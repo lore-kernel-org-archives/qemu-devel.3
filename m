@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC5FE7718E
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B0FE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLcf-0007Ru-9Q; Sun, 22 Dec 2024 08:03:55 -0500
+	id 1tPLbc-0006qP-8w; Sun, 22 Dec 2024 08:02:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLZw-0005Hg-SW
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:20 -0500
+ id 1tPLa4-0005IA-RC
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:24 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLZs-0000gK-Dj
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:01 -0500
+ id 1tPLa0-0000hM-De
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID;
- bh=EDjKG0MR9wst3TyCsLTmFTNz1h59/lIe/yxqED+heiM=; b=wPdni01XS2os8mpnVWGgw+d57s
- BoVGYtGAHv0a9W/IgyYMNvj0p3djxfpPg2YuEB8oiEthyVegoZlCrbDjREeP/S20HcCcZTTPOuQaJ
- jzfayaDMX7mUyKsPodPq20MUthYK/ydoQSHdMWBIGGHdWDyZverRlae6vXee3OPoQeYRi2//p4dYI
- QvLcIIfZzZVblihb7Qu1/laymwb8uM09ZCKntaW4nwi1wBhW6SD0PMA27HkpfevPqWtF/wqXYZZv7
- BoGUHOPfsOci5V5orTR24CGSwS11TeN/k4rdVxfwZL4sDsdgqSDb1TKzI/rHEQeAbteR7Yl1huq8R
- pm02luc15PTrpVldC0YaSTlj+K5i9jU+kWpak0MtMszlSJphl4KvptGL02OP4gAUrHD3hpTavw5sN
- T2d8Yf+DL0kzEusZCEfbGHNlspX14eLseb0x1qsIvZReUjPXqn85wtHufNuE8v7LuRBv9HYVtXRCm
- ZIcBo2cqpIt5KfAoAm310s9FMm3PJrR2nhfCWVDjNBr6z+mbkBBk0vimRwdzR4mAj8ho9Fm6JunOS
- 5jhTCzTioaT3nH8DiaEM8opoJBFOEnMytvHQrda6R5hN0Qjn2F0oR2xMfM71k1mmtmEA0xo46nAsE
- wS9eo1RhAmf4VBlWNhwBF9I2/mO3gyT0wU9A2ZJ8o=;
+ bh=nomOuLrjdVFIkt/fJcG/uMEUJg2nP4CQC3YSh6qawQQ=; b=S2vLibKy5e43gldddtx2CNYac0
+ 5eIUhAufdGoJHjpYdIGgs4HPbmGhMv/ZSiUamnQSlJeYmeKTgCrV3A8SNYXY8oKEl3laVzECdwjkY
+ qZZpoq/bcxTYc/Wq1Zvon0mbwZVnoqz3lM1r+FLV2cSbocJE5nyjrZCTtPGDMHM7fbplgMm9gr4LE
+ vcFwQuXjMcfy33NynmZvwCe43DLUXBxyGvLK/eI66BLqlnmLpPAwHwPYMvczX5KyZ90VrWNtYaNnw
+ 5rQhhDaHEgDRU79XeiU+HjHn9VhJlIJpQx0YIs1tenEYeV7/dFijR4IDbF+y6vApxZPrfIjgaHaNE
+ V+bbtoyaDQvlfOBilUGZ+FqzG4FE1WSwB440B0IbSR32vQA3EEp2VgyqgpDlyFLQXpis1Gjs0f2Gv
+ hK9UThbSoxq9aucxLmy9lMnqNtyjd3H15coLW8L95ZnAMAqzcaLayaZ7mMWCq0dyTfAMsz3aLai64
+ kqNzoZ6eECwahm8ST4BAfHtQ2K+p8j3lJ2JSyRBhY9cvDS25Uoqvon9aT5CyBvRVEkRjybamA8Qv2
+ F8tEUWmTMibI4+w/sqs1fF0J3c26NsI4NesoGsmijnYPVG/bc9GugMXoWrhNeyOWcC+hlqvcD9cTr
+ FOwtZD2UwsBXf0RUWjkt+OhCWbInb/JlYXFsJawVA=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLZE-0002L7-Sg; Sun, 22 Dec 2024 13:00:25 +0000
+ id 1tPLZN-0002L7-60; Sun, 22 Dec 2024 13:00:33 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Sun, 22 Dec 2024 12:59:49 +0000
-Message-Id: <20241222130012.1013374-11-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 22 Dec 2024 12:59:51 +0000
+Message-Id: <20241222130012.1013374-13-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
@@ -53,8 +53,8 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 10/33] next-cube: map ESCC registers as a subregion of the
- next.scr memory region
+Subject: [PATCH v3 12/33] next-cube: move timer MMIO to separate memory region
+ on next-pc device
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,40 +80,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the ESCC device exists within the memory range of the next.scr memory region, map
-the ESCC device registers as a subregion of the next.scr memory region instead of
-directly to the system address space.
+Move the timer MMIO accesses to a separate memory region on the next-pc device
+instead of being part of the next.scr MMIO memory region.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/m68k/next-cube.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/m68k/next-cube.c | 63 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 50 insertions(+), 13 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 9c0ddf91f8..4b175cd9ab 100644
+index 49dff14fb9..a84106219f 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -980,6 +980,7 @@ static const MemoryRegionOps next_floppy_ops = {
+@@ -109,6 +109,7 @@ struct NeXTPC {
+     M68kCPU *cpu;
  
- static void next_escc_init(DeviceState *pcdev)
+     MemoryRegion floppy_mem;
++    MemoryRegion timer_mem;
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
+ 
+@@ -371,17 +372,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+     uint64_t val;
+ 
+     switch (addr) {
+-    /*
+-     * These 4 registers are the hardware timer, not sure which register
+-     * is the latch instead of data, but no problems so far.
+-     *
+-     * Hack: We need to have the LSB change consistently to make it work
+-     */
+-    case 0x1a000 ... 0x1a003:
+-        val = extract32(clock(), (4 - (addr - 0x1a000) - size) << 3,
+-                        size << 3);
+-        break;
+-
+     /* For now return dummy byte to allow the Ethernet test to timeout */
+     case 0x6000:
+         val = 0xff;
+@@ -400,8 +390,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+                              unsigned size)
  {
-+    NeXTPC *next_pc = NEXT_PC(pcdev);
-     DeviceState *dev;
-     SysBusDevice *s;
+     switch (addr) {
+-    /* Hardware timer latch - not implemented yet */
+-    case 0x1a000:
+     default:
+         DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
+                 (unsigned int)addr, val, size);
+@@ -980,6 +968,50 @@ static const MemoryRegionOps next_floppy_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
  
-@@ -997,7 +998,9 @@ static void next_escc_init(DeviceState *pcdev)
-     sysbus_realize_and_unref(s, &error_fatal);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
-     sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
--    sysbus_mmio_map(s, 0, 0x2118000);
++static void next_timer_write(void *opaque, hwaddr addr, uint64_t val,
++                              unsigned size)
++{
++    switch (addr) {
++    case 0 ... 3:
++        /* Hardware timer latch - not implemented yet */
++        break;
 +
-+    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
-+                                sysbus_mmio_get_region(s, 0));
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t next_timer_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val;
++
++    switch (addr) {
++    case 0 ... 3:
++        /*
++         * These 4 registers are the hardware timer, not sure which register
++         * is the latch instead of data, but no problems so far.
++         *
++         * Hack: We need to have the LSB change consistently to make it work
++         */
++        val = extract32(clock(), (4 - addr - size) << 3,
++                        size << 3);
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++
++    return val;
++}
++
++static const MemoryRegionOps next_timer_ops = {
++    .read = next_timer_read,
++    .write = next_timer_write,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
+ static void next_pc_reset(DeviceState *dev)
+ {
+     NeXTPC *s = NEXT_PC(dev);
+@@ -1042,6 +1074,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->scrmem, 0x18000,
+                                 sysbus_mmio_get_region(sbd, 0));
+ 
++    /* Timer */
++    memory_region_add_subregion(&s->scrmem, 0x1a000, &s->timer_mem);
  }
  
- static void next_pc_reset(DeviceState *dev)
+ static void next_pc_init(Object *obj)
+@@ -1065,6 +1099,9 @@ static void next_pc_init(Object *obj)
+                           "next.floppy", 4);
+ 
+     object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
++
++    memory_region_init_io(&s->timer_mem, OBJECT(s), &next_timer_ops, s,
++                          "next.timer", 4);
+ }
+ 
+ /*
 -- 
 2.39.5
 
