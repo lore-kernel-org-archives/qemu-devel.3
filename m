@@ -4,36 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 678ACE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 08:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A7EE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 08:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPHAB-0002nu-LJ; Sun, 22 Dec 2024 03:18:11 -0500
+	id 1tPHUR-0005Ya-Nw; Sun, 22 Dec 2024 03:39:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tPHAA-0002ng-OG; Sun, 22 Dec 2024 03:18:10 -0500
+ id 1tPHUO-0005Xy-Fe; Sun, 22 Dec 2024 03:39:04 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tPHA9-0005pw-1I; Sun, 22 Dec 2024 03:18:10 -0500
+ id 1tPHUM-00084E-OW; Sun, 22 Dec 2024 03:39:04 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4E709C8C60;
- Sun, 22 Dec 2024 11:17:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BFE7AC8C67;
+ Sun, 22 Dec 2024 11:38:27 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D853418DB2E;
- Sun, 22 Dec 2024 11:17:51 +0300 (MSK)
-Message-ID: <fa17134c-0503-4de8-b7e4-4173bdf99738@tls.msk.ru>
-Date: Sun, 22 Dec 2024 11:17:51 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4F46118DB43;
+ Sun, 22 Dec 2024 11:38:58 +0300 (MSK)
+Message-ID: <fe6033cf-fee6-4172-a576-c3456cb2bd26@tls.msk.ru>
+Date: Sun, 22 Dec 2024 11:38:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Reset TSCs of parked vCPUs too on VM reset
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com>
+Subject: Re: [PATCH v2 1/1] hw/intc/riscv_aplic: Fix APLIC in_clrip and
+ clripnum write emulation
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
+ jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20241029085349.30412-1-yongxuan.wang@sifive.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <20241029085349.30412-1-yongxuan.wang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -105,28 +111,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.12.2024 17:51, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+29.10.2024 11:53, Yong-Xuan Wang wrote:
+> In the section "4.7 Precise effects on interrupt-pending bits"
+> of the RISC-V AIA specification defines that:
 > 
-> Since commit 5286c3662294 ("target/i386: properly reset TSC on reset")
-> QEMU writes the special value of "1" to each online vCPU TSC on VM reset
-> to reset it.
+> "If the source mode is Level1 or Level0 and the interrupt domain
+> is configured in MSI delivery mode (domaincfg.DM = 1):
+> The pending bit is cleared whenever the rectified input value is
+> low, when the interrupt is forwarded by MSI, or by a relevant
+> write to an in_clrip register or to clripnum."
 > 
-> However parked vCPUs don't get that handling and due to that their TSCs
-> get desynchronized when the VM gets reset.
-> This in turn causes KVM to turn off PVCLOCK_TSC_STABLE_BIT in its exported
-> PV clock.
-> Note that KVM has no understanding of vCPU being currently parked.
+> Update the riscv_aplic_set_pending() to match the spec.
 > 
-> Without PVCLOCK_TSC_STABLE_BIT the sched clock is marked unstable in
-> the guest's kvm_sched_clock_init().
-> This causes a performance regressions to show in some tests.
-> 
-> Fix this issue by writing the special value of "1" also to TSCs of parked
-> vCPUs on VM reset.
-...
+> Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation for APLIC MSI-mode")
 
-This looks like it should be picked up for stable too, what do you think?
+Is it a qemu-stable material?
 
 Thanks,
 
