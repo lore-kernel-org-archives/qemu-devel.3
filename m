@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9A2E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 08:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D16E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 08:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPHdM-0006zL-Ex; Sun, 22 Dec 2024 03:48:20 -0500
+	id 1tPHhb-0008Eu-6A; Sun, 22 Dec 2024 03:52:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tPHdJ-0006yl-9S; Sun, 22 Dec 2024 03:48:17 -0500
+ id 1tPHhW-0008E7-Ba; Sun, 22 Dec 2024 03:52:38 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tPHdH-0000ln-Dk; Sun, 22 Dec 2024 03:48:16 -0500
+ id 1tPHhU-0001Xy-HP; Sun, 22 Dec 2024 03:52:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BC9B2C8C80;
- Sun, 22 Dec 2024 11:47:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F0737C8C83;
+ Sun, 22 Dec 2024 11:52:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5EEB618DB54;
- Sun, 22 Dec 2024 11:48:09 +0300 (MSK)
-Message-ID: <5038d8dc-e552-4ad0-ba19-cc72b9501681@tls.msk.ru>
-Date: Sun, 22 Dec 2024 11:48:09 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8331418DB59;
+ Sun, 22 Dec 2024 11:52:34 +0300 (MSK)
+Message-ID: <0405d8c3-288f-4952-a760-c0994a9d302c@tls.msk.ru>
+Date: Sun, 22 Dec 2024 11:52:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/timer/hpet: miscellaneous cleanup
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20241126163046.3344931-1-zhao1.liu@intel.com>
+Subject: Re: [PATCH] vvfat: fix ubsan issue in create_long_filename
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, alex.bennee@linaro.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ peter.maydell@linaro.org, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20241204195111.2921141-1-pierrick.bouvier@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -78,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241126163046.3344931-1-zhao1.liu@intel.com>
+In-Reply-To: <20241204195111.2921141-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -104,11 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.11.2024 19:30, Zhao Liu wrote:
-> Hi,
-> 
-> This series just cleans up the outdated comment and macro.
-Applied to the trivial-patches tree.  Thanks!
+04.12.2024 22:51, Pierrick Bouvier wrote:
+> Found with test sbsaref introduced in [1].
+..
+
+Applied to the trivial-patches tree. Thank you!
 
 /mjt
 
