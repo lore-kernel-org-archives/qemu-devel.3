@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D832E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B9CE7718D
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLdR-00025C-LB; Sun, 22 Dec 2024 08:04:43 -0500
+	id 1tPLdF-0000a3-KP; Sun, 22 Dec 2024 08:04:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaz-0006Hj-SG
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:16 -0500
+ id 1tPLbH-0006Tq-6W
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:32 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLay-0000rT-BT
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:09 -0500
+ id 1tPLbF-0000uo-SY
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=32Hsyr/YReiq//ufLSelktznFqNXWwpKnH9enfCHALA=; b=odNkuqA3wB3H8xnx2AqUbf6nTi
- CnmhCszISkyBTRfNjidConCosI0BpdgDkYUiRsYkbbbL8fGU3sDi5LmKf5A3vqka9nSqbYNjKDegS
- P8cFWBegB5tJfQxkrFkwZtVGgx5D0jJimPUPPRUyyUMMde2imMdsAlxIdfVW9xJnAIrFa8IedxpOJ
- eslZmfD5LkPFH/8IucDDixfY05zfyB7bPTo5ZMADxKU+ejkeM8T+lpOVcT0/XjuEFeUGFRC/xDec5
- MZOlxBVd5h7Jb0N8eYqwQGOQ68CYZ1E1ZJyZ4017TbOB65psEwVPuh1oi03ctbc7l0oa9R48UHAJC
- ioJW4SzEU5yHhE4iCH4fMHcAvGtPeSMRWClMmFLbs1hNYiQL3bTHwQ+20HgNCyObYKYb1WHN60XjJ
- kYgG9P76ys3/FcEqu+X04BSeVfruQssH8W4ZlfR6DaMFZOvXD/oCxnXkBSTbR/qe2q2lGVk0aFDR8
- PqEbH6sWtgmZnnHPoucd5nsXk+nT59sBSmcHjRmwCIZ+E9zW1GHSNhj/13d+A0aDgw1+Rv87HYyqa
- 0i12k5cOy70Fk0ISa3ii5PmZQ/YqKG/Q6XO7OK7E15hlMh1HKz9P1AI+A2wrram58Q85L3MK7fjnG
- /MMFvXyql/6ZE+fkwQqa9DKIhL6VSgVfBlSQZQxVA=;
+ bh=JRKGDsSvTWe9iQ6fgKPmc3U+zQ5yHiKGkjYUYYLHmtM=; b=vYrz+27Egn/+hQfQW8DNCACHAK
+ /DLtTBCrddCD9jimsEi9wbJN/dmCkuFuwVneT6Y/HMDZj2G2FmelaXfOYoLbS4Jw8rh30NF8ONY8l
+ Uy+cbW+xXLC5a7U9H+67+7m8Jre5PnPiM9+8Z9npuKcNwbU93ex8ISoUZ8h2c6533bDoeXkzfvZDV
+ NObxh2oO4SPr0EmgyJGDGPLuu/Y/XWFPQoiLrCfhTdK+wHikdPUhq8+sgVeYotJwhUHz89NAbn3rc
+ DXTZOtU8ReBNxWasGHEe7fmwtjwE4/qsXXpIB+U1sIkE+npczAVVNYtAOGPSuNO17H/CaPna7qhCP
+ khCh/Mqcck+cB9I93QkyfrYPO9y+6rcE02cE9BXarQgeBmzh4c2rk05Cyvbp8v+WokW40WJ2l1RKy
+ vHTe1BU7n0VH5xW26EGqTCYtm/7sVc78I2Q7GDUHYMT6GR22tbeAT6ouQsJnWDUnrNnsrYAxPSxXE
+ +Epvr9VPuuEJZfR5Hz4d4vFXsksUkITl/c8v/9PKdbXHhpctMiiLeO5QVBhA5dfkvhydpA0fOIMtO
+ IJ6cz46bfzR+ZaX7Rd1M8UUcDGW2f+/pgUMoe3//WZZj1e9yvDy351qf2u29yFEPw/eiUa7mgwy4W
+ qG67aVyDZfs2xH0lpecvgFKs4jSgTgLgxuaBo9sWM=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaB-0002L7-1y; Sun, 22 Dec 2024 13:01:23 +0000
+ id 1tPLaS-0002L7-VJ; Sun, 22 Dec 2024 13:01:40 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Sun, 22 Dec 2024 13:00:04 +0000
-Message-Id: <20241222130012.1013374-26-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 22 Dec 2024 13:00:11 +0000
+Message-Id: <20241222130012.1013374-33-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 25/33] next-cube: QOMify NeXTRTC
+Subject: [PATCH v3 32/33] next-cube: rename old_scr2 and scr2_2 in
+ next_scr2_rtc_update()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,147 +79,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to allow the RTC functionality to be maintained within its own separate
-device rather than as part of the next-pc device.
+Rename them to old_scr2_rtc and scr2_rtc to reflect that they contain the previous
+and current values of the SCR2 RTC bits.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 71 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 50 insertions(+), 21 deletions(-)
+ hw/m68k/next-cube.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 9daf2207a5..075c525d24 100644
+index cf64f982cc..2625839576 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -42,7 +42,13 @@
- #define RAM_SIZE    0x4000000
- #define ROM_FILE    "Rev_2.5_v66.bin"
+@@ -177,17 +177,17 @@ static void next_scr2_led_update(NeXTPC *s)
  
--typedef struct NeXTRTC {
-+
-+#define TYPE_NEXT_RTC "next-rtc"
-+OBJECT_DECLARE_SIMPLE_TYPE(NeXTRTC, NEXT_RTC)
-+
-+struct NeXTRTC {
-+    SysBusDevice parent_obj;
-+
-     int8_t phase;
-     uint8_t ram[32];
-     uint8_t command;
-@@ -50,7 +56,7 @@ typedef struct NeXTRTC {
-     uint8_t status;
-     uint8_t control;
-     uint8_t retval;
--} NeXTRTC;
-+};
- 
- #define TYPE_NEXT_SCSI "next-scsi"
- OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
-@@ -1012,6 +1018,37 @@ static const MemoryRegionOps next_dummy_en_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
-+static const VMStateDescription next_rtc_vmstate = {
-+    .name = "next-rtc",
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT8(phase, NeXTRTC),
-+        VMSTATE_UINT8_ARRAY(ram, NeXTRTC, 32),
-+        VMSTATE_UINT8(command, NeXTRTC),
-+        VMSTATE_UINT8(value, NeXTRTC),
-+        VMSTATE_UINT8(status, NeXTRTC),
-+        VMSTATE_UINT8(control, NeXTRTC),
-+        VMSTATE_UINT8(retval, NeXTRTC),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static void next_rtc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "NeXT RTC";
-+    dc->vmsd = &next_rtc_vmstate;
-+}
-+
-+static const TypeInfo next_rtc_info = {
-+    .name = TYPE_NEXT_RTC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(NeXTRTC),
-+    .class_init = next_rtc_class_init,
-+};
-+
- static void next_pc_rtc_data_in_irq(void *opaque, int n, int level)
+ static void next_scr2_rtc_update(NeXTPC *s)
  {
-     NeXTPC *s = NEXT_PC(opaque);
-@@ -1078,6 +1115,12 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     }
-     sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
-     sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
-+
-+    /* RTC */
-+    d = DEVICE(&s->rtc);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(d), errp)) {
-+        return;
-+    }
- }
+-    uint8_t old_scr2, scr2_2;
++    uint8_t old_scr2_rtc, scr2_rtc;
  
- static void next_pc_init(Object *obj)
-@@ -1111,6 +1154,8 @@ static void next_pc_init(Object *obj)
-                           "next.timer", 4);
-     sysbus_init_mmio(sbd, &s->timer_mem);
+-    old_scr2 = extract32(s->old_scr2, 8, 8);
+-    scr2_2 = extract32(s->scr2, 8, 8);
++    old_scr2_rtc = extract32(s->old_scr2, 8, 8);
++    scr2_rtc = extract32(s->scr2, 8, 8);
  
-+    object_initialize_child(obj, "rtc", &s->rtc, TYPE_NEXT_RTC);
-+
-     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
-     qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
-                             "pc-rtc-data-in", 1);
-@@ -1128,26 +1173,10 @@ static const Property next_pc_properties[] = {
-     DEFINE_PROP_LINK("cpu", NeXTPC, cpu, TYPE_M68K_CPU, M68kCPU *),
- };
- 
--static const VMStateDescription next_rtc_vmstate = {
--    .name = "next-rtc",
--    .version_id = 2,
--    .minimum_version_id = 2,
--    .fields = (const VMStateField[]) {
--        VMSTATE_INT8(phase, NeXTRTC),
--        VMSTATE_UINT8_ARRAY(ram, NeXTRTC, 32),
--        VMSTATE_UINT8(command, NeXTRTC),
--        VMSTATE_UINT8(value, NeXTRTC),
--        VMSTATE_UINT8(status, NeXTRTC),
--        VMSTATE_UINT8(control, NeXTRTC),
--        VMSTATE_UINT8(retval, NeXTRTC),
--        VMSTATE_END_OF_LIST()
--    },
--};
--
- static const VMStateDescription next_pc_vmstate = {
-     .name = "next-pc",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(scr1, NeXTPC),
-         VMSTATE_UINT32(scr2, NeXTPC),
-@@ -1155,7 +1184,6 @@ static const VMStateDescription next_pc_vmstate = {
-         VMSTATE_UINT32(int_mask, NeXTPC),
-         VMSTATE_UINT32(int_status, NeXTPC),
-         VMSTATE_UINT32(led, NeXTPC),
--        VMSTATE_STRUCT(rtc, NeXTPC, 0, next_rtc_vmstate, NeXTRTC),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -1304,6 +1332,7 @@ static void next_register_type(void)
-     type_register_static(&next_typeinfo);
-     type_register_static(&next_pc_info);
-     type_register_static(&next_scsi_info);
-+    type_register_static(&next_rtc_info);
- }
- 
- type_init(next_register_type)
+-    if (scr2_2 & 0x1) {
++    if (scr2_rtc & 0x1) {
+         /* DPRINTF("RTC %x phase %i\n", scr2_2, rtc->phase); */
+         /* If we are in going down clock... do something */
+-        if (((old_scr2 & SCR2_RTCLK) != (scr2_2 & SCR2_RTCLK)) &&
+-                ((scr2_2 & SCR2_RTCLK) == 0)) {
+-            if (scr2_2 & SCR2_RTDATA) {
++        if (((old_scr2_rtc & SCR2_RTCLK) != (scr2_rtc & SCR2_RTCLK)) &&
++                ((scr2_rtc & SCR2_RTCLK) == 0)) {
++            if (scr2_rtc & SCR2_RTDATA) {
+                 qemu_irq_raise(s->rtc_data_irq);
+             } else {
+                 qemu_irq_lower(s->rtc_data_irq);
 -- 
 2.39.5
 
