@@ -4,87 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78ED6E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 12:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A53EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLVl-0004Fj-Ct; Sun, 22 Dec 2024 07:56:45 -0500
+	id 1tPLZi-00055H-EF; Sun, 22 Dec 2024 08:00:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLVj-0004FL-U8
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 07:56:43 -0500
+ id 1tPLZV-00053F-Ba
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:00:38 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLVi-0008NN-7w
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 07:56:43 -0500
+ id 1tPLZS-0000Zt-0m
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:00:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=xWfvLosilgIA8otj8XWrVzSqR2isSh4HhFpZJddL3hs=; b=sHxBnhJIdnXeHANDGEY8NqLw/w
- TWW4TYXoFlQY4dJXK5hUc4ooZ1qXOtmrjZfjir2GGpDwIEDaG5gWTl4Hz3ruMhk1URy5dwGb41/2r
- ef1LkmZOspNHHkLOK3QfNl5y0rQjllpd25R+s1i6OHMy3CVIE5dQFn8nI0M/saKSISvwetgW7rmR2
- OeyNEoY+PSNAd5EzSE5gqEiorPf8wrQibSCsQo4N0PXfD+TnTJBFbaHz2heYM5nQiia7bVufmhpLv
- 7SjKPmvaGjg9BiLH0rKs/CSF9MUr3QnRYrndGtLIPF0QetGptdVHUpen0R4sMBsCljnZ7rhBQfK06
- Li9wUQjIw60IZG1wnjkr/IKRqpWCewzjbpL1B6q6ibx9fgo8v+MAL+qAGcGo9cnSRqVe69eOfypi5
- fj2iS/A2gQAaMLuqQjyx7OsFGT1B3HwWEWpjyfvmjiN1R/8N9guJuab6mlqAdNPUHBVIVzcB5vJtb
- ZhhQkW/5zwLL5i8rua6V+tyQm5hvYeGjsVGmGirpcfJ6zfXKLzp/3CHzCL0XRsDExD9ZNx8q3lloF
- 75UvtaEdC1VqBH6mvsuD5J4LqAHeVmyJ+De34med+bObuKHs3Pgtb9t6wT7wblQltNLk2SXzUbsr5
- hxEra1kr8CukjWvu9QM+aVOdaf+TDi9Ojyo3YObWE=;
+ MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=xpbqi5MPloLCqAu6nBXYDhUpUya24zqYngDy7Um/6dA=; b=Meemdi7A8WYVosxklZ4clHeyFJ
+ wDIbwQEEsTF0MEz6wxZRfd9G41D5JAQkxd6H/yYjfOSrqEMO6D5Jq+ipYKbHrezkQG+GG7XsUnQmT
+ JQCgBT1haRpYAL/8cso0TowNzsQIWxsCN0P1Ml7uUq+D7DcGLfiEg70Z60QZhDXKjYTYfHI9bHmo4
+ Rk7LoOP9UJq2j+QjTRf8yeSf+swctP0aUUttCxdsxBiV6V5lOaCYidYu5sr67KK9B1DNq4KaWmJi0
+ DZLbt06HcQ/SyZ1bef+6uCr6uhwcPctjooejS8PMbi91JCmj7g4LchYsHtS51rd6JUMqTgkdSDExE
+ kDXFU4LEX/w22ZgUsLIXHvlcyg+s+nWHx+II8Mk9v2yo2XIDkfWBAmHVXeb0+/tqW5cgnVft/gDhH
+ qUym1X+erwzIlWVOGU/PDlGbRjAOrDSL8gODuO8ID7cqmAsVjG463qGktNuYoSjzG9LhsCY4cgCmd
+ XABTPS87RvfHfq0xPDsliTJ8wN8wyCzetErZeNszqw13bigAI7gAFjk/sbHOD4lgjrRXndfPYm3Nf
+ ekSZp7MA8M3UZufmMuJc10VCYr9f+Z5+I4YRQlOZlMw73ZHluZNJVj3Ni48K+dOf3WvSZ08riUUqi
+ cqt5l5c1mnpOT3LjirZ3qPnKpI7NKiwPM6zLtEoHk=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLV0-0002JE-53; Sun, 22 Dec 2024 12:56:01 +0000
-Message-ID: <011c5274-08d8-49d7-96d4-29d177c3e18d@ilande.co.uk>
-Date: Sun, 22 Dec 2024 12:56:28 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-35-mark.cave-ayland@ilande.co.uk>
- <Z1sdIURVdJL8p6cC@redhat.com>
- <fa8ce465-e539-48ec-abf8-d7296ae42b8a@ilande.co.uk>
- <Z2ADHbndSn-vrYsK@redhat.com>
- <dbb457a1-9eb6-4d71-a5e4-84f6679cd9fe@redhat.com>
-Content-Language: en-US
+ id 1tPLYo-0002L7-IT; Sun, 22 Dec 2024 12:59:58 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <dbb457a1-9eb6-4d71-a5e4-84f6679cd9fe@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: huth@tuxfamily.org,
+	qemu-devel@nongnu.org
+Date: Sun, 22 Dec 2024 12:59:42 +0000
+Message-Id: <20241222130012.1013374-4-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
+References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 34/34] next-cube: replace boiler-plate GPL 2.0 or later
- license text with SPDX identifier
+Subject: [PATCH v3 03/33] next-cube: create new next.scsi container memory
+ region
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -110,73 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/12/2024 11:17, Thomas Huth wrote:
+Move the ESP SCSI and SCSI CSR registers to the new next.scsi container memory
+region.
 
-> On 16/12/2024 11.38, Daniel P. Berrangé wrote:
->> On Sat, Dec 14, 2024 at 08:38:06PM +0000, Mark Cave-Ayland wrote:
->>> On 12/12/2024 17:28, Daniel P. Berrangé wrote:
->>>
->>>> On Thu, Dec 12, 2024 at 11:46:20AM +0000, Mark Cave-Ayland wrote:
->>>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>>>> ---
->>>>>    hw/m68k/next-cube.c | 5 +----
->>>>>    1 file changed, 1 insertion(+), 4 deletions(-)
->>>>>
->>>>> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->>>>> index 1e96bb02f8..3c2f3e295c 100644
->>>>> --- a/hw/m68k/next-cube.c
->>>>> +++ b/hw/m68k/next-cube.c
->>>>> @@ -4,10 +4,7 @@
->>>>>     * Copyright (c) 2011 Bryce Lanham
->>>>>     * Copyright (c) 2024 Mark Cave-Ayland
->>>>>     *
->>>>> - * This code is free software; you can redistribute it and/or modify
->>>>> - * it under the terms of the GNU General Public License as published
->>>>> - * by the Free Software Foundation; either version 2 of the License,
->>>>> - * or (at your option) any later version.
->>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>>>     */
->>>>
->>>> While adding a SPDX-License-Identifier alongside existing header text
->>>> is acceptable, my view is that we should stay away from removing existing
->>>> license headers. There are some difficult questions wrt interpretation
->>>> of the GPL in this area & avoiding opening that can of worms would be
->>>> nice.
->>>
->>> I remember you mentioned this before, but I wasn't sure if this would be
->>> mitigated by the fact that the code originated from GSoC? I'm sure I've seen
->>> at least one recent patch that made a similar change, but if there really
->>> are legal reasons not to allow changes of this type then I shall drop it
->>> from the series.
->>
->> GSoC isn't really important. The challenging problem here is GPL clause 1
->> which says
->>
->>    "keep intact all the notices that refer to this License and to the
->>     absence of any warranty"
->>
->> there are differing opinions on how strictly to interpret the "keep intact"
->> language there.
->>
->> While we could have a debate over this and come to some project opinion
->> IMHO it is a better use of our time to just not remove existing notices.
-> 
-> I generally agree with Daniel here ... but in this special case, I should maybe 
-> mention that Bryce's original file only had a "This code is licensed under the GPL" 
-> statement in it:
-> 
->   https://github.com/blanham/qemu-NeXT/blob/next-cube/hw/next-cube.c#L12
-> 
-> IIRC it was me who replaced that with the usual boilerplate when I picked up his work 
-> to get it included in the upstream QEMU. And for me, it's fine if we switch to SPDX 
-> here, so in this special case, it might be OK to replace it?
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/m68k/next-cube.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Seeing as there still seems to be some questions over this patch, I'll drop it from 
-the v3 series.
-
-
-ATB,
-
-Mark.
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index f918998182..58b4762ecd 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -94,6 +94,7 @@ struct NeXTPC {
+ 
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
++    MemoryRegion scsimem;
+ 
+     uint32_t scr1;
+     uint32_t scr2;
+@@ -843,7 +844,12 @@ static void next_scsi_init(DeviceState *pcdev)
+     sysbusdev = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(sysbusdev, &error_fatal);
+     sysbus_connect_irq(sysbusdev, 0, qdev_get_gpio_in(pcdev, NEXT_SCSI_I));
+-    sysbus_mmio_map(sysbusdev, 0, 0x2114000);
++
++    memory_region_init(&next_pc->scsimem, OBJECT(next_pc), "next.scsi", 0x40);
++    memory_region_add_subregion(&next_pc->scsimem, 0x0,
++                                sysbus_mmio_get_region(sysbusdev, 0));
++
++    memory_region_add_subregion(&next_pc->scrmem, 0x14000, &next_pc->scsimem);
+ 
+     next_pc->scsi_reset = qdev_get_gpio_in(dev, 0);
+     next_pc->scsi_dma = qdev_get_gpio_in(dev, 1);
+-- 
+2.39.5
 
 
