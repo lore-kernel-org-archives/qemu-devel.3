@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727ACE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5F3E7718D
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLcx-0007gY-Q6; Sun, 22 Dec 2024 08:04:15 -0500
+	id 1tPLdN-0001ek-PL; Sun, 22 Dec 2024 08:04:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLb9-0006NH-Hd
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:19 -0500
+ id 1tPLal-0006Bc-2v
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:07 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLb7-0000tN-Gm
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:19 -0500
+ id 1tPLah-0000oM-KH
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Dhd9q4dprri5dDCffEVAkY2Gue7Wh4bBs8kcdbwy3j4=; b=VbLla8GiXoDnsF76VSCwDimzwJ
- IBvtjSCUcdDH5K4mo2WCWcAAE8fm7MrtYrOVgOwqPRWgcmbaghJrT8/fqA4tAR5Uj2GKR5HfX/iLS
- AOn8jBeeoZhOrPl4TiE2VEGVFfIpzhxHw+S2395JpC4i+ShBYcgo4ggrkUm67f0OHdYMow4dGDlds
- 5nUjnCKgyRMWTZciOAoK3LKQHkZGsVdMEVAud/wjuHBgjL2RzCO+WGncEqOtQu9a1j8N0Yto4SvkY
- UsnB5AnnRGDFieToiGNJ12K7b+7mSITD9jaBdPyHvq4+VmYgSA2eQjfd4x4yrUmjk0fZA/tiRl+YH
- d7aYnAv9IkYSqJYSSG6kq/qy57XUWYCuR7Sa/+73qx8OHxX9Pw6obxScgT+hmc5poMbzCOFr/otnZ
- PcTRHJFE5SK3D9tlqAkA+XofHiCRXHIgAbWLi52qsA34uUOJ+Em7D4RJO+7SsL+4AwPPfiYSqiT6N
- 07iUR3JATHnp2SbLWFrG0MOCW0u1xM1GCgjhpsQSr7GLbRmp4pBOW0M5OMkrGmFYmyNqEzvDfetu8
- bLSqy1Ht0OuOMabLJYPdOQY/L6kjhSNUdz4gbRsQZ8WEckpEm5CgZLaMM8DKvAvGl7QAF8cAWiUiv
- 0JbrGyzXtLt7TlgtcQIHIa1M3xDistf3oqV6b9fA8=;
+ bh=JmReS6lxO6hk1QShQxhRESrBS8h+LgzPPfGMqPjpxMA=; b=Wx9WJ+cz+dec+ALvhh7CY5dclM
+ 3ptns7j8k4BgCg7CBZD6of6tpW5JHXxtAS9r9Z4oHV69I0FFftganN0DdKRr84atII7DoTQfVQA0u
+ fhx/78xmG80GztRCZOzJCzKb8Je2k7BCEDlHstsQ/0WWb7cCk5wMldopK/AiKORJEg8CuNWIUtKBr
+ NJIUHcKd6Hy2uZAKdQNFYY6IUDxC9lZdGhnaMmpmdSfHncK8ztzpR87kdLw/7EE8Y7s7+6zxYJVXv
+ u1SGmGYjFS4BsZr/a0U7Bs+bKfBuUzATErmwoAnQvmSEMrZRNQ8Q4Ewki2wHulL+MROwa8O8jTN+Q
+ g6ylLVyo5D0RAY0E6pZZRW3FR8YDDXz0G/SaZPmXvZoIo4dGe0gMNLvSNItKUe2g8T/IRsbUTtDQ1
+ dSaai+opGJd7DPSLVbSQTdltp94VMgV2g1KLItza2mfCwTosvDUmQ4N+PQSdyyD65ZqMqhvUewtfM
+ Gnhfp6m6ULgPZgVoId7M7PTKxqfbeE9rM0XzAeH5ld/vwbMtBn4PJbLrOHimOOkM9PblY8Krl+STD
+ lwHN9nzzBfVGmWOL/BbUNIFlQ1uPPSdt8YQxDG929i+I6YDX6ZIyWQLVEi/A0Yb+5Re1Wy8o5ssIP
+ n9uxE7F2nUTiqiBP8ZT8m4bI9wnyYdQ4Pz8uO+eA0=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaO-0002L7-1n; Sun, 22 Dec 2024 13:01:32 +0000
+ id 1tPLZu-0002L7-Bc; Sun, 22 Dec 2024 13:01:06 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Sun, 22 Dec 2024 13:00:08 +0000
-Message-Id: <20241222130012.1013374-30-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 22 Dec 2024 13:00:00 +0000
+Message-Id: <20241222130012.1013374-22-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
@@ -52,8 +52,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 29/33] next-cube: add rtc-cmd-reset named gpio to reset the
- rtc state machine
+Subject: [PATCH v3 21/33] next-cube: always use retval to return rtc read
+ values
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -79,90 +79,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows us to decouple the next-pc and next-rtc devices from each
-other in next_scr2_rtc_update().
+Instead of shifting out rtc read values from individual rtc registers, change
+the logic so that rtc read commands are executed when the last bit of the rtc
+command is received and the result stored in retval. This simplifies the rtc
+read logic such that the shift out logic can be consolidated for rtc phases
+between 8 and 16.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/m68k/next-cube.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ hw/m68k/next-cube.c | 99 ++++++++++++++++++---------------------------
+ 1 file changed, 40 insertions(+), 59 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 8edf51198e..ba8c6bb1cd 100644
+index 2c2790bf75..1fb09fee7d 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -108,6 +108,7 @@ struct NeXTPC {
-     NeXTRTC rtc;
-     qemu_irq rtc_power_irq;
-     qemu_irq rtc_data_irq;
-+    qemu_irq rtc_cmd_reset_irq;
- };
+@@ -190,93 +190,74 @@ static void next_scr2_rtc_update(NeXTPC *s)
+             if (rtc->phase < 8) {
+                 rtc->command = (rtc->command << 1) |
+                                ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+-            }
+-            if (rtc->phase >= 8 && rtc->phase < 16) {
+-                if (next_rtc_cmd_is_write(rtc->command)) {
+-                    /* Shift in value to write */
+-                    rtc->value = (rtc->value << 1) |
+-                                 ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+-                } else {
+-                    /* Shift out value to read */
  
- typedef struct next_dma {
-@@ -264,7 +265,6 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
- static void next_scr2_rtc_update(NeXTPC *s)
- {
-     uint8_t old_scr2, scr2_2;
--    NeXTRTC *rtc = &s->rtc;
+-                    /* if we read RAM register, output RT_DATA bit */
+-                    if (rtc->command <= 0x1F) {
+-                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
+-                        if (rtc->ram[rtc->command] &
+-                            (0x80 >> (rtc->phase - 8))) {
+-                                scr2_2 |= SCR2_RTDATA;
+-                        }
+-
+-                        rtc->retval = (rtc->retval << 1) |
+-                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+-                    }
+-                    /* read the status 0x30 */
+-                    if (rtc->command == 0x30) {
+-                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
+-                        /* for now status = 0x98 (new rtc + FTU) */
+-                        if (rtc->status & (0x80 >> (rtc->phase - 8))) {
+-                            scr2_2 |= SCR2_RTDATA;
+-                        }
+-
+-                        rtc->retval = (rtc->retval << 1) |
+-                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+-                    }
+-                    /* read the status 0x31 */
+-                    if (rtc->command == 0x31) {
+-                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
+-                        if (rtc->control & (0x80 >> (rtc->phase - 8))) {
+-                            scr2_2 |= SCR2_RTDATA;
+-                        }
+-                        rtc->retval = (rtc->retval << 1) |
+-                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
++                if (rtc->phase == 7 && !next_rtc_cmd_is_write(rtc->command)) {
++                    if (rtc->command <= 0x1f) {
++                        /* RAM registers */
++                        rtc->retval = rtc->ram[rtc->command];
+                     }
+-
+                     if ((rtc->command >= 0x20) && (rtc->command <= 0x2F)) {
+-                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
+-                        /* for now 0x00 */
++                        /* RTC */
+                         time_t time_h = time(NULL);
+                         struct tm *info = localtime(&time_h);
+-                        int ret = 0;
++                        rtc->retval = 0;
  
-     old_scr2 = extract32(s->old_scr2, 8, 8);
-     scr2_2 = extract32(s->scr2, 8, 8);
-@@ -282,9 +282,7 @@ static void next_scr2_rtc_update(NeXTPC *s)
-         }
-     } else {
-         /* else end or abort */
--        rtc->phase = 0;
--        rtc->command = 0;
--        rtc->value = 0;
-+        qemu_irq_raise(s->rtc_cmd_reset_irq);
-     }
- }
+                         switch (rtc->command) {
+                         case 0x20:
+-                            ret = SCR2_TOBCD(info->tm_sec);
++                            rtc->retval = SCR2_TOBCD(info->tm_sec);
+                             break;
+                         case 0x21:
+-                            ret = SCR2_TOBCD(info->tm_min);
++                            rtc->retval = SCR2_TOBCD(info->tm_min);
+                             break;
+                         case 0x22:
+-                            ret = SCR2_TOBCD(info->tm_hour);
++                            rtc->retval = SCR2_TOBCD(info->tm_hour);
+                             break;
+                         case 0x24:
+-                            ret = SCR2_TOBCD(info->tm_mday);
++                            rtc->retval = SCR2_TOBCD(info->tm_mday);
+                             break;
+                         case 0x25:
+-                            ret = SCR2_TOBCD((info->tm_mon + 1));
++                            rtc->retval = SCR2_TOBCD((info->tm_mon + 1));
+                             break;
+                         case 0x26:
+-                            ret = SCR2_TOBCD((info->tm_year - 100));
++                            rtc->retval = SCR2_TOBCD((info->tm_year - 100));
+                             break;
+                         }
+-
+-                        if (ret & (0x80 >> (rtc->phase - 8))) {
+-                            scr2_2 |= SCR2_RTDATA;
+-                        }
+-                        rtc->retval = (rtc->retval << 1) |
+-                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
++                    }
++                    if (rtc->command == 0x30) {
++                        /* read the status 0x30 */
++                        rtc->retval = rtc->status;
++                    }
++                    if (rtc->command == 0x31) {
++                        /* read the control 0x31 */
++                        rtc->retval = rtc->control;
++                    }
++                }
++            }
++            if (rtc->phase >= 8 && rtc->phase < 16) {
++                if (next_rtc_cmd_is_write(rtc->command)) {
++                    /* Shift in value to write */
++                    rtc->value = (rtc->value << 1) |
++                                 ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
++                } else {
++                    /* Shift out value to read */
++                    if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
++                        scr2_2 |= SCR2_RTDATA;
++                    } else {
++                        scr2_2 &= ~SCR2_RTDATA;
+                     }
+                 }
+             }
  
-@@ -1015,6 +1013,17 @@ static const MemoryRegionOps next_dummy_en_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
-+static void next_rtc_cmd_reset_irq(void *opaque, int n, int level)
-+{
-+    NeXTRTC *rtc = NEXT_RTC(opaque);
-+
-+    if (level) {
-+        rtc->phase = 0;
-+        rtc->command = 0;
-+        rtc->value = 0;
-+    }
-+}
-+
- static void next_rtc_reset_hold(Object *obj, ResetType type)
- {
-     NeXTRTC *rtc = NEXT_RTC(obj);
-@@ -1033,6 +1042,8 @@ static void next_rtc_init(Object *obj)
-                             "rtc-data-in", 1);
-     qdev_init_gpio_out_named(DEVICE(obj), &rtc->data_out_irq,
-                              "rtc-data-out", 1);
-+    qdev_init_gpio_in_named(DEVICE(obj), next_rtc_cmd_reset_irq,
-+                            "rtc-cmd-reset", 1);
- }
- 
- static const VMStateDescription next_rtc_vmstate = {
-@@ -1143,6 +1154,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     qdev_connect_gpio_out_named(d, "rtc-data-out", 0,
-                                 qdev_get_gpio_in_named(dev,
-                                                        "rtc-data-in", 0));
-+    qdev_connect_gpio_out_named(dev, "rtc-cmd-reset", 0,
-+                                qdev_get_gpio_in_named(d, "rtc-cmd-reset", 0));
- }
- 
- static void next_pc_init(Object *obj)
-@@ -1183,6 +1196,8 @@ static void next_pc_init(Object *obj)
-                             "rtc-data-in", 1);
-     qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
-                              "rtc-data-out", 1);
-+    qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_cmd_reset_irq,
-+                             "rtc-cmd-reset", 1);
- }
- 
- /*
+             rtc->phase++;
+-            if (rtc->phase == 16) {
+-                if (rtc->command >= 0x80 && rtc->command <= 0x9F) {
++            if (rtc->phase == 16 && next_rtc_cmd_is_write(rtc->command)) {
++                if (rtc->command >= 0x80 && rtc->command <= 0x9f) {
++                    /* RAM registers */
+                     rtc->ram[rtc->command - 0x80] = rtc->value;
+                 }
+-                /* write to x30 register */
+-                if (rtc->command == 0xB1) {
+-                    /* clear FTU */
++                if (rtc->command == 0xb1) {
++                    /* write to 0x30 register */
+                     if (rtc->value & 0x04) {
++                        /* clear FTU */
+                         rtc->status = rtc->status & (~0x18);
+                         qemu_irq_lower(s->rtc_power_irq);
+                     }
 -- 
 2.39.5
 
