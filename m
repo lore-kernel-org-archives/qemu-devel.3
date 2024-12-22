@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0755CE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA07E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLbz-0007IB-2e; Sun, 22 Dec 2024 08:03:12 -0500
+	id 1tPLbb-0006nM-Mb; Sun, 22 Dec 2024 08:02:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaX-0005qs-QV
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:43 -0500
+ id 1tPLaU-0005kr-J0
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:38 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaW-0000l7-CK
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:41 -0500
+ id 1tPLaS-0000jK-3M
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=5g1hj/XSpIt4KoSrK8XrF9el+i1hz155MivVbNqV5wQ=; b=QETG9HEzNz8fmp86wKbDT0bN42
- rcg/mfqFdF8Ylhr8bT1ZSM3GltuRmwcIIxz49XoFanVyl5Kbj3JL59yhL5QfjhD2Y5SvqYbGGm8K+
- 8UfbJE+3VzjOFyoiy8fj6uEv4OYUN5CCwSW5Tn48MSDygzGqHKQsuyhMX+Y919HbTAgE3chNgLv+o
- rb9aik3z4roFMkzzlPB8swn8bX4phDOnjRJfvHZuitpsdVSSpgyx1AUnCYEZYTi94m+R/Rnql8lo2
- POkGTOuXayz7iDgUVjT0y2SODiCV9eScV9Nbnd7mi3a9OKNb6GoY6RijTuja0C17v56kQvcs0/iw1
- 66DlKwZZfo7wGqhVK3/l8GLxhg4MJniRKwWJIOgS5bCDFWLWhgiOYCWd3Xd7C7rLXBKcYkr1MPK8v
- iTIORzt0pY3nnjA0T81R6yD/wxUiNUwZ+WOdIHrvEP/FCPqyrzwLAwJtbwRXsWpLi9tdnlGehjoEY
- mJHbInbgGDK9A4YwgFoZFJLrDKTYZyT8ZZnzuMV9Ksi7kpODE+BZz2qGt9qnrOYURTxujwFaE9IRt
- 66IMqs9QUyYcXZ5NS08rgoXbP86EbW20G7qpxcVjCcUCAtNcEZ6XaQCzJv6eeurXSxpsczyAGRLOb
- SmtOyTOLP6F2nG1jkg+WP/F9aVQPmQlqvcF1/RRJY=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=lG6JPKGCu59ybF3q426dh4nFP+wcJAZGCPcTrYtvZ08=; b=KjvbuNr/lWSp92qJLquNxgVAjB
+ +GYRbfoCVbbUVSm7jEqRNFMTodTXSX1voGCLhpz2dhLs8l3KxbX5KtaQk634dZwLvRxgSK1epIFG+
+ zEr57UAWp3tazdDVtG7xz8dEtzNzrTINt10CSbH/2A74KnF6gIEXGFNo+jKDUMT0yMe/mXWSpiBs7
+ JYdkJ4wBbT4S/hMHhgBvNt3T8hNg4UZcorhCm11SxkJEjYgqHfDDGXCIvPxhFxJkLCxydxzO/VgI+
+ M5vd2WU6YqKJBk4rU4hQc144m/mykYizRwhHFkm3r4qeVP1GjBU0j7d0SLB91YmGFe20e9nTpsizR
+ 2eLcZl8lAW3b2ZlsDccHwO6UDvwaG+Gsg6McJr+BfyJvRb3A7kTRUhFyo1N/hyzTPAO9T/vFQc0vX
+ 5XM/RXldj1+OoINa4m9OrPlbNLL2dDQiHsP9ke18n+jk5fNp3Oqs7ro6IOqV/rc4eLgK1sTtCHucs
+ WkLq10q7PL7xMpkeUduolIQ1R9kB1V2iwZOZ8Mfxyhe5mS2M29F1Ohf3fSRnq2WJMHyV2RRBbLRs4
+ R3DGdJhtoOPrelgWt5mIplROtb7bXBov0HqvJ8+B5TL+lc6bR79TaCJQ9G0qFMSYCQ/weQWrIwADG
+ p8XjGlVCyEgeQ3mwZGNGJQVF/8lif38hCgutjyXH8=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLZh-0002L7-M2; Sun, 22 Dec 2024 13:00:53 +0000
+ id 1tPLZZ-0002L7-SN; Sun, 22 Dec 2024 13:00:45 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Sun, 22 Dec 2024 12:59:56 +0000
-Message-Id: <20241222130012.1013374-18-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 22 Dec 2024 12:59:54 +0000
+Message-Id: <20241222130012.1013374-16-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 17/33] next-cube: convert next-pc device to use Resettable
- interface
+Subject: [PATCH v3 15/33] next-cube: remove unused next.scr memory region
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,44 +78,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Now that the next.scr memory region is unused it can be removed and the next-pc
+devices mapped directly within the machine init function. This is the last
+remaining overlapping memory region within the NeXTCube machine.
+
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Acked-by: Thomas Huth <huth@tuxfamily.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/m68k/next-cube.c | 73 +++++++++++++--------------------------------
+ 1 file changed, 21 insertions(+), 52 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index de697c3e2b..61d0cb8327 100644
+index 67432801a3..622b04d3ad 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -1009,9 +1009,9 @@ static const MemoryRegionOps next_dummy_en_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
+@@ -369,38 +369,6 @@ static const MemoryRegionOps next_mmio_ops = {
+ #define SCSICSR_CPUDMA  0x10  /* if set, dma enabled */
+ #define SCSICSR_INTMASK 0x20  /* if set, interrupt enabled */
  
--static void next_pc_reset(DeviceState *dev)
-+static void next_pc_reset_hold(Object *obj, ResetType type)
- {
--    NeXTPC *s = NEXT_PC(dev);
-+    NeXTPC *s = NEXT_PC(obj);
+-static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+-{
+-    uint64_t val;
+-
+-    switch (addr) {
+-    default:
+-        DPRINTF("BMAP Read @ 0x%x size %u\n", (unsigned int)addr, size);
+-        val = 0;
+-        break;
+-    }
+-
+-    return val;
+-}
+-
+-static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+-                             unsigned size)
+-{
+-    switch (addr) {
+-    default:
+-        DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
+-                (unsigned int)addr, val, size);
+-    }
+-}
+-
+-static const MemoryRegionOps next_scr_ops = {
+-    .read = next_scr_readfn,
+-    .write = next_scr_writefn,
+-    .valid.min_access_size = 1,
+-    .valid.max_access_size = 4,
+-    .endianness = DEVICE_BIG_ENDIAN,
+-};
+-
+ #define NEXTDMA_SCSI(x)      (0x10 + x)
+ #define NEXTDMA_FD(x)        (0x10 + x)
+ #define NEXTDMA_ENTX(x)      (0x110 + x)
+@@ -1063,17 +1031,11 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     SysBusDevice *sbd;
+     DeviceState *d;
  
-     /* Set internal registers to initial values */
-     /*     0x0000XX00 << vital bits */
-@@ -1140,12 +1140,13 @@ static const VMStateDescription next_pc_vmstate = {
- static void next_pc_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
+-    /* en network (dummy) */
+-    memory_region_add_subregion(&s->scrmem, 0x6000,
+-                                &s->dummyen_mem);
+-
+     /* SCSI */
+     sbd = SYS_BUS_DEVICE(&s->next_scsi);
+     if (!sysbus_realize(sbd, errp)) {
+         return;
+     }
+-    memory_region_add_subregion(&s->scrmem, 0x14000,
+-                                sysbus_mmio_get_region(sbd, 0));
  
-     dc->desc = "NeXT Peripheral Controller";
-     dc->realize = next_pc_realize;
--    device_class_set_legacy_reset(dc, next_pc_reset);
-     device_class_set_props(dc, next_pc_properties);
-     dc->vmsd = &next_pc_vmstate;
-+    rc->phases.hold = next_pc_reset_hold;
+     d = DEVICE(object_resolve_path_component(OBJECT(&s->next_scsi), "esp"));
+     sysbus_connect_irq(SYS_BUS_DEVICE(d), 0,
+@@ -1082,10 +1044,6 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     s->scsi_reset = qdev_get_gpio_in(d, 0);
+     s->scsi_dma = qdev_get_gpio_in(d, 1);
+ 
+-    /* Floppy */
+-    memory_region_add_subregion(&s->scrmem, 0x14108,
+-                                &s->floppy_mem);
+-
+     /* ESCC */
+     d = DEVICE(&s->escc);
+     qdev_prop_set_uint32(d, "disabled", 0);
+@@ -1103,12 +1061,6 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     }
+     sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
+     sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
+-
+-    memory_region_add_subregion(&s->scrmem, 0x18000,
+-                                sysbus_mmio_get_region(sbd, 0));
+-
+-    /* Timer */
+-    memory_region_add_subregion(&s->scrmem, 0x1a000, &s->timer_mem);
  }
  
- static const TypeInfo next_pc_info = {
+ static void next_pc_init(Object *obj)
+@@ -1120,24 +1072,27 @@ static void next_pc_init(Object *obj)
+ 
+     memory_region_init_io(&s->mmiomem, OBJECT(s), &next_mmio_ops, s,
+                           "next.mmio", 0x9000);
+-    memory_region_init_io(&s->scrmem, OBJECT(s), &next_scr_ops, s,
+-                          "next.scr", 0x20000);
+-
+     sysbus_init_mmio(sbd, &s->mmiomem);
+-    sysbus_init_mmio(sbd, &s->scrmem);
+ 
+     memory_region_init_io(&s->dummyen_mem, OBJECT(s), &next_dummy_en_ops, s,
+                           "next.en", 0x20);
++    sysbus_init_mmio(sbd, &s->dummyen_mem);
+ 
+     object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
++    sysbus_init_mmio(sbd,
++                     sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->next_scsi), 0));
+ 
+     memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
+                           "next.floppy", 4);
++    sysbus_init_mmio(sbd, &s->floppy_mem);
+ 
+     object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
++    sysbus_init_mmio(sbd,
++                     sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->escc), 0));
+ 
+     memory_region_init_io(&s->timer_mem, OBJECT(s), &next_timer_ops, s,
+                           "next.timer", 4);
++    sysbus_init_mmio(sbd, &s->timer_mem);
+ }
+ 
+ /*
+@@ -1239,13 +1194,27 @@ static void next_cube_init(MachineState *machine)
+     /* BMAP IO - acts as a catch-all for now */
+     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02100000);
+ 
++    /* en network (dummy) */
++    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02106000);
++
+     /* unknown: Brightness control register? */
+     empty_slot_init("next.unknown.0", 0x02110000, 0x10);
+     /* unknown: Magneto-Optical drive controller? */
+     empty_slot_init("next.unknown.1", 0x02112000, 0x10);
++
++    /* SCSI */
++    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 2, 0x02114000);
++    /* Floppy */
++    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 3, 0x02114108);
++    /* ESCC */
++    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 4, 0x02118000);
++
+     /* unknown: Serial clock configuration register? */
+     empty_slot_init("next.unknown.2", 0x02118004, 0x10);
+ 
++    /* Timer */
++    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
++
+     /* BMAP memory */
+     memory_region_init_ram_flags_nomigrate(&m->bmapm1, NULL, "next.bmapmem",
+                                            64, RAM_SHARED, &error_fatal);
 -- 
 2.39.5
 
