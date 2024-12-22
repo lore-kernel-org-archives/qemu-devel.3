@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9435E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C619FE7718E
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLdL-0001L5-1m; Sun, 22 Dec 2024 08:04:35 -0500
+	id 1tPLdT-0002Fe-Qh; Sun, 22 Dec 2024 08:04:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaM-0005WK-IU
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:30 -0500
+ id 1tPLan-0006Bv-V8
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:02:07 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLaI-0000jp-1z
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:27 -0500
+ id 1tPLal-0000p6-QT
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=oRqwDhT5n6oRgTvsHNcjDRhCbmxKOqDLv8pQtBCYQZE=; b=0/yNWlBMR7dufnSg72SYbZr+YC
- E4CHoEzCP6XM6wJ3oDB4hplvQPAmQgpxNrsIW0VQoZQGSWAJKgnaHEKb6huNTbDMbyCEAnd97MaTb
- eRQhftLXXoENiLzI87GgeJRZUrFRQZGem8zfk/COwTT2Oxc1lfgpMKDHANupFafHEIhjku/ZV4Iab
- 440QBxPB0QWptlOYDv0f0emGbaa491gv4WN5dokdoi2zBy/uAjZuExDocdjP71cZUDMCh8zkt8Sdp
- d1fuMtZRlPhKjt8TnMNeRCgZijOdcGnrEyF2Lsrbgj7RS0HT4cMV1kWLfnQKIaDG/H0n3OGlZr26q
- b0p2dKp7GUgHqU5boq3dEK2n950ZOIsoEnoclQ3orSTBN5SLmGhKjkf/lAc/P2+yQnWcqaImm1RhD
- DmBH0lgM+2bd3OnPgR9Wmo1+rVDxiVgcLw0Nfd+N1zoPMXuvEwXX3egCI+bkZWHO/DqnOcLM+dg2x
- nfVmJwsYiaTIAuXRRoL/UsE5F1kdvVE5FaUU5lHNaVwXdf3jo79/ChE0cMihCbue2QVJdGvwssPmN
- sWB3VLTnHel/YzfBooJ8p4XMdkua9GgjAfUWUoaxUXsD00VVwwJOH7NAGry48MdiyKv4/JrPI8ijH
- t0uCagbi4P/7ww1IAfH7KayzqcJGAVNwsTAggFqos=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=ceI7/UMZpo6UqpGncQLJnM9zNfx5YW+rnPoAZubGHVc=; b=AyVZX91JsTPsGUkANyJGFhoeJa
+ Q5SBG09E4DH350xR9Jv8H65APaU4c+T1la+8Jc+1ZUvcWxUbezqgg5Bks/YgRSYISglmGheWJESmS
+ CPOO+iZB1cfnFIhCLAZyYcOqarHPVr+hVHntEWY7CngvSivYwJQqULgOfCaL+90DwSQ/eM9MXKScB
+ 0U3zW0zbV8VkxxMgaSmOljIpK5SYlZiqxZZMdr2bZwqFYcwP8VMH9y2LKlnLURLvRxOlJ6+fEKuLx
+ P5DqGJVtUo++hZhey5hwYeFEcSijCBWva8JsDSI77HsPe6KfXBT06eBErj/j++GWmvVHQ7+YVy7JB
+ 4hFzviAvhPI8rCE04/P1NfW3U/EfGGa26a/KG1dj86VMjKnRDG262Nyv92rsuXSeZXckCTQPfiUYA
+ mnRuO5Lo7/fKAf+HjtUJGWH1znAFUree26UmHuY9//9UsvHkrr0w0ZsT8JCf5T62eFi3mbwHhZ4GT
+ Kxe8G8MTdF3pSKJhvEhiFPDX6KqddantRDn1mJzYG+FQL3l9P4FyQltD9RN6V17jVxBiBs2nV+os2
+ 8W+AXowsj4JBQmTbd9N+yyyMcOokWKvFO0mEjP0wtyEfQdJNc4o+tdaY+T4kKhJ8f7cE5bs2JjaT8
+ VB1/5f86zjAiJANbVEO4mNcnW+42CT+jT6rEFtZ/8=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLZe-0002L7-2A; Sun, 22 Dec 2024 13:00:49 +0000
+ id 1tPLZy-0002L7-Hy; Sun, 22 Dec 2024 13:01:10 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Sun, 22 Dec 2024 12:59:55 +0000
-Message-Id: <20241222130012.1013374-17-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 22 Dec 2024 13:00:01 +0000
+Message-Id: <20241222130012.1013374-23-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 16/33] next-cube: rearrange NeXTState declarations to
- improve readability
+Subject: [PATCH v3 22/33] next-cube: use named gpio to set RTC data bit in scr2
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,109 +78,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the NeXTState, next_dma and TYPE_NEXT_MACHINE definition to the same area
-at the top of next-cube.c.
+This is in preparation for moving NeXTRTC to its own separate device.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/m68k/next-cube.c | 64 ++++++++++++++++++++++-----------------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ hw/m68k/next-cube.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 622b04d3ad..de697c3e2b 100644
+index 1fb09fee7d..bc3afa7d54 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -38,30 +38,10 @@
- #define DPRINTF(fmt, ...) do { } while (0)
- #endif
+@@ -240,10 +240,13 @@ static void next_scr2_rtc_update(NeXTPC *s)
+                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+                 } else {
+                     /* Shift out value to read */
++                    qemu_irq rtc_data_in_irq = qdev_get_gpio_in_named(
++                        DEVICE(s), "pc-rtc-data-in", 0);
++
+                     if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
+-                        scr2_2 |= SCR2_RTDATA;
++                        qemu_irq_raise(rtc_data_in_irq);
+                     } else {
+-                        scr2_2 &= ~SCR2_RTDATA;
++                        qemu_irq_lower(rtc_data_in_irq);
+                     }
+                 }
+             }
+@@ -270,8 +273,6 @@ static void next_scr2_rtc_update(NeXTPC *s)
+         rtc->command = 0;
+         rtc->value = 0;
+     }
+-
+-    s->scr2 = deposit32(s->scr2, 8, 8, scr2_2);
+ }
  
--#define TYPE_NEXT_MACHINE MACHINE_TYPE_NAME("next-cube")
--OBJECT_DECLARE_SIMPLE_TYPE(NeXTState, NEXT_MACHINE)
--
- #define ENTRY       0x0100001e
- #define RAM_SIZE    0x4000000
- #define ROM_FILE    "Rev_2.5_v66.bin"
- 
--typedef struct next_dma {
--    uint32_t csr;
--
--    uint32_t saved_next;
--    uint32_t saved_limit;
--    uint32_t saved_start;
--    uint32_t saved_stop;
--
--    uint32_t next;
--    uint32_t limit;
--    uint32_t start;
--    uint32_t stop;
--
--    uint32_t next_initbuf;
--    uint32_t size;
--} next_dma;
--
- typedef struct NextRtc {
-     int8_t phase;
-     uint8_t ram[32];
-@@ -72,18 +52,6 @@ typedef struct NextRtc {
-     uint8_t retval;
- } NextRtc;
- 
--struct NeXTState {
--    MachineState parent;
--
--    MemoryRegion rom;
--    MemoryRegion rom2;
--    MemoryRegion dmamem;
--    MemoryRegion bmapm1;
--    MemoryRegion bmapm2;
--
--    next_dma dma[10];
--};
--
- #define TYPE_NEXT_SCSI "next-scsi"
- OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
- 
-@@ -132,6 +100,38 @@ struct NeXTPC {
-     NextRtc rtc;
+ static uint64_t next_mmio_read(void *opaque, hwaddr addr, unsigned size)
+@@ -1001,6 +1002,20 @@ static const MemoryRegionOps next_dummy_en_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
  };
  
-+typedef struct next_dma {
-+    uint32_t csr;
++static void next_pc_rtc_data_in_irq(void *opaque, int n, int level)
++{
++    NeXTPC *s = NEXT_PC(opaque);
++    uint8_t scr2_2 = extract32(s->scr2, 8, 8);
 +
-+    uint32_t saved_next;
-+    uint32_t saved_limit;
-+    uint32_t saved_start;
-+    uint32_t saved_stop;
++    if (level) {
++        scr2_2 |= SCR2_RTDATA;
++    } else {
++        scr2_2 &= ~SCR2_RTDATA;
++    }
 +
-+    uint32_t next;
-+    uint32_t limit;
-+    uint32_t start;
-+    uint32_t stop;
++    s->scr2 = deposit32(s->scr2, 8, 8, scr2_2);
++}
 +
-+    uint32_t next_initbuf;
-+    uint32_t size;
-+} next_dma;
-+
-+#define TYPE_NEXT_MACHINE MACHINE_TYPE_NAME("next-cube")
-+OBJECT_DECLARE_SIMPLE_TYPE(NeXTState, NEXT_MACHINE)
-+
-+struct NeXTState {
-+    MachineState parent;
-+
-+    MemoryRegion rom;
-+    MemoryRegion rom2;
-+    MemoryRegion dmamem;
-+    MemoryRegion bmapm1;
-+    MemoryRegion bmapm2;
-+
-+    next_dma dma[10];
-+};
-+
- /* Thanks to NeXT forums for this */
+ static void next_pc_reset_hold(Object *obj, ResetType type)
+ {
+     NeXTPC *s = NEXT_PC(obj);
+@@ -1087,6 +1102,8 @@ static void next_pc_init(Object *obj)
+     sysbus_init_mmio(sbd, &s->timer_mem);
+ 
+     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
++    qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
++                            "pc-rtc-data-in", 1);
+ }
+ 
  /*
- static const uint8_t rtc_ram3[32] = {
 -- 
 2.39.5
 
