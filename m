@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB137E7718E
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6720E7718D
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPOlF-0002Yr-E6; Sun, 22 Dec 2024 11:24:59 -0500
+	id 1tPOle-0002b0-Q3; Sun, 22 Dec 2024 11:25:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tPOlA-0002Y3-IZ
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:52 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tPOlH-0002ZY-DR
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:25:00 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tPOl7-0002wX-SJ
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:51 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21649a7bcdcso31420245ad.1
- for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 08:24:49 -0800 (PST)
+ id 1tPOlF-0002yV-Va
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:59 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2156e078563so30100815ad.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 08:24:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734884688; x=1735489488; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=iMHeSlbz0591ATzYmtVcUUaYYddFxbpBuy2TMLDdpkQ=;
- b=Q90erX/IxysZ44JIaTPMV+v19VtfXs5cYYlxwOL70KgEA4Zx3syMJ6nNuc5sQ4lKIG
- XCEKSO0CzGugr1ntkB8UMUWqScjpxgrMbnpxAQ7Whl3yGDFzt1yqy5O34k9Awo3L+Pw6
- VI52lxpWRhlQ+ru/kg1zkbZezUo8BmHZK+yxsM4lNNRRIWYL6Gsbt93byQvWd2ShTqLR
- 2915QpwFQ6ANGC+ufMUW1+RjQPPlfJN2MSRIS3OUbRC8PN+thUqaMWvQVydCbZr2mN+o
- 0LicyZfB05dSyQl8vuNJANoWVk7rEDWqIj+YMq1fuC9RlojFDjHxS+5GkjLvGSPQOKKf
- TEJw==
+ d=linaro.org; s=google; t=1734884696; x=1735489496; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0oaZkc61YjhIqFxlOS5XCCj6BwBkqMgp5zn8nsQHErI=;
+ b=B3vLcZfGfGs9I+0/ZsCzS93rA50Kso4hsoWwP3aGVt6dMtY/U1DTKj7ORM/BZNLk1q
+ 1gNBl3+AlaxGRcmkpLVgHbjalUjcwJ+U6Dd63chB9/S1W0msDVcfELhHr4lAQ8X7st9z
+ 4OS1MZrFhJRq3bGHxWkUxFW62o9SnXhACzoJQG9L6R3W7Trj5Q9qBPkDrTET8wbDORZp
+ goCqyuKFhj3mqZ3PgpbbbktHD+7hDAERl0a204nZwePIVq2eE6esgvbx4Obt4/FLiphx
+ Xguwo11J8R6nNZLU4g0yiCCR7RB59Sn7zq0N6UXmTf9BnKRbseDst1rtb77o4pKjAqQD
+ UTUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734884688; x=1735489488;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iMHeSlbz0591ATzYmtVcUUaYYddFxbpBuy2TMLDdpkQ=;
- b=wShmEIUZ72Yfp5Hw4RX+X33OBhziprXGV00fb9k+IEvOZ41H+tg5ODjkvYp3Iv1ZI6
- aDkzsdYE11Ih43RNqejzD5lxxFzN7GazvfCO4xLzPqTdBinDmqkvX3OfVz8awK3gp/Ys
- q/sAG8U/j6DhGtTCS+6gIe16asgE80YfkMtEhZ5ZWbQfNl/dB0e1nTOc/OIhB4ndYVAP
- JNZNVaO2ipp5kAIL/CTOV8AAanXkI5blsAl+wzQ1mcDiJ7mtAGzbYiwn1gGxMWvikKIj
- ebK6s/5J9gUumUmK3YhRTXLIE8vhz+FBgmOFy0QYLwKhGVsYToq7yT20CFuh4gGC17XP
- eMTQ==
-X-Gm-Message-State: AOJu0YzTDjd6mY5TXw/VvjqnbLRNa78RqbZDM9GQ7/aZ16dfL94f8gBS
- KyJVZOJmU+v7rlR6sNAGIP7uaQypkG0ZYwTcOP00FSGq9n2CmrJU9hXWyIX7PQvByVh5SCAYm5o
- ULEQ=
-X-Gm-Gg: ASbGncsNwzeXCqnEO4vaaheiMsPnGe8im2clg/sTUVAk8CFZ3sxy54d8sIol9WP/pYb
- +tVj1F+cHSa05mLrGei1q5czw+mvsbw/JPlgpt4h4RoZAiFmnjoxhR5KR4B/VtWDRoilx68/lf2
- DH1KuApuFnlm3hVWKa6xskXe+rp21CLVXJJdJh69Rpehdt6FOoNLQCg3dFvj7O3Kpx5A2113frA
- BAPY+zlgBip53+Y6IMxZ+uuc2Y/k9+t7drdbdnnN2ZitRSM/OiC4KsAM2141/k=
-X-Google-Smtp-Source: AGHT+IGtS8X7bef8sTXBY/M3O0CIITHZVtIekCKrNggQQH2OiN78DjhoNfyqlcI+jqER1t4VHgaL4Q==
-X-Received: by 2002:a17:902:ce83:b0:216:5b8b:9062 with SMTP id
- d9443c01a7336-219e70dd21cmr147192875ad.54.1734884687888; 
- Sun, 22 Dec 2024 08:24:47 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734884696; x=1735489496;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0oaZkc61YjhIqFxlOS5XCCj6BwBkqMgp5zn8nsQHErI=;
+ b=E/ipBDdNvtaimN4ZGpjsNNXQILcfDKV379RPRq7MuHXLUGf+8KU940AZx59dqR8a84
+ QxVIZAORCR8Au0xgGXcS5NLFdMyz0IEYByFpdtd9SZzj1z1wH9MXAs2Ci42WkZpdY8fH
+ RHqDk7Rhx77vX+dnlKTRXRXJIKWwH15CWW093xnPTdKtqrDXq+XfEvIRmII29QZ1fezE
+ BmeqtM9PztVKGBNX2HOdDxKO8IMq99e455gMEL4OOxzbPOUWlLpn22SHVBGDsSXrvRsy
+ V2rCIcFYiVFWcb3mRMmpvcP26NnuR75l3KEg3pEx6JlRUDgxzbqhp4sy75L94FFwb9Cx
+ AwGA==
+X-Gm-Message-State: AOJu0YyyIGrBdzJ9T/q2AkxxRM8YpmfTeZbI6iqSbyD5uDL3WmUdYeoa
+ oOX58akf7elCJK4Q/4j4ViVX6XAzRyO6cmFaI0H+wh4z2WemEBukEHvQrQL3oTAQP/argf1xJpZ
+ BhFs=
+X-Gm-Gg: ASbGncsC+M9kXN2XLTRxvNVm+rgWh/SSmd2jhVHmbLZVWEXBM8rW/7fDCEsDaen9X5J
+ KyenZ5JaLn+88/OK0Q/c8BrksWXKWCwu/RqV1PRiVXHkii+VKHxYBswowVDYr27eQHLn3Yew8Eb
+ p3k2qiJb5ctUeHKp+W0+qDAm9979Q4PzaaCeK4LbDaa6Wzi+eNvJLGyTUwjJKDHz4CRA9TFV3Do
+ yD8srQdGhDfuMy5RORyEFLAPuy/Bm+eohpFc2+K8kVw7bUaUZD2gHc/ndKsduw=
+X-Google-Smtp-Source: AGHT+IFgxIKD/q1JF6tKdo0zJUG7yTlWth6Aa1grNjjeL3gbh/HhG+YHTcH1R/g+C01oZmERIWymqg==
+X-Received: by 2002:a17:903:94e:b0:215:96bc:b670 with SMTP id
+ d9443c01a7336-219e6e9df70mr131406885ad.18.1734884696678; 
+ Sun, 22 Dec 2024 08:24:56 -0800 (PST)
 Received: from stoup.. ([71.212.144.252]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc971814sm58461385ad.79.2024.12.22.08.24.47
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-219dc971814sm58461385ad.79.2024.12.22.08.24.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Dec 2024 08:24:47 -0800 (PST)
+ Sun, 22 Dec 2024 08:24:56 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 00/51] tcg: Remove in-flight mask data from OptContext
-Date: Sun, 22 Dec 2024 08:23:55 -0800
-Message-ID: <20241222162446.2415717-1-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 14/51] tcg/optimize: Compute sign mask in fold_deposit
+Date: Sun, 22 Dec 2024 08:24:09 -0800
+Message-ID: <20241222162446.2415717-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241222162446.2415717-1-richard.henderson@linaro.org>
+References: <20241222162446.2415717-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,99 +97,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The desire is to start re-using some of the fold_* functions
-while lowering or simplifying operations during tcg_optmize.
+The input which overlaps the sign bit of the output can
+have its input s_mask propagated to the output s_mask.
 
-Many of these fold_* functions set z_mask, s_mask, and a_mask,
-which hang around until the end of the tcg_optmize loop and
-are applied by finish_folding.  This disconnect between set
-and apply is a problem -- we would no longer be applying the
-masks to the correct opcode.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-Fix this by making the masks local variables, passed down to
-be applied immediately to the opcode being processed.
-
-Changes for v3:
-  - Testing on non-x86 hosts with full-featured deposit ops showed
-    some issues with some of the new computations of sign mask, which
-    turn out to be a representational issue which leads to easy
-    off-by-one errors.
-
-    Change the representation of s_mask to include the sign itself
-    not just repetitions.  Disable optimizations based on s_mask
-    until the conversion is complete.
-
-    Bitwise logical operations require no change.
-
-    Extension, and sign-extending loads, now use INTn_MIN instead
-    of MAKE_64BIT_MASK(n, 64 - n).
-
-    The existing shift and the new deposit s_mask operations require
-    no change, but that's only because they were buggy before.
-
-Patches 6 and 49 are new.  Minor changes scattered in between.
-
-
-r~
-
-
-Richard Henderson (51):
-  tcg/optimize: Split out finish_bb, finish_ebb
-  tcg/optimize: Split out fold_affected_mask
-  tcg/optimize: Copy mask writeback to fold_masks
-  tcg/optimize: Split out fold_masks_zs
-  tcg/optimize: Augment s_mask from z_mask in fold_masks_zs
-  tcg/optimize: Change representation of s_mask
-  tcg/optimize: Use finish_folding in fold_add, fold_add_vec,
-    fold_addsub2
-  tcg/optimize: Use fold_masks_zs in fold_and
-  tcg/optimize: Use fold_masks_zs in fold_andc
-  tcg/optimize: Use fold_masks_zs in fold_bswap
-  tcg/optimize: Use fold_masks_zs in fold_count_zeros
-  tcg/optimize: Use fold_masks_z in fold_ctpop
-  tcg/optimize: Use fold_and and fold_masks_z in fold_deposit
-  tcg/optimize: Compute sign mask in fold_deposit
-  tcg/optimize: Use finish_folding in fold_divide
-  tcg/optimize: Use finish_folding in fold_dup, fold_dup2
-  tcg/optimize: Use fold_masks_s in fold_eqv
-  tcg/optimize: Use fold_masks_z in fold_extract
-  tcg/optimize: Use finish_folding in fold_extract2
-  tcg/optimize: Use fold_masks_zs in fold_exts
-  tcg/optimize: Use fold_masks_z in fold_extu
-  tcg/optimize: Use fold_masks_zs in fold_movcond
-  tcg/optimize: Use finish_folding in fold_mul*
-  tcg/optimize: Use fold_masks_s in fold_nand
-  tcg/optimize: Use fold_masks_z in fold_neg_no_const
-  tcg/optimize: Use fold_masks_s in fold_nor
-  tcg/optimize: Use fold_masks_s in fold_not
-  tcg/optimize: Use fold_masks_zs in fold_or
-  tcg/optimize: Use fold_masks_zs in fold_orc
-  tcg/optimize: Use fold_masks_zs in fold_qemu_ld
-  tcg/optimize: Return true from fold_qemu_st, fold_tcg_st
-  tcg/optimize: Use finish_folding in fold_remainder
-  tcg/optimize: Distinguish simplification in fold_setcond_zmask
-  tcg/optimize: Use fold_masks_z in fold_setcond
-  tcg/optimize: Use fold_masks_s in fold_negsetcond
-  tcg/optimize: Use fold_masks_z in fold_setcond2
-  tcg/optimize: Use finish_folding in fold_cmp_vec
-  tcg/optimize: Use finish_folding in fold_cmpsel_vec
-  tcg/optimize: Use fold_masks_zs in fold_sextract
-  tcg/optimize: Use fold_masks_zs, fold_masks_s in fold_shift
-  tcg/optimize: Simplify sign bit test in fold_shift
-  tcg/optimize: Use finish_folding in fold_sub, fold_sub_vec
-  tcg/optimize: Use fold_masks_zs in fold_tcg_ld
-  tcg/optimize: Use finish_folding in fold_tcg_ld_memcopy
-  tcg/optimize: Use fold_masks_zs in fold_xor
-  tcg/optimize: Use finish_folding in fold_bitsel_vec
-  tcg/optimize: Use finish_folding as default in tcg_optimize
-  tcg/optimize: Remove z_mask, s_mask from OptContext
-  tcg/optimize: Re-enable sign-mask optimizations
-  tcg/optimize: Move fold_bitsel_vec into alphabetic sort
-  tcg/optimize: Move fold_cmp_vec, fold_cmpsel_vec into alphabetic sort
-
- tcg/optimize.c | 834 +++++++++++++++++++++++++------------------------
- 1 file changed, 432 insertions(+), 402 deletions(-)
-
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 0f7c2c810e..b6a0bfe64e 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1613,8 +1613,9 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+     TempOptInfo *t2 = arg_info(op->args[2]);
+     int ofs = op->args[3];
+     int len = op->args[4];
++    int width;
+     TCGOpcode and_opc;
+-    uint64_t z_mask;
++    uint64_t z_mask, s_mask;
+ 
+     if (t1->is_const && t2->is_const) {
+         return tcg_opt_gen_movi(ctx, op, op->args[0],
+@@ -1624,9 +1625,11 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+     switch (ctx->type) {
+     case TCG_TYPE_I32:
+         and_opc = INDEX_op_and_i32;
++        width = 32;
+         break;
+     case TCG_TYPE_I64:
+         and_opc = INDEX_op_and_i64;
++        width = 64;
+         break;
+     default:
+         g_assert_not_reached();
+@@ -1651,8 +1654,15 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+         return fold_and(ctx, op);
+     }
+ 
++    /* The s_mask from the top portion of the deposit is still valid. */
++    if (ofs + len == width) {
++        s_mask = t2->s_mask << ofs;
++    } else {
++        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
++    }
++
+     z_mask = deposit64(t1->z_mask, ofs, len, t2->z_mask);
+-    return fold_masks_z(ctx, op, z_mask);
++    return fold_masks_zs(ctx, op, z_mask, s_mask);
+ }
+ 
+ static bool fold_divide(OptContext *ctx, TCGOp *op)
 -- 
 2.43.0
 
