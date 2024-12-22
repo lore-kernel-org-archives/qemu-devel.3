@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA4B7E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 21:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D23F0E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 21:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPT3G-00042f-1P; Sun, 22 Dec 2024 15:59:50 -0500
+	id 1tPTlO-0001hE-My; Sun, 22 Dec 2024 16:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tPT3D-00042V-By
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 15:59:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tPT3B-0002lP-3o
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 15:59:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734901182;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Sv9mVOhOOhyuS1J1vP/COddgWZ3jWiAGQRVcBdvA0jo=;
- b=b6F3fjxRpjFsB3F8fDYgJZf5gYko/zeCNz5qVq7+0hd7+aqvnYW30xQsk6wezvDpW6kWy/
- kq0jVfbPod+hxIPHrvnw38tl8ex0rZbLTAmIlM8UUIKB8Ikw9eYu+xp2pX5ANu/vecRAH8
- t2qV7LZltxwXHZzgMtnEyVbE2tPxjMY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-tOYGxEeNPAehL1HlMEpuMw-1; Sun,
- 22 Dec 2024 15:59:40 -0500
-X-MC-Unique: tOYGxEeNPAehL1HlMEpuMw-1
-X-Mimecast-MFC-AGG-ID: tOYGxEeNPAehL1HlMEpuMw
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 421161956089; Sun, 22 Dec 2024 20:59:38 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.19])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 31F001956086; Sun, 22 Dec 2024 20:59:35 +0000 (UTC)
-Date: Sun, 22 Dec 2024 15:58:31 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PULL v2 00/15] Host Memory Backends and Memory devices queue
- 2024-12-21
-Message-ID: <20241222205831.GA872476@fedora>
-References: <20241221192209.3979595-1-david@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tPTlI-0001fy-Ud
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 16:45:21 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tPTlH-0001vT-3d
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 16:45:20 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2163b0c09afso31867075ad.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 13:45:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1734903915; x=1735508715; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Jx370CFTAl7yh8PdG3ZOseQcMn3UXlcTs+5VqFVgwk=;
+ b=et0WTLoWD9UufgsKKbUhxIEYwwyy84tL+OWUUpB1VzBsVegAI/0knDv53dQ/mmUNqW
+ UmMF6+VxYPPasa7KU2UIXbelhtnIWU78BT0AILdMMG6RVJ/QHp8xN7VsUQ63aDN2Z+Zu
+ vF19w8skXuMhsDdFWA9Lb9Md66i9ap0BW2OX8W5z2aJTWF+zl0GyTinHquYuAXIsrWq3
+ 9pRZm7GgLEA4OHGPa7Cc/VRpF6bugNj5HtUilrpaAwFizm0k3VQoQj8bTbB+XVawx9VH
+ AWmNMIgZKiNoByMvSjNJBE+E0w49ISu3BRcpDf5nJ2jMLpXVU11Z3Gbt5LlXBSFDOnjI
+ vMcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734903915; x=1735508715;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6Jx370CFTAl7yh8PdG3ZOseQcMn3UXlcTs+5VqFVgwk=;
+ b=wqr1aP9v/Pjz0qmySTG2RyQXvMO+VmOy4aTqFF6Zoh0nS9ocKGwRY7kBj3EdJuwpSt
+ zmcCKLp7nRHyaNKxt22vrMLs3nHJACOfKjk/q31jol0Mlucy8Z/7vB9PJf2Ra8m0Zn8g
+ Kv2gUOjI9RpZF2wNGBpTFTkKgvsAZpPGcye+uDl8LxCRiJL9xx2EeFmGU0g8p34QYXSN
+ HuXLGQqOPwCUPdQ/iFXfuqQ5yGJa21b5ELkGwhMsPU7t42wcveKh5OlI6TrLsTVBWtz1
+ 7ZxvfO0bbyY+xfxEYZTvctoI/mQkWH28PuDbjH/1IouDITd56+rOu67i0wiax0IPjxFk
+ ciyg==
+X-Gm-Message-State: AOJu0Yx0eigGdGcEiBVpeHWE2eKgi+msAIFd82xiFGb6+AYjINOPtYaj
+ 8CYc8W8zmnbcpjbmvgBYXynUyRIgeMN44IcU1Piiian6F7x+nAekXSBfROM6kFMCCU1Tr+AVQm6
+ tTNqKww==
+X-Gm-Gg: ASbGncvWqV731/1i9P+c64nojyfOrbzZ6ThkjU77gFEoE/zGh58U7xg0ru/n7aPgbD+
+ dlYnv8Ubt+jiYvRKIXl8Z5XNzNpGammD0mbPIuQK8tlPF2CYSZzUTMvggCklDrQ6PQeLFo4BynM
+ JvraPS/kaw3c8Ux5ycwECEWBscgCh6nPqMDJv3XlUGE9cc0NwrFlZhkleHMF2Wze8tW3BBPqf2l
+ iVToWx7SnR31pOw+LB9XWpc1YSloGjd+wtl/3n545avthItuqzgnlGrDNq16eq6BDO6LDqxp+HP
+ GGlG7ks=
+X-Google-Smtp-Source: AGHT+IFKH9jwIo9aJMZrUJYkYeESxx2qnXCyqi01O2xyG92HUKJAvukWHW3gK6CRyMjpfQ7hL4ZwJg==
+X-Received: by 2002:a17:902:d2c3:b0:216:69ca:7714 with SMTP id
+ d9443c01a7336-219e6e85c30mr145820255ad.11.1734903915653; 
+ Sun, 22 Dec 2024 13:45:15 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9f7312sm60737175ad.225.2024.12.22.13.45.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 22 Dec 2024 13:45:15 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-trivial@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] hw/riscv/riscv-iommu-sys.c: fix duplicated 'table_size'
+Date: Sun, 22 Dec 2024 18:45:07 -0300
+Message-ID: <20241222214507.2173648-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="QfyyuTFZQJ1TY2uV"
-Content-Disposition: inline
-In-Reply-To: <20241221192209.3979595-1-david@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,30 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Trivial fix for the following ticket:
 
---QfyyuTFZQJ1TY2uV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+CID 1568580:  Incorrect expression  (EVALUATION_ORDER)
+In "table_size = table_size = n_vectors * 16U",
+    "table_size" is written twice with the same value.
 
-Applied, thanks.
+Cc: qemu-trivial@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Resolves: Coverity CID 1568580
+Fixes: 01c1caa9d1 ("hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ hw/riscv/riscv-iommu-sys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
-
---QfyyuTFZQJ1TY2uV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdofXcACgkQnKSrs4Gr
-c8iveQgAjosMtlSATK15uZBcQHTNwLBdM1XqVz+RbTPpeThM3mc9Lx9HQRMq8ISw
-rrKss0Tig8fe3/ZdTcCiH3hUYO/peei6EQSMcFSspdf7p4PVgz3o9GPf28DXTHvS
-ypHiKYrvrzyLzpfVIXNLWek+jziYlo3B5/e1Rityd0ARnBtiWCPmxRRpKxvJjBE7
-Je3CXArkKrddByaRsKiv4IDk3/xr4bsXlAT3lABwi7iyb0rcC5w3Pa+CQwEmIfDs
-bhwCMJH88ZOF1kwoGp3kVihJkh99bcfhLAxaT8Pg2XVNcd26MDK7RBuO9rkQRT9E
-xjUXuQZJdH/w/4dPtkTiML5UgOR8ug==
-=MWtF
------END PGP SIGNATURE-----
-
---QfyyuTFZQJ1TY2uV--
+diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+index 28153f38da..65b24fb07d 100644
+--- a/hw/riscv/riscv-iommu-sys.c
++++ b/hw/riscv/riscv-iommu-sys.c
+@@ -121,7 +121,7 @@ static void riscv_iommu_sysdev_init_msi(RISCVIOMMUStateSys *s,
+                                         uint32_t n_vectors)
+ {
+     RISCVIOMMUState *iommu = &s->iommu;
+-    uint32_t table_size = table_size = n_vectors * PCI_MSIX_ENTRY_SIZE;
++    uint32_t table_size = n_vectors * PCI_MSIX_ENTRY_SIZE;
+     uint32_t table_offset = RISCV_IOMMU_REG_MSI_CONFIG;
+     uint32_t pba_size = QEMU_ALIGN_UP(n_vectors, 64) / 8;
+     uint32_t pba_offset = RISCV_IOMMU_REG_MSI_CONFIG + 256;
+-- 
+2.47.1
 
 
