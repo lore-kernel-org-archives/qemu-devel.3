@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07095E7718E
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3454E7718D
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPOlt-0002vB-MP; Sun, 22 Dec 2024 11:25:37 -0500
+	id 1tPOlp-0002qP-2f; Sun, 22 Dec 2024 11:25:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tPOlR-0002bH-Jq
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:25:18 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tPOlB-0002YL-Q0
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:55 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tPOlP-0003CE-Vc
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:25:09 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-21636268e43so39251525ad.2
- for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 08:25:07 -0800 (PST)
+ id 1tPOl8-0002we-Qz
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:52 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21683192bf9so35224425ad.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 08:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734884706; x=1735489506; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734884689; x=1735489489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=klMxP8/nueO2LoUasMDvvsH0HmT8kwTeat8aAub+VXg=;
- b=YesKbA++hU1jN8rouZyiGTx0yQxwNozKiDjEFX51at37MyJ9dZd+JnVX9nOhSs7kwS
- FzvHlGNCNNgFz/anRB1ROFUjJWgUC5LwjKFK5YWg7hRoMRrR2rGd4M6yeMgHBUX6yujK
- FxNcR9lLRodDpa84yYY77PArDaFG5C0C+HBgQhGwkoy4Q3t7GffpEZ3p0A25aJ0KLUKw
- /6wqqK85MTE2QF6Iuan/pK9L3l0TlI1QYLLnzGRVt7iTz9ojUuLM5L0c2FIyMw/UqRWO
- Fdq0aEcpKEL2rk5vBMs651A632QkRKBhZUzbJAFlaYqUI01ju8Ec/HWSWpvZFy4tbhIU
- Bkgg==
+ bh=iOzpxqZ9VNfy3l9f3NLQHzVfPYu5zW7VkQL9KwFwxnA=;
+ b=RukDIfTjiBL+tFgl+qHb1XCgNvw6ZpLPrrNacHwWQkh1bu1HGQR0DF9uSk49nWUUP7
+ kZ7EFY9e5PC4Wq+eI16ld+xenENxYSXRVPbm0Rm/5aTcVvlHKdHJNzLqKN7U55ZQdxTn
+ 9wY5XiDJ9Zcr+l06PiAZiCb8B+d9HBq+8oe7VlMtUUqFXgvhPtH+xE5t6gu7Pp3Hr5n3
+ KB48Cw69uqG+FeEegUXEfZpJZUmvi+ih4mLCVj6k+ICO+63qkiVmHWLidwiiYtsmnow1
+ gIBpaKikWv98Qhu/82cI/oVZYttRLymY5PEL0EZmaRTFviMqqSp9ylDApJ3AUaC/9nLk
+ wDRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734884706; x=1735489506;
+ d=1e100.net; s=20230601; t=1734884689; x=1735489489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=klMxP8/nueO2LoUasMDvvsH0HmT8kwTeat8aAub+VXg=;
- b=SJ3paayBf+HbKbH8TAP/ulEWT/Gwt9i4qE/dZTizHhNWJMUJAEqqtIIKRG6h9S3AsT
- aP81nNlF5dnnzRfk9htHN8FUR9YMs2lWh4OnoXe5hszcTlGsK96Wr7Lef930So8KUF//
- XkjO7aNl94gQqI63bMo53v17uQq80VfbZUUYP4Bj+LIWtKCPcQ3SUK/ePKkiK9BtAQ4Q
- OuhVuVO6QHYlA/Ozf8EmZo5YHBZ+vaPOQobKHcZNtmLXl7fD8oa/T0P+bQU9KcIJapPT
- y1z6kRm3Mv5D1NvMIWbvMjTqhnEuMDH0K+uZ9L9nfDrfbzUF4O5BVB1ihScp3F5uxzYC
- d2Nw==
-X-Gm-Message-State: AOJu0YyrBG+kXGdPjzO5BrL8Y5msi5QvA2TriUBj+GfSkk9k8AD32Nu0
- /WKR6MBH4EgFZubGWnjyjPFxZCTHxwFEGYjdH8c2hsSBz7t71VdTHVLMJJypTEnP5RUdgLD6en+
- B7uI=
-X-Gm-Gg: ASbGncvkNIi+Yz1VQYZqpoLNMsXjYbvBwcJOfQ02L0D+YqKPsnI4a8vTbHcoRNkgSc0
- 3EHLZ4v1uVhwVPZwc72c6W+8/Is5cgIpczyz88spvRqkMycUDO0agO88Qq4dPz03pibJYsR3VXz
- 6EUh1Sz95FgVYRMF96GXrp586BcoXdN1MO3UZy8Za+KTc1mkBkFq/sy8LBFcmCcM3o8fNh8ZNrV
- EH4Vk33QP20RtfoWsVWXCfR/kFmaRaHetkhtHcOSt9iWE/fk7S8PSnudlF/ecQ=
-X-Google-Smtp-Source: AGHT+IH2CFjtOlhmGZVT12QWM/jpkYdW2zC93s3Ohv/mDbX0CZUADNwKH6QtsstDN3JqJyOw4iSJiw==
-X-Received: by 2002:a17:902:ccc7:b0:215:94b0:9df4 with SMTP id
- d9443c01a7336-219e6f283aemr156292645ad.54.1734884706590; 
- Sun, 22 Dec 2024 08:25:06 -0800 (PST)
+ bh=iOzpxqZ9VNfy3l9f3NLQHzVfPYu5zW7VkQL9KwFwxnA=;
+ b=YJhCD+1W78ckRULSOfVix+gk56VYHEm98YORt7Zm2RPPlSl6wHlmw0L/j3NZry8txm
+ vQvTq5aEOLA+MfQZtOqNFpgAVsSBhDAdO4dx8W943vQjLalyVZ9vdv3Ks8HJoZIBktDN
+ /IdVDHKhp7hHN6J7Jn/cg/YAFNHuWW2SnAN/gb6LmkpbNj5rwK5w+Tseg3TaFFdkrZUg
+ /C/3djDaie3PoeFCBlCouucouDI20PN77DdC45OpmR5sJfSi8IoHmzQg6T9T34mMaJMJ
+ wYGgvIOyQWddQcyO4IDSimzCOlog8N7itBpdU3KeD6Pe5GyGjWMhu5CQ5V7nfBf49e0q
+ S3Jg==
+X-Gm-Message-State: AOJu0YySlcJkNGVFVGjVuVevLoy7tWQr8opnBN09/sa9S3Nxdqd0gyUd
+ RHsz5Uf5sQE+4+gdyat81WiSrRcvFEV4FuL17++eYyWvz8gOTWlAujjNYbCqnPObCecdL2hyi8B
+ RcrE=
+X-Gm-Gg: ASbGncsTIDOIQ13r7Q5vvBmj+z38aAVhZvGcY/fu2x1laQKfqBcxODg/64Tu3vH5E/m
+ pKIKvM2lBvSmhpBhQ6FpHxvtWdPR5RcU4BHJMs/S8w4dXKb+pB1/Z/bfVVve8vw2rQdUk7H+yvY
+ mbPa2c6lj+eahW9D6or5sUrbK4J5ad5i5kLQa2Rj1y2u5jBFOkg94cpnWuLC0mFVW3TXUy+zius
+ IvMECdSeIqPzRFkWN6KecUK5+w2iOVA6uzI7zUdNpfHOjSQMbf8owujZbALjr0=
+X-Google-Smtp-Source: AGHT+IFqCOlKF+JgurAqfIDzDUe6Kfxzp2IGFmzqnl0om3uOgh5intQmV0rvJSEMuErtvRmDnbXxOA==
+X-Received: by 2002:a17:902:ea03:b0:216:69ca:7707 with SMTP id
+ d9443c01a7336-219e6ebaf4bmr131453925ad.30.1734884689193; 
+ Sun, 22 Dec 2024 08:24:49 -0800 (PST)
 Received: from stoup.. ([71.212.144.252]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc971814sm58461385ad.79.2024.12.22.08.25.06
+ d9443c01a7336-219dc971814sm58461385ad.79.2024.12.22.08.24.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Dec 2024 08:25:06 -0800 (PST)
+ Sun, 22 Dec 2024 08:24:48 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 30/51] tcg/optimize: Use fold_masks_zs in fold_qemu_ld
-Date: Sun, 22 Dec 2024 08:24:25 -0800
-Message-ID: <20241222162446.2415717-31-richard.henderson@linaro.org>
+Subject: [PATCH v3 02/51] tcg/optimize: Split out fold_affected_mask
+Date: Sun, 22 Dec 2024 08:23:57 -0800
+Message-ID: <20241222162446.2415717-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241222162446.2415717-1-richard.henderson@linaro.org>
 References: <20241222162446.2415717-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,80 +97,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid the use of the OptContext slots.
+There are only a few logical operations which can compute
+an "affected" mask.  Split out handling of this optimization
+to a separate function, only to be called when applicable.
 
-Be careful not to call fold_masks_zs when the memory operation
-is wide enough to require multiple outputs, so split into two
-functions: fold_qemu_ld_1reg and fold_qemu_ld_2reg.
+Remove the a_mask field from OptContext, as the mask is
+no longer stored anywhere.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ tcg/optimize.c | 42 +++++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 15 deletions(-)
 
 diff --git a/tcg/optimize.c b/tcg/optimize.c
-index c1305e9eab..0eeff6c6b4 100644
+index 453e8c43bd..6757fe0036 100644
 --- a/tcg/optimize.c
 +++ b/tcg/optimize.c
-@@ -2093,24 +2093,33 @@ static bool fold_orc(OptContext *ctx, TCGOp *op)
-     return fold_masks_s(ctx, op, s_mask);
- }
+@@ -64,7 +64,6 @@ typedef struct OptContext {
+     QSIMPLEQ_HEAD(, MemCopyInfo) mem_free;
  
--static bool fold_qemu_ld(OptContext *ctx, TCGOp *op)
-+static bool fold_qemu_ld_1reg(OptContext *ctx, TCGOp *op)
+     /* In flight values from optimization. */
+-    uint64_t a_mask;  /* mask bit is 0 iff value identical to first input */
+     uint64_t z_mask;  /* mask bit is 0 iff value bit is 0 */
+     uint64_t s_mask;  /* mask of clrsb(value) bits */
+     TCGType type;
+@@ -1047,7 +1046,6 @@ static bool fold_const2_commutative(OptContext *ctx, TCGOp *op)
+ 
+ static bool fold_masks(OptContext *ctx, TCGOp *op)
  {
-     const TCGOpDef *def = &tcg_op_defs[op->opc];
-     MemOpIdx oi = op->args[def->nb_oargs + def->nb_iargs];
-     MemOp mop = get_memop(oi);
-     int width = 8 * memop_size(mop);
-+    uint64_t z_mask = -1, s_mask = 0;
+-    uint64_t a_mask = ctx->a_mask;
+     uint64_t z_mask = ctx->z_mask;
+     uint64_t s_mask = ctx->s_mask;
  
-     if (width < 64) {
-         if (mop & MO_SIGN) {
--            ctx->s_mask = MAKE_64BIT_MASK(width, 64 - width);
-+            s_mask = MAKE_64BIT_MASK(width - 1, 64 - (width - 1));
-         } else {
--            ctx->z_mask = MAKE_64BIT_MASK(0, width);
-+            z_mask = MAKE_64BIT_MASK(0, width);
-         }
+@@ -1059,7 +1057,6 @@ static bool fold_masks(OptContext *ctx, TCGOp *op)
+      * type changing opcodes.
+      */
+     if (ctx->type == TCG_TYPE_I32) {
+-        a_mask = (int32_t)a_mask;
+         z_mask = (int32_t)z_mask;
+         s_mask |= MAKE_64BIT_MASK(32, 32);
+         ctx->z_mask = z_mask;
+@@ -1069,6 +1066,19 @@ static bool fold_masks(OptContext *ctx, TCGOp *op)
+     if (z_mask == 0) {
+         return tcg_opt_gen_movi(ctx, op, op->args[0], 0);
      }
- 
-     /* Opcodes that touch guest memory stop the mb optimization.  */
-     ctx->prev_mb = NULL;
--    return false;
-+
-+    return fold_masks_zs(ctx, op, z_mask, s_mask);
++    return false;
 +}
 +
-+static bool fold_qemu_ld_2reg(OptContext *ctx, TCGOp *op)
++/*
++ * An "affected" mask bit is 0 if and only if the result is identical
++ * to the first input.  Thus if the entire mask is 0, the operation
++ * is equivalent to a copy.
++ */
++static bool fold_affected_mask(OptContext *ctx, TCGOp *op, uint64_t a_mask)
 +{
-+    /* Opcodes that touch guest memory stop the mb optimization.  */
-+    ctx->prev_mb = NULL;
-+    return finish_folding(ctx, op);
- }
++    if (ctx->type == TCG_TYPE_I32) {
++        a_mask = (uint32_t)a_mask;
++    }
+     if (a_mask == 0) {
+         return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[1]);
+     }
+@@ -1305,8 +1315,9 @@ static bool fold_and(OptContext *ctx, TCGOp *op)
+      * Known-zeros does not imply known-ones.  Therefore unless
+      * arg2 is constant, we can't infer affected bits from it.
+      */
+-    if (arg_is_const(op->args[2])) {
+-        ctx->a_mask = z1 & ~z2;
++    if (arg_is_const(op->args[2]) &&
++        fold_affected_mask(ctx, op, z1 & ~z2)) {
++        return true;
+     }
  
- static bool fold_qemu_st(OptContext *ctx, TCGOp *op)
-@@ -2995,11 +3004,18 @@ void tcg_optimize(TCGContext *s)
-             break;
-         case INDEX_op_qemu_ld_a32_i32:
-         case INDEX_op_qemu_ld_a64_i32:
-+            done = fold_qemu_ld_1reg(&ctx, op);
-+            break;
-         case INDEX_op_qemu_ld_a32_i64:
-         case INDEX_op_qemu_ld_a64_i64:
-+            if (TCG_TARGET_REG_BITS == 64) {
-+                done = fold_qemu_ld_1reg(&ctx, op);
-+                break;
-+            }
-+            QEMU_FALLTHROUGH;
-         case INDEX_op_qemu_ld_a32_i128:
-         case INDEX_op_qemu_ld_a64_i128:
--            done = fold_qemu_ld(&ctx, op);
-+            done = fold_qemu_ld_2reg(&ctx, op);
-             break;
-         case INDEX_op_qemu_st8_a32_i32:
-         case INDEX_op_qemu_st8_a64_i32:
+     return fold_masks(ctx, op);
+@@ -1331,7 +1342,9 @@ static bool fold_andc(OptContext *ctx, TCGOp *op)
+      */
+     if (arg_is_const(op->args[2])) {
+         uint64_t z2 = ~arg_info(op->args[2])->z_mask;
+-        ctx->a_mask = z1 & ~z2;
++        if (fold_affected_mask(ctx, op, z1 & ~z2)) {
++            return true;
++        }
+         z1 &= z2;
+     }
+     ctx->z_mask = z1;
+@@ -1709,8 +1722,8 @@ static bool fold_extract(OptContext *ctx, TCGOp *op)
+ 
+     z_mask_old = arg_info(op->args[1])->z_mask;
+     z_mask = extract64(z_mask_old, pos, len);
+-    if (pos == 0) {
+-        ctx->a_mask = z_mask_old ^ z_mask;
++    if (pos == 0 && fold_affected_mask(ctx, op, z_mask_old ^ z_mask)) {
++        return true;
+     }
+     ctx->z_mask = z_mask;
+     ctx->s_mask = smask_from_zmask(z_mask);
+@@ -1777,8 +1790,8 @@ static bool fold_exts(OptContext *ctx, TCGOp *op)
+ 
+     ctx->z_mask = z_mask;
+     ctx->s_mask = s_mask;
+-    if (!type_change) {
+-        ctx->a_mask = s_mask & ~s_mask_old;
++    if (!type_change && fold_affected_mask(ctx, op, s_mask & ~s_mask_old)) {
++        return true;
+     }
+ 
+     return fold_masks(ctx, op);
+@@ -1819,8 +1832,8 @@ static bool fold_extu(OptContext *ctx, TCGOp *op)
+ 
+     ctx->z_mask = z_mask;
+     ctx->s_mask = smask_from_zmask(z_mask);
+-    if (!type_change) {
+-        ctx->a_mask = z_mask_old ^ z_mask;
++    if (!type_change && fold_affected_mask(ctx, op, z_mask_old ^ z_mask)) {
++        return true;
+     }
+     return fold_masks(ctx, op);
+ }
+@@ -2482,8 +2495,8 @@ static bool fold_sextract(OptContext *ctx, TCGOp *op)
+     s_mask |= MAKE_64BIT_MASK(len, 64 - len);
+     ctx->s_mask = s_mask;
+ 
+-    if (pos == 0) {
+-        ctx->a_mask = s_mask & ~s_mask_old;
++    if (pos == 0 && fold_affected_mask(ctx, op, s_mask & ~s_mask_old)) {
++        return true;
+     }
+ 
+     return fold_masks(ctx, op);
+@@ -2843,7 +2856,6 @@ void tcg_optimize(TCGContext *s)
+         }
+ 
+         /* Assume all bits affected, no bits known zero, no sign reps. */
+-        ctx.a_mask = -1;
+         ctx.z_mask = -1;
+         ctx.s_mask = 0;
+ 
 -- 
 2.43.0
 
