@@ -4,38 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65478E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 08:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C859E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 09:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPHlR-0000kf-CV; Sun, 22 Dec 2024 03:56:41 -0500
+	id 1tPHoA-0001bn-W3; Sun, 22 Dec 2024 03:59:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tPHlP-0000jf-BT; Sun, 22 Dec 2024 03:56:39 -0500
+ id 1tPHoA-0001bb-8V; Sun, 22 Dec 2024 03:59:30 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tPHlN-0001vA-Qa; Sun, 22 Dec 2024 03:56:39 -0500
+ id 1tPHo8-000218-Rf; Sun, 22 Dec 2024 03:59:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 51DC4C8C88;
- Sun, 22 Dec 2024 11:56:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2DCF9C8C8D;
+ Sun, 22 Dec 2024 11:58:56 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E80D118DB5E;
- Sun, 22 Dec 2024 11:56:34 +0300 (MSK)
-Message-ID: <746cef1e-fc1d-495d-a268-3e823db75a74@tls.msk.ru>
-Date: Sun, 22 Dec 2024 11:56:34 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id CAC3A18DB5F;
+ Sun, 22 Dec 2024 11:59:26 +0300 (MSK)
+Message-ID: <710b775b-41b6-40ae-8467-dea9ddc3ecf9@tls.msk.ru>
+Date: Sun, 22 Dec 2024 11:59:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] docs: Trivial cleanups
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20241219150203.55212-1-philmd@linaro.org>
+Subject: Re: [PATCH] target/i386/cpu: Fix notes for CPU models
+To: Han Han <hhan@redhat.com>, qemu-trivial@nongnu.org,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <20241219085141.1857343-1-hhan@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,9 +77,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241219150203.55212-1-philmd@linaro.org>
+In-Reply-To: <20241219085141.1857343-1-hhan@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -107,19 +103,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-19.12.2024 18:02, Philippe Mathieu-Daudé wrote:
-> 
-> 
-> Philippe Mathieu-Daudé (3):
->    docs: Correct '-runas' and '-fsdev/-virtfs proxy' indentation
->    docs: Correct release of TCG trace-events removal
->    docs: Replace 'since' -> 'removed in' in removed-features.rst
+19.12.2024 11:51, Han Han wrote:
+...
 
-Applied to the trivial-patches tree.
+Applied to the trivial-patches tree, thank you!
 
-I'm also picking (parts of) it for qemu-stable.
-
-Thanks!
+Please do Cc: qemu-devel@ the next time.
 
 /mjt
 
