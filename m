@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A1BE7718D
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9435E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 13:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPLdO-0001lB-Va; Sun, 22 Dec 2024 08:04:39 -0500
+	id 1tPLdL-0001L5-1m; Sun, 22 Dec 2024 08:04:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLah-0006AH-LM
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:58 -0500
+ id 1tPLaM-0005WK-IU
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:30 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLad-0000nl-9N
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:48 -0500
+ id 1tPLaI-0000jp-1z
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 08:01:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=asqk+C+mnPCOf2X7Oz5YB0cynC0owfsP8zB012RqmDM=; b=KCEdsPAjCH3eGyeVhzBo1PZD4E
- AfK2t8oziXHesibmKzXVVaVXWzq1dddd3hB1dfMuG8iVbB1U+r9ytI3dqRXfdqzszn/cyieu+Unzq
- /f6oCGZjOUVuI4QDRzQC8HluazqVDWD6tyHRTGi6/CJyeC/zwgGaNSIGbgSPKfzlFvCB15KDcORab
- wuuNyi658du/k5jxkY0xEBqyQuSR72MhqD7djsYrFtFB0hWfNurTSGVaZ3QJ53LBxrXb50SDWCw3U
- 200xSIP8CZKp0tZ2uB9gRYBsxOvvdldp716szFXvoHXbtE6C+vdYo43CsEhogHw0e1dWw14VZTHu9
- Rgpj+dvyElVWUPDLAMV++N7CRntcRBNuc45Qb9HDVJSf4AO/6aDeGsks9ZLNVo2NtKlWEIE8gC/yS
- 2WEl8/ADgGicoEy6j/JDUCZu2chM+OhjMZe8TYasww1AaheHbJGslFFsjAxf+m73FoFDAkcmerDHb
- 6mcfXyPH/M9O4JCd02YGdgcWizDszyQ0S7eV+zpqQTDXPw8gugHbny4kx5o+prUxKQWV+g5O1bFNd
- k1yjvDX8w0yuJ/+5UZrsOrYPJ44E4NhOZpnzxiN9R0zitsfFbJe5FEvwmvqkel7udk57XX7PDVqon
- cg7h593fqSXTekPqlUG8UvS2Cd0/2r9sqC6mAwJOY=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=oRqwDhT5n6oRgTvsHNcjDRhCbmxKOqDLv8pQtBCYQZE=; b=0/yNWlBMR7dufnSg72SYbZr+YC
+ E4CHoEzCP6XM6wJ3oDB4hplvQPAmQgpxNrsIW0VQoZQGSWAJKgnaHEKb6huNTbDMbyCEAnd97MaTb
+ eRQhftLXXoENiLzI87GgeJRZUrFRQZGem8zfk/COwTT2Oxc1lfgpMKDHANupFafHEIhjku/ZV4Iab
+ 440QBxPB0QWptlOYDv0f0emGbaa491gv4WN5dokdoi2zBy/uAjZuExDocdjP71cZUDMCh8zkt8Sdp
+ d1fuMtZRlPhKjt8TnMNeRCgZijOdcGnrEyF2Lsrbgj7RS0HT4cMV1kWLfnQKIaDG/H0n3OGlZr26q
+ b0p2dKp7GUgHqU5boq3dEK2n950ZOIsoEnoclQ3orSTBN5SLmGhKjkf/lAc/P2+yQnWcqaImm1RhD
+ DmBH0lgM+2bd3OnPgR9Wmo1+rVDxiVgcLw0Nfd+N1zoPMXuvEwXX3egCI+bkZWHO/DqnOcLM+dg2x
+ nfVmJwsYiaTIAuXRRoL/UsE5F1kdvVE5FaUU5lHNaVwXdf3jo79/ChE0cMihCbue2QVJdGvwssPmN
+ sWB3VLTnHel/YzfBooJ8p4XMdkua9GgjAfUWUoaxUXsD00VVwwJOH7NAGry48MdiyKv4/JrPI8ijH
+ t0uCagbi4P/7ww1IAfH7KayzqcJGAVNwsTAggFqos=;
 Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tPLZq-0002L7-1s; Sun, 22 Dec 2024 13:01:02 +0000
+ id 1tPLZe-0002L7-2A; Sun, 22 Dec 2024 13:00:49 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Sun, 22 Dec 2024 12:59:59 +0000
-Message-Id: <20241222130012.1013374-21-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 22 Dec 2024 12:59:55 +0000
+Message-Id: <20241222130012.1013374-17-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 20/33] next-cube: separate rtc read and write shift logic
+Subject: [PATCH v3 16/33] next-cube: rearrange NeXTState declarations to
+ improve readability
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,178 +80,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new next_rtc_cmd_is_write() function to determine if an rtc command
-is a read or write, and start by using it to avoid shifting the rtc input value
-if a rtc read command is executed.
+Move the NeXTState, next_dma and TYPE_NEXT_MACHINE definition to the same area
+at the top of next-cube.c.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/m68k/next-cube.c | 138 ++++++++++++++++++++++++--------------------
- 1 file changed, 74 insertions(+), 64 deletions(-)
+ hw/m68k/next-cube.c | 64 ++++++++++++++++++++++-----------------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 39cc883fd0..2c2790bf75 100644
+index 622b04d3ad..de697c3e2b 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -165,6 +165,12 @@ static void next_scr2_led_update(NeXTPC *s)
-     }
- }
+@@ -38,30 +38,10 @@
+ #define DPRINTF(fmt, ...) do { } while (0)
+ #endif
  
-+static bool next_rtc_cmd_is_write(uint8_t cmd)
-+{
-+    return (cmd >= 0x80 && cmd <= 0x9f) ||
-+           (cmd == 0xb1);
-+}
-+
- static void next_scr2_rtc_update(NeXTPC *s)
- {
-     uint8_t old_scr2, scr2_2;
-@@ -186,76 +192,80 @@ static void next_scr2_rtc_update(NeXTPC *s)
-                                ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-             }
-             if (rtc->phase >= 8 && rtc->phase < 16) {
--                rtc->value = (rtc->value << 1) |
--                             ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+-#define TYPE_NEXT_MACHINE MACHINE_TYPE_NAME("next-cube")
+-OBJECT_DECLARE_SIMPLE_TYPE(NeXTState, NEXT_MACHINE)
 -
--                /* if we read RAM register, output RT_DATA bit */
--                if (rtc->command <= 0x1F) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    if (rtc->ram[rtc->command] & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
--                    }
--
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--                }
--                /* read the status 0x30 */
--                if (rtc->command == 0x30) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    /* for now status = 0x98 (new rtc + FTU) */
--                    if (rtc->status & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                if (next_rtc_cmd_is_write(rtc->command)) {
-+                    /* Shift in value to write */
-+                    rtc->value = (rtc->value << 1) |
-+                                 ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-+                } else {
-+                    /* Shift out value to read */
-+
-+                    /* if we read RAM register, output RT_DATA bit */
-+                    if (rtc->command <= 0x1F) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        if (rtc->ram[rtc->command] &
-+                            (0x80 >> (rtc->phase - 8))) {
-+                                scr2_2 |= SCR2_RTDATA;
-+                        }
-+
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
--
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--                }
--                /* read the status 0x31 */
--                if (rtc->command == 0x31) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    if (rtc->control & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                    /* read the status 0x30 */
-+                    if (rtc->command == 0x30) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        /* for now status = 0x98 (new rtc + FTU) */
-+                        if (rtc->status & (0x80 >> (rtc->phase - 8))) {
-+                            scr2_2 |= SCR2_RTDATA;
-+                        }
-+
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--                }
--
--                if ((rtc->command >= 0x20) && (rtc->command <= 0x2F)) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    /* for now 0x00 */
--                    time_t time_h = time(NULL);
--                    struct tm *info = localtime(&time_h);
--                    int ret = 0;
--
--                    switch (rtc->command) {
--                    case 0x20:
--                        ret = SCR2_TOBCD(info->tm_sec);
--                        break;
--                    case 0x21:
--                        ret = SCR2_TOBCD(info->tm_min);
--                        break;
--                    case 0x22:
--                        ret = SCR2_TOBCD(info->tm_hour);
--                        break;
--                    case 0x24:
--                        ret = SCR2_TOBCD(info->tm_mday);
--                        break;
--                    case 0x25:
--                        ret = SCR2_TOBCD((info->tm_mon + 1));
--                        break;
--                    case 0x26:
--                        ret = SCR2_TOBCD((info->tm_year - 100));
--                        break;
--
-+                    /* read the status 0x31 */
-+                    if (rtc->command == 0x31) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        if (rtc->control & (0x80 >> (rtc->phase - 8))) {
-+                            scr2_2 |= SCR2_RTDATA;
-+                        }
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
+ #define ENTRY       0x0100001e
+ #define RAM_SIZE    0x4000000
+ #define ROM_FILE    "Rev_2.5_v66.bin"
  
--                    if (ret & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                    if ((rtc->command >= 0x20) && (rtc->command <= 0x2F)) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        /* for now 0x00 */
-+                        time_t time_h = time(NULL);
-+                        struct tm *info = localtime(&time_h);
-+                        int ret = 0;
-+
-+                        switch (rtc->command) {
-+                        case 0x20:
-+                            ret = SCR2_TOBCD(info->tm_sec);
-+                            break;
-+                        case 0x21:
-+                            ret = SCR2_TOBCD(info->tm_min);
-+                            break;
-+                        case 0x22:
-+                            ret = SCR2_TOBCD(info->tm_hour);
-+                            break;
-+                        case 0x24:
-+                            ret = SCR2_TOBCD(info->tm_mday);
-+                            break;
-+                        case 0x25:
-+                            ret = SCR2_TOBCD((info->tm_mon + 1));
-+                            break;
-+                        case 0x26:
-+                            ret = SCR2_TOBCD((info->tm_year - 100));
-+                            break;
-+                        }
-+
-+                        if (ret & (0x80 >> (rtc->phase - 8))) {
-+                            scr2_2 |= SCR2_RTDATA;
-+                        }
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                 }
+-typedef struct next_dma {
+-    uint32_t csr;
 -
-             }
+-    uint32_t saved_next;
+-    uint32_t saved_limit;
+-    uint32_t saved_start;
+-    uint32_t saved_stop;
+-
+-    uint32_t next;
+-    uint32_t limit;
+-    uint32_t start;
+-    uint32_t stop;
+-
+-    uint32_t next_initbuf;
+-    uint32_t size;
+-} next_dma;
+-
+ typedef struct NextRtc {
+     int8_t phase;
+     uint8_t ram[32];
+@@ -72,18 +52,6 @@ typedef struct NextRtc {
+     uint8_t retval;
+ } NextRtc;
  
-             rtc->phase++;
+-struct NeXTState {
+-    MachineState parent;
+-
+-    MemoryRegion rom;
+-    MemoryRegion rom2;
+-    MemoryRegion dmamem;
+-    MemoryRegion bmapm1;
+-    MemoryRegion bmapm2;
+-
+-    next_dma dma[10];
+-};
+-
+ #define TYPE_NEXT_SCSI "next-scsi"
+ OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
+ 
+@@ -132,6 +100,38 @@ struct NeXTPC {
+     NextRtc rtc;
+ };
+ 
++typedef struct next_dma {
++    uint32_t csr;
++
++    uint32_t saved_next;
++    uint32_t saved_limit;
++    uint32_t saved_start;
++    uint32_t saved_stop;
++
++    uint32_t next;
++    uint32_t limit;
++    uint32_t start;
++    uint32_t stop;
++
++    uint32_t next_initbuf;
++    uint32_t size;
++} next_dma;
++
++#define TYPE_NEXT_MACHINE MACHINE_TYPE_NAME("next-cube")
++OBJECT_DECLARE_SIMPLE_TYPE(NeXTState, NEXT_MACHINE)
++
++struct NeXTState {
++    MachineState parent;
++
++    MemoryRegion rom;
++    MemoryRegion rom2;
++    MemoryRegion dmamem;
++    MemoryRegion bmapm1;
++    MemoryRegion bmapm2;
++
++    next_dma dma[10];
++};
++
+ /* Thanks to NeXT forums for this */
+ /*
+ static const uint8_t rtc_ram3[32] = {
 -- 
 2.39.5
 
