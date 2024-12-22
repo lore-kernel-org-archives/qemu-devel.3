@@ -4,53 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7327E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 14:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5C1E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPMmJ-00055h-E8; Sun, 22 Dec 2024 09:17:55 -0500
+	id 1tPOlJ-0002ZT-45; Sun, 22 Dec 2024 11:25:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <09cc84e5561f66b6a8cf49b3532c6c78a6acc806@kylie.crudebyte.com>)
- id 1tPMmH-00055V-Av
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 09:17:53 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <09cc84e5561f66b6a8cf49b3532c6c78a6acc806@kylie.crudebyte.com>)
- id 1tPMmF-0004dO-9b
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 09:17:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=1Vu3Tsy2Xx1QYYu6yz9C6lTpEiU4xYMdQple0NsyNfc=; b=MU3Ox
- muBB91NIUFzyjWWQGx8PCPDUGigsv3u+GLGVeh80ecps+lZmCjFitV82iAQsOY0MdCMWhFGB/bML4
- 2cqJ5u7AVTyIrDXPAZtGi8GW7AZCeqhDlFFNxqYaSM/oKHC9CGF7NIql3D9RgAr9Zl1PZBhBr8DbQ
- zwP5qLRPod0w80mP3hIMM0qZstfg/YLCIUSaGTqmdpRfeXUoGmjM4Y/G6a1SkdHliCPYoHxTJyEcH
- xJrlo0r9zTD4VKhRb1dLFsSkO3kPLfDvPVdArgnEM/Pvq0pyHHQwrgRJtpc5I1MCemBO3nT3sxp3e
- uckEOgMjqMbvLOn2fHJ1G87R5oO0zZv0oHr0DjagKNuOG35yBqzWd+07cIkfNL2fjQLGKPnQ1S9FW
- HGWcImk/kS836ninDQaXG0ZmwejVhLYaocDxA0UbqoAx+TiLTZU0M6Lpj2NfZ9/VVMAQViTjiyM6R
- 6GG416Eex6yAMQas5R+Rw6j5aS7qSJEkwtGyBpH56c35V9lcElAXYZipArMu0SI5jJPqxnFeN8RCn
- Jl4i3b+DsSm1nuxp1Tl8CtjO7rpOIM6EVwvTARNBw3N940La92NcxgX0roAFenFHI347ibPRgLfo6
- LalHz9XiXlRYZTjwS/AHNb4c0CCeU2tzjMAVv/SwAwBINC2YZBjAm1GdvjuAsA=;
-Message-Id: <09cc84e5561f66b6a8cf49b3532c6c78a6acc806.1734876877.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Sun, 22 Dec 2024 15:10:44 +0100
-Subject: [PATCH] 9pfs: make multidevs=remap default
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tPOlA-0002Y4-JA
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:52 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tPOl8-0002wZ-0B
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:24:51 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2164b1f05caso31192775ad.3
+ for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 08:24:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734884688; x=1735489488; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i8y2SP5gsVRd2DDyIzSjHzTbblUtHqyMo6MFtQTYJr0=;
+ b=enPxr/sT/UHNGTQxWtSudzFt78ZZwzD2BTQzV4ZTz6KB0SEjbQeZ0jF9ipkB4x2vVp
+ g/1M8VjSsBiiMxnPASfmGE5ahaqA2KQ4Vunp2pbfEqghiod06MUcQ+8aGyFqT3yvS7gJ
+ IWHKWjujoszTFBHCzFTnrkHe8x38HY4I3ahjcw+x8wLjC2HXpitM21XhfmoKzlXYDyJ5
+ V2CZmhvG9swsBvuABiMi4oK+HDDMRMFVP5klnNXJCy3Fiv8HB9VFCgSX5xA3yXCrj71l
+ Yg1AsoB6Lc6Qi8ZkDT+bS2aLVqBQqRvWVJetRG5W0/L5GJcc1swn1FlqeFQegBqA03Jy
+ WH8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734884688; x=1735489488;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i8y2SP5gsVRd2DDyIzSjHzTbblUtHqyMo6MFtQTYJr0=;
+ b=BGEDGLgWpcUg4YAkDCuJZxQAbcLWXSPODYADy3mo5QbfY0WNZ0LT0gScd2QfoHaY1W
+ 1G5rqMwQxhClIYOacl9xwlW8/sPymRNPTUGUZ25c6As9nCozVHzX+EyTezgDV6EVhteT
+ +SXMHrzrU7XFFPlf+5JPtF7R3QVkVQLuDNn73Wf8+9lVx8gY20AjSTpJ0+y9PE+NIjd1
+ sMwW9OBNPIhVBwvfqkCrZl+qtkG1NJ4blglB2CNblb2rcoZXP34pqeZjNZ/O8XXW3bp9
+ bfkf3tcwuI4WiUnfNp9Ze5m2IYjRgqdICd/h/xnKOoI6dhPgt5R+/uTHQfFv4jCMZak2
+ ObzQ==
+X-Gm-Message-State: AOJu0YzhJJISsofRMAFkRTjKscuG7z27vwq7d8D4IgwxaPvRZvbAOtIJ
+ r2Uinjmu1yJ+dYT6yVYN4R5VKge1k1wCT8sOp89aLJtgAIEjH72gL0LN5MyaWnbhTf6tJMroGtZ
+ bNKw=
+X-Gm-Gg: ASbGncvgy4TpEfwchsHejxbkxNuNX6DD9k6SKiOvZ/s7MG0IiQLGBE1uGuGZwKWpVDN
+ Pw99hX6BWb8HsbqD/Jc+QAdt9lB/c0FcvTBK0mrKvJuxis2WihOnDwfwNbecCvPg7iIHF4wiB20
+ 1TssSoCtfcmh6nNhiPS1GrKHCG47ECovbwEEv9k6FaK3qMy9QM+6AAY0na05bJMJU5KD+uOm3TU
+ INgIAd/X/TaiqrxnCbJ2JpElTtVkIRDYwRMvgQnU12YHldeLoKCKIDywvBvB2w=
+X-Google-Smtp-Source: AGHT+IH7SODC73G8OQaLqUkM4p/Zm18XhYJsv3Upjr3YP8PC8Pmz66yA/UIs4Ik1Hikbxb9aBaml5A==
+X-Received: by 2002:a17:903:41c3:b0:216:69ca:773b with SMTP id
+ d9443c01a7336-219e6e8c3d6mr146708575ad.5.1734884688553; 
+ Sun, 22 Dec 2024 08:24:48 -0800 (PST)
+Received: from stoup.. ([71.212.144.252]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc971814sm58461385ad.79.2024.12.22.08.24.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 22 Dec 2024 08:24:48 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=09cc84e5561f66b6a8cf49b3532c6c78a6acc806@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 01/51] tcg/optimize: Split out finish_bb, finish_ebb
+Date: Sun, 22 Dec 2024 08:23:56 -0800
+Message-ID: <20241222162446.2415717-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241222162446.2415717-1-richard.henderson@linaro.org>
+References: <20241222162446.2415717-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,110 +97,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1a6ed33cc5 introduced option multidevs=remap|forbid|warn and made
-"warn" the default option.
+Call them directly from the opcode switch statement in tcg_optimize,
+rather than in finish_folding based on opcode flags.  Adjust folding
+of conditional branches to match.
 
-As it turned out though, e.g. by several reports in conjunction with
-following 9p client issue:
-
-https://github.com/torvalds/linux/commit/850925a8133c73c4a2453c360b2c3beb3bab67c9
-
-Many people are just ignoring this warning, or even do not notice the
-warning at all. Therefore make multidevs=remap the new default option to
-prevent people to run into such kind of severe misbehaviours in the first
-place.
-
-From performance PoV the runtime overhead of multidevs=remap is
-neglectable with few or even just only one device being shared with the
-same 9p export, expected to be constant Theta(1). The inode numbers
-emitted to guest also just loose one bit (since 6b6aa8285d) for the 1st
-device being shared.
-
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/9pfs/9p-local.c |  3 +++
- qemu-options.hx    | 49 +++++++++++++++++++++++++---------------------
- 2 files changed, 30 insertions(+), 22 deletions(-)
+ tcg/optimize.c | 47 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 16 deletions(-)
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 1b1f3b9ec8..928523afcc 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1538,6 +1538,9 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-                               "[remap|forbid|warn]\n");
-             return -1;
-         }
-+    } else {
-+        fse->export_flags &= ~V9FS_FORBID_MULTIDEVS;
-+        fse->export_flags |= V9FS_REMAP_INODES;
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index e9ef16b3c6..453e8c43bd 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -964,24 +964,25 @@ static void copy_propagate(OptContext *ctx, TCGOp *op,
      }
+ }
  
-     if (!path) {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index dacc9790a4..67ad0464fb 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1938,32 +1938,37 @@ SRST
-         Specifies the tag name to be used by the guest to mount this
-         export point.
++static void finish_bb(OptContext *ctx)
++{
++    /* We only optimize memory barriers across basic blocks. */
++    ctx->prev_mb = NULL;
++}
++
++static void finish_ebb(OptContext *ctx)
++{
++    finish_bb(ctx);
++    /* We only optimize across extended basic blocks. */
++    memset(&ctx->temps_used, 0, sizeof(ctx->temps_used));
++    remove_mem_copy_all(ctx);
++}
++
+ static void finish_folding(OptContext *ctx, TCGOp *op)
+ {
+     const TCGOpDef *def = &tcg_op_defs[op->opc];
+     int i, nb_oargs;
  
--    ``multidevs=multidevs``
--        Specifies how to deal with multiple devices being shared with a
--        9p export. Supported behaviours are either "remap", "forbid" or
--        "warn". The latter is the default behaviour on which virtfs 9p
--        expects only one device to be shared with the same export, and
--        if more than one device is shared and accessed via the same 9p
--        export then only a warning message is logged (once) by qemu on
--        host side. In order to avoid file ID collisions on guest you
--        should either create a separate virtfs export for each device to
--        be shared with guests (recommended way) or you might use "remap"
--        instead which allows you to share multiple devices with only one
--        export instead, which is achieved by remapping the original
--        inode numbers from host to guest in a way that would prevent
--        such collisions. Remapping inodes in such use cases is required
-+    ``multidevs=remap|forbid|warn``
-+        Specifies how to deal with multiple devices being shared with
-+        the same 9p export in order to avoid file ID collisions on guest.
-+        Supported behaviours are either "remap" (default), "forbid" or
-+        "warn".
-+
-+        ``remap`` : assumes the possibility that more than one device is
-+        shared with the same 9p export. Therefore inode numbers from host
-+        are remapped for guest in a way that would prevent file ID
-+        collisions on guest. Remapping inodes in such cases is required
-         because the original device IDs from host are never passed and
-         exposed on guest. Instead all files of an export shared with
--        virtfs always share the same device id on guest. So two files
-+        virtfs always share the same device ID on guest. So two files
-         with identical inode numbers but from actually different devices
-         on host would otherwise cause a file ID collision and hence
--        potential misbehaviours on guest. "forbid" on the other hand
--        assumes like "warn" that only one device is shared by the same
--        export, however it will not only log a warning message but also
--        deny access to additional devices on guest. Note though that
--        "forbid" does currently not block all possible file access
--        operations (e.g. readdir() would still return entries from other
--        devices).
-+        potential severe misbehaviours on guest.
-+
-+        ``warn`` : virtfs 9p expects only one device to be shared with
-+        the same export. If however more than one device is shared and
-+        accessed via the same 9p export then only a warning message is
-+        logged (once) by qemu on host side. No further action is performed
-+        in this case that would prevent file ID collisions on guest. This
-+        could thus lead to severe misbehaviours in this case like wrong
-+        files being accessed and data corruption on the exported tree.
-+
-+        ``forbid`` : assumes like "warn" that only one device is shared
-+        by the same 9p export, however it will not only log a warning
-+        message but also deny access to additional devices on guest. Note
-+        though that "forbid" does currently not block all possible file
-+        access operations (e.g. readdir() would still return entries from
-+        other devices).
- ERST
+-    /*
+-     * We only optimize extended basic blocks.  If the opcode ends a BB
+-     * and is not a conditional branch, reset all temp data.
+-     */
+-    if (def->flags & TCG_OPF_BB_END) {
+-        ctx->prev_mb = NULL;
+-        if (!(def->flags & TCG_OPF_COND_BRANCH)) {
+-            memset(&ctx->temps_used, 0, sizeof(ctx->temps_used));
+-            remove_mem_copy_all(ctx);
+-        }
+-        return;
+-    }
+-
+     nb_oargs = def->nb_oargs;
+     for (i = 0; i < nb_oargs; i++) {
+         TCGTemp *ts = arg_temp(op->args[i]);
+@@ -1351,8 +1352,11 @@ static bool fold_brcond(OptContext *ctx, TCGOp *op)
+     if (i > 0) {
+         op->opc = INDEX_op_br;
+         op->args[0] = op->args[3];
++        finish_ebb(ctx);
++    } else {
++        finish_bb(ctx);
+     }
+-    return false;
++    return true;
+ }
  
- DEF("iscsi", HAS_ARG, QEMU_OPTION_iscsi,
+ static bool fold_brcond2(OptContext *ctx, TCGOp *op)
+@@ -1443,9 +1447,12 @@ static bool fold_brcond2(OptContext *ctx, TCGOp *op)
+         }
+         op->opc = INDEX_op_br;
+         op->args[0] = label;
+-        break;
++        finish_ebb(ctx);
++        return true;
+     }
+-    return false;
++
++    finish_bb(ctx);
++    return true;
+ }
+ 
+ static bool fold_bswap(OptContext *ctx, TCGOp *op)
+@@ -3037,6 +3044,14 @@ void tcg_optimize(TCGContext *s)
+         CASE_OP_32_64_VEC(xor):
+             done = fold_xor(&ctx, op);
+             break;
++        case INDEX_op_set_label:
++        case INDEX_op_br:
++        case INDEX_op_exit_tb:
++        case INDEX_op_goto_tb:
++        case INDEX_op_goto_ptr:
++            finish_ebb(&ctx);
++            done = true;
++            break;
+         default:
+             break;
+         }
 -- 
-2.39.5
+2.43.0
 
 
