@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88BBE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEC1E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 16:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPP3y-0000Ij-8Q; Sun, 22 Dec 2024 11:44:20 -0500
+	id 1tPP42-0000Iu-Aw; Sun, 22 Dec 2024 11:44:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tPP3t-0000IU-HY
+ id 1tPP3t-0000IT-Hc
  for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:44:13 -0500
 Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tPP3n-0005B5-9h
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:44:08 -0500
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 762D5254011D;
- Sun, 22 Dec 2024 11:44:05 -0500 (EST)
+ id 1tPP3m-0005Aq-5c
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 11:44:09 -0500
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal
+ [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 181852540120;
+ Sun, 22 Dec 2024 11:44:04 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Sun, 22 Dec 2024 11:44:05 -0500
+ by phl-compute-04.internal (MEProxy); Sun, 22 Dec 2024 11:44:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1734885845;
- x=1734972245; bh=hgKNpuqSzW2O6+p0gRiuodXZuf7iu/BHLzURKXRVV58=; b=
- umCFSpFoiM1w0XaIu8ebUKGvby6FUvT81alexrsPTF5qayHKhQWRsT7Iydrt3hqk
- LGQu/nIgFGkMfrq0To+0XeMNwDLrPyQNpzdV8IEbsCsMfqmAfweXmf1+2jvnqj0y
- s95EkhPKRGXfLdwr6aaf69aDtFOBPCCQv6kg4ENd8evL8LzvdT89m3HmEBFCxDoQ
- 5t8EW6R5JCKd+covEYDRLG3ke8S5n0fRUWYCqiASgNA62r5yJh274hYA/D8G6iF1
- 2UcsFyOE/cRhdwxwhR482W0Mrab/qFPXmYJ4z/K4JJeHOX1kd9k2anIkC9SI6Q24
- dJFEqzpZY5d3sAcAuh5Tuw==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1734885843;
+ x=1734972243; bh=yiJa5mZRL/0HtIKKe2Oj3Cv1OT5YtRXdR8duIKYQo3A=; b=
+ S6KzCKo7ai8E3B+YwRC6QwKX0Wa0briAD0D69jFjb9fxeAPCQP6DvrV7hF5z1Uvn
+ 1eew1UlKEzWd3CEqPc+/Y/SF8ccyYobbWBHJFwGPurJ+C8nt4XKdiK6R4N7LVgkB
+ 1zm0DgENa1EyPN7BZR0UzWvmOpnR1oVe2ACYgxxqsKNn18CYa8ckA2Me8v8WrNuO
+ Mmgu9baHMBnjLY0nGmsGAD915HOH4auRdUgdx9Cr6jiO+McyKvM0XsSsz7qNNmvw
+ IY74ozZbFEs9663x2S97B44BfVfKqjBZvm4ySnowkryFj5iAZ4mckcrqhkulmIzZ
+ 8Vb/9bmBUA3Rw1pBVXvMhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734885845; x=
- 1734972245; bh=hgKNpuqSzW2O6+p0gRiuodXZuf7iu/BHLzURKXRVV58=; b=N
- FCxfVZSCVFcrdYKKeFkamycs+pMUIISkGvEoNRQGJT0B4A5gyIj91u3ttrYKAIQ6
- TCdt70TqtgjOrZCGqOddEFMLqKG0FQWR8JgicoojjmFhXk8HYFSpjnDwBq9+yzNy
- LgUwc8xq83jr+SrnHziOzdJni7wfXIb5XORNZjiOfuXLIwXvXhcb+wBuLiaPF1bn
- zUgOXE4cp5LkO5YD4UV/YlBtQwE6iHzy0IWk45YTG/TXWrHkBUFU/9rA3tVRAF0z
- ROQ8LO995akVVQesIVIl1WusxW1XzaLq1p+SSb1AF0kp/r4Qv8zqQ5A2AZJAhcs5
- 8u1zRb6ox1JcHI7nEvmWg==
-X-ME-Sender: <xms:1UFoZ4Ou5YuHI1BaYmCd73o61SANduZSMD2PvYZ0qwdaYaZGJc17VA>
- <xme:1UFoZ-8bT66m8PIk82pZ-C9-Solnc_D6YpK0JAbPGJgTPgytBpcuteSrqdvMVgRB9
- Lit7_T5cq5bAFIr3hk>
-X-ME-Received: <xmr:1UFoZ_T2e0SnzLvy58PT5MZlQBiZSDuGZwYAie7rFD-tC0ubuwk0oA58>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtkedgleduucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734885843; x=
+ 1734972243; bh=yiJa5mZRL/0HtIKKe2Oj3Cv1OT5YtRXdR8duIKYQo3A=; b=R
+ umpRHtDc+gXzHCsRgfzhrvBSbxzjN+pXU2jz+k+XMDSiFM4UIaHo6mn8WTUj7A43
+ C+TArZxlskOK0B+CicJKQmqpYULRIiOrQlWFzki5IGbjhXLOf97I1jWgMh/wq60U
+ ktmGTYu57wK4WSKdKJWVw6gzN82hcK0+BwfdEgIoYN6VD0EqHviCODwX/01ISZM/
+ QXWdG8/jP0/VK4IEpPg6SqmySY8UL9ICE9xbZc7F+hClGf9BNKBHVUg4Ce4eFihZ
+ psCeL68pHSW0xe7cL1O89Wum35tQTE2K+VInRUeDbPaGQ1VX/tCtLb9jkMcEPiM8
+ GVHksrv6jS2c+3I/aHekg==
+X-ME-Sender: <xms:00FoZ9pAeiFt7Rhruzhf136MHbeFDQfWVzu_xxHROOzvbuQC2tzvtQ>
+ <xme:00FoZ_qUPzRxexvfSKREniiurc0V0hI5lL3WiPVaUD2dg399LCk25tMuRIN8WPgHs
+ wwNI5wXvfMILCsvWY0>
+X-ME-Received: <xmr:00FoZ6Niw3ispn0oStFfanB-P-DjgwPRH4f6jp8B-F-iBt-DXOWv6Umi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtkedgledvucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
  rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
  htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
@@ -67,34 +67,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtkedgleduucetufdoteggod
  vhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepjhhirgiguhhnrdihrghnghesfh
  hlhihgohgrthdrtghomhdprhgtphhtthhopehgrghoshhonhhgsehlohhonhhgshhonhdr
  tghn
-X-ME-Proxy: <xmx:1UFoZwvKeg4Q1ZgqkIkysk1T4LrRgHm8J_XiYE9NG8kCIJ4_100GnA>
- <xmx:1UFoZwetNYQs6MamBmKlQyUBB6eK8tTSGU6TBkEqERttUWgLB-Ldpw>
- <xmx:1UFoZ02SqZnMAHyjNxZCiMFxVsblHdRzDPIAxlkMDNP4_NwnylkzFw>
- <xmx:1UFoZ08KPt6O38GHVFd5tpbpOCZRC7GRik78GUE_Ha5Xs4V2f1_m8w>
- <xmx:1UFoZ_7zwhF4149XJv32YnyWPLnxZuDMh1Jk19R8WYmMBi2Qf8YzcJ9M>
+X-ME-Proxy: <xmx:00FoZ47d9oL6LMN25hm81Zxyv00hocsPU92k7HnTERYKCblnKtPRHg>
+ <xmx:00FoZ86tVS28xLsz6DiEtXj3LBAXbqxeZZqnaXPQQ8r7z9gUwxv_0Q>
+ <xmx:00FoZwixcKYt5VcS5cVNSQkYVrTBXEBrzTGTGsbZ1UJTjq0MJY-lcQ>
+ <xmx:00FoZ-4hBrN9stO-huSHNXiKqXybZX02FQBqmVNuV_fVtRMKJ1-cUA>
+ <xmx:00FoZ33ANPF5WLlywy3pH_zNFNqgbXRVls4ED5D2pmLDQC04s-cDAD_Y>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Dec 2024 11:44:04 -0500 (EST)
+ 22 Dec 2024 11:44:02 -0500 (EST)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Sun, 22 Dec 2024 16:44:00 +0000
-Subject: [PATCH v2 2/2] hw/loongarch/boot: Rework boot code generation
+Date: Sun, 22 Dec 2024 16:43:59 +0000
+Subject: [PATCH v2 1/2] hw/loongarch/boot: Refactor EFI booting protocol
+ generation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241222-la-booting-v2-2-bef2ea7d3b32@flygoat.com>
+Message-Id: <20241222-la-booting-v2-1-bef2ea7d3b32@flygoat.com>
 References: <20241222-la-booting-v2-0-bef2ea7d3b32@flygoat.com>
 In-Reply-To: <20241222-la-booting-v2-0-bef2ea7d3b32@flygoat.com>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6835;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=18956;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=DJregaJS6xL/JGo+hiyZplBoCSmb5EebxbU0rsB8yhw=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhvQMx4tSPWdY152Zvf3Cjk9V/hdFtlQ+EAjzM0j+UnJw5
- We9CWWTOkpZGMS4GGTFFFlCBJT6NjReXHD9QdYfmDmsTCBDGLg4BWAiBnMZ/qfrb+HUSZfT+vIh
- omCT4h+rk1r8MUvYOU+dTdFn6uo8/pvhv4tG/NKeB+llV8R0WL45F4j49ggYbPyqOfPDnHcuvtf
- FWAA=
+ bh=VRZ3DuOGpIUY46FLE7zm1TzXBgcNfuHXmW50KKBen4U=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhvQMx4upQT2zvszKZ4hZ8OVipd3F9L2LGjvO/1p07uk9B
+ iHNjL+nOkpYGMS4GGTFFFlCBJT6NjReXHD9QdYfmDmsTCBDGLg4BWAis7YwfA/xXB/Rf6CQQ4ef
+ y9tSynjrPeGtE6d/3n44/8Ye3Q+L/BkZpj2zX+a9ht3Ia0qAUXBpmuXzdjvHgsxPPVbHZzPZZwU
+ wAgA=
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
 Received-SPF: pass client-ip=202.12.124.158;
@@ -122,143 +123,476 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use stl_p to write instructions so that host endian conversion
-will be performed.
+Refector EFI style booting data structure generation to
+support 32bit EFI variant on LoongArch32 CPU.
 
-Replace mailbox read/write on LoongArch32 systems with 32bit IOCSR
-instructions to prevent illegal instructions.
+All data structs are filled with padding members if necessary
+and marked as QEMU_PACKED to avoid host ABI alignment impact.
+
+Host endian is being cared as well.
+
+It also fixed various problems in old implementation such
+as null pointer on empty string, memory desc map_size not set,
+incorrect memory map definition and so on.
 
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- hw/loongarch/boot.c | 107 +++++++++++++++++++++++++++++-----------------------
- 1 file changed, 59 insertions(+), 48 deletions(-)
+ hw/loongarch/boot.c         | 220 ++++++++++++++++++++++++++++++--------------
+ include/hw/loongarch/boot.h | 106 +++++++++++++++++----
+ 2 files changed, 238 insertions(+), 88 deletions(-)
 
 diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 477c40ccb49d45d4d5026d37db0e79f5f2d89d8e..93847b0eaf8e50ce1a990b91267780e6785e1c2f 100644
+index f258eefe9ac6566b4e043347773a6c240afead07..477c40ccb49d45d4d5026d37db0e79f5f2d89d8e 100644
 --- a/hw/loongarch/boot.c
 +++ b/hw/loongarch/boot.c
-@@ -22,53 +22,64 @@ unsigned memmap_entries;
- ram_addr_t initrd_offset;
- uint64_t initrd_size;
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2023 Loongson Technology Corporation Limited
+  */
  
--static const unsigned int slave_boot_code[] = {
--                  /* Configure reset ebase.                    */
--    0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
++#include <zlib.h>
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+ #include "target/loongarch/cpu.h"
+@@ -74,88 +75,165 @@ static inline void *guidcpy(void *dst, const void *src)
+     return memcpy(dst, src, sizeof(efi_guid_t));
+ }
+ 
+-static void init_efi_boot_memmap(struct efi_system_table *systab,
+-                                 void *p, void *start)
++static void efi_hdr_crc32(efi_table_hdr_t *hdr)
+ {
+-    unsigned i;
+-    struct efi_boot_memmap *boot_memmap = p;
+-    efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
++    uint32_t val;
+ 
+-    /* efi_configuration_table 1 */
+-    guidcpy(&systab->tables[0].guid, &tbl_guid);
+-    systab->tables[0].table = (struct efi_configuration_table *)(p - start);
+-    systab->nr_tables = 1;
 -
--                  /* Disable interrupt.                        */
--    0x0380100c,   /* ori        $t0, $zero,0x4                 */
--    0x04000180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
+-    boot_memmap->desc_size = sizeof(efi_memory_desc_t);
+-    boot_memmap->desc_ver = 1;
+-    boot_memmap->map_size = 0;
 -
--                  /* Clear mailbox.                            */
--    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
--    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20  */
--    0x06481da0,   /* iocsrwr.d  $zero, $t1                     */
+-    efi_memory_desc_t *map = p + sizeof(struct efi_boot_memmap);
+-    for (i = 0; i < memmap_entries; i++) {
+-        map = (void *)boot_memmap + sizeof(*map);
+-        map[i].type = memmap_table[i].type;
+-        map[i].phys_addr = ROUND_UP(memmap_table[i].address, 64 * KiB);
+-        map[i].num_pages = ROUND_DOWN(memmap_table[i].address +
+-                        memmap_table[i].length - map[i].phys_addr, 64 * KiB);
+-        p += sizeof(efi_memory_desc_t);
+-    }
++    hdr->crc32 = 0;
++    val = crc32(0, (const unsigned char *)hdr, hdr->headersize);
++    hdr->crc32 = cpu_to_le32(val);
+ }
+ 
+-static void init_efi_initrd_table(struct efi_system_table *systab,
+-                                  void *p, void *start)
++static void init_efi_vendor_string(void **p)
+ {
+-    efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
+-    struct efi_initrd *initrd_table  = p;
++    uint16_t *vendor_str = *p;
+ 
+-    /* efi_configuration_table 2 */
+-    guidcpy(&systab->tables[1].guid, &tbl_guid);
+-    systab->tables[1].table = (struct efi_configuration_table *)(p - start);
+-    systab->nr_tables = 2;
++    /* QEMU in UTF16-LE */
++    stw_le_p(vendor_str++, 0x0051); /* Q */
++    stw_le_p(vendor_str++, 0x0045); /* E */
++    stw_le_p(vendor_str++, 0x004D); /* M */
++    stw_le_p(vendor_str++, 0x0055); /* U */
++    stw_le_p(vendor_str++, 0x0000); /* \0 */
+ 
+-    initrd_table->base = initrd_offset;
+-    initrd_table->size = initrd_size;
++    *p = vendor_str;
++    *p = QEMU_ALIGN_PTR_UP(*p, sizeof(target_long));
+ }
+ 
+-static void init_efi_fdt_table(struct efi_system_table *systab)
++static void memmap_write_descs(efi_memory_desc_t *map)
+ {
+-    efi_guid_t tbl_guid = DEVICE_TREE_GUID;
 -
--                  /* Enable IPI interrupt.                     */
--    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
--    0x0400118c,   /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG   */
--    0x02fffc0c,   /* addi.d     $t0, $r0,-1(0xfff)             */
--    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
--    0x038011ad,   /* ori        $t1, $t1, CORE_EN_OFF          */
--    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
--    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
--    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+-    /* efi_configuration_table 3 */
+-    guidcpy(&systab->tables[2].guid, &tbl_guid);
+-    systab->tables[2].table = (void *)FDT_BASE;
+-    systab->nr_tables = 3;
+-}
 -
--                  /* Wait for wakeup  <.L11>:                  */
--    0x06488000,   /* idle       0x0                            */
--    0x03400000,   /* andi       $zero, $zero, 0x0              */
--    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
--    0x43fff59f,   /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
--
--                  /* Read and clear IPI interrupt.             */
--    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
--    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
--    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
--    0x038031ad,   /* ori        $t1, $t1, CORE_CLEAR_OFF       */
--    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
--
--                  /* Disable  IPI interrupt.                   */
--    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
--    0x04001180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
--
--                  /* Read mail buf and jump to specified entry */
--    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
--    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
--    0x06480dac,   /* iocsrrd.d  $t0, $t1                       */
--    0x00150181,   /* move       $ra, $t0                       */
--    0x4c000020,   /* jirl       $zero, $ra,0                   */
--};
-+static void generate_secondary_boot_code(void *boot_code, bool is_64bit)
-+{
-+    uint32_t *p = boot_code;
+-static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+-{
+-    void *bp_tables_start;
+-    struct efi_system_table *systab = p;
++    int i;
+ 
+-    info->a2 = p - start;
++    for (i = 0; i < memmap_entries; i++) {
++        uint32_t efi_type;
++        hwaddr start = memmap_table[i].address;
++        hwaddr end = memmap_table[i].address + memmap_table[i].length;
 +
-+    /* Configure reset ebase. */
-+    stl_p(p++, 0x0400302c); /* csrwr      $t0, LOONGARCH_CSR_EENTRY  */
-+
-+    /* Disable interrupt. */
-+    stl_p(p++, 0x0380100c); /* ori        $t0, $zero, 0x4            */
-+    stl_p(p++, 0x04000180); /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
-+
-+    /* Clear mailbox. */
-+    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-+    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
-+    if (is_64bit) {
-+        stl_p(p++, 0x06481da0); /* iocsrwr.d  $zero, $t1             */
-+    } else {
-+        stl_p(p++, 0x064819a0); /* iocsrwr.w  $zero, $t1             */
++        switch (memmap_table[i].type) {
++        case MEMMAP_TYPE_MEMORY:
++            efi_type = EFI_CONVENTIONAL_MEMORY;
++            break;
++        case MEMMAP_TYPE_RESERVED:
++            efi_type = EFI_RESERVED_TYPE;
++            break;
++        case MEMMAP_TYPE_ACPI:
++            efi_type = EFI_ACPI_RECLAIM_MEMORY;
++            break;
++        case MEMMAP_TYPE_NVS:
++            efi_type = EFI_ACPI_MEMORY_NVS;
++            break;
++        default:
++            efi_type = EFI_RESERVED_TYPE;
++            break;
++        }
+ 
+-    systab->hdr.signature = EFI_SYSTEM_TABLE_SIGNATURE;
+-    systab->hdr.revision = EFI_SPECIFICATION_VERSION;
+-    systab->hdr.revision = sizeof(struct efi_system_table),
+-    systab->fw_revision = FW_VERSION << 16 | FW_PATCHLEVEL << 8;
+-    systab->runtime = 0;
+-    systab->boottime = 0;
+-    systab->nr_tables = 0;
++        if (memmap_table[i].reserved) {
++            start = QEMU_ALIGN_DOWN(start, EFI_PAGE_SIZE);
++            end = QEMU_ALIGN_UP(end, EFI_PAGE_SIZE);
++        } else {
++            start = QEMU_ALIGN_UP(start, EFI_PAGE_SIZE);
++            end = QEMU_ALIGN_DOWN(end, EFI_PAGE_SIZE);
++        }
+ 
+-    p += ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
++        map[i].type = cpu_to_le32(efi_type);
++        map[i].phys_addr = cpu_to_le64(start);
++        map[i].virt_addr = cpu_to_le64(start);
++        map[i].num_pages = cpu_to_le64((end - start) >> EFI_PAGE_SHIFT);
 +    }
-+
-+    /* Enable IPI interrupt. */
-+    stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
-+    stl_p(p++, 0x0400118c); /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG */
-+    stl_p(p++, 0x02fffc0c); /* addi.d     $t0, $r0, -1(0xfff)        */
-+    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-+    stl_p(p++, 0x038011ad); /* ori        $t1, $t1, CORE_EN_OFF      */
-+    stl_p(p++, 0x064819ac); /* iocsrwr.w  $t0, $t1                   */
-+    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-+    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
-+
-+    /* Wait for wakeup <.L11>: */
-+    stl_p(p++, 0x06488000); /* idle       0x0                        */
-+    stl_p(p++, 0x03400000); /* andi       $zero, $zero, 0x0          */
-+    stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1                   */
-+    stl_p(p++, 0x43fff59f); /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
-+
-+    /* Read and clear IPI interrupt. */
-+    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-+    stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1                   */
-+    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-+    stl_p(p++, 0x038031ad); /* ori        $t1, $t1, CORE_CLEAR_OFF   */
-+    stl_p(p++, 0x064819ac); /* iocsrwr.w  $t0, $t1                   */
-+
-+    /* Disable IPI interrupt. */
-+    stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
-+    stl_p(p++, 0x04001180); /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
-+
-+    /* Read mail buf and jump to specified entry. */
-+    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-+    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
-+    if (is_64bit) {
-+        stl_p(p++, 0x06480dac); /* iocsrrd.d  $t0, $t1               */
-+    } else {
-+        stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1               */
-+    }
-+    stl_p(p++, 0x00150181); /* move       $ra, $t0                   */
-+    stl_p(p++, 0x4c000020); /* jirl       $zero, $ra, 0              */
 +}
  
- static inline void *guidcpy(void *dst, const void *src)
+-    systab->tables = p;
+-    bp_tables_start = p;
++#define EFI_BOOT_MEMMAP_TABLE_GEN(type)                                     \
++static void init_efi_boot_memmap_##type(void *guidp, void **p)              \
++{                                                                           \
++    struct efi_boot_memmap_##type *boot_memmap = *p;                        \
++    efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;                       \
++                                                                            \
++    /* efi_configuration_table 1 */                                         \
++    guidcpy(guidp, &tbl_guid);                                              \
++                                                                            \
++    boot_memmap->desc_size = cpu_to_le##type(sizeof(efi_memory_desc_t));    \
++    boot_memmap->desc_ver = cpu_to_le32(1);                                 \
++    boot_memmap->map_size = cpu_to_le##type(boot_memmap->desc_size *        \
++                                            memmap_entries);                \
++    memmap_write_descs(boot_memmap->map);                                   \
++    *p += sizeof(struct efi_boot_memmap_##type);                            \
++}
+ 
+-    init_efi_boot_memmap(systab, p, start);
+-    p += ROUND_UP(sizeof(struct efi_boot_memmap) +
+-                  sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
+-    init_efi_initrd_table(systab, p, start);
+-    p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
+-    init_efi_fdt_table(systab);
++#define EFI_INITRD_TABLE_GEN(type)                                          \
++static void init_efi_initrd_table_##type(void *guidp, void **p)             \
++{                                                                           \
++    efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;                      \
++    struct efi_initrd_##type *initrd_table = *p;                            \
++                                                                            \
++    /* efi_configuration_table  */                                          \
++    guidcpy(guidp, &tbl_guid);                                              \
++                                                                            \
++    initrd_table->base = cpu_to_le##type(initrd_offset);                    \
++    initrd_table->size = cpu_to_le##type(initrd_size);                      \
++    *p += sizeof(struct efi_initrd_##type);                                 \
++}
+ 
+-    systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
++#define BOOTP_ALIGN_PTR_UP(p, s, n) ({                                      \
++    uintptr_t __ptr = (uintptr_t)(s) +                                      \
++        QEMU_ALIGN_UP((uintptr_t)(p) - (uintptr_t)(s), n);                  \
++    (typeof(p))(__ptr);                                                     \
++})
++
++#define EFI_INIT_SYSTAB_GEN(type)                                           \
++    EFI_BOOT_MEMMAP_TABLE_GEN(type)                                         \
++    EFI_INITRD_TABLE_GEN(type)                                              \
++static void init_systab_##type(struct loongarch_boot_info *info,            \
++                               void *p, void *start)                        \
++{                                                                           \
++    uint32_t nr_tables = 0;                                                 \
++    const efi_guid_t fdt_guid = DEVICE_TREE_GUID;                           \
++    struct efi_system_table_##type *systab;                                 \
++    struct efi_configuration_table_##type *cfg_tabs;                        \
++                                                                            \
++    p = BOOTP_ALIGN_PTR_UP(p, start, EFI_TABLE_ALIGN);                      \
++    systab = p;                                                             \
++    info->a2 = p - start;                                                   \
++                                                                            \
++    systab->hdr.signature = cpu_to_le64(EFI_SYSTEM_TABLE_SIGNATURE);        \
++    systab->hdr.revision = cpu_to_le32(EFI_SPECIFICATION_VERSION);          \
++    systab->hdr.headersize =                                                \
++            cpu_to_le32(sizeof(struct efi_system_table_##type));            \
++    systab->fw_revision =                                                   \
++            cpu_to_le32(FW_VERSION << 16 | FW_PATCHLEVEL << 8);             \
++    systab->runtime = 0;                                                    \
++    systab->boottime = 0;                                                   \
++    systab->nr_tables = 0;                                                  \
++                                                                            \
++    p += sizeof(struct efi_system_table_##type);                            \
++    systab->fw_vendor = cpu_to_le##type(p - start);                         \
++    init_efi_vendor_string(&p);                                             \
++                                                                            \
++    p = BOOTP_ALIGN_PTR_UP(p, start, EFI_TABLE_ALIGN);                      \
++    systab->tables = cpu_to_le##type(p - start);                            \
++    cfg_tabs = p;                                                           \
++    p += sizeof(struct efi_configuration_table_##type) * 3;                 \
++                                                                            \
++    p = BOOTP_ALIGN_PTR_UP(p, start, EFI_TABLE_ALIGN);                      \
++    cfg_tabs[nr_tables].table = cpu_to_le##type(p - start);                 \
++    init_efi_boot_memmap_##type(&cfg_tabs[nr_tables].guid, &p);             \
++    nr_tables++;                                                            \
++                                                                            \
++    if (initrd_size > 0) {                                                  \
++        cfg_tabs[nr_tables].table = cpu_to_le##type(p - start);             \
++        init_efi_initrd_table_##type(&cfg_tabs[nr_tables].guid, &p);        \
++        nr_tables++;                                                        \
++    }                                                                       \
++                                                                            \
++    guidcpy(&cfg_tabs[nr_tables].guid, &fdt_guid);                          \
++    cfg_tabs[nr_tables].table = cpu_to_le##type(FDT_BASE);                  \
++    nr_tables++;                                                            \
++                                                                            \
++    systab->nr_tables = cpu_to_le32(nr_tables);                             \
++    efi_hdr_crc32(&systab->hdr);                                            \
+ }
+ 
++EFI_INIT_SYSTAB_GEN(32)
++EFI_INIT_SYSTAB_GEN(64)
++
+ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
  {
-@@ -380,7 +391,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+     hwaddr cmdline_addr = p - start;
+@@ -223,7 +301,7 @@ static void reset_load_elf(void *opaque)
+ 
+     cpu_reset(CPU(cpu));
+     if (env->load_elf) {
+-	if (cpu == LOONGARCH_CPU(first_cpu)) {
++        if (cpu == LOONGARCH_CPU(first_cpu)) {
+             env->gpr[4] = env->boot_info->a0;
+             env->gpr[5] = env->boot_info->a1;
+             env->gpr[6] = env->boot_info->a2;
+@@ -265,21 +343,25 @@ static void loongarch_firmware_boot(LoongArchVirtMachineState *lvms,
+     fw_cfg_add_kernel_info(info, lvms->fw_cfg);
+ }
+ 
+-static void init_boot_rom(struct loongarch_boot_info *info, void *p)
++static void init_boot_rom(struct loongarch_boot_info *info, void *p,
++                          bool is_64bit)
+ {
+     void *start = p;
+ 
+     init_cmdline(info, p, start);
+     p += COMMAND_LINE_SIZE;
+ 
+-    init_systab(info, p, start);
++    if (is_64bit)
++        init_systab_64(info, p, start);
++    else
++        init_systab_32(info, p, start);
+ }
+ 
+ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+ {
+     void *p, *bp;
+     int64_t kernel_addr = VIRT_FLASH0_BASE;
+-    LoongArchCPU *lacpu;
++    LoongArchCPU *lacpu = LOONGARCH_CPU(first_cpu);
+     CPUState *cs;
+ 
+     if (info->kernel_filename) {
+@@ -293,7 +375,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+     /* Load cmdline and system tables at [0 - 1 MiB] */
+     p = g_malloc0(1 * MiB);
+     bp = p;
+-    init_boot_rom(info, p);
++    init_boot_rom(info, p, is_la64(&lacpu->env));
+     rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
  
      /* Load slave boot code at pflash0 . */
-     void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
--    memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
-+    generate_secondary_boot_code(boot_code, is_la64(&lacpu->env));
-     rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index b3b870df1f097662dff7fc7c173f152da583d374..96ec15016a314499acf65c6c47e0c4932aa99d01 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -38,11 +38,35 @@ typedef struct {
+         EFI_GUID(0xb1b621d5, 0xf19c, 0x41a5,  0x83, 0x0b, \
+                  0xd9, 0x15, 0x2c, 0x69, 0xaa, 0xe0)
  
-     CPU_FOREACH(cs) {
++/* Memory types: */
++#define EFI_RESERVED_TYPE           0
++#define EFI_LOADER_CODE             1
++#define EFI_LOADER_DATA             2
++#define EFI_BOOT_SERVICES_CODE      3
++#define EFI_BOOT_SERVICES_DATA      4
++#define EFI_RUNTIME_SERVICES_CODE   5
++#define EFI_RUNTIME_SERVICES_DATA   6
++#define EFI_CONVENTIONAL_MEMORY     7
++#define EFI_UNUSABLE_MEMORY         8
++#define EFI_ACPI_RECLAIM_MEMORY     9
++#define EFI_ACPI_MEMORY_NVS         10
++#define EFI_MEMORY_MAPPED_IO        11
++#define EFI_MEMORY_MAPPED_IO_PORT_SPACE 12
++#define EFI_PAL_CODE                13
++#define EFI_PERSISTENT_MEMORY       14
++#define EFI_UNACCEPTED_MEMORY       15
++#define EFI_MAX_MEMORY_TYPE         16
++
++#define EFI_PAGE_SHIFT      12
++#define EFI_PAGE_SIZE       (1UL << EFI_PAGE_SHIFT)
++
++#define EFI_TABLE_ALIGN     (64 * KiB)
++
+ struct efi_config_table {
+     efi_guid_t guid;
+     uint64_t *ptr;
+     const char name[16];
+-};
++} QEMU_PACKED;
+ 
+ typedef struct {
+     uint64_t signature;
+@@ -50,51 +74,90 @@ typedef struct {
+     uint32_t headersize;
+     uint32_t crc32;
+     uint32_t reserved;
+-} efi_table_hdr_t;
++} QEMU_PACKED efi_table_hdr_t;
+ 
+-struct efi_configuration_table {
++struct efi_configuration_table_32 {
+     efi_guid_t guid;
+-    void *table;
+-};
++    uint32_t table;
++} QEMU_PACKED;
+ 
+-struct efi_system_table {
++struct efi_configuration_table_64 {
++    efi_guid_t guid;
++    uint64_t table;
++} QEMU_PACKED;
++
++struct efi_system_table_32 {
++    efi_table_hdr_t hdr;
++    uint32_t fw_vendor;        /* physical addr of CHAR16 vendor string */
++    uint32_t fw_revision;
++    uint32_t con_in_handle;
++    uint32_t con_in;
++    uint32_t con_out_handle;
++    uint32_t con_out;
++    uint32_t stderr_handle;
++    uint32_t stderr_placeholder;
++    uint32_t runtime;
++    uint32_t boottime;
++    uint32_t nr_tables;
++    uint32_t tables;
++} QEMU_PACKED;
++
++struct efi_system_table_64 {
+     efi_table_hdr_t hdr;
+     uint64_t fw_vendor;        /* physical addr of CHAR16 vendor string */
+     uint32_t fw_revision;
++    uint32_t __pad1;
+     uint64_t con_in_handle;
+-    uint64_t *con_in;
++    uint64_t con_in;
+     uint64_t con_out_handle;
+-    uint64_t *con_out;
++    uint64_t con_out;
+     uint64_t stderr_handle;
+     uint64_t stderr_placeholder;
+-    uint64_t *runtime;
+-    uint64_t *boottime;
+-    uint64_t nr_tables;
+-    struct efi_configuration_table *tables;
+-};
++    uint64_t runtime;
++    uint64_t boottime;
++    uint32_t nr_tables;
++    uint32_t __pad2;
++    uint64_t tables;
++} QEMU_PACKED;
+ 
+ typedef struct {
+     uint32_t type;
+-    uint32_t pad;
++    uint32_t __pad;
+     uint64_t phys_addr;
+     uint64_t virt_addr;
+     uint64_t num_pages;
+     uint64_t attribute;
+-} efi_memory_desc_t;
++} QEMU_PACKED efi_memory_desc_t;
++
++struct efi_boot_memmap_32 {
++    uint32_t map_size;
++    uint32_t desc_size;
++    uint32_t desc_ver;
++    uint32_t map_key;
++    uint32_t buff_size;
++    uint32_t __pad;
++    efi_memory_desc_t map[32];
++} QEMU_PACKED;
+ 
+-struct efi_boot_memmap {
++struct efi_boot_memmap_64 {
+     uint64_t map_size;
+     uint64_t desc_size;
+     uint32_t desc_ver;
++    uint32_t __pad;
+     uint64_t map_key;
+     uint64_t buff_size;
+     efi_memory_desc_t map[32];
+-};
++} QEMU_PACKED;
++
++struct efi_initrd_32 {
++    uint32_t base;
++    uint32_t size;
++} QEMU_PACKED;
+ 
+-struct efi_initrd {
++struct efi_initrd_64 {
+     uint64_t base;
+     uint64_t size;
+-};
++} QEMU_PACKED;
+ 
+ struct loongarch_boot_info {
+     uint64_t ram_size;
+@@ -110,6 +173,11 @@ extern unsigned memmap_entries;
+ struct memmap_entry {
+     uint64_t address;
+     uint64_t length;
++    /* E820 style type */
++#define MEMMAP_TYPE_MEMORY      1
++#define MEMMAP_TYPE_RESERVED    2
++#define MEMMAP_TYPE_ACPI        3
++#define MEMMAP_TYPE_NVS         4
+     uint32_t type;
+     uint32_t reserved;
+ };
 
 -- 
 2.43.0
