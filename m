@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7102E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 10:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78ED6E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 12:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPJOH-00073c-Va; Sun, 22 Dec 2024 05:40:54 -0500
+	id 1tPLVl-0004Fj-Ct; Sun, 22 Dec 2024 07:56:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hal.martin@gmail.com>)
- id 1tPJOE-00072T-8e
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 05:40:50 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hal.martin@gmail.com>)
- id 1tPJOC-0000I8-5G
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 05:40:49 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso20439955e9.1
- for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 02:40:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734864045; x=1735468845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+hbx3GO4unRR6HZV4IvVMmVfOKjlVa0u39KZ6AEi31k=;
- b=Gj3sAyrZMetX1sf4lO9cue4QM75E2kVWsmBNq0WvMPcfFuW4W/4qb6bP/8v/XvJ2pN
- S9vl/S2A4ycQI0lGXbBLvt6gcAt/2yOI15h9rUXHAORxSS1xT03EoZO3/rzivma96TBD
- TreP4Pka7vnviOikullTyUESD4h3k/FHsEoZfxJRk7lo0vHRgwSQDDwJ2WGxot7poe8Q
- CBtqOZkzCkGQ6Rktp8dYOOC1e3H3CK7ZEwu58KovCEBS2tWIFgIbL0O9hyzcmfFQyAuJ
- NAEenkApjLmxQM6+Knhovwh2259yXVOZcd8T81Gm1qUphMNkR4UCY+hbEJIGBb2pjQGp
- 2BzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734864045; x=1735468845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+hbx3GO4unRR6HZV4IvVMmVfOKjlVa0u39KZ6AEi31k=;
- b=YDEgvE8hNdWNtxKmZYOWRdX/inQjUCkyBKhYoV5cI+E3i2Z69GOMFbNfnJcc6Zz8TT
- v9OzCGW/ju2hwm4bwfBEFx2qI5XyDx+2SqVkuEurnv94f75W0/DDVJxjJpvEw9iRZZ2V
- HFrg5ox1BPavvPcQHkk5BBhAMSFFjnXaHv0v/d5+oGnzdJMhOZz9OFqml3r6R8aCJ+wR
- et6mMAwVYXg4Fv3uepynKPGjgNiaWDWhQoTZa2jKckXTcl/yTeA8XAqE/pP7Y4ti3sWR
- C0PiGUDVOsxcuY3jXzhRDjkKB+ub1wb+tPcE1L1d+72KEnq8sGQcsc6SEj3+OmKnMrNK
- 3YyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWmTB5uX3V6I80ndJ5j26fSW2fuIvL6nJG+yPRkl3gXI0zM3C+FyYei2IMTe9nJIm8zSNxPX/oafaX@nongnu.org
-X-Gm-Message-State: AOJu0Ywwye3rRD6Hdy/WkVZwX0qkDcvGArr6SYDYlqiRUT27+pUv3Z5r
- ao6zkBqxZcode4cj4oWoM8S0XPvH7L87M4lQirfTzvIoazYuYdR6
-X-Gm-Gg: ASbGnctfch3SkdbBv/bPvhu1W/GJ8o+Mr1gjNUKvA5gGILK4EZG5c5AyG5TcdCGy1Jp
- cDXVbfTwqlOmHCEGom9P8rvarUdHaF7kZOYhtRixxPMBEhbxFGSVCLTtnrX9Mgkz1XNtOdbHin+
- y695EtLPVGrGjl6zVtJ6ortH4u1w39zol8WS4qq/eD6X9bRL/Yr91hXGid4LKd/fNFisQpl2hJp
- WMh5woY/ptJQOMe09ACGR2apDWyKQgslaktXi7/kMnDQaQvwDxCKYAlb3A8u37EkisySg==
-X-Google-Smtp-Source: AGHT+IEtGoCKxEy/GhAZT+IVQoWaV7Y90aZ0UoJ6OJNXkhQ9rdVJ65mW/PolbLxvtNKuLllvEusp2Q==
-X-Received: by 2002:a7b:cc0f:0:b0:436:1b77:b5aa with SMTP id
- 5b1f17b1804b1-4365c775154mr115907875e9.8.1734864044776; 
- Sun, 22 Dec 2024 02:40:44 -0800 (PST)
-Received: from fitlet2.primaryno.de ([185.154.111.60])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b417afsm135278785e9.36.2024.12.22.02.40.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Dec 2024 02:40:44 -0800 (PST)
-From: Hal Martin <hal.martin@gmail.com>
-To: imammedo@redhat.com
-Cc: Hal Martin <hal.martin@gmail.com>, qemu-devel@nongnu.org, mst@redhat.com,
- anisinha@redhat.com
-Subject: [PATCH v4] hw/smbios: support for type 7 (cache information)
-Date: Sun, 22 Dec 2024 10:40:05 +0000
-Message-Id: <20241222104005.10501-1-hal.martin@gmail.com>
-X-Mailer: git-send-email 2.38.5
-In-Reply-To: <20240926160501.593c2b96@imammedo.users.ipa.redhat.com>
-References: <20240926160501.593c2b96@imammedo.users.ipa.redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tPLVj-0004FL-U8
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 07:56:43 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tPLVi-0008NN-7w
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 07:56:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=xWfvLosilgIA8otj8XWrVzSqR2isSh4HhFpZJddL3hs=; b=sHxBnhJIdnXeHANDGEY8NqLw/w
+ TWW4TYXoFlQY4dJXK5hUc4ooZ1qXOtmrjZfjir2GGpDwIEDaG5gWTl4Hz3ruMhk1URy5dwGb41/2r
+ ef1LkmZOspNHHkLOK3QfNl5y0rQjllpd25R+s1i6OHMy3CVIE5dQFn8nI0M/saKSISvwetgW7rmR2
+ OeyNEoY+PSNAd5EzSE5gqEiorPf8wrQibSCsQo4N0PXfD+TnTJBFbaHz2heYM5nQiia7bVufmhpLv
+ 7SjKPmvaGjg9BiLH0rKs/CSF9MUr3QnRYrndGtLIPF0QetGptdVHUpen0R4sMBsCljnZ7rhBQfK06
+ Li9wUQjIw60IZG1wnjkr/IKRqpWCewzjbpL1B6q6ibx9fgo8v+MAL+qAGcGo9cnSRqVe69eOfypi5
+ fj2iS/A2gQAaMLuqQjyx7OsFGT1B3HwWEWpjyfvmjiN1R/8N9guJuab6mlqAdNPUHBVIVzcB5vJtb
+ ZhhQkW/5zwLL5i8rua6V+tyQm5hvYeGjsVGmGirpcfJ6zfXKLzp/3CHzCL0XRsDExD9ZNx8q3lloF
+ 75UvtaEdC1VqBH6mvsuD5J4LqAHeVmyJ+De34med+bObuKHs3Pgtb9t6wT7wblQltNLk2SXzUbsr5
+ hxEra1kr8CukjWvu9QM+aVOdaf+TDi9Ojyo3YObWE=;
+Received: from [2a02:8012:2f01:0:33a9:475d:1cd9:884]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tPLV0-0002JE-53; Sun, 22 Dec 2024 12:56:01 +0000
+Message-ID: <011c5274-08d8-49d7-96d4-29d177c3e18d@ilande.co.uk>
+Date: Sun, 22 Dec 2024 12:56:28 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
+References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
+ <20241212114620.549285-35-mark.cave-ayland@ilande.co.uk>
+ <Z1sdIURVdJL8p6cC@redhat.com>
+ <fa8ce465-e539-48ec-abf8-d7296ae42b8a@ilande.co.uk>
+ <Z2ADHbndSn-vrYsK@redhat.com>
+ <dbb457a1-9eb6-4d71-a5e4-84f6679cd9fe@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <dbb457a1-9eb6-4d71-a5e4-84f6679cd9fe@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=hal.martin@gmail.com; helo=mail-wm1-x334.google.com
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:33a9:475d:1cd9:884
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 34/34] next-cube: replace boiler-plate GPL 2.0 or later
+ license text with SPDX identifier
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,242 +110,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support for SMBIOS type 7 (Cache Information) to qemu.
+On 16/12/2024 11:17, Thomas Huth wrote:
 
-level: cache level (1-8)
-size: cache size
+> On 16/12/2024 11.38, Daniel P. Berrangé wrote:
+>> On Sat, Dec 14, 2024 at 08:38:06PM +0000, Mark Cave-Ayland wrote:
+>>> On 12/12/2024 17:28, Daniel P. Berrangé wrote:
+>>>
+>>>> On Thu, Dec 12, 2024 at 11:46:20AM +0000, Mark Cave-Ayland wrote:
+>>>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>>> ---
+>>>>>    hw/m68k/next-cube.c | 5 +----
+>>>>>    1 file changed, 1 insertion(+), 4 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+>>>>> index 1e96bb02f8..3c2f3e295c 100644
+>>>>> --- a/hw/m68k/next-cube.c
+>>>>> +++ b/hw/m68k/next-cube.c
+>>>>> @@ -4,10 +4,7 @@
+>>>>>     * Copyright (c) 2011 Bryce Lanham
+>>>>>     * Copyright (c) 2024 Mark Cave-Ayland
+>>>>>     *
+>>>>> - * This code is free software; you can redistribute it and/or modify
+>>>>> - * it under the terms of the GNU General Public License as published
+>>>>> - * by the Free Software Foundation; either version 2 of the License,
+>>>>> - * or (at your option) any later version.
+>>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>>     */
+>>>>
+>>>> While adding a SPDX-License-Identifier alongside existing header text
+>>>> is acceptable, my view is that we should stay away from removing existing
+>>>> license headers. There are some difficult questions wrt interpretation
+>>>> of the GPL in this area & avoiding opening that can of worms would be
+>>>> nice.
+>>>
+>>> I remember you mentioned this before, but I wasn't sure if this would be
+>>> mitigated by the fact that the code originated from GSoC? I'm sure I've seen
+>>> at least one recent patch that made a similar change, but if there really
+>>> are legal reasons not to allow changes of this type then I shall drop it
+>>> from the series.
+>>
+>> GSoC isn't really important. The challenging problem here is GPL clause 1
+>> which says
+>>
+>>    "keep intact all the notices that refer to this License and to the
+>>     absence of any warranty"
+>>
+>> there are differing opinions on how strictly to interpret the "keep intact"
+>> language there.
+>>
+>> While we could have a debate over this and come to some project opinion
+>> IMHO it is a better use of our time to just not remove existing notices.
+> 
+> I generally agree with Daniel here ... but in this special case, I should maybe 
+> mention that Bryce's original file only had a "This code is licensed under the GPL" 
+> statement in it:
+> 
+>   https://github.com/blanham/qemu-NeXT/blob/next-cube/hw/next-cube.c#L12
+> 
+> IIRC it was me who replaced that with the usual boilerplate when I picked up his work 
+> to get it included in the upstream QEMU. And for me, it's fine if we switch to SPDX 
+> here, so in this special case, it might be OK to replace it?
 
-Example usage:
--smbios type=7,level=1,size=1M
+Seeing as there still seems to be some questions over this patch, I'll drop it from 
+the v3 series.
 
-Note: this does not change the actual layout of the CPU cache(s),
-it simply allows the user to specify data in SMBIOS to be presented
-to the guest. This is useful for example if you have software that
-queries SMBIOS for the CPU cache levels/size.
 
-Signed-off-by: Hal Martin <hal.martin@gmail.com>
----
- hw/smbios/smbios.c           | 116 +++++++++++++++++++++++++++++++++++
- include/hw/firmware/smbios.h |  29 +++++++++
- qemu-options.hx              |   2 +
- 3 files changed, 147 insertions(+)
+ATB,
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index 02a09eb9cd..9885e902b0 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -18,6 +18,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qemu/config-file.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
-@@ -83,6 +84,13 @@ static struct {
-     .processor_family = 0x01, /* Other */
- };
- 
-+struct type7_instance {
-+    uint16_t level;
-+    uint64_t size;
-+    QTAILQ_ENTRY(type7_instance) next;
-+};
-+static QTAILQ_HEAD(, type7_instance) type7 = QTAILQ_HEAD_INITIALIZER(type7);
-+
- struct type8_instance {
-     const char *internal_reference, *external_reference;
-     uint8_t connector_type, port_type;
-@@ -330,6 +338,23 @@ static const QemuOptDesc qemu_smbios_type4_opts[] = {
-     { /* end of list */ }
- };
- 
-+static const QemuOptDesc qemu_smbios_type7_opts[] = {
-+    {
-+        .name = "type",
-+        .type = QEMU_OPT_NUMBER,
-+        .help = "SMBIOS element type",
-+    },{
-+        .name = "level",
-+        .type = QEMU_OPT_NUMBER,
-+        .help = "cache level",
-+    },{
-+        .name = "size",
-+        .type = QEMU_OPT_SIZE,
-+        .help = "cache size",
-+    },
-+    { /* end of list */ }
-+};
-+
- static const QemuOptDesc qemu_smbios_type8_opts[] = {
-     {
-         .name = "type",
-@@ -733,6 +758,80 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance,
-     smbios_type4_count++;
- }
- 
-+static void smbios_build_type_7_table(SmbiosEntryPointType ep_type)
-+{
-+    unsigned instance = 0;
-+    size_t tbl_len = SMBIOS_TYPE_7_LEN_V21;
-+    struct type7_instance *t7;
-+    char designation[50];
-+    uint16_t cache_size = 0;
-+    uint32_t cache_size2 = 0;
-+
-+    if (ep_type == SMBIOS_ENTRY_POINT_TYPE_64) {
-+        tbl_len = SMBIOS_TYPE_7_LEN_V31;
-+    }
-+
-+    QTAILQ_FOREACH(t7, &type7, next) {
-+        if (t7->size < 1024) {
-+            error_report("SMBIOS CPU cache size (%lu) is too small (>1k)",
-+                         t7->size);
-+            exit(1);
-+        }
-+        SMBIOS_BUILD_TABLE_PRE(7, T0_BASE + instance, true);
-+        sprintf(designation, "CPU Internal L%d", t7->level);
-+        SMBIOS_TABLE_SET_STR(7, socket_designation, designation);
-+        /* cache not socketed, enabled, write back */
-+        t->cache_configuration =  cpu_to_le16(0x180 | ((t7->level) - 1));
-+        if (tbl_len == SMBIOS_TYPE_7_LEN_V21) {
-+            if (t7->size > 1024*MiB) {
-+                error_report("SMBIOS 2.0 doesn't support CPU cache "
-+                            "sizes more than 1024 MiB, use "
-+                            "-machine smbios-entry-point-type=64 option to "
-+                            "enable SMBIOS 3.0 support");
-+                exit(1);
-+            }
-+        }
-+        /* size is defined in 1k granularity */
-+        cache_size = t7->size/1024;
-+        if (t7->size > INT16_MAX) {
-+            /* set granularity to 64KiB */
-+            cache_size = cpu_to_le16(t7->size/(64*1024) | (0x1 << 15));
-+        }
-+
-+        t->supported_sram_type = cpu_to_le16(0x10); /* pipeline burst */
-+        t->current_sram_type = cpu_to_le16(0x10); /* pipeline burst */
-+        t->cache_speed = 0x1; /* 1 ns */
-+        t->error_correction_type = 0x6; /* Multi-bit ECC */
-+        t->system_cache_type = 0x05; /* Unified */
-+        t->associativity = 0x6; /* Fully Associative */
-+
-+        if (tbl_len == SMBIOS_TYPE_7_LEN_V31) {
-+            if (t7->size > ((uint64_t)2 << 45)) {
-+                error_report("SMBIOS CPU cache size (%lu) is too large",
-+                             t7->size);
-+                exit(1);
-+            }
-+            cache_size2 = t7->size/1024;
-+            /* For Cache sizes greater than 2047 MB, the */
-+            /* Maximum Cache Size field is set to 0xFFFF */
-+            if (cache_size2 > (2 << 20)) {
-+                cache_size = 0xffff;
-+                /* set granularity to 64KiB */
-+                cache_size2 = cpu_to_le32(t7->size/(64*1024) | (0x1 << 31));
-+            }
-+
-+            t->maximum_cache_size2 = cache_size2;
-+            t->installed_cache_size2 = cache_size2;
-+
-+        }
-+        t->installed_size = cache_size;
-+        /* set max size to installed size */
-+        t->maximum_cache_size = cache_size;
-+        SMBIOS_BUILD_TABLE_POST;
-+        instance++;
-+    }
-+}
-+
- static void smbios_build_type_8_table(void)
- {
-     unsigned instance = 0;
-@@ -1120,6 +1219,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
-         }
-     }
- 
-+    smbios_build_type_7_table(ep_type);
-     smbios_build_type_8_table();
-     smbios_build_type_9_table(errp);
-     smbios_build_type_11_table();
-@@ -1478,6 +1578,22 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
-                            UINT16_MAX);
-             }
-             return;
-+        case 7:
-+            if (!qemu_opts_validate(opts, qemu_smbios_type7_opts, errp)) {
-+                return;
-+            }
-+            struct type7_instance *t7_i;
-+            t7_i = g_new0(struct type7_instance, 1);
-+            t7_i->level = qemu_opt_get_number(opts, "level", 0);
-+            t7_i->size = qemu_opt_get_size(opts, "size", 0);
-+            /* Only cache levels 1-8 are permitted */
-+            if (t7_i->level > 8) {
-+                error_setg(errp, "SMBIOS CPU cache level %d is invalid (1-8)",
-+                           t7_i->level);
-+                return;
-+            }
-+            QTAILQ_INSERT_TAIL(&type7, t7_i, next);
-+            return;
-         case 8:
-             if (!qemu_opts_validate(opts, qemu_smbios_type8_opts, errp)) {
-                 return;
-diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-index f066ab7262..996d36fead 100644
---- a/include/hw/firmware/smbios.h
-+++ b/include/hw/firmware/smbios.h
-@@ -220,6 +220,35 @@ typedef enum smbios_type_4_len_ver {
-     SMBIOS_TYPE_4_LEN_V30 = offsetofend(struct smbios_type_4, thread_count2),
- } smbios_type_4_len_ver;
- 
-+/* SMBIOS type 7 - Cache Information (v2.0+) */
-+struct smbios_type_7 {
-+    struct smbios_structure_header header;
-+    uint8_t socket_designation;
-+    uint16_t cache_configuration;
-+    uint16_t maximum_cache_size;
-+    uint16_t installed_size;
-+    uint16_t supported_sram_type;
-+    uint16_t current_sram_type;
-+    uint8_t cache_speed;
-+    uint8_t error_correction_type;
-+    uint8_t system_cache_type;
-+    uint8_t associativity;
-+    /* SMBIOS spec 3.1.0, Table 36  */
-+    uint32_t maximum_cache_size2;
-+    uint32_t installed_cache_size2;
-+    /* contained elements follow */
-+} QEMU_PACKED;
-+
-+typedef enum smbios_type_7_len_ver {
-+    SMBIOS_TYPE_7_LEN_V20 = offsetofend(struct smbios_type_7,
-+                                        current_sram_type),
-+    SMBIOS_TYPE_7_LEN_V21 = offsetofend(struct smbios_type_7,
-+                                        associativity),
-+    SMBIOS_TYPE_7_LEN_V31 = offsetofend(struct smbios_type_7,
-+                                        installed_cache_size2),
-+} smbios_type_7_len_ver;
-+
-+
- /* SMBIOS type 8 - Port Connector Information */
- struct smbios_type_8 {
-     struct smbios_structure_header header;
-diff --git a/qemu-options.hx b/qemu-options.hx
-index cc694d3b89..a85bfac647 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2644,6 +2644,8 @@ DEF("smbios", HAS_ARG, QEMU_OPTION_smbios,
-     "              [,asset=str][,part=str][,max-speed=%d][,current-speed=%d]\n"
-     "              [,processor-family=%d][,processor-id=%d]\n"
-     "                specify SMBIOS type 4 fields\n"
-+    "-smbios type=7[,level=%d][,size=%d]\n"
-+    "                specify SMBIOS type 7 fields\n"
-     "-smbios type=8[,external_reference=str][,internal_reference=str][,connector_type=%d][,port_type=%d]\n"
-     "                specify SMBIOS type 8 fields\n"
-     "-smbios type=11[,value=str][,path=filename]\n"
--- 
-2.42.0
+Mark.
 
 
