@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE3EE7718B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 23:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F9FE7718B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 23:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPrUi-0004iW-I1; Mon, 23 Dec 2024 18:05:48 -0500
+	id 1tPrgl-0007e0-Dk; Mon, 23 Dec 2024 18:18:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tPrUg-0004hY-Cj
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 18:05:46 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tPrgj-0007df-5p
+ for qemu-devel@nongnu.org; Mon, 23 Dec 2024 18:18:13 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tPrUe-0003kt-H8
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 18:05:46 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso31970195e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Dec 2024 15:05:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tPrgh-0005ZI-HE
+ for qemu-devel@nongnu.org; Mon, 23 Dec 2024 18:18:12 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4361f664af5so52855025e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Dec 2024 15:18:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734995143; x=1735599943; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734995889; x=1735600689; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8wirB2oxzEwBCtv2tOsMsgvv/9t4T7GgUtSDc9qT4ag=;
- b=WVqNaScc5QLoVTQd56omK1D00jMBPVO+R8s4kDiTQJzteMxRT810kzyCjfTa5Sleu0
- w1/4D3+FE0Ts78TOJEJFE/zQxbLgeozjFDS3ZwdP0ldyYoLeOgtdp9vAA8tWzn1uiGG0
- sjYkwtMmrRbNX8yHwNI9NH4kfcT9S9SNJr1lX7rjwtzF0aFgGE4seZOf74OKsRWTdo1Y
- SDlcBgxJ9Wk4FAQavuZum02u76s0gxi6ziFYQFv7ZlEXHQXoVcEl+dhruRAUNxG6bJK6
- WqxfE6WwDELmMOU6zmTLzV9EPctWVsPrgqWQHsLbym56Eq57I1Hot9QcUHU2IDlz7Rtn
- 8kpA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YCM6xIEzH94DNuFPXwq8qUmhS8PcflXbyhDF6xHTKrQ=;
+ b=d9TiWzzxK/wLj+Ca5BFmO03JGp+OG+A9S+VbREsixUw48SIs7WeI2mT7wqQK/P330v
+ 8Rjka+WK73Qh4hRFyIB6AYwnjLReaj4XIOEVP/uO27XJ0g9E4aw8hK5RWkM9A/Dk8gbL
+ UNhMnA/Skw9hKBS1J8jYU+Gp9uiLFTZJ1QuZv1mzKUhTlN00B+YCY14wfxT2nwfEVYln
+ 6qgxUM2f4P0/g987KaE0xM/YnD2eHyz1T+yZ3o/ApaeO5KNxVtSVJ/kj+7khN3q2nH96
+ /Gqiwe9ZKyW+nFRGjxAU3EgwbQcVmQxaB74bP7xpMbT8Z+P9uNH7mzeU+aMRmBAEjw3g
+ eyPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734995143; x=1735599943;
+ d=1e100.net; s=20230601; t=1734995889; x=1735600689;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8wirB2oxzEwBCtv2tOsMsgvv/9t4T7GgUtSDc9qT4ag=;
- b=WLybS6Wdj8cPvLlWez6J9+T7j/3Zu8K4B2+FNACvCai2eKk3kvm+TifBztisFnQxI2
- wpgohs6NtPRvEeo7sjJNXUHLTuCQF20Nl2AZxDqDY+620TNYmz0bsALN8hQyNw4Xa+xP
- JHkrjOe9hhQP4iyW2KSitSf0YanGRYamyaCIZitVHzJ7JlSlSdS3IHEFAUEbLs/MtQh5
- HR5pg7G6WDEo2GVhJvHMhKXJfKwE/bLrIUaGkSpDlwAFhRW4D6PP33usSUuzgl8yTZ87
- QcOLnj3qJIrmJd9VR+Ey7ziimcHJF4U4BVEKw7LdtW0SG2BhT+VGfByrcqdcs3WlHuuU
- le0A==
+ bh=YCM6xIEzH94DNuFPXwq8qUmhS8PcflXbyhDF6xHTKrQ=;
+ b=ff/1REg0TT3EWlwpIGs4aR4SKfsES8Ce1rb6PH7WgdPu3/zr67duEHksH+ZG/T78SI
+ VasoMLzFhVUj7WRhaYM17TqsK/RijpsuAWIuqtrURY0gXFSCU5GE+hLIebVJyVINFEIq
+ c8uyYGxxHBxEzJ71Jza5t78paXoB/yQnW6fJHieCzgnilg2XC6UPn1DD22d/ced9DRyO
+ YrTkY2ByFFD2Vc7SvAC4D1GVQEgRq5cs3uGOhcFS49ygMXHSzKTiJVgNCeZmopD2SyEr
+ r0XA2SIZ+oJxeX9yS/Di9QkyFqvJ6q1qVxx+WMZmx2ArNr+40OdYY1Oiskkfl1vV80LS
+ WD2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5MPZVKRTRA5P0Cgh+bcJKg2A5piZfNfbCwXIB4iLlUNRZrMyVUShxx0kSBHqTrJgLFEkzJ4I5+Xga@nongnu.org
-X-Gm-Message-State: AOJu0YwBlOtEXJ9g3Z3T5f9UJ3Q7YYlAF0e0yQSQmibQc4ZZP4qJfKME
- 4+3ZVvKqXFIdcRgAEuOPc2UhLoBHzH9GDskAgkrR9GOnXPsldEXazVOP51pNe4M=
-X-Gm-Gg: ASbGncusq3OyswO1pnxaaaf9S4ppnKC2dO7ADHt19DdoqQ/KoMn0pTIA+h8LqArf6Rj
- 0MR1xLqjcrvobPqem83AHUy7p24VWb9LdWX+pV0H8FT2K5t2yJCt79q5xADmsmDtZTeMSW1q8I2
- SBZPrK72lxyr0jvydFVkLBXrTDWqyO4yID3isyevvdyifAsX5ibgAonCLh1S+8FnrAGnW1nJuKT
- aAfxlKj/FconGU9uQMYodshMEXFDwdziiNseKtc4HZ1wv7szt097/t9EadO3XMo3EY=
-X-Google-Smtp-Source: AGHT+IEkpZKtff9otRKBBcG+TWXg2q7OtBuEOOpTO9uYLS2uupqsMwq1V0+NDgxCNOsq9NFrZ1xqcw==
-X-Received: by 2002:a7b:cb93:0:b0:434:f270:a4f0 with SMTP id
- 5b1f17b1804b1-43668b49981mr106293485e9.21.1734995142660; 
- Mon, 23 Dec 2024 15:05:42 -0800 (PST)
+ AJvYcCW3E4ucFTJt+j1E18/eDAIUhHE+AjKHhTOFw092bsuPjBS5TtEOTSYgVUW1rW4r3c79DjooTQOZ37Hq@nongnu.org
+X-Gm-Message-State: AOJu0Yx3O+33lg9IJpwnGrF+vfg9nykDU4ASxsF9agyWJWxnbtuc1GRe
+ B5AEEfn6SI6tVgWomnR/Xw81ZOSAiFwFW4FAQNOAVj+m+xQG699dUa60Q6P0GWbbwNXFVQRQ4la
+ x
+X-Gm-Gg: ASbGncsrBLe//u2ARlUV75ZHNg6YdV/SzSn5e+aaNuoRYMnfjJzg+e1H4rN9cb0BrzA
+ G5lNz4DHnseqOwl5vOoVyArQrHYyq1Db3Z1eC4RuA4S7kU2VjcVbHfJx1yPllYFUavQYfNb39n0
+ xosWdjZhnIunKfe1WLtwK74Lh1CPETnwa4AwVqyRcQ9BKPWSYcQCarbseAjQpqwvbADiAxssr3C
+ OQ1NdwbrJVLvW+R4RqLr+eEsK45gN2rQYpGMYK5bp/mQ8CudTCOPV3Q68xyG2NvktA=
+X-Google-Smtp-Source: AGHT+IF4gILSNfKOvaJySpYWjeAN0lgfY2GIp/ChY914k1NKnCwmZf/Pp48qClUymio7CH3kc+M+jQ==
+X-Received: by 2002:a05:600c:1913:b0:434:f396:525e with SMTP id
+ 5b1f17b1804b1-4366b2fa0a6mr126373485e9.9.1734995888825; 
+ Mon, 23 Dec 2024 15:18:08 -0800 (PST)
 Received: from [192.168.1.117] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c847dabsm12370921f8f.59.2024.12.23.15.05.40
+ 5b1f17b1804b1-4367086e40esm110670515e9.30.2024.12.23.15.18.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Dec 2024 15:05:41 -0800 (PST)
-Message-ID: <cfe36783-9353-45c0-9f4c-6aa1879ffd70@linaro.org>
-Date: Tue, 24 Dec 2024 00:05:39 +0100
+ Mon, 23 Dec 2024 15:18:08 -0800 (PST)
+Message-ID: <0a550dea-68b1-41a5-9616-5046d4577c44@linaro.org>
+Date: Tue, 24 Dec 2024 00:18:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 15/15] hw/vmapple/vmapple: Add vmapple machine type
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
- agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
- mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com,
- hreitz@redhat.com, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org, balaton@eik.bme.hu,
- Alexander Graf <graf@amazon.com>
-References: <167ca349-980c-43a7-82f2-264b2f7250cb@linaro.org>
- <50ABB5B0-4B7C-4F32-A956-82BD76C235E3@philjordan.eu>
- <CAAibmn1sJ8cCyExHaEw853bek1hUt8QrA4Lv5=1R=zX=v=51QQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] target/loongarch: Fix LLSC for LoongArch32
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
+References: <20241222-la32-fixes1-v1-0-8c62b7e594db@flygoat.com>
+ <20241222-la32-fixes1-v1-2-8c62b7e594db@flygoat.com>
+ <a86f364c-58ee-4e73-8c0a-110fefc1f985@linaro.org>
+ <6564d4a5-9299-4de3-99ca-ec4094b9e642@app.fastmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAAibmn1sJ8cCyExHaEw853bek1hUt8QrA4Lv5=1R=zX=v=51QQ@mail.gmail.com>
+In-Reply-To: <6564d4a5-9299-4de3-99ca-ec4094b9e642@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,77 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/12/24 23:17, Phil Dennis-Jordan wrote:
+On 23/12/24 22:01, Jiaxun Yang wrote:
+> 
+> 
+> 在2024年12月23日十二月 下午3:15，Richard Henderson写道：
+>> On 12/22/24 15:40, Jiaxun Yang wrote:
+>>> @@ -9,7 +9,7 @@ static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop)
+>>>        TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
+>>>        TCGv t0 = make_address_i(ctx, src1, a->imm);
+>> ...
+>>> @@ -28,7 +28,8 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop)
+>>>        TCGLabel *l1 = gen_new_label();
+>>>        TCGLabel *done = gen_new_label();
+>>>    
+>>> -    tcg_gen_addi_tl(t0, src1, a->imm);
+>>> +    tcg_gen_mov_tl(t0, src1);
+>>> +    t0 = make_address_i(ctx, t0, a->imm);
+>>
+>> The move before make_address_i is not required.
+>> See the similar code just above in gen_ll.
+> 
+> I think it’s necessary, I thought the same and end up spending hours to track down the problem.
+> 
+> make_address_i won’t make a new temp_reg if imm is zero.
 
->      > Do you have other changes in your v16? I'm quite happy to
->     integrate this
->      > v15.
-> 
->     The ones proposed by Akihiko are the only ones. I’ve already
->     implemented them, so I’m happy to post v16.
-> 
-> 
-> OK, rebasing on the upstream master branch has revealed it's not quite 
-> so simple: there are a bunch of clashes with the recent sysemu->system 
-> rename and the removal of DEFINE_PROP_END_OF_LIST(). They amount to 
+Only if va32 = 0, IOW if HW_FLAGS_VA32 is not set. Per is_va32,
+VA32 == !LA64 or VA32L[1-3]
 
-Yep :/
+Indeed make_address_x() returns the same TCGv if !VA32 and imm=0.
 
-> pretty trivial changes, but almost all commits needed adjusting, so 
-> pulling v15 would be painful. I've just posted my v16 (including all the 
-> changes discussed here).
-> 
-> Thanks for taking an interest in this patch set!
-> 
->      >> Adapting this giant macro for each machine type seems rather
->     error-prone and the kind of thing a computer does better than a
->     human writing the code. I can't help but wonder if we could define a
->     generic version in boards.h and only implement the
->     DEFINE_*_MACHINE{_LATEST,}() wrappers specifically for each machine
->     type. I've created an issue for this on GitLab: https://gitlab.com/
->     qemu-project/qemu/-/issues/2744 <https://gitlab.com/qemu-project/
->     qemu/-/issues/2744> <https:// gitlab.com/qemu-project/qemu/-/
->     issues/2744 <http://gitlab.com/qemu-project/qemu/-/issues/2744>> I
->     might attack that once I've cut down my backlog of unmerged patches.
->      >
->      > Do we really want the vmapple machines to be versioned? I see 3
->     options:
->      > 1/ No (simplest)
->      > 2/ Not yet, adding versioning when we see the needs
->      > 3/ Yes
->      >
->      > Personally I prefer/recommend 1/ or 2/ ;)
-> 
->     I didn’t realise these were an option. :-) I was just inheriting
->     Alex’s code here and assumed it was the standard thing to do.
-> 
->     I could imagine we might change a few things to get better guest
->     version support and perhaps the guest iCloud support that was added
->     to the Virtualization.framework in macOS 15. But yeah it seems
->     unlikely that any of this would cause regressions.
-> 
->     What change would you propose to remove the versioning? Is there a
->     specific machine type I should use as reference? Or do you just want
->     to change that yourself, if I push my v16 code to a public repository?
-> 
-> 
-> OK, grepping through the code base reveals there are quite a number of 
-> the "smaller" machine types are unversioned. So I guess that's a no- 
-> brainer then. I've worked out I essentially just need to move the compat 
-> properties registration to the main init, the "desc" field on the 
-> machine class needs to be set, and the type becomes non-abstract. 
+> So when imm is 0 src1 and src2 is the same tcg reg the value will be clobbered by cmpxchg,
+> causing a couple of tcg tests to fail.
 
-Correct.
+Missing constraint or mis-designed make_address_x()?
+To KISS I'd use a temp in make_address_x() regardless of addend=0.
 
-> Everything still appears to work when I add that back in after removing 
-> all the macro definitions and instantiations. Change included in v16, 
-> but I've still got the reverse of the removal commit around, so if 
-> anyone has good arguments why we need it, I can easily add versioning 
-> back in.
+> 
+> I think only way to ensure t0 is a new temp reg is to perform a move here.
+> 
+> Thanks
+>>
+>>
+>> r~
+> 
 
-Great :)
-
-Thanks,
-
-Phil.
 
