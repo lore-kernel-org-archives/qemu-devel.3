@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359D7E7718D
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Dec 2024 23:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5AAE77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 00:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPVYr-0000Ju-PV; Sun, 22 Dec 2024 18:40:38 -0500
+	id 1tPWLl-0007aH-Sv; Sun, 22 Dec 2024 19:31:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tPVYn-0000JP-CE
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 18:40:33 -0500
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ id 1tPWLj-0007Zj-RE
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 19:31:07 -0500
+Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tPVYl-0006BO-8a
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 18:40:33 -0500
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 696A31140170;
- Sun, 22 Dec 2024 18:40:30 -0500 (EST)
+ id 1tPWLe-0003Lm-Od
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 19:31:07 -0500
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal
+ [10.202.2.52])
+ by mailfout.stl.internal (Postfix) with ESMTP id CFB5111400E4;
+ Sun, 22 Dec 2024 19:31:00 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Sun, 22 Dec 2024 18:40:30 -0500
+ by phl-compute-12.internal (MEProxy); Sun, 22 Dec 2024 19:31:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1734910830;
- x=1734997230; bh=wnJHyNacr/JaVXjVhPEC6VlvfjB69COxs2lNV3a+Y3k=; b=
- cmyyQBoPaBOaAE7F8Mrnc7bN3sG6knj2xlako8RXF1epu+QJ3/RRQzGfkrXTE0CX
- 973U+gAR6bBCKCNgp8T9g/wp0Gzj8HLl6B6Jfa0W295/jOWEAgoCZgeyQhlj4Udx
- DrtmLSphMRSkCZjiH/ITxF2iFZ/DUz4GcYOPGwiIlHlstuPrswx0C6wSPXcpRO1S
- EWMft7w29+t+oWfeefJ9MKLfQqzTeO2W5NFkzGLRGUuiPcvxDSx36jgCm2XLIaSh
- EM8ocbclp3yfk0KT5YAZuW06kFVii0kfawWL4+9Fj64s80sXRkGTuaEcLqE9nPMD
- na+eTPXJAwe7CpwMR0udxA==
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm3; t=1734913860; x=1735000260; bh=sF
+ kjPM6Ahyu09h+6QhdmM3ZEQFBsk+iSPjww6+WnRxk=; b=QOtsVIjlU7D9MHINoN
+ tbIPUK7+7OtAN7wCMfrpu+oWbHW3wNrWiNmiiMzqeibLnWmOqeXz7qJhXOA96yhv
+ QlPP2YkpSzS8y9kWcNSWqaeNr2KGeR3ssOXXAlBqfKj6HPFYgiS8I4U0UohsI4WP
+ mLo6e4D/yNyU4+6PyqhwKjDouYVvjDCB8CxrzMTUyZIWWsf7UoPagF11gCH6vkE0
+ ONT+/eLt6LP9vU4X8EFFEmtpzO+H/2D57LFs3PiONiAbMp88Lil/+qusgqgQDiyi
+ G6nyZxhEUjsfYpvse+9gZvbVif5aDJuMVEazJ3xNGIOHe96Klspa5cXrDN055MEW
+ mXuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734910830; x=
- 1734997230; bh=wnJHyNacr/JaVXjVhPEC6VlvfjB69COxs2lNV3a+Y3k=; b=D
- yXwi2wSuY/sZqJB4pNpabfmPluZMstuIyNe9GSmgPri0/G8zM7PJcfs8wInUsQOc
- 7uNTgesye+lwbDWw3KQekf6JlMqeGCV1wP4KoYUKG7aigq8m/YNuWoFfwueK1A88
- 6AtXlABW/lE1dmNhjqrK9r/pS4vZ4MAYYYjMGru+1x750nWghh49Uqmeud695/Pr
- cGtpC11Rq114HNkr4u0UG3jetEJUi2Kk67KJwsot48TizTj7ulooo7JZk8aXAi1n
- C+AngW10lUVp2rhK3YpZk9TGCI2z07h4OfosH81FJC3AjaxJ5BKHaa9Aw0mXSnAj
- AoJEnyLdExnPrh/2vS10w==
-X-ME-Sender: <xms:bqNoZw2GK30kkf22x8JWote_ZPGfUO0VseP-ZJneWI7lLTp92qYIew>
- <xme:bqNoZ7Hd6Yfgyxuzx_Sh3iELnKWA7VJz3P4jHd23yXV5KVXw9l8lk4D0znDx8164z
- pbbD0US0nwTmQ_kGMI>
-X-ME-Received: <xmr:bqNoZ47CTNDcNStPa7CeZbAzOJEUXe-kWhvF5Rs8HP-62ODAh9Cqkp-c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtledgudefucetufdoteggodetrfdotf
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1734913860; x=1735000260; bh=sFkjPM6Ahyu09h+6QhdmM3ZEQFBs
+ k+iSPjww6+WnRxk=; b=xzWyLhWyakjJ4LRpW6BwyIfB6K4mOn2EZsqZaw0ufuq4
+ JU2ghFzfpyPOxW/FeTGV47McTk8PNOEBVcnSbZMu14w+5Z3wAndd2GjBaVP+KyXC
+ KzjSMv/rmZ+rhgI3x9vZEf0UCk1gxaU0rjP/W5ljBld7rKHJMUzo8hZHO/TId9kc
+ MZNac7dfyr/lRqz6i30X5k4IlJKnlGoWIkvgMdTiWz/G3ZXYU+pivBQgs5pWrdDV
+ BlX0C1DioVhGfRd2/ONMWn2+t1upK4sgy1brhnJA2OR5uXLi21km+FFyvttru2eo
+ wnZCAiSHLwNR6itayz32+krhVRcoOc6BES7Dh/YlDw==
+X-ME-Sender: <xms:RK9oZ2wdhbfNdQP-g_UbhEGo9TjUY4i-5lBA-dtKcauIdAryEjlrvw>
+ <xme:RK9oZySrosvo9jrkkJ35_69v5-c0Xeb4P98_sbieVI-cYvlpdWHXIopTwyZo3L7Sb
+ QinpcimPXd60-Wo1Uo>
+X-ME-Received: <xmr:RK9oZ4WOlc7YOsVVNtGJAjHvYGUEkUvIOLTI0X-zuI5ORgyfMA3wnmgj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtledgvddvucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
  rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
- necuhfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhi
- hgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeelffek
- gedugefhtdduudeghfeuveegffegudekjeelnecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdr
- tghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
- epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehjihgrgihu
- nhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhrtghpthhtohepghgrohhsohhngheslh
- hoohhnghhsohhnrdgtnh
-X-ME-Proxy: <xmx:bqNoZ53WRWuT5TR4v3IqLxxx_au5DpQ9-9TZGExmVMDXbgakUcknkA>
- <xmx:bqNoZzEzjaaQgs4ZwS3CMk8KoJv7IPsKr1EUM-lX5tgmPsyAfRICFg>
- <xmx:bqNoZy9uL_aJfirppVTEbMNn2KYWrNTSh4omcRM_OCB6T9eSyD2lKQ>
- <xmx:bqNoZ4m1ITf4Kl8CJZlU3aXtf-09ux71Ch2UrsXs5gTgsKEAlOoZ9g>
- <xmx:bqNoZ7DK_zQOVNuS2_Bn4mkkaPYgtjSnFnjln4h-_RJaXea7Et7up8Oy>
+ htshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecu
+ hfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgoh
+ grthdrtghomheqnecuggftrfgrthhtvghrnhepleeigefhveefgeekvdffuddtteegkeek
+ ffevffeigedvjeehffdvffffgfeifedvnecuffhomhgrihhnpegvfhhirdhsuhhpphhorh
+ htpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+ mhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhnsg
+ gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghosghi
+ sghosehlohhonhhgshhonhdrtghnpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnoh
+ hnghhnuhdrohhrghdprhgtphhtthhopehjihgrgihunhdrhigrnhhgsehflhihghhorght
+ rdgtohhmpdhrtghpthhtohepghgrohhsohhngheslhhoohhnghhsohhnrdgtnh
+X-ME-Proxy: <xmx:RK9oZ8iYOFFH0x9Sq4jHC6-RlQM6CTEpeJ9BaMyCdeosE6iKRMvNnA>
+ <xmx:RK9oZ4CBAPPUUTmUenoTn8whSOrmjkM2yXXtPK4DlWH32uAJSeIdJw>
+ <xmx:RK9oZ9K_ds5Xp6URJEuyc8U0N3jm9Hh_TtJnzh50sir-QgRsd_-V5A>
+ <xmx:RK9oZ_DpG_2KElMtbN-2F8M8xPeMQaOWaEHJvRQF1mUoNHMaeheTGA>
+ <xmx:RK9oZ7_GhistfvY4aXJzbN-QN8JvdclqecWKse-APyVEHG7yaLapqVtu>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Dec 2024 18:40:29 -0500 (EST)
+ 22 Dec 2024 19:30:59 -0500 (EST)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Sun, 22 Dec 2024 23:40:26 +0000
-Subject: [PATCH 2/3] target/loongarch: Fix LLSC for LoongArch32
+Date: Mon, 23 Dec 2024 00:30:58 +0000
+Subject: [PATCH] hw/loongarch/boot: Support Linux raw boot image
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241222-la32-fixes1-v1-2-8c62b7e594db@flygoat.com>
-References: <20241222-la32-fixes1-v1-0-8c62b7e594db@flygoat.com>
-In-Reply-To: <20241222-la32-fixes1-v1-0-8c62b7e594db@flygoat.com>
+Message-Id: <20241223-la-direct-kernel-boot-v1-1-a79995d8b15e@flygoat.com>
+X-B4-Tracking: v=1; b=H4sIAEGvaGcC/x3MQQqDMBBG4avIrB0wg9bqVcSFjX/bQUlkIlIQ7
+ 27o8lu8d1KCKRL1xUmGQ5PGkOHKgvx3Ch+wztkkldRORHideFaD33mBBaz8inFn33RPedStq9B
+ SbjfDW3//7zBe1w2+vD+4ZwAAAA==
+X-Change-ID: 20241222-la-direct-kernel-boot-c598264710e7
 To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1603;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3980;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=OtFGtow9PzLmAd3ZSoPdl+J0IhcJdBLYWcZAIb5YQIg=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhvSMxVmtnO0uK/p9vliz3Wk9tHdTZlKK6Z9t2xayyyYUb
- eHquMzcUcrCIMbFICumyBIioNS3ofHigusPsv7AzGFlAhnCwMUpABPZJMLwT+HYwvCutzNq9nk/
- 8/5etGu9tsNbze89T+dNzDB3yKx8sJfhn6pIcIW/RfA9Xg3LzDzGwIyLxqI/I09s+LtXjuPS2tO
- 9vAA=
+ bh=7oK8b7rq/fD2GXyUApOzLkS1TwZEcDUnO5vv8AAlL0g=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhvSM9c6bdimYJ2c1ft4Q+MuNkSHK4WitwqRNpc73eANf6
+ R9LT/zfUcrCIMbFICumyBIioNS3ofHigusPsv7AzGFlAhnCwMUpABNZ1MjIsC+qpWnDhDwBu8w3
+ icZ6nkkfjvedeDl/T6lo5/Pl3n0zljEyPL9iz/JuywELmUw/6cM5Uuav5p/xCn9WW6td27fQfsp
+ MXgA=
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=103.168.172.153;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a2-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.147;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout-b4-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -120,42 +123,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gen_ll should use tcg_gen_qemu_ld_tl to load t1, as t1 is
-in TCGv which means it should be a tl type value.
+Many distros are shipping raw kernel images (i.e. vmlinux.efi).
 
-gen_sc should use make_address_i to obtain source address
-to ensure that address is properly truncated.
+Support booting such image by parsing header as per Linux's
+specification [1].
+
+[1]: https://docs.kernel.org/arch/loongarch/booting.html
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+It is based on my previous booting protocol patch
+---
+ hw/loongarch/boot.c         | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ include/hw/loongarch/boot.h | 17 +++++++++++++++++
+ 2 files changed, 62 insertions(+)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index 974bc2a70feddbf021a07b19a0859781eb3a11c4..4607f19b003ae70e5ca1e5b56b174bd7696d54cd 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -9,7 +9,7 @@ static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop)
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv t0 = make_address_i(ctx, src1, a->imm);
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 93847b0eaf8e50ce1a990b91267780e6785e1c2f..5bc889c51fafa9c6d37426b9bee9709c12183927 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -260,6 +260,43 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+     return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+ }
  
--    tcg_gen_qemu_ld_i64(t1, t0, ctx->mem_idx, mop);
-+    tcg_gen_qemu_ld_tl(t1, t0, ctx->mem_idx, mop);
-     tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
-     tcg_gen_st_tl(t1, tcg_env, offsetof(CPULoongArchState, llval));
-     gen_set_gpr(a->rd, t1, EXT_NONE);
-@@ -28,7 +28,8 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop)
-     TCGLabel *l1 = gen_new_label();
-     TCGLabel *done = gen_new_label();
++static int64_t get_linux_image_info(struct loongarch_boot_info *info,
++                                    uint64_t *kernel_entry,
++                                    uint64_t *kernel_low,
++                                    uint64_t *kernel_high)
++{
++    int fd;
++    struct loongarch_linux_hdr hdr;
++    int64_t kernel_size = -1;
++
++    fd = open(info->kernel_filename, O_RDONLY | O_BINARY);
++    if (fd < 0) {
++        return -1;
++    }
++
++    if (read(fd, &hdr, sizeof(hdr)) != sizeof(hdr)) {
++        close(fd);
++        return -1;
++    }
++
++    if ((le32_to_cpu(hdr.mz_magic) & 0xffff) != MZ_MAGIC ||
++        le32_to_cpu(hdr.linux_pe_magic) != LINUX_PE_MAGIC) {
++        close(fd);
++        return -1;
++    }
++
++    *kernel_entry = le64_to_cpu(hdr.kernel_entry);
++    /* Early kernel versions may have those fields in virtual address */
++    *kernel_entry &= MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
++    *kernel_low = le64_to_cpu(hdr.load_offset);
++    *kernel_low &= MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
++    kernel_size = le64_to_cpu(hdr.kernel_size);
++    *kernel_high = *kernel_low + kernel_size;
++
++    close(fd);
++    return kernel_size;
++}
++
+ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+ {
+     uint64_t kernel_entry, kernel_low, kernel_high;
+@@ -270,6 +307,14 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+                            &kernel_entry, &kernel_low,
+                            &kernel_high, NULL, 0,
+                            EM_LOONGARCH, 1, 0);
++    if (kernel_size < 0) {
++        kernel_size = get_linux_image_info(info, &kernel_entry,
++                                           &kernel_low, &kernel_high);
++        if (kernel_size >= 0) {
++            kernel_size = load_image_targphys(info->kernel_filename,
++                                              kernel_low, kernel_size);
++        }
++    }
  
--    tcg_gen_addi_tl(t0, src1, a->imm);
-+    tcg_gen_mov_tl(t0, src1);
-+    t0 = make_address_i(ctx, t0, a->imm);
-     tcg_gen_brcond_tl(TCG_COND_EQ, t0, cpu_lladdr, l1);
-     tcg_gen_movi_tl(dest, 0);
-     tcg_gen_br(done);
+     if (kernel_size < 0) {
+         error_report("could not load kernel '%s': %s",
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index 96ec15016a314499acf65c6c47e0c4932aa99d01..5e8bd4dd73bbb27abccfa1fa577df52aed15b6a2 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -8,6 +8,23 @@
+ #ifndef HW_LOONGARCH_BOOT_H
+ #define HW_LOONGARCH_BOOT_H
+ 
++/* Linux Image Format */
++#define LINUX_PE_MAGIC  0x818223cd
++#define MZ_MAGIC        0x5a4d /* "MZ" */
++
++struct loongarch_linux_hdr {
++    uint32_t mz_magic;
++    uint32_t res0;
++    uint64_t kernel_entry;
++    uint64_t kernel_size;
++    uint64_t load_offset;
++    uint64_t res1;
++    uint64_t res2;
++    uint64_t res3;
++    uint32_t linux_pe_magic;
++    uint32_t pe_header_offset;
++} QEMU_PACKED;
++
+ /* UEFI 2.10 */
+ #define EFI_SYSTEM_TABLE_SIGNATURE       0x5453595320494249
+ #define EFI_2_100_SYSTEM_TABLE_REVISION  ((2<<16) | (100))
 
+---
+base-commit: c69612063e1844b76ac01e3a781b979548c3585c
+change-id: 20241222-la-direct-kernel-boot-c598264710e7
+
+Best regards,
 -- 
-2.43.0
+Jiaxun Yang <jiaxun.yang@flygoat.com>
 
 
