@@ -4,205 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA47E7718B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 17:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DEEE7718B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 18:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPmeh-000802-Hj; Mon, 23 Dec 2024 12:55:47 -0500
+	id 1tPms5-0004iH-MW; Mon, 23 Dec 2024 13:09:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1tPmed-0007zL-5H
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 12:55:43 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tPms2-0004hb-SL; Mon, 23 Dec 2024 13:09:34 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1tPmea-0006K1-0H
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 12:55:42 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BNGuk9v025707;
- Mon, 23 Dec 2024 17:55:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=xzBxkSlEQLFGiPAnjeJc+DtkwQKRQyK954BiJyqfRIc=; b=
- PQZHG/eVuK7UneEUsnE43boYnO/uAfL8X0F70iiOyJ6fclzQAv/zeDAP4PrY6n0P
- Sc+jfbAgddLhYOgqTKcwSknOu2RXXbf11JEU81zxK7zHO3Aiw1kUg+rWHNxeR1R0
- mdQMET4N/4XnGFhsVQ/RKE+I9z2VU09xfYQPzgFaJds8H6Dq1r+lVzvagX09NNvh
- G2CAXLUih5KzRgTlWKR3fPN2be6oQxhfm/9h+nu2vXqUQawv3HVVfQiefthpoJlQ
- mlM7BdU5iv20Vt4VFXD19N20eZ5d4s9mS1J+KihI5Cy8Yv0Mh76t4gW0yDX87MHU
- k2HKXlf0rOUpP3IdfrPhUQ==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nq6sb05v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Dec 2024 17:55:36 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BNH4T3d029612; Mon, 23 Dec 2024 17:55:35 GMT
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2044.outbound.protection.outlook.com [104.47.66.44])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 43nm4debcp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Dec 2024 17:55:35 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wgKL0rOoVolgF44UGghtQPJjQnMnrZqZZr5FqksZIP4l081lJcnRkv5LVRRE6WyoiO3ivN1uzH+fxzoDFqc7cLtS7PtDWm2sn5yTd4v6H5nRgCjiOTVVPi63W2GQPAi8JpJf8uPrpPqKEzZaAk+MDW0KjOkKv3HKz5JEH/rdF4bkFUcE0LuPcpedXTWqCc3A/bUcpLn0qRrJjGG9N5LOMH0RedJjtO0S67jmd6rDiCZKzvPaHOIpZvMg/VPbsd/eoUx7/rQAspQWoW90y3deMKWyiar0nDH1+NAMvx78XbBdFt898+A3Iu6+ht07Me2WMISWCWcbSsdKeXuQjNUd/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xzBxkSlEQLFGiPAnjeJc+DtkwQKRQyK954BiJyqfRIc=;
- b=cbfiJqOMg/zJnYf8y0c3dS/XJhiMDlrJ6sspzi2JFmLJ84asqRTYLNNA1bXm6LmzWjjfdz9J+HFLxs1mUJL3FK1b6z/TLroq0b0kL0Fxpj4Fa/y/C88OL3Ayagi4+kXE22dHzvnBj7AHc+AAO9zrcdlqok8d42Z+lmu5UoPpo1T/E0Eiju/s9bxc5CWbIWJnbPubiIw9157SdyTPL/sLg23TiY/uvEWT4XpNXvFBYJYiDrgwhd3Y/gFJsHNeNNG3e0SDipwMXcep7Gu8B/aN6yM5LXxk84DdivYue2xGDX/y7f8WAmUNVd17AIIQ6mMOExtrPgfBwJ5uNyyBBZfozg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xzBxkSlEQLFGiPAnjeJc+DtkwQKRQyK954BiJyqfRIc=;
- b=P+roDJC7k2KiJEBXS2akYOXZ6NQHhKHA4d/G76SglHWTlvnEyBVsejN10HtWS8vIblXUHkea43cE/JFbL6Te67pHVKJttrFNvqKvcX2j6ZixePsx2Mz2/4P9s8fFdk7XUMBGEZG+yvLxkMQLMdptb+p1VUri/Y3tPBgi3gkJIlc=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by DS0PR10MB7397.namprd10.prod.outlook.com (2603:10b6:8:130::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.20; Mon, 23 Dec
- 2024 17:55:28 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53%6]) with mapi id 15.20.8272.013; Mon, 23 Dec 2024
- 17:55:28 +0000
-Message-ID: <cc96d3e7-4362-461f-8398-bea956b22d73@oracle.com>
-Date: Mon, 23 Dec 2024 17:55:19 +0000
-Subject: Re: [PATCH v2 0/7] migration: Drop/unexport migration_is_device() and
- migration_is_active()
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Maor Gottlieb <maorg@nvidia.com>
-References: <20241218134022.21264-1-avihaih@nvidia.com>
-Content-Language: en-US
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <20241218134022.21264-1-avihaih@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM0PR01CA0173.eurprd01.prod.exchangelabs.com
- (2603:10a6:208:aa::42) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tPmrz-0008Rf-GF; Mon, 23 Dec 2024 13:09:34 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YH5bv74Djz6LDV2;
+ Tue, 24 Dec 2024 02:08:11 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2BB5014039E;
+ Tue, 24 Dec 2024 02:09:24 +0800 (CST)
+Received: from localhost (10.47.75.118) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 23 Dec
+ 2024 19:09:23 +0100
+Date: Mon, 23 Dec 2024 18:09:20 +0000
+To: Alireza Sanaee <alireza.sanaee@huawei.com>, <linuxarm@huawei.com>
+CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <zhao1.liu@intel.com>,
+ <zhenyu.z.wang@intel.com>, <dapeng1.mi@linux.intel.com>,
+ <yongwei.ma@intel.com>, <armbru@redhat.com>, <farman@linux.ibm.com>,
+ <peter.maydell@linaro.org>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>, <mtosatti@redhat.com>,
+ <berrange@redhat.com>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <Jonathan.Cameron@Huawei.com>,
+ <jiangkunkun@huawei.com>, <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
+Subject: Re: [PATCH v4 3/7] arm/virt.c: add cache hierarchy to device tree
+Message-ID: <20241223180920.000049d4@huawei.com>
+In-Reply-To: <20241216175414.1953-4-alireza.sanaee@huawei.com>
+References: <20241216175414.1953-1-alireza.sanaee@huawei.com>
+ <20241216175414.1953-4-alireza.sanaee@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|DS0PR10MB7397:EE_
-X-MS-Office365-Filtering-Correlation-Id: 623e65db-9d46-43d4-a9c5-08dd237afc4b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?c1Z2K2Jac0xPNzYrQnpOclZYMmhEUFJIbkFUMlpMZEY1WXBpaHpXaHRqODhH?=
- =?utf-8?B?Zlc2N0VmbkVLVTJManZla2ZIUm1MUHVuQWRIYVhlZ2VzRHZxcVI0UkFNSmh2?=
- =?utf-8?B?bCtvUlArQ0h1M2MveERvdlZGZ0E5NlBTWXU3RHl6QktxUmNDaWc2NUVoUnFk?=
- =?utf-8?B?NndwdXNSWmw1cmxRbjB2TENYSitsTE9OOWRwL2V2LzAxV2p6UUFQcjlzU2Fy?=
- =?utf-8?B?dCtaZk4wdDV2VUZseGI5Vk56dm5WRVFUWVUyd0x6dWxnaGdtbGRvcjUxNXcz?=
- =?utf-8?B?WWF5WnpGdVpVMnpNNWYvOGtCdWFaSGNKUEkzM2RneVhEdk8zYmNuSGZGaWVl?=
- =?utf-8?B?TFlvcmcvZnF0MzE3bS9PZEwrUjgxbUNMSTJqVGFUQkFFK0QvN2RFcm9UTDJr?=
- =?utf-8?B?d2Zhdi85Qy9GdzcybFNrSFNTeTZUMDR0ZTRhc1Flcnk2QnJMbkJDbFg5akVR?=
- =?utf-8?B?eVhMRVVRZC9OdFp3KzhHK1hxYjFvUS94MFY0RUdCY3JTY05zWURJcjJ1K0Vk?=
- =?utf-8?B?ck85cFgrYVdEMVpNVWdRRndLSmNzaEpReUJ1U3N2YzBzSDhBQW90NnIwbjYx?=
- =?utf-8?B?dGlWdVNaazFuUVQwSmFUaWthcWJIT21YOXNieGhNampTclFyRnBXWXQrZWYx?=
- =?utf-8?B?ZUdpMHAwM0hlaDM5TGpQb3JzektzUEw3bHFLUi9mRDlzaWxvWUh2cVVldkNq?=
- =?utf-8?B?Vk1KTWVpRkIrNDVnb0RSdHh0dGhjSWpPcVZBdDg0VERYTFRpV09DZ25LRjc1?=
- =?utf-8?B?cStJN2E5WGVIQ3VORFdtdEpQZzUzY0NyTk5lcmJQQUpGdVAvMlZ4WlBUZDRq?=
- =?utf-8?B?WXcrUFVMdnh1azdZTkYwL0tPNzVnZnpkR3NDZC80VUJUb2FQbWhLODJScElJ?=
- =?utf-8?B?WWYxVy9OUzZMdktscExBWmZhTkkxUXYxZGZFR0o3Y3pPTUY4bGRUdjh0WjBG?=
- =?utf-8?B?ZFp0VE1vSm5HSzZwTkFaamNsVVdlSWt4RWt5N28wOEM2VnM1TUtDUUNaUGpW?=
- =?utf-8?B?NlpITE5SVzVBTG9nTG5sRE1XckZBTEYvaGxvT0RRTEtwaE5ZVWFsd3ltQ1FF?=
- =?utf-8?B?VWh5WVUraW8vUWxjcFgzak55SFpEY1lXci90VGN2bHcxQ01mN2hzNzJXNGhV?=
- =?utf-8?B?eDBBSkhBS0Z1OUpyOEEvRkkyalBwU2VNdjNtRzkxZlBXcHJQTTJSM3Yvd29m?=
- =?utf-8?B?bEhGUndPWG9uTXl2RGxWYU5oL1BYY05NWGZXWlNndmpTaGdiSXNlZHNvdXdP?=
- =?utf-8?B?L1BQZGQzY1RpMCtIUDBOdDZTN2FHTFhOeW1SRE9YbFcxeGhiV2laa1R3bDA2?=
- =?utf-8?B?Nm82bWhaVjYrdGlYYWhJcC90ZEVQdFNTS2VsQTNET2JGUXJvcDhWbTV5OWlY?=
- =?utf-8?B?TytNcGZNSU5PNzF0TUNybFFJdW93cHUzTDByOTlnRWh0QnUrREluTERvNldp?=
- =?utf-8?B?MjZ2M3A5UlpHQnhIZ1dCTzBIK25STHp3T3B0SlpEeFpUeEJjS3BuaTFpRWV6?=
- =?utf-8?B?T09CYStvbDROeFdnTlJPb0JVN1hpUTV3Y056dW9sYVd1YUxLVWtoako2dVpL?=
- =?utf-8?B?Ri9WUmdkYjBCTVJZWURPYlNmTXNJdGl5MGhMMndxcTVjWXA1b0NNY2U5b3Ra?=
- =?utf-8?B?OFpDaUFNWGZUWVVsV01QVGVXb0tXWitWb2IrM1lHQzFqRFhWcXdodS8vMlRh?=
- =?utf-8?B?R1M5ODU4TjZVYU5uQjZQTWtBQTVUTEpVeHVPS1BxekdrOFNjOHYwQzBBdDVD?=
- =?utf-8?B?WUd4QXJWNXpEcFlQSXY2REVBR0ZZcFE1TFhQZVhrYWdVVXg5UGl5V2FZSCs4?=
- =?utf-8?B?ckZnclh1TzBPcW1uNDVBcURpcmlNamdyUmxESHc2aitaaEc1ZlU4eE15WGNu?=
- =?utf-8?Q?myjU1KXT16x3u?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SHYya2YzNlhFNVBsUzJhNG1RVVNlcWZjMDFXcjVIbXpoclU5S3lOUmtINFpR?=
- =?utf-8?B?Um1ISUw5aHVGeXZGQ2NsNE1ZQ0dZaVliM2tnNkREeXlLQ01ZL2FTS1NLbXhZ?=
- =?utf-8?B?VkRmZmRHMmRodW5uKzdOcWdGaEdyazd5M2hRK0sxRFQ0ZjkrRGV4RWtWUVho?=
- =?utf-8?B?OVVxM3h4aDhmalh5UWNqcWRzMkR3Y25HSGRPRDdpaGpsWUxnZTRPdklQQjVV?=
- =?utf-8?B?U1RHQWNPbms1eXpvZnVZbElFME41dElQQmVhOG1rMjRVSitRRzhxbHBTdHFG?=
- =?utf-8?B?Nmx2T21EWmo2TE5naEdOM3h0VzYzSkM5SlkwREc2WFhxeTh6RXgxdzh1MHVF?=
- =?utf-8?B?YUdJbnRWSEJVaWFYc0E2dTcycXljYzE5OHdQU01VSSt3NmhGdzM0Tll6RTVL?=
- =?utf-8?B?Zi8ycVJPTWl1aHM5elQxRDc1MFh4aGZ3cW9OUzArVHEyalo5Q3ZWRUo5OXdn?=
- =?utf-8?B?bTZPbUhCaDFoWW5PKzdISTBGZnRPQ0tOK0E1OTh1UnVxSHg5clN1UjhyOTM5?=
- =?utf-8?B?WHFKYWY1ak42KzlSenQvTncrbnpTTGtxUkZhcGxJUTE3QytmYkxXaGJhWDFD?=
- =?utf-8?B?a1FUN3Vac0pyQzV6dGEzWEp4ck1QdHpib00vejZzY21vRE1nS3FkVVRLRHNL?=
- =?utf-8?B?VWdkcmJtK0Y1ZGp6cTZWaWhqbEludXNCcHJhaWNwOGJsejlhc2dDSkxBQmJ4?=
- =?utf-8?B?UVJFUVBEM1A0aXRwRUhwUUJvZ3lFTXQzRDU3WHZLV1NDVVVYMk1tREFjNWhW?=
- =?utf-8?B?WEk3blVsTloyWitxK1NYWlA4OUlWVklBR3dWNlpkREZBZy9acEFHZDRMWXVs?=
- =?utf-8?B?aVFVOVpsTVFDdWx5MDVXOXNPZWYvVlpGVUJtaU9sdWJhcDBBZGducWpDSDJh?=
- =?utf-8?B?WEhhOGxTcmRZaDBGWUhxcGxoSEw4SUVGTnZoWWdhL3dwdGpWTGpROVpDQkMv?=
- =?utf-8?B?WExHOEZpY3pESWhhTTNkQTRYMThubG53QUVxaHR1MUZHeHBJVmdNKzlDSkln?=
- =?utf-8?B?WURoOVg4OTJVMjdJZmlFeEo1bFlJSmJiaDNvUEYvaTJpM1I0cGx1d3JoWm1k?=
- =?utf-8?B?Y1FsQldDWW93NXFGMERLb1VCYkxrZmVwcTJKekRsc0FJTHBHSEFtMVN4cll1?=
- =?utf-8?B?Y2M5MEk0WWRJODhmelZMWUcvQ2JCd3VNNjZRWk9iY0MybFlzVDhQWGFRVlpX?=
- =?utf-8?B?bkYvQ2oxWXJEYU1rZTZDTDJrTHFSK2dFOVhFNVFNVGVod1FxRThkK0JUS0NQ?=
- =?utf-8?B?N2lySE1xeWM2RGQ3eEJEWE1Cc25nSW40c21QUERLbW5KWDBSVkEwQUYxM3Mz?=
- =?utf-8?B?RHg1UEJKZ01KWGNVejBUQTdhR09wZlZxQytkTGJheTlpc05WcFFxQ0docDVG?=
- =?utf-8?B?WjRZSSt5U3duZnZYdEppVEwzM1FhREllZUlCWThXNUpOMUYzZXhQNWxNWXUr?=
- =?utf-8?B?dTNORzJwenljYVFiUWl5U2VabnlCMXBVaFBhY1NGa3VqY2FHL3p2NDg4QWg0?=
- =?utf-8?B?bFhQcUF1cHdWN3ZCc3BQL0xTK05QMzA3OGFjMzA0WE41Ty9WNFZlSjNtVWp1?=
- =?utf-8?B?TGNVS3JuR0t6OTV1Zi9MV3NVcTQ1UTB3ZmgrYXVjdFVnYktuRkFESXdOQTY0?=
- =?utf-8?B?akY0cjlQUGZGcjJwRmFJQWFabEc2alMxMG1vY1BMbUFMUmFLZXk4VjRxWTQr?=
- =?utf-8?B?dlNQWERUSzlud1NTZS9VWXVTQW1nRnNnRGpJcmZNRWdnVlY1YmpGSjluSEdN?=
- =?utf-8?B?b1VhUlI5SXNWVnFKSlNDQVNHbERSVGtxaUZqK29BWmM3QjQzdFB6aG5iRmJQ?=
- =?utf-8?B?YitBd0hqdFkvb0wzcVlzM041cmVpd2ZmalBGcFN4ek9GMHZVMzhHL2p3eHgx?=
- =?utf-8?B?YTUwK2c0L2UvRlpJL0VoQ2JmL3hiUWE3VmxiU1ZZZkI3citnWVJ5ZnJINUVn?=
- =?utf-8?B?aURNU0NXUVNZUEJsWHhtYlNpdlFKT0VLSTl6NzExaUdMOFIzZlJNOHJHLzUw?=
- =?utf-8?B?TkpEOStuRDJEWGdkdHEzWmVFTi9IMkNIczJnbExXLzhNbkZ0NG13bHEvdlNH?=
- =?utf-8?B?MGR6YTFyWUtXZ2VqVXNwK3luQ1ZCRnNJWnlOUythU3NzR2RnRWVTTWZ6aEV4?=
- =?utf-8?B?N3A5RWVaSExLTisydkxxYmUvWjJacFNzU0J0NmZpRUdQOGoxWlhVeXJhV3Jn?=
- =?utf-8?B?b1E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: gRR0ji0VqqvUgjnzQwJH1/n5aNtjLunu9MMyC86YsdglGyHGDG/V7VlLniTkbFYcgE2wvRh20/HGzgCzqFCq7CCGknbWNih7np8VkkTiMAzVXCBWQTTXKi+pbUUjr5l1VHgkUQSdEuzXVABU/0aREcciRheLroFcumBbtzF2EJKhGHrpMa65+Jti6kTFWiGX6zDw1Tk0KXDkOuLyh8X26Q7HXVda9VVT6uwt6dtG5hJsKuTvRO9GUL5ddLquwFP2kLRAs6AG+kQxxBth3uRpl6pCo2S7+mr61JVVWW0vtVAa4zZ47AeXAbN7+yieSb/2YBUxG5ZVaTXxBO3HuOud48Aw3saZCdPncPjtw8ZKdt5x5DPdb6imjoj7kSPBhhBTVjZoIRpXU6iwfaUuxsGYoZvC9/tflzjPSpSl7m/Xs2BAElEGUrEcYuiRDHDGOqodXvnOw8NPs9CDE4iuvVX0pc78CYNSv+jQWYl95TbL14vH+ZwHHFSAUjpX9TFwtgY7kL4KYWGdOSf7fyLC0ZyauUimnCIUwp538lLAkOAGtx0dngs7ktjMj7wY7zG3JOV6Ycz1uuQFKlpKeFf8i+7jwrRCxdWAU3tedYyCKIYW1pI=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 623e65db-9d46-43d4-a9c5-08dd237afc4b
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Dec 2024 17:55:28.4790 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AlNV7C5aSJ64JCXWYB6y+2rHuSCeYNIltYvQtQAT0mpX7sSV6TFTGWV/MEifmkALoIAUlnA7e+DvQDQbtjhDRnkMmKJMpSW+CeXgVSh5e7A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7397
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2024-12-23_07,2024-12-23_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 malwarescore=0
- phishscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
- definitions=main-2412230159
-X-Proofpoint-ORIG-GUID: b4omj_Bx4Nw1-MdAFdn2ZBnvsJU6nNFJ
-X-Proofpoint-GUID: b4omj_Bx4Nw1-MdAFdn2ZBnvsJU6nNFJ
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.47.75.118]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -215,40 +71,356 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/2024 13:40, Avihai Horon wrote:
-> Hello,
-> 
-> This follows up on Peter's series [1] to simplify migration status API
-> to a single migration_is_running() function.
-> 
-> Peter's series tried to drop migration_is_device() and
-> migration_is_active(), however VFIO used them to check if dirty page
-> tracking has been started in order to avoid errors in log sync, so they
-> couldn't simply be dropped without some preliminary cleanups.
-> 
-> This series handles these preliminary cleanups and eventually drops
-> migration_is_device() and unexports migration_is_active().
-> 
-> The series has been migration tested with the following:
-> - VFIO device dirty tracking.
-> - Legacy VFIO iommu dirty tracking.
-> - vIOMMU + Legacy VFIO iommu dirty tracking (migration with vIOMMU is
->   currently blocked, so I used a patched QEMU to allow it).
-> 
-> I also tested calc-dirty-rate as now VFIO dirty pages should be included
-> in its report, and indeed they are.
-> 
-> I didn't test it with iommu DPT as I don't have access to such HW.
-> It would be great if someone with the proper HW could test it.
-> 
-FWIW tested iommufd DPT (migration and calc-dirty-rate) on said compatible
-hardware (Milan hardware). Things look to be working as expected. I deferred
-vIOMMU IOMMUFD DPT testing to my own follow-up once I am back from vacation.
+On Mon, 16 Dec 2024 17:54:10 +0000
+Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
-Thanks for fixing calc-dirty-rate along the way your cleanup!
+> Specify which layer (core/cluster/socket) caches found at in the CPU
+> topology. Updating cache topology to device tree (spec v0.4).
+> Example:
+> 
+> Here, 2 sockets (packages), and 2 clusters, 4 cores and 2 threads
+> created, in aggregate 2*2*4*2 logical cores. In the smp-cache object,
+> cores will have l1d and l1i.  However, extending this is not difficult).
+> The clusters will share a unified l2 level cache, and finally sockets
+> will share l3. In this patch, threads will share l1 caches by default,
+> but this can be adjusted if case required.
+> 
+> Currently only three levels of caches are supported.  The patch does not
+> allow partial declaration of caches. In another word, all caches must be
+> defined or caches must be skipped.
+> 
+> ./qemu-system-aarch64 \
+>     -machine virt,\
+>          smp-cache.0.cache=l1i,smp-cache.0.topology=core,\
+>          smp-cache.1.cache=l1d,smp-cache.1.topology=core,\
+>          smp-cache.2.cache=l2,smp-cache.2.topology=cluster,\
+>          smp-cache.3.cache=l3,smp-cache.3.topology=socket\
+>     -cpu max \
+>     -m 2048 \
+>     -smp sockets=2,clusters=2,cores=4,threads=1 \
+>     -kernel ./Image.gz \
+>     -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+>     -initrd rootfs.cpio.gz \
+>     -bios ./edk2-aarch64-code.fd \
+>     -nographic
+> 
+> For instance, following device tree will be generated for a scenario
+> where we have 2 sockets, 2 clusters, 2 cores and 2 threads, in total 16
+> PEs. L1i and L1d are private to each thread, and l2 and l3 are shared at
+> socket level as an example.
+> 
+> Limitation: SMT cores cannot share L1 cache for now. This
+> problem does not exist in PPTT tables.
+> 
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Hi Ali,
 
-	Joao
+
+Hmm. So the bit where the Co-dev makes sense is the utility functions pulled
+forwards from the ACPI code. That is quite a bit of the code so fair enough.
+
+A few comments and questions follow that I missed during internal reviews.
+Sorry they are late!
+
+
+What happens if we see registers that indicate an L4 or higher?  Does it
+just ignore it for now?  I've no problem with it doing so as those are
+rare systems at best and describing the lower caches is still better
+than nothing. I'm not sure what Linux does though if the CPU registers
+say there are more caches than in DT / ACPI?
+
+> ---
+>  hw/arm/virt.c         | 390 ++++++++++++++++++++++++++++++++++++++++++
+>  hw/cpu/core.c         |  97 +++++++++++
+>  include/hw/arm/virt.h |   5 +
+>  include/hw/cpu/core.h |  26 +++
+>  4 files changed, 518 insertions(+)
+
+
+>  static void fdt_add_cpu_nodes(const VirtMachineState *vms)
+>  {
+>      int cpu;
+> @@ -418,6 +608,24 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
+>      const MachineState *ms = MACHINE(vms);
+>      const VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+>      int smp_cpus = ms->smp.cpus;
+> +    int socket_id, cluster_id, core_id, thread_id;
+> +    uint32_t next_level = 0;
+> +    uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+> +    uint32_t thread_offset = 0;
+> +    int last_socket = -1, last_cluster = -1, last_core = -1, last_thread = -1;
+> +    int top_node = 3, top_cluster = 3, top_core = 3, top_thread = 3;
+
+I wonder if a few comments here make sense, or something that makes it clear 3
+is about the levels of cache currently describable.  
+
+> +    int bottom_node = 3, bottom_cluster = 3, bottom_core = 3, bottom_thread = 3;
+> +    unsigned int num_cache;
+> +    CPUCaches caches[16];
+> +    bool cache_created = false;
+> +
+> +    num_cache = virt_get_caches(vms, caches);
+> +
+> +    if (ms->smp_cache.IsDefined &&
+> +        partial_cache_description(ms, caches, num_cache)) {
+> +            error_setg(&error_fatal, "Missing cache description");
+> +            return;
+> +    }
+>  
+>      /*
+>       * See Linux Documentation/devicetree/bindings/arm/cpus.yaml
+> @@ -446,9 +654,15 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
+>  
+>      for (cpu = smp_cpus - 1; cpu >= 0; cpu--) {
+> +        socket_id = cpu / (ms->smp.clusters * ms->smp.cores * ms->smp.threads);
+> +        cluster_id = cpu / (ms->smp.cores * ms->smp.threads) % ms->smp.clusters;
+> +        core_id = cpu / (ms->smp.threads) % ms->smp.cores;
+> +        thread_id = cpu % ms->smp.cores;
+> +
+>          char *nodename = g_strdup_printf("/cpus/cpu@%d", cpu);
+>          ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(cpu));
+>          CPUState *cs = CPU(armcpu);
+> +        const char *prefix = NULL;
+>  
+>          qemu_fdt_add_subnode(ms->fdt, nodename);
+>          qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "cpu");
+> @@ -478,6 +692,177 @@ static void fdt_add_cpu_nodes(const VirtMachineState *vms)
+>                                    qemu_fdt_alloc_phandle(ms->fdt));
+>          }
+>  
+> +        if (!vmc->no_cpu_topology && num_cache) {
+> +            for (uint8_t i = 0; i < num_cache; i++) {
+> +                /* only level 1 in the CPU entry */
+> +                if (caches[i].level > 1) {
+> +                    continue;
+> +                }
+> +
+
+One blank line only.
+
+> +
+> +                if (caches[i].type == INSTRUCTION) {
+> +                    prefix = "i-cache";
+> +                } else if (caches[i].type == DATA) {
+> +                    prefix = "d-cache";
+> +                } else if (caches[i].type == UNIFIED) {
+> +                    error_setg(&error_fatal,
+> +                               "Unified type is not implemented at level %d",
+> +                               caches[i].level);
+> +                    return;
+> +                } else {
+> +                    error_setg(&error_fatal, "Undefined cache type");
+> +                    return;
+> +                }
+> +
+> +                set_cache_properties(ms->fdt, nodename, prefix, caches[i]);
+> +            }
+> +        }
+> +
+> +        if (socket_id != last_socket) {
+> +            bottom_node = top_node;
+> +            /* this assumes socket as the highest topological level */
+
+Is there any way we can check that remains true?  Maybe a question for other
+reviewers.
+
+> +            socket_offset = 0;
+> +            cluster_offset = 0;
+> +            if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_SOCKET) &&
+> +                find_the_lowest_level_cache_defined_at_level(ms,
+> +                    &bottom_node,
+> +                    CPU_TOPOLOGY_LEVEL_SOCKET)) {
+> +
+> +                if (bottom_node == 1) {
+> +                    error_report("Cannot share L1 at socket_id %d.", socket_id);
+
+Maybe add a comment on why.  (DT limitation rather than a theoretical one).
+
+> +                }
+> +
+> +                cache_created = add_cpu_cache_hierarchy(ms->fdt, caches,
+> +                                                        num_cache,
+> +                                                        top_node,
+> +                                                        bottom_node, cpu,
+> +                                                        &socket_offset);
+> +
+> +                if (!cache_created) {
+> +                    error_setg(&error_fatal,
+> +                               "Socket: No caches at levels %d-%d",
+> +                               top_node, bottom_node);
+> +                    return;
+> +                }
+> +
+> +                top_cluster = bottom_node - 1;
+> +            }
+> +
+> +            last_socket = socket_id;
+> +        }
+> +
+...
+> diff --git a/hw/cpu/core.c b/hw/cpu/core.c
+> index 495a5c30ff..186bb367e7 100644
+> --- a/hw/cpu/core.c
+> +++ b/hw/cpu/core.c
+> @@ -102,4 +102,101 @@ static void cpu_core_register_types(void)
+>      type_register_static(&cpu_core_type_info);
+>  }
+>  
+> +bool cache_described_at(const MachineState *ms, CpuTopologyLevel level)
+> +{
+> +    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3) == level ||
+> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2) == level ||
+> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I) == level ||
+> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D) == level) {
+> +        return true;
+> +    }
+> +    return false;
+> +}
+> +
+> +int partial_cache_description(const MachineState *ms,
+> +                              CPUCaches *caches,
+> +                              int num_caches)
+
+Can be wrapped onto fewer sub 80 char lines.
+
+> +{
+> +    int level, c;
+> +
+> +    for (level = 1; level < num_caches; level++) {
+> +        for (c = 0; c < num_caches; c++) {
+> +            if (caches[c].level != level) {
+> +                continue;
+> +            }
+> +
+> +            switch (level) {
+> +            case 1:
+> +                /*
+> +                 * L1 cache is assumed to have both L1I and L1D available.
+> +                 * Technically both need to be checked.
+> +                 */
+> +                if (machine_get_cache_topo_level(ms, 
+> +                                                 CACHE_LEVEL_AND_TYPE_L1I) ==
+> +                    CPU_TOPOLOGY_LEVEL_DEFAULT)
+> +                {
+> +                    assert(machine_get_cache_topo_level(ms,
+> +                                CACHE_LEVEL_AND_TYPE_L1D) ==
+> +                           CPU_TOPOLOGY_LEVEL_DEFAULT);
+
+assert not really appropriate way to trigger an exit.
+error_setg() or similar or just trigger an error_fatal.
+Not sure what is common in related code.
+
+> +                    return level;
+> +                }
+> +                break;
+> +            case 2:
+> +                if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2) ==
+> +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
+> +                    return level;
+> +                }
+> +                break;
+> +            case 3:
+> +                if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3) ==
+> +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
+> +                    return level;
+> +                }
+> +                break;
+> +            }
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +/*
+> + * This function assumes l3 and l2 have unified cache and l1 is split l1d
+> + * and l1i, and further prepares the lowest cache level for a topology
+> + * level.  The info will be fed to build_caches to create caches at the
+> + * right level.
+> + */
+> +int find_the_lowest_level_cache_defined_at_level(const MachineState *ms,
+> +                                                 int *level_found,
+> +                                                 CpuTopologyLevel topo_level) {
+> +
+> +    CpuTopologyLevel level;
+> +
+> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
+> +    if (level == topo_level) {
+> +        *level_found = 1;
+> +        return 1;
+
+This code evolved, but now it makes little sense to return the level found
+and the put it in level_found.  Perhaps just return a bool?
+
+> +    }
+> +
+> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
+> +    if (level == topo_level) {
+> +        *level_found = 1;
+> +        return 1;
+> +    }
+> +
+> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
+> +    if (level == topo_level) {
+> +        *level_found = 2;
+> +        return 2;
+> +    }
+> +
+> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
+> +    if (level == topo_level) {
+> +        *level_found = 3;
+> +        return 3;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  type_init(cpu_core_register_types)
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index a4d937ed45..7b0311ce6e 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -39,6 +39,7 @@
+>  #include "sysemu/kvm.h"
+>  #include "hw/intc/arm_gicv3_common.h"
+>  #include "qom/object.h"
+> +#include "hw/cpu/core.h"
+>  
+>  #define NUM_GICV2M_SPIS       64
+>  #define NUM_VIRTIO_TRANSPORTS 32
+> @@ -50,6 +51,8 @@
+>  /* GPIO pins */
+>  #define GPIO_PIN_POWER_BUTTON  3
+>  
+> +#define CPU_MAX_CACHES 16
+> +
+>  enum {
+>      VIRT_FLASH,
+>      VIRT_MEM,
+> @@ -188,6 +191,8 @@ OBJECT_DECLARE_TYPE(VirtMachineState, VirtMachineClass, VIRT_MACHINE)
+>  
+>  void virt_acpi_setup(VirtMachineState *vms);
+>  bool virt_is_acpi_enabled(VirtMachineState *vms);
+
+> +unsigned int virt_get_caches(const VirtMachineState *vms,
+> +                             CPUCaches *caches);
+>  
+Fits on one line under 80 chars, so undo that wrap.
+
+Thanks,
+
+Jonathan
+
+
+
+
+
 
