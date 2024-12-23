@@ -4,90 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD56AE7718B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 01:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40B1E7718B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 01:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPtjJ-0004Wh-Lw; Mon, 23 Dec 2024 20:29:01 -0500
+	id 1tPtug-0006ye-HI; Mon, 23 Dec 2024 20:40:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tPtjF-0004WK-Tf
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 20:28:58 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tPtjE-00021q-1h
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 20:28:57 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so53346375ad.0
- for <qemu-devel@nongnu.org>; Mon, 23 Dec 2024 17:28:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735003734; x=1735608534; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vuVPMIGlpVw9+dL5VBg3Geq49iODNqiO+bQW6XoXBzY=;
- b=uyoqt/fUVVEMsixgmz2Ph/BEKIaVIlWnZfu6hI+ZymClLxILVTjGFh3fCdVv9iirA+
- mO7f/K1khC0RDRcxS1QabXFabLAAYCKJDjTSLDlgX8TeVkpJcbojtZXSzRfZUmmv6XP7
- y3Wtz5kr66oUhUSd4g7hhF3HKtrGIVYQZjl4ITysnBpG2WN/V6qB7pdz+zf8ne8olWEq
- EdUqFxVVHT9sAeofQ2M8nRf+LrcB5aA8bbnyFSxp4VWlMFCaZX1DD8J0fScrW4IG9Cjj
- YIIiKlnGNN+JxYbemHZSBLtbd3Mfna/B+fc/ACqDT0q5Eod8C0kYGstBnP+nhF131Agf
- 11/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735003734; x=1735608534;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vuVPMIGlpVw9+dL5VBg3Geq49iODNqiO+bQW6XoXBzY=;
- b=hm8K0+ktUYRJwVT+RpCfsH0KKwhdJYwy+pCdZUQvscaipLLy78j9fCzlvvFbOeqOO3
- hQWZaXr4O0kT7paMvpb/opGUqDS7jJo4naZqi25zE6NcQkxud/naVNFl5VmmtboJ8rRS
- xFKqOog8YUsw3zRXWQdQfsHIaz+ubpJ3mXKwYUR0l+2HvDaqGqW9kjJJe6T4TL60gMjs
- Hq1z9r6n+ieczBhLc18fZmdddLH1vkJrMhMc70kO8u/k8IF0A3iZO7YAFw2NsWju3Nw2
- 2aRADUB90xu9s7fdmgOyVKozbwVe1fHQgX3eQTdtREJ2HhpvqHGKD9jnR/exs/IWGDEc
- rzvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7CrNY+xncyU5+CcEi+w8isR7jFftTdEKwCfr+x8L3+7dFvtOlgzff2CTzgQy0u1bisNnmGFWYq6Q0@nongnu.org
-X-Gm-Message-State: AOJu0YyLXOJkFi0HrSXwb/GmVkux8k9mam8YzTIEAJgMkNGDTtV+Ae4O
- TANA8kaY9dC/UmIiuFKQmtgsMS9yhklqv8FCm95jRCpBkqEIYZLqrP9eOsVRH01csR1guFsABYk
- F
-X-Gm-Gg: ASbGncsaRAOyHCi2WGEl8CRldx65T0notxUDvJWgo17aqAab66kCJ5fwKTJSUM9b2Di
- tme3QjEXEVwYqhamMuGNKZsmtOo6cg6KvIzzQab0t6bCWxhL9X+vw8bD4XXDXVhHCvkSMJ0Ft1Y
- QGkVBz4i5vwFgk9mYyo3+uZXsCwN/PGFqeljrm4yd3/2iwAJ50C52nA2/vkcgTjyU8XeGvGScSM
- t8ZhGBNJqf7CwZ8UeBfjXodkyifYQyEWK1VnDhJUXwwbXXfJJNw+z1UqT01V8AxoVC35g==
-X-Google-Smtp-Source: AGHT+IFKZCU9ghdS6sUee7Ob2MGj587qdOXaAAYw874HFIps+c2GJeyT4jf7F4B9eUepYKMdn2Ddbw==
-X-Received: by 2002:a05:6a20:a122:b0:1e1:b220:63db with SMTP id
- adf61e73a8af0-1e5e1f56b34mr24306751637.16.1735003734228; 
- Mon, 23 Dec 2024 17:28:54 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8163fdsm8562458b3a.6.2024.12.23.17.28.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Dec 2024 17:28:53 -0800 (PST)
-Message-ID: <f4a9764f-2a1c-4ccb-97fc-2e445571ed9c@linaro.org>
-Date: Mon, 23 Dec 2024 17:28:53 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/51] tcg/optimize: Change representation of s_mask
+ (Exim 4.90_1) (envelope-from <gabriel.barrantes.dev@outlook.com>)
+ id 1tPsDX-0005Fv-84
+ for qemu-devel@nongnu.org; Mon, 23 Dec 2024 18:52:07 -0500
+Received: from mail-dm6nam10olkn2077.outbound.protection.outlook.com
+ ([40.92.41.77] helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gabriel.barrantes.dev@outlook.com>)
+ id 1tPsDV-0000kI-Js
+ for qemu-devel@nongnu.org; Mon, 23 Dec 2024 18:52:06 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qTN9BefyOejeMughG8uNKEzGPVp7TfQC/JFTBmGyDTbvT2GBR4KVxgZvN2wUvqu9mw72KZuzGManmt/Sb3iuuHnkVAgd2JTF7cxbX9yfyul0/UlFffXSxsXlAYhdEnLrznS3qKfl+sagp0QSGPrhqHF2Y24gjGsgYURbt0kFupMRr74IPHYd1D/pq+1WDRkpFkS7O2feapghzjOd/hkaFKodlsuILuhlYkUmKeEeuFNUWLjdMaN0Jw4fRQCO7Z9qhEfeIObZE78aI14jEGRYLxMmxJJ2OF74cwIV9RAGiK3Dt7fHz8/8Q1Bc3KSkYmYnAAfv+PEJPwUgLItF2DSO9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jtqeXWNq7zTpQp4B8ESToRKv/if1o51X0tuM51tz++I=;
+ b=SW6VCgAFcBEXnvsVU4iW/hJD7AmKKV1Zw7eUc/NIFuFhhYrSkPY3KFMnxZbYUKsTa/FkpI/GudAu+fn/JpZl+yV4bDiRdfqzZ7P3Tj2Y+1aCfDi5iQKY82f5+fQPEAkMWHUc3anhx99ZS9ys09YynI0kBBFpzFiEkr2vqU5tRWY+zJHkASHIpNNotoRDQwpGcgLcnmyfJ+gwy6cYOa//cUKW/e16iazE25g7HQjZQ68NfTGqhmZ1FuUsPtZYWnUdHlLwoxP/uynuDktVtzsRi9JfZ3VUIJWIPodbl7rZLDJcP9N/1UdrS9c1CaQEy6gj7qC+mQOabCcD99KPVqG6xg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jtqeXWNq7zTpQp4B8ESToRKv/if1o51X0tuM51tz++I=;
+ b=mwD7REkShh89ZPRXylph5v6dJyC0mREjv/m4EtFc4H45PDYwjLrhy3HHzLEV6kElzm/JhIz2D0jH+Lk1EvUQXRbz1wYnzQ7B9B5CJbYbcQlTSiWKFDbRYntHncKEiFwUcD2qBOQFjY2dHXH0RYKC9juGuxH3dZiVH4+oObkkvgHb98J4bATIWub2VAN0IdCyhlwAuaWk15Y3WOopAKtjy4XHIOLe5A7XO6fUdEyR0VL+BVmL1CnJrUjQSh3J0YwqjPpb2uTnkzJKmxn7cAPltBmG1yiRNBwKD4kcpS54teHjEkzlgwicQxJ3I7vJ/XnZJjD1ENQBr0lTEcW1MKFh4A==
+Received: from DM8PR13MB5078.namprd13.prod.outlook.com (2603:10b6:8:21::22) by
+ DM4PR13MB5834.namprd13.prod.outlook.com (2603:10b6:8:41::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8272.16; Mon, 23 Dec 2024 23:46:59 +0000
+Received: from DM8PR13MB5078.namprd13.prod.outlook.com
+ ([fe80::9415:f99c:7abe:e230]) by DM8PR13MB5078.namprd13.prod.outlook.com
+ ([fe80::9415:f99c:7abe:e230%5]) with mapi id 15.20.8272.013; Mon, 23 Dec 2024
+ 23:46:59 +0000
+From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
+ "pizhenwei@bytedance.com" <pizhenwei@bytedance.com>, Gabriel Barrantes
+ <gabriel.barrantes.dev@outlook.com>
+Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+Thread-Topic: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+Thread-Index: AQHbVZStpmoWkKHHv0+a+lCeigXtJA==
+Date: Mon, 23 Dec 2024 23:46:57 +0000
+Message-ID: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241222162446.2415717-1-richard.henderson@linaro.org>
- <20241222162446.2415717-7-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241222162446.2415717-7-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM8PR13MB5078:EE_|DM4PR13MB5834:EE_
+x-ms-office365-filtering-correlation-id: 42f52202-04e2-42e7-d80f-08dd23ac16b4
+x-microsoft-antispam: BCL:0;
+ ARA:14566002|8062599003|8060799006|5062599005|15030799003|461199028|19110799003|15080799006|3430499032|102099032|440099028|3412199025|1710799026;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?q6OvQQ2YAbaIVJVQw1yXXENW0gO8O98nxbGTPLKDgmPXohzuiiAEa1hocY?=
+ =?iso-8859-1?Q?n1HhD2NcUHeL6mwyRNiQooVs/qFJzN9TQarCwnY4S2w/0VYMjwqaO28vPN?=
+ =?iso-8859-1?Q?mNZO9aTWiwfdkMSjoDZUdxdn4mOW0N+yIn/Z6ZAYMM3C1SDYGYPl9RoY9B?=
+ =?iso-8859-1?Q?IUgEPdfEKQ8+qngMnEdi9fCOqqJQ56LqlBXTrZs4mKJZljVtUp3dAK5L29?=
+ =?iso-8859-1?Q?CMO05Eo92hHsAwMB8HXfOObgE8wMlgDFke6G1u0Q8aBj0TfCdH/cXFCqJL?=
+ =?iso-8859-1?Q?q87iGISJ9L2VSd0ObouuRzkSjMJRuVtyLIXnNCms1VSSi02rJO+/6s5aIL?=
+ =?iso-8859-1?Q?tPnufw30l9PYEIZGpelFotYppVSjNa2kLZso/sPqusTVKwmdoVBej8GR+g?=
+ =?iso-8859-1?Q?t8MWByTV92NZvxiCsVVm7DmAViBPhD1jLq+jf2PB0K1OZYpbK99/cmvNZP?=
+ =?iso-8859-1?Q?X21tvBx2g848k2kQn1SCHVXLJXWxq4XLEWGFHbHlZtmjrNuBsDTzCIlXzG?=
+ =?iso-8859-1?Q?p6vVHEas8SpzLQQD8kaRf0SQn066dM5TYx/NmfulT0BLCuPgGKegmR50XI?=
+ =?iso-8859-1?Q?m5QCRYIYIVlkotbmw4kLaRclGXxy0eLciOaTuWBfGqiAGeT0XNCRj+NUaH?=
+ =?iso-8859-1?Q?wZQwuyk3Bzv84s6M4P7aSS22ONbd2ttJasgcV+8xjtMHlk0+sAdS8TmwaD?=
+ =?iso-8859-1?Q?tpf+2pUPocPjnEuL4rWLeSCfVw/x/oP06RItSZTebYDmihmIy5LzY9ny7l?=
+ =?iso-8859-1?Q?LKD6RgTgK6kk3zzyfvFO9ITyV0p0ce4NzTm4HpyrqkSj/E0fUT70GbO5iq?=
+ =?iso-8859-1?Q?OtnVgPsoksFS0BaIyXFXYqfOxn+iLSTrXYaJTSfaq9OumTOHAbNy2/Xolp?=
+ =?iso-8859-1?Q?MooCtkDbu8AMP2Wfz54gQv2pLNOuLUsA1AbzI8rFquzjSjsapp20Yuha6c?=
+ =?iso-8859-1?Q?SNIuz2AdDoqOBIrr3hJdbFvW13sPlrRmaF21Cf8+yUPXC2gFN5rDMQ+TEC?=
+ =?iso-8859-1?Q?koT3Ys+44kwITW89Fk1UBBbCU2zQXHCg1QmtisTBcXW+5JSqV+Avz8HLiE?=
+ =?iso-8859-1?Q?g3fQSVKRmj9Hj71Ng6yTPmGkZlbXf6/+2XpsAh0OFgs0zriPrazico4sIM?=
+ =?iso-8859-1?Q?cq0jA8wxgQ9zTobaCdqpAsMMckDlYx/PYSbI1OwsYQLdSU0erEMCTNs6SS?=
+ =?iso-8859-1?Q?Zg8ExLoO5Hxu8g=3D=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?BrPrM+iz3wrkZU5UoZzRNGUnwS2Qlr51lWnP3uJ3ZKozhOgRzado4XHmg1?=
+ =?iso-8859-1?Q?7ZmEbts4rJCzaM/ZwO9S8G537cCW5K/lbVLe32gl4iWZPC+ssCfLKhVCOt?=
+ =?iso-8859-1?Q?L/WAqWQsFB8VAgCAGE3A4g20i59gQmmU7iLI6tszQwup0j4RNtgLPPm7va?=
+ =?iso-8859-1?Q?1KKlk//YkBneypL4lb36X0+L03OoJnBM1IuRaR2eXHiS2YvV+nDKhLX6UV?=
+ =?iso-8859-1?Q?SBDvMYQIMjS3qaWLlsPDi/WMHA2o+TyUn+NpbR17UCtxf52DrtAE54ewSw?=
+ =?iso-8859-1?Q?qHhzhJlcOiQY05M4yFDc1nQ31CqvTj1Ncs0cdzt1w42sgoB3tdGe+EV6Tr?=
+ =?iso-8859-1?Q?Npm6fkgp18pYZiqpP8oPOc+z0KoRsYBk8YCJmNmp/BDm5ifbayqsYOIhUQ?=
+ =?iso-8859-1?Q?cC1EISdT/q655tOPiTP33cIZcl9+B9gPXZhEClkD5JYXWdrPIDf0YR/Xme?=
+ =?iso-8859-1?Q?tnZ65W2AoMU5lCFG8fpKXivRwjqIl2bdNfkrsqTdolbf/Z+ehfTj6Jn7VT?=
+ =?iso-8859-1?Q?UpQ8B996tr4jKR6p8X4WpX9BYt3BPlq34CeiYQYh3RFNZlHwIPgG+JG6pE?=
+ =?iso-8859-1?Q?ZIVOt4o62rKxyXe3PBrHhKIb/BW5JTxJVmXQB9jJ6jiyzAA5MVojNNm627?=
+ =?iso-8859-1?Q?s9ydd+TpED8oi9+dojNcri0G7E50EIpbI9Lu2VHfecdmD5pwOYK92ArWt/?=
+ =?iso-8859-1?Q?4t+gFmUuYyQXn1jBBUYzyndZHKABAkoHHNgyYm2EwQs6njzy8FXJ2ZSK9t?=
+ =?iso-8859-1?Q?P+t3iE5x5QvmE7sVJM8IXkCWxEUgCfVfoM6rEiaB2f1cypc9JX8dXI5+MH?=
+ =?iso-8859-1?Q?ZEVWbeHwqpZHvRRbliS2BJOX5RGrjtwgUZrvDCqdCYIe7/CiMBx8M0dTB6?=
+ =?iso-8859-1?Q?3yQ8XrejgdF5CP7atI6BPPr5SelAMds2u1kaVsWINfhYp9j7x3Ya4rKWCw?=
+ =?iso-8859-1?Q?8H4xdt8wI1/gizxh/rzDYkFqaUrk9R191MxZTYsXf6CAtNcIkGgcj4RmTl?=
+ =?iso-8859-1?Q?ZV8iAAJBSwZS6sjAQqSP1+mYZ6FysQs23Eo2cNdbpxTJqEtBomrzRdW9CJ?=
+ =?iso-8859-1?Q?Udq3s0tA9Vk6nqKXqffWpAT1v8GTCY9baLsw6NMWUj2lP9tcJi0cQpVGzO?=
+ =?iso-8859-1?Q?FgyJuAoBSZBE6kS17xZtlmXgiqNq+K11fA+eAPYQdAI+dkuKVwP3ozSthj?=
+ =?iso-8859-1?Q?S8y1QzveCcTaoVsRvD4i6hQA2fMwVqO+6bvyuh+32+Azq6RxepEmAVP9F6?=
+ =?iso-8859-1?Q?QSLaZcCvVtmvXG5rrdy+zxMuy3VnpIwHYPlUvBJUjqTWZ4J257EPSo39d/?=
+ =?iso-8859-1?Q?0BNS?=
+Content-Type: multipart/alternative;
+ boundary="_000_DM8PR13MB5078933D25141B3F23ECA782B3022DM8PR13MB5078namp_"
+MIME-Version: 1.0
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR13MB5078.namprd13.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42f52202-04e2-42e7-d80f-08dd23ac16b4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Dec 2024 23:46:57.8236 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR13MB5834
+Received-SPF: pass client-ip=40.92.41.77;
+ envelope-from=gabriel.barrantes.dev@outlook.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 23 Dec 2024 20:40:44 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,178 +149,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/22/24 08:24, Richard Henderson wrote:
-> Change the representation from sign bit repetitions to all bits equal
-> to the sign bit, including the sign bit itself.
-> 
-> The previous format has a problem in that it is difficult to recreate
-> a valid sign mask after a shift operation: the "repetitions" part of
-> the previous format meant that applying the same shift as for the value
-> lead to an off-by-one value.
-> 
-> The new format, including the sign bit itself, means that the sign mask
-> can be manipulated in exactly the same way as the value, canonicalization
-> is easier.
-> 
-> Canonicalize the s_mask in fold_masks_zs, rather than requiring callers
-> to do so.  Treat 0 as a non-canonical but typeless input for no sign
-> information, which will be reset as appropriate for the data type.
-> We can easily fold in the data from z_mask while canonicalizing.
-> 
-> Temporarily disable optimizations using s_mask while each operation is
-> converted to use fold_masks_zs and to the new form.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/optimize.c | 64 ++++++++++++--------------------------------------
->   1 file changed, 15 insertions(+), 49 deletions(-)
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index d8f6542c4f..fbc0dc5588 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -52,7 +52,7 @@ typedef struct TempOptInfo {
->       QSIMPLEQ_HEAD(, MemCopyInfo) mem_copy;
->       uint64_t val;
->       uint64_t z_mask;  /* mask bit is 0 if and only if value bit is 0 */
-> -    uint64_t s_mask;  /* a left-aligned mask of clrsb(value) bits. */
-> +    uint64_t s_mask;  /* mask bit is 1 if value bit matches msb */
->   } TempOptInfo;
->   
->   typedef struct OptContext {
-> @@ -65,49 +65,10 @@ typedef struct OptContext {
->   
->       /* In flight values from optimization. */
->       uint64_t z_mask;  /* mask bit is 0 iff value bit is 0 */
-> -    uint64_t s_mask;  /* mask of clrsb(value) bits */
-> +    uint64_t s_mask;  /* mask bit is 1 if value bit matches msb */
->       TCGType type;
->   } OptContext;
->   
-> -/* Calculate the smask for a specific value. */
-> -static uint64_t smask_from_value(uint64_t value)
-> -{
-> -    int rep = clrsb64(value);
-> -    return ~(~0ull >> rep);
-> -}
-> -
-> -/*
-> - * Calculate the smask for a given set of known-zeros.
-> - * If there are lots of zeros on the left, we can consider the remainder
-> - * an unsigned field, and thus the corresponding signed field is one bit
-> - * larger.
-> - */
-> -static uint64_t smask_from_zmask(uint64_t zmask)
-> -{
-> -    /*
-> -     * Only the 0 bits are significant for zmask, thus the msb itself
-> -     * must be zero, else we have no sign information.
-> -     */
-> -    int rep = clz64(zmask);
-> -    if (rep == 0) {
-> -        return 0;
-> -    }
-> -    rep -= 1;
-> -    return ~(~0ull >> rep);
-> -}
-> -
-> -/*
-> - * Recreate a properly left-aligned smask after manipulation.
-> - * Some bit-shuffling, particularly shifts and rotates, may
-> - * retain sign bits on the left, but may scatter disconnected
-> - * sign bits on the right.  Retain only what remains to the left.
-> - */
-> -static uint64_t smask_from_smask(int64_t smask)
-> -{
-> -    /* Only the 1 bits are significant for smask */
-> -    return smask_from_zmask(~smask);
-> -}
-> -
->   static inline TempOptInfo *ts_info(TCGTemp *ts)
->   {
->       return ts->state_ptr;
-> @@ -173,7 +134,7 @@ static void init_ts_info(OptContext *ctx, TCGTemp *ts)
->           ti->is_const = true;
->           ti->val = ts->val;
->           ti->z_mask = ts->val;
-> -        ti->s_mask = smask_from_value(ts->val);
-> +        ti->s_mask = INT64_MIN >> clrsb64(ts->val);
->       } else {
->           ti->is_const = false;
->           ti->z_mask = -1;
-> @@ -992,7 +953,6 @@ static void finish_folding(OptContext *ctx, TCGOp *op)
->            */
->           if (i == 0) {
->               ts_info(ts)->z_mask = ctx->z_mask;
-> -            ts_info(ts)->s_mask = ctx->s_mask;
->           }
->       }
->   }
-> @@ -1051,11 +1011,12 @@ static bool fold_const2_commutative(OptContext *ctx, TCGOp *op)
->    * The passed s_mask may be augmented by z_mask.
->    */
->   static bool fold_masks_zs(OptContext *ctx, TCGOp *op,
-> -                          uint64_t z_mask, uint64_t s_mask)
-> +                          uint64_t z_mask, int64_t s_mask)
->   {
->       const TCGOpDef *def = &tcg_op_defs[op->opc];
->       TCGTemp *ts;
->       TempOptInfo *ti;
-> +    int rep;
->   
->       /* Only single-output opcodes are supported here. */
->       tcg_debug_assert(def->nb_oargs == 1);
-> @@ -1069,7 +1030,7 @@ static bool fold_masks_zs(OptContext *ctx, TCGOp *op,
->        */
->       if (ctx->type == TCG_TYPE_I32) {
->           z_mask = (int32_t)z_mask;
-> -        s_mask |= MAKE_64BIT_MASK(32, 32);
-> +        s_mask |= INT32_MIN;
->       }
->   
->       if (z_mask == 0) {
-> @@ -1081,7 +1042,13 @@ static bool fold_masks_zs(OptContext *ctx, TCGOp *op,
->   
->       ti = ts_info(ts);
->       ti->z_mask = z_mask;
-> -    ti->s_mask = s_mask | smask_from_zmask(z_mask);
-> +
-> +    /* Canonicalize s_mask and incorporate data from z_mask. */
-> +    rep = clz64(~s_mask);
-> +    rep = MAX(rep, clz64(z_mask));
-> +    rep = MAX(rep - 1, 0);
-> +    ti->s_mask = INT64_MIN >> rep;
-> +
->       return true;
->   }
->   
-> @@ -1807,7 +1774,7 @@ static bool fold_exts(OptContext *ctx, TCGOp *op)
->   
->       ctx->z_mask = z_mask;
->       ctx->s_mask = s_mask;
-> -    if (!type_change && fold_affected_mask(ctx, op, s_mask & ~s_mask_old)) {
-> +    if (0 && !type_change && fold_affected_mask(ctx, op, s_mask & ~s_mask_old)) {
->           return true;
->       }
->   
-> @@ -2509,7 +2476,7 @@ static bool fold_sextract(OptContext *ctx, TCGOp *op)
->       s_mask |= MAKE_64BIT_MASK(len, 64 - len);
->       ctx->s_mask = s_mask;
->   
-> -    if (pos == 0 && fold_affected_mask(ctx, op, s_mask & ~s_mask_old)) {
-> +    if (0 && pos == 0 && fold_affected_mask(ctx, op, s_mask & ~s_mask_old)) {
->           return true;
->       }
->   
-> @@ -2535,7 +2502,6 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
->           ctx->z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
->   
->           s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
-> -        ctx->s_mask = smask_from_smask(s_mask);
->   
->           return fold_masks(ctx, op);
->       }
+--_000_DM8PR13MB5078933D25141B3F23ECA782B3022DM8PR13MB5078namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From c808fa797942b9bd32221594b7eef690a7558b14 Mon Sep 17 00:00:00 2001
+From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+Date: Mon, 23 Dec 2024 14:58:12 -0600
+Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
 
+Do not propagate error to the upper, directly output the error to
+avoid leaks.
+
+Closes: #2714
+
+Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+---
+backends/cryptodev-vhost-user.c | 4 ++--
+1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-use=
+r.c
+index 43efdf9747..09bfbddb47 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -281,8 +281,8 @@ static int cryptodev_vhost_user_create_session(
+        break;
+
+    default:
+-        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+-                   sess_info->op_code);
++        error_report("Unsupported opcode :%" PRIu32 "",
++                     sess_info->op_code);
+        return -VIRTIO_CRYPTO_NOTSUPP;
+    }
+
+--
+2.43.0
+
+
+
+--_000_DM8PR13MB5078933D25141B3F23ECA782B3022DM8PR13MB5078namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+From c808fa797942b9bd32221594b7eef690a7558b14 Mon Sep 17 00:00:00 2001 <br>
+From: Gabriel Barrantes &lt;gabriel.barrantes.dev@outlook.com&gt; <br>
+Date: Mon, 23 Dec 2024 14:58:12 -0600 <br>
+Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks <br>
+<br>
+Do not propagate error to the upper, directly output the error to <br>
+avoid leaks. <br>
+<br>
+Closes: #2714 <br>
+<br>
+Signed-off-by: Gabriel Barrantes &lt;gabriel.barrantes.dev@outlook.com&gt; =
+<br>
+--- <br>
+backends/cryptodev-vhost-user.c | 4 ++-- <br>
+1 file changed, 2 insertions(+), 2 deletions(-) <br>
+<br>
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-use=
+r.c <br>
+index 43efdf9747..09bfbddb47 100644 <br>
+--- a/backends/cryptodev-vhost-user.c <br>
++++ b/backends/cryptodev-vhost-user.c <br>
+@@ -281,8 +281,8 @@ static int cryptodev_vhost_user_create_session( <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break; <br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default: <br>
+- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_setg(&amp;local_error, &q=
+uot;Unsupported opcode :%&quot; PRIu32 &quot;&quot;, <br>
+- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sess_info-&gt;op_code); <br>
++ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_report(&quot;Unsupported =
+opcode :%&quot; PRIu32 &quot;&quot;, <br>
++ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sess_info-&gt;op_code); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -VIRTIO_CRYPTO_NOTSU=
+PP; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;<br>
+-- &nbsp;<br>
+2.43.0 <br>
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+</body>
+</html>
+
+--_000_DM8PR13MB5078933D25141B3F23ECA782B3022DM8PR13MB5078namp_--
 
