@@ -4,86 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A9CE77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 01:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1834E7718D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 04:10:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPXGp-0000hf-N6; Sun, 22 Dec 2024 20:30:08 -0500
+	id 1tPZlS-0000Ge-D6; Sun, 22 Dec 2024 23:09:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hhan@redhat.com>) id 1tPXGi-0000dZ-Bb
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 20:30:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hhan@redhat.com>) id 1tPXGe-0000W2-6o
- for qemu-devel@nongnu.org; Sun, 22 Dec 2024 20:29:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734917394;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7hA3AZRVD4+1UKEu0JMZr10iSIMDRUaEYs3uUl+qSoE=;
- b=JfxUX3qobXRofk1kLGXG1PiCYKVVORnofx4qj+r5DwyUJlfC8U0mViqyPnl7x1yIUqH/6R
- nH8tKHXTEDXEak6KhrKdBut6TSGKS6xqGzxF7TlJJJvrwGatQq0h7gNszJMdaLr9hGzeXW
- 8Xo6PxFMExJQzA8IvggVg0U6ZDglw2g=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-V122mZPQO4CIXCRNbjgrPg-1; Sun, 22 Dec 2024 20:29:52 -0500
-X-MC-Unique: V122mZPQO4CIXCRNbjgrPg-1
-X-Mimecast-MFC-AGG-ID: V122mZPQO4CIXCRNbjgrPg
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-aab9f30ac00so303418366b.3
- for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 17:29:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <osy86dev@gmail.com>)
+ id 1tPZlQ-0000G7-Nx
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 23:09:52 -0500
+Received: from mail-pl1-f178.google.com ([209.85.214.178])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <osy86dev@gmail.com>)
+ id 1tPZlP-0001PD-4N
+ for qemu-devel@nongnu.org; Sun, 22 Dec 2024 23:09:52 -0500
+Received: by mail-pl1-f178.google.com with SMTP id
+ d9443c01a7336-2165cb60719so34737635ad.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Dec 2024 20:09:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734917390; x=1735522190;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7hA3AZRVD4+1UKEu0JMZr10iSIMDRUaEYs3uUl+qSoE=;
- b=P4xgo9d8TqD9mnSlLpwGvvUVdxibxPT0HaynT7nj3oRYVqiS/T8Cidk7K8IlRoZocK
- D8FL93CO/XPERR1gICBfSokDMcXzrjXg8FfNzn5IW0AT+S4ZLvgseLLG4YNKxX3TY0hy
- jkuKUDsw6ardq9EWqGRR4FKcGyzkqER/7tCyvJEOMv/aHUuYJx/JMB8XGv93UwVmeFvx
- E06SgJS9GqQ2rflV9w57RUSNKOQcUpiHuv7db+ls2FY091lw1izbbjHAi7GZAKnbWJri
- QVyzS5wvCB4u8E5MozztOTW0S8tcrMgWv9hiKH06boPQExheZ1TfEEK2g+ioieqSYuhe
- 67lw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdXqP/DktfO9c1EbAL7hSyvvUVFTAKzbwQwBrelcITbyvel180+XtFw9mVWUvJ7WnHWGGZyjTC+etX@nongnu.org
-X-Gm-Message-State: AOJu0Ywa4e5yvU9mavtdQa5NxbgFIm7k+QPKYj6AU5RBbGepOz5y5Kyk
- rifR4dBty/E9tS1aNPUU3lJi/0fLGVdsbJ+wfEHTHTltqmrx9sYQM88EpbcQOzGHOEsQFoTdF4w
- Ah6IE7/taAC0F499Vm7auu7wq8Sfdq/I6F0NAnasI0p/gghKNMxjZMo0jWLeCObfZ7VX+dWhDw/
- iS8lNH3ogwJPLqDl5wrp/dfBr6Fns9r+U9V3OfhA==
-X-Gm-Gg: ASbGncsUb/KJp/CLCYFYqzy5Cs/pnjd4EF+u+XbgxRWBgIGOjiSeSGSpFRWqLKX53/I
- dZylFDN8tMEby9uqSW77JqH73k8jWKL+P8pm2gw4=
-X-Received: by 2002:a17:907:94c2:b0:aa6:19c9:ad08 with SMTP id
- a640c23a62f3a-aac334f31e9mr1019650266b.48.1734917389903; 
- Sun, 22 Dec 2024 17:29:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFh/SCuGFH17Wt8QTW7Xb7oYn+uANG7jweu+1VS+Sne54cVlEXIwyekuvJh2kadoXhF0ff0aEB3Sp1Eet+3WkY=
-X-Received: by 2002:a17:907:94c2:b0:aa6:19c9:ad08 with SMTP id
- a640c23a62f3a-aac334f31e9mr1019648966b.48.1734917389641; Sun, 22 Dec 2024
- 17:29:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734926989; x=1735531789;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JPRqhMMf2OJZ/4ZGMyzVwFYbZ4UoQtphtP2rZJZe5+M=;
+ b=KNwR5AvJyAB4G1JIv1EhJbD8jEHuX86/sWbH//9DKlCNIedGNvh9fQIudp9fQNOANk
+ 2vyW0CTUREA4rid8kDW3opAL7pkfs+Oh7EYrUkQJGH++svJqHTeTsHoDIjRuxEXs5mR8
+ jrtNqrPR8d1PsNGqfHZaVdG7+Xm8otxQctG6mFIWyJsp3SQ7NjTFlCoOzxtIpsJ9ExU1
+ Z1hPaRlGeefE2YjATv5GTKIQMFTC0jF3cQqgkDAxq676am+brd68J1jqqYC4/soXR4J5
+ EZGae6B3rMWAeUN6/EGemc2gnDC09C5M0xTojxxRkG+SMTmlqyDAJIhY3o1e+X06/zag
+ O7nw==
+X-Gm-Message-State: AOJu0Yy8ALy1HfOCYv699vhAfuKlNY1+wmn7DZVcKv9b64VfStHyMiXk
+ ClILFMxJ8CNVr5jerOH/ZUcmeTm0g0lt+yGfmG8xAz7hUtXea5P92aGjRA==
+X-Gm-Gg: ASbGncsGi6nxy4Ua0FIg5IGZsEOPs6zMYnaK343RLYuiVYvvmoL5o+DKsw+pzluNOh1
+ k+0+TU0LKKdJDcSDOL5lGnj5EDHlbGm0jvQzhKiNWUMQFxm2chP8SUA4CqT2KPKS5dJZb5xMg2U
+ PKssEg/by+itfOHYj4QOAfnq1lEqbv0L3rxrj+XZOsHy8urrCb3hIxAEEjdc8Rv3DIWH3OEpeo+
+ TJjbkWFDmlSeEElbgxoBayMoTHjgst7T79mn2tE4YJTPPFiDDjiTpYj/PA5EDgh4fqu4ttNLyUA
+ zGWAwNjThA==
+X-Google-Smtp-Source: AGHT+IE3nCayNwWz6yG4y8B0PREhN0nlQrWAvJzmpFAzUBnmnhkdaBRkq7nTN4Ok8YLVjCY2iQYJ9Q==
+X-Received: by 2002:a17:903:2acb:b0:215:6b4c:89fa with SMTP id
+ d9443c01a7336-219e6e85aacmr149220195ad.8.1734926988612; 
+ Sun, 22 Dec 2024 20:09:48 -0800 (PST)
+Received: from localhost.localdomain ([2601:642:4c02:c8b4:911f:687c:35b2:bc4e])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9f4429sm63921115ad.173.2024.12.22.20.09.47
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 22 Dec 2024 20:09:48 -0800 (PST)
+From: Joelle van Dyne <j@getutm.app>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 0/2] Disable unavailable features on older macOS
+Date: Sun, 22 Dec 2024 20:09:43 -0800
+Message-ID: <20241223040945.82871-1-j@getutm.app>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20241219085141.1857343-1-hhan@redhat.com>
- <710b775b-41b6-40ae-8467-dea9ddc3ecf9@tls.msk.ru>
-In-Reply-To: <710b775b-41b6-40ae-8467-dea9ddc3ecf9@tls.msk.ru>
-From: Han Han <hhan@redhat.com>
-Date: Mon, 23 Dec 2024 09:29:38 +0800
-Message-ID: <CAHjf+S-OeNVT=KQxVEg6MW4efVTfXy1iTb85QyL6Zja62PD0fw@mail.gmail.com>
-Subject: Re: [PATCH] target/i386/cpu: Fix notes for CPU models
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-trivial@nongnu.org, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000b97ada0629e5eee7"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hhan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=209.85.214.178; envelope-from=osy86dev@gmail.com;
+ helo=mail-pl1-f178.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.167, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,48 +85,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b97ada0629e5eee7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Some features require APIs introduced in a recent version of macOS. Currently,
+this is not checked anywhere and so either the build will fail (if building with
+an older version of Xcode) or will throw a warning and then crash if run on an
+older machine. The correct way to handle this is with availabilty checks. The
+checks are a clang extension that only works on Apple platforms but these files
+are only built for Apple platforms already and link with Apple frameworks.
 
-On Sun, Dec 22, 2024 at 4:59=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
+Joelle van Dyne (2):
+  vmnet: disable unavailable features on older macOS
+  hvf: arm: disable unavailable features on older macOS
 
-> 19.12.2024 11:51, Han Han wrote:
-> ...
->
-> Applied to the trivial-patches tree, thank you!
->
-> Please do Cc: qemu-devel@ the next time.
->
-> OK. Thanks for your advice
+ net/vmnet-host.c     | 48 ++++++++++++++++++++++++++------------
+ net/vmnet-shared.c   | 23 ++++++++++++++----
+ target/arm/hvf/hvf.c | 55 ++++++++++++++++++++++++++++----------------
+ net/vmnet-bridged.m  | 18 ++++++++++++---
+ 4 files changed, 101 insertions(+), 43 deletions(-)
 
-> /mjt
->
->
-
---000000000000b97ada0629e5eee7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Dec 22,=
- 2024 at 4:59=E2=80=AFPM Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.=
-ru">mjt@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">19.12.2024 11:51, Han Han wrote:<br>
-...<br>
-<br>
-Applied to the trivial-patches tree, thank you!<br>
-<br>
-Please do Cc: qemu-devel@ the next time.<br>
-<br></blockquote><div>OK. Thanks for your advice<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-/mjt<br>
-<br>
-</blockquote></div></div>
-
---000000000000b97ada0629e5eee7--
+-- 
+2.41.0
 
 
