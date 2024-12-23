@@ -4,98 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C979E7718B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 16:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B36E7718D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Dec 2024 16:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tPlL4-0002VL-9L; Mon, 23 Dec 2024 11:31:26 -0500
+	id 1tPlO3-00042y-Rr; Mon, 23 Dec 2024 11:34:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tPlL2-0002UL-6x
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 11:31:24 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tPlL0-0004hz-Fb
- for qemu-devel@nongnu.org; Mon, 23 Dec 2024 11:31:23 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-432d86a3085so29240955e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Dec 2024 08:31:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734971481; x=1735576281; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OshU39fkw/Sq2aeDKqOUJz1CZscFEKzAYLrz4W4krFo=;
- b=cMcepyjMhtCFrcdlOArVbKhtpd4eMf9/wgdTuSKhayjy9In3fhjRHia+u9VxKe7yuL
- LCo7q9xP5qI4wcN07FCFy4KxiBe05XPQnlzTwQQZM1K3obN7FOWrVsbkZH7viDeal6tA
- sT8thf4gb6XHQPnj6gVWcT3pskVVycSfQyVOJru52DZ+CZe0+K5luUbe7GyyERpRMPiQ
- rMF9fabqa3i9SQU9avZ00PrSz58vyBV9JsUu88qzhfwwN12xKxiPSsG9VoUqQGgk6v/Z
- 2X8Akmwb9EhRJHhhRhe9zA1TzY/r5YOuo8nJjGN47YFV9DR3Tu+/KO4hhXNJ0mDyoEF4
- hoeg==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tPlO1-000420-M0
+ for qemu-devel@nongnu.org; Mon, 23 Dec 2024 11:34:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tPlO0-0004uX-0t
+ for qemu-devel@nongnu.org; Mon, 23 Dec 2024 11:34:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734971665;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m3kbamS6wCaCHUYWfWlFyiw8NWgUb9IKARVTOtgj+Ek=;
+ b=FC4Cf+em6E7g3T7QiFZPTs/l8cXhpLY3r2intJej6SeLMKF7bxzWe+q7luYRbWe2vru8pF
+ L1m14COcMB5wq7rC2WkuAWWitxGRPGE7EzREBmm3Y7xA5jSqyQrPeghAcWt5I5hWWQK+AV
+ 88SkZDPkyU1rHYgsd/ZQM6BtkI+rBCs=
+Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
+ [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-ooHBErhJMGqUOwx9mKR5cg-1; Mon, 23 Dec 2024 11:34:22 -0500
+X-MC-Unique: ooHBErhJMGqUOwx9mKR5cg-1
+X-Mimecast-MFC-AGG-ID: ooHBErhJMGqUOwx9mKR5cg
+Received: by mail-yb1-f200.google.com with SMTP id
+ 3f1490d57ef6-e3c7d56aa74so5727036276.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Dec 2024 08:34:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734971481; x=1735576281;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OshU39fkw/Sq2aeDKqOUJz1CZscFEKzAYLrz4W4krFo=;
- b=jfwsWygdaq5/qZKG/Xm5rmAP5aVQ67FsJpahFAEPtPM0yysjyzrCCct5itDYj9V2V9
- 29oB8zUM//wgWVJA+itirJdM38ms/uhuOGpTy0cMJL5K4wHjoUOojxA21Pse/sxYN6wq
- tBcbBeXLn3sjgUqATdRoZKGA911FIgLsoNwiCZ5pNoCe0ULeIIT6+jIGY7NhNekdy8Ey
- LecKOG1wmlZcR+OIKIAjTJioWoiqkSnUjqWnOqbTyLZ8PW53PXa7lNqHJy1jihbAj0hQ
- pIIddwOgdBz91HMHmGvt1V5v0MhYySAror6vIi/tM7UkGbAFQBIGqFU3dWQk/ZWXacPO
- r3nw==
+ d=1e100.net; s=20230601; t=1734971662; x=1735576462;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=m3kbamS6wCaCHUYWfWlFyiw8NWgUb9IKARVTOtgj+Ek=;
+ b=RVKvNgM51LAdC5eULv1KUrAbBP+AMVexEefGl26L7kwbto5/28cVpykX4diDGI/Gom
+ Cz1IZEqgFHCyHQABw/H0b6z5sXY5dVRkOT82cRSwbdsE66Y4du9ARW0YXXuIOMDYDlql
+ FqWEV5DZgtl7Mw5LSM8/k8OyV09vUQ2dctcUYCXDQ53sY8YpUewqii4wK209DC0me8sa
+ 4qRBQMFIM/A/EW6UCVYtvusEeMN3AjqXbueuWxqeGigtPFKE6gKC71p/mJGieVFyLqNy
+ NYfMTknbW3U+P1S8KG1PRqz+Lzv00UUr47/JDS8DnBLpC1Lbanj+KMbf5MHKx6u/e5Bn
+ +l+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuJH2wE5BTb6U/i4vHbBXpjVsP9BsGnpK1aRagYqYv+4J1hb/1F2Ckvp7QMceutE/RdEMHiNMaJiGM@nongnu.org
-X-Gm-Message-State: AOJu0YxMoH4QfALxM4c3ytex0pHbEdFYM6Bhd4q+qjh3N9VJZNblMaf8
- yYsPx1jjPe+DGR4082MspqBhP6TOzWNfEII/8QGZvuOJgB4355FaaI0ZWbcgPrI=
-X-Gm-Gg: ASbGnctKbLT/RyaE3fuzefuOHAolxLj/nw46KQCuO1ojSEYI4B3NGciev11br8wAjvO
- m9ezqGQD6YaCLvTAOc4H8q0A86LtXXsaoh1E0K+PU9AJZ7BuVWeWRiBezJSQQt+NMie1COS2k6V
- rZvmmFyJkAQR3Nl9gg1XEN7/+wNHHr2Xeytcf2BONaom9CBvExVHtwftCE/es496clcU1JA+DoN
- 7fVxcZKsEa5iBXbSPdekl0Kqa+ErRFltUT5vtJcG6pEZoR5GDzJbu/wy60crdxrP1QXDevs4awO
- PI6SPaBdEXwhLSZ1NtM=
-X-Google-Smtp-Source: AGHT+IG1O7g1q8OehghG1lbFKR03xFEFgsFyh3YCsv/O3RkwdCZ9RJfP2OnOnwOeHiq2PD/pGbBjyA==
-X-Received: by 2002:a05:600c:3ca4:b0:434:fe4b:be18 with SMTP id
- 5b1f17b1804b1-436686468fcmr121973355e9.18.1734971480838; 
- Mon, 23 Dec 2024 08:31:20 -0800 (PST)
-Received: from [10.89.88.213] (51.171.88.92.rev.sfr.net. [92.88.171.51])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b0145csm175489215e9.15.2024.12.23.08.31.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Dec 2024 08:31:20 -0800 (PST)
-Message-ID: <ba0226c1-1680-4f28-b575-c708a6aa82c5@linaro.org>
-Date: Mon, 23 Dec 2024 17:31:16 +0100
+ AJvYcCXv7ZZ98LxepmhRpzd6DlAPFbUW7+0kQlcNIOgjss2yTAlQKtcoZSFgfqDdfHr9M5p400KdHnsLkdFK@nongnu.org
+X-Gm-Message-State: AOJu0Yw6Avt/AbM5ltO5K0CtPsT5OA5I914Q66/fwIRktkLS38gU6oWC
+ NK3cTmPseiOFFQzF7wWRQmZZWGE2dqbMfiu+HZks1XUQNu+PFO4+tuyqoueW1M6mfFASErTOY3M
+ N3HDGJRJnlXJXfX2FZNPcaZUN7qWWoutw1fn5gTAZfF2DxK/etvHLPPbe5MCnBOrua8vnR6x6bJ
+ G6CZex1ntbjR3mQD3Px2INQzn2NLA=
+X-Gm-Gg: ASbGncs695QCt+bGFvLmAw/Fs3NVaesvo1g8vKcMBYLUQ1tKUQ3FCgFCvmBi7u4lxTB
+ L0lsIuiGm99Sq5B9BPIXsH94DNVsTihbJPLJizA==
+X-Received: by 2002:a05:6902:2607:b0:e38:8c71:1d7f with SMTP id
+ 3f1490d57ef6-e538c28e664mr9274891276.28.1734971662114; 
+ Mon, 23 Dec 2024 08:34:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGngQA2879Y+HOQ3VKgFAEIZg2uBKVUClM5ql43qHF49b3Awu3CE+B3mDQQYgM8e8OQU3shi1I7jPBzRwpwk1o=
+X-Received: by 2002:a05:6902:2607:b0:e38:8c71:1d7f with SMTP id
+ 3f1490d57ef6-e538c28e664mr9274873276.28.1734971661821; Mon, 23 Dec 2024
+ 08:34:21 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 09/15] gpex: Allow more than 4 legacy IRQs
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
- mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com,
- hreitz@redhat.com, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, akihiko.odaki@daynix.com,
- qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
-References: <20241218202036.80064-1-phil@philjordan.eu>
- <20241218202036.80064-10-phil@philjordan.eu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241218202036.80064-10-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240912165408.234447-1-eperezma@redhat.com>
+ <7fa03d44-fc85-4732-b357-f5610460925f@tls.msk.ru>
+In-Reply-To: <7fa03d44-fc85-4732-b357-f5610460925f@tls.msk.ru>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 23 Dec 2024 17:33:45 +0100
+Message-ID: <CAJaqyWcgbFx=0LVLG-FFqGbYMrwa5qyWxhPhfqdYY0QAvsRe3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Move net backend cleanup to NIC cleanup
+To: Michael Tokarev <mjt@tls.msk.ru>, Jonah Palmer <jonah.palmer@oracle.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
+ dtatulea@nvidia.com, 
+ mcoqueli@redhat.com, mst@redhat.com, si-wei.liu@oracle.com, 
+ qemu-stable@nongnu.org, leiyang@redhat.com, Ani Sinha <anisinha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,44 +106,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 21:20, Phil Dennis-Jordan wrote:
-> From: Alexander Graf <graf@amazon.com>
-> 
-> Some boards such as vmapple don't do real legacy PCI IRQ swizzling.
-> Instead, they just keep allocating more board IRQ lines for each new
-> legacy IRQ. Let's support that mode by giving instantiators a new
-> "nr_irqs" property they can use to support more than 4 legacy IRQ lines.
-> In this mode, GPEX will export more IRQ lines, one for each device.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> 
-> v4:
-> 
->   * Turned pair of IRQ arrays into array of structs.
->   * Simplified swizzling logic selection.
-> 
-> v12:
-> 
->   * Fixed uses of deleted GPEX_NUM_IRQS constant that have been
->     added to QEMU since this patch was originally written.
-> 
->   hw/arm/sbsa-ref.c          |  2 +-
->   hw/arm/virt.c              |  2 +-
->   hw/i386/microvm.c          |  2 +-
->   hw/loongarch/virt.c        | 12 +++++------
->   hw/mips/loongson3_virt.c   |  2 +-
->   hw/openrisc/virt.c         | 12 +++++------
->   hw/pci-host/gpex.c         | 43 ++++++++++++++++++++++++++++++--------
->   hw/riscv/virt.c            | 12 +++++------
->   hw/xen/xen-pvh-common.c    |  2 +-
->   hw/xtensa/virt.c           |  2 +-
->   include/hw/pci-host/gpex.h |  7 +++----
->   11 files changed, 61 insertions(+), 37 deletions(-)
+On Fri, Dec 20, 2024 at 10:02=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> w=
+rote:
+>
+> 12.09.2024 19:54, Eugenio P=C3=A9rez wrote:
+> > Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
+> > structures if peer nic is present") effectively delayed the backend
+> > cleanup, allowing the frontend or the guest to access it resources as
+> > long as the frontend NIC is still visible to the guest.
+> >
+> > However it does not clean up the resources until the qemu process is
+> > over.  This causes an effective leak if the device is deleted with
+> > device_del, as there is no way to close the vdpa device.  This makes
+> > impossible to re-add that device to this or other QEMU instances until
+> > the first instance of QEMU is finished.
+> >
+> > Move the cleanup from qemu_cleanup to the NIC deletion.
+> >
+> > v2:
+> > Remove NIC peer also at net_cleanup. vhost-user trust all the
+> > backends are clean before qemu removes char devices.
+> >
+> > This is not a requisite introduced by this commit as
+> > system/runstate.c:qemu_cleanup shows.
+> >
+> > Eugenio P=C3=A9rez (2):
+> >    net: parameterize the removing client from nc list
+> >    net: move backend cleanup to NIC cleanup
+> >
+> >   net/net.c        | 44 ++++++++++++++++++++++++++++++++++----------
+> >   net/vhost-vdpa.c |  8 --------
+> >   2 files changed, 34 insertions(+), 18 deletions(-)
+> Hi!
+>
+> It looks like this series has been forgotten.  Is it still needed?
+>
+> In order for it to build, a single line in patch 2 needs to be
+> changed (in net_cleanup()), from:
+>
+> +                for (int i =3D 0; i < queues; i++) {
+> +                    NetClientState *nc =3D qemu_get_subqueue(nic, i);
+> +                    qemu_cleanup_net_client(nc->peer, false);
+> +                }
+>
+> to
+>
+> +                for (int i =3D 0; i < queues; i++) {
+> +                    nc =3D qemu_get_subqueue(nic, i);
+> +                    qemu_cleanup_net_client(nc->peer, false);
+> +                }
+>
+> so there's no variable shadowing anymore.
+>
+> Should this series be resent (a v3), or can this be fixed at apply time?
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I guess it is better to resend a v3, so we don't have a compiler
+warning (or error). Jonah, maybe do you want to move this one forward?
+
+Thanks!
 
 
