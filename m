@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151E3E7718E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D37E77188
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7b2-00033Z-GN; Tue, 24 Dec 2024 11:17:24 -0500
+	id 1tQ7b3-00035G-MY; Tue, 24 Dec 2024 11:17:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7ay-00031R-3A
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:20 -0500
+ id 1tQ7az-000328-FF
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:22 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7aw-00039q-3T
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:19 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfZBE013114;
- Tue, 24 Dec 2024 16:17:14 GMT
+ id 1tQ7aw-0003A3-Is
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:21 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfYEW008033;
+ Tue, 24 Dec 2024 16:17:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=X7tlMCUS/pe0rYbAxZWEdnFp1ET9KC5GRBfBDrcPckc=; b=
- bi1VttGFh8EuFsKEKZZUJweB8DaXliE9r8x6CuvSTONGh1pYTv/Zp9hR/RtaxUNg
- vdD3UIZDExfyV8yiVfKCl+1gOeYmwwR42VyGVCYZ5qmPiNKO6fBlCZ3zh2wP+tqI
- pUXlloEdvWp73gMn+uSYcIwT3NrXtWIM1YyBpZdxZJRiylod5ODdrtN2A7goHUpK
- Nmj49MR/Okz5GwHd4CaL6rETEl2HQmiUI0a0NNAGooSU+b1TjYczqzAS66ZW47Px
- iKDkbDFwrxS+1q+2zZzyEx0Y83DUWXBqbaNggv57Etxd6aD8FzTkda7Rk6nVyQfJ
- Raw71SkAoU0yCkIPLKgqAw==
+ corp-2023-11-20; bh=Equ7yWwJew/wnUf+aFBVQlXJgRrN4ZaJSEDL86opA/4=; b=
+ MLW57bLwCZAODCvD1XFl710L8bra4HVIEIffi4G1hEbzrNGHOWs8TuMhFC/7zDvz
+ hYl6eY1hVbPQdOpL5mnKwjU4NHPZvxWWKp1dG6PVzAVnapnntDmryhqa/3xbDmU3
+ imtHg82VYuVED2+E7M6dVB0bz8/+e+m9u58YRiKP6DLP2jp2YKIveSJoEG+AuCZJ
+ uJwqqJV49+irrGW49HK4LKrdBVRLpgLwQUubqd/M74HX5tJuqvH3fCDuHtlKjKcf
+ iPd7WTUGVVVnsSdh3wwbr1goo3tj6Yb+minM+KvE149hULt0ayUbqvnFx2IOkNXy
+ FyUhdE1GJdKW9Q+cnbIAuw==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nq6sch4f-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nq56vh07-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:14 +0000 (GMT)
+ Tue, 24 Dec 2024 16:17:15 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BOFLbUQ022596; Tue, 24 Dec 2024 16:17:13 GMT
+ with ESMTP id 4BOElcEZ023252; Tue, 24 Dec 2024 16:17:14 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43nm484gja-1
+ 43nm484gjv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:13 +0000
+ Tue, 24 Dec 2024 16:17:14 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9XQ021973;
- Tue, 24 Dec 2024 16:17:12 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9XU021973;
+ Tue, 24 Dec 2024 16:17:14 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 43nm484ggj-6; Tue, 24 Dec 2024 16:17:12 +0000
+ ESMTP id 43nm484ggj-8; Tue, 24 Dec 2024 16:17:14 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 05/23] machine: aux-ram-share option
-Date: Tue, 24 Dec 2024 08:16:50 -0800
-Message-Id: <1735057028-308595-6-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 07/23] physmem: preserve ram blocks for cpr
+Date: Tue, 24 Dec 2024 08:16:52 -0800
+Message-Id: <1735057028-308595-8-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2412240141
-X-Proofpoint-ORIG-GUID: 7jWrwsd0gCC4xwwOP3_ynMlmkpXlaQsq
-X-Proofpoint-GUID: 7jWrwsd0gCC4xwwOP3_ynMlmkpXlaQsq
+X-Proofpoint-GUID: 9Vdr4AOT5z1g30K42YZLYoG_GTnSQEcu
+X-Proofpoint-ORIG-GUID: 9Vdr4AOT5z1g30K42YZLYoG_GTnSQEcu
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -105,121 +105,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allocate auxilliary guest RAM as an anonymous file that is shareable
-with an external process.  This option applies to memory allocated as
-a side effect of creating various devices. It does not apply to
-memory-backend-objects, whether explicitly specified on the command
-line, or implicitly created by the -m command line option.
-
-This option is intended to support new migration modes, in which the
-memory region can be transferred in place to a new QEMU process, by sending
-the memfd file descriptor to the process.  Memory contents are preserved,
-and if the mode also transfers device descriptors, then pages that are
-locked in memory for DMA remain locked.  This behavior is a pre-requisite
-for supporting vfio, vdpa, and iommufd devices with the new modes.
+Save the memfd for ramblocks in CPR state, along with a name that
+uniquely identifies it.  The block's idstr is not yet set, so it
+cannot be used for this purpose.  Find the saved memfd in new QEMU when
+creating a block.  If size of a resizable block is larger in new QEMU,
+extend it via the file_ram_alloc truncate parameter, and the extra space
+will be usable after a guest reset.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- hw/core/machine.c   | 20 ++++++++++++++++++++
- include/hw/boards.h |  1 +
- qemu-options.hx     | 11 +++++++++++
- system/physmem.c    |  3 +++
- 4 files changed, 35 insertions(+)
+ system/physmem.c | 44 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index c949af9..75c8cba 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -455,6 +455,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
-     ms->mem_merge = value;
- }
- 
-+static bool machine_get_aux_ram_share(Object *obj, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+
-+    return ms->aux_ram_share;
-+}
-+
-+static void machine_set_aux_ram_share(Object *obj, bool value, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+
-+    ms->aux_ram_share = value;
-+}
-+
- static bool machine_get_usb(Object *obj, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
-@@ -1160,6 +1174,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
-     object_class_property_set_description(oc, "mem-merge",
-         "Enable/disable memory merge support");
- 
-+#ifdef CONFIG_POSIX
-+    object_class_property_add_bool(oc, "aux-ram-share",
-+                                   machine_get_aux_ram_share,
-+                                   machine_set_aux_ram_share);
-+#endif
-+
-     object_class_property_add_bool(oc, "usb",
-         machine_get_usb, machine_set_usb);
-     object_class_property_set_description(oc, "usb",
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 2ad711e..e1f41b2 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -410,6 +410,7 @@ struct MachineState {
-     bool enable_graphics;
-     ConfidentialGuestSupport *cgs;
-     HostMemoryBackend *memdev;
-+    bool aux_ram_share;
-     /*
-      * convenience alias to ram_memdev_id backend memory region
-      * or to numa container memory region
-diff --git a/qemu-options.hx b/qemu-options.hx
-index cc694d3..b1f56b7 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -38,6 +38,9 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
-     "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
-     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-+#ifdef CONFIG_POSIX
-+    "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
-+#endif
-     "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
-     "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
-     QEMU_ARCH_ALL)
-@@ -101,6 +104,14 @@ SRST
-         Enables or disables ACPI Heterogeneous Memory Attribute Table
-         (HMAT) support. The default is off.
- 
-+    ``aux-ram-share=on|off``
-+        Allocate auxiliary guest RAM as an anonymous file that is
-+        shareable with an external process.  This option applies to
-+        memory allocated as a side effect of creating various devices.
-+        It does not apply to memory-backend-objects, whether explicitly
-+        specified on the command line, or implicitly created by the -m
-+        command line option.  The default is off.
-+
-     ``memory-backend='id'``
-         An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
-         Allows to use a memory backend as main RAM.
 diff --git a/system/physmem.c b/system/physmem.c
-index eb1c3a7..0e629ee 100644
+index 0e629ee..7a6d832 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -2112,6 +2112,9 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+@@ -70,6 +70,7 @@
  
- #ifdef CONFIG_POSIX         /* ignore RAM_SHARED for Windows */
-     if (!host) {
-+        if (!share_flags && current_machine->aux_ram_share) {
-+            ram_flags |= RAM_SHARED;
-+        }
+ #include "qemu/pmem.h"
+ 
++#include "migration/cpr.h"
+ #include "migration/vmstate.h"
+ 
+ #include "qemu/range.h"
+@@ -1661,6 +1662,18 @@ void qemu_ram_unset_idstr(RAMBlock *block)
+     }
+ }
+ 
++static char *cpr_name(MemoryRegion *mr)
++{
++    const char *mr_name = memory_region_name(mr);
++    g_autofree char *id = mr->dev ? qdev_get_dev_path(mr->dev) : NULL;
++
++    if (id) {
++        return g_strdup_printf("%s/%s", id, mr_name);
++    } else {
++        return g_strdup(mr_name);
++    }
++}
++
+ size_t qemu_ram_pagesize(RAMBlock *rb)
+ {
+     return rb->page_size;
+@@ -2078,15 +2091,25 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+  * shared with another process if CPR is being used.  Use memfd if available
+  * because it has no size limits, else use POSIX shm.
+  */
+-static int qemu_ram_get_shared_fd(const char *name, Error **errp)
++static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
+ {
+-    int fd;
++    int fd = cpr_find_fd(name, 0);
++
++    if (fd >= 0) {
++        *reused = true;
++        return fd;
++    }
+ 
+     if (qemu_memfd_check(0)) {
+         fd = qemu_memfd_create(name, 0, 0, 0, 0, errp);
+     } else {
+         fd = qemu_shm_alloc(0, errp);
+     }
++
++    if (fd >= 0) {
++        cpr_save_fd(name, 0, fd);
++    }
++    *reused = false;
+     return fd;
+ }
+ #endif
+@@ -2116,8 +2139,9 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+             ram_flags |= RAM_SHARED;
+         }
          if (ram_flags & RAM_SHARED) {
-             const char *name = memory_region_name(mr);
-             int fd = qemu_ram_get_shared_fd(name, errp);
+-            const char *name = memory_region_name(mr);
+-            int fd = qemu_ram_get_shared_fd(name, errp);
++            bool reused;
++            g_autofree char *name = cpr_name(mr);
++            int fd = qemu_ram_get_shared_fd(name, &reused, errp);
+ 
+             if (fd < 0) {
+                 return NULL;
+@@ -2131,9 +2155,14 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+              * fd is not supported, but previous QEMU versions that called
+              * qemu_anon_ram_alloc for anonymous shared memory could have
+              * succeeded.  Quietly fail and fall back.
++             *
++             * After cpr-transfer, new QEMU could create a memory region
++             * with a larger max size than old, so pass reused to grow the
++             * region if necessary.  The extra space will be usable after a
++             * guest reset.
+              */
+             new_block = qemu_ram_alloc_from_fd(size, max_size, resized, mr,
+-                                               ram_flags, fd, 0, false, NULL);
++                                               ram_flags, fd, 0, reused, NULL);
+             if (new_block) {
+                 trace_qemu_ram_alloc_shared(name, new_block->used_length,
+                                             new_block->max_length, fd,
+@@ -2141,6 +2170,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+                 return new_block;
+             }
+ 
++            cpr_delete_fd(name, 0);
+             close(fd);
+             /* fall back to anon allocation */
+         }
+@@ -2219,6 +2249,8 @@ static void reclaim_ramblock(RAMBlock *block)
+ 
+ void qemu_ram_free(RAMBlock *block)
+ {
++    g_autofree char *name = NULL;
++
+     if (!block) {
+         return;
+     }
+@@ -2229,6 +2261,8 @@ void qemu_ram_free(RAMBlock *block)
+     }
+ 
+     qemu_mutex_lock_ramlist();
++    name = cpr_name(block->mr);
++    cpr_delete_fd(name, 0);
+     QLIST_REMOVE_RCU(block, next);
+     ram_list.mru_block = NULL;
+     /* Write list before version */
 -- 
 1.8.3.1
 
