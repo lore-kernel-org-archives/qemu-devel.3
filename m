@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03379E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 09:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE07E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 09:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ0lo-0006Hl-BP; Tue, 24 Dec 2024 04:00:04 -0500
+	id 1tQ0q0-0007Wg-T8; Tue, 24 Dec 2024 04:04:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ0lm-0006Ee-M2
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 04:00:02 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ0ps-0007Vd-TT
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 04:04:21 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ0lk-00059b-Td
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 04:00:02 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3862ca8e0bbso3736970f8f.0
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 01:00:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ0pp-0005f9-Fv
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 04:04:16 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-385f06d0c8eso2750696f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 01:04:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735030799; x=1735635599; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735031052; x=1735635852; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oDKAIsmdLW19i/P9mWzEU69w0622+vUKQ9SUjFLyolc=;
- b=Gmfk99K6BhOcym6qebKHtRRAl4kcnYPOoWcrGPBosFEJa9/h7FD30wpGXOMm56eknA
- KAXrWMG6CFciHhkS+PrPLsGqHmpyWZKXpM9nw97NmbktMD1XnBubiWNGJkPtmb2tWoY6
- 4Eu2wrD1PfhDdTNr85Pb26LmownxL9zS76Apm3QFDYXnwM1YrJhiDt+RBCiyEn0DE/Gu
- MEJPAr1HzrSyv21KOZZ2Duviwo6zAeoophTm2P/dmpGIVR0SyolJ68R1ERvt0p2ap/SE
- eQ65LZtIbK1aj7AnmsIo5E3E20ZGjlnK6yS1cmqAPUYP/v1nnE/kzBWGkkgy8SyiSXIA
- q6Ng==
+ bh=LZpc8CnU6oSKDG84MCVH8xhVz73IT3gitEVwFXsqeTQ=;
+ b=i4rg4//LZA82Fh05KxH53/fGcJ0bRgc/6zGkPVcAB3PQSnPvRRuORQn64pMSy/w9WD
+ euIQNGFWCVqtdf1dg/2U3Ymd8XRXUfxHezQhp8hs8gNfuRaVvjsYY/pJW+AimHnx9AH/
+ vMVcIQOPdK17uzN2SGrsZfjycKUHalUqbERZl+Nhn3EN67yP8tJ//55Kfzt9QSJ1Jju8
+ sjaLlq/T33gzRkZyWefyaroI9cOoRjnBQ9EgJm2bkwEtUhCnTnWkVzYyxkRRPmdHlALk
+ y0BuNbpZn2wfbKhq+yKy07VQwzIHpmG4sNw46xzL5UAQM+glXngziGeQ3udPablfA2Wt
+ sQiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735030799; x=1735635599;
+ d=1e100.net; s=20230601; t=1735031052; x=1735635852;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oDKAIsmdLW19i/P9mWzEU69w0622+vUKQ9SUjFLyolc=;
- b=neJG2CCYEMQf6pcgoVb/4y5kWrRy9LGAn14EVFSf1IljFyOaXy3LekAbwkxXyOfymD
- d/cctiyLLv5VXA/ZdIAe2SN3gx3G8cCVTKarplmFrEjFkDtW/jch5rCSKG6p2z0hpZM4
- XToX4fcHwol2bLiXbSeON9AJMxHxdmndzWP+3rNvQXTpDj22ABEVVfJo3z0OoHS1uf9S
- H7pVT4seTJ8XJLqQsRXyey2P4EBfH2WnzzK9CK+q+eDJXEpS6TqTpNrhQJIDolQRwofP
- OCf9OxJgJ1TbNIO4nq9YUb+2pDX01i1m+EgmjmCx8F5a/HhaQXyN3YDyLQjofyeZZoMI
- IaOw==
+ bh=LZpc8CnU6oSKDG84MCVH8xhVz73IT3gitEVwFXsqeTQ=;
+ b=s3ClK+pYfv2X56NcdXhJZi+mC+FVh8kaH2qJMKx6LskJIVkFYw5nJveCXuhTlBACF6
+ TbncLZQKYUJQlO97synqEJNy4+W3iQaM0lU+gyY9/yeM697NojCAMKpIah+4dKY2WCnr
+ GRT9K+ZDxAxdhOWUU6bhbsogSvn3+8FehUvqc0OXWR13Xn/IgWmoy0pPxHpwDQ/dM4hs
+ h+mD1+h7US5l3N8P3n95VynW4IQWpOIhYuZI5z2tIXabGRl6yB3Fs7sC2Zdd/1ePUFYp
+ gCPj8BcyUXdQ50pCw6Tl5IGEeBeGuAZDPgrY/9XRrqZEXCgAYrzVIfG2HwYLwhH9xPY8
+ adQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVr+OX2aTPIZ72KhDZrT15GGlb3JRArwnINq9EQNudyDAcEuHefkACU3SqUTGI+zi49AIc8rAx3YESP@nongnu.org
-X-Gm-Message-State: AOJu0YxeXZH5msx/CWDgJJi0EAc1EKdVYcVbLiVCvxV3aRmdbhiWKajh
- rRuXsWVgx4YQDE0sdsn6CpQoMLJnatq+TfGbHSGJv/dMUyIf0XqPyZl5URdF040=
-X-Gm-Gg: ASbGncv4scbtf+nhEqQTeEZkheilKbMLpFLyJOGTn52EhoFZzG1XGZvhbfgJu6euSeL
- 2iYgGBa5AS/xhp6u//mG31cvoFwfQbgVKO1wl5KqGDeGzJasm8GRagphLWDHup7DBCzZzhF/YJc
- Lwougm/1kAChy3f9SRSn9HrokOWrsCh+zn8A3yIq5llsi8Eb790Lj+601gArTEU96Hk2hxPXbum
- QidQYKaBmNjjJ8xvIgHIQezhKVI+/zIjqxv5rmHIUGNn7I4uQx0V9/wdaWVt0t9bSw=
-X-Google-Smtp-Source: AGHT+IGzx9Fr6LzLw001ZnrZ/4M8B/V4vexPOqZ1tjaERzbRyOQA73dSUArFNyYaHzdLDB2vdU54cA==
-X-Received: by 2002:a5d:588e:0:b0:388:c75d:be97 with SMTP id
- ffacd0b85a97d-38a221e27bbmr13802325f8f.11.1735030798956; 
- Tue, 24 Dec 2024 00:59:58 -0800 (PST)
+ AJvYcCVxlFNcmPD6HJT+UszqYo29JPuPZkaiesva4uAeGCWRmxEKV2CphUgIXotfVqMgJbaWxIvleRWslEe4@nongnu.org
+X-Gm-Message-State: AOJu0YyCtFzxm40cegkVAgDUsPNeabWpSc8KH8nL6KUOXc8eOkpFs425
+ F0Q1Wq+OH2KQFSiBb9zf5Ug6DEW50fNBoHacoM9W/8qsu/6RUNiqqaZNNbffdeo=
+X-Gm-Gg: ASbGncsss1fVMn9eH/FYHZtoj23EYmrQ/9uE9p0KZUeA0S0qtYm2+qxfpSFUYzmlutD
+ XTBIU8qL3Btv2cVOa45c7Rx3IA5vJp5ZZFnxuXUioz5JzE7eLfudWyRlVURZW4PTnpV62TQWCMe
+ BgRl3lImNjRdNStziPQaajBPizrrIxMddjsJ6LXUjpP5w/rlmn9aVLluM1EI+K8ygfCGRvZvjHk
+ dROaCa/B+YHpQL/sXVjENRn35YjKFb1OFvUhagupwdwUusYHq/4mHcUv253mPsGvlA=
+X-Google-Smtp-Source: AGHT+IFXH5tVG59X58cfv+F/G0GyNlUSqVjyT6jEkDMG1hY1yad5Vxc+HMFQiuL81YIYB4X2N8fK0g==
+X-Received: by 2002:a05:6000:2ae:b0:382:450c:2607 with SMTP id
+ ffacd0b85a97d-38a221f3392mr12272620f8f.4.1735031051195; 
+ Tue, 24 Dec 2024 01:04:11 -0800 (PST)
 Received: from [192.168.1.117] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366128a62asm159476685e9.44.2024.12.24.00.59.58
+ ffacd0b85a97d-38a1c8ac974sm13520889f8f.91.2024.12.24.01.04.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 00:59:58 -0800 (PST)
-Message-ID: <98696813-b2fe-45aa-a759-25764435b7c7@linaro.org>
-Date: Tue, 24 Dec 2024 09:59:57 +0100
+ Tue, 24 Dec 2024 01:04:10 -0800 (PST)
+Message-ID: <61cff220-b0f9-4924-80f1-13e6eccbf465@linaro.org>
+Date: Tue, 24 Dec 2024 10:04:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
-To: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
- "pizhenwei@bytedance.com" <pizhenwei@bytedance.com>,
- Lei He <helei.sig11@bytedance.com>
-References: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
+Subject: Re: [PATCH v1 1/3] hw/timer/aspeed: Support different memory region
+ ops
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241216075353.1308043-1-jamin_lin@aspeedtech.com>
+ <20241216075353.1308043-2-jamin_lin@aspeedtech.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
+In-Reply-To: <20241216075353.1308043-2-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,57 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gabriel,
+Hi Jamin,
 
-On 24/12/24 00:46, Gabriel Barrantes wrote:
->  From c808fa797942b9bd32221594b7eef690a7558b14 Mon Sep 17 00:00:00 2001
-> From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
-> Date: Mon, 23 Dec 2024 14:58:12 -0600
-> Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+On 16/12/24 08:53, Jamin Lin via wrote:
+> It set "aspeed_timer_ops" struct which containing read and write callbacks
+> to be used when I/O is performed on the TIMER region.
 > 
-> Do not propagate error to the upper, directly output the error to
-> avoid leaks.
+> Besides, in the previous design of ASPEED SOCs, the timer registers address
+> space are contiguous.
 > 
-> Closes: #2714
+> ex: TMC00-TMC0C are used for TIMER0.
+> ex: TMC10-TMC1C are used for TIMER1.
+> ex: TMC80-TMC8C are used for TIMER7.
+> 
+> The TMC30 is a control register and TMC34 is an interrupt status register for
+> TIMER0-TIMER7.
+> 
+> However, the register set have a significant change in AST2700. The TMC00-TMC3C
+> are used for TIMER0 and TMC40-TMC7C are used for TIMER1. In additional,
+> TMC20-TMC3C and TMC60-TMC7C are reserved registers for TIMER0 and TIMER1,
+> respectively.
+> 
+> Besides, each TIMER has their own control and interrupt status register.
+> In other words, users are able to set control and interrupt status for TIMER0
+> in one register. Both aspeed_timer_read and aspeed_timer_write callback
+> functions are not compatible AST2700.
+> 
+> Introduce a new "const MemoryRegionOps *" attribute in AspeedTIMERClass and use
+> it in aspeed_timer_realize function.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/timer/aspeed_timer.c         | 7 ++++++-
+>   include/hw/timer/aspeed_timer.h | 1 +
+>   2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
+> index 149f7cc5a6..970bf1d79d 100644
+> --- a/hw/timer/aspeed_timer.c
+> +++ b/hw/timer/aspeed_timer.c
+> @@ -606,6 +606,7 @@ static void aspeed_timer_realize(DeviceState *dev, Error **errp)
+>       int i;
+>       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+>       AspeedTimerCtrlState *s = ASPEED_TIMER(dev);
+> +    AspeedTimerClass *atc = ASPEED_TIMER_GET_CLASS(s);
+>   
+>       assert(s->scu);
+>   
+> @@ -613,7 +614,7 @@ static void aspeed_timer_realize(DeviceState *dev, Error **errp)
+>           aspeed_init_one_timer(s, i);
+>           sysbus_init_irq(sbd, &s->timers[i].irq);
+>       }
+> -    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_timer_ops, s,
+> +    memory_region_init_io(&s->iomem, OBJECT(s), atc->reg_ops, s,
+>                             TYPE_ASPEED_TIMER, 0x1000);
+>       sysbus_init_mmio(sbd, &s->iomem);
+>   }
+> @@ -708,6 +709,7 @@ static void aspeed_2400_timer_class_init(ObjectClass *klass, void *data)
+>       dc->desc = "ASPEED 2400 Timer";
+>       awc->read = aspeed_2400_timer_read;
+>       awc->write = aspeed_2400_timer_write;
+> +    awc->reg_ops = &aspeed_timer_ops;
 
-Better to use the full issue url to ease downstream backports
-where this commit is cherry-picked:
+Simpler (and safer) to initialize a common field once,
+in the parent class, timer_class_init(). Otherwise,
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2714
-
-Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> 
-> Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
-> ---
-> backends/cryptodev-vhost-user.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost- 
-> user.c
-> index 43efdf9747..09bfbddb47 100644
-> --- a/backends/cryptodev-vhost-user.c
-> +++ b/backends/cryptodev-vhost-user.c
-> @@ -281,8 +281,8 @@ static int cryptodev_vhost_user_create_session(
->          break;
-> 
->      default:
-> -        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
-> -                   sess_info->op_code);
-> +        error_report("Unsupported opcode :%" PRIu32 "",
-> +                     sess_info->op_code);
->          return -VIRTIO_CRYPTO_NOTSUPP;
->      }
-
-Arei, Pi, Having CryptoDevBackendClass::create_session() take an errp
-argument would simplify the call chain, reporting the error once in
-cryptodev_backend_create_session().
-
-> 
-> -- 
-> 2.43.0
-> 
-> 
+>   }
+>   
+>   static const TypeInfo aspeed_2400_timer_info = {
+> @@ -724,6 +726,7 @@ static void aspeed_2500_timer_class_init(ObjectClass *klass, void *data)
+>       dc->desc = "ASPEED 2500 Timer";
+>       awc->read = aspeed_2500_timer_read;
+>       awc->write = aspeed_2500_timer_write;
+> +    awc->reg_ops = &aspeed_timer_ops;
+>   }
 
 
