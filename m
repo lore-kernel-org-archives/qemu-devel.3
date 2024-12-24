@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2C3E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 11:58:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA39E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 11:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ3YA-0001Xd-4G; Tue, 24 Dec 2024 06:58:10 -0500
+	id 1tQ3Yx-0002aK-En; Tue, 24 Dec 2024 06:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tQ3Y7-0001RO-Be
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 06:58:07 -0500
-Received: from mout.kundenserver.de ([212.227.126.130])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tQ3Yr-0002G7-Ou
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 06:58:54 -0500
+Received: from mout.kundenserver.de ([212.227.126.134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tQ3Y5-0001Zm-H8
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 06:58:07 -0500
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tQ3Yq-0001tF-80
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 06:58:53 -0500
 Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue009 [213.165.67.103]) with ESMTPSA (Nemesis) id
- 1Mdvyo-1tzfkG0XGY-00d2CF; Tue, 24 Dec 2024 12:57:58 +0100
-Message-ID: <8feb2b30-9b15-4b3c-8517-efedf912745f@vivier.eu>
-Date: Tue, 24 Dec 2024 12:57:57 +0100
+ (mreue011 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1MEFfB-1tIbIi2vsz-004vRv; Tue, 24 Dec 2024 12:58:49 +0100
+Message-ID: <a8046b48-1004-4cef-9783-1077245efd97@vivier.eu>
+Date: Tue, 24 Dec 2024 12:58:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/6] linux-user: netlink: Add missing IFA_PROTO to
- host_to_target_data_addr_rtattr()
+Subject: Re: [PULL 2/6] linux-user: Use unique error messages for cmsg parsing
 To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 Cc: deller@gmx.de
 References: <20241218195247.5459-1-deller@kernel.org>
- <20241218195247.5459-2-deller@kernel.org>
+ <20241218195247.5459-3-deller@kernel.org>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -76,30 +75,30 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <20241218195247.5459-2-deller@kernel.org>
+In-Reply-To: <20241218195247.5459-3-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:aCLyfig2OdGcc6LlVOiyacOhrvh8FjU5wz1ORrRwUEJfJDZsaQi
- 2Zbrnt4+II3pXWQ2as3bDN26J/LngNhevSWvLcWKjs2A9KsN4HDx+Mr/dliDNsZOVyiiypP
- yLQu63Ds5AM4ifCSpOFs6Ye5nYSx4LQff6aL1yTPVCgoYa7pyEu1blOb6RgzxmR3WwlR4cb
- Te0rYGrBMoouDoCn2VhHg==
-UI-OutboundReport: notjunk:1;M01:P0:9joAgb7UkHU=;anfUL7L+uMg2P/rJ9DtiyUFN22y
- akyyKtmSB7p8ZvYdy5Va0uq0HOUGlIAMj/JcUcMYKRJ5M0DovvbBqnaiZ7XiqMXVTBnGm3nP3
- 1HU7FQATw+Dd0OHgNzgBcR18UhRp0/PkbEo6W/6gER+byEiPTJankFJlRNaplEnlXKFDZ1dr8
- Wrq9iIExxcWTvC2WX9K9GmJxtmzEzNrPcK5kK/KEWS+E1s1Zjyz/ihIIyj8+h0S2+p2vpJnKV
- PaxzGG4UHqEISnR0aovFAFc7IM3p4KIiKU5pU+s5j4jynbkGNxzsAtmmzUmRJPoBhL/CkXVsg
- cCZ6eYVPZElKueeskPSlX6HPBx81UKvjHcuRTw2n3WNzscP5khsPzUWzrESZbOTq1UYqG9G/c
- OM4g1ztMTUMPUYqQvYzIRPEfoYI6jTyofPPDcqCv7VFZ3DNsl29MQVGoYZtcH21j4hgIm2kuV
- LCsDWM+XoODEnKEJ4NjGcehZkCIekd70V37yH/W5yEXC4uMirfftIrLJN0PMB9w41w2oocyzz
- ekKliTop3Zsc28eIXUbUb/bOQ1amkuwDGBxFyXuS54Gr6vTHfzpa0pjjGcNsjJAPyuFzbTHna
- 11CVj9Kb4itLD6VNqsu/7xdlkXSqbkwLlUL8wUJ6z3AePAZCP6B1mfIIPcNECWHlQsqwcisvL
- S9YBgpHGYuwAW9YPxE3/2GQ1Ds2dsmora+k83Bq8IqJDC6wHiwz+aNNE58jp0oVRFwiMRMTMH
- utCwTdgWioAB7/f4fnsuof9Ip6RPri42S/VQO8Br9XYPj1ND6WX4hoW0D8Bj95tWJZUlqwtWk
- IubMfFL0afd6GztCnq3qJAtOFYZUhkM4jjjDFpK0munGx695lG5bBkTLXedJs2CeZeZ6xbFJZ
- y8pT8ltXix/LdhjvspDIv03c2STrfyeMjf4ypUpwv5uoI2IIiF6X/xk7yvqtmihWuDtA2IRsd
- PROzTqbDAHau31Vfv7xTd0P3wgD5PnV/+AF1XioFyYp2CAkG38EEaE9HoBzdsIUeV1VFN2PGz
- WzM8OxvOmwHuOUEV/rRnHEBoVsHTz421CIy3R59
-Received-SPF: pass client-ip=212.227.126.130; envelope-from=laurent@vivier.eu;
+X-Provags-ID: V03:K1:nsqaN/kaN8qmVvByuH49+zPYOLb0iv7gwXmZZMqXV2dbmIumVSf
+ hqzhbVDO1oiqmX+n3Yn26UXOCzlGvATVUH9LhVQ3oQs2iilJ0Ym3CyULhsVhU9annpQI02s
+ XZQvQv7qpereiipwGPU/jk/GFYNj8rR8Z/X2nFAG3H+tSMZNaVa/70t9oepRv6lDhRJkgm8
+ 6VuUEfRUZymVggKFb50tQ==
+UI-OutboundReport: notjunk:1;M01:P0:PpYtrsPRaS8=;J8TUcD9V5Qys0uayVDBSTkiI+1h
+ hyJ95LV5CpYWmVqQmMwuK0r2WYajD0IK6Aa3z5Px1WWYx9xwsF5djK3ZbQOoEXXR+BkDqKLL1
+ EG67KvE9jfS/byZCL90fKZgIthJvHLyIqngI5j738EvU+h+TSnyAoAVx/LT3METEzAr9gOTkD
+ qHxVa+PGDz2PgjR1f00Ql+yUPMjZXP/of0xBiLrLStgPfVndobprXL4kemOEsOnThoz5TJknl
+ EDIUgyZbvybVg4sS9ZYiHoU6Y/YhyNMadWO62uC467OUBsPRZjbPf6KbLj0VLEXSaYgqRAViM
+ v9Y9de9R3zzSz02YkFmJYEuLnOjNUaXh1RZF8rpQboN868+QsdGLyQYY1DpBSlJ4mNyjJOQ6u
+ DWOM3lHtQQiqZ0LXqgd+LTMEMZzALl1kVQJlvFXjIDwSUqIaXAo18fMUPBCPs4inOtzfbauBq
+ IebilxyDAoSb4ejddCHJ6aSd/fYkSAUHsY8ShnOvKOWOOxeKc5QsmmyVxstGdgpz0UmAJGKqE
+ RHYRRCiQno1Jp64pLCSKO/d36NRF4uv5ZJ+MKX7yzulFpU3MvT1pcyH4vE5+2bczovuGnzUTA
+ DiG/44eABj9TqPzc/h3mNxDI0oznh+1CGHbHGCnmQXAmDWstjOrWVJwsm05kho1083/U/OA4K
+ iCtsnAFKVv4qug9eiAKCz4usaCJfACcPd14U/O54ghSHhJALozyRkp4innkENLgzOA2e8klmA
+ Zd5MDNDWvzZMsLl7QL3/MZQAEsr1qWPCXFwACbu9RuiqciRbepszgKUJMb/DboFdGcuZ7E+ds
+ QzIDQx+3TeZTLT3qbcMq/4On1g8alHTIThYoxVDuVmSgN+VFgLAgn6Ozc1OLjI8euQ9Mhn5oJ
+ kX6kGTGERCJ/LEUEEFVg4AqUQDK9uFkqR6nVP0xseTFCH4JyY83BCC/HiGVAS4HzvjOW+niWC
+ +9RtfdcT5KTXgHX/UpiIdUFn+Z3m3WfgJu2TW1J80i86587352nXBzZPYoeLeR2hre47AziHb
+ if7QlvFWGvzZEAot0z1tIekNKYQMuNI/rdAnqI5
+Received-SPF: pass client-ip=212.227.126.134; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -126,32 +125,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Le 18/12/2024 à 20:52, deller@kernel.org a écrit :
 > From: Helge Deller <deller@gmx.de>
 > 
-> Fixes this warning:
->   Unknown host IFA type: 11
+> Avoid using the same error message for two different code paths
+> as it complicates determining the one which actually triggered.
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > ---
->   linux-user/fd-trans.c | 1 +
->   1 file changed, 1 insertion(+)
+>   linux-user/syscall.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-> index c04a97c73a..6191e3115b 100644
-> --- a/linux-user/fd-trans.c
-> +++ b/linux-user/fd-trans.c
-> @@ -1143,6 +1143,7 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
->           break;
->       /* string */
->       case IFA_LABEL:
-> +    case IFA_PROTO:
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 1ce4c79784..494323efba 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -1825,7 +1825,7 @@ static inline abi_long target_to_host_cmsg(struct msghdr *msgh,
+>                   *dst = tswap32(*dst);
+>               }
+>           } else {
+> -            qemu_log_mask(LOG_UNIMP, "Unsupported ancillary data: %d/%d\n",
+> +            qemu_log_mask(LOG_UNIMP, "Unsupported target ancillary data: %d/%d\n",
+>                             cmsg->cmsg_level, cmsg->cmsg_type);
+>               memcpy(data, target_data, len);
+>           }
+> @@ -2047,7 +2047,7 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+>   
+>           default:
+>           unimplemented:
+> -            qemu_log_mask(LOG_UNIMP, "Unsupported ancillary data: %d/%d\n",
+> +            qemu_log_mask(LOG_UNIMP, "Unsupported host ancillary data: %d/%d\n",
+>                             cmsg->cmsg_level, cmsg->cmsg_type);
+>               memcpy(target_data, data, MIN(len, tgt_len));
+>               if (tgt_len > len) {
 
-IFA_PROTO is NLA_U8, it should be with IFA_ADDRESS and IFA_LOCAL, not IFA_LABEL (it is NLA_STRING).
-I agree, it doesn't change anything in the code, but I like to keep same types together.
-
->           break;
->       /* u32 */
->       case IFA_FLAGS:
-
-Thanks,
-Laurent
-
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
