@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CCCE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BEC0E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7bQ-0003MB-C5; Tue, 24 Dec 2024 11:17:48 -0500
+	id 1tQ7bT-0003PG-KY; Tue, 24 Dec 2024 11:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7b2-000353-OE
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:24 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1tQ7bJ-0003KW-4a
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:46 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7az-0003Aj-GW
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:24 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEg0vj018774;
- Tue, 24 Dec 2024 16:17:18 GMT
+ id 1tQ7bG-0003Dp-CX
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:40 -0500
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfaSw021753;
+ Tue, 24 Dec 2024 16:17:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=7kFJ0zmHucddFmQ2m7BgbUF4qwTdpmWYozvjpnaJiUM=; b=
- k9SYmUJynfO6Esr/ajJg5PWv9qcc2Gk7uL0nPP1zJF/aHedBH7JgEPj8rDkBY8gc
- eVGUy70IWFrsN8iy9F2EJMwPdwejeV95uY4K8QEaOtZnQ0Z89UVKFPTM7eG1HKNV
- GOXcGZUdznvCsrlEcUjuIaXw4ik/LVcgI+ljNhGxmkfKxyiZj4Ce8faZvA8s8rLM
- D7zMFo4oVnb7F23/Qkr/dwPtWyTBtV1uElxGOZACE+B+sbgoVsCK9BC1PCn01E9S
- 59RNn+tH+7nb+LX6SGqF23A2c6J7Ep9jKOBE1g2i8czpsxP9KaDQFj4/kqJARCvE
- ah/PlvRCR9AlL97VV0Jpsw==
+ corp-2023-11-20; bh=r1srPJSQhfY4Hx0YIJee1U+LczokYroqvWXK2gjx+KI=; b=
+ WAKJQxELxLukZhhhzUz9fM+pWWRaXCac8jvob7vRYe9f3AugPBcEekuojol8VCpi
+ czRvnq1eD7QemI6o2UtzVO9NYQIAQym4OUTWBbLI3goXQdSKq+Le40FBaYII4axC
+ m8VEIeXqNe+PUYfhUsiShDwJwmE9CgsozCPsxeuSKDxDrIuymu8bgiYPwufT81Rn
+ H4yIts0q+YFhM50wOhjWrZ4AoUOwCWxVH9tVJiepAp1S62eoTdMFBQ+5ecf2TGaB
+ xTyh7yFJzR+j1/8yCcNom0GomvASlwX3hNiK47gHRJtwnxp9psibtrUhVspTlXi7
+ 9dRPIdLwCCdZOb6ex6hfPg==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43qgeqs30s-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nq74cgjv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:18 +0000 (GMT)
+ Tue, 24 Dec 2024 16:17:23 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BOGG6RY022588; Tue, 24 Dec 2024 16:17:17 GMT
+ with ESMTP id 4BOGG6Rd022588; Tue, 24 Dec 2024 16:17:23 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43nm484gkw-1
+ 43nm484gp5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:17 +0000
+ Tue, 24 Dec 2024 16:17:23 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9Xc021973;
- Tue, 24 Dec 2024 16:17:16 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9Xu021973;
+ Tue, 24 Dec 2024 16:17:22 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 43nm484ggj-12; Tue, 24 Dec 2024 16:17:16 +0000
+ ESMTP id 43nm484ggj-21; Tue, 24 Dec 2024 16:17:22 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 11/23] migration: incoming channel
-Date: Tue, 24 Dec 2024 08:16:56 -0800
-Message-Id: <1735057028-308595-12-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 20/23] tests/qtest: enhance migration channels
+Date: Tue, 24 Dec 2024 08:17:05 -0800
+Message-Id: <1735057028-308595-21-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
@@ -78,16 +78,16 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2412240141
-X-Proofpoint-ORIG-GUID: c1hDKsKn4RtRnsGq40SIISw7RablprQD
-X-Proofpoint-GUID: c1hDKsKn4RtRnsGq40SIISw7RablprQD
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: 2cpGC0adRSsRDZvOF5osa1Cqui3aD4wa
+X-Proofpoint-GUID: 2cpGC0adRSsRDZvOF5osa1Cqui3aD4wa
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,173 +105,323 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the -incoming option to allow an @MigrationChannel to be specified.
-This allows channels other than 'main' to be described on the command
-line, which will be needed for CPR.
+Change the migrate_qmp and migrate_qmp_fail channels argument to a QObject
+type so the caller can manipulate the object before passing it to the
+helper.  Define migrate_str_to_channel to aid such manipulation.
+Add a channels argument to migrate_incoming_qmp.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- migration/migration.c | 18 ++++++++++++++----
- qemu-options.hx       | 21 +++++++++++++++++++++
- system/vl.c           | 36 +++++++++++++++++++++++++++++++++---
- 3 files changed, 68 insertions(+), 7 deletions(-)
+ tests/qtest/migration/framework.c     | 15 +++++++---
+ tests/qtest/migration/migration-qmp.c | 53 +++++++++++++++++++++++++++++------
+ tests/qtest/migration/migration-qmp.h | 10 ++++---
+ tests/qtest/migration/misc-tests.c    |  9 +++++-
+ tests/qtest/migration/precopy-tests.c |  6 ++--
+ tests/qtest/virtio-net-failover.c     |  8 +++---
+ 6 files changed, 76 insertions(+), 25 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 881684a..7c9bc5b 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2057,6 +2057,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-     MigrationState *s = migrate_get_current();
-     g_autoptr(MigrationChannel) channel = NULL;
-     MigrationAddress *addr = NULL;
-+    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index b3c2c6e..c6ea3e1 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -18,6 +18,8 @@
+ #include "migration/migration-qmp.h"
+ #include "migration/migration-util.h"
+ #include "ppc-util.h"
++#include "qapi/error.h"
++#include "qapi/qmp/qjson.h"
+ #include "qapi/qmp/qlist.h"
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+@@ -690,6 +692,7 @@ void test_precopy_common(MigrateCommon *args)
+ {
+     QTestState *from, *to;
+     void *data_hook = NULL;
++    QObject *out_channels = NULL;
  
-     /*
-      * Having preliminary checks for uri and channel
-@@ -2067,12 +2068,21 @@ void qmp_migrate(const char *uri, bool has_channels,
-     }
- 
-     if (channels) {
--        /* To verify that Migrate channel list has only item */
--        if (channels->next) {
--            error_setg(errp, "Channel list has more than one entries");
-+        for ( ; channels; channels = channels->next) {
-+            MigrationChannelType type = channels->value->channel_type;
-+
-+            if (channelv[type]) {
-+                error_setg(errp, "Channel list has more than one %s entry",
-+                           MigrationChannelType_str(type));
-+                return;
-+            }
-+            channelv[type] = channels->value;
-+        }
-+        addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
-+        if (!addr) {
-+            error_setg(errp, "Channel list has no main entry");
-             return;
+     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return;
+@@ -722,12 +725,16 @@ void test_precopy_common(MigrateCommon *args)
          }
--        addr = channels->value->addr;
      }
  
-     if (uri) {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index b1f56b7..f1a30ef 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4940,10 +4940,18 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
-     "-incoming exec:cmdline\n" \
-     "                accept incoming migration on given file descriptor\n" \
-     "                or from given external command\n" \
-+    "-incoming <channel>\n" \
-+    "                accept incoming migration on the migration channel\n" \
-     "-incoming defer\n" \
-     "                wait for the URI to be specified via migrate_incoming\n",
-     QEMU_ARCH_ALL)
- SRST
-+The -incoming option specifies the migration channel for an incoming
-+migration.  It may be used multiple times to specify multiple
-+migration channel types.  The channel type is specified in <channel>,
-+or is 'main' for all other forms of -incoming.  If multiple -incoming
-+options are specified for a channel type, the last one takes precedence.
-+
- ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
-   \ 
- ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
-@@ -4963,6 +4971,19 @@ SRST
-     Accept incoming migration as an output from specified external
-     command.
- 
-+``-incoming <channel>``
-+    Accept incoming migration on the migration channel.  For the syntax
-+    of <channel>, see the QAPI documentation of ``MigrationChannel``.
-+    Examples:
-+    ::
-+
-+        -incoming '{"channel-type": "main",
-+                    "addr": { "transport": "socket",
-+                              "type": "unix",
-+                              "path": "my.sock" }}'
-+
-+        -incoming main,addr.transport=socket,addr.type=unix,addr.path=my.sock
-+
- ``-incoming defer``
-     Wait for the URI to be specified via migrate\_incoming. The monitor
-     can be used to change settings (such as migration parameters) prior
-diff --git a/system/vl.c b/system/vl.c
-index 2261014..7343a27 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -123,6 +123,7 @@
- #include "qapi/qapi-visit-block-core.h"
- #include "qapi/qapi-visit-compat.h"
- #include "qapi/qapi-visit-machine.h"
-+#include "qapi/qapi-visit-migration.h"
- #include "qapi/qapi-visit-ui.h"
- #include "qapi/qapi-commands-block-core.h"
- #include "qapi/qapi-commands-migration.h"
-@@ -159,6 +160,8 @@ typedef struct DeviceOption {
- static const char *cpu_option;
- static const char *mem_path;
- static const char *incoming;
-+static const char *incoming_str[MIGRATION_CHANNEL_TYPE__MAX];
-+static MigrationChannel *incoming_channels[MIGRATION_CHANNEL_TYPE__MAX];
- static const char *loadvm;
- static const char *accelerators;
- static bool have_custom_ram_size;
-@@ -1822,6 +1825,30 @@ static void object_option_add_visitor(Visitor *v)
-     QTAILQ_INSERT_TAIL(&object_opts, opt, next);
- }
- 
-+static void incoming_option_parse(const char *str)
-+{
-+    MigrationChannelType type = MIGRATION_CHANNEL_TYPE_MAIN;
-+    MigrationChannel *channel;
-+    Visitor *v;
-+
-+    if (!strcmp(str, "defer")) {
-+        channel = NULL;
-+    } else if (migrate_is_uri(str)) {
-+        migrate_uri_parse(str, &channel, &error_fatal);
-+    } else {
-+        v = qobject_input_visitor_new_str(str, "channel-type", &error_fatal);
-+        visit_type_MigrationChannel(v, NULL, &channel, &error_fatal);
-+        visit_free(v);
-+        type = channel->channel_type;
++    if (args->connect_channels) {
++        out_channels = qobject_from_json(args->connect_channels, &error_abort);
 +    }
 +
-+    /* New incoming spec replaces the previous */
-+    qapi_free_MigrationChannel(incoming_channels[type]);
-+    incoming_channels[type] = channel;
-+    incoming_str[type] = str;
-+    incoming = incoming_str[MIGRATION_CHANNEL_TYPE_MAIN];
+     if (args->result == MIG_TEST_QMP_ERROR) {
+-        migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
++        migrate_qmp_fail(from, args->connect_uri, out_channels, "{}");
+         goto finish;
+     }
+ 
+-    migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
++    migrate_qmp(from, to, args->connect_uri, out_channels, "{}");
+ 
+     if (args->start.defer_target_connect) {
+         qtest_connect(to);
+@@ -877,7 +884,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
+      * We need to wait for the source to finish before starting the
+      * destination.
+      */
+-    migrate_incoming_qmp(to, args->connect_uri, "{}");
++    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
+     wait_for_migration_complete(to);
+ 
+     if (stop_src) {
+@@ -913,7 +920,7 @@ void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+     migrate_set_capability(to, "multifd", true);
+ 
+     /* Start incoming migration from the 1st socket */
+-    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
++    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
+ 
+     return NULL;
+ }
+diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+index 71b14b5..f7a597d 100644
+--- a/tests/qtest/migration/migration-qmp.c
++++ b/tests/qtest/migration/migration-qmp.c
+@@ -15,9 +15,13 @@
+ #include "migration-qmp.h"
+ #include "migration-util.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-types-migration.h"
++#include "qapi/qapi-visit-migration.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qjson.h"
+ #include "qapi/qmp/qlist.h"
++#include "qapi/qobject-input-visitor.h"
++#include "qapi/qobject-output-visitor.h"
+ 
+ /*
+  * Number of seconds we wait when looking for migration
+@@ -47,8 +51,33 @@ void migration_event_wait(QTestState *s, const char *target)
+     } while (!found);
+ }
+ 
++/*
++ * Convert a string representing a single channel to an object.
++ * @str may be in JSON or dotted keys format.
++ */
++QObject *migrate_str_to_channel(const char *str)
++{
++    Visitor *v;
++    MigrationChannel *channel;
++    QObject *obj;
++
++    /* Create the channel */
++    v = qobject_input_visitor_new_str(str, "channel-type", &error_abort);
++    visit_type_MigrationChannel(v, NULL, &channel, &error_abort);
++    visit_free(v);
++
++    /* Create the object */
++    v = qobject_output_visitor_new(&obj);
++    visit_type_MigrationChannel(v, NULL, &channel, &error_abort);
++    visit_complete(v, &obj);
++    visit_free(v);
++
++    qapi_free_MigrationChannel(channel);
++    return obj;
 +}
 +
- static void object_option_parse(const char *str)
+ void migrate_qmp_fail(QTestState *who, const char *uri,
+-                      const char *channels, const char *fmt, ...)
++                      QObject *channels, const char *fmt, ...)
  {
-     QemuOpts *opts;
-@@ -2756,8 +2783,11 @@ void qmp_x_exit_preconfig(Error **errp)
-     if (incoming) {
-         Error *local_err = NULL;
-         if (strcmp(incoming, "defer") != 0) {
--            qmp_migrate_incoming(incoming, false, NULL, true, true,
--                                 &local_err);
-+            g_autofree MigrationChannelList *channels =
-+                g_new0(MigrationChannelList, 1);
+     va_list ap;
+     QDict *args, *err;
+@@ -64,8 +93,7 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
+ 
+     g_assert(!qdict_haskey(args, "channels"));
+     if (channels) {
+-        QObject *channels_obj = qobject_from_json(channels, &error_abort);
+-        qdict_put_obj(args, "channels", channels_obj);
++        qdict_put_obj(args, "channels", channels);
+     }
+ 
+     err = qtest_qmp_assert_failure_ref(
+@@ -82,7 +110,7 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
+  * qobject_from_jsonf_nofail()) with "uri": @uri spliced in.
+  */
+ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+-                 const char *channels, const char *fmt, ...)
++                 QObject *channels, const char *fmt, ...)
+ {
+     va_list ap;
+     QDict *args;
+@@ -102,10 +130,9 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+ 
+     g_assert(!qdict_haskey(args, "channels"));
+     if (channels) {
+-        QObject *channels_obj = qobject_from_json(channels, &error_abort);
+-        QList *channel_list = qobject_to(QList, channels_obj);
++        QList *channel_list = qobject_to(QList, channels);
+         migrate_set_ports(to, channel_list);
+-        qdict_put_obj(args, "channels", channels_obj);
++        qdict_put_obj(args, "channels", channels);
+     }
+ 
+     qtest_qmp_assert_success(who,
+@@ -123,7 +150,8 @@ void migrate_set_capability(QTestState *who, const char *capability,
+                              capability, value);
+ }
+ 
+-void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
++void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
++                          const char *fmt, ...)
+ {
+     va_list ap;
+     QDict *args, *rsp;
+@@ -133,7 +161,14 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
+     va_end(ap);
+ 
+     g_assert(!qdict_haskey(args, "uri"));
+-    qdict_put_str(args, "uri", uri);
++    if (uri) {
++        qdict_put_str(args, "uri", uri);
++    }
 +
-+            channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
-+            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
-             if (local_err) {
-                 error_reportf_err(local_err, "-incoming %s: ", incoming);
-                 exit(1);
-@@ -3506,7 +3536,7 @@ void qemu_init(int argc, char **argv)
-                 if (!incoming) {
-                     runstate_set(RUN_STATE_INMIGRATE);
-                 }
--                incoming = optarg;
-+                incoming_option_parse(optarg);
-                 break;
-             case QEMU_OPTION_only_migratable:
-                 only_migratable = 1;
++    g_assert(!qdict_haskey(args, "channels"));
++    if (channels) {
++        qdict_put_obj(args, "channels", channels);
++    }
+ 
+     /* This function relies on the event to work, make sure it's enabled */
+     migrate_set_capability(to, "events", true);
+diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
+index caaa787..faa8181 100644
+--- a/tests/qtest/migration/migration-qmp.h
++++ b/tests/qtest/migration/migration-qmp.h
+@@ -4,17 +4,19 @@
+ 
+ #include "migration-util.h"
+ 
++QObject *migrate_str_to_channel(const char *str);
++
+ G_GNUC_PRINTF(4, 5)
+ void migrate_qmp_fail(QTestState *who, const char *uri,
+-                      const char *channels, const char *fmt, ...);
++                      QObject *channels, const char *fmt, ...);
+ 
+ G_GNUC_PRINTF(5, 6)
+ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+-                 const char *channels, const char *fmt, ...);
++                 QObject *channels, const char *fmt, ...);
+ 
+-G_GNUC_PRINTF(3, 4)
++G_GNUC_PRINTF(4, 5)
+ void migrate_incoming_qmp(QTestState *who, const char *uri,
+-                          const char *fmt, ...);
++                          QObject *channels, const char *fmt, ...);
+ 
+ void migration_event_wait(QTestState *s, const char *target);
+ void migrate_set_capability(QTestState *who, const char *capability,
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index 6173430..dda3707 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -11,6 +11,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qapi/qmp/qjson.h"
+ #include "libqtest.h"
+ #include "migration/framework.h"
+ #include "migration/migration-qmp.h"
+@@ -205,6 +207,7 @@ static void test_validate_uuid_dst_not_set(void)
+ static void do_test_validate_uri_channel(MigrateCommon *args)
+ {
+     QTestState *from, *to;
++    QObject *channels;
+ 
+     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return;
+@@ -217,7 +220,11 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+      * 'uri' and 'channels' validation is checked even before the migration
+      * starts.
+      */
+-    migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
++    channels = args->connect_channels ?
++               qobject_from_json(args->connect_channels, &error_abort) :
++               NULL;
++    migrate_qmp_fail(from, args->connect_uri, channels, "{}");
++
+     migrate_end(from, to, false);
+ }
+ 
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index b709d90..b8a08dd 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -152,7 +152,7 @@ static void *migrate_hook_start_fd(QTestState *from,
+     close(pair[0]);
+ 
+     /* Start incoming migration from the 1st socket */
+-    migrate_incoming_qmp(to, "fd:fd-mig", "{}");
++    migrate_incoming_qmp(to, "fd:fd-mig", NULL, "{}");
+ 
+     /* Send the 2nd socket to the target */
+     qtest_qmp_fds_assert_success(from, &pair[1], 1,
+@@ -479,7 +479,7 @@ static void test_multifd_tcp_cancel(void)
+     migrate_set_capability(to, "multifd", true);
+ 
+     /* Start incoming migration from the 1st socket */
+-    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
++    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
+ 
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+@@ -518,7 +518,7 @@ static void test_multifd_tcp_cancel(void)
+     migrate_set_capability(to2, "multifd", true);
+ 
+     /* Start incoming migration from the 1st socket */
+-    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", "{}");
++    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", NULL, "{}");
+ 
+     migrate_ensure_non_converge(from);
+ 
+diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
+index 08365ff..f04573f 100644
+--- a/tests/qtest/virtio-net-failover.c
++++ b/tests/qtest/virtio-net-failover.c
+@@ -773,7 +773,7 @@ static void test_migrate_in(gconstpointer opaque)
+     check_one_card(qts, true, "standby0", MAC_STANDBY0);
+     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
+ 
+-    migrate_incoming_qmp(qts, uri, "{}");
++    migrate_incoming_qmp(qts, uri, NULL, "{}");
+ 
+     resp = get_failover_negociated_event(qts);
+     g_assert_cmpstr(qdict_get_str(resp, "device-id"), ==, "standby0");
+@@ -895,7 +895,7 @@ static void test_off_migrate_in(gconstpointer opaque)
+     check_one_card(qts, true, "standby0", MAC_STANDBY0);
+     check_one_card(qts, true, "primary0", MAC_PRIMARY0);
+ 
+-    migrate_incoming_qmp(qts, uri, "{}");
++    migrate_incoming_qmp(qts, uri, NULL, "{}");
+ 
+     check_one_card(qts, true, "standby0", MAC_STANDBY0);
+     check_one_card(qts, true, "primary0", MAC_PRIMARY0);
+@@ -1022,7 +1022,7 @@ static void test_guest_off_migrate_in(gconstpointer opaque)
+     check_one_card(qts, true, "standby0", MAC_STANDBY0);
+     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
+ 
+-    migrate_incoming_qmp(qts, uri, "{}");
++    migrate_incoming_qmp(qts, uri, NULL, "{}");
+ 
+     check_one_card(qts, true, "standby0", MAC_STANDBY0);
+     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
+@@ -1747,7 +1747,7 @@ static void test_multi_in(gconstpointer opaque)
+     check_one_card(qts, true, "standby1", MAC_STANDBY1);
+     check_one_card(qts, false, "primary1", MAC_PRIMARY1);
+ 
+-    migrate_incoming_qmp(qts, uri, "{}");
++    migrate_incoming_qmp(qts, uri, NULL, "{}");
+ 
+     resp = get_failover_negociated_event(qts);
+     g_assert_cmpstr(qdict_get_str(resp, "device-id"), ==, "standby0");
 -- 
 1.8.3.1
 
