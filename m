@@ -4,99 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74679E7718D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260EAE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQBB0-0004S9-Hr; Tue, 24 Dec 2024 15:06:46 -0500
+	id 1tQBAb-0003Xd-6r; Tue, 24 Dec 2024 15:06:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQBAl-0003nr-Ec
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:06:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQBAj-0002nj-Aj
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:06:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735070786;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VX9q+QvKx3mLVKEbNX0KGAhDRcUWyt3V/hEcHlB5kLM=;
- b=MFdI3z/LMVSQj13tCIkqzm/acYrQyp458mzn8DgSolOaUdro5unMtBpgYJRTArqn8zd0GD
- exWxEoKhs6CqTzozcAARp7B+F8A09dWQOJOG6oQs7nRO+6SMlG3d5lmwJ9lCJSzErJM+qJ
- NJS98y5PoGO8mCzogBraRYze9WzX5w8=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-495-x5MbjEUeMGKy-SOCgaOUiw-1; Tue, 24 Dec 2024 15:06:23 -0500
-X-MC-Unique: x5MbjEUeMGKy-SOCgaOUiw-1
-X-Mimecast-MFC-AGG-ID: x5MbjEUeMGKy-SOCgaOUiw
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4675c482d6cso91416591cf.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:06:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735070782; x=1735675582;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tQBA4-0002pA-Aq
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:48 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tQBA2-0002aR-QI
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:48 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21644aca3a0so65832075ad.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:05:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735070745; x=1735675545; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VX9q+QvKx3mLVKEbNX0KGAhDRcUWyt3V/hEcHlB5kLM=;
- b=Ikgf7DhlmVdWLSNZ/ZZ+eg+uuyTPAReNPmKZIn3NOsohgrNW0MvrbAtUJHzUIHp9Vj
- r4e+aNdxdYCxcJSEfgukgj5EPEqbDLThQMIo4oLmgSF8dwuCatflUzYBjFnitrYG162k
- Z/jJE7iDNI8TSva6miqgwgVio5hTNmJrL+fKUyOkFcUjrrcIdr6c1KTrnFTFQjesLpeh
- TCF4mTtR+c3nY8LfDk9CDVkdAoVhcFL9QhdTFJ2tOdMjfQOXbro77FCpofaajWnDqPuM
- pXqXNp5xVMqlIAdmBMYNMA+HyHg+0kMz8C26AXm9cHJq1wo8eNChUCjx2mI/yXSYPQfC
- O5ag==
-X-Gm-Message-State: AOJu0YxgECwgfxMDHuQ0xeuOrH60czkkWvLtfqDzJT5Z9TZpXUE5NjFI
- ryi6kIeX+EeA3mhmFUe1OcVQl/o9D6Z0CDF5mqeVMKPgB2SOj0eBP4Zl3PutJl+Donm3QqrQY/3
- 6zb6yAmNy767adHmr8AT57rSQBqfEWydGEszo5W/Uj/LYTvvk8+1t
-X-Gm-Gg: ASbGncsronFh6RMlhFmjyGOLbbgnJwqfMWqwFtC/Im6Bsxl+HbpHL2I9yMcK64YnQd3
- 0kHUJymVuAR1D8VnyRK0eI2ZR41ACnxWAbn+e8Ikdfw/mhuayt76AXEIh0QJsEoWWjy+nnGklTX
- UYIC6iEp97VhS1HiV9pj7O/78W1Qc3C9O+dLhRwjsWEeH0euiZcZpC1FGeWljbBBDWOmHDEy5kk
- q0Uat/hGJbFrKEVbHW5vrLQL1Iq1HOSdJsX5MfpO4lIzxXctIdMVG3mFVRJ8QAIj5oyu5IXWpXH
- RRbiBVtFmo5hoQ9Vaw==
-X-Received: by 2002:a05:6214:1c8e:b0:6d8:a0c8:e467 with SMTP id
- 6a1803df08f44-6dd23344c84mr297736676d6.13.1735070782462; 
- Tue, 24 Dec 2024 12:06:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHkL7e7srtc7v+Gp40aFeJjZjx0Mig53TJ5WdSvThadrtQlgdJiPQG3ILAWbF9h5RYCj0pXbQ==
-X-Received: by 2002:a05:6214:1c8e:b0:6d8:a0c8:e467 with SMTP id
- 6a1803df08f44-6dd23344c84mr297736396d6.13.1735070782158; 
- Tue, 24 Dec 2024 12:06:22 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dd181bb474sm55516866d6.85.2024.12.24.12.06.20
+ bh=k8tsF+Zaln0GqZenAMtz/m3flCsE/XhQzYQ3qzfdH28=;
+ b=bKaTgyP7Uf1ixVkraHVLVwoDQadqXJJMeULt8uw9PwsoU01ysFu67Tbxo9wcZZ4+o9
+ lmBXCNMav8qy8PhuAw62nmRZWKQ9Cud+4hTz7RMKznRHGaldsWV1X4P3OvOR25+3Idlt
+ PH9CYFKeyuoffwYMyH0TcUB1MOUI+R/dUzthSoX8Qg9FVzLUfQkTUyVtbqzX/sReaQyM
+ aDHqOMLq5hWFQ5dfWvNSoTQbxzyyj8qaPx8e9viRftlTe+oxNxPtQHR8vwArUFOB79Wa
+ tIYvf4YU+60XqjFLZvuM9PR+rRBn4K9iK0QiZPolRYt1d8D1foOh+4pzr63eP4YjfTEd
+ kcPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735070745; x=1735675545;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=k8tsF+Zaln0GqZenAMtz/m3flCsE/XhQzYQ3qzfdH28=;
+ b=T/siqLufsk0JvaEqLR/tNGC82pbbOHu//Jz5gHt0eIAbEZt+dypEEI50UgYpyZVVzT
+ zZ/rEKI5iAjBhmyEB4HwwxcJUakWYvvTlZj2YqgQ7x8Soz3hRq6fJ4EGoezBH9DKsmzL
+ DqnuGDoOuQ8vXFP2rBV5n1GDm8Ez3IBIgid+klYVVtA2Gx5/GyzUWkLLeIOxKxyCSYDW
+ 9yJBjELQJUiMplZtySAeE0OAYthw+OUa7oDD+kWFhogZaBwSPH7HeXUlDP4+s6a/S1/B
+ gZK571yHdyrmpObkmMlu6zozPtS914OEWKr1BRFMRDotTYjGbnrpkQj7jOusiEv4rYbc
+ octg==
+X-Gm-Message-State: AOJu0Yw2KLNwgJERO5bSc/1oHqTMumiQyXOi2jkUnJ8eM3Y/uLbLx9DG
+ K0uqn7H1MDoF6oH3Gk6CXsh4uLAF2ACWAW58rATp7LAA/h/2t4UBsYITrtTCWk0C9LVnL8t5F48
+ n708=
+X-Gm-Gg: ASbGncvUDHhZxYS2orJ4QxjXLTvE+HsV1pgcHRgr0LCfBySCmNV6QzQtnvBE6TVBWZI
+ j5fz5FFmJmKEVKut4cM7oufsS0BoFcxodx11812qvc0S7aL/+yl6XEZWcDwkJ82c/LqQr2LpfEm
+ N0gx0xMf0ha3plDP7ie4Dajc0z9W7/y1iu8i37dMZwT0MdNFbc3d7cm2zyb8pIX8gNA3hN88/HU
+ ZBlziKRU01LX5B4UBykeIcplxs8aN5ZJSxc+RDMS4zBL5u/QUlNWkd0LY/HizCDG+OK+SFEMVa0
+ oHPIGRMvHjHYPZd/1BOW5WPKAA==
+X-Google-Smtp-Source: AGHT+IHlJrd/7c25mNQYyrwtlCGAtU/XPAdhnUKobxMH8nHdJPuho4gFdGqVctpk/PelbnvULrcJyA==
+X-Received: by 2002:a05:6a21:2d05:b0:1e1:a647:8a54 with SMTP id
+ adf61e73a8af0-1e5e05ac4cbmr28870806637.20.1735070745152; 
+ Tue, 24 Dec 2024 12:05:45 -0800 (PST)
+Received: from stoup.. (syn-156-019-246-023.biz.spectrum.com. [156.19.246.23])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad8fb895sm10027159b3a.162.2024.12.24.12.05.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 12:06:21 -0800 (PST)
-Date: Tue, 24 Dec 2024 15:06:19 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V5 22/23] migration-test: cpr-transfer
-Message-ID: <Z2sUO7OoX7UK-DPY@x1n>
-References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-23-git-send-email-steven.sistare@oracle.com>
- <Z2sTHg-t0wB4g3Mh@x1n>
+ Tue, 24 Dec 2024 12:05:44 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 24/72] tcg/optimize: Use fold_masks_z in fold_extu
+Date: Tue, 24 Dec 2024 12:04:33 -0800
+Message-ID: <20241224200521.310066-25-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241224200521.310066-1-richard.henderson@linaro.org>
+References: <20241224200521.310066-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z2sTHg-t0wB4g3Mh@x1n>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,196 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 24, 2024 at 03:01:34PM -0500, Peter Xu wrote:
-> On Tue, Dec 24, 2024 at 08:17:07AM -0800, Steve Sistare wrote:
-> > Add a migration test for cpr-transfer mode.  Defer the connection to the
-> > target monitor, else the test hangs because in cpr-transfer mode QEMU does
-> > not listen for monitor connections until we send the migrate command to
-> > source QEMU.
-> > 
-> > To test -incoming defer, send a migrate incoming command to the target,
-> > after sending the migrate command to the source, as required by
-> > cpr-transfer mode.
-> > 
-> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > ---
-> >  tests/qtest/migration/cpr-tests.c | 60 +++++++++++++++++++++++++++++++++++++++
-> >  tests/qtest/migration/framework.c | 19 +++++++++++++
-> >  tests/qtest/migration/framework.h |  3 ++
-> >  3 files changed, 82 insertions(+)
-> > 
-> > diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-> > index 44ce89a..b221980 100644
-> > --- a/tests/qtest/migration/cpr-tests.c
-> > +++ b/tests/qtest/migration/cpr-tests.c
-> > @@ -44,6 +44,62 @@ static void test_mode_reboot(void)
-> >      test_file_common(&args, true);
-> >  }
-> >  
-> > +static void *test_mode_transfer_start(QTestState *from, QTestState *to)
-> > +{
-> > +    migrate_set_parameter_str(from, "mode", "cpr-transfer");
-> > +    return NULL;
-> > +}
-> > +
-> > +/*
-> > + * cpr-transfer mode cannot use the target monitor prior to starting the
-> > + * migration, and cannot connect synchronously to the monitor, so defer
-> > + * the target connection.
-> > + */
-> > +static void test_mode_transfer_common(bool incoming_defer)
-> > +{
-> > +    g_autofree char *cpr_path = g_strdup_printf("%s/cpr.sock", tmpfs);
-> > +    g_autofree char *mig_path = g_strdup_printf("%s/migsocket", tmpfs);
-> > +    g_autofree char *uri = g_strdup_printf("unix:%s", mig_path);
-> > +
-> > +    const char *opts = "-machine aux-ram-share=on -nodefaults";
-> > +    g_autofree const char *cpr_channel = g_strdup_printf(
-> > +        "cpr,addr.transport=socket,addr.type=unix,addr.path=%s",
-> > +        cpr_path);
-> > +    g_autofree char *opts_target = g_strdup_printf("-incoming %s %s",
-> > +                                                   cpr_channel, opts);
-> > +
-> > +    g_autofree char *connect_channels = g_strdup_printf(
-> > +        "[ { 'channel-type': 'main',"
-> > +        "    'addr': { 'transport': 'socket',"
-> > +        "              'type': 'unix',"
-> > +        "              'path': '%s' } } ]",
-> > +        mig_path);
-> 
-> So this test already uses json-format channels, IMHO we probably don't need
-> MigrateCommon.cpr_channel anymore?  We could put them all here. Then..
-> 
-> > +
-> > +    MigrateCommon args = {
-> > +        .start.opts_source = opts,
-> > +        .start.opts_target = opts_target,
-> > +        .start.defer_target_connect = true,
+Avoid the use of the OptContext slots.
 
-One more comment: maybe we can even drop defer_target_connect.  I don't
-expect any non-cpr test to use it.. so introducing the parameter may only
-complicate MigrateCommon struct with almost zero benefit to be reused.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-If to drop it, we could detect "cpr" channel in test_precopy_common() and
-only defer the connection if "cpr" channel is present.
-
-> > +        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
-> > +                                " -machine memory-backend=pc.ram",
-> > +        .listen_uri = incoming_defer ? "defer" : uri,
-> > +        .connect_channels = connect_channels,
-> > +        .cpr_channel = cpr_channel,
-> > +        .start_hook = test_mode_transfer_start,
-> > +    };
-> > +
-> > +    test_precopy_common(&args);
-> > +}
-> > +
-> > +static void test_mode_transfer(void)
-> > +{
-> > +    test_mode_transfer_common(NULL);
-> > +}
-> > +
-> > +static void test_mode_transfer_defer(void)
-> > +{
-> > +    test_mode_transfer_common(true);
-> > +}
-> > +
-> >  void migration_test_add_cpr(MigrationTestEnv *env)
-> >  {
-> >      tmpfs = env->tmpfs;
-> > @@ -55,4 +111,8 @@ void migration_test_add_cpr(MigrationTestEnv *env)
-> >      if (getenv("QEMU_TEST_FLAKY_TESTS")) {
-> >          migration_test_add("/migration/mode/reboot", test_mode_reboot);
-> >      }
-> > +
-> > +    migration_test_add("/migration/mode/transfer", test_mode_transfer);
-> > +    migration_test_add("/migration/mode/transfer/defer",
-> > +                       test_mode_transfer_defer);
-> >  }
-> > diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> > index c6ea3e1..f6175de 100644
-> > --- a/tests/qtest/migration/framework.c
-> > +++ b/tests/qtest/migration/framework.c
-> > @@ -411,6 +411,7 @@ void migrate_end(QTestState *from, QTestState *to, bool test_dest)
-> >      qtest_quit(to);
-> >  
-> >      cleanup("migsocket");
-> > +    cleanup("cpr.sock");
-> >      cleanup("src_serial");
-> >      cleanup("dest_serial");
-> >      cleanup(FILE_TEST_FILENAME);
-> > @@ -692,8 +693,11 @@ void test_precopy_common(MigrateCommon *args)
-> >  {
-> >      QTestState *from, *to;
-> >      void *data_hook = NULL;
-> > +    QObject *in_channels = NULL;
-> >      QObject *out_channels = NULL;
-> >  
-> > +    g_assert(!args->cpr_channel || args->connect_channels);
-> > +
-> >      if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-> >          return;
-> >      }
-> > @@ -725,8 +729,20 @@ void test_precopy_common(MigrateCommon *args)
-> >          }
-> >      }
-> >  
-> > +    /*
-> > +     * The cpr channel must be included in outgoing channels, but not in
-> > +     * migrate-incoming channels.
-> > +     */
-> >      if (args->connect_channels) {
-> > +        in_channels = qobject_from_json(args->connect_channels, &error_abort);
-> >          out_channels = qobject_from_json(args->connect_channels, &error_abort);
-> > +
-> > +        if (args->cpr_channel) {
-> > +            QList *channels_list = qobject_to(QList, out_channels);
-> > +            QObject *obj = migrate_str_to_channel(args->cpr_channel);
-> > +
-> > +            qlist_append(channels_list, obj);
-> > +        }
-> 
-> ... here IIUC we don't need this trick to manipulate the qlist anymore?
-> 
-> Looks like if with that (convert the current cpr_connect string to JSON
-> format, attach it with connect_channels), then we also don't need the
-> pre-requisite patch to make connect_channels manipulate-able. Not sure.
-> 
-> >      }
-> >  
-> >      if (args->result == MIG_TEST_QMP_ERROR) {
-> > @@ -739,6 +755,9 @@ void test_precopy_common(MigrateCommon *args)
-> >      if (args->start.defer_target_connect) {
-> >          qtest_connect(to);
-> >          qtest_qmp_handshake(to);
-> > +        if (!strcmp(args->listen_uri, "defer")) {
-> > +            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
-> > +        }
-> >      }
-> >  
-> >      if (args->result != MIG_TEST_SUCCEED) {
-> > diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-> > index 1341368..4678e2a 100644
-> > --- a/tests/qtest/migration/framework.h
-> > +++ b/tests/qtest/migration/framework.h
-> > @@ -152,6 +152,9 @@ typedef struct {
-> >       */
-> >      const char *connect_channels;
-> >  
-> > +    /* Optional: the cpr migration channel, in JSON or dotted keys format */
-> > +    const char *cpr_channel;
-> > +
-> >      /* Optional: callback to run at start to set migration parameters */
-> >      TestMigrateStartHook start_hook;
-> >      /* Optional: callback to run at finish to cleanup */
-> > -- 
-> > 1.8.3.1
-> > 
-> 
-> -- 
-> Peter Xu
-
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 3aafe039ed..f62e7adfe1 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1851,11 +1851,11 @@ static bool fold_extu(OptContext *ctx, TCGOp *op)
+         g_assert_not_reached();
+     }
+ 
+-    ctx->z_mask = z_mask;
+     if (!type_change && fold_affected_mask(ctx, op, z_mask_old ^ z_mask)) {
+         return true;
+     }
+-    return fold_masks(ctx, op);
++
++    return fold_masks_z(ctx, op, z_mask);
+ }
+ 
+ static bool fold_mb(OptContext *ctx, TCGOp *op)
 -- 
-Peter Xu
+2.43.0
 
 
