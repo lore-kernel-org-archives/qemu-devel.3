@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C3CE7718D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F06E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7Lb-0006bL-FD; Tue, 24 Dec 2024 11:01:27 -0500
+	id 1tQ7PR-0008L6-3R; Tue, 24 Dec 2024 11:05:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tQ7LX-0006Yr-AJ
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:01:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tQ7PI-0008JD-9h
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:05:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tQ7LR-0000uE-Gn
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:01:22 -0500
+ id 1tQ7PG-0001N1-Ds
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:05:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735056076;
+ s=mimecast20190719; t=1735056313;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=i/ex+YEgFBQKbbutLwCLbMm2eOqg4ZA3JWMufpN6EJw=;
- b=a55Z36eTKvnstzEBqFTnPWrGClgnPSVyqjP4f88YD6G3l2CIyLjIXWdyPIUdq3Y9+Jnpo0
- 1WjHgZ+xQUdzhllrIvK8xL2RKSoSIOlVhJrkBtpBdRJ8fBBRnSamS2LEr1VH6H5nNTrJmB
- 6Dhg5JUO1rz3IGx6eHeYyCf1EYj+Bdw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VuJOa2t6EWTxB0pbvBANQMl8GZxoC3FY4AiW3fyZHYM=;
+ b=EOUzE3tjsJpR53/nw3pgHsS9uQvEfs6tA4e8KSJ6b6fY2NcykKsAALQSVOHTkcEBEsTYkk
+ TB0HMOdtwTDSVt3mYxYmdSo29TuyOkJCaf8Zy9JnT9bC1Chi3q4yvAWbFf3gpkry1U6ILr
+ PEuPjAqKmh//v5S1jKjVG+sOZvul9Uw=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-336-UJeTHiDrPdiSYXyGEgycdg-1; Tue, 24 Dec 2024 11:01:11 -0500
-X-MC-Unique: UJeTHiDrPdiSYXyGEgycdg-1
-X-Mimecast-MFC-AGG-ID: UJeTHiDrPdiSYXyGEgycdg
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385d7611ad3so2936236f8f.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 08:01:11 -0800 (PST)
+ us-mta-331-0n_SjnMNMcWm2mq4BwKZpg-1; Tue, 24 Dec 2024 11:05:11 -0500
+X-MC-Unique: 0n_SjnMNMcWm2mq4BwKZpg-1
+X-Mimecast-MFC-AGG-ID: 0n_SjnMNMcWm2mq4BwKZpg
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d9d6293fso4434428a12.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 08:05:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735056070; x=1735660870;
+ d=1e100.net; s=20230601; t=1735056310; x=1735661110;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=i/ex+YEgFBQKbbutLwCLbMm2eOqg4ZA3JWMufpN6EJw=;
- b=ITcBaKFvMx37gCF30esXHsHWq3qI6AVIgOKuezB5dX4ozPZ4cMmkntOmG5ZuU+c8d4
- e7QNQM8mEfAxdc3xmQJ6kTmJr6reKgYfijDt8KFI6VxWXPw+ovckWHaDyohhhyDZZVEg
- 4RKxvtNfa+btGi5JKexsxEr6b8CsCMBKioiEmd8uFRVH/iL4iF54CPC9ZV0JBZeqEzJ3
- y5iY7wAiE3NzSE1FrFjOoifscdbnDW6Xnq+hLSG9wDCL2PADUBWqwQB9sk191SOsPGsC
- GDrqgQAf5mnbDg18tdROVnkDKKVWEmHXWxGTCuDbQdmM94OacwjElkKRuXCKzHcTEeHI
- 1ABw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2a6WRZE9PPqijCW+SnXYBRKUtiiNkd0nu0DWNDjf+JWPAGJmfWWP2GZJTsdI5AeYD1qBCeWT3jqCh@nongnu.org
-X-Gm-Message-State: AOJu0YwtTap8FRvpbsEdvqam8UuHVKglZ5ArMDNoxBZ/HkfTsh2UBGE1
- O2KBIwjr9WgL5vem7TS/pUc8T33cVCWLaJZ6xM5hBxkFnQTcOLG5MtbF5aZe6mE7r2Xa0wMLz2Q
- n3EF7pK2ee2y0pn8mBMsmQAQ+FANn2svSAAPzG674Jvpxcm78LQiV
-X-Gm-Gg: ASbGncsiqb8CHkTXoZ6TBo4x7vEkAWc1OIxd4/My7GPxpo+OdjzJrdiTCYUZnyR4yF6
- /dOuUTjuq0dul9BCSXF7oS8R5hQCiJHsnbFiIeLDbbnq5Rq0Qn8D7mV6Uqbq2DCvJPspDXM+IsZ
- m/TSJ5fRGc6cf2qqVwNgo/bqn/iXvu4R32S6B0y+sUc80wgWw/q9tRxNqPrxk5XcG3sUGM+5bOo
- TGBYVLWLUyO1SgFvqm6exImyV6omW5cb0E3UgAjuVvIbevw+Wt/BhOVU/q2
-X-Received: by 2002:a05:6000:154f:b0:382:3efc:c6d8 with SMTP id
- ffacd0b85a97d-38a221ed2fdmr13709811f8f.12.1735056068842; 
- Tue, 24 Dec 2024 08:01:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlVVigMON3+v7GZf0Wd8e9A4bsNkgxk/ClDcoTANwHbuOSynV5cwu4x+Ht3c++w6w0CeHixQ==
-X-Received: by 2002:a05:6000:154f:b0:382:3efc:c6d8 with SMTP id
- ffacd0b85a97d-38a221ed2fdmr13709747f8f.12.1735056068308; 
- Tue, 24 Dec 2024 08:01:08 -0800 (PST)
+ bh=VuJOa2t6EWTxB0pbvBANQMl8GZxoC3FY4AiW3fyZHYM=;
+ b=mh4u17jgBkvLE+wvDd7dOaKCa73pmEey/qw0uFHy0GlVoRb6+iBDZqfIAbiBf63Dqj
+ r1kLyE78bBz7L6iOLANgjDZM9e+hjkA7oSUJQqQAeHvGR/bZ6uFHYU3x88lF3Tm1+2ga
+ y9n3YdFxF4m/WB2wXFoNXaBp6BLi0Xp278VV+RN7aBw/xJaE3Z2iwCNbEUoHTxzSwNji
+ my+WoNpOkQqBV0k3EkBt3R+Dg/Ql+TyRWoz58pNB1Vj8zPpA4zjA7OY0/yJOxwFNyCq8
+ ECA36PH1m6Cxekzd0UkvQmV4z8b/2Erwkivhrz2M50x2xXzXyS9kK23shTEjLp+DJYPP
+ BgoA==
+X-Gm-Message-State: AOJu0YxAUMMSOrpb/E9kNOVt+4yMZedSJe0k3twEypaLc6gQs12sOGLl
+ 9qFpAcFx3XK/qF3mTMu6CA6aPzh5NwR8FQ8cAMwJc2wW5fTSYRqOzU+q+3iUhK9Qccd44u7VVBD
+ 4Y/Ty+OlVeqBQ6KzQfKYiGxD3STzpJA5TYCWMsYJYJNtjIeuNxcvG
+X-Gm-Gg: ASbGncuTD110WOTQ4SJYSW2nyp90sSovvNRkPvbWRXYEVldz7vFMUnWEu/c+7bPfMAV
+ R70QRMCLY96ROJ2MMOWUIPDXU3TS6XB9dpADdWUZEsSGm2TeXwVz76uHc/fx02au0wyh0rcylIg
+ 7Uqb+tZTzAD0rprNoCl14m9CXX9Ekm03YE+j9yb0taeYkvU2Iwi2hajmrbAKvtf8Qr0m78WriuD
+ 0weWwdEp1d7e7Jk7ypyNRbKbJzCaARqXerM6t9X0Xd4066xvIO9lZeJcPgc
+X-Received: by 2002:a05:600c:82c3:b0:434:f819:251a with SMTP id
+ 5b1f17b1804b1-4368a8b68f2mr22603395e9.9.1735056299562; 
+ Tue, 24 Dec 2024 08:04:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6ufPZc3eVNu/dvuVB0W+Sc4nkuhLK7WbbM1CIT9lKPHfDE/cU/rJqRfM+aATZf+ClryaltA==
+X-Received: by 2002:a05:600c:82c3:b0:434:f819:251a with SMTP id
+ 5b1f17b1804b1-4368a8b68f2mr22597135e9.9.1735056293789; 
+ Tue, 24 Dec 2024 08:04:53 -0800 (PST)
 Received: from [192.168.10.27] ([151.62.105.73])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38a1c847513sm14570673f8f.49.2024.12.24.08.01.07
+ 5b1f17b1804b1-436611ea423sm174711365e9.2.2024.12.24.08.04.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 08:01:07 -0800 (PST)
-Message-ID: <9bb6ea4b-dd40-446d-887d-4878d180c2a5@redhat.com>
-Date: Tue, 24 Dec 2024 17:01:05 +0100
+ Tue, 24 Dec 2024 08:04:53 -0800 (PST)
+Message-ID: <44212226-3692-488b-8694-935bd5c3a333@redhat.com>
+Date: Tue, 24 Dec 2024 17:04:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/11] i386: miscellaneous cleanup
-To: Zhao Liu <zhao1.liu@intel.com>,
+Subject: Re: [PATCH v6 0/4] i386: Support SMP Cache Topology
+To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Tao Su <tao1.su@linux.intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20241106030728.553238-1-zhao1.liu@intel.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20241219083237.265419-1-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -123,10 +125,10 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241106030728.553238-1-zhao1.liu@intel.com>
+In-Reply-To: <20241219083237.265419-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -151,68 +153,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 04:07, Zhao Liu wrote:
-> Hi Paolo and all,
+On 12/19/24 09:32, Zhao Liu wrote:
+> Hi folks,
 > 
-> Is it necessary to include the first patch (AVX10 cleanup/fix) in v9.2?
+> This is my v6. since Phili has already merged the general smp cache
+> part, v6 just includes the remaining i386-specific changes to support
+> SMP cache topology for PC machine (currently all patches have got
+> Reviewed-by from previous review).
 > 
-> Others are for v10.0.
+> Compared with v5 [1], there's no change and just series just picks
+> the unmerged patches and rebases on the master branch (based on the
+> commit 8032c78e556c "Merge tag 'firmware-20241216-pull-request' of
+> https://gitlab.com/kraxel/qemu into staging").
 > 
-> Compared with v4 [1],
->   * patch 1 (AVX10 fix) and patch 9 (RAPL cleanup) are newly added.
->   * rebased on commit 9a7b0a8618b1 ("Merge tag 'pull-aspeed-20241104' of
->     https://github.com/legoater/qemu into staging").
+> The patch 4 ("i386/cpu: add has_caches flag to check smp_cache"), which
+> introduced a has_caches flag, is also ARM side wanted.
+> 
+> Though now this series targets to i386, to help review, I still include
+> the previous introduction about smp cache topology feature.
+> 
+> 
+> Background
+> ==========
+> 
+> The x86 and ARM (RISCV) need to allow user to configure cache properties
+> (current only topology):
+>   * For x86, the default cache topology model (of max/host CPU) does not
+>     always match the Host's real physical cache topology. Performance can
+>     increase when the configured virtual topology is closer to the
+>     physical topology than a default topology would be.
+>   * For ARM, QEMU can't get the cache topology information from the CPU
+>     registers, then user configuration is necessary. Additionally, the
+>     cache information is also needed for MPAM emulation (for TCG) to
+>     build the right PPTT. (Originally from Jonathan)
+> 
+> 
+> About smp-cache
+> ===============
+> 
+> The API design has been discussed heavily in [3].
+> 
+> Now, smp-cache is implemented as a array integrated in -machine. Though
+> -machine currently can't support JSON format, this is the one of the
+> directions of future.
+> 
+> An example is as follows:
+> 
+> smp_cache=smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=module,smp-cache.3.cache=l3,smp-cache.3.topology=die
+> 
+> "cache" specifies the cache that the properties will be applied on. This
+> field is the combination of cache level and cache type. Now it supports
+> "l1d" (L1 data cache), "l1i" (L1 instruction cache), "l2" (L2 unified
+> cache) and "l3" (L3 unified cache).
+> 
+> "topology" field accepts CPU topology levels including "thread", "core",
+> "module", "cluster", "die", "socket", "book", "drawer" and a special
+> value "default".
 
-Removed patches 5 and 11, fixed patch 4 to include CPUID_KVM_CLOCK2, and 
-queued - thanks!
+Looks good; just one thing, does "thread" make sense?  I think that it's 
+almost by definition that threads within a core share all caches, but 
+maybe I'm missing some hardware configurations.
 
 Paolo
 
+> The "default" is introduced to make it easier for libvirt to set a
+> default parameter value without having to care about the specific
+> machine (because currently there is no proper way for machine to
+> expose supported topology levels and caches).
 > 
-> Background and Introduction
-> ===========================
+> If "default" is set, then the cache topology will follow the
+> architecture's default cache topology model. If other CPU topology level
+> is set, the cache will be shared at corresponding CPU topology level.
 > 
-> This series picks cleanup from my previous kvmclock [2] (as other
-> renaming attempts were temporarily put on hold).
 > 
-> In addition, this series also include the cleanup on a historically
-> workaround, recent comment of coco interface [3] and error handling
-> corner cases in kvm_arch_init().
-> 
-> Avoiding the fragmentation of these misc cleanups, I consolidated them
-> all in one series and was able to tackle them in one go!
-> 
-> [1]: https://lore.kernel.org/qemu-devel/20240716161015.263031-1-zhao1.liu@intel.com/
-> [2]: https://lore.kernel.org/qemu-devel/20240329101954.3954987-1-zhao1.liu@linux.intel.com/
-> [3]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
+> [1]: Patch v5: https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/
+> [2]: ARM smp-cache: https://lore.kernel.org/qemu-devel/20241010111822.345-1-alireza.sanaee@huawei.com/
+> [3]: API disscussion: https://lore.kernel.org/qemu-devel/8734ndj33j.fsf@pond.sub.org/
 > 
 > Thanks and Best Regards,
 > Zhao
 > ---
-> Zhao Liu (11):
->    i386/cpu: Mark avx10_version filtered when prefix is NULL
->    target/i386/kvm: Add feature bit definitions for KVM CPUID
->    target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
->      MSR_KVM_SYSTEM_TIME definitions
->    target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
->    target/i386/kvm: Save/load MSRs of kvmclock2
->      (KVM_FEATURE_CLOCKSOURCE2)
->    target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
->    target/i386/confidential-guest: Fix comment of
->      x86_confidential_guest_kvm_type()
->    target/i386/kvm: Clean up return values of MSR filter related
->      functions
->    target/i386/kvm: Return -1 when kvm_msr_energy_thread_init() fails
->    target/i386/kvm: Clean up error handling in kvm_arch_init()
->    target/i386/kvm: Replace ARRAY_SIZE(msr_handlers) with
->      KVM_MSR_FILTER_MAX_RANGES
+> Alireza Sanaee (1):
+>    i386/cpu: add has_caches flag to check smp_cache configuration
 > 
->   hw/i386/kvm/clock.c              |   5 +-
->   target/i386/confidential-guest.h |   2 +-
->   target/i386/cpu.c                |   6 +-
->   target/i386/cpu.h                |  25 ++++
->   target/i386/kvm/kvm.c            | 211 +++++++++++++++++--------------
->   5 files changed, 145 insertions(+), 104 deletions(-)
+> Zhao Liu (3):
+>    i386/cpu: Support thread and module level cache topology
+>    i386/cpu: Update cache topology with machine's configuration
+>    i386/pc: Support cache topology in -machine for PC machine
+> 
+>   hw/core/machine-smp.c |  2 ++
+>   hw/i386/pc.c          |  4 +++
+>   include/hw/boards.h   |  3 ++
+>   qemu-options.hx       | 31 +++++++++++++++++-
+>   target/i386/cpu.c     | 76 ++++++++++++++++++++++++++++++++++++++++---
+>   5 files changed, 111 insertions(+), 5 deletions(-)
 > 
 
 
