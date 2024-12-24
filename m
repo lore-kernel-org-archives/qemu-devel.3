@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC63E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7931DE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ6t1-00050t-3X; Tue, 24 Dec 2024 10:31:56 -0500
+	id 1tQ6tv-0005ev-Cx; Tue, 24 Dec 2024 10:32:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tQ6su-0004xe-M7
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:31:50 -0500
+ id 1tQ6tt-0005ei-VH
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:32:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tQ6sl-0005nQ-7M
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:31:48 -0500
+ id 1tQ6ts-000624-J9
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:32:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735054295;
+ s=mimecast20190719; t=1735054367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sttA86JlVJRPGR1pZfidlTi6I1TCvbAFziqdjrjC9pk=;
- b=hpBS6w/U396GkCa4jjI+ojdGx9IaLauhzEaF8J+Tvv3XPjuK2UgMxKkboACPCxJe8M4b2+
- oE8s4LXu9KuUl4X4E9WqQF+O+eMFmDMqrIVTaAOV7WQjqd/orY7gQgItxFw2Jf3IyHiGiD
- qDMCX6jEXiTKpy6180IRBN23loXz4Xg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LsjkuRBBttKS5dDHbwtUybu0HEbtAQyKBO1ZZH89czU=;
+ b=gn0l3NUSFbspXzLgz3RQVjhjP+DWgQzDJ+OLbgtM+4SIKO3m67/uogFK5XpGhFYJb5eEHm
+ PKQN3blSE4vlxZs/YtBSSAy68K8UpU5eZOxNQW1AdfYbMtPldo8Krrd8B21G42pXz4yyJ+
+ FE9Mqf6R4M9j1HIG1SsH5vrHCHNGd5A=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-jOQfo6eKMO26dy0y12E8hQ-1; Tue, 24 Dec 2024 10:31:33 -0500
-X-MC-Unique: jOQfo6eKMO26dy0y12E8hQ-1
-X-Mimecast-MFC-AGG-ID: jOQfo6eKMO26dy0y12E8hQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso2878665f8f.0
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:31:33 -0800 (PST)
+ us-mta-83-Mghqi63QNlmu9N-4XIl0sg-1; Tue, 24 Dec 2024 10:32:46 -0500
+X-MC-Unique: Mghqi63QNlmu9N-4XIl0sg-1
+X-Mimecast-MFC-AGG-ID: Mghqi63QNlmu9N-4XIl0sg
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385e9c69929so2194692f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:32:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735054292; x=1735659092;
+ d=1e100.net; s=20230601; t=1735054365; x=1735659165;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sttA86JlVJRPGR1pZfidlTi6I1TCvbAFziqdjrjC9pk=;
- b=Skh1Mn+ypSM4JmKkM9htEJc1oTn0Kjw1bBU92wKOttDPsTnPNKL4Op8TCK7lnuDQyM
- jZMz5++SGYb/lRBuhUL6SQOBp9flZ3Cih+sM7eHQZycm3a5W05Mo1A4bm7W9KqfXCWLv
- AgrB9YQDvqsP/5hf34LmzSlph2qjAk5wj2ylItjNqdiuDDyY1mbMZy5m3nytrfvBAgST
- wZZcR+bAtYhCkr/81UUa+fxFukC7eaO+Yk5cDndtK+GXuNtsLfHYXRJvrLsvLNl5m4Qe
- 7r38EO6jXB8L6wRNUufIPUeakNWEh09aOYYkWNnxfMfWtlIEzMAzGJfgh7dSR0+JvpSY
- Umaw==
+ bh=LsjkuRBBttKS5dDHbwtUybu0HEbtAQyKBO1ZZH89czU=;
+ b=hFdeJTFR3+dl3ZldZ1BvgaIMxSb4asbznwDkMoGXvmjUW4gVJcF3z30NCy7ufWJKQC
+ hhWNMB+uM+6+xZ92nfGPt4SNtgGx+tZuqrezJFTsmXWLrNqwmSXEJs8IncTq/kH9cMEX
+ Rq3LPXkEr8ReZZPaDYOi0o4W4lBQ84RnhuPx4JUE+rctVaRZzmFvfvI3q2hjY+QVTduO
+ 8X2cFXhmMV3HUn3TFYbT4CLLVMtNSTuOczgNhX/1RH6fPN9fswH9oeUubsKc3U8L7YIZ
+ GoZpJqkCDaLPCwyJiidyBdLcT+vdVC42CQDUlW9IKbBBufhToS+wmF2PzFdZ5/azdPF+
+ zxlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnzt6Mj/OJv81pl/yMuPhoE0lNSgRSzwC+KK6+uLDndjFtPuJTkshM0KpnKmd6MbSwu+r2DiO40v6z@nongnu.org
-X-Gm-Message-State: AOJu0YyYdPJHwevK0Qi2UHKGi36fc883nV5X2/394ShbvtG64hA6MRc7
- EAVn4mUSh361RVhVFodAOgURbuw3q+OK7RouUA4FeW7p/mPBENnOppyCIlJeenbjIVgGUpVYgew
- vgQCO9Yw9LETpziLp1cxMl8k5MCvZ3s7A3KnAd4bZUEwRVsYxK5se
-X-Gm-Gg: ASbGncvEzCdmnhUvXCPoJGadWIh9vyA791+JbFt9VGRd8kTz1EJL76+BpbAWPFFFk/a
- odE3QmyVkWu0CxLWu8OZic+ya9SF0BKEz5zzXQuKpALEsX7g32XYcUiuTEVD/MXFMjaYeqVHmao
- xcJsS4CM7ezbBUh0yZXQfn1aG7L2L6GUVoQN0Erdyq7NLSE1BRFZg/mnvUQyuYr7xGDWVQJU6ke
- +Ru9afgTHpyiUMTeTuAYhpLgqJPvkaF6dVXkwR3PqQtz95Ut8v0uvJWSomI
-X-Received: by 2002:adf:a453:0:b0:38a:2b39:679d with SMTP id
- ffacd0b85a97d-38a2b396927mr5880316f8f.32.1735054292542; 
- Tue, 24 Dec 2024 07:31:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjDev92cI1a9hEfMDA+fr2hM4oSjxKaQxdL1upD0q+0U/fRFDrGLeO5ylm0YCPlcX6RSvckQ==
-X-Received: by 2002:adf:a453:0:b0:38a:2b39:679d with SMTP id
- ffacd0b85a97d-38a2b396927mr5880306f8f.32.1735054292219; 
- Tue, 24 Dec 2024 07:31:32 -0800 (PST)
+ AJvYcCUCK9xzU8n9WOWKSts672fZR+eu0OsVurFBocN01nCOPQVV1CA65P8z2Vs+JcUnc3ws/mVuc8SMgpgC@nongnu.org
+X-Gm-Message-State: AOJu0Yz7mMLgDMf86TRKLqZZVJf4pUu3QgIhET8HvCdh98PQOgRUcanu
+ TxFgLywmSn/1klxWF/DpaRUls87++TxcWYO58fzE8fWDamgTM9KAmAoedFTgJFGvjyYCzqmOAGv
+ FL0xyXVM08TJfU84o7PUG1O5MnZSI/9T1RzFjnBR5uNMyZ3CSIAcA
+X-Gm-Gg: ASbGncuedTofhNUlVGlvSTutSWniKp6IG6Re3tz3UK748GMMCQeyYJeUqFtpt3SPinV
+ lIKcdOaubvCOVT9HlqrXD5eCr93y1oMu1IfZL8+tLyiAVYn/QBwMkHhgBYNVR6XUeILrwKJnvz0
+ 6yVFUzTMOiDcsW1eU5GOngGSrSBxVQozXZO0IBGfKmhP9+pqCiT9kxIc3e+YD5qo8C9pNcBgIF1
+ p8S98xQTQO5cQj1IGuXBGYeTHN7irRShW1ySOcmPnkh+B+j18nvVfbTKsZi
+X-Received: by 2002:a05:6000:1a8f:b0:386:4034:f9a8 with SMTP id
+ ffacd0b85a97d-38a223f5c51mr13366133f8f.38.1735054365366; 
+ Tue, 24 Dec 2024 07:32:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlR74QyzljNtLsUN0ihDUjhjueo7tcl12nKKAV/Fnd3xM7HvzOKCgCsRZ+z3U6rI8bhnooxg==
+X-Received: by 2002:a05:6000:1a8f:b0:386:4034:f9a8 with SMTP id
+ ffacd0b85a97d-38a223f5c51mr13366109f8f.38.1735054365065; 
+ Tue, 24 Dec 2024 07:32:45 -0800 (PST)
 Received: from [192.168.10.27] ([151.81.118.45])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8292adsm14314648f8f.19.2024.12.24.07.31.30
+ ffacd0b85a97d-38a1c828989sm14463909f8f.18.2024.12.24.07.32.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 07:31:31 -0800 (PST)
-Message-ID: <9d60933c-4713-4d61-b11f-64d4bb667e04@redhat.com>
-Date: Tue, 24 Dec 2024 16:31:28 +0100
+ Tue, 24 Dec 2024 07:32:44 -0800 (PST)
+Message-ID: <af13d0c9-1d73-4cdd-8fd0-eff86a5711d3@redhat.com>
+Date: Tue, 24 Dec 2024 16:32:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/11] target/i386/kvm: Only save/load kvmclock MSRs
- when kvmclock enabled
+Subject: Re: [PATCH v5 05/11] target/i386/kvm: Save/load MSRs of kvmclock2
+ (KVM_FEATURE_CLOCKSOURCE2)
 To: Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
@@ -87,7 +87,7 @@ To: Zhao Liu <zhao1.liu@intel.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
 References: <20241106030728.553238-1-zhao1.liu@intel.com>
- <20241106030728.553238-5-zhao1.liu@intel.com>
+ <20241106030728.553238-6-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -125,7 +125,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241106030728.553238-5-zhao1.liu@intel.com>
+In-Reply-To: <20241106030728.553238-6-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -154,21 +154,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/6/24 04:07, Zhao Liu wrote:
-> MSR_KVM_SYSTEM_TIME and MSR_KVM_WALL_CLOCK are attached with the (old)
-> kvmclock feature (KVM_FEATURE_CLOCKSOURCE).
+> MSR_KVM_SYSTEM_TIME_NEW and MSR_KVM_WALL_CLOCK_NEW are bound to
+> kvmclock2 (KVM_FEATURE_CLOCKSOURCE2).
 > 
-> So, just save/load them only when kvmclock (KVM_FEATURE_CLOCKSOURCE) is
-> enabled.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> 
+> Add the save/load support for these 2 MSRs just like kvmclock MSRs.
 
-The MSRs contains the same values as the "new" pair; QEMU only has to 
-save/restore one of them but the code should be active for both feature 
-bits and thus use
-
-+        if (env->env.features[FEAT_KVM] & (CPUID_KVM_CLOCK |
-+                                           CPUID_KVM_CLOCK2)) {
+As mentioned in the previous patch, this is not necessary.  If it was 
+needed, you'd have to also add VMSTATE fields in machine.c
 
 Paolo
 
