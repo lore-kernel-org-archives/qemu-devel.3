@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0857AE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 17:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AB3E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 17:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ91J-0001dv-TD; Tue, 24 Dec 2024 12:48:37 -0500
+	id 1tQ94i-0003bw-Qh; Tue, 24 Dec 2024 12:52:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ91H-0001dg-BI
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 12:48:35 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ94W-0003Qj-OF
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 12:51:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ91F-0004Rd-K6
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 12:48:35 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ94U-0005IA-Iq
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 12:51:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735062512;
+ s=mimecast20190719; t=1735062713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5htcbXCEDIMhIFlvBWQu+Qt2xY+CeA28cxfAhURGUis=;
- b=bmGA5Kdl+RqGagvjv6jr5rGcc+PuLADljPPNo0TCfYPi0fsI2uDphlkPmhVVAfnhYDGxXR
- nj9GTE4j+e9ZlslRcHftU+XVrasiL04rBNFvBX5F/naGsBMF3PoZcpqDJVv01IwIxhzIhc
- WLLRMP76BW3uCzCqMrg7WlIVi/FmI8M=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zN5hwMxrD4mp9OZqtCA6Eu7EDpWUHwGELiYYy4yuVWM=;
+ b=MF2AfqbQq4M7HUgDemuWs8JTTWpOQF3Hn0eJ+pGpDZwS01FsxJjgZIOiiBVS8FY8Dg7cMi
+ NChGrLjEnhNEnKI7cIlAC87rXw/hgNSZSJlJCuWHZ2GnlkFVXjdjfgamu67juHybvrQ3wV
+ BZuwgYDDQlcEDdHwK+LIdqfZg8BGiSA=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-k6ole87KN9WiS52_0dWsJg-1; Tue, 24 Dec 2024 12:48:30 -0500
-X-MC-Unique: k6ole87KN9WiS52_0dWsJg-1
-X-Mimecast-MFC-AGG-ID: k6ole87KN9WiS52_0dWsJg
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d88c987fc7so95271286d6.3
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 09:48:30 -0800 (PST)
+ us-mta-625-324lkLhsMxWeDMxL4pcTfg-1; Tue, 24 Dec 2024 12:51:52 -0500
+X-MC-Unique: 324lkLhsMxWeDMxL4pcTfg-1
+X-Mimecast-MFC-AGG-ID: 324lkLhsMxWeDMxL4pcTfg
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-467982f8816so116632531cf.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 09:51:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735062510; x=1735667310;
+ d=1e100.net; s=20230601; t=1735062712; x=1735667512;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5htcbXCEDIMhIFlvBWQu+Qt2xY+CeA28cxfAhURGUis=;
- b=szPKOsnopiKimatxPaqGMa/EEGYcQVGLuZWZFf02DCjwjUgaU3QZU3FG0vnhVbEGcP
- SAP6tzZuI1B/7Q+dBoCf4k9UzUWgtCwUvkVAXXsgw7yx8pjrL97AIhdKlDzQF1Ic7JxG
- Ahcy5poFI2MxwZ6bjMgcG5Su+R1a6exNthGsZKnGQdCJoMSriyePeGF6jKZ7Lv9gcMyM
- CZbtMOpVvLsTcwrBZX+RWX6iCxRmz7sRh9tld16rAU+AJFt588CL+m2K83aAsmW8e0Eu
- MDrvwqa3+dtbCE7FjyRYl22a78xHHJT2n/5mcGFvOApwk5+JBehg6EVbi2Rfj7LFD/8v
- CXNQ==
-X-Gm-Message-State: AOJu0YzZG+sRRl2/mYYfsOiXqB+YpqvsOr6U5oO08RWmhIyIM2xPG3ad
- iKG3IGXUn1df7GUIQRocDy2hZkqzeeDeGc02c1lt0HqRtZEw3Ijijj7fKRdNHyKb7YKFsYjDakZ
- 9Bn/NY5GEZg8tvQiwqiny7vmpcTKfrOZ8o4Y1f1PxZRRMxPpNqY14
-X-Gm-Gg: ASbGnctVPJePIXfhrroKb+lHNWJsuLPkM1mtPWRocd6+44sOfWaJ9InGxToSaT2SWuE
- PPMxUzddqiljYC99jLDYb1wcewk81bBJ88nAvN0JRVagOJSeEp5/3I3bZcLca//dTPNRNfXzmqQ
- BWcMLENhwnDgj5fwxqhTGlbxBbBWgGMslS6Y9eUxsyUatvKqJez6Dt0Tk1V+1VIPTHTzmerTG/7
- 8VTlWRqYrYVrYEaUBrn9EChWf4c4zInKzBcv1qvpWtEI3/+S97owhzXn1Ne8L5rP7ddOJANyExi
- R8SehlthMEoI/iR31w==
-X-Received: by 2002:a05:6214:3001:b0:6d8:d79c:1cb2 with SMTP id
- 6a1803df08f44-6dd2334b2e5mr303360276d6.21.1735062510032; 
- Tue, 24 Dec 2024 09:48:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHVRIyabMweCvLDraQadffUDmzp+5tc1e3+fz9RtCCcejw7lFvRNNaegjtWoD4g2/nxPW4g+w==
-X-Received: by 2002:a05:6214:3001:b0:6d8:d79c:1cb2 with SMTP id
- 6a1803df08f44-6dd2334b2e5mr303359966d6.21.1735062509773; 
- Tue, 24 Dec 2024 09:48:29 -0800 (PST)
+ bh=zN5hwMxrD4mp9OZqtCA6Eu7EDpWUHwGELiYYy4yuVWM=;
+ b=i2+FenmLTQl38L30sPK8Hy7FT8lOCocpHmrBzPXv1uwmoT1ftRhRIXzDxVgAt2/rBL
+ 7ZEZjHBxeQmSlcvNl2VphxoMSrcAE3wTIymzOaLIM9zG5ge6T7Q1OOzCyvXuI+NfT/34
+ fN9i+h8HIhXixfOkMx/s04kpRrkzK3XIQYt6xpRz0UsE9bgniSIRWnK6eLIEf1GBvAcR
+ WHfS+hEF1col3VVgFQ15vGDs/rDhg7duHvrYh6rpTo1x09sSPzBEFXpiLFHkfdSmP/Tq
+ ng2gfVs99DDgaFbaFryKIPtrVHBtgo5MdSAgeSwVcN5VE7taNdQPZ+w3EbNViEpW6osZ
+ yoIg==
+X-Gm-Message-State: AOJu0YzgSnfFhPpSygU2kWQaB4SZ/0Lak3IJBzNcdk4kGACqtpaJ4WyS
+ oNsmLn9yM2wBsbXI5dsEKawWSCbFRwKYILDW7M5qBI7SOoE2XsupQsoItL5BX/+rROW/yIGjEZn
+ Xu5AVXT5vKkmp+5EC6VDBpFHiLvVJhWtttJNk0rZi4lLcfbJXhY80
+X-Gm-Gg: ASbGnct1LHInbgIe5Ud0iO7ZWikILLGw15Crm5y51NP91L/v+ZGPhUpzXlv3lATOaTa
+ 1R6JwA3OuvhOJMx1w5h7+UJfezUZGq50NddFqxX7vJJVG9Uy2vLaKa2xieJ+HvKDa02KtGx6umI
+ YLpXKVVz/PxzNO2FN5QMzKOnspPAiKSdzbitXKWJvjDOk46gPxhejsuPHKKBh5L9dBWMhMurbgR
+ dg20FkhMt4chN3elPOon9An1IdVj7834stRK2HTQNyr0Z3WVjGjbYE5krjvwGyZZztOIxKw+O98
+ hz3Gb6gscMkzLAY8Cw==
+X-Received: by 2002:a05:6214:1252:b0:6d8:8a01:64e2 with SMTP id
+ 6a1803df08f44-6dd233af19amr277727776d6.43.1735062711972; 
+ Tue, 24 Dec 2024 09:51:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEJyvjZ5IK2S4i5cP/IbgMN+KpXnnmLtkc2sbMjAbXnu3UQuLhKkeIer+fgGheu5rbAWHehCg==
+X-Received: by 2002:a05:6214:1252:b0:6d8:8a01:64e2 with SMTP id
+ 6a1803df08f44-6dd233af19amr277727616d6.43.1735062711728; 
+ Tue, 24 Dec 2024 09:51:51 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dd180ea69dsm54816786d6.24.2024.12.24.09.48.28
+ 6a1803df08f44-6dd181bb4desm54640056d6.87.2024.12.24.09.51.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 09:48:29 -0800 (PST)
-Date: Tue, 24 Dec 2024 12:48:26 -0500
+ Tue, 24 Dec 2024 09:51:50 -0800 (PST)
+Date: Tue, 24 Dec 2024 12:51:48 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -79,14 +79,14 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V5 10/23] migration: enhance migrate_uri_parse
-Message-ID: <Z2rz6u8aeC3L2Ad-@x1n>
+Subject: Re: [PATCH V5 11/23] migration: incoming channel
+Message-ID: <Z2r0tB9LrjB8cmiA@x1n>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-11-git-send-email-steven.sistare@oracle.com>
+ <1735057028-308595-12-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1735057028-308595-11-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1735057028-308595-12-git-send-email-steven.sistare@oracle.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -112,14 +112,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 24, 2024 at 08:16:55AM -0800, Steve Sistare wrote:
-> Export migrate_uri_parse for use outside migration internals, and define
-> a method migrate_is_uri that indicates when migrate_uri_parse should
-> be used.
+On Tue, Dec 24, 2024 at 08:16:56AM -0800, Steve Sistare wrote:
+> Extend the -incoming option to allow an @MigrationChannel to be specified.
+> This allows channels other than 'main' to be described on the command
+> line, which will be needed for CPR.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
