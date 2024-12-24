@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D986E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E173E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ6e4-0007SP-Ex; Tue, 24 Dec 2024 10:16:28 -0500
+	id 1tQ6eJ-00086m-Nm; Tue, 24 Dec 2024 10:16:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6dv-0007CU-9z
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:20 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e8-0007m0-10
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6ds-00044s-5m
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:17 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e6-000465-CM
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735053375;
+ s=mimecast20190719; t=1735053389;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z5qYckvgIIGDs1pm0GDTPxd8uouPXLvudJ9dPfuOTcI=;
- b=hc+NfkTXCJSSo+HverysWu7RKRLHGkZI96chvMMuTe5yE5W+xPVjy1ytakWiGG4ivCcbzT
- 0Pa3lteqnu+D0MCZqq0JBhx3aK+2V29I1yG+42ooPI4Hc5Dqp2vq509xoTGFIb6Fui0mWx
- gqNN3cGvfRxZEKFwEiTyrzD4fsUDqW8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2/MYYc8uXpt3vIczKYOlrLw1dmBQ3Jvm2ONQ2d5igds=;
+ b=NtL+fft8YpX3GaV7/+hW6fWVRTCykr/PhcEfQNZoINn9CI7tyxh4ygwe3iJU8FKdZshuyK
+ C6lkAPqGrSE12IQNVy1rrYwMFTHA2vPtCM1k+60QQaFKWvhDIBnZofRsaxTkdyzXzzlzBb
+ 0QzSpyaSsXb9VapLE/NrBn3Rw9kGfCQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-SUl30bHyNASTjmOlHY3R_w-1; Tue,
- 24 Dec 2024 10:16:14 -0500
-X-MC-Unique: SUl30bHyNASTjmOlHY3R_w-1
-X-Mimecast-MFC-AGG-ID: SUl30bHyNASTjmOlHY3R_w
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-jBGnjJTWOAO-tBu-K_nx3A-1; Tue,
+ 24 Dec 2024 10:16:28 -0500
+X-MC-Unique: jBGnjJTWOAO-tBu-K_nx3A-1
+X-Mimecast-MFC-AGG-ID: jBGnjJTWOAO-tBu-K_nx3A
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3673A19560AF; Tue, 24 Dec 2024 15:16:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D9F719560B1; Tue, 24 Dec 2024 15:16:27 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.6])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B9D9A3000197; Tue, 24 Dec 2024 15:16:11 +0000 (UTC)
+ id 8BE6E3000197; Tue, 24 Dec 2024 15:16:24 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/17] vfio/igd: add x-igd-gms option back to set DSM region
- size for guest
-Date: Tue, 24 Dec 2024 16:15:40 +0100
-Message-ID: <20241224151547.386529-11-clg@redhat.com>
+ Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Joao Martins <joao.m.martins@oracle.com>
+Subject: [PULL 16/17] migration: Drop migration_is_device()
+Date: Tue, 24 Dec 2024 16:15:46 +0100
+Message-ID: <20241224151547.386529-17-clg@redhat.com>
 In-Reply-To: <20241224151547.386529-1-clg@redhat.com>
 References: <20241224151547.386529-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,76 +85,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomita Moeko <tomitamoeko@gmail.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-DSM region is likely to store framebuffer in Windows, a small DSM
-region may cause display issues (e.g. half of the screen is black).
-Since 971ca22f041b ("vfio/igd: don't set stolen memory size to zero"),
-the x-igd-gms option was functionally removed, QEMU uses host's
-original value, which is determined by DVMT Pre-Allocated option in
-Intel FSP of host bios.
+After being removed from VFIO, migration_is_device() no longer has any
+users. Drop it.
 
-However, some vendors do not expose this config item to users. In
-such cases, x-igd-gms option can be used to manually set the data
-stolen memory size for guest. So this commit brings this option back,
-keeping its old behavior. When it is not specified, QEMU uses host's
-value.
-
-When DVMT Pre-Allocated option is available in host BIOS, user should
-set DSM region size there instead of using x-igd-gms option.
-
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/r/20241206122749.9893-11-tomitamoeko@gmail.com
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Tested-by: Joao Martins <joao.m.martins@oracle.com>
+Link: https://lore.kernel.org/r/20241218134022.21264-7-avihaih@nvidia.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/igd.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ include/migration/misc.h | 1 -
+ migration/migration.c    | 7 -------
+ 2 files changed, 8 deletions(-)
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 73c06bbf64d85b8dbf1575dac34ef8b7e64a3490..b0fef90240ca6dcc0ead7ed536202d618546b4b1 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -14,6 +14,7 @@
- #include "qemu/units.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qapi/qmp/qerror.h"
- #include "hw/hw.h"
- #include "hw/nvram/fw_cfg.h"
- #include "pci.h"
-@@ -722,6 +723,31 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 804eb23c06077bdbf1ad9873b5efa5d7770043e8..ad1e25826aebefd9f21b638a9f4be7dbc50edb95 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -54,7 +54,6 @@ void migration_object_init(void);
+ void migration_shutdown(void);
  
-     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+ bool migration_is_active(void);
+-bool migration_is_device(void);
+ bool migration_is_running(void);
+ bool migration_thread_is_self(void);
  
-+    /*
-+     * Allow user to override dsm size using x-igd-gms option, in multiples of
-+     * 32MiB. This option should only be used when the desired size cannot be
-+     * set from DVMT Pre-Allocated option in host BIOS.
-+     */
-+    if (vdev->igd_gms) {
-+        if (gen < 8) {
-+            if (vdev->igd_gms <= 0x10) {
-+                gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
-+                gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
-+            } else {
-+                error_report(QERR_INVALID_PARAMETER_VALUE,
-+                             "x-igd-gms", "0~0x10");
-+            }
-+        } else {
-+            if (vdev->igd_gms <= 0x40) {
-+                gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
-+                gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
-+            } else {
-+                error_report(QERR_INVALID_PARAMETER_VALUE,
-+                             "x-igd-gms", "0~0x40");
-+            }
-+        }
-+    }
-+
-     ggms_size = igd_gtt_memory_size(gen, gmch);
-     gms_size = igd_stolen_memory_size(gen, gmch);
+diff --git a/migration/migration.c b/migration/migration.c
+index 056a90daafe70325934a83ce14e9e9ad02f9d30a..3606d1e26302e52de22185ba2438df1972dc0430 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1645,13 +1645,6 @@ bool migration_is_active(void)
+             s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+ }
  
+-bool migration_is_device(void)
+-{
+-    MigrationState *s = current_migration;
+-
+-    return s->state == MIGRATION_STATUS_DEVICE;
+-}
+-
+ bool migration_thread_is_self(void)
+ {
+     MigrationState *s = current_migration;
 -- 
 2.47.1
 
