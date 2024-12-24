@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B8ADE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0226E7718D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQBAz-0004Iw-5U; Tue, 24 Dec 2024 15:06:45 -0500
+	id 1tQB9s-0002kg-PE; Tue, 24 Dec 2024 15:05:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQBAE-0002yL-RV
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:59 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tQB9i-0002jM-TE
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:27 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQBAD-0002e6-8r
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:58 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-21634338cfdso79720935ad.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:05:56 -0800 (PST)
+ id 1tQB9g-0002UZ-SG
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:26 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21675fd60feso73522345ad.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:05:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735070756; x=1735675556; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KTUO0uF94ggO8DLruNGc154B1KXBI7ow/g7ffKKGvr4=;
- b=aeDKKiBsClZ3Hfde1gVNPsU5MzqNr+Sbe29iQUDirxarUNVY7EEbpnjgRGu/g9Mdj6
- Qu3AMohNY6S7piJ5j4jsLCH1vnpoQfCySit6B+dbVXlhSko8pAHLwVfHpaJGCjRTkoGM
- EN/Xyd41y6uCf5MW1hmRX97kHUXx74RfqsqPLQyUph8cLQa2aEdYQxfV+9kiFqXLTbdn
- JbEgyuPSOxHbh40kKK8is8eXilYNPp7XUPpkBxN2ol7h5B/jf70VXqAP/Vi9vq2tf0J1
- 65dwl9YDV2BGr1L3JUuicH5mLq3eX2YLH/SAojMMxfaQn+mBbTPLaYLnTDXXneXhWEbO
- 38gg==
+ d=linaro.org; s=google; t=1735070723; x=1735675523; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2jxIuXphk2p1Sj9EERk4+AzkFM+txRkx+yf5xQplj+4=;
+ b=k41fhPK2hg70pFb3WhU4n/huqZCTZ4HCV711wOsOfhKr/I0/Vyc3k/zWxQQNvyTmTu
+ p1xChcWUcYokgHMqsmXmVcYbofbUtJOCd5VERsSpi9tkuZrj9eHxfnkUqRCJ87iJNHJR
+ upcBIhIfOQKvkjfmbwnoxmLJ275BF1sweiCKdWZkG5sydeFYpdtbllRk8AQfVR738B8f
+ hPhOAEQAVzQUtaVSI2VLzytRTBID9o10QXUtVY7iOE+i3wiuSYWjHGMaGqWoEpZE6ybM
+ G/KyKDv2KeLhJAFX8nCT9DvuQ0gzB6i+JyA7W942xSoXpRikRtvhaovtc6b8dRojNUl6
+ dlTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735070756; x=1735675556;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KTUO0uF94ggO8DLruNGc154B1KXBI7ow/g7ffKKGvr4=;
- b=UbV9Vbee4u1zvsnyFLallbkmV1gKKIpeJk7oUUu9j05NKnHFmHBEejucG+LLq7SBhQ
- J939gWCda/mWevpRbl5eA+AmU/Zuk7zNKR2G68bojUPxSe2Xnrt5ciCOfjCKT/PeAmrR
- 0JS5Tynnvy8QzkerhNSFd5fiRJ9nTB27e6yCXvhdxVZhy/Qh1Yw4XIBXFa7h4P0vk88k
- 15cZ58E01L6eNOyka1fvNBYd3tFhRsZXO3ZIe4VJoOX391SvhMT7Ae6uWyFw/r91U+bQ
- ZEXO+DG21L7r/u4hd+b+Fk/9XUf6R7A3lj7WOdE0mhXm49as5dktMgD5HQUs68jF3CVr
- LUYw==
-X-Gm-Message-State: AOJu0YwQ7bF4iBJBGMiplS0tmBxP2S3ugqF+sK2+fMNhDDZTc0RSeo/M
- 3TkMA6uysmXmlRXRVPXnr2Wyp5Paf1S27z+fmxDo1ZGRUDpVUOsl4YmsIrNT2cE/6SShbP7HvPg
- pShA=
-X-Gm-Gg: ASbGncsgt8JHsAS6xa9lLro8Zmr8cqSN0fAInlTQQtpVmBXCjTZl1+L1seGN6H64lX1
- lCiz88KSbm1Lk66lJHLkabEpu9q41i/oTkO+JrFNjiPMj3SSDpLZeyva2L7mmsNszVN6U1Fl3kF
- 8itnHnjmiq2dSDn7yYyy/JkBch6E5zSmyHDPMwlV78RxeDLHRz6h9PnqgSpvO+pEBC+xUR+npCh
- k29o5tD710C+8rUboj3YpLGk5U/FihUdJcx9ZHNX8i8F5KplWgH0TqKGlbKEi9z68AlwXBjIj0U
- bWnA/8ABsRtNhbtfNnx0BK0o1g==
-X-Google-Smtp-Source: AGHT+IH7hDttmrGY8SarAQL2EvDau3KT4ilPoFmFbfWryvVvi8NUagtsDO1Fez/8nbzgOIhWkZZavw==
-X-Received: by 2002:a05:6a20:c907:b0:1e0:e07f:2f01 with SMTP id
- adf61e73a8af0-1e5df939d84mr25801344637.0.1735070756035; 
- Tue, 24 Dec 2024 12:05:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1735070723; x=1735675523;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2jxIuXphk2p1Sj9EERk4+AzkFM+txRkx+yf5xQplj+4=;
+ b=gyJSnMDAr2CxYJQjjNW12vBJaJCATlyqQfMK0K5t1Itxe5orFzYW4yaI++asA7s75/
+ RsIuoZmbHZTUvLMqwkcUJHCayQwokMCOo6dG6b/Im4a8PgNviqX8qkNST6VU7SZpB6xo
+ 0hy7cD6TTwzibo3sJkYLpEakY6NiMSAjnQS5924+L2Dp6EKw2kHUzT10tJ5Kv1Jp9qhJ
+ Scf5TbvKqKyUJZpnFVEFHa2M/HY4IeHBujuHwP7rCmsZ0cQ4LDTBz/VuHDQ9KOWCAVfi
+ O5Bq2c1idTW+LRuaoSiJdymn1wQeEFmEmdqWiKnW2RU15Oqrk8uwMIZCgIJ2+cidejNM
+ tPRQ==
+X-Gm-Message-State: AOJu0Yykc9Ix57eLjImuDaz/47zNENAdOfaRD5yKaJ3/gvtfoabh/4XD
+ LjS5DyZaCRsJib6W1SXIHxfSxwL36DMlIlKH8CUg5AECs/WQIEeERhlYn5aae0Fk/paW3kBTQhM
+ oxZw=
+X-Gm-Gg: ASbGncs+la6l3gunO9Pl1QEDQRQjjYRNERZ1nVAIdHNOw2zwzq0S5NrBNmyCQG3Z97g
+ m464PJQhcTIEqWrooeI9VGcCRYJWACP5F3fwnmGukl1phrosSN9cbELXm1VR+t/qbiDp4qtDobx
+ gyxGsUhRj8BKNKr14dRdwWX8xxn81a4BzOOkwQYp7CFgw8CiFuM3xzTulMuQdf2dE/UuP63rSFW
+ uQx0mwkIp7igB8+ThUHz9BebbyLvkquK2IhNu/zmoTGUhvqKPIe3QvRzu0tMyOjikoSkeShjTCm
+ 5kHj0jzmyuoHuhNREtQZ9CPrtA==
+X-Google-Smtp-Source: AGHT+IEXRR/sJwuzGpFFIHrMezuIbkKNhzVKO/0QEu7JKmadhik9wlYgzvTvIGAyTih+WSG+3fJKEA==
+X-Received: by 2002:a05:6a21:7899:b0:1e1:bf3d:a18a with SMTP id
+ adf61e73a8af0-1e5e0801d78mr30940171637.32.1735070722712; 
+ Tue, 24 Dec 2024 12:05:22 -0800 (PST)
 Received: from stoup.. (syn-156-019-246-023.biz.spectrum.com. [156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8fb895sm10027159b3a.162.2024.12.24.12.05.55
+ d2e1a72fcca58-72aad8fb895sm10027159b3a.162.2024.12.24.12.05.22
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 12:05:55 -0800 (PST)
+ Tue, 24 Dec 2024 12:05:22 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 36/72] tcg/optimize: Distinguish simplification in
- fold_setcond_zmask
-Date: Tue, 24 Dec 2024 12:04:45 -0800
-Message-ID: <20241224200521.310066-37-richard.henderson@linaro.org>
+Subject: [PULL 00/72] tcg patch queue
+Date: Tue, 24 Dec 2024 12:04:09 -0800
+Message-ID: <20241224200521.310066-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241224200521.310066-1-richard.henderson@linaro.org>
-References: <20241224200521.310066-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,76 +96,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change return from bool to int; distinguish between
-complete folding, simplification, and no change.
+The following changes since commit aa3a285b5bc56a4208b3b57d4a55291e9c260107:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+  Merge tag 'mem-2024-12-21' of https://github.com/davidhildenbrand/qemu into staging (2024-12-22 14:33:27 -0500)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index e78f5a79a3..678015a94a 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2155,7 +2155,8 @@ static bool fold_remainder(OptContext *ctx, TCGOp *op)
-     return finish_folding(ctx, op);
- }
- 
--static bool fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
-+/* Return 1 if finished, -1 if simplified, 0 if unchanged. */
-+static int fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
- {
-     uint64_t a_zmask, b_val;
-     TCGCond cond;
-@@ -2250,11 +2251,10 @@ static bool fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
-                 op->opc = xor_opc;
-                 op->args[2] = arg_new_constant(ctx, 1);
-             }
--            return false;
-+            return -1;
-         }
-     }
--
--    return false;
-+    return 0;
- }
- 
- static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
-@@ -2359,10 +2359,13 @@ static bool fold_setcond(OptContext *ctx, TCGOp *op)
-         return tcg_opt_gen_movi(ctx, op, op->args[0], i);
-     }
- 
--    if (fold_setcond_zmask(ctx, op, false)) {
-+    i = fold_setcond_zmask(ctx, op, false);
-+    if (i > 0) {
-         return true;
-     }
--    fold_setcond_tst_pow2(ctx, op, false);
-+    if (i == 0) {
-+        fold_setcond_tst_pow2(ctx, op, false);
-+    }
- 
-     ctx->z_mask = 1;
-     return false;
-@@ -2376,10 +2379,13 @@ static bool fold_negsetcond(OptContext *ctx, TCGOp *op)
-         return tcg_opt_gen_movi(ctx, op, op->args[0], -i);
-     }
- 
--    if (fold_setcond_zmask(ctx, op, true)) {
-+    i = fold_setcond_zmask(ctx, op, true);
-+    if (i > 0) {
-         return true;
-     }
--    fold_setcond_tst_pow2(ctx, op, true);
-+    if (i == 0) {
-+        fold_setcond_tst_pow2(ctx, op, true);
-+    }
- 
-     /* Value is {0,-1} so all bits are repetitions of the sign. */
-     ctx->s_mask = -1;
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20241224
+
+for you to fetch changes up to e4a8e093dc74be049f4829831dce76e5edab0003:
+
+  accel/tcg: Move gen_intermediate_code to TCGCPUOps.translate_core (2024-12-24 08:32:15 -0800)
+
+----------------------------------------------------------------
+tcg/optimize: Remove in-flight mask data from OptContext
+fpu: Add float*_muladd_scalbn
+fpu: Remove float_muladd_halve_result
+fpu: Add float_round_nearest_even_max
+fpu: Add float_muladd_suppress_add_product_zero
+target/hexagon: Use float32_muladd
+accel/tcg: Move gen_intermediate_code to TCGCPUOps.translate_core
+
+----------------------------------------------------------------
+Ilya Leoshkevich (1):
+      tests/tcg: Do not use inttypes.h in multiarch/system/memory.c
+
+Pierrick Bouvier (1):
+      plugins: optimize cpu_index code generation
+
+Richard Henderson (70):
+      tcg/optimize: Split out finish_bb, finish_ebb
+      tcg/optimize: Split out fold_affected_mask
+      tcg/optimize: Copy mask writeback to fold_masks
+      tcg/optimize: Split out fold_masks_zs
+      tcg/optimize: Augment s_mask from z_mask in fold_masks_zs
+      tcg/optimize: Change representation of s_mask
+      tcg/optimize: Use finish_folding in fold_add, fold_add_vec, fold_addsub2
+      tcg/optimize: Introduce const value accessors for TempOptInfo
+      tcg/optimize: Use fold_masks_zs in fold_and
+      tcg/optimize: Use fold_masks_zs in fold_andc
+      tcg/optimize: Use fold_masks_zs in fold_bswap
+      tcg/optimize: Use fold_masks_zs in fold_count_zeros
+      tcg/optimize: Use fold_masks_z in fold_ctpop
+      tcg/optimize: Use fold_and and fold_masks_z in fold_deposit
+      tcg/optimize: Compute sign mask in fold_deposit
+      tcg/optimize: Use finish_folding in fold_divide
+      tcg/optimize: Use finish_folding in fold_dup, fold_dup2
+      tcg/optimize: Use fold_masks_s in fold_eqv
+      tcg/optimize: Use fold_masks_z in fold_extract
+      tcg/optimize: Use finish_folding in fold_extract2
+      tcg/optimize: Use fold_masks_zs in fold_exts
+      tcg/optimize: Use fold_masks_z in fold_extu
+      tcg/optimize: Use fold_masks_zs in fold_movcond
+      tcg/optimize: Use finish_folding in fold_mul*
+      tcg/optimize: Use fold_masks_s in fold_nand
+      tcg/optimize: Use fold_masks_z in fold_neg_no_const
+      tcg/optimize: Use fold_masks_s in fold_nor
+      tcg/optimize: Use fold_masks_s in fold_not
+      tcg/optimize: Use fold_masks_zs in fold_or
+      tcg/optimize: Use fold_masks_zs in fold_orc
+      tcg/optimize: Use fold_masks_zs in fold_qemu_ld
+      tcg/optimize: Return true from fold_qemu_st, fold_tcg_st
+      tcg/optimize: Use finish_folding in fold_remainder
+      tcg/optimize: Distinguish simplification in fold_setcond_zmask
+      tcg/optimize: Use fold_masks_z in fold_setcond
+      tcg/optimize: Use fold_masks_s in fold_negsetcond
+      tcg/optimize: Use fold_masks_z in fold_setcond2
+      tcg/optimize: Use finish_folding in fold_cmp_vec
+      tcg/optimize: Use finish_folding in fold_cmpsel_vec
+      tcg/optimize: Use fold_masks_zs in fold_sextract
+      tcg/optimize: Use fold_masks_zs, fold_masks_s in fold_shift
+      tcg/optimize: Simplify sign bit test in fold_shift
+      tcg/optimize: Use finish_folding in fold_sub, fold_sub_vec
+      tcg/optimize: Use fold_masks_zs in fold_tcg_ld
+      tcg/optimize: Use finish_folding in fold_tcg_ld_memcopy
+      tcg/optimize: Use fold_masks_zs in fold_xor
+      tcg/optimize: Use finish_folding in fold_bitsel_vec
+      tcg/optimize: Use finish_folding as default in tcg_optimize
+      tcg/optimize: Remove z_mask, s_mask from OptContext
+      tcg/optimize: Re-enable sign-mask optimizations
+      tcg/optimize: Move fold_bitsel_vec into alphabetic sort
+      tcg/optimize: Move fold_cmp_vec, fold_cmpsel_vec into alphabetic sort
+      softfloat: Add float{16,32,64}_muladd_scalbn
+      target/arm: Use float*_muladd_scalbn
+      target/sparc: Use float*_muladd_scalbn
+      softfloat: Remove float_muladd_halve_result
+      softfloat: Add float_round_nearest_even_max
+      softfloat: Add float_muladd_suppress_add_product_zero
+      target/hexagon: Use float32_mul in helper_sfmpy
+      target/hexagon: Use float32_muladd for helper_sffma
+      target/hexagon: Use float32_muladd for helper_sffms
+      target/hexagon: Use float32_muladd_scalbn for helper_sffma_sc
+      target/hexagon: Use float32_muladd for helper_sffm[as]_lib
+      target/hexagon: Remove internal_fmafx
+      target/hexagon: Expand GEN_XF_ROUND
+      target/hexagon: Remove Float
+      target/hexagon: Remove Double
+      target/hexagon: Use mulu64 for int128_mul_6464
+      target/hexagon: Simplify internal_mpyhh setup
+      accel/tcg: Move gen_intermediate_code to TCGCPUOps.translate_core
+
+ include/exec/translator.h           |  14 -
+ include/fpu/softfloat-types.h       |   2 +
+ include/fpu/softfloat.h             |  14 +-
+ include/hw/core/tcg-cpu-ops.h       |  13 +
+ target/alpha/cpu.h                  |   2 +
+ target/arm/internals.h              |   2 +
+ target/avr/cpu.h                    |   2 +
+ target/hexagon/cpu.h                |   2 +
+ target/hexagon/fma_emu.h            |   3 -
+ target/hppa/cpu.h                   |   2 +
+ target/i386/tcg/helper-tcg.h        |   2 +
+ target/loongarch/internals.h        |   2 +
+ target/m68k/cpu.h                   |   2 +
+ target/microblaze/cpu.h             |   2 +
+ target/mips/tcg/tcg-internal.h      |   2 +
+ target/openrisc/cpu.h               |   2 +
+ target/ppc/cpu.h                    |   2 +
+ target/riscv/cpu.h                  |   3 +
+ target/rx/cpu.h                     |   2 +
+ target/s390x/s390x-internal.h       |   2 +
+ target/sh4/cpu.h                    |   2 +
+ target/sparc/cpu.h                  |   2 +
+ target/sparc/helper.h               |   4 +-
+ target/tricore/cpu.h                |   2 +
+ target/xtensa/cpu.h                 |   2 +
+ accel/tcg/cpu-exec.c                |   8 +-
+ accel/tcg/plugin-gen.c              |   9 +
+ accel/tcg/translate-all.c           |   8 +-
+ fpu/softfloat.c                     |  63 +--
+ target/alpha/cpu.c                  |   1 +
+ target/alpha/translate.c            |   4 +-
+ target/arm/cpu.c                    |   1 +
+ target/arm/tcg/cpu-v7m.c            |   1 +
+ target/arm/tcg/helper-a64.c         |   6 +-
+ target/arm/tcg/translate.c          |   5 +-
+ target/avr/cpu.c                    |   1 +
+ target/avr/translate.c              |   6 +-
+ target/hexagon/cpu.c                |   1 +
+ target/hexagon/fma_emu.c            | 496 ++++++---------------
+ target/hexagon/op_helper.c          | 125 ++----
+ target/hexagon/translate.c          |   4 +-
+ target/hppa/cpu.c                   |   1 +
+ target/hppa/translate.c             |   4 +-
+ target/i386/tcg/tcg-cpu.c           |   1 +
+ target/i386/tcg/translate.c         |   5 +-
+ target/loongarch/cpu.c              |   1 +
+ target/loongarch/tcg/translate.c    |   4 +-
+ target/m68k/cpu.c                   |   1 +
+ target/m68k/translate.c             |   4 +-
+ target/microblaze/cpu.c             |   1 +
+ target/microblaze/translate.c       |   4 +-
+ target/mips/cpu.c                   |   1 +
+ target/mips/tcg/translate.c         |   4 +-
+ target/openrisc/cpu.c               |   1 +
+ target/openrisc/translate.c         |   4 +-
+ target/ppc/cpu_init.c               |   1 +
+ target/ppc/translate.c              |   4 +-
+ target/riscv/tcg/tcg-cpu.c          |   1 +
+ target/riscv/translate.c            |   4 +-
+ target/rx/cpu.c                     |   1 +
+ target/rx/translate.c               |   4 +-
+ target/s390x/cpu.c                  |   1 +
+ target/s390x/tcg/translate.c        |   4 +-
+ target/sh4/cpu.c                    |   1 +
+ target/sh4/translate.c              |   4 +-
+ target/sparc/cpu.c                  |   1 +
+ target/sparc/fop_helper.c           |   8 +-
+ target/sparc/translate.c            |  84 ++--
+ target/tricore/cpu.c                |   1 +
+ target/tricore/translate.c          |   5 +-
+ target/xtensa/cpu.c                 |   1 +
+ target/xtensa/translate.c           |   4 +-
+ tcg/optimize.c                      | 857 +++++++++++++++++++-----------------
+ tests/tcg/multiarch/system/memory.c |   9 +-
+ fpu/softfloat-parts.c.inc           |  16 +-
+ 75 files changed, 866 insertions(+), 1009 deletions(-)
 
