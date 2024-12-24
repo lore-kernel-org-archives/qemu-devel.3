@@ -4,90 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F9CE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC63E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ6oO-0003t9-KK; Tue, 24 Dec 2024 10:27:09 -0500
+	id 1tQ6t1-00050t-3X; Tue, 24 Dec 2024 10:31:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQ6oM-0003se-KU
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:27:06 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQ6oK-0005Av-DC
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:27:05 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21649a7bcdcso54831615ad.1
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:27:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735054022; x=1735658822; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JiLhIRHosJxOW+J0zPXeV5WBfWdG+502oCZ8WSyWqfQ=;
- b=y8Ts4+wUxpqP4HK0IQR2NdsJkn9VYL6xmqWGCrdlrExcP4EE8IAHGuK/8m9jHNMLH8
- rT9g1w0HC7W4I+QoNi7dyIAqrUvIroZLr0M/IN4ElvyafaYqArYIRgaeVT8C5WvBe4Mu
- oH0fywYLrNi6OkXAbn8ucZ6lzDW8z5CRugNgw+tpOXbqeQUEaMXa/fvcP6Kg4zT+iWDk
- qQD5vLwoAKq6OOEwYf1Obz/p8cUjduFHpqMm8pbVTJFF8X2xKadGBpyrHByg7rtapBJV
- pS5u1mWNR7d/cDaVwGoDSeMVn6lGxpoXcQAwRB1An4Ehu39qL5ojaOMZyPx7M8tIcdFF
- rY+A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tQ6su-0004xe-M7
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:31:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tQ6sl-0005nQ-7M
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:31:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735054295;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sttA86JlVJRPGR1pZfidlTi6I1TCvbAFziqdjrjC9pk=;
+ b=hpBS6w/U396GkCa4jjI+ojdGx9IaLauhzEaF8J+Tvv3XPjuK2UgMxKkboACPCxJe8M4b2+
+ oE8s4LXu9KuUl4X4E9WqQF+O+eMFmDMqrIVTaAOV7WQjqd/orY7gQgItxFw2Jf3IyHiGiD
+ qDMCX6jEXiTKpy6180IRBN23loXz4Xg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-jOQfo6eKMO26dy0y12E8hQ-1; Tue, 24 Dec 2024 10:31:33 -0500
+X-MC-Unique: jOQfo6eKMO26dy0y12E8hQ-1
+X-Mimecast-MFC-AGG-ID: jOQfo6eKMO26dy0y12E8hQ
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-386321c8f4bso2878665f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:31:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735054022; x=1735658822;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JiLhIRHosJxOW+J0zPXeV5WBfWdG+502oCZ8WSyWqfQ=;
- b=Rcbeg2tgPAmOtVnkMb8+A9XDxDkok1VueDx7QGLQOAK/dCOfTzSpz+tbQ8EsD3oOVI
- yUiLxWSMuRR83a9h5LH3J1IvZWt5JMYtProstA6iKhxi6fqFBrhzcBvKbsV5DKeywFW9
- IiY3V6i5Q7OXl56ci2MV3rx/Rvz/LiabArNdNFAwHcbf/4GcSt0lfE/tY904RvXOHAqP
- 9hABGZV2Ra65Tgyy2dB+dum1f6m6I14upbntDWcM5Qqt+Kda2oTYxCoeubM2oXvBWH4y
- ZVt7UFxwCj0dRlplrYTJLaWGbu6aDbf0+S/EWtVuidfqc3tB2pBO7m9pNABw2MZuLd4a
- RD2A==
+ d=1e100.net; s=20230601; t=1735054292; x=1735659092;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sttA86JlVJRPGR1pZfidlTi6I1TCvbAFziqdjrjC9pk=;
+ b=Skh1Mn+ypSM4JmKkM9htEJc1oTn0Kjw1bBU92wKOttDPsTnPNKL4Op8TCK7lnuDQyM
+ jZMz5++SGYb/lRBuhUL6SQOBp9flZ3Cih+sM7eHQZycm3a5W05Mo1A4bm7W9KqfXCWLv
+ AgrB9YQDvqsP/5hf34LmzSlph2qjAk5wj2ylItjNqdiuDDyY1mbMZy5m3nytrfvBAgST
+ wZZcR+bAtYhCkr/81UUa+fxFukC7eaO+Yk5cDndtK+GXuNtsLfHYXRJvrLsvLNl5m4Qe
+ 7r38EO6jXB8L6wRNUufIPUeakNWEh09aOYYkWNnxfMfWtlIEzMAzGJfgh7dSR0+JvpSY
+ Umaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUR/93S7GstGyKrQZULF8gI+Kerr1vgFyM+bNv8ljckKRiRf1kbJsAYBR456boIcrqhHy1mveKh77Kz@nongnu.org
-X-Gm-Message-State: AOJu0Yy5daMSMpq8NB4xcAnE0/8ZCPQLm4sZ6TX34WQ3gH9g/TYpF57l
- F4S0srrdtKqTu0mwY4rs6D/OO6ikXUiwgeu6eVPRpabCs3trGXfFKQ1rEyn5LH6PoIyNWUy+zCO
- Gojo=
-X-Gm-Gg: ASbGncsPguYFtdNBFyzcHEM9im7eseNVG3obkFkI8hRWNPWux9JKHRBsvSofnsAKh88
- 0GL5N7wMXFHf3X5ohJg9tMNXOCdHvarIFmbcO9zbRpfiBUHTrCIYP9mGqI5AA0lXV0I3qPdZDsN
- np/UPM7WKWXWYzR5RGU1zq7let/ldV/NH0D1/2QdE2pu6ANo5lVdT/eN3/l+515nW1L5LMkm8HE
- +rJ4vYFdDhd1KZfRg84mn7cYqQrTNS4TmSc2zJNr3pRbfIJIV54yN4fh9Ju75DnveHghsr9RAXO
- fX5JR2cd/kntW01/r+G7C+UUKyAZuiL3eNVNia4=
-X-Google-Smtp-Source: AGHT+IHAbKu4KQgQ8fQ/Q5inOUmaLGyJAuP2fHl6LXp57iaMFvB0THUe8woyW1b+e47GBxuZ+PyBHw==
-X-Received: by 2002:a05:6a00:410d:b0:725:e5a7:fdac with SMTP id
- d2e1a72fcca58-72abe1ad517mr24785590b3a.26.1735054022504; 
- Tue, 24 Dec 2024 07:27:02 -0800 (PST)
-Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8fb9fcsm9833136b3a.164.2024.12.24.07.27.01
+ AJvYcCUnzt6Mj/OJv81pl/yMuPhoE0lNSgRSzwC+KK6+uLDndjFtPuJTkshM0KpnKmd6MbSwu+r2DiO40v6z@nongnu.org
+X-Gm-Message-State: AOJu0YyYdPJHwevK0Qi2UHKGi36fc883nV5X2/394ShbvtG64hA6MRc7
+ EAVn4mUSh361RVhVFodAOgURbuw3q+OK7RouUA4FeW7p/mPBENnOppyCIlJeenbjIVgGUpVYgew
+ vgQCO9Yw9LETpziLp1cxMl8k5MCvZ3s7A3KnAd4bZUEwRVsYxK5se
+X-Gm-Gg: ASbGncvEzCdmnhUvXCPoJGadWIh9vyA791+JbFt9VGRd8kTz1EJL76+BpbAWPFFFk/a
+ odE3QmyVkWu0CxLWu8OZic+ya9SF0BKEz5zzXQuKpALEsX7g32XYcUiuTEVD/MXFMjaYeqVHmao
+ xcJsS4CM7ezbBUh0yZXQfn1aG7L2L6GUVoQN0Erdyq7NLSE1BRFZg/mnvUQyuYr7xGDWVQJU6ke
+ +Ru9afgTHpyiUMTeTuAYhpLgqJPvkaF6dVXkwR3PqQtz95Ut8v0uvJWSomI
+X-Received: by 2002:adf:a453:0:b0:38a:2b39:679d with SMTP id
+ ffacd0b85a97d-38a2b396927mr5880316f8f.32.1735054292542; 
+ Tue, 24 Dec 2024 07:31:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjDev92cI1a9hEfMDA+fr2hM4oSjxKaQxdL1upD0q+0U/fRFDrGLeO5ylm0YCPlcX6RSvckQ==
+X-Received: by 2002:adf:a453:0:b0:38a:2b39:679d with SMTP id
+ ffacd0b85a97d-38a2b396927mr5880306f8f.32.1735054292219; 
+ Tue, 24 Dec 2024 07:31:32 -0800 (PST)
+Received: from [192.168.10.27] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8292adsm14314648f8f.19.2024.12.24.07.31.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 07:27:02 -0800 (PST)
-Message-ID: <ec72358e-76ab-48f6-ad07-adc6f6504ab3@linaro.org>
-Date: Tue, 24 Dec 2024 07:26:59 -0800
+ Tue, 24 Dec 2024 07:31:31 -0800 (PST)
+Message-ID: <9d60933c-4713-4d61-b11f-64d4bb667e04@redhat.com>
+Date: Tue, 24 Dec 2024 16:31:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/loongarch/boot: Support Linux raw boot image
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- "open list:ARM" <qemu-arm@nongnu.org>
-References: <20241224-la-direct-kernel-boot-v2-1-3e8336c54c60@flygoat.com>
+Subject: Re: [PATCH v5 04/11] target/i386/kvm: Only save/load kvmclock MSRs
+ when kvmclock enabled
+To: Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Tao Su <tao1.su@linux.intel.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20241106030728.553238-1-zhao1.liu@intel.com>
+ <20241106030728.553238-5-zhao1.liu@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241224-la-direct-kernel-boot-v2-1-3e8336c54c60@flygoat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20241106030728.553238-5-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,35 +153,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/24/24 07:06, Jiaxun Yang wrote:
-> +static int64_t load_loongarch_linux_image(const char *filename,
-> +                                          uint64_t *kernel_entry,
-> +                                          uint64_t *kernel_low,
-> +                                          uint64_t *kernel_high)
-> +{
-> +    gsize len;
-> +    int size;
-> +    uint8_t *buffer;
-> +    struct loongarch_linux_hdr *hdr;
-> +
-> +    /* Load as raw file otherwise */
-> +    if (!g_file_get_contents(filename, (char **)&buffer, &len, NULL)) {
-> +        return -1;
-> +    }
-> +    size = len;
+On 11/6/24 04:07, Zhao Liu wrote:
+> MSR_KVM_SYSTEM_TIME and MSR_KVM_WALL_CLOCK are attached with the (old)
+> kvmclock feature (KVM_FEATURE_CLOCKSOURCE).
+> 
+> So, just save/load them only when kvmclock (KVM_FEATURE_CLOCKSOURCE) is
+> enabled.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> 
 
-This truncates from size_t to int, which will start to fail in odd ways at 2GB.
+The MSRs contains the same values as the "new" pair; QEMU only has to 
+save/restore one of them but the code should be active for both feature 
+bits and thus use
 
-The code in load_aarch64_image has the same problem, so the best fix would be to change 
-unpack_efi_zboot_image to take size_t.
++        if (env->env.features[FEAT_KVM] & (CPUID_KVM_CLOCK |
++                                           CPUID_KVM_CLOCK2)) {
 
-> +
-> +    /* Unpack the image if it is a EFI zboot image */
-> +    if (unpack_efi_zboot_image(&buffer, &size) < 0) {
-> +        g_free(buffer);
-> +        return -1;
-> +    }
+Paolo
 
-
-r~
 
