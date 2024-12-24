@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E173E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE7CE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ6eJ-00086m-Nm; Tue, 24 Dec 2024 10:16:44 -0500
+	id 1tQ6eA-0007wj-At; Tue, 24 Dec 2024 10:16:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e8-0007m0-10
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e5-0007Zp-Ir
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e6-000465-CM
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:31 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e3-00045m-Sr
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735053389;
+ s=mimecast20190719; t=1735053387;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2/MYYc8uXpt3vIczKYOlrLw1dmBQ3Jvm2ONQ2d5igds=;
- b=NtL+fft8YpX3GaV7/+hW6fWVRTCykr/PhcEfQNZoINn9CI7tyxh4ygwe3iJU8FKdZshuyK
- C6lkAPqGrSE12IQNVy1rrYwMFTHA2vPtCM1k+60QQaFKWvhDIBnZofRsaxTkdyzXzzlzBb
- 0QzSpyaSsXb9VapLE/NrBn3Rw9kGfCQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5agplQuD+hZNb/x9xV92EqkAd3qW0GJYnlLX+uqSckg=;
+ b=bBKcIc0NKq7fcviEftv+YVLvinWiQgEoafeHspXEm8WHYKIJhUpmtQoYYJ5ubPi1XDq9l8
+ eSiIJ85QvEw1xgvV3ua1gRnHf9ppu1MRJAy2+QGcOrgLFlD+Xt+I9ed2t1asHlRZ6FtG5Q
+ pUlZx5/04b/xB/l6fjcp3oQdaguYq3E=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-jBGnjJTWOAO-tBu-K_nx3A-1; Tue,
- 24 Dec 2024 10:16:28 -0500
-X-MC-Unique: jBGnjJTWOAO-tBu-K_nx3A-1
-X-Mimecast-MFC-AGG-ID: jBGnjJTWOAO-tBu-K_nx3A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-3eTSJOs9NTi8aHoT-ua_Xw-1; Tue,
+ 24 Dec 2024 10:16:22 -0500
+X-MC-Unique: 3eTSJOs9NTi8aHoT-ua_Xw-1
+X-Mimecast-MFC-AGG-ID: 3eTSJOs9NTi8aHoT-ua_Xw
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D9F719560B1; Tue, 24 Dec 2024 15:16:27 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 806F619560A2; Tue, 24 Dec 2024 15:16:21 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.6])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BE6E3000197; Tue, 24 Dec 2024 15:16:24 +0000 (UTC)
+ id CC8653000197; Tue, 24 Dec 2024 15:16:19 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PULL 16/17] migration: Drop migration_is_device()
-Date: Tue, 24 Dec 2024 16:15:46 +0100
-Message-ID: <20241224151547.386529-17-clg@redhat.com>
+ Joao Martins <joao.m.martins@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 14/17] vfio/migration: Rename vfio_devices_all_dirty_tracking()
+Date: Tue, 24 Dec 2024 16:15:44 +0100
+Message-ID: <20241224151547.386529-15-clg@redhat.com>
 In-Reply-To: <20241224151547.386529-1-clg@redhat.com>
 References: <20241224151547.386529-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,50 +87,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Avihai Horon <avihaih@nvidia.com>
 
-After being removed from VFIO, migration_is_device() no longer has any
-users. Drop it.
+vfio_devices_all_dirty_tracking() is used to check if dirty page log
+sync is needed. However, besides checking the dirty page tracking
+status, it also checks the pre_copy_dirty_page_tracking flag.
+
+Rename it to vfio_devices_log_sync_needed() which reflects its purpose
+more accurately and makes the code clearer as there are already several
+helpers with similar names.
 
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
 Tested-by: Joao Martins <joao.m.martins@oracle.com>
-Link: https://lore.kernel.org/r/20241218134022.21264-7-avihaih@nvidia.com
+Link: https://lore.kernel.org/r/20241218134022.21264-5-avihaih@nvidia.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/migration/misc.h | 1 -
- migration/migration.c    | 7 -------
- 2 files changed, 8 deletions(-)
+ hw/vfio/common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 804eb23c06077bdbf1ad9873b5efa5d7770043e8..ad1e25826aebefd9f21b638a9f4be7dbc50edb95 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -54,7 +54,6 @@ void migration_object_init(void);
- void migration_shutdown(void);
- 
- bool migration_is_active(void);
--bool migration_is_device(void);
- bool migration_is_running(void);
- bool migration_thread_is_self(void);
- 
-diff --git a/migration/migration.c b/migration/migration.c
-index 056a90daafe70325934a83ce14e9e9ad02f9d30a..3606d1e26302e52de22185ba2438df1972dc0430 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1645,13 +1645,6 @@ bool migration_is_active(void)
-             s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 9b5524377ce01a0a982157b314ad60add371bac6..f7499a9b7447a7593198e1523c50858b70a8bd85 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -191,7 +191,7 @@ bool vfio_devices_all_dirty_tracking_started(
+            bcontainer->dirty_pages_started;
  }
  
--bool migration_is_device(void)
--{
--    MigrationState *s = current_migration;
--
--    return s->state == MIGRATION_STATUS_DEVICE;
--}
--
- bool migration_thread_is_self(void)
+-static bool vfio_devices_all_dirty_tracking(VFIOContainerBase *bcontainer)
++static bool vfio_log_sync_needed(const VFIOContainerBase *bcontainer)
  {
-     MigrationState *s = current_migration;
+     VFIODevice *vbasedev;
+ 
+@@ -1364,7 +1364,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+         return;
+     }
+ 
+-    if (vfio_devices_all_dirty_tracking(bcontainer)) {
++    if (vfio_log_sync_needed(bcontainer)) {
+         ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
+         if (ret) {
+             error_report_err(local_err);
 -- 
 2.47.1
 
