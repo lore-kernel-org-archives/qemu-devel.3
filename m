@@ -4,146 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C8EE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7C5E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ6cw-000670-98; Tue, 24 Dec 2024 10:15:18 -0500
+	id 1tQ6df-0006xp-A3; Tue, 24 Dec 2024 10:16:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6cu-00064p-Lw
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:15:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6dd-0006xH-Ea
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6ct-0003vY-35
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:15:16 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6db-00042t-Jm
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735053314;
+ s=mimecast20190719; t=1735053358;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=M6VUdP95Va8KaMkFvPzKmBqHBh0Dyilq54vKex3dFdA=;
- b=VHJMN+E6Js8vlORI2hSYzUAdUuhbmF2WKnkb0J5rq9WZe2oW4dFMNkG5rp7eHuRQ1z+WDJ
- 3UWX+jmc+IEgCVDe8w85ECGj3wkWKZHzszfgkCQy5p1mWcWam3m7Bua8kOQcmH2nhfDszm
- EV6PSI2s+1qSZqlWk3hIkc5QDWHMRiI=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-4-x_LsmMOF6s4d5hkNrScw-1; Tue, 24 Dec 2024 10:15:11 -0500
-X-MC-Unique: 4-x_LsmMOF6s4d5hkNrScw-1
-X-Mimecast-MFC-AGG-ID: 4-x_LsmMOF6s4d5hkNrScw
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-46790c5b1a5so129467851cf.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:15:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735053311; x=1735658111;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M6VUdP95Va8KaMkFvPzKmBqHBh0Dyilq54vKex3dFdA=;
- b=sq1YJ/FBdmpO54JuC80FQb3cED5qxqrn5qxq+hNWLWw2GrnuSsfNtSKcXlJiP5PCJ+
- 1Qh+PoD6REgk9KvkHa3cmI75IFD26ANBf8bOsHVpJx4/J+AfUAoeWzkYpCqKAHknKpnq
- xxzOMCoWZYS96BcHC2+vGYzD59dXiUr+4wv5t9WHQhtQiIuhMZlAsKmPSyKd/RvaDHUA
- k8gXqQtz/+pqpghWByxkMV3FwQXucvv68haxFIbo0E3d5OtitYEuIhnXYFFhDkuxNAQN
- KIHmaEs3ZwiHpCykmnLF6ji37RuP01+qDnN7p+Q5C3ro6q7YxkCIlLC5nLWeC3UMgK1P
- otgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfCZ9M07UP7RsnPs11R0wczLVeU1FBfa7e78izb5UFdhsqMF+fZQVO8QTxmnBWq2Q/CyEPOYsRXs1W@nongnu.org
-X-Gm-Message-State: AOJu0Yw22zl3Cdo8LtvntkM0mdTslvsaqaGHLgpPAcZE6GaatI5tMo2C
- U73L2MQOMBEq4VNSK8w4e+tEB9HHBYOEWcWP7ePPavP5ZgG5sOo0xHa3DvK1UUBRX3GMDDdcxqO
- O9uv+93eQRocDz97vPb5Ni3uIRf0H4IXOV8ZAawglH5tZI1pcMXIF
-X-Gm-Gg: ASbGncvIvD5ekuP9h6t67l9XW9dyHKh9K6PqyV488cq2s+OZeWIORNrnr+Uy1fMl1bD
- Dioky+dey3e+ahCikXDm+ZNBnxJ1yOgO7mKvB4BObrUHfCrjeGUl8Xp3dkbAjex/VRCbKuPymu3
- 6shELAqiSccML/A39M7rm+A8z43DGa/phR+UBYw1wshM0S+9kH+t288/7sdaYolKkbxr1FjaAbu
- Ggj8LAJxVXKa2hFLQg+3v/93jRyhKMGsquGc6MuLvihoubQBjIc+rEJuOxSDRTPY5gFutAT2r4n
- 0uw5o+sGSQzxYphn
-X-Received: by 2002:a05:620a:26a1:b0:7b1:19f4:c6e0 with SMTP id
- af79cd13be357-7b9ba850570mr2821575485a.51.1735053310972; 
- Tue, 24 Dec 2024 07:15:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFo+Qur1D6LTZLXrc+RcNHuDgw4UJ5ZN50K16gyyhH+j2v1HemMFEIyk6QHtp+WJAZcQuELgQ==
-X-Received: by 2002:a05:620a:26a1:b0:7b1:19f4:c6e0 with SMTP id
- af79cd13be357-7b9ba850570mr2821570985a.51.1735053310560; 
- Tue, 24 Dec 2024 07:15:10 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
- ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b9ac2d0df8sm476289385a.28.2024.12.24.07.15.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 07:15:10 -0800 (PST)
-Message-ID: <9868a48a-feb2-4ff0-a98f-373608d98720@redhat.com>
-Date: Tue, 24 Dec 2024 16:15:07 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=xd7+HZloy5NBlP2roMtyXsOP0rdnx7TYyLZj9Bk972o=;
+ b=Lr+fgqyp3yN+BA3jrq+58M6ZXKdF41/6B1wcZnMV9JqyuMKLQl0BGPNBk0YDqyRDceWUI+
+ NrIw26VKzwJTMuwrKGVPNiaerPRE2irganmm96uwp0UPMrPZPYhgPm72ZE3UfO2Ou8jLM4
+ sd0Y61kuG/7GoHvIGTFQ3KmtYGvH/pQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-sakZUxDaNM2k3yaXsUAEQw-1; Tue,
+ 24 Dec 2024 10:15:54 -0500
+X-MC-Unique: sakZUxDaNM2k3yaXsUAEQw-1
+X-Mimecast-MFC-AGG-ID: sakZUxDaNM2k3yaXsUAEQw
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88E9C19560BA; Tue, 24 Dec 2024 15:15:53 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.6])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C464A3000197; Tue, 24 Dec 2024 15:15:51 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 01/17] vfio/igd: fix GTT stolen memory size calculation for gen
+ 8+
+Date: Tue, 24 Dec 2024 16:15:31 +0100
+Message-ID: <20241224151547.386529-2-clg@redhat.com>
+In-Reply-To: <20241224151547.386529-1-clg@redhat.com>
+References: <20241224151547.386529-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] migration: Drop/unexport migration_is_device() and
- migration_is_active()
-To: Peter Xu <peterx@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Hyman Huang <yong.huang@smartx.com>,
- Joao Martins <joao.m.martins@oracle.com>, Maor Gottlieb <maorg@nvidia.com>
-References: <20241218134022.21264-1-avihaih@nvidia.com>
- <7e89a423-14ef-4b6e-b1ae-9b2e6e947a38@redhat.com> <Z2rPRxla5iBczNm4@x1n>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <Z2rPRxla5iBczNm4@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,54 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/24/24 16:12, Peter Xu wrote:
-> On Tue, Dec 24, 2024 at 09:20:08AM +0100, Cédric Le Goater wrote:
->> Fabiano, Peter,
->>
->> On 12/18/24 14:40, Avihai Horon wrote:
->>> Hello,
->>>
->>> This follows up on Peter's series [1] to simplify migration status API
->>> to a single migration_is_running() function.
->>>
->>> Peter's series tried to drop migration_is_device() and
->>> migration_is_active(), however VFIO used them to check if dirty page
->>> tracking has been started in order to avoid errors in log sync, so they
->>> couldn't simply be dropped without some preliminary cleanups.
->>>
->>> This series handles these preliminary cleanups and eventually drops
->>> migration_is_device() and unexports migration_is_active().
->>>
->>> The series has been migration tested with the following:
->>> - VFIO device dirty tracking.
->>> - Legacy VFIO iommu dirty tracking.
->>> - vIOMMU + Legacy VFIO iommu dirty tracking (migration with vIOMMU is
->>>     currently blocked, so I used a patched QEMU to allow it).
->>>
->>> I also tested calc-dirty-rate as now VFIO dirty pages should be included
->>> in its report, and indeed they are.
->>>
->>> I didn't test it with iommu DPT as I don't have access to such HW.
->>> It would be great if someone with the proper HW could test it.
->>>
->>> Patch structure:
->>> 1-4: Refactor and clean up VFIO dirty page tracking helpers.
->>> 5: Refactor dirty limit code.
->>> 6-7: Drop/unexport migration_is_device() and migration_is_running().
->>
->> I can take these migration changes through the VFIO queue.
->> Is that ok for you ?
-> 
-> Fabiano is collecting things for this cycle, but just in case he's in the
-> middle of a party - yes please, thanks!
-> 
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
-Sending the PR then !
+On gen 8 and later devices, the GTT stolen memory size when GGMS equals
+0 is 0 (no preallocated memory) rather than 1MB [1].
 
-Thanks,
+[1] 3.1.13, 5th Generation Intel Core Processor Family Datasheet Vol. 2
+    https://www.intel.com/content/www/us/en/content-details/330835
 
-C.
+Fixes: c4c45e943e51 ("vfio/pci: Intel graphics legacy mode assignment")
 
+Reported-By: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/r/20241206122749.9893-2-tomitamoeko@gmail.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/igd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 4047f4f0717f82f48f8e255873f9895a157e210a..73ed1ec8e6af60ed58fe6546f750d07fc972193e 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -268,7 +268,7 @@ static int vfio_igd_gtt_max(VFIOPCIDevice *vdev)
+ 
+     gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, sizeof(gmch));
+     ggms = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+-    if (gen > 6) {
++    if (gen > 6 && ggms != 0) {
+         ggms = 1 << ggms;
+     }
+ 
+@@ -678,7 +678,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+ 
+     /* Determine the size of stolen memory needed for GTT */
+     ggms_mb = (gmch >> (gen < 8 ? 8 : 6)) & 0x3;
+-    if (gen > 6) {
++    if (gen > 6 && ggms_mb != 0) {
+         ggms_mb = 1 << ggms_mb;
+     }
+ 
+-- 
+2.47.1
 
 
