@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C0DE7718D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 19:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45136E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQAzA-0007mm-Vy; Tue, 24 Dec 2024 14:54:33 -0500
+	id 1tQB6A-000113-4R; Tue, 24 Dec 2024 15:01:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQAz9-0007me-UG
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 14:54:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQB68-00010o-Rx
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:01:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQAz8-0000yX-9H
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 14:54:31 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQB66-0001cx-Ut
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:01:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735070068;
+ s=mimecast20190719; t=1735070500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5vtPSwGtH2ejIR+xC1v6/lc/0P3xJYSMhU1FknNePQg=;
- b=ctkdR5ewR4y8da3CM6NkPMXqWJ/Oy6aNMdG+RHfTZW4G0Yn6A65Se0SrdhSlF2582BhCz0
- oXmkpI3PF37xxvJRZ7llf+9cMN/WzZNLWH3YhohUu6DwEleETncWKx0VRmVlHkvTjy2rKj
- tCj6kxaaxNNzaCLa/adFuwlnHBX5Xl4=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qsDASAj/GKa2wWR/iTceXumwIfbSNoIxSR2mUvNd5DI=;
+ b=EQQ4nvRNrsOhYtdwX6IBYTJYkfYJikp9wCTbSGb7SYZvB9Oc5jjon6f8dGedVQBfB+2wF4
+ 4cQL8BhDGN7k/cwjJ/RSkTqlujaKL94pbK3E+sP9cs3N5w6uxTPMcqp9Qb9o7hRfcZAxol
+ AvVPOMzLho6S9kRcvWakkGkbHH+w+9Y=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-2FY4H6TWOGeiGfYl9Z4Vng-1; Tue, 24 Dec 2024 14:54:27 -0500
-X-MC-Unique: 2FY4H6TWOGeiGfYl9Z4Vng-1
-X-Mimecast-MFC-AGG-ID: 2FY4H6TWOGeiGfYl9Z4Vng
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d8f0b1023bso61932566d6.0
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 11:54:27 -0800 (PST)
+ us-mta-159-R21A_ROIOCGfnokC7su4Iw-1; Tue, 24 Dec 2024 15:01:39 -0500
+X-MC-Unique: R21A_ROIOCGfnokC7su4Iw-1
+X-Mimecast-MFC-AGG-ID: R21A_ROIOCGfnokC7su4Iw
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-467944446a0so89587371cf.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:01:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735070067; x=1735674867;
+ d=1e100.net; s=20230601; t=1735070499; x=1735675299;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5vtPSwGtH2ejIR+xC1v6/lc/0P3xJYSMhU1FknNePQg=;
- b=sXfY43vsZ4P1KG3sjZ8BlJiuNXKtnNok4Y2llKhSrQHYU8m1jufuFNEopBU2lRbVvu
- C8ZTqBaijb1b9yG5bAdaGTDl1an7sanwoXYVaxoJpB3pnih1GgnfJ1WofsEfIJmsW0Is
- IezCv0lS9vgO6778RZsvmNhCuZOk1nmXzy4LBVEINfeCLXXrqNAzCkdw/yShc5VBPaC6
- jKyoTfP8ehRyEJtWr6gQK8ZXM6H3Na8Wyxizxy5FJ70oL/LDMecSsBV1jdWSaP6HxG6l
- ls2Zn2xmuQQ3ZPDBwP5i0NRCTfsue5nvml9gM7Fm9hN/u0OLrrve4xtU0pwNiUgE2iZ2
- Xi/w==
-X-Gm-Message-State: AOJu0Yx2I2zzJqqSL6YDJKNxcev/qzmo6Uq6E8hzlGpJ6zviUOimxyUA
- rRL8CxT/d4Gt43BhYZYt1gH01SWTbOuI4Mn494qi6HsVLXTWFbquBRbhTntxS3ji9ZAnT1RZQxb
- PbZD1DLwouiYM0oSA98R258Dd3ekaLv72fqTS9ZfTJCi6SJfL4oU/
-X-Gm-Gg: ASbGncvA8SQh6tQGom+luz6pRfqcF4Qv6NCm0pKvNuYNGSzcXjprI8GMclCntsi8nki
- SZK+yjY8L2Qwy2WxQZHsst08xB/A/o5qNgnHHbkSsYcpH5Tp+eBtYJWLhTKRjqE5JAgt/UgeM+w
- tjbeH1UUxsQYJgGRD0mF1uFpSfGdMYGGdKsH7xREivelngZRlbI9rGlOKusA7rpMWK1/AmaK+fo
- 2InQxoKMwK/pmqv6apq7v1n05lZ0fHvOG20C/gm3MwjSENMUwhkG8IHiKK1pgManuXfRkQ1cDSK
- aDby9wSO/iGovhSv5A==
-X-Received: by 2002:a05:6214:2522:b0:6d8:b189:5419 with SMTP id
- 6a1803df08f44-6dd23308e27mr290935206d6.8.1735070067057; 
- Tue, 24 Dec 2024 11:54:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGS1+RQpAm7vNbL3R+yw+EJynntwJgn2wVbpLM4W9ca97Ymv6DJA20KtjJpxpEgHwAjhOV/GQ==
-X-Received: by 2002:a05:6214:2522:b0:6d8:b189:5419 with SMTP id
- 6a1803df08f44-6dd23308e27mr290934946d6.8.1735070066781; 
- Tue, 24 Dec 2024 11:54:26 -0800 (PST)
+ bh=qsDASAj/GKa2wWR/iTceXumwIfbSNoIxSR2mUvNd5DI=;
+ b=OPN4yLkxMxEZCa9UsFJ54l7jCyoCiyWiWy81PEfkadVkrbAEumUTMOIFLdXsF38v8V
+ lyiDyptfX0kuPnpNvO3o62Z4DKmLKDQxBBte3qX91gaxxfqwxRt8/KazbzAoFEb8eMy7
+ csWROu9r2gS6SSYrcDAqpELbl6zwFCmFDgiqMAaFLxYCMqyxxlZQaPP0z2PrfGPHT882
+ 3C6XHswCQ7yOOSRDlkZdcN/ifJf1M0+4YWwFYgT5n0dgHILUIvrg1LxUh+OotLAlrS+k
+ qz8O2sF4QxzQiR++inCmsq4pudHr7tlGjqsj/kb733Vx7xMLXdWq4SeE4Lh7rxsLWPVx
+ 6Ihw==
+X-Gm-Message-State: AOJu0Yw+RblXluUqN4/NWWdpvHnwX0OMexqBZP6zoaiCB9jLmilY9Uc9
+ NvMK7G/h1oQERAIhBqmmPZhgnqyTl42zjfAjDQUo8dgyneYrJZbsGHJVTDXzxRMMTtnkM4AUrqU
+ s7lMsuINaoVae2cXYOB9Wj3anVxbmvbKBoi9ugxJQflwozkkIL3+m
+X-Gm-Gg: ASbGncuaGuaOlmDaC+AMcoiomJMScDmfnZ9ixfBsIHuFbyIHOp17uAWzcCV3JSUEfJx
+ d8O5Gao+HIqn9VzDUslA+HQDGG2LlvEARdYCBH4naFtfCCRNChPf1a1vLi0NGHIlnmkOkihpKiv
+ BShO8yHCas+KsY0bDWm6Rh8zomjEJn0q2MOMXLwEG3RaSzIFwK/FJwOK9kZ3D5h4hAiA5NSur6M
+ 1P7qrPvgKgszXPOeP6Z5GvfvqdQFrPJ56kfJmEMbdmyCYeZwA+EeACQOnO+enqXmzyyuPfsg5Y+
+ gv4DHiwwyRHqY6NYEQ==
+X-Received: by 2002:ac8:7d4b:0:b0:467:5db1:696d with SMTP id
+ d75a77b69052e-46a4a8caf98mr301060051cf.14.1735070497767; 
+ Tue, 24 Dec 2024 12:01:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFK1dhwaFMF4sGu+TtTJCZk8Jcfa1tjPGbjG6YEywIlpYcH9inwWLuV1ZrIMY4Yrh+2ZQGVrw==
+X-Received: by 2002:ac8:7d4b:0:b0:467:5db1:696d with SMTP id
+ d75a77b69052e-46a4a8caf98mr301059601cf.14.1735070497408; 
+ Tue, 24 Dec 2024 12:01:37 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dd22f025ebsm47620176d6.82.2024.12.24.11.54.25
+ d75a77b69052e-46a3eb175e3sm56289611cf.56.2024.12.24.12.01.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 11:54:25 -0800 (PST)
-Date: Tue, 24 Dec 2024 14:54:23 -0500
+ Tue, 24 Dec 2024 12:01:36 -0800 (PST)
+Date: Tue, 24 Dec 2024 15:01:34 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -79,24 +79,24 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V5 21/23] tests/qtest: assert qmp_ready
-Message-ID: <Z2sRb-6ziWJ-FU6u@x1n>
+Subject: Re: [PATCH V5 22/23] migration-test: cpr-transfer
+Message-ID: <Z2sTHg-t0wB4g3Mh@x1n>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-22-git-send-email-steven.sistare@oracle.com>
+ <1735057028-308595-23-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1735057028-308595-22-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <1735057028-308595-23-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,97 +112,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 24, 2024 at 08:17:06AM -0800, Steve Sistare wrote:
-> Set qmp_ready when the handshake is complete, and assert it when we
-> communicate with the monitor.
+On Tue, Dec 24, 2024 at 08:17:07AM -0800, Steve Sistare wrote:
+> Add a migration test for cpr-transfer mode.  Defer the connection to the
+> target monitor, else the test hangs because in cpr-transfer mode QEMU does
+> not listen for monitor connections until we send the migrate command to
+> source QEMU.
 > 
-> Suggested-by: Peter Xu <peterx@redhat.com>
+> To test -incoming defer, send a migrate incoming command to the target,
+> after sending the migrate command to the source, as required by
+> cpr-transfer mode.
+> 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->  tests/qtest/libqtest.c | 20 +++++++++++++++++---
->  1 file changed, 17 insertions(+), 3 deletions(-)
+>  tests/qtest/migration/cpr-tests.c | 60 +++++++++++++++++++++++++++++++++++++++
+>  tests/qtest/migration/framework.c | 19 +++++++++++++
+>  tests/qtest/migration/framework.h |  3 ++
+>  3 files changed, 82 insertions(+)
 > 
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 2f44d3c..43ee92f 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -77,6 +77,7 @@ struct QTestState
->      int qmp_fd;
->      int sock;
->      int qmpsock;
-> +    bool qmp_ready;
->      pid_t qemu_pid;  /* our child QEMU process */
->      int wstatus;
->  #ifdef _WIN32
-> @@ -552,14 +553,23 @@ void qtest_connect(QTestState *s)
+> diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+> index 44ce89a..b221980 100644
+> --- a/tests/qtest/migration/cpr-tests.c
+> +++ b/tests/qtest/migration/cpr-tests.c
+> @@ -44,6 +44,62 @@ static void test_mode_reboot(void)
+>      test_file_common(&args, true);
+>  }
 >  
->  QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
->  {
-> -    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, true);
-> +    QTestState *s = qtest_init_internal(qtest_qemu_binary(NULL), extra_args,
-> +                                        true);
+> +static void *test_mode_transfer_start(QTestState *from, QTestState *to)
+> +{
+> +    migrate_set_parameter_str(from, "mode", "cpr-transfer");
+> +    return NULL;
+> +}
 > +
-> +    /* Not really ready, but callers need it to test handshakes */
-> +    s->qmp_ready = true;
-
-This is a bit ugly.  The patch defined qmp_ready to be "after qmp
-handshake" so here it needs to be ugly.  However IIUC what we want to
-protect against is trying to read() the qmp before connection (while
-handshake may or may not happen).
-
-So I suppose if we use that definition instead (could rename it to
-qmp_connected if that's clearer), then set it to TRUE in qtest_connect()
-should work for all cases, meanwhile provide the same guard for things like
-cpr tests.
-
-> +    return s;
->  }
->  
->  void qtest_qmp_handshake(QTestState *s)
->  {
-> +    g_autoptr(QDict) greeting = NULL;
+> +/*
+> + * cpr-transfer mode cannot use the target monitor prior to starting the
+> + * migration, and cannot connect synchronously to the monitor, so defer
+> + * the target connection.
+> + */
+> +static void test_mode_transfer_common(bool incoming_defer)
+> +{
+> +    g_autofree char *cpr_path = g_strdup_printf("%s/cpr.sock", tmpfs);
+> +    g_autofree char *mig_path = g_strdup_printf("%s/migsocket", tmpfs);
+> +    g_autofree char *uri = g_strdup_printf("unix:%s", mig_path);
 > +
-> +    /* Set ready first because functions called below assert it */
-> +    s->qmp_ready = true;
+> +    const char *opts = "-machine aux-ram-share=on -nodefaults";
+> +    g_autofree const char *cpr_channel = g_strdup_printf(
+> +        "cpr,addr.transport=socket,addr.type=unix,addr.path=%s",
+> +        cpr_path);
+> +    g_autofree char *opts_target = g_strdup_printf("-incoming %s %s",
+> +                                                   cpr_channel, opts);
 > +
->      /* Read the QMP greeting and then do the handshake */
-> -    QDict *greeting = qtest_qmp_receive(s);
-> -    qobject_unref(greeting);
-> +    greeting = qtest_qmp_receive(s);
->      qobject_unref(qtest_qmp(s, "{ 'execute': 'qmp_capabilities' }"));
->  }
->  
-> @@ -786,6 +796,7 @@ QDict *qtest_qmp_receive(QTestState *s)
->  
->  QDict *qtest_qmp_receive_dict(QTestState *s)
+> +    g_autofree char *connect_channels = g_strdup_printf(
+> +        "[ { 'channel-type': 'main',"
+> +        "    'addr': { 'transport': 'socket',"
+> +        "              'type': 'unix',"
+> +        "              'path': '%s' } } ]",
+> +        mig_path);
+
+So this test already uses json-format channels, IMHO we probably don't need
+MigrateCommon.cpr_channel anymore?  We could put them all here. Then..
+
+> +
+> +    MigrateCommon args = {
+> +        .start.opts_source = opts,
+> +        .start.opts_target = opts_target,
+> +        .start.defer_target_connect = true,
+> +        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
+> +                                " -machine memory-backend=pc.ram",
+> +        .listen_uri = incoming_defer ? "defer" : uri,
+> +        .connect_channels = connect_channels,
+> +        .cpr_channel = cpr_channel,
+> +        .start_hook = test_mode_transfer_start,
+> +    };
+> +
+> +    test_precopy_common(&args);
+> +}
+> +
+> +static void test_mode_transfer(void)
+> +{
+> +    test_mode_transfer_common(NULL);
+> +}
+> +
+> +static void test_mode_transfer_defer(void)
+> +{
+> +    test_mode_transfer_common(true);
+> +}
+> +
+>  void migration_test_add_cpr(MigrationTestEnv *env)
 >  {
-> +    g_assert(s->qmp_ready);
->      return qmp_fd_receive(s->qmp_fd);
+>      tmpfs = env->tmpfs;
+> @@ -55,4 +111,8 @@ void migration_test_add_cpr(MigrationTestEnv *env)
+>      if (getenv("QEMU_TEST_FLAKY_TESTS")) {
+>          migration_test_add("/migration/mode/reboot", test_mode_reboot);
+>      }
+> +
+> +    migration_test_add("/migration/mode/transfer", test_mode_transfer);
+> +    migration_test_add("/migration/mode/transfer/defer",
+> +                       test_mode_transfer_defer);
 >  }
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index c6ea3e1..f6175de 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -411,6 +411,7 @@ void migrate_end(QTestState *from, QTestState *to, bool test_dest)
+>      qtest_quit(to);
 >  
-> @@ -813,12 +824,14 @@ int qtest_socket_server(const char *socket_path)
->  void qtest_qmp_vsend_fds(QTestState *s, int *fds, size_t fds_num,
->                           const char *fmt, va_list ap)
+>      cleanup("migsocket");
+> +    cleanup("cpr.sock");
+>      cleanup("src_serial");
+>      cleanup("dest_serial");
+>      cleanup(FILE_TEST_FILENAME);
+> @@ -692,8 +693,11 @@ void test_precopy_common(MigrateCommon *args)
 >  {
-> +    g_assert(s->qmp_ready);
->      qmp_fd_vsend_fds(s->qmp_fd, fds, fds_num, fmt, ap);
->  }
->  #endif
+>      QTestState *from, *to;
+>      void *data_hook = NULL;
+> +    QObject *in_channels = NULL;
+>      QObject *out_channels = NULL;
 >  
->  void qtest_qmp_vsend(QTestState *s, const char *fmt, va_list ap)
->  {
-> +    g_assert(s->qmp_ready);
->      qmp_fd_vsend(s->qmp_fd, fmt, ap);
->  }
+> +    g_assert(!args->cpr_channel || args->connect_channels);
+> +
+>      if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+>          return;
+>      }
+> @@ -725,8 +729,20 @@ void test_precopy_common(MigrateCommon *args)
+>          }
+>      }
 >  
-> @@ -879,6 +892,7 @@ void qtest_qmp_send_raw(QTestState *s, const char *fmt, ...)
->  {
->      va_list ap;
+> +    /*
+> +     * The cpr channel must be included in outgoing channels, but not in
+> +     * migrate-incoming channels.
+> +     */
+>      if (args->connect_channels) {
+> +        in_channels = qobject_from_json(args->connect_channels, &error_abort);
+>          out_channels = qobject_from_json(args->connect_channels, &error_abort);
+> +
+> +        if (args->cpr_channel) {
+> +            QList *channels_list = qobject_to(QList, out_channels);
+> +            QObject *obj = migrate_str_to_channel(args->cpr_channel);
+> +
+> +            qlist_append(channels_list, obj);
+> +        }
+
+... here IIUC we don't need this trick to manipulate the qlist anymore?
+
+Looks like if with that (convert the current cpr_connect string to JSON
+format, attach it with connect_channels), then we also don't need the
+pre-requisite patch to make connect_channels manipulate-able. Not sure.
+
+>      }
 >  
-> +    g_assert(s->qmp_ready);
->      va_start(ap, fmt);
->      qmp_fd_vsend_raw(s->qmp_fd, fmt, ap);
->      va_end(ap);
+>      if (args->result == MIG_TEST_QMP_ERROR) {
+> @@ -739,6 +755,9 @@ void test_precopy_common(MigrateCommon *args)
+>      if (args->start.defer_target_connect) {
+>          qtest_connect(to);
+>          qtest_qmp_handshake(to);
+> +        if (!strcmp(args->listen_uri, "defer")) {
+> +            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
+> +        }
+>      }
+>  
+>      if (args->result != MIG_TEST_SUCCEED) {
+> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+> index 1341368..4678e2a 100644
+> --- a/tests/qtest/migration/framework.h
+> +++ b/tests/qtest/migration/framework.h
+> @@ -152,6 +152,9 @@ typedef struct {
+>       */
+>      const char *connect_channels;
+>  
+> +    /* Optional: the cpr migration channel, in JSON or dotted keys format */
+> +    const char *cpr_channel;
+> +
+>      /* Optional: callback to run at start to set migration parameters */
+>      TestMigrateStartHook start_hook;
+>      /* Optional: callback to run at finish to cleanup */
 > -- 
 > 1.8.3.1
 > 
