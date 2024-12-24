@@ -4,107 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D22BE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3977E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ8AF-0006Ys-Fq; Tue, 24 Dec 2024 11:53:47 -0500
+	id 1tQ8DS-0007Sa-BE; Tue, 24 Dec 2024 11:57:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ8AE-0006YJ-Fw
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:53:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ8DQ-0007SR-Nn
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:57:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ8AB-0007Dh-7L
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:53:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ8DP-0007Tm-A5
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:57:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735059220;
+ s=mimecast20190719; t=1735059421;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TB0fo/bVbzitc6+x+UIF8h0UO0oa2vNO47I5mwKzLhQ=;
- b=HNat2IunsgALVcvvWD6IWm4DTrnEXW5nkt3PoNd5vPGTP4YudC4f0unqQSqS1rk0DXmXVq
- gX+yD5B+zsEq+pGo0umSknyJtaD93S2bIN7QRxtZlC5Fp25bOCbaRcu5s3OrhspOXGsmX+
- VtICi4crZykuU6FwifTb4IJkAen6ffY=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b+g5XBTZ6NCPc6pCoX1dA3TI46vkN9iqQQkc8PbtVpo=;
+ b=PssxbqkwbPkdR8kLhIc/OyFBwocB0SuUVJVxT5uILHeXxZJ0hoqP0ObmDNf/F1kVqnn3+E
+ fusuBVl9pwHUUaky595mhdbK0DEL9Q5TQFLaDzhcR0kJE8aGPJp3mpZDYMG84vjSMrGb3f
+ 8Z90mzDP8R5HfeGD9den8DBJC8L2ZDU=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-P-SpikLbP86YyxOrhoq1Zw-1; Tue, 24 Dec 2024 11:53:35 -0500
-X-MC-Unique: P-SpikLbP86YyxOrhoq1Zw-1
-X-Mimecast-MFC-AGG-ID: P-SpikLbP86YyxOrhoq1Zw
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-468f7e0aef7so117591491cf.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 08:53:35 -0800 (PST)
+ us-mta-176-xKsOMDqOOmCrwGLoQGYvQw-1; Tue, 24 Dec 2024 11:57:00 -0500
+X-MC-Unique: xKsOMDqOOmCrwGLoQGYvQw-1
+X-Mimecast-MFC-AGG-ID: xKsOMDqOOmCrwGLoQGYvQw
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6faab8334so817107485a.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 08:57:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735059215; x=1735664015;
+ d=1e100.net; s=20230601; t=1735059420; x=1735664220;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TB0fo/bVbzitc6+x+UIF8h0UO0oa2vNO47I5mwKzLhQ=;
- b=gZ8bHMrzWdGvo3AvR+GWlGcp+pR8pm2R0YKd6Kz31b22vyUBD+7f6ly5TyrWWjzUfa
- kVVS8MRS0yNuxTYM/TzVHGuZCAZTPoUdu9rHt7Ggg1jvEjOkzAD3e5rkjJXMaG8vC7er
- Prpop8i5Ds/0IzLA1eMsg2nuGkI/NmPk7/dQfhvMS0HAKH+/+sTi1cvHqXHEvtSf5yFv
- LK0cheRIG/mS87RfGQnuQrXPxutISIxVBUIMkHxaDvDMJr6Ua3JMU5NsKfc/MTkzw8KT
- Ol6SNSrLZF8RGGYGCNUeTLxMRItB6cxl2wNCT96WG5V0VuFVJ6ihoEQl1u2CHPgk/uT0
- eTSg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUde0w+aEn/HQUqAyd1mPt48WGgQDdccLxkdEGXsYhyy/9Gx8/JvrWTek/jOiulg5mWV9B3nerm2Ezm@nongnu.org
-X-Gm-Message-State: AOJu0YxryfTlVmN0/m4edGf6MzSzVfqT02TQZn+6SkuGBzrzB0Y9LIK5
- upI3Sj5j0nFZq41coNU7cIwvt0LiFISqWtD66sbQ6reBSI3wXYJ/fbcfuMnqthBr96/lcl9sjMg
- 3T3PvuARpglY0ZGHkpd0sK1kSfpESzpNfZT7GKKi5GL2UHJZASULe
-X-Gm-Gg: ASbGnctMyaWh4KV2f+ZJOjaV6kIyFgv1mG3lC5b99CYJpVbNoDeH3offyKABulbIHPX
- eerrDeG13fw4RZMfwOog73IOLx1ggnqtlpilCX31LU/BS3eAe684h7wP+Eo5NA6Kl0fjlxkpZNW
- qzF5OfREBdtSSn4x9gbgUJjlo0iL6qoNKc0u8mexFGUSAhzo6GGlCi0oiPc+oCawGkCLDUinrYP
- b0TAsPJ5aRQN/5Agr3ZLpW54pz8BDdlQ3iLYMwwUeLA5ApQLDuR8IHbcXMwt76KXRjs7s29SXct
- j0ya4L0sX+HhPn1D0Q==
-X-Received: by 2002:ac8:59c4:0:b0:467:6b59:423 with SMTP id
- d75a77b69052e-46a4a9a4378mr298371611cf.55.1735059215376; 
- Tue, 24 Dec 2024 08:53:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTILSqaEY6rvfn2fdBhUTINu9nd3gotUfu08KCQJrtNbz8nNa9gbK06McsXuV+dUYfnF4dYA==
-X-Received: by 2002:ac8:59c4:0:b0:467:6b59:423 with SMTP id
- d75a77b69052e-46a4a9a4378mr298371351cf.55.1735059215059; 
- Tue, 24 Dec 2024 08:53:35 -0800 (PST)
+ bh=b+g5XBTZ6NCPc6pCoX1dA3TI46vkN9iqQQkc8PbtVpo=;
+ b=aecM752nE1w5+se6BaIt//1rPsfxtz/8QWO16DQwVIg8zY84vXKQPD6MirpLgE2K2L
+ 9RqDlUZEMG2waLGw26LTVBEJobko3W5SZurD0m9KpVJ9SjZMfpA8AOqB6QU3FXqxBmLh
+ lXK1nrTlc9uoegIuBoGMuRdfUk/XVEbqAFZGxCUlBlMNR3/WeHZIllZjc4oh9MI+VBw5
+ XgKZTwpp8boEOf5uVlL2jboNFrMFFDmnuVHNsw/7B/cWbc73IgblQq2T/ctTy6Mlqab3
+ deqwSaF/9i/+nKbpqdKPQlJmK5xy1tXCNukHUtUNzcfJeQ0GSUxVGLf0Im/IA4taZRAu
+ 9xpQ==
+X-Gm-Message-State: AOJu0Yxf3p97GB2WdoQy42AB9/DWoEYfuGgmfv+vlsIWe0s9AcjEQcz+
+ 0V3JX6Uqr5yMoCoCduhVYwUor4PojldfyK9456Gz4a6ij5DXBHUIZVfATE7evK16NyQLPzy6SdK
+ 3XU+z+5iqL/lQoDxwvyazGy8zTEBkod9supYWC1LqYSNJtd9qQs0B
+X-Gm-Gg: ASbGnct8Sm2aA8RDx9RhcDJ/6dzDm8913qUK9cg4p1hcKB1iQyx44N8aWdJlMKh7chB
+ w0fDe6N4SQ3E6ofRtq9RqjWASjvmNoW0k7q+TY3vBe6fL3DfSifoeAYPy7uMO7PWeXCPBijYvYo
+ LMQxqhHWSAfnimKksJDmRTm6mlfZPZigPSPnBKbmlutjFi0OK9p543Lt1JPAwvW5WhY7WQRvGY7
+ WOH55M5eGb3f/BLER998CiRhweHLLtbwB5fjNE+DweITROhpm2Z3pIX/RUVwTBMFDl5X3SklJ/e
+ wHkYWMTgtExOwRIOeA==
+X-Received: by 2002:a05:620a:6019:b0:7a3:5f3f:c084 with SMTP id
+ af79cd13be357-7b9ba7abf91mr3426355285a.30.1735059419825; 
+ Tue, 24 Dec 2024 08:56:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEKfM9CMEK0302stqY4uoranYfHRcB5MO7KETkUgSNQaC6d1GNH97JofLh4EEbhCKmGgYAx/w==
+X-Received: by 2002:a05:620a:6019:b0:7a3:5f3f:c084 with SMTP id
+ af79cd13be357-7b9ba7abf91mr3426352485a.30.1735059419572; 
+ Tue, 24 Dec 2024 08:56:59 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b9ac2bc18dsm481686185a.22.2024.12.24.08.53.32
+ af79cd13be357-7b9ac2df5a5sm482757885a.43.2024.12.24.08.56.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 08:53:34 -0800 (PST)
-Date: Tue, 24 Dec 2024 11:53:31 -0500
+ Tue, 24 Dec 2024 08:56:58 -0800 (PST)
+Date: Tue, 24 Dec 2024 11:56:56 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Yichen Wang <yichen.wang@bytedance.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v8 08/12] migration/multifd: Add new migration option for
- multifd DSA offloading.
-Message-ID: <Z2rnC8HHVOMkie9h@x1n>
-References: <20241204021142.24184-1-yichen.wang@bytedance.com>
- <20241204021142.24184-9-yichen.wang@bytedance.com>
- <CAHObMVaaLAJZcQbDYKBr0nddvKeY1L=Nf8HjqN7CNd3Z3chfaA@mail.gmail.com>
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V5 01/23] backends/hostmem-shm: factor out allocation of
+ "anonymous shared memory with an fd"
+Message-ID: <Z2rn2Imq1IEzNMXL@x1n>
+References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
+ <1735057028-308595-2-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAHObMVaaLAJZcQbDYKBr0nddvKeY1L=Nf8HjqN7CNd3Z3chfaA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <1735057028-308595-2-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,48 +113,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 23, 2024 at 11:11:46PM -0800, Yichen Wang wrote:
-> > @@ -563,6 +572,15 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
-> >          p->has_x_checkpoint_delay = true;
-> >          visit_type_uint32(v, param, &p->x_checkpoint_delay, &err);
-> >          break;
-> > +    case MIGRATION_PARAMETER_ACCEL_PATH:
-> > +        p->has_accel_path = true;
-> > +        char **strv = g_strsplit(valuestr ? : "", " ", -1);
-> > +        strList **tail = &p->accel_path;
-> > +        for (int i = 0; strv[i]; i++) {
-> > +            QAPI_LIST_APPEND(tail, strv[i]);
-> > +        }
-> > +        g_strfreev(strv);
-> > +        break;
+On Tue, Dec 24, 2024 at 08:16:46AM -0800, Steve Sistare wrote:
+> Let's factor it out so we can reuse it.
 > 
-> I am doing my final testing, and seeing a new issue for above. This
-> code doesn't really work, because strv is freed and all contents after
-> the string split are gone. So here is what I am thinking:
-> 
-> 1. This is supposed to be an easy visit_type_strList(v, param,
-> &p->accel_path, &err), but it actually doesn't work. The code will
-> throw:
-> qemu-system-x86_64.dsa: ../../../qapi/string-input-visitor.c:343:
-> parse_type_str: Assertion `siv->lm == LM_NONE' failed.
-> when you are doing "migrate_set_parameter accel-path
-> dsa:/dev/dsa/wq0.1" from HMP.
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 
-IIUC that's for JSON only.
+Better attach your sign-off here too.. especially when content changed.
 
-> 
-> 2. If I remove the g_strfreev(strv), things are working perfectly. But
-> I am worried about the memory leak here. As technically if you keep
-> doing migrate_set_parameter for say 1 million times, memory will be
-> exhausted.
+[xxx: fix build for !posix]
+Sign-off-by: XXX
 
-Right, better not leak mem.  Can you dup the str when constructing the
-artifact?  I mean something like:
+With that:
 
--   QAPI_LIST_APPEND(tail, strv[i]);
-+   QAPI_LIST_APPEND(tail, g_strdup(strv[i]));
-
-Thanks,
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
