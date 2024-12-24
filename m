@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D37E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17684E7718F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7b3-00035G-MY; Tue, 24 Dec 2024 11:17:25 -0500
+	id 1tQ7bS-0003Nt-AL; Tue, 24 Dec 2024 11:17:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7az-000328-FF
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:22 -0500
+ id 1tQ7b5-00038g-G2
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:27 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7aw-0003A3-Is
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:21 -0500
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfYEW008033;
- Tue, 24 Dec 2024 16:17:15 GMT
+ id 1tQ7b3-0003Cg-QO
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:27 -0500
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfbaY018506;
+ Tue, 24 Dec 2024 16:17:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=Equ7yWwJew/wnUf+aFBVQlXJgRrN4ZaJSEDL86opA/4=; b=
- MLW57bLwCZAODCvD1XFl710L8bra4HVIEIffi4G1hEbzrNGHOWs8TuMhFC/7zDvz
- hYl6eY1hVbPQdOpL5mnKwjU4NHPZvxWWKp1dG6PVzAVnapnntDmryhqa/3xbDmU3
- imtHg82VYuVED2+E7M6dVB0bz8/+e+m9u58YRiKP6DLP2jp2YKIveSJoEG+AuCZJ
- uJwqqJV49+irrGW49HK4LKrdBVRLpgLwQUubqd/M74HX5tJuqvH3fCDuHtlKjKcf
- iPd7WTUGVVVnsSdh3wwbr1goo3tj6Yb+minM+KvE149hULt0ayUbqvnFx2IOkNXy
- FyUhdE1GJdKW9Q+cnbIAuw==
+ corp-2023-11-20; bh=PpVpyhcAIydCocMWiw3DvTwRVPJtO5COOCImX0qyO/k=; b=
+ E4rd3f3NPEf6ONXTLwuIQuDVxQPlQvo/c+LI433MrY/IjLGJf6wc1je78V2JSi0H
+ e0zm5IlBwPGhuRgqEOFXtyao7/3lNdV7evwgVX8YQoZ5Jke+6l2naR2Euz7Dgvae
+ +D3Ip/Zww9OS5nyBED+SwuIS5MnmR1mUJOi9bfpsfbBL+PXHtcolYXbJkelOPwR6
+ 715/wiHtBMzRe4XETRqdbD0cprwLzJQxLzu5N4CS0bClFxE+KwMFrfkr23DbpKLE
+ MR7UxyQmAr/ukCMkGusadGG9aS4Ai+qH5GYBQEBMcOEu7YGIOZYuvIsvXhvxdW8+
+ dp+p1D9aqf27FhsjMzlahQ==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nq56vh07-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43qgeqs30x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:15 +0000 (GMT)
+ Tue, 24 Dec 2024 16:17:23 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BOElcEZ023252; Tue, 24 Dec 2024 16:17:14 GMT
+ with ESMTP id 4BOG7Nsc023408; Tue, 24 Dec 2024 16:17:22 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43nm484gjv-1
+ 43nm484gnx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:14 +0000
+ Tue, 24 Dec 2024 16:17:22 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9XU021973;
- Tue, 24 Dec 2024 16:17:14 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9Xs021973;
+ Tue, 24 Dec 2024 16:17:22 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 43nm484ggj-8; Tue, 24 Dec 2024 16:17:14 +0000
+ ESMTP id 43nm484ggj-20; Tue, 24 Dec 2024 16:17:22 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 07/23] physmem: preserve ram blocks for cpr
-Date: Tue, 24 Dec 2024 08:16:52 -0800
-Message-Id: <1735057028-308595-8-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 19/23] migration-test: defer connection
+Date: Tue, 24 Dec 2024 08:17:04 -0800
+Message-Id: <1735057028-308595-20-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2412240141
-X-Proofpoint-GUID: 9Vdr4AOT5z1g30K42YZLYoG_GTnSQEcu
-X-Proofpoint-ORIG-GUID: 9Vdr4AOT5z1g30K42YZLYoG_GTnSQEcu
+X-Proofpoint-ORIG-GUID: hrewAblsERur97onirLcCQ1sGYHVgjOH
+X-Proofpoint-GUID: hrewAblsERur97onirLcCQ1sGYHVgjOH
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -105,131 +105,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save the memfd for ramblocks in CPR state, along with a name that
-uniquely identifies it.  The block's idstr is not yet set, so it
-cannot be used for this purpose.  Find the saved memfd in new QEMU when
-creating a block.  If size of a resizable block is larger in new QEMU,
-extend it via the file_ram_alloc truncate parameter, and the extra space
-will be usable after a guest reset.
+Add an option to defer connection to the target monitor, needed by the
+cpr-transfer test.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- system/physmem.c | 44 +++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 39 insertions(+), 5 deletions(-)
+ tests/qtest/migration/framework.c | 23 ++++++++++++++++++++---
+ tests/qtest/migration/framework.h |  3 +++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 0e629ee..7a6d832 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -70,6 +70,7 @@
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 2cd4970..b3c2c6e 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -213,6 +213,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+     g_autofree char *machine = NULL;
+     const char *bootpath;
+     g_autofree char *memory_backend = NULL;
++    const char *events;
  
- #include "qemu/pmem.h"
- 
-+#include "migration/cpr.h"
- #include "migration/vmstate.h"
- 
- #include "qemu/range.h"
-@@ -1661,6 +1662,18 @@ void qemu_ram_unset_idstr(RAMBlock *block)
+     if (args->use_shmem) {
+         if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
+@@ -330,22 +331,31 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+                                      &src_state);
      }
+ 
++    /*
++     * If the monitor connection is deferred, enable events on the command line
++     * so none are missed.  This is for testing only, do not set migration
++     * options like this in general.
++     */
++    events = args->defer_target_connect ? "-global migration.x-events=on" : "";
++
+     cmd_target = g_strdup_printf("-accel kvm%s -accel tcg "
+                                  "-machine %s,%s "
+                                  "-name target,debug-threads=on "
+                                  "%s "
+                                  "-serial file:%s/dest_serial "
+                                  "-incoming %s "
+-                                 "%s %s %s %s %s",
++                                 "%s %s %s %s %s %s",
+                                  kvm_opts ? kvm_opts : "",
+                                  machine, machine_opts,
+                                  memory_backend, tmpfs, uri,
++                                 events,
+                                  arch_opts ? arch_opts : "",
+                                  arch_target ? arch_target : "",
+                                  shmem_opts ? shmem_opts : "",
+                                  args->opts_target ? args->opts_target : "",
+                                  ignore_stderr);
+-    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target, true);
++    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target,
++                              !args->defer_target_connect);
+     qtest_qmp_set_event_callback(*to,
+                                  migrate_watch_for_events,
+                                  &dst_state);
+@@ -363,7 +373,9 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+      * to mimic as closer as that.
+      */
+     migrate_set_capability(*from, "events", true);
+-    migrate_set_capability(*to, "events", true);
++    if (!args->defer_target_connect) {
++        migrate_set_capability(*to, "events", true);
++    }
+ 
+     return 0;
  }
+@@ -717,6 +729,11 @@ void test_precopy_common(MigrateCommon *args)
  
-+static char *cpr_name(MemoryRegion *mr)
-+{
-+    const char *mr_name = memory_region_name(mr);
-+    g_autofree char *id = mr->dev ? qdev_get_dev_path(mr->dev) : NULL;
-+
-+    if (id) {
-+        return g_strdup_printf("%s/%s", id, mr_name);
-+    } else {
-+        return g_strdup(mr_name);
+     migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
+ 
++    if (args->start.defer_target_connect) {
++        qtest_connect(to);
++        qtest_qmp_handshake(to);
 +    }
-+}
 +
- size_t qemu_ram_pagesize(RAMBlock *rb)
- {
-     return rb->page_size;
-@@ -2078,15 +2091,25 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
-  * shared with another process if CPR is being used.  Use memfd if available
-  * because it has no size limits, else use POSIX shm.
-  */
--static int qemu_ram_get_shared_fd(const char *name, Error **errp)
-+static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
- {
--    int fd;
-+    int fd = cpr_find_fd(name, 0);
+     if (args->result != MIG_TEST_SUCCEED) {
+         bool allow_active = args->result == MIG_TEST_FAIL;
+         wait_for_migration_fail(from, allow_active);
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index d368fcf..1341368 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -114,6 +114,9 @@ typedef struct {
+      * size is plugged in.  If omitted, "-m %s" is used.
+      */
+     const char *memory_backend;
 +
-+    if (fd >= 0) {
-+        *reused = true;
-+        return fd;
-+    }
++    /* Do not connect to target monitor and qtest sockets in qtest_init */
++    bool defer_target_connect;
+ } MigrateStart;
  
-     if (qemu_memfd_check(0)) {
-         fd = qemu_memfd_create(name, 0, 0, 0, 0, errp);
-     } else {
-         fd = qemu_shm_alloc(0, errp);
-     }
-+
-+    if (fd >= 0) {
-+        cpr_save_fd(name, 0, fd);
-+    }
-+    *reused = false;
-     return fd;
- }
- #endif
-@@ -2116,8 +2139,9 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-             ram_flags |= RAM_SHARED;
-         }
-         if (ram_flags & RAM_SHARED) {
--            const char *name = memory_region_name(mr);
--            int fd = qemu_ram_get_shared_fd(name, errp);
-+            bool reused;
-+            g_autofree char *name = cpr_name(mr);
-+            int fd = qemu_ram_get_shared_fd(name, &reused, errp);
- 
-             if (fd < 0) {
-                 return NULL;
-@@ -2131,9 +2155,14 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-              * fd is not supported, but previous QEMU versions that called
-              * qemu_anon_ram_alloc for anonymous shared memory could have
-              * succeeded.  Quietly fail and fall back.
-+             *
-+             * After cpr-transfer, new QEMU could create a memory region
-+             * with a larger max size than old, so pass reused to grow the
-+             * region if necessary.  The extra space will be usable after a
-+             * guest reset.
-              */
-             new_block = qemu_ram_alloc_from_fd(size, max_size, resized, mr,
--                                               ram_flags, fd, 0, false, NULL);
-+                                               ram_flags, fd, 0, reused, NULL);
-             if (new_block) {
-                 trace_qemu_ram_alloc_shared(name, new_block->used_length,
-                                             new_block->max_length, fd,
-@@ -2141,6 +2170,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-                 return new_block;
-             }
- 
-+            cpr_delete_fd(name, 0);
-             close(fd);
-             /* fall back to anon allocation */
-         }
-@@ -2219,6 +2249,8 @@ static void reclaim_ramblock(RAMBlock *block)
- 
- void qemu_ram_free(RAMBlock *block)
- {
-+    g_autofree char *name = NULL;
-+
-     if (!block) {
-         return;
-     }
-@@ -2229,6 +2261,8 @@ void qemu_ram_free(RAMBlock *block)
-     }
- 
-     qemu_mutex_lock_ramlist();
-+    name = cpr_name(block->mr);
-+    cpr_delete_fd(name, 0);
-     QLIST_REMOVE_RCU(block, next);
-     ram_list.mru_block = NULL;
-     /* Write list before version */
+ typedef enum PostcopyRecoveryFailStage {
 -- 
 1.8.3.1
 
