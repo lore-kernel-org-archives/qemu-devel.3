@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BB8E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CCCE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:18:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7bS-0003Nu-CY; Tue, 24 Dec 2024 11:17:50 -0500
+	id 1tQ7bQ-0003MB-C5; Tue, 24 Dec 2024 11:17:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7bK-0003Kd-Fg
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:46 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1tQ7b2-000353-OE
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:24 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7bH-0003EE-9x
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:42 -0500
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfdUA017780;
- Tue, 24 Dec 2024 16:17:25 GMT
+ id 1tQ7az-0003Aj-GW
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:24 -0500
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEg0vj018774;
+ Tue, 24 Dec 2024 16:17:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=7qu1+R/hmNdsjVZtp8tPrjbBNU+St49SIKpeSFLyjxs=; b=
- YsVXeOjN1SbLWbuHDxEx7WJSx6CXJwlJ0nATELSEVhQnc5DxOaT/aNSV8vw57QD0
- +K3QcJNhEi35+yCoyL4dUZTUstSYuZgy94vT9vtjzvG5tHR/sg/LphEPjlcFAntE
- vFMuoprHVuAYBqpxn09tC+vYsB5XmUY7VPfamR4/IJEPub1jCI4IlnpfoXBwPFkA
- q9Te2tIMhiUmTPt1sGUVRKJO3h8uUlHARtM52vcDNhrHFEIt9q8b+hEW0wYmqWu4
- Cydy0/3UFu6kH3GawFzHlk80M/O70fkg1FN+dSJB5sLPXTSHPPooInMxh971dPM8
- sBSbypydKn/3ThCWjUFshQ==
+ corp-2023-11-20; bh=7kFJ0zmHucddFmQ2m7BgbUF4qwTdpmWYozvjpnaJiUM=; b=
+ k9SYmUJynfO6Esr/ajJg5PWv9qcc2Gk7uL0nPP1zJF/aHedBH7JgEPj8rDkBY8gc
+ eVGUy70IWFrsN8iy9F2EJMwPdwejeV95uY4K8QEaOtZnQ0Z89UVKFPTM7eG1HKNV
+ GOXcGZUdznvCsrlEcUjuIaXw4ik/LVcgI+ljNhGxmkfKxyiZj4Ce8faZvA8s8rLM
+ D7zMFo4oVnb7F23/Qkr/dwPtWyTBtV1uElxGOZACE+B+sbgoVsCK9BC1PCn01E9S
+ 59RNn+tH+7nb+LX6SGqF23A2c6J7Ep9jKOBE1g2i8czpsxP9KaDQFj4/kqJARCvE
+ ah/PlvRCR9AlL97VV0Jpsw==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nq9ycg1d-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43qgeqs30s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:25 +0000 (GMT)
+ Tue, 24 Dec 2024 16:17:18 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BOE54we023297; Tue, 24 Dec 2024 16:17:24 GMT
+ with ESMTP id 4BOGG6RY022588; Tue, 24 Dec 2024 16:17:17 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43nm484gpj-1
+ 43nm484gkw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:24 +0000
+ Tue, 24 Dec 2024 16:17:17 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9Y0021973;
- Tue, 24 Dec 2024 16:17:24 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9Xc021973;
+ Tue, 24 Dec 2024 16:17:16 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 43nm484ggj-23; Tue, 24 Dec 2024 16:17:24 +0000
+ ESMTP id 43nm484ggj-12; Tue, 24 Dec 2024 16:17:16 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 22/23] migration-test: cpr-transfer
-Date: Tue, 24 Dec 2024 08:17:07 -0800
-Message-Id: <1735057028-308595-23-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 11/23] migration: incoming channel
+Date: Tue, 24 Dec 2024 08:16:56 -0800
+Message-Id: <1735057028-308595-12-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
@@ -78,16 +78,16 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2412240141
-X-Proofpoint-GUID: 4XY7OhdF5gM9YRgbcrmxb7iPtWnUzSH4
-X-Proofpoint-ORIG-GUID: 4XY7OhdF5gM9YRgbcrmxb7iPtWnUzSH4
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: c1hDKsKn4RtRnsGq40SIISw7RablprQD
+X-Proofpoint-GUID: c1hDKsKn4RtRnsGq40SIISw7RablprQD
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,167 +105,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a migration test for cpr-transfer mode.  Defer the connection to the
-target monitor, else the test hangs because in cpr-transfer mode QEMU does
-not listen for monitor connections until we send the migrate command to
-source QEMU.
-
-To test -incoming defer, send a migrate incoming command to the target,
-after sending the migrate command to the source, as required by
-cpr-transfer mode.
+Extend the -incoming option to allow an @MigrationChannel to be specified.
+This allows channels other than 'main' to be described on the command
+line, which will be needed for CPR.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- tests/qtest/migration/cpr-tests.c | 60 +++++++++++++++++++++++++++++++++++++++
- tests/qtest/migration/framework.c | 19 +++++++++++++
- tests/qtest/migration/framework.h |  3 ++
- 3 files changed, 82 insertions(+)
+ migration/migration.c | 18 ++++++++++++++----
+ qemu-options.hx       | 21 +++++++++++++++++++++
+ system/vl.c           | 36 +++++++++++++++++++++++++++++++++---
+ 3 files changed, 68 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 44ce89a..b221980 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -44,6 +44,62 @@ static void test_mode_reboot(void)
-     test_file_common(&args, true);
- }
+diff --git a/migration/migration.c b/migration/migration.c
+index 881684a..7c9bc5b 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2057,6 +2057,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationState *s = migrate_get_current();
+     g_autoptr(MigrationChannel) channel = NULL;
+     MigrationAddress *addr = NULL;
++    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
  
-+static void *test_mode_transfer_start(QTestState *from, QTestState *to)
-+{
-+    migrate_set_parameter_str(from, "mode", "cpr-transfer");
-+    return NULL;
-+}
-+
-+/*
-+ * cpr-transfer mode cannot use the target monitor prior to starting the
-+ * migration, and cannot connect synchronously to the monitor, so defer
-+ * the target connection.
-+ */
-+static void test_mode_transfer_common(bool incoming_defer)
-+{
-+    g_autofree char *cpr_path = g_strdup_printf("%s/cpr.sock", tmpfs);
-+    g_autofree char *mig_path = g_strdup_printf("%s/migsocket", tmpfs);
-+    g_autofree char *uri = g_strdup_printf("unix:%s", mig_path);
-+
-+    const char *opts = "-machine aux-ram-share=on -nodefaults";
-+    g_autofree const char *cpr_channel = g_strdup_printf(
-+        "cpr,addr.transport=socket,addr.type=unix,addr.path=%s",
-+        cpr_path);
-+    g_autofree char *opts_target = g_strdup_printf("-incoming %s %s",
-+                                                   cpr_channel, opts);
-+
-+    g_autofree char *connect_channels = g_strdup_printf(
-+        "[ { 'channel-type': 'main',"
-+        "    'addr': { 'transport': 'socket',"
-+        "              'type': 'unix',"
-+        "              'path': '%s' } } ]",
-+        mig_path);
-+
-+    MigrateCommon args = {
-+        .start.opts_source = opts,
-+        .start.opts_target = opts_target,
-+        .start.defer_target_connect = true,
-+        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
-+                                " -machine memory-backend=pc.ram",
-+        .listen_uri = incoming_defer ? "defer" : uri,
-+        .connect_channels = connect_channels,
-+        .cpr_channel = cpr_channel,
-+        .start_hook = test_mode_transfer_start,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
-+static void test_mode_transfer(void)
-+{
-+    test_mode_transfer_common(NULL);
-+}
-+
-+static void test_mode_transfer_defer(void)
-+{
-+    test_mode_transfer_common(true);
-+}
-+
- void migration_test_add_cpr(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
-@@ -55,4 +111,8 @@ void migration_test_add_cpr(MigrationTestEnv *env)
-     if (getenv("QEMU_TEST_FLAKY_TESTS")) {
-         migration_test_add("/migration/mode/reboot", test_mode_reboot);
+     /*
+      * Having preliminary checks for uri and channel
+@@ -2067,12 +2068,21 @@ void qmp_migrate(const char *uri, bool has_channels,
      }
-+
-+    migration_test_add("/migration/mode/transfer", test_mode_transfer);
-+    migration_test_add("/migration/mode/transfer/defer",
-+                       test_mode_transfer_defer);
- }
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index c6ea3e1..f6175de 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -411,6 +411,7 @@ void migrate_end(QTestState *from, QTestState *to, bool test_dest)
-     qtest_quit(to);
  
-     cleanup("migsocket");
-+    cleanup("cpr.sock");
-     cleanup("src_serial");
-     cleanup("dest_serial");
-     cleanup(FILE_TEST_FILENAME);
-@@ -692,8 +693,11 @@ void test_precopy_common(MigrateCommon *args)
- {
-     QTestState *from, *to;
-     void *data_hook = NULL;
-+    QObject *in_channels = NULL;
-     QObject *out_channels = NULL;
- 
-+    g_assert(!args->cpr_channel || args->connect_channels);
+     if (channels) {
+-        /* To verify that Migrate channel list has only item */
+-        if (channels->next) {
+-            error_setg(errp, "Channel list has more than one entries");
++        for ( ; channels; channels = channels->next) {
++            MigrationChannelType type = channels->value->channel_type;
 +
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return;
-     }
-@@ -725,8 +729,20 @@ void test_precopy_common(MigrateCommon *args)
++            if (channelv[type]) {
++                error_setg(errp, "Channel list has more than one %s entry",
++                           MigrationChannelType_str(type));
++                return;
++            }
++            channelv[type] = channels->value;
++        }
++        addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
++        if (!addr) {
++            error_setg(errp, "Channel list has no main entry");
+             return;
          }
+-        addr = channels->value->addr;
      }
  
-+    /*
-+     * The cpr channel must be included in outgoing channels, but not in
-+     * migrate-incoming channels.
-+     */
-     if (args->connect_channels) {
-+        in_channels = qobject_from_json(args->connect_channels, &error_abort);
-         out_channels = qobject_from_json(args->connect_channels, &error_abort);
+     if (uri) {
+diff --git a/qemu-options.hx b/qemu-options.hx
+index b1f56b7..f1a30ef 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4940,10 +4940,18 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+     "-incoming exec:cmdline\n" \
+     "                accept incoming migration on given file descriptor\n" \
+     "                or from given external command\n" \
++    "-incoming <channel>\n" \
++    "                accept incoming migration on the migration channel\n" \
+     "-incoming defer\n" \
+     "                wait for the URI to be specified via migrate_incoming\n",
+     QEMU_ARCH_ALL)
+ SRST
++The -incoming option specifies the migration channel for an incoming
++migration.  It may be used multiple times to specify multiple
++migration channel types.  The channel type is specified in <channel>,
++or is 'main' for all other forms of -incoming.  If multiple -incoming
++options are specified for a channel type, the last one takes precedence.
 +
-+        if (args->cpr_channel) {
-+            QList *channels_list = qobject_to(QList, out_channels);
-+            QObject *obj = migrate_str_to_channel(args->cpr_channel);
+ ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
+   \ 
+ ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
+@@ -4963,6 +4971,19 @@ SRST
+     Accept incoming migration as an output from specified external
+     command.
+ 
++``-incoming <channel>``
++    Accept incoming migration on the migration channel.  For the syntax
++    of <channel>, see the QAPI documentation of ``MigrationChannel``.
++    Examples:
++    ::
 +
-+            qlist_append(channels_list, obj);
-+        }
-     }
- 
-     if (args->result == MIG_TEST_QMP_ERROR) {
-@@ -739,6 +755,9 @@ void test_precopy_common(MigrateCommon *args)
-     if (args->start.defer_target_connect) {
-         qtest_connect(to);
-         qtest_qmp_handshake(to);
-+        if (!strcmp(args->listen_uri, "defer")) {
-+            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
-+        }
-     }
- 
-     if (args->result != MIG_TEST_SUCCEED) {
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 1341368..4678e2a 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -152,6 +152,9 @@ typedef struct {
-      */
-     const char *connect_channels;
- 
-+    /* Optional: the cpr migration channel, in JSON or dotted keys format */
-+    const char *cpr_channel;
++        -incoming '{"channel-type": "main",
++                    "addr": { "transport": "socket",
++                              "type": "unix",
++                              "path": "my.sock" }}'
 +
-     /* Optional: callback to run at start to set migration parameters */
-     TestMigrateStartHook start_hook;
-     /* Optional: callback to run at finish to cleanup */
++        -incoming main,addr.transport=socket,addr.type=unix,addr.path=my.sock
++
+ ``-incoming defer``
+     Wait for the URI to be specified via migrate\_incoming. The monitor
+     can be used to change settings (such as migration parameters) prior
+diff --git a/system/vl.c b/system/vl.c
+index 2261014..7343a27 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -123,6 +123,7 @@
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qapi/qapi-visit-compat.h"
+ #include "qapi/qapi-visit-machine.h"
++#include "qapi/qapi-visit-migration.h"
+ #include "qapi/qapi-visit-ui.h"
+ #include "qapi/qapi-commands-block-core.h"
+ #include "qapi/qapi-commands-migration.h"
+@@ -159,6 +160,8 @@ typedef struct DeviceOption {
+ static const char *cpu_option;
+ static const char *mem_path;
+ static const char *incoming;
++static const char *incoming_str[MIGRATION_CHANNEL_TYPE__MAX];
++static MigrationChannel *incoming_channels[MIGRATION_CHANNEL_TYPE__MAX];
+ static const char *loadvm;
+ static const char *accelerators;
+ static bool have_custom_ram_size;
+@@ -1822,6 +1825,30 @@ static void object_option_add_visitor(Visitor *v)
+     QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+ }
+ 
++static void incoming_option_parse(const char *str)
++{
++    MigrationChannelType type = MIGRATION_CHANNEL_TYPE_MAIN;
++    MigrationChannel *channel;
++    Visitor *v;
++
++    if (!strcmp(str, "defer")) {
++        channel = NULL;
++    } else if (migrate_is_uri(str)) {
++        migrate_uri_parse(str, &channel, &error_fatal);
++    } else {
++        v = qobject_input_visitor_new_str(str, "channel-type", &error_fatal);
++        visit_type_MigrationChannel(v, NULL, &channel, &error_fatal);
++        visit_free(v);
++        type = channel->channel_type;
++    }
++
++    /* New incoming spec replaces the previous */
++    qapi_free_MigrationChannel(incoming_channels[type]);
++    incoming_channels[type] = channel;
++    incoming_str[type] = str;
++    incoming = incoming_str[MIGRATION_CHANNEL_TYPE_MAIN];
++}
++
+ static void object_option_parse(const char *str)
+ {
+     QemuOpts *opts;
+@@ -2756,8 +2783,11 @@ void qmp_x_exit_preconfig(Error **errp)
+     if (incoming) {
+         Error *local_err = NULL;
+         if (strcmp(incoming, "defer") != 0) {
+-            qmp_migrate_incoming(incoming, false, NULL, true, true,
+-                                 &local_err);
++            g_autofree MigrationChannelList *channels =
++                g_new0(MigrationChannelList, 1);
++
++            channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
++            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
+             if (local_err) {
+                 error_reportf_err(local_err, "-incoming %s: ", incoming);
+                 exit(1);
+@@ -3506,7 +3536,7 @@ void qemu_init(int argc, char **argv)
+                 if (!incoming) {
+                     runstate_set(RUN_STATE_INMIGRATE);
+                 }
+-                incoming = optarg;
++                incoming_option_parse(optarg);
+                 break;
+             case QEMU_OPTION_only_migratable:
+                 only_migratable = 1;
 -- 
 1.8.3.1
 
