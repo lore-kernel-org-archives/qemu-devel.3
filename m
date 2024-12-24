@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780ABE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 19:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7F6E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 19:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQAmO-0005Eh-OO; Tue, 24 Dec 2024 14:41:21 -0500
+	id 1tQAop-00065j-V2; Tue, 24 Dec 2024 14:43:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tQAmL-0005EC-Ms
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 14:41:17 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tQAoo-00065a-Fc
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 14:43:50 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tQAmI-0000B8-Md
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 14:41:17 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tQAom-0000G2-VM
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 14:43:50 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 62D1ACAB9E;
- Tue, 24 Dec 2024 22:40:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3BE92CABA0;
+ Tue, 24 Dec 2024 22:43:13 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BE03918EFA4;
- Tue, 24 Dec 2024 22:41:10 +0300 (MSK)
-Message-ID: <5e410e6d-5185-4457-b44a-dc9d2cd2c0d1@tls.msk.ru>
-Date: Tue, 24 Dec 2024 22:41:10 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 832C118EFA5;
+ Tue, 24 Dec 2024 22:43:47 +0300 (MSK)
+Message-ID: <175a1515-7fd9-4a7c-bf72-e72d1c0c5edc@tls.msk.ru>
+Date: Tue, 24 Dec 2024 22:43:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] make-release: only leave tarball of wrap-file subprojects
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20241219102750.389885-1-pbonzini@redhat.com>
+ <5e410e6d-5185-4457-b44a-dc9d2cd2c0d1@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -76,9 +77,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241219102750.389885-1-pbonzini@redhat.com>
+In-Reply-To: <5e410e6d-5185-4457-b44a-dc9d2cd2c0d1@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -102,78 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-19.12.2024 13:27, Paolo Bonzini wrote:
-> The QEMU source archive is including the sources downloaded from crates.io
-> in both tarball form (in subprojects/packagecache) and expanded/patched
-> form (in the subprojects directory).  The former is the more authoritative
-> form, as it has a hash that can be verified in the wrap file and checked
-> against the download URL, so keep that one only.  This works also with
-> --disable-download; when building QEMU for the first time from the
-> tarball, Meson will print something like
-> 
->      Using proc-macro2-1-rs source from cache.
-> 
-> for each subproject, and then go on to extract the tarball and apply the
-> overlay or the patches in subprojects/packagefiles.
-> 
-> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2719
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   scripts/make-release | 31 ++++++++++++++++++++++++++++++-
->   1 file changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/scripts/make-release b/scripts/make-release
-> index 8dc939124c4..2885e872109 100755
-> --- a/scripts/make-release
-> +++ b/scripts/make-release
-> @@ -10,6 +10,27 @@
->   # This work is licensed under the terms of the GNU GPLv2 or later.
->   # See the COPYING file in the top-level directory.
->   
-> +function subproject_dir() {
-> +    if test ! -f "subprojects/$1.wrap"; then
-> +      error "scripts/archive-source.sh should only process wrap subprojects"
-> +    fi
-> +
-> +    # Print the directory key of the wrap file, defaulting to the
-> +    # subproject name.  The wrap file is in ini format and should
-> +    # have a single section only.  There should be only one section
-> +    # named "[wrap-*]", which helps keeping the script simple.
-> +    local dir
-> +    dir=$(sed -n \
-> +      -e '/^\[wrap-[a-z][a-z]*\]$/,/^\[/{' \
-> +      -e    '/^directory *= */!b' \
-> +      -e    's///p' \
-> +      -e    'q' \
-> +      -e '}' \
-> +      "subprojects/$1.wrap")
-> +
-> +    echo "${dir:-$1}"
-> +}
-> +
->   if [ $# -ne 2 ]; then
->       echo "Usage:"
->       echo " $0 gitrepo version"
-> @@ -51,5 +72,13 @@ meson subprojects download $SUBPROJECTS
->           CryptoPkg/Library/OpensslLib/openssl \
->           MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
->   popd
-> -tar --exclude=.git -cJf ${destination}.tar.xz ${destination}
-> +
-> +exclude=(--exclude=.git)
-> +# include the tarballs in subprojects/packagecache but not their expansion
-> +for sp in $SUBPROJECTS; do
-> +    if grep -xqF "[wrap-file]" subprojects/$sp.wrap; then
-> +      exclude+=(--exclude=subprojects/"$(subproject_dir $sp)")
-> +    fi
-> +done
-> +tar "${exclude[@]}" -cJf ${destination}.tar.xz ${destination}
->   rm -rf ${destination}
+24.12.2024 22:41, Michael Tokarev wrote:
+> 19.12.2024 13:27, Paolo Bonzini wrote:
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+>> -tar --exclude=.git -cJf ${destination}.tar.xz ${destination}
+>> +
+>> +exclude=(--exclude=.git)
+>> +# include the tarballs in subprojects/packagecache but not their expansion
+>> +for sp in $SUBPROJECTS; do
+>> +    if grep -xqF "[wrap-file]" subprojects/$sp.wrap; then
+>> +      exclude+=(--exclude=subprojects/"$(subproject_dir $sp)")
+>> +    fi
+>> +done
+>> +tar "${exclude[@]}" -cJf ${destination}.tar.xz ${destination}
+>>   rm -rf ${destination}
 
-Nice simple and efficient sed stuff, haven't seen it in a while :)
+Actually there might be a better way here.  How about
+
+  tar --exclude=.git $(sed -n 's|^/|subprojects/|' subprojects/.gitignore)
+
+?
 
 Thanks,
 
