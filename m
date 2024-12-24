@@ -4,98 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CAF2E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 10:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2C3E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 11:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ2Qj-0004FN-HE; Tue, 24 Dec 2024 05:46:25 -0500
+	id 1tQ3YA-0001Xd-4G; Tue, 24 Dec 2024 06:58:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQ2Qh-0004FF-2F
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 05:46:23 -0500
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tQ3Y7-0001RO-Be
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 06:58:07 -0500
+Received: from mout.kundenserver.de ([212.227.126.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQ2Qb-0000s2-HS
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 05:46:22 -0500
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal
- [10.202.2.49])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 60DFE1140093;
- Tue, 24 Dec 2024 05:46:14 -0500 (EST)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-09.internal (MEProxy); Tue, 24 Dec 2024 05:46:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1735037174;
- x=1735123574; bh=m9L63Sc2i1RbqPLuiBlw7xbTb0iF7VJycxo8R7ryaUQ=; b=
- KMFBKf2h7NXngwez4V2DRbGotUsTqBk6/E1Mt+gwXFDn5uaZ1BVYV4WvEHglVG30
- a+2K/mqMo/FrvohjfG1u7C+dAg0LuRxbJSHH8Aj4VUyZgNkIfvirNuT0U784J3Fv
- LLH9K3IDB3cBhW1LDBPs1K3HYNAkrJawPj5yjU30ENvesB6ku0Eae7yXUTtqCjVC
- +l3m+a/3spdOXq6l5PBRnDT3bikpn5sQ8DhiiSHCNhtWrv9LU4j9gaiqvDZwXw2e
- lTblqQb1XABEi1PTxnEwBnhquCQ3/lolog/TQP9INmNi79TDhECtCiCQAlfIukSj
- BUNvrvBkGn6b4k754QNKFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735037174; x=
- 1735123574; bh=m9L63Sc2i1RbqPLuiBlw7xbTb0iF7VJycxo8R7ryaUQ=; b=q
- 1CmL5JVOzeMQRQ6d1O3BBRoOUl4Wzk2BEwiKWxIWoNbrfdHQxzGwCnFfMJ2OwPN9
- 834iyh1Cm95kV/haRP/Mehn6pmoWba50ySSlXWeQrGe00J7z/2lY0LryNyq9kWV2
- oug4Q9UzqhbZK3iS5JWo+V4KVIpMy2u0WxrhOvGyInc4ZmnjjczQkTi2YifEVnkI
- gr13SX0GFPZ0ek3g1UD6SMrI4TP+eFt7uOf8UKS1kj/W/kgv/qPBijuIJlr4Tr0t
- k6IdyOofeRn1db4xmfy9vYCRNGKFSbME/3pfXHxY38MwLp8Mf8rYaeCX3MefQUTL
- CJ7b4QuqtKP30XLlKC9cA==
-X-ME-Sender: <xms:9ZBqZ607GQhF2RNcDwvDcefvEkN-_VS4IpGg15lD4Bjg4q74Nrn3xQ>
- <xme:9ZBqZ9HyzW9q3ROXUWNmqUBoRE8odrKEflWHunfX10l7Y6IDEdq6nv54_j7aOrzZm
- 0Qq5nhfqGVc7gPpi80>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugedgudejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
- necuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfh
- hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepvdeikedvgeejgefhuddtkeff
- keffvedvfeegjeejfefhheevuedvleevffekjedvnecuffhomhgrihhnpegvfhhirdhsuh
- hpphhorhhtpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgr
- rhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
- hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
- rghoshhonhhgsehlohhonhhgshhonhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslh
- hoohhnghhsohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhu
- rdhorhhg
-X-ME-Proxy: <xmx:9ZBqZy6B5LAeC3mo_OxW70hK_IAeHGF0rHAFa8qbd2l5ZJPvHchSsw>
- <xmx:9ZBqZ73ApdzSgCWgc6RtT1JlPMuuuqELlprtKkWJRmWlNudNENSUZg>
- <xmx:9ZBqZ9GiPK7hXw3t83rz-RqcMjSPoW1cLGqPoDm5AOhj1ETUvwp-hw>
- <xmx:9ZBqZ0-1q4HJHgHsUtuRCiJ0Z0oE_oe2S-niqV5gKSW8vgCMJfKdSw>
- <xmx:9pBqZyTZ8DLfaqBPPT4-pYFkOfuIGwwWmaa0QaMEPqgODrlioBpMI2cs>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id B5AD61C20067; Tue, 24 Dec 2024 05:46:13 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tQ3Y5-0001Zm-H8
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 06:58:07 -0500
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue009 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1Mdvyo-1tzfkG0XGY-00d2CF; Tue, 24 Dec 2024 12:57:58 +0100
+Message-ID: <8feb2b30-9b15-4b3c-8517-efedf912745f@vivier.eu>
+Date: Tue, 24 Dec 2024 12:57:57 +0100
 MIME-Version: 1.0
-Date: Tue, 24 Dec 2024 10:45:53 +0000
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Bibo Mao" <maobibo@loongson.cn>, "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Song Gao" <gaosong@loongson.cn>
-Message-Id: <9983380b-598b-4e8b-a690-80ec15dd35c6@app.fastmail.com>
-In-Reply-To: <63150c24-2353-2904-d6d2-39935a40321d@loongson.cn>
-References: <20241223-la-direct-kernel-boot-v1-1-a79995d8b15e@flygoat.com>
- <63150c24-2353-2904-d6d2-39935a40321d@loongson.cn>
-Subject: Re: [PATCH] hw/loongarch/boot: Support Linux raw boot image
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.159;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/6] linux-user: netlink: Add missing IFA_PROTO to
+ host_to_target_data_addr_rtattr()
+To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Cc: deller@gmx.de
+References: <20241218195247.5459-1-deller@kernel.org>
+ <20241218195247.5459-2-deller@kernel.org>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20241218195247.5459-2-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:aCLyfig2OdGcc6LlVOiyacOhrvh8FjU5wz1ORrRwUEJfJDZsaQi
+ 2Zbrnt4+II3pXWQ2as3bDN26J/LngNhevSWvLcWKjs2A9KsN4HDx+Mr/dliDNsZOVyiiypP
+ yLQu63Ds5AM4ifCSpOFs6Ye5nYSx4LQff6aL1yTPVCgoYa7pyEu1blOb6RgzxmR3WwlR4cb
+ Te0rYGrBMoouDoCn2VhHg==
+UI-OutboundReport: notjunk:1;M01:P0:9joAgb7UkHU=;anfUL7L+uMg2P/rJ9DtiyUFN22y
+ akyyKtmSB7p8ZvYdy5Va0uq0HOUGlIAMj/JcUcMYKRJ5M0DovvbBqnaiZ7XiqMXVTBnGm3nP3
+ 1HU7FQATw+Dd0OHgNzgBcR18UhRp0/PkbEo6W/6gER+byEiPTJankFJlRNaplEnlXKFDZ1dr8
+ Wrq9iIExxcWTvC2WX9K9GmJxtmzEzNrPcK5kK/KEWS+E1s1Zjyz/ihIIyj8+h0S2+p2vpJnKV
+ PaxzGG4UHqEISnR0aovFAFc7IM3p4KIiKU5pU+s5j4jynbkGNxzsAtmmzUmRJPoBhL/CkXVsg
+ cCZ6eYVPZElKueeskPSlX6HPBx81UKvjHcuRTw2n3WNzscP5khsPzUWzrESZbOTq1UYqG9G/c
+ OM4g1ztMTUMPUYqQvYzIRPEfoYI6jTyofPPDcqCv7VFZ3DNsl29MQVGoYZtcH21j4hgIm2kuV
+ LCsDWM+XoODEnKEJ4NjGcehZkCIekd70V37yH/W5yEXC4uMirfftIrLJN0PMB9w41w2oocyzz
+ ekKliTop3Zsc28eIXUbUb/bOQ1amkuwDGBxFyXuS54Gr6vTHfzpa0pjjGcNsjJAPyuFzbTHna
+ 11CVj9Kb4itLD6VNqsu/7xdlkXSqbkwLlUL8wUJ6z3AePAZCP6B1mfIIPcNECWHlQsqwcisvL
+ S9YBgpHGYuwAW9YPxE3/2GQ1Ds2dsmora+k83Bq8IqJDC6wHiwz+aNNE58jp0oVRFwiMRMTMH
+ utCwTdgWioAB7/f4fnsuof9Ip6RPri42S/VQO8Br9XYPj1ND6WX4hoW0D8Bj95tWJZUlqwtWk
+ IubMfFL0afd6GztCnq3qJAtOFYZUhkM4jjjDFpK0munGx695lG5bBkTLXedJs2CeZeZ6xbFJZ
+ y8pT8ltXix/LdhjvspDIv03c2STrfyeMjf4ypUpwv5uoI2IIiF6X/xk7yvqtmihWuDtA2IRsd
+ PROzTqbDAHau31Vfv7xTd0P3wgD5PnV/+AF1XioFyYp2CAkG38EEaE9HoBzdsIUeV1VFN2PGz
+ WzM8OxvOmwHuOUEV/rRnHEBoVsHTz421CIy3R59
+Received-SPF: pass client-ip=212.227.126.130; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,118 +123,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Le 18/12/2024 à 20:52, deller@kernel.org a écrit :
+> From: Helge Deller <deller@gmx.de>
+> 
+> Fixes this warning:
+>   Unknown host IFA type: 11
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   linux-user/fd-trans.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+> index c04a97c73a..6191e3115b 100644
+> --- a/linux-user/fd-trans.c
+> +++ b/linux-user/fd-trans.c
+> @@ -1143,6 +1143,7 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
+>           break;
+>       /* string */
+>       case IFA_LABEL:
+> +    case IFA_PROTO:
 
+IFA_PROTO is NLA_U8, it should be with IFA_ADDRESS and IFA_LOCAL, not IFA_LABEL (it is NLA_STRING).
+I agree, it doesn't change anything in the code, but I like to keep same types together.
 
-=E5=9C=A82024=E5=B9=B412=E6=9C=8824=E6=97=A5=E5=8D=81=E4=BA=8C=E6=9C=88 =
-=E4=B8=8A=E5=8D=884:03=EF=BC=8Cbibo mao=E5=86=99=E9=81=93=EF=BC=9A
-> On 2024/12/23 =E4=B8=8A=E5=8D=888:30, Jiaxun Yang wrote:
->> Many distros are shipping raw kernel images (i.e. vmlinux.efi).
->>=20
->> Support booting such image by parsing header as per Linux's
->> specification [1].
->>=20
->> [1]: https://docs.kernel.org/arch/loongarch/booting.html
->>=20
->> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->> ---
->> It is based on my previous booting protocol patch
->> ---
->>   hw/loongarch/boot.c         | 45 ++++++++++++++++++++++++++++++++++=
-+++++++++++
->>   include/hw/loongarch/boot.h | 17 +++++++++++++++++
->>   2 files changed, 62 insertions(+)
->>=20
->> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
->> index 93847b0eaf8e50ce1a990b91267780e6785e1c2f..5bc889c51fafa9c6d3742=
-6b9bee9709c12183927 100644
->> --- a/hw/loongarch/boot.c
->> +++ b/hw/loongarch/boot.c
->> @@ -260,6 +260,43 @@ static uint64_t cpu_loongarch_virt_to_phys(void =
-*opaque, uint64_t addr)
->>       return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
->>   }
->>  =20
->> +static int64_t get_linux_image_info(struct loongarch_boot_info *info,
->> +                                    uint64_t *kernel_entry,
->> +                                    uint64_t *kernel_low,
->> +                                    uint64_t *kernel_high)
->> +{
->> +    int fd;
->> +    struct loongarch_linux_hdr hdr;
->> +    int64_t kernel_size =3D -1;
->> +
->> +    fd =3D open(info->kernel_filename, O_RDONLY | O_BINARY);
->> +    if (fd < 0) {
->> +        return -1;
->> +    }
->> +
->> +    if (read(fd, &hdr, sizeof(hdr)) !=3D sizeof(hdr)) {
->> +        close(fd);
->> +        return -1;
->> +    }
->> +
->> +    if ((le32_to_cpu(hdr.mz_magic) & 0xffff) !=3D MZ_MAGIC ||
->> +        le32_to_cpu(hdr.linux_pe_magic) !=3D LINUX_PE_MAGIC) {
->> +        close(fd);
->> +        return -1;
->> +    }
->> +
->> +    *kernel_entry =3D le64_to_cpu(hdr.kernel_entry);
->> +    /* Early kernel versions may have those fields in virtual addres=
-s */
->> +    *kernel_entry &=3D MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BIT=
-S);
->> +    *kernel_low =3D le64_to_cpu(hdr.load_offset);
->> +    *kernel_low &=3D MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
->> +    kernel_size =3D le64_to_cpu(hdr.kernel_size);
->> +    *kernel_high =3D *kernel_low + kernel_size;
->> +
->> +    close(fd);
->> +    return kernel_size;
->> +}
->> +
->>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
->>   {
->>       uint64_t kernel_entry, kernel_low, kernel_high;
->> @@ -270,6 +307,14 @@ static int64_t load_kernel_info(struct loongarch=
-_boot_info *info)
->>                              &kernel_entry, &kernel_low,
->>                              &kernel_high, NULL, 0,
->>                              EM_LOONGARCH, 1, 0);
->> +    if (kernel_size < 0) {
->> +        kernel_size =3D get_linux_image_info(info, &kernel_entry,
->> +                                           &kernel_low, &kernel_high=
-);
->> +        if (kernel_size >=3D 0) {
->> +            kernel_size =3D load_image_targphys(info->kernel_filenam=
-e,
->> +                                              kernel_low, kernel_siz=
-e);
->> +        }
-> Can we read file header file firstly?
-> If it is ELFMAG, load_elf is called.
->
-> If it is EFI_PE_MSDOS_MAGIC, check zimg magic in linux_efi_zboot_heade=
-r,=20
-> else loongarch_linux_hdr for plain image if zimg does not match.
+>           break;
+>       /* u32 */
+>       case IFA_FLAGS:
 
-I'd say as checking will be done by load_elf, the fallback path makes mo=
-re
-sense here.
+Thanks,
+Laurent
 
-See similar design on Arm's arm_setup_direct_kernel_boot.
-
-But you are right, I should handle vmlinuz.efi with linux_efi_zboot_head=
-er
-as well.
-
->
-> Regards
-> Bibo Mao
->
->> +    }
-[...]
-
---=20
-- Jiaxun
 
