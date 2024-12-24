@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B025BE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD82DE7718E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQBDg-0007VC-HN; Tue, 24 Dec 2024 15:09:33 -0500
+	id 1tQBAx-00049j-G2; Tue, 24 Dec 2024 15:06:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQBDV-0006wf-P7
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:09:21 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tQBAE-0002y4-5h
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:59 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQBDU-0002yS-0R
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:09:21 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2166022c5caso50557955ad.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:09:19 -0800 (PST)
+ id 1tQBAC-0002dP-Lb
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:05:57 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-21680814d42so52215035ad.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:05:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735070959; x=1735675759; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735070755; x=1735675555; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VUIKMuGpZcO333SHRrlgYIo9hY7EVMRSpYe/wTFZLaI=;
- b=xPuf381Psyw8zye033aHwe0G8pGlidd+1CYnlUfFeKJ5v9dCbcndCR56zGjhR2/Sn5
- TZMO5P+0K6Dos+vvCq2NW2KeBMNB0MBUS+lcZ414T7vV9chvxicAVpSNbEAp3v+uJfzX
- Hfo+sJAGTP/ETrH580EepUdXH12dhqXC2//BfOGeVDayCYGd9m4xnrLCjXeISZfnqSvk
- cUQFUMTBCC35yklc0I8Q6gDjk4hxic+vTts4OqiUAUpxVl2Vujq7IgSZTl+CLvvOHkY9
- ydEGDtmTmTBIN4uMi1g2k5YTMp8o+/pGgdtyNzWgBXdVo/jVRzHwZupUWf3FNZpoUywN
- XsQQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JbV7ezqIGFwEAzD5BKNZbxFvhvTByi12RrhcY98hJws=;
+ b=xXLKM4kFYrGX7RiViWCzc9XzH6BfI9I5Ylrn6AicxTBNZaCcSGkYP46lQcDrtG32Yz
+ DH2cUbQPkgXNLSra6hk3feMcx+usx3WHolQvpKOIacr6sPLNTOZt35CsjcbbLcgRxbwP
+ 4leseye2NBacgwfOKzje5DSwwDU8Rghh+uxR+KB2ls6jeJYWwvkZh1tg9yTmEZyMOtLW
+ BB1BSUozwzEy/9ecgixvXiMv+X/mVN4IUT+83ecwu1kWW1MPIx5RNF0uDIz9CnTGyVe5
+ 3okr02jBf0OlKsmVvz3kk7Bpnz57+p2/PlvEXIEYZ+takVJfLzWZB+Tq5vuzxnRGAbVq
+ Ifgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735070959; x=1735675759;
+ d=1e100.net; s=20230601; t=1735070755; x=1735675555;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VUIKMuGpZcO333SHRrlgYIo9hY7EVMRSpYe/wTFZLaI=;
- b=d7ME0vTje7w9X24q0T9Pjlub21Z0Z2Xlsg4NY3IpLIDYLFVOgeYeM6IrHBgY3ZyrAU
- cMFgzMSjMS7pDbbsVp9N96gpfP8G2X4xLL6OvVK2aiK7gU2i0oYnGQiDLHMLBkqIsxKs
- PUur/npfan17Iy46SYfdV40DsXLR/hWf6IdKimOtFUrKp8jCR2nDENGdejcRJdLHlIDy
- fxwhhVEWPAL1NiUdYmZUjk6K2tUdn7ioXhiZBjDTJivTUIq1MK00IHCkIRin2rhqZFDF
- oKmuE414Plu7pK8s0jLLntV42fImewczcWKCSNfVplwWPkLYfsKetvGSKOSqtH0j0tLf
- ryCA==
-X-Gm-Message-State: AOJu0YxVMWHk98NH8pCZi6kMZQWHSU4PIf1dEZ35iL2B9jBEPR/CVukT
- uBlfB2J5UnPaK9jS0QeI5YveQe3hTSMiLLfeCEK2cuaVoz0UI67IUNqTzSKrMIQK94Wp4dyqo7P
- Rctk=
-X-Gm-Gg: ASbGncsjSRaUmmf7W4NvIAxXBThw2xxtYQ51trvFq+r7Rg+pNQ9dyKuMM9tM9spSg2D
- IXT1W7UAARoXqveSRUxCOdMGAHDenB591ZwY4OPjIU1VsYPy54Sttian1DOzcoZHFBXjQNmcr+a
- LbYyzeQ0D6/mz+1PqqaGsIkPzi9mFokkQt50/dX4/l9XYif/5U5VK56UgunNdBa58y1txMB4c+G
- iuLqE810Aoq4OHoTaSYdVd9ayoXhs+GboKWRL1olZyrQdcTKaNJxz44X7cB25lGiN78kn9NjHnM
- cf8Y6P2k2/kv9bAcnkCJiCHT/g==
-X-Google-Smtp-Source: AGHT+IHosgTQiG47smae7drmSIgIpOP8jmI73YBiq/FH0psrJHepFqx9R7C5KTaQsZNz/9yarPl4FQ==
-X-Received: by 2002:a05:6a00:918a:b0:725:322a:922c with SMTP id
- d2e1a72fcca58-72abdd20f53mr24150743b3a.3.1735070958732; 
- Tue, 24 Dec 2024 12:09:18 -0800 (PST)
+ bh=JbV7ezqIGFwEAzD5BKNZbxFvhvTByi12RrhcY98hJws=;
+ b=IHS6eSk/IxSYs0vImqaNGDzy/TCvLvHIL7OiWdMAlHt9A0A3/3MUsSYuwvWDHWDU5T
+ An9tdViURx/KuvhyIoRLtJ4QLqjykCXeVA2RV4MttZMHTZ6hVghrbt3mz3IF+JFoIow6
+ w8lagvSaS4EX1676P8E6wIC622QzvpF3+YXs403A9KCMkNKz30KXGz9M2NzsMuuDVhaC
+ /ReQxCl6z9G8U7YQPrDgOQW3S8izDz5MSHR9JgTXZm76MAjYbWCDq8GnDnRkY0U1TBuJ
+ zpDubeXDv3zsGRGA98c50lxi74Dl6L5Ljc0NRUTYvvZtUlnB9cMGv+egF++MMMG5/win
+ WbHw==
+X-Gm-Message-State: AOJu0YzNInejlDakDVC0L2j1s8Pp5zXqs+TncWVlEtLRGp4ReBcNqABi
+ QQEuoZ/2zU9dLhmzA/tL/G1FODVHw89vNNcuTVjhBgmyraZJCpipDEtRiDN3fIvbHXx59RcaC/z
+ MY0o=
+X-Gm-Gg: ASbGncvG4BT8g/1GLv0ov3r6bDQvSTR2J/Pw/dgD/Rhf4kJbW3AQEx8qCcr6syBQYBB
+ D6n3DelXK5g3lKqO+po44PFrb0d6d98xHaEcfB1vJruNeSSgd5sIE81krZyskbLCbAbxviwatxX
+ 6evy/cSKzzcuu26rWG1h4uUZCe4sXcyxoQu+8uGCZTwkWZxMnLWIAf5Yx897t1mzLNwmuvoRem9
+ DyphBANeX/jhWhAl0YcjGPE2fGV/lKTIvaQ1V+Nv/0zRuG80eqk3BsrkWAg7XCc7l5KoVVNF5ob
+ R13vWhbDdX+dcsq66/KhXDafDA==
+X-Google-Smtp-Source: AGHT+IFZ8gM0uXHoR2APVEDoOHqfSyNnge6oyo+GEbhHN2FXdD/iPsEv5n1FX78gERtM/x0dmXfBXw==
+X-Received: by 2002:a05:6a20:1588:b0:1e1:e2d9:307 with SMTP id
+ adf61e73a8af0-1e5e0802532mr22399254637.33.1735070755101; 
+ Tue, 24 Dec 2024 12:05:55 -0800 (PST)
 Received: from stoup.. (syn-156-019-246-023.biz.spectrum.com. [156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8309acsm10033521b3a.45.2024.12.24.12.09.18
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-72aad8fb895sm10027159b3a.162.2024.12.24.12.05.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 12:09:18 -0800 (PST)
+ Tue, 24 Dec 2024 12:05:54 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 59/72] softfloat: Add float_round_nearest_even_max
-Date: Tue, 24 Dec 2024 12:05:08 -0800
-Message-ID: <20241224200521.310066-60-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 35/72] tcg/optimize: Use finish_folding in fold_remainder
+Date: Tue, 24 Dec 2024 12:04:44 -0800
+Message-ID: <20241224200521.310066-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241224200521.310066-1-richard.henderson@linaro.org>
 References: <20241224200521.310066-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,41 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This rounding mode is used by Hexagon.
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-types.h | 2 ++
- fpu/softfloat-parts.c.inc     | 3 +++
- 2 files changed, 5 insertions(+)
+ tcg/optimize.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index 79ca44dcc3..9d37cdfaa8 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -140,6 +140,8 @@ typedef enum __attribute__((__packed__)) {
-     float_round_to_odd       = 5,
-     /* Not an IEEE rounding mode: round to closest odd, overflow to inf */
-     float_round_to_odd_inf   = 6,
-+    /* Not an IEEE rounding mode: round to nearest even, overflow to max */
-+    float_round_nearest_even_max = 7,
- } FloatRoundMode;
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 07792c5351..e78f5a79a3 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2152,7 +2152,7 @@ static bool fold_remainder(OptContext *ctx, TCGOp *op)
+         fold_xx_to_i(ctx, op, 0)) {
+         return true;
+     }
+-    return false;
++    return finish_folding(ctx, op);
+ }
  
- /*
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index a724f317c5..37d046cfe9 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -241,6 +241,9 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-     int exp, flags = 0;
- 
-     switch (s->float_rounding_mode) {
-+    case float_round_nearest_even_max:
-+        overflow_norm = true;
-+        /* fall through */
-     case float_round_nearest_even:
-         if (N > 64 && frac_lsb == 0) {
-             inc = ((p->frac_hi & 1) || (p->frac_lo & round_mask) != frac_lsbm1
+ static bool fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
 -- 
 2.43.0
 
