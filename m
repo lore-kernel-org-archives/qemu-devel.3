@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B785BE7718D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30825E7718D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7b6-00039t-Fr; Tue, 24 Dec 2024 11:17:28 -0500
+	id 1tQ7bV-0003Sr-Jb; Tue, 24 Dec 2024 11:17:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7b1-00033l-Mk
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:24 -0500
+ id 1tQ7b7-0003DI-W4
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:30 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tQ7ax-00039y-DO
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:23 -0500
+ id 1tQ7b6-0003Dy-CZ
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:17:29 -0500
 Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfcQR003865;
- Tue, 24 Dec 2024 16:17:15 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BOEfabe003831;
+ Tue, 24 Dec 2024 16:17:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=oRA6fACs8CcT0CTZoVD6CWmXpG7JlDQ0fXRuPhH0mXA=; b=
- f7XqKZ3ayyDS5E6KD09XcSkFVT3cWsA1fE35XspufOkFuIsf4vxfRyukGo3Q18J8
- rFaMKU8IrCSs0HhpHBEHB2xRCOhyFCt9ZSiF1K9r0pzsMmawpdVLd0ksLzrMyRLw
- aQK1jPcCLbeimzdZK+bDRzkO/bBWdtMXyqnyjBDSaK0cO84wis6+J0eF4dcNLEPH
- 3aq87MiD/RwVXe2dhpEWUEY18ey+iaiaodw3tpMiC+xPO997KFwhrCHh2wDWzhzM
- PuMPxJNWYfCX4sJHYH4NjwwfvQx8SdWXlv/rhKzXqoK/QgqaShsG7SpPwqJuUaBw
- Ia2v1d7AIyjusOze5febMw==
+ corp-2023-11-20; bh=pdWx7H/17ATBvFu+JQKPrEiDe4qDsmeSn/q16+5CRsE=; b=
+ isIw7tcZTqkKUFy985LLDNjnIa70iyBsz5pqCpJYCO34BnYtM+zr99a7ttOFNfSS
+ w39TmkXWaC+ZrUvpXvNyNa+F0ckn/hiBtCH/BY1IoKMMvoXNaaWPsK+71JdVkHwx
+ fBFAlRkdM1UQixevOttwLtCn2JeNyiRveJwmqZ0CES6c/sWt+yvOqho4kL7iVQea
+ SD6/ckdhSwj83stVQNeDQjZI9apqbQ44gl0xtt6C1cwivS/w8J2cIkkqxebshgfR
+ 9E+SotdkZA+8muKu5c+glv8HBlhOfttg8hhmMEPusQBsPHUI8EW9uq3yudzl/5xi
+ ZExTH7U/lRzhbjp/2gGubQ==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nqd5mg01-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43nqd5mg0a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:15 +0000 (GMT)
+ Tue, 24 Dec 2024 16:17:24 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BOF5IFg023371; Tue, 24 Dec 2024 16:17:14 GMT
+ with ESMTP id 4BOExGBF022541; Tue, 24 Dec 2024 16:17:24 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43nm484gjn-1
+ 43nm484gpa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Dec 2024 16:17:13 +0000
+ Tue, 24 Dec 2024 16:17:24 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9XS021973;
- Tue, 24 Dec 2024 16:17:13 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4BOGH9Xw021973;
+ Tue, 24 Dec 2024 16:17:23 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 43nm484ggj-7; Tue, 24 Dec 2024 16:17:13 +0000
+ ESMTP id 43nm484ggj-22; Tue, 24 Dec 2024 16:17:23 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 06/23] migration: cpr-state
-Date: Tue, 24 Dec 2024 08:16:51 -0800
-Message-Id: <1735057028-308595-7-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 21/23] tests/qtest: assert qmp_ready
+Date: Tue, 24 Dec 2024 08:17:06 -0800
+Message-Id: <1735057028-308595-22-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2412240141
-X-Proofpoint-GUID: _J4B2Njt4DKoULRtZjCPCct8gGMALKKv
-X-Proofpoint-ORIG-GUID: _J4B2Njt4DKoULRtZjCPCct8gGMALKKv
+X-Proofpoint-GUID: t-t4ifoidho_V12xpnh87Is746fNlugY
+X-Proofpoint-ORIG-GUID: t-t4ifoidho_V12xpnh87Is746fNlugY
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -105,308 +105,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPR must save state that is needed after QEMU is restarted, when devices
-are realized.  Thus the extra state cannot be saved in the migration
-channel, as objects must already exist before that channel can be loaded.
-Instead, define auxilliary state structures and vmstate descriptions, not
-associated with any registered object, and serialize the aux state to a
-cpr-specific channel in cpr_state_save.  Deserialize in cpr_state_load
-after QEMU restarts, before devices are realized.
+Set qmp_ready when the handshake is complete, and assert it when we
+communicate with the monitor.
 
-Provide accessors for clients to register file descriptors for saving.
-The mechanism for passing the fd's to the new process will be specific
-to each migration mode, and added in subsequent patches.
-
+Suggested-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/cpr.h |  25 ++++++
- migration/cpr.c         | 198 ++++++++++++++++++++++++++++++++++++++++++++++++
- migration/meson.build   |   1 +
- migration/migration.c   |   1 +
- migration/trace-events  |   7 ++
- 5 files changed, 232 insertions(+)
- create mode 100644 include/migration/cpr.h
- create mode 100644 migration/cpr.c
+ tests/qtest/libqtest.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-new file mode 100644
-index 0000000..d9364f7
---- /dev/null
-+++ b/include/migration/cpr.h
-@@ -0,0 +1,25 @@
-+/*
-+ * Copyright (c) 2021, 2024 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef MIGRATION_CPR_H
-+#define MIGRATION_CPR_H
-+
-+#include "qapi/qapi-types-migration.h"
-+
-+#define QEMU_CPR_FILE_MAGIC     0x51435052
-+#define QEMU_CPR_FILE_VERSION   0x00000001
-+
-+void cpr_save_fd(const char *name, int id, int fd);
-+void cpr_delete_fd(const char *name, int id);
-+int cpr_find_fd(const char *name, int id);
-+
-+int cpr_state_save(MigrationChannel *channel, Error **errp);
-+int cpr_state_load(MigrationChannel *channel, Error **errp);
-+void cpr_state_close(void);
-+struct QIOChannel *cpr_state_ioc(void);
-+
-+#endif
-diff --git a/migration/cpr.c b/migration/cpr.c
-new file mode 100644
-index 0000000..87bcfdb
---- /dev/null
-+++ b/migration/cpr.c
-@@ -0,0 +1,198 @@
-+/*
-+ * Copyright (c) 2021-2024 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "migration/cpr.h"
-+#include "migration/misc.h"
-+#include "migration/options.h"
-+#include "migration/qemu-file.h"
-+#include "migration/savevm.h"
-+#include "migration/vmstate.h"
-+#include "system/runstate.h"
-+#include "trace.h"
-+
-+/*************************************************************************/
-+/* cpr state container for all information to be saved. */
-+
-+typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
-+
-+typedef struct CprState {
-+    CprFdList fds;
-+} CprState;
-+
-+static CprState cpr_state;
-+
-+/****************************************************************************/
-+
-+typedef struct CprFd {
-+    char *name;
-+    unsigned int namelen;
-+    int id;
-+    int fd;
-+    QLIST_ENTRY(CprFd) next;
-+} CprFd;
-+
-+static const VMStateDescription vmstate_cpr_fd = {
-+    .name = "cpr fd",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32(namelen, CprFd),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
-+        VMSTATE_INT32(id, CprFd),
-+        VMSTATE_INT32(fd, CprFd),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+void cpr_save_fd(const char *name, int id, int fd)
-+{
-+    CprFd *elem = g_new0(CprFd, 1);
-+
-+    trace_cpr_save_fd(name, id, fd);
-+    elem->name = g_strdup(name);
-+    elem->namelen = strlen(name) + 1;
-+    elem->id = id;
-+    elem->fd = fd;
-+    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
-+}
-+
-+static CprFd *find_fd(CprFdList *head, const char *name, int id)
-+{
-+    CprFd *elem;
-+
-+    QLIST_FOREACH(elem, head, next) {
-+        if (!strcmp(elem->name, name) && elem->id == id) {
-+            return elem;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+void cpr_delete_fd(const char *name, int id)
-+{
-+    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+
-+    if (elem) {
-+        QLIST_REMOVE(elem, next);
-+        g_free(elem->name);
-+        g_free(elem);
-+    }
-+
-+    trace_cpr_delete_fd(name, id);
-+}
-+
-+int cpr_find_fd(const char *name, int id)
-+{
-+    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    int fd = elem ? elem->fd : -1;
-+
-+    trace_cpr_find_fd(name, id, fd);
-+    return fd;
-+}
-+/*************************************************************************/
-+#define CPR_STATE "CprState"
-+
-+static const VMStateDescription vmstate_cpr_state = {
-+    .name = CPR_STATE,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+/*************************************************************************/
-+
-+static QEMUFile *cpr_state_file;
-+
-+QIOChannel *cpr_state_ioc(void)
-+{
-+    return qemu_file_get_ioc(cpr_state_file);
-+}
-+
-+int cpr_state_save(MigrationChannel *channel, Error **errp)
-+{
-+    int ret;
-+    QEMUFile *f;
-+    MigMode mode = migrate_mode();
-+
-+    trace_cpr_state_save(MigMode_str(mode));
-+
-+    /* set f based on mode in a later patch in this series */
-+    return 0;
-+
-+    qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
-+    qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
-+
-+    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0);
-+    if (ret) {
-+        error_setg(errp, "vmstate_save_state error %d", ret);
-+        qemu_fclose(f);
-+        return ret;
-+    }
-+
-+    /*
-+     * Close the socket only partially so we can later detect when the other
-+     * end closes by getting a HUP event.
-+     */
-+    qemu_fflush(f);
-+    qio_channel_shutdown(qemu_file_get_ioc(f), QIO_CHANNEL_SHUTDOWN_WRITE,
-+                         NULL);
-+    cpr_state_file = f;
-+    return 0;
-+}
-+
-+int cpr_state_load(MigrationChannel *channel, Error **errp)
-+{
-+    int ret;
-+    uint32_t v;
-+    QEMUFile *f;
-+    MigMode mode = 0;
-+
-+    /* set f and mode based on other parameters later in this patch series */
-+    return 0;
-+
-+    trace_cpr_state_load(MigMode_str(mode));
-+
-+    v = qemu_get_be32(f);
-+    if (v != QEMU_CPR_FILE_MAGIC) {
-+        error_setg(errp, "Not a migration stream (bad magic %x)", v);
-+        qemu_fclose(f);
-+        return -EINVAL;
-+    }
-+    v = qemu_get_be32(f);
-+    if (v != QEMU_CPR_FILE_VERSION) {
-+        error_setg(errp, "Unsupported migration stream version %d", v);
-+        qemu_fclose(f);
-+        return -ENOTSUP;
-+    }
-+
-+    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1);
-+    if (ret) {
-+        error_setg(errp, "vmstate_load_state error %d", ret);
-+        qemu_fclose(f);
-+        return ret;
-+    }
-+
-+    /*
-+     * Let the caller decide when to close the socket (and generate a HUP event
-+     * for the sending side).
-+     */
-+    cpr_state_file = f;
-+
-+    return ret;
-+}
-+
-+void cpr_state_close(void)
-+{
-+    if (cpr_state_file) {
-+        qemu_fclose(cpr_state_file);
-+        cpr_state_file = NULL;
-+    }
-+}
-diff --git a/migration/meson.build b/migration/meson.build
-index d53cf34..039f0f9 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -13,6 +13,7 @@ system_ss.add(files(
-   'block-dirty-bitmap.c',
-   'channel.c',
-   'channel-block.c',
-+  'cpr.c',
-   'cpu-throttle.c',
-   'dirtyrate.c',
-   'exec.c',
-diff --git a/migration/migration.c b/migration/migration.c
-index 056a90d..218239c 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -27,6 +27,7 @@
- #include "system/cpu-throttle.h"
- #include "rdma.h"
- #include "ram.h"
-+#include "migration/cpr.h"
- #include "migration/global_state.h"
- #include "migration/misc.h"
- #include "migration.h"
-diff --git a/migration/trace-events b/migration/trace-events
-index bb0e0cc..89c0244 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -342,6 +342,13 @@ colo_receive_message(const char *msg) "Receive '%s' message"
- # colo-failover.c
- colo_failover_set_state(const char *new_state) "new state %s"
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 2f44d3c..43ee92f 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -77,6 +77,7 @@ struct QTestState
+     int qmp_fd;
+     int sock;
+     int qmpsock;
++    bool qmp_ready;
+     pid_t qemu_pid;  /* our child QEMU process */
+     int wstatus;
+ #ifdef _WIN32
+@@ -552,14 +553,23 @@ void qtest_connect(QTestState *s)
  
-+# cpr.c
-+cpr_save_fd(const char *name, int id, int fd) "%s, id %d, fd %d"
-+cpr_delete_fd(const char *name, int id) "%s, id %d"
-+cpr_find_fd(const char *name, int id, int fd) "%s, id %d returns %d"
-+cpr_state_save(const char *mode) "%s mode"
-+cpr_state_load(const char *mode) "%s mode"
+ QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
+ {
+-    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, true);
++    QTestState *s = qtest_init_internal(qtest_qemu_binary(NULL), extra_args,
++                                        true);
 +
- # block-dirty-bitmap.c
- send_bitmap_header_enter(void) ""
- send_bitmap_bits(uint32_t flags, uint64_t start_sector, uint32_t nr_sectors, uint64_t data_size) "flags: 0x%x, start_sector: %" PRIu64 ", nr_sectors: %" PRIu32 ", data_size: %" PRIu64
++    /* Not really ready, but callers need it to test handshakes */
++    s->qmp_ready = true;
++    return s;
+ }
+ 
+ void qtest_qmp_handshake(QTestState *s)
+ {
++    g_autoptr(QDict) greeting = NULL;
++
++    /* Set ready first because functions called below assert it */
++    s->qmp_ready = true;
++
+     /* Read the QMP greeting and then do the handshake */
+-    QDict *greeting = qtest_qmp_receive(s);
+-    qobject_unref(greeting);
++    greeting = qtest_qmp_receive(s);
+     qobject_unref(qtest_qmp(s, "{ 'execute': 'qmp_capabilities' }"));
+ }
+ 
+@@ -786,6 +796,7 @@ QDict *qtest_qmp_receive(QTestState *s)
+ 
+ QDict *qtest_qmp_receive_dict(QTestState *s)
+ {
++    g_assert(s->qmp_ready);
+     return qmp_fd_receive(s->qmp_fd);
+ }
+ 
+@@ -813,12 +824,14 @@ int qtest_socket_server(const char *socket_path)
+ void qtest_qmp_vsend_fds(QTestState *s, int *fds, size_t fds_num,
+                          const char *fmt, va_list ap)
+ {
++    g_assert(s->qmp_ready);
+     qmp_fd_vsend_fds(s->qmp_fd, fds, fds_num, fmt, ap);
+ }
+ #endif
+ 
+ void qtest_qmp_vsend(QTestState *s, const char *fmt, va_list ap)
+ {
++    g_assert(s->qmp_ready);
+     qmp_fd_vsend(s->qmp_fd, fmt, ap);
+ }
+ 
+@@ -879,6 +892,7 @@ void qtest_qmp_send_raw(QTestState *s, const char *fmt, ...)
+ {
+     va_list ap;
+ 
++    g_assert(s->qmp_ready);
+     va_start(ap, fmt);
+     qmp_fd_vsend_raw(s->qmp_fd, fmt, ap);
+     va_end(ap);
 -- 
 1.8.3.1
 
