@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D71E77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D7F1E7718D
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 20:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQBE1-00025n-V5; Tue, 24 Dec 2024 15:09:54 -0500
+	id 1tQBDd-0007N9-Ay; Tue, 24 Dec 2024 15:09:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQBDO-00068D-EL
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:09:14 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tQBDU-0006og-OW
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:09:21 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQBDM-0002wl-Pu
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:09:14 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so64890985ad.0
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:09:12 -0800 (PST)
+ id 1tQBDS-0002y6-Kg
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 15:09:20 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2efb17478adso5478455a91.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 12:09:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735070951; x=1735675751; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735070957; x=1735675757; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+fPgLDQ23uWllVbCL/m78hDFOj9j1qZde0rBMxog4xg=;
- b=eVZOz8ayP3P+S9SGhNNn3g92F7bj3Awi/rm6h3036jvWdl5UBZ4hes7bQ/gZdBNopN
- 4kxnl41VbW3mDn29LF4nOHe8qeft6d/HAzkfq97gZGq8yK6x7WNQhC1uzPZ3L+VqUYYC
- zOSiYe3VqZVopViJKzhdEo0NQaMdHJuXKpZ66+BlmYsy7QiJMeHBNyHvredF5BBgQnol
- q7i0Suk2qVK2Et9MNJjS5FPU4zvgJ1EDOFm0vTz4Pq9Ky24A7r7UnMKt1jbqxFUWBmNn
- OcP3x03Ca2Qw7eEvVxN+jbrO33/bSacyB2n1XVFK7zMcx/QFzD8tRjDAFAnjaByrJQPR
- 1MAg==
+ bh=1WWVUuFJ12NWX3hZBTm/nR+nuzYhMWj/gdswxVh+HzA=;
+ b=nRW6mibawrPYbgl5GP5Q4Bd0hil2z3UINtVaPUbH1lMVTimLBXKivYIvbPE/xtvfkz
+ AD4QJQg38I2Yt1EWQnNrQI6pNrByW4yuKGcwzRKmld0QubLTjUyMWn7PwmwRIRFUZ2JE
+ 3Cbz+fjf3/1Ss5K4RpEyTOlf0UTICCzuhpXQR6np7HiVnymbaeEaz29vHRgO5MsjPDoV
+ egFML7YtwVJA6DLilV/sjd7xHZvBchOkDvcuvVnoTnCWHiku1sZnGLOsK7WBOW5sHzzX
+ 5bAFzKY+tiUThFyX3yzNpADfPrDwpNthz3s2xm1FeDTRFvgjUGyU8TcHEPTB4NbT8krb
+ 1y8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735070951; x=1735675751;
+ d=1e100.net; s=20230601; t=1735070957; x=1735675757;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+fPgLDQ23uWllVbCL/m78hDFOj9j1qZde0rBMxog4xg=;
- b=td7vfqMZmydzk4GyatNpljtMiNtRIW/4n4/lPnjIJqYCPqUWFtHge+QuhXgDrmNCHb
- K6t1RTU5B31SF4TsAwHwXrj17jVVAapuWv81mJoxQhFLWmxr4OjYgPms3pV/nMk7kbYE
- s2uBeEPKqls+EFt+ubUGKnIQnA4SkSiLb4QoumgGhqZFrrT8rzxooudn3RA/ypatO7Vi
- 9i0bji50Y2Cmkg0/XRyx8t2+kBvxQAg+K/giRXr+ZFduF87xz1liCtj82yFQAwImawEp
- LuZ11viiubDiJ0gu1rPnZR1lmVuIYp7xU+PsVuxIzxxfPP2YRjLZmDZ47b5O3hGU9PHN
- iSYA==
-X-Gm-Message-State: AOJu0Yx8SqcqmnML3950GiOWyiyh8AYewjZzjWtiYxhwfBUYTkegLrqU
- Ub63Lc4PdQGuMYPVPZVBe+pXrlbMJoORt9n5lGEsgJ8Sx7jINPgcTeDC4TXpzdPFz99HgSWXNuC
- HsmU=
-X-Gm-Gg: ASbGncsy6ACh9u3Y4p6E02CgkYujc5obh3SjAoJOA+0Kv1ZY7MXGFnEcoAi3ZAQAnSr
- BfMjDn1nmEeZq1JJzyX6jsYHMBQKtl9AAAVdLb+ZODtCST9DAR+yospgsr83z+pwPTUIyuc1B50
- qEgaQBDpaTPeIhcASm8MuiZXZUnuxQ2DG3BceaYbWwmBBJV0ER6PuQUIwIUKCeTlKg0cxtyknPZ
- JEbnK/FxCLmkjUOMVXG3SAy73jjSvjc/k+5gLvzCnN9qm+oedsMwRbtCtn1GrJ3kGNSqbuEUkGC
- rj5gCSjKzyUN9xAKDBQlp/c0iQ==
-X-Google-Smtp-Source: AGHT+IE4I3sn2Kd1wD+ddDkwyR4BSrFAoepUNxkv6NRJancqTj3y4x152NzQONxzUBXKrAsO298rhg==
-X-Received: by 2002:aa7:88cc:0:b0:72a:a9d9:55ff with SMTP id
- d2e1a72fcca58-72abdb0170bmr25230924b3a.0.1735070951532; 
- Tue, 24 Dec 2024 12:09:11 -0800 (PST)
+ bh=1WWVUuFJ12NWX3hZBTm/nR+nuzYhMWj/gdswxVh+HzA=;
+ b=TYsKCtk6Qq9HW+Elu5pgAJRTP9jrF/aaDukuuFBWvk4Bs9wfKVKhMl2Aj25NckLCMo
+ P68u9WtDAWRYb+p2kSkR7eZnw9aU1hQJ/sCTB7YqHsOtM1SpUMqzDFFH7atQ4M881XCK
+ mIScbUpbpViwF8Fcmyrje/sOzN6qFN0RF5JA1McNCxz5kJ3xCeXEl6Oio4ztvjEQTGip
+ dxfTBB33lDEy2g+8GWHOYOSklVo5yd7IhLloqhc+ke1duSpbrZNrwkrFcZibpbQ1rRAg
+ xduw3IhHGR1dibRzvP1NeXsmtALxTzGKuyuk17p53kBAGmjOH94V8xVmqgtSJc8xjrRX
+ 13PQ==
+X-Gm-Message-State: AOJu0Yyu1P/TtwhKbrmHkxZNPyidZHNMaE4m2bePmwhQuXPGG2hloZ60
+ nHFcciXwN4rFeHrHmAc3J4l64kZwFIY2Tv3BnRY5loWm8Jwtxa+AKXi9Yi+fN1n3h8rrHXj9CxM
+ A+Ug=
+X-Gm-Gg: ASbGnct7UZD4np8dSBu0HZKXxOdTNtYvbvJH0kkuU2tedFy3j0Ot030Gk9VwNalf2s3
+ u/tDayR2KzRWRG0VsY9TiJ08SdK+dYQ2bkZP2YCWDEtNMSywIGuN5FV4ZzJHfpjaSVHhwJyWV9c
+ LQcYYNr2edHzmjk8+DQh/YrKvknpC69wNzIPRqhJy3UTVvuM1L0K/ySsUxL0YJUB4ytzaTvpj08
+ rGc86kFE0h60b76+QH7+AzSktZKY3cJJ1tFQ8JNOnjV4d8HBtkItvzfsVkbw5Xtk9Jp4PEuBKu8
+ ci6JaQ6UxAG2EvWhcuWx5XfPzg==
+X-Google-Smtp-Source: AGHT+IGfx+7TMDPx5mydqtgWJjVpEb5zqmuUKVyvm6Gy5oCxPlE89VoTN3lEm/ZgVooGalHoO/PFgw==
+X-Received: by 2002:a05:6a00:1944:b0:71d:f4ef:6b3a with SMTP id
+ d2e1a72fcca58-72abdeb6e80mr26145144b3a.21.1735070957102; 
+ Tue, 24 Dec 2024 12:09:17 -0800 (PST)
 Received: from stoup.. (syn-156-019-246-023.biz.spectrum.com. [156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8309acsm10033521b3a.45.2024.12.24.12.09.10
+ d2e1a72fcca58-72aad8309acsm10033521b3a.45.2024.12.24.12.09.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Dec 2024 12:09:11 -0800 (PST)
+ Tue, 24 Dec 2024 12:09:16 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 51/72] tcg/optimize: Remove z_mask, s_mask from OptContext
-Date: Tue, 24 Dec 2024 12:05:00 -0800
-Message-ID: <20241224200521.310066-52-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 57/72] target/sparc: Use float*_muladd_scalbn
+Date: Tue, 24 Dec 2024 12:05:06 -0800
+Message-ID: <20241224200521.310066-58-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241224200521.310066-1-richard.henderson@linaro.org>
 References: <20241224200521.310066-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,52 +100,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All mask setting is now done with parameters via fold_masks_*.
+Use the scalbn interface instead of float_muladd_halve_result.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ target/sparc/helper.h     |  4 +-
+ target/sparc/fop_helper.c |  8 ++--
+ target/sparc/translate.c  | 80 +++++++++++++++++++++++----------------
+ 3 files changed, 54 insertions(+), 38 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 51cfcb15d2..98b41975af 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -64,8 +64,6 @@ typedef struct OptContext {
-     QSIMPLEQ_HEAD(, MemCopyInfo) mem_free;
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 1ae3f0c467..3a7f7dc129 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -59,7 +59,7 @@ DEF_HELPER_FLAGS_3(faddd, TCG_CALL_NO_WG, f64, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fsubd, TCG_CALL_NO_WG, f64, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fmuld, TCG_CALL_NO_WG, f64, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fdivd, TCG_CALL_NO_WG, f64, env, f64, f64)
+-DEF_HELPER_FLAGS_5(fmaddd, TCG_CALL_NO_WG, f64, env, f64, f64, f64, i32)
++DEF_HELPER_FLAGS_6(fmaddd, TCG_CALL_NO_WG, f64, env, f64, f64, f64, s32, i32)
+ DEF_HELPER_FLAGS_3(fnaddd, TCG_CALL_NO_WG, f64, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fnmuld, TCG_CALL_NO_WG, f64, env, f64, f64)
  
-     /* In flight values from optimization. */
--    uint64_t z_mask;  /* mask bit is 0 iff value bit is 0 */
--    uint64_t s_mask;  /* mask bit is 1 if value bit matches msb */
-     TCGType type;
- } OptContext;
+@@ -72,7 +72,7 @@ DEF_HELPER_FLAGS_3(fadds, TCG_CALL_NO_WG, f32, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fsubs, TCG_CALL_NO_WG, f32, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fmuls, TCG_CALL_NO_WG, f32, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fdivs, TCG_CALL_NO_WG, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_5(fmadds, TCG_CALL_NO_WG, f32, env, f32, f32, f32, i32)
++DEF_HELPER_FLAGS_6(fmadds, TCG_CALL_NO_WG, f32, env, f32, f32, f32, s32, i32)
+ DEF_HELPER_FLAGS_3(fnadds, TCG_CALL_NO_WG, f32, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fnmuls, TCG_CALL_NO_WG, f32, env, f32, f32)
  
-@@ -961,13 +959,6 @@ static bool finish_folding(OptContext *ctx, TCGOp *op)
-     for (i = 0; i < nb_oargs; i++) {
-         TCGTemp *ts = arg_temp(op->args[i]);
-         reset_ts(ctx, ts);
--        /*
--         * Save the corresponding known-zero/sign bits mask for the
--         * first output argument (only one supported so far).
--         */
--        if (i == 0) {
--            ts_info(ts)->z_mask = ctx->z_mask;
--        }
-     }
-     return true;
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index 236d27b19c..c25097d07f 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -344,17 +344,17 @@ Int128 helper_fsqrtq(CPUSPARCState *env, Int128 src)
  }
-@@ -2879,10 +2870,6 @@ void tcg_optimize(TCGContext *s)
-             ctx.type = TCG_TYPE_I32;
-         }
  
--        /* Assume all bits affected, no bits known zero, no sign reps. */
--        ctx.z_mask = -1;
--        ctx.s_mask = 0;
--
-         /*
-          * Process each opcode.
-          * Sorted alphabetically by opcode as much as possible.
+ float32 helper_fmadds(CPUSPARCState *env, float32 s1,
+-                      float32 s2, float32 s3, uint32_t op)
++                      float32 s2, float32 s3, int32_t sc, uint32_t op)
+ {
+-    float32 ret = float32_muladd(s1, s2, s3, op, &env->fp_status);
++    float32 ret = float32_muladd_scalbn(s1, s2, s3, sc, op, &env->fp_status);
+     check_ieee_exceptions(env, GETPC());
+     return ret;
+ }
+ 
+ float64 helper_fmaddd(CPUSPARCState *env, float64 s1,
+-                      float64 s2, float64 s3, uint32_t op)
++                      float64 s2, float64 s3, int32_t sc, uint32_t op)
+ {
+-    float64 ret = float64_muladd(s1, s2, s3, op, &env->fp_status);
++    float64 ret = float64_muladd_scalbn(s1, s2, s3, sc, op, &env->fp_status);
+     check_ieee_exceptions(env, GETPC());
+     return ret;
+ }
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 9be26c804e..465e20f4f3 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -1359,93 +1359,109 @@ static void gen_op_fabsq(TCGv_i128 dst, TCGv_i128 src)
+ 
+ static void gen_op_fmadds(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2, TCGv_i32 s3)
+ {
+-    gen_helper_fmadds(d, tcg_env, s1, s2, s3, tcg_constant_i32(0));
++    TCGv_i32 z = tcg_constant_i32(0);
++    gen_helper_fmadds(d, tcg_env, s1, s2, s3, z, z);
+ }
+ 
+ static void gen_op_fmaddd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2, TCGv_i64 s3)
+ {
+-    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, tcg_constant_i32(0));
++    TCGv_i32 z = tcg_constant_i32(0);
++    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, z, z);
+ }
+ 
+ static void gen_op_fmsubs(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2, TCGv_i32 s3)
+ {
+-    int op = float_muladd_negate_c;
+-    gen_helper_fmadds(d, tcg_env, s1, s2, s3, tcg_constant_i32(op));
++    TCGv_i32 z = tcg_constant_i32(0);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_c);
++    gen_helper_fmadds(d, tcg_env, s1, s2, s3, z, op);
+ }
+ 
+ static void gen_op_fmsubd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2, TCGv_i64 s3)
+ {
+-    int op = float_muladd_negate_c;
+-    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, tcg_constant_i32(op));
++    TCGv_i32 z = tcg_constant_i32(0);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_c);
++    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, z, op);
+ }
+ 
+ static void gen_op_fnmsubs(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2, TCGv_i32 s3)
+ {
+-    int op = float_muladd_negate_c | float_muladd_negate_result;
+-    gen_helper_fmadds(d, tcg_env, s1, s2, s3, tcg_constant_i32(op));
++    TCGv_i32 z = tcg_constant_i32(0);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_c |
++                                   float_muladd_negate_result);
++    gen_helper_fmadds(d, tcg_env, s1, s2, s3, z, op);
+ }
+ 
+ static void gen_op_fnmsubd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2, TCGv_i64 s3)
+ {
+-    int op = float_muladd_negate_c | float_muladd_negate_result;
+-    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, tcg_constant_i32(op));
++    TCGv_i32 z = tcg_constant_i32(0);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_c |
++                                   float_muladd_negate_result);
++    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, z, op);
+ }
+ 
+ static void gen_op_fnmadds(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2, TCGv_i32 s3)
+ {
+-    int op = float_muladd_negate_result;
+-    gen_helper_fmadds(d, tcg_env, s1, s2, s3, tcg_constant_i32(op));
++    TCGv_i32 z = tcg_constant_i32(0);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_result);
++    gen_helper_fmadds(d, tcg_env, s1, s2, s3, z, op);
+ }
+ 
+ static void gen_op_fnmaddd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2, TCGv_i64 s3)
+ {
+-    int op = float_muladd_negate_result;
+-    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, tcg_constant_i32(op));
++    TCGv_i32 z = tcg_constant_i32(0);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_result);
++    gen_helper_fmaddd(d, tcg_env, s1, s2, s3, z, op);
+ }
+ 
+ /* Use muladd to compute (1 * src1) + src2 / 2 with one rounding. */
+ static void gen_op_fhadds(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2)
+ {
+-    TCGv_i32 one = tcg_constant_i32(float32_one);
+-    int op = float_muladd_halve_result;
+-    gen_helper_fmadds(d, tcg_env, one, s1, s2, tcg_constant_i32(op));
++    TCGv_i32 fone = tcg_constant_i32(float32_one);
++    TCGv_i32 mone = tcg_constant_i32(-1);
++    TCGv_i32 op = tcg_constant_i32(0);
++    gen_helper_fmadds(d, tcg_env, fone, s1, s2, mone, op);
+ }
+ 
+ static void gen_op_fhaddd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2)
+ {
+-    TCGv_i64 one = tcg_constant_i64(float64_one);
+-    int op = float_muladd_halve_result;
+-    gen_helper_fmaddd(d, tcg_env, one, s1, s2, tcg_constant_i32(op));
++    TCGv_i64 fone = tcg_constant_i64(float64_one);
++    TCGv_i32 mone = tcg_constant_i32(-1);
++    TCGv_i32 op = tcg_constant_i32(0);
++    gen_helper_fmaddd(d, tcg_env, fone, s1, s2, mone, op);
+ }
+ 
+ /* Use muladd to compute (1 * src1) - src2 / 2 with one rounding. */
+ static void gen_op_fhsubs(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2)
+ {
+-    TCGv_i32 one = tcg_constant_i32(float32_one);
+-    int op = float_muladd_negate_c | float_muladd_halve_result;
+-    gen_helper_fmadds(d, tcg_env, one, s1, s2, tcg_constant_i32(op));
++    TCGv_i32 fone = tcg_constant_i32(float32_one);
++    TCGv_i32 mone = tcg_constant_i32(-1);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_c);
++    gen_helper_fmadds(d, tcg_env, fone, s1, s2, mone, op);
+ }
+ 
+ static void gen_op_fhsubd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2)
+ {
+-    TCGv_i64 one = tcg_constant_i64(float64_one);
+-    int op = float_muladd_negate_c | float_muladd_halve_result;
+-    gen_helper_fmaddd(d, tcg_env, one, s1, s2, tcg_constant_i32(op));
++    TCGv_i64 fone = tcg_constant_i64(float64_one);
++    TCGv_i32 mone = tcg_constant_i32(-1);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_c);
++    gen_helper_fmaddd(d, tcg_env, fone, s1, s2, mone, op);
+ }
+ 
+ /* Use muladd to compute -((1 * src1) + src2 / 2) with one rounding. */
+ static void gen_op_fnhadds(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2)
+ {
+-    TCGv_i32 one = tcg_constant_i32(float32_one);
+-    int op = float_muladd_negate_result | float_muladd_halve_result;
+-    gen_helper_fmadds(d, tcg_env, one, s1, s2, tcg_constant_i32(op));
++    TCGv_i32 fone = tcg_constant_i32(float32_one);
++    TCGv_i32 mone = tcg_constant_i32(-1);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_result);
++    gen_helper_fmadds(d, tcg_env, fone, s1, s2, mone, op);
+ }
+ 
+ static void gen_op_fnhaddd(TCGv_i64 d, TCGv_i64 s1, TCGv_i64 s2)
+ {
+-    TCGv_i64 one = tcg_constant_i64(float64_one);
+-    int op = float_muladd_negate_result | float_muladd_halve_result;
+-    gen_helper_fmaddd(d, tcg_env, one, s1, s2, tcg_constant_i32(op));
++    TCGv_i64 fone = tcg_constant_i64(float64_one);
++    TCGv_i32 mone = tcg_constant_i32(-1);
++    TCGv_i32 op = tcg_constant_i32(float_muladd_negate_result);
++    gen_helper_fmaddd(d, tcg_env, fone, s1, s2, mone, op);
+ }
+ 
+ static void gen_op_fpexception_im(DisasContext *dc, int ftt)
 -- 
 2.43.0
 
