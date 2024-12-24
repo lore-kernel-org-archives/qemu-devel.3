@@ -4,64 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 587E7E7718D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107A1E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ6e7-0007jb-MC; Tue, 24 Dec 2024 10:16:31 -0500
+	id 1tQ6hf-0007PN-35; Tue, 24 Dec 2024 10:20:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e3-0007NH-2D
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:27 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ6ha-00077U-73
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:20:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tQ6e0-00045b-Bl
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:16:25 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tQ6hY-0004Kc-Cr
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:20:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735053383;
+ s=mimecast20190719; t=1735053601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bs/aFUrZ8wbjvHaRoKXd0EGyk9aLkCzj1babD8hMHsI=;
- b=A24Fv/YjGg7kHg0ImqTqpDJ3EO3ltBjXhkweE9rho4BYR5iGLPNvHzSbV0SEhmdt++Ke5N
- cbd4iAvCzEdDd+tXOtWWXlWrvWO2tVz38yXErh6hzJARa/On5ZuLcR9X+ZMwev3qnR0MMF
- gyRXAYEvUr1kGfDA5GUIDz3bdJ1cuAc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-FhuQZByDN1CdCYZ_QAInWQ-1; Tue,
- 24 Dec 2024 10:16:20 -0500
-X-MC-Unique: FhuQZByDN1CdCYZ_QAInWQ-1
-X-Mimecast-MFC-AGG-ID: FhuQZByDN1CdCYZ_QAInWQ
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65D1D1956086; Tue, 24 Dec 2024 15:16:19 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ABA16300F9B5; Tue, 24 Dec 2024 15:16:17 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/17] vfio/migration: Refactor
- vfio_devices_all_running_and_mig_active() logic
-Date: Tue, 24 Dec 2024 16:15:43 +0100
-Message-ID: <20241224151547.386529-14-clg@redhat.com>
-In-Reply-To: <20241224151547.386529-1-clg@redhat.com>
-References: <20241224151547.386529-1-clg@redhat.com>
+ bh=Hn7yu/BVBdWyu2ZDvEn6R3F57DF6oyoeS4fA9JFJVSI=;
+ b=KL86VeZATQ1JzzpESMEEFup39310Ptu06FUFyWDlufTCsszjywcxAkCNOlt3M5dbmTF+fA
+ LaQJYoiveVxwi1en6E6b99+Be7SYWjsW7B6Fn9s/+cEfu/lHer+NkDJz0p3bwE8tQoh+pY
+ CJjiMozaT7/eVNbQmuCikopP0MISTiM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-184-UbuZPQSlMNaBJOHQwx2uJQ-1; Tue, 24 Dec 2024 10:19:56 -0500
+X-MC-Unique: UbuZPQSlMNaBJOHQwx2uJQ-1
+X-Mimecast-MFC-AGG-ID: UbuZPQSlMNaBJOHQwx2uJQ
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-467c08e67easo112339381cf.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:19:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735053595; x=1735658395;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hn7yu/BVBdWyu2ZDvEn6R3F57DF6oyoeS4fA9JFJVSI=;
+ b=qR3FwGhbM10FVPvU0Eph66VIaPAgl6SaOBdw78MjxljPfSbWG0DkLmRqpHn9YcBxNS
+ a8pw+l3f4h4qR6LOYSRFd/OHox/3m03wxBPGMoNMXZOeenqCY5ZiRYSvR5vTV1xfjM+s
+ qrJuZG3g6ByumUd3mHnEgHkoMd4k6AN3KRsrvnD8xAEpCDzZwWIALk1+OXi0WI8RluaA
+ Olrfl3p7yGyiHA4HJQvXgZ133kmmerC937fANLq11jPg5kko0fG4OnpuFsRT4REVmL1+
+ lxPUXU7xFCJIp9Lc3VXFToB/98I4Z6fJrhUKOWWEDkCav4HCodGelp4xs9VtJq5NEqVL
+ LYuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXT6DpE83zBoUxWmH4D8OVjWMZNb6Cg9zNmUQbrVvHd4kHP2slmJYFAyac3A4/U6EAejKgfYaHTY3fB@nongnu.org
+X-Gm-Message-State: AOJu0YwgdAFWPxKB6NFxGGCIUR6RU4p1mJpWmza4CEw9rKH1Y6v9dU57
+ Wd1A7DRi0/g0E0M3LErQP7HNO5xT0tZDH0JMhJ1AOype25dKfHo8grjmsy6k2bvQo2bQ097YGZo
+ 59o+i8K4sgjdb4xrQLzaocv9rE1xCOLG7eY71LJn82i9Z5XWbkZsm
+X-Gm-Gg: ASbGncuULt0wu/SyanAVetBOqpiAX/qGwMGoeoBm4BnXZmLJFi2gXXCKCVTdBVqxHoo
+ M+c1x4y51FezCt+MbBL8z0Be0aWXNsiD88dRuLwwuPSyngoZ3nbUBMMJNsE20A1Z4th236X+fQx
+ gwSmpRqtb3nZ8FOTl9IlhYT9rvsACJutqr37TWPWuq/a1KLgU2rGk20Rzl7WPmZLaD7EfKBIxCd
+ DrQwFfIDGCXFHQlg9fIME6NuWMciXiZJz/TkRnAE7HTjXY9kwcbrD6vTHcqwnbXwAJvUl1cMhtu
+ ox+UatJIwAoKWFHPNg==
+X-Received: by 2002:a05:6214:20eb:b0:6d8:a4fd:d247 with SMTP id
+ 6a1803df08f44-6dd23306875mr273840926d6.7.1735053595406; 
+ Tue, 24 Dec 2024 07:19:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBlT6u9zDI14ChRtAcsVX+0ic5ezS2vyxjMTb3yZMK0eULrfSLIvF9K9bdWfpd7nvknG6yKA==
+X-Received: by 2002:a05:6214:20eb:b0:6d8:a4fd:d247 with SMTP id
+ 6a1803df08f44-6dd23306875mr273840536d6.7.1735053595082; 
+ Tue, 24 Dec 2024 07:19:55 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dd18137419sm53605736d6.69.2024.12.24.07.19.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Dec 2024 07:19:54 -0800 (PST)
+Date: Tue, 24 Dec 2024 10:19:52 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+ John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: Re: [PATCH 01/17] replay: Fix migration use of clock for statistics
+Message-ID: <Z2rRGK09N1ujK5NV@x1n>
+References: <20241220104220.2007786-1-npiggin@gmail.com>
+ <20241220104220.2007786-2-npiggin@gmail.com> <Z2Wb7T8oH0xbk576@x1n>
+ <D6H1LG4QEYL3.3B6MWT5ZTMAQG@gmail.com> <Z2mdNtwd9UzAUVBB@x1n>
+ <51af6ae2-db61-44f5-bde0-bf2eb98923eb@ispras.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <51af6ae2-db61-44f5-bde0-bf2eb98923eb@ispras.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -70,7 +107,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,135 +123,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Avihai Horon <avihaih@nvidia.com>
+On Tue, Dec 24, 2024 at 10:24:51AM +0300, Pavel Dovgalyuk wrote:
+> On 23.12.2024 20:26, Peter Xu wrote:
+> > On Sat, Dec 21, 2024 at 01:02:01PM +1000, Nicholas Piggin wrote:
+> > > On Sat Dec 21, 2024 at 2:31 AM AEST, Peter Xu wrote:
+> > > > On Fri, Dec 20, 2024 at 08:42:03PM +1000, Nicholas Piggin wrote:
+> > > > > Migration reads CLOCK_HOST when not holding the replay_mutex, which
+> > > > > asserts when recording a trace. These are not guest visible so should
+> > > > > be CLOCK_REALTIME like other statistics in MigrationState, which do
+> > > > > not require the replay_mutex.
+> > > > 
+> > > > Irrelevant of the change, should we document such lock implications in
+> > > > timer.h?
+> > > 
+> > > I guess the intention was to try to avoid caller caring too much
+> > > about replay internals, so I'm not sure if that will help or
+> > > hinder understanding :(
+> > 
+> > CLOCK_HOST should be the wall clock in QEMU, IIUC.  If any QEMU caller
+> > tries to read host wall clock requires some mutex to be held.. then I don't
+> > see how we can avoid mentioning it.  It's indeed weird if we need to take a
+> > feature specific mutex just to read the wallclock.. But maybe I misread the
+> > context somewhere..
+> > 
+> > > 
+> > > I think the big rule is something like "if it affects guest state,
+> > > then you must use HOST or VIRTUAL*, if it does not affect guest state
+> > 
+> > HOST clock logically shouldn't be relevant to guest-state?
+> 
+> CLOCK_HOST is used for rtc by default. As the rtc affects the guest state,
+> therefore CLOCK_HOST affects guest state too.
 
-During DMA unmap with vIOMMU, vfio_devices_all_running_and_mig_active()
-is used to check whether a dirty page log sync of the unmapped pages is
-required. Such log sync is needed during migration pre-copy phase, and
-the current logic detects it by checking if migration is active and if
-the VFIO devices are running.
+It's not obvious to me that HOST should only be used for rtc, and it's part
+of guest state.  If that's a must, I'd still suggest we add that into doc.
+But then it means we lose one way to fetch host wallclock in the time API;
+I still see some other users use it, I'm guessing in the way to fetch host
+wall clock.
 
-However, recently there has been an effort to simplify the migration
-status API and reduce it to a single migration_is_running() function.
+> 
+> Migration is not related to guest state change, therefore it should either
+> use realtime clock, or set some flag to make host clock reads not tracked by
+> record/replay.
 
-To accommodate this, refactor vfio_devices_all_running_and_mig_active()
-logic so it won't use migration_is_active(). Do it by simply checking if
-dirty tracking has been started using internal VFIO flags.
+In migration's case, realtime clock suites more.  But maybe we still need
+another clock indeed just to fetch host wall clock without any lock
+implications.  So maybe the better way is making the tracked one to be
+CLOCK_GUEST_RTC, put rich documentatation to avoid abuse, then keep HOST
+the simple definition.
 
-This should be equivalent to the previous logic as during migration
-dirty tracking is active and when the guest is stopped there shouldn't
-be DMA unmaps coming from it.
+Thanks,
 
-As a side effect, now that migration status is no longer used, DMA unmap
-log syncs are untied from migration. This will make calc-dirty-rate more
-accurate as now it will also include VFIO dirty pages that were DMA
-unmapped.
-
-Also rename the function to properly reflect its new logic and extract
-common code from vfio_devices_all_dirty_tracking().
-
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Tested-by: Joao Martins <joao.m.martins@oracle.com>
-Link: https://lore.kernel.org/r/20241218134022.21264-4-avihaih@nvidia.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-common.h |  4 ++--
- hw/vfio/common.c              | 40 +++++++----------------------------
- hw/vfio/container.c           |  2 +-
- 3 files changed, 11 insertions(+), 35 deletions(-)
-
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index a9a68e3fd9a2a570856193cb290cc252b46093de..0c60be5b15c70168f4f94ad7054d9bd750a162d3 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -296,8 +296,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp);
- void vfio_migration_exit(VFIODevice *vbasedev);
- 
- int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
--bool
--vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer);
-+bool vfio_devices_all_dirty_tracking_started(
-+    const VFIOContainerBase *bcontainer);
- bool
- vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
- int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index fd24b7ced83d241445c0b3dbd014b125b41a0927..9b5524377ce01a0a982157b314ad60add371bac6 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -184,12 +184,18 @@ static bool vfio_devices_all_device_dirty_tracking_started(
-     return true;
- }
- 
-+bool vfio_devices_all_dirty_tracking_started(
-+    const VFIOContainerBase *bcontainer)
-+{
-+    return vfio_devices_all_device_dirty_tracking_started(bcontainer) ||
-+           bcontainer->dirty_pages_started;
-+}
-+
- static bool vfio_devices_all_dirty_tracking(VFIOContainerBase *bcontainer)
- {
-     VFIODevice *vbasedev;
- 
--    if (!(vfio_devices_all_device_dirty_tracking_started(bcontainer) ||
--          bcontainer->dirty_pages_started)) {
-+    if (!vfio_devices_all_dirty_tracking_started(bcontainer)) {
-         return false;
-     }
- 
-@@ -225,36 +231,6 @@ bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
-     return true;
- }
- 
--/*
-- * Check if all VFIO devices are running and migration is active, which is
-- * essentially equivalent to the migration being in pre-copy phase.
-- */
--bool
--vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer)
--{
--    VFIODevice *vbasedev;
--
--    if (!migration_is_active()) {
--        return false;
--    }
--
--    QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
--        VFIOMigration *migration = vbasedev->migration;
--
--        if (!migration) {
--            return false;
--        }
--
--        if (vfio_device_state_is_running(vbasedev) ||
--            vfio_device_state_is_precopy(vbasedev)) {
--            continue;
--        } else {
--            return false;
--        }
--    }
--    return true;
--}
--
- static bool vfio_listener_skipped_section(MemoryRegionSection *section)
- {
-     return (!memory_region_is_ram(section->mr) &&
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 78a3c2d55fcd0f53c9b679167ad8d1b557f72358..4ebb5268088d0a2006e0ed04afec0ee746ed2c1d 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -131,7 +131,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
-     int ret;
-     Error *local_err = NULL;
- 
--    if (iotlb && vfio_devices_all_running_and_mig_active(bcontainer)) {
-+    if (iotlb && vfio_devices_all_dirty_tracking_started(bcontainer)) {
-         if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
-             bcontainer->dirty_pages_supported) {
-             return vfio_dma_unmap_bitmap(container, iova, size, iotlb);
 -- 
-2.47.1
+Peter Xu
 
 
