@@ -4,88 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD8FE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C3CE7718D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 16:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7L9-0006Nh-F1; Tue, 24 Dec 2024 11:00:59 -0500
+	id 1tQ7Lb-0006bL-FD; Tue, 24 Dec 2024 11:01:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ7L4-0006Ma-Ks
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:00:57 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ7Ky-0000sW-En
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:00:54 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43623f0c574so35559575e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 08:00:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735056046; x=1735660846; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D21RsUCvV9sGFUSNH1oCTIM4L8z7UjeOs7mwnT3PWTw=;
- b=oUHHnM56v0zcUoH1mgc03SmFZQ+mxwVYPxmi85Pqqfxc/Sw22I0MALlVQbe7WY4KlH
- 8607l9Vw+JNW4Wqpshq++fe1JSkU1SIFGwd46yXBBI9nCQA81Sv410JatOzCvRF/Zp+X
- 91X8EzEkoiyy/cD4Fm+Q1fYwUfl+bz9sGqTDDvfvsM/2lzlBHO1q99WxgjvOZXvnwenk
- lVDSJTxjja4RgLzy5eua8QAhkEDdcwkQ5b3bf1LC05z7J0m3Y1RGNQaMrxSczdfA2jyN
- RQx4UffjIAJ5plXEnbsYCbwSdtP36RLFZyM3KONUMSVO604h07+JdKunHgzjTxIkMWY2
- Ldrg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tQ7LX-0006Yr-AJ
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:01:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tQ7LR-0000uE-Gn
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 11:01:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735056076;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=i/ex+YEgFBQKbbutLwCLbMm2eOqg4ZA3JWMufpN6EJw=;
+ b=a55Z36eTKvnstzEBqFTnPWrGClgnPSVyqjP4f88YD6G3l2CIyLjIXWdyPIUdq3Y9+Jnpo0
+ 1WjHgZ+xQUdzhllrIvK8xL2RKSoSIOlVhJrkBtpBdRJ8fBBRnSamS2LEr1VH6H5nNTrJmB
+ 6Dhg5JUO1rz3IGx6eHeYyCf1EYj+Bdw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-336-UJeTHiDrPdiSYXyGEgycdg-1; Tue, 24 Dec 2024 11:01:11 -0500
+X-MC-Unique: UJeTHiDrPdiSYXyGEgycdg-1
+X-Mimecast-MFC-AGG-ID: UJeTHiDrPdiSYXyGEgycdg
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385d7611ad3so2936236f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 08:01:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735056046; x=1735660846;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D21RsUCvV9sGFUSNH1oCTIM4L8z7UjeOs7mwnT3PWTw=;
- b=EKwW9pVYNo/ziRA9/AUUxZo9AbSstaZdS6uwRTPXNZ3RcM7qnWl7lV54YCAKOetmBK
- nvWvD+YDoB8fy+kq5Y5jhsfIyn+hAqhd+uHJ0vRiGMSkytX+eqlxygMmFe7rz/zlCCF4
- ROc79S683Wj6pvm+WU7PemStDmhjApso+pyED6ueIjDkstbjQCEtZoIjlhSvE07FKYIM
- DnTg4RpH23v1q3Jptx568uGGq+5qYstArVqQzDSpz5piEiPzyxJ1NrIebxkTM8sOKjBl
- 8C529FR0YpK7H3MYbrevW1CzK3x6C04yVQTC8c+q6B3ln89ycvJ4lZ8CaSNDU6JgbQ+K
- LUuw==
+ d=1e100.net; s=20230601; t=1735056070; x=1735660870;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=i/ex+YEgFBQKbbutLwCLbMm2eOqg4ZA3JWMufpN6EJw=;
+ b=ITcBaKFvMx37gCF30esXHsHWq3qI6AVIgOKuezB5dX4ozPZ4cMmkntOmG5ZuU+c8d4
+ e7QNQM8mEfAxdc3xmQJ6kTmJr6reKgYfijDt8KFI6VxWXPw+ovckWHaDyohhhyDZZVEg
+ 4RKxvtNfa+btGi5JKexsxEr6b8CsCMBKioiEmd8uFRVH/iL4iF54CPC9ZV0JBZeqEzJ3
+ y5iY7wAiE3NzSE1FrFjOoifscdbnDW6Xnq+hLSG9wDCL2PADUBWqwQB9sk191SOsPGsC
+ GDrqgQAf5mnbDg18tdROVnkDKKVWEmHXWxGTCuDbQdmM94OacwjElkKRuXCKzHcTEeHI
+ 1ABw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOjmI8r8cj+UzD4aaBksNsDM+G4gmckJhbou4BgS/yn/VX5Z+oeWaVOdKySOrrP1pONpSHBo+LoX5g@nongnu.org
-X-Gm-Message-State: AOJu0YwGvspi6hZxTBg7mghwdAlJViQIhVHc+2WbeCTzsp3XxjVRWrhh
- G9aaE/PXkuYygbJ+PztPZr9CC/2oWbD8GvQ9oxGFffnKKNfIjz4wali8Yru1PDqFbILYBCZ00eK
- E
-X-Gm-Gg: ASbGnctQG6ZPwPuIIkjyR/PwZTEpzMw7JMTfyrm0uH0qxlb/NFKtwj6waW2iEciuFL9
- Y6/BJvnO502r7MSPR169Ann9zCXdbSDseqXtkkbabclxGsOA18N/wrkTxkCMGPXxMrjs6P1BO03
- nS2mFsp/ima12IuUABmji/R1hnL3WX9+cLzW/9Vokdqx8GMRfmE71vW0MKeI/o6u+NJXlBigLOG
- gjvBdDWrHixs8LwYHlIlR5195XWJPbuxyaFHHdcyz1PRlUnwCv8rrjlLBEG+yLaDjY=
-X-Google-Smtp-Source: AGHT+IH83v4tRbnGS/IB+MsAB9AKxFX4333FrckLHhdiwH4qelkEHUF5eURylEHVGyZsr33iy3vbEQ==
-X-Received: by 2002:a05:6000:18ab:b0:386:1cd3:8a05 with SMTP id
- ffacd0b85a97d-38a223fd47fmr15412902f8f.54.1735056046335; 
- Tue, 24 Dec 2024 08:00:46 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b3b295sm209627475e9.33.2024.12.24.08.00.45
+ AJvYcCX2a6WRZE9PPqijCW+SnXYBRKUtiiNkd0nu0DWNDjf+JWPAGJmfWWP2GZJTsdI5AeYD1qBCeWT3jqCh@nongnu.org
+X-Gm-Message-State: AOJu0YwtTap8FRvpbsEdvqam8UuHVKglZ5ArMDNoxBZ/HkfTsh2UBGE1
+ O2KBIwjr9WgL5vem7TS/pUc8T33cVCWLaJZ6xM5hBxkFnQTcOLG5MtbF5aZe6mE7r2Xa0wMLz2Q
+ n3EF7pK2ee2y0pn8mBMsmQAQ+FANn2svSAAPzG674Jvpxcm78LQiV
+X-Gm-Gg: ASbGncsiqb8CHkTXoZ6TBo4x7vEkAWc1OIxd4/My7GPxpo+OdjzJrdiTCYUZnyR4yF6
+ /dOuUTjuq0dul9BCSXF7oS8R5hQCiJHsnbFiIeLDbbnq5Rq0Qn8D7mV6Uqbq2DCvJPspDXM+IsZ
+ m/TSJ5fRGc6cf2qqVwNgo/bqn/iXvu4R32S6B0y+sUc80wgWw/q9tRxNqPrxk5XcG3sUGM+5bOo
+ TGBYVLWLUyO1SgFvqm6exImyV6omW5cb0E3UgAjuVvIbevw+Wt/BhOVU/q2
+X-Received: by 2002:a05:6000:154f:b0:382:3efc:c6d8 with SMTP id
+ ffacd0b85a97d-38a221ed2fdmr13709811f8f.12.1735056068842; 
+ Tue, 24 Dec 2024 08:01:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlVVigMON3+v7GZf0Wd8e9A4bsNkgxk/ClDcoTANwHbuOSynV5cwu4x+Ht3c++w6w0CeHixQ==
+X-Received: by 2002:a05:6000:154f:b0:382:3efc:c6d8 with SMTP id
+ ffacd0b85a97d-38a221ed2fdmr13709747f8f.12.1735056068308; 
+ Tue, 24 Dec 2024 08:01:08 -0800 (PST)
+Received: from [192.168.10.27] ([151.62.105.73])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c847513sm14570673f8f.49.2024.12.24.08.01.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 08:00:45 -0800 (PST)
-Message-ID: <c138716f-baa5-4fca-82b7-972c66570450@linaro.org>
-Date: Tue, 24 Dec 2024 17:00:44 +0100
+ Tue, 24 Dec 2024 08:01:07 -0800 (PST)
+Message-ID: <9bb6ea4b-dd40-446d-887d-4878d180c2a5@redhat.com>
+Date: Tue, 24 Dec 2024 17:01:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] hw/loongarch/boot: Refactor EFI booting protocol
- generation
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-References: <20241224-la-booting-v3-0-a15bee060a43@flygoat.com>
- <20241224-la-booting-v3-1-a15bee060a43@flygoat.com>
+Subject: Re: [PATCH v5 00/11] i386: miscellaneous cleanup
+To: Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Tao Su <tao1.su@linux.intel.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20241106030728.553238-1-zhao1.liu@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241224-la-booting-v3-1-a15bee060a43@flygoat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <20241106030728.553238-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,96 +151,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 11/6/24 04:07, Zhao Liu wrote:
+> Hi Paolo and all,
+> 
+> Is it necessary to include the first patch (AVX10 cleanup/fix) in v9.2?
+> 
+> Others are for v10.0.
+> 
+> Compared with v4 [1],
+>   * patch 1 (AVX10 fix) and patch 9 (RAPL cleanup) are newly added.
+>   * rebased on commit 9a7b0a8618b1 ("Merge tag 'pull-aspeed-20241104' of
+>     https://github.com/legoater/qemu into staging").
 
-On 24/12/24 15:24, Jiaxun Yang wrote:
-> Refector EFI style booting data structure generation to
-> support 32bit EFI variant on LoongArch32 CPU.
+Removed patches 5 and 11, fixed patch 4 to include CPUID_KVM_CLOCK2, and 
+queued - thanks!
+
+Paolo
+
 > 
-> All data structs are filled with padding members if necessary
-> and marked as QEMU_PACKED to avoid host ABI alignment impact.
+> Background and Introduction
+> ===========================
 > 
-> Host endian is being cared as well.
+> This series picks cleanup from my previous kvmclock [2] (as other
+> renaming attempts were temporarily put on hold).
 > 
-> It also fixed various problems in old implementation such
-> as null pointer on empty string, memory desc map_size not set,
-> incorrect memory map definition and so on.
+> In addition, this series also include the cleanup on a historically
+> workaround, recent comment of coco interface [3] and error handling
+> corner cases in kvm_arch_init().
 > 
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Avoiding the fragmentation of these misc cleanups, I consolidated them
+> all in one series and was able to tackle them in one go!
+> 
+> [1]: https://lore.kernel.org/qemu-devel/20240716161015.263031-1-zhao1.liu@intel.com/
+> [2]: https://lore.kernel.org/qemu-devel/20240329101954.3954987-1-zhao1.liu@linux.intel.com/
+> [3]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
+> 
+> Thanks and Best Regards,
+> Zhao
 > ---
->   hw/loongarch/boot.c         | 220 ++++++++++++++++++++++++++++++--------------
->   include/hw/loongarch/boot.h | 106 +++++++++++++++++----
->   2 files changed, 238 insertions(+), 88 deletions(-)
-
-
-> +#define EFI_BOOT_MEMMAP_TABLE_GEN(type)                                     \
-> +static void init_efi_boot_memmap_##type(void *guidp, void **p)              \
-> +{                                                                           \
-> +    struct efi_boot_memmap_##type *boot_memmap = *p;                        \
-> +    efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;                       \
-> +                                                                            \
-> +    /* efi_configuration_table 1 */                                         \
-> +    guidcpy(guidp, &tbl_guid);                                              \
-> +                                                                            \
-> +    boot_memmap->desc_size = cpu_to_le##type(sizeof(efi_memory_desc_t));    \
-
-I'd prefer we avoid macros and use the ld/stN API, passing the
-size as argument:
-
-        stn_le_p(&boot_memmap->desc_size, size,
-                 sizeof(efi_memory_desc_t));
-
-Ideally splitting the patch in 3, first convert to use the API
-as stn_le_p(ptr, 8, value), then second patch propagate the size,
-and the third add the size=4 case.
-
-> +    boot_memmap->desc_ver = cpu_to_le32(1);                                 \
-> +    boot_memmap->map_size = cpu_to_le##type(boot_memmap->desc_size *        \
-> +                                            memmap_entries);                \
-> +    memmap_write_descs(boot_memmap->map);                                   \
-> +    *p += sizeof(struct efi_boot_memmap_##type);                            \
-> +}
->   
-> -    init_efi_boot_memmap(systab, p, start);
-> -    p += ROUND_UP(sizeof(struct efi_boot_memmap) +
-> -                  sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-> -    init_efi_initrd_table(systab, p, start);
-> -    p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-> -    init_efi_fdt_table(systab);
-> +#define EFI_INITRD_TABLE_GEN(type)                                          \
-> +static void init_efi_initrd_table_##type(void *guidp, void **p)             \
-> +{                                                                           \
-> +    efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;                      \
-> +    struct efi_initrd_##type *initrd_table = *p;                            \
-> +                                                                            \
-> +    /* efi_configuration_table  */                                          \
-> +    guidcpy(guidp, &tbl_guid);                                              \
-> +                                                                            \
-> +    initrd_table->base = cpu_to_le##type(initrd_offset);                    \
-> +    initrd_table->size = cpu_to_le##type(initrd_size);                      \
-> +    *p += sizeof(struct efi_initrd_##type);                                 \
-> +}
-
-
-> +EFI_INIT_SYSTAB_GEN(32)
-> +EFI_INIT_SYSTAB_GEN(64)
-
-
-> -static void init_boot_rom(struct loongarch_boot_info *info, void *p)
-> +static void init_boot_rom(struct loongarch_boot_info *info, void *p,
-> +                          bool is_64bit)
->   {
->       void *start = p;
->   
->       init_cmdline(info, p, start);
->       p += COMMAND_LINE_SIZE;
->   
-> -    init_systab(info, p, start);
-> +    if (is_64bit)
-> +        init_systab_64(info, p, start);
-> +    else
-> +        init_systab_32(info, p, start);
->   }
+> Zhao Liu (11):
+>    i386/cpu: Mark avx10_version filtered when prefix is NULL
+>    target/i386/kvm: Add feature bit definitions for KVM CPUID
+>    target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
+>      MSR_KVM_SYSTEM_TIME definitions
+>    target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
+>    target/i386/kvm: Save/load MSRs of kvmclock2
+>      (KVM_FEATURE_CLOCKSOURCE2)
+>    target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
+>    target/i386/confidential-guest: Fix comment of
+>      x86_confidential_guest_kvm_type()
+>    target/i386/kvm: Clean up return values of MSR filter related
+>      functions
+>    target/i386/kvm: Return -1 when kvm_msr_energy_thread_init() fails
+>    target/i386/kvm: Clean up error handling in kvm_arch_init()
+>    target/i386/kvm: Replace ARRAY_SIZE(msr_handlers) with
+>      KVM_MSR_FILTER_MAX_RANGES
+> 
+>   hw/i386/kvm/clock.c              |   5 +-
+>   target/i386/confidential-guest.h |   2 +-
+>   target/i386/cpu.c                |   6 +-
+>   target/i386/cpu.h                |  25 ++++
+>   target/i386/kvm/kvm.c            | 211 +++++++++++++++++--------------
+>   5 files changed, 145 insertions(+), 104 deletions(-)
+> 
 
 
