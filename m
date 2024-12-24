@@ -4,63 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06B39E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 08:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03379E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 09:00:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ0fp-00048O-NJ; Tue, 24 Dec 2024 03:53:54 -0500
+	id 1tQ0lo-0006Hl-BP; Tue, 24 Dec 2024 04:00:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tQ0fk-00047Y-Gj; Tue, 24 Dec 2024 03:53:49 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tQ0ff-0003sL-WD; Tue, 24 Dec 2024 03:53:47 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YHTFD4NGMz6J67J;
- Tue, 24 Dec 2024 16:53:20 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id B954A1402DA;
- Tue, 24 Dec 2024 16:53:39 +0800 (CST)
-Received: from localhost (10.195.35.193) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 24 Dec
- 2024 09:53:38 +0100
-Date: Tue, 24 Dec 2024 08:53:33 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-CC: <linuxarm@huawei.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
- <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
- <dapeng1.mi@linux.intel.com>, <yongwei.ma@intel.com>, <armbru@redhat.com>,
- <farman@linux.ibm.com>, <peter.maydell@linaro.org>, <mst@redhat.com>,
- <anisinha@redhat.com>, <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>,
- <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
- <shameerali.kolothum.thodi@huawei.com>, <jiangkunkun@huawei.com>,
- <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
-Subject: Re: [PATCH v4 7/7] Update the ACPI tables according to the acpi
- aml_build change, also empty bios-tables-test-allowed-diff.h.
-Message-ID: <20241224085333.00005057@huawei.com>
-In-Reply-To: <20241223181332.000006d5@huawei.com>
-References: <20241216175414.1953-1-alireza.sanaee@huawei.com>
- <20241216175414.1953-8-alireza.sanaee@huawei.com>
- <20241223181332.000006d5@huawei.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ0lm-0006Ee-M2
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 04:00:02 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQ0lk-00059b-Td
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 04:00:02 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3862ca8e0bbso3736970f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 01:00:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735030799; x=1735635599; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oDKAIsmdLW19i/P9mWzEU69w0622+vUKQ9SUjFLyolc=;
+ b=Gmfk99K6BhOcym6qebKHtRRAl4kcnYPOoWcrGPBosFEJa9/h7FD30wpGXOMm56eknA
+ KAXrWMG6CFciHhkS+PrPLsGqHmpyWZKXpM9nw97NmbktMD1XnBubiWNGJkPtmb2tWoY6
+ 4Eu2wrD1PfhDdTNr85Pb26LmownxL9zS76Apm3QFDYXnwM1YrJhiDt+RBCiyEn0DE/Gu
+ MEJPAr1HzrSyv21KOZZ2Duviwo6zAeoophTm2P/dmpGIVR0SyolJ68R1ERvt0p2ap/SE
+ eQ65LZtIbK1aj7AnmsIo5E3E20ZGjlnK6yS1cmqAPUYP/v1nnE/kzBWGkkgy8SyiSXIA
+ q6Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735030799; x=1735635599;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oDKAIsmdLW19i/P9mWzEU69w0622+vUKQ9SUjFLyolc=;
+ b=neJG2CCYEMQf6pcgoVb/4y5kWrRy9LGAn14EVFSf1IljFyOaXy3LekAbwkxXyOfymD
+ d/cctiyLLv5VXA/ZdIAe2SN3gx3G8cCVTKarplmFrEjFkDtW/jch5rCSKG6p2z0hpZM4
+ XToX4fcHwol2bLiXbSeON9AJMxHxdmndzWP+3rNvQXTpDj22ABEVVfJo3z0OoHS1uf9S
+ H7pVT4seTJ8XJLqQsRXyey2P4EBfH2WnzzK9CK+q+eDJXEpS6TqTpNrhQJIDolQRwofP
+ OCf9OxJgJ1TbNIO4nq9YUb+2pDX01i1m+EgmjmCx8F5a/HhaQXyN3YDyLQjofyeZZoMI
+ IaOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVr+OX2aTPIZ72KhDZrT15GGlb3JRArwnINq9EQNudyDAcEuHefkACU3SqUTGI+zi49AIc8rAx3YESP@nongnu.org
+X-Gm-Message-State: AOJu0YxeXZH5msx/CWDgJJi0EAc1EKdVYcVbLiVCvxV3aRmdbhiWKajh
+ rRuXsWVgx4YQDE0sdsn6CpQoMLJnatq+TfGbHSGJv/dMUyIf0XqPyZl5URdF040=
+X-Gm-Gg: ASbGncv4scbtf+nhEqQTeEZkheilKbMLpFLyJOGTn52EhoFZzG1XGZvhbfgJu6euSeL
+ 2iYgGBa5AS/xhp6u//mG31cvoFwfQbgVKO1wl5KqGDeGzJasm8GRagphLWDHup7DBCzZzhF/YJc
+ Lwougm/1kAChy3f9SRSn9HrokOWrsCh+zn8A3yIq5llsi8Eb790Lj+601gArTEU96Hk2hxPXbum
+ QidQYKaBmNjjJ8xvIgHIQezhKVI+/zIjqxv5rmHIUGNn7I4uQx0V9/wdaWVt0t9bSw=
+X-Google-Smtp-Source: AGHT+IGzx9Fr6LzLw001ZnrZ/4M8B/V4vexPOqZ1tjaERzbRyOQA73dSUArFNyYaHzdLDB2vdU54cA==
+X-Received: by 2002:a5d:588e:0:b0:388:c75d:be97 with SMTP id
+ ffacd0b85a97d-38a221e27bbmr13802325f8f.11.1735030798956; 
+ Tue, 24 Dec 2024 00:59:58 -0800 (PST)
+Received: from [192.168.1.117] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4366128a62asm159476685e9.44.2024.12.24.00.59.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Dec 2024 00:59:58 -0800 (PST)
+Message-ID: <98696813-b2fe-45aa-a759-25764435b7c7@linaro.org>
+Date: Tue, 24 Dec 2024 09:59:57 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.195.35.193]
-X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
- frapeml500003.china.huawei.com (7.182.85.28)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+To: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
+ "pizhenwei@bytedance.com" <pizhenwei@bytedance.com>,
+ Lei He <helei.sig11@bytedance.com>
+References: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,468 +99,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Dec 2024 18:13:32 +0000
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+Hi Gabriel,
 
-> On Mon, 16 Dec 2024 17:54:14 +0000
-> Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+On 24/12/24 00:46, Gabriel Barrantes wrote:
+>  From c808fa797942b9bd32221594b7eef690a7558b14 Mon Sep 17 00:00:00 2001
+> From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+> Date: Mon, 23 Dec 2024 14:58:12 -0600
+> Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
 > 
-> > The disassembled differences between actual and expected PPTT based
-> > on the following cache topology representation:
-> > 
-> > ```
-> > test_acpi_one("-M
-> > virt,smp-cache.0.cache=l1i,smp-cache.0.topology=cluster,"
-> > "smp-cache.1.cache=l1d,smp-cache.1.topology=cluster,"
-> > "smp-cache.2.cache=l2,smp-cache.2.topology=cluster,"
-> > "smp-cache.3.cache=l3,smp-cache.3.topology=cluster " "-cpu
-> > cortex-a57 " "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
-> > ```
-> > 
-> > /*
-> >  * Intel ACPI Component Architecture
-> >  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-> >  * Copyright (c) 2000 - 2020 Intel Corporation
-> >  *
-> >  * Disassembly of
-> > ../../../tests/data/acpi/aarch64/virt/PPTT.topology, Mon Oct  7
-> > 16:57:29 2024 *
-> >  * ACPI Data Table [PPTT]
-> >  *
-> >  * Format: [HexOffset DecimalOffset ByteLength]  FieldName :
-> > FieldValue */
-> > 
-> > [000h 0000   4]                    Signature : "PPTT"    [Processor
-> > Properties Topology Table] [004h 0004   4]                 Table
-> > Length : 0000021C [008h 0008   1]                     Revision : 03
-> > [009h 0009   1]                     Checksum : 4D
-> > [00Ah 0010   6]                       Oem ID : "BOCHS "
-> > [010h 0016   8]                 Oem Table ID : "BXPC    "
-> > [018h 0024   4]                 Oem Revision : 00000001
-> > [01Ch 0028   4]              Asl Compiler ID : "BXPC"
-> > [020h 0032   4]        Asl Compiler Revision : 00000001
-> > 
-> > [024h 0036   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [025h 0037   1]                       Length : 14
-> > [026h 0038   2]                     Reserved : 0000
-> > [028h 0040   4]        Flags (decoded below) : 00000011
-> >                             Physical package : 1
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [02Ch 0044   4]                       Parent : 00000000
-> > [030h 0048   4]            ACPI Processor ID : 00000000
-> > [034h 0052   4]      Private Resource Number : 00000000
-> > 
-> > [038h 0056   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [039h 0057   1]                       Length : 14
-> > [03Ah 0058   2]                     Reserved : 0000
-> > [03Ch 0060   4]        Flags (decoded below) : 00000011
-> >                             Physical package : 1
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [040h 0064   4]                       Parent : 00000024
-> > [044h 0068   4]            ACPI Processor ID : 00000000
-> > [048h 0072   4]      Private Resource Number : 00000000
-> > 
-> > [04Ch 0076   1]                Subtable Type : 01 [Cache Type]
-> > [04Dh 0077   1]                       Length : 1C
-> > [04Eh 0078   2]                     Reserved : 0000
-> > [050h 0080   4]        Flags (decoded below) : 000000FF
-> >                                   Size valid : 1
-> >                         Number of Sets valid : 1
-> >                          Associativity valid : 1
-> >                        Allocation Type valid : 1
-> >                             Cache Type valid : 1
-> >                           Write Policy valid : 1
-> >                              Line Size valid : 1
-> > [054h 0084   4]          Next Level of Cache : 00000000
-> > [058h 0088   4]                         Size : 00200000
-> > [05Ch 0092   4]               Number of Sets : 00000800
-> > [060h 0096   1]                Associativity : 10
-> > [061h 0097   1]                   Attributes : 0F
-> >                              Allocation Type : 3
-> >                                   Cache Type : 3
-> >                                 Write Policy : 0
-> > [062h 0098   2]                    Line Size : 0040
-> > 
-> > [068h 0104   1]                Subtable Type : 01 [Cache Type]
-> > [069h 0105   1]                       Length : 1C
-> > [06Ah 0106   2]                     Reserved : 0000
-> > [06Ch 0108   4]        Flags (decoded below) : 000000FF
-> >                                   Size valid : 1
-> >                         Number of Sets valid : 1
-> >                          Associativity valid : 1
-> >                        Allocation Type valid : 1
-> >                             Cache Type valid : 1
-> >                           Write Policy valid : 1
-> >                              Line Size valid : 1
-> > [070h 0112   4]          Next Level of Cache : 0000004C
-> > [074h 0116   4]                         Size : 00008000
-> > [078h 0120   4]               Number of Sets : 00000080
-> > [07Ch 0124   1]                Associativity : 04
-> > [07Dh 0125   1]                   Attributes : 03
-> >                              Allocation Type : 3
-> >                                   Cache Type : 0
-> >                                 Write Policy : 0
-> > [07Eh 0126   2]                    Line Size : 0040
-> > 
-> > [084h 0132   1]                Subtable Type : 01 [Cache Type]
-> > [085h 0133   1]                       Length : 1C
-> > [086h 0134   2]                     Reserved : 0000
-> > [088h 0136   4]        Flags (decoded below) : 000000FF
-> >                                   Size valid : 1
-> >                         Number of Sets valid : 1
-> >                          Associativity valid : 1
-> >                        Allocation Type valid : 1
-> >                             Cache Type valid : 1
-> >                           Write Policy valid : 1
-> >                              Line Size valid : 1
-> > [08Ch 0140   4]          Next Level of Cache : 0000004C
-> > [090h 0144   4]                         Size : 0000C000
-> > [094h 0148   4]               Number of Sets : 00000100
-> > [098h 0152   1]                Associativity : 03
-> > [099h 0153   1]                   Attributes : 07
-> >                              Allocation Type : 3
-> >                                   Cache Type : 1
-> >                                 Write Policy : 0
-> > [09Ah 0154   2]                    Line Size : 0040
-> > 
-> > [0A0h 0160   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [0A1h 0161   1]                       Length : 1C
-> > [0A2h 0162   2]                     Reserved : 0000
-> > [0A4h 0164   4]        Flags (decoded below) : 00000010
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [0A8h 0168   4]                       Parent : 00000038
-> > [0ACh 0172   4]            ACPI Processor ID : 00000000
-> > [0B0h 0176   4]      Private Resource Number : 00000002
-> > [0B4h 0180   4]             Private Resource : 00000084
-> > [0B8h 0184   4]             Private Resource : 00000068
-> > 
-> > [0BCh 0188   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [0BDh 0189   1]                       Length : 14
-> > [0BEh 0190   2]                     Reserved : 0000
-> > [0C0h 0192   4]        Flags (decoded below) : 00000010
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [0C4h 0196   4]                       Parent : 000000A0
-> > [0C8h 0200   4]            ACPI Processor ID : 00000000
-> > [0CCh 0204   4]      Private Resource Number : 00000000
-> > 
-> > [0D0h 0208   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [0D1h 0209   1]                       Length : 14
-> > [0D2h 0210   2]                     Reserved : 0000
-> > [0D4h 0212   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [0D8h 0216   4]                       Parent : 000000BC
-> > [0DCh 0220   4]            ACPI Processor ID : 00000000
-> > [0E0h 0224   4]      Private Resource Number : 00000000
-> > 
-> > [0E4h 0228   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [0E5h 0229   1]                       Length : 14
-> > [0E6h 0230   2]                     Reserved : 0000
-> > [0E8h 0232   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [0ECh 0236   4]                       Parent : 000000BC
-> > [0F0h 0240   4]            ACPI Processor ID : 00000001
-> > [0F4h 0244   4]      Private Resource Number : 00000000
-> > 
-> > [0F8h 0248   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [0F9h 0249   1]                       Length : 14
-> > [0FAh 0250   2]                     Reserved : 0000
-> > [0FCh 0252   4]        Flags (decoded below) : 00000010
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [100h 0256   4]                       Parent : 000000A0
-> > [104h 0260   4]            ACPI Processor ID : 00000001
-> > [108h 0264   4]      Private Resource Number : 00000000
-> > 
-> > [10Ch 0268   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [10Dh 0269   1]                       Length : 14
-> > [10Eh 0270   2]                     Reserved : 0000
-> > [110h 0272   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [114h 0276   4]                       Parent : 000000F8
-> > [118h 0280   4]            ACPI Processor ID : 00000002
-> > [11Ch 0284   4]      Private Resource Number : 00000000
-> > 
-> > [120h 0288   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [121h 0289   1]                       Length : 14
-> > [122h 0290   2]                     Reserved : 0000
-> > [124h 0292   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [128h 0296   4]                       Parent : 000000F8
-> > [12Ch 0300   4]            ACPI Processor ID : 00000003
-> > [130h 0304   4]      Private Resource Number : 00000000
-> > 
-> > [134h 0308   1]                Subtable Type : 01 [Cache Type]
-> > [135h 0309   1]                       Length : 1C
-> > [136h 0310   2]                     Reserved : 0000
-> > [138h 0312   4]        Flags (decoded below) : 000000FF
-> >                                   Size valid : 1
-> >                         Number of Sets valid : 1
-> >                          Associativity valid : 1
-> >                        Allocation Type valid : 1
-> >                             Cache Type valid : 1
-> >                           Write Policy valid : 1
-> >                              Line Size valid : 1
-> > [13Ch 0316   4]          Next Level of Cache : 00000000
-> > [140h 0320   4]                         Size : 00200000
-> > [144h 0324   4]               Number of Sets : 00000800
-> > [148h 0328   1]                Associativity : 10
-> > [149h 0329   1]                   Attributes : 0F
-> >                              Allocation Type : 3
-> >                                   Cache Type : 3
-> >                                 Write Policy : 0
-> > [14Ah 0330   2]                    Line Size : 0040
-> > 
-> > [150h 0336   1]                Subtable Type : 01 [Cache Type]
-> > [151h 0337   1]                       Length : 1C
-> > [152h 0338   2]                     Reserved : 0000
-> > [154h 0340   4]        Flags (decoded below) : 000000FF
-> >                                   Size valid : 1
-> >                         Number of Sets valid : 1
-> >                          Associativity valid : 1
-> >                        Allocation Type valid : 1
-> >                             Cache Type valid : 1
-> >                           Write Policy valid : 1
-> >                              Line Size valid : 1
-> > [158h 0344   4]          Next Level of Cache : 00000134
-> > [15Ch 0348   4]                         Size : 00008000
-> > [160h 0352   4]               Number of Sets : 00000080
-> > [164h 0356   1]                Associativity : 04
-> > [165h 0357   1]                   Attributes : 03
-> >                              Allocation Type : 3
-> >                                   Cache Type : 0
-> >                                 Write Policy : 0
-> > [166h 0358   2]                    Line Size : 0040
-> > 
-> > [16Ch 0364   1]                Subtable Type : 01 [Cache Type]
-> > [16Dh 0365   1]                       Length : 1C
-> > [16Eh 0366   2]                     Reserved : 0000
-> > [170h 0368   4]        Flags (decoded below) : 000000FF
-> >                                   Size valid : 1
-> >                         Number of Sets valid : 1
-> >                          Associativity valid : 1
-> >                        Allocation Type valid : 1
-> >                             Cache Type valid : 1
-> >                           Write Policy valid : 1
-> >                              Line Size valid : 1
-> > [174h 0372   4]          Next Level of Cache : 00000134
-> > [178h 0376   4]                         Size : 0000C000
-> > [17Ch 0380   4]               Number of Sets : 00000100
-> > [180h 0384   1]                Associativity : 03
-> > [181h 0385   1]                   Attributes : 07
-> >                              Allocation Type : 3
-> >                                   Cache Type : 1
-> >                                 Write Policy : 0
-> > [182h 0386   2]                    Line Size : 0040
-> > 
-> > [188h 0392   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [189h 0393   1]                       Length : 1C
-> > [18Ah 0394   2]                     Reserved : 0000
-> > [18Ch 0396   4]        Flags (decoded below) : 00000010
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [190h 0400   4]                       Parent : 00000038
-> > [194h 0404   4]            ACPI Processor ID : 00000001
-> > [198h 0408   4]      Private Resource Number : 00000002
-> > [19Ch 0412   4]             Private Resource : 0000016C
-> > [1A0h 0416   4]             Private Resource : 00000150
-> > 
-> > [1A4h 0420   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [1A5h 0421   1]                       Length : 14
-> > [1A6h 0422   2]                     Reserved : 0000
-> > [1A8h 0424   4]        Flags (decoded below) : 00000010
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [1ACh 0428   4]                       Parent : 00000188
-> > [1B0h 0432   4]            ACPI Processor ID : 00000000
-> > [1B4h 0436   4]      Private Resource Number : 00000000
-> > 
-> > [1B8h 0440   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [1B9h 0441   1]                       Length : 14
-> > [1BAh 0442   2]                     Reserved : 0000
-> > [1BCh 0444   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [1C0h 0448   4]                       Parent : 000001A4
-> > [1C4h 0452   4]            ACPI Processor ID : 00000004
-> > [1C8h 0456   4]      Private Resource Number : 00000000
-> > 
-> > [1CCh 0460   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [1CDh 0461   1]                       Length : 14
-> > [1CEh 0462   2]                     Reserved : 0000
-> > [1D0h 0464   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [1D4h 0468   4]                       Parent : 000001A4
-> > [1D8h 0472   4]            ACPI Processor ID : 00000005
-> > [1DCh 0476   4]      Private Resource Number : 00000000
-> > 
-> > [1E0h 0480   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [1E1h 0481   1]                       Length : 14
-> > [1E2h 0482   2]                     Reserved : 0000
-> > [1E4h 0484   4]        Flags (decoded below) : 00000010
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 0
-> >                        Processor is a thread : 0
-> >                               Node is a leaf : 0
-> >                     Identical Implementation : 1
-> > [1E8h 0488   4]                       Parent : 00000188
-> > [1ECh 0492   4]            ACPI Processor ID : 00000001
-> > [1F0h 0496   4]      Private Resource Number : 00000000
-> > 
-> > [1F4h 0500   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [1F5h 0501   1]                       Length : 14
-> > [1F6h 0502   2]                     Reserved : 0000
-> > [1F8h 0504   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [1FCh 0508   4]                       Parent : 000001E0
-> > [200h 0512   4]            ACPI Processor ID : 00000006
-> > [204h 0516   4]      Private Resource Number : 00000000
-> > 
-> > [208h 0520   1]                Subtable Type : 00 [Processor
-> > Hierarchy Node] [209h 0521   1]                       Length : 14
-> > [20Ah 0522   2]                     Reserved : 0000
-> > [20Ch 0524   4]        Flags (decoded below) : 0000000E
-> >                             Physical package : 0
-> >                      ACPI Processor ID valid : 1
-> >                        Processor is a thread : 1
-> >                               Node is a leaf : 1
-> >                     Identical Implementation : 0
-> > [210h 0528   4]                       Parent : 000001E0
-> > [214h 0532   4]            ACPI Processor ID : 00000007
-> > [218h 0536   4]      Private Resource Number : 00000000
-> > 
-> > Raw Table Data: Length 540 (0x21C)
-> > 
-> >     0000: 50 50 54 54 1C 02 00 00 03 4D 42 4F 43 48 53 20  //
-> > PPTT.....MBOCHS 0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50
-> > 43  // BXPC    ....BXPC 0020: 01 00 00 00 00 14 00 00 11 00 00 00
-> > 00 00 00 00  // ................ 0030: 00 00 00 00 00 00 00 00 00
-> > 14 00 00 11 00 00 00  // ................ 0040: 24 00 00 00 00 00
-> > 00 00 00 00 00 00 01 1C 00 00  // $............... 0050: FF 00 00
-> > 00 00 00 00 00 00 00 20 00 00 08 00 00  // .......... ..... 0060:
-> > 10 0F 40 00 00 00 02 02 01 1C 00 00 FF 00 00 00  //
-> > ..@............. 0070: 4C 00 00 00 00 80 00 00 80 00 00 00 04 03 40
-> > 00  // L.............@. 0080: 00 00 01 00 01 1C 00 00 FF 00 00 00
-> > 4C 00 00 00  // ............L... 0090: 00 C0 00 00 00 01 00 00 03
-> > 07 40 00 00 00 01 01  // ..........@..... 00A0: 00 1C 00 00 10 00
-> > 00 00 38 00 00 00 00 00 00 00  // ........8....... 00B0: 02 00 00
-> > 00 84 00 00 00 68 00 00 00 00 14 00 00  // ........h....... 00C0:
-> > 10 00 00 00 A0 00 00 00 00 00 00 00 00 00 00 00  //
-> > ................ 00D0: 00 14 00 00 0E 00 00 00 BC 00 00 00 00 00 00
-> > 00  // ................ 00E0: 00 00 00 00 00 14 00 00 0E 00 00 00
-> > BC 00 00 00  // ................ 00F0: 01 00 00 00 00 00 00 00 00
-> > 14 00 00 10 00 00 00  // ................ 0100: A0 00 00 00 01 00
-> > 00 00 00 00 00 00 00 14 00 00  // ................ 0110: 0E 00 00
-> > 00 F8 00 00 00 02 00 00 00 00 00 00 00  // ................ 0120:
-> > 00 14 00 00 0E 00 00 00 F8 00 00 00 03 00 00 00  //
-> > ................ 0130: 00 00 00 00 01 1C 00 00 FF 00 00 00 00 00 00
-> > 00  // ................ 0140: 00 00 20 00 00 08 00 00 10 0F 40 00
-> > 04 00 02 02  // .. .......@..... 0150: 01 1C 00 00 FF 00 00 00 34
-> > 01 00 00 00 80 00 00  // ........4....... 0160: 80 00 00 00 04 03
-> > 40 00 04 00 01 00 01 1C 00 00  // ......@......... 0170: FF 00 00
-> > 00 34 01 00 00 00 C0 00 00 00 01 00 00  // ....4........... 0180:
-> > 03 07 40 00 04 00 01 01 00 1C 00 00 10 00 00 00  //
-> > ..@............. 0190: 38 00 00 00 01 00 00 00 02 00 00 00 6C 01 00
-> > 00  // 8...........l... 01A0: 50 01 00 00 00 14 00 00 10 00 00 00
-> > 88 01 00 00  // P............... 01B0: 00 00 00 00 00 00 00 00 00
-> > 14 00 00 0E 00 00 00  // ................ 01C0: A4 01 00 00 04 00
-> > 00 00 00 00 00 00 00 14 00 00  // ................ 01D0: 0E 00 00
-> > 00 A4 01 00 00 05 00 00 00 00 00 00 00  // ................ 01E0:
-> > 00 14 00 00 10 00 00 00 88 01 00 00 01 00 00 00  //
-> > ................ 01F0: 00 00 00 00 00 14 00 00 0E 00 00 00 E0 01 00
-> > 00  // ................ 0200: 06 00 00 00 00 00 00 00 00 14 00 00
-> > 0E 00 00 00  // ................ 0210: E0 01 00 00 07 00 00 00 00
-> > 00 00 00              // ............
-> > 
-> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>  
+> Do not propagate error to the upper, directly output the error to
+> avoid leaks.
 > 
-> I've spent too long staring at PPTT in the past (and reviewed this
-> internally) so all looks good to me. (If you update the test remember
-> to update the comment on it above).
-This comment should be moved to the prior patch.
+> Closes: #2714
+
+Better to use the full issue url to ease downstream backports
+where this commit is cherry-picked:
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2714
+
+Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 > 
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > ---
-> >  tests/data/acpi/aarch64/virt/PPTT.topology  | Bin 356 -> 540 bytes
-> >  tests/qtest/bios-tables-test-allowed-diff.h |   1 -
-> >  2 files changed, 1 deletion(-)
-> > 
-> > diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology
-> > b/tests/data/acpi/aarch64/virt/PPTT.topology index
-> > d0e5e11e90f33cbbbc231f9ad0bd48419e0fea65..f5f07b87c3777106e74f380de7941e1c01fc3447
-> > 100644 GIT binary patch literal 540  
-> > zcmZvXI}XAy5JV>*2o(g0GDQlGKtUNL4F!luq~Hh?93lk;$DrUC6gdjVpo1A>2S;LM
-> > z%e!y9_D)?lO%?*tuH09fLtY;1DrW=$l<UL-nCtYzvZcp@40!i-4orY_R*;0D)3(xE
-> > zvk*rGivR<yGYC;)v;cfFC0cVUI4UmOCl#DQ+D*9&vMKY2t95$J__56O`b@nqZvA7z
-> > z_KHOoxp}{3-usL_pDR7u{(Q!sPos6zc}G5}4ScFq|DT!EDy+||au;^4J6ZgPjXWlw  
-> > S>h0TY?~`Ec-II5*#Ig@|86g1x    
-> > 
-> > literal 356
-> > zcmWFt2nk7HWME*P=H&0}5v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af  
-> > ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
-> > cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?*x0RR91
-> > 
-> > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h
-> > b/tests/qtest/bios-tables-test-allowed-diff.h index
-> > ba2a8180e9..dfb8523c8b 100644 ---
-> > a/tests/qtest/bios-tables-test-allowed-diff.h +++
-> > b/tests/qtest/bios-tables-test-allowed-diff.h @@ -1,2 +1 @@
-> >  /* List of comma-separated changed AML files to ignore */
-> > -"tests/data/acpi/aarch64/virt/PPTT.topology",  
+> Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+> ---
+> backends/cryptodev-vhost-user.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost- 
+> user.c
+> index 43efdf9747..09bfbddb47 100644
+> --- a/backends/cryptodev-vhost-user.c
+> +++ b/backends/cryptodev-vhost-user.c
+> @@ -281,8 +281,8 @@ static int cryptodev_vhost_user_create_session(
+>          break;
+> 
+>      default:
+> -        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+> -                   sess_info->op_code);
+> +        error_report("Unsupported opcode :%" PRIu32 "",
+> +                     sess_info->op_code);
+>          return -VIRTIO_CRYPTO_NOTSUPP;
+>      }
+
+Arei, Pi, Having CryptoDevBackendClass::create_session() take an errp
+argument would simplify the call chain, reporting the error once in
+cryptodev_backend_create_session().
+
+> 
+> -- 
+> 2.43.0
+> 
 > 
 
 
