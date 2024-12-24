@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C30DEE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6825E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 15:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ7EC-0004bC-Cd; Tue, 24 Dec 2024 10:53:48 -0500
+	id 1tQ7FD-0005Em-1k; Tue, 24 Dec 2024 10:54:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tQ7EA-0004ay-5S
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:53:46 -0500
+ id 1tQ7FB-0005EL-Jw
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:54:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tQ7E7-0000DJ-50
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:53:45 -0500
+ id 1tQ7FA-0000FY-4k
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 10:54:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735055621;
+ s=mimecast20190719; t=1735055686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rpwUlF2+hfvdP8OnbqhutbLTrztQBNU9uyxVoaDuj+0=;
- b=VfhuQd5FNS/dEfpXkT5dmMuJ41FRuUMrpTly8xIVPsQLubx4j+ZFuDavslz5hfe2wCzGD9
- p/s+1+CJdqHZ2kmoE1Gp3FA/u+kH68OGBm7wmGdfvba7/h7mOq91qZi55jJk7zGtvQ932p
- FuRbtCLhxfi/uKXTAywjs0NEPVq6sLo=
+ bh=pQPQBK3F62z6akTtDMAEGfDEtkQU09o6OnOmv2Ax/wE=;
+ b=C0jbxoKxxhjAZVEnTaYaHEpLU8tD7uuRMlrwJaxnI7lym2oWqvbLP8mKpZ417p6dcyuXOA
+ nXq7tJzQ99h1RzhbAn43Wnr3EMNIPR9WypRUwAxIrOJ4cjaz+9ECgeK7jFLXpuxL7POPWw
+ UdSi4M5vijZl9yCIWdP2rRaSsFIkiW8=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-l5ClZKQeML6sM_83HsmHbw-1; Tue, 24 Dec 2024 10:53:40 -0500
-X-MC-Unique: l5ClZKQeML6sM_83HsmHbw-1
-X-Mimecast-MFC-AGG-ID: l5ClZKQeML6sM_83HsmHbw
+ us-mta-444-7ZO6eyBAOO2sjzSLK36_wg-1; Tue, 24 Dec 2024 10:54:45 -0500
+X-MC-Unique: 7ZO6eyBAOO2sjzSLK36_wg-1
+X-Mimecast-MFC-AGG-ID: 7ZO6eyBAOO2sjzSLK36_wg
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385e3cbf308so2206926f8f.2
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:53:40 -0800 (PST)
+ ffacd0b85a97d-3862a49fbdaso2220700f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 07:54:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735055619; x=1735660419;
+ d=1e100.net; s=20230601; t=1735055684; x=1735660484;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rpwUlF2+hfvdP8OnbqhutbLTrztQBNU9uyxVoaDuj+0=;
- b=Nly043hrxRUJMY+jXWUpkfOvVz15EeFoRT9iOg2pFMho5zi/eHSMpCPoGJFsi2KSVU
- iyRYWX+mqQ8wdsyRVsPLNEDR03lft2CYmUiBdoMS1mZT33273SOtancakd+PRqBNI744
- OMS9dQRamqoRXNjpiL4dKHFt7JFWrG3VjbIAzdU3au6+uqTNMbQ7T5omLF4biAoreT8L
- +oZzDNzNffTzoDrNxZJ4pSqH28qw6May4BDpJzcxmLbT7ex1HxMZTCDVXCZt6jcrVOpY
- 0dJJPsO3Ov9rve6lJhvIMM2WVkZZVIfwWr9VsBLHRHpWRx2g+3lmnize4NIw7qnO/zGO
- vroA==
+ bh=pQPQBK3F62z6akTtDMAEGfDEtkQU09o6OnOmv2Ax/wE=;
+ b=Zti29dsesIqW8nyOw8LTw71lBhGVuKWxbAbx3YBpkCY906BSJm8aBXCHEBPq7SB4Cp
+ Ig2vifzfcrBtATM+MmO9YpqYacfcj2CZmLu1G0Lb96ycs4qiuL9i/rcoG49mrxN8N3V6
+ BkSumQq2IqTq3D8SaWAjS46QImFrJ13Cp1iNxSwLh/J1os2EPATZS7C+jgLzUzk1yFsu
+ i4tagf2XI/q6gfoq9JPSrF0St0+jnr9hFfSvDxsjo5bgW8ZKKruQIDQzTpm9O7ZxG4n4
+ CKgmZQyQCVfFctpX+4c1LVNmVw5nCq2fceU30qdYOISTDhcMukbxgsrxSaT3dymmhzyy
+ i+ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxMbOi1qhEGVMeGL/w4NVIkdC0zM2kHaAI1FHFlUFC4gRjyqtRyc5eDbVk3QqIv6pI0vdbHNi7n2N+@nongnu.org
-X-Gm-Message-State: AOJu0YzD+3pR0wts8vR/ej3zZGJ2ZGvnZUTeV1bToCMXrth5rcsBk4oM
- MbT72bIU87LQwbf8MJNDXeC8C0T/aG9TzDS0vdDKihCTIdgHd8sPcR7qhCHAHdmP8JYE33wDsDn
- wrjadg2yS9GaT5ZipT/07Xlg5x2OOWY+lE39YPg9ckZI93H8aAMv9
-X-Gm-Gg: ASbGncsk+DeX3Qn4xdjE5Di2NcQpIK/k5kUhrb7TpDD/cG7cumEi/8qCPLbJEzNToZu
- MeFqqB/8miq7EY7PddL7GhZG96cQOt7LkDUriyZ9evsFBv+a7XhDaZQiYMaBR1U2jlmfEM4rGdj
- SPCqkE4y0WO+tlfwd1bkW6kdKMEYeRrKcykXIWA5Kn+zXalQ4Vc5MgSWx2wctTjWFbU6ZK5FqNl
- m6GLVXDDs2SlwOIwNniap90rZTSpNKuYmpdxdUs3uwcIosRmySI4VJbZ/oG
-X-Received: by 2002:a05:6000:4a0a:b0:385:ef39:6ce9 with SMTP id
- ffacd0b85a97d-38a221f1716mr17022023f8f.21.1735055619026; 
- Tue, 24 Dec 2024 07:53:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFy9XW2NulrQYqV0MVeF/XsUmbOaFu2z92cG6Vt4kGG5ZVAIDbCB38c22EYDJB0tagRQEFq8A==
-X-Received: by 2002:a05:6000:4a0a:b0:385:ef39:6ce9 with SMTP id
- ffacd0b85a97d-38a221f1716mr17022007f8f.21.1735055618638; 
- Tue, 24 Dec 2024 07:53:38 -0800 (PST)
+ AJvYcCUX8BTRHyPy4ar/s8sFRbCjIxDDtYXZM79VVFfELnpj3/Ll0bSO4FzWxgvWkKhB6PFKF0aGiBGFMhCN@nongnu.org
+X-Gm-Message-State: AOJu0YxD9DryP1KDsvxIJj5LvkNZJ2C4qUggYK9F9QjgI8/lcLCRxpjR
+ ZgmCZ8a/gb0Bq6awNRbUXKfD+kd5aUH2xDq0KrNYu4RUgndyvixCvz1lvcuBEQE5aQ5O2Bwa4qR
+ cRzNwhdAu7EGmnaz3GUvguxciECLYQ2KfdhswEhmiOz0Ngl5WDSAa
+X-Gm-Gg: ASbGncsFt1PV410dhK8Tdc28i1AT4ao4NPR6MWUEUUKONN7b4o1LVUnn7ruhYR1zIrE
+ d2zN9h4A/RX2y4l3enQnN3dG0K0wT0JM4QTxlnyTHBxXbfS1VV3CxzBP1mFPSkH0vJ7ZsDXO0b/
+ 6rHvQ4DqrZPs9qiCnmQgtZlvdAnMTBLpvMuZjQXEx4qvrcklvY1XfmmaOWufRbFtVL0RevCGZhV
+ aUqp/JaODm8esyDUKqHw7LONBfmShEfwLEUFsRfDMYZfGQxN8aiiNxDoufb
+X-Received: by 2002:a05:6000:18a4:b0:385:cf9d:2720 with SMTP id
+ ffacd0b85a97d-38a221fb1b4mr13707797f8f.23.1735055684162; 
+ Tue, 24 Dec 2024 07:54:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFiJ6dOOb2ZXcY8eI4jxEc9RtVJ0acqzKGJNNsIjsvrgCxL/LV/rbybZ2Hmp8mx3SwrhmxD5g==
+X-Received: by 2002:a05:6000:18a4:b0:385:cf9d:2720 with SMTP id
+ ffacd0b85a97d-38a221fb1b4mr13707776f8f.23.1735055683785; 
+ Tue, 24 Dec 2024 07:54:43 -0800 (PST)
 Received: from [192.168.10.27] ([151.62.105.73])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8acc02sm14301906f8f.104.2024.12.24.07.53.37
+ ffacd0b85a97d-38a1c832e69sm14302199f8f.35.2024.12.24.07.54.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 07:53:38 -0800 (PST)
-Message-ID: <ff866f4c-766c-4637-ba73-bbbdd4b15a2c@redhat.com>
-Date: Tue, 24 Dec 2024 16:53:36 +0100
+ Tue, 24 Dec 2024 07:54:43 -0800 (PST)
+Message-ID: <5463356b-827f-4c9f-a76e-02cd580fe885@redhat.com>
+Date: Tue, 24 Dec 2024 16:54:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/11] target/i386/kvm: Clean up error handling in
- kvm_arch_init()
+Subject: Re: [PATCH v5 11/11] target/i386/kvm: Replace
+ ARRAY_SIZE(msr_handlers) with KVM_MSR_FILTER_MAX_RANGES
 To: Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
@@ -87,7 +87,7 @@ To: Zhao Liu <zhao1.liu@intel.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
 References: <20241106030728.553238-1-zhao1.liu@intel.com>
- <20241106030728.553238-11-zhao1.liu@intel.com>
+ <20241106030728.553238-12-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -125,7 +125,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20241106030728.553238-11-zhao1.liu@intel.com>
+In-Reply-To: <20241106030728.553238-12-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -154,121 +154,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/6/24 04:07, Zhao Liu wrote:
-> Currently, there're following incorrect error handling cases in
-> kvm_arch_init():
-> * Missed to handle failure of kvm_get_supported_feature_msrs().
-> * Missed to return when kvm_vm_enable_disable_exits() fails.
+> kvm_install_msr_filters() uses KVM_MSR_FILTER_MAX_RANGES as the bound
+> when traversing msr_handlers[], while other places still compute the
+> size by ARRAY_SIZE(msr_handlers).
+> 
+> In fact, msr_handlers[] is an array with the fixed size
+> KVM_MSR_FILTER_MAX_RANGES, so there is no difference between the two
+> ways.
+> 
+> For the code consistency and to avoid additional computational overhead,
+> use KVM_MSR_FILTER_MAX_RANGES instead of ARRAY_SIZE(msr_handlers).
 
-At least in these two cases I think it was intentional to avoid hard 
-failures.  It's probably not a very likely case and I think your patch 
-is overall a good idea.
+I agree with the consistency but I'd go the other direction.
 
 Paolo
 
-> * MSR filter related cases called exit() directly instead of returning
->    to kvm_init(). (The caller of kvm_arch_init() - kvm_init() - needs to
->    know if kvm_arch_init() fails in order to perform cleanup).
-> 
-> Fix the above cases.
-> 
+> Suggested-by: Zide Chen <zide.chen@intel.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > Reviewed-by: Zide Chen <zide.chen@intel.com>
 > ---
-> v5: cleaned up kvm_vm_enable_energy_msrs().
-> v3: new commit.
+> v4: new commit.
 > ---
->   target/i386/kvm/kvm.c | 25 ++++++++++++++++---------
->   1 file changed, 16 insertions(+), 9 deletions(-)
+>   target/i386/kvm/kvm.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
 > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 69825b53b6da..013c0359acbe 100644
+> index 013c0359acbe..501873475255 100644
 > --- a/target/i386/kvm/kvm.c
 > +++ b/target/i386/kvm/kvm.c
-> @@ -3147,7 +3147,7 @@ static int kvm_vm_enable_userspace_msr(KVMState *s)
->       return 0;
->   }
->   
-> -static void kvm_vm_enable_energy_msrs(KVMState *s)
-> +static int kvm_vm_enable_energy_msrs(KVMState *s)
+> @@ -5885,7 +5885,7 @@ static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
 >   {
->       int ret;
+>       int i, ret;
 >   
-> @@ -3157,7 +3157,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
->           if (ret < 0) {
->               error_report("Could not install MSR_RAPL_POWER_UNIT handler: %s",
->                            strerror(-ret));
-> -            exit(1);
-> +            return ret;
->           }
+> -    for (i = 0; i < ARRAY_SIZE(msr_handlers); i++) {
+> +    for (i = 0; i < KVM_MSR_FILTER_MAX_RANGES; i++) {
+>           if (!msr_handlers[i].msr) {
+>               msr_handlers[i] = (KVMMSRHandlers) {
+>                   .msr = msr,
+> @@ -5911,7 +5911,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
+>       int i;
+>       bool r;
 >   
->           ret = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
-> @@ -3165,7 +3165,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
->           if (ret < 0) {
->               error_report("Could not install MSR_PKG_POWER_LIMIT handler: %s",
->                            strerror(-ret));
-> -            exit(1);
-> +            return ret;
->           }
+> -    for (i = 0; i < ARRAY_SIZE(msr_handlers); i++) {
+> +    for (i = 0; i < KVM_MSR_FILTER_MAX_RANGES; i++) {
+>           KVMMSRHandlers *handler = &msr_handlers[i];
+>           if (run->msr.index == handler->msr) {
+>               if (handler->rdmsr) {
+> @@ -5931,7 +5931,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+>       int i;
+>       bool r;
 >   
->           ret = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
-> @@ -3173,17 +3173,17 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
->           if (ret < 0) {
->               error_report("Could not install MSR_PKG_POWER_INFO handler: %s",
->                            strerror(-ret));
-> -            exit(1);
-> +            return ret;
->           }
->           ret = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
->                                kvm_rdmsr_pkg_energy_status, NULL);
->           if (ret < 0) {
->               error_report("Could not install MSR_PKG_ENERGY_STATUS handler: %s",
->                            strerror(-ret));
-> -            exit(1);
-> +            return ret;
->           }
->       }
-> -    return;
-> +    return 0;
->   }
->   
->   int kvm_arch_init(MachineState *ms, KVMState *s)
-> @@ -3250,7 +3250,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->           return ret;
->       }
->   
-> -    kvm_get_supported_feature_msrs(s);
-> +    ret = kvm_get_supported_feature_msrs(s);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
->   
->       uname(&utsname);
->       lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
-> @@ -3286,6 +3289,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->           if (ret < 0) {
->               error_report("kvm: guest stopping CPU not supported: %s",
->                            strerror(-ret));
-> +            return ret;
->           }
->       }
->   
-> @@ -3317,12 +3321,15 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->           }
->   
->           if (s->msr_energy.enable == true) {
-> -            kvm_vm_enable_energy_msrs(s);
-> +            ret = kvm_vm_enable_energy_msrs(s);
-> +            if (ret < 0) {
-> +                return ret;
-> +            }
->   
->               ret = kvm_msr_energy_thread_init(s, ms);
->               if (ret < 0) {
->                   error_report("kvm : error RAPL feature requirement not met");
-> -                exit(1);
-> +                return ret;
->               }
->           }
->       }
+> -    for (i = 0; i < ARRAY_SIZE(msr_handlers); i++) {
+> +    for (i = 0; i < KVM_MSR_FILTER_MAX_RANGES; i++) {
+>           KVMMSRHandlers *handler = &msr_handlers[i];
+>           if (run->msr.index == handler->msr) {
+>               if (handler->wrmsr) {
 
 
