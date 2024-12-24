@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F134E7718D
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 14:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A40E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 14:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ5pa-0006d2-QD; Tue, 24 Dec 2024 09:24:19 -0500
+	id 1tQ5pd-0006dT-1Z; Tue, 24 Dec 2024 09:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQ5pU-0006cQ-Fm
+ id 1tQ5pT-0006cG-UP
  for qemu-devel@nongnu.org; Tue, 24 Dec 2024 09:24:12 -0500
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQ5pT-0005LS-2Z
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 09:24:12 -0500
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal
- [10.202.2.51])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 3B1A4254015A;
- Tue, 24 Dec 2024 09:24:10 -0500 (EST)
+ id 1tQ5pR-0005LE-K2
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 09:24:11 -0500
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal
+ [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id D11DF11401A1;
+ Tue, 24 Dec 2024 09:24:08 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-11.internal (MEProxy); Tue, 24 Dec 2024 09:24:10 -0500
+ by phl-compute-02.internal (MEProxy); Tue, 24 Dec 2024 09:24:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1735050250;
- x=1735136650; bh=SaPuX7Cz9/OgI2m94j3k/tRF3jgedJYajcJ7jGWKldw=; b=
- p23D/1IcTBo0zZLGNrE/Dlk62dzAdjlG/CALe0w2G6qZmAf1WjbjyFOfUXEwYKxQ
- LPo5/pObCzRc09APaxDzea2KVV0M0JmN7n6F/6wY6nuQT2X5gsisOAho6smTHhxn
- hM4hsBwOSqSYLegPNQYunScaIXrfofAqM29//oCtAyv/gR56CKYp6kpvr3mxBcGt
- KVd9sxYF5pgyE5G5GXc7eWH/mqQ9gN/q7yTdkJhZKQX5FoQyq8ZzNo2QrQNC6+/o
- f9kwaHTis8L9L/rGCaPGTuIPjaSn+FFp6g9LPdJaRDiuQV/YAs67s9nwHVuD8yV+
- 3rqDC23Z+BWgPT8ojJLc9w==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1735050248;
+ x=1735136648; bh=3qYAndq7s0eBH/drwPl9cVRryaUciC46E2g6bJ91r28=; b=
+ T7wE2M3vjPOiTEzGj4Yco2ickKsJI14L4dtuE4QFZJM58I/J54/5SCOcIJWuHY5r
+ EuxLQzWaykZ/VUsyDOetPcRXUKIv+VkfyirXsdMgqdkwrNU26HdqiYdcJ8y0wDTt
+ Hb4/oHmboc+TKlKJ0uP8r5C0b2aO1QWrkPfZ8OR+1E1oZibKK9GVNWZB+eS2fVPy
+ sAdFOmzagb2y4hZ1pKIxwl7YQPoP1WIK4BJy8C1k9MoRE4aeIkxL4cuA58/0I6et
+ we0H+IEytyjoX55WFAiKSrvNo0fKcrgesGgQqvN683RanGqh6fRsz+LXpmrk3zPH
+ OpqLbpzbSSj+qH1wEEarbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735050250; x=
- 1735136650; bh=SaPuX7Cz9/OgI2m94j3k/tRF3jgedJYajcJ7jGWKldw=; b=W
- /I+JZqmRg1fjqOOZxFkidYbZ83NzLGbe93vhlcHcKLOYR5kfogA4iIFqoBATQwr2
- yp/oeeLoXBq6HY/DH/QfTVySNwHXJhRzDWxThXSy4vgooYv8jHGMvNeoMSZDruPA
- G0C7tQLfMB+600TISKmSTCEPXHt+FfoJOhmEvkDkA3mqqxm6rTnYACmwv0P46H3l
- rQit9dG1myEBY2PsTWk1W4mCd3leBiNgsnoyxcqyOq5wOovc8/9YwnQXCE38pI53
- tQtlM6HyMnVYRF/aKrgM1voN9PKmrYUbTGLgTW3cb/RBXO6Z+1FEYuLT/hc6mkf6
- POVw6yFicnSZkoNxlQYtQ==
-X-ME-Sender: <xms:CcRqZ4WLP7jA1K3aBO5IBlV9yk-0d_Z_xFj0JkEdByiAejBxgHr0qw>
- <xme:CcRqZ8kB-sY4qHqxecrV7SQxadLhbuuV-DjkTFd-gM_AExMltzkwkJnLYHfz5Ixov
- xWuUCW3zUOk-rpFKQc>
-X-ME-Received: <xmr:CcRqZ8awuUD-Azf9sHhOa83lDy1cEEXrxk22xllFj3Xjk20x8h5Y78hm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugedgiedtucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735050248; x=
+ 1735136648; bh=3qYAndq7s0eBH/drwPl9cVRryaUciC46E2g6bJ91r28=; b=C
+ tNIYbcF5LUmJpteeYfkmBcnrf8caImtLSonvTeP8P3a+DZVSN314NgWU06DnHLk1
+ l26/6nNhyMldRb/FmszVahv40wM+yBDEsQJwHB7j73MRIl2S1ZubDRBqUGEio2Wo
+ sW66j9akMRxzR8UxPJDtWtUQDfJ2KLpT5StNSgrkBbiy5IbmGdsehSM1JGy8vvf1
+ +L9EeAnY6VGSm1qeFCt++PlwpAehQaAz1WRXZQjYewgPiGqkyeoDfx6hiXX5ezkR
+ SulezZ67d4uCPd52oHxIj/dbJ8nuypf7GKot4jmTErdHdxCZN7LtFKfFJr76+ZNw
+ x/4YSIc9q1cd1siUAO4zg==
+X-ME-Sender: <xms:CMRqZ7w5yXQ8NTUKcIQ6uh0pI1mYeiQNb726DPwQcaPJAHqy8drUnQ>
+ <xme:CMRqZzSZ0gy9YL8ponY6sEN3D7PF-8dVUB7Ax6ry8HK0QkplsI9CzJjg4DRAc0u3t
+ RuOvSR-lZ0_dPI2kTU>
+X-ME-Received: <xmr:CMRqZ1VLoPbXJoUUtiZP3CWsfmAhkrF6-Z1_cLGpknDr6qmIWZeVQihz>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugedgieduucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
  rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
  htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
@@ -67,38 +67,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugedgiedtucetufdoteggod
  vhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepjhhirgiguhhnrdihrghnghesfh
  hlhihgohgrthdrtghomhdprhgtphhtthhopehmrghosghisghosehlohhonhhgshhonhdr
  tghn
-X-ME-Proxy: <xmx:CcRqZ3WUTVNEs6XfJrnLFzT_kwzoyBkArMy2HLsi9ZrlR-xie5dCJQ>
- <xmx:CcRqZykYibk4PpXSr2b5AJI6Z787YN46Lba8ZB97iSOZLPcNd7jtdQ>
- <xmx:CcRqZ8e7xn--DdR9UUUvwJmVUDAjX5-lVdccqv6IsjzW0EkqFoIeWQ>
- <xmx:CcRqZ0FPZBQ8X9UGqn6Xi40HYbgVERv4g7cewJ_t9DfCDU6TDLEvng>
- <xmx:CsRqZzAlfhaJgG_76nZLNrnyJTDdc9edlkxOKr8H7OK3sj6MjEGDqNZF>
+X-ME-Proxy: <xmx:CMRqZ1jdLXPBPn2TZ6JM69o_arayWL2Rs3rfgVjBMzWe7mBeYG4NSw>
+ <xmx:CMRqZ9ASyNh6u8fmgGYXQV50W62LHTKLX273c7gzkV1wBYJxsW50vQ>
+ <xmx:CMRqZ-J-vUZli-sYSOKIF2NPYnS7wLcQLhp4n0fH4huS8eu9ep9CeQ>
+ <xmx:CMRqZ8Cjo8W-4t4iofvpFAT-DXe4OOpqIF7PTMlzgjI8-XO1ecfNxQ>
+ <xmx:CMRqZ4_qfVwTxamFPS97B1v7iqqKEP3dpJTsgaNOl98cZDpaSgIcPKLF>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Dec 2024 09:24:09 -0500 (EST)
+ 24 Dec 2024 09:24:07 -0500 (EST)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Tue, 24 Dec 2024 14:24:02 +0000
-Subject: [PATCH v3 3/3] hw/loongarch/boot: Support 32bit boot code
+Date: Tue, 24 Dec 2024 14:24:01 +0000
+Subject: [PATCH v3 2/3] hw/loongarch/boot: Take care of host endian for
+ boot code
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241224-la-booting-v3-3-a15bee060a43@flygoat.com>
+Message-Id: <20241224-la-booting-v3-2-a15bee060a43@flygoat.com>
 References: <20241224-la-booting-v3-0-a15bee060a43@flygoat.com>
 In-Reply-To: <20241224-la-booting-v3-0-a15bee060a43@flygoat.com>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2526;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6398;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=ggos8KxnCEkX4dJrh0H4vnXnArwrCkYHe5wYIMmNqeE=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhvSsI6yBoms+/vw3e4OyTM2ZsMiTzbU/s85FV1helsz7P
- U9s33u7jlIWBjEuBlkxRZYQAaW+DY0XF1x/kPUHZg4rE8gQBi5OAZjIp1iGv6LZjK0OZoUswnuc
- awVL2azP3XxnfLdzPuPsaROet53UPs/IcH/h1a2l03Le9rw/OTH9t2wdg2h+kuFbhu7sz7nMs3f
- JswIA
+ bh=qX07bZYD/4hNJTJbuHKhMWse2Akd/h7UJjV6MYQVytQ=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhvSsI6yP3tYczpzdF3Zr+qP9v3R9uf5pO+/nPpbX/j9l8
+ jyJezImHaUsDGJcDLJiiiwhAkp9GxovLrj+IOsPzBxWJpAhDFycAjCRytOMDP0rZwqV/J5eWzy1
+ 8eVar0PmGifntGXJXmr8zRI/56+BmS4jQ0fdO68TTrf3b0lSKvjlLbqf//66uy6HSu9PulK1bqv
+ 5cT4A
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=202.12.124.155;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b4-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.146;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout-b3-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -122,59 +123,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace mailbox read/write on LoongArch32 systems with 32bit IOCSR
-instructions to prevent illegal instructions.
+Use stl_p to store instructions so that host endian conversion
+will be performed.
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- hw/loongarch/boot.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ hw/loongarch/boot.c | 99 +++++++++++++++++++++++++++--------------------------
+ 1 file changed, 51 insertions(+), 48 deletions(-)
 
 diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 9cb13c1f154cb15373d6fdcbcbac883e05472e62..0046ad3e424bdcc488db709945d7059749e0cdc3 100644
+index 477c40ccb49d45d4d5026d37db0e79f5f2d89d8e..9cb13c1f154cb15373d6fdcbcbac883e05472e62 100644
 --- a/hw/loongarch/boot.c
 +++ b/hw/loongarch/boot.c
-@@ -22,7 +22,7 @@ unsigned memmap_entries;
+@@ -22,53 +22,56 @@ unsigned memmap_entries;
  ram_addr_t initrd_offset;
  uint64_t initrd_size;
  
--static void generate_secondary_boot_code(void *boot_code)
-+static void generate_secondary_boot_code(void *boot_code, bool  is_64bit)
+-static const unsigned int slave_boot_code[] = {
+-                  /* Configure reset ebase.                    */
+-    0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
+-
+-                  /* Disable interrupt.                        */
+-    0x0380100c,   /* ori        $t0, $zero,0x4                 */
+-    0x04000180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
+-
+-                  /* Clear mailbox.                            */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20  */
+-    0x06481da0,   /* iocsrwr.d  $zero, $t1                     */
+-
+-                  /* Enable IPI interrupt.                     */
+-    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
+-    0x0400118c,   /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG   */
+-    0x02fffc0c,   /* addi.d     $t0, $r0,-1(0xfff)             */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038011ad,   /* ori        $t1, $t1, CORE_EN_OFF          */
+-    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+-
+-                  /* Wait for wakeup  <.L11>:                  */
+-    0x06488000,   /* idle       0x0                            */
+-    0x03400000,   /* andi       $zero, $zero, 0x0              */
+-    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
+-    0x43fff59f,   /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
+-
+-                  /* Read and clear IPI interrupt.             */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038031ad,   /* ori        $t1, $t1, CORE_CLEAR_OFF       */
+-    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
+-
+-                  /* Disable  IPI interrupt.                   */
+-    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
+-    0x04001180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
+-
+-                  /* Read mail buf and jump to specified entry */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+-    0x06480dac,   /* iocsrrd.d  $t0, $t1                       */
+-    0x00150181,   /* move       $ra, $t0                       */
+-    0x4c000020,   /* jirl       $zero, $ra,0                   */
+-};
++static void generate_secondary_boot_code(void *boot_code)
++{
++    uint32_t *p = boot_code;
++
++    /* Configure reset ebase. */
++    stl_p(p++, 0x0400302c); /* csrwr      $t0, LOONGARCH_CSR_EENTRY  */
++
++    /* Disable interrupt. */
++    stl_p(p++, 0x0380100c); /* ori        $t0, $zero, 0x4            */
++    stl_p(p++, 0x04000180); /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
++
++    /* Clear mailbox. */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
++    stl_p(p++, 0x06481da0); /* iocsrwr.d  $zero, $t1                 */
++
++    /* Enable IPI interrupt. */
++    stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
++    stl_p(p++, 0x0400118c); /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG */
++    stl_p(p++, 0x02fffc0c); /* addi.d     $t0, $r0, -1(0xfff)        */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038011ad); /* ori        $t1, $t1, CORE_EN_OFF      */
++    stl_p(p++, 0x064819ac); /* iocsrwr.w  $t0, $t1                   */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
++
++    /* Wait for wakeup <.L11>: */
++    stl_p(p++, 0x06488000); /* idle       0x0                        */
++    stl_p(p++, 0x03400000); /* andi       $zero, $zero, 0x0          */
++    stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1                   */
++    stl_p(p++, 0x43fff59f); /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
++
++    /* Read and clear IPI interrupt. */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1                   */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038031ad); /* ori        $t1, $t1, CORE_CLEAR_OFF   */
++    stl_p(p++, 0x064819ac); /* iocsrwr.w  $t0, $t1                   */
++
++    /* Disable IPI interrupt. */
++    stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
++    stl_p(p++, 0x04001180); /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
++
++    /* Read mail buf and jump to specified entry. */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
++    stl_p(p++, 0x06480dac); /* iocsrrd.d  $t0, $t1                   */
++    stl_p(p++, 0x00150181); /* move       $ra, $t0                   */
++    stl_p(p++, 0x4c000020); /* jirl       $zero, $ra, 0              */
++}
+ 
+ static inline void *guidcpy(void *dst, const void *src)
  {
-     uint32_t *p = boot_code;
- 
-@@ -36,7 +36,11 @@ static void generate_secondary_boot_code(void *boot_code)
-     /* Clear mailbox. */
-     stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-     stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
--    stl_p(p++, 0x06481da0); /* iocsrwr.d  $zero, $t1                 */
-+    if (is_64bit) {
-+        stl_p(p++, 0x06481da0); /* iocsrwr.d  $zero, $t1             */
-+    } else {
-+        stl_p(p++, 0x064819a0); /* iocsrwr.w  $zero, $t1             */
-+    }
- 
-     /* Enable IPI interrupt. */
-     stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
-@@ -68,7 +72,11 @@ static void generate_secondary_boot_code(void *boot_code)
-     /* Read mail buf and jump to specified entry. */
-     stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
-     stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
--    stl_p(p++, 0x06480dac); /* iocsrrd.d  $t0, $t1                   */
-+    if (is_64bit) {
-+        stl_p(p++, 0x06480dac); /* iocsrrd.d  $t0, $t1               */
-+    } else {
-+        stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1               */
-+    }
-     stl_p(p++, 0x00150181); /* move       $ra, $t0                   */
-     stl_p(p++, 0x4c000020); /* jirl       $zero, $ra, 0              */
- }
-@@ -383,7 +391,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+@@ -380,7 +383,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
  
      /* Load slave boot code at pflash0 . */
      void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
--    generate_secondary_boot_code(boot_code);
-+    generate_secondary_boot_code(boot_code, is_la64(&lacpu->env));
+-    memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
++    generate_secondary_boot_code(boot_code);
      rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
  
      CPU_FOREACH(cs) {
