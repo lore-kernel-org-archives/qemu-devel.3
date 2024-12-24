@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9338FE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 08:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3DCE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Dec 2024 08:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQ0UD-0000RA-0q; Tue, 24 Dec 2024 03:41:53 -0500
+	id 1tQ0X4-0001Oi-T7; Tue, 24 Dec 2024 03:44:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tQ0UA-0000QN-M8; Tue, 24 Dec 2024 03:41:50 -0500
+ id 1tQ0X3-0001OU-Gy; Tue, 24 Dec 2024 03:44:49 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tQ0U8-0002qu-6S; Tue, 24 Dec 2024 03:41:50 -0500
+ id 1tQ0X2-000307-1W; Tue, 24 Dec 2024 03:44:49 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YHSyD3S3Zz67YpK;
- Tue, 24 Dec 2024 16:40:20 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YHT1w2YG6z6LD4K;
+ Tue, 24 Dec 2024 16:43:32 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 8977C1402DA;
- Tue, 24 Dec 2024 16:41:33 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 6B36E140520;
+ Tue, 24 Dec 2024 16:44:45 +0800 (CST)
 Received: from localhost (10.195.35.193) by frapeml500003.china.huawei.com
  (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 24 Dec
- 2024 09:41:32 +0100
-Date: Tue, 24 Dec 2024 08:41:27 +0000
+ 2024 09:44:44 +0100
+Date: Tue, 24 Dec 2024 08:44:39 +0000
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 CC: <linuxarm@huawei.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
  <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
@@ -38,12 +38,13 @@ CC: <linuxarm@huawei.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
  <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
  <shameerali.kolothum.thodi@huawei.com>, <jiangkunkun@huawei.com>,
  <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
-Subject: Re: [PATCH v4 1/7] i386/cpu: add IsDefined flag to smp-cache property
-Message-ID: <20241224084127.00004d43@huawei.com>
-In-Reply-To: <20241223174818.000025c7@huawei.com>
+Subject: Re: [PATCH v4 6/7] tests/qtest/bios-table-test: testing new ARM
+ ACPI PPTT topology
+Message-ID: <20241224084439.00004112@huawei.com>
+In-Reply-To: <20241223181145.00003b06@huawei.com>
 References: <20241216175414.1953-1-alireza.sanaee@huawei.com>
- <20241216175414.1953-2-alireza.sanaee@huawei.com>
- <20241223174818.000025c7@huawei.com>
+ <20241216175414.1953-7-alireza.sanaee@huawei.com>
+ <20241223181145.00003b06@huawei.com>
 Organization: Huawei
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -78,61 +79,50 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Dec 2024 17:48:18 +0000
+On Mon, 23 Dec 2024 18:11:45 +0000
 Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-> On Mon, 16 Dec 2024 17:54:08 +0000
+> On Mon, 16 Dec 2024 17:54:13 +0000
 > Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 > 
-> > This commit adds IsDefined flag to the object and this helps in
-> > avoiding extra checks for every single layer of caches in both x86
-> > and ARM.
+> > Test new PPTT topolopy with cache representation.
 > > 
-> > There is already a discussion on mailing list to have this flag. A
-> > patch that enables this flag will follow later.
+> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > ---
+> >  tests/qtest/bios-tables-test.c | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
 > > 
-> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>  
-> Makes sense.  Zhao Liu, is this something you plan to use in the x86
-> code?
-
-Hi Jonathan,
-
-Yes this one comes from Zhao Liu's new patch-set, thanks to him. I will
-have to send another version given that.
+> > diff --git a/tests/qtest/bios-tables-test.c
+> > b/tests/qtest/bios-tables-test.c index 36e5c0adde..0f72520664 100644
+> > --- a/tests/qtest/bios-tables-test.c
+> > +++ b/tests/qtest/bios-tables-test.c
+> > @@ -2019,7 +2019,11 @@ static void
+> > test_acpi_aarch64_virt_tcg_topology(void) .scan_len = 128ULL * 1024
+> > * 1024, };
+> >  
+> > -    test_acpi_one("-cpu cortex-a57 "
+> > +    test_acpi_one("-M
+> > virt,smp-cache.0.cache=l1i,smp-cache.0.topology=cluster,"
+> > +
+> > "smp-cache.1.cache=l1d,smp-cache.1.topology=cluster,"
+> > +
+> > "smp-cache.2.cache=l2,smp-cache.2.topology=cluster,"
+> > +
+> > "smp-cache.3.cache=l3,smp-cache.3.topology=cluster "
+> > +                  "-cpu cortex-a57 "  
+> Trivial but is there a reason the cpu must come after machine / -M
+> bits? If not I'd leave it on first line to reduce the churn in this
+> patch a little.
+Noted. Less churn.
 > 
-> Either way
+> Either way,
+> 
 > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > 
-> > ---
-> >  hw/core/machine-smp.c | 2 ++
-> >  include/hw/boards.h   | 1 +
-> >  2 files changed, 3 insertions(+)
-> > 
-> > diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-> > index 9a28194676..5a02bbf584 100644
-> > --- a/hw/core/machine-smp.c
-> > +++ b/hw/core/machine-smp.c
-> > @@ -371,6 +371,8 @@ bool machine_parse_smp_cache(MachineState *ms,
-> >          return false;
-> >      }
-> >  
-> > +    ms->smp_cache.IsDefined = true;
-> > +
-> >      return true;
-> >  }
-> >  
-> > diff --git a/include/hw/boards.h b/include/hw/boards.h
-> > index db2aa2b706..2883a57084 100644
-> > --- a/include/hw/boards.h
-> > +++ b/include/hw/boards.h
-> > @@ -373,6 +373,7 @@ typedef struct CpuTopology {
-> >  
-> >  typedef struct SmpCache {
-> >      SmpCacheProperties props[CACHE_LEVEL_AND_TYPE__MAX];
-> > +    bool IsDefined;
-> >  } SmpCache;
-> >  
-> >  /**  
+> 
+> >                    "-smp sockets=1,clusters=2,cores=2,threads=2",
+> > &data); free_test_data(&data);
+> >  }  
 > 
 
 
