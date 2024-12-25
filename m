@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1795E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 02:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8181E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 02:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQHYc-0004P2-NN; Tue, 24 Dec 2024 21:55:34 -0500
+	id 1tQHak-00051g-Os; Tue, 24 Dec 2024 21:57:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tQHYa-0004Ot-SA
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:55:32 -0500
+ id 1tQHaj-00051P-2T
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:57:45 -0500
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tQHYZ-0002rm-40
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:55:32 -0500
+ id 1tQHah-00038e-AE
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:57:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1735095331; x=1766631331;
+ t=1735095463; x=1766631463;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=AfZndZCwwqW8fGGdg4N+iydft+loycjq6e2Cmi6ZLNc=;
- b=gnfpM+Aq50moVIVnKoBX/VhdjDtf7JBAgcEa0xZ/HHY8GgYCjGmSmtw6
- j/xzqQRyTff39aGogr0v8+5OwPncOv0afpf1pl1gcIR5Mxtj2Yq1eGxTA
- 1AcZo/Gv0dxFJllbngw7hUk2FDjg0Gkq4f6rQUcFrpdj0sblaNXk+mjPi
- rg8qnZ0ejojTH+Bz0C51r4S8hyXcslvhite5WHPn5QyiuTLvx5p3EjYyA
- +NZQIArxUJEQ7eEPCBOT/lC4lQpTyF5hSzz43o3rYU/dhVQdj28QUjqfQ
- fML2Qun1wgQUsHv/EGhSeJgZfqLLqyKm5eTsMAUMaVuhpdcuG+LUXDybk g==;
-X-CSE-ConnectionGUID: Bc9pGpo1SD6W78D17BYudQ==
-X-CSE-MsgGUID: lDaYnScARCmR3i7oPddGvQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11296"; a="34829825"
-X-IronPort-AV: E=Sophos;i="6.12,262,1728975600"; d="scan'208";a="34829825"
+ bh=9A/iqk1plgz2s/gWjaqcCmE2nOGsWYjIqYnHAEJG6IU=;
+ b=TRt/WaXCwdhGPzPEwRLiLk46II75+nIiJgFnpQ6OfeLU9phPL7YoJC+7
+ n6MCSoWOLkF4Q8Jnzt59Qpoj5NKSwMrFwxxj3QNNsIBeZ6gafSe8E3NTt
+ Mqbe+fR0TvNdb01OTYtIPA5zWn1M/MMKGtj6BdLl1K2xF6SPGLy0sC5k0
+ Fee54ZbyL7ymgtucnJVe5LYopKvl50jWogK4NJX1ybeTr50sJd0y4gMC4
+ QbW8xdH7sACwyxU0p5yY42kRiKP24Z8eex0OI7oaGxlrGKXA4lklj25Gq
+ 3G2V4IpS5SWdFeEu8hMzuZcONOFCULMKycEx4N9EV6bFYw7XFXWw8pkoP Q==;
+X-CSE-ConnectionGUID: M53qBwM/R4m3QTnNTD6S3g==
+X-CSE-MsgGUID: Sv1W9zlaSk2kTlTXRoOPNw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11296"; a="34830117"
+X-IronPort-AV: E=Sophos;i="6.12,262,1728975600"; d="scan'208";a="34830117"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Dec 2024 18:55:29 -0800
-X-CSE-ConnectionGUID: Re400YvoSVakUHYQANkjHw==
-X-CSE-MsgGUID: lz2Iy1CiSdyF96ned8+x0w==
+ 24 Dec 2024 18:57:39 -0800
+X-CSE-ConnectionGUID: 5lcW9VqiSXefn+HpcsTR3g==
+X-CSE-MsgGUID: vAD5X8TETTaJz3x1DgAQRQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="103712908"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="103713460"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 24 Dec 2024 18:55:26 -0800
-Date: Wed, 25 Dec 2024 11:14:09 +0800
+ by fmviesa003.fm.intel.com with ESMTP; 24 Dec 2024 18:57:36 -0800
+Date: Wed, 25 Dec 2024 11:16:19 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -57,16 +57,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Tao Su <tao1.su@linux.intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
  Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v5 10/11] target/i386/kvm: Clean up error handling in
- kvm_arch_init()
-Message-ID: <Z2t4gSUU2ix1EKF1@intel.com>
+Subject: Re: [PATCH v5 11/11] target/i386/kvm: Replace
+ ARRAY_SIZE(msr_handlers) with KVM_MSR_FILTER_MAX_RANGES
+Message-ID: <Z2t5AxDxRvQ1sIO8@intel.com>
 References: <20241106030728.553238-1-zhao1.liu@intel.com>
- <20241106030728.553238-11-zhao1.liu@intel.com>
- <ff866f4c-766c-4637-ba73-bbbdd4b15a2c@redhat.com>
+ <20241106030728.553238-12-zhao1.liu@intel.com>
+ <5463356b-827f-4c9f-a76e-02cd580fe885@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ff866f4c-766c-4637-ba73-bbbdd4b15a2c@redhat.com>
+In-Reply-To: <5463356b-827f-4c9f-a76e-02cd580fe885@redhat.com>
 Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
@@ -92,25 +92,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 24, 2024 at 04:53:36PM +0100, Paolo Bonzini wrote:
-> Date: Tue, 24 Dec 2024 16:53:36 +0100
+On Tue, Dec 24, 2024 at 04:54:41PM +0100, Paolo Bonzini wrote:
+> Date: Tue, 24 Dec 2024 16:54:41 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH v5 10/11] target/i386/kvm: Clean up error handling in
->  kvm_arch_init()
+> Subject: Re: [PATCH v5 11/11] target/i386/kvm: Replace
+>  ARRAY_SIZE(msr_handlers) with KVM_MSR_FILTER_MAX_RANGES
 > 
 > On 11/6/24 04:07, Zhao Liu wrote:
-> > Currently, there're following incorrect error handling cases in
-> > kvm_arch_init():
-> > * Missed to handle failure of kvm_get_supported_feature_msrs().
-> > * Missed to return when kvm_vm_enable_disable_exits() fails.
+> > kvm_install_msr_filters() uses KVM_MSR_FILTER_MAX_RANGES as the bound
+> > when traversing msr_handlers[], while other places still compute the
+> > size by ARRAY_SIZE(msr_handlers).
+> > 
+> > In fact, msr_handlers[] is an array with the fixed size
+> > KVM_MSR_FILTER_MAX_RANGES, so there is no difference between the two
+> > ways.
+> > 
+> > For the code consistency and to avoid additional computational overhead,
+> > use KVM_MSR_FILTER_MAX_RANGES instead of ARRAY_SIZE(msr_handlers).
 > 
-> At least in these two cases I think it was intentional to avoid hard
-> failures.  It's probably not a very likely case and I think your patch is
-> overall a good idea.
+> I agree with the consistency but I'd go the other direction.
+>
 
-I have the idea to clean up the abort()/exit() in KVM and instead use
-@errp to handle failure cases. However, this would be a big change, so
-this patch only makes a small change, as a first step.
+OK, I'll switch to the other way.
 
 Thanks,
 Zhao
