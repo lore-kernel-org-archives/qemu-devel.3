@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 752DCE7718B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 03:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70031E7718D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 05:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQI6i-00033A-AK; Tue, 24 Dec 2024 22:30:48 -0500
+	id 1tQKC2-000716-GC; Wed, 25 Dec 2024 00:44:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tQI6Z-00031h-KD
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 22:30:46 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tQI6X-0001hm-9w
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 22:30:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1735097437; x=1766633437;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=3iKFT4z2oDkIUweu+RodEq/bkoPWuslvhF1RfRv3KD4=;
- b=jZ7yjmy4ZHndvv/fdFWlQpIINO2OmCMw/g62ojcMokduRkC+C4I3TfDB
- utlcl9DAhCEwGQc9TG0E1V/IYDbgTxpSaUc03tVIlZ3qdeRP3BJlt5XS4
- PIvmT1QoDfVZzqD6G/B+mGmOQDinE8D32pdSZZFWXO3Ga4RIhqTPfzyD6
- erfGEaXl2U1ZKDU/fGNGG5RfuOJdCLeKft5lEx3VKd47pnOOf87fR+AmG
- k5AcUiZ2MQPOUbGXsM0TYDdbytM2onR92XF0R0HPqlRsHoCne/tDMbf75
- d3O0XYxLjhzCl0VTXaiBrsfGTFlApYw4o0UaGYqwRwRCe1noZqjbMlAAZ Q==;
-X-CSE-ConnectionGUID: kioJggVPSamhxti36xsKPg==
-X-CSE-MsgGUID: LJvM7ATiS8y2H84YJMwS4w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11296"; a="35721418"
-X-IronPort-AV: E=Sophos;i="6.12,262,1728975600"; d="scan'208";a="35721418"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Dec 2024 19:30:34 -0800
-X-CSE-ConnectionGUID: 1i829XcrTwm/HZyv+8aUBg==
-X-CSE-MsgGUID: TujlvUd2Sc+92wxfcfh4vA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="104250933"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 24 Dec 2024 19:30:32 -0800
-Date: Wed, 25 Dec 2024 11:49:14 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Tao Su <tao1.su@linux.intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Pankaj Gupta <pankaj.gupta@amd.com>,
- Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v5 05/11] target/i386/kvm: Save/load MSRs of kvmclock2
- (KVM_FEATURE_CLOCKSOURCE2)
-Message-ID: <Z2uAupHhVT7/HfWw@intel.com>
-References: <20241106030728.553238-1-zhao1.liu@intel.com>
- <20241106030728.553238-6-zhao1.liu@intel.com>
- <af13d0c9-1d73-4cdd-8fd0-eff86a5711d3@redhat.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tQKC0-00070j-VI
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 00:44:24 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tQKBz-0008Hr-5g
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 00:44:24 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2ef89dbd8eeso4429834a91.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 21:44:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1735105462; x=1735710262;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=b7RpjOm/DRzNyiYtGsOFcg7Tby9rNOjO2BBVF9kv5qg=;
+ b=ZbubS6a2P/9VicKMcLQKuC0qHJ0RXTJAWdohjkPZG2yafMGE0/SB+Ufq+TJnDFMDsM
+ EQmfZiNSJrp6yD+thi/UK96dF/w2QDdOEJtndZHSZdcihMlG57UgFXuuSUDwuv63dBOT
+ ncFi7h8Djs+NsmBja3Ngf34rbrdsU+2oVrC9mJdDd7ClWnWd2tKyUa8UuDXUxTOwpxXh
+ /eD/CpSmLnizmVgh90T+H6ohXwcFjvZ5gXkctA2P3+4wxcG0uNAWkCmhGjOstrhNNf56
+ CV4y3fvXtJLeUuFvn3HZBcayKhvoAZz/W+vaps6IdGIgpw8piJZpOrwsJOhVaBW/OuhC
+ 9/0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735105462; x=1735710262;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b7RpjOm/DRzNyiYtGsOFcg7Tby9rNOjO2BBVF9kv5qg=;
+ b=KIq1aNAPiy9LaTvr51FCzbSemYVT1vbSLs/IAjKuZcw5m8hNiDJzSjDTb3i4aLhZxP
+ sdKJq1rz39i9UoTuW92ZokjLSD+zr1UnwmK8ToRXPDLxrnXy2StmI3XGvKTdD+B0xBeG
+ xlju0kZK1YC7+nCbAVTJthMdpKh+tecCdYKRsUGOVZc2JdHrQ2AU6NVPPiePa9nEXtT2
+ I6qU2omutkhSUArALTIq1ceD6eO0ArDs3Nwny7grytycRUEPMMlMt/LxEM3Y72VsAw8O
+ zWKa9Jd/Ab92OdlkvKR5nP/WxqXPxa27mcMfsA7LnI236iZ4w77UkbRYSpxpua3JnwTY
+ j8CA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+ASUxQxS085a0EQRpGfiysbmBodRJYv3RRUoRa8vaw/mYHk9dTUxav7iJFsWf2G8M3ZcfVO5oGOJ8@nongnu.org
+X-Gm-Message-State: AOJu0YxWqmsqldyTbD+ZgF2kXnzxUczMK/KFQAprN1cdyc/AoOubR9Lt
+ CLnaMXvJ7U69+xjzjavin6uad/jWnAvtYO2GL3KI/Wz4czKhzAHGAoDDSLjkb3U=
+X-Gm-Gg: ASbGncsBYYyO4+NBkC9dO1pwjJcNBfH+yWvQIQK0vLHoOXxsSfHGacBFgfCUrot1ae6
+ DSW6o08BqgaqfE0SWxSnt3aruMs6uVpnkIK7Q+v/54ape2y5rMdU0ftC/KyfXVTVQW7HBsLvA5X
+ d8L5/vbjifXmSoZAQcdO2BW/KGyH2ToNf60m/C2N2YTsyjvH1PNjFAv17wGV2XhhTG+k1JPDFyh
+ UCGH9XaUJDONv0Z9S2NG5FwH9jQvogmRGOXgOycc6neIMzPVTB1Xf/M+ljh
+X-Google-Smtp-Source: AGHT+IGa2l6dwZz0j525YolHjw3IJJJPuYTmsAG3f7lXGhmQOcauWO7gJ255qeBXcHHq2uDXWiRqHQ==
+X-Received: by 2002:a17:90b:54d0:b0:2ee:c918:cd60 with SMTP id
+ 98e67ed59e1d1-2f452e4a7f6mr28970252a91.20.1735105461854; 
+ Tue, 24 Dec 2024 21:44:21 -0800 (PST)
+Received: from localhost ([157.82.207.107])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-2f2ee26b131sm14653894a91.44.2024.12.24.21.44.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Dec 2024 21:44:21 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Wed, 25 Dec 2024 14:44:13 +0900
+Subject: [PATCH 1/8] futex: Check value after qemu_futex_wait()
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <af13d0c9-1d73-4cdd-8fd0-eff86a5711d3@redhat.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241225-event-v1-1-a58c8d63eb70@daynix.com>
+References: <20241225-event-v1-0-a58c8d63eb70@daynix.com>
+In-Reply-To: <20241225-event-v1-0-a58c8d63eb70@daynix.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org, 
+ devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,25 +102,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 24, 2024 at 04:32:42PM +0100, Paolo Bonzini wrote:
-> Date: Tue, 24 Dec 2024 16:32:42 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH v5 05/11] target/i386/kvm: Save/load MSRs of kvmclock2
->  (KVM_FEATURE_CLOCKSOURCE2)
-> 
-> On 11/6/24 04:07, Zhao Liu wrote:
-> > MSR_KVM_SYSTEM_TIME_NEW and MSR_KVM_WALL_CLOCK_NEW are bound to
-> > kvmclock2 (KVM_FEATURE_CLOCKSOURCE2).
-> > 
-> > Add the save/load support for these 2 MSRs just like kvmclock MSRs.
-> 
-> As mentioned in the previous patch, this is not necessary.  If it was
-> needed, you'd have to also add VMSTATE fields in machine.c
-> 
+futex(2) - Linux manual page
+https://man7.org/linux/man-pages/man2/futex.2.html
+> Note that a wake-up can also be caused by common futex usage patterns
+> in unrelated code that happened to have previously used the futex
+> word's memory location (e.g., typical futex-based implementations of
+> Pthreads mutexes can cause this under some conditions).  Therefore,
+> callers should always conservatively assume that a return value of 0
+> can mean a spurious wake-up, and use the futex word's value (i.e.,
+> the user-space synchronization scheme) to decide whether to continue
+> to block or not.
 
-I see, thanks!
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ include/qemu/futex.h              |  9 +++++++++
+ tests/unit/test-aio-multithread.c |  4 +++-
+ util/qemu-thread-posix.c          | 28 ++++++++++++++++------------
+ 3 files changed, 28 insertions(+), 13 deletions(-)
 
-Regards,
-Zhao
+diff --git a/include/qemu/futex.h b/include/qemu/futex.h
+index 91ae88966e12..f57774005330 100644
+--- a/include/qemu/futex.h
++++ b/include/qemu/futex.h
+@@ -24,6 +24,15 @@ static inline void qemu_futex_wake(void *f, int n)
+     qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
+ }
+ 
++/*
++ * Note that a wake-up can also be caused by common futex usage patterns in
++ * unrelated code that happened to have previously used the futex word's
++ * memory location (e.g., typical futex-based implementations of Pthreads
++ * mutexes can cause this under some conditions).  Therefore, callers should
++ * always conservatively assume that it is a spurious wake-up, and use the futex
++ * word's value (i.e., the user-space synchronization scheme) to decide whether
++ * to continue to block or not.
++ */
+ static inline void qemu_futex_wait(void *f, unsigned val)
+ {
+     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
+diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
+index 08d4570ccb14..8c2e41545a29 100644
+--- a/tests/unit/test-aio-multithread.c
++++ b/tests/unit/test-aio-multithread.c
+@@ -305,7 +305,9 @@ static void mcs_mutex_lock(void)
+     prev = qatomic_xchg(&mutex_head, id);
+     if (prev != -1) {
+         qatomic_set(&nodes[prev].next, id);
+-        qemu_futex_wait(&nodes[id].locked, 1);
++        while (qatomic_read(&nodes[id].locked) == 1) {
++            qemu_futex_wait(&nodes[id].locked, 1);
++        }
+     }
+ }
+ 
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index b2e26e21205b..eade5311d175 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -428,17 +428,21 @@ void qemu_event_wait(QemuEvent *ev)
+ 
+     assert(ev->initialized);
+ 
+-    /*
+-     * qemu_event_wait must synchronize with qemu_event_set even if it does
+-     * not go down the slow path, so this load-acquire is needed that
+-     * synchronizes with the first memory barrier in qemu_event_set().
+-     *
+-     * If we do go down the slow path, there is no requirement at all: we
+-     * might miss a qemu_event_set() here but ultimately the memory barrier in
+-     * qemu_futex_wait() will ensure the check is done correctly.
+-     */
+-    value = qatomic_load_acquire(&ev->value);
+-    if (value != EV_SET) {
++    while (true) {
++        /*
++         * qemu_event_wait must synchronize with qemu_event_set even if it does
++         * not go down the slow path, so this load-acquire is needed that
++         * synchronizes with the first memory barrier in qemu_event_set().
++         *
++         * If we do go down the slow path, there is no requirement at all: we
++         * might miss a qemu_event_set() here but ultimately the memory barrier
++         * in qemu_futex_wait() will ensure the check is done correctly.
++         */
++        value = qatomic_load_acquire(&ev->value);
++        if (value == EV_SET) {
++            break;
++        }
++
+         if (value == EV_FREE) {
+             /*
+              * Leave the event reset and tell qemu_event_set that there are
+@@ -452,7 +456,7 @@ void qemu_event_wait(QemuEvent *ev)
+              * like the load above.
+              */
+             if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
+-                return;
++                break;
+             }
+         }
+ 
+
+-- 
+2.47.1
 
 
