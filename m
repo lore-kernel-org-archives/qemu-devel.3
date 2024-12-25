@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F22ECE77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 02:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040B2E7718E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 02:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQHK3-0007T1-JP; Tue, 24 Dec 2024 21:40:31 -0500
+	id 1tQHK2-0007SY-PD; Tue, 24 Dec 2024 21:40:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tQHK1-0007RK-AN
+ id 1tQHK0-0007Qx-WC
  for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:29 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tQHJx-0000YC-KD
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:29 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tQHJx-0000Y4-K0
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:28 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxTOKQcGtnNEBaAA--.45437S3;
- Wed, 25 Dec 2024 10:40:16 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCx3sWJcGtnJV0IAA--.35957S7;
+ by gateway (Coremail) with SMTP id _____8DxDeOPcGtnMkBaAA--.45566S3;
  Wed, 25 Dec 2024 10:40:15 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMCx3sWJcGtnJV0IAA--.35957S6;
+ Wed, 25 Dec 2024 10:40:14 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org,
 	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 5/6] target/loongarch: Use auto method with LSX feature
-Date: Wed, 25 Dec 2024 10:40:07 +0800
-Message-Id: <20241225024008.486236-6-maobibo@loongson.cn>
+Subject: [PULL 4/6] hw/loongarch/virt: Improve fdt table creation for CPU
+ object
+Date: Wed, 25 Dec 2024 10:40:06 +0800
+Message-Id: <20241225024008.486236-5-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20241225024008.486236-1-maobibo@loongson.cn>
 References: <20241225024008.486236-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx3sWJcGtnJV0IAA--.35957S7
+X-CM-TRANSID: qMiowMCx3sWJcGtnJV0IAA--.35957S6
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,217 +66,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like LBT feature, add type OnOffAuto for LSX feature setting. Also
-add LSX feature detection with new VM ioctl command, fallback to old
-method if it is not supported.
+For CPU object, possible_cpu_arch_ids() function is used rather than
+smp.cpus. With command -smp x, -device la464-loongarch-cpu, smp.cpus
+is not accurate for all possible CPU objects, possible_cpu_arch_ids()
+is used here.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c     | 38 +++++++++++++++------------
- target/loongarch/cpu.h     |  2 ++
- target/loongarch/kvm/kvm.c | 54 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 17 deletions(-)
+ hw/loongarch/virt.c | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index f5bc8720d1..4f425df9f3 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -379,6 +379,7 @@ static void loongarch_la464_initfn(Object *obj)
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 266f291509..99594a13a0 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -365,26 +365,35 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
  {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-     CPULoongArchState *env = &cpu->env;
-+    uint32_t data = 0;
-     int i;
+     int num;
+-    const MachineState *ms = MACHINE(lvms);
+-    int smp_cpus = ms->smp.cpus;
++    MachineState *ms = MACHINE(lvms);
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    const CPUArchIdList *possible_cpus;
++    LoongArchCPU *cpu;
++    CPUState *cs;
++    char *nodename, *map_path;
  
-     for (i = 0; i < 21; i++) {
-@@ -388,7 +389,6 @@ static void loongarch_la464_initfn(Object *obj)
-     cpu->dtb_compatible = "loongarch,Loongson-3A5000";
-     env->cpucfg[0] = 0x14c010;  /* PRID */
+     qemu_fdt_add_subnode(ms->fdt, "/cpus");
+     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
+     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
  
--    uint32_t data = 0;
-     data = FIELD_DP32(data, CPUCFG1, ARCH, 2);
-     data = FIELD_DP32(data, CPUCFG1, PGMMU, 1);
-     data = FIELD_DP32(data, CPUCFG1, IOCSR, 1);
-@@ -477,7 +477,7 @@ static void loongarch_la132_initfn(Object *obj)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-     CPULoongArchState *env = &cpu->env;
+     /* cpu nodes */
+-    for (num = smp_cpus - 1; num >= 0; num--) {
+-        char *nodename = g_strdup_printf("/cpus/cpu@%d", num);
+-        LoongArchCPU *cpu = LOONGARCH_CPU(qemu_get_cpu(num));
+-        CPUState *cs = CPU(cpu);
++    possible_cpus = mc->possible_cpu_arch_ids(ms);
++    for (num = 0; num < possible_cpus->len; num++) {
++        cs = possible_cpus->cpus[num].cpu;
++        if (cs == NULL) {
++            continue;
++        }
++
++        nodename = g_strdup_printf("/cpus/cpu@%d", num);
++        cpu = LOONGARCH_CPU(cs);
+ 
+         qemu_fdt_add_subnode(ms->fdt, nodename);
+         qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "cpu");
+         qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
+                                 cpu->dtb_compatible);
+-        if (ms->possible_cpus->cpus[cs->cpu_index].props.has_node_id) {
++        if (possible_cpus->cpus[num].props.has_node_id) {
+             qemu_fdt_setprop_cell(ms->fdt, nodename, "numa-node-id",
+-                ms->possible_cpus->cpus[cs->cpu_index].props.node_id);
++                possible_cpus->cpus[num].props.node_id);
+         }
+         qemu_fdt_setprop_cell(ms->fdt, nodename, "reg", num);
+         qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle",
+@@ -394,11 +403,13 @@ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+ 
+     /*cpu map */
+     qemu_fdt_add_subnode(ms->fdt, "/cpus/cpu-map");
++    for (num = 0; num < possible_cpus->len; num++) {
++        cs = possible_cpus->cpus[num].cpu;
++        if (cs == NULL) {
++            continue;
++        }
+ 
+-    for (num = smp_cpus - 1; num >= 0; num--) {
+-        char *cpu_path = g_strdup_printf("/cpus/cpu@%d", num);
+-        char *map_path;
 -
-+    uint32_t data = 0;
-     int i;
++        nodename = g_strdup_printf("/cpus/cpu@%d", num);
+         if (ms->smp.threads > 1) {
+             map_path = g_strdup_printf(
+                 "/cpus/cpu-map/socket%d/core%d/thread%d",
+@@ -412,10 +423,10 @@ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+                 num % ms->smp.cores);
+         }
+         qemu_fdt_add_path(ms->fdt, map_path);
+-        qemu_fdt_setprop_phandle(ms->fdt, map_path, "cpu", cpu_path);
++        qemu_fdt_setprop_phandle(ms->fdt, map_path, "cpu", nodename);
  
-     for (i = 0; i < 21; i++) {
-@@ -487,7 +487,6 @@ static void loongarch_la132_initfn(Object *obj)
-     cpu->dtb_compatible = "loongarch,Loongson-1C103";
-     env->cpucfg[0] = 0x148042;  /* PRID */
- 
--    uint32_t data = 0;
-     data = FIELD_DP32(data, CPUCFG1, ARCH, 1); /* LA32 */
-     data = FIELD_DP32(data, CPUCFG1, PGMMU, 1);
-     data = FIELD_DP32(data, CPUCFG1, IOCSR, 1);
-@@ -615,27 +614,30 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
- 
- static bool loongarch_get_lsx(Object *obj, Error **errp)
- {
--    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
--    bool ret;
--
--    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
--        ret = true;
--    } else {
--        ret = false;
--    }
--    return ret;
-+    return LOONGARCH_CPU(obj)->lsx != ON_OFF_AUTO_OFF;
- }
- 
- static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+    uint32_t val;
- 
--    if (value) {
--        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LSX, 1);
--    } else {
--        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LSX, 0);
--        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 0);
-+    cpu->lsx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+    if (kvm_enabled()) {
-+        /* kvm feature detection in function kvm_arch_init_vcpu */
-+        return;
-     }
-+
-+    /* LSX feature detection in TCG mode */
-+    val = cpu->env.cpucfg[2];
-+    if (cpu->lsx == ON_OFF_AUTO_ON) {
-+        if (FIELD_EX32(val, CPUCFG2, LSX) == 0) {
-+            error_setg(errp, "Failed to enable LSX in TCG mode");
-+            return;
-+        }
-+    }
-+
-+    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LSX, value);
- }
- 
- static bool loongarch_get_lasx(Object *obj, Error **errp)
-@@ -693,6 +695,7 @@ void loongarch_cpu_post_init(Object *obj)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
- 
-+    cpu->lsx = ON_OFF_AUTO_AUTO;
-     object_property_add_bool(obj, "lsx", loongarch_get_lsx,
-                              loongarch_set_lsx);
-     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-@@ -713,6 +716,7 @@ void loongarch_cpu_post_init(Object *obj)
- 
-     } else {
-         cpu->lbt = ON_OFF_AUTO_OFF;
-+        cpu->pmu = ON_OFF_AUTO_OFF;
+         g_free(map_path);
+-        g_free(cpu_path);
++        g_free(nodename);
      }
  }
  
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 86c86c6c95..5bddf72c22 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -283,6 +283,7 @@ typedef struct LoongArchTLB LoongArchTLB;
- #endif
- 
- enum loongarch_features {
-+    LOONGARCH_FEATURE_LSX,
-     LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
-     LOONGARCH_FEATURE_PMU,
- };
-@@ -404,6 +405,7 @@ struct ArchCPU {
-     uint32_t  phy_id;
-     OnOffAuto lbt;
-     OnOffAuto pmu;
-+    OnOffAuto lsx;
- 
-     /* 'compatible' string for this CPU for Linux device trees */
-     const char *dtb_compatible;
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 3c86f5ffb9..eeedf3175e 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -798,8 +798,35 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
- {
-     int ret;
-     struct kvm_device_attr attr;
-+    uint64_t val;
- 
-     switch (feature) {
-+    case LOONGARCH_FEATURE_LSX:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_LSX;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        if (ret == 0) {
-+            return true;
-+        }
-+
-+        /* Fallback to old kernel detect interface */
-+        val = 0;
-+        attr.group = KVM_LOONGARCH_VCPU_CPUCFG;
-+        /* Cpucfg2 */
-+        attr.attr  = 2;
-+        attr.addr = (uint64_t)&val;
-+        ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-+        if (!ret) {
-+            ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-+            if (ret) {
-+                return false;
-+            }
-+
-+            ret = FIELD_EX32((uint32_t)val, CPUCFG2, LSX);
-+            return (ret != 0);
-+        }
-+        return false;
-+
-     case LOONGARCH_FEATURE_LBT:
-         /*
-          * Return all if all the LBT features are supported such as:
-@@ -829,6 +856,28 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-     return false;
- }
- 
-+static int kvm_cpu_check_lsx(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LSX);
-+    env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LSX, 0);
-+    if (cpu->lsx == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LSX, 1);
-+        } else {
-+            error_setg(errp, "'lsx' feature not supported by KVM on this host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->lsx == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LSX, 1);
-+    }
-+
-+    return 0;
-+}
-+
- static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
- {
-     CPULoongArchState *env = cpu_env(cs);
-@@ -889,6 +938,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         brk_insn = val;
-     }
- 
-+    ret = kvm_cpu_check_lsx(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+    }
-+
-     ret = kvm_cpu_check_lbt(cs, &local_err);
-     if (ret < 0) {
-         error_report_err(local_err);
 -- 
 2.43.5
 
