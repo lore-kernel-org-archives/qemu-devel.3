@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30D3E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 06:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADF6E7718B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 08:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQKxk-00088b-Ip; Wed, 25 Dec 2024 01:33:44 -0500
+	id 1tQMs3-0001mz-EQ; Wed, 25 Dec 2024 03:35:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1tQKxh-00085U-Hz
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 01:33:41 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1tQKxf-0001vd-Sq
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 01:33:41 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2f44353649aso4954082a91.0
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 22:33:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1735108418; x=1735713218; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LnL9L8+E9JeJnL0Qgv7sIBT9ZPbbiwKfmj1i8Doe7uY=;
- b=DsycIl/fgOkSHuwyVWb3eiH5vZFZQ3t8I22mODEhWYHXiCddZquvB0/fqPXtJwJTVu
- XRoCET7QurH42KDfXQTHdqbKgeBrC1gBLHD91xnBtHVWo0wkol1NH5W/D3jZqJ8RDY/U
- SafJw2QNM92XkgEHR5u1A4FSYvoHpZj9kDGLqhYcNXWerZ3BdyENvA8l+DCYqijqP6vD
- wy/RnjninsHX1D9aEJoNrbN+TA0ZVG1yxXlKTwCfYXJKHmkynl1GFug8xn/mzfYYd3CK
- JclnIOvGh9wPybnlMfggSibck3PQsIx23lL054FV+y2X2Lhp8GZVh+G/vJo09ivh/+so
- kH9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735108418; x=1735713218;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LnL9L8+E9JeJnL0Qgv7sIBT9ZPbbiwKfmj1i8Doe7uY=;
- b=dwqWqzk6n5/+B7ZJjReaT7zECMG03DrvCDhAM3S2EFvf4F+o0oi5Q0pWos6RnGRtYZ
- CrBhsO4N39uXC1PP2CN3ZTCjWxypPZhllaa54QL4M136n/pFdDT/kptwjJM1d4O0J9M4
- DLl+0soHnI2Jr+DMI45sREXDoXgPNhzW/tan+IxLsrcofioqw8PcYSzW7meMkhaIvws3
- Y1F4TcLVpK+jn7BRqXcgNLiyEyTCUlki16sG3sSFVL0AsCN33miLY/QdwamdouUWLsun
- /ysDWbUiTLoR0lgNO3DsZHpDu00ZXY/oF0kHLhTjgUC6cvKqzLEXPDBZGJAZkC4jZVBj
- DDwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSuWSmTB0Dp/APJlgWhX8h1ZI/+uWEKl3HNm89p+gXbFKZy89lVHzZSBRbJNs+n6A//s8FSjSZ8jZh@nongnu.org
-X-Gm-Message-State: AOJu0YxjHboZGHk9vwgpo6KtLlmedk0fSScHsnlVfkGFj7lBhoG0ASHK
- 3CgCoKLYeQUb1Lp5NktVnrpZXG/K4tfpYhs4yySB7b31ro7pbV1cUT+VAHyj/KU=
-X-Gm-Gg: ASbGncsRi7/jYcy2pwfOuiHw574+VaTgvKf+MZxtTH+eMRBcmGVh3ec/q8GxBejVmaN
- zOV5oeZbjY6HtdDmJFvIAruwjYzKXQik8HI7avVeRdEGZaS0S7S60tdpb1ceWWfoze4Tlka3PPF
- +bReBibGryCL1RJvbfkLpFfgbWHtBQ/7envzYS6k/GVrxsDzYR1VybZE8EjAjdXZgGWy4W5y7vs
- xgRQy9UefmjdECqXS7shvAFoLKHToXrJZ/UkwBRxqSY8o1uLLRbPx9xThBZ4w==
-X-Google-Smtp-Source: AGHT+IGFiN5CDdaIChuSewvmfUkhapD8nIrbvolWvEd+C3DRoK2xVzqULSHMdPeQjD6v0SRstHWaHw==
-X-Received: by 2002:a17:90b:2c8c:b0:2ea:3f34:f190 with SMTP id
- 98e67ed59e1d1-2f452ec6fd2mr26065004a91.25.1735108418504; 
- Tue, 24 Dec 2024 22:33:38 -0800 (PST)
-Received: from [10.3.43.196] ([61.213.176.6]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ed52d227sm13361037a91.2.2024.12.24.22.33.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 22:33:38 -0800 (PST)
-Message-ID: <3a2eec42-e2a4-40c0-b655-f4a52f0f8305@bytedance.com>
-Date: Wed, 25 Dec 2024 14:33:36 +0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tQMs2-0001mh-4A
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 03:35:58 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tQMrz-00042h-6c
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 03:35:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1735115755; x=1766651755;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=uO6hCPgf7javtmzMy1gVoLHPESpB6844lQlM8zhgMYs=;
+ b=ThAA3PbjbDxkMqjmRn1V3WknhidEutHwea63SFvHR9xPQdRcJ8Zi92tM
+ x1htxJc00Xgvj3li83MZh4efCCg8TnViAJoYFW8iQXNt5Er+l8dWiM9Vu
+ lxS8nfnjEMVjbfcviLHm5PgYhFtosAEaYsqVEPqACw9a7nbytVyKiFnZD
+ Nbnn0fyP2fRJJtkeEWMBL3lJmNJhrZa2nUpWkxG4sP0BPYuKRW9UH3KI9
+ xZCO+b4BnYk5eoz+4ojxvpziHm5D3iQBZlHou1dHtonqM39VBZSy8A2TB
+ cATfqI+UhziV3RLtpKzSC1/bag9RFd4GM0bzlWq8lKoWzbpl+AyaqH1Va Q==;
+X-CSE-ConnectionGUID: RFBEv0iaTr6EMI1Z84H51w==
+X-CSE-MsgGUID: d8UbsMLqR0idF+l4ztlZ+A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11296"; a="34875250"
+X-IronPort-AV: E=Sophos;i="6.12,262,1728975600"; d="scan'208";a="34875250"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Dec 2024 00:35:51 -0800
+X-CSE-ConnectionGUID: WPEfVdSkRwmH4HfSVDGcLA==
+X-CSE-MsgGUID: AQkrzgyTQam2zcWCvdddLA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="100495477"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa008.jf.intel.com with ESMTP; 25 Dec 2024 00:35:51 -0800
+Date: Wed, 25 Dec 2024 16:54:32 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, junjie.mao@hotmail.com
+Subject: Re: [PATCH 01/12] rust: qom: add ParentField
+Message-ID: <Z2vISD28uK11AevU@intel.com>
+References: <20241220142955.652636-1-pbonzini@redhat.com>
+ <20241220142955.652636-2-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
-To: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>
-References: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
-Content-Language: en-US
-From: zhenwei pi <pizhenwei@bytedance.com>
-In-Reply-To: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pizhenwei@bytedance.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241220142955.652636-2-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,45 +83,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LGTM, thanks.
-
-Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
-
-On 12/24/24 07:46, Gabriel Barrantes wrote:
->  From c808fa797942b9bd32221594b7eef690a7558b14 Mon Sep 17 00:00:00 2001
-> From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
-> Date: Mon, 23 Dec 2024 14:58:12 -0600
-> Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+On Fri, Dec 20, 2024 at 03:29:43PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 20 Dec 2024 15:29:43 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 01/12] rust: qom: add ParentField
+> X-Mailer: git-send-email 2.47.1
 > 
-> Do not propagate error to the upper, directly output the error to
-> avoid leaks.
+> Add a type that, together with the C function object_deinit, ensures the
+> correct drop order for QOM objects relative to their superclasses.
 > 
-> Closes: #2714
+> Right now it is not possible to implement the Drop trait for QOM classes
+> that are defined in Rust, as the drop() function would not be called when
+> the object goes away; instead what is called is ObjectImpl::INSTANCE_FINALIZE.
+> It would be nice for INSTANCE_FINALIZE to just drop the object, but this has
+> a problem: suppose you have
 > 
-> Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+>    pub struct MySuperclass {
+>        parent: DeviceState,
+>        field: Box<MyData>,
+>        ...
+>    }
+> 
+>    impl Drop for MySuperclass {
+>        ...
+>    }
+> 
+>    pub struct MySubclass {
+>        parent: MySuperclass,
+>        ...
+>    }
+> 
+> and an instance_finalize implementation that is like
+> 
+>     unsafe extern "C" fn drop_object<T: ObjectImpl>(obj: *mut Object) {
+>         unsafe { std::ptr::drop_in_place(obj.cast::<T>()) }
+>     }
+> 
+> When instance_finalize is called for MySubclass, it will walk the struct's
+> list of fields and call the drop method for MySuperclass.  Then, object_deinit
+> recurses to the superclass and calls the same drop method again.  This
+> will cause double-freeing of the Box<Data>.
+> 
+> What's happening here is that QOM wants to control the drop order of
+> MySuperclass and MySubclass's fields.  To do so, the parent field must
+> be marked ManuallyDrop<>, which is quite ugly.  Instead, add a wrapper
+> type ParentField<> that is specific to QOM.  This hides the implementation
+> detail of *what* is special about the ParentField, and will also be easy
+> to check in the #[derive(Object)] macro.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
-> backends/cryptodev-vhost-user.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost- 
-> user.c
-> index 43efdf9747..09bfbddb47 100644
-> --- a/backends/cryptodev-vhost-user.c
-> +++ b/backends/cryptodev-vhost-user.c
-> @@ -281,8 +281,8 @@ static int cryptodev_vhost_user_create_session(
->          break;
-> 
->      default:
-> -        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
-> -                   sess_info->op_code);
-> +        error_report("Unsupported opcode :%" PRIu32 "",
-> +                     sess_info->op_code);
->          return -VIRTIO_CRYPTO_NOTSUPP;
->      }
-> 
-> -- 
-> 2.43.0
-> 
-> 
+>  rust/hw/char/pl011/src/device.rs |  6 ++--
+>  rust/qemu-api/src/qom.rs         | 56 +++++++++++++++++++++++++++++---
+>  rust/qemu-api/tests/tests.rs     |  4 +--
+>  3 files changed, 57 insertions(+), 9 deletions(-)
+
+...
+
+>  unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut Object) {
+>      // SAFETY: obj is an instance of T, since rust_instance_init<T>
+>      // is called from QOM core as the instance_init function
+> @@ -151,8 +198,9 @@ fn as_ref(&self) -> &$parent {
+>  ///
+>  /// - the struct must be `#[repr(C)]`;
+>  ///
+> -/// - the first field of the struct must be of the instance struct corresponding
+> -///   to the superclass, which is `ObjectImpl::ParentType`
+> +/// - the first field of the struct must be of type
+> +///   [`ParentField<T>`](ParentField), where `T` is the parent type
+> +///   [`ObjectImpl::ParentType`]
+>  ///
+>  /// - likewise, the first field of the `Class` must be of the class struct
+>  ///   corresponding to the superclass, which is `ObjectImpl::ParentType::Class`.
+
+I think the "likewise" word should be deleted as well, since Class'
+parent field doesn't need any wrapper because Class also doesn't have
+finalize method. The remaining description is clear enough.
+
+Others look good to me!
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
 
