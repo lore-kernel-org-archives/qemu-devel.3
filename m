@@ -4,68 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEF3E7718E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 12:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B54E7718B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 14:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQQe8-0001gP-2l; Wed, 25 Dec 2024 07:37:52 -0500
+	id 1tQRUW-0004Sy-Ul; Wed, 25 Dec 2024 08:32:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
- id 1tQQe3-0001fh-Fc; Wed, 25 Dec 2024 07:37:47 -0500
-Received: from m.syntacore.com ([178.249.69.228] helo=pmg.syntacore.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tQRUQ-0004Rz-G4
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 08:31:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
- id 1tQQe1-0002DJ-4p; Wed, 25 Dec 2024 07:37:46 -0500
-Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
- by pmg.syntacore.com (Proxmox) with ESMTP id 0CA98B41C31;
- Wed, 25 Dec 2024 15:37:35 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:from:from:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=m; bh=pHaxb9Bw6SAt+eDqP7iVb05
- eLRvGqYUfW5Rr1Sj1opI=; b=PZy0ottuxrSw6oENWxEREx3ACGtH513UHwjjU1k
- Rv0xnan5HkkDs0Z6hnoJ9/tdBYzkTwaY1koAMQkkcjOinTFovlr04KpQdSggZgwI
- mNc74Z0+K8Q9zrLEqzg0JF12Dd5qtPT23hhOUQNm7G8Psj4rjij4H7LWbCMaQCWo
- de3mXHNcAMSeDnIS4OwRW1r553MP3reBmV1VismqaMYLvssXd/3IfRg5ebEqpEGU
- yBNK4sA0rakeid3x7nwLZmQsR0V+0XpPAKMSgnpq7JaN3FNJTNSWek16vI/zvv3A
- n/84p8WcF8nOTF3cJg42000nZseIKI3sBLQVyoSf0gL0v0g==
-Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
- [10.76.202.20])
- by pmg.syntacore.com (Proxmox) with ESMTPS id ECE64B412D4;
- Wed, 25 Dec 2024 15:37:34 +0300 (MSK)
-Received: from VirtualBox.corp.yadro.com (172.22.3.83) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 25 Dec 2024 15:36:41 +0300
-From: Ivan Klokov <ivan.klokov@syntacore.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
- <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
- <zhiwei_liu@linux.alibaba.com>, <farosas@suse.de>, <lvivier@redhat.com>,
- <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
-Subject: [PATCH v8 1/2] target/riscv: Add RISC-V CSR qtest support
-Date: Wed, 25 Dec 2024 15:37:17 +0300
-Message-ID: <20241225123718.45991-2-ivan.klokov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241225123718.45991-1-ivan.klokov@syntacore.com>
-References: <20241225123718.45991-1-ivan.klokov@syntacore.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tQRUL-00086L-H5
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 08:31:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735133506;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rEUlTiKt1UJa5J+z/2Rf7jv1jT1YE8baej933EB0VhM=;
+ b=C1WRzBBMRKi7DN1L2qbaI6vwIx5qbzeBCs61pD9N2cud9uLzwzzAucXmm2g1rkMzgD6CrF
+ S1i4h8Osd4olVMP+YrIXrkU3ti1Mv07fQsO2VRmq+19D8BJNgWl6YF9D3u/Ua57iUJT5UT
+ 0G/xSjCOFvP+AgCHdGzpO2cvMmJzDoM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-fti2JbBEOA6DKkhCTy2MxA-1; Wed,
+ 25 Dec 2024 08:31:44 -0500
+X-MC-Unique: fti2JbBEOA6DKkhCTy2MxA-1
+X-Mimecast-MFC-AGG-ID: fti2JbBEOA6DKkhCTy2MxA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE450195608F
+ for <qemu-devel@nongnu.org>; Wed, 25 Dec 2024 13:31:42 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.8])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 09B5119560A3; Wed, 25 Dec 2024 13:31:41 +0000 (UTC)
+Date: Wed, 25 Dec 2024 08:31:39 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PULL 00/17] vfio queue
+Message-ID: <20241225133139.GA930035@fedora>
+References: <20241224151547.386529-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [172.22.3.83]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=ivan.klokov@syntacore.com; helo=pmg.syntacore.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="6/TXom4yhiwDFgDh"
+Content-Disposition: inline
+In-Reply-To: <20241224151547.386529-1-clg@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,166 +86,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RISC-V architecture supports the creation of custom
-CSR-mapped devices. It would be convenient to test them in the same way
-as MMIO-mapped devices. To do this, a new call has been added
-to read/write CSR registers.
 
-Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/riscv/riscv_hart.c  | 56 ++++++++++++++++++++++++++++++++++++++++++
- tests/qtest/libqtest.c | 27 ++++++++++++++++++++
- tests/qtest/libqtest.h | 14 +++++++++++
- 3 files changed, 97 insertions(+)
+--6/TXom4yhiwDFgDh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index bc9ffdd2d4..b8151682c0 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -22,6 +22,9 @@
- #include "qapi/error.h"
- #include "qemu/module.h"
- #include "system/reset.h"
-+#include "qemu/cutils.h"
-+#include "sysemu/qtest.h"
-+#include "sysemu/reset.h"
- #include "hw/sysbus.h"
- #include "target/riscv/cpu.h"
- #include "hw/qdev-properties.h"
-@@ -41,6 +44,55 @@ static void riscv_harts_cpu_reset(void *opaque)
-     cpu_reset(CPU(cpu));
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
-+    CPURISCVState *env = &cpu->env;
-+
-+    int ret = RISCV_EXCP_NONE;
-+    if (strcmp(cmd, "get_csr") == 0) {
-+        ret = riscv_csrr(env, csrno, (target_ulong *)val);
-+    } else if (strcmp(cmd, "set_csr") == 0) {
-+        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
-+                MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
-+    }
-+
-+    g_assert(ret == RISCV_EXCP_NONE);
-+}
-+
-+static bool csr_qtest_callback(CharBackend *chr, gchar **words)
-+{
-+    if (strcmp(words[0], "csr") == 0) {
-+
-+        uint64_t cpu;
-+        uint64_t val;
-+        int rc, csr;
-+
-+        rc = qemu_strtou64(words[2], NULL, 0, &cpu);
-+        g_assert(rc == 0);
-+        rc = qemu_strtoi(words[3], NULL, 0, &csr);
-+        g_assert(rc == 0);
-+        rc = qemu_strtou64(words[4], NULL, 0, &val);
-+        g_assert(rc == 0);
-+        csr_call(words[1], cpu, csr, &val);
-+
-+        qtest_send_prefix(chr);
-+        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
-+
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static void riscv_cpu_register_csr_qtest_callback(void)
-+{
-+    static GOnce once;
-+    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
-+}
-+#endif
-+
- static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
-                                char *cpu_type, Error **errp)
- {
-@@ -58,6 +110,10 @@ static void riscv_harts_realize(DeviceState *dev, Error **errp)
- 
-     s->harts = g_new0(RISCVCPU, s->num_harts);
- 
-+#ifndef CONFIG_USER_ONLY
-+    riscv_cpu_register_csr_qtest_callback();
-+#endif
-+
-     for (n = 0; n < s->num_harts; n++) {
-         if (!riscv_hart_realize(s, n, s->cpu_type, errp)) {
-             return;
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 8de5f1fde3..4bc9643aad 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -1218,6 +1218,33 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
-     return 0;
- }
- 
-+static void qtest_rsp_csr(QTestState *s, uint64_t *val)
-+{
-+    gchar **args;
-+    uint64_t ret;
-+    int rc;
-+
-+    args = qtest_rsp_args(s, 3);
-+
-+    rc = qemu_strtou64(args[1], NULL, 16, &ret);
-+    g_assert(rc == 0);
-+    rc = qemu_strtou64(args[2], NULL, 16, val);
-+    g_assert(rc == 0);
-+
-+    g_strfreev(args);
-+}
-+
-+uint64_t qtest_csr_call(QTestState *s, const char *name,
-+                         uint64_t cpu, int csr,
-+                         uint64_t *val)
-+{
-+    qtest_sendf(s, "csr %s 0x%"PRIx64" %d 0x%"PRIx64"\n",
-+                    name, cpu, csr, *val);
-+
-+    qtest_rsp_csr(s, val);
-+    return 0;
-+}
-+
- void qtest_add_func(const char *str, void (*fn)(void))
- {
-     gchar *path = g_strdup_printf("/%s/%s", qtest_get_arch(), str);
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index f23d80e9e5..cd35e11d4c 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -600,6 +600,20 @@ uint64_t qtest_rtas_call(QTestState *s, const char *name,
-                          uint32_t nargs, uint64_t args,
-                          uint32_t nret, uint64_t ret);
- 
-+/**
-+ * qtest_csr_call:
-+ * @s: #QTestState instance to operate on.
-+ * @name: name of the command to call.
-+ * @cpu: hart number.
-+ * @csr: CSR number.
-+ * @val: Value for reading/writing.
-+ *
-+ * Call an RISC-V CSR read/write function
-+ */
-+uint64_t qtest_csr_call(QTestState *s, const char *name,
-+                         uint64_t cpu, int csr,
-+                         unsigned long *val);
-+
- /**
-  * qtest_bufread:
-  * @s: #QTestState instance to operate on.
--- 
-2.34.1
+Hi C=C3=A9dric,
+Please take a look at the following 32-bit CI failure:
 
+i686-linux-gnu-gcc -m32 -Ilibqemu-x86_64-softmmu.a.p -I. -I.. -Itarget/i386=
+ -I../target/i386 -Isubprojects/libvduse -I../subprojects/libvduse -Iqapi -=
+Itrace -Iui -Iui/shader -I/usr/include/capstone -I/usr/include/p11-kit-1 -I=
+/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server -=
+I/usr/include/spice-1 -I/usr/include/SDL2 -I/usr/include/glib-2.0 -I/usr/li=
+b/i386-linux-gnu/glib-2.0/include -I/usr/include/libmount -I/usr/include/bl=
+kid -I/usr/include/gio-unix-2.0 -I/usr/include/slirp -I/usr/include/gtk-3.0=
+ -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/freetype2 =
+-I/usr/include/fribidi -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -=
+I/usr/include/i386-linux-gnu -I/usr/include/atk-1.0 -I/usr/include/at-spi2-=
+atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/i386-l=
+inux-gnu/dbus-1.0/include -I/usr/include/vte-2.91 -I/usr/include/virgl -I/u=
+sr/include/cacard -I/usr/include/nss -I/usr/include/nspr -I/usr/include/PCS=
+C -I/usr/include/libusb-1.0 -I/usr/include/pipewire-0.3 -I/usr/include/spa-=
+0.2 -I/usr/include/fuse3 -I/usr/include/uuid -fdiagnostics-color=3Dauto -Wa=
+ll -Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protector-strong -Wemp=
+ty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wformat-y2=
+k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissing-for=
+mat-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration=
+ -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-prototy=
+pes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs -=
+Wno-psabi -Wno-shift-negative-value -isystem /builds/qemu-project/qemu/linu=
+x-headers -isystem linux-headers -iquote . -iquote /builds/qemu-project/qem=
+u -iquote /builds/qemu-project/qemu/include -iquote /builds/qemu-project/qe=
+mu/host/include/i386 -iquote /builds/qemu-project/qemu/host/include/generic=
+ -iquote /builds/qemu-project/qemu/tcg/i386 -msse2 -mfpmath=3Dsse -D_GNU_SO=
+URCE -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivial=
+-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIE -D_FILE_OFFSET=
+_BITS=3D64 -D__USE_FILE_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1 -=
+pthread -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -D_R=
+EENTRANT -DSTRUCT_IOVEC_DEFINED -isystem../linux-headers -isystemlinux-head=
+ers -DCOMPILING_PER_TARGET '-DCONFIG_TARGET=3D"x86_64-softmmu-config-target=
+=2Eh"' '-DCONFIG_DEVICES=3D"x86_64-softmmu-config-devices.h"' -MD -MQ libqe=
+mu-x86_64-softmmu.a.p/hw_vfio_igd.c.o -MF libqemu-x86_64-softmmu.a.p/hw_vfi=
+o_igd.c.o.d -o libqemu-x86_64-softmmu.a.p/hw_vfio_igd.c.o -c ../hw/vfio/igd=
+=2Ec
+=2E./hw/vfio/igd.c: In function =E2=80=98vfio_igd_pci_config_read=E2=80=99:
+=2E./hw/vfio/igd.c:438:18: error: format =E2=80=98%lx=E2=80=99 expects argu=
+ment of type =E2=80=98long unsigned int=E2=80=99, but argument 2 has type =
+=E2=80=98uint64_t=E2=80=99 {aka =E2=80=98long long unsigned int=E2=80=99} [=
+-Werror=3Dformat=3D]
+  438 |         hw_error("igd: unsupported pci config read at %lx, size %u",
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  439 |                  offset, size);
+      |                  ~~~~~~
+      |                  |
+      |                  uint64_t {aka long long unsigned int}
+=2E./hw/vfio/igd.c: In function =E2=80=98vfio_igd_pci_config_write=E2=80=99:
+=2E./hw/vfio/igd.c:463:18: error: format =E2=80=98%lx=E2=80=99 expects argu=
+ment of type =E2=80=98long unsigned int=E2=80=99, but argument 2 has type =
+=E2=80=98uint64_t=E2=80=99 {aka =E2=80=98long long unsigned int=E2=80=99} [=
+-Werror=3Dformat=3D]
+  463 |         hw_error("igd: unsupported pci config write at %lx, size %u=
+",
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  464 |                  offset, size);
+      |                  ~~~~~~
+      |                  |
+      |                  uint64_t {aka long long unsigned int}
+cc1: all warnings being treated as errors
+
+https://gitlab.com/qemu-project/qemu/-/jobs/8722428394#L6317
+
+Once the issue has been resolved, please send a new revision of this
+pull request. Thanks!
+
+Stefan
+
+--6/TXom4yhiwDFgDh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdsCTsACgkQnKSrs4Gr
+c8jQiwgAkrm4zNrY6X3elCnR67Uu8hb4/DH8rbTzvM2zuHZBiEu3FD8jPcZGVuQe
+J4yT2YEZzizKpeLi/+ieBZhUOige9HsOT9FmnTqsD7P5qJHeEHa0Z/jlvFUc6OrN
+LaTm/W43Iwwd4OridERyj9yUeevIUuNbdVrUHfqVcKjZhe/K+ixDX2NUw7u/LxJd
+VW+OhL9r694bOW4zVdCKO6jf23JCE9AF89nv2t1hBWhmZNottkXEBazaGDj4sZDv
+e5mPAh+JC212uxD3Kri5pi0F2628pGvzyM6mtTwpBTdhpJgDt7rON+vKaQg/9l13
+7Hp+ZLG61u+GgCrsgRTxFSb2k9KiVQ==
+=f5ie
+-----END PGP SIGNATURE-----
+
+--6/TXom4yhiwDFgDh--
 
 
