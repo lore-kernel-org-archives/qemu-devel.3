@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD152E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 11:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7428E7718B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 11:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQPaI-0006OB-LT; Wed, 25 Dec 2024 06:29:50 -0500
+	id 1tQPch-0008O3-Gf; Wed, 25 Dec 2024 06:32:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQPaG-0006Nu-LO
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 06:29:48 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQPcg-0008Nv-6Z
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 06:32:18 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQPaD-0008HK-P8
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 06:29:48 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4361b0ec57aso57174105e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Dec 2024 03:29:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQPce-0000Q8-C2
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 06:32:17 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-436249df846so39469115e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Dec 2024 03:32:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735126184; x=1735730984; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735126334; x=1735731134; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NxkE2UA0S3kcUAW1+kUEvg3K6wLT3eoLpL9D8Ygd1iY=;
- b=WhD3UGZ0XRNtaOJhP7XGeqJtcqn4OyRAI7shsn4NdwjnSwektbHr5c2I64GVDLU3FT
- zU6MI0A6FiFKFsm+uIQT4Tc8QAPMWr3nJQJEblcBYm8rtuDfQO0GN50pcv3t8HyOi+rH
- iGyKQSU0XVcO9ABYVfGVOs1NKhx3+3loyAYft5zsllYEiuE9/TPpAScKNuiS1c2UrNye
- EUFdTKhXCrkEAYJJKZMjpMDXcv1VCCVCukGxywrQZeWA1H2oZIkjrZ/IeoGKWmnKP622
- qRk4jidAdDe2Rznr/13v+rbp8SkKj3M2vjAP7vT6YW/1e3r8b17WIjnvvYeme4mFF90l
- kpsQ==
+ bh=lw0ofrJ7e/pc783t8Cho0/fhsXo+lE1G3dqPbTdXvr0=;
+ b=CXE96FNlMRDQ8U2GEXe2So5Cuh0k7PGSmNwbb9SAbgGnn956RIIi0JZgl1ZYWYngw3
+ XoFG0sY2gz4Cvhl8XdcA8VaHUuUKNj9nGoskQfRTf8W9WZmK6MOoVz0IMKA76OeVlplD
+ 0Rfqr2ozuLmh5zvl7eGiKVPWwNd4vIEgc855EpBvaIFnwJxhXqtpG93y//AzsD+1NSUK
+ T9CKeyr87tcoTEIDNdVWp1WRrXocLtsF0cxECjV8XcYgjKIZ9ZQk90kT5gwEuHknvxCA
+ Gd+WEIhlf3qPK96x2plwwIibGQAWo6aEaBi3770sGQckTpYZ/ISlfK8uDMgxINYDAxRx
+ gASQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735126184; x=1735730984;
+ d=1e100.net; s=20230601; t=1735126334; x=1735731134;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NxkE2UA0S3kcUAW1+kUEvg3K6wLT3eoLpL9D8Ygd1iY=;
- b=eRjLEKYQ0Y2eSkggL7u8ygvvHLK1ttLJ/pk3pFhju49vnFBxOVlUF3krD60suNW04Z
- 35V5KPyBJBGjnpgwQc8Al3A6BWK57NcfqBy1OKWxAwIQvQ9XRIG836d6AC83uF6HzDQp
- B8q0LUfw7c4K3kVNCGeUoD9wRlWRWs9A3Ruj4tNxlc1wSzhG/XCNCMhlqRXWdmM0DoQo
- NhKS+O9MDbCmMmQb9BFa4syl7skOXv5G2PAv+wewRdtgO3gBmWi6kyHYwv9p6T6Jz7c/
- BjZtJj9AHO0HES5UAZdlqxKrTWSjqX9Sd5K+IDYfM7sH8Wqm/yFehOQ580LsJ7jxIdKn
- jsng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJb7FQBvUf3tuA5yxXXNEwThIB8lwShmZGGlp7ycSdIeQQRAo1TR9UyzKe3kBIAsCKNLq2ydmIstA5@nongnu.org
-X-Gm-Message-State: AOJu0YwI4YvppgBSOta7G5kFKpMQJQ9xiu1UlkMQgY2Gn0Toaa4XyJRF
- yBRNcm55H71xEc5M7jczGlJxSryd3B04i0A/uD90M1VDnmgTGo3RJvz5aSgKHQY=
-X-Gm-Gg: ASbGncvHoyDxA+swnFRNGjHR0gagAhS/3cK++q8dIRfMehqmlaLnDrdIXAQ2YxQlTY7
- WbTmuyL79M0TD8QUPIgoFdMAT+Qmbt2vpYZeYEcK8pnPZ+tsxOTO582+EuLW8llw2Vd4nFsdhod
- zMVAcZSV6Ag9ldXH3WH70ZiG7KyAK1YBtsEU/XDKHFo2vgizaB0bKIw31eBHYbBlcQ4lrmVypue
- pNu3E/rnVFk66xzfhxQvPG93vog/qFYTpdc24zbCgGVVmqlDtDH09alswUOCiCd1Hc=
-X-Google-Smtp-Source: AGHT+IH9tJhl+QQYye6OVgkE8MCThHwpMKqxpfyhQVIB+0WgdAZhrab8cRlI0638K+ke7+T57asX0g==
-X-Received: by 2002:a5d:59af:0:b0:382:4ab4:b428 with SMTP id
- ffacd0b85a97d-38a221ed38cmr16263834f8f.8.1735126184046; 
- Wed, 25 Dec 2024 03:29:44 -0800 (PST)
+ bh=lw0ofrJ7e/pc783t8Cho0/fhsXo+lE1G3dqPbTdXvr0=;
+ b=r/9kvyZ9Y9pX4fy96Be69DSa0uNoZVaKRkMEKVgZ8cM0aftYnxQ1XRmHR9HOqu5o1/
+ RSjCjwinHgsMZ+8gLY3GxmfqusUbaYjIKi64V3RPUFFB2WhP5U6vlLQK3RQFSHkdqfgd
+ 94U3r6Tv1DhEfmrGytP1GBJ/U1LT+us/rfVD9F2X2iLwItkqcpPZTxdjmV9oXhDEfjZe
+ tgQfm7k3o28BaWO0A5AhdH4v2B+jjb6cSyjsDWWkI0Llc/hfrVm4Aoz6BzIHjmnDDL0i
+ S91MYiGOGd8uJ991gcymITPsgdaO36WmcVIG9M1jxE5WbDxuyKbmEBYpTXT6uZjzj7pD
+ wI5Q==
+X-Gm-Message-State: AOJu0YzCB/kGAFyWwQatAM0Og2Wm8Y95E3E+5tjUPkK/oqOkxYpZD57D
+ qnQliUGJlBvDNRlel98NhMabi8bu8W7WATZkjUWQkxj3B4Ne2qjNgjZ93NRqcpQ=
+X-Gm-Gg: ASbGncszisv6kf9jcvp0DPzWDnua7hg9aipH8SO9T9uyiCRg7VQXfx6UiWV8ck65kcy
+ aPkX4rKEU5jJU3BtMICTspskzhNdGqeeu6tTffceWr7BsiTdueFY7RsHJ51gNjuT4dSLOEgXyDD
+ Q3LPf6r7KGeD8ZazyEO3rUOAg00Ql3YFbJmUstF8a6U7KX2Z3EKyJwmSCUj4f+PIzmE0bmsSg4L
+ qlP3PQSVw+2UtFc52TGXQvF1f++HSQiekNgF1H0xTJsMUFrGpCiCFOFu4vmuOztJRo=
+X-Google-Smtp-Source: AGHT+IG64Mn6yHVyGQJQhNPpDLbpUPM32p3EhXA1rKhA68hu5lqfbZH6UhcGx/zBejXrpyvoFpTT0g==
+X-Received: by 2002:a05:600c:138d:b0:434:a852:ba6d with SMTP id
+ 5b1f17b1804b1-43668642fa8mr174408585e9.9.1735126334520; 
+ Wed, 25 Dec 2024 03:32:14 -0800 (PST)
 Received: from [192.168.1.117] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8474b6sm16735133f8f.51.2024.12.25.03.29.43
+ ffacd0b85a97d-38a1c8474b6sm16740522f8f.51.2024.12.25.03.32.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Dec 2024 03:29:43 -0800 (PST)
-Message-ID: <3a4545ab-d9e7-47d2-b89a-5dd1263de91e@linaro.org>
-Date: Wed, 25 Dec 2024 12:29:42 +0100
+ Wed, 25 Dec 2024 03:32:14 -0800 (PST)
+Message-ID: <b691d979-848e-4fc9-8ede-3b16c6de732f@linaro.org>
+Date: Wed, 25 Dec 2024 12:32:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] aspeed: Introduce ast2700-fc machine
-To: Steven Lee <steven_lee@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241225020311.3718080-1-steven_lee@aspeedtech.com>
- <20241225020311.3718080-5-steven_lee@aspeedtech.com>
+Subject: Re: [PULL 1/6] target/loongarch: Fix vldi inst
+To: Bibo Mao <maobibo@loongson.cn>, Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ ghy <2247883756@qq.com>, Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
+ Xianglai Li <lixianglai@loongson.cn>
+References: <20241225024008.486236-1-maobibo@loongson.cn>
+ <20241225024008.486236-2-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241225020311.3718080-5-steven_lee@aspeedtech.com>
+In-Reply-To: <20241225024008.486236-2-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,57 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Steven,
+Hi Bibo,
 
-On 25/12/24 03:03, Steven Lee via wrote:
-> This patch introduces a new machine, ast2700-fc, which supports all cores
-> available in the AST27x0 SoC. In this machine
-> - The first 4 cores are Cortex-A35 cores.
-> - CPU 4 is designated as the SSP core.
-> - CPU 5 is designated as the TSP core.
-> 
-> Test Step:
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/ast2700-ssp.elf
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/ast2700-tsp.elf
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/bl31.bin
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/tee-raw.bin
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/u-boot-nodtb.bin
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/u-boot.dtb
->      wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/image-bmc.tar.zst
->      tar --zstd -xvf image-bmc.tar.zst
-> 
->      qemu-system-aarch64 -machine ast2700fc \
->        -device loader,force-raw=on,addr=0x400000000,file=u-boot-nodtb.bin \
->        -device loader,force-raw=on,addr=$((0x400000000 + 748896)),file=u-boot.dtb\
->        -device loader,force-raw=on,addr=0x430000000,file=bl31.bin\
->        -device loader,force-raw=on,addr=0x430080000,file=tee-raw.bin\
->        -device loader,file=ast2700-ssp.elf,cpu-num=4 \
->        -device loader,file=ast2700-tsp.elf,cpu-num=5 \
->        -device loader,cpu-num=0,addr=0x430000000 \
->        -device loader,cpu-num=1,addr=0x430000000 \
->        -device loader,cpu-num=2,addr=0x430000000 \
->        -device loader,cpu-num=3,addr=0x430000000 \
->        -m 1G \
->        -drive file=image-bmc,if=mtd,format=raw \
->        -serial pty -serial pty -serial pty \
->        -S -nographic
->      char device redirected to /dev/pts/51 (label serial0)
->      char device redirected to /dev/pts/52 (label serial1)
->      char device redirected to /dev/pts/53 (label serial2)
-> 
->      tio /dev/pts/51
->      tio /dev/pts/52
->      tio /dev/pts/53
->      (qemu) c
+On 25/12/24 03:40, Bibo Mao wrote:
+> From: ghy <2247883756@qq.com>
 
-Could we have a functional test included in this series please?
+Is this authorship correct? Should it be:
+From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> 
+> Refer to the link below for a description of the vldi instructions:
+> https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/#synopsis_88
+> Fixed errors in vldi instruction implementation.
+> 
+> Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+
+to match the S-o-b?
+
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c  | 211 ++++++++++++++++++++++++++++++++++++
->   hw/arm/meson.build          |   4 +-
->   include/hw/arm/aspeed_soc.h |  12 ++
->   3 files changed, 226 insertions(+), 1 deletion(-)
->   create mode 100644 hw/arm/aspeed_ast27x0-fc.c
+>   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 
