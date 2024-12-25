@@ -4,87 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7428E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 11:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAAE3E7718B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 12:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQPch-0008O3-Gf; Wed, 25 Dec 2024 06:32:19 -0500
+	id 1tQQe3-0001fc-D0; Wed, 25 Dec 2024 07:37:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQPcg-0008Nv-6Z
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 06:32:18 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQPce-0000Q8-C2
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 06:32:17 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-436249df846so39469115e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Dec 2024 03:32:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735126334; x=1735731134; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lw0ofrJ7e/pc783t8Cho0/fhsXo+lE1G3dqPbTdXvr0=;
- b=CXE96FNlMRDQ8U2GEXe2So5Cuh0k7PGSmNwbb9SAbgGnn956RIIi0JZgl1ZYWYngw3
- XoFG0sY2gz4Cvhl8XdcA8VaHUuUKNj9nGoskQfRTf8W9WZmK6MOoVz0IMKA76OeVlplD
- 0Rfqr2ozuLmh5zvl7eGiKVPWwNd4vIEgc855EpBvaIFnwJxhXqtpG93y//AzsD+1NSUK
- T9CKeyr87tcoTEIDNdVWp1WRrXocLtsF0cxECjV8XcYgjKIZ9ZQk90kT5gwEuHknvxCA
- Gd+WEIhlf3qPK96x2plwwIibGQAWo6aEaBi3770sGQckTpYZ/ISlfK8uDMgxINYDAxRx
- gASQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735126334; x=1735731134;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lw0ofrJ7e/pc783t8Cho0/fhsXo+lE1G3dqPbTdXvr0=;
- b=r/9kvyZ9Y9pX4fy96Be69DSa0uNoZVaKRkMEKVgZ8cM0aftYnxQ1XRmHR9HOqu5o1/
- RSjCjwinHgsMZ+8gLY3GxmfqusUbaYjIKi64V3RPUFFB2WhP5U6vlLQK3RQFSHkdqfgd
- 94U3r6Tv1DhEfmrGytP1GBJ/U1LT+us/rfVD9F2X2iLwItkqcpPZTxdjmV9oXhDEfjZe
- tgQfm7k3o28BaWO0A5AhdH4v2B+jjb6cSyjsDWWkI0Llc/hfrVm4Aoz6BzIHjmnDDL0i
- S91MYiGOGd8uJ991gcymITPsgdaO36WmcVIG9M1jxE5WbDxuyKbmEBYpTXT6uZjzj7pD
- wI5Q==
-X-Gm-Message-State: AOJu0YzCB/kGAFyWwQatAM0Og2Wm8Y95E3E+5tjUPkK/oqOkxYpZD57D
- qnQliUGJlBvDNRlel98NhMabi8bu8W7WATZkjUWQkxj3B4Ne2qjNgjZ93NRqcpQ=
-X-Gm-Gg: ASbGncszisv6kf9jcvp0DPzWDnua7hg9aipH8SO9T9uyiCRg7VQXfx6UiWV8ck65kcy
- aPkX4rKEU5jJU3BtMICTspskzhNdGqeeu6tTffceWr7BsiTdueFY7RsHJ51gNjuT4dSLOEgXyDD
- Q3LPf6r7KGeD8ZazyEO3rUOAg00Ql3YFbJmUstF8a6U7KX2Z3EKyJwmSCUj4f+PIzmE0bmsSg4L
- qlP3PQSVw+2UtFc52TGXQvF1f++HSQiekNgF1H0xTJsMUFrGpCiCFOFu4vmuOztJRo=
-X-Google-Smtp-Source: AGHT+IG64Mn6yHVyGQJQhNPpDLbpUPM32p3EhXA1rKhA68hu5lqfbZH6UhcGx/zBejXrpyvoFpTT0g==
-X-Received: by 2002:a05:600c:138d:b0:434:a852:ba6d with SMTP id
- 5b1f17b1804b1-43668642fa8mr174408585e9.9.1735126334520; 
- Wed, 25 Dec 2024 03:32:14 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8474b6sm16740522f8f.51.2024.12.25.03.32.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Dec 2024 03:32:14 -0800 (PST)
-Message-ID: <b691d979-848e-4fc9-8ede-3b16c6de732f@linaro.org>
-Date: Wed, 25 Dec 2024 12:32:13 +0100
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1tQQe1-0001fC-6I; Wed, 25 Dec 2024 07:37:45 -0500
+Received: from m.syntacore.com ([178.249.69.228] helo=pmg.syntacore.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1tQQdz-0002D5-KF; Wed, 25 Dec 2024 07:37:44 -0500
+Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
+ by pmg.syntacore.com (Proxmox) with ESMTP id 35398B41C1D;
+ Wed, 25 Dec 2024 15:37:32 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:from:from:message-id:mime-version:reply-to:subject:subject
+ :to:to; s=m; bh=5h5SS3dtpMXl/Rc9/gob9tkfcbKneYRjPt757j/XuS4=; b=
+ DycA6+0h9/na/S4UUCgbQSvrwGEh8U+OczZADjJPs3a1Nvubz2w4xDPgIG3EGZo2
+ 8FMjNEmjgFB1QFcBNAzMZyK4hnPHwGqVXYkMjWO2cvl2LUHUtpr+EwSKqrKqe1E8
+ s94IfihrkO4Lzka0610BwC69Q8FlM10dDHZjQn/ign/FaCqXtpu5BPG4zpa18le6
+ e8MlNsy356UPPrEdF+fsmFRxMf1/fpRxfMl6JRsGAYETHGs19CUSZLIXRrhMevLw
+ 7T/f/SPx8as8UQi/yS7y0Guiecfg6qksf+dSGn5G8OogsOcG2vos6AoRczVJ7K1/
+ XuaNE+D6csh1VrXyLYUyUA==
+Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
+ [10.76.202.20])
+ by pmg.syntacore.com (Proxmox) with ESMTPS id 20E14B41BB8;
+ Wed, 25 Dec 2024 15:37:32 +0300 (MSK)
+Received: from VirtualBox.corp.yadro.com (172.22.3.83) by
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 25 Dec 2024 15:36:38 +0300
+From: Ivan Klokov <ivan.klokov@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
+ <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>, <farosas@suse.de>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
+Subject: [PATCH v8 0/2] Support RISC-V CSR read/write in Qtest environment
+Date: Wed, 25 Dec 2024 15:37:16 +0300
+Message-ID: <20241225123718.45991-1-ivan.klokov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/6] target/loongarch: Fix vldi inst
-To: Bibo Mao <maobibo@loongson.cn>, Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
- ghy <2247883756@qq.com>, Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
- Xianglai Li <lixianglai@loongson.cn>
-References: <20241225024008.486236-1-maobibo@loongson.cn>
- <20241225024008.486236-2-maobibo@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241225024008.486236-2-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [172.22.3.83]
+X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
+Received-SPF: pass client-ip=178.249.69.228;
+ envelope-from=ivan.klokov@syntacore.com; helo=pmg.syntacore.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,29 +79,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bibo,
+These patches add functionality for unit testing RISC-V-specific registers.
+The first patch adds a Qtest backend, and the second implements a simple test.
 
-On 25/12/24 03:40, Bibo Mao wrote:
-> From: ghy <2247883756@qq.com>
+---
+v8:
+   - Delete RFC label.
+v7:
+   - Fix build errors, add Reviewed-by, Acked-by.
+---
 
-Is this authorship correct? Should it be:
-From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+Ivan Klokov (2):
+  target/riscv: Add RISC-V CSR qtest support
+  tests/qtest: QTest example for RISC-V CSR register
 
-> 
-> Refer to the link below for a description of the vldi instructions:
-> https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/#synopsis_88
-> Fixed errors in vldi instruction implementation.
-> 
-> Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+ hw/riscv/riscv_hart.c        | 56 ++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.c       | 27 +++++++++++++++++
+ tests/qtest/libqtest.h       | 14 +++++++++
+ tests/qtest/meson.build      |  2 +-
+ tests/qtest/riscv-csr-test.c | 56 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 154 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/riscv-csr-test.c
 
-to match the S-o-b?
+-- 
+2.34.1
 
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 
 
