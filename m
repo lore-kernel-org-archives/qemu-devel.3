@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06472E7718D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 02:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD25CE7718D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 02:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQHK4-0007TX-De; Tue, 24 Dec 2024 21:40:32 -0500
+	id 1tQHK6-0007Td-7c; Tue, 24 Dec 2024 21:40:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tQHK1-0007RW-Jy
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:29 -0500
+ id 1tQHJz-0007Qh-QO
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:27 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tQHJx-0000Xt-Jb
- for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:29 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tQHJw-0000YN-Kp
+ for qemu-devel@nongnu.org; Tue, 24 Dec 2024 21:40:27 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxCeGOcGtnL0BaAA--.46400S3;
- Wed, 25 Dec 2024 10:40:14 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxCeGRcGtnNkBaAA--.46402S3;
+ Wed, 25 Dec 2024 10:40:17 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCx3sWJcGtnJV0IAA--.35957S5;
- Wed, 25 Dec 2024 10:40:14 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCx3sWJcGtnJV0IAA--.35957S8;
+ Wed, 25 Dec 2024 10:40:16 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org,
 	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 3/6] hw/loongarch/virt: Create fdt table on machine creation
- done notification
-Date: Wed, 25 Dec 2024 10:40:05 +0800
-Message-Id: <20241225024008.486236-4-maobibo@loongson.cn>
+Subject: [PULL 6/6] target/loongarch: Use auto method with LASX feature
+Date: Wed, 25 Dec 2024 10:40:08 +0800
+Message-Id: <20241225024008.486236-7-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20241225024008.486236-1-maobibo@loongson.cn>
 References: <20241225024008.486236-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx3sWJcGtnJV0IAA--.35957S5
+X-CM-TRANSID: qMiowMCx3sWJcGtnJV0IAA--.35957S8
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,230 +65,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The same with ACPI table, fdt table is created on machine done
-notification. Some objects like CPU objects can be created with cold-plug
-method with command such as -smp x, -device la464-loongarch-cpu, so all
-objects finish to create when machine is done.
+Like LSX feature, add type OnOffAuto for LASX feature setting.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/loongarch/virt.c | 103 ++++++++++++++++++++++++--------------------
- 1 file changed, 57 insertions(+), 46 deletions(-)
+ target/loongarch/cpu.c     | 50 +++++++++++++++++++++++------------
+ target/loongarch/cpu.h     |  2 ++
+ target/loongarch/kvm/kvm.c | 53 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 89 insertions(+), 16 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 3a905cf71d..266f291509 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -615,12 +615,67 @@ static void virt_build_smbios(LoongArchVirtMachineState *lvms)
-     }
- }
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 4f425df9f3..84b2fda3be 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -623,6 +623,14 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
+     uint32_t val;
  
-+static void virt_fdt_setup(LoongArchVirtMachineState *lvms)
-+{
-+    MachineState *machine = MACHINE(lvms);
-+    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
-+    int i;
-+
-+    create_fdt(lvms);
-+    fdt_add_cpu_nodes(lvms);
-+    fdt_add_memory_nodes(machine);
-+    fdt_add_fw_cfg_node(lvms);
-+    fdt_add_flash_node(lvms);
-+
-+    /* Add cpu interrupt-controller */
-+    fdt_add_cpuic_node(lvms, &cpuintc_phandle);
-+    /* Add Extend I/O Interrupt Controller node */
-+    fdt_add_eiointc_node(lvms, &cpuintc_phandle, &eiointc_phandle);
-+    /* Add PCH PIC node */
-+    fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
-+    /* Add PCH MSI node */
-+    fdt_add_pch_msi_node(lvms, &eiointc_phandle, &pch_msi_phandle);
-+    /* Add pcie node */
-+    fdt_add_pcie_node(lvms, &pch_pic_phandle, &pch_msi_phandle);
-+
-+    /*
-+     * Create uart fdt node in reverse order so that they appear
-+     * in the finished device tree lowest address first
-+     */
-+    for (i = VIRT_UART_COUNT; i-- > 0;) {
-+        hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
-+        int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
-+        fdt_add_uart_node(lvms, &pch_pic_phandle, base, irq, i == 0);
+     cpu->lsx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++    if (cpu->lsx == ON_OFF_AUTO_OFF) {
++        cpu->lasx = ON_OFF_AUTO_OFF;
++        if (cpu->lasx == ON_OFF_AUTO_ON) {
++            error_setg(errp, "Failed to disable LSX since LASX is enabled");
++            return;
++        }
 +    }
 +
-+    fdt_add_rtc_node(lvms, &pch_pic_phandle);
-+    fdt_add_ged_reset(lvms);
-+    platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
-+                                   VIRT_PLATFORM_BUS_BASEADDRESS,
-+                                   VIRT_PLATFORM_BUS_SIZE,
-+                                   VIRT_PLATFORM_BUS_IRQ);
+     if (kvm_enabled()) {
+         /* kvm feature detection in function kvm_arch_init_vcpu */
+         return;
+@@ -635,6 +643,9 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
+             error_setg(errp, "Failed to enable LSX in TCG mode");
+             return;
+         }
++    } else {
++        cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, 0);
++        val = cpu->env.cpucfg[2];
+     }
+ 
+     cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LSX, value);
+@@ -642,29 +653,35 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
+ 
+ static bool loongarch_get_lasx(Object *obj, Error **errp)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+-    bool ret;
+-
+-    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LASX)) {
+-        ret = true;
+-    } else {
+-        ret = false;
+-    }
+-    return ret;
++    return LOONGARCH_CPU(obj)->lasx != ON_OFF_AUTO_OFF;
+ }
+ 
+ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++    uint32_t val;
+ 
+-    if (value) {
+-	if (!FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
+-            cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LSX, 1);
+-	}
+-        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 1);
+-    } else {
+-        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 0);
++    cpu->lasx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++    if ((cpu->lsx == ON_OFF_AUTO_OFF) && (cpu->lasx == ON_OFF_AUTO_ON)) {
++        error_setg(errp, "Failed to enable LASX since lSX is disabled");
++        return;
++    }
 +
-+    /*
-+     * Since lowmem region starts from 0 and Linux kernel legacy start address
-+     * at 2 MiB, FDT base address is located at 1 MiB to avoid NULL pointer
-+     * access. FDT size limit with 1 MiB.
-+     * Put the FDT into the memory map as a ROM image: this will ensure
-+     * the FDT is copied again upon reset, even if addr points into RAM.
-+     */
-+    qemu_fdt_dumpdtb(machine->fdt, lvms->fdt_size);
-+    rom_add_blob_fixed_as("fdt", machine->fdt, lvms->fdt_size, FDT_BASE,
-+                          &address_space_memory);
-+    qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
-+            rom_ptr_for_as(&address_space_memory, FDT_BASE, lvms->fdt_size));
++    if (kvm_enabled()) {
++        /* kvm feature detection in function kvm_arch_init_vcpu */
++        return;
+     }
++
++    /* LASX feature detection in TCG mode */
++    val = cpu->env.cpucfg[2];
++    if (cpu->lasx == ON_OFF_AUTO_ON) {
++        if (FIELD_EX32(val, CPUCFG2, LASX) == 0) {
++            error_setg(errp, "Failed to enable LASX in TCG mode");
++            return;
++        }
++    }
++
++    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
+ }
+ 
+ static bool loongarch_get_lbt(Object *obj, Error **errp)
+@@ -696,6 +713,7 @@ void loongarch_cpu_post_init(Object *obj)
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+ 
+     cpu->lsx = ON_OFF_AUTO_AUTO;
++    cpu->lasx = ON_OFF_AUTO_AUTO;
+     object_property_add_bool(obj, "lsx", loongarch_get_lsx,
+                              loongarch_set_lsx);
+     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 5bddf72c22..8eee49a984 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -284,6 +284,7 @@ typedef struct LoongArchTLB LoongArchTLB;
+ 
+ enum loongarch_features {
+     LOONGARCH_FEATURE_LSX,
++    LOONGARCH_FEATURE_LASX,
+     LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
+     LOONGARCH_FEATURE_PMU,
+ };
+@@ -406,6 +407,7 @@ struct ArchCPU {
+     OnOffAuto lbt;
+     OnOffAuto pmu;
+     OnOffAuto lsx;
++    OnOffAuto lasx;
+ 
+     /* 'compatible' string for this CPU for Linux device trees */
+     const char *dtb_compatible;
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index eeedf3175e..a3f55155b0 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -827,6 +827,32 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         }
+         return false;
+ 
++    case LOONGARCH_FEATURE_LASX:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_LASX;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        if (ret == 0) {
++            return true;
++        }
++
++        /* Fallback to old kernel detect interface */
++        val = 0;
++        attr.group = KVM_LOONGARCH_VCPU_CPUCFG;
++        /* Cpucfg2 */
++        attr.attr  = 2;
++        attr.addr = (uint64_t)&val;
++        ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
++        if (!ret) {
++            ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
++            if (ret) {
++                return false;
++            }
++
++            ret = FIELD_EX32((uint32_t)val, CPUCFG2, LASX);
++            return (ret != 0);
++        }
++        return false;
++
+     case LOONGARCH_FEATURE_LBT:
+         /*
+          * Return all if all the LBT features are supported such as:
+@@ -878,6 +904,28 @@ static int kvm_cpu_check_lsx(CPUState *cs, Error **errp)
+     return 0;
+ }
+ 
++static int kvm_cpu_check_lasx(CPUState *cs, Error **errp)
++{
++    CPULoongArchState *env = cpu_env(cs);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    bool kvm_supported;
++
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LASX);
++    env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 0);
++    if (cpu->lasx == ON_OFF_AUTO_ON) {
++        if (kvm_supported) {
++            env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 1);
++        } else {
++            error_setg(errp, "'lasx' feature not supported by KVM on host");
++            return -ENOTSUP;
++        }
++    } else if ((cpu->lasx == ON_OFF_AUTO_AUTO) && kvm_supported) {
++        env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 1);
++    }
++
++    return 0;
 +}
 +
- static void virt_done(Notifier *notifier, void *data)
+ static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
  {
-     LoongArchVirtMachineState *lvms = container_of(notifier,
-                                       LoongArchVirtMachineState, machine_done);
-     virt_build_smbios(lvms);
-     loongarch_acpi_setup(lvms);
-+    virt_fdt_setup(lvms);
- }
- 
- static void virt_powerdown_req(Notifier *notifier, void *opaque)
-@@ -699,9 +754,7 @@ static DeviceState *create_platform_bus(DeviceState *pch_pic)
- }
- 
- static void virt_devices_init(DeviceState *pch_pic,
--                                   LoongArchVirtMachineState *lvms,
--                                   uint32_t *pch_pic_phandle,
--                                   uint32_t *pch_msi_phandle)
-+                                   LoongArchVirtMachineState *lvms)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(lvms);
-     DeviceState *gpex_dev;
-@@ -747,9 +800,6 @@ static void virt_devices_init(DeviceState *pch_pic,
-         gpex_set_irq_num(GPEX_HOST(gpex_dev), i, 16 + i);
+     CPULoongArchState *env = cpu_env(cs);
+@@ -943,6 +991,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         error_report_err(local_err);
      }
  
--    /* Add pcie node */
--    fdt_add_pcie_node(lvms, pch_pic_phandle, pch_msi_phandle);
--
-     /*
-      * Create uart fdt node in reverse order so that they appear
-      * in the finished device tree lowest address first
-@@ -760,7 +810,6 @@ static void virt_devices_init(DeviceState *pch_pic,
-         serial_mm_init(get_system_memory(), base, 0,
-                        qdev_get_gpio_in(pch_pic, irq),
-                        115200, serial_hd(i), DEVICE_LITTLE_ENDIAN);
--        fdt_add_uart_node(lvms, pch_pic_phandle, base, irq, i == 0);
-     }
- 
-     /* Network init */
-@@ -774,8 +823,6 @@ static void virt_devices_init(DeviceState *pch_pic,
-     sysbus_create_simple("ls7a_rtc", VIRT_RTC_REG_BASE,
-                          qdev_get_gpio_in(pch_pic,
-                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
--    fdt_add_rtc_node(lvms, pch_pic_phandle);
--    fdt_add_ged_reset(lvms);
- 
-     /* acpi ged */
-     lvms->acpi_ged = create_acpi_ged(pch_pic, lvms);
-@@ -793,7 +840,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-     CPULoongArchState *env;
-     CPUState *cpu_state;
-     int cpu, pin, i, start, num;
--    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
- 
-     /*
-      * Extended IRQ model.
-@@ -850,9 +896,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-     memory_region_add_subregion(&lvms->system_iocsr, MAIL_SEND_ADDR,
-                    sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
- 
--    /* Add cpu interrupt-controller */
--    fdt_add_cpuic_node(lvms, &cpuintc_phandle);
--
-     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
-         cpu_state = qemu_get_cpu(cpu);
-         cpudev = DEVICE(cpu_state);
-@@ -891,9 +934,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-         }
-     }
- 
--    /* Add Extend I/O Interrupt Controller node */
--    fdt_add_eiointc_node(lvms, &cpuintc_phandle, &eiointc_phandle);
--
-     pch_pic = qdev_new(TYPE_LOONGARCH_PIC);
-     num = VIRT_PCH_PIC_IRQ_NUM;
-     qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
-@@ -913,9 +953,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
-     }
- 
--    /* Add PCH PIC node */
--    fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
--
-     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
-     start   =  num;
-     num = EXTIOI_IRQS - start;
-@@ -930,10 +967,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-                               qdev_get_gpio_in(extioi, i + start));
-     }
- 
--    /* Add PCH MSI node */
--    fdt_add_pch_msi_node(lvms, &eiointc_phandle, &pch_msi_phandle);
--
--    virt_devices_init(pch_pic, lvms, &pch_pic_phandle, &pch_msi_phandle);
-+    virt_devices_init(pch_pic, lvms);
- }
- 
- static void virt_firmware_init(LoongArchVirtMachineState *lvms)
-@@ -1151,8 +1185,6 @@ static void virt_init(MachineState *machine)
-         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
-     }
- 
--    create_fdt(lvms);
--
-     /* Create IOCSR space */
-     memory_region_init_io(&lvms->system_iocsr, OBJECT(machine), NULL,
-                           machine, "iocsr", UINT64_MAX);
-@@ -1171,8 +1203,6 @@ static void virt_init(MachineState *machine)
-         lacpu = LOONGARCH_CPU(cpu);
-         lacpu->phy_id = machine->possible_cpus->cpus[i].arch_id;
-     }
--    fdt_add_cpu_nodes(lvms);
--    fdt_add_memory_nodes(machine);
-     fw_cfg_add_memory(machine);
- 
-     /* Node0 memory */
-@@ -1224,34 +1254,15 @@ static void virt_init(MachineState *machine)
-                         memmap_table,
-                         sizeof(struct memmap_entry) * (memmap_entries));
-     }
--    fdt_add_fw_cfg_node(lvms);
--    fdt_add_flash_node(lvms);
- 
-     /* Initialize the IO interrupt subsystem */
-     virt_irq_init(lvms);
--    platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
--                                   VIRT_PLATFORM_BUS_BASEADDRESS,
--                                   VIRT_PLATFORM_BUS_SIZE,
--                                   VIRT_PLATFORM_BUS_IRQ);
-     lvms->machine_done.notify = virt_done;
-     qemu_add_machine_init_done_notifier(&lvms->machine_done);
-      /* connect powerdown request */
-     lvms->powerdown_notifier.notify = virt_powerdown_req;
-     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
- 
--    /*
--     * Since lowmem region starts from 0 and Linux kernel legacy start address
--     * at 2 MiB, FDT base address is located at 1 MiB to avoid NULL pointer
--     * access. FDT size limit with 1 MiB.
--     * Put the FDT into the memory map as a ROM image: this will ensure
--     * the FDT is copied again upon reset, even if addr points into RAM.
--     */
--    qemu_fdt_dumpdtb(machine->fdt, lvms->fdt_size);
--    rom_add_blob_fixed_as("fdt", machine->fdt, lvms->fdt_size, FDT_BASE,
--                          &address_space_memory);
--    qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
--            rom_ptr_for_as(&address_space_memory, FDT_BASE, lvms->fdt_size));
--
-     lvms->bootinfo.ram_size = ram_size;
-     loongarch_load_kernel(machine, &lvms->bootinfo);
- }
++    ret = kvm_cpu_check_lasx(cs, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++
+     ret = kvm_cpu_check_lbt(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
 -- 
 2.43.5
 
