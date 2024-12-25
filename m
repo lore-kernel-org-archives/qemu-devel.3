@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3767E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 05:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F53E7718B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Dec 2024 06:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQKC8-00071w-3w; Wed, 25 Dec 2024 00:44:32 -0500
+	id 1tQKxA-0007xV-Hj; Wed, 25 Dec 2024 01:33:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tQKC5-00071T-NY
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 00:44:29 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1tQKx7-0007xL-A2
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 01:33:05 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tQKC3-0008Jd-Nh
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 00:44:29 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21619108a6bso54441715ad.3
- for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 21:44:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1tQKx4-0001e0-MK
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 01:33:05 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-216728b1836so52908175ad.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Dec 2024 22:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1735105466; x=1735710266;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zAt3HH9n1Q4e0VDMLF4qELhaKJyL8RlrkODaMjrBVSc=;
- b=oSwxILHiylHH25z+5EbR/a792Cc6+KEgpnLWEB2mg1fyz2FsFZBxQZXR9ViVXt2Q0O
- gCeZzKF4BZ+Ajpk0g85g/ys7ODVchqptt/S/Yy5J9zIssydZXm46KjKjNu7y1es7lgVl
- p97WknmYtmE/zoPaYo2xzw+Ozssy8WAf8E8m+RCXKn9PD7iIMvRvGAHlrHliLRyIhzPd
- LPAzXjpfadWwiMwZaubGNlxz4zK5sXGprXicYSP7F6qtkP8GdLUDS7o0WVpdDAQN9JIS
- EHAs60dzlAoJh8lCDnu0t/De6NG0inV4opz13QHdDJIFqHLw/8f2h7CHYQ+lGBBxT3Uf
- 18yQ==
+ d=bytedance.com; s=google; t=1735108374; x=1735713174; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2QaMiC30VmqlZbSiZ83tDmP82ETrUFLlEEsLx4hsV6c=;
+ b=HT11mgFTlZSsS7t1A4KWIzrdqsFprCZuzJZitVOpMCBH7n4E+62duhCiYireNFXSha
+ v2EwnSLqOmysxDepRduaE+grOEyvixJXw5DVIVHoz0gsVHqEgqM0futt7CwbPpr86Qxq
+ vQpwgoD5dErp+LcmGGPuHgapkCL/5jThmfEDspZz4w7a0mSMl6oJCtM0odOHSnMRhpfH
+ ozV8ufYfeIeNlrufj9mSxV1pRv8OYKk0HjjTOu+mZDGMX8Eo3sbANCYLS91LmUvcYP7k
+ pqmD+7T/L7jpvOVrK1LoLEvXwjsKTpEB6sFtFfiGIFRaiUQLxcd9lkdhDEwWnySEOlCL
+ jk4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735105466; x=1735710266;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zAt3HH9n1Q4e0VDMLF4qELhaKJyL8RlrkODaMjrBVSc=;
- b=Z7w/dqqBGNNwFBOElaHCE+WudBe8qZ7gHC561UbuQX8LzLl178zgu+ILQk0jIgdwCE
- uXE5KGb6XShC+5XWOnKXVdLIY+ZycM4dTuQ0OoLSQKy+Xc/0GfMoPM1pnbJmnrrgbYY5
- Zi0H18ikF/quGSjFPvBu/kEnvxtBfCMdOAxZkrLBHBd/pAne6MSAypkWuNNx/1tdLrSl
- DgO/fQjQPI9/izTUrQcyrnOAoUo6EUMC/1kERpSqufIO7jIg9aEo9gsqDLdtcGTMopLG
- FjjFAU6uai/ChOA3RFldk8H2R/F/zURqcPrRoQ0zQKNf0Tqh1p28eeiJU3kO42b+4yvD
- o09Q==
+ d=1e100.net; s=20230601; t=1735108374; x=1735713174;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2QaMiC30VmqlZbSiZ83tDmP82ETrUFLlEEsLx4hsV6c=;
+ b=G6zpD0M3an3wiYRcbEoqTIHvKdwfseKb2BT/gabw7iQE0tKIVGIPC0C5ztfmR+9kc/
+ s1uArdeS7nN+Hb+hyru2X1QgvyrNEbrMZQQEfzBp1tn+vSvg6KARPjj/fW0maApwZ1Ke
+ IoksjKYSfZcH0GC9UcxbL8TRIONH8SAH9c8wVuB5h/JOjfBMDM/gU0h4b5XI7QgyfFmP
+ PYRrMtNVsmq1Was/bSILcS0wyxdP5IaAjiI3MD/JGMTdynvcdrtYDu+3qZ4wMG1qHROK
+ RXHwe05V6luZbtlD8gdGjGvgSTGWV7njVTJF3SWPi7w4LBe4y2Fl212IwP7PZEdT4Aa7
+ 5hEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRpR/MdiFy7J5FY7RXjkMLqexFEqK6qg+VD479oXRikZFvr88UupP1+3xudDe3sL/kNJZMkgnWbYTS@nongnu.org
-X-Gm-Message-State: AOJu0YwpbhR66xjsA+AQxzZPz/OctdCMw5SqGYddI7UBe60Tv6UWJaSx
- +t3m8ziqDZuQp7idw59UR6KEdlP/0tfoNMxEIIRgYwdmNtxcR7o1/Tp0qBhSGyc=
-X-Gm-Gg: ASbGnctgB1Ak8+Hoph3KwZmZCmVU+1nCvKkYokVOo3O+aNca7puf53jI/7YMlspKm7H
- C5CAWBthOBxegcB5KGIEBejGaKM4+XyGXyBb8Stj9fYLfpIBsmlEg7EEj5LsL+KFTf78nhFjTj5
- 9dZQACFNEKbgQnUt+hFRq3pJNME453WBtJACFNcVz7qpiuVAO7Thhk67Es/iEnVdyxlBHYh6AeH
- VXwLI1LGNgE9SR4swi7qojiuB3iLG5MPLkOTBUFbrzp8n0id6shXHL9m2H/
-X-Google-Smtp-Source: AGHT+IEC15ohGaoIdaRd2slbCHL8fkV2+MJGVukl9AVQbPL1+v3VFYd+I/HTkIqlUH5UDU/0Xvcfvg==
-X-Received: by 2002:a05:6a20:d49b:b0:1e0:c7cf:bc1f with SMTP id
- adf61e73a8af0-1e5e0447f12mr30538920637.9.1735105466177; 
- Tue, 24 Dec 2024 21:44:26 -0800 (PST)
-Received: from localhost ([157.82.207.107])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-72aad8dd180sm10923398b3a.109.2024.12.24.21.44.24
+ AJvYcCUMOBxedZG1u8vtXELhgah67RjurdbbunQjoWPrzrP8VynllbxZRQcD8GbA+JVCPKlzxeT4CcpSUMgE@nongnu.org
+X-Gm-Message-State: AOJu0YxZQCp6yRcof5g8bvav3WOQ/Bxo3XxI0WrgOJ4jnoBCBtxwb57o
+ VXqUZcL1yLrVt8iW6P5WTeNCL9iPdfEcFNsKLVcmy/fxyVEhTCL8BAXKDHwg6Ig=
+X-Gm-Gg: ASbGncujhRVEtj6noMXqV4bYCDE4gvhbq5RrELRUPlC+tFdari09h1xPxxSo+fEqLrL
+ A4OpYB/xUpBcTu5f2UtSXHHWt875mogX79oCmV/FotDy700D9m+lN+1xRdx7x1U0nZQeqwytLd8
+ NazjTVGYNEA6u75GaGWHmii18b8Uk2tdt0Z16tN7o/5lbAbpTKFsW0xYXFQ35Va7Yczu524XdUZ
+ 5tIXCwbZHiPGnUhx0DJ1W6fS7S8q0zwn7SwDdHyMNr2OqGJr4tzIvOWiLXVRhs=
+X-Google-Smtp-Source: AGHT+IHq+3EZjJgpbwlS/B5VsuVawHXXGS2jtRPE56ZPLllIkZSi4fL4QuGRwyMUggG/tROUhnc9ng==
+X-Received: by 2002:a17:902:f64d:b0:215:94e0:17 with SMTP id
+ d9443c01a7336-219e6ebb6admr298794585ad.23.1735108374172; 
+ Tue, 24 Dec 2024 22:32:54 -0800 (PST)
+Received: from [10.3.43.196] ([61.213.176.11])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9cdde7sm99306205ad.149.2024.12.24.22.32.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Dec 2024 21:44:25 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 25 Dec 2024 14:44:14 +0900
-Subject: [PATCH 2/8] futex: Support Windows
+ Tue, 24 Dec 2024 22:32:53 -0800 (PST)
+Message-ID: <ffdc6141-6754-43cb-bed9-13e377b12880@bytedance.com>
+Date: Wed, 25 Dec 2024 14:32:50 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241225-event-v1-2-a58c8d63eb70@daynix.com>
-References: <20241225-event-v1-0-a58c8d63eb70@daynix.com>
-In-Reply-To: <20241225-event-v1-0-a58c8d63eb70@daynix.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org, 
- devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
+ Lei He <helei.sig11@bytedance.com>
+References: <DM8PR13MB5078933D25141B3F23ECA782B3022@DM8PR13MB5078.namprd13.prod.outlook.com>
+ <98696813-b2fe-45aa-a759-25764435b7c7@linaro.org>
+Content-Language: en-US
+From: zhenwei pi <pizhenwei@bytedance.com>
+In-Reply-To: <98696813-b2fe-45aa-a759-25764435b7c7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,185 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Windows supports futex-like APIs since Windows 8 and Windows Server
-2012.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- meson.build                       |  2 ++
- include/qemu/futex.h              | 52 ++++++++++++++++++++++++++++++---------
- tests/unit/test-aio-multithread.c |  2 +-
- util/lockcnt.c                    |  2 +-
- util/qemu-thread-posix.c          |  4 +--
- util/meson.build                  |  2 +-
- 6 files changed, 47 insertions(+), 17 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index e0b880e4e138..083b6c45d240 100644
---- a/meson.build
-+++ b/meson.build
-@@ -798,11 +798,13 @@ emulator_link_args = []
- midl = not_found
- widl = not_found
- pathcch = not_found
-+synchronization = not_found
- host_dsosuf = '.so'
- if host_os == 'windows'
-   midl = find_program('midl', required: false)
-   widl = find_program('widl', required: false)
-   pathcch = cc.find_library('pathcch')
-+  synchronization = cc.find_library('Synchronization')
-   socket = cc.find_library('ws2_32')
-   winmm = cc.find_library('winmm')
- 
-diff --git a/include/qemu/futex.h b/include/qemu/futex.h
-index f57774005330..c22d756021c9 100644
---- a/include/qemu/futex.h
-+++ b/include/qemu/futex.h
-@@ -1,5 +1,5 @@
- /*
-- * Wrappers around Linux futex syscall
-+ * Wrappers around Linux futex syscall and similar
-  *
-  * Copyright Red Hat, Inc. 2017
-  *
-@@ -11,28 +11,36 @@
-  *
-  */
- 
-+/*
-+ * Note that a wake-up can also be caused by common futex usage patterns in
-+ * unrelated code that happened to have previously used the futex word's
-+ * memory location (e.g., typical futex-based implementations of Pthreads
-+ * mutexes can cause this under some conditions).  Therefore, qemu_futex_wait()
-+ * callers should always conservatively assume that it is a spurious wake-up,
-+ * and use the futex word's value (i.e., the user-space synchronization scheme)
-+ * to decide whether to continue to block or not.
-+ */
-+
- #ifndef QEMU_FUTEX_H
- #define QEMU_FUTEX_H
- 
-+#define HAVE_FUTEX
-+
-+#ifdef CONFIG_LINUX
- #include <sys/syscall.h>
- #include <linux/futex.h>
- 
- #define qemu_futex(...)              syscall(__NR_futex, __VA_ARGS__)
- 
--static inline void qemu_futex_wake(void *f, int n)
-+static inline void qemu_futex_wake_all(void *f)
- {
--    qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
-+    qemu_futex(f, FUTEX_WAKE, INT_MAX, NULL, NULL, 0);
- }
- 
--/*
-- * Note that a wake-up can also be caused by common futex usage patterns in
-- * unrelated code that happened to have previously used the futex word's
-- * memory location (e.g., typical futex-based implementations of Pthreads
-- * mutexes can cause this under some conditions).  Therefore, callers should
-- * always conservatively assume that it is a spurious wake-up, and use the futex
-- * word's value (i.e., the user-space synchronization scheme) to decide whether
-- * to continue to block or not.
-- */
-+static inline void qemu_futex_wake_single(void *f)
-+{
-+    qemu_futex(f, FUTEX_WAKE, 1, NULL, NULL, 0);
-+}
- static inline void qemu_futex_wait(void *f, unsigned val)
- {
-     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
-@@ -46,5 +54,25 @@ static inline void qemu_futex_wait(void *f, unsigned val)
-         }
-     }
- }
-+#elif defined(CONFIG_WIN32)
-+#include <synchapi.h>
-+
-+static inline void qemu_futex_wake_all(void *f)
-+{
-+    WakeByAddressAll(f);
-+}
-+
-+static inline void qemu_futex_wake_single(void *f)
-+{
-+    WakeByAddressSingle(f);
-+}
-+
-+static inline void qemu_futex_wait(void *f, unsigned val)
-+{
-+    WaitOnAddress(f, &val, sizeof(val), INFINITE);
-+}
-+#else
-+#undef HAVE_FUTEX
-+#endif
- 
- #endif /* QEMU_FUTEX_H */
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index 8c2e41545a29..0ead6bf34ad1 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -330,7 +330,7 @@ static void mcs_mutex_unlock(void)
-     /* Wake up the next in line.  */
-     next = qatomic_read(&nodes[id].next);
-     nodes[next].locked = 0;
--    qemu_futex_wake(&nodes[next].locked, 1);
-+    qemu_futex_wake_single(&nodes[next].locked);
- }
- 
- static void test_multi_fair_mutex_entry(void *opaque)
-diff --git a/util/lockcnt.c b/util/lockcnt.c
-index d07c6cc5cee4..ca27d8e61a5c 100644
---- a/util/lockcnt.c
-+++ b/util/lockcnt.c
-@@ -106,7 +106,7 @@ static bool qemu_lockcnt_cmpxchg_or_wait(QemuLockCnt *lockcnt, int *val,
- static void lockcnt_wake(QemuLockCnt *lockcnt)
- {
-     trace_lockcnt_futex_wake(lockcnt);
--    qemu_futex_wake(&lockcnt->count, 1);
-+    qemu_futex_wake_single(&lockcnt->count);
- }
- 
- void qemu_lockcnt_inc(QemuLockCnt *lockcnt)
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index eade5311d175..13459e44c768 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -345,7 +345,7 @@ static inline void qemu_futex_wait(QemuEvent *ev, unsigned val)
- 
- /* Valid transitions:
-  * - free->set, when setting the event
-- * - busy->set, when setting the event, followed by qemu_futex_wake
-+ * - busy->set, when setting the event, followed by qemu_futex_wake_all
-  * - set->free, when resetting the event
-  * - free->busy, when waiting
-  *
-@@ -400,7 +400,7 @@ void qemu_event_set(QemuEvent *ev)
-         smp_mb__after_rmw();
-         if (old == EV_BUSY) {
-             /* There were waiters, wake them up.  */
--            qemu_futex_wake(ev, INT_MAX);
-+            qemu_futex_wake_all(ev);
-         }
-     }
- }
-diff --git a/util/meson.build b/util/meson.build
-index 5d8bef98912a..da5b49f1ea82 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -25,7 +25,7 @@ else
-   util_ss.add(files('event_notifier-win32.c'))
-   util_ss.add(files('oslib-win32.c'))
-   util_ss.add(files('qemu-thread-win32.c'))
--  util_ss.add(winmm, pathcch)
-+  util_ss.add(winmm, pathcch, synchronization)
- endif
- util_ss.add(when: linux_io_uring, if_true: files('fdmon-io_uring.c'))
- if glib_has_gslice
+On 12/24/24 16:59, Philippe Mathieu-Daudé wrote:
+> Hi Gabriel,
+> 
+> On 24/12/24 00:46, Gabriel Barrantes wrote:
+>>  From c808fa797942b9bd32221594b7eef690a7558b14 Mon Sep 17 00:00:00 2001
+>> From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+>> Date: Mon, 23 Dec 2024 14:58:12 -0600
+>> Subject: [PATCH] backends/cryptodev-vhost-user: Fix local_error leaks
+>>
+>> Do not propagate error to the upper, directly output the error to
+>> avoid leaks.
+>>
+>> Closes: #2714
+> 
+> Better to use the full issue url to ease downstream backports
+> where this commit is cherry-picked:
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2714
+> 
+> Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>>
+>> Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+>> ---
+>> backends/cryptodev-vhost-user.c | 4 ++--
+>> 1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev- 
+>> vhost- user.c
+>> index 43efdf9747..09bfbddb47 100644
+>> --- a/backends/cryptodev-vhost-user.c
+>> +++ b/backends/cryptodev-vhost-user.c
+>> @@ -281,8 +281,8 @@ static int cryptodev_vhost_user_create_session(
+>>          break;
+>>
+>>      default:
+>> -        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+>> -                   sess_info->op_code);
+>> +        error_report("Unsupported opcode :%" PRIu32 "",
+>> +                     sess_info->op_code);
+>>          return -VIRTIO_CRYPTO_NOTSUPP;
+>>      }
+> 
+> Arei, Pi, Having CryptoDevBackendClass::create_session() take an errp
+> argument would simplify the call chain, reporting the error once in
+> cryptodev_backend_create_session().
+> 
 
--- 
-2.47.1
+Good idea, I'll do it later.
+
+>>
+>> -- 
+>> 2.43.0
+>>
+>>
+> 
 
 
