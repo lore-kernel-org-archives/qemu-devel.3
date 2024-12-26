@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AB3E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 21:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7EBE7718F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 21:22:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQvGv-0003fF-IA; Thu, 26 Dec 2024 16:19:57 -0500
+	id 1tQvHM-0003qg-2H; Thu, 26 Dec 2024 16:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQvGt-0003eg-Lh
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:19:55 -0500
+ id 1tQvHK-0003q7-69
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:20:22 -0500
 Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQvGs-0002x5-77
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:19:55 -0500
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal
- [10.202.2.52])
- by mailfout.phl.internal (Postfix) with ESMTP id BE74213801DF;
- Thu, 26 Dec 2024 16:19:53 -0500 (EST)
+ id 1tQvHI-0003D9-95
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:20:21 -0500
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal
+ [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id 984A713801E6;
+ Thu, 26 Dec 2024 16:20:18 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-12.internal (MEProxy); Thu, 26 Dec 2024 16:19:53 -0500
+ by phl-compute-05.internal (MEProxy); Thu, 26 Dec 2024 16:20:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1735247993;
- x=1735334393; bh=KCkRYG/jH7j0XUGmJo5gVnglQvXIToUkt02zHQ4OVAo=; b=
- MHh62pem9YEL6q6lN2Td6Zl0Qoy72MkUG/V2A+UgPORkQJmenAMpkpNcAsqWRBVr
- TyKFoj96qJBjg9Pe5wNbRNNUI3rRd6DjpUiQfxDCD/YOTcwXP3MaW13nyhXmQD0m
- mDDMp90dJ9UVdkaQaj9ajg4rp88XsmNdK54IdmZG1FKkBGkK5Yqr8tpXsbqutmkD
- 1pf9tDgJp/CVjXHLQlrBITgJZY9JDmf5OTyZEE+UM0dAQsBXnkez4wmv91AL9+mO
- rC+DTOS33PRHCGGDbF9TKVKBra/3Md12deBPOGcgKLPymlJ8nenKq2B97wOfDM/D
- fmB7za1RNH0ALg7too4vNQ==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1735248018;
+ x=1735334418; bh=mK00rNU3uUZqwx6EGUl+GHsiUe4Y9J4gnVo/RMfXeas=; b=
+ e7CIFt/WFYZ8Xsv8uD0xGVUkgGOGN0PzzObEmmFgT8i8rQWoHlsWzJsAnhIWmLoG
+ 61tk2IbkvBVHIjnlMTjqblOF9IeEnDOGk3plMjTo1hDUsbem3rG/N6gSW/twji06
+ e8W5SIut2TTLQMqa3IH42BA9FWiop3dI5Z0he2IcGM8if4amCjZa6KmgkRAuw7iE
+ LbWQMoPDWsqKPYO2GbAKgB5ADRavToGmNcIBfRivMAIoK9K4cT6jDCzLD3xif8+z
+ 6nid+9PYYWMsYSTIqiO0Kd3EFkTTdA1jzaqdPXFl36ya9zWURAb1MF4y6XX0h++0
+ FacIz6UjR8wU9QO8dP4Fgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735247993; x=
- 1735334393; bh=KCkRYG/jH7j0XUGmJo5gVnglQvXIToUkt02zHQ4OVAo=; b=W
- lGvWh1R7ymaRILyuJ70uUALbpQm5ewSle++6OaOrGzBLJki9PKCyl3oGJXd9Fmx8
- fUkOB/13I5ehq7SAhyCKfCBGrrK14f3Hty6th8ME0OLhhBi03kAdflKH0K/4MnL2
- eiy0Pu70oWWug/MgytB4ro7utFZamgET+ZEvgKIAQyJ437RxUSEqyH8KhN7dufhb
- zQWyR6A7i99KHwsNu2KFeKROLXorILwX6NLtez8IVuKsqL23OOmRBBI6EN0b1Lbi
- efq8l1d8J8MYdMDdVGY2jGvE7wcr3crUBCAp7IR+G/82/H+UYAGof3/usPNCQbh5
- Fw7CItUKUYxAJXRIcpqrg==
-X-ME-Sender: <xms:echtZ2JW3ZKmnpnfv_wQsJYg2eQgQCyfWkiVulvAwnoYuxF5LyUScg>
- <xme:echtZ-LvJ0o8PrqqiOo3bNEpIzmX0xvefhXXnnVrcMQehDHnqk_PtP4PKO03Oye6p
- c1x_HNAk8KIOxBEgzY>
-X-ME-Received: <xmr:echtZ2uHPozFydr2Xxb-UgFX4YaI8XWJOJ34mx2LRwww1vSyOV3NG7xF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgudegkecutefuodetggdotefrod
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735248018; x=
+ 1735334418; bh=mK00rNU3uUZqwx6EGUl+GHsiUe4Y9J4gnVo/RMfXeas=; b=G
+ ffrSj1o2flVEwBoBB3GYJaXsjwKdMHBhM4vvw9v9m7vXzvLoBl9E6Q/AJLefN6a6
+ Bq+DaBGqZilJIX4bbcMUrV5zyVqAOm+drET+3gMerh74sP3hnWAlG9D85Ty+MzNP
+ KCfSs2FtSMis4EvWs+ZvXD4xOYj7oos0v2pL1gzo1r4hLHgbnhPFuddIwtDcwpcm
+ 7UZHRLIsj+OiV2VoCikXVolGdu9p3icJjWENPqJnta3XlMxQ3n7SWf5G/NmP+9VS
+ WMw5DQHnhPMJu/bxRSKXMEy5jbjNdqQbU3VTq291rUdVjF9JLkbIX7SO7ILuKdZk
+ npH3BEPSMorrHosSSaQ6Q==
+X-ME-Sender: <xms:kshtZ5gtCxGRkLN9FvFNYp9V1RspFZXDYbHrW2DbGWA643_5OWLerg>
+ <xme:kshtZ-AVz2x5dph-1rPXvfRv_tnMtoZnj8mhFBXf55hWZYqNaMrpj-RSeH3bjgw8L
+ wuu0O_7ym1erZwMat8>
+X-ME-Received: <xmr:kshtZ5Hos8NzpSHiHZHlwcrtJ0JVSCwygFjM-gPOQJR5nbpB3JJaMexG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgudegjecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
  uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
  hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
  jeenucfhrhhomheplfhirgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflh
  ihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhnpedvkeeihfefveekueevteefleff
- keegudeghfdtuddugefhueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpedtne
+ keegudeghfdtuddugefhueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpeefne
  curfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorght
  rdgtohhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpth
  htohepmhgrohgsihgsoheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehmrghrtggv
@@ -71,22 +71,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgudegkecutefuodetgg
  vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfigrnhhghigrnh
  grnhehheeshhhurgifvghirdgtohhmpdhrtghpthhtohepiihhrghouddrlhhiuhesihhn
  thgvlhdrtghomh
-X-ME-Proxy: <xmx:echtZ7Y20cmBMp5YGTX7M7PEzD-cXozDfgWAwCfLCwaajQTNTGKdyg>
- <xmx:echtZ9aTR2VCRaD7bUA67wZFnVl0PadUcgnPjR3BfpuraiMWWIkksA>
- <xmx:echtZ3DSesxnTXaIE6ARDP6qsDbrh7TDYFn8XKciXe66q7SXpH0xqw>
- <xmx:echtZzbLOfuvYT70rtiz1iiGYHvKrdIbZF44e0UqDZZFr5HDDV3MUQ>
- <xmx:echtZxQFZzgcOvVRa0Jy-wFejrqR0k6Yl6V2qHnlFy_xbPZJnVlVkj00>
+X-ME-Proxy: <xmx:kshtZ-S3G1_4Pyp5oiMtd65-ST-e2ZI6g5zAl2iDvhqM840Y-esCcQ>
+ <xmx:kshtZ2zod-B7hXlNHb-bUSHhGLjHrGbAP0FL2loDSFNJMFweev7z2g>
+ <xmx:kshtZ06aVbpfeAvkEXHPX2lZdqFsVOXJohOZRT7dOKCkagAz5xJkxg>
+ <xmx:kshtZ7xYmpWquV61HA3DRVVk3C-6OwuhueazD88GAxfZZ6lpaxNq5g>
+ <xmx:kshtZxoAvoyEKQw0Y4XNZaJdsHZauR_6KV5_LYCQVTrrg8ke0HV74OIK>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Dec 2024 16:19:51 -0500 (EST)
+ 26 Dec 2024 16:20:16 -0500 (EST)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Thu, 26 Dec 2024 21:19:36 +0000
-Subject: [PATCH v2 05/23] target/loongarch: Use target_ulong for iocsrrd
- helper results
+Date: Thu, 26 Dec 2024 21:19:48 +0000
+Subject: [PATCH v2 17/23] target/loongarch: Refactoring is_la64/is_va32 for
+ LoongArch32
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241226-la32-fixes1-v2-5-0414594f8cb5@flygoat.com>
+Message-Id: <20241226-la32-fixes1-v2-17-0414594f8cb5@flygoat.com>
 References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
 In-Reply-To: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
 To: qemu-devel@nongnu.org
@@ -98,13 +98,13 @@ Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2778;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1435;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=eM8z4PNF4T/f/rnPHhyrp+3IIz7lkcNTnCate8LHDPM=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhvTcE9muL7rCGnMvzejZZ6+i+j+SbWqYgnFL85ED/WeeJ
- LP65n7oKGVhEONikBVTZAkRUOrb0HhxwfUHWX9g5rAygQxh4OIUgIl83MnwP7HmY+WGvV01tdJ1
- Kw41uYWd/K/MZ9LvOG+d5YqFs7xNJzMy3HAS5LjwOleeyXrinB6DSb9LFCt/bYthWfIsUuF5otQ
- GdgA=
+ bh=3fvPVcmduevZWpvYs3fGnpSI9/FSXVdg+OVVSEa4VNs=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhvTcE9kiaxcssl2j3pvI5S5Xt/vlp+ALnKLt17z6TgdvT
+ HFZeepaRykLgxgXg6yYIkuIgFLfhsaLC64/yPoDM4eVCWQIAxenAEwkV42RYfqpTSeErVf+sU6o
+ ePg1kG35/k1FZ79Kn1FJYrEO7n1xegHDP62kK9vPOjbnHOnRWyPLvSI40Hr++61RF5xLtJXk1Na
+ fZwMA
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
 Received-SPF: pass client-ip=103.168.172.144;
@@ -132,68 +132,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those results are all targeting TCGv values, which means they should
-be in target_ulong type.
+is_la64 should be wired to false on LA32 build.
+VA32 CSR check shouldn't be performed in LA32 mode.
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- target/loongarch/helper.h           | 8 ++++----
- target/loongarch/tcg/iocsr_helper.c | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ target/loongarch/cpu.h | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
-index b3b64a021536255a3f9decfc10ff61fe8380e2ae..409d93a5b0808f0e32b8c0e2e17cebac9feaf8ed 100644
---- a/target/loongarch/helper.h
-+++ b/target/loongarch/helper.h
-@@ -104,10 +104,10 @@ DEF_HELPER_2(csrwr_estat, i64, env, tl)
- DEF_HELPER_2(csrwr_asid, i64, env, tl)
- DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
- DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
--DEF_HELPER_2(iocsrrd_b, i64, env, tl)
--DEF_HELPER_2(iocsrrd_h, i64, env, tl)
--DEF_HELPER_2(iocsrrd_w, i64, env, tl)
--DEF_HELPER_2(iocsrrd_d, i64, env, tl)
-+DEF_HELPER_2(iocsrrd_b, tl, env, tl)
-+DEF_HELPER_2(iocsrrd_h, tl, env, tl)
-+DEF_HELPER_2(iocsrrd_w, tl, env, tl)
-+DEF_HELPER_2(iocsrrd_d, tl, env, tl)
- DEF_HELPER_3(iocsrwr_b, void, env, tl, tl)
- DEF_HELPER_3(iocsrwr_h, void, env, tl, tl)
- DEF_HELPER_3(iocsrwr_w, void, env, tl, tl)
-diff --git a/target/loongarch/tcg/iocsr_helper.c b/target/loongarch/tcg/iocsr_helper.c
-index db30de2523fff01bcc8923eb12c7fca7bedca7bf..23d819de0ef9790eb82741f1e8a0e20dc139bf4b 100644
---- a/target/loongarch/tcg/iocsr_helper.c
-+++ b/target/loongarch/tcg/iocsr_helper.c
-@@ -15,25 +15,25 @@
- #define GET_MEMTXATTRS(cas) \
-         ((MemTxAttrs){.requester_id = env_cpu(cas)->cpu_index})
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 4f542a3376831141d012f177dc46a0e928afc85c..a2d416b6634b7f6787c93eac2b777a2f6c71bebf 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -438,18 +438,26 @@ struct LoongArchCPUClass {
  
--uint64_t helper_iocsrrd_b(CPULoongArchState *env, target_ulong r_addr)
-+target_ulong helper_iocsrrd_b(CPULoongArchState *env, target_ulong r_addr)
+ static inline bool is_la64(CPULoongArchState *env)
  {
-     return (int8_t)address_space_ldub(env->address_space_iocsr, r_addr,
-                                       GET_MEMTXATTRS(env), NULL);
++#ifdef TARGET_LOONGARCH64
+     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
++#endif
++    return false;
  }
  
--uint64_t helper_iocsrrd_h(CPULoongArchState *env, target_ulong r_addr)
-+target_ulong helper_iocsrrd_h(CPULoongArchState *env, target_ulong r_addr)
+ static inline bool is_va32(CPULoongArchState *env)
  {
-     return (int16_t)address_space_lduw(env->address_space_iocsr, r_addr,
-                                        GET_MEMTXATTRS(env), NULL);
+     /* VA32 if !LA64 or VA32L[1-3] */
+-    bool va32 = !is_la64(env);
+-    uint64_t plv = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
+-    if (plv >= 1 && (FIELD_EX64(env->CSR_MISC, CSR_MISC, VA32) & (1 << plv))) {
+-        va32 = true;
++    if (is_la64(env)) {
++        uint64_t plv = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
++
++        if (plv >= 1 &&
++            extract64(FIELD_EX64(env->CSR_MISC, CSR_MISC, VA32), plv, 1)) {
++            return true;
++        }
++        return false;
+     }
+-    return va32;
++
++    return true;
  }
  
--uint64_t helper_iocsrrd_w(CPULoongArchState *env, target_ulong r_addr)
-+target_ulong helper_iocsrrd_w(CPULoongArchState *env, target_ulong r_addr)
- {
-     return (int32_t)address_space_ldl(env->address_space_iocsr, r_addr,
-                                       GET_MEMTXATTRS(env), NULL);
- }
- 
--uint64_t helper_iocsrrd_d(CPULoongArchState *env, target_ulong r_addr)
-+target_ulong helper_iocsrrd_d(CPULoongArchState *env, target_ulong r_addr)
- {
-     return address_space_ldq(env->address_space_iocsr, r_addr,
-                              GET_MEMTXATTRS(env), NULL);
+ static inline void set_pc(CPULoongArchState *env, uint64_t value)
 
 -- 
 2.43.0
