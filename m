@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EECE7718B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 03:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A351E7718B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 03:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQe85-0007Md-9S; Wed, 25 Dec 2024 22:01:41 -0500
+	id 1tQeHH-0000ZB-1M; Wed, 25 Dec 2024 22:11:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tQe84-0007MM-9a
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 22:01:40 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1tQeHF-0000Z1-Ru
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 22:11:09 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tQe82-0001Bn-46
- for qemu-devel@nongnu.org; Wed, 25 Dec 2024 22:01:40 -0500
+ id 1tQeHB-0002Vl-1J
+ for qemu-devel@nongnu.org; Wed, 25 Dec 2024 22:11:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1735182098; x=1766718098;
+ t=1735182666; x=1766718666;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=1yYUTFJPIrUSB6nVFXtpXI3qf+jyYkVal3pr8pNy0tI=;
- b=Gpi9Xa1bVF1DA0+Q3Y8VMUlm5lwgIwXYQqFH0B45/CwJw45uJvwDztx3
- HAvZx6Tw5IapXjfbIVoJzD675aLh2WMoyNLC3F4jFXwfdTuqYy5n52dEZ
- 9RNgivSHCQOIfFwnxTPMuoLq1rcuX4tONmCQjtraN8juFAvPurhwAkBfW
- MZSHeGa39bPSae+OJM5Tue0eF8FvoOCkOXzic9vz6bsshKX0qAFXuZKSz
- Mo7RqZOe8v4lBN4Tx/QdWIpmePPGfkDJ+SWJZSiU+nt2nysbBWhFcuvJs
- FDzMpUTeDZAs6YthtuGYsO2lvRXmhl9aqaHvicaKU3hM/7rr3bmmMdG/6 A==;
-X-CSE-ConnectionGUID: DCvLSo8SRs2ggN4aL3ydHA==
-X-CSE-MsgGUID: b3sHlJLFQpCu7Kvlea8/3g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11296"; a="46095072"
-X-IronPort-AV: E=Sophos;i="6.12,265,1728975600"; d="scan'208";a="46095072"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Dec 2024 19:01:34 -0800
-X-CSE-ConnectionGUID: YUriBYDiTTuTLAvQb8jcLg==
-X-CSE-MsgGUID: hs8QJkRNS+m3hr89/Evapw==
+ bh=9T3O/Jb631rQymePER93FuTvIpsKxHRDg9V8dTYFMrE=;
+ b=CNLPUe7NvpKwrmmrBREm0aZbCjaWwT60UoJQICh+aXRFUuMQ16zxxPOf
+ UCYLX/3MZp48lA8tOOL5hmoB6k3w3fQ2lEnhj5v4PNYTIiGsebFhjEbI2
+ iagGsqxOfTimm7S71GbAXqZ7wUts4xcDOLfpDJLKStadC1KBy3Sg/xUpb
+ MBoo757i9HhW4/WeMMBAZFUbU22N7nMn+D+IAWgfJlaZm+PNVVQkCJUEq
+ pRODlxbO5Kkht1p/8Jnw2XCkc8u8dkbGc2XXAv5ZLqwruK2L0p0R9vx6w
+ /FID+hGdzzRsCheQZuRmYugbahb5I2Fsij7VwJ3KJt2c+LZ9yelg5XBD0 g==;
+X-CSE-ConnectionGUID: cxJpUvUzTyeTSzE3LgcaPQ==
+X-CSE-MsgGUID: 4ZUhbVgAQKWBdhy2CoDSUQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11296"; a="35741508"
+X-IronPort-AV: E=Sophos;i="6.12,265,1728975600"; d="scan'208";a="35741508"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Dec 2024 19:11:02 -0800
+X-CSE-ConnectionGUID: tXSmfGMoTbqgYsh1aMPwiw==
+X-CSE-MsgGUID: cGeCZzZmQK2T/K3ofqzy7g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="104904349"
+X-IronPort-AV: E=Sophos;i="6.12,265,1728975600"; d="scan'208";a="104672114"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 25 Dec 2024 19:01:34 -0800
-Date: Thu, 26 Dec 2024 11:20:16 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 25 Dec 2024 19:11:00 -0800
+Date: Thu, 26 Dec 2024 11:29:43 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, junjie.mao@hotmail.com
-Subject: Re: [PATCH 07/12] rust: pl011: only leave embedded object
- initialization in instance_init
-Message-ID: <Z2zLcGH6IeAOHN0r@intel.com>
+Subject: Re: [PATCH 08/12] rust: qom: make INSTANCE_POST_INIT take a shared
+ reference
+Message-ID: <Z2zNpxqnthFuXJPq@intel.com>
 References: <20241220142955.652636-1-pbonzini@redhat.com>
- <20241220142955.652636-8-pbonzini@redhat.com>
+ <20241220142955.652636-9-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241220142955.652636-8-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241220142955.652636-9-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -84,25 +84,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 20, 2024 at 03:29:49PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 20 Dec 2024 15:29:49 +0100
+On Fri, Dec 20, 2024 at 03:29:50PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 20 Dec 2024 15:29:50 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 07/12] rust: pl011: only leave embedded object
->  initialization in instance_init
+> Subject: [PATCH 08/12] rust: qom: make INSTANCE_POST_INIT take a shared
+>  reference
 > X-Mailer: git-send-email 2.47.1
-> 
-> Leave IRQ and MMIO initialization to instance_post_init.  In Rust the
-> two callbacks are more distinct, because only instance_post_init has a
-> fully initialized object available.
-> 
-> While at it, add a wrapper for sysbus_init_mmio so that accesses to
-> the SysBusDevice correctly use shared references.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/hw/char/pl011/src/device.rs | 18 ++++++++++--------
->  rust/qemu-api/src/sysbus.rs      | 12 ++++++++++++
->  2 files changed, 22 insertions(+), 8 deletions(-)
+>  rust/hw/char/pl011/src/device.rs | 4 ++--
+>  rust/qemu-api/src/qom.rs         | 8 ++------
+>  2 files changed, 4 insertions(+), 8 deletions(-)
 > 
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
