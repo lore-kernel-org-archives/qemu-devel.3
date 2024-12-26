@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413E6E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 22:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7FEE77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 22:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQwmU-0006wv-Dh; Thu, 26 Dec 2024 17:56:38 -0500
+	id 1tQwoZ-0008LT-UF; Thu, 26 Dec 2024 17:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQwmS-0006u2-9f
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:56:36 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQwoY-0008Kx-Fm
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:58:46 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQwmL-0005f2-BQ
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:56:36 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-219f8263ae0so43530535ad.0
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 14:56:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQwoW-0005wf-NK
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:58:46 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-216281bc30fso93615595ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 14:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735253786; x=1735858586; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735253923; x=1735858723; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OnV6u3+nfKWuKtFOAsMOV2oEcpMmocVR6sSgqBRQgSU=;
- b=k2o3Kwadt/M4vxeDgozKHtBXO59wRCHkOW6EGH9mpuGGwmSvuibIHDmK+TnAu9TGGn
- rhStJ7tnkh2ZqlzGDxnbfsn8sCPVQ7yQPREO/5JEBh1sNZIgexyEEb6xD09J5aLwNuSF
- A/G+rSRe/BYfbiOw68d8CjZ/8nB9FU6HKKqTg73P1BSISnXu+Prd5QMeMJYNtzTtLhuX
- A3gYwNxga2gInSHQDq6m1OMcUrn1XpOxSmKXXXDc1BDacDt4lAjzDmUnf8KNzeLjlSjG
- TBAO6SfJSZOBSqxNQSGZto31AKxYAm6kA/0ask+vaGJfWVCiW9QfYByhVmh4cdyIsSUb
- 4sPQ==
+ bh=0cIwE37iPsAJ+XHGsmT+5/VtB+UGmfDP2BekpC7UvyY=;
+ b=vs489DoDQxysc7T8sowpcncM3FNBgdnunjw4cQkxU7wNv7MCfh+1hGVOx+vzlkdpF4
+ z0s6mKvI5541UgHfPRLS3jeSK2BK7iJdCUHNxj1L66H3u84xa0Hu3iZQcCkgvv87TYgX
+ GFDClq7V63L3WAb+kFpg1IuGHJyW6G/Lg5CejHDh6rdAicpnIpUhtGVY0rOw4FZ4yujd
+ AhbVUBzhkxdWnaW5JC8TRmCPNVd4nAZLxEsLHDd5yMefUXVIBai1qgjip/GGf6f/4Wya
+ 2rerbN7q51NubxlGIs4daYCZYXTghXpnXoGOazmImQkWbQafIfQ2SpM+mgz6IDNfBwde
+ M6JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735253786; x=1735858586;
+ d=1e100.net; s=20230601; t=1735253923; x=1735858723;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OnV6u3+nfKWuKtFOAsMOV2oEcpMmocVR6sSgqBRQgSU=;
- b=ZQ556xgkqob/yAaBegT+7hmj3/fcOiGoeXCX0rk0e0g6WJ5DLC833PYJRM+mkQ3PJp
- 3trGuF/daIfRS3I5pzBkyIQhWXzekuX5mFo+1hbC4E4WO0el2JA66NbouBEYQzZjErx6
- gBbkznysNGxiPol/iw2yrF4I0XERM0OQiM+qVh8jA7xe1eW7pK+j5oLz6Ms0FETw+IHm
- MTCj3MQL17gUJL8oZwkajM1ZlKvBqWm7NykVzCw/7IJsHs3pvae+HfM+qIjVhAsGiRdL
- y0geCbhj0RmDef+Ix9ghzHcJuaLngV1U4KsjOqvZwBipINDHSrIXHXwhU1XYl9bM/3pE
- JOKQ==
+ bh=0cIwE37iPsAJ+XHGsmT+5/VtB+UGmfDP2BekpC7UvyY=;
+ b=SVsIrJ5SWv6MpF7OiS0MWUfYoVr6rvdkWsTlQWvz08kPebWsWrxTCEL0i0i8YVq3ve
+ MpJ7yOyQK7lqTCuhxihlOdasSCKmNoKGvS/hEgNdPs3F8JQDEwemtW5dAc1/V68sSaSd
+ d/TSTwh2xkvWgOzkBx4ZrPGyOoZ/ioEX1FNoVsmnsI0oqVjDe6MVCVMukhgXMKz97DZP
+ nk1jpZfCnWQDui6XmNzVS7mP8lNi1OKqspE/zajtPYzlXdO3BA5A1rHF2po1cpZjyCr2
+ 6d2LB7nA6qhZJpU+j5qRd7V3M5yV/opcUVPYmCSEMCtaIm2A5nKJyv44QIa5aySvWj0/
+ zWrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXE4WSRD29vsfE8M+ffy1BbBgg4JEz8yH/TNs3TVBAqx3XsnsjxapXvY9uBiPjGsEvJEXjt+A7GqFKO@nongnu.org
-X-Gm-Message-State: AOJu0Yz8iUPjI1YMAD9+Ma2ShXnyxCNFCkEdMOCRz9QHrt7AHX/KbJXy
- k/hb9g1LaQZB4HQdmIGBtKmySBzPVfSBq5LR7RveUe8J4Q/3m2r6CPfjX0FAed8=
-X-Gm-Gg: ASbGnctGeGuSZPZ00ZMXi9v8t9iaTWzrf0aXFU6pZ/b4C74SMUeuurlasMBcKiD0Kle
- luyi9vgqpC6RUV8YuXYblMegC5cBKOAZ+acj+wbEl1hnSgoW83X9muDdph5bSc8yoQSR4yAUWJe
- BU2xMljTpzwTMyJN4cKbU6NaBK/DX3AkLtehjduCdPSu6nV0zGDX9Gzo3NlvryyoS5dg+BIZabR
- GTO4MQXH4w12R8WLJ6LgWagQXvuyEoKesnnk0r9z1yKLvrhywYGsejIsYlTkCg8zjn1j6Edl22h
- v3PSvxhnwIMzSy5122i7lhN6copL5A==
-X-Google-Smtp-Source: AGHT+IH2gsh01F6eaPxTfkahBsQq7GUkn9UimKARLVfSvEI5O4RanIYyUXaJgRxagqjc9HWKTROaiQ==
-X-Received: by 2002:a17:903:94f:b0:216:393b:23d4 with SMTP id
- d9443c01a7336-219e6e89543mr364676835ad.11.1735253785954; 
- Thu, 26 Dec 2024 14:56:25 -0800 (PST)
+ AJvYcCUw5g0V+cREyVDPIeDhJK5bIQHigpGOXky1NjF/wMTfesDSpnYTF16cK4QMU6BsM5y0tktpOHvYAoGV@nongnu.org
+X-Gm-Message-State: AOJu0Yx6qz3tHr3W8E/ov42OMGKM5bHcEQf1lJ/UyBEsrWxkbwTvYecZ
+ oE0oOMtAxkhiGGszjuGGHf3wCCtyNy4y3lefhYdMnXqlarfkwCEMVDZLSzulZKQ=
+X-Gm-Gg: ASbGncuRaRRnzkGXBgo3G4L0aswV649n/HAX6QuZkcWyerTamXp59hPqB4y4WXUVUT4
+ It2lv0YFloqvMhDrdUf/YbiJZmdawKM9su2opVjThlfAtcf83bQA6TxFH24lWMRzFK9CHIaZNOj
+ NdiLqaO/EkqUMV3PD1DPexRmUkC9eRew/+SchkyLTA72lg7YsFgWu3jfsdJDqjGjfFUSXzZzuAq
+ ZOCZ+Lq2w67KyNI37abmgkepGFlBcvt7KKpfyzMpi6ulVRXrnSRavKNzllrdhLRWDUmUtiu6cwm
+ SbCae3QnxSErDpTX8r4UycnnBCYIAg==
+X-Google-Smtp-Source: AGHT+IHXRYJ4jI4nm45gh1Gu5faJPGJIzlGimzQ78Bcr7hggOMG6XctKOb9wvZIz+kN6A0oBiJAJtA==
+X-Received: by 2002:a05:6a00:b87:b0:726:54f1:d133 with SMTP id
+ d2e1a72fcca58-72abddb19ccmr35405457b3a.12.1735253923541; 
+ Thu, 26 Dec 2024 14:58:43 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9d4441sm121334335ad.129.2024.12.26.14.56.20
+ d2e1a72fcca58-72aad90b949sm13404529b3a.176.2024.12.26.14.58.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2024 14:56:25 -0800 (PST)
-Message-ID: <189159ad-0b0d-46db-bc58-c7e1f0ef9bc6@linaro.org>
-Date: Thu, 26 Dec 2024 23:56:18 +0100
+ Thu, 26 Dec 2024 14:58:43 -0800 (PST)
+Message-ID: <f332d6b4-66c0-481c-8936-12892664d24f@linaro.org>
+Date: Thu, 26 Dec 2024 23:58:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/23] hw/loongarch/virt: Default to max32 CPU for
- LoongArch 32 build
+Subject: Re: [PATCH v2 23/23] config: Add loongarch32-softmmu target
 To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -77,14 +76,14 @@ Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
- <20241226-la32-fixes1-v2-20-0414594f8cb5@flygoat.com>
+ <20241226-la32-fixes1-v2-23-0414594f8cb5@flygoat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241226-la32-fixes1-v2-20-0414594f8cb5@flygoat.com>
+In-Reply-To: <20241226-la32-fixes1-v2-23-0414594f8cb5@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,33 +107,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/12/24 22:19, Jiaxun Yang wrote:
-> la464 CPU is not available on LoongArch32. Use max32 which makes
-> more sense here.
-> 
 > Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 > ---
->   hw/loongarch/virt.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 3a905cf71d46e3c5a29672f7bb73faedf1d29444..343d2e745e155d59f0ff17124b3c77ec9b3c111e 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -1440,7 +1440,11 @@ static void virt_class_init(ObjectClass *oc, void *data)
->       HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
->   
->       mc->init = virt_init;
-> +#if defined(TARGET_LOONGARCH64)
->       mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("la464");
-> +#elif defined(TARGET_LOONGARCH32)
-> +    mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("max32");
+>   MAINTAINERS                                     | 4 ++--
+>   configs/devices/loongarch32-softmmu/default.mak | 7 +++++++
+>   configs/targets/loongarch32-softmmu.mak         | 7 +++++++
+>   3 files changed, 16 insertions(+), 2 deletions(-)
 
-Why can't we use it on LOONGARCH64?
 
-> +#endif
->       mc->default_ram_id = "loongarch.ram";
->       mc->desc = "QEMU LoongArch Virtual Machine";
->       mc->max_cpus = LOONGARCH_MAX_CPUS;
+> diff --git a/configs/targets/loongarch32-softmmu.mak b/configs/targets/loongarch32-softmmu.mak
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..50e0075a24ac6bf3717db967b03b816b52a25964
+> --- /dev/null
+> +++ b/configs/targets/loongarch32-softmmu.mak
+> @@ -0,0 +1,7 @@
+> +TARGET_ARCH=loongarch32
+> +TARGET_BASE_ARCH=loongarch
+> +TARGET_KVM_HAVE_GUEST_DEBUG=y
+> +TARGET_SUPPORTS_MTTCG=y
+> +TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+> +# all boards require libfdt
+> +TARGET_NEED_FDT=y
 > 
 
+I'd really like, if possible, to not add a new target, but make the
+current loongarch64-softmmu.mak evolve to support both 32/64 modes.
 
