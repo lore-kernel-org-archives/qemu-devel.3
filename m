@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6B0E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 17:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8BDE77191
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 17:39:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQrp4-0004PR-SU; Thu, 26 Dec 2024 12:38:58 -0500
+	id 1tQrpe-0004wP-CG; Thu, 26 Dec 2024 12:39:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQrp3-0004PI-SQ
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:38:57 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQrp1-0004Ld-Om
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:38:57 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3862d6d5765so4054731f8f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 09:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735234734; x=1735839534; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BVvpml95TRv2qPGlLfGrtOe5vcvsTIQwLtKTFgxSvPo=;
- b=yo00fG8esa5WTJMSjVpxpMZiYb4V4Ywa7mRosggUkLq5RrHpkMfbRJE3WVd7g9qgfm
- d0oBG/XTh7jHfXNPkx1Apqmrd7excSrLwZdhOYiCJ4UtS4p3QcNimTVHl5EY6ojNRBxi
- U8t3Jx7n/O5uwMVzs/Qz/vqiBcdFz/F/gil8G7/XNsWdjHs4bfKUoz3dd77+u8c2noCl
- rY7nM9ig+eszap+Li+lOFO6wtj0eXDiiFb7HFz/sSO7k0QlCzWNu3jWQUscl4uusd2ql
- N4Kq/cwHpEf2FHmySqQKdpbaSWYcTJ+5h6FFqzFfWCiSh8z4Uk3hWegpGnoO6W6xDSEq
- VMsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735234734; x=1735839534;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BVvpml95TRv2qPGlLfGrtOe5vcvsTIQwLtKTFgxSvPo=;
- b=A3wwwVsNNCcxnjomGZH1F+wDppUasWIj45Gx40vLpORxuBRSgGmBK9NQpmpz8BA8Zc
- 2zowlpBqGQ44wKgWaoRlJoxPhMsqt7X+hUw2wA7Q95Ww4OIRPhw+Dd5D9iq7haKwu30O
- LIHK+5Xo3rClYZIt2FlI87uSlBbfLs3YNcJotEv4UoI3P4PHXY30i0gNh0I9s8M9oIWt
- aRqrEOfKBO4bOZNh9u18HLPAHzZyEvxLJb9a7C4PQh6zSjYqd7luvM1njL3+rpW9wclN
- jxT3mMm99Y7dlQx5afvQN+N2VX59Yq/L0J6yAaDvRre0vqtC5UbfjpY/d+Crqg+D7dPq
- SVmw==
-X-Gm-Message-State: AOJu0Yybfgur8n1PIMY+JQ6JwXk1en5ra8UDxXPbzfe9+wiKf1O9nx/u
- wtVvR3wzg8DBL/lKeT3gxn0IhX0JjPKedDla7xNzkqRGnTMg1cP8dQN46uzrU6U=
-X-Gm-Gg: ASbGncsZdsvvPGXQxovEehUnGt1eOcCORMJxj2vDf3YpxXTu/pg+QabjaZCL3rlQ2zy
- SwRuT+kYZbvNj0stAvScynp6+Nv7n22doG4q0TeSEHoR0YbUNuX53nPGSnrDv6gU5XXVllikO7m
- muU7dimwMBRA4fwVPjY2dAjtoPqKe1gpbOAulSO87dcFeSjDCztje/P2z+XMsP08/ao5lCrr3Bj
- VUv23zsIm6/386Ku4g60CHQ2nI4dyi5tGJ6UpNac3FYg7SIwLFIdxJfd9FCK46IP4jf9IWo6Sr+
- WX+CF8PaAS8yrVYP21eFlxil271q3BUr3KGM
-X-Google-Smtp-Source: AGHT+IHcQCybfNPxSP3d07MsAAxZSvJsl94Uz253IVQFNRlDEQog8TM6gibKf8q/Z5duM3U+OPNeWw==
-X-Received: by 2002:a05:6000:4612:b0:385:f984:2cbc with SMTP id
- ffacd0b85a97d-38a22201929mr18202367f8f.34.1735234734080; 
- Thu, 26 Dec 2024 09:38:54 -0800 (PST)
-Received: from [10.217.61.213] (180.red-95-127-33.staticip.rima-tde.net.
- [95.127.33.180]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a28f17315sm14704537f8f.108.2024.12.26.09.38.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2024 09:38:53 -0800 (PST)
-Message-ID: <0083ebbd-2f94-4212-b138-8839630ea9c3@linaro.org>
-Date: Thu, 26 Dec 2024 18:38:49 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tQrpb-0004sD-3q
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:39:31 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tQrpY-0004MY-EB
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:39:30 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1136CCBABF;
+ Thu, 26 Dec 2024 20:38:40 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4929B190412;
+ Thu, 26 Dec 2024 20:39:17 +0300 (MSK)
+Message-ID: <d7560eaa-aa57-4aae-88e8-3a15aa40e11e@tls.msk.ru>
+Date: Thu, 26 Dec 2024 20:39:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/6] target/loongarch: Fix vldi inst
-To: bibo mao <maobibo@loongson.cn>, Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
- ghy <2247883756@qq.com>, Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
- Xianglai Li <lixianglai@loongson.cn>
-References: <20241225024008.486236-1-maobibo@loongson.cn>
- <20241225024008.486236-2-maobibo@loongson.cn>
- <b691d979-848e-4fc9-8ede-3b16c6de732f@linaro.org>
- <db21ace6-a4b1-adaf-7f7b-6d4aae312de9@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <db21ace6-a4b1-adaf-7f7b-6d4aae312de9@loongson.cn>
+Content-Language: en-US, ru-RU
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: Why pycotap is mandatory for building qemu?
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,49 +101,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/12/24 05:22, bibo mao wrote:
-> 
-> 
-> On 2024/12/25 下午7:32, Philippe Mathieu-Daudé wrote:
->> Hi Bibo,
->>
->> On 25/12/24 03:40, Bibo Mao wrote:
->>> From: ghy <2247883756@qq.com>
->>
->> Is this authorship correct? Should it be:
->> From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
-> yes, this is better.
->>
->>>
->>> Refer to the link below for a description of the vldi instructions:
->>> https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/ 
->>> #synopsis_88
->>> Fixed errors in vldi instruction implementation.
->>>
->>> Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
->>
->> to match the S-o-b?
-> Guo Hongyu submits the first version with attachment, xianglai tests it 
-> and submit again with plain text. I added them both with S-o-b -:)
-> 
-> What to do in this condition?
+Hi!
 
-IIUC the technical issue, you can fix the authorship using:
+What's the reason to require python-pycotap when configuring qemu?
+It does not look like an essential part of build procedure, but used
+to run tests only, no?
 
-git commit --amend --author='Guo Hongyu <guohongyu24@mails.ucas.ac.cn>'
+While this python module is shipped with qemu, but for downstream
+distributions these are usually stripped off the source tarball.
 
-> 
-> Regards
-> Bibo Mao
->>
->>> Tested-by: Xianglai Li <lixianglai@loongson.cn>
->>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
->>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>> ---
->>>   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
-> 
+Thanks,
 
+/mjt
 
