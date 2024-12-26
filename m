@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E25E77191
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0949E7718E
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 08:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQj8x-0007Cn-L0; Thu, 26 Dec 2024 03:22:55 -0500
+	id 1tQj9h-0007XQ-MX; Thu, 26 Dec 2024 03:23:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3WRJtZwgKCnQomZSglkZYggYdW.UgeiWem-VWnWdfgfYfm.gjY@flex--wuhaotsh.bounces.google.com>)
- id 1tQj8w-0007CW-8P
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:22:54 -0500
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <3fxJtZwgKCpoQOB4INMBAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--wuhaotsh.bounces.google.com>)
+ id 1tQj9Y-0007V7-Ko
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:23:32 -0500
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3WRJtZwgKCnQomZSglkZYggYdW.UgeiWem-VWnWdfgfYfm.gjY@flex--wuhaotsh.bounces.google.com>)
- id 1tQj8u-0000Uw-Cd
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:22:54 -0500
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-2165433e229so76151175ad.1
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 00:22:50 -0800 (PST)
+ <3fxJtZwgKCpoQOB4INMBAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--wuhaotsh.bounces.google.com>)
+ id 1tQj9W-0000ZR-SQ
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:23:32 -0500
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2efc3292021so11519067a91.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 00:23:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1735201369; x=1735806169; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=f1Y6EcNHZhm3CLLgqkMNUBz1RiDT0X5HPyL7ajEA4xI=;
- b=mnneDlJ4yKpHmeaUjbbmIYIPgg3rBtUvYDozqx4DdH7EfSKxmkThxmo/9J5TnPAsK6
- flVO+4rnb8qSWZIAhIgBQCHv5QHcjIavLXHwB+9hIUSJrkvu9+ksGRQfQpMUU+pYNGp5
- iIuBAKlF1UiPqWynB9JeAnZjtPpRYQTW1d12/E1yQuc+Cd2OdOgRairwXtG9klctA4SF
- s0I8HqMfZTp7tuhefI7bMiRKAm/TyN3CIdBdP3iy+D+PilUUjYK2uTRiWe46vFBg/px/
- 9QpL1aDs4DraTbnPO7xxEapLW8fIC9LwSqR6iLVr1ergTfT49r8PDaO6bC8k2Jl+D2ie
- xryA==
+ d=google.com; s=20230601; t=1735201408; x=1735806208; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=IC2Oq7akfcisB2i2J+bOE64Sr4Q2OzTG/tLjT/6CTOs=;
+ b=Evoovf74b7hQ097hsfHviCfCTlW8eFe/CyUj8wFrCOOSfriYorQ7qo2NpQy66AidFV
+ oqRX9X7fJkmUjWZWxOEDfzsr6f8q4CLPNvgERUuPJCiQucFG5yJXvMfafe+ivIZGaLuA
+ TDEHXeOEMwa8qOXwg+ThjuiTedsuHBL2bvvTUxmdUDbknY9XZZw4hG8uo1WDBz2vNOH6
+ 2qgdDUtMUC1WhbvFc7M9glMi8D1+XA/3k/Hd3xEDjwIVf6wUtCg6nDWaNWfflmZmDpbu
+ 1L+hjaLqx1CRpdGbP93FuGoUvNc0rarRn6TdJve6c7Upx8fTcbpiR1EsJHcXZwMS3Ig1
+ wVKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735201369; x=1735806169;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=f1Y6EcNHZhm3CLLgqkMNUBz1RiDT0X5HPyL7ajEA4xI=;
- b=rBd4ZP9Jnqymp5Y6zfD1o+b0mN53Pv9Tv+/A6JPWsoeDQ36dXsNmBWRUWQHUGytUR9
- vrle4TUiHGyPoo8J/itEmgIjrC12pIAnN7w1+Dc6TuDy1Nt+sWlXggNzvlWi5627ewcH
- XYGYLsrpkYIZhNKasx0h9NxCwBlcFG5NOih71/CjYPUEQGOdt4etLmNIoMPDXMlre/z0
- 1//JQRbaCY8/S0Lu8J+ZDz4Ju7v06g/Q/YPCeiNXSIpaIT7jcuq+oaPf5MYb3MpNKeQM
- LZvwvPpeEtbgSdqVEAvWvC+LH4HKROPzftrMu4OLJDyOAfrfDIsa5oqxq4S+zaNAAWUP
- sTjA==
+ d=1e100.net; s=20230601; t=1735201408; x=1735806208;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IC2Oq7akfcisB2i2J+bOE64Sr4Q2OzTG/tLjT/6CTOs=;
+ b=D9gffwfPKuIYSQ7E05uQA5pj4vfJ6clPWAPb0XceG+3XgSShVPVcl4ZjPiVHEwZ7kN
+ 6SMdIGYirGm0BVBIejQVE2tn4zLJ0L2tFQa73NnH7RbnIriGoxjhs5I/3NYePoLRxStb
+ VQKf/aZDxf88O76sMG1PoAUslQRSwf3FNRFNVL0kiwvVkTjAd5i11j5j99MSapZVdjm8
+ xz6AdlxH/rOwvWOW68lv5dZNfWxSZaWNGyMhID3Afwc2iyFXMt6Xdz97y/XFZcvrI4KL
+ BJKJEsgQ5eLCG+/hE7UQGxjdIif/mOfp/11MoLPA04GTdIwHpiEEjrooZaDjZwN59Ymn
+ vNOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWc5QAhOfFiCMs8DDkqOZrwSycKMXEqTuRpSlld+Q+w9hV58H7eA80jcgBwWRi/PRHHkS9HdyrMihnW@nongnu.org
-X-Gm-Message-State: AOJu0YwrW/RmmHKbtQBYNPMBX+1zF9M+fDODuoOQ3W6x6/+K02BPDUHV
- 4Hnh80MR7A3h1wFI5L0TiL+ctzG168dvFESnE/N3qegBVb6a0be4+Ay1KnnK0br5Jg4tifjblix
- 2lVn1nNQxFw==
-X-Google-Smtp-Source: AGHT+IHtpB1/khSaCTNp49LZS4naiQ5sxw+TlMvt/TZGlRa+iJ3Zzm6X4aLfA85KhxU3qUvygqYOIv6bAbvVeQ==
-X-Received: from plbkw6.prod.google.com ([2002:a17:902:f906:b0:216:2d2a:d873])
+ AJvYcCWvo3UaQLvs7KxM21LsRKZi+HmcjYpXDzQc1N6L1xYemqHhaSGdXs5O1Skkm+7p4NCsZEL16EYUmMgh@nongnu.org
+X-Gm-Message-State: AOJu0YxlWh47Q75TaC3FIq8dliKzhkWFOZy/3JEjIwsPiR9gDMHvKNP+
+ nWRa3La7KEgrZV/PSw8Chkg/WzKyb5YcB+/3OgIbZ2ehrqtVGKj+NnuLMmDX1oninClp+/2LwBO
+ zkSyV1I5uKA==
+X-Google-Smtp-Source: AGHT+IFuNvb6oUezCH++mRfP3bKaVI+rzTgoI3vx3j19C22tTWFL5L3cWfA8U9kkO+K7NiCmxjexVTXUVI1MVg==
+X-Received: from pfbeb15.prod.google.com
+ ([2002:a05:6a00:4c8f:b0:728:e3af:6bb0])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:c40e:b0:216:2dc5:233c with SMTP id
- d9443c01a7336-219e6f0e6e2mr273445935ad.41.1735201369308; 
- Thu, 26 Dec 2024 00:22:49 -0800 (PST)
-Date: Thu, 26 Dec 2024 08:22:19 +0000
+ 2002:a05:6a00:8d8c:b0:729:597:4fa9 with SMTP id
+ d2e1a72fcca58-72abdee24cbmr33253023b3a.22.1735201407809; 
+ Thu, 26 Dec 2024 00:23:27 -0800 (PST)
+Date: Thu, 26 Dec 2024 08:22:30 +0000
+In-Reply-To: <20241226082236.2884287-1-wuhaotsh@google.com>
 Mime-Version: 1.0
+References: <20241226082236.2884287-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
-Message-ID: <20241226082236.2884287-1-wuhaotsh@google.com>
-Subject: [PATCH 00/17] Changes since v1:
+Message-ID: <20241226082236.2884287-12-wuhaotsh@google.com>
+Subject: [PATCH 11/17] hw/misc: Rename npcm7xx_clk to npcm_clk
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
@@ -70,9 +73,9 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com,
  hskinnemoen@google.com, venture@google.com, pbonzini@redhat.com, 
  jasowang@redhat.com, alistair@alistair23.me, Hao Wu <wuhaotsh@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3WRJtZwgKCnQomZSglkZYggYdW.UgeiWem-VWnWdfgfYfm.gjY@flex--wuhaotsh.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3fxJtZwgKCpoQOB4INMBAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--wuhaotsh.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -95,92 +98,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1. Updated vbootrom and pc-bios
-2. Split out CLK/GCR patches into refactoring and adding new features
-3. Fixed a few misc items from the patches.
+NPCM7XX and NPCM8XX have a different set of CLK registers. This
+commit changes the name of the clk files to be used by both
+NPCM7XX and NPCM8XX CLK modules.
 
+Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
+ hw/misc/meson.build                           | 2 +-
+ hw/misc/{npcm7xx_clk.c => npcm_clk.c}         | 2 +-
+ include/hw/arm/npcm7xx.h                      | 2 +-
+ include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+ rename hw/misc/{npcm7xx_clk.c => npcm_clk.c} (99%)
+ rename include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} (98%)
 
-NPCM8XX BMCs are the successors of the NPCM7XX BMCs. They feature
-quad-core ARM Cortex A35 that supports both 32 bits and 64 bits
-operations. This patch set aims to support basic functionalities
-of the NPCM7XX BMCs. The patch set includes:
-
-1. We derive most devices from the 7XX models and
-made some modifications.
-2. We have constructed a minimum vBootROM similar to the 7XX one at
-https://github.com/google/vbootrom/tree/master/npcm8xx
-and included it in the patch set.
-3.  We added a new NPCM8XX SOC and an evaluation
-board machine npcm845-evb.
-
-The OpenBMC for NPCM845 evaluation board can be found at:
-https://github.com/Nuvoton-Israel/openbmc/tree/npcm-v2.10/meta-evb/meta-evb-nuvoton/meta-evb-npcm845
-
-The patch set can boot the evaluation board image built from the source
-above to login prompt.
-
-Hao Wu (17):
-  docs/system/arm: Add Description for NPCM8XX SoC
-  roms: Update vbootrom to 1287b6e
-  pc-bios: Add NPCM8XX vBootrom
-  hw/ssi: Make flash size a property in NPCM7XX FIU
-  hw/misc: Rename npcm7xx_gcr to npcm_gcr
-  hw/misc: Move NPCM7XX GCR to NPCM GCR
-  hw/misc: Add nr_regs and cold_reset_values to NPCM GCR
-  hw/misc: Add support for NPCM8XX GCR
-  hw/misc: Store DRAM size in NPCM8XX GCR Module
-  hw/misc: Support 8-bytes memop in NPCM GCR module
-  hw/misc: Rename npcm7xx_clk to npcm_clk
-  hw/misc: Move NPCM7XX CLK to NPCM CLK
-  hw/misc: Add nr_regs and cold_reset_values to NPCM CLK
-  hw/misc: Support NPCM8XX CLK Module Registers
-  hw/net: Add NPCM8XX PCS Module
-  hw/arm: Add NPCM8XX SoC
-  hw/arm: Add NPCM845 Evaluation board
-
- MAINTAINERS                                   |   1 +
- configs/devices/aarch64-softmmu/default.mak   |   1 +
- docs/system/arm/nuvoton.rst                   |  20 +-
- hw/arm/Kconfig                                |  11 +
- hw/arm/meson.build                            |   1 +
- hw/arm/npcm7xx.c                              |   6 +
- hw/arm/npcm8xx.c                              | 810 ++++++++++++++++++
- hw/arm/npcm8xx_boards.c                       | 256 ++++++
- hw/misc/meson.build                           |   4 +-
- hw/misc/npcm7xx_gcr.c                         | 264 ------
- hw/misc/{npcm7xx_clk.c => npcm_clk.c}         | 238 +++--
- hw/misc/npcm_gcr.c                            | 483 +++++++++++
- hw/misc/trace-events                          |  12 +-
- hw/net/meson.build                            |   1 +
- hw/net/npcm_pcs.c                             | 410 +++++++++
- hw/net/trace-events                           |   4 +-
- hw/ssi/npcm7xx_fiu.c                          |  11 +-
- include/hw/arm/npcm7xx.h                      |   8 +-
- include/hw/arm/npcm8xx.h                      | 127 +++
- include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} |  43 +-
- include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} |  29 +-
- include/hw/net/npcm_pcs.h                     |  42 +
- include/hw/ssi/npcm7xx_fiu.h                  |   1 +
- pc-bios/README                                |   8 +-
- pc-bios/meson.build                           |   1 +
- pc-bios/npcm7xx_bootrom.bin                   | Bin 768 -> 768 bytes
- pc-bios/npcm8xx_bootrom.bin                   | Bin 0 -> 608 bytes
- roms/Makefile                                 |   6 +
- roms/vbootrom                                 |   2 +-
- 29 files changed, 2432 insertions(+), 368 deletions(-)
- create mode 100644 hw/arm/npcm8xx.c
- create mode 100644 hw/arm/npcm8xx_boards.c
- delete mode 100644 hw/misc/npcm7xx_gcr.c
- rename hw/misc/{npcm7xx_clk.c => npcm_clk.c} (81%)
- create mode 100644 hw/misc/npcm_gcr.c
- create mode 100644 hw/net/npcm_pcs.c
- create mode 100644 include/hw/arm/npcm8xx.h
- rename include/hw/misc/{npcm7xx_clk.h => npcm_clk.h} (83%)
- rename include/hw/misc/{npcm7xx_gcr.h => npcm_gcr.h} (76%)
- create mode 100644 include/hw/net/npcm_pcs.h
- create mode 100644 pc-bios/npcm8xx_bootrom.bin
-
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 9bab048849..743066eb96 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -67,7 +67,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx_rngc.c',
+ ))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+-  'npcm7xx_clk.c',
++  'npcm_clk.c',
+   'npcm_gcr.c',
+   'npcm7xx_mft.c',
+   'npcm7xx_pwm.c',
+diff --git a/hw/misc/npcm7xx_clk.c b/hw/misc/npcm_clk.c
+similarity index 99%
+rename from hw/misc/npcm7xx_clk.c
+rename to hw/misc/npcm_clk.c
+index 46f907b61c..2bcb731099 100644
+--- a/hw/misc/npcm7xx_clk.c
++++ b/hw/misc/npcm_clk.c
+@@ -16,7 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-#include "hw/misc/npcm7xx_clk.h"
++#include "hw/misc/npcm_clk.h"
+ #include "hw/timer/npcm7xx_timer.h"
+ #include "hw/qdev-clock.h"
+ #include "migration/vmstate.h"
+diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
+index 2e708471ec..e80fd91f20 100644
+--- a/include/hw/arm/npcm7xx.h
++++ b/include/hw/arm/npcm7xx.h
+@@ -23,7 +23,7 @@
+ #include "hw/gpio/npcm7xx_gpio.h"
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/mem/npcm7xx_mc.h"
+-#include "hw/misc/npcm7xx_clk.h"
++#include "hw/misc/npcm_clk.h"
+ #include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+diff --git a/include/hw/misc/npcm7xx_clk.h b/include/hw/misc/npcm_clk.h
+similarity index 98%
+rename from include/hw/misc/npcm7xx_clk.h
+rename to include/hw/misc/npcm_clk.h
+index 5ed4a4672b..0aef81e10c 100644
+--- a/include/hw/misc/npcm7xx_clk.h
++++ b/include/hw/misc/npcm_clk.h
+@@ -13,8 +13,8 @@
+  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+  * for more details.
+  */
+-#ifndef NPCM7XX_CLK_H
+-#define NPCM7XX_CLK_H
++#ifndef NPCM_CLK_H
++#define NPCM_CLK_H
+ 
+ #include "exec/memory.h"
+ #include "hw/clock.h"
+@@ -177,4 +177,4 @@ struct NPCM7xxCLKState {
+ #define TYPE_NPCM7XX_CLK "npcm7xx-clk"
+ OBJECT_DECLARE_SIMPLE_TYPE(NPCM7xxCLKState, NPCM7XX_CLK)
+ 
+-#endif /* NPCM7XX_CLK_H */
++#endif /* NPCM_CLK_H */
 -- 
 2.47.1.613.gc27f4b7a9f-goog
 
