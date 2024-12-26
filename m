@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B629E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 21:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B01BE7718F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 21:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQvLt-0000ho-3q; Thu, 26 Dec 2024 16:25:05 -0500
+	id 1tQvMJ-0000um-Ko; Thu, 26 Dec 2024 16:25:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQvLr-0000gz-9E
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:25:03 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tQvMI-0000sn-0s
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:25:30 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQvLp-0003VV-H7
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:25:03 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2166f1e589cso96071515ad.3
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 13:25:00 -0800 (PST)
+ id 1tQvMG-0003jD-Bl
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:25:29 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so42913225ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 13:25:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735248300; x=1735853100; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735248326; x=1735853126; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=axpLL/8zFkOviCjNAAqzFNv57PnInBizEh6hvv+69uM=;
- b=XAh87Y0HRStOwOQ5zs80oBJbWmgVGAaFB9sfw0+bfNpcMOnNxBkOyg3NDPMNJlFtW/
- 8hmxs4Yw1iHFeRktWxNWdXwDiXOp+W898bykoid+NtXsDX2bpWvyuouKNpRdO3E9exta
- SovKHMhKm4KJRz+9Du8fEeMqo/fuKLFg7va8Qr/EoRzioOBzbjn3g28c+v5nZkMXOYUx
- 0mn86nY3t/C1PxNVobia9WHPTOrvj+jNOMfDRjSo4NeaaP/eFuzcuUJr8Qh7A88AEfiB
- JRcglAtVrp3JfblIPtIHwEu7C/X6iYFO8d0l4Xw7Ps2HuSJO6gHSJ+zOlyvUNQaze8yu
- GEfg==
+ bh=cZAO8PRz58dbluLAzLjGAfYeZTwfBRg4MB+QVkc0/pY=;
+ b=tuILOqZFFUgCdLTXnqeG4AvxDbwf95CPDOXA4JjuOf3Y97qtOBGUvQQvmMV+sOcpUm
+ 1vES72pj7gpff+/Oe9O9ihE+KNNfvS+GUDoSwc+Ecz8cy0ZWsbo4Jp4AbfALhtndRB5p
+ BT9u6l20Sko/GBstypQ2YAlstBH/v+/Gvf54vWFBB2nHDXJWlBfdBSbQDCngBPvHBEfk
+ AiHA/fIHpVmpNYHcfQiKDW5XxIXIxe0QCUviWmpVr0nn4u8EhdcxAPJyhMUHK1RwyhPS
+ Dxb9xosfxnmgeTPfAWQZOrE//Qik4Pr2QQoRqHtHGWUrq4EJlNBeWzlwc4If9Xi2zXwh
+ LseA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735248300; x=1735853100;
+ d=1e100.net; s=20230601; t=1735248326; x=1735853126;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=axpLL/8zFkOviCjNAAqzFNv57PnInBizEh6hvv+69uM=;
- b=gDO8qjluLiwDbAfqn13SpEjaye/KCqsyoG/IHjI3STIp5NW7xV1pRuELnsm0JYUHm1
- qzsGfNl++bAxDownuH2Xv8gYNODcQhU2hGdvHE6K+4sPsV78aGELybIUuP06CzxFHa8E
- svHjMpJuaKMI76qNBHIsIB/nrw1QklEf0NrdVpMGwJsYIoEs3CFwJfom4y2L52sN+fss
- U58Tvzn98CS4eaDJZqpVC6yUrWBF9j3F9NkMwlB/hvNx+85DFi63FaCnND+sOzAVFxhm
- 4Kn5QKa/SA8HiWpJsEubpgpxhJ0fOAJx8C3Y2IFU3mirdda4lr4dHZr+BZTQkiBCu5ZY
- vK+Q==
+ bh=cZAO8PRz58dbluLAzLjGAfYeZTwfBRg4MB+QVkc0/pY=;
+ b=iepQ+w91qZfxya+kH9iAsJRER/mlwt0Kf7dvP7QY3bDIvymMa9X76XYFCCUNow+dBj
+ mc6PWIGemIqsrFf/5g26+YwdZRxdijaitaiWUNNVaJmGcAlgFRDcqaNT/pFBXjLBo5N7
+ Ykn/3ikmFirw9lqbdUfHXMOrkiGJci6E7zje8Yx2d1KGY+vK66MmlnOpgpJnbEZnYPEK
+ C7g9GFddWR9fgnMYLTbATF9vNlBSIouk0SIMU1j8lXyFytcyWt/6TcLDUH2R4vMqb6PW
+ 7IxJpPl33hNyAIxxxI9etE2fctf4P6rj4a8YhEw9PLkvThIaY5rNjLus4VEtrcoYOlvO
+ ta6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFc8oZ/cGMqltjn+rEn8uJEqMeLwboNRcDxyaAsekNlQltw93WLqKxJf9F6XTA86Qg2+9wujlTF/Ep@nongnu.org
-X-Gm-Message-State: AOJu0Yyou2rEVuVOC+JqOgsyDlvkS8ODHDSir56GeP3b9MaJPb4nkAZ0
- +gbNKS5eniY4uluNun3BDHzTRcPGoRysaTI6IDpfzhtifYMJvuGLXKYwqWuHdak/WfjoG3Gt4tQ
- RKIA=
-X-Gm-Gg: ASbGnctDE11doM8Y4zAhUwwbO1oEikMMgZbMEgKuuMXN49TaQ2+6jGKGeuGGE4QLfCk
- zY7e/54Cip8t6I4GLL+jjITM2nVo9kxdnbm6LXuHM3+rlVXDQttkRRpUIoC0JddrKxSpHUmvooy
- oE7UFBp0Q7Tj9P0lDxGAsZl47SudWXp/H+nnK3l50VODVJaSBoRN/xklOsHtbUd4eVDs5bhOBiJ
- uWWV/a5eLHUDyLBS4OWBx/ScCqsL/p75zvqQU8KFL3F0FrVYNhZSlRNpVwo9TJ1DuWb3UlL92sW
- JjLjfPp5xZ2GipVYuEmqr0SeVXSfZOtj2vqugGE=
-X-Google-Smtp-Source: AGHT+IFy75dcv062d0hLdsS98QBcpa2N8zwdH9qnWJUZVDeCQg+jbEVhlmYPfS66coYNXq4zRIVXXg==
-X-Received: by 2002:a05:6a20:158c:b0:1e0:d6ef:521a with SMTP id
- adf61e73a8af0-1e5e043f6c0mr38303693637.1.1735248299923; 
- Thu, 26 Dec 2024 13:24:59 -0800 (PST)
+ AJvYcCWFiApZHgDHosuRv1ItdFsSFVD46TU08vJEa/9jmPkK/ksLh9tE5SJqiv5CROKUDhYo9yFq9NJwD4qF@nongnu.org
+X-Gm-Message-State: AOJu0YwU9gvEBU86Jf8kB1C/hyX1bxL3Bl77eLN8kwLGjK0ciKzsEojw
+ yOAU0UEkHqYupCOsoE4ww6zYA39iih1jv+jb15g+RsQ8Wbfx93LUBwI9aYk8d04=
+X-Gm-Gg: ASbGncuH8mDMrQBV47RuU6KqQPf3tS0/2UuH+r1JWFkprHwTMXNqU8FyLuNVhMIg92K
+ 3OFsmBSK+HTPzNnitNU9xzy6+SGs+gDBJFzQZEwwvOUDh209RSdFRWteYH8szUoZsDNfCdYRD3l
+ U4XrC7bZt824MfCwITWRE7dQpbBRDolakh52GrBNcMPkL1RoiAarpdYcx/28IMbjhS9B23MOl5p
+ arlSW4SCVoxpTuOLFl31eVQLrgHO4HuRQcKKJocA+OcbR7+fVXnM70VmjBv7PQLFn00+92VHm9e
+ 35ELp62eePKkmdDEx6rhEGukNKk6I8dHY3dyTZU=
+X-Google-Smtp-Source: AGHT+IFpZsYJB/sXGcWUm/Y0sRy4CvTD7xgYZcRCRe7EfxBELTaGHp57hBakGayae6J+zmB0ZMTJ5g==
+X-Received: by 2002:a05:6a00:3a19:b0:72a:8b90:92e9 with SMTP id
+ d2e1a72fcca58-72abde405e2mr36816950b3a.5.1735248326657; 
+ Thu, 26 Dec 2024 13:25:26 -0800 (PST)
 Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8dbb5asm13265074b3a.93.2024.12.26.13.24.58
+ d2e1a72fcca58-72aad90c225sm13351742b3a.197.2024.12.26.13.25.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2024 13:24:59 -0800 (PST)
-Message-ID: <fca63b16-9750-4116-bbb6-8ae1d3b5e5eb@linaro.org>
-Date: Thu, 26 Dec 2024 13:24:56 -0800
+ Thu, 26 Dec 2024 13:25:26 -0800 (PST)
+Message-ID: <6740687a-07cc-48a5-9add-c9231102364f@linaro.org>
+Date: Thu, 26 Dec 2024 13:25:24 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/23] target/loongarch: Enable rotr.w/rotri.w for
- LoongArch32
+Subject: Re: [PATCH v2 02/23] target/loongarch: Fix address generation for
+ gen_sc
 To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -81,14 +80,14 @@ Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
- <20241226-la32-fixes1-v2-1-0414594f8cb5@flygoat.com>
+ <20241226-la32-fixes1-v2-2-0414594f8cb5@flygoat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241226-la32-fixes1-v2-1-0414594f8cb5@flygoat.com>
+In-Reply-To: <20241226-la32-fixes1-v2-2-0414594f8cb5@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,18 +111,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/26/24 13:19, Jiaxun Yang wrote:
-> As per "LoongArch Reference Manual Volume 1: Basic Architecture" v1.1.0,
-> "2.2 Table 2. Application-level basic integer instructions in LA32",
-> rotr.w and rotri.w is a part of LA32 basic integer instructions.
+> gen_sc should use make_address_i to obtain source address
+> to ensure that address is properly truncated.
 > 
-> Note that those instructions are indeed not in LA32R subset, however QEMU
-> is not performing any check against LA32R so far.
+> Another temp value is created in middle to avoid data corruption
+> as make_address_i may return the same memory location as src1.
 > 
-> Make it available to ALL.
-> 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Signed-off-by: Jiaxun Yang<jiaxun.yang@flygoat.com>
 > ---
->   target/loongarch/tcg/insn_trans/trans_shift.c.inc | 4 ++--
+>   target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 4 ++--
 >   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
