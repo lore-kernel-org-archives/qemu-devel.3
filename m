@@ -4,111 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92243E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 22:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B512E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 22:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQw2W-0003cI-IY; Thu, 26 Dec 2024 17:09:08 -0500
+	id 1tQw3z-0004KR-8E; Thu, 26 Dec 2024 17:10:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQw2S-0003bq-Ub
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:09:06 -0500
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQw2R-0000wZ-2N
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:09:04 -0500
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal
- [10.202.2.49])
- by mailfout.phl.internal (Postfix) with ESMTP id 3CC021380197;
- Thu, 26 Dec 2024 17:09:01 -0500 (EST)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-09.internal (MEProxy); Thu, 26 Dec 2024 17:09:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1735250941;
- x=1735337341; bh=+SxT4xdPHznc01EeI2ZXE4RB/jFqlpVv5mq/sWu2i2A=; b=
- GejU7GWkLC8Dgta7+Uz2aS6iccJILjyBzUlNacIZCp2JrPNCwt4+SDmS/UNTd96G
- sDZVGWt5WWbGFaYySGmA9qok+3u0aiv67pBdGlSuQWlG6wj680WrAQf2YsdeH7l9
- PVc9mLh9j81OYLtV5Pb457FDhFo/s02t2kdUcH42s8wvsTAJBy8hqSbXW7zXjb4e
- 0bMTpeEGNOI9Fes3wQogAL5Ky/I67ZdSWchBpZq6XkuHkAGqFLezTTZXTxdBiwvY
- HN5G/sIHYA+2mXj73aFOPJ8YfCXpi1s7xtI1bWiDNRb8c1p4GMAFOSLMqfW9T1XG
- 2uxVl4qA93G6P3q34h86NQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735250941; x=
- 1735337341; bh=+SxT4xdPHznc01EeI2ZXE4RB/jFqlpVv5mq/sWu2i2A=; b=x
- +CbNxKzw9WPB9J+/8uJhb8rX6nTc/MGKkUsK8F6RibSf4OGlla/+1vn/483MsnLy
- 4L3wgW7rZnBRzL2sbYk4eoT/Ulp3jMi9zg3XElyVrSYZVmjWpFGPVg51BOeNYz71
- 8pCsB8hHwaZ/Y1VXhUfVQCLyhKo4aBv2bqBTpBw5KeBy9p/K40qJbLxD6KSG/baE
- 66hlkp/tSOxx6MrkrmAQF2ThZgnEusnsfroU4TlxjsmsFONX0/cchsBCinzTDGyx
- 6TAvipnbNDZJ3BLebFK+yGhgOdRRmdHrMFIjW5cuf4FJhmTuikFw6Fg3pcFrDNli
- sGf4DzaUj12KcEYPVEypw==
-X-ME-Sender: <xms:-9NtZ0qGciIieyo8YNkn4pkELJt5Lm00poGh6AJUoC4XsjsBE5knEA>
- <xme:-9NtZ6rFl894zcL9zRpLjDM3PyHPu8jErbfif91IYL5rbZfq9XNv9T5XtCsEoZHVu
- HaqlH6ju-71UU_dKAY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgudehkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
- jeenucfhrhhomhepfdflihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgse
- hflhihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhnpeejheefuddvtdfggfdvffek
- teehhfelgfdvvedvkeeuffefkeehheegvefhveetjeenucevlhhushhtvghrufhiiigvpe
- dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghho
- rghtrdgtohhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtg
- hpthhtohepmhgrrhgtvghlrdgrphhfvghlsggruhhmsehgmhgrihhlrdgtohhmpdhrtghp
- thhtohepvgguuhgrrhguoheshhgrsghkohhsthdrnhgvthdprhgtphhtthhopeifrghngh
- ihrghnrghnheehsehhuhgrfigvihdrtghomhdprhgtphhtthhopeiihhgrohdurdhlihhu
- sehinhhtvghlrdgtohhmpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrgh
- dprhgtphhtthhopehrihgthhgrrhgurdhhvghnuggvrhhsohhnsehlihhnrghrohdrohhr
- ghdprhgtphhtthhopehgrghoshhonhhgsehlohhonhhgshhonhdrtghnpdhrtghpthhtoh
- epmhgrohgsihgsoheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggv
- vhgvlhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:-9NtZ5M9TlsiYt7bGVEn9EXX0ZPt5tdVIUWmChgzNSTw16iXKejCkQ>
- <xmx:-9NtZ761Ca7VHtBbPQK21uI6PEzffReufJyN_jed-XN7H91Xyqmu2g>
- <xmx:-9NtZz7a1l6OFd2DOCJqkGGIFexjh6SH6CC0AbzGHvULFjm7vlQQog>
- <xmx:-9NtZ7g8nd-vjkxK2I3cHIaxYRvv64Rhr9ZDePQkXqy9_bSZO3xr-g>
- <xmx:_dNtZ3jtW8OarqR9_gkVOAUOshk2MyOda5Klkb6IZQyJXuSMKJH67BhD>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id CDAA01C20067; Thu, 26 Dec 2024 17:08:59 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tQw3y-0004KG-0h
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:10:38 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tQw3v-0001DX-IU
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:10:37 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2eeb4d643a5so8371086a91.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 14:10:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735251034; x=1735855834; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UMIV0DsPZUmifgLKouY7ymHAfyf89W0vvVt0rtbhUp4=;
+ b=fqWg7x2ZWCuoBfkT/lYTyxp9oWS53yYvsp6QpWo8fl2jm8lj0vuZCbGrL+ENXcMYrv
+ dxYI1n/FscZlJsE5DX1k30uI/RW9HrWH4KaxRCRG8si4ZsSnu6Hey5OPbKRmcLwYkAoU
+ kUQjhgWfLgpEzmFx5Hvgc3pVdobIjdea3k53319NJpH++s2u6Du6BS4/homobK9si0b8
+ QkzNbyKtiIcq1zd4xHPmK8QV1IghM0wdP0D+ZwS8Va0xf2VjMidOZFGNqIdXV1ECtchb
+ 5uxxKnywPeSpgf9Ot23Qh+QBtqaMdBkbaRO8LhuyJh+Qd1fOANKUdNAx3Bi/eZzlymlT
+ 1FOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735251034; x=1735855834;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UMIV0DsPZUmifgLKouY7ymHAfyf89W0vvVt0rtbhUp4=;
+ b=S5mVFeADjV7i7MMsEcdwAK/iVA6oAQbYEJnkByi2AhDKBkNhytqf5Bn1wjPpsCe0wC
+ z01qWo4FLk3XN8bxzb5EU9Ljxp7S4C92vCpzC8b6NcRplJGAHGzzJcaJpBz9aPO8qzEn
+ kdM4l6tDLXUAx6Q9zD02EHqGKi/xpQ5KmJ5yKbXgRqapO3jKVXn0zxHvVtlxg/WKh0m7
+ huR92KelGrDVuGhqSNTr1cpeg7R6rTFQaEwkM/fRAaLohdcJXMiCas6xYw+a+2Z++lVU
+ +D6RMTsovUEMi+qPiYFSakDL9MQLUMTpFWuO019m92OACTBqjilS5JyqcPW1s37vRcp/
+ 9aTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/ek1/KvhxsrfbAGhnbksVyVLGVhzRwbkh9zU8KejRvMzXA3kuLlv8P24sCZWWt3ibX7pPtqKCsEig@nongnu.org
+X-Gm-Message-State: AOJu0Yw3vgGgXmeNsOv2aCoiQqtscJCRjmCXSQ36w+ZhDV0Xaoee/Sqr
+ IqMVk9/eOSetWh8srngUcC6enSq8y21h8qe+A5qDwI5plhT9rGj6XIz3NXPW+uQ=
+X-Gm-Gg: ASbGncvlo1WFytNdfsEMm5gRa/2Ys8FfGVYVBFI7/JVkWsSEoxC1ZLXf4F2TVJauwGb
+ 88PSGz3rOhQaRND6cPvCx1PPs4CEQRwTPNzcJDn1Bc4vOCICYwO1uY8PtG1/aAUxB/2fIwkPVW2
+ NfRnHibqGLuGSLrF2F6Kl0ce0+3hX2lhqQDcqprqE34c1YaIWQHLIqEzkUanoEbTNrpeVTxTIWD
+ WrKtwg2jOev3fYrb0PWwTUh9D4Np3sxYPsYD7Y9rjlV/q62ZiEMrjU27/vA0sKoxH1qypoi24Qn
+ gFuMKPNMfYyXElBzLIFsTj9dMNae34aJHZbSo6k=
+X-Google-Smtp-Source: AGHT+IG/dJUpVfiK/VmAaNfq+FOQw4opTrCn6DfkPWYfavL2VIjKpsVKQ4cJawewCwgtbOvie2ZnZA==
+X-Received: by 2002:a17:90a:d88c:b0:2ee:cddd:2454 with SMTP id
+ 98e67ed59e1d1-2f452e1cb4bmr38948868a91.15.1735251033897; 
+ Thu, 26 Dec 2024 14:10:33 -0800 (PST)
+Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
+ [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f2ed52cf9esm17946921a91.8.2024.12.26.14.10.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Dec 2024 14:10:33 -0800 (PST)
+Message-ID: <4f46c4f3-5230-49c1-b50d-fe9f6889ac15@linaro.org>
+Date: Thu, 26 Dec 2024 14:10:31 -0800
 MIME-Version: 1.0
-Date: Thu, 26 Dec 2024 22:08:38 +0000
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Richard Henderson" <richard.henderson@linaro.org>,
- "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Song Gao" <gaosong@loongson.cn>, "Bibo Mao" <maobibo@loongson.cn>,
- "Eric Blake" <eblake@redhat.com>, "Markus Armbruster" <armbru@redhat.com>,
- "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/23] target/loongarch: Scrutinise TCG bitops
+ translation for 32 bit build
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
+Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Yanan Wang" <wangyanan55@huawei.com>, "Zhao Liu" <zhao1.liu@intel.com>,
- "Paolo Bonzini" <pbonzini@redhat.com>
-Message-Id: <192abfba-5b21-4223-94a6-673155949662@app.fastmail.com>
-In-Reply-To: <f2360c0b-979a-4473-a7b1-96caa54cff27@linaro.org>
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
  <20241226-la32-fixes1-v2-12-0414594f8cb5@flygoat.com>
  <f2360c0b-979a-4473-a7b1-96caa54cff27@linaro.org>
-Subject: Re: [PATCH v2 12/23] target/loongarch: Scrutinise TCG bitops
- translation for 32 bit build
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.144;
- envelope-from=jiaxun.yang@flygoat.com; helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ <192abfba-5b21-4223-94a6-673155949662@app.fastmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <192abfba-5b21-4223-94a6-673155949662@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,39 +112,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/26/24 14:08, Jiaxun Yang wrote:
+> 
+> 
+> 在2024年12月26日十二月 下午9:55，Richard Henderson写道：
+> [...]
+>> While this allows the code to compile, (1) the functions are unused and
+>> (2) they do not
+>> compute the required results.  For me, the latter is concerning.
+>>
+>> I'd suggest moving GEN_FALSE_TRANS out of trans_privileged.c.inc, then
+>>
+>> #ifdef TARGET_LOONGARCH64
+>> // all gen_foo_d
+>> TRANS(bytepick_d, 64, gen_rrr_sa, EXT_NONE, EXT_NONE, gen_bytepick_d)
+>> // etc
+>> #else
+>> GEN_FALSE_TRANS(bytepick_d)
+>> // etc
+>> #endif
+> 
+> Thanks for the insight!
+> 
+> I'm actually thinking about introducing an TRANS64 which resolves to
+> GEN_FALSE_TRANS if not on TARGET_LOONGARCH64.
+
+That works too!
 
 
-=E5=9C=A82024=E5=B9=B412=E6=9C=8826=E6=97=A5=E5=8D=81=E4=BA=8C=E6=9C=88 =
-=E4=B8=8B=E5=8D=889:55=EF=BC=8CRichard Henderson=E5=86=99=E9=81=93=EF=BC=9A
-[...]
-> While this allows the code to compile, (1) the functions are unused an=
-d=20
-> (2) they do not=20
-> compute the required results.  For me, the latter is concerning.
->
-> I'd suggest moving GEN_FALSE_TRANS out of trans_privileged.c.inc, then
->
-> #ifdef TARGET_LOONGARCH64
-> // all gen_foo_d
-> TRANS(bytepick_d, 64, gen_rrr_sa, EXT_NONE, EXT_NONE, gen_bytepick_d)
-> // etc
-> #else
-> GEN_FALSE_TRANS(bytepick_d)
-> // etc
-> #endif
-
-Thanks for the insight!
-
-I'm actually thinking about introducing an TRANS64 which resolves to
-GEN_FALSE_TRANS if not on TARGET_LOONGARCH64.
-
-Will try in next version.
-
-Thanks
->
->
-> r~
-
---=20
-- Jiaxun
+r~
 
