@@ -4,118 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56735E7718F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 21:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B629E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 21:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQvH8-0003mj-Sk; Thu, 26 Dec 2024 16:20:12 -0500
+	id 1tQvLt-0000ho-3q; Thu, 26 Dec 2024 16:25:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQvH6-0003lQ-9u
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:20:08 -0500
-Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1tQvH4-0003B8-IZ
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:20:08 -0500
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal
- [10.202.2.44])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 1DE1D1140190;
- Thu, 26 Dec 2024 16:20:06 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Thu, 26 Dec 2024 16:20:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1735248006;
- x=1735334406; bh=eXHJ1U0y5JFh/QMeXDd3F6H0yuNld44iqz4yHUgHQtE=; b=
- O5nSkTDVhhCHrlCFCyChbsi9P5A9iu3HffocL0LxZhrOfjW1wq3P3l8l5O574Ed1
- gRngU6fMTq8PvNqnV4Bo1QuwLFct3YaTxn4dLuO374s2bILKVAaudUw6jffI/C+w
- IOixXL0DZBO6WucDhnC8m/GXCEmv459aUdPFTE9GnV3wEZl4l/nKM4q4sy3hpkoZ
- IbKl11YFY+1Wv0a8O7pnzhIlZhoc2Su1s/O7x2sOZXRowOZpc4kEqdG0O/ZPXpF3
- bPZtF1UUirYTQNuT2k4CibZkqxKQi1d5CUmMB3Xtit0aCodz/0Q3gIO7C/3XUjhx
- Q1P8gTYUjtw/xNnUSuFfGg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735248006; x=
- 1735334406; bh=eXHJ1U0y5JFh/QMeXDd3F6H0yuNld44iqz4yHUgHQtE=; b=U
- G1IGJp1NY1Jzh2H3qi2pxtAaTvCS7Lcdyo1v4984B9i4DiMFEYvkqhkRrhvO7OPi
- O8lLrGzOUMXPj4dWDOqAsUGu92/ujrVmF7JSr/mBdpbfP/lL7y3zEJUA0MnuWZ1k
- hxodHQFFXCQQUk4IUsgjSg5vM1uzK0c18Tfw2uQ0562ByCPyd6sZvADC941Znbxa
- Kz9tRV/eRAgf1RE9+GMHPSYzFciUHyNmPb9NIWD+TKlodIoGbyU2Mf6tSiN5ki+D
- XqtDFTvTl7ix3GYk//sgGpFKxXEj5dMyip9mhybghufDkmQ3CtmRX/RZlJpaleXD
- x5VmIltcvdDm3KHe54+FQ==
-X-ME-Sender: <xms:hchtZyX4lA5ghwGOdRxqmwPb-GDpSZ0lE-9t6Vw4OCsxViZ0vZOyYQ>
- <xme:hchtZ-kBcSzoxL5GvKovgcAZozWJmDNv2_hC-ZHulOsx0V5oWQDyiM6vko0is88TX
- 7hL0tBd2hMh8bZUFbE>
-X-ME-Received: <xmr:hchtZ2Z-ATyTZeKDdwFQaaEioIGGxLYM9asmZmLY_iFXla5mguiWLz-y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgudegkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
- jeenucfhrhhomheplfhirgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflh
- ihghhorghtrdgtohhmqeenucggtffrrghtthgvrhhnpedvkeeihfefveekueevteefleff
- keegudeghfdtuddugefhueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpedune
- curfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorght
- rdgtohhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpth
- htohepmhgrohgsihgsoheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehmrghrtggv
- lhdrrghpfhgvlhgsrghumhesghhmrghilhdrtghomhdprhgtphhtthhopehpsghonhiiih
- hnihesrhgvughhrghtrdgtohhmpdhrtghpthhtohepghgrohhsohhngheslhhoohhnghhs
- ohhnrdgtnhdprhgtphhtthhopegvsghlrghkvgesrhgvughhrghtrdgtohhmpdhrtghpth
- htohepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomhdprhgtphhtthhopehq
- vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfigrnhhghigrnh
- grnhehheeshhhurgifvghirdgtohhmpdhrtghpthhtohepiihhrghouddrlhhiuhesihhn
- thgvlhdrtghomh
-X-ME-Proxy: <xmx:hchtZ5XhHSOHjoWQl3t9o1AKO7VlB1aH8ZJTAoRrrD1kjw-rgh9RUQ>
- <xmx:hchtZ8muBDT6fXC8sJ-v9MbKhrnD5NHfqAlxSwIn1lpbYIz3X3STXA>
- <xmx:hchtZ-edOUv-9RNuqsSqhiFeYwKcDfJaYcy8Qi3R_NmaakUiudg4CQ>
- <xmx:hchtZ-FW9yDgliVQlv0pG5gqQeK6_MPEo23aqnnhSh1cx4p_rWWXiw>
- <xmx:hshtZ3_RGrKQCD72_zdRAeRvmk0pGtGQ_MIhUpg9YY8TN5QnwR48g5UW>
-Feedback-ID: ifd894703:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Dec 2024 16:20:04 -0500 (EST)
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Thu, 26 Dec 2024 21:19:42 +0000
-Subject: [PATCH v2 11/23] target/loongarch: Scrutinise TCG vector
- translation for 32 bit build
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tQvLr-0000gz-9E
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:25:03 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tQvLp-0003VV-H7
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 16:25:03 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2166f1e589cso96071515ad.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 13:25:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735248300; x=1735853100; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=axpLL/8zFkOviCjNAAqzFNv57PnInBizEh6hvv+69uM=;
+ b=XAh87Y0HRStOwOQ5zs80oBJbWmgVGAaFB9sfw0+bfNpcMOnNxBkOyg3NDPMNJlFtW/
+ 8hmxs4Yw1iHFeRktWxNWdXwDiXOp+W898bykoid+NtXsDX2bpWvyuouKNpRdO3E9exta
+ SovKHMhKm4KJRz+9Du8fEeMqo/fuKLFg7va8Qr/EoRzioOBzbjn3g28c+v5nZkMXOYUx
+ 0mn86nY3t/C1PxNVobia9WHPTOrvj+jNOMfDRjSo4NeaaP/eFuzcuUJr8Qh7A88AEfiB
+ JRcglAtVrp3JfblIPtIHwEu7C/X6iYFO8d0l4Xw7Ps2HuSJO6gHSJ+zOlyvUNQaze8yu
+ GEfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735248300; x=1735853100;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=axpLL/8zFkOviCjNAAqzFNv57PnInBizEh6hvv+69uM=;
+ b=gDO8qjluLiwDbAfqn13SpEjaye/KCqsyoG/IHjI3STIp5NW7xV1pRuELnsm0JYUHm1
+ qzsGfNl++bAxDownuH2Xv8gYNODcQhU2hGdvHE6K+4sPsV78aGELybIUuP06CzxFHa8E
+ svHjMpJuaKMI76qNBHIsIB/nrw1QklEf0NrdVpMGwJsYIoEs3CFwJfom4y2L52sN+fss
+ U58Tvzn98CS4eaDJZqpVC6yUrWBF9j3F9NkMwlB/hvNx+85DFi63FaCnND+sOzAVFxhm
+ 4Kn5QKa/SA8HiWpJsEubpgpxhJ0fOAJx8C3Y2IFU3mirdda4lr4dHZr+BZTQkiBCu5ZY
+ vK+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFc8oZ/cGMqltjn+rEn8uJEqMeLwboNRcDxyaAsekNlQltw93WLqKxJf9F6XTA86Qg2+9wujlTF/Ep@nongnu.org
+X-Gm-Message-State: AOJu0Yyou2rEVuVOC+JqOgsyDlvkS8ODHDSir56GeP3b9MaJPb4nkAZ0
+ +gbNKS5eniY4uluNun3BDHzTRcPGoRysaTI6IDpfzhtifYMJvuGLXKYwqWuHdak/WfjoG3Gt4tQ
+ RKIA=
+X-Gm-Gg: ASbGnctDE11doM8Y4zAhUwwbO1oEikMMgZbMEgKuuMXN49TaQ2+6jGKGeuGGE4QLfCk
+ zY7e/54Cip8t6I4GLL+jjITM2nVo9kxdnbm6LXuHM3+rlVXDQttkRRpUIoC0JddrKxSpHUmvooy
+ oE7UFBp0Q7Tj9P0lDxGAsZl47SudWXp/H+nnK3l50VODVJaSBoRN/xklOsHtbUd4eVDs5bhOBiJ
+ uWWV/a5eLHUDyLBS4OWBx/ScCqsL/p75zvqQU8KFL3F0FrVYNhZSlRNpVwo9TJ1DuWb3UlL92sW
+ JjLjfPp5xZ2GipVYuEmqr0SeVXSfZOtj2vqugGE=
+X-Google-Smtp-Source: AGHT+IFy75dcv062d0hLdsS98QBcpa2N8zwdH9qnWJUZVDeCQg+jbEVhlmYPfS66coYNXq4zRIVXXg==
+X-Received: by 2002:a05:6a20:158c:b0:1e0:d6ef:521a with SMTP id
+ adf61e73a8af0-1e5e043f6c0mr38303693637.1.1735248299923; 
+ Thu, 26 Dec 2024 13:24:59 -0800 (PST)
+Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
+ [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad8dbb5asm13265074b3a.93.2024.12.26.13.24.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Dec 2024 13:24:59 -0800 (PST)
+Message-ID: <fca63b16-9750-4116-bbb6-8ae1d3b5e5eb@linaro.org>
+Date: Thu, 26 Dec 2024 13:24:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241226-la32-fixes1-v2-11-0414594f8cb5@flygoat.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/23] target/loongarch: Enable rotr.w/rotri.w for
+ LoongArch32
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
-In-Reply-To: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
-To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7548;
- i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=B9h13SA8JedUvZZiyRlBBN5M0kMQWk0GNpXduoTwOTc=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhvTcE9lhJxmyRU5sL1Jb9Wxh0T+JzjVbu5o+yT0661cWH
- dyvW7++o5SFQYyLQVZMkSVEQKlvQ+PFBdcfZP2BmcPKBDKEgYtTACayu4nhf5Q019n9EznL3NJC
- UoVFrrnvP9C4cvmdtxo+NjdT7vBdE2JkWLlyUgffmypxE+XNwjlh3qt/rz69YupzX8cpzw28s6I
- N2QE=
-X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
- fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=103.168.172.155;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ <20241226-la32-fixes1-v2-1-0414594f8cb5@flygoat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241226-la32-fixes1-v2-1-0414594f8cb5@flygoat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,162 +111,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix types for various TCGv.
+On 12/26/24 13:19, Jiaxun Yang wrote:
+> As per "LoongArch Reference Manual Volume 1: Basic Architecture" v1.1.0,
+> "2.2 Table 2. Application-level basic integer instructions in LA32",
+> rotr.w and rotri.w is a part of LA32 basic integer instructions.
+> 
+> Note that those instructions are indeed not in LA32R subset, however QEMU
+> is not performing any check against LA32R so far.
+> 
+> Make it available to ALL.
+> 
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+>   target/loongarch/tcg/insn_trans/trans_shift.c.inc | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Performing TCGv type conversion as necessary when interaction with GPR
-happens.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
----
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 70 +++++++++++++------------
- 1 file changed, 36 insertions(+), 34 deletions(-)
-
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index 92b1d22e28934b524a1f6ae6cb2bcbb189de27e3..e8015a332636d77ba72aeefde2e4135cdf2543a2 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -4761,7 +4761,8 @@ static bool trans_## NAME (DisasContext *ctx, arg_cv *a)                       \
-                                                                                \
-     tcg_gen_or_i64(t1, al, ah);                                                \
-     tcg_gen_setcondi_i64(COND, t1, t1, 0);                                     \
--    tcg_gen_st8_tl(t1, tcg_env, offsetof(CPULoongArchState, cf[a->cd & 0x7])); \
-+    tcg_gen_st8_i64(t1, tcg_env, offsetof(CPULoongArchState,                   \
-+                                          cf[a->cd & 0x7]));                   \
-                                                                                \
-     return true;                                                               \
- }
-@@ -4807,7 +4808,8 @@ static bool trans_## NAME(DisasContext *ctx, arg_cv * a)                       \
-     tcg_gen_or_i64(t2, d[2], d[3]);                                            \
-     tcg_gen_or_i64(t1, t2, t1);                                                \
-     tcg_gen_setcondi_i64(COND, t1, t1, 0);                                     \
--    tcg_gen_st8_tl(t1, tcg_env, offsetof(CPULoongArchState, cf[a->cd & 0x7])); \
-+    tcg_gen_st8_i64(t1, tcg_env, offsetof(CPULoongArchState,                   \
-+                                          cf[a->cd & 0x7]));                   \
-                                                                                \
-     return true;                                                               \
- }
-@@ -4850,12 +4852,12 @@ static bool gen_g2x(DisasContext *ctx, arg_vr_i *a, MemOp mop,
-     return gen_g2v_vl(ctx, a, 32, mop, func);
- }
- 
--TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_i64)
--TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_i64)
--TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_i64)
--TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
--TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_i64)
--TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
-+TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_tl)
-+TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_tl)
-+TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_tl)
-+TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_tl)
-+TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_tl)
-+TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_tl)
- 
- static bool gen_v2g_vl(DisasContext *ctx, arg_rv_i *a, uint32_t oprsz, MemOp mop,
-                        void (*func)(TCGv, TCGv_ptr, tcg_target_long))
-@@ -4883,18 +4885,18 @@ static bool gen_x2g(DisasContext *ctx, arg_rv_i *a, MemOp mop,
-     return gen_v2g_vl(ctx, a, 32, mop, func);
- }
- 
--TRANS(vpickve2gr_b, LSX, gen_v2g, MO_8, tcg_gen_ld8s_i64)
--TRANS(vpickve2gr_h, LSX, gen_v2g, MO_16, tcg_gen_ld16s_i64)
--TRANS(vpickve2gr_w, LSX, gen_v2g, MO_32, tcg_gen_ld32s_i64)
--TRANS(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
--TRANS(vpickve2gr_bu, LSX, gen_v2g, MO_8, tcg_gen_ld8u_i64)
--TRANS(vpickve2gr_hu, LSX, gen_v2g, MO_16, tcg_gen_ld16u_i64)
--TRANS(vpickve2gr_wu, LSX, gen_v2g, MO_32, tcg_gen_ld32u_i64)
--TRANS(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
--TRANS(xvpickve2gr_w, LASX, gen_x2g, MO_32, tcg_gen_ld32s_i64)
--TRANS(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
--TRANS(xvpickve2gr_wu, LASX, gen_x2g, MO_32, tcg_gen_ld32u_i64)
--TRANS(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
-+TRANS(vpickve2gr_b, LSX, gen_v2g, MO_8, tcg_gen_ld8s_tl)
-+TRANS(vpickve2gr_h, LSX, gen_v2g, MO_16, tcg_gen_ld16s_tl)
-+TRANS(vpickve2gr_w, LSX, gen_v2g, MO_32, tcg_gen_ld32s_tl)
-+TRANS(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_tl)
-+TRANS(vpickve2gr_bu, LSX, gen_v2g, MO_8, tcg_gen_ld8u_tl)
-+TRANS(vpickve2gr_hu, LSX, gen_v2g, MO_16, tcg_gen_ld16u_tl)
-+TRANS(vpickve2gr_wu, LSX, gen_v2g, MO_32, tcg_gen_ld32u_tl)
-+TRANS(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_tl)
-+TRANS(xvpickve2gr_w, LASX, gen_x2g, MO_32, tcg_gen_ld32s_tl)
-+TRANS(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_tl)
-+TRANS(xvpickve2gr_wu, LASX, gen_x2g, MO_32, tcg_gen_ld32u_tl)
-+TRANS(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_tl)
- 
- static bool gvec_dup_vl(DisasContext *ctx, arg_vr *a,
-                         uint32_t oprsz, MemOp mop)
-@@ -4905,8 +4907,8 @@ static bool gvec_dup_vl(DisasContext *ctx, arg_vr *a,
-         return true;
-     }
- 
--    tcg_gen_gvec_dup_i64(mop, vec_full_offset(a->vd),
--                         oprsz, ctx->vl/8, src);
-+    tcg_gen_gvec_dup_tl(mop, vec_full_offset(a->vd),
-+                         oprsz, ctx->vl/TARGET_LONG_SIZE, src);
-     return true;
- }
- 
-@@ -5007,8 +5009,8 @@ static bool gen_vreplve_vl(DisasContext *ctx, arg_vvr *a,
-     if (!check_vec(ctx, oprsz)) {
-         return true;
-     }
--
--    tcg_gen_andi_i64(t0, gpr_src(ctx, a->rk, EXT_NONE), (LSX_LEN / bit) - 1);
-+    tcg_gen_extu_tl_i64(t2, gpr_src(ctx, a->rk, EXT_NONE));
-+    tcg_gen_andi_i64(t0, t2, (LSX_LEN / bit) - 1);
-     tcg_gen_shli_i64(t0, t0, vece);
-     if (HOST_BIG_ENDIAN) {
-         tcg_gen_xori_i64(t0, t0, vece << ((LSX_LEN / bit) - 1));
-@@ -5099,10 +5101,10 @@ static bool do_vbsll_v(DisasContext *ctx, arg_vv_i *a, uint32_t oprsz)
-     }
- 
-     for (i = 0; i < oprsz / 16; i++) {
--        TCGv desthigh = tcg_temp_new_i64();
--        TCGv destlow = tcg_temp_new_i64();
--        TCGv high = tcg_temp_new_i64();
--        TCGv low = tcg_temp_new_i64();
-+        TCGv_i64 desthigh = tcg_temp_new_i64();
-+        TCGv_i64 destlow = tcg_temp_new_i64();
-+        TCGv_i64 high = tcg_temp_new_i64();
-+        TCGv_i64 low = tcg_temp_new_i64();
- 
-         get_vreg64(low, a->vj, 2 * i);
- 
-@@ -5131,10 +5133,10 @@ static bool do_vbsrl_v(DisasContext *ctx, arg_vv_i *a, uint32_t oprsz)
-     }
- 
-     for (i = 0; i < oprsz / 16; i++) {
--        TCGv desthigh = tcg_temp_new_i64();
--        TCGv destlow = tcg_temp_new_i64();
--        TCGv high = tcg_temp_new_i64();
--        TCGv low = tcg_temp_new_i64();
-+        TCGv_i64 desthigh = tcg_temp_new_i64();
-+        TCGv_i64 destlow = tcg_temp_new_i64();
-+        TCGv_i64 high = tcg_temp_new_i64();
-+        TCGv_i64 low = tcg_temp_new_i64();
-         get_vreg64(high, a->vj, 2 * i + 1);
- 
-         ofs = ((a->imm) & 0xf) * 8;
-@@ -5459,7 +5461,7 @@ static void gen_xvld(DisasContext *ctx, int vreg, TCGv addr)
- {
-     int i;
-     TCGv temp = tcg_temp_new();
--    TCGv dest = tcg_temp_new();
-+    TCGv_i64 dest = tcg_temp_new_i64();
- 
-     tcg_gen_qemu_ld_i64(dest, addr, ctx->mem_idx, MO_TEUQ);
-     set_vreg64(dest, vreg, 0);
-@@ -5475,7 +5477,7 @@ static void gen_xvst(DisasContext * ctx, int vreg, TCGv addr)
- {
-     int i;
-     TCGv temp = tcg_temp_new();
--    TCGv dest = tcg_temp_new();
-+    TCGv_i64 dest = tcg_temp_new_i64();
- 
-     get_vreg64(dest, vreg, 0);
-     tcg_gen_qemu_st_i64(dest, addr, ctx->mem_idx, MO_TEUQ);
-
--- 
-2.43.0
-
+r~
 
