@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D523BE77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 17:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6B0E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 17:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQrn7-0003ac-4h; Thu, 26 Dec 2024 12:36:57 -0500
+	id 1tQrp4-0004PR-SU; Thu, 26 Dec 2024 12:38:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQrn5-0003a5-Jc
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:36:55 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQrp3-0004PI-SQ
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:38:57 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQrn4-0004Gr-3S
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:36:55 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43624b2d453so70440795e9.2
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 09:36:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQrp1-0004Ld-Om
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 12:38:57 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3862d6d5765so4054731f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 09:38:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735234612; x=1735839412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735234734; x=1735839534; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6jDuuLJjvLq3B5zgsKAAfTUjIgVl2eSiRr5t3Z0qcEI=;
- b=zL5xl9313HipSBedIuXR5FkKkBH/WGqCPF5DrFndWzq8OCjqtzFKNoZzKpKGU5nI8H
- ivJFKaCYMm6beGGPcOg5ar4z1BRMKgLp8XlUFpTyWrKB+JvD9BEL/17PLlJW2g1mh058
- dCmQEGtn8MaG/j/QsMwKVAugmMUsJ4D8d0CKTknEbq0pHAz+0MBb9IblEx0hx5GKzlxm
- SDpBs1ijUYm9/Xzpzv/6jyLxJ1O3XG+CHPXtY5DkPc1Ocs2bP+8b2xD/CFzQ3eJsYxiv
- oyGq7flA0BOfcsN2B47rvZV9Zi10AAGUNIQzuRPfIH5qbeHlwdpA2BwWW6OfsWmkzILR
- xFew==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BVvpml95TRv2qPGlLfGrtOe5vcvsTIQwLtKTFgxSvPo=;
+ b=yo00fG8esa5WTJMSjVpxpMZiYb4V4Ywa7mRosggUkLq5RrHpkMfbRJE3WVd7g9qgfm
+ d0oBG/XTh7jHfXNPkx1Apqmrd7excSrLwZdhOYiCJ4UtS4p3QcNimTVHl5EY6ojNRBxi
+ U8t3Jx7n/O5uwMVzs/Qz/vqiBcdFz/F/gil8G7/XNsWdjHs4bfKUoz3dd77+u8c2noCl
+ rY7nM9ig+eszap+Li+lOFO6wtj0eXDiiFb7HFz/sSO7k0QlCzWNu3jWQUscl4uusd2ql
+ N4Kq/cwHpEf2FHmySqQKdpbaSWYcTJ+5h6FFqzFfWCiSh8z4Uk3hWegpGnoO6W6xDSEq
+ VMsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735234612; x=1735839412;
+ d=1e100.net; s=20230601; t=1735234734; x=1735839534;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6jDuuLJjvLq3B5zgsKAAfTUjIgVl2eSiRr5t3Z0qcEI=;
- b=ZYH5iLxgorakxz2wGiJaQ6MeNpgo9nUcC0X/kyF/SIhnm0zNy7zhxw9vSSboExGAhe
- 6mQV//awQzzsgiM+DG6CFqBJ9Yqcj8my/w4MtKwoIii9cuWaN8OyVQpo4HYOpm6HgIoF
- OUKU5SncffIrYYzeg/pj/gGVduEY8Yr911go6tjAJIu3Xd3xrOpBxmGe+X4tAnm911pN
- bkKNAc7jxRvvJsYstTVFcbVlYKDjVIw8anvQ/0aE2MW1WjRiFPN9voLEvkXoY68HeEH8
- z0cU2cHobQG6MJP2b5R7swE5gjZnmnrP++nRX3D4c2iB2u9Hh6p3fJSIusG9lva77yUj
- G+rw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPQ4VWJmDZxELlYSYqbvLxsDIxyMq4BvQeUdl2KpKmPH4Y+tEFswt7jQwF/0yHyxbDXjD+VTW2eWJM@nongnu.org
-X-Gm-Message-State: AOJu0YwEB3Ez5g2vlYho4o97+idy7wIi7ZyVl7Em8vShdBgLt9J3suao
- yvJsfDjZR0RKdTk9F4MsFaNTviisJ44rJ2PhoKgK0OVK235H3+/YAijIG3dDiKY=
-X-Gm-Gg: ASbGncvIc2OqZ5g0QD5MNuuUaSXyfpNRY8QkyeVViPEak4a3DX363+JhB7ecjsEQX6V
- r3SPYHOsgfcTpOUpq9rBjmfw1KGUdeOOGs4mDwTcTxhjgrp+uhccSUJ/AyeTd8EYx8huMeOxnJy
- W0hg8Mm1NH62NpbsrP+Gcgi60Tb85i8j09Dv7bcnEufHEIoMmIk0iesSm7p8dELvznXzQSH5U5O
- pQIe1cXcVAlvwYaiYeS5ZMKk8oOAJ19nYkvStSZZYpQYfW0v5x2kZ5q0S2yInA1eaY3VwFd1A8B
- xz3h3IJ7VCRq5K8woiPqUq6zBOmHLUKoeg4Y
-X-Google-Smtp-Source: AGHT+IHjdEqcn47UKDBYIRo2QUami9XzrYy7jYu4P05Rf0BC4n0Rm5ByNBThh2dNxtosabc+CsA+zQ==
-X-Received: by 2002:a5d:6c64:0:b0:385:f6f4:f8e with SMTP id
- ffacd0b85a97d-38a223ff1cemr16935449f8f.50.1735234611869; 
- Thu, 26 Dec 2024 09:36:51 -0800 (PST)
+ bh=BVvpml95TRv2qPGlLfGrtOe5vcvsTIQwLtKTFgxSvPo=;
+ b=A3wwwVsNNCcxnjomGZH1F+wDppUasWIj45Gx40vLpORxuBRSgGmBK9NQpmpz8BA8Zc
+ 2zowlpBqGQ44wKgWaoRlJoxPhMsqt7X+hUw2wA7Q95Ww4OIRPhw+Dd5D9iq7haKwu30O
+ LIHK+5Xo3rClYZIt2FlI87uSlBbfLs3YNcJotEv4UoI3P4PHXY30i0gNh0I9s8M9oIWt
+ aRqrEOfKBO4bOZNh9u18HLPAHzZyEvxLJb9a7C4PQh6zSjYqd7luvM1njL3+rpW9wclN
+ jxT3mMm99Y7dlQx5afvQN+N2VX59Yq/L0J6yAaDvRre0vqtC5UbfjpY/d+Crqg+D7dPq
+ SVmw==
+X-Gm-Message-State: AOJu0Yybfgur8n1PIMY+JQ6JwXk1en5ra8UDxXPbzfe9+wiKf1O9nx/u
+ wtVvR3wzg8DBL/lKeT3gxn0IhX0JjPKedDla7xNzkqRGnTMg1cP8dQN46uzrU6U=
+X-Gm-Gg: ASbGncsZdsvvPGXQxovEehUnGt1eOcCORMJxj2vDf3YpxXTu/pg+QabjaZCL3rlQ2zy
+ SwRuT+kYZbvNj0stAvScynp6+Nv7n22doG4q0TeSEHoR0YbUNuX53nPGSnrDv6gU5XXVllikO7m
+ muU7dimwMBRA4fwVPjY2dAjtoPqKe1gpbOAulSO87dcFeSjDCztje/P2z+XMsP08/ao5lCrr3Bj
+ VUv23zsIm6/386Ku4g60CHQ2nI4dyi5tGJ6UpNac3FYg7SIwLFIdxJfd9FCK46IP4jf9IWo6Sr+
+ WX+CF8PaAS8yrVYP21eFlxil271q3BUr3KGM
+X-Google-Smtp-Source: AGHT+IHcQCybfNPxSP3d07MsAAxZSvJsl94Uz253IVQFNRlDEQog8TM6gibKf8q/Z5duM3U+OPNeWw==
+X-Received: by 2002:a05:6000:4612:b0:385:f984:2cbc with SMTP id
+ ffacd0b85a97d-38a22201929mr18202367f8f.34.1735234734080; 
+ Thu, 26 Dec 2024 09:38:54 -0800 (PST)
 Received: from [10.217.61.213] (180.red-95-127-33.staticip.rima-tde.net.
  [95.127.33.180]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8a6ca5sm20440819f8f.86.2024.12.26.09.36.48
+ ffacd0b85a97d-38a28f17315sm14704537f8f.108.2024.12.26.09.38.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2024 09:36:51 -0800 (PST)
-Message-ID: <f16425be-46a1-4989-a7a2-9d7bb005d257@linaro.org>
-Date: Thu, 26 Dec 2024 18:36:46 +0100
+ Thu, 26 Dec 2024 09:38:53 -0800 (PST)
+Message-ID: <0083ebbd-2f94-4212-b138-8839630ea9c3@linaro.org>
+Date: Thu, 26 Dec 2024 18:38:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw: cast 1 to 1ULL
-To: Tigran Sogomonian <tsogomonian@astralinux.ru>, peter.maydell@linaro.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-References: <20241226095815.15377-1-tsogomonian@astralinux.ru>
+Subject: Re: [PULL 1/6] target/loongarch: Fix vldi inst
+To: bibo mao <maobibo@loongson.cn>, Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ ghy <2247883756@qq.com>, Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
+ Xianglai Li <lixianglai@loongson.cn>
+References: <20241225024008.486236-1-maobibo@loongson.cn>
+ <20241225024008.486236-2-maobibo@loongson.cn>
+ <b691d979-848e-4fc9-8ede-3b16c6de732f@linaro.org>
+ <db21ace6-a4b1-adaf-7f7b-6d4aae312de9@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241226095815.15377-1-tsogomonian@astralinux.ru>
+In-Reply-To: <db21ace6-a4b1-adaf-7f7b-6d4aae312de9@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,31 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/12/24 10:58, Tigran Sogomonian wrote:
-> To prevent integer overflow it is worth casting 1 to 1ULL.
+On 26/12/24 05:22, bibo mao wrote:
 > 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
 > 
-> Signed-off-by: Tigran Sogomonian <tsogomonian@astralinux.ru>
-> ---
->   hw/misc/mps2-fpgaio.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> On 2024/12/25 下午7:32, Philippe Mathieu-Daudé wrote:
+>> Hi Bibo,
+>>
+>> On 25/12/24 03:40, Bibo Mao wrote:
+>>> From: ghy <2247883756@qq.com>
+>>
+>> Is this authorship correct? Should it be:
+>> From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+> yes, this is better.
+>>
+>>>
+>>> Refer to the link below for a description of the vldi instructions:
+>>> https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/ 
+>>> #synopsis_88
+>>> Fixed errors in vldi instruction implementation.
+>>>
+>>> Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+>>
+>> to match the S-o-b?
+> Guo Hongyu submits the first version with attachment, xianglai tests it 
+> and submit again with plain text. I added them both with S-o-b -:)
 > 
-> diff --git a/hw/misc/mps2-fpgaio.c b/hw/misc/mps2-fpgaio.c
-> index d07568248d..297cb1b602 100644
-> --- a/hw/misc/mps2-fpgaio.c
-> +++ b/hw/misc/mps2-fpgaio.c
-> @@ -198,7 +198,7 @@ static void mps2_fpgaio_write(void *opaque, hwaddr offset, uint64_t value,
->   
->               s->led0 = value & MAKE_64BIT_MASK(0, s->num_leds);
->               for (i = 0; i < s->num_leds; i++) {
-> -                led_set_state(s->led[i], value & (1 << i));
-> +                led_set_state(s->led[i], value & (1ULL << i));
+> What to do in this condition?
 
-Let's use extract64() and call it a day?
+IIUC the technical issue, you can fix the authorship using:
 
->               }
->           }
->           break;
+git commit --amend --author='Guo Hongyu <guohongyu24@mails.ucas.ac.cn>'
+
+> 
+> Regards
+> Bibo Mao
+>>
+>>> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+>>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>>> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>> ---
+>>>   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+> 
 
 
