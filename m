@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 676CBE7718F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CD1E77188
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 08:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQj91-0007E1-Oc; Thu, 26 Dec 2024 03:22:59 -0500
+	id 1tQj9z-0007vf-69; Thu, 26 Dec 2024 03:23:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3XBJtZwgKCncrpcVjoncbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--wuhaotsh.bounces.google.com>)
- id 1tQj90-0007DS-QS
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:22:58 -0500
+ <3fBJtZwgKCpcNL81FKJ87FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--wuhaotsh.bounces.google.com>)
+ id 1tQj9U-0007Ty-Nc
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:23:28 -0500
 Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3XBJtZwgKCncrpcVjoncbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--wuhaotsh.bounces.google.com>)
- id 1tQj8y-0000VI-AW
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:22:58 -0500
+ <3fBJtZwgKCpcNL81FKJ87FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--wuhaotsh.bounces.google.com>)
+ id 1tQj9T-0000Z5-3m
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 03:23:28 -0500
 Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-2163c2f32fdso125114625ad.2
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 00:22:53 -0800 (PST)
+ d9443c01a7336-2166855029eso75277155ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 00:23:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1735201373; x=1735806173; darn=nongnu.org;
+ d=google.com; s=20230601; t=1735201404; x=1735806204; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=F8RiAlCHl+1NqI9Hasi2td6dnDjrsz5BjuPhZ1v7pKk=;
- b=ok/qIcwFhWSbgCVsl5FOjkAQqwIvEFePYkj/+ccpRgbIRUI4keCsWTwXaKwnzpQp88
- AECzYVsb8kV5HG28G9Zkg0f7h8h93Pvta25zqHXXVuPE3Hh5eeLnrb+8cYOz84IdyP3E
- O6DNhSQtSefc3OfaOTm8jYcitYrhk3n9+Bxv/FWA1NFqILAQ6RbiJFsMZ+iuaINXQO5Y
- Mk66lE7RAHl1YgZFRtWp6HRy1CWzCLW5UwtOLXA67DDOIFc9+UQIBfEdLYlM1ylWa9e0
- Hah9hAY2yv7J0IFw8rjMhcTz/DH6FF+Z/MZD3q+RdvOGnSHuJVvBjPpavpXOLwZJ0hCv
- +soA==
+ bh=dSh3O5WaaKwNo1iaUvTSpo+z9u0dQr4Ul55JCilzC1E=;
+ b=FnfaS/otLWEUaiYy/GfK1rmakoZbYTY3gA887J5Rfpt0wMYFIjlSVpgHQmyYlyCmV2
+ klNzJtlEmhe/ixDnWAm7emJmVlrWymq6tpptqWArYHYs0XnAKlKjpkTgSUHXxW9kR5M7
+ WNvaPvpeqSvl6GNRtUWQckMHFNHoEqSDAz+vS6FpTsX6XI3+j6PNZmUDH75m0Q7AQ31N
+ mZi/x7ILpClEiSOQ6LeyLA4877Kz9vwV2ExZCglMJyiqWXgFtG5geZjxQr72r14NNKYh
+ YsdOBdsuPyuQqP9CrBZCicTwOIAltPiozZKnImOMezHWUJko/akTMObFpC/b1kJpzyg5
+ iwWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735201373; x=1735806173;
+ d=1e100.net; s=20230601; t=1735201404; x=1735806204;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F8RiAlCHl+1NqI9Hasi2td6dnDjrsz5BjuPhZ1v7pKk=;
- b=wbHhWGHCaPGxJJtFyeRq/w/e5P+FJuFIJtNhAtArf4kfXZaIJmvr3GSGY6rkYm9XWp
- 4Zfsh69CKGBpG+3jPRL4Id1JrwrDzwf7tD8Y3Mfj5pBcCC+trYCrenf1mqTukX6Ll8DB
- NZfa+7ntzVA+BnAeW5wc38J2GlpjpMDpOZvVPLfQJL9Dp1AY007WHapQo8xKfp+czvK2
- a1PUZGF2D1QRmdeEau8fAaUBo6Fw1EUJwrYcqo/Q4Sv3pM1MbVs4aAceh0j9QAzFpyoS
- O1n58zZjMUFfHnhA0/hzCaM0HvyEbKEnfdWdnaTfBond9n99+WqFqNU9mDe9ndKVLDxk
- j+Uw==
+ bh=dSh3O5WaaKwNo1iaUvTSpo+z9u0dQr4Ul55JCilzC1E=;
+ b=Iw68GBni/TsPlAJRebVFpe9GZw+ERoK/5Nn5FpgeihxXuO2yW2xbUVMDuBarZqN1A7
+ w7wQTzt6qdk3Z9C3nk08RBfELitdc0VGEnm10Rn/v/twdRbSrEB4fK5qPmpm2dOqsE2T
+ sAUJqvE6d9phUqycDhNnXC+6aw9c6qYioK8wKDFBwARCNYkAvAa3Pl8E8rRv/OUmrEmA
+ mCFqu7WhMvX6PA5ToS25LvBl/FlRQ0Mu/m3o+YTqvkTuytkrOL2XlBI4zbSwSesxy+Ea
+ +jEKwH69lPQn477Etb12xYafw7CUWH4zegFpMrM5lH41lP+dKQBH5Y8QKtH3szYOSXtd
+ cWGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV92bAZlAefGx0zVBea943ZbGjpYsA+JtH8tdU0pYqbpIvZTtpL6nOgcnP7eCMuJbtqTERF9EdGioES@nongnu.org
-X-Gm-Message-State: AOJu0Yz/HJmSjAHKJHmlldGyLVs+smZY9pJBW/7JJaT9x/2MTFPhDjaC
- MQU38ZM+WP1HQFCSZZ0uF7Yi+i7weiHIT/olLNzfJZ0b4NWYg2gUjQbOTEb9hdVTEZuUGWiDJfe
- Ke6OyONU1Rg==
-X-Google-Smtp-Source: AGHT+IHlzMk/wMahh2Arq+d4lLHpDt1muYa+6Z9UUUfCIvGkHw3kXXzG37dyhHpFVwblDZa0imQ5eVNwUMga3w==
-X-Received: from pgbcq8.prod.google.com ([2002:a05:6a02:4088:b0:801:9268:c344])
+ AJvYcCXPOOyx0kcrCsPue+1p/4hzT93krOo4SoZBhnTjyLLGt4nqTXUVfstVFWEIAH76rEkiGFYQCQykOZ2r@nongnu.org
+X-Gm-Message-State: AOJu0YyXwnrK+wEsKFm1qpo1Ils1ifLi0evQGE/mhJTjNf6tPoJBBjBm
+ fDnnvH9D1/zHUBUXGctt9x0cfV31SwR1th/KoE0Lt+tX9czBRi/L2v05jbfEsb74ZD+THS/8idu
+ PzrTA9spwWA==
+X-Google-Smtp-Source: AGHT+IGhciBY7JOvcaiZKqfDokTB0tyIMo1xsX5q7CQAPjwUCNvh1WVN/30eY6s0kuG17j8avqZf+u4X2x0imA==
+X-Received: from pgbbi9.prod.google.com ([2002:a05:6a02:249:b0:7fd:1eba:c2dd])
  (user=wuhaotsh job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:f682:b0:216:6f1e:5799 with SMTP id
- d9443c01a7336-219e6f14829mr246488525ad.35.1735201372788; 
- Thu, 26 Dec 2024 00:22:52 -0800 (PST)
-Date: Thu, 26 Dec 2024 08:22:20 +0000
+ 2002:a05:6a20:394b:b0:1e1:e2d8:fd3a with SMTP id
+ adf61e73a8af0-1e5e07ffb23mr43631935637.35.1735201404280; 
+ Thu, 26 Dec 2024 00:23:24 -0800 (PST)
+Date: Thu, 26 Dec 2024 08:22:29 +0000
 In-Reply-To: <20241226082236.2884287-1-wuhaotsh@google.com>
 Mime-Version: 1.0
 References: <20241226082236.2884287-1-wuhaotsh@google.com>
 X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
-Message-ID: <20241226082236.2884287-2-wuhaotsh@google.com>
-Subject: [PATCH 01/17] docs/system/arm: Add Description for NPCM8XX SoC
+Message-ID: <20241226082236.2884287-11-wuhaotsh@google.com>
+Subject: [PATCH 10/17] hw/misc: Support 8-bytes memop in NPCM GCR module
 From: Hao Wu <wuhaotsh@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com, 
@@ -73,7 +73,7 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Avi.Fishman@nuvoton.com,
  jasowang@redhat.com, alistair@alistair23.me, Hao Wu <wuhaotsh@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3XBJtZwgKCncrpcVjoncbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--wuhaotsh.bounces.google.com;
+ envelope-from=3fBJtZwgKCpcNL81FKJ87FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--wuhaotsh.bounces.google.com;
  helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
@@ -81,7 +81,7 @@ X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,67 +97,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
-Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
+The NPCM8xx GCR device can be accessed with 64-bit memory operations.
+This patch supports that.
 
 Signed-off-by: Hao Wu <wuhaotsh@google.com>
 ---
- docs/system/arm/nuvoton.rst | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ hw/misc/npcm_gcr.c   | 94 +++++++++++++++++++++++++++++++++-----------
+ hw/misc/trace-events |  4 +-
+ 2 files changed, 74 insertions(+), 24 deletions(-)
 
-diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
-index 05059378e5..0a1916fb99 100644
---- a/docs/system/arm/nuvoton.rst
-+++ b/docs/system/arm/nuvoton.rst
-@@ -1,12 +1,13 @@
- Nuvoton iBMC boards (``kudo-bmc``, ``mori-bmc``, ``npcm750-evb``, ``quanta-gbs-bmc``, ``quanta-gsj``)
- =====================================================================================================
+diff --git a/hw/misc/npcm_gcr.c b/hw/misc/npcm_gcr.c
+index a4c9643119..7dfdd3d74b 100644
+--- a/hw/misc/npcm_gcr.c
++++ b/hw/misc/npcm_gcr.c
+@@ -201,6 +201,7 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+     uint32_t reg = offset / sizeof(uint32_t);
+     NPCMGCRState *s = opaque;
+     NPCMGCRClass *c = NPCM_GCR_GET_CLASS(s);
++    uint64_t value;
  
--The `Nuvoton iBMC`_ chips (NPCM7xx) are a family of ARM-based SoCs that are
-+The `Nuvoton iBMC`_ chips are a family of ARM-based SoCs that are
- designed to be used as Baseboard Management Controllers (BMCs) in various
--servers. They all feature one or two ARM Cortex-A9 CPU cores, as well as an
--assortment of peripherals targeted for either Enterprise or Data Center /
--Hyperscale applications. The former is a superset of the latter, so NPCM750 has
--all the peripherals of NPCM730 and more.
-+servers. Currently there are two families: NPCM7XX series and
-+NPCM8XX series. NPCM7XX series feature one or two ARM Cortex-A9 CPU cores,
-+while NPCM8XX feature 4 ARM Cortex-A35 CPU cores. Both series contain a
-+different assortment of peripherals targeted for either Enterprise or Data
-+Center / Hyperscale applications.
+     if (reg >= c->nr_regs) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -209,9 +210,21 @@ static uint64_t npcm_gcr_read(void *opaque, hwaddr offset, unsigned size)
+         return 0;
+     }
  
- .. _Nuvoton iBMC: https://www.nuvoton.com/products/cloud-computing/ibmc/
- 
-@@ -27,6 +28,8 @@ There are also two more SoCs, NPCM710 and NPCM705, which are single-core
- variants of NPCM750 and NPCM730, respectively. These are currently not
- supported by QEMU.
- 
-+The NPCM8xx SoC is the successor of the NPCM7xx SoC.
+-    trace_npcm_gcr_read(offset, s->regs[reg]);
++    switch (size) {
++    case 4:
++        value = s->regs[reg];
++        break;
 +
- Supported devices
- -----------------
++    case 8:
++        value = s->regs[reg] + (((uint64_t)s->regs[reg + 1]) << 32);
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
  
-@@ -62,6 +65,8 @@ Missing devices
-    * System Wake-up Control (SWC)
-    * Shared memory (SHM)
-    * eSPI slave interface
-+   * Block-tranfer interface (8XX only)
-+   * Virtual UART (8XX only)
+-    return s->regs[reg];
++    trace_npcm_gcr_read(offset, value);
++    return value;
+ }
  
-  * Ethernet controller (GMAC)
-  * USB device (USBD)
-@@ -76,6 +81,11 @@ Missing devices
-  * Video capture
-  * Encoding compression engine
-  * Security features
-+ * I3C buses (8XX only)
-+ * Temperator sensor interface (8XX only)
-+ * Virtual UART (8XX only)
-+ * Flash monitor (8XX only)
-+ * JTAG master (8XX only)
+ static void npcm_gcr_write(void *opaque, hwaddr offset,
+@@ -231,29 +244,65 @@ static void npcm_gcr_write(void *opaque, hwaddr offset,
+         return;
+     }
  
- Boot options
- ------------
+-    switch (reg) {
+-    case NPCM7XX_GCR_PDID:
+-    case NPCM7XX_GCR_PWRON:
+-    case NPCM7XX_GCR_INTSR:
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: register @ 0x%04" HWADDR_PRIx " is read-only\n",
+-                      __func__, offset);
+-        return;
+-
+-    case NPCM7XX_GCR_RESSR:
+-    case NPCM7XX_GCR_CP2BST:
+-        /* Write 1 to clear */
+-        value = s->regs[reg] & ~value;
++    switch (size) {
++    case 4:
++        switch (reg) {
++        case NPCM7XX_GCR_PDID:
++        case NPCM7XX_GCR_PWRON:
++        case NPCM7XX_GCR_INTSR:
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: register @ 0x%04" HWADDR_PRIx " is read-only\n",
++                          __func__, offset);
++            return;
++
++        case NPCM7XX_GCR_RESSR:
++        case NPCM7XX_GCR_CP2BST:
++            /* Write 1 to clear */
++            value = s->regs[reg] & ~value;
++            break;
++
++        case NPCM7XX_GCR_RLOCKR1:
++        case NPCM7XX_GCR_MDLR:
++            /* Write 1 to set */
++            value |= s->regs[reg];
++            break;
++        };
++        s->regs[reg] = value;
+         break;
+ 
+-    case NPCM7XX_GCR_RLOCKR1:
+-    case NPCM7XX_GCR_MDLR:
+-        /* Write 1 to set */
+-        value |= s->regs[reg];
++    case 8:
++        s->regs[reg] = value;
++        s->regs[reg + 1] = v >> 32;
+         break;
+-    };
+ 
+-    s->regs[reg] = value;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static bool npcm_gcr_check_mem_op(void *opaque, hwaddr offset,
++                                  unsigned size, bool is_write,
++                                  MemTxAttrs attrs)
++{
++    NPCMGCRClass *c = NPCM_GCR_GET_CLASS(opaque);
++
++    if (offset >= c->nr_regs * sizeof(uint32_t)) {
++        return false;
++    }
++
++    switch (size) {
++    case 4:
++        return true;
++    case 8:
++        if (offset >= NPCM8XX_GCR_SCRPAD_00 * sizeof(uint32_t) &&
++            offset < (NPCM8XX_GCR_NR_REGS - 1) * sizeof(uint32_t)) {
++            return true;
++        } else {
++            return false;
++        }
++    default:
++        return false;
++    }
+ }
+ 
+ static const struct MemoryRegionOps npcm_gcr_ops = {
+@@ -262,7 +311,8 @@ static const struct MemoryRegionOps npcm_gcr_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid      = {
+         .min_access_size        = 4,
+-        .max_access_size        = 4,
++        .max_access_size        = 8,
++        .accepts                = npcm_gcr_check_mem_op,
+         .unaligned              = false,
+     },
+ };
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index f2d498e862..59c2d4ecc0 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -135,8 +135,8 @@ npcm7xx_clk_read(uint64_t offset, uint32_t value) " offset: 0x%04" PRIx64 " valu
+ npcm7xx_clk_write(uint64_t offset, uint32_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
+ 
+ # npcm_gcr.c
+-npcm_gcr_read(uint64_t offset, uint32_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
+-npcm_gcr_write(uint64_t offset, uint32_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx32
++npcm_gcr_read(uint64_t offset, uint64_t value) " offset: 0x%04" PRIx64 " value: 0x%08" PRIx64
++npcm_gcr_write(uint64_t offset, uint64_t value) "offset: 0x%04" PRIx64 " value: 0x%08" PRIx64
+ 
+ # npcm7xx_mft.c
+ npcm7xx_mft_read(const char *name, uint64_t offset, uint16_t value) "%s: offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
 -- 
 2.47.1.613.gc27f4b7a9f-goog
 
