@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0160E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 22:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BE0E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 22:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQwIp-00084K-DM; Thu, 26 Dec 2024 17:25:59 -0500
+	id 1tQwcA-00035y-O9; Thu, 26 Dec 2024 17:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQwIm-00083q-7C
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:25:56 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQwc3-00035R-9p
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:45:51 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tQwIk-0002aQ-Iy
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:25:55 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2166360285dso81099565ad.1
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 14:25:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQwc1-0004fF-IG
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 17:45:51 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-434e3953b65so45688865e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 14:45:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735251953; x=1735856753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735253148; x=1735857948; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5dLf1Kq6xzTrktj3bf/evyPGkUN+v5J4zWxwWlBVJgU=;
- b=JlCwCaFAv9vDVB5i2C1G9051oOCkHT0weuE6R3fg2KyMVgiJoakGDWa+J/4JvCAFdR
- mb3iZeYD7JdFAHO4xHGW0+R61G1pnWUpwTuXSQSuvoOrjzd7uFUZ+1j6xxdGnh0YYZqb
- JpzZGjBGLKID99ig++MKC6utdxVpDxw7hNSrgS+XlPVNRf8GMhiRSDnF/b2PMToHAMX/
- 4CgCAqR5jNaFzIFML5VDuhHuEci9IFD/2Noy/B3cUpwPE7irn9vw8WKqxKx7vtdGTmA5
- We9mZ5kpZFS7NmddDLXQmkmuJrND+rly3QdZbkcueUp8GF+mSz82gvLa0M07+Yqy+U7j
- nGrg==
+ bh=AL0H08UNOR6e9omrXtEO7vZuIP/t4UGbf/QM8OwrBOI=;
+ b=aKQaG6LkhPH9GINHVPni/Rlpz3Yu/2ZGuV+/rMJR/wfGyBqthAnXdaazKM+RGI3cPU
+ bB9i0C55E3ql9op32u10t+ravCIT6Hswxm63goMRdIZvv0S0r6pQpJfV8OwtJB/JXJgI
+ QlKle66NpBkrRrs4sLfHGkiJxoh9JRrJSv3uilUiSIIKBCIs8TgA7hx1bYmgO870FzXM
+ RQjo9l2oVGQIh1WTHgrjia2/EzBm3u/wuu8YlV4xel8RBgFn4N+ZfS+XMe0Ch2AS8e/8
+ pkaWORN6zxxXlNQJYUfaWJPD9PI2MZ1hZG1NGtJYvLCB3+I89lao7E5NO/MK1J5Nj00i
+ 3WrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735251953; x=1735856753;
+ d=1e100.net; s=20230601; t=1735253148; x=1735857948;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5dLf1Kq6xzTrktj3bf/evyPGkUN+v5J4zWxwWlBVJgU=;
- b=vgRoeL1NMwzQwyrCIXAJWvGsF0u7Qewa5Jl6MixQzU4XOyyQ3+ysiSvbMR47u+4JHA
- OHpKcRJyu/Xr8X0gi7aO/JhM2ytLutPOxPiAAuv9a0A1faATwUs+w2hHvzwjM5KtCyzG
- Cp8kWjLR9wzCcoDJiATOq5tu0c2wyOqEijwaeZm6vB9tSxhltD6Jos9Xmr3VF0RcWKjY
- ExmIif2hLp8E6HvzkrjV3bIhLdI8mDVERWhlGV0iBlYtFqn/IFugRewny/pSXXuMxex+
- gcqIN6WcJ6mdsFt/7rHmGUfkic/j0LEMpZjnhmMFFP8qjQIsRF3dLvgSjTI7ACaJfy+B
- CstA==
+ bh=AL0H08UNOR6e9omrXtEO7vZuIP/t4UGbf/QM8OwrBOI=;
+ b=EL52KSTejj13yHZEze7e6qFAGQQFR8xixfx+4HIzFP1bNJz/8qXtO3vSwjHFbKG4Ys
+ Ng1iR7xt281cOO14Vq4aZoIWQi7C7C8AdcBr9enk/nazIUW0iaxZfUE6DALZ69ee/dgK
+ pYqlSMcKh/5KlEGbBdCA068tRBEjujKm7RX816r9idh/0BOEhT87axDXO+gxBS/ICfdD
+ rjerSrWTiH6ayLr0ImtYqeseljSsYUeDaZNk7GzD1gQMDbOd3O1DCsuwS7Oo/Otj5ekk
+ srNlg7OqOodRbw9aJnKCdN1gl4stzgjzvM32O+ZlV77Vcab2MXnjTCi90eTC7jjgt2RC
+ UCjg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgYScLISUdiI8Lwr8TMaopAdYHP8qNzB7rCtu6eOqdF0WjkN//InRmLjVRTm+aqgxbVUSyswU1e18w@nongnu.org
-X-Gm-Message-State: AOJu0YyRh9pVQHXrFaJNTNEJ2BRV3h474f/PzS7Z2COTSP3ViZHAgoFn
- CQoO2mD/M0hLu+GhuKdRoKW6wScnzyIIx3ci9kXZvMP487jvfr3Ms/t1kT/Iov8=
-X-Gm-Gg: ASbGncssCMluLILbjmmLKPd0WmpjJPkgcdR0iJpqkd69LlVY1dHrPFNuRowAb4/h2As
- gbvz9HXXVjfYN5e56hSjJvdQTfJOtTsAjaOlQujmIoJLu5/wLQ9YlT9O3dCTBxNOhBKp0oVMwZX
- m4x4qzQhlJP7Zws3cFy4Dd8rByIbM0l3CvWZG3igZ+kxqdYKDqTh3mtwXJyFqCPTLaPHzJ9Bkd0
- jqUa3ywWZvulCiEcOyvkG2mweH6l010RsT479RyBj1ZtKXCUQBiAbqZFAaEwBdzonjM2vOItGg1
- AU8P3me2zF8ybiryHB4b5kVJ+BMwa+RY8vDUDEc=
-X-Google-Smtp-Source: AGHT+IGGRdeq8nbi0mWgw2kNc6AxG2iUZKGctq79L2Zr4qsoJHqXYTdTo31/GkMyYZknbVBHjlN6rg==
-X-Received: by 2002:a17:903:2acb:b0:212:514:b30a with SMTP id
- d9443c01a7336-219e6e85a46mr380297765ad.12.1735251952733; 
- Thu, 26 Dec 2024 14:25:52 -0800 (PST)
-Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc964a73sm124152935ad.45.2024.12.26.14.25.51
+ AJvYcCXQpJdK76DTXkGVBr+kALFZqib2S0Z9t7YMaVB4WQ/SxM1jbdaIZRzs7B0L1jWo9dI2oeb5B0r+6ArH@nongnu.org
+X-Gm-Message-State: AOJu0YzriOsQfAF1ZzIiEVFf9SvM1NvG758+119vpCgKhWx/DjdgJ4jT
+ /BKCgTkqqFvjIcV9un9x8peBamwamjQ1zV2jAUYdOa6gVMySMcvWV27Lhwh6rbM=
+X-Gm-Gg: ASbGncvpnhEWBIPXNcCdOFIL3vDYUEo0dK1lwGv6o9AjhLwOKq+WMKUICDD+JZ2Ptzr
+ WAqYoI5dnJ/KyxIXpKQB4oDaqnTjI7+q/2AbB3RAsy8xB8ndEE28qxL+DKNNtPupf9pFakhDGCp
+ ppfYGbQkdNQJLY2sGIdmu/UT22Ka+pFuBFf25vbGYZdQadRndtXUwIx96DI3fYhBlGS/m6gj8HC
+ VRpJw1cy3o5PVJqYS64bQCJwwE1Lf6xdVIuuJpNLfA8MQJW3uOzgoa1QbV1Aajr0F0w83DjTxdj
+ tDzv7wZdQc8KT04q+mdZ0g==
+X-Google-Smtp-Source: AGHT+IHBdt56XOWI+GQfok3e3qC+UsDYJDvr8GkOZT35qI6B+lwR7jogNpNIENmvi0Ue+WLWd7HOkw==
+X-Received: by 2002:adf:b511:0:b0:38a:372b:ff2c with SMTP id
+ ffacd0b85a97d-38a372bff53mr7044545f8f.17.1735253147492; 
+ Thu, 26 Dec 2024 14:45:47 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c832ec4sm20316813f8f.26.2024.12.26.14.45.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2024 14:25:52 -0800 (PST)
-Message-ID: <85a13307-6d57-402d-bc30-8004275e9d47@linaro.org>
-Date: Thu, 26 Dec 2024 14:25:49 -0800
+ Thu, 26 Dec 2024 14:45:46 -0800 (PST)
+Message-ID: <db7a97c1-f917-4c06-8298-7c21918a7cf4@linaro.org>
+Date: Thu, 26 Dec 2024 23:45:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/23] target/loongarch: Scrutinise TCG vector
- translation for 32 bit build
+Subject: Re: [PATCH v2 05/23] target/loongarch: Use target_ulong for iocsrrd
+ helper results
 To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
- <20241226-la32-fixes1-v2-11-0414594f8cb5@flygoat.com>
+ <20241226-la32-fixes1-v2-5-0414594f8cb5@flygoat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241226-la32-fixes1-v2-11-0414594f8cb5@flygoat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241226-la32-fixes1-v2-5-0414594f8cb5@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,43 +107,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/26/24 13:19, Jiaxun Yang wrote:
-> @@ -4850,12 +4852,12 @@ static bool gen_g2x(DisasContext *ctx, arg_vr_i *a, MemOp mop,
->       return gen_g2v_vl(ctx, a, 32, mop, func);
+On 26/12/24 22:19, Jiaxun Yang wrote:
+> Those results are all targeting TCGv values, which means they should
+> be in target_ulong type.
+> 
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+>   target/loongarch/helper.h           | 8 ++++----
+>   target/loongarch/tcg/iocsr_helper.c | 8 ++++----
+>   2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/helper.h b/target/loongarch/helper.h
+> index b3b64a021536255a3f9decfc10ff61fe8380e2ae..409d93a5b0808f0e32b8c0e2e17cebac9feaf8ed 100644
+> --- a/target/loongarch/helper.h
+> +++ b/target/loongarch/helper.h
+> @@ -104,10 +104,10 @@ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+>   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+>   DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+> -DEF_HELPER_2(iocsrrd_b, i64, env, tl)
+> -DEF_HELPER_2(iocsrrd_h, i64, env, tl)
+> -DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+> -DEF_HELPER_2(iocsrrd_d, i64, env, tl)
+> +DEF_HELPER_2(iocsrrd_b, tl, env, tl)
+> +DEF_HELPER_2(iocsrrd_h, tl, env, tl)
+> +DEF_HELPER_2(iocsrrd_w, tl, env, tl)
+> +DEF_HELPER_2(iocsrrd_d, tl, env, tl)
+>   DEF_HELPER_3(iocsrwr_b, void, env, tl, tl)
+>   DEF_HELPER_3(iocsrwr_h, void, env, tl, tl)
+>   DEF_HELPER_3(iocsrwr_w, void, env, tl, tl)
+> diff --git a/target/loongarch/tcg/iocsr_helper.c b/target/loongarch/tcg/iocsr_helper.c
+> index db30de2523fff01bcc8923eb12c7fca7bedca7bf..23d819de0ef9790eb82741f1e8a0e20dc139bf4b 100644
+> --- a/target/loongarch/tcg/iocsr_helper.c
+> +++ b/target/loongarch/tcg/iocsr_helper.c
+> @@ -15,25 +15,25 @@
+>   #define GET_MEMTXATTRS(cas) \
+>           ((MemTxAttrs){.requester_id = env_cpu(cas)->cpu_index})
+>   
+> -uint64_t helper_iocsrrd_b(CPULoongArchState *env, target_ulong r_addr)
+> +target_ulong helper_iocsrrd_b(CPULoongArchState *env, target_ulong r_addr)
+>   {
+>       return (int8_t)address_space_ldub(env->address_space_iocsr, r_addr,
+>                                         GET_MEMTXATTRS(env), NULL);
 >   }
 >   
-> -TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_i64)
-> -TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_i64)
-> -TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_i64)
-> -TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
-> -TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_i64)
-> -TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
-> +TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_tl)
-> +TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_tl)
-> +TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_tl)
-> +TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_tl)
-> +TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_tl)
-> +TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_tl)
-
-All of these *_d instructions are invalid for LA32.
-This is obvious because they specifically refer to general registers.
-
-All of the rest of these changes need to be audited.
-
-> @@ -4905,8 +4907,8 @@ static bool gvec_dup_vl(DisasContext *ctx, arg_vr *a,
->           return true;
->       }
->   
-> -    tcg_gen_gvec_dup_i64(mop, vec_full_offset(a->vd),
-> -                         oprsz, ctx->vl/8, src);
-> +    tcg_gen_gvec_dup_tl(mop, vec_full_offset(a->vd),
-> +                         oprsz, ctx->vl/TARGET_LONG_SIZE, src);
->       return true;
+> -uint64_t helper_iocsrrd_h(CPULoongArchState *env, target_ulong r_addr)
+> +target_ulong helper_iocsrrd_h(CPULoongArchState *env, target_ulong r_addr)
+>   {
+>       return (int16_t)address_space_lduw(env->address_space_iocsr, r_addr,
+>                                          GET_MEMTXATTRS(env), NULL);
 >   }
+>   
+> -uint64_t helper_iocsrrd_w(CPULoongArchState *env, target_ulong r_addr)
+> +target_ulong helper_iocsrrd_w(CPULoongArchState *env, target_ulong r_addr)
+>   {
+>       return (int32_t)address_space_ldl(env->address_space_iocsr, r_addr,
+>                                         GET_MEMTXATTRS(env), NULL);
+>   }
+>   
+> -uint64_t helper_iocsrrd_d(CPULoongArchState *env, target_ulong r_addr)
+> +target_ulong helper_iocsrrd_d(CPULoongArchState *env, target_ulong r_addr)
+>   {
+>       return address_space_ldq(env->address_space_iocsr, r_addr,
+>                                GET_MEMTXATTRS(env), NULL);
+> 
 
-This is not obvious.  There might be uses for which we really ought to have extended the 
-src argument to TCGv_i64.
+We could reduce code duplication adding address_space_ldn().
 
+Anyhow, for this patch:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-r~
 
