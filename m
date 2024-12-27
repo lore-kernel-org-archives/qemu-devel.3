@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B838CE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 15:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6970E7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 17:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRC4o-0000rS-4g; Fri, 27 Dec 2024 10:16:34 -0500
+	id 1tRDlP-0000l3-Ob; Fri, 27 Dec 2024 12:04:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRC4k-0000qr-8a
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 10:16:32 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
+ id 1tRDlN-0000kT-QA; Fri, 27 Dec 2024 12:04:37 -0500
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRC4i-0001QB-Rd
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 10:16:30 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-21619108a6bso82081275ad.3
- for <qemu-devel@nongnu.org>; Fri, 27 Dec 2024 07:16:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
+ id 1tRDlM-00044i-13; Fri, 27 Dec 2024 12:04:37 -0500
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-7b6c3629816so360746485a.1; 
+ Fri, 27 Dec 2024 09:04:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735312587; x=1735917387; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+49uq6Owt+Wr3uOM6i+R/bpvzi6JUtTTruyFT4JG0c4=;
- b=BmkjIuXu59tenGWWe2zxM6hCELoGciT4PIOMON/o1cVrWDY1JFoyhA9YrqASt4eJ4m
- btvLeVXR1sMAzMSYPE74CwOOcbVhITq7c6o33omKy+ol2IUpc4M9HyM5aaDaOO3vv6pu
- E57//WjhULA7nXAJ31xRAADPK/yFIR8H2vkEHpSt+gwfhTvTgyOznvit8tlPgS++z+IR
- 7PAELfygo24rj685XkjTh7fU94KxyLE7RxNp4dXQFeWatCMvc5KsGv9Md8q+SVtujZEf
- RNFd9xa7g7XsuirY3BRyVT2AOvgxWdEjhUlCS4+qlOh4Pifs+h8XSLpvYWbk1QCbTjpR
- NqSA==
+ d=gmail.com; s=20230601; t=1735319074; x=1735923874; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nW5q9sfNRrykMumwkGRsHtr3G94t25PdnSrIWjuC35s=;
+ b=BO/tTJoB35E8FC6t+XnuL0a0J2QR4NjHYv9X25Iiev7smJDTE4gAUqF8B493H9Nnzy
+ pgOXD3sbcgsF0QMK9kA+NfB7XAuYXInEcJ24YYqKtKJlg8eCOuQQMal2GbzYL3+BY2ZN
+ mngpQyxZT0CHIUaKhP+ty5FsAAEtMeqdkeRjOBPSlI08Xgad+daDtUBhCuSBYnQ02u40
+ YD76thErAsPV6YflkJIEOQVV12CphtN4l7f6n7HQHyItQ864y2Q+/tRwlksFd9VYTYtS
+ xn6vuCtHfsHnI319VWVM3Ximt5BKlmhAkcGZYkleADM0wmMfNgJQSNVsbhT2wjXeQleY
+ Z7Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735312587; x=1735917387;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+49uq6Owt+Wr3uOM6i+R/bpvzi6JUtTTruyFT4JG0c4=;
- b=jCTmZIEVMaG1jSP444+wZEcrA4vGX832gj17Lb0XfmjUglXfkHTAK04AA4uYvLuxnm
- iuWmd2nPcNLIbJKpnlNt6tVUGa12WtU2mOyKFKVi4iGswsMWSWthnMHQfeY3CncWLsYX
- mQ3uvlHYlOcOq3DcwG/gPCO1r4lADT0H4NqWsr+VOanUSTi9jEyLfv07p9BRGBBkD2bI
- BVVzU9ZKKI1cWuOMeQSeUUsV1JNDIvBRWkzGebE4ZwINj6B4pcZ4gvcb8y+UzckwcjMf
- WVCYmxVtEVG3ijFDWnG9aYMhUgGMBXbwuP88BJ+LM8jH7RME2Hhg8BmeR283w22TA6tS
- IBrQ==
+ d=1e100.net; s=20230601; t=1735319074; x=1735923874;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nW5q9sfNRrykMumwkGRsHtr3G94t25PdnSrIWjuC35s=;
+ b=KIQ0tc30TXhobsOjsT2uoRzGsO/zz6kmfxTZExft7KIOOF9eZCRtcm+qIjV0fH54qc
+ EhsEVPoEknyBo8viX+Rdoe3ylwBU4GXqTJLyzOm1TYpgjrqmOJHPsCGzyunDOJ+03bXY
+ js++grRCiBxHjvuz2Vuv9rCKwW7k7CFS7jwUO1INQV2Z4yQOZfRSTn23QoQVLsiolAuy
+ 7RNlq7rxeQWyc0gAxNvSeIt40nW/3IhRbQFczuevwzCRwmUDSD0AKF1Fjm6X7iUejoUE
+ 8r4aQIYba4ZcNfyLoJQSZrnWnl8YquKhoDwh6WxVdozx+HBQT6Vs3rQHIYXAhA7GKavN
+ yGfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUngqF6txjRw6qm4oNTylBbKeJvtC6EAgHAYyV/8sfoatyuDrkj98LZw1zgGdgkQAtmjGhkf7cPcjXO@nongnu.org
-X-Gm-Message-State: AOJu0YxrKDMdm22HBZ2mPBdW83MrOpr8KOBPF7apftYJY8o0y2iJgoqm
- Z06TB+4YGnbSq7JqzA7wDELOmBzTYp6028O2Y3Rjp8eRmfncScUVZMpqJT38YJw=
-X-Gm-Gg: ASbGncsk4zqw/Qr7m0mljn1GnsH7fq8ogcC7S6VJZrpztbv2s+KVI/xT4hWCeL+Un/t
- IiB7gpKEnC78f34RVoBkv6oRWktycFJeHzzF0PLUB3pXoHHzAyiTXcOQpNc0gn2xiKyhKPgfk5m
- 8AsD6zLBswYk+bYCwBRKMhGoobNBTpvOuFfedTBYb0f95X/xG8TiB+eTKHOxc/urxkKwgAfP24k
- S/H1EVTZaDfXBfOC9FVgQ0fyozGwvoowE2nDP1a73LVHu5UqeudLtSnO3KvZuzu2NqO4y7pevEH
- FjJXbg8Ci9S9PUeI2VrwOEwxn8cbYTpatGDVlU4=
-X-Google-Smtp-Source: AGHT+IHkkHOQt1kiD99/42RLHt2bvB79iHiDLaIny6FQwoFuIf9eIs3MkmCKS1PJlPV0NJQHh5VBPg==
-X-Received: by 2002:a05:6a00:4485:b0:724:e80a:33a with SMTP id
- d2e1a72fcca58-72abdebc149mr43208812b3a.23.1735312586750; 
- Fri, 27 Dec 2024 07:16:26 -0800 (PST)
-Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad816540sm15185407b3a.22.2024.12.27.07.16.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Dec 2024 07:16:26 -0800 (PST)
-Message-ID: <8ff6dac5-067a-430e-90c2-67e07ba221a2@linaro.org>
-Date: Fri, 27 Dec 2024 07:16:22 -0800
+ AJvYcCUPm6Axg5uud9+NBDfoTaEsa37kgXrSzhANrH+MdjdSDQlvVmVcZRToMT3TutrpDqWjM0nE4arzLkLrU4I=@nongnu.org
+X-Gm-Message-State: AOJu0YxOsICysctFSlo8Mu9AVxFrk4kRkRdQ5VLBdBY1TylKGx2cR6DG
+ 6lodKkm9lqGX9aN6MWcxkQOMvMZ9FvsPYT1NmJr+ib5h5Ajm+KGazaEyqRB7wW0=
+X-Gm-Gg: ASbGncv70SRA0c0/rRhQ1M76MLMUOzFlJzl79ItFue29K5+e8/xXU2fdXY8axnpOnaT
+ XGoPY0X7J+uE3kzzZZ7ET+3jVf4EKoH+tHngb9BsQJmYx9gTjkeKU5XuyhYCznfWCYJyn1B1FHL
+ vcGX2WvjZ5wyFzHhovcTDN211zj2qhGov6rr9RxpB4/fhhiSxdxOx1jlpZtQxfneG/HmOUgVtGY
+ Q4PNlwu+7ROIsM74NZKLgOO6ciWSNpHLx1v1/RbEtDC/xevd0qMuZ0MsP9998QgzJOtHbuNSPqu
+ WW5iv35++3sONm/LDg==
+X-Google-Smtp-Source: AGHT+IGpOUJ+3dTsYSsn4Ra1hlr8TTpQCxSR5tl7GrtPhdA3dZX/joYBqcZnUS5i9GDRf7fY2aWDJA==
+X-Received: by 2002:a05:620a:2492:b0:7b6:e697:2090 with SMTP id
+ af79cd13be357-7b9ba6efae9mr4018702185a.2.1735319073712; 
+ Fri, 27 Dec 2024 09:04:33 -0800 (PST)
+Received: from localhost.localdomain ([151.217.199.135])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b9ac480ea7sm711371185a.94.2024.12.27.09.04.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Dec 2024 09:04:33 -0800 (PST)
+From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, qemu-trivial@nongnu.org,
+ disconnect3d <dominik.b.czarnota@gmail.com>
+Subject: [PATCH] gdbstub/user-target: fix gdbserver int format (%d -> %x)
+Date: Fri, 27 Dec 2024 18:04:13 +0100
+Message-Id: <20241227170413.72438-1-dominik.b.czarnota@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc: use extract64 instead of 1 << i
-To: Tigran Sogomonian <tsogomonian@astralinux.ru>, peter.maydell@linaro.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-References: <20241227104618.2526-1-tsogomonian@astralinux.ru>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241227104618.2526-1-tsogomonian@astralinux.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=dominik.b.czarnota@gmail.com; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,36 +96,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/27/24 02:46, Tigran Sogomonian wrote:
-> 1 << i is casted to uint64_t while bitwise and with val.
-> So this value may become 0xffffffff80000000 but only
-> 31th "start" bit is required.
-> Use the bitfield extract() API instead.
+From: disconnect3d <dominik.b.czarnota@gmail.com>
 
-Again, I < 32.  There is no overflow.  The type of value is irrelevant.
+This commit fixes an incorrect format string for formatting integers
+provided to GDB when debugging a target run in QEMU user mode.
 
+The correct format is hexadecimal for both success and errno values,
+some of which can be seen here [0].
 
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Signed-off-by: Tigran Sogomonian <tsogomonian@astralinux.ru>
-> ---
->   hw/misc/mps2-fpgaio.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/misc/mps2-fpgaio.c b/hw/misc/mps2-fpgaio.c
-> index d07568248d..04a3da5db0 100644
-> --- a/hw/misc/mps2-fpgaio.c
-> +++ b/hw/misc/mps2-fpgaio.c
-> @@ -198,7 +198,7 @@ static void mps2_fpgaio_write(void *opaque, hwaddr offset, uint64_t value,
->   
->               s->led0 = value & MAKE_64BIT_MASK(0, s->num_leds);
->               for (i = 0; i < s->num_leds; i++) {
-> -                led_set_state(s->led[i], value & (1 << i));
-> +                led_set_state(s->led[i], extract64(value, i, 1));
->               }
->           }
->           break;
+[0] https://github.com/bminor/binutils-gdb/blob/e65a355022d0dc6b5707310876a72b5693ec0aa5/gdbserver/hostio.cc#L196-L213
+---
+ gdbstub/user-target.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index 22bf4008c0..4bfcf78aaa 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -317,9 +317,9 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+     int fd = open(filename, flags, mode);
+ #endif
+     if (fd < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+     } else {
+-        g_string_printf(gdbserver_state.str_buf, "F%d", fd);
++        g_string_printf(gdbserver_state.str_buf, "F%x", fd);
+     }
+     gdb_put_strbuf();
+ }
+@@ -329,7 +329,7 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+     int fd = gdb_get_cmd_param(params, 0)->val_ul;
+ 
+     if (close(fd) == -1) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+         gdb_put_strbuf();
+         return;
+     }
+@@ -352,7 +352,7 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
+ 
+     ssize_t n = pread(fd, buf, bufsiz, offset);
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+         gdb_put_strbuf();
+         return;
+     }
+@@ -375,7 +375,7 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
+     ssize_t n = readlink(filename, buf, BUFSIZ);
+ #endif
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+         gdb_put_strbuf();
+         return;
+     }
+-- 
+2.30.2
 
 
