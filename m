@@ -4,57 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F27E7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 20:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A3BE7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 23:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRHMQ-00044V-Fu; Fri, 27 Dec 2024 15:55:06 -0500
+	id 1tRJaW-0006Ha-40; Fri, 27 Dec 2024 18:17:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRHMO-000446-O0
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 15:55:04 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRJaT-0006HB-3Y
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 18:17:46 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRHMN-000124-8D
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 15:55:04 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRJaR-0004Sr-1r
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 18:17:44 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id A56B85C5F70;
- Fri, 27 Dec 2024 20:54:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A78C4CED0;
- Fri, 27 Dec 2024 20:55:00 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id EF0F15C56C4;
+ Fri, 27 Dec 2024 23:16:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4CCC4CED0;
+ Fri, 27 Dec 2024 23:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1735332901;
- bh=lZEjJ4XbotEJNSOPinIq1O73m1AqWJPsAYAqUEoSv38=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=njj1eMLfJjiM/nvTuMtgxHUbm7MagROWLq3SzsTZ14RzkFsOqYyMqMquDJTFWn/da
- aKbJuqp1jQvobkReOu72IDrBJeP0G5AY8iJodZkiVQsvnZ4+py2NcTRUon6oMOQG1w
- 4RFe3815vTU+NnuZSapd8KOq5kpXNsteUkJSMY6cdByyGJd5KxttKxI9Ryzj9Ic4OB
- rK00r4A1EpMW7MNoml/JtUIYUJmyD9MgV2/oR/OsA7LAbTDtFLm0Beb3GEPW2zbqso
- eI3VWeoGtKFZ6qKvDsAs+n1xTnN09TtqHsfE+zT3THECXmJv0it1tLCMmzV1AAFXZE
- ZCCieBuI7dEZg==
-From: deller@kernel.org
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: deller@gmx.de
-Subject: [PATCH v2 6/6] linux-user: netlink: Add missing QEMU_IFLA entries
-Date: Fri, 27 Dec 2024 21:54:49 +0100
-Message-ID: <20241227205449.29311-7-deller@kernel.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241227205449.29311-1-deller@kernel.org>
-References: <20241227205449.29311-1-deller@kernel.org>
+ s=k20201202; t=1735341457;
+ bh=RazBM8DZZS1Gp1MXsL7b4TS0C0IpC3P/3NW+FPvbJD8=;
+ h=Date:From:To:Subject:From;
+ b=uNULvGhKMbWzvsSFoNqqBnlhOLq8aDCFe+e9QxB/jxgnxLXC3zI6VDh/FBv/0ivrr
+ pqYyD7kk1t+HHyAzIjbcUxT4/94pCChG8RO4/bdcCKzywm1cGFmVgYvarzuNTjA0++
+ pH2MfWBYT7TIj8R3rYIOWgagtruYMGkR/fHIfX0l78Ylz3LoqvxDLTUTLiCmI41kYc
+ /jsu86QsOQ8R766Ogaq2XlV6XCPhVNeDmB6kjmjg6TphH/wmEL5kPIzGw15EjvC6Sz
+ aeawrzbtAnDDf5k6Xt/0Gf0BCfNg6mAlVdBrGUn7HRkluul1/Is3lJhSuMZWLAYiqM
+ B5NqWBP3YUZZA==
+Date: Sat, 28 Dec 2024 00:17:33 +0100
+From: Helge Deller <deller@kernel.org>
+To: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v3] target/hppa: Add CPU reset method
+Message-ID: <Z281jSej_buitgV8@p100>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,99 +66,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
-
-This fixes the following qemu warnings when building debian gupnp package:
- Unknown host QEMU_IFLA type: 61
- Unknown host QEMU_IFLA type: 58
- Unknown host QEMU_IFLA type: 59
- Unknown host QEMU_IFLA type: 60
- Unknown host QEMU_IFLA type: 32820
-
-QEMU_IFLA type 32820 is actually NLA_NESTED | QEMU_IFLA_PROP_LIST (a nested
-entry), which is why rta_type needs to be masked with NLA_TYPE_MASK.
+Add the CPU reset method, which resets all CPU registers and the TLB to
+zero. Then the CPU will switch to 32-bit mode (PSW_W bit is not set) and
+start execution at address 0xf0000004.
+Although we currently want to zero out all values in the CPUHPPAState
+struct, add the end_reset_fields marker in case the state structs gets
+extended with other variables later on which should not be reset.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/fd-trans.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-index a5e6c6b6f2..6a8775bb55 100644
---- a/linux-user/fd-trans.c
-+++ b/linux-user/fd-trans.c
-@@ -145,6 +145,14 @@ enum {
-     QEMU_IFLA_PROTO_DOWN_REASON,
-     QEMU_IFLA_PARENT_DEV_NAME,
-     QEMU_IFLA_PARENT_DEV_BUS_NAME,
-+    QEMU_IFLA_GRO_MAX_SIZE,
-+    QEMU_IFLA_TSO_MAX_SIZE,
-+    QEMU_IFLA_TSO_MAX_SEGS,
-+    QEMU_IFLA_ALLMULTI,
-+    QEMU_IFLA_DEVLINK_PORT,
-+    QEMU_IFLA_GSO_IPV4_MAX_SIZE,
-+    QEMU_IFLA_GRO_IPV4_MAX_SIZE,
-+    QEMU_IFLA_DPLL_PIN,
-     QEMU___IFLA_MAX
+V3:
+- Call reset function from hppa_machine_reset() instead
+
+V2:
+- Add end_reset_fields marker
+- call reset function in hppa_cpu_initfn()
+
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index a31dc32a9f..05fd43ce9c 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -655,12 +655,12 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+     for (i = 0; i < smp_cpus; i++) {
+         CPUState *cs = CPU(cpu[i]);
+ 
++        /* reset CPU */
++        resettable_reset(OBJECT(cs), RESET_TYPE_COLD);
++
+         cpu_set_pc(cs, firmware_entry);
+         cpu[i]->env.psw = PSW_Q;
+         cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
+-
+-        cs->exception_index = -1;
+-        cs->halted = 0;
+     }
+ 
+     /* already initialized by machine_hppa_init()? */
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index c38439c180..b908cf65c6 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -235,15 +235,39 @@ static const TCGCPUOps hppa_tcg_ops = {
+ #endif /* !CONFIG_USER_ONLY */
  };
  
-@@ -986,6 +994,22 @@ static abi_long host_to_target_data_vfinfo_nlattr(struct nlattr *nlattr,
-     return 0;
- }
- 
-+static abi_long host_to_target_data_prop_nlattr(struct nlattr *nlattr,
-+                                                void *context)
++static void hppa_cpu_reset_hold(Object *obj, ResetType type)
 +{
-+    switch (nlattr->nla_type) {
-+    /* string */
-+    case QEMU_IFLA_ALT_IFNAME:
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "Unknown host PROP type: %d\n",
-+                      nlattr->nla_type);
-+        break;
++    HPPACPU *cpu = HPPA_CPU(obj);
++    HPPACPUClass *scc = HPPA_CPU_GET_CLASS(cpu);
++    CPUHPPAState *env = &cpu->env;
++    CPUState *cs = CPU(cpu);
++
++    if (scc->parent_phases.hold) {
++        scc->parent_phases.hold(obj, type);
 +    }
-+    return 0;
++
++    memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
++    cpu_set_pc(cs, 0xf0000004);
++    cpu_hppa_put_psw(env, hppa_is_pa20(env) ? PSW_W : 0);
++    cpu_hppa_loaded_fr0(env);
++
++    cs->exception_index = -1;
++    cs->halted = 0;
 +}
 +
-+
- static abi_long host_to_target_data_link_rtattr(struct rtattr *rtattr)
+ static void hppa_cpu_class_init(ObjectClass *oc, void *data)
  {
-     uint32_t *u32;
-@@ -994,7 +1018,7 @@ static abi_long host_to_target_data_link_rtattr(struct rtattr *rtattr)
-     struct rtnl_link_ifmap *map;
-     struct linkinfo_context li_context;
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     CPUClass *cc = CPU_CLASS(oc);
+     HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
  
--    switch (rtattr->rta_type) {
-+    switch (rtattr->rta_type & NLA_TYPE_MASK) {
-     /* binary stream */
-     case QEMU_IFLA_ADDRESS:
-     case QEMU_IFLA_BROADCAST:
-@@ -1032,6 +1056,12 @@ static abi_long host_to_target_data_link_rtattr(struct rtattr *rtattr)
-     case QEMU_IFLA_CARRIER_DOWN_COUNT:
-     case QEMU_IFLA_MIN_MTU:
-     case QEMU_IFLA_MAX_MTU:
-+    case QEMU_IFLA_GRO_MAX_SIZE:
-+    case QEMU_IFLA_TSO_MAX_SIZE:
-+    case QEMU_IFLA_TSO_MAX_SEGS:
-+    case QEMU_IFLA_ALLMULTI:
-+    case QEMU_IFLA_GSO_IPV4_MAX_SIZE:
-+    case QEMU_IFLA_GRO_IPV4_MAX_SIZE:
-         u32 = RTA_DATA(rtattr);
-         *u32 = tswap32(*u32);
-         break;
-@@ -1127,6 +1157,10 @@ static abi_long host_to_target_data_link_rtattr(struct rtattr *rtattr)
-         return host_to_target_for_each_nlattr(RTA_DATA(rtattr), rtattr->rta_len,
-                                               NULL,
-                                              host_to_target_data_vfinfo_nlattr);
-+    case QEMU_IFLA_PROP_LIST:
-+        return host_to_target_for_each_nlattr(RTA_DATA(rtattr), rtattr->rta_len,
-+                                              NULL,
-+                                             host_to_target_data_prop_nlattr);
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unknown host QEMU_IFLA type: %d\n",
-                       rtattr->rta_type);
--- 
-2.47.0
-
+     device_class_set_parent_realize(dc, hppa_cpu_realizefn,
+                                     &acc->parent_realize);
+ 
++    resettable_class_set_parent_phases(rc, NULL, hppa_cpu_reset_hold, NULL,
++                                       &acc->parent_phases);
++
+     cc->class_by_name = hppa_cpu_class_by_name;
+     cc->has_work = hppa_cpu_has_work;
+     cc->mmu_index = hppa_cpu_mmu_index;
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index e45ba50a59..32a674a8b8 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -263,6 +263,9 @@ typedef struct CPUArchState {
+     IntervalTreeRoot tlb_root;
+ 
+     HPPATLBEntry tlb[HPPA_TLB_ENTRIES];
++
++    /* Fields up to this point are cleared by a CPU reset */
++    struct {} end_reset_fields;
+ } CPUHPPAState;
+ 
+ /**
+@@ -281,6 +284,7 @@ struct ArchCPU {
+ /**
+  * HPPACPUClass:
+  * @parent_realize: The parent class' realize handler.
++ * @parent_phases: The parent class' reset phase handlers.
+  *
+  * An HPPA CPU model.
+  */
+@@ -288,6 +292,7 @@ struct HPPACPUClass {
+     CPUClass parent_class;
+ 
+     DeviceRealize parent_realize;
++    ResettablePhases parent_phases;
+ };
+ 
+ #include "exec/cpu-all.h"
 
