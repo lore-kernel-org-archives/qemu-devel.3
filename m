@@ -4,54 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 049FAE7718F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 06:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39C7E7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 07:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tR3jr-0003B7-C3; Fri, 27 Dec 2024 01:22:23 -0500
+	id 1tR4Np-0002lA-RO; Fri, 27 Dec 2024 02:03:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tR3jk-0003A2-Ib
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 01:22:17 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tR3ji-0000Ka-KR
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 01:22:16 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxmeCUR25nn9laAA--.48065S3;
- Fri, 27 Dec 2024 14:22:12 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDx_8eQR25nZ54KAA--.56394S3;
- Fri, 27 Dec 2024 14:22:11 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
- Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL v2 1/6] target/loongarch: Fix vldi inst
-Date: Fri, 27 Dec 2024 14:22:03 +0800
-Message-Id: <20241227062208.1232281-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241227062208.1232281-1-maobibo@loongson.cn>
-References: <20241227062208.1232281-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tR4Nn-0002kZ-0D
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 02:03:39 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tR4Nj-0003zy-La
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 02:03:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1735283016; x=1766819016;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=y94nrVnENXUFz2H0OL45bCRJtzZ8rg4Xy2dMJ69WcxQ=;
+ b=jO2G0dV5PvVoK149zlCbOWDzzYbi9gCR/ngJtzf3/oxPUj0y39Dwu6rN
+ MbgmS4+c2xtYVe2MeW/yNcqDodHSw/Jbu5Ps1M1qCsW0KmXJXJnpMrTUH
+ JKzMTmBI+PXdvLXJEc7MCtVdKwYhDwJoAo6TUWRoYIpOzQfTjgYZoJHgd
+ E1IgWD7H6Obh6KdR+yNVj7z4uIWCVFwMJ57rE79Av6dnKxDQxusAyrU3j
+ FBqf9LKxyGUKslHi7PxYfP8AB2/R7w11cR7T+w6Nz3bX2xy27Y3IV4F+E
+ N8ePW0gKYVCGHIvL37GwifwMymQxUjE5c7OAUXmYUsnoXCej/7ooPGTZz w==;
+X-CSE-ConnectionGUID: RHqlj4VDSlqtLS+MdhuWDQ==
+X-CSE-MsgGUID: 1cvqNDzVTvyqU0DClT1s0g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11297"; a="34999420"
+X-IronPort-AV: E=Sophos;i="6.12,268,1728975600"; d="scan'208";a="34999420"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Dec 2024 23:03:27 -0800
+X-CSE-ConnectionGUID: WoArNZajQNmFvwWGLfeWAw==
+X-CSE-MsgGUID: Y9VSf7O+SImMVmg9lEsrDw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,268,1728975600"; d="scan'208";a="100214543"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa006.jf.intel.com with ESMTP; 26 Dec 2024 23:03:25 -0800
+Date: Fri, 27 Dec 2024 15:22:08 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Subject: Re: [PATCH v2 01/10] i386/cpu: Extract a common fucntion to setup
+ value of MSR_CORE_THREAD_COUNT
+Message-ID: <Z25VoCfML4/ejV/A@intel.com>
+References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
+ <20241219110125.1266461-2-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDx_8eQR25nZ54KAA--.56394S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241219110125.1266461-2-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,35 +89,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+On Thu, Dec 19, 2024 at 06:01:16AM -0500, Xiaoyao Li wrote:
+> Date: Thu, 19 Dec 2024 06:01:16 -0500
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v2 01/10] i386/cpu: Extract a common fucntion to setup
+>  value of MSR_CORE_THREAD_COUNT
+> X-Mailer: git-send-email 2.34.1
+> 
+> There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+> Extract a common function for it.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+> Changes in v2:
+> - move the implementation of cpu_x86_get_msr_core_thread_count() to
+>   target/i386/cpu-sysemu.c;
+> ---
+>  target/i386/cpu-sysemu.c             | 11 +++++++++++
+>  target/i386/cpu.h                    |  2 ++
+>  target/i386/hvf/x86_emu.c            |  3 +--
+>  target/i386/kvm/kvm.c                |  5 +----
+>  target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>  5 files changed, 16 insertions(+), 8 deletions(-)
+> 
 
-Refer to the link below for a description of the vldi instructions:
-https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/#synopsis_88
-Fixed errors in vldi instruction implementation.
-
-Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index 92b1d22e28..d317dfcc1c 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -3480,7 +3480,7 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
-         break;
-     case 1:
-         /* data: {2{16'0, imm[7:0], 8'0}} */
--        data = (t << 24) | (t << 8);
-+        data = (t << 40) | (t << 8);
-         break;
-     case 2:
-         /* data: {2{8'0, imm[7:0], 16'0}} */
--- 
-2.43.5
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
