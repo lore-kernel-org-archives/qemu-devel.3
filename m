@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3244CE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 20:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBEFBE7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 20:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRHMN-00043e-7q; Fri, 27 Dec 2024 15:55:03 -0500
+	id 1tRHML-00043D-Lz; Fri, 27 Dec 2024 15:55:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRHML-00042u-B9
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 15:55:01 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRHMK-00042S-6f
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 15:55:00 -0500
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRHMJ-0000yX-Vs
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 15:55:01 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRHMI-0000yD-RB
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 15:54:59 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 57D705C5F70;
- Fri, 27 Dec 2024 20:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E614C4CED4;
- Fri, 27 Dec 2024 20:54:57 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id A13FE5C1368;
+ Fri, 27 Dec 2024 20:54:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAB3C4CED6;
+ Fri, 27 Dec 2024 20:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1735332898;
- bh=7sDAkRnZ08OkWc2JgsOLVf4mCXc++peN2aQFHOAIuw4=;
+ s=k20201202; t=1735332893;
+ bh=AftUXuUWx9ZD4I5XBHONp6je4n2JUSbFwJicQRR9IxY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=keD6rvbYqU6y+xgFQS/zd4g7sl7zMjD34Di8Tx6+3HdSClVNU0bZjvA3/BBOgdrxh
- 6BUtwXmzp98X9AAkflf4HMcgiuxDMON6akYe9kSE9VMt05Kr3+R2PvIkr8GL+N3WI0
- v9Lfel2BM1qex7+AmGHY+dkoOU0La/uUx1UgzDD5Rc/wx6ik73s5mjz3ShrHQqcV3U
- tlmGUBs+dru9nzYRXnIC968oznwVwS+XZNsLBgejY2dKXENYpXkYwhD2xcSYME8bCw
- 0sQ5iUe6+f+9X96NgGuf6rQ1S73zTTj26WMVp+ja83PHD52CaPHWPsM3dYTvQU9VNF
- AEB4Hvg5ZMtvQ==
+ b=pEf3ovt6kVsWjHKkSS0iwG2Hjk1iZpCd/CIej9PJTOKBfL22tPrEXFNlifu55pMel
+ TDSG7GvEdZ4WM8unAa10+cYJw33ja8/LSaqxMFwrzycBHk/q8qqWhtldtKVdHd++Df
+ Xox5C7KT3nI7POVxs6DDgcRm4iogEB1RmLIlTR265ua1H3yLS1MTIVRB/qX08RxsoV
+ Hlh9bjzhcWZ8WyhuExnKBQCO7578sItWoGOT/HhEcAlS9iVobR18mnN7F5pfkM/dZ2
+ NEgmvvUVmYwbFZ1rv4/bBit6OdPh8NRs23WmKrtD9Y4uxXV9NVXtdPaeuMhQgv0j9b
+ dNnh9YfGMeczg==
 From: deller@kernel.org
 To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: deller@gmx.de
-Subject: [PATCH v2 4/6] linux-user: netlink: Add emulation of IP_MULTICAST_IF
-Date: Fri, 27 Dec 2024 21:54:47 +0100
-Message-ID: <20241227205449.29311-5-deller@kernel.org>
+Subject: [PATCH v2 1/6] linux-user: netlink: Add missing IFA_PROTO to
+ host_to_target_data_addr_rtattr()
+Date: Fri, 27 Dec 2024 21:54:44 +0100
+Message-ID: <20241227205449.29311-2-deller@kernel.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241227205449.29311-1-deller@kernel.org>
 References: <20241227205449.29311-1-deller@kernel.org>
@@ -72,53 +73,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Share code with IP_ADD_MEMBERSHIP/IP_DROP_MEMBERSHIP.
+Fixes this warning:
+ Unknown host IFA type: 11
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ linux-user/fd-trans.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index bbe2560927..4360543e20 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2130,16 +2130,23 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-             }
-             ret = get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
-             break;
-+        case IP_MULTICAST_IF:
-         case IP_ADD_MEMBERSHIP:
-         case IP_DROP_MEMBERSHIP:
-         {
-             struct ip_mreqn ip_mreq;
-             struct target_ip_mreqn *target_smreqn;
-+            int min_size;
- 
-             QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
-                               sizeof(struct target_ip_mreq));
- 
--            if (optlen < sizeof (struct target_ip_mreq) ||
-+            if (optname == IP_MULTICAST_IF) {
-+                min_size = sizeof(struct in_addr);
-+            } else {
-+                min_size = sizeof(struct target_ip_mreq);
-+            }
-+            if (optlen < min_size ||
-                 optlen > sizeof (struct target_ip_mreqn)) {
-                 return -TARGET_EINVAL;
-             }
-@@ -2149,7 +2156,9 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-                 return -TARGET_EFAULT;
-             }
-             ip_mreq.imr_multiaddr.s_addr = target_smreqn->imr_multiaddr.s_addr;
--            ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
-+            if (optlen >= sizeof(struct target_ip_mreq)) {
-+                ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
-+            }
-             if (optlen == sizeof(struct target_ip_mreqn)) {
-                 ip_mreq.imr_ifindex = tswapal(target_smreqn->imr_ifindex);
-                 optlen = sizeof(struct ip_mreqn);
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index c04a97c73a..a86ed2f4b4 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -1140,6 +1140,7 @@ static abi_long host_to_target_data_addr_rtattr(struct rtattr *rtattr)
+     /* binary: depends on family type */
+     case IFA_ADDRESS:
+     case IFA_LOCAL:
++    case IFA_PROTO:
+         break;
+     /* string */
+     case IFA_LABEL:
 -- 
 2.47.0
 
