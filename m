@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34548E7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 10:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81129E7718F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 12:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tR80Y-00021F-0X; Fri, 27 Dec 2024 05:55:54 -0500
+	id 1tR9ER-0002xc-V3; Fri, 27 Dec 2024 07:14:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tsogomonian@astralinux.ru>)
- id 1tR80T-00020B-3h; Fri, 27 Dec 2024 05:55:49 -0500
-Received: from mail-gw01.astralinux.ru ([37.230.196.243])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tsogomonian@astralinux.ru>)
- id 1tR80R-0003ot-31; Fri, 27 Dec 2024 05:55:48 -0500
-Received: from gca-sc-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
- by mail-gw01.astralinux.ru (Postfix) with ESMTP id 3BE4B24B61;
- Fri, 27 Dec 2024 13:55:41 +0300 (MSK)
-Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail03.astralinux.ru
- [10.177.185.108])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mail-gw01.astralinux.ru (Postfix) with ESMTPS;
- Fri, 27 Dec 2024 13:55:40 +0300 (MSK)
-Received: from [10.198.18.100] (unknown [10.198.18.100])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4YKMpz4q5nz1h0CG;
- Fri, 27 Dec 2024 13:55:39 +0300 (MSK)
-Message-ID: <e2773daa-f819-4b71-b5c7-7ff8efc8d6b6@astralinux.ru>
-Date: Fri, 27 Dec 2024 13:55:28 +0300
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tR9E9-0002v5-Ak
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 07:14:04 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tR9Dz-0005FW-P3
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 07:13:54 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-aa689a37dd4so1047792566b.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Dec 2024 04:13:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1735301625; x=1735906425;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2O+DIEBGhBsth5s6qrd3slMPO7yKFnh06DUjpLZtVho=;
+ b=xzgYhYYkD0yWvLS9xiziyheuQ4Wpw3CiZMunGvBNapb0y/zNJxceUGHri2+CVC54dJ
+ ck5ESvna+qK1GjlNB3SvF5gqrWQcPa4uSAtnz06xtySv1oyF7u4uFaP6vSUdVxrw/Ghx
+ ibjpGHah6wPpgtAiSTnZy976Yr68bwVQ1W1zGHrPHrc7DEiA8j/2UwqPYIEkOu9NCjmy
+ 9mM4Pg5aksBPJsyWdQjoLRbNHJLlwjBqmqJd3WgGmlGWqTykCxDofN8VRa+j+3FKjtCb
+ eCg3fDdimZCFpevumHA68AwHIGn675dlXBjDyHeU7AhlsnkVOOuuy1WxpEGqyFB3oDtT
+ iUFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735301625; x=1735906425;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2O+DIEBGhBsth5s6qrd3slMPO7yKFnh06DUjpLZtVho=;
+ b=e0x2OValmwt8YOx3Iik4WtQxQVzad6I0rWq/vF6UZo91nwWudFzz9c1+BFqkPq3Oz8
+ wiRThGfK4It5hRiAiBZ2HnzhCHDfDDLdtSyY4OJaQERoUiFYQdsrW01YMr+ClGSbnrMK
+ DIbKuAMKZdA7SClcuXoGNL6CvVp05+5Ge22N1l7b6FqSwsH0lVIm33wOSX8XhIZmyVcE
+ STBFWOKRKQQRNTGwwCWzoFOebmw5fuRZIlDwADvlazYvXa0N0JsMAR6iABqdMS35AL4C
+ N/bGRoEzecM57rwydafiUUAFjZF2MaQww+3RuVfg1jFwgyv4K3ATFpHChD5B/45sVuMC
+ f3EA==
+X-Gm-Message-State: AOJu0YwDmy7fHxAkuauUVXDZEUkLHn/AXYPHHxVsNrkmFQmPnEoiEW42
+ GilEriUEh0RefuA0n7EChxcPv3hLSh3kDd0CCotOJbkr3Y1eyVZ5fgmz8u6I8gLHRveSKRoxa9Q
+ =
+X-Gm-Gg: ASbGncvhz5ogr752hsZN3sr0lEroP7na4MXB7K3u/3DeS1JdDH4FVlcVmyrvI7mtG/K
+ hDuJb9nyM0/Nre0kohfZtcTabWcb2XV22vIPBKYjDceA+RXwnkPTOrd0jkBjMi9A55jYeId7vJy
+ Jo024fVlTF/YtbD3CkfTa+kV9LQSnaTu7JJ19IreuNWU9mU0RNeM/cZ2pSkE1StJLOo4hsIEVR+
+ F8is61T++on/lQjIpUzDSrlwDqnoBf/ZKSGsU53KUpdQZYyvo9fqogGDZPIu3PMzcmR/aYfmeY5
+ HHcQwLYuLR2taOE2/DaZ7c5foO6XjZCR
+X-Google-Smtp-Source: AGHT+IFhbg2kfNp9SugiGcMQk7FtZYZSin/YtDp1HS7iR9dP5h+WIPD7LKCmOEHFiO1xpZkkX9hjpw==
+X-Received: by 2002:a17:907:86aa:b0:aa6:5eae:7ece with SMTP id
+ a640c23a62f3a-aac33549659mr2712724566b.43.1735301625196; 
+ Fri, 27 Dec 2024 04:13:45 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aac0e82ede9sm1098662766b.2.2024.12.27.04.13.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 27 Dec 2024 04:13:44 -0800 (PST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, philmd@linaro.org, thuth@redhat.com,
+ zhao1.liu@intel.com, imammedo@redhat.com, akihiko.odaki@daynix.com,
+ npiggin@gmail.com, Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v3 1/6] hw/usb/hcd-xhci-pci: Use modulo to select MSI vector
+ as per spec
+Date: Fri, 27 Dec 2024 13:13:31 +0100
+Message-Id: <20241227121336.25838-2-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20241227121336.25838-1-phil@philjordan.eu>
+References: <20241227121336.25838-1-phil@philjordan.eu>
 MIME-Version: 1.0
-User-Agent: RuPost Desktop
-Subject: Re: [PATCH] hw/misc: cast nand_getio value to uint64_t
-Content-Language: ru
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- sdl.qemu@linuxtesting.org
-References: <20241226141626.28722-1-tsogomonian@astralinux.ru>
- <87msgikqkq.fsf@draig.linaro.org>
-From: =?UTF-8?B?0KLQuNCz0YDQsNC9INCh0L7Qs9C+0LzQvtC90Y/QvQ==?=
- <tsogomonian@astralinux.ru>
-In-Reply-To: <87msgikqkq.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-KSMG-AntiPhishing: NotDetected
-X-KSMG-AntiSpam-Auth: dkim=none
-X-KSMG-AntiSpam-Envelope-From: tsogomonian@astralinux.ru
-X-KSMG-AntiSpam-Info: LuaCore: 49 0.3.49
- 28b3b64a43732373258a371bd1554adb2caa23cb, {Tracking_arrow_text},
- {Tracking_from_domain_doesnt_match_to}, new-mail.astralinux.ru:7.1.1;
- d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; 127.0.0.199:7.1.2;
- astralinux.ru:7.1.1, FromAlignment: s
-X-KSMG-AntiSpam-Interceptor-Info: scan successful
-X-KSMG-AntiSpam-Lua-Profiles: 190100 [Dec 27 2024]
-X-KSMG-AntiSpam-Method: none
-X-KSMG-AntiSpam-Rate: 0
-X-KSMG-AntiSpam-Status: not_detected
-X-KSMG-AntiSpam-Version: 6.1.1.7
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
- bases: 2024/12/27 07:57:00 #26921502
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 1
-Received-SPF: pass client-ip=37.230.196.243;
- envelope-from=tsogomonian@astralinux.ru; helo=mail-gw01.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: neutral client-ip=2a00:1450:4864:20::62a;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,23 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-27/12/24 01:49, Alex Bennée пишет:
-> Tigran Sogomonian <tsogomonian@astralinux.ru> writes:
->
->> s->buswidth = nand_flash_ids[s->chip_id].width >> 3;
->> <= 16 >> 3 <= 2.
->> x <= s->ioaddr[offset] << (s->buswidth << 3)
->> <= max_uint8_t << 16
->> With x << 24 overflow is possible.
->> Other cases are similar.
->> Thus, need to cast return value to uint64_t.
->>
->> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->>
->> Signed-off-by: Tigran Sogomonian <tsogomonian@astralinux.ru>
-> This code was removed in 192f75ad11 (hw/misc: Remove omap_gpmc)
-Yes, I saw that upstream master doesn't have this code, but some users 
-use stable-9.1. I suggest adding these changes not to the main branch, 
-but to the stable-9.1 branch.
+QEMU would crash with a failed assertion if the XHCI controller
+attempted to raise the interrupt on a higher vector than the
+highest configured for the device by the guest driver.
+
+It turns out the XHCI spec (Implementation Note in section 4.17,
+"Interrupters") requires that the host controller signal the MSI
+vector with the number computed by taking the interrupter number
+modulo the number of enabled MSI vectors.
+
+This change introduces that modulo calculation, fixing the
+failed assertion and making the device work correctly in MSI mode
+with macOS's XHCI driver.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+---
+
+v2:
+
+ * Switch to modulo arithmetic for MSI vector number rather than dropping,
+   as per spec.
+
+ hw/usb/hcd-xhci-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index e110840c7a..e5e7330387 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -74,6 +74,7 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, int n, bool level)
+     }
+ 
+     if (msi_enabled(pci_dev) && level) {
++        n %= msi_nr_vectors_allocated(pci_dev);
+         msi_notify(pci_dev, n);
+         return true;
+     }
+-- 
+2.39.5 (Apple Git-154)
 
 
