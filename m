@@ -4,96 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6FFE77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Dec 2024 23:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82A4E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 00:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tQx9U-0001Qf-Aa; Thu, 26 Dec 2024 18:20:24 -0500
+	id 1tQxwP-000810-CJ; Thu, 26 Dec 2024 19:10:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQx9P-0001QK-Vj
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 18:20:21 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
+ id 1tQxwJ-00080S-OP
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 19:10:53 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tQx9O-000197-Du
- for qemu-devel@nongnu.org; Thu, 26 Dec 2024 18:20:19 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso45838505e9.0
- for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 15:20:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wuhaotsh@google.com>)
+ id 1tQxwF-0005so-Ll
+ for qemu-devel@nongnu.org; Thu, 26 Dec 2024 19:10:49 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-53e64f3c7d0so43356e87.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Dec 2024 16:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735255216; x=1735860016; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ooKUSInrQyoQqSKqPXJ7lQm+0JQDbHpFynR34wPTuoo=;
- b=AXXLBw/uP8gbIsYUC54j2g2ZoPv1pkNL+SNJgeAKaBIf7MONKs13vbZXxm1Ta4ehJq
- 7heirGPsu/pHAu52TnlgEB9zV60xFB5I8kFl1AislOMlI6EKvseq78rM2aCo/DN0/8wq
- OtCrbDk2othPcBChgsRfoOXRmiV4amEvpGYkBKkG8ZNm8NmQlSW5ZaTbeUlEVmZZ1Jv8
- vyharxaQ643Bt0Edop0jgXVMKk1U3NbrfFaMeO9pXQjMKNabeR+/VMlEBc/qXfDg54Ww
- L0rbgpe4jOF9xsquBAcaMy3aMINzquoHCw/P8Lf303GyO+9h3Sg3DX798xcKQw/z7P3l
- RKLQ==
+ d=google.com; s=20230601; t=1735258243; x=1735863043; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Kiav1LOLgUI1s57efjcsKJrgv00INHU1sewLAsIjnvs=;
+ b=GY5d+tiqFahgmaJzVYKo/9spmCUEuyJh1RuL8vfEdkr9dFy9/hh+oA0Cb2FTqmVtqE
+ 5tiwjnghzPBEjcTjz15q5nSuB638xqC/PebkaP2ZbJMkWEDDtq7KEorJSYX6bKNha9EX
+ r7OMG/fg8aXhz6aFCwm8DnmVqY8v54n2/htluhvdkyNcmNWGUpeO1uMlXWTJe3vXPWvZ
+ 9UzGGQM6dx6DcOT11faosHu0AK3GzxDT6cVTQsDvFG1Id/DcD6Rf5iua95PXYPQiZS/q
+ CyJrnRn9FCXrsTLTJQa9H8Q5C4joY1tPKC3ZBtCb/GutV0DODNsNDl2GjeOEjvfRLHF9
+ kHUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735255216; x=1735860016;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ooKUSInrQyoQqSKqPXJ7lQm+0JQDbHpFynR34wPTuoo=;
- b=TOYodPS+1cDiBOd+iaKnY15YlFD4pHYEJidwGkxhneJQ6mTBGoZMcXPqqLQnMZ7mkT
- 4RqIXHAQF5vmu7zqdTmDiMPBQsLYGzZCZL7NNc9irZAs4IV6Z09hTCpDI2oT6I7M5Bi1
- k8LSY3X2swbVbU39c8mWleWxl/fa43Dp0/HNBPjXRt+U7gc+/BfLyC5rRzT5H4U0VEBH
- 6OoLuX9eUIzzsaJ2mBDlXG/h9M0FAZEXW7Cigf++7fcN2Vi/W34v7gB7hMC6IrEXmVnR
- lD1e/K5FhgbwE/WLdQR63CpfsDchdrzbE1hd3F0NFOZpCywMYzPxvnn+CcsNxg14Cfri
- Ff1g==
+ d=1e100.net; s=20230601; t=1735258243; x=1735863043;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Kiav1LOLgUI1s57efjcsKJrgv00INHU1sewLAsIjnvs=;
+ b=CEUDFSmkkqci7KGOtEv1QO1m5CzqQMVQeBMbKtGQKngSrSn7iE6o7ieSCpr1624CZQ
+ Qe1J7x1fN6pNAFuv+Zzwww7oP5thtB0ZmOIEmLRC+H75qd1B1tIz/F24F4OYAC03V2tl
+ CSOrTP9QS+h4LmKeyrAxqmfAN865AhxqfqtzVc0nXHfNDen56gfWWJ1d8aZCuV56op+R
+ VTep73O1bxmO4CEI4A3n5/myqYwfL1yudiW9IhJMQZln5VcEzjxu+k/8v4NLKxFMamLM
+ EbxuAvVRQhvHww37cmHVUUL7MmVKXJikTEWNpFhWc9jHvgjqEmsCC1Yhq3izMyJlwMfc
+ KQ/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU22+uvSmS0sVklhVRCw5wg62q9gT2prWgDoxPE9kxF2QOz14S+hb3Oe7QYnbiS4je2SYr6qpYZejGN@nongnu.org
-X-Gm-Message-State: AOJu0YyFJMLffMgijVKzczLGYSMGU/YlQHq++a3ykV48YvRGRIE89c9k
- QisV28IES0xMPppjzdnMxHhJQme7f+O8I73aGKEJnaTmvHY7vfzgPhkI2T02sjQ=
-X-Gm-Gg: ASbGncu/BkUd1VT0LADSlTEO2re7ODUL9KjYstQgQLFgDeBmS7GH9ZLF7EnKj8nK0J9
- /jpiFH9r5/TFrxazVcxrEp/Pvap7ITSUsmUMEWS5v+71Ql6IcQCZZINaLin25vmTkwOmIMYxVQl
- r0aKadGuRgPIscIT5iraBMUGIF6Nq4nRrSuM1jpYRW1iE9u/lUt0GGyUfjYw/6Y9gm7Vja2H6cV
- DMYyW2f7xMaMycsHakeBkSIJ5mDP/UamDmkwlEBbX43ZXpqRqv/fGK4KcBle9uAK6SQbtyClffS
- Qr1rZVKk3yR0LHnk6iDiDLFM4Q+bgg==
-X-Google-Smtp-Source: AGHT+IERPY+YwBR9gf13tzEpUDdRLxnBnkYOhJnmnJxQs/Y78G6LwivEzVLrojfRmja0y6WuIOn4wg==
-X-Received: by 2002:a05:6000:4012:b0:386:3272:ee68 with SMTP id
- ffacd0b85a97d-38a221f9fd4mr22992488f8f.28.1735255216054; 
- Thu, 26 Dec 2024 15:20:16 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8292f4sm20972028f8f.3.2024.12.26.15.20.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2024 15:20:14 -0800 (PST)
-Message-ID: <4f754f83-cc85-461f-a6d0-62d3bb01fd15@linaro.org>
-Date: Fri, 27 Dec 2024 00:20:13 +0100
+ AJvYcCWNP1YTAr5mjw4LwzsxvDCZF4QEQLFMUE9kWUk3T1eaFcH/5i2mQ5GAfjM5HLa3OOv8/b4iItd9p0Vo@nongnu.org
+X-Gm-Message-State: AOJu0Yy0xmVDIZ6cQTMv5EVs8Puv4fRQVwFI9A6GR2DkVLm65J9InmR5
+ w44rO7W2qykoV8cIp0Pb7k/9KAh77LYu1LpM1RTQN3xrogkNAzH3FpOcReAWnyAwAYUztAV6FfP
+ kKzvR+S6fTR+J/xo3oq0UDVpji8oGY48Pm8Yo
+X-Gm-Gg: ASbGncuYdVzkdsHT3y4lVlFtibvlWwqLT6xV0m+zhQlVMJKrmXUY6XuKvCiQuUP/07H
+ DwB0DlPqDjR+P+zy564UbDxEH8H9zzCrAsIRQDvSVdPhktS3iXShcjs8=
+X-Google-Smtp-Source: AGHT+IF7XijT91vVSHy7br0tl+wk2BB+fCV33r+iK8J5LFP88iTSsw1rBNtf0T2QS/J1qW6jJYut5v1E9dzg+pcU+mw=
+X-Received: by 2002:a05:6512:3d25:b0:53d:f0a2:1fe3 with SMTP id
+ 2adb3069b0e04-54229455f32mr648484e87.2.1735258243322; Thu, 26 Dec 2024
+ 16:10:43 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/23] hw/loongarch/virt: Default to max32 CPU for
- LoongArch 32 build
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
-Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241226-la32-fixes1-v2-0-0414594f8cb5@flygoat.com>
- <20241226-la32-fixes1-v2-20-0414594f8cb5@flygoat.com>
- <189159ad-0b0d-46db-bc58-c7e1f0ef9bc6@linaro.org>
- <67a7b26b-606e-4bb7-b1d3-fbfd49bdfb5e@app.fastmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <67a7b26b-606e-4bb7-b1d3-fbfd49bdfb5e@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241226130311.1349-1-tsogomonian@astralinux.ru>
+ <CAO=notxZWVBShpD_Y-GJZvXSY6v7tURt0yJ+aQFDm7LpdD8ikg@mail.gmail.com>
+In-Reply-To: <CAO=notxZWVBShpD_Y-GJZvXSY6v7tURt0yJ+aQFDm7LpdD8ikg@mail.gmail.com>
+From: Hao Wu <wuhaotsh@google.com>
+Date: Fri, 27 Dec 2024 08:10:31 +0800
+X-Gm-Features: AbW1kvZ1aDz9P0EVUU9HCSHM0u7JLrUWnbs8m2dkKERcoIXIodlf3W-OYp3Ns7I
+Message-ID: <CAGcCb11XxgJ9Of-XvgHYBmxrz5yCjktZWe6d8jwbV0NOjkHm=Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc: cast rpm to uint64_t
+To: Patrick Leis <venture@google.com>
+Cc: Tigran Sogomonian <tsogomonian@astralinux.ru>, kfting@nuvoton.com,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Content-Type: multipart/alternative; boundary="000000000000305c75062a354b84"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=wuhaotsh@google.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,37 +95,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/12/24 00:03, Jiaxun Yang wrote:
-> 在2024年12月26日十二月 下午10:56，Philippe Mathieu-Daudé写道：
->> On 26/12/24 22:19, Jiaxun Yang wrote:
->>> la464 CPU is not available on LoongArch32. Use max32 which makes
->>> more sense here.
->>>
->>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->>> ---
->>>    hw/loongarch/virt.c | 4 ++++
->>>    1 file changed, 4 insertions(+)
->>>
->>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>> index 3a905cf71d46e3c5a29672f7bb73faedf1d29444..343d2e745e155d59f0ff17124b3c77ec9b3c111e 100644
->>> --- a/hw/loongarch/virt.c
->>> +++ b/hw/loongarch/virt.c
->>> @@ -1440,7 +1440,11 @@ static void virt_class_init(ObjectClass *oc, void *data)
->>>        HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
->>>    
->>>        mc->init = virt_init;
->>> +#if defined(TARGET_LOONGARCH64)
->>>        mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("la464");
->>> +#elif defined(TARGET_LOONGARCH32)
->>> +    mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("max32");
->>
->> Why can't we use it on LOONGARCH64?
-> 
-> I think many users are launching qemu-system-loongarch64 with default CPU,
-> better not to break them, so we only do max32 as default for
-> qemu-system-loongarch32.
+--000000000000305c75062a354b84
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Don't start with a default cpu on loongarch32! The user will get the
-"no default cpu, use -cpu help to display them" and select max32 or any 
-other :)
+On Fri, Dec 27, 2024 at 3:02=E2=80=AFAM Patrick Leis <venture@google.com> w=
+rote:
+
+>
+>
+> On Thu, Dec 26, 2024 at 6:00=E2=80=AFAM Tigran Sogomonian <
+> tsogomonian@astralinux.ru> wrote:
+>
+>> The value of an arithmetic expression
+>> 'rpm * NPCM7XX_MFT_PULSE_PER_REVOLUTION' is a subject
+>> to overflow because its operands are not cast to
+>> a larger data type before performing arithmetic. Thus, need
+>> to cast rpm to uint64_t.
+>>
+>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>>
+>> Signed-off-by: Tigran Sogomonian <tsogomonian@astralinux.ru>
+>>
+> Reviewed-by: Patrick Leis <venture@google.com>
+>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
+
+> ---
+>>  hw/misc/npcm7xx_mft.c | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/misc/npcm7xx_mft.c b/hw/misc/npcm7xx_mft.c
+>> index 9fcc69fe5c..e565cac05d 100644
+>> --- a/hw/misc/npcm7xx_mft.c
+>> +++ b/hw/misc/npcm7xx_mft.c
+>> @@ -172,8 +172,9 @@ static NPCM7xxMFTCaptureState npcm7xx_mft_compute_cn=
+t(
+>>           * RPM =3D revolution/min. The time for one revlution (in ns) i=
+s
+>>           * MINUTE_TO_NANOSECOND / RPM.
+>>           */
+>> -        count =3D clock_ns_to_ticks(clock, (60 * NANOSECONDS_PER_SECOND=
+) /
+>> -            (rpm * NPCM7XX_MFT_PULSE_PER_REVOLUTION));
+>> +        count =3D clock_ns_to_ticks(clock,
+>> +            (uint64_t)(60 * NANOSECONDS_PER_SECOND) /
+>> +            ((uint64_t)rpm * NPCM7XX_MFT_PULSE_PER_REVOLUTION));
+>>      }
+>>
+>>      if (count > NPCM7XX_MFT_MAX_CNT) {
+>> --
+>> 2.30.2
+>>
+>>
+>>
+
+--000000000000305c75062a354b84
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Dec 27,=
+ 2024 at 3:02=E2=80=AFAM Patrick Leis &lt;<a href=3D"mailto:venture@google.=
+com">venture@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div=
+ class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 26=
+, 2024 at 6:00=E2=80=AFAM Tigran Sogomonian &lt;<a href=3D"mailto:tsogomoni=
+an@astralinux.ru" target=3D"_blank">tsogomonian@astralinux.ru</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">The value of a=
+n arithmetic expression<br>
+&#39;rpm * NPCM7XX_MFT_PULSE_PER_REVOLUTION&#39; is a subject<br>
+to overflow because its operands are not cast to<br>
+a larger data type before performing arithmetic. Thus, need<br>
+to cast rpm to uint64_t.<br>
+<br>
+Found by Linux Verification Center (<a href=3D"http://linuxtesting.org" rel=
+=3D"noreferrer" target=3D"_blank">linuxtesting.org</a>) with SVACE.<br>
+<br>
+Signed-off-by: Tigran Sogomonian &lt;<a href=3D"mailto:tsogomonian@astralin=
+ux.ru" target=3D"_blank">tsogomonian@astralinux.ru</a>&gt;<br></blockquote>=
+<div>Reviewed-by: Patrick Leis &lt;<a href=3D"mailto:venture@google.com" ta=
+rget=3D"_blank">venture@google.com</a>&gt;=C2=A0</div></div></div></blockqu=
+ote><div>Reviewed-by: Hao Wu &lt;<a href=3D"mailto:wuhaotsh@google.com">wuh=
+aotsh@google.com</a>&gt;=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_quote"><blockquote class=3D=
+"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
+04,204,204);padding-left:1ex">
+---<br>
+=C2=A0hw/misc/npcm7xx_mft.c | 5 +++--<br>
+=C2=A01 file changed, 3 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/hw/misc/npcm7xx_mft.c b/hw/misc/npcm7xx_mft.c<br>
+index 9fcc69fe5c..e565cac05d 100644<br>
+--- a/hw/misc/npcm7xx_mft.c<br>
++++ b/hw/misc/npcm7xx_mft.c<br>
+@@ -172,8 +172,9 @@ static NPCM7xxMFTCaptureState npcm7xx_mft_compute_cnt(<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * RPM =3D revolution/min. The time for o=
+ne revlution (in ns) is<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * MINUTE_TO_NANOSECOND / RPM.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 count =3D clock_ns_to_ticks(clock, (60 * NANOS=
+ECONDS_PER_SECOND) /<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (rpm * NPCM7XX_MFT_PULSE_PER_REV=
+OLUTION));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 count =3D clock_ns_to_ticks(clock,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (uint64_t)(60 * NANOSECONDS_PER_=
+SECOND) /<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((uint64_t)rpm * NPCM7XX_MFT_PUL=
+SE_PER_REVOLUTION));<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (count &gt; NPCM7XX_MFT_MAX_CNT) {<br>
+-- <br>
+2.30.2<br>
+<br>
+<br>
+</blockquote></div></div>
+</blockquote></div></div>
+
+--000000000000305c75062a354b84--
 
