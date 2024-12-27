@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3EAE7718F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 07:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845F2E7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Dec 2024 07:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tR4ep-0007lb-TT; Fri, 27 Dec 2024 02:21:15 -0500
+	id 1tR4gR-0008PD-N4; Fri, 27 Dec 2024 02:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tR4ej-0007l2-Ad
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 02:21:10 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1tR4gM-0008Om-9b
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 02:22:51 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tR4ef-0005zd-Se
- for qemu-devel@nongnu.org; Fri, 27 Dec 2024 02:21:09 -0500
+ id 1tR4gJ-00064C-Fa
+ for qemu-devel@nongnu.org; Fri, 27 Dec 2024 02:22:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1735284066; x=1766820066;
+ t=1735284167; x=1766820167;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=A6ImB+orkL2jaGAShPBNmF3zKkTddbFDbcrIqEgGQQg=;
- b=PBneHuFAoKgtsN9dc/DUY4UPLND5IEDMEZ7Rko42XUShrxPttv+D/cpx
- 5+HwnmaC1K4BTzJWF8cPO5miWSUsuixnZNUPh0+EWLpyvbTY3rChjE9N1
- pSCAa9WLsvUr3btYkLhmlViT00S8zZ5opirsGYkX4vPF8PK3P6G2I/Hvp
- ugQsb8lzx5QJQ+6omu0owhrUerLxHn2w5dn9EPfKizuWikKcxpRM7QPPS
- bkXdgB0aaij7aF64ynifmZqFAtspEE/ZN4BNcIL5dipU2m/ANzS+9MpWe
- VkPSxTR9wPlzD/UJFzzrhJ7uY1uu4nwrYuz+UXTjis/B5DLqYlxSJQbve A==;
-X-CSE-ConnectionGUID: UrD6vzYpQ66FFJcW1znSCg==
-X-CSE-MsgGUID: XI61m/qJT1StIh3ts2M4XA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11297"; a="46183633"
-X-IronPort-AV: E=Sophos;i="6.12,268,1728975600"; d="scan'208";a="46183633"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Dec 2024 23:21:02 -0800
-X-CSE-ConnectionGUID: R3cJaghXReii27QPxh+jBg==
-X-CSE-MsgGUID: IW0xW7IwSAC4VEdTvEj0Mw==
+ bh=QGBeziVfPGvcpoUGpymnsoBTwiEPKSgpt13b/SYPQiA=;
+ b=fmwA9M1Xsv/aDtRh/g/7Gzl/UM5OUq4a3V6hPH/TSJ1itd8Z5a+rAS2P
+ eyzE6vO8xmogJcE0XpFXpiXZV7B8V5S068Q3m1uZovToMBPA2ZPne+UTT
+ 56Q7hbTLhD6Skx8zZTDQPfNsmg4fvqmdae31X1mZBTj809cZDBWlFrmeP
+ bvkNpxdEeXPtUz3qtLa9dEo3tUDfb6hc4PJTITIsmdHlP1ZYJLy8GRxcs
+ hoK/uZFgcswz45OttyuoONh6qU1XYMpVM7OHaZp2ba+DWbv8OrOV8C+/d
+ a9E2/1N+IwZp/aSW9YUBwigmEoiY5Tm8IZ7RtHFFFUU58PS9q/fNuKhkv A==;
+X-CSE-ConnectionGUID: fnN+0wGYTkWpz6fV5FKENg==
+X-CSE-MsgGUID: 1U9nHJWCQbyMNq7ylYz8Gg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11297"; a="39469113"
+X-IronPort-AV: E=Sophos;i="6.12,268,1728975600"; d="scan'208";a="39469113"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Dec 2024 23:22:46 -0800
+X-CSE-ConnectionGUID: fy30Tiv8QyuSRLVb4FmDlA==
+X-CSE-MsgGUID: o+rPw9dSSJavbaYgB5uGHw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,268,1728975600"; d="scan'208";a="99932439"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="131078588"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 26 Dec 2024 23:21:00 -0800
-Date: Fri, 27 Dec 2024 15:39:43 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 26 Dec 2024 23:22:43 -0800
+Date: Fri, 27 Dec 2024 15:41:27 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -55,15 +55,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: Re: [PATCH v2 03/10] i386/cpu: Drop cores_per_pkg in cpu_x86_cpuid()
-Message-ID: <Z25Zv+oE+1FZ/gQ9@intel.com>
+Subject: Re: [PATCH v2 02/10] i386/cpu: Drop the variable smp_cores and
+ smp_threads in x86_cpu_pre_plug()
+Message-ID: <Z25aJxj5vKBGKwvv@intel.com>
 References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
- <20241219110125.1266461-4-xiaoyao.li@intel.com>
+ <20241219110125.1266461-3-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241219110125.1266461-4-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241219110125.1266461-3-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -88,20 +89,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 06:01:18AM -0500, Xiaoyao Li wrote:
-> Date: Thu, 19 Dec 2024 06:01:18 -0500
+On Thu, Dec 19, 2024 at 06:01:17AM -0500, Xiaoyao Li wrote:
+> Date: Thu, 19 Dec 2024 06:01:17 -0500
 > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v2 03/10] i386/cpu: Drop cores_per_pkg in cpu_x86_cpuid()
+> Subject: [PATCH v2 02/10] i386/cpu: Drop the variable smp_cores and
+>  smp_threads in x86_cpu_pre_plug()
 > X-Mailer: git-send-email 2.34.1
 > 
-> Local variable cores_per_pkg is only used to calculate threads_per_pkg.
-> No need for it. Drop it and open-code it instead.
+> No need to define smp_cores and smp_threads, just using ms->smp.cores
+> and ms->smp.threads is straightforward. It's also consistent with other
+> checks of socket/die/module.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
->  target/i386/cpu.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
+>  hw/i386/x86-common.c | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+>
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
