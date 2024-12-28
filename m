@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD54CE7718F
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 12:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F99CE77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 12:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRVUu-0003Ci-W0; Sat, 28 Dec 2024 07:00:49 -0500
+	id 1tRVea-0007UP-2x; Sat, 28 Dec 2024 07:10:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tRVUW-00039e-9W; Sat, 28 Dec 2024 07:00:33 -0500
+ id 1tRVeE-0007TN-6w; Sat, 28 Dec 2024 07:10:30 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tRVUT-0006gJ-PW; Sat, 28 Dec 2024 07:00:24 -0500
+ id 1tRVeC-0001oF-Ib; Sat, 28 Dec 2024 07:10:25 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id A072FCC839;
- Sat, 28 Dec 2024 14:59:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EE458CC84F;
+ Sat, 28 Dec 2024 15:09:39 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 4856D46162; Sat, 28 Dec 2024 14:54:46 +0300 (MSK)
+ id 544DF4616C; Sat, 28 Dec 2024 14:54:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
+Cc: Han Han <hhan@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 03/11] hw/timer/hpet: Drop the unused macro
-Date: Sat, 28 Dec 2024 14:54:38 +0300
-Message-Id: <20241228115446.2478706-4-mjt@tls.msk.ru>
+Subject: [PULL 08/11] target/i386/cpu: Fix notes for CPU models
+Date: Sat, 28 Dec 2024 14:54:43 +0300
+Message-Id: <20241228115446.2478706-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241228115446.2478706-1-mjt@tls.msk.ru>
 References: <20241228115446.2478706-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,34 +58,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Han Han <hhan@redhat.com>
 
-HPET_TN_CFG_BITS_READONLY_OR_RESERVED is not used in any place since
-HPET_TN_CFG_WRITE_MASK has been already used to check and fix the
-writable bits in hpet_ram_write().
-
-Drop this unused macro.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 644e3c5d812 ("missing vmx features for Skylake-Server and Cascadelake-Server")
+Signed-off-by: Han Han <hhan@redhat.com>
+Reviewed-by: Chenyi Qiang <chenyi.qiang@intel.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- include/hw/timer/hpet.h | 1 -
- 1 file changed, 1 deletion(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
-index d17a8d4319..71e8c62453 100644
---- a/include/hw/timer/hpet.h
-+++ b/include/hw/timer/hpet.h
-@@ -58,7 +58,6 @@
- #define HPET_TN_CFG_WRITE_MASK  0x7f4e
- #define HPET_TN_INT_ROUTE_SHIFT      9
- #define HPET_TN_INT_ROUTE_CAP_SHIFT 32
--#define HPET_TN_CFG_BITS_READONLY_OR_RESERVED 0xffff80b1U
- 
- struct hpet_fw_entry
- {
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 660ddafc28..0b639848cd 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -3692,6 +3692,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             },
+             {
+                 .version = 4,
++                .note = "IBRS, EPT switching, no TSX",
+                 .props = (PropValue[]) {
+                     { "vmx-eptp-switching", "on" },
+                     { /* end of list */ }
+@@ -3826,7 +3827,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+               },
+             },
+             { .version = 4,
+-              .note = "ARCH_CAPABILITIES, no TSX",
++              .note = "ARCH_CAPABILITIES, EPT switching, no TSX",
+               .props = (PropValue[]) {
+                   { "vmx-eptp-switching", "on" },
+                   { /* end of list */ }
 -- 
 2.39.5
 
