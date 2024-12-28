@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F233E77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 10:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DBEE77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 10:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRUKH-0000BA-VB; Sat, 28 Dec 2024 05:45:45 -0500
+	id 1tRUNg-0001J8-AF; Sat, 28 Dec 2024 05:49:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tRUKG-0000Aa-NB
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 05:45:44 -0500
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ id 1tRUNb-0001Ij-Sz
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 05:49:12 -0500
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tRUKF-0008Pg-1Y
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 05:45:44 -0500
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-5189105c5f5so4105735e0c.0
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 02:45:42 -0800 (PST)
+ id 1tRUNY-0000Gz-TR
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 05:49:11 -0500
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4b24d969db1so1855975137.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 02:49:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1735382742; x=1735987542;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1735382947; x=1735987747;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5azlLYHnLDjP1jnyhLJZwgNVop4nhsKTUbAaAFN2Frk=;
- b=Og8TQ0vfU9EB0ch6pti7uJ3vevWLllVEbiNOtzoA/UzkWMR82gP1WqiM3aMEIT8Qn8
- 84unTOkh3WBrr0Pi2ud0lAIFXyFcZ4uVtJgknhIK8cPGcSetcnZ0PI4XzNkfW0o6yEvX
- owuVwxXnATA/9mpdYZRiuDe9geextYX9s7cDQWtdsNImaLEmzSv8s55ddB2I7HqhTKAV
- fo4NdXkX6ywLsBjHGZTt57FiHk6dvZrFXe+Nu5OnODcrNQrl0JiaCMlOf4sU9KeG8H6R
- q2+llErTJbwG2CAqK34/7msQKuM2Wt/kjW0cmkwxEEDIK8X4KyM/xNLflCRLIkc72Cme
- d0gQ==
+ bh=Rm9qCr/yfQFF0NVtL+4X+rXc8O6gPDvf+JlC3PO4Who=;
+ b=0q6ewKprw/19TUmASnpklwouDGoxDRpZ3sJflTtKTjFRE29WEtnSb6xG8omO9ddzU4
+ MYlmjdptirpPeiJq1cnAK3pSBb0apODv/QBNMtAs2sY1+0eha8Z5v81gerwI7eLNKfnY
+ iqQhl4HRJB3yEFGsLijAYV2ctVZkhxs+cP+iRGkNOfdYLO1HcDtaGk5Bvd2iL/qdy5G/
+ flfPmYRTsClTNIh70Vy1TjMSL4TnoxpeORZ5wUWsk12uzUIk33vhd+eOIq7w7jnAVaZX
+ uiv778pRSrbVKiZZDlyk/oYGid4Rvg6SvtwwB8Ehk0rIRalVNsRWKCMY1tVT4nIfH8X3
+ kwew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735382742; x=1735987542;
+ d=1e100.net; s=20230601; t=1735382947; x=1735987747;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5azlLYHnLDjP1jnyhLJZwgNVop4nhsKTUbAaAFN2Frk=;
- b=B5ix+KuokMH/kLE2LMsr4+DgcitegMxwJapT47VLJOmS+xDyq9HWpTtJuVTdwLdq6P
- tF1MAol41dsIS7JlF5P0YD9LdUEfefQo89EjQjvqLSAnbGc77gJLrKJCYMPB1nUUZI95
- w6hegyTNx2cf9LnWaHJwVUThKludvHrnPLjHoagx941n+I483vH++0JrFR2+nY4Z459s
- bQCgim7VrpN7yggjblHqZTqcmD8DlSlbK7hshBkKAWNitl9CGpKkaIpg14Hbz/qI0Mav
- 96r8jSpymPB2E0hqs1I7GOxwsqzrGlGpzm+gBzSXpiECn9C8REyG9wuUOk4hdFfZLVBT
- r6UQ==
-X-Gm-Message-State: AOJu0YxQWBaUG86XvmbVy2yyGMqm+FV+moaT7vfQLQG7oB4+8Isgyh+W
- HS7NNl7k0VP4Wiiw+BBx5huWIwXU8PnFcGJbNnXt5vTyIAgiFe7uWnucBUBHFC9mq3wtzS80L52
- kPONnmvDfouvMniFqnhasKbXcCHfz2+qtpbPe
-X-Gm-Gg: ASbGncuLk3b9epRuAM27H17pkqppeKRivlQQrlvRcNW7kJugwrXADkrVlpwSGpBcxyu
- EANKvm4xziywojfn2mBIjnXCjMFQc0Ua1mlciOA==
-X-Google-Smtp-Source: AGHT+IFJBmaLRhdxETrJVHol9qHXGnJ7pOObKeD0EtPe0EQ6n0ArUMfSeBo5eFiiEfjAYaBoJT3+FmccsDppyRU2AVE=
-X-Received: by 2002:a05:6122:4884:b0:518:89d9:dd99 with SMTP id
- 71dfb90a1353d-51b75c2a515mr25220060e0c.3.1735382742071; Sat, 28 Dec 2024
- 02:45:42 -0800 (PST)
+ bh=Rm9qCr/yfQFF0NVtL+4X+rXc8O6gPDvf+JlC3PO4Who=;
+ b=kP250YE45epU/fcpH4SgLA2jCovIghIdKsbth6NclovoZrbfcY6EB8LJTMHJE1C0X9
+ /1m+AUpYg2XpElq583hqbwsddq1UqTfOzCljAEuJF/Z0qKQYZsbJqPzr5/A5Uy36mEBE
+ eSfamvlP5C/G5ZZWnPiIui9Od7pP/jg/188sTmgtViMkSU7q/TotWs1GOagu+iFrrpva
+ SoW0ERYhreRux3aR+vU3Zg8KGobmERTWvakUZjTsIFUUPT5zhtjvVz3QD4hItVBgTlC1
+ 1wlM/AiXL1yOTHVgrQPnLwssoAtFVN5/UNj/ShQJAhmZqWr68QVJ/PM9KuTWKpEKCWrX
+ qLwQ==
+X-Gm-Message-State: AOJu0YxMzBOOjlprJGes4+EFMgYtIQ1IDMaVTv9hIPE2s1613Tje/YSn
+ CfoJo/i5iSk2KITCNF1SesNN5ZODd3rf+yexR7dp+J0B6KEHhbtrRImT8DSWdpLdjCkte+veKgn
+ NZNmvvxq6/J6o7sle1luDxKNqY8gs/pB0iybl
+X-Gm-Gg: ASbGncu7vvUk0GpsFKtG0mxNvdIfFnpNMuxvrbNGlcV1drhOwhcS4td/39WTXbfFDgP
+ pe2jEiEcsp1jckThdwuidqwRfNZQyAtw16FuVtw==
+X-Google-Smtp-Source: AGHT+IGXMQoBFXzjniSiyZ+tqhsORYq7wMfUpRUWPi3D1WsMacSyUTTdut4ue/i0oqT2D9HReUgbhJnL+xTFQxptBwQ=
+X-Received: by 2002:a05:6102:1493:b0:4af:ea3b:7b41 with SMTP id
+ ada2fe7eead31-4b2cc31c0dcmr22976086137.6.1735382946979; Sat, 28 Dec 2024
+ 02:49:06 -0800 (PST)
 MIME-Version: 1.0
 References: <20241227202435.48055-1-philmd@linaro.org>
- <20241227202435.48055-2-philmd@linaro.org>
-In-Reply-To: <20241227202435.48055-2-philmd@linaro.org>
+ <20241227202435.48055-3-philmd@linaro.org>
+In-Reply-To: <20241227202435.48055-3-philmd@linaro.org>
 From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Sat, 28 Dec 2024 11:45:31 +0100
-Message-ID: <CAAibmn2EJbAEtW8dZz8ZtcN+D4tEq23zSooVZOdqQfG6P4PbOg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/intc: Remove TCG dependency on ARM_GICV3
+Date: Sat, 28 Dec 2024 11:48:56 +0100
+Message-ID: <CAAibmn0zhrZjZ+SL7n7eg041a5APx-o4sCAp0YGDiwUk8gpgDA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/intc: Have ARM_GIC select ARM_GICV3 when KVM is
+ not available
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e4149b062a52471d"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=phil@philjordan.eu; helo=mail-vk1-xa2a.google.com
+Content-Type: multipart/alternative; boundary="0000000000001ab989062a5254d4"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=phil@philjordan.eu; helo=mail-vs1-xe30.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -91,7 +92,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e4149b062a52471d
+--0000000000001ab989062a5254d4
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -99,162 +100,86 @@ On Fri, 27 Dec 2024 at 21:24, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
 g>
 wrote:
 
-> The TYPE_ARM_GICV3 model doesn't have any particular
-> dependency on TCG, remove it. Rename the Kconfig selector
-> ARM_GICV3_TCG -> ARM_GICV3.
+> When the KVM accelerator is selected, the Kconfig ARM_GIC key
+> selects the KVM GIC implementation (ARM_GIC_KVM).
+> For other accelerators (TCG, HVF, ...), select the generic
+> implementation.
 >
-> Fixes: a8a5546798c ("hw/intc/arm_gicv3: Introduce CONFIG_ARM_GIC_TCG
-> Kconfig selector")
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
-
-
 > ---
->  hw/intc/Kconfig     | 6 +++---
->  hw/intc/meson.build | 4 ++--
->  2 files changed, 5 insertions(+), 5 deletions(-)
+>  hw/intc/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-> index dd405bdb5d2..7547528f2c2 100644
+> index 7547528f2c2..762139d8df3 100644
 > --- a/hw/intc/Kconfig
 > +++ b/hw/intc/Kconfig
-> @@ -23,13 +23,13 @@ config APIC
+> @@ -23,7 +23,7 @@ config APIC
 >
 >  config ARM_GIC
 >      bool
-> -    select ARM_GICV3_TCG if TCG
-> +    select ARM_GICV3 if TCG
+> -    select ARM_GICV3 if TCG
+> +    select ARM_GICV3 if !KVM
+>
+
+Wouldn't this disable the ARM_GICV3 by default when building with
+--enable-tcg --enable-kvm? And then there would be no GIC available when
+running the built QEMU in TCG mode. (Bear with me, I'm a relative Meson
+newbie.)
+
+
 >      select ARM_GIC_KVM if KVM
 >      select MSI_NONBROKEN
 >
-> -config ARM_GICV3_TCG
-> +config ARM_GICV3
->      bool
-> -    depends on ARM_GIC && TCG
-> +    depends on ARM_GIC
->
->  config ARM_GIC_KVM
->      bool
-> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-> index 510fdfb6886..602da304b02 100644
-> --- a/hw/intc/meson.build
-> +++ b/hw/intc/meson.build
-> @@ -6,7 +6,7 @@ system_ss.add(when: 'CONFIG_ARM_GIC', if_true: files(
->    'arm_gicv3_common.c',
->    'arm_gicv3_its_common.c',
->  ))
-> -system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
-> +system_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files(
->    'arm_gicv3.c',
->    'arm_gicv3_dist.c',
->    'arm_gicv3_its.c',
-> @@ -39,7 +39,7 @@ endif
->
->  specific_ss.add(when: 'CONFIG_APIC', if_true: files('apic.c',
-> 'apic_common.c'))
->  specific_ss.add(when: 'CONFIG_ARM_GIC', if_true:
-> files('arm_gicv3_cpuif_common.c'))
-> -specific_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true:
-> files('arm_gicv3_cpuif.c'))
-> +specific_ss.add(when: 'CONFIG_ARM_GICV3', if_true:
-> files('arm_gicv3_cpuif.c'))
->  specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true:
-> files('arm_gic_kvm.c'))
->  specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true:
-> files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
->  specific_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
 > --
 > 2.47.1
 >
 >
 
---000000000000e4149b062a52471d
+--0000000000001ab989062a5254d4
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote gmail=
-_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 27 Dec 2024=
- at 21:24, Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.=
-org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">The TYPE_ARM_GICV3 model doesn&#39;t have any particu=
-lar<br>
-dependency on TCG, remove it. Rename the Kconfig selector<br>
-ARM_GICV3_TCG -&gt; ARM_GICV3.<br>
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 27 Dec =
+2024 at 21:24, Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">When the KVM accelerator is selected, the Kconfig=
+ ARM_GIC key<br>
+selects the KVM GIC implementation (ARM_GIC_KVM).<br>
+For other accelerators (TCG, HVF, ...), select the generic<br>
+implementation.<br>
 <br>
-Fixes: a8a5546798c (&quot;hw/intc/arm_gicv3: Introduce CONFIG_ARM_GIC_TCG K=
-config selector&quot;)<br>
 Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
 aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-</blockquote><div><br></div><div>Reviewed-by: Phil Dennis-Jordan &lt;<a hre=
-f=3D"mailto:phil@philjordan.eu">phil@philjordan.eu</a>&gt;<br>Tested-by: Ph=
-il Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu">phil@philjordan.=
-eu</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">---<br>
-=C2=A0hw/intc/Kconfig=C2=A0 =C2=A0 =C2=A0| 6 +++---<br>
-=C2=A0hw/intc/meson.build | 4 ++--<br>
-=C2=A02 files changed, 5 insertions(+), 5 deletions(-)<br>
+---<br>
+=C2=A0hw/intc/Kconfig | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
 <br>
 diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig<br>
-index dd405bdb5d2..7547528f2c2 100644<br>
+index 7547528f2c2..762139d8df3 100644<br>
 --- a/hw/intc/Kconfig<br>
 +++ b/hw/intc/Kconfig<br>
-@@ -23,13 +23,13 @@ config APIC<br>
+@@ -23,7 +23,7 @@ config APIC<br>
 <br>
 =C2=A0config ARM_GIC<br>
 =C2=A0 =C2=A0 =C2=A0bool<br>
--=C2=A0 =C2=A0 select ARM_GICV3_TCG if TCG<br>
-+=C2=A0 =C2=A0 select ARM_GICV3 if TCG<br>
+-=C2=A0 =C2=A0 select ARM_GICV3 if TCG<br>
++=C2=A0 =C2=A0 select ARM_GICV3 if !KVM<br></blockquote><div><br></div><div=
+>Wouldn&#39;t this disable the ARM_GICV3 by default when building with --en=
+able-tcg --enable-kvm? And then there would be no GIC available when runnin=
+g the built QEMU in TCG mode.  (Bear with me, I&#39;m  a relative Meson new=
+bie.)<br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">
 =C2=A0 =C2=A0 =C2=A0select ARM_GIC_KVM if KVM<br>
 =C2=A0 =C2=A0 =C2=A0select MSI_NONBROKEN<br>
 <br>
--config ARM_GICV3_TCG<br>
-+config ARM_GICV3<br>
-=C2=A0 =C2=A0 =C2=A0bool<br>
--=C2=A0 =C2=A0 depends on ARM_GIC &amp;&amp; TCG<br>
-+=C2=A0 =C2=A0 depends on ARM_GIC<br>
-<br>
-=C2=A0config ARM_GIC_KVM<br>
-=C2=A0 =C2=A0 =C2=A0bool<br>
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build<br>
-index 510fdfb6886..602da304b02 100644<br>
---- a/hw/intc/meson.build<br>
-+++ b/hw/intc/meson.build<br>
-@@ -6,7 +6,7 @@ system_ss.add(when: &#39;CONFIG_ARM_GIC&#39;, if_true: file=
-s(<br>
-=C2=A0 =C2=A0&#39;arm_gicv3_common.c&#39;,<br>
-=C2=A0 =C2=A0&#39;arm_gicv3_its_common.c&#39;,<br>
-=C2=A0))<br>
--system_ss.add(when: &#39;CONFIG_ARM_GICV3_TCG&#39;, if_true: files(<br>
-+system_ss.add(when: &#39;CONFIG_ARM_GICV3&#39;, if_true: files(<br>
-=C2=A0 =C2=A0&#39;arm_gicv3.c&#39;,<br>
-=C2=A0 =C2=A0&#39;arm_gicv3_dist.c&#39;,<br>
-=C2=A0 =C2=A0&#39;arm_gicv3_its.c&#39;,<br>
-@@ -39,7 +39,7 @@ endif<br>
-<br>
-=C2=A0specific_ss.add(when: &#39;CONFIG_APIC&#39;, if_true: files(&#39;apic=
-.c&#39;, &#39;apic_common.c&#39;))<br>
-=C2=A0specific_ss.add(when: &#39;CONFIG_ARM_GIC&#39;, if_true: files(&#39;a=
-rm_gicv3_cpuif_common.c&#39;))<br>
--specific_ss.add(when: &#39;CONFIG_ARM_GICV3_TCG&#39;, if_true: files(&#39;=
-arm_gicv3_cpuif.c&#39;))<br>
-+specific_ss.add(when: &#39;CONFIG_ARM_GICV3&#39;, if_true: files(&#39;arm_=
-gicv3_cpuif.c&#39;))<br>
-=C2=A0specific_ss.add(when: &#39;CONFIG_ARM_GIC_KVM&#39;, if_true: files(&#=
-39;arm_gic_kvm.c&#39;))<br>
-=C2=A0specific_ss.add(when: [&#39;CONFIG_ARM_GIC_KVM&#39;, &#39;TARGET_AARC=
-H64&#39;], if_true: files(&#39;arm_gicv3_kvm.c&#39;, &#39;arm_gicv3_its_kvm=
-.c&#39;))<br>
-=C2=A0specific_ss.add(when: &#39;CONFIG_ARM_V7M&#39;, if_true: files(&#39;a=
-rmv7m_nvic.c&#39;))<br>
 -- <br>
 2.47.1<br>
 <br>
 </blockquote></div></div>
 
---000000000000e4149b062a52471d--
+--0000000000001ab989062a5254d4--
 
