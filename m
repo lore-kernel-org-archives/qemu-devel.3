@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7851E77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 11:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6429E77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 12:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRVPW-0006Be-H0; Sat, 28 Dec 2024 06:55:14 -0500
+	id 1tRVUj-0003Ah-K2; Sat, 28 Dec 2024 07:00:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tRVPS-00067E-I0; Sat, 28 Dec 2024 06:55:10 -0500
+ id 1tRVUZ-00039l-EM; Sat, 28 Dec 2024 07:00:33 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tRVPR-0005yS-4I; Sat, 28 Dec 2024 06:55:10 -0500
+ id 1tRVUX-0006h2-Hl; Sat, 28 Dec 2024 07:00:27 -0500
 Received: from localhost.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by isrv.corpit.ru (Postfix) with ESMTP id 82BEACC826;
- Sat, 28 Dec 2024 14:54:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A44A0CC83A;
+ Sat, 28 Dec 2024 14:59:39 +0300 (MSK)
 Received: by localhost.tls.msk.ru (Postfix, from userid 1000)
- id 5BC6746177; Sat, 28 Dec 2024 14:54:46 +0300 (MSK)
+ id 42B704615C; Sat, 28 Dec 2024 14:54:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, qemu-trivial@nongnu.org,
- jonah.palmer@oracle.com, aesteve@redhat.com, hreitz@redhat.com,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 11/11] qmp: update vhost-user protocol feature maps
-Date: Sat, 28 Dec 2024 14:54:46 +0300
-Message-Id: <20241228115446.2478706-12-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 00/11] Trivial patches for 2024-12-28
+Date: Sat, 28 Dec 2024 14:54:35 +0300
+Message-Id: <20241228115446.2478706-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241228115446.2478706-1-mjt@tls.msk.ru>
-References: <20241228115446.2478706-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,41 +57,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+The following changes since commit 38d0939b86e2eef6f6a622c6f1f7befda0146595:
 
-Add VHOST_USER_PROTOCOL_F_SHARED_OBJECT and
-VHOST_USER_PROTOCOL_F_DEVICE_STATE protocol feature maps to
-the virtio introspection.
+  Merge tag 'pull-vfio-20241226' of https://github.com/legoater/qemu into staging (2024-12-26 04:38:38 -0500)
 
-Cc: jonah.palmer@oracle.com
-Fixes: 160947666276 ("vhost-user: add shared_object msg")
-Cc: aesteve@redhat.com
-Fixes: cda83adc62b6 ("vhost-user: Interface for migration state transfer")
-Cc: hreitz@redhat.com
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- hw/virtio/virtio-qmp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+are available in the Git repository at:
 
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index cccc6fe761..8a32a3b105 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -121,6 +121,12 @@ static const qmp_virtio_feature_map_t vhost_user_protocol_map[] = {
-     FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_STATUS, \
-             "VHOST_USER_PROTOCOL_F_STATUS: Querying and notifying back-end "
-             "device status supported"),
-+    FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_SHARED_OBJECT, \
-+            "VHOST_USER_PROTOCOL_F_SHARED_OBJECT: Backend shared object "
-+            "supported"),
-+    FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_DEVICE_STATE, \
-+            "VHOST_USER_PROTOCOL_F_DEVICE_STATE: Backend device state transfer "
-+            "supported"),
-     { -1, "" }
- };
- 
--- 
-2.39.5
+  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
 
+for you to fetch changes up to 1e3d4d9a1a32ac6835f0d295a5117851c421fb5d:
+
+  qmp: update vhost-user protocol feature maps (2024-12-28 14:42:53 +0300)
+
+----------------------------------------------------------------
+trivial patches for 2024-12-28
+
+----------------------------------------------------------------
+Daniel Henrique Barboza (1):
+      hw/riscv/riscv-iommu-sys.c: fix duplicated 'table_size'
+
+Han Han (1):
+      target/i386/cpu: Fix notes for CPU models
+
+Laurent Vivier (1):
+      qmp: update vhost-user protocol feature maps
+
+Philippe Mathieu-Daudé (3):
+      docs: Correct '-runas' and '-fsdev/-virtfs proxy' indentation
+      docs: Correct release of TCG trace-events removal
+      docs: Replace 'since' -> 'removed in' in removed-features.rst
+
+Pierrick Bouvier (2):
+      docs/devel: remove dead video link for sourcehut submit process
+      vvfat: fix ubsan issue in create_long_filename
+
+Zhao Liu (2):
+      hw/timer/hpet: Fix comment about capabilities register
+      hw/timer/hpet: Drop the unused macro
+
+ckf104 (1):
+      contrib/plugins/bbv.c: Start bb index from 1
+
+ block/vvfat.c                     |  4 ++++
+ contrib/plugins/bbv.c             |  2 +-
+ docs/about/deprecated.rst         |  2 +-
+ docs/about/removed-features.rst   | 24 ++++++++++++------------
+ docs/devel/submitting-a-patch.rst |  5 +----
+ hw/riscv/riscv-iommu-sys.c        |  2 +-
+ hw/timer/hpet.c                   |  2 +-
+ hw/virtio/virtio-qmp.c            |  6 ++++++
+ include/hw/timer/hpet.h           |  1 -
+ target/i386/cpu.c                 |  3 ++-
+ 10 files changed, 29 insertions(+), 22 deletions(-)
 
