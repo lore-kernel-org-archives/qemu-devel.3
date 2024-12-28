@@ -4,72 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB372E77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 18:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8616E77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 21:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRb6y-0002r6-5N; Sat, 28 Dec 2024 13:00:29 -0500
+	id 1tRe2x-0002rG-4t; Sat, 28 Dec 2024 16:08:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tRb6i-0002ml-11
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 13:00:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRe2u-0002nG-T9
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 16:08:28 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tRb6c-0005xl-Ht
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 13:00:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735408804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+0rS91l/fZ2E9Vvjp5ubIjNqc7c2BhUyMszT7r2gXnU=;
- b=fyO8hUZ0HCGjCF07bg9hy9/fcC6yqNjKv3rG4LNJZtkLPKJCuIlE+FsmdharV3qjd5XqIe
- Z8NpNz3MutSm6ZvaLM5fe78bfKT/d8J/j1RONykOF9le18p53U2WjzIPo2l4MPLThwC4mT
- NwJrfpIn2268EiqoltkSAhzUYSUZwyc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-BSL5GvG2MzWo5lt-L0SVyw-1; Sat,
- 28 Dec 2024 12:59:59 -0500
-X-MC-Unique: BSL5GvG2MzWo5lt-L0SVyw-1
-X-Mimecast-MFC-AGG-ID: BSL5GvG2MzWo5lt-L0SVyw
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B17F01956086; Sat, 28 Dec 2024 17:59:56 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.17])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BBBF19560B1; Sat, 28 Dec 2024 17:59:48 +0000 (UTC)
-Date: Sat, 28 Dec 2024 12:58:27 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-trivial@nongnu.org
-Subject: Re: [PULL 00/11] Trivial patches for 2024-12-28
-Message-ID: <20241228175827.GA1024359@fedora>
-References: <20241228115446.2478706-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tRe2p-0003JW-D5
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 16:08:28 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 5BAA75C04FA;
+ Sat, 28 Dec 2024 21:07:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46961C4CECD;
+ Sat, 28 Dec 2024 21:08:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1735420092;
+ bh=RjYK6xgqn4kxlkr1ONGz9XaXRiqQVE3WZ9dQakx0Ve8=;
+ h=Date:From:To:Subject:From;
+ b=YeU/Rtt/Yd4hKFSpGB21XMalW9D5/GITJQ0z0E3rss+41XMCPSSSmXD2DjDB7Xk0p
+ 4U4kxUrDluaEctNxGQueiCLyvnWksQiy77PHaHlyimsfqtMErRwe+5xqFO89rlBVkE
+ 1UxF/FUsGro3GtNvNQ0XI1hfz0blafo1PWDMdb7z17xxtL8y584pUdJ3depH3x2WSM
+ 13sulvoi1Tmy9aODDcqksdP+ot/2EOfV5UjsBuUb0/G71q+mhlr9KWm9O6kuSra/RY
+ ToDk/s0VKYWk3dT55yYNsE9QvxUyQDz/dSgN0k252mnHMCizIFf1LKC6GrwM1+6+3o
+ 1jRO8GE2AyHMA==
+Date: Sat, 28 Dec 2024 22:08:08 +0100
+From: Helge Deller <deller@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Subject: [PATCH v2] target/hppa: Speed up hppa_is_pa20()
+Message-ID: <Z3BouGUFFP87PJyx@p100>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="nX4/hvIHGZ5V5RAS"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241228115446.2478706-1-mjt@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +67,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Although the hppa_is_pa20() helper is costly due to string comparisms in
+object_dynamic_cast(), it is called quite often during memory lookups
+and at each start of a block of instruction translations.
+Speed hppa_is_pa20() up by calling object_dynamic_cast() only once at
+CPU creation and store the result in the is_pa20 of struct CPUArchState.
 
---nX4/hvIHGZ5V5RAS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Helge Deller <deller@gmx.de>
 
-Applied, thanks.
+v2:
+- moved init to hppa_cpu_initfn() and is_pa20 to end of CPUArchState struct
+  (feedback by Richard)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
-
---nX4/hvIHGZ5V5RAS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdwPEMACgkQnKSrs4Gr
-c8hs7Af+JmR0dAXZP2zqwdDn9G6Yo8MtkyyM+JmUVPu/os7wSq6SNr78HO6bs6sh
-iI3wag3EahabtfIrEGYD/t3bkqeEH75HbIBZw8ylTill9+2hjYoViQAf/qObHGIo
-vM8NHyDrif3cpJVlL4wXTSA3cl7TPIdsvhQuahYDkZ+TDpQfRHlvghCYLQJEXZb7
-NswGqn1wlHh5ObZOlR2uo0ptB2wqZELMFVTNZ42co9m0JeHl++0aKBGoJN89ekS2
-ZS97PriUYgI5bCI8lpSRIUroi6vNV5sS/rmCsli5QWQ6c7nOA2N+8iRMhPRWKZ0p
-rlV40VebFxyters2pB8fT1ONHZEBFg==
-=Cd31
------END PGP SIGNATURE-----
-
---nX4/hvIHGZ5V5RAS--
-
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index b908cf65c6..05de952a87 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -199,6 +199,7 @@ static void hppa_cpu_initfn(Object *obj)
+     CPUHPPAState *env = &cpu->env;
+ 
+     cs->exception_index = -1;
++    env->is_pa20 = object_dynamic_cast(obj, TYPE_HPPA64_CPU);
+     cpu_hppa_loaded_fr0(env);
+     cpu_hppa_put_psw(env, PSW_W);
+ }
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 32a674a8b8..288ce6d98a 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -266,6 +266,8 @@ typedef struct CPUArchState {
+ 
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
++
++    bool is_pa20;
+ } CPUHPPAState;
+ 
+ /**
+@@ -299,7 +301,7 @@ struct HPPACPUClass {
+ 
+ static inline bool hppa_is_pa20(CPUHPPAState *env)
+ {
+-    return object_dynamic_cast(OBJECT(env_cpu(env)), TYPE_HPPA64_CPU) != NULL;
++    return env->is_pa20;
+ }
+ 
+ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
 
