@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882CEE77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 10:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 076CEE77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 10:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRTc9-0002a2-Mj; Sat, 28 Dec 2024 05:00:11 -0500
+	id 1tRUFg-0007ep-HU; Sat, 28 Dec 2024 05:41:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tRTbx-0002VK-GB
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 04:59:57 -0500
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1tRUFU-0007e1-AK
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 05:40:49 -0500
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tRTbv-0002sg-Md
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 04:59:57 -0500
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-85b8c94a6b4so1677684241.0
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 01:59:55 -0800 (PST)
+ id 1tRUFR-0007v5-Vo
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 05:40:48 -0500
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-4b10dd44c8bso2165393137.3
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 02:40:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1735379994; x=1735984794;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1735382443; x=1735987243;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LlncXcVIEccT+1A1oiS85lylcaqeiQZ3UpIE8UOa3ec=;
- b=a6VBG4FHgzwwkNF5AWwobH/Xe+5ZoelOYxk/Wu0hSBl/2T2acz2oseIsPX6EqJTy/O
- TbXrU1fa4HBfQWHLOG8uQkgME7XCVjSsIbz5n9opev5sXH9+9WlyQnCNLtmNKfe/pc8m
- hYgZMOanRebakiFitO9hGyB7Mw2do2J9IrswWb3LPH0V73R12gRuzPLQjjS3vbf7V2Vb
- nOJx9CLA4sWrmN8njauAbKc5klWIUJkA6neHt3GevRhZ2WT7czvlx6UM1me6phuwaQAK
- L3T2o2CCZuBCGcETkeeXdrHoP2H19dZ3JO2G6CH09TpKgR2OcJFTv7u/sVB0skhXGqQr
- ohWg==
+ bh=A0edgM3CXzY5MxsdiZgL274P24jR+TIWVqIyARo0LE4=;
+ b=n7O1xT8rO5cJrOnGxkgYHZiORMk3YMMCmauZ43UdfW95jQME7ZGa0Qnhg560hl49LM
+ E+55eIeSqOpkFc5lo4xiizWmkT9qqCrMx83u85AWcKgLzOiemjdQFDVzY5nnf1MPez7O
+ B7TCIe0KGJcjbbVrzsXXKjykp9tSTdzeuZq3osYwR/M+b+vn3tHnHbB2Lnzha/PQyqnP
+ n3rvSEc97kEe2HO6gSs0OXzgcsl9T/49nHRo8+Q5Q5O6xScKeZD+6fMfnzxabrTgjL48
+ CJdAGKye/h2Mbcwlf9/A4bWQbzAY1r+5iIYtV4xP4ahlE5H6vNpvbDub3x8h/ZY+Dnka
+ Zl9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735379994; x=1735984794;
+ d=1e100.net; s=20230601; t=1735382443; x=1735987243;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LlncXcVIEccT+1A1oiS85lylcaqeiQZ3UpIE8UOa3ec=;
- b=v4dJS7Mb8w6/glOkFwLkd0zUbGVEhRYkbfq4yJtpCIn5UO+bf1dB0+O+8VtnisKn0b
- VqwBO5mIEgqLt1kbrMsSnFSGV10hclLVk48GnNznkSjg8jEfybAm9+p2V57okeNlSKyx
- F/ThPTm3NG6bu7FBiLuWqCXKrVCQwc+9/QScZMO9aBVnI8XUwHrMZkn6+cvrVnWQiM9+
- yNIhbvZ9RKbfRQLDolPkWwdc9UtPVxhY3X5sQSAiEhtFvTnWjrbkErasNR/SJqh22GkG
- Y2m7Yfj7BYyHOI3ueAH+0lq6OhxOSll3hEG+BKHoRSvAvZ5dq0hJZtKFpHKWd06JaVKe
- bZqQ==
-X-Gm-Message-State: AOJu0Yx5+TadECmkVeCSG6Nx0x1em/keTQ1ox+5Qic0ZDXCa7sdyIi61
- rCbMdpk41yL+dYAdacmRgn8VWEfgDLFSGtVL6gnhXO6IgCEcvAeDVZmf+/FsBhP5Mv93recamVD
- cR8oGe+sLyKtc5JopRxt/xA+MQjCdkhwPQoC4
-X-Gm-Gg: ASbGncu0ia+mLnNv9SU3Mw/+BR+kMHe5VRnnpfS9346l82JFHCmuUK/a4CIjSu9piGb
- OgviA4EaK5RysuyDP2HTJjpAQn0kiMxtIc09xvg==
-X-Google-Smtp-Source: AGHT+IFw5KSroPtXZyYs4idcBcuJSoNAa1ocx03E9/YgZQorCh5/Y/+6odkZ/wI+TySnDDGJBuaCSo/tKuCGp1/x5FY=
-X-Received: by 2002:a05:6102:2c08:b0:4b2:543f:b454 with SMTP id
- ada2fe7eead31-4b2cc4654d9mr23392863137.21.1735379994482; Sat, 28 Dec 2024
- 01:59:54 -0800 (PST)
+ bh=A0edgM3CXzY5MxsdiZgL274P24jR+TIWVqIyARo0LE4=;
+ b=LNQXFag3trbnjjh0OYxeTPUg8EsELRzcIVSVcHCwBYF40c242YJSOikDP7F+0dCptd
+ rvVe6Y8aVxWgGwVY+jnBsP41gEF3MxAaD2bRAwsuEdxbZHm2utLXvZ/2Lxl809Q0w0yV
+ DZYQ5GmvHaOm0czrX86qed1ArFdgAgC6AZzlkY1Er8aNPSZTLlU2Ioc4Cftqndq+gNGR
+ n2BmiDx4YORS8Nw0m3TlUcLTWHLXfSMngHYix8QMtVKuQcqGP6P02/blPx7QnOIks3sI
+ WkYQQNCKzF2BjYDQmKuTSfQsCVC4SIW+1tZaYqM4XTwAmIZM0Voj0ZpOXiY7mrtdfFqE
+ GMKw==
+X-Gm-Message-State: AOJu0Yz3Cw9w1xFUb9/U+eNqhc0LyUAroFBDlXf2hTfyRclryEmThpXp
+ XophlvOVC6P0g7ra8xvJ25aEAlpEeHROekPAmvqv1ceguVEhFnAYp9bH1eYm4I1S4FaGFRTdKfY
+ TT2AWrxt24NgtL2bJktCwRHzbVr8KfAu0Msft
+X-Gm-Gg: ASbGncuQr4FoAs9Nm6pTq3aRn8Ht1oXYysLF5G+6EnvFEcT+BxE9e+OFb3oNxEZyEma
+ ztoshXNFTdXVJ/OxoRud4kp73tauEUrpZFiiGiw==
+X-Google-Smtp-Source: AGHT+IGspwGZ/MOCccLXVH5oeaIgrDMBA/5PhMuxFMJL5wTuOVYGi54nH86DOYaL1nYvkEw3DBDna2meGVws2GZ4J/E=
+X-Received: by 2002:a05:6102:950:b0:4b2:49ec:1b77 with SMTP id
+ ada2fe7eead31-4b2cc494cdamr23693167137.23.1735382442951; Sat, 28 Dec 2024
+ 02:40:42 -0800 (PST)
 MIME-Version: 1.0
-References: <20241223221645.29911-1-phil@philjordan.eu>
- <20241223221645.29911-15-phil@philjordan.eu>
- <1211286e-9211-4d89-9021-f353169af6ad@linaro.org>
- <CAAibmn0q6cBc41J5mABd4bkUEo6pS0MhL8DU8fPfygDvjLSPBQ@mail.gmail.com>
- <49188838-5e52-4d9e-9c50-933e62678163@linaro.org>
-In-Reply-To: <49188838-5e52-4d9e-9c50-933e62678163@linaro.org>
+References: <20241227121336.25838-1-phil@philjordan.eu>
+ <20241227121336.25838-2-phil@philjordan.eu>
+ <e332da74-d815-4c46-804f-a850d2ee12dd@linaro.org>
+ <CAAibmn0CtihG5dijOKKQeMpW32vPoZTd_ekW5n_-3wVBVOP+uQ@mail.gmail.com>
+ <f2f8a23e-32a8-4a2c-89a6-5f9ad0885dde@linaro.org>
+In-Reply-To: <f2f8a23e-32a8-4a2c-89a6-5f9ad0885dde@linaro.org>
 From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Sat, 28 Dec 2024 10:59:43 +0100
-Message-ID: <CAAibmn0puNwDvHcU8xYi1EJ=dnAEhasoTKCk0kmF4DiQfR7dHQ@mail.gmail.com>
-Subject: Re: [PATCH v16 14/14] hw/vmapple/vmapple: Add vmapple machine type
+Date: Sat, 28 Dec 2024 11:40:32 +0100
+Message-ID: <CAAibmn0TQMLZ_kdpY9OZR8pHCiYNEPirS1oN5xHFHtoqUve7UQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] hw/usb/hcd-xhci-pci: Use modulo to select MSI
+ vector as per spec
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org, 
- pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com, 
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- gaosong@loongson.cn, jiaxun.yang@flygoat.com, chenhuacai@kernel.org, 
- kwolf@redhat.com, hreitz@redhat.com, shorne@gmail.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com, 
- marcandre.lureau@redhat.com, berrange@redhat.com, akihiko.odaki@daynix.com, 
- qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org, 
- balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
-Content-Type: multipart/alternative; boundary="0000000000001f2e31062a51a4ce"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::930;
- envelope-from=phil@philjordan.eu; helo=mail-ua1-x930.google.com
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, richard.henderson@linaro.org,
+ thuth@redhat.com, 
+ zhao1.liu@intel.com, imammedo@redhat.com, akihiko.odaki@daynix.com, 
+ npiggin@gmail.com
+Content-Type: multipart/alternative; boundary="0000000000000fdb03062a523627"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=phil@philjordan.eu; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -103,313 +98,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001f2e31062a51a4ce
+--0000000000000fdb03062a523627
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 27 Dec 2024 at 21:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+On Fri, 27 Dec 2024 at 21:27, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
 g>
 wrote:
 
-> On 27/12/24 21:12, Phil Dennis-Jordan wrote:
->
-> >      > diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-> >      > index bcd1be63e3..6a4c4a7fa2 100644
-> >      > --- a/hw/vmapple/Kconfig
-> >      > +++ b/hw/vmapple/Kconfig
-> >      > @@ -10,3 +10,23 @@ config VMAPPLE_CFG
-> >      >   config VMAPPLE_VIRTIO_BLK
-> >      >       bool
+> On 27/12/24 20:45, Phil Dennis-Jordan wrote:
+> >
+> >
+> > On Fri 27. Dec 2024 at 18:45, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
+o.org
+> > <mailto:philmd@linaro.org>> wrote:
+> >
+> >     On 27/12/24 13:13, Phil Dennis-Jordan wrote:
+> >      > QEMU would crash with a failed assertion if the XHCI controller
+> >      > attempted to raise the interrupt on a higher vector than the
+> >      > highest configured for the device by the guest driver.
 > >      >
-> >      > +config VMAPPLE
-> >      > +    bool
-> >      > +    depends on ARM
-> >      > +    depends on HVF
-> >      > +    default y if ARM
-> >      > +    imply PCI_DEVICES
-> >      > +    select ARM_GIC
+> >      > It turns out the XHCI spec (Implementation Note in section 4.17,
+> >      > "Interrupters") requires that the host controller signal the MSI
+> >      > vector with the number computed by taking the interrupter number
+> >      > modulo the number of enabled MSI vectors.
+> >      >
+> >      > This change introduces that modulo calculation, fixing the
+> >      > failed assertion and making the device work correctly in MSI mod=
+e
+> >      > with macOS's XHCI driver.
+> >      >
+> >      > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu
+> >     <mailto:phil@philjordan.eu>>
+> >      > ---
+> >      >
+> >      > v2:
+> >      >
+> >      >   * Switch to modulo arithmetic for MSI vector number rather tha=
+n
+> >     dropping,
+> >      >     as per spec.
+> >      >
+> >      >   hw/usb/hcd-xhci-pci.c | 1 +
+> >      >   1 file changed, 1 insertion(+)
+> >      >
+> >      > diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+> >      > index e110840c7a..e5e7330387 100644
+> >      > --- a/hw/usb/hcd-xhci-pci.c
+> >      > +++ b/hw/usb/hcd-xhci-pci.c
+> >      > @@ -74,6 +74,7 @@ static bool xhci_pci_intr_raise(XHCIState
+> >     *xhci, int n, bool level)
+> >      >       }
+> >      >
+> >      >       if (msi_enabled(pci_dev) && level) {
+> >      > +        n %=3D msi_nr_vectors_allocated(pci_dev);
+> >      >           msi_notify(pci_dev, n);
 > >
-> >     Hmmm I'm getting ...:
+> >     Should this be done at the MSI layer in the callee?
+> >     (I haven't checked the MSI spec).
 > >
-> >     qemu-system-aarch64: unknown type 'arm-gicv3'
-> >
-> >      > +    select PLATFORM_BUS
-> >      > +    select PCI_EXPRESS
-> >      > +    select PCI_EXPRESS_GENERIC_BRIDGE
-> >      > +    select PL011 # UART
-> >      > +    select PL031 # RTC
-> >      > +    select PL061 # GPIO
-> >      > +    select GPIO_PWR
-> >      > +    select PVPANIC_MMIO
-> >      > +    select VMAPPLE_AES
-> >      > +    select VMAPPLE_BDIF
-> >      > +    select VMAPPLE_CFG
-> >      > +    select MAC_PVG_MMIO
-> >      > +    select VMAPPLE_VIRTIO_BLK
-> >
-> >
-> >      > +static void create_gic(VMAppleMachineState *vms, MemoryRegion
-> *mem)
-> >      > +{
-> >      > +    MachineState *ms =3D MACHINE(vms);
-> >      > +    /* We create a standalone GIC */
-> >      > +    SysBusDevice *gicbusdev;
-> >      > +    QList *redist_region_count;
-> >      > +    int i;
-> >      > +    unsigned int smp_cpus =3D ms->smp.cpus;
-> >      > +
-> >      > +    vms->gic =3D qdev_new(gicv3_class_name());
-> >
-> >     ... I suppose due to this call ^^^.
-> >
-> >     $ git grep arm-gicv3
-> >     hw/intc/arm_gicv3_kvm.c:45:#define TYPE_KVM_ARM_GICV3 "kvm-arm-gicv=
-3"
-> >     include/hw/intc/arm_gicv3.h:18:#define TYPE_ARM_GICV3 "arm-gicv3"
-> >     $ git grep TYPE_ARM_GICV3
-> >     hw/intc/arm_gicv3.c:466:    .name =3D TYPE_ARM_GICV3,
-> >     $ git grep -FW arm_gicv3.c
-> >     hw/intc/meson.build=3D9=3Dsystem_ss.add(when: 'CONFIG_ARM_GICV3_TCG=
-',
-> >     if_true: files(
-> >     hw/intc/meson.build:10:  'arm_gicv3.c',
-> >     ...
+> >     (Cc'ing hw/pci/msi.c maintainers)
 > >
 > >
-> > Ahhh, good catch! I suppose this is with =E2=80=94disable-tcg (or equiv=
-alent)
+> > MSI-X has specified aliasing behaviour. As far as I can tell, MSI does
+> > not - this does not seem especially ambiguous either. From the PCI base
+> > spec 3.0:
+> >
+> > 6.8.3.4. Sending Messages
+> > [=E2=80=A6]
+> > =E2=80=9CIf the Multiple Message Enable field is =E2=80=9C000=E2=80=9D,=
+ the function is not
+> > permitted to modify the message data.=E2=80=9D
+> > [=E2=80=A6]
+> > =E2=80=9CHow a function uses multiple vectors (when allocated) is devic=
+e
+> > dependent. A function must handle being allocated fewer vectors than
+> > requested.=E2=80=9D
+> >
+> >
+> > I understand that to mean that MSI vector aliasing is entirely device-
+> > specific, and the assertion in msi_notify() is correct. The XHCI
+> > specification statement that the vector should be determined via the
+> > modulus of the interrupter index and the number of allocated MSI vector=
+s
+> > does indeed seem to be XHCI-specific.
 >
-> Yes, this is how I test HVF.
->
-> >
-> >
-> >     I think commit a8a5546798c ("hw/intc/arm_gicv3: Introduce
-> >     CONFIG_ARM_GIC_TCG Kconfig selector") is invalid as being
-> >     too restrictive.
-> >
-> >     I can go a bit further with these changes on top (ignoring
-> >     renaming ARM_GICV3_TCG -> ARM_GICV3):
-> >
-> >
-> >     -- >8 --
-> >     diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-> >     index dd405bdb5d2..9e06c05b449 100644
-> >     --- a/hw/intc/Kconfig
-> >     +++ b/hw/intc/Kconfig
-> >     @@ -26 +26 @@ config ARM_GIC
-> >     -    select ARM_GICV3_TCG if TCG
-> >     +    select ARM_GICV3_TCG if TCG || HVF
-> >     @@ -32 +32 @@ config ARM_GICV3_TCG
-> >     -    depends on ARM_GIC && TCG
-> >     +    depends on ARM_GIC && (TCG || HVF)
->
-> Now implemented as [*]:
->
-> https://lore.kernel.org/qemu-devel/20241227202435.48055-1-philmd@linaro.o=
-rg/
->
-> >     diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-> >     index 6a4c4a7fa2e..374a89f6a8f 100644
-> >     --- a/hw/vmapple/Kconfig
-> >     +++ b/hw/vmapple/Kconfig
-> >     @@ -19 +19 @@ config VMAPPLE
-> >     -    select ARM_GIC
-> >     +    select ARM_GICV3_TCG
-> >
-> >
-> > Is this last part necessary/advisable? It would seem like the above
-> > changes in hw/intc/Kconfig should make ARM_GIC work too?
-> > (The PVG dependency means we currently can=E2=80=99t support anything o=
-ther than
-> > macOS host systems and thus HVF or theoretically TCG anyway, but if QEM=
-U
-> > gained support for the HVF-provided GIC implementation, we=E2=80=99d ne=
-ed to
-> > change this line again.)
->
-> Hmm indeed we can skip it, but vmapple machine enforces rev=3D3:
->
-> >      > +    qdev_prop_set_uint32(vms->gic, "revision", 3);
->
-> So directly selecting ARM_GICV3 sounds more explicit to me.
+> OK, thanks for checking! Should we add this new information to the
+> patch description?
 >
 
-That's true.
+How about this for the new commit message (I've also slightly clarified the
+final paragraph about macOS guests):
 
-We can sort out the HVF GICV3 if and when that ever gets implemented.
+
+hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
+
+QEMU would crash with a failed assertion if the XHCI controller
+attempted to raise the interrupt on an interrupter corresponding
+to a MSI vector with a higher index than the highest configured
+for the device by the guest driver.
+
+This behaviour is correct on the MSI/PCI side: per PCI 3.0 spec,
+devices must ensure they do not send MSI notifications for
+vectors beyond the range of those allocated by the system/driver
+software. Unlike MSI-X, there is no generic way for handling
+aliasing in the case of fewer allocated vectors than requested,
+so the specifics are up to device implementors. (Section
+6.8.3.4. "Sending Messages")
+
+It turns out the XHCI spec (Implementation Note in section 4.17,
+"Interrupters") requires that the host controller signal the MSI
+vector with the number computed by taking the interrupter number
+modulo the number of enabled MSI vectors.
+
+This change introduces that modulo calculation, fixing the
+failed assertion. This makes the device work correctly in MSI mode
+with macOS's XHCI driver, which only allocates a single vector.
 
 
-> The diff is now (on top of [*]):
+
+Otherwise,
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 >
->       -    select ARM_GIC
->       +    select ARM_GICV3
+> > (NB: reading the PCI spec, I=E2=80=99m struck that it seems very vague =
+on HOW
+> > the low bits of the message data should be =E2=80=9Cmodified=E2=80=9D t=
+o encode the
+> > vector number. But perhaps I=E2=80=99ve just not found that section yet=
+.)
 >
-> WDYT?
+> Maybe MST/Marcel know.
 >
 
-Sounds good.
+msi_prepare_message() implements it by masking off the bits and bitwise
+or'ing the vector number, which must clearly be the correct method of doing
+it or guest OSes would not be happy. I was just struck by the lack of
+clarity in the spec. :-) Much like the handwaving in the XHCI spec on the
+point of pin-based interrupts. [Note to self: if I ever co-author a
+standard specification, make sure someone with no prior involvement
+implements it before ratification.]
 
---0000000000001f2e31062a51a4ce
+--0000000000000fdb03062a523627
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 27 Dec =
-2024 at 21:41, Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+2024 at 21:27, Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
 aro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
 il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On 27/12/24 21:12, Phil Dennis-Jordan wrote:<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; diff --git a/hw/vmapple/Kconfig b/hw/vmapple/=
-Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; index bcd1be63e3..6a4c4a7fa2 100644<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; --- a/hw/vmapple/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +++ b/hw/vmapple/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; @@ -10,3 +10,23 @@ config VMAPPLE_CFG<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0config VMAPPLE_VIRTIO_BLK<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool<br>
+04,204);padding-left:1ex">On 27/12/24 20:45, Phil Dennis-Jordan wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; On Fri 27. Dec 2024 at 18:45, Philippe Mathieu-Daud=C3=A9 &lt;<a href=
+=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@linaro.org</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">phil=
+md@linaro.org</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On 27/12/24 13:13, Phil Dennis-Jordan wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; QEMU would crash with a failed assertion if t=
+he XHCI controller<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; attempted to raise the interrupt on a higher =
+vector than the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; highest configured for the device by the gues=
+t driver.<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +config VMAPPLE<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 bool<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 depends on ARM<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 depends on HVF<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 default y if ARM<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 imply PCI_DEVICES<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select ARM_GIC<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Hmmm I&#39;m getting ...:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0qemu-system-aarch64: unknown type &#39;arm-gicv3&#3=
-9;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PLATFORM_BUS<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PCI_EXPRESS<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PCI_EXPRESS_GENERIC_BRI=
-DGE<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PL011 # UART<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PL031 # RTC<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PL061 # GPIO<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select GPIO_PWR<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select PVPANIC_MMIO<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select VMAPPLE_AES<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select VMAPPLE_BDIF<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select VMAPPLE_CFG<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select MAC_PVG_MMIO<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 select VMAPPLE_VIRTIO_BLK<br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +static void create_gic(VMAppleMachineState *=
-vms, MemoryRegion *mem)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 MachineState *ms =3D MACHINE(v=
-ms);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 /* We create a standalone GIC =
-*/<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 SysBusDevice *gicbusdev;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 QList *redist_region_count;<br=
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; It turns out the XHCI spec (Implementation No=
+te in section 4.17,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; &quot;Interrupters&quot;) requires that the h=
+ost controller signal the MSI<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; vector with the number computed by taking the=
+ interrupter number<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; modulo the number of enabled MSI vectors.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; This change introduces that modulo calculatio=
+n, fixing the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; failed assertion and making the device work c=
+orrectly in MSI mode<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; with macOS&#39;s XHCI driver.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Signed-off-by: Phil Dennis-Jordan &lt;<a href=
+=3D"mailto:phil@philjordan.eu" target=3D"_blank">phil@philjordan.eu</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:phil@philjordan.eu" ta=
+rget=3D"_blank">phil@philjordan.eu</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; ---<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; v2:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0* Switch to modulo arithmetic for=
+ MSI vector number rather than<br>
+&gt;=C2=A0 =C2=A0 =C2=A0dropping,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0as per spec.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0hw/usb/hcd-xhci-pci.c | 1 +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A01 file changed, 1 insertion(+)<br=
 >
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 int i;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 unsigned int smp_cpus =3D ms-&=
-gt;smp.cpus;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 vms-&gt;gic =3D qdev_new(gicv3=
-_class_name());<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/h=
+cd-xhci-pci.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; index e110840c7a..e5e7330387 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; --- a/hw/usb/hcd-xhci-pci.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +++ b/hw/usb/hcd-xhci-pci.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; @@ -74,6 +74,7 @@ static bool xhci_pci_intr_r=
+aise(XHCIState<br>
+&gt;=C2=A0 =C2=A0 =C2=A0*xhci, int n, bool level)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (msi_enabled(pci=
+_dev) &amp;&amp; level) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 n %=3D msi_nr_ve=
+ctors_allocated(pci_dev);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0msi_n=
+otify(pci_dev, n);<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0... I suppose due to this call ^^^.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0$ git grep arm-gicv3<br>
-&gt;=C2=A0 =C2=A0 =C2=A0hw/intc/arm_gicv3_kvm.c:45:#define TYPE_KVM_ARM_GIC=
-V3 &quot;kvm-arm-gicv3&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0include/hw/intc/arm_gicv3.h:18:#define TYPE_ARM_GIC=
-V3 &quot;arm-gicv3&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0$ git grep TYPE_ARM_GICV3<br>
-&gt;=C2=A0 =C2=A0 =C2=A0hw/intc/arm_gicv3.c:466:=C2=A0 =C2=A0 .name =3D TYP=
-E_ARM_GICV3,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0$ git grep -FW arm_gicv3.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0hw/intc/meson.build=3D9=3Dsystem_ss.add(when: &#39;=
-CONFIG_ARM_GICV3_TCG&#39;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0if_true: files(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0hw/intc/meson.build:10:=C2=A0 &#39;arm_gicv3.c&#39;=
-,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0...<br>
-&gt; <br>
-&gt; <br>
-&gt; Ahhh, good catch! I suppose this is with =E2=80=94disable-tcg (or equi=
-valent)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Should this be done at the MSI layer in the callee?=
 <br>
-Yes, this is how I test HVF.<br>
-<br>
+&gt;=C2=A0 =C2=A0 =C2=A0(I haven&#39;t checked the MSI spec).<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0(Cc&#39;ing hw/pci/msi.c maintainers)<br>
 &gt; <br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0I think commit a8a5546798c (&quot;hw/intc/arm_gicv3=
-: Introduce<br>
-&gt;=C2=A0 =C2=A0 =C2=A0CONFIG_ARM_GIC_TCG Kconfig selector&quot;) is inval=
-id as being<br>
-&gt;=C2=A0 =C2=A0 =C2=A0too restrictive.<br>
+&gt; MSI-X has specified aliasing behaviour. As far as I can tell, MSI does=
+ <br>
+&gt; not - this does not seem especially ambiguous either. From the PCI bas=
+e <br>
+&gt; spec 3.0:<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0I can go a bit further with these changes on top (i=
-gnoring<br>
-&gt;=C2=A0 =C2=A0 =C2=A0renaming ARM_GICV3_TCG -&gt; ARM_GICV3):<br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0-- &gt;8 --<br>
-&gt;=C2=A0 =C2=A0 =C2=A0diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0index dd405bdb5d2..9e06c05b449 100644<br>
-&gt;=C2=A0 =C2=A0 =C2=A0--- a/hw/intc/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+++ b/hw/intc/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0@@ -26 +26 @@ config ARM_GIC<br>
-&gt;=C2=A0 =C2=A0 =C2=A0-=C2=A0 =C2=A0 select ARM_GICV3_TCG if TCG<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 select ARM_GICV3_TCG if TCG || HVF<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0@@ -32 +32 @@ config ARM_GICV3_TCG<br>
-&gt;=C2=A0 =C2=A0 =C2=A0-=C2=A0 =C2=A0 depends on ARM_GIC &amp;&amp; TCG<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 depends on ARM_GIC &amp;&amp; (TCG |=
-| HVF)<br>
-<br>
-Now implemented as [*]:<br>
-<a href=3D"https://lore.kernel.org/qemu-devel/20241227202435.48055-1-philmd=
-@linaro.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.org/=
-qemu-devel/20241227202435.48055-1-philmd@linaro.org/</a><br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfi=
-g<br>
-&gt;=C2=A0 =C2=A0 =C2=A0index 6a4c4a7fa2e..374a89f6a8f 100644<br>
-&gt;=C2=A0 =C2=A0 =C2=A0--- a/hw/vmapple/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+++ b/hw/vmapple/Kconfig<br>
-&gt;=C2=A0 =C2=A0 =C2=A0@@ -19 +19 @@ config VMAPPLE<br>
-&gt;=C2=A0 =C2=A0 =C2=A0-=C2=A0 =C2=A0 select ARM_GIC<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 select ARM_GICV3_TCG<br>
+&gt; 6.8.3.4. Sending Messages<br>
+&gt; [=E2=80=A6]<br>
+&gt; =E2=80=9CIf the Multiple Message Enable field is =E2=80=9C000=E2=80=9D=
+, the function is not <br>
+&gt; permitted to modify the message data.=E2=80=9D<br>
+&gt; [=E2=80=A6]<br>
+&gt; =E2=80=9CHow a function uses multiple vectors (when allocated) is devi=
+ce <br>
+&gt; dependent. A function must handle being allocated fewer vectors than <=
+br>
+&gt; requested.=E2=80=9D<br>
 &gt; <br>
 &gt; <br>
-&gt; Is this last part necessary/advisable? It would seem like the above <b=
-r>
-&gt; changes in hw/intc/Kconfig should make ARM_GIC work too?<br>
-&gt; (The PVG dependency means we currently can=E2=80=99t support anything =
-other than <br>
-&gt; macOS host systems and thus HVF or theoretically TCG anyway, but if QE=
-MU <br>
-&gt; gained support for the HVF-provided GIC implementation, we=E2=80=99d n=
-eed to <br>
-&gt; change this line again.)<br>
+&gt; I understand that to mean that MSI vector aliasing is entirely device-=
+ <br>
+&gt; specific, and the assertion in msi_notify() is correct. The XHCI <br>
+&gt; specification statement that the vector should be determined via the <=
+br>
+&gt; modulus of the interrupter index and the number of allocated MSI vecto=
+rs <br>
+&gt; does indeed seem to be XHCI-specific.<br>
 <br>
-Hmm indeed we can skip it, but vmapple machine enforces rev=3D3:<br>
+OK, thanks for checking! Should we add this new information to the<br>
+patch description?<br></blockquote><div><br></div><div>How about this for t=
+he new commit message (I&#39;ve also slightly clarified the final paragraph=
+ about macOS guests):</div><div><br></div><div><br></div>hw/usb/hcd-xhci-pc=
+i: Use modulo to select MSI vector as per spec<br><br>QEMU would crash with=
+ a failed assertion if the XHCI controller<br>attempted to raise the interr=
+upt on an interrupter corresponding</div><div class=3D"gmail_quote gmail_qu=
+ote_container">to a MSI vector with a higher index than the highest configu=
+red</div><div class=3D"gmail_quote gmail_quote_container">for the device by=
+ the guest driver.<br><br>This behaviour is correct on the MSI/PCI side: pe=
+r PCI 3.0 spec,<br>devices must ensure they do not send MSI notifications f=
+or<br>vectors beyond the range of those allocated by the system/driver<br>s=
+oftware. Unlike MSI-X, there is no generic way for handling<br>aliasing in =
+the case of fewer allocated vectors than requested,<br>so the specifics are=
+ up to device implementors. (Section<br>6.8.3.4. &quot;Sending Messages&quo=
+t;)<br><br>It turns out the XHCI spec (Implementation Note in section 4.17,=
+<br>&quot;Interrupters&quot;) requires that the host controller signal the =
+MSI<br>vector with the number computed by taking the interrupter number<br>=
+modulo the number of enabled MSI vectors.<br><br>This change introduces tha=
+t modulo calculation, fixing the<br>failed assertion. This makes the device=
+ work correctly in MSI mode<br>with macOS&#39;s XHCI driver, which only all=
+ocates a single vector.<br><div><br></div><div>=C2=A0</div><div><br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+Otherwise,<br>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
+o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 qdev_prop_set_uint32(vms-&gt;g=
-ic, &quot;revision&quot;, 3);<br>
+&gt; (NB: reading the PCI spec, I=E2=80=99m struck that it seems very vague=
+ on HOW <br>
+&gt; the low bits of the message data should be =E2=80=9Cmodified=E2=80=9D =
+to encode the <br>
+&gt; vector number. But perhaps I=E2=80=99ve just not found that section ye=
+t.)<br>
 <br>
-So directly selecting ARM_GICV3 sounds more explicit to me.<br></blockquote=
-><div><br></div><div>That&#39;s true.</div><div><br></div><div>We can sort =
-out the HVF GICV3 if and when that ever gets implemented.<br></div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-The diff is now (on top of [*]):<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 -=C2=A0 =C2=A0 select ARM_GIC<br>
-=C2=A0 =C2=A0 =C2=A0 +=C2=A0 =C2=A0 select ARM_GICV3<br>
-<br>
-WDYT?<br></blockquote><div><br></div><div>Sounds good. <br></div></div></di=
-v>
+Maybe MST/Marcel know.<br></blockquote><div><br></div><div>msi_prepare_mess=
+age() implements it by masking off the bits and bitwise or&#39;ing the vect=
+or number, which must clearly be the correct method of doing it or guest OS=
+es would not be happy. I was just struck by the lack of clarity in the spec=
+. :-) Much like the handwaving in the XHCI spec on the point of pin-based i=
+nterrupts. [Note to self: if I ever co-author a standard specification, mak=
+e sure someone with no prior involvement  implements it before ratification=
+.]</div><div><br></div><div><br></div></div></div>
 
---0000000000001f2e31062a51a4ce--
+--0000000000000fdb03062a523627--
 
