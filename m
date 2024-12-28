@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8628FE7718F
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A6FE77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 17:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRZ3J-0004bx-8R; Sat, 28 Dec 2024 10:48:33 -0500
+	id 1tRalC-0006eg-U3; Sat, 28 Dec 2024 12:37:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRZ3G-0004bQ-4N
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 10:48:30 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tRalB-0006eU-OP
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 12:37:57 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRZ3E-000459-Ir
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 10:48:29 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-219f8263ae0so61790875ad.0
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 07:48:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tRalA-0000pk-8w
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 12:37:57 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso58520105e9.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 09:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735400906; x=1736005706; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735407474; x=1736012274; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=F+kqvBnI/ld5b8sF+f3mqrXtRvxrGQJQx+Fyoi4CE9s=;
- b=jc/oHrEOpoNlammILZIFSZ2a0soGLJWttqKvg0vG5ueFIRmCzG/Il4riBZXnnq6+sW
- b0McS4poijSap/bZu+94MXj5bEtx+Kr2KizHm7tAF4rLwxwoEOZ/6lKNkV4fjOSnOPhG
- V5O+6urwR+qXx8tYgcP9A0GKpozNAkSdV9hp5YJ6Tgy1EZ7LVBneuUGC3r+jN+W5pDBM
- 55SA+/Y+HLVIjJMFMy+3QlqXeUnw7oLL8zEskx8wGRtGLZe2EKiSN5ijcE3bhy0iK3eh
- wYitfVXRfLy+zc6ek/az0VveWX0053zH+vuy7YJ6oaGIFHKX5HcUqQnzIe9Jch+vTtnn
- zkQA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vXv284q7RI/issoGnWuVaair+++I0WUUmjv72c3o0Js=;
+ b=pPiS9Z3Cbr2nlkmxNfGbI7vHIKjLMTh3VYefZPM5vxEl1FGvnTqT7SFZTKWluGBA1X
+ 57QBWnq+Cx3dTH0/JI6LPw90YeUuq6+CQJACazXkjbxdEquf/2FNCc8kQxC9BlyfIb6H
+ sNsSsIZtKBlZBm+sNr6UC79f3oX9obhOamyaGfI+l54Q+h2f/t7PN+/Zv+4OevJ2Xq1+
+ vXtQLUV/szjuzmAfOlOiLoqoU4JbWwbqBvsB1xuCN66f8jcBcuzYmXz8HPWYa0TsilIY
+ fjdNDa0vCPcJtoYvl7zoocNPNoVERV+K9NpsgxLePBKMgn9fru5MlnSIPhWeDzCGJuyF
+ 625A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735400906; x=1736005706;
+ d=1e100.net; s=20230601; t=1735407474; x=1736012274;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F+kqvBnI/ld5b8sF+f3mqrXtRvxrGQJQx+Fyoi4CE9s=;
- b=BnoBaTkzq3/41jnU2E4JwKOek55tTwe6myniwA8DDGLPWkbb7XOxp/XzsLTo6DfxRh
- WeXI0HOEg1z2PjFL2azgztbg7n9rya/GI5DxepWmX18fpnW4onxMpo5SD6mIyfcxWiF4
- Qz5bIgEw0b8dbJsp7WYOkiaaTpJJTCdilcJhrWpHcoZqUVeLtq2hBMQveYTeZ6fJQitc
- O1tR7J4k2YdVMButNUyX4klbevmmNUPnkrutlsYVVTNGiLKvazYnpn2txQaDMNVt3HAh
- ZU2LisNThOeEyfoOBffTru6n9oLe7323s/j4XIkXq/MToc2EJ0PoLu698oyhhJXoAF07
- cPiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaCCHGKP4dwhGiCZkc/2KoJ63ZxHHSJj7mzRE/9vBL32kuefQFSC3QQCzeC2hUU4D+77yFKg6U7ua4@nongnu.org
-X-Gm-Message-State: AOJu0YybHXebXCO1ltZXu7M0V20TD1rPHLxaFgoYcp5dxOo2dDDUhCNP
- x+lGiII2yk9vEiSPkUeS00fbIzMMzxZCg2v5MaoH2CpAm1k3xv6bV4A8nPmjQ2k=
-X-Gm-Gg: ASbGncvO34QkfHUTufL0VTI466SnX0LKI0/ASGYI9AM8ZJcrb3ofpXdqhjgg9C+J1b2
- ttNHLL8/jrK9ZNRzgty9wx1wbjkSXbJce0ACeLtXfDYcva/VbHAxnjiy8f0QbUiOzBr9Wh3FfOI
- d5s40mWyxMvlCQCljJCpbi2xYpCm50S5O3f3koFNLR6Q7s7AMeU8EAjbOgR60Il3AJ8aGHdjKjS
- PLpAAXdpugLLT7XVehyl2RRFNRVduKb4kusM53SMKpXV/tszfjZuO0QfQeRjQT9hHwnpZ3XhyDa
- uytBcRg9G2A/tPO0mOpVmR+GL2XOalzOKRvMEbo=
-X-Google-Smtp-Source: AGHT+IHdmQNkyvPlRvI9GFyexugwu5JZ6T78aVB9aa98+sgiM4Rx+ZtPwMxswXGaM+/cZUkoCVj9qw==
-X-Received: by 2002:a17:902:db0e:b0:216:2259:a4bd with SMTP id
- d9443c01a7336-219e70dd108mr470798245ad.52.1735400905628; 
- Sat, 28 Dec 2024 07:48:25 -0800 (PST)
-Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4477c84d0sm17737643a91.14.2024.12.28.07.48.24
+ bh=vXv284q7RI/issoGnWuVaair+++I0WUUmjv72c3o0Js=;
+ b=jZ39J20GWWGpQnOhdH+ZfYrs8nV8a9Pa9x3Q6mB99gMHr0YCxZiKo495YQg7+SDov6
+ 8muDM33XWyTbBCs8pwPHmzrk62G8tMRrM+JIzS/5Hb+c+jJ3zQXx5cOJi9Ong6MKeCgC
+ g8BSMcpWQY+1/rYEwHFSlpN6fiIBD6rPh5CdDJCIJTkqoot0h449hhPHmCr0paGgKawe
+ FVKEUmCMfinGE0v7to0b3WBD8WXuLckBoEAJDkLGte3F5GjTEmLisui3oUDteaorfP8H
+ /R+6hre0y+MChIasHjwV4e4R2YRa63XY1JzSDEtcjtrK2ef0R8yhiBU9c2ywi3SdqVAO
+ KkCw==
+X-Gm-Message-State: AOJu0Yy42rw8ITCk01lqhQsotYxqeTxRCl/GHSm6N/rpL+/PZ2TSPArb
+ zH17u/6wky5Viam2pf6SuzXgOJ7UUPUXJ+lc3uEWbPs+3RmM1NHYiyWaBqvajZk=
+X-Gm-Gg: ASbGnctbuawpX8UV6XBxFtpRFoo4hInm06UnjnNLpfpiqr+Zzd9C9YmmLFzvRCQsxBT
+ xmM3a4dQWSBV02SqDqrXDkfj9VIqPiCESlEuS0rlHvvGERxmgb763zwAPuvw+f9HmgLD+vyafQa
+ AiZbq8ocxw8Yr1RT3Q3pkZnbUpFGjqX7yoosbT/Y20S7Ct0cyfJWlaijPPrdZfXyP55//bz+ixR
+ Nh3l0ARXeyeoeiynnwvus0LMUbjYiXDfvtZyyeErloCXsbeH4F817gtHXeGoiDKIQlokd0iUMMc
+ s+sgLFVjdbzCPA8kDEpS48Zd
+X-Google-Smtp-Source: AGHT+IHbSSmS2+baZyy4UVOUw/j1q7hjtf8qGrcAA52oI0lWgOmxQBXMBvwkNt8zjKPHaKNWeqiwWw==
+X-Received: by 2002:a05:600c:45cf:b0:434:f131:1e64 with SMTP id
+ 5b1f17b1804b1-4366864305emr269137255e9.9.1735407474360; 
+ Sat, 28 Dec 2024 09:37:54 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43661219a71sm300306345e9.26.2024.12.28.09.37.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 28 Dec 2024 07:48:25 -0800 (PST)
-Message-ID: <24fa3e1a-7ec8-4685-a3c0-46a3698924f1@linaro.org>
-Date: Sat, 28 Dec 2024 07:48:22 -0800
+ Sat, 28 Dec 2024 09:37:52 -0800 (PST)
+Message-ID: <018cfbde-96be-4d95-bb29-95cdf708187e@linaro.org>
+Date: Sat, 28 Dec 2024 18:37:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: Speed up hppa_is_pa20()
-To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
- qemu-devel@nongnu.org
-References: <Z2-nWcZ5l6oklIZW@p100>
+Subject: Re: [PATCH v2 01/10] i386/cpu: Extract a common fucntion to setup
+ value of MSR_CORE_THREAD_COUNT
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
+ <20241219110125.1266461-2-xiaoyao.li@intel.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <Z2-nWcZ5l6oklIZW@p100>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241219110125.1266461-2-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,42 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/27/24 23:23, Helge Deller wrote:
-> Although the hppa_is_pa20() helper is costly due to string comparisms in
-> object_dynamic_cast(), it is called quite often during memory lookups
-> and at each start of a block of instruction translations.
-> Speed hppa_is_pa20() up by calling object_dynamic_cast() only once at
-> CPU creation and store the result in the is_pa20 of struct CPUArchState.
+On 19/12/24 12:01, Xiaoyao Li wrote:
+> There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+> Extract a common function for it.
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> 
-> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> index a31dc32a9f..08ac1ec068 100644
-> --- a/hw/hppa/machine.c
-> +++ b/hw/hppa/machine.c
-> @@ -281,6 +281,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
->       /* Create CPUs.  */
->       for (unsigned int i = 0; i < smp_cpus; i++) {
->           cpu[i] = HPPA_CPU(cpu_create(machine->cpu_type));
-> +        cpu[i]->env.is_pa20 = object_dynamic_cast(OBJECT(cpu[i]), TYPE_HPPA64_CPU);
->       }
-
-This belongs in hppa_cpu_initfn, since it's internal to the workings of the cpu.
-Otherwise,
-
-> diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-> index e45ba50a59..c37a701f44 100644
-> --- a/target/hppa/cpu.h
-> +++ b/target/hppa/cpu.h
-> @@ -208,6 +208,7 @@ typedef struct CPUArchState {
->       uint64_t fr[32];
->       uint64_t sr[8];          /* stored shifted into place for gva */
->   
-> +    bool is_pa20;
-
-This placement will interact badly with your reset function.
-Probably better to put it at the end of ArchCPU.
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+> Changes in v2:
+> - move the implementation of cpu_x86_get_msr_core_thread_count() to
+>    target/i386/cpu-sysemu.c;
+> ---
+>   target/i386/cpu-sysemu.c             | 11 +++++++++++
+>   target/i386/cpu.h                    |  2 ++
+>   target/i386/hvf/x86_emu.c            |  3 +--
+>   target/i386/kvm/kvm.c                |  5 +----
+>   target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>   5 files changed, 16 insertions(+), 8 deletions(-)
 
 
-r~
+> +uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu)
+> +{
+> +    CPUState *cs = CPU(cpu);
+> +    uint64_t val;
+> +
+> +    val = cs->nr_threads * cs->nr_cores;  /* thread count, bits 15..0 */
+> +    val |= ((uint32_t)cs->nr_cores << 16); /* core count, bits 31..16 */
+> +
+> +    return val;
+
+Alternatively:
+
+        return deposit64(cs->nr_threads * cs->nr_cores, 16, 16,
+                         cs->nr_cores);
+
+> +}
+
 
