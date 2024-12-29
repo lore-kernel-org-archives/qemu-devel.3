@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D552FE7718B
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 16:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B45FE7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 16:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRwCs-0004yC-LA; Sun, 29 Dec 2024 11:31:58 -0500
+	id 1tRwNp-0007Bm-Hn; Sun, 29 Dec 2024 11:43:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tRwCr-0004y3-ES
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 11:31:57 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tRwNn-0007BU-0z
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 11:43:15 -0500
+Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tRwCp-0007sj-Ju
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 11:31:57 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e8f64d5dso14975652a12.3
- for <qemu-devel@nongnu.org>; Sun, 29 Dec 2024 08:31:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tRwNk-0001ib-UK
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 11:43:14 -0500
+Received: by mail-pj1-x1044.google.com with SMTP id
+ 98e67ed59e1d1-2eec9b3a1bbso8590160a91.3
+ for <qemu-devel@nongnu.org>; Sun, 29 Dec 2024 08:43:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735489913; x=1736094713; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PdUjj2+n29/l86eI9xSDRR7fpkQ+03qRp5MqmJ5qmDE=;
- b=nkd2QqMX0pPTcDuiH4N69JCA/Vp65lssuJvF1VPk9Is4vlgMaj+qir8nBW3CJMQAh5
- OSKtqaxjfBEYF3ECi0pjQk16dsCu27ebKqVzmNTBf+h8ztdFDN9f1Tgu82WmO0oXum3g
- AQSJ8P1oiqpIsXiWfqig/TKHTXeO7LCPRDEmqoy/Dv86iNYyIbrimra6m72wlHmV0JAb
- lxSUC5yHzO8gM/HUAkCVfeX0mnpTTe8C1yqN75UyaOzrNeTfFQJTmjRo5Tz/NwOrGhYz
- mDAzyYczjEtla2gy4qrF1Oe0fI+H/g/CuyFVMyUq3JIEjYdrZ/wOUZTdRw+9gz6U7Pmh
- owaA==
+ d=gmail.com; s=20230601; t=1735490591; x=1736095391; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=U3dlPpSgxmz+XnuTv5cF2griZUkpubHrgLxx0XRsO64=;
+ b=VNRWYFkUifBJxX2XZ5hC2OfhQzG6/3iTIY/cQ3iNJNsyd+GrTKqsmaQtZUFdE6iOB1
+ SeFk6HUX9zl9IjoVbCz6rQrB1xVLkJqeqTrxge+oPJc7Nfcx/jwV9jluHiYEbxjFkL0c
+ Xwjm5geBxhHsnZdOYtzvy+n3JUs4IPbhtKGHkBxbmMJBoQATj2r6yPVUhrRbYCMFcwv8
+ cYk3mLuLHObmNwa+Ef0Dru0fA81czqCpxBalmcMJPyhLjEBQTWuRXK6q7JuphjnTqF//
+ cFNcS8ZNSxGdhWSSY/8yIUGykdwl9b8zj90zxv+cBab4Isa8v+O2MzQnh6LfbWDGMTk9
+ 2p6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735489913; x=1736094713;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PdUjj2+n29/l86eI9xSDRR7fpkQ+03qRp5MqmJ5qmDE=;
- b=FO6ZuJUQ2cPFZrwyGrEjlBcKV2aBdkS0J+pEwTUVCw9Qw2+XvCwqOJHQGcugf51P7s
- yq8CXDYDUl3fgZdtUjjfCyeH548EMEuvrJdgUK+HoPoOcqF0chwQMViV9SloZY991ffT
- Np4vYR+WZpHX6i8/mzLb4gF1fSaYlH4umfdADFEmu3THKESSteFxyvHFNrTT91IM5DBj
- CyD90OVTVxVTkrpcEM9y0kbGY3Ijs0SQ5pgfPrDK123XrWkYJYRo4unNDQAiKz9D7tMR
- E/rTFS/BmAzKsG13+vspyZaXtDTgFnicKMqdHygbHsTwy/Dl7XI1ISGPE3BnEpGNbfYU
- pBfw==
-X-Gm-Message-State: AOJu0YztL8ot3EEUHPaVYaoukP5pX1pmUpfowRtmlXTQGNAIY5cKn4qn
- RZvYVIjxNdJehb/Xk/WbwKJmxQi8HWv/sAV0XwuaiQI+qjaZK0O16Yp5lmEIwFQ=
-X-Gm-Gg: ASbGnct7znDOERwDlg6yBvMTQhwiE/8jb9rJhkfIPW/an7mTuawQtblO7xXRUKsJPth
- oJ1lIJ8N38MCFzzSdhKXN0OnaQn8juFFRPHLyfwrs52GOSIMK4PnNbqY08vupLmCA3LOVZYDKeY
- jEAzmZoNaRasF+Zsb0IenoUOe4d6Mdll/5dH+Y6Z2x1co3adK9yTgg3CTr6nD0nWLD3dp0CH69o
- YDunmIu1uG+8TcAOaEuWlxO+eyR5qAyAukSU5ywj9CTr6aQ95QCODU=
-X-Google-Smtp-Source: AGHT+IEyG5W2X351R6GDmHkvD/lulsyeYKeGgLWLUOgbULTMblm1IN9P65WPOwCfKx3J2nNt5jOojQ==
-X-Received: by 2002:a05:6402:4402:b0:5d2:60d9:a2a0 with SMTP id
- 4fb4d7f45d1cf-5d81de5d896mr31638386a12.33.1735489911773; 
- Sun, 29 Dec 2024 08:31:51 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d806fedbbasm14032070a12.71.2024.12.29.08.31.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Dec 2024 08:31:50 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CD6655F7C6;
- Sun, 29 Dec 2024 16:31:48 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <huth@tuxfamily.org>
-Cc: qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yoshinori Sato
- <ysato@users.sourceforge.jp>
-Subject: Re: [PATCH] tests/functional/test_rx_gdbsim: Use stable URL for
- test_linux_sash
-In-Reply-To: <20241229083419.180423-1-huth@tuxfamily.org> (Thomas Huth's
- message of "Sun, 29 Dec 2024 09:34:19 +0100")
-References: <20241229083419.180423-1-huth@tuxfamily.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Sun, 29 Dec 2024 16:31:48 +0000
-Message-ID: <87v7v2v4az.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1735490591; x=1736095391;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U3dlPpSgxmz+XnuTv5cF2griZUkpubHrgLxx0XRsO64=;
+ b=VAgekK95aKyRUjz7eE1UMQjvPy3Me9JGSQt98tgAFzWWrLfOkEZ0hICPnMXNLDsaV9
+ vQjwGeQnZGtkRiUpTDs2co1aMvTCpitVIzcnb+avVLyWcWus/j2q2vwQ5R8eGa3MGqIp
+ NKQGdXEmADdZLNNySJcd4hJVa0USqOe0o51moldUbkntN53O+jNNmaKTLd+Cuk0jylSe
+ iBLh0mTygD8Oktp2SPetqlWyyHngLK/zBuXuFfxLXP5/sORoa0DKw6U9QszR2i+9VdOj
+ y/pmW4wuO8VUxByDa8VAxJGY37tkzrU+Rj//Reg321Eclq+I4TL2Xq2wl5nZ4k7zp5uO
+ 4DDA==
+X-Gm-Message-State: AOJu0YzpkZytMsSXINU+Z6Ib/czeqKSbcAfAZKfEX1aqRD3AXA5ktHue
+ PqFSvSoi90HU9rsZThGLm6b6LnwcXGabJ7eB+lMl6NhOGTS/pG9tXSAjCyyO2w==
+X-Gm-Gg: ASbGncu9YqDV08bVzQfOQZWKx5EWy45TdxxbA63Q3Dp0o7MTc0Gvz3BbyB5wmYsbosQ
+ wAC0Yx0Ajyie34po6sEy9PcAw//mTubouiW6ioan5NKr+jKi33wV422kwCt0LDFwohXST9tYeqg
+ TdUlj5/HVpZuwOijdtbRJ4n44d/RI5/OPCs9WRKwYx+C9g1nrplIBmORSbo3YsCay62+CT5q+Gi
+ UGrUhhoXVM4/IObe6PE41Lq6QSc/NNcW6RGCWYHAorzXYtkngyFwfKZGQ777g==
+X-Google-Smtp-Source: AGHT+IFh4m3fcqNllSFblUjQOrtlzh8nGPVC2jSqY1C286v/nkKvMHKbj0N4JUBa4oNbWdCMUMnIUw==
+X-Received: by 2002:a17:90b:2d88:b0:2ee:af31:a7bd with SMTP id
+ 98e67ed59e1d1-2f452def1d1mr53442725a91.5.1735490591038; 
+ Sun, 29 Dec 2024 08:43:11 -0800 (PST)
+Received: from [192.168.0.163] ([58.38.120.107])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f2ee26e7ecsm21156476a91.50.2024.12.29.08.43.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 29 Dec 2024 08:43:10 -0800 (PST)
+Message-ID: <b373a030-5ccf-418c-9213-865ddc6748fd@gmail.com>
+Date: Mon, 30 Dec 2024 00:43:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] vfio/igd: Enable legacy mode on more devices
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <c.koehne@beckhoff.com>
+References: <20241203133548.38252-1-tomitamoeko@gmail.com>
+ <20241203131205.1391d69a.alex.williamson@redhat.com>
+ <84168744-f82b-494f-93a6-ca334e6cc98c@gmail.com>
+Content-Language: en-US
+In-Reply-To: <84168744-f82b-494f-93a6-ca334e6cc98c@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1044.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,108 +102,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <huth@tuxfamily.org> writes:
+On 12/4/24 23:08, Tomita Moeko wrote:
+> On 12/4/24 04:12, Alex Williamson wrote:
+>> On Tue,  3 Dec 2024 21:35:39 +0800
+>> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+>>
+>>> This patchset extends the support of legacy mode igd passthrough to
+>>> all Intel Gen 11 and 12 devices (including Ice Lake, Jasper Lake,
+>>> Rocket Lake, Alder Lake and Raptor Lake), and emulates GGC register
+>>> in MMIO BAR0 for better compatibiltiy (It is tested Windows and GOP
+>>> driver will read this MMIO register).
+>>>
+>>> It also replaces magic numbers with macros to improve readability,
+>>> and aligns behavior (BDSM registor mirroring and GGMS calculation for
+>>> gen7) with i915 driver to avoid possible issues.
+>>>
+>>> The x-igd-gms option removed in 971ca22f041b ("vfio/igd: don't set
+>>> stolen memory size to zero") is also added back so that data stolen
+>>> memory size can be specified for guest. It is tested that GMS may
+>>> related to framebuffer size, a small GMS value may cause display issues
+>>> like blackscreen. It can be changed by DVMT Pre-allocated option in
+>>> host BIOS, but not all BIOS comes with this option. Having it in QEMU
+>>> helps resolves such issues.
+>>>
+>>> This patchset was verified on Intel i9-12900K CPU(UHD 770, 8086:4680)
+>>> with custom OVMF firmware [1] and IntelGopDriver extracted from host
+>>> bios. IGD device works well in both Windows and Linux guests, and
+>>> scored 726 in 3DMark Time Spy Graphics on Windows guest.
+>>>
+>>> [1] https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
+>>>
+>>> Btw, IO BAR4 seems never be used by guest, and it the IO BAR itself
+>>> is not working on Gen11+ devices in my experiments. There is no hints
+>>> about that in old commit message and mailing list. It would be greatly
+>>> appreciated if someone shares the background.
+>>
+>> The quirks related to BAR4 access are generally for the vBIOS, we
+>> wouldn't expect guest OS level drivers to use them.  IIRC this is
+>> handling moving the stolen memory from the HPA to the GPA when the
+>> vBIOS is writing the GTT.
+> 
+> Got it. I'm wondering why vBIOS still writes HPA instead of GPA when
+> it's in virtual machine, maybe the address is hardcoded?
+> 
+>> Maybe that brings up an interesting topic.  Traditionally "legacy mode"
+>> IGD assignment has been only for 440fx machines with SeaBIOS and last I
+>> was aware edk2 wasn't willing to accept the same hack for the BDSM as
+>> we had put into SeaBIOS, instead indicating that it should be
+>> implemented in the device ROM.  Your branch in [1] above seems to
+>> indicate edk2 does now have assigned IGD specific code.
+>>
+>> Are these patches developing full stack support of these new devices,
+>> from BIOS hand-off, through pre-boot environments, and through to guest
+>> OS drivers, or are we only concerned that the guest OS level driver
+>> lights up a display?
+> 
+> Yes these patches provide a complete legacy mode passthrough solution,
+> from EFI DXE phase to guest OS, but the EFI part requires specific
+> changes in edk2.
+> 
+>> If you're using q35 and OVMF then you must be operating in the realm of
+>> the mythical "Universal Pass-through" mode that I thought Intel had
+>> abandoned.  It seems like we need an update to docs/igd-assign.txt as
+>> it's likely very out of date based on recent improvements here and by
+>> Corvin.
+> 
+> Actually the only machine supports legacy mode is i440fx, windows driver
+> checks the vendor and device id of LPC bridge device at 00:1f.0, if it
+> doesn't match, display driver won't work [1]. On q35 machine, there is
+> already a emulated ICH9 LPC at 00.1f.0. Previous there was a try in
+> modifying the id, but it breaks functionality [2].
+> 
+> [1] https://github.com/projectacrn/acrn-hypervisor/blob/master/devicemodel/hw/pci/lpc.c#L519
+> [2] https://lore.kernel.org/all/1457080913-30018-1-git-send-email-kraxel@redhat.com/
+> 
+> I had a try "Univerisal Pass-through" mode as igd-assign.txt with my
+> UHD 770. On linux guest, it works just as a normal gpu, except there
+> is no display output before i915 driver loaded. Even the device's vbdf
+> is not 00:02.0, and i915 log shows the DSM is 0M, it works perfectly.
+> intel_gpu_top shows igpu is working when I am playing a youtube video.
+> 
+> I also tried setting primary gpu in bios to discrete gpu, which makes
+> the pci class code of igpu changed from 0x030000 (VGA compatible 
+> controller) to 0x308000 (Display controller), it can still output to
+> monitor connected to it on Linux guest. All with a simple
+>     -device vfio-pci,host=00:02.0,id=hostdev0
+> 
+> But for windows guest, I never had any luck. I attached a virtio-gpu to
+> it, with intel grahics drivers installed in guest. If igd is not at
+> 00:02.0 or gop driver is not provided, windows BSOD immediately on boot
 
-> From: Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.org>
->
-> Yoshinori said [*] URL references on OSDN were stable, but they
-> appear not to be. Mirror the artifacts on GitHub to avoid failures
-> while testing on CI.
->
-> [*] https://www.mail-archive.com/qemu-devel@nongnu.org/msg686487.html
->
-> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-> Reported-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.org>
-> Message-ID: <20200630202631.7345-1-f4bug@amsat.org>
-> [huth: Adapt the patch to the new version in the functional framework]
-> Signed-off-by: Thomas Huth <huth@tuxfamily.org>
+After further investigation of the i915 kernel driver and additional
+testing, I found out the root cause is the VBT inside opregion. VBT
+seems to contain configs like how the igd output (Intel call it DVO) is
+mapped to physical ports. If VBT is not present, i915 driver is able to
+mock one (in drivers/gpu/drm/i915/display/intel_bios.c:init_vbt_missing_defaults).
+However, windows driver can't, reporting error 43 in device manager or
+BSOD. Adding x-igd-opregion=on makes windows guest happy with the UPT
+mode. My previous success on linux was just luck, my platform doesn't
+has much difference with intel default configuration. OpRegion should
+be a must for igd passthrough.
 
-The test works but I'm definitely missing some of the console output
-from the end:
+The PCI class code difference is only about whether the device is
+chosen as the primary output in BIOS and is mapped to host VGA memory
+range or not. The class code change is also observed on intel discrete
+GPUs like A750. Both mode can have OpRegion present. Currently kernel
+side only probes OpRegion when igd is in VGA class code. I submitted
+a patch [1] to enable the probe for display controller mode, both
+linux and windows guests can have output to monitor in this mode.  
 
-  =E2=9E=9C  head ./tests/functional/rx/test_rx_gdbsim.RxGdbSimMachine.test=
-_uboot/base.log
-  2024-12-29 16:30:13,829 - DEBUG: Using cached asset /home/alex/.cache/qem=
-u/download/dd7dd4220cccf7aeb32227b26233bf39600db05c3f8e26005bcc2bf6c927207d=
- for https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/u-=
-boot.bin
-  2024-12-29 16:30:13,829 - DEBUG: QEMUMachine "default" created
-  2024-12-29 16:30:13,829 - DEBUG: QEMUMachine "default" temp_dir: /home/al=
-ex/lsrc/qemu.git/builds/all/tests/functional/rx/test_rx_gdbsim.RxGdbSimMach=
-ine.test_uboot/scratch/qemu-machine-pb_7irt4
-  2024-12-29 16:30:13,829 - DEBUG: VM launch command: '/home/alex/lsrc/qemu=
-.git/builds/all/qemu-system-rx -display none -vga none -chardev socket,id=
-=3Dmon,fd=3D5 -mon chardev=3Dmon,mode=3Dcontrol -machine gdbsim-r5f562n8 -c=
-hardev socket,id=3Dconsole,fd=3D10 -serial chardev:console -bios /home/alex=
-/.cache/qemu/download/dd7dd4220cccf7aeb32227b26233bf39600db05c3f8e26005bcc2=
-bf6c927207d -no-reboot'
-  2024-12-29 16:30:13,857 - DEBUG: Console interaction: success_msg=3D'U-Bo=
-ot 2016.05-rc3-23705-ga1ef3c71cb-dirty' failure_msg=3D'None' send_string=3D=
-'None'
-  2024-12-29 16:30:13,857 - DEBUG: Opening console socket
-  2024-12-29 16:30:13,863 - DEBUG: Shutting down VM appliance; timeout=3D30
-  2024-12-29 16:30:13,863 - DEBUG: Attempting graceful termination
-  2024-12-29 16:30:13,863 - DEBUG: Closing console socket
-  2024-12-29 16:30:13,863 - DEBUG: Politely asking QEMU to terminate
-  =F0=9F=95=9916:31:20 alex@draig:qemu.git/builds/all  on =EE=82=A0 testing=
-/next [$?]=20
-  =E2=9E=9C  cat ./tests/functional/rx/test_rx_gdbsim.RxGdbSimMachine.test_=
-uboot/console.log=20
-  2024-12-29 16:30:13,859:=20
-  2024-12-29 16:30:13,859:=20
-  2024-12-29 16:30:13,863: U-Boot 2016.05-rc3-23705-ga1ef3c71cb-dirty
-  =F0=9F=95=9916:31:32 alex@draig:qemu.git/builds/all  on =EE=82=A0 testing=
-/next [$?]=20
+Probably legacy mode means VGA support at first?
 
-> ---
->  tests/functional/test_rx_gdbsim.py | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
->
-> diff --git a/tests/functional/test_rx_gdbsim.py b/tests/functional/test_r=
-x_gdbsim.py
-> index 20623aa51c..49245793e1 100755
-> --- a/tests/functional/test_rx_gdbsim.py
-> +++ b/tests/functional/test_rx_gdbsim.py
-> @@ -21,13 +21,16 @@ class RxGdbSimMachine(QemuSystemTest):
->      KERNEL_COMMON_COMMAND_LINE =3D 'printk.time=3D0 '
->=20=20
->      ASSET_UBOOT =3D Asset(
-> -        'https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz',
-> -        '7146567d669e91dbac166384b29aeba1715beb844c8551e904b86831bfd9d04=
-6')
-> +        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/g=
-dbsim/'
-> +         'u-boot.bin'),
-> +        'dd7dd4220cccf7aeb32227b26233bf39600db05c3f8e26005bcc2bf6c927207=
-d')
->      ASSET_DTB =3D Asset(
-> -        'https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb',
-> +        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/g=
-dbsim/'
-> +         'rx-gdbsim.dtb'),
->          'aa278d9c1907a4501741d7ee57e7f65c02dd1b3e0323b33c6d4247f1b32cf29=
-a')
->      ASSET_KERNEL =3D Asset(
-> -        'http://acc.dl.osdn.jp/users/23/23845/zImage',
-> +        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/g=
-dbsim/'
-> +         'zImage'),
->          'baa43205e74a7220ed8482188c5e9ce497226712abb7f4e7e4f825ce19ff965=
-6')
->=20=20
->      def test_uboot(self):
-> @@ -36,7 +39,7 @@ def test_uboot(self):
->          """
->          self.set_machine('gdbsim-r5f562n8')
->=20=20
-> -        uboot_path =3D self.uncompress(self.ASSET_UBOOT)
-> +        uboot_path =3D self.ASSET_UBOOT.fetch()
->=20=20
->          self.vm.set_console()
->          self.vm.add_args('-bios', uboot_path,
+[1] https://lore.kernel.org/linux-kernel/20241229155140.7434-1-tomitamoeko@gmail.com/
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>> Also, are you proposing the noted edk2 change upstream?  It seems like
+>> edk2 would need some sort of device version detection to know whether
+>> to use a 32 or 64-bit BDSM value.  Thanks,
+>>
+>> Alex
+> 
+> I'm afraid the answer is no, these edk2 changes are not fully open
+> source as they were taken from inten directly [3], except the last
+> patch. (It seems intel uses a modified qemu as "etc/igd-dsm-base"
+> used in patch 5 doesn't exist in qemu, probably they are creating
+> a identical GPA->HPA mapping for igd?).
+> 
+> One of these intel edk2 patches is also included in a edk2 bug [4] and
+> markd as hack.
+> 
+> Besides these edk changes, GOP driver is also needed. Intel never
+> released them to public. Even acrn hypervisor developed by intel says
+> "Fetch the VBT and GOP drivers from the board manufacturer". The only
+> way for users to get it seems to be using tools like "UEFI BIOS
+> Updater" to extract driver from host bios image, or try the luck by
+> downloading the gop driver shared on internet.
+> 
+> After having the GOP driver, a virtual rom for igd device in qemu
+> can be created by
+>     EfiRom -f 0x8086 -i <device_id> -e IgdAssignmentDxe.efi \
+>     PlatformGOPPolicy.efi IntelGopDriver.efi
+> IgdAssignementDxe.efi and PlatformGOPPolicy.efi are built with the
+> edk2 changes.
+> 
+> I'm not sure whether this can be added to official document.
+> 
+> [3] https://eci.intel.com/docs/3.0/components/kvm-hypervisor.html#build-ovmf-fd-for-kvm
+> [4] https://bugzilla.tianocore.org/show_bug.cgi?id=935
+> 
+>>> Changelog:
+>>> v2:
+>>> * Droped "vfio/igd: fix GTT stolen memory size calculation for gen 7".
+>>> * Fixed conditions when calculating GGMS size.
+>>> * Added Gemini Lake and Comet Lake device ids.
+>>> * Splited mirroring register declaration macro into a new patch.
+>>> * Minor fixes.
+>>> Link: https://lore.kernel.org/qemu-devel/20241201160938.44355-1-tomitamoeko@gmail.com/
+>>>
+>>> Tomita Moeko (9):
+>>>   vfio/igd: remove unsupported device ids
+>>>   vfio/igd: align generation with i915 kernel driver
+>>>   vfio/igd: canonicalize memory size calculations
+>>>   vfio/igd: add Gemini Lake and Comet Lake device ids
+>>>   vfio/igd: add Alder/Raptor/Rocket/Ice/Jasper Lake device ids
+>>>   vfio/igd: add macro for declaring mirrored registers
+>>>   vfio/igd: emulate GGC register in mmio bar0
+>>>   vfio/igd: emulate BDSM in mmio bar0 for gen 6-10 devices
+>>>   vfio/igd: add x-igd-gms option back to set DSM region size for guest
+>>>
+>>>  hw/vfio/igd.c | 248 ++++++++++++++++++++++++++++++--------------------
+>>>  1 file changed, 151 insertions(+), 97 deletions(-)
+>>>
+>>
 
