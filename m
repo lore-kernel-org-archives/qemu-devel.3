@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821EBE77193
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC2DE7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhP-0006Xc-An; Sun, 29 Dec 2024 02:26:55 -0500
+	id 1tRniM-0007rg-6j; Sun, 29 Dec 2024 02:27:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhH-0006W8-LW
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:48 -0500
-Received: from mail-ej1-f51.google.com ([209.85.218.51])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhx-0006nH-S1
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:34 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhG-00028j-23
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:47 -0500
-Received: by mail-ej1-f51.google.com with SMTP id
- a640c23a62f3a-aaef00ab172so630807066b.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhs-0002Cg-Bs
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:25 -0500
+Received: by mail-ed1-f48.google.com with SMTP id
+ 4fb4d7f45d1cf-5d7e527becaso13380571a12.3
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457204; x=1736062004;
+ d=1e100.net; s=20230601; t=1735457243; x=1736062043;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ils5tuXfHtph1hTzd0HLTrs6Eu7Mo2u0cItG3OZiwZw=;
- b=fJsoJeugHwnFUj/+uWsESI59hXpBJGZA6pxLGoUv4DkvpRHNdC9SEwwzRR3N5apa+P
- BGAxQWsGyjuWdDxsw66rdki7LRALmmgXJLs7OM9n4doe6nSpgUPqNLf+db7VemIeCRur
- TTvJn9diXEIEt4qMzS2vKDj7U4elAnMEhdfxtL3uH3RAIfnZPU4KYBompsg9bmWSVK2i
- pXGAo/1R+WBrnq+ixEvIbADUn9p9zQO7h+T1ceW1xTtr7duojAdQJ+lGIOx+MfnYh3qO
- 2seo5HXnKZpxzUQS5xT7duOxS5Nedy8L19C4dDJHyqZkNGQKT6qvI5LGrEb9ve+pulSQ
- W+8Q==
+ bh=uANl3b4vNRW+zDDFjIkJDoWOvGKMQzBH26IA3gV2sTw=;
+ b=R4vSBH9IaTJgS6QFwxDgm/88kpGSRG16Omj7EIeK1oKN8EPOIrrXVTX6mYXRDUBcrH
+ grU/5W5n92jKBTbMnhSvYyRtYy4TXDHZN6gcXCH47AMSD9hIa6PcdpUmfqUb7Oe4YOa7
+ NfECbrQuupeV6CKEiQghSQi5NDAn8ZTCI4+7S3EiqfR19nn1yiULU9WkxIFHwkKcl5gM
+ BrMW2LM+JKXruurGq8iOZeCKd/aW/jmzexnPJ5+KiJ4/Su54A5qwaZ7K3kpvdRGQ+WPd
+ QG16D8rv62LilVYWAX1RESjmqyj0KgrVCa+LmqjytF32HoeFcsfFtaNgd20zCLSnai96
+ 5eEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXySbQoxpaWGUGuzOsUaUP6JUO+aAfF4t7+oeJpBHtYKSF+FInB87lI1xR4gka0UTNCcdvsryfJlnHr@nongnu.org
-X-Gm-Message-State: AOJu0Ywj2E3n2aMxyCwseeiFJDi/jCvB+ZbUhQ5/BqIgqdIcSo4V2FbW
- e3ma1VD8eBEED9ZcwW16lOvDNFuF8o9UETInf0Mvr6EUM5YvmZjNbmw/TQ==
-X-Gm-Gg: ASbGncuP7Mo7XjbYyF8dqdquacN8nFXtVWLcyc/UpTIWn8dvcrnmvIXsyYnnYyPsCP2
- R8vq8CVhzfMo/zQAGEGuEQiEEvdolWBNX4kW8cESLmH85FIXZwa5Lo17ad6g5V5DzTtx9T2OjVy
- 3Dz6vynQCOHE9NXCD6Zr/fycdAyOrZg5blWOHzfb+jbG97suJ1/SKRh6XnlcBQHxsAY9MO3696d
- dgpIPYa5JVEpQ2dTTpWDdb/FUveHpeyU6h/aECpOJPq5AmLCqVzarPQdVtdxhhIZStelwv9qkiz
- WAE=
-X-Google-Smtp-Source: AGHT+IGvJg1lEUc1MRwQ1WFrKdgCLDXVtCwFQ/6OfozB0LNXnFw4YUPvtJEmPmSEkGpltvBLDOVsOg==
-X-Received: by 2002:a05:6402:2790:b0:5d0:e73c:b7f0 with SMTP id
- 4fb4d7f45d1cf-5d81de1c241mr78521972a12.28.1735457204205; 
- Sat, 28 Dec 2024 23:26:44 -0800 (PST)
+ AJvYcCW/UfdOkJ1PgFWGd1hJ/Wb9IVG3d+7vN5x3ji73+7WKcTelNBehylYHs43OeJMUPpfcqAF+JnJ/q9pq@nongnu.org
+X-Gm-Message-State: AOJu0YwIWBik1oQ10w/4WO1yPH1H67Vziy6hIFDw+npime/q7WHceVmR
+ SBkIXudkOm8qD7bPpDM+dcTfuQD7pWgGM2RQZ8XTZHDHCLDUgXYb
+X-Gm-Gg: ASbGncvmcoLAELyTB6rKVVqpWOmxW+eCZu5yUkf598AQ9oyLdxfuMBjfpD3vxPLElrQ
+ ZlnI73u5vDmBkFO74ZQhfWQYbdbC3I6pAHaQciel/8sGviXMxCzwlSPgSatMtgCcU1AQt00bRuU
+ E2jPqhIz5WHtpaJW3jtpSeHWWcj3J5GtZvvQgFVI/pBOuRi0w2trdGvkG0EQr712OkrHXZnm0P5
+ hWby4jzebwRH8kOjP+HyF8D7gnb5gb7FT6U0OUM6BZSw+3OKEnVtrNIvClRRUvv7MrcWv33685S
+ Cqs=
+X-Google-Smtp-Source: AGHT+IGtGGdK0WUC2QLWuqlRm0vebD+hSNcMGx8zOkBZbmeqlUKbY6PeX/uPlyHku+1x3R6LhymRyw==
+X-Received: by 2002:a05:6402:270d:b0:5d0:fb56:3f with SMTP id
+ 4fb4d7f45d1cf-5d81dd9cdf0mr70073860a12.12.1735457242541; 
+ Sat, 28 Dec 2024 23:27:22 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.41
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:26:43 -0800 (PST)
+ Sat, 28 Dec 2024 23:27:21 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 08/35] next-cube: introduce next-scsi device
-Date: Sun, 29 Dec 2024 08:24:59 +0100
-Message-ID: <20241229072526.166555-9-huth@tuxfamily.org>
+Subject: [PULL 24/35] next-cube: use named gpio to set RTC data bit in scr2
+Date: Sun, 29 Dec 2024 08:25:15 +0100
+Message-ID: <20241229072526.166555-25-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.51; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f51.google.com
+Received-SPF: pass client-ip=209.85.208.48; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f48.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
  HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,180 +90,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-This device is intended to hold the ESP SCSI controller and the NeXT SCSI CSRs.
-Start by creating the device and moving the ESP SCSI controller to be an
-embedded child device.
+This is in preparation for moving NeXTRTC to its own separate device.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-7-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-23-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 93 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 74 insertions(+), 19 deletions(-)
+ hw/m68k/next-cube.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index c187a469d9..ce147fa9af 100644
+index a39117144c..1e9e662b40 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -83,6 +83,18 @@ struct NeXTState {
-     next_dma dma[10];
+@@ -240,10 +240,13 @@ static void next_scr2_rtc_update(NeXTPC *s)
+                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
+                 } else {
+                     /* Shift out value to read */
++                    qemu_irq rtc_data_in_irq = qdev_get_gpio_in_named(
++                        DEVICE(s), "pc-rtc-data-in", 0);
++
+                     if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
+-                        scr2_2 |= SCR2_RTDATA;
++                        qemu_irq_raise(rtc_data_in_irq);
+                     } else {
+-                        scr2_2 &= ~SCR2_RTDATA;
++                        qemu_irq_lower(rtc_data_in_irq);
+                     }
+                 }
+             }
+@@ -270,8 +273,6 @@ static void next_scr2_rtc_update(NeXTPC *s)
+         rtc->command = 0;
+         rtc->value = 0;
+     }
+-
+-    s->scr2 = deposit32(s->scr2, 8, 8, scr2_2);
+ }
+ 
+ static uint64_t next_mmio_read(void *opaque, hwaddr addr, unsigned size)
+@@ -1001,6 +1002,20 @@ static const MemoryRegionOps next_dummy_en_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
  };
  
-+#define TYPE_NEXT_SCSI "next-scsi"
-+OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
++static void next_pc_rtc_data_in_irq(void *opaque, int n, int level)
++{
++    NeXTPC *s = NEXT_PC(opaque);
++    uint8_t scr2_2 = extract32(s->scr2, 8, 8);
 +
-+/* NeXT SCSI Controller */
-+struct NeXTSCSI {
-+    SysBusDevice parent_obj;
++    if (level) {
++        scr2_2 |= SCR2_RTDATA;
++    } else {
++        scr2_2 &= ~SCR2_RTDATA;
++    }
 +
-+    MemoryRegion scsi_mem;
-+
-+    SysBusESPState sysbus_esp;
-+};
-+
- #define TYPE_NEXT_PC "next-pc"
- OBJECT_DECLARE_SIMPLE_TYPE(NeXTPC, NEXT_PC)
- 
-@@ -94,7 +106,6 @@ struct NeXTPC {
- 
-     MemoryRegion mmiomem;
-     MemoryRegion scrmem;
--    MemoryRegion scsimem;
- 
-     uint32_t scr1;
-     uint32_t scr2;
-@@ -102,6 +113,8 @@ struct NeXTPC {
-     uint32_t int_mask;
-     uint32_t int_status;
-     uint32_t led;
-+
-+    NeXTSCSI next_scsi;
-     uint8_t scsi_csr_1;
-     uint8_t scsi_csr_2;
- 
-@@ -825,38 +838,61 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
-     nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
- }
- 
--static void next_scsi_init(DeviceState *pcdev)
-+static void next_scsi_init(Object *obj)
- {
--    struct NeXTPC *next_pc = NEXT_PC(pcdev);
--    DeviceState *dev;
--    SysBusDevice *sysbusdev;
-+    NeXTSCSI *s = NEXT_SCSI(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    object_initialize_child(obj, "esp", &s->sysbus_esp, TYPE_SYSBUS_ESP);
-+
-+    memory_region_init(&s->scsi_mem, obj, "next.scsi", 0x40);
-+    sysbus_init_mmio(sbd, &s->scsi_mem);
++    s->scr2 = deposit32(s->scr2, 8, 8, scr2_2);
 +}
 +
-+static void next_scsi_realize(DeviceState *dev, Error **errp)
-+{
-+    NeXTSCSI *s = NEXT_SCSI(dev);
-     SysBusESPState *sysbus_esp;
-+    SysBusDevice *sbd;
-     ESPState *esp;
-+    NeXTPC *pcdev;
-+
-+    pcdev = NEXT_PC(container_of(s, NeXTPC, next_scsi));
- 
--    dev = qdev_new(TYPE_SYSBUS_ESP);
--    sysbus_esp = SYSBUS_ESP(dev);
-+    /* ESP */
-+    sysbus_esp = SYSBUS_ESP(&s->sysbus_esp);
-     esp = &sysbus_esp->esp;
-     esp->dma_memory_read = nextscsi_read;
-     esp->dma_memory_write = nextscsi_write;
-     esp->dma_opaque = pcdev;
-     sysbus_esp->it_shift = 0;
-     esp->dma_enabled = 1;
--    sysbusdev = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(sysbusdev, &error_fatal);
--    sysbus_connect_irq(sysbusdev, 0, qdev_get_gpio_in(pcdev, NEXT_SCSI_I));
--
--    memory_region_init(&next_pc->scsimem, OBJECT(next_pc), "next.scsi", 0x40);
--    memory_region_add_subregion(&next_pc->scsimem, 0x0,
--                                sysbus_mmio_get_region(sysbusdev, 0));
-+    sbd = SYS_BUS_DEVICE(sysbus_esp);
-+    if (!sysbus_realize(sbd, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(&s->scsi_mem, 0x0,
-+                                sysbus_mmio_get_region(sbd, 0));
- 
--    memory_region_add_subregion(&next_pc->scrmem, 0x14000, &next_pc->scsimem);
-+    scsi_bus_legacy_handle_cmdline(&s->sysbus_esp.esp.bus);
-+}
- 
--    next_pc->scsi_reset = qdev_get_gpio_in(dev, 0);
--    next_pc->scsi_dma = qdev_get_gpio_in(dev, 1);
-+static void next_scsi_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    scsi_bus_legacy_handle_cmdline(&esp->bus);
-+    dc->desc = "NeXT SCSI Controller";
-+    dc->realize = next_scsi_realize;
- }
- 
-+static const TypeInfo next_scsi_info = {
-+    .name = TYPE_NEXT_SCSI,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_init = next_scsi_init,
-+    .instance_size = sizeof(NeXTSCSI),
-+    .class_init = next_scsi_class_init,
-+};
-+
- static void next_escc_init(DeviceState *pcdev)
+ static void next_pc_reset_hold(Object *obj, ResetType type)
  {
-     DeviceState *dev;
-@@ -897,8 +933,24 @@ static void next_pc_reset(DeviceState *dev)
+     NeXTPC *s = NEXT_PC(obj);
+@@ -1087,6 +1102,8 @@ static void next_pc_init(Object *obj)
+     sysbus_init_mmio(sbd, &s->timer_mem);
  
- static void next_pc_realize(DeviceState *dev, Error **errp)
- {
-+    NeXTPC *s = NEXT_PC(dev);
-+    SysBusDevice *sbd;
-+    DeviceState *d;
-+
-     /* SCSI */
--    next_scsi_init(dev);
-+    sbd = SYS_BUS_DEVICE(&s->next_scsi);
-+    if (!sysbus_realize(sbd, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(&s->scrmem, 0x14000,
-+                                sysbus_mmio_get_region(sbd, 0));
-+
-+    d = DEVICE(object_resolve_path_component(OBJECT(&s->next_scsi), "esp"));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(d), 0,
-+                       qdev_get_gpio_in(DEVICE(s), NEXT_SCSI_I));
-+
-+    s->scsi_reset = qdev_get_gpio_in(d, 0);
-+    s->scsi_dma = qdev_get_gpio_in(d, 1);
- }
- 
- static void next_pc_init(Object *obj)
-@@ -915,6 +967,8 @@ static void next_pc_init(Object *obj)
- 
-     sysbus_init_mmio(sbd, &s->mmiomem);
-     sysbus_init_mmio(sbd, &s->scrmem);
-+
-+    object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
+     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
++    qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
++                            "pc-rtc-data-in", 1);
  }
  
  /*
-@@ -1089,6 +1143,7 @@ static void next_register_type(void)
- {
-     type_register_static(&next_typeinfo);
-     type_register_static(&next_pc_info);
-+    type_register_static(&next_scsi_info);
- }
- 
- type_init(next_register_type)
 -- 
 2.47.1
 
