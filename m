@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D1DE77191
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A23E7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnib-0000X8-NG; Sun, 29 Dec 2024 02:28:09 -0500
+	id 1tRnib-0000WW-J1; Sun, 29 Dec 2024 02:28:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRni9-0007AE-7B
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:42 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniJ-0007nX-La
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:53 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRni5-0002FY-8j
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:40 -0500
-Received: by mail-ed1-f52.google.com with SMTP id
- 4fb4d7f45d1cf-5d84179ef26so10556293a12.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniH-0002ZU-Ei
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:50 -0500
+Received: by mail-ed1-f42.google.com with SMTP id
+ 4fb4d7f45d1cf-5d4e2aa7ea9so14963527a12.2
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457255; x=1736062055;
+ d=1e100.net; s=20230601; t=1735457268; x=1736062068;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QOPz+HDDyrtt7om/GXISvDlgUY8tOSmNDX0mLPvWlak=;
- b=qeOsj4bzkN09Jeg2Lx8RY9dVnYi2Y9iGRZ96fzdjVghJTLdYbWyAh9tsmz8+bvJqo/
- cJcJZUcjOs/VXNzYnayqL1b+5BIZn+vWMCbQGw74MY0N9AFSra+jYzMz+K7zZyoTR7iu
- FlqCYgOqvl74iwROtp5mJw28e9Fd1TmgpZWaKWgvLmbLSZApbTibEXOgCUEJ2IPADFt3
- w5B0KnmAM6JIbvuH/bldnaLR1jk3LB7PiVhYdsk4lCiKe3xrdEqDt6jCU04cAoe9KbPt
- w7W7mJGPy75WkAg0o4j0m8zhw6LOvIBEDXaYWSlkFeob2R5OUOvgl56E6/ZOqW+s4TyZ
- QqjQ==
+ bh=N2x1C1KETruZ4XgMCe5FOJyXuqUjk3r6Kg+gcBPkahg=;
+ b=O3rpMtHuikT+VN4xJNoQw1YdRcwPs7/jzsechfr2Kz5nzu1hPmMnUM2UxkXSpspmMe
+ 78fUfwye8LVxFHj5Uewgw5f27MMgo+MmvwngBW3+v79qh2rR1EWUtO5hyKjvNTYtdvSE
+ YhktJCt5F77+e6TZctKIujkuz/Q1GqNhe5rQKjeiywBKeh2OrYe5W/fe20WThteilrOC
+ 3hfe4GRuTrslQ4Ef+z7UfM63mjgUMh3jDisyDJH6kjrzg/xu0Jp0FuEmEHrX3kiQHJlx
+ 9D4n37z/MK8hW/VoEtmQqYwKW8S3dTaUOs9BLll0F7WbkjpUzUHd5KbhPWDuSdQ27uUw
+ MLnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWh6fKI4mursrhqbw9Mw4QSGJeozQfZKvsIFUAj7smnA3T3rvt/8vdDS61EZvFFSV6l1NGdgosba9yP@nongnu.org
-X-Gm-Message-State: AOJu0Yy1P8OqocGQfTAU4/scvVG00ASN1BZwyafFYJsmvure9QU3Q3ET
- CkoXHZFMe+fVC0kPqwyvT4/AZvgCzC1xVe3VnZs07VAAJ89VVSZU
-X-Gm-Gg: ASbGncsRrb9yIMF/CG1QOrCdpXLQpKODZsw5kHLF4VpnECd8D2wcyJIv6Pqjr/NklKR
- pKfdH79X7zh1od0w+FjrjXUlLR+O8ZelxB1A2EXel8N8p36u1NMy4LGTS5UEeHbVvZGb50WnF8+
- WNnmWmBz+hVMFGagO/rr3hfIlDSUWp2HDDDgaNMTtW9d6h21sITjts+Jz50NhxOl6YyKREG+2Q7
- 6AT+bZgk2+uiT2xgZlhBM4HyLn4tXYoLP8IkOgtnirl3GRm5eJH+h46KIcaEJd3B5J6GP4baEOq
- eEQ=
-X-Google-Smtp-Source: AGHT+IFmP+2YTSgma0G9OIaBN3ZRpElOOLZjgJVbfr6M55zXo/WvNtWRFwsjB7TUuo59r6CLAb40+Q==
-X-Received: by 2002:a05:6402:3585:b0:5d0:ea2a:726c with SMTP id
- 4fb4d7f45d1cf-5d81dd8faaamr26154473a12.8.1735457255361; 
- Sat, 28 Dec 2024 23:27:35 -0800 (PST)
+ AJvYcCVTT52io1/2QtMAUPo91d+kqs57UXtj9hqnJD3rTLPQaBvL2BBahLYghMnZNUw6LU2G9nq9pkRHqweR@nongnu.org
+X-Gm-Message-State: AOJu0YxwEo0dZS3UFYyfDHlV4lrQN8c45jUQ63j9YoAnrsqNRVHBPcRe
+ jb6OMhiGMm/48JuuVzgMoVD2YlIkGFXftcMD3GzFCz83n6bs+DKejRKxlw==
+X-Gm-Gg: ASbGncs1sF03z5sbL97s0sRVe3hfbG5QbE4p3fAXLMW8qEK1JgmZO0DnDOMVDaDcctx
+ tNjWefyAs+4uF5QQeax1i0YhdMBDD8ac6I9I7s7eqXxoZQ4wYBwLB3K52qBznZgOti2fQbnCf0X
+ xVL6HaidqzXp5yAM2vnaez/lwz8w3v2lv8msX/tA8CZFySlShc47iS+JLcVuEJBwBoAYB5x2lGs
+ B1f5DOErsRrAIj/V9UXXlK9ldqh9gR3o7aSBSQU0/dziV9juBSmZvJIkv+lX17EdzlnnS5J/fAb
+ 3gg=
+X-Google-Smtp-Source: AGHT+IGEhPwSp0E2XfirKl/mp8H32vP7eG4+K67DBezTYR/T094GQMQKYFTBEuUk89bY20xLvN4cUw==
+X-Received: by 2002:a05:6402:370f:b0:5d4:3761:d196 with SMTP id
+ 4fb4d7f45d1cf-5d81dda7b47mr27160689a12.10.1735457267878; 
+ Sat, 28 Dec 2024 23:27:47 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.33
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:34 -0800 (PST)
+ Sat, 28 Dec 2024 23:27:46 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 30/35] next-cube: use named gpio output for next-rtc data
-Date: Sun, 29 Dec 2024 08:25:21 +0100
-Message-ID: <20241229072526.166555-31-huth@tuxfamily.org>
+Subject: [PULL 35/35] next-cube: add my copyright to the top of the file
+Date: Sun, 29 Dec 2024 08:25:26 +0100
+Message-ID: <20241229072526.166555-36-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.208.52; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f52.google.com
+Received-SPF: pass client-ip=209.85.208.42; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f42.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -91,83 +91,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Add a named gpio output for the next-rtc data and then update
-next_rtc_data_in_irq() to drive the IRQ directly. This enables the next-rtc to
-next-pc data to be wired up using the standard qdev gpio APIs.
-
-At the same time rename the pc-rtc-data-in gpio to rtc-data-in which is possible
-now that the previous rtc-data-in gpio has been moved to the next-rtc device.
+This series has involved rewriting and/or updating a considerable part of the
+next-cube emulation so update the copyright in next-cube.c to reflect this.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20241222130012.1013374-29-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241222130012.1013374-34-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ hw/m68k/next-cube.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 69f5c7aaec..2bc6d49c34 100644
+index 513ce5844b..0570e4a76f 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -56,6 +56,8 @@ struct NeXTRTC {
-     uint8_t status;
-     uint8_t control;
-     uint8_t retval;
-+
-+    qemu_irq data_out_irq;
- };
- 
- #define TYPE_NEXT_SCSI "next-scsi"
-@@ -234,13 +236,10 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
-             rtc->value = (rtc->value << 1) | level;
-         } else {
-             /* Shift out value to read */
--            qemu_irq rtc_data_in_irq = qdev_get_gpio_in_named(
--                DEVICE(s), "pc-rtc-data-in", 0);
--
-             if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
--                qemu_irq_raise(rtc_data_in_irq);
-+                qemu_irq_raise(rtc->data_out_irq);
-             } else {
--                qemu_irq_lower(rtc_data_in_irq);
-+                qemu_irq_lower(rtc->data_out_irq);
-             }
-         }
-     }
-@@ -1028,8 +1027,12 @@ static void next_rtc_reset_hold(Object *obj, ResetType type)
- 
- static void next_rtc_init(Object *obj)
- {
-+    NeXTRTC *rtc = NEXT_RTC(obj);
-+
-     qdev_init_gpio_in_named(DEVICE(obj), next_rtc_data_in_irq,
-                             "rtc-data-in", 1);
-+    qdev_init_gpio_out_named(DEVICE(obj), &rtc->data_out_irq,
-+                             "rtc-data-out", 1);
- }
- 
- static const VMStateDescription next_rtc_vmstate = {
-@@ -1136,6 +1139,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     /* Data from NeXTPC to RTC */
-     qdev_connect_gpio_out_named(dev, "rtc-data-out", 0,
-                                 qdev_get_gpio_in_named(d, "rtc-data-in", 0));
-+    /* Data from RTC to NeXTPC */
-+    qdev_connect_gpio_out_named(d, "rtc-data-out", 0,
-+                                qdev_get_gpio_in_named(dev,
-+                                                       "rtc-data-in", 0));
- }
- 
- static void next_pc_init(Object *obj)
-@@ -1173,7 +1180,7 @@ static void next_pc_init(Object *obj)
- 
-     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
-     qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
--                            "pc-rtc-data-in", 1);
-+                            "rtc-data-in", 1);
-     qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
-                              "rtc-data-out", 1);
- }
+@@ -2,6 +2,7 @@
+  * NeXT Cube System Driver
+  *
+  * Copyright (c) 2011 Bryce Lanham
++ * Copyright (c) 2024 Mark Cave-Ayland
+  *
+  * This code is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published
 -- 
 2.47.1
 
