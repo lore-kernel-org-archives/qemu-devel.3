@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD1DE7718F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F68C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRniJ-0007gf-25; Sun, 29 Dec 2024 02:27:52 -0500
+	id 1tRnhO-0006XN-SE; Sun, 29 Dec 2024 02:26:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRni1-0006ng-K3
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:36 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhJ-0006WQ-GC
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:49 -0500
+Received: from mail-ej1-f47.google.com ([209.85.218.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhx-0002DA-LM
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:32 -0500
-Received: by mail-ed1-f48.google.com with SMTP id
- 4fb4d7f45d1cf-5d3ecae02beso10066204a12.0
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhH-00028t-Tv
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:49 -0500
+Received: by mail-ej1-f47.google.com with SMTP id
+ a640c23a62f3a-aa5f1909d6fso1222658066b.3
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457248; x=1736062048;
+ d=1e100.net; s=20230601; t=1735457206; x=1736062006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AM4uNV/hC87i9UJ4aHzCgzM3ZV+ooGFBQ58b2dkPsnk=;
- b=FXsNs7O/HC66T97ARFRsQfdHjWoBduj5p/5E9mHO7dXZyp34ytzXQRl9EI47eeWwkA
- hoC+yQ6jtvgOx9JxWW2Q52wsU7+Ni7coALUJZ8gh0FJ4EmfYyoOsUh/Vh3TY2M6ESPvg
- iWL4MQ1uDcGZ86vhHn4hA6qkI96rDue9VPYSRDAsIPUJYfg3Z4wxSCPRmZ1IIxySEUsJ
- 2oX09JVdsXxyCIhPo5p+4mnwC23miKCcDtrzwAAtss6P1xYnN+Q+ffMKdERKIG4kd6fV
- t/iVoZKPx76H3x7MNz0gcO7RTrN0YobLRsSCj0DQIF1NjynDA/diGCBnNxFgmc3lpi01
- AEow==
+ bh=JfP72JC2fK1YTGLvj0y9Jxg1LY7+nBroE5JdeEJSXHY=;
+ b=rEMNvugIzmmDPO1swsaIlwOtimn+vJNvfME3E2MW5/hAc9zQE5oPEgQ3jCB+cfSw0T
+ e3paRW/FJlhYrUGkmSNjD8MV64FKfJO/x2srn/O1emHL0SFr70Tl9YQhrSXC+4l3TgpJ
+ Q6WrJYkb4A6voeuCJkeEd2ZadiDz2bb9V79O6kbmr+e+8sWTx3buCjcCV7StYDwePx3G
+ 36UaNubHK2OGTphEXnjtYNkmkXkiiVVDi4wBnunpFE34Uab2QIAHk642jJsacbNyK+5x
+ 7J7ufDX8l4l6at++IMCIErx3NS6rsfg9UiQKO5boPIJcRjXrd2/DfzWe1o/167c7NFwS
+ HR1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvpesSQU7REPit0PaFZjmXg5jbsSRAn5oDq4L85bqjD8Fd0mlpomVpZMOjbtwyvj5YcSy4tKI4t2Wi@nongnu.org
-X-Gm-Message-State: AOJu0YyXf0BgVfgEvELXt8bZ4XAJW8qkXxeNL7El10FSQNWJy8IisXFc
- Qk+StGtXcNsoYMlz1HqRDRmDBJCWEbothnEUqQ7BnUQ97Qwlidfa
-X-Gm-Gg: ASbGnct5D5Rrhn7OtrNYAfBaRYlKJYQO7fzh2hNXUwcPrKTE2HU/cg6ROBUYGeqkl7C
- SHR/wtffHyVYxwqGTKHvkGWF+RLIjqZymmSnuq3uTxcMuaplRN3yulHc7IZXak/9OF/lQsRg0VD
- ZLeEzlk9yD54mU30NmvXQ1I6a0146GihV1i4jF8GVsrbCAdZX7v/ibYZVSuWbimni0DtY7lYC13
- esQQcvb8S0t3nSpHax38CJ7JfctqZFqgxnD18FcRzfTrji4DzbLLz9KTVePe1h0oGEw4R7LRg97
- tVE=
-X-Google-Smtp-Source: AGHT+IHn0GS6r0K0Za+0S5OXdSsjMJSsfhNYo3t7E+ktRiWgsphoq7ME3UeTeLjMGkYnvHhLfAJL8Q==
-X-Received: by 2002:a05:6402:270d:b0:5d6:66cf:2a3a with SMTP id
- 4fb4d7f45d1cf-5d81dda7e79mr27146740a12.17.1735457247704; 
- Sat, 28 Dec 2024 23:27:27 -0800 (PST)
+ AJvYcCUKN4q1/P5U56wIfQMBqHDorbZqsm5nRkUk8vFVrxN+y0dzuMStxwCy15se2AWLPsrhUknS9AqteCvh@nongnu.org
+X-Gm-Message-State: AOJu0YxioDn5K6o9mD1LeCOegXmlYf4xyDWUnebEfqDn7+xu/BMSKcLR
+ D4E//uv6cBXXWHThYlYNdFOy2AlufGdCG0H5J1DOnrJa6nJSFUfrdNqSFQ==
+X-Gm-Gg: ASbGncsciiYrClqPdAQBal195E52ZlxTJ60YdzgZAFGbKTU46X4v6fl3bvJyT91vMRm
+ INEas4wKZ6G4CDTOosDf6RZjM8+VGWzPi1SCHZXqYUZ7Y+UWuESZZFvEtTI0tMGLV22AKXvNAOH
+ xP1EQS4mbmf/McRslmzXDX365PqgslQHCeGceC/kEDqTJiqd7AXdIk4FQXLlIhzJm3p7mXNsMIT
+ awJDFnoj/D67cY599VNRVDhdG0oiX9WK20WA1jPbGZhJSsK3YLi5HdfLYxk/VQ6U0bVQkcGV2GL
+ vj4=
+X-Google-Smtp-Source: AGHT+IH2JPQs42Wu07z9V64ugqJFVDsjF8q/bTncP5jWTxr2ta1t6dhxugP/jm26ZVf01F+/kCx6FA==
+X-Received: by 2002:a17:907:d25:b0:aa6:93c4:c68c with SMTP id
+ a640c23a62f3a-aac334f3050mr2996132066b.41.1735457206143; 
+ Sat, 28 Dec 2024 23:26:46 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.25
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:26 -0800 (PST)
+ Sat, 28 Dec 2024 23:26:45 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 26/35] next-cube: don't use rtc phase value of -1
-Date: Sun, 29 Dec 2024 08:25:17 +0100
-Message-ID: <20241229072526.166555-27-huth@tuxfamily.org>
+Subject: [PULL 09/35] next-cube: move SCSI CSRs from next-pc to the next-scsi
+ device
+Date: Sun, 29 Dec 2024 08:25:00 +0100
+Message-ID: <20241229072526.166555-10-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.208.48; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f48.google.com
+Received-SPF: pass client-ip=209.85.218.47; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f47.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -90,40 +91,203 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-The rtc phase value of -1 is directly equivalent to using a phase value of 0 so
-simplify the logic to use an initial rtc phase of 0.
+The SCSI CSRs are located within the SCSI subsystem of the NeXT PC (Peripheral
+Contoller) which is now modelled as a separate QEMU device. Add a new memory
+region subregion to contain the SCSI CSRs that simply store and retrieve the
+register values.
+
+Add a new VMStateDescription for the next-scsi device to enable the SCSI CSRs
+to be migrated.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-25-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-8-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ hw/m68k/next-cube.c | 88 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 78 insertions(+), 10 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 0f24905525..3ca70e376e 100644
+index ce147fa9af..687d1b3cb0 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -265,9 +265,6 @@ static void next_scr2_rtc_update(NeXTPC *s)
+@@ -93,6 +93,10 @@ struct NeXTSCSI {
+     MemoryRegion scsi_mem;
  
-     if (scr2_2 & 0x1) {
-         /* DPRINTF("RTC %x phase %i\n", scr2_2, rtc->phase); */
--        if (rtc->phase == -1) {
--            rtc->phase = 0;
--        }
-         /* If we are in going down clock... do something */
-         if (((old_scr2 & SCR2_RTCLK) != (scr2_2 & SCR2_RTCLK)) &&
-                 ((scr2_2 & SCR2_RTCLK) == 0)) {
-@@ -282,7 +279,7 @@ static void next_scr2_rtc_update(NeXTPC *s)
+     SysBusESPState sysbus_esp;
++
++    MemoryRegion scsi_csr_mem;
++    uint8_t scsi_csr_1;
++    uint8_t scsi_csr_2;
+ };
+ 
+ #define TYPE_NEXT_PC "next-pc"
+@@ -115,8 +119,6 @@ struct NeXTPC {
+     uint32_t led;
+ 
+     NeXTSCSI next_scsi;
+-    uint8_t scsi_csr_1;
+-    uint8_t scsi_csr_2;
+ 
+     qemu_irq scsi_reset;
+     qemu_irq scsi_dma;
+@@ -364,6 +366,7 @@ static const MemoryRegionOps next_mmio_ops = {
+ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+ {
+     NeXTPC *s = NEXT_PC(opaque);
++    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+     uint64_t val;
+ 
+     switch (addr) {
+@@ -373,12 +376,12 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case 0x14020:
+-        DPRINTF("SCSI 4020  STATUS READ %X\n", s->scsi_csr_1);
+-        val = s->scsi_csr_1;
++        DPRINTF("SCSI 4020  STATUS READ %X\n", ns->scsi_csr_1);
++        val = ns->scsi_csr_1;
+         break;
+ 
+     case 0x14021:
+-        DPRINTF("SCSI 4021 STATUS READ %X\n", s->scsi_csr_2);
++        DPRINTF("SCSI 4021 STATUS READ %X\n", ns->scsi_csr_2);
+         val = 0x40;
+         break;
+ 
+@@ -411,6 +414,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+                              unsigned size)
+ {
+     NeXTPC *s = NEXT_PC(opaque);
++    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
+ 
+     switch (addr) {
+     case 0x14108:
+@@ -445,7 +449,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+             DPRINTF("SCSICSR Reset\n");
+             /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
+             qemu_irq_raise(s->scsi_reset);
+-            s->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
++            ns->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
+             qemu_irq_lower(s->scsi_reset);
          }
-     } else {
-         /* else end or abort */
--        rtc->phase = -1;
-+        rtc->phase = 0;
-         rtc->command = 0;
-         rtc->value = 0;
-     }
+         if (val & SCSICSR_DMADIR) {
+@@ -838,6 +842,54 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
+     nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
+ }
+ 
++static void next_scsi_csr_write(void *opaque, hwaddr addr, uint64_t val,
++                                unsigned size)
++{
++    NeXTSCSI *s = NEXT_SCSI(opaque);
++
++    switch (addr) {
++    case 0:
++        s->scsi_csr_1 = val;
++        break;
++
++    case 1:
++        s->scsi_csr_2 = val;
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t next_scsi_csr_read(void *opaque, hwaddr addr, unsigned size)
++{
++    NeXTSCSI *s = NEXT_SCSI(opaque);
++    uint64_t val;
++
++    switch (addr) {
++    case 0:
++        val = s->scsi_csr_1;
++        break;
++
++    case 1:
++        val = s->scsi_csr_2;
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++
++    return val;
++}
++
++static const MemoryRegionOps next_scsi_csr_ops = {
++    .read = next_scsi_csr_read,
++    .write = next_scsi_csr_write,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 1,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
+ static void next_scsi_init(Object *obj)
+ {
+     NeXTSCSI *s = NEXT_SCSI(obj);
+@@ -845,6 +897,9 @@ static void next_scsi_init(Object *obj)
+ 
+     object_initialize_child(obj, "esp", &s->sysbus_esp, TYPE_SYSBUS_ESP);
+ 
++    memory_region_init_io(&s->scsi_csr_mem, obj, &next_scsi_csr_ops,
++                          s, "csrs", 2);
++
+     memory_region_init(&s->scsi_mem, obj, "next.scsi", 0x40);
+     sysbus_init_mmio(sbd, &s->scsi_mem);
+ }
+@@ -874,15 +929,30 @@ static void next_scsi_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->scsi_mem, 0x0,
+                                 sysbus_mmio_get_region(sbd, 0));
+ 
++    /* SCSI CSRs */
++    memory_region_add_subregion(&s->scsi_mem, 0x20, &s->scsi_csr_mem);
++
+     scsi_bus_legacy_handle_cmdline(&s->sysbus_esp.esp.bus);
+ }
+ 
++static const VMStateDescription next_scsi_vmstate = {
++    .name = "next-scsi",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT8(scsi_csr_1, NeXTSCSI),
++        VMSTATE_UINT8(scsi_csr_2, NeXTSCSI),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static void next_scsi_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->desc = "NeXT SCSI Controller";
+     dc->realize = next_scsi_realize;
++    dc->vmsd = &next_scsi_vmstate;
+ }
+ 
+ static const TypeInfo next_scsi_info = {
+@@ -999,8 +1069,8 @@ static const VMStateDescription next_rtc_vmstate = {
+ 
+ static const VMStateDescription next_pc_vmstate = {
+     .name = "next-pc",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(scr1, NeXTPC),
+         VMSTATE_UINT32(scr2, NeXTPC),
+@@ -1008,8 +1078,6 @@ static const VMStateDescription next_pc_vmstate = {
+         VMSTATE_UINT32(int_mask, NeXTPC),
+         VMSTATE_UINT32(int_status, NeXTPC),
+         VMSTATE_UINT32(led, NeXTPC),
+-        VMSTATE_UINT8(scsi_csr_1, NeXTPC),
+-        VMSTATE_UINT8(scsi_csr_2, NeXTPC),
+         VMSTATE_STRUCT(rtc, NeXTPC, 0, next_rtc_vmstate, NextRtc),
+         VMSTATE_END_OF_LIST()
+     },
 -- 
 2.47.1
 
