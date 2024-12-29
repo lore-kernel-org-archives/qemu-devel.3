@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A04E7718B
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19773E7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhP-0006Y9-Pc; Sun, 29 Dec 2024 02:26:55 -0500
+	id 1tRniO-00084W-7f; Sun, 29 Dec 2024 02:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhM-0006Wv-Lc
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:53 -0500
-Received: from mail-ej1-f46.google.com ([209.85.218.46])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniE-0007Lo-5H
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:46 -0500
+Received: from mail-ej1-f47.google.com ([209.85.218.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhK-00029B-Np
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:52 -0500
-Received: by mail-ej1-f46.google.com with SMTP id
- a640c23a62f3a-aa696d3901bso762751266b.1
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniA-0002Mb-Qs
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:45 -0500
+Received: by mail-ej1-f47.google.com with SMTP id
+ a640c23a62f3a-a9e44654ae3so1355187666b.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457209; x=1736062009;
+ d=1e100.net; s=20230601; t=1735457261; x=1736062061;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8g4JDK2gP7kBGIRp58PLikXD1WmmiHmJeQox3/MKTjs=;
- b=m5xNMUTUgfBgw91/9PWAvUwUYBPXBMXyxGx6E8GaqacxD/ud7V3tBw/J2LlVFJiG5e
- KjCvq/8NkngP/NHpcC5+21UuveYXt2HldAN0477qIK6YlRo3+at5/rXMqThH4CV9gyyt
- kFM6W+kLXUgUDN/MlWXSVNUh/3XPAoLBd+TVQM8sd7WfMQl48jYGZc6ATI/eYHS0Jivy
- wKBZ2TxphqLc+2Knk07PRPk2ijUe3qbTCmuXVDsrCtNdn0/erIQBFwndMFQsZx93vZcC
- zMNpAx8z+ATPGe4NogyMuc+awZEh9UA0RGBGeDgqX0AnIU0/R9hUomAcJ02Tfix+1H79
- rwcQ==
+ bh=C/fX2BDzfuTauaBQ4WZcOdxemf3BdSm//8XQTAUOovs=;
+ b=pQdSHhkaVbc05KDnfOqbYXORcWPaQtUv/8um1Bt0473fqJBOtma4dTOjBZupL2QZ1p
+ gKKjv9IFNGe6U/0UzRW/MyKKMJATAdihZniYs/Nnc4uSGO9V/6npX6vv8b6QQf6cuO8E
+ 5RepKfafBLtsL+AJWOSl2GXIGRUbpyHUPG/V2Kxa84aifKbMlrU43pHprApHndXfdQTA
+ VkjRXJYGpjVXJJv2OB6nmZQpaNtZGLCx4Lx7slbaFVbWHBabr2Ebme6Cc2HZ6CJcLCHw
+ YK0CS6q0NsKhtDJiszA1a1IQXRzehd98sk+sSG0PPI9HtP1nQ6IMCOAzgJpgGvDya8gq
+ cixg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVk1OqycUmdZkGH5UTVxTV5BkgxUrVfe+2k4YU6CldL3g6FS4WWU2lnITdriTtN1cuU8qu2cMMZ+s34@nongnu.org
-X-Gm-Message-State: AOJu0YymN3SMJ/JOgXTSFXEH7Zd/3Z+osLnqoWpkQgbB5bqSdY8Knf9B
- KbMQvLUmxDFTaqgGNVQ5YChPBDXiy2d/KnggAG/eYQ+1KCDBsluu
-X-Gm-Gg: ASbGnctpY1KcDEF3edg/0QEpIA3C/WuFYkrjNNQl3I/J2mAXA3vL1FIp/Lw23OwKFIW
- mkiIV/+otYsGoauRkqavHACkR9swOF5qFQOeZ3iMxxkiCN3CE8VbC67QuUGbuKW2KPhOkYgZmMJ
- w4VuWsfsY3cWnM+t8xZMYgqjd8Tiw3vLZxLwX2HAYtXEhey+X1pD1ZfEtDD8EvchYDsWiMuezx/
- 9LDAx6/nNyZwyUUDGDTEmWorjHw1UbH1njrUdADsigKC70vJyoHEMgDS/klUUOJ2GX0iJe8nZ1T
- g1I=
-X-Google-Smtp-Source: AGHT+IGP457vSLVn1pcZ7UqdRH1rB2XcUREvQNpeqwpJNge7QAz3g4s2hjFyW0skv/h/6ylILhAqaA==
-X-Received: by 2002:a17:907:3da0:b0:aab:cd45:5d3c with SMTP id
- a640c23a62f3a-aac33685df3mr2770574866b.50.1735457209031; 
- Sat, 28 Dec 2024 23:26:49 -0800 (PST)
+ AJvYcCVvb+AJ4n6wNDEcOXiYix/yTpaAXUskEp5A1l9jtk87HymwtNC10Yh5+F/zUI04UoGKJHbybUJdqDk9@nongnu.org
+X-Gm-Message-State: AOJu0YzyxOaoBzwGFaxiHYeWOy2m+UnlK4Deq+49KwVXCtRc7W0nb0Fe
+ zWl5oMgIoC8oqy0ICyn9FMLUm7+3Vcz9RVIsukgoHkop4Sq0R6nI/VX/+Q==
+X-Gm-Gg: ASbGncuyyPedMQwZz+QbO7/t0ogj/KKYI/4RcJemsmOyPaSK9AURM5WERFYwyrWtUg0
+ Uxd4u+CyiLnbqm5wlAnyycjoK5BZfkyLWoYVLiUVBwA9qBdG1Q/RYuSRqVc0hr/LSHwLYpB5iNB
+ 3dgdRV+wi8ttkytU5V026mYC3ZqO8jtY2p/5Kq+P+sptGQP3rHnniJPARkQGNunMRmUR8farGUs
+ BLmhuH/MZIUWpHs81KpEcWIFQZIiqGWYv9d4TGWcGZ2Y50QCQsaj2phegCU2tNjQUevr1pXqCX/
+ vmE=
+X-Google-Smtp-Source: AGHT+IFdU81tXt5uzgvWKXxVy0jm8r/Irxp7ZSeQlWBpT4VFski1++LihhpN/LRAalOdxZnTjbWKXw==
+X-Received: by 2002:a17:907:1c93:b0:aa6:2b8b:20c6 with SMTP id
+ a640c23a62f3a-aac2ad8a628mr2255037866b.20.1735457260538; 
+ Sat, 28 Dec 2024 23:27:40 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.46
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:26:48 -0800 (PST)
+ Sat, 28 Dec 2024 23:27:39 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 10/35] next-cube: move SCSI 4020/4021 logic from next-pc device
- to next-scsi device
-Date: Sun, 29 Dec 2024 08:25:01 +0100
-Message-ID: <20241229072526.166555-11-huth@tuxfamily.org>
+Subject: [PULL 32/35] next-cube: add rtc-power-out named gpio to trigger the
+ NEXT_PWR_I interrupt
+Date: Sun, 29 Dec 2024 08:25:23 +0100
+Message-ID: <20241229072526.166555-33-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.46; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f46.google.com
+Received-SPF: pass client-ip=209.85.218.47; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f47.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -91,220 +92,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-The SCSI 4020/4021 logic refers to the offset of the SCSI CSRs within the NeXTCube
-address space. Due to the previously overlapping memory regions, there were
-duplicate MMIO accessors in the next.scr memory region for these registers but
-this has now been resolved.
-
-Move the remaining SCSI 4020/4021 logic from the next-pc device to the next-scsi
-device, with the exception that the SCSI 4021 register now returns its previous
-value like a normal register instead of a hardcoded 0x40 value. This also matches
-how the registers are implemented in the Previous emulator.
+This allows us to decouple the next-pc and next-rtc devices from each
+other in next_rtc_data_in_irq().
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-9-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-31-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 139 ++++++++++++++++++++------------------------
- 1 file changed, 62 insertions(+), 77 deletions(-)
+ hw/m68k/next-cube.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 687d1b3cb0..402e268f6b 100644
+index 621e8dc832..9f40640b5d 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -365,8 +365,6 @@ static const MemoryRegionOps next_mmio_ops = {
+@@ -58,6 +58,7 @@ struct NeXTRTC {
+     uint8_t retval;
  
- static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+     qemu_irq data_out_irq;
++    qemu_irq power_irq;
+ };
+ 
+ #define TYPE_NEXT_SCSI "next-scsi"
+@@ -106,7 +107,6 @@ struct NeXTPC {
+     ESCCState escc;
+ 
+     NeXTRTC rtc;
+-    qemu_irq rtc_power_irq;
+     qemu_irq rtc_data_irq;
+     qemu_irq rtc_cmd_reset_irq;
+ };
+@@ -184,7 +184,6 @@ static bool next_rtc_cmd_is_write(uint8_t cmd)
+ static void next_rtc_data_in_irq(void *opaque, int n, int level)
  {
--    NeXTPC *s = NEXT_PC(opaque);
--    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
-     uint64_t val;
+     NeXTRTC *rtc = NEXT_RTC(opaque);
+-    NeXTPC *s = NEXT_PC(container_of(rtc, NeXTPC, rtc));
  
-     switch (addr) {
-@@ -375,16 +373,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
-         val = 0x40 | 0x04 | 0x2 | 0x1;
-         break;
- 
--    case 0x14020:
--        DPRINTF("SCSI 4020  STATUS READ %X\n", ns->scsi_csr_1);
--        val = ns->scsi_csr_1;
--        break;
--
--    case 0x14021:
--        DPRINTF("SCSI 4021 STATUS READ %X\n", ns->scsi_csr_2);
--        val = 0x40;
--        break;
--
-     /*
-      * These 4 registers are the hardware timer, not sure which register
-      * is the latch instead of data, but no problems so far.
-@@ -413,9 +401,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
- static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
-                              unsigned size)
- {
--    NeXTPC *s = NEXT_PC(opaque);
--    NeXTSCSI *ns = NEXT_SCSI(&s->next_scsi);
--
-     switch (addr) {
-     case 0x14108:
-         DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
-@@ -424,68 +409,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+     if (rtc->phase < 8) {
+         rtc->command = (rtc->command << 1) | level;
+@@ -256,7 +255,7 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
+             if (rtc->value & 0x04) {
+                 /* clear FTU */
+                 rtc->status = rtc->status & (~0x18);
+-                qemu_irq_lower(s->rtc_power_irq);
++                qemu_irq_lower(rtc->power_irq);
+             }
          }
-         break;
+     }
+@@ -1044,6 +1043,8 @@ static void next_rtc_init(Object *obj)
+                              "rtc-data-out", 1);
+     qdev_init_gpio_in_named(DEVICE(obj), next_rtc_cmd_reset_irq,
+                             "rtc-cmd-reset", 1);
++    qdev_init_gpio_out_named(DEVICE(obj), &rtc->power_irq,
++                             "rtc-power-out", 1);
+ }
  
--    case 0x14020: /* SCSI Control Register */
--        if (val & SCSICSR_FIFOFL) {
--            DPRINTF("SCSICSR FIFO Flush\n");
--            /* will have to add another irq to the esp if this is needed */
--            /* esp_puflush_fifo(esp_g); */
--        }
--
--        if (val & SCSICSR_ENABLE) {
--            DPRINTF("SCSICSR Enable\n");
--            /*
--             * qemu_irq_raise(s->scsi_dma);
--             * s->scsi_csr_1 = 0xc0;
--             * s->scsi_csr_1 |= 0x1;
--             * qemu_irq_pulse(s->scsi_dma);
--             */
--        }
--        /*
--         * else
--         *     s->scsi_csr_1 &= ~SCSICSR_ENABLE;
--         */
--
--        if (val & SCSICSR_RESET) {
--            DPRINTF("SCSICSR Reset\n");
--            /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
--            qemu_irq_raise(s->scsi_reset);
--            ns->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
--            qemu_irq_lower(s->scsi_reset);
--        }
--        if (val & SCSICSR_DMADIR) {
--            DPRINTF("SCSICSR DMAdir\n");
--        }
--        if (val & SCSICSR_CPUDMA) {
--            DPRINTF("SCSICSR CPUDMA\n");
--            /* qemu_irq_raise(s->scsi_dma); */
--            s->int_status |= 0x4000000;
--        } else {
--            /* fprintf(stderr,"SCSICSR CPUDMA disabled\n"); */
--            s->int_status &= ~(0x4000000);
--            /* qemu_irq_lower(s->scsi_dma); */
--        }
--        if (val & SCSICSR_INTMASK) {
--            DPRINTF("SCSICSR INTMASK\n");
--            /*
--             * int_mask &= ~0x1000;
--             * s->scsi_csr_1 |= val;
--             * s->scsi_csr_1 &= ~SCSICSR_INTMASK;
--             * if (s->scsi_queued) {
--             *     s->scsi_queued = 0;
--             *     next_irq(s, NEXT_SCSI_I, level);
--             * }
--             */
--        } else {
--            /* int_mask |= 0x1000; */
--        }
--        if (val & 0x80) {
--            /* int_mask |= 0x1000; */
--            /* s->scsi_csr_1 |= 0x80; */
--        }
--        DPRINTF("SCSICSR Write: %"PRIx64 "\n", val);
--        /* s->scsi_csr_1 = val; */
--        break;
--
-     /* Hardware timer latch - not implemented yet */
-     case 0x1a000:
-     default:
-@@ -846,13 +769,73 @@ static void next_scsi_csr_write(void *opaque, hwaddr addr, uint64_t val,
-                                 unsigned size)
- {
-     NeXTSCSI *s = NEXT_SCSI(opaque);
-+    NeXTPC *pc = NEXT_PC(container_of(s, NeXTPC, next_scsi));
+ static const VMStateDescription next_rtc_vmstate = {
+@@ -1156,6 +1157,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+                                                        "rtc-data-in", 0));
+     qdev_connect_gpio_out_named(dev, "rtc-cmd-reset", 0,
+                                 qdev_get_gpio_in_named(d, "rtc-cmd-reset", 0));
++    qdev_connect_gpio_out_named(d, "rtc-power-out", 0,
++                                qdev_get_gpio_in(dev, NEXT_PWR_I));
+ }
  
-     switch (addr) {
-     case 0:
-+        if (val & SCSICSR_FIFOFL) {
-+            DPRINTF("SCSICSR FIFO Flush\n");
-+            /* will have to add another irq to the esp if this is needed */
-+            /* esp_puflush_fifo(esp_g); */
-+        }
-+
-+        if (val & SCSICSR_ENABLE) {
-+            DPRINTF("SCSICSR Enable\n");
-+            /*
-+             * qemu_irq_raise(s->scsi_dma);
-+             * s->scsi_csr_1 = 0xc0;
-+             * s->scsi_csr_1 |= 0x1;
-+             * qemu_irq_pulse(s->scsi_dma);
-+             */
-+        }
-+        /*
-+         * else
-+         *     s->scsi_csr_1 &= ~SCSICSR_ENABLE;
-+         */
-+
-+        if (val & SCSICSR_RESET) {
-+            DPRINTF("SCSICSR Reset\n");
-+            /* I think this should set DMADIR. CPUDMA and INTMASK to 0 */
-+            qemu_irq_raise(pc->scsi_reset);
-+            s->scsi_csr_1 &= ~(SCSICSR_INTMASK | 0x80 | 0x1);
-+            qemu_irq_lower(pc->scsi_reset);
-+        }
-+        if (val & SCSICSR_DMADIR) {
-+            DPRINTF("SCSICSR DMAdir\n");
-+        }
-+        if (val & SCSICSR_CPUDMA) {
-+            DPRINTF("SCSICSR CPUDMA\n");
-+            /* qemu_irq_raise(s->scsi_dma); */
-+            pc->int_status |= 0x4000000;
-+        } else {
-+            /* fprintf(stderr,"SCSICSR CPUDMA disabled\n"); */
-+            pc->int_status &= ~(0x4000000);
-+            /* qemu_irq_lower(s->scsi_dma); */
-+        }
-+        if (val & SCSICSR_INTMASK) {
-+            DPRINTF("SCSICSR INTMASK\n");
-+            /*
-+             * int_mask &= ~0x1000;
-+             * s->scsi_csr_1 |= val;
-+             * s->scsi_csr_1 &= ~SCSICSR_INTMASK;
-+             * if (s->scsi_queued) {
-+             *     s->scsi_queued = 0;
-+             *     next_irq(s, NEXT_SCSI_I, level);
-+             * }
-+             */
-+        } else {
-+            /* int_mask |= 0x1000; */
-+        }
-+        if (val & 0x80) {
-+            /* int_mask |= 0x1000; */
-+            /* s->scsi_csr_1 |= 0x80; */
-+        }
-+        DPRINTF("SCSICSR1 Write: %"PRIx64 "\n", val);
-         s->scsi_csr_1 = val;
-         break;
+ static void next_pc_init(Object *obj)
+@@ -1191,7 +1194,6 @@ static void next_pc_init(Object *obj)
  
-     case 1:
-+        DPRINTF("SCSICSR2 Write: %"PRIx64 "\n", val);
-         s->scsi_csr_2 = val;
-         break;
+     object_initialize_child(obj, "rtc", &s->rtc, TYPE_NEXT_RTC);
  
-@@ -868,10 +851,12 @@ static uint64_t next_scsi_csr_read(void *opaque, hwaddr addr, unsigned size)
- 
-     switch (addr) {
-     case 0:
-+        DPRINTF("SCSI 4020  STATUS READ %X\n", s->scsi_csr_1);
-         val = s->scsi_csr_1;
-         break;
- 
-     case 1:
-+        DPRINTF("SCSI 4021 STATUS READ %X\n", s->scsi_csr_2);
-         val = s->scsi_csr_2;
-         break;
- 
+-    s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
+     qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
+                             "rtc-data-in", 1);
+     qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
 -- 
 2.47.1
 
