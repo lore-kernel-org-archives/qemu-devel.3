@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B759E77191
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAA8E77192
 	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:36:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnim-0001CS-3a; Sun, 29 Dec 2024 02:28:20 -0500
+	id 1tRnhZ-0006a9-Bj; Sun, 29 Dec 2024 02:27:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniG-0007cB-AS
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:48 -0500
-Received: from mail-ej1-f48.google.com ([209.85.218.48])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhY-0006Zj-9z
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:04 -0500
+Received: from mail-ej1-f47.google.com ([209.85.218.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniE-0002Wi-Sn
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:48 -0500
-Received: by mail-ej1-f48.google.com with SMTP id
- a640c23a62f3a-aaf57c2e0beso23398366b.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhW-0002AT-Pu
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:04 -0500
+Received: by mail-ej1-f47.google.com with SMTP id
+ a640c23a62f3a-aaec61d0f65so1187748466b.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457265; x=1736062065;
+ d=1e100.net; s=20230601; t=1735457221; x=1736062021;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6c+6XcbVtB2vqqzGJAKMAXsg3ZBXmuneXOWCq5giJbQ=;
- b=iuiybkpVPPCpXJpm1/7Vhru90Y3qknS62mjLauJjQv30imVSUF4R6ONItgrDwiF8gN
- BLD3t+27lpE26xyVUg46tBEUoaUt6DbX6FN4gjYsF7CxS0UfNHLAKeM2zn6fGG29l0/w
- 9RFDJjL1ckEoqNuWwzrdZ33hkmhz398ZSDva0SYRc0VTDrKIohFwhOzYOkN+0okpvpEx
- Tj7mLSE8p/V4srlcLjbS4S56/OjtwCKxJqLRrEnfRMKBPD0txQvVsYqVGZKuMxiInsTa
- j7RNxkpIRvdu26oZt8HCSfWt5rIuzP4ClXRhoNu6u+Wo5LloPR2zjI+/vzQqLU7QcAka
- MuOg==
+ bh=GCDyP0HU91an/SgNVURIRYR9ahqGS4imiUg5gQkD/5Q=;
+ b=dx39hVDsKi/5qkhT+B7P1UDdVUU/msb+y3X2rM5ayIbHXfD+cb5uYr/gQJVSlwPYsC
+ 5uW3o/YXYdNvtaHGES029OQSevasdKoUTXmv7/jNLz5Uz3+XRYrhnL/J6aHrTeYheYYc
+ A0VOUawcAFZg4OPlFAiyhaFMuCsOE4lEAIORM6xOIEe4asB0AlCowtZwYMDm+mnnIeEj
+ MYjlh+PBlSEtna0UmkdMcZnBnFmePB+Qr8n5CHTEzAoswWeMUkqJB68alvhl/DR8ddIU
+ kPe5poQNYE1lFzSm1Zz/5UfdRAGBaFaXRGzsOWziMtyPTCaaVxMmQmAOosw5AKPyBHmG
+ rfMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWf9i7+P6rv58hngO1H8ne5nRPqxht5Li38IB4kctGhish4nK2AzaMv9LjnZ9jeVH/iyCOAxgsvwsri@nongnu.org
-X-Gm-Message-State: AOJu0Yy0N6PYSwcFs6SC8q9cM5W6JOizsaftMBPF5bJd1z/zndNGkUMq
- 9qaJ52st4+RVfv5tv7GmWchaMs7dj+r16UqL2ikpx28eyxazh9je
-X-Gm-Gg: ASbGncsAg1USwV38D7BaTr2cfQkAS0cf9mdSnNK/NkosZRMAkoTdXUau9VbCRS9a8ah
- +mL2LJI58vKj6IkGq4vfnwr3G47HpNcukJtZ68E+t1e5Ac1cdB9A/Lk4BaKt5C6hzxuic6troOH
- aW2M7GymOe9FwV/N/eyOqgaZaU1w0/fx3GAQP0MiOTSgid/P1QxHPu+9uRuio44XqGOxxB9RzFs
- kHE602eLm9mlk88o/0MhRZrowY5sSoUK1XHIS+QeeCfuRNZykTRBIJrFRexRt30iy8Np8bcthn2
- uLI=
-X-Google-Smtp-Source: AGHT+IGJr0AUtJYDjZBp60jy2IDosGHIXjqTvumQEGwH1FwCtEVHYd56CHQRtEuPa62Fxx2th1ai4Q==
-X-Received: by 2002:a17:906:4795:b0:aa6:ab70:4a78 with SMTP id
- a640c23a62f3a-aac3355ea10mr2438685666b.37.1735457265398; 
- Sat, 28 Dec 2024 23:27:45 -0800 (PST)
+ AJvYcCXjOHGprI1MWy2WxHoeu6+1WJjyGTxO1ddayyL0iVpA6hZpfRsI3q6fv4Pjd23ISsinb559nbCI1hMr@nongnu.org
+X-Gm-Message-State: AOJu0YxrUonqEQtJ3EKBVGcJk7zgRJTuaksH2EBPyfWA5z+Q21wfJh/Z
+ WcGVL5Tn1hoIjPo71KMw3y9poMIRqDXzpbDxgCcfXL3y68TO8DPfDOHTfg==
+X-Gm-Gg: ASbGncsuelZi7PY6DjbEjTPWpF9jgO0nuavu/xuOexI1L/A1D+F17ggFN2ySTmZVVkT
+ GKuGgnw7+a1utvWow6gf7Oj+Fqs2OiX0Yr7rntz78RENXBVWBaHhLqPzepE5eTVUEaxnXPir+mc
+ KEB7lYtUSiMva/JamGCpDmRuzDiuBtlGffb6xJyn/mTf8rtALJIoaZA0B6peoPQh3zLQyku+cBN
+ sF1D5RSRtcrSG9jz5D0XLLjqC1DO7EanSjYz9DvO+xE8ZLMVt/9QvZKfiRtRMXNSZBgO43L7Bxl
+ Fmw=
+X-Google-Smtp-Source: AGHT+IFYeGWG/ZAMES4LwkvoOFO8eWlzW+G2WkuBc11XqDj5bj8NWcbfZLzxMX6GstxmDbWxSdREBw==
+X-Received: by 2002:a17:907:96a0:b0:aa6:7feb:193f with SMTP id
+ a640c23a62f3a-aac2ad81a25mr3086979766b.20.1735457221313; 
+ Sat, 28 Dec 2024 23:27:01 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.43
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:44 -0800 (PST)
+ Sat, 28 Dec 2024 23:27:00 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 34/35] next-cube: rename old_scr2 and scr2_2 in
- next_scr2_rtc_update()
-Date: Sun, 29 Dec 2024 08:25:25 +0100
-Message-ID: <20241229072526.166555-35-huth@tuxfamily.org>
+Subject: [PULL 15/35] next-cube: move en ethernet MMIO to separate memory
+ region on next-pc device
+Date: Sun, 29 Dec 2024 08:25:06 +0100
+Message-ID: <20241229072526.166555-16-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.48; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f48.google.com
+Received-SPF: pass client-ip=209.85.218.47; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f47.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -91,46 +91,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Rename them to old_scr2_rtc and scr2_rtc to reflect that they contain the previous
-and current values of the SCR2 RTC bits.
+Move the en ethernet MMIO accesses to a separate memory region on the next-pc
+device instead of being part of the next.scr MMIO memory region.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-33-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-14-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ hw/m68k/next-cube.c | 48 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 40 insertions(+), 8 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 360a46c32e..513ce5844b 100644
+index ba468ce922..97a6f6c472 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -177,17 +177,17 @@ static void next_scr2_led_update(NeXTPC *s)
+@@ -110,6 +110,7 @@ struct NeXTPC {
  
- static void next_scr2_rtc_update(NeXTPC *s)
+     MemoryRegion floppy_mem;
+     MemoryRegion timer_mem;
++    MemoryRegion dummyen_mem;
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
+ 
+@@ -372,11 +373,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+     uint64_t val;
+ 
+     switch (addr) {
+-    /* For now return dummy byte to allow the Ethernet test to timeout */
+-    case 0x6000:
+-        val = 0xff;
+-        break;
+-
+     default:
+         DPRINTF("BMAP Read @ 0x%x size %u\n", (unsigned int)addr, size);
+         val = 0;
+@@ -1012,6 +1008,38 @@ static const MemoryRegionOps next_timer_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
++static void next_dummy_en_write(void *opaque, hwaddr addr, uint64_t val,
++                                unsigned size)
++{
++    /* Do nothing */
++    return;
++}
++
++static uint64_t next_dummy_en_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val;
++
++    switch (addr) {
++    case 0:
++        /* For now return dummy byte to allow the Ethernet test to timeout */
++        val = 0xff;
++        break;
++
++    default:
++        val = 0;
++    }
++
++    return val;
++}
++
++static const MemoryRegionOps next_dummy_en_ops = {
++    .read = next_dummy_en_read,
++    .write = next_dummy_en_write,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
+ static void next_pc_reset(DeviceState *dev)
  {
--    uint8_t old_scr2, scr2_2;
-+    uint8_t old_scr2_rtc, scr2_rtc;
+     NeXTPC *s = NEXT_PC(dev);
+@@ -1034,6 +1062,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     SysBusDevice *sbd;
+     DeviceState *d;
  
--    old_scr2 = extract32(s->old_scr2, 8, 8);
--    scr2_2 = extract32(s->scr2, 8, 8);
-+    old_scr2_rtc = extract32(s->old_scr2, 8, 8);
-+    scr2_rtc = extract32(s->scr2, 8, 8);
++    /* en network (dummy) */
++    memory_region_add_subregion(&s->scrmem, 0x6000,
++                                &s->dummyen_mem);
++
+     /* SCSI */
+     sbd = SYS_BUS_DEVICE(&s->next_scsi);
+     if (!sysbus_realize(sbd, errp)) {
+@@ -1093,6 +1125,9 @@ static void next_pc_init(Object *obj)
+     sysbus_init_mmio(sbd, &s->mmiomem);
+     sysbus_init_mmio(sbd, &s->scrmem);
  
--    if (scr2_2 & 0x1) {
-+    if (scr2_rtc & 0x1) {
-         /* DPRINTF("RTC %x phase %i\n", scr2_2, rtc->phase); */
-         /* If we are in going down clock... do something */
--        if (((old_scr2 & SCR2_RTCLK) != (scr2_2 & SCR2_RTCLK)) &&
--                ((scr2_2 & SCR2_RTCLK) == 0)) {
--            if (scr2_2 & SCR2_RTDATA) {
-+        if (((old_scr2_rtc & SCR2_RTCLK) != (scr2_rtc & SCR2_RTCLK)) &&
-+                ((scr2_rtc & SCR2_RTCLK) == 0)) {
-+            if (scr2_rtc & SCR2_RTDATA) {
-                 qemu_irq_raise(s->rtc_data_irq);
-             } else {
-                 qemu_irq_lower(s->rtc_data_irq);
++    memory_region_init_io(&s->dummyen_mem, OBJECT(s), &next_dummy_en_ops, s,
++                          "next.en", 0x20);
++
+     object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
+ 
+     memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
+@@ -1238,9 +1273,6 @@ static void next_cube_init(MachineState *machine)
+         }
+     }
+ 
+-    /* TODO: */
+-    /* Network */
+-
+     /* DMA */
+     memory_region_init_io(&m->dmamem, NULL, &next_dma_ops, machine,
+                           "next.dma", 0x5000);
 -- 
 2.47.1
 
