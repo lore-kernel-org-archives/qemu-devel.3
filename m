@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61690E7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D1DE77191
 	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhE-0006V6-S6; Sun, 29 Dec 2024 02:26:45 -0500
+	id 1tRnib-0000X8-NG; Sun, 29 Dec 2024 02:28:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnh2-0006T3-EB
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:34 -0500
-Received: from mail-ej1-f46.google.com ([209.85.218.46])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRni9-0007AE-7B
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:42 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnh1-000270-0Z
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:32 -0500
-Received: by mail-ej1-f46.google.com with SMTP id
- a640c23a62f3a-aa6a618981eso1397254266b.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRni5-0002FY-8j
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:40 -0500
+Received: by mail-ed1-f52.google.com with SMTP id
+ 4fb4d7f45d1cf-5d84179ef26so10556293a12.3
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457189; x=1736061989;
+ d=1e100.net; s=20230601; t=1735457255; x=1736062055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kPB4XNLstlc0AegxJ7G/7FURT7P2TWUfnqz8PPlgcsA=;
- b=YCN+NZKbC6O1x6tQNfVcZXjw3lGz4sNZa1oIyVvEHB3Y6GStRFf1wsqaiV+0ERu5tN
- ojWyIau1/I/NwloEylbHjwEmVuW4lC5DvX1ZuH1faR+4R6L4aAucpkSI0rcbbgCIzcmd
- sMdXH/YCZoeWuWsbrLHTMofPUo2UVqC1XC9JqWMMxprqaXUAcKYGBzX4HYzRlANZkyzP
- rJSNogZBiryDO2/B6COaYyhuFei8SeThqYyfA0BN2YqrCGloFibkjoRwyfUVxTJbmAdH
- i+KXS1G+TdH3FMCXY9cn5mPVByErhy43cRCOvRhTZ4LdpqbjypqWCiiI6Bghm6DmTSni
- vWLA==
+ bh=QOPz+HDDyrtt7om/GXISvDlgUY8tOSmNDX0mLPvWlak=;
+ b=qeOsj4bzkN09Jeg2Lx8RY9dVnYi2Y9iGRZ96fzdjVghJTLdYbWyAh9tsmz8+bvJqo/
+ cJcJZUcjOs/VXNzYnayqL1b+5BIZn+vWMCbQGw74MY0N9AFSra+jYzMz+K7zZyoTR7iu
+ FlqCYgOqvl74iwROtp5mJw28e9Fd1TmgpZWaKWgvLmbLSZApbTibEXOgCUEJ2IPADFt3
+ w5B0KnmAM6JIbvuH/bldnaLR1jk3LB7PiVhYdsk4lCiKe3xrdEqDt6jCU04cAoe9KbPt
+ w7W7mJGPy75WkAg0o4j0m8zhw6LOvIBEDXaYWSlkFeob2R5OUOvgl56E6/ZOqW+s4TyZ
+ QqjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVu4CWAQp+VPLXQsE89ZNJyCt3SAtQq+GyIfsfmxb3Lfq086a9CHDeiAsz45hEchDbg21OBa2/KtjCp@nongnu.org
-X-Gm-Message-State: AOJu0YzYO987byMqSGBobUI95/T+ZDeHZIozbR1W8p8XqyE68CnZmI5l
- JFl11jiBoc6t4w5b6eABeJjT2yCDgkHNlHdCY07pkqyQFKwk4wfEx0f9VQ==
-X-Gm-Gg: ASbGnculaIfuhGRtBp3UEguf9JUCjCZ4+psLyxLgmB1c4BcOtO6+nubWTuW71JgzFVg
- of8z+KsmNVAu4y8AOscw0hrfMZm8B5m31MtuCnY7FmSh0nGYfUqj7kle8/2ByersxnhJfZHt6OA
- alFR6lzD8J3f543RK5TakAEdtJeQH/qAi8eA/LZLON1aP0SG13IEVyAsTAJyELmoYeXZH9Z5MQk
- /elcIkrClusbfbh48Syob1/Z/tLOdaGQRCrekhiUXnyjOUgYO+Kt3cTxTxZcqbd9m4Eusv3XoN4
- 7dU=
-X-Google-Smtp-Source: AGHT+IHR62IazP+nCv4oXviE1FM/RuaTGZMYXnrLfj9foh+YjVn9q84bHyoYMbj/6NLuxqRewktS5Q==
-X-Received: by 2002:a17:907:2d1e:b0:aa6:aedb:6030 with SMTP id
- a640c23a62f3a-aac33666079mr2549158866b.52.1735457188769; 
- Sat, 28 Dec 2024 23:26:28 -0800 (PST)
+ AJvYcCWh6fKI4mursrhqbw9Mw4QSGJeozQfZKvsIFUAj7smnA3T3rvt/8vdDS61EZvFFSV6l1NGdgosba9yP@nongnu.org
+X-Gm-Message-State: AOJu0Yy1P8OqocGQfTAU4/scvVG00ASN1BZwyafFYJsmvure9QU3Q3ET
+ CkoXHZFMe+fVC0kPqwyvT4/AZvgCzC1xVe3VnZs07VAAJ89VVSZU
+X-Gm-Gg: ASbGncsRrb9yIMF/CG1QOrCdpXLQpKODZsw5kHLF4VpnECd8D2wcyJIv6Pqjr/NklKR
+ pKfdH79X7zh1od0w+FjrjXUlLR+O8ZelxB1A2EXel8N8p36u1NMy4LGTS5UEeHbVvZGb50WnF8+
+ WNnmWmBz+hVMFGagO/rr3hfIlDSUWp2HDDDgaNMTtW9d6h21sITjts+Jz50NhxOl6YyKREG+2Q7
+ 6AT+bZgk2+uiT2xgZlhBM4HyLn4tXYoLP8IkOgtnirl3GRm5eJH+h46KIcaEJd3B5J6GP4baEOq
+ eEQ=
+X-Google-Smtp-Source: AGHT+IFmP+2YTSgma0G9OIaBN3ZRpElOOLZjgJVbfr6M55zXo/WvNtWRFwsjB7TUuo59r6CLAb40+Q==
+X-Received: by 2002:a05:6402:3585:b0:5d0:ea2a:726c with SMTP id
+ 4fb4d7f45d1cf-5d81dd8faaamr26154473a12.8.1735457255361; 
+ Sat, 28 Dec 2024 23:27:35 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.26
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:26:27 -0800 (PST)
+ Sat, 28 Dec 2024 23:27:34 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 02/35] hw/m68k/next-cube: Disable the default CD-ROM drive
-Date: Sun, 29 Dec 2024 08:24:53 +0100
-Message-ID: <20241229072526.166555-3-huth@tuxfamily.org>
+Subject: [PULL 30/35] next-cube: use named gpio output for next-rtc data
+Date: Sun, 29 Dec 2024 08:25:21 +0100
+Message-ID: <20241229072526.166555-31-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.46; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f46.google.com
+Received-SPF: pass client-ip=209.85.208.52; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f52.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,30 +89,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The NeXT-Cube does not have a CD-ROM drive by default, and the
-kernel does not seem to deal with the empty drive very well, so
-let's disable the CD-ROM drive for this machine.
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
+Add a named gpio output for the next-rtc data and then update
+next_rtc_data_in_irq() to drive the IRQ directly. This enables the next-rtc to
+next-pc data to be wired up using the standard qdev gpio APIs.
+
+At the same time rename the pc-rtc-data-in gpio to rtc-data-in which is possible
+now that the previous rtc-data-in gpio has been moved to the next-rtc device.
+
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-29-mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20241214091720.49779-1-huth@tuxfamily.org>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/m68k/next-cube.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 0ecdcea823..94d56b4654 100644
+index 69f5c7aaec..2bc6d49c34 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -1067,6 +1067,7 @@ static void next_machine_class_init(ObjectClass *oc, void *data)
-     mc->default_ram_size = RAM_SIZE;
-     mc->default_ram_id = "next.ram";
-     mc->default_cpu_type = M68K_CPU_TYPE_NAME("m68040");
-+    mc->no_cdrom = true;
+@@ -56,6 +56,8 @@ struct NeXTRTC {
+     uint8_t status;
+     uint8_t control;
+     uint8_t retval;
++
++    qemu_irq data_out_irq;
+ };
+ 
+ #define TYPE_NEXT_SCSI "next-scsi"
+@@ -234,13 +236,10 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
+             rtc->value = (rtc->value << 1) | level;
+         } else {
+             /* Shift out value to read */
+-            qemu_irq rtc_data_in_irq = qdev_get_gpio_in_named(
+-                DEVICE(s), "pc-rtc-data-in", 0);
+-
+             if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
+-                qemu_irq_raise(rtc_data_in_irq);
++                qemu_irq_raise(rtc->data_out_irq);
+             } else {
+-                qemu_irq_lower(rtc_data_in_irq);
++                qemu_irq_lower(rtc->data_out_irq);
+             }
+         }
+     }
+@@ -1028,8 +1027,12 @@ static void next_rtc_reset_hold(Object *obj, ResetType type)
+ 
+ static void next_rtc_init(Object *obj)
+ {
++    NeXTRTC *rtc = NEXT_RTC(obj);
++
+     qdev_init_gpio_in_named(DEVICE(obj), next_rtc_data_in_irq,
+                             "rtc-data-in", 1);
++    qdev_init_gpio_out_named(DEVICE(obj), &rtc->data_out_irq,
++                             "rtc-data-out", 1);
  }
  
- static const TypeInfo next_typeinfo = {
+ static const VMStateDescription next_rtc_vmstate = {
+@@ -1136,6 +1139,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     /* Data from NeXTPC to RTC */
+     qdev_connect_gpio_out_named(dev, "rtc-data-out", 0,
+                                 qdev_get_gpio_in_named(d, "rtc-data-in", 0));
++    /* Data from RTC to NeXTPC */
++    qdev_connect_gpio_out_named(d, "rtc-data-out", 0,
++                                qdev_get_gpio_in_named(dev,
++                                                       "rtc-data-in", 0));
+ }
+ 
+ static void next_pc_init(Object *obj)
+@@ -1173,7 +1180,7 @@ static void next_pc_init(Object *obj)
+ 
+     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
+     qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
+-                            "pc-rtc-data-in", 1);
++                            "rtc-data-in", 1);
+     qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
+                              "rtc-data-out", 1);
+ }
 -- 
 2.47.1
 
