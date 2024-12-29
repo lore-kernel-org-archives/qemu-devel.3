@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B10BE7718F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B064DE77191
 	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhH-0006Vs-9r; Sun, 29 Dec 2024 02:26:47 -0500
+	id 1tRnhR-0006YB-2z; Sun, 29 Dec 2024 02:26:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnh7-0006Tj-LI
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:37 -0500
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhO-0006XU-VM
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:55 -0500
 Received: from mail-ej1-f48.google.com ([209.85.218.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnh6-00027Z-2z
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:37 -0500
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhN-00029S-Ha
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:54 -0500
 Received: by mail-ej1-f48.google.com with SMTP id
- a640c23a62f3a-aa689a37dd4so1249691666b.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:35 -0800 (PST)
+ a640c23a62f3a-aaec111762bso1088793466b.2
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457194; x=1736061994;
+ d=1e100.net; s=20230601; t=1735457212; x=1736062012;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BY3Nbpch55a2OXFwP4iqNPbMPRnYJkcP0SNHBbJMknQ=;
- b=jT/im3IciryrYbIHU5O3MBkNovJH3Iacrm91NAg5Y9iSsm7O8GPvdW8P5lL+v33iZV
- iD4J7EzHjFhv46W6QEQv4vyHqdut28fvIV1T72UQYUVXzZnXqelNgs5A6aIHYhJRTpkH
- 64R+nZswgmNfp6UFM480ifJWICtvRjvx30XtHwCq1m+aadCfU4rf1HpHjbc9wpBc6k7z
- QxEZSkx8mD4We4Zl5ENM2drOMDF2+g+BCSrHLDeTjZRt5L09ceoO4YYJ5liqQmD6j2FN
- jkswlDnQ7eWBcpnOQkMh9rf8kRdDLnsnuu654D805zN8liYysko9qkFnrWjIkTgyVJD6
- ajvg==
+ bh=fqZjoK0ZImfPOgOFtgojHS/Q0wDjVJPffV/7c5jWce0=;
+ b=mDxY4TNDfaSkmP/g4r+f/cpBI2N66Mp/fsHgSn8gnn6ake+JWdds2HXYzgit5SmZbn
+ 1uaynuTQ+/Xrn0+6L+9g55saGwsIdEURbitl/cLeo+tW2wK6IgfefNcKqtgEzRS2T6TB
+ 2wXN/YnLbFei6tt/A+1FuCjjfhC42GEb3lAUKgC9JKk1yz5yNZLUZNQHF/LZe9LFt0vl
+ +qeePAk4qQda7vrDW3G4HF7cT6JITiLQnOI/CsG9nxqkYKuAvicZO9naOitiR4xEkjf1
+ 6f1lKNmqVLVKm1xH3mBxexYeGEPxo0RKpsuuDUXvEYgIN1iDEdMKQGQzqC6I2pTS8Qxu
+ UMkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOohtB6aHs8X7LEhff1dbFBYiEKYFgs1TN9qRGz7hbQl+gIL+krhlOiQE8wmZwnQ80U12s1QXjFT2K@nongnu.org
-X-Gm-Message-State: AOJu0YyBJinj2nARk577TZOJBtSfCeWwT848hpEud6tDuQPovQEzqxTL
- NAQolMuj4BU7M8oDQm72LcmVozfTcZrva4Z54PTCw5HzG9PxLbaP
-X-Gm-Gg: ASbGncuaQvTz7lVku+1bKAweYXzf4ks62OtXptatVSKzQ9RemuUBogA/i4FzWhv35zo
- SqWKHTn1/f6LqT6LiQwY/S8gQFSCadtbt2FnmGF2i0q1AqguyQHKkVOsDztK34lOIilR0cRg4kL
- ov1tUMYo9MUGQxj03OZmPRd8gzDjF+LQAGladz5Fvptk1eT6qV1JoNIUG8urrrK60cn5PqX6XlP
- Q7QdVou/WhaK9whV4IsU0Bbg34/wRuL5PYO1w24ZKGkK9LedUvCO0hgFKQw0RJezfQL/lgnh+Ou
- LmQ=
-X-Google-Smtp-Source: AGHT+IGxMtt+RoVwUhGC3UA2oBFlj+RjJklGpX8jPoAE/H7P4fzfuoVz9caYRMdJHIGNRab7eyIJqA==
-X-Received: by 2002:a17:906:c10d:b0:aa6:7881:1e84 with SMTP id
- a640c23a62f3a-aac2ad82cf6mr3446765366b.15.1735457194210; 
- Sat, 28 Dec 2024 23:26:34 -0800 (PST)
+ AJvYcCUBQklvsy7tJi3WrXf+MhB1MBe6FpWUxhyC5IFACI65usRuu1e9zEfSpsWogR/lKGj2vsH6ax2TguR+@nongnu.org
+X-Gm-Message-State: AOJu0YzcXzV5aRQgSO/8ZlRjEVB2IY+2PtEjBgE4DQ4EdVzadgcw3SWC
+ 9X3ni2mAaUDjWfuOW0JzSiRglhDJ52BfJlJWzVk2564c3zJjCklT5h5rEQ==
+X-Gm-Gg: ASbGncthyUfzG5tJDU0rrsGh1XBuDmleHHfMOhT8DykhRQCKGeR9ocwQ9u1k5EtgZ8x
+ c++kRYV4DV4/LjJtbxnup+y/511HlN3TtDYuuIgA+DCE9B/2dy5VrFtLLdc815bjm7KHYxHRiF8
+ ykhJU18+Nr25cX3Gs+Jmbjm+nx7Msy4F8X3TU0UZgYYlZx5MOptzehCRFzSyPqmDLMJdY1MhrNL
+ 4G4iDoWRkPkGrC2Kz3m4+u8o0I7s5a/wMDZqfJzXDXUO6af586OkMhcbv1nmEK7n0KCLCbDnnhJ
+ Poo=
+X-Google-Smtp-Source: AGHT+IEdlXartQrmt3BF9c3P+JhldIpvAdRxM7wJgXeS6dUWxgdqTMp2+3ZJc65rFaiWyHfRInn+WA==
+X-Received: by 2002:a17:906:f5a6:b0:aae:b259:ef6c with SMTP id
+ a640c23a62f3a-aaeb259f285mr2465766266b.0.1735457211916; 
+ Sat, 28 Dec 2024 23:26:51 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.31
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:26:33 -0800 (PST)
+ Sat, 28 Dec 2024 23:26:50 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 04/35] next-cube: remove overlap between next.dma and next.mmio
- memory regions
-Date: Sun, 29 Dec 2024 08:24:55 +0100
-Message-ID: <20241229072526.166555-5-huth@tuxfamily.org>
+Subject: [PULL 11/35] next-cube: move floppy disk MMIO to separate memory
+ region in next-pc
+Date: Sun, 29 Dec 2024 08:25:02 +0100
+Message-ID: <20241229072526.166555-12-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=209.85.218.48; envelope-from=th.huth@gmail.com;
  helo=mail-ej1-f48.google.com
@@ -92,104 +91,124 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Change the start of the next.mmio memory region so that it follows on directly
-after the next.dma memory region. Increase the address offsets in
-next_mmio_read() and next_mmio_write(), and reduce the size of the next.mmio
-memory region accordingly.
+The dummy floppy disk device is part of the next-pc device, and not related to
+the NeXTCube SCRs.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-3-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-10-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ hw/m68k/next-cube.c | 61 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 49 insertions(+), 12 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 243d9e7e66..5f07791707 100644
+index 402e268f6b..4d7fcdd943 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -266,23 +266,23 @@ static uint64_t next_mmio_read(void *opaque, hwaddr addr, unsigned size)
+@@ -108,6 +108,7 @@ struct NeXTPC {
+ 
+     M68kCPU *cpu;
+ 
++    MemoryRegion floppy_mem;
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
+ 
+@@ -368,11 +369,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
      uint64_t val;
  
      switch (addr) {
--    case 0x7000:
-+    case 0x2000:    /* 0x2007000 */
-         /* DPRINTF("Read INT status: %x\n", s->int_status); */
-         val = s->int_status;
-         break;
- 
--    case 0x7800:
-+    case 0x2800:    /* 0x2007800 */
-         DPRINTF("MMIO Read INT mask: %x\n", s->int_mask);
-         val = s->int_mask;
-         break;
- 
--    case 0xc000 ... 0xc003:
--        val = extract32(s->scr1, (4 - (addr - 0xc000) - size) << 3,
-+    case 0x7000 ... 0x7003:    /* 0x200c000 */
-+        val = extract32(s->scr1, (4 - (addr - 0x7000) - size) << 3,
-                         size << 3);
-         break;
- 
--    case 0xd000 ... 0xd003:
--        val = extract32(s->scr2, (4 - (addr - 0xd000) - size) << 3,
-+    case 0x8000 ... 0x8003:    /* 0x200d000 */
-+        val = extract32(s->scr2, (4 - (addr - 0x8000) - size) << 3,
-                         size << 3);
-         break;
- 
-@@ -301,25 +301,25 @@ static void next_mmio_write(void *opaque, hwaddr addr, uint64_t val,
-     NeXTPC *s = NEXT_PC(opaque);
- 
+-    case 0x14108:
+-        DPRINTF("FD read @ %x\n", (unsigned int)addr);
+-        val = 0x40 | 0x04 | 0x2 | 0x1;
+-        break;
+-
+     /*
+      * These 4 registers are the hardware timer, not sure which register
+      * is the latch instead of data, but no problems so far.
+@@ -402,13 +398,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+                              unsigned size)
+ {
      switch (addr) {
--    case 0x7000:
-+    case 0x2000:    /* 0x2007000 */
-         DPRINTF("INT Status old: %x new: %x\n", s->int_status,
-                 (unsigned int)val);
-         s->int_status = val;
-         break;
+-    case 0x14108:
+-        DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
+-        if (val == 0x0) {
+-            /* qemu_irq_raise(s->fd_irq[0]); */
+-        }
+-        break;
+-
+     /* Hardware timer latch - not implemented yet */
+     case 0x1a000:
+     default:
+@@ -948,6 +937,47 @@ static const TypeInfo next_scsi_info = {
+     .class_init = next_scsi_class_init,
+ };
  
--    case 0x7800:
-+    case 0x2800:    /* 0x2007800 */
-         DPRINTF("INT Mask old: %x new: %x\n", s->int_mask, (unsigned int)val);
-         s->int_mask  = val;
-         break;
++static void next_floppy_write(void *opaque, hwaddr addr, uint64_t val,
++                              unsigned size)
++{
++    switch (addr) {
++    case 0:
++        DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
++        if (val == 0x0) {
++            /* qemu_irq_raise(s->fd_irq[0]); */
++        }
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t next_floppy_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val;
++
++    switch (addr) {
++    case 0:
++        DPRINTF("FD read @ %x\n", (unsigned int)addr);
++        val = 0x40 | 0x04 | 0x2 | 0x1;
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++
++    return val;
++}
++
++static const MemoryRegionOps next_floppy_ops = {
++    .read = next_floppy_read,
++    .write = next_floppy_write,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
+ static void next_escc_init(DeviceState *pcdev)
+ {
+     DeviceState *dev;
+@@ -1006,6 +1036,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
  
--    case 0xc000 ... 0xc003:
-+    case 0x7000 ... 0x7003:    /* 0x200c000 */
-         DPRINTF("SCR1 Write: %x\n", (unsigned int)val);
--        s->scr1 = deposit32(s->scr1, (4 - (addr - 0xc000) - size) << 3,
-+        s->scr1 = deposit32(s->scr1, (4 - (addr - 0x7000) - size) << 3,
-                             size << 3, val);
-         break;
+     s->scsi_reset = qdev_get_gpio_in(d, 0);
+     s->scsi_dma = qdev_get_gpio_in(d, 1);
++
++    /* Floppy */
++    memory_region_add_subregion(&s->scrmem, 0x14108,
++                                &s->floppy_mem);
+ }
  
--    case 0xd000 ... 0xd003:
--        s->scr2 = deposit32(s->scr2, (4 - (addr - 0xd000) - size) << 3,
-+    case 0x8000 ... 0x8003:    /* 0x200d000 */
-+        s->scr2 = deposit32(s->scr2, (4 - (addr - 0x8000) - size) << 3,
-                             size << 3, val);
-         next_scr2_led_update(s);
-         next_scr2_rtc_update(s);
-@@ -897,7 +897,7 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     qdev_init_gpio_in(dev, next_irq, NEXT_NUM_IRQS);
+ static void next_pc_init(Object *obj)
+@@ -1024,6 +1058,9 @@ static void next_pc_init(Object *obj)
+     sysbus_init_mmio(sbd, &s->scrmem);
  
-     memory_region_init_io(&s->mmiomem, OBJECT(s), &next_mmio_ops, s,
--                          "next.mmio", 0xd0000);
-+                          "next.mmio", 0x9000);
-     memory_region_init_io(&s->scrmem, OBJECT(s), &next_scr_ops, s,
-                           "next.scr", 0x20000);
-     sysbus_init_mmio(sbd, &s->mmiomem);
-@@ -999,7 +999,7 @@ static void next_cube_init(MachineState *machine)
-     sysbus_create_simple(TYPE_NEXTFB, 0x0B000000, NULL);
+     object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
++
++    memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
++                          "next.floppy", 4);
+ }
  
-     /* MMIO */
--    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 0, 0x02000000);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 0, 0x02005000);
- 
-     /* BMAP IO - acts as a catch-all for now */
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02100000);
+ /*
 -- 
 2.47.1
 
