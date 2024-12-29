@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAA8E77192
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADD4E7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 08:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhZ-0006a9-Bj; Sun, 29 Dec 2024 02:27:05 -0500
+	id 1tRoku-0003Ds-DO; Sun, 29 Dec 2024 03:34:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhY-0006Zj-9z
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:04 -0500
-Received: from mail-ej1-f47.google.com ([209.85.218.47])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRoks-0003Df-0M
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 03:34:34 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhW-0002AT-Pu
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:04 -0500
-Received: by mail-ej1-f47.google.com with SMTP id
- a640c23a62f3a-aaec61d0f65so1187748466b.1
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRokp-0006pa-Lv
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 03:34:33 -0500
+Received: by mail-ed1-f45.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e829ff44so17149942a12.0
+ for <qemu-devel@nongnu.org>; Sun, 29 Dec 2024 00:34:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457221; x=1736062021;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GCDyP0HU91an/SgNVURIRYR9ahqGS4imiUg5gQkD/5Q=;
- b=dx39hVDsKi/5qkhT+B7P1UDdVUU/msb+y3X2rM5ayIbHXfD+cb5uYr/gQJVSlwPYsC
- 5uW3o/YXYdNvtaHGES029OQSevasdKoUTXmv7/jNLz5Uz3+XRYrhnL/J6aHrTeYheYYc
- A0VOUawcAFZg4OPlFAiyhaFMuCsOE4lEAIORM6xOIEe4asB0AlCowtZwYMDm+mnnIeEj
- MYjlh+PBlSEtna0UmkdMcZnBnFmePB+Qr8n5CHTEzAoswWeMUkqJB68alvhl/DR8ddIU
- kPe5poQNYE1lFzSm1Zz/5UfdRAGBaFaXRGzsOWziMtyPTCaaVxMmQmAOosw5AKPyBHmG
- rfMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjOHGprI1MWy2WxHoeu6+1WJjyGTxO1ddayyL0iVpA6hZpfRsI3q6fv4Pjd23ISsinb559nbCI1hMr@nongnu.org
-X-Gm-Message-State: AOJu0YxrUonqEQtJ3EKBVGcJk7zgRJTuaksH2EBPyfWA5z+Q21wfJh/Z
- WcGVL5Tn1hoIjPo71KMw3y9poMIRqDXzpbDxgCcfXL3y68TO8DPfDOHTfg==
-X-Gm-Gg: ASbGncsuelZi7PY6DjbEjTPWpF9jgO0nuavu/xuOexI1L/A1D+F17ggFN2ySTmZVVkT
- GKuGgnw7+a1utvWow6gf7Oj+Fqs2OiX0Yr7rntz78RENXBVWBaHhLqPzepE5eTVUEaxnXPir+mc
- KEB7lYtUSiMva/JamGCpDmRuzDiuBtlGffb6xJyn/mTf8rtALJIoaZA0B6peoPQh3zLQyku+cBN
- sF1D5RSRtcrSG9jz5D0XLLjqC1DO7EanSjYz9DvO+xE8ZLMVt/9QvZKfiRtRMXNSZBgO43L7Bxl
- Fmw=
-X-Google-Smtp-Source: AGHT+IFYeGWG/ZAMES4LwkvoOFO8eWlzW+G2WkuBc11XqDj5bj8NWcbfZLzxMX6GstxmDbWxSdREBw==
-X-Received: by 2002:a17:907:96a0:b0:aa6:7feb:193f with SMTP id
- a640c23a62f3a-aac2ad81a25mr3086979766b.20.1735457221313; 
- Sat, 28 Dec 2024 23:27:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1735461270; x=1736066070;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h+Hgu87QsLK6oJkMYANGR40GgxgsQMwzSa6Z0tHkt8Q=;
+ b=oa+axaAWBsytAq8POBSXkGA8Zc17mz8xtIpoUJihuMrblFsevclGzaVozNVy+8mTW3
+ LyEIpmE2KHk4xkjXimBe9V9xYtIXyNaXjLQ8OUrpwa86mVeQ43C2Z5mIwuynmcXf3jwy
+ 98lHjmtGcmnY3jOZTV9OFoWiHcLujXhrbC5zfuvc5actA7lv8j8GadptZd88AQ20eVdS
+ 5yQjC99bfU7veSMT3t4ULirTu4t+cJo8BgJoKcB0Q2CDPDU5kstSY3yc1iPeX0/fbYlF
+ whaetjdHvENQz2Le5R5ilzZ04PI9GK+KTxnxBUcFCHN5xUZ1gxit52FwGioi5HZLjK3g
+ WJKA==
+X-Gm-Message-State: AOJu0YyRk91NC/9frW8cPkiB9xSHyH0MgumDEh13ELkcdqlji1aaL3d7
+ ENmPpkgaw2+URmPp9Ie7QHSBCHRDsvXt9gtGXd/ADeE/rkpqn0ppFB29xg==
+X-Gm-Gg: ASbGncvAeX5AKyrdgGIvA0Q4W6P6WwfJHB1LIFwzeOQ3kzJD4wU4JTJtCWTEhkjf9BN
+ +zwQDzaADrFqLKoPwPjoxYXn+VZXSndUu/cj0vk8cNqYL/rpKa1Wt8oSe6qj56UTKC/sVgo26Mk
+ bIF4E9jRCNtDOtprHvNVhbeRaCI7SEEZDjrm2ijjQU/H2OXIoVKOcL5+ut1160sjxM1EkvT1/Hg
+ QonHADaTRWZa/95FFnW/XUAbwkKqMevS1Q0q34fHiAjK1l8+AfLH6sofFRHAwiK8MQblaEG6zoU
+ KFc=
+X-Google-Smtp-Source: AGHT+IGe26rvNUP4FoE0de5LEY9RgUif4tHW9vgOZw8JRsi2x9TQahwCvkwhMoc9l0dkXhMyUk8PKw==
+X-Received: by 2002:a05:6402:e0a:b0:5d0:c9e6:30ba with SMTP id
+ 4fb4d7f45d1cf-5d81e8c12b4mr27466081a12.12.1735461269781; 
+ Sun, 29 Dec 2024 00:34:29 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.59
+ 4fb4d7f45d1cf-5d80675a6ddsm13030664a12.3.2024.12.29.00.34.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:00 -0800 (PST)
+ Sun, 29 Dec 2024 00:34:28 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PULL 15/35] next-cube: move en ethernet MMIO to separate memory
- region on next-pc device
-Date: Sun, 29 Dec 2024 08:25:06 +0100
-Message-ID: <20241229072526.166555-16-huth@tuxfamily.org>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH] tests/functional/test_rx_gdbsim: Use stable URL for
+ test_linux_sash
+Date: Sun, 29 Dec 2024 09:34:19 +0100
+Message-ID: <20241229083419.180423-1-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
-References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.47; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f47.google.com
+Received-SPF: pass client-ip=209.85.208.45; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f45.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -89,113 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-Move the en ethernet MMIO accesses to a separate memory region on the next-pc
-device instead of being part of the next.scr MMIO memory region.
+Yoshinori said [*] URL references on OSDN were stable, but they
+appear not to be. Mirror the artifacts on GitHub to avoid failures
+while testing on CI.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-14-mark.cave-ayland@ilande.co.uk>
+[*] https://www.mail-archive.com/qemu-devel@nongnu.org/msg686487.html
+
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+Message-ID: <20200630202631.7345-1-f4bug@amsat.org>
+[huth: Adapt the patch to the new version in the functional framework]
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 48 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 40 insertions(+), 8 deletions(-)
+ tests/functional/test_rx_gdbsim.py | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index ba468ce922..97a6f6c472 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -110,6 +110,7 @@ struct NeXTPC {
+diff --git a/tests/functional/test_rx_gdbsim.py b/tests/functional/test_rx_gdbsim.py
+index 20623aa51c..49245793e1 100755
+--- a/tests/functional/test_rx_gdbsim.py
++++ b/tests/functional/test_rx_gdbsim.py
+@@ -21,13 +21,16 @@ class RxGdbSimMachine(QemuSystemTest):
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
  
-     MemoryRegion floppy_mem;
-     MemoryRegion timer_mem;
-+    MemoryRegion dummyen_mem;
-     MemoryRegion mmiomem;
-     MemoryRegion scrmem;
+     ASSET_UBOOT = Asset(
+-        'https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz',
+-        '7146567d669e91dbac166384b29aeba1715beb844c8551e904b86831bfd9d046')
++        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
++         'u-boot.bin'),
++        'dd7dd4220cccf7aeb32227b26233bf39600db05c3f8e26005bcc2bf6c927207d')
+     ASSET_DTB = Asset(
+-        'https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb',
++        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
++         'rx-gdbsim.dtb'),
+         'aa278d9c1907a4501741d7ee57e7f65c02dd1b3e0323b33c6d4247f1b32cf29a')
+     ASSET_KERNEL = Asset(
+-        'http://acc.dl.osdn.jp/users/23/23845/zImage',
++        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
++         'zImage'),
+         'baa43205e74a7220ed8482188c5e9ce497226712abb7f4e7e4f825ce19ff9656')
  
-@@ -372,11 +373,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
-     uint64_t val;
+     def test_uboot(self):
+@@ -36,7 +39,7 @@ def test_uboot(self):
+         """
+         self.set_machine('gdbsim-r5f562n8')
  
-     switch (addr) {
--    /* For now return dummy byte to allow the Ethernet test to timeout */
--    case 0x6000:
--        val = 0xff;
--        break;
--
-     default:
-         DPRINTF("BMAP Read @ 0x%x size %u\n", (unsigned int)addr, size);
-         val = 0;
-@@ -1012,6 +1008,38 @@ static const MemoryRegionOps next_timer_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
+-        uboot_path = self.uncompress(self.ASSET_UBOOT)
++        uboot_path = self.ASSET_UBOOT.fetch()
  
-+static void next_dummy_en_write(void *opaque, hwaddr addr, uint64_t val,
-+                                unsigned size)
-+{
-+    /* Do nothing */
-+    return;
-+}
-+
-+static uint64_t next_dummy_en_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    uint64_t val;
-+
-+    switch (addr) {
-+    case 0:
-+        /* For now return dummy byte to allow the Ethernet test to timeout */
-+        val = 0xff;
-+        break;
-+
-+    default:
-+        val = 0;
-+    }
-+
-+    return val;
-+}
-+
-+static const MemoryRegionOps next_dummy_en_ops = {
-+    .read = next_dummy_en_read,
-+    .write = next_dummy_en_write,
-+    .valid.min_access_size = 1,
-+    .valid.max_access_size = 4,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
- static void next_pc_reset(DeviceState *dev)
- {
-     NeXTPC *s = NEXT_PC(dev);
-@@ -1034,6 +1062,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     SysBusDevice *sbd;
-     DeviceState *d;
- 
-+    /* en network (dummy) */
-+    memory_region_add_subregion(&s->scrmem, 0x6000,
-+                                &s->dummyen_mem);
-+
-     /* SCSI */
-     sbd = SYS_BUS_DEVICE(&s->next_scsi);
-     if (!sysbus_realize(sbd, errp)) {
-@@ -1093,6 +1125,9 @@ static void next_pc_init(Object *obj)
-     sysbus_init_mmio(sbd, &s->mmiomem);
-     sysbus_init_mmio(sbd, &s->scrmem);
- 
-+    memory_region_init_io(&s->dummyen_mem, OBJECT(s), &next_dummy_en_ops, s,
-+                          "next.en", 0x20);
-+
-     object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
- 
-     memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
-@@ -1238,9 +1273,6 @@ static void next_cube_init(MachineState *machine)
-         }
-     }
- 
--    /* TODO: */
--    /* Network */
--
-     /* DMA */
-     memory_region_init_io(&m->dmamem, NULL, &next_dma_ops, machine,
-                           "next.dma", 0x5000);
+         self.vm.set_console()
+         self.vm.add_args('-bios', uboot_path,
 -- 
 2.47.1
 
