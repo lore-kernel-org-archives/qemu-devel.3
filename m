@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5600E7718B
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A5EE7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnie-0000ou-8V; Sun, 29 Dec 2024 02:28:12 -0500
+	id 1tRnhY-0006Zz-NU; Sun, 29 Dec 2024 02:27:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhr-0006mj-IQ
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:29 -0500
-Received: from mail-ej1-f48.google.com ([209.85.218.48])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhW-0006ZV-SP
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:02 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhn-0002CH-EF
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:21 -0500
-Received: by mail-ej1-f48.google.com with SMTP id
- a640c23a62f3a-aaec111762bso1088817366b.2
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhV-0002AN-Ak
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:02 -0500
+Received: by mail-ed1-f53.google.com with SMTP id
+ 4fb4d7f45d1cf-5d4e2aa7ea9so14962948a12.2
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457238; x=1736062038;
+ d=1e100.net; s=20230601; t=1735457220; x=1736062020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DzveOhRiIEBig4HvofWIGXADQFAE0L+6BqYli124gd8=;
- b=TqX5fgBMGBX/YIxDVzff+c8kZv0PdCDgVCscM0dVafrpe5dfXHsUAaXB2pZllEWoVA
- LyJXXxlf8rYAtNU9u9wEdcT92mSjULaTZACf05U8iN7k/Kj0wVJOK39gZvMayFVaV64a
- 0Qvz/sZA8FcrfH/AOE54DjOll8LubpnwlZ64oYH9RoaYNT7ZcxhRQYAhbFDpfxJKy+pc
- V/AVNWqnaEWVd7AGh7hkWfvXGqWBXZ3DGLj3u8c/U6sgngw/d+iagONPWzHZCRLM/Ebp
- meCBLYX9qslKhScWeCB9CMjrsj0wI44TSSUA7iTK73dj9bGLO4rbQwcqfLIAbrA0K+13
- 2oLQ==
+ bh=ugCxO5yyfagZMYJJ0uCQVVshXi6/5tCw+NNyfH9jYgU=;
+ b=Tie90xGxCM2P1xRO3U+uTJ7KwFLM9/87bWQbd/OXjP1dTmDzYNG/sCpSa1qlef/5W0
+ JjvHg0hm5G9gW2yLz9PKrlodeQT1GOiqdQHiOUs6T1RlV/oSrX6ngrEoXuUjIDCMM2gK
+ XeCWr0kfJszzO26rtuvXA/r6nVG7h7QOagyND3oj5vNqyGU48GPSzEHlwXRdjKEychfh
+ IVLLZLTfB9c2+s8c6I+QGmWID300Kh9jzIsvoXHzKZE3LfvLw/DCWnShpCy/Xr5o0qrq
+ dlKqLl2fVMQs5Y7tvouKneuc94N9cS0VbhKwTYF+hH+WdM+u7osUfCmL7XtG+Du6eAcw
+ ogLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWs2f9Zv34n9j3OaylXgcaz0s+wHwmD799Iwsc8DKmBVu1IdAkY4r1mpM660nmlXmRsKDq6xvWX4+DY@nongnu.org
-X-Gm-Message-State: AOJu0YwYd98G8s65qCQvTFEzSysO5KnI5UdrYyQ65GfiJrnGg5fwgLeu
- aZlGpOqdf+Z1GsAZ6bXZ3yzmlWbk49X7dz0AQ9RFjBwDPyikJMd7w+UCKA==
-X-Gm-Gg: ASbGncuCYG6UncTjYRwjfWw3236QVjbX4+/KJHPifiW6VkZeMIh3da7zlgle30Sk19w
- WMIS9vxXCpCow+6uDGBD1DVP7WfZNouWWGv8Udzk0dbNE82h25jWN1kZ1y5UNSiHmvx3i0OofbV
- rtTz561J+eq/n8SW+KS4ejSTtWCtPpmmVCNvCNIAcS4FY9FptGRjn8cUHY/wx/jbwO9nbwbbq2V
- R9I+o1oQVvN3xGUMBc2n9PacnHcyOPgi0925PdNrKD8DsWXepg2i3sxI2hQjlvROI2Brn35c447
- g64=
-X-Google-Smtp-Source: AGHT+IF8p66uGfxFARLrByW0GB83ZMKxyby79MDcHRYemDv1UIYUfIBL6VhZRlenlEd4NvT4kXaOJA==
-X-Received: by 2002:a17:907:1a4e:b0:aac:4324:977e with SMTP id
- a640c23a62f3a-aac432497bamr2509176966b.27.1735457237843; 
- Sat, 28 Dec 2024 23:27:17 -0800 (PST)
+ AJvYcCU5hXIzlLLfEy8JJE8slbtA9d8p5Lulmt3nvp8ADH9qYOEaW7tfTflVEV7vl8hNWZr41ZsVHgUkPEzR@nongnu.org
+X-Gm-Message-State: AOJu0YxLxG5nIBDj/xOkvx4kL4SRQRx9sjtqArbMDsSOtKdEG3Qm1cAh
+ EDNoM6dYYtwz48n9vKLtDWwYAmDHGCrJgxvPgpOgbeLjGOu896Vu
+X-Gm-Gg: ASbGnct6/WB1ldV2edAA2b3i0vZTKAiA8FDepY0AZDujt7NiQQrasnLDb86teL8xNYt
+ vOzfFS6kUqMXb2FM2GIWQLkhSoaKbYyRj3UMTWzYye4Yq+ePD7HLtf2TdTzi/PNxUnVzuy/anVY
+ HHtZMUaGxwi6kRTWerXS4OVg40Z+n6gnQa6a6P/37sP8vPMXmSIZqlQzWnngUW91B5oRWhUCkcd
+ 3pI/6QtG5W/ETM/OebKUzWyj86JsaTAUtPAi3P15N44M2zHQAUmoHwgLcQpeSfkVH4UnWHTCr2R
+ CvM=
+X-Google-Smtp-Source: AGHT+IHTlG2ku5V9n8ZwEEieZpP4YxaEaTl9G3h/EkOCzB2Crmqi8XkXCn7RpBVj90ubZg0r1kCtxQ==
+X-Received: by 2002:a17:907:c1d:b0:aae:ccbe:993d with SMTP id
+ a640c23a62f3a-aaeccbe9ac9mr2240794266b.35.1735457219550; 
+ Sat, 28 Dec 2024 23:26:59 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.16
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:17 -0800 (PST)
+ Sat, 28 Dec 2024 23:26:58 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 22/35] next-cube: separate rtc read and write shift logic
-Date: Sun, 29 Dec 2024 08:25:13 +0100
-Message-ID: <20241229072526.166555-23-huth@tuxfamily.org>
+Subject: [PULL 14/35] next-cube: move timer MMIO to separate memory region on
+ next-pc device
+Date: Sun, 29 Dec 2024 08:25:05 +0100
+Message-ID: <20241229072526.166555-15-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.48; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f48.google.com
+Received-SPF: pass client-ip=209.85.208.53; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f53.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -90,180 +92,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Introduce a new next_rtc_cmd_is_write() function to determine if an rtc command
-is a read or write, and start by using it to avoid shifting the rtc input value
-if a rtc read command is executed.
+Move the timer MMIO accesses to a separate memory region on the next-pc device
+instead of being part of the next.scr MMIO memory region.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-21-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241222130012.1013374-13-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 138 ++++++++++++++++++++++++--------------------
- 1 file changed, 74 insertions(+), 64 deletions(-)
+ hw/m68k/next-cube.c | 63 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 50 insertions(+), 13 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 12f8ecd2d4..eb7d3a9cbd 100644
+index 9f49c33bdd..ba468ce922 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -165,6 +165,12 @@ static void next_scr2_led_update(NeXTPC *s)
-     }
- }
+@@ -109,6 +109,7 @@ struct NeXTPC {
+     M68kCPU *cpu;
  
-+static bool next_rtc_cmd_is_write(uint8_t cmd)
+     MemoryRegion floppy_mem;
++    MemoryRegion timer_mem;
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
+ 
+@@ -371,17 +372,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+     uint64_t val;
+ 
+     switch (addr) {
+-    /*
+-     * These 4 registers are the hardware timer, not sure which register
+-     * is the latch instead of data, but no problems so far.
+-     *
+-     * Hack: We need to have the LSB change consistently to make it work
+-     */
+-    case 0x1a000 ... 0x1a003:
+-        val = extract32(clock(), (4 - (addr - 0x1a000) - size) << 3,
+-                        size << 3);
+-        break;
+-
+     /* For now return dummy byte to allow the Ethernet test to timeout */
+     case 0x6000:
+         val = 0xff;
+@@ -400,8 +390,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+                              unsigned size)
+ {
+     switch (addr) {
+-    /* Hardware timer latch - not implemented yet */
+-    case 0x1a000:
+     default:
+         DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
+                 (unsigned int)addr, val, size);
+@@ -980,6 +968,50 @@ static const MemoryRegionOps next_floppy_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
++static void next_timer_write(void *opaque, hwaddr addr, uint64_t val,
++                              unsigned size)
 +{
-+    return (cmd >= 0x80 && cmd <= 0x9f) ||
-+           (cmd == 0xb1);
++    switch (addr) {
++    case 0 ... 3:
++        /* Hardware timer latch - not implemented yet */
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
 +}
 +
- static void next_scr2_rtc_update(NeXTPC *s)
++static uint64_t next_timer_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val;
++
++    switch (addr) {
++    case 0 ... 3:
++        /*
++         * These 4 registers are the hardware timer, not sure which register
++         * is the latch instead of data, but no problems so far.
++         *
++         * Hack: We need to have the LSB change consistently to make it work
++         */
++        val = extract32(clock(), (4 - addr - size) << 3,
++                        size << 3);
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++
++    return val;
++}
++
++static const MemoryRegionOps next_timer_ops = {
++    .read = next_timer_read,
++    .write = next_timer_write,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
+ static void next_pc_reset(DeviceState *dev)
  {
-     uint8_t old_scr2, scr2_2;
-@@ -186,76 +192,80 @@ static void next_scr2_rtc_update(NeXTPC *s)
-                                ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-             }
-             if (rtc->phase >= 8 && rtc->phase < 16) {
--                rtc->value = (rtc->value << 1) |
--                             ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--
--                /* if we read RAM register, output RT_DATA bit */
--                if (rtc->command <= 0x1F) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    if (rtc->ram[rtc->command] & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
--                    }
--
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--                }
--                /* read the status 0x30 */
--                if (rtc->command == 0x30) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    /* for now status = 0x98 (new rtc + FTU) */
--                    if (rtc->status & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                if (next_rtc_cmd_is_write(rtc->command)) {
-+                    /* Shift in value to write */
-+                    rtc->value = (rtc->value << 1) |
-+                                 ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-+                } else {
-+                    /* Shift out value to read */
-+
-+                    /* if we read RAM register, output RT_DATA bit */
-+                    if (rtc->command <= 0x1F) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        if (rtc->ram[rtc->command] &
-+                            (0x80 >> (rtc->phase - 8))) {
-+                                scr2_2 |= SCR2_RTDATA;
-+                        }
-+
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
--
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--                }
--                /* read the status 0x31 */
--                if (rtc->command == 0x31) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    if (rtc->control & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                    /* read the status 0x30 */
-+                    if (rtc->command == 0x30) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        /* for now status = 0x98 (new rtc + FTU) */
-+                        if (rtc->status & (0x80 >> (rtc->phase - 8))) {
-+                            scr2_2 |= SCR2_RTDATA;
-+                        }
-+
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
--                }
--
--                if ((rtc->command >= 0x20) && (rtc->command <= 0x2F)) {
--                    scr2_2 = scr2_2 & (~SCR2_RTDATA);
--                    /* for now 0x00 */
--                    time_t time_h = time(NULL);
--                    struct tm *info = localtime(&time_h);
--                    int ret = 0;
--
--                    switch (rtc->command) {
--                    case 0x20:
--                        ret = SCR2_TOBCD(info->tm_sec);
--                        break;
--                    case 0x21:
--                        ret = SCR2_TOBCD(info->tm_min);
--                        break;
--                    case 0x22:
--                        ret = SCR2_TOBCD(info->tm_hour);
--                        break;
--                    case 0x24:
--                        ret = SCR2_TOBCD(info->tm_mday);
--                        break;
--                    case 0x25:
--                        ret = SCR2_TOBCD((info->tm_mon + 1));
--                        break;
--                    case 0x26:
--                        ret = SCR2_TOBCD((info->tm_year - 100));
--                        break;
--
-+                    /* read the status 0x31 */
-+                    if (rtc->command == 0x31) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        if (rtc->control & (0x80 >> (rtc->phase - 8))) {
-+                            scr2_2 |= SCR2_RTDATA;
-+                        }
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
+     NeXTPC *s = NEXT_PC(dev);
+@@ -1042,6 +1074,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->scrmem, 0x18000,
+                                 sysbus_mmio_get_region(sbd, 0));
  
--                    if (ret & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                    if ((rtc->command >= 0x20) && (rtc->command <= 0x2F)) {
-+                        scr2_2 = scr2_2 & (~SCR2_RTDATA);
-+                        /* for now 0x00 */
-+                        time_t time_h = time(NULL);
-+                        struct tm *info = localtime(&time_h);
-+                        int ret = 0;
-+
-+                        switch (rtc->command) {
-+                        case 0x20:
-+                            ret = SCR2_TOBCD(info->tm_sec);
-+                            break;
-+                        case 0x21:
-+                            ret = SCR2_TOBCD(info->tm_min);
-+                            break;
-+                        case 0x22:
-+                            ret = SCR2_TOBCD(info->tm_hour);
-+                            break;
-+                        case 0x24:
-+                            ret = SCR2_TOBCD(info->tm_mday);
-+                            break;
-+                        case 0x25:
-+                            ret = SCR2_TOBCD((info->tm_mon + 1));
-+                            break;
-+                        case 0x26:
-+                            ret = SCR2_TOBCD((info->tm_year - 100));
-+                            break;
-+                        }
-+
-+                        if (ret & (0x80 >> (rtc->phase - 8))) {
-+                            scr2_2 |= SCR2_RTDATA;
-+                        }
-+                        rtc->retval = (rtc->retval << 1) |
-+                                      ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                     }
--                    rtc->retval = (rtc->retval << 1) |
--                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                 }
--
-             }
++    /* Timer */
++    memory_region_add_subregion(&s->scrmem, 0x1a000, &s->timer_mem);
+ }
  
-             rtc->phase++;
+ static void next_pc_init(Object *obj)
+@@ -1065,6 +1099,9 @@ static void next_pc_init(Object *obj)
+                           "next.floppy", 4);
+ 
+     object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
++
++    memory_region_init_io(&s->timer_mem, OBJECT(s), &next_timer_ops, s,
++                          "next.timer", 4);
+ }
+ 
+ /*
 -- 
 2.47.1
 
