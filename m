@@ -4,49 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61887E7718F
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 15:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1CAE7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 15:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRv1D-00008n-9R; Sun, 29 Dec 2024 10:15:51 -0500
+	id 1tRvPI-0006Bk-0d; Sun, 29 Dec 2024 10:40:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tRv1B-00008Y-UP; Sun, 29 Dec 2024 10:15:49 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1tRvPF-0006B0-FQ; Sun, 29 Dec 2024 10:40:41 -0500
+Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tRv1A-0007yS-46; Sun, 29 Dec 2024 10:15:49 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E14484E600F;
- Sun, 29 Dec 2024 16:15:37 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id RW1WeoEG9Y40; Sun, 29 Dec 2024 16:15:35 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id BE92A4E600E; Sun, 29 Dec 2024 16:15:35 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BCF3A746F60;
- Sun, 29 Dec 2024 16:15:35 +0100 (CET)
-Date: Sun, 29 Dec 2024 16:15:35 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>
-cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] target/m68k: Handle EXCP_SEMIHOSTING for m68k class CPU
-In-Reply-To: <20241229-m68k-semihosting-v2-1-8a08b2d199a5@flygoat.com>
-Message-ID: <4e51180d-9f2a-c778-13b7-5130ad4d660c@eik.bme.hu>
-References: <20241229-m68k-semihosting-v2-1-8a08b2d199a5@flygoat.com>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1tRvPD-0003b0-LE; Sun, 29 Dec 2024 10:40:41 -0500
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal
+ [10.202.2.49])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id B7A4425400E9;
+ Sun, 29 Dec 2024 10:40:37 -0500 (EST)
+Received: from phl-imap-12 ([10.202.2.86])
+ by phl-compute-09.internal (MEProxy); Sun, 29 Dec 2024 10:40:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1735486837;
+ x=1735573237; bh=yCGTfLw0+h/gUpAefSLfg0+itHdtkQU08+0q7cUgP10=; b=
+ bLYbCdx2zuCOufTAgduX6VjqUYCtUQZ8O9OCACVmGcA46/Vahtw9pfETjnOKBUe7
+ /SHO8NAIRqnwGfo2TcE3IZNN9H3ruPj15CgYFdMvv1w2M0REQ1/xH6pu/kekKReD
+ jnP9iikqY/LHnH+CIuyEoyPSqQGLy4touxUCn6TbVKY9pkzEhS5RCng2gJ451w/4
+ LSY6wOJH0B6Hp4o25CZ55BZTbILxD1Ty0xPRB8VTqxtS9smcfclmi76FAKtAj66e
+ 9VBPcLvYct38Ak545MpGHUGHsMrm40ksdTR7cGcGnYenXlwS4aXSvgAPXM+0zTSg
+ 8BQ/nWxHh70qKAbTie3kZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735486837; x=
+ 1735573237; bh=yCGTfLw0+h/gUpAefSLfg0+itHdtkQU08+0q7cUgP10=; b=J
+ cTPTPw6AtMvNIzwr/j2Xlnm1ExIADD7kMTZlVnGqzPBR64pN7mjR3rkfYx6giOcS
+ +xuuZVzu83Y75eRAzFB+/xyvgW2BhoUdGvMiNhiMcm0llkunba91N0CM6+CIVzZE
+ doQQs8g+kKgQyhaI6LfB67yT35o/es3vN2bW/4g2QXwLYlGVvtGHRv4EohnIGvjS
+ zUwMQCyls67xLD5swYNX0Ih/DZ0Qv3BP9GXvN+FIv6GH848eUkVDCXgZZm0LYYSW
+ atzXzfMpAhybwof9mwcW2tCbxtuXFBG+AqDHH+sH7nedGsgy0C2+UnmgRrice+Zf
+ 8jLEOV30LwnOK6HyoGC4w==
+X-ME-Sender: <xms:dW1xZ5n6M2LqP64QpCSTrqdnapwFS6KUPbT_KLdh_pXc8NkvXJwutg>
+ <xme:dW1xZ01FSX47RZdbEzuxn4czzgXnf1KlNWSbCbhIHtRT1TEafWnr3NvVqVZ1jXXNi
+ 4JXhzLHp9BvArz9B2w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgedgkedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+ necuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfh
+ hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdffkeet
+ hefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivgeptd
+ enucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgr
+ thdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+ htohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheprhhitghhrghr
+ ugdrhhgvnhguvghrshhonheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqd
+ guvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqshhtrggslhgv
+ sehnohhnghhnuhdrohhrghdprhgtphhtthhopehlrghurhgvnhhtsehvihhvihgvrhdrvg
+ hu
+X-ME-Proxy: <xmx:dW1xZ_oH0jkNfqiZnS6wku9o-bUWzc20p8Ck2fycwR6LevrI-ymR1w>
+ <xmx:dW1xZ5lt87wTM8-ghoUV74V5RWvOpGCcQNGjZEZpl2cZKTzEgmh-Ug>
+ <xmx:dW1xZ33kbBu458HawswKeqy9g_kPFWZHYnnYWeMAY7V2QF2UX0KC-g>
+ <xmx:dW1xZ4szyAzB0phIvTF5uTXCWkcgVQvx8lt4UUKaPyqSXa74v2vhcw>
+ <xmx:dW1xZyQWYf6m6EZjYl-tVJX8FsbQ2FcdZD2MFsluVzUNMkG-R1FuxDhO>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 488A51C20066; Sun, 29 Dec 2024 10:40:37 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Date: Sun, 29 Dec 2024 15:40:17 +0000
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+Cc: "QEMU devel" <qemu-devel@nongnu.org>, "Laurent Vivier" <laurent@vivier.eu>,
+ "Richard Henderson" <richard.henderson@linaro.org>, qemu-stable@nongnu.org
+Message-Id: <5d0800cf-a8af-4c65-83db-36940b49563a@app.fastmail.com>
+In-Reply-To: <4e51180d-9f2a-c778-13b7-5130ad4d660c@eik.bme.hu>
+References: <20241229-m68k-semihosting-v2-1-8a08b2d199a5@flygoat.com>
+ <4e51180d-9f2a-c778-13b7-5130ad4d660c@eik.bme.hu>
+Subject: Re: [PATCH v2] target/m68k: Handle EXCP_SEMIHOSTING for m68k class CPU
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=202.12.124.157;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,73 +112,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 29 Dec 2024, Jiaxun Yang wrote:
-> EXCP_SEMIHOSTING can be generated by m68k class CPU with
-> HALT instruction, but it is never handled properly and cause
-> guest fall into deadlock.
->
-> Moving EXCE_SEMIHOSTING handling code to common do_interrupt_all
-> routine to ensure it's handled for both CPU classes.
->
-> Fixes: f161e723fdfd ("target/m68k: Perform the semihosting test during translate")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> Changes in v2:
-> - hoist both calls to do_interrupt_all (Richard)
-> - Link to v1: https://lore.kernel.org/r/20241229-m68k-semihosting-v1-1-db131e2b5212@flygoat.com
-> ---
-> target/m68k/op_helper.c | 12 +++++++++---
-> 1 file changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-> index 15bad5dd46518c6e86b6273d4a2b26b3b6f991de..9dd76f540b4871d3d0ab0e95747c85434e5d677d 100644
-> --- a/target/m68k/op_helper.c
-> +++ b/target/m68k/op_helper.c
-> @@ -202,9 +202,6 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
->             /* Return from an exception.  */
->             cf_rte(env);
->             return;
-> -        case EXCP_SEMIHOSTING:
-> -            do_m68k_semihosting(env, env->dregs[0]);
-> -            return;
->         }
->     }
->
-> @@ -422,6 +419,15 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
->
-> static void do_interrupt_all(CPUM68KState *env, int is_hw)
-> {
-> +    CPUState *cs = env_cpu(env);
 
-This could be within the if block if not needed elsewhere.
 
-> +
-> +    if (!is_hw) {
-> +        switch (cs->exception_index) {
-> +        case EXCP_SEMIHOSTING:
-> +            do_m68k_semihosting(env, env->dregs[0]);
-> +            return;
-
-Also why use switch for a single case? Why not write
-
-if (!is_hw && cs->exception_index == EXCP_SEMIHOSTING)
-
-instead?
-
-Regards,
-BALATON Zoltan
-
-> +        }
-> +    }
->     if (m68k_feature(env, M68K_FEATURE_M68K)) {
->         m68k_interrupt_all(env, is_hw);
->         return;
+=E5=9C=A82024=E5=B9=B412=E6=9C=8829=E6=97=A5=E5=8D=81=E4=BA=8C=E6=9C=88 =
+=E4=B8=8B=E5=8D=883:15=EF=BC=8CBALATON Zoltan=E5=86=99=E9=81=93=EF=BC=9A
+[...]
 >
-> ---
-> base-commit: 2b7a80e07a29074530a0ebc8005a418ee07b1faf
-> change-id: 20241229-m68k-semihosting-2c49c86d3e3c
+> Also why use switch for a single case? Why not write
 >
-> Best regards,
+> if (!is_hw && cs->exception_index =3D=3D EXCP_SEMIHOSTING)
+
+Mostly for clarity and matching the style above, see:
+
+    if (!is_hw) {
+        switch (cs->exception_index) {
+        case EXCP_RTE:
+            /* Return from an exception.  */
+            m68k_rte(env);
+            return;
+        }
+    }
+
+Thanks
+
 >
+> instead?
+>
+[...]
+>>
+
+--=20
+- Jiaxun
 
