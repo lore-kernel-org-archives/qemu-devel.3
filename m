@@ -4,92 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69304E77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Dec 2024 22:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25064E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 00:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRfiS-0005ri-FC; Sat, 28 Dec 2024 17:55:28 -0500
+	id 1tRh55-0005lI-3W; Sat, 28 Dec 2024 19:22:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRfiO-0005if-51
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 17:55:24 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRfiL-00032V-Tt
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 17:55:23 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2f441904a42so10808520a91.1
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 14:55:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735426519; x=1736031319; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jwZRikBHZ6KNJ6OOk/3H2qwRn2eKDb3p3ZPj9cy+iuQ=;
- b=U6UIne7tpZxIjQ8zke6OYp+QnhC3QGnMA4j9Qk1Fj0hAfq/A0lK9FRZUPG2IOzrgGi
- MmOHpoKrmUuFiXkR+WQg9aZw5mg4s8mwK5XMRKW+JvvIwmjCoWoQiIeohQad91gK24VX
- NX3++tlbYlz8U7+XJdlIFiNa8Petnj7EavZz+n4I/UryUodX+qhT64Z2K1TRsphv15ym
- ZSl3fHrQdJf/Mi/4uAcfpEjomoXij3z7PUA/OSXLYIgNwkgt8YSoIXNe575itpdC1mjw
- Sn1u2XZtqVT3+nnYYcQFLyZpAXplJ9Q1rZM4EByydT69+ei3OWKrkI+i8Aqz7QMAGmlP
- eeOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735426519; x=1736031319;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jwZRikBHZ6KNJ6OOk/3H2qwRn2eKDb3p3ZPj9cy+iuQ=;
- b=CzpVC7k18yXt81TXjlwmBU8gdQpw7M3dSRlCAZRW+T7vxjf4nwRFy1jfUkGPIlkgjx
- VsyOFk+GbUVfQLRISojvxJpVWDSrsEqieQ8Hj2BIh6mpcs+tTyXTYF2z/sIoWuyKZ8QS
- DO7cej8h6uRqf9c/Q/tNnaXX9vEOTEDDY2vfzR9K8YmljHJdGmypUW/TgfdlsYMM32J3
- 9avzEZTqdyvr9MOiwJ6IdAjdt4abBGeiqP0bbnkarpMSMy3hUduzhEHrbZYQN/ihnNft
- W7uOnTwwS++nKmOAU7bqDhL2Tk9FoOLtYFmhCMnSb/aXaUffEuMpOn0vlyH68ZQKkg6X
- v6YA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUzCzbUiC9oWhVVgw4AikCz8zInatv2A/FDRiYmfSh6yBgw9voHx46Q7W/JlwUfCe2IxOf+W/jxyQ0@nongnu.org
-X-Gm-Message-State: AOJu0Yz4Rg4FQLb5S1/G5pa/s7XI4I5nUYPrPhjhaEMmyEXgGuQV/ojr
- 0jsRsV3+F1o/0TlxKZXhJjQDvvonu3HztVKnll9JH0lXN/T/Rxq9fVhczM1kcU7P67QQe/GyBuh
- OlHE=
-X-Gm-Gg: ASbGncsP7Wify9DkflJrFEoiCH9TJujno9nJLr3xsQU2bGMq0MZN1/F+7Fofi1zF8QY
- tOFsquaBacLlXZHV+4qi/m3zgUM0WPirgYbDl9KQVS8QOK4dCuo57UH/QgpM5TXFqY9uelBMeiT
- o0DL8YCvzgjFB8eHE0F4cZk6oGVTldFLSKMoHyIHvFhrzVNu2LB6JCCRd6w2F0oJrdIGVmWPNJ5
- YgPszB7F35N8Fpapj2+EpGWboHuWIIdPi6fGnhMZ2a2UtUQeH5ry1QLsx/IiMc/ZsmYIKowhCIW
- k1bApay3VGnAIDi0iQgbsFFjj9BA/zshvBfIjN0=
-X-Google-Smtp-Source: AGHT+IFMsfVfz731wevtHtSnVIl2/eIImcDnJsr8qwWCEYblTYdUkA1skNsW+rTwhUxQHpUth/h5Ig==
-X-Received: by 2002:a17:90a:fc48:b0:2ee:c059:7de3 with SMTP id
- 98e67ed59e1d1-2f452e3a9efmr43792943a91.18.1735426519180; 
- Sat, 28 Dec 2024 14:55:19 -0800 (PST)
-Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
- [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4477c4cc5sm19993365a91.12.2024.12.28.14.55.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 28 Dec 2024 14:55:18 -0800 (PST)
-Message-ID: <e2a83e65-8ed4-4fcd-933b-1f40446d0fe5@linaro.org>
-Date: Sat, 28 Dec 2024 14:55:17 -0800
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1tRh52-0005l0-Jo; Sat, 28 Dec 2024 19:22:53 -0500
+Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1tRh4y-0006Di-UU; Sat, 28 Dec 2024 19:22:51 -0500
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 46D6125400EA;
+ Sat, 28 Dec 2024 19:22:45 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Sat, 28 Dec 2024 19:22:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm3; t=1735431765; x=1735518165; bh=1Y
+ 7M52wWuLrMrOLMsL7Y9mSw1SDq968VdmcgQIsEgkQ=; b=tK4o6vBG9fv1J6d5HT
+ 6FeLchtx4hgRio/7/GoOI0el6JmmazY9Bc+tqfySNDOwXTNWrDHYG0A55OyHG260
+ BuBSVlBP6HbGo764H3PJV/iam23HGS/9wGeWFlL1uA0VvjuM5b28iksOpXq+3vD0
+ BvntvH4D4CTDcfqmvKqzMkOkFEevL+RM2A+3FxMJMtApZO6ysec5FlK//5uKH+4x
+ yVkuIaft2TPKSkgg/x8tuXVhcSzQnkkaCRpR99PDxza65JB/WQaxcZSS4csZjx4u
+ oQ8m4UfS6kh9Q/75oNIFTVL2wCAe2pcHJRJVqPyfse0WA7a+sh/IGHlDqRyh/ulV
+ mFfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1735431765; x=1735518165; bh=1Y7M52wWuLrMrOLMsL7Y9mSw1SDq
+ 968VdmcgQIsEgkQ=; b=YlzdzBXGHMlqUhCfsbdvbi6Hysmo6Xwlv9V9wMXvd6zU
+ zXsImmZ3bvLQfesDENmrjDHGUuVltwFhUQAofToGvxdEhk8jl6ts0rjzfM/4ptep
+ QRhQ0VcjxobDUx5qW5/vrgK+6AaSu6yeM17QjqtazuTWrwDe6+xwhdUDT4KnN9aO
+ dm8xhoM8O6FNG9KdjvQhwIeA16HfiQcAkHycI0/5mQn0TEM8FD7u9bD83p0eOTD7
+ XlgT+A5OkpAUW4AGsFMYhzd/ccu/dxNgvwtAv1IZSdWhNKxWzLm4GVC6ZkQZLuG4
+ 78dU6iJASB9qMwpz9yEbG+gnjq2nP6NCzNNd99a5PA==
+X-ME-Sender: <xms:VJZwZzuJMcsjfqVH1pRuLO6tDEiX9ZqRPDsYVFvARdtO5I9qBLjWNw>
+ <xme:VJZwZ0eMvPllDx3Ya3dOEOyx3c9D-3ffyHqsNeTK_btiryCaGEJe_fq8UwZLPVsBZ
+ 1LXP97aeMH3Z1e8i9U>
+X-ME-Received: <xmr:VJZwZ2zcI5YJAiMyi6pYYG3xBMV_LRAAaBJ3XEvH8Z1SJaunM_JkRFT0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvfedgvddvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecu
+ hfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgoh
+ grthdrtghomheqnecuggftrfgrthhtvghrnhepffetueegkedtgfejveeuvdfghfegtddv
+ gfehudeghfegheetueduheduveejtefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ hrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtgho
+ mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjh
+ hirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomhdprhgtphhtthhopehqvghmuhdq
+ shhtrggslhgvsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlh
+ esnhhonhhgnhhurdhorhhgpdhrtghpthhtoheplhgruhhrvghnthesvhhivhhivghrrdgv
+ uhdprhgtphhtthhopehrihgthhgrrhgurdhhvghnuggvrhhsohhnsehlihhnrghrohdroh
+ hrgh
+X-ME-Proxy: <xmx:VJZwZyNOwUXD3or_e6GkBTZSCfRz77piVMPDHrs5Df8y3hH9Co1E5w>
+ <xmx:VJZwZz97Cf7OVet5p7bUrs5aX2R1z_aj7ecg-A91_NAk9fiwvqG0vA>
+ <xmx:VJZwZyWwvm8B5ns4WG0NatKM_IRjjd-a4O9g0loYbzqfsy_vSUScEg>
+ <xmx:VJZwZ0fPK9GkSdUTQMjwfMjl_HfpMLyMKDsR8g3vMy6bFreSOtIXig>
+ <xmx:VZZwZ-nVuyJxNHsBF_xJhzPdtXdjH0NRRiLTAC0vy5LwuXWKspK7JVC8>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 28 Dec 2024 19:22:43 -0500 (EST)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Sun, 29 Dec 2024 00:22:33 +0000
+Subject: [PATCH] target/m68k: Handle EXCP_SEMIHOSTING for m68k class CPU
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: Speed up hppa_is_pa20()
-To: Helge Deller <deller@gmx.de>, BALATON Zoltan <balaton@eik.bme.hu>,
- Helge Deller <deller@kernel.org>
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
-References: <Z2-nWcZ5l6oklIZW@p100>
- <8150fda8-7f13-75d6-57cf-e2099b14ff33@eik.bme.hu>
- <96b8aad9-1eda-495c-a0f0-0e955151d4fb@gmx.de>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <96b8aad9-1eda-495c-a0f0-0e955151d4fb@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241229-m68k-semihosting-v1-1-db131e2b5212@flygoat.com>
+X-B4-Tracking: v=1; b=H4sIAEiWcGcC/x3MQQqAIBBA0avErBNqCtGuEi3CJh0iCycikO6et
+ HyL/zMIJSaBocqQ6GbhIxa0dQUuzNGT4qUYsMG+RbRq12ZTQjuHQy6OXqHrrTN66ahzULIz0cr
+ Pvxyn9/0AqSFz+mIAAAA=
+X-Change-ID: 20241229-m68k-semihosting-2c49c86d3e3c
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1145;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=1ytj1cwzpZ3HdUNNeVM1q2TYT84itjIJ9G6gJZ//CFw=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhvSCaUFaSdvWeXRMyF42L4MzhWfGgluLN56P8flaELTuE
+ Mc846LNHaUsDGJcDLJiiiwhAkp9GxovLrj+IOsPzBxWJpAhDFycAjCR3xcZGVZymmz1dEzTNruy
+ 0krsWe//yOzf2n9jax0KC+sfM+mlyDL8s7Pr2cO/mf/wCf/NWrus9vo9my64LGli8JN9K5VkZi4
+ v4QEA
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=202.12.124.156;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,27 +123,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/28/24 13:12, Helge Deller wrote:
-> On 12/28/24 12:16, BALATON Zoltan wrote:
->>> static inline bool hppa_is_pa20(CPUHPPAState *env)
->>> {
->>> -    return object_dynamic_cast(OBJECT(env_cpu(env)), TYPE_HPPA64_CPU) != NULL;
->>> +    return env->is_pa20;
->>> }
->>
->> Now this function name is longer than what it extends to so maybe it
->> would be simpler to drop the inline function and use env->is_pa20
->> directly where it's needed?
-> 
-> Yes, that's a possible cleanup which can be done afterwards.
-> 
->> Is there a reason to keep the function?
-> 
-> Personally I like it more than the "env->is_pa20".
-> Richard, any opinion from your side? Should I send a such a replacement patch?
+EXCP_SEMIHOSTING can be generated by m68k class CPU with
+HALT instruction, but it is never handled properly and cause
+guest fall into deadlock.
 
-I like keeping the accessor function.
+Handle it as what we've done to coldfire.
 
+Fixes: f161e723fdfd ("target/m68k: Perform the semihosting test during translate")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+---
+ target/m68k/op_helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-r~
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 15bad5dd46518c6e86b6273d4a2b26b3b6f991de..95b3d5cf052c6ffd515afdffd5465550ae3af455 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -285,6 +285,9 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+             /* Return from an exception.  */
+             m68k_rte(env);
+             return;
++        case EXCP_SEMIHOSTING:
++            do_m68k_semihosting(env, env->dregs[0]);
++            return;
+         }
+     }
+ 
+
+---
+base-commit: 2b7a80e07a29074530a0ebc8005a418ee07b1faf
+change-id: 20241229-m68k-semihosting-2c49c86d3e3c
+
+Best regards,
+-- 
+Jiaxun Yang <jiaxun.yang@flygoat.com>
+
 
