@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5837E7718B
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B579E77191
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRniA-0006vH-S0; Sun, 29 Dec 2024 02:27:44 -0500
+	id 1tRnik-0001Ak-Un; Sun, 29 Dec 2024 02:28:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhh-0006d1-F8
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:16 -0500
-Received: from mail-ej1-f43.google.com ([209.85.218.43])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnia-0000Ub-OI
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:28:08 -0500
+Received: from mail-ej1-f51.google.com ([209.85.218.51])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhe-0002B9-7E
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:11 -0500
-Received: by mail-ej1-f43.google.com with SMTP id
- a640c23a62f3a-aa67f31a858so1492559766b.2
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniY-0002ol-Jy
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:28:07 -0500
+Received: by mail-ej1-f51.google.com with SMTP id
+ a640c23a62f3a-aabfb33aff8so1455029766b.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:28:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457229; x=1736062029;
+ d=1e100.net; s=20230601; t=1735457284; x=1736062084;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:subject:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DwMuN75c9NjsqQ/BaCCQ0FGhDQvIu13vYaZ8NeniCDw=;
- b=oogBPqWikHQCSmH4oPtNw41VVCmhCqCydgM5gDwdP8yWgBcne+8Rt1i8/lURIl6RZx
- qpaBEPrlKj86ZyYdF6E5uLogrDMzspnnbLVwYIf5DUApaeOpS4rRzxUnq+JvUO2jrvdt
- r3YPiMPWhmUeLC8po9TKdf1d3Ojhpkl0Pw36EPanhLgIFnyM796hHV4EkWJsWM6+wH2f
- B6/Gzr0oBCqi7NhYvUckRCW8wdB4lVg+8s/zgJeHwt6Z0f7iI8ClHG9zHy5zYlcBLz5v
- LUVrq3C3059qCw7F5faQshomp/DQWXbF+Wg0bK9x7UMMtknFXVfaPngRtU5ui/Bb9cUy
- AT3Q==
+ bh=d7EIFKUfqXPPhOJYJN1KXzH84tgDNhhwbOVdQrNPcqQ=;
+ b=ZyScH4yM2DxTDmDtbyRNAh50hkvw4VbmxSBXpZJwN+6McV9/BDsQrA2iZdFN01AWck
+ Ff+UMtvbnReT7T3IfeNQMalbvcqtsxT1Wo3ImDY9KF+ZHh8xcXaNmgYubeFZ3mI0c7e0
+ 3RhosHT43orRPqxWK9g0kKxne+bHABJJp/R+pM/JpvbHTjAfkocpl10dbnQHaKsZC2h8
+ 9MljFkGuJFIPV2vjPysPv4CnaZm2sqNYFzLOZRuoNxWNIDO2ot9D+k5EbvYlGYurzMaq
+ x+KfpiaYx1TPH4jKv2DxMPuksr3+7e6t/a89VJW5CAEcMX3i6QCKmixoCJwGagHbJfou
+ Wx9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjDTY79T0DHAdDQgRfm7Rvj1RHof1R+ILrDP4zsp6Zl6LbdR46PCbbFYa01WE/GTj69t0rEWbSKO5D@nongnu.org
-X-Gm-Message-State: AOJu0Yz1jUomYRglaj6Aub7JkFD4kzVmSEWbprox9ZU/z7SeFG+jcExP
- CuW6+JsYJ1+F6gmdOlFL0/CnNpS9rgrIrkXpT3cmPQeZ73J0XWzO
-X-Gm-Gg: ASbGnctB3IV4CKfe1PiGCa4+i9SEyBvqoTb4bHT6gsth8+uX8+PFbDgXx73pPIfiEw/
- a75rfN8UX+byuFShsvYnHpad8svuVyAMdi3QXsMGxikH9FgATWkpguYzYXmrdzmvZWXb8SYC8XY
- 0qB/HAAbgywZ+yBLbYE9aAgG33AH0ny9ZG93lPeRv9nBzF2MI4SkcbxHT+FMPrTOVWtsrRx7YCI
- mi7cX/KgPC4SphCnQQshfVSayrU9U+DB1gbaZy1TU35tsovH+G0URp6ad6sAyNh2wplossNLfhE
- Emg=
-X-Google-Smtp-Source: AGHT+IE/fRKGol2OR7aC/FD+P5mFMGTcUbXsBdfVWglPWKCo8Lk9ZXPAwrPwuFEWfNdUdv8XASO8Jg==
-X-Received: by 2002:a17:907:9689:b0:aae:ee49:e000 with SMTP id
- a640c23a62f3a-aaeee49e11dmr1441065966b.18.1735457228453; 
- Sat, 28 Dec 2024 23:27:08 -0800 (PST)
-Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
+ AJvYcCUmf470l6kH8mYWtakF0FBsSd0FFNZcWukfKPIzcL1PZdCONjRgKMOGb4FRmZ/F4ZfupTzJ+PlUEi+Q@nongnu.org
+X-Gm-Message-State: AOJu0YzDI6iHJmtulNwIvXJhJ/tl6jeyynlN/BTKYKuOpznX6LXvfdYp
+ uKFM3olaxdBfmTV5ZiTMZVEQchirGH8yO+2ZRB3vxxqov/NjVRQnPuPwFQ==
+X-Gm-Gg: ASbGncvkLjwffq7gD4cR4q0U2fmHR2ADH9c7ewAGnEnzJpAXgrqCVBUp2YcQvO0DGdR
+ 5iiCAexkxBG7SSp4+gXP516eCE7t+zXH6fm3paFlivfCqbj0iT+wti0hJGZT+Qo3aGtArwZR9i0
+ 3YODY5wLI4HPSShKyakafLl740CAA7D9GyasMQ1+2rvpQyEQMHMlIvm1vsoNRtSZE3okVjCpLvC
+ cMUMdiEDDYZR+ZcMowIbuPPGQSPeY37YlmaR1UuDJYjlzZeNOfPXgEJnzOcif0WTU45SorZ+QJi
+X-Google-Smtp-Source: AGHT+IGGCEUIQiYpcjeS3rcnjBM/egx2WIJyaoffObhgBPDcjwP4LSJjI/uUtt8K9y3D5YQX4pBiIQ==
+X-Received: by 2002:a17:906:f596:b0:aa6:88a2:cfbd with SMTP id
+ a640c23a62f3a-aac346918fcmr2377753966b.22.1735457282463; 
+ Sat, 28 Dec 2024 23:28:02 -0800 (PST)
+Received: from tpx1 (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.06
+ a640c23a62f3a-aac0f0160f8sm1337987466b.168.2024.12.28.23.28.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:07 -0800 (PST)
+ Sat, 28 Dec 2024 23:28:01 -0800 (PST)
+Date: Sun, 29 Dec 2024 08:27:59 +0100
 From: Thomas Huth <huth@tuxfamily.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PULL 18/35] next-cube: rearrange NeXTState declarations to improve
- readability
-Date: Sun, 29 Dec 2024 08:25:09 +0100
-Message-ID: <20241229072526.166555-19-huth@tuxfamily.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
-References: <20241229072526.166555-1-huth@tuxfamily.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 00/33] next-cube: more tidy-ups and improvements
+Message-ID: <20241229082759.35a4a307@tpx1>
+In-Reply-To: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
+References: <20241222130012.1013374-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.43; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f43.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.218.51; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f51.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
  HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,114 +87,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Am Sun, 22 Dec 2024 12:59:39 +0000
+schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-Move the NeXTState, next_dma and TYPE_NEXT_MACHINE definition to the same area
-at the top of next-cube.c.
+> This series contains a number of tidy-ups and improvements to the NeXTCube machine
+> which include:
+> 
+>   - Bringing the code up-to-date with our latest coding standards/APIs, in particular
+>     related to the board configuration and IRQ wiring
+> 
+>   - Remove the remaining overlapping memory regions and consolidating multiple
+>     register implementations into a single place
+> 
+>   - Add a new next-scsi device containing the ESP device and its associated
+>     CSRs
+> 
+>   - Adding the empty_slot device to fill unimplemented devices and removing
+>     the "catch-all" next.scr memory region
+> 
+>   - QOMifying the next-rtc device and wiring it up with gpios as required
+> 
+> The next-cube machine looks in fairly good shape now, the main remaining work is to
+> create a separate device for the DMA controller and update the wiring of the IRQs
+> (including to the CPU) accordingly.
+> 
+> There is no change to the behaviour of the next-cube machine with this series in
+> that the next-cube machine with a suitable ROM image can now load the kernel from
+> a pre-installed NeXTStep image and start executing it.
+> 
+> Note that due to the device model changes this is a migration break, however since
+> the next-cube machine is currently unable to boot anything useful, I don't see
+> this as an issue.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> 
+> [Patches still needing review: 21, 25, 28, 29, 30]
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241222130012.1013374-17-mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Thomas Huth <huth@tuxfamily.org>
----
- hw/m68k/next-cube.c | 64 ++++++++++++++++++++++-----------------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+Thanks, I've queued the patches now!
 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 73c4d4ea9c..0cf4470ce8 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -38,30 +38,10 @@
- #define DPRINTF(fmt, ...) do { } while (0)
- #endif
- 
--#define TYPE_NEXT_MACHINE MACHINE_TYPE_NAME("next-cube")
--OBJECT_DECLARE_SIMPLE_TYPE(NeXTState, NEXT_MACHINE)
--
- #define ENTRY       0x0100001e
- #define RAM_SIZE    0x4000000
- #define ROM_FILE    "Rev_2.5_v66.bin"
- 
--typedef struct next_dma {
--    uint32_t csr;
--
--    uint32_t saved_next;
--    uint32_t saved_limit;
--    uint32_t saved_start;
--    uint32_t saved_stop;
--
--    uint32_t next;
--    uint32_t limit;
--    uint32_t start;
--    uint32_t stop;
--
--    uint32_t next_initbuf;
--    uint32_t size;
--} next_dma;
--
- typedef struct NextRtc {
-     int8_t phase;
-     uint8_t ram[32];
-@@ -72,18 +52,6 @@ typedef struct NextRtc {
-     uint8_t retval;
- } NextRtc;
- 
--struct NeXTState {
--    MachineState parent;
--
--    MemoryRegion rom;
--    MemoryRegion rom2;
--    MemoryRegion dmamem;
--    MemoryRegion bmapm1;
--    MemoryRegion bmapm2;
--
--    next_dma dma[10];
--};
--
- #define TYPE_NEXT_SCSI "next-scsi"
- OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
- 
-@@ -132,6 +100,38 @@ struct NeXTPC {
-     NextRtc rtc;
- };
- 
-+typedef struct next_dma {
-+    uint32_t csr;
-+
-+    uint32_t saved_next;
-+    uint32_t saved_limit;
-+    uint32_t saved_start;
-+    uint32_t saved_stop;
-+
-+    uint32_t next;
-+    uint32_t limit;
-+    uint32_t start;
-+    uint32_t stop;
-+
-+    uint32_t next_initbuf;
-+    uint32_t size;
-+} next_dma;
-+
-+#define TYPE_NEXT_MACHINE MACHINE_TYPE_NAME("next-cube")
-+OBJECT_DECLARE_SIMPLE_TYPE(NeXTState, NEXT_MACHINE)
-+
-+struct NeXTState {
-+    MachineState parent;
-+
-+    MemoryRegion rom;
-+    MemoryRegion rom2;
-+    MemoryRegion dmamem;
-+    MemoryRegion bmapm1;
-+    MemoryRegion bmapm2;
-+
-+    next_dma dma[10];
-+};
-+
- /* Thanks to NeXT forums for this */
- /*
- static const uint8_t rtc_ram3[32] = {
--- 
-2.47.1
-
+ Thomas
 
