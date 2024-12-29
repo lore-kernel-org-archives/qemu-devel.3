@@ -4,75 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADD4E7718B
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 08:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD77E7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 09:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRoku-0003Ds-DO; Sun, 29 Dec 2024 03:34:36 -0500
+	id 1tRpY3-0003Pf-Mp; Sun, 29 Dec 2024 04:25:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRoks-0003Df-0M
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 03:34:34 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRokp-0006pa-Lv
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 03:34:33 -0500
-Received: by mail-ed1-f45.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e829ff44so17149942a12.0
- for <qemu-devel@nongnu.org>; Sun, 29 Dec 2024 00:34:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735461270; x=1736066070;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=h+Hgu87QsLK6oJkMYANGR40GgxgsQMwzSa6Z0tHkt8Q=;
- b=oa+axaAWBsytAq8POBSXkGA8Zc17mz8xtIpoUJihuMrblFsevclGzaVozNVy+8mTW3
- LyEIpmE2KHk4xkjXimBe9V9xYtIXyNaXjLQ8OUrpwa86mVeQ43C2Z5mIwuynmcXf3jwy
- 98lHjmtGcmnY3jOZTV9OFoWiHcLujXhrbC5zfuvc5actA7lv8j8GadptZd88AQ20eVdS
- 5yQjC99bfU7veSMT3t4ULirTu4t+cJo8BgJoKcB0Q2CDPDU5kstSY3yc1iPeX0/fbYlF
- whaetjdHvENQz2Le5R5ilzZ04PI9GK+KTxnxBUcFCHN5xUZ1gxit52FwGioi5HZLjK3g
- WJKA==
-X-Gm-Message-State: AOJu0YyRk91NC/9frW8cPkiB9xSHyH0MgumDEh13ELkcdqlji1aaL3d7
- ENmPpkgaw2+URmPp9Ie7QHSBCHRDsvXt9gtGXd/ADeE/rkpqn0ppFB29xg==
-X-Gm-Gg: ASbGncvAeX5AKyrdgGIvA0Q4W6P6WwfJHB1LIFwzeOQ3kzJD4wU4JTJtCWTEhkjf9BN
- +zwQDzaADrFqLKoPwPjoxYXn+VZXSndUu/cj0vk8cNqYL/rpKa1Wt8oSe6qj56UTKC/sVgo26Mk
- bIF4E9jRCNtDOtprHvNVhbeRaCI7SEEZDjrm2ijjQU/H2OXIoVKOcL5+ut1160sjxM1EkvT1/Hg
- QonHADaTRWZa/95FFnW/XUAbwkKqMevS1Q0q34fHiAjK1l8+AfLH6sofFRHAwiK8MQblaEG6zoU
- KFc=
-X-Google-Smtp-Source: AGHT+IGe26rvNUP4FoE0de5LEY9RgUif4tHW9vgOZw8JRsi2x9TQahwCvkwhMoc9l0dkXhMyUk8PKw==
-X-Received: by 2002:a05:6402:e0a:b0:5d0:c9e6:30ba with SMTP id
- 4fb4d7f45d1cf-5d81e8c12b4mr27466081a12.12.1735461269781; 
- Sun, 29 Dec 2024 00:34:29 -0800 (PST)
-Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d80675a6ddsm13030664a12.3.2024.12.29.00.34.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Dec 2024 00:34:28 -0800 (PST)
-From: Thomas Huth <huth@tuxfamily.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
-Subject: [PATCH] tests/functional/test_rx_gdbsim: Use stable URL for
- test_linux_sash
-Date: Sun, 29 Dec 2024 09:34:19 +0100
-Message-ID: <20241229083419.180423-1-huth@tuxfamily.org>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1tRpY1-0003PO-G4; Sun, 29 Dec 2024 04:25:21 -0500
+Received: from mailout06.t-online.de ([194.25.134.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1tRpXz-0000ly-DL; Sun, 29 Dec 2024 04:25:21 -0500
+Received: from fwd80.aul.t-online.de (fwd80.aul.t-online.de [10.223.144.106])
+ by mailout06.t-online.de (Postfix) with SMTP id 37C7738A;
+ Sun, 29 Dec 2024 10:25:00 +0100 (CET)
+Received: from [192.168.211.200] ([84.175.226.173]) by fwd80.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1tRpXf-1qWasz0; Sun, 29 Dec 2024 10:24:59 +0100
+Message-ID: <8b48dcab-0a29-4e1c-803b-6279b276a1c4@t-online.de>
+Date: Sun, 29 Dec 2024 10:24:59 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 04/11] vvfat: fix ubsan issue in create_long_filename
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+References: <20241228115446.2478706-1-mjt@tls.msk.ru>
+ <20241228115446.2478706-5-mjt@tls.msk.ru>
+Content-Language: en-US
+From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+In-Reply-To: <20241228115446.2478706-5-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.208.45; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f45.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.156, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TOI-EXPURGATEID: 150726::1735464299-99FF8954-9EEDDEBC/0/0 CLEAN NORMAL
+X-TOI-MSGID: 791a9f44-7886-4c0a-a2d7-1764b6600d30
+Received-SPF: pass client-ip=194.25.134.19; envelope-from=vr_qemu@t-online.de;
+ helo=mailout06.t-online.de
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,59 +65,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+> Found with test sbsaref introduced in [1].
+>
+> [1] https://patchew.org/QEMU/20241203213629.2482806-1-pierrick.bouvier@linaro.org/
+>
+> ../block/vvfat.c:433:24: runtime error: index 14 out of bounds for type 'uint8_t [11]'
+>     #0 0x56151a66b93a in create_long_filename ../block/vvfat.c:433
+>     #1 0x56151a66f3d7 in create_short_and_long_name ../block/vvfat.c:725
+>     #2 0x56151a670403 in read_directory ../block/vvfat.c:804
+>     #3 0x56151a674432 in init_directories ../block/vvfat.c:964
+>     #4 0x56151a67867b in vvfat_open ../block/vvfat.c:1258
+>     #5 0x56151a3b8e19 in bdrv_open_driver ../block.c:1660
+>     #6 0x56151a3bb666 in bdrv_open_common ../block.c:1985
+>     #7 0x56151a3cadb9 in bdrv_open_inherit ../block.c:4153
+>     #8 0x56151a3c8850 in bdrv_open_child_bs ../block.c:3731
+>     #9 0x56151a3ca832 in bdrv_open_inherit ../block.c:4098
+>     #10 0x56151a3cbe40 in bdrv_open ../block.c:4248
+>     #11 0x56151a46344f in blk_new_open ../block/block-backend.c:457
+>     #12 0x56151a388bd9 in blockdev_init ../blockdev.c:612
+>     #13 0x56151a38ab2d in drive_new ../blockdev.c:1006
+>     #14 0x5615190fca41 in drive_init_func ../system/vl.c:649
+>     #15 0x56151aa796dd in qemu_opts_foreach ../util/qemu-option.c:1135
+>     #16 0x5615190fd2b6 in configure_blockdev ../system/vl.c:708
+>     #17 0x56151910a307 in qemu_create_early_backends ../system/vl.c:2004
+>     #18 0x561519113fcf in qemu_init ../system/vl.c:3685
+>     #19 0x56151a7e438e in main ../system/main.c:47
+>     #20 0x7f72d1a46249 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+>     #21 0x7f72d1a46304 in __libc_start_main_impl ../csu/libc-start.c:360
+>     #22 0x561517e98510 in _start (/home/user/.work/qemu/build/qemu-system-aarch64+0x3b9b510)
+>
+> The offset used can easily go beyond entry->name size. It's probably a
+> bug, but I don't have the time to dive into vfat specifics for now.
 
-Yoshinori said [*] URL references on OSDN were stable, but they
-appear not to be. Mirror the artifacts on GitHub to avoid failures
-while testing on CI.
+Hi Pierrick, Michael,
 
-[*] https://www.mail-archive.com/qemu-devel@nongnu.org/msg686487.html
+this patch breaks the creation of long filenames in the vvfat driver.
 
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Message-ID: <20200630202631.7345-1-f4bug@amsat.org>
-[huth: Adapt the patch to the new version in the functional framework]
-Signed-off-by: Thomas Huth <huth@tuxfamily.org>
----
- tests/functional/test_rx_gdbsim.py | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+> This change solves the ubsan issue, and is functionally equivalent, as
+> anything written past the entry->name array would not be read anyway.
 
-diff --git a/tests/functional/test_rx_gdbsim.py b/tests/functional/test_rx_gdbsim.py
-index 20623aa51c..49245793e1 100755
---- a/tests/functional/test_rx_gdbsim.py
-+++ b/tests/functional/test_rx_gdbsim.py
-@@ -21,13 +21,16 @@ class RxGdbSimMachine(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
- 
-     ASSET_UBOOT = Asset(
--        'https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz',
--        '7146567d669e91dbac166384b29aeba1715beb844c8551e904b86831bfd9d046')
-+        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
-+         'u-boot.bin'),
-+        'dd7dd4220cccf7aeb32227b26233bf39600db05c3f8e26005bcc2bf6c927207d')
-     ASSET_DTB = Asset(
--        'https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb',
-+        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
-+         'rx-gdbsim.dtb'),
-         'aa278d9c1907a4501741d7ee57e7f65c02dd1b3e0323b33c6d4247f1b32cf29a')
-     ASSET_KERNEL = Asset(
--        'http://acc.dl.osdn.jp/users/23/23845/zImage',
-+        ('https://github.com/philmd/qemu-testing-blob/raw/rx-gdbsim/rx/gdbsim/'
-+         'zImage'),
-         'baa43205e74a7220ed8482188c5e9ce497226712abb7f4e7e4f825ce19ff9656')
- 
-     def test_uboot(self):
-@@ -36,7 +39,7 @@ def test_uboot(self):
-         """
-         self.set_machine('gdbsim-r5f562n8')
- 
--        uboot_path = self.uncompress(self.ASSET_UBOOT)
-+        uboot_path = self.ASSET_UBOOT.fetch()
- 
-         self.vm.set_console()
-         self.vm.add_args('-bios', uboot_path,
--- 
-2.47.1
+This assumption is wrong. The guest reads the bytes written past the
+entry->name array in the 32 byte direntry_t structure. A LFN direntry
+structure is different from a regular direntry structure.
+
+You patch limits the long file name to 5 UCS-2 characters out of
+possible 13 UCS-2 characters per LFN entry.
+
+To reproduce the issue:
+
+On the host:
+~> mkdir vvfat-drive
+~> touch "vvfat-drive/file with a long name.txt"
+
+and start QEMU with -blockdev
+driver=vvfat,read-only=true,dir=./vvfat-drive,node-name=disk-d,label=hostdrive
+-device scsi-hd,bus=scsi0.0,scsi-id=0,lun=1,drive=disk-d
+
+On the guest without this patch:
+~ # mount -t vfat -o ro /dev/sdb1 /mnt
+~ # ls /mnt
+file with a long name.txt
+
+On the guest with this patch:
+~ # mount -t vfat -o ro /dev/sdb1 /mnt
+~ # ls /mnt
+file
+~ # ls /mnt | xxd
+00000000: 6669 6c65 200a                           file .
+
+With best regards,
+Volker
+
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  block/vvfat.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/block/vvfat.c b/block/vvfat.c
+> index 8ffe8b3b9b..f2eafaa923 100644
+> --- a/block/vvfat.c
+> +++ b/block/vvfat.c
+> @@ -426,6 +426,10 @@ static direntry_t *create_long_filename(BDRVVVFATState *s, const char *filename)
+>          else if(offset<22) offset=14+offset-10;
+>          else offset=28+offset-22;
+>          entry=array_get(&(s->directory),s->directory.next-1-(i/26));
+> +        /* ensure we don't write anything past entry->name */
+> +        if (offset >= sizeof(entry->name)) {
+> +            continue;
+> +        }
+>          if (i >= 2 * length + 2) {
+>              entry->name[offset] = 0xff;
+>          } else if (i % 2 == 0) {
 
 
