@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949E6E7718B
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35949E77191
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhe-0006b8-Ot; Sun, 29 Dec 2024 02:27:10 -0500
+	id 1tRniM-0007sp-7n; Sun, 29 Dec 2024 02:27:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhd-0006aw-S8
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:09 -0500
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRniD-0007Ev-0E
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:45 -0500
 Received: from mail-ed1-f52.google.com ([209.85.208.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhc-0002Aw-5a
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:09 -0500
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRni8-0002Hz-W2
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:43 -0500
 Received: by mail-ed1-f52.google.com with SMTP id
- 4fb4d7f45d1cf-5d7e527becaso13380405a12.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:07 -0800 (PST)
+ 4fb4d7f45d1cf-5d0d32cd31aso11793722a12.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457226; x=1736062026;
+ d=1e100.net; s=20230601; t=1735457258; x=1736062058;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i4l+TGHlXOBajtfUIglTchzUa6DZDsxbmzAyjdJQacs=;
- b=lf+ZVmriNmfMiWIHnznIJr0ru8cf+ZUi9uH27a3tbowMIa+JJLEQyb5L/oqQJ0lEQz
- 9cgYghh/rwS+6Kp5idDJigqC1Y+TL/vQyQsRZNKVZhelwGT6ysXVJNFbiFlHZB7zGQsS
- 5izSo7/jgBNz5GGQ6a6FSU5tYxHxpx50nq/ruRhzQxjtEaEt2tJu9fvvyclkcvAGbOVg
- j31UbYy9+D8ZL8IENXPLs90IX2efRhqkWKqfbzsu8vV2hsgCTgq6o/bWcAMEB1GnUV7F
- dNVbEdVV+vTWhOVCA20DnRzNTnm009eH7P9kFrwD04MVMGa23C9zrMEirvG/gVL6hPba
- J4Vw==
+ bh=qfS3GhF1awVp92+r32OqyA+kFgYxtyMS0V30YdbjWn4=;
+ b=aS9ZK5nkiut17wehgY/OXESl0nsGdDdjpiPgPkWpjceCVeeNJd7C6mD+Hq0+YcF6jN
+ SH5S49pwQIPiGKsm0OwrVgdKoOqlyyE8wiEFK6Vxb0RxTRcrzMjw5yWb9Vj6o5n57KtM
+ +Q3JL44CyX3OXe7yI29BUD/JK07bgs6ThlytVJvXbr92TltTXXH9itae1yQ+9AX7epw+
+ a23pXkUoIJZlvO71mfj6md+q8e6HFbI85xboKmtDm6ejZfagcO/XBhUCDVUDT3mQjjjU
+ ZPaLvRqOj/viSnAiuIrhJY41DO6p8MoD4JhmR0HrbpyZCU1MbVee9bpvqvZQEQy1Hqpd
+ D98g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURhht7p5uUAJ+m5Fyg9ENgGefqU5h4i0QHlDQyxwO5WvV7y7yBHYytEWTEar/RC4NX7vUJqmPU6Pno@nongnu.org
-X-Gm-Message-State: AOJu0YxVAg/FFkcCRJAUKOneo8XEXuHAKWoFmUp/snQz/ueXRktb+lgU
- vwz5PXgyxZHTmJOmTJKzl1haakcK6MGK8++ivAJ/nLyxVH6QN+DD
-X-Gm-Gg: ASbGnculiAJWfSF8EJoA94ih4M7KUjBlIC0/agH7pDDNmxNv0dGAOUXkyfaFRe32sNw
- Ua/IgS6neQYXk8LN536Don7bc9PMSTcYnggK8xCex40GjcUMGLFkll59pZkrQrVjMmIKadShEp0
- 8t0rTtAVBRFFAcrh3im6qjgodzGhi6dX+PjIr1t8RsQW41omeb/+P7t6vzh2tJiRc6s31mUgRyq
- hQ8nPetorjJECi2GyrT7qE6iZherhYsRVMPjrd136+g+My5M/UMfV2X5s1aihVsGZJb1pnB3mQ0
- MdY=
-X-Google-Smtp-Source: AGHT+IFHK/AsFRSwlXIsHkLKFfrsPQ/pqefIt3wxAU1U3u2GWl4YXoUkZSDO4uOR5jkrm8aKV/IwWg==
-X-Received: by 2002:a05:6402:270d:b0:5d0:fb56:3f with SMTP id
- 4fb4d7f45d1cf-5d81dd9cdf0mr70072915a12.12.1735457226192; 
- Sat, 28 Dec 2024 23:27:06 -0800 (PST)
+ AJvYcCW+u7Fff1DzAi8B6izmUpSPPxSe09A0uXphp/HTu/xjI93HuERa5QslMogrK83XMtVl5gEyeBzb8GZ+@nongnu.org
+X-Gm-Message-State: AOJu0Yw2+V9G5v1FDKhX/EhTaQiujEiO0Frpth8j/PzPyINis5C/sUvH
+ qFc5boMG2mcDZnLH5Adiubvq+AqAJkCU4y2uz0o4BcaNMIQimphC
+X-Gm-Gg: ASbGncvak67dy1UM4Q0J5tRFN3fCCYAJ1ruqyPtcl1LwyskYaRz82qNQJgQRqKftI/c
+ egEbkEpGPNOBZqZ2uwo1FXhs0JyEFhwRRIDrqbkxJ9uWVhrct3c3iwE5uw7/3IdkY/T0Rp9vwBl
+ 4cg+91J7DyrRuyOWnDCJJHKxl1hfOXEsGi7hLDxV+9/kC7PP2KpG9uzzVPh7vlk0OnXtsKfXRyL
+ Uf7PLL3xtj6Qhku8dtztqnyZI7GmmOZ56wmfEVXvB88yYF0TH6DDuEVGV8OvnlopldbdF7a1ZSY
+ CSc=
+X-Google-Smtp-Source: AGHT+IEFWQ0SXvXdJpB4ZTHsVEYUFuat4UCm7vjFw62q80Z22GimPubsrFz1a4dweYk6B8qa7RFe1w==
+X-Received: by 2002:a05:6402:3206:b0:5d1:2377:5af3 with SMTP id
+ 4fb4d7f45d1cf-5d81dd83b23mr70704841a12.5.1735457257944; 
+ Sat, 28 Dec 2024 23:27:37 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.04
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:05 -0800 (PST)
+ Sat, 28 Dec 2024 23:27:36 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 17/35] next-cube: remove unused next.scr memory region
-Date: Sun, 29 Dec 2024 08:25:08 +0100
-Message-ID: <20241229072526.166555-18-huth@tuxfamily.org>
+Subject: [PULL 31/35] next-cube: add rtc-cmd-reset named gpio to reset the rtc
+ state machine
+Date: Sun, 29 Dec 2024 08:25:22 +0100
+Message-ID: <20241229072526.166555-32-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=209.85.208.52; envelope-from=th.huth@gmail.com;
  helo=mail-ed1-f52.google.com
@@ -90,163 +92,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Now that the next.scr memory region is unused it can be removed and the next-pc
-devices mapped directly within the machine init function. This is the last
-remaining overlapping memory region within the NeXTCube machine.
+This allows us to decouple the next-pc and next-rtc devices from each
+other in next_scr2_rtc_update().
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-16-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20241222130012.1013374-30-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 73 +++++++++++++--------------------------------
- 1 file changed, 21 insertions(+), 52 deletions(-)
+ hw/m68k/next-cube.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 6ca9170108..73c4d4ea9c 100644
+index 2bc6d49c34..621e8dc832 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -369,38 +369,6 @@ static const MemoryRegionOps next_mmio_ops = {
- #define SCSICSR_CPUDMA  0x10  /* if set, dma enabled */
- #define SCSICSR_INTMASK 0x20  /* if set, interrupt enabled */
+@@ -108,6 +108,7 @@ struct NeXTPC {
+     NeXTRTC rtc;
+     qemu_irq rtc_power_irq;
+     qemu_irq rtc_data_irq;
++    qemu_irq rtc_cmd_reset_irq;
+ };
  
--static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
--{
--    uint64_t val;
--
--    switch (addr) {
--    default:
--        DPRINTF("BMAP Read @ 0x%x size %u\n", (unsigned int)addr, size);
--        val = 0;
--        break;
--    }
--
--    return val;
--}
--
--static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
--                             unsigned size)
--{
--    switch (addr) {
--    default:
--        DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
--                (unsigned int)addr, val, size);
--    }
--}
--
--static const MemoryRegionOps next_scr_ops = {
--    .read = next_scr_readfn,
--    .write = next_scr_writefn,
--    .valid.min_access_size = 1,
--    .valid.max_access_size = 4,
--    .endianness = DEVICE_BIG_ENDIAN,
--};
--
- #define NEXTDMA_SCSI(x)      (0x10 + x)
- #define NEXTDMA_FD(x)        (0x10 + x)
- #define NEXTDMA_ENTX(x)      (0x110 + x)
-@@ -1063,17 +1031,11 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     SysBusDevice *sbd;
-     DeviceState *d;
+ typedef struct next_dma {
+@@ -264,7 +265,6 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
+ static void next_scr2_rtc_update(NeXTPC *s)
+ {
+     uint8_t old_scr2, scr2_2;
+-    NeXTRTC *rtc = &s->rtc;
  
--    /* en network (dummy) */
--    memory_region_add_subregion(&s->scrmem, 0x6000,
--                                &s->dummyen_mem);
--
-     /* SCSI */
-     sbd = SYS_BUS_DEVICE(&s->next_scsi);
-     if (!sysbus_realize(sbd, errp)) {
-         return;
+     old_scr2 = extract32(s->old_scr2, 8, 8);
+     scr2_2 = extract32(s->scr2, 8, 8);
+@@ -282,9 +282,7 @@ static void next_scr2_rtc_update(NeXTPC *s)
+         }
+     } else {
+         /* else end or abort */
+-        rtc->phase = 0;
+-        rtc->command = 0;
+-        rtc->value = 0;
++        qemu_irq_raise(s->rtc_cmd_reset_irq);
      }
--    memory_region_add_subregion(&s->scrmem, 0x14000,
--                                sysbus_mmio_get_region(sbd, 0));
+ }
  
-     d = DEVICE(object_resolve_path_component(OBJECT(&s->next_scsi), "esp"));
-     sysbus_connect_irq(SYS_BUS_DEVICE(d), 0,
-@@ -1082,10 +1044,6 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     s->scsi_reset = qdev_get_gpio_in(d, 0);
-     s->scsi_dma = qdev_get_gpio_in(d, 1);
+@@ -1015,6 +1013,17 @@ static const MemoryRegionOps next_dummy_en_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
  
--    /* Floppy */
--    memory_region_add_subregion(&s->scrmem, 0x14108,
--                                &s->floppy_mem);
--
-     /* ESCC */
-     d = DEVICE(&s->escc);
-     qdev_prop_set_uint32(d, "disabled", 0);
-@@ -1103,12 +1061,6 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     }
-     sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
-     sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
--
--    memory_region_add_subregion(&s->scrmem, 0x18000,
--                                sysbus_mmio_get_region(sbd, 0));
--
--    /* Timer */
--    memory_region_add_subregion(&s->scrmem, 0x1a000, &s->timer_mem);
++static void next_rtc_cmd_reset_irq(void *opaque, int n, int level)
++{
++    NeXTRTC *rtc = NEXT_RTC(opaque);
++
++    if (level) {
++        rtc->phase = 0;
++        rtc->command = 0;
++        rtc->value = 0;
++    }
++}
++
+ static void next_rtc_reset_hold(Object *obj, ResetType type)
+ {
+     NeXTRTC *rtc = NEXT_RTC(obj);
+@@ -1033,6 +1042,8 @@ static void next_rtc_init(Object *obj)
+                             "rtc-data-in", 1);
+     qdev_init_gpio_out_named(DEVICE(obj), &rtc->data_out_irq,
+                              "rtc-data-out", 1);
++    qdev_init_gpio_in_named(DEVICE(obj), next_rtc_cmd_reset_irq,
++                            "rtc-cmd-reset", 1);
+ }
+ 
+ static const VMStateDescription next_rtc_vmstate = {
+@@ -1143,6 +1154,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     qdev_connect_gpio_out_named(d, "rtc-data-out", 0,
+                                 qdev_get_gpio_in_named(dev,
+                                                        "rtc-data-in", 0));
++    qdev_connect_gpio_out_named(dev, "rtc-cmd-reset", 0,
++                                qdev_get_gpio_in_named(d, "rtc-cmd-reset", 0));
  }
  
  static void next_pc_init(Object *obj)
-@@ -1120,24 +1072,27 @@ static void next_pc_init(Object *obj)
- 
-     memory_region_init_io(&s->mmiomem, OBJECT(s), &next_mmio_ops, s,
-                           "next.mmio", 0x9000);
--    memory_region_init_io(&s->scrmem, OBJECT(s), &next_scr_ops, s,
--                          "next.scr", 0x20000);
--
-     sysbus_init_mmio(sbd, &s->mmiomem);
--    sysbus_init_mmio(sbd, &s->scrmem);
- 
-     memory_region_init_io(&s->dummyen_mem, OBJECT(s), &next_dummy_en_ops, s,
-                           "next.en", 0x20);
-+    sysbus_init_mmio(sbd, &s->dummyen_mem);
- 
-     object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
-+    sysbus_init_mmio(sbd,
-+                     sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->next_scsi), 0));
- 
-     memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
-                           "next.floppy", 4);
-+    sysbus_init_mmio(sbd, &s->floppy_mem);
- 
-     object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
-+    sysbus_init_mmio(sbd,
-+                     sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->escc), 0));
- 
-     memory_region_init_io(&s->timer_mem, OBJECT(s), &next_timer_ops, s,
-                           "next.timer", 4);
-+    sysbus_init_mmio(sbd, &s->timer_mem);
+@@ -1183,6 +1196,8 @@ static void next_pc_init(Object *obj)
+                             "rtc-data-in", 1);
+     qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
+                              "rtc-data-out", 1);
++    qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_cmd_reset_irq,
++                             "rtc-cmd-reset", 1);
  }
  
  /*
-@@ -1239,13 +1194,27 @@ static void next_cube_init(MachineState *machine)
-     /* BMAP IO - acts as a catch-all for now */
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02100000);
- 
-+    /* en network (dummy) */
-+    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02106000);
-+
-     /* unknown: Brightness control register? */
-     empty_slot_init("next.unknown.0", 0x02110000, 0x10);
-     /* unknown: Magneto-Optical drive controller? */
-     empty_slot_init("next.unknown.1", 0x02112000, 0x10);
-+
-+    /* SCSI */
-+    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 2, 0x02114000);
-+    /* Floppy */
-+    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 3, 0x02114108);
-+    /* ESCC */
-+    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 4, 0x02118000);
-+
-     /* unknown: Serial clock configuration register? */
-     empty_slot_init("next.unknown.2", 0x02118004, 0x10);
- 
-+    /* Timer */
-+    sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
-+
-     /* BMAP memory */
-     memory_region_init_ram_flags_nomigrate(&m->bmapm1, NULL, "next.bmapmem",
-                                            64, RAM_SHARED, &error_fatal);
 -- 
 2.47.1
 
