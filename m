@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C070E7718F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821EBE77193
 	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRniE-0007LW-CF; Sun, 29 Dec 2024 02:27:46 -0500
+	id 1tRnhP-0006Xc-An; Sun, 29 Dec 2024 02:26:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhl-0006j9-8r
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:21 -0500
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhH-0006W8-LW
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:48 -0500
 Received: from mail-ej1-f51.google.com ([209.85.218.51])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhh-0002Ba-8B
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:16 -0500
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhG-00028j-23
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:47 -0500
 Received: by mail-ej1-f51.google.com with SMTP id
- a640c23a62f3a-aa69077b93fso1197371366b.0
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:27:11 -0800 (PST)
+ a640c23a62f3a-aaef00ab172so630807066b.3
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457231; x=1736062031;
+ d=1e100.net; s=20230601; t=1735457204; x=1736062004;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gFWsx6elcziOUVCYZBguRZxlSU/L1G/iY9+fG5LR1KA=;
- b=YPxvYOs53zsY9KbZAt6onc49+ucIZjROPJQWXyHozGN1cPl6VzkeJxn8oPUQpStTPQ
- hKIwTJoC4IUaAbo8qt1lG/GN9Wc8d+bNRR04Iu0xfchT7quu9ggYn+9Qr0vmTvQEe4/w
- gEK87gyaLuWntbuY0dcjE8QdczA/x+e811O2y832H6i5mzccOlqnLCPQ3Y+ywDnbAJ1/
- 48BQ+swgJZwGU3sZVQpMNsHW82RP/4M9hCR0ab05fl4ddxlVlxlBv1NR9h0we8KhAB1K
- L1AsD7jiokGubwc0Iw1oVwUl6iNZPFFNdtMXseKW6LM6wyux/0ejaJMO79uQlX40gPFL
- 9NDw==
+ bh=Ils5tuXfHtph1hTzd0HLTrs6Eu7Mo2u0cItG3OZiwZw=;
+ b=fJsoJeugHwnFUj/+uWsESI59hXpBJGZA6pxLGoUv4DkvpRHNdC9SEwwzRR3N5apa+P
+ BGAxQWsGyjuWdDxsw66rdki7LRALmmgXJLs7OM9n4doe6nSpgUPqNLf+db7VemIeCRur
+ TTvJn9diXEIEt4qMzS2vKDj7U4elAnMEhdfxtL3uH3RAIfnZPU4KYBompsg9bmWSVK2i
+ pXGAo/1R+WBrnq+ixEvIbADUn9p9zQO7h+T1ceW1xTtr7duojAdQJ+lGIOx+MfnYh3qO
+ 2seo5HXnKZpxzUQS5xT7duOxS5Nedy8L19C4dDJHyqZkNGQKT6qvI5LGrEb9ve+pulSQ
+ W+8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7iHYHpRovObybX22DbSMpqa8DwnuvsHi/YtvuXolTT4HhLedBPQp3OTGMLbQfCaIex/VFB4OXVwz+@nongnu.org
-X-Gm-Message-State: AOJu0YyA0g3+cKNDZkOno7rB664RFptuDZgsSgrvKwJKpWakUzT8tZqu
- I39qdeRWnjiUdMLj9MRohYs9y+4Rj5HFZJHpYMCjLMGI7q9rpfDf
-X-Gm-Gg: ASbGncuDwQF2rPs7VWCLNTZbyKXMLAHPNU1HihxqAlHfvO5+FKQ8YwOaSpDw165tayf
- 4tQnzVtlCIhJzwGDcq+m19/8nGFlVYTVaoO7SVeAUEUBlCRbowC/QzaYNfYYys2ifo3AGOwniwh
- qlIt8b6V4vZE7r0P1m3xDWNbJKRnRmDTloFudgtYMdQZDSUwERamcDal9TM2yFjeHGd2qZ+b2pE
- MX941MOxjCuUjZoGkeW+hxSMnh65wIf4itgTdj6vsdupZgUMv/8PZnOcGSXGO8kGoTP+TmqrmsH
- /9I=
-X-Google-Smtp-Source: AGHT+IFuPE+U/rLxKNq1p8a/FgcCF2/nOJSJWy/xF/6Ebr/oA++QBz7YpoNPAiI//mI2v88X4nVFeQ==
-X-Received: by 2002:a17:906:4fce:b0:aab:73c5:836 with SMTP id
- a640c23a62f3a-aac334c3d70mr3317532166b.32.1735457230692; 
- Sat, 28 Dec 2024 23:27:10 -0800 (PST)
+ AJvYcCXySbQoxpaWGUGuzOsUaUP6JUO+aAfF4t7+oeJpBHtYKSF+FInB87lI1xR4gka0UTNCcdvsryfJlnHr@nongnu.org
+X-Gm-Message-State: AOJu0Ywj2E3n2aMxyCwseeiFJDi/jCvB+ZbUhQ5/BqIgqdIcSo4V2FbW
+ e3ma1VD8eBEED9ZcwW16lOvDNFuF8o9UETInf0Mvr6EUM5YvmZjNbmw/TQ==
+X-Gm-Gg: ASbGncuP7Mo7XjbYyF8dqdquacN8nFXtVWLcyc/UpTIWn8dvcrnmvIXsyYnnYyPsCP2
+ R8vq8CVhzfMo/zQAGEGuEQiEEvdolWBNX4kW8cESLmH85FIXZwa5Lo17ad6g5V5DzTtx9T2OjVy
+ 3Dz6vynQCOHE9NXCD6Zr/fycdAyOrZg5blWOHzfb+jbG97suJ1/SKRh6XnlcBQHxsAY9MO3696d
+ dgpIPYa5JVEpQ2dTTpWDdb/FUveHpeyU6h/aECpOJPq5AmLCqVzarPQdVtdxhhIZStelwv9qkiz
+ WAE=
+X-Google-Smtp-Source: AGHT+IGvJg1lEUc1MRwQ1WFrKdgCLDXVtCwFQ/6OfozB0LNXnFw4YUPvtJEmPmSEkGpltvBLDOVsOg==
+X-Received: by 2002:a05:6402:2790:b0:5d0:e73c:b7f0 with SMTP id
+ 4fb4d7f45d1cf-5d81de1c241mr78521972a12.28.1735457204205; 
+ Sat, 28 Dec 2024 23:26:44 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.27.08
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:27:09 -0800 (PST)
+ Sat, 28 Dec 2024 23:26:43 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 19/35] next-cube: convert next-pc device to use Resettable
- interface
-Date: Sun, 29 Dec 2024 08:25:10 +0100
-Message-ID: <20241229072526.166555-20-huth@tuxfamily.org>
+Subject: [PULL 08/35] next-cube: introduce next-scsi device
+Date: Sun, 29 Dec 2024 08:24:59 +0100
+Message-ID: <20241229072526.166555-9-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=209.85.218.51; envelope-from=th.huth@gmail.com;
  helo=mail-ej1-f51.google.com
@@ -92,46 +90,180 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
+This device is intended to hold the ESP SCSI controller and the NeXT SCSI CSRs.
+Start by creating the device and moving the ESP SCSI controller to be an
+embedded child device.
+
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Acked-by: Thomas Huth <huth@tuxfamily.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241222130012.1013374-18-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Message-ID: <20241222130012.1013374-7-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/m68k/next-cube.c | 93 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 74 insertions(+), 19 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 0cf4470ce8..091e05465e 100644
+index c187a469d9..ce147fa9af 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -1009,9 +1009,9 @@ static const MemoryRegionOps next_dummy_en_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
+@@ -83,6 +83,18 @@ struct NeXTState {
+     next_dma dma[10];
  };
  
--static void next_pc_reset(DeviceState *dev)
-+static void next_pc_reset_hold(Object *obj, ResetType type)
- {
--    NeXTPC *s = NEXT_PC(dev);
-+    NeXTPC *s = NEXT_PC(obj);
++#define TYPE_NEXT_SCSI "next-scsi"
++OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
++
++/* NeXT SCSI Controller */
++struct NeXTSCSI {
++    SysBusDevice parent_obj;
++
++    MemoryRegion scsi_mem;
++
++    SysBusESPState sysbus_esp;
++};
++
+ #define TYPE_NEXT_PC "next-pc"
+ OBJECT_DECLARE_SIMPLE_TYPE(NeXTPC, NEXT_PC)
  
-     /* Set internal registers to initial values */
-     /*     0x0000XX00 << vital bits */
-@@ -1140,12 +1140,13 @@ static const VMStateDescription next_pc_vmstate = {
- static void next_pc_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
+@@ -94,7 +106,6 @@ struct NeXTPC {
  
-     dc->desc = "NeXT Peripheral Controller";
-     dc->realize = next_pc_realize;
--    device_class_set_legacy_reset(dc, next_pc_reset);
-     device_class_set_props(dc, next_pc_properties);
-     dc->vmsd = &next_pc_vmstate;
-+    rc->phases.hold = next_pc_reset_hold;
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
+-    MemoryRegion scsimem;
+ 
+     uint32_t scr1;
+     uint32_t scr2;
+@@ -102,6 +113,8 @@ struct NeXTPC {
+     uint32_t int_mask;
+     uint32_t int_status;
+     uint32_t led;
++
++    NeXTSCSI next_scsi;
+     uint8_t scsi_csr_1;
+     uint8_t scsi_csr_2;
+ 
+@@ -825,38 +838,61 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
+     nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
  }
  
- static const TypeInfo next_pc_info = {
+-static void next_scsi_init(DeviceState *pcdev)
++static void next_scsi_init(Object *obj)
+ {
+-    struct NeXTPC *next_pc = NEXT_PC(pcdev);
+-    DeviceState *dev;
+-    SysBusDevice *sysbusdev;
++    NeXTSCSI *s = NEXT_SCSI(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++
++    object_initialize_child(obj, "esp", &s->sysbus_esp, TYPE_SYSBUS_ESP);
++
++    memory_region_init(&s->scsi_mem, obj, "next.scsi", 0x40);
++    sysbus_init_mmio(sbd, &s->scsi_mem);
++}
++
++static void next_scsi_realize(DeviceState *dev, Error **errp)
++{
++    NeXTSCSI *s = NEXT_SCSI(dev);
+     SysBusESPState *sysbus_esp;
++    SysBusDevice *sbd;
+     ESPState *esp;
++    NeXTPC *pcdev;
++
++    pcdev = NEXT_PC(container_of(s, NeXTPC, next_scsi));
+ 
+-    dev = qdev_new(TYPE_SYSBUS_ESP);
+-    sysbus_esp = SYSBUS_ESP(dev);
++    /* ESP */
++    sysbus_esp = SYSBUS_ESP(&s->sysbus_esp);
+     esp = &sysbus_esp->esp;
+     esp->dma_memory_read = nextscsi_read;
+     esp->dma_memory_write = nextscsi_write;
+     esp->dma_opaque = pcdev;
+     sysbus_esp->it_shift = 0;
+     esp->dma_enabled = 1;
+-    sysbusdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(sysbusdev, &error_fatal);
+-    sysbus_connect_irq(sysbusdev, 0, qdev_get_gpio_in(pcdev, NEXT_SCSI_I));
+-
+-    memory_region_init(&next_pc->scsimem, OBJECT(next_pc), "next.scsi", 0x40);
+-    memory_region_add_subregion(&next_pc->scsimem, 0x0,
+-                                sysbus_mmio_get_region(sysbusdev, 0));
++    sbd = SYS_BUS_DEVICE(sysbus_esp);
++    if (!sysbus_realize(sbd, errp)) {
++        return;
++    }
++    memory_region_add_subregion(&s->scsi_mem, 0x0,
++                                sysbus_mmio_get_region(sbd, 0));
+ 
+-    memory_region_add_subregion(&next_pc->scrmem, 0x14000, &next_pc->scsimem);
++    scsi_bus_legacy_handle_cmdline(&s->sysbus_esp.esp.bus);
++}
+ 
+-    next_pc->scsi_reset = qdev_get_gpio_in(dev, 0);
+-    next_pc->scsi_dma = qdev_get_gpio_in(dev, 1);
++static void next_scsi_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+-    scsi_bus_legacy_handle_cmdline(&esp->bus);
++    dc->desc = "NeXT SCSI Controller";
++    dc->realize = next_scsi_realize;
+ }
+ 
++static const TypeInfo next_scsi_info = {
++    .name = TYPE_NEXT_SCSI,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_init = next_scsi_init,
++    .instance_size = sizeof(NeXTSCSI),
++    .class_init = next_scsi_class_init,
++};
++
+ static void next_escc_init(DeviceState *pcdev)
+ {
+     DeviceState *dev;
+@@ -897,8 +933,24 @@ static void next_pc_reset(DeviceState *dev)
+ 
+ static void next_pc_realize(DeviceState *dev, Error **errp)
+ {
++    NeXTPC *s = NEXT_PC(dev);
++    SysBusDevice *sbd;
++    DeviceState *d;
++
+     /* SCSI */
+-    next_scsi_init(dev);
++    sbd = SYS_BUS_DEVICE(&s->next_scsi);
++    if (!sysbus_realize(sbd, errp)) {
++        return;
++    }
++    memory_region_add_subregion(&s->scrmem, 0x14000,
++                                sysbus_mmio_get_region(sbd, 0));
++
++    d = DEVICE(object_resolve_path_component(OBJECT(&s->next_scsi), "esp"));
++    sysbus_connect_irq(SYS_BUS_DEVICE(d), 0,
++                       qdev_get_gpio_in(DEVICE(s), NEXT_SCSI_I));
++
++    s->scsi_reset = qdev_get_gpio_in(d, 0);
++    s->scsi_dma = qdev_get_gpio_in(d, 1);
+ }
+ 
+ static void next_pc_init(Object *obj)
+@@ -915,6 +967,8 @@ static void next_pc_init(Object *obj)
+ 
+     sysbus_init_mmio(sbd, &s->mmiomem);
+     sysbus_init_mmio(sbd, &s->scrmem);
++
++    object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
+ }
+ 
+ /*
+@@ -1089,6 +1143,7 @@ static void next_register_type(void)
+ {
+     type_register_static(&next_typeinfo);
+     type_register_static(&next_pc_info);
++    type_register_static(&next_scsi_info);
+ }
+ 
+ type_init(next_register_type)
 -- 
 2.47.1
 
