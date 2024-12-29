@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11062E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 01:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400E2E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 01:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRiRG-0005ym-JF; Sat, 28 Dec 2024 20:49:54 -0500
+	id 1tRiZI-0007JF-RJ; Sat, 28 Dec 2024 20:58:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRiRE-0005y2-2O
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 20:49:52 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tRiZH-0007Iq-B2
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 20:58:11 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tRiRC-0006Yg-BZ
- for qemu-devel@nongnu.org; Sat, 28 Dec 2024 20:49:51 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2166f1e589cso125913905ad.3
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 17:49:49 -0800 (PST)
+ id 1tRiZF-0008SP-Q7
+ for qemu-devel@nongnu.org; Sat, 28 Dec 2024 20:58:11 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2167141dfa1so101658685ad.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 17:58:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735436989; x=1736041789; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735437488; x=1736042288; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0IIKW2B8fsTu+cWbPgs+0ZLDo9KwXZrbXrCRNYkkf2M=;
- b=tiCRTMGWwofWE+3vbUP7zwOVyOG9WT650tiRmTEaq/ba8W12razDI9eBZsFI/emKH3
- wHSXlcqWiOrMltZm9aOEWNO8goDOqLMSVFdGFs6MCQqEBRwvi++/M0LSDr/VzKLv4Ty/
- xiAbMPwkp27FJ+Qia+SeBYHkOC1AldzMlYFOUIhLOTtW+v6d88/jbJGn2rhY3wniCdqo
- qaeJRWfrzu9jqD1TBeCN/o7If+ziCoJMQGvn/ZOhlOz9yjbY1DZnDpz9D69FvzHGpzwi
- n+mNq545IZ37fYE0PLjXsh1tfC/27ebped/M0tX1FFoqBCV+Krdeu0DStUgsIRjVkBqD
- UXIg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KtQqhO+1+d04geFXtvmTrNjeNf6ybvJ+YfozVmhg1NQ=;
+ b=qKA8YPiVFh9u4QtI5OhXt4WvNL+R7LOCfD//M74YdoPoYogtkbblckGCTn1EdlDInq
+ wN4fG7+pXfmpocFGhTcq3ejCVk8xPJvU+BUvfHgf1mDw8w487Erl7A+Fg93beIxzo3un
+ nsdlSHHFQYdifSvda2JC5gsR4Ybh1VgrPFxCVhqLLeVuX6hmM1867RreYLPuDtWrIhoO
+ ylaH5cKwV0hhMqgEXENJ8HxiSKGJ9mT6OxLYaKMB309caeVcxQS5AbKH3dPqU4b7yMTY
+ 6bM4Qb5/LL5NRLyVRdKDW1Z1gYqZXjudaMdBf4m7KU9bar9Cn8e+/oIrQi3r/mgW0stl
+ 33oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735436989; x=1736041789;
+ d=1e100.net; s=20230601; t=1735437488; x=1736042288;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0IIKW2B8fsTu+cWbPgs+0ZLDo9KwXZrbXrCRNYkkf2M=;
- b=kr0Rh4nZByvrsXYkR0c3uBkoIbuUNpnAJ2WsrnOIoIV7zfBNNIbb60CPvIhAw6GyKm
- cxK/mtLcaKofD4T7Wy6l0Dqdx3I6j04OoOHuHgyMKlLpWjrYd/TAEGZN8G7Gic31xAjA
- AZ5EteS6A+C1A8BpkI/B2/scTRav7buuDejkchZImj4Txzhw9sfQ22P30RFUJ99btc6L
- Vp+arCzeE+ulUelSAvngK9P0xsbxonr843h9zu+Ai3kFtodX5JKSU2j/jxDwXwfFe24o
- WOWDYsTbK2aMIvXswh7bsHOr84kuEtIuUtACu9LdUwrygCCeCPpUyNdPDGPiqDjwt8ad
- NTmA==
+ bh=KtQqhO+1+d04geFXtvmTrNjeNf6ybvJ+YfozVmhg1NQ=;
+ b=tnJKFwfISXafraHwzaNOGNuDndzaaIvNs7tm3at3rYb9vz5KJ/6erO99ONj8pXQ3Gi
+ 2ibEEq6JIwF5I07K4cBFsDNeuj/9kZHxdjVsSi0MLKvSUOiFA2tV5erKUI/cWB/6k8dK
+ fN9Mzp/Xr+YjtM7AD/eTfbz0LWWQpYeGBQrUXG1iWM9JCaAfloptdo5vXg6NZK1iIZUN
+ sqX6GEyON8F4NGewSYDpG+F57Ibp5VTexW4OVvMAX/fSgGY5uF1LFn9+AWZqeesu6GWa
+ gEwFhJQehfZTh/+q08vV5WM9QHd8UdqcrA69bvLJponJZvYt0JL4WKCDzGvvsLhoJ8uP
+ eyjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlGUKikIVx/0GDweqBfNf3mbywmi/Z+oOZgBIEGCnxkavMO2Xo/Sa9RVeTXNPuzqxJTA33NbHnLI8+@nongnu.org
-X-Gm-Message-State: AOJu0YyOHje4EQVqdXqId5M+5UKfbx7dav4g5/Svj4sbadpAqHdAsiZS
- sjLsF/YnTHx7l8kJOAdfWPvLhEY+UnVU/Dr81g6WXRkwy1aQVyO22M+3VDyWZbM=
-X-Gm-Gg: ASbGncv+DAfiTZFvr9noNPtynMbuD2quKQvF3j3UdFlso0pqJzs0Ush0ucvzfjWxY2s
- k6H8He1oQlEKHuBX2bzBpqloBucBp4rb56BTwzL5lgCT2jFW1HnaFf+aywK2XB0PSp5oVX9TYTj
- 0SEGAifHnmNFN7AI4LkI41wKtFLSXIzWrnmLPxJnrgwJmHE9rMebHm4tdim1ZnLgONPmCuV4v1C
- rXacSCPI8BfECl7ARnqBJHV2suExeVqZE6dzn7JSWfgZfKPR1Rhh0P0qsBoJCnjt5cn+ghj5Mly
- kT/HAxjiJ7sAr4QGZJn5sFamnHAWtz208UlDtuI=
-X-Google-Smtp-Source: AGHT+IEfqixBZDzald3nipW+P6YrZZlHAnL7bru8taeOljmA5L41Psh2Z9MiyoDL4gJwz+wzMgeBAg==
-X-Received: by 2002:a17:903:120d:b0:216:5af7:5a8e with SMTP id
- d9443c01a7336-219e6ebdc17mr469361435ad.26.1735436988871; 
- Sat, 28 Dec 2024 17:49:48 -0800 (PST)
+ AJvYcCUSdd9+ve6+1ZyjcRZ9yfhOEeyWznDsoNKYaOL+I6S9nHZKz9zP+BBN1N241NJ6wdGYJkx3hpofzR3W@nongnu.org
+X-Gm-Message-State: AOJu0YxSx8jxfbP0GVXZI63YMHOYgXaZCmnBGTjFE2So7Ri/s6hlWSnx
+ RlxtAHf80aUCICVr0GOpUt1gSDtkxYNeCG3jgtWtIsBY4v1BxgM7D9+JOriZtzo=
+X-Gm-Gg: ASbGnctKzZhPbuiPz+wGSRZell+6Il+Ddh2qclBrgl2D5ApEj+xTUM5y+LxJ1Lxwr8V
+ pwvymAdrjCdeneZ3t9LRNQ2lE/cEVvJ5T2ZFpsVH4K1QXI54yQQ6Xk0jUGzNiH1VZx+qoBMX/+m
+ 9M0gyuGXjcpKpngP0jlXtoaR+GyR4DqSbnPZbPwIJSE6noHJGjNP4eFKQGRUlIQJCgG5PZNrPB8
+ nij8o5agzXPWI8M2TeqbX6qNuslBmEWKHjvCGz2gergXHmFygzGZr/xoNtD7FOpPBrHvZ5P8+WW
+ nHHT7/m6fMmnX7n4HeNrTbUaWmT3EydVfr+A9iM=
+X-Google-Smtp-Source: AGHT+IH7SsRQwi8XXBvx/zwqa0wkV0s3OCp2xe5sUo8ArtvyqdZ/aRFmSJsTb5Vv+lZVafQfAGdaiw==
+X-Received: by 2002:a17:902:e850:b0:215:7e49:8202 with SMTP id
+ d9443c01a7336-219e6cf8cdcmr473290175ad.13.1735437488231; 
+ Sat, 28 Dec 2024 17:58:08 -0800 (PST)
 Received: from [192.168.125.227] (syn-156-019-246-023.biz.spectrum.com.
  [156.19.246.23]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9629acsm155916565ad.46.2024.12.28.17.49.47
+ d9443c01a7336-219dc96eac6sm156390765ad.80.2024.12.28.17.58.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 28 Dec 2024 17:49:48 -0800 (PST)
-Message-ID: <dbd73c27-4ede-43f9-8503-e3e1f64615dd@linaro.org>
-Date: Sat, 28 Dec 2024 17:49:45 -0800
+ Sat, 28 Dec 2024 17:58:07 -0800 (PST)
+Message-ID: <3b0804a9-4df9-4eb0-bdc8-2745b62355e8@linaro.org>
+Date: Sat, 28 Dec 2024 17:58:06 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/m68k: Handle EXCP_SEMIHOSTING for m68k class CPU
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-stable@nongnu.org
-References: <20241229-m68k-semihosting-v1-1-db131e2b5212@flygoat.com>
+Subject: Re: [PATCH v3] target/hppa: Add CPU reset method
+To: Helge Deller <deller@kernel.org>, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org
+References: <Z281jSej_buitgV8@p100>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241229-m68k-semihosting-v1-1-db131e2b5212@flygoat.com>
+In-Reply-To: <Z281jSej_buitgV8@p100>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,36 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/28/24 16:22, Jiaxun Yang wrote:
-> EXCP_SEMIHOSTING can be generated by m68k class CPU with
-> HALT instruction, but it is never handled properly and cause
-> guest fall into deadlock.
+On 12/27/24 15:17, Helge Deller wrote:
+> Add the CPU reset method, which resets all CPU registers and the TLB to
+> zero. Then the CPU will switch to 32-bit mode (PSW_W bit is not set) and
+> start execution at address 0xf0000004.
+> Although we currently want to zero out all values in the CPUHPPAState
+> struct, add the end_reset_fields marker in case the state structs gets
+> extended with other variables later on which should not be reset.
 > 
-> Handle it as what we've done to coldfire.
+> Signed-off-by: Helge Deller <deller@gmx.de>
 > 
-> Fixes: f161e723fdfd ("target/m68k: Perform the semihosting test during translate")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
->   target/m68k/op_helper.c | 3 +++
->   1 file changed, 3 insertions(+)
+> V3:
+> - Call reset function from hppa_machine_reset() instead
 > 
-> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-> index 15bad5dd46518c6e86b6273d4a2b26b3b6f991de..95b3d5cf052c6ffd515afdffd5465550ae3af455 100644
-> --- a/target/m68k/op_helper.c
-> +++ b/target/m68k/op_helper.c
-> @@ -285,6 +285,9 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
->               /* Return from an exception.  */
->               m68k_rte(env);
->               return;
-> +        case EXCP_SEMIHOSTING:
-> +            do_m68k_semihosting(env, env->dregs[0]);
-> +            return;
->           }
+> V2:
+> - Add end_reset_fields marker
+> - call reset function in hppa_cpu_initfn()
+...
+> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+> index c38439c180..b908cf65c6 100644
+> --- a/target/hppa/cpu.c
+> +++ b/target/hppa/cpu.c
+> @@ -235,15 +235,39 @@ static const TCGCPUOps hppa_tcg_ops = {
+>   #endif /* !CONFIG_USER_ONLY */
+>   };
+>   
+> +static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+> +{
+> +    HPPACPU *cpu = HPPA_CPU(obj);
+> +    HPPACPUClass *scc = HPPA_CPU_GET_CLASS(cpu);
+> +    CPUHPPAState *env = &cpu->env;
+> +    CPUState *cs = CPU(cpu);
+> +
+> +    if (scc->parent_phases.hold) {
+> +        scc->parent_phases.hold(obj, type);
+> +    }
+> +
+> +    memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
+> +    cpu_set_pc(cs, 0xf0000004);
+> +    cpu_hppa_put_psw(env, hppa_is_pa20(env) ? PSW_W : 0);
+> +    cpu_hppa_loaded_fr0(env);
+> +
+> +    cs->exception_index = -1;
+> +    cs->halted = 0;
+> +}
 
-Oops.
+There's also a set of exception_index in hppa_cpu_initfn.
 
-Anyway, better to hoist both calls to do_interrupt_all.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
