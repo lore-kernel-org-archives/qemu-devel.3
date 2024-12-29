@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B064DE77191
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18762E7718B
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Dec 2024 07:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tRnhR-0006YB-2z; Sun, 29 Dec 2024 02:26:57 -0500
+	id 1tRnhU-0006ZD-UH; Sun, 29 Dec 2024 02:27:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhO-0006XU-VM
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:55 -0500
-Received: from mail-ej1-f48.google.com ([209.85.218.48])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhU-0006Z2-17
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:27:00 -0500
+Received: from mail-ed1-f47.google.com ([209.85.208.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhN-00029S-Ha
- for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:54 -0500
-Received: by mail-ej1-f48.google.com with SMTP id
- a640c23a62f3a-aaec111762bso1088793466b.2
- for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tRnhS-0002A7-IU
+ for qemu-devel@nongnu.org; Sun, 29 Dec 2024 02:26:59 -0500
+Received: by mail-ed1-f47.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0d32cd31aso11793368a12.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Dec 2024 23:26:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735457212; x=1736062012;
+ d=1e100.net; s=20230601; t=1735457217; x=1736062017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fqZjoK0ZImfPOgOFtgojHS/Q0wDjVJPffV/7c5jWce0=;
- b=mDxY4TNDfaSkmP/g4r+f/cpBI2N66Mp/fsHgSn8gnn6ake+JWdds2HXYzgit5SmZbn
- 1uaynuTQ+/Xrn0+6L+9g55saGwsIdEURbitl/cLeo+tW2wK6IgfefNcKqtgEzRS2T6TB
- 2wXN/YnLbFei6tt/A+1FuCjjfhC42GEb3lAUKgC9JKk1yz5yNZLUZNQHF/LZe9LFt0vl
- +qeePAk4qQda7vrDW3G4HF7cT6JITiLQnOI/CsG9nxqkYKuAvicZO9naOitiR4xEkjf1
- 6f1lKNmqVLVKm1xH3mBxexYeGEPxo0RKpsuuDUXvEYgIN1iDEdMKQGQzqC6I2pTS8Qxu
- UMkQ==
+ bh=wTxvGFISXS09RDJWJfWcPbX5LopumkcLdvr0lAAgjX4=;
+ b=lNGvG5NA/MZaDCugYUOIHTBUK1ih4PPMrXH2A/Y6gLCa0wLAt0o0Zq+lYIx+tQKn7B
+ fUkhgiw/NjZoqU93u7mIPPArPkwL9FdmsGfvIFFpL7d4OFSlmwUq37lpMSzP1wqKjPgM
+ nfbqyE/ypff6gPc+mNAruQTv8Q/gw47/P7rmbYCOkbQfVztApznDIfO5DZwI8fHt8YGB
+ 30ZZMUm6Ujk4Xb8oUISrXuMR4WNu4YQuleaLlzhX2aNelwK9AWmWEoHW6i0yujIIyOIn
+ 0Hdj2S5xuJMryrWpfsplPduS+WaswptC7TrWhKBeOXEoiIpGVb1GFfNzxrRgH2p9aZuQ
+ i52A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBQklvsy7tJi3WrXf+MhB1MBe6FpWUxhyC5IFACI65usRuu1e9zEfSpsWogR/lKGj2vsH6ax2TguR+@nongnu.org
-X-Gm-Message-State: AOJu0YzcXzV5aRQgSO/8ZlRjEVB2IY+2PtEjBgE4DQ4EdVzadgcw3SWC
- 9X3ni2mAaUDjWfuOW0JzSiRglhDJ52BfJlJWzVk2564c3zJjCklT5h5rEQ==
-X-Gm-Gg: ASbGncthyUfzG5tJDU0rrsGh1XBuDmleHHfMOhT8DykhRQCKGeR9ocwQ9u1k5EtgZ8x
- c++kRYV4DV4/LjJtbxnup+y/511HlN3TtDYuuIgA+DCE9B/2dy5VrFtLLdc815bjm7KHYxHRiF8
- ykhJU18+Nr25cX3Gs+Jmbjm+nx7Msy4F8X3TU0UZgYYlZx5MOptzehCRFzSyPqmDLMJdY1MhrNL
- 4G4iDoWRkPkGrC2Kz3m4+u8o0I7s5a/wMDZqfJzXDXUO6af586OkMhcbv1nmEK7n0KCLCbDnnhJ
- Poo=
-X-Google-Smtp-Source: AGHT+IEdlXartQrmt3BF9c3P+JhldIpvAdRxM7wJgXeS6dUWxgdqTMp2+3ZJc65rFaiWyHfRInn+WA==
-X-Received: by 2002:a17:906:f5a6:b0:aae:b259:ef6c with SMTP id
- a640c23a62f3a-aaeb259f285mr2465766266b.0.1735457211916; 
- Sat, 28 Dec 2024 23:26:51 -0800 (PST)
+ AJvYcCVEM1fBzDUCsCsihwxYSmWi7XEjJVfacgNknr4+F9WzzbU/3Pg+JhylDX3E6qUmwSybhVQ0pFkqDL/W@nongnu.org
+X-Gm-Message-State: AOJu0YzV3g1lkoX36pF+YUzG4kX3rTTurn8UNhUdwvj6oFeGzrm4EwWG
+ KX5BS2aMR7k9Zd3nK91aWArb06EXxn7zKWXqXFXONd10uh/GfR8H
+X-Gm-Gg: ASbGncuS4TKlJZU0Ubvw3TSfiHVNFuNwtakTXfGKjwpLhCzIy+Qvr/jEzxzdo0AqEIi
+ 3CFI74ywB+A1VzXj/C+6mVELwxeHS1soDcEGFQMDOOdwSS8sMvpO++InnJ5JpL8ztjmpSNXMQ2l
+ uF38KCynUsYTUaa1DZA2sNq0Nc3OSZEICi/JscOzIlXGsgBLJQOELCR3IDKqxQw1Ll6QGxlGUar
+ cct0w8HM6/WIug3DNIYVOt/LxfTgYuEQQnSRazFEQd/dpJs3T9rw16l5/qhRFHN9r+IN+3uFbs8
+ ZbA=
+X-Google-Smtp-Source: AGHT+IFBNkft+S8TNz4Ra+uiSaz1qkNULRSlTIHRYGTktHozzSGBW89rABiQ9Q2gGHcCEu9TrbsZ9Q==
+X-Received: by 2002:a05:6402:348d:b0:5d4:55e:f99e with SMTP id
+ 4fb4d7f45d1cf-5d81ddc09abmr74171444a12.18.1735457216965; 
+ Sat, 28 Dec 2024 23:26:56 -0800 (PST)
 Received: from tpx1.. (ip-109-42-49-90.web.vodafone.de. [109.42.49.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.49
+ a640c23a62f3a-aac0e895194sm1329218666b.70.2024.12.28.23.26.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Dec 2024 23:26:50 -0800 (PST)
+ Sat, 28 Dec 2024 23:26:56 -0800 (PST)
 From: Thomas Huth <huth@tuxfamily.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PULL 11/35] next-cube: move floppy disk MMIO to separate memory
- region in next-pc
-Date: Sun, 29 Dec 2024 08:25:02 +0100
-Message-ID: <20241229072526.166555-12-huth@tuxfamily.org>
+Subject: [PULL 13/35] next-cube: move ESCC to be QOM child of next-pc device
+Date: Sun, 29 Dec 2024 08:25:04 +0100
+Message-ID: <20241229072526.166555-14-huth@tuxfamily.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241229072526.166555-1-huth@tuxfamily.org>
 References: <20241229072526.166555-1-huth@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.218.48; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f48.google.com
+Received-SPF: pass client-ip=209.85.208.47; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f47.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -91,124 +91,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-The dummy floppy disk device is part of the next-pc device, and not related to
-the NeXTCube SCRs.
+Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
+of the next-pc device.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-ID: <20241222130012.1013374-10-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241222130012.1013374-12-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 61 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 49 insertions(+), 12 deletions(-)
+ hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 402e268f6b..4d7fcdd943 100644
+index 6ddd9ad0ec..9f49c33bdd 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -108,6 +108,7 @@ struct NeXTPC {
+@@ -124,6 +124,8 @@ struct NeXTPC {
+     qemu_irq scsi_reset;
+     qemu_irq scsi_dma;
  
-     M68kCPU *cpu;
- 
-+    MemoryRegion floppy_mem;
-     MemoryRegion mmiomem;
-     MemoryRegion scrmem;
- 
-@@ -368,11 +369,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
-     uint64_t val;
- 
-     switch (addr) {
--    case 0x14108:
--        DPRINTF("FD read @ %x\n", (unsigned int)addr);
--        val = 0x40 | 0x04 | 0x2 | 0x1;
--        break;
--
-     /*
-      * These 4 registers are the hardware timer, not sure which register
-      * is the latch instead of data, but no problems so far.
-@@ -402,13 +398,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
-                              unsigned size)
- {
-     switch (addr) {
--    case 0x14108:
--        DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
--        if (val == 0x0) {
--            /* qemu_irq_raise(s->fd_irq[0]); */
--        }
--        break;
--
-     /* Hardware timer latch - not implemented yet */
-     case 0x1a000:
-     default:
-@@ -948,6 +937,47 @@ static const TypeInfo next_scsi_info = {
-     .class_init = next_scsi_class_init,
++    ESCCState escc;
++
+     NextRtc rtc;
  };
  
-+static void next_floppy_write(void *opaque, hwaddr addr, uint64_t val,
-+                              unsigned size)
-+{
-+    switch (addr) {
-+    case 0:
-+        DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
-+        if (val == 0x0) {
-+            /* qemu_irq_raise(s->fd_irq[0]); */
-+        }
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static uint64_t next_floppy_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    uint64_t val;
-+
-+    switch (addr) {
-+    case 0:
-+        DPRINTF("FD read @ %x\n", (unsigned int)addr);
-+        val = 0x40 | 0x04 | 0x2 | 0x1;
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    return val;
-+}
-+
-+static const MemoryRegionOps next_floppy_ops = {
-+    .read = next_floppy_read,
-+    .write = next_floppy_write,
-+    .valid.min_access_size = 1,
-+    .valid.max_access_size = 4,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
- static void next_escc_init(DeviceState *pcdev)
- {
-     DeviceState *dev;
-@@ -1006,6 +1036,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+@@ -978,31 +980,6 @@ static const MemoryRegionOps next_floppy_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
  
-     s->scsi_reset = qdev_get_gpio_in(d, 0);
-     s->scsi_dma = qdev_get_gpio_in(d, 1);
+-static void next_escc_init(DeviceState *pcdev)
+-{
+-    NeXTPC *next_pc = NEXT_PC(pcdev);
+-    DeviceState *dev;
+-    SysBusDevice *s;
+-
+-    dev = qdev_new(TYPE_ESCC);
+-    qdev_prop_set_uint32(dev, "disabled", 0);
+-    qdev_prop_set_uint32(dev, "frequency", 9600 * 384);
+-    qdev_prop_set_uint32(dev, "it_shift", 0);
+-    qdev_prop_set_bit(dev, "bit_swap", true);
+-    qdev_prop_set_chr(dev, "chrB", serial_hd(1));
+-    qdev_prop_set_chr(dev, "chrA", serial_hd(0));
+-    qdev_prop_set_uint32(dev, "chnBtype", escc_serial);
+-    qdev_prop_set_uint32(dev, "chnAtype", escc_serial);
+-
+-    s = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(s, &error_fatal);
+-    sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
+-    sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
+-
+-    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
+-                                sysbus_mmio_get_region(s, 0));
+-}
+-
+ static void next_pc_reset(DeviceState *dev)
+ {
+     NeXTPC *s = NEXT_PC(dev);
+@@ -1043,6 +1020,28 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     /* Floppy */
+     memory_region_add_subregion(&s->scrmem, 0x14108,
+                                 &s->floppy_mem);
 +
-+    /* Floppy */
-+    memory_region_add_subregion(&s->scrmem, 0x14108,
-+                                &s->floppy_mem);
++    /* ESCC */
++    d = DEVICE(&s->escc);
++    qdev_prop_set_uint32(d, "disabled", 0);
++    qdev_prop_set_uint32(d, "frequency", 9600 * 384);
++    qdev_prop_set_uint32(d, "it_shift", 0);
++    qdev_prop_set_bit(d, "bit_swap", true);
++    qdev_prop_set_chr(d, "chrB", serial_hd(1));
++    qdev_prop_set_chr(d, "chrA", serial_hd(0));
++    qdev_prop_set_uint32(d, "chnBtype", escc_serial);
++    qdev_prop_set_uint32(d, "chnAtype", escc_serial);
++
++    sbd = SYS_BUS_DEVICE(d);
++    if (!sysbus_realize(sbd, errp)) {
++        return;
++    }
++    sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
++    sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
++
++    memory_region_add_subregion(&s->scrmem, 0x18000,
++                                sysbus_mmio_get_region(sbd, 0));
++
  }
  
  static void next_pc_init(Object *obj)
-@@ -1024,6 +1058,9 @@ static void next_pc_init(Object *obj)
-     sysbus_init_mmio(sbd, &s->scrmem);
+@@ -1064,6 +1063,8 @@ static void next_pc_init(Object *obj)
  
-     object_initialize_child(obj, "next-scsi", &s->next_scsi, TYPE_NEXT_SCSI);
+     memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
+                           "next.floppy", 4);
 +
-+    memory_region_init_io(&s->floppy_mem, OBJECT(s), &next_floppy_ops, s,
-+                          "next.floppy", 4);
++    object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
  }
  
  /*
+@@ -1200,9 +1201,6 @@ static void next_cube_init(MachineState *machine)
+         }
+     }
+ 
+-    /* Serial */
+-    next_escc_init(pcdev);
+-
+     /* TODO: */
+     /* Network */
+ 
 -- 
 2.47.1
 
