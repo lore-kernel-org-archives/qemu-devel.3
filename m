@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B86DE77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 21:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1908E77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 21:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSNJP-0004tV-5Y; Mon, 30 Dec 2024 16:28:31 -0500
+	id 1tSNLM-0005bX-Ph; Mon, 30 Dec 2024 16:30:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tSNJH-0004t0-LU
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 16:28:24 -0500
-Received: from mout.gmx.net ([212.227.15.18])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tSNLH-0005au-RV
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 16:30:31 -0500
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tSNJF-0006a4-4g
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 16:28:22 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tSNLD-0006xb-I6
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 16:30:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1735594092; x=1736198892; i=deller@gmx.de;
- bh=AHiPbIwizxMCvglt/cvx5wlSL8fZU0qsRJlGi+9PeTo=;
+ s=s31663417; t=1735594219; x=1736199019; i=deller@gmx.de;
+ bh=v5p3Hn2vr4wHRGeWprexOQlQgq8CZ+fMqVamVO83L5c=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=PJDYBtk+lmOju2WOkNaiMpvLn9ZeOF20pqBC7veufVvSzRj50PeY8n1O5M7SVyNM
- LUW2M7L0xSKpPChgckvyCgDbq2F1tswWAYz9ZW5WkocqCzVEjGphZl6zFeuzd6DZx
- fQHJ3r7yvwpeEkDNcLQdH9/0fkQk1MNSUfYrIyzKvNd30PCED9rA5CZUWme2nF+Jw
- g0xGnFCuPdQq+0CvVNjmULzLOGidgmbNKGxQ9ogdMI43ccIBG1rrgzOz3+YV/DvSO
- xemai6JzcoOEBvLdNs4oum5Zx/VET3PfpLp27Ef5Kx9d8tP8gtJOc+e9x78ztInxa
- fDJxQ1bd7o0g3h4jKA==
+ b=oxRZTOCV5/Osf8N+ma4C/F0Xysive925Xf1aL77PaXPHClFRAqgCqV3A03C6FVdy
+ YLOXtbJP8B7IalGHd+dtDG5Z/3IaE+inr+PFERTcRUkYSEKlleS0sAH+9UISmb4jt
+ EDiplarOp6V54s9fDoIlN85+yWghwZIYhfCLL+U+tgEqTkmgtsS6w7Dl28j2ZOpUu
+ AqWaNafyMRdZ3CX+Ci/kbgHoX5dgi2s+h0RsnkHr9VMdsStlQODuVG+7kUkEtMGKq
+ raLXjjEivSyfYW5VjjiANEcvO68l08PaalD2ufEqy6MYv1xYNBvr5uYWpF239XKES
+ VDrGH7D/dW390a++3Q==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.172] ([109.250.63.155]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXp5a-1t0yWN3S8q-00Z0qS; Mon, 30
- Dec 2024 22:28:11 +0100
-Message-ID: <53d3bc08-0423-4bf6-b1dc-f7f8a6100371@gmx.de>
-Date: Mon, 30 Dec 2024 22:28:11 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMobO-1tBwv115HQ-00JdvY; Mon, 30
+ Dec 2024 22:30:19 +0100
+Message-ID: <3cc7d9a4-8153-4f40-8b84-142ba455913e@gmx.de>
+Date: Mon, 30 Dec 2024 22:30:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 0/5] hppa CPU reset and speedup
@@ -46,7 +46,7 @@ To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: Richard Henderson <richard.henderson@linaro.org>
 References: <20241230152519.86291-1-philmd@linaro.org>
  <32a4d72c-6cc2-4c33-876d-ddf66b71fab4@gmx.de>
- <271cb1a7-88be-47c6-a574-605d294a2a98@linaro.org>
+ <6db51529-4754-49dc-8af5-2b40019ed30e@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -92,38 +92,38 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <271cb1a7-88be-47c6-a574-605d294a2a98@linaro.org>
+In-Reply-To: <6db51529-4754-49dc-8af5-2b40019ed30e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:07dw5OcT6lcQAYYWC5y9R5oG7loWbB1/oyDO1ENh0+gdcHJH/jK
- ZgPe01PxwRypL4pfI6KLAQFeqafyFe5PearTCxu6OACrEqCijVtXT5NRcmG4SVvLQY6HNL9
- EUBNi8C6i96cZvwNtKnIXgS3AaIR3PgAj5M7FhAj4Y0+wwzegeF6fUuUpvaCH0RhaTWcG1a
- oC6Wpt+OaqFezJ0Im1tzQ==
-UI-OutboundReport: notjunk:1;M01:P0:ztLsS5rvAWo=;IqboZaVLhhXNrsVxBcqIlwNoQ12
- AKjT3gFi/tZUKiEJyrOTqDCLahNCn5/DvBpUmo1zsKbJGroq4FrSmI1wryqTHY+Praz1iqMJB
- /unBlXtJ1gL4Yoi0Sa97kgvmeXoL/HqH0ZOJIodskIxOpWT13GR36DfZy4jHns7w3LQ3JM45p
- FvECO2eeFJm8U7POX0ugXgvr9ElNUCQVtIKcK6+suaw0V6TdOTeP/yPwUhSg2RJihBXv1yFpb
- NavZqjNXESxtHbMvV80qZGayMv58q5YrL8x+dqvJS+lXrGiC0BeBHu969v2xQdk2MXs2E6d0B
- B6M5lO0ZfJersqUvvracaFtJaLWPf2H0xi45RPATQdj8T966djFEn1/9IvOvV5HYioKopfJ84
- DGyawq9EhYRKrXOlPOhG2/+0Lj55ThnlmhWR4zqPvf9FKWawQEiPkV94q6gyyJYEk4JktMBc5
- jr4Hy+ROkHpGhzH9diui4sM0F3ibe4g3x5mMPvImRgltnfw1iyzm0nJpQrw1Z/l8ivnhzBAez
- +h05f0edsGAoHbSfzxBdLrjHaWQUmZ8Y3wOHOHQjjT4cOK9Y5AdmpqbNzy+/ne1h29xeDNxf3
- 8l97QFGdeg37d6ARxp19JewgXlQWUTUV9Z15rsiAoOymdEkDNBqmXmp5rAqB6wNGAg2USPW57
- FY71iOP3HC1Rr+4EgNCfTuy7CnNWD6zCATxuYmqHpFw+Jes54Fyh+ZHd3PrMFY6lsFmIQ6w32
- 7kx9qbZovV7jb32UJZ8vYJtkXcShB408bBHV2kYYrFH3X+hNkvBiV9DOxzEcdszC6Z7Z5Inqv
- zjGhQA6MlF0pAaxJCQGESu+DojQOrafMm9zGVQmsyNzSGhQB3jl531+VNDV492fCeQ31TxfuB
- S+sjtE7pfJe79+IMcw0athvz1YaTGdgooLCWG+xeAS5o5hHs263b2ZEUA+9T0GYpBQ+GFPgtp
- tJfP2UinI7pADYeA/LsNXAourcsr8VVTDZmRND4sSAdt65ebfE+T+DgnFVbrGmVN/d93G7xRW
- FabNVZUMeZgQw+nS4RqnbfPjiwa8XndP+/rX/WkGNZpOAh1KvcvljzV8PV/bDzcjQC5yeHImY
- S8aoneMtkgfNBT+JHTLCoZiwVTzbPi
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:RVHMtcWxuMRQ5GXFoSrsUhjzdxcNakmDT5xJdSe8vxooh/R2kRi
+ m+DdXOmsDhPnAgvUdTCzlrCurO+mFYordQD5kDsSNwmlLftskN1qV6WftwzI1gYCNeB0kSD
+ r3XzeDkhutzKu+OUumf3jn16pAbDLF1osgh6dEqaBDIssZ/yHoA1aqA2w85uS8XLYy2F/3f
+ wWwEN47X1iw/HtjAZjqdg==
+UI-OutboundReport: notjunk:1;M01:P0:TykvgEeFp/I=;iy/O/oljUc/VplXp7BdtKE7VRRx
+ 03PvK9z97tO4ialSaySj5mhUpieDVVVYZiC/PK4ShHC1HLmtnBMzdYUnAGwMkYgdvu/5twqwX
+ V89fGW5/i0TzWqcSBrdKdUT/Qgv6yVaJqgg3LYX0AwXRmkw3P7B49O6J9nut0cdfJoOSqQKxK
+ XkdkSx2qQmOBZ+7nliO+tPGbduIuZb40lKAdW8IJ6s0km7OYwebhMkC6u2phhsgQbIDIh1fZn
+ YSaMJNpPnJy+6Y2qj1IGpGB2blQQdY9kVFLX0l2CIw7yKFL5DchNaDG3wZK9yIHfpADVWEd2s
+ 6Q+FMiYO/wRilI6qQ4A8YARHTHlP2vuKJrQWFOL1uS2BFflpv8llLcxqRAEfVyxO8CNSC4XQc
+ AlQNMIVVwqNsHtWl1zx7ifoxJvRUJ5fbhcvIvczUpAqS+QBac7vi5RQbsZqoS2dhSWfOI9gHp
+ 93VYXQejtI2EFkHzLHSNVeRwnrbhbO5etkuc/uJ9eTAai5u4H77MQzJZdGfotYB+T61x1Z5i4
+ vcfvGMn6geT6kLHx7jkqSVs2l4WhUxUET8ycyuYkn6H58kWIJdvIz9cAATBZ+v1kz379X9uZ4
+ +seRBol56jRoJQvptWnliYJRNFoOIC5K5uj+aXQfoCMvy5y7e0BalvS04I5ncg/qgDwH8Ki0W
+ 8CthhklaSs4zKbaapV00fR/tTDWVLNq/SR/Wk8ix+uRqHYCe1hmah5o+JnD6jNs4R/SzAZ6Jc
+ RYqbpSwNVNSJemtb8/2diZ6lhXYeiKlsTGDWV/F4P2FfDPRgtZ53gYe2ODWMuO/sJ0ZPb51BU
+ OmVBUrXRuLWUVr8F1292oXqKhpwJFwNX3iIu51TeF8kfakTgWJgASykCcJlWTrO7bzTRl6H4a
+ UldGBwBEasaW4w3Gc2wSQ8ttnIj48NZUoJDK+SKK7E1MhZ9eWa1B8lPVroShCxUgSZbwXsvTy
+ YZpwh+dVrXsXO2x9OH8GgU96stFtx1YLH/5bkRqMIVWrVwQtigRTpKJgKJZtPJqMnILBVql5r
+ HLaS3bJCEiZPC2CXLsCCh+uzBkztAegXZkO9lHpICV10ZW3MPJNRg8xwrpqEYVKv5gEg6GOn7
+ jdN0W2CwIWVDZHTll1R/wYrTvlX/7m
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -141,7 +141,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/30/24 21:36, Philippe Mathieu-Daud=C3=A9 wrote:
+On 12/30/24 21:47, Philippe Mathieu-Daud=C3=A9 wrote:
 > On 30/12/24 21:24, Helge Deller wrote:
 >> Hi Philippe,
 >>
@@ -155,58 +155,22 @@ el.org/
 >>
 >> Thanks for picking up my patches and integrating them properly
 >> with the reset code.
->> But sadly your changes somehow break hppa 64-bit CPU support.
->> I think it's to when the reset code is called.
->>
->> Easy reproducer (no other options/disc/network needed):
->> ./qemu-system-hppa -smp cpus=3D4 -nographic -machine C3700
 >
-> [*]
 >
->>
 >>> - Reset PSW using M bit (untested)
 >>
 >> We haven't implemented PSW-M support and the first
 >> thing the firmware does is to reprogram PSW.
 >> So, basically it's not needed.
->>
->>> Helge, could we add a functional test booting Linux?
->>
->> What exactly are you looking for?
->> Some trivial preinstalled disc image with kernels?
->> Any examples?
 >
-> Your [*] example running SeaBIOS is perfect.
->
-> See tests/functional/test_riscv_opensbi.py, but using:
->
->  =C2=A0 wait_for_console_pattern('SeaBIOS PA-RISC 64-bit Firmware')
+> Good to know it isn't needed yet (I grepped and noticed
+> very few uses). Are you OK with the patch as is (as it
+> matches the spec)?
 
-Then I suggest 2 testcases (32-bit and 64-bit CPU, dropped SMP flag):
-./qemu-system-hppa -nographic -machine B160L
-./qemu-system-hppa -nographic -machine C3700
+At least I don't have any objections as long as 32- and 64-bit
+CPUs still boot.
+
+Will you respin the series, then I can test and review?
 
 Helge
-
->
->>
->> Helge
->>
->>> Helge Deller (4):
->>> =C2=A0=C2=A0 target/hppa: Convert hppa_cpu_init() to ResetHold handler
->>> =C2=A0=C2=A0 hw/hppa: Reset vCPUs calling resettable_reset()
->>> =C2=A0=C2=A0 target/hppa: Set PC on vCPU reset
->>> =C2=A0=C2=A0 target/hppa: Speed up hppa_is_pa20()
->>>
->>> Philippe Mathieu-Daud=C3=A9 (1):
->>> =C2=A0=C2=A0 target/hppa: Only set PSW 'M' bit on reset
->>>
->>> =C2=A0 target/hppa/cpu.h | 11 +++++++++--
->>> =C2=A0 hw/hppa/machine.c |=C2=A0 6 +++---
->>> =C2=A0 target/hppa/cpu.c | 20 +++++++++++++++++---
->>> =C2=A0 3 files changed, 29 insertions(+), 8 deletions(-)
->>>
->>
->
-
 
