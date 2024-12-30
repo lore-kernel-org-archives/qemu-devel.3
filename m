@@ -4,88 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9623BE77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 09:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9749E77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 09:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSCKk-0002Tc-Ov; Mon, 30 Dec 2024 04:45:10 -0500
+	id 1tSCQZ-00045e-Fp; Mon, 30 Dec 2024 04:51:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSCKi-0002Sk-K4
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 04:45:08 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSCKg-0002xL-Rn
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 04:45:08 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso60588195e9.3
- for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 01:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735551905; x=1736156705; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NeqSPlopQbxQJjHirFxEZvvtD9F8/TbqVL7nyWt5dJA=;
- b=QKsK/75RS0r66NlTv0nYDEMMVhAQWbE6CIhUBI6g/iIaTdapVEJdMpWoHradhVXCzC
- hmmHAAx/k6O1sQ7tQlua42C/YYEPuItmozlg7t8/4gRhGuDwPgLeLkSNEKmtnvlcDVKS
- dqsx/hoIOTVczDJfTIF2vaerPFokwNlseWgztoVMslldfl0wDr1EYMOofeyQYbiZXvjf
- W6TD25Tg1PD9FPMku5PAEgpoDNe5G9x5lBjFMLA86Wq3cokJ+hZJ0+4tOdHtiTacWPEi
- 6W9oPlFjKO94QioC9IBvm619G5LLt49mZNsKtH2ZduDKXZ0L9xmwtD9yJaPlQe2FQwC2
- uZcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735551905; x=1736156705;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NeqSPlopQbxQJjHirFxEZvvtD9F8/TbqVL7nyWt5dJA=;
- b=haaDNXoxYSBUOrx5GSeWWYeWl5q/2RZNNe6ohfjL4yTRiZT81u22jt6vfBTOtQSzSK
- 0MTu1jUaM89N/PAu4vinW8QYV3tj46rNpiqv0J4SDAwrg5O/jJSryr6YMAa9LAvWkm3K
- UCyBi3Tfrk4QQyvG4L1Xasybc8B6HpSp6FpyE6pMC6niHgJQZvldXJWYdk4SVtLYHbgp
- LamdcL9bsY+alz6sLz33PeXoafwh+vNHC1d3DB7rYp00JlUBxIlnOVXkmq9LwL65RMiA
- PELUWJkXWlf59RLaQZ6OmYtUeGfKflzASMxgQF0u4Bb6LJfVlBCmxAm/B/EmyLpFu0SS
- dTwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMz2Kcdk9MF73SZjH7NkVJSVpk6CtVarWa7DNyDrsbV7c0co8U0oQinddmk870okpRZsdjhgrB/tqd@nongnu.org
-X-Gm-Message-State: AOJu0YxuEUVvx1AWL8X9mkXEL+MKBZw+elqWefO7D+QUSBIMvPGYx/VM
- Dz8s9ExxegZa7MDW/zljo5qW47JrAKOLAaBH9Neob2iR2q1w/m0oSWHfNMnfKII=
-X-Gm-Gg: ASbGnctcExMwn4S1xvo0vyNwqZhRc/0HjV/UCUO7Cb9OjGlgT/FfW+SR92xpEWFL/tZ
- 9K4LoD2ScqsabiW6QEziA1J4kn6IwVR8Hbahy6JTzrqROV4kjNKjGptWMtKtb8iRnCqtsc64LGN
- 7RbNFIMl9AbHLZEJQlYcJMxhB8sBkaEIPb6z7Lr+BIFV8tPxoKhHpeJaxpdFR7DmjygGlkvdjfZ
- V0Ff6NNPTgSHROQRzWCQ72zx3A6UhB288bOYQQ57drgdnTz6uPSg1+HALgd24ErdsIs+9r8LwwK
- ctAowan2d5Qgi5BwDEsM+QMj
-X-Google-Smtp-Source: AGHT+IHFMc/Ax5heVeE1L0HkcIq6f/hSEmyYb7poDnZsbioo3jHm19uzhIWllcAc1YKbOMczXoGodA==
-X-Received: by 2002:a05:600c:3516:b0:434:fbda:1f44 with SMTP id
- 5b1f17b1804b1-436686464e7mr291825775e9.19.1735551904262; 
- Mon, 30 Dec 2024 01:45:04 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b00cf6sm389240535e9.10.2024.12.30.01.45.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Dec 2024 01:45:03 -0800 (PST)
-Message-ID: <8a46da86-f68e-465e-8349-ce9d043372a0@linaro.org>
-Date: Mon, 30 Dec 2024 10:45:02 +0100
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tSCQX-00045D-Oy
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 04:51:10 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tSCQT-0003Sa-EA
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 04:51:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=V1g+CY5MDseeuW64YOUoskf6WoUKk34ZOAZeHehWWsI=; b=h8+ljsSpelzjAZHVxe8+rWnciR
+ 5arkKPYKwyPkcc2aj5+dIQq95iG1Ac9Yab/LzTOWapeh6i7B/dAQnkM4G6o1tas5u3mj7AYSdb0tR
+ nuygLWEfJV/99d5ISUdR/XQ9Msx7BNy9/Tsd3tnbiQibUQ3yySCM+BQqesXcU0880y2CqsY0peZ19
+ W8JyKasEItQWByUKC5+2GAwuRE2n35qAuyqM8fp+XzZbKboR2S0COov86rQrX39PeXUWMz+H3Ph+y
+ INercQ+qBkqNefYvLdSU2ffbx6pU18OzTPlxZLIf1JM+L18vbCXbLNqqOzia0ZREVJCyRjaNcJ8uZ
+ fShR5kYrvfe5uklAC2vm0Jm6xp/wmHcuTde8cRkUBQ2syTHX303cb2qwF2OzzqG5/SPX3FlvHnG6K
+ BwoJCYWny3hBcyOAwNOFctlrnSijzXDQr7rPyEQuXSUNfqBwP72NjwiJFj/6HSaNLpvpGRSa3akEl
+ FgYlqahElsH5w9IrwBr06xv5f+rs0Fmcomgdvjc++ru6oI2FI266t/DiswL0/X4AyuRMm6qW14WOc
+ y95zJSb/pND8qCXNXGtsSfpWoe90SsLhyZbpE8zKd1EZX6gz59C1ht3X3XooTnMtdJc7YA8Em5Z3X
+ FlJfApB1LUicNNHwNxPrZvgtDoKm4Pv1uykTE5nKY=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>
+Subject: Re: [PATCH] 9pfs: improve v9fs_open() tracing
+Date: Mon, 30 Dec 2024 10:50:59 +0100
+Message-ID: <45674069.kNWJ3c3XjC@silver>
+In-Reply-To: <E1tN8RJ-008jNq-5L@kylie.crudebyte.com>
+References: <E1tN8RJ-008jNq-5L@kylie.crudebyte.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Hppa updates
-To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Cc: Helge Deller <deller@gmx.de>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20241230002248.33648-1-deller@kernel.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241230002248.33648-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,30 +69,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan,
+On Monday, December 16, 2024 11:30:09 AM CET Christian Schoenebeck wrote:
+> Improve tracing of 9p 'Topen' request type by showing open() flags as
+> human-readable text.
+> 
+> E.g. trace output:
+> 
+>   v9fs_open tag 0 id 12 fid 2 mode 100352
+> 
+> would become:
+> 
+>   v9fs_open tag=0 id=12 fid=2 mode=100352(RDONLY|NONBLOCK|DIRECTORY|
+>   TMPFILE|NDELAY)
+> 
+> Therefor add a new utility function qemu_open_flags_tostr() that converts
+> numeric open() flags from host's native O_* flag constants to a string
+> presentation.
+> 
+> 9p2000.L and 9p2000.u protocol variants use different numeric 'mode'
+> constants for 'Topen' requests. Instead of writing string conversion code
+> for both protocol variants, use the already existing conversion functions
+> that convert the mode flags from respective protocol constants to host's
+> native open() numeric flag constants and pass that result to the new
+> string conversion function qemu_open_flags_tostr().
+> 
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/9p-util-generic.c | 44 +++++++++++++++++++++++++++++++++++++++
+>  hw/9pfs/9p-util.h         |  6 ++++++
+>  hw/9pfs/9p.c              |  9 +++++++-
+>  hw/9pfs/meson.build       |  1 +
+>  hw/9pfs/trace-events      |  2 +-
+>  5 files changed, 60 insertions(+), 2 deletions(-)
+>  create mode 100644 hw/9pfs/9p-util-generic.c
 
-On 30/12/24 01:22, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> The following changes since commit ae35f033b874c627d81d51070187fbf55f0bf1a7:
-> 
->    Update version for v9.2.0 release (2024-12-10 16:20:54 +0000)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/hppa-updates-for-v9.2-v3-pull-request
-> 
-> for you to fetch changes up to bd2fb633a931b192540522fd842151b2421824ad:
-> 
->    target/hppa: Speed up hppa_is_pa20() (2024-12-30 01:16:15 +0100)
-> 
-> ----------------------------------------------------------------
-> hppa CPU reset and speedup
-> 
-> Add CPU reset function and speed up runtime and translataion.
-> 
-> ----------------------------------------------------------------
+Queued on 9p.next:
+https://github.com/cschoenebeck/qemu/commits/9p.next
 
-Please hold on for this PR, it was posted roughly 1h after the v2
-and I still have comments for the first patch.
+Thanks!
+
+/Christian
+
+
 
