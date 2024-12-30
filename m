@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A53E77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 16:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CB6E7718F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 17:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSIqN-0002Qz-GZ; Mon, 30 Dec 2024 11:42:15 -0500
+	id 1tSJ9a-0002GW-8x; Mon, 30 Dec 2024 12:02:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSIqL-0002Qn-7x
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 11:42:14 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSJ89-0001Sr-Vl
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 12:00:38 -0500
 Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSIqJ-0000pC-7V
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 11:42:12 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSJ88-0002Rv-2K
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 12:00:37 -0500
 Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3862f32a33eso4366524f8f.3
- for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 08:42:10 -0800 (PST)
+ ffacd0b85a97d-38789e5b6a7so4825686f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 09:00:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735576929; x=1736181729; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735578034; x=1736182834; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xeKnEKsR0+uOT+NFBKBAtZvitld2Kqz+mQfzQ7jeZOk=;
- b=JYXWiZ6tUM3g68X9KVCtS4etVUN+SBZaKCI8oXvmb7Iu5BI1I57ZkKm3lJVMxsUy/P
- pli6Nu7ghDHwdS8br3+LZmunxqnoaF3RYlGaSx24mmHCX4Ep77G8NRCxvBM7DwAiEkqQ
- wKBDkjO8MqIJ68k621nuze/XEKifzCf3K4QK1+VzJVRcZkWTC/3bRNEQKMLCixZGumt+
- eQLsbb6P4P/uDVF12kKyWAzOSYxnEnwmPe08WhFa7DLtQGUV3wumsfvLLZnehJlbbb09
- 5SO2K+Y3MkARhZAabnSKPf4pT+mAzf2qLS8fjNsuFQJNIwsz8te6ef5bRQp2lpFqOMaZ
- mU4w==
+ bh=uysGPqHIQQVe1qBJd2EeF+py+w14vPg5GTcj8zRTN50=;
+ b=JG07gMSLp8BUdlHj4ouSCldp10lHru78gKT1MMJ4azQU5AjFwXlY9wmXHoTNzRPtqV
+ giSJ+ZlSd8rubujU4c5J9ksVxZiuzGQU7qN77CiWwCKjy1RMwjUznE69f4NVyYx2QlBY
+ kW/u4+w6I0YXvaq4GT2yeKZru+kwEPTmLvYZeTDA+wFkx3pB1aso1ZpkZ4ClxZnLoun6
+ UXxmDnHbFVcqoCQ5XpGg752j+pRkVHCz5AWl9/znEwPaBpZHFOMn0oYHqz+eLLimCfB2
+ WsF86FPvqULMEOzyVhfncD+q07mDZqaRR1I5a6koKWJ1LU7WGagP3dpiBMAH33l8Epnu
+ 6wWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735576929; x=1736181729;
+ d=1e100.net; s=20230601; t=1735578034; x=1736182834;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xeKnEKsR0+uOT+NFBKBAtZvitld2Kqz+mQfzQ7jeZOk=;
- b=ZDOXP+AuphPZurvwAX7qBf4CxMyECfPrjTU465zorkmD2MbLPLsJRG6oWi7I8LDVlh
- 53Zuu+pqpIJhtCFqDcbr+HXQGAgn2/EyHPrwszW4KkLDdnhvjxMvUTjppilUKNRRxgBG
- WFpJl50v5sXZGk9Hs3P93Zg0LTsubiRIiMIMv7NyIkZFXZISeaBZQN+wNiTw9ct8rqyv
- pABsNcGaWGgT3A7s6QEpSH0J08UOPdXdrZiNgIXG7vBUpC2dyx74nfZwhvJnjw5s6ahn
- 0FZpRa4MrNEjnSgpsszswBIQjbAqF+Of34qhHWgmWrcCzGf/OEIjh2r06/J+pY/ZUOO6
- 4BIw==
-X-Gm-Message-State: AOJu0YwHNNNHqzokU9fs3c2+zCIDxGEkLQ5Cf2Hl5flHQoByuQPuDfz0
- 0Vit7rUrwfTmdXX790zn+wFT16HZdL74JmbWEU/9j+A/KRjKcwaeZrpBZubv8sznmNsSdI8ou3u
- 6
-X-Gm-Gg: ASbGncsl25TP5F2y1SG9gssm+9cwOD5cJ21i9FRAUgpJRYRtTjfAycMeGoJBMymxBs3
- 9SFtJjciYqwNbA6YROG7/FR9A9ajVAxQp/UJVKQ0zC+xAOB64H7v0H1NUQUOr5Wx7H7SgNCipdS
- 8WvaFZ3Qt7Eb3T88oE72Oqebxnw/7tHcbH0lm1hjIg7UrFXptR+KpwFJgU54erYAKh8d0za4XBk
- atXQ7zfZPdgjXSUCnQ4k1m7ETtCAuWtq2fHfms2qKAqKOSAlDq8A0pommYNcnPSqp3jDAa+rD1L
- 9/pi1UDGoZcUWygv/MLRr0vC
-X-Google-Smtp-Source: AGHT+IFSOfue9OZ0StQtjpEHd7pGzqC744lEPd6nwbKJP91hf+X3OX90JKPSuYktgpgVYlnNiexKGg==
-X-Received: by 2002:a5d:47cf:0:b0:385:ee59:44eb with SMTP id
- ffacd0b85a97d-38a221fa9ffmr30615491f8f.33.1735576929176; 
- Mon, 30 Dec 2024 08:42:09 -0800 (PST)
+ bh=uysGPqHIQQVe1qBJd2EeF+py+w14vPg5GTcj8zRTN50=;
+ b=XfT21bH9rEX8ODYwQv4huuSXimVyLpUeyvVibsLvYMHkSlwyfrpSIITYoGJ8Hhduw3
+ iC7G0nJIXjmUgMxVK5lI0v+ANTjh0ajG3c/mB91XexZFRqPpPsf/quAnzWv/rkg2ziZ/
+ h4jNJzS9RcMj7ABrDd+ksWvqCM9LfUbg+ol1RhJOwY8oRb0lcRheSuv3pSI++2FNLa02
+ DGElyspHRSffpnc1arDWdJ1JsR7t5i06l2OlYqwGFVUUWyVSNSLAPFXQj5BIp8Jq5iKk
+ wvr05bwazAjQpDkP0wRSENLJA2ixeK35H9sL+sV/viE619fDhbx5cHvguthBMBfC8pQ4
+ z6/A==
+X-Gm-Message-State: AOJu0YxE9eaX+/KKHcJF/IQ5y54bP0HnGz5jOhZClPOZpprrAcJS/PDJ
+ AXqhtlf9wOoQAwZkBpy/Fz/pvYMl30snfNsEZ2dnJ9i8SVVkuyMvGJcBNJqKRvU=
+X-Gm-Gg: ASbGncvCMExIULWWqM5aN44LQXJIj3YMkYzEknhsFqpd1y5dJ8q2wG6e6sPxy3yL7Qa
+ /7WlGWzs44ff0lO0BvvIBccfhzVifE1rBIDFInTc29MiFRvdlO+AyDTr60mQY8kQOYatEkIbKbz
+ DuXoZsrWbrZShDNfTyg8q7k5i4QkzEtZzJ0+A9XtXysiWALvae4JX20UJMUuyUG5+cDaOtsc2mZ
+ cvqpGKa4v7GQxaDt5VCkpasVdwM3mLbaCSOMS8PTaapwwNvho2MNwmpN24Uut/Dbh616wId5JOu
+ 3Ns9gdL544meTjNVoJwk0e8s
+X-Google-Smtp-Source: AGHT+IH9hwW1umq9dNzSUY3QfahCxuPQLAmi1OpI1yimD5k1cRlGQ4Y2uLBn0FrI4cPBVgNa3I1ZTQ==
+X-Received: by 2002:a5d:5847:0:b0:38a:2b34:e13e with SMTP id
+ ffacd0b85a97d-38a456cbf49mr10495703f8f.18.1735578033902; 
+ Mon, 30 Dec 2024 09:00:33 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a457584bcsm12989464f8f.89.2024.12.30.08.42.07
+ ffacd0b85a97d-38a1c8acc02sm30178332f8f.104.2024.12.30.09.00.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Dec 2024 08:42:08 -0800 (PST)
-Message-ID: <20fbbcc8-bf6d-44c2-b904-be52debc1f8a@linaro.org>
-Date: Mon, 30 Dec 2024 17:42:07 +0100
+ Mon, 30 Dec 2024 09:00:33 -0800 (PST)
+Message-ID: <d3f20436-74ff-4bfa-9b70-c6687d95b423@linaro.org>
+Date: Mon, 30 Dec 2024 18:00:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] hw: Mark architecture specific devices with specific
- endianness
-To: qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- xen-devel@lists.xenproject.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Anthony PERARD <anthony@xenproject.org>,
- Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <huth@tuxfamily.org>,
- Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Paul Durrant <paul@xen.org>, Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20241106184612.71897-1-philmd@linaro.org>
+Subject: Re: [PATCH-for-9.2] hw/avr/arduino: Check for CPU types in
+ machine_run_board_init()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ Michael Rolnik <mrolnik@gmail.com>, Iris Artin <iris@artins.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20241118130109.7838-1-philmd@linaro.org>
+ <CAFEAcA9YQcseyQ3Csf3T99xRfbmvgetkTPZYO22_QE4SZpis-w@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241106184612.71897-1-philmd@linaro.org>
+In-Reply-To: <CAFEAcA9YQcseyQ3Csf3T99xRfbmvgetkTPZYO22_QE4SZpis-w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::435;
@@ -111,18 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/11/24 19:46, Philippe Mathieu-Daudé wrote:
-> When a device is only built for an architecture built for
-> a particular endianness, we can simplify the device to not
-> use the "target native endianness" definition and directly
-> use the proper target endianness.
-> 
-> Philippe Mathieu-Daudé (5):
->    hw/i386: Mark devices as little-endian
->    hw/tricore: Mark devices as little-endian
->    hw/m68k: Mark devices as big-endian
->    hw/openrisc: Mark devices as big-endian
->    hw/sparc: Mark devices as big-endian
+Hi Peter,
 
-I'm queuing this series, better to test it early in the dev cycle.
+On 18/11/24 14:07, Peter Maydell wrote:
+> On Mon, 18 Nov 2024 at 13:02, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Leverage the common code introduced in commit c9cf636d48 ("machine:
+>> Add a valid_cpu_types property") to check for the single valid CPU
+>> type. This allows reporting an error for invalid CPUs:
+>>
+>>    $ qemu-system-avr -M 2009 -cpu avr51-avr-cpu
+>>    qemu-system-avr: Invalid CPU model: avr51
+>>    The only valid type is: avr5
+> 
+> This is a nice user-convenience feature, but why for 9.2?
+> We haven't bothered to error-check the user specified CPU
+> before, and we still don't on many (non-avr) board types.
+
+This patch was motivated by a confused user:
+https://lore.kernel.org/qemu-devel/84975169-3c87-42c8-96e3-7ae724cc4692@linaro.org/
+
+Not checking valid CPUs on boards which only support a limited
+set looks like an open gate for more user complains.
+IMHO checking them should be the rule, not the exceptions.
+
+Back to this patch, do you object to it?
+
+Regards,
+
+Phil.
 
