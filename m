@@ -4,62 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE13E77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 07:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9623BE77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 09:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSAAg-0003a1-VF; Mon, 30 Dec 2024 02:26:39 -0500
+	id 1tSCKk-0002Tc-Ov; Mon, 30 Dec 2024 04:45:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haomiao23s@ict.ac.cn>)
- id 1tSAAb-0003Zn-Ra
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 02:26:34 -0500
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <haomiao23s@ict.ac.cn>)
- id 1tSAAY-0005nU-QB
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 02:26:33 -0500
-Received: from haooops-ThinkPad-P15v-Gen-1.. (unknown [159.226.43.8])
- by APP-03 (Coremail) with SMTP id rQCowAAH7zEXS3Jn9Mq+BA--.25674S2;
- Mon, 30 Dec 2024 15:26:16 +0800 (CST)
-From: Miao Hao <haomiao23s@ict.ac.cn>
-To: gaosong@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	Miao Hao <haomiao23s@ict.ac.cn>
-Subject: [PATCH] target/loongarch: Fix index calculation for variable length
- pte
-Date: Mon, 30 Dec 2024 15:26:13 +0800
-Message-Id: <20241230072613.152286-1-haomiao23s@ict.ac.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSCKi-0002Sk-K4
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 04:45:08 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSCKg-0002xL-Rn
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 04:45:08 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso60588195e9.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 01:45:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735551905; x=1736156705; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NeqSPlopQbxQJjHirFxEZvvtD9F8/TbqVL7nyWt5dJA=;
+ b=QKsK/75RS0r66NlTv0nYDEMMVhAQWbE6CIhUBI6g/iIaTdapVEJdMpWoHradhVXCzC
+ hmmHAAx/k6O1sQ7tQlua42C/YYEPuItmozlg7t8/4gRhGuDwPgLeLkSNEKmtnvlcDVKS
+ dqsx/hoIOTVczDJfTIF2vaerPFokwNlseWgztoVMslldfl0wDr1EYMOofeyQYbiZXvjf
+ W6TD25Tg1PD9FPMku5PAEgpoDNe5G9x5lBjFMLA86Wq3cokJ+hZJ0+4tOdHtiTacWPEi
+ 6W9oPlFjKO94QioC9IBvm619G5LLt49mZNsKtH2ZduDKXZ0L9xmwtD9yJaPlQe2FQwC2
+ uZcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735551905; x=1736156705;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NeqSPlopQbxQJjHirFxEZvvtD9F8/TbqVL7nyWt5dJA=;
+ b=haaDNXoxYSBUOrx5GSeWWYeWl5q/2RZNNe6ohfjL4yTRiZT81u22jt6vfBTOtQSzSK
+ 0MTu1jUaM89N/PAu4vinW8QYV3tj46rNpiqv0J4SDAwrg5O/jJSryr6YMAa9LAvWkm3K
+ UCyBi3Tfrk4QQyvG4L1Xasybc8B6HpSp6FpyE6pMC6niHgJQZvldXJWYdk4SVtLYHbgp
+ LamdcL9bsY+alz6sLz33PeXoafwh+vNHC1d3DB7rYp00JlUBxIlnOVXkmq9LwL65RMiA
+ PELUWJkXWlf59RLaQZ6OmYtUeGfKflzASMxgQF0u4Bb6LJfVlBCmxAm/B/EmyLpFu0SS
+ dTwQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMz2Kcdk9MF73SZjH7NkVJSVpk6CtVarWa7DNyDrsbV7c0co8U0oQinddmk870okpRZsdjhgrB/tqd@nongnu.org
+X-Gm-Message-State: AOJu0YxuEUVvx1AWL8X9mkXEL+MKBZw+elqWefO7D+QUSBIMvPGYx/VM
+ Dz8s9ExxegZa7MDW/zljo5qW47JrAKOLAaBH9Neob2iR2q1w/m0oSWHfNMnfKII=
+X-Gm-Gg: ASbGnctcExMwn4S1xvo0vyNwqZhRc/0HjV/UCUO7Cb9OjGlgT/FfW+SR92xpEWFL/tZ
+ 9K4LoD2ScqsabiW6QEziA1J4kn6IwVR8Hbahy6JTzrqROV4kjNKjGptWMtKtb8iRnCqtsc64LGN
+ 7RbNFIMl9AbHLZEJQlYcJMxhB8sBkaEIPb6z7Lr+BIFV8tPxoKhHpeJaxpdFR7DmjygGlkvdjfZ
+ V0Ff6NNPTgSHROQRzWCQ72zx3A6UhB288bOYQQ57drgdnTz6uPSg1+HALgd24ErdsIs+9r8LwwK
+ ctAowan2d5Qgi5BwDEsM+QMj
+X-Google-Smtp-Source: AGHT+IHFMc/Ax5heVeE1L0HkcIq6f/hSEmyYb7poDnZsbioo3jHm19uzhIWllcAc1YKbOMczXoGodA==
+X-Received: by 2002:a05:600c:3516:b0:434:fbda:1f44 with SMTP id
+ 5b1f17b1804b1-436686464e7mr291825775e9.19.1735551904262; 
+ Mon, 30 Dec 2024 01:45:04 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b00cf6sm389240535e9.10.2024.12.30.01.45.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Dec 2024 01:45:03 -0800 (PST)
+Message-ID: <8a46da86-f68e-465e-8349-ce9d043372a0@linaro.org>
+Date: Mon, 30 Dec 2024 10:45:02 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowAAH7zEXS3Jn9Mq+BA--.25674S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7tF1DCF13Kr13XF1kuF4rZrb_yoW8JFyfpF
- 47uw1jvF4rtrZ2yasrKayYvry7Za1UCa1xXa1xtryfAws5Xr97XF4kJ3sFgF1UJa1fZr42
- vanavr1UZFWxX3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUkq14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
- 6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
- CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
- 2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJV
- W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK67AK6r4x
- MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr
- 0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc40Y0x0E
- wIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJV
- W8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAI
- cVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUjX_-PUUUUU==
-X-Originating-IP: [159.226.43.8]
-X-CM-SenderInfo: 5kdrzx1drsj2g6lf3hldfou0/
-Received-SPF: pass client-ip=159.226.251.81; envelope-from=haomiao23s@ict.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/2] Hppa updates
+To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Cc: Helge Deller <deller@gmx.de>, Stefan Hajnoczi <stefanha@redhat.com>
+References: <20241230002248.33648-1-deller@kernel.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241230002248.33648-1-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,40 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Miao Hao <haomiao23s@ict.ac.cn>
----
- target/loongarch/tcg/tlb_helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Hi Stefan,
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 97f38fc391..a57ddfe8ad 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -538,9 +538,9 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     badvaddr = env->CSR_TLBRBADV;
-     base = base & TARGET_PHYS_MASK;
- 
--    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
-+    /* 0:64bit, 1:128bit, 2:256bit, 3:512bit */
-     shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
--    shift = (shift + 1) * 3;
-+    shift = shift + 3;
- 
-     get_dir_base_width(env, &dir_base, &dir_width, level);
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-@@ -595,9 +595,9 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-             tmp0 += MAKE_64BIT_MASK(ps, 1);
-         }
-     } else {
--        /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
-+        /* 0:64bit, 1:128bit, 2:256bit, 3:512bit */
-         shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
--        shift = (shift + 1) * 3;
-+        shift = shift + 3;
-         badv = env->CSR_TLBRBADV;
- 
-         ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
--- 
-2.34.1
+On 30/12/24 01:22, deller@kernel.org wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> The following changes since commit ae35f033b874c627d81d51070187fbf55f0bf1a7:
+> 
+>    Update version for v9.2.0 release (2024-12-10 16:20:54 +0000)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/hdeller/qemu-hppa.git tags/hppa-updates-for-v9.2-v3-pull-request
+> 
+> for you to fetch changes up to bd2fb633a931b192540522fd842151b2421824ad:
+> 
+>    target/hppa: Speed up hppa_is_pa20() (2024-12-30 01:16:15 +0100)
+> 
+> ----------------------------------------------------------------
+> hppa CPU reset and speedup
+> 
+> Add CPU reset function and speed up runtime and translataion.
+> 
+> ----------------------------------------------------------------
 
+Please hold on for this PR, it was posted roughly 1h after the v2
+and I still have comments for the first patch.
 
