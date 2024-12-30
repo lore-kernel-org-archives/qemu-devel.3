@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B44E77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 15:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AE1E77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 16:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSI5L-0006Wn-GO; Mon, 30 Dec 2024 10:53:39 -0500
+	id 1tSIND-00031D-Ia; Mon, 30 Dec 2024 11:12:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tSI5K-0006Wd-7r
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 10:53:38 -0500
+ id 1tSIN6-00030Z-R3
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 11:12:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tSI5G-0004Ek-AY
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 10:53:38 -0500
+ id 1tSIN3-0006T1-8X
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 11:11:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735574012;
+ s=mimecast20190719; t=1735575114;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AS5Bh5sX85melR8fTJiUPd5+KNHEvPSpjEH/jnrfhBY=;
- b=U2zMEfKaXmAyWgue2MsGDF9huUJSl3b+OLiw5wgH4D2tusEmP0wMMFtUMLnrWtgY58p1mS
- lW3d4FaHR0UcKzncITPiSAhJH0STgYBJsdPPwUfePmjZz3PygcKp4fS87EzO7cJWkOI124
- wS9FY9rFbHtxbHQ5g/ZXLy+no3Pf5/I=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YzLROMrkgk4neC5wsMzQj5+FEVSM5rqMUkXccS3RMqA=;
+ b=Z2pD4NQpuQmM/ZT3mB3Oxometwxg6YAPLvmCD1l1jiYbaIwZBxYQj028NNlN/2MnQYfH5h
+ WPcriFPU4wa5yJQaxTGUsP5Jl59VAHTYhxceSptsKi+ZZ3rmop+YMJtv+e3aGe6GPTCPJJ
+ budNh5YhW/h3QhdgU3i40+uRC15xKQQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-q3hC-OwjMiiBqICml1qlOg-1; Mon, 30 Dec 2024 10:53:30 -0500
-X-MC-Unique: q3hC-OwjMiiBqICml1qlOg-1
-X-Mimecast-MFC-AGG-ID: q3hC-OwjMiiBqICml1qlOg
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-436248d1240so46546885e9.0
- for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 07:53:30 -0800 (PST)
+ us-mta-202--Ec_DXXOO3SzotBXLiV-Fw-1; Mon, 30 Dec 2024 11:11:53 -0500
+X-MC-Unique: -Ec_DXXOO3SzotBXLiV-Fw-1
+X-Mimecast-MFC-AGG-ID: -Ec_DXXOO3SzotBXLiV-Fw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385fdff9db5so1189117f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 08:11:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735574009; x=1736178809;
+ d=1e100.net; s=20230601; t=1735575112; x=1736179912;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AS5Bh5sX85melR8fTJiUPd5+KNHEvPSpjEH/jnrfhBY=;
- b=NCMj7kLsZJ5xGavI1o5WGJLMqMDaOk3e/Y3zVhfXJ8IBAfY7913bwSNQ6sttLlQqoY
- HVffu2m1lLe1DrINtoN/SYFW5FGpe+SDNoZ+Y+PBiJRxX07BLi9TEvSQ6ODg3VKt8a6D
- DXN+rN2yuuJhEc7ZX+2JI3THcs0t74C8ez4Hubo5wexHBw9N0294/7daUOKonQMLnQRL
- t4v/bKSLWnmt5/xB1KJcERujjsDdqtQ4PwBhn5eVqhginRnWLErOyfsfo5oZ04g8p3ju
- TiuSqCk5rba5cOHB5jR57q4K5wmXcpw5w1N5LDIAd6Nrnt7H/p1qB9UD2ueuZQpmWVtf
- BdtA==
-X-Gm-Message-State: AOJu0YxlRYoSxEF0pKvnqwK5PkurliEvben4zocORgMhfdrFxI9KzLds
- EzhhVMhyiDU6Ijzo8zA3pHpHdB0Umye8SSBnxyqXi8WtjxK3KhSmK+Pb2BjqO217PGjVui/nW4+
- N4Vc3lD3VbtwGpIs9BnCQQqvpSac/AG/w3xsH6Ff/LL7Yl238gCsvkdwn366i5vKUt0RsebWtaU
- 3yMwBUjtdYV7SjeONJTk1zHSWG3z+M62J2LStX
-X-Gm-Gg: ASbGncvb4wJtW/U9hmnGEvZdg7eDYMtAIo/IrDcGd61fZe5RaumcxBE6fqoLsZtG8FW
- 4scqb+/rhnBnDfuEXBTDlmLZv0fwOJuitqw1dMGLTFIw4CA8s60Mgr8o8Bv0p3hPE2AIZXNlAtM
- YYm96TvUiTKXcFVF2tUtgVk0iWv8aHANYuBUFHUP+sF18GjZskXM7PTTPvvr4/JQp44T1x88gq5
- cO8Y+4ugF/9tstkBWQII8OPx9Lj1XwRaUttbAa2jmoRlC97QjzY9JvZrFLV9DPZxJ9fP/eiSMEz
- XRmXFWYEPU0g7C9rAo3P6rS1Gdo4
-X-Received: by 2002:a05:600c:350b:b0:434:f131:1e6d with SMTP id
- 5b1f17b1804b1-43668643203mr377939305e9.10.1735574008739; 
- Mon, 30 Dec 2024 07:53:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGaLSDwSFWA9e5Gg49W03l5xxUdL3582hGwN6ZSNr4s6CLVLqWqJI0VaZuEAfxfToTNoU6owg==
-X-Received: by 2002:a05:600c:350b:b0:434:f131:1e6d with SMTP id
- 5b1f17b1804b1-43668643203mr377938965e9.10.1735574008300; 
- Mon, 30 Dec 2024 07:53:28 -0800 (PST)
+ bh=YzLROMrkgk4neC5wsMzQj5+FEVSM5rqMUkXccS3RMqA=;
+ b=QtQxPS66nsaBALPLTBRmDAJib38rqi5zcvmAqE5esRZsiHGzFRH3TJ8ICan/W/kZl9
+ kQDnZHhYM/SwltuV4dcLUTfBfmK0IwtiKo785P7KCMAc61B7SaREl+XUbbcIHGKgXy40
+ i9VQZY6S/jSvaF5J3Wq91sw8Q8opXP52I5bBfPrgBbbe3svN42E4Wtk3u7fuJ7+kU1cv
+ 4XEOzTM0y/S3R3Yn4V5+lG++ZaMtIAAKbpyLw9dMHowaxg0cJiif6Tnmv3E4u4L9AcWg
+ B+LB/gSurvDCqPmlLLmrpX/L1KceFnJjKwMq68maeVb28WdWO9eqDR7RBzlmrM+Ia3de
+ Jw7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaxUGryin9TIRUIY3DDfjbScvIR6B3KquEyAuAALSZbo6Q//3ADwRyegGHyZm4IhDupmDG4sOnb+3C@nongnu.org
+X-Gm-Message-State: AOJu0YypqOJ0eW9FvyMNR98EETuarsd0nsGX4N4Z6WOdychHnXNbD0Z6
+ rkR8WDaUqBpD8q/BfDOcuLQUJ2zIRqzlgJIvXMrdzTV8oYXDNwSFwCUmaNxzsDNNW8fqA0LtnDZ
+ XdmlNo92PHyGJgFpPMKp8yh+UMsBpOJ9bu45JfqlyD3GMzmFkFzfH
+X-Gm-Gg: ASbGncvOEv4358TDHxdsFhYVRPaCwHj1eorHvgLJyKTDmAg9oOcZJTS3sk7TQDf0qyu
+ FA0DuVVVQ6mSscxOFAxlVHfRXymwmBccoLWIg1Plx0A/mKbRjfSj9xnke67YXLjRuWEFBKj5dbe
+ +A+xNik8aHTtaHVdqZzalHUQkhwN7IMcRMUmHbRVRWaLFCE03CPHNDMPJgAK5LkQSMmwrWNqhW2
+ dM2bRmUpyfGCE2EO/SLhNCVA7YbW0FPnZAAByyDdv75Nc+uTbgFins+wQWCilxPeS0QZTywmPoZ
+ y15Rxb5f3yb4x4VlbCw8Y1TPJh4E
+X-Received: by 2002:a05:6000:481e:b0:382:49f9:74bb with SMTP id
+ ffacd0b85a97d-38a2220120dmr32610691f8f.35.1735575111870; 
+ Mon, 30 Dec 2024 08:11:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE361I6s+/oIuPBu0fkBcLWyGb/W9DnUKkDjzSS6GNy2toGPTice4MX3pIU2Uixcr5oVBRNyQ==
+X-Received: by 2002:a05:6000:481e:b0:382:49f9:74bb with SMTP id
+ ffacd0b85a97d-38a2220120dmr32610671f8f.35.1735575111548; 
+ Mon, 30 Dec 2024 08:11:51 -0800 (PST)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e357sm31208837f8f.72.2024.12.30.07.53.27
+ ffacd0b85a97d-38a1c8288b8sm30169964f8f.11.2024.12.30.08.11.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Dec 2024 07:53:27 -0800 (PST)
-Date: Mon, 30 Dec 2024 16:53:27 +0100
+ Mon, 30 Dec 2024 08:11:50 -0800 (PST)
+Date: Mon, 30 Dec 2024 17:11:50 +0100
 From: Igor Mammedov <imammedo@redhat.com>
-To: Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- "kraxel@redhat.com" <kraxel@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, Linuxarm
- <linuxarm@huawei.com>, mst@redhat.com
-Subject: Re: [PATCH v3] fw_cfg: Don't set callback_opaque NULL in
- fw_cfg_modify_bytes_read()
-Message-ID: <20241230165327.4cedbd1e@imammedo.users.ipa.redhat.com>
-In-Reply-To: <d7800cd30fbe4d23ab019f4d35792469@huawei.com>
-References: <20241203131806.37548-1-shameerali.kolothum.thodi@huawei.com>
- <d7800cd30fbe4d23ab019f4d35792469@huawei.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1E?=
+ =?UTF-8?B?YXVkw6k=?= <philmd@linaro.org>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Cameron Esfahani
+ <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 0/4] cpu: Drop CPUState::nr_cores
+Message-ID: <20241230171150.5ef181e0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241205145716.472456-1-xiaoyao.li@intel.com>
+References: <20241205145716.472456-1-xiaoyao.li@intel.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
@@ -114,105 +116,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Dec 2024 09:15:53 +0000
-Shameerali Kolothum Thodi via <qemu-devel@nongnu.org> wrote:
+On Thu,  5 Dec 2024 09:57:12 -0500
+Xiaoyao Li <xiaoyao.li@intel.com> wrote:
 
-> Hi,
->=20
-> A gentle ping on this.
->=20
-> Hope the fix here is still valid and can be picked up.=20
-> Not sure by whom this will get picked up though.
+> The series is motivated by auditing the usage of CPUState::nr_cores and
+> CPUState::nr_threads, which is motivated by [1].
+> 
+> The initial goal is to initialize nr_threads and nr_cores earlier for
+> x86, which leads to patches [2] and [3]. Patch [2] touches all the ARCHes
+> and patch [3] looks hacky. At last Igor suggested to audit nr_threads and
+> nr_cores, and only set them in the pre_plug() callback for the ARCHes that
+> really need them[1].
+> 
+> By audting nr_threads and nr_cores, I found nr_cores is only used by
+> x86. So we can introduce a x86 specific one and initialize in
+> x86_cpu_pre_plug(), then drop nr_cores totally.
+> 
+> However for nr_threads, it's used by MIPS and PPC as well[4]. There are
+> two options:
+> 1. maintain separate substitute in X86/MIPS/PPS, so we can drop
+> CPUState::nr_threads like for CPUState::nr_cores.
+> 
+> 2. keep CPUState::nr_threads and find place (or introduce pre_plug()) to
+> initialize them earlier for MIPS/PPC.
+> 
+> I would like to seek for opinions for which one is prefered. 
+> 
+> This series implments the drop for CPUState::nr_cores. Though it doesn't
+> help on the initial goal without the solution for nr_threads, I think it
+> is still a good cleanup?
+> 
+> BTW, by initializing nr_threads and nr_cores earlier than
+> qemu_init_vcpu(), it also unblocks [5].
 
-Perhaps Michael an pik it up, CCed.
+With minor fixes included mentioned during review
 
->=20
-> @Gerd?
->=20
-> Thanks,
-> Shameer
->=20
-> > -----Original Message-----
-> > From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> > Sent: Tuesday, December 3, 2024 1:18 PM
-> > To: qemu-devel@nongnu.org
-> > Cc: philmd@linaro.org; kraxel@redhat.com; imammedo@redhat.com;
-> > wangzhou1@hisilicon.com; linuxarm@huawei.com
-> > Subject: [PATCH v3] fw_cfg: Don't set callback_opaque NULL in
-> > fw_cfg_modify_bytes_read()
-> >=20
-> > On arm/virt platform, Chen Xiang reported a Guest crash while
-> > attempting the below steps,
-> >=20
-> > 1. Launch the Guest with nvdimm=3Don
-> > 2. Hot-add a NVDIMM dev
-> > 3. Reboot
-> > 4. Guest boots fine.
-> > 5. Reboot again.
-> > 6. Guest boot fails.
-> >=20
-> > QEMU_EFI reports the below error:
-> > ProcessCmdAddPointer: invalid pointer value in "etc/acpi/tables"
-> > OnRootBridgesConnected: InstallAcpiTables: Protocol Error
-> >=20
-> > Debugging shows that on first reboot(after hot adding NVDIMM),
-> > Qemu updates the etc/table-loader len,
-> >=20
-> > qemu_ram_resize()
-> > =C2=A0 fw_cfg_modify_file()
-> > =C2=A0 =C2=A0 =C2=A0fw_cfg_modify_bytes_read()
-> >=20
-> > And in fw_cfg_modify_bytes_read() we set the "callback_opaque" for
-> > the key entry to NULL. Because=C2=A0of this, on the second reboot,
-> > virt_acpi_build_update() is called with a NULL "build_state" and
-> > returns without updating the ACPI tables. This seems to be
-> > upsetting the firmware.
-> >=20
-> > To fix this, don't change the callback_opaque in
-> > fw_cfg_modify_bytes_read().
-> >=20
-> > Fixes: bdbb5b1706d165 ("fw_cfg: add fw_cfg_machine_reset function")
-> > Reported-by: chenxiang <chenxiang66@hisilicon.com>
-> > Acked-by: Igor Mammedov <imammedo@redhat.com>
-> > Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> > Signed-off-by: Shameer Kolothum
-> > <shameerali.kolothum.thodi@huawei.com>
-> > ---
-> > Hi,
-> >=20
-> > I forgot to follow-up on the v2 and it never got picked up.
-> > Thanks to Wangzhou who recently re-run the tests and found that
-> > the problem mentioned above still exists. Hence resending the v2.
-> >=20
-> > v2-->v3:
-> >  -Just rebase.
-> >=20
-> > v2: https://lore.kernel.org/qemu-devel/20220908160354.2023-1-
-> > shameerali.kolothum.thodi@huawei.com/
-> > v1: https://lore.kernel.org/all/20220825161842.841-1-
-> > shameerali.kolothum.thodi@huawei.com/
-> >=20
-> > Thanks,
-> > Shameer
-> > ---
-> >  hw/nvram/fw_cfg.c | 1 -
-> >  1 file changed, 1 deletion(-)
-> >=20
-> > diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-> > index b644577734..74edb1e4cf 100644
-> > --- a/hw/nvram/fw_cfg.c
-> > +++ b/hw/nvram/fw_cfg.c
-> > @@ -730,7 +730,6 @@ static void *fw_cfg_modify_bytes_read(FWCfgState
-> > *s, uint16_t key,
-> >      ptr =3D s->entries[arch][key].data;
-> >      s->entries[arch][key].data =3D data;
-> >      s->entries[arch][key].len =3D len;
-> > -    s->entries[arch][key].callback_opaque =3D NULL;
-> >      s->entries[arch][key].allow_write =3D false;
-> >=20
-> >      return ptr;
-> > --
-> > 2.34.1 =20
->=20
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+
+> 
+> 
+> [1] https://lore.kernel.org/qemu-devel/20241125103857.78a23715@imammedo.users.ipa.redhat.com/
+> [2] https://lore.kernel.org/qemu-devel/5f8db586-cdda-4d00-be02-f9880a20e1a3@redhat.com/
+> [3] https://lore.kernel.org/qemu-devel/20241122160317.4070177-1-xiaoyao.li@intel.com/
+> [4] https://lore.kernel.org/qemu-devel/045f9cb1-2b17-4b2c-985f-3c34e3626b36@intel.com/
+> [5] https://lore.kernel.org/qemu-devel/20231128171239.69b6d7b1@imammedo.users.ipa.redhat.com/
+> 
+> Xiaoyao Li (4):
+>   i386/topology: Update the comment of x86_apicid_from_topo_ids()
+>   i386: Extract a common fucntion to setup value of
+>     MSR_CORE_THREAD_COUNT
+>   i386: Track cores_per_module in CPUX86State
+>   cpu: Remove nr_cores from struct CPUState
+> 
+>  hw/core/cpu-common.c                 |  1 -
+>  hw/i386/x86-common.c                 |  4 +++-
+>  include/hw/core/cpu.h                |  2 --
+>  include/hw/i386/topology.h           |  5 +++--
+>  system/cpus.c                        |  1 -
+>  target/i386/cpu.c                    |  2 +-
+>  target/i386/cpu.h                    | 16 ++++++++++++++++
+>  target/i386/hvf/x86_emu.c            |  3 +--
+>  target/i386/kvm/kvm.c                |  5 +----
+>  target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>  10 files changed, 26 insertions(+), 16 deletions(-)
+> 
 
 
