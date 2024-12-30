@@ -4,126 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 033DDE7718F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 20:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A77E77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 20:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSMK9-0007bm-16; Mon, 30 Dec 2024 15:25:13 -0500
+	id 1tSMPF-00009c-BI; Mon, 30 Dec 2024 15:30:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tSMK6-0007aS-RU
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 15:25:10 -0500
-Received: from mout.gmx.net ([212.227.15.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tSMK3-0008QP-K4
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 15:25:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1735590301; x=1736195101; i=deller@gmx.de;
- bh=p1SiY52BCzLUl8rmvdgXsFjD7/gEtqpIrUmNa+JNQQc=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=P67bQVM11FxFy+jup7BtDgtxzO9YNXlLvQTQlTYu7ZklHSGrNXY79PwMaWb/3mE9
- P5A9GkAtOKy1uoVLqgbgqT+HTQMj7C1R/whnOXc7NJ5r1LHGngQLnMKjzQncffRrY
- y7adVmJAvu16tPyM/5pJs9osnx+IH44LsZBc9QgWpSw0BidR7PJppqghZCOxsRFPp
- VN9j4ySaXFYZ2n0CZ1cwZMHXSXvAHNCLfWIOxkNq5yoSNYGq8T4ZGbUzjaxgwlliH
- Vc0pjj3x4nJ0q7S3qZ8e4+aVH5V2lRdORoHsLNxUZBpp+8soUO2MU/eGmkNWTGM1o
- OcD/5CFAtp+qvGaW0w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.172] ([109.250.63.155]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mzyya-1tgKzr0dTq-010mlI; Mon, 30
- Dec 2024 21:25:01 +0100
-Message-ID: <32a4d72c-6cc2-4c33-876d-ddf66b71fab4@gmx.de>
-Date: Mon, 30 Dec 2024 21:24:59 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSMP9-00008o-KB
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 15:30:24 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSMP7-0000Wk-Ag
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 15:30:23 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so6855939f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 12:30:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735590619; x=1736195419; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yzzKQhrMu9+ipQPX9U5PUvV4kGHzYUL/8aK4yLnwG5g=;
+ b=puB8SIR+4EU1iqgYqTjeUsJIeU8ZWZlz/IxVG8//G5b6EBjhv75CSiNWLPxXV/T1qU
+ 3neMIB9SLguFUjQ+OZE3Yb9ry/J/nyUxFcoMwzOecWEzpH4tlurE5Qd5tAtGWLNx0eyv
+ gkPhQ7K8twse3S/9dEbyVaG0ZBH5uLgN8kuYuuHCGG/4hTL+lghl1coLEUi1JM/fL4Aa
+ NNr/W5Zh+n7R/pAYqm/GqM8VXU6CINBeBkzn71Wat9MVZDnkFNfQRR7rA4vyrqE2p+zG
+ uYt+iViJYlFfyTAXw6/8FKiOdy40z5UQobM1g+1/b0ajMbS43QyAfwpjdmeyWIFmQSNF
+ xCLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735590619; x=1736195419;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yzzKQhrMu9+ipQPX9U5PUvV4kGHzYUL/8aK4yLnwG5g=;
+ b=QlJOHIMTcDoRpe4ZXIb+RnV7LTO2tCTAevbKbT8uoZGS8tVEJnqnbo4E4AcPrMASMu
+ eeJAEUf9JRAjnUnmUJyJIOr6DpFisX8/xy2tl30rxNDftA8ehMRZ5Xn+6/jLo6q31Pi5
+ s69Xk7Slik3oYpkWXRqU4S2/pOViEfKQJI96bpGYdAY8KXuTYCMK05YAOMYhV+oE1JKS
+ F9qRE9hM5ggEbWK4y373Rp6KapRWq2/2coVodCd185rbe8T7NJA+KOmfqO3lwwOUFkEr
+ /FArCGNgPZTjBME+gZWoLtcvB/KFLI3k34fzaatRivKpWHdknUnTQSCp2wXtJv91ihUF
+ +cWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBSpcDPRQTg1OZ/Vi8tTKMwUWAH9kQ2/sWUPjxoscwE804ZysCjUdcdyP43/QBOV1kJZnKn8kUPWrP@nongnu.org
+X-Gm-Message-State: AOJu0Yyl0ttNDUV/WSaHpdvZCA9v+JY+nDf81cxcPu7BPW343y0Fus8D
+ PZr0TP06rkO6d1mkVItpz48vq+ulp9xaUDflUmSvMtB8IVAvR3/vLm7BDC+MiYA=
+X-Gm-Gg: ASbGncv4nBfn1MLkVXtig2VbnsMI7uX9xBd3FISBvW+/yysHqwFqNEMaS4FWf1mA5AG
+ 1MkRHQbuqKStoOfoJxeBLkQMkClS7qvqX6074MKhNfr7HFMp9t/LghIGfFPD/DCHqtwvf58335I
+ kByfZuy6ArhunqzoWznw36jLCAN7Ep2ipHy38ChKl2wBIYgaOPZ7eGCHyJU2CaLEmFZFYYdEPtG
+ AIgmVF8K4gWvTeji3IUc7cIRWOi0vF0dGscsbL8SCQXchAh4aY5iFpyFk43SecU88b5g2mCXNI0
+ 2Dk6onLNnHQm/+mknPfQKMYP
+X-Google-Smtp-Source: AGHT+IFtKdlySpgTFHcXdq3PbHF71/oV+iI3ZCsMwQy1hsgICs2WJd1dz7sU+bcPysmxbgWgFgI/Mg==
+X-Received: by 2002:a05:6000:18a3:b0:386:8ff:d20b with SMTP id
+ ffacd0b85a97d-38a221f2f2dmr29322826f8f.27.1735590618884; 
+ Mon, 30 Dec 2024 12:30:18 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c832e8asm30543979f8f.37.2024.12.30.12.30.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Dec 2024 12:30:18 -0800 (PST)
+Message-ID: <c2ce4e80-d918-4cf5-ab40-ac9e84955423@linaro.org>
+Date: Mon, 30 Dec 2024 21:30:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] hppa CPU reset and speedup
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20241230152519.86291-1-philmd@linaro.org>
+Subject: Re: [PATCH v16 01/14] ui & main loop: Redesign of system-specific
+ main thread event handling
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
+ rad@semihalf.com, quic_llindhol@quicinc.com, stefanha@redhat.com,
+ mst@redhat.com, slp@redhat.com, richard.henderson@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, gaosong@loongson.cn,
+ jiaxun.yang@flygoat.com, chenhuacai@kernel.org, kwolf@redhat.com,
+ hreitz@redhat.com, shorne@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
+ marcandre.lureau@redhat.com, berrange@redhat.com, akihiko.odaki@daynix.com,
+ qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
+ balaton@eik.bme.hu
+References: <20241223221645.29911-1-phil@philjordan.eu>
+ <20241223221645.29911-2-phil@philjordan.eu>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241230152519.86291-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241223221645.29911-2-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:m2c04AgaiKCL9x8L3kzVInF/dfD0uZJvPh+zLFe4GPdGfvnYVpu
- GM21aNryUXqBLia6DMB/Z1sVzkdcugGT7Fxc+eRNT1N7mcCR7rEhRDEi9HDySAE/vfXXLcx
- FXEJC8hHbAuu/MV14fuenY/AJCX3EKkHb+u/uzjtcTO77ekJm2Ueatv2mXVR0L6yweKftap
- lu2sZNBdK1XfY5e/K6omw==
-UI-OutboundReport: notjunk:1;M01:P0:DjLFS+Q7qWE=;NOJ3N4zE9KnLobRP5c1r41vmOW9
- +16O5URk+1ROH01HguNTweLALDa/MUhwvSxmqNRXwJjy8YQIeXCV69VEXtHJjQo9UZWN9Ayfr
- yw8aAJ0wHhIB40PT1TQN9rGmPoUDIUZ7imKtTXp5M9S6HmBlCBOOrwjE7Umpi6+RhJrBbPrU7
- TXiTE47r5k9R5zBetoJ4FO5vBsyoIt/xClqxKGG2iWJ6E6hFB12jDLj3BqR7hIg+jMZM+xrga
- 092pZLEP21b4XCavTRrHQxxFfjU84RQD/8Qxreo4b+lyaF1D7QOSuIgjCXpmKe5po7BV5u42h
- Y2IFrAbyyH8OHgO+s+N8AU2ymyJ058Cb5M9EkBh4Fnxl/jSHS8ia3H15hc3Yn5k87/wxt5swo
- 2zDwik+LvoHbgcfxDxEFdCHKgHKVyxxh6wA7Iy1xTQkdMn8+qvPOa8Gb9K9fqh6bqEhs4MSAN
- rnUV3uTn0V9+nhp/4EwjtqJ+sZOFis55CAQ/9tUs1ADxf1usDy8Y469Uj9V1BeRSsxibxI0XV
- TYJkt8RtY684viD1iwElKoC2M6JS5mQeQCSV28frMeWT6hkvswFbb2Ala9h97lnnSV5TZNT2w
- 5SbVpAJGQVYxcgMnzI0TyP9PkcXpZGL+ryaHixrLBm6pZWZiWgVTA29ZFYo14wX9Az0cs2Hm5
- HC7anR+E5JZRRbAk1arLDXEOy2DMKI5EIIPjYTe8HiR/TlBezfWp8PSKpvDuoc2cf+17aY8m1
- ST/b94Pmf4MNSQUz2V8sUgP1ZQqBZWn9WqZ5BsDsHdaXj8ILEjGHg/H/fz3PX+xHAPGh0J6U6
- x/6QA3iKefmfu2wMQLwQUEuVgos7RwMYHAw28qPZheZuQl1rzxwGz590TB6+hQaY+XsSpVkZ4
- Vr10150rX/Oyb2a1Hchyu7GFWfMJoeOD5nLJlBdQTJLOtwhfcvZCvcjmwUtXfgtnN63IkBQFy
- uPnWIa6h/07Vp5JzxBQNGnAQeYZrEsYRym1JP1/H8gaPwArdpA3V5c07IZohtrbqZyUWzU9wD
- eGTANqriFJg0aaliRjqItdR1FlsZ9STx3Nwew20P01FU8lPQpLBqSVua9Dpr5VCsWzDTXZY8T
- Tg/isk/7LL69j5UsDnYSDqUqkEm3+o
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,51 +112,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+Hi,
 
-On 12/30/24 16:25, Philippe Mathieu-Daud=C3=A9 wrote:
-> Respin of:
-> https://lore.kernel.org/qemu-devel/20241229234154.32250-1-deller@kernel.=
-org/
-> "Add CPU reset function and speed up runtime and translation."
->
-> - Remove hppa_cpu_init()
+On 23/12/24 23:16, Phil Dennis-Jordan wrote:
+> macOS's Cocoa event handling must be done on the initial (main) thread
+> of the process. Furthermore, if library or application code uses
+> libdispatch, the main dispatch queue must be handling events on the main
+> thread as well.
+> 
+> So far, this has affected Qemu in both the Cocoa and SDL UIs, although
+> in different ways: the Cocoa UI replaces the default qemu_main function
+> with one that spins Qemu's internal main event loop off onto a
+> background thread. SDL (which uses Cocoa internally) on the other hand
+> uses a polling approach within Qemu's main event loop. Events are
+> polled during the SDL UI's dpy_refresh callback, which happens to run
+> on the main thread by default.
+> 
+> As UIs are mutually exclusive, this works OK as long as nothing else
+> needs platform-native event handling. In the next patch, a new device is
+> introduced based on the ParavirtualizedGraphics.framework in macOS.
+> This uses libdispatch internally, and only works when events are being
+> handled on the main runloop. With the current system, it works when
+> using either the Cocoa or the SDL UI. However, it does not when running
+> headless. Moreover, any attempt to install a similar scheme to the
+> Cocoa UI's main thread replacement fails when combined with the SDL
+> UI.
+> 
+> This change tidies up main thread management to be more flexible.
+> 
+>   * The qemu_main global function pointer is a custom function for the
+>     main thread, and it may now be NULL. When it is, the main thread
+>     runs the main Qemu loop. This represents the traditional setup.
+>   * When non-null, spawning the main Qemu event loop on a separate
+>     thread is now done centrally rather than inside the Cocoa UI code.
+>   * For most platforms, qemu_main is indeed NULL by default, but on
+>     Darwin, it defaults to a function that runs the CFRunLoop.
+>   * The Cocoa UI sets qemu_main to a function which runs the
+>     NSApplication event handling runloop, as is usual for a Cocoa app.
+>   * The SDL UI overrides the qemu_main function to NULL, thus
+>     specifying that Qemu's main loop must run on the main
+>     thread.
+>   * The GTK UI also overrides the qemu_main function to NULL.
+>   * For other UIs, or in the absence of UIs, the platform's default
+>     behaviour is followed.
+> 
+> This means that on macOS, the platform's runloop events are always
+> handled, regardless of chosen UI. The new PV graphics device will
+> thus work in all configurations. There is no functional change on other
+> operating systems.
+> 
+> Implementing this via a global function pointer variable is a bit
+> ugly, but it's probably worth investigating the existing UI thread rule
+> violations in the SDL (e.g. #2537) and GTK+ back-ends. Fixing those
+> issues might precipitate requirements similar but not identical to those
+> of the Cocoa UI; hopefully we'll see some kind of pattern emerge, which
+> can then be used as a basis for an overhaul. (In fact, it may turn
+> out to be simplest to split the UI/native platform event thread from the
+> QEMU main event loop on all platforms, with any UI or even none at all.)
+> 
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
 
-Thanks for picking up my patches and integrating them properly
-with the reset code.
-But sadly your changes somehow break hppa 64-bit CPU support.
-I think it's to when the reset code is called.
 
-Easy reproducer (no other options/disc/network needed):
-./qemu-system-hppa -smp cpus=3D4 -nographic -machine C3700
+>   include/qemu-main.h | 14 +++++++++++-
+>   system/main.c       | 37 +++++++++++++++++++++++++++----
+>   ui/cocoa.m          | 54 +++++++++++----------------------------------
+>   ui/gtk.c            |  4 ++++
+>   ui/sdl2.c           |  4 ++++
+>   5 files changed, 67 insertions(+), 46 deletions(-)
+> 
+> diff --git a/include/qemu-main.h b/include/qemu-main.h
+> index 940960a7db..2ee83bedff 100644
+> --- a/include/qemu-main.h
+> +++ b/include/qemu-main.h
+> @@ -5,7 +5,19 @@
+>   #ifndef QEMU_MAIN_H
+>   #define QEMU_MAIN_H
+>   
+> -int qemu_default_main(void);
+> +/*
+> + * The function to run on the main (initial) thread of the process.
+> + * NULL means QEMU's main event loop.
+> + * When non-NULL, QEMU's main event loop will run on a purposely created
+> + * thread, after which the provided function pointer will be invoked on
+> + * the initial thread.
+> + * This is useful on platforms which treat the main thread as special
+> + * (macOS/Darwin) and/or require all UI API calls to occur from the main
+> + * thread. Those platforms can initialise it to a specific function,
+> + * while UI implementations may reset it to NULL during their init if they
+> + * will handle system and UI events on the main thread via QEMU's own main
+> + * event loop.
+> + */
+>   extern int (*qemu_main)(void);
+>   
+>   #endif /* QEMU_MAIN_H */
 
-> - Reset PSW using M bit (untested)
 
-We haven't implemented PSW-M support and the first
-thing the firmware does is to reprogram PSW.
-So, basically it's not needed.
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index 0d38c070e4..c023743148 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -38,6 +38,7 @@
+>   #include "qemu/cutils.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/main-loop.h"
+> +#include "qemu-main.h"
+>   
+>   #include "ui/console.h"
+>   #include "ui/gtk.h"
+> @@ -2485,6 +2486,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+>   #ifdef CONFIG_GTK_CLIPBOARD
+>       gd_clipboard_init(s);
+>   #endif /* CONFIG_GTK_CLIPBOARD */
+> +
+> +    /* GTK's event polling must happen on the main thread. */
+> +    qemu_main = NULL;
+>   }
+>   
+>   static void early_gtk_display_init(DisplayOptions *opts)
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index 1fb72f67a6..445eb1dd9f 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -34,6 +34,7 @@
+>   #include "system/system.h"
+>   #include "ui/win32-kbd-hook.h"
+>   #include "qemu/log.h"
+> +#include "qemu-main.h"
+>   
+>   static int sdl2_num_outputs;
+>   static struct sdl2_console *sdl2_console;
+> @@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>       }
+>   
+>       atexit(sdl_cleanup);
+> +
+> +    /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
+> +    qemu_main = NULL;
+>   }
+>   
+>   static QemuDisplay qemu_display_sdl2 = {
 
-> Helge, could we add a functional test booting Linux?
+This fails the build-oss-fuzz job as:
 
-What exactly are you looking for?
-Some trivial preinstalled disc image with kernels?
-Any examples?
+     /usr/bin/ld: libcommon.a.p/ui_gtk.c.o: in function `gtk_display_init':
+     ../ui/gtk.c:2491:(.text+0x3df9): undefined reference to `qemu_main'
+     /usr/bin/ld: ../ui/gtk.c:2491:(.text+0x45f1): undefined reference 
+to `qemu_main'
+     /usr/bin/ld: libcommon.a.p/ui_sdl2.c.o: in function 
+`sdl2_display_init':
+     ../ui/sdl2.c:971:(.text+0x2e8c): undefined reference to `qemu_main'
+     /usr/bin/ld: ../ui/sdl2.c:971:(.text+0x30bf): undefined reference 
+to `qemu_main'
+     clang: error: linker command failed with exit code 1 (use -v to see 
+invocation)
 
-Helge
+Therefore I'm squashing:
 
-> Helge Deller (4):
->    target/hppa: Convert hppa_cpu_init() to ResetHold handler
->    hw/hppa: Reset vCPUs calling resettable_reset()
->    target/hppa: Set PC on vCPU reset
->    target/hppa: Speed up hppa_is_pa20()
->
-> Philippe Mathieu-Daud=C3=A9 (1):
->    target/hppa: Only set PSW 'M' bit on reset
->
->   target/hppa/cpu.h | 11 +++++++++--
->   hw/hppa/machine.c |  6 +++---
->   target/hppa/cpu.c | 20 +++++++++++++++++---
->   3 files changed, 29 insertions(+), 8 deletions(-)
->
+-- >8 --
+diff --git a/tests/qtest/fuzz/fuzz.c b/tests/qtest/fuzz/fuzz.c
+index 8274000bd55..ca248a51a6c 100644
+--- a/tests/qtest/fuzz/fuzz.c
++++ b/tests/qtest/fuzz/fuzz.c
+@@ -41,6 +41,7 @@ static FuzzTargetList *fuzz_target_list;
+  static FuzzTarget *fuzz_target;
+  static QTestState *fuzz_qts;
 
++int (*qemu_main)(void);
+
+
+  void flush_events(QTestState *s)
+---
+
+Regards,
+
+Phil.
 
