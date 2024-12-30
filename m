@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8559BE77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 14:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73254E77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Dec 2024 15:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSHD9-0008A4-El; Mon, 30 Dec 2024 09:57:39 -0500
+	id 1tSHWC-0007Km-Cv; Mon, 30 Dec 2024 10:17:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSHD7-00089o-Ka
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 09:57:37 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSHWA-0007K7-Gn
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 10:17:18 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSHD5-0006KH-Q0
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 09:57:37 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43623f0c574so62538065e9.2
- for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 06:57:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSHW8-0000i8-MW
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 10:17:18 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-388cae9eb9fso5089102f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 07:17:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735570653; x=1736175453; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735571835; x=1736176635; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VrtkpifTu9ko9FfhJksxeRIJVXaPW7toti0ht/t8RnY=;
- b=YBQv+dvkhS9bZ9vOp4BrThHU+m+guzEg2RzMlbWHigJdPHOhJG1/bpEus9iGwvFo64
- q133twZjAHkN5qQ1HQ2RWoHAGvtAgpflWE187DG/QlpY0V7UlumqbxABOe5XJwhZlTMf
- myLjecvwFPjcck+FzA7+uJRr93n6VoNeUJ5PlLWG7YqlRUlrMHpdYYQ5M405LTxPcjfb
- 8/USixUWV0kPwmO/3SdT+9iln4i+O7nU77iic1ThTNjfZ+DympU6btZVyzWFRRRAx0Vz
- 3p9lruAh9KWcfhUXtchT6x9GzfCPEe1IaWPZ+LTBuCf1yIh6k9lScD3UBrxHNV1qhx4Z
- 4kxA==
+ bh=TgEaK9IIv9JgU+XsTIrVRbeP3BFI31d39ksXkKneY5k=;
+ b=KsbKgby3ExoDzt6QX006PqHVEOc1l0SZR7DH23L6SA+4u9lT/M3VjTQQcBKmtevRbj
+ loeB9bBQLx6HlzBNxmecmLuG2otPzI/+YXA0CYa5EbRcBxOFZWauPhFhlwo615CUZMfk
+ v+Wn8JwalRdnBLb3aEQZXTwbJ/31cPLF6UHOZiZnuSwvOX65509GYPlBRHZgIFxHW746
+ PgjuSdSCcMCjHi2cBtKhYDZOrUfxgSXJ9qYF7pRVz/jMLD+0IzPTLBFUF9/En9N606KL
+ TxR7MAVUpEcB1znldaym0uIjp1bqEHens9MG+7puxzbQPGxoqolT3w5BBpGpgabvvTJ0
+ zHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735570653; x=1736175453;
+ d=1e100.net; s=20230601; t=1735571835; x=1736176635;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VrtkpifTu9ko9FfhJksxeRIJVXaPW7toti0ht/t8RnY=;
- b=RbcNEBaI31MF4XXAYuADxDpnGBuwLrQm1ePZ9a6olNV97JowZhlcYEj8cYyL9c24Te
- m/TikBagg6ioywtnevZ/5w2+f7vVCt7pFZNhoFTm36IZa0BjRL13kWkLX3LTAgqemDOx
- OoAreL8iT/CvEwq1NjpHi6L0M7+MXw3oSqnopHsqgp4IynfEMWcPxXeBPJJyGXwnCxs6
- 8t55t9kSyi56nzWcHBsTllA8exZKqHvycWhc9F1oeuHPA/B1T4C0p/QwVSafPSXkrTlN
- O7TJe5mKQZdXm3HhNNA7kBbVu2R47HLeAq8pDCPWl/OAdfVkXcchC5epaA8KZPAUnVuZ
- NzXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAZ62Xj+e7dV+050orllS+Ts+dmeVRtyWc1xE1BvjILCfzEQyf5Cm3A9La8rfpjGZraz3PVIU4F9SL@nongnu.org
-X-Gm-Message-State: AOJu0YxZtJN+gK5zaxjORY7njExIZqkm9Mb83SDNPkLrAlx47Wfpdc9S
- 5YM8GmlrxUGRb3+HSsqeWhcpHSij2KV7NscCdnuBnx+ZULEoK5bfPtRZA3kwrLs=
-X-Gm-Gg: ASbGncs1XY5O27im/ixhVaZj9ByBbDyuv+7i15CA1n/Ask0Ien9Y0QDI6PSN42egvDt
- MGv1nR3KCDHvNSt1dxh2sdQyFNipKAc6KpgKKuckEm6OnJ9hGx09DsY7AQ1GSexF3gcYh6ods9M
- 6wZAAgoEil0rFPIZL0t4Mwf2PzFfd4XwsyCRQjNkdXltC9gQmFjlcPq2/t4QHoeB63J2KDA5kLE
- olzPCL1qczJqgQwlzIbANTRvxZ13y6O5h1l884eoLWuZ0OOokdkPay8RXkj3N7Ab1JngM7pG4FN
- HWzMkpw8g3aegxMudYMITboX
-X-Google-Smtp-Source: AGHT+IFNaCK/9hfe4HaXNXMGz8Of/Pjkg0WT9IdaetSUWVMxRKZsXVjvCqTF/sRFzLyA+zOevtHL1Q==
-X-Received: by 2002:a05:600c:3b86:b0:434:a1d3:a326 with SMTP id
- 5b1f17b1804b1-4366854848dmr285190475e9.6.1735570652786; 
- Mon, 30 Dec 2024 06:57:32 -0800 (PST)
+ bh=TgEaK9IIv9JgU+XsTIrVRbeP3BFI31d39ksXkKneY5k=;
+ b=kCYThZpjTZo+rKtohOnjjI/DLP5D3CZObcIzIff2V5l12CdMsmdx4z42+9LEFq6GjP
+ 9i6FGj8gwM+M+OGxL1kr68nCkPbmOTCbYG34fG8LVIBcP2BoCiJQE4Ulzs931r5bX5RM
+ oWnbMcZP55jN11yA25iCgJEEE9+US5bCcGfnWJc9T3BNEufVfka/EWz/xhbvuQSDsV5h
+ g4IGkfQtndV1xJhSc18lVigBSfikhcZgQNt8hI5Krb7lM/5vUNlWfpPeaiiYhHseJxWB
+ 48muSMXKzFfe8n0zI8bjNVsslnT/FGYJLxzDRIywYCE4C8TumJpt/l1xlTQqHjZuwK3m
+ 9hfA==
+X-Gm-Message-State: AOJu0Yw4PcwRBqKFFqpuWeVVyjJuJ+/+DQoTor+mWeHcc/GxRZh9w+TE
+ QJNk/UL82izYRoawZ400jRl5FxEx3AKQR4w553VJ9qVAff8WCxFrTRtfYyWYRaQ=
+X-Gm-Gg: ASbGnctgeI/RCqx87aipfsCXhbHO1RbJq7mpGFxsls7d0raiwUtFxO2fLbW0ecurGh7
+ jV6HBvYcRiS6mTWrG8gqF+S/J+lWEs9fIYFedTyhS9bmNjWOnf0X/FeQYQDHhkV0m13u/VqRJbv
+ 1yYUNKteNAX39275rdJPZxY+E9dpuMeABoRRmXe+nKcW3xGXZgFw8Nml20i9TadmXK3hO/w+DwQ
+ 8T6ede+tcC//BHAaYyOKm5od//H0N5T39XNZUAjAKsYSjvihLhF06HzGsRyCIpDKRaurBJc6GdM
+ 7Apqg9X2WN6VHycU0cnmxS+0
+X-Google-Smtp-Source: AGHT+IHyV7U8iMyEh1uJzuCBhfDtgFD7zDM23Hhl/a1J+Qp7Qu4pUQsLRD3WA/h0LsBWKljj9iswrQ==
+X-Received: by 2002:a05:6000:4029:b0:386:41bd:53a3 with SMTP id
+ ffacd0b85a97d-38a224083afmr29857472f8f.50.1735571834838; 
+ Mon, 30 Dec 2024 07:17:14 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656a0b361sm391471675e9.0.2024.12.30.06.57.31
+ 5b1f17b1804b1-436611ea4a7sm356850475e9.3.2024.12.30.07.17.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Dec 2024 06:57:32 -0800 (PST)
-Message-ID: <b7da9006-669d-46d5-938e-da1dd993cf9e@linaro.org>
-Date: Mon, 30 Dec 2024 15:57:31 +0100
+ Mon, 30 Dec 2024 07:17:14 -0800 (PST)
+Message-ID: <626e4b64-bf09-4dec-b353-b9239ee6d7d3@linaro.org>
+Date: Mon, 30 Dec 2024 16:17:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/hppa: Add CPU reset method
-To: deller@kernel.org, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Helge Deller <deller@gmx.de>
-References: <20241229234154.32250-1-deller@kernel.org>
- <20241229234154.32250-2-deller@kernel.org>
+Subject: Re: [PATCH v5 09/16] tests/qtest: Update tests using PL011 UART
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-arm@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Tong Ho <tong.ho@amd.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20240719181041.49545-1-philmd@linaro.org>
+ <20240719181041.49545-10-philmd@linaro.org>
+ <CAFEAcA9QA3Kn3h_bwMSoht7KZa8DOpMXFDUWon1kc+iHy59-EQ@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241229234154.32250-2-deller@kernel.org>
+In-Reply-To: <CAFEAcA9QA3Kn3h_bwMSoht7KZa8DOpMXFDUWon1kc+iHy59-EQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,59 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/12/24 00:41, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
+On 29/7/24 17:47, Peter Maydell wrote:
+> On Fri, 19 Jul 2024 at 19:11, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> We weren't enabling the PL011 TX UART before using it
+>> on the raspi and virt machines. Update the ASM code
+>> prefixing:
+>>
+>>    *UART_CTRL = UART_ENABLE | TX_ENABLE;
+>>
+>> to:
+>>
+>>    while (true) {
+>>        *UART_DATA = 'T';
+>>    }
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   tests/qtest/boot-serial-test.c | 15 ++++++++++-----
+>>   1 file changed, 10 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+>> index 3b92fa5d50..5cb309ccf0 100644
+>> --- a/tests/qtest/boot-serial-test.c
+>> +++ b/tests/qtest/boot-serial-test.c
+>> @@ -70,18 +70,23 @@ static const uint8_t kernel_plml605[] = {
+>>   };
+>>
+>>   static const uint8_t bios_raspi2[] = {
+>> -    0x08, 0x30, 0x9f, 0xe5,                 /* ldr   r3,[pc,#8]    Get base */
+>> +    0x10, 0x30, 0x9f, 0xe5,                 /* ldr     r3,[pc,#8]    Get base */
 > 
-> Add the CPU reset method, which resets all CPU registers and the TLB to
-> zero. Then the CPU will switch to 32-bit mode (PSW_W bit is not set) and
-> start execution at address 0xf0000004.
-> Although we currently want to zero out all values in the CPUHPPAState
-> struct, add the end_reset_fields marker in case the state structs gets
-> extended with other variables later on which should not be reset.
+> The instruction bytes have changed but the disassembly comment has not...
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> +    0x10, 0x20, 0x9f, 0xe5,                 /* ldr     r2,[pc,#8]    Get CR */
+>> +    0xb0, 0x23, 0xc3, 0xe1,                 /* strh    r2,[r3, #48]  Set CR */
+>>       0x54, 0x20, 0xa0, 0xe3,                 /* mov     r2,#'T' */
+>> -    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3] */
+>> -    0xfb, 0xff, 0xff, 0xea,                 /* b       loop */
+>> +    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3]       loop: */
 > 
-> V4:
-> - Drop initialization of exception_index in hppa_cpu_initfn()
+> This placement of the "loop:" label is odd -- usually the label
+> goes before the instruction that a branch to the label will
+> start executing at.
 > 
-> V3:
-> - Call reset function from hppa_machine_reset() instead
+>> +    0xfd, 0xff, 0xff, 0xea,                 /* b       loop */
 > 
-> V2:
-> - Add end_reset_fields marker
-> - call reset function in hppa_cpu_initfn()
-> ---
->   hw/hppa/machine.c |  6 +++---
->   target/hppa/cpu.c | 26 ++++++++++++++++++++++++--
->   target/hppa/cpu.h |  5 +++++
->   3 files changed, 32 insertions(+), 5 deletions(-)
+> Here also the bytes changed but not the disassembly. Since
+> 'b' is a relative branch, why does the offset change?
 
+It felt simpler while single-stepping to just fill the TXDATA register
+with the byte to send, and not reset the other registers with unchanged
+values. Anyway you are right, I'll split the changes for clarity.
 
-> +static void hppa_cpu_reset_hold(Object *obj, ResetType type)
-> +{
-> +    HPPACPU *cpu = HPPA_CPU(obj);
-> +    HPPACPUClass *scc = HPPA_CPU_GET_CLASS(cpu);
-> +    CPUHPPAState *env = &cpu->env;
-> +    CPUState *cs = CPU(cpu);
-> +
-> +    if (scc->parent_phases.hold) {
-> +        scc->parent_phases.hold(obj, type);
-
-This ends calling cpu_common_reset_hold() ...
-
-> +    }
-> +
-> +    memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
-> +    cpu_set_pc(cs, 0xf0000004);
-> +    cpu_hppa_put_psw(env, hppa_is_pa20(env) ? PSW_W : 0);
-> +    cpu_hppa_loaded_fr0(env);
-> +
-> +    cs->exception_index = -1;
-> +    cs->halted = 0;
-
-... which already sets these values. Why is that required?
-
-> +}
+> 
+>>       0x00, 0x10, 0x20, 0x3f,                 /* 0x3f201000 = UART0 base addr */
+>> +    0x01, 0x01, 0x00, 0x00,                 /* 0x101      = CR UARTEN|TXE */
+>>   };
+>>
+>>   static const uint8_t kernel_aarch64[] = {
+>> -    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
+>>       0x02, 0x20, 0xa1, 0xd2,                 /* mov     x2, #0x9000000 */
+>> +    0x21, 0x20, 0x80, 0x52,                 /* mov     w1, #0x101 */
+>> +    0x41, 0x60, 0x00, 0x79,                 /* strh    w1, [x2, #48] */
+>> +    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
+>>       0x41, 0x00, 0x00, 0x39,                 /* strb    w1, [x2] */
+>> -    0xfd, 0xff, 0xff, 0x17,                 /* b       -12 (loop) */
+>> +    0xff, 0xff, 0xff, 0x17,                 /* b       -4 (loop) */
+> 
+> Another unexplained offset change here.
+> 
+>>   };
+>>
+>>   static const uint8_t kernel_nrf51[] = {
+>> --
+>> 2.41.0
+> 
+> thanks
+> -- PMM
 
 
