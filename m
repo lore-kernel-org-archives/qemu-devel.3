@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75337E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 20:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A6FE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 20:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSinR-0001mX-3p; Tue, 31 Dec 2024 15:24:58 -0500
+	id 1tSin1-000726-UH; Tue, 31 Dec 2024 15:24:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSinK-0001Bw-L2
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:24:50 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSimr-0006ne-A6
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:24:22 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSinG-00011k-1f
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:24:49 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43618283d48so75091835e9.1
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 12:24:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSimp-0000yM-83
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:24:20 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-436326dcb1cso67675895e9.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 12:24:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735676683; x=1736281483; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735676657; x=1736281457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kYhhix/9PVscVBbQFIH04IFrmOJJ4Qi4bOjmujehVDo=;
- b=jnLNRf42L517PD/EkOg2vVWwQgeUoUnXveTfBP9eLcpraDScT3Jtd7tV3Mdrwq1ffr
- 5xX5h0P6xpcwCTl9nRYWuYvpIFqMuhi+aJ8CpXr6q2FTtpmwg9wbwdyl8NUVp0iRxFUG
- wtQEzIxv+5ndPW5wk7zyGA/x4jHBaXH98K+HykvWp3eCT6WCTPzMsbzsaDliCItGanc7
- AIKHD79zB7rPbH1EUK48iGMtE9OroNaFD9rXqtTMhGTi77kRUMXzoXMEph7Y9fubMxb2
- o/wgmHlp0/1ckY1o6nMcOz7mVL8epcrZBFLUbSx8QexsV7BM2JD3F2PYQN9v59UK3NOU
- PO3g==
+ bh=1OsyYuL+27oK54ZGKawyCinUOguZIMyJUg2PlLlormY=;
+ b=RGH+ILdZAKGJBYa2U4p4PmIkbx64MJPwmIHr1sWm5qCUjgFv9Ek+ZrSbvgVxbmZr11
+ nqsg8zbUrCbvnUzqAneapNyIt+TpjwqCb5aZW42U6J4+ayNCAr4xxed0oHC355txLQf3
+ BLAv+s2rRnBD+RlVeYVDHdfPpnjDCR574iDcHDWxPF8HSZln31bMSxG0VJM4leEimriS
+ wiRy9ubRFeYV28b0P52GS7Ee20Vw7xTD8hYMXWgtwrovs+h7LtcNYBB9oeq+FLHCoXK7
+ IjdF/EIFkRLMlIufVKsgUBllu4nPXArgZkd8SjZjN9x8Rd6ZOoK0a+ZgPBdeH+BG7ZHC
+ psfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735676683; x=1736281483;
+ d=1e100.net; s=20230601; t=1735676657; x=1736281457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kYhhix/9PVscVBbQFIH04IFrmOJJ4Qi4bOjmujehVDo=;
- b=oMFFzzHZl+LzprGuSvMdY0Lugf2rQI+s1pLRzCl2ctc3rVHJi06qCNSVMBrLObiD4M
- 7fbpGbpdeuXQiL4SvGQDb/FXDJRUvUVHmjZcvfgmmdzp3u0TDDLv/rDzNSOPmSolR77t
- iagAlO9x/+ehOozWMbzj2iD4yTNIt8Bar+6FLcmJa5bPNCqobKA/yYfLOtGuoB6VrX8T
- b4uPhKAlphEfGon7OYUnn6LnM1UhDUQugEe6qqeogh3cpymGGdWGkH2hsAeI5BPxry+1
- uSQpi8bkC2ffSRNoTamOcOR3fhQ+yXV/QHwquIoOlGWhnPBznT+cjsP9BquUuYK8ksJv
- 5meg==
-X-Gm-Message-State: AOJu0Yydt0JyvwiXJ9KDbdhGiraunRsOqDdK1iiDZFQXpFz8EYjrHljM
- phL3drL5XDoa7zjK0S9AYnkZcQhI8L5n/JnNMsMQEh0Fl/g89BdqlElPxXBcbf6IM/zFG4ZaZR6
- ywVQ=
-X-Gm-Gg: ASbGnctn4Qfp9facwDUXbyq+P13z5EOdYVrGGlDVBPE4h6FwmYu471eDo0HO48BvVqf
- 8tzpRv1zu61jmbaYB9RRRjW6LkidB7gz8NYHZkPzgGZyeJrkZlF9Ibogoia1c6SNpOB08OB/xo+
- 6aIUJfBBqybMuMxS2jw/zlczqPR9b5YZi+EiIZUPSuuVOQz04QqKfsPf/RI8sRSwT0T/16BOsmH
- RBHItawFUp/pkeScYtxw4oa6kCXu9n8r10kKvHeSc0spVkcX79AYQmGa1vcmNMKSJ3v7+DRDtcz
- ny3CmLmfglrMdKTWp7Ik8W33kuVnwBE=
-X-Google-Smtp-Source: AGHT+IFKw7tzJFLtNW8lvUXDhFv1n5Mf/kbuYAXj/2t1cf0hWJcwQfRmrkhOwveb8xQcpoXH7cQX8w==
-X-Received: by 2002:a05:600c:3b23:b0:434:9499:9e87 with SMTP id
- 5b1f17b1804b1-43668b5e194mr296086495e9.25.1735676683417; 
- Tue, 31 Dec 2024 12:24:43 -0800 (PST)
+ bh=1OsyYuL+27oK54ZGKawyCinUOguZIMyJUg2PlLlormY=;
+ b=i3XuDN1NbP5ap+ZV5WCiztn/QnoBAvIBHHpk1dyDZfzjUc9yFj0k20hLznBY85JTlI
+ /0zz1tNEodH69mn9RVdeCmreik0CpZvHsVweXS3XUCqXz1S1fSoJSUM6J6a5gd7+S671
+ 9EwtDLDpEC28VKVRsxY2cXXbfoyUF0jHrNh1I9w57oix05/Eo50LWi2glfbo6chcA4lf
+ SPPZvgaUU4O9IcUxVTuZrEWfh4QAkCeM4BJuksvBPsSd+6m7FzNFLbCet8NgQCTlva3A
+ BJK90GaJnKBitDOqBqLWmpWHc2ro+HgGXmEq75ZMsAmV4ws16/6Kol/+gg8YY9fRCrZl
+ M4cw==
+X-Gm-Message-State: AOJu0Yw1EkJnJw9jPkj1lNmAoLBNzVdLJX202fEhJOYZd2NT58AcK1N4
+ uude0pAsZHs1GydmtEj/W3UWx3boQN336giQblqF0oQ7j+QAvzMvjqBxYMi6CntZaBxuC0Dmxr3
+ DdqI=
+X-Gm-Gg: ASbGncsd9wb6Lvw9ypVd4RX9mHfxVqta4Qq2IyxsZVA/Lmvrir4a75UBYptnYTVIzGG
+ RyNQxBnBclkg7/bIdnBvNllzCiliGdAR0ZB8f9xGYe3EpL56dputuEPdgpKAjtJZ8nAXybynINz
+ sT0Gt4B9xN5PjW5x78dGKCE6BqFBzgKb1r7TM0MpaD1uKRqOhTdkaHWEDjg11sFBWS9TvQyVLQZ
+ o6kjjl8CJwaHH9wu1Uxa5fh3//jmYhqdvDllPJP6tEDyDrgVlCfqshw0TryT1feaQwawrbRZ8tu
+ hER9jjevk8TwClg68qo1MfNwplGCOyY=
+X-Google-Smtp-Source: AGHT+IE6r4lvWNGyGxrLvUk7/e5JsFXd4B/ZfL3UgH9EBA5Y6jTZnz6Ar4qNRTfJGugThTleDbdoEw==
+X-Received: by 2002:a05:6000:2c3:b0:385:df73:2f3a with SMTP id
+ ffacd0b85a97d-38a221fa8eemr31826814f8f.14.1735676657207; 
+ Tue, 31 Dec 2024 12:24:17 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436611ea3d5sm402023665e9.5.2024.12.31.12.24.42
+ ffacd0b85a97d-38a1c828a8dsm33868515f8f.2.2024.12.31.12.24.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Dec 2024 12:24:43 -0800 (PST)
+ Tue, 31 Dec 2024 12:24:16 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 27/29] MAINTAINERS: Add myself as maintainer for apple-gfx,
- reviewer for HVF
-Date: Tue, 31 Dec 2024 21:22:26 +0100
-Message-ID: <20241231202228.28819-28-philmd@linaro.org>
+Subject: [PULL 22/29] hw/usb/hcd-xhci: Unimplemented/guest error logging for
+ port MMIO
+Date: Tue, 31 Dec 2024 21:22:21 +0100
+Message-ID: <20241231202228.28819-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241231202228.28819-1-philmd@linaro.org>
 References: <20241231202228.28819-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +102,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 
-I'm happy to take responsibility for the macOS PV graphics code. As
-HVF patches don't seem to get much attention at the moment, I'm also
-adding myself as designated reviewer for HVF and x86 HVF to try and
-improve that.
+The XHCI device code uses tracing rather than logging on various code
+paths that are so far unimplemented. In some cases, these code paths
+actually indicate faulty guest software. This patch switches instances
+in the read and write handlers for the port MMIO region to use
+qemu_log_mask() with LOG_UNIMP or LOG_GUEST_ERROR, as appropriate in
+each case.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Roman Bolshakov <rbolshakov@ddn.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241223221645.29911-6-phil@philjordan.eu>
+Message-ID: <20241227121336.25838-5-phil@philjordan.eu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/usb/hcd-xhci.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 38a290e9c2c..2101b512175 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -509,6 +509,7 @@ F: target/arm/hvf/
- X86 HVF CPUs
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: target/i386/hvf/
-@@ -516,6 +517,7 @@ F: target/i386/hvf/
- HVF
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: accel/hvf/
-@@ -2631,6 +2633,11 @@ F: hw/display/edid*
- F: include/hw/display/edid.h
- F: qemu-edid.c
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 3719c0f190d..7dc0994c89c 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -2810,9 +2810,15 @@ static uint64_t xhci_port_read(void *ptr, hwaddr reg, unsigned size)
+     case 0x08: /* PORTLI */
+         ret = 0;
+         break;
+-    case 0x0c: /* reserved */
++    case 0x0c: /* PORTHLPMC */
++        ret = 0;
++        qemu_log_mask(LOG_UNIMP, "%s: read from port register PORTHLPMC",
++                      __func__);
++        break;
+     default:
+-        trace_usb_xhci_unimplemented("port read", reg);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: read from port offset 0x%" HWADDR_PRIx,
++                      __func__, reg);
+         ret = 0;
+     }
  
-+macOS PV Graphics (apple-gfx)
-+M: Phil Dennis-Jordan <phil@philjordan.eu>
-+S: Maintained
-+F: hw/display/apple-gfx*
-+
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
+@@ -2881,9 +2887,22 @@ static void xhci_port_write(void *ptr, hwaddr reg,
+         }
+         break;
+     case 0x04: /* PORTPMSC */
++    case 0x0c: /* PORTHLPMC */
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: write 0x%" PRIx64
++                      " (%u bytes) to port register at offset 0x%" HWADDR_PRIx,
++                      __func__, val, size, reg);
++        break;
+     case 0x08: /* PORTLI */
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Write to read-only PORTLI register",
++                      __func__);
++        break;
+     default:
+-        trace_usb_xhci_unimplemented("port write", reg);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: write 0x%" PRIx64 " (%u bytes) to unknown port "
++                      "register at offset 0x%" HWADDR_PRIx,
++                      __func__, val, size, reg);
++        break;
+     }
+ }
+ 
 -- 
 2.47.1
 
