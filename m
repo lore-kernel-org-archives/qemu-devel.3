@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5596DE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 17:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC2E1E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 18:02:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSgG0-00041l-C9; Tue, 31 Dec 2024 12:42:16 -0500
+	id 1tSgYN-0007tF-6u; Tue, 31 Dec 2024 13:01:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgFy-00041Y-0L
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:42:14 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgYJ-0007sj-9s
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 13:01:13 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgFw-0008Bo-At
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:42:13 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385e1fcb0e1so5546656f8f.2
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 09:42:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgYG-0002PW-9M
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 13:01:10 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4364a37a1d7so107736565e9.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 10:01:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735666930; x=1736271730; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735668066; x=1736272866; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BVdc+X4IC5/CS9NxvUk6MBG0JaFVkTNeP0S8meh/UPE=;
- b=vZfnB52nom2qvz40X5vloXsg+57C6XHAgrKEWQ5DLE6aXHloD7kfn0vM06aj2xqRH+
- Z8Yg5VQSTbPC3FX8c3qnZWp8IXml00wgxptHdHVIc+Ae4j09bQHrrOpK1UmGMYxAGRiS
- iRENwTnHv4yzF8tnrj9Vpkns8FQrZt259tGFBbjC7NXakQGXhQDmMLTQBzJfxVCyRJac
- H2lNo78XxtoG6gCsmNvTp+JS2zV+/w2WM69z5rXGzU7A6JierXwwOy2RW3p1z3ywirS2
- 1GO/tuaB/IWjndPFJAUmxdEzgwivI64cGWxiKF/2EQPzcBk5Qa1SQ7EFXfTvoH1wqroH
- NDGA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CAy/h+byf5acdo41fAdmD5XWdSO7i9k/e2eErMWtT1Q=;
+ b=x+6ujJbnKhYvnu1+EeAIKK1AGL5hlRbvjbkKqewA7+w2IDeW7eMNYbaUYAA2dCCkH7
+ ls2aJd+TZbApWQCqXDgysnjuZKcOFhAmduqFGiRj83cWdTJzBH+EN7GzNrJkp8tkYMbD
+ m5dVngBqy4TNRFhnqxkrOttqPpx2g/55taQ5WHQmXwOzMnJ7PbEBFU6p86IFraENCiay
+ Q15mzVsppZW87k6q3nOgT9kH4wmjOd3L1ZrUPJzlvRQcREruIgcK+0EIWRPuQaBqx7ES
+ Lq+lDrP6xBeXz1NwMD4NLPmOCU7ZfsU9JyM1g92fKr0T9QpJVl/w4KjsWPTAhrY8EHb8
+ KAXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735666930; x=1736271730;
+ d=1e100.net; s=20230601; t=1735668066; x=1736272866;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BVdc+X4IC5/CS9NxvUk6MBG0JaFVkTNeP0S8meh/UPE=;
- b=RTGecOZW2GOkKYobrwqy0KuoeIynUmVSOTqhPn3X1BQvLsu+kXsytKTvmu3si02pnV
- JYnPYZt+kQ2IY8d2JrWbiITLkX5olPhrcZQISY+1sJEgILVwcIMgdmLLXR5hX0OsO73T
- XXs62YZw9ZeCoB24z6e5kSw8Nncisne1AOIg7kV/S8zfHcyU1DwmeCIpXCPgQ/gkFsV8
- pQGhd+djKsLiPrhwBWPi+bfEm2WgnAdBj4BaTM2hPvckU3dEn0A7YeCNxFHzlfu7+CFJ
- M/opiRMKnHTfgHj0FK1Hs2t/fOuNluvuhOIsWDyTLt5fCqR/33T0kHc0prMyiZZib3E/
- oMnQ==
+ bh=CAy/h+byf5acdo41fAdmD5XWdSO7i9k/e2eErMWtT1Q=;
+ b=F/4vrr1nV1Jio9sEARhuXPLw6+6VZOpVVMEZBjgP3FFLGhomZfvWbc1p2D40cbhylE
+ u3EyqO/f3NSitZTlMxbL6bwRB0lzJbWSe7JNJTMj1Z/XOMXo6l7EJow5FlXsFi9ux/Xz
+ IOfb4U5Yh8ZW3qEezlqjjxUsLTcn7JhT+fF2tDuYvFVVSh7znKn87LDMSuzeamrIH4o0
+ DrJXY6sw3SDb7QNdBycNSUnkXP6LOrIuVyGN7vQ9tCko9CrkeRiS6Z8ijpF6EsiQ5eFc
+ vkLf1hS1EbRmXcGtuenePLl2Ik07xev9A5ktRxTPwFtqXBFFVetisJbBNxh9KQyLGiO/
+ E6Jw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxWQsnEEOXXDepqMgTp4SWbfNDlvbP15CrQfNg8VemyyhQl5l7re3eIE4EoyHu9zUMrw8PSfJJK6A1@nongnu.org
-X-Gm-Message-State: AOJu0Yw0lvnIR05Tndbap0KjrZpx2wTmh8Zoh4VRFidrbaZr/d/AHJjC
- slpahrTyHmvJ2n4EJbe4e1kPw8aLIxGw8/MXV9WIYuMgzYcLK3vN85/+SFu+eD8=
-X-Gm-Gg: ASbGncvHwSCct+tyg2IQCFAfFLLKXNvsHPV+DYKizPBQyLzmVxR7Kkg5qHCYs2/v74p
- rW8YXMd6yqizPMDX4PXZ7aicg3dy5bfMUwfnGsqr9VAw08NitvEsy6EIr/NKyT3fw2umRi8MpJJ
- LqFAfU/lrAyN8QemNLB2bpXwCHJUUb2iyZfdh2y6t+94ClrfUbBHoskjcSfXPoMOxt+VMlLJcne
- 6UPU+a7FtHS05WIT1VY76u9qIyDbnoI4vErzdVqgK+rxJN6EP+9FmuwJvmdLYLSJ4b3CPyOqWhx
- PHs9n6RsV7E205/v7UEA0X+B
-X-Google-Smtp-Source: AGHT+IHyTHsU8XvYSbyjdjBWnchPm/3CR9BQDV5vKKilgbbTm+BriUz9ffjzTP5WM8sFION5hdK7SQ==
-X-Received: by 2002:a5d:5f4f:0:b0:382:6f3:a20f with SMTP id
- ffacd0b85a97d-38a221f11ecmr36701004f8f.11.1735666930432; 
- Tue, 31 Dec 2024 09:42:10 -0800 (PST)
+ AJvYcCW45TJClSSryVqb36h/9WHpoH8NfSy8nVfvbiB6Tqr9pteIpUlmizE8mYI7azKGYDQiPb97DIcMy6bf@nongnu.org
+X-Gm-Message-State: AOJu0YxnX1jiERGc58Qa4sO7Q/Wi+i6+Bib+j3x0AXcHNDL9xUKUhF0R
+ c5VmDemiTQQuy3hJol2kD2xuwjsWRPAPhQtcA9Us3JoIG2HIaHc/1FL9Iwpwg1U=
+X-Gm-Gg: ASbGncte6JmmFJ4c8KIvzLh6D/8sKqnNUFyLhdhALrBIqrWl636XKyb43h9gnEDdF0J
+ sWIKociBkbqN23xLXfd8Mz3WjJBWIBvrzR0PNDBxMhHranc2qqrib12/o5r5WC0rAXgDi7G2TqP
+ HVMKfISuAcagi3WAE9TwAU45389uEiCEs0qx8aj9kbjbosXauzaY8Z5iLoXWo/exfK4hOiQ+nYc
+ D0deNV+hlPDjaTX0kwGjoN/UWLsSEfuh/8QKhCwGxVkEk7ElhMKuxH9zRfsVmoDiim9wYLMqUbT
+ 7cKiULrUMFyMHpvjmihy/8nP
+X-Google-Smtp-Source: AGHT+IFHex1vWyr7zaxqtjFYSOMXkGF/7fWPg4LRktsZayQpxgIrW49CXjmefvGk8X6/MMvOOpHWPA==
+X-Received: by 2002:a05:6000:18a3:b0:386:8ff:d20b with SMTP id
+ ffacd0b85a97d-38a221f2f2dmr31832561f8f.27.1735668065751; 
+ Tue, 31 Dec 2024 10:01:05 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c828f8fsm32845427f8f.12.2024.12.31.09.42.09
+ ffacd0b85a97d-38a1c89e3d9sm32744377f8f.67.2024.12.31.10.01.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Dec 2024 09:42:09 -0800 (PST)
-Message-ID: <a1ff93bb-8d07-4bf6-b6b6-0fd8f61d20ff@linaro.org>
-Date: Tue, 31 Dec 2024 18:42:09 +0100
+ Tue, 31 Dec 2024 10:01:05 -0800 (PST)
+Message-ID: <0a4d5893-d54a-4b4f-91ad-0fe35f195294@linaro.org>
+Date: Tue, 31 Dec 2024 19:01:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Ping (2): [PATCH v3] net/vmnet: Pad short Ethernet frames
-To: William Hooper <wsh@wshooper.org>, qemu-devel@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>,
- Phil Dennis-Jordan <lists@philjordan.eu>, Jason Wang <jasowang@redhat.com>
-References: <CAGCz3vsusRSsT8-Fi3a2Z4aeQMtxCzDZ73D8ZgefxVZvm=qY6Q@mail.gmail.com>
- <20241102205653.30476-1-wsh@wshooper.org>
- <CANto9c7n-vZmTDV=eKTTNVN+JA_PGyar=KbibtLhvmfHf8xYkA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] hw/misc/ivshmem-flat: Add ivshmem-flat device
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
+ armbru@redhat.com
+References: <20241216141818.111255-1-gustavo.romero@linaro.org>
+ <20241216141818.111255-2-gustavo.romero@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CANto9c7n-vZmTDV=eKTTNVN+JA_PGyar=KbibtLhvmfHf8xYkA@mail.gmail.com>
+In-Reply-To: <20241216141818.111255-2-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +102,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi William,
+On 16/12/24 15:18, Gustavo Romero wrote:
+> Add a new device, ivshmem-flat, which is similar to the ivshmem PCI but
+> does not require a PCI bus. It's meant to be used on machines like those
+> with Cortex-M MCUs, which usually lack a PCI/PCIe bus, e.g. lm3s6965evb
+> and mps2-an385.
+> 
+> The device currently only supports the sysbus bus.
+> 
+> The new device, just like the ivshmem PCI device, supports both peer
+> notification via hardware interrupts and shared memory.
+> 
+> The device shared memory size can be set using the 'shmem-size' option
+> and it defaults to 4 MiB, which is the default size of shmem allocated
+> by the ivshmem server.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1134
+> Message-ID: <20231127052024.435743-2-gustavo.romero@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   docs/system/devices/ivshmem-flat.rst |  33 ++
+>   hw/misc/Kconfig                      |   5 +
+>   hw/misc/ivshmem-flat.c               | 463 +++++++++++++++++++++++++++
+>   hw/misc/meson.build                  |   2 +
+>   hw/misc/trace-events                 |  16 +
+>   include/hw/misc/ivshmem-flat.h       |  85 +++++
+>   6 files changed, 604 insertions(+)
+>   create mode 100644 docs/system/devices/ivshmem-flat.rst
+>   create mode 100644 hw/misc/ivshmem-flat.c
+>   create mode 100644 include/hw/misc/ivshmem-flat.h
 
-On 30/12/24 22:05, William Hooper wrote:
-> On Sat, Nov 2, 2024 at 1:56 PM William Hooper <wsh@wshooper.org> wrote:
->> At least on macOS 12.7.2, vmnet doesn't pad Ethernet frames, such as the
->> host's ARP replies, to the minimum size (60 bytes before the frame check
->> sequence) defined in IEEE Std 802.3-2022, so guests' Ethernet device
->> drivers may drop them with "frame too short" errors.
->>
->> This patch calls eth_pad_short_frame() to add padding, as in net/tap.c
->> and net/slirp.c. Thanks to Bin Meng, Philippe Mathieu-Daudé, and Phil
->> Dennis-Jordan for reviewing earlier versions.
->>
->> Signed-off-by: William Hooper <wsh@wshooper.org>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2058
->> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
->> ---
->>   net/vmnet-common.m | 23 ++++++++++++++++++++---
->>   1 file changed, 20 insertions(+), 3 deletions(-)
-
-> Ping?
-
-We missed this patch because:
-
-1/ maintainers were not Cc'ed (Jason now added)
-
-$ ./scripts/get_maintainer.pl -f net/vmnet-common.m
-Jason Wang <jasowang@redhat.com> (maintainer:Network device ba...)
-"Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Darwin (macOS, iOS))
-
-2/ it is buried as a reply on a previous patch, see [*]:
-
-"Send each new revision as a new top-level thread, rather than burying
-  it in-reply-to an earlier revision, as many reviewers are not looking
-  inside deep threads for new patches."
-
-Anyway, now queued!
-
-Regards,
-
-Phil.
-
-[*] 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#when-resending-patches-add-a-version-tag
-
+Missing MAINTAINERS entry. Please fix as a follow-up patch.
 
