@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA9EE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 20:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E8AE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 20:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSili-0002MN-7N; Tue, 31 Dec 2024 15:23:10 -0500
+	id 1tSimV-0004wk-Hb; Tue, 31 Dec 2024 15:23:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSilg-0002M8-8k
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:23:08 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSimT-0004po-Ca
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:23:57 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSile-0000qY-LB
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:23:08 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so106895275e9.3
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 12:23:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSimQ-0000v2-CN
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:23:57 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436a03197b2so22693825e9.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 12:23:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735676584; x=1736281384; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735676632; x=1736281432; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GTH2NS4uBQl2BnMaC5NUzMTAA4jFlWhBioB2cxgitBU=;
- b=K1KX2neA/ULhbEPrDQau4crtUIeLDFnDBBx9s7RaM/D0hHo37fPROQwk+CUAYK1mMS
- lFmGMcHWuzVCqvZVrH4sHogchJwXufs6mRQ0Uz8wuN3g2pt/0BPuzCaZbdtYKsBlq3aj
- I6TTsTxjK8a7yvkU4CWcZY4SlKLcpHk9ySLNRphUVXLh10RCnY62lDvijAnMS2uOqUBu
- 3nlliTO/nJDp3dsfX0/WTRkkCUpedeRHJebaZFSu3rdlax2LGwmah4UbFqbOk0BF7APv
- XW++vC5XSykILT7aAN39iArtp8DIQqdFI7ysyit1FFQ8UKWrtliXP+sgjj6V823Gznbf
- XjPg==
+ bh=24stuC9Tej+Nlsj2a7JI1tcgZwdo9U7YvTPvHeYqEOg=;
+ b=T3865P7teJ34HIBo6CBKzJhVfGyg1V/5I9y8bynOOb6j7vjPZ3wdmixb4vbWh6es7w
+ FYZgReyt21TB6M0TI3Vln9UUOYJzd62kuxJihtQpOeLodys7quSDXMDoAcioAs3dfzHC
+ gDWemRv3LfvTThckII5YtHj1T6hTPcOV1lAg4mQgeLzDm0dxkslJnVHU4XaByQxRYgK9
+ e72WsbbHst/QeIz/BvvOt04QbM+xXIMn2Dd92yaImO13MflRuxvWILnEpULdVjFzDOFg
+ bcAUWQs8Vp1WZUTYMzNei71Ep4ER3bXtxRYZmS6+aGW4z4/Eh8nbGRjPCF1t6hWXE1z5
+ Zn4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735676584; x=1736281384;
+ d=1e100.net; s=20230601; t=1735676632; x=1736281432;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GTH2NS4uBQl2BnMaC5NUzMTAA4jFlWhBioB2cxgitBU=;
- b=McBpFYzrMNHpIMJRBRaxu/9fT+C0pv/+JOj07w1qbGngHsWckVzQnUB1QKZ8cqP9zl
- FXYu17PyquhVKhHn5xnBLAmEF7v74hTittBEcLOsavz+W7CzP3PYX8ch02hmCERH3BFb
- p/K6ouqe3fTxS9Xdc8P7MmkP8RD99++Ax8w64H+vZUYOyxzak/mbqxb8q4WROhAydQMP
- cdzX/SBIGvXdGz9kHmh2/qclMGTczZ1FRxdbkaY9F9r/Qi0c3Q2zGjaS6xvBt5yaD36q
- jFyU/IoyGgwWzOsPOFSrBPhHIMDv6h8Yc57eOLPdR1Vo0Sn8/I54xfpOIbSbCmQ3s5XY
- u9FQ==
-X-Gm-Message-State: AOJu0YxmbB7c/ia9wsjxnW5J9lV4HeBkClpOD/E742d6QjCUCV6gRI1H
- oT1fS+39UR0o4utI2yZpQJ3AYf64mpQkRC3xDRNG3MOpK2mL9YnNqnzC7VkEdNZYvZir8x9OjRM
- C6AY=
-X-Gm-Gg: ASbGncvxCDFhXs04qWv8bvq7ZQLRLK1tRG9RDp6iULbEsjeKOAc9D61554YCsejjBW4
- MD5zHlnEzPyGRhN9voMxNsCfFNe6lufeg6SoHzMnX2c818JJBI2S3BjJY1ep7w2fgtP8kaHAa0C
- TPW+tOqyKrievu+1OFsQQ6Y5hKK/3tjdOlqX/IRSuAh+OaNTmNNgA3jUDxOcqfZj/YnVgGE391n
- 5BLCiDKuSa7n2nwyTzeufKVun+EO1jv2xKhN/iGaOh3jEQqw9QjKj34w/oZd7sTg778RonUkSvC
- itf7Tc6/iVfsv7/Kq7DmTOSP44IL8o4=
-X-Google-Smtp-Source: AGHT+IEwcfIODGsf6fHeLL6ojpLHonOjR56fo6RGVOY0Z+T+onxQTzRXOP/xwMCtAdIXihuAM7hA7A==
-X-Received: by 2002:a05:600c:1383:b0:434:fddf:5c0c with SMTP id
- 5b1f17b1804b1-4366835c41emr342504985e9.4.1735676584615; 
- Tue, 31 Dec 2024 12:23:04 -0800 (PST)
+ bh=24stuC9Tej+Nlsj2a7JI1tcgZwdo9U7YvTPvHeYqEOg=;
+ b=DmxWDkinY5uJgUqcycFu5MMHPQAT8vootO7tFxb5Ydo9RCaFg2/Ne9eO8ijyJpebfJ
+ UrkTef2BsSAufy02ZCW2ba2idNSVnZlsjCpH2zs3SzoD4UAtLk5OiFNUuUKTV151U3VZ
+ OyHDvSvPnnj0jUpyJERTLPsOoWjxF7sMpUjrjooaV1DnGpl8Wxrt2n4Pd8+GtsJHYEAj
+ 93KcR3simVRbtlN02+mUj72JANn1C2hJ8CXx4YHV/2qmTs14fwx++CTe0HgSFJ39Q11c
+ EDJjwubOjlivNqUnsn/Yw0Dces+u5sQST+/2IrF5jyGRd3IKnYl9WZXfUpM4Jw5zZQiJ
+ bwEA==
+X-Gm-Message-State: AOJu0YwZdasMiFh18qxp3yBy6EX3unpsVNa/M0a8Vkrzbtr7GH5Nr66E
+ w1axGmpXNKQOUIxPSzRkrbs7VHAJDWLomLfMF0bqP7t2NrarPHc7grRZKXrvcBTeWM4AAsz0q5r
+ jzY0=
+X-Gm-Gg: ASbGncuOpU5GidbGu8aftfWD/U3RjqpJz9d0Fu/WTvkk5vhkizavPfGhChwyOCoPTkX
+ DmOcl6LdjP0iwl2ghn3zbW9M7A9GbA88cOvLirCbQQtKYe6rYrHIMfrQA3NE9GOfS0SJOJ/uRAP
+ 6EkB1lqY04d6PFgGbrC018qlc4VCQAyI3huBVGN7MhFwN61KqOb/T1U8RmpmvRZLolkvv7E4uLJ
+ //EpZueIg2Nkfq0xDAal7Is35ywhc3rfxFKyIwEUnt1yAHl2NwEfXTbRPMirYboa+GyItSg8+ap
+ YWGaRU2gByXjwOBLMqDQvhGiGejFfcc=
+X-Google-Smtp-Source: AGHT+IHQaxwxSJl1/6yWEnOLAH9uOXCjyW21gae9112DYokFOjaO0ELF7GmQOqUy9uCkQWqrxAQk8w==
+X-Received: by 2002:a05:6000:4024:b0:385:f6b9:e750 with SMTP id
+ ffacd0b85a97d-38a221f31a9mr29076092f8f.9.1735676632326; 
+ Tue, 31 Dec 2024 12:23:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b4471bsm431993565e9.44.2024.12.31.12.23.03
+ 5b1f17b1804b1-4364a3766dcsm329449335e9.0.2024.12.31.12.23.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Dec 2024 12:23:04 -0800 (PST)
+ Tue, 31 Dec 2024 12:23:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-Subject: [PULL 07/29] hw/i386: Mark devices as little-endian
-Date: Tue, 31 Dec 2024 21:22:06 +0100
-Message-ID: <20241231202228.28819-8-philmd@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 17/29] hw/misc/vmcoreinfo: Declare QOM type using DEFINE_TYPES
+ macro
+Date: Tue, 31 Dec 2024 21:22:16 +0100
+Message-ID: <20241231202228.28819-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241231202228.28819-1-philmd@linaro.org>
 References: <20241231202228.28819-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,98 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These devices are only used by the X86 targets, which are only
-built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
-definition expand to DEVICE_LITTLE_ENDIAN (besides, the
-DEVICE_BIG_ENDIAN case isn't tested). Simplify directly using
-DEVICE_LITTLE_ENDIAN.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-Message-Id: <20241106184612.71897-2-philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20241219153857.57450-2-philmd@linaro.org>
 ---
- hw/i386/kvm/apic.c         | 2 +-
- hw/i386/pc.c               | 4 ++--
- hw/i386/vapic.c            | 2 +-
- hw/i386/xen/xen_apic.c     | 2 +-
- hw/i386/xen/xen_platform.c | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+ hw/misc/vmcoreinfo.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/kvm/apic.c b/hw/i386/kvm/apic.c
-index 602c7696565..75751060009 100644
---- a/hw/i386/kvm/apic.c
-+++ b/hw/i386/kvm/apic.c
-@@ -214,7 +214,7 @@ static void kvm_apic_mem_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps kvm_apic_io_ops = {
-     .read = kvm_apic_mem_read,
-     .write = kvm_apic_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
+diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
+index 0910c64866f..31073c8de2a 100644
+--- a/hw/misc/vmcoreinfo.c
++++ b/hw/misc/vmcoreinfo.c
+@@ -93,16 +93,13 @@ static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+ }
+ 
+-static const TypeInfo vmcoreinfo_device_info = {
+-    .name          = VMCOREINFO_DEVICE,
+-    .parent        = TYPE_DEVICE,
+-    .instance_size = sizeof(VMCoreInfoState),
+-    .class_init    = vmcoreinfo_device_class_init,
++static const TypeInfo vmcoreinfo_types[] = {
++    {
++        .name           = VMCOREINFO_DEVICE,
++        .parent         = TYPE_DEVICE,
++        .instance_size  = sizeof(VMCoreInfoState),
++        .class_init     = vmcoreinfo_device_class_init,
++    }
  };
  
- static void kvm_apic_reset(APICCommonState *s)
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 53a2f226d03..71118765884 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1068,7 +1068,7 @@ DeviceState *pc_vga_init(ISABus *isa_bus, PCIBus *pci_bus)
- static const MemoryRegionOps ioport80_io_ops = {
-     .write = ioport80_write,
-     .read = ioport80_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -1078,7 +1078,7 @@ static const MemoryRegionOps ioport80_io_ops = {
- static const MemoryRegionOps ioportF0_io_ops = {
-     .write = ioportF0_write,
-     .read = ioportF0_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 0e6d058d063..14de9b7a820 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -718,7 +718,7 @@ static uint64_t vapic_read(void *opaque, hwaddr addr, unsigned size)
- static const MemoryRegionOps vapic_ops = {
-     .write = vapic_write,
-     .read = vapic_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void vapic_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/i386/xen/xen_apic.c b/hw/i386/xen/xen_apic.c
-index 101e16a7662..a94e9005cbe 100644
---- a/hw/i386/xen/xen_apic.c
-+++ b/hw/i386/xen/xen_apic.c
-@@ -36,7 +36,7 @@ static void xen_apic_mem_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps xen_apic_io_ops = {
-     .read = xen_apic_mem_read,
-     .write = xen_apic_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void xen_apic_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/i386/xen/xen_platform.c b/hw/i386/xen/xen_platform.c
-index 0f68c3fe7b3..dd648a2ee94 100644
---- a/hw/i386/xen/xen_platform.c
-+++ b/hw/i386/xen/xen_platform.c
-@@ -514,7 +514,7 @@ static void platform_mmio_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps platform_mmio_handler = {
-     .read = &platform_mmio_read,
-     .write = &platform_mmio_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void platform_mmio_setup(PCIXenPlatformState *d)
+-static void vmcoreinfo_register_types(void)
+-{
+-    type_register_static(&vmcoreinfo_device_info);
+-}
+-
+-type_init(vmcoreinfo_register_types)
++DEFINE_TYPES(vmcoreinfo_types)
 -- 
 2.47.1
 
