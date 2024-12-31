@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A28AE77194
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 00:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B058E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 01:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSQ3E-0003R1-M9; Mon, 30 Dec 2024 19:24:00 -0500
+	id 1tSQm2-0007oS-Bl; Mon, 30 Dec 2024 20:10:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tSQ3D-0003Pa-24
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 19:23:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tSQ3A-0001z0-E4
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 19:23:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735604635;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DQ9f8TEIbiidaBdHdliac2j4M4b1C9RXDFq4BMn1MtE=;
- b=Musl+y6YGMJvPh61snKWpXiTBwMJv5vP1XOQVvKGmXMTQ56i2k4k5V5QvXNrJjbIfLTTu4
- HtzVL1KFGwQUdAukdT0e4+WSLkwZuVW0zLA9ouiPLbJdHOj7sW8FThMIVg9vHahq8Sjo/t
- YqQuVg5WP+Zy2/qCU0URuSDvlYyR0lo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-rzZQWKntM6uZ2kdcR408mg-1; Mon, 30 Dec 2024 19:23:54 -0500
-X-MC-Unique: rzZQWKntM6uZ2kdcR408mg-1
-X-Mimecast-MFC-AGG-ID: rzZQWKntM6uZ2kdcR408mg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43635895374so47767195e9.0
- for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 16:23:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735604632; x=1736209432;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DQ9f8TEIbiidaBdHdliac2j4M4b1C9RXDFq4BMn1MtE=;
- b=CNn890n07pEa3k7GDnfYcspzi+hdXmcIy2hQT39Apedg05WjM8+ft3XsjieyM0j5ag
- yOkjQJACkFlWTEimM2BJ2jkN5S/sSPbfbwK/QjtnSmcZ8yb8sQyeaxC3+xzK1BPSAl8i
- c38xuXYvMLV9su8SqsQgPtE/cIX1gZ9f+mRgFpa8JMdJVoS48mqZTNGWQ0CbmIhWCAbr
- Qa7UpNYd0H/r57pS7yFa6KQlJMp0dDgTIwgLJliOHcpzX1ZA0aMcT/dy4ErDYfT1jMRV
- jTcxL2MFfMoDZBRXRam3LN05ipK81i7Z3yf8qiuy5yYJv3tU2ei2iGKyiDzwfae03Hgl
- 3UdQ==
-X-Gm-Message-State: AOJu0Ywc54kcTrT0TUT3+Y1v/63m9niKiUn2Nhg90xChQj+fz+gwoXvJ
- 9lCi0w5yY2hTCb8VB+CTafASwuFcXamkAzh0KybJCsq4s884YyZHSs5udNNRteRFBJkPYnn/5DX
- 6iy5H/ulmiK6UQSlqKx4iWvLzOi8K+dKSKY1dYh8fpShHg2PiH0H9jFjnAO1o0LKRynIRtA5aYv
- QZPWheaVNBcLWm8OSkAtVq0/HwcKAqg/eZwk74VU4=
-X-Gm-Gg: ASbGncsvHzO3Ai97LuqLaz0F/fClamL1T9LULID/CxZWINHs0MFpdzs9xW4oK8VpTwm
- +IDQ6UX3nnfWLr3dJ9mtNxGZ0Foil/fHg34WtruzXJL9w02wVbWJmQh4vEcAsEYl+ZDT9rCvfzt
- 4UZP1XUl1UqMmVZSeWMcDg7aZajLbKl4oKv0+kc9BZcsYMNSXjBQ48UIVu9IXMecgDB2HJW0xQy
- hjlRMGr7iiZSkbWq0eghJl93rKvuUJ2pgQCu3pgvto0RTEGpGbxqJClTjA=
-X-Received: by 2002:a05:6000:1569:b0:386:3327:4f21 with SMTP id
- ffacd0b85a97d-38a22a648f7mr27522049f8f.27.1735604631631; 
- Mon, 30 Dec 2024 16:23:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXRkrAOdJIh9dRizoOccNa1BQJwzUhNZq9xlXOOZ6F4+nA5NEw9V7RQsz/zLaw5QqEfvQ7yQ==
-X-Received: by 2002:a05:6000:1569:b0:386:3327:4f21 with SMTP id
- ffacd0b85a97d-38a22a648f7mr27522034f8f.27.1735604631244; 
- Mon, 30 Dec 2024 16:23:51 -0800 (PST)
-Received: from [192.168.10.3] ([151.62.105.73])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e2f9sm32122371f8f.81.2024.12.30.16.23.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Dec 2024 16:23:49 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org,
-	zhao1.liu@intel.com,
-	junjie.mao@hotmail.com
-Subject: [RFC PATCH 5/9] rust: vmstate: implement VMState for scalar types
-Date: Tue, 31 Dec 2024 01:23:32 +0100
-Message-ID: <20241231002336.25931-6-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241231002336.25931-1-pbonzini@redhat.com>
-References: <20241231002336.25931-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tSQm0-0007oD-4c
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 20:10:16 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tSQlw-0007mj-5F
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 20:10:15 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Ax6+FsRHNnUxBcAA--.49640S3;
+ Tue, 31 Dec 2024 09:10:04 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCx3sVqRHNnqa0OAA--.63591S3;
+ Tue, 31 Dec 2024 09:10:02 +0800 (CST)
+Subject: Re: [PATCH] feat: add loongarch page table walker support for
+ debugger memory access
+To: Miao Hao <haomiao23s@ict.ac.cn>
+Cc: qemu-devel@nongnu.org, "lixianglai@loongson.cn" <lixianglai@loongson.cn>, 
+ gaosong@loongson.cn
+References: <20241219032455.28608-1-haomiao23s@ict.ac.cn>
+ <b041dacf-df2f-f25f-33c5-a53ad9cc2059@loongson.cn>
+ <b3f8f34b-4477-4396-a3a9-ef38209c87c3@ict.ac.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <d318dcd2-652d-9af1-2119-79d557d8284b@loongson.cn>
+Date: Tue, 31 Dec 2024 09:09:15 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <b3f8f34b-4477-4396-a3a9-ef38209c87c3@ict.ac.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
+X-CM-TRANSID: qMiowMCx3sVqRHNnqa0OAA--.63591S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWfJr4kGw1kWFW7AFW5trWDGFX_yoWDZr1rpr
+ 1kJFWUJry5Jrn5Jr1UWr1UJFyUAr1UJw1DXr18XFyUAr47Xr12gr1UXr1qgr1UJr48Jw1U
+ Jr1UXr1UZF15JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -45
+X-Spam_score: -4.6
 X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.187,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.668,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,213 +85,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Scalar types are those that have their own VMStateInfo.  This poses
-a problem in that references to VMStateInfo can only be included in
-associated consts starting with Rust 1.83.0, when the const_refs_static
-was stabilized.  Removing the requirement is done by placing a limited
-list of VMStateInfos in an enum, and going from enum to &VMStateInfo
-only when building the VMStateField.
 
-The same thing cannot be done with VMS_STRUCT because the set of
-VMStateDescriptions extends to structs defined by the devices.
-Therefore, structs and cells cannot yet use vmstate_of!.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/src/vmstate.rs | 125 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 123 insertions(+), 2 deletions(-)
+On 2024/12/30 下午3:04, Miao Hao wrote:
+> Hi Bibo,
+> 
+> Thanks for your review. I apologize for my late respond due to some 
+> personal reasons.
+> 
+> On 2024/12/19 17:57, bibo mao wrote:
+>> Hi Miao,
+>>
+>> Thanks for doing this. It is useful to debug VM.
+>>
+>> On 2024/12/19 上午11:24, Miao Hao wrote:
+>>> Signed-off-by: Miao Hao <haomiao23s@ict.ac.cn>
+>>> ---
+>>>   target/loongarch/cpu_helper.c     | 104 ++++++++++++++++++++++++++++--
+>>>   target/loongarch/internals.h      |   4 +-
+>>>   target/loongarch/tcg/tlb_helper.c |   4 +-
+>>>   3 files changed, 104 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/target/loongarch/cpu_helper.c 
+>>> b/target/loongarch/cpu_helper.c
+>>> index 580362ac3e..c0828a813d 100644
+>>> --- a/target/loongarch/cpu_helper.c
+>>> +++ b/target/loongarch/cpu_helper.c
+>>> @@ -141,9 +141,95 @@ bool loongarch_tlb_search(CPULoongArchState 
+>>> *env, target_ulong vaddr,
+>>>       return false;
+>>>   }
+>>>   +static int loongarch_page_table_walker(CPULoongArchState *env, 
+>>> hwaddr *physical,
+>>> +                                 int *prot, target_ulong address)
+>>> +{
+>>> +    CPUState *cs = env_cpu(env);
+>>> +    target_ulong index, phys;
+>>> +    int shift;
+>>> +    uint64_t dir_base, dir_width;
+>>> +    uint64_t base;
+>>> +    int level;
+>>> +
+>>> +    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
+>>> +    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+>>> +    shift = (shift + 1) * 3;
+> 
+> the assignment of variable shift and the corresponding comment is 
+> incorrect here, and details are logged in the v1.03 change log of 
+> LoongArch specification volume1 
+> (https://loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf) 
+> 
+> 
+>      /* 0:64bit, 1:128bit, 2:256bit, 3:512bit */
+>      shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+>      shift = shift + 3;
+Ok, I see.
+It seems that this is right, thanks for the detailed explanation.
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 49d0a3c31d4..edd0cbff162 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -21,8 +21,11 @@
- 
- use core::{marker::PhantomData, mem, ptr::NonNull};
- 
--pub use crate::bindings::{VMStateDescription, VMStateField};
- use crate::bindings::VMStateFlags;
-+pub use crate::{
-+    bindings::{self, VMStateDescription, VMStateField},
-+    zeroable::Zeroable,
-+};
- 
- /// This macro is used to call a function with a generic argument bound
- /// to the type of a field.  The function must take a
-@@ -58,6 +61,70 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> { ::core::marker:
-     };
- }
- 
-+/// Workaround for lack of `const_refs_static`: references to global variables
-+/// can be included in a `static`, but not in a `const`; unfortunately, this
-+/// is exactly what would go in the `VMStateField`'s `info` member.
-+///
-+/// This enum contains the contents of the `VMStateField`'s `info` member,
-+/// but as an `enum` instead of a pointer.
-+#[allow(non_camel_case_types)]
-+pub enum VMStateFieldType {
-+    null,
-+    vmstate_info_bool,
-+    vmstate_info_int8,
-+    vmstate_info_int16,
-+    vmstate_info_int32,
-+    vmstate_info_int64,
-+    vmstate_info_uint8,
-+    vmstate_info_uint16,
-+    vmstate_info_uint32,
-+    vmstate_info_uint64,
-+    vmstate_info_timer,
-+}
-+
-+/// Workaround for lack of `const_refs_static`.  Converts a `VMStateFieldType`
-+/// to a `*const VMStateInfo`, for inclusion in a `VMStateField`.
-+#[macro_export]
-+macro_rules! info_enum_to_ref {
-+    ($e:expr) => {
-+        unsafe {
-+            match $e {
-+                $crate::vmstate::VMStateFieldType::null => ::core::ptr::null(),
-+                $crate::vmstate::VMStateFieldType::vmstate_info_bool => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_bool)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_int8 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_int8)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_int16 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_int16)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_int32 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_int32)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_int64 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_int64)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_uint8 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint8)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_uint16 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint16)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_uint32 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint32)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_uint64 => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint64)
-+                }
-+                $crate::vmstate::VMStateFieldType::vmstate_info_timer => {
-+                    ::core::ptr::addr_of!($crate::bindings::vmstate_info_timer)
-+                }
-+            }
-+        }
-+    };
-+}
-+
- /// A trait for types that can be included in a device's migration stream.  It
- /// provides the base contents of a `VMStateField` (minus the name and offset).
- ///
-@@ -66,6 +133,12 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> { ::core::marker:
- /// The contents of this trait go straight into structs that are parsed by C
- /// code and used to introspect into other structs.  Be careful.
- pub unsafe trait VMState {
-+    /// The `info` member of a `VMStateField` is a pointer and as such cannot
-+    /// yet be included in the [`BASE`](VMState::BASE) associated constant;
-+    /// this is only allowed by Rust 1.83.0 and newer.  For now, include the
-+    /// member as an enum which is stored in a separate constant.
-+    const SCALAR_TYPE: VMStateFieldType = VMStateFieldType::null;
-+
-     /// The base contents of a `VMStateField` (minus the name and offset) for
-     /// the type that is implementing the trait.
-     const BASE: VMStateField;
-@@ -80,6 +153,12 @@ pub unsafe trait VMState {
-     };
- }
- 
-+/// Internal utility function to retrieve a type's `VMStateFieldType`;
-+/// used by [`vmstate_of!`](crate::vmstate_of).
-+pub const fn vmstate_scalar_type<T: VMState>(_: PhantomData<T>) -> VMStateFieldType {
-+    T::SCALAR_TYPE
-+}
-+
- /// Internal utility function to retrieve a type's `VMStateField`;
- /// used by [`vmstate_of!`](crate::vmstate_of).
- pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
-@@ -96,11 +175,20 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateField
- /// Return the `VMStateField` for a field of a struct.  The field must be
- /// visible in the current scope.
- ///
-+/// Only a limited set of types is supported out of the box:
-+/// * scalar types (integer and `bool`)
-+/// * the C struct `QEMUTimer`
-+/// * a transparent wrapper for any of the above (`Cell`, `UnsafeCell`,
-+///   [`BqlCell`](crate::cell::BqlCell), [`BqlRefCell`](crate::cell::BqlRefCell)
-+/// * a raw pointer to any of the above
-+/// * a `NonNull` pointer to any of the above, possibly wrapped with `Option`
-+/// * an array of any of the above
-+///
- /// In order to support other types, the trait `VMState` must be implemented
- /// for them.
- #[macro_export]
- macro_rules! vmstate_of {
--    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
-+    ($struct_name:ty, $field_name:ident $([0 .. $num:tt $(* $factor:expr)?])? $(,)?) => {
-         $crate::bindings::VMStateField {
-             name: ::core::concat!(::core::stringify!($field_name), "\0")
-                 .as_bytes()
-@@ -109,6 +197,11 @@ macro_rules! vmstate_of {
-             $(.num_offset: $crate::offset_of!($struct_name, $num),)?
-             // The calls to `call_func_with_field!` are the magic that
-             // computes most of the VMStateField from the type of the field.
-+            info: $crate::info_enum_to_ref!($crate::call_func_with_field!(
-+                $crate::vmstate::vmstate_scalar_type,
-+                $struct_name,
-+                $field_name
-+            )),
-             ..$crate::call_func_with_field!(
-                 $crate::vmstate::vmstate_base,
-                 $struct_name,
-@@ -175,6 +268,7 @@ pub const fn with_varray_multiply(mut self, num: u32) -> VMStateField {
- macro_rules! impl_vmstate_transparent {
-     ($type:ty where $base:tt: VMState $($where:tt)*) => {
-         unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-+            const SCALAR_TYPE: VMStateFieldType = <$base as VMState>::SCALAR_TYPE;
-             const BASE: VMStateField = VMStateField {
-                 size: mem::size_of::<$type>(),
-                 ..<$base as VMState>::BASE
-@@ -189,6 +283,33 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
- impl_vmstate_transparent!(crate::cell::BqlCell<T> where T: VMState);
- impl_vmstate_transparent!(crate::cell::BqlRefCell<T> where T: VMState);
- 
-+// Scalar types using predefined VMStateInfos
-+
-+macro_rules! impl_vmstate_scalar {
-+    ($info:ident, $type:ty$(, $varray_flag:ident)?) => {
-+        unsafe impl VMState for $type {
-+            const SCALAR_TYPE: VMStateFieldType = VMStateFieldType::$info;
-+            const BASE: VMStateField = VMStateField {
-+                size: mem::size_of::<$type>(),
-+                flags: VMStateFlags::VMS_SINGLE,
-+                ..Zeroable::ZERO
-+            };
-+            $(const VARRAY_FLAG: VMStateFlags = VMStateFlags::$varray_flag;)?
-+        }
-+    };
-+}
-+
-+impl_vmstate_scalar!(vmstate_info_bool, bool);
-+impl_vmstate_scalar!(vmstate_info_int8, i8);
-+impl_vmstate_scalar!(vmstate_info_int16, i16);
-+impl_vmstate_scalar!(vmstate_info_int32, i32);
-+impl_vmstate_scalar!(vmstate_info_int64, i64);
-+impl_vmstate_scalar!(vmstate_info_uint8, u8, VMS_VARRAY_UINT8);
-+impl_vmstate_scalar!(vmstate_info_uint16, u16, VMS_VARRAY_UINT16);
-+impl_vmstate_scalar!(vmstate_info_uint32, u32, VMS_VARRAY_UINT32);
-+impl_vmstate_scalar!(vmstate_info_uint64, u64);
-+impl_vmstate_scalar!(vmstate_info_timer, bindings::QEMUTimer);
-+
- // Pointer types using the underlying type's VMState plus VMS_POINTER
- 
- macro_rules! impl_vmstate_pointer {
--- 
-2.47.1
+> 
+>>> +
+>>> +    if ((address >> 63) & 0x1) {
+>>> +        base = env->CSR_PGDH;
+>>> +    } else {
+>>> +        base = env->CSR_PGDL;
+>>> +    }
+>>> +    base &= TARGET_PHYS_MASK;
+>>> +
+>>> +    for (level = 4; level > 0; level--) {
+>>> +        get_dir_base_width(env, &dir_base, &dir_width, level);
+>>> +
+>>> +        if (dir_width != 0) {
+>> how about check whether it equeal to 0 firstly like this?
+>>            if (dir_width == 0)
+>>                continue;
+>>
+> It's good to reduce code nesting, I will adopt this suggestion.
+>>> +            /* get next level page directory */
+>>> +            index = (address >> dir_base) & ((1 << dir_width) - 1);
+>>> +            phys = base | index << shift;
+>> Here will only load first 64bit if shift is not 0, such as 1:128bit, 
+>> 2:192bit, 3:256bit
+>>
+> After fixing the assignment of shift, this issue no longer exists. Shift 
+> is less than or equal to 6, and index is 6 bit. Thus, index << shift is 
+> at most 12 bit.
+Supposing one pte entry is 128bit, value of shift is 4.
+    phys = base | index << shift;  will be the same as
+    phys = base | index * 16;
+however all accessed pte entry is 16 bytes aligned, pte entry with "phys 
+= base | index * 16 + 8" will never be accessed. Is that right?
+
+I think it should be something like this.
+       index = (address >> dir_base) & ((1 << (dir_width + shift) - 1);
+       phys = base | index << 3;
+
+Regards
+Bibo, Mao
+> 
+>>> +            base = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+>>> +            if (!FIELD_EX64(base, TLBENTRY, HUGE)) {
+>>> +                /* mask off page dir permission bits */
+>>> +                base &= TARGET_PAGE_MASK;
+>>> +            } else {
+>>> +                /* base is a huge pte */
+>>> +                break;
+>>> +            }
+>>> +
+>>> +            if (base == 0) {
+>> physical adddress 0 is valid and Valid bit will be checked in later. 
+>> Can we remove this?
+> the value of base equals to 0 means that the current page directory 
+> entry does not point to next level page directory, so we return here
+>>> +                return TLBRET_NOMATCH;
+>>> +            }
+>>
+>>> +        }
+>>> +    }
+>>> +
+>>> +    /* pte */
+>>> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+>>> +        /* Huge Page. base is pte */
+>>> +        base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
+>>> +        base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
+>>> +        if (FIELD_EX64(base, TLBENTRY, HGLOBAL)) {
+>>> +            base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
+>>> +            base = FIELD_DP64(base, TLBENTRY, G, 1);
+>>> +        }
+>>> +    } else {
+>>> +        /* Normal Page. base points to pte */
+>>> +        get_dir_base_width(env, &dir_base, &dir_width, 0);
+>>> +        index = (address >> dir_base) & ((1 << dir_width) - 1);
+>>> +        phys = base | index << shift;
+>> Ditto, shift may be wider than 64-bit.
+>>
+>> Regards
+>> Bibo Mao
+> 
+> Ditto, shift is less than or equal to 6.
+> 
+> 
+> Regards
+> 
+> Miao Hao
+> 
+>>> +        base = ldq_phys(cs->as, phys);
+>>> +    }
+>>> +
+>>> +    /* TODO: check plv and other bits? */
+>>> +
+>>> +    /* base is pte, in normal pte format */
+>>> +    if (!FIELD_EX64(base, TLBENTRY, V)) {
+>>> +        return TLBRET_NOMATCH;
+>>> +    }
+>>> +
+>>> +    if (!FIELD_EX64(base, TLBENTRY, D)) {
+>>> +        *prot = PAGE_READ;
+>>> +    } else {
+>>> +        *prot = PAGE_READ | PAGE_WRITE;
+>>> +    }
+>>> +
+>>> +    /* get TARGET_PAGE_SIZE aligned physical address */
+>>> +    base += (address & TARGET_PHYS_MASK) & ((1 << dir_base) - 1);
+>>> +    /* mask RPLV, NX, NR bits */
+>>> +    base = FIELD_DP64(base, TLBENTRY_64, RPLV, 0);
+>>> +    base = FIELD_DP64(base, TLBENTRY_64, NX, 0);
+>>> +    base = FIELD_DP64(base, TLBENTRY_64, NR, 0);
+>>> +    /* mask other attribute bits */
+>>> +    *physical = base & TARGET_PAGE_MASK;
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>>   static int loongarch_map_address(CPULoongArchState *env, hwaddr 
+>>> *physical,
+>>>                                    int *prot, target_ulong address,
+>>> -                                 MMUAccessType access_type, int 
+>>> mmu_idx)
+>>> +                                 MMUAccessType access_type, int 
+>>> mmu_idx,
+>>> +                                 int is_debug)
+>>>   {
+>>>       int index, match;
+>>>   @@ -151,6 +237,13 @@ static int 
+>>> loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>>>       if (match) {
+>>>           return loongarch_map_tlb_entry(env, physical, prot,
+>>>                                          address, access_type, index, 
+>>> mmu_idx);
+>>> +    } else if (is_debug) {
+>>> +        /*
+>>> +         * For debugger memory access, we want to do the map when 
+>>> there is a
+>>> +         * legal mapping, even if the mapping is not yet in TLB. 
+>>> return 0 if
+>>> +         * there is a valid map, else none zero.
+>>> +         */
+>>> +        return loongarch_page_table_walker(env, physical, prot, 
+>>> address);
+>>>       }
+>>>         return TLBRET_NOMATCH;
+>>> @@ -158,7 +251,8 @@ static int 
+>>> loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>>>   #else
+>>>   static int loongarch_map_address(CPULoongArchState *env, hwaddr 
+>>> *physical,
+>>>                                    int *prot, target_ulong address,
+>>> -                                 MMUAccessType access_type, int 
+>>> mmu_idx)
+>>> +                                 MMUAccessType access_type, int 
+>>> mmu_idx,
+>>> +                                 int is_debug)
+>>>   {
+>>>       return TLBRET_NOMATCH;
+>>>   }
+>>> @@ -178,7 +272,7 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, 
+>>> target_ulong va,
+>>>     int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>>>                            int *prot, target_ulong address,
+>>> -                         MMUAccessType access_type, int mmu_idx)
+>>> +                         MMUAccessType access_type, int mmu_idx, int 
+>>> is_debug)
+>>>   {
+>>>       int user_mode = mmu_idx == MMU_USER_IDX;
+>>>       int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
+>>> @@ -222,7 +316,7 @@ int get_physical_address(CPULoongArchState *env, 
+>>> hwaddr *physical,
+>>>         /* Mapped address */
+>>>       return loongarch_map_address(env, physical, prot, address,
+>>> -                                 access_type, mmu_idx);
+>>> +                                 access_type, mmu_idx, is_debug);
+>>>   }
+>>>     hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+>>> @@ -232,7 +326,7 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState 
+>>> *cs, vaddr addr)
+>>>       int prot;
+>>>         if (get_physical_address(env, &phys_addr, &prot, addr, 
+>>> MMU_DATA_LOAD,
+>>> -                             cpu_mmu_index(cs, false)) != 0) {
+>>> +                             cpu_mmu_index(cs, false), 1) != 0) {
+>>>           return -1;
+>>>       }
+>>>       return phys_addr;
 
 
