@@ -4,77 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F79E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 03:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E120E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 09:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSTHZ-0000L8-DD; Mon, 30 Dec 2024 22:51:01 -0500
+	id 1tSYPn-0002Wx-89; Tue, 31 Dec 2024 04:19:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tSTHW-0000Kq-4Q
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 22:50:58 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tSTHR-0000TE-LH
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 22:50:57 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxMK8WanNn2SxcAA--.26051S3;
- Tue, 31 Dec 2024 11:50:47 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxReQTanNnXOMOAA--.7412S3;
- Tue, 31 Dec 2024 11:50:45 +0800 (CST)
-Subject: Re: [PATCH] feat: add loongarch page table walker support for
- debugger memory access
-To: Miao Hao <haomiao23s@ict.ac.cn>
-Cc: qemu-devel@nongnu.org, "lixianglai@loongson.cn" <lixianglai@loongson.cn>, 
- gaosong@loongson.cn
-References: <20241219032455.28608-1-haomiao23s@ict.ac.cn>
- <b041dacf-df2f-f25f-33c5-a53ad9cc2059@loongson.cn>
- <b3f8f34b-4477-4396-a3a9-ef38209c87c3@ict.ac.cn>
- <d318dcd2-652d-9af1-2119-79d557d8284b@loongson.cn>
- <cfca281e-371e-af35-a909-a03b91a48c0f@loongson.cn>
- <7c0c7482-49a5-47ad-a14a-acbdd8798621@ict.ac.cn>
- <b8abab75-3001-f1c2-e6a6-cb46c1230844@loongson.cn>
- <5dc44323-08e4-4c22-93b5-47e1195b9638@ict.ac.cn>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <d5f53622-384a-4957-77e1-8f36b8cfef15@loongson.cn>
-Date: Tue, 31 Dec 2024 11:49:55 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tSYPh-0002St-HM
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 04:19:45 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tSYPe-0006jz-3m
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 04:19:44 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2161eb94cceso91786695ad.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 01:19:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1735636780; x=1736241580; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OKvKMJzD8MNoyH2tqA4GaYIztXRDF7LjLL1mF4jXgJc=;
+ b=kULm3Yw0HFftQm4L1YnUh4bwgHfXGsqe1SNC0N8MMJYY0+3LSqHfTjiJ4OiV9IQmjK
+ M41wS1Cfbl75P5zcnfTEcTiV/dEcXRK6hVaDo4ROU7xDPw2tM7TrHxo68Hxq+TPx8LF9
+ zvW1to76hZJSdnhzXjhGINer/yxaSsmqqJvMZ+hI7ziiKwNbmSGZcJWFJUqEiNfBVt1C
+ JMRTeESJvYSdIbd1Qkm4T7BBi2qXB9GCBex+E7fNSTz8Rm+lxkpvQQAD7SPGk8HZ/QVy
+ 9OBy9zbEr7EZDDgHEq2+QHaScihK/7sac3iMmZi0bGbyOQa1XloIIpWTYbY53F5dgi/T
+ 29Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735636780; x=1736241580;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OKvKMJzD8MNoyH2tqA4GaYIztXRDF7LjLL1mF4jXgJc=;
+ b=WMhnJni+NifVL3EZKhM9a8QIyU2Wa8QYjc24hTxJWGeL/0VyFKDIXjYj6PCuJz9zht
+ 0q9/xRbJwoSG1Y3xf8FKn2D0pcD78ZUR9QvcCDyOQ3DNPwGqBYKLm8dyaHXqHaw1kGUS
+ 7aGbE6uX6t6dBI33yTUBZ18Ehm0EQh4TL5uq62bdz7/qyBgQ5jq6LSDDOBetm/ZiEzCR
+ qyWx5Md36mP7Eu46/Q7xG9/GHlrZ5+LDgJomonNQZ7dOgxAeZan1QcwBK4CrgmGIvPGM
+ 9XxvG22NMHa/DmmySSo9yk0ssYdmnFbovZQMfhd7vtYDXLWlTtTlnSy62uOlXVNcUy06
+ eiPA==
+X-Gm-Message-State: AOJu0Yzwqh2U5OWFAZzQLTYZ3WjxMDmNGSQJlvuJ7CgTBM5oIYpQuoD6
+ csj7wNSL7BFMvFPmRN4cD+Z7X1xbox0GobmuwkgC0dbq9OZx3X4aVJ5Uf+WVXUQ=
+X-Gm-Gg: ASbGncuJQ7bb10bGFkWKZG7NdPyumstvyrgJ37wyZLcZD/N+EsbsBePDR9+Y5ihrKas
+ zf2HxO+h4SW8hK0IkjFlK3BAO/ZwoprkEnr/J5suVk3XsWkz9XneLrvyKKtPQ57dLJWRuXPcAe7
+ QT4XrPnnwfKNM+M8B9z052F9UL+nfOG8IasHbKM1CN07zPKcnKkPjFnsiD2hlzNQ3NtbSz81BCk
+ Qvk757MBe66TNGwlKpGRY1oJfCSVOdJyVs60j3Ihn8KnZrTJzTrYVd6Nbst9rjxxRXnVw==
+X-Google-Smtp-Source: AGHT+IGPF5Gkru34OHnQGQIzcw+KTdmZ9nTbdZGCLU72/OZuw/c030aydRUe/wadNuY0S3cMnQdwLQ==
+X-Received: by 2002:a05:6a20:7f8b:b0:1e1:9de5:4543 with SMTP id
+ adf61e73a8af0-1e5e047021amr66032072637.14.1735636779998; 
+ Tue, 31 Dec 2024 01:19:39 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-842e35d4becsm15771052a12.79.2024.12.31.01.19.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 31 Dec 2024 01:19:39 -0800 (PST)
+Message-ID: <5763a54d-50c4-4f26-b64b-a5a9d9581471@ventanamicro.com>
+Date: Tue, 31 Dec 2024 06:19:35 -0300
 MIME-Version: 1.0
-In-Reply-To: <5dc44323-08e4-4c22-93b5-47e1195b9638@ict.ac.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 3/7] target/riscv: Handle Smrnmi interrupt and
+ exception
+To: Frank Chang <frank.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Tommy Wu <tommy.wu@sifive.com>
+References: <20241217062440.884261-1-frank.chang@sifive.com>
+ <20241217062440.884261-4-frank.chang@sifive.com>
+ <b243b6b0-a35d-4dc0-a87a-03b61ea2acbc@ventanamicro.com>
+ <CAE_xrPgoTCVzcdMSecCyY8P7OMS5vsYc6wSK2hEqHqgXaOMHbA@mail.gmail.com>
 Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAE_xrPgoTCVzcdMSecCyY8P7OMS5vsYc6wSK2hEqHqgXaOMHbA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxReQTanNnXOMOAA--.7412S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9fXoW3Zr1rCrW8tr15WF4rAw1UurX_yoW8XF1rCo
- WUKr1fAr15Xr1jgr1UJ34DJr13t3WUJr1DJryUGry7Gr18tw1UJ34UJryUt3yUGr18Gr1D
- JryUJr1UAFyUJr15l-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
- 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
- UjIYCTnIWjp_UUUYv7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
- 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
- Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
- v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU1wL05UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.668,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,343 +109,381 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/12/31 上午10:51, Miao Hao wrote:
+On 12/31/24 12:11 AM, Frank Chang wrote:
+> On Thu, Dec 26, 2024 at 8:42 PM Daniel Henrique Barboza <dbarboza@ventanamicro.com <mailto:dbarboza@ventanamicro.com>> wrote:
 > 
-> On 2024/12/31 10:23, bibo mao wrote:
->>
->>
->> On 2024/12/31 上午10:08, Miao Hao wrote:
->>>
->>> On 2024/12/31 09:18, bibo mao wrote:
->>>>
->>>>
->>>> On 2024/12/31 上午9:09, bibo mao wrote:
->>>>>
->>>>>
->>>>> On 2024/12/30 下午3:04, Miao Hao wrote:
->>>>>> Hi Bibo,
->>>>>>
->>>>>> Thanks for your review. I apologize for my late respond due to 
->>>>>> some personal reasons.
->>>>>>
->>>>>> On 2024/12/19 17:57, bibo mao wrote:
->>>>>>> Hi Miao,
->>>>>>>
->>>>>>> Thanks for doing this. It is useful to debug VM.
->>>>>>>
->>>>>>> On 2024/12/19 上午11:24, Miao Hao wrote:
->>>>>>>> Signed-off-by: Miao Hao <haomiao23s@ict.ac.cn>
->>>>>>>> ---
->>>>>>>>   target/loongarch/cpu_helper.c     | 104 
->>>>>>>> ++++++++++++++++++++++++++++--
->>>>>>>>   target/loongarch/internals.h      |   4 +-
->>>>>>>>   target/loongarch/tcg/tlb_helper.c |   4 +-
->>>>>>>>   3 files changed, 104 insertions(+), 8 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/target/loongarch/cpu_helper.c 
->>>>>>>> b/target/loongarch/cpu_helper.c
->>>>>>>> index 580362ac3e..c0828a813d 100644
->>>>>>>> --- a/target/loongarch/cpu_helper.c
->>>>>>>> +++ b/target/loongarch/cpu_helper.c
->>>>>>>> @@ -141,9 +141,95 @@ bool loongarch_tlb_search(CPULoongArchState 
->>>>>>>> *env, target_ulong vaddr,
->>>>>>>>       return false;
->>>>>>>>   }
->>>>>>>>   +static int loongarch_page_table_walker(CPULoongArchState 
->>>>>>>> *env, hwaddr *physical,
->>>>>>>> +                                 int *prot, target_ulong address)
->>>>>>>> +{
->>>>>>>> +    CPUState *cs = env_cpu(env);
->>>>>>>> +    target_ulong index, phys;
->>>>>>>> +    int shift;
->>>>>>>> +    uint64_t dir_base, dir_width;
->>>>>>>> +    uint64_t base;
->>>>>>>> +    int level;
->>>>>>>> +
->>>>>>>> +    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
->>>>>>>> +    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
->>>>>>>> +    shift = (shift + 1) * 3;
->>>>>>
->>>>>> the assignment of variable shift and the corresponding comment is 
->>>>>> incorrect here, and details are logged in the v1.03 change log of 
->>>>>> LoongArch specification volume1 
->>>>>> (https://loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf) 
->>>>>>
->>>>>>
->>>>>>      /* 0:64bit, 1:128bit, 2:256bit, 3:512bit */
->>>>>>      shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
->>>>>>      shift = shift + 3;
->>>>> Ok, I see.
->>>>> It seems that this is right, thanks for the detailed explanation.
->>>>>
->>>>>>
->>>>>>>> +
->>>>>>>> +    if ((address >> 63) & 0x1) {
->>>>>>>> +        base = env->CSR_PGDH;
->>>>>>>> +    } else {
->>>>>>>> +        base = env->CSR_PGDL;
->>>>>>>> +    }
->>>>>>>> +    base &= TARGET_PHYS_MASK;
->>>>>>>> +
->>>>>>>> +    for (level = 4; level > 0; level--) {
->>>>>>>> +        get_dir_base_width(env, &dir_base, &dir_width, level);
->>>>>>>> +
->>>>>>>> +        if (dir_width != 0) {
->>>>>>> how about check whether it equeal to 0 firstly like this?
->>>>>>>            if (dir_width == 0)
->>>>>>>                continue;
->>>>>>>
->>>>>> It's good to reduce code nesting, I will adopt this suggestion.
->>>>>>>> +            /* get next level page directory */
->>>>>>>> +            index = (address >> dir_base) & ((1 << dir_width) - 
->>>>>>>> 1);
->>>>>>>> +            phys = base | index << shift;
->>>>>>> Here will only load first 64bit if shift is not 0, such as 
->>>>>>> 1:128bit, 2:192bit, 3:256bit
->>>>>>>
->>>>>> After fixing the assignment of shift, this issue no longer exists. 
->>>>>> Shift is less than or equal to 6, and index is 6 bit. Thus, index 
->>>>>> << shift is at most 12 bit.
->>>>> Supposing one pte entry is 128bit, value of shift is 4.
->>>>>     phys = base | index << shift;  will be the same as
->>>>>     phys = base | index * 16;
->>>>> however all accessed pte entry is 16 bytes aligned, pte entry with 
->>>>> "phys = base | index * 16 + 8" will never be accessed. Is that right?
->>>>>
->>> I see what you mean, but since all accessed pte entry is 16 bytes 
->>> aligned, why there is a pte entry with "phys = base | index * 16 + 
->>> 8"? On the other hand, a 128 bit pte entry remains undefined in 
->>> LoongArch specification volume1, which only defines 64 bit pte entry 
->>> (in section 5.4.5). Perhaps the CSR_PWCL.PTEWIDTH is for future 
->>> extension, so I think we can just leave it alone since it works well 
->>> on 64 bit pte.
->> IIRC, for 128 bit pte entry, it presents two pages. physical address 
->> of page0 is located phys = base | index * 16, page1 can be located at
->>   phys = base | index * 16 + 8
-> If a pte presents two pages, a virtual address is not mapped to a unique 
-> physical address. The key is the format of a 128 bit pte, which is 
-> undefined.
-emm, I am messed with it.
+> 
+> 
+>     On 12/17/24 3:24 AM, frank.chang@sifive.com <mailto:frank.chang@sifive.com> wrote:
+>      > From: Tommy Wu <tommy.wu@sifive.com <mailto:tommy.wu@sifive.com>>
+>      >
+>      > Because the RNMI interrupt trap handler address is implementation defined.
+>      > We add the 'rnmi-interrupt-vector' and 'rnmi-exception-vector' as the property
+>      > of the harts. It’s very easy for users to set the address based on their
+>      > expectation. This patch also adds the functionality to handle the RNMI signals.
+>      >
+>      > Signed-off-by: Frank Chang <frank.chang@sifive.com <mailto:frank.chang@sifive.com>>
+>      > Signed-off-by: Tommy Wu <tommy.wu@sifive.com <mailto:tommy.wu@sifive.com>>
+>      > ---
+>      >   hw/riscv/riscv_hart.c         | 40 +++++++++++++++++
+>      >   include/hw/riscv/riscv_hart.h |  4 ++
+>      >   target/riscv/cpu.c            | 11 +++++
+>      >   target/riscv/cpu.h            |  3 ++
+>      >   target/riscv/cpu_bits.h       | 12 +++++
+>      >   target/riscv/cpu_helper.c     | 85 ++++++++++++++++++++++++++++++++---
+>      >   6 files changed, 150 insertions(+), 5 deletions(-)
+>      >
+>      > diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+>      > index 0df454772f..f5e40e608d 100644
+>      > --- a/hw/riscv/riscv_hart.c
+>      > +++ b/hw/riscv/riscv_hart.c
+>      > @@ -26,6 +26,7 @@
+>      >   #include "target/riscv/cpu.h"
+>      >   #include "hw/qdev-properties.h"
+>      >   #include "hw/riscv/riscv_hart.h"
+>      > +#include "qemu/error-report.h"
+>      >
+>      >   static const Property riscv_harts_props[] = {
+>      >       DEFINE_PROP_UINT32("num-harts", RISCVHartArrayState, num_harts, 1),
+>      > @@ -33,6 +34,22 @@ static const Property riscv_harts_props[] = {
+>      >       DEFINE_PROP_STRING("cpu-type", RISCVHartArrayState, cpu_type),
+>      >       DEFINE_PROP_UINT64("resetvec", RISCVHartArrayState, resetvec,
+>      >                          DEFAULT_RSTVEC),
+>      > +    /*
+>      > +     * Smrnmi implementation-defined interrupt and exception trap handlers.
+>      > +     *
+>      > +     * When an RNMI interrupt is detected, the hart then enters M-mode and
+>      > +     * jumps to the address defined by "rnmi-interrupt-vector".
+>      > +     *
+>      > +     * When the hart encounters an exception while executing in M-mode with
+>      > +     * the mnstatus.NMIE bit clear, the hart then jumps to the address
+>      > +     * defined by "rnmi-exception-vector".
+>      > +     */
+>      > +    DEFINE_PROP_ARRAY("rnmi-interrupt-vector", RISCVHartArrayState,
+>      > +                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64,
+>      > +                      uint64_t),
+>      > +    DEFINE_PROP_ARRAY("rnmi-exception-vector", RISCVHartArrayState,
+>      > +                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64,
+>      > +                      uint64_t),
+>      >       DEFINE_PROP_END_OF_LIST(),
+> 
+>     This except will result in a conflict because "DEFINE_PROP_END_OF_LIST()," was removed
+>     in master.
+> 
+> 
+> Thanks, Daniel
+> 
+> The commit to drop "DEFINE_PROP_END_OF_LIST()" is not applied to riscv-to-apply.next yet.
+> But I will remove it from the v11 patchset.
 
-For 128 bit pte, one pte represents two consecutive pages, its physical 
-address can be located from address "phys = base | index * 16", address 
-"phys = base | index * 16 + 8" is undefined.
->>
->> If we want to only care about 64 bit pte, the following sentences are 
->> suggested to removed.
->>    +    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
->>    +    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
->>    +    shift = (shift + 1) * 3;
->>
-> The reason for retaining this is to be consistent with helper_lddir and 
-> helper_ldpte in target/loongarch/tcg/tlb_helper.c
-Wait a moment, I will check whether we can remove it totally.
 
-Regards
-Bibo Mao
+Thanks! The reason it isn't in riscv-to-apply.next yet is because we had a riscv queue merged
+10 days ago or so and master is now ahead of it. But riscv.next will derive from master later
+on so might as well base stuff on top of master for now.
+
+
+Thanks,
+
+Daniel
+
+
+
+> 
+> Regards,
+> Frank Chang
 > 
 > 
-> Regards
+>     With that said:
 > 
-> Miao Hao
+>     Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com <mailto:dbarboza@ventanamicro.com>>
 > 
->> Regards
->> Bibo Mao
->>>>> I think it should be something like this.
->>>>>        index = (address >> dir_base) & ((1 << (dir_width + shift) - 
->>>>> 1);
->>>>>        phys = base | index << 3;
->>>> Sorry, it should be shift - 3.
->>>>  index = (address >> dir_base) & (1 << (dir_width + shift - 3) - 1);
->>>>  phys = base | index << 3;
->>>>
->>> In my understanding, assignment "index = (address >> dir_base) & ((1 
->>> << dir_width) - 1)" retrieves the corresponding bits in the virtual 
->>> address set in CSR_PWC[L|H] as the index (Figure 5-2 in LoongArch 
->>> specification volume1), and CSR_PWCL.PTEWIDTH pads zeros to retrieved 
->>> bits to align.
->>>
->>> Here's an example, a 3 level page table with 16KB pages in Loongarch 
->>> linux setup:
->>>
->>> virtual address:
->>>
->>> +---------------+---------------+---------------+---------------+
->>>
->>> |46               36|35               25|24 14|13                 0|
->>>
->>> +---------------+---------------+---------------+---------------+
->>>
->>>     dir3_index    dir1_index    pt_index      page_offset
->>>
->>> CSR_PWCL:
->>>
->>> |00|00000|00000|11001|01011|01110|01011|
->>>
->>> CSR_PWCH:
->>>
->>> |0000000|0|000000|000000|100100|001011|
->>>
->>> Note that dir3_index, dir1_index and pt_index are 11 bit and 
->>> CSR_PWCL.PTEWidth=0. To index a 64 bit pte in the 16KB(2^14B) page 
->>> table, we should pad (0 + 3) zeros to pt_index.
->>>
->>>
->>> Regards
->>>
->>> Miao, Hao
->>>
->>>>>
->>>>> Regards
->>>>> Bibo, Mao
->>>>>>
->>>>>>>> +            base = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
->>>>>>>> +            if (!FIELD_EX64(base, TLBENTRY, HUGE)) {
->>>>>>>> +                /* mask off page dir permission bits */
->>>>>>>> +                base &= TARGET_PAGE_MASK;
->>>>>>>> +            } else {
->>>>>>>> +                /* base is a huge pte */
->>>>>>>> +                break;
->>>>>>>> +            }
->>>>>>>> +
->>>>>>>> +            if (base == 0) {
->>>>>>> physical adddress 0 is valid and Valid bit will be checked in 
->>>>>>> later. Can we remove this?
->>>>>> the value of base equals to 0 means that the current page 
->>>>>> directory entry does not point to next level page directory, so we 
->>>>>> return here
->>>>>>>> +                return TLBRET_NOMATCH;
->>>>>>>> +            }
->>>>>>>
->>>>>>>> +        }
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    /* pte */
->>>>>>>> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->>>>>>>> +        /* Huge Page. base is pte */
->>>>>>>> +        base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
->>>>>>>> +        base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
->>>>>>>> +        if (FIELD_EX64(base, TLBENTRY, HGLOBAL)) {
->>>>>>>> +            base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
->>>>>>>> +            base = FIELD_DP64(base, TLBENTRY, G, 1);
->>>>>>>> +        }
->>>>>>>> +    } else {
->>>>>>>> +        /* Normal Page. base points to pte */
->>>>>>>> +        get_dir_base_width(env, &dir_base, &dir_width, 0);
->>>>>>>> +        index = (address >> dir_base) & ((1 << dir_width) - 1);
->>>>>>>> +        phys = base | index << shift;
->>>>>>> Ditto, shift may be wider than 64-bit.
->>>>>>>
->>>>>>> Regards
->>>>>>> Bibo Mao
->>>>>>
->>>>>> Ditto, shift is less than or equal to 6.
->>>>>>
->>>>>>
->>>>>> Regards
->>>>>>
->>>>>> Miao Hao
->>>>>>
->>>>>>>> +        base = ldq_phys(cs->as, phys);
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    /* TODO: check plv and other bits? */
->>>>>>>> +
->>>>>>>> +    /* base is pte, in normal pte format */
->>>>>>>> +    if (!FIELD_EX64(base, TLBENTRY, V)) {
->>>>>>>> +        return TLBRET_NOMATCH;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    if (!FIELD_EX64(base, TLBENTRY, D)) {
->>>>>>>> +        *prot = PAGE_READ;
->>>>>>>> +    } else {
->>>>>>>> +        *prot = PAGE_READ | PAGE_WRITE;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    /* get TARGET_PAGE_SIZE aligned physical address */
->>>>>>>> +    base += (address & TARGET_PHYS_MASK) & ((1 << dir_base) - 1);
->>>>>>>> +    /* mask RPLV, NX, NR bits */
->>>>>>>> +    base = FIELD_DP64(base, TLBENTRY_64, RPLV, 0);
->>>>>>>> +    base = FIELD_DP64(base, TLBENTRY_64, NX, 0);
->>>>>>>> +    base = FIELD_DP64(base, TLBENTRY_64, NR, 0);
->>>>>>>> +    /* mask other attribute bits */
->>>>>>>> +    *physical = base & TARGET_PAGE_MASK;
->>>>>>>> +
->>>>>>>> +    return 0;
->>>>>>>> +}
->>>>>>>> +
->>>>>>>>   static int loongarch_map_address(CPULoongArchState *env, 
->>>>>>>> hwaddr *physical,
->>>>>>>>                                    int *prot, target_ulong address,
->>>>>>>> -                                 MMUAccessType access_type, int 
->>>>>>>> mmu_idx)
->>>>>>>> +                                 MMUAccessType access_type, int 
->>>>>>>> mmu_idx,
->>>>>>>> +                                 int is_debug)
->>>>>>>>   {
->>>>>>>>       int index, match;
->>>>>>>>   @@ -151,6 +237,13 @@ static int 
->>>>>>>> loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
->>>>>>>>       if (match) {
->>>>>>>>           return loongarch_map_tlb_entry(env, physical, prot,
->>>>>>>>                                          address, access_type, 
->>>>>>>> index, mmu_idx);
->>>>>>>> +    } else if (is_debug) {
->>>>>>>> +        /*
->>>>>>>> +         * For debugger memory access, we want to do the map 
->>>>>>>> when there is a
->>>>>>>> +         * legal mapping, even if the mapping is not yet in 
->>>>>>>> TLB. return 0 if
->>>>>>>> +         * there is a valid map, else none zero.
->>>>>>>> +         */
->>>>>>>> +        return loongarch_page_table_walker(env, physical, prot, 
->>>>>>>> address);
->>>>>>>>       }
->>>>>>>>         return TLBRET_NOMATCH;
->>>>>>>> @@ -158,7 +251,8 @@ static int 
->>>>>>>> loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
->>>>>>>>   #else
->>>>>>>>   static int loongarch_map_address(CPULoongArchState *env, 
->>>>>>>> hwaddr *physical,
->>>>>>>>                                    int *prot, target_ulong address,
->>>>>>>> -                                 MMUAccessType access_type, int 
->>>>>>>> mmu_idx)
->>>>>>>> +                                 MMUAccessType access_type, int 
->>>>>>>> mmu_idx,
->>>>>>>> +                                 int is_debug)
->>>>>>>>   {
->>>>>>>>       return TLBRET_NOMATCH;
->>>>>>>>   }
->>>>>>>> @@ -178,7 +272,7 @@ static hwaddr dmw_va2pa(CPULoongArchState 
->>>>>>>> *env, target_ulong va,
->>>>>>>>     int get_physical_address(CPULoongArchState *env, hwaddr 
->>>>>>>> *physical,
->>>>>>>>                            int *prot, target_ulong address,
->>>>>>>> -                         MMUAccessType access_type, int mmu_idx)
->>>>>>>> +                         MMUAccessType access_type, int 
->>>>>>>> mmu_idx, int is_debug)
->>>>>>>>   {
->>>>>>>>       int user_mode = mmu_idx == MMU_USER_IDX;
->>>>>>>>       int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
->>>>>>>> @@ -222,7 +316,7 @@ int get_physical_address(CPULoongArchState 
->>>>>>>> *env, hwaddr *physical,
->>>>>>>>         /* Mapped address */
->>>>>>>>       return loongarch_map_address(env, physical, prot, address,
->>>>>>>> -                                 access_type, mmu_idx);
->>>>>>>> +                                 access_type, mmu_idx, is_debug);
->>>>>>>>   }
->>>>>>>>     hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr 
->>>>>>>> addr)
->>>>>>>> @@ -232,7 +326,7 @@ hwaddr 
->>>>>>>> loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
->>>>>>>>       int prot;
->>>>>>>>         if (get_physical_address(env, &phys_addr, &prot, addr, 
->>>>>>>> MMU_DATA_LOAD,
->>>>>>>> -                             cpu_mmu_index(cs, false)) != 0) {
->>>>>>>> +                             cpu_mmu_index(cs, false), 1) != 0) {
->>>>>>>>           return -1;
->>>>>>>>       }
->>>>>>>>       return phys_addr;
+> 
+>      >   };
+>      >
+>      > @@ -47,6 +64,29 @@ static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
+>      >   {
+>      >       object_initialize_child(OBJECT(s), "harts[*]", &s->harts[idx], cpu_type);
+>      >       qdev_prop_set_uint64(DEVICE(&s->harts[idx]), "resetvec", s->resetvec);
+>      > +
+>      > +    if (s->harts[idx].cfg.ext_smrnmi) {
+>      > +        if (idx < s->num_rnmi_irqvec) {
+>      > +            qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
+>      > +                                 "rnmi-interrupt-vector", s->rnmi_irqvec[idx]);
+>      > +        }
+>      > +
+>      > +        if (idx < s->num_rnmi_excpvec) {
+>      > +            qdev_prop_set_uint64(DEVICE(&s->harts[idx]),
+>      > +                                 "rnmi-exception-vector", s->rnmi_excpvec[idx]);
+>      > +        }
+>      > +    } else {
+>      > +        if (s->num_rnmi_irqvec > 0) {
+>      > +            warn_report_once("rnmi-interrupt-vector property is ignored "
+>      > +                             "because Smrnmi extension is not enabled.");
+>      > +        }
+>      > +
+>      > +        if (s->num_rnmi_excpvec > 0) {
+>      > +            warn_report_once("rnmi-exception-vector property is ignored "
+>      > +                             "because Smrnmi extension is not enabled.");
+>      > +        }
+>      > +    }
+>      > +
+>      >       s->harts[idx].env.mhartid = s->hartid_base + idx;
+>      >       qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
+>      >       return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
+>      > diff --git a/include/hw/riscv/riscv_hart.h b/include/hw/riscv/riscv_hart.h
+>      > index 912b4a2682..a6ed73a195 100644
+>      > --- a/include/hw/riscv/riscv_hart.h
+>      > +++ b/include/hw/riscv/riscv_hart.h
+>      > @@ -38,6 +38,10 @@ struct RISCVHartArrayState {
+>      >       uint32_t hartid_base;
+>      >       char *cpu_type;
+>      >       uint64_t resetvec;
+>      > +    uint32_t num_rnmi_irqvec;
+>      > +    uint64_t *rnmi_irqvec;
+>      > +    uint32_t num_rnmi_excpvec;
+>      > +    uint64_t *rnmi_excpvec;
+>      >       RISCVCPU *harts;
+>      >   };
+>      >
+>      > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>      > index ade9e6e190..e6988f44c6 100644
+>      > --- a/target/riscv/cpu.c
+>      > +++ b/target/riscv/cpu.c
+>      > @@ -1419,6 +1419,11 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
+>      >           g_assert_not_reached();
+>      >       }
+>      >   }
+>      > +
+>      > +static void riscv_cpu_set_nmi(void *opaque, int irq, int level)
+>      > +{
+>      > +    riscv_cpu_set_rnmi(RISCV_CPU(opaque), irq, level);
+>      > +}
+>      >   #endif /* CONFIG_USER_ONLY */
+>      >
+>      >   static bool riscv_cpu_is_dynamic(Object *cpu_obj)
+>      > @@ -1442,6 +1447,8 @@ static void riscv_cpu_init(Object *obj)
+>      >   #ifndef CONFIG_USER_ONLY
+>      >       qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,
+>      >                         IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
+>      > +    qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,
+>      > +                            "riscv.cpu.rnmi", RNMI_MAX);
+>      >   #endif /* CONFIG_USER_ONLY */
+>      >
+>      >       general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
+>      > @@ -2797,6 +2804,10 @@ static const Property riscv_cpu_properties[] = {
+>      >
+>      >   #ifndef CONFIG_USER_ONLY
+>      >       DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
+>      > +    DEFINE_PROP_UINT64("rnmi-interrupt-vector", RISCVCPU, env.rnmi_irqvec,
+>      > +                       DEFAULT_RNMI_IRQVEC),
+>      > +    DEFINE_PROP_UINT64("rnmi-exception-vector", RISCVCPU, env.rnmi_excpvec,
+>      > +                       DEFAULT_RNMI_EXCPVEC),
+>      >   #endif
+>      >
+>      >       DEFINE_PROP_BOOL("short-isa-string", RISCVCPU, cfg.short_isa_string, false),
+>      > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>      > index a2cb471b3c..8dc5b4d002 100644
+>      > --- a/target/riscv/cpu.h
+>      > +++ b/target/riscv/cpu.h
+>      > @@ -493,6 +493,8 @@ struct CPUArchState {
+>      >       target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
+>      >       target_ulong mnstatus;
+>      >       target_ulong rnmip;
+>      > +    uint64_t rnmi_irqvec;
+>      > +    uint64_t rnmi_excpvec;
+>      >   };
+>      >
+>      >   /*
+>      > @@ -591,6 +593,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
+>      >   int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
+>      >   uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask,
+>      >                                 uint64_t value);
+>      > +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level);
+>      >   void riscv_cpu_interrupt(CPURISCVState *env);
+>      >   #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
+>      >   void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+>      > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+>      > index 9e9637263d..17787fd693 100644
+>      > --- a/target/riscv/cpu_bits.h
+>      > +++ b/target/riscv/cpu_bits.h
+>      > @@ -680,6 +680,12 @@ typedef enum {
+>      >   /* Default Reset Vector address */
+>      >   #define DEFAULT_RSTVEC      0x1000
+>      >
+>      > +/* Default RNMI Interrupt Vector address */
+>      > +#define DEFAULT_RNMI_IRQVEC     0x0
+>      > +
+>      > +/* Default RNMI Exception Vector address */
+>      > +#define DEFAULT_RNMI_EXCPVEC    0x0
+>      > +
+>      >   /* Exception causes */
+>      >   typedef enum RISCVException {
+>      >       RISCV_EXCP_NONE = -1, /* sentinel value */
+>      > @@ -734,6 +740,9 @@ typedef enum RISCVException {
+>      >   /* -1 is due to bit zero of hgeip and hgeie being ROZ. */
+>      >   #define IRQ_LOCAL_GUEST_MAX                (TARGET_LONG_BITS - 1)
+>      >
+>      > +/* RNMI causes */
+>      > +#define RNMI_MAX                           16
+>      > +
+>      >   /* mip masks */
+>      >   #define MIP_USIP                           (1 << IRQ_U_SOFT)
+>      >   #define MIP_SSIP                           (1 << IRQ_S_SOFT)
+>      > @@ -972,6 +981,9 @@ typedef enum RISCVException {
+>      >   #define MHPMEVENT_IDX_MASK                 0xFFFFF
+>      >   #define MHPMEVENT_SSCOF_RESVD              16
+>      >
+>      > +/* RISC-V-specific interrupt pending bits. */
+>      > +#define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
+>      > +
+>      >   /* JVT CSR bits */
+>      >   #define JVT_MODE                           0x3F
+>      >   #define JVT_BASE                           (~0x3F)
+>      > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>      > index 750c0537ca..e5ffbbbd83 100644
+>      > --- a/target/riscv/cpu_helper.c
+>      > +++ b/target/riscv/cpu_helper.c
+>      > @@ -505,6 +505,18 @@ static int riscv_cpu_local_irq_pending(CPURISCVState *env)
+>      >       uint64_t vsbits, irq_delegated;
+>      >       int virq;
+>      >
+>      > +    /* Priority: RNMI > Other interrupt. */
+>      > +    if (riscv_cpu_cfg(env)->ext_smrnmi) {
+>      > +        /* If mnstatus.NMIE == 0, all interrupts are disabled. */
+>      > +        if (!get_field(env->mnstatus, MNSTATUS_NMIE)) {
+>      > +            return RISCV_EXCP_NONE;
+>      > +        }
+>      > +
+>      > +        if (env->rnmip) {
+>      > +            return ctz64(env->rnmip); /* since non-zero */
+>      > +        }
+>      > +    }
+>      > +
+>      >       /* Determine interrupt enable state of all privilege modes */
+>      >       if (env->virt_enabled) {
+>      >           mie = 1;
+>      > @@ -567,7 +579,9 @@ static int riscv_cpu_local_irq_pending(CPURISCVState *env)
+>      >
+>      >   bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+>      >   {
+>      > -    if (interrupt_request & CPU_INTERRUPT_HARD) {
+>      > +    uint32_t mask = CPU_INTERRUPT_HARD | CPU_INTERRUPT_RNMI;
+>      > +
+>      > +    if (interrupt_request & mask) {
+>      >           RISCVCPU *cpu = RISCV_CPU(cs);
+>      >           CPURISCVState *env = &cpu->env;
+>      >           int interruptno = riscv_cpu_local_irq_pending(env);
+>      > @@ -699,6 +713,30 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
+>      >       env->geilen = geilen;
+>      >   }
+>      >
+>      > +void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level)
+>      > +{
+>      > +    CPURISCVState *env = &cpu->env;
+>      > +    CPUState *cs = CPU(cpu);
+>      > +    bool release_lock = false;
+>      > +
+>      > +    if (!bql_locked()) {
+>      > +        release_lock = true;
+>      > +        bql_lock();
+>      > +    }
+>      > +
+>      > +    if (level) {
+>      > +        env->rnmip |= 1 << irq;
+>      > +        cpu_interrupt(cs, CPU_INTERRUPT_RNMI);
+>      > +    } else {
+>      > +        env->rnmip &= ~(1 << irq);
+>      > +        cpu_reset_interrupt(cs, CPU_INTERRUPT_RNMI);
+>      > +    }
+>      > +
+>      > +    if (release_lock) {
+>      > +        bql_unlock();
+>      > +    }
+>      > +}
+>      > +
+>      >   int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
+>      >   {
+>      >       CPURISCVState *env = &cpu->env;
+>      > @@ -1849,6 +1887,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      >       bool write_gva = false;
+>      >       bool always_storeamo = (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO);
+>      >       uint64_t s;
+>      > +    int mode;
+>      >
+>      >       /*
+>      >        * cs->exception is 32-bits wide unlike mcause which is XLEN-bits wide
+>      > @@ -1867,6 +1906,23 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      >       target_ulong mtval2 = 0;
+>      >       int sxlen = 0;
+>      >       int mxlen = 0;
+>      > +    bool nnmi_excep = false;
+>      > +
+>      > +    if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
+>      > +        env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+>      > +        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV,
+>      > +                                  env->virt_enabled);
+>      > +        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP,
+>      > +                                  env->priv);
+>      > +        env->mncause = cause | ((target_ulong)1U << (TARGET_LONG_BITS - 1));
+>      > +        env->mnepc = env->pc;
+>      > +        env->pc = env->rnmi_irqvec;
+>      > +
+>      > +        /* Trapping to M mode, virt is disabled */
+>      > +        riscv_cpu_set_mode(env, PRV_M, false);
+>      > +
+>      > +        return;
+>      > +    }
+>      >
+>      >       if (!async) {
+>      >           /* set tval to badaddr for traps with address information */
+>      > @@ -1960,8 +2016,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      >                     __func__, env->mhartid, async, cause, env->pc, tval,
+>      >                     riscv_cpu_get_trap_name(cause, async));
+>      >
+>      > -    if (env->priv <= PRV_S && cause < 64 &&
+>      > -        (((deleg >> cause) & 1) || s_injected || vs_injected)) {
+>      > +    mode = env->priv <= PRV_S && cause < 64 &&
+>      > +        (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
+>      > +
+>      > +    if (mode == PRV_S) {
+>      >           /* handle the trap in S-mode */
+>      >           /* save elp status */
+>      >           if (cpu_get_fcfien(env)) {
+>      > @@ -2016,6 +2074,14 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      >                     ((async && (env->stvec & 3) == 1) ? cause * 4 : 0);
+>      >           riscv_cpu_set_mode(env, PRV_S, virt);
+>      >       } else {
+>      > +        /*
+>      > +         * If the hart encounters an exception while executing in M-mode
+>      > +         * with the mnstatus.NMIE bit clear, the exception is an RNMI exception.
+>      > +         */
+>      > +        nnmi_excep = cpu->cfg.ext_smrnmi &&
+>      > +                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
+>      > +                     !async;
+>      > +
+>      >           /* handle the trap in M-mode */
+>      >           /* save elp status */
+>      >           if (cpu_get_fcfien(env)) {
+>      > @@ -2049,8 +2115,17 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      >           env->mtval = tval;
+>      >           env->mtval2 = mtval2;
+>      >           env->mtinst = tinst;
+>      > -        env->pc = (env->mtvec >> 2 << 2) +
+>      > -                  ((async && (env->mtvec & 3) == 1) ? cause * 4 : 0);
+>      > +
+>      > +        /*
+>      > +         * For RNMI exception, program counter is set to the RNMI exception
+>      > +         * trap handler address.
+>      > +         */
+>      > +        if (nnmi_excep) {
+>      > +            env->pc = env->rnmi_excpvec;
+>      > +        } else {
+>      > +            env->pc = (env->mtvec >> 2 << 2) +
+>      > +                      ((async && (env->mtvec & 3) == 1) ? cause * 4 : 0);
+>      > +        }
+>      >           riscv_cpu_set_mode(env, PRV_M, virt);
+>      >       }
+>      >
 > 
 
 
