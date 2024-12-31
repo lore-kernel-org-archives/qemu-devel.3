@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FB1E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 19:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B512AE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 19:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tShZZ-0004Hf-NL; Tue, 31 Dec 2024 14:06:33 -0500
+	id 1tShZe-0004I6-0S; Tue, 31 Dec 2024 14:06:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZX-0004HU-Ft
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:31 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZc-0004Hy-51
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:36 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZV-000835-VV
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:31 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso5627594f8f.3
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 11:06:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZa-00083S-Li
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:35 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3862d16b4f5so6410090f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 11:06:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735671988; x=1736276788; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735671992; x=1736276792; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i1yo4w5GnlAYj7AYGNPPXlqGurfVbdqR/bxTMgmzr3s=;
- b=jCIzmScE84tZdOUSl5NUjMpVV2lMfA/nSbuAXYX2EuuV79vHWmsXX73de7Ot1194YH
- qQVUbmF8WlslCmi8KgmerI1ekVJfIRza8aT4dF6AXff85VBZD6KSSBpziU4/bcYjA4aV
- rxTbRdrMI+9QkFftKNnKJYYiUpHwH6T1IiMzSd7lWC9tGj9cQjM7rlPLtSGgoOw303Dm
- lIOFIe/PS7vW44ZFSDHTL34k1ccpewUODDNBpB68Iip3/sdZtoSiN9syg6eHl7iwUQb0
- gjf3asowzNoOdZlkbxVSksbj8fdWp7Ze0/kbokD9/T3ef4fsNWNZjRKJS9ka39KxIIFU
- AuKQ==
+ bh=OPnjzUL72sgItT6b5Sz5QnXH2c6Pz/4KB/mKuiBnROI=;
+ b=vCTk8W1mwrNuq3Mfj67N/sMSrfmhOwHT8y2qJ+Yb71mIsLcB0kt81UMRyMg0IbXmP7
+ OAXNpMGMWRzN8dN4ndOZk367RMdcnhaJFQmI9fHwEy50K5VtdXIgTLBZjZ8UNasAuSbc
+ SpzvFrFdCdPs90ddqJYiQPSSuR0stzfVUSyr1k0oBay4zZAjNnahLESO917lPm6zH51a
+ xStqCG+29x6Vh+Y5DrjzU1VEu4P8WlgOrgitS0blgOVB/d/MKEy6ZGNF/6lgYz1mJcnp
+ Vsyz4ZPrgvGJZhlTtUV8hkSui2XlIGfSt2RdHcfdNKpnA5kdsFUAXJ3YAslmHcdKIRBO
+ VnHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735671988; x=1736276788;
+ d=1e100.net; s=20230601; t=1735671992; x=1736276792;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i1yo4w5GnlAYj7AYGNPPXlqGurfVbdqR/bxTMgmzr3s=;
- b=v4+2RcX+LAOUw4UpV3l2FvPygHfOsNW3e2jZHOrFZtG+/SIpfCnPAeMai6KvOvFHZ6
- WFN6Hi8UlkVTX/g6v9iMz2skN2hDkDCuvoklYYTHWiZU3d49ZYUAx0Vp3NTvaA4Q89mT
- AseWSk0HMYuBveH+7o7UJXn0MM3MSWYUrV9wBZFwT0GwBgVQRqOKMY3Bx1sLyIaKKwDb
- +TuMacbum2qPUXlEDuYEocQAkeYZygM7d8rYKil2GF+ppfB5SYsvT26c12WwD20Q4yLQ
- mf2AykXxEbuFYdHu7sHrS9TtQGQfI9LLkvsQ6CvvXzEyCGzxhVhbtemZ27/tNaVjPqlI
- V12A==
-X-Gm-Message-State: AOJu0Yy5lhpytnq3eckHXwDVCVQYdqO+el+z/hsQYkiz5y2FKLFIyb2K
- 90CqYHC/sXuSR68QJ7YUDMDUcrIFW0z9yiebBENdj81TqxJayJNknGwy1zukeyzvd+nJoaX/63c
- wXPU=
-X-Gm-Gg: ASbGncuOoLilX8X+NZ7e6FBneAbQ7CSDCgr5NJIe2qM49EotWKBilKKn+PcoJdoUeMY
- DJO2kzz1N/Ev1BFv0nlG57nEzjOsXkvKRdfFide3Ubb9P+2NRK+ZbrUWuiDK9s348oKPMQXOevX
- Jm7tuKq1zOv9gdKCLUda1Af5wQwie+v1f/4Dh2gdBkH691IA/T4f/1yOMS97uTImYlRbBgLeTRk
- tgrY1txWWzPvQ0FwJnPu9uITQjxy30DC88yEJC4k/P1KieAOlWyfXHu0vxmxQ+RuToo5j6LWkKS
- FxNVGttJoovEk9JZNJ5r3SJUIgnu6WE=
-X-Google-Smtp-Source: AGHT+IFaHsjwzxhzJY6h4dbh19kat0/6c3g1yY9qbOvYeNQxV+XTZvZsif8wtY3V/43g9qNL6tUikg==
-X-Received: by 2002:a05:6000:4025:b0:388:e2a7:74c8 with SMTP id
- ffacd0b85a97d-38a223ff41dmr35459019f8f.44.1735671987956; 
- Tue, 31 Dec 2024 11:06:27 -0800 (PST)
+ bh=OPnjzUL72sgItT6b5Sz5QnXH2c6Pz/4KB/mKuiBnROI=;
+ b=oLWo+gjPBVXXx+a/AuTbc24Eg9dZK3KtH+muRxprg5DB/N1hQQQfges8NJKALeFjMq
+ 8yccUgxoGyJjYSw0PVOF29/W/8NnadqUEb6IVSdjklPsnMGpZ9Wyzcz8QFT/GFZQJoW0
+ zy1LWRCb3tU4fVdfYiOR8maZjrG8/6u3n7u7dmVxcjU6UZNVCVvLvGSmHzx84In/xwZq
+ W196U4pt5uC/3HLQPIkArGqiDUA7PO3UG54TobOVz14ACuR8sVVdc2DDEElDo4MKL3lQ
+ zoKNolL+T6lvPQlKVJwrWJL4OdWW1875XdeUtHdWZpqWVSquhOd9NYDiYHDwhqSYoc3z
+ +hDw==
+X-Gm-Message-State: AOJu0YwVuu8TWjnaTfyLC9Sub7Kndhrgig7CJKv4k4BJxquUrPBKeEVw
+ Uf8mnDXll/yVCpwpXhJBudUaIZOK9lvxOM8fgXhf2VpFoNAalZQkJxIBoJYJ1BkTROTqo2gI1LY
+ ziZQ=
+X-Gm-Gg: ASbGncupTvC3Yw3n37Wo9D09W1TPnLEsXJC321jOxpK00TeNlO2OplQofKxo85uHgvZ
+ DwAz8q8dkCmqVtR49XA7quchESgto4JtTXRI5U5SpyDJJzbt81NDsaRvK+9l6NFl36BkxPdXTt5
+ Bvt2YMfyya6Q9PXi/KQyDFFgs5oSLRQ0JmMyuvzaco62IfwCmOMccbdv4dvwwhkshGRbF4jIIzx
+ q8pYMsQ0FRgUNwpNVYOUSUbj6PtpuJQbGx5Rsv5gw1w/hbGak7tmDYBZTu+5uqn6UQ+nUV7V0jf
+ mzHlLj9A4qQvCtP+IowgFtAL6qY62dY=
+X-Google-Smtp-Source: AGHT+IGwC6Y4XguVKkslsd1B5A1dSsN166LHpmC76L+VqO3R2P2NCmUZqlRGThOA0bOfFuVJKkB5Yg==
+X-Received: by 2002:a5d:59ae:0:b0:385:f64e:f177 with SMTP id
+ ffacd0b85a97d-38a22a11925mr32527923f8f.11.1735671992627; 
+ Tue, 31 Dec 2024 11:06:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c832e53sm33389931f8f.27.2024.12.31.11.06.27
+ ffacd0b85a97d-38a1c848a47sm33074712f8f.62.2024.12.31.11.06.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Dec 2024 11:06:27 -0800 (PST)
+ Tue, 31 Dec 2024 11:06:32 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 1/6] tests: Add functional tests for HPPA machines
-Date: Tue, 31 Dec 2024 20:06:15 +0100
-Message-ID: <20241231190620.24442-2-philmd@linaro.org>
+Subject: [PATCH v4 2/6] target/hppa: Convert hppa_cpu_init() to ResetHold
+ handler
+Date: Tue, 31 Dec 2024 20:06:16 +0100
+Message-ID: <20241231190620.24442-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241231190620.24442-1-philmd@linaro.org>
 References: <20241231190620.24442-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,92 +101,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add quick firmware boot tests (less than 1sec) for the
-B160L (32-bit) and C3700 (64-bit) HPPA machines:
+From: Helge Deller <deller@gmx.de>
 
-  $ make check-functional-hppa
-  1/4 qemu:func-quick+func-hppa / func-hppa-empty_cpu_model OK 0.13s 1 subtests passed
-  2/4 qemu:func-quick+func-hppa / func-hppa-version         OK 0.14s 1 subtests passed
-  3/4 qemu:func-quick+func-hppa / func-hppa-info_usernet    OK 0.22s 1 subtests passed
-  4/4 qemu:func-quick+func-hppa / func-hppa-hppa_seabios    OK 0.22s 2 subtests passed
+hppa_cpu_initfn() is called once when a HPPA CPU instance is
+initialized, but it sets fields which should be set each time
+a CPU resets. Rename it as a reset handler, having it matching
+the ResettablePhases::hold() signature, and register it as
+ResettableClass handler.
 
-Suggested-by: Helge Deller <deller@gmx.de>
+Since on reset the CPU registers and TLB entries are expected
+to be zero, add a memset() call clearing CPUHPPAState up to
+the &end_reset_fields marker.
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Co-developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                           |  1 +
- tests/functional/meson.build          |  4 +++
- tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
- 3 files changed, 40 insertions(+)
- create mode 100755 tests/functional/test_hppa_seabios.py
+ target/hppa/cpu.h |  5 +++++
+ target/hppa/cpu.c | 14 ++++++++++++--
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 38a290e9c2c..17c720dd2b9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1201,6 +1201,7 @@ F: include/hw/pci-host/astro.h
- F: include/hw/pci-host/dino.h
- F: pc-bios/hppa-firmware.img
- F: roms/seabios-hppa/
-+F: tests/functional/test_hppa_seabios.py
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 22a6510e087..c1d69c1a835 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -263,6 +263,9 @@ typedef struct CPUArchState {
+     IntervalTreeRoot tlb_root;
  
- LoongArch Machines
- ------------------
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 24f7f8f2f1c..71810a3aa82 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -104,6 +104,10 @@ tests_avr_system_thorough = [
-   'avr_mega2560',
- ]
+     HPPATLBEntry tlb[HPPA_TLB_ENTRIES];
++
++    /* Fields up to this point are cleared by a CPU reset */
++    struct {} end_reset_fields;
+ } CPUHPPAState;
  
-+tests_hppa_system_quick = [
-+  'hppa_seabios',
-+]
+ /**
+@@ -281,6 +284,7 @@ struct ArchCPU {
+ /**
+  * HPPACPUClass:
+  * @parent_realize: The parent class' realize handler.
++ * @parent_phases: The parent class' reset phase handlers.
+  *
+  * An HPPA CPU model.
+  */
+@@ -288,6 +292,7 @@ struct HPPACPUClass {
+     CPUClass parent_class;
+ 
+     DeviceRealize parent_realize;
++    ResettablePhases parent_phases;
+ };
+ 
+ #include "exec/cpu-all.h"
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 47d01609557..d784bcdd602 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -193,13 +193,20 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
+     tcg_cflags_set(cs, CF_PCREL);
+ }
+ 
+-static void hppa_cpu_initfn(Object *obj)
++static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ {
++    HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
+     CPUState *cs = CPU(obj);
+     HPPACPU *cpu = HPPA_CPU(obj);
+     CPUHPPAState *env = &cpu->env;
+ 
++    if (scc->parent_phases.hold) {
++        scc->parent_phases.hold(obj, type);
++    }
+     cs->exception_index = -1;
 +
- tests_i386_system_thorough = [
-   'i386_tuxrun',
- ]
-diff --git a/tests/functional/test_hppa_seabios.py b/tests/functional/test_hppa_seabios.py
-new file mode 100755
-index 00000000000..a44d1a3eebe
---- /dev/null
-+++ b/tests/functional/test_hppa_seabios.py
-@@ -0,0 +1,35 @@
-+#!/usr/bin/env python3
-+#
-+# SeaBIOS boot test for HPPA machines
-+#
-+# Copyright (c) 2024 Linaro, Ltd
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++    memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
 +
-+from qemu_test import QemuSystemTest
-+from qemu_test import wait_for_console_pattern
+     cpu_hppa_loaded_fr0(env);
+     cpu_hppa_put_psw(env, PSW_W);
+ }
+@@ -242,10 +249,14 @@ static void hppa_cpu_class_init(ObjectClass *oc, void *data)
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     CPUClass *cc = CPU_CLASS(oc);
+     HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
+ 
+     device_class_set_parent_realize(dc, hppa_cpu_realizefn,
+                                     &acc->parent_realize);
+ 
++    resettable_class_set_parent_phases(rc, NULL, hppa_cpu_reset_hold, NULL,
++                                       &acc->parent_phases);
 +
-+class HppaSeabios(QemuSystemTest):
-+
-+    timeout = 5
-+    MACH_BITS = {'B160L': 32, 'C3700': 64}
-+
-+    def boot_seabios(self):
-+        mach = self.machine
-+        bits = self.MACH_BITS[mach]
-+        self.vm.set_console()
-+        self.vm.launch()
-+        self.machine
-+        wait_for_console_pattern(self, f'SeaBIOS PA-RISC {bits}-bit Firmware')
-+        wait_for_console_pattern(self, f'Emulated machine:     HP {mach} ({bits}-bit')
-+
-+    def test_hppa_32(self):
-+        self.set_machine('B160L')
-+        self.boot_seabios()
-+
-+    def test_hppa_64(self):
-+        self.set_machine('C3700')
-+        self.boot_seabios()
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+     cc->class_by_name = hppa_cpu_class_by_name;
+     cc->has_work = hppa_cpu_has_work;
+     cc->mmu_index = hppa_cpu_mmu_index;
+@@ -269,7 +280,6 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+-        .instance_init = hppa_cpu_initfn,
+         .abstract = false,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
 -- 
 2.47.1
 
