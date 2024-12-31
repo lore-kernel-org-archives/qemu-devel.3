@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FC9E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 17:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE52E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 17:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSgAk-00026A-Lj; Tue, 31 Dec 2024 12:36:50 -0500
+	id 1tSgCM-0002qZ-9U; Tue, 31 Dec 2024 12:38:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgAh-00025q-1K
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:36:47 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgCI-0002po-SI
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:38:27 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgAe-0006n9-SH
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:36:46 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-385df53e559so7949592f8f.3
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 09:36:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgCG-0006sg-PU
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:38:26 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-436a03197b2so22080715e9.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 09:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735666602; x=1736271402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735666703; x=1736271503; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wafRc2gNuj8ETKMyvc2WA8Sr40XFxZnRTYIYUgl7VaI=;
- b=yahZkEn22gx/xGnp/T8cJqgjBe/cycsFZbdJV5G1gjkcwqQuubNCdsco/ixcXwtMt1
- vNgm7sAb6d1PcqV5HU2cPH/jpoyLwirLiWBSZa5YSXZ0gYNlbh6iHT0ZLGNM9udDxUZ/
- gbZnxaog+8Kott6jGPCOwyG1cu4dJWMX+PMKmmKiQpIejl8Z0/DO2d2qTrfpP0bz3aIh
- ZOZCom+y/C94WfoVgMc9+yMerXt5ZJO4d5PZLHGcLA9hlckxAusbJ6llWPM2S1D3olcl
- fXkTnHFrM/J3ReL0jO35NVh9ohWI91ap8nvfLVliihi4xyO2meXY14FvRkY+U7vBarrI
- pSlg==
+ bh=2zHKdA6GmglYmvo9VF/c6jvg33mu7oV9/twb3oky6Js=;
+ b=jmvwL03J6SEFVMetKLsAFg+mRmhCJEzq1hV1KBUXbyjeZ7NdudGgPbGkLuBHCN+Nto
+ pwhvvKSDuWVMfJE2MwoNvjMw5a8igXHRarmtrna9zUaL30eGR8pU0agW4Lzb6k796VYn
+ fm6kvsGGfnA7DQ/CxVsW5D0ieswZq/i+Kprl6vz1jxXC2egmIYagUDpDzcw0B8IjTxG/
+ DdRRd4VaHLFDkVC7ywapo3JbUK72XA/GlAD1JpKGogft8IZIVzCTQ5JIGxB5ZfpCvf4s
+ W5lod9G7vxnUG3PhUrhgRoaNovd0qYbcL6h285bwVwWaFB2ZG1W/di9vl3+Xml/UCCX6
+ 6gOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735666602; x=1736271402;
+ d=1e100.net; s=20230601; t=1735666703; x=1736271503;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wafRc2gNuj8ETKMyvc2WA8Sr40XFxZnRTYIYUgl7VaI=;
- b=o55FFhANMLavQNLRcuSLSUSwEeMYeWquOx01l41y1kMbTUvQDdYviJSfcjVYRdUJCZ
- smnWETlcMfrOYAVGGpmSjLZ9PBO+qR6F6o0puynLYnScKf3Hsxe75qi1edru+BBRxTKn
- Je0AZ5MhPpEsr/Bq5yEbePlttS9OCzfGJwu2Fbe/Z38sGh0EmMEaVxq7L/VUW7ik2aL+
- CVWSutBD1dTQhIpWPc5WlD2Ftl3KDms+gHStcdKstDK+9xZpsbCacaMa/bcU43NM87Ts
- wI/kaVkr1vdi41SIKgIyoPk+xn4X5tgL5Nk6hQV3gp7IhVZoVop/S/3a/kd0O2spm3Qy
- GN2w==
-X-Gm-Message-State: AOJu0Yyx9PKrzwa5r+BzuRdAndhRvCj1kaVTlytS5DGiKNLYZzdkdVbr
- /fOQ8EiigZDRrj/osKG0kgInroNwCT8i5U9c81fQJME6td+l4l2S1gNDUnACFct9BqAZnzi/Q/l
- 3Rks=
-X-Gm-Gg: ASbGncuNGJsyiFRC69Tf+8rzmU3XUs5j3+R4w+W8mbZJ0Mj8s9Mk30j5/ANdMlCxXK9
- TJisI45OFTJHuZ94wqttayCTNV3fAcWduC33lOS6gkrtPklx5/YtjCXnVBBCqIy60PoQgHlH/Jv
- u6LWUXX2HeaRTOoSaavoV1ie/EbWmDgnToOPfr70FGHBRg2sb98P8qFTFoWu7o2AriJUkwCScwM
- BKsolhCSahZBNc1ZFnQ65cOXwGE8hvSpsFp5hq1RTdLr2N892YcvBGyBftKPLgUkZv5xnzQujZ6
- 2CUEI5FKnZdpnkWRcrHvJlt2
-X-Google-Smtp-Source: AGHT+IFQGGryGVkan3TcsQnSIUh2iffunwMspZ+V7LSrqFqSZ3t73AQbj580W9PVAEhdLCbNbOlZQg==
-X-Received: by 2002:a05:6000:154f:b0:385:eeb9:a5bb with SMTP id
- ffacd0b85a97d-38a221f698amr32110612f8f.17.1735666601938; 
- Tue, 31 Dec 2024 09:36:41 -0800 (PST)
+ bh=2zHKdA6GmglYmvo9VF/c6jvg33mu7oV9/twb3oky6Js=;
+ b=PTENFRP8Bs6e54VcQ/5W7tX+niWHAg7K1mOhm1DcqQ7+adA1C8BEm/s8lDyi21oJ32
+ Q7qbeTw6XJ8ILHViXgVZfO1Ymg6YL5BuCBzObAuP2jJbecTJ4StTC7GqJ4azi8uSZPDP
+ iWhg6xXCFB1mg1glHmA+AV1gRUMkmnFJZuud8lJ0XF1rdPTOouoeL6WlIyHkMKRH3Aq6
+ fYUDGahF3lyVD7jwtT6AmgEuhUaz2ZRkOnitubr6waaFnGUtilvFg3pD4d/PvjGTxRvD
+ U2jCh+Tp+LyzZDIzoYTs78XLhOuKsdzoZVw4EZzRLoNUdfB2pbhsJRP5SAIjQLUYL8DR
+ HZfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVClqxa8Y8c8bOF8AgjD7vHGq+E+WPNlRDfhg4tJRT710MZliFrLtwo+BeIuTMPMNPQrl0YYPuyS+Ey@nongnu.org
+X-Gm-Message-State: AOJu0YzxVlajFh7Vao1REtUY712t/9DK8S+usNPyTh5LzzoEVPgcYpbU
+ s36JQVrt1yAbD0BppGJ2cTLwZ2wuy8fGgp8UoDlN3H+CH4HxJoFGNIYLmwQSyrs=
+X-Gm-Gg: ASbGncvAqoRh8L6QC0Wzpe39dk5CpSZcfcBclQ8l8K4I9WClbICXGfE0uJVFgMe+Fqn
+ f31amj1TE2yPVJHNrCrd9f/C3e9aDrty8HCyfj3PrsfXrX3xAUXW9jOv5kpigIZmx/xQWn1Mr+D
+ OnKIGo/imvaL5+3eD/qKZj4X3hlxBqcmfcjSO7O8ieK3SWujNX+9OfppKD2RmmuU4YZ6LT99883
+ lEtFaQVZ2Somq+TYuaUBP57M/KxZoDlyNldzpXBtOPC5BZweBYpw449I7HZe8WdmLbPa0eX6b22
+ mFp29PF3dxzLXSSrgXtu4DKP
+X-Google-Smtp-Source: AGHT+IG3jpQAd3A2PysVaz2/hhEB4UZETKavf/jp6Rrt1tkCPeX/sOHjxpU2godgVULFdrLreJSrRQ==
+X-Received: by 2002:a05:600c:3b9d:b0:436:6160:5b81 with SMTP id
+ 5b1f17b1804b1-43668643bd7mr335818705e9.14.1735666702630; 
+ Tue, 31 Dec 2024 09:38:22 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436611ea3e0sm399392885e9.7.2024.12.31.09.36.39
+ ffacd0b85a97d-38a1c89e2d2sm33846216f8f.71.2024.12.31.09.38.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Dec 2024 09:36:41 -0800 (PST)
-Message-ID: <f47ce9a3-d1f1-4ac2-b1fd-a5c2b7939b5b@linaro.org>
-Date: Tue, 31 Dec 2024 18:36:39 +0100
+ Tue, 31 Dec 2024 09:38:21 -0800 (PST)
+Message-ID: <cca34349-286b-424c-bf92-128ff92fd9c3@linaro.org>
+Date: Tue, 31 Dec 2024 18:38:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 v2] hw/i386/amd_iommu: Simplify non-KVM checks on
- XTSup feature
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, Vasant.Hegde@amd.com,
- Santosh Shukla <santosh.shukla@amd.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, Daniel Hoffman <dhoff749@gmail.com>
-References: <20241129155802.35534-1-philmd@linaro.org>
+Subject: Re: [PATCH v3] fw_cfg: Don't set callback_opaque NULL in
+ fw_cfg_modify_bytes_read()
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, imammedo@redhat.com, wangzhou1@hisilicon.com,
+ linuxarm@huawei.com
+References: <20241203131806.37548-1-shameerali.kolothum.thodi@huawei.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241129155802.35534-1-philmd@linaro.org>
+In-Reply-To: <20241203131806.37548-1-shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,36 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/11/24 16:58, Philippe Mathieu-Daudé wrote:
-> Generic code wanting to access KVM specific methods should
-> do so being protected by the 'kvm_enabled()' helper.
+On 3/12/24 14:18, Shameer Kolothum wrote:
+> On arm/virt platform, Chen Xiang reported a Guest crash while
+> attempting the below steps,
 > 
-> Doing so avoid link failures when optimization is disabled
-> (using --enable-debug), see for example commits c04cfb4596a
-> ("hw/i386: fix short-circuit logic with non-optimizing builds")
-> and 0266aef8cd6 ("amd_iommu: Fix kvm_enable_x2apic link error
-> with clang in non-KVM builds").
+> 1. Launch the Guest with nvdimm=on
+> 2. Hot-add a NVDIMM dev
+> 3. Reboot
+> 4. Guest boots fine.
+> 5. Reboot again.
+> 6. Guest boot fails.
 > 
-> XTSup feature depends on KVM, so protect the whole block
-> checking the XTSup feature with a check on whether KVM is
-> enabled.
+> QEMU_EFI reports the below error:
+> ProcessCmdAddPointer: invalid pointer value in "etc/acpi/tables"
+> OnRootBridgesConnected: InstallAcpiTables: Protocol Error
 > 
-> Since x86_cpus_init() already checks APIC ID > 255 imply
-> kernel support for irqchip and X2APIC, remove the confuse
-> and unlikely reachable "AMD IOMMU xtsup=on requires support
-> on the KVM side" message.
+> Debugging shows that on first reboot(after hot adding NVDIMM),
+> Qemu updates the etc/table-loader len,
 > 
-> Fix a type in "configuration" in error message.
+> qemu_ram_resize()
+>    fw_cfg_modify_file()
+>       fw_cfg_modify_bytes_read()
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> And in fw_cfg_modify_bytes_read() we set the "callback_opaque" for
+> the key entry to NULL. Because of this, on the second reboot,
+> virt_acpi_build_update() is called with a NULL "build_state" and
+> returns without updating the ACPI tables. This seems to be
+> upsetting the firmware.
+> 
+> To fix this, don't change the callback_opaque in fw_cfg_modify_bytes_read().
+> 
+> Fixes: bdbb5b1706d165 ("fw_cfg: add fw_cfg_machine_reset function")
+> Reported-by: chenxiang <chenxiang66@hisilicon.com>
+> Acked-by: Igor Mammedov <imammedo@redhat.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 > ---
-> v2:
-> Rebased on merged 0266aef8cd6 ("amd_iommu: Fix kvm_enable_x2apic
-> link error with clang in non-KVM builds").
-> Supersedes: <20241129114113.33215-1-philmd@linaro.org>
+> Hi,
+> 
+> I forgot to follow-up on the v2 and it never got picked up.
+> Thanks to Wangzhou who recently re-run the tests and found that
+> the problem mentioned above still exists. Hence resending the v2.
+> 
+> v2-->v3:
+>   -Just rebase.
+> 
+> v2: https://lore.kernel.org/qemu-devel/20220908160354.2023-1-shameerali.kolothum.thodi@huawei.com/
+> v1: https://lore.kernel.org/all/20220825161842.841-1-shameerali.kolothum.thodi@huawei.com/
+> 
+> Thanks,
+> Shameer
 > ---
->   hw/i386/amd_iommu.c | 11 ++---------
->   1 file changed, 2 insertions(+), 9 deletions(-)
+>   hw/nvram/fw_cfg.c | 1 -
+>   1 file changed, 1 deletion(-)
 
-Patch queued, thanks.
+Patch queued, thanks!
 
