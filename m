@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54806E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 19:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C4BE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 19:08:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tShZh-0004Ia-Ot; Tue, 31 Dec 2024 14:06:41 -0500
+	id 1tShZn-0004Nc-Cj; Tue, 31 Dec 2024 14:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZg-0004IS-TZ
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:41 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZl-0004Jo-Gs
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:45 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZf-00083w-7k
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:40 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3862b364538so5871979f8f.1
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 11:06:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZj-00084f-Ox
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:44 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso106631785e9.1
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 11:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735671997; x=1736276797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735672002; x=1736276802; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GAtXelESZqP9EpLglyIc26IsQk/mXnYos/ye7zC5LFE=;
- b=e6C6G1RHQbsEgdiL9YKcK/ySQ43gJVVIVQFWBksWtvnhMLyrnabzqmot7lEIs6G6cD
- EGoPrXGgk//+VZ5TdMyeBWiwd126OFJLM9tHKJEoRbPfdIrGCrZeL7PQxYAbsLeAMf6N
- 7QabdYKENT4ur49dnwR4HzcqfTxw1ofdc5ZFEXuZEhdAv27WlHaYOz6warWnIbiTRHdA
- cJAY0TeWvHMkpQg1ZGg9GzVvnbbF+JASoAYuyhsS7mLAzQyKLgDQ5krnMrIZUhrvCEBV
- xOtt52g9MCXf7JlTvisxwZQPJGhcVrv59KLkJgG0QTAlU9wtaZOdVU3Wo55gaFsA4oHU
- vLBw==
+ bh=c0vE3lYtWkiDZCwAWAKMF4/xKoT2gUVX19Q6TmVZnmQ=;
+ b=l4IPgLdp+q7o8Y2luIwvninXPVSBfAHETdPVyQAVEW9G2PfYxSEi/79IYVgmfu7423
+ oZwcrTVq/d+kn+LPnD6l399gnyiVTj33Mau3vuQbWqPLjEsaA3OY+1SnTo2UmIQOdg1W
+ nDfxyq2hgJKTf8UdDo97gA1G68vWgf8DR23KVLIk6cxYDBoaDnmZmUrykM5jOXhXRvMp
+ QHONqrKYL9OOGATCi62jdt7skFwRSaxi1eeW4e5z8WvNgbPc2CaBpYot6PrU3pIi/MgR
+ I9DOFUFRVczzDsT38BuoVvIO+/T7RGlLz7IYRmTNKlh07DpueyxyjWp7w2u04ov2lEa5
+ +5lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735671997; x=1736276797;
+ d=1e100.net; s=20230601; t=1735672002; x=1736276802;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GAtXelESZqP9EpLglyIc26IsQk/mXnYos/ye7zC5LFE=;
- b=r+YVXTBHrXpkJVVKUy++BPWonOm1YVPj3EqZBrcGsv6JoMqw2Hts57XcRXv1OWw6b/
- cM/kyTjhKPXIJyBovvNh2F21YwVq/vBGO/UqvhsPg6W4GwYkD1AzcdUkd41Dg5KnxoUS
- /AOyhIpGEzwwu4wLdmr51xFesFLDRzAbPDOuvZaK9kpkfViUA/uUW4JBCpbC/Fmo5VWD
- gs8NF81d9GUepuFFvn/gJfpAn35vCeNr8yreU+hxJV+ap7/Dof44kKxJhb0Wrlln+ooc
- lB/l6orMBTW7NWfq6sD739m1gKxp6K0R1RvZtc+gY/Efvnkii1hKskJYf3WCDmeLVmah
- Vwrw==
-X-Gm-Message-State: AOJu0YwyqyuvUSqeJlDw5e363+UfYCDVbDEvfFIg5xlg2fTYORSRJTA1
- ULmAw4x9lfE4Al7yszBT+mxwV+HlKQy0ltA7DSYDaGoh7E2Ha2WS2Zv6pWWwwZfgKyeqR3Z5ZZZ
- PKc8=
-X-Gm-Gg: ASbGncsVrVo9UUk82+dlkzJEOBolo7fwMXSprYc6mcuNCYEvHJWz357bkj3n3zrSJPM
- Juv8mdwspVc/BRVhSMS9Zn92W2ltfih1V98c3m1G/9yA+IIwKwpw34HfNoGHhFw/Yw0G8LlV3G8
- HXPv3ru3pPrm1wALK/OeLB5o5yNypc5kgOZoU12UTAtAo2DVDOkzJAscfpTlHKToyDZekoKOU5y
- 2WiM3SPgR8jkVv1F33oAt++r3fmZmpgxsaEQ4nks+I3luikBKY5/BgRdeEvEIqIbTos68QTyisA
- LXFetvewZ0GbV1V+saEMd6Vw797sqZg=
-X-Google-Smtp-Source: AGHT+IE3DIwtSg6CuX/wOrQmnkzUlQSocrZdkDNX4ilZX/fsmrntgn8kvwzSHjirCR2MmMUVFWXdDw==
-X-Received: by 2002:a05:6000:1862:b0:386:4244:15c7 with SMTP id
- ffacd0b85a97d-38a1a27499amr40080334f8f.25.1735671997224; 
- Tue, 31 Dec 2024 11:06:37 -0800 (PST)
+ bh=c0vE3lYtWkiDZCwAWAKMF4/xKoT2gUVX19Q6TmVZnmQ=;
+ b=BpG9qjiAbFiMR83aYYyo2dqEps/Pzip8eDrSeuKFR2J7stddwqtWR19oc0BGEXQYmP
+ aQ/GXPbg0HUSNozvfd4GOVqw14SPxrxWC8q/w4RHrj061Ng/P8xhes1ixzXpqhaEoU7D
+ Z2YE3NdQLZ/OuVd3giGRC7Jo8Zo4KATmaXt+i7fOobZ2tD6q6DKO1pJDIp7Pj9NDZr9S
+ CUBtAKJ+wW72piESWT5G7H49TosHJWY70C3IdUU37y/Mk48LClFJMda0vUQSqZLK1Z8i
+ RxTBbyRUTNFoqmWhioju/8lTKyPjv6wGp+v8tHakNyz5v+8ulPZIlKEJDiUqiSCH9IH5
+ RpNQ==
+X-Gm-Message-State: AOJu0YxkvEeT2T9YaFyerx4BT5yo7O3ermw0xY3AjkB7NA6Wyikjxe78
+ yqZwglK4kFpaj2KhKvfSnC9ifGX5Fw8ZhLVtDJ+JMnAeWYpu7NTBzh57e0bT/xz1QpAXe5+2ww8
+ W3/4=
+X-Gm-Gg: ASbGnctWnoL7Lz/kpkJU4J9wyqb6BjBAp1ZbfKNDWvz5NcsQcr64RBN5n2KIpQeEnie
+ JUAU0O2gHRn2tiy0iuxYW3/0FAxiPpxqyVUJS8XDyvFTnEpn0b8LILtNcMpp6h0uLRJWji4y5OS
+ LrpxdfK9zbJ48MgcXvHeE2D7pGYNYXWNzxY/FAZJTMUxxfMcGNeXeyvjKrbSlgt73yd4HvhZQhR
+ TOJALYkhgU5IcUE7uUcsNodq6AweWvXd5LbnV4mqWMOftvl4/zbrYrGFsS7Q9CuCUELQyQNFZau
+ +dv/LqEZ0UYssNynpgcpHxPO0sNUhr0=
+X-Google-Smtp-Source: AGHT+IHd8c6XmQg80mc67aEZG/kBUeERJgGwlAUWj5chRYlGx5De6mufXscNrCmGd2Oe4OsIc3oFKA==
+X-Received: by 2002:a05:600c:1550:b0:431:4f29:9539 with SMTP id
+ 5b1f17b1804b1-43668b5f892mr299410015e9.32.1735672001843; 
+ Tue, 31 Dec 2024 11:06:41 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c488sm395913725e9.27.2024.12.31.11.06.36
+ 5b1f17b1804b1-4366127c515sm398879245e9.30.2024.12.31.11.06.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Dec 2024 11:06:36 -0800 (PST)
+ Tue, 31 Dec 2024 11:06:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 3/6] hw/hppa: Reset vCPUs calling resettable_reset()
-Date: Tue, 31 Dec 2024 20:06:17 +0100
-Message-ID: <20241231190620.24442-4-philmd@linaro.org>
+Subject: [PATCH v4 4/6] target/hppa: Only set PSW 'M' bit on reset
+Date: Tue, 31 Dec 2024 20:06:18 +0100
+Message-ID: <20241231190620.24442-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241231190620.24442-1-philmd@linaro.org>
 References: <20241231190620.24442-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,52 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+On reset:
 
-Rather than manually (and incompletely) resetting vCPUs,
-call resettable_reset() which will fully reset the vCPUs.
-Remove redundant assignations.
+  "All PSW bits except the M bit is reset. The M bit is set."
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Co-developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Commit 1a19da0da44 ("target/hppa: Fill in hppa_cpu_do_interrupt /
+hppa_cpu_exec_interrupt") inadvertently set the W bit at RESET,
+remove it and set the M bit.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hppa/machine.c | 6 +++---
- target/hppa/cpu.c | 1 +
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ target/hppa/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 65259308e2e..8230f43e41c 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -655,12 +655,12 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
-     for (i = 0; i < smp_cpus; i++) {
-         CPUState *cs = CPU(cpu[i]);
- 
-+        /* reset CPU */
-+        resettable_reset(OBJECT(cs), RESET_TYPE_COLD);
-+
-         cpu_set_pc(cs, firmware_entry);
-         cpu[i]->env.psw = PSW_Q;
-         cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
--
--        cs->exception_index = -1;
--        cs->halted = 0;
-     }
- 
-     /* already initialized by machine_hppa_init()? */
 diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index d784bcdd602..41538d39d62 100644
+index 41538d39d62..dbd46842841 100644
 --- a/target/hppa/cpu.c
 +++ b/target/hppa/cpu.c
-@@ -204,6 +204,7 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
-         scc->parent_phases.hold(obj, type);
-     }
-     cs->exception_index = -1;
-+    cs->halted = 0;
- 
+@@ -209,7 +209,7 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
      memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
  
+     cpu_hppa_loaded_fr0(env);
+-    cpu_hppa_put_psw(env, PSW_W);
++    cpu_hppa_put_psw(env, PSW_M);
+ }
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
 -- 
 2.47.1
 
