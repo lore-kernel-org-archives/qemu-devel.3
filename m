@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BD7E77194
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 00:25:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6642E7718F
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 00:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSQ3B-0003Nx-BZ; Mon, 30 Dec 2024 19:23:57 -0500
+	id 1tSQ3E-0003Pb-4j; Mon, 30 Dec 2024 19:24:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tSQ38-0003N0-Iu
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 19:23:55 -0500
+ id 1tSQ3B-0003Ny-CN
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 19:23:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tSQ35-0001y5-I4
- for qemu-devel@nongnu.org; Mon, 30 Dec 2024 19:23:54 -0500
+ id 1tSQ33-0001xX-1N
+ for qemu-devel@nongnu.org; Mon, 30 Dec 2024 19:23:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735604630;
+ s=mimecast20190719; t=1735604626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V8eqX+r29sPapJhn/vLbtpBrgqJq/aUh19hK4P3NE2Y=;
- b=EYjWqiH05lJnIzFs7CD4vjU92c08+9iD3KxCucsTmQ22PJxaHmlQoLRlhfxqn6XVuEv+95
- /RcD3wGZIQUffoweYnLeCzr5b7ePxhIEmSlh6jqzcxbu4UMpIVg66wOEiLSWEt+pm/mUAC
- c4T3U41U9On8aY936yBPV3PXlzYyzaQ=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=20JLlnKhVGNyGf1xgIyZoN4lgjdqIel1uxoMLonmRjI=;
+ b=h9IRf+poFMFo0PckmISkT6mL+i9KcqHDbCGmMKyUBvA0hQ5xV46Y5pyczUI6ojko0OrDlF
+ XLCm2fzuIfPbLBqNrQx3Q8+L8YXGscs+6LYO5Hu4jKm+9VfD+aBx++5sVc1IgnxKzHdYxb
+ 8Uq0Nijs3MN7wvcUb8dTbw3rgwJtGYk=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-436-htVhSm9mNuONmhrfJZJJeQ-1; Mon, 30 Dec 2024 19:23:48 -0500
-X-MC-Unique: htVhSm9mNuONmhrfJZJJeQ-1
-X-Mimecast-MFC-AGG-ID: htVhSm9mNuONmhrfJZJJeQ
+ us-mta-258-8PmQITZjNjmbjoI60xCQiw-1; Mon, 30 Dec 2024 19:23:41 -0500
+X-MC-Unique: 8PmQITZjNjmbjoI60xCQiw-1
+X-Mimecast-MFC-AGG-ID: 8PmQITZjNjmbjoI60xCQiw
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43623bf2a83so70814715e9.0
- for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 16:23:48 -0800 (PST)
+ 5b1f17b1804b1-4362153dcd6so9976915e9.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Dec 2024 16:23:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735604626; x=1736209426;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=V8eqX+r29sPapJhn/vLbtpBrgqJq/aUh19hK4P3NE2Y=;
- b=vXCK1Aj0dbFFIQuXneTE7G4SbVe5hMhnmx9SmxubTrDzD93JFeWb08WLjV5kVLW9N+
- Uph3G2sr/OP9Ps5+kZu91orspIiU0Ev+6JAXVz9s6Gr0BE3QGPsMk5Bol25tXq2vMwEa
- 4I2tJVO3z9Wl0EEFvxycOfxDCjmAGP85Z62qXwn66Q0GIu8beiApHejCy/hCjHvoF6uM
- QLOiP6T+fqY2tDgF4PJpaoIdRuXOtbqft0OEBPWQuvy0dX0UvGf2t14cS7PFt09WzJ9j
- tRtwjd/l+dxdt/0g9mKCtSWerkEre/mLItOdDP8vVepmZ+31UWW2b+MshOHthqSEqhRR
- P1Lg==
-X-Gm-Message-State: AOJu0YwmUz3vjZv053cJlNGIgS+KlncXXO1ExyJr2FnbeWLj/gKA63ox
- XBbYNJgeXGQZrvI+7V1LrHgM5/opAIc2FzMe9tM14IuYg69JLQT0fxPFhsn9BOIxVMQtDezWog6
- tLMEnxFUxW40xM13b6dx5Wpm+k0J5YuqyiQ7krw6FhlnC10rSLPYCG5llWqf1hMHBlg4ulQqdkv
- z/ctdT7aT26oMV8TMwXUlY7dlO36EO2rTEp8JYDqQ=
-X-Gm-Gg: ASbGncs/NWNs/Nojs2tnUjzHanjJmCs7CdXHjv/r1VXO9CHw3NOxToblvUwDig37L4m
- pz39b0lZfoptFe5xaclAeUQLZDf+xeVqZ+E1bI48mvvyScA2kMBv2CPxbzsLOM/g1F63y37svC8
- TY7bvr77Lyf7MJaoYrcIXyKIGPxsD00e8iuoLVC/zRV09i2AOEZPe8TSiz/G+EC9mLz4uLVyoNA
- xxepBcShAts5wkDS64JsHCBLlE1qGZPOwS4bO9eCiwYg3sw8J5K1atbjqw=
-X-Received: by 2002:a5d:59ad:0:b0:386:32ca:aa12 with SMTP id
- ffacd0b85a97d-38a223feed2mr24894073f8f.49.1735604626472; 
- Mon, 30 Dec 2024 16:23:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFZv9t08NRGO27ZZdgCK2GIiscRqxj0W9Mj/2mSZkxJaFIPLTAS5vXRDNETy4qIatVFZKL1uQ==
-X-Received: by 2002:a5d:59ad:0:b0:386:32ca:aa12 with SMTP id
- ffacd0b85a97d-38a223feed2mr24894063f8f.49.1735604626072; 
- Mon, 30 Dec 2024 16:23:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1735604619; x=1736209419;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=20JLlnKhVGNyGf1xgIyZoN4lgjdqIel1uxoMLonmRjI=;
+ b=v6MJ1QI7cypKoDieQEJMX8ZAjqN0cNP/4LhyF0jLFQ+qJxVQ1BS+Z99ZmAVNd6rLYt
+ LPwZG959XkiMsYLzmcArhJj72pg/7CtkT5/HaAtALarSW2jrI+3b96Rtuc0HRKK1Eu0o
+ ADGRrYkiBUAU7MEEJ3Cf4Br/LUgyr/LTpy/hHtsXFqrr/pb+hreBJVWmji2TGoJVu1Sl
+ kue191N9BTrndPoqHiBekMY4tQ3ZVXk+oYJvxGDAA9wUKmBLIm7c3AWox+3Lyp2Eqrnu
+ dG6DZidOnYf7AvZDaDYBwyi4a0CjFdxXXgdadfR9pQVWWAlFbUXs/QAlVkzd4kqXqNuE
+ pyIA==
+X-Gm-Message-State: AOJu0YxHY7bFY+XOXrmbOuGfcP3BesHVhdJz2Dg0QtogKfE3BBrf3IyO
+ iSTpZEnzBEGUBKesKbSHXhnJmqxleccs54ZMTMOVUtMDzfR4eZLuL7G9CoDQhloNyPDsCNueGEO
+ OiGMgDx9IElBt/PyWXktdD148BzT5x6XJgBudk4K9NQcgMNmuRDxrdheE8h726b7e/hFxi4H4CH
+ Q/t0FD8IkPRwPKhvOQRb3uCNmoyCAkquDY1nLA9PY=
+X-Gm-Gg: ASbGncuORSZXCSxUk+oiRLGxMf3eD3055M7HTU5K5aKIQlNZ6tVl8jlUo4g36iEbGOg
+ CSBQ23BXbtqxyGXk2sXbIopUEL/H0qExPRfSfaT79EKcUWlKxic8dCziqWaXD2bVZQWf0Yftdwn
+ ncyiaA8J0uby8GKkgnlT55gRdpbh0BH5WrYSFOTNn5JuC7LSTRe4LOyP6c43YBYNxJDbA5APVRp
+ mMTSjA2xpSSIko8iaPZsOaiegWkBiHlzOz7seV+MAED9WC2daOC4tnDIAo=
+X-Received: by 2002:a05:600c:3505:b0:434:fafe:edb with SMTP id
+ 5b1f17b1804b1-43668b5f326mr286831175e9.24.1735604619243; 
+ Mon, 30 Dec 2024 16:23:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEJDir+9oM2746BzqIGIR55h8Jcc3q+74tzCVMJaCQfmht6jkQUz9kA/lc2WpcBx7beQkEw8Q==
+X-Received: by 2002:a05:600c:3505:b0:434:fafe:edb with SMTP id
+ 5b1f17b1804b1-43668b5f326mr286831065e9.24.1735604618797; 
+ Mon, 30 Dec 2024 16:23:38 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.105.73])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c832e8asm30944218f8f.37.2024.12.30.16.23.44
+ 5b1f17b1804b1-43656b11aecsm403171205e9.23.2024.12.30.16.23.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Dec 2024 16:23:44 -0800 (PST)
+ Mon, 30 Dec 2024 16:23:38 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	zhao1.liu@intel.com,
 	junjie.mao@hotmail.com
-Subject: [RFC PATCH 3/9] rust: vmstate: add varray support to vmstate_of!
-Date: Tue, 31 Dec 2024 01:23:30 +0100
-Message-ID: <20241231002336.25931-4-pbonzini@redhat.com>
+Subject: [RFC PATCH 0/9] rust: (mostly) type safe VMState
+Date: Tue, 31 Dec 2024 01:23:27 +0100
+Message-ID: <20241231002336.25931-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241231002336.25931-1-pbonzini@redhat.com>
-References: <20241231002336.25931-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -93,7 +90,7 @@ X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.187,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,106 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Untested...
+The existing translation of the C macros for vmstate does not make
+any attempt to type-check vmstate declarations against the struct, so
+introduce a new system that computes VMStateField based on the actual
+struct declaration.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/src/vmstate.rs | 45 +++++++++++++++++++++++++++++++++---
- 1 file changed, 42 insertions(+), 3 deletions(-)
+Macros do not have full access to the type system, therefore a full
+implementation of this scheme requires a helper trait to analyze the type
+and produce a VMStateField from it; the trait stores the VMStateField
+as ana associated const.  Then, a macro "vmstate_of!" accepts arguments
+similar to "offset_of!" and tricks the compiler into looking up the
+trait for the right type.
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index e20f27b172b..079c19c687b 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -69,6 +69,15 @@ pub unsafe trait VMState {
-     /// The base contents of a `VMStateField` (minus the name and offset) for
-     /// the type that is implementing the trait.
-     const BASE: VMStateField;
-+
-+    /// A flag that is added to another field's `VMStateField` to specify the
-+    /// length's type in a variable-sized array.  If this is not a supported
-+    /// type for the length (i.e. if it is not `u8`, `u16`, `u32`), using it
-+    /// in a call to [`vmstate_of!`](crate::vmstate_of) will cause a
-+    /// compile-time error.
-+    const VARRAY_FLAG: VMStateFlags = {
-+        panic!("invalid type for variable-sized array");
-+    };
- }
- 
- /// Internal utility function to retrieve a type's `VMStateField`;
-@@ -77,6 +86,13 @@ pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
-     T::BASE
- }
- 
-+/// Internal utility function to retrieve a type's `VMStateFlags` when it
-+/// is used as the element count of a `VMSTATE_VARRAY`; used by
-+/// [`vmstate_of!`](crate::vmstate_of).
-+pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateField {
-+    T::BASE
-+}
-+
- /// Return the `VMStateField` for a field of a struct.  The field must be
- /// visible in the current scope.
- ///
-@@ -84,18 +100,24 @@ pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
- /// for them.
- #[macro_export]
- macro_rules! vmstate_of {
--    ($struct_name:ty, $field_name:ident $(,)?) => {
-+    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
-         $crate::bindings::VMStateField {
-             name: ::core::concat!(::core::stringify!($field_name), "\0")
-                 .as_bytes()
-                 .as_ptr() as *const ::std::os::raw::c_char,
-             offset: $crate::offset_of!($struct_name, $field_name),
--            // Compute most of the VMStateField from the type of the field.
-+            $(.num_offset: $crate::offset_of!($struct_name, $num),)?
-+            // The calls to `call_func_with_field!` are the magic that
-+            // computes most of the VMStateField from the type of the field.
-             ..$crate::call_func_with_field!(
-                 $crate::vmstate::vmstate_base,
-                 $struct_name,
-                 $field_name
--            )
-+            )$(.with_varray_flag($crate::call_func_with_field!(
-+                    $crate::vmstate::vmstate_varray_flag,
-+                    $struct_name,
-+                    $num))
-+               $(.with_varray_multiply($factor))?)?
-         }
-     };
- }
-@@ -130,6 +152,22 @@ pub const fn with_pointer_flag(mut self) -> Self {
-         self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_POINTER.0);
-         self
-     }
-+
-+    #[must_use]
-+    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
-+        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
-+        self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_ARRAY.0);
-+        self.flags = VMStateFlags(self.flags.0 | flag.0);
-+        self
-+    }
-+
-+    #[must_use]
-+    pub const fn with_varray_multiply(mut self, num: u32) -> VMStateField {
-+        assert!(num <= 0x7FFF_FFFFu32);
-+        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_MULTIPLY_ELEMENTS.0);
-+        self.num = num as i32;
-+        self
-+    }
- }
- 
- // Transparent wrappers: just use the internal type
-@@ -141,6 +179,7 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-                 size: mem::size_of::<$type>(),
-                 ..<$base as VMState>::BASE
-             };
-+            const VARRAY_FLAG: VMStateFlags = <$base as VMState>::VARRAY_FLAG;
-         }
-     };
- }
+Structs and cells have their own sub-VMStateDescription.  This poses
+a problem in that references can only be included in associated consts
+starting with Rust 1.83.0, when the const_refs_static was stabilized.
+So for now structs and cells cannot be done in a type-safe manner,
+but arrays, pointers and scalars can.
+
+Technically, scalar types have the same issue in that they point to a
+VMStateInfo.  For this case however there is onlyya limited list of
+VMStateInfos, so I am placing them in an enum, and going from enum
+to &VMStateInfo only when building the VMStateField (i.e. in a static's
+value rather than in an associated const, and in a macro rather than in
+a const fn).  This isn't great, but it's easily removed when QEMU starts
+accepting a newer Rust version.
+
+The series also introduces the pattern of applying changes to a struct
+using methods with a fn(mut self) -> Self signature, for example
+
+    pub const fn with_version_id(mut self, version_id: i32) -> Self {
+        self.version_id = version_id;
+        self
+    }
+
+This is not quite the builder pattern because there is no need for a
+final ".build()" call, but it's similar/related.
+
+The unfavorable diffstat comes half from the const_refs_static workaround,
+half from new documentation (so in that case it's a plus rather than
+a minus).  And also, there is more functionality and extensibility in
+the new mechanism, whereas only a subset of the C macros was included
+in the previous implementation.  The exception is "field_exists", which
+may be added later if needed as a modifier, similar to with_version_id().
+
+Paolo
+
+
+Paolo Bonzini (9):
+  rust: vmstate: add new type safe implementation
+  rust: vmstate: implement VMState for non-leaf types
+  rust: vmstate: add varray support to vmstate_of!
+  rust: vmstate: implement Zeroable for VMStateField
+  rust: vmstate: implement VMState for scalar types
+  rust: vmstate: add public utility macros to implement VMState
+  rust: qemu_api: add vmstate_struct and vmstate_cell
+  rust: pl011: switch vmstate to new-style macros
+  rust: vmstate: remove translation of C vmstate macros
+
+ rust/hw/char/pl011/src/device.rs       |   3 +-
+ rust/hw/char/pl011/src/device_class.rs |  36 +-
+ rust/hw/char/pl011/src/lib.rs          |   6 +
+ rust/qemu-api/src/prelude.rs           |   2 +
+ rust/qemu-api/src/vmstate.rs           | 673 ++++++++++++++++---------
+ rust/qemu-api/src/zeroable.rs          |  31 ++
+ 6 files changed, 481 insertions(+), 270 deletions(-)
+
 -- 
 2.47.1
 
