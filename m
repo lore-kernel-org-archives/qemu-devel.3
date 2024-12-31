@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB7DE7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AFEDE77188
 	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 15:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSe2W-0001X8-0O; Tue, 31 Dec 2024 10:20:12 -0500
+	id 1tSe2S-0001Uf-BM; Tue, 31 Dec 2024 10:20:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tSe2U-0001Vv-2K
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 10:20:10 -0500
+ id 1tSe2Q-0001Sv-Fa
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 10:20:06 -0500
 Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tSe2S-0004QK-Dv
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 10:20:09 -0500
+ id 1tSe2O-0004Gp-CI
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 10:20:06 -0500
 Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-2156e078563so117007755ad.2
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 07:20:08 -0800 (PST)
+ d9443c01a7336-21680814d42so116139765ad.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 07:20:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1735658407; x=1736263207; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1735658403; x=1736263203; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MVN2qd6MBYuGZQhfybJGo43q8ngHygDWwb5BKByun0A=;
- b=DEYEZxdoG4AhzO6zriaRBs7UeXcSWnDQiQ4mEtXPFAYnn5/Qi25VTRShfjV7gre9cb
- KzCktdl6kp8Kl89rW8hKzBKJ5k34VW6N15WRJlN/oXUPrX0yR676P3YHmRHlseyRvPG2
- McWIEdiSQw0k7jU+d8n59MkCy5f5lwfTtaLWl1dkLV0iXX66LMTk4uX91LCFqP8XbwuP
- ZaLa1KzzMirPbMs+43Dt1P7UpBwnlJkC/xtB7zjbOzSSHn/f51MMIuO/VWtAA1D0b6BB
- 8/fBnVtexsH1p2a9BRFxmzVsnrFO+rR5jEe/kaZeoA1xuY2nLAIoZUC52o8h/LHv6D/n
- QLOw==
+ bh=8ELuuWJBb1m79qHMRperTi1KM3Mna2yl7B0wFom8yxU=;
+ b=j565AAu07Zc0EcGsMmXME/PPNoWpUVhJmP/nfbxmnXRSd24P/04EoG0yHHyd4dhs6Q
+ 1N1EWrDmU7P4q3D0JvDgzuvddQn+quIQkP88YsghMbonOLiVd0n3wmrqLRaJQ9K2HTsX
+ oHNVpjel5/FSJ1X7/KpDxOhM5xQrIrz/LrThHW2LDC1dhllaUPXHZbrqaciHG8F1SDTm
+ BvINQqxRxozYON3vlad84gyb+zYlVoIGxqnOp5EUhNwdU6h/gOsZkhSPU44S58GP1rtX
+ JlYxm+XDe9a07i/Zdaqakdl5TVVtJ0DXnXRGc1wIsfbP7VF0ANmDZ3brwlnH0X2jUYjt
+ ovTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735658407; x=1736263207;
+ d=1e100.net; s=20230601; t=1735658403; x=1736263203;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MVN2qd6MBYuGZQhfybJGo43q8ngHygDWwb5BKByun0A=;
- b=g1wG2fCIhgP26n9DEroCB8riWiXEcat7MqGKIn0iPXCRkKf1FhQD8Cu+jUy8ROnnN7
- xZqr33smksembHA+t03GMt82o23Phgzejxyqbyufv1qbshsgQR/+6Jt/xC/XeZpTE/P0
- YZAQCvWMaKiF2L0lAr4C70/0Ft4j4HYH+K5NdzR2mwWJ05iKj6xPN9myWKg7gngZunpj
- ko8KbFMcMv/2bQCiFqc5Wn2ZWZFsauOkhMQqx2Yn7hts08U7h+I0U8FZkkt/nmhwcl5D
- YdU38cZKIK8AbDX7uFO93oLN7kuYxmyTW9i4IaBLqociW04D+zm92oLbUceEjwPuTIcB
- 39Ng==
-X-Gm-Message-State: AOJu0YxQkTrQqCz7tBIh3bMqTEF3428qIti9pSxcr2qZbfR7ylYyxf5V
- 3CgIhEZDMJlGN4Xa0UivJjx9PL4kIevQRXv+WWF7qlkxmSsA0EU=
-X-Gm-Gg: ASbGncseXmW0XEmrYNS79TOfb6J/faMYrxtJrawn25xoc0YRoSanvX3xisM/Nmsx6H2
- Wa1sJhNsfB9BKbtQOuYJJCQNsIlNZhLZheDKbaDx8tmWIhrS/SDWrwwK1EzEOtfEj7CSvNDMzfa
- P1wpRJ5kM3bpmF20TLsrdu7FfjeqN2ZpGynsKhrLVrERT98saPZi4khBvvvTstyjIgfekB30tMB
- XtwXXYI9CmwdVj1Pf31jVTRJJe7GjHA+3PXQ1UrhzDEYLeXrX1QmxPA79pjsk5J/+NzNQ==
-X-Google-Smtp-Source: AGHT+IEVAKNXNn9JwJm4hD2zal5tswDcksS5BRGtbfLV0li4XDXV6Wo1/6qhcYv6n5JSSqD0dhdWEg==
-X-Received: by 2002:a05:6a21:78aa:b0:1e1:aef4:9ce8 with SMTP id
- adf61e73a8af0-1e5e080c2femr61703095637.28.1735658406997; 
- Tue, 31 Dec 2024 07:20:06 -0800 (PST)
+ bh=8ELuuWJBb1m79qHMRperTi1KM3Mna2yl7B0wFom8yxU=;
+ b=vES/AksXUlgQbTtGtvBFO2zyKEcorRAZNkyxwmJ/QFGacomxYvNcTKdcIQfSPpj4xP
+ KluhWpgT7jGW1KlqgM8AGktcVD8YnSppmJE+InIAkq6eEfQePabt+XlIRwyfCbXnqz+5
+ mCJqFAih7gcM9WdrSmp6uK+Mw2WTAy7kLeKOAnRwNo0rgxkoa8I7ItjR/wkV4YUOA7/i
+ Zqbv4P03uROLkV5eFjzPeOSNU6yRLN6dgthAGEAT7yb1e+9RCvue8fmjepkhI58Y1xU3
+ O5LjsEEvIgrWIEIkrGo7+m6si3f2VbQozYZgtHT9NhNyaFYr2+tmWZ/zp//+0tvK60n9
+ qgDw==
+X-Gm-Message-State: AOJu0YzXJr2dRuNV2pK6+pbJ79Mg2PgJ6aRoKDvt70byemRmnyMLE0tO
+ 2EWNDiHtPDCMpwMKm4K01iA3pDX1le0+cTp1vVq5HuA15zuQh/+irOPUzM0VUQ==
+X-Gm-Gg: ASbGncv2ApKzcPb182Yy07rD1MvaNXQApH3Xj1W438lFiEvSfbiXnwwUFGX23vtSV//
+ 97jnRS1wUggk5bAigW2F9M5PFHOp26/BbU44+4Oa6sVwMvyPX34R5MRdI2AGDF7sWK8vOXgMSQd
+ N9b+BDxho4vqqpjm2QvqXYBoQCH04tX1qukiyBzLJLvEQ3aaGZHgtZkQbc+3kNlLBHryREbqItV
+ hhQM0rTWPpMsTCdrupQp2ybYHi5DGlQ52RXxCF/ri9pypF3uzuNlKUFbKuD1FvusirkKA==
+X-Google-Smtp-Source: AGHT+IFZmmF+DgEPzdsm5Q5nKA+WRY2BiWdaX9aC4/RGyM0Y8kSkqt0qmDPuMjusdXvd3Ywtpsf0OA==
+X-Received: by 2002:a05:6a00:3cc2:b0:725:90f9:daf9 with SMTP id
+ d2e1a72fcca58-72abdefa86emr44106006b3a.15.1735658402652; 
+ Tue, 31 Dec 2024 07:20:02 -0800 (PST)
 Received: from localhost.localdomain ([58.38.120.107])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8309e8sm20933481b3a.43.2024.12.31.07.20.05
+ d2e1a72fcca58-72aad8309e8sm20933481b3a.43.2024.12.31.07.20.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 31 Dec 2024 07:20:06 -0800 (PST)
+ Tue, 31 Dec 2024 07:20:02 -0800 (PST)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 3/3] vfio/igd: use VFIOConfigMirrorQuirk for mirrored registers
-Date: Tue, 31 Dec 2024 23:19:53 +0800
-Message-ID: <20241231151953.59992-4-tomitamoeko@gmail.com>
+Subject: [PATCH 1/3] vfio/pci: declare generic quirks in a new header file
+Date: Tue, 31 Dec 2024 23:19:51 +0800
+Message-ID: <20241231151953.59992-2-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241231151953.59992-1-tomitamoeko@gmail.com>
 References: <20241231151953.59992-1-tomitamoeko@gmail.com>
@@ -99,179 +99,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the introduction of config_offset field, VFIOConfigMirrorQuirk can
-now be used for those mirrored register in igd bar0. This eliminates
-the need for the macro intoduced in 1a2623b5c9e7 ("vfio/igd: add macro
-for declaring mirrored registers").
+Declare generic vfio_generic_{window_address,window_data,mirror}_quirk
+in newly created pci_quirks.h so that they can be used elsewhere, like
+igd.c.
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c | 128 ++++++++++++++------------------------------------
- 1 file changed, 36 insertions(+), 92 deletions(-)
+ hw/vfio/pci-quirks.c | 59 ++++--------------------------------
+ hw/vfio/pci-quirks.h | 71 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+), 53 deletions(-)
+ create mode 100644 hw/vfio/pci-quirks.h
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index f5414b0f8d..28a1d17f01 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -18,6 +18,7 @@
- #include "hw/hw.h"
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index c8e60475d5..bb2ce1d904 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -25,6 +25,7 @@
  #include "hw/nvram/fw_cfg.h"
+ #include "hw/qdev-properties.h"
  #include "pci.h"
 +#include "pci-quirks.h"
  #include "trace.h"
  
  /*
-@@ -422,84 +423,21 @@ static const MemoryRegionOps vfio_igd_index_quirk = {
+@@ -66,40 +67,6 @@ bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev)
+  * Device specific region quirks (mostly backdoors to PCI config space)
+  */
+ 
+-/*
+- * The generic window quirks operate on an address and data register,
+- * vfio_generic_window_address_quirk handles the address register and
+- * vfio_generic_window_data_quirk handles the data register.  These ops
+- * pass reads and writes through to hardware until a value matching the
+- * stored address match/mask is written.  When this occurs, the data
+- * register access emulated PCI config space for the device rather than
+- * passing through accesses.  This enables devices where PCI config space
+- * is accessible behind a window register to maintain the virtualization
+- * provided through vfio.
+- */
+-typedef struct VFIOConfigWindowMatch {
+-    uint32_t match;
+-    uint32_t mask;
+-} VFIOConfigWindowMatch;
+-
+-typedef struct VFIOConfigWindowQuirk {
+-    struct VFIOPCIDevice *vdev;
+-
+-    uint32_t address_val;
+-
+-    uint32_t address_offset;
+-    uint32_t data_offset;
+-
+-    bool window_enabled;
+-    uint8_t bar;
+-
+-    MemoryRegion *addr_mem;
+-    MemoryRegion *data_mem;
+-
+-    uint32_t nr_matches;
+-    VFIOConfigWindowMatch matches[];
+-} VFIOConfigWindowQuirk;
+-
+ static uint64_t vfio_generic_window_quirk_address_read(void *opaque,
+                                                        hwaddr addr,
+                                                        unsigned size)
+@@ -135,7 +102,7 @@ static void vfio_generic_window_quirk_address_write(void *opaque, hwaddr addr,
+     }
+ }
+ 
+-static const MemoryRegionOps vfio_generic_window_address_quirk = {
++const MemoryRegionOps vfio_generic_window_address_quirk = {
+     .read = vfio_generic_window_quirk_address_read,
+     .write = vfio_generic_window_quirk_address_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+@@ -178,26 +145,12 @@ static void vfio_generic_window_quirk_data_write(void *opaque, hwaddr addr,
+                       addr + window->data_offset, data, size);
+ }
+ 
+-static const MemoryRegionOps vfio_generic_window_data_quirk = {
++const MemoryRegionOps vfio_generic_window_data_quirk = {
+     .read = vfio_generic_window_quirk_data_read,
+     .write = vfio_generic_window_quirk_data_write,
      .endianness = DEVICE_LITTLE_ENDIAN,
  };
  
--static uint64_t vfio_igd_pci_config_read(VFIOPCIDevice *vdev, uint64_t offset,
--                                         unsigned size)
--{
--    switch (size) {
--    case 1:
--        return pci_get_byte(vdev->pdev.config + offset);
--    case 2:
--        return pci_get_word(vdev->pdev.config + offset);
--    case 4:
--        return pci_get_long(vdev->pdev.config + offset);
--    case 8:
--        return pci_get_quad(vdev->pdev.config + offset);
--    default:
--        hw_error("igd: unsupported pci config read at %"PRIx64", size %u",
--                 offset, size);
--        break;
--    }
+-/*
+- * The generic mirror quirk handles devices which expose PCI config space
+- * through a region within a BAR.  When enabled, reads and writes are
+- * redirected through to emulated PCI config space.  XXX if PCI config space
+- * used memory regions, this could just be an alias.
+- */
+-typedef struct VFIOConfigMirrorQuirk {
+-    struct VFIOPCIDevice *vdev;
+-    uint32_t offset;
+-    uint8_t bar;
+-    MemoryRegion *mem;
+-    uint8_t data[];
+-} VFIOConfigMirrorQuirk;
 -
--    return 0;
--}
--
--static void vfio_igd_pci_config_write(VFIOPCIDevice *vdev, uint64_t offset,
--                                      uint64_t data, unsigned size)
--{
--    switch (size) {
--    case 1:
--        pci_set_byte(vdev->pdev.config + offset, data);
--        break;
--    case 2:
--        pci_set_word(vdev->pdev.config + offset, data);
--        break;
--    case 4:
--        pci_set_long(vdev->pdev.config + offset, data);
--        break;
--    case 8:
--        pci_set_quad(vdev->pdev.config + offset, data);
--        break;
--    default:
--        hw_error("igd: unsupported pci config write at %"PRIx64", size %u",
--                 offset, size);
--        break;
--    }
--}
--
--#define VFIO_IGD_QUIRK_MIRROR_REG(reg, name)                            \
--static uint64_t vfio_igd_quirk_read_##name(void *opaque,                \
--                                           hwaddr addr, unsigned size)  \
--{                                                                       \
--    VFIOPCIDevice *vdev = opaque;                                       \
--                                                                        \
--    return vfio_igd_pci_config_read(vdev, reg + addr, size);            \
--}                                                                       \
--                                                                        \
--static void vfio_igd_quirk_write_##name(void *opaque, hwaddr addr,      \
--                                        uint64_t data, unsigned size)   \
--{                                                                       \
--    VFIOPCIDevice *vdev = opaque;                                       \
--                                                                        \
--    vfio_igd_pci_config_write(vdev, reg + addr, data, size);            \
--}                                                                       \
--                                                                        \
--static const MemoryRegionOps vfio_igd_quirk_mirror_##name = {           \
--    .read = vfio_igd_quirk_read_##name,                                 \
--    .write = vfio_igd_quirk_write_##name,                               \
--    .endianness = DEVICE_LITTLE_ENDIAN,                                 \
--};
--
--VFIO_IGD_QUIRK_MIRROR_REG(IGD_GMCH, ggc)
--VFIO_IGD_QUIRK_MIRROR_REG(IGD_BDSM, bdsm)
--VFIO_IGD_QUIRK_MIRROR_REG(IGD_BDSM_GEN11, bdsm64)
--
- #define IGD_GGC_MMIO_OFFSET     0x108040
- #define IGD_BDSM_MMIO_OFFSET    0x1080C0
- 
-+typedef struct VFIOIGDBAR0Quirk {
-+    VFIOConfigMirrorQuirk ggc_mirror;
-+    VFIOConfigMirrorQuirk bdsm_mirror;
-+} VFIOIGDBAR0Quirk;
-+
- void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+ static uint64_t vfio_generic_quirk_mirror_read(void *opaque,
+                                                hwaddr addr, unsigned size)
  {
-     VFIOQuirk *quirk;
-+    VFIOIGDBAR0Quirk *bar0;
-+    VFIOConfigMirrorQuirk *ggc_mirror, *bdsm_mirror;
-     int gen;
-+    uint32_t bdsm_reg_size;
- 
-     /*
-      * This must be an Intel VGA device at address 00:02.0 for us to even
-@@ -523,30 +461,36 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-     }
- 
-     quirk = vfio_quirk_alloc(2);
--    quirk->data = vdev;
--
--    memory_region_init_io(&quirk->mem[0], OBJECT(vdev),
--                          &vfio_igd_quirk_mirror_ggc, vdev,
-+    bar0 = quirk->data = g_malloc0(sizeof(*bar0));
-+
-+    ggc_mirror = &bar0->ggc_mirror;
-+    ggc_mirror->vdev = vdev;
-+    ggc_mirror->mem = &quirk->mem[0];
-+    ggc_mirror->bar = nr;
-+    ggc_mirror->offset = IGD_GGC_MMIO_OFFSET;
-+    ggc_mirror->config_offset = IGD_GMCH;
-+
-+    bdsm_mirror = &bar0->bdsm_mirror;
-+    bdsm_mirror->mem = &quirk->mem[1];
-+    bdsm_mirror->vdev = vdev;
-+    bdsm_mirror->offset = IGD_BDSM_MMIO_OFFSET;
-+    bdsm_mirror->config_offset = (gen < 11) ? IGD_BDSM : IGD_BDSM_GEN11;
-+    bdsm_mirror->bar = nr;
-+    bdsm_reg_size = (gen < 11) ? 4 : 8;
-+
-+    memory_region_init_io(ggc_mirror->mem, OBJECT(vdev),
-+                          &vfio_generic_mirror_quirk, ggc_mirror,
-                           "vfio-igd-ggc-quirk", 2);
--    memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
--                                        IGD_GGC_MMIO_OFFSET, &quirk->mem[0],
-+    memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
-+                                        ggc_mirror->offset, ggc_mirror->mem,
-                                         1);
- 
--    if (gen < 11) {
--        memory_region_init_io(&quirk->mem[1], OBJECT(vdev),
--                              &vfio_igd_quirk_mirror_bdsm, vdev,
--                              "vfio-igd-bdsm-quirk", 4);
--        memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
--                                            IGD_BDSM_MMIO_OFFSET,
--                                            &quirk->mem[1], 1);
--    } else {
--        memory_region_init_io(&quirk->mem[1], OBJECT(vdev),
--                              &vfio_igd_quirk_mirror_bdsm64, vdev,
--                              "vfio-igd-bdsm-quirk", 8);
--        memory_region_add_subregion_overlap(vdev->bars[0].region.mem,
--                                            IGD_BDSM_MMIO_OFFSET,
--                                            &quirk->mem[1], 1);
--    }
-+    memory_region_init_io(bdsm_mirror->mem, OBJECT(vdev),
-+                          &vfio_generic_mirror_quirk, bdsm_mirror,
-+                          "vfio-igd-bdsm-quirk", bdsm_reg_size);
-+    memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
-+                                        bdsm_mirror->offset, bdsm_mirror->mem,
-+                                        1);
- 
-     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+@@ -228,7 +181,7 @@ static void vfio_generic_quirk_mirror_write(void *opaque, hwaddr addr,
+                                           addr, data);
  }
+ 
+-static const MemoryRegionOps vfio_generic_mirror_quirk = {
++const MemoryRegionOps vfio_generic_mirror_quirk = {
+     .read = vfio_generic_quirk_mirror_read,
+     .write = vfio_generic_quirk_mirror_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+@@ -1499,7 +1452,7 @@ static void get_nv_gpudirect_clique_id(Object *obj, Visitor *v,
+                                        const char *name, void *opaque,
+                                        Error **errp)
+ {
+-    const Property *prop = opaque;
++    Property *prop = opaque;
+     uint8_t *ptr = object_field_prop_ptr(obj, prop);
+ 
+     visit_type_uint8(v, name, ptr, errp);
+@@ -1509,7 +1462,7 @@ static void set_nv_gpudirect_clique_id(Object *obj, Visitor *v,
+                                        const char *name, void *opaque,
+                                        Error **errp)
+ {
+-    const Property *prop = opaque;
++    Property *prop = opaque;
+     uint8_t value, *ptr = object_field_prop_ptr(obj, prop);
+ 
+     if (!visit_type_uint8(v, name, &value, errp)) {
+diff --git a/hw/vfio/pci-quirks.h b/hw/vfio/pci-quirks.h
+new file mode 100644
+index 0000000000..c0e96a01cc
+--- /dev/null
++++ b/hw/vfio/pci-quirks.h
+@@ -0,0 +1,71 @@
++/*
++ * vfio generic region quirks (mostly backdoors to PCI config space)
++ *
++ * Copyright Red Hat, Inc. 2012-2015
++ *
++ * Authors:
++ *  Alex Williamson <alex.williamson@redhat.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2.  See
++ * the COPYING file in the top-level directory.
++ */
++#ifndef HW_VFIO_VFIO_PCI_QUIRKS_H
++#define HW_VFIO_VFIO_PCI_QUIRKS_H
++
++#include "qemu/osdep.h"
++#include "exec/memop.h"
++
++/*
++ * The generic window quirks operate on an address and data register,
++ * vfio_generic_window_address_quirk handles the address register and
++ * vfio_generic_window_data_quirk handles the data register.  These ops
++ * pass reads and writes through to hardware until a value matching the
++ * stored address match/mask is written.  When this occurs, the data
++ * register access emulated PCI config space for the device rather than
++ * passing through accesses.  This enables devices where PCI config space
++ * is accessible behind a window register to maintain the virtualization
++ * provided through vfio.
++ */
++typedef struct VFIOConfigWindowMatch {
++    uint32_t match;
++    uint32_t mask;
++} VFIOConfigWindowMatch;
++
++typedef struct VFIOConfigWindowQuirk {
++    struct VFIOPCIDevice *vdev;
++
++    uint32_t address_val;
++
++    uint32_t address_offset;
++    uint32_t data_offset;
++
++    bool window_enabled;
++    uint8_t bar;
++
++    MemoryRegion *addr_mem;
++    MemoryRegion *data_mem;
++
++    uint32_t nr_matches;
++    VFIOConfigWindowMatch matches[];
++} VFIOConfigWindowQuirk;
++
++extern const MemoryRegionOps vfio_generic_window_address_quirk;
++extern const MemoryRegionOps vfio_generic_window_data_quirk;
++
++/*
++ * The generic mirror quirk handles devices which expose PCI config space
++ * through a region within a BAR.  When enabled, reads and writes are
++ * redirected through to emulated PCI config space.  XXX if PCI config space
++ * used memory regions, this could just be an alias.
++ */
++typedef struct VFIOConfigMirrorQuirk {
++    struct VFIOPCIDevice *vdev;
++    uint32_t offset;
++    uint8_t bar;
++    MemoryRegion *mem;
++    uint8_t data[];
++} VFIOConfigMirrorQuirk;
++
++extern const MemoryRegionOps vfio_generic_mirror_quirk;
++
++#endif /* HW_VFIO_VFIO_PCI_QUIRKS_H */
 -- 
 2.45.2
 
