@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE52E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 17:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5596DE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 17:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSgCM-0002qZ-9U; Tue, 31 Dec 2024 12:38:30 -0500
+	id 1tSgG0-00041l-C9; Tue, 31 Dec 2024 12:42:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgCI-0002po-SI
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:38:27 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgFy-00041Y-0L
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:42:14 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgCG-0006sg-PU
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:38:26 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-436a03197b2so22080715e9.2
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 09:38:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgFw-0008Bo-At
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 12:42:13 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385e1fcb0e1so5546656f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 09:42:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735666703; x=1736271503; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735666930; x=1736271730; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2zHKdA6GmglYmvo9VF/c6jvg33mu7oV9/twb3oky6Js=;
- b=jmvwL03J6SEFVMetKLsAFg+mRmhCJEzq1hV1KBUXbyjeZ7NdudGgPbGkLuBHCN+Nto
- pwhvvKSDuWVMfJE2MwoNvjMw5a8igXHRarmtrna9zUaL30eGR8pU0agW4Lzb6k796VYn
- fm6kvsGGfnA7DQ/CxVsW5D0ieswZq/i+Kprl6vz1jxXC2egmIYagUDpDzcw0B8IjTxG/
- DdRRd4VaHLFDkVC7ywapo3JbUK72XA/GlAD1JpKGogft8IZIVzCTQ5JIGxB5ZfpCvf4s
- W5lod9G7vxnUG3PhUrhgRoaNovd0qYbcL6h285bwVwWaFB2ZG1W/di9vl3+Xml/UCCX6
- 6gOw==
+ bh=BVdc+X4IC5/CS9NxvUk6MBG0JaFVkTNeP0S8meh/UPE=;
+ b=vZfnB52nom2qvz40X5vloXsg+57C6XHAgrKEWQ5DLE6aXHloD7kfn0vM06aj2xqRH+
+ Z8Yg5VQSTbPC3FX8c3qnZWp8IXml00wgxptHdHVIc+Ae4j09bQHrrOpK1UmGMYxAGRiS
+ iRENwTnHv4yzF8tnrj9Vpkns8FQrZt259tGFBbjC7NXakQGXhQDmMLTQBzJfxVCyRJac
+ H2lNo78XxtoG6gCsmNvTp+JS2zV+/w2WM69z5rXGzU7A6JierXwwOy2RW3p1z3ywirS2
+ 1GO/tuaB/IWjndPFJAUmxdEzgwivI64cGWxiKF/2EQPzcBk5Qa1SQ7EFXfTvoH1wqroH
+ NDGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735666703; x=1736271503;
+ d=1e100.net; s=20230601; t=1735666930; x=1736271730;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2zHKdA6GmglYmvo9VF/c6jvg33mu7oV9/twb3oky6Js=;
- b=PTENFRP8Bs6e54VcQ/5W7tX+niWHAg7K1mOhm1DcqQ7+adA1C8BEm/s8lDyi21oJ32
- Q7qbeTw6XJ8ILHViXgVZfO1Ymg6YL5BuCBzObAuP2jJbecTJ4StTC7GqJ4azi8uSZPDP
- iWhg6xXCFB1mg1glHmA+AV1gRUMkmnFJZuud8lJ0XF1rdPTOouoeL6WlIyHkMKRH3Aq6
- fYUDGahF3lyVD7jwtT6AmgEuhUaz2ZRkOnitubr6waaFnGUtilvFg3pD4d/PvjGTxRvD
- U2jCh+Tp+LyzZDIzoYTs78XLhOuKsdzoZVw4EZzRLoNUdfB2pbhsJRP5SAIjQLUYL8DR
- HZfQ==
+ bh=BVdc+X4IC5/CS9NxvUk6MBG0JaFVkTNeP0S8meh/UPE=;
+ b=RTGecOZW2GOkKYobrwqy0KuoeIynUmVSOTqhPn3X1BQvLsu+kXsytKTvmu3si02pnV
+ JYnPYZt+kQ2IY8d2JrWbiITLkX5olPhrcZQISY+1sJEgILVwcIMgdmLLXR5hX0OsO73T
+ XXs62YZw9ZeCoB24z6e5kSw8Nncisne1AOIg7kV/S8zfHcyU1DwmeCIpXCPgQ/gkFsV8
+ pQGhd+djKsLiPrhwBWPi+bfEm2WgnAdBj4BaTM2hPvckU3dEn0A7YeCNxFHzlfu7+CFJ
+ M/opiRMKnHTfgHj0FK1Hs2t/fOuNluvuhOIsWDyTLt5fCqR/33T0kHc0prMyiZZib3E/
+ oMnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVClqxa8Y8c8bOF8AgjD7vHGq+E+WPNlRDfhg4tJRT710MZliFrLtwo+BeIuTMPMNPQrl0YYPuyS+Ey@nongnu.org
-X-Gm-Message-State: AOJu0YzxVlajFh7Vao1REtUY712t/9DK8S+usNPyTh5LzzoEVPgcYpbU
- s36JQVrt1yAbD0BppGJ2cTLwZ2wuy8fGgp8UoDlN3H+CH4HxJoFGNIYLmwQSyrs=
-X-Gm-Gg: ASbGncvAqoRh8L6QC0Wzpe39dk5CpSZcfcBclQ8l8K4I9WClbICXGfE0uJVFgMe+Fqn
- f31amj1TE2yPVJHNrCrd9f/C3e9aDrty8HCyfj3PrsfXrX3xAUXW9jOv5kpigIZmx/xQWn1Mr+D
- OnKIGo/imvaL5+3eD/qKZj4X3hlxBqcmfcjSO7O8ieK3SWujNX+9OfppKD2RmmuU4YZ6LT99883
- lEtFaQVZ2Somq+TYuaUBP57M/KxZoDlyNldzpXBtOPC5BZweBYpw449I7HZe8WdmLbPa0eX6b22
- mFp29PF3dxzLXSSrgXtu4DKP
-X-Google-Smtp-Source: AGHT+IG3jpQAd3A2PysVaz2/hhEB4UZETKavf/jp6Rrt1tkCPeX/sOHjxpU2godgVULFdrLreJSrRQ==
-X-Received: by 2002:a05:600c:3b9d:b0:436:6160:5b81 with SMTP id
- 5b1f17b1804b1-43668643bd7mr335818705e9.14.1735666702630; 
- Tue, 31 Dec 2024 09:38:22 -0800 (PST)
+ AJvYcCWxWQsnEEOXXDepqMgTp4SWbfNDlvbP15CrQfNg8VemyyhQl5l7re3eIE4EoyHu9zUMrw8PSfJJK6A1@nongnu.org
+X-Gm-Message-State: AOJu0Yw0lvnIR05Tndbap0KjrZpx2wTmh8Zoh4VRFidrbaZr/d/AHJjC
+ slpahrTyHmvJ2n4EJbe4e1kPw8aLIxGw8/MXV9WIYuMgzYcLK3vN85/+SFu+eD8=
+X-Gm-Gg: ASbGncvHwSCct+tyg2IQCFAfFLLKXNvsHPV+DYKizPBQyLzmVxR7Kkg5qHCYs2/v74p
+ rW8YXMd6yqizPMDX4PXZ7aicg3dy5bfMUwfnGsqr9VAw08NitvEsy6EIr/NKyT3fw2umRi8MpJJ
+ LqFAfU/lrAyN8QemNLB2bpXwCHJUUb2iyZfdh2y6t+94ClrfUbBHoskjcSfXPoMOxt+VMlLJcne
+ 6UPU+a7FtHS05WIT1VY76u9qIyDbnoI4vErzdVqgK+rxJN6EP+9FmuwJvmdLYLSJ4b3CPyOqWhx
+ PHs9n6RsV7E205/v7UEA0X+B
+X-Google-Smtp-Source: AGHT+IHyTHsU8XvYSbyjdjBWnchPm/3CR9BQDV5vKKilgbbTm+BriUz9ffjzTP5WM8sFION5hdK7SQ==
+X-Received: by 2002:a5d:5f4f:0:b0:382:6f3:a20f with SMTP id
+ ffacd0b85a97d-38a221f11ecmr36701004f8f.11.1735666930432; 
+ Tue, 31 Dec 2024 09:42:10 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e2d2sm33846216f8f.71.2024.12.31.09.38.20
+ ffacd0b85a97d-38a1c828f8fsm32845427f8f.12.2024.12.31.09.42.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Dec 2024 09:38:21 -0800 (PST)
-Message-ID: <cca34349-286b-424c-bf92-128ff92fd9c3@linaro.org>
-Date: Tue, 31 Dec 2024 18:38:20 +0100
+ Tue, 31 Dec 2024 09:42:09 -0800 (PST)
+Message-ID: <a1ff93bb-8d07-4bf6-b6b6-0fd8f61d20ff@linaro.org>
+Date: Tue, 31 Dec 2024 18:42:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] fw_cfg: Don't set callback_opaque NULL in
- fw_cfg_modify_bytes_read()
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-devel@nongnu.org
-Cc: kraxel@redhat.com, imammedo@redhat.com, wangzhou1@hisilicon.com,
- linuxarm@huawei.com
-References: <20241203131806.37548-1-shameerali.kolothum.thodi@huawei.com>
+Subject: Re: Ping (2): [PATCH v3] net/vmnet: Pad short Ethernet frames
+To: William Hooper <wsh@wshooper.org>, qemu-devel@nongnu.org
+Cc: Bin Meng <bin.meng@windriver.com>,
+ Phil Dennis-Jordan <lists@philjordan.eu>, Jason Wang <jasowang@redhat.com>
+References: <CAGCz3vsusRSsT8-Fi3a2Z4aeQMtxCzDZ73D8ZgefxVZvm=qY6Q@mail.gmail.com>
+ <20241102205653.30476-1-wsh@wshooper.org>
+ <CANto9c7n-vZmTDV=eKTTNVN+JA_PGyar=KbibtLhvmfHf8xYkA@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241203131806.37548-1-shameerali.kolothum.thodi@huawei.com>
+In-Reply-To: <CANto9c7n-vZmTDV=eKTTNVN+JA_PGyar=KbibtLhvmfHf8xYkA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,59 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 14:18, Shameer Kolothum wrote:
-> On arm/virt platform, Chen Xiang reported a Guest crash while
-> attempting the below steps,
-> 
-> 1. Launch the Guest with nvdimm=on
-> 2. Hot-add a NVDIMM dev
-> 3. Reboot
-> 4. Guest boots fine.
-> 5. Reboot again.
-> 6. Guest boot fails.
-> 
-> QEMU_EFI reports the below error:
-> ProcessCmdAddPointer: invalid pointer value in "etc/acpi/tables"
-> OnRootBridgesConnected: InstallAcpiTables: Protocol Error
-> 
-> Debugging shows that on first reboot(after hot adding NVDIMM),
-> Qemu updates the etc/table-loader len,
-> 
-> qemu_ram_resize()
->    fw_cfg_modify_file()
->       fw_cfg_modify_bytes_read()
-> 
-> And in fw_cfg_modify_bytes_read() we set the "callback_opaque" for
-> the key entry to NULL. Because of this, on the second reboot,
-> virt_acpi_build_update() is called with a NULL "build_state" and
-> returns without updating the ACPI tables. This seems to be
-> upsetting the firmware.
-> 
-> To fix this, don't change the callback_opaque in fw_cfg_modify_bytes_read().
-> 
-> Fixes: bdbb5b1706d165 ("fw_cfg: add fw_cfg_machine_reset function")
-> Reported-by: chenxiang <chenxiang66@hisilicon.com>
-> Acked-by: Igor Mammedov <imammedo@redhat.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
-> Hi,
-> 
-> I forgot to follow-up on the v2 and it never got picked up.
-> Thanks to Wangzhou who recently re-run the tests and found that
-> the problem mentioned above still exists. Hence resending the v2.
-> 
-> v2-->v3:
->   -Just rebase.
-> 
-> v2: https://lore.kernel.org/qemu-devel/20220908160354.2023-1-shameerali.kolothum.thodi@huawei.com/
-> v1: https://lore.kernel.org/all/20220825161842.841-1-shameerali.kolothum.thodi@huawei.com/
-> 
-> Thanks,
-> Shameer
-> ---
->   hw/nvram/fw_cfg.c | 1 -
->   1 file changed, 1 deletion(-)
+Hi William,
 
-Patch queued, thanks!
+On 30/12/24 22:05, William Hooper wrote:
+> On Sat, Nov 2, 2024 at 1:56 PM William Hooper <wsh@wshooper.org> wrote:
+>> At least on macOS 12.7.2, vmnet doesn't pad Ethernet frames, such as the
+>> host's ARP replies, to the minimum size (60 bytes before the frame check
+>> sequence) defined in IEEE Std 802.3-2022, so guests' Ethernet device
+>> drivers may drop them with "frame too short" errors.
+>>
+>> This patch calls eth_pad_short_frame() to add padding, as in net/tap.c
+>> and net/slirp.c. Thanks to Bin Meng, Philippe Mathieu-Daudé, and Phil
+>> Dennis-Jordan for reviewing earlier versions.
+>>
+>> Signed-off-by: William Hooper <wsh@wshooper.org>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2058
+>> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>> ---
+>>   net/vmnet-common.m | 23 ++++++++++++++++++++---
+>>   1 file changed, 20 insertions(+), 3 deletions(-)
+
+> Ping?
+
+We missed this patch because:
+
+1/ maintainers were not Cc'ed (Jason now added)
+
+$ ./scripts/get_maintainer.pl -f net/vmnet-common.m
+Jason Wang <jasowang@redhat.com> (maintainer:Network device ba...)
+"Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Darwin (macOS, iOS))
+
+2/ it is buried as a reply on a previous patch, see [*]:
+
+"Send each new revision as a new top-level thread, rather than burying
+  it in-reply-to an earlier revision, as many reviewers are not looking
+  inside deep threads for new patches."
+
+Anyway, now queued!
+
+Regards,
+
+Phil.
+
+[*] 
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#when-resending-patches-add-a-version-tag
+
 
