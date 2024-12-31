@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C8CE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 20:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D22E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 20:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSimg-0006Fw-0i; Tue, 31 Dec 2024 15:24:10 -0500
+	id 1tSila-0002LB-Ci; Tue, 31 Dec 2024 15:23:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSimd-0005zG-DS
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:24:07 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSilX-0002L1-8B
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:23:00 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSimb-0000we-8Z
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:24:06 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so106898765e9.3
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 12:24:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSilV-0000pw-Lw
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 15:22:59 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385e1fcb0e1so5601584f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 12:22:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735676643; x=1736281443; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735676575; x=1736281375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4eBUfaZOV4VpWuEPg0imAAbPSgeX3YWDxsrL3NZUv+w=;
- b=Z3eYRnO16r6Vi72Y64DmN6UPldK4TDxt4NbFYqN4Re2kzULpKYV3ePmmdpaBx8qC+r
- 8U1530m5ZhHq7thiFFaKZjcfjzZBd0bnhZXJy5T0NADbQlFR++8kNQc70g+8mDypVEvK
- p+sEJGZQS4qZ2Vd7bZlb3IAKT5UJYW4APTCt2MlfxQomWrs2tnjXkgB6Rpcvweyz6zfT
- shxABJ8D7YCT65w0XSpQA0muxg/kC0GBESTSjoKhwvohJSqq8Ypgm4t+w6J69vDovwKE
- keHwviMRfuguvSIQ0YfRU6gAnvmhkyAsv2qUFZ1swbrkDBGd0LBl92QQlraSIHophVuq
- hYrA==
+ bh=JXQtPIRMHtqCLfqXYGaOwpsFtz/fcVXJzzd8RkMtGSE=;
+ b=gsV8Hq7STBVOh+0BpR82gIL7Gtja3O5OIVFkFW93VNchvVPmLfmdmuvf/dtIYLExlV
+ AzOC0HEE18Uu7L0X8eeSQwI2p9fJoZWy8SFeYEh9SexUGaXyWs0czJdVRmTbDVPhgWcZ
+ jIRD8Gje7OaDIseAteRvk2nBtMtALPkPBhHMQQiumGCouGOm+adq0t3MHbUIoTPp/jUW
+ 0Rj9Ab1sm7UvqF1k6Sk2EY4e55X2/N8PS8XV+3+SD3bkjtf6gkAMxdTQOyj17JYvIA7y
+ P0GNAEVaRsQhnyIkXeh1bJFaGY9uOWIn40l0oTYcqGM7PfG3EyiKVaLPXwwtZkMx77lq
+ wXkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735676643; x=1736281443;
+ d=1e100.net; s=20230601; t=1735676575; x=1736281375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4eBUfaZOV4VpWuEPg0imAAbPSgeX3YWDxsrL3NZUv+w=;
- b=JsLnq3cYIYwHN/UElCTjidtmiLDzWjk4vQfdEiIrqjUn+T+yU1bGVF5GG2nEokTPUn
- w8LhF9umtINsZxzzUcOQorTJOpE26jZ4Z8fKgYRhOSOqdHHvrjiWe5Uun62d9alAbLM3
- gFF+GY5Ubl2Yv7SeU7k0/1RQ1jKFgNwop/Tx2be67IONOfy0kPYY+ZL3GxpV6XO/baO1
- WiFXBYrB91O6pkV4DE5aJYTZQRmAgwNuy7hUSeEwggyQDF8/gjCCGbAZ3MYRnYyR83KC
- 9ABCJP46QMcrxy1mLPVkEXobE8hmjNfX2fO9rrIcWFRU4eqTXwtG7uUlN8Naq5ecfwe2
- zRWg==
-X-Gm-Message-State: AOJu0YzeCvbL4EGAynjRLJB8l32qtVS/wfMYu+Et02rZZ28p0+R0MiIr
- GfMkV7tfheYhpH2JAdMMKY15doe2JTcGjSfPlxspS8krPmVRZ1KqC/hBwmaa4w7xfgdng/aMSWS
- 1HoE=
-X-Gm-Gg: ASbGncs5swjNXiKTJlignfsK9VVbLM+6uNlXs2gZxhiu7bABlYoHr/LkW728RRr+P9D
- sljexUGNjYOseZ0bOR3x+W9zJGj1yTYNVm648QutQbDQ2NFwHUyM2j6erBPSULODk2uKiVfoJaN
- BNxDqUEW6Plnh+nmBKoWE4eyHhM/P3OkOx5Qt7moPLEMyVFuHsHaUYizNvvdLTnrLfXI35OdvnE
- 6xf18BPHGdHgEv529XWZVa65oJ5R88Nf5fxJaEi0roD7v8A9N4MK/skD2tsiA/FBP9d9PZSVEOd
- RyBigqJNJ5cpRV8/W2phQuUEmHok1Qs=
-X-Google-Smtp-Source: AGHT+IEpyx91W6J9ctlJNmrL70Ly6CMvYQzDhnhsC0VD/GEUKNvmPTDkQuOP4vzfEGxTaxw5kbEySw==
-X-Received: by 2002:a05:6000:713:b0:386:3903:86eb with SMTP id
- ffacd0b85a97d-38a221f1fd1mr32023610f8f.23.1735676643483; 
- Tue, 31 Dec 2024 12:24:03 -0800 (PST)
+ bh=JXQtPIRMHtqCLfqXYGaOwpsFtz/fcVXJzzd8RkMtGSE=;
+ b=G31n5gxAl2CSJpXUrsr/9NvaQqsFNGrqqeUgzdvbElW6o9oafjEvhEiMEiGK2ULrYi
+ oRGfRSDbqVQxWge8ak+GFI4lQZL1WrXAREgLYLjeRwRDj3gwE30gX3l7TFRqOg4Fkb3w
+ XrjNG27yKInwsdHoNqMwONp16FjsPeOGgRgUtbHR4TjYZ0mWsYNN1kCz0u1QsMY9tTdg
+ uvG2e1hEoWUeR6H8X1DimPEjEX2FomanTw6gvdnZFnzgPkom3pbEM/81SzGtd23g8oiZ
+ ZFtWnKJJmkJxBvY5e+9w7DkDvU/t7p1JGXrB/qD8MCKBMpVuk1bwVFJ4BDxpT0Yb58B1
+ k37A==
+X-Gm-Message-State: AOJu0Yw7Iqpytb5f8/Rinq6MjkBl1Dqf9y78gnvilOafNPsesUTjl/G8
+ 8iEEr4LJh1ykYsZwZGgnn5gEJrNHFsn5CN14/88QeUyM8LUfb6tOFgw3fgloEl+TH1C9ogvxeRM
+ W4B8=
+X-Gm-Gg: ASbGncvice4+dILTjSzHZ5maqSat/pgfVQ8Yx8VS4g5i3+YhG2NYYtDLcFe4fFiZ+JO
+ BgXqEabgd8LrQcZOcLERbf6SN9p1RHDlU/6cfnhQpqx6XKaUoz2otQRIXx2CF0xqCZcCyXDXZWu
+ 8BI1LLDJ7flVYJMwOIjgLAkPf9sk6FXrvQ3TB5heRtdjRV5uumBR1Xp+LKLlqaXeSCFBJE276zl
+ yYYm9VPHtSg7rDvbdhoqAyqrUjA3abWX0n7p98Qhp/qQEW07LWdm/s8GnH5u5m9J/RwyReQqeaB
+ bLisocUj4xdMJHm9tq0sQyi50HQ10OM=
+X-Google-Smtp-Source: AGHT+IE7Hw9AOljtJZ1KiGBa8gQVgvby+n22i7k5ppQqvyA4LBc18cvj/+qurDXMKfHhD/scbUDeDA==
+X-Received: by 2002:a05:6000:188e:b0:382:5010:c8de with SMTP id
+ ffacd0b85a97d-38a223fd729mr35020802f8f.46.1735676574781; 
+ Tue, 31 Dec 2024 12:22:54 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e150sm33553091f8f.66.2024.12.31.12.24.01
+ 5b1f17b1804b1-43656a0b361sm431645315e9.0.2024.12.31.12.22.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 31 Dec 2024 12:24:02 -0800 (PST)
+ Tue, 31 Dec 2024 12:22:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vasant Hegde <vasant.hegde@amd.com>
-Subject: [PULL 19/29] hw/i386/amd_iommu: Simplify non-KVM checks on XTSup
- feature
-Date: Tue, 31 Dec 2024 21:22:18 +0100
-Message-ID: <20241231202228.28819-20-philmd@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 05/29] hw/usb/uhci: Introduce and use register defines
+Date: Tue, 31 Dec 2024 21:22:04 +0100
+Message-ID: <20241231202228.28819-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241231202228.28819-1-philmd@linaro.org>
 References: <20241231202228.28819-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +100,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generic code wanting to access KVM specific methods should
-do so being protected by the 'kvm_enabled()' helper.
+From: Guenter Roeck <linux@roeck-us.net>
 
-Doing so avoid link failures when optimization is disabled
-(using --enable-debug), see for example commits c04cfb4596a
-("hw/i386: fix short-circuit logic with non-optimizing builds")
-and 0266aef8cd6 ("amd_iommu: Fix kvm_enable_x2apic link error
-with clang in non-KVM builds").
+Introduce defines for UHCI registers to simplify adding register access
+in subsequent patches of the series.
 
-XTSup feature depends on KVM, so protect the whole block
-checking the XTSup feature with a check on whether KVM is
-enabled.
+No functional change.
 
-Since x86_cpus_init() already checks APIC ID > 255 imply
-kernel support for irqchip and X2APIC, remove the confuse
-and unlikely reachable "AMD IOMMU xtsup=on requires support
-on the KVM side" message.
-
-Fix a type in "configuration" in error message.
-
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20240906122542.3808997-3-linux@roeck-us.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20241129155802.35534-1-philmd@linaro.org>
 ---
- hw/i386/amd_iommu.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ include/hw/usb/uhci-regs.h | 11 +++++++++++
+ hw/usb/hcd-uhci.c          | 32 ++++++++++++++++----------------
+ 2 files changed, 27 insertions(+), 16 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index be522b5d7dc..6b13ce894b1 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1652,17 +1652,10 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
-                                         &s->mr_ir, 1);
+diff --git a/include/hw/usb/uhci-regs.h b/include/hw/usb/uhci-regs.h
+index fd45d29db0f..5b81714e5c2 100644
+--- a/include/hw/usb/uhci-regs.h
++++ b/include/hw/usb/uhci-regs.h
+@@ -1,6 +1,17 @@
+ #ifndef HW_USB_UHCI_REGS_H
+ #define HW_USB_UHCI_REGS_H
  
--    /* AMD IOMMU with x2APIC mode requires xtsup=on */
--    if (x86ms->apic_id_limit > 255 && !s->xtsup) {
--        error_report("AMD IOMMU with x2APIC confguration requires xtsup=on");
-+    if (kvm_enabled() && x86ms->apic_id_limit > 255 && !s->xtsup) {
-+        error_report("AMD IOMMU with x2APIC configuration requires xtsup=on");
-         exit(EXIT_FAILURE);
-     }
--    if (s->xtsup) {
--        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
--            error_report("AMD IOMMU xtsup=on requires support on the KVM side");
--            exit(EXIT_FAILURE);
--        }
--    }
++#define UHCI_USBCMD       0
++#define UHCI_USBSTS       2
++#define UHCI_USBINTR      4
++#define UHCI_USBFRNUM     6
++#define UHCI_USBFLBASEADD 8
++#define UHCI_USBSOF       0x0c
++#define UHCI_USBPORTSC1   0x10
++#define UHCI_USBPORTSC2   0x12
++#define UHCI_USBPORTSC3   0x14
++#define UHCI_USBPORTSC4   0x16
++
+ #define UHCI_CMD_FGR      (1 << 4)
+ #define UHCI_CMD_EGSM     (1 << 3)
+ #define UHCI_CMD_GRESET   (1 << 2)
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 7c0cc694554..8528d493d63 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -389,7 +389,7 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+     trace_usb_uhci_mmio_writew(addr, val);
  
-     pci_setup_iommu(bus, &amdvi_iommu_ops, s);
-     amdvi_init(s);
+     switch (addr) {
+-    case 0x00:
++    case UHCI_USBCMD:
+         if ((val & UHCI_CMD_RS) && !(s->cmd & UHCI_CMD_RS)) {
+             /* start frame processing */
+             trace_usb_uhci_schedule_start();
+@@ -424,7 +424,7 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+             }
+         }
+         break;
+-    case 0x02:
++    case UHCI_USBSTS:
+         s->status &= ~val;
+         /*
+          * XXX: the chip spec is not coherent, so we add a hidden
+@@ -435,27 +435,27 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+         }
+         uhci_update_irq(s);
+         break;
+-    case 0x04:
++    case UHCI_USBINTR:
+         s->intr = val;
+         uhci_update_irq(s);
+         break;
+-    case 0x06:
++    case UHCI_USBFRNUM:
+         if (s->status & UHCI_STS_HCHALTED) {
+             s->frnum = val & 0x7ff;
+         }
+         break;
+-    case 0x08:
++    case UHCI_USBFLBASEADD:
+         s->fl_base_addr &= 0xffff0000;
+         s->fl_base_addr |= val & ~0xfff;
+         break;
+-    case 0x0a:
++    case UHCI_USBFLBASEADD + 2:
+         s->fl_base_addr &= 0x0000ffff;
+         s->fl_base_addr |= (val << 16);
+         break;
+-    case 0x0c:
++    case UHCI_USBSOF:
+         s->sof_timing = val & 0xff;
+         break;
+-    case 0x10 ... 0x1f:
++    case UHCI_USBPORTSC1 ... UHCI_USBPORTSC4:
+         {
+             UHCIPort *port;
+             USBDevice *dev;
+@@ -493,28 +493,28 @@ static uint64_t uhci_port_read(void *opaque, hwaddr addr, unsigned size)
+     uint32_t val;
+ 
+     switch (addr) {
+-    case 0x00:
++    case UHCI_USBCMD:
+         val = s->cmd;
+         break;
+-    case 0x02:
++    case UHCI_USBSTS:
+         val = s->status;
+         break;
+-    case 0x04:
++    case UHCI_USBINTR:
+         val = s->intr;
+         break;
+-    case 0x06:
++    case UHCI_USBFRNUM:
+         val = s->frnum;
+         break;
+-    case 0x08:
++    case UHCI_USBFLBASEADD:
+         val = s->fl_base_addr & 0xffff;
+         break;
+-    case 0x0a:
++    case UHCI_USBFLBASEADD + 2:
+         val = (s->fl_base_addr >> 16) & 0xffff;
+         break;
+-    case 0x0c:
++    case UHCI_USBSOF:
+         val = s->sof_timing;
+         break;
+-    case 0x10 ... 0x1f:
++    case UHCI_USBPORTSC1 ... UHCI_USBPORTSC4:
+         {
+             UHCIPort *port;
+             int n;
 -- 
 2.47.1
 
