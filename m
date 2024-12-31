@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC2E1E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 18:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD93E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 31 Dec 2024 19:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSgYN-0007tF-6u; Tue, 31 Dec 2024 13:01:15 -0500
+	id 1tShZW-0004H9-IV; Tue, 31 Dec 2024 14:06:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgYJ-0007sj-9s
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 13:01:13 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZU-0004Gy-PW
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:28 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tSgYG-0002PW-9M
- for qemu-devel@nongnu.org; Tue, 31 Dec 2024 13:01:10 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so107736565e9.3
- for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 10:01:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tShZS-0007sA-Uo
+ for qemu-devel@nongnu.org; Tue, 31 Dec 2024 14:06:28 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-38634c35129so7807327f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 31 Dec 2024 11:06:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735668066; x=1736272866; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CAy/h+byf5acdo41fAdmD5XWdSO7i9k/e2eErMWtT1Q=;
- b=x+6ujJbnKhYvnu1+EeAIKK1AGL5hlRbvjbkKqewA7+w2IDeW7eMNYbaUYAA2dCCkH7
- ls2aJd+TZbApWQCqXDgysnjuZKcOFhAmduqFGiRj83cWdTJzBH+EN7GzNrJkp8tkYMbD
- m5dVngBqy4TNRFhnqxkrOttqPpx2g/55taQ5WHQmXwOzMnJ7PbEBFU6p86IFraENCiay
- Q15mzVsppZW87k6q3nOgT9kH4wmjOd3L1ZrUPJzlvRQcREruIgcK+0EIWRPuQaBqx7ES
- Lq+lDrP6xBeXz1NwMD4NLPmOCU7ZfsU9JyM1g92fKr0T9QpJVl/w4KjsWPTAhrY8EHb8
- KAXA==
+ d=linaro.org; s=google; t=1735671983; x=1736276783; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=62j49jGyn7Mnek1kENskjDxd1b9k/L3QaHaFnCdk9vk=;
+ b=ZyR7cBN9Jpv7PpsTdds26pHSV8JAqALWsxpvOr1nq4xLsFSbn8cRx1f5/Mufq+rswJ
+ n8mSsB/OKdy1jxgZKPlcoaBAH30cFbCaUds2r8dfrzD0qCbB3G51glqutp98bRo8t66r
+ gFvvwPle1ZfQ5p4V7yFltN/2GWHWHu6kQN4w7LTOb82h83X/N2pGqXn61pog8eYKC/9Q
+ U6xrY4r179+ErIKSvbE35a3V4YdD4Ik4iTyjSAIutp2+YekdCVtX+klRq8ZRtboUq0os
+ GuUK0ynqdTBoq6G3zqk0DpHgNbpmOz3Uk5AilxIPoxV5R4vE4zQfZ0nioUyCY5qo1CZz
+ kZ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735668066; x=1736272866;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CAy/h+byf5acdo41fAdmD5XWdSO7i9k/e2eErMWtT1Q=;
- b=F/4vrr1nV1Jio9sEARhuXPLw6+6VZOpVVMEZBjgP3FFLGhomZfvWbc1p2D40cbhylE
- u3EyqO/f3NSitZTlMxbL6bwRB0lzJbWSe7JNJTMj1Z/XOMXo6l7EJow5FlXsFi9ux/Xz
- IOfb4U5Yh8ZW3qEezlqjjxUsLTcn7JhT+fF2tDuYvFVVSh7znKn87LDMSuzeamrIH4o0
- DrJXY6sw3SDb7QNdBycNSUnkXP6LOrIuVyGN7vQ9tCko9CrkeRiS6Z8ijpF6EsiQ5eFc
- vkLf1hS1EbRmXcGtuenePLl2Ik07xev9A5ktRxTPwFtqXBFFVetisJbBNxh9KQyLGiO/
- E6Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW45TJClSSryVqb36h/9WHpoH8NfSy8nVfvbiB6Tqr9pteIpUlmizE8mYI7azKGYDQiPb97DIcMy6bf@nongnu.org
-X-Gm-Message-State: AOJu0YxnX1jiERGc58Qa4sO7Q/Wi+i6+Bib+j3x0AXcHNDL9xUKUhF0R
- c5VmDemiTQQuy3hJol2kD2xuwjsWRPAPhQtcA9Us3JoIG2HIaHc/1FL9Iwpwg1U=
-X-Gm-Gg: ASbGncte6JmmFJ4c8KIvzLh6D/8sKqnNUFyLhdhALrBIqrWl636XKyb43h9gnEDdF0J
- sWIKociBkbqN23xLXfd8Mz3WjJBWIBvrzR0PNDBxMhHranc2qqrib12/o5r5WC0rAXgDi7G2TqP
- HVMKfISuAcagi3WAE9TwAU45389uEiCEs0qx8aj9kbjbosXauzaY8Z5iLoXWo/exfK4hOiQ+nYc
- D0deNV+hlPDjaTX0kwGjoN/UWLsSEfuh/8QKhCwGxVkEk7ElhMKuxH9zRfsVmoDiim9wYLMqUbT
- 7cKiULrUMFyMHpvjmihy/8nP
-X-Google-Smtp-Source: AGHT+IFHex1vWyr7zaxqtjFYSOMXkGF/7fWPg4LRktsZayQpxgIrW49CXjmefvGk8X6/MMvOOpHWPA==
-X-Received: by 2002:a05:6000:18a3:b0:386:8ff:d20b with SMTP id
- ffacd0b85a97d-38a221f2f2dmr31832561f8f.27.1735668065751; 
- Tue, 31 Dec 2024 10:01:05 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1735671983; x=1736276783;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=62j49jGyn7Mnek1kENskjDxd1b9k/L3QaHaFnCdk9vk=;
+ b=Sf7IHVNyfyooOTM534nflFng4DhC8yhdYQ6ozZhoDWYoRtwFCUOxbLU6cKwPmDxSiR
+ NXP7ZJtDmw4F5fUPSLNYzm3ZY5MuKxlegjvkk3Dk6vlrC94T9n7nNh5+jHuAdXGG9cQw
+ 0i7sK6HhaMnzVgD3DtcRvA48tyPw3dU2j+YNgoD7Hp9Gcb/OosDXn2VW3dnIK6THl5xD
+ y+PZJ8+5PJqJ4D4NdzmEdysMfZcTWGovUdNEIhCYBc9GIIqrN9E6WOpJ8AfR2NqKV4CR
+ R37Yzx/QV3ftnnXMlXkBR/ZHmrm/LtAlZvHwfDs2cWuawBpsyLPEVYf0eFNi+fm69y3C
+ n0AA==
+X-Gm-Message-State: AOJu0YzPc7EVkq4aMu7Te6/sMBl5QwrXhpQFwiE6ySRV4V4JOQev2Wr0
+ fHnFCGEBDrAg3E1FN6LOYHtDEweClDYnUt7x9NGn8OfWImL4qUuIjIiH06koAy9inTPybMn9Y8p
+ VH1k=
+X-Gm-Gg: ASbGnct90bZzFWOexcSkT2y2oQei6OXiFSjF4qpLLjPoLtUKsblxZyVl1ITqK0uQ8+E
+ YKmRMqlY2+ibkBX3aaQZFsqo21fGaxhU7hKA/cXk8QT1pmPSwd//ePSu8Ci4jNiOTe5qno2K44/
+ MWaat6nALcXPekrEDHtOrSRexF4nbxvc1+SBIHeHphyEeJSOlydZdH4DSnAbnCzsFP3pPfWCu8f
+ H5KTM41laTwdMWqIG0eTz+0exzi7jRn7F4rgvngD/LsBIHhON6+gEDc8eIWWk+FLnH0oYAPZbWO
+ z9MiOTcyNPNB+/sSKSl7supDoLzNyoc=
+X-Google-Smtp-Source: AGHT+IHNNacgYby/orf6e1ioySK7rAD6CNC8xGRdN1PiI/FYg71kXAMMMA/TnOjQp5EU/JHf02Vlcg==
+X-Received: by 2002:a5d:588b:0:b0:385:de8d:c0f5 with SMTP id
+ ffacd0b85a97d-38a221eabecmr39024824f8f.16.1735671983266; 
+ Tue, 31 Dec 2024 11:06:23 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e3d9sm32744377f8f.67.2024.12.31.10.01.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Dec 2024 10:01:05 -0800 (PST)
-Message-ID: <0a4d5893-d54a-4b4f-91ad-0fe35f195294@linaro.org>
-Date: Tue, 31 Dec 2024 19:01:04 +0100
+ 5b1f17b1804b1-436840b35b5sm249447525e9.39.2024.12.31.11.06.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 31 Dec 2024 11:06:21 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4 0/6] hppa CPU reset and speedup
+Date: Tue, 31 Dec 2024 20:06:14 +0100
+Message-ID: <20241231190620.24442-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] hw/misc/ivshmem-flat: Add ivshmem-flat device
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
- armbru@redhat.com
-References: <20241216141818.111255-1-gustavo.romero@linaro.org>
- <20241216141818.111255-2-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241216141818.111255-2-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,36 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/12/24 15:18, Gustavo Romero wrote:
-> Add a new device, ivshmem-flat, which is similar to the ivshmem PCI but
-> does not require a PCI bus. It's meant to be used on machines like those
-> with Cortex-M MCUs, which usually lack a PCI/PCIe bus, e.g. lm3s6965evb
-> and mps2-an385.
-> 
-> The device currently only supports the sysbus bus.
-> 
-> The new device, just like the ivshmem PCI device, supports both peer
-> notification via hardware interrupts and shared memory.
-> 
-> The device shared memory size can be set using the 'shmem-size' option
-> and it defaults to 4 MiB, which is the default size of shmem allocated
-> by the ivshmem server.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1134
-> Message-ID: <20231127052024.435743-2-gustavo.romero@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   docs/system/devices/ivshmem-flat.rst |  33 ++
->   hw/misc/Kconfig                      |   5 +
->   hw/misc/ivshmem-flat.c               | 463 +++++++++++++++++++++++++++
->   hw/misc/meson.build                  |   2 +
->   hw/misc/trace-events                 |  16 +
->   include/hw/misc/ivshmem-flat.h       |  85 +++++
->   6 files changed, 604 insertions(+)
->   create mode 100644 docs/system/devices/ivshmem-flat.rst
->   create mode 100644 hw/misc/ivshmem-flat.c
->   create mode 100644 include/hw/misc/ivshmem-flat.h
+Respin of:
+https://lore.kernel.org/qemu-devel/20241229234154.32250-1-deller@kernel.org/
+"Add CPU reset function and speed up runtime and translation."
 
-Missing MAINTAINERS entry. Please fix as a follow-up patch.
+Since v3:
+- Added tests, dropped R-b tags
+
+Helge Deller (4):
+  target/hppa: Convert hppa_cpu_init() to ResetHold handler
+  hw/hppa: Reset vCPUs calling resettable_reset()
+  target/hppa: Set PC on vCPU reset
+  target/hppa: Speed up hppa_is_pa20()
+
+Philippe Mathieu-Daudé (2):
+  tests: Add functional tests for HPPA machines
+  target/hppa: Only set PSW 'M' bit on reset
+
+ MAINTAINERS                           |  1 +
+ target/hppa/cpu.h                     | 11 +++++++--
+ hw/hppa/machine.c                     |  6 ++---
+ target/hppa/cpu.c                     | 22 ++++++++++++++++-
+ tests/functional/meson.build          |  4 +++
+ tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
+ 6 files changed, 73 insertions(+), 6 deletions(-)
+ create mode 100755 tests/functional/test_hppa_seabios.py
+
+-- 
+2.47.1
+
 
