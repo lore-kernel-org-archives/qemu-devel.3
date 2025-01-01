@@ -4,88 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCC4E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 09:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CECE7718B
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 16:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSvE5-0000jV-Tt; Wed, 01 Jan 2025 04:41:17 -0500
+	id 1tT1GX-0002PZ-5z; Wed, 01 Jan 2025 11:08:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tSvE4-0000j0-CC
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 04:41:16 -0500
-Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tSvE2-0000XL-3F
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 04:41:16 -0500
-Received: by mail-pj1-x1041.google.com with SMTP id
- 98e67ed59e1d1-2f4448bf96fso11047793a91.0
- for <qemu-devel@nongnu.org>; Wed, 01 Jan 2025 01:41:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1735724472; x=1736329272; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=h09+K2O/uwP/e/0o7OKTrjxBVl1w5bpxRVKFtGTvo3g=;
- b=h5VfNARDP5L+TW8ofaa2lrbx+qN/0OX0c3/oU1+dEXOFh2AIZ8XS83uNnkoCMBasWC
- KTfIq33ydj0RVY6/sNMvEE1iROH8nNXw5iJ3HazAZovAwQHc0abdc8j8kQsMYfzEhJOf
- AtdNApOLKPinGZY6+MV2iDJHX5OA5bK8JCVz6YHjdrpuhQwRxgRyv0EU6C4+a2iG4VsS
- Z6h0ZCLvt7r11kgrQFaKRtNpO0IXAr6bOn6+q+9VNKQzKgX/gPaplNnyjzCZIc09Sql9
- ORO4VoPmPKKtZsu8PU9j460GxcCIs6I8jWVLF61neZ/Te8koFZvFtrsnd89f2uN49dfK
- UQww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735724472; x=1736329272;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=h09+K2O/uwP/e/0o7OKTrjxBVl1w5bpxRVKFtGTvo3g=;
- b=KUfPlT3Gj1IN//dmwXRqwarpADHx3HCghnVaKiBg2uS53foz5WVXKPBJgCYP478trg
- 67wpztHjaNXMIVseAqQvg6LbkhFungKntMbxSRmKpmqAz7JRHI4A/V6Cj0ze2UrgHFc6
- 434MVCxZvsUHZZJp6ihhxaPKJFUhL5d6CaIlfjc+twbWApto5AWf6HbzF8jJQbzaFuSv
- V3Pac6gjwZ5zTldYArbOjwwJzFlFS37T3N0JtnGWW9qv2F5bghaAcBySsuvRUSwczjRo
- rSXXiHgXZXq6rzV9Skcrzttw/BLX4TwN2L746AtlrfRnzpBF3px2swbfuZz+pFxytezf
- m22w==
-X-Gm-Message-State: AOJu0YzTdEQuxcZYDN26PtArbHQeg0jcmq6uvNNskDnQh6V016Ks/HC8
- 1QmKPiuFJf/VwKdNKzE6ZG8ffEQMHIpIK82CwpQniOmhPH/+jmo=
-X-Gm-Gg: ASbGncuL0H3mMcSVK7zVim7XGAeD3RMfIVam4jvowLHYFqhsSQRCcfe7rwmRWAqCx8r
- T4GkmckNGf2PkpdMhui8+Zw+ANMdTQydJC90yebmbhmOZ7Flb8trlBDXU/6dyXKPNEAeB1B8fo2
- Jf02MIIqT9gqWEGRVr9wN7LLpJq+vjB4FSmXK11shuMRs0vo3TkPiHd5pwx2VzGnX5rQa0zW4mb
- iZYPf2QOVsT8PDjZIXg4+HzxYdOVq0JYuo95xyDlx0Tj559USyKqdEi4E/TuQ==
-X-Google-Smtp-Source: AGHT+IGZyMb6xdx099/oQsy7TOkYwZlX5JjuBRo7QZ7J6HxUKjq6jz7eLJl5pM4moSm+Zragi/68RQ==
-X-Received: by 2002:a17:90b:270d:b0:2ee:48bf:7dc3 with SMTP id
- 98e67ed59e1d1-2f452e1606amr66400351a91.15.1735724472453; 
- Wed, 01 Jan 2025 01:41:12 -0800 (PST)
-Received: from [192.168.0.163] ([58.38.120.107])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ed644d87sm28509735a91.27.2025.01.01.01.41.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Jan 2025 01:41:12 -0800 (PST)
-Message-ID: <4cfa35a5-d2e1-4715-afd2-c32de0d21421@gmail.com>
-Date: Wed, 1 Jan 2025 17:41:07 +0800
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tT1GU-0002PG-9W
+ for qemu-devel@nongnu.org; Wed, 01 Jan 2025 11:08:10 -0500
+Received: from mout.gmx.net ([212.227.17.22])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tT1GR-00059N-Mq
+ for qemu-devel@nongnu.org; Wed, 01 Jan 2025 11:08:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1735747680; x=1736352480; i=deller@gmx.de;
+ bh=OowPyfUfMZvb+VA34h2RAGUmFQQwGNxXCgnHzAScMYE=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=afQZQm0IYwy6udW6MqSTG2hdinRsQWeRKqlc2xZNMAQ3P21b10i0idmer/mTLzCc
+ /VeMaPR9BgkbHuwIUjtszFAgkHyoIHCtJm3mWBgZ8MyF+yxRMeLqOcXn5QtjeQAlK
+ pPP0vOHVK0PCq7fXd6rltElVsSc5xS0xvNqqdaLogsJNSy38gx21SXa3C4YjInJgN
+ 3EIhU6blBwA1t1VzX4yGXSLGUrvBSys7pXsjwmHdIRHpP5q1otIkMD1qhjnI+BbvW
+ RjrKen2/xO0aCxrhfnkq195X3kiPUZ+OXBv7HnOPN+K0tFxxTqApE7+DCAIBD4oa6
+ dsTuf/tUUPz+itXqPA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.172] ([109.250.63.155]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfHAB-1u0RTf1tFb-00hcyd; Wed, 01
+ Jan 2025 17:08:00 +0100
+Message-ID: <f88d51dd-25e6-4038-81f4-4633e16cdec7@gmx.de>
+Date: Wed, 1 Jan 2025 17:07:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] vfio/pci: declare generic quirks in a new header file
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20241231151953.59992-1-tomitamoeko@gmail.com>
- <20241231151953.59992-2-tomitamoeko@gmail.com>
+Subject: Re: [PATCH v4 1/6] tests: Add functional tests for HPPA machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20241231190620.24442-1-philmd@linaro.org>
+ <20241231190620.24442-2-philmd@linaro.org>
 Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <20241231151953.59992-2-tomitamoeko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1041.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20241231190620.24442-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:dDNfohKJ0O8BSiZgfdwIh/LhzQJHboHINK7EH5GRH43h1iocgAo
+ eeshg/OFT7PB1g+Vs8KJv3lRFLgc9tdSrTjRLQSu/J7gALo8SS8A87gb7VVIUE2QpAH1z2n
+ U1Cv2C98l/dYEU4OdC64UvDd988Y9Nl3EkIaao9hXm1C14ohNbtxFZfG3ewEFbHW1ANHTo/
+ HhVEs3E2mjIUUsftrVdxQ==
+UI-OutboundReport: notjunk:1;M01:P0:6lDVvl9v+dQ=;x18m1wJxmyeMeeF/8ltS16kHxOq
+ uw5RuyU80hoKl+5jgIuS4HX6B4zrJNbLyLcu/iUAxhOVwHngX8DPcsc7WXagp37GrpTrgZSlS
+ vXE9XZExvHnawvwe2E6iFEH4nhJrz6mGfRBCoSlW93MVvQ2vwdISK+dhNpHM+/pCA/7u8E5aK
+ FYcG7/pGhc5PmqKLQATsECS7V09fzAnKrW/Yi8P2RSVA1bCqlJHR8fJ2kPiXDla0ZWCuNnrGx
+ 3KobTgnfoi27uOPx5AUTE1HUCMQIiqKIwO8njmZCruvt/GuJiqWZRB8ky0/D61lPKocX2lEih
+ IcF0QlkF36H/uACM4RG8FIrwA8zqR19oNJ+2OhYmPQ5TyeUJVALwQrgv7HZxGOs8Hsdla4snz
+ e+Wu5xn53qGdd7W8X/OToq+5JoGTHQEtZeHqZnlsmRF1P49maN86R9hwrnDAxEWuacvPqaN+7
+ KQrefWULZGCAXCD0c3UCF6vt1u86vIwrBoF9sHt4VkKaSzUoQyoywypaVBglf6G2Remwngzn4
+ V0m5hUUjDTmWWXfvr4e84RRgZSAaSbQhjaSMUNf5mEKnbm60XudbZ1wj6IAJzbaaD3lrVmL10
+ DG5hv+OeT/oNR9IcD064wzngQP8lQENgeULij5ngLiHd5xirZl11qt68+Ywq67bY1NyEviqAC
+ rslaqOVeZRqigQXlJzWVqH21GBxPV1jwhjaSjf24tRQnckwxRMnTWAtArErriFvSmywIHve0b
+ 220hE10lbYxI18HvGKArxK2/kH/Sz96lxtGYPvjZV0oYO5GNtV50+JL+9Gi8bUuyLtOASgQil
+ ktmaTpLnkL5IHlm8E7SCU9hpCfXV6NRA/xFeENyfEaqoHh1cNb2ddhbcaal1MlTy8rtu2WlPh
+ rGsLWtXDaiUZTqCCGDTF9w9bwV7TVmFoYP9CiCiNUkUU73AfcjTE3q7COfVmJV27nnxzl95JY
+ PBeAu/r+FVxrGTYys48k/Uft/qNdFU5t0Ok96WwiqRTGUJtkfPSDC+4w5KNDVM46G2E6K1tKz
+ dS4Cp/DUrqMF28/xoZVQU0mgYbGaSdzANJ3IBwWMWSnZPO64cheEX6U1wOuJw9HusFlMSvvCN
+ TA36X/o5/2ZroBfcemafYwFaMl+NuA
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,219 +140,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/31/24 20:06, Philippe Mathieu-Daud=C3=A9 wrote:
+> Add quick firmware boot tests (less than 1sec) for the
+> B160L (32-bit) and C3700 (64-bit) HPPA machines:
+>
+>    $ make check-functional-hppa
+>    1/4 qemu:func-quick+func-hppa / func-hppa-empty_cpu_model OK 0.13s 1 =
+subtests passed
+>    2/4 qemu:func-quick+func-hppa / func-hppa-version         OK 0.14s 1 =
+subtests passed
+>    3/4 qemu:func-quick+func-hppa / func-hppa-info_usernet    OK 0.22s 1 =
+subtests passed
+>    4/4 qemu:func-quick+func-hppa / func-hppa-hppa_seabios    OK 0.22s 2 =
+subtests passed
+>
+> Suggested-by: Helge Deller <deller@gmx.de>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-
-On 12/31/24 23:19, Tomita Moeko wrote:
-> Declare generic vfio_generic_{window_address,window_data,mirror}_quirk
-> in newly created pci_quirks.h so that they can be used elsewhere, like
-> igd.c.
-> 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
->  hw/vfio/pci-quirks.c | 59 ++++--------------------------------
->  hw/vfio/pci-quirks.h | 71 ++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 77 insertions(+), 53 deletions(-)
->  create mode 100644 hw/vfio/pci-quirks.h
-> 
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index c8e60475d5..bb2ce1d904 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -25,6 +25,7 @@
->  #include "hw/nvram/fw_cfg.h"
->  #include "hw/qdev-properties.h"
->  #include "pci.h"
-> +#include "pci-quirks.h"
->  #include "trace.h"
->  
->  /*
-> @@ -66,40 +67,6 @@ bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev)
->   * Device specific region quirks (mostly backdoors to PCI config space)
->   */
->  
-> -/*
-> - * The generic window quirks operate on an address and data register,
-> - * vfio_generic_window_address_quirk handles the address register and
-> - * vfio_generic_window_data_quirk handles the data register.  These ops
-> - * pass reads and writes through to hardware until a value matching the
-> - * stored address match/mask is written.  When this occurs, the data
-> - * register access emulated PCI config space for the device rather than
-> - * passing through accesses.  This enables devices where PCI config space
-> - * is accessible behind a window register to maintain the virtualization
-> - * provided through vfio.
-> - */
-> -typedef struct VFIOConfigWindowMatch {
-> -    uint32_t match;
-> -    uint32_t mask;
-> -} VFIOConfigWindowMatch;
-> -
-> -typedef struct VFIOConfigWindowQuirk {
-> -    struct VFIOPCIDevice *vdev;
-> -
-> -    uint32_t address_val;
-> -
-> -    uint32_t address_offset;
-> -    uint32_t data_offset;
-> -
-> -    bool window_enabled;
-> -    uint8_t bar;
-> -
-> -    MemoryRegion *addr_mem;
-> -    MemoryRegion *data_mem;
-> -
-> -    uint32_t nr_matches;
-> -    VFIOConfigWindowMatch matches[];
-> -} VFIOConfigWindowQuirk;
-> -
->  static uint64_t vfio_generic_window_quirk_address_read(void *opaque,
->                                                         hwaddr addr,
->                                                         unsigned size)
-> @@ -135,7 +102,7 @@ static void vfio_generic_window_quirk_address_write(void *opaque, hwaddr addr,
->      }
->  }
->  
-> -static const MemoryRegionOps vfio_generic_window_address_quirk = {
-> +const MemoryRegionOps vfio_generic_window_address_quirk = {
->      .read = vfio_generic_window_quirk_address_read,
->      .write = vfio_generic_window_quirk_address_write,
->      .endianness = DEVICE_LITTLE_ENDIAN,
-> @@ -178,26 +145,12 @@ static void vfio_generic_window_quirk_data_write(void *opaque, hwaddr addr,
->                        addr + window->data_offset, data, size);
->  }
->  
-> -static const MemoryRegionOps vfio_generic_window_data_quirk = {
-> +const MemoryRegionOps vfio_generic_window_data_quirk = {
->      .read = vfio_generic_window_quirk_data_read,
->      .write = vfio_generic_window_quirk_data_write,
->      .endianness = DEVICE_LITTLE_ENDIAN,
->  };
->  
-> -/*
-> - * The generic mirror quirk handles devices which expose PCI config space
-> - * through a region within a BAR.  When enabled, reads and writes are
-> - * redirected through to emulated PCI config space.  XXX if PCI config space
-> - * used memory regions, this could just be an alias.
-> - */
-> -typedef struct VFIOConfigMirrorQuirk {
-> -    struct VFIOPCIDevice *vdev;
-> -    uint32_t offset;
-> -    uint8_t bar;
-> -    MemoryRegion *mem;
-> -    uint8_t data[];
-> -} VFIOConfigMirrorQuirk;
-> -
->  static uint64_t vfio_generic_quirk_mirror_read(void *opaque,
->                                                 hwaddr addr, unsigned size)
->  {
-> @@ -228,7 +181,7 @@ static void vfio_generic_quirk_mirror_write(void *opaque, hwaddr addr,
->                                            addr, data);
->  }
->  
-> -static const MemoryRegionOps vfio_generic_mirror_quirk = {
-> +const MemoryRegionOps vfio_generic_mirror_quirk = {
->      .read = vfio_generic_quirk_mirror_read,
->      .write = vfio_generic_quirk_mirror_write,
->      .endianness = DEVICE_LITTLE_ENDIAN,
-> @@ -1499,7 +1452,7 @@ static void get_nv_gpudirect_clique_id(Object *obj, Visitor *v,
->                                         const char *name, void *opaque,
->                                         Error **errp)
->  {
-> -    const Property *prop = opaque;
-> +    Property *prop = opaque;
-
-Sorry this was a mistake when I rebasing my changes. I will revert this in v2.
-
->      uint8_t *ptr = object_field_prop_ptr(obj, prop);
->  
->      visit_type_uint8(v, name, ptr, errp);
-> @@ -1509,7 +1462,7 @@ static void set_nv_gpudirect_clique_id(Object *obj, Visitor *v,
->                                         const char *name, void *opaque,
->                                         Error **errp)
->  {
-> -    const Property *prop = opaque;
-> +    Property *prop = opaque;
-
-ditto
-
->      uint8_t value, *ptr = object_field_prop_ptr(obj, prop);
->  
->      if (!visit_type_uint8(v, name, &value, errp)) {
-> diff --git a/hw/vfio/pci-quirks.h b/hw/vfio/pci-quirks.h
-> new file mode 100644
-> index 0000000000..c0e96a01cc
-> --- /dev/null
-> +++ b/hw/vfio/pci-quirks.h
-> @@ -0,0 +1,71 @@
-> +/*
-> + * vfio generic region quirks (mostly backdoors to PCI config space)
-> + *
-> + * Copyright Red Hat, Inc. 2012-2015
-> + *
-> + * Authors:
-> + *  Alex Williamson <alex.williamson@redhat.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2.  See
-> + * the COPYING file in the top-level directory.
-> + */
-> +#ifndef HW_VFIO_VFIO_PCI_QUIRKS_H
-> +#define HW_VFIO_VFIO_PCI_QUIRKS_H
-> +
-> +#include "qemu/osdep.h"
-> +#include "exec/memop.h"
-> +
-> +/*
-> + * The generic window quirks operate on an address and data register,
-> + * vfio_generic_window_address_quirk handles the address register and
-> + * vfio_generic_window_data_quirk handles the data register.  These ops
-> + * pass reads and writes through to hardware until a value matching the
-> + * stored address match/mask is written.  When this occurs, the data
-> + * register access emulated PCI config space for the device rather than
-> + * passing through accesses.  This enables devices where PCI config space
-> + * is accessible behind a window register to maintain the virtualization
-> + * provided through vfio.
-> + */
-> +typedef struct VFIOConfigWindowMatch {
-> +    uint32_t match;
-> +    uint32_t mask;
-> +} VFIOConfigWindowMatch;
-> +
-> +typedef struct VFIOConfigWindowQuirk {
-> +    struct VFIOPCIDevice *vdev;
-> +
-> +    uint32_t address_val;
-> +
-> +    uint32_t address_offset;
-> +    uint32_t data_offset;
-> +
-> +    bool window_enabled;
-> +    uint8_t bar;
-> +
-> +    MemoryRegion *addr_mem;
-> +    MemoryRegion *data_mem;
-> +
-> +    uint32_t nr_matches;
-> +    VFIOConfigWindowMatch matches[];
-> +} VFIOConfigWindowQuirk;
-> +
-> +extern const MemoryRegionOps vfio_generic_window_address_quirk;
-> +extern const MemoryRegionOps vfio_generic_window_data_quirk;
-> +
-> +/*
-> + * The generic mirror quirk handles devices which expose PCI config space
-> + * through a region within a BAR.  When enabled, reads and writes are
-> + * redirected through to emulated PCI config space.  XXX if PCI config space
-> + * used memory regions, this could just be an alias.
-> + */
-> +typedef struct VFIOConfigMirrorQuirk {
-> +    struct VFIOPCIDevice *vdev;
-> +    uint32_t offset;
-> +    uint8_t bar;
-> +    MemoryRegion *mem;
-> +    uint8_t data[];
-> +} VFIOConfigMirrorQuirk;
-> +
-> +extern const MemoryRegionOps vfio_generic_mirror_quirk;
-> +
-> +#endif /* HW_VFIO_VFIO_PCI_QUIRKS_H */
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
 
 
