@@ -4,96 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D25E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 08:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E228DE7718B
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 08:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tSttv-0003hS-QY; Wed, 01 Jan 2025 03:16:23 -0500
+	id 1tSu4o-0004xz-QV; Wed, 01 Jan 2025 03:27:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tSttu-0003ge-3u
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 03:16:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tStts-0004Lm-Ki
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 03:16:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735719379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=M/DGQVvJ6pD8EPF6A3oGVPxri4BF+dfcHR3gxhYHa20=;
- b=VxhDvBrn2hRnioXHIgwTJ2IFXMJefbMxFhuuacg0sTMOtCTS+o8v4DK+TQYG6UhKc4KTw+
- mMTwoldJv+TQ3qRwNKiWQG3IVowYu9REiHYpXROGO2sZr76PwdaK0uYzYMDCKo9b+5xOAj
- ad40xD++SRkeJTmJZnE2+wK7GJ8gxkA=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-d9SfKgULOmK1LzxcrWz8pg-1; Wed, 01 Jan 2025 03:16:16 -0500
-X-MC-Unique: d9SfKgULOmK1LzxcrWz8pg-1
-X-Mimecast-MFC-AGG-ID: d9SfKgULOmK1LzxcrWz8pg
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2f2a9743093so14665015a91.3
- for <qemu-devel@nongnu.org>; Wed, 01 Jan 2025 00:16:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1tSu4o-0004xp-59
+ for qemu-devel@nongnu.org; Wed, 01 Jan 2025 03:27:38 -0500
+Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1tSu4m-0008Rv-OU
+ for qemu-devel@nongnu.org; Wed, 01 Jan 2025 03:27:37 -0500
+Received: by mail-io1-xd29.google.com with SMTP id
+ ca18e2360f4ac-844d5444b3dso388218039f.1
+ for <qemu-devel@nongnu.org>; Wed, 01 Jan 2025 00:27:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735720052; x=1736324852; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JofWtTiVqY3SaUL2gFQrvmITFhENuwDZsUsjHp+yfH4=;
+ b=deBNYn9pbbOdsYLkXlI3KL0rxDJWMbY/2s4O078mZUOYlsNk8H9ceW3IqcS3y/j3b1
+ SpFSv3GNiFylmoqiqPsyA7Ha1cBjLro2w3/8THfFgpsl0Mc5lHMhAoFRW5J348xD54Bn
+ WoXH2E9T6oBuuof7BygiYexhThM+cn4rygthdi94A3x9CMkRAyTPu1l5gL2Db9VPrfoQ
+ UR7x75nfgwHa/+P3ND2Podk3w46AUcWJu/vazyRErcnqSfEEQ5k2aGZo3gAOlDgirFcX
+ J9GruCHuffezED8kBqBw8+Ad48GfmMf0QYQGfX4O0urMf5sddZxg5mMcns5/qYZlxcYZ
+ leQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735719375; x=1736324175;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=M/DGQVvJ6pD8EPF6A3oGVPxri4BF+dfcHR3gxhYHa20=;
- b=dI7ziLbTDp+BtTt7EG7pxrNfWaK+TjFNecrC1sK2sDnK5S285kLXT7uWDlCpDYSI2s
- l5Erw/5v9CVuilMYXA8kfYk5FFnMmKutcCWST4wyE2owK20NTKpmcQgKuvZ7SEgPI4hJ
- 5XRYwhAjmfKnH6qi+A5hE9880mSYTVihHE6XeoGSLqwVvtJqoxpj3QF47VuMDiv7XhTp
- FvipN/QdUTEbq1CZBvmdvYrFwoAVzZ9GhPnH4eKojtNBlKPYpyQMO9qqBJsqZl0/ewhB
- zoRhOUuaV3dikNPxUWbpSuKhIg+UPO2HYqKrd7bF20bNDVW/DXFYg7v1HJhAvBwjSOxh
- 0PiA==
+ d=1e100.net; s=20230601; t=1735720052; x=1736324852;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JofWtTiVqY3SaUL2gFQrvmITFhENuwDZsUsjHp+yfH4=;
+ b=RH3y5CQq/FWcSc+g3LlwqPmRJUfwbDoSkH8HpP8HzCYhBsXlA4bWmUBTQnfjN2MzkI
+ AeSmYPY4gETDz/7K2ghnXD91Y5xvZYqVBBSLoOYqjR7LjsDAX+ounA2dnNxAd/0hFJsK
+ O8dOaiTuLaHU5+JhG564m29NUkXDTJLRjKA51HHT17xvl+AGeAC708r2mVZfzEF0iSzW
+ Byks575h1dEY+xkXtL7zXbmSUVgi0iMHP363OTGjKt/zE0nq4eFoK00ONj57Yi/k3xj3
+ EIIClJbWb8m5hx41BSkLqipQmhV1YCeBo2Rfx0YnSdWd1VHkfFpf0y+NlHeNlVGHdGIa
+ 2HVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgB+3Z1UXBSUdIow88d/zCtA2it3AoEbiWzudZj88KDalNPe1cwPe/iaknTcrSCWBl+OA20CIxSnSB@nongnu.org
-X-Gm-Message-State: AOJu0Yyd3qlyUTlvaP5Lq3bdxo8/FrsS+HIAOM3ynUcBL3qy+Ue4iUuv
- kXCD5uawRJzgV2U/oql1rEjNLfasB1GVI0CcnunqHvMVa5LSpnOy2lylSnqN/uSFI4FnTN4HMC+
- Cxj0rAGSecrjBCqYOT5qKLmE1EN4nVK0mjoqdiSN/hWxd2Xw2luB0
-X-Gm-Gg: ASbGncsFiy2HdHbsngozSiIYJI8KhPXiIxn9zKsOexf24mrkS1uOSkgjIMSjr3zrYPJ
- kcECHejPx95AWK3QoV6RDYKqDWMqhndZQ0kst58llD0VeQ0qP7N6hTFuYjqPGtpJFFV7xvk3D2P
- yI1TrQXbhXge9sv5wVG+iErCH+c11CNEZkPEcMlZGxVKjmkxbj1ATPmT0lOyGEXk/dSkgeoAdpn
- R4oLvYOFsQ/LhDXyvUjOyPXnBuyIrv5PbHoNVo6gTw5azVfWlxa1BQW3xedkuOUXvmUc53q5sUO
- AA==
-X-Received: by 2002:a17:90b:2802:b0:2ee:8358:385 with SMTP id
- 98e67ed59e1d1-2f452def795mr62334102a91.4.1735719375216; 
- Wed, 01 Jan 2025 00:16:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGF2/sz5tqb9cQQb4onPZRZfjAFk6O5RDLNTSf95ce/gijJmPoZyVDAON/A9UCan1Oflh4aSQ==
-X-Received: by 2002:a17:90b:2802:b0:2ee:8358:385 with SMTP id
- 98e67ed59e1d1-2f452def795mr62334084a91.4.1735719374961; 
- Wed, 01 Jan 2025 00:16:14 -0800 (PST)
-Received: from localhost.localdomain ([115.96.136.4])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-219dc96313esm205447335ad.20.2025.01.01.00.16.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jan 2025 00:16:14 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH] qtest/fw-cfg: remove compiled out code
-Date: Wed,  1 Jan 2025 13:45:55 +0530
-Message-ID: <20250101081555.1050736-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.45.2
+ AJvYcCWbWVjg0s6UogNbCsk2HYqhKe3gdxR1z4aJzaPewNW1TohlaSpWaasdEpt8OLzsl2YeTWU6cRrbCYL/@nongnu.org
+X-Gm-Message-State: AOJu0YyEGT81nm/BdEVg0EpMIa4wvn6ppwIpvTglyQTNxPqpqFWt3Emu
+ Gzu1zhPM6MVruK8234RXYbAvUFcRaXaqn+4+/E7XOJygJLjrlTTiV6EMOg144rZpHF2DKCtFkDf
+ UumR8VZdL4ghITjsIeMHxMkwdYlWmMp0gSQLcYQ==
+X-Gm-Gg: ASbGncvaaeHEdKmU7DQPT7DINS/wttjsq1AwFGkP5THRO/DacE5LF4qmfeuDRSmsYNX
+ gtOhVQFFIcnU2HSU0alc6dgxGe1+7Umf4RBGGCA==
+X-Google-Smtp-Source: AGHT+IEX8NBHkp1Ul4rcpdZlX4/ewP9EamOj1IM9v/ngOVlq5bwo6hd3hQXpRPba3BdklP091TvKRGZzYmIeCjrApeY=
+X-Received: by 2002:a5e:cb42:0:b0:835:3dfc:5ba5 with SMTP id
+ ca18e2360f4ac-84988735634mr3440203839f.5.1735720052208; Wed, 01 Jan 2025
+ 00:27:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.188,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250101081555.1050736-1-anisinha@redhat.com>
+In-Reply-To: <20250101081555.1050736-1-anisinha@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Wed, 1 Jan 2025 09:27:21 +0100
+Message-ID: <CAPMQPEL=sEp-e9NR2FKU6DnnfYdYHY2Z-ymDRtyGgwj2i5Ge7g@mail.gmail.com>
+Subject: Re: [PATCH] qtest/fw-cfg: remove compiled out code
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-trivial@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
+ envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-io1-xd29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,32 +95,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove code that is already compiled out. This prevents confusion.
+On Wed, 1 Jan 2025 at 09:16, Ani Sinha <anisinha@redhat.com> wrote:
+>
+> Remove code that is already compiled out. This prevents confusion.
+>
+> CC: qemu-trivial@nongnu.org
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>  tests/qtest/fw_cfg-test.c | 6 ------
+>  1 file changed, 6 deletions(-)
 
-CC: qemu-trivial@nongnu.org
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/fw_cfg-test.c | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/tests/qtest/fw_cfg-test.c b/tests/qtest/fw_cfg-test.c
-index 5dc807ba23..e48b34afa5 100644
---- a/tests/qtest/fw_cfg-test.c
-+++ b/tests/qtest/fw_cfg-test.c
-@@ -243,12 +243,6 @@ int main(int argc, char **argv)
-     qtest_add_func("fw_cfg/ram_size", test_fw_cfg_ram_size);
-     qtest_add_func("fw_cfg/nographic", test_fw_cfg_nographic);
-     qtest_add_func("fw_cfg/nb_cpus", test_fw_cfg_nb_cpus);
--#if 0
--    qtest_add_func("fw_cfg/machine_id", test_fw_cfg_machine_id);
--    qtest_add_func("fw_cfg/kernel", test_fw_cfg_kernel);
--    qtest_add_func("fw_cfg/initrd", test_fw_cfg_initrd);
--    qtest_add_func("fw_cfg/boot_device", test_fw_cfg_boot_device);
--#endif
-     qtest_add_func("fw_cfg/max_cpus", test_fw_cfg_max_cpus);
-     qtest_add_func("fw_cfg/numa", test_fw_cfg_numa);
-     qtest_add_func("fw_cfg/boot_menu", test_fw_cfg_boot_menu);
--- 
-2.45.2
-
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
