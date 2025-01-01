@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CECE7718B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 16:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 677D2E7718B
+	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 16:24:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tT1GX-0002PZ-5z; Wed, 01 Jan 2025 11:08:14 -0500
+	id 1tT1W5-00041n-Fo; Wed, 01 Jan 2025 11:24:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tT1GU-0002PG-9W
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 11:08:10 -0500
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tT1W4-00041e-4x
+ for qemu-devel@nongnu.org; Wed, 01 Jan 2025 11:24:16 -0500
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tT1GR-00059N-Mq
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 11:08:10 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tT1W1-0002vz-Uj
+ for qemu-devel@nongnu.org; Wed, 01 Jan 2025 11:24:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1735747680; x=1736352480; i=deller@gmx.de;
- bh=OowPyfUfMZvb+VA34h2RAGUmFQQwGNxXCgnHzAScMYE=;
+ s=s31663417; t=1735748651; x=1736353451; i=deller@gmx.de;
+ bh=iihY5CVQP0fSYvtg7e2gDoLrGpoUK69iCsjPogcdg4E=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=afQZQm0IYwy6udW6MqSTG2hdinRsQWeRKqlc2xZNMAQ3P21b10i0idmer/mTLzCc
- /VeMaPR9BgkbHuwIUjtszFAgkHyoIHCtJm3mWBgZ8MyF+yxRMeLqOcXn5QtjeQAlK
- pPP0vOHVK0PCq7fXd6rltElVsSc5xS0xvNqqdaLogsJNSy38gx21SXa3C4YjInJgN
- 3EIhU6blBwA1t1VzX4yGXSLGUrvBSys7pXsjwmHdIRHpP5q1otIkMD1qhjnI+BbvW
- RjrKen2/xO0aCxrhfnkq195X3kiPUZ+OXBv7HnOPN+K0tFxxTqApE7+DCAIBD4oa6
- dsTuf/tUUPz+itXqPA==
+ b=RRnQ9kd9xunk5FjaxG+iCXRMoWIb5/Rr09eFXC7VZ5ElXsuDTJ/EHn7TdJf+vnFU
+ ASBanQTQKzW4SN5zRiwizREDdsEH5/pKCC+NsAJ63IfXNIr/6jfKNNcL/jKoRkE99
+ uC3uCtgJy4JFLLQQZjiPdQzkH4t8SaopEYd6ixGUrpNg2Jj1B6wKCKYAW9sxoeCd7
+ qJhQaKN28Lw8tfQJSx+qQr1nTJq3+M4axK6mxHsHb1eGpX0ANZR5kMIyD0xWc3KDW
+ CJ370nFTCmhE9enxAxZA5fdxCu2XxmVEVMRd4ngt3lSuKr46SS1DqEshuXCa6z6Uz
+ //nPqct7N5OacTajhA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.172] ([109.250.63.155]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfHAB-1u0RTf1tFb-00hcyd; Wed, 01
- Jan 2025 17:08:00 +0100
-Message-ID: <f88d51dd-25e6-4038-81f4-4633e16cdec7@gmx.de>
-Date: Wed, 1 Jan 2025 17:07:59 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdNcG-1u2MKh1Y48-00alYX; Wed, 01
+ Jan 2025 17:24:11 +0100
+Message-ID: <f3f6e456-92ca-46ef-8939-57addc953565@gmx.de>
+Date: Wed, 1 Jan 2025 17:24:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] tests: Add functional tests for HPPA machines
+Subject: Re: [PATCH v4 4/6] target/hppa: Only set PSW 'M' bit on reset
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
 References: <20241231190620.24442-1-philmd@linaro.org>
- <20241231190620.24442-2-philmd@linaro.org>
+ <20241231190620.24442-5-philmd@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -91,40 +91,40 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241231190620.24442-2-philmd@linaro.org>
+In-Reply-To: <20241231190620.24442-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:dDNfohKJ0O8BSiZgfdwIh/LhzQJHboHINK7EH5GRH43h1iocgAo
- eeshg/OFT7PB1g+Vs8KJv3lRFLgc9tdSrTjRLQSu/J7gALo8SS8A87gb7VVIUE2QpAH1z2n
- U1Cv2C98l/dYEU4OdC64UvDd988Y9Nl3EkIaao9hXm1C14ohNbtxFZfG3ewEFbHW1ANHTo/
- HhVEs3E2mjIUUsftrVdxQ==
-UI-OutboundReport: notjunk:1;M01:P0:6lDVvl9v+dQ=;x18m1wJxmyeMeeF/8ltS16kHxOq
- uw5RuyU80hoKl+5jgIuS4HX6B4zrJNbLyLcu/iUAxhOVwHngX8DPcsc7WXagp37GrpTrgZSlS
- vXE9XZExvHnawvwe2E6iFEH4nhJrz6mGfRBCoSlW93MVvQ2vwdISK+dhNpHM+/pCA/7u8E5aK
- FYcG7/pGhc5PmqKLQATsECS7V09fzAnKrW/Yi8P2RSVA1bCqlJHR8fJ2kPiXDla0ZWCuNnrGx
- 3KobTgnfoi27uOPx5AUTE1HUCMQIiqKIwO8njmZCruvt/GuJiqWZRB8ky0/D61lPKocX2lEih
- IcF0QlkF36H/uACM4RG8FIrwA8zqR19oNJ+2OhYmPQ5TyeUJVALwQrgv7HZxGOs8Hsdla4snz
- e+Wu5xn53qGdd7W8X/OToq+5JoGTHQEtZeHqZnlsmRF1P49maN86R9hwrnDAxEWuacvPqaN+7
- KQrefWULZGCAXCD0c3UCF6vt1u86vIwrBoF9sHt4VkKaSzUoQyoywypaVBglf6G2Remwngzn4
- V0m5hUUjDTmWWXfvr4e84RRgZSAaSbQhjaSMUNf5mEKnbm60XudbZ1wj6IAJzbaaD3lrVmL10
- DG5hv+OeT/oNR9IcD064wzngQP8lQENgeULij5ngLiHd5xirZl11qt68+Ywq67bY1NyEviqAC
- rslaqOVeZRqigQXlJzWVqH21GBxPV1jwhjaSjf24tRQnckwxRMnTWAtArErriFvSmywIHve0b
- 220hE10lbYxI18HvGKArxK2/kH/Sz96lxtGYPvjZV0oYO5GNtV50+JL+9Gi8bUuyLtOASgQil
- ktmaTpLnkL5IHlm8E7SCU9hpCfXV6NRA/xFeENyfEaqoHh1cNb2ddhbcaal1MlTy8rtu2WlPh
- rGsLWtXDaiUZTqCCGDTF9w9bwV7TVmFoYP9CiCiNUkUU73AfcjTE3q7COfVmJV27nnxzl95JY
- PBeAu/r+FVxrGTYys48k/Uft/qNdFU5t0Ok96WwiqRTGUJtkfPSDC+4w5KNDVM46G2E6K1tKz
- dS4Cp/DUrqMF28/xoZVQU0mgYbGaSdzANJ3IBwWMWSnZPO64cheEX6U1wOuJw9HusFlMSvvCN
- TA36X/o5/2ZroBfcemafYwFaMl+NuA
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:Huc8QPm3w/0xERroKa5AYPYBrrman/w7bH6WEfpRgQCuvFtWwZQ
+ 3OLPJpy0WZ8Zwe2I9GnAYLQBdYGbi8ddnCSwD9ZAk6Xh0fsZ2vg921pbLFLsl1XzWSoDrgJ
+ JHvVcwnL0FEhaLGQd66lAN4JSWJZEFbSmxDVU04g3GYIJiQwDEQgjy5jLd69F6GBeKUF8BB
+ Rw9p/00RedPTKYNkhaGFw==
+UI-OutboundReport: notjunk:1;M01:P0:IgiYhnSfTPQ=;QcgPD5btIl6ao0HqC71vzkLcajD
+ IDVvhZooSQPWlOUhTKhBvxZQIC2/4H/EATh7IBeNY8QHIQvnza8o16fbTgCMzNd9emVRsylj5
+ Y9SUJf/TV+gUeDtw+ejGEyqQboE6/4MxhA0TdPg44J4ftc3wxuO6XCT6rZ8fReoW3OyZpVbx4
+ vJA62LV8aTGvAo4fbf6nNQAtu/Wy8q7HScAUiO+zfWtOHyIQM5+ztIzxkHYGWII/F3YR25UDH
+ yXKkMM8P4biz+V3qZmGt3J4M7m0lsNeSWcwwcnYGaICKsWHh1l0NkV+RfGSEl03ijfcAFG4dB
+ lhU/qHfZGR4eRRD1IgJoXWQiLU1ApVR1uCIrR9kKn3915xxWkqw8jHkMendEQFDrkIrnK1muv
+ ZXi/mVNGh0L7a7Tsb0TBXH5E8ClLsfP8BDrAC1rArFgh3rPMZ0S97qD48YQ7m5niIoEAiK3y1
+ Xp7i40UJmHPnZqe5YTKkows8UA27glY/wrWWau0DSl5foPnhMG4vKnoGVtGtRKR8G8GgiG4eE
+ QiNr2hdkJxlWgOtYPoiXhRvJJz0CFrtMrjE7pK/UMmh7pfn8L/EXWH7YkvHCHSvOQQhdjrl9V
+ wsr8vo1KK2lZzkfgJKrpMt+ZWcp+JklWuBRHk9L6jtERkU47DG1LSp2qMadwEHax3Mc/jN24R
+ Q61aL0mvLewibN8/122KKtWZg3Zbp0OKnDbQ77CgWx7v/G1JltN5D5RfGktzowRMmqd9HYUtL
+ XXPao2dSIHYdLRckH1hLRxcDDAOMPFFDOltW2Uel+SnJqAp80GLpgKRjFAAsyhiVIaWzDRJeN
+ RJnF8274rI3YmyDz+gsY2b1yXgjB4fnTJ8annYInCrLrDszybeeUazJBjDWzUdRke+z9K3/Wq
+ +7X6TP/UVPa2Yi+vayaML50D5eJA9Llu2trGrWc+7duseI2h3315n7yYKMfGpSiuGwQG6SUG+
+ lMTTfPz3F1zfheK8a9iIsoJVSunnqWohHyMhaot8KvTuq7XRvraDj0sgjSks/cwZB1eyKfi3/
+ YNlYUgIqbBgyvC3R1fEyIgSlP68KPrpKzIj6El2omuFiuLMjumYG0dzxwbay+sjKminhTyObr
+ c89dwQf8PzsZ7ho4coP9/6KsxIUkXl
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,23 +141,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/31/24 20:06, Philippe Mathieu-Daud=C3=A9 wrote:
-> Add quick firmware boot tests (less than 1sec) for the
-> B160L (32-bit) and C3700 (64-bit) HPPA machines:
+> On reset:
 >
->    $ make check-functional-hppa
->    1/4 qemu:func-quick+func-hppa / func-hppa-empty_cpu_model OK 0.13s 1 =
-subtests passed
->    2/4 qemu:func-quick+func-hppa / func-hppa-version         OK 0.14s 1 =
-subtests passed
->    3/4 qemu:func-quick+func-hppa / func-hppa-info_usernet    OK 0.22s 1 =
-subtests passed
->    4/4 qemu:func-quick+func-hppa / func-hppa-hppa_seabios    OK 0.22s 2 =
-subtests passed
+>    "All PSW bits except the M bit is reset. The M bit is set."
 >
-> Suggested-by: Helge Deller <deller@gmx.de>
+> Commit 1a19da0da44 ("target/hppa: Fill in hppa_cpu_do_interrupt /
+> hppa_cpu_exec_interrupt") inadvertently set the W bit at RESET,
+> remove it and set the M bit.
+>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
+Acked-by: Helge Deller <deller@gmx.de>
+
+
+
+> ---
+>   target/hppa/cpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+> index 41538d39d62..dbd46842841 100644
+> --- a/target/hppa/cpu.c
+> +++ b/target/hppa/cpu.c
+> @@ -209,7 +209,7 @@ static void hppa_cpu_reset_hold(Object *obj, ResetTy=
+pe type)
+>       memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
+>
+>       cpu_hppa_loaded_fr0(env);
+> -    cpu_hppa_put_psw(env, PSW_W);
+> +    cpu_hppa_put_psw(env, PSW_M);
+>   }
+>
+>   static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
 
 
