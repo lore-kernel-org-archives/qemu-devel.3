@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5256DE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 15:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC186E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 15:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTMsx-0007YG-JS; Thu, 02 Jan 2025 10:13:19 -0500
+	id 1tTMt8-0007e3-4Q; Thu, 02 Jan 2025 10:13:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTMsn-0007Vc-0c
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 10:13:11 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTMt3-0007Zt-8h
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 10:13:26 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTMsj-0006Vo-0y
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 10:13:07 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so69502665e9.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 07:13:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTMt1-0006Ze-RJ
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 10:13:25 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4361f65ca01so114287145e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 07:13:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735830781; x=1736435581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735830802; x=1736435602; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WJKhnsw6sz3wiF8lOKV7uw4NqCWo3JxX8CcFZUizL7g=;
- b=NbYniyuBq9FrWTpjvs576Yj9/lC+HRCsUB1V2Xzd1H3PPFLz091CUAfC4ryXNz4ItN
- ulOoh8QhBEmXXCXa949PWktdiXyGBX5d/0JssP3xB/cByLRbHvgshSorkKCzxtkflOCN
- nYgPztLe9cGBouP19BwX+pUrkJKJCWKBdW7/Z8UEN/iSS4K9PYeffiX0ytnDMCFcCPyx
- RgzdtTZvO5DAea+MwhHVIW8JfIuW/nM83dU3vxnfsn5M8i4pVpwzyImU3kBq8koOqak2
- PklxtWjQYLD+qxkZz0UpPlOwBUILilD63gCqBWJsEHoAZPABsWDVvtOnrS4xvUQFPpMw
- npSg==
+ bh=mOzPkO5TmCycPZ/aaTUQEr16ldzePeyfEU/CMbdVIug=;
+ b=SsK/aAoEEiUkSZB/b4u2s7wDXRx5D75mrVFZEaHTh2pE75Hq77DPt1nLSI40rxPmC8
+ 4pl+swDT5NDXpLuDEvQhY24po1TngoIhHPOz936E1p18dFJYXrRlGWyuBQl0fCa+BfoH
+ Vbog02EU5Y9iwpdXgxOu2q0Rril4+5clIJ3B6x5YnAO1Gyqm1yeC3ZjKct7DR4MjgFiT
+ yp+nEEl0wIvSiX7rI86/u1525YkmkUV6KZ9DoLUr113es4NyRP6T2GFJM7BuQcppg0tl
+ /tnoxzh6jvrfboEBh7E5FaRHAJC79nNfRqAvH+UcAapHxZ5nvWxUR6D3BiN0NxCOtdZ8
+ 70Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735830781; x=1736435581;
+ d=1e100.net; s=20230601; t=1735830802; x=1736435602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WJKhnsw6sz3wiF8lOKV7uw4NqCWo3JxX8CcFZUizL7g=;
- b=O5mnZHOIs4A2+AbTB9ZeOGwRIvZb5yJGtrnCEfomX/RWxaAyW9J0+nNdkb+/1shWCC
- QDU0gJd6QaEV60OqodSzmiIxiOmx4AyAnT8QwbzHIkQB2qSnsWs4Zoj3krPnynGgB9vM
- NAMP6rhDkpU2+SFMaeK0EMiWPpkvNI5fW7LCThMXKmZ0Wu2+HfMozE8enxW+olYdxYzV
- hmJyGs6LV/mN/5/2dKtVUJuqHlfDuNO+07H91gdoZ24UBDVvQR2z0ZBGTS9AAZb+pIEE
- 3bf/ADIswIcwMtcVbFbYKvFw621o+HeUawiy1Jm6rMBUfydjlfF26COzhmunw4ZmJrqY
- jFWQ==
-X-Gm-Message-State: AOJu0Yy+rUPY3aK6fY1gDFmCnRtRRyAhfPPt+6vHtszQAkG1OdnKin1l
- Oa+ryr9Jsyyo61v5Nmh01v6h7YvMwYIw9hhKWlXQrxgvUFwvuPqeyuIXLYhRJCPJWEQ06Oy3iLI
- XlgaG3g==
-X-Gm-Gg: ASbGncttO37CMF2sagIULDDuXmQbsyBDsy+HCBPQfhFsXnI5MEsrFsQhJeT7yFPnCCU
- KFDs0BBYxUFY6JGJ0WymEGHqwNy95fAj2FwYQnKx8ic92/Ljc03z+PgkG9J0DO0jcG9j9pBQ7iL
- UnwajyiYqIAjHkOFL61UlUOYoJy74hbJkeP43USPe+pzDdM1VgUurgdoL3eyIkuNK3t4R6VrKOU
- P7RigwKLgkOUzqHeNh2JaDWyENQRiy0ldHj1VNUJ6myBT8hJEModCw7KBjRKZV0ZluRwx+6p11X
- 6dW53Z2iJFOkQ6iK/BF0l0LqgB1Xs7Y=
-X-Google-Smtp-Source: AGHT+IE4JPVuNOMW4gJ/XfyPVyPWvdFnceGsMphKbjXGcE/1kT9xlfZMS9MJwHYvGmXYStd0ueS/FA==
-X-Received: by 2002:a05:600c:1c20:b0:436:76bf:51cc with SMTP id
- 5b1f17b1804b1-43676bf5382mr337631465e9.12.1735830781091; 
- Thu, 02 Jan 2025 07:13:01 -0800 (PST)
+ bh=mOzPkO5TmCycPZ/aaTUQEr16ldzePeyfEU/CMbdVIug=;
+ b=Usdo2+gYV+Tbhb4XFnNZ2w5XMTN0aGCB21xuq564ktZGvCvMmuCEEFTm9Cfk/IWk1t
+ n1qe4FmB4r1278uKoR7S3tMmrqp/UuC7z6EH+BI8rytrBaS05urzcJCrZ7UwE8qjyi83
+ Gamx+3+dKd4L0syDXb4EJJLMzXsPhryfk2HUNAedIPPDMDslhb8ut5YcsUpdlvGZvPQL
+ xB3HXn+Uq8hLbJTthAKZQ4T7dHJDvXjeX0zZhi2jTF1mVDL0GpAwlXJJqk841RKObpxJ
+ ntokpzqYt77w56bZ1kyvlwGVgQI/kz1t4+VNo/oH1mhFyoIp1ZpgDcvu53NrU0N/GBWk
+ YDLg==
+X-Gm-Message-State: AOJu0YwVvyGOIky1iYESK9n/ybvaddMZJkgk1jqGJ/UU9uJgTc9YwvgV
+ 2PnoRugs8HhPDAowtYH1GG84HBfXl5bJkz9gDQiEprB9gWzsR/qvxIaKcKNPGmtXmclc1nfKm6h
+ cMBmqmQ==
+X-Gm-Gg: ASbGncvoAN2BGDGe2wArvCB9JvIiSp3O/wZA36TtieP0FS3NZNH3+1415seqU5z8SPQ
+ upbeC2uxVipTLeQSiH9Bs0BsjSgFQfmrECN6W68sUzvL/llJkli5qhUK4D048ODIM1xbIxK3VzE
+ wUjb9AjwGQgQd/GhB0hWUXu24gfIV0ANe880dl8BI+/rj8rAJkDhX6qbmEm7kL9ohBzfBtxL08J
+ o6+dMKWF4c/5jXZI1ezgjodGUqWTq6BjlC6YL87bzhDwEsO9DicjYXvz+EJPu+grfY6oQItDA9n
+ fjAjDDbnIcx8OSGOuMKpkY5tpK+3+Q4=
+X-Google-Smtp-Source: AGHT+IFrL5hXkCHLj+i3X6LEtqowF+hQOBI+5N4joqlV03TBnogyeaMQTJ+NmsC1RngDUIu53EXNWg==
+X-Received: by 2002:a05:6000:4b0b:b0:386:37f5:99e7 with SMTP id
+ ffacd0b85a97d-38a22201897mr41198827f8f.33.1735830802090; 
+ Thu, 02 Jan 2025 07:13:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4364a376846sm459330385e9.0.2025.01.02.07.13.00
+ ffacd0b85a97d-38a1c89e357sm39397475f8f.72.2025.01.02.07.13.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Jan 2025 07:13:00 -0800 (PST)
+ Thu, 02 Jan 2025 07:13:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -76,17 +76,17 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 03/10] qdev: Call qemu_create_machine() on user emulation
-Date: Thu,  2 Jan 2025 16:12:37 +0100
-Message-ID: <20250102151244.59357-4-philmd@linaro.org>
+Subject: [PATCH v3 07/10] qom: Add object_get_container()
+Date: Thu,  2 Jan 2025 16:12:41 +0100
+Message-ID: <20250102151244.59357-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250102151244.59357-1-philmd@linaro.org>
 References: <20250102151244.59357-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,43 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For system emulation, qemu_create_machine() is
-called from qemu_init().
-TCG accelerator always calls tcg_init_machine().
-Use it to call qemu_create_machine() on user
-emulation.
+From: Peter Xu <peterx@redhat.com>
 
+Add a helper to fetch a root container (under object_get_root()).  Sanity
+check on the type of the object.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Message-ID: <20241121192202.4155849-12-peterx@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/tcg-all.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/qom/object.h | 10 ++++++++++
+ qom/object.c         | 10 ++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index c2565758876..e18b0c03f71 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -35,7 +35,9 @@
- #include "qemu/atomic.h"
- #include "qapi/qapi-builtin-visit.h"
- #include "qemu/units.h"
--#if !defined(CONFIG_USER_ONLY)
-+#if defined(CONFIG_USER_ONLY)
-+#include "hw/qdev-core.h"
-+#else
- #include "hw/boards.h"
- #endif
- #include "internal-common.h"
-@@ -124,6 +126,10 @@ static int tcg_init_machine(MachineState *ms)
-     tcg_prologue_init();
- #endif
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 95d6e064d9b..bcf9910b42c 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1510,6 +1510,16 @@ const char *object_property_get_type(Object *obj, const char *name,
+  */
+ Object *object_get_root(void);
  
-+#ifdef CONFIG_USER_ONLY
-+    qemu_create_machine(NULL);
-+#endif
++/**
++ * object_get_container:
++ * @name: the name of container to lookup
++ *
++ * Lookup a root level container.
++ *
++ * Returns: the container with @name.
++ */
++Object *object_get_container(const char *name);
 +
-     return 0;
+ 
+ /**
+  * object_get_objects_root:
+diff --git a/qom/object.c b/qom/object.c
+index b4c52d055d9..81c06906d30 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1751,6 +1751,16 @@ static Object *object_root_initialize(void)
+     return root;
  }
  
++Object *object_get_container(const char *name)
++{
++    Object *container;
++
++    container = object_resolve_path_component(object_get_root(), name);
++    assert(object_dynamic_cast(container, TYPE_CONTAINER));
++
++    return container;
++}
++
+ Object *object_get_root(void)
+ {
+     static Object *root;
 -- 
 2.47.1
 
