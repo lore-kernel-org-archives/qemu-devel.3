@@ -4,80 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B254E77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 08:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAF6E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 08:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTGXM-0003rC-KQ; Thu, 02 Jan 2025 03:26:36 -0500
+	id 1tTGa4-0004ZG-36; Thu, 02 Jan 2025 03:29:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tTGXK-0003qu-0O
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 03:26:34 -0500
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tTGXH-00058a-1b
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 03:26:33 -0500
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-29fae583cc8so5825407fac.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 00:26:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1735806388; x=1736411188;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H+Y4ZPttg6EmS4h0dhKgqSmWyCOjDHVJON7G3N15hdo=;
- b=RDPYm6Fwu4lr1Nw1SzNmvM6DHsf8k2KnFi7bYy39jMEpWmTwrd55xQk/oUxvzNz4qU
- sH077HBupRcs9GYXa8Q5DlgEXW5M8XfPCRGaLWJPGplQ0BYh9jZV2n3TomLPatAPqNZX
- bvjh1q1F+XAmuioQpwTPLeqeZoyA8CEMzKuOrGRWWKrEWHSUnuFAuzC36YrHrebgxfRM
- PsNOCJ6ALrW2WoR+vfMqevw5kcsrL1jwba+45JSjs4V4ADYF2bLlLZpZhd1D8m5h7rBS
- MxuiSYeiAYwn710MkriW6Yt4P/cHZiGIDf2vBoZ8PK/jbRSgDPtmV0fveqfDMW9b0bpY
- adHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735806388; x=1736411188;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H+Y4ZPttg6EmS4h0dhKgqSmWyCOjDHVJON7G3N15hdo=;
- b=tcz6Diz4NOvQ8ywRVVBQ07aO6ff6wlfe4AIaz86BFf0Vh5mnQT9SNoz/H7aDvSDtTD
- LvX02zF+AsOWvcdS3bffRaXrI3mIUqzRxOJZXexO4ZzQQ/G3tmparAgxSjfqdnv12SYX
- 0ybrlf8ywMYshS9lavxm2VkKlxSzyLK+eJP3+dJz9+iWyhAzdkvzCOuysBiW5B7CaxAx
- gPnvGxyxGIlZfwTE9inhGqfpEwYWOhc81U1d80vVilsl1JRY0guH5/09ZOA29z55aix9
- huG2hq01LVyU4sgEJwb1WTqooouYjTm6ISNaUjnaQqBDMt4eTPdVMewx2mqJ0oJnhjjf
- fSMQ==
-X-Gm-Message-State: AOJu0YwQ2z35jtafU/zmJljeMpDe8ouDkiiCVqCNh4QgdR8fHtVGY63q
- SrweVn8RPR9tOZXccSHCb6UnZSYZSKGDIbKkNcegsbzOyxmpCj3XZokNO7AY9mQsoHxkx/FVAge
- 3LpKgA5aLwPokBL6xf0eWwrmVGFFdGXvjgyCRWhCaxqz/cxMXRuueLA==
-X-Gm-Gg: ASbGncv83tJiUaDUrUU/GeD/e+ZE5gw5JzqfR4JNsJUmEZso0yHnbabP4cCSp2Mtj5i
- 9vxMq5CEQ0Peuenefh+ohcnrnwQ8MMiqwq3LOh80=
-X-Google-Smtp-Source: AGHT+IHEHuqAZAziS/LBuIRnM0fza31Bv/nO7eAYVLQZP+vjw5XiVwUYNr0/gpCpo5uVYZYVcXoAiYlo93OFxOvGUj0=
-X-Received: by 2002:a05:6871:d308:b0:29e:37af:a943 with SMTP id
- 586e51a60fabf-2a7fcd3b648mr24654736fac.18.1735806387828; Thu, 02 Jan 2025
- 00:26:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=YAii=T2=kaod.org=clg@ozlabs.org>)
+ id 1tTGZy-0004YU-5W; Thu, 02 Jan 2025 03:29:18 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=YAii=T2=kaod.org=clg@ozlabs.org>)
+ id 1tTGZu-0005fT-Qf; Thu, 02 Jan 2025 03:29:17 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YP0Gx6Qj9z4xdw;
+ Thu,  2 Jan 2025 19:28:57 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YP0Gt2RmCz4x07;
+ Thu,  2 Jan 2025 19:28:53 +1100 (AEDT)
+Message-ID: <513c95c7-8084-460c-86b8-c89612de48dd@kaod.org>
+Date: Thu, 2 Jan 2025 09:28:56 +0100
 MIME-Version: 1.0
-References: <155c8974fd72403b9b32d3e2827850b7f08937f3.1734695085.git.yong.huang@smartx.com>
- <f5d20cd31c44281a5ec29f8b263ba8c8624b2445.1734695085.git.yong.huang@smartx.com>
-In-Reply-To: <f5d20cd31c44281a5ec29f8b263ba8c8624b2445.1734695085.git.yong.huang@smartx.com>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Thu, 2 Jan 2025 16:26:12 +0800
-Message-ID: <CAK9dgmaa9Pk=bFWV_9sZ5rDvshA04Kvu1n0apWsScbRY=_7y2g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] qxl: Fix race on accessing cursor in struct
- SimpleSpiceDisplay
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000025539b062ab4eb02"
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] aspeed: Introduce AST27x0 SoC with Cortex-M4 support
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241225020311.3718080-1-steven_lee@aspeedtech.com>
+ <20241225020311.3718080-4-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20241225020311.3718080-4-steven_lee@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=YAii=T2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.222, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,122 +112,525 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000025539b062ab4eb02
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hello Steven,
 
-- Ping
+On 12/25/24 03:03, Steven Lee wrote:
+> This initial module adds support for the AST27x0 SoC, which features
+> four Cortex-A35 cores and two Cortex-M4 cores. The patch enables emulation
+> of the Cortex-M4 cores, laying the groundwork for co-processor support.
 
-On Fri, Dec 20, 2024 at 7:46=E2=80=AFPM Hyman Huang <yong.huang@smartx.com>=
- wrote:
+These changes introduce implementation of 2 SoCs. Please split.
 
-> Both the spice server and the qemu (iothread/main loop) context
-> can access the cursor field in struct SimpleSpiceDisplay.
->
-> Add the mutex lock before accessing cursor in
-> qxl_spice_reset_cursor().
->
-> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> 
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
->  hw/display/qxl.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-> index ae2d983299..07e171cb5d 100644
-> --- a/hw/display/qxl.c
-> +++ b/hw/display/qxl.c
-> @@ -28,6 +28,7 @@
->  #include "qemu/atomic.h"
->  #include "qemu/main-loop.h"
->  #include "qemu/module.h"
-> +#include "qemu/lockable.h"
->  #include "hw/qdev-properties.h"
->  #include "sysemu/runstate.h"
->  #include "migration/vmstate.h"
-> @@ -298,10 +299,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
->      qemu_mutex_lock(&qxl->track_lock);
->      qxl->guest_cursor =3D 0;
->      qemu_mutex_unlock(&qxl->track_lock);
-> -    if (qxl->ssd.cursor) {
-> -        cursor_unref(qxl->ssd.cursor);
-> +    WITH_QEMU_LOCK_GUARD(&qxl->ssd.lock) {
-> +        if (qxl->ssd.cursor) {
-> +            cursor_unref(qxl->ssd.cursor);
-> +        }
-> +        qxl->ssd.cursor =3D cursor_builtin_hidden();
->      }
-> -    qxl->ssd.cursor =3D cursor_builtin_hidden();
->  }
->
->  static uint32_t qxl_crc32(const uint8_t *p, unsigned len)
-> --
-> 2.39.1
->
->
+>   hw/arm/aspeed_ast27x0-cm4.c | 397 ++++++++++++++++++++++++++++++++++++
+>   hw/arm/meson.build          |   1 +
+>   include/hw/arm/aspeed_soc.h |  23 +++
+>   3 files changed, 421 insertions(+)
+>   create mode 100644 hw/arm/aspeed_ast27x0-cm4.c
+> 
+> diff --git a/hw/arm/aspeed_ast27x0-cm4.c b/hw/arm/aspeed_ast27x0-cm4.c
+> new file mode 100644
+> index 0000000000..591e54f0a7
+> --- /dev/null
+> +++ b/hw/arm/aspeed_ast27x0-cm4.c
+> @@ -0,0 +1,397 @@
+> +/*
+> + * ASPEED Ast27x0 CM4 SoC
+> + *
+> + * Copyright (C) 2024 ASPEED Technology Inc.
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
 
---=20
-Best regards
+Please add an SPDX-License-Identifier tag in all new files.
 
---00000000000025539b062ab4eb02
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> + *
+> + * Implementation extracted from the AST2600 and adapted for Ast10x0.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "exec/address-spaces.h"
+> +#include "hw/qdev-clock.h"
+> +#include "hw/misc/unimp.h"
+> +#include "hw/arm/aspeed_soc.h"
+> +
+> +#define ASPEED_SOC_IOMEM_SIZE 0x00200000
+> +
+> +static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+> +    [ASPEED_DEV_SRAM]      =  0x00000000,
+> +    [ASPEED_DEV_INTC]      =  0x72100000,
+> +    [ASPEED_DEV_INTC0]     =  0x72102000,
+> +    [ASPEED_DEV_INTC1]     =  0x72102100,
+> +    [ASPEED_DEV_INTC2]     =  0x72102200,
+> +    [ASPEED_DEV_INTC3]     =  0x72102300,
+> +    [ASPEED_DEV_INTC4]     =  0x72102400,
+> +    [ASPEED_DEV_INTC5]     =  0x72102500,
+> +    [ASPEED_DEV_INTC6]     =  0x72102600,
+> +    [ASPEED_DEV_INTC7]     =  0x72102700,
+> +    [ASPEED_DEV_INTC8]     =  0x72102800,
+> +    [ASPEED_DEV_SCU]       =  0x72C02000,
+> +    [ASPEED_DEV_SCUIO]     =  0x74C02000,
+> +    [ASPEED_DEV_UART0]     =  0X74C33000,
+> +    [ASPEED_DEV_UART1]     =  0X74C33100,
+> +    [ASPEED_DEV_UART2]     =  0X74C33200,
+> +    [ASPEED_DEV_UART3]     =  0X74C33300,
+> +    [ASPEED_DEV_UART4]     =  0X72C1A000,
+> +    [ASPEED_DEV_IPC0]      =  0x72C1C000,
+> +    [ASPEED_DEV_IPC1]      =  0x72C1C200,
+> +    [ASPEED_DEV_IPC2]      =  0x72C1C800,
+> +    [ASPEED_DEV_UART5]     =  0X74C33400,
+> +    [ASPEED_DEV_UART6]     =  0X74C33500,
+> +    [ASPEED_DEV_UART7]     =  0X74C33600,
+> +    [ASPEED_DEV_UART8]     =  0X74C33700,
+> +    [ASPEED_DEV_UART9]     =  0X74C33800,
+> +    [ASPEED_DEV_UART10]    =  0X74C33900,
+> +    [ASPEED_DEV_UART11]    =  0X74C33A00,
+> +    [ASPEED_DEV_UART12]    =  0X74C33B00,
+> +    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +};
+> +
+> +static const int aspeed_soc_ast27x0ssp_irqmap[] = {
+> +    [ASPEED_DEV_SCU]       = 12,
+> +    [ASPEED_DEV_UART0]     = 132,
+> +    [ASPEED_DEV_UART1]     = 132,
+> +    [ASPEED_DEV_UART2]     = 132,
+> +    [ASPEED_DEV_UART3]     = 132,
+> +    [ASPEED_DEV_UART4]     = 8,
+> +    [ASPEED_DEV_UART5]     = 132,
+> +    [ASPEED_DEV_UART6]     = 140,
+> +    [ASPEED_DEV_UART7]     = 132,
+> +    [ASPEED_DEV_UART8]     = 132,
+> +    [ASPEED_DEV_UART9]     = 132,
+> +    [ASPEED_DEV_UART10]    = 132,
+> +    [ASPEED_DEV_UART11]    = 132,
+> +    [ASPEED_DEV_UART12]    = 132,
+> +    [ASPEED_DEV_TIMER1]    = 16,
+> +};
+> +
+> +static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+> +    [ASPEED_DEV_SRAM]      =  0x00000000,
+> +    [ASPEED_DEV_INTC]      =  0x72100000,
+> +    [ASPEED_DEV_INTC0]     =  0x72103000,
+> +    [ASPEED_DEV_INTC1]     =  0x72103100,
+> +    [ASPEED_DEV_INTC2]     =  0x72103200,
+> +    [ASPEED_DEV_INTC3]     =  0x72103300,
+> +    [ASPEED_DEV_INTC4]     =  0x72103400,
+> +    [ASPEED_DEV_INTC5]     =  0x72103500,
+> +    [ASPEED_DEV_INTC6]     =  0x72103600,
+> +    [ASPEED_DEV_INTC7]     =  0x72103700,
+> +    [ASPEED_DEV_INTC8]     =  0x72103800,
+> +    [ASPEED_DEV_SCU]       =  0x72C02000,
+> +    [ASPEED_DEV_SCUIO]     =  0x74C02000,
+> +    [ASPEED_DEV_UART0]     =  0X74C33000,
+> +    [ASPEED_DEV_UART1]     =  0X74C33100,
+> +    [ASPEED_DEV_UART2]     =  0X74C33200,
+> +    [ASPEED_DEV_UART3]     =  0X74C33300,
+> +    [ASPEED_DEV_UART4]     =  0X72C1A000,
+> +    [ASPEED_DEV_IPC0]      =  0x72C1C400,
+> +    [ASPEED_DEV_IPC1]      =  0x72C1C600,
+> +    [ASPEED_DEV_IPC2]      =  0x72C1C800,
+> +    [ASPEED_DEV_UART5]     =  0X74C33400,
+> +    [ASPEED_DEV_UART6]     =  0X74C33500,
+> +    [ASPEED_DEV_UART7]     =  0X74C33600,
+> +    [ASPEED_DEV_UART8]     =  0X74C33700,
+> +    [ASPEED_DEV_UART9]     =  0X74C33800,
+> +    [ASPEED_DEV_UART10]    =  0X74C33900,
+> +    [ASPEED_DEV_UART11]    =  0X74C33A00,
+> +    [ASPEED_DEV_UART12]    =  0X74C33B00,
+> +    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +};
+> +
+> +static const int aspeed_soc_ast27x0tsp_irqmap[] = {
+> +    [ASPEED_DEV_SCU]       = 12,
+> +    [ASPEED_DEV_UART0]     = 132,
+> +    [ASPEED_DEV_UART1]     = 132,
+> +    [ASPEED_DEV_UART2]     = 132,
+> +    [ASPEED_DEV_UART3]     = 132,
+> +    [ASPEED_DEV_UART4]     = 8,
+> +    [ASPEED_DEV_UART5]     = 132,
+> +    [ASPEED_DEV_UART6]     = 140,
+> +    [ASPEED_DEV_UART7]     = 132,
+> +    [ASPEED_DEV_UART8]     = 132,
+> +    [ASPEED_DEV_UART9]     = 132,
+> +    [ASPEED_DEV_UART10]    = 132,
+> +    [ASPEED_DEV_UART11]    = 132,
+> +    [ASPEED_DEV_UART12]    = 132,
+> +    [ASPEED_DEV_TIMER1]    = 16,
+> +};
+> +
+> +static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedSoCState *s, int dev)
+> +{
+> +    Aspeed27x0CM4SoCState *a = ASPEED27X0CM4_SOC(s);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +
+> +    return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
+> +}
+> +
+> +static void aspeed_soc_ast27x0ssp_init(Object *obj)
+> +{
+> +    Aspeed27x0CM4SoCState *a = ASPEED27X0CM4_SOC(obj);
+> +    AspeedSoCState *s = ASPEED_SOC(obj);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    char socname[8];
+> +    char typename[64];
+> +    int i;
+> +
+> +    if (sscanf(sc->name, "%7s", socname) != 1) {
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);
+> +
+> +    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+> +
+> +    snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
+> +    object_initialize_child(obj, "scu", &s->scu, typename);
+> +    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev", sc->silicon_rev);
+> +> +    for (i = 0; i < sc->uarts_num; i++) {
+> +        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_MM);
+> +    }
+> +
+> +    object_initialize_child(obj, "timerctrl", &s->timerctrl,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "intc", &s->intc,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "ipc", &s->ipc,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +}
+> +
+> +static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+> +{
+> +    Aspeed27x0CM4SoCState *a = ASPEED27X0CM4_SOC(dev_soc);
+> +    AspeedSoCState *s = ASPEED_SOC(dev_soc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    DeviceState *armv7m;
+> +    Error *err = NULL;
+> +    g_autofree char *sram_name = NULL;
+> +
+> +    if (!clock_has_source(s->sysclk)) {
+> +        error_setg(errp, "sysclk clock must be wired up by the board code");
+> +        return;
+> +    }
+> +
+> +    /* AST27X0 SSP Core */
+> +    armv7m = DEVICE(&a->armv7m);
+> +    qdev_prop_set_uint32(armv7m, "num-irq", 256);
+> +    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
+> +    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
+> +    object_property_set_link(OBJECT(&a->armv7m), "memory",
+> +                             OBJECT(s->memory), &error_abort);
+> +    sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+> +
+> +    /* Internal SRAM */
+> +    sram_name = g_strdup_printf("aspeed.sram.%d",
+> +                                CPU(a->armv7m.cpu)->cpu_index);
+> +    memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size, &err);
 
-<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:comic sa=
-ns ms,sans-serif">- Ping</div></div><br><div class=3D"gmail_quote gmail_quo=
-te_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Dec 20, 2024 at=
- 7:46=E2=80=AFPM Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com">y=
-ong.huang@smartx.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-sty=
-le:solid;border-left-color:rgb(204,204,204);padding-left:1ex">Both the spic=
-e server and the qemu (iothread/main loop) context<br>
-can access the cursor field in struct SimpleSpiceDisplay.<br>
-<br>
-Add the mutex lock before accessing cursor in<br>
-qxl_spice_reset_cursor().<br>
-<br>
-Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" tar=
-get=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
----<br>
-=C2=A0hw/display/qxl.c | 9 ++++++---<br>
-=C2=A01 file changed, 6 insertions(+), 3 deletions(-)<br>
-<br>
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c<br>
-index ae2d983299..07e171cb5d 100644<br>
---- a/hw/display/qxl.c<br>
-+++ b/hw/display/qxl.c<br>
-@@ -28,6 +28,7 @@<br>
-=C2=A0#include &quot;qemu/atomic.h&quot;<br>
-=C2=A0#include &quot;qemu/main-loop.h&quot;<br>
-=C2=A0#include &quot;qemu/module.h&quot;<br>
-+#include &quot;qemu/lockable.h&quot;<br>
-=C2=A0#include &quot;hw/qdev-properties.h&quot;<br>
-=C2=A0#include &quot;sysemu/runstate.h&quot;<br>
-=C2=A0#include &quot;migration/vmstate.h&quot;<br>
-@@ -298,10 +299,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)<br>
-=C2=A0 =C2=A0 =C2=A0qemu_mutex_lock(&amp;qxl-&gt;track_lock);<br>
-=C2=A0 =C2=A0 =C2=A0qxl-&gt;guest_cursor =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0qemu_mutex_unlock(&amp;qxl-&gt;track_lock);<br>
--=C2=A0 =C2=A0 if (qxl-&gt;ssd.cursor) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 cursor_unref(qxl-&gt;ssd.cursor);<br>
-+=C2=A0 =C2=A0 WITH_QEMU_LOCK_GUARD(&amp;qxl-&gt;ssd.lock) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qxl-&gt;ssd.cursor) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cursor_unref(qxl-&gt;ssd.cursor)=
-;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 qxl-&gt;ssd.cursor =3D cursor_builtin_hidden()=
-;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 qxl-&gt;ssd.cursor =3D cursor_builtin_hidden();<br>
-=C2=A0}<br>
-<br>
-=C2=A0static uint32_t qxl_crc32(const uint8_t *p, unsigned len)<br>
--- <br>
-2.39.1<br>
-<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
-gards</font></div></div>
+This is better :
 
---00000000000025539b062ab4eb02--
+     if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size, errp)) {
+            return
+     }
+
+and aspeed_soc_ast1030_realize() needs a fix too btw.
+
+> +    if (err != NULL) {
+> +        error_propagate(errp, err);
+> +        return;
+> +    }
+> +    memory_region_add_subregion(s->memory,
+> +                                sc->memmap[ASPEED_DEV_SRAM],
+> +                                &s->sram);
+> +
+> +    /* SCU */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
+> +
+> +    /* UART */
+> +    if (!aspeed_soc_uart_realize(s, errp)) {
+> +        return;
+> +    }
+> +
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
+> +                                  "aspeed.timerctrl",
+> +                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->intc),
+> +                                  "aspeed.intc",
+> +                                  sc->memmap[ASPEED_DEV_INTC], 0x4000);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ipc),
+> +                                  "aspeed.ipc",
+> +                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);
+> +}
+> +
+> +static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass, void *data)
+> +{
+> +    static const char * const valid_cpu_types[] = {
+> +        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
+> +        NULL
+> +    };
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
+> +
+> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
+> +    dc->user_creatable = false;
+> +    dc->realize = aspeed_soc_ast27x0ssp_realize;
+> +
+> +    sc->name = "ast2700ssp-a0";
+> +    sc->valid_cpu_types = valid_cpu_types;
+> +    sc->silicon_rev = AST2700_A0_SILICON_REV;
+> +    sc->sram_size = 0x1000000;
+> +    sc->spis_num = 0;
+> +    sc->ehcis_num = 0;
+> +    sc->wdts_num = 0;
+> +    sc->macs_num = 0;
+> +    sc->uarts_num = 13;
+> +    sc->uarts_base = ASPEED_DEV_UART0;
+> +    sc->irqmap = aspeed_soc_ast27x0ssp_irqmap;
+> +    sc->memmap = aspeed_soc_ast27x0ssp_memmap;
+> +    sc->num_cpus = 1;
+> +    sc->get_irq = aspeed_soc_ast27x0ssp_get_irq;
+> +}
+> +
+> +static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedSoCState *s, int dev)
+> +{
+> +    Aspeed27x0CM4SoCState *a = ASPEED27X0CM4_SOC(s);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +
+> +    return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
+> +}
+> +
+> +static void aspeed_soc_ast27x0tsp_init(Object *obj)
+> +{
+> +    Aspeed27x0CM4SoCState *a = ASPEED27X0CM4_SOC(obj);
+> +    AspeedSoCState *s = ASPEED_SOC(obj);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    char socname[8];
+> +    char typename[64];
+> +    int i;
+> +
+> +    if (sscanf(sc->name, "%7s", socname) != 1) {
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);
+> +
+> +    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+> +
+> +    snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
+> +    object_initialize_child(obj, "scu", &s->scu, typename);
+> +    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev", sc->silicon_rev);
+> +
+> +    for (i = 0; i < sc->uarts_num; i++) {
+> +        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_MM);
+> +    }
+> +
+> +    object_initialize_child(obj, "timerctrl", &s->timerctrl,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "intc", &s->intc,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "ipc", &s->ipc,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +}
+> +
+> +static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+> +{
+> +    Aspeed27x0CM4SoCState *a = ASPEED27X0CM4_SOC(dev_soc);
+> +    AspeedSoCState *s = ASPEED_SOC(dev_soc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    DeviceState *armv7m;
+> +    Error *err = NULL;
+> +    g_autofree char *sram_name = NULL;
+> +
+> +    if (!clock_has_source(s->sysclk)) {
+> +        error_setg(errp, "sysclk clock must be wired up by the board code");
+> +        return;
+> +    }
+> +
+> +    /* AST27X0 TSP Core */
+> +    armv7m = DEVICE(&a->armv7m);
+> +    qdev_prop_set_uint32(armv7m, "num-irq", 256);
+> +    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
+> +    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
+> +    object_property_set_link(OBJECT(&a->armv7m), "memory",
+> +                             OBJECT(s->memory), &error_abort);
+> +    sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+> +
+> +    /* Internal SRAM */
+> +    sram_name = g_strdup_printf("aspeed.sram.%d",
+> +                                CPU(a->armv7m.cpu)->cpu_index);
+> +    memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size, &err);
+> +    if (err != NULL) {
+> +        error_propagate(errp, err);
+> +        return;
+> +    }
+> +    memory_region_add_subregion(s->memory,
+> +                                sc->memmap[ASPEED_DEV_SRAM],
+> +                                &s->sram);
+> +
+> +    /* SCU */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
+> +
+> +    /* UART */
+> +    if (!aspeed_soc_uart_realize(s, errp)) {
+> +        return;
+> +    }
+> +
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
+> +                                  "aspeed.timerctrl",
+> +                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->intc),
+> +                                  "aspeed.intc",
+> +                                  sc->memmap[ASPEED_DEV_INTC], 0x4000);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ipc),
+> +                                  "aspeed.ipc",
+> +                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);
+> +}
+> +
+> +static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass, void *data)
+> +{
+> +    static const char * const valid_cpu_types[] = {
+> +        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
+> +        NULL
+> +    };
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
+> +
+> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
+> +    dc->user_creatable = false;
+> +    dc->realize = aspeed_soc_ast27x0tsp_realize;
+> +
+> +    sc->name = "ast2700tsp-a0";
+> +    sc->valid_cpu_types = valid_cpu_types;
+> +    sc->silicon_rev = AST2700_A0_SILICON_REV;
+> +    sc->sram_size = 0x1000000;
+> +    sc->spis_num = 0;
+> +    sc->ehcis_num = 0;
+> +    sc->wdts_num = 0;
+> +    sc->macs_num = 0;
+> +    sc->uarts_num = 13;
+> +    sc->uarts_base = ASPEED_DEV_UART0;
+> +    sc->irqmap = aspeed_soc_ast27x0tsp_irqmap;
+> +    sc->memmap = aspeed_soc_ast27x0tsp_memmap;
+> +    sc->num_cpus = 1;
+> +    sc->get_irq = aspeed_soc_ast27x0tsp_get_irq;
+> +}
+> +
+> +
+> +static const TypeInfo aspeed_soc_ast27x0cm4_types[] = {
+> +    {
+> +        .name           = TYPE_ASPEED27X0CM4_SOC,
+> +        .parent         = TYPE_ASPEED_SOC,
+> +        .instance_size  = sizeof(Aspeed27x0CM4SoCState),
+> +        .abstract       = true,
+> +    }, {
+> +        .name           = "ast2700ssp-a0",
+> +        .parent         = TYPE_ASPEED27X0CM4_SOC,
+> +        .instance_init  = aspeed_soc_ast27x0ssp_init,
+> +        .class_init     = aspeed_soc_ast27x0ssp_class_init,
+> +    }, {
+> +        .name           = "ast2700tsp-a0",
+> +        .parent         = TYPE_ASPEED27X0CM4_SOC,
+> +        .instance_init  = aspeed_soc_ast27x0tsp_init,
+> +        .class_init     = aspeed_soc_ast27x0tsp_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(aspeed_soc_ast27x0cm4_types)
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 490234b3b8..cd7780b997 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -43,6 +43,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>     'aspeed_soc_common.c',
+>     'aspeed_ast2400.c',
+>     'aspeed_ast2600.c',
+> +  'aspeed_ast27x0-cm4.c',
+>     'aspeed_ast10x0.c',
+>     'aspeed_eeprom.c',
+>     'fby35.c'))
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+
+Please to your ~/.gitconfig
+
+[diff]
+	orderFile = /path/to/qemu/scripts/git.orderfile
+
+> index bf885da3fc..7de69dc57d 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -101,6 +101,8 @@ struct AspeedSoCState {
+>       UnimplementedDeviceState sgpiom;
+>       UnimplementedDeviceState ltpi;
+>       UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+> +    UnimplementedDeviceState intc;
+> +    UnimplementedDeviceState ipc;
+
+Shouldn't these 2 new attributes be moved to Aspeed27x0CM4SoCState ?
+I think each should be introduced in a separate patch with a small
+description.
+
+>       AspeedAPB2OPBState fsi[2];
+>   };
+>   
+> @@ -127,6 +129,15 @@ struct Aspeed2600SoCState {
+>   #define TYPE_ASPEED2600_SOC "aspeed2600-soc"
+>   OBJECT_DECLARE_SIMPLE_TYPE(Aspeed2600SoCState, ASPEED2600_SOC)
+>   
+> +struct Aspeed27x0CM4SoCState {
+> +    AspeedSoCState parent;
+> +
+> +    ARMv7MState armv7m;
+
+Why not use Aspeed10x0SoCState instead ?
+
+
+Thanks,
+
+C.
+
+
+
+> +};
+> +
+> +#define TYPE_ASPEED27X0CM4_SOC "aspeed27x0cm4-soc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0CM4SoCState, ASPEED27X0CM4_SOC)
+> +
+>   struct Aspeed27x0SoCState {
+>       AspeedSoCState parent;
+>   
+> @@ -201,6 +212,15 @@ enum {
+>       ASPEED_DEV_EHCI2,
+>       ASPEED_DEV_VIC,
+>       ASPEED_DEV_INTC,
+> +    ASPEED_DEV_INTC0,
+> +    ASPEED_DEV_INTC1,
+> +    ASPEED_DEV_INTC2,
+> +    ASPEED_DEV_INTC3,
+> +    ASPEED_DEV_INTC4,
+> +    ASPEED_DEV_INTC5,
+> +    ASPEED_DEV_INTC6,
+> +    ASPEED_DEV_INTC7,
+> +    ASPEED_DEV_INTC8,
+>       ASPEED_DEV_SDMC,
+>       ASPEED_DEV_SCU,
+>       ASPEED_DEV_ADC,
+> @@ -253,6 +273,9 @@ enum {
+>       ASPEED_DEV_SCUIO,
+>       ASPEED_DEV_SLI,
+>       ASPEED_DEV_SLIIO,
+> +    ASPEED_DEV_IPC0,
+> +    ASPEED_DEV_IPC1,
+> +    ASPEED_DEV_IPC2,
+>       ASPEED_GIC_DIST,
+>       ASPEED_GIC_REDIST,
+>   };
+
 
