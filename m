@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B45E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57F6E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTIUp-0003tr-9Z; Thu, 02 Jan 2025 05:32:07 -0500
+	id 1tTIuf-0005GJ-Su; Thu, 02 Jan 2025 05:58:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTIUn-0003tC-AA
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:32:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTIUl-0005rB-GW
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:32:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735813922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2rHxQa1PhAoahuKgtDYSw/InvDF8l5Ykbk+lLRlrRRo=;
- b=f0KNnKXMHgIK3uBxqxyx8bpO1HICIaC6gGs6HUJ9UNRIE/NYI06JFSblwiNZcTyKE2rpjD
- gZAkPQT/2tLdPBKt/X13xPY1fB0C5jMXulsG2YbWZ897GbrlSVrTAkWhuGlC9/VG18M2ns
- yTYiRiVG5RtjzsMgQ93PLhk3SEadM6A=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-shSA59nFPhm9eKC6_LCR2w-1; Thu,
- 02 Jan 2025 05:31:59 -0500
-X-MC-Unique: shSA59nFPhm9eKC6_LCR2w-1
-X-Mimecast-MFC-AGG-ID: shSA59nFPhm9eKC6_LCR2w
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3301F19560A3
- for <qemu-devel@nongnu.org>; Thu,  2 Jan 2025 10:31:58 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.39])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 989891956052; Thu,  2 Jan 2025 10:31:56 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTIuc-0005FP-Sp
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:58:47 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTIub-0000Nl-Eq
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:58:46 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4362bae4d7dso80599445e9.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:58:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735815523; x=1736420323; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tcekA88L/Z07G4gBsT6y7wvrNxItM6wYEmpLelolWes=;
+ b=qusRj6B6J974BDnTFDBajgENunRe0dBkOf+Gx3iVaSX1IDFPlEPpGNr7zf8AVyssJx
+ BQPKa1rb7tTi/M5BMO2vXSyZD7PLDCcv+DVi2ViW9MTjp58NPXZwl/iIPZA5J9br9uNW
+ niAhBA9L339CPLrIW0lVjz16bZXCNhGXSWNaUsJ/L7y84sYKkgnwXlFtfkcDpb1Z8oww
+ 4KKiI7EloWCOyrhdQWj5S6dEt3chgbwAmkGvI9B43Z92uVrYFB6M1McKcxZHS/taCn2e
+ J03vIaqtXhyg1DOk4FpsxQ5ZTta8LixO0kmaBlNpTprYWGbd4P2kcjOVlsnzLuZqJf8X
+ KRow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735815523; x=1736420323;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tcekA88L/Z07G4gBsT6y7wvrNxItM6wYEmpLelolWes=;
+ b=otsnGxxpnu6IwUB8+GMap0UA6+MR8RZhYQ0qSsJ7a2bNJlOh2/B1UJpmiJYLGyY3t3
+ 1Ne0xPefIeOcJA4zFjG99OGWbGBtIFyiarM1xykcsGGT/mSJB7yvOLin4MKn4y1386vP
+ PksAm2tEMmh64MQ6yok/3kzwfE+6lzJ2miJRyz6LQNKGgt1iowrb0O8Gcns0HgRms7Zr
+ B/FhrdWQdMzVIT7M3nXitFMcesFIe71xVwSepTBfZQDET61UJeQ1CPpQFYrV7mksHmHw
+ +bcz9tB5pweLHyOs91xqseMgMmgTOHG8LDg3SWfu43W9W27Ke3PoEX9aCeynZKAoU+SC
+ uFsg==
+X-Gm-Message-State: AOJu0YwJ8xrzLmzWfLqf12icFIESmTB6RW73E54QEg3kenEc8nBiuNsP
+ ZIjG9Fi+fE3IWWDEGLQEx6scrllcyZalV+ue+81LTw+Lp0j40lXhk/vv8/ndVnjddhiBEwcH2xY
+ EzqT3xQ==
+X-Gm-Gg: ASbGncvyiAahBmPLNKNpteu4lkGsQafnax9p9OGa+fGVYNgTEwRYzOu8aqg2lYjE9a5
+ Vyu88ZAeJtM/8OSEEqVRjHk3NwfSd6n7i+PKMPrOsKgX+eqLoQ47jIdWSLTSopu8u3abNC8/pGi
+ wWbbNzAnRcH68wMWExqTrhnRk4I8FEuwIeV4G9Yr6oRmlmE+RcZI1s0u0qFrtNUFG5K1NxZC86N
+ PYd0V+VdGj5HT9xOVG8Ez3K3ynIfqP0FPNEmpV67K9CpBXPkfbxixVPCbPqIbEWVHmpOxe5ADbJ
+ 8fb73ntlzmsEMqnT1Ygh6JKShjEmP46+yRbuUBmg2YzTtg==
+X-Google-Smtp-Source: AGHT+IHuKZiTDqfvdgRrkNIzVHKJDvTLXwGdy3KrAjQmf1boaZkc7xDtRhRd53OuYnJUXXBsdIhdSA==
+X-Received: by 2002:a05:600c:350b:b0:434:f8e5:1bb with SMTP id
+ 5b1f17b1804b1-436686430a2mr404478675e9.12.1735815523632; 
+ Thu, 02 Jan 2025 02:58:43 -0800 (PST)
+Received: from localhost.localdomain
+ (161.red-88-29-191.dynamicip.rima-tde.net. [88.29.191.161])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436611ea487sm446530485e9.8.2025.01.02.02.58.42
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 Jan 2025 02:58:43 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 05/10] tests/functional: Extract the find_free_ports() function
- into a helper file
-Date: Thu,  2 Jan 2025 11:31:33 +0100
-Message-ID: <20250102103138.354618-6-thuth@redhat.com>
-In-Reply-To: <20250102103138.354618-1-thuth@redhat.com>
-References: <20250102103138.354618-1-thuth@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 3/4] tests/qtest/boot-serial-test: Reorder pair of
+ instructions in PL011 test
+Date: Thu,  2 Jan 2025 11:58:21 +0100
+Message-ID: <20250102105822.43532-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250102105822.43532-1-philmd@linaro.org>
+References: <20250102105822.43532-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,156 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need this functionality in other functional tests, too, so
-let's extract it into the qemu_test module.
-Also add  an __enter__ and __exit__ function that can be used for
-using this functionality in a locked context, so that tests that
-are running in parallel don't try to compete for the same ports
-later.
-Also make sure to only use ports in the "Dynamic Ports" range
-(see https://www.rfc-editor.org/rfc/rfc6335) and "randomize" the
-start of the probed range with the PID of the test process to
-further avoid possible clashes with other competing processes.
+In the next commit we are going to use a different value
+for the $w1 register, maintaining the same $x2 value. In
+order to keep the next commit trivial to review, set $x2
+before $w1.
 
-Message-ID: <20241218131439.255841-5-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/qemu_test/ports.py | 56 +++++++++++++++++++++++++++++
- tests/functional/test_vnc.py        | 36 +++++--------------
- 2 files changed, 64 insertions(+), 28 deletions(-)
- create mode 100644 tests/functional/qemu_test/ports.py
+ tests/qtest/boot-serial-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/ports.py b/tests/functional/qemu_test/ports.py
-new file mode 100644
-index 0000000000..cc39939d48
---- /dev/null
-+++ b/tests/functional/qemu_test/ports.py
-@@ -0,0 +1,56 @@
-+#!/usr/bin/env python3
-+#
-+# Simple functional tests for VNC functionality
-+#
-+# Copyright 2018, 2024 Red Hat, Inc.
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import fcntl
-+import os
-+import socket
-+import sys
-+import tempfile
-+
-+from .config import BUILD_DIR
-+from typing import List
-+
-+class Ports():
-+
-+    PORTS_ADDR = '127.0.0.1'
-+    PORTS_RANGE_SIZE = 1024
-+    PORTS_START = 49152 + ((os.getpid() * PORTS_RANGE_SIZE) % 16384)
-+    PORTS_END = PORTS_START + PORTS_RANGE_SIZE
-+
-+    def __enter__(self):
-+        lock_file = os.path.join(BUILD_DIR, "tests", "functional", "port_lock")
-+        self.lock_fh = os.open(lock_file, os.O_CREAT)
-+        fcntl.flock(self.lock_fh, fcntl.LOCK_EX)
-+        return self
-+
-+    def __exit__(self, exc_type, exc_value, traceback):
-+        fcntl.flock(self.lock_fh, fcntl.LOCK_UN)
-+        os.close(self.lock_fh)
-+
-+    def check_bind(self, port: int) -> bool:
-+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-+            try:
-+                sock.bind((self.PORTS_ADDR, port))
-+            except OSError:
-+                return False
-+
-+        return True
-+
-+    def find_free_ports(self, count: int) -> List[int]:
-+        result = []
-+        for port in range(self.PORTS_START, self.PORTS_END):
-+            if self.check_bind(port):
-+                result.append(port)
-+                if len(result) >= count:
-+                    break
-+        assert len(result) == count
-+        return result
-+
-+    def find_free_port(self) -> int:
-+        return self.find_free_ports(1)[0]
-diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
-index e600d75234..1916be0103 100755
---- a/tests/functional/test_vnc.py
-+++ b/tests/functional/test_vnc.py
-@@ -14,22 +14,9 @@
- from typing import List
+diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+index 553575ca75c..bcfa504826c 100644
+--- a/tests/qtest/boot-serial-test.c
++++ b/tests/qtest/boot-serial-test.c
+@@ -78,8 +78,8 @@ static const uint8_t bios_raspi2[] = {
+ };
  
- from qemu_test import QemuSystemTest
--
-+from qemu_test.ports import Ports
- 
- VNC_ADDR = '127.0.0.1'
--VNC_PORT_START = 32768
--VNC_PORT_END = VNC_PORT_START + 1024
--
--
--def check_bind(port: int) -> bool:
--    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
--        try:
--            sock.bind((VNC_ADDR, port))
--        except OSError:
--            return False
--
--    return True
--
- 
- def check_connect(port: int) -> bool:
-     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-@@ -40,18 +27,6 @@ def check_connect(port: int) -> bool:
- 
-     return True
- 
--
--def find_free_ports(count: int) -> List[int]:
--    result = []
--    for port in range(VNC_PORT_START, VNC_PORT_END):
--        if check_bind(port):
--            result.append(port)
--            if len(result) >= count:
--                break
--    assert len(result) == count
--    return result
--
--
- class Vnc(QemuSystemTest):
- 
-     def test_no_vnc_change_password(self):
-@@ -85,8 +60,7 @@ def test_change_password(self):
-         self.vm.cmd('change-vnc-password',
-                     password='new_password')
- 
--    def test_change_listen(self):
--        a, b, c = find_free_ports(3)
-+    def do_test_change_listen(self, a, b, c):
-         self.assertFalse(check_connect(a))
-         self.assertFalse(check_connect(b))
-         self.assertFalse(check_connect(c))
-@@ -108,5 +82,11 @@ def test_change_listen(self):
-         self.assertTrue(check_connect(b))
-         self.assertTrue(check_connect(c))
- 
-+    def test_change_listen(self):
-+        with Ports() as ports:
-+            a, b, c = ports.find_free_ports(3)
-+            self.do_test_change_listen(a, b, c)
-+
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+ static const uint8_t kernel_aarch64[] = {
+-    0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
+     0x02, 0x20, 0xa1, 0xd2,                 /*        mov    x2, #0x9000000  Load UART0 */
++    0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
+     0x41, 0x00, 0x00, 0x39,                 /* loop:  strb   w1, [x2]        *TXDAT = 'T' */
+     0xff, 0xff, 0xff, 0x17,                 /*        b      -4              (loop) */
+ };
 -- 
 2.47.1
 
