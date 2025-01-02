@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC543E77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3D7E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTIUv-0003uS-Jn; Thu, 02 Jan 2025 05:32:13 -0500
+	id 1tTIUg-0003rQ-AZ; Thu, 02 Jan 2025 05:31:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTIUt-0003u0-UX
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:32:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTIUf-0003r9-EJ
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:31:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTIUs-0005rT-Cl
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:32:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTIUd-0005qF-VB
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:31:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735813929;
+ s=mimecast20190719; t=1735813915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GPPa8vdt58GXiSGixVwbRhcXl4KjcGndA41w2wQfI/4=;
- b=e8wRHdiib5IMTDuV+KXpDubZ1JybNS2WddVEUvY77RF9VWaEByeWHvo3e2X35nYi/fkYFa
- GDvkrwLpMSxJ8BOBsWwlv7FQAorDm1a7BneOkZennM9f81vtbYYksAY2JPCPoM5VK+3IWO
- XkIV3O8xvozklu6oxzRw0lYAtyVCX5g=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gP3n+xmGEu7VSzd7bF6ZEXq02fd+LK2FuyJYFdeOJd0=;
+ b=cg9KcpjNzMgtI9flqxU1L2HGUWHbhl88cDzUFmMwu1Hx1BbnMZ4S9EELzLvUld0sJH47hp
+ 0aToYvnrxQYYrC6yhPdIzFlt680ex4D5h+jX86lmzvCSl9YorTBjbdjFYvsVNr05fkxuX6
+ CsGVN4QW4QljwlMKzNUQHDiJxLEtlKw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-XYsfp3L5NZKwLRSSF2aZjg-1; Thu,
- 02 Jan 2025 05:32:06 -0500
-X-MC-Unique: XYsfp3L5NZKwLRSSF2aZjg-1
-X-Mimecast-MFC-AGG-ID: XYsfp3L5NZKwLRSSF2aZjg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-CgwbuEo3PUuwnOgGEWkJcw-1; Thu,
+ 02 Jan 2025 05:31:52 -0500
+X-MC-Unique: CgwbuEo3PUuwnOgGEWkJcw-1
+X-Mimecast-MFC-AGG-ID: CgwbuEo3PUuwnOgGEWkJcw
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 179831956087; Thu,  2 Jan 2025 10:32:05 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B32E19560BA
+ for <qemu-devel@nongnu.org>; Thu,  2 Jan 2025 10:31:52 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.39])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1E2D11956052; Thu,  2 Jan 2025 10:32:02 +0000 (UTC)
+ id D1DD81956052; Thu,  2 Jan 2025 10:31:50 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Nicholas Piggin <npiggin@gmail.com>
-Subject: [PULL 07/10] tests/functional/test_ppc64_hv: Update repo management
-Date: Thu,  2 Jan 2025 11:31:35 +0100
-Message-ID: <20250102103138.354618-8-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 03/10] tests/functional/test_vnc: Do not use a hard-coded VNC
+ port
+Date: Thu,  2 Jan 2025 11:31:31 +0100
+Message-ID: <20250102103138.354618-4-thuth@redhat.com>
 In-Reply-To: <20250102103138.354618-1-thuth@redhat.com>
 References: <20250102103138.354618-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -81,42 +83,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+Two tests here are using the hard-coded VNC port :0 ... if there
+is already a QEMU or other program running that is using this
+port, the tests will be failing. Fortunately, QEMU can also
+auto-detect a free port with the "to=..." parameter, so let's
+use that for the tests to avoid the problem.
 
-`setup-apkrepos` can be used to set repos rather than open-coding URLs.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20241220024617.1968556-4-npiggin@gmail.com>
+Message-ID: <20241218131439.255841-4-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/test_ppc64_hv.py | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tests/functional/test_vnc.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/test_ppc64_hv.py b/tests/functional/test_ppc64_hv.py
-index 2182a68c91..e0dffb1f15 100755
---- a/tests/functional/test_ppc64_hv.py
-+++ b/tests/functional/test_ppc64_hv.py
-@@ -81,6 +81,10 @@ def do_start_alpine(self):
-         exec_command_and_wait_for_pattern(self, 'date -s "' + datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S' + '"'), ps1)
-         ps1='alpine:~#'
-         exec_command_and_wait_for_pattern(self, 'setup-alpine -qe', ps1)
-+        exec_command_and_wait_for_pattern(self, 'setup-apkrepos -c1', ps1)
-+        exec_command_and_wait_for_pattern(self, 'apk update', ps1)
-+        # Could upgrade here but it usually should not be necessary
-+        # exec_command_and_wait_for_pattern(self, 'apk upgrade --available', ps1)
+diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
+index b769d3b268..e6328567c7 100755
+--- a/tests/functional/test_vnc.py
++++ b/tests/functional/test_vnc.py
+@@ -72,7 +72,7 @@ def test_no_vnc_change_password(self):
+                          'Could not set password')
  
-     def do_stop_alpine(self):
-         exec_command(self, 'echo "TEST ME"')
-@@ -91,9 +95,6 @@ def do_stop_alpine(self):
+     def test_change_password_requires_a_password(self):
+-        self.vm.add_args('-nodefaults', '-S', '-vnc', ':0')
++        self.vm.add_args('-nodefaults', '-S', '-vnc', ':1,to=999')
+         self.vm.launch()
+         self.assertTrue(self.vm.qmp('query-vnc')['return']['enabled'])
+         set_password_response = self.vm.qmp('change-vnc-password',
+@@ -84,7 +84,7 @@ def test_change_password_requires_a_password(self):
+                          'Could not set password')
  
-     def do_setup_kvm(self):
-         ps1='alpine:~#'
--        exec_command_and_wait_for_pattern(self, 'echo http://dl-cdn.alpinelinux.org/alpine/v3.18/main > /etc/apk/repositories', ps1)
--        exec_command_and_wait_for_pattern(self, 'echo http://dl-cdn.alpinelinux.org/alpine/v3.18/community >> /etc/apk/repositories', ps1)
--        exec_command_and_wait_for_pattern(self, 'apk update', ps1)
-         exec_command_and_wait_for_pattern(self, 'apk add qemu-system-ppc64', ps1)
-         exec_command_and_wait_for_pattern(self, 'modprobe kvm-hv', ps1)
- 
+     def test_change_password(self):
+-        self.vm.add_args('-nodefaults', '-S', '-vnc', ':0,password=on')
++        self.vm.add_args('-nodefaults', '-S', '-vnc', ':1,to=999,password=on')
+         self.vm.launch()
+         self.assertTrue(self.vm.qmp('query-vnc')['return']['enabled'])
+         self.vm.cmd('change-vnc-password',
 -- 
 2.47.1
 
