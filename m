@@ -4,98 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0CBE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 08:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A6DE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 09:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTGoB-00007s-NZ; Thu, 02 Jan 2025 03:43:59 -0500
+	id 1tTHQF-0004p5-D5; Thu, 02 Jan 2025 04:23:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=YAii=T2=kaod.org=clg@ozlabs.org>)
- id 1tTGoA-00007g-FC; Thu, 02 Jan 2025 03:43:58 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=YAii=T2=kaod.org=clg@ozlabs.org>)
- id 1tTGo8-0008VJ-6U; Thu, 02 Jan 2025 03:43:58 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YP0c139Xmz4xdw;
- Thu,  2 Jan 2025 19:43:45 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YP0bx65pVz4x07;
- Thu,  2 Jan 2025 19:43:41 +1100 (AEDT)
-Message-ID: <a785f6dd-46ec-48dd-bd9e-8c9f7be6ded0@kaod.org>
-Date: Thu, 2 Jan 2025 09:43:45 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTHQC-0004ow-E3
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 04:23:16 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTHQA-0006tM-Dz
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 04:23:16 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2f441791e40so12441766a91.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 01:23:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735809791; x=1736414591; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6zEuQv7QpF6Ie4cNcFdsaWLdFf2BXXaTH2NbRgASESA=;
+ b=oU4grogY1aDYyu7OgH9bTOxX8WTIaazWXZdGGiNQXkHlKBfjcQAO4mL/LtAs9y2FT7
+ R0jNuC729JKFaeelmBqCMdq0UMOUfm8RpdNEBmvBwEoXm0QAvG38snJca7hAkVYoft9x
+ 1NG9q4j52h+NUeJvMV2ED61t86jdhEeiONCYlvnZlx1kWBVuPB3fQtx3A65tCPqV5HIC
+ BNOjFft+muYciwpvlIWRouV2sbzfBDmRK4pqmDFe3OjsvdKG0OeUIg0MGUI0m728gDSF
+ gjpmg81PnZaGCtfwcBJ+Le9QW22dYagdkITHNTwEDBC2lzzAVu4p+LOZEwRtBaz4Sbwx
+ NsNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735809791; x=1736414591;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6zEuQv7QpF6Ie4cNcFdsaWLdFf2BXXaTH2NbRgASESA=;
+ b=OuMgEhsT2XPyf9cdLQxKwB9Z36GLkXj6I2Qwt0AKAK6YuYDzjMOpLrJq+xfY3mH3r4
+ y9NcBfnqdwWRH0uhTDdGpMTqQAUPwfT+5A0HrDK0EphyQjWKnRmnRSHxF5hdoXpeGRNy
+ XxDgBfw1q+wLDjXeKMDOiAuK3kRon4y8URL2LI94GYS4Cm6mjnC2XZxk6S9v2ajplGcb
+ Lq6eNMEN5hI5fM88Yb/cY6X6gizy0FSJtaNfl28WcAyc7fXJpGvdXDVP6dY+RIwV7PB+
+ 0RxR7IvA9NO7EFMNQwqlppcw2UmHsGM/To07haRNbq0WfTcCcqCRLiHzrgaybSl40a8U
+ mMuQ==
+X-Gm-Message-State: AOJu0YzJV6eCzsffMXLWG8mXuJ+qLGNCY8PaMDAi+tNG0iRyQpgLLs/3
+ UB0rRSf9SxNeKM0JGP1hRsgdx+iIbiO6qjuWlGe3jmaQZ5E/355i6YeyYDmNwRQBjavdfbKFPgQ
+ cggk=
+X-Gm-Gg: ASbGncuuADkaoPsa3amoAZ9dRM65mXNz2mw8/NmXBBSCJGeTtWpCCJNSZyeqGqvfmi/
+ WNJs4JVG92lFQUMLUu7x4JRu7xu+1dvW/t6H6D8QzC3n2D2Ia7oupd2EJ1CTOkSqKYsYNObD0Uw
+ N9DZSG/SOrh6JnD/CNBc3IbLe2hxH9NLqhOTpV+ei4ngCK7UoQ+/b42q0rAz69nbHYJThlmYBJx
+ AsR9mEk21K4t1yS/pbESefRBeY+w85TN3YwrlkRUQjlDsmQft6f93WcWdWazxZo13B3kVDCHNgq
+ hq09PFMAr6floJ1VF6uFIraepD5TsSU=
+X-Google-Smtp-Source: AGHT+IEO3R76AvitlTTOzABcDPdx+m/Uv5jsTIFi33SRV8wbxGAh8UI+4IzsX3KdzemfkkSyGuAxOw==
+X-Received: by 2002:a17:90a:c2c7:b0:2ee:ee77:227c with SMTP id
+ 98e67ed59e1d1-2f452dfaecdmr59747285a91.3.1735809791402; 
+ Thu, 02 Jan 2025 01:23:11 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f447882a3fsm26034602a91.38.2025.01.02.01.23.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 Jan 2025 01:23:11 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Thomas Huth <thuth@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5] tests: Add functional tests for HPPA machines
+Date: Thu,  2 Jan 2025 10:23:01 +0100
+Message-ID: <20250102092301.42122-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] docs: aspeed: Add ast2700-fc machine section
-To: Steven Lee <steven_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241225020311.3718080-1-steven_lee@aspeedtech.com>
- <20241225020311.3718080-6-steven_lee@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241225020311.3718080-6-steven_lee@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=YAii=T2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.222, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,92 +99,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/25/24 03:03, Steven Lee wrote:
-> This commit adds a section describing the ast2700-fc multi-SoC machine.
-> 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-> ---
->   docs/system/arm/aspeed.rst | 50 ++++++++++++++++++++++++++++++++++++--
->   1 file changed, 48 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index fa4aa28eef..4b4200a4a5 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -1,5 +1,5 @@
-> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-> -==================================================================================================================================================================================================================================================================================================================================================================================================================================
-> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``tacoma-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-> +===================================================================================================================================================================================================================================================================================================================================================================================================================================================
->   
->   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
->   Aspeed evaluation boards. They are based on different releases of the
-> @@ -42,6 +42,7 @@ AST2600 SoC based machines :
->   AST2700 SoC based machines :
->   
->   - ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
-> +- ``ast2700-fc``           Aspeed AST2700 Evaluation board featuring full core support (Cortex-A35 + Cortex-M4)
->   
->   Supported devices
->   -----------------
-> @@ -270,6 +271,51 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
->          -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
->          -nographic
->   
-> +Booting the ast2700-fc machine
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Add quick firmware boot tests (less than 1sec) for the
+B160L (32-bit) and C3700 (64-bit) HPPA machines:
 
-A description of the machine would be helpful.
+  $ make check-functional-hppa
+  ...
+  4/4 qemu:func-quick+func-hppa / func-hppa-hppa_seabios    OK 0.22s 2 subtests passed
 
-Thanks,
+Remove the duplicated B160L test in qtest/boot-serial-test.c.
 
-C.
+Suggested-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+---
+v5: Remove duplicated qtest (th_huth)
+---
+ MAINTAINERS                           |  1 +
+ tests/qtest/boot-serial-test.c        |  2 --
+ tests/functional/meson.build          |  4 +++
+ tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
+ tests/qtest/meson.build               |  2 +-
+ 5 files changed, 41 insertions(+), 3 deletions(-)
+ create mode 100755 tests/functional/test_hppa_seabios.py
 
-
-> +Boot the AST2700 machine from the flash image, use an MTD drive :
-> +
-> +.. code-block:: bash
-> +
-> +  IMGDIR=./
-> +  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
-> +
-> +  $ UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/ast2700-ssp.elf
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/ast2700-tsp.elf
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/bl31.bin
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/tee-raw.bin
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/u-boot-nodtb.bin
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/u-boot.dtb
-> +  $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/image-bmc.tar.zst
-> +  $ tar --zstd -xvf image-bmc.tar.zst
-> +
-> +  $ qemu-system-aarch64 -machine ast2700fc \
-> +       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
-> +       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-> +       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-> +       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/tee-raw.bin \
-> +       -device loader,file=${IMGDIR}/ast2700-ssp.elf,cpu-num=4 \
-> +       -device loader,file=${IMGDIR}/ast2700-tsp.elf,cpu-num=5 \
-> +       -device loader,cpu-num=0,addr=0x430000000 \
-> +       -device loader,cpu-num=1,addr=0x430000000 \
-> +       -device loader,cpu-num=2,addr=0x430000000 \
-> +       -device loader,cpu-num=3,addr=0x430000000 \
-> +       -m 1G \
-> +       -drive file=image-bmc,if=mtd,format=raw \
-> +       -serial pty -serial pty -serial pty \
-> +       -S -nographic
-> +
-> +    char device redirected to /dev/pts/51 (label serial0)
-> +    char device redirected to /dev/pts/52 (label serial1)
-> +    char device redirected to /dev/pts/53 (label serial2)
-> +
-> +  $ tio /dev/pts/51
-> +  $ tio /dev/pts/52
-> +  $ tio /dev/pts/53
-> +  $ (qemu) c
-> +
->   Aspeed minibmc family boards (``ast1030-evb``)
->   ==================================================================
->   
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2101b512175..770bbf9f233 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1203,6 +1203,7 @@ F: include/hw/pci-host/astro.h
+ F: include/hw/pci-host/dino.h
+ F: pc-bios/hppa-firmware.img
+ F: roms/seabios-hppa/
++F: tests/functional/test_hppa_seabios.py
+ 
+ LoongArch Machines
+ ------------------
+diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+index 3b92fa5d506..7ea24855072 100644
+--- a/tests/qtest/boot-serial-test.c
++++ b/tests/qtest/boot-serial-test.c
+@@ -184,8 +184,6 @@ static const testdef_t tests[] = {
+     { "microblazeel", "petalogix-ml605", "", "TT",
+       sizeof(kernel_plml605), kernel_plml605 },
+     { "arm", "raspi2b", "", "TT", sizeof(bios_raspi2), 0, bios_raspi2 },
+-    /* For hppa, force bios to output to serial by disabling graphics. */
+-    { "hppa", "hppa", "-vga none", "SeaBIOS wants SYSTEM HALT" },
+     { "aarch64", "virt", "-cpu max", "TT", sizeof(kernel_aarch64),
+       kernel_aarch64 },
+     { "arm", "microbit", "", "T", sizeof(kernel_nrf51), kernel_nrf51 },
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 24f7f8f2f1c..71810a3aa82 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -104,6 +104,10 @@ tests_avr_system_thorough = [
+   'avr_mega2560',
+ ]
+ 
++tests_hppa_system_quick = [
++  'hppa_seabios',
++]
++
+ tests_i386_system_thorough = [
+   'i386_tuxrun',
+ ]
+diff --git a/tests/functional/test_hppa_seabios.py b/tests/functional/test_hppa_seabios.py
+new file mode 100755
+index 00000000000..a44d1a3eebe
+--- /dev/null
++++ b/tests/functional/test_hppa_seabios.py
+@@ -0,0 +1,35 @@
++#!/usr/bin/env python3
++#
++# SeaBIOS boot test for HPPA machines
++#
++# Copyright (c) 2024 Linaro, Ltd
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++
++class HppaSeabios(QemuSystemTest):
++
++    timeout = 5
++    MACH_BITS = {'B160L': 32, 'C3700': 64}
++
++    def boot_seabios(self):
++        mach = self.machine
++        bits = self.MACH_BITS[mach]
++        self.vm.set_console()
++        self.vm.launch()
++        self.machine
++        wait_for_console_pattern(self, f'SeaBIOS PA-RISC {bits}-bit Firmware')
++        wait_for_console_pattern(self, f'Emulated machine:     HP {mach} ({bits}-bit')
++
++    def test_hppa_32(self):
++        self.set_machine('B160L')
++        self.boot_seabios()
++
++    def test_hppa_64(self):
++        self.set_machine('C3700')
++        self.boot_seabios()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index c5a70021c50..ab296a97a78 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -140,7 +140,7 @@ qtests_alpha = ['boot-serial-test'] + \
+ 
+ qtests_avr = [ 'boot-serial-test' ]
+ 
+-qtests_hppa = ['boot-serial-test'] + \
++qtests_hppa = \
+   qtests_filter + \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
+ 
+-- 
+2.47.1
 
 
