@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF6EE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 13:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8431FE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 14:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTLih-0002t0-1H; Thu, 02 Jan 2025 08:58:39 -0500
+	id 1tTMaT-0003Jp-V3; Thu, 02 Jan 2025 09:54:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTLid-0002sd-KH
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 08:58:35 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tTMaR-0003JW-P2
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 09:54:11 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTLib-0002cG-Ut
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 08:58:35 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43618283d48so82794635e9.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 05:58:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tTMaQ-0003dy-91
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 09:54:11 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2162c0f6a39so163342445ad.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 06:54:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735826308; x=1736431108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735829648; x=1736434448; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MqjEysdRf3BuMavFQ4ZLzmCCIYJWzm6gFgmAX7rlCIQ=;
- b=iuvtoHoU4x+0ReeIaW8fNy5hhclF01+1wE4+1nNE98vjQ5SJEBRM/O/kgO/HKLX+E6
- PyI/qEJiyp7t7UFbnnq8Qiko28uAQJ1U5RlGRXveXfl8CZ3KX8ZFI83u/m7JZNA13F4H
- 4f08EXcvO24ki3dgwLELNossXEEe3K/oVzM0AIIoxKazPWjbKop5uQjMiQWyiqWwcfO1
- axRhCkAAZ8bPx36pQ4poMKGA7CR+4Sg1zClJxGbevklrDS5prO1Apa/DXVLVOddJaBGk
- OfgUl0tZF2pcU8N9O1s+8dYrGgSubCT0RrzpDkQS3BDXSzyPKhkwiYbjOLUvQjCaHmUa
- iRlA==
+ bh=QVkqJTaLW6XmRme1wzrjIaLJFvZnJrcUASbE0mfyV8A=;
+ b=nJu+BxXjKn9y8JX7NYno4gTCurMH8YNIcYge3iPWriqHryzzrTOrN/GLnBB/NIYHrz
+ YVsIoCr2kFpGRKDEXcLL4R83L+OOfIonM+cY1E2ZFKlpF983N1FkSHXzRHo0CL9WCk5y
+ fuGSOLcrm+q5i3IXMU3FUmdJXkiZ8IWg8lapIX7l8DxAObtkUY+REShpfcifOA+qhvSu
+ n1RQ1i+8/L5Lxw7q7Obd+4JmCLNRWSrU7PlWahUGxZf/f+SxZ/oOrUMdob9H9yndRtT1
+ I1s/hriu0XuuxRRQAJT65Tr6glz1rSFWHvl89ORwhNormvhh2csNRfzyqNSng5MlkPoX
+ NBUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735826308; x=1736431108;
+ d=1e100.net; s=20230601; t=1735829648; x=1736434448;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MqjEysdRf3BuMavFQ4ZLzmCCIYJWzm6gFgmAX7rlCIQ=;
- b=DPWr2MyaIJB8gPyGjik3QSLvSYkDVynzZlDNyBWfabuiW2fIkFExdsViwtAzbQDKWV
- Y0h/XxOf52U8pzHkHY4mcG87O+Bld7WFLJd1iPOHPC0BZGGi2s1EvshabnHoP/vs5i7C
- 8CaRG7ws259rbE8V4aXhOhS4Mc0dtnohCRjnOR0acCEtAg5iPfkbZNp4+9qivRSNl2SX
- ClQvaLevyFRyf2o/cuipIIUaqn0Bjyaz+5NbBNXTyUnBwPA8wzxoxiUyRVH4XGodCuQj
- DlON8L4tpGffN6bFs9UEPZBrxeKNeA40WPmckE89fLohNL/i00prJcax5VIYoNXN5Agt
- 1sbA==
+ bh=QVkqJTaLW6XmRme1wzrjIaLJFvZnJrcUASbE0mfyV8A=;
+ b=h5XTIdo80XB7V0WYS8UYl2gTpjoHgDLOIJdLlM5SGZFmS4cDYgncJWHt92E2Y4cv9l
+ AgV8qDwGilW9cmnn9ZcNf4FxbWJoZX1BwNwqN5jTyhaXd/Fxb1Z3siKZHub0nllYZ2hX
+ tifFA2LM4TF1XmIif+PHLEQSA9zyYuFo4TS6W/nGDlGX9bpdtKscoT7v6kZ4MvEGv0MP
+ Mk/dzd/3KiJ3BGBvcFyAwLL4NRX9P5NEQLKTmmoCzg81+yU1wFn1szrcP8dJTkAkTUc0
+ QWKPRqMK2Wka4xxG8i8AX8qOK1r/7PHJ13b3w94+Z9P3VBrEQSCKW74l7bX1raW2X/Sj
+ VP+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWbVHSPFzK/DMtBTHa4oxokCJ+KHFFG1bm5sPljAMWIZbmmTqsdEbZ884rj27gyF7fiNGpUULUQbRe@nongnu.org
-X-Gm-Message-State: AOJu0YwrW/g3zWCqpzgFf8+90MF985QhT0e9cWXrdfydkJH9KiWYO0eJ
- vbPCJoLCCUcKg4DHnby9dSOh0NJOTRZZPfrn2+4vn8/NjtmPGJXVcq+kCOydlDU=
-X-Gm-Gg: ASbGncutEfuapft/Q5U5Qve+eeFPsCvPnOlq5urTmRnLB70fj3B1YsFUg6hCPQAAatv
- rYlGfYlFyDaJiqdomK3zk9LisbRvUKQG0ynygxjQfgLMeI6yK7Dm0t5CN786ve8HnzuM4zh/fp/
- 6re3zub8cYVDCFp2bbgNKBiwkOLNn+l3PsHSb0QgNsdh4BAekUGOCZXUUXzRv6SlohX1D+rqCgy
- gW/NRbpHYLz00B5F7Z80H9ZITWuH8FFaHyhMKQQWwksPyc89hDZ0BNoAR2oewj0ayQNvyn/MNz4
- n419H27/r8UPy3TVDeLrF+Yo
-X-Google-Smtp-Source: AGHT+IExgXfdqabLAr7A4JiH+k8jU3GN+mH1CU7iKx297LjDvbRypxguNJdF4P7ForkV+DUQcDLbIw==
-X-Received: by 2002:a05:600c:45cf:b0:434:f131:1e64 with SMTP id
- 5b1f17b1804b1-4366864305emr402075155e9.9.1735826307551; 
- Thu, 02 Jan 2025 05:58:27 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b015absm487180615e9.13.2025.01.02.05.58.26
+ AJvYcCV9Drf4Ev47ZjpACMHm0cTFQhlJVGfqbZF/5O0714nVz24dwuZdwHdA097/B+1OIY2O1zG3Rw8vRchs@nongnu.org
+X-Gm-Message-State: AOJu0YyWQApvcSPs/OUsH8xQK/fSU6GE3tVM+2JL8nHIPpVUbWU89hr1
+ Y8P4AebmnXZ9Rh3/rSCexfNPrC0RCa65XzEnkzoHSiK1f9ElVlbMsEO1TLmrHIU=
+X-Gm-Gg: ASbGncvKSo1chrnEgFZ4B/tf8VIEci2oA8DkfWURCeRk7nI5ViVMBTQwFO2H7SyZOxp
+ eyJty1IUjGmaHI0pv4lh8vlj2cAxvc2KK9oLzdXx3LI6e2kfy0DKKVxr0AZbeRkB/3xhapju2tb
+ JWh+9ZzgT7oG5aa6SQhQlseVhsOs2CqHRJJxdSr/flPYWhWZeQIAXoaIZRZbHn1b72r6KJ9eSyG
+ qIX8ZekROHX1l8BK/S4I6Xzb9tPHWEU6Q/69gbeq2pVABxKp9G4QWl0PEDkQPHg6IaxMyo=
+X-Google-Smtp-Source: AGHT+IG5Kz9d26jxYQml7M2gAc76en9Q7dtBBwVdHQsZz2+OjhOvG1DE1IHLr/d/0eGm3nD3rksQ5Q==
+X-Received: by 2002:a05:6a20:6a08:b0:1e0:d0b9:9a90 with SMTP id
+ adf61e73a8af0-1e5c6f15f19mr80329653637.13.1735829648375; 
+ Thu, 02 Jan 2025 06:54:08 -0800 (PST)
+Received: from [172.21.1.122] ([63.239.63.212])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-842b229c48fsm18943597a12.26.2025.01.02.06.54.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jan 2025 05:58:26 -0800 (PST)
-Message-ID: <3a9d3121-2056-440f-9809-94ebd4cac4f0@linaro.org>
-Date: Thu, 2 Jan 2025 14:58:26 +0100
+ Thu, 02 Jan 2025 06:54:07 -0800 (PST)
+Message-ID: <f9e8c228-fbaa-4453-97b1-434d22dfd36a@linaro.org>
+Date: Thu, 2 Jan 2025 06:54:05 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/13] qom: Use machine_get_container()
-To: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block <qemu-block@nongnu.org>
-References: <20241121192202.4155849-1-peterx@redhat.com>
- <20241121192202.4155849-11-peterx@redhat.com>
+Subject: Re: [PATCH v6 0/2] tests: Add functional tests for HPPA machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Helge Deller <deller@gmx.de>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250102100340.43014-1-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241121192202.4155849-11-peterx@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250102100340.43014-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,49 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Cc'ing qemu-block@ for floppy disc device)
-
-On 21/11/24 20:21, Peter Xu wrote:
-> Use machine_get_container() whenever applicable across the tree.
+On 1/2/25 02:03, Philippe Mathieu-Daudé wrote:
+> Since v5:
+> - Correct boot-serial-test machine name for stable (th_huth)
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   hw/core/gpio.c        | 3 +--
->   hw/core/qdev.c        | 3 +--
->   hw/core/sysbus.c      | 4 ++--
->   hw/i386/pc.c          | 4 ++--
->   system/ioport.c       | 2 +-
->   system/memory.c       | 2 +-
->   system/qdev-monitor.c | 6 +++---
->   system/vl.c           | 3 +--
->   8 files changed, 12 insertions(+), 15 deletions(-)
+> Philippe Mathieu-Daudé (2):
+>    tests/qtest/boot-serial-test: Correct HPPA machine name
+>    tests: Add functional tests for HPPA machines
+> 
+>   MAINTAINERS                           |  1 +
+>   tests/qtest/boot-serial-test.c        |  2 --
+>   tests/functional/meson.build          |  4 +++
+>   tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
+>   tests/qtest/meson.build               |  2 +-
+>   5 files changed, 41 insertions(+), 3 deletions(-)
+>   create mode 100755 tests/functional/test_hppa_seabios.py
+> 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 317aaca25a..b8ec2506e1 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -460,7 +460,7 @@ static int check_fdc(Object *obj, void *opaque)
->   }
->   
->   static const char * const fdc_container_path[] = {
-> -    "/unattached", "/peripheral", "/peripheral-anon"
-> +    "unattached", "peripheral", "peripheral-anon"
->   };
->   
->   /*
-> @@ -474,7 +474,7 @@ static ISADevice *pc_find_fdc0(void)
->       CheckFdcState state = { 0 };
->   
->       for (i = 0; i < ARRAY_SIZE(fdc_container_path); i++) {
-> -        container = container_get(qdev_get_machine(), fdc_container_path[i]);
-> +        container = machine_get_container(fdc_container_path[i]);
->           object_child_foreach(container, check_fdc, &state);
-
-Orthogonal to this series, but noticing while giving another look at
-it. Is this method really using the correct API? It seems to poke at
-a lower level.
-
->       }
->   
+r~
 
