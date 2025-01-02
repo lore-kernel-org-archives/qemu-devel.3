@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DC9E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B9AE77194
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTPfa-00059Q-8E; Thu, 02 Jan 2025 13:11:43 -0500
+	id 1tTPbq-0007eK-Rp; Thu, 02 Jan 2025 13:07:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTPeX-0007Lm-BQ
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:10:43 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tTPbP-00070v-7Q
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:26 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTPeU-0006Dm-Mb
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:10:37 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2161eb95317so163094495ad.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:10:34 -0800 (PST)
+ id 1tTPbK-0005Ae-60
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:21 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2166022c5caso139850415ad.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:07:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735841433; x=1736446233; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735841237; x=1736446037; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lzsP+UWMx/D13Dq3Gtzq1OLFMQJVWY+dBn5HNIxlV40=;
- b=YBkZUOmwnJork8BenriF7ynEk9KoqBoNpADCG+qNFH5CjoCcNVY0crGTECWi/cYjPB
- bsCXNxV634v+2PQr+unM8YVBoEeUzUw+rgw1jLfWaWttHUW1oViECX3K8V6Aqr58Afbb
- HvKZLWTczhpiRN2ZTAIeceQaeBP/yICU6MlbpM4xfwuKjPvNbWKhXRm2AIaYqtx6yMVM
- o1ljM7+SEoDRv3vQ+Yo8XCOnmgqd0EOT2nSpp5Kh9PCbp6ZYuMnZh7hzDjD8ltc7+bVn
- FXuFeNFTAs9yzCL4dQjXa2+osXhjAcK76J0GhQhHU+m/oDBB7aNB1/0sh9i9Hn6kkZ3l
- gt2g==
+ :reply-to; bh=q3nAV3q09h0xlGJ7EiDcWqW40ibpyfcW35rWOgfARGc=;
+ b=d52HLfay1BXsk8iiptANNJT9aK0CVPA8fzsh997Hfiu1lUFRFGcCDgckVv7gNfzq5z
+ ifwj4iCUrsnBVTzpaNIlUetb/oCva0m23REfeNXRzR4Y1ebqOEfAEcNP55dR8S6bbevP
+ f8wlc6/QKSMPBjiSm8qoSEUL6ZYStwW82oY/5BlPn0HbrNNRze1ZImrQpLQmKTHYH2O5
+ QYDgQgU0GZMMg6373qjhlqxQ6nLolb5z08JVbduKYiKguWrFayJf/ChywxZxcIe/nmaU
+ iKL8J/U8SlbsOCpiTFC0q6TP+9ls/9uEzYx0QkUQFx8l1h+vwKIwxPRvPxX275NqE53M
+ b6HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735841433; x=1736446233;
+ d=1e100.net; s=20230601; t=1735841237; x=1736446037;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lzsP+UWMx/D13Dq3Gtzq1OLFMQJVWY+dBn5HNIxlV40=;
- b=DfB8dHm5RiAktMR5fX44+aXVH+3tLoywCIwrDfBB/lNajh46VkgE/RSreOHGIkRbac
- JyAeL4macUPElr+Mya2bO7fyikWu5YhWANWxPmvZxMEP7m0WvMOUVdMyrLipivrRc8PC
- wTYPGeL8IqWNmHFaTy41oaMBZ44mWXW3A2M9BrHjiTPxaZjtg74EV/xQkMGjTkbLMmaw
- vEC0zIVHhrKNWobOgSXnLMI2D4zw7+7TRavWVzWY4crbuucZNBXbM4HVfmK4PCMnJXjT
- c5cycuVjwwzPvOiD95MvlJpfI+jHOmQyziXWWaGpDw5PG6RVLEf9X3wKkxRnEsN8YoBv
- /f/g==
-X-Gm-Message-State: AOJu0YwnkhKsXX9KRJwTxDvx1pKZ66vs/eKmByH21abLcEC/15ouJ3K3
- oEOY1iwgdXzAleEelgBgYfChzvFhmktGOkoSvj5h43Ue3wXniLKwv5ObalfvLSjhrVSW+auQYu9
- I
-X-Gm-Gg: ASbGncvdR41XkwzQxbL3ZhUb8yKR2YBlrVOH4qhBtwM47DXRVy/9HS1Yjy0epc+PjJD
- vZDJpNHuPd36+bD0i7Iy0hFLW31TTQv1HoZQWxsEguUQrlCJXOC+teJYSYmXz4mJw2rI2u70Ayg
- +mQ1XdWlrrXP8lpdV9v5f2EzktjzqmLAseUDuADen68D/YEanzZHCuUrRjJVl3kSy72qb2YUuMp
- qZF6FF0l3ZBwQXHF8/5GcZytouhTDokZD+67iQze0e+mlaNcALJSCo8+rh3Kw==
-X-Google-Smtp-Source: AGHT+IHtmFD4BZdha8wphR+nzr4Q9GSsKXf56xG55lbyyt9JScnrwY0MNIvJ+e5W2wMSWOSGvcGj+A==
-X-Received: by 2002:a05:6a00:410d:b0:728:fab1:edbb with SMTP id
- d2e1a72fcca58-72abde8fd62mr70179128b3a.20.1735841433205; 
- Thu, 02 Jan 2025 10:10:33 -0800 (PST)
+ bh=q3nAV3q09h0xlGJ7EiDcWqW40ibpyfcW35rWOgfARGc=;
+ b=lxKyWFOcaop/IEI9IzeSOSd04ryzLTMS3A29pXI1Cpf60xzW+yf/r72mxxpQl4QGNz
+ 8I0nm8EW5OGAMd02ZeJgmGFo12EOvSr1bMn2OeXEhOOHrnX+6E7EjYCyThtUDx2/Xa8J
+ g1rcNBQitok7jsHSJs0PlRHQrQTg9ceGjBjTkqFVpJPeG7TGea4a0afdhtx7O9tgWAk3
+ PvJHwDe22v2I2f4IidZ2VLXtZiLSoVDer+l5rubVa83NkS6yPJFojNSzra9OVZIki7zx
+ tVhA/eE29jklzS023jPr+LvmgBpJegxvX75fjME15ZR+m3xm6ZNOjezkTLLnmyVvolYw
+ o7tw==
+X-Gm-Message-State: AOJu0YwechT92vkPl0Rb29tW8A8bSLCTFdbViM0PmFo7XWup2nL8D8AK
+ njBFjUlk49nh0986uax4G9yyIm+6pj1yCPWHXoVAtzt6RH7j8urHGpaRpVh8NNzI+6WAI4WnEFA
+ p
+X-Gm-Gg: ASbGncuDkz1KcBY6E+iC1mfETRZPy4Hbnf/cD9TSSt4NhLjy+f3hHJQbfaLEuDCejFo
+ PBuPhcuYRWpcrzTt4VtsQ8DIVH/TrBitn4OwO/nQ2iJ8z6RrRlGg06S4SaloAoRgme3PHcDdBwH
+ rsFxWZXKgweIqTGbJpmnQzrh1wxt4ewGQsIgjHMdik42vmVaE7++Qqd6nfKNhLPQwD46mZDH3uY
+ TDTcgwhTU/FvXTXAdKApOyARcYPLxnUdfexy+kbctZzPgYiLTBqnzDnD3lrWQ==
+X-Google-Smtp-Source: AGHT+IFdollbEp1BDfNgGpmP2/Zs26f8dIdGhyAEHdgrgEXwAQ9kvJNKYyaZh+OhZDdtGKY5taIzOg==
+X-Received: by 2002:a05:6a20:c88f:b0:1d5:10d6:92b9 with SMTP id
+ adf61e73a8af0-1e5e07f88demr70402613637.30.1735841236627; 
+ Thu, 02 Jan 2025 10:07:16 -0800 (PST)
 Received: from stoup.. ([63.239.63.212]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8dbaf1sm24620827b3a.112.2025.01.02.10.10.32
+ d2e1a72fcca58-72ad3393d5fsm20604456b3a.154.2025.01.02.10.07.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 10:10:32 -0800 (PST)
+ Thu, 02 Jan 2025 10:07:16 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 49/73] tcg: Reorg process_op_defs
-Date: Thu,  2 Jan 2025 10:06:29 -0800
-Message-ID: <20250102180654.1420056-50-richard.henderson@linaro.org>
+Subject: [PATCH 27/73] tcg: Merge TCG_TARGET_HAS_{muls2,mulu2,mulsh,muluh}
+Date: Thu,  2 Jan 2025 10:06:07 -0800
+Message-ID: <20250102180654.1420056-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250102180654.1420056-1-richard.henderson@linaro.org>
 References: <20250102180654.1420056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,470 +96,698 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Process each TCGConstraintSetIndex first.  Allocate TCGArgConstraint
-arrays based on those.  Only afterward process the TCGOpcodes and
-share those TCGArgConstraint arrays.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg.h |   7 +-
- tcg/tcg.c         | 273 +++++++++++++++++++++++-----------------------
- 2 files changed, 139 insertions(+), 141 deletions(-)
+ include/tcg/tcg-opc.h            |  16 ++---
+ tcg/aarch64/tcg-target-has.h     |  12 ++--
+ tcg/arm/tcg-target-has.h         |   8 +--
+ tcg/i386/tcg-target-has.h        |  12 ++--
+ tcg/loongarch64/tcg-target-has.h |  12 ++--
+ tcg/mips/tcg-target-has.h        |  12 ++--
+ tcg/ppc/tcg-target-has.h         |  12 ++--
+ tcg/riscv/tcg-target-has.h       |  12 ++--
+ tcg/s390x/tcg-target-has.h       |  12 ++--
+ tcg/sparc64/tcg-target-has.h     |  12 ++--
+ tcg/tcg-has.h                    |   4 --
+ tcg/tci/tcg-target-has.h         |  14 ++--
+ tcg/tcg-op.c                     | 115 +++++++++++++++++--------------
+ tcg/tcg.c                        |  24 +++----
+ tcg/tci.c                        |   8 ---
+ 15 files changed, 125 insertions(+), 160 deletions(-)
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index ee4785d33b..d589dbe02b 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -710,17 +710,12 @@ typedef struct TCGOpDef {
-     const char *name;
-     uint8_t nb_oargs, nb_iargs, nb_cargs, nb_args;
-     uint8_t flags;
--    TCGArgConstraint *args_ct;
-+    const TCGArgConstraint *args_ct;
- } TCGOpDef;
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index 8d8fda39f8..fbd759764c 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -85,10 +85,10 @@ DEF(brcond_i32, 0, 2, 2, TCG_OPF_BB_END | TCG_OPF_COND_BRANCH)
  
- extern TCGOpDef tcg_op_defs[];
- extern const size_t tcg_op_defs_max;
+ DEF(add2_i32, 2, 4, 0, IMPL(TCG_TARGET_HAS_add2_i32))
+ DEF(sub2_i32, 2, 4, 0, IMPL(TCG_TARGET_HAS_sub2_i32))
+-DEF(mulu2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_mulu2_i32))
+-DEF(muls2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_muls2_i32))
+-DEF(muluh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_muluh_i32))
+-DEF(mulsh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_mulsh_i32))
++DEF(mulu2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_mulu2(TCG_TYPE_I32)))
++DEF(muls2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_muls2(TCG_TYPE_I32)))
++DEF(muluh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_muluh(TCG_TYPE_I32)))
++DEF(mulsh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_mulsh(TCG_TYPE_I32)))
+ DEF(brcond2_i32, 0, 4, 2,
+     TCG_OPF_BB_END | TCG_OPF_COND_BRANCH | IMPL(TCG_TARGET_REG_BITS == 32))
+ DEF(setcond2_i32, 1, 4, 1, IMPL(TCG_TARGET_REG_BITS == 32))
+@@ -183,10 +183,10 @@ DEF(ctpop_i64, 1, 1, 0, IMPL64 | IMPL(TCG_TARGET_HAS_ctpop(TCG_TYPE_I64)))
  
--typedef struct TCGTargetOpDef {
--    TCGOpcode op;
--    const char *args_ct_str[TCG_MAX_OP_ARGS];
--} TCGTargetOpDef;
--
- bool tcg_op_supported(TCGOpcode op, TCGType type);
- bool tcg_op_deposit_valid(TCGType type, unsigned ofs, unsigned len);
+ DEF(add2_i64, 2, 4, 0, IMPL64 | IMPL(TCG_TARGET_HAS_add2_i64))
+ DEF(sub2_i64, 2, 4, 0, IMPL64 | IMPL(TCG_TARGET_HAS_sub2_i64))
+-DEF(mulu2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulu2_i64))
+-DEF(muls2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muls2_i64))
+-DEF(muluh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muluh_i64))
+-DEF(mulsh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulsh_i64))
++DEF(mulu2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulu2(TCG_TYPE_I64)))
++DEF(muls2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muls2(TCG_TYPE_I64)))
++DEF(muluh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muluh(TCG_TYPE_I64)))
++DEF(mulsh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulsh(TCG_TYPE_I64)))
  
+ #define DATA64_ARGS  (TCG_TARGET_REG_BITS == 64 ? 1 : 2)
+ 
+diff --git a/tcg/aarch64/tcg-target-has.h b/tcg/aarch64/tcg-target-has.h
+index 247bf3e358..53182cca6a 100644
+--- a/tcg/aarch64/tcg-target-has.h
++++ b/tcg/aarch64/tcg-target-has.h
+@@ -18,6 +18,10 @@
+ #define TCG_TARGET_HAS_ctpop(T)         0
+ #define TCG_TARGET_HAS_ctz(T)           1
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         0
++#define TCG_TARGET_HAS_mulu2(T)         0
++#define TCG_TARGET_HAS_mulsh(T)         (T == TCG_TYPE_I64)
++#define TCG_TARGET_HAS_muluh(T)         (T == TCG_TYPE_I64)
+ #define TCG_TARGET_HAS_rem(T)           1
+ #define TCG_TARGET_HAS_rot(T)           1
+ 
+@@ -40,10 +44,6 @@
+ #define TCG_TARGET_HAS_negsetcond_i32   1
+ #define TCG_TARGET_HAS_add2_i32         1
+ #define TCG_TARGET_HAS_sub2_i32         1
+-#define TCG_TARGET_HAS_mulu2_i32        0
+-#define TCG_TARGET_HAS_muls2_i32        0
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+ #define TCG_TARGET_HAS_extr_i64_i32     0
+ #define TCG_TARGET_HAS_qemu_st8_i32     0
+ 
+@@ -60,10 +60,6 @@
+ #define TCG_TARGET_HAS_negsetcond_i64   1
+ #define TCG_TARGET_HAS_add2_i64         1
+ #define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        1
+-#define TCG_TARGET_HAS_mulsh_i64        1
+ 
+ /*
+  * Without FEAT_LSE2, we must use LDXP+STXP to implement atomic 128-bit load,
+diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
+index 29405706a4..1352d3c25a 100644
+--- a/tcg/arm/tcg-target-has.h
++++ b/tcg/arm/tcg-target-has.h
+@@ -29,6 +29,10 @@ extern bool use_neon_instructions;
+ #define TCG_TARGET_HAS_ctpop(T)         0
+ #define TCG_TARGET_HAS_ctz(T)           use_armv7_instructions
+ #define TCG_TARGET_HAS_div(T)           use_idiv_instructions
++#define TCG_TARGET_HAS_muls2(T)         1
++#define TCG_TARGET_HAS_mulu2(T)         1
++#define TCG_TARGET_HAS_mulsh(T)         0
++#define TCG_TARGET_HAS_muluh(T)         0
+ #define TCG_TARGET_HAS_rem(T)           0
+ #define TCG_TARGET_HAS_rot(T)           1
+ 
+@@ -49,10 +53,6 @@ extern bool use_neon_instructions;
+ #define TCG_TARGET_HAS_sextract_i32     use_armv7_instructions
+ #define TCG_TARGET_HAS_extract2_i32     1
+ #define TCG_TARGET_HAS_negsetcond_i32   1
+-#define TCG_TARGET_HAS_mulu2_i32        1
+-#define TCG_TARGET_HAS_muls2_i32        1
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+ #define TCG_TARGET_HAS_qemu_st8_i32     0
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128   0
+diff --git a/tcg/i386/tcg-target-has.h b/tcg/i386/tcg-target-has.h
+index a60e13616c..fc6bd85ba2 100644
+--- a/tcg/i386/tcg-target-has.h
++++ b/tcg/i386/tcg-target-has.h
+@@ -31,6 +31,10 @@
+ #define TCG_TARGET_HAS_ctpop(T)         have_popcnt
+ #define TCG_TARGET_HAS_ctz(T)           1
+ #define TCG_TARGET_HAS_div2(T)          1
++#define TCG_TARGET_HAS_muls2(T)         1
++#define TCG_TARGET_HAS_mulu2(T)         1
++#define TCG_TARGET_HAS_mulsh(T)         0
++#define TCG_TARGET_HAS_muluh(T)         0
+ #define TCG_TARGET_HAS_rot(T)           1
+ 
+ /* optional integer and vector instructions */
+@@ -52,10 +56,6 @@
+ #define TCG_TARGET_HAS_negsetcond_i32   1
+ #define TCG_TARGET_HAS_add2_i32         1
+ #define TCG_TARGET_HAS_sub2_i32         1
+-#define TCG_TARGET_HAS_mulu2_i32        1
+-#define TCG_TARGET_HAS_muls2_i32        1
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+ 
+ #if TCG_TARGET_REG_BITS == 64
+ /* Keep 32-bit values zero-extended in a register.  */
+@@ -73,10 +73,6 @@
+ #define TCG_TARGET_HAS_negsetcond_i64   1
+ #define TCG_TARGET_HAS_add2_i64         1
+ #define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        1
+-#define TCG_TARGET_HAS_muls2_i64        1
+-#define TCG_TARGET_HAS_muluh_i64        0
+-#define TCG_TARGET_HAS_mulsh_i64        0
+ #define TCG_TARGET_HAS_qemu_st8_i32     0
+ #else
+ #define TCG_TARGET_HAS_qemu_st8_i32     1
+diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-target-has.h
+index b634baec4f..932acac497 100644
+--- a/tcg/loongarch64/tcg-target-has.h
++++ b/tcg/loongarch64/tcg-target-has.h
+@@ -15,6 +15,10 @@
+ #define TCG_TARGET_HAS_ctpop(T)         0
+ #define TCG_TARGET_HAS_ctz(T)           1
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         0
++#define TCG_TARGET_HAS_mulu2(T)         0
++#define TCG_TARGET_HAS_mulsh(T)         1
++#define TCG_TARGET_HAS_muluh(T)         1
+ #define TCG_TARGET_HAS_rem(T)           1
+ #define TCG_TARGET_HAS_rot(T)           1
+ 
+@@ -33,10 +37,6 @@
+ #define TCG_TARGET_HAS_extract2_i32     0
+ #define TCG_TARGET_HAS_add2_i32         0
+ #define TCG_TARGET_HAS_sub2_i32         0
+-#define TCG_TARGET_HAS_mulu2_i32        0
+-#define TCG_TARGET_HAS_muls2_i32        0
+-#define TCG_TARGET_HAS_muluh_i32        1
+-#define TCG_TARGET_HAS_mulsh_i32        1
+ #define TCG_TARGET_HAS_ext8s_i32        1
+ #define TCG_TARGET_HAS_ext16s_i32       1
+ #define TCG_TARGET_HAS_ext8u_i32        1
+@@ -60,10 +60,6 @@
+ #define TCG_TARGET_HAS_ext32u_i64       1
+ #define TCG_TARGET_HAS_add2_i64         0
+ #define TCG_TARGET_HAS_sub2_i64         0
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        1
+-#define TCG_TARGET_HAS_mulsh_i64        1
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128   (cpuinfo & CPUINFO_LSX)
+ 
+diff --git a/tcg/mips/tcg-target-has.h b/tcg/mips/tcg-target-has.h
+index 91ea0b56d5..f81218178e 100644
+--- a/tcg/mips/tcg-target-has.h
++++ b/tcg/mips/tcg-target-has.h
+@@ -44,6 +44,10 @@ extern bool use_mips32r2_instructions;
+ #define TCG_TARGET_HAS_ctpop(T)         0
+ #define TCG_TARGET_HAS_ctz(T)           0
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         (!use_mips32r6_instructions)
++#define TCG_TARGET_HAS_mulu2(T)         (!use_mips32r6_instructions)
++#define TCG_TARGET_HAS_mulsh(T)         1
++#define TCG_TARGET_HAS_muluh(T)         1
+ #define TCG_TARGET_HAS_rem(T)           1
+ #define TCG_TARGET_HAS_rot(T)           use_mips32r2_instructions
+ 
+@@ -55,10 +59,6 @@ extern bool use_mips32r2_instructions;
+ #define TCG_TARGET_HAS_not(T)           1
+ #define TCG_TARGET_HAS_orc(T)           0
+ 
+-#define TCG_TARGET_HAS_mulu2_i32        (!use_mips32r6_instructions)
+-#define TCG_TARGET_HAS_muls2_i32        (!use_mips32r6_instructions)
+-#define TCG_TARGET_HAS_muluh_i32        1
+-#define TCG_TARGET_HAS_mulsh_i32        1
+ #define TCG_TARGET_HAS_negsetcond_i32   0
+ 
+ #if TCG_TARGET_REG_BITS == 64
+@@ -67,10 +67,6 @@ extern bool use_mips32r2_instructions;
+ #define TCG_TARGET_HAS_extr_i64_i32     1
+ #define TCG_TARGET_HAS_add2_i64         0
+ #define TCG_TARGET_HAS_sub2_i64         0
+-#define TCG_TARGET_HAS_mulu2_i64        (!use_mips32r6_instructions)
+-#define TCG_TARGET_HAS_muls2_i64        (!use_mips32r6_instructions)
+-#define TCG_TARGET_HAS_muluh_i64        1
+-#define TCG_TARGET_HAS_mulsh_i64        1
+ #define TCG_TARGET_HAS_ext32s_i64       1
+ #define TCG_TARGET_HAS_ext32u_i64       1
+ #define TCG_TARGET_HAS_negsetcond_i64   0
+diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
+index b593cd3308..60da23a66a 100644
+--- a/tcg/ppc/tcg-target-has.h
++++ b/tcg/ppc/tcg-target-has.h
+@@ -22,6 +22,10 @@
+ #define TCG_TARGET_HAS_ctpop(T)         have_isa_2_06
+ #define TCG_TARGET_HAS_ctz(T)           have_isa_3_00
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         0
++#define TCG_TARGET_HAS_mulu2(T)         0
++#define TCG_TARGET_HAS_mulsh(T)         1
++#define TCG_TARGET_HAS_muluh(T)         1
+ #define TCG_TARGET_HAS_rem(T)           1
+ #define TCG_TARGET_HAS_rot(T)           1
+ 
+@@ -44,10 +48,6 @@
+ #define TCG_TARGET_HAS_sextract_i32     0
+ #define TCG_TARGET_HAS_extract2_i32     0
+ #define TCG_TARGET_HAS_negsetcond_i32   1
+-#define TCG_TARGET_HAS_mulu2_i32        0
+-#define TCG_TARGET_HAS_muls2_i32        0
+-#define TCG_TARGET_HAS_muluh_i32        1
+-#define TCG_TARGET_HAS_mulsh_i32        1
+ #define TCG_TARGET_HAS_qemu_st8_i32     0
+ 
+ #if TCG_TARGET_REG_BITS == 64
+@@ -67,10 +67,6 @@
+ #define TCG_TARGET_HAS_negsetcond_i64   1
+ #define TCG_TARGET_HAS_add2_i64         1
+ #define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        1
+-#define TCG_TARGET_HAS_mulsh_i64        1
+ #endif
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128   \
+diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
+index 81f81787c0..00eee4cafb 100644
+--- a/tcg/riscv/tcg-target-has.h
++++ b/tcg/riscv/tcg-target-has.h
+@@ -15,6 +15,10 @@
+ #define TCG_TARGET_HAS_ctpop(T)         (cpuinfo & CPUINFO_ZBB)
+ #define TCG_TARGET_HAS_ctz(T)           (cpuinfo & CPUINFO_ZBB)
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         0
++#define TCG_TARGET_HAS_mulu2(T)         0
++#define TCG_TARGET_HAS_mulsh(T)         (T == TCG_TYPE_I64)
++#define TCG_TARGET_HAS_muluh(T)         (T == TCG_TYPE_I64)
+ #define TCG_TARGET_HAS_rem(T)           1
+ #define TCG_TARGET_HAS_rot(T)           (cpuinfo & CPUINFO_ZBB)
+ 
+@@ -33,10 +37,6 @@
+ #define TCG_TARGET_HAS_extract2_i32     0
+ #define TCG_TARGET_HAS_add2_i32         1
+ #define TCG_TARGET_HAS_sub2_i32         1
+-#define TCG_TARGET_HAS_mulu2_i32        0
+-#define TCG_TARGET_HAS_muls2_i32        0
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+ #define TCG_TARGET_HAS_ext8s_i32        1
+ #define TCG_TARGET_HAS_ext16s_i32       1
+ #define TCG_TARGET_HAS_ext8u_i32        1
+@@ -59,10 +59,6 @@
+ #define TCG_TARGET_HAS_ext32u_i64       1
+ #define TCG_TARGET_HAS_add2_i64         1
+ #define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        1
+-#define TCG_TARGET_HAS_mulsh_i64        1
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128   0
+ 
+diff --git a/tcg/s390x/tcg-target-has.h b/tcg/s390x/tcg-target-has.h
+index c954a4c03e..7c0d4708c9 100644
+--- a/tcg/s390x/tcg-target-has.h
++++ b/tcg/s390x/tcg-target-has.h
+@@ -34,6 +34,10 @@ extern uint64_t s390_facilities[3];
+ #define TCG_TARGET_HAS_ctpop(T)       1
+ #define TCG_TARGET_HAS_ctz(T)         0
+ #define TCG_TARGET_HAS_div2(T)        1
++#define TCG_TARGET_HAS_muls2(T)       (T == TCG_TYPE_I64 && HAVE_FACILITY(MISC_INSN_EXT2))
++#define TCG_TARGET_HAS_mulu2(T)       (T == TCG_TYPE_I64)
++#define TCG_TARGET_HAS_mulsh(T)       0
++#define TCG_TARGET_HAS_muluh(T)       0
+ #define TCG_TARGET_HAS_rot(T)         1
+ 
+ /* optional integer and vector instructions */
+@@ -55,10 +59,6 @@ extern uint64_t s390_facilities[3];
+ #define TCG_TARGET_HAS_negsetcond_i32 1
+ #define TCG_TARGET_HAS_add2_i32       1
+ #define TCG_TARGET_HAS_sub2_i32       1
+-#define TCG_TARGET_HAS_mulu2_i32      0
+-#define TCG_TARGET_HAS_muls2_i32      0
+-#define TCG_TARGET_HAS_muluh_i32      0
+-#define TCG_TARGET_HAS_mulsh_i32      0
+ #define TCG_TARGET_HAS_extr_i64_i32   0
+ #define TCG_TARGET_HAS_qemu_st8_i32   0
+ 
+@@ -75,10 +75,6 @@ extern uint64_t s390_facilities[3];
+ #define TCG_TARGET_HAS_negsetcond_i64 1
+ #define TCG_TARGET_HAS_add2_i64       1
+ #define TCG_TARGET_HAS_sub2_i64       1
+-#define TCG_TARGET_HAS_mulu2_i64      1
+-#define TCG_TARGET_HAS_muls2_i64      HAVE_FACILITY(MISC_INSN_EXT2)
+-#define TCG_TARGET_HAS_muluh_i64      0
+-#define TCG_TARGET_HAS_mulsh_i64      0
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128 1
+ 
+diff --git a/tcg/sparc64/tcg-target-has.h b/tcg/sparc64/tcg-target-has.h
+index eaca708478..86b109fc6d 100644
+--- a/tcg/sparc64/tcg-target-has.h
++++ b/tcg/sparc64/tcg-target-has.h
+@@ -19,6 +19,10 @@ extern bool use_vis3_instructions;
+ #define TCG_TARGET_HAS_ctpop(T)         0
+ #define TCG_TARGET_HAS_ctz(T)           0
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         (T == TCG_TYPE_I32)
++#define TCG_TARGET_HAS_mulu2(T)         (T == TCG_TYPE_I32)
++#define TCG_TARGET_HAS_mulsh(T)         0
++#define TCG_TARGET_HAS_muluh(T)         (T == TCG_TYPE_I64 && use_vis3_instructions)
+ #define TCG_TARGET_HAS_rem(T)           0
+ #define TCG_TARGET_HAS_rot(T)           0
+ 
+@@ -41,10 +45,6 @@ extern bool use_vis3_instructions;
+ #define TCG_TARGET_HAS_negsetcond_i32   1
+ #define TCG_TARGET_HAS_add2_i32         1
+ #define TCG_TARGET_HAS_sub2_i32         1
+-#define TCG_TARGET_HAS_mulu2_i32        1
+-#define TCG_TARGET_HAS_muls2_i32        1
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+ #define TCG_TARGET_HAS_qemu_st8_i32     0
+ 
+ #define TCG_TARGET_HAS_extr_i64_i32     0
+@@ -61,10 +61,6 @@ extern bool use_vis3_instructions;
+ #define TCG_TARGET_HAS_negsetcond_i64   1
+ #define TCG_TARGET_HAS_add2_i64         1
+ #define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        use_vis3_instructions
+-#define TCG_TARGET_HAS_mulsh_i64        0
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128   0
+ 
+diff --git a/tcg/tcg-has.h b/tcg/tcg-has.h
+index b2f2cbf2ad..199facbe37 100644
+--- a/tcg/tcg-has.h
++++ b/tcg/tcg-has.h
+@@ -25,10 +25,6 @@
+ #define TCG_TARGET_HAS_negsetcond_i64   0
+ #define TCG_TARGET_HAS_add2_i64         0
+ #define TCG_TARGET_HAS_sub2_i64         0
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        0
+-#define TCG_TARGET_HAS_mulsh_i64        0
+ /* Turn some undef macros into true macros.  */
+ #define TCG_TARGET_HAS_add2_i32         1
+ #define TCG_TARGET_HAS_sub2_i32         1
+diff --git a/tcg/tci/tcg-target-has.h b/tcg/tci/tcg-target-has.h
+index 957ed9e2b3..e0bf8b14bd 100644
+--- a/tcg/tci/tcg-target-has.h
++++ b/tcg/tci/tcg-target-has.h
+@@ -13,6 +13,10 @@
+ #define TCG_TARGET_HAS_ctpop(T)         1
+ #define TCG_TARGET_HAS_ctz(T)           1
+ #define TCG_TARGET_HAS_div(T)           1
++#define TCG_TARGET_HAS_muls2(T)         1
++#define TCG_TARGET_HAS_mulu2(T)         1
++#define TCG_TARGET_HAS_mulsh(T)         0
++#define TCG_TARGET_HAS_muluh(T)         0
+ #define TCG_TARGET_HAS_rem(T)           1
+ #define TCG_TARGET_HAS_rot(T)           1
+ 
+@@ -33,9 +37,6 @@
+ #define TCG_TARGET_HAS_sextract_i32     1
+ #define TCG_TARGET_HAS_extract2_i32     0
+ #define TCG_TARGET_HAS_negsetcond_i32   0
+-#define TCG_TARGET_HAS_muls2_i32        1
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+ #define TCG_TARGET_HAS_qemu_st8_i32     0
+ 
+ #if TCG_TARGET_REG_BITS == 64
+@@ -51,17 +52,10 @@
+ #define TCG_TARGET_HAS_ext16u_i64       1
+ #define TCG_TARGET_HAS_ext32u_i64       1
+ #define TCG_TARGET_HAS_negsetcond_i64   0
+-#define TCG_TARGET_HAS_muls2_i64        1
+ #define TCG_TARGET_HAS_add2_i32         1
+ #define TCG_TARGET_HAS_sub2_i32         1
+-#define TCG_TARGET_HAS_mulu2_i32        1
+ #define TCG_TARGET_HAS_add2_i64         1
+ #define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        1
+-#define TCG_TARGET_HAS_muluh_i64        0
+-#define TCG_TARGET_HAS_mulsh_i64        0
+-#else
+-#define TCG_TARGET_HAS_mulu2_i32        1
+ #endif /* TCG_TARGET_REG_BITS == 64 */
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128   0
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 2fb4ce90dc..8786aa5903 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -1191,9 +1191,9 @@ void tcg_gen_sub2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
+ 
+ void tcg_gen_mulu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
+ {
+-    if (TCG_TARGET_HAS_mulu2_i32) {
++    if (TCG_TARGET_HAS_mulu2(TCG_TYPE_I32)) {
+         tcg_gen_op4_i32(INDEX_op_mulu2_i32, rl, rh, arg1, arg2);
+-    } else if (TCG_TARGET_HAS_muluh_i32) {
++    } else if (TCG_TARGET_HAS_muluh(TCG_TYPE_I32)) {
+         TCGv_i32 t = tcg_temp_ebb_new_i32();
+         tcg_gen_op3_i32(INDEX_op_mul_i32, t, arg1, arg2);
+         tcg_gen_op3_i32(INDEX_op_muluh_i32, rh, arg1, arg2);
+@@ -1215,9 +1215,9 @@ void tcg_gen_mulu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
+ 
+ void tcg_gen_muls2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
+ {
+-    if (TCG_TARGET_HAS_muls2_i32) {
++    if (TCG_TARGET_HAS_muls2(TCG_TYPE_I32)) {
+         tcg_gen_op4_i32(INDEX_op_muls2_i32, rl, rh, arg1, arg2);
+-    } else if (TCG_TARGET_HAS_mulsh_i32) {
++    } else if (TCG_TARGET_HAS_mulsh(TCG_TYPE_I32)) {
+         TCGv_i32 t = tcg_temp_ebb_new_i32();
+         tcg_gen_op3_i32(INDEX_op_mul_i32, t, arg1, arg2);
+         tcg_gen_op3_i32(INDEX_op_mulsh_i32, rh, arg1, arg2);
+@@ -3099,58 +3099,73 @@ void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
+ 
+ void tcg_gen_mulu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
+ {
+-    if (TCG_TARGET_HAS_mulu2_i64) {
+-        tcg_gen_op4_i64(INDEX_op_mulu2_i64, rl, rh, arg1, arg2);
+-    } else if (TCG_TARGET_HAS_muluh_i64) {
+-        TCGv_i64 t = tcg_temp_ebb_new_i64();
+-        tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
+-        tcg_gen_op3_i64(INDEX_op_muluh_i64, rh, arg1, arg2);
+-        tcg_gen_mov_i64(rl, t);
+-        tcg_temp_free_i64(t);
+-    } else {
+-        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
+-        tcg_gen_mul_i64(t0, arg1, arg2);
+-        gen_helper_muluh_i64(rh, arg1, arg2);
+-        tcg_gen_mov_i64(rl, t0);
+-        tcg_temp_free_i64(t0);
++    TCGv_i64 t;
++
++    if (TCG_TARGET_REG_BITS == 64) {
++        if (TCG_TARGET_HAS_mulu2(TCG_TYPE_I64)) {
++            tcg_gen_op4_i64(INDEX_op_mulu2_i64, rl, rh, arg1, arg2);
++            return;
++        }
++        if (TCG_TARGET_HAS_muluh(TCG_TYPE_I64)) {
++            t = tcg_temp_ebb_new_i64();
++            tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
++            tcg_gen_op3_i64(INDEX_op_muluh_i64, rh, arg1, arg2);
++            tcg_gen_mov_i64(rl, t);
++            tcg_temp_free_i64(t);
++            return;
++        }
+     }
++    t = tcg_temp_ebb_new_i64();
++    tcg_gen_mul_i64(t, arg1, arg2);
++    gen_helper_muluh_i64(rh, arg1, arg2);
++    tcg_gen_mov_i64(rl, t);
++    tcg_temp_free_i64(t);
+ }
+ 
+ void tcg_gen_muls2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
+ {
+-    if (TCG_TARGET_HAS_muls2_i64) {
+-        tcg_gen_op4_i64(INDEX_op_muls2_i64, rl, rh, arg1, arg2);
+-    } else if (TCG_TARGET_HAS_mulsh_i64) {
+-        TCGv_i64 t = tcg_temp_ebb_new_i64();
+-        tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
+-        tcg_gen_op3_i64(INDEX_op_mulsh_i64, rh, arg1, arg2);
+-        tcg_gen_mov_i64(rl, t);
+-        tcg_temp_free_i64(t);
+-    } else if (TCG_TARGET_HAS_mulu2_i64 || TCG_TARGET_HAS_muluh_i64) {
+-        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
+-        TCGv_i64 t1 = tcg_temp_ebb_new_i64();
+-        TCGv_i64 t2 = tcg_temp_ebb_new_i64();
+-        TCGv_i64 t3 = tcg_temp_ebb_new_i64();
+-        tcg_gen_mulu2_i64(t0, t1, arg1, arg2);
+-        /* Adjust for negative inputs.  */
+-        tcg_gen_sari_i64(t2, arg1, 63);
+-        tcg_gen_sari_i64(t3, arg2, 63);
+-        tcg_gen_and_i64(t2, t2, arg2);
+-        tcg_gen_and_i64(t3, t3, arg1);
+-        tcg_gen_sub_i64(rh, t1, t2);
+-        tcg_gen_sub_i64(rh, rh, t3);
+-        tcg_gen_mov_i64(rl, t0);
+-        tcg_temp_free_i64(t0);
+-        tcg_temp_free_i64(t1);
+-        tcg_temp_free_i64(t2);
+-        tcg_temp_free_i64(t3);
+-    } else {
+-        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
+-        tcg_gen_mul_i64(t0, arg1, arg2);
+-        gen_helper_mulsh_i64(rh, arg1, arg2);
+-        tcg_gen_mov_i64(rl, t0);
+-        tcg_temp_free_i64(t0);
++    TCGv_i64 t;
++
++    if (TCG_TARGET_REG_BITS == 64) {
++        if (TCG_TARGET_HAS_muls2(TCG_TYPE_I64)) {
++            tcg_gen_op4_i64(INDEX_op_muls2_i64, rl, rh, arg1, arg2);
++            return;
++        }
++        if (TCG_TARGET_HAS_mulsh(TCG_TYPE_I64)) {
++            t = tcg_temp_ebb_new_i64();
++            tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
++            tcg_gen_op3_i64(INDEX_op_mulsh_i64, rh, arg1, arg2);
++            tcg_gen_mov_i64(rl, t);
++            tcg_temp_free_i64(t);
++            return;
++        }
++        if (TCG_TARGET_HAS_mulu2(TCG_TYPE_I64) ||
++            TCG_TARGET_HAS_muluh(TCG_TYPE_I64)) {
++            TCGv_i64 t0 = tcg_temp_ebb_new_i64();
++            TCGv_i64 t1 = tcg_temp_ebb_new_i64();
++            TCGv_i64 t2 = tcg_temp_ebb_new_i64();
++            TCGv_i64 t3 = tcg_temp_ebb_new_i64();
++            tcg_gen_mulu2_i64(t0, t1, arg1, arg2);
++            /* Adjust for negative inputs.  */
++            tcg_gen_sari_i64(t2, arg1, 63);
++            tcg_gen_sari_i64(t3, arg2, 63);
++            tcg_gen_and_i64(t2, t2, arg2);
++            tcg_gen_and_i64(t3, t3, arg1);
++            tcg_gen_sub_i64(rh, t1, t2);
++            tcg_gen_sub_i64(rh, rh, t3);
++            tcg_gen_mov_i64(rl, t0);
++            tcg_temp_free_i64(t0);
++            tcg_temp_free_i64(t1);
++            tcg_temp_free_i64(t2);
++            tcg_temp_free_i64(t3);
++            return;
++        }
+     }
++    t = tcg_temp_ebb_new_i64();
++    tcg_gen_mul_i64(t, arg1, arg2);
++    gen_helper_mulsh_i64(rh, arg1, arg2);
++    tcg_gen_mov_i64(rl, t);
++    tcg_temp_free_i64(t);
+ }
+ 
+ void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
 diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 775d51953c..343da162a5 100644
+index de22bdab85..1befe0c4d7 100644
 --- a/tcg/tcg.c
 +++ b/tcg/tcg.c
-@@ -895,31 +895,35 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode);
+@@ -2235,13 +2235,13 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
+     case INDEX_op_sub2_i32:
+         return TCG_TARGET_HAS_sub2_i32;
+     case INDEX_op_mulu2_i32:
+-        return TCG_TARGET_HAS_mulu2_i32;
++        return TCG_TARGET_HAS_mulu2(TCG_TYPE_I32);
+     case INDEX_op_muls2_i32:
+-        return TCG_TARGET_HAS_muls2_i32;
++        return TCG_TARGET_HAS_muls2(TCG_TYPE_I32);
+     case INDEX_op_muluh_i32:
+-        return TCG_TARGET_HAS_muluh_i32;
++        return TCG_TARGET_HAS_muluh(TCG_TYPE_I32);
+     case INDEX_op_mulsh_i32:
+-        return TCG_TARGET_HAS_mulsh_i32;
++        return TCG_TARGET_HAS_mulsh(TCG_TYPE_I32);
+     case INDEX_op_ext8s_i32:
+         return TCG_TARGET_HAS_ext8s_i32;
+     case INDEX_op_ext16s_i32:
+@@ -2369,13 +2369,13 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
+     case INDEX_op_sub2_i64:
+         return TCG_TARGET_HAS_sub2_i64;
+     case INDEX_op_mulu2_i64:
+-        return TCG_TARGET_HAS_mulu2_i64;
++        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_mulu2(TCG_TYPE_I64);
+     case INDEX_op_muls2_i64:
+-        return TCG_TARGET_HAS_muls2_i64;
++        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_muls2(TCG_TYPE_I64);
+     case INDEX_op_muluh_i64:
+-        return TCG_TARGET_HAS_muluh_i64;
++        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_muluh(TCG_TYPE_I64);
+     case INDEX_op_mulsh_i64:
+-        return TCG_TARGET_HAS_mulsh_i64;
++        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_mulsh(TCG_TYPE_I64);
  
- /* Put all of the constraint sets into an array, indexed by the enum. */
- 
--#define C_O0_I1(I1)                     { .args_ct_str = { #I1 } },
--#define C_O0_I2(I1, I2)                 { .args_ct_str = { #I1, #I2 } },
--#define C_O0_I3(I1, I2, I3)             { .args_ct_str = { #I1, #I2, #I3 } },
--#define C_O0_I4(I1, I2, I3, I4)         { .args_ct_str = { #I1, #I2, #I3, #I4 } },
-+typedef struct TCGConstraintSet {
-+    uint8_t nb_oargs, nb_iargs;
-+    const char *args_ct_str[TCG_MAX_OP_ARGS];
-+} TCGConstraintSet;
- 
--#define C_O1_I1(O1, I1)                 { .args_ct_str = { #O1, #I1 } },
--#define C_O1_I2(O1, I1, I2)             { .args_ct_str = { #O1, #I1, #I2 } },
--#define C_O1_I3(O1, I1, I2, I3)         { .args_ct_str = { #O1, #I1, #I2, #I3 } },
--#define C_O1_I4(O1, I1, I2, I3, I4)     { .args_ct_str = { #O1, #I1, #I2, #I3, #I4 } },
-+#define C_O0_I1(I1)                     { 0, 1, { #I1 } },
-+#define C_O0_I2(I1, I2)                 { 0, 2, { #I1, #I2 } },
-+#define C_O0_I3(I1, I2, I3)             { 0, 3, { #I1, #I2, #I3 } },
-+#define C_O0_I4(I1, I2, I3, I4)         { 0, 4, { #I1, #I2, #I3, #I4 } },
- 
--#define C_N1_I2(O1, I1, I2)             { .args_ct_str = { "&" #O1, #I1, #I2 } },
--#define C_N1O1_I1(O1, O2, I1)           { .args_ct_str = { "&" #O1, #O2, #I1 } },
--#define C_N2_I1(O1, O2, I1)             { .args_ct_str = { "&" #O1, "&" #O2, #I1 } },
-+#define C_O1_I1(O1, I1)                 { 1, 1, { #O1, #I1 } },
-+#define C_O1_I2(O1, I1, I2)             { 1, 2, { #O1, #I1, #I2 } },
-+#define C_O1_I3(O1, I1, I2, I3)         { 1, 3, { #O1, #I1, #I2, #I3 } },
-+#define C_O1_I4(O1, I1, I2, I3, I4)     { 1, 4, { #O1, #I1, #I2, #I3, #I4 } },
- 
--#define C_O2_I1(O1, O2, I1)             { .args_ct_str = { #O1, #O2, #I1 } },
--#define C_O2_I2(O1, O2, I1, I2)         { .args_ct_str = { #O1, #O2, #I1, #I2 } },
--#define C_O2_I3(O1, O2, I1, I2, I3)     { .args_ct_str = { #O1, #O2, #I1, #I2, #I3 } },
--#define C_O2_I4(O1, O2, I1, I2, I3, I4) { .args_ct_str = { #O1, #O2, #I1, #I2, #I3, #I4 } },
--#define C_N1_O1_I4(O1, O2, I1, I2, I3, I4) { .args_ct_str = { "&" #O1, #O2, #I1, #I2, #I3, #I4 } },
-+#define C_N1_I2(O1, I1, I2)             { 1, 2, { "&" #O1, #I1, #I2 } },
-+#define C_N1O1_I1(O1, O2, I1)           { 2, 1, { "&" #O1, #O2, #I1 } },
-+#define C_N2_I1(O1, O2, I1)             { 2, 1, { "&" #O1, "&" #O2, #I1 } },
- 
--static const TCGTargetOpDef constraint_sets[] = {
-+#define C_O2_I1(O1, O2, I1)             { 2, 1, { #O1, #O2, #I1 } },
-+#define C_O2_I2(O1, O2, I1, I2)         { 2, 2, { #O1, #O2, #I1, #I2 } },
-+#define C_O2_I3(O1, O2, I1, I2, I3)     { 2, 3, { #O1, #O2, #I1, #I2, #I3 } },
-+#define C_O2_I4(O1, O2, I1, I2, I3, I4) { 2, 4, { #O1, #O2, #I1, #I2, #I3, #I4 } },
-+#define C_N1_O1_I4(O1, O2, I1, I2, I3, I4) { 2, 4, { "&" #O1, #O2, #I1, #I2, #I3, #I4 } },
-+
-+static const TCGConstraintSet constraint_sets[] = {
- #include "tcg-target-con-set.h"
- };
- 
--
- #undef C_O0_I1
- #undef C_O0_I2
- #undef C_O0_I3
-@@ -1514,32 +1518,12 @@ static TCGTemp *tcg_global_reg_new_internal(TCGContext *s, TCGType type,
- static void tcg_context_init(unsigned max_cpus)
- {
-     TCGContext *s = &tcg_init_ctx;
--    int op, total_args, n, i;
--    TCGOpDef *def;
--    TCGArgConstraint *args_ct;
-+    int  n, i;
-     TCGTemp *ts;
- 
-     memset(s, 0, sizeof(*s));
-     s->nb_globals = 0;
- 
--    /* Count total number of arguments and allocate the corresponding
--       space */
--    total_args = 0;
--    for(op = 0; op < NB_OPS; op++) {
--        def = &tcg_op_defs[op];
--        n = def->nb_iargs + def->nb_oargs;
--        total_args += n;
--    }
--
--    args_ct = g_new0(TCGArgConstraint, total_args);
--
--    for(op = 0; op < NB_OPS; op++) {
--        def = &tcg_op_defs[op];
--        def->args_ct = args_ct;
--        n = def->nb_iargs + def->nb_oargs;
--        args_ct += n;
--    }
--
-     init_call_layout(&info_helper_ld32_mmu);
-     init_call_layout(&info_helper_ld64_mmu);
-     init_call_layout(&info_helper_ld128_mmu);
-@@ -3090,10 +3074,12 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
- }
- 
- /* we give more priority to constraints with less registers */
--static int get_constraint_priority(const TCGOpDef *def, int k)
-+static int get_constraint_priority(const TCGArgConstraint *arg_ct, int k)
- {
--    const TCGArgConstraint *arg_ct = &def->args_ct[k];
--    int n = ctpop64(arg_ct->regs);
-+    int n;
-+
-+    arg_ct += k;
-+    n = ctpop64(arg_ct->regs);
- 
-     /*
-      * Sort constraints of a single register first, which includes output
-@@ -3122,10 +3108,9 @@ static int get_constraint_priority(const TCGOpDef *def, int k)
- }
- 
- /* sort from highest priority to lowest */
--static void sort_constraints(TCGOpDef *def, int start, int n)
-+static void sort_constraints(TCGArgConstraint *a, int start, int n)
- {
-     int i, j;
--    TCGArgConstraint *a = def->args_ct;
- 
-     for (i = 0; i < n; i++) {
-         a[start + i].sort_index = start + i;
-@@ -3135,8 +3120,8 @@ static void sort_constraints(TCGOpDef *def, int start, int n)
-     }
-     for (i = 0; i < n - 1; i++) {
-         for (j = i + 1; j < n; j++) {
--            int p1 = get_constraint_priority(def, a[start + i].sort_index);
--            int p2 = get_constraint_priority(def, a[start + j].sort_index);
-+            int p1 = get_constraint_priority(a, a[start + i].sort_index);
-+            int p2 = get_constraint_priority(a, a[start + j].sort_index);
-             if (p1 < p2) {
-                 int tmp = a[start + i].sort_index;
-                 a[start + i].sort_index = a[start + j].sort_index;
-@@ -3146,56 +3131,43 @@ static void sort_constraints(TCGOpDef *def, int start, int n)
-     }
- }
- 
-+static const TCGArgConstraint empty_cts[TCG_MAX_OP_ARGS];
-+static TCGArgConstraint all_args_cts[ARRAY_SIZE(constraint_sets)][TCG_MAX_OP_ARGS];
-+
- static void process_op_defs(TCGContext *s)
- {
--    TCGOpcode op;
-+    /*
-+     * Process each constraint set.
-+     */
- 
--    for (op = 0; op < NB_OPS; op++) {
--        TCGOpDef *def = &tcg_op_defs[op];
--        const TCGTargetOpDef *tdefs;
-+    for (size_t c = 0; c < ARRAY_SIZE(constraint_sets); ++c) {
-+        const TCGConstraintSet *tdefs = &constraint_sets[c];
-+        TCGArgConstraint *args_ct = all_args_cts[c];
-+        int nb_oargs = tdefs->nb_oargs;
-+        int nb_iargs = tdefs->nb_iargs;
-+        int nb_args = nb_oargs + nb_iargs;
-         bool saw_alias_pair = false;
--        int i, o, i2, o2, nb_args;
- 
--        if (def->flags & TCG_OPF_NOT_PRESENT) {
--            continue;
--        }
--
--        nb_args = def->nb_iargs + def->nb_oargs;
--        if (nb_args == 0) {
--            continue;
--        }
--
--        /*
--         * Macro magic should make it impossible, but double-check that
--         * the array index is in range.  Since the signness of an enum
--         * is implementation defined, force the result to unsigned.
--         */
--        unsigned con_set = tcg_target_op_def(op);
--        tcg_debug_assert(con_set < ARRAY_SIZE(constraint_sets));
--        tdefs = &constraint_sets[con_set];
--
--        for (i = 0; i < nb_args; i++) {
-+        for (int i = 0; i < nb_args; i++) {
-             const char *ct_str = tdefs->args_ct_str[i];
--            bool input_p = i >= def->nb_oargs;
--
--            /* Incomplete TCGTargetOpDef entry. */
--            tcg_debug_assert(ct_str != NULL);
-+            bool input_p = i >= nb_oargs;
-+            int o;
- 
-             switch (*ct_str) {
-             case '0' ... '9':
-                 o = *ct_str - '0';
-                 tcg_debug_assert(input_p);
--                tcg_debug_assert(o < def->nb_oargs);
--                tcg_debug_assert(def->args_ct[o].regs != 0);
--                tcg_debug_assert(!def->args_ct[o].oalias);
--                def->args_ct[i] = def->args_ct[o];
-+                tcg_debug_assert(o < nb_oargs);
-+                tcg_debug_assert(args_ct[o].regs != 0);
-+                tcg_debug_assert(!args_ct[o].oalias);
-+                args_ct[i] = args_ct[o];
-                 /* The output sets oalias.  */
--                def->args_ct[o].oalias = 1;
--                def->args_ct[o].alias_index = i;
-+                args_ct[o].oalias = 1;
-+                args_ct[o].alias_index = i;
-                 /* The input sets ialias. */
--                def->args_ct[i].ialias = 1;
--                def->args_ct[i].alias_index = o;
--                if (def->args_ct[i].pair) {
-+                args_ct[i].ialias = 1;
-+                args_ct[i].alias_index = o;
-+                if (args_ct[i].pair) {
-                     saw_alias_pair = true;
-                 }
-                 tcg_debug_assert(ct_str[1] == '\0');
-@@ -3203,41 +3175,41 @@ static void process_op_defs(TCGContext *s)
- 
-             case '&':
-                 tcg_debug_assert(!input_p);
--                def->args_ct[i].newreg = true;
-+                args_ct[i].newreg = true;
-                 ct_str++;
-                 break;
- 
-             case 'p': /* plus */
-                 /* Allocate to the register after the previous. */
--                tcg_debug_assert(i > (input_p ? def->nb_oargs : 0));
-+                tcg_debug_assert(i > (input_p ? nb_oargs : 0));
-                 o = i - 1;
--                tcg_debug_assert(!def->args_ct[o].pair);
--                tcg_debug_assert(!def->args_ct[o].ct);
--                def->args_ct[i] = (TCGArgConstraint){
-+                tcg_debug_assert(!args_ct[o].pair);
-+                tcg_debug_assert(!args_ct[o].ct);
-+                args_ct[i] = (TCGArgConstraint){
-                     .pair = 2,
-                     .pair_index = o,
--                    .regs = def->args_ct[o].regs << 1,
--                    .newreg = def->args_ct[o].newreg,
-+                    .regs = args_ct[o].regs << 1,
-+                    .newreg = args_ct[o].newreg,
-                 };
--                def->args_ct[o].pair = 1;
--                def->args_ct[o].pair_index = i;
-+                args_ct[o].pair = 1;
-+                args_ct[o].pair_index = i;
-                 tcg_debug_assert(ct_str[1] == '\0');
-                 continue;
- 
-             case 'm': /* minus */
-                 /* Allocate to the register before the previous. */
--                tcg_debug_assert(i > (input_p ? def->nb_oargs : 0));
-+                tcg_debug_assert(i > (input_p ? nb_oargs : 0));
-                 o = i - 1;
--                tcg_debug_assert(!def->args_ct[o].pair);
--                tcg_debug_assert(!def->args_ct[o].ct);
--                def->args_ct[i] = (TCGArgConstraint){
-+                tcg_debug_assert(!args_ct[o].pair);
-+                tcg_debug_assert(!args_ct[o].ct);
-+                args_ct[i] = (TCGArgConstraint){
-                     .pair = 1,
-                     .pair_index = o,
--                    .regs = def->args_ct[o].regs >> 1,
--                    .newreg = def->args_ct[o].newreg,
-+                    .regs = args_ct[o].regs >> 1,
-+                    .newreg = args_ct[o].newreg,
-                 };
--                def->args_ct[o].pair = 2;
--                def->args_ct[o].pair_index = i;
-+                args_ct[o].pair = 2;
-+                args_ct[o].pair_index = i;
-                 tcg_debug_assert(ct_str[1] == '\0');
-                 continue;
-             }
-@@ -3245,16 +3217,16 @@ static void process_op_defs(TCGContext *s)
-             do {
-                 switch (*ct_str) {
-                 case 'i':
--                    def->args_ct[i].ct |= TCG_CT_CONST;
-+                    args_ct[i].ct |= TCG_CT_CONST;
-                     break;
- 
-                 /* Include all of the target-specific constraints. */
- 
- #undef CONST
- #define CONST(CASE, MASK) \
--    case CASE: def->args_ct[i].ct |= MASK; break;
-+    case CASE: args_ct[i].ct |= MASK; break;
- #define REGS(CASE, MASK) \
--    case CASE: def->args_ct[i].regs |= MASK; break;
-+    case CASE: args_ct[i].regs |= MASK; break;
- 
- #include "tcg-target-con-str.h"
- 
-@@ -3265,15 +3237,12 @@ static void process_op_defs(TCGContext *s)
-                 case '&':
-                 case 'p':
-                 case 'm':
--                    /* Typo in TCGTargetOpDef constraint. */
-+                    /* Typo in TCGConstraintSet constraint. */
-                     g_assert_not_reached();
-                 }
-             } while (*++ct_str != '\0');
-         }
- 
--        /* TCGTargetOpDef entry with too much information? */
--        tcg_debug_assert(i == TCG_MAX_OP_ARGS || tdefs->args_ct_str[i] == NULL);
--
-         /*
-          * Fix up output pairs that are aliased with inputs.
-          * When we created the alias, we copied pair from the output.
-@@ -3294,51 +3263,53 @@ static void process_op_defs(TCGContext *s)
-          * first output to pair=3, and the pair_index'es to match.
-          */
-         if (saw_alias_pair) {
--            for (i = def->nb_oargs; i < nb_args; i++) {
-+            for (int i = nb_oargs; i < nb_args; i++) {
-+                int o, o2, i2;
-+
-                 /*
-                  * Since [0-9pm] must be alone in the constraint string,
-                  * the only way they can both be set is if the pair comes
-                  * from the output alias.
-                  */
--                if (!def->args_ct[i].ialias) {
-+                if (!args_ct[i].ialias) {
-                     continue;
-                 }
--                switch (def->args_ct[i].pair) {
-+                switch (args_ct[i].pair) {
-                 case 0:
-                     break;
-                 case 1:
--                    o = def->args_ct[i].alias_index;
--                    o2 = def->args_ct[o].pair_index;
--                    tcg_debug_assert(def->args_ct[o].pair == 1);
--                    tcg_debug_assert(def->args_ct[o2].pair == 2);
--                    if (def->args_ct[o2].oalias) {
-+                    o = args_ct[i].alias_index;
-+                    o2 = args_ct[o].pair_index;
-+                    tcg_debug_assert(args_ct[o].pair == 1);
-+                    tcg_debug_assert(args_ct[o2].pair == 2);
-+                    if (args_ct[o2].oalias) {
-                         /* Case 1a */
--                        i2 = def->args_ct[o2].alias_index;
--                        tcg_debug_assert(def->args_ct[i2].pair == 2);
--                        def->args_ct[i2].pair_index = i;
--                        def->args_ct[i].pair_index = i2;
-+                        i2 = args_ct[o2].alias_index;
-+                        tcg_debug_assert(args_ct[i2].pair == 2);
-+                        args_ct[i2].pair_index = i;
-+                        args_ct[i].pair_index = i2;
-                     } else {
-                         /* Case 1b */
--                        def->args_ct[i].pair_index = i;
-+                        args_ct[i].pair_index = i;
-                     }
-                     break;
-                 case 2:
--                    o = def->args_ct[i].alias_index;
--                    o2 = def->args_ct[o].pair_index;
--                    tcg_debug_assert(def->args_ct[o].pair == 2);
--                    tcg_debug_assert(def->args_ct[o2].pair == 1);
--                    if (def->args_ct[o2].oalias) {
-+                    o = args_ct[i].alias_index;
-+                    o2 = args_ct[o].pair_index;
-+                    tcg_debug_assert(args_ct[o].pair == 2);
-+                    tcg_debug_assert(args_ct[o2].pair == 1);
-+                    if (args_ct[o2].oalias) {
-                         /* Case 1a */
--                        i2 = def->args_ct[o2].alias_index;
--                        tcg_debug_assert(def->args_ct[i2].pair == 1);
--                        def->args_ct[i2].pair_index = i;
--                        def->args_ct[i].pair_index = i2;
-+                        i2 = args_ct[o2].alias_index;
-+                        tcg_debug_assert(args_ct[i2].pair == 1);
-+                        args_ct[i2].pair_index = i;
-+                        args_ct[i].pair_index = i2;
-                     } else {
-                         /* Case 2 */
--                        def->args_ct[i].pair = 3;
--                        def->args_ct[o2].pair = 3;
--                        def->args_ct[i].pair_index = o2;
--                        def->args_ct[o2].pair_index = i;
-+                        args_ct[i].pair = 3;
-+                        args_ct[o2].pair = 3;
-+                        args_ct[i].pair_index = o2;
-+                        args_ct[o2].pair_index = i;
-                     }
-                     break;
-                 default:
-@@ -3348,8 +3319,40 @@ static void process_op_defs(TCGContext *s)
-         }
- 
-         /* sort the constraints (XXX: this is just an heuristic) */
--        sort_constraints(def, 0, def->nb_oargs);
--        sort_constraints(def, def->nb_oargs, def->nb_iargs);
-+        sort_constraints(args_ct, 0, nb_oargs);
-+        sort_constraints(args_ct, nb_oargs, nb_iargs);
-+    }
-+
-+    for (TCGOpcode op = 0; op < NB_OPS; op++) {
-+        TCGOpDef *def = &tcg_op_defs[op];
-+        const TCGConstraintSet *tdefs;
-+        unsigned con_set;
-+        int nb_args;
-+
-+        nb_args = def->nb_iargs + def->nb_oargs;
-+        if (nb_args == 0) {
-+            continue;
-+        }
-+
-+        if (def->flags & TCG_OPF_NOT_PRESENT) {
-+            def->args_ct = empty_cts;
-+            continue;
-+        }
-+
-+        /*
-+         * Macro magic should make it impossible, but double-check that
-+         * the array index is in range.  Since the signness of an enum
-+         * is implementation defined, force the result to unsigned.
-+         */
-+        con_set = tcg_target_op_def(op);
-+        tcg_debug_assert(con_set < ARRAY_SIZE(constraint_sets));
-+
-+        /* The constraint arguments must match TCGOpcode arguments. */
-+        tdefs = &constraint_sets[con_set];
-+        tcg_debug_assert(tdefs->nb_oargs == def->nb_oargs);
-+        tcg_debug_assert(tdefs->nb_iargs == def->nb_iargs);
-+
-+        def->args_ct = all_args_cts[con_set];
-     }
- }
- 
+     case INDEX_op_mov_vec:
+     case INDEX_op_dup_vec:
+@@ -4013,22 +4013,22 @@ liveness_pass_1(TCGContext *s)
+         case INDEX_op_mulu2_i32:
+             opc_new = INDEX_op_mul_i32;
+             opc_new2 = INDEX_op_muluh_i32;
+-            have_opc_new2 = TCG_TARGET_HAS_muluh_i32;
++            have_opc_new2 = TCG_TARGET_HAS_muluh(TCG_TYPE_I32);
+             goto do_mul2;
+         case INDEX_op_muls2_i32:
+             opc_new = INDEX_op_mul_i32;
+             opc_new2 = INDEX_op_mulsh_i32;
+-            have_opc_new2 = TCG_TARGET_HAS_mulsh_i32;
++            have_opc_new2 = TCG_TARGET_HAS_mulsh(TCG_TYPE_I32);
+             goto do_mul2;
+         case INDEX_op_mulu2_i64:
+             opc_new = INDEX_op_mul_i64;
+             opc_new2 = INDEX_op_muluh_i64;
+-            have_opc_new2 = TCG_TARGET_HAS_muluh_i64;
++            have_opc_new2 = TCG_TARGET_HAS_muluh(TCG_TYPE_I64);
+             goto do_mul2;
+         case INDEX_op_muls2_i64:
+             opc_new = INDEX_op_mul_i64;
+             opc_new2 = INDEX_op_mulsh_i64;
+-            have_opc_new2 = TCG_TARGET_HAS_mulsh_i64;
++            have_opc_new2 = TCG_TARGET_HAS_mulsh(TCG_TYPE_I64);
+             goto do_mul2;
+         do_mul2:
+             nb_iargs = 2;
+diff --git a/tcg/tci.c b/tcg/tci.c
+index eeea2a9094..e71bf82c41 100644
+--- a/tcg/tci.c
++++ b/tcg/tci.c
+@@ -673,20 +673,16 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tci_write_reg64(regs, r1, r0, T1 - T2);
+             break;
+ #endif
+-#if TCG_TARGET_HAS_mulu2_i32
+         case INDEX_op_mulu2_i32:
+             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+             tmp64 = (uint64_t)(uint32_t)regs[r2] * (uint32_t)regs[r3];
+             tci_write_reg64(regs, r1, r0, tmp64);
+             break;
+-#endif
+-#if TCG_TARGET_HAS_muls2_i32
+         case INDEX_op_muls2_i32:
+             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+             tmp64 = (int64_t)(int32_t)regs[r2] * (int32_t)regs[r3];
+             tci_write_reg64(regs, r1, r0, tmp64);
+             break;
+-#endif
+ #if TCG_TARGET_HAS_ext8s_i32 || TCG_TARGET_HAS_ext8s_i64
+         CASE_32_64(ext8s)
+             tci_args_rr(insn, &r0, &r1);
+@@ -774,18 +770,14 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tci_args_rr(insn, &r0, &r1);
+             regs[r0] = ctpop64(regs[r1]);
+             break;
+-#if TCG_TARGET_HAS_mulu2_i64
+         case INDEX_op_mulu2_i64:
+             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+             mulu64(&regs[r0], &regs[r1], regs[r2], regs[r3]);
+             break;
+-#endif
+-#if TCG_TARGET_HAS_muls2_i64
+         case INDEX_op_muls2_i64:
+             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
+             muls64(&regs[r0], &regs[r1], regs[r2], regs[r3]);
+             break;
+-#endif
+ #if TCG_TARGET_HAS_add2_i64
+         case INDEX_op_add2_i64:
+             tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
 -- 
 2.43.0
 
