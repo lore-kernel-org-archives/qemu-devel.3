@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D5D1E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed,  1 Jan 2025 23:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D47CE7718B
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 00:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tT8M8-0006cP-Ou; Wed, 01 Jan 2025 18:42:28 -0500
+	id 1tT9BA-0004VE-3f; Wed, 01 Jan 2025 19:35:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tT8M6-0006bs-Qw
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 18:42:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tT8M5-0001O6-D4
- for qemu-devel@nongnu.org; Wed, 01 Jan 2025 18:42:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735774944;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n8Dv21GZlypQzWDS1AJDDNMYbYHT7Edmli0UgMVSb4A=;
- b=WmkwZ7YyHEH9lG3YYtdXoaONVnztjudyRedXosi1ALUuvmpbkXApMeU5le1c78vqr9pG96
- F40rs5ppTGUTWFroYdTpvxNklM60nvNSeSizMoPmxu2A5sGPH6e7XPk+329V4pBye9pa7l
- s1X+mnLCHAwkIjMcN8aYLd2luKl2C34=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-QnBNiyB0PYOWm-aj8RENeA-1; Wed,
- 01 Jan 2025 18:42:21 -0500
-X-MC-Unique: QnBNiyB0PYOWm-aj8RENeA-1
-X-Mimecast-MFC-AGG-ID: QnBNiyB0PYOWm-aj8RENeA
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8C73195608C; Wed,  1 Jan 2025 23:42:13 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.27])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 466CB1956086; Wed,  1 Jan 2025 23:42:11 +0000 (UTC)
-Date: Wed, 1 Jan 2025 18:41:50 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-trivial@nongnu.org
-Subject: Re: [PULL 0/1] Trivial patches for 2024-12-31
-Message-ID: <20250101234150.GA1197536@fedora>
-References: <20241231152324.3307386-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tT9B7-0004TB-Ea; Wed, 01 Jan 2025 19:35:09 -0500
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tT9B6-0002o3-1A; Wed, 01 Jan 2025 19:35:09 -0500
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-4afeb79b52fso2981672137.0; 
+ Wed, 01 Jan 2025 16:35:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1735778104; x=1736382904; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8L2t/sqP27BtSnZ3pFKm1U2uTREPCH/BpdZKNxGWxkM=;
+ b=AtaZ7YyFwaUDluBaYfwcNOnUoxsHYt0HrkqpqhIICgQ8DPydSwUx0KYQTYgU8HW8ob
+ 8vnTYgOnHNb/OJVxP1MA5qjtWkqVghsOvd4RjQdugWhZO5MUetzobCa2rIeTnVV2Nnuf
+ Jsv0zGRliB5pklzO36pE9QEIVVAQLoMAKLgNGnMp1eyrFDscahW49SZvk9tiPOXeq/hk
+ thkALMSIR2uVvZBgXHWfwsy8EX4eYeD1hS/FX67yS9RrSks4nvz7ds2me2gife5KAZ0P
+ ANlujXmU14SnVmIEWc0t0q1SspQYDD9OKp90TkzeZAB09dWi7YQ3xA1zP9F7+LlDLxYK
+ tsAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735778104; x=1736382904;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8L2t/sqP27BtSnZ3pFKm1U2uTREPCH/BpdZKNxGWxkM=;
+ b=UMx7fVqsQ5SH7vbXkEKRpOJILURA3pjJJENvVeMa1Z0i28d77tF92TlelURB5Nu29c
+ QZJ5PVaAhTPzXuUirnZKFdPVsW4fGx6U2Bt/kmCqnLrltaYcIrNzzE9z+TOOLbhJDbpn
+ Zhe1ApkDO7ECbJtu8RbswWihNuutLCnXrV+VMPprxVzVsnD3tmFdnV2njJ+Ek4dQMcuG
+ QNt62sBoAOn5iip7Ow6vO0/AITMG+V4m3o4N+gKaDjFYeHq2jOUG1jFO656ziMzwA79L
+ OVyU/6rq03uYiMLLJeaZepRh5h20sNmazQ228VcniIW/sWpkKRAEQGaXnz6M9UrCE75h
+ ocmQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV64asypUTlsXS+5/14nckqCQcGAnE3pGEJ0NrGmUepclqd85OHbFPPSqiX3lmIkdnxnirYE7KNcMOS@nongnu.org,
+ AJvYcCVTXyiKvNSrUS2ze+2IrPpQuwSu6PzBs89vyIc4BTEEDtVfLP2bx6g6aZTuipPq8g1mBGqFw+JIA3EJadM=@nongnu.org,
+ AJvYcCWH3WjfMfc+a19N+cPCJJOauuDYLLPVXDtPV0jQxv0BFd1KUWVfKnM8VfqIW7sQcwkKfZk1ywE6S9g2mw==@nongnu.org
+X-Gm-Message-State: AOJu0Yy2hZ+RFKFzlfK00RdigauQqUCU9/3f3j/EmKoJ4W4gZIP0+aEy
+ CGfLWDM1wt/tUvQCufQdpTRe3Tkb0pxHD6Kacp7HiN0Sq9aklRfFsMrzPj5cZvUMUQKRxG7FBAv
+ dHFVwqCZCJfgGqt266RWv+2J+rAQ=
+X-Gm-Gg: ASbGncs+yvk/sL46ybEXl1pUFB3t653h7SKRTmyRyQOmwJwUrdyREnKAX7EEpJdj9PT
+ FjSFwr3pCWD3PTK2bpTT89/fc9nik8Le93FuakJomJMjOH1bzNFgDEum59iEgB3sN4RfN
+X-Google-Smtp-Source: AGHT+IFOZ1KE+Wu1RGyZFrbhDOKajBWTWe9Y+KsvQkXyrEjZ3HzFxWDMyg96a93/RPhYSJUtzV/Q0SQ96Lr0DcnJzwY=
+X-Received: by 2002:a05:6102:292b:b0:4b1:1b24:7241 with SMTP id
+ ada2fe7eead31-4b2cc387393mr34540995137.15.1735778104580; Wed, 01 Jan 2025
+ 16:35:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="qN7YFZd3V6PsFZmd"
-Content-Disposition: inline
-In-Reply-To: <20241231152324.3307386-1-mjt@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241029085349.30412-1-yongxuan.wang@sifive.com>
+ <fe6033cf-fee6-4172-a576-c3456cb2bd26@tls.msk.ru>
+In-Reply-To: <fe6033cf-fee6-4172-a576-c3456cb2bd26@tls.msk.ru>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 2 Jan 2025 10:34:38 +1000
+Message-ID: <CAKmqyKPt_kH7uKsGg2OjZy5nKyxpkWdJaR4eJhEPOHFiP4Bumg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] hw/intc/riscv_aplic: Fix APLIC in_clrip and
+ clripnum write emulation
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Yong-Xuan Wang <yongxuan.wang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com, 
+ jim.shu@sifive.com, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,30 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sun, Dec 22, 2024 at 6:40=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> 29.10.2024 11:53, Yong-Xuan Wang wrote:
+> > In the section "4.7 Precise effects on interrupt-pending bits"
+> > of the RISC-V AIA specification defines that:
+> >
+> > "If the source mode is Level1 or Level0 and the interrupt domain
+> > is configured in MSI delivery mode (domaincfg.DM =3D 1):
+> > The pending bit is cleared whenever the rectified input value is
+> > low, when the interrupt is forwarded by MSI, or by a relevant
+> > write to an in_clrip register or to clripnum."
+> >
+> > Update the riscv_aplic_set_pending() to match the spec.
+> >
+> > Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulatio=
+n for APLIC MSI-mode")
+>
+> Is it a qemu-stable material?
 
---qN7YFZd3V6PsFZmd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yes, I think it should be
 
-Applied, thanks.
+Alistair
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
-
---qN7YFZd3V6PsFZmd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmd10r4ACgkQnKSrs4Gr
-c8jeeQf/cuWXWqHBZ08H+7ogY37BkL95Y9C43uPbdsm7XcP7aBCwR4BtI0lN5q4l
-u2R3jCjllFeRQsm50h5NXtgMHp+w4+DeOCwoyY8VET/BbAx+II1n/l2CPm6helXV
-YDnvyc8uJ1i3ejdleWWkABfgyNggwgNtz2tWyEmSKaJc4lbYdqLq6primxvgscsH
-2uSdWaZALku9D0uHF7gI7dj0x00oa/HiPSqYNjTbZOhPYU2clZAYnoUfYNJi5IMK
-FdbaBMH134o+ZSnOhBH9dYlTcYFgwqdIjSHYPUlZxST2+VD12lBu+ell77tsnkZ5
-fnSt6dqn1MUMUZak3nFH8Fovsn4rJw==
-=NTNJ
------END PGP SIGNATURE-----
-
---qN7YFZd3V6PsFZmd--
-
+>
+> Thanks,
+>
+> /mjt
+>
 
