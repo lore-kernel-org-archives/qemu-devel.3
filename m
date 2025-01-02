@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E36E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 21:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DEFCE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 21:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTSX7-00022p-E3; Thu, 02 Jan 2025 16:15:09 -0500
+	id 1tTSaJ-00044c-4V; Thu, 02 Jan 2025 16:18:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tTSX5-00020t-5x
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:15:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tTSX3-00017X-Nb
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:15:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735852503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxp/KcVjywRK6foMv460VmY4UcoWqBCpYwKLnVoWAX0=;
- b=G4hGzkuo4+sY6Nr7Ju/r0AGEnxYJIbd2MMf6/s1PXlw3FohF8QzAhbKMxVeYTNXjmph5f0
- D6yX3rJSOOhvL7eISDC8OJbCKzBzzbMAtIsPsts83hrE5u6R5Mpe8pDu2t6WVX50TDrAJk
- I64l27IA4yr8YtYU0jMKEo3NJzg5wz0=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-oF69Hh8oPPG3-aoa6TI3Gg-1; Thu, 02 Jan 2025 16:15:01 -0500
-X-MC-Unique: oF69Hh8oPPG3-aoa6TI3Gg-1
-X-Mimecast-MFC-AGG-ID: oF69Hh8oPPG3-aoa6TI3Gg
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4675c482d6cso204247201cf.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 13:15:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735852501; x=1736457301;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTSaE-00041t-1z
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:18:24 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTSaC-0001OQ-G0
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:18:21 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so79819405e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 13:18:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735852698; x=1736457498; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pxp/KcVjywRK6foMv460VmY4UcoWqBCpYwKLnVoWAX0=;
- b=C0z15co89W5ZONTxdYhXM9MaPMhQid7OHoStlmSpmMgDg6xRp1vYpIZpCqPqZDJmzP
- WxNiIWo8E4PMhPsXb8lNoEdj6u4HaS1XjPpG38P/YcUBj8SR5b6F/2gnsbaq7b7pbTfP
- lCzC047Uxyxj4YbLtdnu8RW+qnoWD1ZnhQFzIqYB6dhg5f+C9Nd9dFYEqLbZTGnlINNA
- WjF8P2xvTFozcCk1wNIKN5ojgbR3x/QwMuL4DqPAjclNCGGEUmbFjaqwY++s9fRs3f3i
- 4gBzof2vL7qENKBmvjr5Mx3v07pAOU4jqVNS+F+iVK/zMoQz1La53KKAebqX8hqpq7p4
- HyzA==
-X-Gm-Message-State: AOJu0YxwJKsIv0M8XDzLftI4iv8JIBJILFjFUY4VnO1Sbfw9u1h/M7tf
- WEB7roQSLnA6C7+zNnTUaiQEf2d4aOUtz/rf0Ug2djrivBxG9nlnDQvU9rvLTy69i4Z9niuzBN4
- p/bEggN0Ospbmn3JZC9JjKjpKoGACPqTT+Io2NeqCUSLrUqCOh/bv
-X-Gm-Gg: ASbGncuTgeKKYSCdKKuKH0PDympo7z3/nSl6Vg4quUcxQPni1tHIHg+IBTn35ej3vkH
- wBKM2LruLiIoXaNFyMagqaM+W8mJrz4nluyD6bFZTHYONff/7nk/ombEyz1ygqJiBP3+qQC4zsd
- JlbGtSw1OlAR3svMyWiSELQK1bwMzgVkW/Wacsnh3UD3MSNN9TDJMt7RJ1eRjsUn3KwANtx3F3P
- kYTFzLi+owXxQEvqdYY53gYCiC98LG1kyUQ4HJhFU5sCM7XdlRIroZtlKD9O5unq/7omRjSuSgD
- Lk2u/Q5KL7uewtVkjw==
-X-Received: by 2002:ac8:574b:0:b0:467:94ca:541 with SMTP id
- d75a77b69052e-46a4a9bebd3mr916693771cf.55.1735852501334; 
- Thu, 02 Jan 2025 13:15:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFUAsvLMErocy42MER6TW3+kXD4VpkduDuWh2wKEobEghpY7mEKtYYQgojlwCvJFsXLvBdLrw==
-X-Received: by 2002:ac8:574b:0:b0:467:94ca:541 with SMTP id
- d75a77b69052e-46a4a9bebd3mr916693461cf.55.1735852501065; 
- Thu, 02 Jan 2025 13:15:01 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46a3eb30b97sm139008231cf.86.2025.01.02.13.14.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 13:14:59 -0800 (PST)
-Date: Thu, 2 Jan 2025 16:14:57 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] physmem: fix qemu_ram_alloc_from_fd size calculation
-Message-ID: <Z3cB0TehNey27uNZ@x1n>
-References: <1735850090-329906-1-git-send-email-steven.sistare@oracle.com>
+ bh=424nUjnt0mSbCqT2Iy8fBR2D+25DbV9xd+ohVsIuqlU=;
+ b=JUIiF/u3H/ziU1vcqi3gbUpIbiyRQ25D8v9fgvkGWb1QTSWOBVHSvvo9wVej+Jsu9K
+ 6C1cwUNdsUuMltpwbvqi64jJZnr4tDL1gRKZgfYV69EaaeuorK9wKt7hbTphY0Qzwgs3
+ BXOilkUX7TB7XqlJ8Lhz1/l4IHX8qbHfntcRbOxSnWLxMYbAbNka0hRNuBdwSZWKCMDF
+ RG4Gigq6kYlR1wqWjKcxwnK7KCXpjToVZng6dyS8jF45vXAvG/ZoBk8LysNgvXK5aRky
+ tz3yEKQrZ/hci64ywPQAOC1O/2Bd0hh+qPcheKcJPHI+PZsECp4TNdeGuEDRL5xPsiLo
+ 0QfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735852698; x=1736457498;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=424nUjnt0mSbCqT2Iy8fBR2D+25DbV9xd+ohVsIuqlU=;
+ b=b0/eLUYb51Z3HracUjalir2U3qlCDEN0lY8s+VFIzNO7KWcgp6/6J7XhP4rvaBM7XO
+ xrYY1MlU43Y3/iVuiFiQEZoqe1YsLMJWlMvnAM33ufzuubN5Qnt8XsaEboDPuDvWNk7W
+ jE/Xh5VZSJOCFB7PHtYH1G3AxXluVyitOnQfnMQnO3Mnvy88lrqK7ySCoXjz2z0MqDoz
+ WikyEwrfcEphbQItvYStK3Fl2R28j8GwwoLkegr3KaexiX/nw910m3thAs4+4RizDvYK
+ hEFbfy8sd2vTvMkrYk1BuLfVJ02b8XPtMAEbKJrDrCPUWWzmwF352OK3ovj0QRBBlTsM
+ oSmw==
+X-Gm-Message-State: AOJu0Yzr0Yioomjkk+Bnh+4wyb5r+zMIr3zh6U9Bq+2cwzeQlaRBU+bO
+ wUsn6yDNzfsvolAizU4kDOHVldQdC9HWgFjMaUGZ2jhp/cxVrXJuff+SJkPiN1bpviAghghrT9B
+ +qTCh6Q==
+X-Gm-Gg: ASbGnct42nuBAvQvYyxFwcSjTtY6dhMmZJUrhAakxBQeMj+XR1MagzdlgCR4s4GMIvT
+ seuTd5IEsE410xVeMmbjxIkBJ3slbT1Ywd9VpjsX0Kb8G6YykE7gYfpq6pClNw5OKFEdbBxXTfl
+ WMdLZI5cp65579CC6VR6ssSYLoZvGKyFWH1hHCfvTFWI2Z8itOWxjIFVcx7IYi4DdBPOiuLxHgZ
+ jPf15z65PoW6TDUiIsNVvXcrZ+lr78soTwPFuz0wIjeM4aRwGEocnwy0zvmON4Tzv+xOnGaCbg6
+ UCB7oX6E1r0YG3zFw1cSgJpoujKCF7Y=
+X-Google-Smtp-Source: AGHT+IGfozx6MUYu1gUMV/CUhu3LI1INkamt5mCUXdSqXJmJvsY6cOxsqASOCiMuu5ImKU/ES+5/Rg==
+X-Received: by 2002:a05:600c:693:b0:434:f586:753c with SMTP id
+ 5b1f17b1804b1-4366a0cf7f2mr341455805e9.7.1735852698527; 
+ Thu, 02 Jan 2025 13:18:18 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4366128a62asm459186485e9.44.2025.01.02.13.18.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 Jan 2025 13:18:17 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v4 3/8] qdev: Add machine_get_container()
+Date: Thu,  2 Jan 2025 22:17:55 +0100
+Message-ID: <20250102211800.79235-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250102211800.79235-1-philmd@linaro.org>
+References: <20250102211800.79235-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1735850090-329906-1-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 02, 2025 at 12:34:50PM -0800, Steve Sistare wrote:
-> qemu_ram_alloc_from_fd allocates space if file_size == 0.  If non-zero,
-> it uses the existing space and verifies it is large enough, but the
-> verification was broken when the offset parameter was introduced.  As
-> a result, a file smaller than offset passes the verification and causes
-> errors later.  Fix that, and update the error message to include offset.
-> 
-> Peter provides this concise reproducer:
-> 
->   $ touch ramfile
->   $ truncate -s 64M ramfile
->   $ ./qemu-system-x86_64 -object memory-backend-file,mem-path=./ramfile,offset=128M,size=128M,id=mem1,prealloc=on
->   qemu-system-x86_64: qemu_prealloc_mem: preallocating memory failed: Bad address
-> 
-> With the fix, the error message is:
->   qemu-system-x86_64: mem1 backing store size 0x4000000 is too small for 'size' option 0x8000000 plus 'offset' option 0x8000000
-> 
+From: Peter Xu <peterx@redhat.com>
 
-Can have the cc tag here too to be super clear:
+Add a helper to fetch machine containers.  Add some sanity check around.
 
-Cc: qemu-stable@nongnu.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Message-ID: <20241121192202.4155849-10-peterx@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/qdev-core.h | 10 ++++++++++
+ hw/core/qdev.c         | 11 +++++++++++
+ 2 files changed, 21 insertions(+)
 
-> Fixes: 4b870dc4d0c0 ("hostmem-file: add offset option")
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-Please also feel free to attach this patch as the 1st patch when repost
-cpr-transfer, it could make dependency easier no matter how this would
-land.
-
-Maybe it'll be still easier to go via a migration pull that collects cpr
-transfer as a whole. May depend on whether there'll be a memory API pull
-before that..
-
-Thanks,
-
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index b83b1439968..2434065bad2 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -1037,6 +1037,16 @@ Object *qdev_get_machine(void);
+  */
+ Object *qdev_create_fake_machine(void);
+ 
++/**
++ * machine_get_container:
++ * @name: The name of container to lookup
++ *
++ * Get a container of the machine (QOM path "/machine/NAME").
++ *
++ * Returns: the machine container object.
++ */
++Object *machine_get_container(const char *name);
++
+ /**
+  * qdev_get_human_name() - Return a human-readable name for a device
+  * @dev: The device. Must be a valid and non-NULL pointer.
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index bc5b60212a7..9973e029ffa 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -829,6 +829,17 @@ Object *qdev_get_machine(void)
+     return dev;
+ }
+ 
++Object *machine_get_container(const char *name)
++{
++    Object *container, *machine;
++
++    machine = qdev_get_machine();
++    container = object_resolve_path_component(machine, name);
++    assert(object_dynamic_cast(container, TYPE_CONTAINER));
++
++    return container;
++}
++
+ char *qdev_get_human_name(DeviceState *dev)
+ {
+     g_assert(dev != NULL);
 -- 
-Peter Xu
+2.47.1
 
 
