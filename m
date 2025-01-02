@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0A2E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 22:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECCA8E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 22:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTTKz-000474-Kh; Thu, 02 Jan 2025 17:06:42 -0500
+	id 1tTTL5-0004BR-19; Thu, 02 Jan 2025 17:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTTKu-00045c-OE
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 17:06:37 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTTKw-00045m-Fq
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 17:06:38 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTTKs-00076l-M9
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 17:06:36 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTTKt-00076z-NI
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 17:06:37 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 01E38211A5
- for <qemu-devel@nongnu.org>; Thu,  2 Jan 2025 22:06:33 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 694A7211AD;
+ Thu,  2 Jan 2025 22:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1735855593; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ t=1735855594; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W16EDWhUikHN1jB8MXskdFeUKZvu8F6jAEkRTmjXA/g=;
- b=y4+FLipRbsxCotak67BuwLqcaWCGX7FTtPtihzooFCGU19FdDA1rki/hkPhN+VCjEGHmL1
- qAqiJB4UdrqOvESdOP3ehiKOrqu4rogR8r/EMqPs6Sy9tJteRuxGKuZHmWKFzHdlhqNSx7
- 0qEd5PeetL6zgSe9jasL3aFVc1ZVHIo=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rDNXLW/mAvAkWBwXGLA5DBpSv9PgVohtxtj+AFcrhgI=;
+ b=VsSI1XzZXpFgY7XUs8i15gmT6eDq2WpNxaCfPs0Kpwfr2ieDXaTQFAEl23tr6/EnXzuk/H
+ uYQbbLYXGNSMeQTg8TAAYYNHy1irptHLMZMgYgGsd8L4hR+S5GKr8JZRGiIYOpxPdGu4Z6
+ aX+nZuP1kWsttNbTy3LjTRAbYR2Zybo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1735855593;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ s=susede2_ed25519; t=1735855594;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W16EDWhUikHN1jB8MXskdFeUKZvu8F6jAEkRTmjXA/g=;
- b=DmxveDNXg2s04wwWcZZvr2/dPZC9ZHini7o0oCVPkgMg0zlP52kHzL35GpzJPdPVk+QKox
- XXQK+EWJFatQrlDw==
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rDNXLW/mAvAkWBwXGLA5DBpSv9PgVohtxtj+AFcrhgI=;
+ b=1sgVUsIYAi0Q/uXnGCPQbwMXPamEdX/h5gJOMqDAma3ZcMkQiBWIcugHPS71XJ19aGNnUN
+ GXjDuVmA6Cb619Cg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=y4+FLipR;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=DmxveDNX
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1735855593; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ t=1735855594; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W16EDWhUikHN1jB8MXskdFeUKZvu8F6jAEkRTmjXA/g=;
- b=y4+FLipRbsxCotak67BuwLqcaWCGX7FTtPtihzooFCGU19FdDA1rki/hkPhN+VCjEGHmL1
- qAqiJB4UdrqOvESdOP3ehiKOrqu4rogR8r/EMqPs6Sy9tJteRuxGKuZHmWKFzHdlhqNSx7
- 0qEd5PeetL6zgSe9jasL3aFVc1ZVHIo=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rDNXLW/mAvAkWBwXGLA5DBpSv9PgVohtxtj+AFcrhgI=;
+ b=VsSI1XzZXpFgY7XUs8i15gmT6eDq2WpNxaCfPs0Kpwfr2ieDXaTQFAEl23tr6/EnXzuk/H
+ uYQbbLYXGNSMeQTg8TAAYYNHy1irptHLMZMgYgGsd8L4hR+S5GKr8JZRGiIYOpxPdGu4Z6
+ aX+nZuP1kWsttNbTy3LjTRAbYR2Zybo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1735855593;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ s=susede2_ed25519; t=1735855594;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W16EDWhUikHN1jB8MXskdFeUKZvu8F6jAEkRTmjXA/g=;
- b=DmxveDNXg2s04wwWcZZvr2/dPZC9ZHini7o0oCVPkgMg0zlP52kHzL35GpzJPdPVk+QKox
- XXQK+EWJFatQrlDw==
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rDNXLW/mAvAkWBwXGLA5DBpSv9PgVohtxtj+AFcrhgI=;
+ b=1sgVUsIYAi0Q/uXnGCPQbwMXPamEdX/h5gJOMqDAma3ZcMkQiBWIcugHPS71XJ19aGNnUN
+ GXjDuVmA6Cb619Cg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 44DE0132EA
- for <qemu-devel@nongnu.org>; Thu,  2 Jan 2025 22:06:32 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 706F1132EA;
+ Thu,  2 Jan 2025 22:06:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 7YC5AugNd2emeQAAD6G6ig
- (envelope-from <farosas@suse.de>)
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 22:06:32 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id wCZNDekNd2emeQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 02 Jan 2025 22:06:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/8] QTest patches for 2025-01-02
-Date: Thu,  2 Jan 2025 19:06:21 -0300
-Message-Id: <20250102220629.11351-1-farosas@suse.de>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Subject: [PULL 1/8] tests/qtest/migration: Fix compile errors when CONFIG_UADK
+ is set
+Date: Thu,  2 Jan 2025 19:06:22 -0300
+Message-Id: <20250102220629.11351-2-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250102220629.11351-1-farosas@suse.de>
+References: <20250102220629.11351-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 01E38211A5
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_ONE(0.00)[1];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; TO_DN_NONE(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- PREVIOUSLY_DELIVERED(0.00)[qemu-devel@nongnu.org];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:dkim, suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -126,53 +121,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8b70d7f2071e2db51b1910502bfb7f84ebf926be:
+From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-  Merge tag 'hw-misc-20241231' of https://github.com/philmd/qemu into staging (2025-01-01 15:17:08 -0500)
+Removes accidental inclusion of unrelated functions within CONFIG_UADK
+as this causes compile errors like:
 
-are available in the Git repository at:
+error: redefinition of ‘migrate_hook_start_xbzrle’
 
-  https://gitlab.com/farosas/qemu.git tags/qtest-20250102-pull-request
-
-for you to fetch changes up to d9f2b09dd6c3030cda9af9c29e26a0bdfc02bec6:
-
-  qtest/fw-cfg: remove compiled out code (2025-01-02 19:02:11 -0300)
-
-----------------------------------------------------------------
-Qtest pull request
-
-- migration-test: fix UADK build, reinstate postcopy tests and other cleanups
-- a couple of memory leak fixes for bios-tables-test and virtio-iommu-test
-- drop dead code from fw_cfg-test
-
-----------------------------------------------------------------
-
-Ani Sinha (1):
-  qtest/fw-cfg: remove compiled out code
-
-Fabiano Rosas (5):
-  tests/qtest/migration: Do proper cleanup in the dirty_limit test
-  tests/qtest/migration: Initialize buffer in probe_o_direct_support
-  tests/qtest/bios-tables-test: Free tables at dump_aml_files
-  tests/qtest/virtio-iommu-test: Don't pass uninitialized data into
-    qtest_memwrite
-  tests/qtest/migration: Re-enable postcopy tests
-
-Peter Xu (1):
-  tests/migration: Drop arch_[source|target]
-
-Shameer Kolothum (1):
-  tests/qtest/migration: Fix compile errors when CONFIG_UADK is set
-
- tests/qtest/bios-tables-test.c            |  1 +
- tests/qtest/fw_cfg-test.c                 |  6 ---
+Fixes: 932f74f3fe6e ("tests/qtest/migration: Split compression tests from migration-test.c")
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-Id: <20241217131046.83844-1-shameerali.kolothum.thodi@huawei.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
  tests/qtest/migration/compression-tests.c | 54 -----------------------
- tests/qtest/migration/framework.c         |  8 +---
- tests/qtest/migration/migration-util.c    |  7 ++-
- tests/qtest/migration/precopy-tests.c     |  5 +++
- tests/qtest/virtio-iommu-test.c           |  4 +-
- 7 files changed, 16 insertions(+), 69 deletions(-)
+ 1 file changed, 54 deletions(-)
 
+diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
+index 6de87bc47d..d78f1f11f1 100644
+--- a/tests/qtest/migration/compression-tests.c
++++ b/tests/qtest/migration/compression-tests.c
+@@ -88,59 +88,6 @@ migrate_hook_start_precopy_tcp_multifd_uadk(QTestState *from,
+     return migrate_hook_start_precopy_tcp_multifd_common(from, to, "uadk");
+ }
+ 
+-static void *
+-migrate_hook_start_xbzrle(QTestState *from,
+-                          QTestState *to)
+-{
+-    migrate_set_parameter_int(from, "xbzrle-cache-size", 33554432);
+-
+-    migrate_set_capability(from, "xbzrle", true);
+-    migrate_set_capability(to, "xbzrle", true);
+-
+-    return NULL;
+-}
+-
+-static void test_precopy_unix_xbzrle(void)
+-{
+-    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+-    MigrateCommon args = {
+-        .connect_uri = uri,
+-        .listen_uri = uri,
+-        .start_hook = migrate_hook_start_xbzrle,
+-        .iterations = 2,
+-        /*
+-         * XBZRLE needs pages to be modified when doing the 2nd+ round
+-         * iteration to have real data pushed to the stream.
+-         */
+-        .live = true,
+-    };
+-
+-    test_precopy_common(&args);
+-}
+-
+-static void *
+-migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
+-                                            QTestState *to)
+-{
+-    /*
+-     * Overloading this test to also check that set_parameter does not error.
+-     * This is also done in the tests for the other compression methods.
+-     */
+-    migrate_set_parameter_int(from, "multifd-zlib-level", 2);
+-    migrate_set_parameter_int(to, "multifd-zlib-level", 2);
+-
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib");
+-}
+-
+-static void test_multifd_tcp_zlib(void)
+-{
+-    MigrateCommon args = {
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_precopy_tcp_multifd_zlib,
+-    };
+-    test_precopy_common(&args);
+-}
+-
+ static void test_multifd_tcp_uadk(void)
+ {
+     MigrateCommon args = {
+@@ -151,7 +98,6 @@ static void test_multifd_tcp_uadk(void)
+ }
+ #endif /* CONFIG_UADK */
+ 
+-
+ static void *
+ migrate_hook_start_xbzrle(QTestState *from,
+                           QTestState *to)
 -- 
 2.35.3
 
