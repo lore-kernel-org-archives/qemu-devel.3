@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F35E77194
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D5CE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTPbc-00076I-Fr; Thu, 02 Jan 2025 13:07:36 -0500
+	id 1tTPbA-0006x9-Um; Thu, 02 Jan 2025 13:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTPbK-0006yx-Lz
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:19 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tTPb2-0006vl-SO
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:01 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTPbH-00059s-VD
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:17 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2163b0c09afso155743595ad.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:07:14 -0800 (PST)
+ id 1tTPaz-00056w-TE
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:06:59 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21634338cfdso227776615ad.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:06:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735841233; x=1736446033; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735841216; x=1736446016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gm1Ss0byfyZskUZlhHT47TIvd3i99CNzu3mglGlAgro=;
- b=TcIPmSQYrxS5yxK0VmHMa7sQZklvEZDyGfNSQiq7EO20BIDoBTvLTH6SSWs8xEHXtu
- aDlexsrqFoXeXmiqRzmjTRvQOuokxcMKkAqySY5q92iY/srmxd4N8t1+nLwsmU8Pjat7
- oab/FopIWSb1AH56kQP/HmIZFZzSuzlEdtD45CfYN5hjUP0DbVQvkpO1anTUsEMF4dt8
- +fFBcgE8n9v0U9OWkNsdipMu+WOsW2y0fxfTvobfMP+4iNDs6UfRxh8xsh+4u5DqRIgw
- iTFuaWGJ1VzJRMZlvSOyV9fKfylQOLjLlwUDto2g7TaBPsdLQ7+/zq0gGIMSSuD294N7
- VeBw==
+ :reply-to; bh=jqJGVcj4WVAzQUDTHqtmH5ZpB1qepIgknwutcY6cZjw=;
+ b=i3er0YOhcUueO+M1IdXZ9Qn4G87T8JVP32cNrL+cgbAN3Evf6HbFehWwrYWiv4ZIey
+ Xn7FvN/oEe40om7nwVEWsKC0DHC8FJNi+6RpVCGtO/kg8Vnvs9MDqCQq31qiS1zcRv/6
+ Yc+6C6oHa2RLuNlAiBKP5214A2BQQ9+brONQYYt/lmTSYCkTXUToB+Q2JS43+J4+1+w6
+ OLn4mXvcXAVY4sCGI8cGbV5YaJou69+uNutUgsq5d7FHKm85es3yqriVB76xT7EtRR0n
+ 6cNTv4d0Y0DdsYXxuDnRX7NS5fOFQA3yffve+OO0hi9nXcBDUf4wYlHBn8kYLBM9fs6A
+ o9nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735841233; x=1736446033;
+ d=1e100.net; s=20230601; t=1735841216; x=1736446016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gm1Ss0byfyZskUZlhHT47TIvd3i99CNzu3mglGlAgro=;
- b=eAh1//s+Pq+Uf7r2jYebIaDjVHREeh+wBVGPXifu6535FZzPBsjrr+7jEiGfXbrWcZ
- vvPN37GbNFnb2+Sa38bWiVXrlAHzJCrCuE9vm1bNn5/bUCIF92oSOe+SHeVe+/ycQVgw
- 6rmcaBDzioBFILzev5bgcUOrPSnPQevy1ZyC2IcAfDOvjNu1Yu7PgOzr6xtfSMM1UG5q
- 0J7AUkF1OBtELvTorncy3h65Ujk+B0DRaK42kJDgIrydBuGvINmtobQloqk6DMx4wVSQ
- YP7ssxUJxYUfHKsKfJwDCYS/dGJOEIvknijVZRkO6AnMTw/SHSIJcGSZJUDel94wCKki
- k8DQ==
-X-Gm-Message-State: AOJu0Yy2uXYbxu3tO6T/gtyQ4DtT+q7d8HlRik2X5e6VRdqj5zFgkfry
- w+mTk7MYkfuL0cencGayJ/0wYfsA5n9nY6/sDSSsrfgJPgpSJzzsQCz5EHyxDObcVZutJpVznhn
+ bh=jqJGVcj4WVAzQUDTHqtmH5ZpB1qepIgknwutcY6cZjw=;
+ b=YrgRzTn4bKAfyl8CTSwbTLukBKr81I8oVpO9BwgsLyKd4ewQFNdAFQ4FqoQHh8BUDJ
+ 0aYwFlcvChXyESK4RQ+UqgM3hP3b3S7GrWh/bN8Xj+p9cfvtcd/j9xU1sgo4uSfZC+3Y
+ xS863UhzUWY4jajNU1yCileqlzvlK9OvJhBIZSmqbYhlgKcMIlTpXK0LUE5c7CxArndH
+ yk+M0ekRMm/itisi/G605WKVV7rawfiJGYHhbW+sfEn13bz5d531qwqSIFseS/iI0djk
+ OL4rzjLCBT9LX25/Peoi5+4zazMvJQsRP/lS++8/U4sd7Qorf1515l64AgmAWA8GFOT+
+ ix8w==
+X-Gm-Message-State: AOJu0YznPOM6mCCDJjSnZG27RKcW6H7lvj9+YRerOmd3qXoPMzSlF0W5
+ /3a7mTINfyd2YMJ7526WcRP0q4mcUOi3RNijzNG5SXxJH9AShwfIkTJJ7hknIxRhtS0YFVXOrkr
  O
-X-Gm-Gg: ASbGncvgb8mwcWGAMewCU0LoQTMLeUB6sI2+P8dl9Q9Y8ZKiYToMEPkHbyIY+wUn7Bk
- bDDXRt9sdEzLwByy9MtZXuclzJ6zlGnmqMQtrlmSKHcYf/RXiTnRof7ExZVVT0qe5bZfPoYkzRb
- knswBjfRprnymEbh3iLqEMrdCk6lXW2UhYkS91b9KeQohVowneuZKGNkJY0b6DgGOL6tXOJSPlz
- U0kJIM2Gngn7X4mZt7+dM6Er5rk145i7UO83TgHjuPMdnqvxfIHXRb5NPwAVA==
-X-Google-Smtp-Source: AGHT+IF14o3VejrR7n3wNVQfYan0V5/uWBe/UzLfKCiKrswqDvcd7YZl6Np1fK+mgxmhHYJ3wmnfdg==
-X-Received: by 2002:a05:6a00:8c4:b0:727:3c37:d5f9 with SMTP id
- d2e1a72fcca58-72abdeff523mr57977200b3a.26.1735841233497; 
- Thu, 02 Jan 2025 10:07:13 -0800 (PST)
+X-Gm-Gg: ASbGncu/26HW0BifnAaYInPnvZbSfZh2z8Sq8Elvpy1zUukpDL7bqe76lhg9Oop5msK
+ MRb8CagZ0uPiBl1y7CDyP64+49z8Ty4htUJlcEaSzULmrn5FV6NwYhQOZP2FX7NfKpwouy8oEdd
+ kZyfHDZUt+BUThYR7DXQUEEvOQ2Qsql9u8sgv0r9qLVxuwYMdVyzLDbbE+51/i9w3uG8WPMtFs6
+ niwNdP5G7Xaq0TeDoE0WgVn3t2Myh7+4yCIKEAihx7wtARZ2VGNBAsNII9Kfw==
+X-Google-Smtp-Source: AGHT+IHdcWN2KZw0xTv9QMok/gOYjRP3XySRhD12NmtAtJipo/wj/dEzvq+3b5zkkq3fD9mIx1KA3Q==
+X-Received: by 2002:a05:6a00:3c84:b0:725:4615:a778 with SMTP id
+ d2e1a72fcca58-72abdd7a148mr52824931b3a.7.1735841216489; 
+ Thu, 02 Jan 2025 10:06:56 -0800 (PST)
 Received: from stoup.. ([63.239.63.212]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72ad3393d5fsm20604456b3a.154.2025.01.02.10.07.13
+ d2e1a72fcca58-72ad3393d5fsm20604456b3a.154.2025.01.02.10.06.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 10:07:13 -0800 (PST)
+ Thu, 02 Jan 2025 10:06:56 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 23/73] tcg/mips: Expand bswap unconditionally
-Date: Thu,  2 Jan 2025 10:06:03 -0800
-Message-ID: <20250102180654.1420056-24-richard.henderson@linaro.org>
+Subject: [PATCH 01/73] tcg: Add TCGOp.type
+Date: Thu,  2 Jan 2025 10:05:41 -0800
+Message-ID: <20250102180654.1420056-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250102180654.1420056-1-richard.henderson@linaro.org>
 References: <20250102180654.1420056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,49 +96,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While only mips32r2 has explicit instructions for bswap,
-we have built subroutines for bswap for use by qemu_ld/st.
-There's no reason not to expose those subroutines for
-general purpose use.
+Steal 3 bits from nargs to add type without expanding
+the size of the structure.  Move the build-time asserts
+to the top of tcg.c, so that MAX_CALL_IARGS is in scope
+without exporting that detail in the main tcg.h header.
+
+So far, the type field is unused and memset initialized to 0.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/mips/tcg-target-has.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/tcg/tcg.h | 6 ++----
+ tcg/tcg.c         | 9 +++++++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/tcg/mips/tcg-target-has.h b/tcg/mips/tcg-target-has.h
-index a934f86e30..1a8b6d571a 100644
---- a/tcg/mips/tcg-target-has.h
-+++ b/tcg/mips/tcg-target-has.h
-@@ -54,6 +54,7 @@ extern bool use_mips32r2_instructions;
- #define TCG_TARGET_HAS_muls2_i32        (!use_mips32r6_instructions)
- #define TCG_TARGET_HAS_muluh_i32        1
- #define TCG_TARGET_HAS_mulsh_i32        1
-+#define TCG_TARGET_HAS_bswap16_i32      1
- #define TCG_TARGET_HAS_bswap32_i32      1
- #define TCG_TARGET_HAS_negsetcond_i32   0
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index a77ed12b9d..f2ffb69c0c 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -417,7 +417,8 @@ typedef uint32_t TCGLifeData;
  
-@@ -73,7 +74,6 @@ extern bool use_mips32r2_instructions;
+ struct TCGOp {
+     TCGOpcode opc   : 8;
+-    unsigned nargs  : 8;
++    TCGType type    : 3;
++    unsigned nargs  : 5;
+ 
+     /* Parameters for this opcode.  See below.  */
+     unsigned param1 : 8;
+@@ -442,9 +443,6 @@ struct TCGOp {
+ #define TCGOP_VECL(X)     (X)->param1
+ #define TCGOP_VECE(X)     (X)->param2
+ 
+-/* Make sure operands fit in the bitfields above.  */
+-QEMU_BUILD_BUG_ON(NB_OPS > (1 << 8));
+-
+ static inline TCGRegSet output_pref(const TCGOp *op, unsigned i)
+ {
+     return i < ARRAY_SIZE(op->output_pref) ? op->output_pref[i] : 0;
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 4578b185be..f8c4394e1d 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -60,6 +60,15 @@
+ #include "user/guest-base.h"
  #endif
  
- /* optional instructions detected at runtime */
--#define TCG_TARGET_HAS_bswap16_i32      use_mips32r2_instructions
- #define TCG_TARGET_HAS_deposit_i32      use_mips32r2_instructions
- #define TCG_TARGET_HAS_extract_i32      use_mips32r2_instructions
- #define TCG_TARGET_HAS_sextract_i32     0
-@@ -87,9 +87,9 @@ extern bool use_mips32r2_instructions;
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- 
- #if TCG_TARGET_REG_BITS == 64
--#define TCG_TARGET_HAS_bswap16_i64      use_mips32r2_instructions
--#define TCG_TARGET_HAS_bswap32_i64      use_mips32r2_instructions
--#define TCG_TARGET_HAS_bswap64_i64      use_mips32r2_instructions
-+#define TCG_TARGET_HAS_bswap16_i64      1
-+#define TCG_TARGET_HAS_bswap32_i64      1
-+#define TCG_TARGET_HAS_bswap64_i64      1
- #define TCG_TARGET_HAS_deposit_i64      use_mips32r2_instructions
- #define TCG_TARGET_HAS_extract_i64      use_mips32r2_instructions
- #define TCG_TARGET_HAS_sextract_i64     0
++/*
++ * Make sure operands fit in the TCGOp bitfields.
++ * For TCGOp.nargs, maximum physical arguments are constrained by
++ * MAX_CALL_IARGS * TCG_TYPE_I128 on 32-bit hosts, so 128 / 32.
++ */
++QEMU_BUILD_BUG_ON(NB_OPS > (1 << 8));
++QEMU_BUILD_BUG_ON(TCG_TYPE_COUNT > (1 << 3));
++QEMU_BUILD_BUG_ON(MAX_CALL_IARGS * (128 / 32) > (1 << 5));
++
+ /* Forward declarations for functions declared in tcg-target.c.inc and
+    used here. */
+ static void tcg_target_init(TCGContext *s);
 -- 
 2.43.0
 
