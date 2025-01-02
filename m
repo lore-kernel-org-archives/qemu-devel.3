@@ -4,101 +4,210 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4F9E77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 19:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70CEBE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 20:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTRJx-0006u6-Oi; Thu, 02 Jan 2025 14:57:29 -0500
+	id 1tTRQ3-0001A4-43; Thu, 02 Jan 2025 15:03:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tTRJw-0006tu-Fs
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 14:57:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tTRQ1-00019N-DJ
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 15:03:45 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tTRJu-0005Z7-No
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 14:57:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735847844;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=i9w4m4k+PPUARZOXcTHJr54QHMPsWHH+tWn2MXFybP0=;
- b=U1EGHzQMgDYEBSeBnMl3G4SCiByeccUYnLxRBvsiQmelUh9MBqEsNuzHUAJxpO8zJuqUcu
- 1YK88IuZcquXdh8Wd8YZsK3cl5jV82PhRSygYLidyHNR3NcAedSfLb6x2RQC+P8gbrRsd1
- c47srhYK3d6y75VE5huVA6WqWVj1AkI=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-T9VQuBPeNdKMU7T7kBu80g-1; Thu, 02 Jan 2025 14:57:22 -0500
-X-MC-Unique: T9VQuBPeNdKMU7T7kBu80g-1
-X-Mimecast-MFC-AGG-ID: T9VQuBPeNdKMU7T7kBu80g
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b6e9fb0436so3746792385a.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 11:57:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735847842; x=1736452642;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i9w4m4k+PPUARZOXcTHJr54QHMPsWHH+tWn2MXFybP0=;
- b=uqutwtYqVlmGAnoS7e6IEFoyeZz7B2L9MDJACttCcQo0mXwAeo0OWjXAxQjd0R0uxK
- VmdNFU9cPs/xTCw+wbr4GtrO9ljEuqtGoQ39FXT54k+5H8juipkf4GVC+hnQ9tM4C1BL
- KVcoIqZSPJg4idK/tg6TJX9whiu4O4gNqQhgdEO/JgpvIA5bw0i+9/UWFFJy3XP45DPX
- IaWHDJeHVCMiKIFf3QB1COVreOVhzasq9ZEdq83WBGSugvH3SwVSyD5TEXpo1bPJdqVN
- H9yqY7CZR4x39z2h2XRn9H2NJ0oYIGM1WszPOm3KYMXUbsuO2WgzJtKe7XYqh9vVoB8n
- xH6Q==
-X-Gm-Message-State: AOJu0Yx6yJ51rVggxHkkVzqMiOja1xRamDVvFgjqP115Kye5I46KC0b4
- GjPz+wvtG4YL8jAUrlWgHax2wSPQrR5QPCdWIm842ZlEJHfM8y0N7tvp5s5x1q+PN2tVPNDlKmQ
- XJuagS2kZICbxlxt2utJGbl718kDA2ZoNSlgDxxMamayQM2KmJU/J
-X-Gm-Gg: ASbGnctBay4b8DLoonPRW/16EK/N6U2RBxKtbSrFEW0/XZIW8MQKpjRB6/dqcI8Ljhv
- wbHCPmkhPPbqRTu2D5oMRcuPlmRHppX0f0g56AXK2O+ofM/Sl9enCTaMDcu5VXEGp8kXK/gUmYO
- 8fySo3Rcpcos27sKKEEMj5jVUM+LtAzevSPuLboaQx46QhHO+21ufHGutr5Jgs4lZrogwiTzq+h
- 4+XnhkLWNkO3k+DEoYgS95vv0uA0Rq5fpwwzOIf9pAXUFT46FofdXKwHTSybbqdZA5GMTyPbmuh
- p+G6CidBf9cKGkf3Hw==
-X-Received: by 2002:a05:620a:4897:b0:7b6:f995:6e08 with SMTP id
- af79cd13be357-7b9ba7aa40dmr8356420285a.31.1735847842280; 
- Thu, 02 Jan 2025 11:57:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFkZr9qunRcUNlTrkm9LqdfkwvFL2aiN9oLdX6HHEEe/DTtm5ZHq5w2pS+HnsUqTKi/gfCN5A==
-X-Received: by 2002:a05:620a:4897:b0:7b6:f995:6e08 with SMTP id
- af79cd13be357-7b9ba7aa40dmr8356417685a.31.1735847842008; 
- Thu, 02 Jan 2025 11:57:22 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b9ac4cc3ffsm1207346085a.109.2025.01.02.11.57.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 11:57:21 -0800 (PST)
-Date: Thu, 2 Jan 2025 14:57:18 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tTRPz-0007BN-4J
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 15:03:45 -0500
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 502JXkBo022099;
+ Thu, 2 Jan 2025 20:03:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=W6M0qZRyVtX/hcverTyViajibl/xk7KWexhhakTy0Co=; b=
+ R5FSHzo3WbGv59QxYqz6n3fsubl0Mhc9kv2FkGdJ4nWL7NkqCEB0Ymc5Vd0pSTTi
+ eIVAvy9WY0L15lDBYgKDFEqd/JdsUHcxId6sSoKL29bWvB16piGT0yyUg9XlLcry
+ QpUV9vZZKY6TvMtXcZgI7iDwQCssCJ8AZCjPnwYxbIs6l0ptPtbpEP9FMKo3Mj36
+ 84oqJ8uBW1TXGWZC7DmlYCAAa1PBPqcJwIYJ79Aje4RjdhOhXmll+6s2cdmWs6zw
+ uaE10XR1HA8N9ioTNSYV+ccg16BkTQyzQZMgPEPrrwET6G0akegJqoJBjfi4+SIy
+ +K0tQPBKcFBPphRMBoHHbw==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43t88a74gc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 02 Jan 2025 20:03:38 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 502Jl9Q4011786; Thu, 2 Jan 2025 20:03:36 GMT
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2170.outbound.protection.outlook.com [104.47.59.170])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 43t7s91m92-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 02 Jan 2025 20:03:36 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wTPfNtCF4e4a+OGluSnP/J7+mWWEGesxNMT+HoL7uMmrBX2Y7YtSrIaEQPHqlpDNd6rSBa4ES9Cl4lmwohkHEqPUnQh+nangnKqGlo3Fgj8zanZRK++iXVr9I/8BtmIBorHlA/Jc6bYplTL7i3ElRgNcz1wYiDbr52JW0+aKxxxPzSKSchMYXWHkt9dh+g+revK7qJxEBh+eHQSz77IRUz9NfE32ptnD48bwghXXwLIvCFmJJidL7L4vES3exUUo6w7vXj5YZDgIwB79pzaLsWw2aZe0grNHsmuk0hqWXL0hIUC9zI1ydOZ6G8OgXtVdNcUUly8yB19rvpPFTXNC8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W6M0qZRyVtX/hcverTyViajibl/xk7KWexhhakTy0Co=;
+ b=HiyC1sCffC8g464wuOwte6AsBE3Ze1C+32+rAo7rabjB/hxu3N+e2qjoMvyeSBt8Dd6TZkkg11dmIdD7sMvBKUa9X5I4ZP2jjyhWixtsFA73tCUa98LQ1NPIDCBNXUtMMPH45/l2fa1KxDL3YtfI26diQ44XfJCLmXsNdevkL7JuBBPS8eW/IHlNv/rKSznHg1uaiywm9/+/yIjggsiDgfKGrHJF6VY4Zz5XrPxUfBf2sGg1oYhmYVzl36l9YjV8EPP2rjLytZZZLkfL5wpnOmMMD011qMFqklnzY4Z/wRGxbfUSCnwN/TemBVWWMSv12dgbxwDprwX5kmt1uxgsDA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=W6M0qZRyVtX/hcverTyViajibl/xk7KWexhhakTy0Co=;
+ b=sm4ZRlEqj5vL8CmKjJf88YEFyJLy1UK8lh3dn/shVkA3pc3bnYCNVT+liXTNSvYsTtFtW7HR7IFz6jQoNBCdJziuVIUAP3m9e/izsystA518SNTcUXm1M+usIKGn3ytDCI0gpIxP9Ffl+Rg0B2zixAlmV9EENeixTF7Vnqr1qyE=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by SA2PR10MB4538.namprd10.prod.outlook.com (2603:10b6:806:115::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8314.12; Thu, 2 Jan
+ 2025 20:03:20 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8314.012; Thu, 2 Jan 2025
+ 20:03:20 +0000
+Message-ID: <80f303fb-b4d0-480a-bb4e-fd6ed67b764e@oracle.com>
+Date: Thu, 2 Jan 2025 15:03:15 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 02/23] physmem: qemu_ram_alloc_from_fd extensions
+To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V5 15/23] migration: cpr-transfer mode
-Message-ID: <Z3bvnlQ955dWzc-n@x1n>
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
- <Z2sKXAgsUW3A8ajg@x1n>
- <72eaea07-ccfc-4134-84c5-1bc044f7ddae@oracle.com>
+ <1735057028-308595-3-git-send-email-steven.sistare@oracle.com>
+ <Z2rs4nYtuXfFW4sT@x1n> <afde28fb-fad5-4ba7-8c28-bf9f2a05cd1b@oracle.com>
+ <Z3btlLk4YpljgS4R@x1n>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <Z3btlLk4YpljgS4R@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR05CA0090.namprd05.prod.outlook.com
+ (2603:10b6:a03:332::35) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <72eaea07-ccfc-4134-84c5-1bc044f7ddae@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SA2PR10MB4538:EE_
+X-MS-Office365-Filtering-Correlation-Id: fa876670-fcbc-42e6-6dcc-08dd2b688120
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eUJXTUw1TWxRL0JjZWdpQ2d4OVJTbGFPZkNvSzVSQm9nMlcxU3lpQ1A2SGt1?=
+ =?utf-8?B?SHBWM1FvWGh0NWVxZWtPbldCMnFoK1RsdHV1azFTQmpVSktnc0ZyZHZFSjFQ?=
+ =?utf-8?B?Sy9UQVdyZnZhWmFLa09mT3pBQnRhbnNaTm01dk1ISkh6Wk1ZUVlIa3dNdjNo?=
+ =?utf-8?B?OTY1L2Y3cjY0ZkpKVW1OSjBURnJhL29CY2xDNk9GcjQ1Vi9sTmI5ZGpleEpn?=
+ =?utf-8?B?aXVGUUNxZXBwZ3piZDA4cjFyMWdvbExDM09kZ2plSnZDKzZocXVYbFAxNEo3?=
+ =?utf-8?B?aGxVZGhCYWJpMUZmdXZuaVkrdzFXTzhBejRyS05Zb215cnk5K0xwTFhsUEdn?=
+ =?utf-8?B?TlBPZVZGdk9tRUFwUVNZNnUyMlJsWFM0b1V1VVpMU1RXcG1hWjBqdmRBODBj?=
+ =?utf-8?B?VTlKN0o2akZ5YjFiUWplaUpLcWRNamUwakJZT2FxenJGNWRuVmMvRVBSNlVD?=
+ =?utf-8?B?SmRrNWpSVVpJVzBOaklzMnhzdVd1N1hMclN0di9PVDFBSmY5cTVyQ1J0S3R5?=
+ =?utf-8?B?bDdXNHJDeFV6eXgvVFJ0S1FwdjVyRjJORmtUZjZYRmlLem1tQnRDMmRWeFlS?=
+ =?utf-8?B?a29iNkEyQTI2NkRXSzcyc1J3NFVlUHBxVjZkWmVjc2N6Ym5tcTRYZ1EwZXdU?=
+ =?utf-8?B?NGxHRnN6QTJFTnRtWjVVUkR0SzRkZDV4czdIZGhSV3NYcVJvSDliMUFvbEVE?=
+ =?utf-8?B?bE9VN3haQ0c1blNSSit3Z0dRZ1NMK2FJYjlSY09RdUpTMVoxNkhFeFhKaFkx?=
+ =?utf-8?B?ZXp4K282eDBCTUhpZ29mWFcxb3k2NnlBeVdyNmxMTWRua3pXWjdNUkNrdGZN?=
+ =?utf-8?B?QUx1bDNlU3hsVDYyWHdRbnBkQzhwRVQ1Y0dyY2d2LzM0WktDM2FjWUdSNkM3?=
+ =?utf-8?B?MS9MRjFxUU8zZWxwTEVHa2wwRit1TGhKZGF4WjA2blgvemZkU2xTSUx2dVoy?=
+ =?utf-8?B?MEJmM1lnb3BDWGwwTHR1Y01nZTAzV0NVTlhVU05KdHNNQ0piV2pYS21iL2Vz?=
+ =?utf-8?B?SXFpZmhzcjBacm44VG1RMWwzY29nVFpyK3hhZmhPNzZVd1NrRmRyb3FqWDVr?=
+ =?utf-8?B?cGFBZmMwOVdtbGJENGJ3d1hZNk16dVRidFkwRTBLSCtOcmtwZUxMREFYZS9i?=
+ =?utf-8?B?T01XcTFlaThpeFFvSC94bzFBS0ViZXlwRGlJYWpFcldXZFBMSWxlSWVhamU3?=
+ =?utf-8?B?TnhjRmJHSERyeWVFYkFNVUVic0QzaHZJb0lhMjJuVkEybnBmUDZkUXpkQ0gv?=
+ =?utf-8?B?UlVqbXJmL0RpSE0ra3cyRGFTRkJOQVNIQU9ZRjczZENlVUhQTkNuV1B1Mit5?=
+ =?utf-8?B?cU5oU3Z2YVpCZUZLdXJUbXo0eEZtYTlHRUhqazFQUHhrdnFnS0w4T1cyVm85?=
+ =?utf-8?B?amJ3M3Q4NEl2NDhLdllRcEREN1IvZkFjMEwybDJUY1NVM0kzYko2cm1tT1pa?=
+ =?utf-8?B?c0c0ditNS1NkckV6ZnhyNlBiYUtZT2E3a2h0OG8yNDhyazNCMTFUYUQ2QzZR?=
+ =?utf-8?B?Si9VZ0s3QXE1ZzBaRXk0MGFDd0doellFaktsWldCK0VUZWlLV0tNNFFvaS9a?=
+ =?utf-8?B?Y1ZUMzFzMElSeC9ubHVBK3lhanRDQUlrb3picTNwTWF1d00waUhwbXFXNzBP?=
+ =?utf-8?B?a0pDOHMzL2NQV2s2akpxOE4vT1JjakRhUXJMcHlSSEU4d0FIaTNvT05IbEkv?=
+ =?utf-8?B?cThMV20rdnpKNGM4cXV1cklRMXVMYmYwLzZibE9aSXNEdDhQTElJRGEzTWFK?=
+ =?utf-8?B?UzNTb3k5TzArYUtrQmhkYjdwS2JOSG12N1c1TnFIWktpdVlsRmkzbWxTdGw4?=
+ =?utf-8?B?TVJnb1loQWVXeDcwUVZuTXFJSkJlRklxS2ttZmNzYUxyemJ3U1lKaWtvT0dC?=
+ =?utf-8?Q?DTWT5rzWqFx88?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?amhwejd6bDI1RmdYZHQ5Zk4vT0xseWtxVUFJeEFOWWJ3S2owVEpYYno0cmYr?=
+ =?utf-8?B?TE1PYnUzMFVUREcybHBVbnpzb0UrZTkycTJwVURIVFIzWm9FbVV2VzRpZ0pV?=
+ =?utf-8?B?Um9xa3ZTOEE2aFNabHNtM0F6ZTJxZkxsT2FXcEJnME83VFNZa0tDK2cyeWgv?=
+ =?utf-8?B?V3NIcW5YQlp6UE5DTTNxZ0JpdXF1eDBGMnhLQkxuSEdqZ2Zmd2dQWEZMOWNK?=
+ =?utf-8?B?ZTNSd2hxVmhmclEwTFgvV0M2cmlubHpLR1VzY2RxRFRVemUzWTAzRFJyUGY4?=
+ =?utf-8?B?UXVha0crb3JvTVp1SXptM3hTRmMzeHNRazE0STBtUEgxdnBpUUg1bzJ1R2xv?=
+ =?utf-8?B?b1hHKzZqdndqMDJwYVhXQVJzcHRxTEdZRHZMWTRrd1QvMzlaRUxPcDVWYUt4?=
+ =?utf-8?B?OEJrengxQWE3V2swbXVBYTk2U2hHWElCQ3ZIblVyZzJtOCtyYXFBbnBvVFh5?=
+ =?utf-8?B?VE5KZnRIQnBzT0RJUkxEZEZxeFkwVkRjWlVXejg3L2tBVEYrQkJkZzJzOThO?=
+ =?utf-8?B?ODAwN2YxZ2dqTXAxTkhZb3VpRmQ3ZkZsaU5QVWlOV1c0azRhWEpFaGwwRUM1?=
+ =?utf-8?B?ajdMVGJZYzc0Q1ZHSW9wV3g3cEJJYVhjYVVnQTdwdEk2cnZjQnVzUE92L0dt?=
+ =?utf-8?B?Z0h4alhZQWE2NTBySVg0NGJ6YXNhMnR3MkltUzFtOTBSNVlCQ2svQ3ZDWU50?=
+ =?utf-8?B?NXBoTHJQNHRLWUhrUFJqVEd1YmpjeHRqRU9SRis1L1ZPcmM1WG1RUmRIUERy?=
+ =?utf-8?B?NEFHRkd6UVpTSDQ4QlcxY1RLR3BlWng2QTZ5YkUwb2pKVktHL3FrR2oxckJF?=
+ =?utf-8?B?S093ZTkxbzJXUFBFTGZsTUtsc3g0L1MrR0JLR0Y2QUlzVG1SdFJvMTlWMUVM?=
+ =?utf-8?B?MGF1MWdHUG1WSkxGR21vdS9UU3IrWmtiVEprY3U4aVdOekRtZFlWcFVDMjNw?=
+ =?utf-8?B?a2p6R1NrRHdXTng1bHVBa3hHeUpoa0hlcUJXZFFLWFNtR0p3SGZiYTFOZkNZ?=
+ =?utf-8?B?Qlg4MU8vWWRyL1prc0owRzh1YlBWQnpubG83ejQwYkxNbWRXK3hDMVkrYm5u?=
+ =?utf-8?B?NjZyWEE4L3JBRm9PWXFGMkFYUEE1bkh6YjBac1hmdi82VWZmUEpjUGhhSURN?=
+ =?utf-8?B?RzkzS0ZmVkhEWUo5cFM2SmJoSE5aZHREb1JmczFYKzNGV2tlNWtyaGdYZlE3?=
+ =?utf-8?B?ZmdhWG9MbFQzbFEya1ZsOFg1MHlibS8wbkZPTHVycFB4azlVK2xUdDFlVWx4?=
+ =?utf-8?B?cFkvWEFZQWlMZlQxSE03ZmpSMWJBeWtiYWJrSFBuc3pEQ3VPd0RDQi82M0kr?=
+ =?utf-8?B?Y3FodG1icURJZTNCN0dPcVBIK3M5aG9OV2N0OFN5MWdHak1tTGlvWkFHbnF6?=
+ =?utf-8?B?d1NYdzNwVFFZcEFDamJQQkhGWWMxcllPN0NaK0ZqeE5jR1JoTmlvTENadWxm?=
+ =?utf-8?B?bGxLS3NLanpEcmM5OElKcmx1cFhsN1Axejk3WjJaTGw3cVpYbCtVKzRQb2xE?=
+ =?utf-8?B?TVNGWTVBSWxqZnd6NGxvdlBrOUxvMTBQNEppSVpQbzArYkdUZkFzS0FFSjJj?=
+ =?utf-8?B?N2YzR0NQS29CVUpNdjNSUU5Kc0ljZDR0cHFRa3R4RGVmL21aOGxSOEtOSFBK?=
+ =?utf-8?B?b1E2T3F0ZzhWSTExUzdkaE5wUlhJcEY4ZE02a2tJVXhleWpick5DWE94UFcx?=
+ =?utf-8?B?a0xDZUFSazI0VCs4WFdpcktmd09oK3JkQnhXeDVKa1hZNHRIWG13dG5jaU9k?=
+ =?utf-8?B?RFZZcWpuY2syVDFnOGZDU004U1ZaT0Z5UEVxNS9INFhzcUZ2cDFBckxOQU5l?=
+ =?utf-8?B?R0x4cGYzdE1vU2g3ZFV3WWVqQmRDNzFhdm92S0cxcWdyNlZSM1N2M2xaUFpv?=
+ =?utf-8?B?a3pzS2FsVFA3QTMvc2Erc1RmZTlVTml4L3lOMGV2ckgzN3FLOXRrdFZHMXlH?=
+ =?utf-8?B?UjRlVGRmeTRCc0hQQk14QWRaTVhLa3UrUDlPQkRKTldTZVlSMExoR0sweGd5?=
+ =?utf-8?B?T3Y0Nk9KVndLR1dSc2VQSGFadnNEMWZxL1oyRy95c0pHOUxqcG9SdnVCTCtQ?=
+ =?utf-8?B?Q05pNjBtOHVuVGJDd0FOTTN1RzVUVUdONDFUQ1R4SGU5Y2dGSzVjNWhxeHp1?=
+ =?utf-8?B?c25IeDBwamh6TERLNVZuS3FXNi9ZSDg3ZFRHSzBJcHJzM20zcG92clZKRm93?=
+ =?utf-8?B?b2c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 8mvURf5aK2iI634D6fCTqMyr4n6AsVH7Pt0qR2LynVg7VbLM6FqvuGZW9wyQ0Y/8N6kVrAIJ8WgPolu+v8ad2M39dMO/lNYw+5C8kiNbuwJeWYKemxsuwaANRLB4dDWtGdLKgEQDm7tmNl8B1+LGsdLxhGtdhBmU4D0MrB16EgMVwKjbX0PG7GaobmnGDjwVWyOloaUWvNxKfaSpNqrE+uUhD0XLyPrfshcIvfGI3TTY9QubUhHqvLSn0EreXoLgoLh+WpHZXoNSlOeCwl7x5J71hNfSK1ETYsghJWAn64busj10kkeauXRMYnggnCoMAjqNl+JOyZwDUNCUkW0sPayjLnhbm61+POZvZ5K8wFDk2Q4os9Mqn1h+qwxbOQI7xBgcL6igLUclTHWwUbq3UB7hVjghlar6/vX/Htfa873CRRsGrqpkBwUhCUdwmbuc/kRt6/9V1Hcdu6cyTq6YLIoyXRNDKwfh3eLRik/0q9rcpI6MwTojnLpmkDqYcF1VZf8XwSVW0uvJGxZ1WpmdISzLfOGsj4r+plGL5rmxCxQo5pSX6uwLenHQOZzV0mFMfYTtoAnGbPpRtAO+g1tTobRdt4wtoy2Os5Cfb+QENdM=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa876670-fcbc-42e6-6dcc-08dd2b688120
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jan 2025 20:03:20.1450 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ToX93ZP7kW/hlLW1kczuDwzxOs5B3xz62aLCsQKCL89FDbXTNNvYdO+e1BDYanMW+gw/ty9LATtD2StUfz9lsZCX8zGIfGqGjSERnryeluY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4538
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-02_03,2025-01-02_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 spamscore=0
+ malwarescore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501020175
+X-Proofpoint-GUID: 13Ki64erUWcn-r0By0g3pciE-7xWD-IP
+X-Proofpoint-ORIG-GUID: 13Ki64erUWcn-r0By0g3pciE-7xWD-IP
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,108 +223,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 02, 2025 at 02:21:13PM -0500, Steven Sistare wrote:
-> On 12/24/2024 2:24 PM, Peter Xu wrote:
-> > On Tue, Dec 24, 2024 at 08:17:00AM -0800, Steve Sistare wrote:
-> > > Add the cpr-transfer migration mode, which allows the user to transfer
-> > > a guest to a new QEMU instance on the same host with minimal guest pause
-> > > time, by preserving guest RAM in place, albeit with new virtual addresses
-> > > in new QEMU, and by preserving device file descriptors.  Pages that were
-> > > locked in memory for DMA in old QEMU remain locked in new QEMU, because the
-> > > descriptor of the device that locked them remains open.
-> > > 
-> > > cpr-transfer preserves memory and devices descriptors by sending them to
-> > > new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
-> > > be sent over the normal migration channel, because devices and backends
-> > > are created prior to reading the channel, so this mode sends CPR state
-> > > over a second "cpr" migration channel.  New QEMU reads the cpr channel
-> > > prior to creating devices or backends.  The user specifies the cpr channel
-> > > in the channel arguments on the outgoing side, and in a second -incoming
-> > > command-line parameter on the incoming side.
-> > > 
-> > > The user must start old QEMU with the the '-machine aux-ram-share=on' option,
-> > > which allows anonymous memory to be transferred in place to the new process
-> > > by transferring a memory descriptor for each ram block.  Memory-backend
-> > > objects must have the share=on attribute, but memory-backend-epc is not
-> > > supported.
-> > > 
-> > > The user starts new QEMU on the same host as old QEMU, with command-line
-> > > arguments to create the same machine, plus the -incoming option for the
-> > > main migration channel, like normal live migration.  In addition, the user
-> > > adds a second -incoming option with channel type "cpr".  The CPR channel
-> > > address must be a type, such as unix socket, that supports SCM_RIGHTS.
-> > > 
-> > > To initiate CPR, the user issues a migrate command to old QEMU, adding
-> > > a second migration channel of type "cpr" in the channels argument.
-> > > Old QEMU stops the VM, saves state to the migration channels, and enters
-> > > the postmigrate state.  New QEMU mmap's memory descriptors, and execution
-> > > resumes.
-> > > 
-> > > The implementation splits qmp_migrate into start and finish functions.
-> > > Start sends CPR state to new QEMU, which responds by closing the CPR
-> > > channel.  Old QEMU detects the HUP then calls finish, which connects the
-> > > main migration channel.
-> > > 
-> > > In summary, the usage is:
-> > > 
-> > >    qemu-system-$arch -machine aux-ram-share=on ...
-> > > 
-> > >    start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
-> > > 
-> > >    Issue commands to old QEMU:
-> > >      migrate_set_parameter mode cpr-transfer
-> > > 
-> > >      {"execute": "migrate", ...
-> > >          {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
-> > > 
-> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > 
-> > Feel free to take:
-> > 
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > 
-> > I still have a few trivial comments.
-> > 
-> > [...]
-> > 
-> > > diff --git a/migration/cpr.c b/migration/cpr.c
-> > > index 87bcfdb..584b0b9 100644
-> > > --- a/migration/cpr.c
-> > > +++ b/migration/cpr.c
-> > > @@ -45,7 +45,7 @@ static const VMStateDescription vmstate_cpr_fd = {
-> > >           VMSTATE_UINT32(namelen, CprFd),
-> > >           VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
-> > >           VMSTATE_INT32(id, CprFd),
-> > 
-> > Could you remind me again on when id!=0 will start to be used?
+On 1/2/2025 2:48 PM, Peter Xu wrote:
+> On Thu, Jan 02, 2025 at 01:36:01PM -0500, Steven Sistare wrote:
+>> On 12/24/2024 12:18 PM, Peter Xu wrote:
+>>> On Tue, Dec 24, 2024 at 08:16:47AM -0800, Steve Sistare wrote:
+>>>> Extend qemu_ram_alloc_from_fd to support resizable ram, and define
+>>>> qemu_ram_resize_cb to clean up the API.
+>>>>
+>>>> Add a grow parameter to extend the file if necessary.  However, if
+>>>> grow is false, a zero-sized file is always extended.
+>>>>
+>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>> ---
+>>>>    include/exec/ram_addr.h | 13 +++++++++----
+>>>>    system/memory.c         |  4 ++--
+>>>>    system/physmem.c        | 35 ++++++++++++++++++++---------------
+>>>>    3 files changed, 31 insertions(+), 21 deletions(-)
+>>>>
+>>>> diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+>>>> index ff157c1..94bb3cc 100644
+>>>> --- a/include/exec/ram_addr.h
+>>>> +++ b/include/exec/ram_addr.h
+>>>> @@ -111,23 +111,30 @@ long qemu_maxrampagesize(void);
+>>>>     *
+>>>>     * Parameters:
+>>>>     *  @size: the size in bytes of the ram block
+>>>> + *  @max_size: the maximum size of the block after resizing
+>>>>     *  @mr: the memory region where the ram block is
+>>>> + *  @resized: callback after calls to qemu_ram_resize
+>>>>     *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
+>>>>     *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
+>>>>     *              RAM_READONLY_FD, RAM_GUEST_MEMFD
+>>>>     *  @mem_path or @fd: specify the backing file or device
+>>>>     *  @offset: Offset into target file
+>>>> + *  @grow: extend file if necessary (but an empty file is always extended).
+>>>>     *  @errp: pointer to Error*, to store an error if it happens
+>>>>     *
+>>>>     * Return:
+>>>>     *  On success, return a pointer to the ram block.
+>>>>     *  On failure, return NULL.
+>>>>     */
+>>>> +typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
+>>>> +
+>>>>    RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+>>>>                                       uint32_t ram_flags, const char *mem_path,
+>>>>                                       off_t offset, Error **errp);
+>>>> -RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+>>>> +RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+>>>> +                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
+>>>>                                     uint32_t ram_flags, int fd, off_t offset,
+>>>> +                                 bool grow,
+>>>>                                     Error **errp);
+>>>>    RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+>>>> @@ -135,9 +142,7 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+>>>>    RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
+>>>>                             Error **errp);
+>>>>    RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
+>>>> -                                    void (*resized)(const char*,
+>>>> -                                                    uint64_t length,
+>>>> -                                                    void *host),
+>>>> +                                    qemu_ram_resize_cb resized,
+>>>>                                        MemoryRegion *mr, Error **errp);
+>>>>    void qemu_ram_free(RAMBlock *block);
+>>>> diff --git a/system/memory.c b/system/memory.c
+>>>> index 78e17e0..290c522 100644
+>>>> --- a/system/memory.c
+>>>> +++ b/system/memory.c
+>>>> @@ -1680,8 +1680,8 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr,
+>>>>        mr->readonly = !!(ram_flags & RAM_READONLY);
+>>>>        mr->terminates = true;
+>>>>        mr->destructor = memory_region_destructor_ram;
+>>>> -    mr->ram_block = qemu_ram_alloc_from_fd(size, mr, ram_flags, fd, offset,
+>>>> -                                           &err);
+>>>> +    mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
+>>>> +                                           offset, false, &err);
+>>>>        if (err) {
+>>>>            mr->size = int128_zero();
+>>>>            object_unparent(OBJECT(mr));
+>>>> diff --git a/system/physmem.c b/system/physmem.c
+>>>> index c76503a..48c544f 100644
+>>>> --- a/system/physmem.c
+>>>> +++ b/system/physmem.c
+>>>> @@ -1942,8 +1942,10 @@ out_free:
+>>>>    }
+>>>>    #ifdef CONFIG_POSIX
+>>>> -RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+>>>> +RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+>>>> +                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
+>>>>                                     uint32_t ram_flags, int fd, off_t offset,
+>>>> +                                 bool grow,
+>>>>                                     Error **errp)
+>>>>    {
+>>>>        RAMBlock *new_block;
+>>>> @@ -1953,7 +1955,9 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+>>>>        /* Just support these ram flags by now. */
+>>>>        assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
+>>>>                              RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
+>>>> -                          RAM_READONLY_FD | RAM_GUEST_MEMFD)) == 0);
+>>>> +                          RAM_READONLY_FD | RAM_GUEST_MEMFD |
+>>>> +                          RAM_RESIZEABLE)) == 0);
+>>>> +    assert(max_size >= size);
+>>>>        if (xen_enabled()) {
+>>>>            error_setg(errp, "-mem-path not supported with Xen");
+>>>> @@ -1968,12 +1972,14 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+>>>>        size = TARGET_PAGE_ALIGN(size);
+>>>>        size = REAL_HOST_PAGE_ALIGN(size);
+>>>> +    max_size = TARGET_PAGE_ALIGN(max_size);
+>>>> +    max_size = REAL_HOST_PAGE_ALIGN(max_size);
+>>>>        file_size = get_file_size(fd);
+>>>> -    if (file_size > offset && file_size < (offset + size)) {
+>>>> +    if (file_size && file_size < offset + max_size && !grow) {
+>>>
+>>> Is this a bugfix for the case offset < fsize?  If so, better make it a
+>>> small patch and copy stable..
+>>>
+>>> $ touch ramfile
+>>> $ truncate -s 64M ramfile
+>>> $ ./qemu-system-x86_64 -object memory-backend-file,mem-path=./ramfile,offset=128M,size=128M,id=mem1,prealloc=on
+>>> qemu-system-x86_64: qemu_prealloc_mem: preallocating memory failed: Bad address
+>>>
+>>> So yes, it's a bug..
+>>
+>> Yes, it's a bug I noticed by inspection.
+>> I will split and submit to stable.
 > 
-> Each of vfio, iommufd, chardev, and tap will use id != 0.
+> Thanks.
+> 
+>>
+>>>>            error_setg(errp, "backing store size 0x%" PRIx64
+>>>>                       " does not match 'size' option 0x" RAM_ADDR_FMT,
+>>>> -                   file_size, size);
+>>>> +                   file_size, max_size);
+>>>>            return NULL;
+>>>>        }
+>>>> @@ -1988,11 +1994,13 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+>>>>        new_block = g_malloc0(sizeof(*new_block));
+>>>>        new_block->mr = mr;
+>>>>        new_block->used_length = size;
+>>>> -    new_block->max_length = size;
+>>>> +    new_block->max_length = max_size;
+>>>> +    new_block->resized = resized;
+>>>>        new_block->flags = ram_flags;
+>>>>        new_block->guest_memfd = -1;
+>>>> -    new_block->host = file_ram_alloc(new_block, size, fd, !file_size, offset,
+>>>> -                                     errp);
+>>>> +    new_block->host = file_ram_alloc(new_block, max_size, fd,
+>>>> +                                     file_size < offset + max_size,
+>>>
+>>> Same here, looks like relevant to above.
+>>
+>> This line would not be part of the fix for stable.  The pre-cpr code should only
+>> truncate (allocate) if !file_size.  If file_size > 0, the fixed conditional above
+>> verifies that file_size is large enough.
+>>
+>> The fix will be a 1-liner:
+>>   -    if (file_size > offset && file_size < (offset + size)) {
+>>   +    if (file_size && file_size < offset + size) {
+> 
+> Indeed, this should work.
 
-I don't remember the details of the planned future series, but just to
-mention that using integer ID can be error prone on device hot plug/unplug.
+I will also fix the error message, which should have been updated when
+the offset option was added.  With the fix and your test program,
+it says:
+    backing store size 0x4000000 does not match 'size' option 0x8000000
 
-QEMU has a known bug even now on some device (e.g. slirp network backends)
-that if the src QEMU originally has two devices (e.g. id=1,2), unplug
-device id=1 (leaving id=2), then migrate, it could fail seeing dest only
-has id=1 (dest QEMU starts with only one device), seeing a mismatched ID.
+I will change it to
+   backing store size 0x4000000 is too small for 'size' option 0x8000000
+   plus 'offset' option 0x8000000
 
-I recall PCIe frontend devices are not prone to such issue, that should
-depend on whoever has ->get_id() (qdev_get_dev_path?) properly implemented
-to generate a global unique ID that is not affected by order of device
-realized / created.
-
-It could boil down to how the IDs are allocated, anything that can be
-allocated on the fly may not work well if there's no solid topology
-information to fetch.
-
-I wonder if CPR can be prone to this too when using IDs, just FYI.  It
-might be a good idea if ID integers can be avoided somehow.  But you'll
-definitely have the best picture of the whole thing, so it may or may not
-apply.
-
-Thanks,
-
--- 
-Peter Xu
-
+- Steve
 
