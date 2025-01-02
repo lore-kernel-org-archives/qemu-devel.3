@@ -4,90 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8431FE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 14:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80CFE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 14:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTMaT-0003Jp-V3; Thu, 02 Jan 2025 09:54:13 -0500
+	id 1tTMdY-0004VB-7x; Thu, 02 Jan 2025 09:57:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTMaR-0003JW-P2
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 09:54:11 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTMaQ-0003dy-91
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 09:54:11 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so163342445ad.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 06:54:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735829648; x=1736434448; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QVkqJTaLW6XmRme1wzrjIaLJFvZnJrcUASbE0mfyV8A=;
- b=nJu+BxXjKn9y8JX7NYno4gTCurMH8YNIcYge3iPWriqHryzzrTOrN/GLnBB/NIYHrz
- YVsIoCr2kFpGRKDEXcLL4R83L+OOfIonM+cY1E2ZFKlpF983N1FkSHXzRHo0CL9WCk5y
- fuGSOLcrm+q5i3IXMU3FUmdJXkiZ8IWg8lapIX7l8DxAObtkUY+REShpfcifOA+qhvSu
- n1RQ1i+8/L5Lxw7q7Obd+4JmCLNRWSrU7PlWahUGxZf/f+SxZ/oOrUMdob9H9yndRtT1
- I1s/hriu0XuuxRRQAJT65Tr6glz1rSFWHvl89ORwhNormvhh2csNRfzyqNSng5MlkPoX
- NBUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735829648; x=1736434448;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QVkqJTaLW6XmRme1wzrjIaLJFvZnJrcUASbE0mfyV8A=;
- b=h5XTIdo80XB7V0WYS8UYl2gTpjoHgDLOIJdLlM5SGZFmS4cDYgncJWHt92E2Y4cv9l
- AgV8qDwGilW9cmnn9ZcNf4FxbWJoZX1BwNwqN5jTyhaXd/Fxb1Z3siKZHub0nllYZ2hX
- tifFA2LM4TF1XmIif+PHLEQSA9zyYuFo4TS6W/nGDlGX9bpdtKscoT7v6kZ4MvEGv0MP
- Mk/dzd/3KiJ3BGBvcFyAwLL4NRX9P5NEQLKTmmoCzg81+yU1wFn1szrcP8dJTkAkTUc0
- QWKPRqMK2Wka4xxG8i8AX8qOK1r/7PHJ13b3w94+Z9P3VBrEQSCKW74l7bX1raW2X/Sj
- VP+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV9Drf4Ev47ZjpACMHm0cTFQhlJVGfqbZF/5O0714nVz24dwuZdwHdA097/B+1OIY2O1zG3Rw8vRchs@nongnu.org
-X-Gm-Message-State: AOJu0YyWQApvcSPs/OUsH8xQK/fSU6GE3tVM+2JL8nHIPpVUbWU89hr1
- Y8P4AebmnXZ9Rh3/rSCexfNPrC0RCa65XzEnkzoHSiK1f9ElVlbMsEO1TLmrHIU=
-X-Gm-Gg: ASbGncvKSo1chrnEgFZ4B/tf8VIEci2oA8DkfWURCeRk7nI5ViVMBTQwFO2H7SyZOxp
- eyJty1IUjGmaHI0pv4lh8vlj2cAxvc2KK9oLzdXx3LI6e2kfy0DKKVxr0AZbeRkB/3xhapju2tb
- JWh+9ZzgT7oG5aa6SQhQlseVhsOs2CqHRJJxdSr/flPYWhWZeQIAXoaIZRZbHn1b72r6KJ9eSyG
- qIX8ZekROHX1l8BK/S4I6Xzb9tPHWEU6Q/69gbeq2pVABxKp9G4QWl0PEDkQPHg6IaxMyo=
-X-Google-Smtp-Source: AGHT+IG5Kz9d26jxYQml7M2gAc76en9Q7dtBBwVdHQsZz2+OjhOvG1DE1IHLr/d/0eGm3nD3rksQ5Q==
-X-Received: by 2002:a05:6a20:6a08:b0:1e0:d0b9:9a90 with SMTP id
- adf61e73a8af0-1e5c6f15f19mr80329653637.13.1735829648375; 
- Thu, 02 Jan 2025 06:54:08 -0800 (PST)
-Received: from [172.21.1.122] ([63.239.63.212])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-842b229c48fsm18943597a12.26.2025.01.02.06.54.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jan 2025 06:54:07 -0800 (PST)
-Message-ID: <f9e8c228-fbaa-4453-97b1-434d22dfd36a@linaro.org>
-Date: Thu, 2 Jan 2025 06:54:05 -0800
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tTMdV-0004Up-Vg
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 09:57:21 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tTMdT-00041S-Uk
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 09:57:21 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YP8t30vRNz6K6lF;
+ Thu,  2 Jan 2025 22:56:27 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2115B1401F3;
+ Thu,  2 Jan 2025 22:57:16 +0800 (CST)
+Received: from localhost (10.47.73.182) by frapeml500003.china.huawei.com
+ (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 2 Jan
+ 2025 15:57:15 +0100
+Date: Thu, 2 Jan 2025 14:57:08 +0000
+To: Zhao Liu <zhao1.liu@intel.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>, "Daniel P . =?ISO-8859-1?Q?Berran?=
+ =?ISO-8859-1?Q?g=E9?=" <berrange@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-D?=
+ =?ISO-8859-1?Q?aud=E9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <robh@kernel.org>
+Subject: Re: [PATCH v6 0/4] i386: Support SMP Cache Topology
+Message-ID: <20250102145708.0000354f@huawei.com>
+In-Reply-To: <Z2t2DuMBYb2mioB0@intel.com>
+References: <20241219083237.265419-1-zhao1.liu@intel.com>
+ <44212226-3692-488b-8694-935bd5c3a333@redhat.com>
+ <Z2t2DuMBYb2mioB0@intel.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/2] tests: Add functional tests for HPPA machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Helge Deller <deller@gmx.de>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250102100340.43014-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250102100340.43014-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="gb2312"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.47.73.182]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,26 +76,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/2/25 02:03, Philippe Mathieu-DaudÃ© wrote:
-> Since v5:
-> - Correct boot-serial-test machine name for stable (th_huth)
-> 
-> Philippe Mathieu-DaudÃ© (2):
->    tests/qtest/boot-serial-test: Correct HPPA machine name
->    tests: Add functional tests for HPPA machines
-> 
->   MAINTAINERS                           |  1 +
->   tests/qtest/boot-serial-test.c        |  2 --
->   tests/functional/meson.build          |  4 +++
->   tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
->   tests/qtest/meson.build               |  2 +-
->   5 files changed, 41 insertions(+), 3 deletions(-)
->   create mode 100755 tests/functional/test_hppa_seabios.py
-> 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Wed, 25 Dec 2024 11:03:42 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
-r~
+> > > About smp-cache
+> > > ===============
+> > > 
+> > > The API design has been discussed heavily in [3].
+> > > 
+> > > Now, smp-cache is implemented as a array integrated in -machine.
+> > > Though -machine currently can't support JSON format, this is the
+> > > one of the directions of future.
+> > > 
+> > > An example is as follows:
+> > > 
+> > > smp_cache=smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=module,smp-cache.3.cache=l3,smp-cache.3.topology=die
+> > > 
+> > > "cache" specifies the cache that the properties will be applied
+> > > on. This field is the combination of cache level and cache type.
+> > > Now it supports "l1d" (L1 data cache), "l1i" (L1 instruction
+> > > cache), "l2" (L2 unified cache) and "l3" (L3 unified cache).
+> > > 
+> > > "topology" field accepts CPU topology levels including "thread",
+> > > "core", "module", "cluster", "die", "socket", "book", "drawer"
+> > > and a special value "default".  
+> > 
+> > Looks good; just one thing, does "thread" make sense?  I think that
+> > it's almost by definition that threads within a core share all
+> > caches, but maybe I'm missing some hardware configurations.  
+> 
+> Hi Paolo, merry Christmas. Yes, AFAIK, there's no hardware has thread
+> level cache.
+
+Hi Zhao and Paolo,
+
+While the example looks OK to me, and makes sense. But would be curious
+to know more scenarios where I can legitimately see benefit there.
+
+I am wrestling with this point on ARM too. If I were to
+have device trees describing caches in a way that threads get their own
+private caches then this would not be possible to be
+described via device tree due to spec limitations (+CCed Rob) if I
+understood correctly.
+
+Thanks,
+Alireza
+
+> 
+> I considered the thread case is that it could be used for vCPU
+> scheduling optimization (although I haven't rigorously tested the
+> actual impact). Without CPU affinity, tasks in Linux are generally
+> distributed evenly across different cores (for example, vCPU0 on Core
+> 0, vCPU1 on Core 1). In this case, the thread-level cache settings
+> are closer to the actual situation, with vCPU0 occupying the L1/L2 of
+> Host core0 and vCPU1 occupying the L1/L2 of Host core1.
+> 
+> 
+>   ©°©¤©¤©¤©´        ©°©¤©¤©¤©´
+>   vCPU0        vCPU1
+>   ©¦   ©¦        ©¦   ©¦
+>   ©¸©¤©¤©¤©¼        ©¸©¤©¤©¤©¼
+>  ©°©°©¤©¤©¤©´©°©¤©¤©¤©´©´ ©°©°©¤©¤©¤©´©°©¤©¤©¤©´©´
+>  ©¦©¦T0 ©¦©¦T1 ©¦©¦ ©¦©¦T2 ©¦©¦T3 ©¦©¦
+>  ©¦©¸©¤©¤©¤©¼©¸©¤©¤©¤©¼©¦ ©¦©¸©¤©¤©¤©¼©¸©¤©¤©¤©¼©¦
+>  ©¸©¤©¤©¤©¤C0©¤©¤©¤©¤©¼ ©¸©¤©¤©¤©¤C1©¤©¤©¤©¤©¼
+> 
+> 
+> The L2 cache topology affects performance, and cluster-aware
+> scheduling feature in the Linux kernel will try to schedule tasks on
+> the same L2 cache. So, in cases like the figure above, setting the L2
+> cache to be per thread should, in principle, be better.
+> 
+> Thanks,
+> Zhao
+> 
+> 
+
 
