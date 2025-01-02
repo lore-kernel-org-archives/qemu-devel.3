@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7EE0E77194
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA8CE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTI3Q-0002ZL-0d; Thu, 02 Jan 2025 05:03:48 -0500
+	id 1tTIEn-0000Mp-DK; Thu, 02 Jan 2025 05:15:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTI3O-0002ZC-Sv
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:03:46 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tTIEm-0000Md-7n
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:15:32 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTI3N-0006h1-A8
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:03:46 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so118221485e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:03:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tTIEk-0002fQ-68
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:15:31 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5d122cf8e52so19123727a12.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:15:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735812223; x=1736417023; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lsXapPA3Gk5QAziX+SdQxSVqm8p+NaxnEOOojCh6YBA=;
- b=b4wMUukq4yWlFNdGid5ojblWOBY/rim6tF4C+ioYi8TyYUmF9tlU9Yc3aUbDBeRMw0
- XP6S9mUZ87Zm6/Cx905ocBSlcGhboXdfC4FYskdrk2do8UtPAlaWeIfBrxQEstpoqvhe
- Mhzx+OIU5402uZVcpJWDAdANJ1ILgawKKgsbGMxGZenMW6/X5zoY8n0Rh9nx2SJjVkX3
- g89RxRIqNX1oJgES8yXtppSy7HNvtwP+KQOzKXRX605hQNLH2mc1l6ZShTWKlpLp/Rra
- twQCW9D+DE/Gi68IQCwuR9yB3tVgCSw2XCx8y3m0hxvnkswo3dm9Yd/cG/TuQeMOjX+u
- QhaA==
+ d=linaro.org; s=google; t=1735812927; x=1736417727; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U9HBsCdUSNzIZbzp2sjIH7zCYgPhs1zVJqR7keXBtcI=;
+ b=xbkpGDSRfq5cy0XAsKqg63wULogBQlY6RzhwlbH26SGOWuJtTRsX1p6xJ51luIVzlh
+ 4WUQVwjpbNuoQ0EEowJmhBVaxjGc4AznceMuSHk/DRRRiiusiFvdOM2EySXN4NrG3JLo
+ V3plEO2UDAbzQcHphoBdVUGHRag/lesCVTPqu5Nkz3JvL+bZWk6gnZ6u9c3DN0NQvwjE
+ vL3rtqiBJVxWad9kH5Pps5SvsYFx/3wQZyBtoRiS0STHoBp6iv+QES9URQe4Gz38gMut
+ tQdDLWvSYYXKOKdcvSPU43WGP3EGN3SRpXlvsi4vNfVc8GeiHJtJpk88q9kzsqFsU4A/
+ +0ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735812223; x=1736417023;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lsXapPA3Gk5QAziX+SdQxSVqm8p+NaxnEOOojCh6YBA=;
- b=LQiBAdckcgfV9EAqsOdJIe0w96tQQMas3o7OU1KdulP/7X91tcBVeoGjzOfiEdh0mS
- 5Xdkv4MBqVxL3l9jqNtgzD4ZUbKYgNmlvt4V7zEloRiRCIifwr7P5FZcYBQ7CjwWLMDg
- CDI83pJjNOMCCDK1zHC7c3aNU8NFDqw5d4jHEQOG05C6/IwjpbuUVr/PXvPBEpTklgDF
- +Fq8IuSXP0+gOefpJ0jgZtxw7fE2QUEYPgw/OgPzmDIGt9zvvUFCUS09ebiyYAablAPe
- vagTU9bDGqjs3xt3MVy1132opy47/lNMG2BvQGioJ8YWj6TPd4m5ijiL2WpwV1veLH6k
- ibOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrYKdEWIooeyP1AYjDurlXJKYzwFUkra55IPZDKBCqURIHRqZ9L63pt4NA0dSCcqYKll7eIRSEXsxM@nongnu.org
-X-Gm-Message-State: AOJu0YzRDlMWQuOH7rpcsFLrSvdnPVZaXsEfwOotdEKBjOYoGEyycIOr
- ZcB0JjfqcXp2L6heSZb+a4n1FXXdDJrWrvy5/+kawwSXsFxviULjsh8b63kwAYg=
-X-Gm-Gg: ASbGnctF1V6RPb02j3jHzahZtmXU2YDVq44AOHVnP83niB57WP2RclBFRRY2kc3DaMG
- CzZts3A7skklvHpFIo6n946Fo+AKqjNkrdnCsisMVtOrb2Ewq8oRFQs7Y5QjGQVimq0Xs4C55KR
- 4gIikgqaCdHvJShkjuu7kSwmdKW6SBFywRoi6MkPfiAaSHlm3YoDK12OsTyIho4QWbdeXDKB0NM
- 2bGLO3xR4m+JKi2ZBDhbZUSJVCrKq4Fu0lJdHK/zocTjLK/AqdYLEhY8W+J0AhgP0RgJJ2PWFMv
- rvwt/lHuL6UP5BYQaTAOdif62TdSyfs=
-X-Google-Smtp-Source: AGHT+IFnAu3bSJIyVcz3SUPdKYWFL3KamviLLHCHGquio2ndxHNnOyNekRgflwS1MZpKv2uZOozMrA==
-X-Received: by 2002:a05:6000:4021:b0:385:e1f5:476f with SMTP id
- ffacd0b85a97d-38a223f7583mr44466168f8f.39.1735812221938; 
- Thu, 02 Jan 2025 02:03:41 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436611ea3e0sm452428225e9.7.2025.01.02.02.03.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Jan 2025 02:03:41 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Helge Deller <deller@gmx.de>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 0/2] tests: Add functional tests for HPPA machines
-Date: Thu,  2 Jan 2025 11:03:38 +0100
-Message-ID: <20250102100340.43014-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ d=1e100.net; s=20230601; t=1735812927; x=1736417727;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=U9HBsCdUSNzIZbzp2sjIH7zCYgPhs1zVJqR7keXBtcI=;
+ b=rgecrB8Uy1d1xu2SZM5jlWG9sfk/kHvTa0lxmVjGmFP+q9Yy8HNFETJ2noqH6Tovlq
+ k6qpOMLnAeZbevoFMHmfCTlD3PH3FHSgg/LKQpsid5FYMQsMkCKxd1fEhPxgKH8qDxlr
+ 1o5786+NtJxuGKqvN1nijx2Bz39Fl41YqbpwzrHSl44IUYCzAyIAl07zsAHu9tNXKvzp
+ veeiuwuxmDnM7wBKyAimN+rZG8OO2+8+In3IbzNJPfKeXLr2XOzMcb7hvfsLmCftT3L0
+ fIGyh+fN3GPpvDebTwN74o49K4Ntcdq4imX3EBU4ojJDa2iGvGk+wHFIAj96gQe6CqOQ
+ ooxg==
+X-Gm-Message-State: AOJu0YwsGNdSHRt/Vr7DfvYNmeWYarDzBr9qpSbC81zZKaBr/qSJI7Ka
+ nVfuF2Dll4PS0MXkEL5rL81TcLLtPKw/vrnN9kZDtvQic86sUjJ6Lit7LXCdSxs=
+X-Gm-Gg: ASbGncubdKYgl/EjIZj41KfSHT6fuo/fJC9yI46ZOnKqVeZPOcm8KTxn+eM/frTKiGA
+ patGFiDZWBnkZsyvmh0Xl9KtO2Qy8cQ/JOppKyz6q4tQUEgaxIuSFCUhKkyBhIp3yGEQSeNmr92
+ w92DErq/SFK83VZD2WLtadH+cLBNIAlYe8UxLOCJaOuhb9JvT+nqXPPdBVOf8wtAIiD5+TxwZGI
+ SaLQkaV1pX5Awa0dZ9haeNRCPcUBCRtN+AcYlEYCIh7aVrfE2f9WHw=
+X-Google-Smtp-Source: AGHT+IElyCM5Lw/4E5rjLikYlpCYT821EkWpCk139iAUlF4pAddCQhVnqjv/0f3goIrqUldZxeGwKA==
+X-Received: by 2002:a05:6402:2690:b0:5d3:ba42:e9fe with SMTP id
+ 4fb4d7f45d1cf-5d81ddc0362mr36296686a12.12.1735812926984; 
+ Thu, 02 Jan 2025 02:15:26 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d80701c822sm18155296a12.77.2025.01.02.02.15.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jan 2025 02:15:25 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0B48B5F8C1;
+ Thu,  2 Jan 2025 10:15:24 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gautam Bhat <mindentropy@gmail.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: How does "rsi" get set in x86 prologue?
+In-Reply-To: <CAM2a4uxJFhw71emxdZrB4SF-JSzJy_-bL=g9ke7OmjUoOXUDYQ@mail.gmail.com>
+ (Gautam Bhat's message of "Thu, 2 Jan 2025 00:56:47 +0530")
+References: <CAM2a4uxJFhw71emxdZrB4SF-JSzJy_-bL=g9ke7OmjUoOXUDYQ@mail.gmail.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 02 Jan 2025 10:15:23 +0000
+Message-ID: <87jzbdv7wk.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,22 +101,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v5:
-- Correct boot-serial-test machine name for stable (th_huth)
+Gautam Bhat <mindentropy@gmail.com> writes:
 
-Philippe Mathieu-Daudé (2):
-  tests/qtest/boot-serial-test: Correct HPPA machine name
-  tests: Add functional tests for HPPA machines
+> I am trying to understanding the generated code for the x86 target. On
+> EPILOGUE code below:
+>
+> 0x7fff98000000:  55                       pushq    %rbp
+> 0x7fff98000001:  53                       pushq    %rbx
+> 0x7fff98000002:  41 54                    pushq    %r12
+> 0x7fff98000004:  41 55                    pushq    %r13
+> 0x7fff98000006:  41 56                    pushq    %r14
+> 0x7fff98000008:  41 57                    pushq    %r15
+> 0x7fff9800000a:  48 8b ef                 movq     %rdi, %rbp
+> 0x7fff9800000d:  48 81 c4 78 fb ff ff     addq     $-0x488, %rsp
+> 0x7fff98000014:  ff e6                    jmpq     *%rsi
+> 0x7fff98000016:  33 c0                    xorl     %eax, %eax
+> 0x7fff98000018:  48 81 c4 88 04 00 00     addq     $0x488, %rsp
+> 0x7fff9800001f:  c5 f8 77                 vzeroupper
+> 0x7fff98000022:  41 5f                    popq     %r15
+> 0x7fff98000024:  41 5e                    popq     %r14
+> 0x7fff98000026:  41 5d                    popq     %r13
+> 0x7fff98000028:  41 5c                    popq     %r12
+> 0x7fff9800002a:  5b                       popq     %rbx
+> 0x7fff9800002b:  5d                       popq     %rbp
+> 0x7fff9800002c:  c3                       retq
+>
+> Can someone help me understand in which file or where in the source
+> does the "rsi" get set to jump? (0x7fff98000014:  ff e6   jmpq
+> *%rsi)
 
- MAINTAINERS                           |  1 +
- tests/qtest/boot-serial-test.c        |  2 --
- tests/functional/meson.build          |  4 +++
- tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
- tests/qtest/meson.build               |  2 +-
- 5 files changed, 41 insertions(+), 3 deletions(-)
- create mode 100755 tests/functional/test_hppa_seabios.py
+The prologue/epilogue code is generated by:
 
--- 
-2.47.1
+  /* Generate global QEMU prologue and epilogue code */
+  static void tcg_target_qemu_prologue(TCGContext *s)
+  {
+      int i, stack_addend;
 
+      /* TB prologue */
+
+      /* Reserve some stack space, also for TCG temps.  */
+      stack_addend =3D FRAME_SIZE - PUSH_SIZE;
+      tcg_set_frame(s, TCG_REG_CALL_STACK, TCG_STATIC_CALL_ARGS_SIZE,
+                    CPU_TEMP_BUF_NLONGS * sizeof(long));
+
+      /* Save all callee saved registers.  */
+      for (i =3D 0; i < ARRAY_SIZE(tcg_target_callee_save_regs); i++) {
+          tcg_out_push(s, tcg_target_callee_save_regs[i]);
+      }
+
+      if (!tcg_use_softmmu && guest_base) {
+          int seg =3D setup_guest_base_seg();
+          if (seg !=3D 0) {
+              x86_guest_base.seg =3D seg;
+          } else if (guest_base =3D=3D (int32_t)guest_base) {
+              x86_guest_base.ofs =3D guest_base;
+          } else {
+              assert(TCG_TARGET_REG_BITS =3D=3D 64);
+              /* Choose R12 because, as a base, it requires a SIB byte. */
+              x86_guest_base.index =3D TCG_REG_R12;
+              tcg_out_movi(s, TCG_TYPE_PTR, x86_guest_base.index, guest_bas=
+e);
+              tcg_regset_set_reg(s->reserved_regs, x86_guest_base.index);
+          }
+      }
+
+      if (TCG_TARGET_REG_BITS =3D=3D 32) {
+          tcg_out_ld(s, TCG_TYPE_PTR, TCG_AREG0, TCG_REG_ESP,
+                     (ARRAY_SIZE(tcg_target_callee_save_regs) + 1) * 4);
+          tcg_out_addi(s, TCG_REG_ESP, -stack_addend);
+          /* jmp *tb.  */
+          tcg_out_modrm_offset(s, OPC_GRP5, EXT5_JMPN_Ev, TCG_REG_ESP,
+                               (ARRAY_SIZE(tcg_target_callee_save_regs) + 2=
+) * 4
+                               + stack_addend);
+      } else {
+          tcg_out_mov(s, TCG_TYPE_PTR, TCG_AREG0, tcg_target_call_iarg_regs=
+[0]);
+          tcg_out_addi(s, TCG_REG_ESP, -stack_addend);
+          /* jmp *tb.  */
+          tcg_out_modrm(s, OPC_GRP5, EXT5_JMPN_Ev, tcg_target_call_iarg_reg=
+s[1]);
+      }
+
+      /*
+       * Return path for goto_ptr. Set return value to 0, a-la exit_tb,
+       * and fall through to the rest of the epilogue.
+       */
+      tcg_code_gen_epilogue =3D tcg_splitwx_to_rx(s->code_ptr);
+      tcg_out_movi(s, TCG_TYPE_REG, TCG_REG_EAX, 0);
+
+      /* TB epilogue */
+      tb_ret_addr =3D tcg_splitwx_to_rx(s->code_ptr);
+
+      tcg_out_addi(s, TCG_REG_CALL_STACK, stack_addend);
+
+      if (have_avx2) {
+          tcg_out_vex_opc(s, OPC_VZEROUPPER, 0, 0, 0, 0);
+      }
+      for (i =3D ARRAY_SIZE(tcg_target_callee_save_regs) - 1; i >=3D 0; i--=
+) {
+          tcg_out_pop(s, tcg_target_callee_save_regs[i]);
+      }
+      tcg_out_opc(s, OPC_RET, 0, 0, 0);
+  }
+
+The call into the prologue comes from:
+
+  ret =3D tcg_qemu_tb_exec(cpu_env(cpu), tb_ptr);
+
+in cpu_tb_exec. With env in RDI and tb_ptr (the code address) being in
+RSI.
+
+>
+> Thanks,
+> Gautam.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
