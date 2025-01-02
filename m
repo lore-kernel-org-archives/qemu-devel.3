@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A908AE7718B
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 16:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C84FE7718B
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 16:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTNfe-0000aP-7v; Thu, 02 Jan 2025 11:03:38 -0500
+	id 1tTNhl-0001Tp-A0; Thu, 02 Jan 2025 11:05:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1tTNfV-0000ZZ-0h
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 11:03:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1tTNfS-0007D7-KB
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 11:03:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735833801;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=psOMRh/cRJqSjkLrDaO1SdWNo6kSHdDkNYD1Db1ldek=;
- b=O5hCvjOszXS1TXIK33766E55RD9iwy79USOMEjxeyEe+eNfNrkVyq7GDZuKIHJTtXm8Q7x
- AxCnlfMvIOpvR2p/AMK+leNxnO2Kk+o4cnLBN43/DFeQDEsLrngOVnHMpAkCj7Gt45PNCW
- 6AeQc6vynS2SSWSgMmciwGXGNxKKHPQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-uTEfqEH7PAaLtQF1EO5p3A-1; Thu, 02 Jan 2025 11:02:14 -0500
-X-MC-Unique: uTEfqEH7PAaLtQF1EO5p3A-1
-X-Mimecast-MFC-AGG-ID: uTEfqEH7PAaLtQF1EO5p3A
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-467975eabdaso197739011cf.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 08:02:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTNhH-0001PW-0H
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 11:05:21 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTNhE-0007hn-B5
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 11:05:18 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso114649015e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 08:05:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735833913; x=1736438713; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PiUug7+4DxBb4pdRj/4Nl+w548jCnQIvB94kNaUutoY=;
+ b=cB0rOEHOy4BK9f7qkfvXSVFWpGYaOGjilWBYx6iOcucn1ZQbTOSJvYglaItvtJ6rLJ
+ pHWVfcTzSQV7RsPsV7hcXpnWpLmAbpHicIwnE/irJmCS5YznVeC6OwHEI+I0tiEm5YdC
+ PqmxQv35Y29zLMOVaPqD0Aqzd2H6oOCfIA+kivFZ34wtk6y8+8mUTTSydNrydvyLJHAw
+ n5Z6XLDA7fNgaQDyoqZj7uAU/DQUL7ANmZ5WylWM97gOrloIgcAUwPZjje9jtPBWI7mL
+ cJWE2EecH0SPAtNwyqvVUwufSWLsQ5oWpxuLr1aco2tDusOsPJKoOOyefM1NjBjNZAZz
+ 05Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735833733; x=1736438533;
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=psOMRh/cRJqSjkLrDaO1SdWNo6kSHdDkNYD1Db1ldek=;
- b=rKLo48vaycqCckA8pST7SiQVt4yUDCxfKJ7ZH6r2fZ7XsIf3+5594UzAU3A35JhEHf
- vCHmQmutKGUWS4nxYoJ5QkcG2bSQWqv7wLMGLjDDYaThzdML7mADXIWrmV5HKnIZaJ4t
- 8K8BepXYjGYbgJvMdRsYNEQwiP/RXWi0rd1uZREWxn8DraAbqcGbSWCQchawib5ERZyM
- 54HmV7lHhICmLt+op0rK86hUlVbEK4m8Yiu1aBToJNTNrZy0PffszEoBADiKBQFnfgRf
- H8vsLt8lNZmMDSe83/0O7vBKCQr8LmbckaHTTxLlrne0MUSfNkyMRRs18LvKtLXCuGD2
- NvBw==
-X-Gm-Message-State: AOJu0YwNtdIyDqmvHUdpaQpqk2W/8hanQOvUW4akNkn6IY1hs0dcSCte
- OoqFjF8wCkviqIFaq4C5ltiN2w8roiHlL5RuaqVUqTuToaaW1Y2NJrxVzHnprM48Pepz092gHdj
- siFzODTHKYBWqFfVCq4StOZW6mtnKRliHDSvqnEcCMV79KYFjIYW756Sd/WSPnm+IWsIK3tv3pj
- VtnjAsCuegI7GC4J/PTtKJnMokf04cBz49QwY=
-X-Gm-Gg: ASbGncvJZyr+ad70+TtAQFD84vnj529UHJfaSBZxZ6xNmATJgQgddm8P6vC1o+zfxaI
- ayOUzQnMfn1SpDxigO2dOr3EyBzYkThdRAtUU
-X-Received: by 2002:ac8:5e51:0:b0:465:2fcd:cb0b with SMTP id
- d75a77b69052e-46a3b0c317bmr770573711cf.24.1735833733200; 
- Thu, 02 Jan 2025 08:02:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdHe74rwJVkYKfHlP5Mre8SJtrFj02ToSgRbnjulMHr1Fr5UoouURb6whBdbsYeCS1LZ+sSDYe74T6GAwIcLQ=
-X-Received: by 2002:ac8:5e51:0:b0:465:2fcd:cb0b with SMTP id
- d75a77b69052e-46a3b0c317bmr770573491cf.24.1735833732947; Thu, 02 Jan 2025
- 08:02:12 -0800 (PST)
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 Jan 2025 10:02:12 -0600
-From: Andrea Bolognani <abologna@redhat.com>
-References: <20241203094702.124748-1-abologna@redhat.com>
-MIME-Version: 1.0
-In-Reply-To: <20241203094702.124748-1-abologna@redhat.com>
-Date: Thu, 2 Jan 2025 10:02:12 -0600
-Message-ID: <CABJz62PDz_LJdji-NC7LdmonjshG4w+OqGJPzkuStECzMcYSBg@mail.gmail.com>
-Subject: Re: [PATCH] binfmt: Don't consider riscv{32,
- 64} part of the same family
+ d=1e100.net; s=20230601; t=1735833913; x=1736438713;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PiUug7+4DxBb4pdRj/4Nl+w548jCnQIvB94kNaUutoY=;
+ b=Y5misR/ug/1FSfSwNqN9jBLV/47p0DgIEs/3bl3P6KRGJDWsr2H6SpWQVcH2koswZ2
+ DMZHyXjkWMBvqNUoy8CDkOGiMMsxSIaVKTFeAOaVL7X5SLosRMWyxozpAFXrFOomSJCn
+ IOhZhEpELBRhWfLSw4dfCsRP17/VisFa87ss9O8RJUZEY+Z1oAuNMdAJC6LvoC2vlY9P
+ pAOOecydHPDrrktH9cXXeONvzb27jo0jzXT3V3RePVwWsgoe80PKRBzVpRGNvINwy11I
+ vgzQUplgOfrQckkZAXHlL5rI9MThhSBF2zdVa8AqW0S4huQHgFSCKoli1JkXaV+xPaL0
+ MURw==
+X-Gm-Message-State: AOJu0Yw3vPfwE2WwuUzwb3RtN97k5AlcmLU8UOuLUUZ4r6odQXSbZq/M
+ qq4+qUv6QkU3eBpdw11jE3uzrhSj8YT8xRqssBQ9RHVXFXSEP/lVW+ls5On6bae1YEG8QBKhP/+
+ QmkPFLQ==
+X-Gm-Gg: ASbGncsixmY9jDnX3XWv65unQZqk1clRlaZVauO6ol9dPSx9Dn/NxZ8wnEampbgezHn
+ gcCr7gKyjR89+l+0uWm++sDxCjYoNLAG3G2Y/i+tkyJ3wJwpHceCGF06c4uAGRjlKUTERwdlwLB
+ Z6+GM8xXgYtVGJFvrube+ymyWI3n+23LvQ+5TdqIqvFJ4NJZjjrLhiDNFYxhxoBFj/1D8VWYpEM
+ yuJUnuu63FrMKraBIY79zKfpmg2bFva/FWECPEEvbUVww3/Qs+yHD/itNzxpf/BDc1CsgK0+g+9
+ ZifkTDhfQ5sSAQhiV13q6tyQDQWFOCE=
+X-Google-Smtp-Source: AGHT+IEDrpBjhuHk7vjn+GbtnxTgRx3zhNgCzxzKnUjWtLS57lurCPZsIhhQShgu6pTmTIFYRAN0SQ==
+X-Received: by 2002:a5d:64cf:0:b0:382:3c7b:9ae with SMTP id
+ ffacd0b85a97d-38a221f6746mr41758718f8f.16.1735833912737; 
+ Thu, 02 Jan 2025 08:05:12 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4364b053e91sm518395495e9.1.2025.01.02.08.05.11
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 02 Jan 2025 08:05:12 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- David Abdurachmanov <davidlt@rivosinc.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=abologna@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Radoslaw Biernacki <rad@semihalf.com>, Laurent Vivier <laurent@vivier.eu>,
+ Cleber Rosa <crosa@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, mzamazal@redhat.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ John Snow <jsnow@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-arm@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] licenses: Remove SPDX tags not being license identifier for
+ Linaro
+Date: Thu,  2 Jan 2025 17:05:10 +0100
+Message-ID: <20250102160510.61894-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +108,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 03, 2024 at 10:47:02AM +0100, Andrea Bolognani wrote:
-> Currently the script won't generate a configuration file that
-> sets up qemu-user-riscv32 on riscv64, likely under the
-> assumption that 64-bit RISC-V machines can natively run 32-bit
-> RISC-V code.
->
-> However this functionality, while theoretically possible, in
-> practice is missing from most commonly available RISC-V hardware
-> and not enabled at the distro level. So qemu-user-riscv32 really
-> is the only option to run riscv32 binaries on riscv64.
->
-> Make riscv32 and riscv64 each its own family, so that the
-> configuration file we need to make 32-on-64 userspace emulation
-> work gets generated.
->
-> Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
-> Thanks: David Abdurachmanov <davidlt@rivosinc.com>
-> Thanks: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
-> ---
->  scripts/qemu-binfmt-conf.sh | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
+Per [*]:
 
-ping
+  "we're only interested in adopting SPDX for recording the
+  licensing info, [not] any other SPDX metadata."
 
-There are already two ACKs so I think we just need a maintainer to
-pick this up.
+Replace the 'SPDX-FileCopyrightText' and 'SPDX-FileContributor'
+tags added by Linaro by 'Copyright (c)' and 'Authors' words
+respectively.
 
---=20
-Andrea Bolognani / Red Hat / Virtualization
+[*] https://lore.kernel.org/qemu-devel/20241007154548.1144961-4-berrange@redhat.com/
+
+Inspired-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/vcpu-state.h                           | 9 +++++++--
+ include/hw/misc/ivshmem-flat.h                   | 5 +++--
+ hw/misc/ivshmem-flat.c                           | 5 +++--
+ target/m68k/semihosting-stub.c                   | 7 +++++--
+ target/mips/tcg/system/semihosting-stub.c        | 5 +++--
+ tests/qtest/libqos/virtio-scmi.c                 | 2 +-
+ scripts/qom-cast-macro-clean-cocci-gen.py        | 7 +++++--
+ tests/functional/test_aarch64_sbsaref.py         | 8 +++++---
+ tests/functional/test_aarch64_sbsaref_alpine.py  | 8 +++++---
+ tests/functional/test_aarch64_sbsaref_freebsd.py | 8 +++++---
+ 10 files changed, 42 insertions(+), 22 deletions(-)
+
+diff --git a/accel/tcg/vcpu-state.h b/accel/tcg/vcpu-state.h
+index e407d914dfd..2e3464b5eef 100644
+--- a/accel/tcg/vcpu-state.h
++++ b/accel/tcg/vcpu-state.h
+@@ -1,6 +1,11 @@
+ /*
+- * SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+- * SPDX-FileCopyrightText: 2023 Linaro Ltd.
++ * TaskState helpers for QEMU
++ *
++ * Copyright (c) 2023 Linaro Ltd.
++ *
++ * Authors:
++ *   Philippe Mathieu-Daudé
++ *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #ifndef ACCEL_TCG_VCPU_STATE_H
+diff --git a/include/hw/misc/ivshmem-flat.h b/include/hw/misc/ivshmem-flat.h
+index 97ca0ddce61..0c2b0157812 100644
+--- a/include/hw/misc/ivshmem-flat.h
++++ b/include/hw/misc/ivshmem-flat.h
+@@ -1,9 +1,10 @@
+ /*
+  * Inter-VM Shared Memory Flat Device
+  *
+- * SPDX-FileCopyrightText: 2023 Linaro Ltd.
+- * SPDX-FileContributor: Gustavo Romero <gustavo.romero@linaro.org>
+  * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (c) 2023 Linaro Ltd.
++ * Authors:
++ *   Gustavo Romero
+  *
+  */
+ 
+diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
+index 33fc9425d20..40309a8ff38 100644
+--- a/hw/misc/ivshmem-flat.c
++++ b/hw/misc/ivshmem-flat.c
+@@ -1,9 +1,10 @@
+ /*
+  * Inter-VM Shared Memory Flat Device
+  *
+- * SPDX-FileCopyrightText: 2023 Linaro Ltd.
+- * SPDX-FileContributor: Gustavo Romero <gustavo.romero@linaro.org>
+  * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (c) 2023 Linaro Ltd.
++ * Authors:
++ *   Gustavo Romero
+  *
+  */
+ 
+diff --git a/target/m68k/semihosting-stub.c b/target/m68k/semihosting-stub.c
+index d6a5965e29c..dbe669cc5f6 100644
+--- a/target/m68k/semihosting-stub.c
++++ b/target/m68k/semihosting-stub.c
+@@ -1,8 +1,11 @@
+ /*
+  *  m68k/ColdFire semihosting stub
+  *
+- * SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+- * SPDX-FileCopyrightText: 2024 Linaro Ltd.
++ * Copyright (c) 2024 Linaro Ltd.
++ *
++ * Authors:
++ *   Philippe Mathieu-Daudé
++ *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+diff --git a/target/mips/tcg/system/semihosting-stub.c b/target/mips/tcg/system/semihosting-stub.c
+index 7ae27d746f8..bb1f7aae624 100644
+--- a/target/mips/tcg/system/semihosting-stub.c
++++ b/target/mips/tcg/system/semihosting-stub.c
+@@ -1,9 +1,10 @@
+ /*
+  *  MIPS semihosting stub
+  *
+- * SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+- * SPDX-FileCopyrightText: 2024 Linaro Ltd.
+  * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (c) 2024 Linaro Ltd.
++ * Authors:
++ *   Philippe Mathieu-Daudé
+  */
+ 
+ #include "qemu/osdep.h"
+diff --git a/tests/qtest/libqos/virtio-scmi.c b/tests/qtest/libqos/virtio-scmi.c
+index ce8f4d5c06e..6b5bd4db42f 100644
+--- a/tests/qtest/libqos/virtio-scmi.c
++++ b/tests/qtest/libqos/virtio-scmi.c
+@@ -1,7 +1,7 @@
+ /*
+  * virtio-scmi nodes for testing
+  *
+- * SPDX-FileCopyrightText: Linaro Ltd
++ * Copyright (c) Linaro Ltd.
+  * SPDX-FileCopyrightText: Red Hat, Inc.
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  *
+diff --git a/scripts/qom-cast-macro-clean-cocci-gen.py b/scripts/qom-cast-macro-clean-cocci-gen.py
+index 2fa8438a146..5aa51d0c18e 100644
+--- a/scripts/qom-cast-macro-clean-cocci-gen.py
++++ b/scripts/qom-cast-macro-clean-cocci-gen.py
+@@ -13,8 +13,11 @@
+ #           --in-place \
+ #           --dir .
+ #
+-# SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+-# SPDX-FileCopyrightText: 2023 Linaro Ltd.
++# Copyright (c) 2023 Linaro Ltd.
++#
++# Authors:
++#   Philippe Mathieu-Daudé
++#
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ import re
+diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
+index 99cfb6f29a4..e6a55aecfac 100755
+--- a/tests/functional/test_aarch64_sbsaref.py
++++ b/tests/functional/test_aarch64_sbsaref.py
+@@ -2,9 +2,11 @@
+ #
+ # Functional test that boots a kernel and checks the console
+ #
+-# SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+-# SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+-# SPDX-FileContributor: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
++# Copyright (c) 2023-2024 Linaro Ltd.
++#
++# Authors:
++#   Philippe Mathieu-Daudé
++#   Marcin Juszkiewicz
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+diff --git a/tests/functional/test_aarch64_sbsaref_alpine.py b/tests/functional/test_aarch64_sbsaref_alpine.py
+index 6dbc90f30ee..9faf066d183 100755
+--- a/tests/functional/test_aarch64_sbsaref_alpine.py
++++ b/tests/functional/test_aarch64_sbsaref_alpine.py
+@@ -2,9 +2,11 @@
+ #
+ # Functional test that boots a kernel and checks the console
+ #
+-# SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+-# SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+-# SPDX-FileContributor: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
++# Copyright (c) 2023-2024 Linaro Ltd.
++#
++# Authors:
++#   Philippe Mathieu-Daudé
++#   Marcin Juszkiewicz
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
+index 77ba2ba1daf..8dcb4991c31 100755
+--- a/tests/functional/test_aarch64_sbsaref_freebsd.py
++++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
+@@ -2,9 +2,11 @@
+ #
+ # Functional test that boots a kernel and checks the console
+ #
+-# SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+-# SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+-# SPDX-FileContributor: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
++# Copyright (c) 2023-2024 Linaro Ltd.
++#
++# Authors:
++#   Philippe Mathieu-Daudé
++#   Marcin Juszkiewicz
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-- 
+2.47.1
 
 
