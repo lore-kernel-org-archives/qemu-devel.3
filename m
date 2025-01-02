@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B9AE77194
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94AFCE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTPbq-0007eK-Rp; Thu, 02 Jan 2025 13:07:50 -0500
+	id 1tTPf2-0000kv-Vo; Thu, 02 Jan 2025 13:11:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTPbP-00070v-7Q
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:26 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tTPen-0007XK-0R
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:10:53 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTPbK-0005Ae-60
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:07:21 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2166022c5caso139850415ad.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:07:17 -0800 (PST)
+ id 1tTPej-0006HU-Dj
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:10:52 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2166651f752so183474515ad.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:10:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735841237; x=1736446037; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735841448; x=1736446248; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=q3nAV3q09h0xlGJ7EiDcWqW40ibpyfcW35rWOgfARGc=;
- b=d52HLfay1BXsk8iiptANNJT9aK0CVPA8fzsh997Hfiu1lUFRFGcCDgckVv7gNfzq5z
- ifwj4iCUrsnBVTzpaNIlUetb/oCva0m23REfeNXRzR4Y1ebqOEfAEcNP55dR8S6bbevP
- f8wlc6/QKSMPBjiSm8qoSEUL6ZYStwW82oY/5BlPn0HbrNNRze1ZImrQpLQmKTHYH2O5
- QYDgQgU0GZMMg6373qjhlqxQ6nLolb5z08JVbduKYiKguWrFayJf/ChywxZxcIe/nmaU
- iKL8J/U8SlbsOCpiTFC0q6TP+9ls/9uEzYx0QkUQFx8l1h+vwKIwxPRvPxX275NqE53M
- b6HQ==
+ :reply-to; bh=F4dPAyqU7jW3EiHl1iFJF2MLGUYXViz/Z9qg6246/5A=;
+ b=KvxGrI3PmeNOaMloB6YWpkcxxgKxlCK8SZIpum497dwDVPp/RZ+ZE0RIZDtIdk2UOl
+ kUWwl6sBHKpMEHjiHm0E3FkksaV7BSSaKYyPZIMtogPiYRr81l7ntOzL5TBCFHXE5SQ9
+ /ylmLd8q1ln0ZJJnx8GPnEg8z7DAgT+FhNHnpOjD2a6h72QaD/zzzXFQRqyMmUNPAU7O
+ vUzn9LhlRILJjylHAiXu5QmD8LJ/yBrvjsGHyHRRIz7OLcVMNTmyyLvlD3fS+CpZLysq
+ el6GFA5FGy6wCed4kPmRn8EpnDlYORDEyTls0LT+uhkANbd5qLsIYb3F7p1VBByImLxY
+ 7eyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735841237; x=1736446037;
+ d=1e100.net; s=20230601; t=1735841448; x=1736446248;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q3nAV3q09h0xlGJ7EiDcWqW40ibpyfcW35rWOgfARGc=;
- b=lxKyWFOcaop/IEI9IzeSOSd04ryzLTMS3A29pXI1Cpf60xzW+yf/r72mxxpQl4QGNz
- 8I0nm8EW5OGAMd02ZeJgmGFo12EOvSr1bMn2OeXEhOOHrnX+6E7EjYCyThtUDx2/Xa8J
- g1rcNBQitok7jsHSJs0PlRHQrQTg9ceGjBjTkqFVpJPeG7TGea4a0afdhtx7O9tgWAk3
- PvJHwDe22v2I2f4IidZ2VLXtZiLSoVDer+l5rubVa83NkS6yPJFojNSzra9OVZIki7zx
- tVhA/eE29jklzS023jPr+LvmgBpJegxvX75fjME15ZR+m3xm6ZNOjezkTLLnmyVvolYw
- o7tw==
-X-Gm-Message-State: AOJu0YwechT92vkPl0Rb29tW8A8bSLCTFdbViM0PmFo7XWup2nL8D8AK
- njBFjUlk49nh0986uax4G9yyIm+6pj1yCPWHXoVAtzt6RH7j8urHGpaRpVh8NNzI+6WAI4WnEFA
- p
-X-Gm-Gg: ASbGncuDkz1KcBY6E+iC1mfETRZPy4Hbnf/cD9TSSt4NhLjy+f3hHJQbfaLEuDCejFo
- PBuPhcuYRWpcrzTt4VtsQ8DIVH/TrBitn4OwO/nQ2iJ8z6RrRlGg06S4SaloAoRgme3PHcDdBwH
- rsFxWZXKgweIqTGbJpmnQzrh1wxt4ewGQsIgjHMdik42vmVaE7++Qqd6nfKNhLPQwD46mZDH3uY
- TDTcgwhTU/FvXTXAdKApOyARcYPLxnUdfexy+kbctZzPgYiLTBqnzDnD3lrWQ==
-X-Google-Smtp-Source: AGHT+IFdollbEp1BDfNgGpmP2/Zs26f8dIdGhyAEHdgrgEXwAQ9kvJNKYyaZh+OhZDdtGKY5taIzOg==
-X-Received: by 2002:a05:6a20:c88f:b0:1d5:10d6:92b9 with SMTP id
- adf61e73a8af0-1e5e07f88demr70402613637.30.1735841236627; 
- Thu, 02 Jan 2025 10:07:16 -0800 (PST)
+ bh=F4dPAyqU7jW3EiHl1iFJF2MLGUYXViz/Z9qg6246/5A=;
+ b=PUze/zCRQFXeNLD0Y0HbrYObuy+ohBELXeHv2JYQBarwyeDmpB0aUrSNIAerkrSoGJ
+ H9oSaAP5Eixy+n/s8YJdD9S0/6gRCxbSdA2D1gN2WaIvIc2m9hmw1QWdeVfJ88k6IWBw
+ rwu5wY39ToKDyKX2e2cFEkrAhxezPLXRjMAGjPwk8fonry+LO6ZtGEc3bwPIYZgo8/Nr
+ wuz79Sc8FEUatZLenXFPK4pBFmudj2i22pyhzHHE5YH+1y/W9rf9xIckKp0386SUfHTu
+ 46fN0gqFcbWwLBK/O4n8p20VhMZZgFgsts6gnyia5wuMRtrxvI3lRnSlLRkZKXXMu64U
+ dWJA==
+X-Gm-Message-State: AOJu0YxhjoBzJhAt8+wjFLxJYbn+GnnDXeyyuEo65gJhHU7ApAKTtoLT
+ tl5hVPWlm4shB4ZY5zs6U5FK3YVxFduLHv6NrM1Oodh1w4e4N+TMEtds9jwZ7NqISBUo0BXRQBA
+ I
+X-Gm-Gg: ASbGncupbCaxPs+DxrgAQPMrBgVEVwlRseOL4i/QO9lz0eR835Enl6vh2fYBzrXMUtd
+ 9DDxkkOPssMkDrPa7stgF2VGEJP0P/FwdclNpULTv1YPqz24hKdxtvTAZt12Pvs0sow71N4n+kA
+ Qv0WwfPTzleYsqz3J3xxZHABI0PqRRh1yfumiPVjNgLUESE6krF4CIxeYG8b9rnNddi2/8gm5+y
+ s8NkNWb9fupIU1fFkbpeVIkcmqxORMr5ZAAnA9KpSWjggW3rdrGgTmi6sJ9VA==
+X-Google-Smtp-Source: AGHT+IGfKk8Vbp98QX3EhVzaSekF3tD6xZ3L33wpK7/KAksZMlxZju68wbrA/4LDWGq0RovANZVT1g==
+X-Received: by 2002:a05:6a20:7f82:b0:1e0:d575:8d4f with SMTP id
+ adf61e73a8af0-1e5e081c5acmr74790948637.37.1735841447917; 
+ Thu, 02 Jan 2025 10:10:47 -0800 (PST)
 Received: from stoup.. ([63.239.63.212]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72ad3393d5fsm20604456b3a.154.2025.01.02.10.07.16
+ d2e1a72fcca58-72aad8dbaf1sm24620827b3a.112.2025.01.02.10.10.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 10:07:16 -0800 (PST)
+ Thu, 02 Jan 2025 10:10:47 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 27/73] tcg: Merge TCG_TARGET_HAS_{muls2,mulu2,mulsh,muluh}
-Date: Thu,  2 Jan 2025 10:06:07 -0800
-Message-ID: <20250102180654.1420056-28-richard.henderson@linaro.org>
+Subject: [PATCH 67/73] tcg: Merge extract, sextract operations
+Date: Thu,  2 Jan 2025 10:06:47 -0800
+Message-ID: <20250102180654.1420056-68-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250102180654.1420056-1-richard.henderson@linaro.org>
 References: <20250102180654.1420056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,696 +98,841 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-opc.h            |  16 ++---
- tcg/aarch64/tcg-target-has.h     |  12 ++--
- tcg/arm/tcg-target-has.h         |   8 +--
- tcg/i386/tcg-target-has.h        |  12 ++--
- tcg/loongarch64/tcg-target-has.h |  12 ++--
- tcg/mips/tcg-target-has.h        |  12 ++--
- tcg/ppc/tcg-target-has.h         |  12 ++--
- tcg/riscv/tcg-target-has.h       |  12 ++--
- tcg/s390x/tcg-target-has.h       |  12 ++--
- tcg/sparc64/tcg-target-has.h     |  12 ++--
- tcg/tcg-has.h                    |   4 --
- tcg/tci/tcg-target-has.h         |  14 ++--
- tcg/tcg-op.c                     | 115 +++++++++++++++++--------------
- tcg/tcg.c                        |  24 +++----
- tcg/tci.c                        |   8 ---
- 15 files changed, 125 insertions(+), 160 deletions(-)
+ include/tcg/tcg-opc.h            |  7 +++--
+ tcg/optimize.c                   | 12 ++++-----
+ tcg/tcg-op.c                     | 20 +++++++--------
+ tcg/tcg.c                        |  6 ++---
+ tcg/tci.c                        | 25 +++++++-----------
+ tcg/aarch64/tcg-target.c.inc     | 12 +++------
+ tcg/arm/tcg-target.c.inc         |  8 +++---
+ tcg/i386/tcg-target.c.inc        | 32 +++++++----------------
+ tcg/loongarch64/tcg-target.c.inc | 25 +++++-------------
+ tcg/mips/tcg-target.c.inc        | 29 +++++++--------------
+ tcg/ppc/tcg-target.c.inc         | 38 ++++++++++-----------------
+ tcg/riscv/tcg-target.c.inc       | 26 ++++++-------------
+ tcg/s390x/tcg-target.c.inc       | 10 +++-----
+ tcg/sparc64/tcg-target.c.inc     | 10 +++++---
+ tcg/tci/tcg-target.c.inc         | 44 +++++++++++++-------------------
+ 15 files changed, 113 insertions(+), 191 deletions(-)
 
 diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index 8d8fda39f8..fbd759764c 100644
+index 1b133a63ea..643ebe05cc 100644
 --- a/include/tcg/tcg-opc.h
 +++ b/include/tcg/tcg-opc.h
-@@ -85,10 +85,10 @@ DEF(brcond_i32, 0, 2, 2, TCG_OPF_BB_END | TCG_OPF_COND_BRANCH)
+@@ -64,6 +64,9 @@ DEF(remu, 1, 2, 0, TCG_OPF_INT)
+ DEF(div2, 2, 3, 0, TCG_OPF_INT)
+ DEF(divu2, 2, 3, 0, TCG_OPF_INT)
  
- DEF(add2_i32, 2, 4, 0, IMPL(TCG_TARGET_HAS_add2_i32))
- DEF(sub2_i32, 2, 4, 0, IMPL(TCG_TARGET_HAS_sub2_i32))
--DEF(mulu2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_mulu2_i32))
--DEF(muls2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_muls2_i32))
--DEF(muluh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_muluh_i32))
--DEF(mulsh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_mulsh_i32))
-+DEF(mulu2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_mulu2(TCG_TYPE_I32)))
-+DEF(muls2_i32, 2, 2, 0, IMPL(TCG_TARGET_HAS_muls2(TCG_TYPE_I32)))
-+DEF(muluh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_muluh(TCG_TYPE_I32)))
-+DEF(mulsh_i32, 1, 2, 0, IMPL(TCG_TARGET_HAS_mulsh(TCG_TYPE_I32)))
- DEF(brcond2_i32, 0, 4, 2,
-     TCG_OPF_BB_END | TCG_OPF_COND_BRANCH | IMPL(TCG_TARGET_REG_BITS == 32))
- DEF(setcond2_i32, 1, 4, 1, IMPL(TCG_TARGET_REG_BITS == 32))
-@@ -183,10 +183,10 @@ DEF(ctpop_i64, 1, 1, 0, IMPL64 | IMPL(TCG_TARGET_HAS_ctpop(TCG_TYPE_I64)))
++DEF(extract, 1, 1, 2, TCG_OPF_INT)
++DEF(sextract, 1, 1, 2, TCG_OPF_INT)
++
+ DEF(brcond, 0, 2, 2, TCG_OPF_BB_END | TCG_OPF_COND_BRANCH | TCG_OPF_INT)
+ DEF(setcond, 1, 2, 1, TCG_OPF_INT)
+ DEF(negsetcond, 1, 2, 1, TCG_OPF_INT)
+@@ -79,8 +82,6 @@ DEF(sar_i32, 1, 2, 0, 0)
+ DEF(rotl_i32, 1, 2, 0, 0)
+ DEF(rotr_i32, 1, 2, 0, 0)
+ DEF(deposit_i32, 1, 2, 2, 0)
+-DEF(extract_i32, 1, 1, 2, 0)
+-DEF(sextract_i32, 1, 1, 2, 0)
+ DEF(extract2_i32, 1, 2, 1, 0)
  
- DEF(add2_i64, 2, 4, 0, IMPL64 | IMPL(TCG_TARGET_HAS_add2_i64))
- DEF(sub2_i64, 2, 4, 0, IMPL64 | IMPL(TCG_TARGET_HAS_sub2_i64))
--DEF(mulu2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulu2_i64))
--DEF(muls2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muls2_i64))
--DEF(muluh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muluh_i64))
--DEF(mulsh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulsh_i64))
-+DEF(mulu2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulu2(TCG_TYPE_I64)))
-+DEF(muls2_i64, 2, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muls2(TCG_TYPE_I64)))
-+DEF(muluh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_muluh(TCG_TYPE_I64)))
-+DEF(mulsh_i64, 1, 2, 0, IMPL64 | IMPL(TCG_TARGET_HAS_mulsh(TCG_TYPE_I64)))
+ DEF(brcond2_i32, 0, 4, 2, TCG_OPF_BB_END | TCG_OPF_COND_BRANCH)
+@@ -102,8 +103,6 @@ DEF(sar_i64, 1, 2, 0, 0)
+ DEF(rotl_i64, 1, 2, 0, 0)
+ DEF(rotr_i64, 1, 2, 0, 0)
+ DEF(deposit_i64, 1, 2, 2, 0)
+-DEF(extract_i64, 1, 1, 2, 0)
+-DEF(sextract_i64, 1, 1, 2, 0)
+ DEF(extract2_i64, 1, 2, 1, 0)
  
- #define DATA64_ARGS  (TCG_TARGET_REG_BITS == 64 ? 1 : 2)
- 
-diff --git a/tcg/aarch64/tcg-target-has.h b/tcg/aarch64/tcg-target-has.h
-index 247bf3e358..53182cca6a 100644
---- a/tcg/aarch64/tcg-target-has.h
-+++ b/tcg/aarch64/tcg-target-has.h
-@@ -18,6 +18,10 @@
- #define TCG_TARGET_HAS_ctpop(T)         0
- #define TCG_TARGET_HAS_ctz(T)           1
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         0
-+#define TCG_TARGET_HAS_mulu2(T)         0
-+#define TCG_TARGET_HAS_mulsh(T)         (T == TCG_TYPE_I64)
-+#define TCG_TARGET_HAS_muluh(T)         (T == TCG_TYPE_I64)
- #define TCG_TARGET_HAS_rem(T)           1
- #define TCG_TARGET_HAS_rot(T)           1
- 
-@@ -40,10 +44,6 @@
- #define TCG_TARGET_HAS_negsetcond_i32   1
- #define TCG_TARGET_HAS_add2_i32         1
- #define TCG_TARGET_HAS_sub2_i32         1
--#define TCG_TARGET_HAS_mulu2_i32        0
--#define TCG_TARGET_HAS_muls2_i32        0
--#define TCG_TARGET_HAS_muluh_i32        0
--#define TCG_TARGET_HAS_mulsh_i32        0
- #define TCG_TARGET_HAS_extr_i64_i32     0
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- 
-@@ -60,10 +60,6 @@
- #define TCG_TARGET_HAS_negsetcond_i64   1
- #define TCG_TARGET_HAS_add2_i64         1
- #define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        1
--#define TCG_TARGET_HAS_mulsh_i64        1
- 
- /*
-  * Without FEAT_LSE2, we must use LDXP+STXP to implement atomic 128-bit load,
-diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
-index 29405706a4..1352d3c25a 100644
---- a/tcg/arm/tcg-target-has.h
-+++ b/tcg/arm/tcg-target-has.h
-@@ -29,6 +29,10 @@ extern bool use_neon_instructions;
- #define TCG_TARGET_HAS_ctpop(T)         0
- #define TCG_TARGET_HAS_ctz(T)           use_armv7_instructions
- #define TCG_TARGET_HAS_div(T)           use_idiv_instructions
-+#define TCG_TARGET_HAS_muls2(T)         1
-+#define TCG_TARGET_HAS_mulu2(T)         1
-+#define TCG_TARGET_HAS_mulsh(T)         0
-+#define TCG_TARGET_HAS_muluh(T)         0
- #define TCG_TARGET_HAS_rem(T)           0
- #define TCG_TARGET_HAS_rot(T)           1
- 
-@@ -49,10 +53,6 @@ extern bool use_neon_instructions;
- #define TCG_TARGET_HAS_sextract_i32     use_armv7_instructions
- #define TCG_TARGET_HAS_extract2_i32     1
- #define TCG_TARGET_HAS_negsetcond_i32   1
--#define TCG_TARGET_HAS_mulu2_i32        1
--#define TCG_TARGET_HAS_muls2_i32        1
--#define TCG_TARGET_HAS_muluh_i32        0
--#define TCG_TARGET_HAS_mulsh_i32        0
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128   0
-diff --git a/tcg/i386/tcg-target-has.h b/tcg/i386/tcg-target-has.h
-index a60e13616c..fc6bd85ba2 100644
---- a/tcg/i386/tcg-target-has.h
-+++ b/tcg/i386/tcg-target-has.h
-@@ -31,6 +31,10 @@
- #define TCG_TARGET_HAS_ctpop(T)         have_popcnt
- #define TCG_TARGET_HAS_ctz(T)           1
- #define TCG_TARGET_HAS_div2(T)          1
-+#define TCG_TARGET_HAS_muls2(T)         1
-+#define TCG_TARGET_HAS_mulu2(T)         1
-+#define TCG_TARGET_HAS_mulsh(T)         0
-+#define TCG_TARGET_HAS_muluh(T)         0
- #define TCG_TARGET_HAS_rot(T)           1
- 
- /* optional integer and vector instructions */
-@@ -52,10 +56,6 @@
- #define TCG_TARGET_HAS_negsetcond_i32   1
- #define TCG_TARGET_HAS_add2_i32         1
- #define TCG_TARGET_HAS_sub2_i32         1
--#define TCG_TARGET_HAS_mulu2_i32        1
--#define TCG_TARGET_HAS_muls2_i32        1
--#define TCG_TARGET_HAS_muluh_i32        0
--#define TCG_TARGET_HAS_mulsh_i32        0
- 
- #if TCG_TARGET_REG_BITS == 64
- /* Keep 32-bit values zero-extended in a register.  */
-@@ -73,10 +73,6 @@
- #define TCG_TARGET_HAS_negsetcond_i64   1
- #define TCG_TARGET_HAS_add2_i64         1
- #define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        1
--#define TCG_TARGET_HAS_muls2_i64        1
--#define TCG_TARGET_HAS_muluh_i64        0
--#define TCG_TARGET_HAS_mulsh_i64        0
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- #else
- #define TCG_TARGET_HAS_qemu_st8_i32     1
-diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-target-has.h
-index b634baec4f..932acac497 100644
---- a/tcg/loongarch64/tcg-target-has.h
-+++ b/tcg/loongarch64/tcg-target-has.h
-@@ -15,6 +15,10 @@
- #define TCG_TARGET_HAS_ctpop(T)         0
- #define TCG_TARGET_HAS_ctz(T)           1
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         0
-+#define TCG_TARGET_HAS_mulu2(T)         0
-+#define TCG_TARGET_HAS_mulsh(T)         1
-+#define TCG_TARGET_HAS_muluh(T)         1
- #define TCG_TARGET_HAS_rem(T)           1
- #define TCG_TARGET_HAS_rot(T)           1
- 
-@@ -33,10 +37,6 @@
- #define TCG_TARGET_HAS_extract2_i32     0
- #define TCG_TARGET_HAS_add2_i32         0
- #define TCG_TARGET_HAS_sub2_i32         0
--#define TCG_TARGET_HAS_mulu2_i32        0
--#define TCG_TARGET_HAS_muls2_i32        0
--#define TCG_TARGET_HAS_muluh_i32        1
--#define TCG_TARGET_HAS_mulsh_i32        1
- #define TCG_TARGET_HAS_ext8s_i32        1
- #define TCG_TARGET_HAS_ext16s_i32       1
- #define TCG_TARGET_HAS_ext8u_i32        1
-@@ -60,10 +60,6 @@
- #define TCG_TARGET_HAS_ext32u_i64       1
- #define TCG_TARGET_HAS_add2_i64         0
- #define TCG_TARGET_HAS_sub2_i64         0
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        1
--#define TCG_TARGET_HAS_mulsh_i64        1
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128   (cpuinfo & CPUINFO_LSX)
- 
-diff --git a/tcg/mips/tcg-target-has.h b/tcg/mips/tcg-target-has.h
-index 91ea0b56d5..f81218178e 100644
---- a/tcg/mips/tcg-target-has.h
-+++ b/tcg/mips/tcg-target-has.h
-@@ -44,6 +44,10 @@ extern bool use_mips32r2_instructions;
- #define TCG_TARGET_HAS_ctpop(T)         0
- #define TCG_TARGET_HAS_ctz(T)           0
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         (!use_mips32r6_instructions)
-+#define TCG_TARGET_HAS_mulu2(T)         (!use_mips32r6_instructions)
-+#define TCG_TARGET_HAS_mulsh(T)         1
-+#define TCG_TARGET_HAS_muluh(T)         1
- #define TCG_TARGET_HAS_rem(T)           1
- #define TCG_TARGET_HAS_rot(T)           use_mips32r2_instructions
- 
-@@ -55,10 +59,6 @@ extern bool use_mips32r2_instructions;
- #define TCG_TARGET_HAS_not(T)           1
- #define TCG_TARGET_HAS_orc(T)           0
- 
--#define TCG_TARGET_HAS_mulu2_i32        (!use_mips32r6_instructions)
--#define TCG_TARGET_HAS_muls2_i32        (!use_mips32r6_instructions)
--#define TCG_TARGET_HAS_muluh_i32        1
--#define TCG_TARGET_HAS_mulsh_i32        1
- #define TCG_TARGET_HAS_negsetcond_i32   0
- 
- #if TCG_TARGET_REG_BITS == 64
-@@ -67,10 +67,6 @@ extern bool use_mips32r2_instructions;
- #define TCG_TARGET_HAS_extr_i64_i32     1
- #define TCG_TARGET_HAS_add2_i64         0
- #define TCG_TARGET_HAS_sub2_i64         0
--#define TCG_TARGET_HAS_mulu2_i64        (!use_mips32r6_instructions)
--#define TCG_TARGET_HAS_muls2_i64        (!use_mips32r6_instructions)
--#define TCG_TARGET_HAS_muluh_i64        1
--#define TCG_TARGET_HAS_mulsh_i64        1
- #define TCG_TARGET_HAS_ext32s_i64       1
- #define TCG_TARGET_HAS_ext32u_i64       1
- #define TCG_TARGET_HAS_negsetcond_i64   0
-diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
-index b593cd3308..60da23a66a 100644
---- a/tcg/ppc/tcg-target-has.h
-+++ b/tcg/ppc/tcg-target-has.h
-@@ -22,6 +22,10 @@
- #define TCG_TARGET_HAS_ctpop(T)         have_isa_2_06
- #define TCG_TARGET_HAS_ctz(T)           have_isa_3_00
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         0
-+#define TCG_TARGET_HAS_mulu2(T)         0
-+#define TCG_TARGET_HAS_mulsh(T)         1
-+#define TCG_TARGET_HAS_muluh(T)         1
- #define TCG_TARGET_HAS_rem(T)           1
- #define TCG_TARGET_HAS_rot(T)           1
- 
-@@ -44,10 +48,6 @@
- #define TCG_TARGET_HAS_sextract_i32     0
- #define TCG_TARGET_HAS_extract2_i32     0
- #define TCG_TARGET_HAS_negsetcond_i32   1
--#define TCG_TARGET_HAS_mulu2_i32        0
--#define TCG_TARGET_HAS_muls2_i32        0
--#define TCG_TARGET_HAS_muluh_i32        1
--#define TCG_TARGET_HAS_mulsh_i32        1
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- 
- #if TCG_TARGET_REG_BITS == 64
-@@ -67,10 +67,6 @@
- #define TCG_TARGET_HAS_negsetcond_i64   1
- #define TCG_TARGET_HAS_add2_i64         1
- #define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        1
--#define TCG_TARGET_HAS_mulsh_i64        1
- #endif
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128   \
-diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
-index 81f81787c0..00eee4cafb 100644
---- a/tcg/riscv/tcg-target-has.h
-+++ b/tcg/riscv/tcg-target-has.h
-@@ -15,6 +15,10 @@
- #define TCG_TARGET_HAS_ctpop(T)         (cpuinfo & CPUINFO_ZBB)
- #define TCG_TARGET_HAS_ctz(T)           (cpuinfo & CPUINFO_ZBB)
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         0
-+#define TCG_TARGET_HAS_mulu2(T)         0
-+#define TCG_TARGET_HAS_mulsh(T)         (T == TCG_TYPE_I64)
-+#define TCG_TARGET_HAS_muluh(T)         (T == TCG_TYPE_I64)
- #define TCG_TARGET_HAS_rem(T)           1
- #define TCG_TARGET_HAS_rot(T)           (cpuinfo & CPUINFO_ZBB)
- 
-@@ -33,10 +37,6 @@
- #define TCG_TARGET_HAS_extract2_i32     0
- #define TCG_TARGET_HAS_add2_i32         1
- #define TCG_TARGET_HAS_sub2_i32         1
--#define TCG_TARGET_HAS_mulu2_i32        0
--#define TCG_TARGET_HAS_muls2_i32        0
--#define TCG_TARGET_HAS_muluh_i32        0
--#define TCG_TARGET_HAS_mulsh_i32        0
- #define TCG_TARGET_HAS_ext8s_i32        1
- #define TCG_TARGET_HAS_ext16s_i32       1
- #define TCG_TARGET_HAS_ext8u_i32        1
-@@ -59,10 +59,6 @@
- #define TCG_TARGET_HAS_ext32u_i64       1
- #define TCG_TARGET_HAS_add2_i64         1
- #define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        1
--#define TCG_TARGET_HAS_mulsh_i64        1
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128   0
- 
-diff --git a/tcg/s390x/tcg-target-has.h b/tcg/s390x/tcg-target-has.h
-index c954a4c03e..7c0d4708c9 100644
---- a/tcg/s390x/tcg-target-has.h
-+++ b/tcg/s390x/tcg-target-has.h
-@@ -34,6 +34,10 @@ extern uint64_t s390_facilities[3];
- #define TCG_TARGET_HAS_ctpop(T)       1
- #define TCG_TARGET_HAS_ctz(T)         0
- #define TCG_TARGET_HAS_div2(T)        1
-+#define TCG_TARGET_HAS_muls2(T)       (T == TCG_TYPE_I64 && HAVE_FACILITY(MISC_INSN_EXT2))
-+#define TCG_TARGET_HAS_mulu2(T)       (T == TCG_TYPE_I64)
-+#define TCG_TARGET_HAS_mulsh(T)       0
-+#define TCG_TARGET_HAS_muluh(T)       0
- #define TCG_TARGET_HAS_rot(T)         1
- 
- /* optional integer and vector instructions */
-@@ -55,10 +59,6 @@ extern uint64_t s390_facilities[3];
- #define TCG_TARGET_HAS_negsetcond_i32 1
- #define TCG_TARGET_HAS_add2_i32       1
- #define TCG_TARGET_HAS_sub2_i32       1
--#define TCG_TARGET_HAS_mulu2_i32      0
--#define TCG_TARGET_HAS_muls2_i32      0
--#define TCG_TARGET_HAS_muluh_i32      0
--#define TCG_TARGET_HAS_mulsh_i32      0
- #define TCG_TARGET_HAS_extr_i64_i32   0
- #define TCG_TARGET_HAS_qemu_st8_i32   0
- 
-@@ -75,10 +75,6 @@ extern uint64_t s390_facilities[3];
- #define TCG_TARGET_HAS_negsetcond_i64 1
- #define TCG_TARGET_HAS_add2_i64       1
- #define TCG_TARGET_HAS_sub2_i64       1
--#define TCG_TARGET_HAS_mulu2_i64      1
--#define TCG_TARGET_HAS_muls2_i64      HAVE_FACILITY(MISC_INSN_EXT2)
--#define TCG_TARGET_HAS_muluh_i64      0
--#define TCG_TARGET_HAS_mulsh_i64      0
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128 1
- 
-diff --git a/tcg/sparc64/tcg-target-has.h b/tcg/sparc64/tcg-target-has.h
-index eaca708478..86b109fc6d 100644
---- a/tcg/sparc64/tcg-target-has.h
-+++ b/tcg/sparc64/tcg-target-has.h
-@@ -19,6 +19,10 @@ extern bool use_vis3_instructions;
- #define TCG_TARGET_HAS_ctpop(T)         0
- #define TCG_TARGET_HAS_ctz(T)           0
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         (T == TCG_TYPE_I32)
-+#define TCG_TARGET_HAS_mulu2(T)         (T == TCG_TYPE_I32)
-+#define TCG_TARGET_HAS_mulsh(T)         0
-+#define TCG_TARGET_HAS_muluh(T)         (T == TCG_TYPE_I64 && use_vis3_instructions)
- #define TCG_TARGET_HAS_rem(T)           0
- #define TCG_TARGET_HAS_rot(T)           0
- 
-@@ -41,10 +45,6 @@ extern bool use_vis3_instructions;
- #define TCG_TARGET_HAS_negsetcond_i32   1
- #define TCG_TARGET_HAS_add2_i32         1
- #define TCG_TARGET_HAS_sub2_i32         1
--#define TCG_TARGET_HAS_mulu2_i32        1
--#define TCG_TARGET_HAS_muls2_i32        1
--#define TCG_TARGET_HAS_muluh_i32        0
--#define TCG_TARGET_HAS_mulsh_i32        0
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- 
- #define TCG_TARGET_HAS_extr_i64_i32     0
-@@ -61,10 +61,6 @@ extern bool use_vis3_instructions;
- #define TCG_TARGET_HAS_negsetcond_i64   1
- #define TCG_TARGET_HAS_add2_i64         1
- #define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        use_vis3_instructions
--#define TCG_TARGET_HAS_mulsh_i64        0
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128   0
- 
-diff --git a/tcg/tcg-has.h b/tcg/tcg-has.h
-index b2f2cbf2ad..199facbe37 100644
---- a/tcg/tcg-has.h
-+++ b/tcg/tcg-has.h
-@@ -25,10 +25,6 @@
- #define TCG_TARGET_HAS_negsetcond_i64   0
- #define TCG_TARGET_HAS_add2_i64         0
- #define TCG_TARGET_HAS_sub2_i64         0
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        0
--#define TCG_TARGET_HAS_mulsh_i64        0
- /* Turn some undef macros into true macros.  */
- #define TCG_TARGET_HAS_add2_i32         1
- #define TCG_TARGET_HAS_sub2_i32         1
-diff --git a/tcg/tci/tcg-target-has.h b/tcg/tci/tcg-target-has.h
-index 957ed9e2b3..e0bf8b14bd 100644
---- a/tcg/tci/tcg-target-has.h
-+++ b/tcg/tci/tcg-target-has.h
-@@ -13,6 +13,10 @@
- #define TCG_TARGET_HAS_ctpop(T)         1
- #define TCG_TARGET_HAS_ctz(T)           1
- #define TCG_TARGET_HAS_div(T)           1
-+#define TCG_TARGET_HAS_muls2(T)         1
-+#define TCG_TARGET_HAS_mulu2(T)         1
-+#define TCG_TARGET_HAS_mulsh(T)         0
-+#define TCG_TARGET_HAS_muluh(T)         0
- #define TCG_TARGET_HAS_rem(T)           1
- #define TCG_TARGET_HAS_rot(T)           1
- 
-@@ -33,9 +37,6 @@
- #define TCG_TARGET_HAS_sextract_i32     1
- #define TCG_TARGET_HAS_extract2_i32     0
- #define TCG_TARGET_HAS_negsetcond_i32   0
--#define TCG_TARGET_HAS_muls2_i32        1
--#define TCG_TARGET_HAS_muluh_i32        0
--#define TCG_TARGET_HAS_mulsh_i32        0
- #define TCG_TARGET_HAS_qemu_st8_i32     0
- 
- #if TCG_TARGET_REG_BITS == 64
-@@ -51,17 +52,10 @@
- #define TCG_TARGET_HAS_ext16u_i64       1
- #define TCG_TARGET_HAS_ext32u_i64       1
- #define TCG_TARGET_HAS_negsetcond_i64   0
--#define TCG_TARGET_HAS_muls2_i64        1
- #define TCG_TARGET_HAS_add2_i32         1
- #define TCG_TARGET_HAS_sub2_i32         1
--#define TCG_TARGET_HAS_mulu2_i32        1
- #define TCG_TARGET_HAS_add2_i64         1
- #define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        1
--#define TCG_TARGET_HAS_muluh_i64        0
--#define TCG_TARGET_HAS_mulsh_i64        0
--#else
--#define TCG_TARGET_HAS_mulu2_i32        1
- #endif /* TCG_TARGET_REG_BITS == 64 */
- 
- #define TCG_TARGET_HAS_qemu_ldst_i128   0
+ /* size changing ops */
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 3061459944..6077883bc4 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2279,19 +2279,19 @@ static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
+     case TCG_TYPE_I32:
+         shr_opc = INDEX_op_shr_i32;
+         if (TCG_TARGET_extract_valid(TCG_TYPE_I32, sh, 1)) {
+-            uext_opc = INDEX_op_extract_i32;
++            uext_opc = INDEX_op_extract;
+         }
+         if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, sh, 1)) {
+-            sext_opc = INDEX_op_sextract_i32;
++            sext_opc = INDEX_op_sextract;
+         }
+         break;
+     case TCG_TYPE_I64:
+         shr_opc = INDEX_op_shr_i64;
+         if (TCG_TARGET_extract_valid(TCG_TYPE_I64, sh, 1)) {
+-            uext_opc = INDEX_op_extract_i64;
++            uext_opc = INDEX_op_extract;
+         }
+         if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, sh, 1)) {
+-            sext_opc = INDEX_op_sextract_i64;
++            sext_opc = INDEX_op_sextract;
+         }
+         break;
+     default:
+@@ -2786,7 +2786,7 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_eqv_vec:
+             done = fold_eqv(&ctx, op);
+             break;
+-        CASE_OP_32_64(extract):
++        case INDEX_op_extract:
+             done = fold_extract(&ctx, op);
+             break;
+         CASE_OP_32_64(extract2):
+@@ -2906,7 +2906,7 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_bitsel_vec:
+             done = fold_bitsel_vec(&ctx, op);
+             break;
+-        CASE_OP_32_64(sextract):
++        case INDEX_op_sextract:
+             done = fold_sextract(&ctx, op);
+             break;
+         case INDEX_op_sub:
 diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 2fb4ce90dc..8786aa5903 100644
+index 7dbc7b1ad6..4d36da33c5 100644
 --- a/tcg/tcg-op.c
 +++ b/tcg/tcg-op.c
-@@ -1191,9 +1191,9 @@ void tcg_gen_sub2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
- 
- void tcg_gen_mulu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
- {
--    if (TCG_TARGET_HAS_mulu2_i32) {
-+    if (TCG_TARGET_HAS_mulu2(TCG_TYPE_I32)) {
-         tcg_gen_op4_i32(INDEX_op_mulu2_i32, rl, rh, arg1, arg2);
--    } else if (TCG_TARGET_HAS_muluh_i32) {
-+    } else if (TCG_TARGET_HAS_muluh(TCG_TYPE_I32)) {
-         TCGv_i32 t = tcg_temp_ebb_new_i32();
-         tcg_gen_op3_i32(INDEX_op_mul_i32, t, arg1, arg2);
-         tcg_gen_op3_i32(INDEX_op_muluh_i32, rh, arg1, arg2);
-@@ -1215,9 +1215,9 @@ void tcg_gen_mulu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
- 
- void tcg_gen_muls2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
- {
--    if (TCG_TARGET_HAS_muls2_i32) {
-+    if (TCG_TARGET_HAS_muls2(TCG_TYPE_I32)) {
-         tcg_gen_op4_i32(INDEX_op_muls2_i32, rl, rh, arg1, arg2);
--    } else if (TCG_TARGET_HAS_mulsh_i32) {
-+    } else if (TCG_TARGET_HAS_mulsh(TCG_TYPE_I32)) {
-         TCGv_i32 t = tcg_temp_ebb_new_i32();
-         tcg_gen_op3_i32(INDEX_op_mul_i32, t, arg1, arg2);
-         tcg_gen_op3_i32(INDEX_op_mulsh_i32, rh, arg1, arg2);
-@@ -3099,58 +3099,73 @@ void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
- 
- void tcg_gen_mulu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
- {
--    if (TCG_TARGET_HAS_mulu2_i64) {
--        tcg_gen_op4_i64(INDEX_op_mulu2_i64, rl, rh, arg1, arg2);
--    } else if (TCG_TARGET_HAS_muluh_i64) {
--        TCGv_i64 t = tcg_temp_ebb_new_i64();
--        tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
--        tcg_gen_op3_i64(INDEX_op_muluh_i64, rh, arg1, arg2);
--        tcg_gen_mov_i64(rl, t);
--        tcg_temp_free_i64(t);
--    } else {
--        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
--        tcg_gen_mul_i64(t0, arg1, arg2);
--        gen_helper_muluh_i64(rh, arg1, arg2);
--        tcg_gen_mov_i64(rl, t0);
--        tcg_temp_free_i64(t0);
-+    TCGv_i64 t;
-+
-+    if (TCG_TARGET_REG_BITS == 64) {
-+        if (TCG_TARGET_HAS_mulu2(TCG_TYPE_I64)) {
-+            tcg_gen_op4_i64(INDEX_op_mulu2_i64, rl, rh, arg1, arg2);
-+            return;
-+        }
-+        if (TCG_TARGET_HAS_muluh(TCG_TYPE_I64)) {
-+            t = tcg_temp_ebb_new_i64();
-+            tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
-+            tcg_gen_op3_i64(INDEX_op_muluh_i64, rh, arg1, arg2);
-+            tcg_gen_mov_i64(rl, t);
-+            tcg_temp_free_i64(t);
-+            return;
-+        }
+@@ -990,7 +990,7 @@ void tcg_gen_extract_i32(TCGv_i32 ret, TCGv_i32 arg,
      }
-+    t = tcg_temp_ebb_new_i64();
-+    tcg_gen_mul_i64(t, arg1, arg2);
-+    gen_helper_muluh_i64(rh, arg1, arg2);
-+    tcg_gen_mov_i64(rl, t);
-+    tcg_temp_free_i64(t);
- }
  
- void tcg_gen_muls2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
- {
--    if (TCG_TARGET_HAS_muls2_i64) {
--        tcg_gen_op4_i64(INDEX_op_muls2_i64, rl, rh, arg1, arg2);
--    } else if (TCG_TARGET_HAS_mulsh_i64) {
--        TCGv_i64 t = tcg_temp_ebb_new_i64();
--        tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
--        tcg_gen_op3_i64(INDEX_op_mulsh_i64, rh, arg1, arg2);
--        tcg_gen_mov_i64(rl, t);
--        tcg_temp_free_i64(t);
--    } else if (TCG_TARGET_HAS_mulu2_i64 || TCG_TARGET_HAS_muluh_i64) {
--        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
--        TCGv_i64 t1 = tcg_temp_ebb_new_i64();
--        TCGv_i64 t2 = tcg_temp_ebb_new_i64();
--        TCGv_i64 t3 = tcg_temp_ebb_new_i64();
--        tcg_gen_mulu2_i64(t0, t1, arg1, arg2);
--        /* Adjust for negative inputs.  */
--        tcg_gen_sari_i64(t2, arg1, 63);
--        tcg_gen_sari_i64(t3, arg2, 63);
--        tcg_gen_and_i64(t2, t2, arg2);
--        tcg_gen_and_i64(t3, t3, arg1);
--        tcg_gen_sub_i64(rh, t1, t2);
--        tcg_gen_sub_i64(rh, rh, t3);
--        tcg_gen_mov_i64(rl, t0);
--        tcg_temp_free_i64(t0);
--        tcg_temp_free_i64(t1);
--        tcg_temp_free_i64(t2);
--        tcg_temp_free_i64(t3);
--    } else {
--        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
--        tcg_gen_mul_i64(t0, arg1, arg2);
--        gen_helper_mulsh_i64(rh, arg1, arg2);
--        tcg_gen_mov_i64(rl, t0);
--        tcg_temp_free_i64(t0);
-+    TCGv_i64 t;
-+
-+    if (TCG_TARGET_REG_BITS == 64) {
-+        if (TCG_TARGET_HAS_muls2(TCG_TYPE_I64)) {
-+            tcg_gen_op4_i64(INDEX_op_muls2_i64, rl, rh, arg1, arg2);
-+            return;
-+        }
-+        if (TCG_TARGET_HAS_mulsh(TCG_TYPE_I64)) {
-+            t = tcg_temp_ebb_new_i64();
-+            tcg_gen_op3_i64(INDEX_op_mul_i64, t, arg1, arg2);
-+            tcg_gen_op3_i64(INDEX_op_mulsh_i64, rh, arg1, arg2);
-+            tcg_gen_mov_i64(rl, t);
-+            tcg_temp_free_i64(t);
-+            return;
-+        }
-+        if (TCG_TARGET_HAS_mulu2(TCG_TYPE_I64) ||
-+            TCG_TARGET_HAS_muluh(TCG_TYPE_I64)) {
-+            TCGv_i64 t0 = tcg_temp_ebb_new_i64();
-+            TCGv_i64 t1 = tcg_temp_ebb_new_i64();
-+            TCGv_i64 t2 = tcg_temp_ebb_new_i64();
-+            TCGv_i64 t3 = tcg_temp_ebb_new_i64();
-+            tcg_gen_mulu2_i64(t0, t1, arg1, arg2);
-+            /* Adjust for negative inputs.  */
-+            tcg_gen_sari_i64(t2, arg1, 63);
-+            tcg_gen_sari_i64(t3, arg2, 63);
-+            tcg_gen_and_i64(t2, t2, arg2);
-+            tcg_gen_and_i64(t3, t3, arg1);
-+            tcg_gen_sub_i64(rh, t1, t2);
-+            tcg_gen_sub_i64(rh, rh, t3);
-+            tcg_gen_mov_i64(rl, t0);
-+            tcg_temp_free_i64(t0);
-+            tcg_temp_free_i64(t1);
-+            tcg_temp_free_i64(t2);
-+            tcg_temp_free_i64(t3);
-+            return;
-+        }
+     if (TCG_TARGET_extract_valid(TCG_TYPE_I32, ofs, len)) {
+-        tcg_gen_op4ii_i32(INDEX_op_extract_i32, ret, arg, ofs, len);
++        tcg_gen_op4ii_i32(INDEX_op_extract, ret, arg, ofs, len);
+         return;
      }
-+    t = tcg_temp_ebb_new_i64();
-+    tcg_gen_mul_i64(t, arg1, arg2);
-+    gen_helper_mulsh_i64(rh, arg1, arg2);
-+    tcg_gen_mov_i64(rl, t);
-+    tcg_temp_free_i64(t);
- }
+     if (ofs == 0) {
+@@ -1000,7 +1000,7 @@ void tcg_gen_extract_i32(TCGv_i32 ret, TCGv_i32 arg,
  
- void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
+     /* Assume that zero-extension, if available, is cheaper than a shift.  */
+     if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, ofs + len)) {
+-        tcg_gen_op4ii_i32(INDEX_op_extract_i32, ret, arg, 0, ofs + len);
++        tcg_gen_op4ii_i32(INDEX_op_extract, ret, arg, 0, ofs + len);
+         tcg_gen_shri_i32(ret, ret, ofs);
+         return;
+     }
+@@ -1035,19 +1035,19 @@ void tcg_gen_sextract_i32(TCGv_i32 ret, TCGv_i32 arg,
+     }
+ 
+     if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, ofs, len)) {
+-        tcg_gen_op4ii_i32(INDEX_op_sextract_i32, ret, arg, ofs, len);
++        tcg_gen_op4ii_i32(INDEX_op_sextract, ret, arg, ofs, len);
+         return;
+     }
+ 
+     /* Assume that sign-extension, if available, is cheaper than a shift.  */
+     if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, 0, ofs + len)) {
+-        tcg_gen_op4ii_i32(INDEX_op_sextract_i32, ret, arg, 0, ofs + len);
++        tcg_gen_op4ii_i32(INDEX_op_sextract, ret, arg, 0, ofs + len);
+         tcg_gen_sari_i32(ret, ret, ofs);
+         return;
+     }
+     if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, 0, len)) {
+         tcg_gen_shri_i32(ret, arg, ofs);
+-        tcg_gen_op4ii_i32(INDEX_op_sextract_i32, ret, ret, 0, len);
++        tcg_gen_op4ii_i32(INDEX_op_sextract, ret, ret, 0, len);
+         return;
+     }
+ 
+@@ -2690,7 +2690,7 @@ void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
+     }
+ 
+     if (TCG_TARGET_extract_valid(TCG_TYPE_I64, ofs, len)) {
+-        tcg_gen_op4ii_i64(INDEX_op_extract_i64, ret, arg, ofs, len);
++        tcg_gen_op4ii_i64(INDEX_op_extract, ret, arg, ofs, len);
+         return;
+     }
+     if (ofs == 0) {
+@@ -2700,7 +2700,7 @@ void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
+ 
+     /* Assume that zero-extension, if available, is cheaper than a shift.  */
+     if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, ofs + len)) {
+-        tcg_gen_op4ii_i64(INDEX_op_extract_i64, ret, arg, 0, ofs + len);
++        tcg_gen_op4ii_i64(INDEX_op_extract, ret, arg, 0, ofs + len);
+         tcg_gen_shri_i64(ret, ret, ofs);
+         return;
+     }
+@@ -2767,19 +2767,19 @@ void tcg_gen_sextract_i64(TCGv_i64 ret, TCGv_i64 arg,
+     }
+ 
+     if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, ofs, len)) {
+-        tcg_gen_op4ii_i64(INDEX_op_sextract_i64, ret, arg, ofs, len);
++        tcg_gen_op4ii_i64(INDEX_op_sextract, ret, arg, ofs, len);
+         return;
+     }
+ 
+     /* Assume that sign-extension, if available, is cheaper than a shift.  */
+     if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, 0, ofs + len)) {
+-        tcg_gen_op4ii_i64(INDEX_op_sextract_i64, ret, arg, 0, ofs + len);
++        tcg_gen_op4ii_i64(INDEX_op_sextract, ret, arg, 0, ofs + len);
+         tcg_gen_sari_i64(ret, ret, ofs);
+         return;
+     }
+     if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, 0, len)) {
+         tcg_gen_shri_i64(ret, arg, ofs);
+-        tcg_gen_op4ii_i64(INDEX_op_sextract_i64, ret, ret, 0, len);
++        tcg_gen_op4ii_i64(INDEX_op_sextract, ret, ret, 0, len);
+         return;
+     }
+ 
 diff --git a/tcg/tcg.c b/tcg/tcg.c
-index de22bdab85..1befe0c4d7 100644
+index f084b51a72..71171bb7dc 100644
 --- a/tcg/tcg.c
 +++ b/tcg/tcg.c
-@@ -2235,13 +2235,13 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
-     case INDEX_op_sub2_i32:
-         return TCG_TARGET_HAS_sub2_i32;
-     case INDEX_op_mulu2_i32:
--        return TCG_TARGET_HAS_mulu2_i32;
-+        return TCG_TARGET_HAS_mulu2(TCG_TYPE_I32);
-     case INDEX_op_muls2_i32:
--        return TCG_TARGET_HAS_muls2_i32;
-+        return TCG_TARGET_HAS_muls2(TCG_TYPE_I32);
-     case INDEX_op_muluh_i32:
--        return TCG_TARGET_HAS_muluh_i32;
-+        return TCG_TARGET_HAS_muluh(TCG_TYPE_I32);
-     case INDEX_op_mulsh_i32:
--        return TCG_TARGET_HAS_mulsh_i32;
-+        return TCG_TARGET_HAS_mulsh(TCG_TYPE_I32);
-     case INDEX_op_ext8s_i32:
-         return TCG_TARGET_HAS_ext8s_i32;
-     case INDEX_op_ext16s_i32:
-@@ -2369,13 +2369,13 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
-     case INDEX_op_sub2_i64:
-         return TCG_TARGET_HAS_sub2_i64;
-     case INDEX_op_mulu2_i64:
--        return TCG_TARGET_HAS_mulu2_i64;
-+        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_mulu2(TCG_TYPE_I64);
-     case INDEX_op_muls2_i64:
--        return TCG_TARGET_HAS_muls2_i64;
-+        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_muls2(TCG_TYPE_I64);
-     case INDEX_op_muluh_i64:
--        return TCG_TARGET_HAS_muluh_i64;
-+        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_muluh(TCG_TYPE_I64);
-     case INDEX_op_mulsh_i64:
--        return TCG_TARGET_HAS_mulsh_i64;
-+        return TCG_TARGET_REG_BITS == 64 && TCG_TARGET_HAS_mulsh(TCG_TYPE_I64);
+@@ -2192,12 +2192,14 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
+     case INDEX_op_add:
+     case INDEX_op_and:
+     case INDEX_op_brcond:
++    case INDEX_op_extract:
+     case INDEX_op_mov:
+     case INDEX_op_movcond:
+     case INDEX_op_mul:
+     case INDEX_op_neg:
+     case INDEX_op_or:
+     case INDEX_op_setcond:
++    case INDEX_op_sextract:
+     case INDEX_op_sub:
+     case INDEX_op_xor:
+         return has_type;
+@@ -2207,8 +2209,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
+     case INDEX_op_shl_i32:
+     case INDEX_op_shr_i32:
+     case INDEX_op_sar_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_sextract_i32:
+     case INDEX_op_deposit_i32:
+         return true;
  
-     case INDEX_op_mov_vec:
-     case INDEX_op_dup_vec:
-@@ -4013,22 +4013,22 @@ liveness_pass_1(TCGContext *s)
-         case INDEX_op_mulu2_i32:
-             opc_new = INDEX_op_mul_i32;
-             opc_new2 = INDEX_op_muluh_i32;
--            have_opc_new2 = TCG_TARGET_HAS_muluh_i32;
-+            have_opc_new2 = TCG_TARGET_HAS_muluh(TCG_TYPE_I32);
-             goto do_mul2;
-         case INDEX_op_muls2_i32:
-             opc_new = INDEX_op_mul_i32;
-             opc_new2 = INDEX_op_mulsh_i32;
--            have_opc_new2 = TCG_TARGET_HAS_mulsh_i32;
-+            have_opc_new2 = TCG_TARGET_HAS_mulsh(TCG_TYPE_I32);
-             goto do_mul2;
-         case INDEX_op_mulu2_i64:
-             opc_new = INDEX_op_mul_i64;
-             opc_new2 = INDEX_op_muluh_i64;
--            have_opc_new2 = TCG_TARGET_HAS_muluh_i64;
-+            have_opc_new2 = TCG_TARGET_HAS_muluh(TCG_TYPE_I64);
-             goto do_mul2;
-         case INDEX_op_muls2_i64:
-             opc_new = INDEX_op_mul_i64;
-             opc_new2 = INDEX_op_mulsh_i64;
--            have_opc_new2 = TCG_TARGET_HAS_mulsh_i64;
-+            have_opc_new2 = TCG_TARGET_HAS_mulsh(TCG_TYPE_I64);
-             goto do_mul2;
-         do_mul2:
-             nb_iargs = 2;
+@@ -2272,8 +2272,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type)
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extrl_i64_i32:
+     case INDEX_op_extrh_i64_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i64:
+     case INDEX_op_deposit_i64:
+         return TCG_TARGET_REG_BITS == 64;
+ 
 diff --git a/tcg/tci.c b/tcg/tci.c
-index eeea2a9094..e71bf82c41 100644
+index 7164072b1b..6b0f3ba3fd 100644
 --- a/tcg/tci.c
 +++ b/tcg/tci.c
-@@ -673,20 +673,16 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             tci_write_reg64(regs, r1, r0, T1 - T2);
-             break;
+@@ -36,6 +36,9 @@
+ # define tci_assert(cond) ((void)(cond))
  #endif
--#if TCG_TARGET_HAS_mulu2_i32
-         case INDEX_op_mulu2_i32:
-             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
-             tmp64 = (uint64_t)(uint32_t)regs[r2] * (uint32_t)regs[r3];
-             tci_write_reg64(regs, r1, r0, tmp64);
+ 
++#define extract_tr   glue(extract, TCG_TARGET_REG_BITS)
++#define sextract_tr  glue(sextract, TCG_TARGET_REG_BITS)
++
+ __thread uintptr_t tci_tb_ptr;
+ 
+ static void tci_write_reg64(tcg_target_ulong *regs, uint32_t high_index,
+@@ -638,13 +641,13 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tci_args_rrrbb(insn, &r0, &r1, &r2, &pos, &len);
+             regs[r0] = deposit32(regs[r1], pos, len, regs[r2]);
              break;
--#endif
--#if TCG_TARGET_HAS_muls2_i32
-         case INDEX_op_muls2_i32:
-             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
-             tmp64 = (int64_t)(int32_t)regs[r2] * (int32_t)regs[r3];
-             tci_write_reg64(regs, r1, r0, tmp64);
+-        case INDEX_op_extract_i32:
++        case INDEX_op_extract:
+             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
+-            regs[r0] = extract32(regs[r1], pos, len);
++            regs[r0] = extract_tr(regs[r1], pos, len);
              break;
--#endif
- #if TCG_TARGET_HAS_ext8s_i32 || TCG_TARGET_HAS_ext8s_i64
-         CASE_32_64(ext8s)
+-        case INDEX_op_sextract_i32:
++        case INDEX_op_sextract:
+             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
+-            regs[r0] = sextract32(regs[r1], pos, len);
++            regs[r0] = sextract_tr(regs[r1], pos, len);
+             break;
+         case INDEX_op_brcond:
+             tci_args_rl(insn, tb_ptr, &r0, &ptr);
+@@ -772,14 +775,6 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tci_args_rrrbb(insn, &r0, &r1, &r2, &pos, &len);
+             regs[r0] = deposit64(regs[r1], pos, len, regs[r2]);
+             break;
+-        case INDEX_op_extract_i64:
+-            tci_args_rrbb(insn, &r0, &r1, &pos, &len);
+-            regs[r0] = extract64(regs[r1], pos, len);
+-            break;
+-        case INDEX_op_sextract_i64:
+-            tci_args_rrbb(insn, &r0, &r1, &pos, &len);
+-            regs[r0] = sextract64(regs[r1], pos, len);
+-            break;
+         case INDEX_op_ext_i32_i64:
              tci_args_rr(insn, &r0, &r1);
-@@ -774,18 +770,14 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             tci_args_rr(insn, &r0, &r1);
-             regs[r0] = ctpop64(regs[r1]);
+             regs[r0] = (int32_t)regs[r1];
+@@ -1097,10 +1092,8 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
+                            op_name, str_r(r0), str_r(r1), str_r(r2), pos, len);
+         break;
+ 
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+         tci_args_rrbb(insn, &r0, &r1, &pos, &len);
+         info->fprintf_func(info->stream, "%-12s  %s,%s,%d,%d",
+                            op_name, str_r(r0), str_r(r1), pos, len);
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index afb7bce479..2050a0a6db 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -2419,8 +2419,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
+         tcg_out_dep(s, ext, a0, REG0(2), args[3], args[4]);
+         break;
+ 
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_extract_i32:
++    case INDEX_op_extract:
+         if (a2 == 0) {
+             uint64_t mask = MAKE_64BIT_MASK(0, args[3]);
+             tcg_out_logicali(s, I3404_ANDI, ext, a0, a1, mask);
+@@ -2429,8 +2428,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
+         }
+         break;
+ 
+-    case INDEX_op_sextract_i64:
+-    case INDEX_op_sextract_i32:
++    case INDEX_op_sextract:
+         tcg_out_sbfm(s, ext, a0, a1, a2, a2 + args[3] - 1);
+         break;
+ 
+@@ -2934,10 +2932,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extrl_i64_i32:
+     case INDEX_op_extrh_i64_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+         return C_O1_I1(r, r);
+ 
+     case INDEX_op_st_i32:
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index faebedcd75..09ab9d4051 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -2127,10 +2127,10 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_deposit(s, COND_AL, args[0], args[2],
+                         args[3], args[4], const_args[2]);
+         break;
+-    case INDEX_op_extract_i32:
++    case INDEX_op_extract:
+         tcg_out_extract(s, COND_AL, args[0], args[1], args[2], args[3]);
+         break;
+-    case INDEX_op_sextract_i32:
++    case INDEX_op_sextract:
+         tcg_out_sextract(s, COND_AL, args[0], args[1], args[2], args[3]);
+         break;
+     case INDEX_op_extract2_i32:
+@@ -2186,8 +2186,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_not:
+     case INDEX_op_bswap16_i32:
+     case INDEX_op_bswap32_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_sextract_i32:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+         return C_O1_I1(r, r);
+ 
+     case INDEX_op_st_i32:
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index e49089450a..30bb5502f6 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -3042,8 +3042,8 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         }
+         break;
+ 
+-    case INDEX_op_extract_i64:
+-        if (a2 + args[3] == 32) {
++    case INDEX_op_extract:
++        if (TCG_TARGET_REG_BITS == 64 && a2 + args[3] == 32) {
+             if (a2 == 0) {
+                 tcg_out_ext32u(s, a0, a1);
+                 break;
+@@ -3053,8 +3053,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+             tcg_out_shifti(s, SHIFT_SHR, a0, a2);
              break;
--#if TCG_TARGET_HAS_mulu2_i64
-         case INDEX_op_mulu2_i64:
-             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
-             mulu64(&regs[r0], &regs[r1], regs[r2], regs[r3]);
-             break;
--#endif
--#if TCG_TARGET_HAS_muls2_i64
-         case INDEX_op_muls2_i64:
-             tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
-             muls64(&regs[r0], &regs[r1], regs[r2], regs[r3]);
-             break;
--#endif
- #if TCG_TARGET_HAS_add2_i64
-         case INDEX_op_add2_i64:
-             tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
+         }
+-        /* FALLTHRU */
+-    case INDEX_op_extract_i32:
+         if (a2 == 0 && args[3] == 8) {
+             tcg_out_ext8u(s, a0, a1);
+         } else if (a2 == 0 && args[3] == 16) {
+@@ -3076,24 +3074,14 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         }
+         break;
+ 
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_sextract:
+         if (a2 == 0 && args[3] == 8) {
+-            tcg_out_ext8s(s, TCG_TYPE_I64, a0, a1);
++            tcg_out_ext8s(s, type, a0, a1);
+         } else if (a2 == 0 && args[3] == 16) {
+-            tcg_out_ext16s(s, TCG_TYPE_I64, a0, a1);
+-        } else if (a2 == 0 && args[3] == 32) {
++            tcg_out_ext16s(s, type, a0, a1);
++        } else if (type == TCG_TYPE_I64 && a2 == 0 && args[3] == 32) {
+             tcg_out_ext32s(s, a0, a1);
+-        } else {
+-            g_assert_not_reached();
+-        }
+-        break;
+-
+-    case INDEX_op_sextract_i32:
+-        if (a2 == 0 && args[3] == 8) {
+-            tcg_out_ext8s(s, TCG_TYPE_I32, a0, a1);
+-        } else if (a2 == 0 && args[3] == 16) {
+-            tcg_out_ext16s(s, TCG_TYPE_I32, a0, a1);
+-        } else if (a2 == 8 && args[3] == 8) {
++        } else if (type == TCG_TYPE_I32 && a2 == 8 && args[3] == 8) {
+             if (a1 < 4 && a0 < 8) {
+                 tcg_out_modrm(s, OPC_MOVSBL, a0, a1 + 4);
+             } else {
+@@ -3737,10 +3725,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_ext_i32_i64:
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extrl_i64_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_ctpop_i32:
+     case INDEX_op_ctpop_i64:
+         return C_O1_I1(r, r);
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 4016a448a3..d91524e984 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -1366,33 +1366,24 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         }
+         break;
+ 
+-    case INDEX_op_extract_i32:
++    case INDEX_op_extract:
+         if (a2 == 0 && args[3] <= 12) {
+             tcg_out_opc_andi(s, a0, a1, (1 << args[3]) - 1);
+-        } else {
++        } else if (type == TCG_TYPE_I32) {
+             tcg_out_opc_bstrpick_w(s, a0, a1, a2, a2 + args[3] - 1);
+-        }
+-        break;
+-    case INDEX_op_extract_i64:
+-        if (a2 == 0 && args[3] <= 12) {
+-            tcg_out_opc_andi(s, a0, a1, (1 << args[3]) - 1);
+         } else {
+             tcg_out_opc_bstrpick_d(s, a0, a1, a2, a2 + args[3] - 1);
+         }
+         break;
+ 
+-    case INDEX_op_sextract_i64:
+-        if (a2 + args[3] == 32) {
++    case INDEX_op_sextract:
++        if (type == TCG_TYPE_I64 && a2 + args[3] == 32) {
+             if (a2 == 0) {
+                 tcg_out_ext32s(s, a0, a1);
+             } else {
+                 tcg_out_opc_srai_w(s, a0, a1, a2);
+             }
+-            break;
+-        }
+-        /* FALLTHRU */
+-    case INDEX_op_sextract_i32:
+-        if (a2 == 0 && args[3] == 8) {
++        } else if (a2 == 0 && args[3] == 8) {
+             tcg_out_ext8s(s, TCG_TYPE_REG, a0, a1);
+         } else if (a2 == 0 && args[3] == 16) {
+             tcg_out_ext16s(s, TCG_TYPE_REG, a0, a1);
+@@ -2236,10 +2227,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_ext_i32_i64:
+     case INDEX_op_neg:
+     case INDEX_op_not:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_bswap16_i32:
+     case INDEX_op_bswap16_i64:
+     case INDEX_op_bswap32_i32:
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index 85414bb96b..7e8f5e1379 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -2025,33 +2025,24 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                          args[3] + args[4] - 1, args[3]);
+         break;
+ 
+-    case INDEX_op_extract_i32:
++    case INDEX_op_extract:
+         if (a2 == 0 && args[3] <= 16) {
+             tcg_out_opc_imm(s, OPC_ANDI, a0, a1, (1 << args[3]) - 1);
+-        } else {
++        } else if (type == TCG_TYPE_I32) {
+             tcg_out_opc_bf(s, OPC_EXT, a0, a1, args[3] - 1, a2);
+-        }
+-        break;
+-    case INDEX_op_extract_i64:
+-        if (a2 == 0 && args[3] <= 16) {
+-            tcg_out_opc_imm(s, OPC_ANDI, a0, a1, (1 << args[3]) - 1);
+         } else {
+             tcg_out_opc_bf64(s, OPC_DEXT, OPC_DEXTM, OPC_DEXTU,
+                              a0, a1, args[3] - 1, a2);
+         }
+         break;
+ 
+-    case INDEX_op_sextract_i64:
+-        if (a2 == 0 && args[3] == 32) {
+-            tcg_out_ext32s(s, a0, a1);
+-            break;
+-        }
+-        /* FALLTHRU */
+-    case INDEX_op_sextract_i32:
++    case INDEX_op_sextract:
+         if (a2 == 0 && args[3] == 8) {
+-            tcg_out_ext8s(s, TCG_TYPE_REG, a0, a1);
++            tcg_out_ext8s(s, type, a0, a1);
+         } else if (a2 == 0 && args[3] == 16) {
+-            tcg_out_ext16s(s, TCG_TYPE_REG, a0, a1);
++            tcg_out_ext16s(s, type, a0, a1);
++        } else if (type == TCG_TYPE_I64 && a2 == 0 && args[3] == 32) {
++            tcg_out_ext32s(s, a0, a1);
+         } else {
+             g_assert_not_reached();
+         }
+@@ -2160,8 +2151,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_not:
+     case INDEX_op_bswap16_i32:
+     case INDEX_op_bswap32_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_sextract_i32:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_ld_i64:
+     case INDEX_op_bswap16_i64:
+     case INDEX_op_bswap32_i64:
+@@ -2170,8 +2161,6 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extrl_i64_i32:
+     case INDEX_op_extrh_i64_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i64:
+         return C_O1_I1(r, r);
+ 
+     case INDEX_op_st_i32:
+diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+index 421c0f89da..a2618e8573 100644
+--- a/tcg/ppc/tcg-target.c.inc
++++ b/tcg/ppc/tcg-target.c.inc
+@@ -3379,37 +3379,29 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         }
+         break;
+ 
+-    case INDEX_op_extract_i32:
++    case INDEX_op_extract:
+         if (args[2] == 0 && args[3] <= 16) {
+             tcg_out32(s, ANDI | SAI(args[1], args[0], (1 << args[3]) - 1));
+-            break;
++        } else if (type == TCG_TYPE_I32) {
++            tcg_out_rlw(s, RLWINM, args[0], args[1],
++                        32 - args[2], 32 - args[3], 31);
++        } else {
++            tcg_out_rld(s, RLDICL, args[0], args[1],
++                        64 - args[2], 64 - args[3]);
+         }
+-        tcg_out_rlw(s, RLWINM, args[0], args[1],
+-                    32 - args[2], 32 - args[3], 31);
+-        break;
+-    case INDEX_op_extract_i64:
+-        if (args[2] == 0 && args[3] <= 16) {
+-            tcg_out32(s, ANDI | SAI(args[1], args[0], (1 << args[3]) - 1));
+-            break;
+-        }
+-        tcg_out_rld(s, RLDICL, args[0], args[1], 64 - args[2], 64 - args[3]);
+         break;
+ 
+-    case INDEX_op_sextract_i64:
+-        if (args[2] + args[3] == 32) {
++    case INDEX_op_sextract:
++        if (type == TCG_TYPE_I64 && args[2] + args[3] == 32) {
+             if (args[2] == 0) {
+                 tcg_out_ext32s(s, args[0], args[1]);
+             } else {
+                 tcg_out_sari32(s, args[0], args[1], args[2]);
+             }
+-            break;
+-        }
+-        /* FALLTHRU */
+-    case INDEX_op_sextract_i32:
+-        if (args[2] == 0 && args[3] == 8) {
+-            tcg_out_ext8s(s, TCG_TYPE_I32, args[0], args[1]);
++        } else if (args[2] == 0 && args[3] == 8) {
++            tcg_out_ext8s(s, type, args[0], args[1]);
+         } else if (args[2] == 0 && args[3] == 16) {
+-            tcg_out_ext16s(s, TCG_TYPE_I32, args[0], args[1]);
++            tcg_out_ext16s(s, type, args[0], args[1]);
+         } else {
+             g_assert_not_reached();
+         }
+@@ -4111,8 +4103,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_not:
+     case INDEX_op_bswap16_i32:
+     case INDEX_op_bswap32_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_sextract_i32:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_ld_i64:
+     case INDEX_op_ctpop_i64:
+     case INDEX_op_ext_i32_i64:
+@@ -4122,8 +4114,6 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_bswap16_i64:
+     case INDEX_op_bswap32_i64:
+     case INDEX_op_bswap64_i64:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i64:
+         return C_O1_I1(r, r);
+ 
+     case INDEX_op_st_i32:
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index e9a874e424..966cffb525 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -2327,36 +2327,28 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_mb(s, a0);
+         break;
+ 
+-    case INDEX_op_extract_i64:
+-        if (a2 + args[3] == 32) {
++    case INDEX_op_extract:
++        if (type == TCG_TYPE_I64 && a2 + args[3] == 32) {
+             if (a2 == 0) {
+                 tcg_out_ext32u(s, a0, a1);
+             } else {
+                 tcg_out_opc_imm(s, OPC_SRLIW, a0, a1, a2);
+             }
+-            break;
+-        }
+-        /* FALLTHRU */
+-    case INDEX_op_extract_i32:
+-        if (a2 == 0 && args[3] == 16) {
++        } else if (a2 == 0 && args[3] == 16) {
+             tcg_out_ext16u(s, a0, a1);
+         } else {
+             g_assert_not_reached();
+         }
+         break;
+ 
+-    case INDEX_op_sextract_i64:
+-        if (a2 + args[3] == 32) {
++    case INDEX_op_sextract:
++        if (type == TCG_TYPE_I64 && a2 + args[3] == 32) {
+             if (a2 == 0) {
+                 tcg_out_ext32s(s, a0, a1);
+             } else {
+                 tcg_out_opc_imm(s, OPC_SRAIW, a0, a1, a2);
+             }
+-            break;
+-        }
+-        /* FALLTHRU */
+-    case INDEX_op_sextract_i32:
+-        if (a2 == 0 && args[3] == 8) {
++        } else if (a2 == 0 && args[3] == 8) {
+             tcg_out_ext8s(s, TCG_TYPE_REG, a0, a1);
+         } else if (a2 == 0 && args[3] == 16) {
+             tcg_out_ext16s(s, TCG_TYPE_REG, a0, a1);
+@@ -2608,10 +2600,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_extrl_i64_i32:
+     case INDEX_op_extrh_i64_i32:
+     case INDEX_op_ext_i32_i64:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_bswap16_i32:
+     case INDEX_op_bswap32_i32:
+     case INDEX_op_bswap16_i64:
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index 054e036168..1c83e5d648 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -2682,10 +2682,10 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         }
+         break;
+ 
+-    OP_32_64(extract):
++    case INDEX_op_extract:
+         tgen_extract(s, args[0], args[1], args[2], args[3]);
+         break;
+-    OP_32_64(sextract):
++    case INDEX_op_sextract:
+         tgen_sextract(s, args[0], args[1], args[2], args[3]);
+         break;
+ 
+@@ -3240,10 +3240,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extrl_i64_i32:
+     case INDEX_op_extrh_i64_i32:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_ctpop_i32:
+     case INDEX_op_ctpop_i64:
+         return C_O1_I1(r, r);
+diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
+index 2e322eed87..449433c6b3 100644
+--- a/tcg/sparc64/tcg-target.c.inc
++++ b/tcg/sparc64/tcg-target.c.inc
+@@ -1532,11 +1532,13 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_mb(s, a0);
+         break;
+ 
+-    case INDEX_op_extract_i64:
++    case INDEX_op_extract:
++        tcg_debug_assert(type == TCG_TYPE_I64);
+         tcg_debug_assert(a2 + args[3] == 32);
+         tcg_out_arithi(s, a0, a1, a2, SHIFT_SRL);
+         break;
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_sextract:
++        tcg_debug_assert(type == TCG_TYPE_I64);
+         tcg_debug_assert(a2 + args[3] == 32);
+         tcg_out_arithi(s, a0, a1, a2, SHIFT_SRA);
+         break;
+@@ -1570,8 +1572,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_extu_i32_i64:
+     case INDEX_op_extrl_i64_i32:
+     case INDEX_op_extrh_i64_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_qemu_ld_a32_i32:
+     case INDEX_op_qemu_ld_a64_i32:
+     case INDEX_op_qemu_ld_a32_i64:
+diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+index e85cbba0bb..55008e3815 100644
+--- a/tcg/tci/tcg-target.c.inc
++++ b/tcg/tci/tcg-target.c.inc
+@@ -55,10 +55,8 @@ static TCGConstraintSetIndex tcg_target_op_def(const TCGOp *op)
+     case INDEX_op_bswap32_i32:
+     case INDEX_op_bswap32_i64:
+     case INDEX_op_bswap64_i64:
+-    case INDEX_op_extract_i32:
+-    case INDEX_op_extract_i64:
+-    case INDEX_op_sextract_i32:
+-    case INDEX_op_sextract_i64:
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+     case INDEX_op_ctpop_i32:
+     case INDEX_op_ctpop_i64:
+         return C_O1_I1(r, r);
+@@ -496,54 +494,48 @@ static void tcg_out_movi(TCGContext *s, TCGType type,
+     }
+ }
+ 
+-static void tcg_out_extract(TCGContext *s, TCGType type, TCGReg rd,
+-                            TCGReg rs, unsigned pos, unsigned len)
++static void tcg_out_extract(TCGContext *s, TCGReg rd, TCGReg rs,
++                            unsigned pos, unsigned len)
+ {
+-    TCGOpcode opc = type == TCG_TYPE_I32 ?
+-                    INDEX_op_extract_i32 :
+-                    INDEX_op_extract_i64;
+-    tcg_out_op_rrbb(s, opc, rd, rs, pos, len);
++    tcg_out_op_rrbb(s, INDEX_op_extract, rd, rs, pos, len);
+ }
+ 
+-static void tcg_out_sextract(TCGContext *s, TCGType type, TCGReg rd,
+-                             TCGReg rs, unsigned pos, unsigned len)
++static void tcg_out_sextract(TCGContext *s, TCGReg rd, TCGReg rs,
++                             unsigned pos, unsigned len)
+ {
+-    TCGOpcode opc = type == TCG_TYPE_I32 ?
+-                    INDEX_op_sextract_i32 :
+-                    INDEX_op_sextract_i64;
+-    tcg_out_op_rrbb(s, opc, rd, rs, pos, len);
++    tcg_out_op_rrbb(s, INDEX_op_sextract, rd, rs, pos, len);
+ }
+ 
+ static void tcg_out_ext8s(TCGContext *s, TCGType type, TCGReg rd, TCGReg rs)
+ {
+-    tcg_out_sextract(s, type, rd, rs, 0, 8);
++    tcg_out_sextract(s, rd, rs, 0, 8);
+ }
+ 
+ static void tcg_out_ext8u(TCGContext *s, TCGReg rd, TCGReg rs)
+ {
+-    tcg_out_extract(s, TCG_TYPE_REG, rd, rs, 0, 8);
++    tcg_out_extract(s, rd, rs, 0, 8);
+ }
+ 
+ static void tcg_out_ext16s(TCGContext *s, TCGType type, TCGReg rd, TCGReg rs)
+ {
+-    tcg_out_sextract(s, type, rd, rs, 0, 16);
++    tcg_out_sextract(s, rd, rs, 0, 16);
+ }
+ 
+ static void tcg_out_ext16u(TCGContext *s, TCGReg rd, TCGReg rs)
+ {
+-    tcg_out_extract(s, TCG_TYPE_REG, rd, rs, 0, 16);
++    tcg_out_extract(s, rd, rs, 0, 16);
+ }
+ 
+ static void tcg_out_ext32s(TCGContext *s, TCGReg rd, TCGReg rs)
+ {
+     tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+-    tcg_out_sextract(s, TCG_TYPE_I64, rd, rs, 0, 32);
++    tcg_out_sextract(s, rd, rs, 0, 32);
+ }
+ 
+ static void tcg_out_ext32u(TCGContext *s, TCGReg rd, TCGReg rs)
+ {
+     tcg_debug_assert(TCG_TARGET_REG_BITS == 64);
+-    tcg_out_extract(s, TCG_TYPE_I64, rd, rs, 0, 32);
++    tcg_out_extract(s, rd, rs, 0, 32);
+ }
+ 
+ static void tcg_out_exts_i32_i64(TCGContext *s, TCGReg rd, TCGReg rs)
+@@ -751,12 +743,12 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         tcg_out_op_rrrbb(s, opc, args[0], args[1], args[2], args[3], args[4]);
+         break;
+ 
+-    CASE_32_64(extract)  /* Optional (TCG_TARGET_HAS_extract_*). */
+-    CASE_32_64(sextract) /* Optional (TCG_TARGET_HAS_sextract_*). */
++    case INDEX_op_extract:
++    case INDEX_op_sextract:
+         tcg_out_op_rrbb(s, opc, args[0], args[1], args[2], args[3]);
+         break;
+     case INDEX_op_extrh_i64_i32:
+-        tcg_out_op_rrbb(s, INDEX_op_extract_i64, args[0], args[1], 32, 32);
++        tcg_out_extract(s, args[0], args[1], 32, 32);
+         break;
+ 
+     case INDEX_op_neg:
+@@ -779,7 +771,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+         /* The base tci bswaps zero-extend, and ignore high bits. */
+         tcg_out_op_rr(s, opc, args[0], args[1]);
+         if (args[2] & TCG_BSWAP_OS) {
+-            tcg_out_sextract(s, TCG_TYPE_REG, args[0], args[0], 0, width);
++            tcg_out_sextract(s, args[0], args[0], 0, width);
+         }
+         break;
+ 
 -- 
 2.43.0
 
