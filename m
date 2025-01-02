@@ -4,52 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15613E77194
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 07:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 039E3E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 08:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTG25-0005pN-GH; Thu, 02 Jan 2025 02:54:17 -0500
+	id 1tTG9y-0000Il-5P; Thu, 02 Jan 2025 03:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tTG24-0005p2-Ak
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 02:54:16 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tTG22-0000Yh-8m
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 02:54:16 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxmeAXRnZnyy5dAA--.52635S3;
- Thu, 02 Jan 2025 15:53:59 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDx_8cVRnZn0i8RAA--.16082S4;
- Thu, 02 Jan 2025 15:53:58 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/3] hw/intc/loongarch_extioi: Remove num-cpu property
-Date: Thu,  2 Jan 2025 15:53:56 +0800
-Message-Id: <20250102075357.2541410-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250102075357.2541410-1-maobibo@loongson.cn>
-References: <20250102075357.2541410-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTG9w-0000IJ-AA
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 03:02:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTG9r-0001dL-J4
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 03:02:24 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so73083355e9.3
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 00:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735804937; x=1736409737; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bhryZLf1EbuooTuy8RwlZFSpnXwVnpUcFGZKdgU+M68=;
+ b=P6L+fa090XZaK4/CW0P6dyx3QfIu/0qvIjq/wKwMBoTPr4QafABgm05S+oVFUym2zx
+ ugmsblD2g2M0dp6zN5QfJY3bKTpaJ6EFUSQ+47+KKKgBlE2q1c09VmXMslMYehx6V3k9
+ GtwTkottvvGh+wtZ97HmBtnhoxo42gIS6+vw9wlJT8LaGSebUJZ51JbvtM0L/hvG4LfN
+ s8kfH87yw9brdFx63HoThxeLqiOEvSkiX8nFSs4vaIOy0qkYl3wHOS2kG9wRH7aOyrxz
+ atnxskk50CCiAR0e4+lqjn9Zs6jYnlrYc0lszLa4cbHJoRL5CrLt7PH/tyTcYMTUELq0
+ 3ZMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735804937; x=1736409737;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bhryZLf1EbuooTuy8RwlZFSpnXwVnpUcFGZKdgU+M68=;
+ b=lvqxsbq3gJ1YIHW7ZgCqNJPcLQFcsmc+fAULBCDEMobHvSEPvf9GO1LORuTYd5IGGu
+ eoLzYyBoW0Q0i26P27UEFZqwyU1dVUVVbweeZoWNhU3wu47npcyhH7IFmM9QuXJxW5La
+ VETAImGApreXhaasjvxV6lhWPbP0vbgugGT8zE/xAvTDxvwgMs0h8qznTkyAU5YpXo11
+ K3vb1pZIzWaDXeYUvqx3rIJ2yrqnEq6SGIPD2fSs6soNpvXglpuChYZ93a0e2jKNqQkH
+ 4NEIa3qWlHc12/nXr//ml4wlYt4rOsVdXfnkkkV/qrNMKg//gF6Zf4gRPDV5rZxuI740
+ u3LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVguW5WZl/pdhh5Iq1lFDFVwZElcoddiM80s6wr7kYFZVHP78/KRvKuPHX5N3Zqge8XxlgsldYrpdai@nongnu.org
+X-Gm-Message-State: AOJu0YwYk3UMP4N14O/1K0I0e82Sk/D5blnf4VuANSyFj86gRawgPzNa
+ ZQ21BmYXmCM/6B0R+2SWadkf9+Ihzp4YvI5mjMXMDKAEIqv4dx986efAoVajXcoOOREBgAbh7LV
+ lSnc=
+X-Gm-Gg: ASbGncsOShtK3I9pq2J1ABah9r8OMofVwFmJkCsvkBhE0hZKV2UNuJRP8SeMoZXNECy
+ 69EkiP/JhdDLT8V+8P/Cy9EKj556gWCitQk7EH4/PP5Sw4/zFeNeXkuZDG3DdjZ1NxbD8YIOb7C
+ 8qo71TxG5bVywkGHl+8tDAnYPuY2W9PwC9C9WIBV6tkpTm2obzMt2gZyKG9mSNO667cUW6NPyMQ
+ n8pGbGyK5ynQC0xBHuXt3CYGmiwXW1Ilb5MLQlY4AHzE/uHDj2Eu9TINAHIAkWulWcQBigx4mXe
+ 33rqPsNc8Eszv8GfY/VbD7pO
+X-Google-Smtp-Source: AGHT+IH/trRQfJBcFMCDhxP10A/3zS1Ij1aaabrGXPigzwLQQPeI1pV1dZmNoJR3haBRU+9c3uMrDA==
+X-Received: by 2002:a05:600c:4f84:b0:434:f7ea:fb44 with SMTP id
+ 5b1f17b1804b1-43668644255mr375854045e9.14.1735804936859; 
+ Thu, 02 Jan 2025 00:02:16 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c847714sm37757676f8f.54.2025.01.02.00.02.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Jan 2025 00:02:15 -0800 (PST)
+Message-ID: <6402c02c-03e3-49d9-8afb-0c9350e26bd8@linaro.org>
+Date: Thu, 2 Jan 2025 09:02:14 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/test_arm_quanta_gsj: Fix broken test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ qemu-arm@nongnu.org
+References: <20250102073403.36328-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250102073403.36328-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDx_8cVRnZn0i8RAA--.16082S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,95 +103,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since cpu number can be acquired from possible_cpu_arch_ids(),
-num-cpu property is not necessary. Here remove num-cpu property
-for object TYPE_LOONGARCH_EXTIOI_COMMON object.
+On 2/1/25 08:34, Thomas Huth wrote:
+> ASSET_IMAGE needs to be prefixed with "self." ... this bug
+> apparently went in unnoticed because the test is not run by
+> default.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/test_arm_quanta_gsj.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_extioi.c        |  8 --------
- hw/intc/loongarch_extioi_common.c | 14 --------------
- hw/loongarch/virt.c               |  1 -
- 3 files changed, 23 deletions(-)
-
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 2ce2f83196..ec7a72a686 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -318,20 +318,12 @@ static const MemoryRegionOps extioi_virt_ops = {
- static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
- {
-     LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(dev);
--    LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_GET_CLASS(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     MachineState *machine = MACHINE(qdev_get_machine());
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     const CPUArchIdList *id_list;
--    Error *local_err = NULL;
-     int i, pin;
- 
--    lec->parent_realize(dev, &local_err);
--    if (local_err) {
--        error_propagate(errp, local_err);
--        return;
--    }
--
-     for (i = 0; i < EXTIOI_IRQS; i++) {
-         sysbus_init_irq(sbd, &s->irq[i]);
-     }
-diff --git a/hw/intc/loongarch_extioi_common.c b/hw/intc/loongarch_extioi_common.c
-index e4c1cc3c98..7bb2c740ac 100644
---- a/hw/intc/loongarch_extioi_common.c
-+++ b/hw/intc/loongarch_extioi_common.c
-@@ -10,16 +10,6 @@
- #include "hw/intc/loongarch_extioi_common.h"
- #include "migration/vmstate.h"
- 
--static void loongarch_extioi_common_realize(DeviceState *dev, Error **errp)
--{
--    LoongArchExtIOICommonState *s = (LoongArchExtIOICommonState *)dev;
--
--    if (s->num_cpu == 0) {
--        error_setg(errp, "num-cpu must be at least 1");
--        return;
--    }
--}
--
- static int loongarch_extioi_common_pre_save(void *opaque)
- {
-     LoongArchExtIOICommonState *s = (LoongArchExtIOICommonState *)opaque;
-@@ -82,7 +72,6 @@ static const VMStateDescription vmstate_loongarch_extioi = {
- };
- 
- static const Property extioi_properties[] = {
--    DEFINE_PROP_UINT32("num-cpu", LoongArchExtIOICommonState, num_cpu, 1),
-     DEFINE_PROP_BIT("has-virtualization-extension", LoongArchExtIOICommonState,
-                     features, EXTIOI_HAS_VIRT_EXTENSION, 0),
- };
-@@ -90,10 +79,7 @@ static const Property extioi_properties[] = {
- static void loongarch_extioi_common_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
--    LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
- 
--    device_class_set_parent_realize(dc, loongarch_extioi_common_realize,
--                                    &lecc->parent_realize);
-     device_class_set_props(dc, extioi_properties);
-     dc->vmsd = &vmstate_loongarch_extioi;
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 99594a13a0..038910fa44 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -921,7 +921,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
- 
-     /* Create EXTIOI device */
-     extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
--    qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
-     if (virt_is_veiointc_enabled(lvms)) {
-         qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
-     }
--- 
-2.39.3
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
