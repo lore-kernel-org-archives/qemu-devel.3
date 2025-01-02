@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D33E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:27:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE344E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTPt2-0007yJ-Fx; Thu, 02 Jan 2025 13:25:37 -0500
+	id 1tTPt1-0007wM-DD; Thu, 02 Jan 2025 13:25:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTPt0-0007s2-42
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:25:34 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTPsx-0007sp-KH
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTPsy-0007mV-Q1
  for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:25:33 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-385e27c75f4so8276227f8f.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:25:30 -0800 (PST)
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTPsu-0007rQ-CW
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:25:32 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3863c36a731so8864923f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735842329; x=1736447129; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kwDRyvTJZzNpnWnwx0B7XY3O+69910db4I16wox7BzU=;
- b=SlCsZmY5M42hv5Eg1fcSU//IgdsdQSAybBYIMX+O1oqIBOY/3eWeXHBtKJOIHG5YkJ
- UuoSoXGpdrgLasQsu1WQjAFEHRx6JYj0HmIJW0pJrIYoKovOwcg9+RaYKz/6/uNDjKnp
- Yeuo+igp4amaFoxj+60ZYx1hH7tNpXs0UwFI7yujm4sK9L0KWH4ZYeuPFOT1dMXwogs3
- ZUqFIA+m6xVNNCZnNZ4EPW6B+DxWHhvEj1debyWeptyzD8+PttwkBzdadSlbzP01amgD
- ENRQ0xb/tE2lexx+uZ1YINdQJHy2U98lkh5c/KChOSifjpNHaTJ9rUiCLirtidLxzauI
- 1Ebw==
+ d=linaro.org; s=google; t=1735842323; x=1736447123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jK2yBpkIHnh1LAl5uT+d4QXAYiiQhFTrpHhJ+3UqzPQ=;
+ b=DzZMP6q+v38cB5y9oCYjwIkZI4gwa6Fyhunhn1ANQO/zP0hi1KhGXoWz4a0wdIUI6i
+ 6xnNxpHYSUC2eG15AFAinjAihNz7cEH0/mxnKdeXEAR14dhF6DmhKVwNofO2Pgem5IRE
+ Njc+yBeXwPmW0AZn49ChhkPedeBcoa3lDxm0IVqHoX0N3WP4/KNjf3Myq2e+sBCbZwKh
+ XM4U9tTWYasnPIV6kBf9ZHSIl7KKoxybR7CU5ab9+n2iApVteUG9cktOmRo9yOFhzCQX
+ 1dnooOsBELi7Nphx+OaKr3HsR6SOi2MShUMsOOT8DF0Hw1A29MIxBs9K+RVD8WuaTEk4
+ gteg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735842329; x=1736447129;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kwDRyvTJZzNpnWnwx0B7XY3O+69910db4I16wox7BzU=;
- b=osCvLFJ2rhUyveXfvow7LoHeR72w859kUAGThhuKVVM4HdW8Zeiy5c0LCunognR9XJ
- vFjytDE4N1utvh6R/AJENCWyWE6CoOWdMf86ZWyOFroHi5cYb8RwlyS6CFKRbRpVpLsx
- 9uoCHv56+iXUJ/LjpZJp16GHImIz9JayeCO0bzmKKFaTDeyHfAPvelARUtfjbJ1QBDMX
- kXw15dIPldvaUJFVP64smYe6kHUTGGUSPzdcz3dZCHfvTMQ+2VOcMgtJHdfU5cU30qzM
- 2Afm02YCd8qpx4aX/W4TeugV7YXV3QVcXZx48+JaFud4HcZDoO27x0v1DBQYjidAV0sC
- RV+w==
-X-Gm-Message-State: AOJu0Yz7/fuVtUiA64wsX07BfiY3nFVr6wkcd3arpV4Fksr8tCRgwhIC
- bj9kWJq8ghRy9Sw2xrHMRalXPjQWTirPNIIj9sNrAJZeu/cgBYlpH0WanvZcPhx2A85Lu9CHSEq
- 1CbSQSw==
-X-Gm-Gg: ASbGncsJA+vp+6zmQUp0VEPrp9Xxri+rajrXQ6gphbC52gWwH37olX+t6U2yIDnwrSZ
- +2Mjlhv+S8ul7c6S61I5eRZxU5YFGLBRDua6cfCvCtwrXlajpQwgYWY0FYA6iCwPU9LX35ptrJP
- Dvna6v3KuBGRkxOQ0N/1k73kwP2OPpJYyyZ47wupBU5o7ZPdDt2b9mn1eKvzw5ZrkwUrv9U97gP
- ZFsq1HXucXx+9rU9E9GzoeMHr0+YZRfnDtYxCw+Jso3aJdzedhW6uUG90d6CeZuCgfVSYCjSNst
- 3RcK2Y6X3SdO/m6trhPWrYJU/lpWNWc=
-X-Google-Smtp-Source: AGHT+IEs2dh5EalLyOVlh1d+Em48iLhVk267HSINaUMWvVZzuLL5VmBAsRtby4EOJ/JHKZSbbvqbRQ==
-X-Received: by 2002:a05:6000:704:b0:385:e9ba:acda with SMTP id
- ffacd0b85a97d-38a221e2738mr36306420f8f.2.1735842328903; 
- Thu, 02 Jan 2025 10:25:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1735842323; x=1736447123;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jK2yBpkIHnh1LAl5uT+d4QXAYiiQhFTrpHhJ+3UqzPQ=;
+ b=azFlaYFczAapAUqZFfzSC2FQ3nU1KEWD2z4866/n1wAl4FjpX8Oer8z7TOo4v18bKU
+ OV5KG6Lrvfd0aUbeSLp0MS60Eq0RA57gM8+iGiE2XzMcsdWrb+hUpkw/jkLTikFuaZ7x
+ +4NcSUPc+unP15m4aQp3C9hQFPSdM3aqelsFIisf1CONj2d1KOrgiyVXGg93W35QfF3P
+ RCAxpPUA8R0H2ZnxpsVayqtUuffT72NaA0apN0zpwMawxB29Tp3JPzFnprDV2eMSETiV
+ v5A1EbMsc11Azp9sUmzgxlkXJoRFRHTO1Lcel1kDWTTdPKWMKzG/d/e/58iJQFrbZaWJ
+ amPg==
+X-Gm-Message-State: AOJu0YwCMLLKcxx/p2Y/nkUH+9hWAg5CwNUD3n71ykCWfzRS+JXSZN7G
+ g6J09yxxFrupy+AaFhgMEFCoZO/i5ueAjJEynna5iOK8fIsDcM9BeNpJQFAlnU83eLZ+MhPxeT9
+ oWI4EWg==
+X-Gm-Gg: ASbGncti/JIXqC5SNY7wyoBNT+VkzzxmSII8vQuu9YlyI1q14z4MiINkt0GTJ7j91Ov
+ O9+DoSpywuRotRCXqpG9Upqh/Eu5/uRbUHbeyn+YzhG6hhHLC2L1+C+wUUwsE/N0f7Cb7SUfIh1
+ MEF1bIyEqTojpGDphs1q8nv5eX0Nccif8rwde0K8y+d+3vGepQV0wiqUBkNgiRE348VVA2H+rTp
+ R4FLRw+xXttjrDST0dmOzH9wSAlszFEJAGXTrVkIposL2b2Wjuq5UCRkRJRMjPvQfBLHFAj2GF8
+ C4+U8VA8WJ/r0Tzx/82rkGDmuKEniyg=
+X-Google-Smtp-Source: AGHT+IFyA8zkiX7VC5zJdvgoXq837oN4eVeHzZOemNhRJ91sDVki+Wm2heUpuvo3pWH4Hdzt8ETgQg==
+X-Received: by 2002:a05:6000:2c6:b0:386:857:cc54 with SMTP id
+ ffacd0b85a97d-38a221e2d13mr38876114f8f.9.1735842323534; 
+ Thu, 02 Jan 2025 10:25:23 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366e210cecsm424125855e9.2.2025.01.02.10.25.27
+ ffacd0b85a97d-38a1c84ca21sm39011792f8f.63.2025.01.02.10.25.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Jan 2025 10:25:27 -0800 (PST)
+ Thu, 02 Jan 2025 10:25:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
@@ -72,18 +71,16 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/3] linux-user: Only include 'exec/tb-flush.h' header when
- necessary
-Date: Thu,  2 Jan 2025 19:25:19 +0100
-Message-ID: <20250102182521.65428-2-philmd@linaro.org>
+Subject: [PATCH 0/3] linux-user: Call tcg_flush_jmp_cache() before re-using
+ threads
+Date: Thu,  2 Jan 2025 19:25:18 +0100
+Message-ID: <20250102182521.65428-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250102182521.65428-1-philmd@linaro.org>
-References: <20250102182521.65428-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,53 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Very few source files require to access "exec/tb-flush.h"
-declarations, and except a pair, they all include it
-explicitly. No need to overload the generic "user-internals.h".
+Fix a bug reported by Ilya in:
+https://lore.kernel.org/qemu-devel/uuuk6a2vo24yrrqrchjxaeko3utqshrdu6txcnqziokpg7dkom@4l4kd3dqh6jc/
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+Commit bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold()
+out") wanted to restrict tlb_flush() to system emulation,
+but inadvertently also restricted tcg_flush_jmp_cache(),
+which was before called on user emulation via:
+
+  Realize -> Reset -> cpu_common_reset_hold()
+
+Since threads (vCPUs) use a common CPUJumpCache, when many
+threads are created / joined, they eventually end re-using
+a CPUJumpCache entry, which was cleared when the first vCPU
+was allocated (via Realize) but then stayed dirty.
+
+Have cpu_exec_reset_hold() call the common tcg_exec_reset()
+helper on user emulation, eventually calling tcg_flush_jmp_cache().
+
+Philippe Mathieu-Daudé (3):
+  linux-user: Only include 'exec/tb-flush.h' header when necessary
+  accel/tcg: Factor out common tcg_exec_reset() helper
+  accel/tcg: Implement cpu_exec_reset_hold() on user emulation
+
+ accel/tcg/internal-common.h | 1 +
  linux-user/user-internals.h | 1 -
+ accel/tcg/cpu-exec-common.c | 6 ++++++
+ accel/tcg/tcg-accel-ops.c   | 4 ++--
+ accel/tcg/user-exec-stub.c  | 4 ----
+ accel/tcg/user-exec.c       | 5 +++++
  linux-user/mmap.c           | 1 +
  linux-user/syscall.c        | 1 +
- 3 files changed, 2 insertions(+), 1 deletion(-)
+ 8 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index b9b05c1d11f..4aa253b5663 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -20,7 +20,6 @@
- 
- #include "user/thunk.h"
- #include "exec/exec-all.h"
--#include "exec/tb-flush.h"
- #include "qemu/log.h"
- 
- extern char *exec_path;
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 6828b17a63f..d1f36e6f16b 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -21,6 +21,7 @@
- #include "trace.h"
- #include "exec/log.h"
- #include "exec/page-protection.h"
-+#include "exec/tb-flush.h"
- #include "exec/translation-block.h"
- #include "qemu.h"
- #include "user/page-protection.h"
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 78c7c0b34ef..cbbfcf10d28 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -26,6 +26,7 @@
- #include "tcg/startup.h"
- #include "target_mman.h"
- #include "exec/page-protection.h"
-+#include "exec/tb-flush.h"
- #include "exec/translation-block.h"
- #include <elf.h>
- #include <endian.h>
 -- 
 2.47.1
 
