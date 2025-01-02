@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF179E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 21:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06314E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 21:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTSaD-00041T-JS; Thu, 02 Jan 2025 16:18:24 -0500
+	id 1tTSab-00049f-5N; Thu, 02 Jan 2025 16:18:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTSZy-000407-G5
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:18:07 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTSaZ-00048S-RF
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:18:43 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTSZw-0001L6-Li
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:18:05 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3862ca8e0bbso9067926f8f.0
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 13:18:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTSaY-0001Qe-AA
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 16:18:43 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-386329da1d9so5377158f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 13:18:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735852682; x=1736457482; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wMAJRJAkKvu+7ixiGIgm9NO78i/9tU4KbqtSnkAIp08=;
- b=Cmcu7FGX9gBY8suvU5aA5Oehzaz6TUKdBq66CcozNVUnlg4Qqcoz1GJpfPmnkVgEIm
- RMvrbNNwkOvxz1azsXKmYCBsQzEKH4v53r8J2dCnCttdQFM3zhsVZ0Fq6HlUeG5A3F/I
- CbCz6+CfEuWlkjQdBgtg0aKSZpd/uKebnVF8VIMUDIVI/Ke7F1r7EPujn2luOOdBpFy9
- 4/H9EDBB0geJkW7vEqW6N+1r5EeOiNM5tcaGJtf6JB72G8XTGzA2hRLy1fm8Yb47UMBn
- soaSCnyZQ772S5FsqtOR81TvVDKgntsz9BDlInvFZMq3QzAbHUynO04DkX9dJKgFq9hf
- kAYA==
+ d=linaro.org; s=google; t=1735852720; x=1736457520; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X072cNLxlYU70g0aPAnHdJmyEbpQKTIAoLkN1KVyvsY=;
+ b=VdD5b2MTwqOzkcwx3Sf8KbVcivw3vPR8i2H9JzrTz0JwevpNdKlTfPMqk3FAJIAVqD
+ lC9IjU4KXtAG8i/cp9QBgPrYcc40LziBsKi2fOV0IJ9kjOzlhBFtyoyv+aXWxj4+BzB6
+ YpqMTe2a6HnI/7KWpQZvSVMVx49E5rpNncavJmsBeT1/pG5BRl8gU3hTBqByFAFIAZtk
+ VYABK1nU1mgHihHsKivbUsX841Taf7OlkZAM2kCFSbDDO4sA+QRrkip65iGyhrvBZOZA
+ CAlzCOQSJiwWxZJRQGxrnNTXu+nsfPvlQCaf3+wMwL0q+LSdUzAvpGF5AP+91zkx4b6P
+ acuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735852682; x=1736457482;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wMAJRJAkKvu+7ixiGIgm9NO78i/9tU4KbqtSnkAIp08=;
- b=n+I0pCLoD/5/9HHAic8BncYVxJXiZe2WfNxBcyIMu10oJjBzl/idZzj0arJ3WFlo0H
- OjZdrtPGwd2kBtC80tjUb+cnbTx61nHRq0y7rJttAIgOdq+mnNvAM7HuVjrosxuPaMVC
- nTmLfDH/QbPm8kS/1yHVX4asf88ttaIh3GuWFGLpI1zCjor4sy18/nLOd82LCe16CyCz
- 6gI/QQ6MEimMfzxWBBsfJNIUWh12XLgUAKFi4jtWBkmdPWydVmqF5RFOUVOD/Ay//5l/
- SNkrMTOJ6dr+IjrJa9OKmbmc5aibnJ1Kk3ip5OObQtO1PlmVFOW8vsKTbIKWZD8wJr97
- njPQ==
-X-Gm-Message-State: AOJu0YzKLWPOv7wKkMW8GDIOQPPWDzpBwJHsFPLGA9GEdjLl9PqmSq31
- SKt9Ihav8xhZSAqNALs3muVMCjQ4dYWCp+FtLKfNKClrGpMdI+U8B7/PmdjvcxrQK52DtqNz+Tw
- yyyBXLw==
-X-Gm-Gg: ASbGnctjt0bLU1wWe94nhlUbB8BziS1RGG73tov4LBOUE0lVxENJAkJTBkI9yyvpAa1
- PfB0Xl+2ObGLg1MWB26Pv8kfZpTTCtbEJBXX6jaWawcPfdP8gCQo24wWg7jIUZNU6E1h5rNz4uW
- sWEslemM6K09C2g7ouaDqMk5J3r/68p2Cj2eEyO86bjO+3f+Jlzn7nTSGIhN5+Sl8h/NmNAJFlQ
- IPWx+jkzBXLMXlhGlDwHAUDaqSXPisanXbsA2SHMUjJWc5Kq8RjoFsdiDJESimpwjYUoUVPlvwx
- scpitm5OHw9B5hBQUVvkeWHMSxp89e0=
-X-Google-Smtp-Source: AGHT+IFuW3tyNIYDS+29N8PpC8hwZkQCJi3VhvNvAO/VoeqXFTrOF41nHQMn7j5MRlfqp01c7bRzdg==
-X-Received: by 2002:a5d:648d:0:b0:382:4b9a:f51f with SMTP id
- ffacd0b85a97d-38a223f82afmr41619242f8f.47.1735852682268; 
- Thu, 02 Jan 2025 13:18:02 -0800 (PST)
+ d=1e100.net; s=20230601; t=1735852720; x=1736457520;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=X072cNLxlYU70g0aPAnHdJmyEbpQKTIAoLkN1KVyvsY=;
+ b=mAqL3nqQbhVaC8NnT4c1hgjjjGsrgsD/vsgz/D/Yta7TuSSBO9pjgLNSE2TC3jouYJ
+ nNYQVMc59Ujjj4Got577XfodtzYGzEEti8CH699AYXCjBm/KNjkLsmJ/8YbGK+zL8L8K
+ 488b1ahfEoEwWW0nx/CW+C5mkgTMnXQ0HCcZBl2TPG6rKpwGOXOkczGtPlTn4sLpuKGW
+ AF5fUo4NBQKkzh/r0UawF5pyFIYbK+mo+4fBRzXmWHlLxCvaxMy8bAM8h1rrnEIW+/69
+ mLpCA8GE7lEr9P0A0Oonh/UttQLnqlgmmVOMEbBJRbJzzaNSjtu2By7vjSFeruPFKL1j
+ uduQ==
+X-Gm-Message-State: AOJu0Yxly4H5sxc3dMuJZ/VS709ZJ6twc7KH43hoCfD5y6NGMZ2pQSFL
+ HvlXTedNtgmyDF4pHRIL8woskM0y3jan19U7hNNbFyfUXAcO8Q4QqF4/FtHJDVJXu/GcNjqwWze
+ C22F4kQ==
+X-Gm-Gg: ASbGncvgaf92OPC26U/Xygsd7OcwEY1wRvz8he8Om9KQPVz/iTukjloegKC1t+Lqmgs
+ 3bMtItAMKd5GoyvtVyVm9uN9OA9QK4hQV0MYXkbn6gNquObWyzmuguojp1LxRChF6yDf0ye8iLo
+ rfHglItdLbOTAimMdce9wsTYzhSUBJqeCVAVpB/s8mXH9oCWkPCDTeiZyx+4WzTne4KLNI0hffj
+ MRjFsRwCgfNHUf5gt76zz5ZOaGi6gl8ARk9KF08VKgQZeTNV+Mco35pg0SqC6uICc2arFQQwR2s
+ o4qVrvDf44uqgQh4bnLgfM+FwQF3Beo=
+X-Google-Smtp-Source: AGHT+IFktdjjUzUBETKV9PyuXkCREZ3c3g+nxlKsHbj9nwq6FsyN1dPaFpF5Gb7QuNkcttZGCo6slg==
+X-Received: by 2002:a05:6000:2a7:b0:385:ef2f:9282 with SMTP id
+ ffacd0b85a97d-38a221f321dmr44804791f8f.5.1735852720584; 
+ Thu, 02 Jan 2025 13:18:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8b874asm38986775f8f.109.2025.01.02.13.18.00
+ 5b1f17b1804b1-43661219a7csm460601325e9.24.2025.01.02.13.18.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Jan 2025 13:18:01 -0800 (PST)
+ Thu, 02 Jan 2025 13:18:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org,
@@ -75,15 +76,17 @@ Cc: qemu-block@nongnu.org,
  Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v4 0/8] QOM: container_get() removal
-Date: Thu,  2 Jan 2025 22:17:52 +0100
-Message-ID: <20250102211800.79235-1-philmd@linaro.org>
+Subject: [PATCH v4 7/8] qom: Remove container_get()
+Date: Thu,  2 Jan 2025 22:17:59 +0100
+Message-ID: <20250102211800.79235-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250102211800.79235-1-philmd@linaro.org>
+References: <20250102211800.79235-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,58 +109,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Respin of Peter's v2:
-https://lore.kernel.org/qemu-devel/20241121192202.4155849-1-peterx@redhat.com/
+From: Peter Xu <peterx@redhat.com>
 
-'The series is about container_get() and its removal.'
-(See v2's cover).
+Now there's no user of container_get(), remove it.
 
-Since v3:
-- Implement qdev_create_fake_machine() in single patch (peterx)
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241121192202.4155849-14-peterx@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qom/object.h | 11 -----------
+ qom/container.c      | 23 -----------------------
+ 2 files changed, 34 deletions(-)
 
-Since v2:
-- Create fake machine container for user emulation to avoid:
-
-  $ ./qemu-x86_64 /bin/echo foo
-  qemu-x86_64: ../../hw/core/qdev.c:825: qdev_get_machine: Assertion `dev' failed.
-  Aborted (core dumped)
-
-Peter Xu (6):
-  qdev: Make qdev_get_machine() not use container_get()
-  qdev: Add machine_get_container()
-  qdev: Use machine_get_container()
-  qom: Add object_get_container()
-  qom: Use object_get_container()
-  qom: Remove container_get()
-
-Philippe Mathieu-Daudé (2):
-  qdev: Implement qdev_create_fake_machine() for user emulation
-  system: Inline machine_containers[] in
-    qemu_create_machine_containers()
-
- include/hw/qdev-core.h | 20 ++++++++++++++++++++
- include/qom/object.h   | 21 ++++++++++-----------
- accel/tcg/tcg-all.c    |  8 +++++++-
- backends/cryptodev.c   |  4 ++--
- chardev/char.c         |  2 +-
- hw/core/gpio.c         |  3 +--
- hw/core/qdev-user.c    | 21 +++++++++++++++++++++
- hw/core/qdev.c         | 21 ++++++++++++++++++---
- hw/core/sysbus.c       |  4 ++--
- hw/i386/pc.c           |  4 ++--
- qom/container.c        | 23 -----------------------
- qom/object.c           | 12 +++++++++++-
- scsi/pr-manager.c      |  4 ++--
- system/ioport.c        |  2 +-
- system/memory.c        |  2 +-
- system/qdev-monitor.c  |  6 +++---
- system/vl.c            | 19 ++++++++-----------
- ui/console.c           |  2 +-
- ui/dbus-chardev.c      |  2 +-
- hw/core/meson.build    |  1 +
- 20 files changed, 113 insertions(+), 68 deletions(-)
- create mode 100644 hw/core/qdev-user.c
-
+diff --git a/include/qom/object.h b/include/qom/object.h
+index bcf9910b42c..77935572894 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -2017,17 +2017,6 @@ int object_child_foreach(Object *obj, int (*fn)(Object *child, void *opaque),
+ int object_child_foreach_recursive(Object *obj,
+                                    int (*fn)(Object *child, void *opaque),
+                                    void *opaque);
+-/**
+- * container_get:
+- * @root: root of the #path, e.g., object_get_root()
+- * @path: path to the container
+- *
+- * Return a container object whose path is @path.  Create more containers
+- * along the path if necessary.
+- *
+- * Returns: the container object.
+- */
+-Object *container_get(Object *root, const char *path);
+ 
+ /**
+  * object_property_add_new_container:
+diff --git a/qom/container.c b/qom/container.c
+index 20ab74b0e8d..38a27ec1edd 100644
+--- a/qom/container.c
++++ b/qom/container.c
+@@ -34,27 +34,4 @@ Object *object_property_add_new_container(Object *obj, const char *name)
+     return child;
+ }
+ 
+-Object *container_get(Object *root, const char *path)
+-{
+-    Object *obj, *child;
+-    char **parts;
+-    int i;
+-
+-    parts = g_strsplit(path, "/", 0);
+-    assert(parts != NULL && parts[0] != NULL && !parts[0][0]);
+-    obj = root;
+-
+-    for (i = 1; parts[i] != NULL; i++, obj = child) {
+-        child = object_resolve_path_component(obj, parts[i]);
+-        if (!child) {
+-            child = object_property_add_new_container(obj, parts[i]);
+-        }
+-    }
+-
+-    g_strfreev(parts);
+-
+-    return obj;
+-}
+-
+-
+ type_init(container_register_types)
 -- 
 2.47.1
 
