@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E7DE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5057AE77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 18:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTPtt-0008OJ-7R; Thu, 02 Jan 2025 13:26:31 -0500
+	id 1tTPk4-0007qX-23; Thu, 02 Jan 2025 13:16:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTPtC-0008It-EZ
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:25:57 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tTPjs-0007IX-Fy
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:16:10 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTPtA-0007uf-Kh
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:25:46 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4361fe642ddso122670965e9.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:25:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tTPjq-0006sX-6F
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 13:16:08 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-216728b1836so140805465ad.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 10:16:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735842341; x=1736447141; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735841764; x=1736446564; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i5MZZuqxD622nryIdDAIydJBHEZPb4zzJ2vYHU+DCJU=;
- b=bMnCqYdYWqB2o7ydaitSVSzD4oJ0StbMctbwe0+M7ZXEO17SKuClaS1VV6M3nBRz9w
- S8PIcBAA0qmHvU2r3F3A3HwybTDXKyDJNDSZGF6CxbyK3ALkiAbszHiVst9MK9k/zExC
- ONPlPp8kjUdlwBFdcuTsKY1A+lhq/rU4ugHnymmRwnXl+r1AkX21+J2E91h5ZFREE4KF
- gcvqAYUwYW4aMJ1iH72+k76oVZaqzAvCeSSi1NqLsUHXYqPjw3C9RCQB/yih/bH0bP8h
- otwh6ZWav0uGo2w1FutrqfjBlcsN7Uv2yWEZRJgM7SiK6HlL32IUR7FJf7NyTQhjRVh9
- TsEg==
+ bh=d8h/Admcq7JHr895Vta0jYiW589ICp9iFjYzF/Y3DHs=;
+ b=zW9QM1Wf948cZJh/HCxUyUr2/afaIdWbr3rBYIxI3hw5QPgNsKRvDR/nsLJ/cDejuu
+ v18QIvDQBgQ4h1kDgUJGvkTFZelUx/oiuTy5wZGtlBpp/2mTTMeYjx0RIOICY9FK8pRl
+ Oi1zLN4HkZT+kmGGBuzsMtrMWtLjzAqX9Kvh6Z4AkyALc0Rq8bciEk5sbPC087yf58vM
+ ZA4lxvVrBhgbJGVJLd+bSlACTg2X25uTmK9T8ckDSzjSX4zo7C1gK9GIb08X7/shMWmy
+ 1PnB7/Y8a/alp8R5NQO5DZVGjfpDU+JGwlZHdPV40yc7IK/01B1TyGavtZSMqbj/NKWw
+ txXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735842341; x=1736447141;
+ d=1e100.net; s=20230601; t=1735841764; x=1736446564;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i5MZZuqxD622nryIdDAIydJBHEZPb4zzJ2vYHU+DCJU=;
- b=q3L9Ynt87Y55bg3rB2shYZ9g9PAo97YPt2ZCjtcCr4iA/9EKRDlzbXpNo3bGEKSO0D
- AKGvzoE7MV7Q3doNWoDW89HTdCpfwKK71AJUaRs35tSQZDzM5jkT4pc+MJv9K7VMmzF/
- D3RmjYpXXWSFm4K5VJ5NYdcXIVZQxg6Wn7CDUtqj04uh7d0UGt+D4L+AfEhZ3zjvCHfR
- PnffqpElJEYu+F4M7Ci4s0gfA0bbl4jwKTxVWmgOTqaKhGRxIZ+wUR9HLe6dWOMoKNkk
- wLpHlpAJ4oz2y7c89vEBC55KohJ2T5Vi8wHaA19qxRl4zCzXTmTihufNqQWou+TmSGBu
- Vn4A==
-X-Gm-Message-State: AOJu0YwKawbzFopRFVsGlua2O88fOVBhqGTdieSO0rKL300o3rd77cie
- xiFSZKv8ddkDwM63JOsvJkH062OvFJlW1ju55j3PAu3KC7n9cXh2tVQt9vx6F3iv+XlobYPdRPN
- IzPV1Ug==
-X-Gm-Gg: ASbGncvSZbgkWKR/zqvp6gcPqde3NGcMD3JCdy/pDzlkUvomfXiYakdzn3YCdu4z9Dm
- 0KVD2yMd8WMckUKTLLqST1biUrsZ81Kq9OwQY+Iw8LD0MWrVA3fgh919UbPDuZdSpFClfFWfkWo
- MGrGUXbk8++pkHtnlpr6+enkRoZOZRwxdkYwtus7ej94HQ8929xPrvoKBNbgGFYIFfXJmxp3eAT
- AiHTP0ZAPR9M3PmWPKn5IaG4dEyTNPN/iV3x83VATfoGNwC0CGnAi6miR4IOh/bYw6QCZw09SbY
- jtcwM183eBCyoi2OzG0ZrVLg/AQ29ZI=
-X-Google-Smtp-Source: AGHT+IEid+qm5vVH4qUyy9pqL4bxIijQTa/68t6jVfi6GChVFRq2uySRM+CVnJyIev3pDH7z3GTo0g==
-X-Received: by 2002:a05:600c:468f:b0:434:a30b:5455 with SMTP id
- 5b1f17b1804b1-43668b78728mr375470475e9.27.1735842340670; 
- Thu, 02 Jan 2025 10:25:40 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c488sm459203545e9.27.2025.01.02.10.25.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Jan 2025 10:25:39 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=d8h/Admcq7JHr895Vta0jYiW589ICp9iFjYzF/Y3DHs=;
+ b=SEVE55y/o4iI1YZhanb9Xz1aFyqTa3NidVjn10ZAiSdkseVKN2ubuauBM6bnJa5fL+
+ H/37gsDs5ovahhHhAQkq9FVPLzkVfDWNvRwxBsXGJVIngWkWFlrv8YDdKDV9+Wm02scq
+ FkmybIc83BGyhsTkH/7YPldoBE8CbtdCr9ektAlERhu6QXtFLydfDDcdEARlkjdJIGL3
+ TEjqQr0sXFse9jad0873mfY1sgUgUg6855GVN0gynQkwwJvUPn6s3ylwzgwBKvUFEtEE
+ c7KgrpfXq81lY0OriFqJMIjtNJ0mCQBzbJHPF0BzI9F0wu/Pza+t0KxhmAcwN9nAk88u
+ wnbA==
+X-Gm-Message-State: AOJu0YyKq28Jj7vHyw//0RmQuGSwUr67iHL1ILTWJZbrJI7En1wEROzh
+ 1sWibdEuXft8heEz76yz3tn+aQiRq3J7FKfOCXAtvUS3QIRaCd4X+mUtLwfenSsjOArZC51gBqh
+ Z
+X-Gm-Gg: ASbGnct8sWS5ZyWYxbeyygaSje32bAycjPf25UzfQKnHvlRpynxz0KEiYgZzOBxtNCl
+ fnmdPe2Ze/cKPmU2csx7JNVA3T8zWVx6UAfNbdUjikpUaRix+kjx1lU5wQnYqRjDLnEiJiu7xWL
+ ZmTPak0+L23F2utytu+kmKWOp1zQzs4TlKbUXpvijvs84oj+jdrGzPPl5HbRK3NZZ++RXlYJ2EG
+ H7spVKvNmH262oo7g3oT3aEt6KayD+8MvWOhBTxt221PG+RPn3xfph2WAp8dQ==
+X-Google-Smtp-Source: AGHT+IFy4YL3h+4Ey3wfbIq6HK6LyH761h1mioVqaE3lFvrtVGwWpWp/rYRquZiGHhMmY2aaLQ9u3A==
+X-Received: by 2002:a17:902:d481:b0:215:6fcd:6cd1 with SMTP id
+ d9443c01a7336-219e6e8c508mr527072735ad.7.1735841763688; 
+ Thu, 02 Jan 2025 10:16:03 -0800 (PST)
+Received: from stoup.. ([63.239.63.212]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9f68e4sm230148315ad.211.2025.01.02.10.16.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jan 2025 10:16:03 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/3] accel/tcg: Implement cpu_exec_reset_hold() on user
- emulation
-Date: Thu,  2 Jan 2025 19:25:21 +0100
-Message-ID: <20250102182521.65428-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250102182521.65428-1-philmd@linaro.org>
-References: <20250102182521.65428-1-philmd@linaro.org>
+Cc: qemu-riscv@nongnu.org,
+	palmer@dabbelt.com,
+	Alistair.Francis@wdc.com
+Subject: [PATCH 1/2] util/cpuinfo-riscv: Detect Zbs
+Date: Thu,  2 Jan 2025 10:16:00 -0800
+Message-ID: <20250102181601.1421059-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250102181601.1421059-1-richard.henderson@linaro.org>
+References: <20250102181601.1421059-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,87 +99,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold()
-out") wanted to restrict tlb_flush() to system emulation,
-but inadvertently also restricted tcg_flush_jmp_cache(),
-which was before called on user emulation via:
-
-  Realize -> Reset -> cpu_common_reset_hold()
-
-Since threads (vCPUs) use a common CPUJumpCache, when many
-threads are created / joined, they eventually end re-using
-a CPUJumpCache entry, which was cleared when the first vCPU
-was allocated (via Realize) but then stayed dirty, leading to:
-
-  Thread 1 "qemu-s390x" received signal SIGABRT, Aborted.
-  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
-  44      ./nptl/pthread_kill.c: No such file or directory.
-  (gdb) bt
-  #0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at ./nptl/pthread_kill.c:44
-  #1  0x00007ffff7c41e8f in __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
-  #2  0x00007ffff7bf2fb2 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-  #3  0x00007ffff7bdd472 in __GI_abort () at ./stdlib/abort.c:79
-  #4  0x00007ffff7bdd395 in __assert_fail_base (fmt=0x7ffff7d51a90 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=assertion@entry=0x5555556d71b8 "cpu->accel",
-      file=file@entry=0x5555556d70e0 "cpu-target.c", line=line@entry=158, function=function@entry=0x5555556d7260 <__PRETTY_FUNCTION__.3> "cpu_exec_realizefn") at ./assert/assert.c:92
-  #5  0x00007ffff7bebeb2 in __GI___assert_fail (assertion=assertion@entry=0x5555556d71b8 "cpu->accel", file=file@entry=0x5555556d70e0 "cpu-target.c", line=line@entry=158,
-      function=function@entry=0x5555556d7260 <__PRETTY_FUNCTION__.3> "cpu_exec_realizefn") at ./assert/assert.c:101
-  #6  0x00005555555d44ca in cpu_exec_realizefn (cpu=cpu@entry=0x5555557c28c0, errp=errp@entry=0x7fffffffe140) at cpu-target.c:158
-  #7  0x000055555559f50b in s390_cpu_realizefn (dev=0x5555557c28c0, errp=0x7fffffffe1a0) at target/s390x/cpu.c:261
-  #8  0x000055555563f78b in device_set_realized (obj=<optimized out>, value=<optimized out>, errp=0x7fffffffe2e0) at hw/core/qdev.c:510
-  #9  0x000055555564365d in property_set_bool (obj=0x5555557c28c0, v=<optimized out>, name=<optimized out>, opaque=0x5555557a9140, errp=0x7fffffffe2e0) at qom/object.c:2362
-  #10 0x0000555555646bbb in object_property_set (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", v=v@entry=0x5555557c6650, errp=errp@entry=0x7fffffffe2e0)
-      at qom/object.c:1471
-  #11 0x000055555564a45f in object_property_set_qobject (obj=obj@entry=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", value=value@entry=0x5555557a7a90, errp=errp@entry=0x7fffffffe2e0)
-      at qom/qom-qobject.c:28
-  #12 0x0000555555647224 in object_property_set_bool (obj=0x5555557c28c0, name=name@entry=0x5555556e8ae2 "realized", value=value@entry=true, errp=errp@entry=0x7fffffffe2e0)
-      at qom/object.c:1541
-  #13 0x000055555564027c in qdev_realize (dev=<optimized out>, bus=bus@entry=0x0, errp=errp@entry=0x7fffffffe2e0) at hw/core/qdev.c:291
-  #14 0x000055555559bb54 in cpu_create (typename=<optimized out>) at hw/core/cpu-common.c:57
-  #15 0x000055555559a467 in main (argc=4, argv=0x7fffffffeaa8, envp=<optimized out>) at linux-user/main.c:811
-
-Have cpu_exec_reset_hold() call the common tcg_exec_reset()
-helper on user emulation, eventually calling tcg_flush_jmp_cache().
-
-Fixes: bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold() out")
-Reported-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/user-exec-stub.c | 4 ----
- accel/tcg/user-exec.c      | 5 +++++
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ host/include/riscv/host/cpuinfo.h |  5 +++--
+ util/cpuinfo-riscv.c              | 18 ++++++++++++++++--
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
-index 4fbe2dbdc88..2dc6fd9c4e8 100644
---- a/accel/tcg/user-exec-stub.c
-+++ b/accel/tcg/user-exec-stub.c
-@@ -14,10 +14,6 @@ void qemu_init_vcpu(CPUState *cpu)
+diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv/host/cpuinfo.h
+index cdc784e7b6..b2b53dbf62 100644
+--- a/host/include/riscv/host/cpuinfo.h
++++ b/host/include/riscv/host/cpuinfo.h
+@@ -9,8 +9,9 @@
+ #define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
+ #define CPUINFO_ZBA             (1u << 1)
+ #define CPUINFO_ZBB             (1u << 2)
+-#define CPUINFO_ZICOND          (1u << 3)
+-#define CPUINFO_ZVE64X          (1u << 4)
++#define CPUINFO_ZBS             (1u << 3)
++#define CPUINFO_ZICOND          (1u << 4)
++#define CPUINFO_ZVE64X          (1u << 5)
+ 
+ /* Initialized with a constructor. */
+ extern unsigned cpuinfo;
+diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
+index 971c924012..0291b7218a 100644
+--- a/util/cpuinfo-riscv.c
++++ b/util/cpuinfo-riscv.c
+@@ -36,7 +36,8 @@ static void sigill_handler(int signo, siginfo_t *si, void *data)
+ /* Called both as constructor and (possibly) via other constructors. */
+ unsigned __attribute__((constructor)) cpuinfo_init(void)
  {
- }
+-    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND | CPUINFO_ZVE64X;
++    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZBS
++                  | CPUINFO_ZICOND | CPUINFO_ZVE64X;
+     unsigned info = cpuinfo;
  
--void cpu_exec_reset_hold(CPUState *cpu)
--{
--}
--
- /* User mode emulation does not support record/replay yet.  */
+     if (info) {
+@@ -50,6 +51,9 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+ #if defined(__riscv_arch_test) && defined(__riscv_zbb)
+     info |= CPUINFO_ZBB;
+ #endif
++#if defined(__riscv_arch_test) && defined(__riscv_zbs)
++    info |= CPUINFO_ZBS;
++#endif
+ #if defined(__riscv_arch_test) && defined(__riscv_zicond)
+     info |= CPUINFO_ZICOND;
+ #endif
+@@ -71,7 +75,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+             && pair.key >= 0) {
+             info |= pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA : 0;
+             info |= pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB : 0;
+-            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB);
++            info |= pair.value & RISCV_HWPROBE_EXT_ZBS ? CPUINFO_ZBS : 0;
++            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZBS);
+ #ifdef RISCV_HWPROBE_EXT_ZICOND
+             info |= pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZICOND : 0;
+             left &= ~CPUINFO_ZICOND;
+@@ -117,6 +122,15 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+             left &= ~CPUINFO_ZBB;
+         }
  
- bool replay_exception(void)
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 0561c4f6dc7..92640f07ed7 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -40,6 +40,11 @@ __thread uintptr_t helper_retaddr;
- 
- //#define DEBUG_SIGNAL
- 
-+void cpu_exec_reset_hold(CPUState *cpu)
-+{
-+    tcg_exec_reset(cpu);
-+}
++        if (left & CPUINFO_ZBS) {
++            /* Probe for Zbs: bext zero,zero,zero. */
++            got_sigill = 0;
++            asm volatile(".insn r 0x33, 5, 0x24, zero, zero, zero"
++                         : : : "memory");
++            info |= got_sigill ? 0 : CPUINFO_ZBS;
++            left &= ~CPUINFO_ZBS;
++        }
 +
- void cpu_interrupt(CPUState *cpu, int mask)
- {
-     g_assert(bql_locked());
+         if (left & CPUINFO_ZICOND) {
+             /* Probe for Zicond: czero.eqz zero,zero,zero. */
+             got_sigill = 0;
 -- 
-2.47.1
+2.43.0
 
 
