@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CCADE7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 426EFE77188
 	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTI3Z-0002bB-MY; Thu, 02 Jan 2025 05:03:57 -0500
+	id 1tTI3c-0002br-2Q; Thu, 02 Jan 2025 05:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTI3Y-0002av-Q3
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:03:56 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTI3a-0002bN-CT
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:03:58 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTI3R-0006i8-77
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:03:51 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so73993575e9.3
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:03:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTI3Y-0006iv-Ie
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:03:58 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43634b570c1so80279535e9.0
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:03:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735812227; x=1736417027; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735812232; x=1736417032; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gmi9t5Hr2PyM0Z7P9N6nRRkJ25K1LZ2uGASUBS+KL10=;
- b=nz8uALZ6ZRNc81QAM+t6+R9g6BK4n0MA371kVB5EHj6LvaFR4AiS3nVXVwxQuawUE5
- hxACDDfgKkGwSyCL+7LfIEiCoHryBKMEZReM5wlAEwL6INUdysQIxAPHTIYfZxSQK3Pq
- d4EuOQZbtI4I3xgr4MCM3ZUr310wtkf3+ZN61dhUFSrybNGnvdpdV0EW05DoI2TsPYJv
- RF3aSX904wUo3enoR8dxSzdTWZuy4OLPKEED29ib03VEA3UKlrqQrN1M9mkLfs0UBIQ3
- Nt3XzBLVou4fH9wjxDRx1sg5YFxm5oYy8pOxb5oQcEi1qyIY71bheAv8tEpcQpTc6Eoj
- jTyw==
+ bh=+IfUZXZTSx3E5XkEnYiVjxXKMhiznWJF3OIbSSa3FoE=;
+ b=yP5a5EqMgl8JpF1wtSuANxrUHUFL4sGYQEoy1Gm4/r4PW5+PwGB3jxc1rMoBwuN3fW
+ tujUGlAZTpBGmuTOcSpr6QfExZMhnL5PwlMUfg+ApmCCH7BRoKQmylV6tmGV3kHXUxCD
+ u7rNBOcdqCR3mUak4/8W6R3InpHPJV4byv4bpxujvz/uCxtln7R3SesUbd1Ow19SNtCV
+ 6sKb+81jTX/7cLQM5mdb4rJ7OKJIjl3guYVF7R3A1elZsMZKE5sVTmTmeqFnIaY/FtaM
+ yGUja12ZL9lpGLWH4ryPZPfxq4b/JHLRiiMNVWJZ+gZVVxXG8dtw2u+r8iPOq+WZ3AVh
+ uKgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735812227; x=1736417027;
+ d=1e100.net; s=20230601; t=1735812232; x=1736417032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gmi9t5Hr2PyM0Z7P9N6nRRkJ25K1LZ2uGASUBS+KL10=;
- b=AuyZfscw5ZfBGMZr0KEUTjQoo63rKngRtz9RLWGRCFNp3I9ZnheoHVAs++uJx9IF0V
- JgZ4JMzx8eNJOXsTKyKbQcfBicetGUpm4IqH/wARFsGq5ZKIMIcg5E/OIZR5lG+XUqQf
- osdDm4LpAW9fHKGA3EfB/XxwJ6XabpwkUzKwAWkELnF41ESLtaspuAkz0rcRO4a32t5P
- UWCJkEM5hbeUiKfylpbOKsK/za+d7CcG8LefNw+hl1paswgBM1IjhFvLgPAgBp1pIlos
- tq9MMPVjb4tq5s3vF1vAAEtXv05ohBqb4Nuu+SwC/7UwNb0FGlYGVMrTRAGZAWWTmqGO
- z0ug==
+ bh=+IfUZXZTSx3E5XkEnYiVjxXKMhiznWJF3OIbSSa3FoE=;
+ b=ZXGJd/ltP2LM2imljlNdCoxL9+15+9xfMGNnDAIn16FwCegho8D53tqrOUWjry7DkT
+ 5yk63hu9whNArUMQfjSso+xK9P7vP1WpsRQy/h3McYLgHyvxXOoTt5LDaAEQfT/KEh/j
+ Me1+nnZV9EgvTqtfcGRIfazNLJ93nTdFs+O2sSTo9R0q5jympitYu4eSCUE4aH5b1+sv
+ /loatnYGy7dGEbX4sKXfv5c66h+WfYT2tNu+oeaCN4x9UHLD5PTV2rcd80lQINjTCeta
+ BsJNzFCx6/LmK7gNQizDvoYNJHYu9e/0CR35YAHGPaD1tC/dsXVtDIiUBEhL02OqVqul
+ eFyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN+Eyhm44jH/n/4JCuwrclRkQuDKpjKAEQTApWJ9gSPrEDNUDhJdnosf5fFMIh2BKabL6nRS86O8Sw@nongnu.org
-X-Gm-Message-State: AOJu0YzaXTtbFd/cAar1HL2Vmd6apat1kagbPXO3AlZu/L6Mc/C/fK09
- 6vXxy1h6ZnO2CH7rhkxIS6OYKbZTM789VWp2rpINz3bbF0+Ro+M3WpnnbWtOow0=
-X-Gm-Gg: ASbGnctSfrIaRyPJJbf2DExebGcgS/X4JJL7cW/t/DMmgKvlJBKPJNOkygoDri2Nvuk
- bEvLyifF7EJBwePf09uJDYT4Gu/w+EBA2jnNxG2kSSM+OUvVmmCYxq7g45uMijO20CiNc2HO2cp
- yE2PdiOAi2JZL1w3gCzltx6afQEAOrRfoUQq8kiL97mB8rbnm9+LSsxEutbdeLWvvIVYK4hgfzp
- DkLr2jPVxsPS8a1nQo1SzLq7e1X2mgri0X/RThFLlP2yhiMO6yWvgjI9c8OaXbBH1XqWguIFIjk
- 5S2rScFZGegWXSh/K2+gSIK8QlBO3G4=
-X-Google-Smtp-Source: AGHT+IHNmMg/s80nCAWvjUYlY0SWe2ZYC2viGyzcf2kG5XQOrdvxY6pzIukFtFpG/vtn5DJajEytCQ==
-X-Received: by 2002:a05:6000:4b10:b0:385:f470:c2c6 with SMTP id
- ffacd0b85a97d-38a221e21a9mr39819960f8f.11.1735812227503; 
- Thu, 02 Jan 2025 02:03:47 -0800 (PST)
+ AJvYcCXY6h3QZqPNVv2/0LSeXlMFzLL6zl26wrBJw2sUrnwqR2icli/D/yO25KN4EwRc3OjmEKSqlds2O1df@nongnu.org
+X-Gm-Message-State: AOJu0YzCIavzZAlaX8T1gDUvh7S0tg3HQPBzYJanv4Bqr7APLnAnKll/
+ xXyOERn7sdD6qPwB3u1/wNMKcDhUBXcUn2FycpgaDIX4VnRiEWAv/w1bI3tN0mk=
+X-Gm-Gg: ASbGncuTx+c4xA8BF1D5jXLh5nNTu+QPkDHODg5ryuWBcH4h3UQR5bKdW9vU1G9bWc/
+ ATqiUKc8lSSVgT9XHC7lWKCvxCwhWvVcglK8cxR/KSt11ermc/kXMlDEQjndMXaFZjiDx+8rXWZ
+ 0Lj0OHLUWtfHGcahASyqPZPkY9plSBd/iyxXuS0aQFlucQznLDK7CACLLzJD25c11ZUUzgFH5aO
+ QBKxsQhQnvqWnQnWXTWUC+ajYQLqZFG/sYmlcbJsIQ85KyU2ZleEk8eSVFRrvxDy3DOzwH7xvtR
+ mqlXviH7M00eHuI9z1+itfGKGNJPj9o=
+X-Google-Smtp-Source: AGHT+IFRRg2IsQfAxFuEMENodLvYbytjl1KrTs8+xyHQ7elpqzQGnN3H70SOLV5uyOHOsH+i3g5ZYw==
+X-Received: by 2002:a05:600c:6b09:b0:434:eb86:aeca with SMTP id
+ 5b1f17b1804b1-43675cb208bmr419108485e9.10.1735812232152; 
+ Thu, 02 Jan 2025 02:03:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e375sm38350294f8f.73.2025.01.02.02.03.45
+ ffacd0b85a97d-38a1c8a6ca5sm38587349f8f.86.2025.01.02.02.03.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 02 Jan 2025 02:03:47 -0800 (PST)
+ Thu, 02 Jan 2025 02:03:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>,
 	qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Helge Deller <deller@gmx.de>,
  Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH v6 1/2] tests/qtest/boot-serial-test: Correct HPPA machine name
-Date: Thu,  2 Jan 2025 11:03:39 +0100
-Message-ID: <20250102100340.43014-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 2/2] tests: Add functional tests for HPPA machines
+Date: Thu,  2 Jan 2025 11:03:40 +0100
+Message-ID: <20250102100340.43014-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250102100340.43014-1-philmd@linaro.org>
 References: <20250102100340.43014-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +103,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 7df6f751176 ("hw/hppa: Split out machine creation")
-renamed the 'hppa' machine as 'B160L', but forgot to update
-the boot serial test, which ended being skipped.
+Add quick firmware boot tests (less than 1sec) for the
+B160L (32-bit) and C3700 (64-bit) HPPA machines:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7df6f751176 ("hw/hppa: Split out machine creation")
-Reported-by: Thomas Huth <thuth@redhat.com>
+  $ make check-functional-hppa
+  ...
+  4/4 qemu:func-quick+func-hppa / func-hppa-hppa_seabios    OK 0.22s 2 subtests passed
+
+Remove the duplicated B160L test in qtest/boot-serial-test.c.
+
+Suggested-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/boot-serial-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS                           |  1 +
+ tests/qtest/boot-serial-test.c        |  2 --
+ tests/functional/meson.build          |  4 +++
+ tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
+ tests/qtest/meson.build               |  2 +-
+ 5 files changed, 41 insertions(+), 3 deletions(-)
+ create mode 100755 tests/functional/test_hppa_seabios.py
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2101b512175..770bbf9f233 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1203,6 +1203,7 @@ F: include/hw/pci-host/astro.h
+ F: include/hw/pci-host/dino.h
+ F: pc-bios/hppa-firmware.img
+ F: roms/seabios-hppa/
++F: tests/functional/test_hppa_seabios.py
+ 
+ LoongArch Machines
+ ------------------
 diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 3b92fa5d506..7759e8c9702 100644
+index 7759e8c9702..7ea24855072 100644
 --- a/tests/qtest/boot-serial-test.c
 +++ b/tests/qtest/boot-serial-test.c
-@@ -185,7 +185,7 @@ static const testdef_t tests[] = {
+@@ -184,8 +184,6 @@ static const testdef_t tests[] = {
+     { "microblazeel", "petalogix-ml605", "", "TT",
        sizeof(kernel_plml605), kernel_plml605 },
      { "arm", "raspi2b", "", "TT", sizeof(bios_raspi2), 0, bios_raspi2 },
-     /* For hppa, force bios to output to serial by disabling graphics. */
--    { "hppa", "hppa", "-vga none", "SeaBIOS wants SYSTEM HALT" },
-+    { "hppa", "B160L", "-vga none", "SeaBIOS wants SYSTEM HALT" },
+-    /* For hppa, force bios to output to serial by disabling graphics. */
+-    { "hppa", "B160L", "-vga none", "SeaBIOS wants SYSTEM HALT" },
      { "aarch64", "virt", "-cpu max", "TT", sizeof(kernel_aarch64),
        kernel_aarch64 },
      { "arm", "microbit", "", "T", sizeof(kernel_nrf51), kernel_nrf51 },
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 24f7f8f2f1c..71810a3aa82 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -104,6 +104,10 @@ tests_avr_system_thorough = [
+   'avr_mega2560',
+ ]
+ 
++tests_hppa_system_quick = [
++  'hppa_seabios',
++]
++
+ tests_i386_system_thorough = [
+   'i386_tuxrun',
+ ]
+diff --git a/tests/functional/test_hppa_seabios.py b/tests/functional/test_hppa_seabios.py
+new file mode 100755
+index 00000000000..a44d1a3eebe
+--- /dev/null
++++ b/tests/functional/test_hppa_seabios.py
+@@ -0,0 +1,35 @@
++#!/usr/bin/env python3
++#
++# SeaBIOS boot test for HPPA machines
++#
++# Copyright (c) 2024 Linaro, Ltd
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++
++class HppaSeabios(QemuSystemTest):
++
++    timeout = 5
++    MACH_BITS = {'B160L': 32, 'C3700': 64}
++
++    def boot_seabios(self):
++        mach = self.machine
++        bits = self.MACH_BITS[mach]
++        self.vm.set_console()
++        self.vm.launch()
++        self.machine
++        wait_for_console_pattern(self, f'SeaBIOS PA-RISC {bits}-bit Firmware')
++        wait_for_console_pattern(self, f'Emulated machine:     HP {mach} ({bits}-bit')
++
++    def test_hppa_32(self):
++        self.set_machine('B160L')
++        self.boot_seabios()
++
++    def test_hppa_64(self):
++        self.set_machine('C3700')
++        self.boot_seabios()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index c5a70021c50..ab296a97a78 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -140,7 +140,7 @@ qtests_alpha = ['boot-serial-test'] + \
+ 
+ qtests_avr = [ 'boot-serial-test' ]
+ 
+-qtests_hppa = ['boot-serial-test'] + \
++qtests_hppa = \
+   qtests_filter + \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
+ 
 -- 
 2.47.1
 
