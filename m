@@ -4,101 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EF2E77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 19:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E92E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 19:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTRBb-0003yc-DU; Thu, 02 Jan 2025 14:48:51 -0500
+	id 1tTRCB-0004EE-Sk; Thu, 02 Jan 2025 14:49:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tTRBZ-0003yE-Ro
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 14:48:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tTRBX-0003Tb-V8
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 14:48:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735847325;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=t2eSs2oKoGrCGnogND6unf3AFwwxV4FmURv6T/rTMu4=;
- b=cjkVJ7Tb2MXFUitXp7rwqqIrjhN8GYT6Qh83HtH/dwuFEvkxwXtCtT95wCp1bivb3BSK95
- GFEP52fqs7QzxqudOu3jYKJ0C8zE/eOyociAOLeZoR/+L104fxzcTOA5DxkLv0oosdQdwL
- uH/JVKsBBOWjqhs6/OLQwWzhHM1qSk8=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-NQIlf2-qNzeYOm5tNgaLrA-1; Thu, 02 Jan 2025 14:48:41 -0500
-X-MC-Unique: NQIlf2-qNzeYOm5tNgaLrA-1
-X-Mimecast-MFC-AGG-ID: NQIlf2-qNzeYOm5tNgaLrA
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b6f943f59dso1770042785a.2
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 11:48:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735847320; x=1736452120;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tTRC5-00046O-P3
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 14:49:22 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tTRC4-0003aA-4v
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 14:49:21 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43623f0c574so79674465e9.2
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 11:49:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735847357; x=1736452157; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t2eSs2oKoGrCGnogND6unf3AFwwxV4FmURv6T/rTMu4=;
- b=Ei0hlzu8BR/xkAUkPKzt6Xu0Bphux8KRU65HmdBV3haUELG/JtqFJ8nSB7P2sSw5B6
- /o38Q0lsKK32ox0qTrigkLsA0NUaKdmgyzasrwNJGt7GMBi3GeRSdUe8A/mVCTc5A3bf
- c60PZ6JVcRni2bgJnti2iSC1mDzoIXsM3N56LoPreblidznmuLT0tuXkxVx3rIM8SbiN
- OkdjC/RDDmTNjlyTycHkRRBXCsVRFygoMz/MHN9OGjtnITJ2Hiwsln2+sHRt0+d7C2U8
- 39zfKDmGH+A+0fGUrHbhLjM879jYjICP9qUWtA2jBg6MJHgKx+6YvSDUWNd1B4FB5jOb
- TEIw==
-X-Gm-Message-State: AOJu0YwBfV0FfNHkQpG3DbAbq5XAU1aBUnmmO5yLWrrd14ek4193Uvqk
- a+wBrqs1XQCxmAjFHMaQiPO8w+0Vil9wLfrooJzxssDKdXHfoQMw6k4KePLukfN+6L4+xP/99K/
- Y1PqYHpZbx69Yez5K1dZD1rmwbK3EiVXBDKDok5dVjn0mlmIAmu0C
-X-Gm-Gg: ASbGnctl510q+a7k7JM8NzWsm5vFGxbFD0RaibRPg92rZHdbhld+dwwo+pDz52Mzktx
- rr2DEZq8FJonjtPTNY9PrH8/Sv2wYDHKN8JB0zv34tanG5BeM9GVi/0p6wNuxLr5LxKnpkRqORw
- xnFbrKwcem041RHX0wy2Z6T2M0YAmEtcta0KqTPYL3NltYxtnyw5UYMzCqXzXE+XZiKMI58Uo2o
- YsAQP+V1za1lKLva5UyjAjblnqQgaSJCV9/iFGc4JeQiXk9SmMK0QMXQRosrQee5OjGnIkCwuBa
- x4JR40GxzZktdLZOqw==
-X-Received: by 2002:a05:620a:3185:b0:7b7:106a:19a0 with SMTP id
- af79cd13be357-7b9ba799addmr7463215885a.24.1735847320105; 
- Thu, 02 Jan 2025 11:48:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1d5MNKGXlLpb/R5CWw0x6VJM6r9VAf5hbgeHPC3QQeud+Zaep0af7wXLy1VuhK/C/+hp5Yw==
-X-Received: by 2002:a05:620a:3185:b0:7b7:106a:19a0 with SMTP id
- af79cd13be357-7b9ba799addmr7463212585a.24.1735847319695; 
- Thu, 02 Jan 2025 11:48:39 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b9ac47a6cdsm1201100185a.93.2025.01.02.11.48.38
+ bh=MEPqog8njYY5NGwc1eOzP0PMQycHlah5Rlw+iHhu850=;
+ b=QYVRDyGm9wRF23CSEI6fN1MwgaNL9JMQrZTp/YWEsnByULxkbrrJlZZdVpnaqISrHM
+ 7GgMWmZIX3aEwu3/mU5e5//eA7aD9rq6RmlmB+KpRRuWb9K2OexTheQ36u+BGM9UcV8D
+ TVpDxv7ZsWRY9gCpFJa188IuqGdsYbgmnUpD2PCvY8Cw21tloHE1qM4MUakY0HCgw9Wi
+ 83tbVSng2c4qljfw2j8j+Q5gBtzPOeFhhlikaOomp1rhvyKp1m5xTvj+kZJ5uRugzdKY
+ C8407rHhuMHGw4tDPvYaurwgrLxUreu1HAALb9X5lfWvgzkYSk8N7S5U6paNr6un2MLk
+ GOuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735847357; x=1736452157;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MEPqog8njYY5NGwc1eOzP0PMQycHlah5Rlw+iHhu850=;
+ b=V5TwLiAAeY8/mHW8gznXOHr2fb+9lKKjTNM4s2f7o7sMhsAAe2fwhIrNvC4CKuMkP7
+ 4CcucJw9PpiX4Fe6VYt7gI+Jyx9BoYxD67SKNSq9Pa3PaqhtqX/VqzyFxBzLYc2KsxqM
+ Tcwqk4IAGS56BPEcxUFCTqdWIT4lBXEL6DaeJucSLLkTZLO3dI3Vp97zXUJ6ys3WQnJA
+ 0YsS01XFjZQXU8uLQ1HeExfx36a5itqNb+Lx3rA7Zn9ashl7wTxXrVMy82pb+L3gXvdM
+ IaJ6r0sENGnMlXL1iGTHSkmNa1j+nIlolqlW8U4G8Ob5kbISi+T4bxlVedSEsJzXKZ0y
+ ft3w==
+X-Gm-Message-State: AOJu0YxF0LgUiooufvh3LkVtpVUYAmQPwJ1WfVas+lrRpnKiIVX4ILGo
+ sTb6JHG8uCunftkPzQZa5sc5tCT7V6ZC6D4nERtu0qvQ0N0byE+5JkURm7s4fgw=
+X-Gm-Gg: ASbGncvin2ohwS71pFOTi/2/Ntv7tfV39jla+IJQYvO8KJpUkKejV5AHBc8qKlYVjeN
+ AvN9S9muHxoBSoceIlMp7Jr1nvBlGhB5pKkfdAxPcf0xt7jskf35PXbul9PH6dPS2u0L078LG8s
+ 4yAYjT3jhdhXOJ1aZrI249VztjpgL+KuSFuhFm5Zk5P9X+OekI57zxLOJ/O89914WMSJep5REly
+ Zq0BIDatzBc7zkrarOU1TQN6TB4zUNRDcQNH3QEFHIGNK71oTg/SIY=
+X-Google-Smtp-Source: AGHT+IEkWFW4n+s8I3voewKCXxO2vTmPfQfNJGylhQp0PthToUpbUVP7ywbuUsP9UtyIvBfMy2c80Q==
+X-Received: by 2002:a05:600c:4f94:b0:434:f953:efb with SMTP id
+ 5b1f17b1804b1-43668b785d2mr345968945e9.32.1735847357482; 
+ Thu, 02 Jan 2025 11:49:17 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4366121955fsm468754985e9.21.2025.01.02.11.49.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 11:48:39 -0800 (PST)
-Date: Thu, 2 Jan 2025 14:48:36 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V5 02/23] physmem: qemu_ram_alloc_from_fd extensions
-Message-ID: <Z3btlLk4YpljgS4R@x1n>
-References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-3-git-send-email-steven.sistare@oracle.com>
- <Z2rs4nYtuXfFW4sT@x1n>
- <afde28fb-fad5-4ba7-8c28-bf9f2a05cd1b@oracle.com>
+ Thu, 02 Jan 2025 11:49:16 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6239F5F8C1;
+ Thu,  2 Jan 2025 19:49:15 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Wainer dos
+ Santos Moschetta <wainersm@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <f4bug@amsat.org>
+Subject: Re: [PATCH] dockerfiles: Remove 'MAINTAINER' entry in
+ debian-tricore-cross.docker
+In-Reply-To: <20250102152513.61065-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 2 Jan 2025 16:25:13
+ +0100")
+References: <20250102152513.61065-1-philmd@linaro.org>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 02 Jan 2025 19:49:15 +0000
+Message-ID: <87ed1luhc4.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <afde28fb-fad5-4ba7-8c28-bf9f2a05cd1b@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,165 +105,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 02, 2025 at 01:36:01PM -0500, Steven Sistare wrote:
-> On 12/24/2024 12:18 PM, Peter Xu wrote:
-> > On Tue, Dec 24, 2024 at 08:16:47AM -0800, Steve Sistare wrote:
-> > > Extend qemu_ram_alloc_from_fd to support resizable ram, and define
-> > > qemu_ram_resize_cb to clean up the API.
-> > > 
-> > > Add a grow parameter to extend the file if necessary.  However, if
-> > > grow is false, a zero-sized file is always extended.
-> > > 
-> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > > ---
-> > >   include/exec/ram_addr.h | 13 +++++++++----
-> > >   system/memory.c         |  4 ++--
-> > >   system/physmem.c        | 35 ++++++++++++++++++++---------------
-> > >   3 files changed, 31 insertions(+), 21 deletions(-)
-> > > 
-> > > diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
-> > > index ff157c1..94bb3cc 100644
-> > > --- a/include/exec/ram_addr.h
-> > > +++ b/include/exec/ram_addr.h
-> > > @@ -111,23 +111,30 @@ long qemu_maxrampagesize(void);
-> > >    *
-> > >    * Parameters:
-> > >    *  @size: the size in bytes of the ram block
-> > > + *  @max_size: the maximum size of the block after resizing
-> > >    *  @mr: the memory region where the ram block is
-> > > + *  @resized: callback after calls to qemu_ram_resize
-> > >    *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
-> > >    *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
-> > >    *              RAM_READONLY_FD, RAM_GUEST_MEMFD
-> > >    *  @mem_path or @fd: specify the backing file or device
-> > >    *  @offset: Offset into target file
-> > > + *  @grow: extend file if necessary (but an empty file is always extended).
-> > >    *  @errp: pointer to Error*, to store an error if it happens
-> > >    *
-> > >    * Return:
-> > >    *  On success, return a pointer to the ram block.
-> > >    *  On failure, return NULL.
-> > >    */
-> > > +typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
-> > > +
-> > >   RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
-> > >                                      uint32_t ram_flags, const char *mem_path,
-> > >                                      off_t offset, Error **errp);
-> > > -RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-> > > +RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-> > > +                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
-> > >                                    uint32_t ram_flags, int fd, off_t offset,
-> > > +                                 bool grow,
-> > >                                    Error **errp);
-> > >   RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
-> > > @@ -135,9 +142,7 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
-> > >   RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
-> > >                            Error **errp);
-> > >   RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
-> > > -                                    void (*resized)(const char*,
-> > > -                                                    uint64_t length,
-> > > -                                                    void *host),
-> > > +                                    qemu_ram_resize_cb resized,
-> > >                                       MemoryRegion *mr, Error **errp);
-> > >   void qemu_ram_free(RAMBlock *block);
-> > > diff --git a/system/memory.c b/system/memory.c
-> > > index 78e17e0..290c522 100644
-> > > --- a/system/memory.c
-> > > +++ b/system/memory.c
-> > > @@ -1680,8 +1680,8 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr,
-> > >       mr->readonly = !!(ram_flags & RAM_READONLY);
-> > >       mr->terminates = true;
-> > >       mr->destructor = memory_region_destructor_ram;
-> > > -    mr->ram_block = qemu_ram_alloc_from_fd(size, mr, ram_flags, fd, offset,
-> > > -                                           &err);
-> > > +    mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
-> > > +                                           offset, false, &err);
-> > >       if (err) {
-> > >           mr->size = int128_zero();
-> > >           object_unparent(OBJECT(mr));
-> > > diff --git a/system/physmem.c b/system/physmem.c
-> > > index c76503a..48c544f 100644
-> > > --- a/system/physmem.c
-> > > +++ b/system/physmem.c
-> > > @@ -1942,8 +1942,10 @@ out_free:
-> > >   }
-> > >   #ifdef CONFIG_POSIX
-> > > -RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-> > > +RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-> > > +                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
-> > >                                    uint32_t ram_flags, int fd, off_t offset,
-> > > +                                 bool grow,
-> > >                                    Error **errp)
-> > >   {
-> > >       RAMBlock *new_block;
-> > > @@ -1953,7 +1955,9 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-> > >       /* Just support these ram flags by now. */
-> > >       assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
-> > >                             RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
-> > > -                          RAM_READONLY_FD | RAM_GUEST_MEMFD)) == 0);
-> > > +                          RAM_READONLY_FD | RAM_GUEST_MEMFD |
-> > > +                          RAM_RESIZEABLE)) == 0);
-> > > +    assert(max_size >= size);
-> > >       if (xen_enabled()) {
-> > >           error_setg(errp, "-mem-path not supported with Xen");
-> > > @@ -1968,12 +1972,14 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-> > >       size = TARGET_PAGE_ALIGN(size);
-> > >       size = REAL_HOST_PAGE_ALIGN(size);
-> > > +    max_size = TARGET_PAGE_ALIGN(max_size);
-> > > +    max_size = REAL_HOST_PAGE_ALIGN(max_size);
-> > >       file_size = get_file_size(fd);
-> > > -    if (file_size > offset && file_size < (offset + size)) {
-> > > +    if (file_size && file_size < offset + max_size && !grow) {
-> > 
-> > Is this a bugfix for the case offset < fsize?  If so, better make it a
-> > small patch and copy stable..
-> > 
-> > $ touch ramfile
-> > $ truncate -s 64M ramfile
-> > $ ./qemu-system-x86_64 -object memory-backend-file,mem-path=./ramfile,offset=128M,size=128M,id=mem1,prealloc=on
-> > qemu-system-x86_64: qemu_prealloc_mem: preallocating memory failed: Bad address
-> > 
-> > So yes, it's a bug..
-> 
-> Yes, it's a bug I noticed by inspection.
-> I will split and submit to stable.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Thanks.
+> From: Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.org>
+>
+> AMSAT closed its email service [*] so my personal email
+> address is now defunct. Remove it to avoid bouncing emails.
+>
+> [*] https://forum.amsat-dl.org/index.php?thread/4581-amsat-mail-alias-ser=
+vice-to-end-august-1-2024/
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-> 
-> > >           error_setg(errp, "backing store size 0x%" PRIx64
-> > >                      " does not match 'size' option 0x" RAM_ADDR_FMT,
-> > > -                   file_size, size);
-> > > +                   file_size, max_size);
-> > >           return NULL;
-> > >       }
-> > > @@ -1988,11 +1994,13 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
-> > >       new_block = g_malloc0(sizeof(*new_block));
-> > >       new_block->mr = mr;
-> > >       new_block->used_length = size;
-> > > -    new_block->max_length = size;
-> > > +    new_block->max_length = max_size;
-> > > +    new_block->resized = resized;
-> > >       new_block->flags = ram_flags;
-> > >       new_block->guest_memfd = -1;
-> > > -    new_block->host = file_ram_alloc(new_block, size, fd, !file_size, offset,
-> > > -                                     errp);
-> > > +    new_block->host = file_ram_alloc(new_block, max_size, fd,
-> > > +                                     file_size < offset + max_size,
-> > 
-> > Same here, looks like relevant to above.
-> 
-> This line would not be part of the fix for stable.  The pre-cpr code should only
-> truncate (allocate) if !file_size.  If file_size > 0, the fixed conditional above
-> verifies that file_size is large enough.
-> 
-> The fix will be a 1-liner:
->  -    if (file_size > offset && file_size < (offset + size)) {
->  +    if (file_size && file_size < offset + size) {
-
-Indeed, this should work.
-
--- 
-Peter Xu
-
+Queued to testing/next, thanks.
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
