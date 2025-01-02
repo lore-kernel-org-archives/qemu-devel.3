@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA8CE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31ED0E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  2 Jan 2025 10:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTIEn-0000Mp-DK; Thu, 02 Jan 2025 05:15:33 -0500
+	id 1tTIL8-0002Kv-J4; Thu, 02 Jan 2025 05:22:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tTIEm-0000Md-7n
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:15:32 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tTIL6-0002Kd-TS
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:22:04 -0500
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tTIEk-0002fQ-68
- for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:15:31 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5d122cf8e52so19123727a12.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:15:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1tTIL5-0003wt-53
+ for qemu-devel@nongnu.org; Thu, 02 Jan 2025 05:22:04 -0500
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-5401b7f7141so10167386e87.1
+ for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 02:22:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735812927; x=1736417727; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1735813321; x=1736418121; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U9HBsCdUSNzIZbzp2sjIH7zCYgPhs1zVJqR7keXBtcI=;
- b=xbkpGDSRfq5cy0XAsKqg63wULogBQlY6RzhwlbH26SGOWuJtTRsX1p6xJ51luIVzlh
- 4WUQVwjpbNuoQ0EEowJmhBVaxjGc4AznceMuSHk/DRRRiiusiFvdOM2EySXN4NrG3JLo
- V3plEO2UDAbzQcHphoBdVUGHRag/lesCVTPqu5Nkz3JvL+bZWk6gnZ6u9c3DN0NQvwjE
- vL3rtqiBJVxWad9kH5Pps5SvsYFx/3wQZyBtoRiS0STHoBp6iv+QES9URQe4Gz38gMut
- tQdDLWvSYYXKOKdcvSPU43WGP3EGN3SRpXlvsi4vNfVc8GeiHJtJpk88q9kzsqFsU4A/
- +0ew==
+ bh=0k/1pxnCKWWtumjQniYI9+UBLsLwY+5PAWCHylsQ54E=;
+ b=Wzkwjq3fbqa505In4QxmxDzmN3zKRBe21OC5wpzQKHdcmA5AY7XBaMzfJZZ/4UQOOK
+ Y8HtTDcAtLyVJsGZs09QWovld+EOlvOAE6qUROqHAD+mM+h6vNhaCwE4bWMo0jKHLEZp
+ PtqLseGiLNgmWKNYS3xQw9XYh1cu5VkVSSPNl8z/Z3Xz6OqqT226qgzTsBgrVIhKfR1y
+ jH6YVHHqsd2oBuXwOjhrrhfMgK1ye7ib8QBvD7zHy3zY0BKUHzfClHkz30QiFxsiliWR
+ +fvFSPxFT3f9zTF1En647NxtoDRpVwMgE9nSYxJv87fTPzLI6zeyDtCRUq011N6+tEb4
+ y1NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735812927; x=1736417727;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=U9HBsCdUSNzIZbzp2sjIH7zCYgPhs1zVJqR7keXBtcI=;
- b=rgecrB8Uy1d1xu2SZM5jlWG9sfk/kHvTa0lxmVjGmFP+q9Yy8HNFETJ2noqH6Tovlq
- k6qpOMLnAeZbevoFMHmfCTlD3PH3FHSgg/LKQpsid5FYMQsMkCKxd1fEhPxgKH8qDxlr
- 1o5786+NtJxuGKqvN1nijx2Bz39Fl41YqbpwzrHSl44IUYCzAyIAl07zsAHu9tNXKvzp
- veeiuwuxmDnM7wBKyAimN+rZG8OO2+8+In3IbzNJPfKeXLr2XOzMcb7hvfsLmCftT3L0
- fIGyh+fN3GPpvDebTwN74o49K4Ntcdq4imX3EBU4ojJDa2iGvGk+wHFIAj96gQe6CqOQ
- ooxg==
-X-Gm-Message-State: AOJu0YwsGNdSHRt/Vr7DfvYNmeWYarDzBr9qpSbC81zZKaBr/qSJI7Ka
- nVfuF2Dll4PS0MXkEL5rL81TcLLtPKw/vrnN9kZDtvQic86sUjJ6Lit7LXCdSxs=
-X-Gm-Gg: ASbGncubdKYgl/EjIZj41KfSHT6fuo/fJC9yI46ZOnKqVeZPOcm8KTxn+eM/frTKiGA
- patGFiDZWBnkZsyvmh0Xl9KtO2Qy8cQ/JOppKyz6q4tQUEgaxIuSFCUhKkyBhIp3yGEQSeNmr92
- w92DErq/SFK83VZD2WLtadH+cLBNIAlYe8UxLOCJaOuhb9JvT+nqXPPdBVOf8wtAIiD5+TxwZGI
- SaLQkaV1pX5Awa0dZ9haeNRCPcUBCRtN+AcYlEYCIh7aVrfE2f9WHw=
-X-Google-Smtp-Source: AGHT+IElyCM5Lw/4E5rjLikYlpCYT821EkWpCk139iAUlF4pAddCQhVnqjv/0f3goIrqUldZxeGwKA==
-X-Received: by 2002:a05:6402:2690:b0:5d3:ba42:e9fe with SMTP id
- 4fb4d7f45d1cf-5d81ddc0362mr36296686a12.12.1735812926984; 
- Thu, 02 Jan 2025 02:15:26 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d80701c822sm18155296a12.77.2025.01.02.02.15.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2025 02:15:25 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0B48B5F8C1;
- Thu,  2 Jan 2025 10:15:24 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gautam Bhat <mindentropy@gmail.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: How does "rsi" get set in x86 prologue?
-In-Reply-To: <CAM2a4uxJFhw71emxdZrB4SF-JSzJy_-bL=g9ke7OmjUoOXUDYQ@mail.gmail.com>
- (Gautam Bhat's message of "Thu, 2 Jan 2025 00:56:47 +0530")
-References: <CAM2a4uxJFhw71emxdZrB4SF-JSzJy_-bL=g9ke7OmjUoOXUDYQ@mail.gmail.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 02 Jan 2025 10:15:23 +0000
-Message-ID: <87jzbdv7wk.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1735813321; x=1736418121;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0k/1pxnCKWWtumjQniYI9+UBLsLwY+5PAWCHylsQ54E=;
+ b=oYvNAoXwM/OTbbWtaqN/Gx/B9a+D4q5s1C29ZCrYx4EJvYme8joXYWgWhTpzQMAHfe
+ QL92T1jIlnwUqqicKu+xiQMyb3P4nCxeW5xFP4TDGP6f3InCmlrNw4a7f9evx3MaFerq
+ vhJKUYCvn+YneW92wGnmzNCeVr6GVlAWiQJDQyeg9Gly4xtjdlXENgD8nfV5yvB90AZL
+ MwUtrLQl8ZwQ+4oSrVACh82fE7Rq902TSQ2978htSEMSxGu3YDLHo2dCG2VquDTapQzb
+ bMuwqnbjENghEVXXrgg8KyXlNTkQBLtpkbL3A1H6NITNrUEVV0CppGWlaI01RA2IqTjk
+ 9VJA==
+X-Gm-Message-State: AOJu0YzlzTf9D/GMec1rw+0C/gYrvvIS6rO0/P0nSIy4kKbFb+8wQeZi
+ IZuFSIQGjtEYXLicrnwRwCPITXI5wGHJznkae9Jmt3EdpYwxGizBUt35Q0fuRyPR8jRy686Pll4
+ XFne404f2kgiHI/LnvkhrGjUwRD0WRAYQ
+X-Gm-Gg: ASbGncuKDZvNIje9suvBjEZUhKX+jNPRmO+L2hExEaLqpRn3zlNFJGuQIJNvvQKw+mb
+ EZy1WqKrHoPUYxiXW4PILQJ7FnFp7gRgZUqtUiA==
+X-Google-Smtp-Source: AGHT+IHh461JhzzFtVYzmBd2FGCZEmKLpp9JnCg+rk+kGPOt5LwC6spQPgLLBLaLlwpX0SmbiGFilKkG0tpACiZVvMQ=
+X-Received: by 2002:a05:6512:1591:b0:53e:3ac2:9bfa with SMTP id
+ 2adb3069b0e04-54229533ac9mr12216678e87.23.1735813320531; Thu, 02 Jan 2025
+ 02:22:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20241223132355.1417356-1-r.peniaev@gmail.com>
+ <20241223132355.1417356-7-r.peniaev@gmail.com>
+ <CAMxuvaxFGXDYpwPfqTUZuBVY4iF_BCm6jwOM=quUBn98hYPt=g@mail.gmail.com>
+In-Reply-To: <CAMxuvaxFGXDYpwPfqTUZuBVY4iF_BCm6jwOM=quUBn98hYPt=g@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Thu, 2 Jan 2025 11:21:49 +0100
+Message-ID: <CACZ9PQVe1Axq6Lp_acaQuXpih2hwAU_7jz-NywyYBQ88hxt1og@mail.gmail.com>
+Subject: Re: [PATCH v6 6/8] chardev/char-mux: implement backend chardev
+ multiplexing
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,122 +94,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gautam Bhat <mindentropy@gmail.com> writes:
+Hi,
 
-> I am trying to understanding the generated code for the x86 target. On
-> EPILOGUE code below:
+First of all Happy New Year :)
+
+On Mon, Dec 30, 2024 at 12:41=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+
+[cut]
+
+> > +
+> > +    for (i =3D 0; i < d->be_cnt; i++) {
+> > +        written =3D d->be_written[i] - d->be_min_written;
+> > +        if (written) {
+> > +            /* Written in the previous call so take into account */
+> > +            ret =3D MIN(written, ret);
+> > +            continue;
+> > +        }
+> > +        r =3D qemu_chr_fe_write(&d->backends[i], buf, len);
+> > +        if (r < 0 && errno =3D=3D EAGAIN) {
+> > +            /*
+> > +             * Fail immediately if write would block. Expect to be cal=
+led
+> > +             * soon on watch wake up.
+> > +             */
+> > +            d->be_eagain_ind =3D i;
+> > +            return r;
 >
-> 0x7fff98000000:  55                       pushq    %rbp
-> 0x7fff98000001:  53                       pushq    %rbx
-> 0x7fff98000002:  41 54                    pushq    %r12
-> 0x7fff98000004:  41 55                    pushq    %r13
-> 0x7fff98000006:  41 56                    pushq    %r14
-> 0x7fff98000008:  41 57                    pushq    %r15
-> 0x7fff9800000a:  48 8b ef                 movq     %rdi, %rbp
-> 0x7fff9800000d:  48 81 c4 78 fb ff ff     addq     $-0x488, %rsp
-> 0x7fff98000014:  ff e6                    jmpq     *%rsi
-> 0x7fff98000016:  33 c0                    xorl     %eax, %eax
-> 0x7fff98000018:  48 81 c4 88 04 00 00     addq     $0x488, %rsp
-> 0x7fff9800001f:  c5 f8 77                 vzeroupper
-> 0x7fff98000022:  41 5f                    popq     %r15
-> 0x7fff98000024:  41 5e                    popq     %r14
-> 0x7fff98000026:  41 5d                    popq     %r13
-> 0x7fff98000028:  41 5c                    popq     %r12
-> 0x7fff9800002a:  5b                       popq     %rbx
-> 0x7fff9800002b:  5d                       popq     %rbp
-> 0x7fff9800002c:  c3                       retq
->
-> Can someone help me understand in which file or where in the source
-> does the "rsi" get set to jump? (0x7fff98000014:  ff e6   jmpq
-> *%rsi)
+> But next attempt to write will loop over the same backend again, which
+> will see the "same" write multiple times.
 
-The prologue/epilogue code is generated by:
+This case is handled by checking the difference between counters
+`d->be_written[i]` and `d->be_min_written`. The idea is that device, which
+already "swallowed" some portion of data, will be skipped from writing to i=
+t,
+until it catches up with the stream.
 
-  /* Generate global QEMU prologue and epilogue code */
-  static void tcg_target_qemu_prologue(TCGContext *s)
-  {
-      int i, stack_addend;
-
-      /* TB prologue */
-
-      /* Reserve some stack space, also for TCG temps.  */
-      stack_addend =3D FRAME_SIZE - PUSH_SIZE;
-      tcg_set_frame(s, TCG_REG_CALL_STACK, TCG_STATIC_CALL_ARGS_SIZE,
-                    CPU_TEMP_BUF_NLONGS * sizeof(long));
-
-      /* Save all callee saved registers.  */
-      for (i =3D 0; i < ARRAY_SIZE(tcg_target_callee_save_regs); i++) {
-          tcg_out_push(s, tcg_target_callee_save_regs[i]);
-      }
-
-      if (!tcg_use_softmmu && guest_base) {
-          int seg =3D setup_guest_base_seg();
-          if (seg !=3D 0) {
-              x86_guest_base.seg =3D seg;
-          } else if (guest_base =3D=3D (int32_t)guest_base) {
-              x86_guest_base.ofs =3D guest_base;
-          } else {
-              assert(TCG_TARGET_REG_BITS =3D=3D 64);
-              /* Choose R12 because, as a base, it requires a SIB byte. */
-              x86_guest_base.index =3D TCG_REG_R12;
-              tcg_out_movi(s, TCG_TYPE_PTR, x86_guest_base.index, guest_bas=
-e);
-              tcg_regset_set_reg(s->reserved_regs, x86_guest_base.index);
-          }
-      }
-
-      if (TCG_TARGET_REG_BITS =3D=3D 32) {
-          tcg_out_ld(s, TCG_TYPE_PTR, TCG_AREG0, TCG_REG_ESP,
-                     (ARRAY_SIZE(tcg_target_callee_save_regs) + 1) * 4);
-          tcg_out_addi(s, TCG_REG_ESP, -stack_addend);
-          /* jmp *tb.  */
-          tcg_out_modrm_offset(s, OPC_GRP5, EXT5_JMPN_Ev, TCG_REG_ESP,
-                               (ARRAY_SIZE(tcg_target_callee_save_regs) + 2=
-) * 4
-                               + stack_addend);
-      } else {
-          tcg_out_mov(s, TCG_TYPE_PTR, TCG_AREG0, tcg_target_call_iarg_regs=
-[0]);
-          tcg_out_addi(s, TCG_REG_ESP, -stack_addend);
-          /* jmp *tb.  */
-          tcg_out_modrm(s, OPC_GRP5, EXT5_JMPN_Ev, tcg_target_call_iarg_reg=
-s[1]);
-      }
-
-      /*
-       * Return path for goto_ptr. Set return value to 0, a-la exit_tb,
-       * and fall through to the rest of the epilogue.
-       */
-      tcg_code_gen_epilogue =3D tcg_splitwx_to_rx(s->code_ptr);
-      tcg_out_movi(s, TCG_TYPE_REG, TCG_REG_EAX, 0);
-
-      /* TB epilogue */
-      tb_ret_addr =3D tcg_splitwx_to_rx(s->code_ptr);
-
-      tcg_out_addi(s, TCG_REG_CALL_STACK, stack_addend);
-
-      if (have_avx2) {
-          tcg_out_vex_opc(s, OPC_VZEROUPPER, 0, 0, 0, 0);
-      }
-      for (i =3D ARRAY_SIZE(tcg_target_callee_save_regs) - 1; i >=3D 0; i--=
-) {
-          tcg_out_pop(s, tcg_target_callee_save_regs[i]);
-      }
-      tcg_out_opc(s, OPC_RET, 0, 0, 0);
-  }
-
-The call into the prologue comes from:
-
-  ret =3D tcg_qemu_tb_exec(cpu_env(cpu), tb_ptr);
-
-in cpu_tb_exec. With env in RDI and tb_ptr (the code address) being in
-RSI.
+Please take a look into the `char_mux_be_test()` test case, where the
+EAGAIN scenario is tested. The line test-char.c:716 explicitly shows the
+repeat of the write procedure after EAGAIN was received.
 
 >
-> Thanks,
-> Gautam.
+> > +        } else if (r < 0) {
+> > +            /*
+> > +             * Ignore all other errors and pretend the entire buffer i=
+s
+> > +             * written to avoid this chardev being watched. This devic=
+e
+> > +             * becomes disabled until the following write succeeds, bu=
+t
+> > +             * writing continues to others.
+> > +             */
+> > +            r =3D len;
+> > +        }
+> > +        d->be_written[i] +=3D r;
+> > +        ret =3D MIN(r, ret);
+> > +    }
+> > +    d->be_min_written +=3D ret;
+> > +
+> > +    return ret;
+> > +}
+>
+> I am not sure what is the correct way to handle write here. This
+> mux-be behaviour is different from mux-fe, since it handles all
+> backend I/Os, and does not select one... it's more of a "mixer",
+> right, Is this wanted?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Right. The intention is to have both consoles simultaneously
+working, for example having char-based tio (over a socket chardev)
+and image-based vnc (over a vc chardev):
+
+    -chardev socket,path=3D/tmp/sock,server=3Don,wait=3Doff,id=3Dsock0 \
+    -chardev vc,id=3Dvc0 \
+
+and both are connected to the same frontend device.
+
+I agree with you on the "mixer" naming concern, this did not come to
+my mind. As far as I understand the logic of `mux-fe`, it just doesn't seem
+possible to have both frontends running at the same time, because they
+will both generate output, at least that's the case for virtual consoles:
+imagine you have two virtual console frontends working at the same time
+and one backend. Any command you enter from a backend causes the two
+separate frontends to output completely different data.
+
+On the other hand, several backend devices can easily be simultaneously
+attached to one frontend, the analogy is simple: several monitors, several
+keyboards, etc work perfectly fine with a single PC. At least this is how
+I see this, please correct me if I'm wrong.
+
+Do you think we need to artificially introduce multiplexing logic to be ful=
+ly
+compliant with multiplexer naming? It's not hard to do, repeating
+`mux_proc_byte()` from `mux-fe`. In my use-case, I'll still need to disable
+multiplexing in favor of 'mixing', for example with the 'mixer=3Don' option=
+,
+i.e. '-chardev mux-be,mixer=3Don,...`. Or do you think it should be some
+completely different beast, something like mixer chardev?
+
+--
+Roman
 
