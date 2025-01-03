@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49B8E7718F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 23:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B75E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 23:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTqvj-0007hS-BU; Fri, 03 Jan 2025 18:18:11 -0500
+	id 1tTqvZ-0007g6-IR; Fri, 03 Jan 2025 18:18:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvb-0007ga-Fy
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:18:04 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvR-0007fI-Tr
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:17:54 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvZ-0004JB-SO
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:18:03 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-385e06af753so6430526f8f.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 15:18:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvQ-0004Il-9J
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:17:53 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-436326dcb1cso84180815e9.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 15:17:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735946279; x=1736551079; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735946269; x=1736551069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dvr9i4kjv30irFUGSKh7uwfrgCkzcWtJhKmLo4Kj02k=;
- b=Cfjna+cKtWmohoBijknJyZ6H+a6gIz6cBVrnPAC12qB4eyNAGRNBoLrVQQ57iZto7V
- sOXMmUT448QkHEJiqdHVYOK2V47wp8WMjlI3KXP7Ma/smr5zzInAqsldjFiPIobY8lSB
- FulgHHGkQ8qpCW1oPGo/V4WyTdaqKuIDtA9b4R/hJUympNX92uL1nNm72OH12zesnYbY
- SlVYUpbWF3/c07StqayD89T5di5Bc+UFae3Si4xJOvkM4HV0N9kq2ahXDWoYuE+nLtkL
- DSwvSn5kSIDAp/GMzSSkUutyx2bqJRukJCvJ/CJ+bJCc59XVnyR8IQC19cv5pJuzCdw1
- Xc/w==
+ bh=Fd91irf1/HSw++4lXtUuV4IvFrA2wGjS8BYwmjz+8os=;
+ b=w1Q5juwrkFU5OO5kFZeaDfapjX6xEks/bnvQYSfFABF2dm37ls/gjO59KR378hb+on
+ QTxikA+ru8+dxdlWKL3A8qt5AQLbpr2iwzAyANSG69eSL/3PhczurnnpU1ju762124j7
+ 5bPQckD65HL4skk4jNqxiDlI6CsM66f7OWLXDhjE9dOiFFsZ+4xHlXzcxqURn1IwcikG
+ VYAJVCSqkVg0LCWjuPsQVXtmhlbI1ORWFhRcMLM4OjcFGhWZhQrFl8Ipu7esG0uAzUg6
+ Rs65zLAAItBukb8PX/u8bP0V00BN4ZmfAor7q4SAWd/aYmcayOR7nfJLZ3TRWi01X5R2
+ 3S6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735946279; x=1736551079;
+ d=1e100.net; s=20230601; t=1735946269; x=1736551069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dvr9i4kjv30irFUGSKh7uwfrgCkzcWtJhKmLo4Kj02k=;
- b=SELgaIqxbtWCxkvUIenDlGYMuMgGM8Nllb9VgdyOm0HepAWe2fGt8Z954LhvlKjl+x
- NpWBkrCpCIfGVGhwX7mt+JoxixbwbErOdt7x8OSmReb9uQ6AzaxIusQ47ziCp0VZv/9c
- t+GKEDf/M/bkWjnpFwGwUb7i38sK8YefmKL9nI+oz8WaERK/Qh65ZQ7owlAJFlGFF7Rt
- gASebXnYFz19t6u5If1FYPA8X4lDLBgfPnb2iO6PQUpPLfmiVEZwCR+ZjBbz9c+AO9j1
- lHGtGcWmVrgpM4Pc6fkRVoTuMi3aNcgy9GqBU0NMY5vvqa/uZdJSme0U/nu8ZV590tnL
- 91GA==
-X-Gm-Message-State: AOJu0Yzzficg1roz2LoiZm9L0ouG0gq93THcSQbSopPrAxJ6ubeUFfLa
- t5v4vpN9J/qeR3AaM+Qb8jYZYf9vffNqdqSHmKjzAso4js2ufEWqoHAdxlaLIZyu5Oi4qXgHOZS
- bkpk=
-X-Gm-Gg: ASbGnct4BW0jREY8Rj0YYdCBPok3CNiIADX15HT9H00ZPUNd9S4oV8PuhgrkRtOyMJS
- BEpvB+DDMrsevmAE33xu/gmKZRCak8s/EhFDx34gyegJd6qfXc34J63W/rpE3D1Yd1cQ7fzAR0w
- ccJVfRshGKABNnH5xDzWw44ua9frnjYlJUf6/v2ZV8ub8QELaqUqXJIt9gOn2szhDPLtbqVGMw/
- DEwB/BMLLJU62LaoQlrfrj9JmWrAqOKc/P1Ux4ZfXi6F6AHrBupxj99Nwv5WH5ieCbuQkp477CR
- bQcHc8DcRc7XJtmv/YzofI7xJbxR4N8=
-X-Google-Smtp-Source: AGHT+IG63TKFeKPRwPdbBnA+jps1IadvzS3gSAY3rWN86k4OTlp76zNkJaq7HQPq61t57gzTs6L7mw==
-X-Received: by 2002:a05:6000:704:b0:385:fc00:f5d4 with SMTP id
- ffacd0b85a97d-38a221f9f79mr43046709f8f.29.1735946279572; 
- Fri, 03 Jan 2025 15:17:59 -0800 (PST)
+ bh=Fd91irf1/HSw++4lXtUuV4IvFrA2wGjS8BYwmjz+8os=;
+ b=Ihv/dihDBnh4Auy5rUwCcsG0kvotaM81EzLFqcoFyroSnvQf2qfdHJdUOK4BERwiqM
+ xLL0LVKWnkH9HetWF/pZkBltaRAkc4S6xEwiuyc8iEA9NY9EgV+Ih+4zx+qm0wMDY4GB
+ 5xQ8TQ1qGuamCl44ncZ2vOUE3bVexvY0nS+kc2JUDymKXiMPDq9uIAJRK+zqBgkj7NbW
+ J0coHHu6SeU44VxaTe8dWWGMTCZYUM6b/utodLsZ5nWvoPYU/2cbgp6O5bJClLozzGPr
+ S9o/LjQPQXhOXlFvI3SRmEIhTAJupLb732ZN5FxbEhN9mbIvzrxevJANXhiejbtqKL/d
+ Jitw==
+X-Gm-Message-State: AOJu0Yxr/ZuhGSmk97GgMCLDfUAOI/TMFXxk6b9D7xLPLsmHlVsU+mha
+ ReXd2ccInT88W3GsDRtC7Vyku4I0W1gz3syvI3W+6AriVJCLu8SfizVAJ7+jrSmZwv7FCECQ9Jk
+ xeM4=
+X-Gm-Gg: ASbGncuJAEsuJHs4SIvuU3lZD/AzRTCq7Yt91VgXbiha+J2Y0dSvwyHtgHD2RKLhztd
+ eEw0xbXrLSED2XH2qKd5QLigbNv9sTBQwk6anMn8Fucn4WbjsrtwMY7Gek4wqk+MDpJDIAK/u0y
+ NMVpnBOGywHDx4Hi9CaMG/8s+2qsfQJRAQleolFvi0BMXDeMwE2KP0z/fkPmsNSanob0CPTBuxR
+ kGUz4ztVAcRRZg215sHb7PwKpXhpwxqDVPFviC2jY3R4616tdii/1HVJM+oI7AV4MrEoUKU+Dyb
+ nPRNRLHXvZLUmbU/YpD3ZKk5RFyETjY=
+X-Google-Smtp-Source: AGHT+IHdfjTPBusfrsOiih6/ZzrrEDIZwEfWmhibHzWr4VoyGvx6cSeRQvOWl5mWj93iXEHa1bm4mg==
+X-Received: by 2002:a05:6000:2ae:b0:382:450c:2607 with SMTP id
+ ffacd0b85a97d-38a221f3392mr37667024f8f.4.1735946269189; 
+ Fri, 03 Jan 2025 15:17:49 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661200abesm493862365e9.18.2025.01.03.15.17.58
+ 5b1f17b1804b1-43656af6c42sm530125255e9.9.2025.01.03.15.17.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 15:17:59 -0800 (PST)
+ Fri, 03 Jan 2025 15:17:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -72,17 +72,17 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 3/6] target/xtensa: Move xtensa-isa.c to common_ss[]
-Date: Sat,  4 Jan 2025 00:17:35 +0100
-Message-ID: <20250103231738.65413-4-philmd@linaro.org>
+Subject: [RFC PATCH 1/6] target: Only link capstone to targets requiring it
+Date: Sat,  4 Jan 2025 00:17:33 +0100
+Message-ID: <20250103231738.65413-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250103231738.65413-1-philmd@linaro.org>
 References: <20250103231738.65413-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,31 +105,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Xtensa disassembler (selected with CONFIG_XTENSA_DIS=y)
-uses methods defined in xtensa-isa.c, so this file has to be
-compiled when the disassembler is linked.
+No need to link capstone to targets which don't use it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ disas/meson.build        | 1 -
+ target/arm/meson.build   | 1 +
+ target/i386/meson.build  | 1 +
+ target/ppc/meson.build   | 1 +
+ target/s390x/meson.build | 1 +
+ 5 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/xtensa/meson.build b/target/xtensa/meson.build
-index f8d60101e3d..68ebfe2582d 100644
---- a/target/xtensa/meson.build
-+++ b/target/xtensa/meson.build
-@@ -12,9 +12,10 @@ xtensa_ss.add(files(
-   'op_helper.c',
-   'translate.c',
-   'win_helper.c',
--  'xtensa-isa.c',
+diff --git a/disas/meson.build b/disas/meson.build
+index bbfa1197835..4e80adf36ae 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -20,4 +20,3 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
  ))
- 
-+common_ss.add(when: 'CONFIG_XTENSA_DIS', if_true: files('xtensa-isa.c'))
-+
- xtensa_system_ss = ss.source_set()
- xtensa_system_ss.add(files(
-   'dbg_helper.c',
+ common_ss.add(files('disas-common.c'))
+ system_ss.add(files('disas-mon.c'))
+-specific_ss.add(capstone)
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 2e10464dbb6..3d64334657d 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -1,4 +1,5 @@
+ arm_ss = ss.source_set()
++arm_ss.add(capstone)
+ arm_ss.add(files(
+   'cpu.c',
+   'debug_helper.c',
+diff --git a/target/i386/meson.build b/target/i386/meson.build
+index 2e9c472f49d..7d1363ec21f 100644
+--- a/target/i386/meson.build
++++ b/target/i386/meson.build
+@@ -1,4 +1,5 @@
+ i386_ss = ss.source_set()
++i386_ss.add(capstone)
+ i386_ss.add(files(
+   'cpu.c',
+   'gdbstub.c',
+diff --git a/target/ppc/meson.build b/target/ppc/meson.build
+index db3b7a0c33b..b5f509612ec 100644
+--- a/target/ppc/meson.build
++++ b/target/ppc/meson.build
+@@ -1,4 +1,5 @@
+ ppc_ss = ss.source_set()
++ppc_ss.add(capstone)
+ ppc_ss.add(files(
+   'cpu-models.c',
+   'cpu.c',
+diff --git a/target/s390x/meson.build b/target/s390x/meson.build
+index 3b34ae034cb..6e00793944e 100644
+--- a/target/s390x/meson.build
++++ b/target/s390x/meson.build
+@@ -1,4 +1,5 @@
+ s390x_ss = ss.source_set()
++s390x_ss.add(capstone)
+ s390x_ss.add(files(
+   'cpu.c',
+   'cpu_features.c',
 -- 
 2.47.1
 
