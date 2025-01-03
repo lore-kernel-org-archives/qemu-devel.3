@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6646E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398B4E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTlb2-0002iQ-Db; Fri, 03 Jan 2025 12:36:28 -0500
+	id 1tTlcy-0003n6-0d; Fri, 03 Jan 2025 12:38:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=ZvCr=T3=kaod.org=clg@ozlabs.org>)
- id 1tTlb0-0002hX-2e; Fri, 03 Jan 2025 12:36:26 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tTlcv-0003mM-Ly; Fri, 03 Jan 2025 12:38:26 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=ZvCr=T3=kaod.org=clg@ozlabs.org>)
- id 1tTlax-0005AJ-5y; Fri, 03 Jan 2025 12:36:25 -0500
+ id 1tTlct-0005Ix-VN; Fri, 03 Jan 2025 12:38:25 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YPrMv36yhz4xfV;
- Sat,  4 Jan 2025 04:36:11 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YPrQD1cBSz4xfV;
+ Sat,  4 Jan 2025 04:38:12 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YPrMq6WCwz4wcl;
- Sat,  4 Jan 2025 04:36:04 +1100 (AEDT)
-Message-ID: <82f7f669-f04f-4230-adaf-a9920a30dbed@kaod.org>
-Date: Fri, 3 Jan 2025 18:36:07 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YPrQ86k3Dz4xfR;
+ Sat,  4 Jan 2025 04:38:08 +1100 (AEDT)
+Message-ID: <6d7d7471-5d23-4a12-ae7c-4574eaa4e015@kaod.org>
+Date: Fri, 3 Jan 2025 18:38:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] aspeed: ast27x0: Map unimplemented devices in SoC
- memory
+Subject: Re: [PATCH 3/5] aspeed: Introduce AST27x0 SoC with Cortex-M4 support
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -42,11 +41,9 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
 Cc: Troy Lee <troy_lee@aspeedtech.com>,
  Yunlin Tang <yunlin.tang@aspeedtech.com>
 References: <20241225020311.3718080-1-steven_lee@aspeedtech.com>
- <20241225020311.3718080-3-steven_lee@aspeedtech.com>
- <94c71f3b-4c3a-4989-af08-2cf07c8aca2c@kaod.org>
- <KL1PR0601MB418046C74568BBE39A6ECB1B85152@KL1PR0601MB4180.apcprd06.prod.outlook.com>
- <09cccc1d-e678-4f79-af5d-673d5f9c5588@kaod.org>
- <KL1PR0601MB4180BBD75C70B77F1476759385152@KL1PR0601MB4180.apcprd06.prod.outlook.com>
+ <20241225020311.3718080-4-steven_lee@aspeedtech.com>
+ <513c95c7-8084-460c-86b8-c89612de48dd@kaod.org>
+ <KL1PR0601MB4180C0343845F973DE86571285152@KL1PR0601MB4180.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -91,18 +88,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <KL1PR0601MB4180BBD75C70B77F1476759385152@KL1PR0601MB4180.apcprd06.prod.outlook.com>
+In-Reply-To: <KL1PR0601MB4180C0343845F973DE86571285152@KL1PR0601MB4180.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=ZvCr=T3=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.204, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.204, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,96 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/3/25 10:57, Steven Lee wrote:
-> Hi Cédric,
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@kaod.org>
->> Sent: Friday, January 3, 2025 5:44 PM
->> To: Steven Lee <steven_lee@aspeedtech.com>; Peter Maydell
->> <peter.maydell@linaro.org>; Troy Lee <leetroy@gmail.com>; Jamin Lin
->> <jamin_lin@aspeedtech.com>; Andrew Jeffery
->> <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; open
->> list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC here
->> <qemu-devel@nongnu.org>
->> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
->> <yunlin.tang@aspeedtech.com>
->> Subject: Re: [PATCH 2/5] aspeed: ast27x0: Map unimplemented devices in SoC
->> memory
->>
->> On 1/3/25 09:14, Steven Lee wrote:
->>> Hi Cédric,
->>>
->>>> -----Original Message-----
->>>> From: Cédric Le Goater <clg@kaod.org>
->>>> Sent: Friday, December 27, 2024 5:53 PM
->>>> To: Steven Lee <steven_lee@aspeedtech.com>; Peter Maydell
->>>> <peter.maydell@linaro.org>; Troy Lee <leetroy@gmail.com>; Jamin Lin
->>>> <jamin_lin@aspeedtech.com>; Andrew Jeffery
->>>> <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; open
->>>> list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC here
->>>> <qemu-devel@nongnu.org>
->>>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Yunlin Tang
->>>> <yunlin.tang@aspeedtech.com>
->>>> Subject: Re: [PATCH 2/5] aspeed: ast27x0: Map unimplemented devices
->>>> in SoC memory
->>>>
->>>> Hello,
->>>>
->>>> On 12/25/24 03:03, Steven Lee wrote:
->>>>> Maps following unimplemented devices in SoC memory
->>>>> - dpmcu
->>>>> - iomem0
->>>>> - iomem1
->>>>> - ltpi
->>>>> - io
->>>>
->>>> Could you please add a sentence about what these devices are ?
->>>>
->>>> Thanks,
->>>>
->>>> C.
->>>>
->>>
->>> DPMCU stands for Display Port MCU controller.
->>> Regarding LTPI, when the AST1700 is connected to the AST2700, AST1070
->> LTPI controller's registers are mapped to 0x30000000.
->>
->> Is the LTPI IP a device for communication between SoCs ?
-> 
-> Yes, it can be used to connect to AST1700. AST1700 is an I/O expander that supports the DC-SCM 2.1 LTPI protocol.
-> It provides AST2700 with additional GPIO, UART, I3C, and other interfaces.
+Hello Steven,
 
-This is the kind of information which would be useful to add
-to the description of the SoC/machine and in the commit log.
+[ ... ]
 
+>>> +struct Aspeed27x0CM4SoCState {
+>>> +    AspeedSoCState parent;
+>>> +
+>>> +    ARMv7MState armv7m;
+>>
+>> Why not use Aspeed10x0SoCState instead ?
+>>
+> 
+> The AST2700's CM4 is not part of the AST10x0 series SoC.
+
+ok. These are different HW designs.
+
+> However, since the structure is identical, I can switch to 
+> using Aspeed10x0SoCState if reusing it is deemed more appropriate.
+
+That's fine. Let's keep it this way.
 
 Thanks,
 
 C.
 
-
-> 
-> Thanks,
-> Steven
-> 
->>
->>> Io, Iomem0 and Iomem1 include unimplemented controllers in the memory
->> ranges 0x120000000 - 0x121000000 and 0x14000000 - 0x141000000.
->>> For instance:
->>> - USB hub at 0x12010000
->>> - eSPI at 0x14C5000
->>> - PWM at 0x140C0000
->>>
->>> I will include the description in the commit message.
->>
->> yes please.
->>
->> Thanks,
->>
->> C.
->>
->>
-> 
 
 
