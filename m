@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B75E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 23:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3E3E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 23:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTqvZ-0007g6-IR; Fri, 03 Jan 2025 18:18:02 -0500
+	id 1tTqvx-0007jL-7n; Fri, 03 Jan 2025 18:18:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvR-0007fI-Tr
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:17:54 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvv-0007iz-EK
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:18:23 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvQ-0004Il-9J
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:17:53 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-436326dcb1cso84180815e9.0
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 15:17:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTqvs-0004Kl-Sk
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 18:18:22 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-385df53e559so9964141f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 15:18:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735946269; x=1736551069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735946299; x=1736551099; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Fd91irf1/HSw++4lXtUuV4IvFrA2wGjS8BYwmjz+8os=;
- b=w1Q5juwrkFU5OO5kFZeaDfapjX6xEks/bnvQYSfFABF2dm37ls/gjO59KR378hb+on
- QTxikA+ru8+dxdlWKL3A8qt5AQLbpr2iwzAyANSG69eSL/3PhczurnnpU1ju762124j7
- 5bPQckD65HL4skk4jNqxiDlI6CsM66f7OWLXDhjE9dOiFFsZ+4xHlXzcxqURn1IwcikG
- VYAJVCSqkVg0LCWjuPsQVXtmhlbI1ORWFhRcMLM4OjcFGhWZhQrFl8Ipu7esG0uAzUg6
- Rs65zLAAItBukb8PX/u8bP0V00BN4ZmfAor7q4SAWd/aYmcayOR7nfJLZ3TRWi01X5R2
- 3S6Q==
+ bh=NFgkKamr5QeIwstbRr7Q/p762wUgXwLu6RDwYB0Omtc=;
+ b=wXmEtYwpUMEXiLKSfOddrl9CtuYv1JGRQNJdlMuIaFnn3t/dbsd/YMXZka0bixAGxX
+ YJg29PVXP+n8S5JWwHUx6SLYXeUTTFxZdKt0FtFCIlvKly4Ui9X+FqzvoZSp1zn8KrZ2
+ 9H5v0lFMSSgBWmTbOSGpnAaWIAAUTOaHKlGsKzk0qlcAGZdl+Zd9wQIAxrz6Z/c+dQ2h
+ jJz/+69kznjx8tJpvl3eT27EKvX9QMazZmVL8fSs2LOlEETus/JLSM0UwLZo0XqjDaUb
+ O5vUphD24q6ZQmGzfRYqGRWx763EtXIezJY+VN/dWCaQbWZEzIf8dcFJgEOFncS3uVvw
+ /0Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735946269; x=1736551069;
+ d=1e100.net; s=20230601; t=1735946299; x=1736551099;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Fd91irf1/HSw++4lXtUuV4IvFrA2wGjS8BYwmjz+8os=;
- b=Ihv/dihDBnh4Auy5rUwCcsG0kvotaM81EzLFqcoFyroSnvQf2qfdHJdUOK4BERwiqM
- xLL0LVKWnkH9HetWF/pZkBltaRAkc4S6xEwiuyc8iEA9NY9EgV+Ih+4zx+qm0wMDY4GB
- 5xQ8TQ1qGuamCl44ncZ2vOUE3bVexvY0nS+kc2JUDymKXiMPDq9uIAJRK+zqBgkj7NbW
- J0coHHu6SeU44VxaTe8dWWGMTCZYUM6b/utodLsZ5nWvoPYU/2cbgp6O5bJClLozzGPr
- S9o/LjQPQXhOXlFvI3SRmEIhTAJupLb732ZN5FxbEhN9mbIvzrxevJANXhiejbtqKL/d
- Jitw==
-X-Gm-Message-State: AOJu0Yxr/ZuhGSmk97GgMCLDfUAOI/TMFXxk6b9D7xLPLsmHlVsU+mha
- ReXd2ccInT88W3GsDRtC7Vyku4I0W1gz3syvI3W+6AriVJCLu8SfizVAJ7+jrSmZwv7FCECQ9Jk
- xeM4=
-X-Gm-Gg: ASbGncuJAEsuJHs4SIvuU3lZD/AzRTCq7Yt91VgXbiha+J2Y0dSvwyHtgHD2RKLhztd
- eEw0xbXrLSED2XH2qKd5QLigbNv9sTBQwk6anMn8Fucn4WbjsrtwMY7Gek4wqk+MDpJDIAK/u0y
- NMVpnBOGywHDx4Hi9CaMG/8s+2qsfQJRAQleolFvi0BMXDeMwE2KP0z/fkPmsNSanob0CPTBuxR
- kGUz4ztVAcRRZg215sHb7PwKpXhpwxqDVPFviC2jY3R4616tdii/1HVJM+oI7AV4MrEoUKU+Dyb
- nPRNRLHXvZLUmbU/YpD3ZKk5RFyETjY=
-X-Google-Smtp-Source: AGHT+IHdfjTPBusfrsOiih6/ZzrrEDIZwEfWmhibHzWr4VoyGvx6cSeRQvOWl5mWj93iXEHa1bm4mg==
-X-Received: by 2002:a05:6000:2ae:b0:382:450c:2607 with SMTP id
- ffacd0b85a97d-38a221f3392mr37667024f8f.4.1735946269189; 
- Fri, 03 Jan 2025 15:17:49 -0800 (PST)
+ bh=NFgkKamr5QeIwstbRr7Q/p762wUgXwLu6RDwYB0Omtc=;
+ b=t2n7aLFY7iv2W2hBWq5Jzc2+sKJJ+sQfq5RObdTP1yyZVaxqeYq/ZJJ+mo8FhhLhSg
+ k7B1/coBx3VhrRHG3nM31nsNr3PM+epUM+sjuCXuPhfOSKYLNYDiH8uCqjseKoZrD8k6
+ cqx2vzELo6ya1GgdAGFbFgq+dBxaZQzv96yHjLkkD1BLBTm6jXuac0cqf1Z4Hx8QGzVZ
+ lQjn5gakdzre2nUvOCh008Kss72YApoJBhaGHGPPnn7fBFwu4C2AC4iugP0Qy0ZrzljY
+ QUlmLDF9B1tJddjfQcrSDzDJUArob020F+hUktiWDQ3SSekoWogFUnwACBkok7L9fP//
+ wmiQ==
+X-Gm-Message-State: AOJu0Yy/Ldu1LG6jQjoIpLuwXi9VF8IcSxtkkWYGmv1Zk2a1QdF8WV1L
+ l/j1lPd6FsyA5rdUfsdMrUkflTLi8ni0KCu2ud5IhQh94ojJqtn3IZepk8Y7oDZOaVniMG0XpnD
+ QDfU=
+X-Gm-Gg: ASbGncshij/ql4RqlGGUw+F598Sps47yfbsAcr+YIOI1qACNqlfIf/lGe3Na+QgI6HM
+ fYvZUViokp9bdWJSjq5BPJI7qjatGcEcUt65nJiUQpdnmXiesFRRdRIFqVdEN8yG3TstFwn64N3
+ YplAs8I+mWw62OZ1fmE7NMxd8szAFW383/v5bdg3W+XslNH2WKWYSowvxv1GZij7vGHUOIcw0px
+ I/EcBNe2TpgpFrsqkkeRwIeZrJ8nuMO4LioZxWOp8hGE+GCln83BsYPqCJObs31nKpbitLxPH7T
+ q5NSIVrtRbwI/QvWA3gC1C1G547+zMQ=
+X-Google-Smtp-Source: AGHT+IEELyeRPCxWvjPw55To1sVaG4rmYhgqPjLZbhNjea9LVY8pUjkiArH7cSW7A3cNDMnoXhekuw==
+X-Received: by 2002:a5d:64a3:0:b0:385:f527:be6d with SMTP id
+ ffacd0b85a97d-38a2240074fmr41498707f8f.36.1735946298953; 
+ Fri, 03 Jan 2025 15:18:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656af6c42sm530125255e9.9.2025.01.03.15.17.48
+ ffacd0b85a97d-38a2e25edbbsm34109746f8f.110.2025.01.03.15.18.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 15:17:48 -0800 (PST)
+ Fri, 03 Jan 2025 15:18:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -72,17 +72,17 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 1/6] target: Only link capstone to targets requiring it
-Date: Sat,  4 Jan 2025 00:17:33 +0100
-Message-ID: <20250103231738.65413-2-philmd@linaro.org>
+Subject: [RFC PATCH 6/6] disas: Select capstone targets by default
+Date: Sat,  4 Jan 2025 00:17:38 +0100
+Message-ID: <20250103231738.65413-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250103231738.65413-1-philmd@linaro.org>
 References: <20250103231738.65413-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,66 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to link capstone to targets which don't use it.
+When capstone is available, we get ARM/X86/PPC/S390X
+disassemblers in common_ss[] for free.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- disas/meson.build        | 1 -
- target/arm/meson.build   | 1 +
- target/i386/meson.build  | 1 +
- target/ppc/meson.build   | 1 +
- target/s390x/meson.build | 1 +
- 5 files changed, 4 insertions(+), 1 deletion(-)
+ disas/Kconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/disas/meson.build b/disas/meson.build
-index bbfa1197835..4e80adf36ae 100644
---- a/disas/meson.build
-+++ b/disas/meson.build
-@@ -20,4 +20,3 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
- ))
- common_ss.add(files('disas-common.c'))
- system_ss.add(files('disas-mon.c'))
--specific_ss.add(capstone)
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 2e10464dbb6..3d64334657d 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -1,4 +1,5 @@
- arm_ss = ss.source_set()
-+arm_ss.add(capstone)
- arm_ss.add(files(
-   'cpu.c',
-   'debug_helper.c',
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 2e9c472f49d..7d1363ec21f 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -1,4 +1,5 @@
- i386_ss = ss.source_set()
-+i386_ss.add(capstone)
- i386_ss.add(files(
-   'cpu.c',
-   'gdbstub.c',
-diff --git a/target/ppc/meson.build b/target/ppc/meson.build
-index db3b7a0c33b..b5f509612ec 100644
---- a/target/ppc/meson.build
-+++ b/target/ppc/meson.build
-@@ -1,4 +1,5 @@
- ppc_ss = ss.source_set()
-+ppc_ss.add(capstone)
- ppc_ss.add(files(
-   'cpu-models.c',
-   'cpu.c',
-diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-index 3b34ae034cb..6e00793944e 100644
---- a/target/s390x/meson.build
-+++ b/target/s390x/meson.build
-@@ -1,4 +1,5 @@
- s390x_ss = ss.source_set()
-+s390x_ss.add(capstone)
- s390x_ss.add(files(
-   'cpu.c',
-   'cpu_features.c',
+diff --git a/disas/Kconfig b/disas/Kconfig
+index 1d2c397c953..8af8ecd5c81 100644
+--- a/disas/Kconfig
++++ b/disas/Kconfig
+@@ -3,6 +3,7 @@ config ALPHA_DIS
+ 
+ config ARM_DIS
+     bool
++    default y if CAPSTONE
+ 
+ config AVR_DIS
+     bool
+@@ -15,6 +16,7 @@ config HPPA_DIS
+ 
+ config I386_DIS
+     bool
++    default y if CAPSTONE
+ 
+ config LOONGARCH_DIS
+     bool
+@@ -33,6 +35,7 @@ config OPENRISC_DIS
+ 
+ config PPC_DIS
+     bool
++    default y if CAPSTONE
+ 
+ config RISCV_DIS
+     bool
+@@ -42,6 +45,7 @@ config RX_DIS
+ 
+ config S390_DIS
+     bool
++    default y if CAPSTONE
+ 
+ config SH4_DIS
+     bool
 -- 
 2.47.1
 
