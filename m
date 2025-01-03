@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5276FE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97EBE77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTieg-0004nh-LT; Fri, 03 Jan 2025 09:28:02 -0500
+	id 1tTifq-0005PI-AU; Fri, 03 Jan 2025 09:29:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTiec-0004nK-Fh
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:27:59 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1tTifo-0005P4-7R
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:29:12 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTieU-0001WK-FO
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:27:52 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2ee51f8c47dso13591639a91.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:27:49 -0800 (PST)
+ id 1tTifm-0002pz-Ie
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:29:12 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2166360285dso172587475ad.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:29:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735914469; x=1736519269; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735914547; x=1736519347; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5p9SkT98wbLWuImiaUJLXHc6NHbfqtSch+TPB5Qv+H4=;
- b=y29DPVBM6EYVO0LR9peN/t1RCaXVqQWN0dXQzpjL8xyzZYINHDdUQiB1O864XYYEmh
- Ybn/5OGxIe+VE8ift7J/uiOreUcQ9blSCqIXT32vCw0dxe/L/DUQNdZGdo+xYmG5IkI4
- iU/mMmtRu/psFCfKZ76zZJfnTU+ssr25iK0oPSQLceW/ULAXwXwVwig0qWQ/osBMSUaI
- KSbEkjoTzZlc/Redgok1LSKqMGlQnF5iW3gN4T3Bd5usFdPmWqcOYb6IfVt8DYGXhYZX
- 8o8EBd3JZu1OLSQehgS1KGS5dpKp/rE+Ndic0ut5iHp5aoUGSDQcW+pDWjfs3XeZiiGp
- rwFA==
+ bh=jrJTOnWC4UqPNTzh6wuNE7sFgxXlnr3DP6aaKY7LwlA=;
+ b=o79FvZZWI2/6e7tq+JTvGZ+6SBErvJNZ2JJTvzeVKQP8oFQ1C7rHv1EfHze21YtZ+H
+ G+0beOSouF6tPyH1KbYqelr/5huAA521e9PEymJLXZQ4CZenw2gh3BIs6qsDtcyMeZYT
+ Dr+5xSuyS8He9L4DOcEWw5sJATUC/fAAVhDnPdcSIWeO7BmwjqkJ9isYS03G1I/itmsZ
+ RQJolQStbRRUjiNG2K/VJcF8cAhKko4Z+OC1coDA4rA/3NqCvEdzh7yNlaf80YyWdxWJ
+ Og08btXwzgUHIg8DcqmMEgO7H/mDv00g8vasthyb5o+CGk93ZNOMR16RfT7Bkl4mTwHK
+ NnIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735914469; x=1736519269;
+ d=1e100.net; s=20230601; t=1735914547; x=1736519347;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5p9SkT98wbLWuImiaUJLXHc6NHbfqtSch+TPB5Qv+H4=;
- b=Fy37+3I/wOr+GnF9GfPDSilAAi2kj/PokoNodv9xP9SEn9UjvesrE0684xroFQZJ2D
- r+rZsP+SuYWkZYQmw/wgGXdHxTGb88JgQp+67CkhVR4GD6SRbdaaqvMxpqZJKLlmj4US
- +8bEsAer2oLeo5JV04QdefpQZgKSrjFo5u6dac3riu9VoHKx0j7CbYx5/1NeMmTEWBVh
- syJxqlfw0rz4pHmdvctUyqNM8mGwsPH+1V62xeJiNfZPUl+UMW0nJvc0475lLNJ4URS0
- QqvySO/ZYVgbxvP+03skIt9iYr8JujmDQJb3tZTsmPMSYn+2IVNncaWd6QsBPRhQDJHq
- HmtQ==
+ bh=jrJTOnWC4UqPNTzh6wuNE7sFgxXlnr3DP6aaKY7LwlA=;
+ b=MVMp5SifMDdPN+qVEigqH0Gb8IIVqWdVsMVDBoaUN+iMxmGZ5BGmdCE09db+XFrW1L
+ ewMMl1441H83Txtwhlunu1JAYok6mXfYe4tvrMBu96rekUPFemcGUPXNWvFDzFHafU7k
+ v1orh959xUSB63vK90YW979nJL3TCe9k/BrB/E3ceObZ+i7ozYXGtAY4HJV3MtqJH3z6
+ UAg292whnV77Tsb6HIFsm89bN4vDkZqlGpVoItyl/94wbZ9UL2FoEE/henAcPyo0+EgB
+ 0zskwVxOwMFqkAmxY7eK/sa44BYaLbOs5DqGmzMZomPcr+e5JUkWpdXFS+li86D1bUFD
+ rAWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4wPAa3CFoeEYnHqT0sLqfLLuQiCMOwci+ggzuehJcotkJocVDcitZck8wyqM1Rvl1yR1w6S2RYgA9@nongnu.org
-X-Gm-Message-State: AOJu0YwN+StNFI73KNTJI0xU31qXkSgRBQjjNS9rtqjh/u+CjaMARUTd
- T8GgfzGZGJYJN/+x74399gZ02mek3sVeHsL3lmtoLcU4EzWp9Rp4h9vkKMh3oKvLK9qPgWJzykg
- Z
-X-Gm-Gg: ASbGnct/QuIYayNpbUHWAa91aLacDjBALYuOwMhNJZiZ6PBILw53U95+INCxoxZfE3Y
- g/6D3jjshoSF4bX1ETYpeumHqbg6TrcyEkAdn8QyE/gCDQOlpfeec6x5Pektpw4wvzlksqxqJFp
- pg6uIekRml75LvTtXHXpt2stcQ9FavXg+pnd8BVnVh9cbuOwm6jrtb9ntFUp2HgmS+Ahzf4ZYlo
- 0hB8h7ULWeWHTSzrXbHbKfwyVQtpztlavYzLJlC7l3PsMlE0gt8tuw6Y1xUvF1+omShHQo=
-X-Google-Smtp-Source: AGHT+IG8FyxxWVzFeWKYKMAW7YF4iar+pooe7FdHlcB+NCaW5uhimOWXV1Qa0sK3emxCrmIJrNTckQ==
-X-Received: by 2002:a17:90a:c2ce:b0:2ee:4513:f1d1 with SMTP id
- 98e67ed59e1d1-2f452eb24b8mr66390191a91.23.1735914468836; 
- Fri, 03 Jan 2025 06:27:48 -0800 (PST)
+ AJvYcCW1EuultaseBZ0q3qW5et2hTVhEBDBFrJt5td26565VC/2fBEhojOCEh4f3B3GfAFVycqKMVx4JwN1W@nongnu.org
+X-Gm-Message-State: AOJu0YypDKm9JR6d+C09M24t8DN1bse7gh0OlYBF+disDvCR/ldSfhan
+ to0uPR/yCeZzMXK2vwoYE3D47sEJEvCpg/sBMLuoGBI1i0WRd/9P5ZCLkCLXDwc=
+X-Gm-Gg: ASbGncsyYR7qF7+qX5avZ0/uj77XmRYqJRni7/qFzueOPoBLbYwRjfgK2Hw4Z7RPt5x
+ 7gTL57n9a97+We/r+k2BQqaxws3Zxmrkmm1ovKFVBhzUDsyyWiOEUhXTZx7IHpBMlJ0kDhNXRcG
+ jp5ZjdVvcLjTW6UNF6MQ3dPlMzeNPrNyKjWP4ia+Q/in5NfgvT2vc7edYfvdf2zxBtFS6VgbHOx
+ eFZdivIa8B8Gl52o1atJwr4xaNF8PWNBd6jbclQH4KrcVbplefOD5NPTrhovK9HQprUgmA=
+X-Google-Smtp-Source: AGHT+IGnSJTrWkd0+qhuergNjp7uk2wWId1IewxVg1Vtx6NuRdksjQ0jBA5RjR/qvDmgvB6wrUkyoA==
+X-Received: by 2002:a17:902:d582:b0:216:282d:c68c with SMTP id
+ d9443c01a7336-219e6e9dff9mr745470245ad.23.1735914546689; 
+ Fri, 03 Jan 2025 06:29:06 -0800 (PST)
 Received: from [172.21.1.122] ([63.239.63.212])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ed52cf40sm33453048a91.1.2025.01.03.06.27.48
+ d9443c01a7336-219dc96e867sm246838295ad.71.2025.01.03.06.29.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 06:27:48 -0800 (PST)
-Message-ID: <483b30f7-1205-4677-a9bc-53e8488c522c@linaro.org>
-Date: Fri, 3 Jan 2025 06:27:46 -0800
+ Fri, 03 Jan 2025 06:29:06 -0800 (PST)
+Message-ID: <bc272903-3bd3-47e5-91fc-af97dd057ee3@linaro.org>
+Date: Fri, 3 Jan 2025 06:29:04 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] qdev: Add machine_get_container()
+Subject: Re: [PATCH v4 4/8] qdev: Use machine_get_container()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250102211800.79235-1-philmd@linaro.org>
- <20250102211800.79235-4-philmd@linaro.org>
+ <20250102211800.79235-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250102211800.79235-4-philmd@linaro.org>
+In-Reply-To: <20250102211800.79235-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,18 +103,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/2/25 13:17, Philippe Mathieu-Daudé wrote:
-> From: Peter Xu <peterx@redhat.com>
+> From: Peter Xu<peterx@redhat.com>
 > 
-> Add a helper to fetch machine containers.  Add some sanity check around.
+> Use machine_get_container() whenever applicable across the tree.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> Message-ID: <20241121192202.4155849-10-peterx@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Peter Xu<peterx@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Message-ID:<20241121192202.4155849-11-peterx@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/hw/qdev-core.h | 10 ++++++++++
->   hw/core/qdev.c         | 11 +++++++++++
->   2 files changed, 21 insertions(+)
+>   hw/core/gpio.c        | 3 +--
+>   hw/core/qdev.c        | 3 +--
+>   hw/core/sysbus.c      | 4 ++--
+>   hw/i386/pc.c          | 4 ++--
+>   system/ioport.c       | 2 +-
+>   system/memory.c       | 2 +-
+>   system/qdev-monitor.c | 6 +++---
+>   system/vl.c           | 3 +--
+>   8 files changed, 12 insertions(+), 15 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
