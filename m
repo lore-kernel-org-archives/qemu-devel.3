@@ -4,67 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8EFAE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 15:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBD9E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 16:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTk0M-0001f0-7k; Fri, 03 Jan 2025 10:54:30 -0500
+	id 1tTk5N-0002fC-CB; Fri, 03 Jan 2025 10:59:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTk0H-0001eT-Q4
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:54:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTk5L-0002eo-SR
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:59:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTk0F-0002Ob-U1
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:54:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTk5J-0003Rb-Uz
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:59:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735919662;
+ s=mimecast20190719; t=1735919976;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=8MK3UcVLcOkZD/EmeCE8e77wopXF8zXhW3+DVQ2Dxmk=;
- b=Jh28nOv/Cdpjty0WeULnw4zt3nA1IFy8VtbEz+zVzbN+HlW9f2FjJAkawFYExIBbvWscYA
- Zu1g6/a3tp4ADIbAVZ6sNCrz6PRYg/EttLALfjwOlYDg93fyDJmWg4WtM0oeQJO+7J8kof
- sAauLTZsBKhHGWTRvtNYYVBBTIIwDu8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-D0cptFSUNbWyxj0r9RrKpw-1; Fri,
- 03 Jan 2025 10:54:18 -0500
-X-MC-Unique: D0cptFSUNbWyxj0r9RrKpw-1
-X-Mimecast-MFC-AGG-ID: D0cptFSUNbWyxj0r9RrKpw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECFA619560B4; Fri,  3 Jan 2025 15:54:16 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.148])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0A9319560AA; Fri,  3 Jan 2025 15:54:13 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org
-Subject: [PATCH] Remove the deprecated "-runas" command line option
-Date: Fri,  3 Jan 2025 16:54:11 +0100
-Message-ID: <20250103155411.721759-1-thuth@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4TKlLesN0V+bdF3Q5RhvBaN0wPE5HYpl8kQwCUMWyfU=;
+ b=dv8JzdxON3KpDlDlY4rjhPUcZbvjxQe14AgEZOEIRvDglOWXKdzc2BMfwqPnp2dtDVcque
+ oC7JiMyZZ8M0JKrYqg/Rsa5UG4a3jPOEzIH4q2eVo/DiFuCGs4LEn8b7qGIWvIe8PlYzDE
+ wXFCs2043ZHP6nKyOOVAoazJpPGbgeg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-h4BDrhG3MlmjEXWyBVc7jA-1; Fri, 03 Jan 2025 10:59:35 -0500
+X-MC-Unique: h4BDrhG3MlmjEXWyBVc7jA-1
+X-Mimecast-MFC-AGG-ID: h4BDrhG3MlmjEXWyBVc7jA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43635895374so60012515e9.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 07:59:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735919973; x=1736524773;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4TKlLesN0V+bdF3Q5RhvBaN0wPE5HYpl8kQwCUMWyfU=;
+ b=frNeBwWeDaVoL9s/2d6/CxmI2S2FG7P/yM+IJLMtiTIMwpAIRqwzZ3wipzMgD/imzd
+ mUnCnwucJ2PJmUZYaqxFGOwzydiBMY1ZVwwg65ojEpwwOQDxuFXheo29RyP5I9XxS7s5
+ hWGasGqum6MfmXzOD/3ts6jqIeAz4G3RAUrIlhpgrhWTqCqk94zn1rpLxE1hrX5mbNj7
+ 3CgpMWmIthB0RDPFmphIRQMrRl3mbmkWmhtn4ivNcqurt/4/EmGbFG0LwV5P0Y14goZQ
+ uAe79WJf02hRdD7aPqlibomRHxKZlPcey1wpXOcRFhAT/0aGIL70kPBDcxSvxn1zvy2I
+ 8nDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzSZu5iOqNNVp/gZzUy+qYupJYZaimzWLeV7v7i8Q2EGnreMtOOJdMs8AlDOtxpZrPxlT2Ss5+ZgEk@nongnu.org
+X-Gm-Message-State: AOJu0Yy8/5Y/JO58uLFfIbcD5dRJsmc7dYrohSbr/KLkDZFEHcZMe3cP
+ 9qKClOTbBGneVKUdx8nTn6JfYfTlt5PXlALX747ccvEbPJISOPt0+7UNpLyj15SGpLrLX3cUnHu
+ J8SFOwb3fv5ESBa0cHGG1V0ucOmU2eCfAnHNOH68bbbG9/QbcwJ36
+X-Gm-Gg: ASbGncs0PJNTII0vRyhsvK/6jVJhsAZx+QuweYkX3lfIQuoJIKCTBvMKwrlHxJozJuJ
+ rQkF837N0IfuG6TJEGk60MezNDBQwlJrTcIl9nM2aLFD45yx71RdswGQaHmZx8WOofNMl6T8czY
+ bU+reqB2e2k+PFRmzL2M2id1+thS2dI0+n2IjRbIwbMCZWPgbMPUxJf+Gv7N+sx5IFd7qVQlOun
+ hmHtliP2HI64vQtPTlcmNZDS6FKdYsRZc8pF5iIzz5vbL+5IK3rG8JqTd1g1AG74f1weV8PfYWM
+ B4QE62OLhT/6
+X-Received: by 2002:a05:600c:4f89:b0:431:15f1:421d with SMTP id
+ 5b1f17b1804b1-4365fc09731mr404060565e9.16.1735919973028; 
+ Fri, 03 Jan 2025 07:59:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlpP9LDXaDmpbZlF+TSiIQEvMOHOS3PDhMx245j/L3d5i4EXcnckrxrIlJWCvJThlAFIdaRg==
+X-Received: by 2002:a05:600c:4f89:b0:431:15f1:421d with SMTP id
+ 5b1f17b1804b1-4365fc09731mr404060475e9.16.1735919972636; 
+ Fri, 03 Jan 2025 07:59:32 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-148.web.vodafone.de.
+ [109.42.51.148]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43661200abesm484682075e9.18.2025.01.03.07.59.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jan 2025 07:59:32 -0800 (PST)
+Message-ID: <77cd861a-3e23-48ba-934d-c8249925680a@redhat.com>
+Date: Fri, 3 Jan 2025 16:59:30 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/tcg/s390x: Use the SLOF libc headers for the
+ multiarch tests
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20241216133819.78583-1-iii@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241216133819.78583-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
 X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,105 +155,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It has been marked as deprecated two releases ago, so it should
-be fine now to remove this command line option.
+On 16/12/2024 14.37, Ilya Leoshkevich wrote:
+> Compiling the s390x tests on Fedora, which has the s390x cross-compiler
+> installed, fails with:
+> 
+>      In file included from qemu/tests/tcg/s390x/console.c:8:
+>      qemu/tests/tcg/s390x/../../../pc-bios/s390-ccw/sclp.c:11:10: fatal error: string.h: No such file or directory
+>         11 | #include <string.h>
+> 
+> This is because Fedora does not have a cross-libc. Since console.c
+> already uses the SLOF libc implementation, add the respective headers
+> to the include path.
+> 
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>   tests/tcg/s390x/Makefile.softmmu-target | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
+> index 969bc5728fa..7adde2fa087 100644
+> --- a/tests/tcg/s390x/Makefile.softmmu-target
+> +++ b/tests/tcg/s390x/Makefile.softmmu-target
+> @@ -45,7 +45,8 @@ TESTS += $(ASM_TESTS)
+>   S390X_MULTIARCH_RUNTIME_OBJS = head64.o console.o $(MINILIB_OBJS)
+>   $(MULTIARCH_TESTS): $(S390X_MULTIARCH_RUNTIME_OBJS)
+>   $(MULTIARCH_TESTS): LDFLAGS += $(S390X_MULTIARCH_RUNTIME_OBJS)
+> -$(MULTIARCH_TESTS): CFLAGS += $(MINILIB_INC)
+> +$(MULTIARCH_TESTS): CFLAGS += $(MINILIB_INC) \
+> +			      -I$(SRC_PATH)/roms/SLOF/lib/libc/include/
+>   memory: CFLAGS += -DCHECK_UNALIGNED=0
+>   
+>   # s390x clears the BSS section so we need to account for that
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- docs/about/deprecated.rst       |  6 ------
- docs/about/removed-features.rst |  6 ++++++
- system/vl.c                     |  9 ---------
- qemu-options.hx                 | 15 +--------------
- 4 files changed, 7 insertions(+), 29 deletions(-)
+Tested-by: Thomas Huth <thuth@redhat.com>
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index d6809f94ea..63b46fd520 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -74,12 +74,6 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
- marked deprecated since 9.0, users have to ensure that all the topology members
- described with -smp are supported by the target machine.
- 
--``-runas`` (since 9.1)
--''''''''''''''''''''''
--
--Use ``-run-with user=..`` instead.
--
--
- User-mode emulator command line arguments
- -----------------------------------------
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index cb1388049a..c6616ce05e 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -555,6 +555,12 @@ to produce an odd effect (rotating input but not display output). But
- this was never intended or documented behaviour, so we have dropped
- the options along with the machine models they were intended for.
- 
-+``-runas`` (removed in 10.0)
-+''''''''''''''''''''''''''''
-+
-+Use ``-run-with user=..`` instead.
-+
-+
- User-mode emulator command line arguments
- -----------------------------------------
- 
-diff --git a/system/vl.c b/system/vl.c
-index 0843b7ab49..3c5bd36d7d 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3611,15 +3611,6 @@ void qemu_init(int argc, char **argv)
-                 /* Nothing to be parsed here. Especially, do not error out below. */
-                 break;
- #if defined(CONFIG_POSIX)
--            case QEMU_OPTION_runas:
--                warn_report("-runas is deprecated, use '-run-with user=...' instead");
--                if (!os_set_runas(optarg)) {
--                    error_report("User \"%s\" doesn't exist"
--                                 " (and is not <uid>:<gid>)",
--                                 optarg);
--                    exit(1);
--                }
--                break;
-             case QEMU_OPTION_daemonize:
-                 os_set_daemonize(true);
-                 break;
-diff --git a/qemu-options.hx b/qemu-options.hx
-index cc694d3b89..7090d59f6f 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4976,19 +4976,6 @@ SRST
-     ``-nodefaults`` option will disable all those default devices.
- ERST
- 
--#ifndef _WIN32
--DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
--    "-runas user     change to user id user just before starting the VM\n" \
--    "                user can be numeric uid:gid instead\n",
--    QEMU_ARCH_ALL)
--#endif
--SRST
--``-runas user``
--    Immediately before starting guest execution, drop root privileges,
--    switching to the specified user. This option is deprecated, use
--    ``-run-with user=...`` instead.
--ERST
--
- DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
-     "-prom-env variable=value\n"
-     "                set OpenBIOS nvram variables\n",
-@@ -5176,7 +5163,7 @@ SRST
- 
-     ``chroot=dir`` can be used for doing a chroot to the specified directory
-     immediately before starting the guest execution. This is especially useful
--    in combination with -runas.
-+    in combination with ``user=...``.
- 
-     ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
-     before starting guest execution. QEMU will use the ``setuid`` and ``setgid``
--- 
-2.47.1
+... and queued for my next pull request, thanks!
 
 
