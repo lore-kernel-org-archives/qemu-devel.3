@@ -4,129 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B25FE7719B
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 07:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7791E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 07:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTbmP-0007x1-0x; Fri, 03 Jan 2025 02:07:33 -0500
+	id 1tTcL7-0006iC-HJ; Fri, 03 Jan 2025 02:43:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTbmK-0007we-Bc
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 02:07:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTcL4-0006hh-Bm
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 02:43:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTbmH-0001yk-VA
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 02:07:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTcL2-0004Yj-Ch
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 02:43:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735888043;
+ s=mimecast20190719; t=1735890198;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=geBIPLcV2FBCwntuhU2GAvx8N2+g3wcArPxuaoR9Cus=;
- b=LNF5E98A5soXs//MFP3v34b6IrOyP7Ew4gNzF6YDL9ldA83COdhNyCF0OQQDQ3qHxaW+vY
- MkkKbGq8XP+kFOvynxY2bOZ8F/MPhucjBIti7eEP/mA5aq3gKnP0ovU84croQ7BvMF0WTm
- C4anpmt0Mw9qeH7GZRWpMoz4hcTgL4c=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-494-mmsYeJilPLeduF1q0wfKzg-1; Fri, 03 Jan 2025 02:07:21 -0500
-X-MC-Unique: mmsYeJilPLeduF1q0wfKzg-1
-X-Mimecast-MFC-AGG-ID: mmsYeJilPLeduF1q0wfKzg
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5d3eea3b9aaso9838252a12.1
- for <qemu-devel@nongnu.org>; Thu, 02 Jan 2025 23:07:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735888040; x=1736492840;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=geBIPLcV2FBCwntuhU2GAvx8N2+g3wcArPxuaoR9Cus=;
- b=Iyzz74gQeYNUBCf1eakzAAMfznlbcT6MrEdVk6bMkUHXKR1hgVM/nAIgCWKBndNaVz
- IHHUr89jzao9FZgz7fMAQ/RvNG+0AoX8GwBcw8ehWWWPgyIhTPYAID6FKrhReWS4ritP
- Mjrwyd4sBlgPsmPiHYHA8M4U7CK/I72pAU//p3vauehdxNE2+idO0boo8/fIeHVgb5N6
- mWNJ86twhhJizu5AOAIIwO3ksDnmf1WG/OSlxKd0KedY2RON4OOH7Azck/nmNOqQGIU+
- pquD4azWaEOtspFTj3sF4P73KZ5270bMsqiFVUgt4gDYVI8HH0iajyaUGlErpppI8/om
- QRkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7riGDXfjFoQstZYzqW+yckbU0U/+s/d8mAXJ1j69QR5w3vwu2asL7EAbwfWf/6gdJnOcGCSM7djfl@nongnu.org
-X-Gm-Message-State: AOJu0Yyt9+FXGeHXuwtgbMcRoM4B5m6oMrGhYdDr9MAiBUcQH9KYipCF
- IB4jTcE/fhEexM/ccLbsXAzuEZ6+ms4W7jovhkeNEucIsbrwQYPQr1z3b68veAqoCRjJBZrdY1r
- em21lmTfJVq/vdgQVJfxfvApmK0a5+bqjQEz/SLPAbFhayd5qZwdm
-X-Gm-Gg: ASbGncscgD2jeHPNyjtjpIGrlfAGtiJjUQIikZfxdOi5mPV7eqBIfRaYIym9hlUU9GH
- xWg6V7MqPvB3VcoZkX2r6GC3qdG4+sEl5p/G0zk5FPM6Gc7NnRH7eaNMyGnFOqJXam7pMRcMluX
- gONSGr4OTw1u/WfKqtLNkopgvQIuIvaTd6KguQW1uimiZbiIELn9PtwbOfJLld1il4L344b5+ns
- 7YFbdsi/dawI37CnTx0yB164nVWck82y35VanIG2CDMkYrXxndp8Qslf0zf5Kk6W9wFxRL2/g9i
- hyry856TVnQV
-X-Received: by 2002:a05:6402:210f:b0:5d0:cfad:f71 with SMTP id
- 4fb4d7f45d1cf-5d81de1c921mr109557243a12.32.1735888040221; 
- Thu, 02 Jan 2025 23:07:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFN2ovi17VoVV3YvF5quk9AZnPDi3/0yw7lw5e4qGZeQpR0TEJ6kUbY0iionhRsb8mmuZ1vZg==
-X-Received: by 2002:a05:6402:210f:b0:5d0:cfad:f71 with SMTP id
- 4fb4d7f45d1cf-5d81de1c921mr109557216a12.32.1735888039871; 
- Thu, 02 Jan 2025 23:07:19 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-148.web.vodafone.de.
- [109.42.51.148]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e830b9esm1859222366b.36.2025.01.02.23.07.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Jan 2025 23:07:19 -0800 (PST)
-Message-ID: <5c47e871-c753-4244-aa24-39a9e0a9d5f8@redhat.com>
-Date: Fri, 3 Jan 2025 08:07:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: which test.hex is right for qemu-microbit?
-To: Liu Jaloo <liu.jaloo@gmail.com>, qemu-devel@nongnu.org
-Cc: joel@jms.id.au, Peter Maydell <peter.maydell@linaro.org>
-References: <CAOYM0N2sXVBkPz64J44kFGPhdSq+qvheQD-yy53trAjv0NDh0w@mail.gmail.com>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=RkJ/ZGq5VsZXTybfL8qsCjEPpazv8Z7wPf9S/sciRA8=;
+ b=P9Mu/j8EyT7h1pKywJ7B3FwV+9sMqHG6+eHnIrVOSMPahcgjOsUdAtiCDkzosYSNM8n06Z
+ 5yytevHcq+WoAgxvUfzTQTtY3uaGVaQyLyHuT1Ts+bLl+NZd0ZVrMSIxuT63SOqNq3BRrG
+ W3CzAMSIjUyqyXp620xby3lFSgE+MR8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-1IchaT-hPruBquzH9I1veA-1; Fri,
+ 03 Jan 2025 02:43:14 -0500
+X-MC-Unique: 1IchaT-hPruBquzH9I1veA-1
+X-Mimecast-MFC-AGG-ID: 1IchaT-hPruBquzH9I1veA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F2471956088; Fri,  3 Jan 2025 07:43:12 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.153])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9B8B319560A2; Fri,  3 Jan 2025 07:43:09 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAOYM0N2sXVBkPz64J44kFGPhdSq+qvheQD-yy53trAjv0NDh0w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v3] tests/functional: Convert the migration avocado test
+Date: Fri,  3 Jan 2025 08:43:08 +0100
+Message-ID: <20250103074308.463860-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
@@ -152,34 +80,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/01/2025 06.49, Liu Jaloo wrote:
-> in qemu branch statble-9.2
-> 
->     $ ./build/qemu-system-arm -M microbit -device loader,file=/path/to/
->     heart-hearts-makecode.hex
-> 
->     Segmentation fault
+Now that we've got a find_free_port() function in the functional
+test framework, we can convert the migration test, too.
+While the original avocado test was only meant to run on aarch64,
+ppc64 and x86, we can turn this into a more generic test by now
+and run it on all architectures that have a machine which ships
+with a working firmware. To avoid overlapping with the migration
+qtest, we now also test migration on machines that are not covered
+by the migration qtest yet.
 
-That's a bug of course - a segfault should never happen...
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v3: Migrate machines that are not covered by the qtest yet
 
-...
-> according to docs/system/arm/nrf.rst
-> 
->     $ qemu-system-arm -M microbit -device loader,file=test.hex
-> 
-> 
-> from the page https://microbit.org/projects/make-it-code-it/heart/ <https:// 
-> microbit.org/projects/make-it-code-it/heart/> download the hex file :
-> 
->     wget https://microbit.org/downloads/heart-hearts-makecode.hex <https://
->     microbit.org/downloads/heart-hearts-makecode.hex>
+ MAINTAINERS                                   |   1 +
+ tests/functional/meson.build                  |  32 +++++
+ .../test_migration.py}                        | 135 +++++++-----------
+ 3 files changed, 83 insertions(+), 85 deletions(-)
+ rename tests/{avocado/migration.py => functional/test_migration.py} (41%)
+ mode change 100644 => 100755
 
-... but if that one is failing, maybe the clue from 
-https://wiki.qemu.org/Testing/Machines could help: It points to a mail that 
-suggests to use https://ozlabs.org/~joel/microbit-micropython.hex for 
-testing this machine.
-
-  HTH,
-   Thomas
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0c9d5dbc73..045eb206bb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3449,6 +3449,7 @@ F: include/migration/
+ F: include/qemu/userfaultfd.h
+ F: migration/
+ F: scripts/vmstate-static-checker.py
++F: tests/functional/test_migration.py
+ F: tests/vmstate-static-checker-data/
+ F: tests/qtest/migration/
+ F: tests/qtest/migration-*
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 781bd7eae6..7974814d6b 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -57,6 +57,10 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
+ ]
+ 
++tests_aarch64_system_quick = [
++  'migration',
++]
++
+ tests_aarch64_system_thorough = [
+   'aarch64_aspeed',
+   'aarch64_raspi3',
+@@ -70,10 +74,18 @@ tests_aarch64_system_thorough = [
+   'multiprocess',
+ ]
+ 
++tests_alpha_system_quick = [
++  'migration',
++]
++
+ tests_alpha_system_thorough = [
+   'alpha_clipper',
+ ]
+ 
++tests_arm_system_quick = [
++  'migration',
++]
++
+ tests_arm_system_thorough = [
+   'arm_aspeed_ast1030',
+   'arm_aspeed_palmetto',
+@@ -105,6 +117,10 @@ tests_avr_system_thorough = [
+   'avr_mega2560',
+ ]
+ 
++tests_i386_system_quick = [
++  'migration',
++]
++
+ tests_i386_system_thorough = [
+   'i386_tuxrun',
+ ]
+@@ -153,6 +169,7 @@ tests_or1k_system_thorough = [
+ ]
+ 
+ tests_ppc_system_quick = [
++  'migration',
+   'ppc_74xx',
+ ]
+ 
+@@ -167,6 +184,10 @@ tests_ppc_system_thorough = [
+   'ppc_virtex_ml507',
+ ]
+ 
++tests_ppc64_system_quick = [
++  'migration',
++]
++
+ tests_ppc64_system_thorough = [
+   'ppc64_e500',
+   'ppc64_hv',
+@@ -176,6 +197,7 @@ tests_ppc64_system_thorough = [
+ ]
+ 
+ tests_riscv32_system_quick = [
++  'migration',
+   'riscv_opensbi',
+ ]
+ 
+@@ -184,6 +206,7 @@ tests_riscv32_system_thorough = [
+ ]
+ 
+ tests_riscv64_system_quick = [
++  'migration',
+   'riscv_opensbi',
+ ]
+ 
+@@ -210,10 +233,18 @@ tests_sh4eb_system_thorough = [
+   'sh4eb_r2d',
+ ]
+ 
++tests_sparc_system_quick = [
++  'migration',
++]
++
+ tests_sparc_system_thorough = [
+   'sparc_sun4m',
+ ]
+ 
++tests_sparc64_system_quick = [
++  'migration',
++]
++
+ tests_sparc64_system_thorough = [
+   'sparc64_sun4u',
+   'sparc64_tuxrun',
+@@ -222,6 +253,7 @@ tests_sparc64_system_thorough = [
+ tests_x86_64_system_quick = [
+   'cpu_queries',
+   'mem_addr_space',
++  'migration',
+   'pc_cpu_hotplug_props',
+   'virtio_version',
+   'x86_cpu_model_versions',
+diff --git a/tests/avocado/migration.py b/tests/functional/test_migration.py
+old mode 100644
+new mode 100755
+similarity index 41%
+rename from tests/avocado/migration.py
+rename to tests/functional/test_migration.py
+index be6234b3c2..44804113cf
+--- a/tests/avocado/migration.py
++++ b/tests/functional/test_migration.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Migration test
+ #
+ # Copyright (c) 2019 Red Hat, Inc.
+@@ -12,19 +14,12 @@
+ 
+ import tempfile
+ import os
++import time
+ 
+-from avocado_qemu import QemuSystemTest
+-from avocado import skipUnless
+-
+-from avocado.utils.network import ports
+-from avocado.utils import wait
+-from avocado.utils.path import find_command
+-
++from qemu_test import QemuSystemTest, skipIfMissingCommands
++from qemu_test.ports import Ports
+ 
+ class MigrationTest(QemuSystemTest):
+-    """
+-    :avocado: tags=migration
+-    """
+ 
+     timeout = 10
+ 
+@@ -33,103 +28,73 @@ def migration_finished(vm):
+         return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
+ 
+     def assert_migration(self, src_vm, dst_vm):
+-        wait.wait_for(self.migration_finished,
+-                      timeout=self.timeout,
+-                      step=0.1,
+-                      args=(src_vm,))
+-        wait.wait_for(self.migration_finished,
+-                      timeout=self.timeout,
+-                      step=0.1,
+-                      args=(dst_vm,))
++
++        end = time.monotonic() + self.timeout
++        while time.monotonic() < end and not self.migration_finished(src_vm):
++           time.sleep(0.1)
++
++        end = time.monotonic() + self.timeout
++        while time.monotonic() < end and not self.migration_finished(dst_vm):
++           time.sleep(0.1)
++
+         self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
+         self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
+         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
+         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
+ 
++    def select_machine(self):
++        target_machine = {
++            'aarch64': 'quanta-gsj',
++            'alpha': 'clipper',
++            'arm': 'npcm750-evb',
++            'i386': 'isapc',
++            'ppc': 'sam460ex',
++            'ppc64': 'mac99',
++            'riscv32': 'spike',
++            'riscv64': 'virt',
++            'sparc': 'SS-4',
++            'sparc64': 'sun4u',
++            'x86_64': 'microvm',
++        }
++        self.set_machine(target_machine[self.arch])
++
+     def do_migrate(self, dest_uri, src_uri=None):
+-        dest_vm = self.get_vm('-incoming', dest_uri)
++        self.select_machine()
++        dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
+         dest_vm.add_args('-nodefaults')
+         dest_vm.launch()
+         if src_uri is None:
+             src_uri = dest_uri
+-        source_vm = self.get_vm()
++        source_vm = self.get_vm(name="source-qemu")
+         source_vm.add_args('-nodefaults')
+         source_vm.launch()
+         source_vm.qmp('migrate', uri=src_uri)
+         self.assert_migration(source_vm, dest_vm)
+ 
+-    def _get_free_port(self):
++    def _get_free_port(self, ports):
+         port = ports.find_free_port()
+         if port is None:
+-            self.cancel('Failed to find a free port')
++            self.skipTest('Failed to find a free port')
+         return port
+ 
+-    def migration_with_tcp_localhost(self):
+-        dest_uri = 'tcp:localhost:%u' % self._get_free_port()
+-        self.do_migrate(dest_uri)
++    def test_migration_with_tcp_localhost(self):
++        with Ports() as ports:
++            dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
++            self.do_migrate(dest_uri)
+ 
+-    def migration_with_unix(self):
++    def test_migration_with_unix(self):
+         with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
+             dest_uri = 'unix:%s/qemu-test.sock' % socket_path
+             self.do_migrate(dest_uri)
+ 
+-    @skipUnless(find_command('nc', default=False), "'nc' command not found")
+-    def migration_with_exec(self):
+-        """The test works for both netcat-traditional and netcat-openbsd packages."""
+-        free_port = self._get_free_port()
+-        dest_uri = 'exec:nc -l localhost %u' % free_port
+-        src_uri = 'exec:nc localhost %u' % free_port
+-        self.do_migrate(dest_uri, src_uri)
+-
+-
+-@skipUnless('aarch64' in os.uname()[4], "host != target")
+-class Aarch64(MigrationTest):
+-    """
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:virt
+-    :avocado: tags=cpu:max
+-    """
+-
+-    def test_migration_with_tcp_localhost(self):
+-        self.migration_with_tcp_localhost()
+-
+-    def test_migration_with_unix(self):
+-        self.migration_with_unix()
+-
++    @skipIfMissingCommands('nc')
+     def test_migration_with_exec(self):
+-        self.migration_with_exec()
+-
+-
+-@skipUnless('x86_64' in os.uname()[4], "host != target")
+-class X86_64(MigrationTest):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=machine:pc
+-    :avocado: tags=cpu:qemu64
+-    """
+-
+-    def test_migration_with_tcp_localhost(self):
+-        self.migration_with_tcp_localhost()
+-
+-    def test_migration_with_unix(self):
+-        self.migration_with_unix()
+-
+-    def test_migration_with_exec(self):
+-        self.migration_with_exec()
+-
+-
+-@skipUnless('ppc64le' in os.uname()[4], "host != target")
+-class PPC64(MigrationTest):
+-    """
+-    :avocado: tags=arch:ppc64
+-    :avocado: tags=machine:pseries
+-    """
+-
+-    def test_migration_with_tcp_localhost(self):
+-        self.migration_with_tcp_localhost()
+-
+-    def test_migration_with_unix(self):
+-        self.migration_with_unix()
+-
+-    def test_migration_with_exec(self):
+-        self.migration_with_exec()
++        """The test works for both netcat-traditional and netcat-openbsd packages."""
++        with Ports() as ports:
++            free_port = self._get_free_port(ports)
++            dest_uri = 'exec:nc -l localhost %u' % free_port
++            src_uri = 'exec:nc localhost %u' % free_port
++            self.do_migrate(dest_uri, src_uri)
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.47.1
 
 
