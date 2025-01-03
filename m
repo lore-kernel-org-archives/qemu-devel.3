@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02088E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9D2E77198
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTigo-00060C-0I; Fri, 03 Jan 2025 09:30:25 -0500
+	id 1tTihL-00068g-En; Fri, 03 Jan 2025 09:30:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTigb-0005yr-H5
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:30:02 -0500
+ id 1tTihD-00067t-Dd
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:30:44 -0500
 Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTigW-0002ty-SU
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:29:58 -0500
+ id 1tTihC-0003Ac-52
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:30:39 -0500
 Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2163dc5155fso168790105ad.0
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:29:56 -0800 (PST)
+ d9443c01a7336-216426b0865so168131165ad.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:30:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735914595; x=1736519395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735914636; x=1736519436; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kYIPrQZKJqMAC9wUvijh5ry0bWoyMmWYZi56slLSlHw=;
- b=xYJYl+sSlNDjyMC+TId7toT0Q/OtSVMcShzUY7EIctArfsWvOBY5GE3bTCuXHra/zj
- kdcAk0aTDW/892KM1XW1LZoHCsruNFiJP6T4YUmXctNRqqiSVXiV807FTH+kn3Y9BxQR
- mkqJV8NTG+w0ry2kR2f6fZZt33S94RrIS7lQjNENlwlO95aEdz4QipNRsCwwOYAjsL8I
- zB2yGe5CuaoRE8mYWoX23a6xiooPxdxch0ek6lYuWerr/Na2QU36JRetpfZxCy1ZtnlL
- drwu1HCl1hz/obR1Xb7QYGgl+MiXOL4JlhVqaLwMUIzZ/9uqFRfpT/u9DT3WAELnjVFl
- WvGg==
+ bh=pwKHgC4i2qqIzaSRrSPEjofmj6Fy5ZXQgSThwD9E8Oc=;
+ b=qScFbguDFutDx24E+AK3eloEfskid5MaDC5or1I2mPKrs8ctDlkfTCtVcogz616/A2
+ Ae64WykzzcI3V7KW2X684TaIKYLqS32tZV5QzJMlFPiULJaXqm2Sogls5oKzmfWrMlbw
+ xHTt6AE1yDdrcULrMi+tuZS3mKeHtj6X+72b9xOz0q2T1xA2oaEOu6b2BCq0dMGmNP3F
+ nIqJWgsbCnRCrmaYiFgD3CyEe0yoTcrqh6KpZmuTPrKfptIo4Ic9EgWDPFpiNrlz1XMC
+ gFdHN0IADWXhbc5YSGgr0aIlYAZuB2SP1PfSNtMvYULc/p9QLDNld4fxfnpbW2ffoQXp
+ EWeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735914595; x=1736519395;
+ d=1e100.net; s=20230601; t=1735914636; x=1736519436;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kYIPrQZKJqMAC9wUvijh5ry0bWoyMmWYZi56slLSlHw=;
- b=vcIgipLwCbQQrMUvIl/WKre7CpFRhk6h5Az1GDNh5s1aMFsawUEQXRMTarKC6JMV/B
- ez9aleBnrtVgJUVtheKLbi97YJ9LTJXE+tIXST9l9QgMU/+do4H37B2wYXoaiLFBTTk2
- 7FrXQHYIfCL7L6Z5XQepYkx+2173/SJWoiW68I1MxHhWbyFmS3aYWkSJmEJ8x+icdeOK
- Trgt1Hu0eVMSYo3LozKO6xsNs+mdwAQYaB1GH4NpA9Kzs2Ixr8CB+pmYqZw+rKLKrN3f
- q0Lv4+ZWFJG2NMf/eibkfrHlY2WERk4bRT6oVbDWtq9HRqhnLb6urqBQrKsQvxHidMFS
- I1wA==
+ bh=pwKHgC4i2qqIzaSRrSPEjofmj6Fy5ZXQgSThwD9E8Oc=;
+ b=aIEhawKTs31M0eH+tGXQmtfI2ht/eRuHUfowwwwVrNxgqiEBZJbYYvUwRv427KBmrh
+ luh9TPXv4ShR7lqHFke9iBUuEjjyzhEAcYtDEfpJJm9HP5zyrHcmLTj3wWWuaHDOoMea
+ cKT5dTIDyHyl8J7evDJnI2U3WJvVA4bAAUYFTaBYueBe/otPyEOe/sxsVh1Sfe92tCN6
+ h20L2jEEDaZqEWPyKfzCSaYZgLnlAs9N0+x6DZ4kxmgikLA5NUA21zI3QNe3BYhr/BOx
+ JJV7xCRLUTfoaYN9Cb3Pma5xHUvcEpOR4oGuJHmYl8VmoF4GfAdcthiFeDGZ753JgwON
+ Tt0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOh7xASi4NspsGcmDqOdFzEIlDg9iZSB0QEA4xFDmHjV/jlOy4ODqmj1ZgCwmRRl3XE7kRofH6XLxn@nongnu.org
-X-Gm-Message-State: AOJu0Yz3GqFFQRGBbbjO08bTTyksBzHG8tERKhsi/wqsDqucr3i1a5GH
- VKZ5i8X71h8rPcJkfnDSOz8mXc91zLtsB0eqxW+hmZUr7gJgYfmodKWxtkSPZ7w=
-X-Gm-Gg: ASbGncsEoPYnWpynZ0Dpr+rTXj2qi+0oGcjp+n+r/rVRpFjmAcOmbyxXRV+ZAaGXdhJ
- QEWsD5aSSnVRFie4j7aTPobEJZDO9wwQBBerOjTDE1xbkMSpRdsRt/jWAKbsOBEr95Pp/alSykN
- uEWoW599YBQMwX1q1kj95DE6dJWAfEbQRAJs0mJaCJut8FTcI52X4d/DyXiNo0oD8I4Hsc4Xp4a
- HdEDvxkznuVvqaKEo+so8dMJGTBTYfQeRsI7R/ucB47BPZmmlY5sOpYKDSKGtX1rs2c0N4=
-X-Google-Smtp-Source: AGHT+IGGxLAcy/4GFcdnDfPa2cxnyu4bIt8jmIta/F/+RzSHBJOSenffatpKbk2xAP7dBNLnsLIf1w==
-X-Received: by 2002:a17:902:e546:b0:215:9894:5670 with SMTP id
- d9443c01a7336-219e6ea26b3mr589614985ad.16.1735914595447; 
- Fri, 03 Jan 2025 06:29:55 -0800 (PST)
+ AJvYcCV4zi24/8GtfOcyzB93zGi+VZE95UBBlMAK2/C2MqoWZWVK1K2CHvwX0v0KQEB9x+guby+DyIjyZoeK@nongnu.org
+X-Gm-Message-State: AOJu0YwRvOOTPMtWlfbKEO1Sul8xAGyAVHmzgoE4pIJsBIP2o24tbWzo
+ WQBY310+X8PyfRhw5f3EiIlES/iahKGnkRdpIowWm/Y1CwLS/dQi/lJt++hIw3NQRtNGgixfcTY
+ 4
+X-Gm-Gg: ASbGnctxoUcsg+gnjsr2LNkye5geputN4GbANafJNzEB5MNZYXCNKBxO8g32fgbcDuL
+ 9j07/rub8zbmTdfCsEvrlnrBML7ChSc4Nzb98P41lME+mG1JIRFIWAg/wkjJ0/T1X82OoOBisI2
+ MAmdDzSVBZcI/2eJSbpuUi0hdqj/e4WrZf4ZJZrKyVBgDkZEOlqDxmeg5MfwVbBCDAWkmHwwo1o
+ dNDm0Ef8iOuPB9VvVNx7ZTDf0ZE4/rFW7u1jPmk+Lac1D5g4sLoCQbWw9T1UYgjWqtrWfg=
+X-Google-Smtp-Source: AGHT+IF2Um/UE0Ytq+/DJmzn6GuMW4uF+G5NziP3lWc4JFOYz7Ski2t3QfWXmdGDC/R7zjG9wVIirg==
+X-Received: by 2002:a17:903:2286:b0:215:b087:5d62 with SMTP id
+ d9443c01a7336-219e6f1483fmr756193475ad.36.1735914635034; 
+ Fri, 03 Jan 2025 06:30:35 -0800 (PST)
 Received: from [172.21.1.122] ([63.239.63.212])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dca01989sm245831735ad.239.2025.01.03.06.29.54
+ 41be03b00d2f7-842e4057b77sm20199869a12.83.2025.01.03.06.30.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 06:29:55 -0800 (PST)
-Message-ID: <18432183-1254-4f0e-b0db-dd8e9eb45817@linaro.org>
-Date: Fri, 3 Jan 2025 06:29:53 -0800
+ Fri, 03 Jan 2025 06:30:34 -0800 (PST)
+Message-ID: <09884f05-01af-4413-89d1-60ced84524c4@linaro.org>
+Date: Fri, 3 Jan 2025 06:30:32 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/8] qom: Add object_get_container()
+Subject: Re: [PATCH v4 6/8] qom: Use object_get_container()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250102211800.79235-1-philmd@linaro.org>
- <20250102211800.79235-6-philmd@linaro.org>
+ <20250102211800.79235-7-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250102211800.79235-6-philmd@linaro.org>
+In-Reply-To: <20250102211800.79235-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
@@ -105,18 +106,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/2/25 13:17, Philippe Mathieu-Daudé wrote:
 > From: Peter Xu<peterx@redhat.com>
 > 
-> Add a helper to fetch a root container (under object_get_root()).  Sanity
-> check on the type of the object.
+> Use object_get_container() whenever applicable across the tree.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Daniel P. Berrangé<berrange@redhat.com>
 > Signed-off-by: Peter Xu<peterx@redhat.com>
-> Message-ID:<20241121192202.4155849-12-peterx@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Message-ID:<20241121192202.4155849-13-peterx@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/qom/object.h | 10 ++++++++++
->   qom/object.c         | 10 ++++++++++
->   2 files changed, 20 insertions(+)
+>   backends/cryptodev.c | 4 ++--
+>   chardev/char.c       | 2 +-
+>   qom/object.c         | 2 +-
+>   scsi/pr-manager.c    | 4 ++--
+>   ui/console.c         | 2 +-
+>   ui/dbus-chardev.c    | 2 +-
+>   6 files changed, 8 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
