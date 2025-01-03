@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF30E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5276FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTidM-0003ky-En; Fri, 03 Jan 2025 09:26:40 -0500
+	id 1tTieg-0004nh-LT; Fri, 03 Jan 2025 09:28:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTid7-0003hc-A9
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:26:26 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tTiec-0004nK-Fh
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:27:59 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tTid4-0000kz-FS
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:26:24 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-216401de828so160841385ad.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:26:22 -0800 (PST)
+ id 1tTieU-0001WK-FO
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:27:52 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2ee51f8c47dso13591639a91.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:27:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735914381; x=1736519181; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735914469; x=1736519269; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ykBe4BeZxcH1uoXSoP4aM5wFAFNIbP5016D7mVp3b/M=;
- b=Rq41Sja/94xRqVoHsgLBXP/TCic/X/xyXwtJOP1GUUU669GB58anWbIa3HGfdwQ6JD
- MeCWVfEm1P/cbd45S71hPZulslNkm6d+xfpw1uDlI+1S39J8rtQGpZElVQJL5uvAte7o
- V07jR9RUFmBPSm5Ib1IQCgAcq1m9Y/MIb/vFTz14LVTQcNZMhE12UjVAC60phmWCxoNe
- txX84QLSzG5OpnR2Oc2FMIKW20H/eR6Kp/AbghSiVtalSkVYkGxM1hzqaTNSElzIK3DE
- /pj1rsXR2ORgIjl0B567y+XpfHxkvDEGLiQ0usYr6b/dfTmZfP0YLotOz/oTdxp0Rllw
- S2Aw==
+ bh=5p9SkT98wbLWuImiaUJLXHc6NHbfqtSch+TPB5Qv+H4=;
+ b=y29DPVBM6EYVO0LR9peN/t1RCaXVqQWN0dXQzpjL8xyzZYINHDdUQiB1O864XYYEmh
+ Ybn/5OGxIe+VE8ift7J/uiOreUcQ9blSCqIXT32vCw0dxe/L/DUQNdZGdo+xYmG5IkI4
+ iU/mMmtRu/psFCfKZ76zZJfnTU+ssr25iK0oPSQLceW/ULAXwXwVwig0qWQ/osBMSUaI
+ KSbEkjoTzZlc/Redgok1LSKqMGlQnF5iW3gN4T3Bd5usFdPmWqcOYb6IfVt8DYGXhYZX
+ 8o8EBd3JZu1OLSQehgS1KGS5dpKp/rE+Ndic0ut5iHp5aoUGSDQcW+pDWjfs3XeZiiGp
+ rwFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735914381; x=1736519181;
+ d=1e100.net; s=20230601; t=1735914469; x=1736519269;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ykBe4BeZxcH1uoXSoP4aM5wFAFNIbP5016D7mVp3b/M=;
- b=JK/70i5bhOa4Ba6kPqQ6AowmfKGMud+wxvWQKl+7Ggj0aUK3uj/Cq8IZlmvpH2y+99
- 28KE2OyvdbHVo/Y2hsIVeJmgkHphVE7iMayico4qaHy/cgPIp9JCn+Br8313+A9wvIDx
- L/oO3rG/0884PgLLD8gCcs/Tbl2E5ynG+uoNiigUTUe8Y2qxObWXzWCsQe1CsmkJ8pCN
- 0A4F3qOBGeDy6T1AkPw9sGlMAyrBu9VgP2adX1H6lMF76QqPc4/hapCAQMfTqaI/Mlkv
- 3hlZ16On3FlIhQQE1L4TYDBZDBTFtJZEQ+uMuwlLdQhpOsmJKW3fAAY5JXdfUGF/cc5+
- erDw==
+ bh=5p9SkT98wbLWuImiaUJLXHc6NHbfqtSch+TPB5Qv+H4=;
+ b=Fy37+3I/wOr+GnF9GfPDSilAAi2kj/PokoNodv9xP9SEn9UjvesrE0684xroFQZJ2D
+ r+rZsP+SuYWkZYQmw/wgGXdHxTGb88JgQp+67CkhVR4GD6SRbdaaqvMxpqZJKLlmj4US
+ +8bEsAer2oLeo5JV04QdefpQZgKSrjFo5u6dac3riu9VoHKx0j7CbYx5/1NeMmTEWBVh
+ syJxqlfw0rz4pHmdvctUyqNM8mGwsPH+1V62xeJiNfZPUl+UMW0nJvc0475lLNJ4URS0
+ QqvySO/ZYVgbxvP+03skIt9iYr8JujmDQJb3tZTsmPMSYn+2IVNncaWd6QsBPRhQDJHq
+ HmtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUBHQJRwMjjUFIxiJD3A4nki9ArNu0JRXugeS2+H/v5NE7cH81DovMx6027ScI5L6SgumReWBvB6qN@nongnu.org
-X-Gm-Message-State: AOJu0YxYBFr0rUaupgj1nMo+txYr15hSOw7Wkimu2XnLpXSNlIK/0gy9
- c3Nlr+QSTeY0XuGwOPtICpVdhAFuvHk/DevU3cHNESj3VwqGnUUE6We2PFDCCWaSuj+buHpDBre
- N
-X-Gm-Gg: ASbGncv7hMKjKwXAHLYicNrA+MQHxunKesAiDc7EXFMjaumzUog5lq/dPU+tgy0kFU4
- CoBNUPn7co4OLobKcbyDG5hG61vfohHWrsYowdQIAoX3gAO43I1V4FvPJ7DW/xWuJYFARL5PKQ5
- QzRdYHXoUyS7vwndzGgWT/g5THHenoFOM1IQUHsO8qdQHf71ewto6faSr5ssAWklD7lDA0qVMyv
- z4i9RTKCKmREoTmlO56LulXQVnTAyM7fuPgwOdh2Q3AWxkj97fie/9CoB0Wtaza24Ou988=
-X-Google-Smtp-Source: AGHT+IH0p+LQgPIhrmE11X2f1T3l0ulGwtBbXm4pfD4jyX34iIyRgYvKEO40h8KlPPjTh1qaqVwf1A==
-X-Received: by 2002:a05:6a20:430a:b0:1e1:a9dd:5a68 with SMTP id
- adf61e73a8af0-1e5e044bd9bmr76952362637.1.1735914380920; 
- Fri, 03 Jan 2025 06:26:20 -0800 (PST)
+ AJvYcCV4wPAa3CFoeEYnHqT0sLqfLLuQiCMOwci+ggzuehJcotkJocVDcitZck8wyqM1Rvl1yR1w6S2RYgA9@nongnu.org
+X-Gm-Message-State: AOJu0YwN+StNFI73KNTJI0xU31qXkSgRBQjjNS9rtqjh/u+CjaMARUTd
+ T8GgfzGZGJYJN/+x74399gZ02mek3sVeHsL3lmtoLcU4EzWp9Rp4h9vkKMh3oKvLK9qPgWJzykg
+ Z
+X-Gm-Gg: ASbGnct/QuIYayNpbUHWAa91aLacDjBALYuOwMhNJZiZ6PBILw53U95+INCxoxZfE3Y
+ g/6D3jjshoSF4bX1ETYpeumHqbg6TrcyEkAdn8QyE/gCDQOlpfeec6x5Pektpw4wvzlksqxqJFp
+ pg6uIekRml75LvTtXHXpt2stcQ9FavXg+pnd8BVnVh9cbuOwm6jrtb9ntFUp2HgmS+Ahzf4ZYlo
+ 0hB8h7ULWeWHTSzrXbHbKfwyVQtpztlavYzLJlC7l3PsMlE0gt8tuw6Y1xUvF1+omShHQo=
+X-Google-Smtp-Source: AGHT+IG8FyxxWVzFeWKYKMAW7YF4iar+pooe7FdHlcB+NCaW5uhimOWXV1Qa0sK3emxCrmIJrNTckQ==
+X-Received: by 2002:a17:90a:c2ce:b0:2ee:4513:f1d1 with SMTP id
+ 98e67ed59e1d1-2f452eb24b8mr66390191a91.23.1735914468836; 
+ Fri, 03 Jan 2025 06:27:48 -0800 (PST)
 Received: from [172.21.1.122] ([63.239.63.212])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-842b9fb38basm24091638a12.49.2025.01.03.06.26.20
+ 98e67ed59e1d1-2f2ed52cf40sm33453048a91.1.2025.01.03.06.27.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 06:26:20 -0800 (PST)
-Message-ID: <2d9611e7-2d61-4bf3-bf75-4934ba76b7f6@linaro.org>
-Date: Fri, 3 Jan 2025 06:26:18 -0800
+ Fri, 03 Jan 2025 06:27:48 -0800 (PST)
+Message-ID: <483b30f7-1205-4677-a9bc-53e8488c522c@linaro.org>
+Date: Fri, 3 Jan 2025 06:27:46 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/8] qdev: Make qdev_get_machine() not use
- container_get()
+Subject: Re: [PATCH v4 3/8] qdev: Add machine_get_container()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250102211800.79235-1-philmd@linaro.org>
- <20250102211800.79235-3-philmd@linaro.org>
+ <20250102211800.79235-4-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250102211800.79235-3-philmd@linaro.org>
+In-Reply-To: <20250102211800.79235-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,28 +106,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/2/25 13:17, Philippe Mathieu-Daudé wrote:
 > From: Peter Xu <peterx@redhat.com>
 > 
-> Currently, qdev_get_machine() has a slight misuse on container_get(), as
-> the helper says "get a container" but in reality the goal is to get the
-> machine object.  It is still a "container" but not strictly.
+> Add a helper to fetch machine containers.  Add some sanity check around.
 > 
-> Note that it _may_ get a container (at "/machine") in our current unit test
-> of test-qdev-global-props.c before all these changes, but it's probably
-> unexpected and worked by accident.
-> 
-> Switch to an explicit object_resolve_path_component(), with a side benefit
-> that qdev_get_machine() can happen a lot, and we don't need to split the
-> string ("/machine") every time.  This also paves way for making the helper
-> container_get() never try to return a non-container at all.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
 > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Message-ID: <20241121192202.4155849-9-peterx@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Message-ID: <20241121192202.4155849-10-peterx@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/core/qdev.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+>   include/hw/qdev-core.h | 10 ++++++++++
+>   hw/core/qdev.c         | 11 +++++++++++
+>   2 files changed, 21 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
 
