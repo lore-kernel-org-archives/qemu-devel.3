@@ -4,97 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96223E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42900E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTine-0000ow-R1; Fri, 03 Jan 2025 09:37:18 -0500
+	id 1tTit1-0002MK-Ij; Fri, 03 Jan 2025 09:42:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTina-0000ls-UA
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:37:16 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTinY-0004XS-LY
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:37:14 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso81488125e9.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 06:37:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735915030; x=1736519830; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DfEnmb8Rktf9iJVdyHrY6P07HXSwQD2OcWlB2ELuINs=;
- b=rp31yQ/2O9FdxQbsnoJLDTU61qKusxedAwXJGzAghHknSfiUDGlg3SNusNXOYJ+sPr
- 57rRR2YPQDSz5znx7WilpdFijLU4dy2gnWeCfyJ4La07fxXH98NiV8D9xOQMft/gLeOp
- lLu/YZE5Tc+minr8beh6mm57HefpSKmlg7eb4tc8hc55L18wq6wc2F5oPHOQgkv+25FZ
- X3gCwzcGRkMAaxSoA8kv2iY4KoqnLsptUcF5p8sbAPKr3b0PCwnc6MfEu5BxfbJnJizo
- 5vDXCqvtMH/KwOdcYxFqAIN23jdTjtI9Gdl8pGQ4+DoX1iETyPftBQOgqQ6ebOtAKfRN
- ruDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735915030; x=1736519830;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DfEnmb8Rktf9iJVdyHrY6P07HXSwQD2OcWlB2ELuINs=;
- b=Sg1WIbVhs825dgn6+CZv5zvWJKNDZd73HjreKCmLWiFB8ew2SVbJRqXOhNl1NZdtcd
- IRnx50GzJkkiyTHqbM4d8Ak5TFK8wvkWmu24IBvcQn8IDOlWBbKD5azWJx8IuwqkVmCC
- M3vsl1w3aVsj08AKhJa+jlVORyPjt4hmeQ7LgmcR2Z/jcJD4ZhLSVkDxjUi0gSh99dbh
- fEKQ1uMJNvWZkdOQSTPdBjpVMQHqFfbgmG2ioK+Lu8MO/HyBg1ahN74gK33Y+L0SM6EH
- Mg0U60ia02K+rsKMmPalSwe5OQpdyaT1Y0Z7wKycyE0xm5CQiKKrBwZZ8Y6AS6deooBL
- /PZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW91hWLcCTn+oLB+Ef0zzXmVOdQhWrGAw/x61m3d0vJsnCSxV04VT7a+/rtFiAgwfBWKCttbOBSpFH9@nongnu.org
-X-Gm-Message-State: AOJu0Ywug/get8qM6a5iJaL28urWaxLp+GBSFv7vr92lnJyjBMW/CjjN
- EefEvkwfpwSPLIxOKsn3a3zz0FdrqTr/gzWz6aRUSqjpyJPxxKGZGooQK764l4U=
-X-Gm-Gg: ASbGncsAtR2m63k0jFk/WcdyKESc7LWExl7cgn3IBtW6nE2jI48anxwQw46mFSFNrJg
- o31Ka4mheJJLxgmgMXLU+LA42bUJbU1HvIMHg4W7LaNKG146vinhzqsyMId0w7SuyZj1yXly/23
- BQFgaCNCFwTwlVC/HmiKjbLqSvdS52p4gNS1UD40ZWwPa8eyYJSHe4Gr+FtVHA1+HD0H11XjjIC
- 7BSXPpTsOe/ccWU/JK8VFc4atbciHrggUm2KYUgDWyQB00E/GvT5sIlsCJzX7KKbKT6XQvn9jjL
- c2rBQGRommE+gnWHhIHkeG71
-X-Google-Smtp-Source: AGHT+IHJApoX633yVMi64TCcPSEABuvSmCnn0zU4TTAlYwRFgWx1uHokAuFwKJheOGUgBZVPaxBJPg==
-X-Received: by 2002:a05:600c:3ca4:b0:434:fe4b:be18 with SMTP id
- 5b1f17b1804b1-436686468fcmr451577385e9.18.1735915029644; 
- Fri, 03 Jan 2025 06:37:09 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661218f43sm488105015e9.19.2025.01.03.06.37.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 06:37:09 -0800 (PST)
-Message-ID: <673f7002-9ee8-403c-960f-e4f79058ff99@linaro.org>
-Date: Fri, 3 Jan 2025 15:37:07 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTisy-0002Lh-0m
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:42:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTisv-0007CI-1u
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:42:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735915362;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w8LoI9OpDsxgB5tZy2fIMS4VsPy9QVHUsmhu4T8JJX0=;
+ b=UaeyXBX3wxbVtMyB2Maop/05xvJaQreqdjjrZvAFoaYRmmYbQwfo/w3qHi8dUxbpBd9n3A
+ QcrzvKj1T+k6AkUSRF2Cv1eY0eoOktUy2xXdfX4aSzWRhWPiKs27aicvPA/u1/U6gOLNiU
+ ie1S+frhuQM6V7+0+hfrS0StArCUxUo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-ZQRriByNPlOFd_bYyUKeag-1; Fri,
+ 03 Jan 2025 09:42:41 -0500
+X-MC-Unique: ZQRriByNPlOFd_bYyUKeag-1
+X-Mimecast-MFC-AGG-ID: ZQRriByNPlOFd_bYyUKeag
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E02F9195608E; Fri,  3 Jan 2025 14:42:39 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.148])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D67663000197; Fri,  3 Jan 2025 14:42:36 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+Subject: [PATCH 01/10] hw/s390x/s390-virtio-ccw: Remove the deprecated 2.4 and
+ 2.5 machine types
+Date: Fri,  3 Jan 2025 15:42:23 +0100
+Message-ID: <20250103144232.520383-2-thuth@redhat.com>
+In-Reply-To: <20250103144232.520383-1-thuth@redhat.com>
+References: <20250103144232.520383-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] qdev: Implement qdev_create_fake_machine() for
- user emulation
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>
-References: <20250102211800.79235-1-philmd@linaro.org>
- <20250102211800.79235-2-philmd@linaro.org>
- <87603a20-8c61-454e-9f05-bff7823f69e7@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87603a20-8c61-454e-9f05-bff7823f69e7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,80 +84,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/25 15:24, Richard Henderson wrote:
-> On 1/2/25 13:17, Philippe Mathieu-Daudé wrote:
->> When a QDev instance is realized, qdev_get_machine() ends up called.
->> In the next commit, qdev_get_machine() will require a "machine"
->> container to be always present. To satisfy this QOM containers design,
->> Implement qdev_create_fake_machine() which creates a fake "machine"
->> container for user emulation.
->>
->> On system emulation, qemu_create_machine() is called from qemu_init().
->> For user emulation, since the TCG accelerator always calls
->> tcg_init_machine(), we use it to hook our fake machine creation.
->>
->> Suggested-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/qdev-core.h | 10 ++++++++++
->>   accel/tcg/tcg-all.c    |  8 +++++++-
->>   hw/core/qdev-user.c    | 21 +++++++++++++++++++++
->>   hw/core/meson.build    |  1 +
->>   4 files changed, 39 insertions(+), 1 deletion(-)
->>   create mode 100644 hw/core/qdev-user.c
->>
->> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
->> index e6ef80b7fd0..b83b1439968 100644
->> --- a/include/hw/qdev-core.h
->> +++ b/include/hw/qdev-core.h
->> @@ -1027,6 +1027,16 @@ const char *qdev_fw_name(DeviceState *dev);
->>   void qdev_assert_realized_properly(void);
->>   Object *qdev_get_machine(void);
->> +/**
->> + * qdev_create_fake_machine(): Create a fake machine container.
->> + *
->> + * .. note::
->> + *    This function is a kludge for user emulation (USER_ONLY)
->> + *    because when thread (TYPE_CPU) are realized, qdev_realize()
->> + *    access a machine container.
->> + */
->> +Object *qdev_create_fake_machine(void);
->> +
->>   /**
->>    * qdev_get_human_name() - Return a human-readable name for a device
->>    * @dev: The device. Must be a valid and non-NULL pointer.
->> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
->> index c2565758876..95adaacee82 100644
->> --- a/accel/tcg/tcg-all.c
->> +++ b/accel/tcg/tcg-all.c
->> @@ -35,7 +35,9 @@
->>   #include "qemu/atomic.h"
->>   #include "qapi/qapi-builtin-visit.h"
->>   #include "qemu/units.h"
->> -#if !defined(CONFIG_USER_ONLY)
->> +#if defined(CONFIG_USER_ONLY)
->> +#include "hw/qdev-core.h"
->> +#else
->>   #include "hw/boards.h"
->>   #endif
->>   #include "internal-common.h"
->> @@ -124,6 +126,10 @@ static int tcg_init_machine(MachineState *ms)
->>       tcg_prologue_init();
->>   #endif
->> +#ifdef CONFIG_USER_ONLY
->> +    qdev_create_fake_machine();
->> +#endif
-> 
-> No need to return the fake machine, it seems.
+They are older than 6 years, so according to our machine support
+policy, they can be removed now.
 
-My first reasoning was about avoiding ASan leak warnings, planning
-to release that container on exit(), but I'm clearly over-engineering
-what is meant to be a kludge.
+This removes the requirements for the storage keys "migration-enabled"
+property which will be removed in the next patch. It also removes
+the code that sets "max_revision" to 0 for some CCW devices, but
+the relating code in virtio-ccw.c indicates that 0 could have also
+been in use for other machines types < 5.1, so further clean-up for
+code related to "max_revision" won't be done yet.
 
->  With that,
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/s390-virtio-ccw.c | 37 -------------------------------------
+ 1 file changed, 37 deletions(-)
 
-I'll remove and merge directly, thanks!
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 2be8da2913..bca61488cc 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1325,43 +1325,6 @@ static void ccw_machine_2_6_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(2, 6);
+ 
+-static void ccw_machine_2_5_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_6_instance_options(machine);
+-}
+-
+-static void ccw_machine_2_5_class_options(MachineClass *mc)
+-{
+-    ccw_machine_2_6_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+-}
+-DEFINE_CCW_MACHINE(2, 5);
+-
+-static void ccw_machine_2_4_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_5_instance_options(machine);
+-}
+-
+-static void ccw_machine_2_4_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { TYPE_S390_SKEYS, "migration-enabled", "off", },
+-        { "virtio-blk-ccw", "max_revision", "0", },
+-        { "virtio-balloon-ccw", "max_revision", "0", },
+-        { "virtio-serial-ccw", "max_revision", "0", },
+-        { "virtio-9p-ccw", "max_revision", "0", },
+-        { "virtio-rng-ccw", "max_revision", "0", },
+-        { "virtio-net-ccw", "max_revision", "0", },
+-        { "virtio-scsi-ccw", "max_revision", "0", },
+-        { "vhost-scsi-ccw", "max_revision", "0", },
+-    };
+-
+-    ccw_machine_2_5_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-DEFINE_CCW_MACHINE(2, 4);
+-
+ #endif
+ 
+ static void ccw_machine_register_types(void)
+-- 
+2.47.1
 
 
