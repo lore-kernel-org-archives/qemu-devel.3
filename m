@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F5FE7718F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63B99E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTlCa-0000Th-Dy; Fri, 03 Jan 2025 12:11:12 -0500
+	id 1tTlCa-0000Tb-85; Fri, 03 Jan 2025 12:11:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCW-0000T9-QX
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:09 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCR-0000SP-HG
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:03 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCV-0006oP-9P
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:08 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-385df53e559so9799460f8f.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:11:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCQ-0006nx-1V
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:03 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso82555325e9.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:11:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735924265; x=1736529065; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735924260; x=1736529060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q/CzbbG3jOxGhXorzYheCWoGqel4SlzmIyrU6suQqBM=;
- b=kyUL5HaUsDQe9YDQZb6Ki7ZTbvghAYHCf9IpLCsxUmPpN9OqGE/Akc6aFFRFTE3fi0
- Nj56nzaUAahlISX3hvvIk2jJZlxVrfd8dqZcSec4GA8BJtUmVQdlz5oBeNhKDTnn0GNK
- CqE+PDVKefkUjjuztn0ifAm9d6skVxw2fRqeRtUgA+5seEwi+gL7bmSwknTZ18VC/UMD
- baNqZbgAX8NJEZtQ756u5itvFgeKqz22blEc8ZN8oQsvGZJ+5z2KHzglOIq5/kYwZ0/C
- 9jiB8ikFqqmsSfIQITBgplcfjKgOh67K8TeE82qx1hkLVNOKmiA9lnxf+zmJvdRoaFzv
- UVdQ==
+ bh=A5XdE242or4AIgVZWPEadWGVw1QKMWXHY4iwMfcXJLM=;
+ b=D8mcgKEXXgw0FqNtBfDFED/+AhBGUp8gatP/52JFK+d63do4Y+vFw4Q4kXIH9FBgf0
+ 0NB3+0JNuDpVsQ+S/+L1o+3WcCIZBjpODMIIYsTj60WLoLx+eN7PjaiOeQxH4bsAfY8X
+ kvvPhumg5mQ2yWbP/f/crqG2fQYgLYK2pWqVLhv2dhhHfh+xNf2xNAf6BDQaCw1qKlkq
+ K1nJBmg+b+S6mwjuWYZO6JtgNNOmHk/NutLLIWECrIQns0x83My8AAq2lOu/wdrvvN3n
+ BiqOKQ7fmL/CiBqiJ8mq0laNtf6XqXUcE/ThG3yBG706pGcu8VJWLGtikOsqZSPz2O29
+ Qn7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735924265; x=1736529065;
+ d=1e100.net; s=20230601; t=1735924260; x=1736529060;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q/CzbbG3jOxGhXorzYheCWoGqel4SlzmIyrU6suQqBM=;
- b=oero3itUF3BKSkUj6+XlKLhhqANKstWkdKyXyajwCWb9c66Wvyt8CE+Ax67MCCBpMi
- IxO3bYZ+4ZbgOYDd/fyuF+HHYCw/6A6koV33L4vlnOrlY5jou7OV7pGdTkOg9rmEvcPu
- TMhKRZ49/BO33oDErl5x+JYBSFFqhV3hnRhc+kb5bsIEJJtDDVPWny5XX/zsyjfuxsgP
- 5gWL/f9n4nMD47uPSFXXgHbN4tF8W3cn+g/HwBc+2rxHh4sX93Jj8tiXpF/daTOczSkm
- L24Oa+cgdt6Pn0WPE0vuABxwRRfSnnJIJBPdrHVFSOpg+7ltjdAPGOsim52DirBZRTS1
- W6tg==
-X-Gm-Message-State: AOJu0YzdNqEzQ5wjjRb9kHSNPDmGi0ku4p1lfmYpxhXZwG5icac/Kbtx
- ZXoEiINpCabtiCjZJrWQwm+/Qfi+T9Lhwi+nS9IHbNbjmDSuIMav2e0qqfieXz3OJJj+GCdRu7I
- wBDE=
-X-Gm-Gg: ASbGncsrCGr2aWNxazci7J/Z5PzEstou30q+r7MuOt1wOtCU/L+QElKGCzqmMCmKmo+
- W4nXnvv+WXv2hATyVo11lSTONbwPRCXGV10KyZ/Vlo4uHZO2JGtCn5AER75fO1hVQ+5JfykezCJ
- GMcQAo/MxtC7tGH51WsdtSHsFYs8R5VzrZ12dDe3/lhXMQ+qyer2H+IQKAfuYLtBzQCmcd7GQkJ
- ILxwCSrtZM3YWb8LHjNHPyENKf3qflSdM3OGIt57HpLGULzsV3BtWJGhAd99m68snDsHvUAXe+P
- uiR0ZbBzukVA4H9GQbfKkYtcfLkpk64=
-X-Google-Smtp-Source: AGHT+IGchJbT6bpnXWoxhQ17XnigkqxhTNr+aNxhYgiEpo4fdURQlkPCucKa22rfOo74+Qm9odwasw==
-X-Received: by 2002:a05:6000:154f:b0:385:eeb9:a5bb with SMTP id
- ffacd0b85a97d-38a221f698amr40605261f8f.17.1735924264910; 
- Fri, 03 Jan 2025 09:11:04 -0800 (PST)
+ bh=A5XdE242or4AIgVZWPEadWGVw1QKMWXHY4iwMfcXJLM=;
+ b=a986Cb8OCpuebj7YLqeNUJJ4wcZGxuMklE8bj5YuyaBAggH+kx7ExJbBAhG7OTUkoZ
+ qoyfKfpID82mqUH6U6NidFBhDXnxJkfDxDU/8srKqzC4quSj3eATMkkJkJuISMrmxcEi
+ JHWzVauOfnLSUiJltDEzOic2qm5sfauWFmzUzBCsZIO9XfXOUReDRKiw12D5JJwmCNlp
+ TiIATyBX4M6sONcV8D2Sd4CJyrTCJLm89A+zrq5rDcKmfSdENO6J9jURyFWWgt20lX7+
+ KGr3+PCPb0oo88bJSb9JZn0raTN2lan4gSdbCPGDpKGv5p78RHnm7qz5QfXIUQigpQeb
+ W9qw==
+X-Gm-Message-State: AOJu0YxoHAfqT8Xs1TcLKTlpj9AdgSMywkzGmYZ5dxVeD1KeXMxdOvmB
+ 42mfK1ILanpg4eDZtf3Bep954LYT2zUW1U2iWI40Dpsk8gT3X3huZgkRbXauXFi23L3ZRBhTesJ
+ 0bD4=
+X-Gm-Gg: ASbGnctp3AzmhWmtl4RcYaeP88JA2EC6rLgsxBFcTL8iROFdNXegCKFB6ctv3zM26l6
+ q1FeJnJXQld+7pNonbTBTuBBEbib8yoChH/LwxC2mHx+33QF3brZ35ktoiVzNzodUbWumSqZkmP
+ jBE9aX7hv0uADqRHkYVJPy5rUboJEhpAzsmU5Noduanjb6Wc4zCFl3+BLs677Ar8SEJz9hafScG
+ WqX+EzV36S2rKkgc6iSuLQuB4VwAT3drM+SMXPNzsIloEZBovDub1PTsBHt0nxOlMCm+ER1ZAY+
+ nj1TrVIvPv9mXfSJfJP3gmoomyiCukU=
+X-Google-Smtp-Source: AGHT+IERC60Agg1k2eN1gd88XTgS6bx2NpC5+LTqOO1XivlHcuIt5iuShlhqjWQR9o+zzB1I1uKB9g==
+X-Received: by 2002:a05:600c:548e:b0:431:5e3c:2ff0 with SMTP id
+ 5b1f17b1804b1-436686431a0mr401008775e9.8.1735924260263; 
+ Fri, 03 Jan 2025 09:11:00 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b119b6sm526575015e9.22.2025.01.03.09.11.03
+ 5b1f17b1804b1-43661289d3dsm494171645e9.41.2025.01.03.09.10.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 09:11:04 -0800 (PST)
+ Fri, 03 Jan 2025 09:10:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -73,17 +73,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/5] semihosting/meson: Build config.o and console.o once
-Date: Fri,  3 Jan 2025 18:10:37 +0100
-Message-ID: <20250103171037.11265-6-philmd@linaro.org>
+Subject: [PATCH 4/5] semihosting/console: Avoid including 'cpu.h'
+Date: Fri,  3 Jan 2025 18:10:36 +0100
+Message-ID: <20250103171037.11265-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250103171037.11265-1-philmd@linaro.org>
 References: <20250103171037.11265-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,41 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-config.c and console.c don't use any target specific
-headers anymore, move them from specific_ss[] to
-system_ss[] so they are built once, but will also be
-linked once, removing global symbol clash in a single
-QEMU binary.
+The CPUState structure is declared in "hw/core/cpu.h",
+the EXCP_HALTED definition in "exec/cpu-common.h".
+Both headers are indirectly include by "cpu.h". In
+order to remove "cpu.h" from "semihosting/console.h",
+explicitly include them in console.c, otherwise we'd
+get:
+
+  ../semihosting/console.c:88:11: error: incomplete definition of type 'struct CPUState'
+     88 |         cs->exception_index = EXCP_HALTED;
+        |         ~~^
+  ../semihosting/console.c:88:31: error: use of undeclared identifier 'EXCP_HALTED'
+     88 |         cs->exception_index = EXCP_HALTED;
+        |                               ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- semihosting/meson.build | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/semihosting/console.h | 2 --
+ semihosting/console.c         | 3 ++-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/semihosting/meson.build b/semihosting/meson.build
-index 34933e5a195..86f5004bed7 100644
---- a/semihosting/meson.build
-+++ b/semihosting/meson.build
-@@ -4,13 +4,16 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
- ))
+diff --git a/include/semihosting/console.h b/include/semihosting/console.h
+index bd78e5f03fc..1c12e178ee3 100644
+--- a/include/semihosting/console.h
++++ b/include/semihosting/console.h
+@@ -9,8 +9,6 @@
+ #ifndef SEMIHOST_CONSOLE_H
+ #define SEMIHOST_CONSOLE_H
  
- specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
--  'config.c',
--  'console.c',
-   'uaccess.c',
- ))
+-#include "cpu.h"
+-
+ /**
+  * qemu_semihosting_console_read:
+  * @cs: CPUState
+diff --git a/semihosting/console.c b/semihosting/console.c
+index 60102bbab66..c3683a15668 100644
+--- a/semihosting/console.c
++++ b/semihosting/console.c
+@@ -18,14 +18,15 @@
+ #include "qemu/osdep.h"
+ #include "semihosting/semihost.h"
+ #include "semihosting/console.h"
++#include "exec/cpu-common.h"
+ #include "exec/gdbstub.h"
+-#include "exec/exec-all.h"
+ #include "qemu/log.h"
+ #include "chardev/char.h"
+ #include "chardev/char-fe.h"
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "qemu/fifo8.h"
++#include "hw/core/cpu.h"
  
- common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
--system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
-+system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
-+  'config.c',
-+  'console.c',
-+), if_false: files(
-+  'stubs-system.c',
-+))
- 
- specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
- 		if_true: files('arm-compat-semi.c'))
+ /* Access to this structure is protected by the BQL */
+ typedef struct SemihostingConsole {
 -- 
 2.47.1
 
