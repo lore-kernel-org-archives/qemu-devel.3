@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D52ABE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91040E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTlCX-0000SY-JR; Fri, 03 Jan 2025 12:11:09 -0500
+	id 1tTlIA-0004IC-33; Fri, 03 Jan 2025 12:16:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCO-0000S9-FQ
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:00 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlI3-0004Hq-Rt
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:16:52 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCL-0006nV-EZ
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:58 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4362f61757fso123745775e9.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:10:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlHx-0007l5-NG
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:16:51 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-436637e8c8dso126769945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:16:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735924255; x=1736529055; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bFOLOeMz7nvWSObnCUJsVQrXvjleVQMv9sXlW+9Cp1o=;
- b=Dv9AHlLEy6FKDGC3fNW45b1TcNhGhnXbt15irFsF51B4Eqv/zdBTlNsdEXYThKKA4E
- CSaCnZ+Nrh9a6izERArAOt5DM6p3AevHWuRi0fJMG+PJs3yrL0Mb68RFE4a9UXzKfDdw
- Wp/JrB3o1ypwS3ys7uTzYzsvVkoCo4LR9w/pGU8446DznlFLSD/HTHkV73LwoC8/xbzP
- UyzserCsY+TY6lMDHFdPRio/tET8RoeO/c5medVvN6fuqq/gdWCSALaFonZ7nBuzOy6Q
- yGa6T0s8jislrW7E/umlEKz4sAGVc7vumUs+t3Yv9c7BsBD8K5pPqf6rvrmwosjWZF34
- lQYA==
+ d=linaro.org; s=google; t=1735924600; x=1736529400; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hr+aVtCaKzlkXbNEKmFT9c/S1qhdem6wwl/faHDIfS8=;
+ b=fPeAzrVyzOTebR++5pfaWEjoe5vXVH0EJn+o7eSwseSiqedWoCrUwvf7OxCzFGPLW3
+ YcrO6u9wXSMhdv8uP+n4FUlDw2xj2OXfxwuh/r5S0U7eg0WfcGDyYg1Fz75Qts/OO4s1
+ rZxI4Qiq31jCsOrxBMAGQRq1n7VpGzQ3G8Yf0jezxBq9eWTHuFQb8uh0TmgAsDTR04eD
+ L6l/8Yy85sCBGODpch9+xzPxzARieJw0FZ6/dghWkjcQTuEBgsfB8pbyXs2l0OVrYR2A
+ C282aAZecd2V79ZGALR2tQktzqOrF/y26fcrY2NtaKPT0GtUfNNaRo7OwSs+KT5XM0fF
+ RDJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735924255; x=1736529055;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bFOLOeMz7nvWSObnCUJsVQrXvjleVQMv9sXlW+9Cp1o=;
- b=WJOq/ARHV9+gna9FN/LR4G8wfYjA6Q/z5n3q7o6C5l/kbnY2Zult+8/YQmN8avCNrC
- B51P+vKYaoslv2hTDrh2QJ/Ou6jTH2CT7u+SUKa9C10oKPDwyBoABQg1EluzvRxM8cnC
- eKlDYoqYKcjglOnbnoQrzbaApbrddRTNJ+HxH6Ud0T+5wAKlWY6Ov62N2J6zZcHewuE/
- PU1KGFFGwCV0MousiEewj9J2nD8a/cze1OYbPs2bFDijgi6bVSNTj5iVAfpbzwdhIbdm
- blL6e69eA0Ma3KnB5UZu+7tpJphA91V90PJderMacQI8E70aDfD6XljEGJiqgrfZ0I1G
- Yk1Q==
-X-Gm-Message-State: AOJu0YxZY+FbdSUHHL8XckMFtuTO6LJPtOQxLhIAPWfw3+MyH8N+r1fH
- fw0rmq0j3s0oJ1cDVNdy8UxvqLlBnlWBJxPO8SjyBBJD9PlbEoPf8GM95yUQM/wO6XTbo4VIrPa
- htrM=
-X-Gm-Gg: ASbGnctb9FtnM7O9Zelk1qAWQxYc5IMaf/AZFRsd6MOFpW8DlBMEa8n94MbUUH67PdJ
- nLpYBAaTZBg6mBFP3UGW+O/TNKk6bMlP44L4zAg04JHWDwQzWd/WiD7aKXTFnsY8y8MnwfSgfnq
- XjNP32sA07/uYwKiYVw9weZpa/pX093v2QmM0q/t9lKnaIoX/JGa+50/Xe8QnJ/P69Lrhfgjas0
- mQo338xrm7mYs9CWLC0gfMxxaDUuqHh4KU/qgjOem8K+DpRZ7z5+wqWRNb1DLqaCy3rHnKhCrKt
- SfK2T+b8v8RN3FTxN4v+kUYj1Fed6Wo=
-X-Google-Smtp-Source: AGHT+IF+rrMTjue2+vuHoiVnpaonjflsL6Kb9Yitix7awOVRt+ocOHs/fJ/l5ks1VsYkMQngWSqRcg==
-X-Received: by 2002:a05:600c:45c6:b0:42c:c28c:e477 with SMTP id
- 5b1f17b1804b1-43668b4808fmr385949495e9.23.1735924255552; 
- Fri, 03 Jan 2025 09:10:55 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1735924600; x=1736529400;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hr+aVtCaKzlkXbNEKmFT9c/S1qhdem6wwl/faHDIfS8=;
+ b=IVEibVGyRwd8hq1E0EnlCiKZcwiF6GBvAbey+I9gnMEZ2UrpUk5k/y3P4FqbieI8fK
+ RIGTLfYTFlehJLBShF6VnMqxmIjTgxPjPiJBvtR8+XCY66jZuq8xWDDc44RyzQCn875l
+ BXEUQCZFk7kX6Ud56JyVwb82qKnXzauqfjjqkAiAWyuqM2KAujYzQCc1JD/fx2JFvKTS
+ HGzkxsevYssovzbEFidK6DBit/6RfYFZZ80a2iHyHJ0XbOBwSttfKPacUJ/QGYTzJYon
+ 48M0YNTQwlYaDxcfyoezzVKqNZRo3G7mXcrXL09z0FjiHejN4fQcUCKfLVNk7ahEcp7k
+ 1ZVw==
+X-Gm-Message-State: AOJu0YyqRQjVjGsdXZSAw9hmgLJ3qzJCI7E/4tZRYz+5fz8ZhBvPsSDv
+ 4ATvVUVfgVg9lM84v6FA/WI7VCOCKd4gm9ya/PBuUML78v2TjdzjZ2QnXuR9bUM=
+X-Gm-Gg: ASbGncuAGGq3VbKAtkDK2NXi2I4CjsNEOkbnjL8KvptCmwhDj/9+o6w5qPRMZxMrKLm
+ 3lw9k9gsAz7OrKr5qnU2zu+ir5ke3/puV8uDWvQOP7WQhI6R73ct2+RPmxoi39w9DuFAtUx3GBz
+ aie4kxcorCq4+JR5i8MHuTQqjo4urB+6vdIexKi+74tRxiRiVeTkz0Ap7Coo7wZC8NTM54eaWrP
+ EY0myLB4fPrQlHiMpK04R0zYeK9Zddb9mZEXEa2s8OHC6XSU34G2d19OdCTON1wQeRrLW3As1Np
+ iuJkV4aJCBaT169S6gwyvJzg
+X-Google-Smtp-Source: AGHT+IEND1AWliTYEzh2ULD8BKlTdDwUDUV848cCWoNzawOiJSbEU1SqPuCyzuDlQL9Fbbk+K0og+w==
+X-Received: by 2002:a05:600c:444b:b0:434:a1d3:a306 with SMTP id
+ 5b1f17b1804b1-436685489aamr421596515e9.5.1735924599967; 
+ Fri, 03 Jan 2025 09:16:39 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661219578sm493380585e9.20.2025.01.03.09.10.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 09:10:54 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Kito Cheng <kito.cheng@sifive.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Keith Packard <keithp@keithp.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/5] semihosting/arm-compat: Include missing 'cpu.h' header
-Date: Fri,  3 Jan 2025 18:10:35 +0100
-Message-ID: <20250103171037.11265-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250103171037.11265-1-philmd@linaro.org>
-References: <20250103171037.11265-1-philmd@linaro.org>
+ 5b1f17b1804b1-4364a379d69sm473685555e9.0.2025.01.03.09.16.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jan 2025 09:16:39 -0800 (PST)
+Message-ID: <d06dd874-c6a5-49ba-89c1-60668ad639d4@linaro.org>
+Date: Fri, 3 Jan 2025 18:16:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] system: Try hardware accelerators (KVM, HVF) before
+ software one (TCG)
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>
+References: <20250103150558.1473-1-philmd@linaro.org>
+ <Z3f--qO8x45MpiXQ@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z3f--qO8x45MpiXQ@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,34 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ARM semihosting implementations in "common-semi-target.h"
-must de-reference the target CPUArchState, which is declared
-in each target "cpu.h" header. Include it in order to avoid
-when refactoring:
+On 3/1/25 16:15, Daniel P. Berrangé wrote:
+> On Fri, Jan 03, 2025 at 04:05:58PM +0100, Philippe Mathieu-Daudé wrote:
+>> As Daniel suggested [*]:
+>>
+>>> We should consider to rank HVF above TCG, on the basis
+>>> that HW acceleration is faster and should provide a
+>>> host<->guest security boundary that we don't claim for TCG
+>>
+>> [*] https://lore.kernel.org/qemu-devel/Z07YASl2Pd3CPtjE@redhat.com/
+> 
+> Note, my statement above was on the basis that HVF passes all our
+> functional tests, thus indicating a decent level of confidence
+> in the correctness of the HVF impl.
 
-  In file included from ../../semihosting/arm-compat-semi.c:169:
-  ../target/riscv/common-semi-target.h:16:5: error: use of undeclared identifier 'RISCVCPU'
-     16 |     RISCVCPU *cpu = RISCV_CPU(cs);
-        |     ^
+Indeed, I forgot about that, and only tested in my 'HVF-only'
+directory before posting, but ...
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- semihosting/arm-compat-semi.c | 1 +
- 1 file changed, 1 insertion(+)
+> If anyone knows any show stopper problems with HVF that would
+> justify blocking its promotion ahead of TCG.... say now.
 
-diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index d78c6428b90..86e5260e504 100644
---- a/semihosting/arm-compat-semi.c
-+++ b/semihosting/arm-compat-semi.c
-@@ -166,6 +166,7 @@ static LayoutInfo common_semi_find_bases(CPUState *cs)
- 
- #endif
- 
-+#include "cpu.h"
- #include "common-semi-target.h"
- 
- /*
--- 
-2.47.1
+... here we go:
+
+  3/15 qemu:qtest+qtest-aarch64 / qtest-aarch64/migration-test 
+       ERROR            0.88s   killed by signal 11 SIGSEGV
+
+>> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   system/vl.c | 5 ++---
+>>   1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> 
+> With regards,
+> Daniel
 
 
