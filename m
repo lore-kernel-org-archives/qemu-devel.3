@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C46B8E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209BEE7718F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTlCG-0000QE-CN; Fri, 03 Jan 2025 12:10:53 -0500
+	id 1tTlCL-0000RR-8d; Fri, 03 Jan 2025 12:10:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlC8-0000PU-3j
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:44 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCC-0000Pm-Iy
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:50 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlC6-0006mE-Ds
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:43 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-385deda28b3so8538204f8f.0
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:10:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCB-0006md-4u
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:48 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4362bae4d7dso89660895e9.1
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:10:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735924240; x=1736529040; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wW81ZsV/iemciYIUPkkQZwi1T5j7zVtZZ41DJIlDy9M=;
- b=NTe+olGL8SXDRfkskFdbMGkPDjstsBL4CZw/pnUVJC6CELqBGqoTIQdTsHz//38B03
- T3pjCb2sfy8sSHTUdpxuvTGIIWGCANK3ucvdr2z8bsZmws45rfHuMwqsU3yAi+NLolx8
- nQbmBoKx/2yJiYsitOTm5jQcXc84XLlzkdHoCzQSXjvTcNmTBVhQldsQFfJCuambVBhQ
- BGysm/CP2jmrvWe8ePInnlJtxdIdL5wrGRdTujWb2aJJqLS04BRlFsh9XJu/HMFCsGiR
- YdY4TDmhXaQGK7w0Wyyigc111GJMdY7ltX4KJSuOBYySohPzZhiXEhzzZVdSjly5dWgc
- zfpg==
+ d=linaro.org; s=google; t=1735924245; x=1736529045; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jhLJyNKpXTaAG71p496OhoK9px2w3vuRidPr1o8/SQw=;
+ b=QNbTF/Z+EIYKTIzNqycgTUaGheTcrKDdz1USiNYNc+8zA5+59DddTr/cCdLZnF1gao
+ eswymmb+kODh8V+ZVliF7pHKgGxR+eHOufRpRdJl1oKJR/UjQeXt/++hSJM6LTvLlqB3
+ A4fkbZvKH0DwbA4FnQ8VKhzMxTsILEKPsKyJMlM5TduqamQ1jBlg5/w0wmHb59RcXTOT
+ hoHsO3i7jA39DkiHDy2kFY9DjaB6s0EMG8UUmM6tJqYWTRk6MhTzMgnMMHrQjAenGbMm
+ uBxcSRJZVIYzLQF+Hs51z0N6w75hwWClF5FXkj0nyJxknBLyo5sUSKFRq8bps/a1np40
+ UWIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735924240; x=1736529040;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wW81ZsV/iemciYIUPkkQZwi1T5j7zVtZZ41DJIlDy9M=;
- b=gMxAOzXjD7YwbT9vsNpfzpRmD7pVCpaLVAC1K3P9wrNixQA1ONXXfju/Slk9BHUX1K
- ZcJdET8T5kxQCxERb+7P+7emxSpV7sH9BIqXvdTya9zdBHIQ8D4NVYrQ0kSZP7NqF2Os
- z13UQsxNZ2hhRIRsnQ1SMwDOrXQCwx+qP4cvYIz3iX/qhojL247ZMx842SNT9RmbRSyr
- DpO1HElyUNpecCwZZa6COWywz3NA6HgAVivproDhIBxBf7XuN6mseyngKoikX+C3Fj03
- zhKGrP8DG+83LNU9mUL42YlESANg9GGV6Ydw1xYthiwFDR2KI8z5kHY8obvpQGd8vb0L
- IZ7w==
-X-Gm-Message-State: AOJu0Yzw67VqMYgnYO9S/KeT2RbrEuEqbtcSewLbcbDEUv7uL00ue+B2
- 5uV7B5HOXEwAKQLKfIqnq5SBwqPam3HF30i9Ev31g975iUsF6v4QgPajwxcklSxz23oluVPwTlM
- 7M3w=
-X-Gm-Gg: ASbGncuTtNqN/YFMLc6rxrJ7VAy4sm8c01I2d2y6q/rUpvOZTXB+WgoULRu2sNdXNbS
- GAhbzOBEFGyJb6/BYcKlY1nr74son5SGiQ7BvyCXjmllWBgdjZKrYLnMnOjCEccuXJoMdinKjIX
- PuhcsFcfnWT52xjKQig9SdL2+qmQA1v0MZPj3o+mPXbSoJt/Jn8maqJO6dxSKTdFy6S1RbJ3QY8
- uyV/1fcc1zXdg2/OgqRcnznuXV/P9gEJGWnWlr7pmYyoZkmKnvoJ4g6mxqqAECt8UVyLc1pn2Tl
- fQYYN99rAW5C2MVEmFCj7nUPAmhmZdI=
-X-Google-Smtp-Source: AGHT+IHCYhVQDsYiVnheag74DZuJ3EJ9I+nJ3H7uWGz28yHIx/7nKq+DbH4Izp0rj5xrKnw4qvpsWA==
-X-Received: by 2002:a5d:47c5:0:b0:386:3213:5b9b with SMTP id
- ffacd0b85a97d-38a223f5cebmr41308637f8f.43.1735924240342; 
- Fri, 03 Jan 2025 09:10:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1735924245; x=1736529045;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jhLJyNKpXTaAG71p496OhoK9px2w3vuRidPr1o8/SQw=;
+ b=Nh+Wle2TMahVy5LJWGcVzIWN+r55Jk5JxEyag5Ha1M1kBuLZoLFf+tq+an8toWUNe+
+ ADpYZf4a6owptcNH1cV2UHui/unESIZXRj2Z/SurFe6NLUVKb/+UiisZYxC6UZPrxnqu
+ NrXIk/89NJowQKtfUS9ER7yHoYJjqINVsKvg7W/FbFEoKQuSJQqvTz0MxvNK3rltrNs7
+ 3UoKXPmO8NFPjjf6XmXw94T4IAPBqGLWqdUITfthV8f4hUX4425lcCyCTCx4sbgi1+ZK
+ ysmxpngbO1Uv4yoSVkvhxHkfqgrqEpSx+J4X7SdEZbV/3646LHCvfc9VfjpIbdRHvxnv
+ VrFA==
+X-Gm-Message-State: AOJu0YxUwAUYayQ3T94VOSsSiwFDh8TNx/oyDDXJA4LCDDCKzXbyyqWz
+ +v6ZQPZOG5FL+Dz8WYmXq9J6SwI4RUiqFy5rwADSk9KJFuCxuM9WlfklTwPV0nj5D2ao27sN456
+ NRBs=
+X-Gm-Gg: ASbGnctQUaf810vKRI/FGzMIP0Cig4Wso4MHqOYRGMAwzkHr/Joz5R9JX5rG0OFNZLZ
+ oT/EuqI2Rmv4fZ1EN3TZQ5kqyfAK6hDjzT7sycbE5fE0BIBXgcUtUyY5l9UVV3Ubk3JsQaE/Lco
+ ROXsHUFIeiUZSHvUGyc61GKQ0RceaznVYTOPk9YswM1SCCvcmhnlt/FgXMN5BrSuVqEv5xc+9J/
+ VZWZNuD+6vQYj5TRwEPKeauV1JhGI0/DJrTzUH+As01+31ieLgoKx4kNdDsWQ3vU0WJ4E8fapul
+ nS9uqTLq14jD3VgdjH4dC+CKNmm9iQ8=
+X-Google-Smtp-Source: AGHT+IF8Nsy3ccr7cQYoUOI7TTONOJuDjDJ8wD8LLXAHwSTD/oHVYSofldv6C/suyviRUkfllAm1gw==
+X-Received: by 2002:a05:600c:3b86:b0:434:f3d8:62d0 with SMTP id
+ 5b1f17b1804b1-43668547175mr449340245e9.3.1735924245179; 
+ Fri, 03 Jan 2025 09:10:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436611ea42esm496409315e9.9.2025.01.03.09.10.39
+ ffacd0b85a97d-38a1c8acafesm40979667f8f.98.2025.01.03.09.10.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 09:10:39 -0800 (PST)
+ Fri, 03 Jan 2025 09:10:44 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -72,15 +73,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/5] semihosting: Reduce target specific code
-Date: Fri,  3 Jan 2025 18:10:32 +0100
-Message-ID: <20250103171037.11265-1-philmd@linaro.org>
+Subject: [PATCH 1/5] semihosting/syscalls: Include missing 'exec/cpu-defs.h'
+ header
+Date: Fri,  3 Jan 2025 18:10:33 +0100
+Message-ID: <20250103171037.11265-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250103171037.11265-1-philmd@linaro.org>
+References: <20250103171037.11265-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,54 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series makes semihosting config.c and console.c
-target agnostic, building them once, removing symbol
-collision of the following functions in the single
-binary:
+target_ulong is defined in each target "cpu-param.h",
+itself included by "exec/cpu-defs.h".
+Include the latter in order to avoid when refactoring:
 
- - qemu_semihosting_chardev_init
- - qemu_semihosting_config_options
- - qemu_semihosting_config_opts
- - qemu_semihosting_enable
- - semihosting_arg_fallback
- - semihosting_enabled
- - semihosting_get_argc
- - semihosting_get_target
+  include/semihosting/syscalls.h:26:24: error: unknown type name 'target_ulong'
+     26 |                        target_ulong fname, target_ulong fname_len,
+        |                        ^
 
-This function is still problematic, being built for
-each target:
-
- - qemu_semihosting_guestfd_init
-
-Note, it depends on CONFIG_ARM_COMPATIBLE_SEMIHOSTING
-which is target specific, so doesn't scale in a
-heterogeneous setup like the ZynqMP machine, having
-ARM cores with CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y and
-MicroBlaze ones with CONFIG_ARM_COMPATIBLE_SEMIHOSTING=n.
-
-I suppose the semihosting API needs rework to consider
-the CPUClass? I'll let that investigation for the
-maintainer ;)
-
-Regards,
-
-Phil.
-
-Philippe Mathieu-Daudé (5):
-  semihosting/syscalls: Include missing 'exec/cpu-defs.h' header
-  semihosting/uaccess: Include missing 'exec/cpu-all.h' header
-  semihosting/arm-compat: Include missing 'cpu.h' header
-  semihosting/console: Avoid including 'cpu.h'
-  semihosting/meson: Build config.o and console.o once
-
- include/semihosting/console.h  | 2 --
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  include/semihosting/syscalls.h | 1 +
- semihosting/arm-compat-semi.c  | 1 +
- semihosting/console.c          | 3 ++-
- semihosting/uaccess.c          | 1 +
- semihosting/meson.build        | 9 ++++++---
- 6 files changed, 11 insertions(+), 6 deletions(-)
+ 1 file changed, 1 insertion(+)
 
+diff --git a/include/semihosting/syscalls.h b/include/semihosting/syscalls.h
+index b5937c619a6..6627c45fb28 100644
+--- a/include/semihosting/syscalls.h
++++ b/include/semihosting/syscalls.h
+@@ -9,6 +9,7 @@
+ #ifndef SEMIHOSTING_SYSCALLS_H
+ #define SEMIHOSTING_SYSCALLS_H
+ 
++#include "exec/cpu-defs.h"
+ #include "gdbstub/syscalls.h"
+ 
+ /*
 -- 
 2.47.1
 
