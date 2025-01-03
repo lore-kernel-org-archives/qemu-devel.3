@@ -4,57 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB7AE7718F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 11:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDDEE77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 11:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTfuT-00016r-2u; Fri, 03 Jan 2025 06:32:09 -0500
+	id 1tTg5H-0003wh-1N; Fri, 03 Jan 2025 06:43:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tTfuQ-00016E-Dk
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 06:32:06 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tTg5E-0003vW-R9
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 06:43:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tTfuO-0004KP-Hz
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 06:32:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=FgygfjpFVrtLCX3r+bHF7l8KIJq0zui++aq0cRv0YnY=; b=TM0iAu/kwI7g5W+TKmkL+9STMz
- WMnp1jyk3SzkaP0V9wNVhLSOkHnM01j0uN2EpmDKpXZIcqi+hYKYH+cOaVj0l5UoAPDIoUbgQsxAE
- 2A0ndSikIVGcURatAgee+2Gvfdh4duSM3lyrdfp4d3/HyjS/+AFh45PnQGNd7ve8feCfPF7eufOI9
- JsLxAt+jp52n+syeEheaeCc2Zgc9Lgx7OCEjjHu4t9z0KzuoNi6CDaxoTK8zzqTSsFOzl8EbIKLwf
- cIQb3YdOpGEcpTeHrFuQkdVU+lbqnFJITqCGyiG392em2ADcIXDcj1CoUjcpOUL8LsnRuuwODUDW2
- NxDOzrLTxxgllITdjCeAaKsFlGMvJdJHm7dU+DP0G1bz/yD9THYGc4i15qhSNR+ls5393QQKYzUO8
- TraUvDx/0fEhgb5x+6QIy1NXR1jWK/h9VSpleJxjE2PBp2BL5w83qZdei6iR/Cn+u2jxgI7ulMZ9Q
- uo1Bu/p3+Q/f9KasaXKJprm4rwlTYDfXbnpHl9fNZVmw7swJpK88CZRCT/KG3QWmzi8wXtOhMVRQZ
- 58dmbslNveAzbj5FpfxufHU+61w9gmtF9KV3zk91aL6JsApYmnGZXJmXZN30nr1Jhrb25k9sV9O/H
- ++6m8svFmZ60/4UxpNwK04pPUVyOFf/YyqkwJswE8=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Subject: Re: [PATCH] 9pfs: improve v9fs_open() tracing
-Date: Fri, 03 Jan 2025 12:31:59 +0100
-Message-ID: <14000677.NzGkIOIz7l@silver>
-In-Reply-To: <45674069.kNWJ3c3XjC@silver>
-References: <E1tN8RJ-008jNq-5L@kylie.crudebyte.com>
- <45674069.kNWJ3c3XjC@silver>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tTg5D-0000Dq-AE
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 06:43:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735904591;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=GbbnoXYi8vumOwR9t+gdddIUMaxEXsmhheh1fffy3G8=;
+ b=CmevW31sYhYg2I0GiMMthK+y10q268Us5bxI+Tm3taasGw1+GmzcMr9XQ21qjDOMV2zRej
+ FAe7ts1aTBwaw9ITvFKgk5XaU/3wS/ELbWO3NVTyGWtT82TfrKbhYgUhbUuFacVT0YOcW+
+ RGdzPn20TVCQQN6JtWxTvFJaDdegibI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-2tAAdk7lMcC8o4Ri3gdsTQ-1; Fri,
+ 03 Jan 2025 06:43:07 -0500
+X-MC-Unique: 2tAAdk7lMcC8o4Ri3gdsTQ-1
+X-Mimecast-MFC-AGG-ID: 2tAAdk7lMcC8o4Ri3gdsTQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63CBC195604F; Fri,  3 Jan 2025 11:43:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.141])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF0C21956056; Fri,  3 Jan 2025 11:43:03 +0000 (UTC)
+Date: Fri, 3 Jan 2025 11:43:00 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs: update copyright date to the year 2025
+Message-ID: <Z3fNRM0SSmYGB_y9@redhat.com>
+References: <20250101080116.1050336-1-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250101080116.1050336-1-anisinha@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,93 +82,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Monday, December 30, 2024 10:50:59 AM CET Christian Schoenebeck wrote:
-> On Monday, December 16, 2024 11:30:09 AM CET Christian Schoenebeck wrote:
-> > Improve tracing of 9p 'Topen' request type by showing open() flags as
-> > human-readable text.
-> > 
-> > E.g. trace output:
-> > 
-> >   v9fs_open tag 0 id 12 fid 2 mode 100352
-> > 
-> > would become:
-> > 
-> >   v9fs_open tag=0 id=12 fid=2 mode=100352(RDONLY|NONBLOCK|DIRECTORY|
-> >   TMPFILE|NDELAY)
-> > 
-> > Therefor add a new utility function qemu_open_flags_tostr() that converts
-> > numeric open() flags from host's native O_* flag constants to a string
-> > presentation.
-> > 
-> > 9p2000.L and 9p2000.u protocol variants use different numeric 'mode'
-> > constants for 'Topen' requests. Instead of writing string conversion code
-> > for both protocol variants, use the already existing conversion functions
-> > that convert the mode flags from respective protocol constants to host's
-> > native open() numeric flag constants and pass that result to the new
-> > string conversion function qemu_open_flags_tostr().
-> > 
-> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > ---
-> >  hw/9pfs/9p-util-generic.c | 44 +++++++++++++++++++++++++++++++++++++++
-> >  hw/9pfs/9p-util.h         |  6 ++++++
-> >  hw/9pfs/9p.c              |  9 +++++++-
-> >  hw/9pfs/meson.build       |  1 +
-> >  hw/9pfs/trace-events      |  2 +-
-> >  5 files changed, 60 insertions(+), 2 deletions(-)
-> >  create mode 100644 hw/9pfs/9p-util-generic.c
+On Wed, Jan 01, 2025 at 01:31:16PM +0530, Ani Sinha wrote:
+> We are already in January 2025! Update copyright notices.
 > 
-> Queued on 9p.next:
-> https://github.com/cschoenebeck/qemu/commits/9p.next
+> Cc: peter.maydell@linaro.org
+> Cc: qemu-trivial@nongnu.org
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>  docs/conf.py              | 2 +-
+>  include/qemu/help-texts.h | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> Thanks!
+> diff --git a/docs/conf.py b/docs/conf.py
+> index 164a8ee8b2..31bb9a3789 100644
+> --- a/docs/conf.py
+> +++ b/docs/conf.py
+> @@ -87,7 +87,7 @@
+>  
+>  # General information about the project.
+>  project = u'QEMU'
+> -copyright = u'2024, The QEMU Project Developers'
+> +copyright = u'2025, The QEMU Project Developers'
+>  author = u'The QEMU Project Developers'
+
+How about we make this consistent with the help-texts.h  file
+by making it cover the range of dates, as stuff that was authored
+in 2024 and before , doesn't magically change its copyright date
+to 2025, only new contribs get that.
+
+>  
+>  # The version info for the project you're documenting, acts as replacement for
+> diff --git a/include/qemu/help-texts.h b/include/qemu/help-texts.h
+> index 353ab2ad8b..bc8fab9169 100644
+> --- a/include/qemu/help-texts.h
+> +++ b/include/qemu/help-texts.h
+> @@ -2,7 +2,7 @@
+>  #define QEMU_HELP_TEXTS_H
+>  
+>  /* Copyright string for -version arguments, About dialogs, etc */
+> -#define QEMU_COPYRIGHT "Copyright (c) 2003-2024 " \
+> +#define QEMU_COPYRIGHT "Copyright (c) 2003-2025 " \
+>      "Fabrice Bellard and the QEMU Project developers"
+>  
+>  /* Bug reporting information for --help arguments, About dialogs, etc */
+> -- 
+> 2.45.2
 > 
-> /Christian
+> 
 
-I just realized that evaluation of O_SYNC and O_TMPFILE was wrong, as they
-might contain several bits.
-
-And O_NDELAY should be filtered if it is exactly the same as O_NONBLOCK.
-
-This should fix these issues:
-
-diff --git a/hw/9pfs/9p-util-generic.c b/hw/9pfs/9p-util-generic.c
-index dff9a42d97..4c1e9c887d 100644
---- a/hw/9pfs/9p-util-generic.c
-+++ b/hw/9pfs/9p-util-generic.c
-@@ -28,15 +28,21 @@ char *qemu_open_flags_tostr(int flags)
-         #ifdef O_CLOEXEC
-         (flags & O_CLOEXEC) ? "|CLOEXEC" : "",
-         #endif
--        (flags & O_SYNC) ? "|SYNC" : "",
-+        #ifdef __O_SYNC
-+        (flags & __O_SYNC) ? "|SYNC" : "",
-+        #else
-+        ((flags & O_SYNC) == O_SYNC) ? "|SYNC" : "",
-+        #endif
-         #ifdef O_PATH
-         (flags & O_PATH) ? "|PATH" : "",
-         #endif
--        #ifdef O_TMPFILE
--        (flags & O_TMPFILE) ? "|TMPFILE" : "",
-+        #ifdef __O_TMPFILE
-+        (flags & __O_TMPFILE) ? "|TMPFILE" : "",
-+        #elif defined(O_TMPFILE)
-+        ((flags & O_TMPFILE) == O_TMPFILE) ? "|TMPFILE" : "",
-         #endif
-         /* O_NDELAY is usually just an alias of O_NONBLOCK */
--        #ifdef O_NDELAY
-+        #if defined(O_NDELAY) && O_NDELAY != O_NONBLOCK
-         (flags & O_NDELAY) ? "|NDELAY" : "",
-         #endif
-         NULL /* always last (required NULL termination) */
-
-I post a V2 of this patch now.
-
-Best regards,
-Christian Schoenebeck
-
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
