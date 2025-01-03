@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF92E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B53E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTlOl-0006if-Ml; Fri, 03 Jan 2025 12:23:52 -0500
+	id 1tTlNx-0005yJ-F1; Fri, 03 Jan 2025 12:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlOh-0006hd-4X
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:23:43 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlNw-0005y2-Nd
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:22:56 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlOc-0001UG-Ve
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:23:42 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43618283dedso123824395e9.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:23:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlNv-0001O0-As
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:22:56 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso113491565e9.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735925015; x=1736529815; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=k3jWifUuqeP1feEf9SFINLpqfhPOd4o6l2XX2flqvIk=;
- b=nudlXNCBeVK/4Rpf89YJnX9vjVsWb8XwHQwd1CqYVYxXN4OX+qyTrf941bB4IonqYx
- CsDzV+d1Poh2OtASuWjplC5P8kahAgG5e+IrlXiYWGg3fUgLD6lgocDjo4H9seOQObYB
- OAuQDDD2+KzdAWJPnUQVF58xMc0NrGth6oQ3ZhzSzM65odzRxDh4Ut8z/6m3Pivtkwud
- +zrr5Fys2ygoIbxXyAhxBK1VakhtaFCPZ0TbSfjt8PUSvynJ1zrqKadNtqCQQBWuZHGh
- KQaem0rqyLP6MfzATyVIAOeagBwRYBuQTLkDu6POswMD6Rs6Pt4qD2T7g2Pjq30KxZ7i
- 7qgg==
+ d=linaro.org; s=google; t=1735924973; x=1736529773; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GlVN5y46CcSMejJupZx1BQuV3ovHng+r81SDig0PPcM=;
+ b=jiuSRzv3/Ybkng7ShWDIxVHxVDec7am9puq2WV7jiWjRlEjiEt2MOiF3EntvFX4iBF
+ HzRGmcJfNhouWkW86bK27Nli1C8VZ1zwqfDRZMsCisfxx2F7SHGYz8zRvytJapwDqVjN
+ /wobjwedwQ2muxpfa9Y0tvPir7EHwCb+73e98+eV4zksQtpCx8p55P7rlbFqYt/abzZg
+ Iem83JvGMWvQWTRZ90RjrEnB3oeJksKwe7RjUhTGQ61JoGyajtj1+j19p0cKZwDK5zna
+ T9hI2FIjr9rExhBEAfku9JqtMgAkBLwKv7rvrGKjJ313ECVX+xs++GiqSuWJPGaPw8C4
+ 2ftA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735925015; x=1736529815;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k3jWifUuqeP1feEf9SFINLpqfhPOd4o6l2XX2flqvIk=;
- b=s9G+zgedGA03mJum6cRt3fuS6bS5noQ/kRnQC7gq+frUtn48mYwQvL8c5e8ofgyXPh
- llDLLlh4tnXPWVd+h8HEhnRpuDKjse6KoBQhvr6HWsMHkjKOZzV1aWz5g0oW6venH+bn
- XWI2MGMz+98H4Vo4IHb1jCwQoC7AurlCuhlbpA7AqFCdYDW794PgyMPjzNZhbFZkfQko
- 4E5H4Co5LTQZv97ifPeOllAhb2l/s7rKhZU+J6qZ4G8eyOMQGljJT3oQQ76f8eGSBEVs
- vlQUJCoOYOYEAkQ6iojd1DdTJS1gejdHCSVGwhxjNFWXRWw7TOvFyFKzH8ZNiebVQrjz
- mahg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLOjMDbr4r/HCdEoqCqdC2BCBSFm0ufLcXrAujdfHFRI9g9jmNhGlZNAs6vAYZQfFGWKREbMiM8x9V@nongnu.org
-X-Gm-Message-State: AOJu0Yw8Crk4/TQWg0aKXMJcL+raXCEgorGVLcCYUKefGBX/2S2lT1/d
- WYCxwZ77zeFRT8C70NZCKZ7F7GjLX58uBSUnf5G8X6qWDl2IHbyEA4KoyFGBYjA=
-X-Gm-Gg: ASbGncvvTH5ZVxgyvuaUVMcbYjdr1A8v9QECxQkFMoiCNaneymW8TJTrHdmlfZiqIMb
- S0qRUO2V6M+UVS79Y8bsEiHX5QAmFl8gOEyOu0tbB0deGPwlsL12kVsj+M0lhGCzHEELxz5Y80j
- e3tcQ1xe6ldYIErqmWk7N7KwzdXDfprL1niEiJCXloQlsPE9/cXxi7pGq6+X2QoIzwkaahCTXI/
- j+9QtK+aSJH7V6fW83A3wZdc+Pc5KZrrS4RYUeFk4U1T01ZRMgcCI9pIb/LREtWCdf1XxDr+/Bt
- aphIRPNQDzuyTiCVdJAvByK1
-X-Google-Smtp-Source: AGHT+IGJvVt7VDI7jaemSYiP89o3oIeiiuI6FLH5oN8k1VVONF02cTBT6FXXfBsRyt8VdJLeXFl23A==
-X-Received: by 2002:a05:6000:460b:b0:386:4a24:1916 with SMTP id
- ffacd0b85a97d-38a22408c69mr44788837f8f.55.1735925015522; 
- Fri, 03 Jan 2025 09:23:35 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1735924973; x=1736529773;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GlVN5y46CcSMejJupZx1BQuV3ovHng+r81SDig0PPcM=;
+ b=ftJEK9/JX5wLhbwSfb0T6CVQA0SHJ/r9Gxkycc7tgJZHm4GTa19HXoeN2aRvvdf5Ht
+ Ilz4q0EinuDHgMNBZUqM+NAEJ3cTCrkA1QAwFpfsVkGt3s35Vv4y/siKqJoM2Z9EfG6S
+ TScKqBlB4pQIrK34cIVw34qiRqpPJH588IYgrJG/IfL4WZx5eTZKJV5F0jXnzJ90HlTh
+ QHjGZJE2/2HObHth26IN9D0KwkiwedBM/JaqKs2TqIp/EdODhOXRS0Hgm7NChVtyE9ZV
+ HamiW+C9/Ux9Cw4a571InCNSFYAj6t0UQpjeXN52U5DlRshz4cZVpaw9pNxpflACuUIO
+ jqiQ==
+X-Gm-Message-State: AOJu0YyBo45Ak/juPfyHVv4lVqgdfBz0IPXOcLrbQHjZ5vvPixR4l6M1
+ pVc+HOsnv8DVSKC521asfWZ+4OUdQEhgSprmetwUqZUCuDr8R+gAtPXvJhNYorbQLp0UY+dZwap
+ 35z4=
+X-Gm-Gg: ASbGnct6DaQs8jYkddNfcX93sbIitExHUUiGxqWmT/prx0iuu3FvzuMdcHUc3QcR/PC
+ dhO/QC1xJTDQxJZ5d3zkW3x6BoDYS18SGRthJaa8Z+sx9tqxgWWkT6JWTTa1Fv7YMetZahw1RUS
+ B0E/WBkWRVUYApnJSr7fHI70nOmM+sV1I3ylbFFFTZZ4IepjEax/4M9xQ+q/hIc97kg03Ohsysp
+ y3K35+20ULFs7VJAaZpL7fBXO91p3WbJwe9UfKtUpdAcorh0KAdViUS54794xr9oj3wCubdnY2q
+ 6n/0JCshqf0hS9q+6YiiJe+l1bcjs5o=
+X-Google-Smtp-Source: AGHT+IGyxVCndHj/pTMGfjvPSV9eCuiFdx3ug/8h2WJ9LNhi+aADdu5rL88R184yUE7q9jIyCyFPdQ==
+X-Received: by 2002:a05:600c:154a:b0:434:fd15:3adc with SMTP id
+ 5b1f17b1804b1-43668b786bamr376435975e9.25.1735924973185; 
+ Fri, 03 Jan 2025 09:22:53 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e1c0sm41838441f8f.77.2025.01.03.09.23.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 09:23:35 -0800 (PST)
-Message-ID: <c9b250a1-64dc-4735-a503-b965d9011958@linaro.org>
-Date: Fri, 3 Jan 2025 18:23:33 +0100
+ 5b1f17b1804b1-4366127c508sm488947785e9.33.2025.01.03.09.22.50
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 03 Jan 2025 09:22:51 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v7 2/4] tests/qtest/boot-serial-test: Reduce for() loop in
+ PL011 tests
+Date: Fri,  3 Jan 2025 18:22:37 +0100
+Message-ID: <20250103172239.18562-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250103172239.18562-1-philmd@linaro.org>
+References: <20250103172239.18562-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/s390x: Declare loadparm as char[LOADPARM_LEN]
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>
-References: <20241120085300.49866-1-philmd@linaro.org>
- <20241120085300.49866-2-philmd@linaro.org>
- <d005f227-cf46-4a62-a152-668030ad7e49@linaro.org>
- <d4d352bf-35f9-413b-a495-8eb8db7da3f2@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d4d352bf-35f9-413b-a495-8eb8db7da3f2@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,52 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/25 18:17, Thomas Huth wrote:
-> On 30/12/2024 18.02, Philippe Mathieu-Daudé wrote:
->> ping for this single cleanup patch?
->>
->> On 20/11/24 09:52, Philippe Mathieu-Daudé wrote:
->>> "hw/s390x/ipl/qipl.h" defines loadparm[] length as LOADPARM_LEN,
->>> use that instead of the magic '8' value. Use a char type for
->>> char buffer.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/s390x/ccw-device.h               | 5 +++--
->>>   hw/s390x/ipl.h                      | 2 +-
->>>   include/hw/qdev-properties-system.h | 2 +-
->>>   include/hw/s390x/s390-virtio-ccw.h  | 3 ++-
->>>   hw/core/qdev-properties-system.c    | 8 +++++---
->>>   hw/s390x/ipl.c                      | 6 +++---
->>>   hw/scsi/scsi-disk.c                 | 2 +-
->>>   7 files changed, 16 insertions(+), 12 deletions(-)
->>>
->>> diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
->>> index 4439feb140..94a9b35714 100644
->>> --- a/hw/s390x/ccw-device.h
->>> +++ b/hw/s390x/ccw-device.h
->>> @@ -15,6 +15,7 @@
->>>   #include "hw/qdev-core.h"
->>>   #include "hw/s390x/css.h"
->>>   #include "hw/s390x/css-bridge.h"
->>> +#include "hw/s390x/ipl/qipl.h"
->>>   struct CcwDevice {
->>>       DeviceState parent_obj;
->>> @@ -27,7 +28,7 @@ struct CcwDevice {
->>>       /* The actual busid of the virtual subchannel. */
->>>       CssDevId subch_id;
->>>       /* If set, use this loadparm value when device is boot target */
->>> -    uint8_t loadparm[8];
->>> +    char loadparm[LOADPARM_LEN];
-> 
-> I'm not sure whether changing the type is such a good idea ... some 
-> spots that handle loadparm include EBCDIC encoding, and the unsigned 
-> type might have been used here for a reason? I'd better keep uint8_t 
-> unless you've double-checked all combinations...
+Since registers are not modified, we don't need
+to refill their values. Directly jump to the previous
+store instruction to keep filling the TXDAT register.
 
-OK, no problem, thanks for checking!
+The equivalent C code remains:
 
-Regards,
+  while (true) {
+      *UART_DATA = 'T';
+  }
 
-Phil.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/qtest/boot-serial-test.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+index a71d2857807..553575ca75c 100644
+--- a/tests/qtest/boot-serial-test.c
++++ b/tests/qtest/boot-serial-test.c
+@@ -70,18 +70,18 @@ static const uint8_t kernel_plml605[] = {
+ };
+ 
+ static const uint8_t bios_raspi2[] = {
+-    0x08, 0x30, 0x9f, 0xe5,                 /* loop:  ldr     r3, [pc, #8]   Get &UART0 */
++    0x08, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #8]   Get &UART0 */
+     0x54, 0x20, 0xa0, 0xe3,                 /*        mov     r2, #'T' */
+-    0x00, 0x20, 0xc3, 0xe5,                 /*        strb    r2, [r3]       *TXDAT = 'T' */
+-    0xfb, 0xff, 0xff, 0xea,                 /*        b       -12            (loop) */
++    0x00, 0x20, 0xc3, 0xe5,                 /* loop:  strb    r2, [r3]       *TXDAT = 'T' */
++    0xff, 0xff, 0xff, 0xea,                 /*        b       -4             (loop) */
+     0x00, 0x10, 0x20, 0x3f,                 /* UART0: 0x3f201000 */
+ };
+ 
+ static const uint8_t kernel_aarch64[] = {
+-    0x81, 0x0a, 0x80, 0x52,                 /* loop:  mov    w1, #'T' */
++    0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
+     0x02, 0x20, 0xa1, 0xd2,                 /*        mov    x2, #0x9000000  Load UART0 */
+-    0x41, 0x00, 0x00, 0x39,                 /*        strb   w1, [x2]        *TXDAT = 'T' */
+-    0xfd, 0xff, 0xff, 0x17,                 /*        b      -12             (loop) */
++    0x41, 0x00, 0x00, 0x39,                 /* loop:  strb   w1, [x2]        *TXDAT = 'T' */
++    0xff, 0xff, 0xff, 0x17,                 /*        b      -4              (loop) */
+ };
+ 
+ static const uint8_t kernel_nrf51[] = {
+-- 
+2.47.1
+
 
