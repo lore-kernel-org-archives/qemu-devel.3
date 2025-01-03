@@ -4,119 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D484DE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 18:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11573E77198
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 19:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTmRu-0005Si-JL; Fri, 03 Jan 2025 13:31:06 -0500
+	id 1tTnck-0000ZF-Ae; Fri, 03 Jan 2025 14:46:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTmRo-0005SG-J4
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 13:31:03 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTmRm-0002SW-3F
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 13:31:00 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8B7CC1F37C;
- Fri,  3 Jan 2025 18:30:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1735929052; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sKV8zZScHhU+FTwpnsd79XkSMFHf6NrWuyhUUGV5ubg=;
- b=jYlv8/bIEkp/dqwJNI7LtnQHV+FAhwOCjDWnlh+30Z6/ffhlfW6P6xSI0q5pQigWne/1jH
- EPueXMV9DdXk7hqdQ5jQLPqh7dEcrFXOUqtgaN2kz2T263APdodanwJkRSYKxwzy0T4Bdv
- oalSLG+ePd5uoirG/YnepGiukGLfSAQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1735929052;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sKV8zZScHhU+FTwpnsd79XkSMFHf6NrWuyhUUGV5ubg=;
- b=BMq5THW5ncAvEaDk52W9tVGbkuL5r+D5MBEPIoR3A0oaEm8O4w+Q5hCLdRybG2oIeUfQAo
- Z5mjeu8nIRLNyMAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="jYlv8/bI";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BMq5THW5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1735929052; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sKV8zZScHhU+FTwpnsd79XkSMFHf6NrWuyhUUGV5ubg=;
- b=jYlv8/bIEkp/dqwJNI7LtnQHV+FAhwOCjDWnlh+30Z6/ffhlfW6P6xSI0q5pQigWne/1jH
- EPueXMV9DdXk7hqdQ5jQLPqh7dEcrFXOUqtgaN2kz2T263APdodanwJkRSYKxwzy0T4Bdv
- oalSLG+ePd5uoirG/YnepGiukGLfSAQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1735929052;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sKV8zZScHhU+FTwpnsd79XkSMFHf6NrWuyhUUGV5ubg=;
- b=BMq5THW5ncAvEaDk52W9tVGbkuL5r+D5MBEPIoR3A0oaEm8O4w+Q5hCLdRybG2oIeUfQAo
- Z5mjeu8nIRLNyMAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0B312134E4;
- Fri,  3 Jan 2025 18:30:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id BLELMNsseGeBGwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 03 Jan 2025 18:30:51 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PULL 00/17] Migration patches for 2024-12-17
-In-Reply-To: <e5199fbb-e16e-4df0-a93d-5c0eecdc1ec7@redhat.com>
-References: <20241217174855.24971-1-farosas@suse.de>
- <20241219123213.GA692742@fedora> <87zfkrtsgt.fsf@suse.de>
- <Z2WbSZkEGSnA-BX9@x1n> <e5199fbb-e16e-4df0-a93d-5c0eecdc1ec7@redhat.com>
-Date: Fri, 03 Jan 2025 15:30:48 -0300
-Message-ID: <874j2f92cn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <wainersm@redhat.com>)
+ id 1tTnci-0000Z2-HK
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 14:46:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wainersm@redhat.com>)
+ id 1tTncg-0001Go-OJ
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 14:46:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735933575;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=p83MjaGlcXEDyx+Ni16wYf30AG959q/0HJeOs16rl44=;
+ b=NhwF9AoZtHuH/cWumlB1O8inL9LXfh5ace+2ssG+oSTatSPvMMxwXNHCDutaMogB6YCnqD
+ 5q1Q0YFnrMfIkUpSJUR0RVVvFK8ZNqs2DBbgjNG7mEeWlKB4mNwIBWGWZzVxGH+Am/bmQK
+ e6Ln9aNbAK12n88MF9ko3t2665vb134=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-xv9pFCK9Mz-bauUf6Q2eMg-1; Fri, 03 Jan 2025 14:45:01 -0500
+X-MC-Unique: xv9pFCK9Mz-bauUf6Q2eMg-1
+X-Mimecast-MFC-AGG-ID: xv9pFCK9Mz-bauUf6Q2eMg
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2efa0eb9cfeso16796565a91.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 11:45:01 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735933500; x=1736538300;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p83MjaGlcXEDyx+Ni16wYf30AG959q/0HJeOs16rl44=;
+ b=EuZUQ4X4FF576iFHL5laA25z5ej1FCWDKUuOo+5CEV/0W7eB5sCErjPo4+lsgOzVqQ
+ AFbr/cH4LVeFXMQ8JRTVG8it56G4WZ6yU/hteGaSJrRc4drVHlqPLB/uQJby4/+UptKH
+ RJQNQ8FwZ93B1amwkGmvc1KmZzCXxk9C1u4zd6/IbpwaHsnWpagjqIiUBP6CcGLqVTKQ
+ 5Wz3c4nwLq8luvOtLbaU3/shUzov8zIC1mTPxxNSFmtV1u/FG3k//oJAnGv29yMCcTVt
+ alqbOqwpgt2OP/2EY+5nA5qUtT2NsWKW35X5RAt+lhP9S0+jyXMc1Ay2G7Enp3mPjQxv
+ 68EA==
+X-Gm-Message-State: AOJu0Yz227ofHkYzCknhfWxq/igozW+T7XRy7MG/pBgvcvlglqWmr3QY
+ PNhaup9JBaS1RMGpntd5ZA4kfAtEw4/KKe1SJD7DDETOJmCgXj2+yUrPwlI9t39+HShP40b8GKW
+ 7FxD28fqrh1rJJ25189JazNonQgx6RSX2+DnbgbBLNCCsDGZDFlLz
+X-Gm-Gg: ASbGnctNCj3YiMrvIp3cn4Orodf+6nd8YfF48kVAMUSZz9t1JUDei/zezZafZ2wV+ZL
+ arZ1k3cdidv6qrUWjDukgJ0hTO9gC/H0BxaKp1vZvm6MKzEXRYlpE3o11Ab4X8nBq4FP2ZDBYr8
+ YjW72/5dWtvVu76w6I2ZM+b1eeXuzh4K1fFxTh9jnvpbX415zV9AT3wAm38m7ABCKUEgpxQ7Q3r
+ 6KPw41+fw9WK6lLvxosF9WXrhsZ85pLvpIQH3umhqfjJRbwR6EVWETwM1sZA0N4Oc6XXhkNLlhk
+ +z8S3Ub16n4=
+X-Received: by 2002:a17:90b:5208:b0:2ee:7e53:bfae with SMTP id
+ 98e67ed59e1d1-2f4536531cfmr69319029a91.10.1735933500191; 
+ Fri, 03 Jan 2025 11:45:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+dFAajW+wzr7nnqNMvDeOYxGwnG5PzWvvXBqXmu9j4cFUR0VywUdZ3qgJI2G2DjBtps+1kA==
+X-Received: by 2002:a17:90b:5208:b0:2ee:7e53:bfae with SMTP id
+ 98e67ed59e1d1-2f4536531cfmr69319009a91.10.1735933499870; 
+ Fri, 03 Jan 2025 11:44:59 -0800 (PST)
+Received: from wmoschet-thinkpadp16vgen1.rmtbr.csb ([187.23.176.81])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dca0282fsm248261695ad.259.2025.01.03.11.44.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 03 Jan 2025 11:44:56 -0800 (PST)
+From: wainersm@redhat.com
+To: philmd@linaro.org,
+	thuth@redhat.com,
+	peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] MAINTAINERS: Remove myself from reviewers
+Date: Fri,  3 Jan 2025 16:44:49 -0300
+Message-ID: <20250103194450.360789-1-wainersm@redhat.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 8B7CC1F37C
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=wainersm@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,107 +107,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+From: Wainer dos Santos Moschetta <wainersm@redhat.com>
 
-> On 20/12/2024 17.28, Peter Xu wrote:
->> On Thu, Dec 19, 2024 at 03:53:22PM -0300, Fabiano Rosas wrote:
->>> Stefan Hajnoczi <stefanha@redhat.com> writes:
->>>
->>>> Hi Fabiano,
->>>> Please take a look at this CI failure:
->>>>
->>>>>>> MALLOC_PERTURB_=3D61 QTEST_QEMU_BINARY=3D./qemu-system-s390x UBSAN_=
-OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:print_stac=
-ktrace=3D1 QTEST_QEMU_IMG=3D./qemu-img MESON_TEST_ITERATION=3D1 MSAN_OPTION=
-S=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:print_stacktrace=
-=3D1 ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1 =
-PYTHON=3D/home/gitlab-runner/builds/4S3awx_3/0/qemu-project/qemu/build/pyve=
-nv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-sto=
-rage-daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/4S3awx_3/0/qemu=
--project/qemu/tests/dbus-vmstate-daemon.sh /home/gitlab-runner/builds/4S3aw=
-x_3/0/qemu-project/qemu/build/tests/qtest/migration-test --tap -k
->>>> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95
->>>> stderr:
->>>> Traceback (most recent call last):
->>>>    File "/home/gitlab-runner/builds/4S3awx_3/0/qemu-project/qemu/build=
-/scripts/analyze-migration.py", line 688, in <module>
->>>>      dump.read(dump_memory =3D args.memory)
->>>>    File "/home/gitlab-runner/builds/4S3awx_3/0/qemu-project/qemu/build=
-/scripts/analyze-migration.py", line 625, in read
->>>>      section.read()
->>>>    File "/home/gitlab-runner/builds/4S3awx_3/0/qemu-project/qemu/build=
-/scripts/analyze-migration.py", line 461, in read
->>>>      field['data'] =3D reader(field, self.file)
->>>>    File "/home/gitlab-runner/builds/4S3awx_3/0/qemu-project/qemu/build=
-/scripts/analyze-migration.py", line 434, in __init__
->>>>      for field in self.desc['struct']['fields']:
->>>> KeyError: 'fields'
->>>
->>> This is the command line that runs only this specific test:
->>>
->>> PYTHON=3D/usr/bin/python3.11 QTEST_QEMU_BINARY=3D./qemu-system-s390x
->>> ./tests/qtest/migration-test -p /s390x/migration/analyze-script
->>>
->>> I cannot reproduce in migration-next nor in the detached HEAD that the
->>> pipeline ran in (had to download the tarball from gitlab).
->>>
->>> The only s390 patch in this PR is one that I can test just fine with
->>> TCG, so there shouldn't be any difference from KVM (i.e. there should be
->>> no state being migrated with KVM that is not already migrated with TCG).
->>>
->>>> warning: fd: migration to a file is deprecated. Use file: instead.
->>>> warning: fd: migration to a file is deprecated. Use file: instead.
->>>
->>> This is harmless.
->>>
->>>> **
->>>> ERROR:../tests/qtest/migration-test.c:36:main: assertion failed (ret =
-=3D=3D 0): (1 =3D=3D 0)
->>>> (test program exited with status code -6)
->>>
->>> This is the assert at the end of the tests, irrelevant.
->>>
->>>>
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/8681858344#L8190
->>>>
->>>> If you find this pull request caused the failure, please send a new
->>>> revision. Otherwise please let me know so we can continue to
->>>> investigate.
->>>
->>> I don't have an s390x host at hand so the only thing I can to is to drop
->>> that patch and hope that resolves the problem. @Peter, @Thomas, any
->>> other ideas? Can you verify this on your end?
->>=20
->> Cannot reproduce either here, x86_64 host only.  The report was from s390
->> host, though.  I'm not familiar with the s390 patch, I wonder if any of =
-you
->> could use plain brain power to figure more things out.
->>=20
->> We could wait for 1-2 more days to see whether Thomas can figure it out,
->> hopefully easily reproduceable on s390.. or we can also leave that for
->> later.  And if the current issue on such fix is s390-host-only, might be
->> easier to be picked up by s390 tree, perhaps?
->
-> I tested migration-20241217-pull-request on a s390x (RHEL) host, but I=20
-> cannot reproduce the issue there - make check-qtest works without any=20
-> problems. Is it maybe related to that specific Ubuntu installation?
->
+The time I spent contributing to QEMU was great, but I've not been active
+for a long time now. So removing myself from the reviewers list of
+"Integration Testing with the Avocado framework" and
+"Build and test automation" subsystems.
 
-Since we cannot reproduce outside of the staging CI, could we run that
-job again with a diagnostic patch? Here's the rebased PR with the patch:
+Signed-off-by: Wainer dos Santos Moschetta <wainersm@redhat.com>
+---
+ MAINTAINERS | 2 --
+ 1 file changed, 2 deletions(-)
 
-https://gitlab.com/farosas/qemu/-/commits/migration-next
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2101b51217..b25070a31f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4151,7 +4151,6 @@ M: Alex Bennée <alex.bennee@linaro.org>
+ T: git https://gitlab.com/stsquad/qemu testing/next
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ M: Thomas Huth <thuth@redhat.com>
+-R: Wainer dos Santos Moschetta <wainersm@redhat.com>
+ S: Maintained
+ F: .github/workflows/lockdown.yml
+ F: .gitlab-ci.yml
+@@ -4197,7 +4196,6 @@ Integration Testing with the Avocado framework
+ W: https://trello.com/b/6Qi1pxVn/avocado-qemu
+ R: Cleber Rosa <crosa@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+-R: Wainer dos Santos Moschetta <wainersm@redhat.com>
+ S: Odd Fixes
+ F: tests/avocado/
+ 
+-- 
+2.47.0
 
-(fork CI run: https://gitlab.com/farosas/qemu/-/pipelines/1610691202)
-
-Or should I just send a v2 of this PR with the debug patch?
 
