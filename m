@@ -4,87 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD27E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 08:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3050FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 08:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTdIg-0000S3-4Z; Fri, 03 Jan 2025 03:44:58 -0500
+	id 1tTdMb-0002cc-6q; Fri, 03 Jan 2025 03:49:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTdIe-0000RY-6l
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:44:56 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTdIc-0006uf-OF
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:44:55 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-436326dcb1cso79390355e9.0
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 00:44:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735893892; x=1736498692; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iI5lyeQHnmhMvIXJza8ZDiOiz/tvGmc6CQsZplQtXjM=;
- b=ORomXZYkocW8XsuV3vX2VTq4EkzwKJvtvcmQRxHcgzqt6irdPZ7rzIT4EOstyxGihL
- 00TL28U8AQ86mGDRPG17dFLgrASrXMj4vrTNS1V/UxKgwPaDiSPUSxWn4m31XQeRi4gj
- 8DZ2o/ky/6f1OB472U/fjlno1lxQHCR11KFk0J8xymcnwNSjn3qSVa7aL7KDycm/xTV6
- ECiDzHmyeVV/Rd92nQ20pGBFnQHb3R3JwdGaStaDAcvm6tUc8wSbqxBhb1ry+rRL3EWt
- TsB2AnOs0i8BFh4qT92QyqEJA/U57yrDoAdjIpiKbU/nPnRGs3Sl83dK5y9ml77+Cw4V
- 4SsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735893892; x=1736498692;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iI5lyeQHnmhMvIXJza8ZDiOiz/tvGmc6CQsZplQtXjM=;
- b=CdibC1BuFlrUmj+8MSt3/kcfgfz8DCCHTEy1b4AuSINvz9w9i3KX7BCuOPy3wTLxbo
- luqbWtgzwSXh/0b1Mgvsv3JSSnKpr9BBM7RgOk7auGIIIBfA3GIpBzopHJ41rS/UTuQw
- WPrF7ETnIC96h8V9879Cc8fWN3n30BMsfUmV8vuNyi1v8EeWYo+gW0WKKuB9+MykavIA
- S7RDFijasSB7eVcm+9mutLXWB72feQKaAevB1wM2coDhlQHU75ysisjFLQfyCDHZ6trk
- qthFpCEoDmuBGmhNKL++My1CtDv0gXOm7YEIj0HYz27/voQgBhYJv5Ldh8oIRuhzRjZr
- xo6A==
-X-Gm-Message-State: AOJu0YxggOK6LT2outD9oi4ZMQqo6zD06TBxsGPRZZm3TvyhfvB4WB53
- JFEJbzv6usrbhuUUxzTXYsx6tAFhfTurgs15+lm/HXQPYfKNjBp6wZPZnudjqop//toNlCratRL
- ZAZeniw==
-X-Gm-Gg: ASbGncvcQpiq/PlO/tQaMkOqmCH8Gb5IYwfOG+CKvlFsku07LXbmzDOO1PzECo10Nyf
- CDAEK8WzEaYE1ewql0fJaf/QYN+2hBSxsPPvRXnsueXD8doA+gbT8spRc8DYhOzrFUDV/qEL7s3
- 6Tgsi1Np3rgn9c57pKIEvrKyf3eI8GE8eUtej5Tw+kQ95rGXUGfIVgbN0/ayHSdbQKnWg9qDthW
- Enjf8F6M/Leb4LitmwhSh/IjjII7IExEQ+mSYTnbkHiNutO7zI7NnXqvbnI9Y5zpp7KHu6UR2Qh
- avaEC/NiKAUM21ZwW9gHGTgK
-X-Google-Smtp-Source: AGHT+IGdJiePKpO47xV78O7mUPiKOzLdglLt7nk1xErUEuUp4QKgXbABi9SKNArZ4haLE1TbDeDVNQ==
-X-Received: by 2002:a05:6000:1f88:b0:386:4034:f9a0 with SMTP id
- ffacd0b85a97d-38a22408cbemr37514863f8f.52.1735893891604; 
- Fri, 03 Jan 2025 00:44:51 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366121955fsm483801365e9.21.2025.01.03.00.44.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 00:44:51 -0800 (PST)
-Message-ID: <5d2a536d-9b68-4b31-8d92-6cc42ed72e5c@linaro.org>
-Date: Fri, 3 Jan 2025 09:44:49 +0100
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1tTdMR-0002aY-OB
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:48:55 -0500
+Received: from torg.zytor.com ([2607:7c80:54:3::138] helo=mail.zytor.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1tTdMK-0007dz-3N
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:48:50 -0500
+Received: from terminus.zytor.com (terminus.zytor.com
+ [IPv6:2607:7c80:54:3:0:0:0:136]) (authenticated bits=0)
+ by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 5038mSAh1820053
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Fri, 3 Jan 2025 00:48:34 -0800
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 5038mSAh1820053
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+ s=2024121701; t=1735894114;
+ bh=tHQ0O4NNOOY1zKdop+Ullx68t2A01zOtKHg9Taqtneo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=mpRKG3RGPY8+DWS0zPwF+y5+Itv2YYRJS2Ha+ZtDD17SlEcqNV41YSIJxiXcavvnK
+ 2vmDLUDsr8UEcwdRlV+ARsFBtsrWT+nxnqC7s3oCtKN//SErEte4mVdS+Gjq3YZF62
+ Pj4sLyK76UvUOiwX+Hi1yOOzD8OaC/uCiqF3NJ9O/Gu92HHw+jmn5+gDr3iZMXvP/Q
+ Fo7OIu14jlUjY1Pnwai6dolYR/pcX1uXHXxUTRS1JSgCyDw8W9jZs32G+Fkc+W2GCQ
+ PJmZiHBXmS9iHPd2N8txmkIa9HtwM415EA0cqbaIe6YpS/S0UhhB3/i4eicVsx43R5
+ Zkm992Gh4VfMg==
+From: "Xin Li (Intel)" <xin@zytor.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, xin3.li@intel.com
+Subject: [PATCH v1 3/3] target/i386: Add the immediate form MSR access
+ instruction support
+Date: Fri,  3 Jan 2025 00:48:27 -0800
+Message-ID: <20250103084827.1820007-4-xin@zytor.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250103084827.1820007-1-xin@zytor.com>
+References: <20250103084827.1820007-1-xin@zytor.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] qtest: Remove uses of 'first_cpu'
-To: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Cc: Bandan Das <bsd@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241211233727.98923-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241211233727.98923-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:7c80:54:3::138; envelope-from=xin@zytor.com;
+ helo=mail.zytor.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,25 +69,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fabiano,
+The immediate form of MSR access instructions are primarily motivated by
+performance, not code size: by having the MSR number in an immediate, it
+is available *much* earlier in the pipeline, which allows the hardware
+much more leeway about how a particular MSR is handled.
 
-On 12/12/24 00:37, Philippe Mathieu-Daudé wrote:
-> Replace first_cpu->as by address_space_memory.
-> 
-> Philippe Mathieu-Daudé (2):
->    system/qtest: Remove uses of 'first_cpu'
->    qtest/fuzz: Remove uses of 'first_cpu'
-> 
->   system/qtest.c                    | 53 ++++++++++++++++---------------
->   tests/qtest/fuzz/generic_fuzz.c   |  3 +-
->   tests/qtest/fuzz/qtest_wrappers.c | 53 ++++++++++++++++---------------
->   3 files changed, 56 insertions(+), 53 deletions(-)
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+---
+ target/i386/cpu.c | 2 +-
+ target/i386/cpu.h | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-Ping :)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 2fb05879c3..83fb059d09 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1138,7 +1138,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+             NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, "msr-imm", NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index d23fa96549..df27c359d3 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -987,6 +987,9 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ /* Non-Serializing Write to Model Specific Register (WRMSRNS) */
+ #define CPUID_7_1_EAX_WRMSRNS           (1U << 19)
+ 
++/* The immediate form of MSR access instructions */
++#define CPUID_7_1_ECX_MSR_IMM           (1U << 5)
++
+ /* Do not exhibit MXCSR Configuration Dependent Timing (MCDT) behavior */
+ #define CPUID_7_2_EDX_MCDT_NO           (1U << 5)
+ 
+-- 
+2.47.1
 
-Tell me if you prefer I merge these patch myself.
-
-Regards,
-
-Phil.
 
