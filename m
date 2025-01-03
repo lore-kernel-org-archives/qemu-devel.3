@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A0FE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E534AE77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 15:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTj70-0002yq-KV; Fri, 03 Jan 2025 09:57:18 -0500
+	id 1tTjAA-0003uF-S1; Fri, 03 Jan 2025 10:00:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTj6y-0002yK-VM
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:57:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTj6w-0001bN-At
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:57:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735916232;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=4fm99VWae0ATbDo3ay8bHhNE5ulfguEtt6NDfcQ2Rk8=;
- b=IHPLwBV3L6bvP3OLYQeFiQuML3pFd+VCa/pmJ662xGS3fZIll7NlCs6BK3Uni+L1Au9aSk
- ZpO2q+FUB+0dw3bT0LY/Yu6DFwVgKJOWpSsbzJzJQTr5TOC8hlCV9/xfdpM+WUOG4/vmZU
- 1/SSX2CZLrhy3ulwpTvY3v5XFEbacLg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-mBjBn5P-NH2t7Phhvh8KAg-1; Fri,
- 03 Jan 2025 09:57:07 -0500
-X-MC-Unique: mBjBn5P-NH2t7Phhvh8KAg-1
-X-Mimecast-MFC-AGG-ID: mBjBn5P-NH2t7Phhvh8KAg
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 837D71956095; Fri,  3 Jan 2025 14:57:06 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.148])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 72B16300F9B5; Fri,  3 Jan 2025 14:57:03 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] docs/about/deprecated: Remove paragraph about initial
- deprecation in 2.10
-Date: Fri,  3 Jan 2025 15:57:02 +0100
-Message-ID: <20250103145702.597139-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTj9w-0003tF-B8
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:00:28 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTj9s-00020P-0S
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:00:17 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4361dc6322fso81599875e9.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 07:00:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1735916413; x=1736521213; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dpXuYcdvuojmHsWcWvPx03ZkYKyOJt6Gyjb+5tlWOc8=;
+ b=eho8gqTFucg/ZC0A9kG1/Twhc4b/+jqBtKIBdWAqN3KthRs6BzDj4V3St97PmXnwys
+ 7hg/3qYIVAZZSYq0vye8n+KzqJjm9Kq2lMXwaI5CTD3mPP4ENIwXJ2jeinYb7hRg1Xl4
+ iENRuOBnGBQTodewWhGfH0zwAvuuUASP3LRe63/wX4OJHSLITy2XcgHHn9+ylPFcaPw3
+ eKJ1thkLxtvnG3ayIT4DY0VR2UL6L6oYKGsZkB8Pr6TVqiZw7JlPC/NcgDBKGkDyC1wg
+ iSFgpFM8T1CSFiaE1wjCZsX7xc76YWDbYstWBhpCBsf9oaBjJNNX/l0xvR6zE/vJfhhN
+ 5j0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735916413; x=1736521213;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dpXuYcdvuojmHsWcWvPx03ZkYKyOJt6Gyjb+5tlWOc8=;
+ b=cmX/KZmZuCRfjmiTbznvWmh/0LHToDuMAB7JGC8Pt1xE77xB6QlHq2u5S6dOMiv5KE
+ vpnVIrhoQwOXruXMR+Eh25AWNh86+Fk+pgMwCCu5m1H6ERlLZoQwymZ8qJRGFai1jKhv
+ UmmtU2sgHewzFnXv2fEEKB7MtT9R6hJN5O/IY62m5w8lHdFTyIAQ2zb0uUy6z8n/UTxJ
+ kC8GyCyYN5IxwB9g8KLTdUsB5747AcN4aFzp22AuqiGM/2vD4WuDt8Sbt33TabuIVA87
+ NIjFx2Kp6p46E9x1Wg2FQ8XSSbjoXvTyWRrAvYAxtA+f5zBFkwiGj2IhrtNx7+Mx3wPi
+ dZcw==
+X-Gm-Message-State: AOJu0YxJ44EQWRXFQGne/ciQ0jO98nHWYPG59rX0AvwPHoHLTOTdPGUO
+ SdMLeGOJ8+M/sMa2RHrHOnLOvRXFwH6sxYGMZvWD3MTT6TDaOAonXlhltzqkWwY=
+X-Gm-Gg: ASbGncsXAZk9MUCPpuQDHzPSDWogtVjdcuTC5hUMOA+0dq58u14hIDVjBvmZoViounM
+ oNa5ZQTKyIY37Y2HD6Dmf9I0xgMhHwdH+LcxuitD3ZrlougVIJsmmKDyZ1Zr8l9EQ9UPk38nCm1
+ EeQpXffedQVuwfxJA/9LxKRjeBunqo/0uzL3ap4UrWmI0B99kZVJDiJMtN5owkLVzF+X96Q7f7C
+ H5laCcXtTbFu4v3vpHQgFZ+SDdFfUfF+0Lq/CQb5BlCG2OkiSneitF3Z6QS19D9TJ+MnmmAgb3L
+ hk+7r1nEeUUIn4TrMZ4WrFIu
+X-Google-Smtp-Source: AGHT+IHK/bgoMWiu1lahUIOprunmigPNOk04PFY1GNM0q0FVCDFKgxiHkrqgYXJqXOT4uB048T7+4w==
+X-Received: by 2002:a05:600c:46c7:b0:434:a1d3:a331 with SMTP id
+ 5b1f17b1804b1-43668b5f36amr403667065e9.22.1735916413464; 
+ Fri, 03 Jan 2025 07:00:13 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436612899f0sm485864225e9.38.2025.01.03.07.00.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jan 2025 07:00:12 -0800 (PST)
+Message-ID: <2f674a4a-ca98-4a73-b0a7-c239d8bbe519@linaro.org>
+Date: Fri, 3 Jan 2025 16:00:12 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dockerfiles: Remove 'MAINTAINER' entry in
+ debian-tricore-cross.docker
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
+References: <20250102152513.61065-1-philmd@linaro.org>
+ <87ed1luhc4.fsf@draig.linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87ed1luhc4.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,34 +102,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we introduced the deprecation rule of keeping deprecated features
-for two more releases, we had to state that we would not remove features
-by surprise that had already been marked as deprecated before. Nowadays,
-this paragraph is not needed anymore, so we can remove it now.
+On 2/1/25 20:49, Alex Bennée wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+>>
+>> AMSAT closed its email service [*] so my personal email
+>> address is now defunct. Remove it to avoid bouncing emails.
+>>
+>> [*] https://forum.amsat-dl.org/index.php?thread/4581-amsat-mail-alias-service-to-end-august-1-2024/
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- docs/about/deprecated.rst | 6 ------
- 1 file changed, 6 deletions(-)
+Maybe safer to directly start with an archived version:
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index d6809f94ea..25653889bd 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -24,12 +24,6 @@ should exclusively use a non-deprecated machine type, with use of the most
- recent version highly recommended. Non-versioned machine types follow the
- general feature deprecation policy.
- 
--Prior to the 2.10.0 release there was no official policy on how
--long features would be deprecated prior to their removal, nor
--any documented list of which features were deprecated. Thus
--any features deprecated prior to 2.10.0 will be treated as if
--they were first deprecated in the 2.10.0 release.
--
- What follows is a list of all features currently marked as
- deprecated.
- 
--- 
-2.47.1
+     [*] 
+https://web.archive.org/web/20240617194936/https://forum.amsat-dl.org/index.php?thread/4581-amsat-mail-alias-service-to-end-august-1-2024/
 
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Queued to testing/next, thanks.
+
+Thanks Alex!
 
