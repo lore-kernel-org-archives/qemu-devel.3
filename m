@@ -4,95 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F893E77198
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 08:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D2D9E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 08:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTdMZ-0002c8-G3; Fri, 03 Jan 2025 03:49:00 -0500
+	id 1tTdMX-0002bj-Jc; Fri, 03 Jan 2025 03:48:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTdMM-0002a6-GM
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1tTdMU-0002am-LX
  for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:48:55 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTdMJ-0007eT-7N
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:48:44 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385e2880606so8854256f8f.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 00:48:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735894121; x=1736498921; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dnw69YT7DoNzg822LR/pg2ScQe8hvsPH8QgQBHxooSk=;
- b=jf4QqyfWXHP+ZmDKhKXHXPcw6r9zCIs5C8uIo7BYZXyhR+m6oh8VqTMi+Dh4ABWzg5
- tYvmTmP0jVdwwOk9WkNkqhowMJmzLZMUafynyG/lshdIySvP7+k+nwYvVf18TkoADYxt
- m8h166k1rUHSHqluVNIzyKtZ1hW1EJDydffhvrbXlbXxnB4X+3r11rYSfGORXf/5bgZL
- RJ/SJm6giqqorUZrTpJrKwwdDBhGf331VTg7oYGrAWSkXKikkQ2Col0mhGh7zJlkKTC9
- 8Fm8AGCs7F/8mQFsqmMJlDe0sJ9VazaGHl86+GmltvxA0kZ+eH115PWoJVmECnP88Fu7
- fL7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735894121; x=1736498921;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dnw69YT7DoNzg822LR/pg2ScQe8hvsPH8QgQBHxooSk=;
- b=FgpvAZ21lQm9yBAhsotljIGK4hE9f728lU4HMba/v0rhfKLmDsoEb00+BIgXGMbdnc
- HaGgSknWUYpQWeqZRBVXVcB+wj0Gv2ocWeQ8BwZkmV6xoZ/q2+fZ1UMpBn8DImUJqz6e
- olcx0g1MXucToxWGpjCH8NPnrhkUN9l2pCs5o78KuIq1IDmLIQh4f2VLAjXIDgyCDUJz
- YZ0tBlImfW79l8KlUrBnpjIZzP6XVYNmltr3wb/8RfOsjU4IdhxU7aWwyDeZjoMSphpS
- f6weTvTGeqiI+0wV6n41R63AJy39KbfnUQvPZUNXOiwWsdZyeJzSyPTtWLXUToe7Rfr0
- mZ9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8P7g/RKaC8N6XSQmOuYF8NPwGlu6YNc56dX2WjN9NecBOAgLQLad4+pY8/Xwq2IhS3YDqNVcc7fSg@nongnu.org
-X-Gm-Message-State: AOJu0YxrfH6vsxSEXnOTRNbctF4d4vicZR0ZaIaCASk0VXRR0csJ1krr
- rISeYBEnLhCH4bJMXb0Pu+hE6gwzTIXmqdENWTLabu3QDKSo76EWOMiK7Kt7TE8=
-X-Gm-Gg: ASbGnctEZzyJaZuukt5Z4WgTy8qZuqos7dmGa4J1HcnrYRd7XEi/IRWGmuAdT646qG9
- Bna92v3ii6rZP29uTzOmWreoM56veqGVCsVSzlm0EiNEjO+NGJwrqv3V9UXsJ8AbFrn2ZmhB12z
- XhL0LO6IbqxbpcJqq7LdVBupfMQ2txhttTc94jHbHuuLsAZ0Ba/EM+9tUga/ZX2qG2WddqZi/0D
- 18XyaxIYDiN3Mfo0ywOwMJm/FxnT0Xg6lyyJhNEPLnwJhfKT1iMZGFZe2vGp3D5QNd/KhjfQblF
- 5RA8W5Sdibg1WN8zzZ6VE4Ga
-X-Google-Smtp-Source: AGHT+IHSOFKbnJb/LVYLzoY4lVG/m8tkY+b/NDORf7yD1TmFLlbGVMjXwAf/tsu6dMDY8tMtPw+NHA==
-X-Received: by 2002:a05:6000:1887:b0:388:c61d:43e4 with SMTP id
- ffacd0b85a97d-38a223f8368mr38837491f8f.45.1735894120881; 
- Fri, 03 Jan 2025 00:48:40 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b11aecsm509026925e9.23.2025.01.03.00.48.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 00:48:39 -0800 (PST)
-Message-ID: <50cc7499-d162-465e-b3a6-25636dfda2db@linaro.org>
-Date: Fri, 3 Jan 2025 09:48:38 +0100
+Received: from torg.zytor.com ([2607:7c80:54:3::138] helo=mail.zytor.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1tTdMK-0007dy-2S
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:48:51 -0500
+Received: from terminus.zytor.com (terminus.zytor.com
+ [IPv6:2607:7c80:54:3:0:0:0:136]) (authenticated bits=0)
+ by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 5038mSAg1820053
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Fri, 3 Jan 2025 00:48:33 -0800
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 5038mSAg1820053
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+ s=2024121701; t=1735894113;
+ bh=BCyB+afis0o+SHjXEdqncBSF1CJCWKKrH5Ett7rxx08=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=qkMSXwNbUTTrntCIxDP/SjdO0vcCD2SP32mIW0axWT3QfigNOZUgOI07J7tv9BbtU
+ khzBHE20PCyRpJxTIdef4wKCyYUskf6XH29JyItt53nbIsAA1G9o59YnZ/EoJ5F+sC
+ WSCnsGWwjHJHQnoeMPZ0s0UV3zldvYOsyJdEG8f0K7Robu6KvdJ66DvlvjVwfURQQO
+ Sr/UiGE9VU9MmLAcF+n4iHkROUJOJozromUsVZLCKfm5PW2fdP+uBIhH0MsC9XydyG
+ 8QOTtDHfEX6rt2ixb0mcDcKyHWtW3bpDnVzaEGSu/SOfFz/84ZnwO/2Zb/JN9mxoZU
+ NO1tOTMrcq0IQ==
+From: "Xin Li (Intel)" <xin@zytor.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, xin3.li@intel.com
+Subject: [PATCH v1 2/3] target/i386: Add a new CPU feature word for
+ CPUID.7.1.ECX
+Date: Fri,  3 Jan 2025 00:48:26 -0800
+Message-ID: <20250103084827.1820007-3-xin@zytor.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250103084827.1820007-1-xin@zytor.com>
+References: <20250103084827.1820007-1-xin@zytor.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
- ClassInitImpl<>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20241219083228.363430-1-pbonzini@redhat.com>
- <20241219083228.363430-26-pbonzini@redhat.com>
- <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
- <Z3enuYCHnKuiANmv@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z3enuYCHnKuiANmv@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:7c80:54:3::138; envelope-from=xin@zytor.com;
+ helo=mail.zytor.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,79 +69,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Markus, Daniel & Peter
+The immediate form of MSR access instructions will use this new CPU
+feature word.
 
-On 3/1/25 10:02, Zhao Liu wrote:
->>> -/// # Safety
->>> -///
->>> -/// We expect the FFI user of this function to pass a valid pointer that
->>> -/// can be downcasted to type `DeviceClass`, because `T` implements
->>> -/// `DeviceImpl`.
->>> -pub unsafe extern "C" fn rust_device_class_init<T: DeviceImpl>(
->>> -    klass: *mut ObjectClass,
->>> -    _: *mut c_void,
->>> -) {
->>> -    let mut dc = ::core::ptr::NonNull::new(klass.cast::<DeviceClass>()).unwrap();
->>> -    unsafe {
->>> -        let dc = dc.as_mut();
->>> +impl<T> ClassInitImpl<DeviceClass> for T
->>> +where
->>> +    T: DeviceImpl,
->>> +{
->>> +    fn class_init(dc: &mut DeviceClass) {
->>>            if <T as DeviceImpl>::REALIZE.is_some() {
->>>                dc.realize = Some(rust_realize_fn::<T>);
->>>            }
->>>            if <T as DeviceImpl>::RESET.is_some() {
->>> -            bindings::device_class_set_legacy_reset(dc, Some(rust_reset_fn::<T>));
->>> +            unsafe {
->>> +                bindings::device_class_set_legacy_reset(dc, Some(rust_reset_fn::<T>));
->>
->> Pre-existing, but since it appears on this patch, Rust device models
->> should not implement this legacy interface.
-> 
-> Rust pl011 is just faithful to the C functionality, and it's really time
-> to make the rust version drop the previous technical debt too!
-> 
-> But I think this patch is OK for now since using legacy interface is the
-> most simplified approach, and next step we can consider how to convert
-> it to the modern interface with proper rust binding (my initial thought
-> tells me that there is at least some effort needed here to explore
-> whether a simple resettable trait would be enough...).
-> 
->> If a non-Rust parent
->> implements it, I think we should convert the non-Rust parent before
->> adding a Rust child. No clue how to check a parent don't implement
->> this interface in Rust.
-> 
-> For C side, I also didn't find some case to check parent's
-> legacy_reset before device_class_set_legacy_reset().
-> 
-> Maybe we should add `assert(!dc->legacy_reset)` in
-> device_class_set_legacy_reset()?
-> 
-> Similarly, device_class_set_parent_[realize|unrealize] are worth
-> adding assert().
-> 
-> If you agree, I'd be happy to add assert() to these three functions as
-> well. :-)
-> 
->> Generally, we shouldn't access legacy API from Rust IMHO.
->>
->>> +            }
->>>            }
->>>            if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
->>>                dc.vmsd = vmsd;
->>>            }
->>>            let prop = <T as DeviceImpl>::properties();
->>>            if !prop.is_empty() {
->>> -            bindings::device_class_set_props_n(dc, prop.as_ptr(), prop.len());
->>> +            unsafe {
->>> +                bindings::device_class_set_props_n(dc, prop.as_ptr(), prop.len());
->>> +            }
->>>            }
->>>        }
->>>    }
->>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+---
+ target/i386/cpu.c | 23 ++++++++++++++++++++++-
+ target/i386/cpu.h |  1 +
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 8a1223acb3..2fb05879c3 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -894,6 +894,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+ 
+ #define TCG_7_1_EAX_FEATURES (CPUID_7_1_EAX_FZRM | CPUID_7_1_EAX_FSRS | \
+           CPUID_7_1_EAX_FSRC | CPUID_7_1_EAX_CMPCCXADD)
++#define TCG_7_1_ECX_FEATURES 0
+ #define TCG_7_1_EDX_FEATURES 0
+ #define TCG_7_2_EDX_FEATURES 0
+ #define TCG_APM_FEATURES 0
+@@ -1133,6 +1134,25 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         },
+         .tcg_features = TCG_7_1_EAX_FEATURES,
+     },
++    [FEAT_7_1_ECX] = {
++        .type = CPUID_FEATURE_WORD,
++        .feat_names = {
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++        },
++        .cpuid = {
++            .eax = 7,
++            .needs_ecx = true, .ecx = 1,
++            .reg = R_ECX,
++        },
++        .tcg_features = TCG_7_1_ECX_FEATURES,
++    },
+     [FEAT_7_1_EDX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+@@ -6659,9 +6679,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             *edx = env->features[FEAT_7_0_EDX]; /* Feature flags */
+         } else if (count == 1) {
+             *eax = env->features[FEAT_7_1_EAX];
++            *ecx = env->features[FEAT_7_1_ECX];
+             *edx = env->features[FEAT_7_1_EDX];
+             *ebx = 0;
+-            *ecx = 0;
+         } else if (count == 2) {
+             *edx = env->features[FEAT_7_2_EDX];
+             *eax = 0;
+@@ -7563,6 +7583,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         x86_cpu_adjust_feat_level(cpu, FEAT_6_EAX);
+         x86_cpu_adjust_feat_level(cpu, FEAT_7_0_ECX);
+         x86_cpu_adjust_feat_level(cpu, FEAT_7_1_EAX);
++        x86_cpu_adjust_feat_level(cpu, FEAT_7_1_ECX);
+         x86_cpu_adjust_feat_level(cpu, FEAT_7_1_EDX);
+         x86_cpu_adjust_feat_level(cpu, FEAT_7_2_EDX);
+         x86_cpu_adjust_feat_level(cpu, FEAT_8000_0001_EDX);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index dbd8f1ffc7..d23fa96549 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -667,6 +667,7 @@ typedef enum FeatureWord {
+     FEAT_7_1_EDX,       /* CPUID[EAX=7,ECX=1].EDX */
+     FEAT_7_2_EDX,       /* CPUID[EAX=7,ECX=2].EDX */
+     FEAT_24_0_EBX,      /* CPUID[EAX=0x24,ECX=0].EBX */
++    FEAT_7_1_ECX,       /* CPUID[EAX=7,ECX=1].ECX */
+     FEATURE_WORDS,
+ } FeatureWord;
+ 
+-- 
+2.47.1
 
 
