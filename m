@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C606CE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059D0E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTib0-0001bh-8r; Fri, 03 Jan 2025 09:24:14 -0500
+	id 1tTibt-0002Lx-CR; Fri, 03 Jan 2025 09:25:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tTiam-0001aY-Tn; Fri, 03 Jan 2025 09:24:02 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ id 1tTibk-0002EQ-Is; Fri, 03 Jan 2025 09:25:00 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tTial-0000AH-DB; Fri, 03 Jan 2025 09:24:00 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ id 1tTibi-0000Id-T0; Fri, 03 Jan 2025 09:25:00 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 809171F38E;
- Fri,  3 Jan 2025 14:23:55 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id CE7FB1F38E;
+ Fri,  3 Jan 2025 14:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1735914235; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1735914297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHVnQFXxVvW2+JU1tVsEDoToQVemvao2RFVeUK7VKEI=;
- b=RP2JQsBNqi6EAOA9W4fzs8pu1EYFYNKEq3e25ieZxtjkmvcLo7IwQ6EtzU3aXzBC19RreX
- V5K4wObRJjWIZ1a0wbQnT7le/LrnoqrJi4A2kAxx+OmD1Nq+3MMAfabkzA4a23OaA8W1v6
- KKxTN+1156zOcr+3V/oIvh6/TPWklq8=
+ bh=rcMrzQcZ7L6DKtOjgNZCFYnkQYfFI4acBM5KL6MCMiw=;
+ b=GF/8SKxaObaMTLXxjBiOczVuh0kGnlfK8Yhw6ciTy2Tol1M7Vv12XoatztL/2JKENv1f+9
+ HBjJFjswSBpmmAeKKALl+tEkZBXOXwVGAujwvAzT4E26g/Ws2Mcj7k576vJsb5p3PabqEd
+ FZdPXCYVgMjYRRDqhSpA+eIlU2znlss=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1735914235;
+ s=susede2_ed25519; t=1735914297;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHVnQFXxVvW2+JU1tVsEDoToQVemvao2RFVeUK7VKEI=;
- b=F66f749DWnZflnj5c+t4D9Rwyda7DtqLpr4Iw+/Tm8Ur0E2Xk0fHVE00nsb07mkgyn6odL
- SLtofB8UEKR1XxDw==
+ bh=rcMrzQcZ7L6DKtOjgNZCFYnkQYfFI4acBM5KL6MCMiw=;
+ b=atTJ3y3l4n5lXQOoR8Hy9QOG26s72O/I1u+9cyQX5CUz55BWBx1137rXQaH+q/+5bujYaA
+ Juv42iS/eoYimSAg==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ragd99zE;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=YVGtLLD4
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1735914235; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1735914296; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHVnQFXxVvW2+JU1tVsEDoToQVemvao2RFVeUK7VKEI=;
- b=RP2JQsBNqi6EAOA9W4fzs8pu1EYFYNKEq3e25ieZxtjkmvcLo7IwQ6EtzU3aXzBC19RreX
- V5K4wObRJjWIZ1a0wbQnT7le/LrnoqrJi4A2kAxx+OmD1Nq+3MMAfabkzA4a23OaA8W1v6
- KKxTN+1156zOcr+3V/oIvh6/TPWklq8=
+ bh=rcMrzQcZ7L6DKtOjgNZCFYnkQYfFI4acBM5KL6MCMiw=;
+ b=ragd99zEKewav2ucvPilWtrGDugzjrCWp/j14RmeCCHdqtQBU0j6j3BjKgBmchTvGe0b9+
+ Wacykb1Gl6Evd+wU88hsUO5ZEOa7CG7Ze3cIxIBSrjOYcmHReemUYIDEaqm1E15f1JYbtB
+ 13PSXNvtOaeT11YFyMUVIBSO7TXrwok=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1735914235;
+ s=susede2_ed25519; t=1735914296;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHVnQFXxVvW2+JU1tVsEDoToQVemvao2RFVeUK7VKEI=;
- b=F66f749DWnZflnj5c+t4D9Rwyda7DtqLpr4Iw+/Tm8Ur0E2Xk0fHVE00nsb07mkgyn6odL
- SLtofB8UEKR1XxDw==
+ bh=rcMrzQcZ7L6DKtOjgNZCFYnkQYfFI4acBM5KL6MCMiw=;
+ b=YVGtLLD4zpLVQZBMiXD/ifcEqR7FL4xOj7y/W2FuvgjhKuy9SzTFrVDpuCFRuxpIk3O4bC
+ FIip1KiYEouH1JBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 02DA4134E4;
- Fri,  3 Jan 2025 14:23:54 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 55B4A134E4;
+ Fri,  3 Jan 2025 14:24:56 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iltYLvryd2fiWwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 03 Jan 2025 14:23:54 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4O4RBzjzd2cnXAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 03 Jan 2025 14:24:56 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -78,37 +80,48 @@ Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Paolo Bonzini
  <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, qemu-arm@nongnu.org, Philippe =?utf-8?Q?Mathi?=
  =?utf-8?Q?eu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 2/4] tests/qtest/boot-serial-test: Reduce for() loop
- in PL011 tests
-In-Reply-To: <20250102105822.43532-3-philmd@linaro.org>
+Subject: Re: [PATCH v6 3/4] tests/qtest/boot-serial-test: Reorder pair of
+ instructions in PL011 test
+In-Reply-To: <20250102105822.43532-4-philmd@linaro.org>
 References: <20250102105822.43532-1-philmd@linaro.org>
- <20250102105822.43532-3-philmd@linaro.org>
-Date: Fri, 03 Jan 2025 11:23:52 -0300
-Message-ID: <87ed1k7z7r.fsf@suse.de>
+ <20250102105822.43532-4-philmd@linaro.org>
+Date: Fri, 03 Jan 2025 11:24:53 -0300
+Message-ID: <87bjwo7z62.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.28 / 50.00]; BAYES_HAM(-2.98)[99.91%];
+X-Rspamd-Queue-Id: CE7FB1F38E
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.46 / 50.00]; BAYES_HAM(-2.95)[99.80%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
+ MX_GOOD(-0.01)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid, suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,15 +140,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> Since registers are not modified, we don't need
-> to refill their values. Directly jump to the previous
-> store instruction to keep filling the TXDAT register.
->
-> The equivalent C code remains:
->
->   while (true) {
->       *UART_DATA =3D 'T';
->   }
+> In the next commit we are going to use a different value
+> for the $w1 register, maintaining the same $x2 value. In
+> order to keep the next commit trivial to review, set $x2
+> before $w1.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
