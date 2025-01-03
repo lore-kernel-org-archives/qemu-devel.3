@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97BBEE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 15:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620DDE77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 15:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTjFZ-0008Ib-PL; Fri, 03 Jan 2025 10:06:09 -0500
+	id 1tTjHw-0000tI-B0; Fri, 03 Jan 2025 10:08:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTjFW-0008IJ-Vp
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:06:07 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTjHu-0000sf-DZ
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:08:34 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTjFU-0005xQ-UE
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:06:06 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso84396395e9.3
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 07:06:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTjHs-0006Gd-KY
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:08:34 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so7525937f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 07:08:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735916762; x=1736521562; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vWyUslIfzchH/Qqlm6hFSoY1eYQiE88dMF3dsmhROmc=;
- b=sRmiIV0onMVlrMOoi1WugPFa811o65wuPC0UMS+QZ1ypWkT51NZoPHGi3nc9bfk9MM
- 8wmIvQRdJi+2Ydtr0W24D7M8A7Ul0QSpA6C4GhBSYNcLRyiWRkrWbaLICn82o6bbAnEj
- EA4+ttnpr0JybGhAYNw2u/9PJ7f0aBfmb9LfrbBtJ0491gr/gSoJX/ylrwSf6a0IToJ3
- 1VVlNIIlZM+3Ih3s+6MzbK6H7JJE0tc6NpdTsQi1fAC7kcAaoWd6l91Q5ZxSfMC6BjE2
- S0Di//coIwNGseGcO47JXP9EKlN0hXg5Z41o0pR43hKSKeQkansnxniUwY30szzaKnpo
- 6gbg==
+ d=linaro.org; s=google; t=1735916911; x=1736521711; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r2+EuOqgH2urw2OP6VSf6sSCRq9D8mLLNGymXCzT50Q=;
+ b=ZZ9WBMrWjpvOgX45FAmpKGSKY176tfnZlQS1RAhE2yrAclwKs3bIwA6r6TEoice36K
+ JfC3HvatL+OT9uI/5QkZek6AbRloYjA6RrmMniOXr1WcfSg/6ugFgRyaVuPxl0OpHLWl
+ TFC0aijI+CvJhgsB/LxdRyCOSswz0wwElQsyS2XRK5YofDo/BkXIYcqPQ2+WV0gVo3Dm
+ opF4qCswaVmu5kn4csz2xCxL9pglbA7VC1RZtqDhbvYnvU4pPvBr6qtJ44jo+JIjB+NE
+ k/cW1aed8r77jLhT97igTYV4TM1eegYruQ8zGz9gsl06UFrc9aqSyi1CgSjhLZbmuOGP
+ qSQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735916762; x=1736521562;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vWyUslIfzchH/Qqlm6hFSoY1eYQiE88dMF3dsmhROmc=;
- b=WwGP98baYeIFioDvibcOZCCtRouYn00KPQiPFh1cq0+r+RbWqoPiT5PspxPMpPJ1tN
- Sk5PlyDtSJS0kBD1ziYncYi4TR4d4kb/2e/zGkec+TqxBdeOtzqEdx9Ru/HzhRQ4Hzod
- D1ZnxE1S2d+WCNmfhwVueTJ7wn5FbUU8vVzgrNbcYUspyvbOmZNJILCV3HGRgQCT9B3G
- Luvav+x1N3Nx2U7oQXkastuaFujc+/XZcOANRaqNHKxLokyATq1s8l+Ov5C/4KlGjPAZ
- mlme2zkcu594vmzwtyOJU26xcX1O43EuAxosAfJNmxOe/CPp0OSwhBM6t3Ipxk/VtVj3
- Hp4A==
-X-Gm-Message-State: AOJu0Yz6u3eQ3dfkloNohHCi/KeToBJw0AP+2QhbCl9eL946RDUgzVen
- LQHtuYHwNHzWNeCS3sZXvBuTpPNrUgRYYh12ZpqttLg3vziQbwFQKASrl/vPT9J7VlDDcC7vEux
- cccc=
-X-Gm-Gg: ASbGnctCFGpCkWDVVgEg0w2pI05v2vB2vZA3ZSQB12JuXRqIDaVjA4rd2za/AVGnNT5
- He5afbnGHeKbzjPXXYvwyKOleSgmjidHri6W84NRPwU+yWtEqdFCfIgFVV3LG8a00etXAUirdtV
- BwO6tmZikL34H35733W3fggb4vtza42qF8w2a3my/D+s1gibPlz3k67nkYQKDsTMEzhUvcZ1UXm
- hbqpQqSqwb/jex4mH56GB7wvdOWkrtHQotFC0Qy5ymy9wQexlmHxQlw5tMMq6NTg0uPbNujrFR/
- BedR9iUW4K880vNamC0IrH1Hz2QRfb8=
-X-Google-Smtp-Source: AGHT+IGHalqycdJaWgujgfZPDARfttyRrFKXwCky2vmmZfqoxOZU8aeMTk1UDEAHEhHdnaeEsZFj2A==
-X-Received: by 2002:a05:600c:4f86:b0:434:a802:e99a with SMTP id
- 5b1f17b1804b1-436685484bamr422640835e9.4.1735916760732; 
- Fri, 03 Jan 2025 07:06:00 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1735916911; x=1736521711;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r2+EuOqgH2urw2OP6VSf6sSCRq9D8mLLNGymXCzT50Q=;
+ b=pteKZZ0plcufWu5YI9p5naqMIzQd87Hcqm82WpIRzf/eZ9UJKsRs4ETKWXo6n/EtN+
+ lrZ+z+8/sVe8BjPY/GSY6PO7Iv8w7xbXU5mIvM/R8SM9uttioIDbhUigLRKtWGRMjWor
+ L3xa09dHAkY4S4IipLohlb2Pn2aoSCKlAwg4qaJZGO3b+7WrHfD5w+pzhAF1zK+U+qv+
+ jUH+wWtmbgkz4kPavFDM08rNBWEYSpKjgz2ozU/jnmwReXYjnzfBNz5wHMEYAjYreyr1
+ lQAD3F54099HH23+ftTP/iJkLOxnGmH17MavBhqnjESvxYu90qbhRVsiUtqNakNjUCXM
+ Cakw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxKjt9iTNJtD8FwztP1fMCmTFLDOK3GusJt9aLd42MUHDaAHjBRymEWv2MdMXumsOrgIZ5qrt/EEsG@nongnu.org
+X-Gm-Message-State: AOJu0Yz+1r+YCSsJRoqztlr9eTkHqioz2FotAuIv/aR/hn9WJ5MA3zqU
+ pDkeymaPKnHwHjb7UlHE5LFplZjiNqsAOpJl7HEwzIKzBQECokX3wEyMQ5Rcuoo=
+X-Gm-Gg: ASbGncsw6D8Mz4QAoy4DeK0kIceAZ/VuTprRgcNNdIYGXd0K0I8U4/zZIx4ms/j23qi
+ /TqEMjBPelFKMXTM2wXCGvOD4C6rmh7MzosTHURhyYkm+LjDcNvb5Qceu+zy3o9FMQ/1zHSC3ZL
+ m7se07zTf2J5lM+uUWdHj8vHpShY/bW/HU3pSq33bpssVj0xXNFHGUz0bgw/ZSlh+RVVtTaaeI7
+ dfibWu1Xa5aswRKJeItVZbMF8Ru4V0Aljwi9pFyRs1lNLLjO2e1mZiAoDISKTXstPlANXHTSyYw
+ KXRdrNE75kP7ou1UqOACZ8Xj
+X-Google-Smtp-Source: AGHT+IHf92aNOME9sNfHMLKRq1YpEFls1kHnigg8kFTVtI1ANMu7tvP1Hi3QKh49uIssyE2ugh6jHA==
+X-Received: by 2002:a5d:584e:0:b0:385:e5d8:3ec2 with SMTP id
+ ffacd0b85a97d-38a221f9c94mr47449289f8f.28.1735916910945; 
+ Fri, 03 Jan 2025 07:08:30 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436612899f0sm485988345e9.38.2025.01.03.07.05.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 07:06:00 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] system: Try hardware accelerators (KVM,
- HVF) before software one (TCG)
-Date: Fri,  3 Jan 2025 16:05:58 +0100
-Message-ID: <20250103150558.1473-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ ffacd0b85a97d-38a1c828f5fsm41382990f8f.8.2025.01.03.07.08.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 03 Jan 2025 07:08:30 -0800 (PST)
+Message-ID: <5d19a266-fb17-4143-b701-01740ce0c705@linaro.org>
+Date: Fri, 3 Jan 2025 16:08:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 4/4] tests/qtest/boot-serial-test: Initialize PL011
+ Control register
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20250102105822.43532-1-philmd@linaro.org>
+ <20250102105822.43532-5-philmd@linaro.org> <878qrs7xhy.fsf@suse.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <878qrs7xhy.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,45 +104,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As Daniel suggested [*]:
+On 3/1/25 16:00, Fabiano Rosas wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> The tests using the PL011 UART of the virt and raspi machines
+>> weren't properly enabling the UART and its transmitter previous
+>> to sending characters. Follow the PL011 manual initialization
+>> recommendation by setting the proper bits of the control register.
+>>
+>> Update the ASM code prefixing:
+>>
+>>    *UART_CTRL = UART_ENABLE | TX_ENABLE;
+>>
+>> to:
+>>
+>>    while (true) {
+>>        *UART_DATA = 'T';
+>>    }
+>>
+>> Note, since commit 51b61dd4d56 ("hw/char/pl011: Warn when using
+>> disabled transmitter") incomplete PL011 initialization can be
+>> logged using the '-d guest_errors' command line option.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   tests/qtest/boot-serial-test.c | 7 ++++++-
+>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
+>> index bcfa504826c..6ea7e62e076 100644
+>> --- a/tests/qtest/boot-serial-test.c
+>> +++ b/tests/qtest/boot-serial-test.c
+>> @@ -70,15 +70,20 @@ static const uint8_t kernel_plml605[] = {
+>>   };
+>>   
+>>   static const uint8_t bios_raspi2[] = {
+>> -    0x08, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #8]   Get &UART0 */
+>> +    0x10, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #8]   Get &UART0 */
+> 
+> The comment needs updating, no?
 
-> We should consider to rank HVF above TCG, on the basis
-> that HW acceleration is faster and should provide a
-> host<->guest security boundary that we don't claim for TCG
+Oops indeed, good catch :)
 
-[*] https://lore.kernel.org/qemu-devel/Z07YASl2Pd3CPtjE@redhat.com/
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- system/vl.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+    "ldr     r3, [pc, #16]"
 
-diff --git a/system/vl.c b/system/vl.c
-index 0843b7ab49b..e20391281f8 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2379,7 +2379,6 @@ static void configure_accelerators(const char *progname)
-             /* Select the default accelerator */
-             bool have_tcg = accel_find("tcg");
-             bool have_kvm = accel_find("kvm");
--            bool have_hvf = accel_find("hvf");
- 
-             if (have_tcg && have_kvm) {
-                 if (g_str_has_suffix(progname, "kvm")) {
-@@ -2390,10 +2389,10 @@ static void configure_accelerators(const char *progname)
-                 }
-             } else if (have_kvm) {
-                 accelerators = "kvm";
-+            } else if (accel_find("hvf")) {
-+                accelerators = "hvf";
-             } else if (have_tcg) {
-                 accelerators = "tcg";
--            } else if (have_hvf) {
--                accelerators = "hvf";
-             } else {
-                 error_report("No accelerator selected and"
-                              " no default accelerator available");
--- 
-2.47.1
+> 
+>> +    0x10, 0x20, 0x9f, 0xe5,                 /*        ldr     r2, [pc, #8]   Get &CR */
+>> +    0xb0, 0x23, 0xc3, 0xe1,                 /*        strh    r2, [r3, #48]  Set CR */
+>>       0x54, 0x20, 0xa0, 0xe3,                 /*        mov     r2, #'T' */
+>>       0x00, 0x20, 0xc3, 0xe5,                 /* loop:  strb    r2, [r3]       *TXDAT = 'T' */
+>>       0xff, 0xff, 0xff, 0xea,                 /*        b       -4             (loop) */
+>>       0x00, 0x10, 0x20, 0x3f,                 /* UART0: 0x3f201000 */
+>> +    0x01, 0x01, 0x00, 0x00,                 /* CR:    0x101 = UARTEN|TXE */
+>>   };
+>>   
+>>   static const uint8_t kernel_aarch64[] = {
+>>       0x02, 0x20, 0xa1, 0xd2,                 /*        mov    x2, #0x9000000  Load UART0 */
+>> +    0x21, 0x20, 0x80, 0x52,                 /*        mov    w1, 0x101       CR = UARTEN|TXE */
+>> +    0x41, 0x60, 0x00, 0x79,                 /*        strh   w1, [x2, #48]   Set CR */
+>>       0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
+>>       0x41, 0x00, 0x00, 0x39,                 /* loop:  strb   w1, [x2]        *TXDAT = 'T' */
+>>       0xff, 0xff, 0xff, 0x17,                 /*        b      -4              (loop) */
 
 
