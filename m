@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209BEE7718F
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F5FE7718F
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 17:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTlCL-0000RR-8d; Fri, 03 Jan 2025 12:10:57 -0500
+	id 1tTlCa-0000Th-Dy; Fri, 03 Jan 2025 12:11:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCC-0000Pm-Iy
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:50 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCW-0000T9-QX
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:09 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCB-0006md-4u
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:10:48 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4362bae4d7dso89660895e9.1
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:10:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTlCV-0006oP-9P
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 12:11:08 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385df53e559so9799460f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 09:11:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735924245; x=1736529045; darn=nongnu.org;
+ d=linaro.org; s=google; t=1735924265; x=1736529065; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jhLJyNKpXTaAG71p496OhoK9px2w3vuRidPr1o8/SQw=;
- b=QNbTF/Z+EIYKTIzNqycgTUaGheTcrKDdz1USiNYNc+8zA5+59DddTr/cCdLZnF1gao
- eswymmb+kODh8V+ZVliF7pHKgGxR+eHOufRpRdJl1oKJR/UjQeXt/++hSJM6LTvLlqB3
- A4fkbZvKH0DwbA4FnQ8VKhzMxTsILEKPsKyJMlM5TduqamQ1jBlg5/w0wmHb59RcXTOT
- hoHsO3i7jA39DkiHDy2kFY9DjaB6s0EMG8UUmM6tJqYWTRk6MhTzMgnMMHrQjAenGbMm
- uBxcSRJZVIYzLQF+Hs51z0N6w75hwWClF5FXkj0nyJxknBLyo5sUSKFRq8bps/a1np40
- UWIg==
+ bh=Q/CzbbG3jOxGhXorzYheCWoGqel4SlzmIyrU6suQqBM=;
+ b=kyUL5HaUsDQe9YDQZb6Ki7ZTbvghAYHCf9IpLCsxUmPpN9OqGE/Akc6aFFRFTE3fi0
+ Nj56nzaUAahlISX3hvvIk2jJZlxVrfd8dqZcSec4GA8BJtUmVQdlz5oBeNhKDTnn0GNK
+ CqE+PDVKefkUjjuztn0ifAm9d6skVxw2fRqeRtUgA+5seEwi+gL7bmSwknTZ18VC/UMD
+ baNqZbgAX8NJEZtQ756u5itvFgeKqz22blEc8ZN8oQsvGZJ+5z2KHzglOIq5/kYwZ0/C
+ 9jiB8ikFqqmsSfIQITBgplcfjKgOh67K8TeE82qx1hkLVNOKmiA9lnxf+zmJvdRoaFzv
+ UVdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735924245; x=1736529045;
+ d=1e100.net; s=20230601; t=1735924265; x=1736529065;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jhLJyNKpXTaAG71p496OhoK9px2w3vuRidPr1o8/SQw=;
- b=Nh+Wle2TMahVy5LJWGcVzIWN+r55Jk5JxEyag5Ha1M1kBuLZoLFf+tq+an8toWUNe+
- ADpYZf4a6owptcNH1cV2UHui/unESIZXRj2Z/SurFe6NLUVKb/+UiisZYxC6UZPrxnqu
- NrXIk/89NJowQKtfUS9ER7yHoYJjqINVsKvg7W/FbFEoKQuSJQqvTz0MxvNK3rltrNs7
- 3UoKXPmO8NFPjjf6XmXw94T4IAPBqGLWqdUITfthV8f4hUX4425lcCyCTCx4sbgi1+ZK
- ysmxpngbO1Uv4yoSVkvhxHkfqgrqEpSx+J4X7SdEZbV/3646LHCvfc9VfjpIbdRHvxnv
- VrFA==
-X-Gm-Message-State: AOJu0YxUwAUYayQ3T94VOSsSiwFDh8TNx/oyDDXJA4LCDDCKzXbyyqWz
- +v6ZQPZOG5FL+Dz8WYmXq9J6SwI4RUiqFy5rwADSk9KJFuCxuM9WlfklTwPV0nj5D2ao27sN456
- NRBs=
-X-Gm-Gg: ASbGnctQUaf810vKRI/FGzMIP0Cig4Wso4MHqOYRGMAwzkHr/Joz5R9JX5rG0OFNZLZ
- oT/EuqI2Rmv4fZ1EN3TZQ5kqyfAK6hDjzT7sycbE5fE0BIBXgcUtUyY5l9UVV3Ubk3JsQaE/Lco
- ROXsHUFIeiUZSHvUGyc61GKQ0RceaznVYTOPk9YswM1SCCvcmhnlt/FgXMN5BrSuVqEv5xc+9J/
- VZWZNuD+6vQYj5TRwEPKeauV1JhGI0/DJrTzUH+As01+31ieLgoKx4kNdDsWQ3vU0WJ4E8fapul
- nS9uqTLq14jD3VgdjH4dC+CKNmm9iQ8=
-X-Google-Smtp-Source: AGHT+IF8Nsy3ccr7cQYoUOI7TTONOJuDjDJ8wD8LLXAHwSTD/oHVYSofldv6C/suyviRUkfllAm1gw==
-X-Received: by 2002:a05:600c:3b86:b0:434:f3d8:62d0 with SMTP id
- 5b1f17b1804b1-43668547175mr449340245e9.3.1735924245179; 
- Fri, 03 Jan 2025 09:10:45 -0800 (PST)
+ bh=Q/CzbbG3jOxGhXorzYheCWoGqel4SlzmIyrU6suQqBM=;
+ b=oero3itUF3BKSkUj6+XlKLhhqANKstWkdKyXyajwCWb9c66Wvyt8CE+Ax67MCCBpMi
+ IxO3bYZ+4ZbgOYDd/fyuF+HHYCw/6A6koV33L4vlnOrlY5jou7OV7pGdTkOg9rmEvcPu
+ TMhKRZ49/BO33oDErl5x+JYBSFFqhV3hnRhc+kb5bsIEJJtDDVPWny5XX/zsyjfuxsgP
+ 5gWL/f9n4nMD47uPSFXXgHbN4tF8W3cn+g/HwBc+2rxHh4sX93Jj8tiXpF/daTOczSkm
+ L24Oa+cgdt6Pn0WPE0vuABxwRRfSnnJIJBPdrHVFSOpg+7ltjdAPGOsim52DirBZRTS1
+ W6tg==
+X-Gm-Message-State: AOJu0YzdNqEzQ5wjjRb9kHSNPDmGi0ku4p1lfmYpxhXZwG5icac/Kbtx
+ ZXoEiINpCabtiCjZJrWQwm+/Qfi+T9Lhwi+nS9IHbNbjmDSuIMav2e0qqfieXz3OJJj+GCdRu7I
+ wBDE=
+X-Gm-Gg: ASbGncsrCGr2aWNxazci7J/Z5PzEstou30q+r7MuOt1wOtCU/L+QElKGCzqmMCmKmo+
+ W4nXnvv+WXv2hATyVo11lSTONbwPRCXGV10KyZ/Vlo4uHZO2JGtCn5AER75fO1hVQ+5JfykezCJ
+ GMcQAo/MxtC7tGH51WsdtSHsFYs8R5VzrZ12dDe3/lhXMQ+qyer2H+IQKAfuYLtBzQCmcd7GQkJ
+ ILxwCSrtZM3YWb8LHjNHPyENKf3qflSdM3OGIt57HpLGULzsV3BtWJGhAd99m68snDsHvUAXe+P
+ uiR0ZbBzukVA4H9GQbfKkYtcfLkpk64=
+X-Google-Smtp-Source: AGHT+IGchJbT6bpnXWoxhQ17XnigkqxhTNr+aNxhYgiEpo4fdURQlkPCucKa22rfOo74+Qm9odwasw==
+X-Received: by 2002:a05:6000:154f:b0:385:eeb9:a5bb with SMTP id
+ ffacd0b85a97d-38a221f698amr40605261f8f.17.1735924264910; 
+ Fri, 03 Jan 2025 09:11:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8acafesm40979667f8f.98.2025.01.03.09.10.44
+ 5b1f17b1804b1-43656b119b6sm526575015e9.22.2025.01.03.09.11.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 03 Jan 2025 09:10:44 -0800 (PST)
+ Fri, 03 Jan 2025 09:11:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -73,18 +73,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/5] semihosting/syscalls: Include missing 'exec/cpu-defs.h'
- header
-Date: Fri,  3 Jan 2025 18:10:33 +0100
-Message-ID: <20250103171037.11265-2-philmd@linaro.org>
+Subject: [PATCH 5/5] semihosting/meson: Build config.o and console.o once
+Date: Fri,  3 Jan 2025 18:10:37 +0100
+Message-ID: <20250103171037.11265-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250103171037.11265-1-philmd@linaro.org>
 References: <20250103171037.11265-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,31 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_ulong is defined in each target "cpu-param.h",
-itself included by "exec/cpu-defs.h".
-Include the latter in order to avoid when refactoring:
-
-  include/semihosting/syscalls.h:26:24: error: unknown type name 'target_ulong'
-     26 |                        target_ulong fname, target_ulong fname_len,
-        |                        ^
+config.c and console.c don't use any target specific
+headers anymore, move them from specific_ss[] to
+system_ss[] so they are built once, but will also be
+linked once, removing global symbol clash in a single
+QEMU binary.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/semihosting/syscalls.h | 1 +
- 1 file changed, 1 insertion(+)
+ semihosting/meson.build | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/semihosting/syscalls.h b/include/semihosting/syscalls.h
-index b5937c619a6..6627c45fb28 100644
---- a/include/semihosting/syscalls.h
-+++ b/include/semihosting/syscalls.h
-@@ -9,6 +9,7 @@
- #ifndef SEMIHOSTING_SYSCALLS_H
- #define SEMIHOSTING_SYSCALLS_H
+diff --git a/semihosting/meson.build b/semihosting/meson.build
+index 34933e5a195..86f5004bed7 100644
+--- a/semihosting/meson.build
++++ b/semihosting/meson.build
+@@ -4,13 +4,16 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
+ ))
  
-+#include "exec/cpu-defs.h"
- #include "gdbstub/syscalls.h"
+ specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
+-  'config.c',
+-  'console.c',
+   'uaccess.c',
+ ))
  
- /*
+ common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
+-system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
++system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
++  'config.c',
++  'console.c',
++), if_false: files(
++  'stubs-system.c',
++))
+ 
+ specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
+ 		if_true: files('arm-compat-semi.c'))
 -- 
 2.47.1
 
