@@ -4,91 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620DDE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 15:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF486E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 15:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTjHw-0000tI-B0; Fri, 03 Jan 2025 10:08:36 -0500
+	id 1tTjOZ-0002H5-2Q; Fri, 03 Jan 2025 10:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTjHu-0000sf-DZ
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:08:34 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tTjHs-0006Gd-KY
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:08:34 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-385de59c1a0so7525937f8f.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 07:08:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1735916911; x=1736521711; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r2+EuOqgH2urw2OP6VSf6sSCRq9D8mLLNGymXCzT50Q=;
- b=ZZ9WBMrWjpvOgX45FAmpKGSKY176tfnZlQS1RAhE2yrAclwKs3bIwA6r6TEoice36K
- JfC3HvatL+OT9uI/5QkZek6AbRloYjA6RrmMniOXr1WcfSg/6ugFgRyaVuPxl0OpHLWl
- TFC0aijI+CvJhgsB/LxdRyCOSswz0wwElQsyS2XRK5YofDo/BkXIYcqPQ2+WV0gVo3Dm
- opF4qCswaVmu5kn4csz2xCxL9pglbA7VC1RZtqDhbvYnvU4pPvBr6qtJ44jo+JIjB+NE
- k/cW1aed8r77jLhT97igTYV4TM1eegYruQ8zGz9gsl06UFrc9aqSyi1CgSjhLZbmuOGP
- qSQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735916911; x=1736521711;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r2+EuOqgH2urw2OP6VSf6sSCRq9D8mLLNGymXCzT50Q=;
- b=pteKZZ0plcufWu5YI9p5naqMIzQd87Hcqm82WpIRzf/eZ9UJKsRs4ETKWXo6n/EtN+
- lrZ+z+8/sVe8BjPY/GSY6PO7Iv8w7xbXU5mIvM/R8SM9uttioIDbhUigLRKtWGRMjWor
- L3xa09dHAkY4S4IipLohlb2Pn2aoSCKlAwg4qaJZGO3b+7WrHfD5w+pzhAF1zK+U+qv+
- jUH+wWtmbgkz4kPavFDM08rNBWEYSpKjgz2ozU/jnmwReXYjnzfBNz5wHMEYAjYreyr1
- lQAD3F54099HH23+ftTP/iJkLOxnGmH17MavBhqnjESvxYu90qbhRVsiUtqNakNjUCXM
- Cakw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxKjt9iTNJtD8FwztP1fMCmTFLDOK3GusJt9aLd42MUHDaAHjBRymEWv2MdMXumsOrgIZ5qrt/EEsG@nongnu.org
-X-Gm-Message-State: AOJu0Yz+1r+YCSsJRoqztlr9eTkHqioz2FotAuIv/aR/hn9WJ5MA3zqU
- pDkeymaPKnHwHjb7UlHE5LFplZjiNqsAOpJl7HEwzIKzBQECokX3wEyMQ5Rcuoo=
-X-Gm-Gg: ASbGncsw6D8Mz4QAoy4DeK0kIceAZ/VuTprRgcNNdIYGXd0K0I8U4/zZIx4ms/j23qi
- /TqEMjBPelFKMXTM2wXCGvOD4C6rmh7MzosTHURhyYkm+LjDcNvb5Qceu+zy3o9FMQ/1zHSC3ZL
- m7se07zTf2J5lM+uUWdHj8vHpShY/bW/HU3pSq33bpssVj0xXNFHGUz0bgw/ZSlh+RVVtTaaeI7
- dfibWu1Xa5aswRKJeItVZbMF8Ru4V0Aljwi9pFyRs1lNLLjO2e1mZiAoDISKTXstPlANXHTSyYw
- KXRdrNE75kP7ou1UqOACZ8Xj
-X-Google-Smtp-Source: AGHT+IHf92aNOME9sNfHMLKRq1YpEFls1kHnigg8kFTVtI1ANMu7tvP1Hi3QKh49uIssyE2ugh6jHA==
-X-Received: by 2002:a5d:584e:0:b0:385:e5d8:3ec2 with SMTP id
- ffacd0b85a97d-38a221f9c94mr47449289f8f.28.1735916910945; 
- Fri, 03 Jan 2025 07:08:30 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c828f5fsm41382990f8f.8.2025.01.03.07.08.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 07:08:30 -0800 (PST)
-Message-ID: <5d19a266-fb17-4143-b701-01740ce0c705@linaro.org>
-Date: Fri, 3 Jan 2025 16:08:28 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tTjOT-0002Fu-LU
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:15:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tTjOR-00077V-5b
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 10:15:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1735917317;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U1sjXKZQ2laLntgdzFRAQKIOYz9wr48NjaMQxUkkuyM=;
+ b=Y46BIgm9S7C/2y70ze4iFrFibgZ2lqrW9KnVmCDlUhKOz6vyOnd4JTZ9uthbTZj51cM//d
+ AZTuDtmB26b1SB/DLe37Lz69MU5mPFtzNV0Rm5D0wKlknIK+liz+LoQURPWi7wLBr1dQyZ
+ 4aNoHy6UchGcaidfekjDy4K+2RzbNjg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-Jv3RcRcbPROTp93fWFfILA-1; Fri,
+ 03 Jan 2025 10:15:14 -0500
+X-MC-Unique: Jv3RcRcbPROTp93fWFfILA-1
+X-Mimecast-MFC-AGG-ID: Jv3RcRcbPROTp93fWFfILA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4ECBE19560B8; Fri,  3 Jan 2025 15:15:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.141])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EC9419560A2; Fri,  3 Jan 2025 15:15:09 +0000 (UTC)
+Date: Fri, 3 Jan 2025 15:15:06 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] system: Try hardware accelerators (KVM, HVF) before
+ software one (TCG)
+Message-ID: <Z3f--qO8x45MpiXQ@redhat.com>
+References: <20250103150558.1473-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] tests/qtest/boot-serial-test: Initialize PL011
- Control register
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250102105822.43532-1-philmd@linaro.org>
- <20250102105822.43532-5-philmd@linaro.org> <878qrs7xhy.fsf@suse.de>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <878qrs7xhy.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20250103150558.1473-1-philmd@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.186,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,69 +88,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/25 16:00, Fabiano Rosas wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+On Fri, Jan 03, 2025 at 04:05:58PM +0100, Philippe Mathieu-Daudé wrote:
+> As Daniel suggested [*]:
 > 
->> The tests using the PL011 UART of the virt and raspi machines
->> weren't properly enabling the UART and its transmitter previous
->> to sending characters. Follow the PL011 manual initialization
->> recommendation by setting the proper bits of the control register.
->>
->> Update the ASM code prefixing:
->>
->>    *UART_CTRL = UART_ENABLE | TX_ENABLE;
->>
->> to:
->>
->>    while (true) {
->>        *UART_DATA = 'T';
->>    }
->>
->> Note, since commit 51b61dd4d56 ("hw/char/pl011: Warn when using
->> disabled transmitter") incomplete PL011 initialization can be
->> logged using the '-d guest_errors' command line option.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/qtest/boot-serial-test.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
->> index bcfa504826c..6ea7e62e076 100644
->> --- a/tests/qtest/boot-serial-test.c
->> +++ b/tests/qtest/boot-serial-test.c
->> @@ -70,15 +70,20 @@ static const uint8_t kernel_plml605[] = {
->>   };
->>   
->>   static const uint8_t bios_raspi2[] = {
->> -    0x08, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #8]   Get &UART0 */
->> +    0x10, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #8]   Get &UART0 */
+> > We should consider to rank HVF above TCG, on the basis
+> > that HW acceleration is faster and should provide a
+> > host<->guest security boundary that we don't claim for TCG
 > 
-> The comment needs updating, no?
+> [*] https://lore.kernel.org/qemu-devel/Z07YASl2Pd3CPtjE@redhat.com/
 
-Oops indeed, good catch :)
+Note, my statement above was on the basis that HVF passes all our
+functional tests, thus indicating a decent level of confidence
+in the correctness of the HVF impl.
 
-    "ldr     r3, [pc, #16]"
+If anyone knows any show stopper problems with HVF that would
+justify blocking its promotion ahead of TCG.... say now.
 
-> 
->> +    0x10, 0x20, 0x9f, 0xe5,                 /*        ldr     r2, [pc, #8]   Get &CR */
->> +    0xb0, 0x23, 0xc3, 0xe1,                 /*        strh    r2, [r3, #48]  Set CR */
->>       0x54, 0x20, 0xa0, 0xe3,                 /*        mov     r2, #'T' */
->>       0x00, 0x20, 0xc3, 0xe5,                 /* loop:  strb    r2, [r3]       *TXDAT = 'T' */
->>       0xff, 0xff, 0xff, 0xea,                 /*        b       -4             (loop) */
->>       0x00, 0x10, 0x20, 0x3f,                 /* UART0: 0x3f201000 */
->> +    0x01, 0x01, 0x00, 0x00,                 /* CR:    0x101 = UARTEN|TXE */
->>   };
->>   
->>   static const uint8_t kernel_aarch64[] = {
->>       0x02, 0x20, 0xa1, 0xd2,                 /*        mov    x2, #0x9000000  Load UART0 */
->> +    0x21, 0x20, 0x80, 0x52,                 /*        mov    w1, 0x101       CR = UARTEN|TXE */
->> +    0x41, 0x60, 0x00, 0x79,                 /*        strh   w1, [x2, #48]   Set CR */
->>       0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
->>       0x41, 0x00, 0x00, 0x39,                 /* loop:  strb   w1, [x2]        *TXDAT = 'T' */
->>       0xff, 0xff, 0xff, 0x17,                 /*        b      -4              (loop) */
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  system/vl.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
