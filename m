@@ -4,67 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C6BE77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FC7E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 14:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTiIh-0005hY-CX; Fri, 03 Jan 2025 09:05:19 -0500
+	id 1tTiQQ-0007Wq-9n; Fri, 03 Jan 2025 09:13:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tTiIf-0005fP-0V
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:05:17 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tTiIc-00026U-BI
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:05:16 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YPlbG58ttz6K9LP;
- Fri,  3 Jan 2025 22:00:42 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 68DF91406AC;
- Fri,  3 Jan 2025 22:05:04 +0800 (CST)
-Received: from localhost (10.47.74.248) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 3 Jan
- 2025 15:05:03 +0100
-Date: Fri, 3 Jan 2025 14:04:57 +0000
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: Rob Herring <robh@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrang" <berrange@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, Philippe Mathieu-Daud
- <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, "Michael S .
- Tsirkin" <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Sia Jee Heng
- <jeeheng.sia@starfivetech.com>, <qemu-devel@nongnu.org>,
- <kvm@vger.kernel.org>
-Subject: Re: [PATCH v6 0/4] i386: Support SMP Cache Topology
-Message-ID: <20250103140457.00004c4b@huawei.com>
-In-Reply-To: <Z3efFsigJ6SxhqMf@intel.com>
-References: <20241219083237.265419-1-zhao1.liu@intel.com>
- <44212226-3692-488b-8694-935bd5c3a333@redhat.com>
- <Z2t2DuMBYb2mioB0@intel.com> <20250102145708.0000354f@huawei.com>
- <CAL_JsqKeA4dSwO40VgARVAiVM=w1PU8Go8GJYv4v8Wri64UFbw@mail.gmail.com>
- <20250102180141.00000647@huawei.com> <Z3efFsigJ6SxhqMf@intel.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTiQO-0007WQ-2H
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:13:16 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tTiQM-0004Li-8T
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 09:13:15 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A56861F38E;
+ Fri,  3 Jan 2025 14:13:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1735913591; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kHhwuAJ3qkjx5pP3ctJKt91pYWqv/BIYcUPuJUJYm9E=;
+ b=RMkwiGl7AAv8vsJmaXKOC6PaEOUNLKnSw7ap2yCjDDEBZXfWPOFufrpIAI7rR34at6PCRp
+ 5/bNbWp5i72Z8sJw1IBWSbFa8YYKkm1BydersH5b1TZfiKQSmbIQx/z0QtU1+LwQ80pD1V
+ 1kMIarY3BOcl50OSZz/D7gfp4ANBkIM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1735913591;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kHhwuAJ3qkjx5pP3ctJKt91pYWqv/BIYcUPuJUJYm9E=;
+ b=DWck6X1HPkLY0pJp0CGhJ7qV2ENKO2OYfXTuj3U3Es0F7LjdSigs5RbtTFmxC6YBzxxmeh
+ JTple/9GgUivEADw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1735913589; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kHhwuAJ3qkjx5pP3ctJKt91pYWqv/BIYcUPuJUJYm9E=;
+ b=01JxtycEZZHY9Bgym5xtymWmm9Wxa4Y0Ma4wD01heP4KKFEuVB6XadSiNU1otubl6XTEH9
+ EyePEJCyU8Y39gJHQcFYC9w4cpNQHOcidaxsEd/Fk6npK3fE87DXJ0v8B7Y3rTsnOWN368
+ jJfAtHwWu5C+8E+mbQA5V3brZhTnt3A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1735913589;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=kHhwuAJ3qkjx5pP3ctJKt91pYWqv/BIYcUPuJUJYm9E=;
+ b=m8H5RnTknT8hFjqWKBV9tj3W1EpyQeRofvm6y5Zi4txOuZBPTFTp9lY3rgiMgZPgWLb61Y
+ 0FKQeErQp4lT1xAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5FC88134E4;
+ Fri,  3 Jan 2025 14:13:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dSNzCXTwd2fUWAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 03 Jan 2025 14:13:08 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+	Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v2] migration: Add more error handling to analyze-migration.py
+Date: Fri,  3 Jan 2025 11:13:05 -0300
+Message-Id: <20250103141305.8435-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.47.74.248]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- frapeml500003.china.huawei.com (7.182.85.28)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,self.data:url,suse.de:email,suse.de:mid];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,107 +105,141 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 3 Jan 2025 16:25:58 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+The analyze-migration script was seen failing in s390x in misterious
+ways. It seems we're reaching the VMSDFieldStruct constructor without
+any fields, which would indicate an empty .subsection entry, a
+VMSTATE_STRUCT with no fields or a vmsd with no fields. We don't have
+any of those, at least not without the unmigratable flag set, so this
+should never happen.
 
-> On Thu, Jan 02, 2025 at 06:01:41PM +0000, Alireza Sanaee wrote:
-> > Date: Thu, 2 Jan 2025 18:01:41 +0000
-> > From: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > Subject: Re: [PATCH v6 0/4] i386: Support SMP Cache Topology
-> > X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
-> >=20
-> > On Thu, 2 Jan 2025 11:09:51 -0600
-> > Rob Herring <robh@kernel.org> wrote:
-> >  =20
-> > > On Thu, Jan 2, 2025 at 8:57=E2=80=AFAM Alireza Sanaee
-> > > <alireza.sanaee@huawei.com> wrote: =20
-> > > >
-> > > > On Wed, 25 Dec 2024 11:03:42 +0800
-> > > > Zhao Liu <zhao1.liu@intel.com> wrote:
-> > > >   =20
-> > > > > > > About smp-cache
-> > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > > > > >
-> > > > > > > The API design has been discussed heavily in [3].
-> > > > > > >
-> > > > > > > Now, smp-cache is implemented as a array integrated in
-> > > > > > > -machine. Though -machine currently can't support JSON
-> > > > > > > format, this is the one of the directions of future.
-> > > > > > >
-> > > > > > > An example is as follows:
-> > > > > > >
-> > > > > > > smp_cache=3Dsmp-cache.0.cache=3Dl1i,smp-cache.0.topology=3Dco=
-re,smp-cache.1.cache=3Dl1d,smp-cache.1.topology=3Dcore,smp-cache.2.cache=3D=
-l2,smp-cache.2.topology=3Dmodule,smp-cache.3.cache=3Dl3,smp-cache.3.topolog=
-y=3Ddie
-> > > > > > >
-> > > > > > > "cache" specifies the cache that the properties will be
-> > > > > > > applied on. This field is the combination of cache level
-> > > > > > > and cache type. Now it supports "l1d" (L1 data cache),
-> > > > > > > "l1i" (L1 instruction cache), "l2" (L2 unified cache) and
-> > > > > > > "l3" (L3 unified cache).
-> > > > > > >
-> > > > > > > "topology" field accepts CPU topology levels including
-> > > > > > > "thread", "core", "module", "cluster", "die", "socket",
-> > > > > > > "book", "drawer" and a special value "default".   =20
-> > > > > >
-> > > > > > Looks good; just one thing, does "thread" make sense?  I
-> > > > > > think that it's almost by definition that threads within a
-> > > > > > core share all caches, but maybe I'm missing some hardware
-> > > > > > configurations.=20
-> > > > >
-> > > > > Hi Paolo, merry Christmas. Yes, AFAIK, there's no hardware has
-> > > > > thread level cache.   =20
-> > > >
-> > > > Hi Zhao and Paolo,
-> > > >
-> > > > While the example looks OK to me, and makes sense. But would be
-> > > > curious to know more scenarios where I can legitimately see
-> > > > benefit there.
-> > > >
-> > > > I am wrestling with this point on ARM too. If I were to
-> > > > have device trees describing caches in a way that threads get
-> > > > their own private caches then this would not be possible to be
-> > > > described via device tree due to spec limitations (+CCed Rob)
-> > > > if I understood correctly.   =20
-> > >=20
-> > > You asked me for the opposite though, and I described how you can
-> > > share the cache. If you want a cache per thread, then you probably
-> > > want a node per thread.
-> > >=20
-> > > Rob
-> > >  =20
-> >=20
-> > Hi Rob,
-> >=20
-> > That's right, I made the mistake in my prior message, and you
-> > recalled correctly. I wanted shared caches between two threads,
-> > though I have missed your answer before, just found it.
-> >  =20
->=20
-> Thank you all!
->=20
-> Alireza, do you know how to configure arm node through QEMU options?
+Add some debug statements so that we can see what's going on the next
+time the issue happens.
 
-Hi Zhao, do you mean the -smp param?
->=20
-> However, IIUC, arm needs more effort to configure cache per thread (by
-> configuring node topology)...In that case, since no one has explicitly
-> requested the need for cache per thread, I can disable cache per
-> thread for now. I can return an error for this scenario during the
-> general smp-cache option parsing (in the future, if there is a real
-> need, it can be easily re-enabled).
->=20
-> Will drop cache per thread in the next version.
->=20
-> Thanks,
-> Zhao
->=20
->=20
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ scripts/analyze-migration.py | 75 +++++++++++++++++++++---------------
+ 1 file changed, 45 insertions(+), 30 deletions(-)
+
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index 8a254a5b6a..f2457b1dde 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -429,6 +429,9 @@ def __init__(self, desc, file):
+         super(VMSDFieldStruct, self).__init__(desc, file)
+         self.data = collections.OrderedDict()
+ 
++        if 'fields' not in self.desc['struct']:
++            raise Exception("No fields in struct. VMSD:\n%s" % self.desc)
++
+         # When we see compressed array elements, unfold them here
+         new_fields = []
+         for field in self.desc['struct']['fields']:
+@@ -477,6 +480,10 @@ def read(self):
+                     raise Exception("Subsection %s not found at offset %x" % ( subsection['vmsd_name'], self.file.tell()))
+                 name = self.file.readstr()
+                 version_id = self.file.read32()
++
++                if not subsection:
++                    raise Exception("Empty description for subsection: %s" % name)
++
+                 self.data[name] = VMSDSection(self.file, version_id, subsection, (name, 0))
+                 self.data[name].read()
+ 
+@@ -574,10 +581,13 @@ def __init__(self, filename):
+         }
+         self.filename = filename
+         self.vmsd_desc = None
++        self.vmsd_json = ""
+ 
+-    def read(self, desc_only = False, dump_memory = False, write_memory = False):
++    def read(self, desc_only = False, dump_memory = False,
++             write_memory = False):
+         # Read in the whole file
+         file = MigrationFile(self.filename)
++        self.vmsd_json = file.read_migration_debug_json()
+ 
+         # File magic
+         data = file.read32()
+@@ -635,9 +645,11 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
+         file.close()
+ 
+     def load_vmsd_json(self, file):
+-        vmsd_json = file.read_migration_debug_json()
+-        self.vmsd_desc = json.loads(vmsd_json, object_pairs_hook=collections.OrderedDict)
++        self.vmsd_desc = json.loads(self.vmsd_json,
++                                    object_pairs_hook=collections.OrderedDict)
+         for device in self.vmsd_desc['devices']:
++            if 'fields' not in device:
++                raise Exception("vmstate for device %s has no fields" % device['name'])
+             key = (device['name'], device['instance_id'])
+             value = ( VMSDSection, device )
+             self.section_classes[key] = value
+@@ -666,31 +678,34 @@ def default(self, o):
+ 
+ jsonenc = JSONEncoder(indent=4, separators=(',', ': '))
+ 
+-if args.extract:
+-    dump = MigrationDump(args.file)
+-
+-    dump.read(desc_only = True)
+-    print("desc.json")
+-    f = open("desc.json", "w")
+-    f.truncate()
+-    f.write(jsonenc.encode(dump.vmsd_desc))
+-    f.close()
+-
+-    dump.read(write_memory = True)
+-    dict = dump.getDict()
+-    print("state.json")
+-    f = open("state.json", "w")
+-    f.truncate()
+-    f.write(jsonenc.encode(dict))
+-    f.close()
+-elif args.dump == "state":
+-    dump = MigrationDump(args.file)
+-    dump.read(dump_memory = args.memory)
+-    dict = dump.getDict()
+-    print(jsonenc.encode(dict))
+-elif args.dump == "desc":
+-    dump = MigrationDump(args.file)
+-    dump.read(desc_only = True)
+-    print(jsonenc.encode(dump.vmsd_desc))
+-else:
++if not any([args.extract, args.dump == "state", args.dump == "desc"]):
+     raise Exception("Please specify either -x, -d state or -d desc")
++
++try:
++    dump = MigrationDump(args.file)
++
++    if args.extract:
++        dump.read(desc_only = True)
++
++        print("desc.json")
++        f = open("desc.json", "w")
++        f.truncate()
++        f.write(jsonenc.encode(dump.vmsd_desc))
++        f.close()
++
++        dump.read(write_memory = True)
++        dict = dump.getDict()
++        print("state.json")
++        f = open("state.json", "w")
++        f.truncate()
++        f.write(jsonenc.encode(dict))
++        f.close()
++    elif args.dump == "state":
++        dump.read(dump_memory = args.memory)
++        dict = dump.getDict()
++        print(jsonenc.encode(dict))
++    elif args.dump == "desc":
++        dump.read(desc_only = True)
++        print(jsonenc.encode(dump.vmsd_desc))
++except Exception:
++    raise Exception("Full JSON dump:\n%s", dump.vmsd_json)
+-- 
+2.35.3
 
 
