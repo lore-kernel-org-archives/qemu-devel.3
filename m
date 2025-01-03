@@ -4,67 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7791E77188
-	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 07:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D03E77188
+	for <qemu-devel@archiver.kernel.org>; Fri,  3 Jan 2025 08:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTcL7-0006iC-HJ; Fri, 03 Jan 2025 02:43:26 -0500
+	id 1tTciK-0001MF-UV; Fri, 03 Jan 2025 03:07:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTcL4-0006hh-Bm
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 02:43:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tTciI-0001Lm-O3
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:07:23 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tTcL2-0004Yj-Ch
- for qemu-devel@nongnu.org; Fri, 03 Jan 2025 02:43:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1735890198;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=RkJ/ZGq5VsZXTybfL8qsCjEPpazv8Z7wPf9S/sciRA8=;
- b=P9Mu/j8EyT7h1pKywJ7B3FwV+9sMqHG6+eHnIrVOSMPahcgjOsUdAtiCDkzosYSNM8n06Z
- 5yytevHcq+WoAgxvUfzTQTtY3uaGVaQyLyHuT1Ts+bLl+NZd0ZVrMSIxuT63SOqNq3BRrG
- W3CzAMSIjUyqyXp620xby3lFSgE+MR8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-1IchaT-hPruBquzH9I1veA-1; Fri,
- 03 Jan 2025 02:43:14 -0500
-X-MC-Unique: 1IchaT-hPruBquzH9I1veA-1
-X-Mimecast-MFC-AGG-ID: 1IchaT-hPruBquzH9I1veA
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F2471956088; Fri,  3 Jan 2025 07:43:12 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.153])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B8B319560A2; Fri,  3 Jan 2025 07:43:09 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v3] tests/functional: Convert the migration avocado test
-Date: Fri,  3 Jan 2025 08:43:08 +0100
-Message-ID: <20250103074308.463860-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tTciG-0004X5-H7
+ for qemu-devel@nongnu.org; Fri, 03 Jan 2025 03:07:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1735891640; x=1767427640;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=V9eWh/15VXEA7gCguj+BFRdYMLZ5oi0QEKqx0Wixdm0=;
+ b=QVFRuxP/ojcKybDCTiEWBrF5422wHJjndmAgUAYwumcFVGQGbIgyisje
+ /KM3mJbjDPtcfroVlHfgRSzVwaaayz4AxPncS9wW6AvGFuApPLSjoE2CS
+ rpeyxAkjxEPTgJq5mnEeMrOdGd015qw4SAQcbKNATbI/htjRxHvDzvMcW
+ zR3pfqWcix30zcfNkHp/gkcK0EjSTFkSnWWSCLm62sLMhh0+J6b29Zpt+
+ XjiGY/pdwrreiMQwDR+p1c/P/gjcYmG2CkTQEn+oY074QnTYKliz80KHq
+ VPoiRDYR8TAiljey4tEEsiUiQImoSCTNA/NQMxYTof5V4AI0J60oGa2qU g==;
+X-CSE-ConnectionGUID: V5fLzTBCQ/mO6KlfdxoFlA==
+X-CSE-MsgGUID: 4P36/32hTB2sg27dhqZAhg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11303"; a="47127275"
+X-IronPort-AV: E=Sophos;i="6.12,286,1728975600"; d="scan'208";a="47127275"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jan 2025 00:07:16 -0800
+X-CSE-ConnectionGUID: GVxnOHgASdqfBFLYpSpnkQ==
+X-CSE-MsgGUID: IoJpPDfHRa+7zTghEf19Nw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,286,1728975600"; d="scan'208";a="106708690"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 03 Jan 2025 00:07:13 -0800
+Date: Fri, 3 Jan 2025 16:25:58 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: Rob Herring <robh@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v6 0/4] i386: Support SMP Cache Topology
+Message-ID: <Z3efFsigJ6SxhqMf@intel.com>
+References: <20241219083237.265419-1-zhao1.liu@intel.com>
+ <44212226-3692-488b-8694-935bd5c3a333@redhat.com>
+ <Z2t2DuMBYb2mioB0@intel.com> <20250102145708.0000354f@huawei.com>
+ <CAL_JsqKeA4dSwO40VgARVAiVM=w1PU8Go8GJYv4v8Wri64UFbw@mail.gmail.com>
+ <20250102180141.00000647@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+In-Reply-To: <20250102180141.00000647@huawei.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -65
+X-Spam_score: -6.6
+X-Spam_bar: ------
+X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,333 +97,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we've got a find_free_port() function in the functional
-test framework, we can convert the migration test, too.
-While the original avocado test was only meant to run on aarch64,
-ppc64 and x86, we can turn this into a more generic test by now
-and run it on all architectures that have a machine which ships
-with a working firmware. To avoid overlapping with the migration
-qtest, we now also test migration on machines that are not covered
-by the migration qtest yet.
+On Thu, Jan 02, 2025 at 06:01:41PM +0000, Alireza Sanaee wrote:
+> Date: Thu, 2 Jan 2025 18:01:41 +0000
+> From: Alireza Sanaee <alireza.sanaee@huawei.com>
+> Subject: Re: [PATCH v6 0/4] i386: Support SMP Cache Topology
+> X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+> 
+> On Thu, 2 Jan 2025 11:09:51 -0600
+> Rob Herring <robh@kernel.org> wrote:
+> 
+> > On Thu, Jan 2, 2025 at 8:57 AM Alireza Sanaee
+> > <alireza.sanaee@huawei.com> wrote:
+> > >
+> > > On Wed, 25 Dec 2024 11:03:42 +0800
+> > > Zhao Liu <zhao1.liu@intel.com> wrote:
+> > >  
+> > > > > > About smp-cache
+> > > > > > ===============
+> > > > > >
+> > > > > > The API design has been discussed heavily in [3].
+> > > > > >
+> > > > > > Now, smp-cache is implemented as a array integrated in
+> > > > > > -machine. Though -machine currently can't support JSON
+> > > > > > format, this is the one of the directions of future.
+> > > > > >
+> > > > > > An example is as follows:
+> > > > > >
+> > > > > > smp_cache=smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=module,smp-cache.3.cache=l3,smp-cache.3.topology=die
+> > > > > >
+> > > > > > "cache" specifies the cache that the properties will be
+> > > > > > applied on. This field is the combination of cache level and
+> > > > > > cache type. Now it supports "l1d" (L1 data cache), "l1i" (L1
+> > > > > > instruction cache), "l2" (L2 unified cache) and "l3" (L3
+> > > > > > unified cache).
+> > > > > >
+> > > > > > "topology" field accepts CPU topology levels including
+> > > > > > "thread", "core", "module", "cluster", "die", "socket",
+> > > > > > "book", "drawer" and a special value "default".  
+> > > > >
+> > > > > Looks good; just one thing, does "thread" make sense?  I think
+> > > > > that it's almost by definition that threads within a core share
+> > > > > all caches, but maybe I'm missing some hardware configurations.
+> > > > >  
+> > > >
+> > > > Hi Paolo, merry Christmas. Yes, AFAIK, there's no hardware has
+> > > > thread level cache.  
+> > >
+> > > Hi Zhao and Paolo,
+> > >
+> > > While the example looks OK to me, and makes sense. But would be
+> > > curious to know more scenarios where I can legitimately see benefit
+> > > there.
+> > >
+> > > I am wrestling with this point on ARM too. If I were to
+> > > have device trees describing caches in a way that threads get their
+> > > own private caches then this would not be possible to be
+> > > described via device tree due to spec limitations (+CCed Rob) if I
+> > > understood correctly.  
+> > 
+> > You asked me for the opposite though, and I described how you can
+> > share the cache. If you want a cache per thread, then you probably
+> > want a node per thread.
+> > 
+> > Rob
+> > 
+> 
+> Hi Rob,
+> 
+> That's right, I made the mistake in my prior message, and you recalled
+> correctly. I wanted shared caches between two threads, though I have
+> missed your answer before, just found it.
+> 
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- v3: Migrate machines that are not covered by the qtest yet
+Thank you all!
 
- MAINTAINERS                                   |   1 +
- tests/functional/meson.build                  |  32 +++++
- .../test_migration.py}                        | 135 +++++++-----------
- 3 files changed, 83 insertions(+), 85 deletions(-)
- rename tests/{avocado/migration.py => functional/test_migration.py} (41%)
- mode change 100644 => 100755
+Alireza, do you know how to configure arm node through QEMU options?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0c9d5dbc73..045eb206bb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3449,6 +3449,7 @@ F: include/migration/
- F: include/qemu/userfaultfd.h
- F: migration/
- F: scripts/vmstate-static-checker.py
-+F: tests/functional/test_migration.py
- F: tests/vmstate-static-checker-data/
- F: tests/qtest/migration/
- F: tests/qtest/migration-*
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 781bd7eae6..7974814d6b 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -57,6 +57,10 @@ tests_generic_linuxuser = [
- tests_generic_bsduser = [
- ]
- 
-+tests_aarch64_system_quick = [
-+  'migration',
-+]
-+
- tests_aarch64_system_thorough = [
-   'aarch64_aspeed',
-   'aarch64_raspi3',
-@@ -70,10 +74,18 @@ tests_aarch64_system_thorough = [
-   'multiprocess',
- ]
- 
-+tests_alpha_system_quick = [
-+  'migration',
-+]
-+
- tests_alpha_system_thorough = [
-   'alpha_clipper',
- ]
- 
-+tests_arm_system_quick = [
-+  'migration',
-+]
-+
- tests_arm_system_thorough = [
-   'arm_aspeed_ast1030',
-   'arm_aspeed_palmetto',
-@@ -105,6 +117,10 @@ tests_avr_system_thorough = [
-   'avr_mega2560',
- ]
- 
-+tests_i386_system_quick = [
-+  'migration',
-+]
-+
- tests_i386_system_thorough = [
-   'i386_tuxrun',
- ]
-@@ -153,6 +169,7 @@ tests_or1k_system_thorough = [
- ]
- 
- tests_ppc_system_quick = [
-+  'migration',
-   'ppc_74xx',
- ]
- 
-@@ -167,6 +184,10 @@ tests_ppc_system_thorough = [
-   'ppc_virtex_ml507',
- ]
- 
-+tests_ppc64_system_quick = [
-+  'migration',
-+]
-+
- tests_ppc64_system_thorough = [
-   'ppc64_e500',
-   'ppc64_hv',
-@@ -176,6 +197,7 @@ tests_ppc64_system_thorough = [
- ]
- 
- tests_riscv32_system_quick = [
-+  'migration',
-   'riscv_opensbi',
- ]
- 
-@@ -184,6 +206,7 @@ tests_riscv32_system_thorough = [
- ]
- 
- tests_riscv64_system_quick = [
-+  'migration',
-   'riscv_opensbi',
- ]
- 
-@@ -210,10 +233,18 @@ tests_sh4eb_system_thorough = [
-   'sh4eb_r2d',
- ]
- 
-+tests_sparc_system_quick = [
-+  'migration',
-+]
-+
- tests_sparc_system_thorough = [
-   'sparc_sun4m',
- ]
- 
-+tests_sparc64_system_quick = [
-+  'migration',
-+]
-+
- tests_sparc64_system_thorough = [
-   'sparc64_sun4u',
-   'sparc64_tuxrun',
-@@ -222,6 +253,7 @@ tests_sparc64_system_thorough = [
- tests_x86_64_system_quick = [
-   'cpu_queries',
-   'mem_addr_space',
-+  'migration',
-   'pc_cpu_hotplug_props',
-   'virtio_version',
-   'x86_cpu_model_versions',
-diff --git a/tests/avocado/migration.py b/tests/functional/test_migration.py
-old mode 100644
-new mode 100755
-similarity index 41%
-rename from tests/avocado/migration.py
-rename to tests/functional/test_migration.py
-index be6234b3c2..44804113cf
---- a/tests/avocado/migration.py
-+++ b/tests/functional/test_migration.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Migration test
- #
- # Copyright (c) 2019 Red Hat, Inc.
-@@ -12,19 +14,12 @@
- 
- import tempfile
- import os
-+import time
- 
--from avocado_qemu import QemuSystemTest
--from avocado import skipUnless
--
--from avocado.utils.network import ports
--from avocado.utils import wait
--from avocado.utils.path import find_command
--
-+from qemu_test import QemuSystemTest, skipIfMissingCommands
-+from qemu_test.ports import Ports
- 
- class MigrationTest(QemuSystemTest):
--    """
--    :avocado: tags=migration
--    """
- 
-     timeout = 10
- 
-@@ -33,103 +28,73 @@ def migration_finished(vm):
-         return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
- 
-     def assert_migration(self, src_vm, dst_vm):
--        wait.wait_for(self.migration_finished,
--                      timeout=self.timeout,
--                      step=0.1,
--                      args=(src_vm,))
--        wait.wait_for(self.migration_finished,
--                      timeout=self.timeout,
--                      step=0.1,
--                      args=(dst_vm,))
-+
-+        end = time.monotonic() + self.timeout
-+        while time.monotonic() < end and not self.migration_finished(src_vm):
-+           time.sleep(0.1)
-+
-+        end = time.monotonic() + self.timeout
-+        while time.monotonic() < end and not self.migration_finished(dst_vm):
-+           time.sleep(0.1)
-+
-         self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-         self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
- 
-+    def select_machine(self):
-+        target_machine = {
-+            'aarch64': 'quanta-gsj',
-+            'alpha': 'clipper',
-+            'arm': 'npcm750-evb',
-+            'i386': 'isapc',
-+            'ppc': 'sam460ex',
-+            'ppc64': 'mac99',
-+            'riscv32': 'spike',
-+            'riscv64': 'virt',
-+            'sparc': 'SS-4',
-+            'sparc64': 'sun4u',
-+            'x86_64': 'microvm',
-+        }
-+        self.set_machine(target_machine[self.arch])
-+
-     def do_migrate(self, dest_uri, src_uri=None):
--        dest_vm = self.get_vm('-incoming', dest_uri)
-+        self.select_machine()
-+        dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
-         dest_vm.add_args('-nodefaults')
-         dest_vm.launch()
-         if src_uri is None:
-             src_uri = dest_uri
--        source_vm = self.get_vm()
-+        source_vm = self.get_vm(name="source-qemu")
-         source_vm.add_args('-nodefaults')
-         source_vm.launch()
-         source_vm.qmp('migrate', uri=src_uri)
-         self.assert_migration(source_vm, dest_vm)
- 
--    def _get_free_port(self):
-+    def _get_free_port(self, ports):
-         port = ports.find_free_port()
-         if port is None:
--            self.cancel('Failed to find a free port')
-+            self.skipTest('Failed to find a free port')
-         return port
- 
--    def migration_with_tcp_localhost(self):
--        dest_uri = 'tcp:localhost:%u' % self._get_free_port()
--        self.do_migrate(dest_uri)
-+    def test_migration_with_tcp_localhost(self):
-+        with Ports() as ports:
-+            dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-+            self.do_migrate(dest_uri)
- 
--    def migration_with_unix(self):
-+    def test_migration_with_unix(self):
-         with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
-             dest_uri = 'unix:%s/qemu-test.sock' % socket_path
-             self.do_migrate(dest_uri)
- 
--    @skipUnless(find_command('nc', default=False), "'nc' command not found")
--    def migration_with_exec(self):
--        """The test works for both netcat-traditional and netcat-openbsd packages."""
--        free_port = self._get_free_port()
--        dest_uri = 'exec:nc -l localhost %u' % free_port
--        src_uri = 'exec:nc localhost %u' % free_port
--        self.do_migrate(dest_uri, src_uri)
--
--
--@skipUnless('aarch64' in os.uname()[4], "host != target")
--class Aarch64(MigrationTest):
--    """
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
--    :avocado: tags=cpu:max
--    """
--
--    def test_migration_with_tcp_localhost(self):
--        self.migration_with_tcp_localhost()
--
--    def test_migration_with_unix(self):
--        self.migration_with_unix()
--
-+    @skipIfMissingCommands('nc')
-     def test_migration_with_exec(self):
--        self.migration_with_exec()
--
--
--@skipUnless('x86_64' in os.uname()[4], "host != target")
--class X86_64(MigrationTest):
--    """
--    :avocado: tags=arch:x86_64
--    :avocado: tags=machine:pc
--    :avocado: tags=cpu:qemu64
--    """
--
--    def test_migration_with_tcp_localhost(self):
--        self.migration_with_tcp_localhost()
--
--    def test_migration_with_unix(self):
--        self.migration_with_unix()
--
--    def test_migration_with_exec(self):
--        self.migration_with_exec()
--
--
--@skipUnless('ppc64le' in os.uname()[4], "host != target")
--class PPC64(MigrationTest):
--    """
--    :avocado: tags=arch:ppc64
--    :avocado: tags=machine:pseries
--    """
--
--    def test_migration_with_tcp_localhost(self):
--        self.migration_with_tcp_localhost()
--
--    def test_migration_with_unix(self):
--        self.migration_with_unix()
--
--    def test_migration_with_exec(self):
--        self.migration_with_exec()
-+        """The test works for both netcat-traditional and netcat-openbsd packages."""
-+        with Ports() as ports:
-+            free_port = self._get_free_port(ports)
-+            dest_uri = 'exec:nc -l localhost %u' % free_port
-+            src_uri = 'exec:nc localhost %u' % free_port
-+            self.do_migrate(dest_uri, src_uri)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.47.1
+However, IIUC, arm needs more effort to configure cache per thread (by
+configuring node topology)...In that case, since no one has explicitly
+requested the need for cache per thread, I can disable cache per thread
+for now. I can return an error for this scenario during the general
+smp-cache option parsing (in the future, if there is a real need, it can
+be easily re-enabled).
+
+Will drop cache per thread in the next version.
+
+Thanks,
+Zhao
 
 
