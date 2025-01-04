@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1870E77188
-	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jan 2025 07:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7446E77197
+	for <qemu-devel@archiver.kernel.org>; Sat,  4 Jan 2025 07:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tTyiL-00039I-N1; Sat, 04 Jan 2025 02:36:54 -0500
+	id 1tTyuT-0006yA-8A; Sat, 04 Jan 2025 02:49:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tTyiD-00038X-Fw
- for qemu-devel@nongnu.org; Sat, 04 Jan 2025 02:36:47 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tTyuR-0006xg-FB
+ for qemu-devel@nongnu.org; Sat, 04 Jan 2025 02:49:23 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tTyiB-0004w8-Uw
- for qemu-devel@nongnu.org; Sat, 04 Jan 2025 02:36:45 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2166022c5caso159765885ad.2
- for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 23:36:43 -0800 (PST)
+ id 1tTyuP-0001My-Qf
+ for qemu-devel@nongnu.org; Sat, 04 Jan 2025 02:49:23 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2163dc5155fso177712865ad.0
+ for <qemu-devel@nongnu.org>; Fri, 03 Jan 2025 23:49:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1735976203; x=1736581003;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1735976960; x=1736581760;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nUQUJaOUPrhv5bXHlKSaYOoVtPTOlAhSIbbKfSqWyrU=;
- b=YPMPl3dJQYDClO+nYZYoO0GKrBu71n23IILz8dd9B2oy8b07+hBesJ0QJJMhM26hmx
- HnZYis7TCNljbrqZ8V4KsCzoyIpCs260a87fm+XJwrC511f+dSJoXfXE67BlFDfQWBSY
- ea6EUpb1cF7Lu1yJzw/XXmWqWF4sx5MbK2d0NxTnuLjOn90CAJwUAjfm3v4Y8DywFRIN
- dCF+it1cEQfdw57Z9ROoGQeNUN/T6/8YxtxOu4bUUE9Pei6oCeq9bwwkJKIeJAZpoSlw
- Gu99gkvYv+vS6AAJP+3LKRpEmMsRmO4VVoafz8osdzkjW8CyH//mmtJffhTDg+0RqO3v
- s4Zw==
+ :reply-to; bh=2h+Z6KGAocZY9ssdYDPG8vWiVaY52bfept3SN4O9ir8=;
+ b=2m+1u19j/Y6iySfxi1jw2QNeKSOD/T9H7Di5y9RXhWvy3WlvXg/6Rpx1hekhg+K7b6
+ BFeoE9Va3e2/hJpAvbWbpPOrwehfKR+UP7Q2tuj5OmvzDYx7teIpLROM94V/svGaxr8K
+ K1L6uYDpEk/UA3WqDhJEVbV1bsIWEZOCTV8K1J0uuFjzadn5gFPqY6gMMusryz/1ykg1
+ AlIInqKvEdvmYSfL313qSIQ7kgGfn70KkjCni8MYHJK5Q1/iW2yq8T/tjlQM0jhJcCc5
+ a703Xaw2rYAeVtkd3Ul1Gi3EFAzxAE8irRxr2WsSYaptTrnqtuJ836pihb+m1zDVV1wQ
+ oHqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1735976203; x=1736581003;
+ d=1e100.net; s=20230601; t=1735976960; x=1736581760;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nUQUJaOUPrhv5bXHlKSaYOoVtPTOlAhSIbbKfSqWyrU=;
- b=CoLbfMBcHaiBY4kkNbfgJon47lexOaoSD/VAYZbsQvJtyqC849qWKBdThfI9nyX4WE
- 391hLka12uS8JBdC3TgeQ5mAMCNW6S1uKMptzKZ4vxhK8IhhpqXOlVX+s5K7nbS/K74F
- QkYo8UXt3doG6yaZTW9xiAv54e9ts8P4zo3hQuAseZGGPUQy7MFygRzSHsEkvgo+1kUj
- v9mSAU7GrMvuKWuv41mI7mmFfTO0Fn4eA4CXuzlGF0tvlTSENFnRqLHBYmMz7THbalpA
- KT57IulpDjOaQnXTKrMyc6d7uO3Z9mgZFtWcQa7yWQDLQEaVLMiIcXkF7Hs9RH5HNBYo
- e6QA==
-X-Gm-Message-State: AOJu0Yxya8/Qcwte9iAqDjSrpbfqp4d4X/WQIcq0/UnWvbyFDXOOVESU
- TQ7VKzdEU7RCZvdWrQQ4Q+tyR4ulyLZSvABbIquue6CVFAYMyH8dKToeZORHtrc=
-X-Gm-Gg: ASbGncu8RdRsOktUHBR5jNVuLqOXEzIX2tVp5BiGOR8c4DU9U5PBfmGXEDndfoWgE2a
- bg3FTegPSJlFDoDpQAHUhybo0/7MBM8/l/cKUP8tpU3/6XKkOSjvE9arKuqDai7Vr/PgvLVlU3o
- p/IAuvQNZD01GrES2p1rTfFMGt56bbKSt+PC98o5vnn+iOwQoWT1NFEw79HmPd1/iIh5MzgJC7b
- rZ9PpcA2mJA1HTV0gA6bi1jo7DuOCxEOAWxSZ/vDooLD8O+UX8kAzOV/Gd+
-X-Google-Smtp-Source: AGHT+IEWU9/cRizzUkr9glce1nyiXStd+Ml5FG/leQNJ4RKB7dbyiKSUJTstIgVqKz/sfjQHQA99rQ==
-X-Received: by 2002:a05:6a21:6f87:b0:1e1:ab51:f531 with SMTP id
- adf61e73a8af0-1e5e048adecmr92981783637.22.1735976202703; 
- Fri, 03 Jan 2025 23:36:42 -0800 (PST)
+ bh=2h+Z6KGAocZY9ssdYDPG8vWiVaY52bfept3SN4O9ir8=;
+ b=TeVg63HPdcn+mO89tKGrXHZpQ369WquLH9C3/Yhc3gHdheNBWy7npOL5Tcaf/GUfTf
+ MPzB3lwCryhpF9t/CKw3NFtIq6jVQ3B+ikozdy3e7osRUL7w8KqTTog2heUyj2olXrYI
+ DFanl5terb/lDU8D9G/QzNuaBdHK5bLj3SgFLnW032D7xC0U+omPM/lNnuJ7u6IJQHg9
+ LvDF7FyQZq7bRubEgWPRxqV6NVruABwsgI2DTkHvaH27fhAc/5CgRTxHxFkTnleORiKE
+ jOBiwHZq36rJD1gazNh4L3WG+tTNPYLQxcg9RAqr0gYR9ROtaineNb3rmPPIbXlhNuYr
+ h0Xg==
+X-Gm-Message-State: AOJu0YzvrIx/aIPq3By8tL3PTxtfjcglZ8vQQn9kgPgCXs2xdgwC/j4C
+ R7cg8TsArksn4pvt4vThYYdsIs7veFklejjbO3+XDmj7VmaOLpzmpYL0UT3Jv0k=
+X-Gm-Gg: ASbGncvTZ8XKa19RIYtMQuvTBRkBcjsV1GtjCAVnBYfd/phzlqlv/nG8u3V48xZvzor
+ ZfK2Qikr9llYSNi1qFkB5HbOQ7JNu1UP3iSyZNtYtLDI8hJRjaAtgCAyqzIDCz75fbjlqCDlzJB
+ fdLo/6wG2Tr10OJ0a1ealv+YokaqumZg5mI0YgO3LHYLiBhJ4PPgSSbjh7t2DYSn/HV+p0Ouj6t
+ XDTkiMEG9FrhOM7Y1zOseWEAGb/G4EVm0W399YE1HwPaLMa9Blqf81LNoCU
+X-Google-Smtp-Source: AGHT+IHuVkdnGW/DCAWvMEG5nSg480teyybHwod0XE11mxMngbq7GlMJkhBoDnqycIhxUm0Q5+sz5w==
+X-Received: by 2002:a05:6a20:7350:b0:1e1:cbbf:be0 with SMTP id
+ adf61e73a8af0-1e5e04a2f70mr98340197637.22.1735976960459; 
+ Fri, 03 Jan 2025 23:49:20 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-842e89059b1sm21196482a12.86.2025.01.03.23.36.39
+ 41be03b00d2f7-842abd593bcsm25264710a12.16.2025.01.03.23.49.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Jan 2025 23:36:42 -0800 (PST)
+ Fri, 03 Jan 2025 23:49:20 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 04 Jan 2025 16:36:05 +0900
-Subject: [PATCH v3 1/3] qdev-properties: Accept bool for OnOffAuto
+Date: Sat, 04 Jan 2025 16:48:54 +0900
+Subject: [PATCH v4 2/2] virtio-net: Report RSS warning at device
+ realization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250104-virtio-v3-1-63ef70e9ddf3@daynix.com>
-References: <20250104-virtio-v3-0-63ef70e9ddf3@daynix.com>
-In-Reply-To: <20250104-virtio-v3-0-63ef70e9ddf3@daynix.com>
+Message-Id: <20250104-auto-v4-2-972461ee87fd@daynix.com>
+References: <20250104-auto-v4-0-972461ee87fd@daynix.com>
+In-Reply-To: <20250104-auto-v4-0-972461ee87fd@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
@@ -82,10 +83,11 @@ To: Jason Wang <jasowang@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Eduardo Habkost <eduardo@habkost.net>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,52 +109,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Accept bool literals for OnOffAuto properties for consistency with bool
-properties. This enables users to set the "on" or "off" value in a
-uniform syntax without knowing whether the "auto" value is accepted.
-This behavior is especially useful when converting an existing bool
-property to OnOffAuto or vice versa.
+Warning about RSS fallback at device realization allows the user to
+notice the configuration problem early.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/core/qdev-properties.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ hw/net/virtio-net.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 434a76f5036e..0081d79f9b7b 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -491,6 +491,21 @@ const PropertyInfo qdev_prop_string = {
-     .set   = set_string,
- };
- 
-+static void set_on_off_auto(Object *obj, Visitor *v, const char *name,
-+                            void *opaque, Error **errp)
-+{
-+    Property *prop = opaque;
-+    int *ptr = object_field_prop_ptr(obj, prop);
-+    bool value;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 6b2104c6b68d..c6a8e6055909 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -829,6 +829,8 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+         if (virtio_has_feature(on_off_auto_features.on_bits, VIRTIO_NET_F_HASH_REPORT) ||
+             (virtio_has_feature(on_off_auto_features.on_bits, VIRTIO_NET_F_RSS) &&
+              !ebpf_rss_is_loaded(&n->ebpf_rss))) {
++            warn_report("Can't load eBPF RSS - fallback to software RSS");
 +
-+    if (visit_type_bool(v, name, &value, NULL)) {
-+        *ptr = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+        return;
-+    }
-+
-+    qdev_propinfo_set_enum(obj, v, name, opaque, errp);
-+}
-+
- /* --- on/off/auto --- */
+             virtio_clear_feature(&on_off_auto_features.auto_bits,
+                                  VIRTIO_NET_F_RSS);
+         }
+@@ -1344,16 +1346,10 @@ static void virtio_net_detach_ebpf_rss(VirtIONet *n)
+ static void virtio_net_commit_rss_config(VirtIONet *n)
+ {
+     if (n->rss_data.enabled) {
+-        n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
++        n->rss_data.enabled_software_rss = n->rss_data.populate_hash ||
++                                           !virtio_net_attach_ebpf_rss(n);
+         if (n->rss_data.populate_hash) {
+             virtio_net_detach_ebpf_rss(n);
+-        } else if (!virtio_net_attach_ebpf_rss(n)) {
+-            if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
+-                warn_report("Can't load eBPF RSS for vhost");
+-            } else {
+-                warn_report("Can't load eBPF RSS - fallback to software RSS");
+-                n->rss_data.enabled_software_rss = true;
+-            }
+         }
  
- const PropertyInfo qdev_prop_on_off_auto = {
-@@ -498,7 +513,7 @@ const PropertyInfo qdev_prop_on_off_auto = {
-     .description = "on/off/auto",
-     .enum_table = &OnOffAuto_lookup,
-     .get = qdev_propinfo_get_enum,
--    .set = qdev_propinfo_set_enum,
-+    .set = set_on_off_auto,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
- 
+         trace_virtio_net_rss_enable(n,
 
 -- 
 2.47.1
