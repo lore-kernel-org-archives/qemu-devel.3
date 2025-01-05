@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CFBE77188
-	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jan 2025 00:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17561E77188
+	for <qemu-devel@archiver.kernel.org>; Sun,  5 Jan 2025 01:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUEyo-0004rZ-Gh; Sat, 04 Jan 2025 19:58:58 -0500
+	id 1tUF2o-0005kG-Sb; Sat, 04 Jan 2025 20:03:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tUEym-0004rE-9j
- for qemu-devel@nongnu.org; Sat, 04 Jan 2025 19:58:56 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tUF2l-0005k0-KC
+ for qemu-devel@nongnu.org; Sat, 04 Jan 2025 20:03:04 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tUEyk-0007y7-Mm
- for qemu-devel@nongnu.org; Sat, 04 Jan 2025 19:58:56 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2163dc5155fso184056115ad.0
- for <qemu-devel@nongnu.org>; Sat, 04 Jan 2025 16:58:54 -0800 (PST)
+ id 1tUF2h-0008Mb-Vq
+ for qemu-devel@nongnu.org; Sat, 04 Jan 2025 20:03:01 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2ee76befe58so19066762a91.2
+ for <qemu-devel@nongnu.org>; Sat, 04 Jan 2025 17:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736038733; x=1736643533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736038978; x=1736643778; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ApbwMEeSPLE0lo59eyfcF6YvfFB6Nskvw3GslQLCDdA=;
- b=TSJXArIqjyP/hIm9Et+TTGJhhKM8kFrSueVQthPHKa/6+jgPFOBDQti5aOSC9saWWc
- sfoIXCIJNg3KzJPmemumWIyo/avu68anbGGyQl3Srd/QeYW1WMXeHytGGxC9ORIhofph
- Fzi7lzwUCmAWpvKuxRGlwd3lDtQDsm1PytFeVRJ6AInHI/io9q42r0oiRtqfiKWHfNq2
- xsYPXVrubu79sdjXXlvfwVpeUEaKXAxHRv7ZIUF8QsjYeOeOL/PAJ/nAjplLyKB2Mn/t
- 2Smm/7J7QZVQ8CG0bICPL6vamYLLvYfxsJCxBJP5Nwrs3zSjlX/R2R/WfZgiDI1Jq6Lr
- Czug==
+ bh=rTbFYmyzByt8KEK5g+eS3GX0VwIyvGnXScH5bPi/Zws=;
+ b=jNMA4/eGizd4IWLzjVFL11Dsznssz/qpSIxvV0fIldVJr97fiUOXzz28ZSOV4pfGrU
+ jQaFNB4TEDrp7UhGPdEb23E9AI/VCWghablA+vd3Skhm4/6ph9RLmoc27wZjO4j3jc/w
+ sGXrJn3FkKY5bJeABSpyzFSKCuGiYC8liFApd/uPFL8Wmsea+UOqELvwsSwWBXi0F5I4
+ iuiQOvbj6LDCZN8UKaldp9eLk5AuTljHW9/xmK+unFYvPgI7uxFbcHxx9OD2Oroy1AJB
+ KbwCHzsr8jewwdayAvepQASsMND6UgEahgCFrJxcqx3B7YHSD8Ous7BhqZWH2dIjH6At
+ BNLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736038733; x=1736643533;
+ d=1e100.net; s=20230601; t=1736038978; x=1736643778;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ApbwMEeSPLE0lo59eyfcF6YvfFB6Nskvw3GslQLCDdA=;
- b=Tg8wWZHA6vaKDbLLLXxkddTTzNJc8vmlN07sZBFA92YFBYaf4l+xohnyqXmw3NEuHC
- OmtrkIxiOUUvjVQ548fGMHmEPTyeMZZocL6c9Y47qI1xpXX2Y4PMWkIHVIl9gZEeTwmz
- a9isKRuuh4a3U/xungVYBb/XRUZkQyBxRxV0EBKKrIXHmsv0/2EnbQJ0nYfM9Ye3KOmZ
- Efrw1Qpt8nq8OxZ13knz+YViw4pJWbzQH760vavbZsKirkJaOLzivzRPniOOMgd3M9ht
- dvJNRybYTZ0nwU/j34art0XT2D187QkZX35nIEMVkKYrI/um/TSXiTqICNdR8lR1k9Vy
- pNHw==
+ bh=rTbFYmyzByt8KEK5g+eS3GX0VwIyvGnXScH5bPi/Zws=;
+ b=qd2w7kJPewbmgsXi0saAvZIlXL6UMr5IcQfiZY69+jjUWf0Ugvc2NOlbutghGokZDz
+ T5susIENcewhpCOUyI+hmAGSQuUO7Bie7hmWzAp65KWoEimLwMNwA4CbQ81DGRXwFtfw
+ NINOFQzl7yyf4U3CyCEF7xXadMOmlLXmzEGAyMFKS9x4jSCZD8tVE5uHT8SnuzWRBK0o
+ bvdOJTWIGA5cSMS9sQpUgNdK2qGvFVZcYAzuyw3r2xw/hrU8cS/xyKUs5S/ujJC/n9q/
+ SBwUHydSurrX/SmG6NhgW8ETfXPaw+sAFapTJlBeA5AL7Ah17Cw6CR9w74HOFm2wnLUr
+ UfHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/t7j2m/Nx09dAPcmngFeJYFDg71eh0dd67coBD5zd7KxXNtOkl2Z/PacLQWte/RAVEQEU7wndUXBR@nongnu.org
-X-Gm-Message-State: AOJu0YxG1uAFEU/nuVqU7VJI7MdYcMRx9GcOpQPTWXdpqbTa3atMRNNw
- 1EA7kgf2WBNHEdVAjQrJCTHALlKQsCyUjy+oWhV7y6TVO5DlSzd51QqCMJmZMYE=
-X-Gm-Gg: ASbGncu7N6Ct4G+1INjt23vxUiHzqFCiVyO/fPpKsPD65XoxWMtxutXyxE45Z2DXWsT
- IdDNzETEZyfXQGnm89keEzBkrC9hrSzJRPsH+8W+kP5PtUtveom6cGbLc/FPPP8YbJnRsMkH3dE
- VNyqTikn5qcs3ukmAcwH44D5zwiE5SOJkyqnMEpttP0VCWBxfsX901bWm5iQjOJ8uiyuZAzKRsL
- QPs/pGvJ/Ab+0IzOX82l69l9ukDyJPzVGreVC0fuMQgwbFUH/wugq7NqhwOzUjGgVW+NDPRxSkB
- HQWBfpcMS/39zXWquwxQw+AJrETeWAI=
-X-Google-Smtp-Source: AGHT+IEhNuD64/L6vatxqc2VFA2n+AOV7sV/MRnWW2peeEzecnt0D/UyWwlZGPgFa5OHaWzNc8Hncg==
-X-Received: by 2002:a05:6a00:cd6:b0:729:a31:892d with SMTP id
- d2e1a72fcca58-72abdd9603cmr92770793b3a.8.1736038733529; 
- Sat, 04 Jan 2025 16:58:53 -0800 (PST)
+ AJvYcCUnBC0rtkmVNyVbgrOomCSt43D0ABvjdj8VplIVK+wRXGSS4KA87CpSPhpC87MCDqzy6oEjUcHZ6vFk@nongnu.org
+X-Gm-Message-State: AOJu0YxluYBJ7azQSOELT+xI66ABr8i6h42BFhWLTb0xTK+TDMr246i6
+ MpaWAY2BJRV8PO6pHipWcdHoesHP1hlPt1FSBxZvebDPxFbyC39iJCtUOfzODyE=
+X-Gm-Gg: ASbGncvaBq8xBugpFs2dMxXHHv6528fXcJFy4z4VMy3Bu07sfSbR8ksgezJVIoO+7aP
+ CkzT3HfT9/P5jKEv48G0cXCYPAAdcbvraYkBS4YD79+miosQoQR0vPqCrgxTm3F4R3RI7jKmhzF
+ BhlGZgipe/wA93NjqdY7Jf8+9i+A/x/N2fVMQ4WPUXGIHvCmNBJ75sibbAa6vum/kGj9iqh3p77
+ XjtKLnrSqiOwznSgbyI9dEsRTKeWl4zqjHAJraLMWElAVnXdAJ8LMOMmEapyzLrVkQM7p6TU5hB
+ d91/kJXPC9DN5MDaPvHsbWR4Z9g3aDY=
+X-Google-Smtp-Source: AGHT+IFTzeypw+nE0+Dt9YyucfTrU/9iaQz6tyBc/bKxugJ4LZC/vXEu5GNikQfSRgf0xWjscSydRw==
+X-Received: by 2002:a17:90b:2cc5:b0:2ee:aed6:9ec2 with SMTP id
+ 98e67ed59e1d1-2f452e16379mr80792652a91.14.1736038978171; 
+ Sat, 04 Jan 2025 17:02:58 -0800 (PST)
 Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
  [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad834cffsm29623137b3a.67.2025.01.04.16.58.52
+ d9443c01a7336-219dc962c31sm266938115ad.47.2025.01.04.17.02.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 04 Jan 2025 16:58:53 -0800 (PST)
-Message-ID: <9aa6172d-40bc-4086-9abb-4a11c2a4dc80@linaro.org>
-Date: Sat, 4 Jan 2025 16:58:50 -0800
+ Sat, 04 Jan 2025 17:02:57 -0800 (PST)
+Message-ID: <435a2919-6238-4845-9bd8-9e32c3c2a7f8@linaro.org>
+Date: Sat, 4 Jan 2025 17:02:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/6] target/xtensa: Move xtensa-isa.c to common_ss[]
+Subject: Re: [RFC PATCH 6/6] disas: Select capstone targets by default
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -79,14 +79,14 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Thomas Huth <thuth@redhat.com>
 References: <20250103231738.65413-1-philmd@linaro.org>
- <20250103231738.65413-4-philmd@linaro.org>
+ <20250103231738.65413-7-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250103231738.65413-4-philmd@linaro.org>
+In-Reply-To: <20250103231738.65413-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,33 +110,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/3/25 15:17, Philippe Mathieu-Daudé wrote:
-> The Xtensa disassembler (selected with CONFIG_XTENSA_DIS=y)
-> uses methods defined in xtensa-isa.c, so this file has to be
-> compiled when the disassembler is linked.
+> When capstone is available, we get ARM/X86/PPC/S390X
+> disassemblers in common_ss[] for free.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/xtensa/meson.build | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/xtensa/meson.build b/target/xtensa/meson.build
-> index f8d60101e3d..68ebfe2582d 100644
-> --- a/target/xtensa/meson.build
-> +++ b/target/xtensa/meson.build
-> @@ -12,9 +12,10 @@ xtensa_ss.add(files(
->     'op_helper.c',
->     'translate.c',
->     'win_helper.c',
-> -  'xtensa-isa.c',
->   ))
->   
-> +common_ss.add(when: 'CONFIG_XTENSA_DIS', if_true: files('xtensa-isa.c'))
-> +
->   xtensa_system_ss = ss.source_set()
->   xtensa_system_ss.add(files(
->     'dbg_helper.c',
+>   disas/Kconfig | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+
+Hopefully starting with capstone 6 we'll be able to add more.
+
 
 r~
 
