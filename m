@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6C8E7719A
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 17:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F9EE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 17:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUr36-0001T1-Ae; Mon, 06 Jan 2025 12:37:57 -0500
+	id 1tUrJV-0005qY-0c; Mon, 06 Jan 2025 12:54:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tUr2x-0001Ri-MD
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:37:52 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tUr2w-00059Z-0Y
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:37:47 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2ee76befe58so21222102a91.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 09:37:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736185064; x=1736789864; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7vEPaDYMTmy26J/4RhVLGeEBUZMGkiMwnubqyq0F7bs=;
- b=KB5N+ikbTR4kPZ/gvXrUfnmJyUnM2SNHnFB/4/oM4DS1BmT5rI/o3hRg8QhIdyUhOy
- JJnAvZ3zeHFtaB9P8ZTIz9KMHkiT8B7oZ6qUg9XYt9/ZeXuHFc7kqL2epCVXvW/L+J/T
- oK2Q5iclBsCO4+AMmkz/LpQMXjG8k4FC4eFud+qXtrmpJZgXbt02IHTMnmSmdYJMfpot
- wsNmA4cqcMrUCGmY563jPPvaoPixM5o73XU2jOIfjgeqZzsiHLQDYSdaSTNT2CB9yqX3
- qwyLSlSKA/HimZmVY4uEvvlZT2A3f66JvfXzxukP96eBHT0jeYnUAGRJ/K9xJXQ5nt4F
- elmA==
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tUrJT-0005qP-Cy
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:54:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tUrJR-0006mt-Kx
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:54:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736186085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Fvy2BjbbeD6qoEouZiqZW2ocKJMDLV5YU9HPan5O/L8=;
+ b=Bl0PI6CGXbAHp/GwN/A9QGeSf3TejNi9ydATCCK4L3N+E7U++R4fm5BWqN/IXux3UnSQ57
+ fZ6P/WKYS2M6mbMedfO9n/4MflKHmXS558ixCqIPVj7wMcTddHDsNTVKH5ckabpz2mODep
+ NtG4qdOni1Mp5+ZU+M7COb77Kk8jxh8=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-jcLlnVRlNYqAVp84ZCVQeQ-1; Mon, 06 Jan 2025 12:54:43 -0500
+X-MC-Unique: jcLlnVRlNYqAVp84ZCVQeQ-1
+X-Mimecast-MFC-AGG-ID: jcLlnVRlNYqAVp84ZCVQeQ
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b6f2515eb3so1498004285a.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 09:54:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736185064; x=1736789864;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7vEPaDYMTmy26J/4RhVLGeEBUZMGkiMwnubqyq0F7bs=;
- b=GY4vCmabg4+NjDwJ1AWrVJWZq/Y2F+nl/fxsOEbNT0uRv9k38SaMcNj+Iqw04b8Ff/
- BG/3OV4Mk4qTSs6O9d/RBibu85RTCC9onTscN6DZjVAsgFHAe1uv128y2xU3qK6W2gm9
- 3m9Yfgre9d8l2KrfHvlmpFoBLeTX4goZfM0oVWnl1m84QyAaHRnb2k+XK7h4jDmrT1Pc
- qUxeEedluGq9u1EYVKPQCYn++IgWd4jT+D+ISuopZm/AxxiwlJyZbw395rGlj5IRJS0I
- D6NTiC3F4EH042w5cx9JgNnkTjcgzlOKov+vhUWbQ8rWE6BAwbvEO+tlwI+LjDPO0XlC
- TMAg==
-X-Gm-Message-State: AOJu0YzGBSSV0RAt9+Jyk6UNoXIMEblvcV4EkE0XJobDtaCz5YOeLJRn
- Wz1QZzF6vOxt63Yw56iyLbr2ezL6jyCW1uMOqaIas/CXdy/yMmGaSvlibBnSJ4XnIa4q2JGFsyZ
- yc9M=
-X-Gm-Gg: ASbGncukx65n93Rh7mAjFPLZJ7l0P7FiaHFpUTv4FAKmr614Q71dZXP1GkIMJuQTyMy
- 721XQuGBeIsoop1nDAKczJmHzb4RcnA82cFKnMnEfX2MTEiB0t8bK/S8MIzkMZ2M5f6As7ceI1K
- WzQn/p/pMMlD5X/AHsMpruu7iSBKmRhiYuHP64gFqiwf+Swn62IiDPsLBQPw5Kkg0X4yNsKUcFp
- cjjTWiRPf7BKgF7JVGt6jHVjQpeUHGxacWDPdTOlDUNzcwR+taBpXrm18mr/vstTl//6COJBzmH
- djo+30+wbQ==
-X-Google-Smtp-Source: AGHT+IGrsoTurh9eO7bLfQY22rkBasvkH6TZOVwu8qJLFl7laanpLuq1Na30qnoU7Gkmh0YvrCv81g==
-X-Received: by 2002:a17:90b:2543:b0:2f4:432d:250d with SMTP id
- 98e67ed59e1d1-2f452e372edmr79415834a91.21.1736185064015; 
- Mon, 06 Jan 2025 09:37:44 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([189.110.107.205])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4478ac7dbsm34139317a91.50.2025.01.06.09.37.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jan 2025 09:37:43 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] target/riscv: use RISCVException enum in exception
- helpers
-Date: Mon,  6 Jan 2025 14:37:33 -0300
-Message-ID: <20250106173734.412353-2-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250106173734.412353-1-dbarboza@ventanamicro.com>
-References: <20250106173734.412353-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1736186082; x=1736790882;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
+ :mime-version:references:from:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Fvy2BjbbeD6qoEouZiqZW2ocKJMDLV5YU9HPan5O/L8=;
+ b=PI5SHcOxKlObT6i8buPt++E1nJiCZINQJFHXOEuPIB0B+Ap07XAbiViGdbtYkeDSCE
+ 1CwCs+FQ6BT8RH4R5+e3ymb40QgJrbFFBTatVCoM+K0ZrTVtVHpbkprA6sSFkhp3xtVx
+ hCTRwKv/Fv2TWCVgxmZEE1MT5oo0RKO7zAqi6g0IaT6LI9dVv47msL8meHZ59VAZNIfB
+ yxcC1/kAA0GILYHhJO31Bftpod7sZxJoEZAu0hMAwis+khG8jdp+9ewq8LUwTeUerxrf
+ itLmORSOi0lXEknYwSaW5W7TPOKnt9gBzOxoUlBMFjWwoRONhMBmPHzWe54+GN/VTJhN
+ VAmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJ0pFIUBoNUkIy2PxCkRrvGikAw4v+JGii62F6uXoJRI0u3OM3nzs9JP1IJ5o4xC0fyF/Jq+TBMX6Z@nongnu.org
+X-Gm-Message-State: AOJu0Yw2LMe50/tWYnI8YaP3PFzddi/KBWrC1Q+6KDhAy8xsZhEZWxfW
+ G869IklerKQYIXEsL4YI/iVKRn9ka+1ZnhPEBH7/+y773z7FiSNpXCEVHXA6suFvM+xgIFHAQ4X
+ +/477/AxT60GJH5GoiNkPCiMDN3zj/aXolbo+zK73hYhmZs0jx6B464n/zX1Fz2xd93E7gPxzWO
+ IBSO1upLsCQOA1SDPjrBibqjLEzd4=
+X-Gm-Gg: ASbGnctX1dNq56on7hLxx6+FpfOox2nR+XHC3U9uEQbiMu1tNvIy7+6ygQfvSyykA6S
+ Dsk0bCiKLykSkcRxAoXkDfb2ephKAUcIRDycT2s8=
+X-Received: by 2002:a05:620a:27cb:b0:7b8:61df:f5de with SMTP id
+ af79cd13be357-7b9ba7e5f73mr8860434585a.45.1736186082490; 
+ Mon, 06 Jan 2025 09:54:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhUeBRKm87lpA4OkU+PW6OVxzk/PdQTTo8DJ9H7DxKOIWLi5mINjgNIwXQXlvQE+Mv7YJYGNpHFRjIkXlQdVs=
+X-Received: by 2002:a05:620a:27cb:b0:7b8:61df:f5de with SMTP id
+ af79cd13be357-7b9ba7e5f73mr8860432485a.45.1736186082226; Mon, 06 Jan 2025
+ 09:54:42 -0800 (PST)
+Received: from 744723338238 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 6 Jan 2025 12:54:41 -0500
+From: Andrea Bolognani <abologna@redhat.com>
+References: <20241203094702.124748-1-abologna@redhat.com>
+ <CABJz62PDz_LJdji-NC7LdmonjshG4w+OqGJPzkuStECzMcYSBg@mail.gmail.com>
+ <CAKmqyKMkN7z51MoAeOK-buDZjKeEV7AjzviyVcZ_AyMEJPgg0w@mail.gmail.com>
+ <CAFEAcA97_XJNs=oZP2OUTsGdaEU0YD9_PFzucQO214+Vmo1mmQ@mail.gmail.com>
+ <Z3vFRrkjIEa-LaqU@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <Z3vFRrkjIEa-LaqU@redhat.com>
+Date: Mon, 6 Jan 2025 12:54:41 -0500
+Message-ID: <CABJz62Myvg==rTWpjHhB9MWufZ_AMoMJv6Jtmf4i3isQt=sV1w@mail.gmail.com>
+Subject: Re: [PATCH] binfmt: Don't consider riscv{32,
+ 64} part of the same family
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair23@gmail.com>, 
+ qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ David Abdurachmanov <davidlt@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=abologna@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,65 +112,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do a cosmetic change in riscv_raise_exception() to change 'exception'
-type from uint32_t to RISCVException, making it a bit clear that the
-arg is directly correlated to the RISCVException enum.
+On Mon, Jan 06, 2025 at 11:57:58AM +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Mon, Jan 06, 2025 at 11:47:00AM +0000, Peter Maydell wrote:
+> > On Mon, 6 Jan 2025 at 01:29, Alistair Francis <alistair23@gmail.com> wr=
+ote:
+> > > We didn't get an answer to the issue of a CPU supporting RV32 and yet
+> > > the kernel still calls QEMU.
+> > >
+> > > I understand this allows things to work out of the box, but seems lik=
+e
+> > > a disservice to any hardware that does support RV32
+> >
+> > There's the same thing on Arm too -- we don't set up qemu-user
+> > aarch32 binfmt-misc on an aarch64 system because the host might
+> > be able to natively execute the aarch32 binary. This is becoming
+> > less true, but we still don't want to silently downgrade
+> > native execution to emulation on the hosts where native execution
+> > used to work.
+>
+> Arm is a bigger problem as historically there genuinely was a
+> non-trivial set of CPUs with 32-on-64 support in HW.
+>
+> IIUC, the riscv situation is much less likely to be a real problem
 
-As a side effect, change 'excp' type from int to RISCVException in
-generate_exception() to guarantee that all callers of
-riscv_raise_exception() will use the enum.
+Exactly.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/riscv/cpu.h       | 3 ++-
- target/riscv/op_helper.c | 3 ++-
- target/riscv/translate.c | 2 +-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+My understanding is that, while 64-bit RISC-V CPUs that can natively
+run 32-bit applications are theoretically possible, no such CPU
+actually exists right now.
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 252fdb8672..3d9c404254 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -606,7 +606,8 @@ void riscv_translate_code(CPUState *cs, TranslationBlock *tb,
-                           int *max_insns, vaddr pc, void *host_pc);
- 
- G_NORETURN void riscv_raise_exception(CPURISCVState *env,
--                                      uint32_t exception, uintptr_t pc);
-+                                      RISCVException exception,
-+                                      uintptr_t pc);
- 
- target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
- void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index eddedacf4b..29c104bc23 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -27,7 +27,8 @@
- 
- /* Exceptions processing helpers */
- G_NORETURN void riscv_raise_exception(CPURISCVState *env,
--                                      uint32_t exception, uintptr_t pc)
-+                                      RISCVException exception,
-+                                      uintptr_t pc)
- {
-     CPUState *cs = env_cpu(env);
-     cs->exception_index = exception;
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index a992d4f3c6..f46d76c785 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -245,7 +245,7 @@ static void gen_update_pc(DisasContext *ctx, target_long diff)
-     ctx->pc_save = ctx->base.pc_next + diff;
- }
- 
--static void generate_exception(DisasContext *ctx, int excp)
-+static void generate_exception(DisasContext *ctx, RISCVException excp)
- {
-     gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env, tcg_constant_i32(excp));
--- 
-2.47.1
+Even if it did exist, distros would have to set up things to support
+this scenario, which they don't.
+
+So in the current situation we're effectively making it impossible to
+run riscv32 binaries on riscv64 for the benefit of a hypotetical
+scenario.
+
+> As a immediate bandaid, I'd suggest that qemu-binfmt-conf.sh could keep
+> its current logic as the default, and have a switch "--32-on-64" [1] to
+> tell it to generate the binfmt for 32-bit arch, even if 64-bit arch
+> could have 32-bit support.
+>
+> Distros/users could then choose whether to pass --32-on-64 when staticall=
+y
+> generating the binfmt files.
+
+While I'm still convinced that this patch could be safely applied
+as-is, I'd be happy to go with your proposed approach if doing so
+would help move things forward.
+
+--=20
+Andrea Bolognani / Red Hat / Virtualization
 
 
