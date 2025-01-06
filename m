@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 615B7E77199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87EEE77198
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 03:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUdv0-0002OH-U1; Sun, 05 Jan 2025 22:36:43 -0500
+	id 1tUduY-0002LF-6f; Sun, 05 Jan 2025 22:36:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUdux-0002O4-Ad; Sun, 05 Jan 2025 22:36:39 -0500
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ id 1tUduV-0002Kh-Rk; Sun, 05 Jan 2025 22:36:11 -0500
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUduv-0006Vi-Nw; Sun, 05 Jan 2025 22:36:39 -0500
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-85ba92b3acfso5810427241.1; 
- Sun, 05 Jan 2025 19:36:36 -0800 (PST)
+ id 1tUduT-0006UQ-Id; Sun, 05 Jan 2025 22:36:11 -0500
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-518799f2828so7164046e0c.0; 
+ Sun, 05 Jan 2025 19:36:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736134596; x=1736739396; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736134568; x=1736739368; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OyhFNG3Olecwae8Zh/b++4z1jqQL+kxO+gyuZuW131g=;
- b=MKOa4QB5JNTUnp0wSookqDzt4rrx+NIOKMnjty+rr9hYU3nNe9wqL3NcVEXROSDqC7
- BiFrRLN0StO6JI2qKJZeC4Yp1DszHtoyR0atAK1KBSS5wCAn1C+9l95Jp/siSji16coH
- EzIYL1E06ofhqY9D6ElArNpGYVx+b3tgJ5AhCPAd3MlQ7Nifyww2EXwjQ55mRYqfDeaQ
- hYQuYQMPTcHFOzM6cRpqsUldmg//8/dEq9Zsvl2WwUKOwMeSekSxD6G2rR8iN3ZJTRph
- /AQ/3O+TCe2v0b5Pulio4tV8KfeFgGXUz05vYvjNIo95q8Nk9RaTpaFTFvplXVOs3jwO
- zVNQ==
+ bh=EdU390pOIrzfZRFwnsuY2kG/3vZgj8A2WxHhca/Nq4Q=;
+ b=JEEoBxOGgqwAni0yRKakR3e5qPMuSZA1XquJzQnehejKCi3avGDfQWCovhbihZbt+0
+ qEpXmogKYzu4rUMMSgV9PlBFmdNvGphI+9EObVPLJ71NwHpDsTJdDfnGN4uFFo+eI+4W
+ +5IkUDCXidhiNC4MppXZLD8yYr0ul7xJwR4lughzE1Nbt8vVEh+QowKlqedMJVi5/Jh5
+ P1dDa1tPi0RBbfPdcHNrNn/gnemF+V1CTf6orgVP2GfkKpCM8+yDMzyDQ7P2PLfc1tds
+ obxZdRxVSLmCnBstyl3A0kZ9m+c5M7OZEzI7oLni0u+r0acPoHlLvf0y9Nu/epSjtOCd
+ kM7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736134596; x=1736739396;
+ d=1e100.net; s=20230601; t=1736134568; x=1736739368;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OyhFNG3Olecwae8Zh/b++4z1jqQL+kxO+gyuZuW131g=;
- b=l8T0m9xOzd7UYaHRsqygivgmhR8muQXVbKY/qol3iNX8C5YTB7GSD3LTT7NJzj8XJ5
- vZOLO1+etKHzpf8G/aakL7lo4+dMsFWoWZQ2JdLNw/iHAfiJuszncl68bCn3dfb0h+jp
- fz7k3b9jMRsGGLLb1X0Yt+YSFUthE88gNv0YFoAaY38qqSIWPSzybWOPB3HH77PRtOJ2
- ebaB9AQi1yon8GRml5jL3/fgpnyyYTxWsx0nz1dVJZNx56gAacTH8Zwffb3bgo6gRz1N
- IONckbleqC8yDMIi6RAGc44tmhX5mCn7u60+xgBmk27N2GITLOR6va0RQ3bVWtYdR43F
- EGfA==
+ bh=EdU390pOIrzfZRFwnsuY2kG/3vZgj8A2WxHhca/Nq4Q=;
+ b=TMXHVvsHbPnYbBvKkAtuIcJrNjYVfPeBcqmdaPGomvsmP0lS03eVtdXOB3y4vS7ENf
+ rCI8x5xW9rMyfBps15dF0cZX8jJpFul+YoXzxs0bu/7QEQ9XZpstGnsWLK1Mkq8JbOhG
+ RoKfOla2Y52w8AtQvJ9fzIvmupmKhcjt3W2gvZIHjftHJn5z2RzO9E23k5Wlvbklt48x
+ Dyr5UC4mxsfnQOIRhn+erKTV/vXXISh8ax9wOcW6Vz2XL0bFk8XkN37hM/I9YdCgWc3Y
+ X3PMNClNyrOvWrz7h36Kaz4RCopOCvxzQrQhztGYNCojuh0qOi3ZyL77Ii/2sF1As5IV
+ GSig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLSfw5kIKib5GhI3rfXXn4mtpP3bhyMnM4AKb0aXiMdLdhVlkINswAYrAelvbCzaowKCKkQs6iCfdZ@nongnu.org
-X-Gm-Message-State: AOJu0Yy0cVuLi+WjX4N+UkqsTnLzKaIpPnDxAzVTiBBxURE+KLzbzj6e
- ujbVbRaq4/UmLf7mUVlUZNoci4QOIlxQbxBHaCgjTAKKyVP/Tq3+DQNWTcbNdEA2/gT3ek5zLjy
- w5pv4jLTq0Z1b6tNyndDSW4K8Viw=
-X-Gm-Gg: ASbGncvWXF0KkzKaYN7diR/0Tcu4xHsqJ7WWuCrYzFUNUYO007X83gAH1J59fnBzM5y
- 93/ImTnOWtodHSIyy3fhSK0EE474mGpwgfQ20hjWNSBJh6PpQQsMSXrKIlKq5rw4XuHI=
-X-Google-Smtp-Source: AGHT+IGbbdCtEgaBGtHcl86K62vtqpabJEvmCU2ZpLNNyRzUwHmh/X0tN2rT5yKpTbXK/A1okuaHOhtoKxg3uD8q7d4=
-X-Received: by 2002:a05:6102:6d1:b0:4b1:1b41:ff5f with SMTP id
- ada2fe7eead31-4b2cc320db4mr45424734137.1.1736134596245; Sun, 05 Jan 2025
- 19:36:36 -0800 (PST)
+ AJvYcCURCe4BRiCBZzcU4bW+AvVbfus5j2ZznUcKWi4bhKvzjtoenIf9WjdjbgBfo/jzi+F/GwkCZzc+1+3S@nongnu.org,
+ AJvYcCXqRpH3GhazfTBHLKRP/0HTNDdDBTb1OEExk27GOpEK4laVTq6XOBb+MC6P28LaDb+avpFUO3is7W19SA==@nongnu.org
+X-Gm-Message-State: AOJu0Yzb8C8o8i0pfrlgdYoDdimkbY2iM1oDG+uowTQXonS07geHb2k7
+ QIlKBnff32iZOp2Ptemf3wzWZ4drUN/Qp7WAY4JEPVtOEl/0iiVElVvc2YcbuklTWfGAbkeeRSE
+ ztLW59fu3g66A1R9haO2VkYZGfuo=
+X-Gm-Gg: ASbGnctlGjixmDzhCXCtv81+6qXEgCkCcqKgCVqrCYANRxtkdDMmsj0QPFs+HcWubtO
+ KatunI8+GD7/Px/LXlSmjLFUL8aOKR6E+hLAsYvidh/JnGW9haNeD/9sg5MRmxH7+oao=
+X-Google-Smtp-Source: AGHT+IFSgpwx6Wc0ENTD/Z+RTPdT/t07qm2ukTeZjr6Ll+2At9bWP+2P4TZIFi9aMhTgCWDB0VuyThXmJgFg/+0gPRQ=
+X-Received: by 2002:ac5:c3c3:0:b0:515:20e6:7861 with SMTP id
+ 71dfb90a1353d-51b64ab5d68mr35072411e0c.2.1736134568018; Sun, 05 Jan 2025
+ 19:36:08 -0800 (PST)
 MIME-Version: 1.0
-References: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
+References: <20241217085709.679823-1-baturo.alexey@gmail.com>
+In-Reply-To: <20241217085709.679823-1-baturo.alexey@gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 13:36:09 +1000
-Message-ID: <CAKmqyKNifEXQtfusSACP87eKKTZjMJWM4=Rg2zD_GrLmzWHTTg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] target/riscv: add traces for exceptions
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
+Date: Mon, 6 Jan 2025 13:35:42 +1000
+Message-ID: <CAKmqyKM8F0ziHKCX9ZeQdqugGM=gesBHiX9sUCwoxVT2ZfMvVA@mail.gmail.com>
+Subject: Re: [PATCH v14 0/7] Pointer Masking update for Zjpm v1.0
+To: baturo.alexey@gmail.com
+Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com, 
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,35 +96,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 20, 2024 at 3:47=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Tue, Dec 17, 2024 at 6:57=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
+>
+> From: Alexey Baturo <baturo.alexey@gmail.com>
 >
 > Hi,
 >
-> Let's add trace capabilities in riscv_raise_exception() to allow users
-> of qemu-riscv(32/64) to have a little more information when a SIGILL
-> occurs. This is done in patch 2.
+> Rebased and addressed Alistair's comments on code style.
 >
-> Patch 1 is a "look and feel" patch that I figured was worth doing.
+> Thanks
 >
-> Daniel Henrique Barboza (2):
->   target/riscv: use RISCVException enum in exception helpers
->   target/riscv: add trace in riscv_raise_exception()
+> [v13]:
+> Rebased and addressed Daniel's comments about the return type of the help=
+er.
+>
+> Thanks
+>
+> [v12]:
+> Rebased and addressed Richard's comments about proper masking virtualized=
+ accesses.
+>
+> Thanks
+>
+> [v11]:
+> As suggested on the mailing list by Daniel, I'm resubmitting this series =
+and keeping the original versioning number.
+> So that makes this one v11 and previous - v10.
+> Also I applied previously issues reviewed-by tags on some of the patches =
+that were present in v9 series, but only for the code, that didn't change m=
+uch.
+> For the others I'd really like to have them reviewed as there were a lot =
+of comments on v9 series.
+> Also rebased on the current upstream.
+>
+> Thanks
+>
+> [v10]:
+> I've rebased this patch series and addressed Richard's and Daniel's comme=
+nts.
+> Thanks
+>
+> [v0]:
+> As Pointer Masking is finally ratified, these patches intend to update th=
+e existing code to the final version.
+> These patches have been submitted previously and I tried to address all t=
+he suggestions, but I'd suggest to review them from the clean slate and the=
+n finally push them to the repo.
+> Thanks.
+>
+> Alexey Baturo (7):
+>   target/riscv: Remove obsolete pointer masking extension code.
+>   target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+>     of Zjpm v1.0
+>   target/riscv: Add helper functions to calculate current number of
+>     masked bits for pointer masking
+>   target/riscv: Add pointer masking tb flags
+>   target/riscv: Update address modify functions to take into account
+>     pointer masking
+>   target/riscv: Apply pointer masking for virtualized memory accesses
+>   target/riscv: Enable updates for pointer masking variables and thus
+>     enable pointer masking extension
 
-Do you mind rebasing on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
+This is all reviewed, but doesn't apply to
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+unfortunatley. Do you mind rebasing and hopefully this should then be
+merged :)
 
 Alistair
 
 >
->  target/riscv/cpu.h        | 3 ++-
->  target/riscv/op_helper.c  | 9 ++++++++-
->  target/riscv/trace-events | 3 +++
->  target/riscv/translate.c  | 2 +-
->  4 files changed, 14 insertions(+), 3 deletions(-)
+>  target/riscv/cpu.c           |  19 +-
+>  target/riscv/cpu.h           |  50 ++---
+>  target/riscv/cpu_bits.h      |  91 +--------
+>  target/riscv/cpu_cfg.h       |   3 +
+>  target/riscv/cpu_helper.c    | 128 +++++++++----
+>  target/riscv/csr.c           | 357 +++--------------------------------
+>  target/riscv/internals.h     |  54 ++++++
+>  target/riscv/machine.c       |  17 +-
+>  target/riscv/op_helper.c     |  16 +-
+>  target/riscv/pmp.c           |  14 +-
+>  target/riscv/pmp.h           |   1 +
+>  target/riscv/tcg/tcg-cpu.c   |   5 +-
+>  target/riscv/translate.c     |  47 ++---
+>  target/riscv/vector_helper.c |   5 -
+>  14 files changed, 257 insertions(+), 550 deletions(-)
 >
 > --
-> 2.47.1
->
+> 2.39.5
 >
 
