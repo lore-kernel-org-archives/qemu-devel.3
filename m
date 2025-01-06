@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29FDBE77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 22:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACEB1E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 22:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUv9O-00054L-N2; Mon, 06 Jan 2025 17:00:42 -0500
+	id 1tUvBM-0005mr-Hc; Mon, 06 Jan 2025 17:02:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=bhFb=T6=kaod.org=clg@ozlabs.org>)
- id 1tUv9G-00053v-Jd; Mon, 06 Jan 2025 17:00:36 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=bhFb=T6=kaod.org=clg@ozlabs.org>)
- id 1tUv9E-0006sC-7H; Mon, 06 Jan 2025 17:00:34 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YRp574rX1z4wyw;
- Tue,  7 Jan 2025 09:00:11 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YRp555HN3z4wp0;
- Tue,  7 Jan 2025 09:00:09 +1100 (AEDT)
-Message-ID: <5690ed2b-366f-450c-b724-98f0b474123e@kaod.org>
-Date: Mon, 6 Jan 2025 23:00:11 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUvBK-0005mM-Cu
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 17:02:42 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUvBI-00073z-Na
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 17:02:41 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-436281c8a38so106590895e9.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 14:02:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736200958; x=1736805758; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RY8sOE3ZoEA8kPEJmoKoP0R20WqR/mF8LvQBtm7eKGc=;
+ b=WfQGs+B3nn8ydPwqNJDCklreAZrrM1Zf5eT13nSwjzNOd1oSTSxD6By501FadwJPFI
+ Hu5qEoJ5T5nr42ozLuANi1AJUI/oeYuI89RxGMuGDXcH5WrCIIl0K14C9JBaRnCXv4nC
+ pvxftEgYdAv5K2hjQ8rysYhQs/CXR3BBTH/QC3Ge8Opgtwr8xL1NiPlelZDqmx6cOdSq
+ HJR3ncr5snqwVZkm5ksnB/LgJPVOPjHMHQLH9JrcmbmSX6vzHESABraQvfxiog8aHvnG
+ mq6/547vlE43dNXecpJJhdx+X501gEwnuoYAnGrOkgJbk8D9xa+fPGaUxhIcMeJ9Uu+g
+ 6N8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736200958; x=1736805758;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RY8sOE3ZoEA8kPEJmoKoP0R20WqR/mF8LvQBtm7eKGc=;
+ b=vxhPoT2QjUUrFEjogLrPL3YVet8B+SGCbBqIGKg5Vai9+cwAbEQwRYvVnOTXWChnoD
+ V5g3dvq5RbI2iHWNbPFrxrjX24AFj3BE+MK7kna5L7Eu/pCa++2z95/sl72qMvcUIsjU
+ dCwxr7Y7EtMR8MTN8wP48QdNTYf/fIcUuPsfppRMG5VlyvLRGiGkqBfJ+j3LVe7J1/Am
+ NKoYnhyb/HVhMUZlXwtNSiGROUiW31/lpwCU0JICg7PpBkECdXNhaAc/0bCnBiWLcxmp
+ 4+oRiLWzhFIHuN6m1eHV552Szqo9bb0cZsk/6K5MV9aFnFTWk+Qe6hYVm78eMO+lcYO9
+ sPeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXm2Lbb0vGXYmcuJ39ug4RmVgzC/7OkTPOXmhYD0Xb4o8Uuu4s8aywGr246zGhzfjDqsGvgQOLtXnD4@nongnu.org
+X-Gm-Message-State: AOJu0YzIGbaskallFuv7OmTT+oB2ZOV/tSaABMDOiF2df/qPmiexay0s
+ phnBXbwHOIDUtZ5znTNffVx8Mpgk3DlQv6CmTDjB3dG85zhp2Fo125kf8YI6vJFl5HMvU9ur35j
+ QLSI=
+X-Gm-Gg: ASbGncuJffN1ptg/2PiBRFpcTBgQkw+7Cu405ecqqmYSdWL1a/FAspmBZM7iZ4cfoIz
+ fSldkSMdy+mjYYI/RWxlvstHZq335W7Yf1zzz4+L4JZCX+A79L3G0pA/6K0QYMGFJHZGytsRhGM
+ y/e1kbbwtxNenp+0nahI1uxfGZSUHw+Gg7/tLqqeHSPjunA8lYTyQSQayye8if1YKwwxa+t2rCg
+ 7CcHTfvU0+Wh66FpXTwY4SNCSXqZFT5RBQDakuSfy5E7OGZovu7EqOagaW2BdDRM+JY6iA4SJAW
+ 8sDE15in6KtvYbNjv28bsJiS
+X-Google-Smtp-Source: AGHT+IETw2IiqeBdQ9jqllx3n+7digostXudWcQS+PowbTGiIfgbf4Nce8WVRzbtcs3su84XZPfcuA==
+X-Received: by 2002:a05:600c:1d03:b0:434:a5bc:70fc with SMTP id
+ 5b1f17b1804b1-43668642e70mr472431255e9.8.1736200957946; 
+ Mon, 06 Jan 2025 14:02:37 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436611ea47asm579245105e9.4.2025.01.06.14.02.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jan 2025 14:02:37 -0800 (PST)
+Message-ID: <0b3567cb-559a-4828-a93a-a6d3a7da1235@linaro.org>
+Date: Mon, 6 Jan 2025 23:02:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] ppc/pnv: HOMER and OCC fixes and improvements
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-References: <20241210030451.1306608-1-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20241210030451.1306608-1-npiggin@gmail.com>
+Subject: Re: [PATCH 53/73] tcg: Use C_NotImplemented in tcg_target_op_def
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250102180654.1420056-1-richard.henderson@linaro.org>
+ <20250102180654.1420056-54-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250102180654.1420056-54-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=bhFb=T6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.179, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,63 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
-
-On 12/10/24 04:04, Nicholas Piggin wrote:
-> This series makes a bunch of fixes and improvements to the HOMER and
-> OCC unit models for powernv. It gets OPAL OCC code happier again,
-
-Nice. I had similar changes exposing pstates and sensors for QEMU.
-I am glad this is now possible.
-
-> but requires this series of skiboot fixes (which I will hope to get
-> upstream and then into QEMU in the same release as this series is
-> merged.
+On 2/1/25 19:06, Richard Henderson wrote:
+> Return C_NotImplemented instead of asserting for opcodes
+> not implemented by the backend.
 > 
-> https://lists.ozlabs.org/pipermail/skiboot/2024-November/019013.html
-> 
-> Big changes is moving HOMER from mmio register implementation to a
-> RAM memory region which better maches hardware and is much easier to
-> work with; and the addition of some dynamic OCC behaviour to the
-> device model.
-> 
-> I wouldn't expect any review of OCC details. It's neglected and this
-> series gets it in better shape than before. But anything on the
-> basic structure and QEMU details is welcome. I will add some test
-> cases to help ensure it doesn't regress in future, I will have to
-> juggle the skiboot fixes as well though, so will do that later.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tcg.c                        | 12 ++++++------
+>   tcg/aarch64/tcg-target.c.inc     |  2 +-
+>   tcg/arm/tcg-target.c.inc         |  2 +-
+>   tcg/i386/tcg-target.c.inc        |  2 +-
+>   tcg/loongarch64/tcg-target.c.inc |  2 +-
+>   tcg/mips/tcg-target.c.inc        |  2 +-
+>   tcg/ppc/tcg-target.c.inc         |  2 +-
+>   tcg/riscv/tcg-target.c.inc       |  2 +-
+>   tcg/s390x/tcg-target.c.inc       |  2 +-
+>   tcg/sparc64/tcg-target.c.inc     |  2 +-
+>   tcg/tci/tcg-target.c.inc         |  2 +-
+>   11 files changed, 16 insertions(+), 16 deletions(-)
 
-Have you considered modeling the OCC in QEMU ? I am asking because
-I have a series removing all 405 support in QEMU 10.0.
-
-Thanks,
-
-C.
-
-
-
-> 
-> Thanks,
-> Nick
-> 
-> Nicholas Piggin (9):
->    ppc/pnv/homer: Fix OCC registers
->    ppc/pnv/homer: Make dummy reads return 0
->    ppc/pnv/occ: Fix common area sensor offsets
->    ppc/pnv/homer: class-based base and size
->    ppc/pnv/occ: Better document OCCMISC bits
->    ppc/pnv: Make HOMER memory a RAM region
->    ppc/pnv/occ: Update pstate frequency tables
->    ppc/pnv/occ: Add POWER10 OCC-OPAL data format
->    ppc/pnv/occ: Implement a basic dynamic OCC model
-> 
->   include/hw/ppc/pnv.h       |   6 +-
->   include/hw/ppc/pnv_homer.h |  12 +-
->   include/hw/ppc/pnv_occ.h   |   9 +
->   hw/ppc/pnv.c               |  87 +++--
->   hw/ppc/pnv_homer.c         | 230 +++----------
->   hw/ppc/pnv_occ.c           | 668 +++++++++++++++++++++++++++++++++++--
->   6 files changed, 742 insertions(+), 270 deletions(-)
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
