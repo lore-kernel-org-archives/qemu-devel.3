@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52982E77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4929E77198
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUtJr-0002aJ-92; Mon, 06 Jan 2025 15:03:23 -0500
+	id 1tUtKN-0002sP-78; Mon, 06 Jan 2025 15:03:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJo-0002ZZ-72
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:21 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtKK-0002qF-PC
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:52 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJl-0003Al-Gw
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:19 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso89226975e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtKH-0003cP-BD
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:52 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38633b5dbcfso14193128f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736193795; x=1736798595; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736193828; x=1736798628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xubr80DdDK1TQnuEw657hT2ILmCSL1Bi/K/I0ME5hpI=;
- b=xF7qbtvWNIykbu1ysX4Uc7/rJdNjL2LLtaLRDO1qre/XI6xhi3MWttFHLtMzJDMzD+
- NYCAlgS0wsZGGObsIXojRlTCWC1q494MK5OfpdG82RsHbPVwI6WyjaX/xFmrEfLbudmY
- IQDWee9q07bb3mSb7Hsg3vZ+M5HvDKfWay9TM3MZWqMP26PgjD/eMdWwUdpGER2JUkJL
- uq1bGtLr9DnLPMlDHhdvD55YkceSUFaetnc6WBVK3J4F4lzqDvoUaJGuGLvYa4OYKey5
- cgFQwSGzbehZvaJQ8kz0eJ57cEjBaiWJXX3k55ZefN1xBQznK6u6FytEhoS4Rqf4aphS
- 0yAA==
+ bh=iQTkKmwN0la/zq4/AmggU7ruV8aWhlAE2m8oe1Or7Yc=;
+ b=LBR/DXZRmSrzf6cNzKaXGzcg5zmJ7W8SRehar81uDGTmoZKgNXjqnmSMUvumBQrO/R
+ sVm4d7K+uRJjwivKq2IARdDmn+wrFhIjdwM8eX+M7eS7FVh90eudcFo+XWw5sLQ4khZW
+ l6uv2wKASPzPy8Y3GDGJWO7s+AMhfhJoMNBfBvjIZIzfQIeUa2lk/ELfjUUugXE4MvBv
+ 3I7akvh9HzQTjLA5UXgX1O1MJUioU0NdS8924IenP/Icii1RQqDOGKBEvlX1KXI/sPZi
+ ySEmN++NXtqf69DxjGpM382IhL8wTQ7CXTAAQ+j3RoQdKltV5Y8HaG4w77Rj9rpilhsG
+ Gubg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736193795; x=1736798595;
+ d=1e100.net; s=20230601; t=1736193828; x=1736798628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xubr80DdDK1TQnuEw657hT2ILmCSL1Bi/K/I0ME5hpI=;
- b=sqEeviWFk+xNbGOYUa3DPyMVxVGyDbuWORjNEHqe2vxMk92QPJEHBNwar1omFBptEn
- 4zNZwIMFM737xjdOkGi0ognvC7LFeDkyUjKOKW5+N17dSRiiSDG8zoUqGfQ+1/Wj1AFY
- 6Wiepo+p5SU7/2TWgCRhBEtn7yfTlSLlj5PIDHadR0c7qfnCl5VyjdXHsj3IrL0ma32r
- qmOsfBLTjg2WHc0Y7d7Farf3D58u8q4rPU5a0G1LThEJferlq306AhMJ9UzZoXSM+QHC
- pLAf5QMydEuIxya4zZIX8a1WNzcFjan4rOR00PGxi7/C1ecTRzHbzH6NDS+BgmY8VEYH
- HMzA==
-X-Gm-Message-State: AOJu0YzLlMrTKUltUITW+z6AMIrWqA9Uko55h6QgeJh11gAwc7EKwxFI
- f2Rsmvb0DY92qsBlmu6wF2haSUw7rV9/PEQ9AMwuW/3V5ejM2lBfrLDUdU7jP1ibIvqANjXACR/
- iRZg=
-X-Gm-Gg: ASbGnct3rEzuPrWWBistgJs4Z12tCy7fs8soiVckhVINGHJ4IstWX5NAx2Gm+uiuFcm
- Uojj3q2ifIXy3lstBOLTfqUsM36yWp0BO33/aqOj8PQWjwA0VpFITO8p4sqnZJakYQMK5639yJ5
- A1qQO7/TdhXywxDW1gXb2tSHkUtplc+LXgsUVQQwOXb/rLLvfUlNrlcYbF0dDcD07B6BLmosWxG
- RyQsPjzI0y0Td09jJ908NFopPzlmHYyQQ/160/Uor5ikawM2ruwrkHmxkvWkmGIZWRBl1ldlCuF
- pyO9peimPgYN9DaFBYZzoVqdRd47BIw=
-X-Google-Smtp-Source: AGHT+IG6hn6gQ1rEDpo0RUo5rK6HsOddWfOpcS85mXtVNMxlfkCCUdnnKaA6rQB2Q6OTZ5JLDkEevw==
-X-Received: by 2002:a05:600c:1d12:b0:436:1b86:f05 with SMTP id
- 5b1f17b1804b1-436dc20b0c1mr4405765e9.11.1736193795597; 
- Mon, 06 Jan 2025 12:03:15 -0800 (PST)
+ bh=iQTkKmwN0la/zq4/AmggU7ruV8aWhlAE2m8oe1Or7Yc=;
+ b=cepJNaGUr6jx/FWifNIkbWGKbX0iVrHIQR+5CK5PyRHqxg+Y8c4037gZrngcVFNBpD
+ +oUcbHyvtLz3SOqnnE2k+xyvKc0TEobPwut7Zt30pxZCbL4iH4AViK+rAXN5BYpw2otT
+ 7CAsavC6PXIWpwx0O9GXA7TF5VYX6l5slGBgya4nobsN7tdQQiI56twwe7JGdXO0lWFm
+ L3BmontxAQD+spaKJ8QGjYTkE0+hKKq7rq3MVX6rmEZ2wV85g4buNC5jSXk+qIhCw7Uw
+ on9uYoQ9PpFnVzb5smud8DyWfWgXddsHGoCgRI6XfWgAKRtFbEhQ4u4jI6PWjsCs8hyf
+ kGrw==
+X-Gm-Message-State: AOJu0Yxf9p+4Hyl/FxB6Q5u87IhjDD2XdPR7X61503LgMvssSw0ZnMqx
+ YdNNstYR7n3zDlQoO1/pHnpZDKPXtxRbngdWnJFD3RXTPmvfUim0nrAwUrInHiLKMZvQzbqd9FJ
+ oyfo=
+X-Gm-Gg: ASbGncszjujSgWa67lJgRVVe/jxZ/TL3ZNIQtNDbjkZNmubaDjfxirJbg7MTitLSyvM
+ S0kiEu2NO73gcwDqxMimYIde8J3LoSxrmT7hkt5Pa5lhgQRG9H/8Zoyvb7BB6HROg+W0rUbIMpm
+ TVFr0AzjttOZokyy3TChidq6A6n6RgST18APY4W8UASm+wHo7369zE71DvIwyYb3QHSb/goeMQt
+ AOBGOqmKHIALkBqNVy9nnC4ba6sywc1WSRA031pLxcs4JkROJYhPmXJbRM++Y3PTnwRYyffoiIr
+ 0fugErAFYzOQ3HbHlC17oD1uqdpzoZY=
+X-Google-Smtp-Source: AGHT+IHDE/cbM5Uz3mC6dPWI+SKnpmJxnVL7+eC7vPChMfg/0MfF0CSgk918tvS7UmQNdLQuffdZDw==
+X-Received: by 2002:a5d:6c64:0:b0:385:f6f4:f8e with SMTP id
+ ffacd0b85a97d-38a223ff1cemr40988273f8f.50.1736193825978; 
+ Mon, 06 Jan 2025 12:03:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366128a353sm577748615e9.42.2025.01.06.12.03.12
+ 5b1f17b1804b1-436723cb159sm525092965e9.16.2025.01.06.12.03.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 Jan 2025 12:03:15 -0800 (PST)
+ Mon, 06 Jan 2025 12:03:44 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -94,17 +94,17 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH 2/7] cpus: Introduce AccelOpsClass::get_cpus_queue()
-Date: Mon,  6 Jan 2025 21:02:53 +0100
-Message-ID: <20250106200258.37008-3-philmd@linaro.org>
+Subject: [RFC PATCH 7/7] accel/kvm: Use CPU_FOREACH_KVM()
+Date: Mon,  6 Jan 2025 21:02:58 +0100
+Message-ID: <20250106200258.37008-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106200258.37008-1-philmd@linaro.org>
 References: <20250106200258.37008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,135 +127,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want the ability to iterate over vCPUs of a specific
-accelerator.  Introduce cpus_get_accel_cpus_queue() to
-be used by accelerator common code, and expose the
-get_cpus_queue() in AccelOpsClass, so each accelerator
-can register its own queue of vCPUs.
+Only iterate over KVM vCPUs when running KVM specific code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h      |  8 ++++++++
- include/system/accel-ops.h |  6 ++++++
- accel/tcg/user-exec-stub.c |  5 +++++
- cpu-common.c               | 10 ++++++++++
- system/cpus.c              |  5 +++++
- 5 files changed, 34 insertions(+)
+ include/system/kvm_int.h         |  3 +++
+ accel/kvm/kvm-all.c              | 14 +++++++-------
+ hw/i386/kvm/clock.c              |  3 ++-
+ hw/intc/spapr_xive_kvm.c         |  5 +++--
+ hw/intc/xics_kvm.c               |  5 +++--
+ target/i386/kvm/kvm.c            |  4 ++--
+ target/i386/kvm/xen-emu.c        |  2 +-
+ target/s390x/kvm/kvm.c           |  2 +-
+ target/s390x/kvm/stsi-topology.c |  3 ++-
+ 9 files changed, 24 insertions(+), 17 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 48d90f50a71..5ae9bb64d6e 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -591,6 +591,14 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
- typedef QTAILQ_HEAD(CPUTailQ, CPUState) CPUTailQ;
- extern CPUTailQ cpus_queue;
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 4de6106869b..0ef4c336b18 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -13,6 +13,7 @@
+ #include "qapi/qapi-types-common.h"
+ #include "qemu/accel.h"
+ #include "qemu/queue.h"
++#include "system/hw_accel.h"
+ #include "system/kvm.h"
+ #include "hw/boards.h"
+ #include "hw/i386/topology.h"
+@@ -168,6 +169,8 @@ struct KVMState
+     char *device;
+ };
  
-+/**
-+ * cpus_get_accel_cpus_queue:
-+ * @cpu: The vCPU to get the accelerator #CPUTailQ.
-+ *
-+ * Returns the #CPUTailQ associated with the accelerator of the vCPU.
-+ */
-+CPUTailQ *cpus_get_accel_cpus_queue(CPUState *cpu);
++#define CPU_FOREACH_KVM(cpu) CPU_FOREACH_HWACCEL(cpu)
 +
- #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
- #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
- #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
-diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
-index 137fb96d444..fe59f728bfc 100644
---- a/include/system/accel-ops.h
-+++ b/include/system/accel-ops.h
-@@ -12,6 +12,7 @@
+ void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
+                                   AddressSpace *as, int as_id, const char *name);
  
- #include "exec/vaddr.h"
- #include "qom/object.h"
-+#include "hw/core/cpu.h"
- 
- #define ACCEL_OPS_SUFFIX "-ops"
- #define TYPE_ACCEL_OPS "accel" ACCEL_OPS_SUFFIX
-@@ -37,6 +38,11 @@ struct AccelOpsClass {
-     bool (*cpus_are_resettable)(void);
-     void (*cpu_reset_hold)(CPUState *cpu);
- 
-+    /**
-+     * get_cpus_queue:
-+     * Returns the #CPUTailQ maintained by this accelerator.
-+     */
-+    CPUTailQ *(*get_cpus_queue)(void);
-     void (*create_vcpu_thread)(CPUState *cpu); /* MANDATORY NON-NULL */
-     void (*kick_vcpu_thread)(CPUState *cpu);
-     bool (*cpu_thread_is_idle)(CPUState *cpu);
-diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
-index 4fbe2dbdc88..cb76cec76be 100644
---- a/accel/tcg/user-exec-stub.c
-+++ b/accel/tcg/user-exec-stub.c
-@@ -18,6 +18,11 @@ void cpu_exec_reset_hold(CPUState *cpu)
- {
- }
- 
-+CPUTailQ *cpus_get_accel_cpus_queue(CPUState *cpu)
-+{
-+    return NULL;
-+}
-+
- /* User mode emulation does not support record/replay yet.  */
- 
- bool replay_exception(void)
-diff --git a/cpu-common.c b/cpu-common.c
-index 4248b2d727e..ff8db9c7f9d 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -82,6 +82,7 @@ unsigned int cpu_list_generation_id_get(void)
- void cpu_list_add(CPUState *cpu)
- {
-     static bool cpu_index_auto_assigned;
-+    CPUTailQ *accel_cpus_queue = cpus_get_accel_cpus_queue(cpu);
- 
-     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
-     if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
-@@ -92,17 +93,26 @@ void cpu_list_add(CPUState *cpu)
-         assert(!cpu_index_auto_assigned);
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index c65b790433c..9b26b286865 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -872,7 +872,7 @@ static uint64_t kvm_dirty_ring_reap_locked(KVMState *s, CPUState* cpu)
+     if (cpu) {
+         total = kvm_dirty_ring_reap_one(s, cpu);
+     } else {
+-        CPU_FOREACH(cpu) {
++        CPU_FOREACH_KVM(cpu) {
+             total += kvm_dirty_ring_reap_one(s, cpu);
+         }
      }
-     QTAILQ_INSERT_TAIL_RCU(&cpus_queue, cpu, node);
-+    if (accel_cpus_queue) {
-+        QTAILQ_INSERT_TAIL_RCU(accel_cpus_queue, cpu, node);
-+    }
-+
-     cpu_list_generation_id++;
- }
- 
- void cpu_list_remove(CPUState *cpu)
+@@ -935,7 +935,7 @@ static void kvm_cpu_synchronize_kick_all(void)
  {
-+    CPUTailQ *accel_cpus_queue = cpus_get_accel_cpus_queue(cpu);
-+
-     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
-     if (!QTAILQ_IN_USE(cpu, node)) {
-         /* there is nothing to undo since cpu_exec_init() hasn't been called */
+     CPUState *cpu;
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_KVM(cpu) {
+         run_on_cpu(cpu, do_kvm_cpu_synchronize_kick, RUN_ON_CPU_NULL);
+     }
+ }
+@@ -3535,7 +3535,7 @@ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+         }
+     }
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_KVM(cpu) {
+         err = kvm_update_guest_debug(cpu, 0);
+         if (err) {
+             return err;
+@@ -3574,7 +3574,7 @@ int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+         }
+     }
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_KVM(cpu) {
+         err = kvm_update_guest_debug(cpu, 0);
+         if (err) {
+             return err;
+@@ -3592,7 +3592,7 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
+     QTAILQ_FOREACH_SAFE(bp, &s->kvm_sw_breakpoints, entry, next) {
+         if (kvm_arch_remove_sw_breakpoint(cpu, bp) != 0) {
+             /* Try harder to find a CPU that currently sees the breakpoint. */
+-            CPU_FOREACH(tmpcpu) {
++            CPU_FOREACH_KVM(tmpcpu) {
+                 if (kvm_arch_remove_sw_breakpoint(tmpcpu, bp) == 0) {
+                     break;
+                 }
+@@ -3603,7 +3603,7 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
+     }
+     kvm_arch_remove_all_hw_breakpoints();
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_KVM(cpu) {
+         kvm_update_guest_debug(cpu, 0);
+     }
+ }
+@@ -4384,7 +4384,7 @@ static void query_stats_cb(StatsResultList **result, StatsTarget target,
+         stats_args.result.stats = result;
+         stats_args.names = names;
+         stats_args.errp = errp;
+-        CPU_FOREACH(cpu) {
++        CPU_FOREACH_KVM(cpu) {
+             if (!apply_str_list_filter(cpu->parent_obj.canonical_path, targets)) {
+                 continue;
+             }
+diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
+index 63be5088420..f2638cf2c22 100644
+--- a/hw/i386/kvm/clock.c
++++ b/hw/i386/kvm/clock.c
+@@ -17,6 +17,7 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "system/kvm.h"
++#include "system/kvm_int.h"
+ #include "system/runstate.h"
+ #include "system/hw_accel.h"
+ #include "kvm/kvm_i386.h"
+@@ -196,7 +197,7 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
+         if (!cap_clock_ctrl) {
+             return;
+         }
+-        CPU_FOREACH(cpu) {
++        CPU_FOREACH_KVM(cpu) {
+             run_on_cpu(cpu, do_kvmclock_ctrl, RUN_ON_CPU_NULL);
+         }
+     } else {
+diff --git a/hw/intc/spapr_xive_kvm.c b/hw/intc/spapr_xive_kvm.c
+index 26d30b41c15..08354f08512 100644
+--- a/hw/intc/spapr_xive_kvm.c
++++ b/hw/intc/spapr_xive_kvm.c
+@@ -14,6 +14,7 @@
+ #include "target/ppc/cpu.h"
+ #include "system/cpus.h"
+ #include "system/kvm.h"
++#include "system/kvm_int.h"
+ #include "system/runstate.h"
+ #include "hw/ppc/spapr.h"
+ #include "hw/ppc/spapr_cpu_core.h"
+@@ -678,7 +679,7 @@ int kvmppc_xive_post_load(SpaprXive *xive, int version_id)
+      * 'post_load' handler of XiveTCTX because the machine is not
+      * necessarily connected to the KVM device at that time.
+      */
+-    CPU_FOREACH(cs) {
++    CPU_FOREACH_KVM(cs) {
+         PowerPCCPU *cpu = POWERPC_CPU(cs);
+ 
+         ret = kvmppc_xive_cpu_set_state(spapr_cpu_state(cpu)->tctx, &local_err);
+@@ -795,7 +796,7 @@ int kvmppc_xive_connect(SpaprInterruptController *intc, uint32_t nr_servers,
+         kvmppc_xive_change_state_handler, xive);
+ 
+     /* Connect the presenters to the initial VCPUs of the machine */
+-    CPU_FOREACH(cs) {
++    CPU_FOREACH_KVM(cs) {
+         PowerPCCPU *cpu = POWERPC_CPU(cs);
+ 
+         ret = kvmppc_xive_cpu_connect(spapr_cpu_state(cpu)->tctx, errp);
+diff --git a/hw/intc/xics_kvm.c b/hw/intc/xics_kvm.c
+index ee72969f5f1..aed2ad44363 100644
+--- a/hw/intc/xics_kvm.c
++++ b/hw/intc/xics_kvm.c
+@@ -29,6 +29,7 @@
+ #include "qapi/error.h"
+ #include "trace.h"
+ #include "system/kvm.h"
++#include "system/kvm_int.h"
+ #include "hw/ppc/spapr.h"
+ #include "hw/ppc/spapr_cpu_core.h"
+ #include "hw/ppc/xics.h"
+@@ -418,7 +419,7 @@ int xics_kvm_connect(SpaprInterruptController *intc, uint32_t nr_servers,
+     kvm_gsi_direct_mapping = true;
+ 
+     /* Create the presenters */
+-    CPU_FOREACH(cs) {
++    CPU_FOREACH_KVM(cs) {
+         PowerPCCPU *cpu = POWERPC_CPU(cs);
+ 
+         icp_kvm_realize(DEVICE(spapr_cpu_state(cpu)->icp), &local_err);
+@@ -434,7 +435,7 @@ int xics_kvm_connect(SpaprInterruptController *intc, uint32_t nr_servers,
+     }
+ 
+     /* Connect the presenters to the initial VCPUs of the machine */
+-    CPU_FOREACH(cs) {
++    CPU_FOREACH_KVM(cs) {
+         PowerPCCPU *cpu = POWERPC_CPU(cs);
+         icp_set_kvm_state(spapr_cpu_state(cpu)->icp, &local_err);
+         if (local_err) {
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 2f66e63b880..437911d6c6a 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -329,7 +329,7 @@ void kvm_synchronize_all_tsc(void)
+     CPUState *cpu;
+ 
+     if (kvm_enabled()) {
+-        CPU_FOREACH(cpu) {
++        CPU_FOREACH_KVM(cpu) {
+             run_on_cpu(cpu, do_kvm_synchronize_tsc, RUN_ON_CPU_NULL);
+         }
+     }
+@@ -2847,7 +2847,7 @@ static void *kvm_msr_energy_thread(void *data)
+          * Identify the vcpu threads
+          * Calculate the number of vcpu per package
+          */
+-        CPU_FOREACH(cpu) {
++        CPU_FOREACH_KVM(cpu) {
+             for (int i = 0; i < num_threads; i++) {
+                 if (cpu->thread_id == thd_stat[i].thread_id) {
+                     thd_stat[i].is_vcpu = true;
+diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
+index e81a2458812..36ae9c11252 100644
+--- a/target/i386/kvm/xen-emu.c
++++ b/target/i386/kvm/xen-emu.c
+@@ -1422,7 +1422,7 @@ int kvm_xen_soft_reset(void)
+         return err;
+     }
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_KVM(cpu) {
+         async_run_on_cpu(cpu, do_vcpu_soft_reset, RUN_ON_CPU_NULL);
+     }
+ 
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index db645a48133..a02e78ce807 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -1559,7 +1559,7 @@ static void handle_diag_318(S390CPU *cpu, struct kvm_run *run)
          return;
      }
  
-+    if (accel_cpus_queue) {
-+        QTAILQ_REMOVE_RCU(accel_cpus_queue, cpu, node);
-+    }
-     QTAILQ_REMOVE_RCU(&cpus_queue, cpu, node);
-     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
-     cpu_list_generation_id++;
-diff --git a/system/cpus.c b/system/cpus.c
-index 99f83806c16..972df6ab061 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -209,6 +209,11 @@ void cpu_exec_reset_hold(CPUState *cpu)
+-    CPU_FOREACH(t) {
++    CPU_FOREACH_KVM(t) {
+         run_on_cpu(t, s390_do_cpu_set_diag318,
+                    RUN_ON_CPU_HOST_ULONG(diag318_info));
      }
- }
+diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
+index c8d6389cd87..cf1a9b5d218 100644
+--- a/target/s390x/kvm/stsi-topology.c
++++ b/target/s390x/kvm/stsi-topology.c
+@@ -10,6 +10,7 @@
+ #include "cpu.h"
+ #include "hw/s390x/sclp.h"
+ #include "hw/s390x/cpu-topology.h"
++#include "system/kvm_int.h"
  
-+CPUTailQ *cpus_get_accel_cpus_queue(CPUState *cpu)
-+{
-+    return cpus_accel ? cpus_accel->get_cpus_queue() : NULL;
-+}
-+
- int64_t cpus_get_virtual_clock(void)
- {
-     /*
+ QEMU_BUILD_BUG_ON(S390_CPU_ENTITLEMENT_LOW != 1);
+ QEMU_BUILD_BUG_ON(S390_CPU_ENTITLEMENT_MEDIUM != 2);
+@@ -256,7 +257,7 @@ static void s390_topology_fill_list_sorted(S390TopologyList *topology_list)
+ 
+     QTAILQ_INSERT_HEAD(topology_list, &sentinel, next);
+ 
+-    CPU_FOREACH(cs) {
++    CPU_FOREACH_KVM(cs) {
+         S390TopologyId id = s390_topology_from_cpu(S390_CPU(cs));
+         S390TopologyEntry *entry = NULL, *tmp;
+ 
 -- 
 2.47.1
 
