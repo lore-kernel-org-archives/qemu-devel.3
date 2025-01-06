@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F04E77197
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 00:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC81AE77197
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 01:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUbGB-0003pv-Sj; Sun, 05 Jan 2025 19:46:23 -0500
+	id 1tUbuj-0007sR-ES; Sun, 05 Jan 2025 20:28:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUbGA-0003pi-P7; Sun, 05 Jan 2025 19:46:22 -0500
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ id 1tUbuh-0007ry-Bj
+ for qemu-devel@nongnu.org; Sun, 05 Jan 2025 20:28:15 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUbG9-0000eZ-0E; Sun, 05 Jan 2025 19:46:22 -0500
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-5160f80e652so3859090e0c.2; 
- Sun, 05 Jan 2025 16:46:19 -0800 (PST)
+ id 1tUbuf-0001Pw-R5
+ for qemu-devel@nongnu.org; Sun, 05 Jan 2025 20:28:15 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-85c4c9349b3so2899958241.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 17:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736124379; x=1736729179; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736126891; x=1736731691; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SHeen0Na/un64+8Rj0TrYkaF97UWMlPJybZ7W8/Tmek=;
- b=hYTJgHO6mwbU55uw3aVJGd6zsvcAqvlEVFYv4qOEXxOxmu0FSwKJLrgUY29EbW/oYd
- R7oBkYNUQ3vO1qJb+MDc/GErpnUlKA82EMfQweiJWkganoI8Yt62jF7mJqlAZu5gIqHX
- lM8oTFt8ij0UtkGuzIbDHM+paCLzHaJSLD82Mcr5X5z0DzlZD8yXqgWCH9wuv0kZD54x
- KYIPFzGAPSqH1wWviWodlNwec9yklobEIfQgMsggfpapTVI9+gp6VEmdCHDo05XFh8nj
- XotGV7SXwoekrxA+u4zC5R+smScvyhVpKJ6ZEUizbK6bsv9AYTPijXMVoMloRs35bTUp
- aE+Q==
+ bh=w3qw3I00CMB6EznQ4XXjqmDcBgRIShrFfpZw0BdII3w=;
+ b=Dup2JowaW1PKjcl1+SCPMir8nmnVhvF4K1RrTolhOZluYym027GeZx4w0G4cGKHn51
+ fgjdhxHgCszKjuT5MmX8eQ32MXv7ZPv6nyK7xR4cBjBi6Q/T5+1oxv0KkiP0sr9zXv9W
+ ZoJoIfAJcYyO4jCETOhoM70bLaz4erICV7GEo72i2uiDaob0RLw2M9aVPLo9Uw+fJYxV
+ 7E5H+VS73eNs6JKpn4SJyZPu1ssOdm6gR42iqV8yfie8FK1oM7lz3S51A01kp3TiksyL
+ lvvsVKz0pYJIAzgvBNG5GvWPU5nc9/Eu3Y1cwWz3SaqWHWnJ89lpH5ArDpKOi8f55LOY
+ q0wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736124379; x=1736729179;
+ d=1e100.net; s=20230601; t=1736126891; x=1736731691;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SHeen0Na/un64+8Rj0TrYkaF97UWMlPJybZ7W8/Tmek=;
- b=RSNTOJGAiwHsJe+WFWvLSJxiH1oVPoPKEKViGgYC3ZctOyjm6poiiFMXRqX4ISwy/6
- lpnkAuKoz1CssHgEW9ZmcKtVbA4X/jAG/z8414vhUyUEoP0T/1LDiU0BRwcCVgxA5mfW
- lnW/YgfNUlwJuwpSWfllDVakUwQM4tIOst87EnusdrKWP+/DokXWItj1em8QkxDJzqq7
- YdL+ggEzrqaz5Y4XR0a+TRL+eJOxR2puWyeKz0gRYTRmUY6vhcf7ga0UvLWxkJA7s4FQ
- ivI70vQ813KPVOx1883ZFkgHR92nCQfHFwa/YTmKaQ/KdY9Pfpq7pq2PhyiplB3RqsIK
- iBrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXs8D77OKWFOh7oZbXH3Rk+glnbvFjZOmGgJtgWRUe4FgcM95s5Zx6m1JP/sxqULVdhw2OnDPMmC6Oa@nongnu.org
-X-Gm-Message-State: AOJu0YxwHMvQ34/xz5wWhGrW4Y4nRW4a5S9b4IKsD+wrIR65I3xXmSvQ
- NA1MpzdrqcyKrgSz/Y7bgDdTCW5pBuWYTIeiZoC/rNyG1aIX5icPVV2NC9MDH5ke4z0VF3QCNRv
- eQg/9FmS2XHHEzV/2L5AvTn+/enk=
-X-Gm-Gg: ASbGncuw3+VP/G1pEP+xGvhXa+hpQnNWHNhThHHeHGXqxcbviIkl1xUKwszbyg2AKHh
- +ajeUYcdEn0/ITLA+5t4OsxzrXAcV7rB6uBV0uHDCAFuoDMRRQHau6HBroZYkJhMvSlg=
-X-Google-Smtp-Source: AGHT+IFbJ39RxNOimTbjKbKKMzUCOld7Qa+cU7yT2GOWXfTrgZawozmAlzUR6JDwvznPjGb5erLyaP+tSABskUa/SXU=
-X-Received: by 2002:a05:6122:659b:b0:516:2d4e:4493 with SMTP id
- 71dfb90a1353d-51b75c3d499mr40011210e0c.1.1736124378831; Sun, 05 Jan 2025
- 16:46:18 -0800 (PST)
+ bh=w3qw3I00CMB6EznQ4XXjqmDcBgRIShrFfpZw0BdII3w=;
+ b=MX8uxHOKZPP989nziWT6vKy8uQsanD1CL1WNMX9K+kmUMzmz5hZKSicpWXic18JmdR
+ 6EFkkjM9JStqCNZG0VhV3JY61sXOWvXa+enfymRpBywr2ViYuE6qV8zhTLOBfqqzF87O
+ nMGrV5nqgFsQNu2/V2tWjK2IE229Zu384fJxN+A9b5XvtZKgKYe43R67Bu9Zk0U11agG
+ 58ryn41shwu+hL2SpA377BoNdxajrpeGyyYQQkMlvzhvrRpNd4gpM6+feV/DrbEKpBiw
+ N45NkPOvvG2G/81DGNUUXJ7/EwUemMRY/SCP0IlO39ETIS1JxwAYGyQf/D611hQ39c6K
+ GImg==
+X-Gm-Message-State: AOJu0YwJLqfZfbdSHwMfFrPiGup4JKH90bBGDdYfry8q7Je1Q3OE1gPh
+ U0jD9vjd9KhuGW7OamdYOdSozP+SShPQC/1WMQhWRoYNE4zzb8MSjBw1i+d5pt8Hhv6fcCfq4+q
+ o5U/G+AIAYn8lYxoOuPHc760c8fA=
+X-Gm-Gg: ASbGncvgNZ2rDDPgjeJeQEM/T/yzDYZ6WwzRC4tWNqCVJYroN6uLxotGT7YR48edStk
+ haZCQn+WLn0fNNQ+wivE1yVNQ9H3oMMUWiPY1RmT48xFNn0oaDYUEvhSS88Wca6H9Icg=
+X-Google-Smtp-Source: AGHT+IGzFoID6nYbzlxsV7kG3vKsNPYfiqsU4fnqa2hZaPzQf7Mju0Oyxc9hfni9xuD1ynDAy0G4Sar0U75iTYA/hBU=
+X-Received: by 2002:a05:6102:50a1:b0:4af:de39:c55 with SMTP id
+ ada2fe7eead31-4b2cc48e5dbmr40997859137.27.1736126891190; Sun, 05 Jan 2025
+ 17:28:11 -0800 (PST)
 MIME-Version: 1.0
-References: <20250102181601.1421059-1-richard.henderson@linaro.org>
- <20250102181601.1421059-3-richard.henderson@linaro.org>
-In-Reply-To: <20250102181601.1421059-3-richard.henderson@linaro.org>
+References: <20241203094702.124748-1-abologna@redhat.com>
+ <CABJz62PDz_LJdji-NC7LdmonjshG4w+OqGJPzkuStECzMcYSBg@mail.gmail.com>
+In-Reply-To: <CABJz62PDz_LJdji-NC7LdmonjshG4w+OqGJPzkuStECzMcYSBg@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 10:45:52 +1000
-Message-ID: <CAKmqyKPgW59So96a9Kv2e9sH7OBNOjvLDaBLkCk-GCjH2KgNSQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tcg/riscv: Use BEXTI for single-bit extractions
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- Alistair.Francis@wdc.com
+Date: Mon, 6 Jan 2025 11:27:45 +1000
+Message-ID: <CAKmqyKMkN7z51MoAeOK-buDZjKeEV7AjzviyVcZ_AyMEJPgg0w@mail.gmail.com>
+Subject: Re: [PATCH] binfmt: Don't consider riscv{32,
+ 64} part of the same family
+To: Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ David Abdurachmanov <davidlt@rivosinc.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,75 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 3, 2025 at 4:21=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, Jan 3, 2025 at 2:04=E2=80=AFAM Andrea Bolognani <abologna@redhat.co=
+m> wrote:
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> On Tue, Dec 03, 2024 at 10:47:02AM +0100, Andrea Bolognani wrote:
+> > Currently the script won't generate a configuration file that
+> > sets up qemu-user-riscv32 on riscv64, likely under the
+> > assumption that 64-bit RISC-V machines can natively run 32-bit
+> > RISC-V code.
+> >
+> > However this functionality, while theoretically possible, in
+> > practice is missing from most commonly available RISC-V hardware
+> > and not enabled at the distro level. So qemu-user-riscv32 really
+> > is the only option to run riscv32 binaries on riscv64.
+> >
+> > Make riscv32 and riscv64 each its own family, so that the
+> > configuration file we need to make 32-on-64 userspace emulation
+> > work gets generated.
+> >
+> > Link: https://src.fedoraproject.org/rpms/qemu/pull-request/72
+> > Thanks: David Abdurachmanov <davidlt@rivosinc.com>
+> > Thanks: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+> > ---
+> >  scripts/qemu-binfmt-conf.sh | 7 ++-----
+> >  1 file changed, 2 insertions(+), 5 deletions(-)
+>
+> ping
+>
+> There are already two ACKs so I think we just need a maintainer to
+> pick this up.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+We didn't get an answer to the issue of a CPU supporting RV32 and yet
+the kernel still calls QEMU.
+
+I understand this allows things to work out of the box, but seems like
+a disservice to any hardware that does support RV32
 
 Alistair
 
-> ---
->  tcg/riscv/tcg-target-has.h |  8 +++++++-
->  tcg/riscv/tcg-target.c.inc | 13 +++++++++++--
->  2 files changed, 18 insertions(+), 3 deletions(-)
 >
-> diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
-> index 10e61edc45..ea38ee5cbb 100644
-> --- a/tcg/riscv/tcg-target-has.h
-> +++ b/tcg/riscv/tcg-target-has.h
-> @@ -64,7 +64,13 @@ tcg_target_extract_valid(TCGType type, unsigned ofs, u=
-nsigned len)
->          /* ofs > 0 uses SRLIW; ofs =3D=3D 0 uses add.uw. */
->          return ofs || (cpuinfo & CPUINFO_ZBA);
->      }
-> -    return (cpuinfo & CPUINFO_ZBB) && ofs =3D=3D 0 && len =3D=3D 16;
-> +    switch (len) {
-> +    case 1:
-> +        return (cpuinfo & CPUINFO_ZBS) && ofs !=3D 0;
-> +    case 16:
-> +        return (cpuinfo & CPUINFO_ZBB) && ofs =3D=3D 0;
-> +    }
-> +    return false;
->  }
->  #define TCG_TARGET_extract_valid  tcg_target_extract_valid
->
-> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-> index 12c3cffcc0..83ec7cd980 100644
-> --- a/tcg/riscv/tcg-target.c.inc
-> +++ b/tcg/riscv/tcg-target.c.inc
-> @@ -162,6 +162,7 @@ typedef enum {
->      OPC_ANDI =3D 0x7013,
->      OPC_AUIPC =3D 0x17,
->      OPC_BEQ =3D 0x63,
-> +    OPC_BEXTI =3D 0x48005013,
->      OPC_BGE =3D 0x5063,
->      OPC_BGEU =3D 0x7063,
->      OPC_BLT =3D 0x4063,
-> @@ -2307,9 +2308,17 @@ static void tcg_out_op(TCGContext *s, TCGOpcode op=
-c, TCGType type,
->              } else {
->                  tcg_out_opc_imm(s, OPC_SRLIW, a0, a1, a2);
->              }
-> -        } else if (a2 =3D=3D 0 && args[3] =3D=3D 16) {
-> +            break;
-> +        }
-> +        switch (args[3]) {
-> +        case 1:
-> +            tcg_out_opc_imm(s, OPC_BEXTI, a0, a1, a2);
-> +            break;
-> +        case 16:
-> +            tcg_debug_assert(a2 =3D=3D 0);
->              tcg_out_ext16u(s, a0, a1);
-> -        } else {
-> +            break;
-> +        default:
->              g_assert_not_reached();
->          }
->          break;
 > --
-> 2.43.0
+> Andrea Bolognani / Red Hat / Virtualization
 >
 >
 
