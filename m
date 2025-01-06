@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3B1E77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 22:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8EBCE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 23:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUvdD-0003SK-Ur; Mon, 06 Jan 2025 17:31:31 -0500
+	id 1tUww7-0004Mo-UX; Mon, 06 Jan 2025 18:55:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUvdB-0003Rk-CC
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 17:31:29 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tUww5-0004Md-V4
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 18:55:05 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUvd8-0001xk-VK
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 17:31:28 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4362bae4d7dso106764225e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 14:31:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tUww4-00019V-Bu
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 18:55:05 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2165cb60719so220365815ad.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 15:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736202685; x=1736807485; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736207702; x=1736812502; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LYfjSSJpyWF8YdTXFIQrrsDbxYpNwcI0JUFAlwMko/s=;
- b=PuIRE3/0LBzh21cpIXshLw8KdtDHittEj6zh8zmI4HzJ/GlajN4Rqd3WEyu+RlYJKB
- i+3ho09F6cQevFd+VWBPSjOAZivDSV52/W8m73VFuy1J555mXPlHqE90nTMuwipshqoy
- 3X3yqVALDaj3RYTB6Uu87NcslfzRyW82gNKJI71Rrr6ptwDnyvzsQqS4/DPE2F4K0ili
- CZEnCda3jPy/AAtMSWBsZVXJ4b+Rtf9LBP7JBZA2wYqCXfDFqXoFF1QRi06K20vXLHqS
- kwjcni4oB+WUsskZ47VkyadatVcSkXkUeCqTyALA7q/aCHHWLjlX3ppsdzPqCG5MQ0fA
- nySA==
+ bh=n/iFhgUSm8/8XlLzLN81XPOf1KOBl79CC0AIjsyKUCU=;
+ b=RGP7epl/H5wVkbl4wY7ey3NNiNQAzX8NKpcqEaT8Uqt0okWdivnWUGzLT3kIhDGdV1
+ fzGwkslRmVh3lXtWWKvaeWLFzWFVK3PXMQOXs+7tlTG1I+Dw2nsAUr/mczWPCO6OJWfJ
+ HhrDnH8lec0AO+GmcVq70zdBLqpG3kA65F/4VyR3SAiYl1tK8RF2xfQUnK73YUpOXyT+
+ QE/72jh8xafTzMsE94M8ZkEfHpzlY1JWQ00qttK9fOVjqe8K3kdP71MIZcaL/0gFAEq1
+ oIzbzPfbUovrAD4FjCH404sFXczSH+Nr9Vv5mTC7plvEDVLdIDwTxR+q45E8murBYAf7
+ n2DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736202685; x=1736807485;
+ d=1e100.net; s=20230601; t=1736207702; x=1736812502;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LYfjSSJpyWF8YdTXFIQrrsDbxYpNwcI0JUFAlwMko/s=;
- b=enu3WRCkZPP+JNsqP5BG5rYS/0LyZVmajLtD7HTskfdG8RHNdB91vDmyMRFF7dPG62
- FfR+h809hFYAUoD0T20Q7wJe/8giUGGxK4xalr0ZgHB+VDdRKeNgvjK+VUlp309qvhdv
- BWnCqGgFybOjOPXYkHB/f2JgSZDvigwMRaGm/MUwWuoOIPG96LOsjjhGKsjiOzujjeF+
- Z8gXHhiy9CdKyyzndn/hBWBJ1R+FgC4lS3lVpCkiLStzlhLmuGlD824yd0o3sQ4E/3HM
- vzghgVg50IDV72TcJciNsBG3DznlktxI2oXtU3k16HFRTvj1dbfrtTcI+v9b/c/aYbjM
- /HkA==
+ bh=n/iFhgUSm8/8XlLzLN81XPOf1KOBl79CC0AIjsyKUCU=;
+ b=XSVUyEHEhmFPc5p3Ri52Crc8/XjLBfNgbIDmg+NImx+vaWr/pQP5KzR2L69y5TIXN8
+ TzZOK88x5/rJXS2vZ1+iCZauCDGaeXcKJM7z275jv/4csy+2thfKBGdQVq1LIUP08Kce
+ IUOEEXMJezyjHQNuoIlzZh/I62wUYrcgHM+ZWl5rIOvGgvYJ8ZnqWQiuG4bOJY20E+KM
+ 3TowVr/D1IdtCWEBUR7cXKLcj51AimEjTwzcOh3KLH4sSqUyF6vg3SvryiEwMAgr98hg
+ 5JqmVi7PhPr5dqj8McoqMAKZjEYyV0onvfARldjCpCL52QrunakycJ2w1W9CNkNCuvqY
+ e9zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSMPQNay4ucYoVyAHi0+txV45zQMypF/i5zI+BrDrQ5RjXqmYwL2CnqNSWTQUsOduwiN4QySCU2Y0W@nongnu.org
-X-Gm-Message-State: AOJu0YyEW/2mid7JLnu1XXB5V9OFAEe4/GzwZ8paXKxpRqimAirHxtJU
- HDpCZy5oHqRGugNyn95iq/CI61cl7F+tcyNQhaQYSOBfjPM4l5+js9eunQQy1woA1CveMXg00TN
- WuUM=
-X-Gm-Gg: ASbGnctlFgyjlkP8CCyHeyZK/n5/BiE7N9427AMAkunpTaxmOipad+pGWoo4LTUoTBq
- s2Q0g7MVNDs3E24jk9/YgfnaQMdFEna0nEMqhtZscxM0mGOzVF4tIp9qI6PlxL3z/40eNtb0+py
- IA7UknOrb8N9/9UTbBZGJ4nQum+gqzIubef0RfAMMGwEgqZysQRzurPg/U2c/J89Pna9R66+KBM
- rzSqGjGpwqVS4vYm5ckK7Eo/vC9n4VSvnJpYLplkGUuDdx4Dsn8Y43XyNMuPZacPmgWSZXCc1nV
- j9hXAeU7SUajNwKSXenYJ2rB
-X-Google-Smtp-Source: AGHT+IE5wJRfn693znD86VToMPSDet6TCSmunOqLo4cJloQKQnAgusO7ugExr2Byb7siHt4zycrRsQ==
-X-Received: by 2002:a05:600c:5102:b0:431:547e:81d0 with SMTP id
- 5b1f17b1804b1-43668642eb9mr474791775e9.11.1736202684753; 
- Mon, 06 Jan 2025 14:31:24 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661219a71sm576228825e9.26.2025.01.06.14.31.23
+ AJvYcCWoBsXJ7KhZ+2XqooiiNPYJXjb/O3R3q/eInbCnqaER+TbyKtv9qQfDtdCo9GPOAxavwYhgbi9JYxPO@nongnu.org
+X-Gm-Message-State: AOJu0YwnnpAjqkjGHGJboLbbkjyzqsZh17jilpBfFvdJZurcywxAT+PH
+ VkOoCH2S1dYAzixOAtyf89s2wiZzZyr9XatXbapoBNXUFS+vCyiK3iMKefBPj9s=
+X-Gm-Gg: ASbGncsuecYbi6D3YQwJUvISuClJEQyp6PFFKwlE2uHKHfMXEEAnne4S5frmC6Cghhp
+ iCvipj+GJhoeuJZ1jlZRPbUvJQaYeUKmgF5kGfrS/L0ny472dJRIzwbcus2q0SL4mFX2bM0wGu+
+ A8BOnP70evtpqid+kaV7d/DGt5FTiCJvh/Zc8ntIG4C8ZWV5hERicz9UCdr8RsH+4jpd7ElBRaj
+ QoVlJUNfBKHHq6uKSrsDguPKJRMphW0JUe1etASEL1blka0eyEQpwn/7YlIfPTU4wOWcPR1SI9i
+ yPWbBsYtNXVSmt5cR7thfK4xmzdGLEU=
+X-Google-Smtp-Source: AGHT+IGZYABRFVqvA+z98m5CZzS85tYWDRRfmPaH7z4Mxd62VIPF/aE2+fxkRwBUiqYxq+bnrGC9YA==
+X-Received: by 2002:a05:6a20:4394:b0:1e1:a716:3172 with SMTP id
+ adf61e73a8af0-1e5e04609a8mr86807517637.12.1736207702454; 
+ Mon, 06 Jan 2025 15:55:02 -0800 (PST)
+Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
+ [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad8dbb5asm31928139b3a.93.2025.01.06.15.55.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jan 2025 14:31:23 -0800 (PST)
-Message-ID: <2e05865f-8577-486f-870a-f797f8538cfb@linaro.org>
-Date: Mon, 6 Jan 2025 23:31:22 +0100
+ Mon, 06 Jan 2025 15:55:02 -0800 (PST)
+Message-ID: <26ae11cb-af99-4ded-b2d1-4638279db944@linaro.org>
+Date: Mon, 6 Jan 2025 15:54:59 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 67/73] tcg: Merge extract, sextract operations
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 21/73] tcg: Merge TCG_TARGET_HAS_{div,rem,div2}
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 References: <20250102180654.1420056-1-richard.henderson@linaro.org>
- <20250102180654.1420056-68-richard.henderson@linaro.org>
+ <20250102180654.1420056-22-richard.henderson@linaro.org>
+ <9342a208-5a9c-4737-ad9d-1b115b66ed47@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250102180654.1420056-68-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <9342a208-5a9c-4737-ad9d-1b115b66ed47@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,26 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/25 19:06, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg-opc.h            |  7 +++--
->   tcg/optimize.c                   | 12 ++++-----
->   tcg/tcg-op.c                     | 20 +++++++--------
->   tcg/tcg.c                        |  6 ++---
->   tcg/tci.c                        | 25 +++++++-----------
->   tcg/aarch64/tcg-target.c.inc     | 12 +++------
->   tcg/arm/tcg-target.c.inc         |  8 +++---
->   tcg/i386/tcg-target.c.inc        | 32 +++++++----------------
->   tcg/loongarch64/tcg-target.c.inc | 25 +++++-------------
->   tcg/mips/tcg-target.c.inc        | 29 +++++++--------------
->   tcg/ppc/tcg-target.c.inc         | 38 ++++++++++-----------------
->   tcg/riscv/tcg-target.c.inc       | 26 ++++++-------------
->   tcg/s390x/tcg-target.c.inc       | 10 +++-----
->   tcg/sparc64/tcg-target.c.inc     | 10 +++++---
->   tcg/tci/tcg-target.c.inc         | 44 +++++++++++++-------------------
->   15 files changed, 113 insertions(+), 191 deletions(-)
+On 1/6/25 13:49, Philippe Mathieu-Daudé wrote:
+>> diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
+>> index a6c7cdba5d..6734fd63e7 100644
+>> --- a/tcg/ppc/tcg-target-has.h
+>> +++ b/tcg/ppc/tcg-target-has.h
+>> @@ -16,13 +16,14 @@
+>>   #define have_altivec   (cpuinfo & CPUINFO_ALTIVEC)
+>>   #define have_vsx       (cpuinfo & CPUINFO_VSX)
+>> +/* optional integer instructions */
+>> +#define TCG_TARGET_HAS_div(T)           1
+>> +#define TCG_TARGET_HAS_rem(T)           1
+> 
+> Can you explain this change?
+> 
+>>   /* optional instructions automatically implemented */
+>>   #define TCG_TARGET_HAS_ext8u_i32        0 /* andi */
+>>   #define TCG_TARGET_HAS_ext16u_i32       0
+>> -/* optional instructions */
+>> -#define TCG_TARGET_HAS_div_i32          1
+>> -#define TCG_TARGET_HAS_rem_i32          have_isa_3_00
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Bug.  Fixed, thanks.
 
+
+r~
 
