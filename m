@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A28E77198
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52982E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUtK5-0002hz-8i; Mon, 06 Jan 2025 15:03:37 -0500
+	id 1tUtJr-0002aJ-92; Mon, 06 Jan 2025 15:03:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtK1-0002do-1t
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:33 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJo-0002ZZ-72
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:21 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJx-0003CX-Rp
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:32 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43618283d48so106994855e9.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJl-0003Al-Gw
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:19 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4361b6f9faeso89226975e9.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736193808; x=1736798608; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736193795; x=1736798595; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CfaBEiOdRjHzzwUS3kiFtedqZxggxEJ4hucj9YdleWw=;
- b=vUFUXIgYaZ13C/B9EU9+VVK9D9LStH6BKoOq0cr+XrBDkNEBm6Okidv3TZgxAKa65K
- iClacdlfa7wzw93lGiSzOjlWzc7wqe3fhJX0PCMZtys0tl/8whGpIecPY08cih91hCqF
- ny4h3lLsdpxv6YwX340zyWjsOUEQEE+qP0/5KNrlhOJJHUlHIaboZR+IC2mCnxnuwHDu
- h9gX5mRUWQO/rObXkeZuuUf0b/ZKX9WA8TbGPjmleogWFUFISNTzpXTuGlKSdDofB7Sq
- 1GnGN5uISm+dZ1mXwE243YFU8zMwKAMkdTCHs5QN3BS1BKO4iuHGa+Dkqo4EWj/FPuJK
- KzLA==
+ bh=xubr80DdDK1TQnuEw657hT2ILmCSL1Bi/K/I0ME5hpI=;
+ b=xF7qbtvWNIykbu1ysX4Uc7/rJdNjL2LLtaLRDO1qre/XI6xhi3MWttFHLtMzJDMzD+
+ NYCAlgS0wsZGGObsIXojRlTCWC1q494MK5OfpdG82RsHbPVwI6WyjaX/xFmrEfLbudmY
+ IQDWee9q07bb3mSb7Hsg3vZ+M5HvDKfWay9TM3MZWqMP26PgjD/eMdWwUdpGER2JUkJL
+ uq1bGtLr9DnLPMlDHhdvD55YkceSUFaetnc6WBVK3J4F4lzqDvoUaJGuGLvYa4OYKey5
+ cgFQwSGzbehZvaJQ8kz0eJ57cEjBaiWJXX3k55ZefN1xBQznK6u6FytEhoS4Rqf4aphS
+ 0yAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736193808; x=1736798608;
+ d=1e100.net; s=20230601; t=1736193795; x=1736798595;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CfaBEiOdRjHzzwUS3kiFtedqZxggxEJ4hucj9YdleWw=;
- b=hNq9yhXssGIb88K0z+mys8WnNaZmjPlQe/9pUXcdAxHuTjG02OuZroK+PLihSoGrVi
- MGtd4RMTYwh+I0rPQk9lwLUlmZAi+pDES/ifJHOVfA/iKmOS3U64VBfTE+o6u21hsyWp
- cihZFnnqsD1YpcHELGUTys1r3QnUlxZAxABXHIvBAK82LBDhK4K/Qjb4vVBOR5YHtFh7
- 3BlE9y0YmV1nb3PZphMODDDhuc77ET2zE6fX+g1Ya7ErBjgevDTub5prH8HLRVUImzVd
- h7fK9/GCUMseRw4NlbVwnfi7XcA46IiiQbCvDyvMjTSt7XufIuPmQRSGd0dxhB5u0VA2
- Xkxg==
-X-Gm-Message-State: AOJu0Yy6Y/DuVuwn6/fe+A396Ye4npcADYPFnAg2Ia+T6LgKAD5Z3Kz1
- ynlNmHGnw+MldNsc4B3dHlQjm8AFKAa5TJDJN6OjAu7i6gjWmKiAGjThc6IHVlcZ1BIdWelff65
- fsPI=
-X-Gm-Gg: ASbGncv9xH5PBiDQ0bhkcfVM3BA4xW70z+KR6UYhp5UlcE9twPsRAO9UHSgv+wDBB/D
- AzLwbznp4JBLPZk3AlbNz2LwPG27BIx03X4t+g/zKCSnqKbTm/DRpa7GRU5gnNAJtArcEsWN12i
- aj9RdTSXZj5wk73TwY2pg0jZAap4mzT43PWO7MLCw4pU2IRa439S8NIzWfCac2heCYeVNv7OM3Q
- UM8HPQwImJsnO9mJetaxYAvRolNMJ0RG49KjsXuQg4MNT156gwt50vts3vFHDORVTLWR03inbYr
- Ogl3ahVid35HvB3F5zODo00MFuUHk9M=
-X-Google-Smtp-Source: AGHT+IF3+buEkSMAzhBuTtka5TQV/I34nAgDx1rHh3g80/cDyG64W7K1EH4+aemix37pseTOETajew==
-X-Received: by 2002:a05:600c:4f94:b0:434:f871:1b96 with SMTP id
- 5b1f17b1804b1-43668b7a1dfmr474821135e9.29.1736193807616; 
- Mon, 06 Jan 2025 12:03:27 -0800 (PST)
+ bh=xubr80DdDK1TQnuEw657hT2ILmCSL1Bi/K/I0ME5hpI=;
+ b=sqEeviWFk+xNbGOYUa3DPyMVxVGyDbuWORjNEHqe2vxMk92QPJEHBNwar1omFBptEn
+ 4zNZwIMFM737xjdOkGi0ognvC7LFeDkyUjKOKW5+N17dSRiiSDG8zoUqGfQ+1/Wj1AFY
+ 6Wiepo+p5SU7/2TWgCRhBEtn7yfTlSLlj5PIDHadR0c7qfnCl5VyjdXHsj3IrL0ma32r
+ qmOsfBLTjg2WHc0Y7d7Farf3D58u8q4rPU5a0G1LThEJferlq306AhMJ9UzZoXSM+QHC
+ pLAf5QMydEuIxya4zZIX8a1WNzcFjan4rOR00PGxi7/C1ecTRzHbzH6NDS+BgmY8VEYH
+ HMzA==
+X-Gm-Message-State: AOJu0YzLlMrTKUltUITW+z6AMIrWqA9Uko55h6QgeJh11gAwc7EKwxFI
+ f2Rsmvb0DY92qsBlmu6wF2haSUw7rV9/PEQ9AMwuW/3V5ejM2lBfrLDUdU7jP1ibIvqANjXACR/
+ iRZg=
+X-Gm-Gg: ASbGnct3rEzuPrWWBistgJs4Z12tCy7fs8soiVckhVINGHJ4IstWX5NAx2Gm+uiuFcm
+ Uojj3q2ifIXy3lstBOLTfqUsM36yWp0BO33/aqOj8PQWjwA0VpFITO8p4sqnZJakYQMK5639yJ5
+ A1qQO7/TdhXywxDW1gXb2tSHkUtplc+LXgsUVQQwOXb/rLLvfUlNrlcYbF0dDcD07B6BLmosWxG
+ RyQsPjzI0y0Td09jJ908NFopPzlmHYyQQ/160/Uor5ikawM2ruwrkHmxkvWkmGIZWRBl1ldlCuF
+ pyO9peimPgYN9DaFBYZzoVqdRd47BIw=
+X-Google-Smtp-Source: AGHT+IG6hn6gQ1rEDpo0RUo5rK6HsOddWfOpcS85mXtVNMxlfkCCUdnnKaA6rQB2Q6OTZ5JLDkEevw==
+X-Received: by 2002:a05:600c:1d12:b0:436:1b86:f05 with SMTP id
+ 5b1f17b1804b1-436dc20b0c1mr4405765e9.11.1736193795597; 
+ Mon, 06 Jan 2025 12:03:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656af6cbbsm610646205e9.3.2025.01.06.12.03.25
+ 5b1f17b1804b1-4366128a353sm577748615e9.42.2025.01.06.12.03.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 Jan 2025 12:03:26 -0800 (PST)
+ Mon, 06 Jan 2025 12:03:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -94,17 +94,17 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH 4/7] accel/tcg: Use CPU_FOREACH_TCG()
-Date: Mon,  6 Jan 2025 21:02:55 +0100
-Message-ID: <20250106200258.37008-5-philmd@linaro.org>
+Subject: [RFC PATCH 2/7] cpus: Introduce AccelOpsClass::get_cpus_queue()
+Date: Mon,  6 Jan 2025 21:02:53 +0100
+Message-ID: <20250106200258.37008-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106200258.37008-1-philmd@linaro.org>
 References: <20250106200258.37008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,203 +127,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only iterate over TCG vCPUs when running TCG specific code.
+We want the ability to iterate over vCPUs of a specific
+accelerator.  Introduce cpus_get_accel_cpus_queue() to
+be used by accelerator common code, and expose the
+get_cpus_queue() in AccelOpsClass, so each accelerator
+can register its own queue of vCPUs.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/cputlb.c           |  7 ++++---
- accel/tcg/monitor.c          |  3 ++-
- accel/tcg/tb-maint.c         |  7 ++++---
- accel/tcg/tcg-accel-ops-rr.c | 10 +++++-----
- accel/tcg/tcg-accel-ops.c    |  8 ++++----
- 5 files changed, 19 insertions(+), 16 deletions(-)
+ include/hw/core/cpu.h      |  8 ++++++++
+ include/system/accel-ops.h |  6 ++++++
+ accel/tcg/user-exec-stub.c |  5 +++++
+ cpu-common.c               | 10 ++++++++++
+ system/cpus.c              |  5 +++++
+ 5 files changed, 34 insertions(+)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index b4ccf0cdcb7..06f34df808b 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -48,6 +48,7 @@
- #endif
- #include "tcg/tcg-ldst.h"
- #include "tcg/oversized-guest.h"
-+#include "tcg-accel-ops.h"
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 48d90f50a71..5ae9bb64d6e 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -591,6 +591,14 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
+ typedef QTAILQ_HEAD(CPUTailQ, CPUState) CPUTailQ;
+ extern CPUTailQ cpus_queue;
  
- /* DEBUG defines, enable DEBUG_TLB_LOG to log to the CPU_LOG_MMU target */
- /* #define DEBUG_TLB */
-@@ -368,7 +369,7 @@ static void flush_all_helper(CPUState *src, run_on_cpu_func fn,
++/**
++ * cpus_get_accel_cpus_queue:
++ * @cpu: The vCPU to get the accelerator #CPUTailQ.
++ *
++ * Returns the #CPUTailQ associated with the accelerator of the vCPU.
++ */
++CPUTailQ *cpus_get_accel_cpus_queue(CPUState *cpu);
++
+ #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
+ #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
+ #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
+diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
+index 137fb96d444..fe59f728bfc 100644
+--- a/include/system/accel-ops.h
++++ b/include/system/accel-ops.h
+@@ -12,6 +12,7 @@
+ 
+ #include "exec/vaddr.h"
+ #include "qom/object.h"
++#include "hw/core/cpu.h"
+ 
+ #define ACCEL_OPS_SUFFIX "-ops"
+ #define TYPE_ACCEL_OPS "accel" ACCEL_OPS_SUFFIX
+@@ -37,6 +38,11 @@ struct AccelOpsClass {
+     bool (*cpus_are_resettable)(void);
+     void (*cpu_reset_hold)(CPUState *cpu);
+ 
++    /**
++     * get_cpus_queue:
++     * Returns the #CPUTailQ maintained by this accelerator.
++     */
++    CPUTailQ *(*get_cpus_queue)(void);
+     void (*create_vcpu_thread)(CPUState *cpu); /* MANDATORY NON-NULL */
+     void (*kick_vcpu_thread)(CPUState *cpu);
+     bool (*cpu_thread_is_idle)(CPUState *cpu);
+diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
+index 4fbe2dbdc88..cb76cec76be 100644
+--- a/accel/tcg/user-exec-stub.c
++++ b/accel/tcg/user-exec-stub.c
+@@ -18,6 +18,11 @@ void cpu_exec_reset_hold(CPUState *cpu)
  {
-     CPUState *cpu;
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_TCG(cpu) {
-         if (cpu != src) {
-             async_run_on_cpu(cpu, fn, d);
-         }
-@@ -646,7 +647,7 @@ void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-         TLBFlushPageByMMUIdxData *d;
- 
-         /* Allocate a separate data block for each destination cpu.  */
--        CPU_FOREACH(dst_cpu) {
-+        CPU_FOREACH_TCG(dst_cpu) {
-             if (dst_cpu != src_cpu) {
-                 d = g_new(TLBFlushPageByMMUIdxData, 1);
-                 d->addr = addr;
-@@ -839,7 +840,7 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-     d.bits = bits;
- 
-     /* Allocate a separate data block for each destination cpu.  */
--    CPU_FOREACH(dst_cpu) {
-+    CPU_FOREACH_TCG(dst_cpu) {
-         if (dst_cpu != src_cpu) {
-             p = g_memdup(&d, sizeof(d));
-             async_run_on_cpu(dst_cpu, tlb_flush_range_by_mmuidx_async_1,
-diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
-index ae1dbeb79f8..98bd937ae20 100644
---- a/accel/tcg/monitor.c
-+++ b/accel/tcg/monitor.c
-@@ -19,6 +19,7 @@
- #include "tcg/tcg.h"
- #include "internal-common.h"
- #include "tb-context.h"
-+#include "tcg-accel-ops.h"
- 
- 
- static void dump_drift_info(GString *buf)
-@@ -131,7 +132,7 @@ static void tlb_flush_counts(size_t *pfull, size_t *ppart, size_t *pelide)
-     CPUState *cpu;
-     size_t full = 0, part = 0, elide = 0;
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_TCG(cpu) {
-         full += qatomic_read(&cpu->neg.tlb.c.full_flush_count);
-         part += qatomic_read(&cpu->neg.tlb.c.part_flush_count);
-         elide += qatomic_read(&cpu->neg.tlb.c.elide_flush_count);
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 3f1bebf6ab5..8598c59654f 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -36,6 +36,7 @@
- #ifdef CONFIG_USER_ONLY
- #include "user/page-protection.h"
- #endif
-+#include "tcg-accel-ops.h"
- 
- 
- /* List iterators for lists of tagged pointers in TranslationBlock. */
-@@ -771,7 +772,7 @@ static void do_tb_flush(CPUState *cpu, run_on_cpu_data tb_flush_count)
-     }
-     did_flush = true;
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_TCG(cpu) {
-         tcg_flush_jmp_cache(cpu);
-     }
- 
-@@ -885,13 +886,13 @@ static void tb_jmp_cache_inval_tb(TranslationBlock *tb)
- 
-     if (tb_cflags(tb) & CF_PCREL) {
-         /* A TB may be at any virtual address */
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             tcg_flush_jmp_cache(cpu);
-         }
-     } else {
-         uint32_t h = tb_jmp_cache_hash_func(tb->pc);
- 
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             CPUJumpCache *jc = cpu->tb_jmp_cache;
- 
-             if (qatomic_read(&jc->array[h].tb) == tb) {
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 028b385af9a..e5ce285efb9 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -42,7 +42,7 @@ void rr_kick_vcpu_thread(CPUState *unused)
- {
-     CPUState *cpu;
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_TCG(cpu) {
-         cpu_exit(cpu);
-     };
  }
-@@ -116,7 +116,7 @@ static void rr_wait_io_event(void)
  
-     rr_start_kick_timer();
++CPUTailQ *cpus_get_accel_cpus_queue(CPUState *cpu)
++{
++    return NULL;
++}
++
+ /* User mode emulation does not support record/replay yet.  */
  
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_TCG(cpu) {
-         qemu_wait_io_event_common(cpu);
+ bool replay_exception(void)
+diff --git a/cpu-common.c b/cpu-common.c
+index 4248b2d727e..ff8db9c7f9d 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -82,6 +82,7 @@ unsigned int cpu_list_generation_id_get(void)
+ void cpu_list_add(CPUState *cpu)
+ {
+     static bool cpu_index_auto_assigned;
++    CPUTailQ *accel_cpus_queue = cpus_get_accel_cpus_queue(cpu);
+ 
+     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+     if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
+@@ -92,17 +93,26 @@ void cpu_list_add(CPUState *cpu)
+         assert(!cpu_index_auto_assigned);
+     }
+     QTAILQ_INSERT_TAIL_RCU(&cpus_queue, cpu, node);
++    if (accel_cpus_queue) {
++        QTAILQ_INSERT_TAIL_RCU(accel_cpus_queue, cpu, node);
++    }
++
+     cpu_list_generation_id++;
+ }
+ 
+ void cpu_list_remove(CPUState *cpu)
+ {
++    CPUTailQ *accel_cpus_queue = cpus_get_accel_cpus_queue(cpu);
++
+     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+     if (!QTAILQ_IN_USE(cpu, node)) {
+         /* there is nothing to undo since cpu_exec_init() hasn't been called */
+         return;
+     }
+ 
++    if (accel_cpus_queue) {
++        QTAILQ_REMOVE_RCU(accel_cpus_queue, cpu, node);
++    }
+     QTAILQ_REMOVE_RCU(&cpus_queue, cpu, node);
+     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
+     cpu_list_generation_id++;
+diff --git a/system/cpus.c b/system/cpus.c
+index 99f83806c16..972df6ab061 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -209,6 +209,11 @@ void cpu_exec_reset_hold(CPUState *cpu)
      }
  }
-@@ -129,7 +129,7 @@ static void rr_deal_with_unplugged_cpus(void)
+ 
++CPUTailQ *cpus_get_accel_cpus_queue(CPUState *cpu)
++{
++    return cpus_accel ? cpus_accel->get_cpus_queue() : NULL;
++}
++
+ int64_t cpus_get_virtual_clock(void)
  {
-     CPUState *cpu;
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_TCG(cpu) {
-         if (cpu->unplug && !cpu_can_run(cpu)) {
-             tcg_cpu_destroy(cpu);
-             break;
-@@ -160,7 +160,7 @@ static int rr_cpu_count(void)
- 
-     if (cpu_list_generation_id_get() != last_gen_id) {
-         cpu_count = 0;
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             ++cpu_count;
-         }
-         last_gen_id = cpu_list_generation_id_get();
-@@ -201,7 +201,7 @@ static void *rr_cpu_thread_fn(void *arg)
-         qemu_cond_wait_bql(first_cpu->halt_cond);
- 
-         /* process any pending work */
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             current_cpu = cpu;
-             qemu_wait_io_event_common(cpu);
-         }
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 1fb077f7b38..371bbaa0307 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -144,7 +144,7 @@ static int tcg_insert_breakpoint(CPUState *cs, int type, vaddr addr, vaddr len)
-     switch (type) {
-     case GDB_BREAKPOINT_SW:
-     case GDB_BREAKPOINT_HW:
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             err = cpu_breakpoint_insert(cpu, addr, BP_GDB, NULL);
-             if (err) {
-                 break;
-@@ -154,7 +154,7 @@ static int tcg_insert_breakpoint(CPUState *cs, int type, vaddr addr, vaddr len)
-     case GDB_WATCHPOINT_WRITE:
-     case GDB_WATCHPOINT_READ:
-     case GDB_WATCHPOINT_ACCESS:
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             err = cpu_watchpoint_insert(cpu, addr, len,
-                                         xlat_gdb_type(cpu, type), NULL);
-             if (err) {
-@@ -175,7 +175,7 @@ static int tcg_remove_breakpoint(CPUState *cs, int type, vaddr addr, vaddr len)
-     switch (type) {
-     case GDB_BREAKPOINT_SW:
-     case GDB_BREAKPOINT_HW:
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             err = cpu_breakpoint_remove(cpu, addr, BP_GDB);
-             if (err) {
-                 break;
-@@ -185,7 +185,7 @@ static int tcg_remove_breakpoint(CPUState *cs, int type, vaddr addr, vaddr len)
-     case GDB_WATCHPOINT_WRITE:
-     case GDB_WATCHPOINT_READ:
-     case GDB_WATCHPOINT_ACCESS:
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_TCG(cpu) {
-             err = cpu_watchpoint_remove(cpu, addr, len,
-                                         xlat_gdb_type(cpu, type));
-             if (err) {
+     /*
 -- 
 2.47.1
 
