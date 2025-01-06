@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB79E77199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6C8E7719A
 	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 17:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUr3B-0001UO-TO; Mon, 06 Jan 2025 12:38:01 -0500
+	id 1tUr36-0001T1-Ae; Mon, 06 Jan 2025 12:37:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tUr30-0001Rq-3R
+ id 1tUr2x-0001Ri-MD
  for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:37:52 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tUr2y-00059w-GP
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:37:49 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2efd81c7ca4so17226608a91.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 09:37:48 -0800 (PST)
+ id 1tUr2w-00059Z-0Y
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:37:47 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2ee76befe58so21222102a91.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 09:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736185067; x=1736789867; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1736185064; x=1736789864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qv52jkrGDn6R8p6PaFWBL55tG/0tbBmoAShMyY3di4w=;
- b=fl2/uvQxdPyXX0OhQlKV+KdXcqmFqtfSwsEY8QWJokepD+l/tXaaXUmP8GRFreU1lQ
- pL+QGaPYhg1qM3SBQLD8ip0wgt/eQJn4LdWlIf+K4K3cv6+pDGqukcwHF2luZ0wWN+d6
- VIgOHlzzpAPZ71f10rD38TjcT6uKGHVRuniMDOudC6gworzEhfmCO65xvYuf2RlotkwV
- yTI9gQhJ04hDTqZDL8a/l6nAlFeu1kU1ioPErk2aVQvfRV06F6XBHmNs/8sRgZ5NZURp
- /+wQPLKs4r27mqyFK420tcvS/1QJaaeBQEls8evVDqx+3SNkkuOA5AAH6sU7SVXlvDvO
- j7Zw==
+ bh=7vEPaDYMTmy26J/4RhVLGeEBUZMGkiMwnubqyq0F7bs=;
+ b=KB5N+ikbTR4kPZ/gvXrUfnmJyUnM2SNHnFB/4/oM4DS1BmT5rI/o3hRg8QhIdyUhOy
+ JJnAvZ3zeHFtaB9P8ZTIz9KMHkiT8B7oZ6qUg9XYt9/ZeXuHFc7kqL2epCVXvW/L+J/T
+ oK2Q5iclBsCO4+AMmkz/LpQMXjG8k4FC4eFud+qXtrmpJZgXbt02IHTMnmSmdYJMfpot
+ wsNmA4cqcMrUCGmY563jPPvaoPixM5o73XU2jOIfjgeqZzsiHLQDYSdaSTNT2CB9yqX3
+ qwyLSlSKA/HimZmVY4uEvvlZT2A3f66JvfXzxukP96eBHT0jeYnUAGRJ/K9xJXQ5nt4F
+ elmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736185067; x=1736789867;
+ d=1e100.net; s=20230601; t=1736185064; x=1736789864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qv52jkrGDn6R8p6PaFWBL55tG/0tbBmoAShMyY3di4w=;
- b=TPs4TDKziRHFTsTiihaIcA3q0UeV5mVLHCzNTzMv5XpUZu9OxKCb2vsz28ksSKjMJ6
- vOU/CIUWCRtXtjENu8HAHDBJWMEy6l8HU0WeB3TAorUBAE2001uZb8WYz0WvmjZ2fMdu
- 0eZ5ZgBOUmN5cY45GL5ZnuYPYpeVpfWcJYQhwr7EZSNDUQ9DQxtkhRijxMmUP+bpPoHS
- i1bDiyKIFPAQlbX6eTswzgtYvT6tcM46ot6O4J/iJkCKIL2TrSVEDUgImZYzM9xxKG+k
- r76LcoHcdiB0ebMyAdyScL0rzPiiJl6cn9iDfumT2jHhPTmgS7Lr4qtNKM1sIAsN4r2t
- EKmQ==
-X-Gm-Message-State: AOJu0YygmZjKBEGS+wLvaVTVXM8AO+OShgXtsZJjureqqMqOCi9BVtDu
- OZgL4TujTtAjeUZt8ooGvypGAs9ccqCNF3TBJWSY52LZ4SA15nBTOfu+qjk92z0TmnKCNz9CMR5
- uITM=
-X-Gm-Gg: ASbGnctUHa3AAUcjIUUdLbGN1LbpkYWXKyWilW0/6IkPcY3rQNASq5rIO4PPDC+5CNY
- O36olDVetd8JIJ5wB72bHK51rLlDqcbTw9VLoafstb9re+f/q56AInvY5c+tDjAB3xvPhudDumm
- Sx1Fq0jS+hYt37d4tnkfn29qyWCWLsUgx6eRINQxfKkoS9I29Hl78CFkh14XO6JMklS7beiUhf4
- btynm5CWvLgFbRwdpWDs8rAUglwB6+y5WCcPrsUok745IQtC6g2lehp9XWF0T2P00AKqyHt7Nkv
- yX3PNmvCdg==
-X-Google-Smtp-Source: AGHT+IG7g2zeqhgMAS1yxD6t0p3QHrELyI8xaNuo9Ayxj0AY77oAc7tcnFm0Z2BqxdkyItd37f9gRA==
-X-Received: by 2002:a17:90b:2c84:b0:2ee:f687:6ad5 with SMTP id
- 98e67ed59e1d1-2f452dfd364mr83272047a91.2.1736185066867; 
- Mon, 06 Jan 2025 09:37:46 -0800 (PST)
+ bh=7vEPaDYMTmy26J/4RhVLGeEBUZMGkiMwnubqyq0F7bs=;
+ b=GY4vCmabg4+NjDwJ1AWrVJWZq/Y2F+nl/fxsOEbNT0uRv9k38SaMcNj+Iqw04b8Ff/
+ BG/3OV4Mk4qTSs6O9d/RBibu85RTCC9onTscN6DZjVAsgFHAe1uv128y2xU3qK6W2gm9
+ 3m9Yfgre9d8l2KrfHvlmpFoBLeTX4goZfM0oVWnl1m84QyAaHRnb2k+XK7h4jDmrT1Pc
+ qUxeEedluGq9u1EYVKPQCYn++IgWd4jT+D+ISuopZm/AxxiwlJyZbw395rGlj5IRJS0I
+ D6NTiC3F4EH042w5cx9JgNnkTjcgzlOKov+vhUWbQ8rWE6BAwbvEO+tlwI+LjDPO0XlC
+ TMAg==
+X-Gm-Message-State: AOJu0YzGBSSV0RAt9+Jyk6UNoXIMEblvcV4EkE0XJobDtaCz5YOeLJRn
+ Wz1QZzF6vOxt63Yw56iyLbr2ezL6jyCW1uMOqaIas/CXdy/yMmGaSvlibBnSJ4XnIa4q2JGFsyZ
+ yc9M=
+X-Gm-Gg: ASbGncukx65n93Rh7mAjFPLZJ7l0P7FiaHFpUTv4FAKmr614Q71dZXP1GkIMJuQTyMy
+ 721XQuGBeIsoop1nDAKczJmHzb4RcnA82cFKnMnEfX2MTEiB0t8bK/S8MIzkMZ2M5f6As7ceI1K
+ WzQn/p/pMMlD5X/AHsMpruu7iSBKmRhiYuHP64gFqiwf+Swn62IiDPsLBQPw5Kkg0X4yNsKUcFp
+ cjjTWiRPf7BKgF7JVGt6jHVjQpeUHGxacWDPdTOlDUNzcwR+taBpXrm18mr/vstTl//6COJBzmH
+ djo+30+wbQ==
+X-Google-Smtp-Source: AGHT+IGrsoTurh9eO7bLfQY22rkBasvkH6TZOVwu8qJLFl7laanpLuq1Na30qnoU7Gkmh0YvrCv81g==
+X-Received: by 2002:a17:90b:2543:b0:2f4:432d:250d with SMTP id
+ 98e67ed59e1d1-2f452e372edmr79415834a91.21.1736185064015; 
+ Mon, 06 Jan 2025 09:37:44 -0800 (PST)
 Received: from grind.dc1.ventanamicro.com ([189.110.107.205])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4478ac7dbsm34139317a91.50.2025.01.06.09.37.44
+ 98e67ed59e1d1-2f4478ac7dbsm34139317a91.50.2025.01.06.09.37.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jan 2025 09:37:46 -0800 (PST)
+ Mon, 06 Jan 2025 09:37:43 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 2/2] target/riscv: add trace in riscv_raise_exception()
-Date: Mon,  6 Jan 2025 14:37:34 -0300
-Message-ID: <20250106173734.412353-3-dbarboza@ventanamicro.com>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/2] target/riscv: use RISCVException enum in exception
+ helpers
+Date: Mon,  6 Jan 2025 14:37:33 -0300
+Message-ID: <20250106173734.412353-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106173734.412353-1-dbarboza@ventanamicro.com>
 References: <20250106173734.412353-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,73 +104,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using system mode we can get the CPU traps being taken via the
-'riscv_trap' trace or the "-d int" qemu log. User mode does not a way of
-logging/showing exceptions to users.
+Do a cosmetic change in riscv_raise_exception() to change 'exception'
+type from uint32_t to RISCVException, making it a bit clear that the
+arg is directly correlated to the RISCVException enum.
 
-Add a trace in riscv_raise_exception() to allow qemu-riscv(32/64) users
-to check all exceptions being thrown. This is particularly useful to
-help identifying insns that are throwing SIGILLs.
-
-As it is today we need to debug their binaries to identify where the
-illegal insns are:
-
-$ ~/work/qemu/build/qemu-riscv64 -cpu rv64 ./foo.out
-Illegal instruction (core dumped)
-
-After this change users can capture the trace and use EPC to pinpoint
-the insn:
-
-$ ~/work/qemu/build/qemu-riscv64 -cpu rv64 -trace riscv_exception ./foo.out
-riscv_exception 8 (user_ecall) on epc 0x17cd2
-riscv_exception 8 (user_ecall) on epc 0x17cda
-riscv_exception 8 (user_ecall) on epc 0x17622
-(...)
-riscv_exception 2 (illegal_instruction) on epc 0x1053a
-Illegal instruction (core dumped)
+As a side effect, change 'excp' type from int to RISCVException in
+generate_exception() to guarantee that all callers of
+riscv_raise_exception() will use the enum.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/op_helper.c  | 6 ++++++
- target/riscv/trace-events | 3 +++
- 2 files changed, 9 insertions(+)
+ target/riscv/cpu.h       | 3 ++-
+ target/riscv/op_helper.c | 3 ++-
+ target/riscv/translate.c | 2 +-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 252fdb8672..3d9c404254 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -606,7 +606,8 @@ void riscv_translate_code(CPUState *cs, TranslationBlock *tb,
+                           int *max_insns, vaddr pc, void *host_pc);
+ 
+ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+-                                      uint32_t exception, uintptr_t pc);
++                                      RISCVException exception,
++                                      uintptr_t pc);
+ 
+ target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
+ void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
 diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 29c104bc23..29de8eb43d 100644
+index eddedacf4b..29c104bc23 100644
 --- a/target/riscv/op_helper.c
 +++ b/target/riscv/op_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
-+#include "trace.h"
+@@ -27,7 +27,8 @@
  
  /* Exceptions processing helpers */
  G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-@@ -31,6 +32,11 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-                                       uintptr_t pc)
+-                                      uint32_t exception, uintptr_t pc)
++                                      RISCVException exception,
++                                      uintptr_t pc)
  {
      CPUState *cs = env_cpu(env);
-+
-+    trace_riscv_exception(exception,
-+                          riscv_cpu_get_trap_name(exception, false),
-+                          env->pc);
-+
      cs->exception_index = exception;
-     cpu_loop_exit_restore(cs, pc);
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index a992d4f3c6..f46d76c785 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -245,7 +245,7 @@ static void gen_update_pc(DisasContext *ctx, target_long diff)
+     ctx->pc_save = ctx->base.pc_next + diff;
  }
-diff --git a/target/riscv/trace-events b/target/riscv/trace-events
-index 49ec4d3b7d..93837f82a1 100644
---- a/target/riscv/trace-events
-+++ b/target/riscv/trace-events
-@@ -9,3 +9,6 @@ pmpaddr_csr_write(uint64_t mhartid, uint32_t addr_index, uint64_t val) "hart %"
  
- mseccfg_csr_read(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": read mseccfg, val: 0x%" PRIx64
- mseccfg_csr_write(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": write mseccfg, val: 0x%" PRIx64
-+
-+# op_helper.c
-+riscv_exception(uint32_t exception, const char *desc, uint64_t epc) "%u (%s) on epc 0x%"PRIx64""
+-static void generate_exception(DisasContext *ctx, int excp)
++static void generate_exception(DisasContext *ctx, RISCVException excp)
+ {
+     gen_update_pc(ctx, 0);
+     gen_helper_raise_exception(tcg_env, tcg_constant_i32(excp));
 -- 
 2.47.1
 
