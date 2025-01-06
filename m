@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD04E77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 13:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D7BE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 14:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUnDo-00033Z-2s; Mon, 06 Jan 2025 08:32:44 -0500
+	id 1tUnr6-0003jv-DD; Mon, 06 Jan 2025 09:13:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tUnDm-0002yz-Ne
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 08:32:42 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tUnDl-0000QR-5H
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 08:32:42 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e3983f8ff40so16419830276.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 05:32:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736170359; x=1736775159; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nE+pjx8kG+LDRHRQJvg2JhnCp2z5c6FEVTyJmVxJUyA=;
- b=wgUR/5sQnPYrzFtvQ2jyuCM2LCGWRyw5Y3B1+ZYkkKf8+LH5v1RRljxrBXMsSgQfJy
- 2S9lw5Dspq1ADwfNBngYiveej+vBiZ58DO9G4kGVW76mWPANlUeJp82RlMxBmjrUgnid
- LoW8XGI4uV1VCrhN+dud7aLz1xWlF5AcoiPIuLZ4vOmLw1XU8YtwBgKrP2AE6ov5MMbe
- Y3HNfw84L9LBmzF+C4JRdQcz0Dbx17KSR/5/P6VpWPLoAARmPJs++xvgrqG/611g8nci
- jU5SMqhcyFB4U9dSNFDUKxvTtP9k1OLeRhimyDTbwtUV88s0hDW2JtAqhL/vinIaH4IE
- z22w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736170359; x=1736775159;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nE+pjx8kG+LDRHRQJvg2JhnCp2z5c6FEVTyJmVxJUyA=;
- b=HpQjEajbnjMbA1tPE2H+4q155NUvDsRyG6F26dygJ+Fp1Os6n3QP/gJb2Q+qpZyVoV
- i+v3ExiDLs+i9riKeCTyGBbu+FeP0ke18HT8s2qeMczYY0/smDcpxy0TQ4k2tTUl2G0b
- UTyyzdYqsIloTDtaKHiu6zbJCcUViLzeXp+lOpCZeNB5i5Cy39za9Na+cyclVe0TGNie
- +wzTCaXzvrMHzAcId7L+U1rh+OSukzhOKX+xTOU786HLMsYsu2XsfW2JRIowOiuLSsP1
- AV4XxeF4gXEETAJUQlBoCRA1ZI8X8fBrIuFWVEfZyMOusVeTODl9wPZU2lkwu89yFSBn
- 3ptQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV1TGpbfOwT5ZG8r/gkhCXETxGNZgXZqHBBgvUW4Re/4W3IsAF9EP32UMudFKRM+pW5S340/8sdZej8@nongnu.org
-X-Gm-Message-State: AOJu0Yz1BDMDbxMg2xKReOVbQTSFO+x6MYqwV2D6clTlDbJW9HSSXGYW
- /BN2ocOWU21G4MU9KZ9Lfn1rfNrj4+A2WCymPi+nuKTYqRcjKMkGLvUy6BgF+fcaPYvArRwOMof
- KdlinXe+p5KQwY6+wTPuXTqXiTXMvKTykVcUCEg==
-X-Gm-Gg: ASbGncsgpmIbg/kY5ZSFXW0YqUpMm/OUx7PeeQSq/U+DrBGLuetwPeh6Mg9fOfZjy39
- QU6ka3hkgIo6/LS/lm1Cm1UyCu53tymmP0WtPlYM=
-X-Google-Smtp-Source: AGHT+IFFv6/gf4rI1Z2RaoSo2HGm977RjEznfsbs/MjJlP9sLARu/Qfc3W6Hl27Lso6rxng5iXM+6V2d25vRWy1lW04=
-X-Received: by 2002:a25:c706:0:b0:e54:9fae:d63e with SMTP id
- 3f1490d57ef6-e549faed901mr4230922276.24.1736170359330; Mon, 06 Jan 2025
- 05:32:39 -0800 (PST)
-MIME-Version: 1.0
-References: <20241219083228.363430-1-pbonzini@redhat.com>
- <20241219083228.363430-26-pbonzini@redhat.com>
- <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
- <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
-In-Reply-To: <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jan 2025 13:32:28 +0000
-Message-ID: <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
-Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
- ClassInitImpl<>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tUnr3-0003jK-VP; Mon, 06 Jan 2025 09:13:18 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tUnr0-0007VF-JD; Mon, 06 Jan 2025 09:13:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736172795; x=1767708795;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=GpXw5G72+cS3odSUoaw2u94izBRazSMCA+VgY3SdFc0=;
+ b=cJlK7CIU9qFDB9fAKILpXGAhUPY9ZjscLZuhRCpZ6mhnlVcTVlzkRRmi
+ dn1WMSoV+Lg1cqqY9ObZRpU2iRQxg3LBXuNZhPcp33pEc6qBYYJn0Vf+0
+ h1NetXoEiuM7nL0HIyS++lihtSW/Kze8BSeDMS34TBpKvbpQ2vHKvgOYX
+ /GhnMTO9hZOAniAr9a06SWo4nHoh624TYBA+/duiIImni+gn2Fd3pyM+Y
+ qr5GJDOuWyjPzkmBAvkoVlN9gK4EJonvJUHExPzoz5u8iGYli0UBI0E8t
+ QYZw66OB4cwPsa3cDR6bPgs4Zvl0Nv3MQkulSh06kTlO/WNQpv7RnLf0p A==;
+X-CSE-ConnectionGUID: afs8EDozQHiQM0cKhOYr7Q==
+X-CSE-MsgGUID: 1wyPIpv6T92RSo2LUdpY0Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="47675385"
+X-IronPort-AV: E=Sophos;i="6.12,292,1728975600"; d="scan'208";a="47675385"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2025 06:13:10 -0800
+X-CSE-ConnectionGUID: WHTrH3oiRWCk3yR1lN1tcg==
+X-CSE-MsgGUID: kmqi1yfgRuGV+NzQyls0Lw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,292,1728975600"; d="scan'208";a="133311758"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa002.jf.intel.com with ESMTP; 06 Jan 2025 06:13:09 -0800
+Date: Mon, 6 Jan 2025 22:31:56 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
+Subject: Re: [RFC PATCH 4/9] rust: vmstate: implement Zeroable for VMStateField
+Message-ID: <Z3vpXJj/XgwbJUiS@intel.com>
+References: <20241231002336.25931-1-pbonzini@redhat.com>
+ <20241231002336.25931-5-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241231002336.25931-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,35 +81,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jan 2025 at 11:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> Il gio 2 gen 2025, 18:04 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> =
-ha scritto:
->> Pre-existing, but since it appears on this patch, Rust device models
->> should not implement this legacy interface. If a non-Rust parent
->> implements it, I think we should convert the non-Rust parent before
->> adding a Rust child. No clue how to check a parent don't implement
->> this interface in Rust.
->>
->> Generally, we shouldn't access legacy API from Rust IMHO.
->
->
-> I disagree that device_class_set_legacy_reset() should not be used. Three=
--phase reset is only needed for buses, and requires more code in order to i=
-mplement the Resettable interface. Devices gain nothing compared to using d=
-evice_class_set_legacy_reset().
+On Tue, Dec 31, 2024 at 01:23:31AM +0100, Paolo Bonzini wrote:
+> Date: Tue, 31 Dec 2024 01:23:31 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [RFC PATCH 4/9] rust: vmstate: implement Zeroable for VMStateField
+> X-Mailer: git-send-email 2.47.1
+> 
+> This shortens a bit the constants.  Do not bother using it
+> in the vmstate macros since most of them will go away soon.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/vmstate.rs  | 18 +++---------------
+>  rust/qemu-api/src/zeroable.rs | 31 +++++++++++++++++++++++++++++++
+>  2 files changed, 34 insertions(+), 15 deletions(-)
+> 
 
-Devices using device_class_set_legacy_reset() *are* using
-three-phase reset, just with a different function signature:
--- all that device_class_set_legacy_reset() does is register the
-provided reset function as the 'hold' phase reset via a
-trivial passthrough function that adjusts for the function
-signature being slightly different. (This is different from
-the situation prior to commit 5fdb6cd27211eff, where we still
-had more of the "legacy reset" machinery around with various
-transitional handling to make it interwork with three-phase.)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-I think here I agree with Philippe that we might as well
-provide only the new API to Rust devices.
-
--- PMM
 
