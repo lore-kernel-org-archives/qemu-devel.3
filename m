@@ -4,114 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4929E77198
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DF5E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:15:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUtKN-0002sP-78; Mon, 06 Jan 2025 15:03:55 -0500
+	id 1tUtVY-00018b-Mt; Mon, 06 Jan 2025 15:15:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtKK-0002qF-PC
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:52 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtKH-0003cP-BD
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:52 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38633b5dbcfso14193128f8f.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736193828; x=1736798628; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iQTkKmwN0la/zq4/AmggU7ruV8aWhlAE2m8oe1Or7Yc=;
- b=LBR/DXZRmSrzf6cNzKaXGzcg5zmJ7W8SRehar81uDGTmoZKgNXjqnmSMUvumBQrO/R
- sVm4d7K+uRJjwivKq2IARdDmn+wrFhIjdwM8eX+M7eS7FVh90eudcFo+XWw5sLQ4khZW
- l6uv2wKASPzPy8Y3GDGJWO7s+AMhfhJoMNBfBvjIZIzfQIeUa2lk/ELfjUUugXE4MvBv
- 3I7akvh9HzQTjLA5UXgX1O1MJUioU0NdS8924IenP/Icii1RQqDOGKBEvlX1KXI/sPZi
- ySEmN++NXtqf69DxjGpM382IhL8wTQ7CXTAAQ+j3RoQdKltV5Y8HaG4w77Rj9rpilhsG
- Gubg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736193828; x=1736798628;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iQTkKmwN0la/zq4/AmggU7ruV8aWhlAE2m8oe1Or7Yc=;
- b=cepJNaGUr6jx/FWifNIkbWGKbX0iVrHIQR+5CK5PyRHqxg+Y8c4037gZrngcVFNBpD
- +oUcbHyvtLz3SOqnnE2k+xyvKc0TEobPwut7Zt30pxZCbL4iH4AViK+rAXN5BYpw2otT
- 7CAsavC6PXIWpwx0O9GXA7TF5VYX6l5slGBgya4nobsN7tdQQiI56twwe7JGdXO0lWFm
- L3BmontxAQD+spaKJ8QGjYTkE0+hKKq7rq3MVX6rmEZ2wV85g4buNC5jSXk+qIhCw7Uw
- on9uYoQ9PpFnVzb5smud8DyWfWgXddsHGoCgRI6XfWgAKRtFbEhQ4u4jI6PWjsCs8hyf
- kGrw==
-X-Gm-Message-State: AOJu0Yxf9p+4Hyl/FxB6Q5u87IhjDD2XdPR7X61503LgMvssSw0ZnMqx
- YdNNstYR7n3zDlQoO1/pHnpZDKPXtxRbngdWnJFD3RXTPmvfUim0nrAwUrInHiLKMZvQzbqd9FJ
- oyfo=
-X-Gm-Gg: ASbGncszjujSgWa67lJgRVVe/jxZ/TL3ZNIQtNDbjkZNmubaDjfxirJbg7MTitLSyvM
- S0kiEu2NO73gcwDqxMimYIde8J3LoSxrmT7hkt5Pa5lhgQRG9H/8Zoyvb7BB6HROg+W0rUbIMpm
- TVFr0AzjttOZokyy3TChidq6A6n6RgST18APY4W8UASm+wHo7369zE71DvIwyYb3QHSb/goeMQt
- AOBGOqmKHIALkBqNVy9nnC4ba6sywc1WSRA031pLxcs4JkROJYhPmXJbRM++Y3PTnwRYyffoiIr
- 0fugErAFYzOQ3HbHlC17oD1uqdpzoZY=
-X-Google-Smtp-Source: AGHT+IHDE/cbM5Uz3mC6dPWI+SKnpmJxnVL7+eC7vPChMfg/0MfF0CSgk918tvS7UmQNdLQuffdZDw==
-X-Received: by 2002:a5d:6c64:0:b0:385:f6f4:f8e with SMTP id
- ffacd0b85a97d-38a223ff1cemr40988273f8f.50.1736193825978; 
- Mon, 06 Jan 2025 12:03:45 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436723cb159sm525092965e9.16.2025.01.06.12.03.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 Jan 2025 12:03:44 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Alexander Graf <agraf@csgraf.de>, Paul Durrant <paul@xen.org>,
- David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Reinoud Zandijk <reinoud@netbsd.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
- Riku Voipio <riku.voipio@iki.fi>, Anthony PERARD <anthony@xenproject.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Zhao Liu <zhao1.liu@intel.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- David Woodhouse <dwmw2@infradead.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH 7/7] accel/kvm: Use CPU_FOREACH_KVM()
-Date: Mon,  6 Jan 2025 21:02:58 +0100
-Message-ID: <20250106200258.37008-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250106200258.37008-1-philmd@linaro.org>
-References: <20250106200258.37008-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1tUtVO-00016a-RI; Mon, 06 Jan 2025 15:15:18 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1tUtVL-0004pw-LB; Mon, 06 Jan 2025 15:15:18 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 506E6sj7002701;
+ Mon, 6 Jan 2025 20:15:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=DlI62BJub4BdTeNvRspjlRb9urbaLpzCeHPPUjxorK4=; b=J4gL5MaVd82M
+ hOyQ9OGMDBi/WYI3MjB5VPRafg43SFxwQmUbJgr7Rf6RFv8dTOA/O+DDMBeDE/Dz
+ a3EsDF1Hd1jTsU+yVIIEnWCuW0ag6m4ncg3EfcpyjxfnAi/bUH8f4njoDZUbYfdx
+ KRHTPt57uO2WB7IbXnGSgsq51E4bmcEOVSBsN1VhZ+HcE3khwZjIAQfks+xhnwcV
+ pUIws38esAAnDqrot7W4SmJeQozqDh91Ozk/YBEF0+NU9ZwYsan0tfYddI+Bh+6v
+ dh3M/dhGrSwv3T/XHDrjDyyTT/6Vm0pDbkqkJzWDN42L2ADkhCGE2lWyhbd60VVd
+ IR4RgRiUBA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 440gn51k11-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jan 2025 20:15:09 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 506KB09T017297;
+ Mon, 6 Jan 2025 20:15:09 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 440gn51k10-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jan 2025 20:15:09 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 506I56g5004143;
+ Mon, 6 Jan 2025 20:15:08 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yfasyfag-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jan 2025 20:15:08 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 506KF7tD31654622
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jan 2025 20:15:08 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D91895805B;
+ Mon,  6 Jan 2025 20:15:07 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1CA975805F;
+ Mon,  6 Jan 2025 20:15:07 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Jan 2025 20:15:07 +0000 (GMT)
+Message-ID: <43e8dde9c0605526a4ae796b7dc090aaa8e59b65.camel@linux.ibm.com>
+Subject: Re: [PATCH 26/71] hw/gpio: Constify all Property
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Tyrone Ting
+ <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>, Alistair Francis
+ <Alistair.Francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Samuel Tardieu <sam@rfc1149.net>, "open list:i.MX31
+ (kzm)" <qemu-arm@nongnu.org>, "open list:pca955x" <qemu-ppc@nongnu.org>,
+ "open list:SiFive Machines" <qemu-riscv@nongnu.org>
+Date: Mon, 06 Jan 2025 14:15:06 -0600
+In-Reply-To: <20241213190750.2513964-31-richard.henderson@linaro.org>
+References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ <20241213190750.2513964-31-richard.henderson@linaro.org>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-22.el8_8.2) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: E2zrYNGCyRt_j5RA3Pgzv7hIcm1YZ2E9
+X-Proofpoint-GUID: amMgKoZRH-N6hREDOiNz2xcG2gDOi_Yq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0
+ mlxscore=0 priorityscore=1501 phishscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=984 spamscore=0 clxscore=1011 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501060174
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,263 +118,143 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only iterate over KVM vCPUs when running KVM specific code.
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/system/kvm_int.h         |  3 +++
- accel/kvm/kvm-all.c              | 14 +++++++-------
- hw/i386/kvm/clock.c              |  3 ++-
- hw/intc/spapr_xive_kvm.c         |  5 +++--
- hw/intc/xics_kvm.c               |  5 +++--
- target/i386/kvm/kvm.c            |  4 ++--
- target/i386/kvm/xen-emu.c        |  2 +-
- target/s390x/kvm/kvm.c           |  2 +-
- target/s390x/kvm/stsi-topology.c |  3 ++-
- 9 files changed, 24 insertions(+), 17 deletions(-)
-
-diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-index 4de6106869b..0ef4c336b18 100644
---- a/include/system/kvm_int.h
-+++ b/include/system/kvm_int.h
-@@ -13,6 +13,7 @@
- #include "qapi/qapi-types-common.h"
- #include "qemu/accel.h"
- #include "qemu/queue.h"
-+#include "system/hw_accel.h"
- #include "system/kvm.h"
- #include "hw/boards.h"
- #include "hw/i386/topology.h"
-@@ -168,6 +169,8 @@ struct KVMState
-     char *device;
- };
- 
-+#define CPU_FOREACH_KVM(cpu) CPU_FOREACH_HWACCEL(cpu)
-+
- void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
-                                   AddressSpace *as, int as_id, const char *name);
- 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index c65b790433c..9b26b286865 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -872,7 +872,7 @@ static uint64_t kvm_dirty_ring_reap_locked(KVMState *s, CPUState* cpu)
-     if (cpu) {
-         total = kvm_dirty_ring_reap_one(s, cpu);
-     } else {
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_KVM(cpu) {
-             total += kvm_dirty_ring_reap_one(s, cpu);
-         }
-     }
-@@ -935,7 +935,7 @@ static void kvm_cpu_synchronize_kick_all(void)
- {
-     CPUState *cpu;
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_KVM(cpu) {
-         run_on_cpu(cpu, do_kvm_cpu_synchronize_kick, RUN_ON_CPU_NULL);
-     }
- }
-@@ -3535,7 +3535,7 @@ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
-         }
-     }
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_KVM(cpu) {
-         err = kvm_update_guest_debug(cpu, 0);
-         if (err) {
-             return err;
-@@ -3574,7 +3574,7 @@ int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
-         }
-     }
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_KVM(cpu) {
-         err = kvm_update_guest_debug(cpu, 0);
-         if (err) {
-             return err;
-@@ -3592,7 +3592,7 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
-     QTAILQ_FOREACH_SAFE(bp, &s->kvm_sw_breakpoints, entry, next) {
-         if (kvm_arch_remove_sw_breakpoint(cpu, bp) != 0) {
-             /* Try harder to find a CPU that currently sees the breakpoint. */
--            CPU_FOREACH(tmpcpu) {
-+            CPU_FOREACH_KVM(tmpcpu) {
-                 if (kvm_arch_remove_sw_breakpoint(tmpcpu, bp) == 0) {
-                     break;
-                 }
-@@ -3603,7 +3603,7 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
-     }
-     kvm_arch_remove_all_hw_breakpoints();
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_KVM(cpu) {
-         kvm_update_guest_debug(cpu, 0);
-     }
- }
-@@ -4384,7 +4384,7 @@ static void query_stats_cb(StatsResultList **result, StatsTarget target,
-         stats_args.result.stats = result;
-         stats_args.names = names;
-         stats_args.errp = errp;
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_KVM(cpu) {
-             if (!apply_str_list_filter(cpu->parent_obj.canonical_path, targets)) {
-                 continue;
-             }
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index 63be5088420..f2638cf2c22 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -17,6 +17,7 @@
- #include "qemu/host-utils.h"
- #include "qemu/module.h"
- #include "system/kvm.h"
-+#include "system/kvm_int.h"
- #include "system/runstate.h"
- #include "system/hw_accel.h"
- #include "kvm/kvm_i386.h"
-@@ -196,7 +197,7 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
-         if (!cap_clock_ctrl) {
-             return;
-         }
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_KVM(cpu) {
-             run_on_cpu(cpu, do_kvmclock_ctrl, RUN_ON_CPU_NULL);
-         }
-     } else {
-diff --git a/hw/intc/spapr_xive_kvm.c b/hw/intc/spapr_xive_kvm.c
-index 26d30b41c15..08354f08512 100644
---- a/hw/intc/spapr_xive_kvm.c
-+++ b/hw/intc/spapr_xive_kvm.c
-@@ -14,6 +14,7 @@
- #include "target/ppc/cpu.h"
- #include "system/cpus.h"
- #include "system/kvm.h"
-+#include "system/kvm_int.h"
- #include "system/runstate.h"
- #include "hw/ppc/spapr.h"
- #include "hw/ppc/spapr_cpu_core.h"
-@@ -678,7 +679,7 @@ int kvmppc_xive_post_load(SpaprXive *xive, int version_id)
-      * 'post_load' handler of XiveTCTX because the machine is not
-      * necessarily connected to the KVM device at that time.
-      */
--    CPU_FOREACH(cs) {
-+    CPU_FOREACH_KVM(cs) {
-         PowerPCCPU *cpu = POWERPC_CPU(cs);
- 
-         ret = kvmppc_xive_cpu_set_state(spapr_cpu_state(cpu)->tctx, &local_err);
-@@ -795,7 +796,7 @@ int kvmppc_xive_connect(SpaprInterruptController *intc, uint32_t nr_servers,
-         kvmppc_xive_change_state_handler, xive);
- 
-     /* Connect the presenters to the initial VCPUs of the machine */
--    CPU_FOREACH(cs) {
-+    CPU_FOREACH_KVM(cs) {
-         PowerPCCPU *cpu = POWERPC_CPU(cs);
- 
-         ret = kvmppc_xive_cpu_connect(spapr_cpu_state(cpu)->tctx, errp);
-diff --git a/hw/intc/xics_kvm.c b/hw/intc/xics_kvm.c
-index ee72969f5f1..aed2ad44363 100644
---- a/hw/intc/xics_kvm.c
-+++ b/hw/intc/xics_kvm.c
-@@ -29,6 +29,7 @@
- #include "qapi/error.h"
- #include "trace.h"
- #include "system/kvm.h"
-+#include "system/kvm_int.h"
- #include "hw/ppc/spapr.h"
- #include "hw/ppc/spapr_cpu_core.h"
- #include "hw/ppc/xics.h"
-@@ -418,7 +419,7 @@ int xics_kvm_connect(SpaprInterruptController *intc, uint32_t nr_servers,
-     kvm_gsi_direct_mapping = true;
- 
-     /* Create the presenters */
--    CPU_FOREACH(cs) {
-+    CPU_FOREACH_KVM(cs) {
-         PowerPCCPU *cpu = POWERPC_CPU(cs);
- 
-         icp_kvm_realize(DEVICE(spapr_cpu_state(cpu)->icp), &local_err);
-@@ -434,7 +435,7 @@ int xics_kvm_connect(SpaprInterruptController *intc, uint32_t nr_servers,
-     }
- 
-     /* Connect the presenters to the initial VCPUs of the machine */
--    CPU_FOREACH(cs) {
-+    CPU_FOREACH_KVM(cs) {
-         PowerPCCPU *cpu = POWERPC_CPU(cs);
-         icp_set_kvm_state(spapr_cpu_state(cpu)->icp, &local_err);
-         if (local_err) {
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 2f66e63b880..437911d6c6a 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -329,7 +329,7 @@ void kvm_synchronize_all_tsc(void)
-     CPUState *cpu;
- 
-     if (kvm_enabled()) {
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_KVM(cpu) {
-             run_on_cpu(cpu, do_kvm_synchronize_tsc, RUN_ON_CPU_NULL);
-         }
-     }
-@@ -2847,7 +2847,7 @@ static void *kvm_msr_energy_thread(void *data)
-          * Identify the vcpu threads
-          * Calculate the number of vcpu per package
-          */
--        CPU_FOREACH(cpu) {
-+        CPU_FOREACH_KVM(cpu) {
-             for (int i = 0; i < num_threads; i++) {
-                 if (cpu->thread_id == thd_stat[i].thread_id) {
-                     thd_stat[i].is_vcpu = true;
-diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
-index e81a2458812..36ae9c11252 100644
---- a/target/i386/kvm/xen-emu.c
-+++ b/target/i386/kvm/xen-emu.c
-@@ -1422,7 +1422,7 @@ int kvm_xen_soft_reset(void)
-         return err;
-     }
- 
--    CPU_FOREACH(cpu) {
-+    CPU_FOREACH_KVM(cpu) {
-         async_run_on_cpu(cpu, do_vcpu_soft_reset, RUN_ON_CPU_NULL);
-     }
- 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index db645a48133..a02e78ce807 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -1559,7 +1559,7 @@ static void handle_diag_318(S390CPU *cpu, struct kvm_run *run)
-         return;
-     }
- 
--    CPU_FOREACH(t) {
-+    CPU_FOREACH_KVM(t) {
-         run_on_cpu(t, s390_do_cpu_set_diag318,
-                    RUN_ON_CPU_HOST_ULONG(diag318_info));
-     }
-diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
-index c8d6389cd87..cf1a9b5d218 100644
---- a/target/s390x/kvm/stsi-topology.c
-+++ b/target/s390x/kvm/stsi-topology.c
-@@ -10,6 +10,7 @@
- #include "cpu.h"
- #include "hw/s390x/sclp.h"
- #include "hw/s390x/cpu-topology.h"
-+#include "system/kvm_int.h"
- 
- QEMU_BUILD_BUG_ON(S390_CPU_ENTITLEMENT_LOW != 1);
- QEMU_BUILD_BUG_ON(S390_CPU_ENTITLEMENT_MEDIUM != 2);
-@@ -256,7 +257,7 @@ static void s390_topology_fill_list_sorted(S390TopologyList *topology_list)
- 
-     QTAILQ_INSERT_HEAD(topology_list, &sentinel, next);
- 
--    CPU_FOREACH(cs) {
-+    CPU_FOREACH_KVM(cs) {
-         S390TopologyId id = s390_topology_from_cpu(S390_CPU(cs));
-         S390TopologyEntry *entry = NULL, *tmp;
- 
--- 
-2.47.1
+On Fri, 2024-12-13 at 13:07 -0600, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  hw/gpio/imx_gpio.c       | 2 +-
+>  hw/gpio/npcm7xx_gpio.c   | 2 +-
+>  hw/gpio/omap_gpio.c      | 2 +-
+>  hw/gpio/pca9552.c        | 2 +-
+>  hw/gpio/pca9554.c        | 2 +-
+>  hw/gpio/pl061.c          | 2 +-
+>  hw/gpio/sifive_gpio.c    | 2 +-
+>  hw/gpio/stm32l4x5_gpio.c | 2 +-
+>  8 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
+> index 27535a577f..919d53701f 100644
+> --- a/hw/gpio/imx_gpio.c
+> +++ b/hw/gpio/imx_gpio.c
+> @@ -290,7 +290,7 @@ static const VMStateDescription vmstate_imx_gpio
+> = {
+>      }
+>  };
+>  
+> -static Property imx_gpio_properties[] = {
+> +static const Property imx_gpio_properties[] = {
+>      DEFINE_PROP_BOOL("has-edge-sel", IMXGPIOState, has_edge_sel,
+> true),
+>      DEFINE_PROP_BOOL("has-upper-pin-irq", IMXGPIOState,
+> has_upper_pin_irq,
+>                       false),
+> diff --git a/hw/gpio/npcm7xx_gpio.c b/hw/gpio/npcm7xx_gpio.c
+> index ba19b9ebad..db6792b2ad 100644
+> --- a/hw/gpio/npcm7xx_gpio.c
+> +++ b/hw/gpio/npcm7xx_gpio.c
+> @@ -386,7 +386,7 @@ static const VMStateDescription
+> vmstate_npcm7xx_gpio = {
+>      },
+>  };
+>  
+> -static Property npcm7xx_gpio_properties[] = {
+> +static const Property npcm7xx_gpio_properties[] = {
+>      /* Bit n set => pin n has pullup enabled by default. */
+>      DEFINE_PROP_UINT32("reset-pullup", NPCM7xxGPIOState, reset_pu,
+> 0),
+>      /* Bit n set => pin n has pulldown enabled by default. */
+> diff --git a/hw/gpio/omap_gpio.c b/hw/gpio/omap_gpio.c
+> index a47a2167a6..03ee9e47c6 100644
+> --- a/hw/gpio/omap_gpio.c
+> +++ b/hw/gpio/omap_gpio.c
+> @@ -225,7 +225,7 @@ void omap_gpio_set_clk(Omap1GpioState *gpio,
+> omap_clk clk)
+>      gpio->clk = clk;
+>  }
+>  
+> -static Property omap_gpio_properties[] = {
+> +static const Property omap_gpio_properties[] = {
+>      DEFINE_PROP_INT32("mpu_model", Omap1GpioState, mpu_model, 0),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+> index 59b233339a..427419d218 100644
+> --- a/hw/gpio/pca9552.c
+> +++ b/hw/gpio/pca9552.c
+> @@ -428,7 +428,7 @@ static void pca955x_realize(DeviceState *dev,
+> Error **errp)
+>      qdev_init_gpio_in(dev, pca955x_gpio_in_handler, k->pin_count);
+>  }
+>  
+> -static Property pca955x_properties[] = {
+> +static const Property pca955x_properties[] = {
+>      DEFINE_PROP_STRING("description", PCA955xState, description),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+> index 68cc9e1de4..e8b0458aac 100644
+> --- a/hw/gpio/pca9554.c
+> +++ b/hw/gpio/pca9554.c
+> @@ -291,7 +291,7 @@ static void pca9554_realize(DeviceState *dev,
+> Error **errp)
+>      qdev_init_gpio_in(dev, pca9554_gpio_in_handler,
+> PCA9554_PIN_COUNT);
+>  }
+>  
+> -static Property pca9554_properties[] = {
+> +static const Property pca9554_properties[] = {
+>      DEFINE_PROP_STRING("description", PCA9554State, description),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/hw/gpio/pl061.c b/hw/gpio/pl061.c
+> index d5838b8e98..9b8ca6de32 100644
+> --- a/hw/gpio/pl061.c
+> +++ b/hw/gpio/pl061.c
+> @@ -562,7 +562,7 @@ static void pl061_realize(DeviceState *dev, Error
+> **errp)
+>      }
+>  }
+>  
+> -static Property pl061_props[] = {
+> +static const Property pl061_props[] = {
+>      DEFINE_PROP_UINT32("pullups", PL061State, pullups, 0xff),
+>      DEFINE_PROP_UINT32("pulldowns", PL061State, pulldowns, 0x0),
+>      DEFINE_PROP_END_OF_LIST()
+> diff --git a/hw/gpio/sifive_gpio.c b/hw/gpio/sifive_gpio.c
+> index e85c0406a2..5603f0c235 100644
+> --- a/hw/gpio/sifive_gpio.c
+> +++ b/hw/gpio/sifive_gpio.c
+> @@ -349,7 +349,7 @@ static const VMStateDescription
+> vmstate_sifive_gpio = {
+>      }
+>  };
+>  
+> -static Property sifive_gpio_properties[] = {
+> +static const Property sifive_gpio_properties[] = {
+>      DEFINE_PROP_UINT32("ngpio", SIFIVEGPIOState, ngpio,
+> SIFIVE_GPIO_PINS),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/hw/gpio/stm32l4x5_gpio.c b/hw/gpio/stm32l4x5_gpio.c
+> index 30d8d6cba4..d1394f3f55 100644
+> --- a/hw/gpio/stm32l4x5_gpio.c
+> +++ b/hw/gpio/stm32l4x5_gpio.c
+> @@ -447,7 +447,7 @@ static const VMStateDescription
+> vmstate_stm32l4x5_gpio = {
+>      }
+>  };
+>  
+> -static Property stm32l4x5_gpio_properties[] = {
+> +static const Property stm32l4x5_gpio_properties[] = {
+>      DEFINE_PROP_STRING("name", Stm32l4x5GpioState, name),
+>      DEFINE_PROP_UINT32("mode-reset", Stm32l4x5GpioState,
+> moder_reset, 0),
+>      DEFINE_PROP_UINT32("ospeed-reset", Stm32l4x5GpioState,
+> ospeedr_reset, 0),
 
 
