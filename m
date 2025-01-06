@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9A6E77198
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 00:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F04E77197
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 00:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUbEU-00033a-Ae; Sun, 05 Jan 2025 19:44:38 -0500
+	id 1tUbGB-0003pv-Sj; Sun, 05 Jan 2025 19:46:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUbES-00033L-T7; Sun, 05 Jan 2025 19:44:36 -0500
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
+ id 1tUbGA-0003pi-P7; Sun, 05 Jan 2025 19:46:22 -0500
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUbER-0000FE-CT; Sun, 05 Jan 2025 19:44:36 -0500
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-85c5a91374cso6067098241.3; 
- Sun, 05 Jan 2025 16:44:34 -0800 (PST)
+ id 1tUbG9-0000eZ-0E; Sun, 05 Jan 2025 19:46:22 -0500
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-5160f80e652so3859090e0c.2; 
+ Sun, 05 Jan 2025 16:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736124273; x=1736729073; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736124379; x=1736729179; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jBPSN0565DwRfHSLSkdp0aAZd4mGl37SWM8k/2149eQ=;
- b=kU+eCOod3p2lm5X3/PVZcKbDl/1/GOajjcpW1xA6RoTY14ZtTttO74As1hcWli8sP6
- DBsKZ/Dvk9/Al+i/p88rPjHNbEFZ+wohyUUbRbsRDztoAPlDTf09qVqbgADD2CeXjaEt
- FyrDOwQJJ2cGU4VsaLbbQaKenBo+FY5Pe6LC5lhX7XwBZ4RDWYVbaqf5x1wXG+hJx7DW
- m+0/EPs9N13huKPCb+kJnAE6vP2ubCVVl2p0UhunLE2sS60Pd3QJZIp6gpFR30YSg3Pb
- HmaKwbtxLn1T1gMBi+cX65vmOYjQUu1bpO0hpzUKWy46OKDCm7UXuT4/BOUbduoe9JVp
- HDAQ==
+ bh=SHeen0Na/un64+8Rj0TrYkaF97UWMlPJybZ7W8/Tmek=;
+ b=hYTJgHO6mwbU55uw3aVJGd6zsvcAqvlEVFYv4qOEXxOxmu0FSwKJLrgUY29EbW/oYd
+ R7oBkYNUQ3vO1qJb+MDc/GErpnUlKA82EMfQweiJWkganoI8Yt62jF7mJqlAZu5gIqHX
+ lM8oTFt8ij0UtkGuzIbDHM+paCLzHaJSLD82Mcr5X5z0DzlZD8yXqgWCH9wuv0kZD54x
+ KYIPFzGAPSqH1wWviWodlNwec9yklobEIfQgMsggfpapTVI9+gp6VEmdCHDo05XFh8nj
+ XotGV7SXwoekrxA+u4zC5R+smScvyhVpKJ6ZEUizbK6bsv9AYTPijXMVoMloRs35bTUp
+ aE+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736124273; x=1736729073;
+ d=1e100.net; s=20230601; t=1736124379; x=1736729179;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jBPSN0565DwRfHSLSkdp0aAZd4mGl37SWM8k/2149eQ=;
- b=moWPDEb5SzNf+oMwoF8eHCEUBAFuggaBrl8BvlgV9pFdNhJgpsjGMa+S7Tpy3qQxBX
- 77qDYQEivxw/Z9MsBrSKvWlLgQqHZn9G7hwQq9PSW0uLsXdNAV88HEI4xLYUWz6l8Hgn
- 5944G1sYRijoOFf825sMo1l8gXKqKUQR4BBlIvmbPdpYnkT2sfARK+QmT/Yqr3L7l4/Y
- Oq46PNbZ/UPLYQ/4OiTqHbjU0DUGOxO2vfloXGPZ8CnSQyoe24ZF0LMBVv0KdEvBDi9B
- LjBUg5BhTMoTP5e5FFAy3/Hzoj9GDbmnOFe5amI6GSjfvXBgzpOJStpvgNIKEEatRJVm
- BmVA==
+ bh=SHeen0Na/un64+8Rj0TrYkaF97UWMlPJybZ7W8/Tmek=;
+ b=RSNTOJGAiwHsJe+WFWvLSJxiH1oVPoPKEKViGgYC3ZctOyjm6poiiFMXRqX4ISwy/6
+ lpnkAuKoz1CssHgEW9ZmcKtVbA4X/jAG/z8414vhUyUEoP0T/1LDiU0BRwcCVgxA5mfW
+ lnW/YgfNUlwJuwpSWfllDVakUwQM4tIOst87EnusdrKWP+/DokXWItj1em8QkxDJzqq7
+ YdL+ggEzrqaz5Y4XR0a+TRL+eJOxR2puWyeKz0gRYTRmUY6vhcf7ga0UvLWxkJA7s4FQ
+ ivI70vQ813KPVOx1883ZFkgHR92nCQfHFwa/YTmKaQ/KdY9Pfpq7pq2PhyiplB3RqsIK
+ iBrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDFl2ARDJNU2gca6J05Og1r44M2sI2Ew/vUpRZr2xrFw1UsUabfR02B88FkWfbAGXQktO50uMl2Aj5@nongnu.org
-X-Gm-Message-State: AOJu0YwBnkoERODKx2OIRavqQYkC8Nk5MnwMkkROFGIzbFivV8lCr+F+
- avtDMcJ4Za+Abo8PM6zJBvKfFsmI+lTov1TVf/1ndOQ7lS7Sc5BEUfUCLv7SHfUe4nMH47q5nh6
- vkMXn3Sj+uifwk4MKs1kusqW18Voceg==
-X-Gm-Gg: ASbGncuBo/T9tEtY3s2rXDjGpFR/GkTmymnb7zHU4EtydnPla3OUnNlMvsgvuZ4HTme
- +9DUKaaaZTwS6p6Uf51Quud20wx6oznjMPKPcjqHIDFqo5K3nbqedoPOQGhDg+rdJpIA=
-X-Google-Smtp-Source: AGHT+IF4WhxWqQhvHM96EoFogwOP5rASyAm5NQvgP6wWcrLmoypNAn/5RzcF6mrj05LeVdc8kky0nxU373R9TapnpIw=
-X-Received: by 2002:a05:6102:c4e:b0:4b1:5cc5:cfa7 with SMTP id
- ada2fe7eead31-4b2cc11f0b4mr45560300137.0.1736124273283; Sun, 05 Jan 2025
- 16:44:33 -0800 (PST)
+ AJvYcCXs8D77OKWFOh7oZbXH3Rk+glnbvFjZOmGgJtgWRUe4FgcM95s5Zx6m1JP/sxqULVdhw2OnDPMmC6Oa@nongnu.org
+X-Gm-Message-State: AOJu0YxwHMvQ34/xz5wWhGrW4Y4nRW4a5S9b4IKsD+wrIR65I3xXmSvQ
+ NA1MpzdrqcyKrgSz/Y7bgDdTCW5pBuWYTIeiZoC/rNyG1aIX5icPVV2NC9MDH5ke4z0VF3QCNRv
+ eQg/9FmS2XHHEzV/2L5AvTn+/enk=
+X-Gm-Gg: ASbGncuw3+VP/G1pEP+xGvhXa+hpQnNWHNhThHHeHGXqxcbviIkl1xUKwszbyg2AKHh
+ +ajeUYcdEn0/ITLA+5t4OsxzrXAcV7rB6uBV0uHDCAFuoDMRRQHau6HBroZYkJhMvSlg=
+X-Google-Smtp-Source: AGHT+IFbJ39RxNOimTbjKbKKMzUCOld7Qa+cU7yT2GOWXfTrgZawozmAlzUR6JDwvznPjGb5erLyaP+tSABskUa/SXU=
+X-Received: by 2002:a05:6122:659b:b0:516:2d4e:4493 with SMTP id
+ 71dfb90a1353d-51b75c3d499mr40011210e0c.1.1736124378831; Sun, 05 Jan 2025
+ 16:46:18 -0800 (PST)
 MIME-Version: 1.0
 References: <20250102181601.1421059-1-richard.henderson@linaro.org>
- <20250102181601.1421059-2-richard.henderson@linaro.org>
-In-Reply-To: <20250102181601.1421059-2-richard.henderson@linaro.org>
+ <20250102181601.1421059-3-richard.henderson@linaro.org>
+In-Reply-To: <20250102181601.1421059-3-richard.henderson@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 10:44:07 +1000
-Message-ID: <CAKmqyKP2qj4fsUCMfrxNpaydo=bJJKsUg-wSo0G7KqsPSLw=Pg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] util/cpuinfo-riscv: Detect Zbs
+Date: Mon, 6 Jan 2025 10:45:52 +1000
+Message-ID: <CAKmqyKPgW59So96a9Kv2e9sH7OBNOjvLDaBLkCk-GCjH2KgNSQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tcg/riscv: Use BEXTI for single-bit extractions
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  Alistair.Francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,7 +94,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 3, 2025 at 4:28=E2=80=AFAM Richard Henderson
+On Fri, Jan 3, 2025 at 4:21=E2=80=AFAM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
@@ -104,86 +104,63 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  host/include/riscv/host/cpuinfo.h |  5 +++--
->  util/cpuinfo-riscv.c              | 18 ++++++++++++++++--
->  2 files changed, 19 insertions(+), 4 deletions(-)
+>  tcg/riscv/tcg-target-has.h |  8 +++++++-
+>  tcg/riscv/tcg-target.c.inc | 13 +++++++++++--
+>  2 files changed, 18 insertions(+), 3 deletions(-)
 >
-> diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv/host/=
-cpuinfo.h
-> index cdc784e7b6..b2b53dbf62 100644
-> --- a/host/include/riscv/host/cpuinfo.h
-> +++ b/host/include/riscv/host/cpuinfo.h
-> @@ -9,8 +9,9 @@
->  #define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
->  #define CPUINFO_ZBA             (1u << 1)
->  #define CPUINFO_ZBB             (1u << 2)
-> -#define CPUINFO_ZICOND          (1u << 3)
-> -#define CPUINFO_ZVE64X          (1u << 4)
-> +#define CPUINFO_ZBS             (1u << 3)
-> +#define CPUINFO_ZICOND          (1u << 4)
-> +#define CPUINFO_ZVE64X          (1u << 5)
+> diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
+> index 10e61edc45..ea38ee5cbb 100644
+> --- a/tcg/riscv/tcg-target-has.h
+> +++ b/tcg/riscv/tcg-target-has.h
+> @@ -64,7 +64,13 @@ tcg_target_extract_valid(TCGType type, unsigned ofs, u=
+nsigned len)
+>          /* ofs > 0 uses SRLIW; ofs =3D=3D 0 uses add.uw. */
+>          return ofs || (cpuinfo & CPUINFO_ZBA);
+>      }
+> -    return (cpuinfo & CPUINFO_ZBB) && ofs =3D=3D 0 && len =3D=3D 16;
+> +    switch (len) {
+> +    case 1:
+> +        return (cpuinfo & CPUINFO_ZBS) && ofs !=3D 0;
+> +    case 16:
+> +        return (cpuinfo & CPUINFO_ZBB) && ofs =3D=3D 0;
+> +    }
+> +    return false;
+>  }
+>  #define TCG_TARGET_extract_valid  tcg_target_extract_valid
 >
->  /* Initialized with a constructor. */
->  extern unsigned cpuinfo;
-> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index 971c924012..0291b7218a 100644
-> --- a/util/cpuinfo-riscv.c
-> +++ b/util/cpuinfo-riscv.c
-> @@ -36,7 +36,8 @@ static void sigill_handler(int signo, siginfo_t *si, vo=
-id *data)
->  /* Called both as constructor and (possibly) via other constructors. */
->  unsigned __attribute__((constructor)) cpuinfo_init(void)
->  {
-> -    unsigned left =3D CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND | CPUIN=
-FO_ZVE64X;
-> +    unsigned left =3D CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZBS
-> +                  | CPUINFO_ZICOND | CPUINFO_ZVE64X;
->      unsigned info =3D cpuinfo;
->
->      if (info) {
-> @@ -50,6 +51,9 @@ unsigned __attribute__((constructor)) cpuinfo_init(void=
-)
->  #if defined(__riscv_arch_test) && defined(__riscv_zbb)
->      info |=3D CPUINFO_ZBB;
->  #endif
-> +#if defined(__riscv_arch_test) && defined(__riscv_zbs)
-> +    info |=3D CPUINFO_ZBS;
-> +#endif
->  #if defined(__riscv_arch_test) && defined(__riscv_zicond)
->      info |=3D CPUINFO_ZICOND;
->  #endif
-> @@ -71,7 +75,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void=
-)
->              && pair.key >=3D 0) {
->              info |=3D pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA :=
- 0;
->              info |=3D pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB :=
- 0;
-> -            left &=3D ~(CPUINFO_ZBA | CPUINFO_ZBB);
-> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZBS ? CPUINFO_ZBS :=
- 0;
-> +            left &=3D ~(CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZBS);
->  #ifdef RISCV_HWPROBE_EXT_ZICOND
->              info |=3D pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZI=
-COND : 0;
->              left &=3D ~CPUINFO_ZICOND;
-> @@ -117,6 +122,15 @@ unsigned __attribute__((constructor)) cpuinfo_init(v=
-oid)
->              left &=3D ~CPUINFO_ZBB;
->          }
->
-> +        if (left & CPUINFO_ZBS) {
-> +            /* Probe for Zbs: bext zero,zero,zero. */
-> +            got_sigill =3D 0;
-> +            asm volatile(".insn r 0x33, 5, 0x24, zero, zero, zero"
-> +                         : : : "memory");
-> +            info |=3D got_sigill ? 0 : CPUINFO_ZBS;
-> +            left &=3D ~CPUINFO_ZBS;
+> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+> index 12c3cffcc0..83ec7cd980 100644
+> --- a/tcg/riscv/tcg-target.c.inc
+> +++ b/tcg/riscv/tcg-target.c.inc
+> @@ -162,6 +162,7 @@ typedef enum {
+>      OPC_ANDI =3D 0x7013,
+>      OPC_AUIPC =3D 0x17,
+>      OPC_BEQ =3D 0x63,
+> +    OPC_BEXTI =3D 0x48005013,
+>      OPC_BGE =3D 0x5063,
+>      OPC_BGEU =3D 0x7063,
+>      OPC_BLT =3D 0x4063,
+> @@ -2307,9 +2308,17 @@ static void tcg_out_op(TCGContext *s, TCGOpcode op=
+c, TCGType type,
+>              } else {
+>                  tcg_out_opc_imm(s, OPC_SRLIW, a0, a1, a2);
+>              }
+> -        } else if (a2 =3D=3D 0 && args[3] =3D=3D 16) {
+> +            break;
 > +        }
-> +
->          if (left & CPUINFO_ZICOND) {
->              /* Probe for Zicond: czero.eqz zero,zero,zero. */
->              got_sigill =3D 0;
+> +        switch (args[3]) {
+> +        case 1:
+> +            tcg_out_opc_imm(s, OPC_BEXTI, a0, a1, a2);
+> +            break;
+> +        case 16:
+> +            tcg_debug_assert(a2 =3D=3D 0);
+>              tcg_out_ext16u(s, a0, a1);
+> -        } else {
+> +            break;
+> +        default:
+>              g_assert_not_reached();
+>          }
+>          break;
 > --
 > 2.43.0
 >
