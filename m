@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEFCE77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 15:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C02BBE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 15:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUovA-0002bj-S8; Mon, 06 Jan 2025 10:21:36 -0500
+	id 1tUozr-0003m3-PR; Mon, 06 Jan 2025 10:26:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tUov9-0002bL-Nv
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 10:21:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tUov8-0004Vn-9b
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 10:21:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736176892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HlJ4+Qy6GgfCO5yiBUzos7Dl9d3hIVivSqa8SZuW7Ig=;
- b=Kucuia/D5lmsGljH7+GK29t+fResCmDUm1xCM2ysB/d0QRhoWdEvq51mK7T2Diau9m6UO/
- 63TjaeNibrvyYXeOBDy/9B1bY3EFueHk5bHjmy0MM7PTYW9aRDcHIoGGlrpvwrsZ2Xdzve
- qjlR1P8UGWEY/Lv04QXv8ps7H0T+THc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-213-rbG0K4msNVWNwOG5qCxF1g-1; Mon, 06 Jan 2025 10:21:30 -0500
-X-MC-Unique: rbG0K4msNVWNwOG5qCxF1g-1
-X-Mimecast-MFC-AGG-ID: rbG0K4msNVWNwOG5qCxF1g
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38a35a65575so6721584f8f.1
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 07:21:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <osy86dev@gmail.com>)
+ id 1tUozq-0003lb-6A
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 10:26:26 -0500
+Received: from mail-pl1-f175.google.com ([209.85.214.175])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <osy86dev@gmail.com>)
+ id 1tUozo-00056g-7d
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 10:26:25 -0500
+Received: by mail-pl1-f175.google.com with SMTP id
+ d9443c01a7336-215770613dbso155086735ad.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 07:26:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736176888; x=1736781688;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
+ d=1e100.net; s=20230601; t=1736177182; x=1736781982;
+ h=cc:to:subject:message-id:date:from:references:in-reply-to
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HlJ4+Qy6GgfCO5yiBUzos7Dl9d3hIVivSqa8SZuW7Ig=;
- b=hkHxwxfdGvesnWw7MxmBJkowaRNaL6pNmK7BDaqK3ASyuBuk7sUPO1JWu6VNiKHUwi
- KwipSPw379bycD9euqZH/cHzwcOSFQeN5XwLLyOF5bTB1m6Hr7V1YwZWpL+TD+a5I7CI
- PzDaRBGmZAiNO2fRSkQcwrDzdo+60LABEVwq/bDYRuiTjNHYxODgJJJxigpb+ypFeEEU
- KmfzykFoRqe6n74WbGg+9yD/I7qZbeEIxI3m0D+w2spx1Jp4oyfXqlGgVe41zq8Tc4Nz
- XHmg+hHua+o1DEochAxD0bTQ+kAHGuXSuyvswUITOT/lgPmWfhCOBvY3f+4v+4k5CNwp
- 89BQ==
+ bh=XF3FgtYVetN37eCpFJOcTyDP4OVBSK8Ubb35FdoFTkY=;
+ b=JFLpSs8HpNOjjnN4smo5MdyZErTRITjtnNk6ZdsAi5sP3t95Zx++O2CLdhLpvuAqqs
+ dZrG2AtsQStnfn1O/a8kbDsF/vAu0rEj8SE7/8xfRWzk5pQiipDz5+OfhBnM4TkUoW/C
+ bKpwBI0AeKHEmIgAAgqifcvAgcjbwchUOVEq0gPYyM3Fuyy0cFvlxo3J3Mw82phWb2f2
+ 1fZAJvivHoiTFzo5dqhijOAYdJhty8tOjHmYo5xBP2om/TaatF27kerkK1sUaJlctcRU
+ WKgkY3O6N/9aB6smX+5DWwi6iFXtpwpy9C5DTRms75K24UMH8bCnRLKote78h3Z8K4Zh
+ Ljgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmnpE154zvwOVTcbExKHj6xOOhOZp5Q/MV5ca3W8J9PYTdx3h6H+VDBKxppZeb/QUmzfvlEWJYhtfv@nongnu.org
-X-Gm-Message-State: AOJu0YxqeUBHmcIcR0oLj2yYY5n5BdLPRJ5yQEoh66+GA2Y8lgZSugKa
- 1QO9VWYsl65RvjhyKxlIfk8W3w2mf6OZPrWu+wPSXS2jwEwXYmwcxMDE9rOJbAtnYcVauS+oNw1
- eDVX8DhYUNnGu0rr6pdyAZeWbkqec0TY9IbL7fRIskeIfrbf0jTpyi/H77+HuE86bJBjLJNssys
- KcnRm20YGjirEErwZelDEDrpsCbDI=
-X-Gm-Gg: ASbGncvmy6pyVrR2txNOlrtYbO2uUdWFLCQAuftcNKDZ8huC6JHrRiC2mf7Gr4wR7vz
- jmiIppeAUTlNnLSTOEvWYh0TjtGdzZasdcukcbA==
-X-Received: by 2002:a05:6000:18a8:b0:385:f7d2:7e29 with SMTP id
- ffacd0b85a97d-38a221ea539mr48530050f8f.15.1736176888549; 
- Mon, 06 Jan 2025 07:21:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOovEQZm3ht7n5+nHRPhWRFImJWCNuQcSHrPn6DtSZ2iQTaACqTmB/MmBO1URglumKAFbZkaObRVddsJB4HKE=
-X-Received: by 2002:a05:6000:18a8:b0:385:f7d2:7e29 with SMTP id
- ffacd0b85a97d-38a221ea539mr48530031f8f.15.1736176888170; Mon, 06 Jan 2025
- 07:21:28 -0800 (PST)
+ AJvYcCVDCxoyIcuIpk2qupzSnynu/gSlYkH67/1gAjsnYvsLUaVKfYFAKoVcJBcdZzyt0laWQhRTro321B6y@nongnu.org
+X-Gm-Message-State: AOJu0YxIcqZXPVnRRamZrapQ8EVnovFx9ee9P/VtMw8EGhIAtdGFlSkq
+ xZUmxHMDH2ti5hzFDOKGN9xvplTofKwjfAollQTUCOKoz3WaHVcXRdDDAw==
+X-Gm-Gg: ASbGncu85y5IJV5Pqeo+lnWEvgpn4TCEqBC8/VQjOcIJ7VbCxtxVQt4nqeb/yIpspbh
+ vZ4RrasQgOAOEfRGg8iZtbAObC95qOtwlQgVTxxCh0u9EOve6c9IVwli5mOv4CorXzxoPcFWMBS
+ eUQjYCSxd9szS266n9GoKMGhsFpOniw1QGaQbjNmGzVwEMMk+ohQXqtQzMJNv+r9lHQeYx2znWf
+ qMju0EP8DyrJ+yawx9LY7bFpsqlJQsCQ2+nCmBR1mMJzEzTCg0yP4gAoHdj36qySFOIxef3zoVB
+ mrVftx5jLMD1
+X-Google-Smtp-Source: AGHT+IH8kDmgdQ+4rhOrk598RO3UbcM7T6ftBiabNexP0oV+6Cg6G/sPB3+nE+fgp4q5dLhxu4vMTA==
+X-Received: by 2002:a05:6a21:398:b0:1e0:c56f:7db4 with SMTP id
+ adf61e73a8af0-1e5e0447f3amr85504294637.2.1736177181879; 
+ Mon, 06 Jan 2025 07:26:21 -0800 (PST)
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com.
+ [209.85.214.180]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72b5bde56f8sm11321372b3a.162.2025.01.06.07.26.21
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jan 2025 07:26:21 -0800 (PST)
+Received: by mail-pl1-f180.google.com with SMTP id
+ d9443c01a7336-21661be2c2dso190504545ad.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 07:26:21 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNMzAeLeHGw/nvfbD4Y26IxEVNNEq+ScRNPutHESBYQ+kLt+2qmuoYoYFma1gbuyd1u9P4bQo3RjkM@nongnu.org
+X-Received: by 2002:a05:6a21:3a94:b0:1e0:c378:6f5b with SMTP id
+ adf61e73a8af0-1e5e081c6b2mr101234026637.38.1736177180921; Mon, 06 Jan 2025
+ 07:26:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20241219083228.363430-1-pbonzini@redhat.com>
- <20241219083228.363430-26-pbonzini@redhat.com>
- <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
- <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
- <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 6 Jan 2025 16:21:16 +0100
-Message-ID: <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
-Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
- ClassInitImpl<>
+Received: by 2002:a05:6a11:6709:b0:5c7:c9d9:22b0 with HTTP; Mon, 6 Jan 2025
+ 07:26:20 -0800 (PST)
+In-Reply-To: <CAFEAcA9kzT2qwThGFvNmZ4VQgVEA189dmGYwHu-FZftfJFAU-g@mail.gmail.com>
+References: <20241223040945.82871-1-j@getutm.app>
+ <CAFEAcA9kzT2qwThGFvNmZ4VQgVEA189dmGYwHu-FZftfJFAU-g@mail.gmail.com>
+From: Joelle van Dyne <j@getutm.app>
+Date: Mon, 6 Jan 2025 07:26:20 -0800
+X-Gmail-Original-Message-ID: <CA+E+eSBMNgxptk0RzKVMuvuBJ9XZquooCxabDB8ezWjmTa4R_w@mail.gmail.com>
+Message-ID: <CA+E+eSBMNgxptk0RzKVMuvuBJ9XZquooCxabDB8ezWjmTa4R_w@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Disable unavailable features on older macOS
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000afee7c062b0b2e29"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+Cc: Joelle van Dyne <j@getutm.app>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000022dd9e062b0b40fc"
+Received-SPF: pass client-ip=209.85.214.175; envelope-from=osy86dev@gmail.com;
+ helo=mail-pl1-f175.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.179, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,59 +103,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000afee7c062b0b2e29
+--00000000000022dd9e062b0b40fc
 Content-Type: text/plain; charset="UTF-8"
 
-Il lun 6 gen 2025, 14:32 Peter Maydell <peter.maydell@linaro.org> ha
-scritto:
+If the policy is macOS 12 or later then you still need patch 2-3 because
+currently it is broken on macOS 12.
 
-> I think here I agree with Philippe that we might as well
-> provide only the new API to Rust devices.
+On Monday, January 6, 2025, Peter Maydell <peter.maydell@linaro.org> wrote:
+
+> On Mon, 23 Dec 2024 at 04:10, Joelle van Dyne <j@getutm.app> wrote:
+> > Some features require APIs introduced in a recent version of macOS.
+> Currently,
+> > this is not checked anywhere and so either the build will fail (if
+> building with
+> > an older version of Xcode) or will throw a warning and then crash if run
+> on an
+> > older machine. The correct way to handle this is with availabilty
+> checks. The
+> > checks are a clang extension that only works on Apple platforms but
+> these files
+> > are only built for Apple platforms already and link with Apple
+> frameworks.
 >
-
-Ok, I wasn't thinking of doing that because there isn't right now an easy
-way to add interfaces to Rust-defined classes. However, all devices are
-Resettable and Device isn't defined in Rust, so it's not hard to add a
-ResettableImpl trait in rust/qemu-api/srv/qdev.rs, and initialize it for
-all devices.
-
-If anybody wants to do it as an exercise, I am happy to help, otherwise I
-can prepare a patch too.
-
-Paolo
-
-
+> We deliberately only support macos 12 or later and don't want
+> to carry code workarounds to build on earlier versions
+> (see eg commit 3bf445fbb1 which removes old ifdeffery needed by 11).
+> This is part of our "supported build platforms" policy
+> documented in docs/about/build-platforms.rst.
+>
+> thanks
 > -- PMM
 >
->
 
---000000000000afee7c062b0b2e29
+--00000000000022dd9e062b0b40fc
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 6 gen 2025, 14:32 Peter M=
-aydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro=
-.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">I think here I agree with Philippe that we might as well<br>
-provide only the new API to Rust devices.<br></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Ok, I wasn&#39;t thinking of doing=
- that because there isn&#39;t right now an easy way to add interfaces to Ru=
-st-defined classes. However, all devices are Resettable and Device isn&#39;=
-t defined in Rust, so it&#39;s not hard to add a ResettableImpl trait in ru=
-st/qemu-api/srv/<a href=3D"http://qdev.rs">qdev.rs</a>, and initialize it f=
-or all devices.</div><div dir=3D"auto"><br></div><div dir=3D"auto">If anybo=
-dy wants to do it as an exercise, I am happy to help, otherwise I can prepa=
-re a patch too.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote =
-gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+If the policy is macOS 12 or later then you still need patch 2-3 because cu=
+rrently it is broken on macOS 12.<br><br>On Monday, January 6, 2025, Peter =
+Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linar=
+o.org</a>&gt; wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Mon, 23 Dec 2024 =
+at 04:10, Joelle van Dyne &lt;<a href=3D"mailto:j@getutm.app">j@getutm.app<=
+/a>&gt; wrote:<br>
+&gt; Some features require APIs introduced in a recent version of macOS. Cu=
+rrently,<br>
+&gt; this is not checked anywhere and so either the build will fail (if bui=
+lding with<br>
+&gt; an older version of Xcode) or will throw a warning and then crash if r=
+un on an<br>
+&gt; older machine. The correct way to handle this is with availabilty chec=
+ks. The<br>
+&gt; checks are a clang extension that only works on Apple platforms but th=
+ese files<br>
+&gt; are only built for Apple platforms already and link with Apple framewo=
+rks.<br>
 <br>
+We deliberately only support macos 12 or later and don&#39;t want<br>
+to carry code workarounds to build on earlier versions<br>
+(see eg commit 3bf445fbb1 which removes old ifdeffery needed by 11).<br>
+This is part of our &quot;supported build platforms&quot; policy<br>
+documented in docs/about/build-platforms.<wbr>rst.<br>
+<br>
+thanks<br>
 -- PMM<br>
-<br>
-</blockquote></div></div></div>
+</blockquote>
 
---000000000000afee7c062b0b2e29--
-
+--00000000000022dd9e062b0b40fc--
 
