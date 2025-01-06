@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AEA6E77198
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 07:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54602E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 07:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUh8S-0000IU-JB; Mon, 06 Jan 2025 02:02:48 -0500
+	id 1tUhH0-00047B-EA; Mon, 06 Jan 2025 02:11:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUh8Q-0000Hp-Ql
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 02:02:46 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUhGx-00046H-Pl
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 02:11:35 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUh8P-0008MR-CY
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 02:02:46 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3862a921123so9470505f8f.3
- for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 23:02:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUhGv-00027O-Df
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 02:11:35 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4361b0ec57aso140016035e9.0
+ for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 23:11:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736146962; x=1736751762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736147491; x=1736752291; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yPcfyLj0RsI9wYqcaozKL/Cd1GLzEcln//Q2DeARfPs=;
- b=PajKtqA+KN0PycsIE40avwu79WrkJ3FMRdAgKcRrLPXrwhbof+7v3642Dl2evjv4X1
- 6VYzIqTFISXjRHiPRZkAgTbTE3HQ9wCOMtJBSMepsZatG8MHVLc+41/8Mw8d5ikU05qI
- k/CsGVbJWame2FChawEWanSWxiZ2LniK8Mt4lm8gIgtJUySTebUGc2cpwLDGWeqNR2v/
- f9k66pxWQUFaxWryKatH3bDbIF5SRc4lbOCY2WiF8meLtn9cY8DumgOP9B1ANMgOTzpl
- bVqQndItlq05En9Em6ES8hk82X2LnoaadmQ5AFl58wBE753tF9PW+yqb4sVHdEr6m7MR
- BavA==
+ bh=qmtb4H1yvqTUqu5C5qVwhkNZdh6ipuYsNPSvkh25XGE=;
+ b=zsC7RrKGuHe7Z7Wluq7+WtCyQoL4AvDJTJHbPlmHntFGxbMAlxD74uaHCgHFtwwm8K
+ oX89WH2KtiiA8jCiqQ9PfX0yubiHWaQkarlDBPP8E3baZNeie2M8xEYPa62wNMYLaWIp
+ 2YjDXnWLqmdiwUa9Ye7ewODsuynmEL6T/ZOvIolf2BvbqX7w3ayKvzeCZOlwgcqVwKlx
+ 1P9e9Jv/ijHP59IHmNJlyx+/NZKOrPt1x7rqN0drG8L75qOH6RTYOD+xvcYA3vVGK2no
+ 8bTqD3835nsNbfndOghlExwwaGcvZFPzBbPLgpVLeD4DMiTYr29+PQSofSoPjJlwpWh0
+ qIlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736146962; x=1736751762;
+ d=1e100.net; s=20230601; t=1736147491; x=1736752291;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yPcfyLj0RsI9wYqcaozKL/Cd1GLzEcln//Q2DeARfPs=;
- b=ErOG++3BG+2Khr/qoGjHEzNc2E1+sp/tSEhF1J1IK/mswoOgPv5Hc6xZwmI+JXUnBb
- FM1eZzqax13GJtOSJeCDQMAds3bxGwYFyMbEHPKBra6p19L0eyLft6REpf9p2FeW8RF6
- 76YcNhnCIk3bkGxSFDYmS03WjtoQi/vZuPVNPP6Zb1CaEHgBDDlr883R6Llx8lfxLT98
- UmxervFTVAGIrUHU7jlK3mEuFHLggAJXZ++9+IejV9AY2xbXX97zwBFOdSalXyWrE3Ef
- wMDgmZcCf7i+8TYKGk+c5vbOlVujImv90ja5zDEHELXZnwKlI8cQcwy/GyaFaksMEpuS
- ZkHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsXHYlDU3kIuUZTrVeQaLW4+TMyA1uA9wBgEhNfQvqg4T9lmco5yPtuQscdYNYFyhM36bRzjNBU2+e@nongnu.org
-X-Gm-Message-State: AOJu0YyPdBa8+60qTMoENEhQ7WU3ZphUB0x025PGe031LH5arA5pJAdy
- x3EIt5vFr0PXEauZ0rVp1IzGqyBBnBa7Udj1ijPU6mfdrOELQUUqo6EKfbovaVU=
-X-Gm-Gg: ASbGncv+u3ZgIMDJ2L0x6V/+PvDPwbBFjWadP1qkjOtif46l5jexEF5EHRrijm7OON2
- md2DkGp8iFIwXc8TOqZnAES++paxcgxyu7a2Rvs69Vp/JtxPpl7HU34P+o5QLvC88jrfVe+hByH
- SLMfNsWSBSxx7OXcmlvSH78RpYhbObkntYsp2usQni9gVQ6nCG+Ljsn41k8if0ckKBtP98pXMAQ
- +KgmaL7VJwxE/XMAQhpxPdNlnjsprQfFeMwvUMC4Dxoa+Xus4Wa1Nf/YdxCh/hhveQRweM0fmsg
- A1Z39QL4blEUoS93G5G5OSMp
-X-Google-Smtp-Source: AGHT+IGLP6anKpHeC9pRPahJb2wo3oOk2ftUwLUu6FbNfufkWu2GWeHTxgDEO2TbDM2IMZF4HqOEMQ==
-X-Received: by 2002:a05:6000:1542:b0:385:fc70:7f6 with SMTP id
- ffacd0b85a97d-38a221e1f67mr44293784f8f.7.1736146962417; 
- Sun, 05 Jan 2025 23:02:42 -0800 (PST)
+ bh=qmtb4H1yvqTUqu5C5qVwhkNZdh6ipuYsNPSvkh25XGE=;
+ b=OH02vx9oRwjvcOzC14nIB5Bm60h0pYZa3vT1M2s7785AVH4chZNzt2p2PFCGSbtfoD
+ Sr8vFjOrbKUhiMc4BZq9ixH6B+2Mvu1B7434Rqb6eTyLAyMmnzUKQFbolD4OMcmrcwT6
+ +k9noPuq+BGObLZvBzZEAWW1f47li5nxWjqFqXb9hUhpYKI8Tt2Al/THsewjqfGFgdyn
+ F0IDp2Jdt1xlkxYGwvbNwJAH6z3iyiopmmKSdWLYn+Y6WMfGsaQGAVph6qmGzcLxnYSk
+ ZlEG0E/wBdaWnFVRqosUCnowrP6rF7AerwJM0i9sBt7u333EGamdPExFERRLErERclwa
+ CgiA==
+X-Gm-Message-State: AOJu0YzdQGL4ltWLkPgFMh51W0VH84O60kt8V1uJ5P2HZWik9yBPkfOA
+ 9u5bioUV6LY+5cj21jIwuS+XWEdesWZ49tD8K1Lbe4zXeoXg8lDhYnjBNGqHQOU=
+X-Gm-Gg: ASbGncuXN27rvuaYcVwTPakLHJqZaJfy7SHEe01JXcc4EiXvbBfw1CGk37vRIsofDUU
+ ix4+HOG02Ppq83cQ38oh0kfosMY3uuvpOG67BJlHgZimtj7RPG9rYQFqiz86n5LdH3u7QYUO9tI
+ GYARbz2GBT1BP6PVATX+f4eNdzqlRUHBl4Pn02LL6jf7HGFCG/kbFwT0ENzcZBjHbi5vHYDBXEj
+ wHWEPmZzIePDmHl+4RttnhzCQ0S8k3Azj8tnqIyJv8D012G/LXlLqYDDb6C5vy2+CIffBwdz4Sc
+ xE1n/boXzS8yE1kEDZNTfI9d
+X-Google-Smtp-Source: AGHT+IEMoBsRrQE+lT3TaHF7YUlcRRjvPYng8r6ICW+bZGna0/NoMY/W3Ehh+nmIPv3MuMsok7hypQ==
+X-Received: by 2002:a05:600c:1550:b0:434:f99e:a5b5 with SMTP id
+ 5b1f17b1804b1-43668b61bcemr385024805e9.28.1736147491457; 
+ Sun, 05 Jan 2025 23:11:31 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e1acsm47238416f8f.68.2025.01.05.23.02.41
+ 5b1f17b1804b1-43656b442dasm590742215e9.42.2025.01.05.23.11.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 05 Jan 2025 23:02:41 -0800 (PST)
-Message-ID: <3b82468c-e388-4275-8a9c-b0085777e768@linaro.org>
-Date: Mon, 6 Jan 2025 08:02:40 +0100
+ Sun, 05 Jan 2025 23:11:30 -0800 (PST)
+Message-ID: <6d6c5322-836a-4381-95fa-a27150c7dc02@linaro.org>
+Date: Mon, 6 Jan 2025 08:11:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: use RISCVException enum in exception
- helpers
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
- <20241219174657.1988767-2-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v18 01/14] hw/pci: Rename has_power to enabled
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com
+References: <20250104-reuse-v18-0-c349eafd8673@daynix.com>
+ <20250104-reuse-v18-1-c349eafd8673@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241219174657.1988767-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250104-reuse-v18-1-c349eafd8673@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +111,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 18:46, Daniel Henrique Barboza wrote:
-> Do a cosmetic change in riscv_raise_exception() to change 'exception'
-> type from uint32_t to RISCVException, making it a bit clear that the
-> arg is directly correlated to the RISCVException enum.
+On 4/1/25 08:52, Akihiko Odaki wrote:
+> The renamed state will not only represent powering state of PFs, but
+> also represent SR-IOV VF enablement in the future.
 > 
-> As a side effect, change 'excp' type from int to RISCVException in
-> generate_exception() to guarantee that all callers of
-> riscv_raise_exception() will use the enum.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->   target/riscv/cpu.h       | 3 ++-
->   target/riscv/op_helper.c | 3 ++-
->   target/riscv/translate.c | 2 +-
->   3 files changed, 5 insertions(+), 3 deletions(-)
+>   include/hw/pci/pci.h        |  7 ++++++-
+>   include/hw/pci/pci_device.h |  2 +-
+>   hw/pci/pci.c                | 14 +++++++-------
+>   hw/pci/pci_host.c           |  4 ++--
+>   4 files changed, 16 insertions(+), 11 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
