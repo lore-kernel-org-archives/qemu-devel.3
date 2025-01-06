@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4B4E77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 05:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2267FE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 05:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUfRa-0000yp-GR; Mon, 06 Jan 2025 00:14:26 -0500
+	id 1tUfuB-0003kC-5h; Mon, 06 Jan 2025 00:43:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUfRY-0000yR-RF
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:14:24 -0500
-Received: from mail-vs1-xe2e.google.com ([2607:f8b0:4864:20::e2e])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1tUfu8-0003j5-3A
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:43:56 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUfRV-0007C7-IA
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:14:24 -0500
-Received: by mail-vs1-xe2e.google.com with SMTP id
- ada2fe7eead31-4b2c0a7ef74so7905193137.2
- for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 21:14:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1tUfu1-0004IF-DK
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:43:55 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21644aca3a0so14655225ad.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 21:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736140460; x=1736745260; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1736142227; x=1736747027; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5ARCoVIsYhjXVeJ12wuEmsZqT+YGPBaB4qfmA/3N0dk=;
- b=H+LU476q7tFnkrDw96/jXcPvYx47clI3Gh4JGl8xd2dcCPYKGgDvqdky5WAsoAXR1w
- hMEATz+GE0MeTCVp/59g6bYiFHlK0eACNzpGmDDAcFksO3CP18s+feYw9G8qRmS48kv7
- e80lV/bKXEZJdvdw3n29cjdMZ8QUv02vMwP7aXI1lawJhj69CRyuO6eQr2PEhpw6aIT4
- gDwY9QXledhZn0rxyNJAmMxedsZJz+yEmi/RM0OVTfwGn1KY6OOBwk1XuaWL6oWtl7rV
- A9XzCYdleoCH1SqSokUyqGjCmpvDTkZWoQp2WFPEUJ1D2JyvJoNfhYy7aZr+LjPZgnVh
- jAWQ==
+ bh=Z8LsyuACSdwiN3QycgR2G1Ajx+zirWJN8wOULR7lYME=;
+ b=Q8jT2oMkP7Z5H1DuwWKorjw+8D2G//gYtox6lEetLCsHElImbtso/fX8En5oThShX4
+ MiO+dvxzVohyABnFLGd5BgctZUIX//DLL+g1fVE7bmLnKaaGypv814TlAifr1ao2TB1B
+ nuFQ1Bp2quX0MmPwYyxAZfOKflhRkHpfRHfEJW9pwS0QdwP4mES8cjR7FWaKQ8QB+/TY
+ +oyaZWZHGIs7+SwnKbIsBWe27czdour6Cw/aRbSIIbA3I1vS0hKWVX948HVOqhqy2mxk
+ gswZOd17Zt3xQ99GOUBPQfi5YOmZzUQZaksBNKATjCzHMstVFZFdrEXZRI63o4a60zDX
+ ElcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736140460; x=1736745260;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1736142227; x=1736747027;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5ARCoVIsYhjXVeJ12wuEmsZqT+YGPBaB4qfmA/3N0dk=;
- b=mpsDwB8PKTGg724Tii6ppiqiwJv0Mr1D/hiwCZhTWxpGr4eddp5ElQDhrSyXuws/bd
- 2ppsvoMCBOAMvTLeCh9JJL2Nka9n8Xrn544ham5MpqHh+IuUUa243DyTZ0A40XbzfRaa
- hRGYfGASS07gA329PUSBSJNxVm5oOaIEoxXtppaLRAx1k4GipSNIS3madIQx+10+s/z3
- cOBJQAuQjzaODukVpHZ4jSCc0Y68OLz6Qj+YNE5e3uJSZeXm1foHlbZoGp/W4C24JscR
- LqOrjHowZYskzGln7sM2zjo3V1+nMLacQ/bDaHlaQheVUZQsbhh9lX7asyXH+sdEwBEt
- JgLw==
-X-Gm-Message-State: AOJu0YzMa54IPRAyrC0sLx9ioHabhaeCl3yYwWw+Gj9IXRCqze4lRmBX
- vJGiXjJSscpK/thmk4YSqswW3erKVlz1Y2W/gN8sUMn0aUbOefoziPMoskvq/2R2SN50GTh2f/k
- i89Gaio02MOhuRxLL2lVTcSJfbmE=
-X-Gm-Gg: ASbGnctRWmx0OCIfkGqMYT0WgIlDtrKM5+7be4lZuYJxbhjA8YzEVvRjjkfP2ZTFbvZ
- DUAb0V6MlrTG640bBLcnrDmRdYPWmImOEb/5YoJvCPvhLI+Hhizn0g843a1UfZceGkN8=
-X-Google-Smtp-Source: AGHT+IGiaUchGMdsKHSBmIiSUHMYd7Ep3vgNMvmbrGI9uhlvaEyXdQ2ZUGNyffgnSK3UXoc3NPKTBCk63cA8kPb75E8=
-X-Received: by 2002:a05:6102:2906:b0:4b2:cc01:6a8 with SMTP id
- ada2fe7eead31-4b2cc35f2acmr42436792137.9.1736140459375; Sun, 05 Jan 2025
- 21:14:19 -0800 (PST)
+ bh=Z8LsyuACSdwiN3QycgR2G1Ajx+zirWJN8wOULR7lYME=;
+ b=mTo5eXVBdl0H31Z6WS96nekXGz4mDrYRWcOPtoB+5J9EFCcWdJSNGNjN9DYyVzvb/I
+ RvCJvTom2mb3hpiw1Q7NhWcrG1s3wObFRLcRsNbGdeOXkyl66iUsCRcuiH4Wzf48Iokn
+ wbyfRdK6JabzDKmvxa4x58TDxfN+4fG1ao+Mp8kg+b9nAjcepQLLZbOtMbZwW/fElyN4
+ 81vEWCW2mC+3Giyj3bTnAOHeiYa4NmRZ7qGe2FpPnWyx8a/9on7ppZgpvCjUmxSkcgMZ
+ c80ejNa6x/OiHQbFJmpjPTekM1dst5gQb/CgR1kIoQnMDbVu5d4hY3NeKKpFGb6jt5kJ
+ S42Q==
+X-Gm-Message-State: AOJu0YyTY0Tyq81YpaYAp1D4CG+5yYcHgeO5sK9/SWsi8QTzkl/JnR5n
+ MKwk7ET6AkiJT+hCjVtd0+S3ul3DzXvOt/4BnClfdC0mcPmlpiZZ3AoXcbOUzkgfAOFFfdvbDbn
+ HVtpFA9zAjS/QZhhd+pUQkpHCqLYdkxcvasGTnGweY7kNEr6r0BAuDrLoN3K0BAqXDj1N2LacF1
+ +FUWkd9VvFsv/d5aTvY5A6zqS4/9rv1Ocp4F0EFil8WA==
+X-Gm-Gg: ASbGncvyZSxQFSVOrg+S/V6AEFF06wp3OXEs6Ui/MgOrD2fFmv7fUFmsRze5LSU4Lqn
+ ueDE1hewTt9XmG+vQ6YZ1FpYDhtzb4+TuBBZ/fpTjnhk4+EZWxa6d2DDIfwxBl/wN+lzSQYEpfB
+ 1x1I7aVIRbv8VUQtCsEv98l4wixoykj3D3g/MHnBYC+TprhMHae/4didNfosf1NMyl8iu48+5Br
+ kk/I+VyzG15CIgKUd5Y84N53sbsjCEbZxYyIg8jtUta1N/1a2qQtk/amIfEhdmRXLW+2QSoi9rw
+ blBnAocNVEs=
+X-Google-Smtp-Source: AGHT+IGpkfpqcJ422VPzvGxmOocPMDyJbrbt60c37ldrNFkHp8G9QGvYmih9ucBZLDSfXITxtgcNug==
+X-Received: by 2002:a17:903:22c3:b0:216:6769:9eea with SMTP id
+ d9443c01a7336-219e6f133ccmr839763165ad.37.1736142227270; 
+ Sun, 05 Jan 2025 21:43:47 -0800 (PST)
+Received: from fchang-1826.internal.sifive.com ([210.176.154.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc96eac6sm285722215ad.80.2025.01.05.21.43.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 05 Jan 2025 21:43:46 -0800 (PST)
+From: frank.chang@sifive.com
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tommy Wu <tommy.wu@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v12 2/6] target/riscv: Add Smrnmi CSRs
+Date: Mon,  6 Jan 2025 13:43:32 +0800
+Message-Id: <20250106054336.1878291-3-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250106054336.1878291-1-frank.chang@sifive.com>
+References: <20250106054336.1878291-1-frank.chang@sifive.com>
 MIME-Version: 1.0
-References: <CAEekfLYJqvMDf5A_Yj=N6jMGQ4oj3rC+fv3xcCCfSBy8TDaY-Q@mail.gmail.com>
- <CAKmqyKPo=a=RHUvvgKZLB_DJnEXO=7u25MwNfXu5EDjak=y0vg@mail.gmail.com>
- <CAEekfLaW=-tpTo73or0Lv6zqOuCa67UoYSt9guyHFsw6yM37mg@mail.gmail.com>
-In-Reply-To: <CAEekfLaW=-tpTo73or0Lv6zqOuCa67UoYSt9guyHFsw6yM37mg@mail.gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 15:13:53 +1000
-Message-ID: <CAKmqyKNeks-12czF7sWP7gr_t=WU9g309_y5Xk58iFBiVcAijg@mail.gmail.com>
-Subject: Re: Subject: [PATCH] loader: Add register setting support via cli
-To: Sam Price <thesamprice@gmail.com>
-Cc: qemu-devel@nongnu.org, alistair@alistair23.me
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2e;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=frank.chang@sifive.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,255 +106,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 6, 2025 at 2:59=E2=80=AFPM Sam Price <thesamprice@gmail.com> wr=
-ote:
->
-> I didn't mean to change all of the submodules.
-> I was somewhat porting from xilinx-qemu over to the main line, and
-> messed up the commit on that.
-> Ill get my gitlab branch fixed up on the next commit.
-> I am horrible at this email part.
->
-> I could malloc memory and push all of the register names/ values into
-> a queue, and then call the backend gdb routines on the number of
-> calls.
+From: Tommy Wu <tommy.wu@sifive.com>
 
-So GDB uses the XML files in `gdb-xml` for the register information.
-Considering that each architecture uses a different register naming
-structure I think you are going to have a hard time doing this
-manually.
+The Smrnmi extension adds the 'mnscratch', 'mnepc', 'mncause',
+'mnstatus' CSRs.
 
-The best bet is probably just to use `cc->gdb_num_core_regs` to get
-the number of regs and then use integer offsets (so no strings, just
-0, 1, 2...) for the registers.
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c      |  5 +++
+ target/riscv/cpu.h      |  7 ++++
+ target/riscv/cpu_bits.h | 11 ++++++
+ target/riscv/csr.c      | 82 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 105 insertions(+)
 
-It's still not ideal, but might be good enough
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 954425081d..2ae9a8a895 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1134,6 +1134,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+         riscv_trigger_reset_hold(env);
+     }
+ 
++    if (cpu->cfg.ext_smrnmi) {
++        env->rnmip = 0;
++        env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
++    }
++
+     if (kvm_enabled()) {
+         kvm_riscv_reset_vcpu(cpu);
+     }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 252fdb8672..0079c640f7 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -486,6 +486,13 @@ struct CPUArchState {
+     uint64_t kvm_timer_state;
+     uint64_t kvm_timer_frequency;
+ #endif /* CONFIG_KVM */
++
++    /* RNMI */
++    target_ulong mnscratch;
++    target_ulong mnepc;
++    target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
++    target_ulong mnstatus;
++    target_ulong rnmip;
+ };
+ 
+ /*
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index fe4e34c64a..9e9637263d 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -353,6 +353,12 @@
+ #define CSR_PMPADDR14       0x3be
+ #define CSR_PMPADDR15       0x3bf
+ 
++/* RNMI */
++#define CSR_MNSCRATCH       0x740
++#define CSR_MNEPC           0x741
++#define CSR_MNCAUSE         0x742
++#define CSR_MNSTATUS        0x744
++
+ /* Debug/Trace Registers (shared with Debug Mode) */
+ #define CSR_TSELECT         0x7a0
+ #define CSR_TDATA1          0x7a1
+@@ -634,6 +640,11 @@ typedef enum {
+ #define SATP64_ASID         0x0FFFF00000000000ULL
+ #define SATP64_PPN          0x00000FFFFFFFFFFFULL
+ 
++/* RNMI mnstatus CSR mask */
++#define MNSTATUS_NMIE       0x00000008
++#define MNSTATUS_MNPV       0x00000080
++#define MNSTATUS_MNPP       0x00001800
++
+ /* VM modes (satp.mode) privileged ISA 1.10 */
+ #define VM_1_10_MBARE       0
+ #define VM_1_10_SV32        1
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 381cda81f8..f35b8f4c21 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -597,6 +597,17 @@ static RISCVException debug(CPURISCVState *env, int csrno)
+ 
+     return RISCV_EXCP_ILLEGAL_INST;
+ }
++
++static RISCVException rnmi(CPURISCVState *env, int csrno)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++
++    if (cpu->cfg.ext_smrnmi) {
++        return RISCV_EXCP_NONE;
++    }
++
++    return RISCV_EXCP_ILLEGAL_INST;
++}
+ #endif
+ 
+ static RISCVException seed(CPURISCVState *env, int csrno)
+@@ -4654,6 +4665,67 @@ static RISCVException write_upmbase(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException read_mnscratch(CPURISCVState *env, int csrno,
++                                     target_ulong *val)
++{
++    *val = env->mnscratch;
++    return RISCV_EXCP_NONE;
++}
++
++static int write_mnscratch(CPURISCVState *env, int csrno, target_ulong val)
++{
++    env->mnscratch = val;
++    return RISCV_EXCP_NONE;
++}
++
++static int read_mnepc(CPURISCVState *env, int csrno, target_ulong *val)
++{
++    *val = env->mnepc;
++    return RISCV_EXCP_NONE;
++}
++
++static int write_mnepc(CPURISCVState *env, int csrno, target_ulong val)
++{
++    env->mnepc = val;
++    return RISCV_EXCP_NONE;
++}
++
++static int read_mncause(CPURISCVState *env, int csrno, target_ulong *val)
++{
++    *val = env->mncause;
++    return RISCV_EXCP_NONE;
++}
++
++static int write_mncause(CPURISCVState *env, int csrno, target_ulong val)
++{
++    env->mncause = val;
++    return RISCV_EXCP_NONE;
++}
++
++static int read_mnstatus(CPURISCVState *env, int csrno, target_ulong *val)
++{
++    *val = env->mnstatus;
++    return RISCV_EXCP_NONE;
++}
++
++static int write_mnstatus(CPURISCVState *env, int csrno, target_ulong val)
++{
++    target_ulong mask = (MNSTATUS_NMIE | MNSTATUS_MNPP);
++
++    if (riscv_has_ext(env, RVH)) {
++        /* Flush tlb on mnstatus fields that affect VM. */
++        if ((val ^ env->mnstatus) & MNSTATUS_MNPV) {
++            tlb_flush(env_cpu(env));
++        }
++
++        mask |= MNSTATUS_MNPV;
++    }
++
++    /* mnstatus.mnie can only be cleared by hardware. */
++    env->mnstatus = (env->mnstatus & MNSTATUS_NMIE) | (val & mask);
++    return RISCV_EXCP_NONE;
++}
++
+ #endif
+ 
+ /* Crypto Extension */
+@@ -5161,6 +5233,16 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+                         write_sstateen_1_3,
+                         .min_priv_ver = PRIV_VERSION_1_12_0 },
+ 
++    /* RNMI */
++    [CSR_MNSCRATCH] = { "mnscratch", rnmi, read_mnscratch, write_mnscratch,
++                        .min_priv_ver = PRIV_VERSION_1_12_0               },
++    [CSR_MNEPC]     = { "mnepc",     rnmi, read_mnepc,     write_mnepc,
++                        .min_priv_ver = PRIV_VERSION_1_12_0               },
++    [CSR_MNCAUSE]   = { "mncause",   rnmi, read_mncause,   write_mncause,
++                        .min_priv_ver = PRIV_VERSION_1_12_0               },
++    [CSR_MNSTATUS]  = { "mnstatus",  rnmi, read_mnstatus,  write_mnstatus,
++                        .min_priv_ver = PRIV_VERSION_1_12_0               },
++
+     /* Supervisor Trap Setup */
+     [CSR_SSTATUS]    = { "sstatus",    smode, read_sstatus,    write_sstatus,
+                          NULL,                read_sstatus_i128              },
+-- 
+2.34.1
 
-> I will rely on the gdb routine for doing validation of both the name /
-> value arguments.
-
-If there is a way to do this with the GDB stub that might also work well
-
->
-> I will make an implementation of this using the include/qemue/queue.h
-> to store all passed in register arguments.
-> https://gitlab.com/thesamprice/qemu/-/blob/master/include/qemu/queue.h
-> If there is a better datastructure I should use for implementation let me=
- know.
-
-I don't follow why you need a queue, but I might just be misunderstanding.
-
->
-> Ill also update docs/system/generic-loader.rst
-
-Yes please
-
->
-> Are unit tests needed?
-
-I think for now I wouldn't worry about it
-
-Alistair
-
-> Any guidance on what you would want done for this would be appreciated.
->
-> Thanks,
-> Sam
->
-> On Sun, Jan 5, 2025 at 11:41=E2=80=AFPM Alistair Francis <alistair23@gmai=
-l.com> wrote:
-> >
-> > On Fri, Dec 6, 2024 at 1:30=E2=80=AFPM Sam Price <thesamprice@gmail.com=
-> wrote:
-> > >
-> > > I needed to set the registers prior to boot up to mimic what uboot
-> > > would do prior to loading a binary.  This adds a generic option of re=
-g
-> > > to the loader command, it uses the existing gcc commands for setting
-> > > register values.
-> > >
-> > > I'm sorry I couldn't figure out how to work the git send-email
-> > > properly.  Configuring it with my gmail became too cumbersome, and my
-> > > work email was also challenging to configure.
-> > >
-> > > I have the file staged here.
-> > > https://gitlab.com/thesamprice/qemu/-/tree/loader?ref_type=3Dheads
-> > > I am unsure of how to add tests for this.
-> > > I could continue working too polish this off with instructions from
-> > > others if it is desired for the main line.
-> >
-> > Thanks for the patch. This will need documentation added under
-> > `docs/system/generic-loader.rst` so that people know how to use it and
-> > what it does
-> >
-> > >
-> > > Signed-off-by: Sam Price <thesamprice@gmail.com>
-> > > ---
-> > >
-> > > ---
-> > >  hw/core/generic-loader.c         | 28 ++++++++++++++++++++++++++++
-> > >  include/hw/core/generic-loader.h |  6 +++++-
-> > >  roms/SLOF                        |  2 +-
-> > >  roms/edk2                        |  2 +-
-> > >  roms/openbios                    |  2 +-
-> > >  roms/opensbi                     |  2 +-
-> > >  roms/seabios                     |  2 +-
-> > >  roms/seabios-hppa                |  2 +-
-> > >  tests/lcitool/libvirt-ci         |  2 +-
-> > >  9 files changed, 40 insertions(+), 8 deletions(-)
-> > >
-> > > diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-> > > index ea8628b892..ebda8ac43f 100644
-> > > --- a/hw/core/generic-loader.c
-> > > +++ b/hw/core/generic-loader.c
-> > > @@ -55,6 +55,19 @@ static void generic_loader_reset(void *opaque)
-> > >          }
-> > >      }
-> > >
-> > > +    for (int i =3D 0; i < 31; i++) {
-> >
-> > Why 31?
-> >
-> > I'm guessing you picked this because that's how many registers your
-> > architecture supports, but that's not the same for all architectures
-> >
-> > > +        if (s->has_register_defaults[i]) {
-> > > +            CPUClass *cc =3D CPU_GET_CLASS(s->cpu);
-> > > +            uint8_t buf[sizeof(uint64_t)];
-> > > +            memcpy(buf, &s->register_defaults[i], sizeof(uint64_t));
-> > > +            if (cc && cc->gdb_write_register) {
-> > > +                cc->gdb_write_register(s->cpu, buf, i);
-> > > +            }
-> > > +        }
-> > > +    }
-> > > +
-> > > +
-> > > +
-> > >      if (s->data_len) {
-> > >          assert(s->data_len <=3D sizeof(s->data));
-> > >          dma_memory_write(s->cpu->as, s->addr, &s->data, s->data_len,
-> > > @@ -172,6 +185,20 @@ static void generic_loader_realize(DeviceState
-> > > *dev, Error **errp)
-> > >      } else {
-> > >          s->data =3D cpu_to_le64(s->data);
-> > >      }
-> > > +
-> > > +    /* Store the CPU register default if specified */
-> > > +    if (s->reg) {
-> > > +        int reg_num;
-> > > +        if (sscanf(s->reg, "r%d", &reg_num) =3D=3D 1 &&
-> > > +                    reg_num >=3D 0 && reg_num < 31) {
-> >
-> > I don't think all architectures call their registers r* and they don't
-> > all have 31 registers
-> >
-> > > +            s->register_defaults[reg_num] =3D s->data;
-> > > +            s->has_register_defaults[reg_num] =3D true;
-> > > +        } else {
-> > > +            error_setg(errp, "Unsupported register: %s", s->reg);
-> > > +            return;
-> > > +        }
-> > > +    }
-> > > +
-> > >  }
-> > >
-> > >  static void generic_loader_unrealize(DeviceState *dev)
-> > > @@ -186,6 +213,7 @@ static Property generic_loader_props[] =3D {
-> > >      DEFINE_PROP_BOOL("data-be", GenericLoaderState, data_be, false),
-> > >      DEFINE_PROP_UINT32("cpu-num", GenericLoaderState, cpu_num, CPU_N=
-ONE),
-> > >      DEFINE_PROP_BOOL("force-raw", GenericLoaderState, force_raw, fal=
-se),
-> > > +    DEFINE_PROP_STRING("reg", GenericLoaderState, reg),
-> > >      DEFINE_PROP_STRING("file", GenericLoaderState, file),
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > >  };
-> > > diff --git a/include/hw/core/generic-loader.h b/include/hw/core/gener=
-ic-loader.h
-> > > index 19d87b39c8..d81e1632fd 100644
-> > > --- a/include/hw/core/generic-loader.h
-> > > +++ b/include/hw/core/generic-loader.h
-> > > @@ -35,10 +35,14 @@ struct GenericLoaderState {
-> > >      uint32_t cpu_num;
-> > >
-> > >      char *file;
-> > > -
-> > > +    char *reg;
-> > >      bool force_raw;
-> > >      bool data_be;
-> > >      bool set_pc;
-> > > +
-> > > +    /* Add an array for storing default register values */
-> > > +    bool has_register_defaults[31];  /* Track if a default value is =
-provided */
-> > > +    uint64_t register_defaults[31];  /* Default values for registers=
- r0-r30 */
-> > >  };
-> > >
-> > >  #define TYPE_GENERIC_LOADER "loader"
-> > > diff --git a/roms/SLOF b/roms/SLOF
-> > > index 3a259df244..6b6c16b4b4 160000
-> > > --- a/roms/SLOF
-> > > +++ b/roms/SLOF
-> > > @@ -1 +1 @@
-> > > -Subproject commit 3a259df2449fc4a4e43ab5f33f0b2c66484b4bc3
-> > > +Subproject commit 6b6c16b4b40763507cf1f518096f3c3883c5cf2d
-> > > diff --git a/roms/edk2 b/roms/edk2
-> > > index 4dfdca63a9..f80f052277 160000
-> > > --- a/roms/edk2
-> > > +++ b/roms/edk2
-> > > @@ -1 +1 @@
-> > > -Subproject commit 4dfdca63a93497203f197ec98ba20e2327e4afe4
-> > > +Subproject commit f80f052277c88a67c55e107b550f504eeea947d3
-> > > diff --git a/roms/openbios b/roms/openbios
-> > > index c3a19c1e54..af97fd7af5 160000
-> > > --- a/roms/openbios
-> > > +++ b/roms/openbios
-> > > @@ -1 +1 @@
-> > > -Subproject commit c3a19c1e54977a53027d6232050e1e3e39a98a1b
-> > > +Subproject commit af97fd7af5e7c18f591a7b987291d3db4ffb28b5
-> > > diff --git a/roms/opensbi b/roms/opensbi
-> > > index 43cace6c36..057eb10b6d 160000
-> > > --- a/roms/opensbi
-> > > +++ b/roms/opensbi
-> > > @@ -1 +1 @@
-> > > -Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
-> > > +Subproject commit 057eb10b6d523540012e6947d5c9f63e95244e94
-> > > diff --git a/roms/seabios b/roms/seabios
-> > > index a6ed6b701f..ea1b7a0733 160000
-> > > --- a/roms/seabios
-> > > +++ b/roms/seabios
-> > > @@ -1 +1 @@
-> > > -Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
-> > > +Subproject commit ea1b7a0733906b8425d948ae94fba63c32b1d425
-> > > diff --git a/roms/seabios-hppa b/roms/seabios-hppa
-> > > index a528f01d7a..673d2595d4 160000
-> > > --- a/roms/seabios-hppa
-> > > +++ b/roms/seabios-hppa
-> > > @@ -1 +1 @@
-> > > -Subproject commit a528f01d7abd511d3cc71b7acaab6e036ee524bd
-> > > +Subproject commit 673d2595d4f773cc266cbf8dbaf2f475a6adb949
-> > > diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-> > > index 9ad3f70bde..9bff3b763b 160000
-> > > --- a/tests/lcitool/libvirt-ci
-> > > +++ b/tests/lcitool/libvirt-ci
-> > > @@ -1 +1 @@
-> > > -Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
-> > > +Subproject commit 9bff3b763b5531a1490e238bfbf77306dc3a6dbb
-> >
-> > Did you mean to change all of these submodules?
-> >
-> >
-> > Alistair
-> >
-> > > --
-> > > 2.45.2
-> > >
->
->
->
-> --
-> Sincerely,
->
-> Sam Price
 
