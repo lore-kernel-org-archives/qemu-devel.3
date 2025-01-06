@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87EEE77198
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 03:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2638CE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 04:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUduY-0002LF-6f; Sun, 05 Jan 2025 22:36:14 -0500
+	id 1tUeUy-0007yl-Fn; Sun, 05 Jan 2025 23:13:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUduV-0002Kh-Rk; Sun, 05 Jan 2025 22:36:11 -0500
+ id 1tUeUw-0007yC-DE; Sun, 05 Jan 2025 23:13:50 -0500
 Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUduT-0006UQ-Id; Sun, 05 Jan 2025 22:36:11 -0500
+ id 1tUeUt-0004g7-Jq; Sun, 05 Jan 2025 23:13:49 -0500
 Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-518799f2828so7164046e0c.0; 
- Sun, 05 Jan 2025 19:36:08 -0800 (PST)
+ 71dfb90a1353d-5188c6f260cso4588002e0c.1; 
+ Sun, 05 Jan 2025 20:13:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736134568; x=1736739368; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736136826; x=1736741626; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EdU390pOIrzfZRFwnsuY2kG/3vZgj8A2WxHhca/Nq4Q=;
- b=JEEoBxOGgqwAni0yRKakR3e5qPMuSZA1XquJzQnehejKCi3avGDfQWCovhbihZbt+0
- qEpXmogKYzu4rUMMSgV9PlBFmdNvGphI+9EObVPLJ71NwHpDsTJdDfnGN4uFFo+eI+4W
- +5IkUDCXidhiNC4MppXZLD8yYr0ul7xJwR4lughzE1Nbt8vVEh+QowKlqedMJVi5/Jh5
- P1dDa1tPi0RBbfPdcHNrNn/gnemF+V1CTf6orgVP2GfkKpCM8+yDMzyDQ7P2PLfc1tds
- obxZdRxVSLmCnBstyl3A0kZ9m+c5M7OZEzI7oLni0u+r0acPoHlLvf0y9Nu/epSjtOCd
- kM7Q==
+ bh=4w7KYziDFPcQIZYM2D8sP/CfovUPDh1hoaCnUNYqNH4=;
+ b=hO29b4xf6Hk75+uvKbLjtdcaqxHxJMHdBwUrrCRU1j7fNLLKp1cwL5wHY5verMCSMc
+ QrfB/EDF7fk5oSH4NpK5pJ9+IfvP2uU96N/ApgmBlv3FZvSM2udHiOL0Au1LW4qiJAoe
+ zMnZuPR2nfluP3Nq9M2TyAFcMK32p3athyu4dpdyRr2aM+Fv4xK079EXbf3Hl7tlyPw4
+ EtvWLGar9lT9Z+PJoF4e9h2acx8chwUVwNG0VPjhVsqtAvK4GTmf4skVwosWsXvHW6MP
+ Z+4JDLt1kABGo3eUxAy5GyTRvoQis6DcRIa2VEvEUhyhQavIKlNxieaf26CvsRaaw3KB
+ bw1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736134568; x=1736739368;
+ d=1e100.net; s=20230601; t=1736136826; x=1736741626;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EdU390pOIrzfZRFwnsuY2kG/3vZgj8A2WxHhca/Nq4Q=;
- b=TMXHVvsHbPnYbBvKkAtuIcJrNjYVfPeBcqmdaPGomvsmP0lS03eVtdXOB3y4vS7ENf
- rCI8x5xW9rMyfBps15dF0cZX8jJpFul+YoXzxs0bu/7QEQ9XZpstGnsWLK1Mkq8JbOhG
- RoKfOla2Y52w8AtQvJ9fzIvmupmKhcjt3W2gvZIHjftHJn5z2RzO9E23k5Wlvbklt48x
- Dyr5UC4mxsfnQOIRhn+erKTV/vXXISh8ax9wOcW6Vz2XL0bFk8XkN37hM/I9YdCgWc3Y
- X3PMNClNyrOvWrz7h36Kaz4RCopOCvxzQrQhztGYNCojuh0qOi3ZyL77Ii/2sF1As5IV
- GSig==
+ bh=4w7KYziDFPcQIZYM2D8sP/CfovUPDh1hoaCnUNYqNH4=;
+ b=vsPIq53p29P64yQFS85nsJu2F3iZfrTm6/728zbcfoz7SGSNmLZusHBJPc9326xiHD
+ TsVyWX47R1KZ2CJQa5MEbmRvsVJEUoQt/a0FiAp3W73OIkm+5XmzL4Zztd+8Jc64259j
+ PcMk/EWaneCwjpufxyiBJHfKeGX0aJRfYeynAW7UWMm5z7d7rXa9An3WhbilNR48qPdk
+ vZ/FuUeu2zVaZO1tJoZ3ggQzsNu+ArPicNCWE6R5lBCI5Q3y8YbqzPb0jHDSfMcg6/jQ
+ ZVoxjeBGJ30I5yT/M+gX1XzW4qy7LJRn4DNAxfT9L2LqXSVeLRN2xhJmlXjntcz8r+08
+ 1Lgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURCe4BRiCBZzcU4bW+AvVbfus5j2ZznUcKWi4bhKvzjtoenIf9WjdjbgBfo/jzi+F/GwkCZzc+1+3S@nongnu.org,
- AJvYcCXqRpH3GhazfTBHLKRP/0HTNDdDBTb1OEExk27GOpEK4laVTq6XOBb+MC6P28LaDb+avpFUO3is7W19SA==@nongnu.org
-X-Gm-Message-State: AOJu0Yzb8C8o8i0pfrlgdYoDdimkbY2iM1oDG+uowTQXonS07geHb2k7
- QIlKBnff32iZOp2Ptemf3wzWZ4drUN/Qp7WAY4JEPVtOEl/0iiVElVvc2YcbuklTWfGAbkeeRSE
- ztLW59fu3g66A1R9haO2VkYZGfuo=
-X-Gm-Gg: ASbGnctlGjixmDzhCXCtv81+6qXEgCkCcqKgCVqrCYANRxtkdDMmsj0QPFs+HcWubtO
- KatunI8+GD7/Px/LXlSmjLFUL8aOKR6E+hLAsYvidh/JnGW9haNeD/9sg5MRmxH7+oao=
-X-Google-Smtp-Source: AGHT+IFSgpwx6Wc0ENTD/Z+RTPdT/t07qm2ukTeZjr6Ll+2At9bWP+2P4TZIFi9aMhTgCWDB0VuyThXmJgFg/+0gPRQ=
-X-Received: by 2002:ac5:c3c3:0:b0:515:20e6:7861 with SMTP id
- 71dfb90a1353d-51b64ab5d68mr35072411e0c.2.1736134568018; Sun, 05 Jan 2025
- 19:36:08 -0800 (PST)
+ AJvYcCV980qDjsZWaqQLFH4hKXrsYpCLCXHtc4B/MgctZJsLDuec6W+oUQjsiaD/4joq7fLsoHp0n8GPWhTp@nongnu.org
+X-Gm-Message-State: AOJu0YwPcJnAgDQDuYGVeEZdBF1eM/PXVz69dAXRGsqdDTwFF25oHbab
+ oOH57MFptzzkgckmj5XkvQGiPGI1kL49nEed9o0jzzKeamhDt25D/iX8+cKSCbE3iaezY4jZQvR
+ xYPExGPqeX/+7bZl2pSGXLtD+qvI=
+X-Gm-Gg: ASbGncvQ2GLeg8yh/SqvBN2dQW7ETJZlX3j9sH7D5nGNn+XxIY0hdqqWqLOQXM27fYo
+ PoiFpvMO1xoiID474PF0iybcC8nw30tVuSTP60sv9rQxP/v7G+iXX/HH90KugykptfCo=
+X-Google-Smtp-Source: AGHT+IEedT6QYUYEQO3a2ARsXA2fJlxbbWk3deZnLV3TTslz3wk8qfw3UceQmJU2YkTPgQryu1Q80r9FGd/MYX1FreY=
+X-Received: by 2002:a05:6122:2a44:b0:518:81aa:899b with SMTP id
+ 71dfb90a1353d-51b75c6fb79mr36919024e0c.6.1736136826010; Sun, 05 Jan 2025
+ 20:13:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20241217085709.679823-1-baturo.alexey@gmail.com>
-In-Reply-To: <20241217085709.679823-1-baturo.alexey@gmail.com>
+References: <20241231032654.133039-1-frank.chang@sifive.com>
+ <20241231032654.133039-5-frank.chang@sifive.com>
+In-Reply-To: <20241231032654.133039-5-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 13:35:42 +1000
-Message-ID: <CAKmqyKM8F0ziHKCX9ZeQdqugGM=gesBHiX9sUCwoxVT2ZfMvVA@mail.gmail.com>
-Subject: Re: [PATCH v14 0/7] Pointer Masking update for Zjpm v1.0
-To: baturo.alexey@gmail.com
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Date: Mon, 6 Jan 2025 14:13:20 +1000
+Message-ID: <CAKmqyKNk0mdgu1g+WEYzeY-c8GvZY0jVdbNoUU34PyFEi540nA@mail.gmail.com>
+Subject: Re: [PATCH v11 4/6] target/riscv: Add Smrnmi mnret instruction
+To: frank.chang@sifive.com
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tommy Wu <tommy.wu@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
@@ -96,92 +98,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 6:57=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
+On Tue, Dec 31, 2024 at 1:28=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
-> From: Alexey Baturo <baturo.alexey@gmail.com>
+> From: Tommy Wu <tommy.wu@sifive.com>
 >
-> Hi,
+> This patch adds a new instruction 'mnret'. 'mnret' is an M-mode-only
+> instruction that uses the values in `mnepc` and `mnstatus` to return to t=
+he
+> program counter, privilege mode, and virtualization mode of the
+> interrupted context.
 >
-> Rebased and addressed Alistair's comments on code style.
->
-> Thanks
->
-> [v13]:
-> Rebased and addressed Daniel's comments about the return type of the help=
-er.
->
-> Thanks
->
-> [v12]:
-> Rebased and addressed Richard's comments about proper masking virtualized=
- accesses.
->
-> Thanks
->
-> [v11]:
-> As suggested on the mailing list by Daniel, I'm resubmitting this series =
-and keeping the original versioning number.
-> So that makes this one v11 and previous - v10.
-> Also I applied previously issues reviewed-by tags on some of the patches =
-that were present in v9 series, but only for the code, that didn't change m=
-uch.
-> For the others I'd really like to have them reviewed as there were a lot =
-of comments on v9 series.
-> Also rebased on the current upstream.
->
-> Thanks
->
-> [v10]:
-> I've rebased this patch series and addressed Richard's and Daniel's comme=
-nts.
-> Thanks
->
-> [v0]:
-> As Pointer Masking is finally ratified, these patches intend to update th=
-e existing code to the final version.
-> These patches have been submitted previously and I tried to address all t=
-he suggestions, but I'd suggest to review them from the clean slate and the=
-n finally push them to the repo.
-> Thanks.
->
-> Alexey Baturo (7):
->   target/riscv: Remove obsolete pointer masking extension code.
->   target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
->     of Zjpm v1.0
->   target/riscv: Add helper functions to calculate current number of
->     masked bits for pointer masking
->   target/riscv: Add pointer masking tb flags
->   target/riscv: Update address modify functions to take into account
->     pointer masking
->   target/riscv: Apply pointer masking for virtualized memory accesses
->   target/riscv: Enable updates for pointer masking variables and thus
->     enable pointer masking extension
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This is all reviewed, but doesn't apply to
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next
-unfortunatley. Do you mind rebasing and hopefully this should then be
-merged :)
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/helper.h                         |  1 +
+>  target/riscv/insn32.decode                    |  3 ++
+>  .../riscv/insn_trans/trans_privileged.c.inc   | 20 +++++++++
+>  target/riscv/op_helper.c                      | 45 ++++++++++++++++---
+>  4 files changed, 64 insertions(+), 5 deletions(-)
 >
->  target/riscv/cpu.c           |  19 +-
->  target/riscv/cpu.h           |  50 ++---
->  target/riscv/cpu_bits.h      |  91 +--------
->  target/riscv/cpu_cfg.h       |   3 +
->  target/riscv/cpu_helper.c    | 128 +++++++++----
->  target/riscv/csr.c           | 357 +++--------------------------------
->  target/riscv/internals.h     |  54 ++++++
->  target/riscv/machine.c       |  17 +-
->  target/riscv/op_helper.c     |  16 +-
->  target/riscv/pmp.c           |  14 +-
->  target/riscv/pmp.h           |   1 +
->  target/riscv/tcg/tcg-cpu.c   |   5 +-
->  target/riscv/translate.c     |  47 ++---
->  target/riscv/vector_helper.c |   5 -
->  14 files changed, 257 insertions(+), 550 deletions(-)
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index 451261ce5a..16ea240d26 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -131,6 +131,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl=
+)
+>  #ifndef CONFIG_USER_ONLY
+>  DEF_HELPER_1(sret, tl, env)
+>  DEF_HELPER_1(mret, tl, env)
+> +DEF_HELPER_1(mnret, tl, env)
+>  DEF_HELPER_1(wfi, void, env)
+>  DEF_HELPER_1(wrs_nto, void, env)
+>  DEF_HELPER_1(tlb_flush, void, env)
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index e9139ec1b9..942c434c6e 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -121,6 +121,9 @@ wfi         0001000    00101 00000 000 00000 1110011
+>  sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+>  sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
 >
+> +# *** NMI ***
+> +mnret       0111000    00010 00000 000 00000 1110011
+> +
+>  # *** RV32I Base Instruction Set ***
+>  lui      ....................       ..... 0110111 @u
+>  {
+> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/risc=
+v/insn_trans/trans_privileged.c.inc
+> index ecd3b8b2c9..73f940d406 100644
+> --- a/target/riscv/insn_trans/trans_privileged.c.inc
+> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
+> @@ -18,6 +18,12 @@
+>   * this program.  If not, see <http://www.gnu.org/licenses/>.
+>   */
+>
+> +#define REQUIRE_SMRNMI(ctx) do {     \
+> +    if (!ctx->cfg_ptr->ext_smrnmi) { \
+> +        return false;                \
+> +    }                                \
+> +} while (0)
+> +
+>  static bool trans_ecall(DisasContext *ctx, arg_ecall *a)
+>  {
+>      /* always generates U-level ECALL, fixed in do_interrupt handler */
+> @@ -106,6 +112,20 @@ static bool trans_mret(DisasContext *ctx, arg_mret *=
+a)
+>  #endif
+>  }
+>
+> +static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
+> +{
+> +#ifndef CONFIG_USER_ONLY
+> +    REQUIRE_SMRNMI(ctx);
+> +    decode_save_opc(ctx, 0);
+> +    gen_helper_mnret(cpu_pc, tcg_env);
+> +    tcg_gen_exit_tb(NULL, 0); /* no chaining */
+> +    ctx->base.is_jmp =3D DISAS_NORETURN;
+> +    return true;
+> +#else
+> +    return false;
+> +#endif
+> +}
+> +
+>  static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
+>  {
+>  #ifndef CONFIG_USER_ONLY
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index eddedacf4b..63ec53e992 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -321,24 +321,30 @@ target_ulong helper_sret(CPURISCVState *env)
+>      return retpc;
+>  }
+>
+> -target_ulong helper_mret(CPURISCVState *env)
+> +static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc=
+,
+> +                                  target_ulong prev_priv)
+>  {
+>      if (!(env->priv >=3D PRV_M)) {
+>          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+>      }
+>
+> -    target_ulong retpc =3D env->mepc;
+>      if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
+>          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+>      }
+>
+> -    uint64_t mstatus =3D env->mstatus;
+> -    target_ulong prev_priv =3D get_field(mstatus, MSTATUS_MPP);
+> -
+>      if (riscv_cpu_cfg(env)->pmp &&
+>          !pmp_get_num_rules(env) && (prev_priv !=3D PRV_M)) {
+>          riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC()=
+);
+>      }
+> +}
+> +
+> +target_ulong helper_mret(CPURISCVState *env)
+> +{
+> +    target_ulong retpc =3D env->mepc;
+> +    uint64_t mstatus =3D env->mstatus;
+> +    target_ulong prev_priv =3D get_field(mstatus, MSTATUS_MPP);
+> +
+> +    check_ret_from_m_mode(env, retpc, prev_priv);
+>
+>      target_ulong prev_virt =3D get_field(env->mstatus, MSTATUS_MPV) &&
+>                               (prev_priv !=3D PRV_M);
+> @@ -370,6 +376,35 @@ target_ulong helper_mret(CPURISCVState *env)
+>      return retpc;
+>  }
+>
+> +target_ulong helper_mnret(CPURISCVState *env)
+> +{
+> +    target_ulong retpc =3D env->mnepc;
+> +    target_ulong prev_priv =3D get_field(env->mnstatus, MNSTATUS_MNPP);
+> +    target_ulong prev_virt;
+> +
+> +    check_ret_from_m_mode(env, retpc, prev_priv);
+> +
+> +    prev_virt =3D get_field(env->mnstatus, MNSTATUS_MNPV) &&
+> +                (prev_priv !=3D PRV_M);
+> +    env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, true);
+> +
+> +    /*
+> +     * If MNRET changes the privilege mode to a mode
+> +     * less privileged than M, it also sets mstatus.MPRV to 0.
+> +     */
+> +    if (prev_priv < PRV_M) {
+> +        env->mstatus =3D set_field(env->mstatus, MSTATUS_MPRV, false);
+> +    }
+> +
+> +    if (riscv_has_ext(env, RVH) && prev_virt) {
+> +        riscv_cpu_swap_hypervisor_regs(env);
+> +    }
+> +
+> +    riscv_cpu_set_mode(env, prev_priv, prev_virt);
+> +
+> +    return retpc;
+> +}
+> +
+>  void helper_wfi(CPURISCVState *env)
+>  {
+>      CPUState *cs =3D env_cpu(env);
 > --
-> 2.39.5
+> 2.34.1
+>
 >
 
