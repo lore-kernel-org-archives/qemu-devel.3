@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F269E77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F714E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUtJk-0002Yk-25; Mon, 06 Jan 2025 15:03:16 -0500
+	id 1tUtKC-0002o1-K5; Mon, 06 Jan 2025 15:03:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJh-0002Xb-8L
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:13 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtKB-0002n3-5y
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:43 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtJf-00039t-1g
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:13 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3862d16b4f5so9136537f8f.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUtK8-0003OO-QG
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:03:42 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so106003925e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:03:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736193789; x=1736798589; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736193819; x=1736798619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gw/8miEe/PnaBFePSWTnOg3qI2ZvVUjrjdrVrAxgzBI=;
- b=px94p8GTMutot+SHUgInntlxuc3KrdY9cMjay+uyCuTvj7o0bEtZhFjtiEDyvrVejT
- MuDVODS4PYfHutEAn/g+Tg7RCF/BlMk2gNSX6Dw9tEfIfqsnHHwydriIbv028d07/waj
- 2iHCsMYBEEjJtjntVB6ihxFgIWyBG6OWhLCh23LW0EbfWluU4mgYdljo2dlyHguMx1dM
- BdGi65sVqkXTN8zl8UfKa/VKjcLv4EnprtSeja7pEGiCU2AD4R/Wx7mqlQdEKAt2aOtH
- ZAY5P5YPaPVQQTxgKgzvTiyPecLOgblrNqOf25TjTyLH4YDiKU0dFnKBGPeaWqKjawX7
- e1aA==
+ bh=sQToL39oc1IIGRZ4x4DJpAbte9qYHUOsWxQUB+w3STI=;
+ b=uOPJMAGRbEpVSEyPu+TgDMLOkZY6dP6K1EnZzyLTxMGgOQ57hyv9G3iIA0bMeFd+NW
+ CO+Q4u4wgsWXovHffVu6upFJz68LJYjY0lub39tNj/R1NPPbIqS5VRk0yFbQXI6scy25
+ zax/C/KQ1w6FMT3yzeiK7BgL7EBePqwne9LaSM71/RdDjHajJN5zrrwE1cnvToIK/1a0
+ vctAOwotlyM3Yn0XKYN6wZ/xtOJf2mqcOWaPsltsykpRXtpemsver4mrsH/MoW5ob3Sd
+ 7cGebdQ8C+dbQCIN9LS2zz82/EXaTP3I27Is7WWEdukKskb8dvlpqpaa0hh40NCKYjQB
+ /oAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736193789; x=1736798589;
+ d=1e100.net; s=20230601; t=1736193819; x=1736798619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gw/8miEe/PnaBFePSWTnOg3qI2ZvVUjrjdrVrAxgzBI=;
- b=M0/fjsOT5s0v2Q12qwWaNylqTYC9LajlCKtQbB0PGcUOdfJT7+XKr6upPc7an0Fr57
- V8r/JFlfNFR+LXhA+KlYzbfsItW02AESdWxcNUEdp0XaosNya7At05FywQqeWe3YDDLt
- yiPuuPD0RZDDgVK60qdNIznx4Au/pxQRwJHutZ2mnfgU2X5zVqhCWwf/MHnMObETf/zW
- 8K4dHOrhDcXWYSMLMTUecaYz/FPWcskbbhd5+tkczpCUy1uQrIgZ2M4og3lcFioE273/
- ibgFSZU35HjKC8/AtyNu67JRx2rh4AcJnOrkBofK3bhZAtO+bVqO716s7cx2QyphWKTw
- qfCQ==
-X-Gm-Message-State: AOJu0Yx7TcgKQEojuSgafS4BDAaT7IrqryJy+buxrQzuUvA963Obc88Y
- k6raust9lMqOboajg9aEvkxyH81MxBsqQhJEcYtata+NCYc0e3rMO7FeKBxidRHi2UaACPB1FgQ
- 7RaI=
-X-Gm-Gg: ASbGncslsmmZPznTJbYNdsZ9ess3g1a6HtpPuHdrNh/OrocZK9s3lgRGe1hXBn0gbO7
- p+q9qOfWlvJPtWLrZaV1SXA9JdZUULshrTjxViGrMTawO4RsOhdibQq9IN+6ddDfAeN1HJVw2v4
- OVWcP1PyBxIyXBt8DeD9EvNm6OrS/PiDvYNxcKLyWDCSWOwJvFtUlFJtOjXNlfbGEubehwAv02Q
- 17AJeZOUJVfz209xp1gvWc6fSVPs4nz/iQnmHgGhRwUgFr4JEn/ijyDQRzG7ZQYb2YbTh4AQqeC
- RA5A4fgG+/IA+VDGnRkGWTAI+kc/TQw=
-X-Google-Smtp-Source: AGHT+IE81N1RplBD8FCsdoj95sqyVSqitqWpe38bLlQuumoNL1lLDdZMOpwBwgd43Npz//MFxfo/tw==
-X-Received: by 2002:a5d:64ac:0:b0:38a:4df5:a08 with SMTP id
- ffacd0b85a97d-38a7923b959mr440924f8f.22.1736193788891; 
- Mon, 06 Jan 2025 12:03:08 -0800 (PST)
+ bh=sQToL39oc1IIGRZ4x4DJpAbte9qYHUOsWxQUB+w3STI=;
+ b=JR+NDKlVjf7pYEtF7sgkdoDed2+8XU3ke8PetwsEEf/Zi08ni6nBxlKNNG9srqOTy+
+ rAcSU091dxpUc3FbcBjkxF818IgiQjDh5jIwrPTClJeYzcBom6fcwdfD6aODS8heVhLU
+ a8OpEtYKeAfGbm6HG2TBm7SSyGs8z5tlsHAXDy8PhyiStu9cEuLzGo5Dul2wP7L/WFgw
+ LpaGWxnL4NzyF/vLciUODoUes51ZcMRO80NUXBva6br8LTwumYXyFMABd7pl4x+eYGf+
+ FiWo1BCyTK3TAIEGoczyHiw7XJ54XVT8MbhXIoonZlzeiIF3ntdwmtodJ9AgEWq5qc7V
+ kK3w==
+X-Gm-Message-State: AOJu0Ywsy+gsWfL2Wf+lWCMe/5M/+qqi/RT6URnHejS5qBiUFAhZEEiJ
+ TdAGO5MJgR4uVL97gAJF+ly6kEaRIDMIKKFCQwfbG4ImDdDgaFcY/CWK4Pd5DQtOKWhdjtO6jNc
+ wCXQ=
+X-Gm-Gg: ASbGncuvDVwayRfsONpyS/fR0r7ELQlZDgtXFO1CVQ3nYC+pYCW3snEJVMp/e25IBMA
+ XfwyE2regSX46AnU5/3ORWtqi8zFjKiYoeIeHLpChLCANV0e2guOAA3dKfh2tcWHQqf0TJZu92h
+ qZxwJHn4ax2XZxAqoYiyMPlMgM8zvN0Nr4cK4w7Q20Zr+WsPGE/nZW37oYC4+qd5fJPp7QYDyRh
+ M7Crrq/KWX1p9xQls8sRpKbXqOpgMPuyDqmihSMNcbV8sh1N5ywK1KoQGGAUG32QDm+zGcoshDM
+ hUJJmaWhZ/kHVJDaMNItk9arCJJmGmw=
+X-Google-Smtp-Source: AGHT+IFXiDdVgmnTH4sfktC8/xKNinP6K1bHXh0LE5bFlepNSrMiJFLvtHvHs4neclwfX3Zl5Vm/Iw==
+X-Received: by 2002:a05:600c:5112:b0:434:faa9:5266 with SMTP id
+ 5b1f17b1804b1-436c2b5b491mr121041605e9.13.1736193818909; 
+ Mon, 06 Jan 2025 12:03:38 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43665cd9c29sm559552815e9.14.2025.01.06.12.03.07
+ 5b1f17b1804b1-4367086e40esm543882975e9.30.2025.01.06.12.03.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 06 Jan 2025 12:03:08 -0800 (PST)
+ Mon, 06 Jan 2025 12:03:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -94,17 +94,17 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH 1/7] cpus: Restrict CPU_FOREACH_SAFE() to user emulation
-Date: Mon,  6 Jan 2025 21:02:52 +0100
-Message-ID: <20250106200258.37008-2-philmd@linaro.org>
+Subject: [RFC PATCH 6/7] accel/hvf: Use CPU_FOREACH_HVF()
+Date: Mon,  6 Jan 2025 21:02:57 +0100
+Message-ID: <20250106200258.37008-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106200258.37008-1-philmd@linaro.org>
 References: <20250106200258.37008-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,27 +127,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Only iterate over HVF vCPUs when running HVF specific code.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/system/hvf_int.h  | 4 ++++
+ accel/hvf/hvf-accel-ops.c | 9 +++++----
+ target/arm/hvf/hvf.c      | 4 ++--
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index c3ca0babcb3..48d90f50a71 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -594,8 +594,11 @@ extern CPUTailQ cpus_queue;
- #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
- #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
- #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 42ae18433f0..3cf64faabd1 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -11,6 +11,8 @@
+ #ifndef HVF_INT_H
+ #define HVF_INT_H
+ 
++#include "system/hw_accel.h"
 +
-+#if defined(CONFIG_USER_ONLY)
- #define CPU_FOREACH_SAFE(cpu, next_cpu) \
-     QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
-+#endif
+ #ifdef __aarch64__
+ #include <Hypervisor/Hypervisor.h>
+ typedef hv_vcpu_t hvf_vcpuid;
+@@ -74,4 +76,6 @@ int hvf_put_registers(CPUState *);
+ int hvf_get_registers(CPUState *);
+ void hvf_kick_vcpu_thread(CPUState *cpu);
  
- extern __thread CPUState *current_cpu;
++#define CPU_FOREACH_HVF(cpu) CPU_FOREACH_HWACCEL(cpu)
++
+ #endif
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index 945ba720513..bbbe2f8d45b 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -504,7 +504,7 @@ static int hvf_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+         }
+     }
  
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_HVF(cpu) {
+         err = hvf_update_guest_debug(cpu);
+         if (err) {
+             return err;
+@@ -543,7 +543,7 @@ static int hvf_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
+         }
+     }
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_HVF(cpu) {
+         err = hvf_update_guest_debug(cpu);
+         if (err) {
+             return err;
+@@ -560,7 +560,7 @@ static void hvf_remove_all_breakpoints(CPUState *cpu)
+     QTAILQ_FOREACH_SAFE(bp, &hvf_state->hvf_sw_breakpoints, entry, next) {
+         if (hvf_arch_remove_sw_breakpoint(cpu, bp) != 0) {
+             /* Try harder to find a CPU that currently sees the breakpoint. */
+-            CPU_FOREACH(tmpcpu)
++            CPU_FOREACH_HVF(tmpcpu)
+             {
+                 if (hvf_arch_remove_sw_breakpoint(tmpcpu, bp) == 0) {
+                     break;
+@@ -572,7 +572,7 @@ static void hvf_remove_all_breakpoints(CPUState *cpu)
+     }
+     hvf_arch_remove_all_hw_breakpoints();
+ 
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_HVF(cpu) {
+         hvf_update_guest_debug(cpu);
+     }
+ }
+@@ -581,6 +581,7 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, void *data)
+ {
+     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+ 
++    ops->get_cpus_queue = hw_accel_get_cpus_queue;
+     ops->create_vcpu_thread = hvf_start_vcpu_thread;
+     ops->kick_vcpu_thread = hvf_kick_vcpu_thread;
+ 
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 0afd96018e0..13400ff0d5f 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2269,10 +2269,10 @@ static void hvf_arch_set_traps(void)
+ 
+     /* Check whether guest debugging is enabled for at least one vCPU; if it
+      * is, enable exiting the guest on all vCPUs */
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_HVF(cpu) {
+         should_enable_traps |= cpu->accel->guest_debug_enabled;
+     }
+-    CPU_FOREACH(cpu) {
++    CPU_FOREACH_HVF(cpu) {
+         /* Set whether debug exceptions exit the guest */
+         r = hv_vcpu_set_trap_debug_exceptions(cpu->accel->fd,
+                                               should_enable_traps);
 -- 
 2.47.1
 
