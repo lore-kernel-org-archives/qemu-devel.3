@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F0AE77198
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 05:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD4FE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 05:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUfty-0003gg-VY; Mon, 06 Jan 2025 00:43:46 -0500
+	id 1tUfvj-0005UL-Bl; Mon, 06 Jan 2025 00:45:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tUftx-0003gI-Tr
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:43:45 -0500
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1tUfvU-000592-7O
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:45:25 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tUftw-0004H2-1i
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:43:45 -0500
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2ee50ffcf14so17794571a91.0
- for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 21:43:43 -0800 (PST)
+ id 1tUfvQ-0004al-Uo
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:45:19 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e9f60bf4so25205410a12.3
+ for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 21:45:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1736142222; x=1736747022; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Z2X5nWtoBDHcCOAv2YoYn8p6BiXBTm5yBQ3TPvY8bqA=;
- b=HlOPW+vIrUUqA3/wvaolZGzv8IZ9Tr6kRdAuWcLKiJ/SuCslfYFEo6+2kdKC8YSIPv
- 3pniCqgnErCTcW57RRY7jYAo88jBE3c/u0IHzhx2I4vnZ36MiW01/bf2/9g/dapkNcwB
- JoWmUdGVIUgDLJqFV2sITEf/pXnBUhlKhWIapXpvTqt/S75CkrAj1MsiRAmKGt0ztiMQ
- A37TWK7yu7YwkOlrllisFowlToh89p8FCfZkQ1tWSMqiQ4//j8cGfkksypRj6u76CfKu
- tiUAk5tVk9chKnr+RPBL0HPmb7lzmIr3zV2P8n/bcSxrVfjF9krdrIDR1BZxuIVDR3ml
- 3o2g==
+ d=sifive.com; s=google; t=1736142315; x=1736747115; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=O682btEOM1Rl7PEyZuuGOXhFL3ZlxKOw32XVYH9sxZE=;
+ b=bn3GqKXJ28nBJNreXePWIfkUXI33cJAqj22YdmcXdSMzbR5Mp5xfLi0P27VcnP6kj6
+ cDCWtzjRauSOtYyXW7zgpxQrWzCCh8sF5MtTU5wfu8GQk7+wpvKWiO39msgaa3TdeIr7
+ vNT2O/HiN1MIiTvTAG/NiMEGaqvss7io6C75WFItHpBAO9YSd/X4NjBl5X5zIFwQcriI
+ CQDo3jLfOz1nTDTnOF+Lm3gjVKSXs8uHZ6Az2g298OT85pvQtkcyTiJgy6eQ02bcJ8ny
+ BjXoZEnit1jdMlHWRc0lqkqXCTuQu3mcOOxUN9xyeeTdbSVCULfyK6voHhG9zQ1jmNYP
+ maQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736142222; x=1736747022;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1736142315; x=1736747115;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Z2X5nWtoBDHcCOAv2YoYn8p6BiXBTm5yBQ3TPvY8bqA=;
- b=RX2i9qQxAm7dQJdwqWVgagM8B9VRUeO8atBX7WZU6soSiSxHEiX3MCFSnPnuuEYihx
- ZoDArDM8xTLK4f3TNH9SIGGrAYRKKitdXq5lOVKr6v9HRc3CEEdtRkLImm3THfNheHp0
- 6oZtLcfsyuRVUz0smSD7Moc4IN6boTe30elcugQivt+CK1YptRsjQhvARLtpR15mrdbK
- J1OuAyKoLBKQSFUyPZpu5CdviWu7xuU1W7AAteBrEdbH339kQ6ivI2odKCKUXwZhkjQ5
- 8VP1+bDvcrOTiXsveVCFygrNmHnwHMg/91yKDkl8kLEKkq3phuPncksUKA0QoYYnvO/A
- yldA==
-X-Gm-Message-State: AOJu0YyFHxTWQs69hQJuJyIC6xBUwmmvVyiciJp7G86Vv6UnXj57XZOn
- bFy7hJRZjMvDBb7KWfpKfc+vU5XKxy/pEZB0zMQvJKnhxGEJJ08VBZGkqlpap1qqNo5LK5+zbEL
- 4Lx+4Ygmh395HObUo3vGkySfrLjy6A+rHMOIF8kjp95eKUVSN/8wr4weTPu0Wx86C3OB7/jJxhq
- 8GDM4pSPhJvGH115onl8nL9zcvV6UAJ2FAsYyAzMcGHw==
-X-Gm-Gg: ASbGnctw7m0C28nbdBVcZTf/jotdodsgbM5lTNznow7gS0M9MV7EUJ/TylSHdKQiAJ+
- YFbDOKkk7T6RAqWB6lPfUw1c8hNAUZCp60eTYQVYxIKJO6f9UjmxrNPbHKWpr38ytTHxxtORn0/
- cXWs76Q+ddFrPoZZ26uFeuQTnEvDEtFMJoZxuycSelkMG7VSZwwFLGnUZA6F/dpcmQjPq3kDrtT
- sQWaAYrmqANqXJf+86RsyAGGOQYcA367C2ObBqHVXFjDTDBBvjRCtB28nXMNNT6IXqsWQXghnd1
- 7+wI5dKKnv4=
-X-Google-Smtp-Source: AGHT+IGK1BRrOVzvgCNi8MHimmjFCEhyxQM9n2mSCDpbT3aD2WeoBanODzIA1WBiwtMwMJgrSiri0A==
-X-Received: by 2002:a17:90b:2651:b0:2ef:2980:4411 with SMTP id
- 98e67ed59e1d1-2f443607d7cmr91122271a91.9.1736142221789; 
- Sun, 05 Jan 2025 21:43:41 -0800 (PST)
-Received: from fchang-1826.internal.sifive.com ([210.176.154.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc96eac6sm285722215ad.80.2025.01.05.21.43.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jan 2025 21:43:41 -0800 (PST)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v12 0/6] Add Smrnmi support
-Date: Mon,  6 Jan 2025 13:43:30 +0800
-Message-Id: <20250106054336.1878291-1-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.34.1
+ bh=O682btEOM1Rl7PEyZuuGOXhFL3ZlxKOw32XVYH9sxZE=;
+ b=LWF22iDPIUsoh5426r6PNOuvFJ/s0M5rDkR9e0Dtt44uBeGPd5Mq1FmvK3XGTdW5d5
+ X61hc0nWdRBJpowIBR1RFILdZEEfS0QpnRgNdob/l2WSOtcZT1o1yqVA9HgH8zHV/eJR
+ Va561urL3OLR9g3G1bj9oXb+k5NVH7qllzh3foS05eBxjINDQ5k/hRBpcPNrhpy6Z8Ba
+ NUgW29qY7fZm+foVGpnoX+ooM3KSAYRrTHKBaEZgn2gVt4RmN9AXS1+jyQC63v3aHETQ
+ H4p9KG+uRlYb6vqHfXLa2e2twHhIXf4a6u88wthyEnR6UurvjBy+sQb4EbyfYVpRzGSu
+ CANQ==
+X-Gm-Message-State: AOJu0Yx/NmfFzS/jWHO/qFENAeCAmrt3q2+3HbuguJSIz5tfCjEPbF7J
+ MSUHpiuKv6L/AwUseHI++ALYAizhayxc4ap5CDypiHocJA+A5yXbCXM16B2PhSO1KQPgOu/+KZS
+ k4U2DXmYwZJ9o3fG4YKj0j0ouSmHlSurz3QNQsQ==
+X-Gm-Gg: ASbGncu28iNp0+SL4qdOK+4ajkjHehtzVQ2zJmBIkyTbi81THcjWXuJysmroXQFZkgX
+ Mrnfp3dVTGl+9WVpKwax/qQAF83i5UvtqmcYb0U0=
+X-Google-Smtp-Source: AGHT+IHIbY5Wve+otfojHub9qczoC3Ifhr3iWOyapmhH9kXjZZbrsC5IAdv4XfldFINQhh8gqDJYhnsk/iMRjMAE6/4=
+X-Received: by 2002:a05:6402:11c7:b0:5d0:b51c:8489 with SMTP id
+ 4fb4d7f45d1cf-5d81ddc01abmr43546356a12.12.1736142315182; Sun, 05 Jan 2025
+ 21:45:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=frank.chang@sifive.com; helo=mail-pj1-x102c.google.com
+References: <20241231032654.133039-1-frank.chang@sifive.com>
+ <20241231032654.133039-6-frank.chang@sifive.com>
+ <CAKmqyKOUnh-iDiN7_H1rtRq_dmXT2b=5qN9iVDf-JeD7X7OGOw@mail.gmail.com>
+In-Reply-To: <CAKmqyKOUnh-iDiN7_H1rtRq_dmXT2b=5qN9iVDf-JeD7X7OGOw@mail.gmail.com>
+From: Frank Chang <frank.chang@sifive.com>
+Date: Mon, 6 Jan 2025 13:45:04 +0800
+Message-ID: <CAE_xrPgpWVvMEM_6MEAAGmxD-6C4W+8T-NkrGmzKLJYZisBPQg@mail.gmail.com>
+Subject: Re: [PATCH v11 5/6] target/riscv: Add Smrnmi cpu extension
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tommy Wu <tommy.wu@sifive.com>
+Content-Type: multipart/alternative; boundary="000000000000f9f901062b03212b"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=frank.chang@sifive.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -104,147 +96,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+--000000000000f9f901062b03212b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This patchset added support for Smrnmi Extension in RISC-V.
+On Mon, Jan 6, 2025 at 12:15=E2=80=AFPM Alistair Francis <alistair23@gmail.=
+com>
+wrote:
 
-There are four new CSRs and one new instruction added to allow NMI to be
-resumable in RISC-V, which are:
+> On Tue, Dec 31, 2024 at 1:28=E2=80=AFPM <frank.chang@sifive.com> wrote:
+> >
+> > From: Tommy Wu <tommy.wu@sifive.com>
+> >
+> > This adds the properties for ISA extension Smrnmi.
+> >
+> > Also, when Smrnmi is present, the firmware (e.g., OpenSBI) must set
+> > mnstatus.NMIE to 1 before enabling any interrupts. Otherwise, all
+> > interrupts will be disabled. Since our current OpenSBI does not
+> > support Smrnmi yet, let's disable Smrnmi for the 'max' type CPU for
+> > now. We can re-enable it once OpenSBI includes proper support for it.
+> >
+> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> > Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+> > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > ---
+> >  target/riscv/cpu.c         | 2 ++
+> >  target/riscv/tcg/tcg-cpu.c | 6 ++++++
+> >  2 files changed, 8 insertions(+)
+> >
+> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > index 6c46a2f076..b0d9e93170 100644
+> > --- a/target/riscv/cpu.c
+> > +++ b/target/riscv/cpu.c
+> > @@ -186,6 +186,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> >      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+> >      ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+> >      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+> > +    ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
+> >      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+> >      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+> >      ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
+> > @@ -1614,6 +1615,7 @@ const RISCVCPUMultiExtConfig
+> riscv_cpu_extensions[] =3D {
+> >
+> >      MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
+> >      MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
+> > +    MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
+> >      MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+> >      MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
+> >      MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
+> > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> > index cbf2cf1963..c4070c948e 100644
+> > --- a/target/riscv/tcg/tcg-cpu.c
+> > +++ b/target/riscv/tcg/tcg-cpu.c
+> > @@ -1421,6 +1421,12 @@ static void riscv_init_max_cpu_extensions(Object
+> *obj)
+> >      if (env->misa_mxl !=3D MXL_RV32) {
+> >          isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcf), false);
+> >      }
+> > +
+> > +    /*
+> > +     * ext_smrnmi requires OpenSBI changes that our current
+> > +     * image does not have. Disable it for now.
+> > +     */
+> > +    isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi), false);
+>
+> Should we log this to users so they know?
+>
+> Alistair
+>
 
-=============================================================
-  * mnscratch (0x740)
-  * mnepc     (0x741)
-  * mncause   (0x742)
-  * mnstatus  (0x744)
-=============================================================
-  * mnret: To return from RNMI interrupt/exception handler.
-=============================================================
+Sure, I've added it in the v12 patchset.
 
-RNMI also has higher priority than any other interrupts or exceptions
-and cannot be disabled by software.
+Regards,
+Frank Chang
 
-RNMI may be used to route to other devices such as Bus Error Unit or
-Watchdog Timer in the future.
 
-The interrupt/exception trap handler addresses of RNMI are
-implementation defined.
+>
+> >  }
+> >
+> >  static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
+> > --
+> > 2.34.1
+> >
+> >
+>
 
-If anyone wants to test the patches, we can use the customized OpenSBI[1],
-and the customized QEMU[2].
+--000000000000f9f901062b03212b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-We implemented a PoC RNMI trap handler in the customized OpenSBI.
-In the customized QEMU, we use the Smrnmi patches and the patch from
-Damien Hedde[3]. The patch from Damien Hedde can be used to inject
-the RNMI signal with the qmp command.
+<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jan 6, 2025 at 12:15=E2=80=AFPM A=
+listair Francis &lt;<a href=3D"mailto:alistair23@gmail.com">alistair23@gmai=
+l.com</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_container">=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Dec 31, 2024 at 1=
+:28=E2=80=AFPM &lt;<a href=3D"mailto:frank.chang@sifive.com" target=3D"_bla=
+nk">frank.chang@sifive.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; From: Tommy Wu &lt;<a href=3D"mailto:tommy.wu@sifive.com" target=3D"_b=
+lank">tommy.wu@sifive.com</a>&gt;<br>
+&gt;<br>
+&gt; This adds the properties for ISA extension Smrnmi.<br>
+&gt;<br>
+&gt; Also, when Smrnmi is present, the firmware (e.g., OpenSBI) must set<br=
+>
+&gt; mnstatus.NMIE to 1 before enabling any interrupts. Otherwise, all<br>
+&gt; interrupts will be disabled. Since our current OpenSBI does not<br>
+&gt; support Smrnmi yet, let&#39;s disable Smrnmi for the &#39;max&#39; typ=
+e CPU for<br>
+&gt; now. We can re-enable it once OpenSBI includes proper support for it.<=
+br>
+&gt;<br>
+&gt; Signed-off-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.co=
+m" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
+&gt; Signed-off-by: Tommy Wu &lt;<a href=3D"mailto:tommy.wu@sifive.com" tar=
+get=3D"_blank">tommy.wu@sifive.com</a>&gt;<br>
+&gt; Signed-off-by: Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@=
+ventanamicro.com" target=3D"_blank">dbarboza@ventanamicro.com</a>&gt;<br>
+&gt; Reviewed-by: Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@ve=
+ntanamicro.com" target=3D"_blank">dbarboza@ventanamicro.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 2 ++<br>
+&gt;=C2=A0 target/riscv/tcg/tcg-cpu.c | 6 ++++++<br>
+&gt;=C2=A0 2 files changed, 8 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
+&gt; index 6c46a2f076..b0d9e93170 100644<br>
+&gt; --- a/target/riscv/cpu.c<br>
+&gt; +++ b/target/riscv/cpu.c<br>
+&gt; @@ -186,6 +186,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext=
+_smaia),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0,=
+ ext_smcntrpmf),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ex=
+t_smepmp),<br>
+&gt; +=C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smr=
+nmi),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0,=
+ ext_smstateen),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext=
+_ssaia),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, h=
+as_priv_1_11),<br>
+&gt; @@ -1614,6 +1615,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extension=
+s[] =3D {<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;smaia&quot;, ext_smaia, f=
+alse),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;smepmp&quot;, ext_smepmp,=
+ false),<br>
+&gt; +=C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;smrnmi&quot;, ext_smrnmi, fals=
+e),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;smstateen&quot;, ext_smst=
+ateen, false),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;ssaia&quot;, ext_ssaia, f=
+alse),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;svade&quot;, ext_svade, f=
+alse),<br>
+&gt; diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c<b=
+r>
+&gt; index cbf2cf1963..c4070c948e 100644<br>
+&gt; --- a/target/riscv/tcg/tcg-cpu.c<br>
+&gt; +++ b/target/riscv/tcg/tcg-cpu.c<br>
+&gt; @@ -1421,6 +1421,12 @@ static void riscv_init_max_cpu_extensions(Objec=
+t *obj)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (env-&gt;misa_mxl !=3D MXL_RV32) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 isa_ext_update_enabled(cpu, CPU_CFG_=
+OFFSET(ext_zcf), false);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* ext_smrnmi requires OpenSBI changes that our cu=
+rrent<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* image does not have. Disable it for now.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi),=
+ false);<br>
+<br>
+Should we log this to users so they know?<br>
+<br>
+Alistair<br></blockquote><div><br></div><div><div>Sure, I&#39;ve added it i=
+n the v12 patchset.</div><div><br></div><div>Regards,</div><div>Frank Chang=
+</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">
+<br>
+&gt;=C2=A0 }<br>
+&gt;<br>
+&gt;=C2=A0 static bool riscv_cpu_has_max_extensions(Object *cpu_obj)<br>
+&gt; --<br>
+&gt; 2.34.1<br>
+&gt;<br>
+&gt;<br>
+</blockquote></div></div>
 
-[1] https://github.com/TommyWu-fdgkhdkgh/opensbi/tree/dev/twu/master
-[2] https://github.com/sifive/qemu/tree/upstream-smrnmi-v12
-[3] https://lists.gnu.org/archive/html/qemu-devel/2019-06/msg06232.html
-
-Test commands :
-$ ./build/qemu-system-riscv64 -M virt -cpu rv64,smrnmi=true,
-rnmi-interrupt-vector={Offset of the RNMI handler in the customized
-OpenSBI.} -m 4G -smp 2 -serial mon:stdio -serial null -nographic
--bios fw_jump.elf -kernel Image -initrd rootfs.cpio
--qmp unix:/tmp/qmp-sock,server,wait=off
-
-Use qmp command to inject the RNMI.
-
-Assert RNMI:
-$ ./scripts/qmp/qmp-shell /tmp/qmp-sock
-(QEMU) gpio-set path=/machine/soc0/harts[0] gpio=riscv.cpu.rnmi number=0 value=true
-
-De-assert RNMI:
-(QEMU) gpio-set path=/machine/soc0/harts[0] gpio=riscv.cpu.rnmi number=0 value=false
-
-Changelog:
-
-v12
-  * Replace TARGET_LONG_BITS with MXL.
-  * Add log to inform user that Smrnmi is disabled in the 'max' type CPU.
-  * Rebase to riscv-to-apply.next.
-
-v11
-  * Squash patch 7 into patch 5.
-  * Remove "DEFINE_PROP_END_OF_LIST()" from "riscv_harts_props[]" for
-    the upcoming "DEFINE_PROP_END_OF_LIST()" removal.
-
-v10
-  * Disable Smrnmi for the 'max' type CPU.
-
-v9
-  * Add Zicfilp support for Smrnmi.
-  * Change the existence checks for 'rnmi-interrupt-vector' and
-    'rnmi-exception-vector' to use 'num_rnmi_irqvec' and 'num_rnmi_excpvec'.
-  * Add warn_once messages for cases where the user sets
-    'rnmi-interrupt-vector' or 'rnmi-exception-vector' property without
-    enabling Smrnmi.
-
-v8
-  * Set virt to false when trapping to M-mode by RNMI.
-  (Thanks to Clément for the suggestions.)
-
-v7
-  * Rename 'nmi_execp' to 'nnmi_excep' and refactor RNMI exception
-    checking codes.
-  (Thanks to Clément for the suggestions.)
-  * Add the missing REQUIRE_SMRNMI() check and remove the redundant
-    check in 'helper_mnret'.
-  * Rebase to riscv-to-apply.next.
-  (Thanks to Alistair for the suggestions.)
-
-v6
-  * Delete the redundant code in 'riscv_cpu_do_interrupt'.
-  (Thank Alvin for the suggestion.)
-  * Split the shared code in 'helper_mret' and 'helper_mnret' into a
-    helper function 'check_ret_from_m_mode'.
-  (Thank Alistair for the suggestion.)
-
-v5
-  * Move the patch that adds the Smrnmi extension to the last patch.
-  (Thank Alistair for the suggestion.)
-  * Implement an M-mode software PoC for this with implemented handlers.
-  (Thank Andrew Jones for the suggestion.)
-  * Add a commit message to all patches of the series.
-  (Thank Andrew Jones for the suggestion.)
-
-v4
-  * Fix some coding style issues.
-  (Thank Daniel for the suggestions.)
-
-v3
-  * Update to the newest version of Smrnmi extension specification.
-
-v2
-  * split up the series into more commits for convenience of review.
-  * add missing rnmi_irqvec and rnmi_excpvec properties to riscv_harts.
-
-Frank Chang (1):
-  target/riscv: Add Zicfilp support for Smrnmi
-
-Tommy Wu (5):
-  target/riscv: Add 'ext_smrnmi' in the RISCVCPUConfig
-  target/riscv: Add Smrnmi CSRs
-  target/riscv: Handle Smrnmi interrupt and exception
-  target/riscv: Add Smrnmi mnret instruction
-  target/riscv: Add Smrnmi cpu extension
-
- hw/riscv/riscv_hart.c                         | 41 ++++++++
- include/hw/riscv/riscv_hart.h                 |  4 +
- target/riscv/cpu.c                            | 18 ++++
- target/riscv/cpu.h                            | 10 ++
- target/riscv/cpu_bits.h                       | 24 +++++
- target/riscv/cpu_cfg.h                        |  1 +
- target/riscv/cpu_helper.c                     | 99 +++++++++++++++++--
- target/riscv/csr.c                            | 82 +++++++++++++++
- target/riscv/helper.h                         |  1 +
- target/riscv/insn32.decode                    |  3 +
- .../riscv/insn_trans/trans_privileged.c.inc   | 20 ++++
- target/riscv/op_helper.c                      | 54 +++++++++-
- target/riscv/tcg/tcg-cpu.c                    |  9 ++
- 13 files changed, 353 insertions(+), 13 deletions(-)
-
---
-2.34.1
-
+--000000000000f9f901062b03212b--
 
