@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B3FE77197
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 03:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 615B7E77199
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 03:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUdco-0000Lk-Tz; Sun, 05 Jan 2025 22:17:57 -0500
+	id 1tUdv0-0002OH-U1; Sun, 05 Jan 2025 22:36:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUdcg-0000LQ-Vf; Sun, 05 Jan 2025 22:17:47 -0500
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1tUdux-0002O4-Ad; Sun, 05 Jan 2025 22:36:39 -0500
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUdcf-0003PB-Dj; Sun, 05 Jan 2025 22:17:46 -0500
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-51ba75ee2f3so3649284e0c.2; 
- Sun, 05 Jan 2025 19:17:44 -0800 (PST)
+ id 1tUduv-0006Vi-Nw; Sun, 05 Jan 2025 22:36:39 -0500
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-85ba92b3acfso5810427241.1; 
+ Sun, 05 Jan 2025 19:36:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736133464; x=1736738264; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736134596; x=1736739396; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mdVjyWIslowjc+XiB2n8nHKnoFskwztZus0YURbz7h8=;
- b=FiXkNDUtdsDy2fzvC9fRwo6XfVZTFYCnK7qI6UH2gWmyY/gHkfaRGUDzEKhqpn8ALz
- iarCl3+cVLV05l+Ih4keeitTyrgPigoiMdQgZQ8xuN57BV7SmPv1Yrj2Ms85xh8zkSs8
- tGBRG06GJ4K3hITPF2TxRoY2v5hCifzHDKQyd6BOoOmaPQmX//nP3ILYRXhCRchJZY80
- WCNRv4XTbETtP9q6xzqatsP4TnDuR2ZHTMWSxKPnqdGbyvg6AGHsX/u+rAKjDDwiT0bP
- NT6tE2jOWygybjJ2MFIlS7GEJ+8jOel3D//pnwt0Cx1jojiFFIVErh4aIuCL+68AlxDH
- CR0g==
+ bh=OyhFNG3Olecwae8Zh/b++4z1jqQL+kxO+gyuZuW131g=;
+ b=MKOa4QB5JNTUnp0wSookqDzt4rrx+NIOKMnjty+rr9hYU3nNe9wqL3NcVEXROSDqC7
+ BiFrRLN0StO6JI2qKJZeC4Yp1DszHtoyR0atAK1KBSS5wCAn1C+9l95Jp/siSji16coH
+ EzIYL1E06ofhqY9D6ElArNpGYVx+b3tgJ5AhCPAd3MlQ7Nifyww2EXwjQ55mRYqfDeaQ
+ hYQuYQMPTcHFOzM6cRpqsUldmg//8/dEq9Zsvl2WwUKOwMeSekSxD6G2rR8iN3ZJTRph
+ /AQ/3O+TCe2v0b5Pulio4tV8KfeFgGXUz05vYvjNIo95q8Nk9RaTpaFTFvplXVOs3jwO
+ zVNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736133464; x=1736738264;
+ d=1e100.net; s=20230601; t=1736134596; x=1736739396;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mdVjyWIslowjc+XiB2n8nHKnoFskwztZus0YURbz7h8=;
- b=wBdGvnTozYd+bTaQCzwj2VxrUt4aS7dzZJb+dIxDao1q4ktm6RC++DQNAjqveDGYwG
- rMQCODerQM/FqulPQrOO1xNfY3tkK2hxZohW/nErdCHKG0SO3Le3vUeu1LzFyKZqt97K
- tBDTMWogDy6eryWOoKDPfFqevf/aqo+d/g/9FswyHWBE6eAdOc7TGC3SbVl/N1ySBoFW
- OaUor3p6Jr501+UTXNfDTs3+uKNg6qUJ4Wknlk+mio4z0DkWypbwcN2fmomrs9MtL5fW
- JBm2kTUtqcTlnabb+Xkl50vwXFikOFR0Jy89VcbKgReDvlHwq+jq7YpuNrm/7CAkXqoK
- ltAQ==
+ bh=OyhFNG3Olecwae8Zh/b++4z1jqQL+kxO+gyuZuW131g=;
+ b=l8T0m9xOzd7UYaHRsqygivgmhR8muQXVbKY/qol3iNX8C5YTB7GSD3LTT7NJzj8XJ5
+ vZOLO1+etKHzpf8G/aakL7lo4+dMsFWoWZQ2JdLNw/iHAfiJuszncl68bCn3dfb0h+jp
+ fz7k3b9jMRsGGLLb1X0Yt+YSFUthE88gNv0YFoAaY38qqSIWPSzybWOPB3HH77PRtOJ2
+ ebaB9AQi1yon8GRml5jL3/fgpnyyYTxWsx0nz1dVJZNx56gAacTH8Zwffb3bgo6gRz1N
+ IONckbleqC8yDMIi6RAGc44tmhX5mCn7u60+xgBmk27N2GITLOR6va0RQ3bVWtYdR43F
+ EGfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWT8iL2jx3t28OP6O2xYnsLC1N21F6VJYa7AFolN9zmh3tK4xocVLzRM+q5ahevKjOD0KdMP1ZHSvY/@nongnu.org,
- AJvYcCWuRzK44YRCkLuKC2FYD8Maf4vj00B9X0EMeRkr1ddJi7TAi4+XBx7/Xza2+MBawpKYh/ySzFfOSk1uEg==@nongnu.org
-X-Gm-Message-State: AOJu0YykPggilC2O7diWiryFgNyD5l8vkCypt+bO2mLDOUwIlQbpuU6q
- +96f0ltlVhC+HSltuZXkXNk0JfqIR7as//+9kg/Ms9ft3eC0uISS6rHLP9DeTB5vTRuZIGI9Pw8
- ZCP5HuukUroGMGNKUgw8Kf1OyYLM=
-X-Gm-Gg: ASbGncvBROjWVs04T7Yzx49RkLjyAptqMoeJ5SgquWR+hOUJrT9D0ATYH+iYilNH6b8
- QgiAJ2ScHeZesvjC8wXBa7m8pn5cI8vU0GTH5uqqKpksYUGaU/OBzfRtljEN60MU+u6o=
-X-Google-Smtp-Source: AGHT+IG5PTW/BkFrfmnxFrheYjTT+dcolixn/2nBilrzRSLgqkxxfEGsGqwg8/+BFk7y8qHqNhivLbaQNg++IJuDVrE=
-X-Received: by 2002:a05:6122:8c0c:b0:518:9582:db90 with SMTP id
- 71dfb90a1353d-51b75d6fb20mr38998242e0c.11.1736133463952; Sun, 05 Jan 2025
- 19:17:43 -0800 (PST)
+ AJvYcCVLSfw5kIKib5GhI3rfXXn4mtpP3bhyMnM4AKb0aXiMdLdhVlkINswAYrAelvbCzaowKCKkQs6iCfdZ@nongnu.org
+X-Gm-Message-State: AOJu0Yy0cVuLi+WjX4N+UkqsTnLzKaIpPnDxAzVTiBBxURE+KLzbzj6e
+ ujbVbRaq4/UmLf7mUVlUZNoci4QOIlxQbxBHaCgjTAKKyVP/Tq3+DQNWTcbNdEA2/gT3ek5zLjy
+ w5pv4jLTq0Z1b6tNyndDSW4K8Viw=
+X-Gm-Gg: ASbGncvWXF0KkzKaYN7diR/0Tcu4xHsqJ7WWuCrYzFUNUYO007X83gAH1J59fnBzM5y
+ 93/ImTnOWtodHSIyy3fhSK0EE474mGpwgfQ20hjWNSBJh6PpQQsMSXrKIlKq5rw4XuHI=
+X-Google-Smtp-Source: AGHT+IGbbdCtEgaBGtHcl86K62vtqpabJEvmCU2ZpLNNyRzUwHmh/X0tN2rT5yKpTbXK/A1okuaHOhtoKxg3uD8q7d4=
+X-Received: by 2002:a05:6102:6d1:b0:4b1:1b41:ff5f with SMTP id
+ ada2fe7eead31-4b2cc320db4mr45424734137.1.1736134596245; Sun, 05 Jan 2025
+ 19:36:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20241217085709.679823-1-baturo.alexey@gmail.com>
- <20241217085709.679823-4-baturo.alexey@gmail.com>
-In-Reply-To: <20241217085709.679823-4-baturo.alexey@gmail.com>
+References: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 13:17:18 +1000
-Message-ID: <CAKmqyKMJ8MeCyv5JPX38s22Tk+mL+rFECUyRJXTESxL_sPX5eQ@mail.gmail.com>
-Subject: Re: [PATCH v14 3/7] target/riscv: Add helper functions to calculate
- current number of masked bits for pointer masking
-To: baturo.alexey@gmail.com
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Date: Mon, 6 Jan 2025 13:36:09 +1000
+Message-ID: <CAKmqyKNifEXQtfusSACP87eKKTZjMJWM4=Rg2zD_GrLmzWHTTg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/riscv: add traces for exceptions
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,133 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 6:57=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
+On Fri, Dec 20, 2024 at 3:47=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> From: Alexey Baturo <baturo.alexey@gmail.com>
+> Hi,
 >
-> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Let's add trace capabilities in riscv_raise_exception() to allow users
+> of qemu-riscv(32/64) to have a little more information when a SIGILL
+> occurs. This is done in patch 2.
+>
+> Patch 1 is a "look and feel" patch that I figured was worth doing.
+>
+> Daniel Henrique Barboza (2):
+>   target/riscv: use RISCVException enum in exception helpers
+>   target/riscv: add trace in riscv_raise_exception()
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Do you mind rebasing on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
 
 Alistair
 
-> ---
->  target/riscv/cpu.h        |  5 +++
->  target/riscv/cpu_helper.c | 78 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 83 insertions(+)
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 417ff45544..e7f346ff6b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -768,8 +768,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr =
-*pc,
+>  target/riscv/cpu.h        | 3 ++-
+>  target/riscv/op_helper.c  | 9 ++++++++-
+>  target/riscv/trace-events | 3 +++
+>  target/riscv/translate.c  | 2 +-
+>  4 files changed, 14 insertions(+), 3 deletions(-)
 >
->  bool riscv_cpu_is_32bit(RISCVCPU *cpu);
->
-> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
-> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
-> +uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
-> +
->  RISCVException riscv_csrr(CPURISCVState *env, int csrno,
->                            target_ulong *ret_value);
-> +
->  RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
->                             target_ulong *ret_value,
->                             target_ulong new_value, target_ulong write_ma=
-sk);
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index dba04851d5..7d149dfb33 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -214,6 +214,84 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr =
-*pc,
->      *pflags =3D flags;
->  }
->
-> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
-> +{
-> +#ifndef CONFIG_USER_ONLY
-> +    int priv_mode =3D cpu_address_mode(env);
-> +
-> +    if (get_field(env->mstatus, MSTATUS_MPRV) &&
-> +        get_field(env->mstatus, MSTATUS_MXR)) {
-> +        return PMM_FIELD_DISABLED;
-> +    }
-> +
-> +    /* Get current PMM field */
-> +    switch (priv_mode) {
-> +    case PRV_M:
-> +        if (riscv_cpu_cfg(env)->ext_smmpm) {
-> +            return get_field(env->mseccfg, MSECCFG_PMM);
-> +        }
-> +        break;
-> +    case PRV_S:
-> +        if (riscv_cpu_cfg(env)->ext_smnpm) {
-> +            if (get_field(env->mstatus, MSTATUS_MPV)) {
-> +                return get_field(env->henvcfg, HENVCFG_PMM);
-> +            } else {
-> +                return get_field(env->menvcfg, MENVCFG_PMM);
-> +            }
-> +        }
-> +        break;
-> +    case PRV_U:
-> +        if (riscv_has_ext(env, RVS)) {
-> +            if (riscv_cpu_cfg(env)->ext_ssnpm) {
-> +                return get_field(env->senvcfg, SENVCFG_PMM);
-> +            }
-> +        } else {
-> +            if (riscv_cpu_cfg(env)->ext_smnpm) {
-> +                return get_field(env->menvcfg, MENVCFG_PMM);
-> +            }
-> +        }
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +    return PMM_FIELD_DISABLED;
-> +#else
-> +    return PMM_FIELD_DISABLED;
-> +#endif
-> +}
-> +
-> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
-> +{
-> +#ifndef CONFIG_USER_ONLY
-> +    int satp_mode =3D 0;
-> +    int priv_mode =3D cpu_address_mode(env);
-> +
-> +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> +        satp_mode =3D get_field(env->satp, SATP32_MODE);
-> +    } else {
-> +        satp_mode =3D get_field(env->satp, SATP64_MODE);
-> +    }
-> +
-> +    return ((satp_mode !=3D VM_1_10_MBARE) && (priv_mode !=3D PRV_M));
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm)
-> +{
-> +    switch (pmm) {
-> +    case PMM_FIELD_DISABLED:
-> +        return 0;
-> +    case PMM_FIELD_PMLEN7:
-> +        return 7;
-> +    case PMM_FIELD_PMLEN16:
-> +        return 16;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
->  #ifndef CONFIG_USER_ONLY
->
->  /*
 > --
-> 2.39.5
+> 2.47.1
+>
 >
 
