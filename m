@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 373E2E77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 16:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70932E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 16:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUqEx-00056a-3a; Mon, 06 Jan 2025 11:46:08 -0500
+	id 1tUqIM-0005u9-1q; Mon, 06 Jan 2025 11:49:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tUqEY-00054b-36
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 11:45:43 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tUqIK-0005tk-Fp
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 11:49:36 -0500
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tUqEW-0007Ue-Gt
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 11:45:41 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d0205bd5so22279400a12.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 08:45:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tUqII-0007gr-N2
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 11:49:36 -0500
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e46ac799015so17879298276.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 08:49:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736181939; x=1736786739; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=bbWBIifpojGW0xkwdwEaKNkDuatDG6bDkaU0P7ywEz4=;
- b=OXhcbuZ2Hzbdz4QRlC83xt9N4z7dVoUM5Cfpi3pQAUaq/mtop/llvJv5wd37qGrWhR
- EzALI/jdZtqy3Cma3vndu8bNtyhQJdiU3LW+QwG731I13hLnPgD9ZxCSOzKbe29jSF/7
- vNrKNwsfGl4/i6F0r0lVayAmcAOESD8KlpdnOhWA72JIyYj+8CC7xr/NMl1BkhX8mRZl
- b6YJSuICTSFysD+Dq18vVHM1nqDV5I9VHjYcASc/pkXHWJjzSysWj2nZKzZpFFrQPNyG
- 8i2x7Cvu4prKM/cVGlFpOyY1dCVdLLwOvTLtvSUGPXJDDAhkY07udI4uYI14KaSOurg5
- UUsw==
+ d=linaro.org; s=google; t=1736182173; x=1736786973; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nxfNvLUy32b5m16uWv1RUhxL+6TPjwmEwO15LPii5CM=;
+ b=sA1eLcmafdM1wTtJktSehw6qSCgOsTDT9cJNzxBPeGmKehcZYZbHpsxaJkuZSf2qqF
+ NalRDQgy/2Bj8ejXg/OLfBS0sPJfU4njEuguEIXoaIxFXUsNUjgELTTuGl9nMdCmYZnj
+ 7h4bbanBS2oJAHZXgGHO2G66noR9CPw405xC4r0IgjpL1quh5U+/ofwhVMRUHtv8WkMQ
+ /ZFBiG86+F9tHeP2Ta1O0A/TGDLHBzjxm4fVBy2E6mlMdoQPsTCpAZihCXypWzro0Zd1
+ 3KRFS5XyuBseNku2z3a1xzY0sgppIDDHhpCJMvRh8fMDXslfN063ktK/MmzTjges7ggy
+ oCVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736181939; x=1736786739;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bbWBIifpojGW0xkwdwEaKNkDuatDG6bDkaU0P7ywEz4=;
- b=Qu9NzTaL6jgMqlm8bRB3CRX3SXxrsO4Qy96cWZ72cns7MQ+awiGFXTJqaJ73zs6zoU
- cfc4GVZksbOBQbqWV6B3F7kCR2JulYkliD576eZeHZoNhckERrQ0B0DAm+X6spIJXiRV
- F22h3fLoYWEJx3ZB6e3hQBoilbfF4wAZ21GJ0RcdpPX3kK/TQIiFNXM9FdkN1jDoPjVU
- dxpIfkr7WMu2joJjSCDUn9Klz8LQwfY9tgyK94S4imZWG3NWDVvNPwgtgGsVnX2H2vL/
- np7RgHZxbW5txKGZ0Qsg2RaGhg/DrcwUhurYw04VLdm7iC9TWj4X3HvUjX1LtP60lpJE
- 5NrA==
-X-Gm-Message-State: AOJu0Yz3DG2F+s6kRQ7WRfV5csN3aUUEAIT2o40UlPOqogjSxP1PJYxF
- ok1jOvRnXdIHPe/VG+3GgFSAPXBYV4MjQpL0ht/HBluNAVWxAIw2c0V0OeZR5oggRcarLVbTAOi
- p3iEHOjqzl4ObORpVB05I1bt9e0vOBpwH
-X-Gm-Gg: ASbGncvSxcQUBvNZictiK9V4WPi+jlGBuWsQUxUcnx4JOCKLEdd9lhbVBb75GDTrQ4Q
- +4j8/jxC3WVF01k2yLm1C35Ez+tbBSurzY01n
-X-Google-Smtp-Source: AGHT+IFl5Rila7pFH8AaHn5u+6lpD/lhrUYCycMMTUAgVCkdkPWtNk+uUYyuBaU2TB0zY1aVi2581GOybx64h+NXd90=
-X-Received: by 2002:a05:6402:2109:b0:5cf:e66f:678d with SMTP id
- 4fb4d7f45d1cf-5d81de083bamr56051652a12.28.1736181938363; Mon, 06 Jan 2025
- 08:45:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736182173; x=1736786973;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nxfNvLUy32b5m16uWv1RUhxL+6TPjwmEwO15LPii5CM=;
+ b=mlhzvEntP89ETXz6YZjIg2KgtHpGauEcw0UX80ovns2rwqc8fpaFHZbCm1PAfFcsSE
+ AubQ/LTC5wQmxieUHcqOqRu+TwkCPueir2FNC/MPjPdyoF8CVJ8iFED/02uEOeyFS4hG
+ 3FTRVYOTSMahw2Gb4s28hG1QnoCeSB6r2zGSgzL3mQahVBYsGgQORYy/zOBqRvnBhf/2
+ c/Nvudhfc7QEQjGVVTOLu3ptCFAySFieEgIZkLpYO/7LrNh+HeTiFVOaCRWBz8m8swhz
+ UXHmbxESLRkE9ikccUe46eNejI4mjaYGjFWhnS+qWQEu/7pWeDeMOrPmbvIkiVH1H074
+ qmcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUELCmWJ4TT88FYOz58+U2zyNkwmPM4J4OcCV7s7l73iXWQf3Mb/fl03bEqRLiGQJkcrbgKqowQejSu@nongnu.org
+X-Gm-Message-State: AOJu0Yx11IxlCNVrE4DN1atuf4c2lhtK4jrksYH4drFSGMtxlIH9Sgoh
+ WgwPkcxyIYnck7JrdTU1hLtSuWLU5B1jtF2mK0tn2cdsVqT3wGsb6vpohmHsLCKSikm3rXUokaE
+ C7IrF8+2notpBV2NesvOm9upjox0SPlGLugUg8Q==
+X-Gm-Gg: ASbGncsrvtJyPZRKdgP4AHR+h4r1wFHWcTLH0Nk+3+hvB8YWtGI45Zh4zv/hNXc05pI
+ ZGHhiwMXgQMy/mf26wH5k2SHfccEfeY4LmzE2dn8=
+X-Google-Smtp-Source: AGHT+IEMJ/EA44haRhoNqqcgYvMaKfo4A9GLrtA1T4dE2BKErqnvnQp0LThjFSldEgZFgyVyuelVTPxaFaDoN6w4puY=
+X-Received: by 2002:a25:806:0:b0:e3a:e3e:2747 with SMTP id
+ 3f1490d57ef6-e538c400dcemr36714143276.32.1736182173403; 
+ Mon, 06 Jan 2025 08:49:33 -0800 (PST)
 MIME-Version: 1.0
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 6 Jan 2025 11:45:26 -0500
-Message-ID: <CAJSP0QW02Mf5Vtp9UbvAUc+UXKV0Exw_ggFCMAgVQ0+dH7Jf0w@mail.gmail.com>
-Subject: test_x86_64_hotplug_cpu.py times out frequently in CI
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
+References: <CAJSP0QW02Mf5Vtp9UbvAUc+UXKV0Exw_ggFCMAgVQ0+dH7Jf0w@mail.gmail.com>
+In-Reply-To: <CAJSP0QW02Mf5Vtp9UbvAUc+UXKV0Exw_ggFCMAgVQ0+dH7Jf0w@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 6 Jan 2025 16:49:22 +0000
+Message-ID: <CAFEAcA8C916fiLab_86JhXMe5sjVQBjFZQVCP6YP+715pn9qLQ@mail.gmail.com>
+Subject: Re: test_x86_64_hotplug_cpu.py times out frequently in CI
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ "Daniel P. Berrange" <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,34 +92,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
-test_x86_64_hotplug_cpu.py times out frequently in CI runs. Here is an example:
-https://gitlab.com/qemu-project/qemu/-/jobs/8777540230#L1151
+On Mon, 6 Jan 2025 at 16:45, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+>
+> Hi Thomas,
+> test_x86_64_hotplug_cpu.py times out frequently in CI runs. Here is an example:
+> https://gitlab.com/qemu-project/qemu/-/jobs/8777540230#L1151
+>
+> The detailed test logs are here:
+> https://gitlab.com/qemu-project/qemu/-/jobs/8777540230/artifacts/browse/build/tests/functional/x86_64/test_x86_64_hotplug_cpu.HotPlugCPU.test_hotplug/
+>
+> I looked at this failure with Dan and Peter on IRC. It was pointed out
+> that the final command assumes that device_del takes effect
+> immediately. The console log shows that the CPU was still visible to
+> the guest when the final command executed.
+>
+> Could be a bug in QEMU, the test, or both?
+>
+> 2025-01-06 15:45:29,308: :/#
+> 2025-01-06 15:45:29,313: cd /sys/devices/system/cpu/cpu0
+> 2025-01-06 15:45:29,315: :/sys/devices/system/cpu/cpu0#
+> 2025-01-06 15:45:29,320: cd /sys/devices/system/cpu/cpu1
+> 2025-01-06 15:45:29,322: sh: cd: /sys/devices/system/cpu/cpu1: No such
+> file or directory
+> 2025-01-06 15:45:29,325:
+> 2025-01-06 15:45:29,330: :/sys/devices/system/cpu/cpu0# [    7.337146]
+> CPU1 has been hot-added
+> 2025-01-06 15:45:29,330:
+> 2025-01-06 15:45:29,335: cd /sys/devices/system/cpu/cpu1
+> 2025-01-06 15:45:29,337: :/sys/devices/system/cpu/cpu1#
+> 2025-01-06 15:45:29,342: cd /sys/devices/system/cpu/cpu1
 
-The detailed test logs are here:
-https://gitlab.com/qemu-project/qemu/-/jobs/8777540230/artifacts/browse/build/tests/functional/x86_64/test_x86_64_hotplug_cpu.HotPlugCPU.test_hotplug/
+Though the fact that there is no final shell prompt after
+the last 'cd' command is perhaps evidence against this being
+a simple race where the guest execution of the "cd" command
+beat the guest handling of the hot-unplug event.
 
-I looked at this failure with Dan and Peter on IRC. It was pointed out
-that the final command assumes that device_del takes effect
-immediately. The console log shows that the CPU was still visible to
-the guest when the final command executed.
-
-Could be a bug in QEMU, the test, or both?
-
-2025-01-06 15:45:29,308: :/#
-2025-01-06 15:45:29,313: cd /sys/devices/system/cpu/cpu0
-2025-01-06 15:45:29,315: :/sys/devices/system/cpu/cpu0#
-2025-01-06 15:45:29,320: cd /sys/devices/system/cpu/cpu1
-2025-01-06 15:45:29,322: sh: cd: /sys/devices/system/cpu/cpu1: No such
-file or directory
-2025-01-06 15:45:29,325:
-2025-01-06 15:45:29,330: :/sys/devices/system/cpu/cpu0# [    7.337146]
-CPU1 has been hot-added
-2025-01-06 15:45:29,330:
-2025-01-06 15:45:29,335: cd /sys/devices/system/cpu/cpu1
-2025-01-06 15:45:29,337: :/sys/devices/system/cpu/cpu1#
-2025-01-06 15:45:29,342: cd /sys/devices/system/cpu/cpu1
-
-Thanks,
-Stefan
+-- PMM
 
