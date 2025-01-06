@@ -4,120 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AABEBE77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CC8E77199
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 20:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUtZO-0002Rn-MF; Mon, 06 Jan 2025 15:19:26 -0500
+	id 1tUtcv-0003is-Fh; Mon, 06 Jan 2025 15:23:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tUtZK-0002QP-Jo
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:19:22 -0500
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tUtZH-00059L-LV
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:19:22 -0500
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2ef28f07dbaso16892900a91.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:19:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736194756; x=1736799556; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=a9p8hjeIMnEMUpmW04h0W7NoiD5E5c5Q5zI/Al9/E30=;
- b=At76ze0wv8w/xsOHgsyR38SaEK4qqmB6PULMbaNYy565Il0mnJ8nJ0Zw7JyPlMo74b
- Eurzp30dhGPUIvzntGS7so7YwHrEjcRKqsz0Aevn4fe5FCKH64N4uEHDtI2nx/PI0VOe
- 1Np584k3n70csVcBnq6gTwNaNUMtWb8R1BBueylXlHtiEsmvouh8xzC5KkK9FCSFf8uI
- 5hjfaxFKCj/0DtQuUpE4p8V9qun+BQQqbCk1KBVJrzwC8LrKc472hkeipAHkMROU1cYZ
- m73cIwtETFS23JR9yk0cHWSf/Dols2Rs+FgiAOEN3bR0SIQaJWLnwHpC+9jvtPyrJM/d
- 8P/g==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tUtct-0003hy-EA
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:23:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tUtcp-0005ZP-Bd
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 15:23:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736194977;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=859HPKiqb8IAcC+jVRnLlw8kYxsQC5X9UClO3gcPRW4=;
+ b=OB5N8ZgvAgp3NRrabpheZgn43OO6AAIj++ngKAEDHthCYM6RMz+O2Jz5m/nKsKvN5/l0du
+ 6m6gSqw2C/oRMx6s6HkNJkdnIWAy9bvJzam++wkKIB5U4wDWWJr48ahk94Xz02QhpAelFv
+ dJejKvTvQZX0f1JNdh1qTvj+TJuhePI=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-1-AtW6JgvPM_6sr1OgzCcTrw-1; Mon, 06 Jan 2025 15:22:54 -0500
+X-MC-Unique: AtW6JgvPM_6sr1OgzCcTrw-1
+X-Mimecast-MFC-AGG-ID: AtW6JgvPM_6sr1OgzCcTrw
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6d8eb5ea994so171858876d6.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 12:22:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736194756; x=1736799556;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a9p8hjeIMnEMUpmW04h0W7NoiD5E5c5Q5zI/Al9/E30=;
- b=H9Fx8A2L79839Fm+gYfcnT3xuUtkdvC+1TWxPyt+O9W12YKYnjr/IJ+LEEkhzL5bCv
- OnqSAUvVWloXNHjWi+uW9MbRJ2LIzBk5hKJ+bDqKwHJRKO2Gda2NDSF3arUvGzcfk0Rf
- C6SgtSVelgots8OCNpeorLET5AuUKYdTqQy78Ah53rwX9g6aLAMJ6yS8Gnqz8QNEDmkr
- JSSUGdohJx8XgumiVWnNvgBkEKk0rXq9+/jydX2ZeSjU/wzBtbx1svl8Uzvrf+2DCRw2
- sgpu5EW0mmzMJkDScn9W/pkw+bT1BTtZ0TP0KbnM1Lcw6kzLZOU36xIw/vwPiSxJiroq
- rCYA==
+ d=1e100.net; s=20230601; t=1736194973; x=1736799773;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=859HPKiqb8IAcC+jVRnLlw8kYxsQC5X9UClO3gcPRW4=;
+ b=CO7fWhxGYoSxvFeJNbEagKrH76OqTsTXKz1NHUcXd2gpn+AvVIqVsKEkWF1z+oSjBM
+ o8K7YBop/jRIZt8WHF6QKF6wDNyIninA1X4s0KF6FrDvQMYX2A2deS7KOdgUwuyGwvpl
+ PuhGpoAeoIrW9OdjRIbr5plovKNPglcA66LPoc8vozwpEhYQR9YWx70uKVqv3NOARZ7y
+ SJQO0D9osIT6fMXnZWgVVJhh9IHz97F1Bb0BnsBngsr5DVDjFPX3TGw0ZcUH7KDdClMS
+ 5/mg2GGoL3c84c18Od3gPljJMHqEafjDXn4uTJSi5yP0614skl437D5Pgd34tzZOTSCU
+ KXzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIKUJaB25fw86uN6n2XWXwCM9jPUGg4+gUlbo0LpTECvoQBSneapo8T0IdBUqDlicBDmiUwHHWFWTo@nongnu.org
-X-Gm-Message-State: AOJu0YyIv0j03VAFyRPPuqDMkj4qkCvf6SSf4wglUWAbRiUtVi/dRP4p
- LK4arRLnr+Mse4UAjb+9rm7lTboGVyuTVa9phfwGUY32dr5hD/TW/yNqiMUXYxU=
-X-Gm-Gg: ASbGncsJf4qFyJ3i1eBjvb5021ea4/Pf4xpB7p5rYUcQYMGU6oEPxiCbr74Noc5ZiwF
- GwJrzu/yqcALfZaCKvBk5ZrZ68+/sldXyGsMVEqie39AGQ5qg7c8hQPOm8KCbEAD3fpGHutLGXT
- tG4u0b6OGMhOO5LxoL6OwSxtpAfIr70iGL64Gw+exW8XCobs5GnQOXVGIfs1dpqQLAW7eTkso57
- 6GXcvK0IYm5nqyb09lBM/dsgCjLHK/QTTMlfdAbvB72U+2pww7f9Tfu7FzzukZu5wjII/jAOzLm
- PlYjXLhsn4HlvADDP9p4HgjrU16HHMbik2U=
-X-Google-Smtp-Source: AGHT+IEdi1WeRPTrXeJrhazkx/sBhP2RZVeyTSKqrV/o+q5vpCxn6bBHpDXsADAKiAGaa0ShcqYeAQ==
-X-Received: by 2002:a17:90b:51c2:b0:2ee:ab29:1a57 with SMTP id
- 98e67ed59e1d1-2f452def211mr85711065a91.2.1736194756055; 
- Mon, 06 Jan 2025 12:19:16 -0800 (PST)
-Received: from ?IPV6:2804:7f0:bdcd:fb00:6501:2693:db52:c621?
- ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ee26b125sm39870772a91.43.2025.01.06.12.19.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jan 2025 12:19:15 -0800 (PST)
-Message-ID: <69e79cef-214d-4795-b3ce-032529c9f7d6@ventanamicro.com>
-Date: Mon, 6 Jan 2025 17:19:04 -0300
+ AJvYcCUL+74N3mEdCseLivf2gXUc2L6F3djgybe4scC8Q1xxhk507rXamJBVndfwc8zN5GreeR9pxW57Bqfl@nongnu.org
+X-Gm-Message-State: AOJu0YxYfEqj18ef66fBsA1oTXHPD/kW4EQNl+7KMJZzaJJUFBNhr4ug
+ Mf9ihFi4LIvYBepTeO5v9G8utWItdeF7zpqMtatWSZj7lY/RaEDwLzYp1v84w+30yrhn8CQ/EBh
+ OBbYtokagFgCjc5E+Vs5oUysrTLZwvJDQrEriN7WeXHQfIT4X5S1e
+X-Gm-Gg: ASbGnctuYRoTH8YlnI5OJAAl4FELux32/IQoNmFuQ8gfs0BXObFJXA5T2EWhr3fQHUD
+ eZShMdKF8HEYZxZG1Vgz6A64zti3M5BnUUtbT5r+oeVUvwFgFgs+XtZku1tOYXySqdUfeRXkJ5+
+ gdegcvToVHU+wgGUek0MYxXxjvTw6svE22ImfGTOrdoOx98OuEp8wxoUGmyjZHNEy99O083j557
+ hrEsUYzFUpskqz9fJjYkD541Y+v265MiFX5WsedNPTrZThfAj2FOAQ4YTD/2h0i65wnDpQ8D6v0
+ I4eNHGjWjCMcKTpgqg==
+X-Received: by 2002:a05:6214:260b:b0:6d4:2646:108a with SMTP id
+ 6a1803df08f44-6dd23329655mr998440386d6.12.1736194973453; 
+ Mon, 06 Jan 2025 12:22:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHvgeeA8eadZKPRtwZ7FakRMrESyMfhQQGMxDrP6txicb4SBlo8ytEBx9kVtyyakyAlZU80/Q==
+X-Received: by 2002:a05:6214:260b:b0:6d4:2646:108a with SMTP id
+ 6a1803df08f44-6dd23329655mr998440116d6.12.1736194973175; 
+ Mon, 06 Jan 2025 12:22:53 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dd180ea82fsm173774956d6.26.2025.01.06.12.22.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Jan 2025 12:22:52 -0800 (PST)
+Date: Mon, 6 Jan 2025 15:22:49 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PULL 00/17] Migration patches for 2024-12-17
+Message-ID: <Z3w7mSc1XEH8N0IG@x1n>
+References: <20241219123213.GA692742@fedora> <87zfkrtsgt.fsf@suse.de>
+ <Z2WbSZkEGSnA-BX9@x1n>
+ <e5199fbb-e16e-4df0-a93d-5c0eecdc1ec7@redhat.com>
+ <874j2f92cn.fsf@suse.de>
+ <CAJSP0QVxQf4neUewBha9f=n+6-f2eTD_o5f7v+1R2Wm2y07paA@mail.gmail.com>
+ <87sepz7guf.fsf@suse.de> <87pll37cin.fsf@suse.de>
+ <Z3wk4GRH6E4kfNma@x1n> <87ldvn7nju.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/7] cpus: Restrict CPU_FOREACH_SAFE() to user
- emulation
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Alexander Graf <agraf@csgraf.de>, Paul Durrant <paul@xen.org>,
- David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Reinoud Zandijk <reinoud@netbsd.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
- Riku Voipio <riku.voipio@iki.fi>, Anthony PERARD <anthony@xenproject.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>, Zhao Liu
- <zhao1.liu@intel.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- David Woodhouse <dwmw2@infradead.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>
-References: <20250106200258.37008-1-philmd@linaro.org>
- <20250106200258.37008-2-philmd@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250106200258.37008-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ldvn7nju.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,33 +113,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Perhaps add in the commit msg something like "it's only being used in
-bsd-user and linux-user code"
+On Mon, Jan 06, 2025 at 04:24:53PM -0300, Fabiano Rosas wrote:
+> Here's the fix for the pre-existing issue in the script:
 
-On 1/6/25 5:02 PM, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
+For this patch:
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   include/hw/core/cpu.h | 3 +++
->   1 file changed, 3 insertions(+)
 > 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index c3ca0babcb3..48d90f50a71 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -594,8 +594,11 @@ extern CPUTailQ cpus_queue;
->   #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
->   #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
->   #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
+> -- 8< --
+> From 5bcad03aad85556a7b72f79d3574e246a99432c3 Mon Sep 17 00:00:00 2001
+> From: Fabiano Rosas <farosas@suse.de>
+> Date: Mon, 6 Jan 2025 15:05:31 -0300
+> Subject: [PATCH 1/2] migration: Fix parsing of s390 stream
+> 
+> The parsing for the S390StorageAttributes section is currently leaving
+> an unconsumed token that is later interpreted by the generic code as
+> QEMU_VM_EOF, cutting the parsing short.
+
+Better mention why it can be intepreted as QEMU_VM_EOF, especially s390's
+tag is 8 bytes while QEMU's EOF is 1 byte.. that confused me. :)
+
+> 
+> The migration will issue a STATTR_FLAG_DONE between iterations, but
+> there's a final STATTR_FLAG_EOS at .save_complete.
+> 
+> Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py for s390x")
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  scripts/analyze-migration.py | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+> index f2457b1dde..2a2160cbf7 100755
+> --- a/scripts/analyze-migration.py
+> +++ b/scripts/analyze-migration.py
+> @@ -65,6 +65,9 @@ def readvar(self, size = None):
+>      def tell(self):
+>          return self.file.tell()
+>  
+> +    def seek(self, a, b):
+> +        return self.file.seek(a, b)
 > +
-> +#if defined(CONFIG_USER_ONLY)
->   #define CPU_FOREACH_SAFE(cpu, next_cpu) \
->       QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
-> +#endif
->   
->   extern __thread CPUState *current_cpu;
->   
+>      # The VMSD description is at the end of the file, after EOF. Look for
+>      # the last NULL byte, then for the beginning brace of JSON.
+>      def read_migration_debug_json(self):
+> @@ -272,11 +275,24 @@ def __init__(self, file, version_id, device, section_key):
+>          self.section_key = section_key
+>  
+>      def read(self):
+> +        pos = 0
+>          while True:
+>              addr_flags = self.file.read64()
+>              flags = addr_flags & 0xfff
+> -            if (flags & (self.STATTR_FLAG_DONE | self.STATTR_FLAG_EOS)):
+> +
+> +            if flags & self.STATTR_FLAG_DONE:
+> +                pos = self.file.tell()
+> +                continue
+> +            elif flags & self.STATTR_FLAG_EOS:
+>                  return
+> +            else:
+> +                # No EOS came after DONE, that's OK, but rewind the
+> +                # stream because this is not our data.
+> +                if pos:
+> +                    self.file.seek(pos, 0)
+
+Nit: use io.SEEK_SET.
+
+> +                    return
+> +                raise Exception("Unknown flags %x", flags)
+> +
+>              if (flags & self.STATTR_FLAG_ERROR):
+>                  raise Exception("Error in migration stream")
+>              count = self.file.read64()
+
+With above:
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
 
 
