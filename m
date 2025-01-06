@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70932E77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 16:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE8EE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 17:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUqIM-0005u9-1q; Mon, 06 Jan 2025 11:49:38 -0500
+	id 1tUqu8-00076X-50; Mon, 06 Jan 2025 12:28:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tUqIK-0005tk-Fp
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 11:49:36 -0500
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tUqu6-00076M-Fy
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:28:38 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tUqII-0007gr-N2
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 11:49:36 -0500
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e46ac799015so17879298276.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 08:49:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tUqu5-0004H6-0e
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 12:28:38 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21644aca3a0so29263565ad.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 09:28:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736182173; x=1736786973; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nxfNvLUy32b5m16uWv1RUhxL+6TPjwmEwO15LPii5CM=;
- b=sA1eLcmafdM1wTtJktSehw6qSCgOsTDT9cJNzxBPeGmKehcZYZbHpsxaJkuZSf2qqF
- NalRDQgy/2Bj8ejXg/OLfBS0sPJfU4njEuguEIXoaIxFXUsNUjgELTTuGl9nMdCmYZnj
- 7h4bbanBS2oJAHZXgGHO2G66noR9CPw405xC4r0IgjpL1quh5U+/ofwhVMRUHtv8WkMQ
- /ZFBiG86+F9tHeP2Ta1O0A/TGDLHBzjxm4fVBy2E6mlMdoQPsTCpAZihCXypWzro0Zd1
- 3KRFS5XyuBseNku2z3a1xzY0sgppIDDHhpCJMvRh8fMDXslfN063ktK/MmzTjges7ggy
- oCVw==
+ d=linaro.org; s=google; t=1736184515; x=1736789315; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/N7P41fqn60sJoiyXjPs73j+4L1sMCOkBwsY3WxADUA=;
+ b=vZEaP/4w1yXic5YeJPl5hyZF9+lkZJupWEtj1x1MzgDbqnVIF75bKFn9nvi6fiTd+5
+ WMQdx6g4cU+FvvpdmQ+dLnpF15C5ot3EJmUu6NxpuuOu+KjwMj0g0mPAYFxFUfuB9I85
+ 6sy3EuwFSNgpNSMAKLCjr9yoUoz4z8Ry/8A6nRp1irfchzugL2gMyMeO+6PwUp3/bHvt
+ Z9/ZJYBzjATPRo/GIXs/dX38uxDKP2fsNi0gB3T3HU5sQAiXvTzoZPT1+kc5lcrcAHSw
+ zxdT4rNR2c5oKRJRwr1+YF7hgp9e3RoO63M/N9CjuWgGz038IMflis8fBrnCpedP4bz+
+ exxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736182173; x=1736786973;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nxfNvLUy32b5m16uWv1RUhxL+6TPjwmEwO15LPii5CM=;
- b=mlhzvEntP89ETXz6YZjIg2KgtHpGauEcw0UX80ovns2rwqc8fpaFHZbCm1PAfFcsSE
- AubQ/LTC5wQmxieUHcqOqRu+TwkCPueir2FNC/MPjPdyoF8CVJ8iFED/02uEOeyFS4hG
- 3FTRVYOTSMahw2Gb4s28hG1QnoCeSB6r2zGSgzL3mQahVBYsGgQORYy/zOBqRvnBhf/2
- c/Nvudhfc7QEQjGVVTOLu3ptCFAySFieEgIZkLpYO/7LrNh+HeTiFVOaCRWBz8m8swhz
- UXHmbxESLRkE9ikccUe46eNejI4mjaYGjFWhnS+qWQEu/7pWeDeMOrPmbvIkiVH1H074
- qmcw==
+ d=1e100.net; s=20230601; t=1736184515; x=1736789315;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/N7P41fqn60sJoiyXjPs73j+4L1sMCOkBwsY3WxADUA=;
+ b=fNxf40LYhke2EaXAaA3en4fe/gWfWNBY94oxxU1mQY35DVpuwu9c6WqZeNyX9P3YTy
+ DlX3Pvjh+rVnkR2oxtFOyXA0rY3HcOBBFZncmfydUQeJv+40jJfIsM75oo6k+E0lES5m
+ bpKhGJVm7JZL6MYjrX8V62Jml0XTGOFXojq5Rq0rBeXuK5+kvTlbn7Jh9e7x83BqO1OI
+ cDwc1E0U6pdenMzZyGdMaMnZwAdABfaj7frUTFXW2hKSUmfxSt1nX2+Ulj8BcYvlTgfi
+ syXxIi1LULDIqm11InEaO08QjPx6WoX53XGKu946MN16Yhoh8koRNwU28ORFnrEtkoJA
+ hGkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUELCmWJ4TT88FYOz58+U2zyNkwmPM4J4OcCV7s7l73iXWQf3Mb/fl03bEqRLiGQJkcrbgKqowQejSu@nongnu.org
-X-Gm-Message-State: AOJu0Yx11IxlCNVrE4DN1atuf4c2lhtK4jrksYH4drFSGMtxlIH9Sgoh
- WgwPkcxyIYnck7JrdTU1hLtSuWLU5B1jtF2mK0tn2cdsVqT3wGsb6vpohmHsLCKSikm3rXUokaE
- C7IrF8+2notpBV2NesvOm9upjox0SPlGLugUg8Q==
-X-Gm-Gg: ASbGncsrvtJyPZRKdgP4AHR+h4r1wFHWcTLH0Nk+3+hvB8YWtGI45Zh4zv/hNXc05pI
- ZGHhiwMXgQMy/mf26wH5k2SHfccEfeY4LmzE2dn8=
-X-Google-Smtp-Source: AGHT+IEMJ/EA44haRhoNqqcgYvMaKfo4A9GLrtA1T4dE2BKErqnvnQp0LThjFSldEgZFgyVyuelVTPxaFaDoN6w4puY=
-X-Received: by 2002:a25:806:0:b0:e3a:e3e:2747 with SMTP id
- 3f1490d57ef6-e538c400dcemr36714143276.32.1736182173403; 
- Mon, 06 Jan 2025 08:49:33 -0800 (PST)
+ AJvYcCXwmY7st9TEMhWlbaXpo7BHXD6e4Mzk68E6bLGXG67zJoE97QyJJK8PEfiFCkR8/cZmGphwUKvyxEYL@nongnu.org
+X-Gm-Message-State: AOJu0Yw1BBkZ1OaQr7j+1zXGyY3uOzn5G9V7Mrrp9kR6uu507jZ5hzPR
+ AKj22hP5+0jt3H8XIrc44va+tqPQN7vOzTX906R0cPVS1l8Jw26ti2hHEt8wck4=
+X-Gm-Gg: ASbGncvMAKLhBaGSuX1eR9eiIIXOxHWdy8lTGCDtcWE48xPPE1bqacq+H2cDSJMAiaj
+ mGsSEaNgfvxc7EYKKhWnZ3irwCpFvaAEZi08Mtn2+/RaAb4YWFLNkcPYND14dfgKnmpMvt43bRI
+ Luao+9EBz1vieifLOK5W7aAlcRu20IL02h0KNIxh4gzFWyMwNY1bGurRo43xv+51U+i7Z68QCwX
+ OuGEfjZsHSdcSZpISj5h7O+oGVfYYSt9HV7D61Q7G8m7gvPdWoPYsiHfZCTQk4k6bopZ33hjtFO
+ EpqMJ0MWB8uSqYfONVP6HhHP7qYYAMo=
+X-Google-Smtp-Source: AGHT+IEsomIUy2Q7NHi0kv5yDUNmlPOt15lf/oqiATWKPM6HhDt8IfJbfJfzfE/WPZDGsGcRg4eoPQ==
+X-Received: by 2002:a05:6a00:410d:b0:725:f376:f4ff with SMTP id
+ d2e1a72fcca58-72abde0b086mr86405420b3a.13.1736184514973; 
+ Mon, 06 Jan 2025 09:28:34 -0800 (PST)
+Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
+ [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad8dbbf6sm31705873b3a.111.2025.01.06.09.28.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jan 2025 09:28:34 -0800 (PST)
+Message-ID: <10f93bcb-bef9-43cb-a87e-aafacb9317fe@linaro.org>
+Date: Mon, 6 Jan 2025 09:28:31 -0800
 MIME-Version: 1.0
-References: <CAJSP0QW02Mf5Vtp9UbvAUc+UXKV0Exw_ggFCMAgVQ0+dH7Jf0w@mail.gmail.com>
-In-Reply-To: <CAJSP0QW02Mf5Vtp9UbvAUc+UXKV0Exw_ggFCMAgVQ0+dH7Jf0w@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 6 Jan 2025 16:49:22 +0000
-Message-ID: <CAFEAcA8C916fiLab_86JhXMe5sjVQBjFZQVCP6YP+715pn9qLQ@mail.gmail.com>
-Subject: Re: test_x86_64_hotplug_cpu.py times out frequently in CI
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- "Daniel P. Berrange" <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] semihosting: Reduce target specific code
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Kito Cheng <kito.cheng@sifive.com>, Keith Packard <keithp@keithp.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250103171037.11265-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250103171037.11265-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,40 +108,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jan 2025 at 16:45, Stefan Hajnoczi <stefanha@gmail.com> wrote:
->
-> Hi Thomas,
-> test_x86_64_hotplug_cpu.py times out frequently in CI runs. Here is an example:
-> https://gitlab.com/qemu-project/qemu/-/jobs/8777540230#L1151
->
-> The detailed test logs are here:
-> https://gitlab.com/qemu-project/qemu/-/jobs/8777540230/artifacts/browse/build/tests/functional/x86_64/test_x86_64_hotplug_cpu.HotPlugCPU.test_hotplug/
->
-> I looked at this failure with Dan and Peter on IRC. It was pointed out
-> that the final command assumes that device_del takes effect
-> immediately. The console log shows that the CPU was still visible to
-> the guest when the final command executed.
->
-> Could be a bug in QEMU, the test, or both?
->
-> 2025-01-06 15:45:29,308: :/#
-> 2025-01-06 15:45:29,313: cd /sys/devices/system/cpu/cpu0
-> 2025-01-06 15:45:29,315: :/sys/devices/system/cpu/cpu0#
-> 2025-01-06 15:45:29,320: cd /sys/devices/system/cpu/cpu1
-> 2025-01-06 15:45:29,322: sh: cd: /sys/devices/system/cpu/cpu1: No such
-> file or directory
-> 2025-01-06 15:45:29,325:
-> 2025-01-06 15:45:29,330: :/sys/devices/system/cpu/cpu0# [    7.337146]
-> CPU1 has been hot-added
-> 2025-01-06 15:45:29,330:
-> 2025-01-06 15:45:29,335: cd /sys/devices/system/cpu/cpu1
-> 2025-01-06 15:45:29,337: :/sys/devices/system/cpu/cpu1#
-> 2025-01-06 15:45:29,342: cd /sys/devices/system/cpu/cpu1
+On 1/3/25 09:10, Philippe Mathieu-Daudé wrote:
+> Philippe Mathieu-Daudé (5):
+>    semihosting/syscalls: Include missing 'exec/cpu-defs.h' header
+>    semihosting/uaccess: Include missing 'exec/cpu-all.h' header
+>    semihosting/arm-compat: Include missing 'cpu.h' header
+>    semihosting/console: Avoid including 'cpu.h'
+>    semihosting/meson: Build config.o and console.o once
 
-Though the fact that there is no final shell prompt after
-the last 'cd' command is perhaps evidence against this being
-a simple race where the guest execution of the "cd" command
-beat the guest handling of the hot-unplug event.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- PMM
+r~
 
