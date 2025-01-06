@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46284E77197
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 01:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF982E77197
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 02:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUcP3-0001U8-HL; Sun, 05 Jan 2025 20:59:37 -0500
+	id 1tUcYc-0003Pu-UT; Sun, 05 Jan 2025 21:09:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUcP1-0001Od-7d; Sun, 05 Jan 2025 20:59:35 -0500
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ id 1tUcYb-0003PE-3l; Sun, 05 Jan 2025 21:09:29 -0500
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUcOz-0000XQ-HV; Sun, 05 Jan 2025 20:59:35 -0500
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-85bb264993cso2256546241.1; 
- Sun, 05 Jan 2025 17:59:32 -0800 (PST)
+ id 1tUcYY-0003Xb-7A; Sun, 05 Jan 2025 21:09:28 -0500
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4affbb7ef2dso9477352137.0; 
+ Sun, 05 Jan 2025 18:09:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736128772; x=1736733572; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736129364; x=1736734164; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XivDPfZEm8827ekIR2Pg4GXa3ja9+uBgidlNUVkDuC0=;
- b=HoaHhfVaHmdbWA6DO0PdC1xA8DgmnXpgkesIUvoVQT9wSB2Wi1qw20S5bVCkIicMTd
- QORN4qHsWalmIe1sMZ/B9iJ6RL9ktXiqcTB/xAenjGM9TEKQ7y7KPTLc9n6kLjgNisaw
- ObrurbfoYrbvPl/2b0Qmn0Plh1T3SjY0oNXTYYbnJEVl8FcfM7Uj2Obl4mfbSCEmvj/a
- 3Na1DoGG0YOxp2MhjKzatXi4Hzed/+lgDIpryykpecoqzZYSBkpx/9YoPWOLlUgmGqlQ
- nV9jRpQHT+yHs9bzEKmyySWz0+WOUUEgYi9OQ3l0M9PRGCu1MbNHa98tvsZRlJI4JmqE
- VOyg==
+ bh=Bpku/GlJhPT7ZDSadY0Vf8Pz4R9+iLv8jDicNXxcnzE=;
+ b=eOMsBxzrBS4UJ3md7nGRoovucf1HTOl2E72nwO4wiYzra4JKqKeWZ4MScsRhtU4unu
+ ayvsrppgTkAdBsCKHY6zLJSuCKaK8gPU6u9A1OaiVp3bVwCW6dYDfRgevbcGU6R+5d3K
+ GGpKufDsGNJ++EqrROhT0d7n/vPa7nfINGVGTnmNWbyc17fg9cRLKnmdrZ+hOXtNt7DP
+ dm1xg2dldPgd35XMsgVCnmyNV/pzQvhZOdjZtwETBXkoUUcd0kFtOcfE8nj5CbPRh3nA
+ RsXLlH8R0wlxMPQEGzDMTn15SpI7kEXqhaNibbzsDnf1lF4BnLoWeVaCBC7fyh/73n7C
+ 28QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736128772; x=1736733572;
+ d=1e100.net; s=20230601; t=1736129364; x=1736734164;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XivDPfZEm8827ekIR2Pg4GXa3ja9+uBgidlNUVkDuC0=;
- b=u1mAXNI5OnuEIUloVdwEK6MnW9am2/V+xl9HSKWMfdUSjT5lMCxc3vb0QsqmskYV7c
- F5CFYMPNMd3/eL28OCj38gJH88xzdFCy6OeG+cJp754umczvFHE/h5g18iySGhI6xzli
- oGCm6fBKgUhwFzrXAMTxLFbxRRsBatZZevPWZC9Vqb0utP9ZZcw70l7dwayILSe0SiD4
- OwXWz7KG7L9ls9fUqfpmJqWkZbC86yD1HyUtuF9dWYisa+5FcKzwu+zreOlik+CIv+om
- qZ8mZlnL8ei5ENcDAAGNDzyvVAT7A+esL0x2x3u7M7QDrlzgDr2pqZkF99TOGeE3MvAs
- CWdg==
+ bh=Bpku/GlJhPT7ZDSadY0Vf8Pz4R9+iLv8jDicNXxcnzE=;
+ b=mC4/1wUN+p2MHcBisqXYHzrnrOReyUCnRHkIqQxpTYjeC23ynVUfa1/MAVRCDZSc4i
+ g9uXI1t30oACu5xFH/y3c60fktlplKz5ZjqowezkE8GNP4Pt8eIf9Emipkdz6LU7USX1
+ dWc7KOxQTz3ZaeN6EC61tm7HN/0izTRdUapNnEN7jAFxLtgyY6Bpd37XRkXrlTAGDsQv
+ /lYT5EhongMgznmQGU2sDhOY6pFMCtG6MGHJ+j3GP5OWUMnSG1+MO1qlDYZfLWTRgo3y
+ FXmO1W9RyJJjBFQHUs9q1jLR/caPWQ/j1slQD6NfHTd+YO1vF5b1kylxafZ5HgiBc6XT
+ E1OQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxV+kAbSx4VHvrW25xq0ho1ofMJpIKG9lmfzRJwqG96Pk1Gwq5tRvwYiw5K8NTntSzYhljkjeWb0Tk@nongnu.org
-X-Gm-Message-State: AOJu0Yzp5A+at/flmxbWrJg2id7CcdWbUy9IP8gRlHC8MLHEKqRmPM1R
- PZt/3qddvQNWd8lmUG1heerxgTB3p+f6mvTNE47Kuk7YTHkPCqK7ik0Hl3GkhxAO6DrYyjwOKee
- eh0eeodsTGAkAH/YUTyADDPCFepCkRQ==
-X-Gm-Gg: ASbGnctY8UWqomk97VvZ9vtt1tvvkIAWe/cNEegjIzJx/P9C8+TsraJ41WzvzHpHlKe
- r2yZTj2WowkwZYbVm0jMo3XQQHDM0yRHhbuwa3U01xEie6M3+XqbxHPCF87kVAzB77IE=
-X-Google-Smtp-Source: AGHT+IEFG2XDjcyLZ6ONTemGqla5ecN8Pleyk2MAHf2Cuq0BOr5obj55CcYLRDZffH9DNTGXtBn70DCQh8/mkTu/tcQ=
-X-Received: by 2002:a05:6102:1493:b0:4af:af20:516a with SMTP id
- ada2fe7eead31-4b2cc31c290mr45507450137.1.1736128771806; Sun, 05 Jan 2025
- 17:59:31 -0800 (PST)
+ AJvYcCVGM0zST1kNpK4CGl+PASlv9ZxWG3eRfw6wTZTZabmtlhNovbAX5gu6MOhMaItcKumFPDxzuS2pdKgMVg==@nongnu.org,
+ AJvYcCW4smmtnrLsRwTgOsu2G7B9N+daid2uKiDaTwcn0+w4yKlAZ3ezGDSqgsuyAHI21jqw/bzTuOpY+lXW@nongnu.org
+X-Gm-Message-State: AOJu0Yw/H+vuqzSvW9UGbblHlAsHtIKez7DtOZKRBwEPrUc/67vjrgCJ
+ zv97EUy8bKx/2NzqahSI7Ga6AkpplKggKG/Xl0mzuMjWACOu4c7t66aYnQi5OBmECT/hoPVo8Ua
+ QoB74OjhBVn3ibmMmTaL2NQUFjAE=
+X-Gm-Gg: ASbGncvjvNhJWxI1rFhkDfUd5PskDyik5vbCGkyRnMtMyhhjr2lXAc7wcdsSamF/I0D
+ pS8O219n+2MXu64Jjh2Sr0RxAijulLeTpSgWrQg8Oy6sAYIkjnpk8x+gkjfWUms261ks=
+X-Google-Smtp-Source: AGHT+IGEORcWNP4jeEN2O3gZRUil0Z/A6eXOeEzgMu66JjmDY7+OJKvLOiBB5n6+PXGXinImWpwxrY5q6d2P+z6k/TQ=
+X-Received: by 2002:a05:6102:fa5:b0:4b2:adfb:4f93 with SMTP id
+ ada2fe7eead31-4b2cc4540cemr49408076137.17.1736129364256; Sun, 05 Jan 2025
+ 18:09:24 -0800 (PST)
 MIME-Version: 1.0
-References: <tencent_1993B55C24DE7979BF34B200F78287002907@qq.com>
-In-Reply-To: <tencent_1993B55C24DE7979BF34B200F78287002907@qq.com>
+References: <cover.1734424581.git.lc00631@tecorigin.com>
+ <0b9e98cf4003198bda24ac56e128e4393682963e.1734424581.git.lc00631@tecorigin.com>
+In-Reply-To: <0b9e98cf4003198bda24ac56e128e4393682963e.1734424581.git.lc00631@tecorigin.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 11:59:05 +1000
-Message-ID: <CAKmqyKOjW=oaSEW76dFa+=hQn6n-DhH3sSncz0bDC+O31Eyj-Q@mail.gmail.com>
-Subject: Re: [PATCH v4] riscv/gdbstub: add V bit to priv reg
-To: Yanfeng Liu <yfliu2008@qq.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- alex.bennee@linaro.org, mario.fleischmann@lauterbach.com
+Date: Mon, 6 Jan 2025 12:08:57 +1000
+Message-ID: <CAKmqyKPFYxhK8PANOVzV3FMWxd79wZSJYLWkKOAgEMt_b2KvZA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] target/riscv: Fix handling of NOP for vstart >= vl
+ in vext_vx_rm_2()
+To: Chao Liu <lc00631@tecorigin.com>
+Cc: bmeng.cn@gmail.com, liwei1518@gmail.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ zqz00548@tecorigin.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,74 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 16, 2024 at 7:38=E2=80=AFAM Yanfeng Liu <yfliu2008@qq.com> wrot=
-e:
+On Tue, Dec 17, 2024 at 6:46=E2=80=AFPM Chao Liu <lc00631@tecorigin.com> wr=
+ote:
 >
-> This adds virtualization mode (V bit) as bit(2) of register `priv`
-> per RiscV debug spec v1.0.0-rc4. Checked with gdb-multiarch v12.1.
->
-> Note that GDB may display `INVALID` tag for `priv` reg when V bit
-> is set, this doesn't affect actual access to the bit though.
->
-> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> fix: https://lore.kernel.org/all/20240322085319.1758843-8-alistair.franci=
+s@wdc.com/
 
-Thanks!
+Can you include a commit message of what this fixes?
 
-Applied to riscv-to-apply.next
+Instead of linking to the pull request there should be a fixes tag
+here, like this
 
-Alistair
+Fixes: df4252b2ecaf "target/riscv/vector_helpers: do early exit when
+vstart >=3D vl"
 
+> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
 > ---
->  target/riscv/gdbstub.c | 23 +++++++++++++++++++----
->  1 file changed, 19 insertions(+), 4 deletions(-)
+>  target/riscv/vector_helper.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index c07df972f1..18e88f416a 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -213,7 +213,10 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByte=
-Array *buf, int n)
->          RISCVCPU *cpu =3D RISCV_CPU(cs);
->          CPURISCVState *env =3D &cpu->env;
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index a85dd1d200..54bac5922a 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -2154,8 +2154,6 @@ vext_vv_rm_1(void *vd, void *v0, void *vs1, void *v=
+s2,
+>               uint32_t vl, uint32_t vm, int vxrm,
+>               opivv2_rm_fn *fn, uint32_t vma, uint32_t esz)
+>  {
+> -    VSTART_CHECK_EARLY_EXIT(env);
+> -
+>      for (uint32_t i =3D env->vstart; i < vl; i++) {
+>          if (!vm && !vext_elem_mask(v0, i)) {
+>              /* set masked-off elements to 1s */
+> @@ -2179,6 +2177,8 @@ vext_vv_rm_2(void *vd, void *v0, void *vs1, void *v=
+s2,
+>      uint32_t vta =3D vext_vta(desc);
+>      uint32_t vma =3D vext_vma(desc);
 >
-> -        return gdb_get_regl(buf, env->priv);
-> +        /* Per RiscV debug spec v1.0.0 rc4 */
-> +        target_ulong vbit =3D (env->virt_enabled) ? BIT(2) : 0;
+> +    VSTART_CHECK_EARLY_EXIT(env);
 > +
-> +        return gdb_get_regl(buf, env->priv | vbit);
->  #endif
->      }
->      return 0;
-> @@ -226,10 +229,22 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint=
-8_t *mem_buf, int n)
->          RISCVCPU *cpu =3D RISCV_CPU(cs);
->          CPURISCVState *env =3D &cpu->env;
->
-> -        env->priv =3D ldtul_p(mem_buf) & 0x3;
-> -        if (env->priv =3D=3D PRV_RESERVED) {
-> -            env->priv =3D PRV_S;
-> +        target_ulong new_priv =3D ldtul_p(mem_buf) & 0x3;
-> +        bool new_virt =3D 0;
-> +
-> +        if (new_priv =3D=3D PRV_RESERVED) {
-> +            new_priv =3D PRV_S;
-> +        }
-> +
-> +        if (new_priv !=3D PRV_M) {
-> +            new_virt =3D (ldtul_p(mem_buf) & BIT(2)) >> 2;
->          }
-> +
-> +        if (riscv_has_ext(env, RVH) && new_virt !=3D env->virt_enabled) =
-{
-> +            riscv_cpu_swap_hypervisor_regs(env);
-> +        }
-> +
-> +        riscv_cpu_set_mode(env, new_priv, new_virt);
->  #endif
->          return sizeof(target_ulong);
->      }
+>      switch (env->vxrm) {
+>      case 0: /* rnu */
+>          vext_vv_rm_1(vd, v0, vs1, vs2,
 > --
-> 2.34.1
+> 2.47.1
 >
 >
 
