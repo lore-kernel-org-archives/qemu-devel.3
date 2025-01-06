@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128E1E77197
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 01:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F61E77197
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 01:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUbzT-0000ak-0A; Sun, 05 Jan 2025 20:33:11 -0500
+	id 1tUc1E-0001Rq-Pc; Sun, 05 Jan 2025 20:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUbzQ-0000aU-Cq; Sun, 05 Jan 2025 20:33:08 -0500
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ id 1tUc1D-0001Rc-Hh; Sun, 05 Jan 2025 20:34:59 -0500
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUbzO-00026X-Gj; Sun, 05 Jan 2025 20:33:08 -0500
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-518ae5060d4so4158854e0c.0; 
- Sun, 05 Jan 2025 17:33:05 -0800 (PST)
+ id 1tUc1B-0002GS-TD; Sun, 05 Jan 2025 20:34:59 -0500
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-5174d53437eso8329549e0c.2; 
+ Sun, 05 Jan 2025 17:34:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736127185; x=1736731985; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736127295; x=1736732095; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZBTLDcdGbJ5W0EhibDgXXb1cXQuybmP2U9BnOZPnjyA=;
- b=OEWJF6c+OfrXbigXrdvZqaeWyflqN/dwYgaMPbn9jjURE+l9Fn3wsIrs/8pWMnhREt
- Sthq4y2G0EjLeq36OkriX/WDbnVLIPsrLl58C666Ogma86+nPiX9Jyf8ZbJIZe8DP0F9
- bdgdbEJe5QlR4s2eDs7gauD4cKXMFxLwuB8fvyDwcDExklCYi5sMZLXiKihhohaOazgH
- 88bu2oWxDN2wo36WaPdGaQRgFfmf89WaNJy9o4l6ZVuz+RUVGqgU8dEm+kr3GcuqwKtT
- skYQY89SRPiH52O527X/V2aafoK1oRs/zV8KEz2RBiRAljaaOAJ7ng5UHKNXJib/lzlk
- SRWQ==
+ bh=hsCBQLekdYyhgVJb6uWj5kFsaL2lZHZmv9dXTfKtMz0=;
+ b=PUhSzWICQyzTl4edDKc90U94b9Vi0FwI+2t09y9YBIK1I48OvSlykhisRpFYmII/Hm
+ hadYRTHiluoyFihU390oCdkWqLZSUSPGHrjEgI9vXeEZ0FiQOmPbsfgYUeb6pdDkcIr+
+ fPFx+i8peMduvvMpyV9XsHmPmBYmk/eMOyg64yHkCLrKRzHMIIS93rPOuPuEDQBMCzqE
+ RQvWpJ/3GdiLNnTaibGNBFhNdzIS/66FswpJqufGlfUqlhY1XuFKLIHaQWp5s02Aoa/B
+ 4YtiFT9Vz/xuxcL6xpB6bW01jA5OEX2Q4FyALcADrsBpgSzjBjruHWNcxlaLbtXY0nR0
+ fQow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736127185; x=1736731985;
+ d=1e100.net; s=20230601; t=1736127295; x=1736732095;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZBTLDcdGbJ5W0EhibDgXXb1cXQuybmP2U9BnOZPnjyA=;
- b=fOlPjuiecTdaVEP6SyrAS8JhIAqe0sdgt2WAPk/80TWyQyeGEKqZKyCBqGWB2AAVA7
- KbX9Y9/jO6A6gNyIoi1n+YMpFiPE9tUD26I72Db+lbK1kD3zt/CTh4hz1iQARBah0Lx3
- p7WdXDL84j1rRmeEMuPgNKwiV2gozG5SmVG0Ik1X08lfLX3FE6scUo3IQt+Ie+HlikDY
- NT/njcDsZaNdUL+M5Alcy8oQoS4IMMPkQuEdBxXUK7LpzzJEyFDlZEpNGfnqXkwmita5
- ptTFFYxk0BQxIccIo+GxMDXwE/6KXS1KMHFcMIJZF9ZybG+eLbN7uRjemJanKMo9Hoa2
- YR8g==
+ bh=hsCBQLekdYyhgVJb6uWj5kFsaL2lZHZmv9dXTfKtMz0=;
+ b=ccW2Yn8drlZGigrxeP2gLAT9PIxGkX3ovENRcZlqM6shjSgJG9qK7Wcc4nBaTd2KAn
+ KAflaLhjD8nErbO0V2CwsSdcIYsXEOgg5lxlSqVMlHoRcVEd+licc6UJ42uWNZYNdpe4
+ TCwaGpRg1sGj4zjuWD7W0WHmr5PaAU4CU7me4G3vZdVJ80Ob0NgfbzF1YT9m5WR5O/Ye
+ QP8a54WB/+0ptkiWDitcXFFKQlAe34Xg4blHehhkDYXnjiWjYxr3ZlLDwZ66DOixTAT6
+ GdXBsYh6/GKfvm2DXiLHm5Cu3Z6TXMnATHFFCJoKECmEoAiM5qhwE0TuYZl+ZZdfuten
+ 7lqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWbDhOUMNTjefrbxA3pTRsOh8je9/UNOzumTZ53OUkFyQ5MXGWm1B3RmF6SB+GWlr15e8eD11sXl9p@nongnu.org
-X-Gm-Message-State: AOJu0YzPIFDthBIKy+6QoMCETwO33+IZGDt1O4o7oLAUK7l1aexqiRPj
- uBUqKFaNwMwuINugLG2rxwF8LmGE237PFTGiDpScq4HYKE+vIf9k+dX7euZ7wlGxSx9sNcg1nAV
- jTfweC73hJCqo4kroEPMdldiRSeQ=
-X-Gm-Gg: ASbGncv+GVizaUcB24i9nMqC4wDc88Wy76LB78IZUfy/TP2ALd/ZnRqZgkEYRMHSq94
- 1V8fU+FJcd94WcSJN4PRQR6taEuUCGavKe4Iy06qFRs4d8QFT8v39jh2ssOZK2Rmph38=
-X-Google-Smtp-Source: AGHT+IFl6ib3z3NDsXbqt7Q3I3G9g9gwHXBGAcSaVsodnZidFYd90THZHl2sOZHaWwlT7e4eY9DcN1BGXB79dM1mvgk=
-X-Received: by 2002:a05:6122:a17:b0:518:a0ac:1f42 with SMTP id
- 71dfb90a1353d-51b75c3f4aamr34778271e0c.1.1736127185022; Sun, 05 Jan 2025
- 17:33:05 -0800 (PST)
+ AJvYcCXcxLYwzW4GSH95qZ+lrf/WMgBNfCFhKkuHpYP+/SAf3Zz6RwUPt3YsQkej20uB0qBiMX/1J/Mmk8ag@nongnu.org
+X-Gm-Message-State: AOJu0YyEDUCTFUZ2+fuzVc5/SVlZ2Quk4FVJrp3SXyyoe0JgW+pTmyq3
+ baSwrB89GAeAl7yvlVOVo/dqxitbb7d/gVvf/SUN3u3X/xnYZfjLvHojpXc67c25Ww78mamfA7c
+ cZaTPnm+NmfOXjKDX0T6ByzJlvsQ=
+X-Gm-Gg: ASbGncsqAHk48r6g6SgzJSOdsCNLvK+iwxs6g2cZY/xRiK3TU6E3BTbbV9Gx1BwsfSO
+ F/H5OHVHpm0tQ/L0Uak8Sob8Avsp5y61pSyYY6VDezIY4N9sjh/z9aTcGaU9sS9xqm8s=
+X-Google-Smtp-Source: AGHT+IGAUAMxQpLoPBYPcjWiSo62JBlrZoUTugZfKnPgIB3igbiPgMjJGNlAwodVjsBT0LBCtNlbRRLlsL+Ta/JIKQA=
+X-Received: by 2002:a05:6122:4884:b0:518:89d9:dd99 with SMTP id
+ 71dfb90a1353d-51b75c2a515mr45171107e0c.3.1736127295525; Sun, 05 Jan 2025
+ 17:34:55 -0800 (PST)
 MIME-Version: 1.0
 References: <20241225123718.45991-1-ivan.klokov@syntacore.com>
- <20241225123718.45991-2-ivan.klokov@syntacore.com>
-In-Reply-To: <20241225123718.45991-2-ivan.klokov@syntacore.com>
+ <20241225123718.45991-3-ivan.klokov@syntacore.com>
+In-Reply-To: <20241225123718.45991-3-ivan.klokov@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 6 Jan 2025 11:32:39 +1000
-Message-ID: <CAKmqyKNBYHjuQFdm=p97jLQ5oWFutBS-1HaGU4yKvLaGWWbkyg@mail.gmail.com>
-Subject: Re: [PATCH v8 1/2] target/riscv: Add RISC-V CSR qtest support
+Date: Mon, 6 Jan 2025 11:34:29 +1000
+Message-ID: <CAKmqyKOHW1OhgqUAAZypmggYZNsskoqGbENbVpdTsLGU2YwGbg@mail.gmail.com>
+Subject: Re: [PATCH v8 2/2] tests/qtest: QTest example for RISC-V CSR register
 To: Ivan Klokov <ivan.klokov@syntacore.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
@@ -71,8 +71,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
  lvivier@redhat.com, pbonzini@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,16 +96,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 25, 2024 at 10:38=E2=80=AFPM Ivan Klokov <ivan.klokov@syntacore=
+On Wed, Dec 25, 2024 at 10:39=E2=80=AFPM Ivan Klokov <ivan.klokov@syntacore=
 .com> wrote:
 >
-> The RISC-V architecture supports the creation of custom
-> CSR-mapped devices. It would be convenient to test them in the same way
-> as MMIO-mapped devices. To do this, a new call has been added
-> to read/write CSR registers.
+> Added demo for reading CSR register from qtest environment.
 >
 > Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
-> Acked-by: Fabiano Rosas <farosas@suse.de>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
@@ -113,160 +110,89 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/riscv_hart.c  | 56 ++++++++++++++++++++++++++++++++++++++++++
->  tests/qtest/libqtest.c | 27 ++++++++++++++++++++
->  tests/qtest/libqtest.h | 14 +++++++++++
->  3 files changed, 97 insertions(+)
+>  tests/qtest/meson.build      |  2 +-
+>  tests/qtest/riscv-csr-test.c | 56 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 57 insertions(+), 1 deletion(-)
+>  create mode 100644 tests/qtest/riscv-csr-test.c
 >
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index bc9ffdd2d4..b8151682c0 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -22,6 +22,9 @@
->  #include "qapi/error.h"
->  #include "qemu/module.h"
->  #include "system/reset.h"
-> +#include "qemu/cutils.h"
-> +#include "sysemu/qtest.h"
-> +#include "sysemu/reset.h"
->  #include "hw/sysbus.h"
->  #include "target/riscv/cpu.h"
->  #include "hw/qdev-properties.h"
-> @@ -41,6 +44,55 @@ static void riscv_harts_cpu_reset(void *opaque)
->      cpu_reset(CPU(cpu));
->  }
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index c5a70021c5..7eb1199d91 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -273,7 +273,7 @@ qtests_s390x =3D \
+>  qtests_riscv32 =3D \
+>    (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-wa=
+tchdog-test'] : [])
 >
-> +#ifndef CONFIG_USER_ONLY
-> +static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *v=
-al)
-> +{
-> +    RISCVCPU *cpu =3D RISCV_CPU(cpu_by_arch_id(cpu_num));
-> +    CPURISCVState *env =3D &cpu->env;
-> +
-> +    int ret =3D RISCV_EXCP_NONE;
-> +    if (strcmp(cmd, "get_csr") =3D=3D 0) {
-> +        ret =3D riscv_csrr(env, csrno, (target_ulong *)val);
-> +    } else if (strcmp(cmd, "set_csr") =3D=3D 0) {
-> +        ret =3D riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
-> +                MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
-> +    }
-> +
-> +    g_assert(ret =3D=3D RISCV_EXCP_NONE);
-> +}
-> +
-> +static bool csr_qtest_callback(CharBackend *chr, gchar **words)
-> +{
-> +    if (strcmp(words[0], "csr") =3D=3D 0) {
-> +
-> +        uint64_t cpu;
-> +        uint64_t val;
-> +        int rc, csr;
-> +
-> +        rc =3D qemu_strtou64(words[2], NULL, 0, &cpu);
-> +        g_assert(rc =3D=3D 0);
-> +        rc =3D qemu_strtoi(words[3], NULL, 0, &csr);
-> +        g_assert(rc =3D=3D 0);
-> +        rc =3D qemu_strtou64(words[4], NULL, 0, &val);
-> +        g_assert(rc =3D=3D 0);
-> +        csr_call(words[1], cpu, csr, &val);
-> +
-> +        qtest_send_prefix(chr);
-> +        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
-> +
-> +        return true;
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +static void riscv_cpu_register_csr_qtest_callback(void)
-> +{
-> +    static GOnce once;
-> +    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback)=
-;
-> +}
-> +#endif
-> +
->  static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
->                                 char *cpu_type, Error **errp)
->  {
-> @@ -58,6 +110,10 @@ static void riscv_harts_realize(DeviceState *dev, Err=
-or **errp)
+> -qtests_riscv64 =3D \
+> +qtests_riscv64 =3D ['riscv-csr-test'] + \
+>    (unpack_edk2_blobs ? ['bios-tables-test'] : [])
 >
->      s->harts =3D g_new0(RISCVCPU, s->num_harts);
->
-> +#ifndef CONFIG_USER_ONLY
-> +    riscv_cpu_register_csr_qtest_callback();
-> +#endif
-> +
->      for (n =3D 0; n < s->num_harts; n++) {
->          if (!riscv_hart_realize(s, n, s->cpu_type, errp)) {
->              return;
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 8de5f1fde3..4bc9643aad 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -1218,6 +1218,33 @@ uint64_t qtest_rtas_call(QTestState *s, const char=
- *name,
->      return 0;
->  }
->
-> +static void qtest_rsp_csr(QTestState *s, uint64_t *val)
-> +{
-> +    gchar **args;
-> +    uint64_t ret;
-> +    int rc;
-> +
-> +    args =3D qtest_rsp_args(s, 3);
-> +
-> +    rc =3D qemu_strtou64(args[1], NULL, 16, &ret);
-> +    g_assert(rc =3D=3D 0);
-> +    rc =3D qemu_strtou64(args[2], NULL, 16, val);
-> +    g_assert(rc =3D=3D 0);
-> +
-> +    g_strfreev(args);
-> +}
-> +
-> +uint64_t qtest_csr_call(QTestState *s, const char *name,
-> +                         uint64_t cpu, int csr,
-> +                         uint64_t *val)
-> +{
-> +    qtest_sendf(s, "csr %s 0x%"PRIx64" %d 0x%"PRIx64"\n",
-> +                    name, cpu, csr, *val);
-> +
-> +    qtest_rsp_csr(s, val);
-> +    return 0;
-> +}
-> +
->  void qtest_add_func(const char *str, void (*fn)(void))
->  {
->      gchar *path =3D g_strdup_printf("/%s/%s", qtest_get_arch(), str);
-> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-> index f23d80e9e5..cd35e11d4c 100644
-> --- a/tests/qtest/libqtest.h
-> +++ b/tests/qtest/libqtest.h
-> @@ -600,6 +600,20 @@ uint64_t qtest_rtas_call(QTestState *s, const char *=
-name,
->                           uint32_t nargs, uint64_t args,
->                           uint32_t nret, uint64_t ret);
->
-> +/**
-> + * qtest_csr_call:
-> + * @s: #QTestState instance to operate on.
-> + * @name: name of the command to call.
-> + * @cpu: hart number.
-> + * @csr: CSR number.
-> + * @val: Value for reading/writing.
+>  qos_test_ss =3D ss.source_set()
+> diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
+> new file mode 100644
+> index 0000000000..ff5c29e6c6
+> --- /dev/null
+> +++ b/tests/qtest/riscv-csr-test.c
+> @@ -0,0 +1,56 @@
+> +/*
+> + * QTest testcase for RISC-V CSRs
 > + *
-> + * Call an RISC-V CSR read/write function
+> + * Copyright (c) 2024 Syntacore.
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms of the GNU General Public License as published by the
+> + * Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+> + *
+> + * This program is distributed in the hope that it will be useful, but W=
+ITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+> + * for more details.
 > + */
-> +uint64_t qtest_csr_call(QTestState *s, const char *name,
-> +                         uint64_t cpu, int csr,
-> +                         unsigned long *val);
 > +
->  /**
->   * qtest_bufread:
->   * @s: #QTestState instance to operate on.
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +
+> +#define CSR_MVENDORID       0xf11
+> +#define CSR_MISELECT        0x350
+> +
+> +static void run_test_csr(void)
+> +{
+> +    uint64_t res;
+> +    uint64_t val =3D 0;
+> +
+> +    QTestState *qts =3D qtest_init("-machine virt -cpu veyron-v1");
+> +
+> +    res =3D qtest_csr_call(qts, "get_csr", 0, CSR_MVENDORID, &val);
+> +
+> +    g_assert_cmpint(res, =3D=3D, 0);
+> +    g_assert_cmpint(val, =3D=3D, 0x61f);
+> +
+> +    val =3D 0xff;
+> +    res =3D qtest_csr_call(qts, "set_csr", 0, CSR_MISELECT, &val);
+> +
+> +    g_assert_cmpint(res, =3D=3D, 0);
+> +
+> +    val =3D 0;
+> +    res =3D qtest_csr_call(qts, "get_csr", 0, CSR_MISELECT, &val);
+> +
+> +    g_assert_cmpint(res, =3D=3D, 0);
+> +    g_assert_cmpint(val, =3D=3D, 0xff);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +
+> +    qtest_add_func("/cpu/csr", run_test_csr);
+> +
+> +    return g_test_run();
+> +}
 > --
 > 2.34.1
 >
