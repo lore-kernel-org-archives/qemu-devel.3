@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACAFFE77188
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 09:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A0FE77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 09:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUjYw-0001Lz-Si; Mon, 06 Jan 2025 04:38:18 -0500
+	id 1tUja6-0002Lr-FO; Mon, 06 Jan 2025 04:39:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tUjYv-0001LG-UM
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 04:38:17 -0500
+ id 1tUja4-0002Ld-RP
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 04:39:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tUjYt-0001Ny-W8
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 04:38:17 -0500
+ id 1tUja2-0001Rs-Vh
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 04:39:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736156293;
+ s=mimecast20190719; t=1736156366;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kBiMSAvDs8oyUKqUMfcqS2w9/gcB9FvrLUtPwnZ9hJQ=;
- b=F0DhipwYfU/ernpw9rncFgdkdGDe7TnlEgr8hXyUE//epX+vJcTnwh9z9cJnuGpvso1VFv
- PjX5b4m/vfCwVkinsJkna6jrsZfo/Gv5yQb5AVbN5QipKnpI2vGunWv/Ie9MC9sqMNX2zM
- QB+wrbX6LRXXPIzkDSCcG2CaoFvDZvM=
+ bh=j9Lahhyn8/w9w4Gx8V31EP67wte2cQjSucqnu/S1daw=;
+ b=LPrMTugcIt1d0eK6myVHDZ2UqRuNt8H/j+cmAwX+Qi5x5HZqiaGhI9+JTLgO6ldCPJWJuF
+ ILJmRCtoJ9dci4u2cxV0H5MDOk0FnSeydDw2XO7wVjqIJAtjOvbbe2dI1rA2L7FdBFxqQZ
+ zurE5/IqE6RP7ZOvbDN9oxexdcBxHQ0=
 Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
  [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-UckbSN5vNr-AaqbPrEUozQ-1; Mon, 06 Jan 2025 04:38:10 -0500
-X-MC-Unique: UckbSN5vNr-AaqbPrEUozQ-1
-X-Mimecast-MFC-AGG-ID: UckbSN5vNr-AaqbPrEUozQ
+ us-mta-148-YykBGIWyM_ecr3hScSlN5w-1; Mon, 06 Jan 2025 04:39:23 -0500
+X-MC-Unique: YykBGIWyM_ecr3hScSlN5w-1
+X-Mimecast-MFC-AGG-ID: YykBGIWyM_ecr3hScSlN5w
 Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d8f14fc179so407386736d6.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 01:38:10 -0800 (PST)
+ 6a1803df08f44-6d92efa9ff4so232045326d6.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 01:39:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736156290; x=1736761090;
+ d=1e100.net; s=20230601; t=1736156362; x=1736761162;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kBiMSAvDs8oyUKqUMfcqS2w9/gcB9FvrLUtPwnZ9hJQ=;
- b=Qutp9ye1ejpCz3ka8bDOX4mRqbmDvYyjJjrmXIyxtW+sNZDKe7ul8qnUk9NNT4LOo4
- polHpbvTeA44lAzw7ku1cjQStOTuXveNNc53eVrqmhPUKg/AWccEK8p/3L61JPqrToqf
- AJCmLXRxBlL/HT1BffethSI83x00+LcrFWVOhBSouafK2ziti7kkI4G7PkpTzaS25Vv9
- q3NQJwgnCJxcinJEZ0S44xpRYfHgi5bucjbDBOoLF2YmfMDcjkb4EsIHdSOkROCy/4pQ
- WNs+JoO/X3SQ26gnYjh+YYyMjslgsmfPVrL3Uf1sUQnKnisBRa/17NVK5pOP7fXICsf/
- YYKQ==
-X-Gm-Message-State: AOJu0YzGiSoFIzeUpNdPOq7221UJC4qWoQWOfw2uq5Wn+jTcJpzHmCW+
- sGHOWP8HVFS7F8mjHz1IkCBw6geaodtmpCaQOiLkGAUHGsz0WS6dpGr8qPJOlcIy+1gzB4k32mR
- 7A/IAO2oE0AuDO/rgMoc+3J1LQmKlsGNt2JXJfeBVGw5v6xKkKEV96GNmJ8pABngwdk+FOhhXzP
- RVPF90zFoDhVeyLirOuIRxN7mB7qLOZ7Gn86s=
-X-Gm-Gg: ASbGncuBDYUCkirqJyx1PcPIAHqTtPui2SVeHZy3qZZhw+5KZ4/MbazBCGeMfeDovLi
- N85rp2N+VEX+/yaeoSOqRmrA3s0E0/+ha/7SC8NgP
-X-Received: by 2002:a05:6214:3291:b0:6d8:899e:c3be with SMTP id
- 6a1803df08f44-6dd233afa69mr992641506d6.49.1736156290287; 
- Mon, 06 Jan 2025 01:38:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGvdtCYCY7rTPXSvAuTysbbJfEpJfqkIKivFsJD0DQFHbw5Lk30V15C7I/T5SpgsQNLHoofsuu8eOFSoSNxThI=
-X-Received: by 2002:a05:6214:3291:b0:6d8:899e:c3be with SMTP id
- 6a1803df08f44-6dd233afa69mr992641356d6.49.1736156290075; Mon, 06 Jan 2025
- 01:38:10 -0800 (PST)
+ bh=j9Lahhyn8/w9w4Gx8V31EP67wte2cQjSucqnu/S1daw=;
+ b=EIQjCd6Qak9gNpWpi4JVzc9MNxusGj52ANN1myGKYy0vdSmsdskgMFW9g2l3mznLln
+ /8qxE8gDPb3VVxDxRdZT7t3Lovzne01YpJjNR9v/4HpdxnZg1kfmKCwudpUel6nWFClV
+ 7/4unqLXTVicuhJWPiL4YiZnEgfd57ixEXfBuiGHxDi5Mt5W9t5oue4/pLjeryGRz097
+ 9i2FTcMX6caL+1NmXSizlBiV90WdInNJXsO36mqNKZOr/c5dORL9qk5RgZYCxARgzjq2
+ KBbG1lHPVEAwjnJ72bzIupUD5qpJPVnN1vUwTqa4HTKg5sRJV9zAVllA1jEx3VRla2vC
+ O9Iw==
+X-Gm-Message-State: AOJu0YzyNZFs+WYzQ+kYBKIJdkuhQhM4z4BTFdRug6xNqvSGG46DF+pd
+ HuSq55GgjMa0oEYaVhmoXsnbQqeAp5k3Z5N2PUncbOiOYYq++0DopYqQpRElfgBX+279EpiKALD
+ /9yRHcD/2OUMOv4YzbVFkT9nIw+kUPXRpIM+ZOdyfxT0Dtpqcx83x1V06G0sZJbeUIsv/rYIRgO
+ No4CLYOVKDJOasiHfC4gL181vfPDginFlzHkH0Jw==
+X-Gm-Gg: ASbGncv8lauDdGrUg9oBDVVxIh9LBEK1rDr9HUFIRZi56qPCTsqUJ1UF+/jRr/nem2N
+ a4FVywF4C+w6PIwXqqtMCqhSBxC7l/6nHfctduwO4
+X-Received: by 2002:a05:6214:767:b0:6d8:96a6:ec22 with SMTP id
+ 6a1803df08f44-6dd2335741dmr1005040946d6.23.1736156362662; 
+ Mon, 06 Jan 2025 01:39:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFiSR3VIry3XdTycXOdye54SlHk2YerLZe4eGWrFlPw3j/u2nTwQdbgv2uOsyH3ItWWxHfWEzmxKP6Y4ZQqB/4=
+X-Received: by 2002:a05:6214:767:b0:6d8:96a6:ec22 with SMTP id
+ 6a1803df08f44-6dd2335741dmr1005040806d6.23.1736156362444; Mon, 06 Jan 2025
+ 01:39:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20241216154552.213961-1-kkostiuk@redhat.com>
- <20241216154552.213961-2-kkostiuk@redhat.com>
-In-Reply-To: <20241216154552.213961-2-kkostiuk@redhat.com>
+References: <20241225083744.277374-1-demeng@redhat.com>
+In-Reply-To: <20241225083744.277374-1-demeng@redhat.com>
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 6 Jan 2025 11:37:59 +0200
-Message-ID: <CAPMcbCrP4Y3uXYWzEQ3FpD_0Tm-Of6HJs7L8SEfwVxz1omO82g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] qga: Add log to guest-fsfreeze-thaw command
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000f1de58062b06623c"
+Date: Mon, 6 Jan 2025 11:39:11 +0200
+Message-ID: <CAPMcbCpWoi1cg4Z792GMY3NSjSZTd=86qGM_7GVSKhsUDs3ngw@mail.gmail.com>
+Subject: Re: [PATCH] qemu-ga: Optimize freeze-hook script logic of logging
+ error
+To: Dehan Meng <demeng@redhat.com>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com
+Content-Type: multipart/alternative; boundary="000000000000422612062b066768"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -102,109 +99,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f1de58062b06623c
+--000000000000422612062b066768
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-ping
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 
-On Mon, Dec 16, 2024 at 5:47=E2=80=AFPM Konstantin Kostiuk <kkostiuk@redhat=
-.com>
-wrote:
+On Wed, Dec 25, 2024 at 10:37=E2=80=AFAM Dehan Meng <demeng@redhat.com> wro=
+te:
 
-> Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+> Make sure the error log of fsfreeze hooks
+> when freeze/thaw/snapshot could be logged
+> to system logs if the default logfile of
+> qga can't be written or other situations
+>
+> Signed-off-by: Dehan Meng <demeng@redhat.com>
 > ---
->  qga/commands-posix.c | 2 ++
->  qga/commands-win32.c | 3 +++
->  2 files changed, 5 insertions(+)
+>  scripts/qemu-guest-agent/fsfreeze-hook | 36 +++++++++++++++++++++++---
+>  1 file changed, 32 insertions(+), 4 deletions(-)
 >
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 636307bedf..359a56be81 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -805,8 +805,10 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
->      int ret;
->
->      ret =3D qmp_guest_fsfreeze_do_thaw(errp);
-> +
->      if (ret >=3D 0) {
->          ga_unset_frozen(ga_state);
-> +        slog("guest-fsthaw called");
->          execute_fsfreeze_hook(FSFREEZE_HOOK_THAW, errp);
->      } else {
->          ret =3D 0;
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index 038beb8cfa..7d8e260e1f 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -1273,6 +1273,9 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
->      qga_vss_fsfreeze(&i, false, NULL, errp);
->
->      ga_unset_frozen(ga_state);
-> +
-> +    slog("guest-fsthaw called");
-> +
->      return i;
+> diff --git a/scripts/qemu-guest-agent/fsfreeze-hook
+> b/scripts/qemu-guest-agent/fsfreeze-hook
+> index 13aafd4845..c1feb6f5ce 100755
+> --- a/scripts/qemu-guest-agent/fsfreeze-hook
+> +++ b/scripts/qemu-guest-agent/fsfreeze-hook
+> @@ -19,15 +19,43 @@ is_ignored_file() {
+>      return 1
 >  }
 >
-> --
-> 2.47.1
+> +USE_SYSLOG=3D0
+> +# if log file is not writable, fallback to syslog
+> +[ ! -w "$LOGFILE" ] && USE_SYSLOG=3D1
+> +# try to update log file and fallback to syslog if it fails
+> +touch "$LOGFILE" &>/dev/null || USE_SYSLOG=3D1
+> +
+> +# Ensure the log file is writable, fallback to syslog if not
+> +log_message() {
+> +    local message=3D"$1"
+> +    if [ "$USE_SYSLOG" -eq 0 ]; then
+> +        printf "%s: %s\n" "$(date)" "$message" >>"$LOGFILE"
+> +    else
+> +        logger -t qemu-ga-freeze-hook "$message"
+> +    fi
+> +}
+> +
+>  # Iterate executables in directory "fsfreeze-hook.d" with the specified
+> args
+>  [ ! -d "$FSFREEZE_D" ] && exit 0
+> +
+>  for file in "$FSFREEZE_D"/* ; do
+>      is_ignored_file "$file" && continue
+>      [ -x "$file" ] || continue
+> -    printf "$(date): execute $file $@\n" >>$LOGFILE
+> -    "$file" "$@" >>$LOGFILE 2>&1
+> -    STATUS=3D$?
+> -    printf "$(date): $file finished with status=3D$STATUS\n" >>$LOGFILE
+> +
+> +    log_message "Executing $file $@"
+> +    if [ "$USE_SYSLOG" -eq 0 ]; then
+> +        "$file" "$@" >>"$LOGFILE" 2>&1
+> +        STATUS=3D$?
+> +    else
+> +        "$file" "$@" 2>&1 | logger -t qemu-ga-freeze-hook
+> +        STATUS=3D${PIPESTATUS[0]}
+> +    fi
+> +
+> +    if [ $STATUS -ne 0 ]; then
+> +        log_message "Error: $file finished with status=3D$STATUS"
+> +    else
+> +        log_message "$file finished successfully"
+> +    fi
+>  done
 >
+>  exit 0
+> --
+> 2.40.1
 >
 >
 
---000000000000f1de58062b06623c
+--000000000000422612062b066768
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">ping<br></div><br><div class=3D"gmail_quote gmail_quote_co=
-ntainer"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 16, 2024 at 5:47=
-=E2=80=AFPM Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com">k=
-kostiuk@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">Signed-off-by: Konstantin Kostiuk &lt;<a href=3D"mailto:k=
-kostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;<br>
+<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Wed, Dec 25, 2024 at 10:37=E2=80=AFAM Dehan Meng &lt;<a href=3D=
+"mailto:demeng@redhat.com">demeng@redhat.com</a>&gt; wrote:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">Make sure the error log of fsfr=
+eeze hooks<br>
+when freeze/thaw/snapshot could be logged<br>
+to system logs if the default logfile of<br>
+qga can&#39;t be written or other situations<br>
+<br>
+Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=
+=3D"_blank">demeng@redhat.com</a>&gt;<br>
 ---<br>
-=C2=A0qga/commands-posix.c | 2 ++<br>
-=C2=A0qga/commands-win32.c | 3 +++<br>
-=C2=A02 files changed, 5 insertions(+)<br>
+=C2=A0scripts/qemu-guest-agent/fsfreeze-hook | 36 +++++++++++++++++++++++--=
+-<br>
+=C2=A01 file changed, 32 insertions(+), 4 deletions(-)<br>
 <br>
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
-index 636307bedf..359a56be81 100644<br>
---- a/qga/commands-posix.c<br>
-+++ b/qga/commands-posix.c<br>
-@@ -805,8 +805,10 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0int ret;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0ret =3D qmp_guest_fsfreeze_do_thaw(errp);<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (ret &gt;=3D 0) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ga_unset_frozen(ga_state);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 slog(&quot;guest-fsthaw called&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0execute_fsfreeze_hook(FSFREEZE_HOOK_THAW,=
- errp);<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D 0;<br>
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
-index 038beb8cfa..7d8e260e1f 100644<br>
---- a/qga/commands-win32.c<br>
-+++ b/qga/commands-win32.c<br>
-@@ -1273,6 +1273,9 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0qga_vss_fsfreeze(&amp;i, false, NULL, errp);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0ga_unset_frozen(ga_state);<br>
-+<br>
-+=C2=A0 =C2=A0 slog(&quot;guest-fsthaw called&quot;);<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0return i;<br>
+diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-ag=
+ent/fsfreeze-hook<br>
+index 13aafd4845..c1feb6f5ce 100755<br>
+--- a/scripts/qemu-guest-agent/fsfreeze-hook<br>
++++ b/scripts/qemu-guest-agent/fsfreeze-hook<br>
+@@ -19,15 +19,43 @@ is_ignored_file() {<br>
+=C2=A0 =C2=A0 =C2=A0return 1<br>
 =C2=A0}<br>
 <br>
--- <br>
-2.47.1<br>
++USE_SYSLOG=3D0<br>
++# if log file is not writable, fallback to syslog<br>
++[ ! -w &quot;$LOGFILE&quot; ] &amp;&amp; USE_SYSLOG=3D1<br>
++# try to update log file and fallback to syslog if it fails<br>
++touch &quot;$LOGFILE&quot; &amp;&gt;/dev/null || USE_SYSLOG=3D1<br>
++<br>
++# Ensure the log file is writable, fallback to syslog if not<br>
++log_message() {<br>
++=C2=A0 =C2=A0 local message=3D&quot;$1&quot;<br>
++=C2=A0 =C2=A0 if [ &quot;$USE_SYSLOG&quot; -eq 0 ]; then<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 printf &quot;%s: %s\n&quot; &quot;$(date)&quot=
+; &quot;$message&quot; &gt;&gt;&quot;$LOGFILE&quot;<br>
++=C2=A0 =C2=A0 else<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 logger -t qemu-ga-freeze-hook &quot;$message&q=
+uot;<br>
++=C2=A0 =C2=A0 fi<br>
++}<br>
++<br>
+=C2=A0# Iterate executables in directory &quot;fsfreeze-hook.d&quot; with t=
+he specified args<br>
+=C2=A0[ ! -d &quot;$FSFREEZE_D&quot; ] &amp;&amp; exit 0<br>
++<br>
+=C2=A0for file in &quot;$FSFREEZE_D&quot;/* ; do<br>
+=C2=A0 =C2=A0 =C2=A0is_ignored_file &quot;$file&quot; &amp;&amp; continue<b=
+r>
+=C2=A0 =C2=A0 =C2=A0[ -x &quot;$file&quot; ] || continue<br>
+-=C2=A0 =C2=A0 printf &quot;$(date): execute $file $@\n&quot; &gt;&gt;$LOGF=
+ILE<br>
+-=C2=A0 =C2=A0 &quot;$file&quot; &quot;$@&quot; &gt;&gt;$LOGFILE 2&gt;&amp;=
+1<br>
+-=C2=A0 =C2=A0 STATUS=3D$?<br>
+-=C2=A0 =C2=A0 printf &quot;$(date): $file finished with status=3D$STATUS\n=
+&quot; &gt;&gt;$LOGFILE<br>
++<br>
++=C2=A0 =C2=A0 log_message &quot;Executing $file $@&quot;<br>
++=C2=A0 =C2=A0 if [ &quot;$USE_SYSLOG&quot; -eq 0 ]; then<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;$file&quot; &quot;$@&quot; &gt;&gt;&quot=
+;$LOGFILE&quot; 2&gt;&amp;1<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 STATUS=3D$?<br>
++=C2=A0 =C2=A0 else<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;$file&quot; &quot;$@&quot; 2&gt;&amp;1 |=
+ logger -t qemu-ga-freeze-hook<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 STATUS=3D${PIPESTATUS[0]}<br>
++=C2=A0 =C2=A0 fi<br>
++<br>
++=C2=A0 =C2=A0 if [ $STATUS -ne 0 ]; then<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 log_message &quot;Error: $file finished with s=
+tatus=3D$STATUS&quot;<br>
++=C2=A0 =C2=A0 else<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 log_message &quot;$file finished successfully&=
+quot;<br>
++=C2=A0 =C2=A0 fi<br>
+=C2=A0done<br>
 <br>
+=C2=A0exit 0<br>
+-- <br>
+2.40.1<br>
 <br>
 </blockquote></div>
 
---000000000000f1de58062b06623c--
+--000000000000422612062b066768--
 
 
