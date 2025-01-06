@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A073E77199
-	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 05:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B40E77188
+	for <qemu-devel@archiver.kernel.org>; Mon,  6 Jan 2025 05:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUfuE-0003lZ-3s; Mon, 06 Jan 2025 00:44:02 -0500
+	id 1tUfzy-0001ea-UN; Mon, 06 Jan 2025 00:49:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tUfu9-0003jc-Ob
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:43:58 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUfzx-0001e7-It
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:49:57 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tUfu7-0004J5-V7
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:43:57 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2156e078563so172625975ad.2
- for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 21:43:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tUfzv-0004py-RB
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 00:49:57 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3863703258fso8728166f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 05 Jan 2025 21:49:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1736142233; x=1736747033; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DMWiwVoFUO9CgNCJuVDY2YJrtySv3drqiXkHUeaBqX8=;
- b=CHRjJsut+ogbOScYqtkgw04fIa6NiS9hYF2nEtbFk7VeGvLNVK4R7pcNhg7cKvoY3y
- w1rZ/yRZLRWxJGqMHa+aiLLDu+oF3D6Sio5y/FoQjZGzyU/0iKzPVIF+LBxKQKweABvb
- DiVmcEb8oVdra3TN2bLb0A8i6HUxm3PQGaxPIDz3KQpQ4QWIMykwhAycxZCTD8yrx6yk
- aPWzC+kfLHyO4ZLWc40ghusoNf39lryUPVLu9tWczE0Ub4tUHvFm8LHYF1bcOG1oJVf0
- fCjzoVQuXh1efAkdlCAJlHxDYDFmyHLY7WAxudjhYWSr76BZ1rmQ6YBysm2y9wuT3WFe
- cHaA==
+ d=linaro.org; s=google; t=1736142593; x=1736747393; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VCmLGmzD2F6J2QbfSwUjmhgNI3SOO1JNMjze/6Q3R3A=;
+ b=RO4lkRPTQzZdT+dm4hcJ9yAPz0+ZK9mn3mTz9YulaIN34a4wSOakKuagWGl0+drsu8
+ Qro8/3+pAy7Id+g6jV84s5F/a7vCjWlfz7n740FXSzqiveHmHlSt95AfMWjwg8e89/9Z
+ Vexqvw4wT2G1eOG0GxS2qt6FdeSUGdRZBW6x3ROtu7N+jl0cIAiGkdKcru19AHVoVvGR
+ INDcpPrnRhS2WxZr2vUQPUI2aoMbXirc8i1XpU/JEqezkIhjqVsuos1/MXnsWvhgUL0x
+ qgVU0QAoLE9ZWgtFdeCY5xHmaDak2eEEUBp+emdSe2jDN8wjn4Qafn8JFqEB7wYMpV1i
+ BXBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736142233; x=1736747033;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DMWiwVoFUO9CgNCJuVDY2YJrtySv3drqiXkHUeaBqX8=;
- b=jf3uqbLthdwOWE0TAKQAwz5BeEOo4+Nc9hgvgMqJULpj5OQk56gn6gHO5U1qbGYjRm
- b9Yo2pfac2U8wbGtG5b6jMfsBV+qeplWd8fY3MVMsFWVGdT5QSa3SmRNF26GC3pLMRwl
- tYoMcnEwA0Z3PkNnxijCb1c1h1uN35fEbBYBIZAKDaZdhRhAdHWqSR2YC4fJMuSVdu8K
- Mqti7CLURlQ1NRmll9RO2SEP7ch6B9QnuWe1LFP6u3MQA3u8ozEDxubiJFKxuuQii9Vt
- vv4HQOu+DvKj11HEiS1Fj6ixR+IudnFJdfIW0XVxXB1wIJzKCam2trqC/IF1lagfs1BR
- KGqg==
-X-Gm-Message-State: AOJu0Yx1hTBwYBUo+5pBKhrTawjGxyQjMJkQ4bK4JKv2JLsmg1S85Zrc
- 3YhcF0CgejBTEVSevog3bzY4ozNkDmw2NVOoli6hyAX2ntfd4IPhgfBe1HR2RDnchgSSh0MPSXC
- RKPz8mokedKF30M84u1sE6oWtw4egQLLdfZ+s9w9YEItKrOJ8l1htayq5ydZS9pxile0N/N0DVt
- sKDNR+nQrNluvqgCCP7tnLvnP3J5UZzHhAjxqkvhGw2Q==
-X-Gm-Gg: ASbGnctd59NRW++yKzEzybeU54eJO1mAeUXNrZFQDbMMhOMe//jbMWYd69j5C1E+9ps
- lRN/zXGcjiakkv2IxsUzx2Pb7GOAECrB5e1xthWPcK1i/4Uy6W4NE75CE3GkrPuM2GJJnqfphfA
- WaTjvG61ZSXpButMpzgQor5KjSp2+SW9fGMGLpZXwNA5tplV8td6R3vdkSoX+DEVgC8IZeqHtjE
- ks5WDOsz65t1ZI2vQ32AUg7l4i9EZczWTRjN2msIl/KMa2Wsh1YXFnQ2PxyR3Z5xS3D4sbMsTqM
- 7UJZaMqp2K8=
-X-Google-Smtp-Source: AGHT+IFhpduUXhDNV5ApBzk6FHaLHzbZUkW07f75JmI1oWdcVEvjHQkXKvAByG9o+zSrKVUl4dBZGQ==
-X-Received: by 2002:a17:902:e84b:b0:216:6f1a:1c77 with SMTP id
- d9443c01a7336-219e6f105d3mr774972755ad.43.1736142233140; 
- Sun, 05 Jan 2025 21:43:53 -0800 (PST)
-Received: from fchang-1826.internal.sifive.com ([210.176.154.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc96eac6sm285722215ad.80.2025.01.05.21.43.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 05 Jan 2025 21:43:52 -0800 (PST)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tommy Wu <tommy.wu@sifive.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v12 4/6] target/riscv: Add Smrnmi mnret instruction
-Date: Mon,  6 Jan 2025 13:43:34 +0800
-Message-Id: <20250106054336.1878291-5-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250106054336.1878291-1-frank.chang@sifive.com>
-References: <20250106054336.1878291-1-frank.chang@sifive.com>
+ d=1e100.net; s=20230601; t=1736142593; x=1736747393;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VCmLGmzD2F6J2QbfSwUjmhgNI3SOO1JNMjze/6Q3R3A=;
+ b=IOHLJmXyqzxpSAsGZWnv8Lgpf9xwq0EyKxpLWBmISzFOHU5bHknp5IsalcabgtFekN
+ LjySJom3u9XYDMZpf8fmSeRBxNlzG8xPhkXHccTQhHG5EQuWhMTHr8f0tTiWegrGwQJC
+ tupwocEBfUrHWy0FXn0xftcBT9GMSZmyiXB44Mz6kb4HGpnnvcE/LRnBt1qaIWaWEh3C
+ 0JqtprWUP/CHVOORDeFeskdHAaWeiuZb3D8qqugmo3W291CqUBs2/sMFTb0oEEOD+4DK
+ MmIKLobYAFqbJ/UvkFyfAhZ4vFrbAffGbMiKb7P4hWJxPrJYcsV//3E6oGhzE3f8t9cu
+ TVFg==
+X-Gm-Message-State: AOJu0YxPv4whB69VCucmmdQr8TbZEK5FXdzgENfFbAvpbimhGMB1+wzu
+ U1/CSskZISobwGvjKFYPkNrj5zBZLjqZExEd5agYnV5gtqzdMojYsDnSf9zEGTU=
+X-Gm-Gg: ASbGncuDipRvUyriiT6pJYC4RxMcLzTaDgbeaoyMc2pp5Y9RAlvFiOtI+aCkSe/d4xc
+ WpCZA89myD5WCwqRpzK2Pz92yIKMwEP+06jgsXvIcYSJUpSTgsOPL7z+3N9oMkCAd43p4BBTcyA
+ KKe3MNYyilnUwI1PIcajVidl/6ziapGKBD6xggXM0/bsQGXpCYdLNcT80K7N2ATPWjmIDc/oxy0
+ Jm0Hj3VcZce1aKxevBcfsjTv7BCV5+vGZ4CZ+joO66YtGthK+2hcsoZ4gocmxS3sn4YkyGqoCrn
+ uiVM6lxl7MN3L36AMHfrQjch
+X-Google-Smtp-Source: AGHT+IESIA9XGQTtrDXjhln51iA0e4e4qu49QebmEKhykFDAO28yJvW2s8/PBH3HXeCzyR9FDQIMSQ==
+X-Received: by 2002:a5d:6da2:0:b0:385:f07a:f4cb with SMTP id
+ ffacd0b85a97d-38a22a11748mr37802830f8f.8.1736142592962; 
+ Sun, 05 Jan 2025 21:49:52 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c89e219sm47624284f8f.84.2025.01.05.21.49.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 05 Jan 2025 21:49:51 -0800 (PST)
+Message-ID: <52a4751c-b27c-4670-a941-58d8653992bd@linaro.org>
+Date: Mon, 6 Jan 2025 06:49:50 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Remove myself as Avocado Framework reviewer
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250103233026.65717-1-philmd@linaro.org>
+ <c15e8494-0171-4f30-5bad-e2ff370d5569@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c15e8494-0171-4f30-5bad-e2ff370d5569@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=frank.chang@sifive.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,165 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tommy Wu <tommy.wu@sifive.com>
+On 4/1/25 01:12, BALATON Zoltan wrote:
+> On Sat, 4 Jan 2025, Philippe Mathieu-Daudé wrote:
+>> While I was very enthusiast when Avocado was presented to
+> 
+> I think 'enthusiastic' would be correct here.
 
-This patch adds a new instruction 'mnret'. 'mnret' is an M-mode-only
-instruction that uses the values in `mnepc` and `mnstatus` to return to the
-program counter, privilege mode, and virtualization mode of the
-interrupted context.
+Oh OK, thanks.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/helper.h                         |  1 +
- target/riscv/insn32.decode                    |  3 ++
- .../riscv/insn_trans/trans_privileged.c.inc   | 20 +++++++++
- target/riscv/op_helper.c                      | 45 ++++++++++++++++---
- 4 files changed, 64 insertions(+), 5 deletions(-)
-
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 451261ce5a..16ea240d26 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -131,6 +131,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_1(sret, tl, env)
- DEF_HELPER_1(mret, tl, env)
-+DEF_HELPER_1(mnret, tl, env)
- DEF_HELPER_1(wfi, void, env)
- DEF_HELPER_1(wrs_nto, void, env)
- DEF_HELPER_1(tlb_flush, void, env)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index e9139ec1b9..942c434c6e 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -121,6 +121,9 @@ wfi         0001000    00101 00000 000 00000 1110011
- sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
- sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
- 
-+# *** NMI ***
-+mnret       0111000    00010 00000 000 00000 1110011
-+
- # *** RV32I Base Instruction Set ***
- lui      ....................       ..... 0110111 @u
- {
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index ecd3b8b2c9..73f940d406 100644
---- a/target/riscv/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -18,6 +18,12 @@
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
- 
-+#define REQUIRE_SMRNMI(ctx) do {     \
-+    if (!ctx->cfg_ptr->ext_smrnmi) { \
-+        return false;                \
-+    }                                \
-+} while (0)
-+
- static bool trans_ecall(DisasContext *ctx, arg_ecall *a)
- {
-     /* always generates U-level ECALL, fixed in do_interrupt handler */
-@@ -106,6 +112,20 @@ static bool trans_mret(DisasContext *ctx, arg_mret *a)
- #endif
- }
- 
-+static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    REQUIRE_SMRNMI(ctx);
-+    decode_save_opc(ctx, 0);
-+    gen_helper_mnret(cpu_pc, tcg_env);
-+    tcg_gen_exit_tb(NULL, 0); /* no chaining */
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
- static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
- {
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index eddedacf4b..63ec53e992 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -321,24 +321,30 @@ target_ulong helper_sret(CPURISCVState *env)
-     return retpc;
- }
- 
--target_ulong helper_mret(CPURISCVState *env)
-+static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
-+                                  target_ulong prev_priv)
- {
-     if (!(env->priv >= PRV_M)) {
-         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-     }
- 
--    target_ulong retpc = env->mepc;
-     if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
-         riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
-     }
- 
--    uint64_t mstatus = env->mstatus;
--    target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
--
-     if (riscv_cpu_cfg(env)->pmp &&
-         !pmp_get_num_rules(env) && (prev_priv != PRV_M)) {
-         riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
-     }
-+}
-+
-+target_ulong helper_mret(CPURISCVState *env)
-+{
-+    target_ulong retpc = env->mepc;
-+    uint64_t mstatus = env->mstatus;
-+    target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
-+
-+    check_ret_from_m_mode(env, retpc, prev_priv);
- 
-     target_ulong prev_virt = get_field(env->mstatus, MSTATUS_MPV) &&
-                              (prev_priv != PRV_M);
-@@ -370,6 +376,35 @@ target_ulong helper_mret(CPURISCVState *env)
-     return retpc;
- }
- 
-+target_ulong helper_mnret(CPURISCVState *env)
-+{
-+    target_ulong retpc = env->mnepc;
-+    target_ulong prev_priv = get_field(env->mnstatus, MNSTATUS_MNPP);
-+    target_ulong prev_virt;
-+
-+    check_ret_from_m_mode(env, retpc, prev_priv);
-+
-+    prev_virt = get_field(env->mnstatus, MNSTATUS_MNPV) &&
-+                (prev_priv != PRV_M);
-+    env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, true);
-+
-+    /*
-+     * If MNRET changes the privilege mode to a mode
-+     * less privileged than M, it also sets mstatus.MPRV to 0.
-+     */
-+    if (prev_priv < PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, false);
-+    }
-+
-+    if (riscv_has_ext(env, RVH) && prev_virt) {
-+        riscv_cpu_swap_hypervisor_regs(env);
-+    }
-+
-+    riscv_cpu_set_mode(env, prev_priv, prev_virt);
-+
-+    return retpc;
-+}
-+
- void helper_wfi(CPURISCVState *env)
- {
-     CPUState *cs = env_cpu(env);
--- 
-2.34.1
+> 
+> Regards,
+> BALATON Zoltan
+> 
+>> the QEMU community and pushed forward to have it integrated,
+>> time passed and I lost interest. Be honest, remove my R: tag
+>> to not give fake expectation I'd review patches related to
+>> Avocado anymore.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> MAINTAINERS | 1 -
+>> 1 file changed, 1 deletion(-)
 
 
