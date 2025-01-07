@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568BFE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 14:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0587DE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 14:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVAJt-0004jK-D8; Tue, 07 Jan 2025 09:12:33 -0500
+	id 1tVAX8-0007US-6f; Tue, 07 Jan 2025 09:26:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAJr-0004j9-Qo
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:12:31 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAWv-0007Tp-I6
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:26:03 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAJq-0001uk-55
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:12:31 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAWt-0003zb-6y
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:26:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736259147;
+ s=mimecast20190719; t=1736259956;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YT6oXZ7QyPsHVz8vhsMDbMijQzr8eCs6M8NB/JB/gP8=;
- b=AJR6/3LWyo8BvXRrJDPwsjr5X45P4b3gbzqb3UcYM+l4/FiKfWDayhyop/qbl6xOWV3ktR
- Rygxv0RtQUwJyvqC8Xg7in7Q54M/FTGhaTf1AwwDO89pX9O8FO9ve4nAafNcTm5vlBxwGd
- jkY0kROP87EWIoJNeqAA8O0CjTHd0tM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=IaFNB4MndI1vFWN202iri2tsIJpXyjy1kRLi0aCKHNA=;
+ b=I5lGx8WpPWrou+lw0px2kTXEgmcH7mvEzIQt0hQ5cP0MoeCKc837XJAqCSA+q1JuYXtxLo
+ URHDjz+RSaJc0FioZX6v0Vgho3j4Sf2+fENiNb+JEbiJBkEMBGH76AaiHYLbFu7pgHhOfb
+ mUXkCEbhvD5yzx/H5mddrbLES70fnC0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-KjCCjSvJN4mhB9P_nSsAXw-1; Tue,
- 07 Jan 2025 09:12:24 -0500
-X-MC-Unique: KjCCjSvJN4mhB9P_nSsAXw-1
-X-Mimecast-MFC-AGG-ID: KjCCjSvJN4mhB9P_nSsAXw
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-GVND92jSPIaHDgpu-p_m1Q-1; Tue,
+ 07 Jan 2025 09:25:55 -0500
+X-MC-Unique: GVND92jSPIaHDgpu-p_m1Q-1
+X-Mimecast-MFC-AGG-ID: GVND92jSPIaHDgpu-p_m1Q
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F01719776A2; Tue,  7 Jan 2025 14:12:12 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 289831955F42; Tue,  7 Jan 2025 14:25:54 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4363A3000706; Tue,  7 Jan 2025 14:12:12 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 976901956053; Tue,  7 Jan 2025 14:25:53 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EA25321E6924; Tue, 07 Jan 2025 15:12:09 +0100 (CET)
+ id 2983521E6924; Tue, 07 Jan 2025 15:25:51 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
-Subject: Re: [PATCH v11 1/2] tpm: convert tpmdev options processing to new
- visitor format
-In-Reply-To: <20241212170528.30364-2-James.Bottomley@HansenPartnership.com>
- (James Bottomley's message of "Thu, 12 Dec 2024 12:05:27 -0500")
-References: <20241212170528.30364-1-James.Bottomley@HansenPartnership.com>
- <20241212170528.30364-2-James.Bottomley@HansenPartnership.com>
-Date: Tue, 07 Jan 2025 15:12:09 +0100
-Message-ID: <87y0zm90hy.fsf@pond.sub.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  philmd@linaro.org,
+ alex.bennee@linaro.org,  thuth@redhat.com
+Subject: Re: [RESEND][PATCH v3 0/7] Add ivshmem-flat device
+In-Reply-To: <20241216141818.111255-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Mon, 16 Dec 2024 14:18:11 +0000")
+References: <20241216141818.111255-1-gustavo.romero@linaro.org>
+Date: Tue, 07 Jan 2025 15:25:51 +0100
+Message-ID: <87r05e8zv4.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -87,97 +85,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-James Bottomley <James.Bottomley@HansenPartnership.com> writes:
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-> Instead of processing the tpmdev options using the old qemu options,
-> convert to the new visitor format which also allows the passing of
-> json on the command line.
+> This is a resend of the series:
 >
-> Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
-> Tested-by: Stefan Berger <stefanb@linux.ibm.com>
-> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+> https://lore.kernel.org/qemu-devel/20240222222218.2261956-1-gustavo.romero@linaro.org/
+>
+> rebased on the current master. The series was sent about 9 months ago and
+> remains relevant. Besides addressing the longstanding issue:
+>
+> https://gitlab.com/qemu-project/qemu/-/issues/1134
+>
+> it has generated interest in the community at least twice since its last
+> version, from different contexts:
+>
+> https://lists.nongnu.org/archive/html/qemu-discuss/2024-05/msg00003.html
+> https://lists.nongnu.org/archive/html/qemu-devel/2024-09/msg00374.html
+>
+> This suggests the series is being used out-of-tree in various contexts, such
+> as experiments with heterogeneous architectures.
+>
+> But due to the fact it relies on sysbus, which is marked for future removal,
+> some maintainers objected to accepting the patchset, causing it to be held in
+> the ML.
 
-[...]
+Actually, I inquired about the use cases, and was told it's for OpenAMP.
+I challenged the use of ivshmem for that purpose in some detail[*], but
+got no reply.
 
-> diff --git a/qapi/tpm.json b/qapi/tpm.json
-> index a16a72edb9..e6345d424b 100644
-> --- a/qapi/tpm.json
-> +++ b/qapi/tpm.json
-
-Looks like you missed my review of v10.  I'll copy it below for your
-convenience.
-
-> @@ -142,6 +142,27 @@
->              'emulator': 'TPMEmulatorOptionsWrapper' },
->    'if': 'CONFIG_TPM' }
->  
-> +##
-> +# @TpmCreateOptions:
-> +#
-> +# A union referencing different TPM backend types' configuration options
-> +#   without the wrapper to be usable by visitors.
-
-reST trap: this is a definition list.  Delete the second line's
-indentation to make it a paragraph:
-
-   # A union referencing different TPM backend types' configuration
-   # options without the wrapper to be usable by visitors.
+>         However, given the ongoing community interest and since currently there
+> isn't a better way on QEMU than using sysbus for the wiring needs of this
+> device (e.g. to wire the device to a CPU IRQ input line), I'd kindly like to ask
+> maintainers to reconsider its acceptance.
 
 
-> +#
-> +# @type: - 'passthrough' The configuration options for the TPM passthrough type
-> +#        - 'emulator' The configuration options for TPM emulator backend type
 
-docs/devel/qapi-code-gen.rst:
-
-    Descriptions start with '\@name:'.  The description text must be
-    indented like this::
-
-     # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-     #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-You indent more to make the '-' line up.  Hmm.
-
-Let's indent this like @TpmTypeOptions right above, namely
-
-    # @type:
-    #     - 'passthrough' The configuration options for the TPM
-    #       passthrough type
-    #     - 'emulator' The configuration options for TPM emulator backend
-    #       type
-
-> +#
-> +# @id: The Id of the TPM
-
-What kind of Id is this?
-
-> +#
-> +# Since: 9.0
-
-10.0
-
-> +##
-> +{ 'union': 'TpmCreateOptions',
-> +  'base': { 'type': 'TpmType',
-> +            'id' : 'str' },
-> +  'discriminator': 'type',
-> +  'data': { 'passthrough' : 'TPMPassthroughOptions',
-> +            'emulator': 'TPMEmulatorOptions' },
-> +  'if': 'CONFIG_TPM' }
-
-This is a flattened version of TpmTypeOptions with additional member
-@id.
-
-Flattened: the union branches use Foo instead of FooWrapper.
-
-@id: I guess query-tpm has it one level up, in TPMInfo.
-
-Okay.
-
-> +
->  ##
->  # @TPMInfo:
->  #
+[*] https://lore.kernel.org/qemu-devel/87zfth4psf.fsf@pond.sub.org/
 
 [...]
 
