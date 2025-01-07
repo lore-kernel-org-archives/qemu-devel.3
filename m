@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0587DE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 14:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97730E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 14:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVAX8-0007US-6f; Tue, 07 Jan 2025 09:26:14 -0500
+	id 1tVAcw-0000PH-1D; Tue, 07 Jan 2025 09:32:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAWv-0007Tp-I6
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:26:03 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tVAcu-0000Ow-2m
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:32:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAWt-0003zb-6y
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:26:00 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tVAcs-0004zc-J2
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:32:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736259956;
+ s=mimecast20190719; t=1736260328;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IaFNB4MndI1vFWN202iri2tsIJpXyjy1kRLi0aCKHNA=;
- b=I5lGx8WpPWrou+lw0px2kTXEgmcH7mvEzIQt0hQ5cP0MoeCKc837XJAqCSA+q1JuYXtxLo
- URHDjz+RSaJc0FioZX6v0Vgho3j4Sf2+fENiNb+JEbiJBkEMBGH76AaiHYLbFu7pgHhOfb
- mUXkCEbhvD5yzx/H5mddrbLES70fnC0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lDor7YJlYtL+6jP2shCrIEsiSX8sRisU5498G7H7l58=;
+ b=MdMSJYhiJDi9KUOkDX+IE/JUmeskYvTFLcckcTzd61n3aqSrzJAYNJX+PdQCsl/pSYPG5l
+ Q5vo6ZrJL8hXK5KKegb/Eg/30WFMVXhhKzwSJrzG728AzbK3UVZipTLC9pj4jXWVBg9xcZ
+ lfOe+8rLAEyMWQ6tuTjXIH3LnFa94Ug=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-GVND92jSPIaHDgpu-p_m1Q-1; Tue,
- 07 Jan 2025 09:25:55 -0500
-X-MC-Unique: GVND92jSPIaHDgpu-p_m1Q-1
-X-Mimecast-MFC-AGG-ID: GVND92jSPIaHDgpu-p_m1Q
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-KvrS9NMIPoWfoyTewEi2kw-1; Tue,
+ 07 Jan 2025 09:32:06 -0500
+X-MC-Unique: KvrS9NMIPoWfoyTewEi2kw-1
+X-Mimecast-MFC-AGG-ID: KvrS9NMIPoWfoyTewEi2kw
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 289831955F42; Tue,  7 Jan 2025 14:25:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 976901956053; Tue,  7 Jan 2025 14:25:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2983521E6924; Tue, 07 Jan 2025 15:25:51 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  philmd@linaro.org,
- alex.bennee@linaro.org,  thuth@redhat.com
-Subject: Re: [RESEND][PATCH v3 0/7] Add ivshmem-flat device
-In-Reply-To: <20241216141818.111255-1-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Mon, 16 Dec 2024 14:18:11 +0000")
-References: <20241216141818.111255-1-gustavo.romero@linaro.org>
-Date: Tue, 07 Jan 2025 15:25:51 +0100
-Message-ID: <87r05e8zv4.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB3A919560A7; Tue,  7 Jan 2025 14:32:05 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.129])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E31251956053; Tue,  7 Jan 2025 14:32:04 +0000 (UTC)
+Date: Tue, 7 Jan 2025 09:32:03 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PULL 0/2] Misc QGA patches for 2025-01-06
+Message-ID: <20250107143203.GA102645@fedora>
+References: <20250106113814.35459-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="pQQUX8VQwq0byT54"
+Content-Disposition: inline
+In-Reply-To: <20250106113814.35459-1-kkostiuk@redhat.com>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -85,43 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-> This is a resend of the series:
->
-> https://lore.kernel.org/qemu-devel/20240222222218.2261956-1-gustavo.romero@linaro.org/
->
-> rebased on the current master. The series was sent about 9 months ago and
-> remains relevant. Besides addressing the longstanding issue:
->
-> https://gitlab.com/qemu-project/qemu/-/issues/1134
->
-> it has generated interest in the community at least twice since its last
-> version, from different contexts:
->
-> https://lists.nongnu.org/archive/html/qemu-discuss/2024-05/msg00003.html
-> https://lists.nongnu.org/archive/html/qemu-devel/2024-09/msg00374.html
->
-> This suggests the series is being used out-of-tree in various contexts, such
-> as experiments with heterogeneous architectures.
->
-> But due to the fact it relies on sysbus, which is marked for future removal,
-> some maintainers objected to accepting the patchset, causing it to be held in
-> the ML.
+--pQQUX8VQwq0byT54
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Actually, I inquired about the use cases, and was told it's for OpenAMP.
-I challenged the use of ivshmem for that purpose in some detail[*], but
-got no reply.
+Applied, thanks.
 
->         However, given the ongoing community interest and since currently there
-> isn't a better way on QEMU than using sysbus for the wiring needs of this
-> device (e.g. to wire the device to a CPU IRQ input line), I'd kindly like to ask
-> maintainers to reconsider its acceptance.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
 
+--pQQUX8VQwq0byT54
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-[*] https://lore.kernel.org/qemu-devel/87zfth4psf.fsf@pond.sub.org/
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmd9OuMACgkQnKSrs4Gr
+c8ik7wf6AoAvhY87Z1ZE83oCta4BzLSgzdEBKGPk6+/LFCQiEFSDlDaVDdWeiOg8
+bxgs0KU+tQIif9hMST5K1gG5V6BX6uyRTO1h/BYuG17vZMxh9LlJRoJFfko4J3Go
+9aZNsAIApkPNIU8iy8gLkYnT8L9eBTsw7QwKQrDvWRcw8sPuK73mZKV8GDIc5NlU
+0y2u3ppV8eh5IddQU8GHa5+Qhc4eOcQX9g22++Mut0egoH90d7qi3uGLkq+RNmNF
+0iRAbtQZ+sxSCakoy/WHMsov93tNot7VySlLxyua03pmCEWYsmHpJPEg0h6nLUO5
+wlX4aAysbdgw5ioqIeFEAASaGnxHGg==
+=Kaeb
+-----END PGP SIGNATURE-----
 
-[...]
+--pQQUX8VQwq0byT54--
 
 
