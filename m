@@ -4,68 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144C6E7719A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5056E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCKA-0007iA-N8; Tue, 07 Jan 2025 11:20:58 -0500
+	id 1tVCNh-0000Qg-FN; Tue, 07 Jan 2025 11:24:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+f031519a9170f34b3d42+7807+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVCKA-0007i2-1q
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:20:58 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+f031519a9170f34b3d42+7807+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVCK6-0002OQ-Cf
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:20:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=ekh3Z4lo+nHqEI1i2279koOzWW8aJUVzHXp4gWbAabs=; b=Ok0V/5cD02yZ72a+kaIxgHMLRy
- 0MGvwsWgZ+FBk1ENQWAH3JmNPBi1FSd4oKu4NNym0yzWrwm/mQeozuvS6TGRJ6Lts5YaeXUQPg01f
- prjbZi5JC+IGz/dxM7j7P0O+0OY/FzXVWE99y7umjV8jK5y+5hc1KPm+esm2wO3ni765b3TlXcrYR
- A54UjoM5sPmsUXJSh5n20prn9uWChzSpDpGMc0TOS0vQrFTWY2TToljciyKX5eCkVXIT4jQm2Y8xw
- ps4RR3vvrwMHzVKDVX0SJmx4whZiPxQN2RtNm7tB17r8FvW+IJgWq8AJzrt6tnZT+Cy7C13uCdjRJ
- 3XsfBh2A==;
-Received: from 54-240-197-232.amazon.com ([54.240.197.232]
- helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tVCJh-00000008CRp-1mFX; Tue, 07 Jan 2025 16:20:44 +0000
-Message-ID: <8b2690f2c9532468fd5029d319737904b58acec2.camel@infradead.org>
-Subject: Re: [PATCH] hw/i386/pc: Fix level interrupt sharing for Xen event
- channel GSI
-From: David Woodhouse <dwmw2@infradead.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Paul Durrant
- <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Date: Tue, 07 Jan 2025 16:20:28 +0000
-In-Reply-To: <20250107110718-mutt-send-email-mst@kernel.org>
-References: <e592f9127f2d9919e6ccb76a0afb38c5d725d8ec.camel@infradead.org>
- <20250107110718-mutt-send-email-mst@kernel.org>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-svDrbxWAbOKEueaJSr3j"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVCNe-0000Ps-GF
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:24:34 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVCNc-0002aQ-Sw
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:24:34 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43622267b2eso164316695e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:24:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736267071; x=1736871871; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5jERAaufHj4whkljT09G46/USkGPlSnCwTb3KtA7mFs=;
+ b=UoX799nstMjOf46AgeqCdHdfOpm5bivYbleCdgOFFoUrk1irXEuJ7p0aUyG3FyhDr1
+ MXWgY7R6ZVIGmVTBSs4shf/vs7u725MDTr2xmdaZFxRm1e5watI3IxxVESwn3LBlyvjI
+ y/tMwz7pzNM6rnbK+76QY9iTK+I07D1ICFerrntq6d25S/jotxzVAVyr37m2AL6KCgi/
+ BRxm7NnQ+hJFVBGc/vwZD/31lkzxU/P+9U5OKwOU4UexeivkfFScSbo+ofbtF7WikbAp
+ p4YiOZDVkz1FoCymvkJijp1Jv9czO50b9wbeJ17QuDAPYrTIzG74k84zW5ulwDag2cuU
+ 8Xcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736267071; x=1736871871;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5jERAaufHj4whkljT09G46/USkGPlSnCwTb3KtA7mFs=;
+ b=MNdIupMzU1udSxnkCKPE43vg5CbQX/su+yt/xO7aQGHXwMHGMygd+L/x79uUqke3yM
+ Xh8bgqALLdRaEHkYZe7pnYjeREFR1p8inhlXtGMbNkyYL4fwBJQyStVWf6kp8vubwMLD
+ 6CSOqcMI2fVtzWZ0aW61jFJ8o2KLO6IYxuG9po0Y4UoJ1ntSEMMyZ3sr7rT1R0Z+RauX
+ nxthYFmtF0Lu/dJRpzMTuQODOsGpVdRtJe3UObgXPMt4q5wb011CBvtYLQa4PeRryhgD
+ yn6TJva8jiW6fjlo574/2jN2mbjSQn/nKxoEzfJjFQQhr0d/g7Wpc5IgImc3cYx6o4CW
+ JwwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrtDuRECTJeqW+pBjaZNlvYc6jODatMpDpEiMjvhWOOYvi+Skl4yNWnvPDen7ZfpK98tvpTljCpW7V@nongnu.org
+X-Gm-Message-State: AOJu0YzWmPOTrNePhKHRjHB3jLSHFKGtzUz0WACX0w2/t9hXk8vT94Sd
+ DFeHJsjrssgQt2alO9tUP79r3Anf37n6nnQWG3MivFikhVDQyxh78OXxQHrZYfM=
+X-Gm-Gg: ASbGnctMfFomOcCsscw4a2v2rfchaq1YPt2mmuFqWNcM4V13/8KNFMKSeUZH3cJNIJL
+ jK1ecKfM2S++mT9O3Bcc4TDKDLrKuZPyU2jF8vLg+aIl4BJ7J+WxkKerL2LFPJmOFxz6YbsI5Xv
+ VQxvjXmzHSHw2l+bMf4p40aXjkUiNJNGAHRGdEw/S2V1kKtG5I7JPJ03EN6ykV2fu+YX0Jux3HO
+ U8tchmJGEwmRZEDL4brpInRENhnujy2RE3F3fYwICJb2+meNxQLwb+YUM3tXPaWUR+YH/m3ribU
+ zCt/8GTB47GknNwnqnxYEGSW
+X-Google-Smtp-Source: AGHT+IHEqlWyKvzK44kwNGkqe6HiGn+vYEZ29/hCgmJoeH8pStBYqE+7RWWZAE/bCM7KQYPtbW1dQw==
+X-Received: by 2002:a05:600c:1f8f:b0:436:30e4:459b with SMTP id
+ 5b1f17b1804b1-4368a8b6a2emr443640565e9.18.1736267071092; 
+ Tue, 07 Jan 2025 08:24:31 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656af6cbbsm635514245e9.3.2025.01.07.08.24.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 08:24:30 -0800 (PST)
+Message-ID: <7cc2a444-c699-4e56-80ff-8f9d6890b71a@linaro.org>
+Date: Tue, 7 Jan 2025 17:24:29 +0100
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+f031519a9170f34b3d42+7807+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
+ ClassInitImpl<>
+To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20241219083228.363430-1-pbonzini@redhat.com>
+ <20241219083228.363430-26-pbonzini@redhat.com>
+ <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
+ <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
+ <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
+ <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
+ <Z31OiMcYT/66AGDt@intel.com>
+ <CABgObfZETbD03-H6=qOt6V8GY4ex3WP82i5axzdf_U0GCwsMbw@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfZETbD03-H6=qOt6V8GY4ex3WP82i5axzdf_U0GCwsMbw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,171 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/1/25 17:03, Paolo Bonzini wrote:
+> On Tue, Jan 7, 2025 at 4:37 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+>>> If anybody wants to do it as an exercise, I am happy to help, otherwise I
+>>> can prepare a patch too.
+>>
+>> If possible and if no one else wants to practice, I would also like to
+>> give it a try (I'll add it to my list).
+> 
+> Hmm, thinking more about it, it does require a bit that is slightly
+> more complicated than I anticipated, which is a binding to
+> object_class_dynamic_cast(). I placed something completely untested
+> (except it compiles...) in rust-next. It uses a new trait
+> InterfaceType that can be used as
+> 
+>      ResettableClass::interface_init::<T, DeviceState>(dc);
+> 
+> but I don't really like the two parameters and also I don't like that
+> class_init is called differently for classes and interfaces. It's
+> probably possible to design a better API, but I didn't spend too much
+> time on it because it may require rethinking how classes are declared
+> (not a huge deal, as we have only four of them).
 
---=-svDrbxWAbOKEueaJSr3j
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Are you saying this is not a problem related to QDev Reset, but
+a limitation with any QOM interface, and we can not instantiate
+any type implementing TYPE_INTERFACE? As in:
 
-On Tue, 2025-01-07 at 11:07 -0500, Michael S. Tsirkin wrote:
-> On Thu, Dec 19, 2024 at 05:24:11PM +0100, David Woodhouse wrote:
-> > From: David Woodhouse <dwmw@amazon.co.uk>
-> >=20
-> > The system GSIs are not designed for sharing. One device might assert a
-> > shared interrupt with qemu_set_irq() and another might deassert it, and
-> > the level from the first device is lost.
-> >=20
-> > This could be solved by using a multiplexer which functions as an OR
-> > gate, much like the PCI code already implements for pci_set_irq() for
-> > muxing the INTx lines.
-> >=20
-> > Alternatively, it could be solved by having a 'resample' callback which
-> > is invoked when the interrupt is acked at the interrupt controller, and
-> > causes the devices to re-trigger the interrupt if it should still be
-> > pending. This is the model that VFIO in Linux uses, with a 'resampler'
-> > eventfd that actually unmasks the interrupt on the hardware device and
-> > thus triggers a new interrupt from it if needed. QEMU currently doesn't
-> > use that VFIO interface correctly, and just bashes on the resampler for
-> > every MMIO access to the device "just in case".
-> >=20
-> > This does neither of those. The Xen event channel GSI support *already*
-> > has hooks into the PC gsi_handler() code, for routing GSIs to PIRQs. So
-> > we can implement the logical OR of the external input (from PCI INTx,
-> > serial etc.) with the Xen event channel GSI by allowing that existing
-> > hook to modify the 'level' being asserted.
-> >=20
-> > Closes: https://gitlab.com/qemu-project/qemu/-/issues/2731
-> > Reported-by: Thomas Huth <thuth@redhat.com>
-> > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
->=20
-> Xen things so feel free to merge.
->=20
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+   .interfaces = (InterfaceInfo[]) {
+     ...
+   },
 
-Thanks.
+> Feel free to give it a try, but it seems like a relatively low
+> priority item compared to upstreaming timers (i.e. HPET) and
+> MemoryRegionOps; or figuring out logging.
+> 
+> Paolo
+> 
 
-Further testing shows I need one minor fix...
-
-> > @@ -1596,7 +1607,7 @@ static int allocate_pirq(XenEvtchnState *s, int t=
-ype, int gsi)
-> > =C2=A0=C2=A0=C2=A0=C2=A0 return pirq;
-> > =C2=A0}
-> > =C2=A0
-> > -bool xen_evtchn_set_gsi(int gsi, int level)
-> > +bool xen_evtchn_set_gsi(int gsi, int *level)
-> > =C2=A0{
-> > =C2=A0=C2=A0=C2=A0=C2=A0 XenEvtchnState *s =3D xen_evtchn_singleton;
-> > =C2=A0=C2=A0=C2=A0=C2=A0 int pirq;
-
-...
-
-@@ -1628,7 +1656,7 @@ bool xen_evtchn_set_gsi(int gsi, int level)
-         return false;
-     }
-=20
--    if (level) {
-+    if (*level) {
-         int port =3D s->pirq[pirq].port;
-=20
-         s->pirq_gsi_set |=3D (1U << gsi);
-
-
-
-
---=-svDrbxWAbOKEueaJSr3j
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDEwNzE2MjAy
-OFowLwYJKoZIhvcNAQkEMSIEIB6bxXDpKGzufwA4uFYdwVS2dV6+NaFXKAftGBfYJVrYMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAczPrpvQl7mf0
-xLlDJ6LHLl1fhWUiGzxQMoV5+a7O8vfFMgPX5NJs/c26CzVthwk5+O7gI+sPUvm0vJsU80xcn/gP
-TE4+t87IZmi4/xkfZKvndv1cekKWHWgFxtldXdFW8r+2ZUVL10cx4aD43VW+sYgg1+zrdfrEGeks
-dnmWgeqkFaipHeWDiy9EzpJNBiRP/yWDcJwyqBsznaMlEK/xDy0O3WLMi8+BSOBl/NjwpNpEVbo0
-UmUtP/ezgCybxSxGAa7WhGWHqnx4gRriCrvWFdRkNlir4BSmiMHPrA5OSV9KUXyNSOe5kk+jkQMI
-9byBq42fpsF++aN34CrukIcgQEQ33L0c+BB23cTRdx/TvbNpVLGy9M5jcS8hiolU5lSznOGymUWU
-Co3z7NNODbOKZUq8hVPHBUhbW6CO+PNZ6QU3O1s2SMlAnmqGwjkv9vCIoR0bjfgpKWcP3hFrxYO3
-eYs/IPgSs2eNitixN/zU8lE2gOBqfaOqtGQNK9nwy8H8NYzodqaUPyQCkNd+Qda01xDqzqySNR7u
-6jCAtZyTUHQEZlYEaFB8ZXKu3x5WReide8E+L6PogGu9F81asrvnBVAMOr5oaTmGVaHH06t1mBbN
-35NrEnGJfKJj/PmjkaeZvwr3Q9p52COqOGuqa+HBEkIdZ34vUSI38omqdyk8E7sAAAAAAAA=
-
-
---=-svDrbxWAbOKEueaJSr3j--
 
