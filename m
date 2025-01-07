@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60B6E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963C9E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCtz-00027G-Ld; Tue, 07 Jan 2025 11:57:59 -0500
+	id 1tVCr2-0008IU-04; Tue, 07 Jan 2025 11:54:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCtx-000236-9T
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:57:57 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1tVCpW-00056D-QJ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:24 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCtv-0006th-BK
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:57:56 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38633b5dbcfso15169060f8f.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:57:54 -0800 (PST)
+ id 1tVCoZ-0005vn-C9
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:22 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385dece873cso5925304f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736269074; x=1736873874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268742; x=1736873542; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R2nl2q/jhmEGUG+F/0rLUrlSD8XWQpV+qDK7U0WrjiI=;
- b=ep1UI+ph1tfkafoqMiSs+87E1a+xmrIw95FPIQRlraBQsakLCgmET5SRQaaYEiaav+
- tGwApgixu7MHSp9kJRG9g6zejrd4ixwzQrQO1bnca0ZP/G3lvwS7D47UDQE22X5Lee0j
- 7MDgRLU8qEKcdb3AS/i520g4dzUVbRcoGJdn32ibJO+JtDzsYNxTgLYClB84M/6RQooN
- TCMBk6HtB5SPSXH7SOATKEI0r6B6jFD+QBOT4dOk4KiSqKYfnzjf6q7aya19aXt+kpJD
- DnQirlOVB+7Lc+0MBNQoNTznli5fE6AAlMnsGq5a7MnkDip9iAdoi+bg2oHicPXXdQKf
- xNGQ==
+ bh=9bkcZ+UQ0l/G8BdjL46Ekgb6aiXVq9O7cYmGEkCbVeY=;
+ b=EtP2JYyofY27C6qg5Flc37aCdv7HrJZ5etsiFXU3bFNNm9aCsmF7nRx9tw2UYwDGH3
+ ASf4amad5vvIblAiy2rVl3dT1KL0k1q2FR7jzyh2ritrQNvkg+RWeofDqN3Nn6ejvSaj
+ wTk5adon3duCAIQN05BW+k/PjM4EP0XfZHKrT2Yf9oCbR8xQWaWKnRMw9XIeG8X876xR
+ DW9XZqsi/kvhJpOLOppGqHNlJUoTM8xdtMYD5/s4jls4IbWxrZOwy4kk7isMEUysAiwr
+ uirY+xEv0Kce3Q0GwDjcJA5/liQajBSQmOas7ExKhk6sp5Inta2w2IJXgi1R/UL+1+r1
+ O1CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736269074; x=1736873874;
+ d=1e100.net; s=20230601; t=1736268742; x=1736873542;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R2nl2q/jhmEGUG+F/0rLUrlSD8XWQpV+qDK7U0WrjiI=;
- b=mdNp/cfGFO0ke8swRiIxc2QL79f/XLdFrhnl8Z+fPRSe1Qjhe/7+XTXt+ZzwFTlLvT
- qGgWZS4TZjtXT4A0y4aoopAjDi2SY08/LO39eIA9h1rUBmThKz3jXvPxnw5qvvka0pg0
- kjnwYX2NSRKeFYtVCvPxVetjWsK51nebXL2M/L6b+EIFK160nyttOTIlBFYbUky0MEvk
- G6mmxPKB9kN0QAoaTSGae0ZUVTmGmqMXObuKy17/qbNs3AuV+abmIMLvWWrc2Gl4vrPQ
- VWsYBTmPs5xYKHNnL+T/tyZIWmxr4huFRc87E/UZbJ65He/RTzueyUrMHjhWoGwM7jah
- DbxA==
-X-Gm-Message-State: AOJu0YxbtaQN6uL2kwMa9pksS9mzocYypiA23l/SMHh1dKIQafp/KoNP
- qU+9fHHPTd7rE/ptmv9sL8Qb9Geixk/fKyV2RvUpua7PM8YhHPDhNSEglvb3ROs=
-X-Gm-Gg: ASbGncsRs78mfkIV2bjSJbUIbZoGD+gyEU4n2f8Oa4yeWI3vVQ6AkjZyu5M/e5qtWgj
- Lf5zKLZr7ASFiVcnryTnhkA8rhNXniCYCh50roFHnVU1jMKpv6WU1qAQxmwBtuetupDfWcqS3gL
- 5cIF6cVhMHrr8CPLzsd8ASx7dkel/UaygEVUeEeM41UHnG5Fe/jvZus2jexKHKxsZaqDgcLNTM0
- 2UnvGft0n7n6gCsS1pmqC4jo9WsFo2OQutrWmrNA7t3ORfibP3RHlM=
-X-Google-Smtp-Source: AGHT+IGRf/DUfHTpWX1mrFa1rZyRHPWojHW3ZkaRYvLYQTxAPMD/fqdIkKloQyWPx+nXncAI4HJpZA==
-X-Received: by 2002:a05:6000:704:b0:385:fd24:3317 with SMTP id
- ffacd0b85a97d-38a221e2389mr51337852f8f.1.1736269073626; 
- Tue, 07 Jan 2025 08:57:53 -0800 (PST)
+ bh=9bkcZ+UQ0l/G8BdjL46Ekgb6aiXVq9O7cYmGEkCbVeY=;
+ b=Tu/bUA8eStsR0x+xzCTJqXcyrN71CUQ6leblmLt+5OX/cKRyjwA6Vt7lmsU/MOIz/8
+ EBzuGAYUGpDYOdyJoGFa5xoW5+tae9MWMDccNBvYNYTuu0MRye/bGgrLkUXLAbmzXlk3
+ s0EHmyeBpC9NqApS8ehlYobZDT/K+D4EIsCPA9NuiJCalMcDagY94/gncZA7R/NYnHlJ
+ kzQE93YGQXx9ZATwZQAkSNPsbku+ob66IPrs47Nc6VlAux/+aF/P0JaHTG3/8NJK0ytx
+ 2IsIt1pHMBFDyHnsU0DInwcWuMtitKo65+6XrdNm6LL2uSsn6z1BCXjiZE3dz2+e78NC
+ lc+A==
+X-Gm-Message-State: AOJu0Yz0IejOm8m0UbP7Un9KFAOoVqSYS+Wh/xPxQYXYFzOvtyRC8xAb
+ 2+xEe0ZI21pKlKXUkMTa4Ne2Ajqxt5aYdBe+Od+if0+nsjZxVGX24iEGqWgrH20=
+X-Gm-Gg: ASbGncsCb1XXXZno4FH3NZjLJ1L2y3A3V64iniL2aXKmFYLW1wu5n8uALD8a3p0MXFQ
+ FuO73vfY8XES/wE7XrbSmwFngNGgOYK3imiH/8XtbRXYrUlmd9cf+ZL6wk09+BHIFplG+Du5tPv
+ jR4Zx2ZbVLkb+BlUQSoCPjViEiayvDxBbXiigFIygQYCDfgRUfWAIrqLweUeda7dQdFiY9hOjST
+ jVbdOo5kHAXkIprJcDbwVYdp46p1TqSLBjqY5/M9JyLD17yM6oJXxk=
+X-Google-Smtp-Source: AGHT+IGefZKDySJlS4CrSeYUwxLMByi32RabbTOWrXYjfIFalO0HsUJ1KBm/dHAmxfMbCI9mOH8XbA==
+X-Received: by 2002:a05:6000:1fa9:b0:385:f38e:c0c3 with SMTP id
+ ffacd0b85a97d-38a221f1391mr47094494f8f.6.1736268741670; 
+ Tue, 07 Jan 2025 08:52:21 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436612008casm605560395e9.14.2025.01.07.08.57.52
+ ffacd0b85a97d-38a457584bcsm33619886f8f.89.2025.01.07.08.52.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:57:53 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EB81C5FDC6;
- Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 4C6925F8FC;
+ Tue,  7 Jan 2025 16:52:10 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -97,17 +97,17 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 21/29] tests/lcitool: bump to latest version of libvirt-ci
-Date: Tue,  7 Jan 2025 16:51:59 +0000
-Message-Id: <20250107165208.743958-22-alex.bennee@linaro.org>
+Subject: [PATCH v3 25/29] tests/vm: partially un-tabify help output
+Date: Tue,  7 Jan 2025 16:52:03 +0000
+Message-Id: <20250107165208.743958-26-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -130,51 +130,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We will shortly need this to build our riscv64 cross container.
-However to keep the delta down just do the bump first. As ccache4 is
-now preferred for FreeBSD to get the latest version there is a little
-update in the FreeBSD metadata.
+While the make syntax itself uses tabs having a mixture of tabs and
+spaces in the vm-help output make no sense and confuses things lining
+up between terminal and editor. Fix that.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/cirrus/freebsd-14.vars | 2 +-
- tests/lcitool/libvirt-ci            | 2 +-
- tests/vm/generated/freebsd.json     | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ tests/vm/Makefile.include | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
-index 0a7ac5e0e1..0997c47af5 100644
---- a/.gitlab-ci.d/cirrus/freebsd-14.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
-@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
- NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-index 9ad3f70bde..b6a65806bc 160000
---- a/tests/lcitool/libvirt-ci
-+++ b/tests/lcitool/libvirt-ci
-@@ -1 +1 @@
--Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
-+Subproject commit b6a65806bc9b2b56985f5e97c936b77c7e7a99fc
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index 3cb7fb7060..81fc38d798 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -13,7 +13,7 @@
-     "bzip2",
-     "ca_root_nss",
-     "capstone4",
--    "ccache",
-+    "ccache4",
-     "cmocka",
-     "ctags",
-     "curl",
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 13ed80f72d..d80ca79a28 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -64,23 +64,23 @@ endif
+ 	@echo "  vm-boot-ssh-<guest>             - Boot guest and login via ssh"
+ 	@echo
+ 	@echo "Special variables:"
+-	@echo "    BUILD_TARGET=foo		 - Override the build target"
+-	@echo "    DEBUG=1              	 - Enable verbose output on host and interactive debugging"
+-	@echo '    EXTRA_CONFIGURE_OPTS="..."   - Pass to configure step'
+-	@echo "    J=[0..9]*            	 - Override the -jN parameter for make commands"
+-	@echo "    LOG_CONSOLE=1        	 - Log console to file in: ~/.cache/qemu-vm "
+-	@echo "    USE_TCG=1        	         - Use TCG for cross-arch images"
+-	@echo "    QEMU=/path/to/qemu		 - Change path to QEMU binary"
++	@echo "    BUILD_TARGET=foo              - Override the build target"
++	@echo "    DEBUG=1                       - Enable verbose output on host and interactive debugging"
++	@echo '    EXTRA_CONFIGURE_OPTS="..."    - Pass to configure step'
++	@echo "    J=[0..9]*                     - Override the -jN parameter for make commands"
++	@echo "    LOG_CONSOLE=1                 - Log console to file in: ~/.cache/qemu-vm "
++	@echo "    USE_TCG=1                     - Use TCG for cross-arch images"
++	@echo "    QEMU=/path/to/qemu            - Change path to QEMU binary"
+ ifeq ($(HAVE_PYTHON_YAML),yes)
+-	@echo "    QEMU_CONFIG=/path/conf.yml   - Change path to VM configuration .yml file."
++	@echo "    QEMU_CONFIG=/path/conf.yml    - Change path to VM configuration .yml file."
+ else
+ 	@echo "    (install python3-yaml to enable support for yaml file to configure a VM.)"
+ endif
+-	@echo "                                   See conf_example_*.yml for file format details."
+-	@echo "    QEMU_IMG=/path/to/qemu-img	 - Change path to qemu-img tool"
+-	@echo "    QEMU_LOCAL=1                 - Use QEMU binary local to this build."
+-	@echo "    TARGET_LIST=a,b,c    	 - Override target list in builds"
+-	@echo "    V=1				 - Enable verbose output on host and guest commands"
++	@echo "                                    See conf_example_*.yml for file format details."
++	@echo "    QEMU_IMG=/path/to/qemu-img    - Change path to qemu-img tool"
++	@echo "    QEMU_LOCAL=1                  - Use QEMU binary local to this build."
++	@echo "    TARGET_LIST=a,b,c             - Override target list in builds"
++	@echo "    V=1                           - Enable verbose output on host and guest commands"
+ 
+ vm-build-all: $(addprefix vm-build-, $(IMAGES))
+ 
 -- 
 2.39.5
 
