@@ -4,52 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F516E77199
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 03:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D1AE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 04:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUzxI-00058R-Oq; Mon, 06 Jan 2025 22:08:32 -0500
+	id 1tV1Fh-0008O5-Br; Mon, 06 Jan 2025 23:31:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tUzxG-00056R-1P
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 22:08:30 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tUzxC-0004c2-Ur
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 22:08:29 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxmeGmmnxnX_heAA--.59297S3;
- Tue, 07 Jan 2025 11:08:22 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDxfcejmnxnn2gXAA--.35275S8;
- Tue, 07 Jan 2025 11:08:22 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
-	Huacai Chen <chenhuacai@kernel.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3 6/7] hw/intc/loongson_ipi: Add more output parameter for
- cpu_by_arch_id
-Date: Tue,  7 Jan 2025 11:08:18 +0800
-Message-Id: <20250107030819.90442-7-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250107030819.90442-1-maobibo@loongson.cn>
-References: <20250107030819.90442-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tV1Ff-0008NB-0L
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 23:31:35 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tV1Fb-0004rI-NW
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 23:31:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736224292; x=1767760292;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=EgfUnfi3B6wHzzpaWZy67DMUoPrQG5yuYtQSPT15bwE=;
+ b=DaSBrUsGbkwJP9ZCTqcdv1wFiFkxekGUrUmKsbaay/8VzsSrX7O/P4Bl
+ WdU8Dqg7p6j+eMNZ4IuB6Z+kXCkw5IdE95s3O2C2vgE2KdgPtb3Y9nGiB
+ /FYKFg3ods8jSCNwehzjEivtKoylPdIqJAXiNOWr5vpXEI0VMxD4LJguK
+ d9Vi5qJ5iBf6u7TKbbYnW8PLdrn59gdOhpB2qu1OxMYGc0cySLhxKperL
+ +hG+QkdqjZ4uJtCaHRzyR8WC5wotuIioZFaiWJWHZqg1LX10/2VOP/6yQ
+ rrfkm2pIPuRMs/XWE7iAU+QwxEgeUVl7lECBAP+VG10aQs8gpidWRTLGb Q==;
+X-CSE-ConnectionGUID: jIWNhjXjSSi53aft8ld6pw==
+X-CSE-MsgGUID: 0Mx3H+uvSgySMTTWdEFKtg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="35688516"
+X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="35688516"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2025 20:31:27 -0800
+X-CSE-ConnectionGUID: 8Jbc/QSnQFKjyJ71E+KIxw==
+X-CSE-MsgGUID: FNec55lvRWu91mTu7brDAg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="133504458"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2025 20:31:24 -0800
+Message-ID: <bf435f2e-5cfb-411d-937a-6c686a0530dd@intel.com>
+Date: Tue, 7 Jan 2025 12:31:21 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/10] i386/cpu: Extract a common fucntion to setup
+ value of MSR_CORE_THREAD_COUNT
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
+ <20241219110125.1266461-2-xiaoyao.li@intel.com>
+ <018cfbde-96be-4d95-bb29-95cdf708187e@linaro.org>
+ <902568a2-8160-4265-9e2c-c4465eaa62d4@linaro.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <902568a2-8160-4265-9e2c-c4465eaa62d4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxfcejmnxnn2gXAA--.35275S8
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -67,182 +93,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add logic cpu index output parameter for function cpu_by_arch_id,
-CPUState::cpu_index is logic cpu slot index for possible_cpus.
-However it is logic cpu index with LoongsonIPICommonState::IPICore,
-here hide access for CPUState::cpu_index directly, it comes from
-function cpu_by_arch_id().
+On 1/3/2025 4:52 PM, Philippe Mathieu-Daudé wrote:
+> On 28/12/24 18:37, Philippe Mathieu-Daudé wrote:
+>> On 19/12/24 12:01, Xiaoyao Li wrote:
+>>> There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+>>> Extract a common function for it.
+>>>
+>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>> ---
+>>> Changes in v2:
+>>> - move the implementation of cpu_x86_get_msr_core_thread_count() to
+>>>    target/i386/cpu-sysemu.c;
+>>> ---
+>>>   target/i386/cpu-sysemu.c             | 11 +++++++++++
+>>>   target/i386/cpu.h                    |  2 ++
+>>>   target/i386/hvf/x86_emu.c            |  3 +--
+>>>   target/i386/kvm/kvm.c                |  5 +----
+>>>   target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>>>   5 files changed, 16 insertions(+), 8 deletions(-)
+>>
+>>
+>>> +uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu)
+>>> +{
+>>> +    CPUState *cs = CPU(cpu);
+>>> +    uint64_t val;
+>>> +
+>>> +    val = cs->nr_threads * cs->nr_cores;  /* thread count, bits 
+>>> 15..0 */
+>>> +    val |= ((uint32_t)cs->nr_cores << 16); /* core count, bits 
+>>> 31..16 */
+>>> +
+>>> +    return val;
+>>
+>> Alternatively:
+>>
+>>         return deposit64(cs->nr_threads * cs->nr_cores, 16, 16,
+>>                          cs->nr_cores);
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_ipi.c               | 19 +++++++++++++++----
- hw/intc/loongson_ipi.c                | 23 ++++++++++++++++++++++-
- hw/intc/loongson_ipi_common.c         | 21 ++++++++++++---------
- include/hw/intc/loongson_ipi_common.h |  3 ++-
- 4 files changed, 51 insertions(+), 15 deletions(-)
+I would rather keep it as-is as suguested by Philippe[1].
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index 41d9625dcb..515549e8a5 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -38,17 +38,28 @@ static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
-     return found_cpu;
- }
- 
--static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
-+static int loongarch_cpu_by_arch_id(LoongsonIPICommonState *lics,
-+                                    int64_t arch_id, int *index, CPUState **pcs)
- {
-     MachineState *machine = MACHINE(qdev_get_machine());
-     CPUArchId *archid;
-+    CPUState *cs;
- 
-     archid = find_cpu_by_archid(machine, arch_id);
--    if (archid) {
--        return CPU(archid->cpu);
-+    if (archid && archid->cpu) {
-+        cs = archid->cpu;
-+        if (index) {
-+            *index = cs->cpu_index;
-+        }
-+
-+        if (pcs) {
-+            *pcs = cs;
-+        }
-+
-+        return MEMTX_OK;
-     }
- 
--    return NULL;
-+    return MEMTX_ERROR;
- }
- 
- static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 29e92d48fd..d2268a27f8 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -20,6 +20,27 @@ static AddressSpace *get_iocsr_as(CPUState *cpu)
-     return NULL;
- }
- 
-+static int loongson_cpu_by_arch_id(LoongsonIPICommonState *lics,
-+                                   int64_t arch_id, int *index, CPUState **pcs)
-+{
-+    CPUState *cs;
-+
-+    cs = cpu_by_arch_id(arch_id);
-+    if (cs == NULL) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    if (index) {
-+        *index = cs->cpu_index;
-+    }
-+
-+    if (pcs) {
-+        *pcs = cs;
-+    }
-+
-+    return MEMTX_OK;
-+}
-+
- static const MemoryRegionOps loongson_ipi_core_ops = {
-     .read_with_attrs = loongson_ipi_core_readl,
-     .write_with_attrs = loongson_ipi_core_writel,
-@@ -92,7 +113,7 @@ static void loongson_ipi_class_init(ObjectClass *klass, void *data)
-                                       &lic->parent_unrealize);
-     device_class_set_props(dc, loongson_ipi_properties);
-     licc->get_iocsr_as = get_iocsr_as;
--    licc->cpu_by_arch_id = cpu_by_arch_id;
-+    licc->cpu_by_arch_id = loongson_cpu_by_arch_id;
- }
- 
- static const TypeInfo loongson_ipi_types[] = {
-diff --git a/hw/intc/loongson_ipi_common.c b/hw/intc/loongson_ipi_common.c
-index 363cddc54c..f5ab5024c0 100644
---- a/hw/intc/loongson_ipi_common.c
-+++ b/hw/intc/loongson_ipi_common.c
-@@ -103,16 +103,17 @@ static MemTxResult mail_send(LoongsonIPICommonState *ipi,
-     uint32_t cpuid;
-     hwaddr addr;
-     CPUState *cs;
-+    int cpu, ret;
- 
-     cpuid = extract32(val, 16, 10);
--    cs = licc->cpu_by_arch_id(cpuid);
--    if (cs == NULL) {
-+    ret = licc->cpu_by_arch_id(ipi, cpuid, &cpu, &cs);
-+    if (ret != MEMTX_OK) {
-         return MEMTX_DECODE_ERROR;
-     }
- 
-     /* override requester_id */
-     addr = SMP_IPI_MAILBOX + CORE_BUF_20 + (val & 0x1c);
--    attrs.requester_id = cs->cpu_index;
-+    attrs.requester_id = cpu;
-     return send_ipi_data(ipi, cs, val, addr, attrs);
- }
- 
-@@ -123,16 +124,17 @@ static MemTxResult any_send(LoongsonIPICommonState *ipi,
-     uint32_t cpuid;
-     hwaddr addr;
-     CPUState *cs;
-+    int cpu, ret;
- 
-     cpuid = extract32(val, 16, 10);
--    cs = licc->cpu_by_arch_id(cpuid);
--    if (cs == NULL) {
-+    ret = licc->cpu_by_arch_id(ipi, cpuid, &cpu, &cs);
-+    if (ret != MEMTX_OK) {
-         return MEMTX_DECODE_ERROR;
-     }
- 
-     /* override requester_id */
-     addr = val & 0xffff;
--    attrs.requester_id = cs->cpu_index;
-+    attrs.requester_id = cpu;
-     return send_ipi_data(ipi, cs, val, addr, attrs);
- }
- 
-@@ -146,6 +148,7 @@ MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr, uint64_t val,
-     uint32_t cpuid;
-     uint8_t vector;
-     CPUState *cs;
-+    int cpu, ret;
- 
-     addr &= 0xff;
-     trace_loongson_ipi_write(size, (uint64_t)addr, val);
-@@ -176,11 +179,11 @@ MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr, uint64_t val,
-         cpuid = extract32(val, 16, 10);
-         /* IPI status vector */
-         vector = extract8(val, 0, 5);
--        cs = licc->cpu_by_arch_id(cpuid);
--        if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
-+        ret = licc->cpu_by_arch_id(ipi, cpuid, &cpu, &cs);
-+        if (ret != MEMTX_OK || cpu >= ipi->num_cpu) {
-             return MEMTX_DECODE_ERROR;
-         }
--        loongson_ipi_core_writel(&ipi->cpu[cs->cpu_index], CORE_SET_OFF,
-+        loongson_ipi_core_writel(&ipi->cpu[cpu], CORE_SET_OFF,
-                                  BIT(vector), 4, attrs);
-         break;
-     default:
-diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
-index 4192f3d548..b587f9c571 100644
---- a/include/hw/intc/loongson_ipi_common.h
-+++ b/include/hw/intc/loongson_ipi_common.h
-@@ -46,7 +46,8 @@ struct LoongsonIPICommonClass {
-     DeviceRealize parent_realize;
-     DeviceUnrealize parent_unrealize;
-     AddressSpace *(*get_iocsr_as)(CPUState *cpu);
--    CPUState *(*cpu_by_arch_id)(int64_t id);
-+    int (*cpu_by_arch_id)(LoongsonIPICommonState *lics, int64_t id,
-+                          int *index, CPUState **pcs);
- };
- 
- MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr, uint64_t *data,
--- 
-2.39.3
+(deposit64() is really a new thing for i386)
+
+[1] 
+https://lore.kernel.org/qemu-devel/20241210173524.48e203a3@imammedo.users.ipa.redhat.com/
+
+>>> +}
+>>
+> 
+> Typo "function" in patch subject.
+
+thanks for catching it!
 
 
