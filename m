@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB0CE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 950FAE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCqO-0006gQ-H9; Tue, 07 Jan 2025 11:54:16 -0500
+	id 1tVCua-00031j-AA; Tue, 07 Jan 2025 11:58:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCpV-00054v-4M
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:23 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tVCu5-0002DD-P5
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:07 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoY-0005vS-HC
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:20 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43675b1155bso151148605e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:22 -0800 (PST)
+ id 1tVCtx-0006v7-Lc
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:04 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385d7f19f20so6995487f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:57:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736268741; x=1736873541; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736269076; x=1736873876; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lG7MbUBeLhp7BGSne5jxjhgnKJrC/8a0zBr1FqLJA6g=;
- b=EaYY86GjY8yx41cog3rReYU6GGriUpxaAe4MJg9qimL0qMkBKGnO9Yky8K9tW1T+YN
- awbZTls/CpZ1zljQyuX1AWgVzjA4hgxai74tLCpgqVY85h5eyNEZrZvuIkhKvgl7TFI5
- R1jLGKjxI2phzjKZ0x7U/jesgNY0dSGUDOT4xuwv2dqDPV+PedqdxMm4tp8ZvJWtA2b7
- hqtCqchZ03iBJJA1YBKwpPSMWvtEfDmWI+iEJyaqlgklRRI6aYAYKKhpnpTEWmqm2h7K
- p4AHi4xKOQjPC8/s/w+9mzojWig9jfLrHtFBuSUiWt6wsf4PRufb3VkkqvBSzPPeWSat
- iuxQ==
+ bh=lmaBQafc1hcOcHjmvqmTitVigBgQH5FjwDw2a2hIcHI=;
+ b=IhT5l9186tYJYy5kkb0qVdJ1CwyZPpehWg4/3DmiDywqqsz6p2H35p1zsWfHRsKjkD
+ 9dkQlAsAktw9FNEP/zoP04JBo178r12txvO9xxZ8t6q3oWOZbneX+LIsYURkKjUyJAVG
+ vFK53ZMnfYElT5zkXB4/t2kSGhu/eEkJ6KMXyvYrOUo2mEXlVy67ji5H0tmgRgovhNlT
+ QbiR+vhj3wOPpJ8cbon42pYlMPrycv+fiwpRLm1VeJDDBinMuMyJ7EASFewMMbGEqqL0
+ 5ZPRja2pZFEPnxIjSiHgwbTJluBPn9CMEZ52fOB3JP6W/RTGxDYGCIJ0nbv3//+g240j
+ KDrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736268741; x=1736873541;
+ d=1e100.net; s=20230601; t=1736269076; x=1736873876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lG7MbUBeLhp7BGSne5jxjhgnKJrC/8a0zBr1FqLJA6g=;
- b=qd4IHLfzeiQQqu7T+j0NVnEI+M3VJCYluvOJIsl4mCdhcuPtt5aTT7dB6NQnuBoPaD
- VI0VeBOpeKy0YCVNcwixvF8eNKaDSv4thZrboMoDBB3T5oebY+qZfcQja0q4VaZUrSvL
- IaT1/+CRKEPgodD9QApRSk83bjyokN1D2wl/MEKssL9buLHRmduhqrW1JU7JTy8q5fom
- FbSPqrCu2da3bk+f34xttTdOZP5yKL0b7KDeydAbGY9bKD0ZR7wF566Hm1RpqLjvxsgk
- wM4kWIUbJ3MKQhOyltumamZW8bd8X+hq4Ab50JFcVoxMwAp6Y+/7SU60zdCWhWyev2/O
- fT+A==
-X-Gm-Message-State: AOJu0YyLj9SrOlW2bGBU+PgK+4qBLulYdYJB506LxJHnzIJbXu0UfsYW
- yAAmpI+/GuZoPLt8s/0XJ4SfszrlpjYNY23QRC34mKUzAMLcmRRJLZWxx2saclw=
-X-Gm-Gg: ASbGnct38pZTulMha/KjNwY2ic7t/h2499cGop4BRRBkgf6OdeCCtWqkBMzJCD//ZrE
- LJZ3mT9IWQ8n/PYzLXMUhQxCSCXsh8lNdCBtJlDaFNMjKNPU2Sj0gcuI5I36QY0oZhlXF2fwjCY
- ERT408iR2hecwURCDAzniWLjNxYeQevbUxrNnWw3seMxQ0ffXCcxKQqQNFcv2rPTBl92GLi7PTE
- fvw/5zKTmYnLNVs368Fh+KKP3G58qqpg1c6FmIJOiGbvnRSXOIxVNM=
-X-Google-Smtp-Source: AGHT+IH7iqwDon8XGewQLXgOu/1cStkxVfVLr5WLrNmcktmwgWaeERsXwdfPTe57yv3zWJosorlr2w==
-X-Received: by 2002:a05:600c:3106:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-43668b93817mr508634885e9.27.1736268740993; 
- Tue, 07 Jan 2025 08:52:20 -0800 (PST)
+ bh=lmaBQafc1hcOcHjmvqmTitVigBgQH5FjwDw2a2hIcHI=;
+ b=h2zsrwB3uvX/uTQG9Olzz11kdDKusB3fKrzXAgK2uumP7tdjbcZPACYFmqCWkOUOvg
+ ajohU9BHLs93cNDqG8yNVzOB7rnxuhxmS/mLNEBAwpdtp7EKLHHvIGWUzxgU9U4aC1wY
+ Mg/aZ+CNK0d82wbHfXd2ZVt2pK1DVUU3eEtgem8G8mh7vuoAiXXySffjJ/JZq7y1ibta
+ 5u9JHOiuh2asVCtZP1grJnVMLFPOkCRVEQKZIE44vjUH2H5TlmTkiJCi9bETFcUThCRy
+ mf7Tg4yTab//y5kqNiUp+yH3XBci///oJep4XnFGR4DYggmR0ymIlOOBNxwesdLaxBKt
+ z8Mg==
+X-Gm-Message-State: AOJu0YyadK8yKGw2jakB3clRWYxNSvXiHwRULtkkK4yoTxxaEK2MIqZQ
+ EnZgRWFVzCBWvm+zhYrym9F2A6OOFo7kQCrSG1QB8ySgE56p0dvLZgGtPUrwaS0=
+X-Gm-Gg: ASbGncsrckCfSun3vCL+fQa9X+/IAvcQPjQmxUQwREpAWKIMkg+Q4HKAjymfzh4N2HA
+ 56+AckVt3YFVSQY2xEHxtrACPFogfUTwLiVUNt52nTDK7k3ZES1HFChnPuHFCBVqV4lEKL3iMbS
+ PSp+Bj9/O4N9nxOhWmkanyjkS6PMuZqmumcLP9rBOqEhiylIIS2h5nkbhNXIaCCxClhigTn5Sr+
+ WxmQ+eaNdrWUhPTQ7ujQ47Gug5JZVawjgURYSdbmDJjapvYZdzIswQ=
+X-Google-Smtp-Source: AGHT+IHIiQA0UrClHndchLe3wsTOvHly+pLlflFj495fnUqG7Hr9zCIqcXDumFHeW5YQLfbH4ERt/Q==
+X-Received: by 2002:a5d:47a9:0:b0:385:d7f9:f166 with SMTP id
+ ffacd0b85a97d-38a221fa11cmr45355632f8f.17.1736269075813; 
+ Tue, 07 Jan 2025 08:57:55 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436dcceb8c6sm14053885e9.0.2025.01.07.08.52.15
+ ffacd0b85a97d-38a1c8a6ca5sm52045565f8f.86.2025.01.07.08.57.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:52:16 -0800 (PST)
+ Tue, 07 Jan 2025 08:57:53 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0C8D05FEF9;
- Tue,  7 Jan 2025 16:52:10 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id BC88B5FD35;
+ Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -97,18 +97,18 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 22/29] tests/docker: move riscv64 cross container from sid
- to trixie
-Date: Tue,  7 Jan 2025 16:52:00 +0000
-Message-Id: <20250107165208.743958-23-alex.bennee@linaro.org>
+Subject: [PATCH v3 19/29] tests/functional: add zstd support to uncompress
+ utility
+Date: Tue,  7 Jan 2025 16:51:57 +0000
+Message-Id: <20250107165208.743958-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,49 +131,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although riscv64 isn't going to be a release architecture for trixie
-the packages are still built while it is testing. Moving from sid will
-also avoid some of the volatility we get from tracking the bleeding
-edge.
+Rather than using the python library (which has a different API
+anyway) lets just call the binary. zstdtools is already in out
+qemu.yml so all test containers should have it around. Tests should
+still use @skipIfMissingCommands('zstd') to gracefully handle when
+only minimal dependencies have been installed.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/docker/dockerfiles/debian-riscv64-cross.docker | 4 ++--
- tests/lcitool/refresh                                | 4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ tests/functional/qemu_test/uncompress.py | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-index 4d8ca83cb3..b0386cd3a1 100644
---- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all --cross-arch riscv64 debian-sid qemu-minimal
-+#  $ lcitool dockerfile --layers all --cross-arch riscv64 debian-13 qemu-minimal
- #
- # https://gitlab.com/libvirt/libvirt-ci
+diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+index 6d02ded066..404eee1f83 100644
+--- a/tests/functional/qemu_test/uncompress.py
++++ b/tests/functional/qemu_test/uncompress.py
+@@ -12,6 +12,7 @@
+ import os
+ import shutil
+ from urllib.parse import urlparse
++from subprocess import check_call, CalledProcessError
  
--FROM docker.io/library/debian:sid-slim
-+FROM docker.io/library/debian:trixie-slim
+ from .asset import Asset
  
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 6720516b94..53f8d2585f 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -220,7 +220,9 @@ try:
-                         trailer=cross_build("powerpc64le-linux-gnu-",
-                                             "ppc64-softmmu,ppc64-linux-user"))
+@@ -38,6 +39,18 @@ def lzma_uncompress(xz_path, output_path):
+             os.remove(output_path)
+             raise
  
--    generate_dockerfile("debian-riscv64-cross", "debian-sid",
-+    # while not yet a release architecture the packages are still
-+    # build while part of testing
-+    generate_dockerfile("debian-riscv64-cross", "debian-13",
-                         project="qemu-minimal",
-                         cross="riscv64",
-                         trailer=cross_build("riscv64-linux-gnu-",
++def zstd_uncompress(zstd_path, output_path):
++    if os.path.exists(output_path):
++        return
++
++    try:
++        check_call(['zstd', "-f", "-d", zstd_path,
++                    "-o", output_path])
++    except CalledProcessError as e:
++        os.remove(output_path)
++        raise Exception(
++            f"Unable to decompress zstd file {zstd_path} with {e}") from e
++
+ '''
+ @params compressed: filename, Asset, or file-like object to uncompress
+ @params uncompressed: filename to uncompress into
+@@ -59,6 +72,8 @@ def uncompress(compressed, uncompressed, format=None):
+         lzma_uncompress(str(compressed), uncompressed)
+     elif format == "gz":
+         gzip_uncompress(str(compressed), uncompressed)
++    elif format == "zstd":
++        zstd_uncompress(str(compressed), uncompressed)
+     else:
+         raise Exception(f"Unknown compression format {format}")
+ 
+@@ -79,5 +94,7 @@ def guess_uncompress_format(compressed):
+         return "xz"
+     elif ext == ".gz":
+         return "gz"
++    elif ext == ".zstd":
++        return "zstd"
+     else:
+         raise Exception(f"Unknown compression format for {compressed}")
 -- 
 2.39.5
 
