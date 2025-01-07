@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4279E77199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6024E7719A
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVBbH-0003Zy-PP; Tue, 07 Jan 2025 10:34:36 -0500
+	id 1tVBap-00034k-DP; Tue, 07 Jan 2025 10:34:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBbF-0003Sx-Re
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBan-00034L-P2
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBbE-0005AE-06
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:33 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBam-000524-CG
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736264071;
+ s=mimecast20190719; t=1736264041;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kSr09eySL7lUswaydhH7hCz8x7o2ME2ZHatF7jinfq4=;
- b=IIaG+OziJTO+Mb8l1iQW2QeSamXvNirfdUCjMWp8eK4DjxzfcLHpyaG0wigUurwy4LeYUm
- 2pR6N6ZnWkmv0gTAMdqPsjPvV+u6NisRxxT+CKsNcFUiJ3lmDcmyf4JvDq0BvoI/FPjLx9
- WmE0on2oqcOHfk2ZXvNQbHpJrnGmKLE=
+ bh=UVhloq3ti9EHIyiQV/uSapzfpupxQNhfhuCF+psO+Wc=;
+ b=O5Mrc5rHYed7e+k3t5MIH67oIr5IXhFicBCuI4d1cUvg1Fs3/zLqW2999VfvqCXDs7FZfF
+ 28aChYVetJApCcY83Z3yi5p2PAgysh2toLQOghVP9zNFrpCJBCdYg9wKg0BCIYHimnos6D
+ 9BWnavu1xZ5uQ3xi6Z0EAu1LISw+EmU=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-miCq3fBRPfGPE9Epb83pAQ-1; Tue,
- 07 Jan 2025 10:34:27 -0500
-X-MC-Unique: miCq3fBRPfGPE9Epb83pAQ-1
-X-Mimecast-MFC-AGG-ID: miCq3fBRPfGPE9Epb83pAQ
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-TR7RHDnjPZifxcD4rOp4IA-1; Tue,
+ 07 Jan 2025 10:33:59 -0500
+X-MC-Unique: TR7RHDnjPZifxcD4rOp4IA-1
+X-Mimecast-MFC-AGG-ID: TR7RHDnjPZifxcD4rOp4IA
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41D791955DD2; Tue,  7 Jan 2025 15:34:26 +0000 (UTC)
+ id 929181955E9C; Tue,  7 Jan 2025 15:33:57 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.66])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 912A81956053; Tue,  7 Jan 2025 15:34:25 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF7E5195606B; Tue,  7 Jan 2025 15:33:55 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id D3AE31800608; Tue, 07 Jan 2025 16:33:54 +0100 (CET)
+ id 77425180039D; Tue, 07 Jan 2025 16:33:53 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
@@ -56,25 +56,26 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
  Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
  Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 20/21] docs: add uefi variable service documentation
-Date: Tue,  7 Jan 2025 16:33:47 +0100
-Message-ID: <20250107153353.1144978-21-kraxel@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Laszlo Ersek <lersek@redhat.com>
+Subject: [PATCH v2 01/21] hw/uefi: add include/hw/uefi/var-service-api.h
+Date: Tue,  7 Jan 2025 16:33:28 +0100
+Message-ID: <20250107153353.1144978-2-kraxel@redhat.com>
 In-Reply-To: <20250107153353.1144978-1-kraxel@redhat.com>
 References: <20250107153353.1144978-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,112 +91,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- docs/devel/index-internals.rst |  1 +
- docs/devel/uefi-vars.rst       | 66 ++++++++++++++++++++++++++++++++++
- hw/uefi/LIMITATIONS.md         |  7 ++++
- 3 files changed, 74 insertions(+)
- create mode 100644 docs/devel/uefi-vars.rst
- create mode 100644 hw/uefi/LIMITATIONS.md
+This file defines the register interface of the uefi-vars device.
+It's only a handful of registers: magic value, command and status
+registers, location and size of the communication buffer.
 
-diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
-index ab9fbc448263..56aa589f663c 100644
---- a/docs/devel/index-internals.rst
-+++ b/docs/devel/index-internals.rst
-@@ -18,6 +18,7 @@ Details about QEMU's various subsystems including how to add features to them.
-    s390-cpu-topology
-    s390-dasd-ipl
-    tracing
-+   uefi-vars
-    vfio-iommufd
-    writing-monitor-commands
-    virtio-backends
-diff --git a/docs/devel/uefi-vars.rst b/docs/devel/uefi-vars.rst
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Laszlo Ersek <lersek@redhat.com>
+---
+ include/hw/uefi/var-service-api.h | 40 +++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+ create mode 100644 include/hw/uefi/var-service-api.h
+
+diff --git a/include/hw/uefi/var-service-api.h b/include/hw/uefi/var-service-api.h
 new file mode 100644
-index 000000000000..3e7bd98b5208
+index 000000000000..37fdab32741f
 --- /dev/null
-+++ b/docs/devel/uefi-vars.rst
-@@ -0,0 +1,66 @@
-+==============
-+UEFI variables
-+==============
++++ b/include/hw/uefi/var-service-api.h
+@@ -0,0 +1,40 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * uefi-vars device - API of the virtual device for guest/host communication.
++ */
++#ifndef QEMU_UEFI_VAR_SERVICE_API_H
++#define QEMU_UEFI_VAR_SERVICE_API_H
 +
-+Guest UEFI variable management
-+==============================
 +
-+The traditional approach for UEFI Variable storage in qemu guests is
-+to work as close as possible to physical hardware.  That means
-+providing pflash as storage and leaving the management of variables
-+and flash to the guest.
++/* isa: io range */
++#define UEFI_VARS_IO_BASE                   0x520
 +
-+Secure boot support comes with the requirement that the UEFI variable
-+storage must be protected against direct access by the OS.  All update
-+requests must pass the sanity checks.  (Parts of) the firmware must
-+run with a higher privilege level than the OS so this can be enforced
-+by the firmware.  On x86 this has been implemented using System
-+Management Mode (SMM) in qemu and kvm, which again is the same
-+approach taken by physical hardware.  Only privileged code running in
-+SMM mode is allowed to access flash storage.
++/* sysbus: fdt node path */
++#define UEFI_VARS_FDT_NODE       "qemu-uefi-vars"
++#define UEFI_VARS_FDT_COMPAT     "qemu,uefi-vars"
 +
-+Communication with the firmware code running in SMM mode works by
-+serializing the requests to a shared buffer, then trapping into SMM
-+mode via SMI.  The SMM code processes the request, stores the reply in
-+the same buffer and returns.
++/* registers */
++#define UEFI_VARS_REG_MAGIC                  0x00  /* 16 bit */
++#define UEFI_VARS_REG_CMD_STS                0x02  /* 16 bit */
++#define UEFI_VARS_REG_BUFFER_SIZE            0x04  /* 32 bit */
++#define UEFI_VARS_REG_BUFFER_ADDR_LO         0x08  /* 32 bit */
++#define UEFI_VARS_REG_BUFFER_ADDR_HI         0x0c  /* 32 bit */
++#define UEFI_VARS_REGS_SIZE                  0x10
 +
-+Host UEFI variable service
-+==========================
++/* magic value */
++#define UEFI_VARS_MAGIC_VALUE               0xef1
 +
-+Instead of running the privileged code inside the guest we can run it
-+on the host.  The serialization protocol can be reused.  The
-+communication with the host uses a virtual device, which essentially
-+configures the shared buffer location and size, and traps to the host
-+to process the requests.
++/* command values */
++#define UEFI_VARS_CMD_RESET                  0x01
++#define UEFI_VARS_CMD_MM                     0x02
 +
-+The ``uefi-vars`` device implements the UEFI virtual device.  It comes
-+in ``uefi-vars-isa`` and ``uefi-vars-sysbus`` flavours.  The device
-+reimplements the handlers needed, specifically
-+``EfiSmmVariableProtocol`` and ``VarCheckPolicyLibMmiHandler``.  It
-+also consumes events (``EfiEndOfDxeEventGroup``,
-+``EfiEventReadyToBoot`` and ``EfiEventExitBootServices``).
++/* status values */
++#define UEFI_VARS_STS_SUCCESS                0x00
++#define UEFI_VARS_STS_BUSY                   0x01
++#define UEFI_VARS_STS_ERR_UNKNOWN            0x10
++#define UEFI_VARS_STS_ERR_NOT_SUPPORTED      0x11
++#define UEFI_VARS_STS_ERR_BAD_BUFFER_SIZE    0x12
 +
-+The advantage of the approach is that we do not need a special
-+privilege level for the firmware to protect itself, i.e. it does not
-+depend on SMM emulation on x64, which allows the removal of a bunch of
-+complex code for SMM emulation from the linux kernel
-+(CONFIG_KVM_SMM=n).  It also allows support for secure boot on arm
-+without implementing secure world (el3) emulation in kvm.
 +
-+Of course there are also downsides.  The added device increases the
-+attack surface of the host, and we are adding some code duplication
-+because we have to reimplement some edk2 functionality in qemu.
-+
-+usage on x86_64 (isa)
-+---------------------
-+
-+.. code::
-+
-+   qemu-system-x86_64 -device uefi-vars-isa,jsonfile=/path/to/vars.json
-+
-+usage on aarch64 (sysbus)
-+-------------------------
-+
-+.. code::
-+
-+   qemu-system-aarch64 -M virt,x-uefi-vars=on
-diff --git a/hw/uefi/LIMITATIONS.md b/hw/uefi/LIMITATIONS.md
-new file mode 100644
-index 000000000000..29308bd587aa
---- /dev/null
-+++ b/hw/uefi/LIMITATIONS.md
-@@ -0,0 +1,7 @@
-+known issues and limitations
-+----------------------------
-+
-+* works only on little endian hosts
-+  - accessing structs in guest ram is done without endian conversion.
-+* works only for 64-bit guests
-+  - UINTN is mapped to uint64_t, for 32-bit guests that would be uint32_t
++#endif /* QEMU_UEFI_VAR_SERVICE_API_H */
 -- 
 2.47.1
 
