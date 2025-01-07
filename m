@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A391E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE805E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV8L2-00013P-Pz; Tue, 07 Jan 2025 07:05:37 -0500
+	id 1tV8d3-0004Bf-BV; Tue, 07 Jan 2025 07:24:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tV8Ky-0000zF-Pv
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:05:32 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tV8d1-0004BN-Rj
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:24:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tV8Kw-0007aD-Ki
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:05:32 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tV8cz-0001tI-VG
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:24:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736251529;
+ s=mimecast20190719; t=1736252648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SsGVkR2GPSmKQ0BN3mgiFjQzgJ3K4A4z8hdH9ACqaeQ=;
- b=T4clMuQhzvlRVmHubzy6L0MasErLadc+6trTDSuebDgrEhpcs3Qh4YPbDq0qoiwzTvOx0+
- Pg78gBH5lIWUQYKjDMHNO0AAJLYjnLaEVZ8z4JNA9NiuQTtbY3atncJDOg+kq7UwL3DZx0
- 8mfi+KdhHOqGkjdwIxrMR8Pj3IQEGag=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-Co0jDsHCM1Kl30vJeOQpNw-1; Tue,
- 07 Jan 2025 07:05:25 -0500
-X-MC-Unique: Co0jDsHCM1Kl30vJeOQpNw-1
-X-Mimecast-MFC-AGG-ID: Co0jDsHCM1Kl30vJeOQpNw
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D5BD19560BA; Tue,  7 Jan 2025 12:05:24 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE18D19560A2; Tue,  7 Jan 2025 12:05:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8135C21E6924; Tue, 07 Jan 2025 13:05:20 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange"
- <berrange@redhat.com>,  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V5 15/23] migration: cpr-transfer mode
-In-Reply-To: <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Tue, 24 Dec 2024 08:17:00 -0800")
-References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
- <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
-Date: Tue, 07 Jan 2025 13:05:20 +0100
-Message-ID: <87ed1eakxr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=tBhgfETM99NEMDiU1FVnu4UUpsHSbAgJWNnVsfsni24=;
+ b=H5NyvW/rFJ3tCALwAnzOwEQ3FwwBGcUHrTo/oO8n8Dx0Ec2JJpRWo5FJCmUt3zWtMBNGxJ
+ cnycKoQwIxsXwBJ9ZuKtQ0Z9ykBOIZ2I3skXzxN//5ZXFflxKXr6homqMqDJ2w6/2D9wUs
+ CN0yh4fzJqKd5pjG+mJ1AXmNNNnFSac=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-286-82-3_OQaPzyEfqrHQOCkqw-1; Tue, 07 Jan 2025 07:24:06 -0500
+X-MC-Unique: 82-3_OQaPzyEfqrHQOCkqw-1
+X-Mimecast-MFC-AGG-ID: 82-3_OQaPzyEfqrHQOCkqw
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385ed79291eso7733929f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 04:24:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736252645; x=1736857445;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tBhgfETM99NEMDiU1FVnu4UUpsHSbAgJWNnVsfsni24=;
+ b=uhzkL6U9FabIrffH+WQLHKY9uDNms60fAdygIxSHm/TGufQpDCdjRmGruay5wuoZ1x
+ KEohbNS1IvMLpVt1+Znz6eou9D/0TqgSjGpZae8v+jG0EZRY+WnvZ0zIZJQoag76nBh4
+ EfTGgS3Oog4b6vyjGeX4plXDxUkZK5mxUbFuSdqODIZU2ENScp9GY7VJylbpMCZV94Dk
+ XwbMeJ8VfzmEua0FLXE1sot2j5BKxDyAv2Zd8mkE7WQGlWw0FX+UglwYz88Ae9z3oBf+
+ WFDY3uY+6dB1OxcOfQEGXxJ++YGVyB/C2AP1RnKf8jGZKrEkKa8ornU+8pB5EZIka3xx
+ 5IdA==
+X-Gm-Message-State: AOJu0YyDMfvFqPFQR7RQoUDmvjXYgEc25qnoubSSw6mvH0cg0tLYxnEf
+ NtAm7R1e4ZDgxpD0CExQheBHXq3MOn6c8Dm4BgRsZcsyKPYt44YhB9hLwY9DAvbimAz2wnDLZnS
+ 1T67OCRpnk8xmvgtulS0LQW1QtnvvdcGBxYB2CNnqZdp7+nqqS2ZCmLQJjMO3AXTP2naxvG02or
+ oOD1sMMnZIyotwAwR13doztcaz8WY=
+X-Gm-Gg: ASbGncu/PrIYzAvwjO3VogVoC2LcLaSxWOgae6KHBmV3+fEMZ+19AqV/kKZZN1WDWLg
+ XCWoo4TqB3Guzn30tFKO8Cjr4TIVoCl/5/dJVew==
+X-Received: by 2002:a5d:5f56:0:b0:382:45db:6a1e with SMTP id
+ ffacd0b85a97d-38a7913bcf8mr2711312f8f.14.1736252644725; 
+ Tue, 07 Jan 2025 04:24:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdCOBT/WPKqbvxYoZE1G1ce2F6839rhweRBKlBnacFSZhluProYmcnIpDOweSXkOJJ9GaBJbJOd+9g+ItmULs=
+X-Received: by 2002:a5d:5f56:0:b0:382:45db:6a1e with SMTP id
+ ffacd0b85a97d-38a7913bcf8mr2711195f8f.14.1736252642416; Tue, 07 Jan 2025
+ 04:24:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+References: <20241231002336.25931-1-pbonzini@redhat.com>
+ <20241231002336.25931-2-pbonzini@redhat.com>
+ <Z3zstgKXAgeRrIU2@intel.com>
+In-Reply-To: <Z3zstgKXAgeRrIU2@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 7 Jan 2025 13:23:50 +0100
+Message-ID: <CABgObfbdFo9B1nedC+Bu2QQfjTL1TOpmSQt0p0a0d0iWev6UKg@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/9] rust: vmstate: add new type safe implementation
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -90,193 +102,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
-
-> Add the cpr-transfer migration mode, which allows the user to transfer
-> a guest to a new QEMU instance on the same host with minimal guest pause
-> time, by preserving guest RAM in place, albeit with new virtual addresses
-> in new QEMU, and by preserving device file descriptors.  Pages that were
-> locked in memory for DMA in old QEMU remain locked in new QEMU, because the
-> descriptor of the device that locked them remains open.
+On Tue, Jan 7, 2025 at 9:39=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrote=
+:
+> This is very good work! I am curious about how QEMU plays with Rust
+> forum:
 >
-> cpr-transfer preserves memory and devices descriptors by sending them to
-> new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
-> be sent over the normal migration channel, because devices and backends
-> are created prior to reading the channel,
+> Rust forum's disscussion is under MIT and Apache 2.0 licenses [1], and
+> since vmstate.rs is under the GPLv2 license, do we need to specify that
+> certain code retains the MIT license?
 
-Is that an artifact of the way QEMU starts up, or is it fundamental?
+I will add a note similar to the one that is already there in offset_of.
 
->                                           so this mode sends CPR state
-> over a second "cpr" migration channel.  New QEMU reads the cpr channel
-> prior to creating devices or backends.  The user specifies the cpr channel
-> in the channel arguments on the outgoing side, and in a second -incoming
-> command-line parameter on the incoming side.
+> > +/// ```
+> > +/// # use qemu_api::call_func_with_field;
+> > +/// # use core::marker::PhantomData;
+> > +/// const fn size_of_field<T>(_: PhantomData<T>) -> usize {
+> > +///     std::mem::size_of::<T>()
+> > +/// }
+> > +///
+> > +/// struct Foo {
+> > +///     x: u16,
+> > +/// };
+> > +/// // calls size_of_field::<u16>()
+> > +/// assert_eq!(call_func_with_field!(size_of_field, Foo, x), 2);
+> > +/// ```
+> > +#[macro_export]
+> > +macro_rules! call_func_with_field {
+> > +    ($func:expr, $typ:ty, $($field:tt).+) =3D> {
+> > +        $func(loop {
+> > +            #![allow(unreachable_code)]
+> > +            const fn phantom__<T>(_: &T) -> ::core::marker::PhantomDat=
+a<T> { ::core::marker::PhantomData }
+> > +            // Unreachable code is exempt from checks on uninitialized=
+ values.
+> > +            // Use that trick to infer the type of this PhantomData.
+> > +            break ::core::marker::PhantomData;
+> > +            break phantom__(&{ let value__: $typ; value__.$($field).+ =
+});
+> > +        })
+> > +    };
+> > +}
 >
-> The user must start old QEMU with the the '-machine aux-ram-share=on' option,
-> which allows anonymous memory to be transferred in place to the new process
-> by transferring a memory descriptor for each ram block.  Memory-backend
-> objects must have the share=on attribute, but memory-backend-epc is not
-> supported.
+> Very flexible and powerful. (I even think this code could be released as
+> a new public crate.)
+
+It's probably not _that_ useful in general, unless you're implementing
+this kind of reflection... otherwise I would have found an existing
+solution. :) But yes, it's very powerful.
+
+Out of curiosity, I asked claude.ai to explain it and it said "This is
+a rather advanced use of Rust's type system and macro capabilities to
+do compile-time reflection - basically inspecting the types of struct
+fields without runtime overhead. While creative, this pattern isn't
+commonly needed in everyday Rust code."
+
+When fed the initial comment from the Rust forum it said "your comment
+about wanting to access <T as SomeTrait>::SOMETHING for a field's type
+is a classic serialization pattern - often used to get things like
+type IDs, serialization formats, or field metadata at compile time".
+That's actually pretty impressive; the LLM was also impressed and it
+started asking me more about it ("Are you building a custom
+serialization framework from scratch, or extending an existing one?").
+
+> > +/// Return the `VMStateField` for a field of a struct.  The field must=
+ be
+> > +/// visible in the current scope.
+> > +///
+> > +/// In order to support other types, the trait `VMState` must be imple=
+mented
+> > +/// for them.
+> > +#[macro_export]
+> > +macro_rules! vmstate_of {
+> > +    ($struct_name:ty, $field_name:ident $(,)?) =3D> {
 >
-> The user starts new QEMU on the same host as old QEMU, with command-line
-> arguments to create the same machine, plus the -incoming option for the
-> main migration channel, like normal live migration.  In addition, the user
-> adds a second -incoming option with channel type "cpr".  The CPR channel
-> address must be a type, such as unix socket, that supports SCM_RIGHTS.
+> why allow a comma at the end? It seems other patches don't use that
+> style.
+
+I copied it from the standard library offset_of, but I can remove it too.
+
+> > +// Add a couple builder-style methods to VMStateField, allowing
+> > +// easy derivation of VMStateField constants from other types.
+> > +impl VMStateField {
+> > +    #[must_use]
+> > +    pub const fn with_version_id(mut self, version_id: i32) -> Self {
 >
-> To initiate CPR, the user issues a migrate command to old QEMU, adding
-> a second migration channel of type "cpr" in the channels argument.
-> Old QEMU stops the VM, saves state to the migration channels, and enters
-> the postmigrate state.  New QEMU mmap's memory descriptors, and execution
-> resumes.
->
-> The implementation splits qmp_migrate into start and finish functions.
-> Start sends CPR state to new QEMU, which responds by closing the CPR
-> channel.  Old QEMU detects the HUP then calls finish, which connects the
-> main migration channel.
->
-> In summary, the usage is:
->
->   qemu-system-$arch -machine aux-ram-share=on ...
->
->   start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
->
->   Issue commands to old QEMU:
->     migrate_set_parameter mode cpr-transfer
->
->     {"execute": "migrate", ...
->         {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Why not use u32 (and omit an assert)?
 
-[...]
+The version_id field is an int in the C struct; you'd still need to
+assert that it's <=3D i32::MAX, and you'd also need an 'as i32'. In
+practice it will always be a constant, therefore it will auto-cast to
+either i32 or u32.
 
-> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-> index f31deb3..2210f0c 100644
-> --- a/migration/vmstate-types.c
-> +++ b/migration/vmstate-types.c
-> @@ -15,6 +15,7 @@
->  #include "qemu-file.h"
->  #include "migration.h"
->  #include "migration/vmstate.h"
-> +#include "migration/client-options.h"
->  #include "qemu/error-report.h"
->  #include "qemu/queue.h"
->  #include "trace.h"
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index a605dc2..35309dc 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -614,9 +614,47 @@
->  #     or COLO.
->  #
->  #     (since 8.2)
-> +#
-> +# @cpr-transfer: This mode allows the user to transfer a guest to a
-> +#     new QEMU instance on the same host with minimal guest pause
-> +#     time, by preserving guest RAM in place, albeit with new virtual
-> +#     addresses in new QEMU.  Devices and their pinned pages will also
-> +#     be preserved in a future QEMU release.
-
-Maybe "@cpr-transfer: Checkpoint and restart migration mode minimizes
-guest pause time by transferring guest RAM without copying it."
-
-If you want to mention the guest RAM mapping differs between old and new
-QEMU, that's fine, but it's also detail, so I'd do it further down.
-
-> +#
-> +#     The user starts new QEMU on the same host as old QEMU, with
-> +#     command-line arguments to create the same machine, plus the
-> +#     -incoming option for the main migration channel, like normal
-> +#     live migration.  In addition, the user adds a second -incoming
-> +#     option with channel type "cpr".  The CPR channel address must
-> +#     be a type, such as unix socket, that supports SCM_RIGHTS.
-
-Permit me to indulge in a bit of pedantry...  A channel address doesn't
-support SCM_RIGHTS, only a channel may.  A channel supports it when it
-is backed by a UNIX domain socket.  The channel's socket's transport
-type need not be 'unix' for that, it could also be 'fd'.
-
-Suggest something like "This CPR channel must be a UNIX domain socket."
-
-If you want to say why, that's fine: "This CPR channel must support file
-descriptor transfer, i.e. it must be a UNIX domain socket."
-
-If you want to mention SCM_RIGHTS, that's fine, too: "This CPR channel
-must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
-UNIX domain socket."
-
-> +#
-> +#     To initiate CPR, the user issues a migrate command to old QEMU,
-> +#     adding a second migration channel of type "cpr" in the channels
-
-in the channel's
-
-> +#     argument.  Old QEMU stops the VM, saves state to the migration
-> +#     channels, and enters the postmigrate state.  Execution resumes
-> +#     in new QEMU.
-> +#
-> +#     New QEMU reads the CPR channel before opening a monitor, hence
-> +#     the CPR channel cannot be specified in the list of channels for
-> +#     a migrate-incoming command.  It may only be specified on the
-> +#     command line.
-
-This is a restriction that could conceivably be lifted in the future,
-right?
-
-What happens if a user tries to specify it with migrate-incoming?  Fails
-cleanly?  What's the error message?
-
-Maybe simply:
-
-         Currently, the CPR channel can only be specified on the command
-         line, not with the migrate-incoming command.
-
-with a big, fat comment explaining the restriction next to the spot
-that reports the error.
-
-> +#
-> +#     The main channel address cannot be a file type, and for the tcp
-> +#     type, the port cannot be 0 (meaning dynamically choose a port).
-
-What's "the tcp type"?  URI "tcp:..." / channel
-addr.transport=socket,addr.type=inet?
-
-> +#
-> +#     Memory-backend objects must have the share=on attribute, but
-> +#     memory-backend-epc is not supported.  The VM must be started
-> +#     with the '-machine aux-ram-share=on' option.
-> +#
-> +#     When using -incoming defer, you must issue the migrate command
-> +#     to old QEMU before issuing any monitor commands to new QEMU.
-> +#     However, new QEMU does not open and read the migration stream
-> +#     until you issue the migrate incoming command.
-
-I think some (all?) instances of "old QEMU" and "new QEMU" would read
-better as "the old QEMU" and "the new QEMU".
-
-> +#
-> +#     (since 10.0)
->  ##
->  { 'enum': 'MigMode',
-> -  'data': [ 'normal', 'cpr-reboot' ] }
-> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
->  
->  ##
->  # @ZeroPageDetection:
-> @@ -1578,11 +1616,12 @@
->  # The migration channel-type request options.
->  #
->  # @main: Main outbound migration channel.
-> +# @cpr: Checkpoint and restart state channel.
->  #
->  # Since: 8.1
->  ##
->  { 'enum': 'MigrationChannelType',
-> -  'data': [ 'main' ] }
-> +  'data': [ 'main', 'cpr' ] }
->  
->  ##
->  # @MigrationChannel:
+Paolo
 
 
