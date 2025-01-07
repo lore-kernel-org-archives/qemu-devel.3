@@ -4,68 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A55BE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E01E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV57z-0002Rt-J8; Tue, 07 Jan 2025 03:39:55 -0500
+	id 1tV5CG-0003jk-JX; Tue, 07 Jan 2025 03:44:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tV57w-0002RB-4d; Tue, 07 Jan 2025 03:39:52 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <keosung.park@samsung.com>)
+ id 1tV5CE-0003jP-NS
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:44:19 -0500
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tV57q-00082w-Sa; Tue, 07 Jan 2025 03:39:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736239187; x=1767775187;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=wy4C1JLqouyAQa7rS1oC3i8VxtHk8A6mXEyq4Eb/X3s=;
- b=PGKanqSQjl5NnSjE7DOQRBsL0rUM8IGD9RWHxPFbz+KnHdkaiwqhDBIc
- vpwA3WRPo9C1+o65rxKIElLql7oJ9kG7qTdq27pMseFAJEMQU79/yvz6q
- 7VrGP+xv60hICgz+Cf9VU5uadCjrNcSkDd20VyIupJjfMP0XwUiix9VDd
- KywK9sZ7VngiBDHRRk0jKaLr13p0Tgtu0fOYW6Cj7Wk39xbORB24TcHrV
- H2jwCfmb6cAdQIhdZckNIEG4ghQrN7HeRyPNNZ2Pg54YHYJhTnJ+gIZGB
- XCs6jYSJys4JBu15wAGzvmI4A9nOTLO8rDZwpyJhAD/1VjplLyusu2QUU w==;
-X-CSE-ConnectionGUID: ztIfaf4UQXunlIWrezJGPg==
-X-CSE-MsgGUID: PaSqxhltS6m+5B00BIGv8g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="36426856"
-X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; d="scan'208";a="36426856"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2025 00:39:44 -0800
-X-CSE-ConnectionGUID: FaL/xuO0TY6w99zRF3rQGA==
-X-CSE-MsgGUID: HM74yDQpRVizIFmUN1SksQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; d="scan'208";a="102598663"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 07 Jan 2025 00:39:42 -0800
-Date: Tue, 7 Jan 2025 16:58:30 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
-Subject: Re: [RFC PATCH 1/9] rust: vmstate: add new type safe implementation
-Message-ID: <Z3zstgKXAgeRrIU2@intel.com>
-References: <20241231002336.25931-1-pbonzini@redhat.com>
- <20241231002336.25931-2-pbonzini@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241231002336.25931-2-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+ (Exim 4.90_1) (envelope-from <keosung.park@samsung.com>)
+ id 1tV5C6-0008VZ-7y
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:44:18 -0500
+Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20250107084357epoutp01c1e91fd854fdfd6159a96bada791fa34~YXJHMCndD2624526245epoutp01k
+ for <qemu-devel@nongnu.org>; Tue,  7 Jan 2025 08:43:57 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20250107084357epoutp01c1e91fd854fdfd6159a96bada791fa34~YXJHMCndD2624526245epoutp01k
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1736239437;
+ bh=qMVTTSrMbBxUY+BObY6KkjD7t/14XIBA7i8I9M0jDso=;
+ h=Subject:Reply-To:From:To:CC:Date:References:From;
+ b=UJU7d0kTj8L1VYzqUCV5YSm01O4f2ElCRTIlqCtuSkacvEzwpFxTNizyc967V8mKT
+ Nwwnac3yx8EE16/9uExVWGV60dBjY2mtJRLmIfPw1Wa6j4K4Y9/r7X0AtcRRUUVvyT
+ SZOiqmafyA+X/Oz0w7rYKsPP6aW5o+wrgM3e/PTk=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+ epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+ 20250107084357epcas2p490bd9a8aa015af73bb28e7acab61acce~YXJG7FdYJ2756227562epcas2p44;
+ Tue,  7 Jan 2025 08:43:57 +0000 (GMT)
+Received: from epsmges2p3.samsung.com (unknown [182.195.36.69]) by
+ epsnrtp1.localdomain (Postfix) with ESMTP id 4YS4Mw3ZpVz4x9Pr; Tue,  7 Jan
+ 2025 08:43:56 +0000 (GMT)
+X-AuditID: b6c32a47-fd1c970000005659-12-677ce94ce160
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+ epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+ CD.97.22105.C49EC776; Tue,  7 Jan 2025 17:43:56 +0900 (KST)
+Mime-Version: 1.0
+Subject: [PATCH v2] hw/ufs: Adjust value to match CPU's endian format
+From: Keoseong Park <keosung.park@samsung.com>
+To: Jeuk Kim <jeuk20.kim@samsung.com>, "philmd@linaro.org"
+ <philmd@linaro.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "farosas@suse.de" <farosas@suse.de>, "lvivier@redhat.com"
+ <lvivier@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3@epcms2p2>
+Date: Tue, 07 Jan 2025 17:43:56 +0900
+X-CMS-MailID: 20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+X-CPGSPASS: Y
+X-CPGSPASS: Y
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphk+LIzCtJLcpLzFFi42LZdljTQtfnZU26wb3lEhYvD2lavH6xnNni
+ /tZrjBafGqQs9m/7x2qxZoWwxfHeHSwO7B53ru1h83hybTOTx/t9V9k8+rasYvTYfLo6gDUq
+ 2yYjNTEltUghNS85PyUzL91WyTs43jne1MzAUNfQ0sJcSSEvMTfVVsnFJ0DXLTMH6AYlhbLE
+ nFKgUEBicbGSvp1NUX5pSapCRn5xia1SakFKToF5gV5xYm5xaV66Xl5qiZWhgYGRKVBhQnZG
+ /7xtzAW3hCqets5lbWB8JdjFyMkhIWAisbTrLVsXIxeHkMAORom7L28DORwcvAKCEn93CIPU
+ CAu4Siz/vo0JxBYSUJLoWriVGSJuILFu+h4wm01AT2LK7zuMIHNEBBoZJbb13WAFcZhBnIsr
+ PrNCbOOVmNH+lAXClpbYvnwrI4StIfFjWS8zhC0qcXP1W3YY+/2x+VA1IhKt985C1QhKPPi5
+ mxHkUAkBSYmpPyQgwvUSre9PsYPslRCYwCjReOwP1Bx9iWsdG8H28gr4SvTf3Ak2h0VAVWLG
+ gqNMEDUuEnd6esFsZgFtiWULXzODzGcW0JRYv0sfYpWyxJFbLBAVfBIdh/+yw3zVsPE3VvaO
+ eU+gpqtJPFqwBRoKMhIX55xjnsCoNAsR0rOQ7J2FsHcBI/MqRrHUguLc9NRiowJjeOQm5+du
+ YgQnRy33HYwz3n7QO8TIxMF4iFGCg1lJhDdLozJdiDclsbIqtSg/vqg0J7X4EKMp0McTmaVE
+ k/OB6TmvJN7QxNLAxMzM0NzI1MBcSZz3XuvcFCGB9MSS1OzU1ILUIpg+Jg5OqQYm7YMhum/f
+ tB2WdbXaxCDX9+fN9M6rfRZ/mqbZKVm88dDdLz7X7NlLX4Po07PXei9XVmg8IaD4rujZhm6u
+ jBCZRpEPLw9P5ZAL69lQtk/zjKVds3JL7Ymd1YI704Q3L5lyx+pAwenpD18ZvrpY0bH/9ZZj
+ 180KPwh8es/LZFwho2npz2mmEqYx4cnD8rfW++zP7zJSSEhbyXSuNT7XhOPlx/uza1VTOT4F
+ PpTZ9+st60wuZ3OjOZ+OXehYwuec1ih8qcpu6aTQXD4lg6u9ZhXP2YTv/tj4UPrnKbedLR82
+ 6eTP1tuS7WvQ/2tebmHhloSUfyl+qqy6Zux9PvZHP71zc1R7+zeO9eAMHt+KxRZKLMUZiYZa
+ zEXFiQDw5Ck6FwQAAA==
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3
+References: <CGME20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3@epcms2p2>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=keosung.park@samsung.com; helo=mailout1.samsung.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
 X-Spam_bar: ----
 X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,197 +111,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: keosung.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 31, 2024 at 01:23:28AM +0100, Paolo Bonzini wrote:
-> Date: Tue, 31 Dec 2024 01:23:28 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [RFC PATCH 1/9] rust: vmstate: add new type safe implementation
-> X-Mailer: git-send-email 2.47.1
-> 
-> The existing translation of the C macros for vmstate does not make
-> any attempt to type-check vmstate declarations against the struct, so
-> introduce a new system that computes VMStateField based on the actual
-> struct declaration.
-> 
-> Macros do not have full access to the type system, therefore a full
-> implementation of this scheme requires a helper trait to analyze the
-> type and produce a VMStateField from it; a macro "vmstate_of!" accepts
-> arguments similar to "offset_of!" and tricks the compiler into looking
-> up the trait for the right type.
-> 
-> The patch introduces not just vmstate_of!, but also the slightly too
-> clever enabling macro call_func_with_field!.  The particular trick used
-> here was proposed on the users.rust-lang.org forum, so I take no merit
-> and all the blame.
+In ufs_write_attr_value(), the value parameter is handled in the CPU's
+endian format but provided in big-endian format by the caller. Thus, it
+is converted to the CPU's endian format. The related test code is also
+fixed to reflect this change.
 
-This is very good work! I am curious about how QEMU plays with Rust
-forum:
-
-Rust forum's disscussion is under MIT and Apache 2.0 licenses [1], and
-since vmstate.rs is under the GPLv2 license, do we need to specify that
-certain code retains the MIT license?
-
-[1]: https://users.rust-lang.org/t/tos-updated-to-match-rfcs-and-rust-repository/45650
-
-> Introduce the trait and some functions to access it; the actual
-> implementation comes later.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api/src/prelude.rs |   2 +
->  rust/qemu-api/src/vmstate.rs | 110 +++++++++++++++++++++++++++++++++--
->  2 files changed, 106 insertions(+), 6 deletions(-)
-> 
-> diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-> index 4ea70b9c823..2dc86e19b29 100644
-> --- a/rust/qemu-api/src/prelude.rs
-> +++ b/rust/qemu-api/src/prelude.rs
-> @@ -18,3 +18,5 @@
->  pub use crate::qom_isa;
->  
->  pub use crate::sysbus::SysBusDeviceMethods;
-> +
-> +pub use crate::vmstate::VMState;
-> diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-> index 63c897abcdf..bfcf06e8f1d 100644
-> --- a/rust/qemu-api/src/vmstate.rs
-> +++ b/rust/qemu-api/src/vmstate.rs
-> @@ -4,13 +4,111 @@
->  
->  //! Helper macros to declare migration state for device models.
->  //!
-> -//! Some macros are direct equivalents to the C macros declared in
-> -//! `include/migration/vmstate.h` while
-> -//! [`vmstate_subsections`](crate::vmstate_subsections) and
-> -//! [`vmstate_fields`](crate::vmstate_fields) are meant to be used when
-> -//! declaring a device model state struct.
-> +//! This module includes three families of macros:
-> +//!
-> +//! * [`vmstate_unused!`](crate::vmstate_unused) and
-> +//!   [`vmstate_of!`](crate::vmstate_of), which are used to express the
-> +//!   migration format for a struct.  This is based on the [`VMState`] trait,
-> +//!   which is defined by all migrateable types.
-> +//!
-> +//! * helper macros to declare a device model state struct, in particular
-> +//!   [`vmstate_subsections`](crate::vmstate_subsections) and
-> +//!   [`vmstate_fields`](crate::vmstate_fields).
-> +//!
-> +//! * direct equivalents to the C macros declared in
-> +//!   `include/migration/vmstate.h`. These are not type-safe and should not be
-> +//!   used if the equivalent functionality is available with `vmstate_of!`.
->  
-> -pub use crate::bindings::VMStateDescription;
-> +use core::marker::PhantomData;
-> +
-> +pub use crate::bindings::{VMStateDescription, VMStateField};
-> +
-> +/// This macro is used to call a function with a generic argument bound
-> +/// to the type of a field.  The function must take a
-> +/// [`PhantomData`]`<T>` argument; `T` is the type of
-> +/// field `$field` in the `$typ` type.
-> +///
-> +/// # Examples
-> +///
-> +/// ```
-> +/// # use qemu_api::call_func_with_field;
-> +/// # use core::marker::PhantomData;
-> +/// const fn size_of_field<T>(_: PhantomData<T>) -> usize {
-> +///     std::mem::size_of::<T>()
-> +/// }
-> +///
-> +/// struct Foo {
-> +///     x: u16,
-> +/// };
-> +/// // calls size_of_field::<u16>()
-> +/// assert_eq!(call_func_with_field!(size_of_field, Foo, x), 2);
-> +/// ```
-> +#[macro_export]
-> +macro_rules! call_func_with_field {
-> +    ($func:expr, $typ:ty, $($field:tt).+) => {
-> +        $func(loop {
-> +            #![allow(unreachable_code)]
-> +            const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> { ::core::marker::PhantomData }
-> +            // Unreachable code is exempt from checks on uninitialized values.
-> +            // Use that trick to infer the type of this PhantomData.
-> +            break ::core::marker::PhantomData;
-> +            break phantom__(&{ let value__: $typ; value__.$($field).+ });
-> +        })
-> +    };
-> +}
-
-Very flexible and powerful. (I even think this code could be released as
-a new public crate.)
-
-> +/// A trait for types that can be included in a device's migration stream.  It
-> +/// provides the base contents of a `VMStateField` (minus the name and offset).
-> +///
-> +/// # Safety
-> +///
-> +/// The contents of this trait go straight into structs that are parsed by C
-> +/// code and used to introspect into other structs.  Be careful.
-> +pub unsafe trait VMState {
-> +    /// The base contents of a `VMStateField` (minus the name and offset) for
-> +    /// the type that is implementing the trait.
-> +    const BASE: VMStateField;
-> +}
-> +
-> +/// Internal utility function to retrieve a type's `VMStateField`;
-> +/// used by [`vmstate_of!`](crate::vmstate_of).
-> +pub const fn vmstate_base<T: VMState>(_: PhantomData<T>) -> VMStateField {
-> +    T::BASE
-> +}
-> +
-> +/// Return the `VMStateField` for a field of a struct.  The field must be
-> +/// visible in the current scope.
-> +///
-> +/// In order to support other types, the trait `VMState` must be implemented
-> +/// for them.
-> +#[macro_export]
-> +macro_rules! vmstate_of {
-> +    ($struct_name:ty, $field_name:ident $(,)?) => {
-
-why allow a comma at the end? It seems other patches don't use that
-style.
-
-> +        $crate::bindings::VMStateField {
-> +            name: ::core::concat!(::core::stringify!($field_name), "\0")
-> +                .as_bytes()
-> +                .as_ptr() as *const ::std::os::raw::c_char,
-> +            offset: $crate::offset_of!($struct_name, $field_name),
-> +            // Compute most of the VMStateField from the type of the field.
-> +            ..$crate::call_func_with_field!(
-> +                $crate::vmstate::vmstate_base,
-> +                $struct_name,
-> +                $field_name
-> +            )
-> +        }
-> +    };
-> +}
-> +
-> +// Add a couple builder-style methods to VMStateField, allowing
-> +// easy derivation of VMStateField constants from other types.
-> +impl VMStateField {
-> +    #[must_use]
-> +    pub const fn with_version_id(mut self, version_id: i32) -> Self {
-
-Why not use u32 (and omit an assert)?
-
-> +        assert!(version_id >= 0);
-> +        self.version_id = version_id;
-> +        self
-> +    }
-> +}
->  
->  #[doc(alias = "VMSTATE_UNUSED_BUFFER")]
->  #[macro_export]
-> -- 
-> 2.47.1
-
-Good design! Look good to me.
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-
+Fixes: 7c85332a2b3e (=22hw/ufs: minor bug fixes related to ufs-test=22)
+Reviewed-by: Philippe Mathieu-Daud=C3=A9=20<philmd=40linaro.org>=0D=0ASigne=
+d-off-by:=20Keoseong=20Park=20<keosung.park=40samsung.com>=0D=0A---=0D=0A=
+=20hw/ufs/ufs.c=20=20=20=20=20=20=20=20=20=20=20=7C=202=20+-=0D=0A=20tests/=
+qtest/ufs-test.c=20=7C=202=20+-=0D=0A=202=20files=20changed,=202=20insertio=
+ns(+),=202=20deletions(-)=0D=0A=0D=0Adiff=20--git=20a/hw/ufs/ufs.c=20b/hw/u=
+fs/ufs.c=0D=0Aindex=208d26d13791..428fe927ad=20100644=0D=0A---=20a/hw/ufs/u=
+fs.c=0D=0A+++=20b/hw/ufs/ufs.c=0D=0A=40=40=20-1164,7=20+1164,7=20=40=40=20s=
+tatic=20QueryRespCode=20ufs_exec_query_attr(UfsRequest=20*req,=20int=20op)=
+=0D=0A=20=20=20=20=20=20=20=20=20value=20=3D=20ufs_read_attr_value(u,=20idn=
+);=0D=0A=20=20=20=20=20=20=20=20=20ret=20=3D=20UFS_QUERY_RESULT_SUCCESS;=0D=
+=0A=20=20=20=20=20=7D=20else=20=7B=0D=0A-=20=20=20=20=20=20=20=20value=20=
+=3D=20req->req_upiu.qr.value;=0D=0A+=20=20=20=20=20=20=20=20value=20=3D=20b=
+e32_to_cpu(req->req_upiu.qr.value);=0D=0A=20=20=20=20=20=20=20=20=20ret=20=
+=3D=20ufs_write_attr_value(u,=20idn,=20value);=0D=0A=20=20=20=20=20=7D=0D=
+=0A=20=20=20=20=20req->rsp_upiu.qr.value=20=3D=20cpu_to_be32(value);=0D=0Ad=
+iff=20--git=20a/tests/qtest/ufs-test.c=20b/tests/qtest/ufs-test.c=0D=0Ainde=
+x=2060199abbee..1f860b41c0=20100644=0D=0A---=20a/tests/qtest/ufs-test.c=0D=
+=0A+++=20b/tests/qtest/ufs-test.c=0D=0A=40=40=20-145,7=20+145,7=20=40=40=20=
+static=20void=20ufs_send_query(QUfs=20*ufs,=20uint8_t=20slot,=20uint8_t=20q=
+uery_function,=0D=0A=20=20=20=20=20req_upiu.qr.idn=20=3D=20idn;=0D=0A=20=20=
+=20=20=20req_upiu.qr.index=20=3D=20index;=0D=0A=20=20=20=20=20req_upiu.qr.s=
+elector=20=3D=20selector;=0D=0A-=20=20=20=20req_upiu.qr.value=20=3D=20attr_=
+value;=0D=0A+=20=20=20=20req_upiu.qr.value=20=3D=20cpu_to_be32(attr_value);=
+=0D=0A=20=20=20=20=20req_upiu.qr.length=20=3D=20UFS_QUERY_DESC_MAX_SIZE;=0D=
+=0A=20=20=20=20=20qtest_memwrite(ufs->dev.bus->qts,=20req_upiu_addr,=20&req=
+_upiu,=0D=0A=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20siz=
+eof(req_upiu));=0D=0A--=20=0D=0A2.25.1=0D=0A=0D=0A
 
