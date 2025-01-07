@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4057CE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA15E7719A
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCuT-0002QR-Ah; Tue, 07 Jan 2025 11:58:29 -0500
+	id 1tVCqE-00060E-Pd; Tue, 07 Jan 2025 11:54:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCu1-00029m-OU
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:02 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tVCpT-00053g-C7
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:20 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCtv-0006tr-VZ
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:01 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so162715365e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:57:55 -0800 (PST)
+ id 1tVCoX-0005v9-Th
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:19 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-38789e5b6a7so7639836f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736269074; x=1736873874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268740; x=1736873540; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6UOxR9mHFC4u/8ZQKvQLQtYEWlgMJY9tIWZpiZZUDDA=;
- b=WtFXiK3mF+Z3GIuqzUITmUMf2z+WojJlRt6KoV8A5RpQ1FEr8rOIoOrvwSOkX939JM
- oO4YoKOJBcvjdXT+giySWI7gFuH9Dcxd2RMsCfkUxjg0db2Xe0wWjHsXHmIwKghvGsgA
- d4/RFCO3Gscb5C8Zv9cJq+NRjR9O5Fm35YgSNik4iC/FSbikQb4AzCql1/oq6bMP4i40
- W6+M6g9JrRm9lD65W+qNelufh0Z14Bw8tp4ys3uZe1Sy4yDRqzrwNnrdrwB26GztQ1Ya
- z843dtVutyecKQpftXNBx2HFcVX5TzotW1WJ7qXiDGxhcCthIYCim8wWsFRGORCfOAJ9
- rHXw==
+ bh=jQuRMWlbCCi01i6ad4dl2DxKLluayG2p5Bfu87XJ3wk=;
+ b=Jseg0zP8GYBBVSbTf7mtxdLsyCcHeIG6yOasK5pXyEp8P9MXVuQHhnEtekHsgIpZKx
+ R+aeaDRb2J+5VHpHSwUfBaEs2OUbgJfYltJvjTKNDdDT+mDJqqos/FT43fDcgfFMmoCy
+ x4qviyS+6MHvRiBwBEKj/Y74y1c3jR1AtVQe51AdTt3IObdVDghXRoao+31xme9XNmr0
+ Eyh6ShUQRToTOIdAkExjnUl/ffUds5KcBemkx4ycUbTpfP54vzqzU3cg27kd4IZacQI1
+ GqmxD03WcBmhOTw0lYgxRe5HyJKHdPt6UV3jvHchRqhh317+nehJ5SI2W14rVVgc7qcv
+ XtoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736269074; x=1736873874;
+ d=1e100.net; s=20230601; t=1736268740; x=1736873540;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6UOxR9mHFC4u/8ZQKvQLQtYEWlgMJY9tIWZpiZZUDDA=;
- b=VON/rfdbjV9qDxbuqIaluiTc135CBPa+Y+pn3+vwbxepcwu08F8zOdpKskqRdAVhDQ
- sR+pDiqSu9CXiVP+AY8ut4GMDPs6ZHp5HdrOgDDCzuFd9Tfyv89Dxcj9WoGhR92A89kw
- kEiVLwkwd+5OxOaSkX9u7CE7i9RtYBjXwtmzzguPInua9fItfqJKLH2WNM7l1B+ygpLP
- 2DsBCDUORy/R8lSlM8aN5r2uTeqjO7TL4Q7UVg67sYddTW9D7jQW53zkPsMjD9vZ1HXh
- uHku5f65lnukJPBL+SW+5fDzk68BUjVfU8i04TnihuLOcdp6jpIm59h09y7Lc55B/vHG
- DGBA==
-X-Gm-Message-State: AOJu0Yx8oxYIk/pOR0vCc/Nu/cSJq5niVkH1unCz4xfjW6BvKKBeXUYK
- KG0rmT89MSQ4/6AlwiNLjYOI7oqVD17RD6Pak5ikzeRFg6HYr2dWYkjn9Kmz30g=
-X-Gm-Gg: ASbGnctFVTMcAFbZLfp0Xv/7vc41511R+OV6I9ohLnDtMoROlVjvWfaF0sLyGHtUI4q
- Eal/pFjtS1eJOcg3B4VfsCklNSdd18aLQAanemBmsRk6bvLNRRgPboB+oebNMBrnuKQo61lYPrQ
- swyLc5AtsR8+nkO1Fm9Pn6TRAvJfKweLlW/wTliMnXzWZPx8/nhnUk0e5nDZ173mVUP3r/JPOCY
- O5lEV3ZnnWkpPOxk7/ykp2CQZW4erHdplmia2U1gYdChkIxGdt23Lk=
-X-Google-Smtp-Source: AGHT+IHN87QmSfVe8F4kSFNeHA2niaeFn1nhjWWay5C+P7JIWdxLFsxz+gXzwbUfhZlmj9HWghxh3A==
-X-Received: by 2002:a05:600c:3b13:b0:436:488f:4f5 with SMTP id
- 5b1f17b1804b1-4366864420bmr543788965e9.19.1736269073952; 
- Tue, 07 Jan 2025 08:57:53 -0800 (PST)
+ bh=jQuRMWlbCCi01i6ad4dl2DxKLluayG2p5Bfu87XJ3wk=;
+ b=OS1LMxvajFkTTPCoE5c3wMzn3Vg5t+zFbRhEB6vSqgWyOzbrGfMxWyNwwXg+90Op8O
+ IRXwlssQXinw81XMqLHBiKvJgdLDd/zNo28ASsi4jOBM2K3yyzQ10CFptEiGMeMFwbP0
+ u7p/Ae8zggBHe95DeicPkmARXoqQyIgMyi3xVbCjIfyGJXgZOfTo7239+zGeyXkQKEtk
+ TEIHsHvTy+a8ABM5AOB5XzVmeeUW5iUME1Ri1QRot39lw+v8wpcazvFyorNufTnWuo+L
+ APxzGUAQhVXq2/jbpR1m/6a+V9/O7w3iiqY+HgVcusLDJBaC49MbKl1c5X874W1smKjc
+ 20dg==
+X-Gm-Message-State: AOJu0Yyh8uBsafbRYhAqjZ1kiql1mb4cQUJabDq1fGYjij9L98U/6D3u
+ 1oanMg/BiVfgYHxvrbRWh0ZWX1wRf0FRGdkcPs3ZFNL1srdkpIy2RyxSdg3GhjA=
+X-Gm-Gg: ASbGnct/4NFMDKyA+Hcg9c3QlFWvzA14BzGYDcl8ZKEXEMPY4mAwYBWLH0KBKtDRFUD
+ JJ/G6X+FNDT9koxeENVQUn8yCf7zLfUvW8UNcmaPWMqjVJxxt2VrHy68pfWeQ77TbPNUTUBh060
+ +uJ3LuyCnq9AP0kNpRN2+fMRt31RhlIgdxZkhetDMFvL85uMLuqe9p0y5JC3Gve0sqKYbUyPT7e
+ tcA8EeQrM/lWxNsKelkZaz8YI2Qq4oDxtzI980+dOLtJ8yHGIgM8CY=
+X-Google-Smtp-Source: AGHT+IHDvSwthRY1Bqg5XPKXJ6Wk492f34cXz4QB5e4dA8LTgHHR5riUpQLo8YqqMaElqSOq3JV8uQ==
+X-Received: by 2002:a05:6000:1fa7:b0:385:f7a3:fed1 with SMTP id
+ ffacd0b85a97d-38a223f5cf6mr58032077f8f.44.1736268740292; 
+ Tue, 07 Jan 2025 08:52:20 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e2eesm51580698f8f.80.2025.01.07.08.57.52
+ ffacd0b85a97d-38a7f1c26a6sm2223201f8f.53.2025.01.07.08.52.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:57:53 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2175B60030;
- Tue,  7 Jan 2025 16:52:10 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 62D625FBAC;
+ Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -96,19 +96,20 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 23/29] tests/lcitool: remove temp workaround for debian
- mips64el
-Date: Tue,  7 Jan 2025 16:52:01 +0000
-Message-Id: <20250107165208.743958-24-alex.bennee@linaro.org>
+ Bernhard Beschow <shentey@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 15/29] tests/functional/aarch64: add tests for FEAT_RME
+Date: Tue,  7 Jan 2025 16:51:53 +0000
+Message-Id: <20250107165208.743958-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,115 +132,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The workaround applied in
+This boot an OP-TEE environment, and launch a nested guest VM inside it
+using the Realms feature. We do it for virt and sbsa-ref platforms.
 
-  commit c60473d29254b79d9437eface8b342e84663ba66
-  Author: Alex Bennée <alex.bennee@linaro.org>
-  Date:   Wed Oct 2 10:03:33 2024 +0200
-
-    testing: bump mips64el cross to bookworm and fix package list
-
-Is no longer required since the affected builds are now fixed.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241217133525.3836570-1-berrange@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241220165212.3653495-1-pierrick.bouvier@linaro.org>
+[AJB: tweak ordering of setup]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .../dockerfiles/debian-mips64el-cross.docker  |  9 ++++++
- tests/lcitool/mappings.yml                    | 29 -------------------
- 2 files changed, 9 insertions(+), 29 deletions(-)
+Tested-by: Thomas Huth <thuth@redhat.com>
 
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index c09a8da890..9f6c4763c5 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -93,13 +93,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcmocka-dev:mips64el \
-                       libcurl4-gnutls-dev:mips64el \
-                       libdaxctl-dev:mips64el \
-+                      libdrm-dev:mips64el \
-+                      libepoxy-dev:mips64el \
-                       libfdt-dev:mips64el \
-                       libffi-dev:mips64el \
-                       libfuse3-dev:mips64el \
-+                      libgbm-dev:mips64el \
-                       libgcrypt20-dev:mips64el \
-                       libglib2.0-dev:mips64el \
-                       libglusterfs-dev:mips64el \
-                       libgnutls28-dev:mips64el \
-+                      libgtk-3-dev:mips64el \
-+                      libgtk-vnc-2.0-dev:mips64el \
-                       libibverbs-dev:mips64el \
-                       libiscsi-dev:mips64el \
-                       libjemalloc-dev:mips64el \
-@@ -119,6 +124,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       librbd-dev:mips64el \
-                       librdmacm-dev:mips64el \
-                       libsasl2-dev:mips64el \
-+                      libsdl2-dev:mips64el \
-+                      libsdl2-image-dev:mips64el \
-                       libseccomp-dev:mips64el \
-                       libselinux1-dev:mips64el \
-                       libslirp-dev:mips64el \
-@@ -134,6 +141,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libusb-1.0-0-dev:mips64el \
-                       libusbredirhost-dev:mips64el \
-                       libvdeplug-dev:mips64el \
-+                      libvirglrenderer-dev:mips64el \
-+                      libvte-2.91-dev:mips64el \
-                       libxdp-dev:mips64el \
-                       libzstd-dev:mips64el \
-                       nettle-dev:mips64el \
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index f8186b0e69..74eb13d62b 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -6,23 +6,6 @@ mappings:
-   flake8:
-     OpenSUSELeap15:
- 
--  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
--  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
--  gtk3:
--    mips64el-deb:
--
--  libdrm:
--    mips64el-deb:
--
--  libepoxy:
--    mips64el-deb:
--
--  gtk-vnc:
--    mips64el-deb:
--
--  mesa-libgbm:
--    mips64el-deb:
--
-   meson:
-     OpenSUSELeap15:
- 
-@@ -81,18 +64,6 @@ mappings:
-   python3-wheel:
-     OpenSUSELeap15: python311-pip
- 
--  sdl2:
--    mips64el-deb:
--
--  sdl2-image:
--    mips64el-deb:
--
--  virglrenderer:
--    mips64el-deb:
--
--  vte:
--    mips64el-deb:
--
- pypi_mappings:
-   # Request more recent version
-   meson:
+-----
+
+v2:
+- move test to its own file
+- add sbsa test
+- check output of `cca-workload-attestation report`
+
+v3:
+- build and run test with cca-v4 images
+- factorize nested guest test between both tests
+- remove accel tcg option as it is the default when running tests
+Note: It's a long test and there is a work in progress to understand why
+debug build is so slow (x12 vs optimized).
+
+v4:
+- use pauth-impdef=on to speed up build time execution (x2.5 faster)
+- increase timeout value
+
+v5:
+- migrate test to new archive_extract helper
+
+v6:
+ - archive_extract helper needs explicit format for .tar.gz archives
+ - move set_machine/require_accel to the front
+---
+ tests/functional/meson.build                 |  4 +
+ tests/functional/test_aarch64_rme_sbsaref.py | 69 ++++++++++++++
+ tests/functional/test_aarch64_rme_virt.py    | 98 ++++++++++++++++++++
+ 3 files changed, 171 insertions(+)
+ create mode 100755 tests/functional/test_aarch64_rme_sbsaref.py
+ create mode 100755 tests/functional/test_aarch64_rme_virt.py
+
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 7890dcb86d..bd3d903cfc 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -13,6 +13,8 @@ endif
+ test_timeouts = {
+   'aarch64_aspeed' : 600,
+   'aarch64_raspi4' : 480,
++  'aarch64_rme_virt' : 1200,
++  'aarch64_rme_sbsaref' : 1200,
+   'aarch64_sbsaref_alpine' : 720,
+   'aarch64_sbsaref_freebsd' : 720,
+   'aarch64_tuxrun' : 240,
+@@ -60,6 +62,8 @@ tests_aarch64_system_thorough = [
+   'aarch64_aspeed',
+   'aarch64_raspi3',
+   'aarch64_raspi4',
++  'aarch64_rme_virt',
++  'aarch64_rme_sbsaref',
+   'aarch64_sbsaref',
+   'aarch64_sbsaref_alpine',
+   'aarch64_sbsaref_freebsd',
+diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/test_aarch64_rme_sbsaref.py
+new file mode 100755
+index 0000000000..93bb528338
+--- /dev/null
++++ b/tests/functional/test_aarch64_rme_sbsaref.py
+@@ -0,0 +1,69 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Realms environment on sbsa-ref machine and a
++# nested guest VM using it.
++#
++# Copyright (c) 2024 Linaro Ltd.
++#
++# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import time
++import os
++import logging
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import exec_command, wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
++from test_aarch64_rme_virt import test_realms_guest
++
++class Aarch64RMESbsaRefMachine(QemuSystemTest):
++
++    # Stack is built with OP-TEE build environment from those instructions:
++    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
++    # https://github.com/pbo-linaro/qemu-rme-stack
++    ASSET_RME_STACK_SBSA = Asset(
++        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
++         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
++         'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c104999e')
++
++    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
++    # and launching a nested VM using it.
++    def test_aarch64_rme_sbsaref(self):
++        self.set_machine('sbsa-ref')
++        self.require_accelerator('tcg')
++
++        self.vm.set_console()
++
++        stack_path_tar_gz = self.ASSET_RME_STACK_SBSA.fetch()
++        self.archive_extract(stack_path_tar_gz, format="tar")
++
++        rme_stack = self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-sbsa')
++        pflash0 = os.path.join(rme_stack, 'images', 'SBSA_FLASH0.fd')
++        pflash1 = os.path.join(rme_stack, 'images', 'SBSA_FLASH1.fd')
++        virtual = os.path.join(rme_stack, 'images', 'disks', 'virtual')
++        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
++
++        self.vm.add_args('-cpu', 'max,x-rme=on,pauth-impdef=on')
++        self.vm.add_args('-m', '2G')
++        self.vm.add_args('-M', 'sbsa-ref')
++        self.vm.add_args('-drive', f'file={pflash0},format=raw,if=pflash')
++        self.vm.add_args('-drive', f'file={pflash1},format=raw,if=pflash')
++        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
++        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
++        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
++        self.vm.add_args('-device', 'virtio-9p-pci,fsdev=shr0,mount_tag=shr0')
++        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
++        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
++        self.vm.add_args('-netdev', 'user,id=net0')
++
++        self.vm.launch()
++        # Wait for host VM boot to complete.
++        wait_for_console_pattern(self, 'Welcome to Buildroot')
++        exec_command_and_wait_for_pattern(self, 'root', '#')
++
++        test_realms_guest(self)
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
+new file mode 100755
+index 0000000000..42b9229b4c
+--- /dev/null
++++ b/tests/functional/test_aarch64_rme_virt.py
+@@ -0,0 +1,98 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Realms environment on virt machine and a nested
++# guest VM using it.
++#
++# Copyright (c) 2024 Linaro Ltd.
++#
++# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import time
++import os
++import logging
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import exec_command, wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
++
++def test_realms_guest(test_rme_instance):
++
++    # Boot the (nested) guest VM
++    exec_command(test_rme_instance,
++                 'qemu-system-aarch64 -M virt,gic-version=3 '
++                 '-cpu host -enable-kvm -m 512M '
++                 '-M confidential-guest-support=rme0 '
++                 '-object rme-guest,id=rme0 '
++                 '-device virtio-net-pci,netdev=net0,romfile= '
++                 '-netdev user,id=net0 '
++                 '-kernel /mnt/out/bin/Image '
++                 '-initrd /mnt/out-br/images/rootfs.cpio '
++                 '-serial stdio')
++    # Detect Realm activation during (nested) guest boot.
++    wait_for_console_pattern(test_rme_instance,
++                             'SMC_RMI_REALM_ACTIVATE')
++    # Wait for (nested) guest boot to complete.
++    wait_for_console_pattern(test_rme_instance,
++                             'Welcome to Buildroot')
++    exec_command_and_wait_for_pattern(test_rme_instance, 'root', '#')
++    # query (nested) guest cca report
++    exec_command(test_rme_instance, 'cca-workload-attestation report')
++    wait_for_console_pattern(test_rme_instance,
++                             '"cca-platform-hash-algo-id": "sha-256"')
++    wait_for_console_pattern(test_rme_instance,
++                             '"cca-realm-hash-algo-id": "sha-512"')
++    wait_for_console_pattern(test_rme_instance,
++                             '"cca-realm-public-key-hash-algo-id": "sha-256"')
++
++class Aarch64RMEVirtMachine(QemuSystemTest):
++
++    # Stack is built with OP-TEE build environment from those instructions:
++    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
++    # https://github.com/pbo-linaro/qemu-rme-stack
++    ASSET_RME_STACK_VIRT = Asset(
++        ('https://fileserver.linaro.org/s/iaRsNDJp2CXHMSJ/'
++         'download/rme-stack-op-tee-4.2.0-cca-v4-qemu_v8.tar.gz'),
++         '1851adc232b094384d8b879b9a2cfff07ef3d6205032b85e9b3a4a9ae6b0b7ad')
++
++    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
++    # and launching a nested VM using it.
++    def test_aarch64_rme_virt(self):
++        self.set_machine('virt')
++        self.vm.set_console()
++        self.require_accelerator('tcg')
++
++        stack_path_tar_gz = self.ASSET_RME_STACK_VIRT.fetch()
++        self.archive_extract(stack_path_tar_gz, format="tar")
++
++        rme_stack = self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-qemu_v8')
++        kernel = os.path.join(rme_stack, 'out', 'bin', 'Image')
++        bios = os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
++        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
++
++        self.vm.add_args('-cpu', 'max,x-rme=on,pauth-impdef=on')
++        self.vm.add_args('-m', '2G')
++        self.vm.add_args('-M', 'virt,acpi=off,'
++                         'virtualization=on,'
++                         'secure=on,'
++                         'gic-version=3')
++        self.vm.add_args('-bios', bios)
++        self.vm.add_args('-kernel', kernel)
++        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
++        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
++        self.vm.add_args('-device', 'virtio-9p-device,fsdev=shr0,mount_tag=shr0')
++        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
++        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
++        self.vm.add_args('-netdev', 'user,id=net0')
++        self.vm.add_args('-append', 'root=/dev/vda')
++
++        self.vm.launch()
++        # Wait for host VM boot to complete.
++        wait_for_console_pattern(self, 'Welcome to Buildroot')
++        exec_command_and_wait_for_pattern(self, 'root', '#')
++
++        test_realms_guest(self)
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.39.5
 
