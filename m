@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1335E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE75E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCqH-0006FV-KO; Tue, 07 Jan 2025 11:54:09 -0500
+	id 1tVCoW-00040P-Jo; Tue, 07 Jan 2025 11:52:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCpN-0004oB-Uj
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:15 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tVCoV-0003zg-Bf
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:19 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoV-0005t8-4t
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:10 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so114284065e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:18 -0800 (PST)
+ id 1tVCoN-0005ob-LN
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:19 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385e87b25f0so10432790f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736268738; x=1736873538; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268729; x=1736873529; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2HRwD3Xk/RE1GAmonVu05a0HKbmwgTGs+7B2YTG5x8w=;
- b=hIL40y+9LuiJxhKx6cFlC9Ts3iLMQzWoj4OBAxu/+WQP2sQL/mRag9AB4klFvA7anK
- UtvicAO6tc27V9UswwsMF+LjwVcNLXiiij4GGTDEPyBJd+BH8XuHvvSKaYDbd19Vn1AU
- hr/eetzuWd6NrRJrHIlqIBPukXUNWxGFA/5rhuNQoGsxY7vRDTJ5v29eXWZIM1/BtJGp
- gLMP6ny7cXGuu8BZvxVJEhNvKc7SkohTfRRslr/DRulbjKiacb8CmfYCnIZE69d5IKn8
- cJBuk7ZY7spjTmmr6uSb03ZldKhr0CzIML3QAZNlQVxDCk7CYFEmqMe3ukkWxKVh8h4A
- 67HQ==
+ bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
+ b=et1donzP1n/vecihhD68v+g+D0Kwt9WmnP4/srhJIu4T5vNTKXj+gjTQRlteMlsBXo
+ XUTFj7k72hUC2obQN5DAK6O6TrSKo3I8oFlkClPnUCmifccISsI23juBVvJkW7+REoPt
+ lQUCIzf4RbihbD6pES8L+1F8J+BsyHyc43+kk76UC22+q+Zj54yqnMa0qOJx+VEmgZbV
+ hTlOsAMH+82piOlvy3ZsPP55CeMARohq6evOBKWy0T76a1qO0Nrs+d341YbWxUL+rgR0
+ 2gb70JkpMtmH4ZocGzc80HJAuE4C/hwKiEoV1NktiebD2oTck8wLgbz2C1GmooXe5AW2
+ XlAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736268738; x=1736873538;
+ d=1e100.net; s=20230601; t=1736268729; x=1736873529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2HRwD3Xk/RE1GAmonVu05a0HKbmwgTGs+7B2YTG5x8w=;
- b=sSpkP0NoGA22a1DgK5WDtSuysDKRFCl0McopERHNpG8O8FPbHEyamc7OGyfgXM16SO
- oHxffLM8g8PV9Bau3IibqUb5totZffZJjWjqlzFd4L7Hf8mCD57owHAX4qVU1U1nQeZ7
- lkDT5tQsZZXcbvsltvKDvsRQQGD77+/346FSpnP+thGznXYE3LkrnHj04S2j2biDgA06
- VPpYRdhPXhQ6KKWtqI8jZijlhjPp9dA/WhQ1HumWYOxIaFmacmWdLhDK4s+QnzDHZTq/
- Ru5xIaioEGJuXyIAc34RoR8kL0cZKmMxaTzG9pztcCB0J0fENdxkeAlBW4qljBxjGbTA
- U+nQ==
-X-Gm-Message-State: AOJu0YzbAetW4R/JqxJ/+gw4JZRfuHAUcVOIgc0hRKe0eBgXTOjNQJXD
- JLEhoh5WmbIxzudkzQ1B5PQc+s0TpHLe7YrL1LCOwnPRUXP0C8f2ZMHo1xPJYdg=
-X-Gm-Gg: ASbGnculCt/AMYOIIFLmH/LBPOtbjTjf3VBMNajKud9doC2gxNAc07eb3ek8669PL0T
- fnDHfd6YqcxxBwfLboaY41hHOngoJ/GgGe0/q7uIxfijTZu42Kkw5l1Y041fWCfj/wqc7GwBF5t
- LZSGwSTn5YmfYF5NcAKmKCBA2m8JYmIzb5g2Co/9De8vRDcX+gGOFUxC+Fctdt019IxFZ4uHzNe
- PT+DaCb/a8ElZtls77Bg8GcNbz/6eMOcLyFxBP5ZQshTHp4Lg8KdO0=
-X-Google-Smtp-Source: AGHT+IE+Tl1W9D4rpvhtah1/y6v+HdZm1GD0iEd/+eo2ZsgxMVXIA/g/ACXa+9TrlDXiFgc0T9cVrQ==
-X-Received: by 2002:a05:6000:4a03:b0:385:ed16:c8b with SMTP id
- ffacd0b85a97d-38a221fa4c0mr44898432f8f.23.1736268737622; 
- Tue, 07 Jan 2025 08:52:17 -0800 (PST)
+ bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
+ b=iPU3BvrWZ3GcBylZMvJuzAe3W3rxXspMoqWgDdOu/pX0Jld3R5YK80hDFHX12DePV1
+ 0c6IiWuZHVX5MMW9tEkzNd2COqROF4kJnY9THVIAcVDqSbbuZEfnW01PiJ2HdNHUxYzE
+ 966yCw9cLVU2pFxPIDP2SQLlZZ3ESXF+IoYvfJL7kH36vxjxAxsba2+gQh5nZ8juEDPN
+ G41+H90orIafuBFPPHDMWzhlUwIevasjXrlbb+kAvkqSJnuBx94jbtwGdfU4qKSlX1MB
+ o5gR7DonNYpBLJs85/vgW1xwCoZHl4NGvnaUG5x2rjj/DNU9lWubDYjt41tQ7jwXoSzb
+ Eegw==
+X-Gm-Message-State: AOJu0YwA5b4Tp6Gz9dbUI7xyEeI4IAom9Q9XsFiLWu3voBEDN5fh7S8/
+ 1lvN34bp2SE4MGpKV6FM53bMRKuLKscaYDZ8OcJz522Kz61WuK+wOtm1MCdqJMM=
+X-Gm-Gg: ASbGnctrz7JhE5uKpUG0X4sB7hKynbt9Ok37Twu+YmLcYDEAB4sJ8SGnJPvTVJFrHF7
+ 8faPnHEtKAg6+MkGOO3FF5ibq7v6dy8u5DMmK+PfcIGR2yBmiIY3YeH5OwcI3qnegEsFLWaEXou
+ sgW2Ax+4sBy7RGFiRh/YHaf2yKRfjR53atb6HCEMii7tfah1Ns7DKDe1eF5jZS8UQRVajoZsXTP
+ hemLEQ8q92t/3f+jp0M22k2PfRmbRLad+df1gxPGwumbb2dBHc1NHY=
+X-Google-Smtp-Source: AGHT+IHyLVrmZmlrBQJRz/52kbZIecaWIAxhTafHZHyDTgDvNPoSnsk8/DInVMxkv7PmK7nBpojLhA==
+X-Received: by 2002:a5d:47ce:0:b0:38a:5ce8:df73 with SMTP id
+ ffacd0b85a97d-38a7924412cmr3161920f8f.23.1736268729515; 
+ Tue, 07 Jan 2025 08:52:09 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a2e25edbbsm43213264f8f.110.2025.01.07.08.52.12
+ ffacd0b85a97d-38a1c84ca21sm51110218f8f.63.2025.01.07.08.52.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:52:16 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:08 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 10E265FA6C;
- Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3A9825F8FE;
+ Tue,  7 Jan 2025 16:52:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -99,17 +99,17 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Bernhard Beschow <shentey@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v3 11/29] tests/functional: update the riscv64 tuxrun tests
-Date: Tue,  7 Jan 2025 16:51:49 +0000
-Message-Id: <20250107165208.743958-12-alex.bennee@linaro.org>
+Subject: [PATCH v3 02/29] tests/functional: update the i386 tuxrun tests
+Date: Tue,  7 Jan 2025 16:51:40 +0000
+Message-Id: <20250107165208.743958-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,48 +133,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Now there are new up to date images available we should update to them.
-Note we re-use the riscv32 kernel and rootfs for test_riscv64_rv32.
 
 Cc: Anders Roxell <anders.roxell@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Tested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-32-alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-23-alex.bennee@linaro.org>
 ---
- tests/functional/test_riscv64_tuxrun.py | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tests/functional/test_i386_tuxrun.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_riscv64_tuxrun.py b/tests/functional/test_riscv64_tuxrun.py
-index 4e2449539c..0d8de36204 100755
---- a/tests/functional/test_riscv64_tuxrun.py
-+++ b/tests/functional/test_riscv64_tuxrun.py
-@@ -17,18 +17,18 @@
- class TuxRunRiscV64Test(TuxRunBaselineTest):
+diff --git a/tests/functional/test_i386_tuxrun.py b/tests/functional/test_i386_tuxrun.py
+index c593ffbe8c..f3ccf11ae8 100755
+--- a/tests/functional/test_i386_tuxrun.py
++++ b/tests/functional/test_i386_tuxrun.py
+@@ -17,11 +17,11 @@
+ class TuxRunI386Test(TuxRunBaselineTest):
  
-     ASSET_RISCV64_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/riscv64/Image',
--        'cd634badc65e52fb63465ec99e309c0de0369f0841b7d9486f9729e119bac25e')
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv64/Image',
-+        '2bd8132a3bf21570290042324fff48c987f42f2a00c08de979f43f0662ebadba')
-     ASSET_RISCV64_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/riscv64/rootfs.ext4.zst',
--        'b18e3a3bdf27be03da0b285e84cb71bf09eca071c3a087b42884b6982ed679eb')
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv64/rootfs.ext4.zst',
-+        'aa4736a9872651dfc0d95e709465eedf1134fd19d42b8cb305bfd776f9801004')
+     ASSET_I386_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/i386/bzImage',
+-        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
++        'https://storage.tuxboot.com/buildroot/20241119/i386/bzImage',
++        '47fb44e38e34101eb0f71a2a01742b959d40ed5fd67cefb5608a39be11d3b74e')
+     ASSET_I386_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/i386/rootfs.ext4.zst',
+-        'f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a')
++        'https://storage.tuxboot.com/buildroot/20241119/i386/rootfs.ext4.zst',
++        'a1a3b3b4c9dccd6475b58db95c107b468b736b700f6620985a8ed050a73d51c8')
  
-     ASSET_RISCV32_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/riscv32/Image',
--        '89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5')
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv32/Image',
-+        '872bc8f8e0d4661825d5f47f7bec64988e9d0a8bd5db8917d57e16f66d83b329')
-     ASSET_RISCV32_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/riscv32/rootfs.ext4.zst',
--        '7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba')
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv32/rootfs.ext4.zst',
-+        '511ad34e63222db08d6c1da16fad224970de36517a784110956ba6a24a0ee5f6')
- 
-     def test_riscv64(self):
-         self.set_machine('virt')
+     def test_i386(self):
+         self.set_machine('q35')
 -- 
 2.39.5
 
