@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DFDE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BC1E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV4XS-0000VU-HR; Tue, 07 Jan 2025 03:02:10 -0500
+	id 1tV4YB-0002AI-N0; Tue, 07 Jan 2025 03:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4Wo-0000E2-Ck
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:32 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tV4XH-0000Pk-Kv
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:02:00 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4Wm-0002uS-Cw
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:29 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-216395e151bso161392385ad.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:01:27 -0800 (PST)
+ id 1tV4XD-00030Y-7Q
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:57 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2166651f752so25297125ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736236887; x=1736841687; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736236914; x=1736841714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Va9p08X93j/jzeWcLncWLYR0nY5/Q2/Ig5KLzRua/5s=;
- b=kweRXHyDZWRrc1GfQUud3Ig0aeQlT4dIQgNLPMhffNFyasrLjqR0o86mj9++l6bgpk
- 42gcRMGghHw4agTXd2I29ErxQo8jIq0sg5JgmaerpSIk3wR/qZUNHMGOGJxLoW8A02Tj
- +3j0vnRLza/iSIzzh1UiKJrX4E48m7dDNd+4bpbsrqC7QS38J5yApz4Iv6DUjngs7ao1
- SaQOH5MoF8xNDcKaykX8yrPFmFF3fsBgs36K09mXpR7Jd0CzifhWDebBrpjvVl7gavqF
- NkP2qT99s3E+ZSLjrNdEJ+uEyljo660MifV5St5VtTn78NF1seYsh2KknQCcXLbEXjKh
- Uu3Q==
+ bh=4uOL1Ec34bEcm3pIR/RP3l7LZaQfA5cBwwchghp/teo=;
+ b=AdlvAhgGv6v8+CMeBdapjB5E2l99Nziu2nMEXz3yT7S2YtexyOThMsDKgThn7Hf+8J
+ 3eAblwwUn518/QpHGEvkcoc0ZJD9RH+HnBAS7AmZB+9/EU0lMcSd4QLItIOjqUTfFdRE
+ LUspz5QhHElTZcT3r1oK1DZiFav+GOLDjhnyEag3D8jm/hSxR0mc3N3D2DqLgepCdrgz
+ GYA3m+MgyIsXWZXddGrO5YSFA1BoGZLMciOO2+n7ImMURelwLSnAqJceHZy9qa8mC9ma
+ Y89rryQHNbUAH1z2hoxBfk8B4ag1leBblSubZm/9fVI0wPgxmW+HHlrihna0hErFOwoF
+ dRLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736236887; x=1736841687;
+ d=1e100.net; s=20230601; t=1736236914; x=1736841714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Va9p08X93j/jzeWcLncWLYR0nY5/Q2/Ig5KLzRua/5s=;
- b=TIeeUbqZY6VCdsqNXe2NUnWORLAOpOsx5yuFL1rG2jvQKE8LHoJzUi7DCtSWq9H84r
- LfJaItHxmlX10MWuiQ0w4rMQC2W0MVr+cpHC+V6a8Isb1eWMs1tSyXkzGX76LdUU6Oi0
- gBNSQGDxqCYJI5I/lJNeBZf9S815zFTBXWXvmelAhca1j49y8LI3Q4z9v0IOH7FTWdUr
- S7ajIaBY8m0Y92rCztqDiY588RtS8BvGeHV8VLUWQro1p9JJ9KJYwfn/tLgBTG1c0OxN
- tSVWsY+d/H/KLZv7vAXPM68ZN94o+hHzPYz5D2KKBlRN30xqYZRaCXfUaHmuJq+ErxvM
- 2d1Q==
-X-Gm-Message-State: AOJu0YxtwvZmrqv0WkQxyqV7eigQ6deNoH5TceJCehH2HPuwj4D3rXlk
- f4GgxwkQHJvgwCbwndyOQNbO6qC6QNvdOzFZkuDYknJobbMMfvxyZGWhr4FhoeMP+ND5swbgn3y
- p
-X-Gm-Gg: ASbGnctBSw/s6i/kdAwEsUfGHkMkA7Nxlang8+yug+CF4MHO0LWQKVMPn6ttLZwBgSu
- 2TXxTAYkgqv/qDIU2ono3Rk/nzdBL4WY8FWmF3yLnREsv1iNmaG1kpvTIR02uO1KzppCA1Mhn2r
- nKrApuqO7KyrFNw03i1XT6kFPD118Cuu2n9cctBh+eukJp7u5vC8p2m34dpxxS+ET2ti2sLiDki
- dfV8HuL4tTT4GU9bD5ru6pd52uy6VN6RqHOITvYPS3e7qcwRly4V1c6Mvb+3Zspr1qj7/3NSMHN
- rWg38WGOmruxbsDHCg==
-X-Google-Smtp-Source: AGHT+IEec4J2eznnnC2FAYCOgggCxFbkfPFDKd2H2me7rMRHI9DtFgRcQW/+sspKhYr7evylB7viGw==
-X-Received: by 2002:a17:903:32c9:b0:215:7287:67bb with SMTP id
- d9443c01a7336-21a7a0dc406mr33571705ad.0.1736236886964; 
- Tue, 07 Jan 2025 00:01:26 -0800 (PST)
+ bh=4uOL1Ec34bEcm3pIR/RP3l7LZaQfA5cBwwchghp/teo=;
+ b=fjD4FXcVjGMQ6n89Ce504AsDnKgSqsilF0cXc5cdug0toM+VCuZqkxdnjwn8Wi/x7e
+ xOtbR+FacseutvDoWBfBbFf9hsseiIXj5NDdgynnW/47mHURUW1NE2V/3vVt03FL7/VW
+ WCPBJ+JKrXwMmd+bLAasF491M/7o0wWsgNKCFTJ0Q2R9kARIIdaLsxfSfcH//ScPiGMn
+ LfwEAibKK69v6Su5WtveJCO1jojKAQN5NBCum5ZWA8ZTJsrIQUgY1JuZMFnysztrOz1k
+ ipw9kg/NfpFwq67gveOl4+hbXj5NlMHEvPwLTQ36Y8VfFo8LXDrhwvpybqCohLjbhHrN
+ MUDQ==
+X-Gm-Message-State: AOJu0YzUplv4nOLJ+xyZngKl6dz+hkJsQQJIYItmAVnDBQyE0OeD86W0
+ Vznjf2fmLjRL/gEe+V2WbR+OrRw5M48oBLqVCEeLzHcPZN+gDcnQlembTHcfrCH8+E+mi5Y9bSN
+ t
+X-Gm-Gg: ASbGncvdeaHqoxDSx8pxLdRlgs4ZtTHIyZzBCVETwCI6pL5j4Xfg04egW3qO6rQ0v3H
+ bIHrncV7q77ZlDDgwB9PbbCzEHA43vC8HbAT1weRiqXNGDEurnxwy+G+MUFAASDr0jBLX9PdTsk
+ dLaTmRG58d5O2r7o8RX1PyyM34r1kvC6I5RmFY8bBI0rcrcVVWD8f7LrOCWlPISvtzbM0Br1/Zx
+ ny+Kg2mYnYHbwmAHzwQSUEx/W7WzSERrjD6N5G63MdsuqQN7M0wxTyiHwmwOGx09dSx7ZqbDJGH
+ zXGgTGk7v5QmC95Nww==
+X-Google-Smtp-Source: AGHT+IE7xrWToRcnH3+SnqzeaBRXyoAV843py2nuIvuFj1SajuLbs5FRdI7gnTPk+77y8bFvdzatSA==
+X-Received: by 2002:a17:902:f602:b0:216:3c2b:a5e5 with SMTP id
+ d9443c01a7336-219e6ebb682mr841720155ad.27.1736236913955; 
+ Tue, 07 Jan 2025 00:01:53 -0800 (PST)
 Received: from stoup.. (76-14-228-138.or.wavecable.com. [76.14.228.138])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc96eb12sm306765995ad.87.2025.01.07.00.01.26
+ d9443c01a7336-219dc96eb12sm306765995ad.87.2025.01.07.00.01.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 00:01:26 -0800 (PST)
+ Tue, 07 Jan 2025 00:01:52 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 12/81] target/i386: Use tcg_op_deposit_valid
-Date: Tue,  7 Jan 2025 00:00:03 -0800
-Message-ID: <20250107080112.1175095-13-richard.henderson@linaro.org>
+Subject: [PATCH v2 37/81] tcg/arm: Add full [US]XT[BH] into {s}extract
+Date: Tue,  7 Jan 2025 00:00:28 -0800
+Message-ID: <20250107080112.1175095-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250107080112.1175095-1-richard.henderson@linaro.org>
 References: <20250107080112.1175095-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,47 +100,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid direct usage of TCG_TARGET_deposit_*_valid.
+The armv6 uxt and sxt opcodes have a 2-bit rotate field
+which supports extractions from ofs = {0,8,16,24}.
+Special case ofs = 0, len <= 8 as AND.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/emit.c.inc | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ tcg/arm/tcg-target-has.h | 17 +++++++++++++
+ tcg/arm/tcg-target.c.inc | 54 +++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 65 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index ab416627b7..a2b940a5c3 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -25,10 +25,8 @@
-  */
- #ifdef TARGET_X86_64
- #define TCG_TARGET_HAS_extract2_tl      TCG_TARGET_HAS_extract2_i64
--#define TCG_TARGET_deposit_tl_valid     TCG_TARGET_deposit_i64_valid
- #else
- #define TCG_TARGET_HAS_extract2_tl      TCG_TARGET_HAS_extract2_i32
--#define TCG_TARGET_deposit_tl_valid     TCG_TARGET_deposit_i32_valid
+diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
+index 316185500d..d6ca35ed1a 100644
+--- a/tcg/arm/tcg-target-has.h
++++ b/tcg/arm/tcg-target-has.h
+@@ -82,4 +82,21 @@ extern bool use_neon_instructions;
+ #define TCG_TARGET_HAS_cmpsel_vec       0
+ #define TCG_TARGET_HAS_tst_vec          1
+ 
++static inline bool
++tcg_target_extract_valid(TCGType type, unsigned ofs, unsigned len)
++{
++    if (use_armv7_instructions) {
++        return true;  /* SBFX or UBFX */
++    }
++    switch (len) {
++    case 8:   /* SXTB or UXTB */
++    case 16:  /* SXTH or UXTH */
++        return (ofs % 8) == 0;
++    }
++    return false;
++}
++
++#define TCG_TARGET_extract_valid   tcg_target_extract_valid
++#define TCG_TARGET_sextract_valid  tcg_target_extract_valid
++
  #endif
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 9cfb733a14..12dad7307f 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -1036,19 +1036,61 @@ static void tcg_out_deposit(TCGContext *s, ARMCond cond, TCGReg rd,
+ static void tcg_out_extract(TCGContext *s, ARMCond cond, TCGReg rd,
+                             TCGReg rn, int ofs, int len)
+ {
+-    /* ubfx */
+-    tcg_out32(s, 0x07e00050 | (cond << 28) | (rd << 12) | rn
+-              | (ofs << 7) | ((len - 1) << 16));
++    /* According to gcc, AND can be faster. */
++    if (ofs == 0 && len <= 8) {
++        tcg_out_dat_imm(s, cond, ARITH_AND, rd, rn,
++                        encode_imm_nofail((1 << len) - 1));
++        return;
++    }
++
++    if (use_armv7_instructions) {
++        /* ubfx */
++        tcg_out32(s, 0x07e00050 | (cond << 28) | (rd << 12) | rn
++                  | (ofs << 7) | ((len - 1) << 16));
++        return;
++    }
++
++    assert(ofs % 8 == 0);
++    switch (len) {
++    case 8:
++        /* uxtb */
++        tcg_out32(s, 0x06ef0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
++        break;
++    case 16:
++        /* uxth */
++        tcg_out32(s, 0x06ff0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
++        break;
++    default:
++        g_assert_not_reached();
++    }
+ }
  
- #define MMX_OFFSET(reg)                        \
-@@ -3449,7 +3447,7 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
-     }
+ static void tcg_out_sextract(TCGContext *s, ARMCond cond, TCGReg rd,
+                              TCGReg rn, int ofs, int len)
+ {
+-    /* sbfx */
+-    tcg_out32(s, 0x07a00050 | (cond << 28) | (rd << 12) | rn
+-              | (ofs << 7) | ((len - 1) << 16));
++    if (use_armv7_instructions) {
++        /* sbfx */
++        tcg_out32(s, 0x07a00050 | (cond << 28) | (rd << 12) | rn
++                  | (ofs << 7) | ((len - 1) << 16));
++        return;
++    }
++
++    assert(ofs % 8 == 0);
++    switch (len) {
++    case 8:
++        /* sxtb */
++        tcg_out32(s, 0x06af0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
++        break;
++    case 16:
++        /* sxth */
++        tcg_out32(s, 0x06bf0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
++        break;
++    default:
++        g_assert_not_reached();
++    }
+ }
  
-     /* Compute high part, including incoming carry.  */
--    if (!have_1bit_cin || TCG_TARGET_deposit_tl_valid(1, TARGET_LONG_BITS - 1)) {
-+    if (!have_1bit_cin || tcg_op_deposit_valid(TCG_TYPE_TL, 1, TARGET_LONG_BITS - 1)) {
-         /* high = (T0 << 1) | cin */
-         TCGv cin = have_1bit_cin ? decode->cc_dst : decode->cc_src;
-         tcg_gen_deposit_tl(high, cin, s->T0, 1, TARGET_LONG_BITS - 1);
-@@ -3501,7 +3499,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
-     }
- 
-     /* Save incoming carry into high, it will be shifted later.  */
--    if (!have_1bit_cin || TCG_TARGET_deposit_tl_valid(1, TARGET_LONG_BITS - 1)) {
-+    if (!have_1bit_cin || tcg_op_deposit_valid(TCG_TYPE_TL, 1, TARGET_LONG_BITS - 1)) {
-         TCGv cin = have_1bit_cin ? decode->cc_dst : decode->cc_src;
-         tcg_gen_deposit_tl(high, cin, s->T0, 1, TARGET_LONG_BITS - 1);
-     } else {
++
+ static void tcg_out_ld32u(TCGContext *s, ARMCond cond,
+                           TCGReg rd, TCGReg rn, int32_t offset)
+ {
 -- 
 2.43.0
 
