@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50163E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35F4E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV4Xc-0000rU-NS; Tue, 07 Jan 2025 03:02:22 -0500
+	id 1tV4YB-000299-J0; Tue, 07 Jan 2025 03:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4Wi-0000CY-VR
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:25 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tV4XD-0000NI-Dw
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:57 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4Wh-0002tY-G5
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:24 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-215770613dbso164901875ad.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:01:23 -0800 (PST)
+ id 1tV4X8-0002zd-Tl
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:01:53 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-216426b0865so216731845ad.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736236882; x=1736841682; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736236908; x=1736841708; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pKmXb1m3DMp90fmFisjNG4WdmYNCL6RTfNDqnFc9oqQ=;
- b=mlYXWCgjgpM5HlJMhwewu8zMhU5+7EcmUGucgPY8YIRou8dsMZVd2hxr4KZ6IRhlZX
- ri5ZZ4v3WWjOV5LzmVr+dgnUObK8kmqYtH/fEOSxHkkB4ZVQM0WsMu9/c0dE+ehPYkPQ
- ea7vEWA4BMbVT8IRNCvoJmrOD5p0L6T/DoDHI+P8Iz/8QC1eP1ryvcUZyRgpYyf3PIat
- FrjUSpnuoja5YrGD58eUbgZ45LRs9VD3eZF7Y8YWXFmDQweGFH3ilV6NiT1N9iwScGHw
- 1wVHtMlhMofI/MJYfvPTHBqEaKNIQfo9AkevqA29rAyyc3iJIVt5sdGI8pivzg8yhbwc
- xacw==
+ bh=o7SCT29N5BBhzi5MEE82XugxyYi9HADlW0L0D0UEGk4=;
+ b=pcU6p0OmtO62ht4ywkmu8t5CYaOrYxw+yS35iSCz/WHkyl37Z7gOfHq/4hJxmab8TK
+ 0npofPBptq8ah/NK5HsiRg5XCv+n/uXyX9VkNnfeN+VSj+NXB6EyMQ6k7KFcHvbFSwBY
+ 6S/Y4vwWEBBc9NEo0tnzNVSNVSdJRAjXQsGVURUCsvQWgn3W+hBHuxluLoGld4T7pnvV
+ vL5lJolxWwScYzBABXQb+XG6DlFB6V++XI5u/EhQAONfaSHGdtnqHZRraNWPnPuptxdd
+ oL8Qlxaj7BScKhwOD9dnzMA/RgMYmJuTxnyJTSJX4U7wDETpLz2DdXCy8jzM8h3EpPh9
+ ANHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736236882; x=1736841682;
+ d=1e100.net; s=20230601; t=1736236908; x=1736841708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pKmXb1m3DMp90fmFisjNG4WdmYNCL6RTfNDqnFc9oqQ=;
- b=SL/XmmV6cL9+U47gCINQiSf41VAo6j62zN6BwRK6VaPBqD90p5b5vuyeHUoK3EboCX
- iCoHJM0vr+o3supsArBZ8fhdRZorY326ZTvxlDTi9sIuhLDekOKTwEOZWJe6vf7TnbQ2
- 2ZXI6CG0ovhrAUbkLjbhFbZNfV1vVeEqK17FEYCtXvFeNzRDRfE6Tmly5D1pAhjF5uHq
- x4MoLGBuHv/xIq+XvUAHkW5g53WAYhOd9Pk1WPicSNttyx2QDNKcEEJoFt7KSql7NO4R
- P0S4UtVYyNSJgW4QqfqKYpMfmtv2JzUCiOtF4Q6U0YrC2DaFh+Wh/zc9gs9zeHkCt3kk
- aWyg==
-X-Gm-Message-State: AOJu0YwhGR1sMTFItCY5lcL62FLIqYLkugB/WVl+K0MxwJUC70kMxU91
- JXE/f7cEO0Xw+YIeCh3cdkWbeuQTWQVhXHuw2vzWTMjTPO+mQosJoSRwYxbo4SYe1OuR0DNRM0N
- 6
-X-Gm-Gg: ASbGncuXffUvxuD4OBzuVuMwuIVUgHIMKdCr4VsV3r+Qptwz3Q7d7W/7ujJwhD8D/Qy
- 465tgPfMQjltchGg4jRxVkRf/uwBtzeUo9UXl6Ti3ZugqOgKWdAfco5Sk0S/mEwSo4g+1UKR7fQ
- oNZBm8VxICzIfAWB8sU/aQIG7nsNDHispFtwFkLWBRs3l1wZhYG0rTL9HNZWuu75eHrKDOjubSv
- sCAd3+i9ozldwEw9Gf/ZUqMkQRUWWLfBgbFf2a4+/1DsVILbLa3fPlLgg2ognfIXa03k3fi2zgP
- 1LD4vKbhxFsa+G6vWQ==
-X-Google-Smtp-Source: AGHT+IHfFTecU6lzpJzWtCGaKeSJoO7gIGiYdOG38PLKl5WLN7Ehk38sznzrJIvS+p+aeLGTrBELUQ==
-X-Received: by 2002:a17:903:32c5:b0:215:e98c:c5bb with SMTP id
- d9443c01a7336-219e6eb43d6mr894059505ad.28.1736236882107; 
- Tue, 07 Jan 2025 00:01:22 -0800 (PST)
+ bh=o7SCT29N5BBhzi5MEE82XugxyYi9HADlW0L0D0UEGk4=;
+ b=KE83W6bG5jEDYd5VfMQSUp429kleX17X2dbblLfFZCgL7hxpAQMfx16MJkEa10G7hl
+ /SBhJk6u7PZTENORyEDfy29ChRpU6SNqux9OedZPCRtjy8dgRIoqhzcfzBau5+1pesik
+ mg1phEK0M+r5yMnSBYs98944KgFbs5b0e/SvQXSMjTxZpvEQd3V20nArcXsguOb2nTGw
+ nMNxFIX1u92aE0mne2Sei5vtZ6cMcrAR+3paP+AQPuRDGiHzS6g9k3XryK+uIUBrDkNf
+ Zbwe6KnjNL5svNfdQR1dRYNVRfyhBq/SDdYCU6JAXdco77QyPFX8AyAYp67U8/2GtV/0
+ gaXQ==
+X-Gm-Message-State: AOJu0Yy8Gf064RbUupQfnAggn8YVghjpsbqmc4bUAwXb3pE9tCtAmgLY
+ UTDZ5bLMVXdvhTekq3YZq6fKbNe/BPQK2HImQpkd/b90tmSgIJBhhcHd2CzoFQbU0z7ghwpkDom
+ S
+X-Gm-Gg: ASbGnctt7jSrN0MSm7GVvkRCiromh6n4k/b2yiFG6xXbhggaTIyO5Z16ZWcdO9Gyc3z
+ td6aj3NoBV1i/GWDhI1BNeMeXO6+UN+EBx5fYmSqdE+hBwD+oofzvuRjlMQUCgCeKc/87r3Osgg
+ BcLGPDaecU6mYi7A4evzQ957fN/wINj19KYnyhYf24QSFXexpbSwmN8MuqdbQBJbu/pWcRDLzN0
+ moYtFcEjv+z1kh2PeHk0uhzBoBpXk4px88n6Tx1rD1HkyILMBTx86zLdWDWCDPSIzY3wswSrrh1
+ 6TuyonIlk9hMobMEGw==
+X-Google-Smtp-Source: AGHT+IFVY5p9VCey7PDEUk5TDtWKBUSjU3qVeRgqmsbYyCSTZyFHPyW40h2BnYckctM9P51dBRPkXA==
+X-Received: by 2002:a17:903:11c5:b0:216:30f9:93d4 with SMTP id
+ d9443c01a7336-219e6e894demr850053245ad.8.1736236908008; 
+ Tue, 07 Jan 2025 00:01:48 -0800 (PST)
 Received: from stoup.. (76-14-228-138.or.wavecable.com. [76.14.228.138])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc96eb12sm306765995ad.87.2025.01.07.00.01.21
+ d9443c01a7336-219dc96eb12sm306765995ad.87.2025.01.07.00.01.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 00:01:21 -0800 (PST)
+ Tue, 07 Jan 2025 00:01:47 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 07/81] target/arm: Do not test TCG_TARGET_HAS_bitsel_vec
-Date: Mon,  6 Jan 2025 23:59:58 -0800
-Message-ID: <20250107080112.1175095-8-richard.henderson@linaro.org>
+Subject: [PATCH v2 33/81] tcg/i386: Handle all 8-bit extensions for i686
+Date: Tue,  7 Jan 2025 00:00:24 -0800
+Message-ID: <20250107080112.1175095-34-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250107080112.1175095-1-richard.henderson@linaro.org>
 References: <20250107080112.1175095-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rely on tcg-op-vec.c to expand the opcode if missing.
+When we generalize {s}extract_i32, we'll lose the
+specific register constraints on ext8u and ext8s.
+It's just as easy to emit a couple of insns instead.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-sve.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ tcg/i386/tcg-target.c.inc | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 49d32fabc9..732453db6f 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -596,14 +596,8 @@ static void gen_bsl1n_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, TCGv_i64 k)
- static void gen_bsl1n_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
-                           TCGv_vec m, TCGv_vec k)
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index e51269f81d..047c5da81c 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -1329,16 +1329,31 @@ static inline void tcg_out_rolw_8(TCGContext *s, int reg)
+ 
+ static void tcg_out_ext8u(TCGContext *s, TCGReg dest, TCGReg src)
  {
--    if (TCG_TARGET_HAS_bitsel_vec) {
--        tcg_gen_not_vec(vece, n, n);
--        tcg_gen_bitsel_vec(vece, d, k, n, m);
--    } else {
--        tcg_gen_andc_vec(vece, n, k, n);
--        tcg_gen_andc_vec(vece, m, m, k);
--        tcg_gen_or_vec(vece, d, n, m);
--    }
-+    tcg_gen_not_vec(vece, n, n);
-+    tcg_gen_bitsel_vec(vece, d, k, n, m);
+-    /* movzbl */
+-    tcg_debug_assert(src < 4 || TCG_TARGET_REG_BITS == 64);
++    if (TCG_TARGET_REG_BITS == 32 && src >= 4) {
++        tcg_out_mov(s, TCG_TYPE_I32, dest, src);
++        if (dest >= 4) {
++            tcg_out_modrm(s, OPC_ARITH_EvIz, ARITH_AND, dest);
++            tcg_out32(s, 0xff);
++            return;
++        }
++        src = dest;
++    }
+     tcg_out_modrm(s, OPC_MOVZBL + P_REXB_RM, dest, src);
  }
  
- static void gen_bsl1n(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-@@ -640,14 +634,8 @@ static void gen_bsl2n_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, TCGv_i64 k)
- static void gen_bsl2n_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
-                           TCGv_vec m, TCGv_vec k)
+ static void tcg_out_ext8s(TCGContext *s, TCGType type, TCGReg dest, TCGReg src)
  {
--    if (TCG_TARGET_HAS_bitsel_vec) {
--        tcg_gen_not_vec(vece, m, m);
--        tcg_gen_bitsel_vec(vece, d, k, n, m);
--    } else {
--        tcg_gen_and_vec(vece, n, n, k);
--        tcg_gen_or_vec(vece, m, m, k);
--        tcg_gen_orc_vec(vece, d, n, m);
--    }
-+    tcg_gen_not_vec(vece, m, m);
-+    tcg_gen_bitsel_vec(vece, d, k, n, m);
+     int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
+-    /* movsbl */
+-    tcg_debug_assert(src < 4 || TCG_TARGET_REG_BITS == 64);
++
++    if (TCG_TARGET_REG_BITS == 32 && src >= 4) {
++        tcg_out_mov(s, TCG_TYPE_I32, dest, src);
++        if (dest >= 4) {
++            tcg_out_shifti(s, SHIFT_SHL, dest, 24);
++            tcg_out_shifti(s, SHIFT_SAR, dest, 24);
++            return;
++        }
++        src = dest;
++    }
+     tcg_out_modrm(s, OPC_MOVSBL + P_REXB_RM + rexw, dest, src);
  }
  
- static void gen_bsl2n(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
 -- 
 2.43.0
 
