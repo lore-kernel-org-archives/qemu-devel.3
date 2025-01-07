@@ -4,69 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969B8E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9853E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVBRr-00019j-1B; Tue, 07 Jan 2025 10:24:51 -0500
+	id 1tVBU4-0001xZ-H5; Tue, 07 Jan 2025 10:27:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVBRn-00019M-OS; Tue, 07 Jan 2025 10:24:47 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVBRk-0003jp-RJ; Tue, 07 Jan 2025 10:24:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736263485; x=1767799485;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=TIIM4dkj0OCU1RcFETy0gaMxAsMM7RGugczvPHwe4Zo=;
- b=SMItgzSN5y1FTEUooomrzEO2/Mp015UOJADYt5HL8vz2Rf0BzrQwo+Co
- EO4Ho2+ek7I+qsvCdr4aeKoXLOwL7pB2uL4dNX2fNJguJrEBo6inZ+Ymp
- QdZ6s5TN4U0BtMB9rmaUQ3rtsbOffY7fzXGACP1FoLKlXzhAliOj6HJep
- qbD1WR1tsc18ezgVfCVa6dvOjNLLyYI9hF7lxTy9X+xBOSrUj7rAhiV6K
- 854LuuHVKXW9rrOSuoyDxkyk7nDVJ7Gzv0EXZahWCBh3k5tqk/eZ9t1Lm
- /fqUM+vCgf+ehLz8WJC0C4bFa597PBQjHRD4W7JtPTFteQtWqH8sTxFan g==;
-X-CSE-ConnectionGUID: lvwt563PRi+FYaBlMVUvnQ==
-X-CSE-MsgGUID: eaGsVRjYSlaZFaBWmLh3jA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11308"; a="53869682"
-X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; d="scan'208";a="53869682"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2025 07:24:39 -0800
-X-CSE-ConnectionGUID: 6pRcvfvdQOG3g0wiFP28Aw==
-X-CSE-MsgGUID: oG3Lstq1RaCMyT0mDjn9uw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; d="scan'208";a="103307912"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 07 Jan 2025 07:24:37 -0800
-Date: Tue, 7 Jan 2025 23:43:25 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
-Subject: Re: [RFC PATCH 2/9] rust: vmstate: implement VMState for non-leaf
- types
-Message-ID: <Z31LnWiD8jysxBGv@intel.com>
-References: <20241231002336.25931-1-pbonzini@redhat.com>
- <20241231002336.25931-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tVBU3-0001xF-Ln
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:27:07 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tVBU1-00047p-W8
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:27:07 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2f43d17b0e3so23348631a91.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 07:27:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736263624; x=1736868424; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Xnhe/f46nqxtalb7KGtFTeaX7QlcvPzDfu3D/eQVlsY=;
+ b=NLIQmHXge127CVvXXfp+vNEuCrRpu1XHagwTXMgNSgnCBJzTl5o2SG/oCnb26TMaov
+ nqz6v/Re7avDXZ+sNarI0x/u4f6zDBuqcgfM6zTayI5u4cimrWW7Yiw3Hz/uj2IzyFId
+ fg/Y7OwiWkKzAMuh7liropfZ4IDPaED45p75pIUjq9/cmg/Kd2zrxLAzc329ROp60N7A
+ LCazvSIvY4gDv6jBfqTNAMRvBJmPfgMLxZGuFJBxXje48wLpfhd9jxqskdWhfjhqYD0W
+ 5dnLNRd4rBfDpebwc5KNoLsAkFfgvI3c9/0OvyD1279ItIFXIx+m8tFeI4Eagibi89KC
+ pRcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736263624; x=1736868424;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xnhe/f46nqxtalb7KGtFTeaX7QlcvPzDfu3D/eQVlsY=;
+ b=VE3QxPSN6nuafepAGCk9LDJWBNKA1ewVUq+cZSrIdwZh0Q67b89H2VkjuiELY2uHFo
+ y4bAWvs/afdDhFchaNkVtQ52czj/5HcYVZEDbg4mbgBgz91iV3XYBxb1qpX1XSBji6L+
+ Jz1oLFcDOrfF3jDM74K2zXhSvuJBJuu7yrFoNUuLeOoEk61dhpE1GsCRaY1GJTl4m9pp
+ e8nN+ZGTSsrc+vhPUZM2E1TVMgg0OPQRhS8IztTeljr2AH0ay4MQMujl7zkFxVyHDzZh
+ j4G/G0Ik+HE/93t6UiJD+uv4QIhzpQB1S7VLwgG4cagsX3t9fndkkal6YIzbWYcMMxoq
+ CNnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyo22ijKztxhJamyiXV+n8pKSNd5Bzm0wGTEPwwFUpLoeMhSu2VFlvVUBpupoPJ4R3XNestV64RftV@nongnu.org
+X-Gm-Message-State: AOJu0YyiCbW4ZuiHC8/DGDh8JdeCwum4hB9o/tU472mNd/opOAZYArxm
+ z9glDH2S0RN8DugPxrTLAMPeY9hN1A/ksOThNkgqsfZc5sGGbmjkFVMPMbH1XgceTG03Usubofa
+ s
+X-Gm-Gg: ASbGncuqoJvLyyDzvypjDLS0abWenuU4Jdu5IRYgybwnvLwQr4ouFNTFGbImQ7SVvn0
+ sJ3xpcqj9IMUlFYCPYi5vMO4w07Rhw4WFk9ksH/tQ9okoLY2aTWimcaweuI7gVCzQhi4zyQ9Efe
+ UDrZZ2zsj4N4FOgPFt57cvIEKc8txFyuQTibru0yxbRf0joNA298B6xKgWLc9gkukjWvwIhrkmM
+ ILMiwdlSGw2a2Im+n0noz1sMB2rleNbLwKCZfCY7BTPKo9yQGFuGZj61fMmmkHDWx5FX2RANl2q
+ cu6UsUjUjHgdqapiw2UvhxC0q5A5Apw=
+X-Google-Smtp-Source: AGHT+IH71vueA1E7eI8vMK9Vr28aT1Vn9Mvlzd76I4gNft2jGcvSZchMluQnK9wkIsL2EhkEFxMbSw==
+X-Received: by 2002:a17:90a:e18b:b0:2ee:fdf3:390d with SMTP id
+ 98e67ed59e1d1-2f452edc2cfmr77205326a91.31.1736263624354; 
+ Tue, 07 Jan 2025 07:27:04 -0800 (PST)
+Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
+ [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9f7307sm309935065ad.195.2025.01.07.07.27.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 07:27:04 -0800 (PST)
+Message-ID: <4f5fb5fe-2f12-4fdf-9fab-600742b72a99@linaro.org>
+Date: Tue, 7 Jan 2025 07:27:01 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241231002336.25931-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] tcg/riscv: Use BEXTI for single-bit extractions
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com
+References: <20250102181601.1421059-1-richard.henderson@linaro.org>
+ <20250102181601.1421059-3-richard.henderson@linaro.org>
+ <05497e58-43ad-41de-b868-223aafa6ed3e@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <05497e58-43ad-41de-b868-223aafa6ed3e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,147 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 31, 2024 at 01:23:29AM +0100, Paolo Bonzini wrote:
-> Date: Tue, 31 Dec 2024 01:23:29 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [RFC PATCH 2/9] rust: vmstate: implement VMState for non-leaf types
-> X-Mailer: git-send-email 2.47.1
+On 1/7/25 02:29, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
-> Arrays, pointers and cells use a VMStateField that is based on that
-> for the inner type.  The implementation therefore delegates to the
-> VMState implementation of the inner type.
+> On 2/1/25 19:16, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/riscv/tcg-target-has.h |  8 +++++++-
+>>   tcg/riscv/tcg-target.c.inc | 13 +++++++++++--
+>>   2 files changed, 18 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
+>> index 10e61edc45..ea38ee5cbb 100644
+>> --- a/tcg/riscv/tcg-target-has.h
+>> +++ b/tcg/riscv/tcg-target-has.h
+>> @@ -64,7 +64,13 @@ tcg_target_extract_valid(TCGType type, unsigned ofs, unsigned len)
+>>           /* ofs > 0 uses SRLIW; ofs == 0 uses add.uw. */
+>>           return ofs || (cpuinfo & CPUINFO_ZBA);
+>>       }
+>> -    return (cpuinfo & CPUINFO_ZBB) && ofs == 0 && len == 16;
+>> +    switch (len) {
+>> +    case 1:
+>> +        return (cpuinfo & CPUINFO_ZBS) && ofs != 0;
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/qemu-api/src/vmstate.rs | 66 +++++++++++++++++++++++++++++++++++-
->  1 file changed, 65 insertions(+), 1 deletion(-)
-> 
-> diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-> index bfcf06e8f1d..e20f27b172b 100644
-> --- a/rust/qemu-api/src/vmstate.rs
-> +++ b/rust/qemu-api/src/vmstate.rs
-> @@ -19,8 +19,9 @@
->  //!   `include/migration/vmstate.h`. These are not type-safe and should not be
->  //!   used if the equivalent functionality is available with `vmstate_of!`.
->  
-> -use core::marker::PhantomData;
-> +use core::{marker::PhantomData, mem, ptr::NonNull};
->  
-> +use crate::bindings::VMStateFlags;
->  pub use crate::bindings::{VMStateDescription, VMStateField};
->  
->  /// This macro is used to call a function with a generic argument bound
-> @@ -108,6 +109,69 @@ pub const fn with_version_id(mut self, version_id: i32) -> Self {
->          self.version_id = version_id;
->          self
->      }
-> +
-> +    #[must_use]
-> +    pub const fn with_array_flag(mut self, num: usize) -> Self { 
-> +        assert!(num <= 0x7FFF_FFFFusize);
+> Why can't we have ofs=0?
 
-I see, this is the similar case to check overflow like your comment for
-patch 1. I think we can use i32::MAX to avoid such magic number.
+To prefer ANDI.
 
-> +        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) == 0);
 
-Do we need to also check varray flags? e.g.,
-
-But the doc (in vmstate.h) of VMS_ARRAY said "May not be combined with
-VMS_VARRAY*", I understand VMS_ARRAY shouldn't be combined with
-VMS_VARRAY*, am I right?
-
-If so, we can add a simple const variable that combines all VARRY flags,
-e.g,
-
-const VMS_VARRAY_FLAGS: VMStateFlags = VMStateFlags(
-    VMStateFlags::VMS_VARRAY_INT32.0 |
-    VMStateFlags::VMS_VARRAY_UINT8.0 |
-    VMStateFlags::VMS_VARRAY_UINT16.0 |
-    VMStateFlags::VMS_VARRAY_UINT32.0
-);
-
-...
-
-assert!((self.flags.0 & VMS_VARRAY_FLAGS.0) == 0);
-
-> +        if (self.flags.0 & VMStateFlags::VMS_POINTER.0) != 0 {
-> +            self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_POINTER.0);
-> +            self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0);
-> +        }
-> +        self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_SINGLE.0);
-> +        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_ARRAY.0);
-> +        self.num = num as i32;
-> +        self
-> +    }
-> +
-> +    #[must_use]
-> +    pub const fn with_pointer_flag(mut self) -> Self {
-> +        assert!((self.flags.0 & VMStateFlags::VMS_POINTER.0) == 0);
-
-Maybe VMS_ARRAY_OF_POINTER should be checked here as well?
-
-> +        self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_POINTER.0);
-> +        self
-> +    }
-> +}
-> +
-> +// Transparent wrappers: just use the internal type
-> +
-> +macro_rules! impl_vmstate_transparent {
-> +    ($type:ty where $base:tt: VMState $($where:tt)*) => {
-> +        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-> +            const BASE: VMStateField = VMStateField {
-> +                size: mem::size_of::<$type>(),
-> +                ..<$base as VMState>::BASE
-> +            };
-> +        }
-> +    };
-> +}
-> +
-> +impl_vmstate_transparent!(std::cell::Cell<T> where T: VMState);
-> +impl_vmstate_transparent!(std::cell::UnsafeCell<T> where T: VMState);
-> +impl_vmstate_transparent!(crate::cell::BqlCell<T> where T: VMState);
-> +impl_vmstate_transparent!(crate::cell::BqlRefCell<T> where T: VMState);
-> +
-> +// Pointer types using the underlying type's VMState plus VMS_POINTER
-> +
-> +macro_rules! impl_vmstate_pointer {
-> +    ($type:ty where $base:tt: VMState $($where:tt)*) => {
-> +        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-> +            const SCALAR_TYPE: VMStateFieldType = <T as VMState>::SCALAR_TYPE;
-
-Rebase issue: SCALAR_TYPE is introduced in patch 5.
-
-> +            const BASE: VMStateField = <$base as VMState>::BASE.with_pointer_flag();
-> +        }
-> +    };
-> +}
-> +
-> +impl_vmstate_pointer!(*const T where T: VMState);
-> +impl_vmstate_pointer!(*mut T where T: VMState);
-> +impl_vmstate_pointer!(NonNull<T> where T: VMState);
-> +impl_vmstate_pointer!(Option<NonNull<T>> where T: VMState);
-> +
-> +// Arrays using the underlying type's VMState plus
-> +// VMS_ARRAY/VMS_ARRAY_OF_POINTER
-> +
-> +unsafe impl<T: VMState, const N: usize> VMState for [T; N] {
-> +    const SCALAR_TYPE: VMStateFieldType = <T as VMState>::SCALAR_TYPE;
-
-Ditto.
-
-> +    const BASE: VMStateField = <T as VMState>::BASE.with_array_flag(N);
->  }
->  
->  #[doc(alias = "VMSTATE_UNUSED_BUFFER")]
-> -- 
-> 2.47.1
->
-
-Overall, I think this patch handles the array/pointer/cell cases very
-well. So (with some nits fixed :-)),
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+r~
 
