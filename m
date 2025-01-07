@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DDE9E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E16E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVBb3-0003D7-Gs; Tue, 07 Jan 2025 10:34:21 -0500
+	id 1tVBbB-0003Is-J1; Tue, 07 Jan 2025 10:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBb1-0003C9-ID
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:19 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBb9-0003H2-EZ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBb0-00056Q-4W
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:19 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBb7-00058H-U6
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736264057;
+ s=mimecast20190719; t=1736264065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qMgawXtrIVlaeM7Nd+w2ae5y0ULXzvEM2qhvmTnjdk4=;
- b=jTxRSHUgmCmpDz5GVav+SIRkmGOrolqXr6hQi+mmBBIocieWuCMuaNUrA/TFZYOlNlWQRo
- ATWG4v/dKtoSeS1oU0o17bsAGfGWzoGnsGqTxHeuQK8G3W98nrw9pTB69W0Rjempn6sQ9E
- f3TmcYmf9AyNzq3MM2XU97OWYGO1orc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=V72gLHc8eOLeuqp6z1QZn/Z6Pn3sjtYnWvuS+x+Pus0=;
+ b=JLQoT9CStRZnTi9ijyU3uUGkxzVU9n7tZk5E0h6hbRhM/uQDPBuE1V9LNcceVtcz/rq0ew
+ UWqn+fzUiAfW6CaO7943t8ShnqPHfpjV5humK677bIEb1IzRwsJb6uxEWfNboVSef42G9l
+ QAdvDk/NIOcALc/J8Cs58qY0YrRPsHk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-mtrcTVuGOe6ALPwc18U5qw-1; Tue,
- 07 Jan 2025 10:34:14 -0500
-X-MC-Unique: mtrcTVuGOe6ALPwc18U5qw-1
-X-Mimecast-MFC-AGG-ID: mtrcTVuGOe6ALPwc18U5qw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-EMtvT4ycNZuf3gtmN2Db0Q-1; Tue,
+ 07 Jan 2025 10:34:21 -0500
+X-MC-Unique: EMtvT4ycNZuf3gtmN2Db0Q-1
+X-Mimecast-MFC-AGG-ID: EMtvT4ycNZuf3gtmN2Db0Q
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 339C91955DC3; Tue,  7 Jan 2025 15:34:12 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E0361955D45; Tue,  7 Jan 2025 15:34:20 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.66])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D37F11956088; Tue,  7 Jan 2025 15:34:11 +0000 (UTC)
+ id 01F2F1956088; Tue,  7 Jan 2025 15:34:20 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 2825618003B7; Tue, 07 Jan 2025 16:33:54 +0100 (CET)
+ id 892351800601; Tue, 07 Jan 2025 16:33:54 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
@@ -57,9 +57,9 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
  Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 11/21] hw/uefi: add var-service-pkcs7-stub.c
-Date: Tue,  7 Jan 2025 16:33:38 +0100
-Message-ID: <20250107153353.1144978-12-kraxel@redhat.com>
+Subject: [PATCH v2 16/21] hw/uefi: add to meson
+Date: Tue,  7 Jan 2025 16:33:43 +0100
+Message-ID: <20250107153353.1144978-17-kraxel@redhat.com>
 In-Reply-To: <20250107153353.1144978-1-kraxel@redhat.com>
 References: <20250107153353.1144978-1-kraxel@redhat.com>
 MIME-Version: 1.0
@@ -90,39 +90,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pkcs7 stub which is used in case gnutls is not available.
-
-It throws EFI_WRITE_PROTECTED errors unconditionally, so all
-authenticated variables are readonly for the guest.
+Wire up uefi-vars in the build system.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/uefi/var-service-pkcs7-stub.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
- create mode 100644 hw/uefi/var-service-pkcs7-stub.c
+ hw/meson.build      |  1 +
+ hw/uefi/meson.build | 18 ++++++++++++++++++
+ meson.build         |  1 +
+ 3 files changed, 20 insertions(+)
+ create mode 100644 hw/uefi/meson.build
 
-diff --git a/hw/uefi/var-service-pkcs7-stub.c b/hw/uefi/var-service-pkcs7-stub.c
+diff --git a/hw/meson.build b/hw/meson.build
+index b827c82c5d7b..138f5d59e178 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -35,6 +35,7 @@ subdir('smbios')
+ subdir('ssi')
+ subdir('timer')
+ subdir('tpm')
++subdir('uefi')
+ subdir('ufs')
+ subdir('usb')
+ subdir('vfio')
+diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
 new file mode 100644
-index 000000000000..118cba446d4b
+index 000000000000..d280881f457a
 --- /dev/null
-+++ b/hw/uefi/var-service-pkcs7-stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * uefi vars device - pkcs7 stubs
-+ */
-+#include "qemu/osdep.h"
-+#include "system/dma.h"
++++ b/hw/uefi/meson.build
+@@ -0,0 +1,18 @@
++uefi_vars_ss = ss.source_set()
++if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
++  uefi_vars_ss.add(files('var-service-core.c',
++                         'var-service-json.c',
++                         'var-service-vars.c',
++                         'var-service-auth.c',
++                         'var-service-guid.c',
++                         'var-service-utils.c',
++                         'var-service-policy.c'))
++  uefi_vars_ss.add(when: gnutls,
++                   if_true: files('var-service-pkcs7.c'),
++                   if_false: files('var-service-pkcs7-stub.c'))
++  uefi_vars_ss.add(files('var-service-siglist.c'))
++endif
 +
-+#include "hw/uefi/var-service.h"
-+
-+efi_status uefi_vars_check_pkcs7_2(uefi_variable *siglist,
-+                                   void **digest, uint32_t *digest_size,
-+                                   mm_variable_access *va, void *data)
-+{
-+    return EFI_WRITE_PROTECTED;
-+}
++modules += { 'hw-uefi' : {
++    'vars'     : uefi_vars_ss,
++}}
+diff --git a/meson.build b/meson.build
+index d06f59095c67..741a61089ff4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3584,6 +3584,7 @@ if have_system
+     'hw/ssi',
+     'hw/timer',
+     'hw/tpm',
++    'hw/uefi',
+     'hw/ufs',
+     'hw/usb',
+     'hw/vfio',
 -- 
 2.47.1
 
