@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368DDE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37CBE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVEvv-0000Mp-3p; Tue, 07 Jan 2025 14:08:07 -0500
+	id 1tVFE1-0003L7-46; Tue, 07 Jan 2025 14:26:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tVEvs-0000MZ-Ih
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:08:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tVEvr-0005wQ-03
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:08:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736276882;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=e6N+MDNfhqEWSldmyBSY1nNns1pi99KQqXGHwXf1lOY=;
- b=Kv3XQn3lPDX+GS+XWmKwpdfOhFWda/xjTu4uNuf1JKxBkRzj/NscJT2N+WJ3a2LIYrp2Ax
- PJhJBNEtt0SXnTAPHcwGUoAF3CS2+0U+8mk/Ox6UiCjX2jMOB3eBLbC4AeOmIQXJ3ETWPc
- fF/Ny3aJHsF02VuhP/dUAKsA8nxXyjM=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-213-helW-Y2SMJOThyFM4b1efg-1; Tue, 07 Jan 2025 14:06:42 -0500
-X-MC-Unique: helW-Y2SMJOThyFM4b1efg-1
-X-Mimecast-MFC-AGG-ID: helW-Y2SMJOThyFM4b1efg
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-844df5d5edfso114841439f.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 11:06:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVFDv-0003KV-C3
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:26:45 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVFDt-0007oJ-2c
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:26:42 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3863494591bso8201776f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 11:26:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736277999; x=1736882799; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jQpe/t9gE90x9xB1kiTd2LC7ZhqmJPaLIwleQhgmA4g=;
+ b=tACTlSaNNumfLn9lWEpyPUQBk/pKlWa9eUdntVXhDsbruvxK1ZQVfD7Lunbt9jviee
+ nmtapRiXQgcIaFpQjrwlOLh3Yl+l2PGbRSDb1YjhPgUAwSYMS319X2YvO0UmL+IdHlAt
+ dtT9etAsnZHaap0pzRme08mU6UTIUQVkI3lhwk6f4SVgsrOvgGzXRFMyFb0hntBQNL8W
+ k/lQvCpU3Jy4ar89DL9BRXZn092EPUuyvvWIajjWAj/yC7ldh2ktXyf02BDSKPpsy7QB
+ KmEDonzPZx9WwwKtABsQ7PcVb5l+wYnBoZ2IwsE5m6aQs2hPLUKGsvVz1dVndvtKh/+L
+ he4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736276802; x=1736881602;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=e6N+MDNfhqEWSldmyBSY1nNns1pi99KQqXGHwXf1lOY=;
- b=KI+gwCh105nSrbd+eGodXk9qHJHXSgXv6sUZRB7e5rspv5yQdfGiLrJSE/OcDey12j
- TmaODDWXALVq8Fl10hNb3EnaUxqBY8gRAGyO6fEHVjJL4s3G5OT2gsCBDa9NAB6Frvk/
- e95U9yE4W+IwcEsvje3byZ9bAm0sNMhtExrint6ZG9vAKwu40QLCP7cUb7Sdrl9QDewL
- lAYCp4mCWKPtqJnPvsx7Gd2zT2Nux5dS0RLg2QrsaYZEteW40Afi/U6CXEeF/Nml01CU
- fAT3JYamc6FQ8tz37/YCslQeqqf24l6YRV3urK/yIWRXbPlRCQCrhrtDETl5atuIriHk
- dTsg==
-X-Gm-Message-State: AOJu0YwRjaZkeisHQaY78KS986kLG4CJOhj+zST2LJ7o+JCaBA3xne6n
- cO1iRMCbTJDLCLywyjfzOoRp0mGO4orVjQBL4VTwd8WaF9s1IbUhVez0YZnOrRNWn+sVcc6vaHU
- 07eZfzzGONIYSWKzkzli5ocdQdwUVUpKwNmVnZ1RF2XaYvh4d9TT/
-X-Gm-Gg: ASbGncue4a8SLIckgcUNdJJQVgbcTltSwbSu+Z2vlqZTiqx0px3fBk+jO9wb5N7VFYx
- NIX2+dTQ2pYVtbf4LrYA3pM+FWG3lFuIBYP5syHlUE6PM33P3/X9S8zK17/OdIF0ZhO+1RJgrcP
- 5thIZg9toGTY1uvi/zaf986d9ZwcosKfTXk7K4S2wqKMXPbzomYAL4gVoqQuRNQXopffiQVcH7B
- wnQNM57dF7zLw/UUikybR+/az4ULKfrzsrmo0YjxVgMWsxqwmK/LBxIZ0z6
-X-Received: by 2002:a05:6e02:1f05:b0:3a7:e7bd:9f30 with SMTP id
- e9e14a558f8ab-3ce3a86aaadmr949465ab.2.1736276801516; 
- Tue, 07 Jan 2025 11:06:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFurqoZehh6ETJcqNQf2m661gzblrt8qa1LeuOAB0NVJKyEs82GAel/K/ZDiyH+6PD5qR3ng==
-X-Received: by 2002:a05:6e02:1f05:b0:3a7:e7bd:9f30 with SMTP id
- e9e14a558f8ab-3ce3a86aaadmr949365ab.2.1736276801232; 
- Tue, 07 Jan 2025 11:06:41 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3c0de053105sm101468715ab.15.2025.01.07.11.06.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 11:06:40 -0800 (PST)
-Date: Tue, 7 Jan 2025 14:06:34 -0500
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Rorie Reyes <rreyes@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, pbonzini@redhat.com,
- cohuck@redhat.com, pasic@linux.ibm.com, jjherne@linux.ibm.com,
- borntraeger@linux.ibm.com, clg@redhat.com, thuth@redhat.com,
- akrowiak@linux.ibm.com
-Subject: Re: [PATCH v1 0/5] Report vfio-ap configuration changes
-Message-ID: <20250107140634.35cb33ba.alex.williamson@redhat.com>
-In-Reply-To: <20250107184354.91079-1-rreyes@linux.ibm.com>
-References: <20250107184354.91079-1-rreyes@linux.ibm.com>
-Organization: Red Hat
+ d=1e100.net; s=20230601; t=1736277999; x=1736882799;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jQpe/t9gE90x9xB1kiTd2LC7ZhqmJPaLIwleQhgmA4g=;
+ b=puIjJHNcMiiQ8OaW9CO3v9kmg30cXIEss6PWsWjx02Q+F3yoVhRUZQ/FLClKEmUGa6
+ iYgPF+JrWDGXMKz9Lrq5G+zhes7Nj7UntISLmrHlGnz5iqo03uCoN062KCG9qitgnhST
+ 4WBcHHqYbJ+dP63C/38Ik00UlV387aU39esh9c3JRqvYIJTXD19TyaLefP/f18pRFl13
+ 03lfbV+4361ZR8KI5PuuoWP3FCjP6MMcXQZycadauTNVUhLc2chX2BwqcyiRJNfpIEcD
+ GDslUXnf6MfYtyTDIXRz9FU23f6To/QD3WiPKpCTAX/qFEPbnliA/dzrO8XFL1IAedOy
+ LmCQ==
+X-Gm-Message-State: AOJu0Yy7pj//ExQYJuKprNQ+o3kHT8fBbfrc+wxpxF+GIkX2Gd6rpt5V
+ kIQvh9zlG7c9w12VzgOWBpLlKGKgY4pWiIV+LRB/D10Zcd/lMYqxOK+yrG8A7h2xfkR8TDcfc8p
+ rdoY=
+X-Gm-Gg: ASbGncvwYHYx4oRRtm/4F8fptwExzNHinEcmHUKDwVKtmxDhfbCpGctXLYsXmpT8eEj
+ hOBvFdSx2yCk5ul/dS9PTB2eIc6aCTvH7kTSP4iDbiPcbQSCTexHdjIGfSoYhoBRUG3v7PUBxxL
+ J+4TmDJA3IC31qNnJcuk3zZP1WE0tJ47amDJkmbfrGpIDdAAx60BuotegIvnpj/9B9+CIegNL79
+ O7ky2HM3kMDHRt31nou8Zu1Zt+/VvjxOYa9HZhPzICMoX1RSpj9xTfUKnt25lEdq5PqmclZ4au7
+ cBWeQaYod5ZRrgIeuXyJ1FNo8mADAXo=
+X-Google-Smtp-Source: AGHT+IHLTbv1Vkh/klZ/gKZbygji4sVpVuH+nf3/hXfJlGgADfO39TPn1BJuftl1wlMw79bhQYgFww==
+X-Received: by 2002:a05:6000:2c5:b0:385:f195:27f with SMTP id
+ ffacd0b85a97d-38a221f339emr57011373f8f.5.1736277999177; 
+ Tue, 07 Jan 2025 11:26:39 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c828e7asm50601297f8f.21.2025.01.07.11.26.38
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 07 Jan 2025 11:26:38 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] tests/qtest/stm32l4x5_usart: Avoid accessing NVIC via MMIO
+Date: Tue,  7 Jan 2025 20:26:37 +0100
+Message-ID: <20250107192637.67683-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,22 +100,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  7 Jan 2025 13:43:49 -0500
-Rorie Reyes <rreyes@linux.ibm.com> wrote:
+The STM32L4x5 SoC family use a ARM Cortex-M core. Such
+core is architecturally tied with a NVIC (interrupt controller),
+having the NVIC MMIO mapped in the core address space.
 
-> This patch series creates and registers a handler that is called when
-> userspace is notified by the kernel that a guest's AP configuration has
-> changed. The handler in turn notifies the guest that its AP configuration
-> has changed. This allows the guest to immediately respond to AP
-> configuration changes rather than relying on polling or some other
-> inefficient mechanism for detecting config changes.
+When using the QTest accelerator, we don't emulate vCPU, only
+a dummy is created. For now, QTest is only supposed to access
+MMIO devices mapped on the main 'SysBus'. Thus it shouldn't
+be able to access a NVIC MMIO region, because such region is
+specific to a vCPU address space, which isn't available under
+QTest.
 
-Why are configuration changes to the device allowed while the device is
-in use?
+In order to avoid NVIC MMIO accesses, rather than checking
+UART IRQs on the NVIC, intercept the UART IRQ and check for
+raised/lowered events.
 
-Would a uevent be considered an inefficient mechanism?  Why?
+The sysbus USART1 IRQ output is wired to EXTI #26 input.
+Use qtest_irq_intercept_out_named() to intercept it, count
+the events with qtest_get_irq_lowered_counter() and
+qtest_get_irq_raised_counter().
 
-Thanks,
-Alex
+Remove the then unused check/clear_nvic_pending() methods.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20241216141818.111255-7-gustavo.romero@linaro.org>
+"tests/qtest: Add API functions to capture IRQ toggling"
+
+This patch is to fix the problem reported by Fabiano when
+removing the &first_cpu global in qtest, see analysis in:
+https://lore.kernel.org/qemu-devel/05820c9b-a683-4eb4-a836-e97aa708d5e5@linaro.org/
+
+Note, while writing that patch I noticed a problem with the
+b-l475e-iot01a machine. In bl475e_init() somes output GPIOs
+are wired twice. The EXTI outputs are passed to the SoC with
+qdev_pass_gpios(), and few are re-wired to the various output
+IRQ splitters. I'll open a GitLab issue so it can be cleared
+later.
+---
+ tests/qtest/stm32l4x5_usart-test.c | 33 +++++++-----------------------
+ 1 file changed, 7 insertions(+), 26 deletions(-)
+
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index 927bab63614..35622e9434d 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -46,26 +46,7 @@ REG32(ICR, 0x20)
+ REG32(RDR, 0x24)
+ REG32(TDR, 0x28)
+ 
+-#define NVIC_ISPR1 0XE000E204
+-#define NVIC_ICPR1 0xE000E284
+-#define USART1_IRQ 37
+-
+-static bool check_nvic_pending(QTestState *qts, unsigned int n)
+-{
+-    /* No USART interrupts are less than 32 */
+-    assert(n > 32);
+-    n -= 32;
+-    return qtest_readl(qts, NVIC_ISPR1) & (1 << n);
+-}
+-
+-static bool clear_nvic_pending(QTestState *qts, unsigned int n)
+-{
+-    /* No USART interrupts are less than 32 */
+-    assert(n > 32);
+-    n -= 32;
+-    qtest_writel(qts, NVIC_ICPR1, (1 << n));
+-    return true;
+-}
++#define USART1_EXTI_IRQ 26
+ 
+ /*
+  * Wait indefinitely for the flag to be updated.
+@@ -195,6 +176,8 @@ static void init_uart(QTestState *qts)
+     /* Enable the transmitter, the receiver and the USART. */
+     qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
+         cr1 | R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
++
++    qtest_irq_intercept_out_named(qts, "machine/soc/exti", "sysbus-irq");
+ }
+ 
+ static void test_write_read(void)
+@@ -221,7 +204,7 @@ static void test_receive_char(void)
+     g_assert_true(send(sock_fd, "a", 1, 0) == 1);
+     usart_wait_for_flag(qts, USART1_BASE_ADDR + A_ISR, R_ISR_RXNE_MASK);
+     g_assert_cmphex(qtest_readl(qts, USART1_BASE_ADDR + A_RDR), ==, 'a');
+-    g_assert_false(check_nvic_pending(qts, USART1_IRQ));
++    g_assert_cmpuint(qtest_get_irq_lowered_counter(qts, USART1_EXTI_IRQ), ==, 0);
+ 
+     /* Now with the IRQ */
+     cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
+@@ -230,8 +213,7 @@ static void test_receive_char(void)
+     g_assert_true(send(sock_fd, "b", 1, 0) == 1);
+     usart_wait_for_flag(qts, USART1_BASE_ADDR + A_ISR, R_ISR_RXNE_MASK);
+     g_assert_cmphex(qtest_readl(qts, USART1_BASE_ADDR + A_RDR), ==, 'b');
+-    g_assert_true(check_nvic_pending(qts, USART1_IRQ));
+-    clear_nvic_pending(qts, USART1_IRQ);
++    g_assert_cmpuint(qtest_get_irq_lowered_counter(qts, USART1_EXTI_IRQ), >, 0);
+ 
+     close(sock_fd);
+ 
+@@ -251,7 +233,7 @@ static void test_send_char(void)
+     qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 'c');
+     g_assert_true(recv(sock_fd, s, 1, 0) == 1);
+     g_assert_cmphex(s[0], ==, 'c');
+-    g_assert_false(check_nvic_pending(qts, USART1_IRQ));
++    g_assert_cmpuint(qtest_get_irq_lowered_counter(qts, USART1_EXTI_IRQ), ==, 0);
+ 
+     /* Now with the IRQ */
+     cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
+@@ -260,8 +242,7 @@ static void test_send_char(void)
+     qtest_writel(qts, USART1_BASE_ADDR + A_TDR, 'd');
+     g_assert_true(recv(sock_fd, s, 1, 0) == 1);
+     g_assert_cmphex(s[0], ==, 'd');
+-    g_assert_true(check_nvic_pending(qts, USART1_IRQ));
+-    clear_nvic_pending(qts, USART1_IRQ);
++    g_assert_cmpuint(qtest_get_irq_raised_counter(qts, USART1_EXTI_IRQ), >, 0);
+ 
+     close(sock_fd);
+ 
+-- 
+2.47.1
 
 
