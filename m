@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6244FE77199
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 09:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C5FE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 09:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV5xN-0005PP-Or; Tue, 07 Jan 2025 04:33:01 -0500
+	id 1tV5xT-0005Qb-O6; Tue, 07 Jan 2025 04:33:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roger.pau@cloud.com>)
- id 1tV5xL-0005PE-IV
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:32:59 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1tV5xR-0005QD-Sc
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:33:05 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roger.pau@cloud.com>)
- id 1tV5xI-0006Jk-8S
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:32:59 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385e87b25f0so10082036f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 01:32:55 -0800 (PST)
+ id 1tV5xQ-0006KD-8s
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:33:05 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43621d27adeso105776975e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 01:33:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1736242374; x=1736847174; darn=nongnu.org;
+ d=citrix.com; s=google; t=1736242382; x=1736847182; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=le6xEQUAKXVEdnvKDfxbK1jzAiqE1WDBuz0Ul4Gn8vE=;
- b=PJlmNn0qA0N8eIZ3hbD1QBxpn4ksZGw6aas0MJHbd9GbX1eCjBGaTdsyYZwbqXAr2d
- vyGtEc5F0XXiZ17GePLe0TroVE4AbYBTjD2oHC/mNdYP+tOvJR7TbR4ZLz7Rvb2Keivu
- pwLxtgJo/ZBdJy8VeZ1FKD6lgC36Up4PN/S/s=
+ bh=NXMJwJkD6GoreE4rq36bTo/n6oNP+S5NtP/Em4G4kUk=;
+ b=H732gq64P26N8HSKGLeDVYPS1UV5KgMAF0F4RixJGJaqZp7knvxr9uH6Unxluk5NlM
+ HU9xLUFB43PKx9zIHsSVqydRcOQRvyXWHICI0x/tdTX7vRuck6IPQPZAHhRsPKYZd1tM
+ 8//5aLAUnwgCQ3rLJrRC6Ct/04eytbeZCeOxQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736242374; x=1736847174;
+ d=1e100.net; s=20230601; t=1736242382; x=1736847182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=le6xEQUAKXVEdnvKDfxbK1jzAiqE1WDBuz0Ul4Gn8vE=;
- b=Xwsc5VhUG3MgNbFwqIQXoogBK72FwUL8SC09Fmcheo5y7MPfU50SdqcbePkcIP5GSl
- pL6/yBR9Ae/b4q59Xo086vLGHiBZavlHz9tiH5o9BbZzceQuI23Mv2ls3mhnFRQ2Rm4p
- wdB0ojcqyBqxIeHQeHYSkdgpgzl248LnYFc5/O9nzvyq9RpK4nY3rKYSch2Y9WZYMoaU
- lf7c98kxy/UosAUZ3ZQc5KitG/dGf3j5ztXUvza6g1uX6pQD33KYfKg6R/3/03LAWRsj
- 2KMBIQTC/s2Apw9aBJoLaT411o1XwuMmJak+qbcNRO0iCD6Ykc0B9z2UOUIzdHz+2KeC
- 615Q==
-X-Gm-Message-State: AOJu0YzJkpETFCc+Lrercjhh1lI7Lz6kd9pwDMf0k0xzAuEFxUAs5/gU
- opzqty62CxX11fMlIWs0EMKeAEsE5pNLtdrlAZ8iymc2tH6tNgBqLT2Nh/Ev4aalNIa8qLA/hq/
- x
-X-Gm-Gg: ASbGncsNZetzxph7B8nbmGAxtWPfPQ5zalpaE2Fds+EUaV1g2KN5cLMRCu1oQ0INRPP
- +DnA6ouX4k7kcUjRWqItCj+XTPUHcUaMW7LMY7I1ly8YkAoxWDzihLfCql9QpoLahSSUNN3oxb/
- T8l6IaVZ0OHrTnDDuwKPkIAix0AZ60zIIWUA90aGLT7eR1QB1JWP6zv2mO5gUw9WRzwmPyYy/qO
- RkKRzv97H5Zpd+T3BjrBA9sHKSs9QrQCAsBj4QC96y5XxokwdF5cvRfDtv6yw==
-X-Google-Smtp-Source: AGHT+IGs6RVcLqHmfQoSzmfYVFDzjcfB1yzxVrQ1br3JPwQL8Jwfwgn1cE39EOkxrmixmEPusLWFPA==
-X-Received: by 2002:a5d:47c3:0:b0:385:df17:2148 with SMTP id
- ffacd0b85a97d-38a7923b75dmr1712737f8f.20.1736242374009; 
- Tue, 07 Jan 2025 01:32:54 -0800 (PST)
+ bh=NXMJwJkD6GoreE4rq36bTo/n6oNP+S5NtP/Em4G4kUk=;
+ b=EUsX/5zPom9YOYTmyshiAo/ydC2AmYeCl59cUpK/npTmOYKH5mQC1/EeXqqzjdlJJ/
+ BKUqZyD6Wo31WkqJZIhton4qN7GHz2zUl4OZd6dO8cwf+REc6ov6op5jdfvuAlW+y34M
+ WfeyMXIut/AtZgFcbMfPiBII7rkCAPnuYpXDEoebqRyn4ZqPos9Qys4b+6YO4XqLs7QK
+ ky0wb0vZN6hNkCFIKM/TBKiKJgY4jIu8PLHJzQXtS6zRBUAz8cE+QZ7csh+/lH60XBAP
+ QGabHTA/lF3Ko/q7QDHvD9WPcun1LOYy/SfD9UpTPO5QG6Y7lTlOn07MhJTHABlnN5w/
+ /YJg==
+X-Gm-Message-State: AOJu0YyX/4O7jXbKF2mCiplIgICEwfalLgQXk3VewYGi1VWA5dx3xJwy
+ eXoIoP9y//4iUJ8CLvDzVG0XMjWuvsJQ6fU/4Jhh2C9hKHokvWZ04yY7GvpGAPTgQt0vkbMK3G4
+ R
+X-Gm-Gg: ASbGncs/e0ev78k3W4og7n+1o8JdjUuqY6vYMfEg1qFtD9HiRbLpuPQ8/xexXPVjmlU
+ PK9RmJJQH6v5uDqgFpdmpjK57H2BOn0iI74yr1kzH1cDNLFXkupaGVbtUJh4MivSIP+gWVOi3Sb
+ f6YUwtP3Q5arcvhj2Bcl0z32KGr1FYYG3jafT8yZi9PCz4Ca6nUshnAIpvMK0aj8rZ1XMT2Od+8
+ mn4l/2h9ZCHI6y5IXrL6BVQNz+9r2o6HFPLtMG0SqY1aHigqaZ82/hYC23JVQ==
+X-Google-Smtp-Source: AGHT+IEix0l+GrmL6GlNsHgpdBKlhdge3KcJsVrThXIBxIDP7VrUAOxyB//Zy8/3JjeQgqN+VJe5zw==
+X-Received: by 2002:a05:6000:4012:b0:385:f7a3:fea6 with SMTP id
+ ffacd0b85a97d-38a221fa6bamr42191038f8f.13.1736242382216; 
+ Tue, 07 Jan 2025 01:33:02 -0800 (PST)
 Received: from localhost ([84.78.159.3]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c4d7sm591188645e9.34.2025.01.07.01.32.52
+ ffacd0b85a97d-38a1c8a6abesm49900025f8f.90.2025.01.07.01.33.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 01:32:53 -0800 (PST)
+ Tue, 07 Jan 2025 01:33:01 -0800 (PST)
 From: Roger Pau Monne <roger.pau@citrix.com>
 To: qemu-devel@nongnu.org
 Cc: Roger Pau Monne <roger.pau@citrix.com>,
@@ -67,18 +67,17 @@ Cc: Roger Pau Monne <roger.pau@citrix.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org
-Subject: [PATCH 1/2] xen/console: fix error handling in
- xen_console_device_create()
-Date: Tue,  7 Jan 2025 10:31:39 +0100
-Message-ID: <20250107093140.86180-2-roger.pau@citrix.com>
+Subject: [PATCH 2/2] xen: do not use '%ms' scanf specifier
+Date: Tue,  7 Jan 2025 10:31:40 +0100
+Message-ID: <20250107093140.86180-3-roger.pau@citrix.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20250107093140.86180-1-roger.pau@citrix.com>
 References: <20250107093140.86180-1-roger.pau@citrix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=roger.pau@cloud.com; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=roger.pau@cloud.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -101,26 +100,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The usage of error_prepend() in some of the error contexts of
-xen_console_device_create() is incorrect, as `errp` hasn't been initialized.
-This leads to the following segmentation fault on error paths resulting from
-xenstore reads:
+The 'm' parameter used to request auto-allocation of the destination variable
+is not supported on FreeBSD, and as such leads to failures to parse.
 
-Program terminated with signal SIGSEGV, Segmentation fault.
-Address not mapped to object.
-    fmt=0x15c4dfeade42 "failed to read console device type: ", ap=0x15cd0165ab50)
-    at ../qemu-xen-dir-remote/util/error.c:142
-142         g_string_append(newmsg, (*errp)->msg);
-[...]
-(gdb) bt
-    (errp=0x15cd0165ae10, fmt=0x15c4dfeade42 "failed to read console device type: ", ap=0x15cd0165ab50) at ../qemu-xen-dir-remote/util/error.c:142
-    (errp=0x15cd0165ae10, fmt=0x15c4dfeade42 "failed to read console device type: ")
-    at ../qemu-xen-dir-remote/util/error.c:152
-    (backend=0x43944de00660, opts=0x43944c929000, errp=0x15cd0165ae10)
-    at ../qemu-xen-dir-remote/hw/char/xen_console.c:555
+What's more, the current usage of '%ms' with xs_node_scanf() is pointless, as
+it just leads to a double allocation of the same string.  Instead use
+qemu_xen_xs_read() to read the whole xenstore node.
 
-Replace usages of error_prepend() with error_setg() where appropriate.
-
+Fixes: a783f8ad4ec9 ('xen: add a mechanism to automatically create XenDevice-s...')
 Fixes: 9b7737469080 ('hw/xen: update Xen console to XenDevice model')
 Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
 ---
@@ -132,30 +119,70 @@ Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: xen-devel@lists.xenproject.org
 ---
- hw/char/xen_console.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/char/xen_console.c | 11 +++++++++--
+ hw/xen/xen-bus.c      |  7 +++++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-index ef0c2912efa1..af706c7ef440 100644
+index af706c7ef440..18afd214c2f6 100644
 --- a/hw/char/xen_console.c
 +++ b/hw/char/xen_console.c
-@@ -551,7 +551,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
-     }
- 
-     if (xs_node_scanf(xsh, XBT_NULL, fe, "type", errp, "%ms", &type) != 1) {
--        error_prepend(errp, "failed to read console device type: ");
-+        error_setg(errp, "failed to read console device type: ");
+@@ -531,6 +531,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
+     const char *name = xen_backend_get_name(backend);
+     unsigned long number;
+     char *fe = NULL, *type = NULL, *output = NULL;
++    const char *node_path;
+     char label[32];
+     XenDevice *xendev = NULL;
+     XenConsole *con;
+@@ -550,7 +551,10 @@ static void xen_console_device_create(XenBackendInstance *backend,
          goto fail;
      }
  
-@@ -582,7 +582,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
-     } else if (number) {
-         cd = serial_hd(number);
-         if (!cd) {
--            error_prepend(errp, "console: No serial device #%ld found: ",
-+            error_setg(errp, "console: No serial device #%ld found: ",
-                           number);
-             goto fail;
+-    if (xs_node_scanf(xsh, XBT_NULL, fe, "type", errp, "%ms", &type) != 1) {
++    node_path = g_strdup_printf("%s/type", fe);
++    type = qemu_xen_xs_read(xsh, XBT_NULL, node_path, NULL);
++    g_free(node_path);
++    if (!type) {
+         error_setg(errp, "failed to read console device type: ");
+         goto fail;
+     }
+@@ -568,7 +572,10 @@ static void xen_console_device_create(XenBackendInstance *backend,
+ 
+     snprintf(label, sizeof(label), "xencons%ld", number);
+ 
+-    if (xs_node_scanf(xsh, XBT_NULL, fe, "output", NULL, "%ms", &output) == 1) {
++    node_path = g_strdup_printf("%s/output", fe);
++    output = qemu_xen_xs_read(xsh, XBT_NULL, node_path, NULL);
++    g_free(node_path);
++    if (!output) {
+         /*
+          * FIXME: sure we want to support implicit
+          * muxed monitors here?
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index adfc4efad035..9be807649e77 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -142,6 +142,7 @@ again:
+ 
+     opts = qdict_new();
+     for (i = 0; i < n; i++) {
++        const char *node_path;
+         char *val;
+ 
+         /*
+@@ -156,8 +157,10 @@ again:
+             !strcmp(key[i], "hotplug-status"))
+             continue;
+ 
+-        if (xs_node_scanf(xenbus->xsh, tid, path, key[i], NULL, "%ms",
+-                          &val) == 1) {
++        node_path = g_strdup_printf("%s/%s", path, key[i]);
++        val = qemu_xen_xs_read(xenbus->xsh, tid, node_path, NULL);
++        g_free(node_path);
++        if (val) {
+             qdict_put_str(opts, key[i], val);
+             free(val);
          }
 -- 
 2.46.0
