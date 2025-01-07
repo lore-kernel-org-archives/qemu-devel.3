@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 749E4E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 09:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CBCE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 09:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV5X4-0001La-Hc; Tue, 07 Jan 2025 04:05:50 -0500
+	id 1tV5hx-0003Eg-RA; Tue, 07 Jan 2025 04:17:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV5X0-0001KH-O8
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:05:47 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1tV5hv-0003E7-Qm
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:17:04 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV5Wz-0002oc-2v
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:05:46 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-38637614567so6929187f8f.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 01:05:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1tV5hu-0004V7-AE
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:17:03 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2ef72924e53so22339318a91.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 01:17:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736240742; x=1736845542; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=gmail.com; s=20230601; t=1736241421; x=1736846221; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MDcW+xfLTJD/IB8Pbtb5vwtl2Z1T3HvRUsMWCOo7VOg=;
- b=YsxIGwt0FUjM8Ngmg9lD27DJBR4wlGC1ZGT2/w2a/JdZb8l2YJc2//1koAB0wiK7i0
- y5veJTx5Yhvmj35M5/FhPt1mYkilhIiDwBcDxZl4iKQze1VO2dlk99vJ80rvzrVHoHz7
- pWdhpF8SH+8x7v5OBqS4mKu9SByqV6wzK88gxgHddJVrFqN3rrRUIfrJ1iFDWQ5vYxsJ
- LoE9AOk4ySSbLopNu0i4cTIeNiEv2OHEVZQrplQoeNkBssuvMP+bvAAmN0I3fcITdrma
- iIKB3+JI7VFW2YyqQUMN3axgtQDG9rSfa2+Bk3SwxqIdLba5s/2BIxYuQkc+fZS2d9xv
- 75Dg==
+ bh=L8hhEqlHQ0AEGQDSWr47PnNloF147kADH/G/AhG0a7M=;
+ b=XBtOt9TjSZdnrHxvY9+0RH1GMU1xzTfX3/pN4ptvOPUTDmiKls5v8fKwqW/ST65pDz
+ 1DP/dKLM11PhZeJvZtg6vsKuc/n5FhftalimGrbfjGMh+HSElpGLFKWAftDJu0yqSBfh
+ BQjzCB5eQPogHayflbA4kvtAbyvobeXh7w2uFL6XvFm5sCv/9ELN5alsW4j8BhxbmXqC
+ kmMUvwG3w0MZsTmS2DY7dQJtSL5NG5fuYIfXm+D+i7P2CRQkBdbbX4e7dkqbGB1gqG6s
+ CapUM5yil76pDO4Z2vLBAsyVDmJHJXwP0ZMA27rbWcwS4RKMo4uODPvFPKbvvXpM4x8n
+ PLPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736240742; x=1736845542;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1736241421; x=1736846221;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MDcW+xfLTJD/IB8Pbtb5vwtl2Z1T3HvRUsMWCOo7VOg=;
- b=kWXfUZgTlH9TGqpl3mKAdcrWbN2/seqhUFElrG8J2+JuRduZlPoe6+X1LT5Om8Gocr
- ryey+JmCXU0sfKv7w0cyzOniBUekmHD7BBofKm9qXQ4jadoahH7Tb4mNuHN6erCZSO7D
- tetF6kyvNFM0YYmBaiZQ6BrbS+o9Js1YRGXDa/nwXxeTnnafMVZPRc/3/HhHOSsT5ZRr
- YxmyIZFddeMC0NmKFaV4oNNkMJI+7wv4eSydvLC89L2af8J2nMXKEX1KG/j/PgIA5dMG
- zm7RJ7l8lzyxa2Fpq5u2BkTnxRULaOmiu0jOp65S+vtH6HfvsO6OFtH+DAlL9CXfCGCi
- pCbg==
+ bh=L8hhEqlHQ0AEGQDSWr47PnNloF147kADH/G/AhG0a7M=;
+ b=tvqRSRaV8eNVnbHsDROtgbaZJMKCTM6m95dThuoMTcbowvqesBr13ofoQhhPtYH/oK
+ gbP38rwvScZZcfrjfs3LO9OwPoYEv+62rwo6Nlsz/0p2eDZyTZ1RejpIWRiBahxe2Qng
+ KjkrjJcBoWTmUJZ7tkR/h74JDQFIeFtPn8tPXeeqEc3jbUVByZoK8ENmJVQShxd6q1YF
+ VMfVpRJndW1QC6nRfsaaRBUHqi6Zq1GU6Wo7EOq6Z58GmQLN0IyvZ7OhfCvjFcntkjqv
+ lVIoMwe4rU9JELYY5wd0ZZ1Z9BGECrdiYsahTjvV7QZfsN98ysbRzmFI+C5JApDgxDrb
+ EO6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSlDisJoCpBz+KAOUTvEDpB5YfRFxySftF5wzT1YPKRGtQ2r5Hg8JNSXFTBcdCjqmLO19FIlNJL2tR@nongnu.org
-X-Gm-Message-State: AOJu0Yyw8blJVXYw261qd/Oqe/wuIsJORYSpTqSGK3FOZRSBf1UB2Kt5
- KT5s0hCQexHvnvDapGWNL0uHUZaVMgU35DTxdr96tLJt9no0hF86HTs3rAMaUYc=
-X-Gm-Gg: ASbGnct6W+PTo5bUPkrjQ0ZjueWs6jnp+2QEIgKB/bFxDg/S9aIIDmARLRrMG41XCyA
- HA4NjzL8m+8YzXhEODcU57NDXG4Vgpmjs0YZgKX9I8ZtCGUB0K9dvuJQOYA2hIyVOj0SPvi9E3Y
- LDj8BKAYpMvV8dLdHp0ZWR5Zmi59JypURepiNHI+c3JYx20nETZwPjQmbSjBF1B5KOShCoHkeiL
- GGsN6hyVo9ZHkRJbpJGT9Q9goeA6CoEEn0MMhJEjFpIUsSGlHJsl3ChUE7jBrJv4qnD4VZYclm/
- n9uCgsKjzoASZLnUhlIibhS1
-X-Google-Smtp-Source: AGHT+IEf97TXzXfI5yE+aYcsMW5+AS94RPd/lJIJokCWAI8O70UbC4qsCs5OHNd19wrJ/09bWADCVA==
-X-Received: by 2002:a05:6000:2a1:b0:385:f060:b7fc with SMTP id
- ffacd0b85a97d-38a221fee1amr49885812f8f.25.1736240742278; 
- Tue, 07 Jan 2025 01:05:42 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4367086e40esm557878575e9.30.2025.01.07.01.05.41
+ AJvYcCXICGyYD8AXEH9E2jipUTvw2CaDSHulQBYO0DbJ86opBeXTtSkV1yQPVxSDewp13lq48dLDKk0bUYVP@nongnu.org
+X-Gm-Message-State: AOJu0YzX7mBjfPhmxhxVngdwEKHj+sUJSu2Uwb9GJnB7RyMEDBGIL/Qm
+ bIbBO2t/WTZsqGbWpgIilNKXdL0Xljj3bREw1l2wSEVPvVN3we+F
+X-Gm-Gg: ASbGncthHS8Rs1todZYKuBvi1Pojo43lVZ8gyAwCLYd6eNZ1OOYosKiUU6aC6XNTY32
+ 2/py/yL1HiBNmiGdAVLVZuwTArX0CnAKWCp8o6gUyVz+/57me/v0Rn8hkOXvy/IbqJivwsQE1sQ
+ Fxjo5zCFtS0vpbRdjzt5jLvAXMEhwUp5WQmojJRO4fAOYDBYnMsLerdFedKOmc4HD5wY6YzBEtN
+ D4+DHaREGNsRXd0EvNi7PROyTb1mI13YMMTZJ3POOMWuAvEL9nvIayH5sQHMDtDLZZX2lI=
+X-Google-Smtp-Source: AGHT+IFLYpv8mg4Z6dvH+Mw1fYfR7+f1gLVR2c93t43MCku0Jfr8r3sbiRGr1mEWVocYdjhe5dff4w==
+X-Received: by 2002:a05:6a00:39a3:b0:729:1c0f:b94a with SMTP id
+ d2e1a72fcca58-72abdeb9c0dmr91695070b3a.23.1736241420753; 
+ Tue, 07 Jan 2025 01:17:00 -0800 (PST)
+Received: from [192.168.0.22] ([175.119.5.143])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-842ddb09b2asm30053765a12.57.2025.01.07.01.16.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 01:05:41 -0800 (PST)
-Message-ID: <a856d994-e6ca-4737-bd66-323c60a7d898@linaro.org>
-Date: Tue, 7 Jan 2025 10:05:41 +0100
+ Tue, 07 Jan 2025 01:17:00 -0800 (PST)
+Message-ID: <a59dd0e0-12a6-4fb7-9494-23cfd653ade9@gmail.com>
+Date: Tue, 7 Jan 2025 18:17:30 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] util/cpuinfo-riscv: Detect Zbs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, Alistair.Francis@wdc.com
-References: <20250102181601.1421059-1-richard.henderson@linaro.org>
- <20250102181601.1421059-2-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250102181601.1421059-2-richard.henderson@linaro.org>
+Subject: Re: [PATCH v2] hw/ufs: Adjust value to match CPU's endian format
+Content-Language: ko
+To: keosung.park@samsung.com, Jeuk Kim <jeuk20.kim@samsung.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "farosas@suse.de" <farosas@suse.de>,
+ "lvivier@redhat.com" <lvivier@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>
+References: <CGME20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3@epcms2p2>
+ <20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3@epcms2p2>
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+In-Reply-To: <20250107084356epcms2p2af4d86432174d76ea57336933e46b4c3@epcms2p2>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,13 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/25 19:16, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+On 1/7/2025 5:43 PM, Keoseong Park wrote:
+> In ufs_write_attr_value(), the value parameter is handled in the CPU's
+> endian format but provided in big-endian format by the caller. Thus, it
+> is converted to the CPU's endian format. The related test code is also
+> fixed to reflect this change.
+>
+> Fixes: 7c85332a2b3e ("hw/ufs: minor bug fixes related to ufs-test")
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Keoseong Park <keosung.park@samsung.com>
 > ---
->   host/include/riscv/host/cpuinfo.h |  5 +++--
->   util/cpuinfo-riscv.c              | 18 ++++++++++++++++--
->   2 files changed, 19 insertions(+), 4 deletions(-)
+>   hw/ufs/ufs.c           | 2 +-
+>   tests/qtest/ufs-test.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+> index 8d26d13791..428fe927ad 100644
+> --- a/hw/ufs/ufs.c
+> +++ b/hw/ufs/ufs.c
+> @@ -1164,7 +1164,7 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
+>           value = ufs_read_attr_value(u, idn);
+>           ret = UFS_QUERY_RESULT_SUCCESS;
+>       } else {
+> -        value = req->req_upiu.qr.value;
+> +        value = be32_to_cpu(req->req_upiu.qr.value);
+>           ret = ufs_write_attr_value(u, idn, value);
+>       }
+>       req->rsp_upiu.qr.value = cpu_to_be32(value);
+> diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+> index 60199abbee..1f860b41c0 100644
+> --- a/tests/qtest/ufs-test.c
+> +++ b/tests/qtest/ufs-test.c
+> @@ -145,7 +145,7 @@ static void ufs_send_query(QUfs *ufs, uint8_t slot, uint8_t query_function,
+>       req_upiu.qr.idn = idn;
+>       req_upiu.qr.index = index;
+>       req_upiu.qr.selector = selector;
+> -    req_upiu.qr.value = attr_value;
+> +    req_upiu.qr.value = cpu_to_be32(attr_value);
+>       req_upiu.qr.length = UFS_QUERY_DESC_MAX_SIZE;
+>       qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
+>                      sizeof(req_upiu));
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Thank you for your contribution.
+
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
 
