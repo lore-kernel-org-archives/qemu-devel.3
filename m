@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CB3E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B866DE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCoz-0004IT-3H; Tue, 07 Jan 2025 11:52:49 -0500
+	id 1tVCqL-0006Xx-NV; Tue, 07 Jan 2025 11:54:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCop-0004CM-Pz
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:41 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tVCpQ-0004zM-Tr
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:17 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoQ-0005qG-IW
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:39 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso114414345e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:14 -0800 (PST)
+ id 1tVCoW-0005uJ-Ru
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:16 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3862ca8e0bbso11993338f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736268733; x=1736873533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268739; x=1736873539; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XAm5CLLg9CbkGcsm6UEr9S48g/0qIqAr62CjoayD1as=;
- b=fGMjofNlrO2Mc/CaesCKAvcrvBZO5DO2tho1nxAq/Tglt8XhqM8NObugHOLTaK2s30
- QegZNPe6rBkpjpxLgJRRFc2nNRUrbC3YtuKk/j05W/DeNJzMdCQpY8foK/1439jzouhJ
- w6Mr75mwTBj/kvr2wOu4X624rJyHBY7uV2DDIxo5nO6aT2MeSjsafjB+8NICLmt6EU0i
- DIKB4QAfXoFbbzvGVEENKL3/61TekxKOiH3/WSecNlRocUd3U57AFLmd4A7211ExMMvf
- vc2vfqbB5P30A0yGY4jiRlMjEJFw73kGYmI5yZRSS87hUYCeLFhZioIb+WAliITuaVMx
- wBPQ==
+ bh=kYtPKP+K5TFg3ROfXNJmvA24TJ2xerIjRSKiAVxUUqc=;
+ b=kyDYbzuLyBygTTJHPC8OObhghBQVfaW49d0Ik+3XbbNXg1PDtriwkyfAftIpUbaUEa
+ wbgMchYAZedzR3a0WTDEqeAhWZGL2cm9YdHIDEX3SsEJYdvTG0X9H5qylXJwwil1DAxf
+ F/OFu2ZaLl0r9hSFYa43sth3wDWUx/MjZcJb6rc1r9lq4/Vz81tC3ArY9ipeA2r2dU46
+ YtMpdcGnvixaEnl8yjphXtM2I1xxDg0tjdsL8BUY9yaLe0GFWYcBVkMKVyb1iEPjnYDB
+ f+0HaSqNNsWEm/MkRBrAKtnaJOlwwMI2qFC9pIu2f/U2ej5XM8UsUpoGN2bc2rb6qT+y
+ ss5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736268733; x=1736873533;
+ d=1e100.net; s=20230601; t=1736268739; x=1736873539;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XAm5CLLg9CbkGcsm6UEr9S48g/0qIqAr62CjoayD1as=;
- b=JnsMxgh+Tn9cZKTpzHRfwr5N1WOW4Uw+fqmmOP/KgBPoa4Ip5qb/tYv43KKkwITYCY
- 01SOqOBxwfhqPLOU7iVw/DpdD8HS2+qpsvLT7oR0sW84F8YWSe5N645QAmIZdKPKGSHd
- FHt8IuIuvM9t/84HSkoffOwxECtTCvYGzoqNK5/TIb8xOsh8EUjQpP9PwyyI6qqindVL
- xedjTYQJC0dDqx260Ww/YvZdL/3/K1+xKsVBGuo+iC1/v2VapnOm5S029/v3QhP/Y+/D
- Gh+nbzhHOtaanxM096Y6IQ3QbS9jF3/5wO9CIP7TsgckAfMaEtBn9/VzHaYD96HaMY0L
- gT7A==
-X-Gm-Message-State: AOJu0YyV/E7/FcXEal+ZrSC78VYiPvvmyjY6Jfep2mXwwT/IFTt0sBVz
- 4bmiwcTKNvVPm9+xxoJKLGYKN6p7Sc1p0WXPWSGAJuJSgxGnFVETZGHRlXh0sEk=
-X-Gm-Gg: ASbGncttbLNMW8y4HDrtEfglNbrgy71SBQJVdB/d9/vKWV6TVPVdQeurU31fdyoGJe/
- uvEYassCJKVhAqVbhonIRm/ATKpxhKiMsTu5pzTvWIfrHgRf3zd2FSmFW3S43wj5ZGMrT0PrxWa
- /gTy/djAJDy2Anb3F5bpWgga+MLwRtPbsNEIZeoUZERXwDwfaD83I3r81ASe+Dp8wRTQ4cX6XTF
- JIWRzWCr6IQHKTwg0GBSj1zJQmqrZ9FRXEhpOc3M3MDNHbcs7XBIfY=
-X-Google-Smtp-Source: AGHT+IGioCwy/MktanB+hVlb46/WW89VYn7JrfuFRCWmCdTPcDUUVEo16uqps/X0wgRcsCV9iiguqQ==
-X-Received: by 2002:a05:600c:1986:b0:434:fdbc:5cf7 with SMTP id
- 5b1f17b1804b1-43668b7a0a8mr500485875e9.27.1736268732891; 
- Tue, 07 Jan 2025 08:52:12 -0800 (PST)
+ bh=kYtPKP+K5TFg3ROfXNJmvA24TJ2xerIjRSKiAVxUUqc=;
+ b=MHWvdUADLdwBQ3A+WdEzSSMC8o6jeXCB4ZGOQQu2SfZcjXkqJspmQny1MV+F2A90Uw
+ JCkldPZuD/XLefYraPReY8GwXo/wluipu5JK/XUqnM6kCFZeP3OFTlGra/AxiCTOa07e
+ wTDrVY0tnaYySbuwSwImAWA0oD73lRujWZEhEbwvzeYxgB0qMOlCYhyGH1QgPrOj9Vzq
+ DdrI2i39+GPKk4k2bETklJ/JusyrunsvaUhk/4zI+CAt3cxGagcXuwZuez6aA8JlM5/C
+ 6rGvRXzHnOUes0InOxQDDokvERz/jEXeddeQiuDem+VYUXwLiO/G87YuIp/wzjt1W9Oj
+ Bj1A==
+X-Gm-Message-State: AOJu0Yz0bfoQD0/pZFn5QLm4WG8ybsePZOq6z/awYnNP52Nz+xYIUDLW
+ LdcAwl9ny1iia19gKBNIbqDrLh8XLrr/ybDHrEkAm3Z/YBnsXdEzb0rr/eC+1fM=
+X-Gm-Gg: ASbGncu0ZwZRp1SMP6CU9rqfWh4ZvCgABHT3/fnq8THeTgix5CvN59wB0p2cWWSY5I+
+ 3PX+RmKweDTR6ChNOlRhsX9c6/8gpzz8ywnd/coImIY7N/42i9uaOOwCffPJqBiHrUWgE3KM9Dx
+ Ba2g1CWsKGqGfGFnGwZcIyD0T5vZtoAaZZhQVtKJdfa3U5D+CdRaQk7m7I71AwVOBTmyAcZR2Kl
+ 26XTOLFRx5mjnQlHGFZKCf1+wO05K87FkeHHnavk7nVeVClzzL3HGk=
+X-Google-Smtp-Source: AGHT+IEaWFrVpOOV5AjR1fah5b3WuHfNw+KGECGBFK2AyHtnqReD+Gjicrr0aKlo3ea/TR1IkPP+gg==
+X-Received: by 2002:adf:9b83:0:b0:38a:624b:e609 with SMTP id
+ ffacd0b85a97d-38a624be681mr16073594f8f.55.1736268739033; 
+ Tue, 07 Jan 2025 08:52:19 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b4274csm639215485e9.38.2025.01.07.08.52.10
+ ffacd0b85a97d-38a1c8472b3sm50758769f8f.58.2025.01.07.08.52.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:52:11 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7F3C45F932;
- Tue,  7 Jan 2025 16:52:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 4B3D75FB57;
+ Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -99,17 +99,17 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Bernhard Beschow <shentey@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v3 05/29] tests/functional: update the mips32el tuxrun tests
-Date: Tue,  7 Jan 2025 16:51:43 +0000
-Message-Id: <20250107165208.743958-6-alex.bennee@linaro.org>
+Subject: [PATCH v3 14/29] tests/functional: update the x86_64 tuxrun tests
+Date: Tue,  7 Jan 2025 16:51:52 +0000
+Message-Id: <20250107165208.743958-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -138,31 +138,31 @@ Cc: Anders Roxell <anders.roxell@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Tested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-26-alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-35-alex.bennee@linaro.org>
 ---
- tests/functional/test_mipsel_tuxrun.py | 8 ++++----
+ tests/functional/test_x86_64_tuxrun.py | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_mipsel_tuxrun.py b/tests/functional/test_mipsel_tuxrun.py
-index 2965bbd913..d4b39baab5 100755
---- a/tests/functional/test_mipsel_tuxrun.py
-+++ b/tests/functional/test_mipsel_tuxrun.py
+diff --git a/tests/functional/test_x86_64_tuxrun.py b/tests/functional/test_x86_64_tuxrun.py
+index 4f96139871..fcbc62b1b0 100755
+--- a/tests/functional/test_x86_64_tuxrun.py
++++ b/tests/functional/test_x86_64_tuxrun.py
 @@ -17,11 +17,11 @@
- class TuxRunMipsELTest(TuxRunBaselineTest):
+ class TuxRunX86Test(TuxRunBaselineTest):
  
-     ASSET_MIPSEL_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/mips32el/vmlinux',
--        '8573867c68a8443db8de6d08bb33fb291c189ca2ca671471d3973a3e712096a3')
-+        'https://storage.tuxboot.com/buildroot/20241119/mips32el/vmlinux',
-+        '660dd8c7a6ca7a32d37b4e6348865532ab0edb66802e8cc07869338444cf4929')
-     ASSET_MIPSEL_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/mips32el/rootfs.ext4.zst',
--        'e799768e289fd69209c21f4dacffa11baea7543d5db101e8ce27e3bc2c41d90e')
-+        'https://storage.tuxboot.com/buildroot/20241119/mips32el/rootfs.ext4.zst',
-+        'c5d69542bcaed54a4f34671671eb4be5c608ee02671d4d0436544367816a73b1')
+     ASSET_X86_64_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/x86_64/bzImage',
+-        '2bc7480a669ee9b6b82500a236aba0c54233debe98cb968268fa230f52f03461')
++        'https://storage.tuxboot.com/buildroot/20241119/x86_64/bzImage',
++        'f57bfc6553bcd6e0a54aab86095bf642b33b5571d14e3af1731b18c87ed5aef8')
+     ASSET_X86_64_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/x86_64/rootfs.ext4.zst',
+-        'b72ac729769b8f51c6dffb221113c9a063c774dbe1d66af30eb593c4e9999b4b')
++        'https://storage.tuxboot.com/buildroot/20241119/x86_64/rootfs.ext4.zst',
++        '4b8b2a99117519c5290e1202cb36eb6c7aaba92b357b5160f5970cf5fb78a751')
  
-     def test_mips32el(self):
-         self.set_machine('malta')
+     def test_x86_64(self):
+         self.set_machine('q35')
 -- 
 2.39.5
 
