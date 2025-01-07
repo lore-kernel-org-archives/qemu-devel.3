@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288FCE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DF1E77199
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVBbA-0003IZ-QA; Tue, 07 Jan 2025 10:34:28 -0500
+	id 1tVBbJ-0003cz-Cf; Tue, 07 Jan 2025 10:34:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBb9-0003HI-Jk
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:27 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBbG-0003XF-VQ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBb8-00058Y-1c
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:27 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tVBbF-0005AY-IZ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736264065;
+ s=mimecast20190719; t=1736264072;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fhA9vw4rC8cliR2dekVATbP1rzZ3SVv6Ouh3uqjp7AI=;
- b=i7sKF8Luy8eYmjL8/vJcS9S/pG1ahQgh1LmtRQz0xAYjYicbWsu/6CG3OKYLPTc6wkIKXs
- s0XuCkEYupuTmqsRSV+zrfgnMCvcwoWdBqI9DYXNRzGa9/hKGwNQKybNWRFEzJspdXJgE6
- UmfvSbnkGgbuDjlPD+vhjfyC+oY2L2Q=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9VfOLVY4PKP7+JfEplTNZ+7N7DCAftr7lf3bLl4oJc8=;
+ b=NOlG/wTHOXkCTYJamcrRQ58QSXUSijQSArL1pyrk2k4JT+5WITctcTodcTo5MMOFWBBB0O
+ +7Nwjao6IMyF4GNaxjPWfigSvYiojzSeCEFA/7NGm3Hl+1jb+WNdUlKS1vqZAu93hJQxZb
+ TVgxoSBdT90ohc9OfvmCQvhd7f/HV1k=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-6sUirdTSNhu6eQHzgdy-3w-1; Tue,
- 07 Jan 2025 10:34:22 -0500
-X-MC-Unique: 6sUirdTSNhu6eQHzgdy-3w-1
-X-Mimecast-MFC-AGG-ID: 6sUirdTSNhu6eQHzgdy-3w
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-_SqfRP5PNLqZT_qxB3-w_g-1; Tue,
+ 07 Jan 2025 10:34:29 -0500
+X-MC-Unique: _SqfRP5PNLqZT_qxB3-w_g-1
+X-Mimecast-MFC-AGG-ID: _SqfRP5PNLqZT_qxB3-w_g
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE4901955D92; Tue,  7 Jan 2025 15:34:20 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C85F51955D53; Tue,  7 Jan 2025 15:34:27 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.66])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3247E195606C; Tue,  7 Jan 2025 15:34:20 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC8C519560A2; Tue,  7 Jan 2025 15:34:26 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 9AB4B1800603; Tue, 07 Jan 2025 16:33:54 +0100 (CET)
+ id E1C0F180060A; Tue, 07 Jan 2025 16:33:54 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
@@ -57,14 +57,14 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, graf@amazon.com,
  Eric Blake <eblake@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 17/21] hw/uefi: add uefi-vars-sysbus device
-Date: Tue,  7 Jan 2025 16:33:44 +0100
-Message-ID: <20250107153353.1144978-18-kraxel@redhat.com>
+Subject: [PATCH v2 21/21] hw/uefi: add MAINTAINERS entry
+Date: Tue,  7 Jan 2025 16:33:48 +0100
+Message-ID: <20250107153353.1144978-22-kraxel@redhat.com>
 In-Reply-To: <20250107153353.1144978-1-kraxel@redhat.com>
 References: <20250107153353.1144978-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -90,125 +90,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds sysbus bindings for the variable service.
-
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/uefi/var-service-sysbus.c | 90 ++++++++++++++++++++++++++++++++++++
- hw/uefi/meson.build          |  3 +-
- 2 files changed, 92 insertions(+), 1 deletion(-)
- create mode 100644 hw/uefi/var-service-sysbus.c
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/uefi/var-service-sysbus.c b/hw/uefi/var-service-sysbus.c
-new file mode 100644
-index 000000000000..de2f83e3e5ab
---- /dev/null
-+++ b/hw/uefi/var-service-sysbus.c
-@@ -0,0 +1,90 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * uefi vars device - sysbus variant.
-+ */
-+#include "qemu/osdep.h"
-+#include "migration/vmstate.h"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2101b5121756..ad2bce45a076 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2785,6 +2785,12 @@ F: hw/hyperv/hv-balloon*.h
+ F: include/hw/hyperv/dynmem-proto.h
+ F: include/hw/hyperv/hv-balloon.h
+ 
++UEFI variable service
++M: Gerd Hoffmann <kraxel@redhat.com>
++S: Maintained
++F: hw/uefi/
++F: include/hw/uefi/
 +
-+#include "hw/qdev-properties.h"
-+#include "hw/sysbus.h"
-+
-+#include "hw/uefi/var-service.h"
-+#include "hw/uefi/var-service-api.h"
-+
-+#define TYPE_UEFI_VARS_SYSBUS "uefi-vars-sysbus"
-+OBJECT_DECLARE_SIMPLE_TYPE(uefi_vars_sysbus_state, UEFI_VARS_SYSBUS)
-+
-+struct uefi_vars_sysbus_state {
-+    SysBusDevice parent_obj;
-+    struct uefi_vars_state state;
-+};
-+
-+static const VMStateDescription vmstate_uefi_vars_sysbus = {
-+    .name = "uefi-vars-sysbus",
-+    .fields = (VMStateField[]) {
-+        VMSTATE_STRUCT(state, uefi_vars_sysbus_state, 0,
-+                       vmstate_uefi_vars, uefi_vars_state),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const Property uefi_vars_sysbus_properties[] = {
-+    DEFINE_PROP_SIZE("size", uefi_vars_sysbus_state, state.max_storage,
-+                     256 * 1024),
-+    DEFINE_PROP_STRING("jsonfile", uefi_vars_sysbus_state, state.jsonfile),
-+    DEFINE_PROP_BOOL("force-secure-boot", uefi_vars_sysbus_state,
-+                     state.force_secure_boot, false),
-+    DEFINE_PROP_BOOL("disable-custom-mode", uefi_vars_sysbus_state,
-+                     state.disable_custom_mode, false),
-+};
-+
-+static void uefi_vars_sysbus_init(Object *obj)
-+{
-+    uefi_vars_sysbus_state *uv = UEFI_VARS_SYSBUS(obj);
-+
-+    uefi_vars_init(obj, &uv->state);
-+}
-+
-+static void uefi_vars_sysbus_reset(DeviceState *dev)
-+{
-+    uefi_vars_sysbus_state *uv = UEFI_VARS_SYSBUS(dev);
-+
-+    uefi_vars_hard_reset(&uv->state);
-+}
-+
-+static void uefi_vars_sysbus_realize(DeviceState *dev, Error **errp)
-+{
-+    uefi_vars_sysbus_state *uv = UEFI_VARS_SYSBUS(dev);
-+    SysBusDevice *sysbus = SYS_BUS_DEVICE(dev);
-+
-+    sysbus_init_mmio(sysbus, &uv->state.mr);
-+    uefi_vars_realize(&uv->state, errp);
-+}
-+
-+static void uefi_vars_sysbus_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = uefi_vars_sysbus_realize;
-+    dc->vmsd = &vmstate_uefi_vars_sysbus;
-+    device_class_set_legacy_reset(dc, uefi_vars_sysbus_reset);
-+    device_class_set_props(dc, uefi_vars_sysbus_properties);
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+}
-+
-+static const TypeInfo uefi_vars_sysbus_info = {
-+    .name          = TYPE_UEFI_VARS_SYSBUS,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(uefi_vars_sysbus_state),
-+    .instance_init = uefi_vars_sysbus_init,
-+    .class_init    = uefi_vars_sysbus_class_init,
-+};
-+module_obj(TYPE_UEFI_VARS_SYSBUS);
-+
-+static void uefi_vars_sysbus_register_types(void)
-+{
-+    type_register_static(&uefi_vars_sysbus_info);
-+}
-+
-+type_init(uefi_vars_sysbus_register_types)
-diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
-index d280881f457a..cf2d26e9bf9a 100644
---- a/hw/uefi/meson.build
-+++ b/hw/uefi/meson.build
-@@ -6,7 +6,8 @@ if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
-                          'var-service-auth.c',
-                          'var-service-guid.c',
-                          'var-service-utils.c',
--                         'var-service-policy.c'))
-+                         'var-service-policy.c',
-+                         'var-service-sysbus.c'))
-   uefi_vars_ss.add(when: gnutls,
-                    if_true: files('var-service-pkcs7.c'),
-                    if_false: files('var-service-pkcs7-stub.c'))
+ Subsystems
+ ----------
+ Overall Audio backends
 -- 
 2.47.1
 
