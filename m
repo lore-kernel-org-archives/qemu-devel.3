@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE75E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A075CE77199
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCoW-00040P-Jo; Tue, 07 Jan 2025 11:52:20 -0500
+	id 1tVCrH-0000x3-PR; Tue, 07 Jan 2025 11:55:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoV-0003zg-Bf
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:19 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1tVCpb-0005D6-Lx
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:30 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoN-0005ob-LN
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:19 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385e87b25f0so10432790f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:10 -0800 (PST)
+ id 1tVCob-0005xU-HV
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:27 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso156682895e9.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736268729; x=1736873529; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268744; x=1736873544; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
- b=et1donzP1n/vecihhD68v+g+D0Kwt9WmnP4/srhJIu4T5vNTKXj+gjTQRlteMlsBXo
- XUTFj7k72hUC2obQN5DAK6O6TrSKo3I8oFlkClPnUCmifccISsI23juBVvJkW7+REoPt
- lQUCIzf4RbihbD6pES8L+1F8J+BsyHyc43+kk76UC22+q+Zj54yqnMa0qOJx+VEmgZbV
- hTlOsAMH+82piOlvy3ZsPP55CeMARohq6evOBKWy0T76a1qO0Nrs+d341YbWxUL+rgR0
- 2gb70JkpMtmH4ZocGzc80HJAuE4C/hwKiEoV1NktiebD2oTck8wLgbz2C1GmooXe5AW2
- XlAw==
+ bh=oOL1w6DXYhRHKCvs8ew1RtJiJh2Nk45cuCcCN9iEMs4=;
+ b=bJVCpxmCRYrxELIH/R/TUy4UkND6KIfHczhvWalzoEiB6I1WEXLLvKIx8UbNfGf3vX
+ d3kAcCiJlu7Z8P7zq4XThF8lAH8HRRNmH8mE6DM9dpafFSWL1KC4mMcGl4DJUVs5yfV2
+ pZdjB/vLVS8FGTZbfCldMmSzVf514UWLzcUX3P9dmlVfKuaBwXauhYjKWQASbGlX98rQ
+ m7Ki0qzuGf0EGW3+1xqwxcZOQwT92PnhcEVQkvGBJdUaMuDDNx/mOFTWtgQxMi6xA3m1
+ WPSq5UMCvImCgOvT6k/WA5JebfboEiVHgNoeSs5TS9+s+5CzMml5rk4h7pqPBR6btWNT
+ eLxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736268729; x=1736873529;
+ d=1e100.net; s=20230601; t=1736268744; x=1736873544;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
- b=iPU3BvrWZ3GcBylZMvJuzAe3W3rxXspMoqWgDdOu/pX0Jld3R5YK80hDFHX12DePV1
- 0c6IiWuZHVX5MMW9tEkzNd2COqROF4kJnY9THVIAcVDqSbbuZEfnW01PiJ2HdNHUxYzE
- 966yCw9cLVU2pFxPIDP2SQLlZZ3ESXF+IoYvfJL7kH36vxjxAxsba2+gQh5nZ8juEDPN
- G41+H90orIafuBFPPHDMWzhlUwIevasjXrlbb+kAvkqSJnuBx94jbtwGdfU4qKSlX1MB
- o5gR7DonNYpBLJs85/vgW1xwCoZHl4NGvnaUG5x2rjj/DNU9lWubDYjt41tQ7jwXoSzb
- Eegw==
-X-Gm-Message-State: AOJu0YwA5b4Tp6Gz9dbUI7xyEeI4IAom9Q9XsFiLWu3voBEDN5fh7S8/
- 1lvN34bp2SE4MGpKV6FM53bMRKuLKscaYDZ8OcJz522Kz61WuK+wOtm1MCdqJMM=
-X-Gm-Gg: ASbGnctrz7JhE5uKpUG0X4sB7hKynbt9Ok37Twu+YmLcYDEAB4sJ8SGnJPvTVJFrHF7
- 8faPnHEtKAg6+MkGOO3FF5ibq7v6dy8u5DMmK+PfcIGR2yBmiIY3YeH5OwcI3qnegEsFLWaEXou
- sgW2Ax+4sBy7RGFiRh/YHaf2yKRfjR53atb6HCEMii7tfah1Ns7DKDe1eF5jZS8UQRVajoZsXTP
- hemLEQ8q92t/3f+jp0M22k2PfRmbRLad+df1gxPGwumbb2dBHc1NHY=
-X-Google-Smtp-Source: AGHT+IHyLVrmZmlrBQJRz/52kbZIecaWIAxhTafHZHyDTgDvNPoSnsk8/DInVMxkv7PmK7nBpojLhA==
-X-Received: by 2002:a5d:47ce:0:b0:38a:5ce8:df73 with SMTP id
- ffacd0b85a97d-38a7924412cmr3161920f8f.23.1736268729515; 
- Tue, 07 Jan 2025 08:52:09 -0800 (PST)
+ bh=oOL1w6DXYhRHKCvs8ew1RtJiJh2Nk45cuCcCN9iEMs4=;
+ b=XyGyaYnW5OPdyBBI+OL6TgptS8VoGJkc74N5yfUE19ehAWkIF3mmWm9IADF/cMIb50
+ TxDCzM+S/NF0l07U+iSUfs3eRMMvwFHYI911U5gfx/YcHO2XddHU9KYkaAUPFDa4zWaK
+ wxBRi+smNmrWJu4/fFhdUgQa/Twk4k3a0gvr2rP6DdQDIHQdwuOBqNFhns2O2LLtIm6S
+ JT40Pw4RwzQQ0SMMCueoVGNbZ31TIx3yFn2LudZzdg/Or+nWmWej1Fi1En33lBnZHnDK
+ O8urJihDhMRYd4LQl15h1P4Q7ner1lEbkU1duWuaNLrHJw2En0GdqAgLw8FJSJgWcdAv
+ jo7w==
+X-Gm-Message-State: AOJu0YyXWh+RRzcssNrSklnF8VYrWblTMfu9aS3vVls3k3wE79Zn5ZQl
+ jtir0ci6YkNXPD/fXDkKg4Yqaw4v2alyMmSphbvacLyEFmpU5KUJ2RicCfAJwZw=
+X-Gm-Gg: ASbGncsB4TyShyYeLZHm6owkhbcHYxicUDkNhdhPk4AqK/SJf4ztAJtOaEUVpM8qStn
+ S7MCIvI0R8Gb6/D/tFEgYV42TMkXTtHTbXLLPq2APiqcxsFScZwKNoE4NFt7FtR5RBBK5JzWp/d
+ Z8ypANMAeQyDnwekxh16DCucDR+dOQYkcpvChi0lLaRPjy/pmTMj/AM3yCAUnS7xFsGKTASaFKh
+ 2M25/Ut8egaFz2pgaaRu6m2qY/cJGu4B7DJAiIEfIkHfQ9OIFbRvTM=
+X-Google-Smtp-Source: AGHT+IFNDzjgNio99KjA4CNrZqt044tR+yPTj4ZI4LY/EjTtw+XPBEW4crdWNJqJULnvsKp3pZBJ4A==
+X-Received: by 2002:a05:600c:1c1a:b0:434:a746:9c82 with SMTP id
+ 5b1f17b1804b1-4366854725cmr528081785e9.5.1736268744136; 
+ Tue, 07 Jan 2025 08:52:24 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c84ca21sm51110218f8f.63.2025.01.07.08.52.08
+ 5b1f17b1804b1-43656b1143dsm633698265e9.18.2025.01.07.08.52.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:52:08 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:17 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3A9825F8FE;
- Tue,  7 Jan 2025 16:52:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 384DD60132;
+ Tue,  7 Jan 2025 16:52:10 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -96,20 +96,18 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v3 02/29] tests/functional: update the i386 tuxrun tests
-Date: Tue,  7 Jan 2025 16:51:40 +0000
-Message-Id: <20250107165208.743958-3-alex.bennee@linaro.org>
+ Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3 24/29] tests/vm: fix build_path based path
+Date: Tue,  7 Jan 2025 16:52:02 +0000
+Message-Id: <20250107165208.743958-25-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,37 +130,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+We no longer need to go into the per-arch build directories to find
+the build directories binary. Lets call it directly.
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-23-alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/test_i386_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/vm/basevm.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tests/functional/test_i386_tuxrun.py b/tests/functional/test_i386_tuxrun.py
-index c593ffbe8c..f3ccf11ae8 100755
---- a/tests/functional/test_i386_tuxrun.py
-+++ b/tests/functional/test_i386_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunI386Test(TuxRunBaselineTest):
- 
-     ASSET_I386_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/i386/bzImage',
--        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
-+        'https://storage.tuxboot.com/buildroot/20241119/i386/bzImage',
-+        '47fb44e38e34101eb0f71a2a01742b959d40ed5fd67cefb5608a39be11d3b74e')
-     ASSET_I386_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/i386/rootfs.ext4.zst',
--        'f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a')
-+        'https://storage.tuxboot.com/buildroot/20241119/i386/rootfs.ext4.zst',
-+        'a1a3b3b4c9dccd6475b58db95c107b468b736b700f6620985a8ed050a73d51c8')
- 
-     def test_i386(self):
-         self.set_machine('q35')
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index 4a1af04b9a..6f3f2e76df 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -520,8 +520,7 @@ def get_qemu_path(arch, build_path=None):
+     if "QEMU" in os.environ:
+         qemu_path = os.environ["QEMU"]
+     elif build_path:
+-        qemu_path = os.path.join(build_path, arch + "-softmmu")
+-        qemu_path = os.path.join(qemu_path, "qemu-system-" + arch)
++        qemu_path = os.path.join(build_path, "qemu-system-" + arch)
+     else:
+         # Default is to use system path for qemu.
+         qemu_path = "qemu-system-" + arch
 -- 
 2.39.5
 
