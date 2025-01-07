@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2403AE77188
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 01:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04B3E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 01:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUyWH-0000Sv-Hc; Mon, 06 Jan 2025 20:36:33 -0500
+	id 1tUyXv-0001A6-Uk; Mon, 06 Jan 2025 20:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUyWF-0000Se-Ei; Mon, 06 Jan 2025 20:36:31 -0500
-Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tUyWB-00034y-U0; Mon, 06 Jan 2025 20:36:31 -0500
-Received: by mail-vs1-xe30.google.com with SMTP id
- ada2fe7eead31-4afe4f1ce18so4311291137.3; 
- Mon, 06 Jan 2025 17:36:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736213786; x=1736818586; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o+ZPa83ZpImKYA3B3hvSsn3nkX5F7jHRADyyCiCDSYw=;
- b=lmcWs8wa2aslxnFydr2qG9CU/qSuglXbO9JB5gVaNlgQbfI+2n8TSo8+FNrxeZwoiC
- hwSz7PO7zrdfPUZc8SdcxitPyBjhEmoLAr5teiodq/rGy5SqfxUoOs0smvvmIKWCjJDa
- eFX3sReHLh79aCzxdeX97DQUN4h9thUvsvW6fWN9r8oExOVCpxBWbDgIHqgsx9Hmch8v
- //N+3F3BPO2Izqq/j1Y+a5AULIyE2CW8LBijbHknkfJUPlS+tS45Uae2yrHktETHZf5s
- EloOTIqlCRbXg/Uyb+UwijcM/fYU5rtf3IUpjqCb4SBO3jWKfRf4DIP/puxTErV7q3RA
- q91w==
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tUyXs-00019V-9q
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 20:38:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tUyXq-0003DE-BL
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 20:38:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736213889;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5HBUfeUW6/GEDOvf/9UKNi0N2F9Yek+Arua+HJkBvO8=;
+ b=INCgs216zOR3V2mksaq/JWW91wc1qwz4kWrp7yu2W4eDXfBqKCmEbz+2Ruvvug8BxMoCvd
+ rUBFFvsHrFclV/MSdQe1u4TbSN7saJxM+doPlj2L7FP6EVCwlLc43wkMOTgAS3AS6m5q3i
+ mfvC4qzVjrABfzIa8Pxo+I9wGlbDYXg=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-90-8agsM_aaORiq7oGnZ_Q6Tw-1; Mon, 06 Jan 2025 20:38:07 -0500
+X-MC-Unique: 8agsM_aaORiq7oGnZ_Q6Tw-1
+X-Mimecast-MFC-AGG-ID: 8agsM_aaORiq7oGnZ_Q6Tw
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0b5036394so6519652a12.3
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 17:38:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736213786; x=1736818586;
+ d=1e100.net; s=20230601; t=1736213886; x=1736818686;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o+ZPa83ZpImKYA3B3hvSsn3nkX5F7jHRADyyCiCDSYw=;
- b=k0RvWyoZeJRNc+2GyjJ2/TedLHaicsGQ2yf8aDuxS2W0dpwEcrLsDeALUG5kLhMOwD
- PoF3q1Jrfzr+v1Eb1GLZSpfWi+BtWgxE9AfRDAWYWMQhStOgVENfeD+HES+Ul5iF0B3H
- 2IDumtEPZnfiydEwqF8q0mlb8zHnf7wzvjjv6ghdTocLg2UskY5847xQ2HIvqo8dU2Lz
- ua+D7zjBgXIdnH1N+Fihnb3AUOK0A2IW9t+yDFvjnd4NVVFYnlQPegHszgA9oV6Jab71
- ZQdKykSlp7KIVagSHO/4peaezM/ND3ZoQBCAn667OL1REtXY5ArzdnYhl4Ew+/MTV2Ww
- BGVQ==
+ bh=5HBUfeUW6/GEDOvf/9UKNi0N2F9Yek+Arua+HJkBvO8=;
+ b=pkPMNeiBXAbMepa8XozcxZR6kSgcthhg/G8ZInwDmRJ5V9m71wRyFsn+s5UwbSCumV
+ eO30QYbqo4EvgIwAOSytcu2rFEsw60ZFTePN5uxpKNQGPhTtOR4gDUe0Bmeb8FqBoz3B
+ cAh/j6lQm4t4XFGoY44ZvnkT9UIMuELyNSJ/IiHhhe2H5YzV7qczOIdLHPKs8S1RBabr
+ bBRVUedXJiQ0KwqOw9QzSTOjV8FQ5jbirXh9UH0RMdOpoGtpLjs8hc0avuxfU4cSnFWj
+ B3Af1aLoxZvpd4X/X9I3qvycBcji7UZFziWOu/40Qk7+77O61KX03gPSXd7haxheDjhF
+ kDAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBeLPOwvzo8v1vE0DV4aQG1UavIArJmEGG7cz1Ef98nDUCzMrKh844pZs9ndVfoRUGqO02vit/TfCVhg==@nongnu.org,
- AJvYcCXA7odufXXeY+uYxidMjYDvA09uWImDZpraKEoHazx22w26UjzhoAzOAvQJC1lcYxaf8ukwNoxBhgR8@nongnu.org
-X-Gm-Message-State: AOJu0YwY877Udz7m86Rk3Kyr0KLDWelrLiSfNoG8snff+/uqTNLtzjKR
- uMosJ7MA6horisJ8b/8pJJyi6fn8ORebHsRzilwrLf+s4wrYA2gy1sbqgvhZH5BUXKGHx2kS+PL
- 4Mg1wdAEK6MIM8BkICKxfx7qhbzc=
-X-Gm-Gg: ASbGncvNTMxwnScE3wAVZuLfQWjUgmNZwCIh4QKzbU5z+zwBriLYZJoDtE42Qo8yAGG
- IQ2hf/zn44I5Bjq/hDixDh5V8vXLr7PLsswkj7L8=
-X-Google-Smtp-Source: AGHT+IHkmGU+imwdSzRyh5iHMswDjWc6HRsu5b4MBpNV9a6KGfRjSxG40GttIohYnLmuw+uknnlyfWwzIOMWXnBmmJ4=
-X-Received: by 2002:a05:6102:6cf:b0:4b1:16f8:efc4 with SMTP id
- ada2fe7eead31-4b2cc36a2f3mr52253648137.12.1736213785978; Mon, 06 Jan 2025
- 17:36:25 -0800 (PST)
+ AJvYcCUCvR3ImLkPZTDcGldTc/fzVq2DdVviOyZw03W9TeN/ni5AIMPX+/GzwHSw5GeggYdnUrS/I06bGUxA@nongnu.org
+X-Gm-Message-State: AOJu0YxebyBhLcYSY6EDP7uEcBmjUwv2ZMRks5rGT0THmmdOda86jnSO
+ lRHJLMBi516WQukpQPfvaNtsWnw72AfBVuZmQ5jtWmQ2qSHW36HhF44mxJ9RlVwTsfSK8ZrusZx
+ qD/dcsuuRG+Hf5no5E1OQ1Z/V3TsStzwpPVtGKKugNFtqS9v4j3EVm/drBQyzDPKUU8dobaQD9g
+ +FM1s1GC3AIMYqgwARHf5FA6IGK/w=
+X-Gm-Gg: ASbGncv5AYPXPIUCAjehgGNQsFR31YySyn6APa2NGgUIM1N09XZem1hf5kJSer5Jz5h
+ FiIYuHE6oGpftY0Axlw9/WoVBnOx7dcd/cM/WgbU=
+X-Received: by 2002:a05:6402:40cf:b0:5d0:e570:508d with SMTP id
+ 4fb4d7f45d1cf-5d81ddfe3b3mr54213761a12.17.1736213886180; 
+ Mon, 06 Jan 2025 17:38:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHqcRRRzEUvyTzkjOEYu2/MEdRmop+VOXdJye8qao2kymx5NxR2rX7fs5y1XW3kobsqEOn7YyTEeDAnBNwC6DM=
+X-Received: by 2002:a05:6402:40cf:b0:5d0:e570:508d with SMTP id
+ 4fb4d7f45d1cf-5d81ddfe3b3mr54213754a12.17.1736213885857; Mon, 06 Jan 2025
+ 17:38:05 -0800 (PST)
 MIME-Version: 1.0
-References: <20250106102346.1100149-1-baturo.alexey@gmail.com>
-In-Reply-To: <20250106102346.1100149-1-baturo.alexey@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 7 Jan 2025 11:36:00 +1000
-X-Gm-Features: AbW1kvYVkSMjBFN8ippSYjOj0K2FyFVhIlJ9q9-No0NysMM6Z0lO62D8TXuxjhg
-Message-ID: <CAKmqyKOeLJk=No+2fxAEsGaMic2bT92zpgAMd_6LNhhUnTDvtA@mail.gmail.com>
-Subject: Re: [PATCH v15 0/7] Pointer Masking update for Zjpm v1.0
-To: baturo.alexey@gmail.com
-Cc: richard.henderson@linaro.org, palmer@dabbelt.com, Alistair.Francis@wdc.com,
- sagark@eecs.berkeley.edu, kbastian@mail.uni-paderborn.de, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, frank.chang@sifive.com
+References: <20250106155737.976977-1-jonah.palmer@oracle.com>
+In-Reply-To: <20250106155737.976977-1-jonah.palmer@oracle.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Tue, 7 Jan 2025 09:37:29 +0800
+X-Gm-Features: AbW1kvYRr4M-a20Na6SQV7G0NaCVNy1Y-lTLNOpkuYIIj-jXSdlxgWpiqAEa4l4
+Message-ID: <CAPpAL=x-maHy-KSn0jLwNcQMf-3uLVvu9Ld-Cx1vB6BDi5C34w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Move net backend cleanup to NIC cleanup
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: eperezma@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
+ dtatulea@nvidia.com, mcoqueli@redhat.com, mst@redhat.com, 
+ si-wei.liu@oracle.com, qemu-stable@nongnu.org, anisinha@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,96 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 6, 2025 at 8:25=E2=80=AFPM <baturo.alexey@gmail.com> wrote:
->
-> From: Alexey Baturo <baturo.alexey@gmail.com>
->
-> Hi,
->
-> Rebased against Alistair's riscv-to-apply.next
->
-> Thanks
->
-> [v14]:
-> Rebased and addressed Alistair's comments on code style.
->
->
-> [v13]:
-> Rebased and addressed Daniel's comments about the return type of the help=
-er.
->
-> Thanks
->
-> [v12]:
-> Rebased and addressed Richard's comments about proper masking virtualized=
- accesses.
->
-> Thanks
->
-> [v11]:
-> As suggested on the mailing list by Daniel, I'm resubmitting this series =
-and keeping the original versioning number.
-> So that makes this one v11 and previous - v10.
-> Also I applied previously issues reviewed-by tags on some of the patches =
-that were present in v9 series, but only for the code, that didn't change m=
-uch.
-> For the others I'd really like to have them reviewed as there were a lot =
-of comments on v9 series.
-> Also rebased on the current upstream.
->
-> Thanks
->
-> [v10]:
-> I've rebased this patch series and addressed Richard's and Daniel's comme=
-nts.
-> Thanks
->
-> [v0]:
-> As Pointer Masking is finally ratified, these patches intend to update th=
-e existing code to the final version.
-> These patches have been submitted previously and I tried to address all t=
-he suggestions, but I'd suggest to review them from the clean slate and the=
-n finally push them to the repo.
-> Thanks.
->
-> Alexey Baturo (7):
->   target/riscv: Remove obsolete pointer masking extension code.
->   target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
->     of Zjpm v1.0
->   target/riscv: Add helper functions to calculate current number of
->     masked bits for pointer masking
->   target/riscv: Add pointer masking tb flags
->   target/riscv: Update address modify functions to take into account
->     pointer masking
->   target/riscv: Apply pointer masking for virtualized memory accesses
->   target/riscv: Enable updates for pointer masking variables and thus
->     enable pointer masking extension
+I tested this series of patches with virtio-net regression
+tests,everything works fine.
 
-Thanks!
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-Applied to riscv-to-apply.next
-
-Alistair
-
+On Mon, Jan 6, 2025 at 11:57=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
 >
->  target/riscv/cpu.c           |  19 +-
->  target/riscv/cpu.h           |  50 ++---
->  target/riscv/cpu_bits.h      |  91 +--------
->  target/riscv/cpu_cfg.h       |   3 +
->  target/riscv/cpu_helper.c    | 128 +++++++++----
->  target/riscv/csr.c           | 359 +++--------------------------------
->  target/riscv/internals.h     |  54 ++++++
->  target/riscv/machine.c       |  17 +-
->  target/riscv/op_helper.c     |  16 +-
->  target/riscv/pmp.c           |  14 +-
->  target/riscv/pmp.h           |   1 +
->  target/riscv/tcg/tcg-cpu.c   |   5 +-
->  target/riscv/translate.c     |  47 ++---
->  target/riscv/vector_helper.c |   5 -
->  14 files changed, 258 insertions(+), 551 deletions(-)
+> Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
+> structures if peer nic is present") effectively delayed the backend
+> cleanup, allowing the frontend or the guest to access it resources as
+> long as the frontend NIC is still visible to the guest.
+>
+> However it does not clean up the resources until the qemu process is
+> over.  This causes an effective leak if the device is deleted with
+> device_del, as there is no way to close the vdpa device.  This makes
+> impossible to re-add that device to this or other QEMU instances until
+> the first instance of QEMU is finished.
+>
+> Move the cleanup from qemu_cleanup to the NIC deletion.
+>
+> v3:
+> Remove shadowed declaration of NetClientState nc variable in 2/2.
+>
+> v2:
+> Remove NIC peer also at net_cleanup. vhost-user trust all the
+> backends are clean before qemu removes char devices.
+>
+> This is not a requisite introduced by this commit as
+> system/runstate.c:qemu_cleanup shows.
+>
+> Eugenio P=C3=A9rez (2):
+>   net: parameterize the removing client from nc list
+>   net: move backend cleanup to NIC cleanup
+>
+>  net/net.c        | 44 ++++++++++++++++++++++++++++++++++----------
+>  net/vhost-vdpa.c |  8 --------
+>  2 files changed, 34 insertions(+), 18 deletions(-)
 >
 > --
-> 2.39.5
+> 2.43.5
 >
->
+
 
