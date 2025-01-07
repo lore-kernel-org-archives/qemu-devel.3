@@ -4,87 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C5FE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 09:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32361E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 10:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV5xT-0005Qb-O6; Tue, 07 Jan 2025 04:33:07 -0500
+	id 1tV6Ph-0002yZ-WF; Tue, 07 Jan 2025 05:02:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roger.pau@cloud.com>)
- id 1tV5xR-0005QD-Sc
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:33:05 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roger.pau@cloud.com>)
- id 1tV5xQ-0006KD-8s
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 04:33:05 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso105776975e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 01:33:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1736242382; x=1736847182; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NXMJwJkD6GoreE4rq36bTo/n6oNP+S5NtP/Em4G4kUk=;
- b=H732gq64P26N8HSKGLeDVYPS1UV5KgMAF0F4RixJGJaqZp7knvxr9uH6Unxluk5NlM
- HU9xLUFB43PKx9zIHsSVqydRcOQRvyXWHICI0x/tdTX7vRuck6IPQPZAHhRsPKYZd1tM
- 8//5aLAUnwgCQ3rLJrRC6Ct/04eytbeZCeOxQ=
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tV6Pa-0002wV-8M
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 05:02:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tV6PX-0000dQ-NZ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 05:02:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736244125;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=5gtv9N7TzT1nu+Oi6AEh02EfPzNnGaN90Wj4IqJ/qMw=;
+ b=UOtjZY7DvN85dsY++J7q49PS79rnb5em9bsItiMVXVidWRb1pad1rUKESgYbFW7YdXbf9v
+ HQypZWn7FwLUupkv7hM8/HY48J+D0LgUPwk92VXZg30G0ubfZwi7r0Dg48/JIaClfWDkFt
+ UOKy2uVNwll+O4vPHHzKTxD0gojafIE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-438-w5y2Hy_eNlG63VMZUbDrvQ-1; Tue, 07 Jan 2025 05:02:00 -0500
+X-MC-Unique: w5y2Hy_eNlG63VMZUbDrvQ-1
+X-Mimecast-MFC-AGG-ID: w5y2Hy_eNlG63VMZUbDrvQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43635895374so72595915e9.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 02:01:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736242382; x=1736847182;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NXMJwJkD6GoreE4rq36bTo/n6oNP+S5NtP/Em4G4kUk=;
- b=EUsX/5zPom9YOYTmyshiAo/ydC2AmYeCl59cUpK/npTmOYKH5mQC1/EeXqqzjdlJJ/
- BKUqZyD6Wo31WkqJZIhton4qN7GHz2zUl4OZd6dO8cwf+REc6ov6op5jdfvuAlW+y34M
- WfeyMXIut/AtZgFcbMfPiBII7rkCAPnuYpXDEoebqRyn4ZqPos9Qys4b+6YO4XqLs7QK
- ky0wb0vZN6hNkCFIKM/TBKiKJgY4jIu8PLHJzQXtS6zRBUAz8cE+QZ7csh+/lH60XBAP
- QGabHTA/lF3Ko/q7QDHvD9WPcun1LOYy/SfD9UpTPO5QG6Y7lTlOn07MhJTHABlnN5w/
- /YJg==
-X-Gm-Message-State: AOJu0YyX/4O7jXbKF2mCiplIgICEwfalLgQXk3VewYGi1VWA5dx3xJwy
- eXoIoP9y//4iUJ8CLvDzVG0XMjWuvsJQ6fU/4Jhh2C9hKHokvWZ04yY7GvpGAPTgQt0vkbMK3G4
- R
-X-Gm-Gg: ASbGncs/e0ev78k3W4og7n+1o8JdjUuqY6vYMfEg1qFtD9HiRbLpuPQ8/xexXPVjmlU
- PK9RmJJQH6v5uDqgFpdmpjK57H2BOn0iI74yr1kzH1cDNLFXkupaGVbtUJh4MivSIP+gWVOi3Sb
- f6YUwtP3Q5arcvhj2Bcl0z32KGr1FYYG3jafT8yZi9PCz4Ca6nUshnAIpvMK0aj8rZ1XMT2Od+8
- mn4l/2h9ZCHI6y5IXrL6BVQNz+9r2o6HFPLtMG0SqY1aHigqaZ82/hYC23JVQ==
-X-Google-Smtp-Source: AGHT+IEix0l+GrmL6GlNsHgpdBKlhdge3KcJsVrThXIBxIDP7VrUAOxyB//Zy8/3JjeQgqN+VJe5zw==
-X-Received: by 2002:a05:6000:4012:b0:385:f7a3:fea6 with SMTP id
- ffacd0b85a97d-38a221fa6bamr42191038f8f.13.1736242382216; 
- Tue, 07 Jan 2025 01:33:02 -0800 (PST)
-Received: from localhost ([84.78.159.3]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8a6abesm49900025f8f.90.2025.01.07.01.33.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 01:33:01 -0800 (PST)
-From: Roger Pau Monne <roger.pau@citrix.com>
-To: qemu-devel@nongnu.org
-Cc: Roger Pau Monne <roger.pau@citrix.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org
-Subject: [PATCH 2/2] xen: do not use '%ms' scanf specifier
-Date: Tue,  7 Jan 2025 10:31:40 +0100
-Message-ID: <20250107093140.86180-3-roger.pau@citrix.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20250107093140.86180-1-roger.pau@citrix.com>
-References: <20250107093140.86180-1-roger.pau@citrix.com>
+ d=1e100.net; s=20230601; t=1736244118; x=1736848918;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=5gtv9N7TzT1nu+Oi6AEh02EfPzNnGaN90Wj4IqJ/qMw=;
+ b=LPEdhYyWE5ccRsCUVSmR0wEhBTFdjcN02/37QpnvuUcUbUamce6/lb3dZMqM2nXJTj
+ iRTQhPoNZA0tHCvG3swDcvbz2Y+cbimAa3wvcPCGeLPhBIggfQ7fG2DIvSh9QHG9iyzd
+ CmfhEevPTcHbUi/qP3LzQGwK4Nis9aVgbg7NlgzvwkT1vgtj/y2/DhesPuiYUWYFRKwG
+ ljPXRcb6lVNLZ9NSF8Zrk3I31I5ngv8EKTuiKniOm2Wx0aKX9i//WDvju3SZJmpZf2Nn
+ K6M/UcE45RtIHQq1ytR0u+X2mmM6RKy5u3mnrRSzFi9+pTC5RHzeuUnICsK8mX//rOl0
+ /ueg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoRJIw00uHSOkn5fMvG+N8LMWailuCwHkWVytwh3fU3oQgsl3nw3Gv1IG5OIgcbx6Q7M4HfApiJWPx@nongnu.org
+X-Gm-Message-State: AOJu0Ywzi7ySIHDkPWj1Z6w4EmVklBkDDm3SZzLi1Pk7/AJm4/4yYkP1
+ 6qjcgPECV8giXHaHbi/RyztWNlUie54mYMu/DtnqkgAPbEmn+nLNo34411uGhWFvXFaaif2izuY
+ Tu4Fr40EwyQAEEUK0tuyWSca815vFOr/4AZbFzDqUlpzBSWDeRyou
+X-Gm-Gg: ASbGncuBVPH39WQrsA79CHkAHqH+5JZR+GnRBFet3mlohppN7XrI4TP4aXYxDHprBGZ
+ G7F8cO2mLK5EGBei1VS8S/bDuExzeBe+iXS1qLkI4i1bogB9DKS5olFJEe2hrt5IW0RxRn8nnNW
+ V2Hb94ITc7U2nqPCO1cA90+0SSUq27xEfPnTCiglonjMr3bdXd4OnsxcloHfkdYBprjloLispo1
+ oocAn7g3uelzVtfdRanhHcxADFuT8MWiTwfmpwfyXtsaA4Iewp1JgOYd65gL9R6l+V/wRT7T6lO
+ JT0CBJO2j6jfP2QdyyWI2JaDSDb1c43A0PRY1ug585j3dV8lzjz1NXNelcuPgYfQYIeOkmlsUGX
+ P21rua8Ep
+X-Received: by 2002:a05:600c:1f17:b0:434:9f90:2583 with SMTP id
+ 5b1f17b1804b1-436dc257c5amr18546835e9.11.1736244117877; 
+ Tue, 07 Jan 2025 02:01:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbnq3p/hGNIIDZYelzxE6ZbQrv0P4yznI4/bSUAdzj1mJDBuzdeghvVj9mD4y4eCpfKa5ZdA==
+X-Received: by 2002:a05:600c:1f17:b0:434:9f90:2583 with SMTP id
+ 5b1f17b1804b1-436dc257c5amr18546505e9.11.1736244117537; 
+ Tue, 07 Jan 2025 02:01:57 -0800 (PST)
+Received: from ?IPV6:2003:cb:c719:1700:56dc:6a88:b509:d3f3?
+ (p200300cbc719170056dc6a88b509d3f3.dip0.t-ipconnect.de.
+ [2003:cb:c719:1700:56dc:6a88:b509:d3f3])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656af6c4esm626967975e9.4.2025.01.07.02.01.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 02:01:56 -0800 (PST)
+Message-ID: <2dfd3c37-3816-470d-9f8a-9187c93c0c21@redhat.com>
+Date: Tue, 7 Jan 2025 11:01:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=roger.pau@cloud.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2] physmem: fix qemu_ram_alloc_from_fd size calculation
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <1735853532-330037-1-git-send-email-steven.sistare@oracle.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <1735853532-330037-1-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.179, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,91 +160,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'm' parameter used to request auto-allocation of the destination variable
-is not supported on FreeBSD, and as such leads to failures to parse.
+On 02.01.25 22:32, Steve Sistare wrote:
+> qemu_ram_alloc_from_fd allocates space if file_size == 0.  If non-zero,
+> it uses the existing space and verifies it is large enough, but the
+> verification was broken when the offset parameter was introduced.  As
+> a result, a file smaller than offset passes the verification and causes
+> errors later.  Fix that, and update the error message to include offset.
+> 
+> Peter provides this concise reproducer:
+> 
+>    $ touch ramfile
+>    $ truncate -s 64M ramfile
+>    $ ./qemu-system-x86_64 -object memory-backend-file,mem-path=./ramfile,offset=128M,size=128M,id=mem1,prealloc=on
+>    qemu-system-x86_64: qemu_prealloc_mem: preallocating memory failed: Bad address
+> 
+> With the fix, the error message is:
+>    qemu-system-x86_64: mem1 backing store size 0x4000000 is too small for 'size' option 0x8000000 plus 'offset' option 0x8000000
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 4b870dc4d0c0 ("hostmem-file: add offset option")
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> ---
+>   system/physmem.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index c76503a..f01325f 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1970,10 +1970,11 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+>       size = REAL_HOST_PAGE_ALIGN(size);
+>   
+>       file_size = get_file_size(fd);
+> -    if (file_size > offset && file_size < (offset + size)) {
+> -        error_setg(errp, "backing store size 0x%" PRIx64
+> -                   " does not match 'size' option 0x" RAM_ADDR_FMT,
+> -                   file_size, size);
+> +    if (file_size && file_size < offset + size) {
+> +        error_setg(errp, "%s backing store size 0x%" PRIx64
+> +                   " is too small for 'size' option 0x" RAM_ADDR_FMT
+> +                   " plus 'offset' option 0x" RAM_ADDR_FMT,
 
-What's more, the current usage of '%ms' with xs_node_scanf() is pointless, as
-it just leads to a double allocation of the same string.  Instead use
-qemu_xen_xs_read() to read the whole xenstore node.
 
-Fixes: a783f8ad4ec9 ('xen: add a mechanism to automatically create XenDevice-s...')
-Fixes: 9b7737469080 ('hw/xen: update Xen console to XenDevice model')
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
----
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Anthony PERARD <anthony@xenproject.org>
-Cc: Paul Durrant <paul@xen.org>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: xen-devel@lists.xenproject.org
----
- hw/char/xen_console.c | 11 +++++++++--
- hw/xen/xen-bus.c      |  7 +++++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+Note that offset is of type "off_t", not ram_addr_t.
 
-diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-index af706c7ef440..18afd214c2f6 100644
---- a/hw/char/xen_console.c
-+++ b/hw/char/xen_console.c
-@@ -531,6 +531,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
-     const char *name = xen_backend_get_name(backend);
-     unsigned long number;
-     char *fe = NULL, *type = NULL, *output = NULL;
-+    const char *node_path;
-     char label[32];
-     XenDevice *xendev = NULL;
-     XenConsole *con;
-@@ -550,7 +551,10 @@ static void xen_console_device_create(XenBackendInstance *backend,
-         goto fail;
-     }
- 
--    if (xs_node_scanf(xsh, XBT_NULL, fe, "type", errp, "%ms", &type) != 1) {
-+    node_path = g_strdup_printf("%s/type", fe);
-+    type = qemu_xen_xs_read(xsh, XBT_NULL, node_path, NULL);
-+    g_free(node_path);
-+    if (!type) {
-         error_setg(errp, "failed to read console device type: ");
-         goto fail;
-     }
-@@ -568,7 +572,10 @@ static void xen_console_device_create(XenBackendInstance *backend,
- 
-     snprintf(label, sizeof(label), "xencons%ld", number);
- 
--    if (xs_node_scanf(xsh, XBT_NULL, fe, "output", NULL, "%ms", &output) == 1) {
-+    node_path = g_strdup_printf("%s/output", fe);
-+    output = qemu_xen_xs_read(xsh, XBT_NULL, node_path, NULL);
-+    g_free(node_path);
-+    if (!output) {
-         /*
-          * FIXME: sure we want to support implicit
-          * muxed monitors here?
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index adfc4efad035..9be807649e77 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -142,6 +142,7 @@ again:
- 
-     opts = qdict_new();
-     for (i = 0; i < n; i++) {
-+        const char *node_path;
-         char *val;
- 
-         /*
-@@ -156,8 +157,10 @@ again:
-             !strcmp(key[i], "hotplug-status"))
-             continue;
- 
--        if (xs_node_scanf(xenbus->xsh, tid, path, key[i], NULL, "%ms",
--                          &val) == 1) {
-+        node_path = g_strdup_printf("%s/%s", path, key[i]);
-+        val = qemu_xen_xs_read(xenbus->xsh, tid, node_path, NULL);
-+        g_free(node_path);
-+        if (val) {
-             qdict_put_str(opts, key[i], val);
-             free(val);
-         }
+ram_addr_t is a uintptr_t, but off_t can be a different integer type.
+
+In meson.build we use "-D_FILE_OFFSET_BITS=64". So on 32bit ram_addr_t 
+would be 32bit but off_t will be 64bit.
+
+
+Printing off_t can be weird [1]. Maybe just cast it to an uint64_t and 
+print it using PRIx64?
+
+
+[1] 
+https://stackoverflow.com/questions/586928/how-should-i-print-types-like-off-t-and-size-t
+
 -- 
-2.46.0
+Cheers,
+
+David / dhildenb
 
 
