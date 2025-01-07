@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F76E77197
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 900A7E77198
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV3jX-0001YV-Gw; Tue, 07 Jan 2025 02:10:35 -0500
+	id 1tV3jA-0001Wf-RW; Tue, 07 Jan 2025 02:10:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3jV-0001YB-41
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:10:33 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tV3j9-0001Va-4l; Tue, 07 Jan 2025 02:10:11 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3jS-0006FY-EZ
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:10:32 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so172127035e9.0
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 23:10:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tV3j4-00067A-Tq; Tue, 07 Jan 2025 02:10:10 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-aaf8f0ea963so890281766b.3; 
+ Mon, 06 Jan 2025 23:10:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736233828; x=1736838628; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mVI3dYzHBeT8VZtZhmpxbHrEVgI9gtq2gj1l/2EtTRQ=;
- b=qaa4nEj6BhP4DDW7TzvD8A5Ho90S/MU7fyXMkoTH3BXYnnSI4cVOOKnYH8zTL1qbfz
- kXQGSpI9+QLdtZJsrlyjkbBBVwC2nx2/tGl+k5XiIavIT+JadUCYrL4q9s5s2DRitN71
- DIK6XGzbIJ5BX6nq9nsSibfH3oIKCOEJ9Bs6wlJCsCHs8MoXdI4Q3DvIIsBMm4orzRTo
- +gaNPJuLWjgsVGWc/EDc7p8IFsYNnsCZJ23lyNfr41mpBaaE+QrGi17C/rXdxc4NRTBY
- 09m3JCDqVAPHk4/Ompi6BgklUl4yCg6DeoG3Ch3d9VVo86EMPe00MuysY/duHlRkxUwM
- ASmw==
+ d=gmail.com; s=20230601; t=1736233803; x=1736838603; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6w9qOLOSzu8TxbPI+aY12uHR1MxkluwkiwlQBrD7UAE=;
+ b=ESClOO795VVV7pSGjO2HET+J/yC3ktiKzvovNvwYgW8iN7Ocgh5Wnz5/gclC/DMD/d
+ OBRpLf5ikmWrIATt8CAo771CsYY9fKS0VtiPBHvVXv2cA43ywy+rIzH53CfVsp8yHYep
+ LIYPAZ7Nb77fGo4t64EjE6SFiQnTcmFoIxZFsYXtyitVpwT9Fc+vJ8apsA3FC4RKPCew
+ lPgqBT2368QwP/Dd0rKDE31BhRQxiKD/TziwFMC2pde0GArCaAFhFu4RX91DXosqr4jz
+ kmcflrSogRO0zYSR4etEQWzcS4ht9v1IEnIosEGvlFyc2z1r1xl5X3SpeRf+PDdJBswB
+ 6LaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736233828; x=1736838628;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mVI3dYzHBeT8VZtZhmpxbHrEVgI9gtq2gj1l/2EtTRQ=;
- b=DgVy+hPDWJqtL8Ib+nZ6xdGkltJ0Cgc51BpKNn/MyjkqpRNccKCNqchvxIiPiFXJTn
- jZYLF2Ox+Jrr98B3YDKnAFpj/1WvmFog/M6I+8IjmZWbxxU0SxhukhCFhjKUy6ifEVdi
- w3F9UTQxw0RYaz+lffArS1EAPXtXwXLUX4q2oSEf5M+HNQzqgWxdvUC+xCmVk0z/q2b7
- d78dqJXXezNK+0cfHxu2FhqE2HfWi8WA2iUjZuwKiSo18L2FIvqRNbUQcHTZrFlm3zUX
- /+MgRHRtna53C7iZOCbxW4FnC3mIjW1GjcjnJaOx9NO2nLxsEjqbhM6GletGt+3ctBzu
- bp5A==
+ d=1e100.net; s=20230601; t=1736233803; x=1736838603;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6w9qOLOSzu8TxbPI+aY12uHR1MxkluwkiwlQBrD7UAE=;
+ b=S8zKtkm31kiEYDwibt4FF4VTnY7TlOYqGubgPzuFi1kuQaom+du7XNYdx79D1mvWzG
+ gLvJ1a9nc7J+tv/uPeRDiqiMqrtNRjLmVfdU/DJ0xHJpcnnDhvBYh/rSBT4B4kbO8/w5
+ qJ9A3cVDauD1mNBtP52EjVBFk03X82h6r5V2epnFHDrHEV3akMKapogOMBo2TbVOn9VJ
+ SozExcprBeKn4TM3xrOv1CwrZAhJS1W9I9HYPcXXLpz1SfiinHWRZKbZZF4fTvp41U/5
+ mu2C4kdfIobR/QEwv4yiTknKzhe4+udASsbpfmK7DyXLbytFUedr+2+bTx2VzPzy5A+S
+ FcLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuypdrwJNkWk8Xtg73wYsjIeOKx+uh5OQGKKtUZFMStLxkId68MX+DAC0ZpTr1WQ7nf80pWODf9rL3@nongnu.org
-X-Gm-Message-State: AOJu0YzF3ykCL7klm/aVNK8csronfHR8Vwo1clEm2PMzNSkfPwTFQ7MZ
- Tffe8g5ryOc386Z5tSbv0RcCELw4AZ1DVFepuMJ4B4eih90JYrjrCC5HKeDpFHskl1J57aB+0pD
- tW+U=
-X-Gm-Gg: ASbGnctmDlmtbmSITijacrajrlF0eN/aBN2VUmex4rCFVpI5VLBttzADDOd+5xvClME
- 7RCywq3IzrY9BE7cPufTNjJNaqcJ26jqlP8JxMSCVNuY1VhKhqRg0FCfOdoONk9Gi0Dsc327JVJ
- 8TAa/UIbwM0HnVeSdaEoX09w9FP6p24rjHZyiB7EngUhtZx9MHKDvghNs7lXcyAM/wC37vwx/xl
- 04/LUzAKSX6/mw/Ttr/qZuFX6+iKdvMwy1B6gO021ptmUTLlWxQgIChhu76JZ674mDfIN+6MGIY
- DzPU8FjepZsS3NsMEfyiUhTm
-X-Google-Smtp-Source: AGHT+IF5DMhmB/AF+MvNaMfprANjCJ7SRn0/iQOW6Z8zqi0lpr+4HByB/0nMfv2+Cyv33W5rw/8taw==
-X-Received: by 2002:a05:6000:18a3:b0:385:f60b:f5c4 with SMTP id
- ffacd0b85a97d-38a221f9f90mr49525840f8f.29.1736233828440; 
- Mon, 06 Jan 2025 23:10:28 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e140sm50743145f8f.79.2025.01.06.23.10.27
+ AJvYcCUusyXxgX2hSRL356nZ7wrg4RrqwH/Q+ibQIk4aXGyF3CECTtEAmU/0wjouZxZzmX8zS9noELD5xIWO/w==@nongnu.org,
+ AJvYcCVVn+ZsWzT1Ms2FraYB+3qMd1plcBeuqfWs8Q8hxnDrLS9Mgk9MbiyqzF13Xauj7CmE1XVNXmZR35Jv@nongnu.org
+X-Gm-Message-State: AOJu0YxCs7+HDhnVdGqVcCuGxwHjsH9CbAH9C8j9AeTkVr0F3gn4GKpS
+ 52IV9xjpx1fAA55BZ5ovBLN/7rEJpfpCO2Al6UJADqFbhugWEL/a
+X-Gm-Gg: ASbGncucf2sEr9Upvhao2YHrOqJdvbG6AXO3CKdcuuVNM/szmA0nDeXt6jLU/vsZBkr
+ cfK4Y9SdFGz6G+2X5oiKQ8rdatPQgRBrnoFB5BCaUJOllXMfIXwwdp3Ww2XtR/hxxciRpOQcDUJ
+ gZstknB+uzuQ/TfmhiI+CjOYw1SOhiv6r+S9H0jv2/i7WosH0jZBaINAR+ikIGN+MaoBi3ivjaJ
+ e8RGYJqzxA3QLD+ZXQxSgWEqhDZgb4NfalXZW4+tnV595wOfByMNYOZfVtne75S9WUEXqxkgtt1
+ jmhHu5xnR1rP4ccVu+HX6d1s2iSKyRlC
+X-Google-Smtp-Source: AGHT+IEIa5eYqDRRz9gHnvmZukuPyvW0E6fqziySzWB4F3nkdFrOkvfMIV/ejk3fl27rVsazfIQfAg==
+X-Received: by 2002:a17:907:7da0:b0:aaf:ab71:bf79 with SMTP id
+ a640c23a62f3a-aafab71c24emr1378392066b.19.1736233803047; 
+ Mon, 06 Jan 2025 23:10:03 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-093-128-023-134.93.128.pool.telefonica.de.
+ [93.128.23.134]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aac0efe4184sm2325021766b.119.2025.01.06.23.10.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jan 2025 23:10:27 -0800 (PST)
-Message-ID: <c63f0db5-b53c-4380-8b58-6c4e1327218d@linaro.org>
-Date: Tue, 7 Jan 2025 08:10:27 +0100
+ Mon, 06 Jan 2025 23:10:02 -0800 (PST)
+Date: Tue, 07 Jan 2025 07:10:02 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Jamin Lin via <qemu-devel@nongnu.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>,
+ "open list:SD (Secure Card)" <qemu-block@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: jamin_lin@aspeedtech.com, troy_lee@aspeedtech.com,
+ yunlin.tang@aspeedtech.com
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_2/2=5D_hw/sd/sdh?=
+ =?US-ASCII?Q?ci=3A_Fix_data_transfer_did_not?=
+ =?US-ASCII?Q?_complete_if_data_size_is_bigger_than_SDMA_Buffer_Boundary?=
+In-Reply-To: <20241213031205.641009-3-jamin_lin@aspeedtech.com>
+References: <20241213031205.641009-1-jamin_lin@aspeedtech.com>
+ <20241213031205.641009-3-jamin_lin@aspeedtech.com>
+Message-ID: <D62F06C8-5247-4FBC-82A9-9127352B30A6@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/73] tcg: Add TCGType argument to tcg_emit_op,
- tcg_op_insert_*
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250102180654.1420056-1-richard.henderson@linaro.org>
- <20250102180654.1420056-4-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250102180654.1420056-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,20 +108,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/25 19:05, Richard Henderson wrote:
-> In some places we have a ready type to give.
-> In others, like tcg-op.c, simply pass 0 for now.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg-op.h |  8 +++++---
->   include/tcg/tcg.h    |  6 +++---
->   tcg/optimize.c       | 20 +++++++++++---------
->   tcg/tcg-op-vec.c     |  8 ++++----
->   tcg/tcg-op.c         | 12 ++++++------
->   tcg/tcg.c            | 28 ++++++++++++++++------------
->   6 files changed, 45 insertions(+), 37 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Am 13=2E Dezember 2024 03:12:05 UTC schrieb Jamin Lin via <qemu-devel@nong=
+nu=2Eorg>:
+>According to the design of sdhci_sdma_transfer_multi_blocks, if the
+>"s->blkcnt * 512" was bigger than the SDMA Buffer boundary, it break the
+>while loop of data transfer and set SDHC_NISEN_DMA in the normal interrup=
+t
+>status to notify the firmware that this SDMA boundary buffer Transfer Com=
+plete
+>and firmware should set the system address of the next SDMA boundary buff=
+er
+>for the remained data transfer=2E
+>
+>However, after firmware set the system address of the next SDMA boundary =
+buffer
+>in the SDMA System Address Register(0x00), SDHCI model did not restart th=
+e data
+>transfer, again=2E Finally, firmware break the data transfer because firm=
+ware
+>did not receive the either "DMA Interrupt" or "Transfer Complete Interrup=
+t"
+>from SDHCI model=2E
+
+I ran into a similar problem in u-boot, too=2E Apparently its Freescale uS=
+DHCI driver expects the SD command to fill the whole buffer=2E Here are som=
+e thoughts:
+
+AFAIU, the SDMA buffer needs to be big enough to hold all s->blkcnt * s->b=
+lksize bytes and a guest would typically expect the SD command to fill the =
+buffer in one go (please correct me if I'm wrong)=2E Furthermore, I believe=
+ on real hardware the command would run in the background, allowing the gue=
+st to do real work rather than wait=2E After all, the block attributes regi=
+ster allows for up to 4GiB to be filled on some hardware (again, please cor=
+rect me if I'm wrong)=2E
+
+The problem is that sdhci_sdma_transfer_multi_blocks() blocks QEMU, i=2Ee=
+=2E does not run in the background=2E If a guest asks for huge amounts of d=
+ata to be transferred, then this would disturb emulation and QEMU would fre=
+eze for a while=2E To avoid that, it seems to me as if the implementation c=
+hooses to exit the while loop prematurely, relying on the guest to poke it =
+again=2E This, unfortunately, doesn't work for all guests=2E So ideally, sd=
+hci_sdma_transfer_multi_blocks() should read all data and run in the backgr=
+ound, e=2Eg=2E in a thread or in even in a coroutine? What do you think?
+
+Best regards,
+Bernhard
+
+>
+>Error log from u-boot
+>```
+>sdhci_transfer_data: Transfer data timeout
+> ** fs_devread read error - block
+>```
+>
+>According to the following mention from SDMA System Address Register of S=
+DHCI
+>spec,
+>'''
+>This register contains the system memory address for an SDMA transfer in
+>32-bit addressing mode=2E When the Host Controller stops an SDMA transfer=
+,
+>this register shall point to the system address of the next contiguous da=
+ta
+>position=2E
+>It can be accessed only if no transaction is executing (i=2Ee=2E, after a=
+ transaction
+>has stopped)=2E Reading this register during SDMA transfers may return an
+>invalid value=2E
+>The Host Driver shall initialize this register before starting an SDMA
+>transaction=2E
+>After SDMA has stopped, the next system address of the next contiguous
+>data position can be read from this register=2E
+>The SDMA transfer waits at the every boundary specified by the SDMA
+>Buffer Boundary in the Block Size register=2E The Host Controller generat=
+es
+>DMA Interrupt to request the Host Driver to update this register=2E The H=
+ost
+>Driver sets the next system address of the next data position to this reg=
+ister=2E
+>When the most upper byte of this register (003h) is written, the Host Con=
+troller
+>restarts the SDMA transfer=2E
+>''',
+>
+>restart the data transfer if firmware writes the most upper byte of SDMA =
+System
+>Address, s->blkcnt is bigger than 0 and SDHCI is in the data transfer sta=
+te=2E
+>
+>Signed-off-by: Jamin Lin <jamin_lin@aspeedtech=2Ecom>
+>---
+> hw/sd/sdhci=2Ec | 12 ++++++++++++
+> 1 file changed, 12 insertions(+)
+>
+>diff --git a/hw/sd/sdhci=2Ec b/hw/sd/sdhci=2Ec
+>index f1a329fdaf=2E=2Ea632177735 100644
+>--- a/hw/sd/sdhci=2Ec
+>+++ b/hw/sd/sdhci=2Ec
+>@@ -1180,6 +1180,18 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t =
+val, unsigned size)
+>                     sdhci_sdma_transfer_single_block(s);
+>                 }
+>             }
+>+        } else if (TRANSFERRING_DATA(s->prnsts)) {
+>+            s->sdmasysad =3D (s->sdmasysad & mask) | value;
+>+            MASKED_WRITE(s->sdmasysad, mask, value);
+>+            /* restarts the SDMA transfer if the most upper byte is writ=
+ten */
+>+            if ((s->sdmasysad & 0xFF000000) && s->blkcnt &&
+>+                SDHC_DMA_TYPE(s->hostctl1) =3D=3D SDHC_CTRL_SDMA) {
+>+                if (s->trnmod & SDHC_TRNS_MULTI) {
+>+                    sdhci_sdma_transfer_multi_blocks(s);
+>+                } else {
+>+                    sdhci_sdma_transfer_single_block(s);
+>+                }
+>+            }
+>         }
+>         break;
+>     case SDHC_BLKSIZE:
 
