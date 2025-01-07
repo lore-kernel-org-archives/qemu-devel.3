@@ -4,102 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B89DCE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 18:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA4B0E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 18:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVE81-0007z8-7P; Tue, 07 Jan 2025 13:16:33 -0500
+	id 1tVEQA-0002TS-JI; Tue, 07 Jan 2025 13:35:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=eiJ5=T7=kaod.org=clg@ozlabs.org>)
- id 1tVE7v-0007um-D0; Tue, 07 Jan 2025 13:16:27 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=eiJ5=T7=kaod.org=clg@ozlabs.org>)
- id 1tVE7s-0008KL-G2; Tue, 07 Jan 2025 13:16:27 -0500
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4YSK4D3Gd4z4wj2;
- Wed,  8 Jan 2025 05:16:12 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4YSK480pLjz4wb0;
- Wed,  8 Jan 2025 05:16:07 +1100 (AEDT)
-Message-ID: <fb000c52-9025-4a72-9d78-b6e7f4955e10@kaod.org>
-Date: Tue, 7 Jan 2025 19:16:12 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVEQ3-0002So-Kt
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 13:35:11 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVEQ0-00023h-KJ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 13:35:11 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso157749605e9.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 10:35:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736274907; x=1736879707; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=167vkgXi+p1l5XuKD9ozI0rWzBdU1wiwKN1ml5juTVQ=;
+ b=iJGgYnas5dfhGAssRV9ooK4/FKJxJs7xTTEJPaUCCjB1TZj6VUR2ijR4Rpyo4vXmiw
+ FUg7G85t+WxQjzgTWnQfO6rN4U6IEb98kzgHQLbKvZdHeUuv2CwdDH+ywrinFzwLBlga
+ F2yoj4nb93ble1jmdlDoJv7NtuFhbgGSW8WF7Iy+RX0MvlYjovn1/tMMLlxZmDzq7ri8
+ rJ0iG33b6uWd6y/XcZncIRjfhnNzIjWHTIDFmeFdmXAEoCtRUZf8V4ILop6tZy+DySOo
+ dVHmqd2jiZ5Vg5j49ouaX8g6HDksX7VLZDRnOQaLBASD21Zar2cYho948/kOOPcHw2PR
+ nStA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736274907; x=1736879707;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=167vkgXi+p1l5XuKD9ozI0rWzBdU1wiwKN1ml5juTVQ=;
+ b=PUnU/JsK/XbbFgMwSyTcTjldhQ5T6cARaYefCm8f1+by2sszrtT+vRmtN2KBuGTqIs
+ dIfsUOBqsZgDf8MTqwuztU59rOGPDeYv3oKadph4biWMrpV232Dh3fI/zoLggX+cZdyb
+ 0wIsE3gt7H6xDOGqSWMGDCni2gCGzVAm13Yzh+U9HP3kIJVcQ5muW2E9XWunDjm7U36W
+ gdKdStQ0hIUeYbEVpoaVru1LfHeUfVb9miuXLIByY8Fs348yk8z3px/sXBz28Gh9rYQO
+ IFzcHjL1eWfHa67XmteEWAxDPCUycj8v32m/gxA78rlkLlVl/B25sFUVDh8W9B92kn6t
+ ecFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJG2SzrcKJrwOVhQ7yhJKn+xXQDi2g65uazGz7SYcfs8XrJk5KFHgInhOyBobXutDgNuXnG6mbYQp/@nongnu.org
+X-Gm-Message-State: AOJu0YyOA02HQ1D5D+ImFKtz8jdoui0heeg5XkF4Sl5K9XrN3dtBWahg
+ r6cDVAjCSQ1QQ2Behu7Nrq647bBmFksNab1hxucq0U1F8W5zobCi0yIqV1uCZiw=
+X-Gm-Gg: ASbGncv7gKDsoN/8GfC3Xdwgj9W35nbMm4L244DGlyrDH4QEBEbJ8FCxzjQ2oIe0k7V
+ 5WKUoTGo2OROL7IWG1MvxY71KA5U3/xy4uj5llqbml03D7Go/PZTZsi6K/cVwVhcbYClivjCL5Z
+ ryyq+50GRvY+CmV9tE91hhz3//FkURAPYaj7A7gNw9UueC8MRT8p9DqFeHLY9NK+zEntSUBB6Mg
+ i5N/XplO0JiE8N5V5xiicBO5ZpbuxgbQ0LAkvCbrH0r9By4mQanjdL9CWwQ3nlDHTOC5rrbpvSc
+ yIDRYYndvnLcpUcYQTtMIkWD
+X-Google-Smtp-Source: AGHT+IHOMgFPJTfbscvpYOsBqU3NX1ecv4i9MYoxHQvhiApDbGSOmHbGI+XOfXwUouL3JmdSDpJ9Fw==
+X-Received: by 2002:a05:600c:3150:b0:436:17e4:ad4c with SMTP id
+ 5b1f17b1804b1-4366835ebefmr500410505e9.6.1736274906846; 
+ Tue, 07 Jan 2025 10:35:06 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a2432e587sm47157880f8f.95.2025.01.07.10.35.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 10:35:06 -0800 (PST)
+Message-ID: <77ee967d-00e6-45fa-a8b1-42192e61b553@linaro.org>
+Date: Tue, 7 Jan 2025 19:35:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] Introduce a new Write Protected pin inverted
- property
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Bin Meng <bmeng.cn@gmail.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:SD (Secure Card)" <qemu-block@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241114094839.4128404-1-jamin_lin@aspeedtech.com>
- <2e956389-289a-4806-8985-ab846d808736@kaod.org>
- <b520adf4-12f1-4261-a48f-bb74589bb31d@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <b520adf4-12f1-4261-a48f-bb74589bb31d@linaro.org>
+Subject: Re: [PATCH v3 6/7] tests/qtest: Add API functions to capture IRQ
+ toggling
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
+ armbru@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+References: <20241216141818.111255-1-gustavo.romero@linaro.org>
+ <20241216141818.111255-7-gustavo.romero@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241216141818.111255-7-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=eiJ5=T7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.24, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,53 +104,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/27/24 12:23, Philippe Mathieu-Daudé wrote:
-> On 27/11/24 10:44, Cédric Le Goater wrote:
->> On 11/14/24 10:48, Jamin Lin wrote:
->>> change from v1:
->>> 1. Support RTC for AST2700.
->>> 2. Support SDHCI write protected pin inverted for AST2500 and AST2600.
->>> 3. Introduce Capabilities Register 2 for SD slot 0 and 1.
->>> 4. Support create flash devices via command line for AST1030.
->>>
->>> change from v2:
->>> replace wp-invert with wp-inverted and fix review issues.
->>>
->>> change from v3:
->>> 1. add reviewer suggestion about wp_inverted comment
->>> 2. AST2500 EVB does not need to set wp-inverted property of sdhci model
->>> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm/boot/dts/aspeed/aspeed-ast2500-evb.dts#L110
->>>
->>> Jamin Lin (3):
->>>    hw/sd/sdhci: Fix coding style
->>>    hw/sd/sdhci: Introduce a new Write Protected pin inverted property
->>>    hw/arm/aspeed: Invert sdhci write protected pin for AST2600 EVB
->>>
->>>   hw/arm/aspeed.c         |  7 +++++
->>>   hw/sd/sdhci.c           | 70 ++++++++++++++++++++++++++++-------------
->>>   include/hw/arm/aspeed.h |  1 +
->>>   include/hw/sd/sdhci.h   |  5 +++
->>>   4 files changed, 61 insertions(+), 22 deletions(-)
->>>
->>
->> Philippe,
->>
->> I plan to queue patch 2-3 for QEMU 10.0. Is that ok for you ?
+Cc'ing maintainers:
+
+$ ./scripts/get_maintainer.pl -f tests/qtest/libqtest.c
+Fabiano Rosas <farosas@suse.de> (maintainer:qtest)
+Laurent Vivier <lvivier@redhat.com> (maintainer:qtest)
+Paolo Bonzini <pbonzini@redhat.com> (reviewer:qtest)
+
+On 16/12/24 15:18, Gustavo Romero wrote:
+> Currently, the QTest API does not provide a function to capture when an
+> IRQ line is raised or lowered, although the QTest Protocol already
+> reports such IRQ transitions. As a consequence, it is also not possible
+> to capture when an IRQ line is toggled. Functions like qtest_get_irq()
+> only read the current state of the intercepted IRQ lines, which is
+> already high (or low) when the function is called if the IRQ line is
+> toggled. Therefore, these functions miss the IRQ line state transitions.
 > 
-> Having to modify sdhci.c internals is dubious, since inversion
-> occurs out of this block. If this is the soc/board layer, isn't
-> better to model at this level? Smth like:
+> This commit introduces two new API functions:
+> qtest_get_irq_raised_counter() and qtest_get_irq_lowered_counter().
+> These functions allow capturing the number of times an observed IRQ line
+> transitioned from low to high state or from high to low state,
+> respectively.
+> 
+> When used together, these new API functions then allow checking if one
+> or more pulses were generated (indicating if the IRQ line was toggled).
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Acked-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/qtest/libqtest.c | 24 ++++++++++++++++++++++++
+>   tests/qtest/libqtest.h | 28 ++++++++++++++++++++++++++++
+>   2 files changed, 52 insertions(+)
+> 
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 8de5f1fde3..dfe3139a88 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -83,6 +83,8 @@ struct QTestState
+>       int expected_status;
+>       bool big_endian;
+>       bool irq_level[MAX_IRQ];
+> +    uint64_t irq_raised_counter[MAX_IRQ];
+> +    uint64_t irq_lowered_counter[MAX_IRQ];
+>       GString *rx;
+>       QTestTransportOps ops;
+>       GList *pending_events;
+> @@ -515,6 +517,8 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+>       s->rx = g_string_new("");
+>       for (i = 0; i < MAX_IRQ; i++) {
+>           s->irq_level[i] = false;
+> +        s->irq_raised_counter[i] = 0;
+> +        s->irq_lowered_counter[i] = 0;
+>       }
+>   
+>       /*
+> @@ -706,8 +710,10 @@ redo:
+>           g_assert_cmpint(irq, <, MAX_IRQ);
+>   
+>           if (strcmp(words[1], "raise") == 0) {
+> +            s->irq_raised_counter[irq]++;
+>               s->irq_level[irq] = true;
+>           } else {
+> +            s->irq_lowered_counter[irq]++;
+>               s->irq_level[irq] = false;
+>           }
+>   
+> @@ -999,6 +1005,22 @@ bool qtest_get_irq(QTestState *s, int num)
+>       return s->irq_level[num];
+>   }
+>   
+> +uint64_t qtest_get_irq_raised_counter(QTestState *s, int num)
+> +{
+> +    /* dummy operation in order to make sure irq is up to date */
+> +    qtest_inb(s, 0);
 
-This change is implementing the polarity of a WP pin as described
-in [1]. I think modeling that with a QOM property should be ok,
-since we don't have GPIO lines in the generic SDHCI device model.
-Or we could introduce a SDBusClass class attribute and define
-new types for it ?
+Isn't it better to simply call:
 
-Thanks,
+        qtest_rsp(s);
 
-C.
+?
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/mmc/mmc-controller.yaml#n52
+> +
+> +    return s->irq_raised_counter[num];
+> +}
+> +
+> +uint64_t qtest_get_irq_lowered_counter(QTestState *s, int num)
+> +{
+> +    /* dummy operation in order to make sure irq is up to date */
+> +    qtest_inb(s, 0);
+
+Ditto.
+
+> +
+> +    return s->irq_lowered_counter[num];
+> +}
+> +
+>   void qtest_module_load(QTestState *s, const char *prefix, const char *libname)
+>   {
+>       qtest_sendf(s, "module_load %s %s\n", prefix, libname);
+> @@ -1902,6 +1924,8 @@ QTestState *qtest_inproc_init(QTestState **s, bool log, const char* arch,
+>       qts->wstatus = 0;
+>       for (int i = 0; i < MAX_IRQ; i++) {
+>           qts->irq_level[i] = false;
+> +        qts->irq_raised_counter[i] = 0;
+> +        qts->irq_lowered_counter[i] = 0;
+>       }
+>   
+>       qtest_client_set_rx_handler(qts, qtest_client_inproc_recv_line);
+> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+> index f23d80e9e5..b73c04139e 100644
+> --- a/tests/qtest/libqtest.h
+> +++ b/tests/qtest/libqtest.h
+> @@ -389,6 +389,34 @@ void qtest_module_load(QTestState *s, const char *prefix, const char *libname);
+>    */
+>   bool qtest_get_irq(QTestState *s, int num);
+>   
+> +/**
+> + * qtest_get_irq_raised_counter:
+> + * @s: #QTestState instance to operate on.
+> + * @num: Interrupt to observe.
+> + *
+> + * This function can be used in conjunction with the
+> + * qtest_get_irq_lowered_counter() to check if one or more pulses where
+> + * generated on the observed interrupt.
+
+Missing to mention a device must be previously intercepted with
+qtest_irq_intercept_*().
+
+> + *
+> + * Returns: The number of times IRQ @num was raised, i.e., transitioned from
+> + * a low state (false) to a high state (true).
+> + */
+> +uint64_t qtest_get_irq_raised_counter(QTestState *s, int num);
+> +
+> +/**
+> + * qtest_get_irq_lowered_counter:
+> + * @s: #QTestState instance to operate on.
+> + * @num: Interrupt to observe.
+> + *
+> + * This function can be used in conjunction with the
+> + * qtest_get_irq_raised_counter() to check if one or more pulses where
+> + * generated on the observed interrupt.
+
+Ditto.
+
+> + *
+> + * Returns: The number of times IRQ @num was lowered, i.e., transitioned from
+> + * a high state (true) to a low state (false).
+> + */
+> +uint64_t qtest_get_irq_lowered_counter(QTestState *s, int num);
+> +
+>   /**
+>    * qtest_irq_intercept_in:
+>    * @s: #QTestState instance to operate on.
 
 
