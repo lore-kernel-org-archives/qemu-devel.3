@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946D3E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE70BE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCyW-0004UQ-Dl; Tue, 07 Jan 2025 12:02:40 -0500
+	id 1tVDQN-0003tV-I9; Tue, 07 Jan 2025 12:31:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCyU-0004OZ-8X
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 12:02:38 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tVDQF-0003sN-Ie
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 12:31:19 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCyS-0007cx-8u
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 12:02:37 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso114383505e9.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 09:02:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1tVDQB-0002v9-Ty
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 12:31:18 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385d7b4da2bso13451433f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 09:31:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736269354; x=1736874154; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VwJuQalGALESTiy3usL6E8NGBbd5s9w+iEiGcWxwR6c=;
- b=UDirQcXPjvp3TfcwtYjf0ZNfv1YoLdXGDFaF9D1Pe/b/utg7PhCKWPJ3kHXZWpbvOZ
- dc4CJMajL9ArJaOY33Xl2UL06IXQVOok3IFpOcoVujSuZtH+JOrhLIOgAIHBsdw7dwMU
- kLoHiT9P6dfdSkqYU81ekwcmD0ZtQbEFog23urB5x+JNUBiidWqcA3jf7nKfx3E25t8J
- 49RsASLl9Jly2wFAQOP5cwHed99T3Ycb9f1pgieH7kpfxNlaciQX1I5DgwNcJFy/3KVC
- 7gdnXKriBWjTT+NGZ+RHlIng1qWojEWwdRhlPwRV6rN+QltRLZTKE7eCPRvEDT4yu6wO
- ugWw==
+ d=gmail.com; s=20230601; t=1736271074; x=1736875874; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ESrXcS4CyR34nc2MA3Yc3tYjqpuUJbG5oTiHQj66O1w=;
+ b=lyhjLdezeu/0HSRDUKDEJIov8UBl71rLdz4Md28BEBbikdIjGIcRnWG5MZnMtchwKy
+ OlULnipGygfBl1fq1/aKC7hAArANHCB5/b+bQHI5Qr2QSKivHon8u5h3wmMv3vcnd5pi
+ LbZD6Wk1M4fX75Z+Mq9hkxhJI+FE13IvWZUV6si5+bjrS4CshCqdzNmy14MM0uYm2TkC
+ XaFsmYWLKNjvtoCuvFvOmZbdDyb2hEyPacmMJIK7u3w8sKZIraphh5cuaB0JdpXL6feI
+ aLYJqVe78Xq7SVQbx60vpHEFUbT/O2NYwzeYQ7fexznltvZUxKKPX2WEKgKp7qhutBpC
+ v41A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736269354; x=1736874154;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VwJuQalGALESTiy3usL6E8NGBbd5s9w+iEiGcWxwR6c=;
- b=swZz2ZM0V+duzxYwH4VGkQCF62QfHurZ7lyK93E5r3qmY7Bhq53x8MCfGw7zaXshlR
- iu0bUFba4zoK1iJtpuFGOB1a/Q/W9c0Pn1f6aBivtQqAcaLYsRDZxPTjYcrqaLd2vnEn
- M3wdSrxgjaPk7dzw+u7ac2Mwh1WZk5a5Ty9Yi2Za51K3Z/BlE018HCNg9GZIWE//Yzn2
- c2qeXUEcBcX1wsXp3mfQ3IntM/sjES2Kd5gLz6fO5fqhwRzwNKDZtvhbqcWJj2rLv4gV
- eXZWbmfvWrNTvd0iCWckeBkMA/QuYCuf4PgxeLe2+3m+1PB3V5odcHrfhNi6+b1g7Mau
- Zm7A==
+ d=1e100.net; s=20230601; t=1736271074; x=1736875874;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ESrXcS4CyR34nc2MA3Yc3tYjqpuUJbG5oTiHQj66O1w=;
+ b=Xl0c/owYgcydxcmXiaOsewQam3TJZc/dcj5iceHpGSUcoXyrp2+oUuRo6WWzgvbvZR
+ E3WEIMFZBNg04BSUN4SAysIUXhXr1eylUpUqXaxpVXzWXqC0jGiRDlh8AbhPqFS6m9So
+ Fv+mwG787wPFmJgOUrNBsCeRxl9aUs1/OJVZiCKs3LoMGgUKQheCTDJT6g9MFxQb9zj/
+ 6rReiKt5TM2BaHdL7LrSb+W5YKFUXT/9Jz52x119qiiUZy1N32k8jmLvbS38gkWWc34m
+ Qse9yg/7bNB0dxottmcVFokfXfSkcAdZn2ulpUWGvXWQ0SklO6l1KqMiVFzQJ/F+tu/G
+ 3vTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBuw5AewHzF8yH6+WsarkngvivUl6WnKd5VNvCMFb9qBbgwLD0GeeGpabEfnTuPxjaPwCOKUzbVtiY@nongnu.org
-X-Gm-Message-State: AOJu0Yw3XH4LFhmikzVZzbFhgvmpBoj/PrhYucvijiCd3Lt+hD7pkFfD
- mlpgG3P3Lhk7TTpdJdHHxhicBuA4T4vyolAazodQ3L01syOZZswutsPqBJ9Kdx8=
-X-Gm-Gg: ASbGncuWDJTyebLviceEBPivG4bnRi3/vium1AJ38RZFxfu46GWQ51/h9yuZz0moDWt
- sdfOEuhWTjhOogDri511/hH8uK6MTa0aJKP5g2Ezmn/9Uf+t/J4/zlCMHuVmj72sB6HLuHkD5T4
- wzuI65niaihlu7YsqduVMCvhdxN6TvF/InPQVB1C/lEPw7VoY4vwvdfgYGxoe+M7PSYn8jgAiDl
- XPBO/q92PjO6AmCIVHz1r5pL8TNo6mHKe8xSCuAhIefv3HSTITyuuA=
-X-Google-Smtp-Source: AGHT+IGSnfxVwWpqw2133zVVt2HgrFW9nfTPn39uUbDnne3UJz4GjySzPF4UJDeU1ilCHWQAREjRxQ==
-X-Received: by 2002:a05:600c:4588:b0:42c:b16e:7a22 with SMTP id
- 5b1f17b1804b1-43668643348mr559184655e9.12.1736269353835; 
- Tue, 07 Jan 2025 09:02:33 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436612008casm605671245e9.14.2025.01.07.09.02.32
+ AJvYcCUrjVY7Xx5YrVbcSgg1wVZ/PfSSNOF81Zm2+4SEdru1QMIIxU2rFqOK4XFmz6YAtroL6yqulDRFcwPy@nongnu.org
+X-Gm-Message-State: AOJu0Ywlj9TxAi1mqSxuPf2oVnXCB8BGQXPup4mGLHPamxAycLwxIvFE
+ zVuzCFwY0h+35CjFKlUZqV0IPZ3p/ifx+3+sy0mK9xU7ckAk7rWu
+X-Gm-Gg: ASbGncvT7A0s7V4izJNeii8sVyQ5pn5GdDzhchItJKyynRvwaH1sU5yMXRYDNO/+nsB
+ G+W4sxao26qRPoFNGZ/3OrMV4pOf0CZTvWSlXCuFRJ3pdMIV8w5/kZePBNYjafCoNdOgVZ/Mj7x
+ KXs+PDCFZ4HSKPt2XuQHre1x3tqIHx/W66JVPBKXZyK4M2LKNjLk5VooiHXS+yqIE51qQqxs0Lv
+ r8R5/N+hkvflZIJItX6edEKg9T+0VoiL2kfNqBwQO8rp5U/ZHTRqAFX4zobAAhevjIDVP7lt/bK
+ ivhfubEZLs0IFCHT1//J
+X-Google-Smtp-Source: AGHT+IFLkrufmByFsBIalSOdTV4+sXe+2QS2kCKfrBBQZdwM5Mihg1mCSw6uXtDG3JUd8UNtdsfnlw==
+X-Received: by 2002:a5d:5986:0:b0:385:d143:138b with SMTP id
+ ffacd0b85a97d-38a223ff407mr51287114f8f.51.1736271073656; 
+ Tue, 07 Jan 2025 09:31:13 -0800 (PST)
+Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
+ [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8a6e19sm50665188f8f.100.2025.01.07.09.31.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 09:02:32 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 56E3A5F869;
- Tue,  7 Jan 2025 17:02:31 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,  philmd@linaro.org,  thuth@redhat.com, Bill Mills
- <bill.mills@linaro.org>
-Subject: Re: [RESEND][PATCH v3 0/7] Add ivshmem-flat device
-In-Reply-To: <87r05e8zv4.fsf@pond.sub.org> (Markus Armbruster's message of
- "Tue, 07 Jan 2025 15:25:51 +0100")
-References: <20241216141818.111255-1-gustavo.romero@linaro.org>
- <87r05e8zv4.fsf@pond.sub.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 07 Jan 2025 17:02:31 +0000
-Message-ID: <874j2ad0bc.fsf@draig.linaro.org>
+ Tue, 07 Jan 2025 09:31:12 -0800 (PST)
+Date: Tue, 7 Jan 2025 17:31:11 +0000
+From: Stafford Horne <shorne@gmail.com>
+To: Rob Landley <rob@landley.net>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Linux OpenRISC <linux-openrisc@vger.kernel.org>
+Subject: Re: or1k -M virt -hda and net.
+Message-ID: <Z31k3zNN3pOdGWWK@antec>
+References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+ <Z0Cyx3i3z7Zl7XPm@antec>
+ <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
+ <Z0GSETLeT5w8B2DX@antec>
+ <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
+ <Z0LMqEqcdjkAxnN-@antec>
+ <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net>
+ <Z2lgL31ZeSkO59MZ@antec>
+ <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
+ <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net>
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=shorne@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,71 +111,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On Tue, Jan 07, 2025 at 05:56:52AM -0600, Rob Landley wrote:
+> On 12/31/24 19:19, Rob Landley wrote:
+> > On 12/23/24 07:05, Stafford Horne wrote:
+> > > > The kernel config looks like it should have virt block device
+> > > > support, but
+> ...
+> > >    -device virtio-blk-device,drive=d0 -drive
+> > > file=${DISK},id=d0,if=none,format=qcow2
+> > 
+> > -drive file=file.img,format=raw,id=hd0 -device virtio-blk-device,drive=hd0
+> > 
+> > My -device looks similar but -drive is file=file.img,format=raw,id=hd0
+> > 
+> > No idea what if= does? I haven't seemed to need it...
+> ...
+> > Thanks, I think this target is good for release. Now to figure out why
+> > sh2eb network isn't working after the restore (it used to!). Nor is
+> > microblaze's network...
+> 
+> My test harness appends -hda filename.img to the qemu command line, which
+> works for all the other targets, and is awkward to turn into
+> -device lots-of-stuff,file-filename.img,more-stuff inside a shell script.
+> (At best it's a special case parsing and rewriting qemu command line
+> plumbing to turn "generic" into an architecture-specific workaround.)
 
-> Gustavo Romero <gustavo.romero@linaro.org> writes:
->
->> This is a resend of the series:
->>
->> https://lore.kernel.org/qemu-devel/20240222222218.2261956-1-gustavo.rome=
-ro@linaro.org/
->>
->> rebased on the current master. The series was sent about 9 months ago and
->> remains relevant. Besides addressing the longstanding issue:
->>
->> https://gitlab.com/qemu-project/qemu/-/issues/1134
->>
->> it has generated interest in the community at least twice since its last
->> version, from different contexts:
->>
->> https://lists.nongnu.org/archive/html/qemu-discuss/2024-05/msg00003.html
->> https://lists.nongnu.org/archive/html/qemu-devel/2024-09/msg00374.html
->>
->> This suggests the series is being used out-of-tree in various contexts, =
-such
->> as experiments with heterogeneous architectures.
->>
->> But due to the fact it relies on sysbus, which is marked for future remo=
-val,
->> some maintainers objected to accepting the patchset, causing it to be he=
-ld in
->> the ML.
->
-> Actually, I inquired about the use cases, and was told it's for OpenAMP.
-> I challenged the use of ivshmem for that purpose in some detail[*], but
-> got no reply.
->
->>         However, given the ongoing community interest and since currentl=
-y there
->> isn't a better way on QEMU than using sysbus for the wiring needs of this
->> device (e.g. to wire the device to a CPU IRQ input line), I'd kindly lik=
-e to ask
->> maintainers to reconsider its acceptance.
->
-> [*] https://lore.kernel.org/qemu-devel/87zfth4psf.fsf@pond.sub.org/
+Hi Rob,
 
-Yes the principle use case is modelling asymmetric set ups with two sets
-of CPU cores attached only by a piece of shared RAM with maybe a
-signalling an IRQ. As the CPUs are doing the work we want to test both
-sides (VirtIO device and driver) rather than provide an emulation.
+Sorry, from the laat email I was under the impression that you had everything
+working as expected.
 
-Once we have a single QEMU binary that is dynamically configurable and
-supports heterogeneous setups then we can model it within QEMU itself.
-However until that point 2 QEMU's and some shared memory is the easiest
-way to test such things.
+> In THEORY I should be able to do something like:
+> 
+> root/or1k/run-qemu.sh -netdev user,id=net0 -device
+> virtio-net-device,netdev=net0 -device virtio-blk-device,drive=sd0 -hda
+> README
+> 
+> And just have extra arch setup that then accepts the generic appended to it.
+> But in practice that says:
+> 
+> qemu-system-or1k: -device virtio-blk-device,drive=sd0: Device needs media,
+> but drive is empty
+> 
+> Putting the -hda before the -device doesn't help. (And even if it did, the
+> result would barf if run _without_ -hda, which should also work.)
+> 
+> Having -hda by itself is accepted by qemu, but I don't know what bus/driver
+> gets added as a result (or1k kernel does not find it).
 
-This is currently being worked on as part of the larger HVAC project:
+I am having a hard time understanding the use case.
 
-  https://linaro.atlassian.net/wiki/spaces/HVAC/overview
+As you know I use the following to wire in the buildroot image which I turned
+into a qcow2 disk using my tool:
 
-where we are working on a new VirtIO transport layer (virtio-msg) that
-doesn't have the issues associated with lack of trapped configuration
-space.
+  https://github.com/stffrdhrn/or1k-utils/blob/master/scripts/qemu-or1k-mkimg
 
->
-> [...]
+  -device virtio-blk-device,drive=d0 -drive file=${DISK},id=d0,format=qcow2
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+But I think you want to use:
+
+  -device virtio-blk-device,drive=sd0 -hda XYZ
+
+I have not used -hda before, do you have it working with other targets?
+
+According to the qemu docs in qemu-options.hx. I see:
+
+    Use file as hard disk 0, 1, 2 or 3 image on the default bus of the
+    emulated machine (this is for example the IDE bus on most x86 machines,
+    but it can also be SCSI, virtio or something else on other target
+    architectures). See also the :ref:`disk images` chapter in the System
+    Emulation Users Guide.
+
+I think, since we don't have a "default" bus in openrisc this doesn't work so we
+need to specify the -drive explictly.
+
+I checked the x86 machine code and confirm it seems to work like this.  There is
+code in the system setup to look for hd* drives and wire them into IDE.  There
+is no such code in openrisc.
+
+-Stafford
 
