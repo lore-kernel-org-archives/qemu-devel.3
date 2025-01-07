@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784DEE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA4C1E77199
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVFbO-0003At-Gb; Tue, 07 Jan 2025 14:50:58 -0500
+	id 1tVFbP-0003Bq-SN; Tue, 07 Jan 2025 14:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tVFbA-00038x-JL; Tue, 07 Jan 2025 14:50:46 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVFb8-00038g-EV
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:50:43 -0500
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tVFb8-0002Fe-Vz; Tue, 07 Jan 2025 14:50:44 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVFb6-0002FJ-IS
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:50:41 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6D7A81F451;
- Tue,  7 Jan 2025 19:50:41 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 50D261F391;
+ Tue,  7 Jan 2025 19:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736279441; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736279439; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
- b=mT4CWYgKZ/khN+aMQO/FnXL3aZNbAXhFzvzbKewzKozUeG4Ck75Z3HrTR/8qko9pT87nyg
- +f4ZT5M6f03Y7Xv7R5PzubDrTxqt9Ne3EpQCac0IWLl++5JFAxcu1obb9EHpM35H2IyJwO
- FMw8qmJlgMjoZ+8uNEvVcqgQrY+qLtA=
+ bh=HjwAIhieiDI4jccyYYVOBI5lsGpwJh5VFeLMMjjUJTE=;
+ b=aIIvF5kcUM5Qs9tjqLXMwNA5Zpwux2a/hWQOamTegb5cXRy9iqHe9N9ZuTLiNTExvo1ysH
+ HMzjeJyj/c8Ls8gUapZNUXivBtVPlrI5L0QmFw2DUoa+jCe2ObIIpApUpV61pWOeba7vM/
+ 6jB0/MXWRzrzEjw7QvbSND6gEIAeHOQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736279441;
+ s=susede2_ed25519; t=1736279439;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
- b=X1eh4sBr3OKF0VVSufm7IhVzW130BWk3PDEqusOVESfseYQgoSlw+fg8HinVloGiRkknlw
- /8gjQE5TBrtlNNAg==
+ bh=HjwAIhieiDI4jccyYYVOBI5lsGpwJh5VFeLMMjjUJTE=;
+ b=GHdpA6no72lUggHWUkwAzAe+gDCHyAnCjAiJQa9kOXhmSSQC3ngk7QOqV0bfFxwhGZxT+D
+ Yd+UFh6RHmdWyoAg==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736279441; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736279439; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
- b=mT4CWYgKZ/khN+aMQO/FnXL3aZNbAXhFzvzbKewzKozUeG4Ck75Z3HrTR/8qko9pT87nyg
- +f4ZT5M6f03Y7Xv7R5PzubDrTxqt9Ne3EpQCac0IWLl++5JFAxcu1obb9EHpM35H2IyJwO
- FMw8qmJlgMjoZ+8uNEvVcqgQrY+qLtA=
+ bh=HjwAIhieiDI4jccyYYVOBI5lsGpwJh5VFeLMMjjUJTE=;
+ b=aIIvF5kcUM5Qs9tjqLXMwNA5Zpwux2a/hWQOamTegb5cXRy9iqHe9N9ZuTLiNTExvo1ysH
+ HMzjeJyj/c8Ls8gUapZNUXivBtVPlrI5L0QmFw2DUoa+jCe2ObIIpApUpV61pWOeba7vM/
+ 6jB0/MXWRzrzEjw7QvbSND6gEIAeHOQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736279441;
+ s=susede2_ed25519; t=1736279439;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
- b=X1eh4sBr3OKF0VVSufm7IhVzW130BWk3PDEqusOVESfseYQgoSlw+fg8HinVloGiRkknlw
- /8gjQE5TBrtlNNAg==
+ bh=HjwAIhieiDI4jccyYYVOBI5lsGpwJh5VFeLMMjjUJTE=;
+ b=GHdpA6no72lUggHWUkwAzAe+gDCHyAnCjAiJQa9kOXhmSSQC3ngk7QOqV0bfFxwhGZxT+D
+ Yd+UFh6RHmdWyoAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BD83913A6A;
- Tue,  7 Jan 2025 19:50:39 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 24C9013A6A;
+ Tue,  7 Jan 2025 19:50:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yJmRII+FfWeCGAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 07 Jan 2025 19:50:39 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yDHFNo2FfWeCGAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 07 Jan 2025 19:50:37 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH 7/7] s390x: Fix CSS migration
-Date: Tue,  7 Jan 2025 16:50:25 -0300
-Message-Id: <20250107195025.9951-8-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 6/7] migration: Fix arrays of pointers in JSON writer
+Date: Tue,  7 Jan 2025 16:50:24 -0300
+Message-Id: <20250107195025.9951-7-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250107195025.9951-1-farosas@suse.de>
 References: <20250107195025.9951-1-farosas@suse.de>
@@ -90,7 +90,7 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
  RCVD_TLS_ALL(0.00)[]
@@ -119,41 +119,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit a55ae46683 ("s390: move css_migration_enabled from machine to
-css.c") disabled CSS migration globally instead of doing it
-per-instance.
+Currently, if an array of pointers contains a NULL pointer, that
+pointer will be encoded as '0' in the stream. Since the JSON writer
+doesn't define a "pointer" type, that '0' will now be an uint64, which
+is different from the original type being pointed to, e.g. struct.
 
-CC: Paolo Bonzini <pbonzini@redhat.com>
-CC: qemu-stable@nongnu.org #9.1
-Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+That mixed-type array shouldn't be compressed, otherwise data is lost
+as the code currently makes the whole array have the type of the first
+element.
+
+While we could disable the array compression when a NULL pointer is
+found, the JSON part of the stream still makes part of downtime, so we
+should avoid writing unecessary bytes to it.
+
+Keep the array compression in place, but break the array into several
+type-contiguous pieces if NULL and non-NULL pointers are mixed.
+
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-Id: <20241213160120.23880-3-farosas@suse.de>
 ---
- hw/s390x/s390-virtio-ccw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
+ scripts/analyze-migration.py |  9 ++++++++-
+ 2 files changed, 40 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 2be8da2913..7bbf412620 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1257,6 +1257,7 @@ static void ccw_machine_2_9_instance_options(MachineState *machine)
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_INT_SUPPRESSION);
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_EVENT_NOTIFICATION);
-+    css_migration_enabled = false;
- }
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 52704c822c..a79ccf3875 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+             int size = vmstate_size(opaque, field);
+             uint64_t old_offset, written_bytes;
+             JSONWriter *vmdesc_loop = vmdesc;
++            bool is_prev_null = false;
  
- static void ccw_machine_2_9_class_options(MachineClass *mc)
-@@ -1269,7 +1270,6 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
-     ccw_machine_2_10_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
-     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    css_migration_enabled = false;
- }
- DEFINE_CCW_MACHINE(2, 9);
+             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
+                 assert(first_elem || !n_elems || !size);
+             }
++
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
+                 const VMStateField *inner_field;
++                bool is_null;
++                int max_elems = n_elems - i;
  
+                 old_offset = qemu_file_transferred(f);
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+@@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                      * not follow.
+                      */
+                     inner_field = vmsd_create_fake_nullptr_field(field);
++                    is_null = true;
+                 } else {
+                     inner_field = field;
++                    is_null = false;
++                }
++
++                /*
++                 * Due to the fake nullptr handling above, if there's mixed
++                 * null/non-null data, it doesn't make sense to emit a
++                 * compressed array representation spanning the entire array
++                 * because the field types will be different (e.g. struct
++                 * vs. uint64_t). Search ahead for the next null/non-null
++                 * element and start a new compressed array if found.
++                 */
++                if (field->flags & VMS_ARRAY_OF_POINTER &&
++                    is_null != is_prev_null) {
++
++                    is_prev_null = is_null;
++                    vmdesc_loop = vmdesc;
++
++                    for (int j = i + 1; j < n_elems; j++) {
++                        void *elem = *(void **)(first_elem + size * j);
++                        bool elem_is_null = !elem && size;
++
++                        if (is_null != elem_is_null) {
++                            max_elems = j - i;
++                            break;
++                        }
++                    }
+                 }
+ 
+                 vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+-                                      i, n_elems);
++                                      i, max_elems);
+ 
+                 if (inner_field->flags & VMS_STRUCT) {
+                     ret = vmstate_save_state(f, inner_field->vmsd,
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index 4836920ddc..9138e91a11 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -497,7 +497,14 @@ def read(self):
+                     raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
+                 a.append(field['data'])
+             else:
+-                self.data[field['name']] = field['data']
++                # There could be multiple entries for the same field
++                # name, e.g. when a compressed array was broken in
++                # more than one piece.
++                if (field['name'] in self.data and
++                    type(self.data[field['name']]) == list):
++                    self.data[field['name']].append(field['data'])
++                else:
++                    self.data[field['name']] = field['data']
+ 
+         if 'subsections' in self.desc['struct']:
+             for subsection in self.desc['struct']['subsections']:
 -- 
 2.35.3
 
