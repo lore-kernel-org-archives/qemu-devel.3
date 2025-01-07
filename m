@@ -4,87 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC29E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3E8E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV4b5-0002Ap-Vw; Tue, 07 Jan 2025 03:05:56 -0500
+	id 1tV4Zv-000669-My; Tue, 07 Jan 2025 03:04:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4aL-0000Kg-OD
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:05:17 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4aD-0003Le-Qg
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:05:07 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21631789fcdso162839335ad.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:05:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736237100; x=1736841900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QIM8q57Dg+aT1NLOwIU9Hlx+n02I0UIsaBRFnPIQTh4=;
- b=IrAqFeWvKnZn7lEDF+Fp5QkYw5noPurF2JVd/ArthyhliimVdKY0UfCobC+RH/sxGO
- YTcn46lPcGBqsRMuCWbB8KESrEYoC7qvtBmgpSb+XKYHNLvEGIowUpIMRmomQ+tNg6Nc
- LXCfmv2O1OSn5GItnE9hOjrgUxiKoebnwnFC88KNny7jCx4jGHwJwerfoEyTZtGYGZ71
- qZYn5rH/Dgri6nfBS3N7l6VSzU+i0xJQLQ77Lrvhn6oHH0yrxQnetVzMkrVrupfU7NP5
- DSbKgI3b+G/aviMAwHmRoitkv0qSoQdkq1pLqhOKw500I7aI69cUYOcM4H6UpNP5vIyN
- 9tIA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tV4YU-0003lB-Vk
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:03:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tV4YS-00039a-G4
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:03:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736236990;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wiMOOHV60q4eXagNMIOLvNFV+qq1RGRo7TL5T/ORWco=;
+ b=GCR5ZqsDKBjLrldPsMf/oOmXQh5pYXSktrAL77G7O4pLwhPjfbGVLvl4GYIkKeVRH8iCFO
+ FaNuX+Yv5NpwZjBZV0jvBtqNoXQ/zPDoJr68zIYl04epU5ud8ZcfCHF8BiuQdxD+d7gu4M
+ UtL2WH9j0JJzKiqoULh1BD6OOtGs+Lc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-193-dexG0c9bPCytAkGVAn5SRQ-1; Tue, 07 Jan 2025 03:03:09 -0500
+X-MC-Unique: dexG0c9bPCytAkGVAn5SRQ-1
+X-Mimecast-MFC-AGG-ID: dexG0c9bPCytAkGVAn5SRQ
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d8f4a0df93so440714216d6.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:03:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736237100; x=1736841900;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QIM8q57Dg+aT1NLOwIU9Hlx+n02I0UIsaBRFnPIQTh4=;
- b=E7NQN8O4CbasJaQQo3gdDBWVrg1N/FPyRZbBVPIMt5JC7dA49u+UjW4UT9zZT4Iy3D
- C91oRP5L1oN94EvGmJfADYwt+o5voGVIDHtHeMQo/fgxzapAH7PwQw1PVFH0JEY7ZD+H
- YvkMieeYkhoaji/30bjrYE4o92lxPOcUDpL3I/dZGlIHtzkhSJf+1Syt4ju6R1MjN31e
- cLVlQVwgyTskaBhYal2XrsF47t2OhorCLh1aSehs3hRIqLIssYORD4bywxCU6u4gY8I6
- ldKvm9e5pojshBkXB7TQEnPCfsTKiXttvVbln+HaV11psTgxxiCGpT2LFeemCENlnOYU
- m7zg==
-X-Gm-Message-State: AOJu0YxBXwaXHedYt3HyrBozjTHmuejyt9Ea9zBkzYEdpmz1i+Y2/64a
- 1DNUazfiHX7uzXe0vaapXlIj0sTZ996eMpdbA1ncUP92LvzWSNT1fUrq+7BwSsSnHc+CWMMvU3j
- V
-X-Gm-Gg: ASbGncuzpzoGZcWFdXSPkY/iUKeuqYC3Ws6vwBrsH1Cx40F83bdqEWsg2t+IXlBbqEC
- E3tcQIHa4TpUjGSXi3V8f9akbAUv483wFjTKeT21y/x4VoWqli9W7jxscboi8hSnLuz/inw3i3k
- GN/W6CAU6HH3mWgVsNC/krMjJVIpdiBENT8StXKxdySbWmQiuNiq6Tp5L649qdb36+hXPxePJ3z
- D2UWpJZt39BAXM4ezIH3pnQVyB2wL0rd5in9bOV920+cnfnJEBYDtOIlj5Y9wzVi/r7D8DbmvdG
- tU4z8YXWdz76zCxK8w==
-X-Google-Smtp-Source: AGHT+IEqPnx33/ai9LG5FotF/aoy4w0f60QTpttzepJf0Y5JYd5p6PyX9NcioDtm76OUifMqumecfg==
-X-Received: by 2002:a05:6a00:1381:b0:728:f21b:ce4c with SMTP id
- d2e1a72fcca58-72d103b553fmr3541648b3a.5.1736237100195; 
- Tue, 07 Jan 2025 00:05:00 -0800 (PST)
-Received: from stoup.. (76-14-228-138.or.wavecable.com. [76.14.228.138])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad84eb5dsm32577852b3a.86.2025.01.07.00.04.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 00:04:59 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 42/81] tcg/riscv: Use SRAIW, SRLIW for {s}extract_i64
-Date: Tue,  7 Jan 2025 00:00:33 -0800
-Message-ID: <20250107080112.1175095-43-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250107080112.1175095-1-richard.henderson@linaro.org>
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1736236988; x=1736841788;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wiMOOHV60q4eXagNMIOLvNFV+qq1RGRo7TL5T/ORWco=;
+ b=iA+LTFsZQ4bCP8+uNYgPpz9i1ZHJy7WWE3bMJPRU6tbL6X1tFUfHmvkTUX6UaVdXsI
+ I2pv0Qyq7DNEjE/U3ApwRnjSsFeNqS4UrZ9cSkPjhyTtyTErlJ/RRuXnqRrG7QiyodLx
+ qPiE70i4pL4MnPSeA6OyHFfdbwXs1lcoCr0RVy7YlJ2BelF+uFjsxBVBIxM62S4m9aea
+ CMPEtwGnMMYCRrSityRnGAfLUoghrfcFM49acc5Qgf31RxiybtogQkha2utdYPO4FhxS
+ IAtdIM4uEnElxCaGYDJbZUD+WahB+fyBkHbKc8d8+hyGk0dodpG4njvG4NqiPtWPUyMX
+ IMpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUz9Pw+eudDZi6Gq+qUMuJNtNbcq5hXtTQj7JYdve6Xw4aG05Vw2f0w2Iw1haxMnNFtpGQv/SH9TBVA@nongnu.org
+X-Gm-Message-State: AOJu0YzZTiFTPdAWC+HiQRKlA3NuT4Em/+3JJh6QrDsjYIcSc5/NeTwC
+ JL6eKLRxVhiito6eRCypRMOMh61iTzzUoZPbaB7CwudX2+8pojXnU+havODaNdSj35It9YOHkXc
+ efBLv3NlBY1DrRgAEjAtgBFc1wnTKFLnKQQRxHZHrrIqteee4xXYW
+X-Gm-Gg: ASbGncsXdMlbAR1GdpnUwbyyXNziJ1pq1T5mo6m9IWP0+o0xVqwNqLVnxrNXXxiXhJ2
+ KyoI1Bs/CHzE/ZBV30jQWRPuBncHKgpAHfKeByoaES2+60fIouY/TZr5Y3eY2wPfughLcAsNNqT
+ 4+hRC67OVD6Zlord4EaTyIgX/A1J9CNiuMY9Q1NOrEgKniIhogOQZ/Hi+2037ET2ZgQr5OrR6Rv
+ C5bYW8Sr4ntvqp42DEWCJorPASehqQAaVnVcr2RXUE7BsaKwoGAMsYdrsOMO+GLXImc8ouil525
+ KYMH/jp8yu6d
+X-Received: by 2002:a05:6214:240e:b0:6d8:9838:d3a9 with SMTP id
+ 6a1803df08f44-6dd23356042mr888122466d6.26.1736236988713; 
+ Tue, 07 Jan 2025 00:03:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF8uZCilvrTikPipyXzmXV/mRQyiOUa90t9VqaXjol/FeeAF5dRjdkc+PlrOJ4IIHjqQ/x7SQ==
+X-Received: by 2002:a05:6214:240e:b0:6d8:9838:d3a9 with SMTP id
+ 6a1803df08f44-6dd23356042mr888122216d6.26.1736236988466; 
+ Tue, 07 Jan 2025 00:03:08 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-49-182.web.vodafone.de.
+ [109.42.49.182]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dd18110450sm179182026d6.44.2025.01.07.00.03.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 00:03:07 -0800 (PST)
+Message-ID: <3fb8281e-23f0-44a7-904b-34b8ea8ca7f3@redhat.com>
+Date: Tue, 7 Jan 2025 09:03:01 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] qtest: Remove uses of 'first_cpu'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Bandan Das <bsd@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-arm <qemu-arm@nongnu.org>
+References: <20241211233727.98923-1-philmd@linaro.org>
+ <5d2a536d-9b68-4b31-8d92-6cc42ed72e5c@linaro.org> <87msg884mn.fsf@suse.de>
+ <05820c9b-a683-4eb4-a836-e97aa708d5e5@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <05820c9b-a683-4eb4-a836-e97aa708d5e5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,92 +160,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extracts which abut bit 32 may use 32-bit shifts.
+On 04/01/2025 00.48, Philippe Mathieu-Daudé wrote:
+> On 3/1/25 13:26, Fabiano Rosas wrote:
+>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>
+>>> Hi Fabiano,
+>>>
+>>> On 12/12/24 00:37, Philippe Mathieu-Daudé wrote:
+>>>> Replace first_cpu->as by address_space_memory.
+>>>>
+>>>> Philippe Mathieu-Daudé (2):
+>>>>     system/qtest: Remove uses of 'first_cpu'
+>>>>     qtest/fuzz: Remove uses of 'first_cpu'
+> 
+>>> Ping :)
+>>
+>> Hi!
+>>
+>> Good that you pinged, I thought you were looking into the test failures
+>> from v1. I copied you in this other thread that mentioned them as well:
+>>
+>> https://lore.kernel.org/r/87y10jctbd.fsf@suse.de
+>>
+>> Applying this series on top of master just now:
+>>
+>> Summary of Failures:
+>>
+>>   10/519 qemu:qtest+qtest-arm / qtest-arm/stm32l4x5_usart- 
+>> test               ERROR            1.40s   exit status 1
+>> 165/519 qemu:qtest+qtest-arm / qtest-arm/sse-timer- 
+>> test                     ERROR            0.40s   killed by signal 6 SIGABRT
+>> 185/519 qemu:qtest+qtest-arm / qtest-arm/stm32l4x5_exti- 
+>> test                ERROR            0.19s   exit status 1
+>> 187/519 qemu:qtest+qtest-arm / qtest-arm/stm32l4x5_rcc- 
+>> test                 ERROR            0.19s   exit status 1
+>> 515/519 qemu:qtest+qtest-arm / qtest-arm/microbit- 
+>> test                      TIMEOUT         60.01s   killed by signal 15 
+>> SIGTERM
+> 
+> Hmm interesting, I have a "quick-before-posting-series" set
+> of tests, and a "full-before-posting-pullreq" one. The quick
+> is quite extensive, but only include Aarch64. I thought, since
+> it contains the ARM targets, they would also be tested, but
+> no...
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/riscv/tcg-target-has.h | 24 +++++++-----------------
- tcg/riscv/tcg-target.c.inc | 16 ++++++++++++----
- 2 files changed, 19 insertions(+), 21 deletions(-)
+IIRC this was a deliberate decision once in the past to avoid double 
+testing: qtests_aarch64 in tests/qtest/meson.build does not include 
+qtest_arm, it's a separate set of tests indeed.
 
-diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
-index 5bf62c7c7f..e890546c3a 100644
---- a/tcg/riscv/tcg-target-has.h
-+++ b/tcg/riscv/tcg-target-has.h
-@@ -112,31 +112,21 @@
- static inline bool
- tcg_target_extract_valid(TCGType type, unsigned ofs, unsigned len)
- {
--    if (ofs == 0) {
--        switch (len) {
--        case 16:
--            return cpuinfo & CPUINFO_ZBB;
--        case 32:
--            return (cpuinfo & CPUINFO_ZBA) && type == TCG_TYPE_I64;
--        }
-+    if (type == TCG_TYPE_I64 && ofs + len == 32) {
-+        /* ofs > 0 uses SRLIW; ofs == 0 uses add.uw. */
-+        return ofs || (cpuinfo & CPUINFO_ZBA);
-     }
--    return false;
-+    return (cpuinfo & CPUINFO_ZBB) && ofs == 0 && len == 16;
- }
- #define TCG_TARGET_extract_valid  tcg_target_extract_valid
- 
- static inline bool
- tcg_target_sextract_valid(TCGType type, unsigned ofs, unsigned len)
- {
--    if (ofs == 0) {
--        switch (len) {
--        case 8:
--        case 16:
--            return cpuinfo & CPUINFO_ZBB;
--        case 32:
--            return type == TCG_TYPE_I64;
--        }
-+    if (type == TCG_TYPE_I64 && ofs + len == 32) {
-+        return true;
-     }
--    return false;
-+    return (cpuinfo & CPUINFO_ZBB) && ofs == 0 && (len == 8 || len == 16);
- }
- #define TCG_TARGET_sextract_valid  tcg_target_sextract_valid
- 
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index fc93900c6d..4f6e18f59e 100644
---- a/tcg/riscv/tcg-target.c.inc
-+++ b/tcg/riscv/tcg-target.c.inc
-@@ -2344,8 +2344,12 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         break;
- 
-     case INDEX_op_extract_i64:
--        if (a2 == 0 && args[3] == 32) {
--            tcg_out_ext32u(s, a0, a1);
-+        if (a2 + args[3] == 32) {
-+            if (a2 == 0) {
-+                tcg_out_ext32u(s, a0, a1);
-+            } else {
-+                tcg_out_opc_imm(s, OPC_SRLIW, a0, a1, a2);
-+            }
-             break;
-         }
-         /* FALLTHRU */
-@@ -2358,8 +2362,12 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         break;
- 
-     case INDEX_op_sextract_i64:
--        if (a2 == 0 && args[3] == 32) {
--            tcg_out_ext32s(s, a0, a1);
-+        if (a2 + args[3] == 32) {
-+            if (a2 == 0) {
-+                tcg_out_ext32s(s, a0, a1);
-+            } else {
-+                tcg_out_opc_imm(s, OPC_SRAIW, a0, a1, a2);
-+            }
-             break;
-         }
-         /* FALLTHRU */
--- 
-2.43.0
+IMHO it's a little bit unfortunate, since in a couple of spots in the CI, we 
+are taking the shortcut of only adding aarch64-softmmu to the target list, 
+but not arm-softmmu.
+
+Maybe we should add some logic to tests/qtest/meson.build so that if 
+arm-softmmu is not in target_dirs, we add the tests to qtests_aarch64 ?
+
+  Thomas
+
 
 
