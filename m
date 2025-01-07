@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD8EE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFE4E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 13:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV9AH-0002gm-1i; Tue, 07 Jan 2025 07:58:33 -0500
+	id 1tV9BJ-0003Ak-2j; Tue, 07 Jan 2025 07:59:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tV9AF-0002gS-Ly
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:58:31 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tV9BG-00038X-Oq
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:59:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tV9AD-0005np-BK
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:58:30 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tV9BE-0005sD-UJ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:59:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736254706;
+ s=mimecast20190719; t=1736254771;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ng8RFocGVTOvADJ5kGqvR/jNKINXH+huDBiOymsbcFs=;
- b=KFe78zImhzEXUl53wvlgIem1DGOoBZ7KY5T0Fj4u/UODna8+c+3AB10PekkBIKXafFYtqF
- M9o1lC3IkGnZC58VMtK5yOImS7IyiTw6tcx92VSZYweSHykZddXqVCOHMr8KMsKvnF9qjs
- QCzJxPkzcajdmdfTexIm1Z+rAiDB+1o=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-pPGZN9dvNM2xU3Ny1x8mYQ-1; Tue, 07 Jan 2025 07:58:24 -0500
-X-MC-Unique: pPGZN9dvNM2xU3Ny1x8mYQ-1
-X-Mimecast-MFC-AGG-ID: pPGZN9dvNM2xU3Ny1x8mYQ
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2f46b7851fcso29988179a91.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 04:58:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736254703; x=1736859503;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ng8RFocGVTOvADJ5kGqvR/jNKINXH+huDBiOymsbcFs=;
- b=HsvCgtGWpzw/EEXXZ6YpOaJMgsJ29I0ntpA5WbmSLXd+HZ0agkNRk0u6o5NKc90r+m
- To2OY0yQxOpwZDok8Im8NHQMSxFhVb/OsFqQu9CgB5xkmosgIRkchWuPPNg2vjpyPpEY
- uG7xFfPlBn84SHtDSH9u35xxDhbFw7NwaRelklRmJMPvx0QPi8EOBlfOOTzvyuG4O32v
- Yo03Z4NrgReD8lWMTbZMNmCCjbfobIyushzz6S3FZTm+nCbA/kAV76KCvPJdhqvE7pTB
- 4NcFjvNuu3D6KSKEvq7E9AexUfm5raGbUg7qM0beqmSbF5YDrbbVKz1boMOYWzP9FyFw
- PjQQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSl2ltG3z8RwVW2QhegotY7OkifKoGF9afWSxjbW/EpxCzUD8It9MW3lP5EMlIH36yyJLAAQHf9II2@nongnu.org
-X-Gm-Message-State: AOJu0YzIEtcDID0W+2Zf8SFTcnkWcbVEiJFBsMyPURL9GJnwkASAlFDM
- 8lBk2LNe2AfdO7mnJ4KI+vm2d5qozyC0cQS6lFSHTuULCAsMrSPdy9oWhwTUjeSpXS9OPnZRsyc
- Vncg05HvAK6vtsTcE8FjU6DYMbpgoHP9KBsB9+ae9MFPP9MiqTPbS
-X-Gm-Gg: ASbGncuRsjIKQ6s8rOgtELTVYj0f+O/CVYd35vl40XBXiRyUD1Nh1KZFsItJlW+pf8z
- QbA1XSrPGmD9Z3E18lwVtly9ne4q++8U7LFaWTx77le3NoPiZZ9RifZNFEccIuzG/5PQ6Etb75r
- Yy8yakj3Vr3n86mJsVm//qY5Sjqh6MaFK+ZuhXci8enXZBqWswkF6duPgE+diDT4tA02F0GnYzv
- yOL/M6hSUNaHyK6mN5WRArnb8BvkyFhjDxDYGVxWHK3EBP38/e9e6WzYW4sA2RzSwIcip+UyF40
- Lv7K
-X-Received: by 2002:a17:90b:524f:b0:2ea:bf1c:1e3a with SMTP id
- 98e67ed59e1d1-2f452e2259emr115337245a91.12.1736254703423; 
- Tue, 07 Jan 2025 04:58:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE4BYFS+JRZ3ajxaqBN7ajDE0bdnrzyHGtR507lKc5ToPdI5199sfaKymIHddpv9+mTTRF4aQ==
-X-Received: by 2002:a17:90b:524f:b0:2ea:bf1c:1e3a with SMTP id
- 98e67ed59e1d1-2f452e2259emr115337211a91.12.1736254703042; 
- Tue, 07 Jan 2025 04:58:23 -0800 (PST)
-Received: from localhost.localdomain ([115.96.125.221])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-2f4633df7c0sm31977199a91.18.2025.01.07.04.58.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 04:58:22 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: armbru@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH] tests/qtest/libqos: add DMA support for writing and reading
- fw_cfg files
-Date: Tue,  7 Jan 2025 18:28:02 +0530
-Message-ID: <20250107125802.139479-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.45.2
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xw8EKJF7rOh7cbcukS5ZR0Gloqp7Xv8oV0bwJfrIZnw=;
+ b=Nflb6CTBiqSUi7aLji4Rf2r8MEX0tuu0ijghZjOhXwUgWwaKZIS2UfH2/8FD2ZaSKmlGK9
+ 9rfjL5IJmFhqTxj/opw63OiCHEfY2eqqZZXqOr8rQvPISB7tXWoN+TR19b7uvCTDQ+F3SJ
+ LUUZDiVsMfsR8ZGfC1NWQydJiztGLsw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-xOG0e_d6ORCbDUOBDGPhww-1; Tue,
+ 07 Jan 2025 07:59:28 -0500
+X-MC-Unique: xOG0e_d6ORCbDUOBDGPhww-1
+X-Mimecast-MFC-AGG-ID: xOG0e_d6ORCbDUOBDGPhww
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D06819560AA; Tue,  7 Jan 2025 12:59:27 +0000 (UTC)
+Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7000195606B; Tue,  7 Jan 2025 12:59:25 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, David Hildenbrand
+ <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>
+Subject: Re: [PATCH 01/10] hw/s390x/s390-virtio-ccw: Remove the deprecated
+ 2.4 and 2.5 machine types
+In-Reply-To: <20250103144232.520383-2-thuth@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20250103144232.520383-1-thuth@redhat.com>
+ <20250103144232.520383-2-thuth@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Tue, 07 Jan 2025 13:59:23 +0100
+Message-ID: <874j2abx04.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -109,210 +91,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At present, the libqos/fw_cfg.c library does not support the modern DMA which
-is required to write to the fw_cfg files. It only uses the IO interface.
-Implement read and write methods based on DMA. This will enable developers to
-write tests that writes to the fw_cfg file(s). The structure of the code is
-taken from edk2 fw_cfg implementation. It has been tested by writing a qtest
-that writes to a fw_cfg file. This test will be part of a future patch series.
+On Fri, Jan 03 2025, Thomas Huth <thuth@redhat.com> wrote:
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/libqos/fw_cfg.c | 150 ++++++++++++++++++++++++++++++++++++
- tests/qtest/libqos/fw_cfg.h |   4 +
- 2 files changed, 154 insertions(+)
+> They are older than 6 years, so according to our machine support
+> policy, they can be removed now.
+>
+> This removes the requirements for the storage keys "migration-enabled"
+> property which will be removed in the next patch. It also removes
+> the code that sets "max_revision" to 0 for some CCW devices, but
+> the relating code in virtio-ccw.c indicates that 0 could have also
+> been in use for other machines types < 5.1, so further clean-up for
+> code related to "max_revision" won't be done yet.
 
-diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
-index 89f053ccac..1b855fbb15 100644
---- a/tests/qtest/libqos/fw_cfg.c
-+++ b/tests/qtest/libqos/fw_cfg.c
-@@ -17,6 +17,8 @@
- #include "../libqtest.h"
- #include "qemu/bswap.h"
- #include "hw/nvram/fw_cfg.h"
-+#include "malloc-pc.h"
-+#include "libqos-malloc.h"
- 
- void qfw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
- {
-@@ -60,6 +62,59 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-     qtest_writew(fw_cfg->qts, fw_cfg->base, key);
- }
- 
-+static void
-+qfw_cfg_dma_transfer(QFWCFG *fw_cfg, void *address, uint32_t length,
-+                     uint32_t control)
-+{
-+    FWCfgDmaAccess access;
-+    uint32_t addr;
-+    QGuestAllocator guest_malloc;
-+    uint64_t guest_access_addr;
-+    uint64_t gaddr;
-+
-+    pc_alloc_init(&guest_malloc, fw_cfg->qts, ALLOC_NO_FLAGS);
-+
-+    /* create a data buffer in guest memory */
-+    gaddr = guest_alloc(&guest_malloc, length);
-+    g_assert(gaddr);
-+    qtest_bufwrite(fw_cfg->qts, gaddr, address, length);
-+
-+    access.address = cpu_to_be64(gaddr);
-+    access.length = cpu_to_be32(length);
-+    access.control = cpu_to_be32(control);
-+
-+    guest_access_addr = guest_alloc(&guest_malloc, sizeof(access));
-+    g_assert(guest_access_addr);
-+    qtest_bufwrite(fw_cfg->qts, guest_access_addr, &access, sizeof(access));
-+
-+    /* lower 32 bits */
-+    addr = cpu_to_be32((uint32_t)(uintptr_t)guest_access_addr);
-+    qtest_outl(fw_cfg->qts, fw_cfg->base + 8, addr);
-+    /* upper 32 bits */
-+    addr = cpu_to_be32((uint32_t)(uintptr_t)(guest_access_addr >> 32));
-+    qtest_outl(fw_cfg->qts, fw_cfg->base + 4, addr);
-+
-+    g_assert(!(be32_to_cpu(access.control) & FW_CFG_DMA_CTL_ERROR));
-+
-+    guest_free(&guest_malloc, guest_access_addr);
-+    guest_free(&guest_malloc, gaddr);
-+    alloc_destroy(&guest_malloc);
-+}
-+
-+static void
-+qfw_cfg_write_entry(QFWCFG *fw_cfg, uint16_t key, void *buf, int len)
-+{
-+    qfw_cfg_select(fw_cfg, key);
-+    qfw_cfg_dma_transfer(fw_cfg, buf, len, FW_CFG_DMA_CTL_WRITE);
-+}
-+
-+static void
-+qfw_cfg_read_entry(QFWCFG *fw_cfg, uint16_t key, void *buf, int len)
-+{
-+    qfw_cfg_select(fw_cfg, key);
-+    qfw_cfg_dma_transfer(fw_cfg, buf, len, FW_CFG_DMA_CTL_READ);
-+}
-+
- /*
-  * The caller need check the return value. When the return value is
-  * nonzero, it means that some bytes have been transferred.
-@@ -104,6 +159,101 @@ size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
-     return filesize;
- }
- 
-+/*
-+ * The caller need check the return value. When the return value is
-+ * nonzero, it means that some bytes have been transferred.
-+ *
-+ * If the fw_cfg file in question is smaller than the allocated & passed-in
-+ * buffer, then the first len bytes were read.
-+ *
-+ * If the fw_cfg file in question is larger than the passed-in
-+ * buffer, then the return value explains how much was actually read.
-+ *
-+ * It is illegal to call this function if fw_cfg does not support DMA
-+ * interface. The caller should ensure that DMA is supported before
-+ * calling this function.
-+ */
-+size_t qfw_cfg_read_file(QFWCFG *fw_cfg, const char *filename,
-+                         void *data, size_t buflen)
-+{
-+    uint32_t count;
-+    uint32_t i;
-+    unsigned char *filesbuf = NULL;
-+    size_t dsize;
-+    size_t len = 0;
-+    FWCfgFile *pdir_entry;
-+
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
-+    count = be32_to_cpu(count);
-+    dsize = sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
-+    filesbuf = g_malloc(dsize);
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
-+    pdir_entry = (FWCfgFile *)(filesbuf + sizeof(uint32_t));
-+    for (i = 0; i < count; ++i, ++pdir_entry) {
-+        if (!strcmp(pdir_entry->name, filename)) {
-+            len = be32_to_cpu(pdir_entry->size);
-+            uint16_t sel = be16_to_cpu(pdir_entry->select);
-+            if (len > buflen) {
-+                len = buflen;
-+            }
-+            qfw_cfg_read_entry(fw_cfg, sel, data, len);
-+            break;
-+        }
-+    }
-+    g_free(filesbuf);
-+    return len;
-+}
-+
-+/*
-+ * The caller need check the return value. When the return value is
-+ * nonzero, it means that some bytes have been transferred.
-+ *
-+ * If the fw_cfg file in question is smaller than the allocated & passed-in
-+ * buffer, then the buffer has been partially written.
-+ *
-+ * If the fw_cfg file in question is larger than the passed-in
-+ * buffer, then the return value explains how much was actually written.
-+ *
-+ * It is illegal to call this function if fw_cfg does not support DMA
-+ * interface. The caller should ensure that DMA is supported before
-+ * calling this function.
-+ */
-+size_t qfw_cfg_write_file(QFWCFG *fw_cfg, const char *filename,
-+                          void *data, size_t buflen)
-+{
-+    uint32_t count;
-+    uint32_t i;
-+    size_t len = 0;
-+    uint32_t id;
-+    unsigned char *filesbuf = NULL;
-+    size_t dsize;
-+    FWCfgFile *pdir_entry;
-+
-+    /* write operation is only valid if DMA is supported */
-+    id = qfw_cfg_get_u32(fw_cfg, FW_CFG_ID);
-+    g_assert(id & FW_CFG_VERSION_DMA);
-+
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
-+    count = be32_to_cpu(count);
-+    dsize = sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
-+    filesbuf = g_malloc(dsize);
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
-+    pdir_entry = (FWCfgFile *)(filesbuf + sizeof(uint32_t));
-+    for (i = 0; i < count; ++i, ++pdir_entry) {
-+        if (!strcmp(pdir_entry->name, filename)) {
-+            len = be32_to_cpu(pdir_entry->size);
-+            uint16_t sel = be16_to_cpu(pdir_entry->select);
-+            if (len > buflen) {
-+                len = buflen;
-+            }
-+            qfw_cfg_write_entry(fw_cfg, sel, data, len);
-+            break;
-+        }
-+    }
-+    g_free(filesbuf);
-+    return len;
-+}
-+
- static void mm_fw_cfg_read(QFWCFG *fw_cfg, void *data, size_t len)
- {
-     uint8_t *ptr = data;
-diff --git a/tests/qtest/libqos/fw_cfg.h b/tests/qtest/libqos/fw_cfg.h
-index b0456a15df..62221a9500 100644
---- a/tests/qtest/libqos/fw_cfg.h
-+++ b/tests/qtest/libqos/fw_cfg.h
-@@ -33,6 +33,10 @@ uint32_t qfw_cfg_get_u32(QFWCFG *fw_cfg, uint16_t key);
- uint64_t qfw_cfg_get_u64(QFWCFG *fw_cfg, uint16_t key);
- size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
-                         void *data, size_t buflen);
-+size_t qfw_cfg_write_file(QFWCFG *fw_cfg, const char *filename,
-+                          void *data, size_t buflen);
-+size_t qfw_cfg_read_file(QFWCFG *fw_cfg, const char *filename,
-+                         void *data, size_t buflen);
- 
- QFWCFG *mm_fw_cfg_init(QTestState *qts, uint64_t base);
- void mm_fw_cfg_uninit(QFWCFG *fw_cfg);
--- 
-2.45.2
+These are two different issues:
+- QEMU 2.4 and earlier _defaulted_ to legacy virtio devices (enforced by
+  setting max_revision to 0)
+- QEMU 5.0 and earlier _allowed_ virtio device types to be configured as
+  legacy devices that did not actually support legacy (e.g. virtio-gpu),
+  there's a compat value to allow a max_revision of 0 for those old
+  machine types
+
+So that's not a problem -- but I wonder whether we had missed the boat
+elsewhere, when we introduced revisions > 1 (nothing much we can do now
+if that is the case, though.)
+
+I also don't think we actually want to remove max_revision anyway, as it
+could also be used for non-compat related things (e.g. to accommodate a
+known buggy driver.)
+
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  hw/s390x/s390-virtio-ccw.c | 37 -------------------------------------
+>  1 file changed, 37 deletions(-)
+
+The patch itself LGTM.
 
 
