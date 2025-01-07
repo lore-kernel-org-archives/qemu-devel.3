@@ -4,80 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEB7E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9625CE77199
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:24:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV3wD-0001DR-U1; Tue, 07 Jan 2025 02:23:41 -0500
+	id 1tV3wZ-0001GK-6t; Tue, 07 Jan 2025 02:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tV3wC-0001D1-1q
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:23:40 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tV3w9-0007dP-6H
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:23:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736234617; x=1767770617;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=VCmXgbYQ/ZSnluxbOEjbx9Minq4xrR4y0fz/Vjo4cuk=;
- b=EjNw1ZMongcwSRutfiGWsCFshPLUYCJinq4/77wwB0kWDMzfUZWha2xu
- GevxCXbcSPjwZv/j1tlYE6clahN3qaC6AOE6hILb3rgsGjWfMf0PBxdxo
- 9w3kq6VI6KE2EBzeu4748i7M63Bh2zOLplIG56ujsqwF/JbKNq3w1uzwt
- U/OHjLlI6/+YBZviNM1wqZi4TpxIA5cWrF+8sXdnH/W8wHUuhmBUV9t0A
- x8k/gfj+b+6LMekzKh18mnC3l3UXKiZ83Hj1+aURWljJFTPDpTXd9dfLT
- fkHGKQ6BUQZ2n0LOdopctvpLFRr6BhRowAY9SF3v2AEiDCMTHYCVmYrhK g==;
-X-CSE-ConnectionGUID: knYsFdHgSuO50k7lBnC0LQ==
-X-CSE-MsgGUID: R+8vdEWMQVeC3uH6B7wpZg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="39224762"
-X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="39224762"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jan 2025 23:23:33 -0800
-X-CSE-ConnectionGUID: uAnHJf0hSJ+tdqKYqvemNA==
-X-CSE-MsgGUID: n+CvdcgRRw+5MF8KybiI1g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="107304152"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jan 2025 23:23:30 -0800
-Message-ID: <ae5dc8f4-6967-4ec9-8176-ea8a5b6c2f63@intel.com>
-Date: Tue, 7 Jan 2025 15:23:28 +0800
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3wX-0001EW-VR
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:24:02 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3wW-0007eP-2G
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:24:01 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3863703258fso9407903f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 23:23:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736234638; x=1736839438; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qEkupldCw8c8chh2uJdgGm73Ctq69CVYmSH4734A6hg=;
+ b=fHBJ08D37+w53hvxh5I3PdeHWZ863JFIgjwooj4J2cQboq6obDx7x0CRqxYo2f873L
+ IjJcGTqEEyElmUZZrPXDNC9D9t/g90bDoi1Ic9A0xx3UkSDI7wMgnG6ADmicqiK9In6Y
+ btxwkMHs1ZigBFrLmh3ZxSQ03wtp8HGok030wtnD9QkueQkwZ2r0BtclO9p9b+3wuM95
+ DEIluPgYt2MRBpH39w/THu/sTntn6iJjBtleT8iFwfcmuK/eWdvtSjlu44ypM+6rmot6
+ g4AmqdfYF5sV0gxQYisj+wcz3SKSVOeQHNTt0iwy/qwOsJeIJeDeISVrJHA8ZiTOK19V
+ whbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736234638; x=1736839438;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qEkupldCw8c8chh2uJdgGm73Ctq69CVYmSH4734A6hg=;
+ b=tC59LQifwfhHD7/tx8tac0IjMRnWo1CBSAKH8H5aso0t89sHlaXtuvv8M1SBC/Srsh
+ +qpjgRTz4DqJZDKIfq+1Y0uBa5YWGLY2upzKOUoNlOrOQ8gmflZk9YlWqn4slj9XEJ3L
+ xRMqQFJupMP1gmFlT/PshvoaRZAlEHMr3beJ6hIDpUAXHtK7wP+JjxQw5fXoEUyVhbJC
+ vKufEaADAjBP/Ley401h3qORcyV/lS2ZK5+PqkMcz2XAw4G3TwRRZJCRCjD+eJ0/L6kW
+ lcVL38r3hMXswm1PuJZvwKqWgcfs7ZCCM3DZQSACy8XPzDfJDnAntfAhQcp7dP07VQrI
+ 4S6A==
+X-Gm-Message-State: AOJu0YxMnsmzhnW6Fzw0fJhDJrGh3dySrcZCIPB24MzR44Lw/Q6ail8i
+ 1XgQfvTbGgSAHdFXy85sueeijnadceWc07S3n541B2G28lELp/HzpBy/WiWzkSs=
+X-Gm-Gg: ASbGncsRGqGqLUP4N3lcvAtp8V1G/IdbbkuCJibw+4GyajJ6y8l7/Y4Azhs8Vlucibi
+ 0yi1FlCMGl2sYHQnWA+DzI0rsh1b7nQ6juhYnsKQzZtKyYj5L5CJ99OlFRN2DxwOQcp4AgReWG6
+ JmFCDZV10sci8jMAK+E22sVvheXY1GoRixrnBZmkALLwais3vxlmbonFbwJY8MDW/bwzocxEycH
+ M1gJW8HR8YuNPSyIJbJrAsCLf1/kmXsNk5lPVNhTNUxOeX4qBPko27R9sU4lepNSOw5Vp9m6TOq
+ yKzfCmDLmUDmz8ejZGv/bg5J
+X-Google-Smtp-Source: AGHT+IHq0HeaEaD8AnocIepL4dfnVsx8aTsFsXLBrvsQuUsak+JUY9U+JtxvqlS8iv5PJh4nBFfF1A==
+X-Received: by 2002:a5d:47c3:0:b0:388:c61d:4415 with SMTP id
+ ffacd0b85a97d-38a79142277mr1410058f8f.18.1736234638137; 
+ Mon, 06 Jan 2025 23:23:58 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8a6dd3sm49667943f8f.96.2025.01.06.23.23.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jan 2025 23:23:56 -0800 (PST)
+Message-ID: <5d1b8ee6-2959-42cb-9bf8-597ef63d5bed@linaro.org>
+Date: Tue, 7 Jan 2025 08:23:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/4] cpu: Drop CPUState::nr_cores
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-References: <20241205145716.472456-1-xiaoyao.li@intel.com>
- <20241230171150.5ef181e0@imammedo.users.ipa.redhat.com>
+Subject: Re: [PATCH v2 01/10] i386/cpu: Extract a common fucntion to setup
+ value of MSR_CORE_THREAD_COUNT
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
+ <20241219110125.1266461-2-xiaoyao.li@intel.com>
+ <018cfbde-96be-4d95-bb29-95cdf708187e@linaro.org>
+ <902568a2-8160-4265-9e2c-c4465eaa62d4@linaro.org>
+ <bf435f2e-5cfb-411d-937a-6c686a0530dd@intel.com>
+ <711792d0-858e-49ec-a3b5-b33d9312d542@intel.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20241230171150.5ef181e0@imammedo.users.ipa.redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <711792d0-858e-49ec-a3b5-b33d9312d542@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,77 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/31/2024 12:11 AM, Igor Mammedov wrote:
-> On Thu,  5 Dec 2024 09:57:12 -0500
-> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+On 7/1/25 05:34, Xiaoyao Li wrote:
+> On 1/7/2025 12:31 PM, Xiaoyao Li wrote:
+>> On 1/3/2025 4:52 PM, Philippe Mathieu-Daudé wrote:
+>>> On 28/12/24 18:37, Philippe Mathieu-Daudé wrote:
+>>>> On 19/12/24 12:01, Xiaoyao Li wrote:
+>>>>> There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+>>>>> Extract a common function for it.
+>>>>>
+>>>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>> ---
+>>>>> Changes in v2:
+>>>>> - move the implementation of cpu_x86_get_msr_core_thread_count() to
+>>>>>    target/i386/cpu-sysemu.c;
+>>>>> ---
+>>>>>   target/i386/cpu-sysemu.c             | 11 +++++++++++
+>>>>>   target/i386/cpu.h                    |  2 ++
+>>>>>   target/i386/hvf/x86_emu.c            |  3 +--
+>>>>>   target/i386/kvm/kvm.c                |  5 +----
+>>>>>   target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>>>>>   5 files changed, 16 insertions(+), 8 deletions(-)
+>>>>
+>>>>
+>>>>> +uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu)
+>>>>> +{
+>>>>> +    CPUState *cs = CPU(cpu);
+>>>>> +    uint64_t val;
+>>>>> +
+>>>>> +    val = cs->nr_threads * cs->nr_cores;  /* thread count, bits 
+>>>>> 15..0 */
+>>>>> +    val |= ((uint32_t)cs->nr_cores << 16); /* core count, bits 
+>>>>> 31..16 */
+>>>>> +
+>>>>> +    return val;
+>>>>
+>>>> Alternatively:
+>>>>
+>>>>         return deposit64(cs->nr_threads * cs->nr_cores, 16, 16,
+>>>>                          cs->nr_cores);
+>>
+>> I would rather keep it as-is as suguested by Philippe[1].
 > 
->> The series is motivated by auditing the usage of CPUState::nr_cores and
->> CPUState::nr_threads, which is motivated by [1].
->>
->> The initial goal is to initialize nr_threads and nr_cores earlier for
->> x86, which leads to patches [2] and [3]. Patch [2] touches all the ARCHes
->> and patch [3] looks hacky. At last Igor suggested to audit nr_threads and
->> nr_cores, and only set them in the pre_plug() callback for the ARCHes that
->> really need them[1].
->>
->> By audting nr_threads and nr_cores, I found nr_cores is only used by
->> x86. So we can introduce a x86 specific one and initialize in
->> x86_cpu_pre_plug(), then drop nr_cores totally.
->>
->> However for nr_threads, it's used by MIPS and PPC as well[4]. There are
->> two options:
->> 1. maintain separate substitute in X86/MIPS/PPS, so we can drop
->> CPUState::nr_threads like for CPUState::nr_cores.
->>
->> 2. keep CPUState::nr_threads and find place (or introduce pre_plug()) to
->> initialize them earlier for MIPS/PPC.
->>
->> I would like to seek for opinions for which one is prefered.
->>
->> This series implments the drop for CPUState::nr_cores. Though it doesn't
->> help on the initial goal without the solution for nr_threads, I think it
->> is still a good cleanup?
->>
->> BTW, by initializing nr_threads and nr_cores earlier than
->> qemu_init_vcpu(), it also unblocks [5].
+> Sorry for being wrong with the name. (awkward)
 > 
-> With minor fixes included mentioned during review
+> s/Philippe/Igor
 > 
-> Acked-by: Igor Mammedov <imammedo@redhat.com>
-
-Appreciated for your Ack, Igor!
-
-There is a v2[*], could you take a look at that?
-
-[*] 
-https://lore.kernel.org/qemu-devel/20241219110125.1266461-1-xiaoyao.li@intel.com/
-
+>> (deposit64() is really a new thing for i386)
 >>
+>> [1] https://lore.kernel.org/qemu- 
+>> devel/20241210173524.48e203a3@imammedo.users.ipa.redhat.com/
+
+Then use deposit64() in another patch on top?
+
+>>>>> +}
+>>>>
+>>>
+>>> Typo "function" in patch subject.
 >>
->> [1] https://lore.kernel.org/qemu-devel/20241125103857.78a23715@imammedo.users.ipa.redhat.com/
->> [2] https://lore.kernel.org/qemu-devel/5f8db586-cdda-4d00-be02-f9880a20e1a3@redhat.com/
->> [3] https://lore.kernel.org/qemu-devel/20241122160317.4070177-1-xiaoyao.li@intel.com/
->> [4] https://lore.kernel.org/qemu-devel/045f9cb1-2b17-4b2c-985f-3c34e3626b36@intel.com/
->> [5] https://lore.kernel.org/qemu-devel/20231128171239.69b6d7b1@imammedo.users.ipa.redhat.com/
+>> thanks for catching it!
 >>
->> Xiaoyao Li (4):
->>    i386/topology: Update the comment of x86_apicid_from_topo_ids()
->>    i386: Extract a common fucntion to setup value of
->>      MSR_CORE_THREAD_COUNT
->>    i386: Track cores_per_module in CPUX86State
->>    cpu: Remove nr_cores from struct CPUState
->>
->>   hw/core/cpu-common.c                 |  1 -
->>   hw/i386/x86-common.c                 |  4 +++-
->>   include/hw/core/cpu.h                |  2 --
->>   include/hw/i386/topology.h           |  5 +++--
->>   system/cpus.c                        |  1 -
->>   target/i386/cpu.c                    |  2 +-
->>   target/i386/cpu.h                    | 16 ++++++++++++++++
->>   target/i386/hvf/x86_emu.c            |  3 +--
->>   target/i386/kvm/kvm.c                |  5 +----
->>   target/i386/tcg/sysemu/misc_helper.c |  3 +--
->>   10 files changed, 26 insertions(+), 16 deletions(-)
 >>
 > 
 
