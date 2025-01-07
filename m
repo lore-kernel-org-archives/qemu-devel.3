@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19468E77188
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 01:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DB9E77188
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 02:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUyq1-0005Bt-5d; Mon, 06 Jan 2025 20:56:57 -0500
+	id 1tUz3r-00070f-Hs; Mon, 06 Jan 2025 21:11:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1tUypz-0005Ba-6X
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 20:56:55 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1tUypx-00052M-Op
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 20:56:54 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2f441791e40so17634899a91.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 17:56:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736215011; x=1736819811; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JWDRZeUAvK4U5nqOKgFhcdv5xmNToSgFPy3WjUmGny8=;
- b=kUvGMEsy5jcZUyy3hIoulm0dfmS+bQMJJ2EGRPNyLJ8E3W/SV0WDx2erZ5MSs9Zwcs
- UOYhe/RBwSDIB5bbWEKXCsMIsILsnLIu490163h1bsPLoZ+4bwPccSu8VVOFaWxcJ2c0
- 0+5Ms5+xcvqWp7falb7VnU3Vw+/InDoBKpgwKqWarHNxqsijX0TawUBmUbAC65l5GVl/
- KYSOtTQQTE+mjTVFo0b9yhz+PI4UQtAGtHzGLmcy73vukJzQ2HWv8lB8Rc8HCrhhjQoC
- UrBdRsgFWrN2vW+2RD5GWlZO0yGwEC7RswUL0FggBc4excWgbX9ArGZE6W3qcB19tLME
- exFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736215011; x=1736819811;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JWDRZeUAvK4U5nqOKgFhcdv5xmNToSgFPy3WjUmGny8=;
- b=LdE63F6z+q0LiuPqpRIWsJlZFMydSqDkLPqylLYNPY9wDpDzNMc1Awi+DTYmZ5cYBP
- 6c+T7CfHZmbJlaS5d+45LmaHw//PgHavCptjAORsZKSkzN/990pQJqNYGTBi0wh0z7k3
- 3yRReZ3CQpl2MdzToFjxSNrmvhIzvRxokNR/WtxPODBWqSw6CjRtc7qkfg6m7WzOqU77
- 3FxbQodiJzYflGhHmXNoV7CYiMYREi5qdFdr0WhdCQlPk9w48KxVcvJDcCGXiPFqqoc2
- tFCJZhk21rayA/CcaBSxaK5SC7UyeXti+HMlxxl7B51xV4hSNzSDv4SnNfTGHPE9UXfm
- 57Zw==
-X-Gm-Message-State: AOJu0Yzr8TloJhH0HuuYA1hFK6fa6xTh96DikHYuRx2mibVS4FSD9RcO
- diptJ8Ms6ll53HWQDvMgtozpT7tUl8HZcnvEEmOYu5Oh12saFoEK3A7AQAxDJxGERWZtrsXeE5A
- U
-X-Gm-Gg: ASbGnctSu9LfQxwqe0SCk9M4069cxmS9AZhN+Nto5bCmgZ0tCSwCuojICKedlnxLpLN
- RGezaZe9RKlkUU9ZrmyseHsNop30z7y4PNLV7AAemaz08tM9M7WL20qdqzDOtGj1obttyf0gvMi
- 28m+UWbHPhEl0vftGzycg5tn7MI7xm4fvLVz5dzXJiJZILVeNzmUDTviiHpYV+VMyGr76ha5pDq
- 3+eBrhq3lOmsdI0Oay6qSRQlJZXZ6IrseShdKMAkMapyBsVfKQGEWu9R6TR0w==
-X-Google-Smtp-Source: AGHT+IGHLmLOSA0wsL6PseJXmU3fFaNJDDLawVChZqyAxx4/tLHRBLoNUg9cZfChVap/lH2Dbeyivg==
-X-Received: by 2002:a17:90b:528a:b0:2ee:8619:210b with SMTP id
- 98e67ed59e1d1-2f452ec3589mr90077881a91.29.1736215010854; 
- Mon, 06 Jan 2025 17:56:50 -0800 (PST)
-Received: from gromero0.. ([191.8.218.247]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4be2b1f43sm16680910a91.17.2025.01.06.17.56.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jan 2025 17:56:50 -0800 (PST)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org,
-	philmd@linaro.org
-Cc: alex.bennee@linaro.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH] MAINTAINERS: Add me as the maintainer for ivshmem-flat
-Date: Tue,  7 Jan 2025 01:56:39 +0000
-Message-Id: <20250107015639.27648-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <James.Bottomley@HansenPartnership.com>)
+ id 1tUz3p-00070A-T5
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 21:11:13 -0500
+Received: from bedivere.hansenpartnership.com ([104.223.66.194])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <James.Bottomley@HansenPartnership.com>)
+ id 1tUz3o-0006Wb-4V
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 21:11:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=hansenpartnership.com; s=20151216; t=1736215870;
+ bh=mfxU72G4eSGdFLfGbL1wTIlEa432yZOUFx+qo5wPLPY=;
+ h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
+ b=dcCBTpjGGWByssqwr/zy92cV8VH3n9s0dewpRZAiVdMwWi9EU8ysZjnGZrKKhLJij
+ 38CvDy3UGnGeeqtnvNkdeYKdWJ3xHWeTqGTvNX+pZk0popyLLBH8C8pJks4edFWXnK
+ wHUUkfUPORoprOXrx21VW0Oxlax8rX4oB9XfGres=
+Received: from localhost (localhost [127.0.0.1])
+ by bedivere.hansenpartnership.com (Postfix) with ESMTP id 6289D128036E;
+ Mon, 06 Jan 2025 21:11:10 -0500 (EST)
+Received: from bedivere.hansenpartnership.com ([127.0.0.1])
+ by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavis, port 10024)
+ with ESMTP id CQOzB_GZjynD; Mon,  6 Jan 2025 21:11:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=hansenpartnership.com; s=20151216; t=1736215870;
+ bh=mfxU72G4eSGdFLfGbL1wTIlEa432yZOUFx+qo5wPLPY=;
+ h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
+ b=dcCBTpjGGWByssqwr/zy92cV8VH3n9s0dewpRZAiVdMwWi9EU8ysZjnGZrKKhLJij
+ 38CvDy3UGnGeeqtnvNkdeYKdWJ3xHWeTqGTvNX+pZk0popyLLBH8C8pJks4edFWXnK
+ wHUUkfUPORoprOXrx21VW0Oxlax8rX4oB9XfGres=
+Received: from [172.20.4.117] (unknown [74.85.233.199])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id 0DFD41280198;
+ Mon, 06 Jan 2025 21:11:10 -0500 (EST)
+Message-ID: <f83258defb96927b2656c2834108f9603bdd0e9a.camel@HansenPartnership.com>
+Subject: Re: [PATCH v11 2/2] tpm: add backend for mssim
+From: James Bottomley <James.Bottomley@HansenPartnership.com>
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, Stefan
+ Berger <stefanb@linux.ibm.com>
+Date: Mon, 06 Jan 2025 18:11:09 -0800
+In-Reply-To: <Z2RaYsLkazgciofM@redhat.com>
+References: <20241212170528.30364-1-James.Bottomley@HansenPartnership.com>
+ <20241212170528.30364-3-James.Bottomley@HansenPartnership.com>
+ <Z2RaYsLkazgciofM@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.4 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=104.223.66.194;
+ envelope-from=James.Bottomley@HansenPartnership.com;
+ helo=bedivere.hansenpartnership.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,32 +86,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add me as the maintainer for the ivshmem-flat device.
+On Thu, 2024-12-19 at 17:39 +0000, Daniel P. Berrangé wrote:
+> On Thu, Dec 12, 2024 at 12:05:28PM -0500, James Bottomley wrote:
+> > The Microsoft Simulator (mssim) is the reference emulation platform
+> > for the TCG TPM 2.0 specification.
+> > 
+> > https://github.com/Microsoft/ms-tpm-20-ref.git
+> > 
+> > It exports a fairly simple network socket based protocol on two
+> > sockets, one for command (default 2321) and one for control
+> > (default
+> > 2322).  This patch adds a simple backend that can speak the mssim
+> > protocol over the network.  It also allows the two sockets to be
+> > specified on the command line.  The benefits are twofold: firstly
+> > it
+> > gives us a backend that actually speaks a standard TPM emulation
+> > protocol instead of the linux specific TPM driver format of the
+> > current emulated TPM backend and secondly, using the microsoft
+> > protocol, the end point of the emulator can be anywhere on the
+> > network, facilitating the cloud use case where a central TPM
+> > service
+> > can be used over a control network.
+> > 
+> > The implementation does basic control commands like power off/on,
+> > but
+> > doesn't implement cancellation or startup.  The former because
+> > cancellation is pretty much useless on a fast operating TPM
+> > emulator
+> > and the latter because this emulator is designed to be used with
+> > OVMF
+> > which itself does TPM startup and I wanted to validate that.
+> > 
+> > To run this, simply download an emulator based on the MS
+> > specification
+> > (package ibmswtpm2 on openSUSE) and run it, then add these two
+> > lines
+> > to the qemu command and it will use the emulator.
+> > 
+> >     -tpmdev mssim,id=tpm0 \
+> >     -device tpm-crb,tpmdev=tpm0 \
+> > 
+> > to use a remote emulator replace the first line with
+> > 
+> >     -tpmdev
+> > "{'type':'mssim','id':'tpm0','command':{'type':inet,'host':'remote'
+> > ,'port':'2321'}}"
+> > 
+> > tpm-tis also works as the backend.
+> > 
+> > Signed-off-by: James Bottomley
+> > <James.Bottomley@HansenPartnership.com>
+> > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > 
+> > ---
+> > 
+> > v2: convert to SocketAddr json and use
+> > qio_channel_socket_connect_sync()
+> > v3: gate control power off by migration state keep control socket
+> > disconnected
+> >     to test outside influence and add docs.
+> > v7: TPMmssim -> TPMMssim; doc and json fixes
+> >     Make command socket open each time (makes OS debugging easier)
+> > v11: add startup method to make sure TPM is reset on reboot
+> > ---
+> >  MAINTAINERS              |   6 +
+> >  backends/tpm/Kconfig     |   5 +
+> >  backends/tpm/meson.build |   1 +
+> >  backends/tpm/tpm_mssim.c | 335
+> > +++++++++++++++++++++++++++++++++++++++
+> >  backends/tpm/tpm_mssim.h |  44 +++++
+> >  docs/specs/tpm.rst       |  39 +++++
+> >  qapi/tpm.json            |  31 +++-
+> >  system/tpm-hmp-cmds.c    |   9 ++
+> >  8 files changed, 466 insertions(+), 4 deletions(-)
+> >  create mode 100644 backends/tpm/tpm_mssim.c
+> >  create mode 100644 backends/tpm/tpm_mssim.h
+> > 
+> 
+> 
+> > diff --git a/backends/tpm/tpm_mssim.c b/backends/tpm/tpm_mssim.c
+> > new file mode 100644
+> > index 0000000000..8f105fc924
+> > --- /dev/null
+> > +++ b/backends/tpm/tpm_mssim.c
+> > @@ -0,0 +1,335 @@
+> > +/*
+> > + * Emulator TPM driver which connects over the mssim protocol
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + *
+> > + * Copyright (c) 2022
+> 
+> Copyright by whom ? I presume yourself, but I wouldn't normally
+> assume the 'Author' line applies to the Copyright line.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+I'll fix up this one (and all the others below) but:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2101b51217..461f98525b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2785,6 +2785,13 @@ F: hw/hyperv/hv-balloon*.h
- F: include/hw/hyperv/dynmem-proto.h
- F: include/hw/hyperv/hv-balloon.h
- 
-+ivshmem-flat
-+M: Gustavo Romero <gustavo.romero@linaro.org>
-+S: Maintained
-+F: hw/misc/ivshmem-flat.c
-+F: include/hw/misc/ivshmem-flat.h
-+F: docs/system/devices/ivshmem-flat.rst
-+
- Subsystems
- ----------
- Overall Audio backends
--- 
-2.34.1
+[...]
+> > diff --git a/backends/tpm/tpm_mssim.h b/backends/tpm/tpm_mssim.h
+> > new file mode 100644
+> > index 0000000000..397474e4f6
+> > --- /dev/null
+> > +++ b/backends/tpm/tpm_mssim.h
+> > @@ -0,0 +1,44 @@
+> > +/*
+> > + * SPDX-License-Identifier: BSD-2-Clause
+> > + *
+> > + * The code below is copied from the Microsoft/TCG Reference
+> > implementation
+> > + *
+> > + *  https://github.com/Microsoft/ms-tpm-20-ref.git
+> > + *
+> > + * In file TPMCmd/Simulator/include/TpmTcpProtocol.h
+> > + */
+> 
+> That file has a volumous copyright header that I would expect to be
+> preserved here.
+
+Actually, the file itself has no copyright header at all (seems to be
+standard practice for all header files in the repository). Did you want
+me to paste the copyright lines from the LICENSE file; i.e.
+
+Copyright 2010-2022 Microsoft Corporation
+Copyright 2022-2024 Trusted Computing Group and its contributors
+
+?
+
+James
+
 
 
