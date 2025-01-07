@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B29E7719A
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 405CDE77199
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCpE-0004bF-PA; Tue, 07 Jan 2025 11:53:05 -0500
+	id 1tVCqR-00070J-6o; Tue, 07 Jan 2025 11:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCp5-0004S1-Nu
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:56 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1tVCpa-0005Bk-CQ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:28 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoT-0005rl-9X
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-436ce2ab251so27754595e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:16 -0800 (PST)
+ id 1tVCob-0005x7-1m
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:26 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so125695545e9.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736268735; x=1736873535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268743; x=1736873543; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9FzFnlzkuRqAIG729x/b7511sIkBqkjnI6qfjXVG1TA=;
- b=cTx3uJhhkaW8pNdz5T4l8M9GyL7H9zpgufwj4mtjDMXpRga4E6G4BWuciGlloaW0Zt
- kPnlM0pCY+qSMI/dx2OxARytwkIqYmxWP2vNk/zP7MiCeZYEbYBmhD7mdHcNIML7ay6X
- lRCSvC1tyZpO0KrrDjiC1Y3JnajJkvXwy2F2gwUA5XAoKm6kGTpDY39D44Q7POFsxxvl
- Y7HxWHGeVbZD0FUA+BOnRhxrgQSLZxhBhODHhSj58IZUstdLtP6ShYOtRjzLo6Iks7wx
- rmYv1ITjknFayPgcPHUtyb0OzBnnpB6jOIKtCa16f9dboU5/nuVjlYzwtoIDWHdxwzaf
- 5ebA==
+ bh=pp9Cb+nLjYnJ8bOQQMApTzM9CoLq9IVOBk3wtPI/KWI=;
+ b=LqGDe+m1UgtZcslNmKrtV8sUsoNSWv38bdxSCmsNoCkK4ipJ7gqnEZUBF2fbS0EsnF
+ U6l6vLRAHAWTCBpoQp/fmbI/t2xtoM/JgxoX1dz5Yy5/yt19s/sIGITjcBsuh7PcTYs0
+ +FEIiM6itI6Y0JLCLTaHKs++my2Sao0x/y/Si/v0Ky6K6PVpNqKG2GK0qSQ2bbpo9MVl
+ 1fFfxKhra/kLdRtfdZXRpZRrxmXE3v4VNZtMalS7ZjpyoPp1cGbRvlKHHlDuTd7jkeKv
+ i4yBXQMakUq+mFGNp66ninuO/ztKFwSEQrVIlDluMErSxq5tLSYxcFmHG6SX+UY1Ckf4
+ bPcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736268735; x=1736873535;
+ d=1e100.net; s=20230601; t=1736268743; x=1736873543;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9FzFnlzkuRqAIG729x/b7511sIkBqkjnI6qfjXVG1TA=;
- b=kJAExlF+/ixT2swqSI+RPaugbLoEpI01jdJFSBXk274UkfJeydTlz+SNE22JDbbX+y
- S6qfwSM3DUuZMNmDWb3+vS3u/3fXBh0S/VlgNRqluxJ6VF1xs1ygVpP4i0TMbbkLbxfX
- rk5p2huSReT9uLwT8EfkkBOTUnEPSGnHYqDrN7nfz8UwqgYxjUYBgAteiWqyFyaxMDOT
- YU/A3i6vA4nraiEfbfM7h9Kyvkb+Pl2iqIttWkNjQoJHQnlTVEzXvJyMSNfUvLKZ2pS2
- ZexumDwWAyBnlU8mTeAFt0UBhvg+6T7bezk3X0lhpQYw6YrJZpw43xHYMiQQC/3W417P
- g/mg==
-X-Gm-Message-State: AOJu0Yws08iu8e345v+taLMxa7WVBtLAckhXurhsLcZU5VzJB7r7rm/u
- nL4KNx7+a6IabYVePe0bk2zz36hT7W/ctMKyj/5uJJcFgSfsEYOjVwm7GsU5rJc=
-X-Gm-Gg: ASbGncsgTus52lkFE9H4+XyrBlhMvqBdFjJ8CufGFzBVBvgodEiSWvkCaJc0L6+aUND
- IVueWyzIbDK/Jw7BE3oCNbN+j5dduhUNjT1DBk63jyCaYLrt1FztU0BSSyCEjemHFZf5k9ZOVnT
- PrvLk+E1RCaRj3B8k0fBAT5md5QK17JiphgzloZRxQaojPg/Hd70wy9pEZx1c7EsWGZgv5XGBJG
- VR4DSI4GoxfNge4mGfSiPYZIyp4S4kha6KTHuqDjsqFfP+2c3pv6lg=
-X-Google-Smtp-Source: AGHT+IHr8FvuMDxn27uTX6Ray6vggcKJfli2Aqj65zcld+gPiFlnDckk5RO1WtN/ECLelse9kkybIg==
-X-Received: by 2002:a5d:64e2:0:b0:385:f979:7664 with SMTP id
- ffacd0b85a97d-38a2240019bmr55034696f8f.58.1736268734730; 
- Tue, 07 Jan 2025 08:52:14 -0800 (PST)
+ bh=pp9Cb+nLjYnJ8bOQQMApTzM9CoLq9IVOBk3wtPI/KWI=;
+ b=GKnS3oJPTBV+RENSv/e64KvXmc0hA6vNALnFuek8+kOb8dATvxgZ4vl5eXrnGfG858
+ JDa3HcxvHIqm7meNR/Ib+I37HxN9b9rUuxRi214FBDOtjGDYfeEofLQMc6llt7JqS6bg
+ ilfyy+iQTWjFopPGGSPZIBSCUIdc1btnesJjPsk0zkZZiQMeaPZ4cHXadZtRMRbqFdLl
+ 1JUuQNLfTOGm4nwbxj/X9Sh0HVA/7y+YYm9XXI89YjsPQhmJ5T9PPDihJTjn1A4rp2WG
+ xEl+BHVoESwDL9FQOe4oMltfFYSQcZYvDr3vMe/CByUK5xS+d26SaCNE0gBBbDQXr5Nm
+ GeSQ==
+X-Gm-Message-State: AOJu0YzEI/Qdm5puX8fveV6pIt7YIiBCEJtmczktWNsJDQO5buIoV5kb
+ n0r4LAh3jTXhlOpw+UyIwf+f41s0uXnfxtFhXibq8IU52vOQp7CEQoyndswa2Z8=
+X-Gm-Gg: ASbGncv3Eq8q9kdkBrQbT89Rawecl/E0BTAXK5/9DM2FqWxPZNNt19bnlkmIx5xXj/4
+ CIRniFlB/JXrL5t8rsPlgd+JGMWqoo0a37LCh/6zNzA9kk9Igr2QFIS+5eBR93WhK5C2ffnCKrA
+ WvE844BXjvOST75t7rtxGAegzL4fDA04aD9mghujuo+js7Y7TbUrZekOpMnkIKxBHoOam5CI8ZK
+ bJoUor3QBDcucwM2pWs9EHocd72tc8LCZk947zEd+CWGR8XoT6AQA0=
+X-Google-Smtp-Source: AGHT+IEZlo7wUd2guFc1pI8Jjm0H4j47Cqk02RDV8c+BTKryqrUGFCktldufQ/0LiLhhSX36f/8lzA==
+X-Received: by 2002:a5d:5e09:0:b0:385:f72a:a3b0 with SMTP id
+ ffacd0b85a97d-38a223fd417mr66713319f8f.55.1736268743552; 
+ Tue, 07 Jan 2025 08:52:23 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8474c2sm50198301f8f.55.2025.01.07.08.52.10
+ 5b1f17b1804b1-4366127c4d7sm602216935e9.34.2025.01.07.08.52.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:52:11 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:20 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9605D5F935;
- Tue,  7 Jan 2025 16:52:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 8DF2C60571;
+ Tue,  7 Jan 2025 16:52:10 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -98,25 +98,26 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v3 06/29] tests/functional: update the mips64 tuxrun tests
-Date: Tue,  7 Jan 2025 16:51:44 +0000
-Message-Id: <20250107165208.743958-7-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
+Subject: [PATCH v3 28/29] dockerfiles: Remove 'MAINTAINER' entry in
+ debian-tricore-cross.docker
+Date: Tue,  7 Jan 2025 16:52:06 +0000
+Message-Id: <20250107165208.743958-29-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,37 +133,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
+AMSAT closed its email service [*] so my personal email
+address is now defunct. Remove it to avoid bouncing emails.
+
+[*] https://web.archive.org/web/20240617194936/https://forum.amsat-dl.org/index.php?thread/4581-amsat-mail-alias-service-to-end-august-1-2024/
+
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250102152513.61065-1-philmd@linaro.org>
+[AJB: update URL to web.archive.org]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-27-alex.bennee@linaro.org>
 ---
- tests/functional/test_mips64_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/docker/dockerfiles/debian-tricore-cross.docker | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tests/functional/test_mips64_tuxrun.py b/tests/functional/test_mips64_tuxrun.py
-index 54af1ae794..0e4c65961d 100755
---- a/tests/functional/test_mips64_tuxrun.py
-+++ b/tests/functional/test_mips64_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunMips64Test(TuxRunBaselineTest):
+diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
+index 479b4d6eba..7e00e870ce 100644
+--- a/tests/docker/dockerfiles/debian-tricore-cross.docker
++++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
+@@ -11,8 +11,6 @@
+ #
+ FROM docker.io/library/debian:11-slim
  
-     ASSET_MIPS64_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/mips64/vmlinux',
--        '09010e51e4b8bcbbd2494786ffb48eca78f228e96e5c5438344b0eac4029dc61')
-+        'https://storage.tuxboot.com/buildroot/20241119/mips64/vmlinux',
-+        'fe2882d216898ba2c56b49ba59f46ad392f36871f7fe325373cd926848b9dbdc')
-     ASSET_MIPS64_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/mips64/rootfs.ext4.zst',
--        '69d91eeb04df3d8d172922c6993bb37d4deeb6496def75d8580f6f9de3e431da')
-+        'https://storage.tuxboot.com/buildroot/20241119/mips64/rootfs.ext4.zst',
-+        'b8c98400216b6d4fb3b3ff05e9929aa015948b596cf0b82234813c84a4f7f4d5')
- 
-     def test_mips64(self):
-         self.set_machine('malta')
+-MAINTAINER Philippe Mathieu-Daudé <f4bug@amsat.org>
+-
+ RUN apt update && \
+     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
+     DEBIAN_FRONTEND=noninteractive eatmydata apt install -yy \
 -- 
 2.39.5
 
