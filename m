@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF11E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 11:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0972E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 11:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV7Wa-0000Yu-C9; Tue, 07 Jan 2025 06:13:29 -0500
+	id 1tV7bm-0001OB-Gh; Tue, 07 Jan 2025 06:18:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tV7WQ-0000YM-TW
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 06:13:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tV7WO-0000Wq-6a
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 06:13:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736248394;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=i4cw780DN/LGmTQ/ybrMWyZ0EkmQUgapSHvCxCFoy5k=;
- b=ZZ7AbSVY10tWcgOFtpWWGwV//o9aZZBAGH2MUqP7+A6U+XSsey+9t45U23ZmqwMaMsQCob
- +UFMVc3KBlVhLO9j2KKMvnJQJQTHUEfcoiYy68ijxpqCS4t/adHiZGudA68cubS3UjyIkO
- baW2Dsd5pSWxy66glDUOFFRJVCQ+A+c=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-p-teSpYSMu-xjTQRfKXfMg-1; Tue, 07 Jan 2025 06:13:12 -0500
-X-MC-Unique: p-teSpYSMu-xjTQRfKXfMg-1
-X-Mimecast-MFC-AGG-ID: p-teSpYSMu-xjTQRfKXfMg
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so6817249f8f.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 03:13:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tV7bl-0001O0-DR
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 06:18:49 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tV7bj-0001CL-Ab
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 06:18:49 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2163bd70069so33782105ad.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 03:18:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736248725; x=1736853525;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hoznFOBSphqP4gcOgEi27/LzCX1DhAknL37Btcf9VZ4=;
+ b=EkUVZqqnav1TT+x9l9/f8XbSYLuDdHp3tmtJPiQWfnWcOuwSUyfoLEF2A/2CzX0EH+
+ RKlagYlG2jtAfZ0cyNiEKeuMbKYA0L9S2tV+9eN7OezGQQXLQjMYW83xMyMmjwZseYev
+ R4pMOKckSpgkcgQhNEf6kp+jJCTACU2tqBo/5ymbno4EP+Qwi4hLwPtTGFkgzZ51B5Bb
+ E0HICtFRm8Ji2nLa6BVhGrhB4/c+a873/TUEd+N8WCcjZF0eJp0dsYRUoh4kjE9LQ+BR
+ uJASahL0NLE3tC8Dz1v8lhK3VCZq8zUyOjykqxpTfZ50iE0oljs5AcUsONtqxwn5QAvc
+ hlRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736248391; x=1736853191;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i4cw780DN/LGmTQ/ybrMWyZ0EkmQUgapSHvCxCFoy5k=;
- b=iajPtKgbWKverjx3pwQEmhNEF3/rcfEWj6JZbglkESjdcOKKPHqKDHZE3sN9lNHoSm
- BMavaqQA4bz8Jlvfet5krgfLn8zqetQdRLWYV1kd6430+0LGy7vLtZT4kRqeYkZZiDtT
- pvgB93d6lgRvTNvuzWsmTkFOMGwUwN+ddA8Xw7UbLSy+NE2h+Eevcgo6JBb/wcUB5s/n
- 9E58BFnkyUi8j63cH7jYoE5Czkmfm1UccqObdOM2s6OfYe6xty6JXk2z2l/QMkPDk/U9
- 1QdbjkKSDD342VuUwVxcE2VDcuxMX7Xo6Y5XwAuxoECfFs3sS1EKsAeboPPRNYYGuiPF
- 3Vqw==
-X-Gm-Message-State: AOJu0YzD3flbdgxME25A0lIR8lPPELsqwbZiKJ4HHc+aV3r84Et3zMYV
- XDpkHd/Wxb7mUwoOjAstMHxdBNRr8HmIpaAxdl6xl6eP7IQ0sMBeKX8bZqHTLyRuShDWZYU2IpG
- RNuq50Mqnq/mUdlflLDCKzItmgWjRUnJbWocfbnOWh+Llvqw3rfQSQAWqXez5Kwa/jiazg5P3zT
- bn5iUBOc05N6dLDOIyZ0Dtr+sOwK44jdL1pMB9fTw=
-X-Gm-Gg: ASbGncvpSv6ljrRpx3JQbg7TX5mZm48B8ZV3EB0nNr5VhamXAhFeW6ACLS8LYLooTsf
- 6af3EdFalaVfxabz6E2g6s76+yZlKcjPWtTKL/uNcUOQ4PZoafxblAVaQgwqnTSduzvFmV75Yje
- yK0fWMPWaxN/GfLHBqXkvWRtLAKY6fV8+q9p3+DxZ56gu327mAr7kHNJ2u0QvspCM2viBhZ9+DR
- S1m7TwGFhNqkqGFvlRGGQNHP4ZnDPmmVnLf7vPZJEnW9+QY+7QpKtWJ6vPt
-X-Received: by 2002:a05:6000:471e:b0:382:31a1:8dc3 with SMTP id
- ffacd0b85a97d-38a222007dcmr57916471f8f.35.1736248390932; 
- Tue, 07 Jan 2025 03:13:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHsKGtzMwet/3vDxB6OPZw6g/JXYZ4ek+I8YHCnTJ883ddE31kt7UZf50c6150NnPPetdLyJg==
-X-Received: by 2002:a05:6000:471e:b0:382:31a1:8dc3 with SMTP id
- ffacd0b85a97d-38a222007dcmr57916416f8f.35.1736248390231; 
- Tue, 07 Jan 2025 03:13:10 -0800 (PST)
-Received: from [192.168.10.47] ([151.62.105.73])
+ d=1e100.net; s=20230601; t=1736248725; x=1736853525;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hoznFOBSphqP4gcOgEi27/LzCX1DhAknL37Btcf9VZ4=;
+ b=vbeY+wyi1qGkKPP6Shf5wUu91qKaGJ2gUlaRSgHjatQIhsYmZazdNCya3FBM0qzF0v
+ OYWJL+K0H9ddJTx0AXsvfXxUm6qQvbF/SprbwVUfcRAUQa7bBBsjZA2roWWRNlW1qxoK
+ Ee2af9xCpqwTsNpeccGaAbVf/lR7x45lx2EfT/iGr3Ax+5QR6oAkvuu1oQZJgQgI7xxQ
+ +luohm9Cg54QFnu758kSoPH/XmQjQTMnQsYJ+FPFK4REsSHaV2BnmBolldtvHqikAEvO
+ inDRoBc7DndywqBS1fR5zp6GP58nn8FKbNWIR/vrdbxnJWUoz4qCBuYKHy/MMq/uL5jj
+ 8S1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVg67sQNy+9bkCwyugkQJKODGOFDMhKDf/QSLN/RIcX7DhBrTA4rTpD0WZVMrXiEfefbzyLCdCs04gA@nongnu.org
+X-Gm-Message-State: AOJu0Yznfgg9nimWiZev/baHeG2aXGyor9wmvvpPYP0eK2ZYTJeVdqjZ
+ m+1aZaUwGOqYntrn45WA/Wolz1B/7/xbNn8bw5VPOHTyfbM+hqJzk0w3nVHs8d8=
+X-Gm-Gg: ASbGncuNgiTGvhuElRESWLY8L7JD7GvPylwIoMpRQxllIwk5xXSYZe4VvWe+IV4oXS4
+ 6ZvMPC3gUA5b9Lmq2iwI+rVqpxQUFXezJDUb/vUaUraLGzxB8/BDjrZrqX0V6ComffcVWCCf7Eh
+ vL7FUK3sS3AIInk76Iuawhp4NLQ9kX37kmY7kaJidcau3GKRXDRs0YI8vAiaDIJEJdnpqPjMgFw
+ 1zKEqrtK6v+ZPj2UhXomB3pOiql3rJfCpE+antzUDNPSwGWqYfoBPMERr0y7MQpsJQ=
+X-Google-Smtp-Source: AGHT+IHD2FAOOr614XE4fHS2GjK9JTPzZjPoVTKFeHxvxEPkgbMFxH1ik6O06goT/zWrsedW2jc9sA==
+X-Received: by 2002:a05:6a21:7898:b0:1db:eb82:b22f with SMTP id
+ adf61e73a8af0-1e5e0458de2mr94005899637.5.1736248725318; 
+ Tue, 07 Jan 2025 03:18:45 -0800 (PST)
+Received: from [157.82.203.37] ([157.82.203.37])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8a8d3dsm49686927f8f.94.2025.01.07.03.13.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 03:13:09 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] qom: remove unused field
-Date: Tue,  7 Jan 2025 12:13:08 +0100
-Message-ID: <20250107111308.21886-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
+ 41be03b00d2f7-8e2478b59bcsm18614741a12.72.2025.01.07.03.18.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 03:18:44 -0800 (PST)
+Message-ID: <015052c8-969a-4604-b2eb-aa6ded0f4331@daynix.com>
+Date: Tue, 7 Jan 2025 20:18:40 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: No display in Xen PV guests: "This VM has no graphic display
+ device."
+To: Dario Faggioli <dfaggioli@suse.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paul Durrant <paul@xen.org>, Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Charles Arnold <CARNOLD@suse.com>
+References: <23260a79710e2c302028afa401a969ca9cc389f9.camel@suse.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <23260a79710e2c302028afa401a969ca9cc389f9.camel@suse.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,49 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "concrete_class" field of InterfaceClass is only ever written, and as far
-as I can tell is not particularly useful when debugging either; remove it.
+On 2024/12/12 0:27, Dario Faggioli wrote:
+> Hello everyone,
+> 
+> We've found an issue that manifests in Xen PV guests. We have
+> encountered it when testing our (SUSE and openSUSE) packaged version of
+> 9.1.x, but I've been able to reproduce it even using the upstream
+> master branch.
+> 
+> QEMU 8.2.8 works fine, so something happened during 9.0 or 9.1
+> development (and not backported to stable).
+> 
+> Basically, it's enough to try to create a Xen PV guest with virt-
+> manager and the only output of the virt-manager window will be "This VM
+> has no graphic display device" (while, e.g., `xl console <domid>` works
+> fine).
+> 
+> There is some additional info in this bug, but not all of that makes
+> sense (we were in a hurry for a fix, and this is not my area :-/):
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=1232712
+> 
+> However, what I eventually figured out though (through a couple of
+> bisections), is that if I revert _both_:
+> 
+> - 6ece1df966 hw/xen: Register framebuffer backend via xen_backend_init()
+> - e99441a379 ui/curses: Do not use console_select().
+> 
+> Things work again.
+> 
+> As I said, this is not my field, so there's not much more that I can
+> say for now. Nevertheless, I'm happy to try to help as much as I can
+> (e.g., testing theories, trying patches, etc)... So let me know what I
+> can do. :-)
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/qom/object.h | 5 ++++-
- qom/object.c         | 1 -
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Hi,
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 95d6e064d9b..f28ffea9a64 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -573,12 +573,15 @@ struct InterfaceInfo {
-  *
-  * The class for all interfaces.  Subclasses of this class should only add
-  * virtual methods.
-+ *
-+ * Note that most of the fields of ObjectClass are unused (all except
-+ * "type", in fact).  They are only present in InterfaceClass to allow
-+ * @object_class_dynamic_cast to work with both regular classes and interfaces.
-  */
- struct InterfaceClass
- {
-     ObjectClass parent_class;
-     /* private: */
--    ObjectClass *concrete_class;
-     Type interface_type;
- };
- 
-diff --git a/qom/object.c b/qom/object.c
-index b4c52d055d9..e9dfad854bd 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -314,7 +314,6 @@ static void type_initialize_interface(TypeImpl *ti, TypeImpl *interface_type,
-     g_free((char *)info.name);
- 
-     new_iface = (InterfaceClass *)iface_impl->class;
--    new_iface->concrete_class = ti->class;
-     new_iface->interface_type = interface_type;
- 
-     ti->class->interfaces = g_slist_append(ti->class->interfaces, new_iface);
--- 
-2.47.1
+I tried to run Xen on QEMU to debug this but it doesn't boot. The 
+command line I used is:
+qemu-system-x86_64 -nographic -kernel var/xen -initrd 
+var/xtf/tests/example/test-pv64-example -append 'loglvl=all 
+com1=115200,,8n1 console=com1 noreboot console_timestamps=boot' -m 512
 
+It gives no console output. Do you have an idea how to fix this?
+
+Regards,
+Akihiko Odaki
 
