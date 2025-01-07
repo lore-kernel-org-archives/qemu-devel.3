@@ -4,134 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A717AE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A391E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV8K9-0000Bl-Ia; Tue, 07 Jan 2025 07:04:41 -0500
+	id 1tV8L2-00013P-Pz; Tue, 07 Jan 2025 07:05:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tV8Jt-00005n-9N
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:04:31 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tV8Ky-0000zF-Pv
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:05:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tV8JZ-0007F3-96
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:04:23 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tV8Kw-0007aD-Ki
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:05:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736251440;
+ s=mimecast20190719; t=1736251529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LNQMn2wIZii4j2bqMBE6Moj3MRDBpdeutH+qPyUcNO8=;
- b=CKXXr2r5GqLaRvN9PlwrkYWrKPlWQ4s44J1sV8wvUl7ucfrqDljkmLpuY6avE6qysKOepD
- VYG05CLzrqOSKGbV32sUHpXe/x3Hwc5X3QY7snyd10ZnjurVMyTxNjdQW0TCgxHG71zrUv
- Yv1UmVpoCwxu4JxIH94Kzs7wdWnZVJA=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-324-vvYhKfdJNdO6HPYYEe4veg-1; Tue, 07 Jan 2025 07:03:58 -0500
-X-MC-Unique: vvYhKfdJNdO6HPYYEe4veg-1
-X-Mimecast-MFC-AGG-ID: vvYhKfdJNdO6HPYYEe4veg
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b9e433351dso2620570585a.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 04:03:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736251438; x=1736856238;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LNQMn2wIZii4j2bqMBE6Moj3MRDBpdeutH+qPyUcNO8=;
- b=ljrjQhwzPNihs1xglNGb9913ibu+2pj7YI+DkBIqPw3xHMNxHK3xU3MAdzkaZWzy/Y
- hrYeJbh2wDYaDjwbxIrFqOiM9rQ/9k7zGm+S9qOGOm8GHaXEHNiOnsHRwFrOMSIYWuHP
- eJH5XQSagn09Em2FcEO2GHOkqHQFd3B6e3P9+dGO0Xz35TsxX/Cm17UuwKo/nBCfgYB8
- lqYd5hQmvsBM8zyuMoYf1NNSw+2adgmigFZvd0YDzphEFGxEYzSgG1+9ed+F7B6N563i
- Vn+GH+B35CO4MBm33RxhJOG5XlM9sR2fkWJsfGYudNTFkxkj4BFa4Fz47BMXTgSyGu0B
- tBvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvASnZi/gn6fz762IqdGNr8HLTOdO8DwexBHziYlHBgos92Wy2lAYO4geLmTZmxBG6cxMG3KcF2qp3@nongnu.org
-X-Gm-Message-State: AOJu0YwFlCOORspJXjY3Hknlwo9qtQNRwVaMP1hKjgbeUwGroObGpqzR
- 4saifuYiLBreXVtHAJu3Mwg6WCipLoD/+yap6UXdt3CzyuH3JXAfytDGec/wVzHc4OMx+2Wv0tQ
- 2vjEOZRhVxyaEOHyAvyuBeM3DHL2KUwBnx/qm7Yi+84965ODZ+VnA
-X-Gm-Gg: ASbGncsi/nlAKr+IXELvIqnSthVaWbZJZfw1Tr/LlvvOj8rE1sxYCGt7wQheJ8D/qsA
- v5vEqHYg5oDxA0eD4QU5hUZrazYsTJ6Ovuvuzj8If7qNsi3F1KYxwVQEbypwfnxmTDaJC7KVXXx
- 6brDWxltEwAA7+sbNOzAYkns1TEHYS2ysUEu68cmzfJtMoY7+p7bC6PSVYYEmZcg2dwUcBE7OA8
- x6O7wXqbwQa73+GVVB4t9COR3jRGLAwOIxyf+P6ECtQRceItK0tixKjh/4YedcGpX/BYy85vcsm
- 0AMSDOsM/BpF
-X-Received: by 2002:a05:620a:4452:b0:7ac:dfed:65ee with SMTP id
- af79cd13be357-7b9ba716874mr9275484485a.3.1736251438054; 
- Tue, 07 Jan 2025 04:03:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEwmI/dtqps/dSWojUNe4Mbg9U/izSv44Vhz+slzcdZXKbFZzXMWPaiXsHUxQYh6IJOUfRNUg==
-X-Received: by 2002:a05:620a:4452:b0:7ac:dfed:65ee with SMTP id
- af79cd13be357-7b9ba716874mr9275481885a.3.1736251437746; 
- Tue, 07 Jan 2025 04:03:57 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-49-182.web.vodafone.de.
- [109.42.49.182]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b9ac478d35sm1582614785a.90.2025.01.07.04.03.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 04:03:57 -0800 (PST)
-Message-ID: <ab03dc76-14fe-4da3-97b9-b7da5bb154d0@redhat.com>
-Date: Tue, 7 Jan 2025 13:03:52 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=SsGVkR2GPSmKQ0BN3mgiFjQzgJ3K4A4z8hdH9ACqaeQ=;
+ b=T4clMuQhzvlRVmHubzy6L0MasErLadc+6trTDSuebDgrEhpcs3Qh4YPbDq0qoiwzTvOx0+
+ Pg78gBH5lIWUQYKjDMHNO0AAJLYjnLaEVZ8z4JNA9NiuQTtbY3atncJDOg+kq7UwL3DZx0
+ 8mfi+KdhHOqGkjdwIxrMR8Pj3IQEGag=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-Co0jDsHCM1Kl30vJeOQpNw-1; Tue,
+ 07 Jan 2025 07:05:25 -0500
+X-MC-Unique: Co0jDsHCM1Kl30vJeOQpNw-1
+X-Mimecast-MFC-AGG-ID: Co0jDsHCM1Kl30vJeOQpNw
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D5BD19560BA; Tue,  7 Jan 2025 12:05:24 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE18D19560A2; Tue,  7 Jan 2025 12:05:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8135C21E6924; Tue, 07 Jan 2025 13:05:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange"
+ <berrange@redhat.com>,  Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V5 15/23] migration: cpr-transfer mode
+In-Reply-To: <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Tue, 24 Dec 2024 08:17:00 -0800")
+References: <1735057028-308595-1-git-send-email-steven.sistare@oracle.com>
+ <1735057028-308595-16-git-send-email-steven.sistare@oracle.com>
+Date: Tue, 07 Jan 2025 13:05:20 +0100
+Message-ID: <87ed1eakxr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/test_x86_64_hotplug_cpu: Fix race
- condition during unplug
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250107115245.52755-1-thuth@redhat.com>
- <Z30WlysSx4-L-YSs@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Z30WlysSx4-L-YSs@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -156,40 +90,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/01/2025 12.57, Daniel P. Berrangé wrote:
-> On Tue, Jan 07, 2025 at 12:52:45PM +0100, Thomas Huth wrote:
->> When unplugging the CPU, the test tries to check for a successful
->> unplug by changing to the /sys/devices/system/cpu/cpu1 directory
->> to see whether that fails. However, the "cd" could be faster than
->> the unplug operation in the kernel, so there is a race condition
->> and the test sometimes fails here.
->> Fix it by trying to change the directory in a loop until the the
->> CPU has really been unplugged.
->>
->> Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/functional/test_x86_64_hotplug_cpu.py | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/tests/functional/test_x86_64_hotplug_cpu.py b/tests/functional/test_x86_64_hotplug_cpu.py
->> index b1d5156c72..7b9200ac2e 100755
->> --- a/tests/functional/test_x86_64_hotplug_cpu.py
->> +++ b/tests/functional/test_x86_64_hotplug_cpu.py
->> @@ -59,11 +59,13 @@ def test_hotplug(self):
->>                                             'cd /sys/devices/system/cpu/cpu1',
->>                                             'cpu1#')
->>   
->> +        exec_command_and_wait_for_pattern(self, 'cd ..', prompt)
-> 
-> Is this actually needed ? Are we keeping the CPU from being unplugged by
-> being in that dir ? If so, why isn't it also needed in the while loop
-> below ?
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-I added it to make the console output less confusing (otherwise it's still 
-shown in the prompt after the CPU has been unplugged)... but I can also 
-remove this line again if you prefer it?
+> Add the cpr-transfer migration mode, which allows the user to transfer
+> a guest to a new QEMU instance on the same host with minimal guest pause
+> time, by preserving guest RAM in place, albeit with new virtual addresses
+> in new QEMU, and by preserving device file descriptors.  Pages that were
+> locked in memory for DMA in old QEMU remain locked in new QEMU, because the
+> descriptor of the device that locked them remains open.
+>
+> cpr-transfer preserves memory and devices descriptors by sending them to
+> new QEMU over a unix domain socket using SCM_RIGHTS.  Such CPR state cannot
+> be sent over the normal migration channel, because devices and backends
+> are created prior to reading the channel,
 
-  Thomas
+Is that an artifact of the way QEMU starts up, or is it fundamental?
+
+>                                           so this mode sends CPR state
+> over a second "cpr" migration channel.  New QEMU reads the cpr channel
+> prior to creating devices or backends.  The user specifies the cpr channel
+> in the channel arguments on the outgoing side, and in a second -incoming
+> command-line parameter on the incoming side.
+>
+> The user must start old QEMU with the the '-machine aux-ram-share=on' option,
+> which allows anonymous memory to be transferred in place to the new process
+> by transferring a memory descriptor for each ram block.  Memory-backend
+> objects must have the share=on attribute, but memory-backend-epc is not
+> supported.
+>
+> The user starts new QEMU on the same host as old QEMU, with command-line
+> arguments to create the same machine, plus the -incoming option for the
+> main migration channel, like normal live migration.  In addition, the user
+> adds a second -incoming option with channel type "cpr".  The CPR channel
+> address must be a type, such as unix socket, that supports SCM_RIGHTS.
+>
+> To initiate CPR, the user issues a migrate command to old QEMU, adding
+> a second migration channel of type "cpr" in the channels argument.
+> Old QEMU stops the VM, saves state to the migration channels, and enters
+> the postmigrate state.  New QEMU mmap's memory descriptors, and execution
+> resumes.
+>
+> The implementation splits qmp_migrate into start and finish functions.
+> Start sends CPR state to new QEMU, which responds by closing the CPR
+> channel.  Old QEMU detects the HUP then calls finish, which connects the
+> main migration channel.
+>
+> In summary, the usage is:
+>
+>   qemu-system-$arch -machine aux-ram-share=on ...
+>
+>   start new QEMU with "-incoming <main-uri> -incoming <cpr-channel>"
+>
+>   Issue commands to old QEMU:
+>     migrate_set_parameter mode cpr-transfer
+>
+>     {"execute": "migrate", ...
+>         {"channel-type": "main"...}, {"channel-type": "cpr"...} ... }
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+
+[...]
+
+> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> index f31deb3..2210f0c 100644
+> --- a/migration/vmstate-types.c
+> +++ b/migration/vmstate-types.c
+> @@ -15,6 +15,7 @@
+>  #include "qemu-file.h"
+>  #include "migration.h"
+>  #include "migration/vmstate.h"
+> +#include "migration/client-options.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/queue.h"
+>  #include "trace.h"
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index a605dc2..35309dc 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -614,9 +614,47 @@
+>  #     or COLO.
+>  #
+>  #     (since 8.2)
+> +#
+> +# @cpr-transfer: This mode allows the user to transfer a guest to a
+> +#     new QEMU instance on the same host with minimal guest pause
+> +#     time, by preserving guest RAM in place, albeit with new virtual
+> +#     addresses in new QEMU.  Devices and their pinned pages will also
+> +#     be preserved in a future QEMU release.
+
+Maybe "@cpr-transfer: Checkpoint and restart migration mode minimizes
+guest pause time by transferring guest RAM without copying it."
+
+If you want to mention the guest RAM mapping differs between old and new
+QEMU, that's fine, but it's also detail, so I'd do it further down.
+
+> +#
+> +#     The user starts new QEMU on the same host as old QEMU, with
+> +#     command-line arguments to create the same machine, plus the
+> +#     -incoming option for the main migration channel, like normal
+> +#     live migration.  In addition, the user adds a second -incoming
+> +#     option with channel type "cpr".  The CPR channel address must
+> +#     be a type, such as unix socket, that supports SCM_RIGHTS.
+
+Permit me to indulge in a bit of pedantry...  A channel address doesn't
+support SCM_RIGHTS, only a channel may.  A channel supports it when it
+is backed by a UNIX domain socket.  The channel's socket's transport
+type need not be 'unix' for that, it could also be 'fd'.
+
+Suggest something like "This CPR channel must be a UNIX domain socket."
+
+If you want to say why, that's fine: "This CPR channel must support file
+descriptor transfer, i.e. it must be a UNIX domain socket."
+
+If you want to mention SCM_RIGHTS, that's fine, too: "This CPR channel
+must support file descriptor transfer with SCM_RIGHTS, i.e. it must be a
+UNIX domain socket."
+
+> +#
+> +#     To initiate CPR, the user issues a migrate command to old QEMU,
+> +#     adding a second migration channel of type "cpr" in the channels
+
+in the channel's
+
+> +#     argument.  Old QEMU stops the VM, saves state to the migration
+> +#     channels, and enters the postmigrate state.  Execution resumes
+> +#     in new QEMU.
+> +#
+> +#     New QEMU reads the CPR channel before opening a monitor, hence
+> +#     the CPR channel cannot be specified in the list of channels for
+> +#     a migrate-incoming command.  It may only be specified on the
+> +#     command line.
+
+This is a restriction that could conceivably be lifted in the future,
+right?
+
+What happens if a user tries to specify it with migrate-incoming?  Fails
+cleanly?  What's the error message?
+
+Maybe simply:
+
+         Currently, the CPR channel can only be specified on the command
+         line, not with the migrate-incoming command.
+
+with a big, fat comment explaining the restriction next to the spot
+that reports the error.
+
+> +#
+> +#     The main channel address cannot be a file type, and for the tcp
+> +#     type, the port cannot be 0 (meaning dynamically choose a port).
+
+What's "the tcp type"?  URI "tcp:..." / channel
+addr.transport=socket,addr.type=inet?
+
+> +#
+> +#     Memory-backend objects must have the share=on attribute, but
+> +#     memory-backend-epc is not supported.  The VM must be started
+> +#     with the '-machine aux-ram-share=on' option.
+> +#
+> +#     When using -incoming defer, you must issue the migrate command
+> +#     to old QEMU before issuing any monitor commands to new QEMU.
+> +#     However, new QEMU does not open and read the migration stream
+> +#     until you issue the migrate incoming command.
+
+I think some (all?) instances of "old QEMU" and "new QEMU" would read
+better as "the old QEMU" and "the new QEMU".
+
+> +#
+> +#     (since 10.0)
+>  ##
+>  { 'enum': 'MigMode',
+> -  'data': [ 'normal', 'cpr-reboot' ] }
+> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
+>  
+>  ##
+>  # @ZeroPageDetection:
+> @@ -1578,11 +1616,12 @@
+>  # The migration channel-type request options.
+>  #
+>  # @main: Main outbound migration channel.
+> +# @cpr: Checkpoint and restart state channel.
+>  #
+>  # Since: 8.1
+>  ##
+>  { 'enum': 'MigrationChannelType',
+> -  'data': [ 'main' ] }
+> +  'data': [ 'main', 'cpr' ] }
+>  
+>  ##
+>  # @MigrationChannel:
 
 
