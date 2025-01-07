@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E9FE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9664EE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCWr-0005N4-6S; Tue, 07 Jan 2025 11:34:05 -0500
+	id 1tVCb6-0008DC-6G; Tue, 07 Jan 2025 11:38:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tVCWq-0005K2-HM
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:34:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tVCWo-0003x1-6H
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:34:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736267641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pgJ21ZMa9nqS4ql2OaI1/AlduvKHGINBG4bHCB/ONbs=;
- b=eZCvZ00QsIpnLwGUo6xrRZOxLmAUrPJ0dw+vFQr5ctW6w94fpBQ6zPaVtxFxq2FAIcU7Zj
- NKa3Whqh+Qj5kJ2l942o/xC8/rLPSxz8vU/V4r2+ile0hm6p/hOAS5YFWC2RaUzR4ARfvk
- BkfXQp1IOO0N+QwuvOWHvKv/uKdl680=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-rliyqgLYObmfqHQNHSvt-A-1; Tue,
- 07 Jan 2025 11:32:34 -0500
-X-MC-Unique: rliyqgLYObmfqHQNHSvt-A-1
-X-Mimecast-MFC-AGG-ID: rliyqgLYObmfqHQNHSvt-A
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F9C81955EA6; Tue,  7 Jan 2025 16:32:33 +0000 (UTC)
-Received: from rh-jmarcin.redhat.com (unknown [10.45.226.131])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A54B195606B; Tue,  7 Jan 2025 16:32:30 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>
-Subject: [PATCH 1/2] tests/qtest: Introduce
- qtest_init_with_env_and_capabilities()
-Date: Tue,  7 Jan 2025 17:31:53 +0100
-Message-ID: <20250107163156.310226-2-jmarcin@redhat.com>
-In-Reply-To: <20250107163156.310226-1-jmarcin@redhat.com>
-References: <20250107163156.310226-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1tVCb4-0008Cm-Ca
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:38:26 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1tVCb2-0004OG-OO
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:38:26 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so9428769f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:38:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736267901; x=1736872701; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Sr8Xs4r2TFMP6tGIuDAbISqtz04aNoL5H5GhHw6xGT0=;
+ b=mwT7eGx210USiB97bL/A2U2swVhgFb1QxjeCqICdHJP6EVhDkvO3bO92EtPJfsyJh5
+ pmyqTELbH3DwZfyRJd9EdBtMY0sd/EnVbWoOb9zWIaxwmAZkeCS0ACD5iRbMjJwnC9ho
+ DNBCJWD0k6cZmIpdG94tLepYxLG/SWoVR2VpKCZ+LlR4DxVRRtTw18o1vnQHw29PUbTt
+ Fz5C+n1qPL1Y0dtjNZLGgt+0eeINpHg1c3fU5mmqwnE/j7K209ufAwZdpCoPK/DDvCh4
+ OmoaT5ZXm4t46QVC/4LGRFm2hCnJquZQAkQgHtp+RT+RJUN7sxt4/f0kAJqBW2t3LT54
+ lkYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736267901; x=1736872701;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Sr8Xs4r2TFMP6tGIuDAbISqtz04aNoL5H5GhHw6xGT0=;
+ b=YQXjICVIFQa9/UQWAUXjd9Pw+ycdwKKWcd3K+1xyqudAaARVQVSTZu4yAnR6uX5LDF
+ kHNvQbErr8czkp99NxtiVGb8YwMEW6maN9nxRhIgIhbJTRRW36NRVO1o3WDbPC2w8vje
+ sQTiAebwJY0p92Q0Uv35vRzaeENQwk6v3jSOuKrCHICMWsYJXvmIAgY0paqoMz7E/Wlb
+ p0RR5kr9/YOYGilQiM3vzi5q1XJFtYwSL37cS56g4Y3huNuU+bRQCVZtpYFCzu6st0hd
+ d4szmAZ2jhJKtWVVxG9SkUjJmZyCqofkm0N6bb4n3b8J8CccnlUFK5Cy0kIK3zxZziUT
+ IOpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzygJpt/5+MIbjMwYbgfdK1rXc6hVfoMAI4s0nr73rbT/qtXEdzTlUbXfn5GbFpTUvM8mwwbiTUf28@nongnu.org
+X-Gm-Message-State: AOJu0YwnSfV21gN5SBuMnMqs9B4HHwDNpJVzc/GnG6msj0LE1PEeWkyN
+ wXNXReXdRH9HmhhIqmk1HKv+FiabKiq++VAgC5yqZpUSVw7Icdz6
+X-Gm-Gg: ASbGnctpgJImOx30IC6EDpwNILtHq/0xCGuqbcAaUxTR5BCTaEPUl/wqOam81Be/ffH
+ hzp3XwF5SS8r3DHayX2+cslzd0yd8BxCSAmg86HU25yMXchMw3ORPAthoKOzmfMNEtYGsxuduZT
+ jekzErdtkMRRHmF00nY1sQzVtlHqRkoiBvPhun7ZlUZjCArMwzYZIN8hKqfEKgARf82YI3wlN5J
+ 9JKOgLGQgm1o9PECAQxssUPrWwtN+toURPD28Jn+DCm9Th9Ne4GVQzdUo6NX87S6NOidpBfpjN0
+ Dbzy7ktpvlUB
+X-Google-Smtp-Source: AGHT+IEFedTtdO4UUkhnQ/hz2WkGKXSxC4a7WoFdiKSBKjgqZ49ORwFamTToiZhUsaRpZy4cuG+ysA==
+X-Received: by 2002:a5d:64c9:0:b0:385:e394:37ea with SMTP id
+ ffacd0b85a97d-38a221f17b4mr57040741f8f.22.1736267901321; 
+ Tue, 07 Jan 2025 08:38:21 -0800 (PST)
+Received: from [10.95.102.182] (54-240-197-231.amazon.com. [54.240.197.231])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8472d5sm51504045f8f.47.2025.01.07.08.38.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 08:38:20 -0800 (PST)
+From: Paul Durrant <xadimgnik@gmail.com>
+X-Google-Original-From: Paul Durrant <paul@xen.org>
+Message-ID: <e0eec24c-dd22-4b95-8e62-60d9107b2ae0@xen.org>
+Date: Tue, 7 Jan 2025 16:38:19 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/i386/pc: Fix level interrupt sharing for Xen event
+ channel GSI
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <975f9dab5718b441e6d4463a43845dc22b5ddf8f.camel@infradead.org>
+Content-Language: en-US
+Organization: Xen Project
+In-Reply-To: <975f9dab5718b441e6d4463a43845dc22b5ddf8f.camel@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=xadimgnik@gmail.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,96 +107,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: paul@xen.org
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds a new version of qtest_init_with_env() that allows
-specifying QMP capabilities that should be enabled during handshake.
-This is useful for example if a test needs out-of-band execution of QMP
-commands, it can initialize with the oob capability.
+On 07/01/2025 16:32, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> The system GSIs are not designed for sharing. One device might assert a
+> shared interrupt with qemu_set_irq() and another might deassert it, and
+> the level from the first device is lost.
+> 
+> This could be solved by using a multiplexer which functions as an OR
+> gate, much like the PCI code already implements for pci_set_irq() for
+> muxing the INTx lines.
+> 
+> Alternatively, it could be solved by having a 'resample' callback which
+> is invoked when the interrupt is acked at the interrupt controller, and
+> causes the devices to re-trigger the interrupt if it should still be
+> pending. This is the model that VFIO in Linux uses, with a 'resampler'
+> eventfd that actually unmasks the interrupt on the hardware device and
+> thus triggers a new interrupt from it if needed. QEMU currently doesn't
+> use that VFIO interface correctly, and just bashes on the resampler for
+> every MMIO access to the device "just in case".
+> 
+> This does neither of those. The Xen event channel GSI support *already*
+> has hooks into the PC gsi_handler() code, for routing GSIs to PIRQs. So
+> we can implement the logical OR of the external input (from PCI INTx,
+> serial etc.) with the Xen event channel GSI by allowing that existing
+> hook to modify the 'level' being asserted.
+> 
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2731
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+> v2:
+>   • Fix deassertion of PIRQ GSI.
+> 
+>   hw/i386/kvm/xen_evtchn.c | 50 +++++++++++++++++++++++++++++++---------
+>   hw/i386/kvm/xen_evtchn.h |  2 +-
+>   hw/i386/x86-common.c     | 32 ++++++++++++++++---------
+>   3 files changed, 61 insertions(+), 23 deletions(-)
+> 
+[snip]
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index a7d46c3105..13badc26a5 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -450,8 +450,27 @@ static long get_file_size(FILE *f)
+>   void gsi_handler(void *opaque, int n, int level)
+>   {
+>       GSIState *s = opaque;
+> +    bool bypass_ioapic = false;
+>   
+>       trace_x86_gsi_interrupt(n, level);
+> +
+> +#ifdef CONFIG_XEN_EMU
+> +        /*
+> +         * Xen delivers the GSI to the Legacy PIC (not that Legacy PIC
+> +         * routing actually works properly under Xen). And then to
+> +         * *either* the PIRQ handling or the I/OAPIC depending on
+> +         * whether the former wants it.
+> +         *
+> +         * Additionally, this hook allows the Xen event channel GSI to
+> +         * work around QEMU's lack of support for shared level interrupts,
+> +         * by keeping track of the externally driven state of the pin and
+> +         * implementing a logical OR with the state of the evtchn GSI.
+> +         */
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- tests/qtest/libqtest.c | 18 ++++++++++++++++--
- tests/qtest/libqtest.h | 17 +++++++++++++++++
- 2 files changed, 33 insertions(+), 2 deletions(-)
+Looks like something went wrong with the indent here.
 
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 8de5f1fde3..00dc01a851 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -543,7 +543,9 @@ QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
-     return qtest_init_internal(qtest_qemu_binary(NULL), extra_args);
- }
- 
--QTestState *qtest_init_with_env(const char *var, const char *extra_args)
-+QTestState *qtest_init_with_env_and_capabilities(const char *var,
-+                                                 const char *extra_args,
-+                                                 QList *capabilities)
- {
-     QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args);
-     QDict *greeting;
-@@ -551,11 +553,23 @@ QTestState *qtest_init_with_env(const char *var, const char *extra_args)
-     /* Read the QMP greeting and then do the handshake */
-     greeting = qtest_qmp_receive(s);
-     qobject_unref(greeting);
--    qobject_unref(qtest_qmp(s, "{ 'execute': 'qmp_capabilities' }"));
-+    if (capabilities) {
-+        qtest_qmp_assert_success(s,
-+                                 "{ 'execute': 'qmp_capabilities', "
-+                                 "'arguments': { 'enable': %p } }",
-+                                 qobject_ref(capabilities));
-+    } else {
-+        qtest_qmp_assert_success(s, "{ 'execute': 'qmp_capabilities' }");
-+    }
- 
-     return s;
- }
- 
-+QTestState *qtest_init_with_env(const char *var, const char *extra_args)
-+{
-+    return qtest_init_with_env_and_capabilities(var, extra_args, NULL);
-+}
-+
- QTestState *qtest_init(const char *extra_args)
- {
-     return qtest_init_with_env(NULL, extra_args);
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index f23d80e9e5..1d0d5e7c29 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -19,6 +19,7 @@
- 
- #include "qapi/qmp/qobject.h"
- #include "qapi/qmp/qdict.h"
-+#include "qapi/qmp/qlist.h"
- #include "libqmp.h"
- 
- typedef struct QTestState QTestState;
-@@ -68,6 +69,22 @@ QTestState *qtest_init(const char *extra_args);
-  */
- QTestState *qtest_init_with_env(const char *var, const char *extra_args);
- 
-+/**
-+ * qtest_init_with_env_and_capabilities:
-+ * @var: Environment variable from where to take the QEMU binary
-+ * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
-+ * arguments are subject to word splitting and shell evaluation.
-+ * @capabilities: list of QMP capabilities (strings) to enable
-+ *
-+ * Like qtest_init_with_env(), but enable specified capabilities during
-+ * hadshake.
-+ *
-+ * Returns: #QTestState instance.
-+ */
-+QTestState *qtest_init_with_env_and_capabilities(const char *var,
-+                                                 const char *extra_args,
-+                                                 QList *capabilities);
-+
- /**
-  * qtest_init_without_qmp_handshake:
-  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
--- 
-2.47.1
-
+> +    if (xen_mode == XEN_EMULATE) {
+> +        bypass_ioapic = xen_evtchn_set_gsi(n, &level);
+> +    }
+> +#endif
+> +
 
