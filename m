@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9494E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB0CE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCuY-0002pa-Qr; Tue, 07 Jan 2025 11:58:34 -0500
+	id 1tVCqO-0006gQ-H9; Tue, 07 Jan 2025 11:54:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCu7-0002EW-Qd
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:09 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1tVCpV-00054v-4M
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:23 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCtx-0006vP-U3
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:05 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4362bae4d7dso113316805e9.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:57:57 -0800 (PST)
+ id 1tVCoY-0005vS-HC
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:53:20 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso151148605e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736269076; x=1736873876; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736268741; x=1736873541; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9MTBQbpHCuuSIa6mICahNI723KTPOBvz07NNLKdbyUY=;
- b=BRcmsSG1yPeM+NU4PoFh4WKYzVy48aHGmqSXUcG53VnlAWUij/eR7PPgsg9Gy2Q2w+
- 67cDbKRhHcnRbrgqFyi7iecUEetru7Bu18MdmZw81qJK8R9s5mYJWSzA74pC6vNf8C6g
- Pj/+8LN0WuRCXry5WORPN7Viw5L4YKkI79DydNGBR6Y5rVEp9qX/79WjNHo8Hxa2/qkk
- EN/FnstxsmWbHpGUynpAeQzSGMUwxRpG3ALt0u13RbAC0owyTGxZyVj4avVhYQdWAtyO
- K90aJb2lV/DNYQcvFPICY/LPg3WnSFL5RYJJNEzo2ZyHRkd5uEGjLraN46WmrMNxvWLe
- 0w1g==
+ bh=lG7MbUBeLhp7BGSne5jxjhgnKJrC/8a0zBr1FqLJA6g=;
+ b=EaYY86GjY8yx41cog3rReYU6GGriUpxaAe4MJg9qimL0qMkBKGnO9Yky8K9tW1T+YN
+ awbZTls/CpZ1zljQyuX1AWgVzjA4hgxai74tLCpgqVY85h5eyNEZrZvuIkhKvgl7TFI5
+ R1jLGKjxI2phzjKZ0x7U/jesgNY0dSGUDOT4xuwv2dqDPV+PedqdxMm4tp8ZvJWtA2b7
+ hqtCqchZ03iBJJA1YBKwpPSMWvtEfDmWI+iEJyaqlgklRRI6aYAYKKhpnpTEWmqm2h7K
+ p4AHi4xKOQjPC8/s/w+9mzojWig9jfLrHtFBuSUiWt6wsf4PRufb3VkkqvBSzPPeWSat
+ iuxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736269076; x=1736873876;
+ d=1e100.net; s=20230601; t=1736268741; x=1736873541;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9MTBQbpHCuuSIa6mICahNI723KTPOBvz07NNLKdbyUY=;
- b=QLxrwH5zj0ojrfGxx0Bb8c+rmrw1kIbPDFHxdGWzzZF8RLTLB23H6pf9TyEHptVNjh
- t88NjttWeVUU73q5cxFHr3sJGGUjWR6V+ewvWBEwPmNgX/Yia/qCcSm4vZRY3Oirbvsw
- nX22rKg7BnebAi/4axD7Irw4kJSYaxp8baFMB7m26nY4EfwKUfWDMQNwvNJipyLBBQ+1
- xhRgOvjZF2Z6do0cfmH2hoxWhAg2XuDMkFQGuI+nhL8VD3+beDRXD1ZliGMttX+qlpnW
- 0m27YnZ4KbUs5LQRePukqBzYO/3qW9Ktdr/QJX+4WeqhCHSfAUVjzYiAoS8VyvRX+7bb
- Q/aA==
-X-Gm-Message-State: AOJu0YwgF6NuBaLnfntufpmYi1lBF2ktZKA/EGsZOppLCf9M01vdNknr
- r+UTs9PhPxHCtYRDVXA5uQIk0k6SIvrZkwYVzBdpWQqqO0FPHgDcmgYOigjomW8=
-X-Gm-Gg: ASbGncutV2VbDbXUEN34qZu3JMvJLPjrpTZ7autY4NsB5RjNz/IwJJAc19A27G74Trw
- 6jw32e+LMc9eXy/k9zyTKKCnYYpwwjiMgr1poe+YRyh8X0rA5Cn1oaXGipTfJKAUvMMnRm8yil0
- sIjqqYJmrZbvPuY5BF9H5bwFKoms8Lvtudx2xc94IsaaUA7yro4hJAD40Nk05qc2nEjkT+7e56B
- FptXETF9lPNHSl3GMJ4G45EmmSQBA19K50/CZYo+6gJs65UHaUBmgI=
-X-Google-Smtp-Source: AGHT+IHWP6Qy/H8JyZCF9iRPLeEVgXFWIAmhqoj00u6KNLxfGn1FjfA1GSNar8ppWuem5Gl6aflONQ==
-X-Received: by 2002:a05:6000:2ad:b0:386:4a0d:bb21 with SMTP id
- ffacd0b85a97d-38a221f12b0mr56744003f8f.22.1736269076274; 
- Tue, 07 Jan 2025 08:57:56 -0800 (PST)
+ bh=lG7MbUBeLhp7BGSne5jxjhgnKJrC/8a0zBr1FqLJA6g=;
+ b=qd4IHLfzeiQQqu7T+j0NVnEI+M3VJCYluvOJIsl4mCdhcuPtt5aTT7dB6NQnuBoPaD
+ VI0VeBOpeKy0YCVNcwixvF8eNKaDSv4thZrboMoDBB3T5oebY+qZfcQja0q4VaZUrSvL
+ IaT1/+CRKEPgodD9QApRSk83bjyokN1D2wl/MEKssL9buLHRmduhqrW1JU7JTy8q5fom
+ FbSPqrCu2da3bk+f34xttTdOZP5yKL0b7KDeydAbGY9bKD0ZR7wF566Hm1RpqLjvxsgk
+ wM4kWIUbJ3MKQhOyltumamZW8bd8X+hq4Ab50JFcVoxMwAp6Y+/7SU60zdCWhWyev2/O
+ fT+A==
+X-Gm-Message-State: AOJu0YyLj9SrOlW2bGBU+PgK+4qBLulYdYJB506LxJHnzIJbXu0UfsYW
+ yAAmpI+/GuZoPLt8s/0XJ4SfszrlpjYNY23QRC34mKUzAMLcmRRJLZWxx2saclw=
+X-Gm-Gg: ASbGnct38pZTulMha/KjNwY2ic7t/h2499cGop4BRRBkgf6OdeCCtWqkBMzJCD//ZrE
+ LJZ3mT9IWQ8n/PYzLXMUhQxCSCXsh8lNdCBtJlDaFNMjKNPU2Sj0gcuI5I36QY0oZhlXF2fwjCY
+ ERT408iR2hecwURCDAzniWLjNxYeQevbUxrNnWw3seMxQ0ffXCcxKQqQNFcv2rPTBl92GLi7PTE
+ fvw/5zKTmYnLNVs368Fh+KKP3G58qqpg1c6FmIJOiGbvnRSXOIxVNM=
+X-Google-Smtp-Source: AGHT+IH7iqwDon8XGewQLXgOu/1cStkxVfVLr5WLrNmcktmwgWaeERsXwdfPTe57yv3zWJosorlr2w==
+X-Received: by 2002:a05:600c:3106:b0:434:a802:43d with SMTP id
+ 5b1f17b1804b1-43668b93817mr508634885e9.27.1736268740993; 
+ Tue, 07 Jan 2025 08:52:20 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c4bbsm599441955e9.32.2025.01.07.08.57.54
+ 5b1f17b1804b1-436dcceb8c6sm14053885e9.0.2025.01.07.08.52.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:57:55 -0800 (PST)
+ Tue, 07 Jan 2025 08:52:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A3C495F8FE;
- Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0C8D05FEF9;
+ Tue,  7 Jan 2025 16:52:10 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -97,24 +97,25 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 18/29] tests/functional: remove hacky sleep from the tests
-Date: Tue,  7 Jan 2025 16:51:56 +0000
-Message-Id: <20250107165208.743958-19-alex.bennee@linaro.org>
+Subject: [PATCH v3 22/29] tests/docker: move riscv64 cross container from sid
+ to trixie
+Date: Tue,  7 Jan 2025 16:52:00 +0000
+Message-Id: <20250107165208.743958-23-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,79 +131,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have proper detection of prompts now so we don't need to guess with
-sleep() sprinkled through the test. The extra step of calling halt is
-just to flush the final bits of the log (although the last line is
-still missed).
+Although riscv64 isn't going to be a release architecture for trixie
+the packages are still built while it is testing. Moving from sid will
+also avoid some of the volatility we get from tracking the bleeding
+edge.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
 ---
-v2
-  - avoid long lines by iterating through an array
-  - drop time import
-v3
-  - fix up on re-base
-  - drop stray import os that had sneaked in
----
- tests/functional/test_aarch64_virt.py | 32 +++++++++++++++------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ tests/docker/dockerfiles/debian-riscv64-cross.docker | 4 ++--
+ tests/lcitool/refresh                                | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
-index 08576b0694..2d9995a95d 100755
---- a/tests/functional/test_aarch64_virt.py
-+++ b/tests/functional/test_aarch64_virt.py
-@@ -10,12 +10,12 @@
+diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+index 4d8ca83cb3..b0386cd3a1 100644
+--- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
++++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
  #
- # SPDX-License-Identifier: GPL-2.0-or-later
+-#  $ lcitool dockerfile --layers all --cross-arch riscv64 debian-sid qemu-minimal
++#  $ lcitool dockerfile --layers all --cross-arch riscv64 debian-13 qemu-minimal
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
--import time
- import logging
- from subprocess import check_call, DEVNULL
+-FROM docker.io/library/debian:sid-slim
++FROM docker.io/library/debian:trixie-slim
  
- from qemu_test import QemuSystemTest, Asset
--from qemu_test import exec_command, wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
- from qemu_test import get_qemu_img
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 6720516b94..53f8d2585f 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -220,7 +220,9 @@ try:
+                         trailer=cross_build("powerpc64le-linux-gnu-",
+                                             "ppc64-softmmu,ppc64-linux-user"))
  
- 
-@@ -107,18 +107,22 @@ def common_aarch64_virt(self, machine):
-                          'virtio-blk-device,drive=scratch')
- 
-         self.vm.launch()
--        self.wait_for_console_pattern('Welcome to Buildroot')
--        time.sleep(0.1)
--        exec_command(self, 'root')
--        time.sleep(0.1)
--        exec_command(self, 'dd if=/dev/hwrng of=/dev/vda bs=512 count=4')
--        time.sleep(0.1)
--        exec_command(self, 'md5sum /dev/vda')
--        time.sleep(0.1)
--        exec_command(self, 'cat /proc/interrupts')
--        time.sleep(0.1)
--        exec_command(self, 'cat /proc/self/maps')
--        time.sleep(0.1)
-+
-+        ps1='#'
-+        self.wait_for_console_pattern('login:')
-+
-+        commands = [
-+            ('root', ps1),
-+            ('cat /proc/interrupts', ps1),
-+            ('cat /proc/self/maps', ps1),
-+            ('uname -a', ps1),
-+            ('dd if=/dev/hwrng of=/dev/vda bs=512 count=4', ps1),
-+            ('md5sum /dev/vda', ps1),
-+            ('halt -n', 'reboot: System halted')
-+        ]
-+
-+        for cmd, pattern in commands:
-+            exec_command_and_wait_for_pattern(self, cmd, pattern)
- 
-     def test_aarch64_virt_gicv3(self):
-         self.common_aarch64_virt("virt,gic_version=3")
+-    generate_dockerfile("debian-riscv64-cross", "debian-sid",
++    # while not yet a release architecture the packages are still
++    # build while part of testing
++    generate_dockerfile("debian-riscv64-cross", "debian-13",
+                         project="qemu-minimal",
+                         cross="riscv64",
+                         trailer=cross_build("riscv64-linux-gnu-",
 -- 
 2.39.5
 
