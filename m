@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE48BE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCCBE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV8ud-0007Bi-00; Tue, 07 Jan 2025 07:42:24 -0500
+	id 1tV93D-0008Nr-DW; Tue, 07 Jan 2025 07:51:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tV8uY-0007BE-Db
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:42:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tV8uV-0004E7-RV
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:42:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736253734;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qfVJMxLX0yK3zBExqW0wBPdz2eGbMTcGtktm1jzQd1o=;
- b=Ns80one5/gJrV4O46dJNTvo5YRCGpvQqJp/CFXKpdoeNBPjL44ehaSmxxqY7rsHpXs7ecL
- 8IbFTlnJM4hTw1bIgUrCqawkZY+nMYVOgxUUFzxMAeXhIXy7zHh2wACIXkXFyEzWjNBg/q
- eraJw9t1TpWvRb7KGtiU0cWGg5mUZwo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-tCWu2IlBPvaiGG-YC0EGQg-1; Tue,
- 07 Jan 2025 07:42:10 -0500
-X-MC-Unique: tCWu2IlBPvaiGG-YC0EGQg-1
-X-Mimecast-MFC-AGG-ID: tCWu2IlBPvaiGG-YC0EGQg
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C0F51956046; Tue,  7 Jan 2025 12:42:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.64])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B9261955EB4; Tue,  7 Jan 2025 12:42:07 +0000 (UTC)
-Date: Tue, 7 Jan 2025 12:42:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tV933-0008NQ-VU
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:51:07 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tV930-00051C-5Q
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:51:05 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e9a88793so2814652a12.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 04:51:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736254260; x=1736859060; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=r3tNCIod9+xZ6YFYPgaeZe+OWDBJ5yU6pC3G+GrD1EM=;
+ b=GG3Fx7pse2lw3fkP6pBER8zK3cqq8GKIMT7BlQxNbVNl1f7/DCFmLKuDu3W4KIAGz/
+ OP7+cj15nUtaiIQ4oxy+tm5qZ1xOWqCAL2reB+/oA3UIBKJH47i66Qbe5oGJ3H+D5Ivn
+ qqu/bMvHrGuFmjUEsZWrbSHexx7wkNGoV7HXZBHzylsC9uPCWCsnhRbxy12sdD7b5iiJ
+ IuCMgBt30HtIzQbGfOFaSXhwGvXWt/2FJxKRPputYoqVRwZQijqjKh7IvzFw0wt65CZa
+ OQej+ix4mZyGT/Q9iCvGx9e1A4JEplbH86LJJZaQXM5AosWfKb8hekW2mumxyXw7N9n3
+ A5+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736254260; x=1736859060;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r3tNCIod9+xZ6YFYPgaeZe+OWDBJ5yU6pC3G+GrD1EM=;
+ b=eW6d9OXMwCWMNXPjTfhk2XXVG15jZrKpLbicTpvntHAhvzS7jOF4wE0PJ3ViuU3uY6
+ e6tZ/dRjJsLzOXepyHe9U9p+tfo2IbChvtOUenV4n/yllEMxQNUOsk+y7oNvD9HMgd3T
+ 5+1qfwnWSpmrYARi7y8jBD1C/bXuyr7o1JF+f//R6nojS5DzP1VahpBKUvQxZL5A0qCY
+ +4g3ozjBenkaJ0diz8PHqYvgPiiyUt8ZuHG7CMyQ0Ke30PFAN3nPNRzRZQx9FSHecv9r
+ O5BdWJTVpE0b4SBotyf4aag158Cq/X5n8xiRu14WPE5PKfJYBhh6I4bZlwAzf7KonPIU
+ QatA==
+X-Gm-Message-State: AOJu0YylAZheBbJuRJ9VCS47grHhT+bY5kyxqwkAK4OaFYxfiFVg+ZQ6
+ OgcZ3x9CoFK/BdgrGvGmIiOr/BUpuYZBMXHHygA92MncgR8hIfnUSTzVwpEYDruMxQOXaD/rhYy
+ uTJllqwYpuaLkgj9ZholAakjCrOcZyg==
+X-Gm-Gg: ASbGnctyVRl+LqM5oBgUZvZbrVgaI3oG+WXppyz69SiSiFHuoP+Zz6XCU6yb/UgU+wf
+ jjlRfFaKTpGHnwfeuMfd9dawRFkVyinqJxCRc
+X-Google-Smtp-Source: AGHT+IHX00fxpwzadurkSQmtfKt7w7kSFuJM8403IBwIypUbYKfrKvoyclP2hC42PnlgCQrW3ncB6zzKFeoOzaGSzak=
+X-Received: by 2002:a05:6402:388d:b0:5d3:ce7f:ac05 with SMTP id
+ 4fb4d7f45d1cf-5d81de169a3mr55649465a12.31.1736254259570; Tue, 07 Jan 2025
+ 04:50:59 -0800 (PST)
+MIME-Version: 1.0
+References: <20250107115245.52755-1-thuth@redhat.com>
+In-Reply-To: <20250107115245.52755-1-thuth@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 7 Jan 2025 07:50:47 -0500
+Message-ID: <CAJSP0QWxqDt0F5Nd0AnL4Zg=h_eec0-2-M8TbU4mCMU6AfLcdw@mail.gmail.com>
 Subject: Re: [PATCH] tests/functional/test_x86_64_hotplug_cpu: Fix race
  condition during unplug
-Message-ID: <Z30hG1PxfEPjq9Td@redhat.com>
-References: <20250107115245.52755-1-thuth@redhat.com>
- <Z30WlysSx4-L-YSs@redhat.com>
- <ab03dc76-14fe-4da3-97b9-b7da5bb154d0@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ab03dc76-14fe-4da3-97b9-b7da5bb154d0@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,52 +90,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 07, 2025 at 01:03:52PM +0100, Thomas Huth wrote:
-> On 07/01/2025 12.57, Daniel P. Berrangé wrote:
-> > On Tue, Jan 07, 2025 at 12:52:45PM +0100, Thomas Huth wrote:
-> > > When unplugging the CPU, the test tries to check for a successful
-> > > unplug by changing to the /sys/devices/system/cpu/cpu1 directory
-> > > to see whether that fails. However, the "cd" could be faster than
-> > > the unplug operation in the kernel, so there is a race condition
-> > > and the test sometimes fails here.
-> > > Fix it by trying to change the directory in a loop until the the
-> > > CPU has really been unplugged.
-> > > 
-> > > Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
-> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > > ---
-> > >   tests/functional/test_x86_64_hotplug_cpu.py | 6 ++++--
-> > >   1 file changed, 4 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/tests/functional/test_x86_64_hotplug_cpu.py b/tests/functional/test_x86_64_hotplug_cpu.py
-> > > index b1d5156c72..7b9200ac2e 100755
-> > > --- a/tests/functional/test_x86_64_hotplug_cpu.py
-> > > +++ b/tests/functional/test_x86_64_hotplug_cpu.py
-> > > @@ -59,11 +59,13 @@ def test_hotplug(self):
-> > >                                             'cd /sys/devices/system/cpu/cpu1',
-> > >                                             'cpu1#')
-> > > +        exec_command_and_wait_for_pattern(self, 'cd ..', prompt)
-> > 
-> > Is this actually needed ? Are we keeping the CPU from being unplugged by
-> > being in that dir ? If so, why isn't it also needed in the while loop
-> > below ?
-> 
-> I added it to make the console output less confusing (otherwise it's still
-> shown in the prompt after the CPU has been unplugged)... but I can also
-> remove this line again if you prefer it?
+On Tue, 7 Jan 2025 at 06:52, Thomas Huth <thuth@redhat.com> wrote:
+>
+> When unplugging the CPU, the test tries to check for a successful
+> unplug by changing to the /sys/devices/system/cpu/cpu1 directory
+> to see whether that fails. However, the "cd" could be faster than
+> the unplug operation in the kernel, so there is a race condition
+> and the test sometimes fails here.
+> Fix it by trying to change the directory in a loop until the the
+> CPU has really been unplugged.
+>
+> Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/functional/test_x86_64_hotplug_cpu.py | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 
-No, i'm not that fussed.
+Thanks for fixing this! I'll keep an eye on the CI job status after
+merging your next pull request.
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Stefan
 
