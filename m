@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD7CE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 23:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A97E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 23:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVIsi-0005pZ-Sk; Tue, 07 Jan 2025 18:21:04 -0500
+	id 1tVIwt-0006lI-BB; Tue, 07 Jan 2025 18:25:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVIsg-0005ou-Hv
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 18:21:02 -0500
-Received: from dormouse.elm.relay.mailchannels.net ([23.83.212.50])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVIwr-0006jh-G3
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 18:25:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVIse-0004Jp-IQ
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 18:21:02 -0500
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 340623237F6;
- Tue,  7 Jan 2025 23:20:58 +0000 (UTC)
-Received: from pdx1-sub0-mail-a234.dreamhost.com
- (trex-2.trex.outbound.svc.cluster.local [100.109.23.135])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id A31233223F9;
- Tue,  7 Jan 2025 23:20:57 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1736292057; a=rsa-sha256;
- cv=none;
- b=ERBS0oiVBk2Xb6JwdkcXLRqG1qX7KuXhDocNEsYsb7berQkUcbPhQEH/6D/IXXrC2iiojg
- n13YhgIRcXyjqRNJgF+vRLSOGlB2GLDh9DHwCzZgJAEDZT9Mu+iT0q+2ceo24hdxwL/lWa
- IoyiZ57aUt686Ss1yzBArk/v8lkWv2+XjAraOEZ7+lZX3EHiUdpvpEDvctPUpMTQwXFZ0C
- BWnzfZjAyilMfRzEKyrNEE8KP903zVTMzOLu0efBdgwwutfxgBQWICruWcqQUapamekaJx
- S1BFYVFnQbZG/lIkiX1y8TnZJDzY0I0rZT0e7wAKQsguuA0M0HD2AAOeC3scnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1736292057;
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVIwp-0004uo-JV
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 18:25:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736292317;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=uTPIbz7LB+ULVOPIft/sMzfCsyOKg2ovifBBeDjlNiw=;
- b=avWeJe1ZAgNUlXujgh4KlD7R2WZ+5aACVdB7FOn5J9K4drrXClnT/m0Feo7B03T3COlTsN
- OccRu9HDc7N2tx/JHWy2g5ZZUB5Nw+rsWolwWxrA9Okesoe9rperpKIKuJ+GhanN2PnREV
- SHibX+dxZivQ8LYuDJ82wOODTCJdXxSrihTMkzJhZbHnUjQuAzV1zaIiJHH2S/YfN2VKCD
- gNK5+z0SKtPRldMuWJclrJp0ygIv8w9gMOrkygXSep/7LLktfEHLPM0yABD7E35/deovAG
- 8jPU64/bHsomN4RPr5zIkmkRVrXI/f7gl0b41DwYu1gpV7J+BuT04r1XpOPm+A==
-ARC-Authentication-Results: i=1; rspamd-7df4dcbd86-4qk5j;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
-X-MailChannels-Auth-Id: dreamhost
-X-Harbor-Cold: 2435848978ac12b9_1736292057917_4051586479
-X-MC-Loop-Signature: 1736292057917:226697232
-X-MC-Ingress-Time: 1736292057917
-Received: from pdx1-sub0-mail-a234.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.109.23.135 (trex/7.0.2); Tue, 07 Jan 2025 23:20:57 +0000
-Received: from [172.16.32.88] (unknown [198.232.126.202])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested)
- (Authenticated sender: rob@landley.net)
- by pdx1-sub0-mail-a234.dreamhost.com (Postfix) with ESMTPSA id 4YSRqr6rBBz8S; 
- Tue,  7 Jan 2025 15:20:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
- s=dreamhost; t=1736292057;
- bh=wWKlZUyNNVVj1YsXWkNsJDVvt0wHxvoYrtx+2KFO3gk=;
- h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
- b=YR+GRBwk00tVJR+vSRWtil5ZHEyS92qt2LXmA8h5CoIA81O8dhLBi0OFXqI/k11/f
- N9f3ZqRIa/QNMD4OhzxVxoIIXcZFMoJuHtsozN984BO0UzWTz36yw+3i/n5S1BI4Ov
- hRxG8lqeHStDTmF9koToXZCcg2hQlaSs34lHsg/RsgqAA3eSLC4rxL3tjpd1kAvMR/
- lUXv1+mWteYFXvL+0K4b4SIN4ppo8z9PToxWIPn7/vn+s0Ljy5puVD/Aasq9DCKaqc
- wFcRAvIM5suj/M4ZrTS5sy9FSilqS3MdgZpqFnC9lwRyzKC9GWS9GiEQudrKkJ89lj
- jp63iW5vmFgsw==
-Message-ID: <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
-Date: Tue, 7 Jan 2025 17:20:56 -0600
+ in-reply-to:in-reply-to:references:references;
+ bh=jk5llIMPGH13C1mE7NpYOAIHY5SKHrdVlTfqe5jJARw=;
+ b=IYgQ/tXjN765+pn9MTyS/Px/XLf6nb9FwNvEXRkW4BU0w/somsbE5XnjQsD+EnR+7CzN5M
+ KIrwznM0yMohzCcExCIz9d73kq8DYsyXcFlQB4D4pHZwV8Cn5uXAdVTycmeNI54t/pfXlw
+ /pAksYWm+y45Jc89b9Lo0kPfpY5V+6Y=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-PIAB2FbUPzmiVqvQdDHogw-1; Tue, 07 Jan 2025 18:25:12 -0500
+X-MC-Unique: PIAB2FbUPzmiVqvQdDHogw-1
+X-Mimecast-MFC-AGG-ID: PIAB2FbUPzmiVqvQdDHogw
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-467975eabdaso4823811cf.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 15:25:12 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736292312; x=1736897112;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jk5llIMPGH13C1mE7NpYOAIHY5SKHrdVlTfqe5jJARw=;
+ b=QECZOp6RnPShFY9X93yOzO4jgtKcA0M9lmssK590ho3w2YnydwrhWV2hFqyH4e2O/4
+ y0cR2z1hfdji48WGYl6moeYRylO3fxALfTcXalmSdr98L3aw6KT+TKWT+egtDZTlEolU
+ E9yQ5Rcyeg4GIsSktWYbWL/DHkZyTqd9isfQ1FUWnsl8SY0X1zUqwGK3QeGIWaMm/Ufb
+ AZ/Vas1lxbfzeSLEVaK2hJcO3TzERmlo0DvFmGEvfyFCX6aL5KNPLgRlK+F7RpN8iY0m
+ p7hH9MlghHks3WpViAh4xuIxg8XgUegpP1K+LH6VhDq0UtG6Ea7R76sCXf6rb+9rftZc
+ BWJQ==
+X-Gm-Message-State: AOJu0Yyg2B2nVbeWjqw0svF/F9nNcAGR6DF5a0hri4HJrVjJmMC8IAus
+ tQsMgI3Y2+2pTIndL6ku8TfZHw1wkCN2c2JWRheR0PP8FqP/ejpRQErbucHlcXXyTyijmftjIik
+ j70ruY0l3AM7PpWEWc/o96S3UMaZd7pj+maSPKh3UQYaNdDZ1PU9p
+X-Gm-Gg: ASbGncsWnVCzH2vZ7idbYvRvpb0MUbx50AzgcTfuQ5YoSw3THFDKb2UoOJyFXHYtzTc
+ 5OQyRO1N3C0vNt6XhMOmRCbGv/nRxN2CAaepV+tLp2IVxfwuuk3FE2ZdgZvSXM74KJ5jeoSSqA6
+ UnxiE5lvBahGH189SKALe1x4n2ZFIyoWydPTQzlrJg6WR2r+zkWGuTfo1X4GdToZH5hdp75AwnX
+ CF8j/omOB7Tlb8+V71yidnuiB8yVZCGJQ95jCPgWI34Xm1NZvv0iznGrWkUP/jZi3Niwq6Wz6nd
+ 14IfyTC8Qm7Fl4WnIA==
+X-Received: by 2002:ac8:7e84:0:b0:467:5cd2:4001 with SMTP id
+ d75a77b69052e-46b3ac393aemr77115761cf.3.1736292312294; 
+ Tue, 07 Jan 2025 15:25:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFc+kqqMjs2ci8NgrY1IitoI953bRWZjlzdmjAjeoOd+AvUvThVNJtXnM0q+BPKqJMj5BNsw==
+X-Received: by 2002:ac8:7e84:0:b0:467:5cd2:4001 with SMTP id
+ d75a77b69052e-46b3ac393aemr77115571cf.3.1736292311937; 
+ Tue, 07 Jan 2025 15:25:11 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46a3e677a55sm190102561cf.27.2025.01.07.15.25.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Jan 2025 15:25:10 -0800 (PST)
+Date: Tue, 7 Jan 2025 18:25:09 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 6/7] migration: Fix arrays of pointers in JSON writer
+Message-ID: <Z3231YxnKrjtwX6h@x1n>
+References: <20250107195025.9951-1-farosas@suse.de>
+ <20250107195025.9951-7-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: or1k -M virt -hda and net.
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stafford Horne <shorne@gmail.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Linux OpenRISC <linux-openrisc@vger.kernel.org>
-References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
- <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
- <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
- <Z0LMqEqcdjkAxnN-@antec> <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net>
- <Z2lgL31ZeSkO59MZ@antec> <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
- <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
- <87y0zmbita.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Rob Landley <rob@landley.net>
-In-Reply-To: <87y0zmbita.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.212.50; envelope-from=rob@landley.net;
- helo=dormouse.elm.relay.mailchannels.net
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250107195025.9951-7-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,111 +105,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/25 12:05, Alex Bennée wrote:
-> Stafford Horne <shorne@gmail.com> writes:
->> I have not used -hda before, do you have it working with other targets?
->>
->> According to the qemu docs in qemu-options.hx. I see:
->>
->>      Use file as hard disk 0, 1, 2 or 3 image on the default bus of the
->>      emulated machine (this is for example the IDE bus on most x86 machines,
->>      but it can also be SCSI, virtio or something else on other target
->>      architectures). See also the :ref:`disk images` chapter in the System
->>      Emulation Users Guide.
->>
->> I think, since we don't have a "default" bus in openrisc this doesn't work so we
->> need to specify the -drive explictly.
->>
->> I checked the x86 machine code and confirm it seems to work like this.  There is
->> code in the system setup to look for hd* drives and wire them into IDE.  There
->> is no such code in openrisc.
+On Tue, Jan 07, 2025 at 04:50:24PM -0300, Fabiano Rosas wrote:
+> Currently, if an array of pointers contains a NULL pointer, that
+> pointer will be encoded as '0' in the stream. Since the JSON writer
+> doesn't define a "pointer" type, that '0' will now be an uint64, which
+> is different from the original type being pointed to, e.g. struct.
 > 
-> Yeah don't use -hdX as they are legacy options with a lot of default
-> assumptions. As the docs say: https://qemu.readthedocs.io/en/master/system/invocation.html#hxtool-1
+> That mixed-type array shouldn't be compressed, otherwise data is lost
+> as the code currently makes the whole array have the type of the first
+> element.
 > 
->    The QEMU block device handling options have a long history and have
->    gone through several iterations as the feature set and complexity of
->    the block layer have grown. Many online guides to QEMU often reference
->    older and deprecated options, which can lead to confusion.
+> While we could disable the array compression when a NULL pointer is
+> found, the JSON part of the stream still makes part of downtime, so we
+> should avoid writing unecessary bytes to it.
+> 
+> Keep the array compression in place, but break the array into several
+> type-contiguous pieces if NULL and non-NULL pointers are mixed.
 
-I want "a block device from this file" in a generic way that works the 
-same across multiple architectures regardless of the board being 
-emulated, where I only have to specify the file not explicitly 
-micromanage bus plumbing details, and which is easy for a human to type 
-from when explained over a voice call.
+Could I request for a sample JSON dump for an example array in the commit
+log?  This whole solution looks working but is tricky.  A sample could help
+people understand (e.g. showing the same "name" being dumped multiple
+times..).
 
-What's the alternative to -hda you suggest for that?
+Side note: I tried to dump a very basic VM's JSON out to disk, it scares me
+on the size:
 
-Can I do "./run-qemu.sh -drive file=blah.img" without the rest? Perhaps 
-specify all the details in the script and then optionally add an extra 
-argument at the end? I couldn't get that to work:
+$ ls -lhS JSON.out 
+-rw-r--r--. 1 peterx peterx 106K Jan  7 17:18 JSON.out
 
-$ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
-virtio-net-device,netdev=net0 -drive format=raw,id=hd0 -device 
-virtio-blk-device,drive=hd0 -drive file=README
-qemu-system-or1k: -drive format=raw,id=hd0: A block device must be 
-specified for "file"
+That's a simplest VM with all default stuff, mostly nothing complex.. I may
+really need to measure how the JSON debug strings affect migration function
+or perf at some point..
 
-Also, if you say -device and -drive but do NOT specify a file, qemu 
-refuses to start. So I can't set the defaults but only optionally use 
-them, the way -hda has defaults built into the image that don't cause a 
-problem if I DON'T add a -hda argument to the command line.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
+>  scripts/analyze-migration.py |  9 ++++++++-
+>  2 files changed, 40 insertions(+), 2 deletions(-)
+> 
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 52704c822c..a79ccf3875 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>              int size = vmstate_size(opaque, field);
+>              uint64_t old_offset, written_bytes;
+>              JSONWriter *vmdesc_loop = vmdesc;
+> +            bool is_prev_null = false;
+>  
+>              trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+>              if (field->flags & VMS_POINTER) {
+>                  first_elem = *(void **)first_elem;
+>                  assert(first_elem || !n_elems || !size);
+>              }
+> +
+>              for (i = 0; i < n_elems; i++) {
+>                  void *curr_elem = first_elem + size * i;
+>                  const VMStateField *inner_field;
+> +                bool is_null;
+> +                int max_elems = n_elems - i;
+>  
+>                  old_offset = qemu_file_transferred(f);
+>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+> @@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                       * not follow.
+>                       */
+>                      inner_field = vmsd_create_fake_nullptr_field(field);
+> +                    is_null = true;
+>                  } else {
+>                      inner_field = field;
+> +                    is_null = false;
+> +                }
+> +
+> +                /*
+> +                 * Due to the fake nullptr handling above, if there's mixed
+> +                 * null/non-null data, it doesn't make sense to emit a
+> +                 * compressed array representation spanning the entire array
+> +                 * because the field types will be different (e.g. struct
+> +                 * vs. uint64_t). Search ahead for the next null/non-null
+> +                 * element and start a new compressed array if found.
+> +                 */
+> +                if (field->flags & VMS_ARRAY_OF_POINTER &&
+> +                    is_null != is_prev_null) {
+> +
+> +                    is_prev_null = is_null;
+> +                    vmdesc_loop = vmdesc;
+> +
+> +                    for (int j = i + 1; j < n_elems; j++) {
+> +                        void *elem = *(void **)(first_elem + size * j);
+> +                        bool elem_is_null = !elem && size;
+> +
+> +                        if (is_null != elem_is_null) {
+> +                            max_elems = j - i;
+> +                            break;
+> +                        }
+> +                    }
+>                  }
+>  
+>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+> -                                      i, n_elems);
+> +                                      i, max_elems);
+>  
+>                  if (inner_field->flags & VMS_STRUCT) {
+>                      ret = vmstate_save_state(f, inner_field->vmsd,
+> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+> index 4836920ddc..9138e91a11 100755
+> --- a/scripts/analyze-migration.py
+> +++ b/scripts/analyze-migration.py
+> @@ -497,7 +497,14 @@ def read(self):
+>                      raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
+>                  a.append(field['data'])
+>              else:
+> -                self.data[field['name']] = field['data']
+> +                # There could be multiple entries for the same field
+> +                # name, e.g. when a compressed array was broken in
+> +                # more than one piece.
+> +                if (field['name'] in self.data and
+> +                    type(self.data[field['name']]) == list):
+> +                    self.data[field['name']].append(field['data'])
+> +                else:
+> +                    self.data[field['name']] = field['data']
 
->    Older options like -hda are essentially macros which expand into -drive
->    options for various drive interfaces.
+Do we realy need these script changes?  I thought VMSDFieldStruct always
+breaks array_len field into "index" based anyway?
 
-Where the knowledge of "what this board needs in order to do that" is 
-built into qemu rather than provided by the caller, yes.
+        new_fields = []
+        for field in self.desc['struct']['fields']:
+            if not 'array_len' in field:
+                new_fields.append(field)
+                continue
+            array_len = field.pop('array_len')
+            field['index'] = 0
+            new_fields.append(field)
+            for i in range(1, array_len):
+                c = field.copy()
+                c['index'] = i
+                new_fields.append(c)
 
-> The original forms bake in a lot
->    of assumptions from the days when QEMU was emulating a legacy PC, they
->    are not recommended for modern configurations.
+        self.desc['struct']['fields'] = new_fields
 
-I'm building a kernel. It finds /dev/?da so I can mount it. That is my 
-desired outcome.
+-- 
+Peter Xu
 
-I am attempting to get generic behavior out of multiple architectures, 
-among other reasons so I can cross-test and package up "it fails on X, 
-here's a build and test" to point package maintainers at.
-
-"It natively builds under the emulator" is the easiest way to make that 
-work, which is why https://landley.net/bin/toolchains/latest/ has a 
-native.sqf for each cross.tar.xz.
-
-wget system-image-arch.txz
-wget toolchain.sqf
-wget test.img
-
-./run-emulator.sh -hda test.img -hdb toolchain.sqf
-
-If I have to explain "-drive virtio-potato-walrus,inkpot=striated 
--device collect=striated,burbank-potato,ireland" at somebody whose 
-domain expertise is xfce or something, the barrier to getting them to 
-reproduce the issue I'm seeing is noticeably higher. If I have to MAKE a 
-bespoke wrapper shell script for them with every bug report, the 
-likelihood that it works differently for them than when I tried it is 
-noticeably nonzero, and the likelihood of the issue going on my todo 
-heap and never getting pursued upstream is also noticeably higher. Which 
-is why I try to make generic tools...
-
-(Making a _test_ script to demonstrate the issue is normal. If it's 
-their project, usually they can tell if I typoed it and fix it up 
-themselves because they know what I MEANT. But if I typo the setup for 
-the virtual environment, or are missing a prerequisite package install, 
-or they hit qemu version skew, or I said /bin/sh and theirs points to 
-dash... Brick wall. It either works or it doesn't.)
-
-(And when I have to set up the long version for a nightly cron job, and 
-then when the test fails 6 months later and I look at it and go "huh? 
-salad?" that's a bad 3am digression as well. And which is more likely to 
-break from version skew during qemu version upgrades: two lines of 
-micromanaging --longopts or -hda that gets adjusted by the maintainers?)
-
-Rob
-
-P.S. For some reason -hda grew an "I'm going to make the first block 
-read-only just like loopback devices do because you can't be trusted" 
-nag a few years back, but it's mostly yet more boot spam. I can tell the 
-kernel to be quiet during boot, but never figured out the equivalent for 
-qemu-system...
 
