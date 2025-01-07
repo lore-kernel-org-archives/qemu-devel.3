@@ -4,98 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD76E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2A2E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVBbZ-00042Y-O7; Tue, 07 Jan 2025 10:34:54 -0500
+	id 1tVBdp-0003Ak-VM; Tue, 07 Jan 2025 10:37:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tVBbX-0003v0-G0
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:51 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tVBbV-0005C7-P7
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:34:51 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21654fdd5daso214408515ad.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 07:34:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736264088; x=1736868888; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qgHvuD9mo6flfbAZTuMkYLnQcUOY8FDvBrOYgWFXpoQ=;
- b=M2/dD2EC1SuxQOqgZBeZYIlxwb4smslEHa76HidfX8DeFMZqTOGhvJ9L8W1Cuc75JQ
- 5UG0Ks2g9TuNE5qDCwm8waE4boXIu1Flu8bJPt+pWvOhRFpYg86bvY6apUxczcnbB1gR
- fk8v2YVBFiWaRmc9jaFy+Gr7xySE42qWLIs/ORugMGz9bfLQD+IvDe02m/zfYVIl/ZpA
- 6dkpUAB48lqvrQkn4Pog0GbXsTp8zBbz1T9jKHMuQ7gQELXDuS0qrrfiLi8J32vPp8Ei
- Kqdx8POt0TIKQQbJDJZDz72vN0/y3/S6pQY1CI17L6yAZVnovWmSWxv7AZ/HSD8B55oI
- 2E9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736264088; x=1736868888;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qgHvuD9mo6flfbAZTuMkYLnQcUOY8FDvBrOYgWFXpoQ=;
- b=QZXqyv1VHHl+fQ74jZ/ZV+tpNicuoQbI/tS/nnKtvwLYL0mdoQCe/X5TIpNYDsdpW/
- h8xA2uotEcr7h3Z1puhYVkDsjA2z8NK+3zUQCsyJsu9lUdmUSLB9iMzsmBeEj41ivx2y
- YUzV3rCcdmQoJVoIElF/to1UGgJeyB3uLvS4pb4i0aiWtLuZ+O/ruXg5mmVTseE+aP2E
- qVa1jDBe4EAnQ2YS8L8C1bqfQA6uR1GzErWDAejL0dH6U+0eo6uYFxIzifxWepMdDf7r
- N5yaa7TKVkbM4cv1jgua8xTqO+qXFcyJH+ZP7q4EiiOF9kxvTaHnBO6RCHuFBtvHlBJT
- 2RUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUyUMtxLAGD3SmEa7jfhPGvy+To6MgEoLOyMVxE1zomwMxvuuJc5ZaN4bVc5y2yR4UcJ+1SBHUe4zOu@nongnu.org
-X-Gm-Message-State: AOJu0Ywey5KcuW1SsriVvGp54++PCNEdpTJhQZ2/6ihkRF9jC90diw3w
- ZS61rr2xkZx4E6w+j03HjVREH5eitbjuX+jr5ZSy4A58kOkRtFj+TOtSi5cb5e/3TpS0f7MHLCn
- O
-X-Gm-Gg: ASbGncsV3men65VsV+usGmRJu5G5VCpIzPf6IkyZjRTGQWO/E8nKvJl2Hm6EwQCyUw1
- uU0/Btf4YyAi8TshzYXw7KNCanCwtjjT1X34K9PaCCgxMI/hHXnukqmoV5lqSOeCqxYnJWmriDr
- 0cuN0c/V8TjJdr4jALfy2nOBeDN7J+JJjkLOtGGSM2SNC8INccJIDJ6+6ugQBWbJrbAbeiwWW4c
- 9E1ZV+TIFkktuHd0Aq6Be+VRwzQzv1qQxlt1rm1zrlpAU1BfccbfW2TfHEU34XkjK9Dms/kPc7i
- 16qWscEpEtNpXO2M9C+iC2CdXBKdTGs=
-X-Google-Smtp-Source: AGHT+IH0Qqlxhfp60UweDm07f6TXXvd8IHIcd3qEwTcEF74MktQnAtgm78MXQ0GvcBpqlHFpFn3vQg==
-X-Received: by 2002:a17:902:d4cf:b0:216:60a5:ebfd with SMTP id
- d9443c01a7336-219e6f5472fmr700569435ad.55.1736264088212; 
- Tue, 07 Jan 2025 07:34:48 -0800 (PST)
-Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
- [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9705c1sm311335215ad.101.2025.01.07.07.34.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 07:34:47 -0800 (PST)
-Message-ID: <1db55939-040e-47f5-8550-17a44f3dc129@linaro.org>
-Date: Tue, 7 Jan 2025 07:34:44 -0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tVBdn-0002y4-Os; Tue, 07 Jan 2025 10:37:11 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tVBdl-0005YM-M8; Tue, 07 Jan 2025 10:37:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736264229; x=1767800229;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=XCZzl+buYDclRmkgsVH4Yt09a40/e44VZXfhyc5VbpQ=;
+ b=Yhz3Bd0e0q5Ai0Uz14ixFK6eriVIsULXq0oMCQAtOxV17zqLlKO69Mw6
+ 9d8okJBeycCvgr/zB8MewUmq5FJhkQNOgimLihzIUL8HO+HLUJVo8jFsf
+ YqM/MS9lbeUu4cQNfigwYUOLym/gnoOtFA0t+ES55zewKugcI4fSyVaVU
+ qQP2MxOsqynfehnIRYlU63TvHpsBEs+MWnyy2UJnglM/ghfdHhJcmk0Ab
+ xvcPY1uwgayJknpfxeMSLDp57AGbz29A7FtBDletMUWyp1JcaC68HyNjm
+ gTF8rP8TCLenMA/Vb+SAov9QreR6yKxcGRs1PKOUOtK1kVWabAsoNJEVD Q==;
+X-CSE-ConnectionGUID: VmHZWESXRDuXcBQ07bAMnA==
+X-CSE-MsgGUID: R2/oXIxkRBuS0ypDYVtsKw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11308"; a="58918289"
+X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; d="scan'208";a="58918289"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2025 07:37:06 -0800
+X-CSE-ConnectionGUID: cAaLE8/KTEantrsyvHyn2w==
+X-CSE-MsgGUID: qL2+2CzjQHazhhTdck2m1w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="126095713"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 07 Jan 2025 07:37:04 -0800
+Date: Tue, 7 Jan 2025 23:55:52 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
+ ClassInitImpl<>
+Message-ID: <Z31OiMcYT/66AGDt@intel.com>
+References: <20241219083228.363430-1-pbonzini@redhat.com>
+ <20241219083228.363430-26-pbonzini@redhat.com>
+ <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
+ <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
+ <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
+ <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target/arm/arm-powerctl: Restrict to ARM cores
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair.francis@wdc.com>,
- qemu-arm@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <thuth@redhat.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250107135739.48324-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250107135739.48324-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,21 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/25 05:57, Philippe Mathieu-Daudé wrote:
-> Since v1:
-> - Factor cpu_is_of_type() out
+On Mon, Jan 06, 2025 at 04:21:16PM +0100, Paolo Bonzini wrote:
+> Date: Mon, 6 Jan 2025 16:21:16 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
+>  ClassInitImpl<>
 > 
-> Philippe Mathieu-Daudé (2):
->    cpus: Introduce cpu_is_of_type() helper
->    target/arm/arm-powerctl: Restrict to ARM cores
+> Il lun 6 gen 2025, 14:32 Peter Maydell <peter.maydell@linaro.org> ha
+> scritto:
 > 
->   include/hw/core/cpu.h     | 9 +++++++++
->   cpu-common.c              | 5 +++++
->   target/arm/arm-powerctl.c | 6 ++++--
->   3 files changed, 18 insertions(+), 2 deletions(-)
+> > I think here I agree with Philippe that we might as well
+> > provide only the new API to Rust devices.
+> >
 > 
+> Ok, I wasn't thinking of doing that because there isn't right now an easy
+> way to add interfaces to Rust-defined classes. However, all devices are
+> Resettable and Device isn't defined in Rust, so it's not hard to add a
+> ResettableImpl trait in rust/qemu-api/srv/qdev.rs, and initialize it for
+> all devices.
+> 
+> If anybody wants to do it as an exercise, I am happy to help, otherwise I
+> can prepare a patch too.
+>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+If possible and if no one else wants to practice, I would also like to
+give it a try (I'll add it to my list).
 
-r~
+Zhao
+
 
