@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5062E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 18:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368DDE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVElN-00075a-75; Tue, 07 Jan 2025 13:57:13 -0500
+	id 1tVEvv-0000Mp-3p; Tue, 07 Jan 2025 14:08:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVElJ-000753-31
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 13:57:09 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVElH-0004Gx-FT
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 13:57:08 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso106436705e9.3
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 10:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736276225; x=1736881025; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c3darVpZrv40gfMs7JtLycBDIF+yCQhL7QwhFFYlrrw=;
- b=ca7e4KqArN/mM57FeGIq3v2BXbAdMRQcrZ51YJ0waaDTr2cixTgebCYcHcUUfPLwQi
- PO7/nFSi3Z45x0iQcpTpjkkrieaoxjGcMmKdjdJqtZ0P65W9X86+zbleJqGZn6ElSnyN
- eaWsR7Bwt9Vqa59dfBVlehCAkdfQeqZ4GTyelo0pQvLZh/LR/EtrRLi96TXIsJVF/F33
- uuc6dnMzaqQocJea6bWOhNmKEvpOUvflvlIlWZWocfMsUJyjpPfZwSGzXrD2696fBoQS
- Ooxa27u1U6KMLzUI0kDA0vge3QzB8WR+az5eCOofr9CvwJaxnV/31+avY609UuO74nK3
- D7jg==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tVEvs-0000MZ-Ih
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:08:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1tVEvr-0005wQ-03
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:08:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736276882;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e6N+MDNfhqEWSldmyBSY1nNns1pi99KQqXGHwXf1lOY=;
+ b=Kv3XQn3lPDX+GS+XWmKwpdfOhFWda/xjTu4uNuf1JKxBkRzj/NscJT2N+WJ3a2LIYrp2Ax
+ PJhJBNEtt0SXnTAPHcwGUoAF3CS2+0U+8mk/Ox6UiCjX2jMOB3eBLbC4AeOmIQXJ3ETWPc
+ fF/Ny3aJHsF02VuhP/dUAKsA8nxXyjM=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-213-helW-Y2SMJOThyFM4b1efg-1; Tue, 07 Jan 2025 14:06:42 -0500
+X-MC-Unique: helW-Y2SMJOThyFM4b1efg-1
+X-Mimecast-MFC-AGG-ID: helW-Y2SMJOThyFM4b1efg
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-844df5d5edfso114841439f.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 11:06:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736276225; x=1736881025;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c3darVpZrv40gfMs7JtLycBDIF+yCQhL7QwhFFYlrrw=;
- b=o/7UeF13bHnqHt0UDVQ582d80El2ZYBCaQVbxrQw19/EKbgmPdgkwiSfVCPEj4YaM+
- sE4um201Z0koc6q11+t8ZjYP6uVJ+t2bgIl0nKwcInEmw1gBVPSm0ScG30WdLNoqO6+O
- DrONCH9xK9T39JK+EdzwqrTnlFPH3WnEvf1Kwov9nUQTswQWpluLch8ESTSyv8WDUDsQ
- yOz7tI9X93uTvVPWekXjd0slZpA5989ecnMUEWsa+vT/1kVkdZ5N6jvZrPJ6dD2erp2P
- FHKLTjDFWzz7m7haFCLM7GPrU6UNkKfS/vytUOc7DnCRQLc813oQP/pdkPxvfUI/qvg9
- n/bg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbqsl2W32ctv5we3b3hmo9DFJzkLxYRshJF8zDpjTYqYYHDm2R/Al2QpbjchSpv4/qSchbissTqGgY@nongnu.org
-X-Gm-Message-State: AOJu0Yxpt8VKkMJ2T5kTlE4FpsRrAAvjM9xuTHYAH2+LAie6wPEua1/f
- X1kuIxdkN9CjCknUsj1/ut9HCJfI6/f3Co+M/l9ZprCSzT2g4kIRgasYHbzzHIE=
-X-Gm-Gg: ASbGncuOh469dkX4bi+adgrN5iAInds2MgziFhbo7uiCb8/WbZaROj0IZjtAlW3Z2NP
- qWdspS35jo5Saxy6Gi9Vn0K1VcB2n1mvyqPJ1S68ejwpoXcHe8EWsq66hv4X62ZFq2FShOj+SiU
- G7+5o+NlCNg/Uc/egtTThmWcDrty4XBYWaJdb6rGtHpqq7ZaL63cvD38W5BSAxmTJQm9HOgTOvz
- M+puzgemoj32YTH8u10EwD0Vv6YhN/fFccEsHM0TEOFrnKGsjaj8N1iXA1u4Du7zHvB9+hKDRTu
- xsvs+tCP8RCyOnbjJj8pSuz9
-X-Google-Smtp-Source: AGHT+IE+xFX0awFyDNf7ue4odLMiLyG5RNcDktK8Off4n0U35vuGUlXBUMwfnrUkHSUOGt/fSr0dWg==
-X-Received: by 2002:a05:600c:3b24:b0:436:2923:d23a with SMTP id
- 5b1f17b1804b1-43668b7a683mr430353145e9.33.1736276225648; 
- Tue, 07 Jan 2025 10:57:05 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661219a71sm602097695e9.26.2025.01.07.10.57.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 10:57:05 -0800 (PST)
-Message-ID: <d1674d1e-e6ac-441f-acbd-ad3a2dcd15aa@linaro.org>
-Date: Tue, 7 Jan 2025 19:57:04 +0100
+ d=1e100.net; s=20230601; t=1736276802; x=1736881602;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=e6N+MDNfhqEWSldmyBSY1nNns1pi99KQqXGHwXf1lOY=;
+ b=KI+gwCh105nSrbd+eGodXk9qHJHXSgXv6sUZRB7e5rspv5yQdfGiLrJSE/OcDey12j
+ TmaODDWXALVq8Fl10hNb3EnaUxqBY8gRAGyO6fEHVjJL4s3G5OT2gsCBDa9NAB6Frvk/
+ e95U9yE4W+IwcEsvje3byZ9bAm0sNMhtExrint6ZG9vAKwu40QLCP7cUb7Sdrl9QDewL
+ lAYCp4mCWKPtqJnPvsx7Gd2zT2Nux5dS0RLg2QrsaYZEteW40Afi/U6CXEeF/Nml01CU
+ fAT3JYamc6FQ8tz37/YCslQeqqf24l6YRV3urK/yIWRXbPlRCQCrhrtDETl5atuIriHk
+ dTsg==
+X-Gm-Message-State: AOJu0YwRjaZkeisHQaY78KS986kLG4CJOhj+zST2LJ7o+JCaBA3xne6n
+ cO1iRMCbTJDLCLywyjfzOoRp0mGO4orVjQBL4VTwd8WaF9s1IbUhVez0YZnOrRNWn+sVcc6vaHU
+ 07eZfzzGONIYSWKzkzli5ocdQdwUVUpKwNmVnZ1RF2XaYvh4d9TT/
+X-Gm-Gg: ASbGncue4a8SLIckgcUNdJJQVgbcTltSwbSu+Z2vlqZTiqx0px3fBk+jO9wb5N7VFYx
+ NIX2+dTQ2pYVtbf4LrYA3pM+FWG3lFuIBYP5syHlUE6PM33P3/X9S8zK17/OdIF0ZhO+1RJgrcP
+ 5thIZg9toGTY1uvi/zaf986d9ZwcosKfTXk7K4S2wqKMXPbzomYAL4gVoqQuRNQXopffiQVcH7B
+ wnQNM57dF7zLw/UUikybR+/az4ULKfrzsrmo0YjxVgMWsxqwmK/LBxIZ0z6
+X-Received: by 2002:a05:6e02:1f05:b0:3a7:e7bd:9f30 with SMTP id
+ e9e14a558f8ab-3ce3a86aaadmr949465ab.2.1736276801516; 
+ Tue, 07 Jan 2025 11:06:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFurqoZehh6ETJcqNQf2m661gzblrt8qa1LeuOAB0NVJKyEs82GAel/K/ZDiyH+6PD5qR3ng==
+X-Received: by 2002:a05:6e02:1f05:b0:3a7:e7bd:9f30 with SMTP id
+ e9e14a558f8ab-3ce3a86aaadmr949365ab.2.1736276801232; 
+ Tue, 07 Jan 2025 11:06:41 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3c0de053105sm101468715ab.15.2025.01.07.11.06.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Jan 2025 11:06:40 -0800 (PST)
+Date: Tue, 7 Jan 2025 14:06:34 -0500
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Rorie Reyes <rreyes@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, pbonzini@redhat.com,
+ cohuck@redhat.com, pasic@linux.ibm.com, jjherne@linux.ibm.com,
+ borntraeger@linux.ibm.com, clg@redhat.com, thuth@redhat.com,
+ akrowiak@linux.ibm.com
+Subject: Re: [PATCH v1 0/5] Report vfio-ap configuration changes
+Message-ID: <20250107140634.35cb33ba.alex.williamson@redhat.com>
+In-Reply-To: <20250107184354.91079-1-rreyes@linux.ibm.com>
+References: <20250107184354.91079-1-rreyes@linux.ibm.com>
+Organization: Red Hat
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] tests/qtest: Add API functions to capture IRQ
- toggling
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
- armbru@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-References: <20241216141818.111255-1-gustavo.romero@linaro.org>
- <20241216141818.111255-7-gustavo.romero@linaro.org>
- <77ee967d-00e6-45fa-a8b1-42192e61b553@linaro.org>
-Content-Language: en-US
-In-Reply-To: <77ee967d-00e6-45fa-a8b1-42192e61b553@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,63 +110,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 19:35, Philippe Mathieu-Daudé wrote:
-> Cc'ing maintainers:
-> 
-> $ ./scripts/get_maintainer.pl -f tests/qtest/libqtest.c
-> Fabiano Rosas <farosas@suse.de> (maintainer:qtest)
-> Laurent Vivier <lvivier@redhat.com> (maintainer:qtest)
-> Paolo Bonzini <pbonzini@redhat.com> (reviewer:qtest)
-> 
-> On 16/12/24 15:18, Gustavo Romero wrote:
->> Currently, the QTest API does not provide a function to capture when an
->> IRQ line is raised or lowered, although the QTest Protocol already
->> reports such IRQ transitions. As a consequence, it is also not possible
->> to capture when an IRQ line is toggled. Functions like qtest_get_irq()
->> only read the current state of the intercepted IRQ lines, which is
->> already high (or low) when the function is called if the IRQ line is
->> toggled. Therefore, these functions miss the IRQ line state transitions.
->>
->> This commit introduces two new API functions:
->> qtest_get_irq_raised_counter() and qtest_get_irq_lowered_counter().
->> These functions allow capturing the number of times an observed IRQ line
->> transitioned from low to high state or from high to low state,
->> respectively.
->>
->> When used together, these new API functions then allow checking if one
->> or more pulses were generated (indicating if the IRQ line was toggled).
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Acked-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/qtest/libqtest.c | 24 ++++++++++++++++++++++++
->>   tests/qtest/libqtest.h | 28 ++++++++++++++++++++++++++++
->>   2 files changed, 52 insertions(+)
+On Tue,  7 Jan 2025 13:43:49 -0500
+Rorie Reyes <rreyes@linux.ibm.com> wrote:
 
+> This patch series creates and registers a handler that is called when
+> userspace is notified by the kernel that a guest's AP configuration has
+> changed. The handler in turn notifies the guest that its AP configuration
+> has changed. This allows the guest to immediately respond to AP
+> configuration changes rather than relying on polling or some other
+> inefficient mechanism for detecting config changes.
 
->> +uint64_t qtest_get_irq_raised_counter(QTestState *s, int num)
->> +{
->> +    /* dummy operation in order to make sure irq is up to date */
->> +    qtest_inb(s, 0);
-> 
-> Isn't it better to simply call:
-> 
->         qtest_rsp(s);
-> 
-> ?
+Why are configuration changes to the device allowed while the device is
+in use?
 
-Sorry I misunderstood. You want to flush the qtest socket, right?
-Could this be sufficient?
+Would a uevent be considered an inefficient mechanism?  Why?
 
-           s->ops.send(s, "\n");
-
-Otherwise I'd rather add a "nop" command. Seeing "inb" in traces
-is very confusing.
-
-> 
->> +
->> +    return s->irq_raised_counter[num];
->> +}
+Thanks,
+Alex
 
 
