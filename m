@@ -4,89 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE805E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE48BE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 12:43:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV8d3-0004Bf-BV; Tue, 07 Jan 2025 07:24:13 -0500
+	id 1tV8ud-0007Bi-00; Tue, 07 Jan 2025 07:42:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tV8d1-0004BN-Rj
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:24:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tV8uY-0007BE-Db
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:42:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tV8cz-0001tI-VG
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:24:11 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tV8uV-0004E7-RV
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 07:42:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736252648;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1736253734;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tBhgfETM99NEMDiU1FVnu4UUpsHSbAgJWNnVsfsni24=;
- b=H5NyvW/rFJ3tCALwAnzOwEQ3FwwBGcUHrTo/oO8n8Dx0Ec2JJpRWo5FJCmUt3zWtMBNGxJ
- cnycKoQwIxsXwBJ9ZuKtQ0Z9ykBOIZ2I3skXzxN//5ZXFflxKXr6homqMqDJ2w6/2D9wUs
- CN0yh4fzJqKd5pjG+mJ1AXmNNNnFSac=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-286-82-3_OQaPzyEfqrHQOCkqw-1; Tue, 07 Jan 2025 07:24:06 -0500
-X-MC-Unique: 82-3_OQaPzyEfqrHQOCkqw-1
-X-Mimecast-MFC-AGG-ID: 82-3_OQaPzyEfqrHQOCkqw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385ed79291eso7733929f8f.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 04:24:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736252645; x=1736857445;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tBhgfETM99NEMDiU1FVnu4UUpsHSbAgJWNnVsfsni24=;
- b=uhzkL6U9FabIrffH+WQLHKY9uDNms60fAdygIxSHm/TGufQpDCdjRmGruay5wuoZ1x
- KEohbNS1IvMLpVt1+Znz6eou9D/0TqgSjGpZae8v+jG0EZRY+WnvZ0zIZJQoag76nBh4
- EfTGgS3Oog4b6vyjGeX4plXDxUkZK5mxUbFuSdqODIZU2ENScp9GY7VJylbpMCZV94Dk
- XwbMeJ8VfzmEua0FLXE1sot2j5BKxDyAv2Zd8mkE7WQGlWw0FX+UglwYz88Ae9z3oBf+
- WFDY3uY+6dB1OxcOfQEGXxJ++YGVyB/C2AP1RnKf8jGZKrEkKa8ornU+8pB5EZIka3xx
- 5IdA==
-X-Gm-Message-State: AOJu0YyDMfvFqPFQR7RQoUDmvjXYgEc25qnoubSSw6mvH0cg0tLYxnEf
- NtAm7R1e4ZDgxpD0CExQheBHXq3MOn6c8Dm4BgRsZcsyKPYt44YhB9hLwY9DAvbimAz2wnDLZnS
- 1T67OCRpnk8xmvgtulS0LQW1QtnvvdcGBxYB2CNnqZdp7+nqqS2ZCmLQJjMO3AXTP2naxvG02or
- oOD1sMMnZIyotwAwR13doztcaz8WY=
-X-Gm-Gg: ASbGncu/PrIYzAvwjO3VogVoC2LcLaSxWOgae6KHBmV3+fEMZ+19AqV/kKZZN1WDWLg
- XCWoo4TqB3Guzn30tFKO8Cjr4TIVoCl/5/dJVew==
-X-Received: by 2002:a5d:5f56:0:b0:382:45db:6a1e with SMTP id
- ffacd0b85a97d-38a7913bcf8mr2711312f8f.14.1736252644725; 
- Tue, 07 Jan 2025 04:24:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdCOBT/WPKqbvxYoZE1G1ce2F6839rhweRBKlBnacFSZhluProYmcnIpDOweSXkOJJ9GaBJbJOd+9g+ItmULs=
-X-Received: by 2002:a5d:5f56:0:b0:382:45db:6a1e with SMTP id
- ffacd0b85a97d-38a7913bcf8mr2711195f8f.14.1736252642416; Tue, 07 Jan 2025
- 04:24:02 -0800 (PST)
+ bh=qfVJMxLX0yK3zBExqW0wBPdz2eGbMTcGtktm1jzQd1o=;
+ b=Ns80one5/gJrV4O46dJNTvo5YRCGpvQqJp/CFXKpdoeNBPjL44ehaSmxxqY7rsHpXs7ecL
+ 8IbFTlnJM4hTw1bIgUrCqawkZY+nMYVOgxUUFzxMAeXhIXy7zHh2wACIXkXFyEzWjNBg/q
+ eraJw9t1TpWvRb7KGtiU0cWGg5mUZwo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-tCWu2IlBPvaiGG-YC0EGQg-1; Tue,
+ 07 Jan 2025 07:42:10 -0500
+X-MC-Unique: tCWu2IlBPvaiGG-YC0EGQg-1
+X-Mimecast-MFC-AGG-ID: tCWu2IlBPvaiGG-YC0EGQg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C0F51956046; Tue,  7 Jan 2025 12:42:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.64])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B9261955EB4; Tue,  7 Jan 2025 12:42:07 +0000 (UTC)
+Date: Tue, 7 Jan 2025 12:42:03 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] tests/functional/test_x86_64_hotplug_cpu: Fix race
+ condition during unplug
+Message-ID: <Z30hG1PxfEPjq9Td@redhat.com>
+References: <20250107115245.52755-1-thuth@redhat.com>
+ <Z30WlysSx4-L-YSs@redhat.com>
+ <ab03dc76-14fe-4da3-97b9-b7da5bb154d0@redhat.com>
 MIME-Version: 1.0
-References: <20241231002336.25931-1-pbonzini@redhat.com>
- <20241231002336.25931-2-pbonzini@redhat.com>
- <Z3zstgKXAgeRrIU2@intel.com>
-In-Reply-To: <Z3zstgKXAgeRrIU2@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 7 Jan 2025 13:23:50 +0100
-Message-ID: <CABgObfbdFo9B1nedC+Bu2QQfjTL1TOpmSQt0p0a0d0iWev6UKg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/9] rust: vmstate: add new type safe implementation
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ab03dc76-14fe-4da3-97b9-b7da5bb154d0@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,100 +89,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 7, 2025 at 9:39=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrote=
-:
-> This is very good work! I am curious about how QEMU plays with Rust
-> forum:
->
-> Rust forum's disscussion is under MIT and Apache 2.0 licenses [1], and
-> since vmstate.rs is under the GPLv2 license, do we need to specify that
-> certain code retains the MIT license?
+On Tue, Jan 07, 2025 at 01:03:52PM +0100, Thomas Huth wrote:
+> On 07/01/2025 12.57, Daniel P. Berrangé wrote:
+> > On Tue, Jan 07, 2025 at 12:52:45PM +0100, Thomas Huth wrote:
+> > > When unplugging the CPU, the test tries to check for a successful
+> > > unplug by changing to the /sys/devices/system/cpu/cpu1 directory
+> > > to see whether that fails. However, the "cd" could be faster than
+> > > the unplug operation in the kernel, so there is a race condition
+> > > and the test sometimes fails here.
+> > > Fix it by trying to change the directory in a loop until the the
+> > > CPU has really been unplugged.
+> > > 
+> > > Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
+> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > ---
+> > >   tests/functional/test_x86_64_hotplug_cpu.py | 6 ++++--
+> > >   1 file changed, 4 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/tests/functional/test_x86_64_hotplug_cpu.py b/tests/functional/test_x86_64_hotplug_cpu.py
+> > > index b1d5156c72..7b9200ac2e 100755
+> > > --- a/tests/functional/test_x86_64_hotplug_cpu.py
+> > > +++ b/tests/functional/test_x86_64_hotplug_cpu.py
+> > > @@ -59,11 +59,13 @@ def test_hotplug(self):
+> > >                                             'cd /sys/devices/system/cpu/cpu1',
+> > >                                             'cpu1#')
+> > > +        exec_command_and_wait_for_pattern(self, 'cd ..', prompt)
+> > 
+> > Is this actually needed ? Are we keeping the CPU from being unplugged by
+> > being in that dir ? If so, why isn't it also needed in the while loop
+> > below ?
+> 
+> I added it to make the console output less confusing (otherwise it's still
+> shown in the prompt after the CPU has been unplugged)... but I can also
+> remove this line again if you prefer it?
 
-I will add a note similar to the one that is already there in offset_of.
+No, i'm not that fussed.
 
-> > +/// ```
-> > +/// # use qemu_api::call_func_with_field;
-> > +/// # use core::marker::PhantomData;
-> > +/// const fn size_of_field<T>(_: PhantomData<T>) -> usize {
-> > +///     std::mem::size_of::<T>()
-> > +/// }
-> > +///
-> > +/// struct Foo {
-> > +///     x: u16,
-> > +/// };
-> > +/// // calls size_of_field::<u16>()
-> > +/// assert_eq!(call_func_with_field!(size_of_field, Foo, x), 2);
-> > +/// ```
-> > +#[macro_export]
-> > +macro_rules! call_func_with_field {
-> > +    ($func:expr, $typ:ty, $($field:tt).+) =3D> {
-> > +        $func(loop {
-> > +            #![allow(unreachable_code)]
-> > +            const fn phantom__<T>(_: &T) -> ::core::marker::PhantomDat=
-a<T> { ::core::marker::PhantomData }
-> > +            // Unreachable code is exempt from checks on uninitialized=
- values.
-> > +            // Use that trick to infer the type of this PhantomData.
-> > +            break ::core::marker::PhantomData;
-> > +            break phantom__(&{ let value__: $typ; value__.$($field).+ =
-});
-> > +        })
-> > +    };
-> > +}
->
-> Very flexible and powerful. (I even think this code could be released as
-> a new public crate.)
 
-It's probably not _that_ useful in general, unless you're implementing
-this kind of reflection... otherwise I would have found an existing
-solution. :) But yes, it's very powerful.
-
-Out of curiosity, I asked claude.ai to explain it and it said "This is
-a rather advanced use of Rust's type system and macro capabilities to
-do compile-time reflection - basically inspecting the types of struct
-fields without runtime overhead. While creative, this pattern isn't
-commonly needed in everyday Rust code."
-
-When fed the initial comment from the Rust forum it said "your comment
-about wanting to access <T as SomeTrait>::SOMETHING for a field's type
-is a classic serialization pattern - often used to get things like
-type IDs, serialization formats, or field metadata at compile time".
-That's actually pretty impressive; the LLM was also impressed and it
-started asking me more about it ("Are you building a custom
-serialization framework from scratch, or extending an existing one?").
-
-> > +/// Return the `VMStateField` for a field of a struct.  The field must=
- be
-> > +/// visible in the current scope.
-> > +///
-> > +/// In order to support other types, the trait `VMState` must be imple=
-mented
-> > +/// for them.
-> > +#[macro_export]
-> > +macro_rules! vmstate_of {
-> > +    ($struct_name:ty, $field_name:ident $(,)?) =3D> {
->
-> why allow a comma at the end? It seems other patches don't use that
-> style.
-
-I copied it from the standard library offset_of, but I can remove it too.
-
-> > +// Add a couple builder-style methods to VMStateField, allowing
-> > +// easy derivation of VMStateField constants from other types.
-> > +impl VMStateField {
-> > +    #[must_use]
-> > +    pub const fn with_version_id(mut self, version_id: i32) -> Self {
->
-> Why not use u32 (and omit an assert)?
-
-The version_id field is an int in the C struct; you'd still need to
-assert that it's <=3D i32::MAX, and you'd also need an 'as i32'. In
-practice it will always be a constant, therefore it will auto-cast to
-either i32 or u32.
-
-Paolo
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
