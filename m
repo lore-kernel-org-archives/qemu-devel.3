@@ -4,98 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C54E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3DCE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV3bl-0007ig-4K; Tue, 07 Jan 2025 02:02:33 -0500
+	id 1tV3cn-00088E-3y; Tue, 07 Jan 2025 02:03:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keosung.park@samsung.com>)
- id 1tV3bj-0007iP-7L
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:02:31 -0500
-Received: from mailout4.samsung.com ([203.254.224.34])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tV3cP-0007wH-VR
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:03:14 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keosung.park@samsung.com>)
- id 1tV3bd-0004w3-5z
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:02:30 -0500
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20250107070210epoutp04ea3089705b3615fbe32cbb2a7116d14b~YVwP5cJZ00182001820epoutp04s
- for <qemu-devel@nongnu.org>; Tue,  7 Jan 2025 07:02:10 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20250107070210epoutp04ea3089705b3615fbe32cbb2a7116d14b~YVwP5cJZ00182001820epoutp04s
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1736233330;
- bh=uJa4rYsMaTg8VDExdSda4Cb/uCHunn3DcwEJtGO17A4=;
- h=Subject:Reply-To:From:To:CC:Date:References:From;
- b=QRWn60CxwvcL0Ow8ar4q4VGJ1O3LzvOQowzZpGM8wdTGq2xz8EAGX3ng/hJ2qtN0+
- 2ysMrE7E/VfZvgub0oXJQB9tDcXkvlOOKGktwNwkmB+v8AbQfi6l7Rpw/qe7Q1KDWf
- y1nzeVWDQWNl/fEDEDtf+RjOWAwFACKL2/u5xizU=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
- epcas2p4.samsung.com (KnoxPortal) with ESMTP id
- 20250107070210epcas2p49de1e36506d2ec0c466c3d44efafe561~YVwPgKfmH0221702217epcas2p4s;
- Tue,  7 Jan 2025 07:02:10 +0000 (GMT)
-Received: from epsmgec2p1.samsung.com (unknown [182.195.36.99]) by
- epsnrtp4.localdomain (Postfix) with ESMTP id 4YS26T4T3Yz4x9QH; Tue,  7 Jan
- 2025 07:02:09 +0000 (GMT)
-X-AuditID: b6c32a43-0b1e27000000599a-8b-677cd1716725
-Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
- epsmgec2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
- 4A.51.22938.171DC776; Tue,  7 Jan 2025 16:02:09 +0900 (KST)
-Mime-Version: 1.0
-Subject: [PATCH] hw/ufs: Adjust value to match CPU's endian format
-From: Keoseong Park <keosung.park@samsung.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
-Date: Tue, 07 Jan 2025 16:02:09 +0900
-X-CMS-MailID: 20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tV3cN-0004zO-0s
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:03:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736233391; x=1767769391;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=p7jd2YJglQZEF/n7cYU/XBni6ira8+uSNT520OdyVM4=;
+ b=PFU/JC8+vve/ur2XWLFv7z8WfYOkbtMtu2lmEbbSASmTVTdIcWbZOjVO
+ 187L7JnqCcMQj+tcaB4CYe5MRH2oXEucTcQTVw9eIK28YEho9QJowbZBi
+ i5XZkjiA6ZGAgGeE6O70dIEZPD4XQHDJzmKrsRyIrO4C6o2/gha1D13YD
+ k31PIF+jfXhiaxgSiQ8413hwY0a63SH8tza7KI4P9vaug6Xw21MFsqW1c
+ 9YsT/kkBjDiXwKjNLh9BMeFYNF24XkT22DABk9ITnbcrg9fRZZTyX5+im
+ s0mOkWLxfw9/zUoFXU8Q3gf3jMZkYj+skwCBoc1wGMmV3R9UAzQn+Uwai g==;
+X-CSE-ConnectionGUID: 66UW83y5Thm4svrUYYDQog==
+X-CSE-MsgGUID: cG6vB8PWSQCacK4TPwKYdg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="40172134"
+X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="40172134"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2025 23:03:06 -0800
+X-CSE-ConnectionGUID: cKw0qahtRoK4x2Xu3ETOOA==
+X-CSE-MsgGUID: CvKENtPiQ+u+XoL4x7D0bQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="102570702"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2025 23:03:03 -0800
+Message-ID: <16703283-6f1e-412d-a362-5331ed32d28a@intel.com>
+Date: Tue, 7 Jan 2025 15:03:00 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/10] i386/cpu: Hoist check of CPUID_EXT3_TOPOEXT
+ against threads_per_core
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
+ <20241219110125.1266461-8-xiaoyao.li@intel.com> <Z25gSWzeVNLqIAPc@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z25gSWzeVNLqIAPc@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-X-CPGSPASS: Y
-X-CPGSPASS: Y
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIKsWRmVeSWpSXmKPExsWy7bCmmW7hxZp0g+2zRC1eHtK0uL/1GqPF
- 8d4dLA7MHk+ubWby6NuyijGAKSrbJiM1MSW1SCE1Lzk/JTMv3VbJOzjeOd7UzMBQ19DSwlxJ
- IS8xN9VWycUnQNctMwdoh5JCWWJOKVAoILG4WEnfzqYov7QkVSEjv7jEVim1ICWnwLxArzgx
- t7g0L10vL7XEytDAwMgUqDAhO+NR51nGgjNsFZ8bJzE2MM5i7WLk5JAQMJH4tfsokM3FISSw
- g1Fiytv/jF2MHBy8AoISf3cIg9QICzhJbHqymhHEFhJQkuhauJUZIm4gsW76HjCbTUBPYsrv
- O2A1IgKqEq8Wb2IBsZkFjCWWnJnKDrGLV2JG+1MWCFtaYvvyrYwQtobEj2W9zBC2qMTN1W/Z
- Yez3x+ZD1YhItN47C1UjKPHg526wMyUEJCWm/pCACNdLtL4/xQ7yioTABEaJxmN/oOboS1zr
- 2Ai2l1fAV2LyyTlgv7MA3Xl01jcmiDkuEtvmyEKcLC+x/e0cZpAws4CmxPpd+hAVyhJHbkE9
- xSfRcfgv3FMNG39jZe+Y94QJwlaTeLRgCzTAZSQuzjnHPIFRaRYimGch2TsLYe8CRuZVjGKp
- BcW56anJRgWG8JhNzs/dxAhOa1rOOxivzP+nd4iRiYPxEKMEB7OSCG+WRmW6EG9KYmVValF+
- fFFpTmrxIUZToIcnMkuJJucDE2teSbyhiaWBiZmZobmRqYG5kjjvvda5KUIC6YklqdmpqQWp
- RTB9TBycUg1Mx/Sv5dkUusb+UPx+yXDLhZ8Mno7vWf4uYZw2a9OLtJiM4/uX5r8NTZrxfknp
- PNGDIbK6xc4bxa7XBucm3zo24+URlxV7thh6OKvYH1g88+5DocrDBd6PL3tcKfFf0Tp3EYut
- 5Is5/iuO1nTNYvC6U/s0Zt8sR74Hk7t2ZYs6iC69dS+TQat5YfX7xtrvqbsSQl/vfev1SSOU
- v+i7wdXF/uGJIrJlNcnt6o1XgzqixYo0e9W/qXok10t8Ug98GHFjzRcnPWEfJ78kD2+nLpHN
- B1kl1+keURNQKc2oPvFAn6NknfjNjJVXjm59f+7STrvQts7yvsytoat+zj2xwS7IavGrZY+e
- /5+7rTyJaZ+XEktxRqKhFnNRcSIAzrFCGPQDAAA=
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29
-References: <CGME20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=keosung.park@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,33 +88,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: keosung.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In ufs_write_attr_value(), the value parameter is handled in the CPU's
-endian format but provided in big-endian format by the caller. Thus, it
-is converted accordingly.
+On 12/27/2024 4:07 PM, Zhao Liu wrote:
+> On Thu, Dec 19, 2024 at 06:01:22AM -0500, Xiaoyao Li wrote:
+>> Date: Thu, 19 Dec 2024 06:01:22 -0500
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: [PATCH v2 07/10] i386/cpu: Hoist check of CPUID_EXT3_TOPOEXT
+>>   against threads_per_core
+>> X-Mailer: git-send-email 2.34.1
+>>
+>> Now it changes to use env->topo_info.threads_per_core and doesn't depend
+>> on qemu_init_vcpu() anymore. Drop the comment of the order dependency on
+>> qemu_init_vcpu() and hoist code to put it together with other feature
+>> checking.
+> 
+> The comment was dropped in patch 6. You could move such description to
+> there.
 
-Signed-off-by: Keoseong Park <keosung.park@samsung.com>
----
- hw/ufs/ufs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Obviously, I didn't take care of the patch split and reorder.
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 8d26d13791..428fe927ad 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -1164,7 +1164,7 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
-         value = ufs_read_attr_value(u, idn);
-         ret = UFS_QUERY_RESULT_SUCCESS;
-     } else {
--        value = req->req_upiu.qr.value;
-+        value = be32_to_cpu(req->req_upiu.qr.value);
-         ret = ufs_write_attr_value(u, idn, value);
-     }
-     req->rsp_upiu.qr.value = cpu_to_be32(value);
--- 
-2.25.1
+I tent to move the dropping of the comment from patch 6 to this one.
+
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   target/i386/cpu.c | 30 +++++++++++++++---------------
+>>   1 file changed, 15 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index d41768648ab9..fd59da5d445d 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -7880,6 +7880,21 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>>        */
+>>       cpu->mwait.ecx |= CPUID_MWAIT_EMX | CPUID_MWAIT_IBE;
+>>   
+>> +    /*
+>> +     * Most Intel and certain AMD CPUs support hyperthreading. Even though QEMU
+>> +     * fixes this issue by adjusting CPUID_0000_0001_EBX and CPUID_8000_0008_ECX
+>> +     * based on inputs (sockets,cores,threads), it is still better to give
+>> +     * users a warning.
+>> +     */
+>> +    if (IS_AMD_CPU(env) &&
+>> +        !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
+>> +        env->nr_threads > 1) {
+> 
+> Typo, env->topo_info.threads_per_core.
+
+Thanks for catching it.
+
+>> +            warn_report_once("This family of AMD CPU doesn't support "
+>> +                             "hyperthreading(%d). Please configure -smp "
+>> +                             "options properly or try enabling topoext "
+>> +                             "feature.", env->nr_threads);
+>> +    }
+>> +
+>>       /* For 64bit systems think about the number of physical bits to present.
+>>        * ideally this should be the same as the host; anything other than matching
+>>        * the host can cause incorrect guest behaviour.
 
 
