@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EAEE77199
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36D7E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 08:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV4ar-00013U-4d; Tue, 07 Jan 2025 03:05:41 -0500
+	id 1tV4oB-0007QW-R4; Tue, 07 Jan 2025 03:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4ab-0000Yi-Nz
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:05:27 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1tV4o8-0007Pv-Fj
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:19:24 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tV4aR-0003PK-R0
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:05:21 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21631789fcdso162841455ad.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:05:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1tV4o6-0005nW-Th
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 03:19:24 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21a7ed0155cso1816995ad.3
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 00:19:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736237114; x=1736841914; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uQPN0tQwnd4k5tLXDa4Y6zgvvZBkCwb0Lgy7Bg/M9fI=;
- b=SnYBzpfaTyjBjnN4GPU6PWlNDGe0Aco1TKthX3Hs4YiX7brSi6rM531pfgUEkYV8pm
- pv/FjF9dwJQ+AzhYTAZrBc6b7SHou3rVsE1Mj+tQwATDrssZBEW6FpbFE/J+Xx9J0Ysz
- MXS2kr0RllVJ7IM+kUFXz1l+yPJbL8wv8I9tOsR8SRUClwXGLFmodfDYjUErIHcmwGcO
- TCLzu79zR0g3nN5Ch2GX/QekaF4anS0NYeU1ZSjKWK9cicOJcvOpg+kjTRCcreuYKgwq
- pVCdUqKtDHcF9WQdJ2PMEhQqZLie5H1YUJxwqG8Z1M3bvCTX5AKYzweItcN6dIQqrehL
- zTwg==
+ d=gmail.com; s=20230601; t=1736237961; x=1736842761; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bsVaQSU+SKN6xlpHRBfPGuVJQwveGYniAv/EHWcQWGc=;
+ b=Bh/4pxUosaVUY2u7fzOGQsobAgifOc0agtgeLn9M0drLKaRFIZu9VZo5phhMBlz5N3
+ uHvTp7AO4YSUtr0qB+4JTI5AtFgbBWpptEmJwZz4SOuDAh6O+5nCTt+WG7ef/CvzWC6B
+ cWnzvs6wg87k/6sAnIp81YfG6As5dkqY/atk7SMW+aB8HySJ0i79+0jfciKeqkszVVh0
+ nTua7+wr5efa2VXP6bqpdnNphXau1w5n4RFvijYO30SfAWk/J2+iANHaetY4jkhsMe1i
+ 8KvcpuFVHW5t7TDkbhVNoTYKkew5aItGWaNcgi3ToJXiB+t9wqrJ4EXMsLlbUI7UhE/k
+ jh4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736237114; x=1736841914;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uQPN0tQwnd4k5tLXDa4Y6zgvvZBkCwb0Lgy7Bg/M9fI=;
- b=FqbomK8a1+oGLh0139N7IIU2ps00vxKczSp0K49kZ+TNzdvNTQ55r/Ki5n4uKT7VUB
- 7uq911qn42Z64H9K94U5oGrPtoAluHbRqdL9bHp9KV/N0doSPmAnZRNdHEyTgaubTQd5
- 26eXGX/Ufn5TF/FBIGzNAM+is2yw3i15cawX8G5w48YxcQw7GMhQXBmHtml4XJH1hGBO
- DO9f7I+1GdRPRkCPv38oL0dDkcO4VAeeT9ducjpBnAL2fggYhU8xY0GOAcmQz3In7E0v
- e7j6Y7t5WEwvHNgh6QLrEA4HZhvJQCAgYD+d6VV5j5gXD5vjhMkvnIB5w0PBqoKlf5QN
- h/1w==
-X-Gm-Message-State: AOJu0Yxm1PtPxWwlt0XnyLP7palOxzeUd8a9cJtytbasShjqEqS2J4rQ
- zWUfUbY3QOIDLJtBTmZjfDGjmXPCW9gXsrn+b0eEQ4hcI5gifw6UMIbK6UPWXbQKJa6NrdKcDwj
- g
-X-Gm-Gg: ASbGnctfPvySetk5YeZvJ9dE39KbCvR/vei44ReTbuzYufvt9jelmVOklChBtTl8SNv
- oKppwuPohhUcQXLDlpmMOlL1jf5EKq8tHH6E9RZdfCEAsfo+dfdlcUnuv2IItZZasKbDGEuHdIV
- 5LOF8SQkVLho1G3fYKoFexKEWOZECiprLjXuxbmCY0JNLx2JSWFIsO0s+27iQbj6IG6j41bquzu
- YsptS1axM4+kUQp72KG+g9phbkqhEf6OAcve7BSz99nEw+fCVa3401S1qURnRLGKEb9rYp6k95h
- 685gv4A1knMVKTi8hg==
-X-Google-Smtp-Source: AGHT+IFmdma5bxz327Z8tyleKL4YgVdLkebqVvFGzTZZrmvLOgNEJrStc09n/a+coZjZcuIoOu8ZBQ==
-X-Received: by 2002:a05:6300:6681:b0:1e1:a48f:1212 with SMTP id
- adf61e73a8af0-1e73746a7e2mr3708629637.4.1736237114295; 
- Tue, 07 Jan 2025 00:05:14 -0800 (PST)
-Received: from stoup.. (76-14-228-138.or.wavecable.com. [76.14.228.138])
+ d=1e100.net; s=20230601; t=1736237961; x=1736842761;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bsVaQSU+SKN6xlpHRBfPGuVJQwveGYniAv/EHWcQWGc=;
+ b=Bn3gvm+iJnGjkw4b/wM9HesklZrX0s2WwEM1gjnUCkimaumXYbIdSpDMEVDOwTNbdm
+ 4A9o0kX0sl97GojVDCW09Sak2nNGoWijnsagVdRO38GBwKr/D9dtSaO+yfGuz74cxUCa
+ yG8E1JbcvSK2KZbJC3fvdhONZgtfXjeZRzUtAXYXmlnts3zac5N/i973UiLNcQNaPyBq
+ ZNBsiJWhyUEZ4Pvf1wGerTGdWF2Q9v5DI/FREMDHOKxwJOhPs5y69FJaqcasYnpyq1ja
+ 9VTNy2OxtCOkkC+DmZvd9D8Otz7KrRDmOcnuzJWtbDxO0cxkflb7YnVGOXM9cG11tI4H
+ r5Nw==
+X-Gm-Message-State: AOJu0Yz76gqaV/anphtrsEv7sGQpo8Oems0b9XJcL2vG8JgXySJicFHH
+ M0sO+hkMUUzuxo8FynoCZF/kbWfLWt/TD1YSxDNFBz9l/DlkYbERfTIWwCRF
+X-Gm-Gg: ASbGncuqgUGfeglVxCEP6dRP5VdHVroeftUYeZh6ZecnaI7TEihqfEI2ObulqceG4Kw
+ lmEvFoOli96AgGO68o7CBgH7mBraE21AEK3x0uNc32IHNIG1wFMoO7uGXGlpuTLA1AixIRIB2Nn
+ OGT5KgOEU6pLbuMjHGMXt6nqrQKBlt09h6JVhr9KXKP2Rd2qxHcPf4w1IZOs+zbOO5C44CG4esx
+ 8qgrbUZFSwZQq3jpJpHaNVDjzRIRf2sblTQjEaTYH1yGX7xQQKYG0xLfe+bqWOSrfWW6RE=
+X-Google-Smtp-Source: AGHT+IHyz/2bLq6xxdE3XEgpT1xuHtGq4u/ofH3hBrvXj5GJmgwjxIxXhC5nJl6p/REawySu+DZjkg==
+X-Received: by 2002:a05:6a00:3cc1:b0:725:df1a:288 with SMTP id
+ d2e1a72fcca58-72abe18acb0mr84193154b3a.24.1736237960946; 
+ Tue, 07 Jan 2025 00:19:20 -0800 (PST)
+Received: from [192.168.0.22] ([175.119.5.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad84eb5dsm32577852b3a.86.2025.01.07.00.05.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 00:05:13 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 56/81] tcg/optimize: Fold andc with immediate to and
-Date: Tue,  7 Jan 2025 00:00:47 -0800
-Message-ID: <20250107080112.1175095-57-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250107080112.1175095-1-richard.henderson@linaro.org>
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ d2e1a72fcca58-72aad8fd610sm32669322b3a.136.2025.01.07.00.19.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 00:19:20 -0800 (PST)
+Message-ID: <97d74ec1-4a13-4726-9584-09dada83c1dc@gmail.com>
+Date: Tue, 7 Jan 2025 17:19:51 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ufs: Adjust value to match CPU's endian format
+To: keosung.park@samsung.com, Jeuk Kim <jeuk20.kim@samsung.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <CGME20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
+ <20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
+Content-Language: ko
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+In-Reply-To: <20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,42 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 79af2c312a..1dd7b0e0bc 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1328,6 +1328,25 @@ static bool fold_andc(OptContext *ctx, TCGOp *op)
-     t2 = arg_info(op->args[2]);
-     z_mask = t1->z_mask;
- 
-+    if (ti_is_const(t2)) {
-+        /* Fold andc r,x,i to and r,x,~i. */
-+        switch (ctx->type) {
-+        case TCG_TYPE_I32:
-+        case TCG_TYPE_I64:
-+            op->opc = INDEX_op_and;
-+            break;
-+        case TCG_TYPE_V64:
-+        case TCG_TYPE_V128:
-+        case TCG_TYPE_V256:
-+            op->opc = INDEX_op_and_vec;
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+        op->args[2] = arg_new_constant(ctx, ~ti_const_val(t2));
-+        return fold_and(ctx, op);
-+    }
-+
-     /*
-      * Known-zeros does not imply known-ones.  Therefore unless
-      * arg2 is constant, we can't infer anything from it.
--- 
-2.43.0
+On 1/7/2025 4:02 PM, Keoseong Park wrote:
+> In ufs_write_attr_value(), the value parameter is handled in the CPU's
+> endian format but provided in big-endian format by the caller. Thus, it
+> is converted accordingly.
+>
+> Signed-off-by: Keoseong Park <keosung.park@samsung.com>
+> ---
+>   hw/ufs/ufs.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+> index 8d26d13791..428fe927ad 100644
+> --- a/hw/ufs/ufs.c
+> +++ b/hw/ufs/ufs.c
+> @@ -1164,7 +1164,7 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
+>           value = ufs_read_attr_value(u, idn);
+>           ret = UFS_QUERY_RESULT_SUCCESS;
+>       } else {
+> -        value = req->req_upiu.qr.value;
+> +        value = be32_to_cpu(req->req_upiu.qr.value);
+>           ret = ufs_write_attr_value(u, idn, value);
+>       }
+>       req->rsp_upiu.qr.value = cpu_to_be32(value);
+
+
+Thank you for fixing this bug!
+I reviewed the changes and noticed that some changes to |ufs-test| are 
+also needed to fully fix the problem.
+
+Could you please include the following changes and send a v2 patch? 
+Thank you.
+
+
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 60199abbee..1f860b41c0 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -145,7 +145,7 @@ static void ufs_send_query(QUfs *ufs, uint8_t slot, 
+uint8_t query_function,
+      req_upiu.qr.idn = idn;
+      req_upiu.qr.index = index;
+      req_upiu.qr.selector = selector;
+-    req_upiu.qr.value = attr_value;
++    req_upiu.qr.value = cpu_to_be32(attr_value);
+      req_upiu.qr.length = UFS_QUERY_DESC_MAX_SIZE;
+      qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
+                     sizeof(req_upiu));
 
 
