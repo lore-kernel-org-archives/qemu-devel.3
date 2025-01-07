@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836EFE77199
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 22:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD7CE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 23:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVIK7-0000fH-Kc; Tue, 07 Jan 2025 17:45:19 -0500
+	id 1tVIsi-0005pZ-Sk; Tue, 07 Jan 2025 18:21:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVIJu-0000a0-EX
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 17:45:10 -0500
-Received: from iguana.tulip.relay.mailchannels.net ([23.83.218.253])
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVIsg-0005ou-Hv
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 18:21:02 -0500
+Received: from dormouse.elm.relay.mailchannels.net ([23.83.212.50])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVIJr-0005VG-FI
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 17:45:06 -0500
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVIse-0004Jp-IQ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 18:21:02 -0500
 X-Sender-Id: dreamhost|x-authsender|rob@landley.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 2E38090164B;
- Tue,  7 Jan 2025 22:45:00 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTP id 340623237F6;
+ Tue,  7 Jan 2025 23:20:58 +0000 (UTC)
 Received: from pdx1-sub0-mail-a234.dreamhost.com
- (trex-3.trex.outbound.svc.cluster.local [100.110.108.105])
+ (trex-2.trex.outbound.svc.cluster.local [100.109.23.135])
  (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id C6A08902825;
- Tue,  7 Jan 2025 22:44:59 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1736289899; a=rsa-sha256;
+ by relay.mailchannels.net (Postfix) with ESMTPA id A31233223F9;
+ Tue,  7 Jan 2025 23:20:57 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1736292057; a=rsa-sha256;
  cv=none;
- b=I0v8xYKKyrUnAHvRtQBSfsXAVpiGqaM45tGz3goahmM2/9pC7E9qW4uDbaZ1Guur3n9bmh
- 8aeSb5y2tdlHy7WknrteVANdsI5Fk//16/v2GYjHZHaF/VifzwxNVhmmTGcDTTgdt27WHR
- 8QoY1A7CZMUbDVRGR8aB7RKQL1eTPIuADnS9s/mF1dYHAwBAQWharu3B1DfYK/qfy5JI2m
- Tt2ZmYsPZGJWNafQaSvEved9p3k29uK5rWEeuZUHAAoTUEE0tUubJCwfr44dJkM9S7zs45
- Zms9uTZdTAnOyzHSnCZeOlXmlAvKt2TKVD135XwRdk2GypMhu1wlfKrmZunRNA==
+ b=ERBS0oiVBk2Xb6JwdkcXLRqG1qX7KuXhDocNEsYsb7berQkUcbPhQEH/6D/IXXrC2iiojg
+ n13YhgIRcXyjqRNJgF+vRLSOGlB2GLDh9DHwCzZgJAEDZT9Mu+iT0q+2ceo24hdxwL/lWa
+ IoyiZ57aUt686Ss1yzBArk/v8lkWv2+XjAraOEZ7+lZX3EHiUdpvpEDvctPUpMTQwXFZ0C
+ BWnzfZjAyilMfRzEKyrNEE8KP903zVTMzOLu0efBdgwwutfxgBQWICruWcqQUapamekaJx
+ S1BFYVFnQbZG/lIkiX1y8TnZJDzY0I0rZT0e7wAKQsguuA0M0HD2AAOeC3scnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1736289899;
+ d=mailchannels.net; s=arc-2022; t=1736292057;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=19rQuYKWdj3WspfAlwQyaeO9hXQfsHX9zoPqxvDrcFk=;
- b=2RWX1lRGvG8iOJPpM6nlC+wbFqyrRTDtfIOWqMfiWhAMxgX8wzAkGqSqLbbpqUaaYXuq7u
- 8e+rKGaF8vpORCBijdFK1Ata8xXoi/IuvHpuW81bl1OS1eL5lmo4VsvcHYc/R09j0X5W4Y
- wPgETxJNaxsZbcJrW2kJgxIVCDU68iwkL+Yh4ln/uVhTWf4ce0mQfazbFs71kfSrOA2eVn
- pD7gAILJoV3jRT5bWXio4bvtHcTy+KSxwX4Z5lz5GzPgl9VRzHAa4PWcpkxn2CSv2inu+k
- MCoQ5IWnoIzmtHOkM0yGMZx1E8A+UuVKYvg6zw3Y0JpFRYb80oqVHF9nMsUBag==
-ARC-Authentication-Results: i=1; rspamd-7df4dcbd86-wm5wb;
+ bh=uTPIbz7LB+ULVOPIft/sMzfCsyOKg2ovifBBeDjlNiw=;
+ b=avWeJe1ZAgNUlXujgh4KlD7R2WZ+5aACVdB7FOn5J9K4drrXClnT/m0Feo7B03T3COlTsN
+ OccRu9HDc7N2tx/JHWy2g5ZZUB5Nw+rsWolwWxrA9Okesoe9rperpKIKuJ+GhanN2PnREV
+ SHibX+dxZivQ8LYuDJ82wOODTCJdXxSrihTMkzJhZbHnUjQuAzV1zaIiJHH2S/YfN2VKCD
+ gNK5+z0SKtPRldMuWJclrJp0ygIv8w9gMOrkygXSep/7LLktfEHLPM0yABD7E35/deovAG
+ 8jPU64/bHsomN4RPr5zIkmkRVrXI/f7gl0b41DwYu1gpV7J+BuT04r1XpOPm+A==
+ARC-Authentication-Results: i=1; rspamd-7df4dcbd86-4qk5j;
  auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
 X-Sender-Id: dreamhost|x-authsender|rob@landley.net
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
 X-MailChannels-Auth-Id: dreamhost
-X-Abiding-Tart: 4a4d30337d091ca1_1736289900076_3419067299
-X-MC-Loop-Signature: 1736289900076:880936782
-X-MC-Ingress-Time: 1736289900075
+X-Harbor-Cold: 2435848978ac12b9_1736292057917_4051586479
+X-MC-Loop-Signature: 1736292057917:226697232
+X-MC-Ingress-Time: 1736292057917
 Received: from pdx1-sub0-mail-a234.dreamhost.com (pop.dreamhost.com
  [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.110.108.105 (trex/7.0.2); Tue, 07 Jan 2025 22:45:00 +0000
+ by 100.109.23.135 (trex/7.0.2); Tue, 07 Jan 2025 23:20:57 +0000
 Received: from [172.16.32.88] (unknown [198.232.126.202])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
  (Authenticated sender: rob@landley.net)
- by pdx1-sub0-mail-a234.dreamhost.com (Postfix) with ESMTPSA id 4YSR2M1RTkz63; 
- Tue,  7 Jan 2025 14:44:59 -0800 (PST)
+ by pdx1-sub0-mail-a234.dreamhost.com (Postfix) with ESMTPSA id 4YSRqr6rBBz8S; 
+ Tue,  7 Jan 2025 15:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
- s=dreamhost; t=1736289899;
- bh=NXORyqlvwbFeXwzA2tF3x3Nq6v4lGRTmOfEkvZMREus=;
+ s=dreamhost; t=1736292057;
+ bh=wWKlZUyNNVVj1YsXWkNsJDVvt0wHxvoYrtx+2KFO3gk=;
  h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
- b=SJHfx3V8WFBTGluNacGlXyvcAPJlh+rhNWI6bWydWV0lBJyu2xETg1pC+9tRa7iHQ
- 2hRzF8TEbO3QEWCKaQu1qqxmwR9kByfxSLGw0WEVravGHFYgytbQqQiU6lg13p584z
- 8pK6flpuRG3BSYE1Q4aeFNowA+TUCPwkB7fdz53xzYdX1kOO/BCf2CZZYw1VZxWHDW
- /dTcrU7etf7NMfB2OsaTVMWMdAey14ynSmAoI57+DRtd98WC1vrIs3LZ1i2gDLhRaJ
- 5lxPw3UE4nPjesrkGCbUe0fdvT2RE5RAale3j/7KTYeVOdjwtNyF76QYT/c3+5BtNq
- gJxHhmsYbnQxQ==
-Message-ID: <0d2df37a-a167-445f-aacf-714a29587511@landley.net>
-Date: Tue, 7 Jan 2025 16:44:58 -0600
+ b=YR+GRBwk00tVJR+vSRWtil5ZHEyS92qt2LXmA8h5CoIA81O8dhLBi0OFXqI/k11/f
+ N9f3ZqRIa/QNMD4OhzxVxoIIXcZFMoJuHtsozN984BO0UzWTz36yw+3i/n5S1BI4Ov
+ hRxG8lqeHStDTmF9koToXZCcg2hQlaSs34lHsg/RsgqAA3eSLC4rxL3tjpd1kAvMR/
+ lUXv1+mWteYFXvL+0K4b4SIN4ppo8z9PToxWIPn7/vn+s0Ljy5puVD/Aasq9DCKaqc
+ wFcRAvIM5suj/M4ZrTS5sy9FSilqS3MdgZpqFnC9lwRyzKC9GWS9GiEQudrKkJ89lj
+ jp63iW5vmFgsw==
+Message-ID: <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
+Date: Tue, 7 Jan 2025 17:20:56 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: or1k -M virt -hda and net.
-To: Stafford Horne <shorne@gmail.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stafford Horne <shorne@gmail.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  "Jason A. Donenfeld" <Jason@zx2c4.com>,
  QEMU Developers <qemu-devel@nongnu.org>,
@@ -91,19 +92,20 @@ References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
  <Z0LMqEqcdjkAxnN-@antec> <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net>
  <Z2lgL31ZeSkO59MZ@antec> <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
  <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
+ <87y0zmbita.fsf@draig.linaro.org>
 Content-Language: en-US
 From: Rob Landley <rob@landley.net>
-In-Reply-To: <Z31k3zNN3pOdGWWK@antec>
+In-Reply-To: <87y0zmbita.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.218.253; envelope-from=rob@landley.net;
- helo=iguana.tulip.relay.mailchannels.net
+Received-SPF: pass client-ip=23.83.212.50; envelope-from=rob@landley.net;
+ helo=dormouse.elm.relay.mailchannels.net
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
@@ -122,295 +124,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/25 11:31, Stafford Horne wrote:
-> On Tue, Jan 07, 2025 at 05:56:52AM -0600, Rob Landley wrote:
->> On 12/31/24 19:19, Rob Landley wrote:
->>> On 12/23/24 07:05, Stafford Horne wrote:
->>>>> The kernel config looks like it should have virt block device
->>>>> support, but
->> ...
->>>>     -device virtio-blk-device,drive=d0 -drive
->>>> file=${DISK},id=d0,if=none,format=qcow2
->>>
->>> -drive file=file.img,format=raw,id=hd0 -device virtio-blk-device,drive=hd0
->>>
->>> My -device looks similar but -drive is file=file.img,format=raw,id=hd0
->>>
->>> No idea what if= does? I haven't seemed to need it...
->> ...
->>> Thanks, I think this target is good for release. Now to figure out why
->>> sh2eb network isn't working after the restore (it used to!). Nor is
->>> microblaze's network...
+On 1/7/25 12:05, Alex Bennée wrote:
+> Stafford Horne <shorne@gmail.com> writes:
+>> I have not used -hda before, do you have it working with other targets?
 >>
->> My test harness appends -hda filename.img to the qemu command line, which
->> works for all the other targets, and is awkward to turn into
->> -device lots-of-stuff,file-filename.img,more-stuff inside a shell script.
->> (At best it's a special case parsing and rewriting qemu command line
->> plumbing to turn "generic" into an architecture-specific workaround.)
-> 
-> Hi Rob,
-> 
-> Sorry, from the laat email I was under the impression that you had everything
-> working as expected.
-
-I have it all working by hand, but not in the automated test harness. 
-See the comment at the start of:
-
-https://github.com/landley/toybox/blob/master/mkroot/testroot.sh
-
->> In THEORY I should be able to do something like:
+>> According to the qemu docs in qemu-options.hx. I see:
 >>
->> root/or1k/run-qemu.sh -netdev user,id=net0 -device
->> virtio-net-device,netdev=net0 -device virtio-blk-device,drive=sd0 -hda
->> README
+>>      Use file as hard disk 0, 1, 2 or 3 image on the default bus of the
+>>      emulated machine (this is for example the IDE bus on most x86 machines,
+>>      but it can also be SCSI, virtio or something else on other target
+>>      architectures). See also the :ref:`disk images` chapter in the System
+>>      Emulation Users Guide.
 >>
->> And just have extra arch setup that then accepts the generic appended to it.
->> But in practice that says:
+>> I think, since we don't have a "default" bus in openrisc this doesn't work so we
+>> need to specify the -drive explictly.
 >>
->> qemu-system-or1k: -device virtio-blk-device,drive=sd0: Device needs media,
->> but drive is empty
->>
->> Putting the -hda before the -device doesn't help. (And even if it did, the
->> result would barf if run _without_ -hda, which should also work.)
->>
->> Having -hda by itself is accepted by qemu, but I don't know what bus/driver
->> gets added as a result (or1k kernel does not find it).
+>> I checked the x86 machine code and confirm it seems to work like this.  There is
+>> code in the system setup to look for hd* drives and wire them into IDE.  There
+>> is no such code in openrisc.
 > 
-> I am having a hard time understanding the use case.
-
-I have a script (above) that creates a test.sqf squashfs image and 
-attaches it to the emulator's first hard drive. My init script tries to
-mount /dev/?da /mnt and then if /mnt/init exists it runs that instead of 
-launching an interactive shell prompt.
-
-The wildcard works for /dev/hda, /dev/sda, and /dev/vda, so no matter 
-which type of block device this architecture is using, the codepath to 
-invoke it and to use it is generic as long as qemu can populate the bus 
-and the associated kernel driver can find the device. This way I can 
-test many different architectures with the same code.
-
-Here, maybe this will help:
-
-$ for i in root/*/run-qemu.sh
- > do echo -n "$i:"
- > KARGS='HANDOFF="find /dev -name ?da"' setsid -d timeout -i 10 
-/bin/bash $i -hda README 2>/dev/null | grep ^/dev/
- > done
-root/aarch64/run-qemu.sh:/dev/vda
-root/armv4l/run-qemu.sh:/dev/sda
-root/armv5l/run-qemu.sh:/dev/sda
-root/armv7l/run-qemu.sh:/dev/vda
-root/i486/run-qemu.sh:/dev/sda
-root/i686/run-qemu.sh:/dev/sda
-root/m68k/run-qemu.sh:/dev/sda
-root/microblaze/run-qemu.sh:root/mips64/run-qemu.sh:/dev/sda
-root/mipsel/run-qemu.sh:/dev/sda
-root/mips/run-qemu.sh:/dev/sda
-root/or1k/run-qemu.sh:root/powerpc64le/run-qemu.sh:/dev/sda
-root/powerpc64/run-qemu.sh:/dev/sda
-root/powerpc/run-qemu.sh:/dev/sda
-root/riscv32/run-qemu.sh:/dev/vda
-root/riscv64/run-qemu.sh:/dev/vda
-root/s390x/run-qemu.sh:/dev/vda
-root/sh2eb/run-qemu.sh:root/sh4eb/run-qemu.sh:/dev/sda
-root/sh4/run-qemu.sh:/dev/sda
-root/x86_64/run-qemu.sh:/dev/sda
-
-The three hiccups above are sh2eb (which is building for a physical 
-board so can't run that kernel under qemu), microblaze (which I 
-mentioned hasn't got a working block device at all), and or1k. All the 
-other architectures accept the same:
-
-   run-qemu -hda filename
-
-And the hardware details aren't the caller's problem. The loop calling 
-each board invocation script knows nothing about the board, and doesn't 
-have to. This means many different architectures can be regression 
-tested in a generic fashion using a human-friendly UI option.
-
-(The "setsid -d" is needed because otherwise if you redirect or pipe 
-stdout qemu-system hangs before launching the kernel. Longstanding bug 
-of many years, my notes say the hang is because qemu casts SIGTTOU on 
-itself and winds up as a frog, 
-https://landley.net/notes-2017.html#16-06-2017 and I thought I'd poked 
-qemu-devel about it at the time...)
-
-> As you know I use the following to wire in the buildroot image which I turned
-> into a qcow2 disk using my tool:
+> Yeah don't use -hdX as they are legacy options with a lot of default
+> assumptions. As the docs say: https://qemu.readthedocs.io/en/master/system/invocation.html#hxtool-1
 > 
->    https://github.com/stffrdhrn/or1k-utils/blob/master/scripts/qemu-or1k-mkimg
-> 
->    -device virtio-blk-device,drive=d0 -drive file=${DISK},id=d0,format=qcow2
-> 
-> But I think you want to use:
-> 
->    -device virtio-blk-device,drive=sd0 -hda XYZ
+>    The QEMU block device handling options have a long history and have
+>    gone through several iterations as the feature set and complexity of
+>    the block layer have grown. Many online guides to QEMU often reference
+>    older and deprecated options, which can lead to confusion.
 
-Yes. I want to just use -hda XYZ which for most targets "just works" 
-already because the board knows where to put -hda. Unfortunately, when I 
-pass -hda to qemu-system-or1k it accepts it but I can't find the 
-resulting block device. (I don't know what driver I'd need to install to 
-talk to wherever -hda went on or1k. I've tried tracing the code but it's 
-callbacks from callbacks, like reading a choose your own adventure novel.)
+I want "a block device from this file" in a generic way that works the 
+same across multiple architectures regardless of the board being 
+emulated, where I only have to specify the file not explicitly 
+micromanage bus plumbing details, and which is easy for a human to type 
+from when explained over a voice call.
 
-Your instructions showed me how to use virtio-block-device which in 
-theory should create a /dev/vda and thus work fine with the existing 
-code, so I tried to supplement the existing or1k behavior to tell it 
-that -hda should go to virtio. I'd be happy to change my kernel config 
-to add whatever driver -hda is currently attaching the block device to 
-instead, but either way I had to try to figure out how the data 
-structures were initialized to, and softmmu/vl.c has:
+What's the alternative to -hda you suggest for that?
 
-             case QEMU_OPTION_hda:
-             case QEMU_OPTION_hdb:
-             case QEMU_OPTION_hdc:
-             case QEMU_OPTION_hdd:
-                 drive_add(IF_DEFAULT, popt->index - QEMU_OPTION_hda, 
-optarg, HD_OPTS);
+Can I do "./run-qemu.sh -drive file=blah.img" without the rest? Perhaps 
+specify all the details in the script and then optionally add an extra 
+argument at the end? I couldn't get that to work:
 
-Which is in blockdev.c doing:
+$ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
+virtio-net-device,netdev=net0 -drive format=raw,id=hd0 -device 
+virtio-blk-device,drive=hd0 -drive file=README
+qemu-system-or1k: -drive format=raw,id=hd0: A block device must be 
+specified for "file"
 
-QemuOpts *drive_add(BlockInterfaceType type, int index, const char 
-*file, const char *optstr)
-{
-     QemuOpts *opts = qemu_opts_parse_noisily(qemu_find_opts("drive"), 
-optstr, false);
-...
-     if (type != IF_DEFAULT) {
-         qemu_opt_set(opts, "if", if_name[type], &error_abort);
+Also, if you say -device and -drive but do NOT specify a file, qemu 
+refuses to start. So I can't set the defaults but only optionally use 
+them, the way -hda has defaults built into the image that don't cause a 
+problem if I DON'T add a -hda argument to the command line.
 
-And figuring out where THAT's initialized (or interrogating it at 
-runtime) got me as far as:
+>    Older options like -hda are essentially macros which expand into -drive
+>    options for various drive interfaces.
 
-   grep -r '"device"' qapi/block-core.json
+Where the knowledge of "what this board needs in order to do that" is 
+built into qemu rather than provided by the caller, yes.
 
-And I think I'd need to be able to use the "monitor" mode which isn't 
-really compatible with my normal "serial console on stdin/stdout" use 
-cases so I've never quite picked up the knack...
+> The original forms bake in a lot
+>    of assumptions from the days when QEMU was emulating a legacy PC, they
+>    are not recommended for modern configurations.
 
-At that point I asked on the list, before sticking 8 zillion printf()s 
-into qemu to try to figure out what it's doing.
+I'm building a kernel. It finds /dev/?da so I can mount it. That is my 
+desired outcome.
 
-(The OTHER hiccup is I'd like to be able to NOT use -hda and not have 
-qemu abort because -device isn't consumed. I don't mind a warning, it's 
-not like qemu-system isn't ridiculously chatty already, but refusing to 
-start is a blocker. The guts of the scripts currently look like:
+I am attempting to get generic behavior out of multiple architectures, 
+among other reasons so I can cross-test and package up "it fails on X, 
+here's a build and test" to point package maintainers at.
 
-$ cat root/mips/run-qemu.sh
-DIR="$(dirname $0)"; qemu-system-mips -M malta -m 256 "$@" -nographic 
--no-reboot -kernel "$DIR"/linux-kernel -initrd "$DIR"/initramfs.cpio.gz 
--append "HOST=mips console=ttyS0 $KARGS"
-echo -e '\e[?7h'
+"It natively builds under the emulator" is the easiest way to make that 
+work, which is why https://landley.net/bin/toolchains/latest/ has a 
+native.sqf for each cross.tar.xz.
 
-So adding a couple -device potato=aardvark,micromanagement=extreme isn't 
-a big change, but trying to PARSE the command line arguments and rewrite 
-them is brittle and icky. (My old linux from scratch build used -hda for 
-a build control image and -hdb for writeable scratch space. There was 
-even the occasional -hdc...)
+wget system-image-arch.txz
+wget toolchain.sqf
+wget test.img
 
-The $DIR shenanigans are so "subdir/run-qemu.sh -hda file" can find 
-"file" out of the current directory but find the initramfs and kernel 
-image out of the subdir.
+./run-emulator.sh -hda test.img -hdb toolchain.sqf
 
-The echo -e is because more than one qemu bios bootup spew (which you 
-CANNOT SUPPRESS, I've tried) disables wordwrap in the terminal and 
-leaves it like that on exit, and then bash's command line 
-editing/history goes nuts until you type "reset". man 4 console_codes 
-search for DECAWM.
+If I have to explain "-drive virtio-potato-walrus,inkpot=striated 
+-device collect=striated,burbank-potato,ireland" at somebody whose 
+domain expertise is xfce or something, the barrier to getting them to 
+reproduce the issue I'm seeing is noticeably higher. If I have to MAKE a 
+bespoke wrapper shell script for them with every bug report, the 
+likelihood that it works differently for them than when I tried it is 
+noticeably nonzero, and the likelihood of the issue going on my todo 
+heap and never getting pursued upstream is also noticeably higher. Which 
+is why I try to make generic tools...
 
-> I have not used -hda before, do you have it working with other targets?
+(Making a _test_ script to demonstrate the issue is normal. If it's 
+their project, usually they can tell if I typoed it and fix it up 
+themselves because they know what I MEANT. But if I typo the setup for 
+the virtual environment, or are missing a prerequisite package install, 
+or they hit qemu version skew, or I said /bin/sh and theirs points to 
+dash... Brick wall. It either works or it doesn't.)
 
-Almost all of them, yes.
-
-In a previous life, I used this same trick to do automated native builds 
-of Linux From Scratch 6.x under the emulator. I even had the emulated 
-build configured to call out through the virtual network to distcc 
-running on loopback on the host (which let me do an SMP build at about 
-make -j3 from a single threaded host).
-
-https://speakerdeck.com/landley/developing-for-non-x86-targets-using-qemu
-
-Back when I maintained busybox I taught it to build Linux From Scratch, 
-which allowed distros like Alpine Linux to rebase on it, and that was my 
-project doing that:
-
-https://landley.net/aboriginal/about.html
-https://landley.net/aboriginal/control-images/
-https://github.com/landley/control-images/tree/master/images/lfs-bootstrap
-https://landley.net/aboriginal/downloads/old/binaries/1.3.0/extras/
-
-This mkroot stuff is my successor project 
-(https://landley.net/aboriginal/news.html), which I hope to get natively 
-building Linux From Scratch under qemu using a toybox host someday, as 
-part of my ongoing plan to turn android into a native self-hosting OS:
-
-https://landley.net/toybox/about.html
-http://lists.landley.net/pipermail/toybox-landley.net/2020-July/011898.html
-
-Bit older and slower than I used to be. That much caffeine just gives me 
-a migraine these days.
-
-> According to the qemu docs in qemu-options.hx. I see:
-> 
->      Use file as hard disk 0, 1, 2 or 3 image on the default bus of the
->      emulated machine (this is for example the IDE bus on most x86 machines,
->      but it can also be SCSI, virtio or something else on other target
->      architectures). See also the :ref:`disk images` chapter in the System
->      Emulation Users Guide.
-> 
-> I think, since we don't have a "default" bus in openrisc this doesn't work so we
-> need to specify the -drive explictly.
-
-Exactly. Patching qemu to have virto be the default bus would also be 
-great, you'll notice half the above targets already have -hda slot into 
-/dev/vda. There used to be several actual /dev/hda in there too but Greg 
-KH hates IDE the same way he hates my Pixel 3's USB tethering driver, so 
-now those pretend to be scsi.
-
-> I checked the x86 machine code and confirm it seems to work like this.  There is
-> code in the system setup to look for hd* drives and wire them into IDE.  There
-> is no such code in openrisc.
-
-Which is why I was trying to redirect it. I dunno how to add the 
-relevant code to the system setup, and it wouldn't work with the 
-existing release anyway..
-
-If "or1k can't work with -hda" I can document it as broken this release, 
-but ALMOST all my targets are passing the basic smoketest! I'm so close!
-
-$ mkroot/testroot.sh
-.....................
-PASS=aarch64 armv4l armv5l armv7l i486 i686 m68k mips64 mipsel mips 
-powerpc64le powerpc64 powerpc riscv32 riscv64 s390x sh4 x86_64
-NOPASS=microblaze or1k sh4eb
-No kernel: armv7m sh2eb
-
-Microblaze has no /dev/?da (as in there's no device I could attach it to 
-even with the long option, I'd have to use NBD), sh4eb has -hda is 
-working but it's having some endianness hiccup with the network card 
-(works in sh4 but not sh4eb, I'm trying to track it down, I thought this 
-worked at one point), and the two "No kernel" ones legitimately have no 
-qemu kernel config because sh2eb is producing a kernel for a physical 
-board qemu doesn't emulate (j-core turtle, I should signal that somehow 
-so it doesn't show up as an error, adding a qemu-system-jcore target 
-would be great but I just did 
-https://landley.net/bin/mkroot/latest/linux-patches/0002-sh4-fdpic.patch 
-so I can test its nommu fdpic userspace under sh4eb instead. Not perfect 
-but for basic smoketests...)
-
-And of course armv7m is a whole SAGA... 
-https://landley.net/notes-2023.html#23-02-2023 and 
-https://www.spinics.net/lists/linux-sh/msg64491.html and... ahem. 
-Tangent. Haven't got that one working yet. In theory the toolchain 
-FINALLY has fdpic support, musl I'm not sure about (the toolchain I'm 
-building is static pie), and I couldn't find a good kernel config that 
-lined up with a qemu -M last I checked. (I've looked around for 
-examples, but there's a bit of a gap between buildroot's 
-configs/stm32f429_disco_xip_defconfig and configs/qemu_arm_ebbr_defconfig).
-
-> -Stafford
-
-Thanks,
+(And when I have to set up the long version for a nightly cron job, and 
+then when the test fails 6 months later and I look at it and go "huh? 
+salad?" that's a bad 3am digression as well. And which is more likely to 
+break from version skew during qemu version upgrades: two lines of 
+micromanaging --longopts or -hda that gets adjusted by the maintainers?)
 
 Rob
+
+P.S. For some reason -hda grew an "I'm going to make the first block 
+read-only just like loopback devices do because you can't be trusted" 
+nag a few years back, but it's mostly yet more boot spam. I can tell the 
+kernel to be quiet during boot, but never figured out the equivalent for 
+qemu-system...
 
