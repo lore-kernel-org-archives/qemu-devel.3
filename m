@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF28E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 14:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568BFE77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 14:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVABK-0000WF-ET; Tue, 07 Jan 2025 09:03:42 -0500
+	id 1tVAJt-0004jK-D8; Tue, 07 Jan 2025 09:12:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=095394c9e=wilfred.mallawa@wdc.com>)
- id 1tV3cp-0008Bs-TR; Tue, 07 Jan 2025 02:03:40 -0500
-Received: from esa3.hgst.iphmx.com ([216.71.153.141])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAJr-0004j9-Qo
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:12:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=095394c9e=wilfred.mallawa@wdc.com>)
- id 1tV3cR-0004zw-Mi; Tue, 07 Jan 2025 02:03:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1736233414; x=1767769414;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=j/q79xHdmnI7HhNKdxz8x34ZiOnrEIZxDdCCKCaV8S8=;
- b=LIYgPS6F55D+MIbiNDURclURrl+V0lUs3vRTE42W1JbUauewfo23T/y7
- hIUTBPIQxhpzTbO9inujc0LPIscLHvvxoRwFqMf+a/Ewp9StKoqYW7ZEm
- YKHItgHUZc0LJyod43FSsZ2HWGPQk3dx96FMkWV3erRnQRRCtZ04ajflH
- ToBKdksDmOnfuq0Y4AkqibtEBGza6e/MIWFm4q528MfAZmxXi4phblrzm
- bV7l307HbPZ10VDRAw9HhbvpBNRn5eiT9d1OSftC2lg0vBE/rpWCOvHP8
- meMPlTkQkABQkLHoSvpmFvkhLAqCXWONspY1y1RXfETi80V4U1vJxmn9X Q==;
-X-CSE-ConnectionGUID: QcRBScmSRoOQE0AxdCsiHw==
-X-CSE-MsgGUID: Via1vERIRfCyh7tJccuQag==
-X-IronPort-AV: E=Sophos;i="6.12,294,1728921600"; d="scan'208";a="35368529"
-Received: from h199-255-45-15.hgst.com (HELO uls-op-cesaep02.wdc.com)
- ([199.255.45.15])
- by ob1.hgst.iphmx.com with ESMTP; 07 Jan 2025 15:03:14 +0800
-IronPort-SDR: 677cc2e3_exhgayasJ6nIAHIASOx6EMl3hBNULGgWIpewD+SgWZT9REJ
- FRkTAuqYpg6LS/XtbV9mC1ZVHCSq3g6FxkZFHtA==
-Received: from uls-op-cesaip01.wdc.com ([10.248.3.36])
- by uls-op-cesaep02.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 06 Jan 2025 22:00:04 -0800
-WDCIronportException: Internal
-Received: from unknown (HELO fedora.wdc.com) ([10.225.165.88])
- by uls-op-cesaip01.wdc.com with ESMTP; 06 Jan 2025 23:03:08 -0800
-To: qemu-devel@nongnu.org,
-	qemu-block@nongnu.org
-Cc: alistair.francis@wdc.com, kbusch@kernel.org, its@irrelevant.dk,
- foss@defmacro.it, stefanha@redhat.com, fam@euphon.net, philmd@linaro.org,
- kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: [RFC 2/4] spdm: add spdm storage transport virtual header
-Date: Tue,  7 Jan 2025 15:29:06 +1000
-Message-ID: <20250107052906.249973-5-wilfred.mallawa@wdc.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250107052906.249973-2-wilfred.mallawa@wdc.com>
-References: <20250107052906.249973-2-wilfred.mallawa@wdc.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVAJq-0001uk-55
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 09:12:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736259147;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YT6oXZ7QyPsHVz8vhsMDbMijQzr8eCs6M8NB/JB/gP8=;
+ b=AJR6/3LWyo8BvXRrJDPwsjr5X45P4b3gbzqb3UcYM+l4/FiKfWDayhyop/qbl6xOWV3ktR
+ Rygxv0RtQUwJyvqC8Xg7in7Q54M/FTGhaTf1AwwDO89pX9O8FO9ve4nAafNcTm5vlBxwGd
+ jkY0kROP87EWIoJNeqAA8O0CjTHd0tM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-KjCCjSvJN4mhB9P_nSsAXw-1; Tue,
+ 07 Jan 2025 09:12:24 -0500
+X-MC-Unique: KjCCjSvJN4mhB9P_nSsAXw-1
+X-Mimecast-MFC-AGG-ID: KjCCjSvJN4mhB9P_nSsAXw
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F01719776A2; Tue,  7 Jan 2025 14:12:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4363A3000706; Tue,  7 Jan 2025 14:12:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EA25321E6924; Tue, 07 Jan 2025 15:12:09 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
+Subject: Re: [PATCH v11 1/2] tpm: convert tpmdev options processing to new
+ visitor format
+In-Reply-To: <20241212170528.30364-2-James.Bottomley@HansenPartnership.com>
+ (James Bottomley's message of "Thu, 12 Dec 2024 12:05:27 -0500")
+References: <20241212170528.30364-1-James.Bottomley@HansenPartnership.com>
+ <20241212170528.30364-2-James.Bottomley@HansenPartnership.com>
+Date: Tue, 07 Jan 2025 15:12:09 +0100
+Message-ID: <87y0zm90hy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=216.71.153.141;
- envelope-from=prvs=095394c9e=wilfred.mallawa@wdc.com; helo=esa3.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 07 Jan 2025 09:03:36 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,43 +84,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Wilfred Mallawa <wilfred.mallawa@wdc.com>
-From:  Wilfred Mallawa via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This header contains the transport encoding for an SPDM message that
-uses the SPDM over Storage transport as defined by the DMTF DSP0286.
+James Bottomley <James.Bottomley@HansenPartnership.com> writes:
 
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
----
- include/system/spdm-socket.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> Instead of processing the tpmdev options using the old qemu options,
+> convert to the new visitor format which also allows the passing of
+> json on the command line.
+>
+> Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+> Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 2b7d03f82d..fc007e5b48 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -88,6 +88,18 @@ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-  */
- void spdm_socket_close(const int socket, uint32_t transport_type);
- 
-+/*
-+ * Defines the transport encoding for SPDM, this information shall be passed
-+ * down to the SPDM server, when conforming to the SPDM over Storage standard
-+ * as defined by DSP0286.
-+ */
-+typedef struct QEMU_PACKED {
-+    uint8_t security_protocol;
-+    uint16_t security_protocol_specific;
-+    bool inc_512;
-+    uint32_t length;
-+} StorageSpdmTransportHeader;
-+
- #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
- #define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
- #define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
--- 
-2.47.1
+[...]
+
+> diff --git a/qapi/tpm.json b/qapi/tpm.json
+> index a16a72edb9..e6345d424b 100644
+> --- a/qapi/tpm.json
+> +++ b/qapi/tpm.json
+
+Looks like you missed my review of v10.  I'll copy it below for your
+convenience.
+
+> @@ -142,6 +142,27 @@
+>              'emulator': 'TPMEmulatorOptionsWrapper' },
+>    'if': 'CONFIG_TPM' }
+>  
+> +##
+> +# @TpmCreateOptions:
+> +#
+> +# A union referencing different TPM backend types' configuration options
+> +#   without the wrapper to be usable by visitors.
+
+reST trap: this is a definition list.  Delete the second line's
+indentation to make it a paragraph:
+
+   # A union referencing different TPM backend types' configuration
+   # options without the wrapper to be usable by visitors.
+
+
+> +#
+> +# @type: - 'passthrough' The configuration options for the TPM passthrough type
+> +#        - 'emulator' The configuration options for TPM emulator backend type
+
+docs/devel/qapi-code-gen.rst:
+
+    Descriptions start with '\@name:'.  The description text must be
+    indented like this::
+
+     # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+     #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+You indent more to make the '-' line up.  Hmm.
+
+Let's indent this like @TpmTypeOptions right above, namely
+
+    # @type:
+    #     - 'passthrough' The configuration options for the TPM
+    #       passthrough type
+    #     - 'emulator' The configuration options for TPM emulator backend
+    #       type
+
+> +#
+> +# @id: The Id of the TPM
+
+What kind of Id is this?
+
+> +#
+> +# Since: 9.0
+
+10.0
+
+> +##
+> +{ 'union': 'TpmCreateOptions',
+> +  'base': { 'type': 'TpmType',
+> +            'id' : 'str' },
+> +  'discriminator': 'type',
+> +  'data': { 'passthrough' : 'TPMPassthroughOptions',
+> +            'emulator': 'TPMEmulatorOptions' },
+> +  'if': 'CONFIG_TPM' }
+
+This is a flattened version of TpmTypeOptions with additional member
+@id.
+
+Flattened: the union branches use Foo instead of FooWrapper.
+
+@id: I guess query-tpm has it one level up, in TPMInfo.
+
+Okay.
+
+> +
+>  ##
+>  # @TPMInfo:
+>  #
+
+[...]
 
 
