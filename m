@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B695E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87BAEE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV40o-0003pj-N8; Tue, 07 Jan 2025 02:28:26 -0500
+	id 1tV4Cz-0006JX-BK; Tue, 07 Jan 2025 02:41:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV40n-0003pY-P6
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:28:25 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV4Cw-0006JO-Tm
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:40:58 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV40m-0008Np-33
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:28:25 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436249df846so104902605e9.3
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 23:28:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV4Cu-0001Cs-RS
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:40:58 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-436a03197b2so56067945e9.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 23:40:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736234901; x=1736839701; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736235655; x=1736840455; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nvotU8vEmwT3jcuDYkX7w0NflOQasRvzk96g56LUaVk=;
- b=PDXuSrr7NEe04cDtUkQ4PqnZ9Irb5qQYIdNqWGTM3m0rDG1cpSe/XKQQGFGIyDEGRb
- yws7B1euVzI2YOQ0mNPts5tO/oAHM3aBD61SdMntwWKdyMoVzQzVZUkE80lOiB1PpUb+
- 44a5b7/RpacK4lx7/zSw38Lhsy7x9F+O4rGTe/0dqpy1EfaUcW6IoE/O2dmSPWKMKbUx
- dHVDupyJqVQhjZBnkIP2whqziw/s6bWCTYR36g6uC9WYcNnGeJZxZRe6VDF61GD9wNNu
- gZ+ck7wFBKc9pbX/c7vmnikPOmzAJovsdOtC8hyAV6x0Zu1aSKHsYdYH0wxW5AF+oEVX
- WTWQ==
+ bh=H8hrQkHmGhGTIu42zpzotS/QZe823Hr8cTx359mtXqc=;
+ b=Md4Y0X/ctA+/N04Xu+O+62Kq/hnJsQNbhao/u/mV9whAKFQ5GkrPJwJA1KoufliSI1
+ gAR49OMxKrpIawG5qFSx0orEVWMOKyXN28L98/xFMnLR9GoTVW44xekAVuoJ/wJQE9cQ
+ AeGILymnD0tVMYZ/hDl8ScRdZq8YUT2W9/gOXgjO3jV1u4/fs1g9Z4Sfl9a1IbP6Hqp2
+ nDTDSU9RiW7AKJNpSeP4/FknaYeH05lYrblD9RbiT8I8sQuMN6DeQWJ/ef+DHbAW+Ky6
+ umExNA9wWjpidKupEyJFmX9PeThHPL2rN/cM+JSesG/cKfqkJ7d2IKX5veQWDXIKTmKl
+ U/bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736234901; x=1736839701;
+ d=1e100.net; s=20230601; t=1736235655; x=1736840455;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nvotU8vEmwT3jcuDYkX7w0NflOQasRvzk96g56LUaVk=;
- b=qaErOIc8mN8uldt6NRxbppHu2ZhqbtCNnpNqJNA8izOgRjkSJUUhsqj7EEukw1kWuh
- md0q6UbRycUOGfCTzRmG5G6CWaTQkYLbXqdwiA3GD5tYc20IR2kctFy6Km7fnnqjFTzj
- yGWDe9kem/2TTiPZaoRtf18LcytKcNqulEZSPqfGUgoLMj6TfucXZGdO7BNDWNtGfTjT
- UBRzRXMIhE6h9HXm19k4ykYL7YBpKjS+LDcmnU1xuYpqlCbVV37qEVESIQP3PR/FHSJo
- KPaYFwPGqYnwrS1rNdLdHMXfsOVapQCAwn4eP+wNpPHuD92b8HBoFchyc0VGU9DqcBXV
- H6tg==
-X-Gm-Message-State: AOJu0YwIiSjCHjrvaeF+GatgSCrSzKN4/VF0uOMiEWMZrKHza/nI/mle
- JJwabHbyxeoMq9V4vhUXrlmle5QZZVUPwF1t6gG34S1b+Yu8VFueTaP4DPt7Qwc=
-X-Gm-Gg: ASbGncs6EQGPLaRTOkS8tEkXPbclR67PsMVta2L+756u5jw6W1KQP8PkpFG30AQ3+1J
- /dIkj9ta0ymLXQN6YeqAzYPma+KPnlFbE2C1ugq0wB4B+C/77D4k/mMgR0hY1i/pdv5bNLNv+qP
- 1EJjCkprB9PDeSL9BvrDazwJlz6uJT7YtasI9XFrHtv67Q2sua7/wUK0fD41GQuvqlPNXiC0Spi
- yZJ4ocmhQdy6lNUsR024rfmAvvIIJl+MZNaUilT8/nMzB+Y61tA64+rqT8zTaHbnJDdr+rYAjVy
- M1cVEcn9cCXHdKkyP9n8xzCN
-X-Google-Smtp-Source: AGHT+IFSFIFYQ4l6YjSmPlC7fe4c+xV5566OLnFOkbPYNwFS5B+jRfpLHrBfWyTejGkfuevM3DvUvA==
-X-Received: by 2002:a05:600c:468f:b0:434:f335:855 with SMTP id
- 5b1f17b1804b1-43668b78324mr404904495e9.28.1736234901575; 
- Mon, 06 Jan 2025 23:28:21 -0800 (PST)
+ bh=H8hrQkHmGhGTIu42zpzotS/QZe823Hr8cTx359mtXqc=;
+ b=gyoq2GyHdW+bBO33bdXP3BxeLmu9MNWM0zgpvEAnKIwborKANSjWKxNFJSydgOscwN
+ P1kBYYn1uC/4UvpmrdCYeocA1pmw3SjgZBJ1umX+qzFNzMD+Z3TO2SJ1R2R8VFxU+9Ei
+ QoRemwoH2dSFzGLqL1+x3GIZEhpKDSeJQvW3f4TH4vIbNeYs/yJWGTR0xwxSux8Q0lmA
+ ghIqyDAohQNLhScN0lx6ocu5z6ns0SiHrotvzggtXdGNXVBAIL0ydLuQzxrhItijSukk
+ 7/dJA5qmgsPBD2fS9QFuk1qRnXBvykOotKRtzoitcccgst42U6R3h/MM5BOrPkXJ7h3/
+ 0hww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgOR6JaubQTDu1gW3YpQwe0TM+S09Of2G2JriLQ82Vjcn5YG+gTZ3Pskf4f4KtpLDAkY8gZf4F2b2o@nongnu.org
+X-Gm-Message-State: AOJu0YxL0uU8TbQcFrL+6U+7QQMnifObC9vMCjfq5RdaFg607zvnmBsW
+ axAG7/z4EWMno8MQ+5nM1l+4IgfHKnfk8G8vTIDzHCN8lR7PtE+uxRh9npwNvFY=
+X-Gm-Gg: ASbGncvh4kqkNG7xQXEEin4O41LM9KiMG0cpOg/sFXJOm/IhAqCmJrBq8A+PUvtl1L2
+ 7lJsxBfanp45CCR/yH/F0YpmnFylNEw9Lf+DNICPYMs1L0k18epJBNh7QvTWQcXIicPZ0D30Af9
+ vqmXpAJ4nvZPu+p0mtto9Inu3sm5LCqo8AMaHmltIe63rqLE2yz+kkIL7yEmA2A6AmWBeZmvGP6
+ dItSEJxh/CJmO9GfSQk/rDSt2/jvpOg7wChBl+jojpun5F/8g3WZ31J0HVvj3M68HiYGLpOKQrI
+ k2CbuiLlZE9+fbkX5o2nwo3b
+X-Google-Smtp-Source: AGHT+IEdujK5EK3oAnO9Errx0QO39Jm06vcRZU6DeZGMGJRE/l0Q7+zNCn4tPljmpNrDvEDbiwO47A==
+X-Received: by 2002:a05:600c:4ecc:b0:434:a802:e9b2 with SMTP id
+ 5b1f17b1804b1-4366854887cmr513111965e9.4.1736235654690; 
+ Mon, 06 Jan 2025 23:40:54 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661219a71sm585173415e9.26.2025.01.06.23.28.19
+ 5b1f17b1804b1-436dd14dfcasm9127835e9.1.2025.01.06.23.40.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jan 2025 23:28:20 -0800 (PST)
-Message-ID: <674703cd-3c56-422f-911f-6628a9a75f17@linaro.org>
-Date: Tue, 7 Jan 2025 08:28:19 +0100
+ Mon, 06 Jan 2025 23:40:53 -0800 (PST)
+Message-ID: <a416d786-45ec-46c8-8624-6046e3b39f36@linaro.org>
+Date: Tue, 7 Jan 2025 08:40:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ufs: Adjust value to match CPU's endian format
-To: keosung.park@samsung.com, Jeuk Kim <jeuk20.kim@samsung.com>,
- Yoochan Jeong <yc01.jeong@samsung.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <CGME20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
- <20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
+Subject: Re: [PATCH v11 2/2] tpm: add backend for mssim
+To: James Bottomley <James.Bottomley@HansenPartnership.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
+References: <20241212170528.30364-1-James.Bottomley@HansenPartnership.com>
+ <20241212170528.30364-3-James.Bottomley@HansenPartnership.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107070209epcms2p8b39b26cf5a32a7b66246f2d122005f29@epcms2p8>
+In-Reply-To: <20241212170528.30364-3-James.Bottomley@HansenPartnership.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +103,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 08:02, Keoseong Park wrote:
-> In ufs_write_attr_value(), the value parameter is handled in the CPU's
-> endian format but provided in big-endian format by the caller. Thus, it
-> is converted accordingly.
+Hi James,
+
+On 12/12/24 18:05, James Bottomley wrote:
+> The Microsoft Simulator (mssim) is the reference emulation platform
+> for the TCG TPM 2.0 specification.
 > 
-
-Fixes: 7c85332a2b3 ("hw/ufs: minor bug fixes related to ufs-test")
-
-> Signed-off-by: Keoseong Park <keosung.park@samsung.com>
+> https://github.com/Microsoft/ms-tpm-20-ref.git
+> 
+> It exports a fairly simple network socket based protocol on two
+> sockets, one for command (default 2321) and one for control (default
+> 2322).  This patch adds a simple backend that can speak the mssim
+> protocol over the network.  It also allows the two sockets to be
+> specified on the command line.  The benefits are twofold: firstly it
+> gives us a backend that actually speaks a standard TPM emulation
+> protocol instead of the linux specific TPM driver format of the
+> current emulated TPM backend and secondly, using the microsoft
+> protocol, the end point of the emulator can be anywhere on the
+> network, facilitating the cloud use case where a central TPM service
+> can be used over a control network.
+> 
+> The implementation does basic control commands like power off/on, but
+> doesn't implement cancellation or startup.  The former because
+> cancellation is pretty much useless on a fast operating TPM emulator
+> and the latter because this emulator is designed to be used with OVMF
+> which itself does TPM startup and I wanted to validate that.
+> 
+> To run this, simply download an emulator based on the MS specification
+> (package ibmswtpm2 on openSUSE) and run it, then add these two lines
+> to the qemu command and it will use the emulator.
+> 
+>      -tpmdev mssim,id=tpm0 \
+>      -device tpm-crb,tpmdev=tpm0 \
+> 
+> to use a remote emulator replace the first line with
+> 
+>      -tpmdev "{'type':'mssim','id':'tpm0','command':{'type':inet,'host':'remote','port':'2321'}}"
+> 
+> tpm-tis also works as the backend.
+> 
+> Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> 
 > ---
->   hw/ufs/ufs.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-> index 8d26d13791..428fe927ad 100644
-> --- a/hw/ufs/ufs.c
-> +++ b/hw/ufs/ufs.c
-> @@ -1164,7 +1164,7 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
->           value = ufs_read_attr_value(u, idn);
->           ret = UFS_QUERY_RESULT_SUCCESS;
->       } else {
-> -        value = req->req_upiu.qr.value;
-> +        value = be32_to_cpu(req->req_upiu.qr.value);
+> v2: convert to SocketAddr json and use qio_channel_socket_connect_sync()
+> v3: gate control power off by migration state keep control socket disconnected
+>      to test outside influence and add docs.
+> v7: TPMmssim -> TPMMssim; doc and json fixes
+>      Make command socket open each time (makes OS debugging easier)
+> v11: add startup method to make sure TPM is reset on reboot
+> ---
+>   MAINTAINERS              |   6 +
+>   backends/tpm/Kconfig     |   5 +
+>   backends/tpm/meson.build |   1 +
+>   backends/tpm/tpm_mssim.c | 335 +++++++++++++++++++++++++++++++++++++++
+>   backends/tpm/tpm_mssim.h |  44 +++++
+>   docs/specs/tpm.rst       |  39 +++++
+>   qapi/tpm.json            |  31 +++-
+>   system/tpm-hmp-cmds.c    |   9 ++
+>   8 files changed, 466 insertions(+), 4 deletions(-)
+>   create mode 100644 backends/tpm/tpm_mssim.c
+>   create mode 100644 backends/tpm/tpm_mssim.h
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
->           ret = ufs_write_attr_value(u, idn, value);
->       }
->       req->rsp_upiu.qr.value = cpu_to_be32(value);
+> +static int tpm_send_ctrl(TPMMssim *t, uint32_t cmd, Error **errp)
+> +{
+> +    int ret, retc;
+> +    Error *local_err = NULL;
+> +
+> +    ret = qio_channel_socket_connect_sync(t->ctrl_qc, t->opts.control, errp);
+> +    if (ret != 0) {
+> +        return ret;
+> +    }
+> +    cmd = htonl(cmd);
 
+I'd rather not use <arpa/inet.h> here, but:
+
+        cpu_to_be32s(&cmd);
+
+> +    ret = qio_channel_write_all(QIO_CHANNEL(t->ctrl_qc),
+> +                                (char *)&cmd, sizeof(cmd), errp);
+> +    if (ret != 0) {
+> +        goto out;
+> +    }
+> +
+> +    ret = qio_channel_read_all(QIO_CHANNEL(t->ctrl_qc),
+> +                               (char *)&cmd, sizeof(cmd), errp);
+> +    if (ret != 0) {
+> +        goto out;
+> +    }
+> +    if (cmd != 0) {
+> +        error_setg(errp, ERROR_PREFIX
+> +                   "Incorrect ACK recieved on control channel 0x%x", cmd);
+> +        ret = -1;
+> +    }
+> + out:
+> +    /*
+> +     * need to close the channel here, but if that fails report it
+> +     * while not letting a prior failure get overwritten
+> +     */
+> +    retc = qio_channel_close(QIO_CHANNEL(t->ctrl_qc), &local_err);
+> +    error_propagate(errp, local_err);
+> +    return retc ? retc : ret;
+> +}
+
+
+> +static void tpm_mssim_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
+> +                                     Error **errp)
+> +{
+> +    TPMMssim *t = TPM_MSSIM(tb);
+> +    uint32_t header, len;
+> +    uint8_t locality = cmd->locty;
+> +    struct iovec iov[4];
+> +    int ret;
+> +
+> +    ret = qio_channel_socket_connect_sync(t->cmd_qc, t->opts.command, errp);
+> +    if (ret != 0) {
+> +        goto fail_msg;
+> +    }
+> +
+> +    header = htonl(TPM_SEND_COMMAND);
+> +    len = htonl(cmd->in_len);
+
+        cpu_to_be32()
+
+> +    iov[0].iov_base = &header;
+> +    iov[0].iov_len = sizeof(header);
+> +    iov[1].iov_base = &locality;
+> +    iov[1].iov_len = sizeof(locality);
+> +    iov[2].iov_base = &len;
+> +    iov[2].iov_len = sizeof(len);
+> +    iov[3].iov_base = (void *)cmd->in;
+> +    iov[3].iov_len = cmd->in_len;
+> +
+> +    ret = qio_channel_writev_all(QIO_CHANNEL(t->cmd_qc), iov, 4, errp);
+> +    if (ret != 0) {
+> +        goto fail;
+> +    }
+> +
+> +    ret = qio_channel_read_all(QIO_CHANNEL(t->cmd_qc),
+> +                               (char *)&len, sizeof(len), errp);
+> +    if (ret != 0) {
+> +        goto fail;
+> +    }
+> +
+> +    len = ntohl(len);
+
+        be32_to_cpu()
+
+> +    if (len > cmd->out_len) {
+> +        error_setg(errp, "receive size is too large");
+> +        goto fail;
+> +    }
+> +    ret = qio_channel_read_all(QIO_CHANNEL(t->cmd_qc),
+> +                               (char *)cmd->out, len, errp);
+> +    if (ret != 0) {
+> +        goto fail;
+> +    }
+> +
+> +    /* ACK packet */
+> +    ret = qio_channel_read_all(QIO_CHANNEL(t->cmd_qc),
+> +                               (char *)&header, sizeof(header), errp);
+> +    if (ret != 0) {
+> +        goto fail;
+> +    }
+> +    if (header != 0) {
+> +        error_setg(errp, "incorrect ACK received on command channel 0x%x", len);
+> +        goto fail;
+> +    }
+> +
+> +    ret = qio_channel_close(QIO_CHANNEL(t->cmd_qc), errp);
+> +    if (ret != 0) {
+> +        goto fail_msg;
+> +    }
+> +
+> +    return;
+> +
+> + fail:
+> +    /* we're already failing, so don't worry if this fails too */
+> +    qio_channel_close(QIO_CHANNEL(t->cmd_qc), NULL);
+> + fail_msg:
+> +    error_prepend(errp, ERROR_PREFIX);
+> +    tpm_util_write_fatal_error_response(cmd->out, cmd->out_len);
+> +}
+
+
+> +static const TypeInfo tpm_mssim_info = {
+> +    .name = TYPE_TPM_MSSIM,
+> +    .parent = TYPE_TPM_BACKEND,
+> +    .instance_size = sizeof(TPMMssim),
+> +    .class_init = tpm_mssim_class_init,
+> +    .instance_init = tpm_mssim_instance_init,
+> +    .instance_finalize = tpm_mssim_instance_finalize,
+> +};
+> +
+> +static void tpm_mssim_register(void)
+> +{
+> +    type_register_static(&tpm_mssim_info);
+> +}
+> +
+> +type_init(tpm_mssim_register)
+
+Preferably DEFINE_TYPES().
+
+Otherwise (modulo Daniel comments), LGTM!
+
+Regards,
+
+Phil.
 
