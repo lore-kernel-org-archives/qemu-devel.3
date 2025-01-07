@@ -4,98 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA794E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 13:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B348E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 13:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV9ef-0000MI-MO; Tue, 07 Jan 2025 08:29:59 -0500
+	id 1tV9r6-0003rv-KO; Tue, 07 Jan 2025 08:42:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tV9eS-0000Lh-9C
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 08:29:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tV9qz-0003rH-LE; Tue, 07 Jan 2025 08:42:42 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tV9eQ-0002JY-Aa
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 08:29:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736256580;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=I+Xep6c17SHmb/pGZYwZG/RX0nmuxvQcJ7gFzQUVS/s=;
- b=Ndl6Ee05h8J2nDhh07mYrRokIf8WOdrkQhUTbZjKaPYBedJ6bgPOs5LLk637fm+biMNwpU
- I4cVqZx1PMF6ubVRJ0ocZJwexo56uTHsmcOSUhwGf8LvUbGHKbEFzPXX0p+VgMUdQN3nbt
- XobSHxhatO6W68erLSskCecvTJWXp9Q=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-h_ivOboWN_GAtF73M_1-gA-1; Tue, 07 Jan 2025 08:29:38 -0500
-X-MC-Unique: h_ivOboWN_GAtF73M_1-gA-1
-X-Mimecast-MFC-AGG-ID: h_ivOboWN_GAtF73M_1-gA
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ee86953aeaso21991792a91.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 05:29:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736256578; x=1736861378;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=I+Xep6c17SHmb/pGZYwZG/RX0nmuxvQcJ7gFzQUVS/s=;
- b=mlHAFaao7g3D16sSY/Jzyze3oJpZGqXS1Ej5zja8BZZHTw/qW9X5lr9WdfpB/gXjKP
- FXtQjt4OQ+cJ/O/AhWgjcZSFjQUpefssMEhZfAAty6xlLGFQpkF037QKUZ1f1Kmvdo5h
- 2J7wWGI7qgdCyhnxXvicsGsnazxXhw2208k+cF7zJwoxlQGlxEpHD1IJDO2xGKNG2ghd
- ZLraDXjzOjyrMyGntv5nop5Oopwm08dViVVI+chFnymJQRZ5FLATFDKBh5Xc4OdZ0l0z
- 4hAAhZ5g9od1sk7Je2hsltMJb/rigaBcoliUByDPVeNuWB8M7I8MiAEcNAlbUAEQO+3H
- AGNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUfF73/oKtUoK3KiXvIJEXsRjm0kFpl+DBmecNuGfIbFdUpMBEJc7MqESgX3cRAdYRktLqENCPTSaUb@nongnu.org
-X-Gm-Message-State: AOJu0YzrsvjCN4Y7UhJ0EZHFhlKrzggalEox8L8zCfcFb4C6v/Sr0EwP
- dXmeIZjZVzVMwudluc5LSbAODWB5OVYm/UFE9CJyqvI1B6+xmiSoWvKakshEDaOt3DKS8Lu5xUF
- SXx7GXZzXY+wfKBk+a4uqxTjFmN5JjaxJqbZW2uPVHvlB96J/YBqj
-X-Gm-Gg: ASbGncte39CgAo/VqfcGI4+ufIlVUhkf0uYAqKsUHFjs0EOgpnr7Y+s9lGzAol2FFX0
- 8jA2/CwFZqXe4kO20bngjJhe3uAqhmoiw2fU6Z9wve5Z2BePLbA3niFlEtPIpBllcIA8Th/0q64
- Hm75100XfF9WlXZHTQ8aVIWSj4jlpmoik3hol0R6kgqNb5KOwV4zBO6nN3h+b1hz2MEM9QOEkYE
- p2ujlrC5m23wvythU2K1WYUAKspXbAn+rZNYdoVZWH3aor/i3GC7LT/ppzi8Ev54dIrb7D81Q==
-X-Received: by 2002:a17:90b:134d:b0:2ea:4c4f:bd20 with SMTP id
- 98e67ed59e1d1-2f452eed773mr82769447a91.32.1736256577810; 
- Tue, 07 Jan 2025 05:29:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7IPZt8qS0ESiGCgXupNz047ecN9Bqo3fRXe2y2F+BjjyDLEBVffWjn0G6m47oz+XxkCOnHw==
-X-Received: by 2002:a17:90b:134d:b0:2ea:4c4f:bd20 with SMTP id
- 98e67ed59e1d1-2f452eed773mr82769415a91.32.1736256577331; 
- Tue, 07 Jan 2025 05:29:37 -0800 (PST)
-Received: from smtpclient.apple ([115.96.125.221])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4478ac7dbsm35879322a91.50.2025.01.07.05.29.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 07 Jan 2025 05:29:36 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.1\))
-Subject: Re: [PATCH] tests/qtest/libqos: add DMA support for writing and
- reading fw_cfg files
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20250107125802.139479-1-anisinha@redhat.com>
-Date: Tue, 7 Jan 2025 18:59:22 +0530
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <52B9F983-9401-4368-953D-D2445702CA0F@redhat.com>
-References: <20250107125802.139479-1-anisinha@redhat.com>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51.11.1)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tV9qv-00055n-UQ; Tue, 07 Jan 2025 08:42:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736257358; x=1767793358;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=yNliXUkL8tj6/zZ3Icw4QFTzFBtbTX7zCyWe9j1llBk=;
+ b=ZVGxOum3FoPHTFaL4eI4xi2ugXtF8Fok6OXSfnGBNw5jx53PQxjKMLTg
+ cqqf8Z+MWKM8UCr4L63Yw7FRYV+djy/xVGV4YV/BYvIeRIBRZDAvdax1F
+ NEa9bNOG42AEJtbsJMcvUiBrN1Qu3hPQlCAx6T8r8E7TWlwfhR1k/XmET
+ kKw55ui1blJz8vgMCXK2eKcZaDLy5BwgaIOIXYwpmsnPP4a8xy2GPEt8j
+ LR0JSHd9kyakfu34Scpqsb7zw1Xv5oGEd9brDXFaodymt1+yuiM18ZmiF
+ AYHuPqD9OIRCn5YRudBgz7cDcOlSmvNHn8KICII5hN3x8peUvaQ6wvFaj g==;
+X-CSE-ConnectionGUID: sAO0pu1cRqqL0BtyVUIVVg==
+X-CSE-MsgGUID: r023MZ0cQLmVsXyEFhizTg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11308"; a="35672092"
+X-IronPort-AV: E=Sophos;i="6.12,295,1728975600"; d="scan'208";a="35672092"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2025 05:42:33 -0800
+X-CSE-ConnectionGUID: kSfna26QR7muYxrDCs74VQ==
+X-CSE-MsgGUID: gWD9EhGnQ8a/bZyZwRBt6g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="107820698"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 07 Jan 2025 05:42:31 -0800
+Date: Tue, 7 Jan 2025 22:01:19 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
+Subject: Re: [RFC PATCH 1/9] rust: vmstate: add new type safe implementation
+Message-ID: <Z30zr4Se4lhlHcyo@intel.com>
+References: <20241231002336.25931-1-pbonzini@redhat.com>
+ <20241231002336.25931-2-pbonzini@redhat.com>
+ <Z3zstgKXAgeRrIU2@intel.com>
+ <CABgObfbdFo9B1nedC+Bu2QQfjTL1TOpmSQt0p0a0d0iWev6UKg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfbdFo9B1nedC+Bu2QQfjTL1TOpmSQt0p0a0d0iWev6UKg@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,237 +83,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> > Very flexible and powerful. (I even think this code could be released as
+> > a new public crate.)
+> 
+> It's probably not _that_ useful in general, unless you're implementing
+> this kind of reflection... otherwise I would have found an existing
+> solution. :) But yes, it's very powerful.
 
+Personally, I feel that projects that glue C and Rust together require
+similar tricks more, making them more challenging.
 
-> On 7 Jan 2025, at 6:28=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
-wrote:
->=20
-> At present, the libqos/fw_cfg.c library does not support the modern =
-DMA which
-> is required to write to the fw_cfg files. It only uses the IO =
-interface.
-> Implement read and write methods based on DMA. This will enable =
-developers to
-> write tests that writes to the fw_cfg file(s). The structure of the =
-code is
-> taken from edk2 fw_cfg implementation. It has been tested by writing a =
-qtest
-> that writes to a fw_cfg file. This test will be part of a future patch =
-series.
->=20
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Out of curiosity, I asked claude.ai to explain it and it said "This is
+> a rather advanced use of Rust's type system and macro capabilities to
+> do compile-time reflection - basically inspecting the types of struct
+> fields without runtime overhead. While creative, this pattern isn't
+> commonly needed in everyday Rust code."
+> 
+> When fed the initial comment from the Rust forum it said "your comment
+> about wanting to access <T as SomeTrait>::SOMETHING for a field's type
+> is a classic serialization pattern - often used to get things like
+> type IDs, serialization formats, or field metadata at compile time".
+> That's actually pretty impressive; the LLM was also impressed and it
+> started asking me more about it ("Are you building a custom
+> serialization framework from scratch, or extending an existing one?").
 
-Clearly I sent this out a tad bit early.
+Incredible, commercial LLMs are so proficient in Rust and provide such
+professional comments (even a bit off-topic, it feels like LLMs could
+even review patches).
 
-> ---
-> tests/qtest/libqos/fw_cfg.c | 150 ++++++++++++++++++++++++++++++++++++
-> tests/qtest/libqos/fw_cfg.h |   4 +
-> 2 files changed, 154 insertions(+)
->=20
-> diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
-> index 89f053ccac..1b855fbb15 100644
-> --- a/tests/qtest/libqos/fw_cfg.c
-> +++ b/tests/qtest/libqos/fw_cfg.c
-> @@ -17,6 +17,8 @@
-> #include "../libqtest.h"
-> #include "qemu/bswap.h"
-> #include "hw/nvram/fw_cfg.h"
-> +#include "malloc-pc.h"
-> +#include "libqos-malloc.h"
->=20
-> void qfw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-> {
-> @@ -60,6 +62,59 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, =
-uint16_t key)
->     qtest_writew(fw_cfg->qts, fw_cfg->base, key);
-> }
->=20
-> +static void
-> +qfw_cfg_dma_transfer(QFWCFG *fw_cfg, void *address, uint32_t length,
-> +                     uint32_t control)
-> +{
-> +    FWCfgDmaAccess access;
-> +    uint32_t addr;
-> +    QGuestAllocator guest_malloc;
-> +    uint64_t guest_access_addr;
-> +    uint64_t gaddr;
-> +
-> +    pc_alloc_init(&guest_malloc, fw_cfg->qts, ALLOC_NO_FLAGS);
-> +
-> +    /* create a data buffer in guest memory */
-> +    gaddr =3D guest_alloc(&guest_malloc, length);
-> +    g_assert(gaddr);
-> +    qtest_bufwrite(fw_cfg->qts, gaddr, address, length);
-> +
-> +    access.address =3D cpu_to_be64(gaddr);
-> +    access.length =3D cpu_to_be32(length);
-> +    access.control =3D cpu_to_be32(control);
-> +
-> +    guest_access_addr =3D guest_alloc(&guest_malloc, sizeof(access));
-> +    g_assert(guest_access_addr);
-> +    qtest_bufwrite(fw_cfg->qts, guest_access_addr, &access, =
-sizeof(access));
-> +
-> +    /* lower 32 bits */
-> +    addr =3D cpu_to_be32((uint32_t)(uintptr_t)guest_access_addr);
-> +    qtest_outl(fw_cfg->qts, fw_cfg->base + 8, addr);
-> +    /* upper 32 bits */
-> +    addr =3D cpu_to_be32((uint32_t)(uintptr_t)(guest_access_addr >> =
-32));
-> +    qtest_outl(fw_cfg->qts, fw_cfg->base + 4, addr);
-> +
-> +    g_assert(!(be32_to_cpu(access.control) & FW_CFG_DMA_CTL_ERROR));
-> +
-> +    guest_free(&guest_malloc, guest_access_addr);
-> +    guest_free(&guest_malloc, gaddr);
-> +    alloc_destroy(&guest_malloc);
-> +}
-> +
-> +static void
-> +qfw_cfg_write_entry(QFWCFG *fw_cfg, uint16_t key, void *buf, int len)
-> +{
-> +    qfw_cfg_select(fw_cfg, key);
-> +    qfw_cfg_dma_transfer(fw_cfg, buf, len, FW_CFG_DMA_CTL_WRITE);
-> +}
-> +
-> +static void
-> +qfw_cfg_read_entry(QFWCFG *fw_cfg, uint16_t key, void *buf, int len)
-> +{
-> +    qfw_cfg_select(fw_cfg, key);
-> +    qfw_cfg_dma_transfer(fw_cfg, buf, len, FW_CFG_DMA_CTL_READ);
-> +}
-> +
-> /*
->  * The caller need check the return value. When the return value is
->  * nonzero, it means that some bytes have been transferred.
-> @@ -104,6 +159,101 @@ size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const =
-char *filename,
->     return filesize;
-> }
->=20
-> +/*
-> + * The caller need check the return value. When the return value is
-> + * nonzero, it means that some bytes have been transferred.
-> + *
-> + * If the fw_cfg file in question is smaller than the allocated & =
-passed-in
-> + * buffer, then the first len bytes were read.
-> + *
-> + * If the fw_cfg file in question is larger than the passed-in
-> + * buffer, then the return value explains how much was actually read.
-> + *
-> + * It is illegal to call this function if fw_cfg does not support DMA
-> + * interface. The caller should ensure that DMA is supported before
-> + * calling this function.
-> + */
-> +size_t qfw_cfg_read_file(QFWCFG *fw_cfg, const char *filename,
-> +                         void *data, size_t buflen)
-> +{
-> +    uint32_t count;
-> +    uint32_t i;
-> +    unsigned char *filesbuf =3D NULL;
-> +    size_t dsize;
-> +    size_t len =3D 0;
-> +    FWCfgFile *pdir_entry;
-> +
-> +    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
-> +    count =3D be32_to_cpu(count);
-> +    dsize =3D sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
-> +    filesbuf =3D g_malloc(dsize);
-> +    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
-> +    pdir_entry =3D (FWCfgFile *)(filesbuf + sizeof(uint32_t));
-> +    for (i =3D 0; i < count; ++i, ++pdir_entry) {
-> +        if (!strcmp(pdir_entry->name, filename)) {
+Thank you for providing this interesting example. LLMs are indeed the
+good tool to help get started with and practice Rust.
 
-This code is repeated in multiple functions. So I will refactor this =
-into a helper.
-
-> +            len =3D be32_to_cpu(pdir_entry->size);
-> +            uint16_t sel =3D be16_to_cpu(pdir_entry->select);
-> +            if (len > buflen) {
-> +                len =3D buflen;
-> +            }
-> +            qfw_cfg_read_entry(fw_cfg, sel, data, len);
-> +            break;
-> +        }
-> +    }
-> +    g_free(filesbuf);
-> +    return len;
-> +}
-> +
-> +/*
-> + * The caller need check the return value. When the return value is
-> + * nonzero, it means that some bytes have been transferred.
-> + *
-> + * If the fw_cfg file in question is smaller than the allocated & =
-passed-in
-> + * buffer, then the buffer has been partially written.
-> + *
-> + * If the fw_cfg file in question is larger than the passed-in
-> + * buffer, then the return value explains how much was actually =
-written.
-> + *
-> + * It is illegal to call this function if fw_cfg does not support DMA
-> + * interface. The caller should ensure that DMA is supported before
-> + * calling this function.
-> + */
-> +size_t qfw_cfg_write_file(QFWCFG *fw_cfg, const char *filename,
-> +                          void *data, size_t buflen)
-> +{
-> +    uint32_t count;
-> +    uint32_t i;
-> +    size_t len =3D 0;
-> +    uint32_t id;
-> +    unsigned char *filesbuf =3D NULL;
-> +    size_t dsize;
-> +    FWCfgFile *pdir_entry;
-> +
-> +    /* write operation is only valid if DMA is supported */
-> +    id =3D qfw_cfg_get_u32(fw_cfg, FW_CFG_ID);
-> +    g_assert(id & FW_CFG_VERSION_DMA);
-> +
-> +    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
-> +    count =3D be32_to_cpu(count);
-> +    dsize =3D sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
-> +    filesbuf =3D g_malloc(dsize);
-> +    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
-> +    pdir_entry =3D (FWCfgFile *)(filesbuf + sizeof(uint32_t));
-> +    for (i =3D 0; i < count; ++i, ++pdir_entry) {
-> +        if (!strcmp(pdir_entry->name, filename)) {
-> +            len =3D be32_to_cpu(pdir_entry->size);
-> +            uint16_t sel =3D be16_to_cpu(pdir_entry->select);
-> +            if (len > buflen) {
-> +                len =3D buflen;
-> +            }
-> +            qfw_cfg_write_entry(fw_cfg, sel, data, len);
-> +            break;
-> +        }
-> +    }
-> +    g_free(filesbuf);
-> +    return len;
-> +}
-> +
-> static void mm_fw_cfg_read(QFWCFG *fw_cfg, void *data, size_t len)
-> {
->     uint8_t *ptr =3D data;
-> diff --git a/tests/qtest/libqos/fw_cfg.h b/tests/qtest/libqos/fw_cfg.h
-> index b0456a15df..62221a9500 100644
-> --- a/tests/qtest/libqos/fw_cfg.h
-> +++ b/tests/qtest/libqos/fw_cfg.h
-> @@ -33,6 +33,10 @@ uint32_t qfw_cfg_get_u32(QFWCFG *fw_cfg, uint16_t =
-key);
-> uint64_t qfw_cfg_get_u64(QFWCFG *fw_cfg, uint16_t key);
-> size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
->                         void *data, size_t buflen);
-> +size_t qfw_cfg_write_file(QFWCFG *fw_cfg, const char *filename,
-> +                          void *data, size_t buflen);
-> +size_t qfw_cfg_read_file(QFWCFG *fw_cfg, const char *filename,
-> +                         void *data, size_t buflen);
->=20
-> QFWCFG *mm_fw_cfg_init(QTestState *qts, uint64_t base);
-> void mm_fw_cfg_uninit(QFWCFG *fw_cfg);
-> --=20
-> 2.45.2
->=20
+Thanks,
+Zhao
 
 
