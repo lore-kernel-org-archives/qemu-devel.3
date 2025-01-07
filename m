@@ -4,68 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A223CE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045B4E77198
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 17:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCuf-0003aH-Hw; Tue, 07 Jan 2025 11:58:41 -0500
+	id 1tVCuY-0002lG-3z; Tue, 07 Jan 2025 11:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+f031519a9170f34b3d42+7807+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVCuY-0002pc-Mr
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:35 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+f031519a9170f34b3d42+7807+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVCuW-00070d-LO
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=XwJTIuWivxlc/Ww4JM5f7eQ9QshVBOQ4vuk58wJsZR8=; b=bN5j+kt32dOt8+4OP7Tu3pPWYv
- 6gaj0QT1SfMUpdQb86b9TjaDU2Gdwzlbt69ZB1ECsawLrt3O2ljj3XXZhVL0EpVi0vtaJQlHzCCU4
- FTm8s3uTAVwtkjB0M5EFYEMqNtGGfJdtS5FZOuiw90sTm/YUP/ygm3GEMPClkzGm/kQ8l2KbacaJB
- DCjxD+YYfNA3tkV6C7g4jU+udKqOeAzIobcts/nf7vMRiH6TbeBXmvicD98NLqWQNJNVyX7+CCytR
- PYKWut/pNzCaFeUb4e/Ia8l95njqgWMf1edOAGrdyND0DtpaQpLqrAyi6QV8NPHh7b9E+wiEr872I
- osPAA59A==;
-Received: from 54-240-197-232.amazon.com ([54.240.197.232]
- helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tVCuR-00000008Odo-18fc; Tue, 07 Jan 2025 16:58:28 +0000
-Message-ID: <df85c04746a36d6467821ed57c93709dceee4e33.camel@infradead.org>
-Subject: Re: [PATCH v2] hw/i386/pc: Fix level interrupt sharing for Xen
- event channel GSI
-From: David Woodhouse <dwmw2@infradead.org>
-To: paul@xen.org, qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, 
- "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Date: Tue, 07 Jan 2025 16:58:26 +0000
-In-Reply-To: <e0eec24c-dd22-4b95-8e62-60d9107b2ae0@xen.org>
-References: <975f9dab5718b441e6d4463a43845dc22b5ddf8f.camel@infradead.org>
- <e0eec24c-dd22-4b95-8e62-60d9107b2ae0@xen.org>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-zPO1N4wKd6yUZapN/IJk"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVCu1-00029n-Q9
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVCtv-0006u5-W7
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:58:01 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so113269595e9.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:57:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736269074; x=1736873874; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MJxt9IGDQlJ1+KQmlOP1oYH7KxpruLFwZ7bhPRqF6vE=;
+ b=l6scB2UeqOFWseQ0mJKSXmNjPLWythqOImEmAn59mEIQgtVfWimw6sdfN88GJS51MP
+ jXKRWbXW0KiBV9Bm+0psIsJ2tZz5kIcb/AI+dsY/C5Lk+DiwrlJ6AoJjr/R0aePkgfd9
+ 0qjIFHozNcCbmARAdGakCzkOZUMurYhXR85J/RudLCyzfSa23pESMj/oGgVsmiU34p0S
+ y6eHSJFYQyVKIEztYpoBo4s27lEdVPGyNOpZV/EnXr5F/CtHOdA2AJzKbC8IsbxqsIJH
+ 4fA2KK/EAn9XXhArizEkbkMn6RXVo4DA2nEUIPBGQtBvZ/G5EKktKdwJnoCJx3xHpg01
+ /SOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736269074; x=1736873874;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MJxt9IGDQlJ1+KQmlOP1oYH7KxpruLFwZ7bhPRqF6vE=;
+ b=QYGq8RidevNWMXwVE0Mdv/00Lg/E9brmk7yiEirMH2ht5jB2YfCcmLM0BPNUe6/fe8
+ PRgTf7kI4AkGZZlQEx/b2srztCYBzfZMJZRDJ1OtM5b4aQwU54HqwmgYYL63FMvxecRk
+ fG9dEFE9ES3X88iGphXyyzwQ+4CXMV2MdmRDCPaLc0hCrX5DeHycGWMRdW3neJwd3kor
+ YT1x6A1j/FzOAM3dSb/Q//hlH4mtm++iv/5Y92jjeaAV+5tIK3ceut2wmxYf+9M2CRbT
+ 0D2uJpQluJeflqxGw9P1xx5kJfjDqUwjaNfH5Z4iGrgMBJK0hdXZqSM3B4ve9KGekD+1
+ dcfQ==
+X-Gm-Message-State: AOJu0YycZQ6QxyrDpddgamk9SBO7GZyHFOAkLlav9TKYaWydEbnX4QRN
+ 7gaVtxANnhBay9f21PYkDu8wwrOQYLkjwk32sK88pjAmA2oeJVCf1kL2ulDvxOo=
+X-Gm-Gg: ASbGnctabtjVjGDwXjYLPS5bf9jc+EF2Cmz5pREzeJcdcGhK3sbjHikAaYSAS5Oznrj
+ laYUxNQg1EmtLNuEHny4LPbM/eg8CFHhAjYf34CrC/qO4EDmV2Fj2hl+AQRk64lk2pW8D8h4O04
+ 6z2JHCYOHlLzY+BNAs3ZqA2XklqJAxk5C056Wq5BVG0ckrW3nD/WoI86od/tELAXH/+aLeOSq2Y
+ xiNO9spUvEMO5XRg28wBZ9OmBy+WsbEXo+BVl6QSEcTbDxvT0miU2o=
+X-Google-Smtp-Source: AGHT+IFAkBpxcnevEqMjoZiIDmMT7TgDciUe/fYSbyaBGvogpc4HTp5vOEekncGtiK89wQJWMjZjrA==
+X-Received: by 2002:a05:600c:4688:b0:435:b064:7dce with SMTP id
+ 5b1f17b1804b1-4366864618emr570189795e9.18.1736269074296; 
+ Tue, 07 Jan 2025 08:57:54 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4366127c4b0sm604067075e9.35.2025.01.07.08.57.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Jan 2025 08:57:53 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 909285FC6C;
+ Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Beraldo Leal <bleal@redhat.com>, Ed Maste <emaste@freebsd.org>,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-ppc@nongnu.org,
+ John Snow <jsnow@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-riscv@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-arm@nongnu.org,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Eric Farman <farman@linux.ibm.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3 17/29] system/qtest: properly feedback results of
+ clock_[step|set]
+Date: Tue,  7 Jan 2025 16:51:55 +0000
+Message-Id: <20250107165208.743958-18-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
+References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+f031519a9170f34b3d42+7807+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,125 +131,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Time will not advance if the system is paused or there are no timer
+events set for the future. In absence of pending timer events
+advancing time would make no difference the system state. Attempting
+to do so would be a bug and the test or device under test would need
+fixing.
 
---=-zPO1N4wKd6yUZapN/IJk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Tighten up the result reporting to `FAIL` if time was not advanced.
 
-T24gVHVlLCAyMDI1LTAxLTA3IGF0IDE2OjM4ICswMDAwLCBQYXVsIER1cnJhbnQgd3JvdGU6Cj4g
-Cj4gPiArI2lmZGVmIENPTkZJR19YRU5fRU1VCj4gPiArwqDCoMKgwqDCoMKgwqAgLyoKPiA+ICvC
-oMKgwqDCoMKgwqDCoMKgICogWGVuIGRlbGl2ZXJzIHRoZSBHU0kgdG8gdGhlIExlZ2FjeSBQSUMg
-KG5vdCB0aGF0IExlZ2FjeSBQSUMKPiA+ICvCoMKgwqDCoMKgwqDCoMKgICogcm91dGluZyBhY3R1
-YWxseSB3b3JrcyBwcm9wZXJseSB1bmRlciBYZW4pLiBBbmQgdGhlbiB0bwo+ID4gK8KgwqDCoMKg
-wqDCoMKgwqAgKiAqZWl0aGVyKiB0aGUgUElSUSBoYW5kbGluZyBvciB0aGUgSS9PQVBJQyBkZXBl
-bmRpbmcgb24KPiA+ICvCoMKgwqDCoMKgwqDCoMKgICogd2hldGhlciB0aGUgZm9ybWVyIHdhbnRz
-IGl0Lgo+ID4gK8KgwqDCoMKgwqDCoMKgwqAgKgo+ID4gK8KgwqDCoMKgwqDCoMKgwqAgKiBBZGRp
-dGlvbmFsbHksIHRoaXMgaG9vayBhbGxvd3MgdGhlIFhlbiBldmVudCBjaGFubmVsIEdTSSB0bwo+
-ID4gK8KgwqDCoMKgwqDCoMKgwqAgKiB3b3JrIGFyb3VuZCBRRU1VJ3MgbGFjayBvZiBzdXBwb3J0
-IGZvciBzaGFyZWQgbGV2ZWwgaW50ZXJydXB0cywKPiA+ICvCoMKgwqDCoMKgwqDCoMKgICogYnkg
-a2VlcGluZyB0cmFjayBvZiB0aGUgZXh0ZXJuYWxseSBkcml2ZW4gc3RhdGUgb2YgdGhlIHBpbiBh
-bmQKPiA+ICvCoMKgwqDCoMKgwqDCoMKgICogaW1wbGVtZW50aW5nIGEgbG9naWNhbCBPUiB3aXRo
-IHRoZSBzdGF0ZSBvZiB0aGUgZXZ0Y2huIEdTSS4KPiA+ICvCoMKgwqDCoMKgwqDCoMKgICovCj4g
-Cj4gTG9va3MgbGlrZSBzb21ldGhpbmcgd2VudCB3cm9uZyB3aXRoIHRoZSBpbmRlbnQgaGVyZS4K
-CkZpeGVkIHRoZSBpbmRlbnRhdGlvbiBmb3IgdGhlIGNvbW1lbnQgdG8gNCBzcGFjZXMgaW4gbXkg
-dHJlZTsgdGhhbmtzLgo=
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2687
+---
+ system/qtest.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
+diff --git a/system/qtest.c b/system/qtest.c
+index 99ef2042f6..e68ed0f2a8 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -78,6 +78,11 @@ static void *qtest_server_send_opaque;
+  * let you adjust the value of the clock (monotonically).  All the commands
+  * return the current value of the clock in nanoseconds.
+  *
++ * If the commands FAIL then time wasn't advanced which is likely
++ * because the machine was in a paused state or no timer events exist
++ * in the future. This will cause qtest to abort and the test will
++ * need to check its assumptions.
++ *
+  * .. code-block:: none
+  *
+  *  > clock_step
+@@ -710,7 +715,8 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             qtest_sendf(chr, "OK little\n");
+         }
+     } else if (qtest_enabled() && strcmp(words[0], "clock_step") == 0) {
+-        int64_t ns;
++        int64_t old_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++        int64_t ns, new_ns;
+ 
+         if (words[1]) {
+             int ret = qemu_strtoi64(words[1], NULL, 0, &ns);
+@@ -719,11 +725,10 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             ns = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+                                             QEMU_TIMER_ATTR_ALL);
+         }
+-        qemu_clock_advance_virtual_time(
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + ns);
++        new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
+         qtest_send_prefix(chr);
+-        qtest_sendf(chr, "OK %"PRIi64"\n",
+-                    (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++        qtest_sendf(chr, "%s %"PRIi64"\n",
++                    new_ns > old_ns ? "OK" : "FAIL", new_ns);
+     } else if (strcmp(words[0], "module_load") == 0) {
+         Error *local_err = NULL;
+         int rv;
+@@ -740,16 +745,16 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             qtest_sendf(chr, "FAIL\n");
+         }
+     } else if (qtest_enabled() && strcmp(words[0], "clock_set") == 0) {
+-        int64_t ns;
++        int64_t ns, new_ns;
+         int ret;
+ 
+         g_assert(words[1]);
+         ret = qemu_strtoi64(words[1], NULL, 0, &ns);
+         g_assert(ret == 0);
+-        qemu_clock_advance_virtual_time(ns);
++        new_ns = qemu_clock_advance_virtual_time(ns);
+         qtest_send_prefix(chr);
+-        qtest_sendf(chr, "OK %"PRIi64"\n",
+-                    (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++        qtest_sendf(chr, "%s %"PRIi64"\n",
++                    new_ns == ns ? "OK" : "FAIL", new_ns);
+     } else if (process_command_cb && process_command_cb(chr, words)) {
+         /* Command got consumed by the callback handler */
+     } else {
+-- 
+2.39.5
 
---=-zPO1N4wKd6yUZapN/IJk
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDEwNzE2NTgy
-NlowLwYJKoZIhvcNAQkEMSIEIMZfBd9tIMcw8Ksc3s1ZTYrdr9MGbp/xlKzX8tN2IM4KMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAIo+EI2FaX2JJ
-V1NTlLT9bJi4vvo6wdjyKmrsgb1JEECfBeCqtZhfrUOv3aeNDQoG4trqFoccG5q/1LzjaSLbf08d
-FnVHHrXRfIkEyl/IQZHwwB6Vj+iTccT9DerkbuaIWToEtaA9rBKqs76gBCzXxfoSHzoIVmz3XRt1
-yyRF3u7nwanlzaqFr393OwdapKTOrQslxMZto7kTUrZSPzPpGutNRIOMW7sZ/23vcQQEMASng5YR
-OQ6XCfWEzlZ7FNkaWgzlMtRh/NLwCzuUPSVK+tOdzETBzbED0R5C+5nBn8G6NjsYlxXF1DkMu7rw
-k8sDCUuheom7U22+JXjFG782x+noN1mcRl3U3L5M0Gj1/09Y2dpCwipP/rgtFFs8dLDS1V0IWhVn
-L4r8YSgQe7lK81XZmULwixl1Ued2ZVRQYJnvJdJkdoZhorsPUoLGy8FRxf37j4nS5B+IMWGO8z4y
-UPRu9FREBMPDCC6eug8PSWlIht75gxFBbm4BkSC9RseESn7OfSKrpNzVFlRg06kAskHlxkbLD1lE
-Blj1HIthrWVT6Xw1F0rut0ykhCWDxbmsoc8UbWpWU4qHjpfd1N6UnPGkm77+E4Q/SnISt6qVoCNV
-SkLN8rYhYwikwTkpGP3OijOtFvMCOeLeb1JxCJLrfR3Wx/U9SsQ/jQktbgZzhGkAAAAAAAA=
-
-
---=-zPO1N4wKd6yUZapN/IJk--
 
