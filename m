@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3DCE77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F76E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 07:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV3cn-00088E-3y; Tue, 07 Jan 2025 02:03:37 -0500
+	id 1tV3jX-0001YV-Gw; Tue, 07 Jan 2025 02:10:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tV3cP-0007wH-VR
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:03:14 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tV3cN-0004zO-0s
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:03:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736233391; x=1767769391;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=p7jd2YJglQZEF/n7cYU/XBni6ira8+uSNT520OdyVM4=;
- b=PFU/JC8+vve/ur2XWLFv7z8WfYOkbtMtu2lmEbbSASmTVTdIcWbZOjVO
- 187L7JnqCcMQj+tcaB4CYe5MRH2oXEucTcQTVw9eIK28YEho9QJowbZBi
- i5XZkjiA6ZGAgGeE6O70dIEZPD4XQHDJzmKrsRyIrO4C6o2/gha1D13YD
- k31PIF+jfXhiaxgSiQ8413hwY0a63SH8tza7KI4P9vaug6Xw21MFsqW1c
- 9YsT/kkBjDiXwKjNLh9BMeFYNF24XkT22DABk9ITnbcrg9fRZZTyX5+im
- s0mOkWLxfw9/zUoFXU8Q3gf3jMZkYj+skwCBoc1wGMmV3R9UAzQn+Uwai g==;
-X-CSE-ConnectionGUID: 66UW83y5Thm4svrUYYDQog==
-X-CSE-MsgGUID: cG6vB8PWSQCacK4TPwKYdg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="40172134"
-X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="40172134"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jan 2025 23:03:06 -0800
-X-CSE-ConnectionGUID: cKw0qahtRoK4x2Xu3ETOOA==
-X-CSE-MsgGUID: CvKENtPiQ+u+XoL4x7D0bQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; d="scan'208";a="102570702"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jan 2025 23:03:03 -0800
-Message-ID: <16703283-6f1e-412d-a362-5331ed32d28a@intel.com>
-Date: Tue, 7 Jan 2025 15:03:00 +0800
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3jV-0001YB-41
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:10:33 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3jS-0006FY-EZ
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 02:10:32 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so172127035e9.0
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 23:10:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736233828; x=1736838628; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mVI3dYzHBeT8VZtZhmpxbHrEVgI9gtq2gj1l/2EtTRQ=;
+ b=qaa4nEj6BhP4DDW7TzvD8A5Ho90S/MU7fyXMkoTH3BXYnnSI4cVOOKnYH8zTL1qbfz
+ kXQGSpI9+QLdtZJsrlyjkbBBVwC2nx2/tGl+k5XiIavIT+JadUCYrL4q9s5s2DRitN71
+ DIK6XGzbIJ5BX6nq9nsSibfH3oIKCOEJ9Bs6wlJCsCHs8MoXdI4Q3DvIIsBMm4orzRTo
+ +gaNPJuLWjgsVGWc/EDc7p8IFsYNnsCZJ23lyNfr41mpBaaE+QrGi17C/rXdxc4NRTBY
+ 09m3JCDqVAPHk4/Ompi6BgklUl4yCg6DeoG3Ch3d9VVo86EMPe00MuysY/duHlRkxUwM
+ ASmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736233828; x=1736838628;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mVI3dYzHBeT8VZtZhmpxbHrEVgI9gtq2gj1l/2EtTRQ=;
+ b=DgVy+hPDWJqtL8Ib+nZ6xdGkltJ0Cgc51BpKNn/MyjkqpRNccKCNqchvxIiPiFXJTn
+ jZYLF2Ox+Jrr98B3YDKnAFpj/1WvmFog/M6I+8IjmZWbxxU0SxhukhCFhjKUy6ifEVdi
+ w3F9UTQxw0RYaz+lffArS1EAPXtXwXLUX4q2oSEf5M+HNQzqgWxdvUC+xCmVk0z/q2b7
+ d78dqJXXezNK+0cfHxu2FhqE2HfWi8WA2iUjZuwKiSo18L2FIvqRNbUQcHTZrFlm3zUX
+ /+MgRHRtna53C7iZOCbxW4FnC3mIjW1GjcjnJaOx9NO2nLxsEjqbhM6GletGt+3ctBzu
+ bp5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuypdrwJNkWk8Xtg73wYsjIeOKx+uh5OQGKKtUZFMStLxkId68MX+DAC0ZpTr1WQ7nf80pWODf9rL3@nongnu.org
+X-Gm-Message-State: AOJu0YzF3ykCL7klm/aVNK8csronfHR8Vwo1clEm2PMzNSkfPwTFQ7MZ
+ Tffe8g5ryOc386Z5tSbv0RcCELw4AZ1DVFepuMJ4B4eih90JYrjrCC5HKeDpFHskl1J57aB+0pD
+ tW+U=
+X-Gm-Gg: ASbGnctmDlmtbmSITijacrajrlF0eN/aBN2VUmex4rCFVpI5VLBttzADDOd+5xvClME
+ 7RCywq3IzrY9BE7cPufTNjJNaqcJ26jqlP8JxMSCVNuY1VhKhqRg0FCfOdoONk9Gi0Dsc327JVJ
+ 8TAa/UIbwM0HnVeSdaEoX09w9FP6p24rjHZyiB7EngUhtZx9MHKDvghNs7lXcyAM/wC37vwx/xl
+ 04/LUzAKSX6/mw/Ttr/qZuFX6+iKdvMwy1B6gO021ptmUTLlWxQgIChhu76JZ674mDfIN+6MGIY
+ DzPU8FjepZsS3NsMEfyiUhTm
+X-Google-Smtp-Source: AGHT+IF5DMhmB/AF+MvNaMfprANjCJ7SRn0/iQOW6Z8zqi0lpr+4HByB/0nMfv2+Cyv33W5rw/8taw==
+X-Received: by 2002:a05:6000:18a3:b0:385:f60b:f5c4 with SMTP id
+ ffacd0b85a97d-38a221f9f90mr49525840f8f.29.1736233828440; 
+ Mon, 06 Jan 2025 23:10:28 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c89e140sm50743145f8f.79.2025.01.06.23.10.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 06 Jan 2025 23:10:27 -0800 (PST)
+Message-ID: <c63f0db5-b53c-4380-8b58-6c4e1327218d@linaro.org>
+Date: Tue, 7 Jan 2025 08:10:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/10] i386/cpu: Hoist check of CPUID_EXT3_TOPOEXT
- against threads_per_core
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
- <20241219110125.1266461-8-xiaoyao.li@intel.com> <Z25gSWzeVNLqIAPc@intel.com>
+Subject: Re: [PATCH 03/73] tcg: Add TCGType argument to tcg_emit_op,
+ tcg_op_insert_*
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250102180654.1420056-1-richard.henderson@linaro.org>
+ <20250102180654.1420056-4-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z25gSWzeVNLqIAPc@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250102180654.1420056-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.446,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,61 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/27/2024 4:07 PM, Zhao Liu wrote:
-> On Thu, Dec 19, 2024 at 06:01:22AM -0500, Xiaoyao Li wrote:
->> Date: Thu, 19 Dec 2024 06:01:22 -0500
->> From: Xiaoyao Li <xiaoyao.li@intel.com>
->> Subject: [PATCH v2 07/10] i386/cpu: Hoist check of CPUID_EXT3_TOPOEXT
->>   against threads_per_core
->> X-Mailer: git-send-email 2.34.1
->>
->> Now it changes to use env->topo_info.threads_per_core and doesn't depend
->> on qemu_init_vcpu() anymore. Drop the comment of the order dependency on
->> qemu_init_vcpu() and hoist code to put it together with other feature
->> checking.
+On 2/1/25 19:05, Richard Henderson wrote:
+> In some places we have a ready type to give.
+> In others, like tcg-op.c, simply pass 0 for now.
 > 
-> The comment was dropped in patch 6. You could move such description to
-> there.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-op.h |  8 +++++---
+>   include/tcg/tcg.h    |  6 +++---
+>   tcg/optimize.c       | 20 +++++++++++---------
+>   tcg/tcg-op-vec.c     |  8 ++++----
+>   tcg/tcg-op.c         | 12 ++++++------
+>   tcg/tcg.c            | 28 ++++++++++++++++------------
+>   6 files changed, 45 insertions(+), 37 deletions(-)
 
-Obviously, I didn't take care of the patch split and reorder.
-
-I tent to move the dropping of the comment from patch 6 to this one.
-
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   target/i386/cpu.c | 30 +++++++++++++++---------------
->>   1 file changed, 15 insertions(+), 15 deletions(-)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index d41768648ab9..fd59da5d445d 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -7880,6 +7880,21 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
->>        */
->>       cpu->mwait.ecx |= CPUID_MWAIT_EMX | CPUID_MWAIT_IBE;
->>   
->> +    /*
->> +     * Most Intel and certain AMD CPUs support hyperthreading. Even though QEMU
->> +     * fixes this issue by adjusting CPUID_0000_0001_EBX and CPUID_8000_0008_ECX
->> +     * based on inputs (sockets,cores,threads), it is still better to give
->> +     * users a warning.
->> +     */
->> +    if (IS_AMD_CPU(env) &&
->> +        !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
->> +        env->nr_threads > 1) {
-> 
-> Typo, env->topo_info.threads_per_core.
-
-Thanks for catching it.
-
->> +            warn_report_once("This family of AMD CPU doesn't support "
->> +                             "hyperthreading(%d). Please configure -smp "
->> +                             "options properly or try enabling topoext "
->> +                             "feature.", env->nr_threads);
->> +    }
->> +
->>       /* For 64bit systems think about the number of physical bits to present.
->>        * ideally this should be the same as the host; anything other than matching
->>        * the host can cause incorrect guest behaviour.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
