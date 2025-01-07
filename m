@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2B9E77199
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784DEE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 19:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVFbC-00038y-WB; Tue, 07 Jan 2025 14:50:48 -0500
+	id 1tVFbO-0003At-Gb; Tue, 07 Jan 2025 14:50:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVFb3-00037z-AH
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:50:37 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tVFbA-00038x-JL; Tue, 07 Jan 2025 14:50:46 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVFb1-0002Dr-2A
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 14:50:36 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tVFb8-0002Fe-Vz; Tue, 07 Jan 2025 14:50:44 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1673521162;
- Tue,  7 Jan 2025 19:50:31 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6D7A81F451;
+ Tue,  7 Jan 2025 19:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736279431; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736279441; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sMJx2pzWfxVFk6wour7Z8kvLg7qdh3rP3Lxozjx6Gbk=;
- b=Ga0mK4lIqRLStqdgb3xk3PVqJqfT2XJ64vlZhnvkqaRPWqL5LxTUdjE3uPBBeVfaZ9tRYj
- LYnMM2pq2fwv3mhSrAEg3yEVcsHH7H6VbF2Et1OLdcqvHlssTPIao9EjRof2EJu8UX/qMl
- 2daomdoLaiSJU5NHQ5qt/NHfzBI1e9c=
+ bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
+ b=mT4CWYgKZ/khN+aMQO/FnXL3aZNbAXhFzvzbKewzKozUeG4Ck75Z3HrTR/8qko9pT87nyg
+ +f4ZT5M6f03Y7Xv7R5PzubDrTxqt9Ne3EpQCac0IWLl++5JFAxcu1obb9EHpM35H2IyJwO
+ FMw8qmJlgMjoZ+8uNEvVcqgQrY+qLtA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736279431;
+ s=susede2_ed25519; t=1736279441;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sMJx2pzWfxVFk6wour7Z8kvLg7qdh3rP3Lxozjx6Gbk=;
- b=4vZEfvptw2grqKCKXX+4fTX4UTbLqDB6j9O5k0MUw1AEJIYpUBSvXQj2FA0gYDi8Iriid/
- A6LaeBJUufEwCIDg==
-Authentication-Results: smtp-out1.suse.de;
+ bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
+ b=X1eh4sBr3OKF0VVSufm7IhVzW130BWk3PDEqusOVESfseYQgoSlw+fg8HinVloGiRkknlw
+ /8gjQE5TBrtlNNAg==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736279431; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736279441; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sMJx2pzWfxVFk6wour7Z8kvLg7qdh3rP3Lxozjx6Gbk=;
- b=Ga0mK4lIqRLStqdgb3xk3PVqJqfT2XJ64vlZhnvkqaRPWqL5LxTUdjE3uPBBeVfaZ9tRYj
- LYnMM2pq2fwv3mhSrAEg3yEVcsHH7H6VbF2Et1OLdcqvHlssTPIao9EjRof2EJu8UX/qMl
- 2daomdoLaiSJU5NHQ5qt/NHfzBI1e9c=
+ bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
+ b=mT4CWYgKZ/khN+aMQO/FnXL3aZNbAXhFzvzbKewzKozUeG4Ck75Z3HrTR/8qko9pT87nyg
+ +f4ZT5M6f03Y7Xv7R5PzubDrTxqt9Ne3EpQCac0IWLl++5JFAxcu1obb9EHpM35H2IyJwO
+ FMw8qmJlgMjoZ+8uNEvVcqgQrY+qLtA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736279431;
+ s=susede2_ed25519; t=1736279441;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sMJx2pzWfxVFk6wour7Z8kvLg7qdh3rP3Lxozjx6Gbk=;
- b=4vZEfvptw2grqKCKXX+4fTX4UTbLqDB6j9O5k0MUw1AEJIYpUBSvXQj2FA0gYDi8Iriid/
- A6LaeBJUufEwCIDg==
+ bh=GJUYCHg1tAerMxKnUkMRw26VZaD9t94AlwOX97jr+CU=;
+ b=X1eh4sBr3OKF0VVSufm7IhVzW130BWk3PDEqusOVESfseYQgoSlw+fg8HinVloGiRkknlw
+ /8gjQE5TBrtlNNAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D76CD13A6A;
- Tue,  7 Jan 2025 19:50:29 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BD83913A6A;
+ Tue,  7 Jan 2025 19:50:39 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WAHBJoWFfWeCGAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 07 Jan 2025 19:50:29 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yJmRII+FfWeCGAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 07 Jan 2025 19:50:39 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 1/7] migration: Add more error handling to analyze-migration.py
-Date: Tue,  7 Jan 2025 16:50:19 -0300
-Message-Id: <20250107195025.9951-2-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
+Subject: [PATCH 7/7] s390x: Fix CSS migration
+Date: Tue,  7 Jan 2025 16:50:25 -0300
+Message-Id: <20250107195025.9951-8-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250107195025.9951-1-farosas@suse.de>
 References: <20250107195025.9951-1-farosas@suse.de>
@@ -90,12 +90,12 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,139 +119,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The analyze-migration script was seen failing in s390x in misterious
-ways. It seems we're reaching the VMSDFieldStruct constructor without
-any fields, which would indicate an empty .subsection entry, a
-VMSTATE_STRUCT with no fields or a vmsd with no fields. We don't have
-any of those, at least not without the unmigratable flag set, so this
-should never happen.
+Commit a55ae46683 ("s390: move css_migration_enabled from machine to
+css.c") disabled CSS migration globally instead of doing it
+per-instance.
 
-Add some debug statements so that we can see what's going on the next
-time the issue happens.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+CC: qemu-stable@nongnu.org #9.1
+Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-Id: <20250103141305.8435-1-farosas@suse.de>
+Message-Id: <20241213160120.23880-3-farosas@suse.de>
 ---
- scripts/analyze-migration.py | 75 +++++++++++++++++++++---------------
- 1 file changed, 45 insertions(+), 30 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 8a254a5b6a..f2457b1dde 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -429,6 +429,9 @@ def __init__(self, desc, file):
-         super(VMSDFieldStruct, self).__init__(desc, file)
-         self.data = collections.OrderedDict()
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 2be8da2913..7bbf412620 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1257,6 +1257,7 @@ static void ccw_machine_2_9_instance_options(MachineState *machine)
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_INT_SUPPRESSION);
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_EVENT_NOTIFICATION);
++    css_migration_enabled = false;
+ }
  
-+        if 'fields' not in self.desc['struct']:
-+            raise Exception("No fields in struct. VMSD:\n%s" % self.desc)
-+
-         # When we see compressed array elements, unfold them here
-         new_fields = []
-         for field in self.desc['struct']['fields']:
-@@ -477,6 +480,10 @@ def read(self):
-                     raise Exception("Subsection %s not found at offset %x" % ( subsection['vmsd_name'], self.file.tell()))
-                 name = self.file.readstr()
-                 version_id = self.file.read32()
-+
-+                if not subsection:
-+                    raise Exception("Empty description for subsection: %s" % name)
-+
-                 self.data[name] = VMSDSection(self.file, version_id, subsection, (name, 0))
-                 self.data[name].read()
+ static void ccw_machine_2_9_class_options(MachineClass *mc)
+@@ -1269,7 +1270,6 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
+     ccw_machine_2_10_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    css_migration_enabled = false;
+ }
+ DEFINE_CCW_MACHINE(2, 9);
  
-@@ -574,10 +581,13 @@ def __init__(self, filename):
-         }
-         self.filename = filename
-         self.vmsd_desc = None
-+        self.vmsd_json = ""
- 
--    def read(self, desc_only = False, dump_memory = False, write_memory = False):
-+    def read(self, desc_only = False, dump_memory = False,
-+             write_memory = False):
-         # Read in the whole file
-         file = MigrationFile(self.filename)
-+        self.vmsd_json = file.read_migration_debug_json()
- 
-         # File magic
-         data = file.read32()
-@@ -635,9 +645,11 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
-         file.close()
- 
-     def load_vmsd_json(self, file):
--        vmsd_json = file.read_migration_debug_json()
--        self.vmsd_desc = json.loads(vmsd_json, object_pairs_hook=collections.OrderedDict)
-+        self.vmsd_desc = json.loads(self.vmsd_json,
-+                                    object_pairs_hook=collections.OrderedDict)
-         for device in self.vmsd_desc['devices']:
-+            if 'fields' not in device:
-+                raise Exception("vmstate for device %s has no fields" % device['name'])
-             key = (device['name'], device['instance_id'])
-             value = ( VMSDSection, device )
-             self.section_classes[key] = value
-@@ -666,31 +678,34 @@ def default(self, o):
- 
- jsonenc = JSONEncoder(indent=4, separators=(',', ': '))
- 
--if args.extract:
--    dump = MigrationDump(args.file)
--
--    dump.read(desc_only = True)
--    print("desc.json")
--    f = open("desc.json", "w")
--    f.truncate()
--    f.write(jsonenc.encode(dump.vmsd_desc))
--    f.close()
--
--    dump.read(write_memory = True)
--    dict = dump.getDict()
--    print("state.json")
--    f = open("state.json", "w")
--    f.truncate()
--    f.write(jsonenc.encode(dict))
--    f.close()
--elif args.dump == "state":
--    dump = MigrationDump(args.file)
--    dump.read(dump_memory = args.memory)
--    dict = dump.getDict()
--    print(jsonenc.encode(dict))
--elif args.dump == "desc":
--    dump = MigrationDump(args.file)
--    dump.read(desc_only = True)
--    print(jsonenc.encode(dump.vmsd_desc))
--else:
-+if not any([args.extract, args.dump == "state", args.dump == "desc"]):
-     raise Exception("Please specify either -x, -d state or -d desc")
-+
-+try:
-+    dump = MigrationDump(args.file)
-+
-+    if args.extract:
-+        dump.read(desc_only = True)
-+
-+        print("desc.json")
-+        f = open("desc.json", "w")
-+        f.truncate()
-+        f.write(jsonenc.encode(dump.vmsd_desc))
-+        f.close()
-+
-+        dump.read(write_memory = True)
-+        dict = dump.getDict()
-+        print("state.json")
-+        f = open("state.json", "w")
-+        f.truncate()
-+        f.write(jsonenc.encode(dict))
-+        f.close()
-+    elif args.dump == "state":
-+        dump.read(dump_memory = args.memory)
-+        dict = dump.getDict()
-+        print(jsonenc.encode(dict))
-+    elif args.dump == "desc":
-+        dump.read(desc_only = True)
-+        print(jsonenc.encode(dump.vmsd_desc))
-+except Exception:
-+    raise Exception("Full JSON dump:\n%s", dump.vmsd_json)
 -- 
 2.35.3
 
