@@ -4,99 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98711E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E8AE77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCST-0002Df-I3; Tue, 07 Jan 2025 11:29:33 -0500
+	id 1tVCTK-0002sI-Ih; Tue, 07 Jan 2025 11:30:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tVCSS-0002DK-1X
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:29:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tVCTH-0002mp-T0
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:30:24 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tVCSQ-0003Ab-FB
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:29:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736267369;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jiM1LIzVm64gZNl2wcaUn5sDKQykU/RHxCllnJa+msk=;
- b=Xl4a4SQXW2+ut1JrGC31KkOS+XQPLKItWnNNuxz9K2xCaAUsXKe6qTeAQSZDp0SYtqt3ZI
- n4VLJXtW6tJLRUpDb/macX2hLT3wBa14yyU+j7IG/g9IZ7jFPJl5WHx9Xf4xs8pEosJkXj
- SVqT/IQ1BrDn+RWHQaOEbo6boUun9rk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-2PHXXkjmPpeEqfMkuTd0Ug-1; Tue, 07 Jan 2025 11:29:27 -0500
-X-MC-Unique: 2PHXXkjmPpeEqfMkuTd0Ug-1
-X-Mimecast-MFC-AGG-ID: 2PHXXkjmPpeEqfMkuTd0Ug
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43626224274so48678025e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:29:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736267366; x=1736872166;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jiM1LIzVm64gZNl2wcaUn5sDKQykU/RHxCllnJa+msk=;
- b=dHJ3eZ6iD5jIvI7RhpJFuWb09yp0qrFiK11TR9wrY3eftr4bZOwS3CPbvm4A+uUJpd
- AvubDavT5O3YWAf+iprjuR6EbTpKGg5ruLhUV2XV+AE6m/ZhEFA6UiAIBP2ylypiQEVu
- plyBde8JXMp6HL+PoNZNGv081K25AiyPq6s0wjXaG/OzcmAk3sgbUal3FRA0QbvKCUm6
- HTCnUpUIAYWz4UmNuRO5EFEfy7XNdm23amKq1IjJ+7gLOfjkas+G3J0nXaRqPYDR8fQJ
- z4ahopqG9LqqJrQWUxwRF/JOc0CygO1XAK7MGGB/awtn+nreaP9OOaRpSHYehzDh6MVD
- ygWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWskA7vIX+GlysJjxp05snuMPGO5wKZxVGTBT4RRIwm/Z0uU63JCcTb4vGSvJjyYWtSHqPKT6f7w5c0@nongnu.org
-X-Gm-Message-State: AOJu0YzJCwBnz1DGcMCw4URvKzZaTvdVtpTmQarrNsO0mGj28TfPnEN7
- lgp9Ui3PW8YwDwnVLafhn3y1c4AJBHd1ihGOmGt+bKOp9c5zjQymebAdAhwA7zx6nQlXJbeK9Te
- fe8n+RKxxS1Yevaa5zRnF54GWuDFDxXGPafwqMpBbCPMDN+EivZ9Kj/8r19+FtIyQHHhQI0ZcHg
- oUwQCskSGn2FJTuus4jh1k+6xVrVs=
-X-Gm-Gg: ASbGnctvMJeGIl70Rd0P+3RvMTdLka5dXgi30x51A28LdocAhB5IiC2kzMNVUsf5q4H
- FJzDt3GR0oT+TYOc62VPKWAEXv3fpXBxkdfsa+g==
-X-Received: by 2002:a05:600c:468f:b0:434:f335:855 with SMTP id
- 5b1f17b1804b1-43668b78324mr419547655e9.28.1736267366547; 
- Tue, 07 Jan 2025 08:29:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1Gm88GTwU+d69vau7yMVlbGi8WnUchWKhvfIJhqzmRufi4K50T9P/SzUeM0X8LPa6QAObtFdXkFXzHhpwZAk=
-X-Received: by 2002:a05:600c:468f:b0:434:f335:855 with SMTP id
- 5b1f17b1804b1-43668b78324mr419547495e9.28.1736267366255; Tue, 07 Jan 2025
- 08:29:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1tVCTE-0003Rf-VL
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:30:23 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 62617D29AF;
+ Tue,  7 Jan 2025 19:29:13 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C80BF19641A;
+ Tue,  7 Jan 2025 19:30:08 +0300 (MSK)
+Content-Type: multipart/mixed; boundary="------------iIQV94jrbnATO1hU8R08znQH"
+Message-ID: <9b64bbe0-473d-4f6b-a673-356e74517fb4@tls.msk.ru>
+Date: Tue, 7 Jan 2025 19:30:08 +0300
 MIME-Version: 1.0
-References: <20241219083228.363430-1-pbonzini@redhat.com>
- <20241219083228.363430-26-pbonzini@redhat.com>
- <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
- <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
- <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
- <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
- <Z31OiMcYT/66AGDt@intel.com>
- <CABgObfZETbD03-H6=qOt6V8GY4ex3WP82i5axzdf_U0GCwsMbw@mail.gmail.com>
- <7cc2a444-c699-4e56-80ff-8f9d6890b71a@linaro.org>
-In-Reply-To: <7cc2a444-c699-4e56-80ff-8f9d6890b71a@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 7 Jan 2025 17:29:14 +0100
-Message-ID: <CABgObfaMja+D5NcCBp-AKUGgOgTR=uju93dyj57ZFAO+mUGUDA@mail.gmail.com>
-Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
- ClassInitImpl<>
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+User-Agent: Mozilla Thunderbird
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Content-Language: en-US, ru-RU
+Cc: qemu-devel <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: A few patches for u-boot-sam460ex
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,39 +100,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 7, 2025 at 5:24=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
-> > but I don't really like the two parameters and also I don't like that
-> > class_init is called differently for classes and interfaces. It's
-> > probably possible to design a better API, but I didn't spend too much
-> > time on it because it may require rethinking how classes are declared
-> > (not a huge deal, as we have only four of them).
->
-> Are you saying this is not a problem related to QDev Reset, but
-> a limitation with any QOM interface, and we can not instantiate
-> any type implementing TYPE_INTERFACE? As in:
->
->    .interfaces =3D (InterfaceInfo[]) {
->      ...
->    },
+This is a multi-part message in MIME format.
+--------------iIQV94jrbnATO1hU8R08znQH
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-So far there was no need for that, so it is not implemented. There are
-three parts:
+Hi!
 
-1) adding interfaces to the TypeInfo
+For some time, qemu package in debian carries several patches for roms/u-boot-sam460ex,
+fixing a number of issues.  It'd be nice to have them in the official repository.
 
-2) filling in vtables for the interfaces
+Thanks,
 
-3) filling in the ResettableClass vtable based on a trait
+/mjt
+--------------iIQV94jrbnATO1hU8R08znQH
+Content-Type: text/x-patch; charset=UTF-8;
+ name="u-boot-sam460ex-mstring.patch"
+Content-Disposition: attachment; filename="u-boot-sam460ex-mstring.patch"
+Content-Transfer-Encoding: base64
 
-None of these is supported by Rust code right now, but only (2) and
-(3) are needed for qdev reset. That's because the Resettable interface
-is declared in DeviceState rather than in the individual devices.
+RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KU3ViamVjdDogdS1ib290
+LXNhbTQ2MGV4OiByZW1vdmUgb2Jzb2xldGUgLW1zdHJpbmcgZ2NjIG9wdGlvbgpEYXRlOiBT
+dW4gT2N0IDIyIDIzOjM1OjQ1IDIwMjMgKzAzMDAKCk1vZGVybiBnY2MgY29tcGxhaW5zIGFi
+b3V0IGl0LgoKU2lnbmVkLW9mZi1ieTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5y
+dT4KCmRpZmYgLS1naXQgYS9yb21zL3UtYm9vdC1zYW00NjBleC9hcmNoL3Bvd2VycGMvY3B1
+L3BwYzR4eC9jb25maWcubWsgYi9yb21zL3UtYm9vdC1zYW00NjBleC9hcmNoL3Bvd2VycGMv
+Y3B1L3BwYzR4eC9jb25maWcubWsKaW5kZXggOGY0N2M5YjcyOC4uY2Y0NDE0Y2VlNiAxMDA2
+NDQKLS0tIGEvcm9tcy91LWJvb3Qtc2FtNDYwZXgvYXJjaC9wb3dlcnBjL2NwdS9wcGM0eHgv
+Y29uZmlnLm1rCisrKyBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2FyY2gvcG93ZXJwYy9jcHUv
+cHBjNHh4L2NvbmZpZy5tawpAQCAtMjQsMyArMjQsMyBAQAogUExBVEZPUk1fUkVMRkxBR1Mg
+Kz0gLWZQSUMgLW1lYWJpCi1QTEFURk9STV9DUFBGTEFHUyArPSAtRENPTkZJR180eHggLWZm
+aXhlZC1yMiAtbXN0cmluZyAtbXNvZnQtZmxvYXQKK1BMQVRGT1JNX0NQUEZMQUdTICs9IC1E
+Q09ORklHXzR4eCAtZmZpeGVkLXIyIC1tc29mdC1mbG9hdAogCg==
+--------------iIQV94jrbnATO1hU8R08znQH
+Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-fdi.patch"
+Content-Disposition: attachment; filename="u-boot-sam460ex-fdi.patch"
+Content-Transfer-Encoding: base64
 
-(2) boils down to wrapping object_class_dynamic_cast into a
-nice-enough API. The commit that I added to rust-next covers that and
-it should work, but the API is a bit unorthogonal.
+RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KU3ViamVjdDogdS1ib290
+LXNhbTQ2MGV4OiBmZGkgZml4CkRhdGU6IFNhdCBBcHIgMSAxNzozNDowOSAyMDIzICswMzAw
+CgpGaXggdGhlIG1pc3NpbmcgZXh0ZXJuIGluIGEgdmFyaWFibGUgZGVjbGFyYXRpb24sCnJl
+c3VsdGluZyBpbiB0aGlzIHZhcmlhYmxlIGJlaW5nIHJlcGVhdGVkIGVhY2ggdGltZQp0aGlz
+IGhlYWRlciBpcyBpbmNsdWRlZCwgc28gdGhlIGxpbmsgd2l0aCBtb2Rlcm4gZ2NjCmZhaWxz
+LgoKU2lnbmVkLW9mZi1ieTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KCmRp
+ZmYgLS1naXQgYS9yb21zL3UtYm9vdC1zYW00NjBleC9ib2FyZC9BQ3ViZS9jb21tb24vdmVz
+YS5oIGIvcm9tcy91LWJvb3Qtc2FtNDYwZXgvYm9hcmQvQUN1YmUvY29tbW9uL3Zlc2EuaApp
+bmRleCBhNmMzMmMzYzJjLi45OTY3MmFhNjdiIDEwMDY0NAotLS0gYS9yb21zL3UtYm9vdC1z
+YW00NjBleC9ib2FyZC9BQ3ViZS9jb21tb24vdmVzYS5oCisrKyBiL3JvbXMvdS1ib290LXNh
+bTQ2MGV4L2JvYXJkL0FDdWJlL2NvbW1vbi92ZXNhLmgKQEAgLTQsNyArNCw3IEBACiBleHRl
+cm4gdm9pZCAqRG9WZXNhKGludCBhcmdjLCBjaGFyICphcmd2W10pOwogZXh0ZXJuIHZvaWQg
+KnNldF92ZXNhX21vZGUoaW50IG1vZGUpOwogCi1zdHJ1Y3QgRnJhbWVCdWZmZXJJbmZvCitl
+eHRlcm4gc3RydWN0IEZyYW1lQnVmZmVySW5mbwogewogICAgICAgICB2b2lkICpCYXNlQWRk
+cmVzczsKICAgICAgICAgdW5zaWduZWQgbG9uZyBYU2l6ZTsK
+--------------iIQV94jrbnATO1hU8R08znQH
+Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-build.patch"
+Content-Disposition: attachment; filename="u-boot-sam460ex-build.patch"
+Content-Transfer-Encoding: base64
 
-Paolo
+RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KRGF0ZTogU2F0LCAwMyBB
+dWcgMjAyNCAxMToxODo1OCArMDMwMApTdWJqZWN0OiB1LWJvb3Qtc2FtNDYwZXg6IGJ1aWxk
+IGZpeGVzCgpGaXhlcyBvciB3b3JrcyBhcm91bmQgbnVtZXJvdXMgYnVpbGQgaXNzdWVzIGFu
+ZCBvbmUgcmVhbCBidWcuCgpNb3N0IGFyZSBkdWUgdG8gbmV3IGRlZmF1bHRzIGluIGdjYyAo
+aW4gZGViaWFuKSwgbGlrZQogLVdlcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlv
+bnMgKHRoZXJlIGFyZSBhIGxvdCBvZiBtaXNzaW5nIGRlY2xzKQogLVdlcnJvcj1pbmNvbXBh
+dGlibGUtcG9pbnRlci10eXBlcyAoZnVuY3Rpb24gdHlwZXMgbWlzbWF0Y2hlcykKIC1XZXJy
+b3I9aW50LWNvbnZlcnNpb24gKGZyZWUgaW50IDw9PiBwb2ludGVyIGNvbnZlcnNpb24pCgpC
+dWctRGViaWFuOiBodHRwczovL2J1Z3MuZGViaWFuLm9yZy8xMDc1NDI4ClNpZ25lZC1vZmYt
+Ynk6IE1pY2hhZWwgVG9rYXJldiA8bWp0QHRscy5tc2sucnU+CgpkaWZmIC0tZ2l0IGEvcm9t
+cy91LWJvb3Qtc2FtNDYwZXgvYm9hcmQvQUN1YmUvU2FtNDYwZXgvU2FtNDYwZXguYyBiL3Jv
+bXMvdS1ib290LXNhbTQ2MGV4L2JvYXJkL0FDdWJlL1NhbTQ2MGV4L1NhbTQ2MGV4LmMKaW5k
+ZXggNGQ1Yjk1M2MwMi4uNWVjZjE2ZGJlMiAxMDA2NDQKLS0tIGEvcm9tcy91LWJvb3Qtc2Ft
+NDYwZXgvYm9hcmQvQUN1YmUvU2FtNDYwZXgvU2FtNDYwZXguYworKysgYi9yb21zL3UtYm9v
+dC1zYW00NjBleC9ib2FyZC9BQ3ViZS9TYW00NjBleC9TYW00NjBleC5jCkBAIC04NDMsNyAr
+ODQzLDcgQEAgaW50IGxhc3Rfc3RhZ2VfaW5pdCAodm9pZCkKIAkvLyBjbGVhbnVwIGxhc3Qg
+OCBieXRlcyBvZiB0aGUgUlRDIHJlZ2lzdGVycyBiYW5rIC0tLS0tCiAJCiAJY2hhciBhcnJb
+OF0gPSB7IDAgfTsKLQlpMmNfd3JpdGUoMHg2OCwgMHgwOCwgMSwgJmFyciwgOCk7CisJaTJj
+X3dyaXRlKDB4NjgsIDB4MDgsIDEsIGFyciwgOCk7CiAJCiAJLy8gVVNCIEluaXQgLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogCmRpZmYgLS1naXQgYS9y
+b21zL3UtYm9vdC1zYW00NjBleC9jb21tb24vdXNiLmMgYi9yb21zL3UtYm9vdC1zYW00NjBl
+eC9jb21tb24vdXNiLmMKaW5kZXggMjAzYzlmNzc5NS4uZDY0NWQzNmM4ZSAxMDA2NDQKLS0t
+IGEvcm9tcy91LWJvb3Qtc2FtNDYwZXgvY29tbW9uL3VzYi5jCisrKyBiL3JvbXMvdS1ib290
+LXNhbTQ2MGV4L2NvbW1vbi91c2IuYwpAQCAtOTU3LDcgKzk1Nyw3IEBAIHZvaWQgdXNiX3Nj
+YW5fZGV2aWNlcyh2b2lkKQogCQlwcmludGYoIiVkIFVTQiBEZXZpY2UocykgZm91bmRcbiIs
+IGRldl9pbmRleCk7CiAJCQogI2lmZGVmIENPTkZJR19TQU00NjBFWAotCXN0YXRpYyBhdHRl
+bXB0cyA9IDA7CisJc3RhdGljIGludCBhdHRlbXB0cyA9IDA7CiAJCiAgICAgaWYgKGRldl9p
+bmRleCA8IDMpIHsgIAogICAgICAgICB1MTYgZnBnYV92YWwgPSBpbl9iZTE2KCh2b2lkICop
+Q09ORklHX1NZU19GUEdBX0JBU0UgKyAweDJFKTsKZGlmZiAtLWdpdCBhL3JvbXMvdS1ib290
+LXNhbTQ2MGV4L2NvbmZpZy5tayBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2NvbmZpZy5tawpp
+bmRleCBiY2RhNzc2MTFhLi45OTI4ZjVmNGM2IDEwMDY0NAotLS0gYS9yb21zL3UtYm9vdC1z
+YW00NjBleC9jb25maWcubWsKKysrIGIvcm9tcy91LWJvb3Qtc2FtNDYwZXgvY29uZmlnLm1r
+CkBAIC0xOTEsNiArMTkxLDExIEBAIGVuZGlmCiAKIENGTEFHUyArPSAkKGNhbGwgY2Mtb3B0
+aW9uLC1mbm8tc3RhY2stcHJvdGVjdG9yKQogCisjIHRoaXMgdS1ib290IGlzIGFuIG9sZCBi
+YWQgY29kZQorQ0ZMQUdTICs9ICQoY2FsbCBjYy1vcHRpb24sLVduby1lcnJvcj1pbXBsaWNp
+dC1mdW5jdGlvbi1kZWNsYXJhdGlvbikKK0NGTEFHUyArPSAkKGNhbGwgY2Mtb3B0aW9uLC1X
+bm8tZXJyb3I9aW5jb21wYXRpYmxlLXBvaW50ZXItdHlwZXMpCitDRkxBR1MgKz0gJChjYWxs
+IGNjLW9wdGlvbiwtV25vLWVycm9yPWludC1jb252ZXJzaW9uKQorCiAjICQoQ1BQRkxBR1Mp
+IHNldHMgLWcsIHdoaWNoIGNhdXNlcyBnY2MgdG8gcGFzcyBhIHN1aXRhYmxlIC1nPGZvcm1h
+dD4KICMgb3B0aW9uIHRvIHRoZSBhc3NlbWJsZXIuCiBBRkxBR1NfREVCVUcgOj0K
 
+--------------iIQV94jrbnATO1hU8R08znQH--
 
