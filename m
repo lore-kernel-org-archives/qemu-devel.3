@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335FFE77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 06:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E57E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 06:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tV3Rf-0005qQ-NP; Tue, 07 Jan 2025 01:52:07 -0500
+	id 1tV3VW-0006be-Bq; Tue, 07 Jan 2025 01:56:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3Rd-0005pu-It
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 01:52:05 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@gmail.com>)
+ id 1tV3VU-0006bQ-KP
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 01:56:04 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tV3Rb-0003vn-Io
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 01:52:04 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385de9f789cso11297894f8f.2
- for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 22:52:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@gmail.com>)
+ id 1tV3VS-0004Ju-SV
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 01:56:04 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ef6c56032eso16374497a91.2
+ for <qemu-devel@nongnu.org>; Mon, 06 Jan 2025 22:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736232721; x=1736837521; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JHJXvWkOPDWpmq79f8zCj+vmrRIwZUYfHfzuEHPF5x8=;
- b=i9LOLzQy+9bdamS+0/nL5prj+VAaO8s/a2DgxUCOZryGwb35oZlTBzVaQBue5n++TQ
- PMw6Qr/YA78IsalRrUH6E+ZtXxUXepmRqjZnRCHJXWrERzXLAriSBn3eMqRv8KeU5trR
- uWazzh6FD1V17IJY5u07DXEPEBdHgPbSpf6000P5PFxnZ4c/YfUOD1uD59B1APZCMz7o
- 7fP4rpVPhOL7YYovKGgKLJ5wq3tvrcSiu1IEdcc5/aWk7E2GyEBSyoKYfNBX08wS29CU
- IrcFuqD7rY4bKRUdUcYh65MTblNaPuftZe1lYmcoJk4D3DCtCYjV64Uin4U5I/SWGwFJ
- slhQ==
+ d=gmail.com; s=20230601; t=1736232961; x=1736837761; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RjkY+h+3PAVYP0RDSnP8zFyX0O1SvOK7FYUU1P1wjuc=;
+ b=T59d0fhW+GaYLkZGOgxjdd59rObYKKxOlqIa6pioGAT24pwiUx7LPUXL4Xx6oxkoBb
+ YOdPMyIS7cd3hFKWKpPxSPwy/ggAnzEABITOyyR86UWCa0H3bnzrswF374n+YGeGqGdF
+ UNMmDcSKeaXyL2Ms2086UZhljrwdSbg4C4yWhZVf+FgMPdRDDgI19qy4OpsvMnr6lk9o
+ bxbbxGURjSmYu3A4vncyiapkoEh/BSDMjFuETAqWm84bfwXMWVqc+kqPlCwu6BVmu6sZ
+ Z8x9TyIBHKze6WiSFggSllnynCDfmX0s5218g5xoGu3EAvsHGETqyE/nMc8Tj8Qj5ZYd
+ k7MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736232721; x=1736837521;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JHJXvWkOPDWpmq79f8zCj+vmrRIwZUYfHfzuEHPF5x8=;
- b=So+MpPMXi3N1Sqlt+uCwh1Mpmp3U2HqziM3I6uVIuBjq6/bHVzSw/YLsvjOVad4Qvy
- vtbeYznhDF2XMGtR+bLMmKrL1nwlsMHZciDXYGIBTSElAUlzAcVw0lv24ZBarXgAR0z5
- 2J9rvGNaFJja+h5n6dMOTLTyAb83+V0c65SH0xebF9kL4NK9zV709iGS+YHi8eR8AfAC
- n4gwLEfITNkK55xr+uyaRJryo0jyjMzQuWQGzV7Klr+TplGLF+ia0xWgS9PF2RLYMr6s
- ReTmSl0Lsalyn2tOUcXMp8gnj37jZTM591bVkTjLXSmiehh3tLk24w8B7HhSFkEaOcan
- grcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOK7S/NfZUcs7w2NDYnORXTY+Nodu5ZtCamzUPrz2wdU12e5s25mvUl4DugnT/tni+G38Rbyn2OG3l@nongnu.org
-X-Gm-Message-State: AOJu0Yz7OaHGsCVA6uxMPSRA5CJAErkwbBog/wBGPAlVMgNTFIetR8YE
- oKoacxcAQ5qJCFHtYXnI+Z+NCtQf3IWjIT0fcX3RO5FDc1q2pitYJYyZYW7UDpw=
-X-Gm-Gg: ASbGncuD14y0o+4xhXfCodQpfvL1iIV5He4WOiwSjVqwL3xnR3se1lrJ/CH4X2Wt8Sl
- jT6bmOgbOVQRKLuOaMG6dqtz7aC77+dsd2C+YwT03XuC57CoP5xbBrsmIq0wr803gu+91XW2bu6
- hfZMKDaGmTC3fTXNy+W3FbZL+55P1bgzI59hhUAU9wUW+bx5lVS0IEio6knPz7Jt8FgPbms2uuA
- qlJoTV/DhwDBcZB+9bPGxif0eVHNjJzwoF5DeWkMWEOi9r9Wef6g7lv2IuAhJtv4d63WdPSigs5
- D7G1VZ4FR/tCaWxCZpKBOBmt
-X-Google-Smtp-Source: AGHT+IEB2vbfM5aTlgSLQikXUasZcCiDDJ3wYOzNYZfuR+75YRsc8+Sq6wDQhXpMAI0nD31X9pdMlA==
-X-Received: by 2002:a5d:5f83:0:b0:385:ec6e:e87a with SMTP id
- ffacd0b85a97d-38a223ffaf7mr45383775f8f.43.1736232721099; 
- Mon, 06 Jan 2025 22:52:01 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e1a1sm49011413f8f.69.2025.01.06.22.52.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Jan 2025 22:52:00 -0800 (PST)
-Message-ID: <a4fa3adb-ce6b-4eae-a91d-b26b5c173986@linaro.org>
-Date: Tue, 7 Jan 2025 07:51:59 +0100
+ d=1e100.net; s=20230601; t=1736232961; x=1736837761;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RjkY+h+3PAVYP0RDSnP8zFyX0O1SvOK7FYUU1P1wjuc=;
+ b=hdFfDuFTQVrca9UObxT7R9b7wH0vCCTbae7rLzboSvQ5nqlduW22bQwor1hCuaYmCI
+ WBGtYBgdUVYWR0s4xEtB0sGArjcCbcS/tCCw23IIFC1ZuLQ9ctboCNABqocb7JCh+9BH
+ zMxIuUS/QwCW4g5DjrnndjR9EfiGLNnHmWFzRdqvfwsjH/895xuaeeifvQ4JegAUAhPx
+ VR8l6sALbdhT/ZvSvs4hrhr458tmuBdWCRmlNUAEvhZd+2/vwy77CLobqdiXaWuUNA8/
+ I/V8usIoTW/YF3c8dDrCP0Bu90QW7Kxg9ODbGLis2sBnVgG04DYQDUYZiTasyt/XShCU
+ Vn+Q==
+X-Gm-Message-State: AOJu0YxvuLOVv+eefwHg+Yakb3kraRD2p2JG2OKIEtXQrwDK6zOaZxhq
+ wz8xcEcq3rE8ccGICkbBWVEirzRz2ZtKG/kKU05IKhHS35gAYbbTIZKQLM4WsqgHOzQfSbaGUV2
+ 1RVEu4ZZfaSNeLe/CnCcpP6Voe2g=
+X-Gm-Gg: ASbGncurRLof79bflP5pX3PUy+mFCstR3kZ7+Kvn4mYpo5wiNwt7qBrCVMlrHd/L9dx
+ MYxBXGSiW7lNPOo4P0U7cwgKUc0ZbQ4f9cOyTCemp80c=
+X-Google-Smtp-Source: AGHT+IETKWJ40R/SxPDkwGI3lsZI7j/UiBbeCzuDmwt4hMwzT42E3yMOygxi+UiQXLUlGioeOEpvAIKf5UF28Z9LPzE=
+X-Received: by 2002:a17:90b:2c8e:b0:2ef:2d9f:8e55 with SMTP id
+ 98e67ed59e1d1-2f452e458e5mr97271841a91.17.1736232960786; Mon, 06 Jan 2025
+ 22:56:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add me as the maintainer for ivshmem-flat
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-References: <20250107015639.27648-1-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107015639.27648-1-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+References: <20230622214845.3980-1-joao.m.martins@oracle.com>
+In-Reply-To: <20230622214845.3980-1-joao.m.martins@oracle.com>
+From: Zhangfei Gao <zhangfei.gao@gmail.com>
+Date: Tue, 7 Jan 2025 14:55:49 +0800
+X-Gm-Features: AbW1kvZ0e3DvMC6UJquw_C4kE0tJ_4rq-wxgQP9KWYVP7qlwKOMMEH0a3Rt8ygI
+Message-ID: <CAMj5Bki73PNZdZvNAsK1YJiWGMeZugQCZ18QPekCM5EN61QqBg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/15] vfio: VFIO migration support with vIOMMU
+To: Joao Martins <joao.m.martins@oracle.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
+ Cedric Le Goater <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, Avihai Horon <avihaih@nvidia.com>, 
+ Jason Gunthorpe <jgg@nvidia.com>, Yi Liu <yi.l.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=zhangfei.gao@gmail.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,14 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 02:56, Gustavo Romero wrote:
-> Add me as the maintainer for the ivshmem-flat device.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   MAINTAINERS | 7 +++++++
->   1 file changed, 7 insertions(+)
+Hi, Joao
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri, Jun 23, 2023 at 5:51=E2=80=AFAM Joao Martins <joao.m.martins@oracle=
+.com> wrote:
+>
+> Hey,
+>
+> This series introduces support for vIOMMU with VFIO device migration,
+> particurlarly related to how we do the dirty page tracking.
+>
+> Today vIOMMUs serve two purposes: 1) enable interrupt remaping 2)
+> provide dma translation services for guests to provide some form of
+> guest kernel managed DMA e.g. for nested virt based usage; (1) is special=
+ly
+> required for big VMs with VFs with more than 255 vcpus. We tackle both
+> and remove the migration blocker when vIOMMU is present provided the
+> conditions are met. I have both use-cases here in one series, but I am ha=
+ppy
+> to tackle them in separate series.
+>
+> As I found out we don't necessarily need to expose the whole vIOMMU
+> functionality in order to just support interrupt remapping. x86 IOMMUs
+> on Windows Server 2018[2] and Linux >=3D5.10, with qemu 7.1+ (or really
+> Linux guests with commit c40aaaac10 and since qemu commit 8646d9c773d8)
+> can instantiate a IOMMU just for interrupt remapping without needing to
+> be advertised/support DMA translation. AMD IOMMU in theory can provide
+> the same, but Linux doesn't quite support the IR-only part there yet,
+> only intel-iommu.
+>
+> The series is organized as following:
+>
+> Patches 1-5: Today we can't gather vIOMMU details before the guest
+> establishes their first DMA mapping via the vIOMMU. So these first four
+> patches add a way for vIOMMUs to be asked of their properties at start
+> of day. I choose the least churn possible way for now (as opposed to a
+> treewide conversion) and allow easy conversion a posteriori. As
+> suggested by Peter Xu[7], I have ressurected Yi's patches[5][6] which
+> allows us to fetch PCI backing vIOMMU attributes, without necessarily
+> tieing the caller (VFIO or anyone else) to an IOMMU MR like I
+> was doing in v3.
+>
+> Patches 6-8: Handle configs with vIOMMU interrupt remapping but without
+> DMA translation allowed. Today the 'dma-translation' attribute is
+> x86-iommu only, but the way this series is structured nothing stops from
+> other vIOMMUs supporting it too as long as they use
+> pci_setup_iommu_ops() and the necessary IOMMU MR get_attr attributes
+> are handled. The blocker is thus relaxed when vIOMMUs are able to toggle
+> the toggle/report DMA_TRANSLATION attribute. With the patches up to this =
+set,
+> we've then tackled item (1) of the second paragraph.
 
+Not understanding how to handle the device page table.
+
+Does this mean after live-migration, the page table built by vIOMMU
+will be re-build in the target guest via pci_setup_iommu_ops?
+Or done by page-fault again?
+
+Thanks
 
