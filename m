@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE131E77198
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60B6E77197
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVCp2-0004PP-Te; Tue, 07 Jan 2025 11:52:52 -0500
+	id 1tVCtz-00027G-Ld; Tue, 07 Jan 2025 11:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCp1-0004MJ-Aq
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:51 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tVCtx-000236-9T
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:57:57 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVCoS-0005rX-WC
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:52:51 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so178797155e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:52:16 -0800 (PST)
+ id 1tVCtv-0006th-BK
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:57:56 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38633b5dbcfso15169060f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:57:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736268735; x=1736873535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736269074; x=1736873874; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uQa8lE+2zCWqeETwyUKylE9fAVCRJIjj0umvCIZJA8E=;
- b=xKMp93gEVruUadhTZftwuS1KhNk9z2b3Vh9Z9czFOwmYLranALWCioOkXoKw5iVdcs
- ybH9Zrj3N96z5/l09PVFDzoe8S5Fhj8YAdPNNrJ3BMT8XfE70DJ/wtl+1LSRDef7zUPv
- KWfrhjO3gbYvDVK4U29d/oCXprWPnjMcXeEYeEDk/afbhaIOHgR23cInu7Q1NMwdQHCX
- CJx0k4j1YkjpEd1CpwVMFK5+TNlkjMdfSOC5Jl7zSaqzkRSkZrmd4WghED61WgEL0AAM
- 01kr7gWhNFFUqF2J5iak0pAXFbhO7ldOYq2Hcbg/7X0z244EI7Y3j+oJOfGBWJvIjSJs
- wCBg==
+ bh=R2nl2q/jhmEGUG+F/0rLUrlSD8XWQpV+qDK7U0WrjiI=;
+ b=ep1UI+ph1tfkafoqMiSs+87E1a+xmrIw95FPIQRlraBQsakLCgmET5SRQaaYEiaav+
+ tGwApgixu7MHSp9kJRG9g6zejrd4ixwzQrQO1bnca0ZP/G3lvwS7D47UDQE22X5Lee0j
+ 7MDgRLU8qEKcdb3AS/i520g4dzUVbRcoGJdn32ibJO+JtDzsYNxTgLYClB84M/6RQooN
+ TCMBk6HtB5SPSXH7SOATKEI0r6B6jFD+QBOT4dOk4KiSqKYfnzjf6q7aya19aXt+kpJD
+ DnQirlOVB+7Lc+0MBNQoNTznli5fE6AAlMnsGq5a7MnkDip9iAdoi+bg2oHicPXXdQKf
+ xNGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736268735; x=1736873535;
+ d=1e100.net; s=20230601; t=1736269074; x=1736873874;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uQa8lE+2zCWqeETwyUKylE9fAVCRJIjj0umvCIZJA8E=;
- b=dPM0wP+ll9CzT1Ff20IdOQXqRQaBONF8O2Mw8xokQvm3bq8x1C/hiFi+1Y3+tcaSDb
- cSpclkQFSrAWpnUHpILPvZGdwZ8VHnL4Nkw/IrPZLHjtOQ6SHXUj+sSaVoYWpjoLKN50
- AqGt/QaPpv7qtspuo8e/02QLwaxuPSwTGCocMa+EOBY2p0ctef8rRYJfgy4yRsKIwJ3+
- Kzb6zMwiQoooiFkLJ+5uDoo8faBp91Sk4DVOdkGA9wIOuCpOxMK/DVbTArI2lUoNLvk6
- dBq5XYQrlr3IU3awtdq31SmBtuXqUmy+eBX04gBk0ZB3sF7rF3eBXIDoY6BEmPOiIJ7y
- OU/g==
-X-Gm-Message-State: AOJu0YxiP7S+SWkeUMwHjKcuwQtDHi89CdRuL4+ITyNEXSoBA5Bh0lzf
- 0tdulzJx5g9tHN1STAN9eW+teTvrEafchgjgAv+SVfRSMd+fLzCLq+GQ2dpa6rY=
-X-Gm-Gg: ASbGncsC2YI1YU/I8oshHos55okHocmedKd5bl4xyQn4Cw3qtbqWFwbLqfR0/Ly9bhv
- kUclbh0AxqwmFgBbzUQ36l7iDoZAhxQQqyvLRpoEAzQ+VK1MBFqe4eROsvhYO5m/hQL2METQJUj
- zCdXXuc8F7PdeN6qnAWtD2IusgYuWj3F2cIBGO+yst1cru5+yyppNpfCoZBpo8vSXNVYPwzRBFF
- 8sz6Hpw3GsvmqIn7h3cbbml83mK45lw54NW2GAQPXPv0bN45UORq7I=
-X-Google-Smtp-Source: AGHT+IGJaMVN357lzD+88ol6Cqialy1zG6i3hgUTu42T6mKwSA+1SdTSP+i/ovxXPWbAC4GdSUKqgQ==
-X-Received: by 2002:a05:600c:a0a:b0:434:a781:f5d5 with SMTP id
- 5b1f17b1804b1-43668b93ca2mr556772955e9.30.1736268735426; 
- Tue, 07 Jan 2025 08:52:15 -0800 (PST)
+ bh=R2nl2q/jhmEGUG+F/0rLUrlSD8XWQpV+qDK7U0WrjiI=;
+ b=mdNp/cfGFO0ke8swRiIxc2QL79f/XLdFrhnl8Z+fPRSe1Qjhe/7+XTXt+ZzwFTlLvT
+ qGgWZS4TZjtXT4A0y4aoopAjDi2SY08/LO39eIA9h1rUBmThKz3jXvPxnw5qvvka0pg0
+ kjnwYX2NSRKeFYtVCvPxVetjWsK51nebXL2M/L6b+EIFK160nyttOTIlBFYbUky0MEvk
+ G6mmxPKB9kN0QAoaTSGae0ZUVTmGmqMXObuKy17/qbNs3AuV+abmIMLvWWrc2Gl4vrPQ
+ VWsYBTmPs5xYKHNnL+T/tyZIWmxr4huFRc87E/UZbJ65He/RTzueyUrMHjhWoGwM7jah
+ DbxA==
+X-Gm-Message-State: AOJu0YxbtaQN6uL2kwMa9pksS9mzocYypiA23l/SMHh1dKIQafp/KoNP
+ qU+9fHHPTd7rE/ptmv9sL8Qb9Geixk/fKyV2RvUpua7PM8YhHPDhNSEglvb3ROs=
+X-Gm-Gg: ASbGncsRs78mfkIV2bjSJbUIbZoGD+gyEU4n2f8Oa4yeWI3vVQ6AkjZyu5M/e5qtWgj
+ Lf5zKLZr7ASFiVcnryTnhkA8rhNXniCYCh50roFHnVU1jMKpv6WU1qAQxmwBtuetupDfWcqS3gL
+ 5cIF6cVhMHrr8CPLzsd8ASx7dkel/UaygEVUeEeM41UHnG5Fe/jvZus2jexKHKxsZaqDgcLNTM0
+ 2UnvGft0n7n6gCsS1pmqC4jo9WsFo2OQutrWmrNA7t3ORfibP3RHlM=
+X-Google-Smtp-Source: AGHT+IGRf/DUfHTpWX1mrFa1rZyRHPWojHW3ZkaRYvLYQTxAPMD/fqdIkKloQyWPx+nXncAI4HJpZA==
+X-Received: by 2002:a05:6000:704:b0:385:fd24:3317 with SMTP id
+ ffacd0b85a97d-38a221e2389mr51337852f8f.1.1736269073626; 
+ Tue, 07 Jan 2025 08:57:53 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e219sm51517269f8f.84.2025.01.07.08.52.11
+ 5b1f17b1804b1-436612008casm605560395e9.14.2025.01.07.08.57.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 07 Jan 2025 08:52:11 -0800 (PST)
+ Tue, 07 Jan 2025 08:57:53 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EFA365F9EC;
- Tue,  7 Jan 2025 16:52:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id EB81C5FDC6;
+ Tue,  7 Jan 2025 16:52:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -96,20 +96,18 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v3 10/29] tests/functional: update the riscv32 tuxrun tests
-Date: Tue,  7 Jan 2025 16:51:48 +0000
-Message-Id: <20250107165208.743958-11-alex.bennee@linaro.org>
+ Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3 21/29] tests/lcitool: bump to latest version of libvirt-ci
+Date: Tue,  7 Jan 2025 16:51:59 +0000
+Message-Id: <20250107165208.743958-22-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250107165208.743958-1-alex.bennee@linaro.org>
 References: <20250107165208.743958-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,37 +130,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+We will shortly need this to build our riscv64 cross container.
+However to keep the delta down just do the bump first. As ccache4 is
+now preferred for FreeBSD to get the latest version there is a little
+update in the FreeBSD metadata.
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-31-alex.bennee@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/test_riscv32_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .gitlab-ci.d/cirrus/freebsd-14.vars | 2 +-
+ tests/lcitool/libvirt-ci            | 2 +-
+ tests/vm/generated/freebsd.json     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_riscv32_tuxrun.py b/tests/functional/test_riscv32_tuxrun.py
-index 49b57cd428..3c570208d0 100755
---- a/tests/functional/test_riscv32_tuxrun.py
-+++ b/tests/functional/test_riscv32_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunRiscV32Test(TuxRunBaselineTest):
- 
-     ASSET_RISCV32_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/riscv32/Image',
--        '89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5')
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv32/Image',
-+        '872bc8f8e0d4661825d5f47f7bec64988e9d0a8bd5db8917d57e16f66d83b329')
-     ASSET_RISCV32_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/riscv32/rootfs.ext4.zst',
--        '7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba')
-+        'https://storage.tuxboot.com/buildroot/20241119/riscv32/rootfs.ext4.zst',
-+        '511ad34e63222db08d6c1da16fad224970de36517a784110956ba6a24a0ee5f6')
- 
-     def test_riscv32(self):
-         self.set_machine('virt')
+diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
+index 0a7ac5e0e1..0997c47af5 100644
+--- a/.gitlab-ci.d/cirrus/freebsd-14.vars
++++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
+@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
+ NINJA='/usr/local/bin/ninja'
+ PACKAGING_COMMAND='pkg'
+ PIP3='/usr/local/bin/pip'
+-PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
++PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-sphinx py311-sphinx_rtd_theme py311-tomli python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
+ PYPI_PKGS=''
+ PYTHON='/usr/local/bin/python3'
+diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
+index 9ad3f70bde..b6a65806bc 160000
+--- a/tests/lcitool/libvirt-ci
++++ b/tests/lcitool/libvirt-ci
+@@ -1 +1 @@
+-Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
++Subproject commit b6a65806bc9b2b56985f5e97c936b77c7e7a99fc
+diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
+index 3cb7fb7060..81fc38d798 100644
+--- a/tests/vm/generated/freebsd.json
++++ b/tests/vm/generated/freebsd.json
+@@ -13,7 +13,7 @@
+     "bzip2",
+     "ca_root_nss",
+     "capstone4",
+-    "ccache",
++    "ccache4",
+     "cmocka",
+     "ctags",
+     "curl",
 -- 
 2.39.5
 
