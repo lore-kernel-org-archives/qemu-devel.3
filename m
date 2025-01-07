@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80484E77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B8CE77198
 	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 03:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tUzxG-00056j-QZ; Mon, 06 Jan 2025 22:08:30 -0500
+	id 1tUzxH-00057c-Nt; Mon, 06 Jan 2025 22:08:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tUzxF-00056H-9r
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 22:08:29 -0500
+ id 1tUzxG-00056p-HJ
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 22:08:30 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tUzxC-0004c1-Tu
- for qemu-devel@nongnu.org; Mon, 06 Jan 2025 22:08:29 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tUzxD-0004cF-4K
+ for qemu-devel@nongnu.org; Mon, 06 Jan 2025 22:08:30 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bx++GkmnxnTfheAA--.55041S3;
- Tue, 07 Jan 2025 11:08:20 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxuuCmmnxnXPheAA--.57203S3;
+ Tue, 07 Jan 2025 11:08:22 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDxfcejmnxnn2gXAA--.35275S2;
- Tue, 07 Jan 2025 11:08:20 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMDxfcejmnxnn2gXAA--.35275S7;
+ Tue, 07 Jan 2025 11:08:22 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
 	Huacai Chen <chenhuacai@kernel.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 0/7] hw/intc/loongson_ipi: Remove property num_cpu
-Date: Tue,  7 Jan 2025 11:08:12 +0800
-Message-Id: <20250107030819.90442-1-maobibo@loongson.cn>
+Subject: [PATCH v3 5/7] hw/intc/loongarch_ipi: Remove num-cpu property
+Date: Tue,  7 Jan 2025 11:08:17 +0800
+Message-Id: <20250107030819.90442-6-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250107030819.90442-1-maobibo@loongson.cn>
+References: <20250107030819.90442-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxfcejmnxnn2gXAA--.35275S2
+X-CM-TRANSID: qMiowMDxfcejmnxnn2gXAA--.35275S7
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,42 +66,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Property num_cpu is not necessary, it can be acquired from function
-possible_cpu_arch_ids(), also adding arch_id and CPUState pointer in
-IPICore object, so that IPICore object can be parsed from physical
-cpu id.
+Since cpu number can be acquired from possible_cpu_arch_ids(),
+num-cpu property is not necessary. Here remove num-cpu property
+for object iTYPE_LOONGARCH_IPI object.
 
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
-  v2 ... v3:
-    1. Remove TYPE_HOTPLUG_HANDLER interface support
-    2. Remove num_cpu property
-    3. Adding arch_id and CPUState pointer in IPICore object
+ hw/intc/loongarch_ipi.c | 5 -----
+ hw/loongarch/virt.c     | 1 -
+ 2 files changed, 6 deletions(-)
 
-  v1 ... v2:
-    1. Refresh to latest version.
-    2. Rename present_cpu_map with present_map, and present_cpu with index.
-    3. Replace present_cpu and cs with struct::IPICPUState.
-
----
-Bibo Mao (7):
-  hw/intc/loongarch_ipi: Implement realize interface
-  hw/intc/loongson_ipi: Remove num_cpu from loongson_ipi_common
-  hw/intc/loongson_ipi: Remove property num_cpu from loongson_ipi_common
-  hw/intc/loongarch_ipi: Get cpu number from possible_cpu_arch_ids
-  hw/intc/loongarch_ipi: Remove num-cpu property
-  hw/intc/loongson_ipi: Add more output parameter for cpu_by_arch_id
-  hw/intc/loongarch_ipi: Use alternative function cpu_by_arch_id
-
- hw/intc/loongarch_ipi.c               | 69 ++++++++++++++++++++-------
- hw/intc/loongson_ipi.c                | 43 ++++++++++++++++-
- hw/intc/loongson_ipi_common.c         | 41 +++++-----------
- hw/loongarch/virt.c                   |  1 -
- include/hw/intc/loongarch_ipi.h       |  1 +
- include/hw/intc/loongson_ipi_common.h |  5 +-
- 6 files changed, 109 insertions(+), 51 deletions(-)
-
-
-base-commit: 9ee90cfc25747ab25c7da31a50f167fc5122e20e
+diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+index 49b4595d90..41d9625dcb 100644
+--- a/hw/intc/loongarch_ipi.c
++++ b/hw/intc/loongarch_ipi.c
+@@ -79,10 +79,6 @@ static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
+-static const Property loongarch_ipi_properties[] = {
+-    DEFINE_PROP_UINT32("num-cpu", LoongsonIPICommonState, num_cpu, 1),
+-};
+-
+ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+ {
+     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
+@@ -91,7 +87,6 @@ static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
+ 
+     device_class_set_parent_realize(dc, loongarch_ipi_realize,
+                                     &lic->parent_realize);
+-    device_class_set_props(dc, loongarch_ipi_properties);
+     licc->get_iocsr_as = get_iocsr_as;
+     licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
+ }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 60bd4dc9d3..0d6506eb38 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -898,7 +898,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+ 
+     /* Create IPI device */
+     ipi = qdev_new(TYPE_LOONGARCH_IPI);
+-    qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
+ 
+     /* IPI iocsr memory region */
 -- 
 2.39.3
 
