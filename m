@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819A6E77198
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FC5E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 15:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVBqN-0004qm-C3; Tue, 07 Jan 2025 10:50:11 -0500
+	id 1tVBrO-00062X-EV; Tue, 07 Jan 2025 10:51:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVBqJ-0004lZ-5j
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:50:08 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVBqG-0006tK-5N
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 10:50:05 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso108596865e9.0
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 07:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736265002; x=1736869802; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8uL7tmd9mUIlLYCOLx9MrU0lzClIZcU9iuDszLT0rGM=;
- b=A9yWLIHCpAye+K4c0OcvIyWvgFEIXwsS86e2rPQdLGsY3GjHyM2gyIV772jVORkutM
- mN+JGRfZvTvEtSO4mRVIO3HhYtaGIhtrgTDemwIqBMCEdS2CDFbQgY5EG/7gGlzKQVZi
- iKOkfNJRTJHFJcdCe3a5F34VSQKFjRcawEesYvzMxg93Axap+ES80tvc2Wpvk2D15xGo
- Ay2nXHzk02BRlCO18XqsO1RU2V4Mu6w1Az7IWwFlbzrUwcnks6oINOlaFIEOveJjZxiM
- p7Qb1Bq9TusPf2pTZ6G9UFzsjxxo78yN6UgmDrSU10z4OBSon9k4KsTcm/lXaeq5ks21
- yjHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736265002; x=1736869802;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8uL7tmd9mUIlLYCOLx9MrU0lzClIZcU9iuDszLT0rGM=;
- b=ay23dOYzHlan0MuySmrFmzUkk/g0ti5GJr7VkeJGolCNZgFKdfWNFCjti0hBhKXScH
- A2ZZhWORJRvx0iypRKEpbMnIyHP/cYV7l400NPWpUPBenneDN4vfOQYXL9OFtGajhdl5
- Wz4boAlN7unmyRR4/Aty68deZKMPnAX1Jo8FVNfsr5lHxFhiGFitjnHJM9BB78leae59
- jdoNdi2zMe8t3wFPm1pQx+tvuOdaoiHsmjyz/TWOPOBkA4cUSIt3ip1bx3YNuuVJMhWf
- 44NFQKgBV5ctcYi3y4lUYSn6y2DOpZPAzfKjkIxXowvXP5EOmIeg01PnPd+97CV7GTCt
- QU5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURiYIRsEUCBLZkYNDTfhaJtM3yAaUmVV/Y90TR1JXsjBE4/7ikpuYEqm1oXhi/LrI/jkGcKz4GlbPS@nongnu.org
-X-Gm-Message-State: AOJu0YzXWIUXocub65ipxAPgokoM0Q780bo0VxPKjCBoP4xFTMFQ5CyE
- fMbUMJINekbZKXvg5qcZgvEYR10KOofiFl8plia520Gn1h9tq2yo6+/AG0bUfdA=
-X-Gm-Gg: ASbGncsOipHHJNTyF8J5zry8vm5VK/DIhlkAU8QTC/rTq/XGznkACN1PPzoEAKmUtVX
- 3EteKuSrwTGo0cZJO6sYpjdV3MH4iotSSYua9WRPP8Noc8Qr0J1522xRPrvkKQTXhD21VmwmvbK
- 1zvmaITtosYJLfXDSghg5TAvWTGqkOmzkpRsuh7kwbIx3K0MvcZfVc1LRea+AmpP1zZ5iWQeyAu
- ddPDPnwLYYmFJNTPKXZbxgHseGlSWU+hZvRDIVYcugP/utzirvIh3jUZEHtDpPGR33UFIJVtIOQ
- s5f/oUOMuQxz8j7PBqFfhFEX
-X-Google-Smtp-Source: AGHT+IH2N2hCHNT/GIol2eJD86r2KacZ7DsYBYv5HDoCWQc5TzhLGRQGqYZv+cTpjM3sxWJYR6eRSQ==
-X-Received: by 2002:a05:600c:450f:b0:434:f5c0:32b1 with SMTP id
- 5b1f17b1804b1-436686461f0mr584402155e9.15.1736265002478; 
- Tue, 07 Jan 2025 07:50:02 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b119b6sm640027315e9.22.2025.01.07.07.50.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 07:50:01 -0800 (PST)
-Message-ID: <c21089b9-bb8a-4bac-8302-c19efe4da16a@linaro.org>
-Date: Tue, 7 Jan 2025 16:50:00 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=eiJ5=T7=kaod.org=clg@ozlabs.org>)
+ id 1tVBrM-00061n-UH; Tue, 07 Jan 2025 10:51:12 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=eiJ5=T7=kaod.org=clg@ozlabs.org>)
+ id 1tVBrI-00077L-B4; Tue, 07 Jan 2025 10:51:12 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4YSFrY2kJ1z4wxx;
+ Wed,  8 Jan 2025 02:50:53 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4YSFrT5fHwz4wcl;
+ Wed,  8 Jan 2025 02:50:46 +1100 (AEDT)
+Message-ID: <8f36b753-660d-4902-be5b-b6569c93aeb5@kaod.org>
+Date: Tue, 7 Jan 2025 16:50:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
- ClassInitImpl<>
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20241219083228.363430-1-pbonzini@redhat.com>
- <20241219083228.363430-26-pbonzini@redhat.com>
- <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
- <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
- <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
- <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
- <Z31OiMcYT/66AGDt@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z31OiMcYT/66AGDt@intel.com>
+Subject: Re: [PATCH 0/5] Introduce AST27x0 multi-SoC machine
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241225020311.3718080-1-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20241225020311.3718080-1-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=eiJ5=T7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.24, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,34 +110,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 16:55, Zhao Liu wrote:
-> On Mon, Jan 06, 2025 at 04:21:16PM +0100, Paolo Bonzini wrote:
->> Date: Mon, 6 Jan 2025 16:21:16 +0100
->> From: Paolo Bonzini <pbonzini@redhat.com>
->> Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
->>   ClassInitImpl<>
->>
->> Il lun 6 gen 2025, 14:32 Peter Maydell <peter.maydell@linaro.org> ha
->> scritto:
->>
->>> I think here I agree with Philippe that we might as well
->>> provide only the new API to Rust devices.
->>>
->>
->> Ok, I wasn't thinking of doing that because there isn't right now an easy
->> way to add interfaces to Rust-defined classes. However, all devices are
->> Resettable and Device isn't defined in Rust, so it's not hard to add a
->> ResettableImpl trait in rust/qemu-api/srv/qdev.rs, and initialize it for
->> all devices.
->>
->> If anybody wants to do it as an exercise, I am happy to help, otherwise I
->> can prepare a patch too.
->>
+Steven,
+
+When you resend, could you please rebase on top of :
+
+   https://lore.kernel.org/qemu-devel/20241216075353.1308043-1-jamin_lin@aspeedtech.com/
+
+Thanks,
+
+C.
+
+On 12/25/24 03:03, Steven Lee wrote:
+> This patch series introduces full cores support for the AST27x0 SoC,
+> along with necessary updates to the ASPEED AST27x0 SOC.
 > 
-> If possible and if no one else wants to practice, I would also like to
-> give it a try (I'll add it to my list).
+> The AST27x0 SoC is a new family of ASPEED SoCs featuring 4 Cortex-A35
+> cores and 2 Cortex-M4 cores. This patch set adds the following updates:
+> 
+> 1. Public API updates:
+>     Modifies the sdhci_attach_drive and write_boot_rom functions to make them
+>     accessible for broader usage.
+> 
+> 2. SoC memory updates:
+>     Maps unimplemented devices in the AST27x0 memory space.
+> 
+> 3. AST27x0 CM4 SoC integration:
+>     Adds basic support for the AST27x0 CM4 SoC.
+> 
+> 4. AST2700-FC machine:
+>     Introduces a new AST2700-FC machine which supports emulating 4
+>     cortex-a35 cores and 2 coretex-m4 cores.
+> 
+> 5. Documentation:
+>     Updates the ASPEED documentation to include usage of the new
+>     ast2700-fc machine.
+> 
+> This series has been tested using ASPEED SDK image by the following
+>    IMGDIR=./
+>    UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+> 
+>    $ UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/ast2700-ssp.elf
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/ast2700-tsp.elf
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/bl31.bin
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/tee-raw.bin
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/u-boot-nodtb.bin
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/u-boot.dtb
+>    $ wget https://github.com/stevenlee7189/zephyr/releases/download/1.0.0/image-bmc.tar.zst
+>    $ tar --zstd -xvf image-bmc.tar.zst
+> 
+>    $ qemu-system-aarch64 -machine ast2700fc \
+>         -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
+>         -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
+>         -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+>         -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/tee-raw.bin \
+>         -device loader,file=${IMGDIR}/ast2700-ssp.elf,cpu-num=4 \
+>         -device loader,file=${IMGDIR}/ast2700-tsp.elf,cpu-num=5 \
+>         -device loader,cpu-num=0,addr=0x430000000 \
+>         -device loader,cpu-num=1,addr=0x430000000 \
+>         -device loader,cpu-num=2,addr=0x430000000 \
+>         -device loader,cpu-num=3,addr=0x430000000 \
+>         -m 1G \
+>         -drive file=image-bmc,if=mtd,format=raw \
+>         -serial pty -serial pty -serial pty \
+>         -S -nographic
+> 
+>      char device redirected to /dev/pts/51 (label serial0)
+>      char device redirected to /dev/pts/52 (label serial1)
+>      char device redirected to /dev/pts/53 (label serial2)
+> 
+>    $ tio /dev/pts/51
+>    $ tio /dev/pts/52
+>    $ tio /dev/pts/53
+>    $ (qemu) c
+> 
+> Steven Lee (5):
+>    aspeed: Make sdhci_attach_drive and write_boot_rom public
+>    aspeed: ast27x0: Map unimplemented devices in SoC memory
+>    aspeed: Introduce AST27x0 SoC with Cortex-M4 support
+>    aspeed: Introduce ast2700-fc machine
+>    docs: aspeed: Add ast2700-fc machine section
+> 
+>   docs/system/arm/aspeed.rst  |  50 ++++-
+>   hw/arm/aspeed.c             |   4 +-
+>   hw/arm/aspeed_ast27x0-cm4.c | 397 ++++++++++++++++++++++++++++++++++++
+>   hw/arm/aspeed_ast27x0-fc.c  | 211 +++++++++++++++++++
+>   hw/arm/aspeed_ast27x0.c     |  45 +++-
+>   hw/arm/meson.build          |   5 +-
+>   include/hw/arm/aspeed.h     |   6 +
+>   include/hw/arm/aspeed_soc.h |  41 ++++
+>   8 files changed, 747 insertions(+), 12 deletions(-)
+>   create mode 100644 hw/arm/aspeed_ast27x0-cm4.c
+>   create mode 100644 hw/arm/aspeed_ast27x0-fc.c
+> 
+> --
+> 2.34.1
+> 
 
-Go ahead! (I'm very busy right now)
-
-Thanks :)
 
