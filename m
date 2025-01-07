@@ -4,100 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A25E77197
-	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A96E77197
+	for <qemu-devel@archiver.kernel.org>; Tue,  7 Jan 2025 16:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVC3W-0000YY-Hr; Tue, 07 Jan 2025 11:03:46 -0500
+	id 1tVC5q-0001cT-LM; Tue, 07 Jan 2025 11:06:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tVC3V-0000Y1-1I
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:03:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tVC3T-00008U-Ol
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:03:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736265821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=asW1LTV43nxvAamuwi2vYstVviQNdc5YaTrUV6wVhDQ=;
- b=NxFDMMRsSON9uZHRjy0Z9maiobkpW6f13pVncx+AceC+jd+0JAkorMDRo/gFbZiBILjv8q
- RV+gnreVUfhfcTo+V4xAEvsrQNJYlCzuD1TXAGqrnTDtmwl3d6qcn1brwWGyowvNU7/hlu
- k0qpnEJV79hhOKZaJgx9iAkF8NadQM8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-7mn3nPvsPwSdCep_CIeZuw-1; Tue, 07 Jan 2025 11:03:40 -0500
-X-MC-Unique: 7mn3nPvsPwSdCep_CIeZuw-1
-X-Mimecast-MFC-AGG-ID: 7mn3nPvsPwSdCep_CIeZuw
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38634103b0dso9295817f8f.2
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:03:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tVC5l-0001bs-JB
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:06:06 -0500
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tVC5i-0000S1-0C
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 11:06:05 -0500
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4afd56903b7so4082864137.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 08:06:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1736265959; x=1736870759;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DW6AtDTP6p9aAbxryQCwFOHcIWGa0LNKqKbhK2pFSbg=;
+ b=Mh8El9xD7A2KthA1/aIHpgOPTwDGzau09ICEks84tPDGM7+l3OFpq1QzpcWIGWrZ0o
+ KDdts2cbU1fiSWuME3CEqNq+FyNF/h4NMbcuxeHF+Zww1WJhK9Fu9hVc5Ead8k1eJzMk
+ Kw2T2RzofRZLNZWNRRGpYoowC1azl5831+7po5Q3J1iU5PB4t47x5S0LPyRovnwBVvD8
+ aVq88gvCuzYBkmT1R+2id+kyQGzpwPOsSWR1DKyemuCdmsOmqOhf7yCE1r+fO35qY60y
+ rZQY3NBa/ITQRXSrUrJppcYcyo6YL9uI3LGEBkKv7MppP3aajuvCDGvD1UZhpsCOI1AW
+ 0ISQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736265819; x=1736870619;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=asW1LTV43nxvAamuwi2vYstVviQNdc5YaTrUV6wVhDQ=;
- b=LukoVCv1AbGy1AZ3lxJ9gvpFgKjAQVaFyTMcv/7qpdvVAI8Cxq7xwJSOhuZwXBEvxp
- hc60oNmR42GrT1BzYPmuZFSCz1AUQAmGnDhbt9ZgAQ9F2/XQ0nQYdu8MuQVhnbRMyc/k
- SBZOOTFqlb0YJsvW7HJOl4XrKdN3QeyngXFaDb+dtQ+FtrcQ1Mejs3C0eQGlcfQ9ptoc
- mFlHfeolfCMoftSWj4Y0qoR223rgHp3f13NbtozC5I2RiI0zdM1D/n7XL1UEsxvaFNzm
- HRr8+UUIg9fkwqUZy9MayQlYx2DB5Oy+HtTJqXpVjSFytG9PrzUnvPzC+HwvVLuwTFIz
- eovw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFEmDIfrskBisEJFJktmNLPSFTf7wAFbT44OmDXLrpKcjlCvLSDG65sVP35Lj9gjmIIrSZveNgAIHh@nongnu.org
-X-Gm-Message-State: AOJu0Yxru9PeQEl3bMQEZSHXuQizQd7ktasoZS/Wcbfkt1E97aiP1K+u
- BfP7edRRZi2Vy2wYkTkCkc2tsga6ik3O73jIQC/++klM7H0q1s5KEomqFSc5rg7hgSL0hJ0q7Z5
- yOzZGOPZAMh07XcLF84J7bz4ekH2LvS1JXuHPumEWbKE+vn0usTT2q0orxA3ZzLEfm5HoSxjQAs
- 3lP8W9OGUKcLRhVS1KypLOdc8oRDQ=
-X-Gm-Gg: ASbGncstllbGPwUTJiOel5cXjhl6l/zShqDNe5qv1E0P5Y7DF1/egxY/IeqWsJTYzUz
- JWfvxCqwSN2n/775po61IOCZeEqjbyETqgogNTw==
-X-Received: by 2002:adf:b30c:0:b0:38a:4b8b:1ba with SMTP id
- ffacd0b85a97d-38a4b8b01d1mr25459361f8f.14.1736265817311; 
- Tue, 07 Jan 2025 08:03:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERxQ6/ABSZdv5kOPinZ4nwpr4aJEp4gA0zNHvsvnSnq9SagQx0J4C6bnOL1FH5emPGLbpudobaqz19rhs/JhM=
-X-Received: by 2002:adf:b30c:0:b0:38a:4b8b:1ba with SMTP id
- ffacd0b85a97d-38a4b8b01d1mr25459315f8f.14.1736265816855; Tue, 07 Jan 2025
- 08:03:36 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736265959; x=1736870759;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DW6AtDTP6p9aAbxryQCwFOHcIWGa0LNKqKbhK2pFSbg=;
+ b=OA6frPq5OGe4gNpzFdsqsrR0bkGllJzpeTo3NGC/2wZy6LunNb1BWEJvUmD/x4/lw1
+ 86MJEp9n87+bPesIwvNO77H21EFk8ODNaMayKFXRf4YOZoJl7e7EEIPI1pyXS8WP4hO/
+ G6YeIoSHL++VlwDPPTOJSpPCU9Lyi1uu2Ix1eg1+7IHwGMgM/xSv1G/0G0FgNlu1S77H
+ Vc7ttLWVVIeuM4/3ejDyiYBSCSaMuMgv/pGc7uPl3q+zcAUmfYAzGjetJyXyNh72/+eI
+ lPcZKAXjMGZ1wD1J45oA3boKHU3eF5HtFjNfGhjCAk8P4D3/ux8o9ekKYnzVoF6l/GJ4
+ wU7w==
+X-Gm-Message-State: AOJu0YxDeRO0ithb8bkKRQwcbDp19kqQj4BgjAA+7jo+SNJCyX4pwYta
+ 1yzrKItvv6UJr/hq6gM12W+Ne7ld9NzrcGzQntd68QWK4oFAZ3wKMwV7csyc/Z7oJa2sjyViqvx
+ rHm04NCD+mFmFj9dJX6DC3DXR7Ap8djcnKKck
+X-Gm-Gg: ASbGncvpGMcKHi6VNVJ7zDiLEgBbOeDEH5uxj8S1n71b68BI1DJz7CIwhcjFQ6RtY+Y
+ lkL0jf0rrURGqlqKnDYs+f+7u2/ONF+2c8eOyrw==
+X-Google-Smtp-Source: AGHT+IHnvm0wirIicvFLXCsjhxeqdfXPSWhD5wgaDoQ7a+kX6VSy5zrbDlKzfeI0h8Z3tkUZRjPikQ+kSSSKjFRU4jU=
+X-Received: by 2002:a05:6122:1999:b0:517:4e40:6838 with SMTP id
+ 71dfb90a1353d-51b75c65272mr44424236e0c.6.1736265959592; Tue, 07 Jan 2025
+ 08:05:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20241219083228.363430-1-pbonzini@redhat.com>
- <20241219083228.363430-26-pbonzini@redhat.com>
- <daea6757-a67b-45d5-bf2a-807fd9569a70@linaro.org>
- <CABgObfYMP5-9uN9cLofPT6DzBS_o1CVfbHbY8pwn9xjdOXOqgw@mail.gmail.com>
- <CAFEAcA-PE1paXOJNUo-cihu__htZQUYogZphVhRAjFNFzgi7JA@mail.gmail.com>
- <CABgObfZ7FFW5yhA2u6Rt5=MndrLsF=BnNhgE73LAyUWUGF=yXQ@mail.gmail.com>
- <Z31OiMcYT/66AGDt@intel.com>
-In-Reply-To: <Z31OiMcYT/66AGDt@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 7 Jan 2025 17:03:23 +0100
-Message-ID: <CABgObfZETbD03-H6=qOt6V8GY4ex3WP82i5axzdf_U0GCwsMbw@mail.gmail.com>
-Subject: Re: [PULL 25/41] rust: qom: put class_init together from multiple
- ClassInitImpl<>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241227202435.48055-1-philmd@linaro.org>
+ <20241227202435.48055-3-philmd@linaro.org>
+ <CAAibmn0zhrZjZ+SL7n7eg041a5APx-o4sCAp0YGDiwUk8gpgDA@mail.gmail.com>
+In-Reply-To: <CAAibmn0zhrZjZ+SL7n7eg041a5APx-o4sCAp0YGDiwUk8gpgDA@mail.gmail.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Tue, 7 Jan 2025 17:05:48 +0100
+X-Gm-Features: AbW1kvb_ySWjF0Vl8NK1dVDj3D_1TaGuNYsqNrAlCsYHozoAfn3vBqik1FlzvKk
+Message-ID: <CAAibmn1g6+btdRX99ZUvbaBm7hP_AnAGNfDHz4Wgi3fPn=waOw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/intc: Have ARM_GIC select ARM_GICV3 when KVM is
+ not available
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000c1f0a6062b1feb89"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=phil@philjordan.eu; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,33 +94,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 7, 2025 at 4:37=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrote=
+--000000000000c1f0a6062b1feb89
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Sat, 28 Dec 2024 at 11:48, Phil Dennis-Jordan <phil@philjordan.eu> wrote=
 :
-> > If anybody wants to do it as an exercise, I am happy to help, otherwise=
- I
-> > can prepare a patch too.
+
 >
-> If possible and if no one else wants to practice, I would also like to
-> give it a try (I'll add it to my list).
+>
+> On Fri, 27 Dec 2024 at 21:24, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org>
+> wrote:
+>
+>> When the KVM accelerator is selected, the Kconfig ARM_GIC key
+>> selects the KVM GIC implementation (ARM_GIC_KVM).
+>> For other accelerators (TCG, HVF, ...), select the generic
+>> implementation.
+>>
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> ---
+>>  hw/intc/Kconfig | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+>> index 7547528f2c2..762139d8df3 100644
+>> --- a/hw/intc/Kconfig
+>> +++ b/hw/intc/Kconfig
+>> @@ -23,7 +23,7 @@ config APIC
+>>
+>>  config ARM_GIC
+>>      bool
+>> -    select ARM_GICV3 if TCG
+>> +    select ARM_GICV3 if !KVM
+>>
+>
+> Wouldn't this disable the ARM_GICV3 by default when building with
+> --enable-tcg --enable-kvm? And then there would be no GIC available when
+> running the built QEMU in TCG mode. (Bear with me, I'm a relative Meson
+> newbie.)
+>
+>
 
-Hmm, thinking more about it, it does require a bit that is slightly
-more complicated than I anticipated, which is a binding to
-object_class_dynamic_cast(). I placed something completely untested
-(except it compiles...) in rust-next. It uses a new trait
-InterfaceType that can be used as
 
-    ResettableClass::interface_init::<T, DeviceState>(dc);
+OK, I've managed to answer my own question now by setting up a RPi5 with
+aarch64 RPOS and building QEMU on that with --enable-kvm --enable-tcg. With
+patch 1/2 applied on current upstream master, I get:
 
-but I don't really like the two parameters and also I don't like that
-class_init is called differently for classes and interfaces. It's
-probably possible to design a better API, but I didn't spend too much
-time on it because it may require rethinking how classes are declared
-(not a huge deal, as we have only four of them).
+$ build/qemu-system-aarch64 -accel tcg -M virt,gic-version=3D3 -smp 4 -m 4G
+*[runs successfully]*
 
-Feel free to give it a try, but it seems like a relatively low
-priority item compared to upstreaming timers (i.e. HPET) and
-MemoryRegionOps; or figuring out logging.
+with 2/2 applied as well:
 
-Paolo
+$ build/qemu-system-aarch64 -accel tcg -M virt,gic-version=3D3 -smp 4 -m 4G
+qemu-system-aarch64: tcg does not support GICv3 emulation
+$
 
+In other words, with the proposed change, ARM_GICV3 is indeed deselected if
+KVM is selected even if TCG is also selected.
+
+
+Possibly very basic question: is there any support for kernel-irqchip=3Doff
+on aarch64/KVM?
+If yes, don't we need ARM_GICV3 in that case anyway, so we should drop any
+accel dependency on it in the first place?
+
+
+If we definitely don't need the software GIC in KVM-only builds, I guess
+we're down to listing each accel that needs it individually. Is that:
+
+select ARM_GICV3 if TCG || HVF || NVMM || WHPX || XEN_EMU || XEN
+
+or can we drop any of those? Have I missed anything? What about QTest?
+
+--000000000000c1f0a6062b1feb89
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, 28 Dec 2024 =
+at 11:48, Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu" targ=
+et=3D"_blank">phil@philjordan.eu</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></di=
+v><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On F=
+ri, 27 Dec 2024 at 21:24, Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto=
+:philmd@linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt; wrote:<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">When the KVM acceler=
+ator is selected, the Kconfig ARM_GIC key<br>
+selects the KVM GIC implementation (ARM_GIC_KVM).<br>
+For other accelerators (TCG, HVF, ...), select the generic<br>
+implementation.<br>
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0hw/intc/Kconfig | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig<br>
+index 7547528f2c2..762139d8df3 100644<br>
+--- a/hw/intc/Kconfig<br>
++++ b/hw/intc/Kconfig<br>
+@@ -23,7 +23,7 @@ config APIC<br>
+<br>
+=C2=A0config ARM_GIC<br>
+=C2=A0 =C2=A0 =C2=A0bool<br>
+-=C2=A0 =C2=A0 select ARM_GICV3 if TCG<br>
++=C2=A0 =C2=A0 select ARM_GICV3 if !KVM<br></blockquote><div><br></div><div=
+>Wouldn&#39;t this disable the ARM_GICV3 by default when building with --en=
+able-tcg --enable-kvm? And then there would be no GIC available when runnin=
+g the built QEMU in TCG mode.  (Bear with me, I&#39;m  a relative Meson new=
+bie.)<br></div><div>=C2=A0<br>
+</div></div></div></blockquote><div><br></div><div><br></div><div>OK, I&#39=
+;ve managed to answer my own question now by setting up a RPi5 with aarch64=
+ RPOS and building QEMU on that with --enable-kvm --enable-tcg. With patch =
+1/2 applied on current upstream master, I get:</div><div><br></div><div><sp=
+an style=3D"font-family:monospace">$ build/qemu-system-aarch64 -accel tcg -=
+M virt,gic-version=3D3 -smp 4 -m 4G</span></div><div><i><span style=3D"font=
+-family:monospace">[runs successfully]</span></i><br></div><div><br></div><=
+div>with 2/2 applied as well:</div><div><span style=3D"font-family:monospac=
+e"><br></span></div><div><span style=3D"font-family:monospace">$ build/qemu=
+-system-aarch64 -accel tcg -M virt,gic-version=3D3 -smp 4 -m 4G<br>qemu-sys=
+tem-aarch64: tcg does not support GICv3 emulation</span></div><div><span st=
+yle=3D"font-family:monospace">$<br></span></div><div><br></div><div>In othe=
+r words, with the proposed change, ARM_GICV3 is indeed deselected if KVM is=
+ selected even if TCG is also selected.</div><div><br></div><div><br></div>=
+<div>Possibly very basic question: is there any support for kernel-irqchip=
+=3Doff on aarch64/KVM?</div><div>If yes, don&#39;t we need ARM_GICV3 in tha=
+t case anyway, so we should drop any accel dependency on it in the first pl=
+ace?</div><div><br></div><div><br></div><div>If we definitely don&#39;t nee=
+d the software GIC in KVM-only builds, I guess we&#39;re down to listing ea=
+ch accel that needs it individually. Is that:<br></div><div><br></div><div>=
+select ARM_GICV3 if TCG || HVF || NVMM || WHPX || XEN_EMU || XEN<br></div><=
+div><br></div><div>or can we drop any of those? Have I missed anything? Wha=
+t about QTest?</div><div><br></div></div></div>
+</div>
+
+--000000000000c1f0a6062b1feb89--
 
