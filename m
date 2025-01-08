@@ -4,101 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7CE2E7719A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCBA0E77199
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 16:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVYhY-00069f-J8; Wed, 08 Jan 2025 11:14:36 -0500
+	id 1tVYhD-0005zQ-Qh; Wed, 08 Jan 2025 11:14:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVYhX-00068G-0V
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:14:35 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVYhC-0005yv-AC
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:14:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVYhV-00035x-5z
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:14:34 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508BhNGU025541;
- Wed, 8 Jan 2025 16:14:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=y2KCmI
- /7khv71Iy8c1LpsoPS2xA2m+oEXJaeqb9UBUs=; b=BrJN+CH/865NkVFPdeSQXU
- PCeWxO9YahDFR7yRlIb28qqZD/EbgeCD7b41GWfqGmdmTsKTq2+gE+BW0Lv3W3uJ
- 08E9HRZp6EkBuUmmTOCgw537UrelWtI+LgvEjOPum+FemruI5sk43uuTs9UM0Okv
- ZI3UHcoQ2I1TGTGAX0nnJJac6CuJPZ6lVcg1MyHQ6HEEJONR1ebLX+fEGXZ2ZYtk
- lY7uS7hpYuU7psGwiBGGi9oP/pukG4C6Qa2N2nrsmFOemuz/BO61osj+eQurRIVw
- j4duS77GqFF/eV0xHlaWqbopdmWJc//PsmCa0r8pO1/BlMClP+deoCB0kIcj8H9Q
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441edj3yn4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 16:14:21 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508DMBwh013641;
- Wed, 8 Jan 2025 16:14:20 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygap0gu9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 16:14:19 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 508GEHRb44892566
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jan 2025 16:14:18 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D950920043;
- Wed,  8 Jan 2025 16:14:17 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6460020040;
- Wed,  8 Jan 2025 16:14:17 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jan 2025 16:14:17 +0000 (GMT)
-Message-ID: <dbdc943984d3d7ceded8b793be0cc0f546aae971.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 2/8] gdbstub: Try unlinking the unix socket before
- binding
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>, Laurent
- Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Kyle Evans <kevans@freebsd.org>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Date: Wed, 08 Jan 2025 17:14:17 +0100
-In-Reply-To: <875xmpb82n.fsf@draig.linaro.org>
-References: <20241216123412.77450-1-iii@linux.ibm.com>
- <20241216123412.77450-3-iii@linux.ibm.com>
- <875xmpb82n.fsf@draig.linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVYh9-00033E-9Z
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:14:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736352849;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=R6kKYyV165aGrYbMAl7rleILIWh93DQR68TXm7dj1lw=;
+ b=Lv+wGLQ5Nt0+k/P2J2gDQchRFbRUbsb9LEoE8iR45sPhl/JCuy/vQ/Y9IrRq3wF7C+BaPz
+ MIrZOE06Cw+Xl5cL6wqeqsle/08LqXnbJc8AZJLmFSydXpYnCyadEemu1dqSFK6qzhCAp0
+ QZLsoAar7LhirLJ0Mn4Wc8Yg3+DWftc=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-458-qatQjFsjPxqVS6TOfxegVw-1; Wed, 08 Jan 2025 11:14:05 -0500
+X-MC-Unique: qatQjFsjPxqVS6TOfxegVw-1
+X-Mimecast-MFC-AGG-ID: qatQjFsjPxqVS6TOfxegVw
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d88ccf14aeso313732946d6.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 08:14:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736352845; x=1736957645;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R6kKYyV165aGrYbMAl7rleILIWh93DQR68TXm7dj1lw=;
+ b=R2DWWbyJkWOnV404E4a+Kf12jAYXETU17Ru/E8lwzSdcCJSAYOoEGJSrNLNMmwmlaj
+ V/+KMwTDP8rDU6VXSeThjedw8kYVvZH9cwEraBpLjTADiH2KEf32k41h4mhz+gWZj6e1
+ QRRR45teh9JuwdP6FR4fFU46pWSofMzYB+YdetAgDfPjRFcHwtujvr//k2/j3ehBtZ59
+ 256S6KtgKCq85m7jgDq9nv9Kf38WlPU/RCKpJxaNu+BUUlCYsRhn9aRhLVMXR1XJfVUa
+ fsEvlXruShRghiPenzElhOLUScYfDOak4kfRnMmj33N6ej8Icyku5nVIobmKg0t1UHNB
+ 5GKA==
+X-Gm-Message-State: AOJu0Yw0t/8yGpD/svOLzTQ6ZasUYjlH5CeDESts8/koyMoq2XPOry7X
+ NYMYeZP4GbloXd1tQah1X02IC5uJy34XIeRnRCe3JmyuL/69/EX57xOgn/tCi9oCqTiZ+QoWV2j
+ N7NjHfgEPl4InitT+K7Z+tjreOkatevR/DgvTGHLo5TyNlqfm/kKv
+X-Gm-Gg: ASbGncv9DPRgE801BMAnY3OnXJfwQDt3ZflAQyc11OLmb99vOkt7ai9YlHin4BOdeby
+ U/C7px+EpqDnqfrsOqMk/444ck4LuPzyui3P+vdXrC6pCal0/Cvzp20Wr6QuqLuibRCbVhA+r5Q
+ fdimopaDqirMW//cx+rjGltimZmu1ncSILBHvaPcsKXwYyvkxm4vyiOU7V9iVXr5Zfm+00gYlmo
+ XbLGQSkDY+7b/FGFZohGpYJS1NpyY9CtnuiSSbZUGAakGf8PRC4EE8hFFU/k3EFpuDG3u2IdavA
+ IrTOBr5uZafF0S1kDA==
+X-Received: by 2002:a05:6214:dc4:b0:6d8:83bd:5cfb with SMTP id
+ 6a1803df08f44-6df9b1cf5a9mr65155746d6.10.1736352844930; 
+ Wed, 08 Jan 2025 08:14:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE/zTrf7oSNZwu5OUs4As89OwH9NpgUjKU0Ldmb4EAMuOCcAo1EQ8rc5ckeuTCFRR/B8jCPrA==
+X-Received: by 2002:a05:6214:dc4:b0:6d8:83bd:5cfb with SMTP id
+ 6a1803df08f44-6df9b1cf5a9mr65155366d6.10.1736352844590; 
+ Wed, 08 Jan 2025 08:14:04 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dd181a7c13sm192602806d6.77.2025.01.08.08.14.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jan 2025 08:14:04 -0800 (PST)
+Date: Wed, 8 Jan 2025 11:14:01 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 6/7] migration: Fix arrays of pointers in JSON writer
+Message-ID: <Z36kScJti9LrWVU7@x1n>
+References: <20250107195025.9951-1-farosas@suse.de>
+ <20250107195025.9951-7-farosas@suse.de> <Z3231YxnKrjtwX6h@x1n>
+ <87cygx4dlt.fsf@suse.de>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: zlIVG_0z2SNJhQIdH-38cXyOlXDpVVV7
-X-Proofpoint-ORIG-GUID: zlIVG_0z2SNJhQIdH-38cXyOlXDpVVV7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=961 phishscore=0 malwarescore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501080133
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87cygx4dlt.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,46 +106,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-01-08 at 16:10 +0000, Alex Benn=C3=A9e wrote:
-> Ilya Leoshkevich <iii@linux.ibm.com> writes:
->=20
-> > In case an emulated process execve()s another emulated process,
-> > bind()
-> > will fail, because the socket already exists. So try deleting it.
-> >=20
-> > Note that it is not possible to handle this in do_execv(): deleting
-> > gdbserver_user_state.socket_path before safe_execve() is not
-> > correct,
-> > because the latter may fail, and afterwards we may lose control.
-> >=20
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > ---
-> > =C2=A0gdbstub/user.c | 1 +
-> > =C2=A01 file changed, 1 insertion(+)
-> >=20
-> > diff --git a/gdbstub/user.c b/gdbstub/user.c
-> > index ef52f249ce9..c900d0a52fe 100644
-> > --- a/gdbstub/user.c
-> > +++ b/gdbstub/user.c
-> > @@ -337,6 +337,7 @@ static int gdbserver_open_socket(const char
-> > *path)
-> > =C2=A0
-> > =C2=A0=C2=A0=C2=A0=C2=A0 sockaddr.sun_family =3D AF_UNIX;
-> > =C2=A0=C2=A0=C2=A0=C2=A0 pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun=
-_path) - 1,
-> > path);
-> > +=C2=A0=C2=A0=C2=A0 unlink(sockaddr.sun_path);
->=20
-> Should we be checking for errors here? What do we expect when
-> attempting
-> to unlink a non-existent path? -EIO?
+On Wed, Jan 08, 2025 at 10:52:30AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Tue, Jan 07, 2025 at 04:50:24PM -0300, Fabiano Rosas wrote:
+> >> Currently, if an array of pointers contains a NULL pointer, that
+> >> pointer will be encoded as '0' in the stream. Since the JSON writer
+> >> doesn't define a "pointer" type, that '0' will now be an uint64, which
+> >> is different from the original type being pointed to, e.g. struct.
+> >> 
+> >> That mixed-type array shouldn't be compressed, otherwise data is lost
+> >> as the code currently makes the whole array have the type of the first
+> >> element.
+> >> 
+> >> While we could disable the array compression when a NULL pointer is
+> >> found, the JSON part of the stream still makes part of downtime, so we
+> >> should avoid writing unecessary bytes to it.
+> >> 
+> >> Keep the array compression in place, but break the array into several
+> >> type-contiguous pieces if NULL and non-NULL pointers are mixed.
+> >
+> > Could I request for a sample JSON dump for an example array in the commit
+> > log?  This whole solution looks working but is tricky.  A sample could help
+> > people understand (e.g. showing the same "name" being dumped multiple
+> > times..).
+> 
+> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+>  "version": 1, "fields": [
+>    ...,
+>    {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
+>    {"name": "css", "type": "struct", "struct": {
+>     "vmsd_name": "s390_css_img", "version": 1, "fields": [{"name":
+>     "chpids", "array_len": 256, "type": "struct", "struct": {"vmsd_name":
+>     "s390_chp_info", "version": 1, "fields": [{"name": "in_use", "type":
+>     "uint8", "size": 1}, {"name": "type", "type": "uint8", "size": 1},
+>     {"name": "is_virtual", "type": "uint8", "size": 1}]}, "size": 3}]},
+>     "size": 768},
+>    {"name": "css", "type": "uint8", "size": 1},
+>    ...
+> ]}
 
-ENOENT I guess.
-I will add a check that requires either success or ENOENT.
+Yes something like this would work, thanks.  We could even omit most of the
+struct details but only show the important ones:
 
-> > =C2=A0=C2=A0=C2=A0=C2=A0 ret =3D bind(fd, (struct sockaddr *)&sockaddr,
-> > sizeof(sockaddr));
-> > =C2=A0=C2=A0=C2=A0=C2=A0 if (ret < 0) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 perror("bind socket");
+  {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+   "version": 1, "fields": [
+     ...,
+     {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
+     {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
+     {"name": "css", "type": "uint8", "size": 1},
+     ...
+  ]}
+
+> 
+> >
+> > Side note: I tried to dump a very basic VM's JSON out to disk, it scares me
+> > on the size:
+> >
+> > $ ls -lhS JSON.out 
+> > -rw-r--r--. 1 peterx peterx 106K Jan  7 17:18 JSON.out
+> >
+> > That's a simplest VM with all default stuff, mostly nothing complex.. I may
+> > really need to measure how the JSON debug strings affect migration function
+> > or perf at some point..
+> >
+> 
+> Agreed.
+> 
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >>  migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
+> >>  scripts/analyze-migration.py |  9 ++++++++-
+> >>  2 files changed, 40 insertions(+), 2 deletions(-)
+> >> 
+> >> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> >> index 52704c822c..a79ccf3875 100644
+> >> --- a/migration/vmstate.c
+> >> +++ b/migration/vmstate.c
+> >> @@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> >>              int size = vmstate_size(opaque, field);
+> >>              uint64_t old_offset, written_bytes;
+> >>              JSONWriter *vmdesc_loop = vmdesc;
+> >> +            bool is_prev_null = false;
+> >>  
+> >>              trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+> >>              if (field->flags & VMS_POINTER) {
+> >>                  first_elem = *(void **)first_elem;
+> >>                  assert(first_elem || !n_elems || !size);
+> >>              }
+> >> +
+> >>              for (i = 0; i < n_elems; i++) {
+> >>                  void *curr_elem = first_elem + size * i;
+> >>                  const VMStateField *inner_field;
+> >> +                bool is_null;
+> >> +                int max_elems = n_elems - i;
+> >>  
+> >>                  old_offset = qemu_file_transferred(f);
+> >>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+> >> @@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> >>                       * not follow.
+> >>                       */
+> >>                      inner_field = vmsd_create_fake_nullptr_field(field);
+> >> +                    is_null = true;
+> >>                  } else {
+> >>                      inner_field = field;
+> >> +                    is_null = false;
+> >> +                }
+> >> +
+> >> +                /*
+> >> +                 * Due to the fake nullptr handling above, if there's mixed
+> >> +                 * null/non-null data, it doesn't make sense to emit a
+> >> +                 * compressed array representation spanning the entire array
+> >> +                 * because the field types will be different (e.g. struct
+> >> +                 * vs. uint64_t). Search ahead for the next null/non-null
+> >> +                 * element and start a new compressed array if found.
+> >> +                 */
+> >> +                if (field->flags & VMS_ARRAY_OF_POINTER &&
+> >> +                    is_null != is_prev_null) {
+> >> +
+> >> +                    is_prev_null = is_null;
+> >> +                    vmdesc_loop = vmdesc;
+> >> +
+> >> +                    for (int j = i + 1; j < n_elems; j++) {
+> >> +                        void *elem = *(void **)(first_elem + size * j);
+> >> +                        bool elem_is_null = !elem && size;
+> >> +
+> >> +                        if (is_null != elem_is_null) {
+> >> +                            max_elems = j - i;
+> >> +                            break;
+> >> +                        }
+> >> +                    }
+> >>                  }
+> >>  
+> >>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+> >> -                                      i, n_elems);
+> >> +                                      i, max_elems);
+> >>  
+> >>                  if (inner_field->flags & VMS_STRUCT) {
+> >>                      ret = vmstate_save_state(f, inner_field->vmsd,
+> >> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+> >> index 4836920ddc..9138e91a11 100755
+> >> --- a/scripts/analyze-migration.py
+> >> +++ b/scripts/analyze-migration.py
+> >> @@ -497,7 +497,14 @@ def read(self):
+> >>                      raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
+> >>                  a.append(field['data'])
+> 
+> There's actually a bug here, the code above does:
+> 
+>   if len(a) != int(field['index']):
+>       raise Exception()
+> 
+> Which only works with this patch because the compressed array happens to
+> come first.
+
+I think it will work no matter how it's ordered after your patch?  IOW I'd
+hope it'll keep working if the 1st is a nullptr:
+
+     {"name": "css", "type": "uint8", "size": 1},
+     {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
+     {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
+
+Because IIUC the python script will parse each of the lines above into a
+VMSD field.
+
+> 
+> >>              else:
+> >> -                self.data[field['name']] = field['data']
+> >> +                # There could be multiple entries for the same field
+> >> +                # name, e.g. when a compressed array was broken in
+> >> +                # more than one piece.
+> >> +                if (field['name'] in self.data and
+> >> +                    type(self.data[field['name']]) == list):
+> >> +                    self.data[field['name']].append(field['data'])
+> >> +                else:
+> >> +                    self.data[field['name']] = field['data']
+> >
+> > Do we realy need these script changes?  I thought VMSDFieldStruct always
+> > breaks array_len field into "index" based anyway?
+> >
+> >         new_fields = []
+> >         for field in self.desc['struct']['fields']:
+> >             if not 'array_len' in field:
+> >                 new_fields.append(field)
+> >                 continue
+> >             array_len = field.pop('array_len')
+> >             field['index'] = 0
+> >             new_fields.append(field)
+> >             for i in range(1, array_len):
+> >                 c = field.copy()
+> >                 c['index'] = i
+> >                 new_fields.append(c)
+> >
+> >         self.desc['struct']['fields'] = new_fields
+> 
+> This code is about decompressing the array, it doesn't handle multiple
+> entries with the same name. See the JSON I posted up there.
+> 
+> This makes the single:
+> 
+>   {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
+> 
+> become multiple:
+> 
+>   {"name": "css", "index": 0, "type": "uint8", "size": 1},
+>   {"name": "css", "index": 1, "type": "uint8", "size": 1},
+>   ...
+>   {"name": "css", "index": 253, "type": "uint8", "size": 1},
+
+Correct.
+
+I think that means for each of the break-down entries there'll be an
+"index" if it's an array.  What you changed above is the case where "index"
+is not available, which is processing the non-array entry.  Why does that
+need change?  What happens if you run this without the python part you
+changed in this patch?
+
+-- 
+Peter Xu
 
 
