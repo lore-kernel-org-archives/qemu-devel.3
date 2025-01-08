@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546DAE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 04:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FDAEE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 04:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVNzT-00076L-WC; Tue, 07 Jan 2025 23:48:24 -0500
+	id 1tVO3m-0000jZ-QW; Tue, 07 Jan 2025 23:52:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tVNzS-000766-OR
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 23:48:22 -0500
-Received: from mail-dm6nam11on2060d.outbound.protection.outlook.com
- ([2a01:111:f403:2415::60d]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1tVO3l-0000jN-9S
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 23:52:49 -0500
+Received: from mail-bn8nam11on2040.outbound.protection.outlook.com
+ ([40.107.236.40] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1tVNzR-0001Xr-13
- for qemu-devel@nongnu.org; Tue, 07 Jan 2025 23:48:22 -0500
+ id 1tVO3i-0003iI-IL
+ for qemu-devel@nongnu.org; Tue, 07 Jan 2025 23:52:49 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZTgkFTvRx5Imomz0JtXTSpRsfGx81bCNRheMf+/KlL25z58vdOQFwrePrACHq8KqsI468AocsSLWvkX6qAAyy4D2rEEe62Fndz9VArP651Ywh5g6lLakfcVzAM5fbdJmi2x7Yyy+8y3UOWDR+Nw133FD8WCUQ4dkygc4mG2Zw1Bc/MZws6o6/J2XuvQh4TlTHo30qxCw4LSSmSAmn8dbz/2MKtvHEn9UNWlh9eLEf/G+FWbqQVV3ODUlSpLk3SRsAFwWePHtXaOZPy5kJ4Swpl6QLupq4dDl5t8drGWb6DYm1nWAOGV9+xoHYg4KPUVeqNbg1o/HLleOO+Rct1Qfcw==
+ b=acL6bBychLs0K2dR+odLiyLRSfvAQ81RswnWmA3p92VW12oLnwIoBpjenoKcyfTnlKHS2F6Qh+D1ccbmyz1SJYuXG0+VZ0j5nWdDEaQ52um6xKUx40cKb6RAUEms/SbB4bUY/RpEw4qciGfftPFqrfoRcaa8HUdh5s+uMvExD/7kZbtyRoycReA0fHIu7BKiLrneEZp/0ZFi8IC2hAhuUMggtCdM5oqAM+Yj4kcg2XMYitBz9O1mtwrRqE3jMZRu03+PWf2Og8gLHexetv/RrQSCZujQSDgrmM0+/6crsdLYmR/6Z1jolgfnPfZoQY7MP9O76iJAKs4YLokY1TFoxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZzAly5QRUUCquuJ/VbIhURNhFiufLQl2CWVmjZos6Mo=;
- b=IYqxFfL6W0rVCVv0tGQ5uVHAneqBMWcd029rqXkj00Ol74fHKwzisQ/+VEgsAJ5+Tdw3Y5SjP6sGYsXvtjh4q3ItcoKwzDQbpSU3gNf3w5YxSYPaiM7Mzxx+DXyKtQ9dmVvax/rPAsCu3YkOjvTK77p1WN3ImlU+/Zxd0kr3edQucxkix8ZvVyOtseU+giDcE3csl/ojs9Z56Thaxhw5+71+a012C3FOTTzXl6evPnINj/uiSeTJumhdy9EXK9yiZaCJeKgvKZ4dUWZQANYo1nRDuoZJ+f9DpGanUB6W+NDYMvcDfMUWYivrUuGLwEiANFzPyRjyM4iT9cBfd6+2Bw==
+ bh=pISHhBQp46Ro2ytR+uk4VMAUQbVAstO7vOFbJSCuH2I=;
+ b=lT8SyuuN4WZIIbAx7f0ABqTe6hc8V3iwWXCzOh1Ix98SJ92zjas9RvlHE3/eTV+C+XY+vqEmO32tNjXpaMWyz6c3i9EJWokO2xQMqy+ND25/iq+ABj7+gWQX1Nv7B8vhXKyCJIfCb7da9DlZZ6N89PBs+P0Db9s3sL1U1CmjBKa8tcYkTXKZgw0GjtohSV8B5AnzaJ0HmRRxaAHdkUqAyB4mVlL8Wak0r12qVUhrxCahTrEh7wFTo6/wKIy4BfvLTqn3+a5ckHcin01pze7aLEV4h+yVibV+tsjyO+Jqj9ffEgoODpUfU8N8jeWGNl8G75WKuZc7gL+29EnC9BMWIg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZzAly5QRUUCquuJ/VbIhURNhFiufLQl2CWVmjZos6Mo=;
- b=RkvTHmh0FGCJ6YhTfNHJpBsF2GNiMNtuW0gJ6sgfgZ0C8fqnOiNP2P72THUsk1i1JAUpfIo1YLJIS5bfkTQRpuoBeuaJZzPjnP521LjIeQh+9fRpE7+gvP8UUbE4fA4T4HkRHTUSCVgbR/wZSmdUon9tAv0ZPPI2AQR1eXIYGZ4=
+ bh=pISHhBQp46Ro2ytR+uk4VMAUQbVAstO7vOFbJSCuH2I=;
+ b=yelok3E+7jlH81C2ikOR1hmBKlUk+e8K0jZSv75NeLt3aYidfhZ6fzDFUAGgaOivvG5XRkxxqYeYYOiPrJZfshVhAvS5JLZ5jJt9M+Gw5ZBHkpSBI//uqsXV0e+l3VWAJQaj4wJOsq9J+QygbKjL4L6d7Iu5gLkHQ8+W37m9vbs=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
  by SA1PR12MB9247.namprd12.prod.outlook.com (2603:10b6:806:3af::18)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8314.16; Wed, 8 Jan
- 2025 04:47:51 +0000
+ 2025 04:47:33 +0000
 Received: from CH3PR12MB9194.namprd12.prod.outlook.com
  ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
  ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8314.015; Wed, 8 Jan 2025
- 04:47:51 +0000
-Message-ID: <2582a187-fa16-427b-a925-2ac564848a69@amd.com>
-Date: Wed, 8 Jan 2025 15:47:47 +1100
+ 04:47:33 +0000
+Message-ID: <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
+Date: Wed, 8 Jan 2025 15:47:25 +1100
 User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 5/7] memory: Register the RamDiscardManager instance upon
- guest_memfd creation
+Subject: Re: [PATCH 0/7] Enable shared device assignment
 Content-Language: en-US
 To: Chenyi Qiang <chenyi.qiang@intel.com>,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -62,9 +60,8 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>
 References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-6-chenyi.qiang@intel.com>
 From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <20241213070852.106092-6-chenyi.qiang@intel.com>
+In-Reply-To: <20241213070852.106092-1-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: MEWPR01CA0009.ausprd01.prod.outlook.com
@@ -73,103 +70,102 @@ X-ClientProxiedBy: MEWPR01CA0009.ausprd01.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|SA1PR12MB9247:EE_
-X-MS-Office365-Filtering-Correlation-Id: d8007d81-bbf2-4d91-c27d-08dd2f9f9b72
+X-MS-Office365-Filtering-Correlation-Id: 9620a59a-47d1-4ebf-0055-08dd2f9f90a6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NEpNRnVXdnVxT2djUi9hWFFwTzEwSkhQaTZobXpIdjVxUE5zaUhqZmlSZCt0?=
- =?utf-8?B?NE4zZE1WYzVxVmxUTE16eStJbllsM0RDQ1JqSEtrakpjMHR6VUNCbzZLUXY4?=
- =?utf-8?B?SUVwWWVFc3JiUUdkWS9sR2Z4ZUFaRkdBT0s1VGlENlN4WTVGdnBkR1JxTXpO?=
- =?utf-8?B?clNLMzJYaG5mVlpRaGhSZVAxSkNESEl4aTN6bVJXQ0tYeDVKbFc5d0VaOWFx?=
- =?utf-8?B?YklDVEkzMXFIVDA5KzRhUVhyRTZvUytkblRucXZYRWFYSFY5Z0o2VGI4ODJm?=
- =?utf-8?B?ajlDMEgyaXNrL0VQRnVMcWZ6ZHc3cDVTdnpUQlN4VlFoU3E1cXJZSFpsYjVL?=
- =?utf-8?B?VzZYT1hYZVJueDZ1b0ZNVmk4OUhxSGc3WHloVzNzR1pxOEJ2cUx3aGRHMDFY?=
- =?utf-8?B?ek1XR2YvQlZ4cEpPSWNvUVlOMTRXZkRHS2I4UmRBSlo3cUdvZ1MraGRHc3Jk?=
- =?utf-8?B?YXRUL0tsbjRPS1didmxLY1N4SFJEYUxyZWhvTVpTTG1WZHIyZCtQM1JIdlFq?=
- =?utf-8?B?eFpZdmNhNjg3Z3BKUjNoVUFLdmtNZ2Rad3o3YS96emhONW1qUUVYRDB6Umlz?=
- =?utf-8?B?UWdZZDliQ0R4R2JxSVUvdGNtSE5QdE9WeVA4bW5jQytwZ1h0K1AxelJSZ2M0?=
- =?utf-8?B?RHZlMXNJaTFKL3pFd1djY3B4eVowYXlQdyt5WStHdnNGSjJBZVFqY3JieEY3?=
- =?utf-8?B?S1prTDJRTStaTUNZa0hhUUM3YUlSS2lZdG1pN3A1bnJ2dHBwZE9TcG5GNGVa?=
- =?utf-8?B?Z3drQUZFOFV0dDBJNlRWME1JcExNaTBleFBCc1BOakJCekZzQmZyMDBPRmhM?=
- =?utf-8?B?NDhWVW5INWtYVGtubXFSaC92NHhXd0FSM2x0QWJzdTR3L2UwcTRQYkt3ekFs?=
- =?utf-8?B?SGQ3UjZZaDBBUVBUamNiVXVvUkNIN25BVEJMT1BFdmZRNHpFeUtRYk4vM1NE?=
- =?utf-8?B?UWlhVGs2RkxuUXY2WHRUVDJxQWkxTHVuY0F1NUdMd0l0WWg3TzlqeFgyL2N0?=
- =?utf-8?B?RjNiSENpaVViRXlON3djKzZHTTZ4emVvNUNsZktLRWtQL08rNDJySnRMYkNa?=
- =?utf-8?B?bllhaUtlQmg2cmxlOCs0MnlWRHM0Y2kxcFhuZ0F6VUlxTjl3NUxrTWhyNWxh?=
- =?utf-8?B?SFRJSFJCY1dJem8wOVVIRGdzRVNsZndtQVJuTktldlIwU3hmbEpDUnBPaDhz?=
- =?utf-8?B?NzN5S1JUVHFONFFZcmFCeng3c2ZxNTN5Mzk5b2dsOGdnQWlDbS8yaDZSY3pT?=
- =?utf-8?B?ampacjIvV1luc3F5YVBzdC9UQUM2eFZQRFdRVU1UWlR4cFJzVHRlNURxd3I1?=
- =?utf-8?B?dTRyRWhheW9ZN3haL1IybFlOVDFsajZpamovd2prZDVNbDZyZzZYc2l0dFVF?=
- =?utf-8?B?RDJqUDNpajVmSWF2N1c4dTh4Q0lxTjNCem1CWGFDaDdPNzc2Y0ZJdEx3ck1U?=
- =?utf-8?B?dG0rNVhSbG9HckozT2h3Tmsvc0pZVHJQNHZVYjM0OW9MUmlCRi9SdFlXdHIx?=
- =?utf-8?B?dlZrdnB1UjVsQnhQOFRyWXVpWnk2QUZvbEZqMU1wK0tuaU5kNEhUa0pOWTJz?=
- =?utf-8?B?d3FUUTZJWXhseCtTeVd1b0JRV2pNQllKTVkweHpaTTRiUzJzdlhzSEtDYXdU?=
- =?utf-8?B?cUlZcmhxOGovbjhsNkhSVm9EUVdJR0xwY0JmUHRsZ2FQQkRFTWg1L0NXOHdF?=
- =?utf-8?B?YzRwek9ENVhFVXQ5VlNvQk5sZ21pUTVPT1ovZmMzVkwza0FLUUxjSmNrUDdX?=
- =?utf-8?B?Wm9KUU1rRHNxbStlN3pCWS9pN1drQzFSdmlaNFJ4L3VjZk90a2IzVUtLU0pL?=
- =?utf-8?B?aUlIY2toemlGaG5HdFFXbENXSDVLMWNzK1JWQ3lpalZHdHpseUd2QnVXc3E3?=
- =?utf-8?Q?Zs+XrQB1rhfPs?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aE5JaTlrbU54Vy9FWXl2WHcyUFQrYXYxek9VbEtFRGxFQ2lWaXBYV1BRL3Qx?=
+ =?utf-8?B?eUZGak5oVklTUjVBTkJwc0xGNUlRQzQ5RzRXYm5EeGJ2V3R4WGxNNnZubWFl?=
+ =?utf-8?B?L2Z6cWVlZUI5ampUczBuOStTcjJ2cE5ZV3F0bmdldGRYVG4rcGt4aEkzY2pQ?=
+ =?utf-8?B?L2VlS0w0M1hLaTFJbkpVRVA2VnJtOXVha3AycFh3ZXVQZ2NhK256S3FoWXhu?=
+ =?utf-8?B?R3VYdnQveVhPcjB0R3RLZDJpYzNmUUxaYjl4ZkhZQm5zWHNPTWhzUGZRQTdW?=
+ =?utf-8?B?TndDdEdWbnlEbTR4MEZiSCtJQnkxV3R1ZEYvR3hEOGZEcUZ5QndHRXhpdXoz?=
+ =?utf-8?B?UHRSMVlNaVRDam41cFFIOTdScDk5bEt2SER2THptQS95L2lOdEpOMzJYZ2ZE?=
+ =?utf-8?B?SGM1M0VnMGx0S1dlbit6emJ6YkZDdE1jWDhvMkhLbFlOMmNMSG5CMmVmR2ZP?=
+ =?utf-8?B?Lzg3TmU1eXlqUWVsS3UvdjhkYWFsT2t2YUExWUNTOW9SWmE2THBEZFVxTGFQ?=
+ =?utf-8?B?LzZaZ243TW9lWHZuNHNQbDRyT0kwOUt1RVdhNGxLMnFNM2VNYWNKNk1SOE5i?=
+ =?utf-8?B?Z3d5andKUjVVRkx4MzdHSWF6cEpvTWFoNVM1VXJ2Q2p0b2xFcm5ndFhvekEx?=
+ =?utf-8?B?Z1c4MlF6NkQ5L21YbUNlVTA2UUVtK1BmbFllZW51eWV0eXFVVkJtbkxML3BU?=
+ =?utf-8?B?U05qTkd5ZlRqekVTbXhzUW11RFBzZjB1QVhDT2ROYTJIQk5BZm9Qc1hFeVpP?=
+ =?utf-8?B?RzZ5SXhuM2FjTEtUcmYyZFA0ZVc2TmpVYkE5NEEvVTBCRzdydUlvS1k4aDYr?=
+ =?utf-8?B?NnpZN2FERUh1MjVsdWFVRlNEcy9TQWowVk9UemVyR0hYd0VDWGFoTU1WOVZS?=
+ =?utf-8?B?VURqWjlETFRCU2ZMWkpCN0RLQzBrMzQ4QWtMdktkNmVJdm9NV0c2Z3lXYUtu?=
+ =?utf-8?B?RmtwMUFUdmx2YWgyUkpKektwT2VrbVRmdWVxYXFDdjFnOGFzOHVFem5veWU1?=
+ =?utf-8?B?ZFJueUdoZE1kRXlHOVlPaEhvZEpNYzl1c1R6Wmo2bjZvaGdENjllYUxrL2Uw?=
+ =?utf-8?B?THNrOHBKc2s5TkNjakFmTVA4VGhaZWJiSGtLd1p0THZLTTZmallyVlBjTnBM?=
+ =?utf-8?B?NU0reFZ3YVFSL2d4d2ozVzhpMzQ1WS9DTVhVSitpTG1TS3I5WlFaWU11aFY5?=
+ =?utf-8?B?RURaN1V5cFg3b1REUldoMG51NlRaZXlqRU5acEJrUExUOWVOZlpEcFNJTHk3?=
+ =?utf-8?B?WHFyU0pXYXJwOFMrcUtPZG5tdE5CdWk4bmZIVERJZUV2akF3WnZPRHNQTVJu?=
+ =?utf-8?B?S3VOTC9PZ2VEQ0ZkNStDTnVkc25XOUo2QkJDUnJCb0FpUUhNZE1XZVVzOStu?=
+ =?utf-8?B?Y3BDWE1iZXBhSnl5M0thZm4zK2xXTUdQdS9MVkhRbEtOalFwajNOU3pUVUti?=
+ =?utf-8?B?cHlyZkk1VG9VZG0yK2NYUTdqRlJlMnRZMUpLZXlYRDIvbE4yL04yY1g4Wjhj?=
+ =?utf-8?B?TWJ3d1NDeGhhNlBKUHNuaHZPOFJzTnZzcGZzTWZlRUJTMjdWbWR5R0lIdEJ2?=
+ =?utf-8?B?MTYyaW5lNS91UExPZldPQ3NKZ3F4SXFpTUdpMjQxckJpdElVdWZBTnYwQUpT?=
+ =?utf-8?B?dFliVHpCLzY1S3hrZUg5VG9YeWc2cHF6VEdoSCtNQWtORmVrR29ZYUNUNkF1?=
+ =?utf-8?B?Qi9xZE51MlUwK1BKRkRUSlJnMmM3SVJYYmhHK2loUy9vSHlWRDhVYmdWa2Nx?=
+ =?utf-8?B?N0ZtVWN6aTU3S1FwMnIycDFuSjNPc2hxNzY2TEMwSTZpTUtyRkpsbHNjS3Vn?=
+ =?utf-8?B?aGRFRzc3ZWRzRFRZbnE3QT09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?clhBWElycVZOck5Uc3crYTVaWkdWK1U4N2d4ZFgrM0VyN2JZL055bTNGTkps?=
- =?utf-8?B?OTFvSjBhTllkUzZsY0dPSFVPZGxvVjBXVGhKSXBYdWFZQUd5SWo5cXc5YS9s?=
- =?utf-8?B?c0pEK2lSMlM1OWFzVE9MaG1vbHNTeENySkhvTjUxMzJpOG5kRGlwVUlpS0E0?=
- =?utf-8?B?SWYrdXJQVnNWVm9VNzZjeW5aeE04OHIxaG5uZTNOY3JzY3hkVCtReFRjcHZG?=
- =?utf-8?B?WGI4ZU1WeE1Gcmo2N29mdG9ONmc5Z2M4NDlldFpxZU1OakJiZVQ4VGo1NDRX?=
- =?utf-8?B?eGNsTmh2SjZlTlF1VkphaFkwWmdETDVQM1VNbloxd0hrRTU4VmNJaG1ES1pR?=
- =?utf-8?B?QStsNG9PcGRnTzBLZGZXMmhzT3QvbUplQ1hrRVU4bHRUbDVtSjhNWkIrZlc1?=
- =?utf-8?B?aUZGb01JakwyR3BRZGNsaE9PVmV3Sk9jbmpyMnVIT2ErR0g0cGRUZXpYMmVT?=
- =?utf-8?B?YUR4WUc3SVM2YVQ5SnRvMkxsYlN5Zm45SWxVWDJhM1U1OGdrL1dGblo4VWZl?=
- =?utf-8?B?U1hOY3JFWDEzWS9mVS9Nbi9wbHFHdjJrSVArYmlUZi9NWjNHWUMvRE11b3FZ?=
- =?utf-8?B?L0xSUmhYR1BjYjd6R1hMcU1CUGxwR1cvMmtwNVd4czZBK1VRdHBkeDRXZ25T?=
- =?utf-8?B?MWpqOGI1MFp3WkdoYjhmb3pMTEpCUzROSjI2eWc5NnFZbCtCM2k2RXJtaVBV?=
- =?utf-8?B?a0M0bWdjbkZOUmVtSFlXNDZBK291bUxldXpMUTYvbVVDYWk1NHlBaU5acEIw?=
- =?utf-8?B?UHJuUHZVa01UQ08xV29lLzlPa1Z3S3hvNDNLN3o5WXFqU096SjVBQlRsQmls?=
- =?utf-8?B?STlVeDdhUzlweWR2aGlwTWdBeDFNWlhiUFpyN0pxSTdxY1podVBUT1JBVUZS?=
- =?utf-8?B?MDNidGJMelJOSjJ3aTQyUE11MTd5NUtXV1EzVlRNaHVpT2xjU2p2TUtUcHI3?=
- =?utf-8?B?aXNJLzRYcnhTUzhIN085d0ZEUC9heXVkbU9DblhhL29STkdkcnVPdWE0YU4v?=
- =?utf-8?B?dm9BcTdkZVZwMmdDdzJrYUNzeXcvV1BzejgwS2pOOXZtU1k4RXdYaHEyVXZT?=
- =?utf-8?B?V2VCL1l6WmFOQmNDT2JUYjFyODlwMWVMcUdvWjl4VUl5Uk5JeWxpc0xTODJK?=
- =?utf-8?B?WkxpWFFldmtURk9lOVozandsM0FadldPYTVoc2hjRWhBNG9RQkNpVER6WlVW?=
- =?utf-8?B?a0lmdks0blhQcG83OTVRRkNBNXpsaCtGd0pHOVA3YktodGtRZnpha3I5ZVph?=
- =?utf-8?B?Y3kxdnNJVWQ0K1kyUkV3Vm56Nm52VEJsdSs2bWtqOEt3em9jckpZTDdoMWdM?=
- =?utf-8?B?RFBZeHdDUjZGcmIwZGFvem1jdWpCZXltYnBEQkluWGczUnRpQ0NhaEcvZW9V?=
- =?utf-8?B?NHI3RSt2VWRsYVBzNzVsMSt6SVQ1SVJ5K3dCRkJMTGJKc2g4NDdzZlVNcnE5?=
- =?utf-8?B?SXVZNnFWWUdoTXNsd3ViTUh2eHJ0MXJqRGFDZmtDWVNmT3VWZUVwdlIzdmVM?=
- =?utf-8?B?V1A1OGpDQXRqU1I1YkpJcXhhR3p2TWRpclBUUTYvQWZvVlpiZE5IMDJwcDFG?=
- =?utf-8?B?ZHh5b1hOUSs3VVdPaGhQVVdDWERza2hGaWZ5WVZIWWtrM0Y0ZG43ODhlNlp1?=
- =?utf-8?B?SnpMOTdGbXdhZWdkeEd1N1IzTXczeFVWM2pUeHo0UkNTZkF4ZHVydHNpRFNq?=
- =?utf-8?B?OVBBcTkzVDJpaXJia1J2MEQ4MDlrYS9oazlvUXhtWkY0Ynd2QThMam9WcS9O?=
- =?utf-8?B?UFpnVWxaaklxT0VWRHJMbjFBQVNsR21aSzZubDZxbFl6U3hoTjljaGNQVG5L?=
- =?utf-8?B?NzVBdmRqd1RESEU5ZmxOcThWdzZtZUgzVGQ2SE9hRml3eTVwL2hJRHNmNzFj?=
- =?utf-8?B?VGw1WUtTMkNOc2NEMndOT05WdkhKTHpyZWJ3NG83NXBpbXdsYTRONCtkaXYv?=
- =?utf-8?B?Nyt4WWdQdHBhUTN5RXB4L2ZmUXZwTTYrSExINkQ2MkhoaG5wNjNGQW8rOGVm?=
- =?utf-8?B?ZEVidlpwaGZIL0RzVjBvU2xURU1BcmpnNHpmU2RVUGs0UUNmbkg3M2ova05v?=
- =?utf-8?B?WmR0VDNnSDZIczBEbzNUZ0x4ckVobHVlQ1JIRWh4YW5XSnVBU21RWWRYNWVU?=
- =?utf-8?Q?/RVPITi7OyCKwr85k/ekC70d9?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a29GVHV6VlVJbGFsYjZJc0IvOWNXditWbE56eEZYTjBCTk9jbkRITXJxNC9O?=
+ =?utf-8?B?Y21qVmpZOSsvTGJLUnJDd2FpNjBDU0VOMlhwb0N0RHNWVGQ0N3VDamFTVEkr?=
+ =?utf-8?B?c1Q5YmVrYTlWZFQxZmdNandQQ0ZWdVV5N0VyKzNDczNTWTVZcXlOTlJhNENu?=
+ =?utf-8?B?Qm1BQUZPdXo1Ykp0RFdTRzFhRWNqLzk5NUh0ZzZnT29sNmxRZS9DUXF2ekl1?=
+ =?utf-8?B?TStWUmFzNjludVRWQ3lxRVg2ZVMzd3ZZNzM3ZnIrd0lLcnVIQ21EOGFjSTZz?=
+ =?utf-8?B?eWl3djBudVVzTEs5OU0xc3BiQlhCY1FEVngrdU1MTWdhL0hvVmttczNQUXZ5?=
+ =?utf-8?B?NGVVakRKMGpxaGFjRSt1OFIxelFPSjR6WUxTRHI0R3pDL0FIWHFobkU2MjU5?=
+ =?utf-8?B?bEs2MFdOWmV3aE4wbVE0YjNYVFBNMUZJN1ZRdVJwY0pBMmNQOVgxNGIxTkl1?=
+ =?utf-8?B?YzVFeXVyWFFyQUtZRGpYeHhMNWg2Q2k4WHJ5WHBxaC9YblI0RE1YS0tRZlg1?=
+ =?utf-8?B?UmRDaldyUVl3SlBJc1BIMGx6TTRuYmJNdEd5ck92UkRJclJ0QytnbElqZVJB?=
+ =?utf-8?B?RjhlUW9hUlVlbEVzMFlKUDdtSjZPdUxnWWFPakhPTkR1YnU3YjdCVk94cCtK?=
+ =?utf-8?B?aG1QTkFKUW10b080NG9wbWtUREF3L2tSdGdnYXNwZEFxbGJxOXAweEtpWE4z?=
+ =?utf-8?B?Znl3NUhrTnd6TERzT2F3MklKZU1ROTZyZVN2djN2ZkdnTVYrdnhsSVN4OEFk?=
+ =?utf-8?B?M1UzZjdMcTJmMjVSOGd1VlBwZUtmVzQ2cVV5cFU5aGl0UnhsZGoxTzlSS1ox?=
+ =?utf-8?B?MGtDdmJhdy9hOHNQNm5ya3pvZ3JEYll3NThmN0t2N25lNGpVa3kvcjc3WkNB?=
+ =?utf-8?B?SFR6MjVnNGF4YUE3NFUwdGE1RjR6ZW9RUzVkSWZPWFFEckhITG9PNWpuTmgr?=
+ =?utf-8?B?NEhrS244dlZybmhzS3FYMjdhWW9ORXJhbnN4Tm9zUVd5SWdXdGVQbjF2bEVr?=
+ =?utf-8?B?VzJVVkRQazBrZ09sSUl0VVh5SnhaWlZLSDYrRklUMURxbndoVGcwZEpPeWxD?=
+ =?utf-8?B?a0tWeDd0aGhvVHFFLzRZdE9EVHFHOHF5NTVrMEdJSXFZQXJGbDRhTjIrRkVz?=
+ =?utf-8?B?T0cxbXI4VFpCWFV3VTZYVzQwSlZUN000T1d0amYzRkdabEsrYmlKMU50YmVK?=
+ =?utf-8?B?Nk0yNjFvMmJ5RDRnRjMvbUVUbkpIc2txd2ZHS2VmUFkvRitkSGIvd2VZMzQy?=
+ =?utf-8?B?dktieXVBbWxscnErSWhWNEgrbGRGUXZ4K0JNUmFBZnFEVHJTRFM5ZDFWR0VL?=
+ =?utf-8?B?U0tLNHVDY0FwZWI2angvaUJIcGpaNEtZY0p6MCtOb3hTd3JDVSt2NUhLVFZt?=
+ =?utf-8?B?T3plRFQ2MXlibDBaazJIU29ZYTdhZVpydnZEM3N3Q0xxOVJBMkRQSmFTT0VU?=
+ =?utf-8?B?TUo5RzUrU2ozMTExaWtkWjRML2RyQzdzQTdvWnlEakFnZ0h2aG1pNDd5Q3pJ?=
+ =?utf-8?B?aTFSOWV6MTIxQndYOW9wT3pBZkJ1UHRnT3BLdlpRSVU1eWE5VkhsRlZmbVBm?=
+ =?utf-8?B?alZZdFJ6UlRJYnpxZXVDSTVUdVlhUmlmeUh3ZTltekhBWXljRDdLa1V5VVVp?=
+ =?utf-8?B?c3FJV05JbEx5UTlpUVMyRyt5dXlOaU55d3h2ZGErTkhBSjNGa3ljMUdIb1l6?=
+ =?utf-8?B?Rys0N3BnRU5yVkRSRnV0aTRyUFNJZG9RSzViM0tlcms2ZnFTMk80NVFQemFy?=
+ =?utf-8?B?VmRJKzNpcGNxYTRHbGw0M2xnZy9ZZ0tGN3V0TXVUYjRMTWU0Nms3QndGVUtj?=
+ =?utf-8?B?aFRTN3N6dWlFOXd5Uzgvb0xVOUorUW5TbmQzZjRrSFVJVFoxUlJSMktWeWdy?=
+ =?utf-8?B?RG05UDdXeGtmSE11bDMvYnk5UTM5dFJnUkt5d1lXalZ2MUZ1ZDR2R01iMHdp?=
+ =?utf-8?B?T3k3QnZvM3ZxNzVUN0JnQ0FBQzZsRkp0RVVBRFl0Q0hQMHNUblo2MjhqOERk?=
+ =?utf-8?B?eU5NczdGODRlZ3NjNU52Q0NDYXFwemVTRVR6UTlud0pZTjJMY1YvWnovM2kv?=
+ =?utf-8?B?SHl1YVBmWjZraEYzemlWbFpDMi9XbmxTQzZibFNaQVhGRHlad3NvYTJPNXIy?=
+ =?utf-8?Q?2xqGiP2533f4YDPYD+KYFIJG7?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d8007d81-bbf2-4d91-c27d-08dd2f9f9b72
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9620a59a-47d1-4ebf-0055-08dd2f9f90a6
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2025 04:47:51.2239 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2025 04:47:33.2965 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yJd+afCPNthQUkYQNjvCIXvm1rHp1pd0ld3qgl1xxVW6XhRraVrDA4F01tTh18PpDm8uapo/3k8tToxb7g7z5g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: YsvQih2jo4/waG4+Ax/fGg1LYLtwpJKjwVGu8fPQXSkWOtmX3vevyNcD4Qo0Cc8NezKXVa3OWGXj1bxN+RZraw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB9247
-Received-SPF: permerror client-ip=2a01:111:f403:2415::60d;
+Received-SPF: permerror client-ip=40.107.236.40;
  envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,180 +182,233 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/12/24 18:08, Chenyi Qiang wrote:
-> Introduce the realize()/unrealize() callbacks to initialize/uninitialize
-> the new guest_memfd_manager object and register/unregister it in the
-> target MemoryRegion.
+> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+> discard") effectively disables device assignment when using guest_memfd.
+> This poses a significant challenge as guest_memfd is essential for
+> confidential guests, thereby blocking device assignment to these VMs.
+> The initial rationale for disabling device assignment was due to stale
+> IOMMU mappings (see Problem section) and the assumption that TEE I/O
+> (SEV-TIO, TDX Connect, COVE-IO, etc.) would solve the device-assignment
+> problem for confidential guests [1]. However, this assumption has proven
+> to be incorrect. TEE I/O relies on the ability to operate devices against
+> "shared" or untrusted memory, which is crucial for device initialization
+> and error recovery scenarios. As a result, the current implementation does
+> not adequately support device assignment for confidential guests, necessitating
+> a reevaluation of the approach to ensure compatibility and functionality.
 > 
-> Guest_memfd was initially set to shared until the commit bd3bcf6962
-> ("kvm/memory: Make memory type private by default if it has guest memfd
-> backend"). To align with this change, the default state in
-> guest_memfd_manager is set to private. (The bitmap is cleared to 0).
-> Additionally, setting the default to private can also reduce the
-> overhead of mapping shared pages into IOMMU by VFIO during the bootup stage.
+> This series enables shared device assignment by notifying VFIO of page
+> conversions using an existing framework named RamDiscardListener.
+> Additionally, there is an ongoing patch set [2] that aims to add 1G page
+> support for guest_memfd. This patch set introduces in-place page conversion,
+> where private and shared memory share the same physical pages as the backend.
+> This development may impact our solution.
 > 
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> We presented our solution in the guest_memfd meeting to discuss its
+> compatibility with the new changes and potential future directions (see [3]
+> for more details). The conclusion was that, although our solution may not be
+> the most elegant (see the Limitation section), it is sufficient for now and
+> can be easily adapted to future changes.
+> 
+> We are re-posting the patch series with some cleanup and have removed the RFC
+> label for the main enabling patches (1-6). The newly-added patch 7 is still
+> marked as RFC as it tries to resolve some extension concerns related to
+> RamDiscardManager for future usage.
+> 
+> The overview of the patches:
+> - Patch 1: Export a helper to get intersection of a MemoryRegionSection
+>    with a given range.
+> - Patch 2-6: Introduce a new object to manage the guest-memfd with
+>    RamDiscardManager, and notify the shared/private state change during
+>    conversion.
+> - Patch 7: Try to resolve a semantics concern related to RamDiscardManager
+>    i.e. RamDiscardManager is used to manage memory plug/unplug state
+>    instead of shared/private state. It would affect future users of
+>    RamDiscardManger in confidential VMs. Attach it behind as a RFC patch[4].
+> 
+> Changes since last version:
+> - Add a patch to export some generic helper functions from virtio-mem code.
+> - Change the bitmap in guest_memfd_manager from default shared to default
+>    private. This keeps alignment with virtio-mem that 1-setting in bitmap
+>    represents the populated state and may help to export more generic code
+>    if necessary.
+> - Add the helpers to initialize/uninitialize the guest_memfd_manager instance
+>    to make it more clear.
+> - Add a patch to distinguish between the shared/private state change and
+>    the memory plug/unplug state change in RamDiscardManager.
+> - RFC: https://lore.kernel.org/qemu-devel/20240725072118.358923-1-chenyi.qiang@intel.com/
+> 
 > ---
->   include/sysemu/guest-memfd-manager.h | 27 +++++++++++++++++++++++++++
->   system/guest-memfd-manager.c         | 28 +++++++++++++++++++++++++++-
->   system/physmem.c                     |  7 +++++++
->   3 files changed, 61 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/sysemu/guest-memfd-manager.h b/include/sysemu/guest-memfd-manager.h
-> index 9dc4e0346d..d1e7f698e8 100644
-> --- a/include/sysemu/guest-memfd-manager.h
-> +++ b/include/sysemu/guest-memfd-manager.h
-> @@ -42,6 +42,8 @@ struct GuestMemfdManager {
->   struct GuestMemfdManagerClass {
->       ObjectClass parent_class;
->   
-> +    void (*realize)(GuestMemfdManager *gmm, MemoryRegion *mr, uint64_t region_size);
-> +    void (*unrealize)(GuestMemfdManager *gmm);
->       int (*state_change)(GuestMemfdManager *gmm, uint64_t offset, uint64_t size,
->                           bool shared_to_private);
->   };
-> @@ -61,4 +63,29 @@ static inline int guest_memfd_manager_state_change(GuestMemfdManager *gmm, uint6
->       return 0;
->   }
->   
-> +static inline void guest_memfd_manager_realize(GuestMemfdManager *gmm,
-> +                                              MemoryRegion *mr, uint64_t region_size)
-> +{
-> +    GuestMemfdManagerClass *klass;
-> +
-> +    g_assert(gmm);
-> +    klass = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
-> +
-> +    if (klass->realize) {
-> +        klass->realize(gmm, mr, region_size);
+> Background
+> ==========
+> Confidential VMs have two classes of memory: shared and private memory.
+> Shared memory is accessible from the host/VMM while private memory is
+> not. Confidential VMs can decide which memory is shared/private and
+> convert memory between shared/private at runtime.
+> 
+> "guest_memfd" is a new kind of fd whose primary goal is to serve guest
+> private memory. The key differences between guest_memfd and normal memfd
+> are that guest_memfd is spawned by a KVM ioctl, bound to its owner VM and
+> cannot be mapped, read or written by userspace.
 
-Ditch realize() hook and call guest_memfd_manager_realizefn() directly?
-Not clear why these new hooks are needed.
+The "cannot be mapped" seems to be not true soon anymore (if not already).
 
-> +    }
-> +}
-> +
-> +static inline void guest_memfd_manager_unrealize(GuestMemfdManager *gmm)
-> +{
-> +    GuestMemfdManagerClass *klass;
-> +
-> +    g_assert(gmm);
-> +    klass = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
-> +
-> +    if (klass->unrealize) {
-> +        klass->unrealize(gmm);
-> +    }
-> +}
-
-guest_memfd_manager_unrealizefn()?
+https://lore.kernel.org/all/20240801090117.3841080-1-tabba@google.com/T/
 
 
-> +
->   #endif
-> diff --git a/system/guest-memfd-manager.c b/system/guest-memfd-manager.c
-> index 6601df5f3f..b6a32f0bfb 100644
-> --- a/system/guest-memfd-manager.c
-> +++ b/system/guest-memfd-manager.c
-> @@ -366,6 +366,31 @@ static int guest_memfd_state_change(GuestMemfdManager *gmm, uint64_t offset,
->       return ret;
->   }
->   
-> +static void guest_memfd_manager_realizefn(GuestMemfdManager *gmm, MemoryRegion *mr,
-> +                                          uint64_t region_size)
-> +{
-> +    uint64_t bitmap_size;
-> +
-> +    gmm->block_size = qemu_real_host_page_size();
-> +    bitmap_size = ROUND_UP(region_size, gmm->block_size) / gmm->block_size;
+> 
+> In QEMU's implementation, shared memory is allocated with normal methods
+> (e.g. mmap or fallocate) while private memory is allocated from
+> guest_memfd. When a VM performs memory conversions, QEMU frees pages via
+> madvise() or via PUNCH_HOLE on memfd or guest_memfd from one side and
+> allocates new pages from the other side.
+> 
+> Problem
+> =======
+> Device assignment in QEMU is implemented via VFIO system. In the normal
+> VM, VM memory is pinned at the beginning of time by VFIO. In the
+> confidential VM, the VM can convert memory and when that happens
+> nothing currently tells VFIO that its mappings are stale. This means
+> that page conversion leaks memory and leaves stale IOMMU mappings. For
+> example, sequence like the following can result in stale IOMMU mappings:
+> 
+> 1. allocate shared page
+> 2. convert page shared->private
+> 3. discard shared page
+> 4. convert page private->shared
+> 5. allocate shared page
+> 6. issue DMA operations against that shared page
+> 
+> After step 3, VFIO is still pinning the page. However, DMA operations in
+> step 6 will hit the old mapping that was allocated in step 1, which
+> causes the device to access the invalid data.
+> 
+> Solution
+> ========
+> The key to enable shared device assignment is to update the IOMMU mappings
+> on page conversion.
+> 
+> Given the constraints and assumptions here is a solution that satisfied
+> the use cases. RamDiscardManager, an existing interface currently
+> utilized by virtio-mem, offers a means to modify IOMMU mappings in
+> accordance with VM page assignment. Page conversion is similar to
+> hot-removing a page in one mode and adding it back in the other.
+> 
+> This series implements a RamDiscardManager for confidential VMs and
+> utilizes its infrastructure to notify VFIO of page conversions.
+> 
+> Another possible attempt [5] was to not discard shared pages in step 3
+> above. This was an incomplete band-aid because guests would consume
+> twice the memory since shared pages wouldn't be freed even after they
+> were converted to private.
+> 
+> w/ in-place page conversion
+> ===========================
+> To support 1G page support for guest_memfd, the current direction is to
+> allow mmap() of guest_memfd to userspace so that both private and shared
+> memory can use the same physical pages as the backend. This in-place page
+> conversion design eliminates the need to discard pages during shared/private
+> conversions. However, device assignment will still be blocked because the
+> in-place page conversion will reject the conversion when the page is pinned
+> by VFIO.
+> 
+> To address this, the key difference lies in the sequence of VFIO map/unmap
+> operations and the page conversion. This series can be adjusted to achieve
+> unmap-before-conversion-to-private and map-after-conversion-to-shared,
+> ensuring compatibility with guest_memfd.
+> 
+> Additionally, with in-place page conversion, the previously mentioned
+> solution to disable the discard of shared pages is not feasible because
+> shared and private memory share the same backend, and no discard operation
+> is performed. Retaining the old mappings in the IOMMU would result in
+> unsafe DMA access to protected memory.
+> 
+> Limitation
+> ==========
+> 
+> One limitation (also discussed in the guest_memfd meeting) is that VFIO
+> expects the DMA mapping for a specific IOVA to be mapped and unmapped with
+> the same granularity. The guest may perform partial conversions, such as
+> converting a small region within a larger region. To prevent such invalid
+> cases, all operations are performed with 4K granularity. The possible
+> solutions we can think of are either to enable VFIO to support partial unmap
+> or to implement an enlightened guest to avoid partial conversion. The former
+> requires complex changes in VFIO, while the latter requires the page
+> conversion to be a guest-enlightened behavior. It is still uncertain which
+> option is a preferred one.
 
-imho unaligned region_size should be an assert.
+in-place memory conversion is :)
 
-> +
-> +    gmm->mr = mr;
-> +    gmm->bitmap_size = bitmap_size;
-> +    gmm->bitmap = bitmap_new(bitmap_size);
-> +
-> +    memory_region_set_ram_discard_manager(gmm->mr, RAM_DISCARD_MANAGER(gmm));
-> +}
-
-This belongs to 2/7.
-
-> +
-> +static void guest_memfd_manager_unrealizefn(GuestMemfdManager *gmm)
-> +{
-> +    memory_region_set_ram_discard_manager(gmm->mr, NULL);
-> +
-> +    g_free(gmm->bitmap);
-> +    gmm->bitmap = NULL;
-> +    gmm->bitmap_size = 0;
-> +    gmm->mr = NULL;
-
-@gmm is being destroyed here, why bother zeroing?
-
-> +}
-> +
-
-This function belongs to 2/7.
-
->   static void guest_memfd_manager_init(Object *obj)
->   {
->       GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(obj);
-> @@ -375,7 +400,6 @@ static void guest_memfd_manager_init(Object *obj)
->   
->   static void guest_memfd_manager_finalize(Object *obj)
->   {
-> -    g_free(GUEST_MEMFD_MANAGER(obj)->bitmap);
->   }
->   
->   static void guest_memfd_manager_class_init(ObjectClass *oc, void *data)
-> @@ -384,6 +408,8 @@ static void guest_memfd_manager_class_init(ObjectClass *oc, void *data)
->       RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
->   
->       gmmc->state_change = guest_memfd_state_change;
-> +    gmmc->realize = guest_memfd_manager_realizefn;
-> +    gmmc->unrealize = guest_memfd_manager_unrealizefn;
->   
->       rdmc->get_min_granularity = guest_memfd_rdm_get_min_granularity;
->       rdmc->register_listener = guest_memfd_rdm_register_listener;
-> diff --git a/system/physmem.c b/system/physmem.c
-> index dc1db3a384..532182a6dd 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -53,6 +53,7 @@
->   #include "sysemu/hostmem.h"
->   #include "sysemu/hw_accel.h"
->   #include "sysemu/xen-mapcache.h"
-> +#include "sysemu/guest-memfd-manager.h"
->   #include "trace.h"
->   
->   #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-> @@ -1885,6 +1886,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->               qemu_mutex_unlock_ramlist();
->               goto out_free;
->           }
-> +
-> +        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(object_new(TYPE_GUEST_MEMFD_MANAGER));
-> +        guest_memfd_manager_realize(gmm, new_block->mr, new_block->mr->size);
-
-Wow. Quite invasive.
-
->       }
->   
->       ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-> @@ -2139,6 +2143,9 @@ static void reclaim_ramblock(RAMBlock *block)
->   
->       if (block->guest_memfd >= 0) {
->           close(block->guest_memfd);
-> +        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(block->mr->rdm);
-> +        guest_memfd_manager_unrealize(gmm);
-> +        object_unref(OBJECT(gmm));
-
-Likely don't matter but I'd do the cleanup before close() or do 
-block->guest_memfd=-1 before the cleanup. Thanks,
+> 
+> Testing
+> =======
+> This patch series is tested with the KVM/QEMU branch:
+> KVM: https://github.com/intel/tdx/tree/tdx_kvm_dev-2024-11-20
+> QEMU: https://github.com/intel-staging/qemu-tdx/tree/tdx-upstream-snapshot-2024-12-13
 
 
->           ram_block_discard_require(false);
->       }
->   
+The branch is gone now? tdx-upstream-snapshot-2024-12-18 seems to have 
+these though. Thanks,
+
+> 
+> To facilitate shared device assignment with the NIC, employ the legacy
+> type1 VFIO with the QEMU command:
+> 
+> qemu-system-x86_64 [...]
+>      -device vfio-pci,host=XX:XX.X
+> 
+> The parameter of dma_entry_limit needs to be adjusted. For example, a
+> 16GB guest needs to adjust the parameter like
+> vfio_iommu_type1.dma_entry_limit=4194304.
+> 
+> If use the iommufd-backed VFIO with the qemu command:
+> 
+> qemu-system-x86_64 [...]
+>      -object iommufd,id=iommufd0 \
+>      -device vfio-pci,host=XX:XX.X,iommufd=iommufd0
+> 
+> No additional adjustment required.
+> 
+> Following the bootup of the TD guest, the guest's IP address becomes
+> visible, and iperf is able to successfully send and receive data.
+> 
+> Related link
+> ============
+> [1] https://lore.kernel.org/all/d6acfbef-96a1-42bc-8866-c12a4de8c57c@redhat.com/
+> [2] https://lore.kernel.org/lkml/cover.1726009989.git.ackerleytng@google.com/
+> [3] https://docs.google.com/document/d/1M6766BzdY1Lhk7LiR5IqVR8B8mG3cr-cxTxOrAosPOk/edit?tab=t.0#heading=h.jr4csfgw1uql
+> [4] https://lore.kernel.org/qemu-devel/d299bbad-81bc-462e-91b5-a6d9c27ffe3a@redhat.com/
+> [5] https://lore.kernel.org/all/20240320083945.991426-20-michael.roth@amd.com/
+> 
+> Chenyi Qiang (7):
+>    memory: Export a helper to get intersection of a MemoryRegionSection
+>      with a given range
+>    guest_memfd: Introduce an object to manage the guest-memfd with
+>      RamDiscardManager
+>    guest_memfd: Introduce a callback to notify the shared/private state
+>      change
+>    KVM: Notify the state change event during shared/private conversion
+>    memory: Register the RamDiscardManager instance upon guest_memfd
+>      creation
+>    RAMBlock: make guest_memfd require coordinate discard
+>    memory: Add a new argument to indicate the request attribute in
+>      RamDismcardManager helpers
+> 
+>   accel/kvm/kvm-all.c                  |   4 +
+>   hw/vfio/common.c                     |  22 +-
+>   hw/virtio/virtio-mem.c               |  55 ++--
+>   include/exec/memory.h                |  36 ++-
+>   include/sysemu/guest-memfd-manager.h |  91 ++++++
+>   migration/ram.c                      |  14 +-
+>   system/guest-memfd-manager.c         | 456 +++++++++++++++++++++++++++
+>   system/memory.c                      |  30 +-
+>   system/memory_mapping.c              |   4 +-
+>   system/meson.build                   |   1 +
+>   system/physmem.c                     |   9 +-
+>   11 files changed, 659 insertions(+), 63 deletions(-)
+>   create mode 100644 include/sysemu/guest-memfd-manager.h
+>   create mode 100644 system/guest-memfd-manager.c
+> 
 
 -- 
 Alexey
