@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D84FE77199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F4DE7719B
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVXHP-0001MM-34; Wed, 08 Jan 2025 09:43:31 -0500
+	id 1tVXHH-0001Km-El; Wed, 08 Jan 2025 09:43:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVXHN-0001Lw-Qe
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:43:29 -0500
+ id 1tVXHF-0001K7-9e
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:43:21 -0500
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVXHK-0008O8-PP
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:43:29 -0500
+ id 1tVXHD-0008MI-EM
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:43:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736347407; x=1767883407;
+ t=1736347400; x=1767883400;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=4zIiyRBJx2uUEgy/m5M23r7WgU1QXI3Eb0MeZznc3Pk=;
- b=gWlGoBEtbwAIgi4dyayxqLxVUFNTn6J4cCEm69IIq5YvfYs8to9ggfqh
- GCFF/6tM/L5nbBzCrkWzQ03/lJfwh7t7swHsuFdckQwcdMk2gEToC3nX9
- 9z/ksZpCYPqM8U/DwITBWKc13DbEaWjDi5u63/cHCVzwSL1z/KhisdHbw
- k1TH9wYJCZqz0P6mtPq8eXNnMcisMGLnhe/tLJ7E1OPS9CSmdXjClx1ZZ
- RLrxsORmrcTIhWLs2d5NqpN1VorP6lz3Mp/o/IM++bYGaYIv6JtpiXtK3
- 9r2DstwZfQk3Mj+LyCZZqL7MPNF0AaR4MV3cYNYaBpUgUBurSqOW4+P42 A==;
-X-CSE-ConnectionGUID: v3hoyr06QTCNMvXVOiqO1g==
-X-CSE-MsgGUID: dXHb27d0TJqReL/y3Fkc7w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11309"; a="36737382"
-X-IronPort-AV: E=Sophos;i="6.12,298,1728975600"; d="scan'208";a="36737382"
+ bh=roMx6NLgvG1w2UZlck/tSjXRrw4hdWLyk6vWSzvqPQI=;
+ b=F07taqnZcrR7tksO7D06M/OKwoU3csEiYj8EfaB4kbmiyJJi/dBz9Ul5
+ rKQmGYOFY49zoM7g1G3Ti5bpW1SuTAEvC2MrNN4iJir2HwZQAsRoOAU1x
+ fTTZCpYHYvURTfkMvrTvS6Exnxu5j4SpGt2LYUBwEFJgPA+2fxLNcuZ3t
+ lk292MwpkSATekCKTA3dr5S6KxWTljTsspv47JeBFL03Syks9oUw+EZzS
+ 6kieNPfa2yleNN6NZ49jjLrRA/3bxJ+CIgljOCIro+XhBrDp8wotKs7Eo
+ 1wkuB9B0aLoimYvD2dB5S/EKH/VTQHSSgA7+8SL023m0+Yrqz6fXG3e3D w==;
+X-CSE-ConnectionGUID: AO9UCz9hSdO1Lf3fGSdcUg==
+X-CSE-MsgGUID: +wDxJLB3QA+El95FvktfLg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11309"; a="36737350"
+X-IronPort-AV: E=Sophos;i="6.12,298,1728975600"; d="scan'208";a="36737350"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jan 2025 06:43:25 -0800
-X-CSE-ConnectionGUID: wY1PHkZiSZCcy+MYM3rw5g==
-X-CSE-MsgGUID: pZlpAOiwTwKyvRgLs/Qpcw==
+ 08 Jan 2025 06:43:17 -0800
+X-CSE-ConnectionGUID: 2i5G/sg9RIKwJW2uz0Nc0A==
+X-CSE-MsgGUID: 59Xo8U8iTim5ohGRbQs+ow==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="103969397"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="103969389"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 08 Jan 2025 06:43:21 -0800
+ by orviesa008.jf.intel.com with ESMTP; 08 Jan 2025 06:43:13 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -58,12 +58,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Alireza Sanaee <alireza.sanaee@huawei.com>,
  Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>
-Subject: [PATCH v7 3/5] i386/cpu: Update cache topology with machine's
- configuration
-Date: Wed,  8 Jan 2025 23:01:48 +0800
-Message-Id: <20250108150150.1258529-4-zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v7 1/5] hw/core/machine: Reject thread level cache
+Date: Wed,  8 Jan 2025 23:01:46 +0800
+Message-Id: <20250108150150.1258529-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250108150150.1258529-1-zhao1.liu@intel.com>
 References: <20250108150150.1258529-1-zhao1.liu@intel.com>
@@ -94,107 +92,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User will configure smp cache topology via -machine smp-cache.
+Currently, neither i386 nor ARM have real hardware support for per-
+thread cache, and there is no clear demand for this specific cache
+topology.
 
-For this case, update the x86 CPUs' cache topology with user's
-configuration in MachineState.
+Additionally, since supporting this special cache topology on ARM
+requires extra effort [1], it is unnecessary to support it at this
+moment, even though per-thread cache might have potential scheduling
+benefits for VMs without CPU affinity.
+
+Therefore, disable thread-level cache topology in the general machine
+part. At present, i386 has not enabled SMP cache, so disabling the
+thread parameter does not pose compatibility issues.
+
+In the future, if there is a clear demand for this feature, the correct
+approach would be to add a new control field in MachineClass.smp_props
+and enable it only for the machines that require it.
+
+[1]: https://lore.kernel.org/qemu-devel/Z3efFsigJ6SxhqMf@intel.com/#t
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
-Changes since Patch v3:
- * Updated MachineState.smp_cache to consume "default" level and did a
-   check to ensure topological hierarchical relationships are correct.
+Changes since Patch v6:
+ * New commit to reject "thread" parameter when parse smp-cache.
 ---
- target/i386/cpu.c | 67 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
+ hw/core/machine-smp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4728373fdf03..b6d6c4b96d49 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7758,6 +7758,64 @@ static void x86_cpu_hyperv_realize(X86CPU *cpu)
-     cpu->hyperv_limits[2] = 0;
- }
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index b954eb849027..4e020c358b66 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -321,6 +321,13 @@ bool machine_parse_smp_cache(MachineState *ms,
+             return false;
+         }
  
-+#ifndef CONFIG_USER_ONLY
-+static bool x86_cpu_update_smp_cache_topo(MachineState *ms, X86CPU *cpu,
-+                                          Error **errp)
-+{
-+    CPUX86State *env = &cpu->env;
-+    CpuTopologyLevel level;
++        if (props->topology == CPU_TOPOLOGY_LEVEL_THREAD) {
++            error_setg(errp,
++                       "%s level cache not supported by this machine",
++                       CpuTopologyLevel_str(props->topology));
++            return false;
++        }
 +
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l1d_cache->share_level = level;
-+        env->cache_info_amd.l1d_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D,
-+            env->cache_info_cpuid4.l1d_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D,
-+            env->cache_info_amd.l1d_cache->share_level);
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l1i_cache->share_level = level;
-+        env->cache_info_amd.l1i_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I,
-+            env->cache_info_cpuid4.l1i_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I,
-+            env->cache_info_amd.l1i_cache->share_level);
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l2_cache->share_level = level;
-+        env->cache_info_amd.l2_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2,
-+            env->cache_info_cpuid4.l2_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2,
-+            env->cache_info_amd.l2_cache->share_level);
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l3_cache->share_level = level;
-+        env->cache_info_amd.l3_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3,
-+            env->cache_info_cpuid4.l3_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3,
-+            env->cache_info_amd.l3_cache->share_level);
-+    }
-+
-+    if (!machine_check_smp_cache(ms, errp)) {
-+        return false;
-+    }
-+    return true;
-+}
-+#endif
-+
- static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
- {
-     CPUState *cs = CPU(dev);
-@@ -7982,6 +8040,15 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
- 
- #ifndef CONFIG_USER_ONLY
-     MachineState *ms = MACHINE(qdev_get_machine());
-+
-+    /*
-+     * TODO: Add a SMPCompatProps.has_caches flag to avoid useless updates
-+     * if user didn't set smp_cache.
-+     */
-+    if (!x86_cpu_update_smp_cache_topo(ms, cpu, errp)) {
-+        return;
-+    }
-+
-     qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
- 
-     if (cpu->env.features[FEAT_1_EDX] & CPUID_APIC || ms->smp.cpus > 1) {
+         if (!machine_check_topo_support(ms, props->topology, errp)) {
+             return false;
+         }
 -- 
 2.34.1
 
