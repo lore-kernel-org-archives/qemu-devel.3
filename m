@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E814EE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E65AE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVSKm-0004Cg-3g; Wed, 08 Jan 2025 04:26:40 -0500
+	id 1tVSKr-0004G6-Kl; Wed, 08 Jan 2025 04:26:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSKF-0003xl-Du; Wed, 08 Jan 2025 04:26:10 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1tVSKH-0003xy-3N; Wed, 08 Jan 2025 04:26:14 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSKC-0004oH-7g; Wed, 08 Jan 2025 04:26:07 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e8f64d5dso29736822a12.3; 
- Wed, 08 Jan 2025 01:26:03 -0800 (PST)
+ id 1tVSKF-0004pJ-GZ; Wed, 08 Jan 2025 04:26:08 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5d7e3f1fdafso34640631a12.0; 
+ Wed, 08 Jan 2025 01:26:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736328362; x=1736933162; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736328365; x=1736933165; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vMIpdFO0N7wGBeNJgw4ik62IVdc9YLqNPL4DIkZzaYo=;
- b=EctkDglTzH6uvHBNnQrqNyVp7zLyVigORgTAxDiOtHfuinY4vSECv3mTMwFjxEpCYh
- y0CqjrYNtJYFSNd2eF67sBx6TjJpX+oMRxCsgjgZBrtC+V7JN/shdsf46TLIfrI5VDCC
- SFtILgKtGqVFkYIjtcS7xr51YLV5jZQ3HCN9VV3tkXBNO61/vP6yCjNomYalu0q32Fvo
- iAZqe8Mzn9E6Bw598nLk/0V9ErMARsbC9kGzZrZrDcJWiiYeZbNEgcIA75LkKRgA931L
- qihXUc6Y4+qpynq+9dJjZD9v1o2e7PHa3QXG64CgXHNVMGtLreapgdMskFP/CqRw0HIP
- Kaeg==
+ bh=qbHAwk39a0EI/mfJEXYlFT6Wq50d666L3aYBs+8Wil0=;
+ b=O3kQTyyvy9f32SQTLnuUfCI0K5LE9l5SW9WjfkF7h8QAf57NKnNOVhuN2rbD4BMZOZ
+ OwsUGE13yvS66AnvIb87Pa34/o8I7s83eWokn0m5dlmjt97P35BMOAf4LKJJTMiqIY0j
+ G0m6g2DTcFXGY8Az5P1LUvhQiVDV7BihnXtMzybIDID4AkvyjgAE816ngS891EW+aPHg
+ WkZQffqChRSBL9Pq28IPYWj/13VcZy6PAkxabEPnWdZgJ7nKIRzKa1L1DO8rKHfhU9zr
+ 70nzYQtjw7UuhzgcsWzX8gDIwzU+G/Pap0rrk6afoc53YrHM4FNObQsVuFiFknqHdLuG
+ nEDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736328362; x=1736933162;
+ d=1e100.net; s=20230601; t=1736328365; x=1736933165;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vMIpdFO0N7wGBeNJgw4ik62IVdc9YLqNPL4DIkZzaYo=;
- b=hoYjcuM0vLcWq9tRWdvYsS4WBxdQs39UCrSOPMpaB1ito4bQ0tNToP3OJvbFQgDaBq
- 6wNmNZNMN6LMlib9Y12x+eDhR6Lf4tTrd9QmYjG+9oRHV6Cn/DdYOjkzkkInsupyXKC/
- PPIvKMPZbVVz1YRbQ1ahHSP3HnkM6rsE4dQWDtchKhx/TPf6TL0R1vfJyB0GAy8uPvbt
- E3TZHxi4Ohug+4bl/W37JyOZjXuC2P35Vav9HHv6Eh+TzKiePk+UNPR7qMEx0tBD9tBz
- 8ajknWe6CvhWHEFd2515ZWNR5HFg5WmPcrTbeqEne8IovyCPPRo1FjPRIu+A7zru0eDo
- mGDw==
+ bh=qbHAwk39a0EI/mfJEXYlFT6Wq50d666L3aYBs+8Wil0=;
+ b=dZDZlIlv2mxvNk2P+E+FFY9j1N1tmVSvEnw44Tc1IBKa/ScIoeQl9tX9O0IjGpD+tP
+ TxvH5cnufvdHYzPYLhZXPmuluKTTcDmwN/u+94US3gXVV8kXPWC0u7+dJnH0ZrpUfkfM
+ lS8cfWMwlj7LQNPA21On7s7+ooMx+8+3ZOMXJ+SaN9VPyMtUu8YVsQFLv6DOG0c0x6pj
+ XNdBWBni52zFFh74AEVfHA0Syhr1S/golv3VyTg/v8dmn7OaUs6oR3DSeAFB+MlRRFWD
+ 0TiWB5FLtqk9Fv0/xquf1UFstd+OXNMlV/WCa2TYlH1vkVLcJCXZmiHOoWZhJAd7CwNz
+ c/vg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuq4kfmpeu0Ef9MkLnm8SJrCnA9os+nvUEh4fraOl2oNCwx5jxHquXsGDoDrZkWK2xzjmLLTqBcudfNg==@nongnu.org,
- AJvYcCX3LchvoIeHxRR7+sNLJ1EJ3+DAw2xKeEJQVVu1xfcxMUsvWEqxgG9MDxmYt1GRYtdNBaA8OQ0gCQ==@nongnu.org
-X-Gm-Message-State: AOJu0YyJDUm/K5OfoABZsWxk5wXGNXSWieEh4CSA4WWhO7MutQvgVEcX
- ffOzWsxfiA6vGEaoVIy31MFunO49OOPLm5j3hwKiFwFPsEOi3ZB8NtRs36uK
-X-Gm-Gg: ASbGncvOGq5Vzo0RP+RRecuZY0Zrv7ii0Ko2oXBnPAenVKeVhGdwW3Nn+QzKI7lTIaY
- 5YTZxou/2wKM/QOTt2LVmetC7u0Y1jelprALLvd6fsDodn7euLPWP+B/rWzf2K6h/xMOgJLh/ct
- 0+3/9tUjAXVuz+esTATeEnU2M7g8XvV8vYhVSCXohMSTfWVFnB8o9d2fqFlSPkBYjCdX4UPw6B1
- 6L8iq1DgEgsEwfyES7+/kkh78LfKzuAGFGGn05VE0pWJLhirNemK1WAIeQnWWWz3qvSYk/+N0/X
- cyS2HAc9YiCaF0DfQ7yEU1kqSrQGX1lBtEcLJLuOnVqsbek=
-X-Google-Smtp-Source: AGHT+IHFQrFh6c57c1Coios4cW/pdrw9Wvf4lb/JVTP2PZXx04NVCsBCCfngWDORLJUGAI+7FR3yzw==
-X-Received: by 2002:a05:6402:5288:b0:5d0:b7c5:c409 with SMTP id
- 4fb4d7f45d1cf-5d972e0abe4mr1669542a12.14.1736328361615; 
- Wed, 08 Jan 2025 01:26:01 -0800 (PST)
+ AJvYcCUDCv6WP5IfXJDiWXQVN28lx+AwskstaF/1Mq4q8EMUbctVYNQ0DJOtJV65PZW6Bkm6Fdvf/yUvaw==@nongnu.org,
+ AJvYcCW00OfVpW22CrWG9jEvbW36eR7Jah9o5sZoTzKEZqoLSTucav/IXZjcN1LpZh9viwuamkiRcbEJ+dPRjg==@nongnu.org
+X-Gm-Message-State: AOJu0Ywm6I7Fs7q+eeePq7GOGiSwLbRGZ3cWvoodwcU5rd+GM97dTlsj
+ PPMkc787/nDft28J7hvrQO2JhqzOLBRs/uhUAlnbbGnZP7zOMUcXda0A4+Wi
+X-Gm-Gg: ASbGncvJ6IQ1Sx94pr/A6BKD5PzpeHa7m92tszSRMPWSh46u4Ol2LWDWpy+RSMj4V9h
+ To7Dz3tBII8MNkZi+zPh6gPuRR8Hq4qnUUUNkOmK5g6vFWwSzDLEilhzExvLiPszKWbKMPgt7KQ
+ 7lrq9m8qvujndilyMEKM3UoesWHT22w0BoDcVOJRRYZCJpxQA8+xxFQ/rFnkE9QGWs5yAPcwowg
+ qFjzk5JDfZLSdPMiqeLEGVfjM+Gps6QIr5jbNo5bN9SlU45Xza//cFeWmar2CFtEpNXiw3hgveQ
+ /jXxYXT8IWqt2Dx2ICr769jpElCbPR/X4zJ/zmJaaXU2AWM=
+X-Google-Smtp-Source: AGHT+IE340ZO7/O4tWuw3vvS7/AUxeFEvFt5RUzTOe8GQ+NPh/kb66lntRwqwh+XS39R3YcbD8t8pg==
+X-Received: by 2002:a05:6402:2686:b0:5d9:a55:810c with SMTP id
+ 4fb4d7f45d1cf-5d972df64c2mr1509804a12.5.1736328364806; 
+ Wed, 08 Jan 2025 01:26:04 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-188-106-228.77.188.pool.telefonica.de. [77.188.106.228])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.26.00
+ 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.26.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 01:26:00 -0800 (PST)
+ Wed, 08 Jan 2025 01:26:03 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
@@ -77,17 +77,16 @@ Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 09/14] hw/char/imx_serial: Turn some DPRINTF() statements into
- trace events
-Date: Wed,  8 Jan 2025 10:25:33 +0100
-Message-ID: <20250108092538.11474-10-shentey@gmail.com>
+Subject: [PATCH 11/14] tests/qtest/libqos: Reuse TYPE_IMX_I2C define
+Date: Wed,  8 Jan 2025 10:25:35 +0100
+Message-ID: <20250108092538.11474-12-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250108092538.11474-1-shentey@gmail.com>
 References: <20250108092538.11474-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,156 +111,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/char/imx_serial.c | 58 +++++++++++++++++++++++++++++---------------
- hw/char/trace-events |  5 ++++
- 2 files changed, 44 insertions(+), 19 deletions(-)
+ tests/qtest/libqos/arm-imx25-pdk-machine.c | 5 +++--
+ tests/qtest/libqos/i2c-imx.c               | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
-index be06f39a4d..38b4865157 100644
---- a/hw/char/imx_serial.c
-+++ b/hw/char/imx_serial.c
-@@ -27,6 +27,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/fifo32.h"
-+#include "trace.h"
+diff --git a/tests/qtest/libqos/arm-imx25-pdk-machine.c b/tests/qtest/libqos/arm-imx25-pdk-machine.c
+index 8fe128fae8..2d8b754343 100644
+--- a/tests/qtest/libqos/arm-imx25-pdk-machine.c
++++ b/tests/qtest/libqos/arm-imx25-pdk-machine.c
+@@ -23,6 +23,7 @@
+ #include "libqos-malloc.h"
+ #include "qgraph.h"
+ #include "i2c.h"
++#include "hw/i2c/imx_i2c.h"
  
- #ifndef DEBUG_IMX_UART
- #define DEBUG_IMX_UART 0
-@@ -185,10 +186,10 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
-                                 unsigned size)
+ #define ARM_PAGE_SIZE            4096
+ #define IMX25_PDK_RAM_START      0x80000000
+@@ -50,7 +51,7 @@ static void *imx25_pdk_get_driver(void *object, const char *interface)
+ static QOSGraphObject *imx25_pdk_get_device(void *obj, const char *device)
  {
-     IMXSerialState *s = (IMXSerialState *)opaque;
-+    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
-     uint32_t c, rx_used;
-     uint8_t rxtl = s->ufcr & TL_MASK;
--
--    DPRINTF("read(offset=0x%" HWADDR_PRIx ")\n", offset);
-+    uint64_t value;
- 
-     switch (offset >> 2) {
-     case 0x0: /* URXD */
-@@ -209,49 +210,67 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
-             imx_serial_rx_fifo_ageing_timer_restart(s);
-             qemu_chr_fe_accept_input(&s->chr);
-         }
--        return c;
-+        value = c;
-+        break;
- 
-     case 0x20: /* UCR1 */
--        return s->ucr1;
-+        value = s->ucr1;
-+        break;
- 
-     case 0x21: /* UCR2 */
--        return s->ucr2;
-+        value = s->ucr2;
-+        break;
- 
-     case 0x25: /* USR1 */
--        return s->usr1;
-+        value = s->usr1;
-+        break;
- 
-     case 0x26: /* USR2 */
--        return s->usr2;
-+        value = s->usr2;
-+        break;
- 
-     case 0x2A: /* BRM Modulator */
--        return s->ubmr;
-+        value = s->ubmr;
-+        break;
- 
-     case 0x2B: /* Baud Rate Count */
--        return s->ubrc;
-+        value = s->ubrc;
-+        break;
- 
-     case 0x2d: /* Test register */
--        return s->uts1;
-+        value = s->uts1;
-+        break;
- 
-     case 0x24: /* UFCR */
--        return s->ufcr;
-+        value = s->ufcr;
-+        break;
- 
-     case 0x2c:
--        return s->onems;
-+        value = s->onems;
-+        break;
- 
-     case 0x22: /* UCR3 */
--        return s->ucr3;
-+        value = s->ucr3;
-+        break;
- 
-     case 0x23: /* UCR4 */
--        return s->ucr4;
-+        value = s->ucr4;
-+        break;
- 
-     case 0x29: /* BRM Incremental */
--        return 0x0; /* TODO */
-+        value = 0x0; /* TODO */
-+        break;
- 
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
-                       HWADDR_PRIx "\n", TYPE_IMX_SERIAL, __func__, offset);
--        return 0;
-+        value = 0;
-+        break;
+     QIMX25PDKMachine *machine = obj;
+-    if (!g_strcmp0(device, "imx.i2c")) {
++    if (!g_strcmp0(device, TYPE_IMX_I2C)) {
+         return &machine->i2c_1.obj;
      }
-+
-+    trace_imx_serial_read(chr ? chr->label : "NODEV", offset, value);
-+
-+    return value;
+ 
+@@ -86,7 +87,7 @@ static void imx25_pdk_register_nodes(void)
+         .extra_device_opts = "bus=i2c-bus.0"
+     };
+     qos_node_create_machine("arm/imx25-pdk", qos_create_machine_arm_imx25_pdk);
+-    qos_node_contains("arm/imx25-pdk", "imx.i2c", &edge, NULL);
++    qos_node_contains("arm/imx25-pdk", TYPE_IMX_I2C, &edge, NULL);
  }
  
- static void imx_serial_write(void *opaque, hwaddr offset,
-@@ -261,8 +280,7 @@ static void imx_serial_write(void *opaque, hwaddr offset,
-     Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
-     unsigned char ch;
+ libqos_init(imx25_pdk_register_nodes);
+diff --git a/tests/qtest/libqos/i2c-imx.c b/tests/qtest/libqos/i2c-imx.c
+index 710cb926d6..6d868e4cc4 100644
+--- a/tests/qtest/libqos/i2c-imx.c
++++ b/tests/qtest/libqos/i2c-imx.c
+@@ -209,8 +209,8 @@ void imx_i2c_init(IMXI2C *s, QTestState *qts, uint64_t addr)
  
--    DPRINTF("write(offset=0x%" HWADDR_PRIx ", value = 0x%x) to %s\n",
--            offset, (unsigned int)value, chr ? chr->label : "NODEV");
-+    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
- 
-     switch (offset >> 2) {
-     case 0x10: /* UTXD */
-@@ -374,9 +392,11 @@ static int imx_can_receive(void *opaque)
- static void imx_put_data(void *opaque, uint32_t value)
+ static void imx_i2c_register_nodes(void)
  {
-     IMXSerialState *s = (IMXSerialState *)opaque;
-+    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
-     uint8_t rxtl = s->ufcr & TL_MASK;
+-    qos_node_create_driver("imx.i2c", NULL);
+-    qos_node_produces("imx.i2c", "i2c-bus");
++    qos_node_create_driver(TYPE_IMX_I2C, NULL);
++    qos_node_produces(TYPE_IMX_I2C, "i2c-bus");
+ }
  
--    DPRINTF("received char\n");
-+    trace_imx_serial_put_data(chr ? chr->label : "NODEV", value);
-+
-     imx_serial_rx_fifo_push(s, value);
-     if (fifo32_num_used(&s->rx_fifo) >= rxtl) {
-         s->usr1 |= USR1_RRDY;
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 59e1f734a7..4c6d401b4b 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -52,6 +52,11 @@ escc_sunkbd_event_out(int ch) "Translated keycode 0x%2.2x"
- escc_kbd_command(int val) "Command %d"
- escc_sunmouse_event(int dx, int dy, int buttons_state) "dx=%d dy=%d buttons=0x%01x"
- 
-+# imx_serial.c
-+imx_serial_read(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] -> 0x%08" PRIu64
-+imx_serial_write(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] <- 0x%08" PRIu64
-+imx_serial_put_data(const char *chrname, uint32_t value) "%s: 0x%" PRIu32
-+
- # pl011.c
- pl011_irq_state(int level) "irq state %d"
- pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
+ libqos_init(imx_i2c_register_nodes);
 -- 
 2.47.1
 
