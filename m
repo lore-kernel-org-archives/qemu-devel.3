@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD143E7719A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F3EAE77188
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 12:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVV0V-0000bl-O0; Wed, 08 Jan 2025 07:17:56 -0500
+	id 1tVV0h-0001Lg-7t; Wed, 08 Jan 2025 07:18:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVUuf-0000vF-7S
+ id 1tVUuo-0000yJ-7e
  for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:12:06 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVUuS-0007Eh-07
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:11:52 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e9a88793so4731443a12.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 04:11:00 -0800 (PST)
+ id 1tVUuS-0007Lh-GM
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:11:56 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-aaef00ab172so1943995666b.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 04:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736338259; x=1736943059; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736338272; x=1736943072; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9FzFnlzkuRqAIG729x/b7511sIkBqkjnI6qfjXVG1TA=;
- b=Uz/VqdF3l9ZIITHCMeXwS6eS18FAxoaObgZcSkGiZp+SRwo+KJZ6p9Jusw+UeUxE58
- U+yUl/lL/SspG2+4SiANddwgyhn6iRXwPrLmH3qV/r12yPVAmCXUrrmtvYpB7Xg0Knej
- 7yUnedTcJ6p1gM+ly8KAjVSB66dnuwbXtvOVP1ZczEnyA5K1G4vZGg/BAcIi8FDFLWQs
- qn8z2AbIs+9sjDAPi2DLYzNW+Q7l50bjLdm4N4uss8JyDKtn2Xog2ZFLN27qVSJwyBqC
- CoQvGIJu7FSm4dS01jrzjvbQm8A1t2ZuObGYNKvAk4rbL6q2gV7a4wwFNooZdCkmO6CT
- XliA==
+ bh=vq4Qkciwh7M0vksShefS4DYNksffCFzZUscSyEDE7S8=;
+ b=VqfnSUHNjOcgBZE04BOvNWXgKJHrFimB2VxNBj/BCCLPBNqcEd2zRQqk7hHsr5/EwT
+ 77WAEm3wiCj732dGPrDhzf1CDkSc3OM+bxe22QaXTKsUlYs+66lI/2YBCIN7D7XpnAYW
+ oXEfbJhBi6NW5SZdg5qabvAxNY6gWUKaScbHz0QyAVfz71MqdQ+f/jbnyFMdrvQN+64z
+ Mxtkqr/1/HKZbHIhjrDwGSijppGdpEPF0CW2kz8iP8++IJi8sy2+YxCulU89iW+uFD4I
+ bu+W3swjnQtib0mlb+faHZ95LXEnenxbgMj0Ylo1XW94pRGJDVC0iolWTl3ZdE+W5ep6
+ V8nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736338259; x=1736943059;
+ d=1e100.net; s=20230601; t=1736338272; x=1736943072;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9FzFnlzkuRqAIG729x/b7511sIkBqkjnI6qfjXVG1TA=;
- b=rQrUOMo3WSIIIiJ48vrc5DLiqtp4lYxtUzdteKtG/jOEfWCQZySoKV0+UuJseRcazI
- 1RBliZZCYPiswm3TeH9uVQaTDPQ0sSc63kDSt7XRfhLWGiLpWn6c0d5YTBbaQS8C3ica
- ykATkGMM4ynpKKBkB+x3JZrK0tT3/ENinaGrN6rgnrq6tdcTu/43WCmq/1xJH1geDiCI
- x05Oy6+DpTKJXHpDRrLynBd7Fms0iibmdn81/M1LMWw96ZFinbk+fMmXLVfeR9K9pHzd
- fqfLIJ7ULHyFHZ9BgOPRA1NXZwQvt1aJOQdSCb25elK4/NwYAzDUcX2LIKtsQd7fIrou
- qmYg==
-X-Gm-Message-State: AOJu0YxrBnJSEwoqyEx1oD5LOCIJ171ALOO8xB4JS14N/j4sVSV2By4F
- JuRPWQwt2wjIgPYgNHzNnhLS1YWpIYfT+bv4tESe9ddN5AyKA0nUoaalhWM/luk=
-X-Gm-Gg: ASbGncsdR+LSVma5LCrDCb8etW5c52y1ZInu9jHo939iSfWHzea6udD2vpvS/OroaHM
- cwqNPxqonvTbZkUSK26AsGhnGJx/tPYOofLMGkPHWUMqqCFp991FlsxZJS7+Z5ZlpOQi6+A3JHv
- aBWzxduKYUC6aJpF6WtK/YKe+wku5Er22RHPcyn2gjw+CKdYnGJgiImWodtgDtxQVLT/kiQKGo7
- lrgMK6vxypxYoeWFJdeQ0FntAc+PEWwlvgfGmkj1PShQK2N3qV1dN8=
-X-Google-Smtp-Source: AGHT+IFFw8wK117zL9VY7uzxo0iTFddD3/yDIlS3wKTDFnrJ+I8CgaLROBxO7E6EB2QtP5j5wT8pYg==
-X-Received: by 2002:a05:6402:5241:b0:5d0:f904:c23d with SMTP id
- 4fb4d7f45d1cf-5d972e6e094mr2355688a12.28.1736338258968; 
- Wed, 08 Jan 2025 04:10:58 -0800 (PST)
+ bh=vq4Qkciwh7M0vksShefS4DYNksffCFzZUscSyEDE7S8=;
+ b=UGFegUvlYh1iKtesAsefhQK9ihuj9NP5vUJSuTtE0xP09f6mYyAvvZBdPCZtdKlMyc
+ mla+9o1zX+1FhhRPM3NUqFE2HjbLfm+N4K8oiMSIW9PaqQS8oOkDYDzVk5CLYz4wOg5i
+ NPiM+yAOYElUzfswN7YhMH0kD0QJuc3NDazbfgJ/EvnBezHvgymQJpEk7CbuYGVE9nmo
+ 1YJ38UXfqFIS4TrEu+tQDFwiSj+9lJfPyvrqLG+PqKWgU6fh4aXHRF0GiVvjjpF/BSKN
+ I66kvPbZFkqXepHjAcjdDmswqrGoYojUTpQtUJrvBh7JLZODuLgMW8lm5d1YQzeR18lX
+ 5T6g==
+X-Gm-Message-State: AOJu0YzeRT4vn/6uHrdm009dRTbtj6Uw2z9GpD4RGLTYfk8pXbnCV8s8
+ 84D0GLcJoLEjUdWj4OLIatI81YzL/eLrM9VRzH/w69Zge4ThiXBqms4Cfks7BpU=
+X-Gm-Gg: ASbGncsKxTlhlCLimrNqXk8dPQThdK34Q6Ojm5roY8N7ksurHjjNS3QqbsscZ5SEwF3
+ rkmrc9FPkMcS28zxJIzNSRn7GVySOtSbXQ2sxN5HT7JBxeJqjofeI4yLR/GdDfRO2jnYqOuVqvp
+ wvCXiOWITduj4pRteS0POQLvuxjhECJzQuewO9taPHwtj01fgnsfEzHND5V6dX7uKV8EOZoISaJ
+ MhjGn1NvvjICjWGRuQr1BaxTu71NiUKiCLyssbpcjhlcybB7bg2ZaQ=
+X-Google-Smtp-Source: AGHT+IGqyVWL23twfGdSv62KajzlAjpNkDYLneH2hB6KzCps4JesxIYZgfHVCvDT80j/13aZwVMeHQ==
+X-Received: by 2002:a05:6402:400a:b0:5d2:7199:ac2 with SMTP id
+ 4fb4d7f45d1cf-5d972e00032mr5639415a12.2.1736338271482; 
+ Wed, 08 Jan 2025 04:11:11 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d80675a535sm25346850a12.6.2025.01.08.04.10.56
+ 4fb4d7f45d1cf-5d806fed4e1sm26068538a12.70.2025.01.08.04.11.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 04:10:57 -0800 (PST)
+ Wed, 08 Jan 2025 04:11:08 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 262415F935;
- Wed,  8 Jan 2025 12:10:55 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id CBD195F8AC;
+ Wed,  8 Jan 2025 12:10:56 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>,
@@ -97,19 +97,19 @@ Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>,
  Markus Armbruster <armbru@redhat.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
- Peter Maydell <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v4 06/32] tests/functional: update the mips64 tuxrun tests
-Date: Wed,  8 Jan 2025 12:10:28 +0000
-Message-Id: <20250108121054.1126164-7-alex.bennee@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>
+Subject: [PATCH v4 23/32] tests/functional: extend test_aarch64_virt with
+ vulkan test
+Date: Wed,  8 Jan 2025 12:10:45 +0000
+Message-Id: <20250108121054.1126164-24-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250108121054.1126164-1-alex.bennee@linaro.org>
 References: <20250108121054.1126164-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,37 +132,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+Now that we have virtio-gpu Vulkan support, let's add a test for it.
+Currently this is using images build by buildroot:
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+  https://lists.buildroot.org/pipermail/buildroot/2024-December/768196.html
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-27-alex.bennee@linaro.org>
----
- tests/functional/test_mips64_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_mips64_tuxrun.py b/tests/functional/test_mips64_tuxrun.py
-index 54af1ae794..0e4c65961d 100755
---- a/tests/functional/test_mips64_tuxrun.py
-+++ b/tests/functional/test_mips64_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunMips64Test(TuxRunBaselineTest):
+---
+v2
+  - use decorator for has_cmd(zstd)
+  - un-handled->unhandled
+  - drop extra - from --snapshot
+  - drop unneeded virtualization=on
+  - only show 1s of each scene
+  - fix long lines
+v3
+  - move set_machine/require_accelerator to top of test
+  - use uncompress utility function
+  - remove extra ()'s from ASSETS
+v4
+  - split misc fixups into earlier commits
+  - don't swallow leading newlines before class
+  - fixup commit message
+---
+ tests/functional/test_aarch64_virt.py | 74 ++++++++++++++++++++++++++-
+ 1 file changed, 72 insertions(+), 2 deletions(-)
+
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+index 201c5ed023..6b2336a28d 100755
+--- a/tests/functional/test_aarch64_virt.py
++++ b/tests/functional/test_aarch64_virt.py
+@@ -13,10 +13,12 @@
+ import logging
+ from subprocess import check_call, DEVNULL
  
-     ASSET_MIPS64_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/mips64/vmlinux',
--        '09010e51e4b8bcbbd2494786ffb48eca78f228e96e5c5438344b0eac4029dc61')
-+        'https://storage.tuxboot.com/buildroot/20241119/mips64/vmlinux',
-+        'fe2882d216898ba2c56b49ba59f46ad392f36871f7fe325373cd926848b9dbdc')
-     ASSET_MIPS64_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/mips64/rootfs.ext4.zst',
--        '69d91eeb04df3d8d172922c6993bb37d4deeb6496def75d8580f6f9de3e431da')
-+        'https://storage.tuxboot.com/buildroot/20241119/mips64/rootfs.ext4.zst',
-+        'b8c98400216b6d4fb3b3ff05e9929aa015948b596cf0b82234813c84a4f7f4d5')
++from qemu.machine.machine import VMLaunchFailure
++
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import exec_command, exec_command_and_wait_for_pattern
+ from qemu_test import wait_for_console_pattern
+-from qemu_test import get_qemu_img
++from qemu_test import skipIfMissingCommands, get_qemu_img
  
-     def test_mips64(self):
-         self.set_machine('malta')
+ 
+ class Aarch64VirtMachine(QemuSystemTest):
+@@ -132,5 +134,73 @@ def test_aarch64_virt_gicv2(self):
+         self.common_aarch64_virt("virt,gic-version=2")
+ 
+ 
++    ASSET_VIRT_GPU_KERNEL = Asset(
++        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
++        'download?path=%2F&files='
++        'Image',
++        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462f6')
++
++    ASSET_VIRT_GPU_ROOTFS = Asset(
++        'https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
++        'download?path=%2F&files='
++        'rootfs.ext4.zstd',
++        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
++
++    @skipIfMissingCommands('zstd')
++    def test_aarch64_virt_with_gpu(self):
++        # This tests boots with a buildroot test image that contains
++        # vkmark and other GPU exercising tools. We run a headless
++        # weston that nevertheless still exercises the virtio-gpu
++        # backend.
++
++        self.set_machine('virt')
++        self.require_accelerator("tcg")
++
++        kernel_path = self.ASSET_VIRT_GPU_KERNEL.fetch()
++        image_path = self.uncompress(self.ASSET_VIRT_GPU_ROOTFS, format="zstd")
++
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'console=ttyAMA0 root=/dev/vda')
++
++        self.vm.add_args("-accel", "tcg")
++        self.vm.add_args("-cpu", "neoverse-v1,pauth-impdef=on")
++        self.vm.add_args("-machine", "virt,gic-version=max",
++                         '-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.add_args("-smp", "2", "-m", "2048")
++        self.vm.add_args("-device",
++                         "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
++        self.vm.add_args("-display", "egl-headless")
++        self.vm.add_args("-display", "dbus,gl=on")
++        self.vm.add_args("-device", "virtio-blk-device,drive=hd0")
++        self.vm.add_args("-blockdev",
++                         "driver=raw,file.driver=file,"
++                         "node-name=hd0,read-only=on,"
++                         f"file.filename={image_path}")
++        self.vm.add_args("-snapshot")
++
++        try:
++            self.vm.launch()
++        except VMLaunchFailure as excp:
++            if "old virglrenderer, blob resources unsupported" in excp.output:
++                self.skipTest("No blob support for virtio-gpu")
++            elif "old virglrenderer, venus unsupported" in excp.output:
++                self.skipTest("No venus support for virtio-gpu")
++            else:
++                self.log.info("unhandled launch failure: {excp.output}")
++                raise excp
++
++        self.wait_for_console_pattern('buildroot login:')
++        exec_command(self, 'root')
++        exec_command(self, 'export XDG_RUNTIME_DIR=/tmp')
++        exec_command_and_wait_for_pattern(self,
++                                          "weston -B headless "
++                                          "--renderer gl "
++                                          "--shell kiosk "
++                                          "-- vkmark -b:duration=1.0",
++                                          "vkmark Score")
++
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.39.5
 
