@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AEB3E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E814EE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:30:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVSKi-00046y-RG; Wed, 08 Jan 2025 04:26:37 -0500
+	id 1tVSKm-0004Cg-3g; Wed, 08 Jan 2025 04:26:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSK7-0003vO-Dr; Wed, 08 Jan 2025 04:25:59 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1tVSKF-0003xl-Du; Wed, 08 Jan 2025 04:26:10 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSK5-0004mT-Mj; Wed, 08 Jan 2025 04:25:59 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5d84179ef26so4889425a12.3; 
- Wed, 08 Jan 2025 01:25:56 -0800 (PST)
+ id 1tVSKC-0004oH-7g; Wed, 08 Jan 2025 04:26:07 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e8f64d5dso29736822a12.3; 
+ Wed, 08 Jan 2025 01:26:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736328355; x=1736933155; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736328362; x=1736933162; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aPu1XN0WSJ78Dz4uVHZFF9UQOoIdIxv9/jGfNRVw5Jw=;
- b=j7xb5pb2jPBVVRVNDtYjb7IclOXD/OEIYWugNEKIDc141FnTrrSNR66yLARw3cKRBD
- 4VTPpJYs5dl4W2Uhdu38HY9DtCdTLAnSd2xVOpzOhZI0rQVc7YD2VjBcV588fi1W/qB3
- biRZpJsTRgNo7xl3nv0GpFuCZNSj9EsUqQCedzxYvt9+ve3lF4CkETBqSq+pBamdsys8
- yb6o4IRyqM5DjkAygo+0nFSO/nXaVjspA5v5GV3xivHXeV4TnNltOYXzvaLqHv58XzYa
- b5my6G1CqveArerkQiWXGIvldpMtt7VhYnC7j5I0tbsVcE9mzD/ECSpX26FelWz+HYmP
- EILg==
+ bh=vMIpdFO0N7wGBeNJgw4ik62IVdc9YLqNPL4DIkZzaYo=;
+ b=EctkDglTzH6uvHBNnQrqNyVp7zLyVigORgTAxDiOtHfuinY4vSECv3mTMwFjxEpCYh
+ y0CqjrYNtJYFSNd2eF67sBx6TjJpX+oMRxCsgjgZBrtC+V7JN/shdsf46TLIfrI5VDCC
+ SFtILgKtGqVFkYIjtcS7xr51YLV5jZQ3HCN9VV3tkXBNO61/vP6yCjNomYalu0q32Fvo
+ iAZqe8Mzn9E6Bw598nLk/0V9ErMARsbC9kGzZrZrDcJWiiYeZbNEgcIA75LkKRgA931L
+ qihXUc6Y4+qpynq+9dJjZD9v1o2e7PHa3QXG64CgXHNVMGtLreapgdMskFP/CqRw0HIP
+ Kaeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736328355; x=1736933155;
+ d=1e100.net; s=20230601; t=1736328362; x=1736933162;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aPu1XN0WSJ78Dz4uVHZFF9UQOoIdIxv9/jGfNRVw5Jw=;
- b=aIr9TtyYNChEHCJ4FQ9Sn8uxNPaOnASqzEQfdYW5T9tEyXwEgAvdWRfx/bpo25PCqg
- 2EDf8vobyOg6ywq8hipIzkBQiASHyAyj6HunHU4lqvJfxkapXESP3eP8PBsIg1BPqmxX
- ldafjUKAewN6OSFsgaEmfOSHYnvYoFId7SFaBrFO9EsvV4tnHtnMSiRO74LQoX27vj7Z
- kewUuOJaKCLM2g1+Oknl03SvSoXrgcfHnm1W5beZLWe/l3KOWnsmryCzHxj7reDqYRuP
- b/NBCSKH/WWbknaOUDBJq+SgkYgDCXPUdEe55VzFsBoOPHWy5vUgXotIZwiFpVgZMkP4
- M1dg==
+ bh=vMIpdFO0N7wGBeNJgw4ik62IVdc9YLqNPL4DIkZzaYo=;
+ b=hoYjcuM0vLcWq9tRWdvYsS4WBxdQs39UCrSOPMpaB1ito4bQ0tNToP3OJvbFQgDaBq
+ 6wNmNZNMN6LMlib9Y12x+eDhR6Lf4tTrd9QmYjG+9oRHV6Cn/DdYOjkzkkInsupyXKC/
+ PPIvKMPZbVVz1YRbQ1ahHSP3HnkM6rsE4dQWDtchKhx/TPf6TL0R1vfJyB0GAy8uPvbt
+ E3TZHxi4Ohug+4bl/W37JyOZjXuC2P35Vav9HHv6Eh+TzKiePk+UNPR7qMEx0tBD9tBz
+ 8ajknWe6CvhWHEFd2515ZWNR5HFg5WmPcrTbeqEne8IovyCPPRo1FjPRIu+A7zru0eDo
+ mGDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSqrKRTgotxzcyQkLmPgKBahxYyy7EwatHnx+Bv4ZWyNmIrFpNzYy+6DfSKWk3tIkMhdImrtmglg==@nongnu.org,
- AJvYcCXYSb/X1hWNrdfvMQJTfTdUR3RDtsZoq0juy3QZqwcjyfQsn55v2yJdAImdoZK6/6TkZq0zMpoX0VhUVw==@nongnu.org
-X-Gm-Message-State: AOJu0YzVskKmQIKscCIzye/WxRrXNPrZY6Ju1OzMo8UdgVH+Oq620YDl
- sxB3olhVDL3fgwnXM+WvGwRCtEFtbig/iHQ6ICaRX3861Rw54zDDiiJ6yybH
-X-Gm-Gg: ASbGncuMacfI3iMYlq+czSp6BnhPB8RVSJne40j0dvjVabknfqw53mE6xLQzFvchS5O
- kKVr33uX0T9FWk/Tj3q6Y9F5tlDZynfaPVmt8l+ZZowcrR+cjGu53dengjSP7a1wp9Nco4WVmec
- 79as4PF6ji3Q40eFAadG8Ew3yBPfE3LkIMjXNiKK+yGA5NPcIbAfmB6j+3VVHegxaSXfCTGo5kB
- kGL6oG0MRjkfAWxd/F2crqvWaNs4d8tcxhySmmlxX0h6aEyVT7yqR8MvP7qvewhhS21IIETEMv6
- FsKoPbR04c/r196XAwFlzQpyqxPnPPTlV4YggI/EqiGKqJA=
-X-Google-Smtp-Source: AGHT+IGIdvkIyqHc0FKN2Jp91DlocfLqEpUXXhnmKMVI6La0cBQr+vzBb8GswUzk1fQHEXmYFqBfuw==
-X-Received: by 2002:a05:6402:354c:b0:5d3:fb9d:3f69 with SMTP id
- 4fb4d7f45d1cf-5d972e4cdd8mr1521105a12.21.1736328355021; 
- Wed, 08 Jan 2025 01:25:55 -0800 (PST)
+ AJvYcCVuq4kfmpeu0Ef9MkLnm8SJrCnA9os+nvUEh4fraOl2oNCwx5jxHquXsGDoDrZkWK2xzjmLLTqBcudfNg==@nongnu.org,
+ AJvYcCX3LchvoIeHxRR7+sNLJ1EJ3+DAw2xKeEJQVVu1xfcxMUsvWEqxgG9MDxmYt1GRYtdNBaA8OQ0gCQ==@nongnu.org
+X-Gm-Message-State: AOJu0YyJDUm/K5OfoABZsWxk5wXGNXSWieEh4CSA4WWhO7MutQvgVEcX
+ ffOzWsxfiA6vGEaoVIy31MFunO49OOPLm5j3hwKiFwFPsEOi3ZB8NtRs36uK
+X-Gm-Gg: ASbGncvOGq5Vzo0RP+RRecuZY0Zrv7ii0Ko2oXBnPAenVKeVhGdwW3Nn+QzKI7lTIaY
+ 5YTZxou/2wKM/QOTt2LVmetC7u0Y1jelprALLvd6fsDodn7euLPWP+B/rWzf2K6h/xMOgJLh/ct
+ 0+3/9tUjAXVuz+esTATeEnU2M7g8XvV8vYhVSCXohMSTfWVFnB8o9d2fqFlSPkBYjCdX4UPw6B1
+ 6L8iq1DgEgsEwfyES7+/kkh78LfKzuAGFGGn05VE0pWJLhirNemK1WAIeQnWWWz3qvSYk/+N0/X
+ cyS2HAc9YiCaF0DfQ7yEU1kqSrQGX1lBtEcLJLuOnVqsbek=
+X-Google-Smtp-Source: AGHT+IHFQrFh6c57c1Coios4cW/pdrw9Wvf4lb/JVTP2PZXx04NVCsBCCfngWDORLJUGAI+7FR3yzw==
+X-Received: by 2002:a05:6402:5288:b0:5d0:b7c5:c409 with SMTP id
+ 4fb4d7f45d1cf-5d972e0abe4mr1669542a12.14.1736328361615; 
+ Wed, 08 Jan 2025 01:26:01 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-188-106-228.77.188.pool.telefonica.de. [77.188.106.228])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.25.53
+ 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.26.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 01:25:54 -0800 (PST)
+ Wed, 08 Jan 2025 01:26:00 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
@@ -77,16 +77,17 @@ Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 04/14] hw/core: Introduce TYPE_SHARED_IRQ
-Date: Wed,  8 Jan 2025 10:25:28 +0100
-Message-ID: <20250108092538.11474-5-shentey@gmail.com>
+Subject: [PATCH 09/14] hw/char/imx_serial: Turn some DPRINTF() statements into
+ trace events
+Date: Wed,  8 Jan 2025 10:25:33 +0100
+Message-ID: <20250108092538.11474-10-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250108092538.11474-1-shentey@gmail.com>
 References: <20250108092538.11474-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,179 +112,156 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/core/shared-irq.h | 39 ++++++++++++++++
- hw/core/shared-irq.c         | 88 ++++++++++++++++++++++++++++++++++++
- hw/core/Kconfig              |  3 ++
- hw/core/meson.build          |  1 +
- 4 files changed, 131 insertions(+)
- create mode 100644 include/hw/core/shared-irq.h
- create mode 100644 hw/core/shared-irq.c
+ hw/char/imx_serial.c | 58 +++++++++++++++++++++++++++++---------------
+ hw/char/trace-events |  5 ++++
+ 2 files changed, 44 insertions(+), 19 deletions(-)
 
-diff --git a/include/hw/core/shared-irq.h b/include/hw/core/shared-irq.h
-new file mode 100644
-index 0000000000..803c303dd0
---- /dev/null
-+++ b/include/hw/core/shared-irq.h
-@@ -0,0 +1,39 @@
-+/*
-+ * IRQ sharing device.
-+ *
-+ * Copyright (c) 2025 Bernhard Beschow <shentey@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+/*
-+ * This is a simple device which has one GPIO output line and multiple GPIO
-+ * input lines. The output line is active if at least one of the input lines is.
-+ *
-+ * QEMU interface:
-+ *  + N unnamed GPIO inputs: the input lines
-+ *  + one unnamed GPIO output: the output line
-+ *  + QOM property "num-lines": sets the number of input lines
-+ */
-+#ifndef HW_SHARED_IRQ_H
-+#define HW_SHARED_IRQ_H
-+
-+#include "hw/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_SHARED_IRQ "shared-irq"
-+
-+#define MAX_SHARED_LINES 16
-+
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(SharedIRQ, SHARED_IRQ)
-+
-+struct SharedIRQ {
-+    DeviceState parent_obj;
-+
-+    qemu_irq out_irq;
-+    uint16_t irq_states;
-+    uint8_t num_lines;
-+};
-+
-+#endif
-diff --git a/hw/core/shared-irq.c b/hw/core/shared-irq.c
-new file mode 100644
-index 0000000000..b2a4ea4a66
---- /dev/null
-+++ b/hw/core/shared-irq.c
-@@ -0,0 +1,88 @@
-+/*
-+ * IRQ sharing device.
-+ *
-+ * Copyright (c) 2025 Bernhard Beschow <shentey@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/shared-irq.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+
-+static void shared_irq_handler(void *opaque, int n, int level)
-+{
-+    SharedIRQ *s = opaque;
-+    uint16_t mask = BIT(n);
-+
-+    if (level) {
-+        s->irq_states |= mask;
-+    } else {
-+        s->irq_states &= ~mask;
-+    }
-+
-+    qemu_set_irq(s->out_irq, !!s->irq_states);
-+}
-+
-+static void shared_irq_init(Object *obj)
-+{
-+    SharedIRQ *s = SHARED_IRQ(obj);
-+
-+    qdev_init_gpio_out(DEVICE(s), &s->out_irq, 1);
-+}
-+
-+static void shared_irq_realize(DeviceState *dev, Error **errp)
-+{
-+    SharedIRQ *s = SHARED_IRQ(dev);
-+
-+    if (s->num_lines < 1 || s->num_lines >= MAX_SHARED_LINES) {
-+        error_setg(errp,
-+                   "IRQ shared number of lines %d must be between 1 and %d",
-+                   s->num_lines, MAX_SHARED_LINES);
-+        return;
-+    }
-+
-+    qdev_init_gpio_in(dev, shared_irq_handler, s->num_lines);
-+}
-+
-+static const Property shared_irq_properties[] = {
-+    DEFINE_PROP_UINT8("num-lines", SharedIRQ, num_lines, 1),
-+};
-+
-+static const VMStateDescription shared_irq_vmstate = {
-+    .name = TYPE_SHARED_IRQ,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(irq_states, SharedIRQ),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static void shared_irq_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    /* No state to reset */
-+    device_class_set_props(dc, shared_irq_properties);
-+    dc->vmsd = &shared_irq_vmstate;
-+    dc->realize = shared_irq_realize;
-+
-+    /* Reason: Needs to be wired up to work */
-+    dc->user_creatable = false;
-+}
-+
-+static const TypeInfo shared_irq_types[] = {
-+    {
-+       .name = TYPE_SHARED_IRQ,
-+       .parent = TYPE_DEVICE,
-+       .instance_size = sizeof(SharedIRQ),
-+       .instance_init = shared_irq_init,
-+       .class_init = shared_irq_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(shared_irq_types)
-diff --git a/hw/core/Kconfig b/hw/core/Kconfig
-index d1bdf765ee..ddff977963 100644
---- a/hw/core/Kconfig
-+++ b/hw/core/Kconfig
-@@ -32,6 +32,9 @@ config PLATFORM_BUS
- config REGISTER
-     bool
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index be06f39a4d..38b4865157 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -27,6 +27,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qemu/fifo32.h"
++#include "trace.h"
  
-+config SHARED_IRQ
-+    bool
-+
- config SPLIT_IRQ
-     bool
+ #ifndef DEBUG_IMX_UART
+ #define DEBUG_IMX_UART 0
+@@ -185,10 +186,10 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
+                                 unsigned size)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
++    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     uint32_t c, rx_used;
+     uint8_t rxtl = s->ufcr & TL_MASK;
+-
+-    DPRINTF("read(offset=0x%" HWADDR_PRIx ")\n", offset);
++    uint64_t value;
  
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index ce9dfa3f4b..6b5bdc8ec7 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -21,6 +21,7 @@ system_ss.add(when: 'CONFIG_OR_IRQ', if_true: files('or-irq.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bus.c'))
- system_ss.add(when: 'CONFIG_PTIMER', if_true: files('ptimer.c'))
- system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
-+system_ss.add(when: 'CONFIG_SHARED_IRQ', if_true: files('shared-irq.c'))
- system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
- system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+     switch (offset >> 2) {
+     case 0x0: /* URXD */
+@@ -209,49 +210,67 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
+             imx_serial_rx_fifo_ageing_timer_restart(s);
+             qemu_chr_fe_accept_input(&s->chr);
+         }
+-        return c;
++        value = c;
++        break;
+ 
+     case 0x20: /* UCR1 */
+-        return s->ucr1;
++        value = s->ucr1;
++        break;
+ 
+     case 0x21: /* UCR2 */
+-        return s->ucr2;
++        value = s->ucr2;
++        break;
+ 
+     case 0x25: /* USR1 */
+-        return s->usr1;
++        value = s->usr1;
++        break;
+ 
+     case 0x26: /* USR2 */
+-        return s->usr2;
++        value = s->usr2;
++        break;
+ 
+     case 0x2A: /* BRM Modulator */
+-        return s->ubmr;
++        value = s->ubmr;
++        break;
+ 
+     case 0x2B: /* Baud Rate Count */
+-        return s->ubrc;
++        value = s->ubrc;
++        break;
+ 
+     case 0x2d: /* Test register */
+-        return s->uts1;
++        value = s->uts1;
++        break;
+ 
+     case 0x24: /* UFCR */
+-        return s->ufcr;
++        value = s->ufcr;
++        break;
+ 
+     case 0x2c:
+-        return s->onems;
++        value = s->onems;
++        break;
+ 
+     case 0x22: /* UCR3 */
+-        return s->ucr3;
++        value = s->ucr3;
++        break;
+ 
+     case 0x23: /* UCR4 */
+-        return s->ucr4;
++        value = s->ucr4;
++        break;
+ 
+     case 0x29: /* BRM Incremental */
+-        return 0x0; /* TODO */
++        value = 0x0; /* TODO */
++        break;
+ 
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
+                       HWADDR_PRIx "\n", TYPE_IMX_SERIAL, __func__, offset);
+-        return 0;
++        value = 0;
++        break;
+     }
++
++    trace_imx_serial_read(chr ? chr->label : "NODEV", offset, value);
++
++    return value;
+ }
+ 
+ static void imx_serial_write(void *opaque, hwaddr offset,
+@@ -261,8 +280,7 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+     Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     unsigned char ch;
+ 
+-    DPRINTF("write(offset=0x%" HWADDR_PRIx ", value = 0x%x) to %s\n",
+-            offset, (unsigned int)value, chr ? chr->label : "NODEV");
++    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
+ 
+     switch (offset >> 2) {
+     case 0x10: /* UTXD */
+@@ -374,9 +392,11 @@ static int imx_can_receive(void *opaque)
+ static void imx_put_data(void *opaque, uint32_t value)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
++    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     uint8_t rxtl = s->ufcr & TL_MASK;
+ 
+-    DPRINTF("received char\n");
++    trace_imx_serial_put_data(chr ? chr->label : "NODEV", value);
++
+     imx_serial_rx_fifo_push(s, value);
+     if (fifo32_num_used(&s->rx_fifo) >= rxtl) {
+         s->usr1 |= USR1_RRDY;
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 59e1f734a7..4c6d401b4b 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -52,6 +52,11 @@ escc_sunkbd_event_out(int ch) "Translated keycode 0x%2.2x"
+ escc_kbd_command(int val) "Command %d"
+ escc_sunmouse_event(int dx, int dy, int buttons_state) "dx=%d dy=%d buttons=0x%01x"
+ 
++# imx_serial.c
++imx_serial_read(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] -> 0x%08" PRIu64
++imx_serial_write(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] <- 0x%08" PRIu64
++imx_serial_put_data(const char *chrname, uint32_t value) "%s: 0x%" PRIu32
++
+ # pl011.c
+ pl011_irq_state(int level) "irq state %d"
+ pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
 -- 
 2.47.1
 
