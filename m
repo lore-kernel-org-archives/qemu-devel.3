@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CDA0E77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB556E7719A
 	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 15:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVXtm-0001xW-Vh; Wed, 08 Jan 2025 10:23:13 -0500
+	id 1tVXtl-0001wU-AT; Wed, 08 Jan 2025 10:23:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVXtZ-0001tn-Hm; Wed, 08 Jan 2025 10:22:58 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tVXtZ-0001tm-Hd
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 10:22:57 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVXtW-0005EQ-L7; Wed, 08 Jan 2025 10:22:56 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5d3ecae02beso781098a12.0; 
- Wed, 08 Jan 2025 07:22:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tVXtW-0005EW-0i
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 10:22:56 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-aaecf50578eso760857866b.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 07:22:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736349764; x=1736954564; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736349765; x=1736954565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+f7UOlWeL8+YCrnm6mVFVB4mI6TIS4CM7dpB1OmgzV0=;
- b=E6iKtGSXomy0zcT0G+/0UxDhSlavbOJTlqhB26IvrSWuJ6yxJg6buhPxU5ksiIC7P7
- hBeyCkKHz1bYIsjVLvqDF9XRrv9uCLxWjOodDvwUT+HAegXxSg8qCtPAuOhbQyb3oPcf
- b+hreu8MEmer/5ZhRb0sBmTqnVvADOYgUQ7jkkL9e7uteYGeRVUxbgS95RIuK+49ZxBV
- ZPM/7EFyN0YyosJDWGgmqxBgjrXidBb/ELDWh4dNT+iSKG9//rZ6xtx2NeaHAVIPtHN1
- YvYh6g3pevSppadyXSIHVacOCud24tGFpyUiN9pS5jqcjMaUx8+oppk5XPIgN3jq0IrP
- FMVg==
+ bh=MJmR62pnrdLuNnhPrdsP22t6rwya1eZq5Y0KF8WPy34=;
+ b=RMqcd1y3sbFasRI954HCC9fuUooI6/cylKK/i+ol5E7+uAtqhxgr7b64SejJx2SNjg
+ zeCcJyLxmf4KXNKldTzZ6BBpYd0NttG/djLET/Ua2REisoatAUmyeKuJJsqv0KExFBBm
+ 6sw44VR46/SDK6JpsmpbvImuEiPQf/BkkUON9k8LtrJMSZNlu9yoM7DVBuwIpxk6rXyp
+ RfTF7h3kOI/iRx6Pt0TfXpFCSFm31qOySzI7JuefWAKNdKQ1Mk5r46oacvu8pDiSSXgM
+ olw65ZVsPI6cvdH99wQUgBMTvQLgANdz6jv91lmwqEvkhSxoyXVBrdbD5rJn21xz1cZ7
+ x/Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736349764; x=1736954564;
+ d=1e100.net; s=20230601; t=1736349765; x=1736954565;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+f7UOlWeL8+YCrnm6mVFVB4mI6TIS4CM7dpB1OmgzV0=;
- b=Js9wi6XtqtZVSGRuzUhf+P5WyXIEqweqd6jvXJ2Rzzf3JNX+4sS8efdUnuVg5B0x5g
- oEA48jsPBzh6+BCrL74zEUeL0JkcBe3Yvi7LN0e3QhAg5JGmZ/hu6Mda8EQNIQW7GfM1
- nyo4hxH+PGCE7bprxrI7HFCzvvtiipejQYhl+AsBjIfx1ZgvDYz9IiZv1l3tlFxzvaAJ
- zFec4WUSwkIv61idDfemX8grbMs4ivmsERZmIBfWf5rBseXjQVxkMB7RuordMV9vvhb7
- t+9N1fFRqZtuZrQmeOVN7kOO/v2jsE1RqJf6eQSHBXDeofrOpvQ0lXpGmVFSnlHMKYHo
- aGiA==
+ bh=MJmR62pnrdLuNnhPrdsP22t6rwya1eZq5Y0KF8WPy34=;
+ b=CP7Si/EatR5lTN3NUZrprCGyNM+AI5s9zovgM+F23OEOCEffdhHz1Ikv8M9mtclQ3r
+ bgGtW9JAGHbOhWjwr7y6847fS/7Aa0IKF8H9HzaztgkCMZ1/vgb0LLpdQWfKTkF5xvIR
+ xKPsJtyCRPexnFEwePVyldD7+R2rpFHZbeygLRmPhYt86EG85IMOj7GeudcSYjF1AcaA
+ J+auOsFRaFzQdXEbC8vRtLqTAi1WSfSy9IOGlzEQ3cKVPLiXLbF1ok6tH9w/Pdup45pL
+ unZlQM7KLSLObu/BaxeXkpi/2R8zKjcZ9PZyK0OGyYTD7AEdCMBriyY4dnUUTOY9r22c
+ fJXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeMg2knTj9b2ilC4cIoReDDBxTAgdmNgyQrK3p9Mxczx5W0YZiVdWNVEE5l0trEksFjVua7aEPE+azCA==@nongnu.org,
- AJvYcCXAdv7LXC082kMMBJiBraK+FHjINK285R8pp+ed0/P1UCuCgRbakmMpNqZySQv0AR3mhTBzUvyVKA==@nongnu.org
-X-Gm-Message-State: AOJu0YyUMe8KvshryJGUxKx2mc8R/5l3PmQiJiXFiF+Y81z5D5GOfA8k
- pJxAacBNPCOkvLcSUq2SzirGDShFTTjW8EA4ePaBYutC7XE+RvhWfr+kcw==
-X-Gm-Gg: ASbGncu9jw2VTjkeyQLaZ1vI6Ykc/9OZ6Lx0VqLLrHU3fBDZge7JLBPJHaHAXSDQWl7
- qoNCkioU3zlEopisM0pCp3ea+/SH2NZzo3UPJazShg7wWfjWoaAlnMh4c44fd12kLZtBC9yf0Ea
- 6Pu9bu8vYV5+MIxuW4evzIt2V1g2kaM2KuveenSudf4bSRTPNU9N2TiTP134VnMY85UG6maeGPK
- gFgMBqovBWy6ZqpL6JBoxkhk3n0KzeclF1hlbslTHv+FvxzTIG7KvR6ihTv2BS7QTqq2NtuQRE8
- FdTkBORJsL+n7HsJ8NZ8zez2V+4=
-X-Google-Smtp-Source: AGHT+IGsbuaUE0RpqSsw3+xQ4eLW0iVCQVa+/dP+SVcSGxzIc/BQnzUDQqKlru9NEeAHMIDBhhERdA==
-X-Received: by 2002:a17:906:7314:b0:aaf:f32:cd34 with SMTP id
- a640c23a62f3a-ab2ab6a84ecmr258443266b.15.1736349763830; 
- Wed, 08 Jan 2025 07:22:43 -0800 (PST)
+ AJvYcCWHDTf4bbiMY1TsQGerd1o9GvF2tfIBhSznvr6BFca4y0TDCw7rYSx2ArXwchFR92fVcny2z9/Rse6N@nongnu.org
+X-Gm-Message-State: AOJu0YwLUqgkS3S3Ig3XGojIk5rSm2UnXHTRwOFmnJLL3VWwvn3tSy90
+ w/fsdjt4kykRG57YLon0ONb08rwm/2dkUKnlp1a7wUqSH+Fa9kmW
+X-Gm-Gg: ASbGncuocCJvkSUZ0NWYkKjBX4/U2CSaoSMLXaVMQRRnDGd45F/dRPdXmJesV/oEgSN
+ JrgOvfWhhp7wSOaqVrzkiucOw8H6PzOnPNwztBVdl5O7zLPvPgw230cHvNuCPH4r9jeIRKrnaz8
+ YX4dUVeywW9O6P1+LM75bttx5LnaaMRHZVpLzrIwPm6bNLeqwsjRPU4nqQXeXLvqZTl604Bl1WS
+ Q4DRIiNPJm2A1DWMr8biFRl4TUOvPm7a1415VJVhYGqNmiY0id1DRHr+CI7FAqns08r8SViWCd1
+ OXKOGBvdd94Lx2zybcF4u7NCC/M=
+X-Google-Smtp-Source: AGHT+IGxnz0ggv12CJVSXb4mZXihATLTBqRi9YZEA4tyjY+iAJhP74blbpMO7fTiv/XdSv2ITjrPOg==
+X-Received: by 2002:a17:907:6d23:b0:aae:a087:f972 with SMTP id
+ a640c23a62f3a-ab2ab16b1d6mr231978966b.11.1736349765311; 
+ Wed, 08 Jan 2025 07:22:45 -0800 (PST)
 Received: from [127.0.0.1] (business-90-187-110-129.pool2.vodafone-ip.de.
  [90.187.110.129]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e894b60sm2542977166b.68.2025.01.08.07.22.43
+ a640c23a62f3a-aac0f014572sm2487281366b.151.2025.01.08.07.22.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 07:22:43 -0800 (PST)
-Date: Wed, 08 Jan 2025 14:26:41 +0000
+ Wed, 08 Jan 2025 07:22:44 -0800 (PST)
+Date: Wed, 08 Jan 2025 14:23:43 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Guenter Roeck <linux@roeck-us.net>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>
+CC: Thomas Huth <thuth@redhat.com>, Paul Durrant <paul@xen.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 04/14] hw/core: Introduce TYPE_SHARED_IRQ
-In-Reply-To: <20250108092538.11474-5-shentey@gmail.com>
-References: <20250108092538.11474-1-shentey@gmail.com>
- <20250108092538.11474-5-shentey@gmail.com>
-Message-ID: <0481ED42-8DAB-41D5-B1F9-89D5E5756DFE@gmail.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_hw/i386/pc=3A_Fix_level_inte?=
+ =?US-ASCII?Q?rrupt_sharing_for_Xen_event_channel_GSI?=
+In-Reply-To: <a7484289fdffd85431bc6b255a59b894bc3e2d6a.camel@infradead.org>
+References: <e592f9127f2d9919e6ccb76a0afb38c5d725d8ec.camel@infradead.org>
+ <20250107110718-mutt-send-email-mst@kernel.org>
+ <8b2690f2c9532468fd5029d319737904b58acec2.camel@infradead.org>
+ <E60B2E8D-23B5-43E2-8DC5-FDBA30EB40EF@gmail.com>
+ <a7484289fdffd85431bc6b255a59b894bc3e2d6a.camel@infradead.org>
+Message-ID: <3BC1A243-5481-4902-81B6-80135577847D@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,197 +111,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 8=2E Januar 2025 09:25:28 UTC schrieb Bernhard Beschow <shentey@gmail=
-=2Ecom>:
->Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->---
-> include/hw/core/shared-irq=2Eh | 39 ++++++++++++++++
-> hw/core/shared-irq=2Ec         | 88 ++++++++++++++++++++++++++++++++++++
-> hw/core/Kconfig              |  3 ++
-> hw/core/meson=2Ebuild          |  1 +
-> 4 files changed, 131 insertions(+)
-> create mode 100644 include/hw/core/shared-irq=2Eh
-> create mode 100644 hw/core/shared-irq=2Ec
+Am 8=2E Januar 2025 11:26:57 UTC schrieb David Woodhouse <dwmw2@infradead=
+=2Eorg>:
+>On Wed, 2025-01-08 at 09:45 +0000, Bernhard Beschow wrote:
+>>=20
+>>=20
+>> Am 7=2E Januar 2025 16:20:28 UTC schrieb David Woodhouse
+>> <dwmw2@infradead=2Eorg>:
+>> > On Tue, 2025-01-07 at 11:07 -0500, Michael S=2E Tsirkin wrote:
+>> > > On Thu, Dec 19, 2024 at 05:24:11PM +0100, David Woodhouse wrote:
+>> > > > From: David Woodhouse <dwmw@amazon=2Eco=2Euk>
+>> > > >=20
+>> > > > The system GSIs are not designed for sharing=2E One device might
+>> > > > assert a
+>> > > > shared interrupt with qemu_set_irq() and another might deassert
+>> > > > it, and
+>> > > > the level from the first device is lost=2E
+>> > > >=20
+>> > > > This could be solved by using a multiplexer which functions as
+>> > > > an OR
+>> > > > gate, much like the PCI code already implements for
+>> > > > pci_set_irq() for
+>> > > > muxing the INTx lines=2E
+>>=20
+>> Just curious: Why not use that aporoach? Could
+>> <https://lore=2Ekernel=2Eorg/qemu-devel/20250108092538=2E11474-5-shente=
+y@gm
+>> ail=2Ecom/>
+>>  help?
 >
->diff --git a/include/hw/core/shared-irq=2Eh b/include/hw/core/shared-irq=
-=2Eh
->new file mode 100644
+>That looks very similar to hw/core/or-irq=2Ec which rth pointed out to
+>me=2E Is there a reason for both of them existing?
 
-As pointed out by David, this device is redundant to TYPE_OR_IRQ=2E I'll d=
-rop it in v2=2E
+Thanks for pointing out its existence! I totally expected it to exist unde=
+r hw/core/, next to split-irq=2E But it resides under hw/, next to irq=2Ec=
+=2E=2E=2E
+
+>
+>It would be theoretically possible to rework the x86 GSI handling to
+>use such a thing, yes=2E
+>
+>It would be a large yak-shaving task which exceeds the time I currently
+>have available for a bug fix, but I don't *always* let that stop me=2E
+>
+>More to the point though, I *still* wouldn't like the outcome=2E I still
+>want us to have a 'resample' callback when the interrupt is
+>acknowledged in the interrupt controller, to see if any of the inputs
+>still want the line to be asserted=2E
+>
+>That's the only way to handle it efficiently for VFIO INTx and for the
+>Xen GSI callback anyway=2E
+
+Good to know=2E Thanks!
 
 Best regards,
 Bernhard
-
->index 0000000000=2E=2E803c303dd0
->--- /dev/null
->+++ b/include/hw/core/shared-irq=2Eh
->@@ -0,0 +1,39 @@
->+/*
->+ * IRQ sharing device=2E
->+ *
->+ * Copyright (c) 2025 Bernhard Beschow <shentey@gmail=2Ecom>
->+ *
->+ * SPDX-License-Identifier: GPL-2=2E0-or-later
->+ */
->+
->+/*
->+ * This is a simple device which has one GPIO output line and multiple G=
-PIO
->+ * input lines=2E The output line is active if at least one of the input=
- lines is=2E
->+ *
->+ * QEMU interface:
->+ *  + N unnamed GPIO inputs: the input lines
->+ *  + one unnamed GPIO output: the output line
->+ *  + QOM property "num-lines": sets the number of input lines
->+ */
->+#ifndef HW_SHARED_IRQ_H
->+#define HW_SHARED_IRQ_H
->+
->+#include "hw/sysbus=2Eh"
->+#include "qom/object=2Eh"
->+
->+#define TYPE_SHARED_IRQ "shared-irq"
->+
->+#define MAX_SHARED_LINES 16
->+
->+
->+OBJECT_DECLARE_SIMPLE_TYPE(SharedIRQ, SHARED_IRQ)
->+
->+struct SharedIRQ {
->+    DeviceState parent_obj;
->+
->+    qemu_irq out_irq;
->+    uint16_t irq_states;
->+    uint8_t num_lines;
->+};
->+
->+#endif
->diff --git a/hw/core/shared-irq=2Ec b/hw/core/shared-irq=2Ec
->new file mode 100644
->index 0000000000=2E=2Eb2a4ea4a66
->--- /dev/null
->+++ b/hw/core/shared-irq=2Ec
->@@ -0,0 +1,88 @@
->+/*
->+ * IRQ sharing device=2E
->+ *
->+ * Copyright (c) 2025 Bernhard Beschow <shentey@gmail=2Ecom>
->+ *
->+ * SPDX-License-Identifier: GPL-2=2E0-or-later
->+ */
->+
->+#include "qemu/osdep=2Eh"
->+#include "hw/core/shared-irq=2Eh"
->+#include "hw/irq=2Eh"
->+#include "hw/qdev-properties=2Eh"
->+#include "qapi/error=2Eh"
->+#include "migration/vmstate=2Eh"
->+
->+static void shared_irq_handler(void *opaque, int n, int level)
->+{
->+    SharedIRQ *s =3D opaque;
->+    uint16_t mask =3D BIT(n);
->+
->+    if (level) {
->+        s->irq_states |=3D mask;
->+    } else {
->+        s->irq_states &=3D ~mask;
->+    }
->+
->+    qemu_set_irq(s->out_irq, !!s->irq_states);
->+}
->+
->+static void shared_irq_init(Object *obj)
->+{
->+    SharedIRQ *s =3D SHARED_IRQ(obj);
->+
->+    qdev_init_gpio_out(DEVICE(s), &s->out_irq, 1);
->+}
->+
->+static void shared_irq_realize(DeviceState *dev, Error **errp)
->+{
->+    SharedIRQ *s =3D SHARED_IRQ(dev);
->+
->+    if (s->num_lines < 1 || s->num_lines >=3D MAX_SHARED_LINES) {
->+        error_setg(errp,
->+                   "IRQ shared number of lines %d must be between 1 and =
-%d",
->+                   s->num_lines, MAX_SHARED_LINES);
->+        return;
->+    }
->+
->+    qdev_init_gpio_in(dev, shared_irq_handler, s->num_lines);
->+}
->+
->+static const Property shared_irq_properties[] =3D {
->+    DEFINE_PROP_UINT8("num-lines", SharedIRQ, num_lines, 1),
->+};
->+
->+static const VMStateDescription shared_irq_vmstate =3D {
->+    =2Ename =3D TYPE_SHARED_IRQ,
->+    =2Eversion_id =3D 1,
->+    =2Eminimum_version_id =3D 1,
->+    =2Efields =3D (const VMStateField[]) {
->+        VMSTATE_UINT16(irq_states, SharedIRQ),
->+        VMSTATE_END_OF_LIST()
->+    },
->+};
->+
->+static void shared_irq_class_init(ObjectClass *klass, void *data)
->+{
->+    DeviceClass *dc =3D DEVICE_CLASS(klass);
->+
->+    /* No state to reset */
->+    device_class_set_props(dc, shared_irq_properties);
->+    dc->vmsd =3D &shared_irq_vmstate;
->+    dc->realize =3D shared_irq_realize;
->+
->+    /* Reason: Needs to be wired up to work */
->+    dc->user_creatable =3D false;
->+}
->+
->+static const TypeInfo shared_irq_types[] =3D {
->+    {
->+       =2Ename =3D TYPE_SHARED_IRQ,
->+       =2Eparent =3D TYPE_DEVICE,
->+       =2Einstance_size =3D sizeof(SharedIRQ),
->+       =2Einstance_init =3D shared_irq_init,
->+       =2Eclass_init =3D shared_irq_class_init,
->+    },
->+};
->+
->+DEFINE_TYPES(shared_irq_types)
->diff --git a/hw/core/Kconfig b/hw/core/Kconfig
->index d1bdf765ee=2E=2Eddff977963 100644
->--- a/hw/core/Kconfig
->+++ b/hw/core/Kconfig
->@@ -32,6 +32,9 @@ config PLATFORM_BUS
-> config REGISTER
->     bool
->=20
->+config SHARED_IRQ
->+    bool
->+
-> config SPLIT_IRQ
->     bool
->=20
->diff --git a/hw/core/meson=2Ebuild b/hw/core/meson=2Ebuild
->index ce9dfa3f4b=2E=2E6b5bdc8ec7 100644
->--- a/hw/core/meson=2Ebuild
->+++ b/hw/core/meson=2Ebuild
->@@ -21,6 +21,7 @@ system_ss=2Eadd(when: 'CONFIG_OR_IRQ', if_true: files('=
-or-irq=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bu=
-s=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_PTIMER', if_true: files('ptimer=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_REGISTER', if_true: files('register=2Ec'))
->+system_ss=2Eadd(when: 'CONFIG_SHARED_IRQ', if_true: files('shared-irq=2E=
-c'))
-> system_ss=2Eadd(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq=2Ec'=
-))
-> system_ss=2Eadd(when: 'CONFIG_XILINX_AXI', if_true: files('stream=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt=
-=2Ec'))
 
