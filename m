@@ -4,99 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472A4E7719A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 216ACE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVPOH-0000gB-Bo; Wed, 08 Jan 2025 01:18:05 -0500
+	id 1tVPNh-0000bS-5h; Wed, 08 Jan 2025 01:17:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVPOF-0000fi-GF
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:18:03 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVPOD-0000Fy-0O
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:18:03 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2166360285dso245492365ad.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 22:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736317079; x=1736921879;
- darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KNHmz4n9fYXb4CxXWu3evTiRGsfEj2fs3Wplujdp9aI=;
- b=29VRspw6In5YxYR27FGhikVejlmqtnPX0N2O1QyfnU+fyjuelgy71bTMnohIyflj32
- RWofn7pWFfUF//XHX0j+mmDGJiOda44vrexxvDiD7jBSHrrLmmRrD3QeumvtA0/wHgvc
- sTDF41+bKJEQnwu5DRx3u6+mv/otBexuaWeb7xJq4q8HFw0r46wQMpDfbQcwlMf3lOmi
- v4rNVKwMMy4r4wEA+C2UdC4iLI/FunLTHkJDgNABwiiFxP00bIrxjM6xpTDmIvRm1n0K
- 8AJgHNRDSdpSH/UBUyRav7971sER729YH6h9/GmWc9ocUDa8fs0LW23DIBKEb4HaM3fA
- MpyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736317079; x=1736921879;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KNHmz4n9fYXb4CxXWu3evTiRGsfEj2fs3Wplujdp9aI=;
- b=XfrSmhyQClzzMV7GMrSBYQwyjOD1Y+Exi3f40HAfh3IBqUddXnH2U8/R5sC3onnfxL
- KypEyjHaAthslwQ7yBpVMvwRyUvQeWWXY/AlkxyC9aB17I26HwvcyW9V98Rcsw80NVoA
- PKbZ6Itd9DuCvPXy1nnwq08T8H2x1MW68s4XOMHnjpAPo77UDNnsOjDXxDdC2AENssUV
- BpnSxfpooVTwmgUT7ZKBqXZ2NiuMMqi5G8Ib0AIqQDlV5f/DTTnsxlEydAph8UKomPaB
- hNG52+unlSQXYhhegzncUmO9/QfvX/zZEcxpPSyL2JeS3DYv9eeOKTNqclqc+cQk4Rbe
- cjYQ==
-X-Gm-Message-State: AOJu0Yymhx2Jq/liG1dm1LP4xPUaw4KbGNN2zt7jsTYnFUUzPBJFvxyd
- Udh3LRszxIgPmtxmIT0/BoSacMAi43ETAn6bPr8DaCHTzm2I0WU62aJhP6DH24Q=
-X-Gm-Gg: ASbGncugTr8DxWKcLHSPnP7T0XBDspVITweu9vJGQ7jht8cXVF9jke38SqjS2UeqhCo
- oft+CU2hPrvrBJTv/fhRj85RVRC76Msi83Fka8CrYBa2SLBDzuORcHTaZWkQXZTHn/1KSgE9996
- q1EGg6uGASUaf/vvYOIBKUygyfS6HeNvSxUscN90D2aaUErlKxAUy3K2J96/oDuWo43z6RKYvBg
- RB8tDCEMX3/oX+BgGhQsqWxSjMuDhVUQT42OwHeYb34zkSH04OkmI9S0dc=
-X-Google-Smtp-Source: AGHT+IEuy+sMr70BSejD3s+Fyor9w0NVaht2/YkpqgdlqN/ikH7mp7tUG+hoj/BH3Gma0lx69spDqA==
-X-Received: by 2002:a05:6a00:846:b0:725:df1a:285 with SMTP id
- d2e1a72fcca58-72d21f476b9mr2255874b3a.12.1736317079175; 
- Tue, 07 Jan 2025 22:17:59 -0800 (PST)
-Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-72aad848020sm34411603b3a.81.2025.01.07.22.17.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 22:17:58 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v4 0/4] virtio: Convert feature properties to OnOffAuto
-Date: Wed, 08 Jan 2025 15:17:49 +0900
-Message-Id: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tVPNe-0000aj-Tu; Wed, 08 Jan 2025 01:17:26 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tVPNd-0000Cp-1Z; Wed, 08 Jan 2025 01:17:26 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5080012L026708;
+ Wed, 8 Jan 2025 06:17:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=J/kS/R
+ Gj8pW/TMeyjkgB7rGOhnwrxfJM0pZzwSnzhWk=; b=FXd8/rX5IaVp5YwsKImT3N
+ QA83wBXPJ6EmRcCwWiEFzzmeOkitmP82/VD+mwC40ie0QXVCZDYQOrRl2hbmCroH
+ xpApl2GsS5gU9et60Ac2me6siZJRHAG64aPw0+5DvjI+e0RhWDmRXTpiJJAU3IKx
+ e4iTZjpz8mCBTyQkB8MOJsh3mLq5XR4sBJE++jw6zgY6eF9GLqEyL95c6C6TDmJM
+ Z0Gha8muIGo/Mw48C8tl55Euqudwz6qM06MMT31XHKjB9x2TkkJDE1SwK36OKKmH
+ TsxQJXBf8z2htByIATUU75Us/wE1rpbIU3b/2mW48G7n7DGxsQiPGIO9dXrzwjbA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441edj17v5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 06:17:21 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5086EF9a016817;
+ Wed, 8 Jan 2025 06:17:20 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441edj17v3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 06:17:20 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50821UHM027963;
+ Wed, 8 Jan 2025 06:17:19 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yhhk64ak-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 06:17:19 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5086HJtF29098646
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 Jan 2025 06:17:19 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1579D58056;
+ Wed,  8 Jan 2025 06:17:19 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7CE3F58052;
+ Wed,  8 Jan 2025 06:17:16 +0000 (GMT)
+Received: from [9.124.223.97] (unknown [9.124.223.97])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Jan 2025 06:17:16 +0000 (GMT)
+Message-ID: <09859162-6319-48a7-8564-ba6023b38dd9@linux.ibm.com>
+Date: Wed, 8 Jan 2025 11:47:14 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/2] Add new PowerPC Special Purpose Registers
+To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org,
+ "sbhat@linux.ibm.com" <sbhat@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ dantan@linux.ibm.com
+References: <20250107205102.20242-1-dantan@linux.vnet.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250107205102.20242-1-dantan@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAI0YfmcC/2WNyw6CMBBFf4V0bU07U16u/A/josIgs5CaQhoI4
- d8tJPiIyzOZc+4sevJMvTgls/AUuGfXRTCHRFSt7e4kuY4sQIHRSqMM7Ad2UmeGLDZQphWK+Pz
- 01PC4hS7XyC33g/PT1g16ve4JsyeClkpSWddNbgtdlPpc26nj8Vi5h1gbAb48gLcH0bsBlgYwI
- 5Xin4e7lyqtPnsYvQypydW2+usty/ICnwX67g0BAAA=
-To: Jason Wang <jasowang@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Andrew Melnychenko <andrew@daynix.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Lei Yang <leiyang@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 6S1DH1q_zVWeZuL8Tqpz6BOZy4HoSRWR
+X-Proofpoint-ORIG-GUID: sMwxyTY1cubc3M1hOXPvODYU1BQ1c9NJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=852 phishscore=0 malwarescore=0
+ impostorscore=0 priorityscore=1501 clxscore=1015 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501080046
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,57 +117,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series was spun off from:
-"[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
-(https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
++ Shivaprasad (had posted patches for DAWR1/DAWRX1 earlier)
 
-Some features are not always available with vhost. Legacy features are
-not available with vp_vdpa in particular. virtio devices used to disable
-them when not available even if the corresponding properties were
-explicitly set to "on".
+https://lore.kernel.org/qemu-devel/170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com/
 
-QEMU already has OnOffAuto type, which includes the "auto" value to let
-it automatically decide the effective value. Convert feature properties
-to OnOffAuto and set them "auto" by default to utilize it. This allows
-QEMU to report an error if they are set "on" and the corresponding
-features are not available.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
-Changes in v4:
-- Added patch "qapi: Do not consume a value if failed".
-- Link to v3: https://lore.kernel.org/r/20250104-virtio-v3-0-63ef70e9ddf3@daynix.com
-
-Changes in v3:
-- Rebased.
-- Link to v2: https://lore.kernel.org/r/20241022-virtio-v2-0-b2394236e053@daynix.com
-
-Changes in v2:
-- Expanded the message of patch "qdev-properties: Accept bool for
-  OnOffAuto".
-- Link to v1: https://lore.kernel.org/r/20241014-virtio-v1-0-e9ddf7a81891@daynix.com
-
----
-Akihiko Odaki (4):
-      qapi: Do not consume a value if failed
-      qdev-properties: Accept bool for OnOffAuto
-      qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
-      virtio: Convert feature properties to OnOffAuto
-
- include/hw/qdev-properties.h |  18 ++++++++
- include/hw/virtio/virtio.h   |  38 +++++++++-------
- hw/core/machine.c            |   4 +-
- hw/core/qdev-properties.c    |  83 +++++++++++++++++++++++++++++++++-
- hw/virtio/virtio-bus.c       |  14 +++++-
- hw/virtio/virtio.c           |   4 +-
- qapi/qobject-input-visitor.c | 103 +++++++++++++++++++++++++++++--------------
- 7 files changed, 207 insertions(+), 57 deletions(-)
----
-base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
-change-id: 20241013-virtio-164ea3f295c3
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
-
+On 1/8/25 02:21, dan tan wrote:
+> From: dan tan <dantan@linux.ibm.com>
+> 
+> *** BLURB HERE ***
+> Version 3 summary:
+>      RWMR (Region Weighted Mode Register) -
+>          - change the register to generic read/write from nop/write
+> 
+> Version 2 summary:
+>      (DAWR1,DAWRX1):
+>          - spec reference: https://files.openpower.foundation/s/EgCy7C43p2NSRfR
+>          - corrected commit message format
+>          - combine DAWR(0/1) handling into a single function
+>          - add DAWR1 & DAWRX1 to init_proc_POWER10() only.
+> 
+>      RWMR (Region Weighted Mode Register) -
+>          - corrected the previous definition as ITV1
+>          - spec reference:
+>              https://ibm.ent.box.com/s/tmklq90ze7aj8f4n32er1mu3sy9u8k3k (Power9)
+>          - it appears that part of the previous upstream request SPRs
+>            (SPR_POWER_MMCR3, SPR_POWER_SIER2, SPR_POWER_SIER3) are
+>            already in the current master. Therefore, removed those
+>            from this request.
+> 
+> dan tan (2):
+>    ppc/pnv: Add new PowerPC Special Purpose Registers (DAWR1,DAWRX1)
+>    ppc/pnv: Add new PowerPC Special Purpose Registers (RWMR)
+> 
+>   include/hw/ppc/spapr.h   |  2 +-
+>   target/ppc/cpu.h         |  8 +++--
+>   target/ppc/helper.h      |  4 +--
+>   target/ppc/spr_common.h  |  2 ++
+>   hw/ppc/spapr_hcall.c     | 24 ++++++++------
+>   target/ppc/cpu.c         | 69 ++++++++++++++++++++++++++--------------
+>   target/ppc/cpu_init.c    | 20 ++++++++++++
+>   target/ppc/excp_helper.c | 11 ++++++-
+>   target/ppc/machine.c     |  5 ++-
+>   target/ppc/misc_helper.c |  8 ++---
+>   target/ppc/translate.c   | 21 ++++++++++--
+>   11 files changed, 127 insertions(+), 47 deletions(-)
+> 
 
