@@ -4,170 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76329E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1249DE7719A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVX0P-0004DN-Nz; Wed, 08 Jan 2025 09:25:57 -0500
+	id 1tVXA1-0006xr-UU; Wed, 08 Jan 2025 09:35:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVX0H-0004B9-AM
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:25:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVX0E-00029M-KD
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:25:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736346345;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AXEibKuSVZlpViRtb1cZIFRQexR3IJ/dHIKw/SCt2RM=;
- b=A/C8QenmMRG+bAHLTaPMIIwrk/GScS9zvwn9ivIc8ya2d5cgmkRcF3ALMHCPb3zpr6WQO8
- B12YQwgYDFrI/Vi1VjdSGrUS8/dzm2/ZAXhu/6Kvg1NnP6IN7K6Wjc1aJqcQQVvs/plQlc
- XbTWEzqLSNHdGXO0gI84VWIuaszJGI4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-SU32wcreNf6zjRXXyGii_w-1; Wed, 08 Jan 2025 09:25:44 -0500
-X-MC-Unique: SU32wcreNf6zjRXXyGii_w-1
-X-Mimecast-MFC-AGG-ID: SU32wcreNf6zjRXXyGii_w
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361fc2b2d6so54226325e9.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 06:25:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
+ id 1tVXA0-0006ws-00
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:35:52 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
+ id 1tVX9w-0006bY-RZ
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:35:51 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so137402755e9.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 06:35:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=embecosm.com; s=google; t=1736346947; x=1736951747; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0iGYqWP4PTuAkDwFXJhbVYiarmXqHTjD9rai41KZ6hc=;
+ b=NxKqoP3+g5/2K9ppV8ac6UGTPENkXrZ+tjZGWwqsRTErpShH7krIkPFy8uxhI49ZRt
+ 2jcsiRVOn2D6S4HOIeff+MRnmOOqHI0yvmTn+2ge0ZkEpYotDaieo9jzgrLl6LswmE/n
+ xUJKJnxzIx8Mo/XD0T146l3j1NoT0kpu5zkRL84aStp/2lVEH1GH5Tz6nhk4eNQ+IJC9
+ AXkbyr2fVBNlevNurlWVrp4DPc6mM1Z2qyJmFuKyOyG1KyTqPUPFS1+lrGbkgH9qmeLI
+ rDWfOK4MTHSpOldJM5lfaSKYzSvVibir1Dpo/Nldn8YdWJ6XVpolxpRy032rUhqqwxYz
+ kQtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736346343; x=1736951143;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AXEibKuSVZlpViRtb1cZIFRQexR3IJ/dHIKw/SCt2RM=;
- b=H+KiyUA1eD87GUa2V2yCHj1nty7+zn+LW/svVyjczpWIbQ9gFlu85W29jglaHzZojL
- upLTK1Ph+BdCQxeCeoze6NRbps4Bo5PE7gPEjWwiRJ1FZStEYOzHFOlOBbWiOx7JjGhl
- 74LeoD6vvLGMgR8AZxlgG9QNaVwWJj3wW4qSKEU3UAFA0tuSgFawByU7P00AJ51ES0Kz
- 9dNljWizqxZ/GU3ZhFAE23WjSzLQG0ElBdUhVn8/j1/l40oboi51epZdnvc2VvCVb6Gw
- qz3uLQMTouLGIUlBR+akSruAnVee5dmsZ4YZnV2nHPmJzVXooUB0qBPaO8Go3ZGps55k
- 20rg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoNdt8LkzE0XEbDwz1izSSrQrHWykk7e0UK/SDYjG/VXJxqOmOnoHUMoYoh0v9qRAFpcrkWBEk2phK@nongnu.org
-X-Gm-Message-State: AOJu0YyCCcgLY8m+rcWl97lMILake/84e8Bkg/opFpxWG3XWpKksaDLc
- ZWe81PSMuHHpWN4YSr0BQJifOM42kPqVcRt1+FR+Mj8cRovaG5ykG+VlTB2baZ+An4SKwZQ9B9q
- G1m75WVPODQX0+FUMFpRhy2ft9GcCLFvnDC4feZTqqZwK7uzxFj55
-X-Gm-Gg: ASbGnctP+hkkb3LXnQ9CvwumUlZ4lWShQSwSLM67AwCkOf+PMERuu5UE68xWS5kAtdR
- K1h3ACExbKUk4LrZU/66Jl/zSmjfveHNhVnLdj/icappbxF84de5ru+y8vVzKYzwRFJMeH+J80q
- 2rKuZ4vwT5FSj0ifpBhx87sm9OFIDxtXkfzQBxNyKgCSZFOKs5onkf5SRxiVQN6lb8sphqdXUKs
- AIT9o752zm/hj7RlPrOzfqnWsP/e/uKwE0HSW63CX83BiSk/m2mSOTcLm7lS7z9QZ+fxAKsMr70
- hHko4w==
-X-Received: by 2002:a05:600c:3c97:b0:436:840b:261c with SMTP id
- 5b1f17b1804b1-436e26ab54fmr24511435e9.19.1736346343414; 
- Wed, 08 Jan 2025 06:25:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEW/VZmQGCFHL26iHoltEGoa1/hXsmymAFeZ9FozAthutIar/25REbOi0GZdgiL53jYuYNmYA==
-X-Received: by 2002:a05:600c:3c97:b0:436:840b:261c with SMTP id
- 5b1f17b1804b1-436e26ab54fmr24510775e9.19.1736346342911; 
- Wed, 08 Jan 2025 06:25:42 -0800 (PST)
-Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ d=1e100.net; s=20230601; t=1736346947; x=1736951747;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0iGYqWP4PTuAkDwFXJhbVYiarmXqHTjD9rai41KZ6hc=;
+ b=kXUkSS4isEYJWX8H/O2mCVMqrHFreSNnZf7lqAUj3MUdyg3ddZE2u9BxiNK4E50i2Y
+ h0f2WcAxyryv5NlVecKnkCxxzkDRJykrBQ6dY1oPhMe2nuF/3ZNNWqFXlpRttkzF9f7p
+ 93ZaqWZFz/1HYV3GCnngkgwzlisZT9nuc5FJTXJimfvsnUIcKvzIesSCIJop6jpY1lMt
+ PzpORy6fkrvHevjOaw6pFwJAh5yX6Z+ghS4GiJaj+Ba2CDMLZGvUeMPmNYDwF+lrhYHC
+ 5w4w/miqnlhPUQwQVmHKa1W0MoWYh2KADI4KH+cUwCUbkGaci+NAN2+NtFyMNtExG22Q
+ 6YeQ==
+X-Gm-Message-State: AOJu0YxqQ17q/6/Rs/uqzUHfT9wHWo8z2JJwn2F7yXZR3BoNM9KX9UYh
+ 3Nv9RIhoDY4pj8T6gYVa+IWmwuddS8/XFLfrhoJe6obe5C5MHr6ZhxBYzJmbk8bC9us6guxF5rS
+ fIHM=
+X-Gm-Gg: ASbGncujCo4OsGbkDfstiLAGwnSU1rP1QQ4QH5vam5uMhN2QxQO0iQ5MlJ+Zs6dg5kW
+ IaMy0JMZbtnV9VuFF/9tIjkNITHvtfWytTT1O9SqtfceLq2/gdnQ8w2rxIKBL05dz8L56zfxN69
+ LjbvhoMW+c4tGg4vzdN6BDSvEA8RNx4277dCL2EsNVyCsJk0HpJ0lm0oxoE2yi0QDDoeIENu5qQ
+ GFtclKl5FJfsl0teiVvX2dAKQdXRp9p70yoX22UVqLk0ZTyZTqDPl03pMqFObowJnpbT4p5PmKs
+ 8VTu5puejfQMqubUaIYFEpdxOnP8JsOQD8gHk2jkof6bRvMq
+X-Google-Smtp-Source: AGHT+IGDOmM17MJxokkC3gYZDwQHtjdaq7/FLE+3tzvnsVbRRpvPXHEM7W/oISw5UL/aHhZlu8EVQQ==
+X-Received: by 2002:a05:6000:1a89:b0:385:fc8c:24b6 with SMTP id
+ ffacd0b85a97d-38a8730b2femr2595175f8f.27.1736346946672; 
+ Wed, 08 Jan 2025 06:35:46 -0800 (PST)
+Received: from dorian..
+ (sals-04-b2-v4wan-167965-cust660.vm36.cable.virginm.net. [80.3.10.149])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2da74dasm22530075e9.2.2025.01.08.06.25.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 06:25:42 -0800 (PST)
-Message-ID: <d1dfef85-c830-416e-9ff6-a69c124aa32e@redhat.com>
-Date: Wed, 8 Jan 2025 15:25:41 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 29/32] tests/vm: allow interactive login as root
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>, 
- qemu-riscv@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ ffacd0b85a97d-38a1c8330d4sm52450316f8f.29.2025.01.08.06.35.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jan 2025 06:35:46 -0800 (PST)
+From: Craig Blackmore <craig.blackmore@embecosm.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Craig Blackmore <craig.blackmore@embecosm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <lvivier@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Bernhard Beschow <shentey@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Laurent Vivier
- <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
- Eric Farman <farman@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Peter Maydell
- <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>
-References: <20250108121054.1126164-1-alex.bennee@linaro.org>
- <20250108121054.1126164-30-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250108121054.1126164-30-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>, Paolo Savini <paolo.savini@embecosm.com>
+Subject: [PATCH v8 1/1] target/riscv: rvv: Use wider accesses for unit stride
+ load/store
+Date: Wed,  8 Jan 2025 14:35:23 +0000
+Message-ID: <20250108143523.153010-2-craig.blackmore@embecosm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250108143523.153010-1-craig.blackmore@embecosm.com>
+References: <20250108143523.153010-1-craig.blackmore@embecosm.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=craig.blackmore@embecosm.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,16 +110,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/01/2025 13.10, Alex Bennée wrote:
-> This is useful when debugging and you want to add packages to an
-> image.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/vm/Makefile.include | 3 ++-
->   tests/vm/basevm.py        | 9 +++++++--
->   2 files changed, 9 insertions(+), 3 deletions(-)
+Use atomic load/store functions to access multiple elements from host.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
+
+Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+Signed-off-by: Craig Blackmore <craig.blackmore@embecosm.com>
+---
+ target/riscv/vector_helper.c | 90 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 82 insertions(+), 8 deletions(-)
+
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index a85dd1d200..c0cb5c0ee1 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -206,30 +206,104 @@ vext_continus_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
+     }
+ }
+ 
++#if !HOST_BIG_ENDIAN
++/* Atomic operations for load/store */
++
++#define GEN_VEXT_LDST_ATOMIC_HOST(SIZE, TYPE)                             \
++static inline QEMU_ALWAYS_INLINE void                                     \
++vext_ldst_atom_##SIZE##_host(void *vd, uint32_t byte_offset, TYPE *host,  \
++                             bool is_load)                                \
++{                                                                         \
++    TYPE *vd_ptr = (TYPE *) (vd + byte_offset);                           \
++    if (is_load) {                                                        \
++        *vd_ptr = qatomic_read__nocheck(host);                            \
++    } else {                                                              \
++        qatomic_set__nocheck(host, *vd_ptr);                              \
++    }                                                                     \
++}                                                                         \
++
++GEN_VEXT_LDST_ATOMIC_HOST(2, uint16_t)
++GEN_VEXT_LDST_ATOMIC_HOST(4, uint32_t)
++#ifdef CONFIG_ATOMIC64
++GEN_VEXT_LDST_ATOMIC_HOST(8, uint64_t)
++#endif
++
++static inline QEMU_ALWAYS_INLINE void
++vext_ldst_atom_16_host(void *vd, uint32_t byte_offset, Int128 *host,
++                       bool is_load)
++{
++    Int128 *vd_ptr = (Int128 *) (vd + byte_offset);
++    if (is_load) {
++        *vd_ptr = atomic16_read_ro(host);
++    } else {
++        atomic16_set(host, *vd_ptr);
++    }
++}
++#endif
++
+ static inline QEMU_ALWAYS_INLINE void
+ vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
+                         void *vd, uint32_t evl, uint32_t reg_start, void *host,
+-                        uint32_t esz, bool is_load)
++                        uint32_t esz, bool is_load, uint32_t log2_esz)
+ {
+ #if HOST_BIG_ENDIAN
+     for (; reg_start < evl; reg_start++, host += esz) {
+         ldst_host(vd, reg_start, host);
+     }
+ #else
+-    if (esz == 1) {
+-        uint32_t byte_offset = reg_start * esz;
+-        uint32_t size = (evl - reg_start) * esz;
++    uint32_t size = (evl - reg_start) * esz;
++    uint32_t test = (uintptr_t) host;
+ 
++    /* Misaligned load/stores do not require any atomicity */
++    if (esz == 1 || unlikely(test % esz != 0)) {
++        uint32_t byte_offset = reg_start * esz;
+         if (is_load) {
+             memcpy(vd + byte_offset, host, size);
+         } else {
+             memcpy(host, vd + byte_offset, size);
+         }
+-    } else {
+-        for (; reg_start < evl; reg_start++, host += esz) {
+-            ldst_host(vd, reg_start, host);
++        return;
++    }
++
++    /*
++     * At this point esz > 1 and host is aligned to at least esz, so the ldst
++     * can be completed in atomic chunks of at least esz.
++     */
++
++    /* Test that both alignment and size are multiples of the atomic width. */
++    test |= size;
++
++    /*
++     * If !HAVE_ATOMIC128_RO, then atomic16_set may be implemented with a
++     * 16-byte compare and store loop, which is expensive, so prefer two 8-byte
++     * stores in this case.
++     */
++    if (HAVE_ATOMIC128_RO && (is_load || HAVE_ATOMIC128_RW)
++        && (test % 16 == 0)) {
++        for (; reg_start < evl; reg_start += 16 >> log2_esz, host += 16) {
++            vext_ldst_atom_16_host(vd, reg_start * esz, host, is_load);
++        }
++        return;
++    }
++    if (test % 8 == 0) {
++        for (; reg_start < evl; reg_start += 8 >> log2_esz, host += 8) {
++            vext_ldst_atom_8_host(vd, reg_start * esz, host, is_load);
++        }
++        return;
++    }
++    if (test % 4 == 0) {
++        for (; reg_start < evl; reg_start += 4 >> log2_esz, host += 4) {
++            vext_ldst_atom_4_host(vd, reg_start * esz, host, is_load);
+         }
++        return;
++    }
++    if (test % 2 == 0) {
++        for (; reg_start < evl; reg_start += 2 >> log2_esz, host += 2) {
++            vext_ldst_atom_2_host(vd, reg_start * esz, host, is_load);
++        }
++        return;
+     }
++    g_assert_not_reached();
+ #endif
+ }
+ 
+@@ -343,7 +417,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+     if (flags == 0) {
+         if (nf == 1) {
+             vext_continus_ldst_host(env, ldst_host, vd, evl, env->vstart, host,
+-                                    esz, is_load);
++                                    esz, is_load, log2_esz);
+         } else {
+             for (i = env->vstart; i < evl; ++i) {
+                 k = 0;
+-- 
+2.43.0
 
 
