@@ -4,169 +4,202 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DB6E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9862E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVPlf-000805-Nf; Wed, 08 Jan 2025 01:42:17 -0500
+	id 1tVPlm-000829-8b; Wed, 08 Jan 2025 01:42:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVPlX-0007zK-Mm
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:42:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tVPlj-00080u-2h
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:42:19 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVPlU-0005nc-UQ
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:42:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736318523;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XhxNRVTCKtc9/WFiD1+tRaBv/KR4USKjJ+CA7V9EstM=;
- b=QvQlfBE69hrDxCynd+Zqsfw/3U5wfAbJF5p8TkNAe348htSYW7X/0sYyQV07SGfxdb1pKZ
- Z0fQynEr/onYnOtlQM2z054/4uiTh541vlMvH9drHBbL85J+HdumHiNgO2m4gNjAqJu0Yo
- 2zqLWtx0TBNtHx4C8UoplSCoNzXlDyA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-491-OuVcqkAcPMG8wlv6D2Yz_w-1; Wed, 08 Jan 2025 01:42:01 -0500
-X-MC-Unique: OuVcqkAcPMG8wlv6D2Yz_w-1
-X-Mimecast-MFC-AGG-ID: OuVcqkAcPMG8wlv6D2Yz_w
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-aa69e84128aso1175839266b.1
- for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 22:42:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736318520; x=1736923320;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XhxNRVTCKtc9/WFiD1+tRaBv/KR4USKjJ+CA7V9EstM=;
- b=pSWLWviNJ4sepra98s3APYHkAflMTLT1FNbDJHxK49MUDAJ4W0+E4TmkJNW+SKFZo7
- Q9M3072WSECx30rH2lGZ7sLpT3c6ZwBh/vZAPvjVv8CBobwsJ4Yf+B7na671HisrjAmU
- glZWPX1+UQqY7LTyp7SQG8mzlr0qRArzou72ooeTqIwfmx/1IlessRGiea6nPs+zJjT+
- dbV+Z7+lIPsKocm04rH62ATktoyF4im3b57Yv6wcYC1M6QmavE7XY+2tO9lceJjT4jdp
- pPIhKwdHWwUpakVNYxmfB7FnMrm26TCphH8o+mc3+GdigBeggXyzCPvQyd4BqmpCYsVv
- cpmg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRaL3fPuQQccHKbNBeHL/Y2+U1nu6t+mvAXcUCV5LS2XHvhlFw020epnlT5ZdXyV2z3TprjNt4KzUp@nongnu.org
-X-Gm-Message-State: AOJu0YzkyxMP68DS16hULwAn8kENnPUZ2lp+PtiuFDiKdAR7c2uQ1t32
- pqdQoJzzJj4BrxBjdDi0KI7SkFro8bsw7SWxn6gvXPX1zP1Ka9/tpWY51bqQMJG+FphS6rS9sTu
- ID2N85+5WGwH3DPsmIdxhItjndRZc6bfnRuQJJ+zQgVaOok68q/GT
-X-Gm-Gg: ASbGncvi1GTn8HI9lyWiCtSLZrY5V5mCGuBd8VBJtd6CtUajJYBAGcRQvnts40u5BYC
- DdY177SEV/dIZe3QuUK9/ra0xeFB7ARijYz66KeJxG+dJwn+fNsIX4h44KX8xIdtXkAKPwv2mxF
- cwakkVm5bEE/GuBYxUopwvYgFNYP9VgKYOPkazYDwuAdGbbgqOB5xGdQ+GB470A8MwW+3qmU/Z2
- J+0uRjB4iWW3Nfj60F0Hm5ATel5X+rxfa2Ifrb0GvG+j7nQDMcukQ9fbdvOsR0qcK5fciI0fQHp
- u0+BIdD0EiYA
-X-Received: by 2002:a17:907:3f89:b0:aac:501:5629 with SMTP id
- a640c23a62f3a-ab2abc95256mr130841166b.56.1736318520421; 
- Tue, 07 Jan 2025 22:42:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnuSk+iJhdaIsF2FaV8kvM9PEEQHx3bWKaA+PtNOmmUIBheVERBkX2RMXiEA10mfUs3nEFAw==
-X-Received: by 2002:a17:907:3f89:b0:aac:501:5629 with SMTP id
- a640c23a62f3a-ab2abc95256mr130836366b.56.1736318519970; 
- Tue, 07 Jan 2025 22:41:59 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-49-182.web.vodafone.de.
- [109.42.49.182]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0f06da76sm2458615966b.194.2025.01.07.22.41.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 07 Jan 2025 22:41:59 -0800 (PST)
-Message-ID: <b7618b1d-a48d-459d-9768-40830c866560@redhat.com>
-Date: Wed, 8 Jan 2025 07:41:55 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tVPlf-0005tR-Tx
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:42:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736318536; x=1767854536;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=cFQGQjmjqXVsX6DYbpULfMjQAVjzOtqVCPpT0TCg9Jg=;
+ b=bIT4g7mf+onca6TY/3gHmxW+0hOKntcKk3DyGMt5HyxKr5VAKErGmEo4
+ SW+cjOgaUN4NV0tztBLwag4JbIT9jyEZmYjFZ/zMTY2OeKYL0YUL5pAl6
+ UFaYZ2UEMZNg0XPX7OPEjc1IDSNsXzg5q3qgnIzDQ2YgsFYXDc9YUBKdt
+ TGthKuyIi71Y1sDRqM1GTV0/w/wS2ogvOCpBRHi3KzDpE9fPCzeWwSpyS
+ CToI7udLtxbaonVXgmVLv6hVQjfCsijDfq3z/ylqMep5oMriHEEm/yHZd
+ GQndtAW57uttrrpkAabvluC5ZZDX59xWDwtuTscyd8ruGAciSY74ni7Yw A==;
+X-CSE-ConnectionGUID: XDC3KlbrTMuPmk6/fpq1/w==
+X-CSE-MsgGUID: FeMavwt3RjSB+j4Q5ICuCg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11308"; a="36690972"
+X-IronPort-AV: E=Sophos;i="6.12,297,1728975600"; d="scan'208";a="36690972"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2025 22:42:07 -0800
+X-CSE-ConnectionGUID: yZk3AzCmTeCariFHKtHs8Q==
+X-CSE-MsgGUID: A0bnGgexRaaxvKKgEW0pkg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,297,1728975600"; d="scan'208";a="107868851"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by fmviesa004.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 07 Jan 2025 22:42:00 -0800
+Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Tue, 7 Jan 2025 22:41:59 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Tue, 7 Jan 2025 22:41:59 -0800
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.168)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Tue, 7 Jan 2025 22:41:50 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kf6fWRVTQcDeFq2bmxPRtUMnWjliKs6eS3izLjajyZFyY97AfY/YcHy1CGElTFR6KtgogkVjmor+kr7R5Hf2wWZ4e4i6HgwdfE06I6FuuAcgszIYsA0csW5Fa4zScIAs5MQx0WvRhIPfunMVxBfNAsXJ6vk6l5ynyk2b+KcP8netDK6b7Dagq9mDYDQw7IKBS4l+KXT0+o33TPtASoL41cyFjyQtOyXwQ1oceplH0nU0FCsMLb8cUa7f/100KSpYu/9kqAb2Pnh4KR0SiVjiBlx+5fLF3gIMNAi/5+O3vsF2Cx5Zxqw7/V+N1M/7+llX0MjaActhFPmPNrABiIHASw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Z6n9SghpOuTCYUuPIO51iwqex+eTpU7mBcbee8DOz/M=;
+ b=qV+ihHdbQxhfDbIKX2JlDwgTh8AlGPauhWuiYF5NJIINi/uLzaUmJeDvUcj8SWhBULt0JTJWgrCPrVLFQUpKWmWAC5Liq5F8UrK/nclV8Qglj9Tp3PBIwBbwPEaDUj4gKdcxmiQ8wiy5Gbcvg+PbbDN9FZhxcYbrY5XGs3HQXjMRSH6I80QDqxX6inMca8YxXgR+QKxPF5NosuOWIx+9ncKC4FXIwnYcSYrzHsKgVTLYSXRoKzhaSNVqlyJL7fSdzXg+x9YxYkFRtLqc5U1roBbw1fVmM9zqtQU31bOvgoeDjA9OG+3whxA44JRZ7k0c1InZFfHD2Qkz2tk4QpzX3A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ SN7PR11MB6922.namprd11.prod.outlook.com (2603:10b6:806:2a9::9) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8314.17; Wed, 8 Jan 2025 06:41:45 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%5]) with mapi id 15.20.8314.018; Wed, 8 Jan 2025
+ 06:41:45 +0000
+Message-ID: <5465ec6c-aee2-4ee3-a812-830fb069a184@intel.com>
+Date: Wed, 8 Jan 2025 14:41:37 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 19/29] tests/functional: add zstd support to uncompress
- utility
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Beraldo Leal <bleal@redhat.com>, Ed Maste <emaste@freebsd.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-ppc@nongnu.org,
- John Snow <jsnow@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-riscv@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
- Weiwei Li <liwei1518@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- qemu-arm@nongnu.org, Li-Wen Hsu <lwhsu@freebsd.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cleber Rosa <crosa@redhat.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Eric Farman <farman@linux.ibm.com>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
- Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250107165208.743958-1-alex.bennee@linaro.org>
- <20250107165208.743958-20-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 1/7] memory: Export a helper to get intersection of a
+ MemoryRegionSection with a given range
+To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
+ <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-2-chenyi.qiang@intel.com>
+ <30624aca-a718-4a7d-b14f-25ab26e6bded@amd.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250107165208.743958-20-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <30624aca-a718-4a7d-b14f-25ab26e6bded@amd.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+X-ClientProxiedBy: SI2P153CA0004.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:4:140::23) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|SN7PR11MB6922:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2cf0e3d5-1394-418c-51ac-08dd2faf84c5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TFdIQmp2SGdxUWFPNStmbDVaWkdpazRoaVZQSjVBTEQ5T3ZmL2pkR29iUGtM?=
+ =?utf-8?B?ZE13SlZtTmliZ1FXWFh0ZjVGMU8xTHJTa29wcS9Zcy9IcFcrSlV1VDJ4bjBE?=
+ =?utf-8?B?WGVmWW5xRGdyN0RXc215d1dzYjNxYlA2OU53VE13UHh0eEJPTnA3M0lwQUti?=
+ =?utf-8?B?eHpEOVZDbkhlb0o4bkoyY1BkUDk2S2NJUmJYNnowZFBESHZkdVkyd1pYTWJR?=
+ =?utf-8?B?N0RqZWpnK0RaVEdvbmxCUVdyamZTbVEvQzVrY2xkdkRiZjNhb3poV0tNQUZU?=
+ =?utf-8?B?N1VUbTViNXRQdXFpcjJlQXc4Y3hnemVHNjA4SzA1Z0NoanJSckViekZJUHdv?=
+ =?utf-8?B?YStFQ1hGV0ZoK2JBUXpxUkNLVTV2T3FEanRjbEFZRzlsd3gwaUREYm5xRjUr?=
+ =?utf-8?B?M1ByUllwQlg4ckZYRkoyNmZoNklrS0FNc1R3ZEpMMkF1a01Ua0FqU3lqR3J2?=
+ =?utf-8?B?ZjZOZEQ3c2pxV3FPVHJ1Y3BZa3JrSjNIVlBhd3MwSEdUY0hhSXNLQVlOUEFF?=
+ =?utf-8?B?MkNaQys2RDVLa2FYTm1jV3FoZFpKdkRVb0NqRit3RUt1SW1uR2taWmxRV0Fm?=
+ =?utf-8?B?UzFRMXUyU1BqWW5GWC91NU15dDBjckVYYVV1c2xxaEVjQjRnMU1mNEp1aTFm?=
+ =?utf-8?B?dkQ4OUNZa2VhaUJXWjZQbFhoc2NiS0VXQVFmN254L0M5aVY5WmkwRTdUalJP?=
+ =?utf-8?B?c0pack5vQitSVUt3L1NSOFpQZlN0WXZlWkxHK3ZwWkFRK0UrcGJPaUJOSlhT?=
+ =?utf-8?B?a2puQmJ1YjNMM1ZuR0NqVVFHa2N4MDM0M0NrTE55L0s2eXNpcG51cWdhN1U2?=
+ =?utf-8?B?R0N6VE56YkpKQ28zdzZqRGJpVlFrZU4veTk0dmZ3YlNFdXhpdlhScW1lWXZj?=
+ =?utf-8?B?WDVORXdIZVRMbjhPM2lxN1A1STQxd1R0M2xHSnBXUE51UVRleVgxMUJtKzFU?=
+ =?utf-8?B?ZE1BLzB2ZmJwa2U1MUpMOEs1MC9yN3lUUTh3Snk1RFlYeml5N1RTV3FlQm1U?=
+ =?utf-8?B?aTNkVEwrMFBZV3RTN08rMHlwcDVYVWcyVWNCUXVrV0JnUzVISE1LeCtGRWVU?=
+ =?utf-8?B?VVc5RzFzenFIQlYyZnNBTXEzT1dWWlVuQlZ2L3cvdUZhVkc3NE1hSTg2RWc5?=
+ =?utf-8?B?Z0NHa3NEYVlMdjRjWXA0aVlzUmUrdnRBYTdra0RUNE5Xc1FNZnVJMCtyQU9w?=
+ =?utf-8?B?UjhJVE5SKzl0cGRZZFNqNUQxeks2N2FQb3RrdzNsTHZDVWdQR1dHWm5TYjEy?=
+ =?utf-8?B?ejJWNWxYTlpwNlU5OXF1cjJCNVYyS2IraFJYTEc5akh3cGhWMkZCZXErQVJP?=
+ =?utf-8?B?UHFsSEREMWlyU0crWVZnRmpvM2JUR0FlcU1vL0Mvdll6OHJGdmxYK3k5TGRo?=
+ =?utf-8?B?aUZsYSs3K0ZHL2N1OXJ3U1czZGpzZ3VFRFkrVk9NTS9lamErTjcySzg3RlBl?=
+ =?utf-8?B?Rnp3Szdvb0NrZnFUQXd2Z2dsS25WZDBsUTZOc3dSRlJjV2pxbmQxNFdzQklw?=
+ =?utf-8?B?U2lUK0szMlViM0ZkVkJycVFzQzg5OVh4SlRIcVhWenQvdW55OTExWlRkUm1X?=
+ =?utf-8?B?ejhZRUpDZERKQWdaeWpoWm02Tk13Z0FoRVNVb1lKUkljMG1zbzRSc2xrQUp6?=
+ =?utf-8?B?YVV6QWo2cUFTdjQwNmtLOExJSHE4VWNhRmFhd1R2eGhLdWNOQWw3N0pQY2d2?=
+ =?utf-8?B?Qk8zV3R5d1hVRmQxdFdZQ2Y1WmtsbzFRckJIelB4MUZiN0JWSnpFRCt5b1o4?=
+ =?utf-8?B?VFY5Vk9PUWVHQTZnR1l5QTJHM2xweUs5NnhuNXYrTUhQR2FhbElCMjJzNFpl?=
+ =?utf-8?B?RHVIU1BZdjRkaDFyRHlmMmRxZHNUTUtpQ2g1SElSNUlQYXB3Yk43emJCN2ds?=
+ =?utf-8?Q?zSBpNqwe1jxoI?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b00zZ2RGMkVFc05GVHB0RGI2aUFpMWdFK3FhcWRialZobjROR055TVBYQU9u?=
+ =?utf-8?B?MTZIdXNvc1lPeHZWWHFldG4za1lQM3lzM2hMU2JDa1FadkthVlppNTU3QUI0?=
+ =?utf-8?B?SXA1WDdHRmt1VVlYbXpKeWhZRFBjMUhCUGNJTS91a0ErK0NUaGh5TzEwUCsx?=
+ =?utf-8?B?SnFSUjZJSUFrdlB0WjV4ZXdDM3NTMmR4RFhZVXNVcGpZVlFnQVZkQUxqOTg4?=
+ =?utf-8?B?WVZkcGdqMDFJQTVzWlAwdmtUUUVMZWhNR1R3c1JnTmg0SkdVeUhpb2d1QXMr?=
+ =?utf-8?B?Q2N6VjJuYmEwWjB5MUpFdzd3RnpMM1Q2WlYrMmZJdERvZU5NRXR1Sm5EOXpC?=
+ =?utf-8?B?bnRVV2M4UTQ2WlVKaGgxUS82dWc5N0pldktmQmNEWG5BcGRyM1lpSDBvY0Zv?=
+ =?utf-8?B?OFVNYmdLa1labWNsUTFOWUNlYnYxeWdXMHRMdkt6dlJMclhnQld2aitPRENx?=
+ =?utf-8?B?WjdOZk1qbFVaa3lZY1l3YW96QzRtb0lhbmpEQ3hGWHV3Tmp4U1hLSnNkMkly?=
+ =?utf-8?B?bkRvSk9HSEpSTFNGWkJqaGgvU1MvSkJ3U29VVTJraHc5aFFlalIxcm1sQVJN?=
+ =?utf-8?B?UWpkTlZiZm1QQUFCdFRicHNRUkpHL1hvWEdYdTNPYkNGSEFINFBlS3JYL09z?=
+ =?utf-8?B?eWpKNkNERVlzVDFoeW5ta3FtWU1vQlVITFd0V0pnTEl6ak81aE4rYlJpVUNX?=
+ =?utf-8?B?b3h1NVVnbWJjcjBZaDA0RnJtd2pxVS83VXN4SEVaMXY2VHZRcy9INkFRcjYw?=
+ =?utf-8?B?VVBnUXJvZFRkTGZOZmkrSGlNbnlsTHZYODdEbGs1TDJwZkc3UE5heFloUFhh?=
+ =?utf-8?B?S3p0NXI1U2hYbWhEYU9DcXJ6YUhLWVV2NFlRc0ZIWjZob3dxWFNtUWEwVEVz?=
+ =?utf-8?B?RDcwZUF1c1pYMWJaQWxtSm1lQTBybTVMVXF0MHcvd0JZY2RLYkZ3TURTZnZp?=
+ =?utf-8?B?SWVMQ1pLR2REdGR2QUt5U1lPeStteVBnOUlITjg1eXZKVUZTbVhBZzFjSy9K?=
+ =?utf-8?B?TUdUUVNwRVBtN3IzT0gwMTVzb1Y4aHNQYzkzTFJhazdoZSttZ2V4RzBWZjg4?=
+ =?utf-8?B?SDhsTXZzb3EyYmpkUFVUWCtNYkFjdHB0SEExNi96WG1yNDlBM0hiRXN5U1I5?=
+ =?utf-8?B?SHFFMEQweWxvOGJJV2puaDUrMTRKN29mWlc0RUp2Z0JtcGtkUTN0WjhKdlVE?=
+ =?utf-8?B?UzRmQ1owcm5yYnJkSHp3K1A1ZUhuN044TEE4c0Zzekd5KzE3NGM0cFh4TVRQ?=
+ =?utf-8?B?YVc2RlBVR1htbnRuanVoQVRabXEzZG5UM2hIb1FCODFRZ3R3WUxuQmFpYWox?=
+ =?utf-8?B?WUhtcjFCRlFXRmJNUC9relJvY1BMdnJzT040eWtObEtteEJjdlR2NHZTaDFD?=
+ =?utf-8?B?dE9zRGw1V0JRdW14SG9QdnQ2cjNSZ3FCNzF4K2srakdiRlBGV0ZDbGszYnp5?=
+ =?utf-8?B?eGVhZlEyWFRCU24wem1pZ05mbXFaWXRndGZHSnpOekUrSkpidWFiL2grZ0Yw?=
+ =?utf-8?B?UnJLMjZHTUd2aUxFUG1oRlFtRTIzWFVwOWtScXdsdEZzTkhTWXgzaitSYi9w?=
+ =?utf-8?B?eTRjWWJQekVNTzRFWGd3Uk42ZmdBMTE1VSt2bXdXUVJoUmk4N1hFblIyenZF?=
+ =?utf-8?B?WGt6NmdjcjNLZnU1UFROblN3UHVrRFlzWnBHNHliT1RVeGxJTXplRmYxWStx?=
+ =?utf-8?B?OCsxZXZqWGJjR2pzV1lZK0p5TU9PTzU5cEtBcHp6RThockxrOWw2ZXJYVUZ5?=
+ =?utf-8?B?WlhaaFV3Z2o2WXpOZWdiSFV1aXNmbVE2TFR1Q3JGbG95d1hMMHlya2J3V1F6?=
+ =?utf-8?B?dnhsd1FqVHVMUWc4eDR4Rmt4bDNsMk9seGtYaG9kNFZBTzQvWjMyWTZYbHls?=
+ =?utf-8?B?U0ZJOWhmbkVWcWZMWHFHRXN5SFZuS0t4cVZ0cDNpM1k3dDVDcTZNeGVnM0tF?=
+ =?utf-8?B?VVdQMzBzaUl6TU4wcS9nNzE5dndFS3BjYTMrZWZRVFRhdXVkN2UwQk1ncHNt?=
+ =?utf-8?B?MkwzQXFNMHNBS2RqT3F5VVlvWFhPNDRLK2xLZUxXdGtjRG9QTWo1eEprSUVq?=
+ =?utf-8?B?amJMYVYrTzdxbTlOdEtzQzJPNVVKem9sSml5ZnVHcGRZSk5uNlJTR2Zxc0l3?=
+ =?utf-8?B?QWs0VHVpOWZCbE5WL1lZckowSEtKU1Zhd1A1R2RJOFVTdVd6WFByVjBVUy9q?=
+ =?utf-8?B?V0E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2cf0e3d5-1394-418c-51ac-08dd2faf84c5
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2025 06:41:45.2637 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Z5+n8FLlAE02tLPsJ9ILlaitNiI5rB6qSU8UFSHR9oihurrhex1DxBmoWEEUrzeq9Xzv6qkP9TP3zvl5VHQgZg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6922
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -184,83 +217,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/01/2025 17.51, Alex Bennée wrote:
-> Rather than using the python library (which has a different API
-> anyway) lets just call the binary. zstdtools is already in out
-> qemu.yml so all test containers should have it around. Tests should
-> still use @skipIfMissingCommands('zstd') to gracefully handle when
-> only minimal dependencies have been installed.
 
-Thanks, sounds like a good idea to have a common function for this. Just a 
-comment below...
 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/functional/qemu_test/uncompress.py | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
+On 1/8/2025 12:47 PM, Alexey Kardashevskiy wrote:
+> On 13/12/24 18:08, Chenyi Qiang wrote:
+>> Rename the helper to memory_region_section_intersect_range() to make it
+>> more generic.
+>>
+>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> ---
+>>   hw/virtio/virtio-mem.c | 32 +++++---------------------------
+>>   include/exec/memory.h  | 13 +++++++++++++
+>>   system/memory.c        | 17 +++++++++++++++++
+>>   3 files changed, 35 insertions(+), 27 deletions(-)
+>>
+>> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+>> index 80ada89551..e3d1ccaeeb 100644
+>> --- a/hw/virtio/virtio-mem.c
+>> +++ b/hw/virtio/virtio-mem.c
+>> @@ -242,28 +242,6 @@ static int
+>> virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
+>>       return ret;
+>>   }
+>>   -/*
+>> - * Adjust the memory section to cover the intersection with the given
+>> range.
+>> - *
+>> - * Returns false if the intersection is empty, otherwise returns true.
+>> - */
+>> -static bool virtio_mem_intersect_memory_section(MemoryRegionSection *s,
+>> -                                                uint64_t offset,
+>> uint64_t size)
+>> -{
+>> -    uint64_t start = MAX(s->offset_within_region, offset);
+>> -    uint64_t end = MIN(s->offset_within_region + int128_get64(s->size),
+>> -                       offset + size);
+>> -
+>> -    if (end <= start) {
+>> -        return false;
+>> -    }
+>> -
+>> -    s->offset_within_address_space += start - s->offset_within_region;
+>> -    s->offset_within_region = start;
+>> -    s->size = int128_make64(end - start);
+>> -    return true;
+>> -}
+>> -
+>>   typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void
+>> *arg);
+>>     static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+>> @@ -285,7 +263,7 @@ static int
+>> virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+>>                                         first_bit + 1) - 1;
+>>           size = (last_bit - first_bit + 1) * vmem->block_size;
+>>   -        if (!virtio_mem_intersect_memory_section(&tmp, offset,
+>> size)) {
+>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>> size)) {
+>>               break;
+>>           }
+>>           ret = cb(&tmp, arg);
+>> @@ -317,7 +295,7 @@ static int
+>> virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
+>>                                    first_bit + 1) - 1;
+>>           size = (last_bit - first_bit + 1) * vmem->block_size;
+>>   -        if (!virtio_mem_intersect_memory_section(&tmp, offset,
+>> size)) {
+>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>> size)) {
+>>               break;
+>>           }
+>>           ret = cb(&tmp, arg);
+>> @@ -353,7 +331,7 @@ static void virtio_mem_notify_unplug(VirtIOMEM
+>> *vmem, uint64_t offset,
+>>       QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+>>           MemoryRegionSection tmp = *rdl->section;
+>>   -        if (!virtio_mem_intersect_memory_section(&tmp, offset,
+>> size)) {
+>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>> size)) {
+>>               continue;
+>>           }
+>>           rdl->notify_discard(rdl, &tmp);
+>> @@ -369,7 +347,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem,
+>> uint64_t offset,
+>>       QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+>>           MemoryRegionSection tmp = *rdl->section;
+>>   -        if (!virtio_mem_intersect_memory_section(&tmp, offset,
+>> size)) {
+>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>> size)) {
+>>               continue;
+>>           }
+>>           ret = rdl->notify_populate(rdl, &tmp);
+>> @@ -386,7 +364,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem,
+>> uint64_t offset,
+>>               if (rdl2 == rdl) {
+>>                   break;
+>>               }
+>> -            if (!virtio_mem_intersect_memory_section(&tmp, offset,
+>> size)) {
+>> +            if (!memory_region_section_intersect_range(&tmp, offset,
+>> size)) {
+>>                   continue;
+>>               }
+>>               rdl2->notify_discard(rdl2, &tmp);
+>> diff --git a/include/exec/memory.h b/include/exec/memory.h
+>> index e5e865d1a9..ec7bc641e8 100644
+>> --- a/include/exec/memory.h
+>> +++ b/include/exec/memory.h
+>> @@ -1196,6 +1196,19 @@ MemoryRegionSection
+>> *memory_region_section_new_copy(MemoryRegionSection *s);
+>>    */
+>>   void memory_region_section_free_copy(MemoryRegionSection *s);
+>>   +/**
+>> + * memory_region_section_intersect_range: Adjust the memory section
+>> to cover
+>> + * the intersection with the given range.
+>> + *
+>> + * @s: the #MemoryRegionSection to be adjusted
+>> + * @offset: the offset of the given range in the memory region
+>> + * @size: the size of the given range
+>> + *
+>> + * Returns false if the intersection is empty, otherwise returns true.
+>> + */
+>> +bool memory_region_section_intersect_range(MemoryRegionSection *s,
+>> +                                           uint64_t offset, uint64_t
+>> size);
+>> +
+>>   /**
+>>    * memory_region_init: Initialize a memory region
+>>    *
+>> diff --git a/system/memory.c b/system/memory.c
+>> index 85f6834cb3..ddcec90f5e 100644
+>> --- a/system/memory.c
+>> +++ b/system/memory.c
+>> @@ -2898,6 +2898,23 @@ void
+>> memory_region_section_free_copy(MemoryRegionSection *s)
+>>       g_free(s);
+>>   }
+>>   +bool memory_region_section_intersect_range(MemoryRegionSection *s,
+>> +                                           uint64_t offset, uint64_t
+>> size)
+>> +{
+>> +    uint64_t start = MAX(s->offset_within_region, offset);
+>> +    uint64_t end = MIN(s->offset_within_region + int128_get64(s->size),
+>> +                       offset + size);
 > 
-> diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
-> index 6d02ded066..404eee1f83 100644
-> --- a/tests/functional/qemu_test/uncompress.py
-> +++ b/tests/functional/qemu_test/uncompress.py
-> @@ -12,6 +12,7 @@
->   import os
->   import shutil
->   from urllib.parse import urlparse
-> +from subprocess import check_call, CalledProcessError
->   
->   from .asset import Asset
->   
-> @@ -38,6 +39,18 @@ def lzma_uncompress(xz_path, output_path):
->               os.remove(output_path)
->               raise
->   
-> +def zstd_uncompress(zstd_path, output_path):
-> +    if os.path.exists(output_path):
-> +        return
-> +
-> +    try:
-> +        check_call(['zstd', "-f", "-d", zstd_path,
-> +                    "-o", output_path])
-> +    except CalledProcessError as e:
-> +        os.remove(output_path)
-> +        raise Exception(
-> +            f"Unable to decompress zstd file {zstd_path} with {e}") from e
+> imho @end needs to be Int128 and s/MIN/int128_min/, etc to be totally
+> correct (although it is going to look horrendous). May be it was alright
+> when it was just virtio but now it is a wider API. I understand this is
+> cut-n-paste and unlikely scenario of offset+size crossing 1<<64 but
+> still. Thanks,
 
-In tests/functional/qemu_test/tuxruntest.py we had to add a
+Make sense. I'll change it in next version.
 
-   os.chmod(..., stat.S_IRUSR | stat.S_IWUSR)
-
-to make sure that the write-protected compressed assets are usable 
-afterwards... Would it make sense to add this here, too, so that the callers 
-don't have to do it on their own?
-
-Also, could you maybe change tests/functional/qemu_test/tuxruntest.py 
-accordingly to use this new function here?
-
-  Thanks,
-   Thomas
-
-
->   '''
->   @params compressed: filename, Asset, or file-like object to uncompress
->   @params uncompressed: filename to uncompress into
-> @@ -59,6 +72,8 @@ def uncompress(compressed, uncompressed, format=None):
->           lzma_uncompress(str(compressed), uncompressed)
->       elif format == "gz":
->           gzip_uncompress(str(compressed), uncompressed)
-> +    elif format == "zstd":
-> +        zstd_uncompress(str(compressed), uncompressed)
->       else:
->           raise Exception(f"Unknown compression format {format}")
->   
-> @@ -79,5 +94,7 @@ def guess_uncompress_format(compressed):
->           return "xz"
->       elif ext == ".gz":
->           return "gz"
-> +    elif ext == ".zstd":
-> +        return "zstd"
->       else:
->           raise Exception(f"Unknown compression format for {compressed}")
+> 
+> 
+>> +
+>> +    if (end <= start) {
+>> +        return false;
+>> +    }
+>> +
+>> +    s->offset_within_address_space += start - s->offset_within_region;
+>> +    s->offset_within_region = start;
+>> +    s->size = int128_make64(end - start);
+>> +    return true;
+>> +}
+>> +
+>>   bool memory_region_present(MemoryRegion *container, hwaddr addr)
+>>   {
+>>       MemoryRegion *mr;
+> 
 
 
