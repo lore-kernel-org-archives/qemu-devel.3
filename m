@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8152DE7719A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 16:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7CE2E7719A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 16:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVYdM-0004jf-Mx; Wed, 08 Jan 2025 11:10:16 -0500
+	id 1tVYhY-00069f-J8; Wed, 08 Jan 2025 11:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVYdL-0004jW-AD
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:10:15 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVYdI-0002nl-5F
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:10:14 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-aaeec07b705so2015158266b.2
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 08:10:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736352610; x=1736957410; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4FVaJRJpLU4ekYycAZEIHHqFhvgMhGDyd3RdZGnWR6I=;
- b=oCJ3/JydTlnL+l460PbDcwkaj1BkK3Ce6hg8xqJ/BR3gGVERzLYC2nKN6ZBCGxTMeK
- jU7B9gLl4w1MoSg12pMT7uFUSaq1XOEJiyLPHSa7NrvrUM5G0e4G7vL5ODIxCdW/HCCm
- kre0YdRA6wAn5SZupOmAg7clvAeeKDAo5fhUsYqokxveC1SEmBY4zJmbyYoTj0Y4NuL2
- ORCRW+IqMQ5n87kFK19lyvOUyE2CjJiUOHU+br173v/lc6lYqsca2y5kKyIRt4QGicAq
- ZW0g58gddeUIBfMW/fn23LNUXh/d/nPj4CmCOQGQI18xYOg/9KM1rMF91yaR3K4oEzST
- OZLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736352610; x=1736957410;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4FVaJRJpLU4ekYycAZEIHHqFhvgMhGDyd3RdZGnWR6I=;
- b=cZ69E1zBl3mzT3+v90qL25CzpXQnTDg5LNgijYNYZYMWHE8ruu7tltzPhyutsU5SbH
- J+minf7q71PW6QHjTyNtWiYJA2jf81gxSuW1cWgo/uL6D7Tck269HGrX193IA2/6jRWu
- pzKi98U2H5cUj2LHoL15kkKtLxXKkBPF9oU0EBr306KqNTAlM//2ZhUWKKOeTONIcuBI
- hLWRFnKw92bKUM3f5ZlG83rntwUvDg9VZtPhM4axEpSJXWKMrxx+6r/oV32dKCIvfy1+
- 4CVvlkncehXa8A3319IeJ1jPGxqWmA21BQuujAjCp/cQ4XBHHrbrMxVUV+igYs8jY6E7
- w+lg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4biofTqNs33pgQAYKfGQnOVPGfdk/6kwi2dOp7cZXcuxKF9F43/JN+g6O5HbeDFX1C4jZKDzc6UWL@nongnu.org
-X-Gm-Message-State: AOJu0Yy6Irieuec84oULzO5vY07PHZPA38dasdHigFGxsOObJggzhdj3
- DH3aHZ1shorjQhWC8wp65M6mJgIDXhazsRQh6V1fGMdbtZZM4w+2Qf6NlfMciuA=
-X-Gm-Gg: ASbGncu0HVbNIMKY9VQBFQak5wySx1iT/x9PCj7tJSpUgyY1ilBDZezdfc+P9lQ4r0E
- VswM/tmyyC3j8QfKgFuHc2yyDOKnRqPz+T+5mRtHbwkYGhITq8GVhPbyGNmNBs/WW8OH7NIreyW
- Uw+9kUjoid8JQi1rH6w/wJAoeSlkpbR7P30RSts0KHi1FiGKiVAfxdMkHeZwrgcWFYBG648BBSR
- rUkUzmksJaCdkXYmeFIclOrmtSrkTo1aSCjb02nUrvizkhV3+bGg+w=
-X-Google-Smtp-Source: AGHT+IEdQL8Hbp59r2HhV//U1NxLCyafAz3kzxoxQu+Mh5jrdUg5nevrH6+tYqZWjlK3mLNOhxPpMg==
-X-Received: by 2002:a17:907:3a96:b0:ab2:b5f1:567d with SMTP id
- a640c23a62f3a-ab2b5f15acbmr182977266b.32.1736352610043; 
- Wed, 08 Jan 2025 08:10:10 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0e8951ebsm2492663166b.71.2025.01.08.08.10.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 08:10:09 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BCB545F8AC;
- Wed,  8 Jan 2025 16:10:08 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>,  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Kyle Evans
- <kevans@freebsd.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVYhX-00068G-0V
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:14:35 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVYhV-00035x-5z
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:14:34 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508BhNGU025541;
+ Wed, 8 Jan 2025 16:14:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=y2KCmI
+ /7khv71Iy8c1LpsoPS2xA2m+oEXJaeqb9UBUs=; b=BrJN+CH/865NkVFPdeSQXU
+ PCeWxO9YahDFR7yRlIb28qqZD/EbgeCD7b41GWfqGmdmTsKTq2+gE+BW0Lv3W3uJ
+ 08E9HRZp6EkBuUmmTOCgw537UrelWtI+LgvEjOPum+FemruI5sk43uuTs9UM0Okv
+ ZI3UHcoQ2I1TGTGAX0nnJJac6CuJPZ6lVcg1MyHQ6HEEJONR1ebLX+fEGXZ2ZYtk
+ lY7uS7hpYuU7psGwiBGGi9oP/pukG4C6Qa2N2nrsmFOemuz/BO61osj+eQurRIVw
+ j4duS77GqFF/eV0xHlaWqbopdmWJc//PsmCa0r8pO1/BlMClP+deoCB0kIcj8H9Q
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441edj3yn4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 16:14:21 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508DMBwh013641;
+ Wed, 8 Jan 2025 16:14:20 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygap0gu9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 16:14:19 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 508GEHRb44892566
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 Jan 2025 16:14:18 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D950920043;
+ Wed,  8 Jan 2025 16:14:17 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6460020040;
+ Wed,  8 Jan 2025 16:14:17 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Jan 2025 16:14:17 +0000 (GMT)
+Message-ID: <dbdc943984d3d7ceded8b793be0cc0f546aae971.camel@linux.ibm.com>
 Subject: Re: [PATCH v3 2/8] gdbstub: Try unlinking the unix socket before
  binding
-In-Reply-To: <20241216123412.77450-3-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Mon, 16 Dec 2024 13:33:20 +0100")
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>, Laurent
+ Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Kyle Evans <kevans@freebsd.org>,
+ Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Date: Wed, 08 Jan 2025 17:14:17 +0100
+In-Reply-To: <875xmpb82n.fsf@draig.linaro.org>
 References: <20241216123412.77450-1-iii@linux.ibm.com>
  <20241216123412.77450-3-iii@linux.ibm.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 08 Jan 2025 16:10:08 +0000
-Message-ID: <875xmpb82n.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ <875xmpb82n.fsf@draig.linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: zlIVG_0z2SNJhQIdH-38cXyOlXDpVVV7
+X-Proofpoint-ORIG-GUID: zlIVG_0z2SNJhQIdH-38cXyOlXDpVVV7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=961 phishscore=0 malwarescore=0
+ impostorscore=0 priorityscore=1501 clxscore=1015 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501080133
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,38 +114,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+On Wed, 2025-01-08 at 16:10 +0000, Alex Benn=C3=A9e wrote:
+> Ilya Leoshkevich <iii@linux.ibm.com> writes:
+>=20
+> > In case an emulated process execve()s another emulated process,
+> > bind()
+> > will fail, because the socket already exists. So try deleting it.
+> >=20
+> > Note that it is not possible to handle this in do_execv(): deleting
+> > gdbserver_user_state.socket_path before safe_execve() is not
+> > correct,
+> > because the latter may fail, and afterwards we may lose control.
+> >=20
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> > =C2=A0gdbstub/user.c | 1 +
+> > =C2=A01 file changed, 1 insertion(+)
+> >=20
+> > diff --git a/gdbstub/user.c b/gdbstub/user.c
+> > index ef52f249ce9..c900d0a52fe 100644
+> > --- a/gdbstub/user.c
+> > +++ b/gdbstub/user.c
+> > @@ -337,6 +337,7 @@ static int gdbserver_open_socket(const char
+> > *path)
+> > =C2=A0
+> > =C2=A0=C2=A0=C2=A0=C2=A0 sockaddr.sun_family =3D AF_UNIX;
+> > =C2=A0=C2=A0=C2=A0=C2=A0 pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun=
+_path) - 1,
+> > path);
+> > +=C2=A0=C2=A0=C2=A0 unlink(sockaddr.sun_path);
+>=20
+> Should we be checking for errors here? What do we expect when
+> attempting
+> to unlink a non-existent path? -EIO?
 
-> In case an emulated process execve()s another emulated process, bind()
-> will fail, because the socket already exists. So try deleting it.
->
-> Note that it is not possible to handle this in do_execv(): deleting
-> gdbserver_user_state.socket_path before safe_execve() is not correct,
-> because the latter may fail, and afterwards we may lose control.
->
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->  gdbstub/user.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/gdbstub/user.c b/gdbstub/user.c
-> index ef52f249ce9..c900d0a52fe 100644
-> --- a/gdbstub/user.c
-> +++ b/gdbstub/user.c
-> @@ -337,6 +337,7 @@ static int gdbserver_open_socket(const char *path)
->=20=20
->      sockaddr.sun_family =3D AF_UNIX;
->      pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun_path) - 1, path);
-> +    unlink(sockaddr.sun_path);
+ENOENT I guess.
+I will add a check that requires either success or ENOENT.
 
-Should we be checking for errors here? What do we expect when attempting
-to unlink a non-existent path? -EIO?
+> > =C2=A0=C2=A0=C2=A0=C2=A0 ret =3D bind(fd, (struct sockaddr *)&sockaddr,
+> > sizeof(sockaddr));
+> > =C2=A0=C2=A0=C2=A0=C2=A0 if (ret < 0) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 perror("bind socket");
 
->      ret =3D bind(fd, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
->      if (ret < 0) {
->          perror("bind socket");
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
