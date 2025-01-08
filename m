@@ -4,78 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F4DE7719B
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A275CE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVXHH-0001Km-El; Wed, 08 Jan 2025 09:43:23 -0500
+	id 1tVXPo-0006zL-DA; Wed, 08 Jan 2025 09:52:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVXHF-0001K7-9e
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:43:21 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVXHD-0008MI-EM
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:43:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736347400; x=1767883400;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=roMx6NLgvG1w2UZlck/tSjXRrw4hdWLyk6vWSzvqPQI=;
- b=F07taqnZcrR7tksO7D06M/OKwoU3csEiYj8EfaB4kbmiyJJi/dBz9Ul5
- rKQmGYOFY49zoM7g1G3Ti5bpW1SuTAEvC2MrNN4iJir2HwZQAsRoOAU1x
- fTTZCpYHYvURTfkMvrTvS6Exnxu5j4SpGt2LYUBwEFJgPA+2fxLNcuZ3t
- lk292MwpkSATekCKTA3dr5S6KxWTljTsspv47JeBFL03Syks9oUw+EZzS
- 6kieNPfa2yleNN6NZ49jjLrRA/3bxJ+CIgljOCIro+XhBrDp8wotKs7Eo
- 1wkuB9B0aLoimYvD2dB5S/EKH/VTQHSSgA7+8SL023m0+Yrqz6fXG3e3D w==;
-X-CSE-ConnectionGUID: AO9UCz9hSdO1Lf3fGSdcUg==
-X-CSE-MsgGUID: +wDxJLB3QA+El95FvktfLg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11309"; a="36737350"
-X-IronPort-AV: E=Sophos;i="6.12,298,1728975600"; d="scan'208";a="36737350"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jan 2025 06:43:17 -0800
-X-CSE-ConnectionGUID: 2i5G/sg9RIKwJW2uz0Nc0A==
-X-CSE-MsgGUID: 59Xo8U8iTim5ohGRbQs+ow==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="103969389"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 08 Jan 2025 06:43:13 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v7 1/5] hw/core/machine: Reject thread level cache
-Date: Wed,  8 Jan 2025 23:01:46 +0800
-Message-Id: <20250108150150.1258529-2-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250108150150.1258529-1-zhao1.liu@intel.com>
-References: <20250108150150.1258529-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <adam@rttst.com>) id 1tVXPh-0006z6-37
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:52:06 -0500
+Received: from mta-231a.oxsus-vadesecure.net ([15.204.3.4]
+ helo=nmtao201.oxsus-vadesecure.net)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <adam@rttst.com>) id 1tVXPa-0003ZS-LH
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:52:01 -0500
+Authentication-Results: oxsus-vadesecure.net;
+ auth=pass smtp.auth=3@204339 smtp.mailfrom=adam@rttst.com;
+ARC-Seal: i=1; a=rsa-sha256; d=oxsus-vadesecure.net; s=arc-202309-rsa2048;
+ t=1736347915; cv=none;
+ b=abkAD25K611s883WXJkDA1h/1SEcDatpBqM8cvFceBu2XrS2+3mU0Gwk1ctClOfjXrjHQCHpDh+mEIka2RJ6tiFp+EOcPvSpiFFDpqduf7T1lWxRbYoKUMOhcgKV1H4yu28U1XfpIHi6DUHLQxD/SQT5o1eaf5SmbfzFpdfOCOrGcy3bsATimZb5x6IhwFU1FW9/zE6vgxoq96D8tqSv+xbmmIs9tOL84YW7nWCd0VCcSzyqvpOpxK9KtFsvRhvhH1IVdOq3/WbFGtC52ngt9nNCU1j7yJ0pGMqNaK1+srwWkPk+3l9Cl4uDgS47PspqMP1nKlAS37wPVJisBQMzFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=oxsus-vadesecure.net;
+ s=arc-202309-rsa2048; t=1736347915; c=relaxed/relaxed;
+ h=from:reply-to:subject:date:to:cc:resent-date:resent-from:resent-to:resent-cc:in-reply-to:references:list-id:list-help:list-unsubscribe:list-unsubscribe-post:list-subscribe:list-post:list-owner:list-archive;
+ bh=+K3Drh4nQ4T68jZoiYlJL2Unji4JeZHpX09bvQKFSvc=;
+ b=Vze+7ZPqcpDXVks9eOuPxE4RwweoBZKY3t0vJIfhTNzM1CkhK3J7Y5BdNeOByoo8sFS84f9rWnCMjjJJfS+ziI0nJFTVEh4S68Zj5DSYFKLUH2ijNPLQXkpfeTRkE+xcs0mQhUG280J/u/qbDAO/kg31El7d/VFI6ilTGIORwRWKEU7BW+02XVdDzp+eSHOyxDWsJlRZ2VKXb6o8RK1Is82x2OV4KyQ5GlMyCheqL+CgJDGJry/pk/U9z2eCOEUsVq7Z8Rgk42GSG6ZtbBFqdmxRtsuiFOW1UJ5jetb1RKemPCrYxR1dt+FceilkirXIIn8988C/kBrhbVUk9poJ4g==
+ARC-Authentication-Results: i=1;
+DKIM-Signature: v=1; a=rsa-sha256; bh=+K3Drh4nQ4T68jZoiYlJL2Unji4JeZHpX09bvQ
+ KFSvc=; c=relaxed/relaxed; d=oxsus-vadesecure.net; h=from:reply-to:
+ subject:date:to:cc:resent-date:resent-from:resent-to:resent-cc:
+ in-reply-to:references:list-id:list-help:list-unsubscribe:
+ list-unsubscribe-post:list-subscribe:list-post:list-owner:list-archive;
+ q=dns/txt; s=dkim-202410-rsa2048; t=1736347915; x=1736952715; b=GwcOJ6U
+ bG2yaIXFNHEzTHgdMJivGDeOg2/Y3gt883HSfBLTR8+xJQwb7T0p7UfhJ+NQXH390LRUxyY
+ bKUnBTfeFfhVHAmWVQCFa6VBbr+NGoCPh1HsRiJrazpPlQ31vRcdzTPXsE+LG1t+Y465E+r
+ /XBG9FEm8oxSGJJs0Beqg7Ln8fIJwfvj9z69A1SBmxkaqoJ12Q0tZEFx9w6QXrJ5Bd25BmC
+ M63TV2/WdFkVLvAn3kJ5pxqJVJcAdRDcJ6OFlpFqbFCLw1ykyu4+RbTMw3lg/88NUs7axSc
+ sgvn4WJyKk3/s/fTD6znc4gZ5ZQPsTOKXVikWOWV6WdUSMcBljg==
+Received: from proxy-19.proxy.cloudus.ewr.xion.oxcs.net ([107.143.227.186])
+ by oxsus2nmtao01p.internal.vadesecure.com with ngmta
+ id 8b95b1e9-1818bf3a5865ef04; Wed, 08 Jan 2025 14:51:55 +0000
+Message-ID: <3fd90b0c-ff50-4dc7-921d-bdecb82c7777@rttst.com>
+Date: Wed, 8 Jan 2025 08:51:52 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: Adam <adam@rttst.com>
+Subject: 86_64 host is not supported by hypervisor - 2024
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=15.204.3.4; envelope-from=adam@rttst.com;
+ helo=nmtao201.oxsus-vadesecure.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,55 +76,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: adam@rttst.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, neither i386 nor ARM have real hardware support for per-
-thread cache, and there is no clear demand for this specific cache
-topology.
+TWIMC:
 
-Additionally, since supporting this special cache topology on ARM
-requires extra effort [1], it is unnecessary to support it at this
-moment, even though per-thread cache might have potential scheduling
-benefits for VMs without CPU affinity.
+Had an issue with VM networking that turned out to be the host. In the 
+process of troubleshooting, I
 
-Therefore, disable thread-level cache topology in the general machine
-part. At present, i386 has not enabled SMP cache, so disabling the
-thread parameter does not pose compatibility issues.
+     sudo apt reinstall libvirt   (and other QEMU/KVM virtualization 
+dependencies)
 
-In the future, if there is a clear demand for this feature, the correct
-approach would be to add a new control field in MachineClass.smp_props
-and enable it only for the machines that require it.
+Now I am getting this particular error when trying to use the 
+host-passthrough for the CPU.
 
-[1]: https://lore.kernel.org/qemu-devel/Z3efFsigJ6SxhqMf@intel.com/#t
+"error: unsupported configuration: CPU mode 'host-passthrough' for 
+x86_64 qemu domain on x86_64 host is not supported by hypervisor"
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-Changes since Patch v6:
- * New commit to reject "thread" parameter when parse smp-cache.
----
- hw/core/machine-smp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+This was working previously.  I found that two other domains are 
+responding the same.
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index b954eb849027..4e020c358b66 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -321,6 +321,13 @@ bool machine_parse_smp_cache(MachineState *ms,
-             return false;
-         }
- 
-+        if (props->topology == CPU_TOPOLOGY_LEVEL_THREAD) {
-+            error_setg(errp,
-+                       "%s level cache not supported by this machine",
-+                       CpuTopologyLevel_str(props->topology));
-+            return false;
-+        }
-+
-         if (!machine_check_topo_support(ms, props->topology, errp)) {
-             return false;
-         }
--- 
-2.34.1
+The configuration in xml file is:
+
+     <metadata>
+     <libosinfo:libosinfo 
+xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+       <libosinfo:os id="http://libosinfo.org/linux/2022"/>
+     </libosinfo:libosinfo>
+   </metadata>
+   <memory unit='KiB'>4194304</memory>
+   <currentMemory unit='KiB'>4194304</currentMemory>
+   <vcpu placement='static'>2</vcpu>
+   <os>
+     <type arch='x86_64' machine='pc-q35-7.2'>hvm</type>
+     <boot dev='hd'/>
+   </os>
+   <features>
+     <acpi/>
+     <apic/>
+     <vmport state='off'/>
+   </features>
+   <cpu mode='host-passthrough' check='none' migratable='on'/>
+   <clock offset='utc'>
+
+But i now have to use this for it to work but the system is quite slow now.
+
+  <metadata>
+     <libosinfo:libosinfo 
+xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+       <libosinfo:os id="http://libosinfo.org/linux/2022"/>
+     </libosinfo:libosinfo>
+   </metadata>
+   <memory unit='KiB'>4194304</memory>
+   <currentMemory unit='KiB'>4194304</currentMemory>
+   <vcpu placement='static'>2</vcpu>
+   <os>
+     <type arch='x86_64' machine='pc-q35-5.2'>hvm</type>
+     <boot dev='hd'/>
+   </os>
+   <features>
+     <acpi/>
+     <apic/>
+     <vmport state='off'/>
+   </features>
+   <cpu mode='custom' match='exact' check='none'>
+     <model fallback='forbid'>qemu64</model>
+   </cpu>
+
+
+Any recommendations, given that this used to work.
+
+
+Traceback error details are below this line:
+
+Error starting domain: unsupported configuration: CPU mode 
+'host-passthrough' for x86_64 qemu domain on x86_64 host is not 
+supported by hypervisor
+
+Traceback (most recent call last):
+   File "/usr/share/virt-manager/virtManager/asyncjob.py", line 72, in 
+cb_wrapper
+     callback(asyncjob, *args, **kwargs)
+   File "/usr/share/virt-manager/virtManager/asyncjob.py", line 108, in 
+tmpcb
+     callback(*args, **kwargs)
+   File "/usr/share/virt-manager/virtManager/object/libvirtobject.py", 
+line 57, in newfn
+     ret = fn(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/usr/share/virt-manager/virtManager/object/domain.py", line 
+1402, in startup
+     self._backend.create()
+   File "/usr/lib/python3/dist-packages/libvirt.py", line 1373, in create
+     raise libvirtError('virDomainCreate() failed')
+libvirt.libvirtError: unsupported configuration: CPU mode 
+'host-passthrough' for x86_64 qemu domain on x86_64 host is not 
+supported by hypervisor
+
+
+Thank you,
+
+A>AM
+
+
+
 
 
