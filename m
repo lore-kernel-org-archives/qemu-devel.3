@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AAADE77199
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 20:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44ED8E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 20:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVcdn-0007Gz-Pc; Wed, 08 Jan 2025 15:26:59 -0500
+	id 1tVd81-0007nE-38; Wed, 08 Jan 2025 15:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdb-0007Dv-MQ
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:49 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdZ-0006s4-RO
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:47 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508Ehs19016007;
- Wed, 8 Jan 2025 20:26:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LKeLb0
- K6yzjo1BqPmQKktPLgWotiXJx2uOaOMenZGNo=; b=ahqUaDE+8+s7wylwrVgKz9
- 0s+/h/dd0mXSVky4PjTlXYncG4dfYJClzzJJ3PU/R7Opuxh7YlMYjHW8pRfMsQ+P
- MdQclz5Tlc1GV3hLOA1i8LpTbjxQ73j5WdzimRpC60CNZhudrBSQGHGDW2uNVv06
- a3+cuKJtreGDo5u9jqaX81VQcb1T+MiUIoDnrFVULl1SqXi/9FszxmcHgvVh46Tl
- zgV9MdI/bWq55prkX1LO2ySvpsgk98TPVA4H4DuET12Q0+3ZgLEVBnDb+eIFGJuJ
- GLJo0MZvS6++zsdNHJqqK0wZQHrlpKOV90HSRDmfl6VsRIzeEbeg7F7wxh7yEIIw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441huc4ck1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 20:26:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508KD5mD013645;
- Wed, 8 Jan 2025 20:26:35 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygap1jr3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 20:26:35 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 508KQXpb50463002
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jan 2025 20:26:33 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4B52720043;
- Wed,  8 Jan 2025 20:26:33 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB30920040;
- Wed,  8 Jan 2025 20:26:32 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.179.24.127])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jan 2025 20:26:32 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v4 8/9] docs/user: Document the %d placeholder and suspend=n
- QEMU_GDB features
-Date: Wed,  8 Jan 2025 21:05:03 +0100
-Message-ID: <20250108202625.149869-9-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250108202625.149869-1-iii@linux.ibm.com>
-References: <20250108202625.149869-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVd7z-0007mc-Mt
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:58:11 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVd7y-0007bX-2s
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:58:11 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so122942f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 12:58:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736369888; x=1736974688; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6EP+H9vs3RZsSrBEy4KUT2vK7/akYOcuaOfWMAj8iPg=;
+ b=YPeivN8YRKBdaeHX61cuc9vxtt+jrcWZBT6RqZEeVhJK+kZfPZ0wcTgfRmeW6PCrO9
+ FNJxEzrYhU3nXyocy1MGcfX4/Sgc0D8buI9HsAN8mfnCEh4tE95RzNtAmhmce9RZZL2A
+ HzA8hWYeQsM0x09Y/kZOGCfgCFZ9LRRRhpTGJEoUrKY3UUIx/8FnttO2ZX9Q7fpefI7B
+ C7cS9XGChZnFm2b6EdFjvIRcuQR5inhk4teSHjKVvkC21+u/HdtgrFM5dB+HKn8LJd3f
+ d9++82x2zLx9RfuZxaZWnZyi8a7YB8BsKqTcipefjFNxsrs3NESrqbmv12+wOvBDGSD9
+ PDZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736369888; x=1736974688;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6EP+H9vs3RZsSrBEy4KUT2vK7/akYOcuaOfWMAj8iPg=;
+ b=bYlnDgZ1aHgYevaHYMpWDRjeEFlTVDEeIHZkjnbciz/ax2YpK8j2IR7UVMg3MKP/TE
+ MzWKVsUaobwbu6+s1XkRZAaiP1zVwb6Bz1NlFL4xWDMr4Fva4erqjUrKW2Sy9GoPDGPN
+ r9mLG6CbyK5iLTQqCz2WMOonA5Ko1cuXEEae45KHzds+1lX2itP0fyNGlsoxJrKlsl4l
+ xhvG3rfbj011tcFwcXEwmDNi26iOPxM0AURqMF3fxsf8ag77V9d+i9ruSd9AaHMt02wA
+ qp6deELXXRKUqmt3KSMA19bLO3c/sLs2XPW6KtMqGYKMkpOMTcR+zeesKMJ2CELzNBhz
+ vwZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXy4YwZoudc8jE6xkriFFbtmyKw1g1E9xbHr5NWhfh6vDflCh0obM0xA78+ZLev4YlOJqOk7OwDjZ/T@nongnu.org
+X-Gm-Message-State: AOJu0YyAV3R+i5RgwXQJE/I3ZCqGpwh0Z4/iuDa0F0a7HfbclWFXPHW9
+ f/CYcScgKj85plLWl2zqocdwBjspU1dufjwuWJa/6aWJohniOUOsr0vDFktHLMo=
+X-Gm-Gg: ASbGncu+jnJZZZ9kF5c7qh1VTPTXw9QuDYrP6tLzseAXitBat0N/w92uddtbmvH7eNF
+ b8MBCs3hgK3danTWj9vVWRglxpOxbFff7DVtZy36jNdnQfa2aaolFpJoBSn1GBgJPDL+ldVN+2N
+ 1Z/kTOmbraPS4K4OH0OBLHF0374oumukotNq68MtJEednSvAdgJ2MuxcL4IdfUttVyEGLLbbvWg
+ V4DudmxvNNEuA7yjJzylLBCPwepEYPGUwVvDePhKz5PW4NseCBiNK45TJ0vFSgiwPf94lX73QWP
+ HYYfZbE4kyttZlo00TsIS+OA
+X-Google-Smtp-Source: AGHT+IFe+DJh8gIs1CY4x/ZCM0LOsRvYFVVIqBGD4Kdn8UZUtUvcAWJHUWDsPBcU/qqyZ+kdjRry4g==
+X-Received: by 2002:a05:6000:2ce:b0:38a:6807:f86 with SMTP id
+ ffacd0b85a97d-38a872da793mr3517896f8f.17.1736369888480; 
+ Wed, 08 Jan 2025 12:58:08 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c89e528sm54437305f8f.83.2025.01.08.12.58.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jan 2025 12:58:07 -0800 (PST)
+Message-ID: <22a19a9f-47e5-47eb-b9ea-6bd2757b5c90@linaro.org>
+Date: Wed, 8 Jan 2025 21:58:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 59/81] tcg: Merge INDEX_op_andc_{i32,i64}
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ <20250107080112.1175095-60-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250107080112.1175095-60-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rnSDenZrkfayUOG0bhhEhn5eoHqTYY6I
-X-Proofpoint-GUID: rnSDenZrkfayUOG0bhhEhn5eoHqTYY6I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=999
- bulkscore=0 mlxscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501080163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,47 +101,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- docs/user/main.rst | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+On 7/1/25 09:00, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-opc.h          | 3 +--
+>   target/arm/tcg/translate-a64.c | 2 +-
+>   target/tricore/translate.c     | 2 +-
+>   tcg/optimize.c                 | 6 ++++--
+>   tcg/tcg-op.c                   | 8 ++++----
+>   tcg/tcg.c                      | 6 ++----
+>   tcg/tci.c                      | 5 ++---
+>   tcg/tci/tcg-target.c.inc       | 2 +-
+>   8 files changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/docs/user/main.rst b/docs/user/main.rst
-index 7a126ee8093..8dcb1d90a8b 100644
---- a/docs/user/main.rst
-+++ b/docs/user/main.rst
-@@ -50,7 +50,7 @@ Command line options
- 
- ::
- 
--   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g port] [-B offset] [-R size] program [arguments...]
-+   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g endpoint] [-B offset] [-R size] program [arguments...]
- 
- ``-h``
-    Print the help
-@@ -87,8 +87,18 @@ Debug options:
-    Activate logging of the specified items (use '-d help' for a list of
-    log items)
- 
--``-g port``
--   Wait gdb connection to port
-+``-g endpoint``
-+   Wait gdb connection to a port (e.g., ``1234``) or a unix socket (e.g.,
-+   ``/tmp/qemu.sock``).
-+
-+   If a unix socket path contains single ``%d`` placeholder (e.g.,
-+   ``/tmp/qemu-%d.sock``), it is replaced by the emulator PID, which is useful
-+   when passing this option via the ``QEMU_GDB`` environment variable to a
-+   multi-process application.
-+
-+   If the endpoint address is followed by ``,suspend=n`` (e.g.,
-+   ``1234,suspend=n``), then the emulated program starts without waiting for a
-+   connection, which can be established at any later point in time.
- 
- ``-one-insn-per-tb``
-    Run the emulation with one guest instruction per translation block.
--- 
-2.47.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
