@@ -4,88 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4758E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3303E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVdyn-0000eJ-In; Wed, 08 Jan 2025 16:52:45 -0500
+	id 1tVdzb-0005rr-Ep; Wed, 08 Jan 2025 16:53:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVdyj-0000J0-Hv
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:52:41 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVdyg-00043D-Rx
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:52:41 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-436249df846so2310315e9.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:52:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736373156; x=1736977956; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WsIbd2lcGoALdXZR+OvweRzuxqGd5A616jGuDBmreAo=;
- b=n9vaTzfDzo3msJegoW7vZyzEEywLiRKOKDf76yMnicrEFXuc4GFkYUFp/KV1/oEV/G
- iM+xMUdg7/GYDcv8g2DiOhUOPMhrHgsEtMhiKyfTdPdYiFNppJqWNlfl2FnBjN69vuf+
- uAFvPpQYxYv20ogSyd+d43J7otjZD+BghWTDc310smergiCxomhL8O1d6HjYP/2sEdnU
- pDQdIQMY9NNkSNwZtSs9esmviig9R60Ce9k0V1TOVWw/OS6PHFWTI2K07EHHtGWr3vkK
- O8KTB3zrDpeUy0R6eAiI9+/LDi/DyPEi3OQhZwaxbk1amgZHc2esDylYje3OMDcujoSR
- 43ww==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdzZ-0005fM-D1
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:53:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdzX-0004Ba-Pn
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:53:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736373210;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=vHvlQp1aQA5l/um+YechYvvftWyn9AOMcuaRx3SfcL8=;
+ b=NfT8pOYttTSwyjDfSi9VAIr6rgLgLVWHFM+k3rkM9QntMnv6ZddVenPpTV5JHh5zSY0SFJ
+ +tu8hV3n3+prV6o3TplUFdEehffC1TEDfs9wOEaYNL24t24gcqblLvgSyM1B7Fq451FKoP
+ bJ8Tt/Dvv1iAzcznasSqooEvJCuTbog=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-yQIO5py2PjKqU-mVwVFWXg-1; Wed, 08 Jan 2025 16:53:27 -0500
+X-MC-Unique: yQIO5py2PjKqU-mVwVFWXg-1
+X-Mimecast-MFC-AGG-ID: yQIO5py2PjKqU-mVwVFWXg
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4362f893bfaso1385955e9.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:53:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736373156; x=1736977956;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WsIbd2lcGoALdXZR+OvweRzuxqGd5A616jGuDBmreAo=;
- b=IzwGRzDutbDpS2buag/Bk34ivECdcs0CKFkJnYCSYIUubW8C/ltlZbuPOsM3ZLm7pP
- FrIDg70TQPvld8Z5rufqBgTCxaiLeubZt9zRsj5dy7+8Xd3o+5IRlgwuVeRrA+o2mmGe
- QFv9c/tMUwdanGGnQxnmcVTUm0M/x74HYSQLGuvCMRAlo7DV8QCeAKjqcExiERJ+Epk9
- V6CIoDJHhTs4W5A47GnqtVQ2us3DWnjjj8q468J5X3F42xnqHhhWFfSmaWChGCXnhFEf
- qsX0SR3+uSLvLZvnoGJKSw8Qmg+/k26MUzafWaEVNbCv2LN+wW7feneBYgoRRn8MlVX9
- I8IA==
-X-Gm-Message-State: AOJu0YwfvG4LWgy7mIYBwHEYfvCbNEnyptAgD6RtIdqa0c1V8ekMuPPg
- tDicEQLUhhaTIOogrdpH1lGP3RujJbFv5WQNugQyGrWP2RqjVRZxrMrxMPLjNM9RwRu8GE/nfj9
- wWmc=
-X-Gm-Gg: ASbGnctmSTzAgxG3LU7lEaiQzpVjBLmPyD4FzFlkq8sn6qTX1egD2DrzjhBB6op4GX8
- vVgaOZkvI8fEur/fuWy9O0LFgH6ebA4lqpQnWmuH/27EJK4I7YNMYMHQ/MjL+O0+gkJd6FY39TJ
- 2EM/Wb7t5aZh3hpngjyanrsqBkEOKjjwhxcIRTw49J0hVQxHZCG32/t8k3jbOEwTYhAznk6cQlu
- HXszih69bkWzHrPLDUyqN98kt8IiEa18f5TxvtnU02SHoR9BzAhLE7mY0T+BUDPnNCbMCb60jP/
- 471b5hAV/R78lJD9JpB4DJmmymlJ/bA=
-X-Google-Smtp-Source: AGHT+IE983i4KnDom703oFe851znkMuddI9I2gislxp9oPaOTMYyDfijoQsKeV2N6oq3kpeeoKUQOg==
-X-Received: by 2002:a5d:598b:0:b0:385:ee40:2d75 with SMTP id
- ffacd0b85a97d-38a872da8b6mr3339093f8f.20.1736373156085; 
- Wed, 08 Jan 2025 13:52:36 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2da65a3sm34280505e9.7.2025.01.08.13.52.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 Jan 2025 13:52:35 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 08/14] tcg/ppc: Extract TCG_TARGET_HAS_foo defs to
- 'tcg-target-has.h'
-Date: Wed,  8 Jan 2025 22:51:49 +0100
-Message-ID: <20250108215156.8731-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250108215156.8731-1-philmd@linaro.org>
-References: <20250107080112.1175095-19-richard.henderson@linaro.org>
- <20250108215156.8731-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1736373206; x=1736978006;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=vHvlQp1aQA5l/um+YechYvvftWyn9AOMcuaRx3SfcL8=;
+ b=RoDBIfgsmMAupbU3MSJE+9LK+arnvmKc4A6DJJdKlMhoMsh0dp6zJAiLJ4uzx7ckKQ
+ BtLqpLljV4nOVJ7TgczY1Ydd9MacUvU6/P7JFfdVnYWANsVB71ye53g71IRWCu125Kpk
+ YofDnuQ1DfJcvF2MM4dqWFrCcEQHiEZipjzcluNS5nr0p6N5tM8W5BGuXoNPb5wQ/jDg
+ 6Z4PlGRC/XkS/3KxJ5d0P9PtbOhKJSlUMhwTzpKzC/GtNVidFn9Kq2o65aEvBjjSobdG
+ ZfsPDdq7ctrK+R/GzYPDI3+YaLqO7k7RYcD5s4MAw4umKWInISB+1IAX6OoUlj9kkco7
+ gW3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVsI+sZ4Ws7Lv2p7j6zVByeeFLBR/DfFGpIQCCqXj8gQa8qxOOX9R4ScV1Hk+hZkjQi0m26ttC8lAee@nongnu.org
+X-Gm-Message-State: AOJu0YxGe9DTnp1IwFqZWKmfj0Wvb8wI+IDRC8zIOIR88SXd5QlJ7YTY
+ aS3Z+xqqaePphYiDsk6cKE/2L8SAXHkWhxoWCWeUEhAktC7EIw2bKOg4gJdZpKWXVxv9tmek4iT
+ Ji/0AOehLJbFWN610JZVilyuTWgwjfG3ST+T4Rlu9ZfWJ+hXJE0Pi
+X-Gm-Gg: ASbGnctVKCg4AVJyLVIpBlQVUKBFLcLVuN600aM4w3DdzcZGDPBmq5zTqXkMUOj961Z
+ T99Lx5Blpa0vC1aTbMhRAB08r1dV0sryWpC2o1kfYfv3y9D4k9OKRJnleGq/bI7QSSzmNYVNQNg
+ u2VBmchSlrl3f55VDB4vAKI/SVA343uVHu4BBUyyArP9YlYz9IYA/yPgyd8GIP7cxphvnQ0RWNd
+ oyGBtcEUmQy9ebx+46e2Tz5LcdewGSDn4yZyjHlT+CF7sgyySqpRKh9I5ZiL8TUHJ83bdK7Q+tG
+ +HrV3+B7Z+6WjEmGzyfEOC0sAR2INXNkoxQdnqFk2oOdPaJqbni9RxN2652gJNgbQOLsdkiJHUC
+ OZpZgqw==
+X-Received: by 2002:a05:600c:1386:b0:434:f8e5:1bb with SMTP id
+ 5b1f17b1804b1-436e26aeb43mr40080745e9.12.1736373206332; 
+ Wed, 08 Jan 2025 13:53:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3rDS1hnE25fBfA1d5/lNO0uT9AX7FuBxSWBmfEMxNTmreerhi9TLvtnMmXsUDtITkyp8U6Q==
+X-Received: by 2002:a05:600c:1386:b0:434:f8e5:1bb with SMTP id
+ 5b1f17b1804b1-436e26aeb43mr40080505e9.12.1736373205924; 
+ Wed, 08 Jan 2025 13:53:25 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7?
+ (p200300cbc70d3a00d73c06a8ca9f1df7.dip0.t-ipconnect.de.
+ [2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2e94ed7sm33441315e9.42.2025.01.08.13.53.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jan 2025 13:53:24 -0800 (PST)
+Message-ID: <e13ddad7-77cf-489b-9e32-d336edb01c85@redhat.com>
+Date: Wed, 8 Jan 2025 22:53:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 7/7] system/physmem: Memory settings applied on remap
+ notification
+To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
+References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
+ <20241214134555.440097-1-william.roche@oracle.com>
+ <20241214134555.440097-8-william.roche@oracle.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241214134555.440097-8-william.roche@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,279 +165,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On 14.12.24 14:45, “William Roche wrote:
+> From: William Roche <william.roche@oracle.com>
+> 
+> Merging and dump settings are handled by the remap notification
+> in addition to memory policy and preallocation.
+> 
+> Signed-off-by: William Roche <william.roche@oracle.com>
+> ---
+>   system/physmem.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 9fc74a5699..c0bfa20efc 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2242,8 +2242,6 @@ void qemu_ram_remap(ram_addr_t addr)
+>                       }
+>                       qemu_ram_remap_mmap(block, vaddr, page_size, offset);
+>                   }
+> -                memory_try_enable_merging(vaddr, page_size);
+> -                qemu_ram_setup_dump(vaddr, page_size);
+>                   ram_block_notify_remap(block->host, offset, page_size);
+>               }
+>   
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tcg/ppc/tcg-target-has.h | 124 +++++++++++++++++++++++++++++++++++++++
- tcg/ppc/tcg-target.h     | 114 +----------------------------------
- 2 files changed, 125 insertions(+), 113 deletions(-)
- create mode 100644 tcg/ppc/tcg-target-has.h
+Ah yes, indeed.
 
-diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
-new file mode 100644
-index 00000000000..a6c7cdba5d5
---- /dev/null
-+++ b/tcg/ppc/tcg-target-has.h
-@@ -0,0 +1,124 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Define target-specific opcode support
-+ * Copyright (c) 2008 Fabrice Bellard
-+ */
-+
-+#ifndef TCG_TARGET_HAS_H
-+#define TCG_TARGET_HAS_H
-+
-+#include "host/cpuinfo.h"
-+
-+#define have_isa_2_06  (cpuinfo & CPUINFO_V2_06)
-+#define have_isa_2_07  (cpuinfo & CPUINFO_V2_07)
-+#define have_isa_3_00  (cpuinfo & CPUINFO_V3_0)
-+#define have_isa_3_10  (cpuinfo & CPUINFO_V3_1)
-+#define have_altivec   (cpuinfo & CPUINFO_ALTIVEC)
-+#define have_vsx       (cpuinfo & CPUINFO_VSX)
-+
-+/* optional instructions automatically implemented */
-+#define TCG_TARGET_HAS_ext8u_i32        0 /* andi */
-+#define TCG_TARGET_HAS_ext16u_i32       0
-+
-+/* optional instructions */
-+#define TCG_TARGET_HAS_div_i32          1
-+#define TCG_TARGET_HAS_rem_i32          have_isa_3_00
-+#define TCG_TARGET_HAS_rot_i32          1
-+#define TCG_TARGET_HAS_ext8s_i32        1
-+#define TCG_TARGET_HAS_ext16s_i32       1
-+#define TCG_TARGET_HAS_bswap16_i32      1
-+#define TCG_TARGET_HAS_bswap32_i32      1
-+#define TCG_TARGET_HAS_not_i32          1
-+#define TCG_TARGET_HAS_andc_i32         1
-+#define TCG_TARGET_HAS_orc_i32          1
-+#define TCG_TARGET_HAS_eqv_i32          1
-+#define TCG_TARGET_HAS_nand_i32         1
-+#define TCG_TARGET_HAS_nor_i32          1
-+#define TCG_TARGET_HAS_clz_i32          1
-+#define TCG_TARGET_HAS_ctz_i32          have_isa_3_00
-+#define TCG_TARGET_HAS_ctpop_i32        have_isa_2_06
-+#define TCG_TARGET_HAS_deposit_i32      1
-+#define TCG_TARGET_HAS_extract_i32      1
-+#define TCG_TARGET_HAS_sextract_i32     0
-+#define TCG_TARGET_HAS_extract2_i32     0
-+#define TCG_TARGET_HAS_negsetcond_i32   1
-+#define TCG_TARGET_HAS_mulu2_i32        0
-+#define TCG_TARGET_HAS_muls2_i32        0
-+#define TCG_TARGET_HAS_muluh_i32        1
-+#define TCG_TARGET_HAS_mulsh_i32        1
-+#define TCG_TARGET_HAS_qemu_st8_i32     0
-+
-+#if TCG_TARGET_REG_BITS == 64
-+#define TCG_TARGET_HAS_add2_i32         0
-+#define TCG_TARGET_HAS_sub2_i32         0
-+#define TCG_TARGET_HAS_extr_i64_i32     0
-+#define TCG_TARGET_HAS_div_i64          1
-+#define TCG_TARGET_HAS_rem_i64          have_isa_3_00
-+#define TCG_TARGET_HAS_rot_i64          1
-+#define TCG_TARGET_HAS_ext8s_i64        1
-+#define TCG_TARGET_HAS_ext16s_i64       1
-+#define TCG_TARGET_HAS_ext32s_i64       1
-+#define TCG_TARGET_HAS_ext8u_i64        0
-+#define TCG_TARGET_HAS_ext16u_i64       0
-+#define TCG_TARGET_HAS_ext32u_i64       0
-+#define TCG_TARGET_HAS_bswap16_i64      1
-+#define TCG_TARGET_HAS_bswap32_i64      1
-+#define TCG_TARGET_HAS_bswap64_i64      1
-+#define TCG_TARGET_HAS_not_i64          1
-+#define TCG_TARGET_HAS_andc_i64         1
-+#define TCG_TARGET_HAS_orc_i64          1
-+#define TCG_TARGET_HAS_eqv_i64          1
-+#define TCG_TARGET_HAS_nand_i64         1
-+#define TCG_TARGET_HAS_nor_i64          1
-+#define TCG_TARGET_HAS_clz_i64          1
-+#define TCG_TARGET_HAS_ctz_i64          have_isa_3_00
-+#define TCG_TARGET_HAS_ctpop_i64        have_isa_2_06
-+#define TCG_TARGET_HAS_deposit_i64      1
-+#define TCG_TARGET_HAS_extract_i64      1
-+#define TCG_TARGET_HAS_sextract_i64     0
-+#define TCG_TARGET_HAS_extract2_i64     0
-+#define TCG_TARGET_HAS_negsetcond_i64   1
-+#define TCG_TARGET_HAS_add2_i64         1
-+#define TCG_TARGET_HAS_sub2_i64         1
-+#define TCG_TARGET_HAS_mulu2_i64        0
-+#define TCG_TARGET_HAS_muls2_i64        0
-+#define TCG_TARGET_HAS_muluh_i64        1
-+#define TCG_TARGET_HAS_mulsh_i64        1
-+#endif
-+
-+#define TCG_TARGET_HAS_qemu_ldst_i128   \
-+    (TCG_TARGET_REG_BITS == 64 && have_isa_2_07)
-+
-+#define TCG_TARGET_HAS_tst              1
-+
-+/*
-+ * While technically Altivec could support V64, it has no 64-bit store
-+ * instruction and substituting two 32-bit stores makes the generated
-+ * code quite large.
-+ */
-+#define TCG_TARGET_HAS_v64              have_vsx
-+#define TCG_TARGET_HAS_v128             have_altivec
-+#define TCG_TARGET_HAS_v256             0
-+
-+#define TCG_TARGET_HAS_andc_vec         1
-+#define TCG_TARGET_HAS_orc_vec          have_isa_2_07
-+#define TCG_TARGET_HAS_nand_vec         have_isa_2_07
-+#define TCG_TARGET_HAS_nor_vec          1
-+#define TCG_TARGET_HAS_eqv_vec          have_isa_2_07
-+#define TCG_TARGET_HAS_not_vec          1
-+#define TCG_TARGET_HAS_neg_vec          have_isa_3_00
-+#define TCG_TARGET_HAS_abs_vec          0
-+#define TCG_TARGET_HAS_roti_vec         0
-+#define TCG_TARGET_HAS_rots_vec         0
-+#define TCG_TARGET_HAS_rotv_vec         1
-+#define TCG_TARGET_HAS_shi_vec          0
-+#define TCG_TARGET_HAS_shs_vec          0
-+#define TCG_TARGET_HAS_shv_vec          1
-+#define TCG_TARGET_HAS_mul_vec          1
-+#define TCG_TARGET_HAS_sat_vec          1
-+#define TCG_TARGET_HAS_minmax_vec       1
-+#define TCG_TARGET_HAS_bitsel_vec       have_vsx
-+#define TCG_TARGET_HAS_cmpsel_vec       1
-+#define TCG_TARGET_HAS_tst_vec          0
-+
-+#endif
-diff --git a/tcg/ppc/tcg-target.h b/tcg/ppc/tcg-target.h
-index 4fa4a30de41..fa2cc281838 100644
---- a/tcg/ppc/tcg-target.h
-+++ b/tcg/ppc/tcg-target.h
-@@ -25,8 +25,6 @@
- #ifndef PPC_TCG_TARGET_H
- #define PPC_TCG_TARGET_H
- 
--#include "host/cpuinfo.h"
--
- #define MAX_CODE_GEN_BUFFER_SIZE  ((size_t)-1)
- 
- #define TCG_TARGET_NB_REGS 64
-@@ -55,117 +53,7 @@ typedef enum {
-     TCG_AREG0 = TCG_REG_R27
- } TCGReg;
- 
--#define have_isa_2_06  (cpuinfo & CPUINFO_V2_06)
--#define have_isa_2_07  (cpuinfo & CPUINFO_V2_07)
--#define have_isa_3_00  (cpuinfo & CPUINFO_V3_0)
--#define have_isa_3_10  (cpuinfo & CPUINFO_V3_1)
--#define have_altivec   (cpuinfo & CPUINFO_ALTIVEC)
--#define have_vsx       (cpuinfo & CPUINFO_VSX)
--
--/* optional instructions automatically implemented */
--#define TCG_TARGET_HAS_ext8u_i32        0 /* andi */
--#define TCG_TARGET_HAS_ext16u_i32       0
--
--/* optional instructions */
--#define TCG_TARGET_HAS_div_i32          1
--#define TCG_TARGET_HAS_rem_i32          have_isa_3_00
--#define TCG_TARGET_HAS_rot_i32          1
--#define TCG_TARGET_HAS_ext8s_i32        1
--#define TCG_TARGET_HAS_ext16s_i32       1
--#define TCG_TARGET_HAS_bswap16_i32      1
--#define TCG_TARGET_HAS_bswap32_i32      1
--#define TCG_TARGET_HAS_not_i32          1
--#define TCG_TARGET_HAS_andc_i32         1
--#define TCG_TARGET_HAS_orc_i32          1
--#define TCG_TARGET_HAS_eqv_i32          1
--#define TCG_TARGET_HAS_nand_i32         1
--#define TCG_TARGET_HAS_nor_i32          1
--#define TCG_TARGET_HAS_clz_i32          1
--#define TCG_TARGET_HAS_ctz_i32          have_isa_3_00
--#define TCG_TARGET_HAS_ctpop_i32        have_isa_2_06
--#define TCG_TARGET_HAS_deposit_i32      1
--#define TCG_TARGET_HAS_extract_i32      1
--#define TCG_TARGET_HAS_sextract_i32     0
--#define TCG_TARGET_HAS_extract2_i32     0
--#define TCG_TARGET_HAS_negsetcond_i32   1
--#define TCG_TARGET_HAS_mulu2_i32        0
--#define TCG_TARGET_HAS_muls2_i32        0
--#define TCG_TARGET_HAS_muluh_i32        1
--#define TCG_TARGET_HAS_mulsh_i32        1
--#define TCG_TARGET_HAS_qemu_st8_i32     0
--
--#if TCG_TARGET_REG_BITS == 64
--#define TCG_TARGET_HAS_add2_i32         0
--#define TCG_TARGET_HAS_sub2_i32         0
--#define TCG_TARGET_HAS_extr_i64_i32     0
--#define TCG_TARGET_HAS_div_i64          1
--#define TCG_TARGET_HAS_rem_i64          have_isa_3_00
--#define TCG_TARGET_HAS_rot_i64          1
--#define TCG_TARGET_HAS_ext8s_i64        1
--#define TCG_TARGET_HAS_ext16s_i64       1
--#define TCG_TARGET_HAS_ext32s_i64       1
--#define TCG_TARGET_HAS_ext8u_i64        0
--#define TCG_TARGET_HAS_ext16u_i64       0
--#define TCG_TARGET_HAS_ext32u_i64       0
--#define TCG_TARGET_HAS_bswap16_i64      1
--#define TCG_TARGET_HAS_bswap32_i64      1
--#define TCG_TARGET_HAS_bswap64_i64      1
--#define TCG_TARGET_HAS_not_i64          1
--#define TCG_TARGET_HAS_andc_i64         1
--#define TCG_TARGET_HAS_orc_i64          1
--#define TCG_TARGET_HAS_eqv_i64          1
--#define TCG_TARGET_HAS_nand_i64         1
--#define TCG_TARGET_HAS_nor_i64          1
--#define TCG_TARGET_HAS_clz_i64          1
--#define TCG_TARGET_HAS_ctz_i64          have_isa_3_00
--#define TCG_TARGET_HAS_ctpop_i64        have_isa_2_06
--#define TCG_TARGET_HAS_deposit_i64      1
--#define TCG_TARGET_HAS_extract_i64      1
--#define TCG_TARGET_HAS_sextract_i64     0
--#define TCG_TARGET_HAS_extract2_i64     0
--#define TCG_TARGET_HAS_negsetcond_i64   1
--#define TCG_TARGET_HAS_add2_i64         1
--#define TCG_TARGET_HAS_sub2_i64         1
--#define TCG_TARGET_HAS_mulu2_i64        0
--#define TCG_TARGET_HAS_muls2_i64        0
--#define TCG_TARGET_HAS_muluh_i64        1
--#define TCG_TARGET_HAS_mulsh_i64        1
--#endif
--
--#define TCG_TARGET_HAS_qemu_ldst_i128   \
--    (TCG_TARGET_REG_BITS == 64 && have_isa_2_07)
--
--#define TCG_TARGET_HAS_tst              1
--
--/*
-- * While technically Altivec could support V64, it has no 64-bit store
-- * instruction and substituting two 32-bit stores makes the generated
-- * code quite large.
-- */
--#define TCG_TARGET_HAS_v64              have_vsx
--#define TCG_TARGET_HAS_v128             have_altivec
--#define TCG_TARGET_HAS_v256             0
--
--#define TCG_TARGET_HAS_andc_vec         1
--#define TCG_TARGET_HAS_orc_vec          have_isa_2_07
--#define TCG_TARGET_HAS_nand_vec         have_isa_2_07
--#define TCG_TARGET_HAS_nor_vec          1
--#define TCG_TARGET_HAS_eqv_vec          have_isa_2_07
--#define TCG_TARGET_HAS_not_vec          1
--#define TCG_TARGET_HAS_neg_vec          have_isa_3_00
--#define TCG_TARGET_HAS_abs_vec          0
--#define TCG_TARGET_HAS_roti_vec         0
--#define TCG_TARGET_HAS_rots_vec         0
--#define TCG_TARGET_HAS_rotv_vec         1
--#define TCG_TARGET_HAS_shi_vec          0
--#define TCG_TARGET_HAS_shs_vec          0
--#define TCG_TARGET_HAS_shv_vec          1
--#define TCG_TARGET_HAS_mul_vec          1
--#define TCG_TARGET_HAS_sat_vec          1
--#define TCG_TARGET_HAS_minmax_vec       1
--#define TCG_TARGET_HAS_bitsel_vec       have_vsx
--#define TCG_TARGET_HAS_cmpsel_vec       1
--#define TCG_TARGET_HAS_tst_vec          0
-+#include "tcg-target-has.h"
- 
- #define TCG_TARGET_DEFAULT_MO (0)
- 
 -- 
-2.47.1
+Cheers,
+
+David / dhildenb
 
 
