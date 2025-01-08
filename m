@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61526E7719A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 08:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E57E77199
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 08:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVRgs-00060l-UD; Wed, 08 Jan 2025 03:45:26 -0500
+	id 1tVRgw-00061T-Qt; Wed, 08 Jan 2025 03:45:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRgq-00060I-K4
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRgw-000613-68
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRgo-0001kA-Lm
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRgu-0001l4-Kv
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736325921;
+ s=mimecast20190719; t=1736325927;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2tL8QoC8fAgjREmFCjnOxHG7/mQixkJ6Lbuq4HoNfYY=;
- b=dHdzVveJjmSOzVCNKd8GWE8gSxuFaIuRlcZ6g0StuRqdHyOhuAZFoWBfK8G4tyHqe7odcA
- h1usb1pgjEw5FKhSZqvHzs73yuxboP3XZgHWI+xjw0QTyK99VL/tmJzmVNwFDOmI+Yp+gF
- 5HReY5QO5+G49viFxIkVYhCreOEKo80=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Gz3v/6EF1DakjN8iH3WKQVxZtElEUxjflajUmI9kip4=;
+ b=LEckB5OauQkwAxusLbqNKltlnO8T+MQFiDm74R6rwyLofascGnDCM+yGbAAARpSuZ6/K45
+ 8KzhjfgGF2cmfWVGfk5UzOLNS64N2QNTazfNQv9xjg3IPivAeEShoXbmJJQxfdD65Yxg5H
+ wZmGO8UXUdwGHs5g2bZ8TtKAvSaIVIc=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-OUwveiokNayCt-CUvlKlnA-1; Wed,
- 08 Jan 2025 03:45:19 -0500
-X-MC-Unique: OUwveiokNayCt-CUvlKlnA-1
-X-Mimecast-MFC-AGG-ID: OUwveiokNayCt-CUvlKlnA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-h6rW1vZoOvGSiAD5BNVbPA-1; Wed,
+ 08 Jan 2025 03:45:21 -0500
+X-MC-Unique: h6rW1vZoOvGSiAD5BNVbPA-1
+X-Mimecast-MFC-AGG-ID: h6rW1vZoOvGSiAD5BNVbPA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F6B319560AF; Wed,  8 Jan 2025 08:45:18 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B2B319153C2; Wed,  8 Jan 2025 08:45:20 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-228.str.redhat.com
  [10.33.192.228])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5E6519560AB; Wed,  8 Jan 2025 08:45:16 +0000 (UTC)
+ id EED2C19560AA; Wed,  8 Jan 2025 08:45:18 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/14] tests/tcg/s390x: Use the SLOF libc headers for the
- multiarch tests
-Date: Wed,  8 Jan 2025 09:44:58 +0100
-Message-ID: <20250108084511.238458-2-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PULL 02/14] hw/s390x/s390-virtio-ccw: Remove the deprecated 2.4 and
+ 2.5 machine types
+Date: Wed,  8 Jan 2025 09:44:59 +0100
+Message-ID: <20250108084511.238458-3-thuth@redhat.com>
 In-Reply-To: <20250108084511.238458-1-thuth@redhat.com>
 References: <20250108084511.238458-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -86,42 +86,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+They are older than 6 years, so according to our machine support
+policy, they can be removed now.
 
-Compiling the s390x tests on Fedora, which has the s390x cross-compiler
-installed, fails with:
+This removes the requirements for the storage keys "migration-enabled"
+property which will be removed in the next patch. It also removes
+the code that sets "max_revision" to 0 for some CCW devices, but the
+relating code in virtio-ccw.c indicates that 0 could have also been in
+use for other machines types < 5.1, so further clean-up for code related
+to "max_revision" won't be done yet (see also commit d55f518248f -
+"virtio: skip legacy support check on machine types less than 5.1").
 
-    In file included from qemu/tests/tcg/s390x/console.c:8:
-    qemu/tests/tcg/s390x/../../../pc-bios/s390-ccw/sclp.c:11:10: fatal error: string.h: No such file or directory
-       11 | #include <string.h>
-
-This is because Fedora does not have a cross-libc. Since console.c
-already uses the SLOF libc implementation, add the respective headers
-to the include path.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241216133819.78583-1-iii@linux.ibm.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20250103144232.520383-2-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/tcg/s390x/Makefile.softmmu-target | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/s390x/s390-virtio-ccw.c | 37 -------------------------------------
+ 1 file changed, 37 deletions(-)
 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index 969bc5728f..7adde2fa08 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -45,7 +45,8 @@ TESTS += $(ASM_TESTS)
- S390X_MULTIARCH_RUNTIME_OBJS = head64.o console.o $(MINILIB_OBJS)
- $(MULTIARCH_TESTS): $(S390X_MULTIARCH_RUNTIME_OBJS)
- $(MULTIARCH_TESTS): LDFLAGS += $(S390X_MULTIARCH_RUNTIME_OBJS)
--$(MULTIARCH_TESTS): CFLAGS += $(MINILIB_INC)
-+$(MULTIARCH_TESTS): CFLAGS += $(MINILIB_INC) \
-+			      -I$(SRC_PATH)/roms/SLOF/lib/libc/include/
- memory: CFLAGS += -DCHECK_UNALIGNED=0
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 2be8da2913..bca61488cc 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1325,43 +1325,6 @@ static void ccw_machine_2_6_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(2, 6);
  
- # s390x clears the BSS section so we need to account for that
+-static void ccw_machine_2_5_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_6_instance_options(machine);
+-}
+-
+-static void ccw_machine_2_5_class_options(MachineClass *mc)
+-{
+-    ccw_machine_2_6_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+-}
+-DEFINE_CCW_MACHINE(2, 5);
+-
+-static void ccw_machine_2_4_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_5_instance_options(machine);
+-}
+-
+-static void ccw_machine_2_4_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { TYPE_S390_SKEYS, "migration-enabled", "off", },
+-        { "virtio-blk-ccw", "max_revision", "0", },
+-        { "virtio-balloon-ccw", "max_revision", "0", },
+-        { "virtio-serial-ccw", "max_revision", "0", },
+-        { "virtio-9p-ccw", "max_revision", "0", },
+-        { "virtio-rng-ccw", "max_revision", "0", },
+-        { "virtio-net-ccw", "max_revision", "0", },
+-        { "virtio-scsi-ccw", "max_revision", "0", },
+-        { "vhost-scsi-ccw", "max_revision", "0", },
+-    };
+-
+-    ccw_machine_2_5_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-DEFINE_CCW_MACHINE(2, 4);
+-
+ #endif
+ 
+ static void ccw_machine_register_types(void)
 -- 
 2.47.1
 
