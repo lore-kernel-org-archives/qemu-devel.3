@@ -4,199 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0111DE77199
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DB6E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVPYU-00066P-Ag; Wed, 08 Jan 2025 01:28:38 -0500
+	id 1tVPlf-000805-Nf; Wed, 08 Jan 2025 01:42:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tVPYN-000657-8V
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:28:31 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVPlX-0007zK-Mm
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:42:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tVPYK-0003W7-NA
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:28:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736317708; x=1767853708;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=3Ynz8r8Yvq+4AQoIfriC1rgQXKET1YlNv0NbCngcMb8=;
- b=NEAfc/BfQEqpsujuc+/aNIbXiUzs/jNJ9rQ2HEozcSORwf6ta9zr8+48
- O0lOlQw6JROtE2DQaY1r4ermL/Hj6uIq6wln8ivFQG3amq/mGjepRFbBV
- +hrMD30t6mzbWr8hXmgg6ekJmBHzAyaku/Pe1q/+nDDmSFpcXLm7te5q2
- k9+Z/3iAJyYA4ZMy4cxTvqnV6UVPNYQA+YngNxlrF9CehdLh9XwxHRjul
- 2nJqKn5G/NsRGHY5XooE9//ZKgbwqPiOx42tagZujzPKnqCGcxY/edc5c
- wqMfRZ8E2FA6TnPEFN2u3ATvkKko8UCLbFEtrdL/Zjci0iht62eyDCuUR Q==;
-X-CSE-ConnectionGUID: hkLFgpnjRlSPc2Oti2FKRQ==
-X-CSE-MsgGUID: rUVEvzQES7uJUiwgkQ56NA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11308"; a="24133810"
-X-IronPort-AV: E=Sophos;i="6.12,297,1728975600"; d="scan'208";a="24133810"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2025 22:28:24 -0800
-X-CSE-ConnectionGUID: VcZt3vnKR3Os67Cvuq71rw==
-X-CSE-MsgGUID: JRVPEYBLQYiTSEicF148jw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="126284070"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 07 Jan 2025 22:28:23 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Tue, 7 Jan 2025 22:28:23 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Tue, 7 Jan 2025 22:28:23 -0800
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.45) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Tue, 7 Jan 2025 22:28:22 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Fw+fkixLyGU+l50V4WRgAAc0odvCIjryC7x8zHAm/z8Q5mdwkkSxRIhztJkAPVFOK4FvsCvp5Wj9v5mbYPCSRFfC7XIXQu2ZZgpVHky0eUV3UkzNVKlvC4IQj5gcYTlt3fUT1qXEgIzbpzu+73jnJ/WqjnoIlcL/qPuholZR/0X/tAkzvoNP4NuV66xvCzty0pcD091iLRftOIoTfI4LtFlKT3ctR9Mn8AkuoUGgLLOghIcP1oGEoBPPo60A7/psTx3gNC+xQZVpvy1U3Hu96cvl2rmzy1ny4f+JI8zI0tK0FfbCEAg5uq4mp19J0aKzyXMJtJKBzrTpndhkM+t6Sw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mTwHSuBJWAP4CzUZJmd8UtnuLZzFOeG6/VCsTCkN0fE=;
- b=H+bh8RgkgIuAkcQY0No+I4197UyqM6qV6qIzZ9RKpRJX+taip1NaQx+CyqEAakRT6qeeqekzsNVK5z+aUHokCteijt9LrKtnDVCRuhimbrMthhM1dJ7PWDuykiLTWLn2LOoP4BrAbaJFbGRBGWW61+kIWNSj0nfRDnHWs+6lq9FJmbQlM3st2IX4sRdFqcPJ98ev9UWHdr5URNdG19XvyGWk7exKAz8uW2rv4GflrNv/dUC8/h1AwPIWbP5FovX0ZmASZ5e7lu+IyV/z85ukkGdBCuhRfxwyCUb8bwoZgpwbj1Pl2SNpZe0X6Zv0GUjvN+IF3R5D4oNBoSBD5fo7Dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- PH7PR11MB5914.namprd11.prod.outlook.com (2603:10b6:510:138::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8314.17; Wed, 8 Jan 2025 06:28:11 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%5]) with mapi id 15.20.8314.018; Wed, 8 Jan 2025
- 06:28:11 +0000
-Message-ID: <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
-Date: Wed, 8 Jan 2025 14:28:02 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Enable shared device assignment
-To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
- <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
- <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR02CA0030.apcprd02.prod.outlook.com
- (2603:1096:4:195::17) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVPlU-0005nc-UQ
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:42:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736318523;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XhxNRVTCKtc9/WFiD1+tRaBv/KR4USKjJ+CA7V9EstM=;
+ b=QvQlfBE69hrDxCynd+Zqsfw/3U5wfAbJF5p8TkNAe348htSYW7X/0sYyQV07SGfxdb1pKZ
+ Z0fQynEr/onYnOtlQM2z054/4uiTh541vlMvH9drHBbL85J+HdumHiNgO2m4gNjAqJu0Yo
+ 2zqLWtx0TBNtHx4C8UoplSCoNzXlDyA=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-491-OuVcqkAcPMG8wlv6D2Yz_w-1; Wed, 08 Jan 2025 01:42:01 -0500
+X-MC-Unique: OuVcqkAcPMG8wlv6D2Yz_w-1
+X-Mimecast-MFC-AGG-ID: OuVcqkAcPMG8wlv6D2Yz_w
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa69e84128aso1175839266b.1
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 22:42:01 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736318520; x=1736923320;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XhxNRVTCKtc9/WFiD1+tRaBv/KR4USKjJ+CA7V9EstM=;
+ b=pSWLWviNJ4sepra98s3APYHkAflMTLT1FNbDJHxK49MUDAJ4W0+E4TmkJNW+SKFZo7
+ Q9M3072WSECx30rH2lGZ7sLpT3c6ZwBh/vZAPvjVv8CBobwsJ4Yf+B7na671HisrjAmU
+ glZWPX1+UQqY7LTyp7SQG8mzlr0qRArzou72ooeTqIwfmx/1IlessRGiea6nPs+zJjT+
+ dbV+Z7+lIPsKocm04rH62ATktoyF4im3b57Yv6wcYC1M6QmavE7XY+2tO9lceJjT4jdp
+ pPIhKwdHWwUpakVNYxmfB7FnMrm26TCphH8o+mc3+GdigBeggXyzCPvQyd4BqmpCYsVv
+ cpmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRaL3fPuQQccHKbNBeHL/Y2+U1nu6t+mvAXcUCV5LS2XHvhlFw020epnlT5ZdXyV2z3TprjNt4KzUp@nongnu.org
+X-Gm-Message-State: AOJu0YzkyxMP68DS16hULwAn8kENnPUZ2lp+PtiuFDiKdAR7c2uQ1t32
+ pqdQoJzzJj4BrxBjdDi0KI7SkFro8bsw7SWxn6gvXPX1zP1Ka9/tpWY51bqQMJG+FphS6rS9sTu
+ ID2N85+5WGwH3DPsmIdxhItjndRZc6bfnRuQJJ+zQgVaOok68q/GT
+X-Gm-Gg: ASbGncvi1GTn8HI9lyWiCtSLZrY5V5mCGuBd8VBJtd6CtUajJYBAGcRQvnts40u5BYC
+ DdY177SEV/dIZe3QuUK9/ra0xeFB7ARijYz66KeJxG+dJwn+fNsIX4h44KX8xIdtXkAKPwv2mxF
+ cwakkVm5bEE/GuBYxUopwvYgFNYP9VgKYOPkazYDwuAdGbbgqOB5xGdQ+GB470A8MwW+3qmU/Z2
+ J+0uRjB4iWW3Nfj60F0Hm5ATel5X+rxfa2Ifrb0GvG+j7nQDMcukQ9fbdvOsR0qcK5fciI0fQHp
+ u0+BIdD0EiYA
+X-Received: by 2002:a17:907:3f89:b0:aac:501:5629 with SMTP id
+ a640c23a62f3a-ab2abc95256mr130841166b.56.1736318520421; 
+ Tue, 07 Jan 2025 22:42:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGnuSk+iJhdaIsF2FaV8kvM9PEEQHx3bWKaA+PtNOmmUIBheVERBkX2RMXiEA10mfUs3nEFAw==
+X-Received: by 2002:a17:907:3f89:b0:aac:501:5629 with SMTP id
+ a640c23a62f3a-ab2abc95256mr130836366b.56.1736318519970; 
+ Tue, 07 Jan 2025 22:41:59 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-49-182.web.vodafone.de.
+ [109.42.49.182]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aac0f06da76sm2458615966b.194.2025.01.07.22.41.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 22:41:59 -0800 (PST)
+Message-ID: <b7618b1d-a48d-459d-9768-40830c866560@redhat.com>
+Date: Wed, 8 Jan 2025 07:41:55 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|PH7PR11MB5914:EE_
-X-MS-Office365-Filtering-Correlation-Id: 60feaef5-a51b-4e97-6603-08dd2fad9f8d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RlZHckVBZjJhZXliVFNTQnlLNXppS09qeE1kbmVYbjlZNWp2amQ1SHE5R0Ex?=
- =?utf-8?B?UllraVFNN2JiZUJKbTJyRUJhZVFqVHp4d01aVkxMOElNMUYzc0ZDMkVTY0Jn?=
- =?utf-8?B?VUlwWmtkN3dWL2NHcCtSMmpUejFxUGU2TjJPVWdXVVRLM3crc3FRdFFhQldo?=
- =?utf-8?B?YmNGWmZPNktDcmhWa3Bsc1FacWdpc2tFRmUwZUM4QTZsa3dQdXZReVhkZHVJ?=
- =?utf-8?B?alBDanc1eng2T09pZ1pDOGZQKzhaYTJFblltY2xiNCs3MVIyOS9CdlNxM0lP?=
- =?utf-8?B?Z1BkRTl5Y3Rwa1VVUyt1Z3pQK2k2bERHRFVXdlh5bnU4cFlndEYwaGhPV255?=
- =?utf-8?B?ajBJL2Z3UkJ2Zks2cDI3WTNxUFdOZzV1QzlqT2xmcFA0MW1jS3BFNnBCbXVr?=
- =?utf-8?B?NlNmUitRODJLNjhPLzNPNWtkQTM5b3VabUdWQzlwYmM5Y2M3MzM2YjJyMVl6?=
- =?utf-8?B?ZjRaM2R6RmpwTGhJWlA0L2xxU3FlVlFieVpoN3Fna2ZodzlUZnVPUnVnTk94?=
- =?utf-8?B?b2g2QXdPUmZJd3ZVY21WSVhxdENKWjB4TEtaYjFlMnZNWGVTMlZkQW9IMGt4?=
- =?utf-8?B?UTYxSXR4NVVDUThVZzA2a1pORUxSZ3BjSkpnTjJSUGdrZ1l0RjJUWDZhZThC?=
- =?utf-8?B?M1BNVktnTkJmMHdVU1IrUXZXY29yNiswOEpsSVZ4bjF3MVVWWGlMTkVMekx2?=
- =?utf-8?B?UysxZXZBVW9DejM4MXZCajlDNVR1Q2tXcERONDVsZGNIYmU5QlZpWGdIVkpY?=
- =?utf-8?B?SERwdmY5OHRncEp0M3o3UGJHVWhYZGVBNEdJVXVjeFhCV2NJeWJnN0ZGbWlZ?=
- =?utf-8?B?R3lvdEl2TGQ5RGtwbHgyZlhBODN6eXNRNFdJT1JBTUN6TlZCU1E2dVdkRU5H?=
- =?utf-8?B?bXpnaGswVG1PVTV0ZzZKYzZUSDNqNmxvck13Uk9GVVFJY3lhbURrWWF4b0JR?=
- =?utf-8?B?OFhHSjNtNUxHOHF1Qkh0SnVndk9oRHJrRENHVWcvNlpRM2pmSUQ0NGROVWRn?=
- =?utf-8?B?bXBRV2trNGhYOW1TQThMa2tHWWFlWUF0S3lNeC9uQkFwNy9DWGhDZjNtZFJa?=
- =?utf-8?B?eVpZNVdBSk9GbFNqZVpqTEhwejlDaG9Kby9Fd2l0TmVoS2tOVGdsYTM0RWd0?=
- =?utf-8?B?a2gwa1cyYjR6c1pHVk1wNzNiR21rRW01WXJ2N2VHZ3ZNaklWWjlwdEV0Y2g0?=
- =?utf-8?B?Z2NNOGJpVnZLTjVwRGJIQXRWd0tIbVJMUG9aTFlST2dzNUJRcS9TQXcrcnhs?=
- =?utf-8?B?VExxOWluUkV4K1VvVjBRNXpvR1pub1p4ODlZZDZzRlRpTTNqdTBnc3NaMStk?=
- =?utf-8?B?NDRyeDJPaWtBMEZhdXE1dFJmbkNuQUd2VzNxdVJrZEpxQW5JNHg5OCtLODFh?=
- =?utf-8?B?L1hCRXZrc244RmhaUGVWS1RML243OEVIWlBEMVZHWGZLZFJXZng1S25XYk5R?=
- =?utf-8?B?clpGdDFzME8xT0hLMVh1MmhsSFVDNHNwSzJPNHgxd2I5Q2FoQXVtOU1XUmlU?=
- =?utf-8?B?cWdsT0JsVTF4SG1pdDBrcnRRa0cvMzFLTkh3cndMaDZId2JkVFQ4K2hCbUww?=
- =?utf-8?B?WU9FdTBsWEhDQlhlcGdaZjNwcnVRZ3FOTVdxQ0J3bmJwSzhJeGI2T0wzb1RD?=
- =?utf-8?B?OE9CbWVHZmo4TFdVYTJsc0N3L1BTRENGRWV6ZEtkdzFISVR0TG1WZ1hDY29w?=
- =?utf-8?B?ZWdvL3Nab3k0TU0vcHlUYWtoUDJpRHprTjhHMXA0OU5hc0JEcTY2YU1VN0tO?=
- =?utf-8?B?ZWZhK1VCU0p5RHN6U3Z6SUw0YkttL0NJbG9sb2k3dEo2aVVoVTlyWStzYWRL?=
- =?utf-8?B?Z3d1ZDhCT012Y1g5Y2xmdz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZGVRdEExSVJrc2FVM0RHQ2hKSE1TV0JSTkdVTWhPUHV3MmgxR2pNWGJHWXdT?=
- =?utf-8?B?UllrbzNoTXZTUXBySHRVczd0ZSs0MFJOeUttWFpXbVg1Q0FKc21jVTV2M1NN?=
- =?utf-8?B?R240MDFTSWRuZmtPb2dqWDcrQmFPQVpqcVN2Z3RJRjg2clF1bUZVVnIrV01l?=
- =?utf-8?B?WE5KVXZLd2ViNzBRRDRHVHdrOWkrWHErdWZ1RUcyVVp0YzR2WEVBdXJpRWR5?=
- =?utf-8?B?bER2NXRSdFpUZUNzM3AzTnNYZlR5TGE3ajFGM2loekp6NEkxRnpVdkxoUmJ4?=
- =?utf-8?B?L2d0WEw2cFg3RXR6L21CSm5zZm1Ob0xlV0lKOUJZb0Z4TEl0N0ZZUTVnYTNQ?=
- =?utf-8?B?YmJ2YmRGcWFWMXhzWTl6TGhpZFZucUE0VjhEK3p6d3YwNTN0Vll3S0FMUit6?=
- =?utf-8?B?TlRpSmp3VGlvKzMrSFIrYVRLUDNrOHRjU3lXcFdEMGNjYlJIcUVscktqQm13?=
- =?utf-8?B?blNEd0ZPNGxsVFR1cHF5M2c3STNqcWU3ZTZFRFBhVDZ2YWFDMnFMUTE5c3FO?=
- =?utf-8?B?T0FGSmlvTUovd2NNOS9UbEhVaEppbTdaSGhqdVg5YjZrdk1VbGFuN1Q5c1R1?=
- =?utf-8?B?MTEzMytSVUxDK0lOMlNINFBVeE1WYTVaaDhSb01jWkdFUmRJZ3NEdlZHWkp5?=
- =?utf-8?B?UW80VjBGc0ZJMUkwRHB5RkxkbXpGem9JdVh0MmhoUlRWa0o4TEtFWXdLV2tz?=
- =?utf-8?B?WHUvOW0wY0kydzk3Z3Jud3RINE1lc2ZRMStZenNKdjF4VnhEcDF5bHlyWFNZ?=
- =?utf-8?B?SDBTSGRnTVllSjVBY3RpZzhKekVodWVwcmYwSm55NXNsUVR3ZVFJSHEwTFBp?=
- =?utf-8?B?OThGcFBmQjVXcnJ3L2ptYzF2anlYVFh3c2JWYkhadWVQVHRDSW5lN2FmTVhh?=
- =?utf-8?B?QTdJM3NZRzVpSEhlTGdnS3ZLQzgwVEVhRTIra2N5aFphNUpHL2tpTjR6Nkw5?=
- =?utf-8?B?ZHZiVWQ4eDJrQjgybXJlVU5nTStRbUY2am15bUVBeVBEa3lrZHRaS2x5YWpU?=
- =?utf-8?B?Slh2bnh2emNDaEhPaSsvRFRWbDlmWkJDaVRtbWZZdlJGSTlTVEQxZnkvSm5o?=
- =?utf-8?B?anhPZEhxcm84YXhsaVRqNjdaVVpqWm1HTGFIWjNSbVd6cVRMVEhDM09DT3Mz?=
- =?utf-8?B?b3FIVTFMTTJrakRVYm9XS1dkWXBKOFhNdlAyNllPeWt2d01GQ2dQYmRSeXFB?=
- =?utf-8?B?emcrZ1hxZWhPOXVCaGNXZ213dW1kTk9zdVcrNGJmWUlDWUkySmlLV2dXeml6?=
- =?utf-8?B?QVY2VjEyUjFoV1JDUU9peEhsSjhQa1RNOEdoNDdMM2JPVHppZnRncEhGV2pT?=
- =?utf-8?B?MU8yQkVKTWw5UEV4d3k0SU1xSGY1NFhtMmtzUllzR2tkaHpzdk5RVkxzVy9L?=
- =?utf-8?B?Z3BiRS9ENnJvUHJJclhyZFI4Rm5XdFRDQzFQQk9SOHJpK1FySmI1VlMxZlV4?=
- =?utf-8?B?YkwxQk1qdmFBY1Y3RXJoVzZ3U2J4THRoeFBuOFZBOGZHTnd3R2JMeUNsck56?=
- =?utf-8?B?SDF4Ync5Y2VGaXZmSE5ETUExMzNsQjZqWjA2c3lQZVdPb3dyOGtNOFo1SUFr?=
- =?utf-8?B?YzhMWnk1QVJsWEF2akhTZWlnUDd6MEY4Q1d3WnR4bjVtNTFJQjdLWjJWTnB0?=
- =?utf-8?B?SWgvdWdiMHdmQ2dpbG11K3lieFFNYUJSVkwrWGMxV1dSUWcwM1o1N01QRXFh?=
- =?utf-8?B?TFBMb2NmMFdXL1lnZUhFUEtrZk5UYWRHQWFzMjZZZHpjeGxmRGJybjdQVi83?=
- =?utf-8?B?cGFtQi95UU1LbTdGQWc3VUIrdWhKdkxjWS9tL1o4Z2lnb0Job0IyNFJKOUhF?=
- =?utf-8?B?eXhHdWM3U3VzUStLc3RkZkhVOUdVcnREankvWGZ4YTQ2QWI3aTZPeXo3ZVNy?=
- =?utf-8?B?QXhQZDdwMkhERUNrbUJPRnRLYXRsZGZJM2xCZ203ZmtGbEJqNGd3dkF2clha?=
- =?utf-8?B?T1ZaajBvcy83ZldyVXN4MG8rVUxEYmcraFBuN3c3Q3pjL0lGTE9rZ281SXpw?=
- =?utf-8?B?TzA1MGJMbVlzVzVlQVJuTmhzKzVsckNUTDM3UWFRdnR6bTgwRzlzZjdNTncr?=
- =?utf-8?B?Rjdxa2ZDeXQ1T1czUWhGS2Y4dExxdFpzTWNHbm1FaVNjZGdNalpOalNzNVRm?=
- =?utf-8?B?TlVRQ2t4VVJ0dDI1VmExOVh4WE9OeTVRVzJ1NEYyVWNMQkZKeXpQYW9VRk5h?=
- =?utf-8?B?QUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60feaef5-a51b-4e97-6603-08dd2fad9f8d
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2025 06:28:11.2289 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S1W1g3J/mtc6l2EFfmP2YkB7gT+ZZqD+n3S06a/Zk8uCEgH5dwy30N/B44cKIcIU9LIy+qJ08+bziN7x3wuWow==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB5914
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.16;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 19/29] tests/functional: add zstd support to uncompress
+ utility
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Beraldo Leal <bleal@redhat.com>, Ed Maste <emaste@freebsd.org>,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-ppc@nongnu.org,
+ John Snow <jsnow@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-riscv@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Weiwei Li <liwei1518@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ qemu-arm@nongnu.org, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
+ <lvivier@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Eric Farman <farman@linux.ibm.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20250107165208.743958-1-alex.bennee@linaro.org>
+ <20250107165208.743958-20-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250107165208.743958-20-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -214,171 +184,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Alexey for your review!
+On 07/01/2025 17.51, Alex Bennée wrote:
+> Rather than using the python library (which has a different API
+> anyway) lets just call the binary. zstdtools is already in out
+> qemu.yml so all test containers should have it around. Tests should
+> still use @skipIfMissingCommands('zstd') to gracefully handle when
+> only minimal dependencies have been installed.
 
-On 1/8/2025 12:47 PM, Alexey Kardashevskiy wrote:
-> On 13/12/24 18:08, Chenyi Qiang wrote:
->> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
->> discard") effectively disables device assignment when using guest_memfd.
->> This poses a significant challenge as guest_memfd is essential for
->> confidential guests, thereby blocking device assignment to these VMs.
->> The initial rationale for disabling device assignment was due to stale
->> IOMMU mappings (see Problem section) and the assumption that TEE I/O
->> (SEV-TIO, TDX Connect, COVE-IO, etc.) would solve the device-assignment
->> problem for confidential guests [1]. However, this assumption has proven
->> to be incorrect. TEE I/O relies on the ability to operate devices against
->> "shared" or untrusted memory, which is crucial for device initialization
->> and error recovery scenarios. As a result, the current implementation
->> does
->> not adequately support device assignment for confidential guests,
->> necessitating
->> a reevaluation of the approach to ensure compatibility and functionality.
->>
->> This series enables shared device assignment by notifying VFIO of page
->> conversions using an existing framework named RamDiscardListener.
->> Additionally, there is an ongoing patch set [2] that aims to add 1G page
->> support for guest_memfd. This patch set introduces in-place page
->> conversion,
->> where private and shared memory share the same physical pages as the
->> backend.
->> This development may impact our solution.
->>
->> We presented our solution in the guest_memfd meeting to discuss its
->> compatibility with the new changes and potential future directions
->> (see [3]
->> for more details). The conclusion was that, although our solution may
->> not be
->> the most elegant (see the Limitation section), it is sufficient for
->> now and
->> can be easily adapted to future changes.
->>
->> We are re-posting the patch series with some cleanup and have removed
->> the RFC
->> label for the main enabling patches (1-6). The newly-added patch 7 is
->> still
->> marked as RFC as it tries to resolve some extension concerns related to
->> RamDiscardManager for future usage.
->>
->> The overview of the patches:
->> - Patch 1: Export a helper to get intersection of a MemoryRegionSection
->>    with a given range.
->> - Patch 2-6: Introduce a new object to manage the guest-memfd with
->>    RamDiscardManager, and notify the shared/private state change during
->>    conversion.
->> - Patch 7: Try to resolve a semantics concern related to
->> RamDiscardManager
->>    i.e. RamDiscardManager is used to manage memory plug/unplug state
->>    instead of shared/private state. It would affect future users of
->>    RamDiscardManger in confidential VMs. Attach it behind as a RFC
->> patch[4].
->>
->> Changes since last version:
->> - Add a patch to export some generic helper functions from virtio-mem
->> code.
->> - Change the bitmap in guest_memfd_manager from default shared to default
->>    private. This keeps alignment with virtio-mem that 1-setting in bitmap
->>    represents the populated state and may help to export more generic
->> code
->>    if necessary.
->> - Add the helpers to initialize/uninitialize the guest_memfd_manager
->> instance
->>    to make it more clear.
->> - Add a patch to distinguish between the shared/private state change and
->>    the memory plug/unplug state change in RamDiscardManager.
->> - RFC: https://lore.kernel.org/qemu-devel/20240725072118.358923-1-
->> chenyi.qiang@intel.com/
->>
->> ---
->>
->> Background
->> ==========
->> Confidential VMs have two classes of memory: shared and private memory.
->> Shared memory is accessible from the host/VMM while private memory is
->> not. Confidential VMs can decide which memory is shared/private and
->> convert memory between shared/private at runtime.
->>
->> "guest_memfd" is a new kind of fd whose primary goal is to serve guest
->> private memory. The key differences between guest_memfd and normal memfd
->> are that guest_memfd is spawned by a KVM ioctl, bound to its owner VM and
->> cannot be mapped, read or written by userspace.
-> 
-> The "cannot be mapped" seems to be not true soon anymore (if not already).
-> 
-> https://lore.kernel.org/all/20240801090117.3841080-1-tabba@google.com/T/
+Thanks, sounds like a good idea to have a common function for this. Just a 
+comment below...
 
-Exactly, allowing guest_memfd to do mmap is the direction. I mentioned
-it below with in-place page conversion. Maybe I would move it here to
-make it more clear.
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/qemu_test/uncompress.py | 17 +++++++++++++++++
+>   1 file changed, 17 insertions(+)
+> 
+> diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+> index 6d02ded066..404eee1f83 100644
+> --- a/tests/functional/qemu_test/uncompress.py
+> +++ b/tests/functional/qemu_test/uncompress.py
+> @@ -12,6 +12,7 @@
+>   import os
+>   import shutil
+>   from urllib.parse import urlparse
+> +from subprocess import check_call, CalledProcessError
+>   
+>   from .asset import Asset
+>   
+> @@ -38,6 +39,18 @@ def lzma_uncompress(xz_path, output_path):
+>               os.remove(output_path)
+>               raise
+>   
+> +def zstd_uncompress(zstd_path, output_path):
+> +    if os.path.exists(output_path):
+> +        return
+> +
+> +    try:
+> +        check_call(['zstd', "-f", "-d", zstd_path,
+> +                    "-o", output_path])
+> +    except CalledProcessError as e:
+> +        os.remove(output_path)
+> +        raise Exception(
+> +            f"Unable to decompress zstd file {zstd_path} with {e}") from e
 
-> 
-> 
->>
->> In QEMU's implementation, shared memory is allocated with normal methods
->> (e.g. mmap or fallocate) while private memory is allocated from
->> guest_memfd. When a VM performs memory conversions, QEMU frees pages via
->> madvise() or via PUNCH_HOLE on memfd or guest_memfd from one side and
->> allocates new pages from the other side.
->>
+In tests/functional/qemu_test/tuxruntest.py we had to add a
 
-[...]
+   os.chmod(..., stat.S_IRUSR | stat.S_IWUSR)
 
->>
->> One limitation (also discussed in the guest_memfd meeting) is that VFIO
->> expects the DMA mapping for a specific IOVA to be mapped and unmapped
->> with
->> the same granularity. The guest may perform partial conversions, such as
->> converting a small region within a larger region. To prevent such invalid
->> cases, all operations are performed with 4K granularity. The possible
->> solutions we can think of are either to enable VFIO to support partial
->> unmap
->> or to implement an enlightened guest to avoid partial conversion. The
->> former
->> requires complex changes in VFIO, while the latter requires the page
->> conversion to be a guest-enlightened behavior. It is still uncertain
->> which
->> option is a preferred one.
-> 
-> in-place memory conversion is :)
-> 
->>
->> Testing
->> =======
->> This patch series is tested with the KVM/QEMU branch:
->> KVM: https://github.com/intel/tdx/tree/tdx_kvm_dev-2024-11-20
->> QEMU: https://github.com/intel-staging/qemu-tdx/tree/tdx-upstream-
->> snapshot-2024-12-13
-> 
-> 
-> The branch is gone now? tdx-upstream-snapshot-2024-12-18 seems to have
-> these though. Thanks,
+to make sure that the write-protected compressed assets are usable 
+afterwards... Would it make sense to add this here, too, so that the callers 
+don't have to do it on their own?
 
-Thanks for pointing it out. You're right,
-tdx-upstream-snapshot-2024-12-18 is the latest branch. I added the fixup
-for patch 1 and forgot to update the change here.
+Also, could you maybe change tests/functional/qemu_test/tuxruntest.py 
+accordingly to use this new function here?
 
-> 
->>
->> To facilitate shared device assignment with the NIC, employ the legacy
->> type1 VFIO with the QEMU command:
->>
->> qemu-system-x86_64 [...]
->>      -device vfio-pci,host=XX:XX.X
->>
->> The parameter of dma_entry_limit needs to be adjusted. For example, a
->> 16GB guest needs to adjust the parameter like
->> vfio_iommu_type1.dma_entry_limit=4194304.
->>
->> If use the iommufd-backed VFIO with the qemu command:
->>
->> qemu-system-x86_64 [...]
->>      -object iommufd,id=iommufd0 \
->>      -device vfio-pci,host=XX:XX.X,iommufd=iommufd0
->>
->> No additional adjustment required.
->>
->> Following the bootup of the TD guest, the guest's IP address becomes
->> visible, and iperf is able to successfully send and receive data.
+  Thanks,
+   Thomas
 
-> 
+
+>   '''
+>   @params compressed: filename, Asset, or file-like object to uncompress
+>   @params uncompressed: filename to uncompress into
+> @@ -59,6 +72,8 @@ def uncompress(compressed, uncompressed, format=None):
+>           lzma_uncompress(str(compressed), uncompressed)
+>       elif format == "gz":
+>           gzip_uncompress(str(compressed), uncompressed)
+> +    elif format == "zstd":
+> +        zstd_uncompress(str(compressed), uncompressed)
+>       else:
+>           raise Exception(f"Unknown compression format {format}")
+>   
+> @@ -79,5 +94,7 @@ def guess_uncompress_format(compressed):
+>           return "xz"
+>       elif ext == ".gz":
+>           return "gz"
+> +    elif ext == ".zstd":
+> +        return "zstd"
+>       else:
+>           raise Exception(f"Unknown compression format for {compressed}")
 
 
