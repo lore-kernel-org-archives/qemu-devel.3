@@ -4,91 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBECE77199
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD1FE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVdWt-0002S7-9K; Wed, 08 Jan 2025 16:23:55 -0500
+	id 1tVdha-0003ym-VA; Wed, 08 Jan 2025 16:34:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tVdWq-0002Rr-Kh
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:23:53 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tVdWn-0005kc-CF
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:23:51 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2163b0c09afso3160465ad.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:23:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736371427; x=1736976227; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LD3wV6zXImDGJLak8OuA1TD/TcMpBHgvBJNlMpOU68I=;
- b=DYhOZYU2mka5BhN03Gltw+nvoSEvY1Y5lwjkQUCXmg4k8o11tY83erkqozQZ4y65BV
- UqQoYK54aVP5BcSO6XS0tNzjovdMBERQsSHT+8ot1Qi5EkSNCw6Oans+UhuN+dfdCNyD
- W5evjTM5zxbjCu8mUOBnhkRqe4Q0b9caHjznRfTXp8IjoYqB24hOcynzw/73WAPX9Mpq
- Oi3qefVZCMKeZUSUY9FslqoxnmNskKvbBPSWZ2m4h01Cep7Zgw2DoApO2ZUia1V4yvDx
- 12uZTVpM6N51UcZUNK/RwrvYOFYZkC+GIHtl/v6ZML24HftIxERyKz9Cwf9jTdnmr5pR
- AobQ==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdhY-0003xd-Lr
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:34:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdhW-0007xK-8g
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:34:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736372092;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=41M+R/XKCImcVpiXngXcgQ/wxhxdyEth/DA3pcD/uAY=;
+ b=V7i6lvz9QD7/LcH9zxqmwaKd5qPfKltKgmSWhzG2lAKe0d2OURjN/dH1e7NC7pdzMp7dV2
+ OzQ+dHuTHHsdLDJW4jQYT8SFmXTvdRg3vn/p+ZgTQN6ZgUaE19+55qTJb9ZX5xmhJaFDse
+ 9l5Y3O+hzXNZjW4yafMbKEYkK/QG8dk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-449-BzmNOa6nO3eFxxoYxnCPbw-1; Wed, 08 Jan 2025 16:34:51 -0500
+X-MC-Unique: BzmNOa6nO3eFxxoYxnCPbw-1
+X-Mimecast-MFC-AGG-ID: BzmNOa6nO3eFxxoYxnCPbw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385dcae001fso81296f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:34:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736371427; x=1736976227;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LD3wV6zXImDGJLak8OuA1TD/TcMpBHgvBJNlMpOU68I=;
- b=w3RMMrptJAh3tnuUIp71fwFkqDbUueWPYpvn8Xp4aIdaINGdgPeVRVTidNXzonfZFY
- c7SsT2JSKgSRDOsxYMnwDNjKypaBqabEibZ8OlwTjzmmgqhUnHil4KUiSGUtOLiaGgkm
- yg0aqeS0TLoQS6uOtaM4JdesH3ua2Vf6VxoJIHxkbBAgF+VfrTUs1mhHPHV/ijyj2rma
- mRlQsHPm9fRemDC1jZpZvrEEx1VntT86hjJap2vVp6t7WUvvcvXZCpXTXWR7zCHp2clk
- f0vQ65g74jrXSn4Mx0VDKz3waZUnbWQ+eIQnfTQ/sZXjsh3tVV4Cym+5BgciTPXYZwlh
- /36g==
+ d=1e100.net; s=20230601; t=1736372090; x=1736976890;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=41M+R/XKCImcVpiXngXcgQ/wxhxdyEth/DA3pcD/uAY=;
+ b=Yzmx0H0531Cq+oKbSXRcJyF0ZiZvWwODh7HX7vxKX3w6I0QEuVN2g3epAFEoBXrRnA
+ Dm2rAz9EI2r8DJDArjLg1KGQK8w/kfXmUt1Cq2jNPszanFdAU96bCvUi5Vz5y7sX5I+Q
+ BgYby5j7QL6XXxv5x6fW7B/Xr5sH7cB5jgMMOxZPDPoNrmPn73ANtM3YQXz06TDx7/tP
+ e/VviIuDWf3NpzNUgs7OSxkOyXd0Boho8Gzb7T1Gpgg5MH2FfAty6mlOfVJUff/7eVkE
+ EdvEovs+KZgc7qzQfkc5/Rg25N8ZWCmcRi2NjawQ7Ym7tEDGxRZqv69kL6+vkdQ/GSkg
+ R+6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeJ0/aJQQl2+OZJxkbltvlKEea6c80BavgOqQ4uOwt0pl7rynUXw+id3+GnVlPCf9zyg8Ggg4eUJIg@nongnu.org
-X-Gm-Message-State: AOJu0YzEmkyY7+R9qq2FRvzSm/PYU3wQNtzu4ssmzUP6XLr3OTx4Sycj
- tBTTvhvZH4rOlS3qYfdWT7DlYpgGCI2gp+KyAkTWpVJPocxzIfq+xKhVNIhE9WY=
-X-Gm-Gg: ASbGncsP1BMJKshmTiRw2e5kfh3m7HQ7+HDaljzMSqsDJTXwAsROzfBVxkLJq1yORYD
- K01WtlGCW89Hdkf9dEBUzt3IuLDzT+pGMMqX5jxignM2zSOPcYchbr7bN+HyQB23P5XVcrYHMTX
- Y7Zb/86nMJ+eloB5KTaRJlUGIHKSbfxPh3MTY0TR1+Tm9S6nZaqc+G8A0w23bbQHPlq6dHgSkD/
- nj3otKcknRR49tPKdbwAglv/mpe63qtaNdAydO5igYOEen6oOd+WcYoS38IXeJxkye20wpMgW3x
- tzHmk/AjMOpqq8awFb0MM/43D/qlZNo=
-X-Google-Smtp-Source: AGHT+IEiwkALAUkLA8V+PS0xGvD8nynX9TOIpWFvt4mkZIWUz+dir4WM3QFFVWY/VSasl/TFz+Lygg==
-X-Received: by 2002:a05:6a20:734a:b0:1d9:c64a:9f72 with SMTP id
- adf61e73a8af0-1e88d0a2a44mr7614679637.2.1736371427526; 
- Wed, 08 Jan 2025 13:23:47 -0800 (PST)
-Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
- [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-842b2b3e80fsm27968327a12.31.2025.01.08.13.23.46
+ AJvYcCWMJaw0S/WD1TWZMMoGWlvvPb6kMP6YxXsa+RcdG8aqF+W79aLCLh6AYz9k95bDWdJBrW7N/sHiWO1H@nongnu.org
+X-Gm-Message-State: AOJu0YzHB9OST5A6CV4ABFwtgC6NTy0PQwVIKxBlDH7ek5OsNK3qENw8
+ N2e+IdBw4ssDiEywp8DWdt4luxRH8szxLG3RU8N4swFQpCT+Wm6vrZDJ9Qex8J5mjLYpZ+H1JHf
+ syijemHCnSNWhox3y7uv8aTILCQxjlh7UC8f/FcgaMyFyJ+JZUfVL
+X-Gm-Gg: ASbGncuUzUdJbXrZm3UKdrKqVxwmUOX1LJsUwQnEXUAB7Sx3BD5xZLqhJaRt5ZSAC7g
+ /kqKQ8f9tITSv0GoiWi0xztJOZJ2Z/6pHBteubQ5x3xrHDX8bP5t0dXminnPN9E/0QFKQP9eN+n
+ d/jw8SAxThjoKMuK4YFRixgSr9nrOK3jDjX/VUY8+Pnp/aFEl25nAOafjxOV7LthbCfCXHV5YX5
+ 8SOdJjkDQsgkr7Dx7RvtD0B7PHFijs8yyFdvakRseGLQ1r8I7HaXaJ96o9jVPtYx1RH7JN4V1hX
+ U7GH8J753FLHprEQEpKNQ9pdvEY2mXv0nAUogeFRw4K9uGOHa8gTWVpVEkr2QIZBKOt4GxPYyd2
+ pM24ETw==
+X-Received: by 2002:a05:6000:1a85:b0:385:e0d6:fb48 with SMTP id
+ ffacd0b85a97d-38a872f6f22mr3585470f8f.7.1736372090213; 
+ Wed, 08 Jan 2025 13:34:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEb3cbHq2ETie7LVaxVOhPaqZj91QSORGfs8AUXFme7GEmdJD1HTMJ71G/up3Uu3f2wI8hTSQ==
+X-Received: by 2002:a05:6000:1a85:b0:385:e0d6:fb48 with SMTP id
+ ffacd0b85a97d-38a872f6f22mr3585426f8f.7.1736372089356; 
+ Wed, 08 Jan 2025 13:34:49 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7?
+ (p200300cbc70d3a00d73c06a8ca9f1df7.dip0.t-ipconnect.de.
+ [2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c89e2f9sm55147455f8f.81.2025.01.08.13.34.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 13:23:47 -0800 (PST)
-Message-ID: <b7e1c48f-fef9-480a-832b-d7aa9cdb17bf@linaro.org>
-Date: Wed, 8 Jan 2025 13:23:44 -0800
+ Wed, 08 Jan 2025 13:34:48 -0800 (PST)
+Message-ID: <a00d6d67-c0a1-4d54-9932-bf3b3a7054d8@redhat.com>
+Date: Wed, 8 Jan 2025 22:34:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/81] tcg: Replace TCGOP_VECL with TCGOP_TYPE
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-3-richard.henderson@linaro.org>
- <1271a667-845a-458b-b8e8-b3a9a75fafc3@linaro.org>
+Subject: Re: [PATCH v4 1/7] hwpoison_page_list and qemu_ram_remap are based on
+ pages
+To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
+References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
+ <20241214134555.440097-1-william.roche@oracle.com>
+ <20241214134555.440097-2-william.roche@oracle.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <1271a667-845a-458b-b8e8-b3a9a75fafc3@linaro.org>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241214134555.440097-2-william.roche@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,48 +165,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 09:39, Philippe Mathieu-Daudé wrote:
-> On 7/1/25 08:59, Richard Henderson wrote:
->> In the replacement, drop the TCGType - TCG_TYPE_V64 adjustment,
->> except for the call to tcg_out_vec_op.  Pass type to tcg_gen_op[1-6],
->> so that all integer opcodes gain the type.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/tcg/tcg.h      |   2 +-
->>   tcg/tcg-internal.h     |  13 ++---
->>   tcg/optimize.c         |  10 +---
->>   tcg/tcg-op-ldst.c      |  26 ++++++----
->>   tcg/tcg-op-vec.c       |   8 +--
->>   tcg/tcg-op.c           | 113 +++++++++++++++++++++++------------------
->>   tcg/tcg.c              |  11 ++--
->>   docs/devel/tcg-ops.rst |  15 +++---
->>   8 files changed, 105 insertions(+), 93 deletions(-)
+On 14.12.24 14:45, “William Roche wrote:
+> From: William Roche <william.roche@oracle.com>
+
+Subject should likely start with "system/physmem:".
+
+Maybe
+
+"system/physmem: handle hugetlb correctly in qemu_ram_remap()"
+
 > 
+> The list of hwpoison pages used to remap the memory on reset
+> is based on the backend real page size. When dealing with
+> hugepages, we create a single entry for the entire page.
+
+Maybe add something like:
+
+"To correctly handle hugetlb, we must mmap(MAP_FIXED) a complete hugetlb 
+page; hugetlb pages cannot be partially mapped."
+
 > 
->> @@ -3320,7 +3333,7 @@ void tcg_gen_exit_tb(const TranslationBlock *tb, unsigned idx)
->>           tcg_debug_assert(idx == TB_EXIT_REQUESTED);
->>       }
->> -    tcg_gen_op1i(INDEX_op_exit_tb, val);
->> +    tcg_gen_op1i(INDEX_op_exit_tb, 0, val);
+> Co-developed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: William Roche <william.roche@oracle.com>
+> ---
+>   accel/kvm/kvm-all.c       |  6 +++++-
+>   include/exec/cpu-common.h |  3 ++-
+>   system/physmem.c          | 32 ++++++++++++++++++++++++++------
+>   3 files changed, 33 insertions(+), 8 deletions(-)
 > 
-> Having TCG_TYPE_I32 = 0 is confusing.
-> 
-> Should we define TCG_TYPE_VOID = 0 first, shifting all other types
-> (and updating tcg_type_size())?
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 801cff16a5..24c0c4ce3f 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -1278,7 +1278,7 @@ static void kvm_unpoison_all(void *param)
+>   
+>       QLIST_FOREACH_SAFE(page, &hwpoison_page_list, list, next_page) {
+>           QLIST_REMOVE(page, list);
+> -        qemu_ram_remap(page->ram_addr, TARGET_PAGE_SIZE);
+> +        qemu_ram_remap(page->ram_addr);
+>           g_free(page);
+>       }
+>   }
+> @@ -1286,6 +1286,10 @@ static void kvm_unpoison_all(void *param)
+>   void kvm_hwpoison_page_add(ram_addr_t ram_addr)
+>   {
+>       HWPoisonPage *page;
+> +    size_t page_size = qemu_ram_pagesize_from_addr(ram_addr);
+> +
+> +    if (page_size > TARGET_PAGE_SIZE)
+> +        ram_addr = QEMU_ALIGN_DOWN(ram_addr, page_size);
 
-No.  E.g. tcg/aarch64/tcg-target.c.inc:
+Is that part still required? I thought it would be sufficient (at least 
+in the context of this patch) to handle it all in qemu_ram_remap().
 
-/* We're going to re-use TCGType in setting of the SF bit, which controls
-    the size of the operation performed.  If we know the values match, it
-    makes things much cleaner.  */
-QEMU_BUILD_BUG_ON(TCG_TYPE_I32 != 0 || TCG_TYPE_I64 != 1);
+qemu_ram_remap() will calculate the range to process based on the 
+RAMBlock page size. IOW, the QEMU_ALIGN_DOWN() we do now in 
+qemu_ram_remap().
 
-Obviously this value is never used for INDEX_op_exit_tb (and others).  If you really think 
-it's important, we could add VOID as another value.  But I think that might be more 
-confusing than anything else.  So far we're restricted to integer and vector types.  If we 
-add a third classification, we're going to want to adjust all of the checks everywhere.
+Or am I missing something?
 
+(sorry if we discussed that already; if there is a good reason it might 
+make sense to state it in the patch description)
+-- 
+Cheers,
 
-r~
+David / dhildenb
+
 
