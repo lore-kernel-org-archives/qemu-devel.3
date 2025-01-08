@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980D0E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76329E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 14:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVWyJ-00037V-Fg; Wed, 08 Jan 2025 09:23:47 -0500
+	id 1tVX0P-0004DN-Nz; Wed, 08 Jan 2025 09:25:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVWyH-00036g-12
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:23:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVX0H-0004B9-AM
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:25:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVWyF-0000yH-5e
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:23:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVX0E-00029M-KD
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 09:25:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736346222;
+ s=mimecast20190719; t=1736346345;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K8lISznkSsY7JYLY+0cSfE3/Spssu6TIycJ1SVGaqA0=;
- b=T7dgWD/EiOMat/A4sY5++JPVB3h49sYWVCHlTctOzmHzovsjUgyCZupVv8ogXRMlirscC2
- /y9lYlwnwD4prmNvydgaMaVuGQkjSI6IzKIsIPN4I+2HzCSZx9KQDxyDOHqFbosMAlhHCg
- wPs+j35FYfLMAqhTfT7a7NMFBQ6GfbA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AXEibKuSVZlpViRtb1cZIFRQexR3IJ/dHIKw/SCt2RM=;
+ b=A/C8QenmMRG+bAHLTaPMIIwrk/GScS9zvwn9ivIc8ya2d5cgmkRcF3ALMHCPb3zpr6WQO8
+ B12YQwgYDFrI/Vi1VjdSGrUS8/dzm2/ZAXhu/6Kvg1NnP6IN7K6Wjc1aJqcQQVvs/plQlc
+ XbTWEzqLSNHdGXO0gI84VWIuaszJGI4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-cZL5ZOxmOvmS2rqA5r9Ggg-1; Wed, 08 Jan 2025 09:23:41 -0500
-X-MC-Unique: cZL5ZOxmOvmS2rqA5r9Ggg-1
-X-Mimecast-MFC-AGG-ID: cZL5ZOxmOvmS2rqA5r9Ggg
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d8860ab00dso268569016d6.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 06:23:41 -0800 (PST)
+ us-mta-481-SU32wcreNf6zjRXXyGii_w-1; Wed, 08 Jan 2025 09:25:44 -0500
+X-MC-Unique: SU32wcreNf6zjRXXyGii_w-1
+X-Mimecast-MFC-AGG-ID: SU32wcreNf6zjRXXyGii_w
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4361fc2b2d6so54226325e9.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 06:25:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736346220; x=1736951020;
+ d=1e100.net; s=20230601; t=1736346343; x=1736951143;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=K8lISznkSsY7JYLY+0cSfE3/Spssu6TIycJ1SVGaqA0=;
- b=DUfNR8tPRi+ExVOXiQGAiqjQlqeMO+qyxPOggbi/iEjSj0pzdjkjNBlSnQ0CKEYs21
- KHDirBOHlGRqD/hxte3YRZyGqmTlMS2GI/akGOSyT440VutGZdnT3zVElPs2SxDmhCau
- Lr39k+LQfk7AG3oEd6adm93mWLh3Ban15jpGe9IgpVRqCvF7rU/HBoNijhkfXmY97aFH
- pLQRnlvQAJpqIkE4UpwGu07lTAexk5kdCsSVZTq74UY0et4YvnWTEoV0pBJwpEFr7P4t
- 7qO2weN4sMTEBzGWSBJuVAy4DIb0G0eeFHggSxa/86YGvKWeAZz9pJ8w/MqyUHNMbd/j
- tbWw==
+ bh=AXEibKuSVZlpViRtb1cZIFRQexR3IJ/dHIKw/SCt2RM=;
+ b=H+KiyUA1eD87GUa2V2yCHj1nty7+zn+LW/svVyjczpWIbQ9gFlu85W29jglaHzZojL
+ upLTK1Ph+BdCQxeCeoze6NRbps4Bo5PE7gPEjWwiRJ1FZStEYOzHFOlOBbWiOx7JjGhl
+ 74LeoD6vvLGMgR8AZxlgG9QNaVwWJj3wW4qSKEU3UAFA0tuSgFawByU7P00AJ51ES0Kz
+ 9dNljWizqxZ/GU3ZhFAE23WjSzLQG0ElBdUhVn8/j1/l40oboi51epZdnvc2VvCVb6Gw
+ qz3uLQMTouLGIUlBR+akSruAnVee5dmsZ4YZnV2nHPmJzVXooUB0qBPaO8Go3ZGps55k
+ 20rg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV70oYebg9y8jLSsK6zsqFwWRvNfXEECV+h5OuVI53d0tKPl7aaGIRUfSrKhhlX0gtd57fmAHfQJkTd@nongnu.org
-X-Gm-Message-State: AOJu0YxaqASJgihdpLOB3J0cnZShqROxHpe8oZhwlJ8Io5tSEb73zF6P
- afavU5CoUP92mVBKQrrFY+jk3DmocebQtoFrzYh5BdnAsHDevsHeQQjt7rfay4QQhaHbyVsxGV3
- Blj7K6sQ8vEm+xFXhlpT5fm9UK/1e0CZPSIed088R7VTqzASB5JfS
-X-Gm-Gg: ASbGncvVKtjO5Z5cimsUT2dqw9J4ti13wBc74wfmLq1x/028j1xCCm/3d/Hd8H8W+kM
- 4h4z+FWfvrdBgdx9epB8RJVt1AblaambRkVhMUOSUFCHsBMI81LcFOSgvtRHzu3xm2+BtYsgDdf
- ldgHRLrDiz9rmQssyT9LrZTlfZTDFaHwwV/ljpEOJL3bg5z9VrmtgQ/Gcles+igUI5DwxMbVvU5
- aoUhbJmvkX0DJESHaThnL1OJjiBUkomz11VSwkAWqsw6Z25kLkTYtFnGDKSwiuv1AAygm9WSVN8
- GhINrQ==
-X-Received: by 2002:a05:6214:21eb:b0:6d4:215d:91b9 with SMTP id
- 6a1803df08f44-6df9b2384bemr49512286d6.11.1736346220550; 
- Wed, 08 Jan 2025 06:23:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG1CsFxVSo9qHWX2aH3anT9yyxECES6XiCdVE8hxIrwbQFVI0cv6gyIBZBvKA/yGWuNql8Xdw==
-X-Received: by 2002:a05:6214:21eb:b0:6d4:215d:91b9 with SMTP id
- 6a1803df08f44-6df9b2384bemr49511676d6.11.1736346220188; 
- Wed, 08 Jan 2025 06:23:40 -0800 (PST)
+ AJvYcCUoNdt8LkzE0XEbDwz1izSSrQrHWykk7e0UK/SDYjG/VXJxqOmOnoHUMoYoh0v9qRAFpcrkWBEk2phK@nongnu.org
+X-Gm-Message-State: AOJu0YyCCcgLY8m+rcWl97lMILake/84e8Bkg/opFpxWG3XWpKksaDLc
+ ZWe81PSMuHHpWN4YSr0BQJifOM42kPqVcRt1+FR+Mj8cRovaG5ykG+VlTB2baZ+An4SKwZQ9B9q
+ G1m75WVPODQX0+FUMFpRhy2ft9GcCLFvnDC4feZTqqZwK7uzxFj55
+X-Gm-Gg: ASbGnctP+hkkb3LXnQ9CvwumUlZ4lWShQSwSLM67AwCkOf+PMERuu5UE68xWS5kAtdR
+ K1h3ACExbKUk4LrZU/66Jl/zSmjfveHNhVnLdj/icappbxF84de5ru+y8vVzKYzwRFJMeH+J80q
+ 2rKuZ4vwT5FSj0ifpBhx87sm9OFIDxtXkfzQBxNyKgCSZFOKs5onkf5SRxiVQN6lb8sphqdXUKs
+ AIT9o752zm/hj7RlPrOzfqnWsP/e/uKwE0HSW63CX83BiSk/m2mSOTcLm7lS7z9QZ+fxAKsMr70
+ hHko4w==
+X-Received: by 2002:a05:600c:3c97:b0:436:840b:261c with SMTP id
+ 5b1f17b1804b1-436e26ab54fmr24511435e9.19.1736346343414; 
+ Wed, 08 Jan 2025 06:25:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEW/VZmQGCFHL26iHoltEGoa1/hXsmymAFeZ9FozAthutIar/25REbOi0GZdgiL53jYuYNmYA==
+X-Received: by 2002:a05:600c:3c97:b0:436:840b:261c with SMTP id
+ 5b1f17b1804b1-436e26ab54fmr24510775e9.19.1736346342911; 
+ Wed, 08 Jan 2025 06:25:42 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dd181d3db8sm190818236d6.104.2025.01.08.06.23.34
+ 5b1f17b1804b1-436e2da74dasm22530075e9.2.2025.01.08.06.25.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 06:23:39 -0800 (PST)
-Message-ID: <fc682b87-faef-493a-9edc-e83e7fb1fc5c@redhat.com>
-Date: Wed, 8 Jan 2025 15:23:34 +0100
+ Wed, 08 Jan 2025 06:25:42 -0800 (PST)
+Message-ID: <d1dfef85-c830-416e-9ff6-a69c124aa32e@redhat.com>
+Date: Wed, 8 Jan 2025 15:25:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 28/32] tests/vm: partially un-tabify help output
+Subject: Re: [PATCH v4 29/32] tests/vm: allow interactive login as root
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>, 
@@ -110,7 +110,7 @@ Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>,
  Palmer Dabbelt <palmer@dabbelt.com>, Peter Maydell
  <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>
 References: <20250108121054.1126164-1-alex.bennee@linaro.org>
- <20250108121054.1126164-29-alex.bennee@linaro.org>
+ <20250108121054.1126164-30-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -155,19 +155,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250108121054.1126164-29-alex.bennee@linaro.org>
+In-Reply-To: <20250108121054.1126164-30-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,14 +184,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/01/2025 13.10, Alex Bennée wrote:
-> While the make syntax itself uses tabs having a mixture of tabs and
-> spaces in the vm-help output make no sense and confuses things lining
-> up between terminal and editor. Fix that.
+> This is useful when debugging and you want to add packages to an
+> image.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   tests/vm/Makefile.include | 26 +++++++++++++-------------
->   1 file changed, 13 insertions(+), 13 deletions(-)
+>   tests/vm/Makefile.include | 3 ++-
+>   tests/vm/basevm.py        | 9 +++++++--
+>   2 files changed, 9 insertions(+), 3 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
