@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F0FE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701B5E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVSKb-00044Z-4q; Wed, 08 Jan 2025 04:26:29 -0500
+	id 1tVSLk-0005Zw-Pr; Wed, 08 Jan 2025 04:27:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSK5-0003ut-6H; Wed, 08 Jan 2025 04:25:58 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1tVSKI-0003y2-T6; Wed, 08 Jan 2025 04:26:14 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSK3-0004lu-Mf; Wed, 08 Jan 2025 04:25:56 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d143376dso24189511a12.3; 
- Wed, 08 Jan 2025 01:25:54 -0800 (PST)
+ id 1tVSKH-0004pr-9K; Wed, 08 Jan 2025 04:26:10 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-aaedd529ba1so1881761266b.1; 
+ Wed, 08 Jan 2025 01:26:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736328352; x=1736933152; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736328366; x=1736933166; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pwXzEhTAhGKIo4AswhlvC0Ew8f+aipAHcykX2e2ZcNs=;
- b=LYNt0DkYgosJXBySE2+TDhbWtejJADoEC12EKQ0tDAocPxhKw0nZVtlFhhlBEe9EmI
- 8KeR3hn7a4wYPZc2Ewm4vQRtvbz2FaoYN81F6NIVZlJI2KMM3wpYO0L/stFpznmNPQbL
- jyvlRTNmboTZDDoTy0Rw+u9WiHNiXlghbp7/Q3ihPUmgv4Qu8X7Sj3lI2RmBVh2N3XLN
- Nj/mUXlAf/i3Ker4Z6XqwnlIiZHgqVMQ5cnYc/mQK1tam8wyj6wtuG9rAE/ctrtjgFu7
- 3A2hygWqaHttI+yDJwqSm5JJ61ukzqvDC3SOvBarz2s2wCdWY0V0aQK1VVsByK3GH1l3
- 67aA==
+ bh=47JwbBXTIXSphmQBXHikRa/hsHdiVRz6iqvffl0LB6Y=;
+ b=SMOG6IyZyNdqlFTLY3aZlsh9BjgDQvAQ4i9wDoPydWZcexIaOuRlDKgSW7F+7yzc9s
+ xQ5PqZWdjUCNKF5ySU9cFO8ZLzo01p2q6CjMiDNp2/5x04oBmaXmRElNmKEwFbpOL4ci
+ IwCJ30VhbMgZzZWOZEmSL90m2zIg0yTobTbpsDAWwNXBcayjXAEbQByqHAV5SL7GvwDn
+ 1SiwiPreOchYD6owf7Cz+u4UX1FSlPGP5nRqelwcK3jk8ddpDgm1cLZa4fXRQEJJdPT8
+ H5UyRWz/LCUSpZhVYm13QvIe0nBykay1qSLzAw9kNTAFlqbn0d5ueH7lk2O60hvo/0D+
+ lOUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736328352; x=1736933152;
+ d=1e100.net; s=20230601; t=1736328366; x=1736933166;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pwXzEhTAhGKIo4AswhlvC0Ew8f+aipAHcykX2e2ZcNs=;
- b=P29GVU+tZxF2XUzHySmJ/jbeZFMpuP3wm/Rtv1bwPux30bFv6e7Mp4ItYNZsen/wnp
- xz4N0YgoepdVRd1r5XqjUM18neVlFRIv/Z+ckvbnNLYOeTnUs9XH2EjBgjX/3Ehe/5+2
- NvFa5fy0vTIjJtSVnGBjpCGfJMTybVZWz0xf+HKG6fFJckaE2ZZOM3yZJBQqWFbeWA0R
- w4pdlXlMdinT7aJ1QeDUz/TNZG2PlnSy5HjlCbIE7Dq8sD4nspOOTOvbE28/BBVeQ7zk
- H/GKcJz+LcbgWOXM7nCOceWpZtO3q7tZngo4ESJZDdxaSLLoGcvByzwP1j6f237Rehtz
- wO3g==
+ bh=47JwbBXTIXSphmQBXHikRa/hsHdiVRz6iqvffl0LB6Y=;
+ b=Vl4k3iYZok1I6awFiPMMv95tVuBTAb1Mr0CVmUddDJnVv4AMU+czoREuwdfVQRoM6p
+ nW+TbnCSYZ6ZpnydGuuXgz5sn3zzGxVxoSvEHjxnoF/xtpFOO47q3bPqYbqOWCz7/MvI
+ r8EdZMPq18T26gL/1RIYAkSUeTp6owPfEWBPUwi/rYEX0OTxznBher4tt6BAGcY0RqRm
+ NgSgnyGbbhLJjbbBMklDncdX4H+CXvduLEx4RMSqIwLw7+X3Z68jl78WTHKpWB1w7Uet
+ XSk33Lh2SJsd2rfbQzPp8Ik/MVrdsyHyIAGGgQJOgYN11bohZgw1Sh+j+wE9pFDlgO9p
+ dyyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjBtYaLD+gvDS6TNBo0ppbDlln9G4I151ULJZrzbxm2tqqAaDKd986tJfpjUWfaJkB+znUVvjOWr8aqA==@nongnu.org,
- AJvYcCWuJlSGLrtkXtPDBSwDI5laGJKwZ7d/PZwxNNO5uDI8V4vpP9cyjQmb7ab/+JydzHXWFiSYT9oaSA==@nongnu.org
-X-Gm-Message-State: AOJu0YzxmeXUb1ClebA1skWlf9GMWOZUBj2RE+RPRbJfQ2cZmMqu9khS
- GHM6I1gVqYgPuoqGQXXKKBAajpnrzdbn0Zvvz1V9fsgFIEYQ191jWeOk+mhZ
-X-Gm-Gg: ASbGncsrGuEcdfPd5ph1ol5oyOSfWDKuM43Rrfs3Dr7IMi61Q4prqPQAlWxGXrMvC2A
- CgimEPGavdXT0+Es1aIYeO9LvJoE/TUCevg/cUruPI6EcyjtZzUv77BbHjzIgwmoCGRbT9iq2WH
- TOdEjFo7Y7V02yO/UTnRAg2sXU5sXakZ0Tlc9sWc2/HjfOFQpezRltZHhkJbTwN0l6pgFuCgtL9
- vQ2uhigNDCVyHouD+PaFyt52lKVAW0RQJ/XVeewkvrssDCamKnc9IN9rsuiQ59c0+dldtmRcv3S
- Es/8hWGsNvZecGyC3HZCaB38PweQMczx5gFAf3h/x+pbTe8=
-X-Google-Smtp-Source: AGHT+IHooUNtU1SHuHJ8W88F7WGBPnxr1ss7L89Q8JzHOKPTP+CE60tv6LlDF9PydNLMb5WFTAcL/A==
-X-Received: by 2002:a05:6402:4403:b0:5d0:e9de:5415 with SMTP id
- 4fb4d7f45d1cf-5d972e08601mr1558175a12.14.1736328352217; 
- Wed, 08 Jan 2025 01:25:52 -0800 (PST)
+ AJvYcCUmdJlQcm6bqu5sYUplGIEYK812C0H7/6nN6PIRf11VEh3FJ7jQJexdaFPogI+9Ckt8zqEYewvv5D5Kzg==@nongnu.org,
+ AJvYcCVxUt1m0aX4RJei2RFa8Z4A0xF0PquaZVAJrj9IsfzuAgK02I3zXv2tzBwQLzpL12frSG7O8P/R9g==@nongnu.org
+X-Gm-Message-State: AOJu0YzupVRBsLYYN7o+vRuq7dpVa17/Y91BVRS7ks/xpAnUjJZBjFO8
+ R/ixVdSk5+61moCMG/BLa+YwKo9fwGVqGCyfI25fboqA9uVeNXder6NpihY6
+X-Gm-Gg: ASbGncsFo5tqqIxoJRdwhzSpilUpqnUqtVo6w1LRvaseEMg+yj4P7DQOQ1wP/RNMgm4
+ YLi6sEpLHKui0xWgiY5K0H1Po+4vDcksm7Hy/TRerLdqTBbQqVQMYs09t/OraZDX87GxTjifz8l
+ grGjcsGLqobNGS+IDmKMzpoeoYOv3Nu2zJ1GBRBKpvNnlYNUQbAaztgmynAvOFYtWbrkvm47NiT
+ 36pLm35MpS1+YsUwx6Fa5sS+57f82JNWe3aKbowpMf0bPJC7MiHwMFR/YD5elfv3Wc0JOYFsVEZ
+ Jv5p7zIug9RZ9m8qqOkFqUauuDyFeZgrGXFuSMHfuJesErw=
+X-Google-Smtp-Source: AGHT+IF37DM0lPHB6Ht98gxxrmOuEFwmsCCUIHmk5DNfMwiQGRjHc//EVHJJ1SocaxQ68nZdO5pjog==
+X-Received: by 2002:a05:6402:4405:b0:5d4:35c7:cd7a with SMTP id
+ 4fb4d7f45d1cf-5d972e0b20cmr4743427a12.10.1736328366331; 
+ Wed, 08 Jan 2025 01:26:06 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-188-106-228.77.188.pool.telefonica.de. [77.188.106.228])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.25.50
+ 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.26.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 01:25:50 -0800 (PST)
+ Wed, 08 Jan 2025 01:26:05 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
@@ -77,16 +77,16 @@ Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 02/14] hw/char/imx_serial: Fix reset value of UFCR register
-Date: Wed,  8 Jan 2025 10:25:26 +0100
-Message-ID: <20250108092538.11474-3-shentey@gmail.com>
+Subject: [PATCH 12/14] hw/i2c/imx_i2c: Convert DPRINTF() to trace events
+Date: Wed,  8 Jan 2025 10:25:36 +0100
+Message-ID: <20250108092538.11474-13-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250108092538.11474-1-shentey@gmail.com>
 References: <20250108092538.11474-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,50 +109,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The value of the UCFR register is respected when echoing characters to the
-terminal, but its reset value is reserved. Fix the reset value to the one
-documented in the datasheet.
-
-While at it move the related attribute out of the section of unimplemented
-registers since its value is actually respected.
+Also print the MMIO address when tracing. This allows to distinguishing the
+many instances a typical i.MX SoC has.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/char/imx_serial.h | 2 +-
- hw/char/imx_serial.c         | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ hw/i2c/imx_i2c.c    | 21 +++++----------------
+ hw/i2c/trace-events |  5 +++++
+ 2 files changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/include/hw/char/imx_serial.h b/include/hw/char/imx_serial.h
-index 65f0e97c76..90ba3ff18c 100644
---- a/include/hw/char/imx_serial.h
-+++ b/include/hw/char/imx_serial.h
-@@ -109,13 +109,13 @@ struct IMXSerialState {
-     uint32_t ucr1;
-     uint32_t ucr2;
-     uint32_t uts1;
-+    uint32_t ufcr;
+diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
+index c565fd5b8a..be1688c064 100644
+--- a/hw/i2c/imx_i2c.c
++++ b/hw/i2c/imx_i2c.c
+@@ -25,18 +25,7 @@
+ #include "hw/i2c/i2c.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+-
+-#ifndef DEBUG_IMX_I2C
+-#define DEBUG_IMX_I2C 0
+-#endif
+-
+-#define DPRINTF(fmt, args...) \
+-    do { \
+-        if (DEBUG_IMX_I2C) { \
+-            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX_I2C, \
+-                                             __func__, ##args); \
+-        } \
+-    } while (0)
++#include "trace.h"
  
-     /*
-      * The registers below are implemented just so that the
-      * guest OS sees what it has written
-      */
-     uint32_t onems;
--    uint32_t ufcr;
-     uint32_t ubmr;
-     uint32_t ubrc;
-     uint32_t ucr3;
-diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
-index 12705a1337..f805da23ff 100644
---- a/hw/char/imx_serial.c
-+++ b/hw/char/imx_serial.c
-@@ -159,6 +159,7 @@ static void imx_serial_reset(IMXSerialState *s)
-     s->ucr3 = 0x700;
-     s->ubmr = 0;
-     s->ubrc = 4;
-+    s->ufcr = BIT(11) | BIT(0);
+ static const char *imx_i2c_get_regname(unsigned offset)
+ {
+@@ -152,8 +141,8 @@ static uint64_t imx_i2c_read(void *opaque, hwaddr offset,
+         break;
+     }
  
-     fifo32_reset(&s->rx_fifo);
-     timer_del(&s->ageing_timer);
+-    DPRINTF("read %s [0x%" HWADDR_PRIx "] -> 0x%02x\n",
+-            imx_i2c_get_regname(offset), offset, value);
++    trace_imx_i2c_read(s->iomem.addr, imx_i2c_get_regname(offset), offset,
++                       value);
+ 
+     return (uint64_t)value;
+ }
+@@ -163,8 +152,8 @@ static void imx_i2c_write(void *opaque, hwaddr offset,
+ {
+     IMXI2CState *s = IMX_I2C(opaque);
+ 
+-    DPRINTF("write %s [0x%" HWADDR_PRIx "] <- 0x%02x\n",
+-            imx_i2c_get_regname(offset), offset, (int)value);
++    trace_imx_i2c_read(s->iomem.addr, imx_i2c_get_regname(offset), offset,
++                       value);
+ 
+     value &= 0xff;
+ 
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index f708a7ace1..c6cba1ecf6 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -56,3 +56,8 @@ npcm7xx_smbus_recv_fifo(const char *id, uint8_t received, uint8_t expected) "%s
+ 
+ pca954x_write_bytes(uint8_t value) "PCA954X write data: 0x%02x"
+ pca954x_read_data(uint8_t value) "PCA954X read data: 0x%02x"
++
++# imx_i2c.c
++
++imx_i2c_read(uint64_t addr, const char *reg, uint64_t ofs, uint64_t value) "0x%" PRIx64 ":[%s (0x%" PRIx64 ")] -> 0x%02" PRIx64
++imx_i2c_write(uint64_t addr, const char *reg, uint64_t ofs, uint64_t value) "0x%" PRIx64 ":[%s (0x%" PRIx64 ")] <- 0x%02" PRIx64
 -- 
 2.47.1
 
