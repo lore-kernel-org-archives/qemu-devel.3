@@ -4,88 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A909E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E720E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVdRf-0000hJ-Fp; Wed, 08 Jan 2025 16:18:31 -0500
+	id 1tVdVL-0001aP-RF; Wed, 08 Jan 2025 16:22:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tVdRa-0000gZ-Fm
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:18:29 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdVI-0001a8-VF
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:22:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tVdRX-0005Ck-3U
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:18:26 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdVH-0005dE-BB
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:22:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736371101;
+ s=mimecast20190719; t=1736371334;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yDPxfsGHj4pCbSf5mPsZPhRAO1dq6Qr6r72Z+W/S8qk=;
- b=GDDAL8CtbwTsTDcCX2595rrDYmrNV1e0vqi9rA/nuXdRZfY1kLC8Qjd+BCcLsEdTCgNysQ
- rG9t15dg6MGs8YHM266JZYEcLtZ/fYg27gWEZgYEeMI0ueHd1wntp4THKlytfWXJxEN2G3
- YyqdSCTcn7kreFanbCAkzXZznRA+3w0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Bfj03Z1hailZKFXRLUXKAdtZqhCy+9zpwuchbFoqM/Y=;
+ b=Jjl+Uz47LpkPkvTGVx0fDd8+XE4o00hoZzjEZ+ijP6Da7s06s4FU1cAVJ8+U6Zha/goSvl
+ QCUb+eKJaSfcz1hn+RaPhrOdMa4lGSrI4+bSHslq9frnDeVGCS62N6LiUqDOsQ5tYT2w9e
+ TxmoNkbEQw6vw7CVTJgHtVIUZrLAuT8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-691-hYTRtmbqOEWK5g2SLwlsUA-1; Wed, 08 Jan 2025 16:18:20 -0500
-X-MC-Unique: hYTRtmbqOEWK5g2SLwlsUA-1
-X-Mimecast-MFC-AGG-ID: hYTRtmbqOEWK5g2SLwlsUA
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ef7fbd99a6so376291a91.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:18:19 -0800 (PST)
+ us-mta-629-nr4K_BfCOrGUCYS6oip73g-1; Wed, 08 Jan 2025 16:22:09 -0500
+X-MC-Unique: nr4K_BfCOrGUCYS6oip73g-1
+X-Mimecast-MFC-AGG-ID: nr4K_BfCOrGUCYS6oip73g
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-436248d1240so1202195e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:22:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736371099; x=1736975899;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yDPxfsGHj4pCbSf5mPsZPhRAO1dq6Qr6r72Z+W/S8qk=;
- b=Od6eAPpQA8vuyoDQn9fLvMuRFzbWiVZqEA5XGD6yWhj5kJ1wVyEIFxeyCRT72Fjvq7
- h1olhXisuOhMr3ipNHCAZWbVxrS5bbDK3vQHPF2KamZJW9MzNNYLstLuyFEsmxeGhKsk
- tPMqtFkTTBTAZvAdJxRVk7MWholjR4hA6Q5X9dyI/BYb9a9BHsVljyOUfGCmRaL1HegH
- AFhx+HME9rYmWo8pVip8YQyqvo8Sxpot0HFTdxrL8++10X72ifKdbYMMpeAezQIPm76w
- oLrLygUhdFbKJW98zzJobd65tzeyy3LJS4RinwGYposMt5nBIdNJcbqFH8uPURANGL7n
- juwA==
-X-Gm-Message-State: AOJu0Yz+XOQvFnyfI+6zb17d1oM9ZxUY0GTU7zOqq5++DV3gDrdWcSf8
- c7TMR+cFvdcyhHHPu+1TH76TKCHNhWM4CAndHHSFec2wmFXgFXmADmdmBOOt7U0p0XpNWvvWZVp
- YrraBn0/JrsmED1oR04R9DpZ3+ljpnsy/Q85YPEEIyo6PjaaOJ4cQ7v+3mRHq72dLW+j2tf8B5L
- Sx+p29wiRk/IktzoS5zJHb4RE+mdQ=
-X-Gm-Gg: ASbGncsI+rTHIsKmo5qpsuXBknYY+OjVPkWTzJwv44rBvpadX0AHzzo030vhIPjtWH7
- D2dSoxiDb5+2JIl1wedWfuQPrZHY9rySUnNYcufIOj2ySF5LxBAFCPYdKxseOqyzhryo/xQ==
-X-Received: by 2002:a17:90b:2652:b0:2ee:3cc1:793b with SMTP id
- 98e67ed59e1d1-2f548f44334mr5689034a91.26.1736371098971; 
- Wed, 08 Jan 2025 13:18:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPIFl2eEGgPTDDmbi4BEjYibDOfjbLx3vUJmbNG6yoJmJWJrmR9GdcOlikzXWdZO7oOKbQ1JLkfyzimDawtBQ=
-X-Received: by 2002:a17:90b:2652:b0:2ee:3cc1:793b with SMTP id
- 98e67ed59e1d1-2f548f44334mr5689008a91.26.1736371098631; Wed, 08 Jan 2025
- 13:18:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736371328; x=1736976128;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Bfj03Z1hailZKFXRLUXKAdtZqhCy+9zpwuchbFoqM/Y=;
+ b=BkOhfw8kJu2rtTwBAa6jKWIU/PxGhY9nAOa+vP8zCzgC5G0HzLggLxpXCHGUZjUb3I
+ auOBTtI8oOTTv+7nDAVcRyzaTNiMZjilCD6pBCURGgzWV9PZ/gWywKMMPgPDjOplQwfb
+ kkf8eFJf/MMqKgxpNFWtm40odSwKwbLu33mPJaU4RTHNjKNtiRDNLJ8f/hn2tjs2VrX3
+ SKDA1seMcZZEoZr8umIyVU2pzZEqsx7fK2MBuC8fBzWhHWhWOGPDevT0x5+wakqTJI71
+ P8gMFhwWH8QYvoCehi3c6pJzD4z7krVGc5E3+GNgJgdfcn7/mbqo0nN1nquIqNnFirAp
+ +Yjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAOAcJnIzwTFz8FYweExWkZOxTe5OhwrXTrN5gqAwXOZc4giD/JsD4A4lZ+wwEf2am513AehnH6ZIU@nongnu.org
+X-Gm-Message-State: AOJu0YwH/NCsbOxK2oFYq1ca/zmBkq1eAr+XKvMFwYviraHf5lyHqXO9
+ sJL5OzkISR6oCyn53o3OTaxhtQqvm/N0oPOPs4pYfr1IgUbmjFE8dNpWpPwxVC5MZPcJx+Xw0E9
+ UAgIDf0XrYbXhhQCWeaAVHG0V5BvFs44VtGn43xx1DgeTl49jWiWG
+X-Gm-Gg: ASbGncujJb1ZYBm5zVUxps/lO3+AjVrF8HMPcpRLh/rJdughEXrV9/bX+DL2JmQ6439
+ FWQYV0RzjvftJvkAoFs2N+VBmQKZ0jqIJ5tUMqvGlwTfhXzs2zrncAuOBaDWnDyogO5EDHkvNzc
+ TB5Os9k+ekGSInFlZ9oCUiluqqOU+bl1VpOAK4xyIHiO44wDlNSFRJYsHsQRrQatlal/EKGiLuv
+ z7s34pMUdVXu26dZ1iMK3Vnw1qK38nvvt2Vqx252ZB/2D2594WrHhMbCcVIHiBnjCNxplGj049/
+ IEY53LHyxqBAbZ3rozxRkqSiqnrjIVBm5AgBNvkAjcr1MOe65O5ZgvRSWHwUftoGsCs7lkch7ZS
+ vp2crfw==
+X-Received: by 2002:a05:600c:4f95:b0:434:a1d3:a326 with SMTP id
+ 5b1f17b1804b1-436e2678213mr35028655e9.6.1736371328495; 
+ Wed, 08 Jan 2025 13:22:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IExWh9zYA05FKQUbHVuvm6/DNDgU3VRZGy31QFodIFIbAXgOWwcsJ5+GVAxWwXAoOZSsckkQw==
+X-Received: by 2002:a05:600c:4f95:b0:434:a1d3:a326 with SMTP id
+ 5b1f17b1804b1-436e2678213mr35028465e9.6.1736371328150; 
+ Wed, 08 Jan 2025 13:22:08 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7?
+ (p200300cbc70d3a00d73c06a8ca9f1df7.dip0.t-ipconnect.de.
+ [2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e99a6e04sm141615e9.10.2025.01.08.13.22.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jan 2025 13:22:06 -0800 (PST)
+Message-ID: <6d771c8c-1ebe-48aa-b74e-6195738a041a@redhat.com>
+Date: Wed, 8 Jan 2025 22:22:04 +0100
 MIME-Version: 1.0
-References: <20241213021827.2956769-1-jsnow@redhat.com>
- <20241213021827.2956769-10-jsnow@redhat.com>
- <87h66y4hgl.fsf@pond.sub.org>
-In-Reply-To: <87h66y4hgl.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 8 Jan 2025 16:18:07 -0500
-X-Gm-Features: AbW1kvYg78JQGGUoRrOClqJHWsEiAVfl5xIFbkXtew7esmL2lYeOwHQNz9Yrg_M
-Message-ID: <CAFn=p-YBsJBNFWrX=XLF1TaWPjSA5kNhg3spf83Cw9_JnS2_pw@mail.gmail.com>
-Subject: Re: [PATCH 09/23] qapi/source: allow multi-line QAPISourceInfo
- advancing
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000885e06062b3866d0"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/7] Poisoned memory recovery on reboot
+To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
+ imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
+References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
+ <20241214134555.440097-1-william.roche@oracle.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241214134555.440097-1-william.roche@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,220 +163,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000885e06062b3866d0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 14.12.24 14:45, “William Roche wrote:
+> From: William Roche <willia.roche@oracle.com>
+> 
+> Hello David,
 
-On Fri, Dec 20, 2024 at 8:22=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+Hi!
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > This is for the sake of the new rST generator (the "transmogrifier") so
-> > we can advance multiple lines on occasion while keeping the
-> > generated<-->source mappings accurate.
-> >
-> > next_line now simply takes an optional n parameter which chooses the
-> > number of lines to advance.
-> >
-> >
-> > RFC: Here's the exorbitant detail on why I want this:
-> >
-> > This is used mainly when converting section syntax in free-form
-> > documentation to more traditional rST section header syntax, which
-> > does not always line up 1:1 for line counts.
-> >
-> > For example:
-> >
-> > ```
-> >  ##
-> >  # =3D Section     <-- Info is pointing here, "L1"
-> >  #
-> >  # Lorem Ipsum
-> >  ##
-> > ```
-> >
-> > would be transformed to rST as:
-> >
-> > ```
-> > =3D=3D=3D=3D=3D=3D=3D        <-- L1
-> > Section        <-- L1
-> > =3D=3D=3D=3D=3D=3D=3D        <-- L1
-> >                <-- L2
-> > Lorem Ipsum    <-- L3
-> > ```
->
-> I can't help to wonder...  Could we simply use rST markup instead?
->
-> "Later", "maybe later", or even "please ask me later" would be perfectly
-> acceptable answers.
->
+Let me start reviewing today a bit (it's already late, and I'll continue 
+tomorrow.
 
-Yeah, I'd be happy with that, I just didn't want to add more complexity to
-the pile so I went for what I felt was "simplest":
+> 
+> Here is an new version of our code and an updated description of the
+> patch set:
+> 
+ >   ---> This set of patches fixes several problems with hardware 
+memory errors
+> impacting hugetlbfs memory backed VMs and the generic memory recovery
+> on VM reset.
+> When using hugetlbfs large pages, any large page location being impacted
+> by an HW memory error results in poisoning the entire page, suddenly
+> making a large chunk of the VM memory unusable.
 
-- Leave source syntax alone
-- Copy and modify the existing freeform doc parser
-- Quickly allow for multi-line advancing where it appeared to be important.
+I assume the problem that will remain is that a running VM will still 
+lose that chunk (yet, we only indicate a single 4k page to the guest via 
+an injected MCE :( ).
 
-Modifying freeform syntax to be purely rST that isn't modified or rewritten
-at all has benefits:
+So the biggest point of this patch set is really the recovery on reboot.
 
-- No need to mangle or multiplex source line source information
-- Less code
-- More straightforward
+And as I am writing this, I realize that the series subject correctly 
+reflects that :)
 
-I'm quite happy to do it later, is there some kind of "ticket" system you'd
-tolerate using for tracking nits for cleanup? I *will* forget if we don't
-listify and track them, I'm sorry (but wise enough) to admit. I just don't
-want to get sidetracked on little side-quests right now. (Quite prone to
-this...)
+-- 
+Cheers,
 
-
->
-> > After consuming the single "Section" line from the source, we want to
-> > advance the source pointer to the next non-empty line which requires
-> > jumping by more than one line.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  scripts/qapi/source.py | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
-> > index 7b379fdc925..ffdc3f482ac 100644
-> > --- a/scripts/qapi/source.py
-> > +++ b/scripts/qapi/source.py
-> > @@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
-> >          self.defn_meta =3D meta
-> >          self.defn_name =3D name
-> >
-> > -    def next_line(self: T) -> T:
-> > +    def next_line(self: T, n: int =3D 1) -> T:
-> >          info =3D copy.copy(self)
-> > -        info.line +=3D 1
-> > +        info.line +=3D n
-> >          return info
-> >
-> >      def loc(self) -> str:
->
-> Assuming we need this:
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
-
-Thanks! We can always drop stuff later if we wind up not needing it, it's
-just a means to an end.
-
---js
-
---000000000000885e06062b3866d0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Dec 20,=
- 2024 at 8:22=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; This is for the sake of the new rST generator (the &quot;transmogrifie=
-r&quot;) so<br>
-&gt; we can advance multiple lines on occasion while keeping the<br>
-&gt; generated&lt;--&gt;source mappings accurate.<br>
-&gt;<br>
-&gt; next_line now simply takes an optional n parameter which chooses the<b=
-r>
-&gt; number of lines to advance.<br>
-&gt;<br>
-&gt;<br>
-&gt; RFC: Here&#39;s the exorbitant detail on why I want this:<br>
-&gt;<br>
-&gt; This is used mainly when converting section syntax in free-form<br>
-&gt; documentation to more traditional rST section header syntax, which<br>
-&gt; does not always line up 1:1 for line counts.<br>
-&gt;<br>
-&gt; For example:<br>
-&gt;<br>
-&gt; ```<br>
-&gt;=C2=A0 ##<br>
-&gt;=C2=A0 # =3D Section=C2=A0 =C2=A0 =C2=A0&lt;-- Info is pointing here, &=
-quot;L1&quot;<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Lorem Ipsum<br>
-&gt;=C2=A0 ##<br>
-&gt; ```<br>
-&gt;<br>
-&gt; would be transformed to rST as:<br>
-&gt;<br>
-&gt; ```<br>
-&gt; =3D=3D=3D=3D=3D=3D=3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L1<br>
-&gt; Section=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L1<br>
-&gt; =3D=3D=3D=3D=3D=3D=3D=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L1<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;-- L2<br>
-&gt; Lorem Ipsum=C2=A0 =C2=A0 &lt;-- L3<br>
-&gt; ```<br>
-<br>
-I can&#39;t help to wonder...=C2=A0 Could we simply use rST markup instead?=
-<br>
-<br>
-&quot;Later&quot;, &quot;maybe later&quot;, or even &quot;please ask me lat=
-er&quot; would be perfectly<br>
-acceptable answers.<br></blockquote><div><br></div><div>Yeah, I&#39;d be ha=
-ppy with that, I just didn&#39;t want to add more complexity to the pile so=
- I went for what I felt was &quot;simplest&quot;:</div><div><br></div><div>=
-- Leave source syntax alone</div><div>- Copy and modify the existing freefo=
-rm doc parser</div><div>- Quickly allow for multi-line advancing where it a=
-ppeared to be important.</div><div><br></div><div>Modifying freeform syntax=
- to be purely rST that isn&#39;t modified or rewritten at all has benefits:=
-</div><div><br></div><div>- No need to mangle or multiplex source line sour=
-ce information</div><div>- Less code</div><div>- More straightforward<br></=
-div><div><br></div><div>I&#39;m quite happy to do it later, is there some k=
-ind of &quot;ticket&quot; system you&#39;d tolerate using for tracking nits=
- for cleanup? I *will* forget if we don&#39;t listify and track them, I&#39=
-;m sorry (but wise enough) to admit. I just don&#39;t want to get sidetrack=
-ed on little side-quests right now. (Quite prone to this...)<br></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; After consuming the single &quot;Section&quot; line from the source, w=
-e want to<br>
-&gt; advance the source pointer to the next non-empty line which requires<b=
-r>
-&gt; jumping by more than one line.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 scripts/qapi/source.py | 4 ++--<br>
-&gt;=C2=A0 1 file changed, 2 insertions(+), 2 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py<br>
-&gt; index 7b379fdc925..ffdc3f482ac 100644<br>
-&gt; --- a/scripts/qapi/source.py<br>
-&gt; +++ b/scripts/qapi/source.py<br>
-&gt; @@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -&gt; None:=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.defn_meta =3D meta<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.defn_name =3D name<br>
-&gt;=C2=A0 <br>
-&gt; -=C2=A0 =C2=A0 def next_line(self: T) -&gt; T:<br>
-&gt; +=C2=A0 =C2=A0 def next_line(self: T, n: int =3D 1) -&gt; T:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 info =3D copy.copy(self)<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 info.line +=3D 1<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 info.line +=3D n<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return info<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 def loc(self) -&gt; str:<br>
-<br>
-Assuming we need this:<br>
-Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" tar=
-get=3D"_blank">armbru@redhat.com</a>&gt;</blockquote><div><br></div><div>Th=
-anks! We can always drop stuff later if we wind up not needing it, it&#39;s=
- just a means to an end.</div><div><br></div><div>--js <br></div></div></di=
-v>
-
---000000000000885e06062b3866d0--
+David / dhildenb
 
 
