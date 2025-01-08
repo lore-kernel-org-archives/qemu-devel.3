@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A79E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 20:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F402FE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 20:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVcdW-0007Bh-8A; Wed, 08 Jan 2025 15:26:42 -0500
+	id 1tVcdX-0007C3-5k; Wed, 08 Jan 2025 15:26:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdU-0007BF-AJ
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:40 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdV-0007Bg-Gh
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:41 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdS-0006qe-L9
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:40 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508C2ZBq027089;
- Wed, 8 Jan 2025 20:26:30 GMT
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdT-0006qg-4y
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:41 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508E75Rx003080;
+ Wed, 8 Jan 2025 20:26:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=x55OOGktqZtKRfAR0eO/4uQ2zOwn
- 5OS/er4K1EhtRyo=; b=YfyANmI9uy7bI29mavliyzV9NwDaq+cqkAqLG3WKuq/Y
- Iorc+kzLvqGojcqp7AC22AdklC4qrnQWCXisgvBd3YOTCVAn50C2xXBIpTttK6HB
- A7vJHR0hdOMoYSj0dsAmosZbpmsGIYFtZavM8g+/SVYqUho+iF/+gTdn4wKzP2+F
- Z/nYLmeT4aYBdI3uN5kT3mD7Mm2SaIeoaBtWhnKYFzUz0Udtpjue9wtVycR3F4UG
- zrTDbQ3q1Ydj4357YJg8F9waaMWB1qr9KyapTfiuwsxhvGri/9cS+MkbEu31ApYu
- N8moiw2s/Bnx7iJG7zMiKnhUjqBJUvGF0BVB2itiNw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441e3b4x6f-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=h2zLql
+ JHWsyk9VsMpy+BdlX4us6ZwDunSnosEn8uDtA=; b=QcZm6hHXB9eIFWRxuNxfSu
+ BJk5jsvcO1BFxVX8KWcAjIwgFQrQ+ap0HNzKmvhbHaoglbSha5PZYnRrUhJ1BXc+
+ G1cZH5dus1xGWj8xRnjj8BPYkEga8qelqsY1H5Dpa89HBE4Gl3d9MHatuMF54pRi
+ IST+IiS1SUSO0luzK8NIpl8NIxNXNTDKEyDSXnHKPe6vllbrD6RM+J6JaMap4mef
+ lyr5pjlWgXvnP9nUdVOQaqzZg0cP51pTYDYZBHqMgVIGlXiC3DrniGvK/LZtX+Hy
+ 6+BpT/vw6u41Qw1HEzWMFvIV2Qo8l33lvg2+Qc3KKh6xRE7PV56yFwH0hBVoj8MQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441tu5hmm9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 20:26:30 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508KD5mC013645;
- Wed, 8 Jan 2025 20:26:29 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygap1jqs-1
+ Wed, 08 Jan 2025 20:26:31 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508H4LVX015805;
+ Wed, 8 Jan 2025 20:26:30 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygtm1gp8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 20:26:29 +0000
+ Wed, 08 Jan 2025 20:26:30 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 508KQRAX14287292
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 508KQSEw40108356
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jan 2025 20:26:27 GMT
+ Wed, 8 Jan 2025 20:26:28 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8569420043;
+ by IMSVA (Postfix) with ESMTP id 4767620043;
+ Wed,  8 Jan 2025 20:26:28 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9D38220040;
  Wed,  8 Jan 2025 20:26:27 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E18A820040;
- Wed,  8 Jan 2025 20:26:26 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.179.24.127])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jan 2025 20:26:26 +0000 (GMT)
+ Wed,  8 Jan 2025 20:26:27 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -65,25 +66,28 @@ To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
 Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v4 0/9] gdbstub: Allow late attachment
-Date: Wed,  8 Jan 2025 21:04:55 +0100
-Message-ID: <20250108202625.149869-1-iii@linux.ibm.com>
+Subject: [PATCH v4 1/9] qapi: Make qapi_bool_parse() gracefully handle NULL
+ value
+Date: Wed,  8 Jan 2025 21:04:56 +0100
+Message-ID: <20250108202625.149869-2-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250108202625.149869-1-iii@linux.ibm.com>
+References: <20250108202625.149869-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: GwBxyhED7Kgmp2tnsQ6y6gsJH0lzE_P7
-X-Proofpoint-GUID: GwBxyhED7Kgmp2tnsQ6y6gsJH0lzE_P7
+X-Proofpoint-GUID: E1NcSFeJfU5EUuOXXBmSyIy1msxkakjN
+X-Proofpoint-ORIG-GUID: E1NcSFeJfU5EUuOXXBmSyIy1msxkakjN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1015 bulkscore=0
- lowpriorityscore=0 mlxlogscore=725 adultscore=0 suspectscore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501080163
+ mlxscore=0 priorityscore=1501
+ mlxlogscore=843 adultscore=0 bulkscore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501080163
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -109,87 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3: https://lore.kernel.org/qemu-devel/20241216123412.77450-1-iii@linux.ibm.com/
-v3 -> v4: Rebase.
-          Add missing "\n"s to error messages.
-          Use unix_listen() (Alex).
-          Use qapi_bool_parse() and patch it to accept NULL (Alex).
-          Remove a leftover include (Alex).
-          Rename port_or_path to path, set it to NULL after freeing (Alex).
+Use g_strcmp0(), so that NULL is considered an invalid parameter value.
 
-v2: https://lore.kernel.org/qemu-devel/20241106223629.2608-1-iii@linux.ibm.com/
-v2 -> v3: Rebase.
-          Patches that need review:
-          - [PATCH 2/8] gdbstub: Try unlinking the unix socket before binding
-          - [PATCH 4/8] user: Introduce host_interrupt_signal  # linux part
-          - [PATCH 6/8] gdbstub: Allow late attachment
-          - [PATCH 7/8] docs/user: Document the %d placeholder and suspend=n QEMU_GDB features
-          - [PATCH 8/8] tests/tcg: Add late gdbstub attach test
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ qapi/qapi-util.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-v1: https://lore.kernel.org/qemu-devel/20241024200031.80327-1-iii@linux.ibm.com/
-v1 -> v2: Rebase, fix conflicts with the QEMU_RTSIG_MAP patch.
-          Use qemu_get_thread_id() for %d (Helge, Richard, Warner).
-          Add R-bs, except for the Richard's one on 4/8, since
-          conflict resolution caused a noticeable change.
-
-Hi,
-
-This series adds the ability to attach GDB to a running qemu-user
-instance. This is useful for debugging multi-process apps.
-
-Patches 1 and 2 implement a small related feature: the ability to
-create individual UNIX sockets for each child process.
-
-Patches 3-5 add the required infrastructure. In particular, we need
-to reserve a host signal for waking up threads, as discussed in [1].
-By the way, the problem with atomicity of checking for pending signals
-and invoking syscalls that I'm describing in that thread seems to
-have already been solved by the safe_syscall infrastructure, so the
-changes are fairly simple.
-
-If this series is accepted, I will rebase the all-stop series on top
-of it.
-
-Patch 6 is the implementation, patch 7 is a documentation update,
-patch 8 is a test. I tested this series on Linux and only
-compile-tested on the BSDs.
-
-Best regards,
-Ilya
-
-Ilya Leoshkevich (9):
-  qapi: Make qapi_bool_parse() gracefully handle NULL value
-  gdbstub: Allow the %d placeholder in the socket path
-  gdbstub: Try unlinking the unix socket before binding
-  user: Introduce user/signal.h
-  user: Introduce host_interrupt_signal
-  osdep: Introduce qemu_kill_thread()
-  gdbstub: Allow late attachment
-  docs/user: Document the %d placeholder and suspend=n QEMU_GDB features
-  tests/tcg: Add late gdbstub attach test
-
- bsd-user/main.c                            |   1 -
- bsd-user/signal-common.h                   |   1 -
- bsd-user/signal.c                          |  13 ++
- docs/user/main.rst                         |  16 ++-
- gdbstub/user.c                             | 150 +++++++++++++++++----
- include/qemu/osdep.h                       |   9 ++
- include/user/signal.h                      |  25 ++++
- linux-user/main.c                          |   1 -
- linux-user/signal-common.h                 |   1 -
- linux-user/signal.c                        |  26 +++-
- linux-user/syscall.c                       |   1 +
- qapi/qapi-util.c                           |  16 +--
- tests/guest-debug/run-test.py              |  15 ++-
- tests/tcg/multiarch/Makefile.target        |   9 +-
- tests/tcg/multiarch/gdbstub/late-attach.py |  28 ++++
- tests/tcg/multiarch/late-attach.c          |  41 ++++++
- util/oslib-posix.c                         |  15 +++
- 17 files changed, 317 insertions(+), 51 deletions(-)
- create mode 100644 include/user/signal.h
- create mode 100644 tests/tcg/multiarch/gdbstub/late-attach.py
- create mode 100644 tests/tcg/multiarch/late-attach.c
-
+diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
+index 65a7d184372..c6ae829f904 100644
+--- a/qapi/qapi-util.c
++++ b/qapi/qapi-util.c
+@@ -86,17 +86,17 @@ int qapi_enum_parse(const QEnumLookup *lookup, const char *buf,
+ 
+ bool qapi_bool_parse(const char *name, const char *value, bool *obj, Error **errp)
+ {
+-    if (g_str_equal(value, "on") ||
+-        g_str_equal(value, "yes") ||
+-        g_str_equal(value, "true") ||
+-        g_str_equal(value, "y")) {
++    if (!g_strcmp0(value, "on") ||
++        !g_strcmp0(value, "yes") ||
++        !g_strcmp0(value, "true") ||
++        !g_strcmp0(value, "y")) {
+         *obj = true;
+         return true;
+     }
+-    if (g_str_equal(value, "off") ||
+-        g_str_equal(value, "no") ||
+-        g_str_equal(value, "false") ||
+-        g_str_equal(value, "n")) {
++    if (!g_strcmp0(value, "off") ||
++        !g_strcmp0(value, "no") ||
++        !g_strcmp0(value, "false") ||
++        !g_strcmp0(value, "n")) {
+         *obj = false;
+         return true;
+     }
 -- 
 2.47.1
 
