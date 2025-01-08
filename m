@@ -4,84 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC2BE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 12:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA90E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 12:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVV3i-0005gj-Dp; Wed, 08 Jan 2025 07:21:14 -0500
+	id 1tVV4q-0007AH-S5; Wed, 08 Jan 2025 07:22:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVUwS-0002cc-E2
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:13:50 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVV0h-0001Uy-PM
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:18:07 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVUwP-0007tf-M6
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:13:43 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-216281bc30fso30537845ad.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 04:13:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVV0f-0002QV-3L
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 07:18:07 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-385df53e559so13031773f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 04:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736338420; x=1736943220;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qMShpxxlgZk7ivSlzKAuGIG5z3yJv+Ts7KMBgEzCc+A=;
- b=gOmn7MC8W9FCrGtVfnPXA0pSgEVmFtU/vp07wgWLnBUFXwxwFJAKEiqY0sA3Y8PPXT
- CVEyxUmt30Qkch/McQFtfCsadGwEkk8iOCceZCJrGC+99JSzXiA97PqB551WIqDoT1B+
- 353OgCMJXn0SzTZG+/rNNGAAuA401ZxQydxVeq1sefKCZJYPE+8A6yZHFo0SlrgTENws
- 00O/c+QdnmQ8veEFUzEt9q3Dk4DMK8O2DYUOuopiKiYuLfmogT37cEcDfShXqitlb2VX
- dUy2iBo73i6uuwMzRANRvVTUet5Aqq5AH8eezCtSH31Q4f1zHt6+t5ftzE6pPVihcgKq
- 2Eug==
+ d=linaro.org; s=google; t=1736338683; x=1736943483; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zb7xH3yqos9lFAi/HcOIGn+1EMSfay7/d3nkjMNZ1pk=;
+ b=IEa+u33YioinDNU6VgHz7ZuD+4TA4tOTgzbBgi8S0y5JBNTIWEyMm6PECRmnJ+ALwz
+ 7Bk/D6f3FqDQorTwxZeK/P6fLbbHSbItv6knkQVc8+fcDtX4VvDvBsi1ellu+59r0o/9
+ DdB6umbItAusNO6VklVSG9hKaEXR/d1Wp7AcLtAWjrgJ30llopFOl1oGKiVLJXSYLW7X
+ io9VNP190riC02dXXY8FprMSxSEPD+G4B9Qi+WYbv3N7xkBX6Jw7a0djlnFrt46o3LUi
+ oI1qb48iSeuho+0zEmgRj/PDoSsbr4orIKmTFj8xhF/rrwIYtN66GXNoVbRAwJo4Z33y
+ /dEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736338420; x=1736943220;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qMShpxxlgZk7ivSlzKAuGIG5z3yJv+Ts7KMBgEzCc+A=;
- b=FTv/031PduMbLjZ3ZjNDcDpzlvbG6D7jb4mL5sA1ELbvo5hTv5TURxAv7KM5KBL/Td
- 05tuAhLOt9StU/ZFYxNUGJieBytgqUXsuwQ7Q6bBDa9dc6uhLZaQY+d++VnW5IMT2yFc
- tCD12m1mWuYSfP7oFBCwBJrivhGiyP1AesMNtV8oH/vXh0i1wiI3pmwmGpup8tChNRti
- pQB6UhKZyKO+CYhICnZgfVz28PNk5YXmU5t4aroYABNlrrqY2oHub9fEqbdM3X5OyJoe
- 9yMK8VdprawEj60u0GN6ogY3m35fYSCYPQen3KcE+wfZ4MuPnTuRWDD3er1kztjkaUIf
- xa/Q==
-X-Gm-Message-State: AOJu0YyxqEvdyfrkl5Ew7UQzub9LlqtlG7Z62YHC0+mv45BSNVV7osR/
- 3yFMBuD1xPl5tM55J1SVnHlr/+rIKmU/JH/tAJNFTrXLMDGbPw2+5bvAPf/Tfxs=
-X-Gm-Gg: ASbGncu5fUjKrfv5w2iQz7xS0kifizhehyGd61LFCRkqgUiUAo00s/vAKztv2U+dSYq
- nL8RP+3KJkDkX0kpWS2TQ6d/ifEBT09ZH0RtAR6ic0/i3KnVop/rWM8kZQdexH1YT41KuManmH0
- xvH9qUNRdhCuYpFbEs1qc0RXSfDcCrZq5hnCojVOK1AtY0OJoYCsZuIW/qQdh902DyVKlj0hWoG
- MYY3Tj2GKBFJaLTnfknLeLekueyfrYV2/G55KATSb/QjGkHhnov3n8+Ltg=
-X-Google-Smtp-Source: AGHT+IHAi2cNp8BpVaGCtzaMkDvyuBW8eZwL5MYmrAr2CZyZZr5P69cSREB/fYOTTHlkHtJPIZn7Zg==
-X-Received: by 2002:a05:6a00:6c89:b0:725:936d:4187 with SMTP id
- d2e1a72fcca58-72d21fcec01mr3812894b3a.17.1736338420286; 
- Wed, 08 Jan 2025 04:13:40 -0800 (PST)
-Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-842b1ce01b8sm27462272a12.20.2025.01.08.04.13.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 04:13:39 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 08 Jan 2025 21:13:29 +0900
-Subject: [PATCH] virtio-net: Fix num_buffers for version 1
+ d=1e100.net; s=20230601; t=1736338683; x=1736943483;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Zb7xH3yqos9lFAi/HcOIGn+1EMSfay7/d3nkjMNZ1pk=;
+ b=tKBfMsXvWPagjUJHOJ5Yo7RIREpCW9nxLnV/LRL89FcNpmTAKUx/n1dhbch5RtMyUI
+ Z7RlYuJFCR82DDXqJ+MbcT7iQWO5pv8UeyufMsKdp5H+gGyTHNIoSszlN0KBXdLqPcMo
+ FGutSXxieGbU7HHb7rel85nUmGxgbzeRP49KKljIeVlrbkVO4CWoDxPLMYzh7+udaFDq
+ EbinZFIWUuy5vt153f6tRHIIWrdI7p7jjVPamfog1aW+oQkp1cXDYzEW1Zdkbf+ms0aj
+ IAyVo1BQEzSycJ8tiLkfOfVNu3mJ0O1rB1iE+UzIES/YFHCMuYv/D8dU5vGEEFLl8KPn
+ D8rA==
+X-Gm-Message-State: AOJu0Yx/JaCWILeIInWkGtFOT3lC7aqubQazXEzdOTdK8hO6zNnCONK0
+ rAGDor5RG3CSTuOK2aOaMbe4Fo9CKPbcPzIWWJolz18JQnPyTADYtAnQCNB4igk=
+X-Gm-Gg: ASbGnctaVD8wpUWlPUaX0gxZa1FeHePhv4EXggpNasV9WIVRxHlnMUfZ55Lfrv2mPMN
+ AioiU9DbH+C5KiKDa9hvi08vJTywZ2hK6qRELvlmW/gpqXtmQxCbqo/Bu8FnrUMkbYyk2nKaqv/
+ JC3jf/GKCqvBlsqNG7+xzpyDdg+BvWhoZdZB8frOgteJSYZ8pV66iXyHYrp/9N5V5s2+moJTyED
+ 9PIpkAnMszPXEKa07Lj4j31ggHPWRGXgp/WNj/TcmxUgyhi0eEJs1E=
+X-Google-Smtp-Source: AGHT+IFJaDyc9PdIvlMp1Qb/fCGUrgwK5l9RHvUq8sdZnTNPVlPw8v8AQSVFUQxNasg1nuKuQub+Tg==
+X-Received: by 2002:a05:6000:4b04:b0:386:4a24:1916 with SMTP id
+ ffacd0b85a97d-38a87317c6dmr1854219f8f.55.1736338683262; 
+ Wed, 08 Jan 2025 04:18:03 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2e21e1esm19018945e9.38.2025.01.08.04.18.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jan 2025 04:18:02 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 878CA5FBC2;
+ Wed,  8 Jan 2025 12:10:56 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ qemu-riscv@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Beraldo Leal <bleal@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <lvivier@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Ed Maste <emaste@freebsd.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Bernhard Beschow <shentey@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>
+Subject: [PATCH v4 20/32] tests/functional: update tuxruntest to use
+ uncompress utility
+Date: Wed,  8 Jan 2025 12:10:42 +0000
+Message-Id: <20250108121054.1126164-21-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250108121054.1126164-1-alex.bennee@linaro.org>
+References: <20250108121054.1126164-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250108-buffers-v1-1-a0c85ff31aeb@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAOhrfmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDIyNz3aTStLTUomJds6QUYxNL42QjC/NUJaDqgqLUtMwKsEnRsbW1AC7
- C18dZAAAA
-To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,35 +132,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The specification says the device MUST set num_buffers to 1 if
-VIRTIO_NET_F_MRG_RXBUF has not been negotiated.
+Use the utility functions to reduce code duplication.
 
-Fixes: df91055db5c9 ("virtio-net: enable virtio 1.0")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/net/virtio-net.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tests/functional/qemu_test/tuxruntest.py | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 06f096abf678..b241cd4bb48a 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1992,6 +1992,8 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-                                     offsetof(typeof(hdr),
-                                              virtio_net.hdr.num_buffers),
-                                     sizeof(hdr.virtio_net.hdr.num_buffers));
-+            } else {
-+                hdr.virtio_net.hdr.num_buffers = cpu_to_le16(1);
-             }
+diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+index 7227a83757..41a4945a14 100644
+--- a/tests/functional/qemu_test/tuxruntest.py
++++ b/tests/functional/qemu_test/tuxruntest.py
+@@ -73,17 +73,7 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
+         Fetch the TuxBoot assets.
+         """
+         kernel_image =  kernel_asset.fetch()
+-        disk_image_zst = rootfs_asset.fetch()
+-
+-        disk_image = self.scratch_file("rootfs.ext4")
+-
+-        check_call(['zstd', "-f", "-d", disk_image_zst,
+-                    "-o", disk_image],
+-                   stdout=DEVNULL, stderr=DEVNULL)
+-        # zstd copies source archive permissions for the output
+-        # file, so must make this writable for QEMU
+-        os.chmod(disk_image, stat.S_IRUSR | stat.S_IWUSR)
+-
++        disk_image = self.uncompress(rootfs_asset)
+         dtb = dtb_asset.fetch() if dtb_asset is not None else None
  
-             guest_offset = n->has_vnet_hdr ?
-
----
-base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
-change-id: 20241227-buffers-6bd3493c287e
-
-Best regards,
+         return (kernel_image, disk_image, dtb)
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.39.5
 
 
