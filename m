@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A922E77199
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 11:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 523C9E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 11:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVUeA-0007BT-7s; Wed, 08 Jan 2025 06:54:50 -0500
+	id 1tVUdb-0006Ub-Ec; Wed, 08 Jan 2025 06:54:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1tVUdf-0006Vd-Dx
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 06:54:20 -0500
+ id 1tVUd7-0006PW-9L
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 06:53:51 -0500
 Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1tVUdd-0002Hw-9b
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 06:54:19 -0500
-Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50881hho004556;
- Wed, 8 Jan 2025 03:54:06 -0800
+ id 1tVUd1-0002Cn-0T
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 06:53:42 -0500
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50885pFC021537;
+ Wed, 8 Jan 2025 03:53:35 -0800
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=ZnGB7j6yjuAFNZMfhz++dR+OD+RYXIWGIqPPWhnna
- 8I=; b=Os6xWpXepdTUtzNMD+dlitHUoGWkbr2JN015uuxTZh4F/Cs+uRoBbfH7s
- 3KFm/3BIVmgBjxAPn6c5GPQPU8sirroiq996lEluIjb6KZu7MllRJ0pBk+ddn1zl
- I0KKukYIah9Hnz69mfo8BpQA6tswbPF5Dp1rTX+E2+HANUbEalBuyhYl6PkxsanA
- 4TsInSdKxhHW3oGbg7jgOGlB04PxLih0KCJzpDgxHhnB6wIasyNOpoef2/BCK9BQ
- /vZxKAnnqpUyqXVGt/BWnKJHP/BPjpMZpUpr8aQqhTls7s71lA1VDYn4UOYRLdMh
- uVi695CHttdZZy6RxqICCA/bZ25nw==
-Received: from nam12-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam12lp2171.outbound.protection.outlook.com [104.47.55.171])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 43y3ynrwf1-2
+ proofpoint20171006; bh=sTEjbMLlPVEgYrFpP6gnfLqwrQNlSwLWipaDa0jU3
+ fE=; b=oVUZ/6TOLFOYi4PJtaJ3RdYGd2G60QfYppgZNd43D/Dh7MKkxzgVN+cC+
+ dvFOmhZry0MbHaeur4FhYY4LuhGwY3BVsh4TtQUluwKTKnZv1v8m180k7guFkfeV
+ Q4duoT21mbTGmfkGmooavta2iP84tFD0vAEU+N/FQ64NOXMEkO2QHD2aQh19yyp3
+ Gd2x+j/EXpzYHYkmIIyGOTk4G0rcGADge584xRmii1w34A0BUU+r4BJtmGNmRO6y
+ ApGsmFYxI+y1S6vYq9qQT4VGEbu2YTSzXqRH/PieE9zVxMwRhFsCAgfW1CABy48e
+ NHgNFQSz2HasMNme4I+BAnuTjih0g==
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04lp2040.outbound.protection.outlook.com [104.47.74.40])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 43y5d3rs7x-2
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 03:54:06 -0800 (PST)
+ Wed, 08 Jan 2025 03:53:34 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IbhobrSyCN/n1PmNl9tmHKyx1AZbeMhJR21LUwQjKgSPI+YOF7cmwiJTkRjWRQ5gXy1LKdkTzCSKIg6ZX0mqDe4WE/6fmcsvDIVfKth3dQ+hRG7BNsTynhfw7IYcwPAzLitBiKsXqek9j00BEoGlmz3IEP3Ij8kW17VJKyccpnmplGK/MzpekOH+ZInkJ3g7LybVFbbtoDPTpThfu4ZXwNbC/XLUcAgIl+T+sLXAYI5gYpNBSnwV8XPvp+Bqg1a/4TYvqL2LwznAhbf81ujPeAbG9OQ65K5Yw/IyXJdwtn5v1ATnexdR2c/ga7OZTTNl2ACBuCcyFWEV33KomaejqA==
+ b=cN+q2f8b7wujg4nmJSe9s2EroHO4K6b7pLS0k/ak5ZNH7k+CBg817YBw8QYgZ2JJi5ZlrZf5uEpfzmzVFRd8x3pt6NVMEBagHznAP3jTbbtITo39Qyo84bYS33RWv5bkLp+JxtSezghLD7rmIokuutXNBZsux/j15RMNyrWYOB6VCvPNnMGZ3s4eFX6UbOivxMp0wkR39fGkNIYXetKCHVWbwT/LWrYkvZrF8CzmMR+BhyGwT6g7PWUE5TRDmhoYmG6RO0aV6kM3gMsAJdLFA4cUOQH2UGbq0ECQL2eGKxkjIWH9ARzbNnH3FxhQZ/NclrwOX7aBdWzYn5cKiahb+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZnGB7j6yjuAFNZMfhz++dR+OD+RYXIWGIqPPWhnna8I=;
- b=J2s1b7s0noImallteVUZ843cSGUNhWnep8nmLawdMb1gCEKoLVFEMfIyLxQT4zKhPvNuSl7kONHtbxGjg7ifYofAgD+37hmnYmG77v03+/0/a3fn9Duyb1tu5KP1bX38/Hz2ARMime3uSi72/KHiOlrdwP5j8F042stTAGFZMPNllHXTZ+xzNgnTMAtC8ee14OTj97Z1moLszz+pLkklPg2OyX/pO1UAQEh8EdpBkAYRJbJMiMwmIvJod3688RZ8OpnqYJurA3itHr6H9reNg4ZxQ+0lBovmSjOZpzluhH+EdYoHHKT5uTGic6dod1OxZwoRjcvT9uEt4NO+eghyqg==
+ bh=sTEjbMLlPVEgYrFpP6gnfLqwrQNlSwLWipaDa0jU3fE=;
+ b=j2zQhupiMQgiJz4nXdC5GSFn6nXoeH0byd28x69zTOU4a9Ai1+O7iVHohMjlLFBazBbtDAAGwXhlIfyIOAgIebInURikkJv0b/fmECh/da1vCxHogx4fw5ct8C30yR4n6LbmMHMXYEPkmGpw9O9xx6RtBnhyH/NN6jAkqlXCDvcDsoxOWcyzkQ+t9wE8bYnWbD2e83VDqtQXREhBwSQBGudvpQgPVZv+CY//D07JBrk/R+k5u1HZnce1y9rB/n7/J0e7+psAU88YONObfKUzVKYN+XaE2vUnZPao/OOTVdpIxDeyRjaA/eiZY6shYpkLjLrUQD17owLXA1TO/5WtIw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZnGB7j6yjuAFNZMfhz++dR+OD+RYXIWGIqPPWhnna8I=;
- b=UaV7hNqm1A4b3KNCXdZP4+m8wmP/eksleBCiSsj4cU30rB2opElabWTYsO6bcRO2fSX/anj6I+rcvSxu9GiovRd0ZVSwYJLBwwaQxPO1DU/hPj/Zd0oIpvkIbPfcEqjy1hBM3+xW2Mha0rFNv8oNdCuB7CGqYIkUycNVIBdLbLlgAGp4c21HbAj5k5SgCOewqXDt9LBVWOGmd4jPfGJDowC31UBb6N70Rd/lQrChSjLMUzJTEw0qZUsKZiYDl5CyuPlAE3bhUh/Ed+vIpSF205r19k6eDbScUPkHxgjZ7fI10JXPQqjkZagu2wNMH9u74UULJ4A4o+EzbILGQR2Wgg==
+ bh=sTEjbMLlPVEgYrFpP6gnfLqwrQNlSwLWipaDa0jU3fE=;
+ b=if0QatfJ8YQFXRw4iuRpzBiheamMavcSyR69RWw5LcKxPCyAcQoOMdazENkvU2ER0CbxGYOvl3gMhrPpiHjTwwf07pQJcdup5Rx5o019BDdP69snEYysUZx7Fd+0I4oBzIQAaqWYUE1ISb4ahKE4nRJk9C0WlcPmP0Zy7uSv6ws7MMruJytFdfRzbyswkVnl+Kx3rO+13WrxRrd20Bskf9OlqgU41bSW4yTIhKr7W/8iWt30/ADz9/eADw8E6mLMKcI1JRtGaaHeCbHWYs+RhixO+CT65eRk8MTcxM+HWXVScq8lU8scg3mvE6CpdN/5c3XH8YepoTwl/P9ftIf+QQ==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by PH0PR02MB7670.namprd02.prod.outlook.com (2603:10b6:510:50::13) with
+ by SJ0PR02MB7502.namprd02.prod.outlook.com (2603:10b6:a03:2a2::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.10; Wed, 8 Jan
- 2025 11:54:04 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.11; Wed, 8 Jan
+ 2025 11:53:31 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51%4]) with mapi id 15.20.8335.010; Wed, 8 Jan 2025
- 11:54:04 +0000
+ 11:53:31 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: elena.ufimtseva@oracle.com, alex.williamson@redhat.com, clg@redhat.com,
  jag.raman@oracle.com, thanos.makatos@nutanix.com
-Subject: [PATCH 26/26] vfio-user: add coalesced posted writes
-Date: Wed,  8 Jan 2025 11:50:32 +0000
-Message-Id: <20250108115032.1677686-27-john.levon@nutanix.com>
+Subject: [PATCH 01/26] vfio/container: pass MemoryRegion to DMA operations
+Date: Wed,  8 Jan 2025 11:50:07 +0000
+Message-Id: <20250108115032.1677686-2-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250108115032.1677686-1-john.levon@nutanix.com>
 References: <20250108115032.1677686-1-john.levon@nutanix.com>
@@ -79,85 +79,85 @@ X-ClientProxiedBy: AS4P189CA0066.EURP189.PROD.OUTLOOK.COM
  (2603:10b6:610:7f::9)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB7670:EE_
-X-MS-Office365-Filtering-Correlation-Id: 073f55f8-3c9d-49e5-6961-08dd2fdb25fc
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SJ0PR02MB7502:EE_
+X-MS-Office365-Filtering-Correlation-Id: f6375515-69b2-4fcd-ea0b-08dd2fdb1256
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?WpwHoAC06ex/XRxMg7SmVjjX7ykOAEYlVhvBn/ILgkTD2bBkh2GuWEdTuPtU?=
- =?us-ascii?Q?klsBgqSEC/NAmzQUi0VmQVICgTvw6okLRB6fwtASFRseUoSNE6+wrzCijg7J?=
- =?us-ascii?Q?X7Kv0kRdfcQjAEbqEyUjohewMlgAi1WYPVTLXQUVwu1pX61NNy5JZjTTJPgF?=
- =?us-ascii?Q?A58txdB55DM0XyvdfdOpB9fEIY+aBMhq08mUXX+Vp8SnjQmXlUQbttsLZDga?=
- =?us-ascii?Q?GiEjW0mlnAE1W5BjTwdN1tlHczP92ESJuin5yJxRWuam/1hxCFM/gVTnLDsp?=
- =?us-ascii?Q?vy+Toi4NOQ/qcNFyNQfNNjs8g+QkQw8qlqLINHjSevTWbmdeFH4G2w1z18Rm?=
- =?us-ascii?Q?DzZLCA/sGoq/pn01jaO+c85UoN0wKjxrpwhrYsvw20ziAuFMFKGw15pB7Ot3?=
- =?us-ascii?Q?0DMuKrs5lZFrovNLh5RQPWNOJ9PfMUItdJKbsfo8so6C2gW9Gm641MWu7Q0I?=
- =?us-ascii?Q?dEvLJDFEY8svU/COgl/fzo0/pYTGt2nyZXLh0bC17tQEfb6dTWfTJ4Y4tX9I?=
- =?us-ascii?Q?gvp+XjehfcyuZ+2iGrMUUerYHZUV/lbDWpxRzIEJe3ydky1wUWsRA+Iv7fXX?=
- =?us-ascii?Q?qPmy2ZraMfHAc5jCp62U+RDpKnLxuhotPZcnDm1MNDAUBT+jMPD999chtfwN?=
- =?us-ascii?Q?aQE1hpdMsmW4doVZ79ilwjO8uL8B8S8uANIvj6iE+4ZJhP8YlOJWMHJ4v39U?=
- =?us-ascii?Q?e5xOaYdw0xXkTyW1BFDYTVNVaZ6PhpjnwGM6dZp6l78YrB8JHZuMiKw1YeQd?=
- =?us-ascii?Q?8ivC7fNcTqnpn1Xy0aQ18F5oVwkNSto201e6wfJqLdDopBJcVd27cvf51jLD?=
- =?us-ascii?Q?mCPfsIFo9PfAZLypdAx+F6H+abcJu/XVrfhTAWH/lBLiLiNRrfgxwUlC+BuJ?=
- =?us-ascii?Q?l/SufQgXZAy3S6KTBN96pRlQcpafYg7AEcSGGFsrfqPhCvBAqlCQDv5f6SSN?=
- =?us-ascii?Q?KNB3rY2ncc9/WNlj2/YQrGCAiGjRfw/YJDJ9M7oFDjfpZ4k26B0hIvz4kEAs?=
- =?us-ascii?Q?nDu/KUIeCd8u5/CUwhiPDKwi5pP16zvF6KhOjNamPqZfM+yJXNJMtpuw+JLX?=
- =?us-ascii?Q?xitDRweL2zaKgN/ZiLHmeR0WVMsStFhM+D2Ke5GwKIUxbzBUqGJ1FVpo2T/5?=
- =?us-ascii?Q?MLzKhf5GTCzAwQfi5cIDVuca7VAFNj4Yt7Wp//VMnf4AjL4yqWWTPuGfiPvA?=
- =?us-ascii?Q?DpccWx5cLvvLG1WDIHTd0q7iRvdDMLaXwg6lJd6mMT3HuxoQtM/9mWareg7v?=
- =?us-ascii?Q?wbnR4bwoF6RSFQN2YPkoO8mU2LXuXJooyEmwG9xVcxtWyKsasYCus/p+PiEY?=
- =?us-ascii?Q?XWYlvLdwgValDIiGanNamF+DhxilnWkrEgIPJ5+cJKu9Rx5Z5VOulOgV8Rau?=
- =?us-ascii?Q?M4WoCbOPRDFTIRf2xGmFJ4yEIZsE?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/qBN692iq2ZieFzAZACMQhgrj38/lFv9elNUEETFf1fdUjoIwZM04/0d23TJ?=
+ =?us-ascii?Q?n4sbFfRZQIozdjTJeS5Gcee/Q8D2YUJLTnoaKDu76Bn/XopG0FDZGnfv87/M?=
+ =?us-ascii?Q?IMj40YufwUS2pua1X1FUqTg7oMdpnNAEF/rYRB0QgjQ74yKkCfGAnKQ1+I/J?=
+ =?us-ascii?Q?cT9fjdTygQ0bxYLjlFw0Yik48XBVqVYUz7FpeU+NFN9nPq9M3hbU0Y9T+8yz?=
+ =?us-ascii?Q?AL0EXSSf5YtYWqL6xF4kHMkxTDPLt4TOM33WezRFDfS95iX7cuOartvjR6Qs?=
+ =?us-ascii?Q?opQMxdSCvxnnfJ8I06fU/c+ZWDr6HNPv5ZmadKT+uTBf92brxiogsRGIaJJW?=
+ =?us-ascii?Q?8ktwfXmouipL0x/1enmIgCpRok9Hd/d+Z4a+VhZ+0VIx/OX8pDUdEUzDVoiw?=
+ =?us-ascii?Q?tbE0pvauIEF3oMNHuKChBGa00zBmZPBmBjpjyLMwA0E2EWrYEVcbup3ChUuw?=
+ =?us-ascii?Q?hAc2tdkdR+fY9U490sKEtYcrnRwbQATsahMEFvhxmnPFsmBZ3PonQfIt2mGd?=
+ =?us-ascii?Q?OFlD6Kl+0HYokN7YIRb31NuZSaK3NxaYadTYHAPZYM5Zeu20ogvt2wnsa2Uu?=
+ =?us-ascii?Q?WkFk8HVq7dYPOxXqBLK8+KypBBkouqmJnMP1fophiG++jqc2RmUYkz7N4wgY?=
+ =?us-ascii?Q?m7SlQTZ5H5v1WKhrWl406F/R8luBFO++fHDRkHxEd6x3UIsOipG7PJ78+Zb5?=
+ =?us-ascii?Q?rML6o18yz6361oco6EpS4l7sLErk9LGZVZ1PBKeMYuWjwzEjfLCm9EvRN6d6?=
+ =?us-ascii?Q?fkW2vxRrLyOyGtLEl1AgADNydJIb84EYAW8uR7IWBW7coQCjZXs5xeDXfdRb?=
+ =?us-ascii?Q?XBXh/yU+b0ewPLbNprwsxxdykMI8pk/gbkRHK7KRjTZB8yvH+tiHSqD8UPrH?=
+ =?us-ascii?Q?vSk49hvOQQjLXLPX1g9cR+ErqELsOstOCjzBMAjLDZ6a9WUcpfj6cWOrRyJ1?=
+ =?us-ascii?Q?abyh+2zfUA/6Pxy09GwhlU1TDAVfaiZHpxqCbzepxDBllmXDpBzgf9m7+tgm?=
+ =?us-ascii?Q?8tUWKiiNQOc/5qLhVI9/swJaHQ+cB/rPOBuAQA2l7Ga4SWrtfj9mQywwZYw4?=
+ =?us-ascii?Q?Hc193TaN2zH79JRrxqnAw078StMYt3XutT4lh1dew/Es3MakkvE2ZIky/NHK?=
+ =?us-ascii?Q?Ebb+l/CdEZMO/6wkB05ITxHGmUMcAHFZgpCkS+xQvCCcAWjttwag5ukYnC7H?=
+ =?us-ascii?Q?yLHFzBkcYqBxNcdgNdJgdBE2aS2qqTLVXrJCXeipZvaqbTyD5iKdTLDdNXmo?=
+ =?us-ascii?Q?Y8v6RDEdjLwBP1679PyKFQrX20vE9WoBGdWGMKLJRNAegzqaaip+3lLPKuEd?=
+ =?us-ascii?Q?7+FW0d+nR3BTi5To+9+Zz9m+jflLH7sz2JALG12MOqv9LhHyngTYSN6c1lTM?=
+ =?us-ascii?Q?AHmntO/Hhj8eSIJCw9UDiGrRJFE6?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?za9X+5LOxxAuBOInrv2RDjtPmEFocTcASvsik/Rd/LUYZIg89DbCWOgEI6xN?=
- =?us-ascii?Q?cnXIabugpzL6iXoftJIUAUihFgEYQT/bwMnbQQ5jOU3yNOLl1medcTV56CX6?=
- =?us-ascii?Q?dfpbrpNr/aV5HEI6aL76pfjunaJnXEnJX2UiCE0ZczAY3A7y6NNwOlr6otKk?=
- =?us-ascii?Q?laE7qcreNdqXQ3ogFyMFr8n5Zmi1lX0JXNF2VVe2veNPA2aaGNAiq8DtC8Gn?=
- =?us-ascii?Q?vBweJv6YKxj3mrRhMk7ap7dO/hoVrIvsnCThzKbJb72Gh7jSqe2yU2YQFQHM?=
- =?us-ascii?Q?6Uc7wbo8f4kmZMxM5qQbaFdD5DOjmqAPOtGYHPWwOYKaKGezOtzLi8OXjtNP?=
- =?us-ascii?Q?pphLkK/3XhfbSxJT/LLnY7Tg19ch2nKmKnZmXcohMqeqBRTU6QQEA5kMTsGG?=
- =?us-ascii?Q?EMWqv2F0daLVym1R2uL0iiAqYiw3G5Px2CBx9T0cA9zT4mF9cNMso79hKEGY?=
- =?us-ascii?Q?nVt8trJ6sBSbtVnyVS71cHj+JMfpwfB+2LXBpqwIvCD3upHGg1dwXjbX8ulB?=
- =?us-ascii?Q?i98FEpeTmbXgGChfZRqTldSkxyJcbkP2dC+LbZOu5B5Jlw2Y+GoZ6Rq48j4G?=
- =?us-ascii?Q?De/kF2oI6HlPQ4v0y0g2L7siXL6aKpXmDftWYluB/NTLhQDiZSO+Dd1NEWaL?=
- =?us-ascii?Q?eDdAl5tjAeBX/Sto1TsVMCyGKyLMv6P5UDhbX+V/wojx8cKOmDNWam2Kj+SA?=
- =?us-ascii?Q?Cty4ZJJsBZqcPvp0gcR9mU0mapsbnY8MVP2hAp/CsXyp3PkKZDCZVkxJsxN+?=
- =?us-ascii?Q?g5WeEAGf20Aw7SUwAiy9vct6IynnUHJQL2HnMSgkUTKCAVOm4Zuv2OGrPSXT?=
- =?us-ascii?Q?FbKthfbI2K9M9vh1qLTPNDK8651iGwGXfYhk8/cLo4SvFlUAidrY83h3aJta?=
- =?us-ascii?Q?WDc/BN+cvnaketUuAKqmApNtMhdQtzkMA+f7JpSvlS282dZxWB+zyu8N3mr1?=
- =?us-ascii?Q?fNXZg1WVxidOTnANNrPp9zmMvaHvhoIuEG79yvxCorM48DesrPDKaXh17Piw?=
- =?us-ascii?Q?V1zZ0UZhRsJosdq3XrkS0KZQ/uHyXNeDuGYPfc304Dj4OPDMl0ry2lWmv38f?=
- =?us-ascii?Q?Mfb8hQF04sv2a7jCcjLjktMpGyGr6mMFxhOe4xLAMKY00bu3SMuUOfzsUxEL?=
- =?us-ascii?Q?b02r1tlqIwyMqyXnxPTJbv8pxxaD7hTzD+kEJPqSSPhfboTy9Y+JZEcygraf?=
- =?us-ascii?Q?91YtFXRTH6+0FfbWghB3wQwz2ag2Dx0gMUslGJe4F/VI6+U0eluyWjG3wdVw?=
- =?us-ascii?Q?xoaw1bs2sJLCTvgwECKE26x+5+LTPEBWrlJJ0nv3Kcdrm0+Y9CLiMItd7EO9?=
- =?us-ascii?Q?EKvkbkEHgkK3y9XRCf24Q2kDoR+WyH1BbIlCP3xRbLGGFoMMJoj1ZjLp14TH?=
- =?us-ascii?Q?TGH0sj0Ii9tuFRMJSyQIcSFh/YA+OWCCWqAcjyrnskFZEd0IHSSAYu4+WrZ0?=
- =?us-ascii?Q?2AmKk+ogKFMMqvVvVQvyUCFlGSz1D0utetMKDr27Ihwa6D9xe+1A908PQifP?=
- =?us-ascii?Q?L1iRq0EfWAqurRZcOQtJh0IpDlE2Cpeqe0u6VYE0b2sfc85gtitetbDq4lII?=
- =?us-ascii?Q?IOi7ut7DKK7yvULHxUWSOSE5ZPW8kyhyE32IDs7R?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3V+/RrNMPiwjdlgvjXe08fT+RmK6bvhRB5r1QEK1ca6t/tomHzUiQCWtHg0m?=
+ =?us-ascii?Q?Va/QmGL0kAwO1FqwqlL26v81pBDzNVwfZhIue7J6aU5mGdaXVn9LrFoKlBiD?=
+ =?us-ascii?Q?olpupkeH2qtXEVh+EExS/a1Bd82HWxOUsigSTq5nO0OwIa55Grx6aP/z/X+L?=
+ =?us-ascii?Q?ss26ZAQn1PbeSgk6HePzV6m9slPcXX/dNMW4KSkLHXKpshTaLQpeu+6+it+t?=
+ =?us-ascii?Q?kv3k+RP0cUQ8ylLbx4UvtYoWqmqqOPc+EDSqgJLEhr7lgAg5SfflQeOLGz1G?=
+ =?us-ascii?Q?IjDRwA977rN8omGdBkCpvF+0LGPUt1s5jyLBENXmyRP2mEzGfe9hNdA0v38Y?=
+ =?us-ascii?Q?gnemOYhfjxvhJa3GxkG2NxbKN8O0p+infA2IRcf3vsPtUZirA8VGEz7HI3lp?=
+ =?us-ascii?Q?lfDNAoRSNadM3+ylwbyUbkOgEg5bhQu68NEi9Ru7xViD1Wmtx+Z5KCgzxG5k?=
+ =?us-ascii?Q?1CT8qHs0pTxcYC5d55CtyhXymory8IMVbSZdyfuPEAviWf6MS5tTNTal8qXV?=
+ =?us-ascii?Q?f/ZJxQOy/AMq6JDEcGfG8r+MtUp9zwNE/HaCGJ/KMqJW8e4K2yTxhcuYLt3I?=
+ =?us-ascii?Q?z0N9Yfs0IYDffIOhgDIkvlO8CwGe3SKHNlyoj/9L4tPnRLnczV647rSXP4Dz?=
+ =?us-ascii?Q?rGrAvjSVaiqI758COXNtung32Sy2eQITTdfP4dY+l6fvhB2bteJ1XpAMZLO2?=
+ =?us-ascii?Q?/gz9XwQ0okpuB18KCgUha18B3pkeMS6r+inB45HC0pkoEbNpLKSh8bTO0t93?=
+ =?us-ascii?Q?qoeUt6fRNk4gV/Ag2A4PJ2LPBGDRfn3ZWZxKrENkCRgnllKbKMegVp+47KsQ?=
+ =?us-ascii?Q?H9KGgl/4hunuffi7LCqOQaiXYeU1o+Krr3Tkow6SnlVysZSBylh1nRPxQ1Si?=
+ =?us-ascii?Q?zw/TARReqabbA/IMbygJrRbwm9v9ubHSunebpEqt8WZCch01H3T6c1RwoJI6?=
+ =?us-ascii?Q?XZMWikg6N6T7Jl/uwZvpOBdd4UFIpVw430imGo2mbtKJcrLz1SBORtTbiKX+?=
+ =?us-ascii?Q?THypCu5cNZq9fsNQJh6I40+K0vNgJyY35Bkp9jxOdTcV07y0C7VecaJzFUm6?=
+ =?us-ascii?Q?q8Qh6s21LCqtDOK6xXSTvaGu1Lxx5+Qqnys5vboA7ixCH4kqqJs863zRSKE+?=
+ =?us-ascii?Q?shP+MYO68EpXeuM2fFAUi7V5KWZm14SR9+8QZjCKSAhOz2vwfqYMYLok1oKt?=
+ =?us-ascii?Q?9WOzZjwd8gjEPdtnd59tXbqJXWpGbmBpjrDa7Hf9R9wVksIAX/InGdt3D+LS?=
+ =?us-ascii?Q?Jp1E6Gam0pr4Sb7YQidGtiU3tl7/oDwAQDbIMh7NxFFVaEoPZ8HN/49LQ3fq?=
+ =?us-ascii?Q?owHWiAs35sdZk8r3513y/hAaFtAM5ia8M9KZeJHzif3goWMlzsz1X5imH63D?=
+ =?us-ascii?Q?lJS7upfo18v/POK0G8ZNmQU7fWMXuFIwMXBtMS3TcVXbT+P4cC/0Il54SxdE?=
+ =?us-ascii?Q?7GLVPx8ShntiaTwhqJIRfSASbwFFtYRNxRxu5b/GnTdOhnWF91ka83f1iecH?=
+ =?us-ascii?Q?olviQ012uFELHsbjZ/PsfGqVrbhtd0PInd0PGfY+FsDzzK5ckB7v2HqkivUk?=
+ =?us-ascii?Q?dowgnUmsCJf8uZfklu76V3dYbMfOhfoaHWG+eWwI?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 073f55f8-3c9d-49e5-6961-08dd2fdb25fc
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6375515-69b2-4fcd-ea0b-08dd2fdb1256
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2025 11:54:03.9478 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2025 11:53:31.0084 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hwKZDt2XPLVSCw6e/wEveygWbMrlRO3FzRK8tFsb1aPddeGVkk5s4VBwd3yIPjWkWg6UV0XUl1u2rxmZaOMwjg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB7670
-X-Proofpoint-GUID: QiSurhCSaSPczzfheMSal95rZBSVTxUe
-X-Authority-Analysis: v=2.4 cv=CrlFcm4D c=1 sm=1 tr=0 ts=677e675e cx=c_pps
- a=98TgpmV4a5moxWevO5qy4g==:117 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: gAVVp0DUPMsHAzBUEM/9tuslAHAg0w10cQz/dmY2YWdSl+crO2ZhnGwLIgqxdtt+4aKZSQUlyRQ3gOaFwq81cA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7502
+X-Proofpoint-ORIG-GUID: QzKfUsO_Shj78O_T7NrbVWijaWFRDoLW
+X-Proofpoint-GUID: QzKfUsO_Shj78O_T7NrbVWijaWFRDoLW
+X-Authority-Analysis: v=2.4 cv=YLtlyQGx c=1 sm=1 tr=0 ts=677e673e cx=c_pps
+ a=ZeveGGZnxkNpWlA7A6AaFA==:117 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=VdSt8ZQiCzkA:10
  a=0034W8JfsZAA:10 a=0kUYKlekyDsA:10
- a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=oAmoKkZGSHXUR1tpXt0A:9
+ a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=DMMBb2U3yOgPCP8cz6YA:9
  a=14NRyaPF5x3gF6G45PvQ:22
-X-Proofpoint-ORIG-GUID: QiSurhCSaSPczzfheMSal95rZBSVTxUe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-08_02,2025-01-08_01,2024-11-22_01
@@ -189,330 +189,225 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jagannathan Raman <jag.raman@oracle.com>
 
-Add new message to send multiple writes to server.
-Prevents the outgoing queue from overflowing when
-a long latency operation is followed by a series
-of posted writes.
+Pass through the MemoryRegion to DMA operation handlers of vfio
+containers. The vfio-user container will need this later.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/trace-events    |   1 +
- hw/vfio/user-protocol.h |  21 +++++++
- hw/vfio/user.c          | 131 +++++++++++++++++++++++++++++++++++++++-
- hw/vfio/user.h          |   7 +++
- 4 files changed, 158 insertions(+), 2 deletions(-)
+ hw/vfio/common.c                      | 17 ++++++++++-------
+ hw/vfio/container-base.c              |  4 ++--
+ hw/vfio/container.c                   |  3 ++-
+ hw/vfio/iommufd.c                     |  3 ++-
+ hw/virtio/vhost-vdpa.c                |  2 +-
+ include/exec/memory.h                 |  4 +++-
+ include/hw/vfio/vfio-container-base.h |  4 ++--
+ system/memory.c                       |  7 ++++++-
+ 8 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index e3a7f82550..fe9d797af7 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -192,6 +192,7 @@ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index
- vfio_user_region_rw(uint32_t region, uint64_t off, uint32_t count) " region %d offset 0x%"PRIx64" count %d"
- vfio_user_get_irq_info(uint32_t index, uint32_t flags, uint32_t count) " index %d flags 0x%x count %d"
- vfio_user_set_irqs(uint32_t index, uint32_t start, uint32_t count, uint32_t flags) " index %d start %d count %d flags 0x%x"
-+vfio_user_wrmulti(const char *s, uint64_t wr_cnt) " %s count 0x%"PRIx64
- 
- # user-container.c
- vfio_user_dma_map(uint64_t iova, uint64_t size, uint64_t off, uint32_t flags, bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" off 0x%"PRIx64" flags 0x%x async_ops %d"
-diff --git a/hw/vfio/user-protocol.h b/hw/vfio/user-protocol.h
-index 607e0f4b7f..22e3265f58 100644
---- a/hw/vfio/user-protocol.h
-+++ b/hw/vfio/user-protocol.h
-@@ -42,6 +42,7 @@ enum vfio_user_command {
-     VFIO_USER_DMA_WRITE                 = 12,
-     VFIO_USER_DEVICE_RESET              = 13,
-     VFIO_USER_DIRTY_PAGES               = 14,
-+    VFIO_USER_REGION_WRITE_MULTI        = 15,
-     VFIO_USER_MAX,
- };
- 
-@@ -75,6 +76,7 @@ typedef struct {
- #define VFIO_USER_CAP_PGSIZES   "pgsizes"
- #define VFIO_USER_CAP_MAP_MAX   "max_dma_maps"
- #define VFIO_USER_CAP_MIGR      "migration"
-+#define VFIO_USER_CAP_MULTI     "write_multiple"
- 
- /* "migration" members */
- #define VFIO_USER_CAP_PGSIZE            "pgsize"
-@@ -221,4 +223,23 @@ typedef struct {
-     char data[];
- } VFIOUserBitmap;
- 
-+/*
-+ * VFIO_USER_REGION_WRITE_MULTI
-+ */
-+#define VFIO_USER_MULTI_DATA  8
-+#define VFIO_USER_MULTI_MAX   200
-+
-+typedef struct {
-+    uint64_t offset;
-+    uint32_t region;
-+    uint32_t count;
-+    char data[VFIO_USER_MULTI_DATA];
-+} VFIOUserWROne;
-+
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint64_t wr_cnt;
-+    VFIOUserWROne wrs[VFIO_USER_MULTI_MAX];
-+} VFIOUserWRMulti;
-+
- #endif /* VFIO_USER_PROTOCOL_H */
-diff --git a/hw/vfio/user.c b/hw/vfio/user.c
-index 217d0e9ea4..128a65a3e7 100644
---- a/hw/vfio/user.c
-+++ b/hw/vfio/user.c
-@@ -26,6 +26,7 @@
- #include "io/channel-socket.h"
- #include "io/channel-util.h"
- #include "system/iothread.h"
-+#include "qapi/qmp/qbool.h"
- #include "qapi/qmp/qdict.h"
- #include "qapi/qmp/qjson.h"
- #include "qapi/qmp/qstring.h"
-@@ -58,6 +59,7 @@ static void vfio_user_request(void *opaque);
- static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg);
- static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                                  VFIOUserFDs *fds);
-+static void vfio_user_flush_multi(VFIOUserProxy *proxy);
- 
- static inline void vfio_user_set_error(VFIOUserHdr *hdr, uint32_t err)
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index f7499a9b74..0e3ea71aae 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -248,12 +248,12 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+ /* Called with rcu_read_lock held.  */
+ static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                                ram_addr_t *ram_addr, bool *read_only,
+-                               Error **errp)
++                               MemoryRegion **mrp, Error **errp)
  {
-@@ -462,6 +464,11 @@ static void vfio_user_send(void *opaque)
+     bool ret, mr_has_discard_manager;
+ 
+     ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+-                               &mr_has_discard_manager, errp);
++                               &mr_has_discard_manager, mrp, errp);
+     if (ret && mr_has_discard_manager) {
+         /*
+          * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+@@ -281,6 +281,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+     VFIOContainerBase *bcontainer = giommu->bcontainer;
+     hwaddr iova = iotlb->iova + giommu->iommu_offset;
++    MemoryRegion *mrp;
+     void *vaddr;
+     int ret;
+     Error *local_err = NULL;
+@@ -300,7 +301,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
+ 
+-        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
++        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &mrp,
++                                &local_err)) {
+             error_report_err(local_err);
+             goto out;
          }
-         qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-                                        vfio_user_recv, NULL, NULL, proxy);
-+
-+        /* queue empty - send any pending multi write msgs */
-+        if (proxy->wr_multi != NULL) {
-+            vfio_user_flush_multi(proxy);
-+        }
-     }
- }
+@@ -313,7 +315,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+          */
+         ret = vfio_container_dma_map(bcontainer, iova,
+                                      iotlb->addr_mask + 1, vaddr,
+-                                     read_only);
++                                     read_only, mrp);
+         if (ret) {
+             error_report("vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+                          "0x%"HWADDR_PRIx", %p) = %d (%s)",
+@@ -378,7 +380,7 @@ static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
+         vaddr = memory_region_get_ram_ptr(section->mr) + start;
  
-@@ -482,6 +489,7 @@ static int vfio_user_send_one(VFIOUserProxy *proxy)
+         ret = vfio_container_dma_map(bcontainer, iova, next - start,
+-                                     vaddr, section->readonly);
++                                     vaddr, section->readonly, section->mr);
+         if (ret) {
+             /* Rollback */
+             vfio_ram_discard_notify_discard(rdl, section);
+@@ -662,7 +664,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
      }
  
-     QTAILQ_REMOVE(&proxy->outgoing, msg, next);
-+    proxy->num_outgoing--;
-     if (msg->type == VFIO_MSG_ASYNC) {
-         vfio_user_recycle(proxy, msg);
-     } else {
-@@ -589,11 +597,18 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
+     ret = vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
+-                                 vaddr, section->readonly);
++                                 vaddr, section->readonly, section->mr);
+     if (ret) {
+         error_setg(&err, "vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+                    "0x%"HWADDR_PRIx", %p) = %d (%s)",
+@@ -1214,7 +1216,8 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     }
+ 
+     rcu_read_lock();
+-    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
++    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, NULL,
++                            &local_err)) {
+         error_report_err(local_err);
+         goto out_unlock;
+     }
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 749a3fd29d..5e0c9700d9 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -17,12 +17,12 @@
+ 
+ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+                            hwaddr iova, ram_addr_t size,
+-                           void *vaddr, bool readonly)
++                           void *vaddr, bool readonly, MemoryRegion *mrp)
  {
-     int ret;
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
  
-+    /* older coalesced writes go first */
-+    if (proxy->wr_multi != NULL &&
-+        ((msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REQUEST)) {
-+        vfio_user_flush_multi(proxy);
-+    }
-+
-     /*
-      * Unsent outgoing msgs - add to tail
-      */
-     if (!QTAILQ_EMPTY(&proxy->outgoing)) {
-         QTAILQ_INSERT_TAIL(&proxy->outgoing, msg, next);
-+        proxy->num_outgoing++;
-         return 0;
-     }
- 
-@@ -607,6 +622,7 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
-     }
-     if (ret == QIO_CHANNEL_ERR_BLOCK) {
-         QTAILQ_INSERT_HEAD(&proxy->outgoing, msg, next);
-+        proxy->num_outgoing = 1;
-         qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-                                        vfio_user_recv, proxy->ctx,
-                                        vfio_user_send, proxy);
-@@ -1122,12 +1138,27 @@ static bool check_migr(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-     return caps_parse(proxy, qdict, caps_migr, errp);
+     g_assert(vioc->dma_map);
+-    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
++    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mrp);
  }
  
-+static bool check_multi(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QBool *qb = qobject_to(QBool, qobj);
-+
-+    if (qb == NULL) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MULTI);
-+        return false;
-+    }
-+    if (qbool_get_bool(qb)) {
-+        proxy->flags |= VFIO_PROXY_USE_MULTI;
-+    }
-+    return true;
-+}
-+
- static struct cap_entry caps_cap[] = {
-     { VFIO_USER_CAP_MAX_FDS, check_max_fds },
-     { VFIO_USER_CAP_MAX_XFER, check_max_xfer },
-     { VFIO_USER_CAP_PGSIZES, check_pgsizes },
-     { VFIO_USER_CAP_MAP_MAX, check_max_dma },
-     { VFIO_USER_CAP_MIGR, check_migr },
-+    { VFIO_USER_CAP_MULTI, check_multi },
-     { NULL }
- };
- 
-@@ -1186,6 +1217,7 @@ static GString *caps_json(void)
-     qdict_put_int(capdict, VFIO_USER_CAP_MAX_XFER, VFIO_USER_DEF_MAX_XFER);
-     qdict_put_int(capdict, VFIO_USER_CAP_PGSIZES, VFIO_USER_DEF_PGSIZE);
-     qdict_put_int(capdict, VFIO_USER_CAP_MAP_MAX, VFIO_USER_DEF_MAP_MAX);
-+    qdict_put_bool(capdict, VFIO_USER_CAP_MULTI, true);
- 
-     qdict_put_obj(dict, VFIO_USER_CAP, QOBJECT(capdict));
- 
-@@ -1454,19 +1486,114 @@ static int vfio_user_region_read(VFIOUserProxy *proxy, uint8_t index,
-     return msgp->count;
+ int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 4ebb526808..fe193ac7da 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -176,7 +176,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
  }
  
-+static void vfio_user_flush_multi(VFIOUserProxy *proxy)
-+{
-+    VFIOUserMsg *msg;
-+    VFIOUserWRMulti *wm = proxy->wr_multi;
-+    int ret;
-+
-+    proxy->wr_multi = NULL;
-+
-+    /* adjust size for actual # of writes */
-+    wm->hdr.size -= (VFIO_USER_MULTI_MAX - wm->wr_cnt) * sizeof(VFIOUserWROne);
-+
-+    msg = vfio_user_getmsg(proxy, &wm->hdr, NULL);
-+    msg->id = wm->hdr.id;
-+    msg->rsize = 0;
-+    msg->type = VFIO_MSG_ASYNC;
-+    trace_vfio_user_wrmulti("flush", wm->wr_cnt);
-+
-+    ret = vfio_user_send_queued(proxy, msg);
-+    if (ret < 0) {
-+        vfio_user_recycle(proxy, msg);
-+    }
-+}
-+
-+static void vfio_user_create_multi(VFIOUserProxy *proxy)
-+{
-+    VFIOUserWRMulti *wm;
-+
-+    wm = g_malloc0(sizeof(*wm));
-+    vfio_user_request_msg(&wm->hdr, VFIO_USER_REGION_WRITE_MULTI,
-+                          sizeof(*wm), VFIO_USER_NO_REPLY);
-+    proxy->wr_multi = wm;
-+}
-+
-+static void vfio_user_add_multi(VFIOUserProxy *proxy, uint8_t index,
-+                                off_t offset, uint32_t count, void *data)
-+{
-+    VFIOUserWRMulti *wm = proxy->wr_multi;
-+    VFIOUserWROne *w1 = &wm->wrs[wm->wr_cnt];
-+
-+    w1->offset = offset;
-+    w1->region = index;
-+    w1->count = count;
-+    memcpy(&w1->data, data, count);
-+
-+    wm->wr_cnt++;
-+    trace_vfio_user_wrmulti("add", wm->wr_cnt);
-+    if (wm->wr_cnt == VFIO_USER_MULTI_MAX ||
-+        proxy->num_outgoing < VFIO_USER_OUT_LOW) {
-+        vfio_user_flush_multi(proxy);
-+    }
-+}
-+
- static int vfio_user_region_write(VFIOUserProxy *proxy, uint8_t index,
-                                   off_t offset, uint32_t count, void *data,
-                                   bool post)
+ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+-                               ram_addr_t size, void *vaddr, bool readonly)
++                               ram_addr_t size, void *vaddr, bool readonly,
++                               MemoryRegion *mrp)
  {
-     VFIOUserRegionRW *msgp = NULL;
--    int flags = post ? VFIO_USER_NO_REPLY : 0;
-+    int flags;
-     int size = sizeof(*msgp) + count;
-+    bool can_multi;
-     int ret;
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 3490a8f1eb..f541b00785 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -28,7 +28,8 @@
+ #include "exec/ram_addr.h"
  
-     if (count > proxy->max_xfer_size) {
-         return -EINVAL;
+ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+-                            ram_addr_t size, void *vaddr, bool readonly)
++                            ram_addr_t size, void *vaddr, bool readonly,
++                            MemoryRegion *mrp)
+ {
+     const VFIOIOMMUFDContainer *container =
+         container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 3cdaa12ed5..a1866bb396 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -228,7 +228,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
+ 
+-        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
++        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL, NULL,
+                                   &local_err)) {
+             error_report_err(local_err);
+             return;
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 9458e2801d..50e7b7be30 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -737,13 +737,15 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+  * @read_only: indicates if writes are allowed
+  * @mr_has_discard_manager: indicates memory is controlled by a
+  *                          RamDiscardManager
++ * @mrp: if non-NULL, fill in with MemoryRegion
+  * @errp: pointer to Error*, to store an error if it happens.
+  *
+  * Return: true on success, else false setting @errp with error.
+  */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager, Error **errp);
++                          bool *mr_has_discard_manager, MemoryRegion **mrp,
++                          Error **errp);
+ 
+ typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+ typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 4cff9943ab..c9d339383e 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -73,7 +73,7 @@ typedef struct VFIORamDiscardListener {
+ 
+ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+                            hwaddr iova, ram_addr_t size,
+-                           void *vaddr, bool readonly);
++                           void *vaddr, bool readonly, MemoryRegion *mrp);
+ int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+                              hwaddr iova, ram_addr_t size,
+                              IOMMUTLBEntry *iotlb);
+@@ -113,7 +113,7 @@ struct VFIOIOMMUClass {
+     bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
+     int (*dma_map)(const VFIOContainerBase *bcontainer,
+                    hwaddr iova, ram_addr_t size,
+-                   void *vaddr, bool readonly);
++                   void *vaddr, bool readonly, MemoryRegion *mrp);
+     int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+                      hwaddr iova, ram_addr_t size,
+                      IOMMUTLBEntry *iotlb);
+diff --git a/system/memory.c b/system/memory.c
+index 78e17e0efa..82ac19d473 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2185,7 +2185,8 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+ /* Called with rcu_read_lock held.  */
+ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+                           ram_addr_t *ram_addr, bool *read_only,
+-                          bool *mr_has_discard_manager, Error **errp)
++                          bool *mr_has_discard_manager, MemoryRegion **mrp,
++                          Error **errp)
+ {
+     MemoryRegion *mr;
+     hwaddr xlat;
+@@ -2250,6 +2251,10 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+         *read_only = !writable || mr->readonly;
      }
  
-+    if (proxy->flags & VFIO_PROXY_NO_POST) {
-+        post = false;
++    if (mrp != NULL) {
++        *mrp = mr;
 +    }
 +
-+    /* write eligible to be in a WRITE_MULTI msg ? */
-+    can_multi = (proxy->flags & VFIO_PROXY_USE_MULTI) && post &&
-+        count <= VFIO_USER_MULTI_DATA;
-+
-+    /*
-+     * This should be a rare case, so first check without the lock,
-+     * if we're wrong, vfio_send_queued() will flush any posted writes
-+     * we missed here
-+     */
-+    if (proxy->wr_multi != NULL ||
-+        (proxy->num_outgoing > VFIO_USER_OUT_HIGH && can_multi)) {
-+
-+        /*
-+         * re-check with lock
-+         *
-+         * if already building a WRITE_MULTI msg,
-+         *  add this one if possible else flush pending before
-+         *  sending the current one
-+         *
-+         * else if outgoing queue is over the highwater,
-+         *  start a new WRITE_MULTI message
-+         */
-+        WITH_QEMU_LOCK_GUARD(&proxy->lock) {
-+            if (proxy->wr_multi != NULL) {
-+                if (can_multi) {
-+                    vfio_user_add_multi(proxy, index, offset, count, data);
-+                    return count;
-+                }
-+                vfio_user_flush_multi(proxy);
-+            } else if (proxy->num_outgoing > VFIO_USER_OUT_HIGH && can_multi) {
-+                vfio_user_create_multi(proxy);
-+                vfio_user_add_multi(proxy, index, offset, count, data);
-+                return count;
-+            }
-+        }
-+    }
-+
-+    flags = post ? VFIO_USER_NO_REPLY : 0;
-     msgp = g_malloc0(size);
-     vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_WRITE, size, flags);
-     msgp->offset = offset;
-@@ -1476,7 +1603,7 @@ static int vfio_user_region_write(VFIOUserProxy *proxy, uint8_t index,
-     trace_vfio_user_region_rw(msgp->region, msgp->offset, msgp->count);
- 
-     /* async send will free msg after it's sent */
--    if (post && !(proxy->flags & VFIO_PROXY_NO_POST)) {
-+    if (post) {
-         vfio_user_send_async(proxy, &msgp->hdr, NULL);
-         return count;
-     }
-diff --git a/hw/vfio/user.h b/hw/vfio/user.h
-index ff2aa005eb..dc4d41cc0e 100644
---- a/hw/vfio/user.h
-+++ b/hw/vfio/user.h
-@@ -90,6 +90,8 @@ typedef struct VFIOUserProxy {
-     VFIOUserMsg *last_nowait;
-     VFIOUserMsg *part_recv;
-     size_t recv_left;
-+    VFIOUserWRMulti *wr_multi;
-+    int num_outgoing;
-     enum proxy_state state;
- } VFIOUserProxy;
- 
-@@ -98,6 +100,11 @@ typedef struct VFIOUserProxy {
- #define VFIO_PROXY_NO_MMAP       0x2
- #define VFIO_PROXY_FORCE_QUEUED  0x4
- #define VFIO_PROXY_NO_POST       0x8
-+#define VFIO_PROXY_USE_MULTI     0x10
-+
-+/* coalescing high and low water marks for VFIOProxy num_outgoing */
-+#define VFIO_USER_OUT_HIGH       1024
-+#define VFIO_USER_OUT_LOW        128
- 
- typedef struct VFIODevice VFIODevice;
+     return true;
+ }
  
 -- 
 2.34.1
