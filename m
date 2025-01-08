@@ -4,143 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C5EE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 10:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B431EE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 10:52:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVTax-0001Oh-10; Wed, 08 Jan 2025 05:47:27 -0500
+	id 1tVTfK-0002Kp-6A; Wed, 08 Jan 2025 05:51:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tVTaZ-0001NM-GR
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 05:47:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tVTaV-00066t-IX
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 05:47:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736333216;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eKOVuF1tVCFrg4xucSl9Z48GxMlerwz+1iYVX23nAJo=;
- b=D/FuragK0r3JXlJihYCFvO4RHqCHXgn+uD77XNsk++VwMFCuACWZ+Y/TL+AApKPrvdksQB
- n+Bid3ZUcToJ2PzVcUU6vuLHVOgMmpBPThynpGBOdkA+AhHgPUx4kJsV2TzOQcA12/ySCz
- Fr2fuIz5h4fKf5HrJ8O4QtMiz+F4Q/g=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-Mzi3Td3vOla-cZ6G36J8JQ-1; Wed, 08 Jan 2025 05:46:53 -0500
-X-MC-Unique: Mzi3Td3vOla-cZ6G36J8JQ-1
-X-Mimecast-MFC-AGG-ID: Mzi3Td3vOla-cZ6G36J8JQ
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-467982f8816so360433691cf.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 02:46:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736333213; x=1736938013;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tVTfE-0002Kg-IL
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 05:51:54 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tVTfC-0007Bf-6s
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 05:51:51 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-38633b5dbcfso15911260f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 02:51:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736333507; x=1736938307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eKOVuF1tVCFrg4xucSl9Z48GxMlerwz+1iYVX23nAJo=;
- b=Mz1+zUjqmqDqtJRA52ebg7hRnrIfJunynaH2S3zxn5WdhmwBv8+XEUUyEhwOY17wUi
- AcZDR7nqC6Hy+7CIOWrNHhtE09aXJlgnC0uyAPo1j/EI4pozK0wKqRP/rjEyWB106s66
- RmvveoLwykW237rdZRoevFVtyl/ksTyvLklVZXelUxirqIFJqA3cRds3JjJMxiitPC1U
- wtqGPXRTLOObBayVqJ2ThVXm3xed0fYYZ37feBx1J2Ibr4dlkEBhY/sDkDqcS8tNl/l4
- pGAjaGk6Fum13wFd7e9gb3zBB+wSunK8EXeq4jD5FgKY5qBwvs/n5Tlb7vm3+rbl6yzY
- jdMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXpXDtRenDpuvBuNib64ci1WcBtwTQNPzOhvAMlmzZvsV3Rd9eR6u/tLZ1P5cNqBRIRlIVu0ArgZhR@nongnu.org
-X-Gm-Message-State: AOJu0Yy+n+zLYSzJnCGnyEzZ/3VegjKiEABVh+LSC1PdZlx8UjDlKI/k
- Od8TMdD1G7koswq3u7MQ6BBM6WQ67t9pUkSGqpXhO0DMv6j3hYIWADha1uEh3YcMi4PGRrHisvJ
- 0mXJWAenPYTDsv4wTKfP4+KDn7uv1yXgN8/uXLgoKF+qVUtnPq1Fg
-X-Gm-Gg: ASbGncvFEEV6wnw57uMxwvbEOkExTj3cwfnRe7ZywlyxwKqTPa7I2nxKxcPKHnNaGTk
- kc0flOohA+Yyn3oTPkBw5UgaXwPuPeIN10hurcvhdZKdmSdaN2iqNa+WmlB0mbkH6Ji/LVovWeK
- BBdiP1Jav1dXihcA3JaetP+zmoaGCszb1EaFn58gQBUAo6W29BRm8yKiQwvbExzuas7qyjmFoUZ
- KQUd2Jwe90Z11hwojA2c3QhzA/U32KBwOSfMilLL1PmHAy/ijG3zaawKm6wRFJsYM4Yq8icLau8
- tQJoFBBrxK5EGcAeA3A=
-X-Received: by 2002:ac8:5794:0:b0:467:6dd9:c961 with SMTP id
- d75a77b69052e-46c710a4f02mr28016111cf.48.1736333213234; 
- Wed, 08 Jan 2025 02:46:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFK47uiDlgJtg/4kQK8COlCIoJrIr9bKiqI/L0bHKtW9PtVCCnVcQfN6tLQ9abWcOlsu2555g==
-X-Received: by 2002:ac8:5794:0:b0:467:6dd9:c961 with SMTP id
- d75a77b69052e-46c710a4f02mr28015961cf.48.1736333212888; 
- Wed, 08 Jan 2025 02:46:52 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46a3e6a106fsm194493711cf.38.2025.01.08.02.46.51
+ bh=P4iCOjuZ/xAqj/+8jAiztsVvLpoUdK7ynsRVlAarbkA=;
+ b=YwBlR5vDY+AYohLjdDqN2m5vGLqB66loeKkAwzwsYw8rH8kN3f6ge7h9wmq9w+FRTO
+ qWGNOFbfFGKvFcj4BFbZf/femx0wS27S4YNXMTGbuvKmGZxPH+AbI5VeCi1FS8HYtfh7
+ SoRAQfcNsPvw9fXwr0aIr5oThG1QKpadmYWFYdmvaHkgLs3kkNpWYcUCbKpVELi82a+B
+ ZDDBqem0vXoTXNa4/7eGpFctztj3SUOE2RycMMZVK/ro3GVGyn//6yptyGCFso2TAIMD
+ O3eRSgiPtMqrFcgIMWyYmrq8aG2IB/pFPhJfif+tYJhbndPEyI2hAESJupDSUAEmzm3W
+ be5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736333507; x=1736938307;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P4iCOjuZ/xAqj/+8jAiztsVvLpoUdK7ynsRVlAarbkA=;
+ b=eiCmc7HHUgbvUUrYMdQ1MIpzMZO2XdxIEke/4Bl6QbOeo+KAZ+rF1WKzhjw6pPAjkB
+ 0mO8yaqyIn1bpJxLSwsX/gO8yHwgVvRedgryeluyuwxp/cflPpt9cIANCYix8JKXIIGt
+ MS5aSxE1F6k3vINTkmRSqu9o+9dJDENr6ouWyjUUlWsYe6kUFW3+HiI+viw5jh8gOTXz
+ ukgS9iJ4QH5yqJdNCd/7m12kg2vnvddE95/fLmKS7C9Y4Rn5Mi3TlKWN4b3UUE100uL3
+ lwLyJfpHQVdSwA612zgwf8YWzHs7AKeZWYNFmwpvP06loovukGRVZHmGN8Yem8KlTZ6Y
+ lNHg==
+X-Gm-Message-State: AOJu0Yy9kLyDhAVJBZRAfx3iUjfeZ7SxmjtWjUXY0Ov9XLGbtt/0ULHR
+ 8lA7/mQ4XMR+OAy1Ca7c9oXRg+o2dhPI7FpDcVUesRuznMHiqZBBy6nQmQ==
+X-Gm-Gg: ASbGnctOmJeRKgioesg46mzO/L32C6VrPCXr2R3plXvlQzVCCORZlF4V4jxZ3XNWhGP
+ 2Fl1tvmOnkpj1BK/IMbhCCjps1s3BN+Xh5WlrT4WK9nPmGnYkOgzSBEypihs4TIZc3QJSN2H1qg
+ eD6dOBg+ERCaHc255mMMOxjDz49SqrqHpjDNaiZ0LyKAPC+tfno1/uffHVMvlIDCZsiGwNDPSAS
+ YAJSNEVFmBSKilkTbCaIobIzAe04raen9ZmQS9gL5uJbOKAwLbw
+X-Google-Smtp-Source: AGHT+IGqIaT+5M6eC6yS9qvb4iMsCuARl6VL60xRz6RyrP+G7RI+BXnESAj30GlnVwk2/mfARZp9ag==
+X-Received: by 2002:adf:a3d2:0:b0:38a:88f8:aac6 with SMTP id
+ ffacd0b85a97d-38a88f8ac78mr931149f8f.41.1736333507056; 
+ Wed, 08 Jan 2025 02:51:47 -0800 (PST)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aaf5d1b602bsm1138530266b.178.2025.01.08.02.51.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 02:46:52 -0800 (PST)
-Message-ID: <11cbdc49-668d-4f73-b5a8-cdaa4c85a756@redhat.com>
-Date: Wed, 8 Jan 2025 11:46:50 +0100
+ Wed, 08 Jan 2025 02:51:46 -0800 (PST)
+Date: Wed, 08 Jan 2025 09:45:43 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, David Woodhouse <dwmw2@infradead.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+CC: Thomas Huth <thuth@redhat.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_hw/i386/pc=3A_Fix_level_inte?=
+ =?US-ASCII?Q?rrupt_sharing_for_Xen_event_channel_GSI?=
+In-Reply-To: <8b2690f2c9532468fd5029d319737904b58acec2.camel@infradead.org>
+References: <e592f9127f2d9919e6ccb76a0afb38c5d725d8ec.camel@infradead.org>
+ <20250107110718-mutt-send-email-mst@kernel.org>
+ <8b2690f2c9532468fd5029d319737904b58acec2.camel@infradead.org>
+Message-ID: <E60B2E8D-23B5-43E2-8DC5-FDBA30EB40EF@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sd/sdcard: Remove sd_set_cb()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
-References: <20250108100240.960593-1-clg@redhat.com>
- <76dfa092-7d20-46db-beb1-43848cb5ee4f@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <76dfa092-7d20-46db-beb1-43848cb5ee4f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,22 +103,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 11:43, Philippe Mathieu-Daudé wrote:
-> On 8/1/25 11:02, Cédric Le Goater wrote:
->> Last user of sd_set_cb() was removed in commit ce5dd27534b0 ("hw/sd:
->> Remove omap2_mmc device").
-> 
-> https://lore.kernel.org/qemu-devel/20240903200446.25921-2-philmd@linaro.org/
-> ;)
-> 
-
-Ah ! good. I was wondering what to do of the '*_cb' IRQs and
-'me_no_qdev_me_kill_mammoth_with_rocks' too. You dropped them
-all.
-
-Thanks,
-
-C.
 
 
+Am 7=2E Januar 2025 16:20:28 UTC schrieb David Woodhouse <dwmw2@infradead=
+=2Eorg>:
+>On Tue, 2025-01-07 at 11:07 -0500, Michael S=2E Tsirkin wrote:
+>> On Thu, Dec 19, 2024 at 05:24:11PM +0100, David Woodhouse wrote:
+>> > From: David Woodhouse <dwmw@amazon=2Eco=2Euk>
+>> >=20
+>> > The system GSIs are not designed for sharing=2E One device might asse=
+rt a
+>> > shared interrupt with qemu_set_irq() and another might deassert it, a=
+nd
+>> > the level from the first device is lost=2E
+>> >=20
+>> > This could be solved by using a multiplexer which functions as an OR
+>> > gate, much like the PCI code already implements for pci_set_irq() for
+>> > muxing the INTx lines=2E
+
+Just curious: Why not use that aporoach? Could <https://lore=2Ekernel=2Eor=
+g/qemu-devel/20250108092538=2E11474-5-shentey@gmail=2Ecom/> help?
+
+Best regards,
+Bernhard
+
+>> >=20
+>> > Alternatively, it could be solved by having a 'resample' callback whi=
+ch
+>> > is invoked when the interrupt is acked at the interrupt controller, a=
+nd
+>> > causes the devices to re-trigger the interrupt if it should still be
+>> > pending=2E This is the model that VFIO in Linux uses, with a 'resampl=
+er'
+>> > eventfd that actually unmasks the interrupt on the hardware device an=
+d
+>> > thus triggers a new interrupt from it if needed=2E QEMU currently doe=
+sn't
+>> > use that VFIO interface correctly, and just bashes on the resampler f=
+or
+>> > every MMIO access to the device "just in case"=2E
+>> >=20
+>> > This does neither of those=2E The Xen event channel GSI support *alre=
+ady*
+>> > has hooks into the PC gsi_handler() code, for routing GSIs to PIRQs=
+=2E So
+>> > we can implement the logical OR of the external input (from PCI INTx,
+>> > serial etc=2E) with the Xen event channel GSI by allowing that existi=
+ng
+>> > hook to modify the 'level' being asserted=2E
+>> >=20
+>> > Closes: https://gitlab=2Ecom/qemu-project/qemu/-/issues/2731
+>> > Reported-by: Thomas Huth <thuth@redhat=2Ecom>
+>> > Signed-off-by: David Woodhouse <dwmw@amazon=2Eco=2Euk>
+>>=20
+>> Xen things so feel free to merge=2E
+>>=20
+>> Acked-by: Michael S=2E Tsirkin <mst@redhat=2Ecom>
+>
+>Thanks=2E
+>
+>Further testing shows I need one minor fix=2E=2E=2E
+>
+>> > @@ -1596,7 +1607,7 @@ static int allocate_pirq(XenEvtchnState *s, int=
+ type, int gsi)
+>> > =C2=A0=C2=A0=C2=A0=C2=A0 return pirq;
+>> > =C2=A0}
+>> > =C2=A0
+>> > -bool xen_evtchn_set_gsi(int gsi, int level)
+>> > +bool xen_evtchn_set_gsi(int gsi, int *level)
+>> > =C2=A0{
+>> > =C2=A0=C2=A0=C2=A0=C2=A0 XenEvtchnState *s =3D xen_evtchn_singleton;
+>> > =C2=A0=C2=A0=C2=A0=C2=A0 int pirq;
+>
+>=2E=2E=2E
+>
+>@@ -1628,7 +1656,7 @@ bool xen_evtchn_set_gsi(int gsi, int level)
+>         return false;
+>     }
+>=20
+>-    if (level) {
+>+    if (*level) {
+>         int port =3D s->pirq[pirq]=2Eport;
+>=20
+>         s->pirq_gsi_set |=3D (1U << gsi);
+>
+>
+>
 
