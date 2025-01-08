@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A83E7719A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 08:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1786FE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 08:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVRhS-00068r-2O; Wed, 08 Jan 2025 03:46:02 -0500
+	id 1tVRhN-00067P-41; Wed, 08 Jan 2025 03:45:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRhD-00065r-Vo
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRh9-00064l-5k
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRhC-0001no-Hj
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tVRh7-0001mw-B2
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 03:45:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736325945;
+ s=mimecast20190719; t=1736325940;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tW/wPuJVrr8OL/8q9TH0GvpC38OJs+qigH7g3x85HTo=;
- b=hsFoiep/Na5orWIgvlQaFMR+5gxqf7JssnGYW6XIcE7tQSJ9CdZ3yaMD6fjfjzhPctFWQj
- ApepfPreyviTGgxVucXb3vYR/8GNE7Zoivpsyx+sDhKkNKFGxGNcQ3JCNkR0yNh2xQBgmT
- PJ5HC+Xh35s9xJF2lLoMaOY5TFYNAiM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jIiK9mRXx1U0Jr5JdSMAlS96qe4blqH5vn6b1D8aFsM=;
+ b=EMfeZ+mtKNpY1EJGcoCn4oG12p5pkMtNtpHSxeB6B8JqznbWk5cs0jYF1tDEretxYZKOxV
+ A8BY2gdk3uA1RSoT1FWEwBSJsxvlE+kPcxHEYlqt2AOb4Ou8pHJDhsME7pUlewfUEj0wno
+ 3viCuPj81ODw3Cc/G/xVr7YIaXY4xyY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-teCmVej8MrG0fYERuIpxVQ-1; Wed,
- 08 Jan 2025 03:45:43 -0500
-X-MC-Unique: teCmVej8MrG0fYERuIpxVQ-1
-X-Mimecast-MFC-AGG-ID: teCmVej8MrG0fYERuIpxVQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-y6lH1zzAP8iBiCEm1VPBMg-1; Wed,
+ 08 Jan 2025 03:45:38 -0500
+X-MC-Unique: y6lH1zzAP8iBiCEm1VPBMg-1
+X-Mimecast-MFC-AGG-ID: y6lH1zzAP8iBiCEm1VPBMg
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2D491955DC0
- for <qemu-devel@nongnu.org>; Wed,  8 Jan 2025 08:45:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3E1B19560B1; Wed,  8 Jan 2025 08:45:37 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-228.str.redhat.com
  [10.33.192.228])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E4F019560AA; Wed,  8 Jan 2025 08:45:41 +0000 (UTC)
+ id 2092919560AA; Wed,  8 Jan 2025 08:45:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 13/14] docs/about/deprecated: Remove paragraph about initial
- deprecation in 2.10
-Date: Wed,  8 Jan 2025 09:45:10 +0100
-Message-ID: <20250108084511.238458-14-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PULL 10/14] hw/s390x/s390-virtio-ccw: Remove the deprecated 2.8
+ machine type
+Date: Wed,  8 Jan 2025 09:45:07 +0100
+Message-ID: <20250108084511.238458-11-thuth@redhat.com>
 In-Reply-To: <20250108084511.238458-1-thuth@redhat.com>
 References: <20250108084511.238458-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.437,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,35 +84,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we introduced the deprecation rule of keeping deprecated features
-for two more releases, we had to state that we would not remove features
-by surprise that had already been marked as deprecated before. Nowadays,
-this paragraph is not needed anymore, so we can remove it now.
+The s390-ccw-virtio-2.8 machine is older than 6 years, so according to
+our machine support policy, it can be removed now.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250103145702.597139-1-thuth@redhat.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20250103144232.520383-10-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/about/deprecated.rst | 6 ------
- 1 file changed, 6 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 63b46fd520..4a3c302962 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -24,12 +24,6 @@ should exclusively use a non-deprecated machine type, with use of the most
- recent version highly recommended. Non-versioned machine types follow the
- general feature deprecation policy.
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 08562e45a8..8a242cc1ec 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1260,23 +1260,6 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(2, 9);
  
--Prior to the 2.10.0 release there was no official policy on how
--long features would be deprecated prior to their removal, nor
--any documented list of which features were deprecated. Thus
--any features deprecated prior to 2.10.0 will be treated as if
--they were first deprecated in the 2.10.0 release.
+-static void ccw_machine_2_8_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_9_instance_options(machine);
+-}
 -
- What follows is a list of all features currently marked as
- deprecated.
+-static void ccw_machine_2_8_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { TYPE_S390_FLIC_COMMON, "adapter_routes_max_batch", "64", },
+-    };
+-
+-    ccw_machine_2_9_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_8, hw_compat_2_8_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-DEFINE_CCW_MACHINE(2, 8);
+-
+ #endif
  
+ static void ccw_machine_register_types(void)
 -- 
 2.47.1
 
