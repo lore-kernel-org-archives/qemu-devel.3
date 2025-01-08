@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE34E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 18:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780A7E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 18:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVbB3-0008Rb-Cx; Wed, 08 Jan 2025 13:53:13 -0500
+	id 1tVbGD-0000pp-NA; Wed, 08 Jan 2025 13:58:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVbB1-0008R4-JT
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:53:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1tVbG8-0000pK-24; Wed, 08 Jan 2025 13:58:28 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVbAz-0007zO-GF
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:53:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736362387;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0W+EX8OAzYP5h1kHBTcwzmHaExVkDf5UvTU+/dFDzSA=;
- b=ZDn48mKufx56byYSQ1RziCRWnHHJ+XpvKvkrsHV31CfsMM5jC5CQrS7nvEOeyNRKMsV84q
- u1+ZxDVA4wUFOZQRVUkO6mqj2Zzt9JJYnPaKRBtxLwjXaJDe6IkkfKn9P9T4I/JNnXXIjM
- TzNfzxGC+FY0hVFhyomiCVwS8wlKOrI=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556--IJLXprGNq6rU77WadfAPw-1; Wed, 08 Jan 2025 13:53:06 -0500
-X-MC-Unique: -IJLXprGNq6rU77WadfAPw-1
-X-Mimecast-MFC-AGG-ID: -IJLXprGNq6rU77WadfAPw
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aa691c09772so13137566b.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 10:53:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736362385; x=1736967185;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0W+EX8OAzYP5h1kHBTcwzmHaExVkDf5UvTU+/dFDzSA=;
- b=RvyEJjRa79yQ/CTGpFXPI9i3uKh/KKFScx71mS/VSgTCNSm6OUmtFcV/fjZIn/NEJX
- HzrfGS6T7WRBqnB3SKkPOrDodBvPYUn5OJ2IWVQleykRWAoLo6sPYdKcRvcyA5JjbmHL
- qP52ASbafsn1E6d2keGdLNTkqep4X4gRXuglNE9EsLTqy0CXmIW936iTVpwz9XMbSrXt
- opziBrw6Ouz2dU6BmZleJ6EWLd6xEf0bkBWvOiDDffk1igWIyqmQer0Ei6EXRV/bD/R1
- GvwOrqJb7mxjkSNU3ZYBpnarF0iLYohOGU8qB1gojGZYDbV93CuIHSWRuN3I4MKmrwcf
- cCUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXo73ra3/RynOzmtUF70ct1FR+DcxYrbjgmW9GZ6jexUrLFRUieIk6g9K85qa1UuZO4g666UNHztBKe@nongnu.org
-X-Gm-Message-State: AOJu0YxFu9eOIX2zZqtllqBQti/uDt//yYDD/Iora599Rakp+0vWIv09
- jAFiqHF+/Fu3516/vjFsImFetn+HDJkWNaSQ9S/oHdlZ98crkC5k4eZxC/YYbkWkNmTtYah+vSW
- OFMPV63vHTuH5U7T1LXA1PsrOL9JwTjiUvgxYW1fFpcbfqhjYKUGr
-X-Gm-Gg: ASbGncuxV+oejkCdYhSI1FzFBfVSBdjgHB2HwkAiKwmlBqE+mJBUSmnVBZ4NbPgN1Lr
- Ey0tf2hhkE93Ngjz7HJUVIMvDAXNtSOvkScWVYZgEQdpZF4djak5OwpqW7FU9T+5cCDwf102r3i
- S04b5T6DilmHOrDMqB6x3gJ5PPQX97h2wxFrvkz196Zo6uR05la/VmfbWIgTyKu9KY8BU3X+O1m
- WI/LlQUbIFXku3qKN5xTeHrAiVkHor1+4RuN3PVwBpMWKvN9TQ=
-X-Received: by 2002:a17:907:1a4b:b0:ab2:b4bc:41ef with SMTP id
- a640c23a62f3a-ab2b4bc50c3mr212496666b.29.1736362385179; 
- Wed, 08 Jan 2025 10:53:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG5YK4cYZ5axzFKK0C987utxG37OE1APcCssi6KidFu1JgP3hogEMRpgNyhrRu2M/201ufmdw==
-X-Received: by 2002:a17:907:1a4b:b0:ab2:b4bc:41ef with SMTP id
- a640c23a62f3a-ab2b4bc50c3mr212494266b.29.1736362384801; 
- Wed, 08 Jan 2025 10:53:04 -0800 (PST)
-Received: from redhat.com ([2a02:14f:175:d62d:93ef:d7e2:e7da:ed72])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0f015b3csm2510531566b.161.2025.01.08.10.53.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 10:53:03 -0800 (PST)
-Date: Wed, 8 Jan 2025 13:53:00 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v3 0/3] virtio: Convert feature properties to OnOffAuto
-Message-ID: <20250108135204-mutt-send-email-mst@kernel.org>
-References: <20250104-virtio-v3-0-63ef70e9ddf3@daynix.com>
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1tVbG4-00015m-Hu; Wed, 08 Jan 2025 13:58:27 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508CeaBt026789;
+ Wed, 8 Jan 2025 18:58:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BsBnkv
+ KmvWmRyk0yDTgj2iAGmQgFyV4u6KekuTpr8v8=; b=HSe4Fjh/AqCrkhuzt10iXT
+ GlY2hBZ9Y31WS8AzmYV5TbWdHAsvkMxI499uxQmHnwMofgAcNa9iaiTqQ9XTJ0bh
+ g5p2BzIyj8pHtRuLp6W7pH2K28zT1fU8R7RZVxBPBrGmQbF/s2U5DkgD2LUNvPOq
+ c6pLOpsFW9VNA0k0KaKQ9VsPNnYaw2aWKWuWHYpqjw6F2e5O3LYROQPiyLWEh55T
+ 5CvfX1sGhG2iprp4qvd9crRPoQpk9G1UFC2WmA2NAuMP8uh8wuvK/eFRS2cf0a/q
+ agGbyEZbBxphlZJY1TKgJrI/TSLh9DAgu8YuOKJZl1tZPlxTAbLKaKjsVfh1L/oA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441e3b4k1n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 18:58:18 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508I6fnp026183;
+ Wed, 8 Jan 2025 18:58:17 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yj128yny-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jan 2025 18:58:17 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 508IwG5623790204
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 Jan 2025 18:58:17 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C14E25805D;
+ Wed,  8 Jan 2025 18:58:16 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 777C758043;
+ Wed,  8 Jan 2025 18:58:15 +0000 (GMT)
+Received: from [9.61.241.32] (unknown [9.61.241.32])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Jan 2025 18:58:15 +0000 (GMT)
+Message-ID: <7171c479-5cb4-4748-ba37-da4cf2fac35b@linux.ibm.com>
+Date: Wed, 8 Jan 2025 13:58:14 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250104-virtio-v3-0-63ef70e9ddf3@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/5] hw/vfio/ap: notification handler for AP config
+ changed event
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
+References: <20250107184354.91079-1-rreyes@linux.ibm.com>
+ <20250107184354.91079-3-rreyes@linux.ibm.com>
+ <af2e1f98-f313-4a84-baa8-4435da40c326@redhat.com>
+Content-Language: en-US
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <af2e1f98-f313-4a84-baa8-4435da40c326@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: hUS908DU7SuxXDzrBCTfmi8DcHj4KpB7
+X-Proofpoint-GUID: hUS908DU7SuxXDzrBCTfmi8DcHj4KpB7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 suspectscore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501080152
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,55 +114,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 04, 2025 at 04:36:04PM +0900, Akihiko Odaki wrote:
-> This series was spun off from:
-> "[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
-> (https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
-> 
-> Some features are not always available with vhost. Legacy features are
-> not available with vp_vdpa in particular. virtio devices used to disable
-> them when not available even if the corresponding properties were
-> explicitly set to "on".
-> 
-> QEMU already has OnOffAuto type, which includes the "auto" value to let
-> it automatically decide the effective value. Convert feature properties
-> to OnOffAuto and set them "auto" by default to utilize it. This allows
-> QEMU to report an error if they are set "on" and the corresponding
-> features are not available.
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v3:
-> - Rebased.
-> - Link to v2: https://lore.kernel.org/r/20241022-virtio-v2-0-b2394236e053@daynix.com
-> 
-> Changes in v2:
-> - Expanded the message of patch "qdev-properties: Accept bool for
->   OnOffAuto".
-> - Link to v1: https://lore.kernel.org/r/20241014-virtio-v1-0-e9ddf7a81891@daynix.com
+On 1/8/25 2:34 AM, Cédric Le Goater wrote:
 
+> On 1/7/25 19:43, Rorie Reyes wrote:
+>> Register an event notifier handler to process AP configuration
+>> change events by queuing the event and generating a CRW to let
+>> the guest know its AP configuration has changed
+>>
+>> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+>> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+>> Tested-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> I don't recall a previous version of these changes where these
+> trailers were added. Was this part of an internal review ?
+> It is best to restart the process when the patches become public.
+>
+> Thanks,
+>
+> C.
 
-Markus I think you had feedback on previous versions of this?
+Hey Cédric,
 
-> ---
-> Akihiko Odaki (3):
->       qdev-properties: Accept bool for OnOffAuto
->       qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
->       virtio: Convert feature properties to OnOffAuto
-> 
->  include/hw/qdev-properties.h | 18 ++++++++++
->  include/hw/virtio/virtio.h   | 38 +++++++++++---------
->  hw/core/machine.c            |  4 ++-
->  hw/core/qdev-properties.c    | 83 ++++++++++++++++++++++++++++++++++++++++++--
->  hw/virtio/virtio-bus.c       | 14 ++++++--
->  hw/virtio/virtio.c           |  4 ++-
->  6 files changed, 138 insertions(+), 23 deletions(-)
-> ---
-> base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
-> change-id: 20241013-virtio-164ea3f295c3
-> 
-> Best regards,
-> -- 
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+Yes these patches went through an internal review and Anthony Krowiak is
+
+the primary maintainer for VFIO-AP. This is my first upstream review so
+
+apologize for the confusion.
+
+Thanks,
+
+Rorie
 
 
