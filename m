@@ -4,88 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC0DE77199
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E83E7719B
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVe4G-00029Y-Pv; Wed, 08 Jan 2025 16:58:25 -0500
+	id 1tVeAD-0004Bi-Rz; Wed, 08 Jan 2025 17:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVe4C-00029C-AO
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:58:20 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVe47-0004qy-Sr
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:58:19 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4361f664af5so3748545e9.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:58:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736373493; x=1736978293; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=udUJUuAdFr3vF+7ETFNGdPmqTXxPnpxTztgzmDCR61k=;
- b=Jhi5drNluGGSG4h5ZKTgcK0MqEZNvE2tphckpNDopd0Mbvy6BlvAYTOD48rBqeGQkc
- ObuAIq4EfLRRKugZuedX2hdrrHRsNKxbo49mYsasqwah24lvlF8jQ8lUucgMjeoJ+p5/
- 2wWfWJnjcUTe9EAl6Qlk4mGrRgerGrCxQrHLPMqratlcJ1ffAXuJWefnquKssH9stS3/
- bQ0xm6Pt1EKb9pWPvw07bRkTeCmnfdsns5VNwBA9NwIXpOPF8Xanculkw4X72OOOQV0p
- JY4nWnsxYxXnaYiBdKRYzXEQceJUGrRtGlYxRqIzj+ya/qjGRozKAygFcmV4C11/1eyf
- YXeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736373493; x=1736978293;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=udUJUuAdFr3vF+7ETFNGdPmqTXxPnpxTztgzmDCR61k=;
- b=O2vNxaWveGofSI8H9Cpg14h31VY20DUw+W2wrt8052NWp9KhBSH1nBPGi/QygODkhu
- HkNg/zyiuBIwom+zSUjAV6Bkb9bhXrk3S1KdpNgY5mJ0NKR9nvYcy8IUke5hP/W3OfDA
- eJ74I2/kF/DDCH0SsijOHN9xy1ecJmdozZLHq7p/Vzr8qlIrsy34pwtbDpKUFrKnyiDy
- LnJKNVXyEkh4dNstWTcEaYxXVZ6iqEMbkJqVvzG+x89EfMF3gi9Yu2ns7fzGqIiOD1km
- zQDPTHmOBJc0dSJ9uiEcP5MQmw/PrtyTP9X4lOv+LG6X2i/9rTN7m+dQqI3YZyQFBeg1
- vbxw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWO4rKWx/e4lFkqBoGi+DGH1C8t/FXXTcSRnRsnfhbKsMFpqF+5uYbUpt+Qld0lwzr4f5j8+UL9y+3@nongnu.org
-X-Gm-Message-State: AOJu0Yx5fNttsdOCW7mX4tD4mrRrHX2TPCz0pMTp6q1agHNtXNZoasJz
- aL43Xkm2YBdekAsxYPpGr1wnnGy6rMXZ2u6amSG5bX9vcbqH2BaZsN/lJE+Q1j8=
-X-Gm-Gg: ASbGncvsL7GlDZc109N5DRAGWpPOZqKPbxFuWwBgqnaQp9nUQZ970eXefeAkdSfRLs8
- OHzgPnkAeVteKCAz4peojwcOb6CqHmkk/1LVC/T60ogIiGuaW+8z0QjwvHBSH3fSsGyZJ4CW/nu
- GJ5wZJJGPmJEgXBJun9LB1pAXw8RBKfNFH6IgDCeuHcxBRVEk39bvm3SxRjCXJ3AKFzwM/wmT9T
- M8yMpfWIZI71aK5hKGCmCV9llVq7JHbR1UdgI6/PDjX1V/Y/22I44rPNGiS3gdKxsWp4v9r+g24
- UvGajipZejHZtOCA93y0d2Ws
-X-Google-Smtp-Source: AGHT+IH24kbg0iRPAH18bTv7CmhFPAcAODDrGPIu7Ld8aSpOSTE45D3EZdYS2KrMREexpyUkIeHlHQ==
-X-Received: by 2002:a05:600c:138a:b0:434:a781:f5d5 with SMTP id
- 5b1f17b1804b1-436e271bcb3mr43958295e9.30.1736373493030; 
- Wed, 08 Jan 2025 13:58:13 -0800 (PST)
-Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e383623sm16654f8f.32.2025.01.08.13.58.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 13:58:12 -0800 (PST)
-Message-ID: <8450ee49-4474-4ee7-9658-cd2ec2662aa7@linaro.org>
-Date: Wed, 8 Jan 2025 22:58:11 +0100
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tVeAC-0004BS-Qc
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:04:32 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1tVeAB-0006OG-4x
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:04:32 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 25871A404A4;
+ Wed,  8 Jan 2025 22:02:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E6CC4CEDF;
+ Wed,  8 Jan 2025 22:04:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1736373869;
+ bh=++yLiwF1vMXtmMJcl0mx0RivzvJ7PQ5W2ExsxlhLhr4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=QwoSwxVWakADNVUNt8nDBizbxRA01B8Q4PZ7bcFVgfc6hGAkT+nTvmOdRmDFppOd2
+ lcmCFw1eYmbz62mQHBSkF3WyATU8yTvQB+CVuZZb8JLT3dj5+UPBkIZVKJ23IeQARZ
+ TpilkFHGqEKQlJgH6I6a7GmQmmVpQbaQPI7iNM9WmgsL0+7aO8Wd5gu5fUrbCA9ejC
+ fVSbmNAcwVgmrc9Az5WuEfQeeUC+A03RS6q5qkfGmigxW3i+9A18rqMuvglPKp9Mhs
+ gRcCn1kpfq+MKTP2mZKnKwKyNTPm0mSHOmjPV42Mp8XWQ8kBBKpUKqSWnnW/Q18Y6z
+ TRqgT4omXwhhQ==
+From: deller@kernel.org
+To: Stefan Hajnoczi <stefanha@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: deller@gmx.de
+Subject: [PULL v2 2/6] linux-user: Use unique error messages for cmsg parsing
+Date: Wed,  8 Jan 2025 23:04:18 +0100
+Message-ID: <20250108220422.169967-3-deller@kernel.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250108220422.169967-1-deller@kernel.org>
+References: <20250108220422.169967-1-deller@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 26/81] tcg: Add TCG_OPF_NOT_PRESENT to opcodes without
- inputs or outputs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-27-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-27-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=deller@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,21 +74,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 09:00, Richard Henderson wrote:
-> The br, mb, goto_tb and exit_tb opcodes do not have
-> register operands, only constants, flags, or labels.
-> Remove the special case in opcode_args_ct by including
-> TCG_OPF_NOT_PRESENT in the flags for these opcodes.
+From: Helge Deller <deller@gmx.de>
 
-Hmm this might answer my question about using 0 = TCG_TYPE_I32
-for these.
+Avoid using the same error message for two different code paths
+as it complicates determining the one which actually triggered.
 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg-opc.h | 8 ++++----
->   tcg/tcg.c             | 3 ---
->   2 files changed, 4 insertions(+), 7 deletions(-)
-
+Signed-off-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+---
+ linux-user/syscall.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 1ce4c79784..494323efba 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -1825,7 +1825,7 @@ static inline abi_long target_to_host_cmsg(struct msghdr *msgh,
+                 *dst = tswap32(*dst);
+             }
+         } else {
+-            qemu_log_mask(LOG_UNIMP, "Unsupported ancillary data: %d/%d\n",
++            qemu_log_mask(LOG_UNIMP, "Unsupported target ancillary data: %d/%d\n",
+                           cmsg->cmsg_level, cmsg->cmsg_type);
+             memcpy(data, target_data, len);
+         }
+@@ -2047,7 +2047,7 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+ 
+         default:
+         unimplemented:
+-            qemu_log_mask(LOG_UNIMP, "Unsupported ancillary data: %d/%d\n",
++            qemu_log_mask(LOG_UNIMP, "Unsupported host ancillary data: %d/%d\n",
+                           cmsg->cmsg_level, cmsg->cmsg_type);
+             memcpy(target_data, data, MIN(len, tgt_len));
+             if (tgt_len > len) {
+-- 
+2.47.0
 
 
