@@ -4,110 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB8EE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 18:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAB4E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 18:11:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVaRp-00045c-By; Wed, 08 Jan 2025 13:06:29 -0500
+	id 1tVaWQ-0005hl-Kk; Wed, 08 Jan 2025 13:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVaRo-00045E-OK
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:06:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVaWO-0005hZ-Rd
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:11:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVaRm-0002yf-45
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:06:28 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVaWN-0003jk-7i
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:11:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736359584;
+ s=mimecast20190719; t=1736359867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v0pEvL10WI8Li3AFy5zxtxLbDSZO+5YyIxzTkXMmTuA=;
- b=WUO/kDVeWCA51XIJoMzhkB2lyPl0IPTpE3dnLGOpLs9PDJFmfhb8C3jQsG74srcTyNaoDW
- Hb9eO+NE7HUW61KPKJJGd8zGvbLDWPtAyUDj3Nez4kzN8udc0q3pN6LZvvvSX7QXiKKOmY
- pGiVDYuIIQbrjz55nECIXV2/oGutx3g=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KNWudEl395pTSAcJEXvWCSz589uTZDBEcgkVToTSIkY=;
+ b=Rf8EaskgtW4wYfyrS0Y+NTJ9KMsGIIu3s3AviJyciBFB+KU5jbAecAen4MjAW0lufZ4icd
+ 1J6XD8siy7kDG7oolWpQfGXOyRPIu0vgKR9KPJ9nyipMkEb/P8gIHJf/zvhCoY1Xb1bQlm
+ 9pKXlKV92iC6g++N+W2CKok7acFhh90=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-DdovRlzMNPiizSK9d2IHEw-1; Wed, 08 Jan 2025 13:06:22 -0500
-X-MC-Unique: DdovRlzMNPiizSK9d2IHEw-1
-X-Mimecast-MFC-AGG-ID: DdovRlzMNPiizSK9d2IHEw
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-467b19b5641so347157641cf.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 10:06:22 -0800 (PST)
+ us-mta-163-7slZCrGpOmu-8uON0nKqsw-1; Wed, 08 Jan 2025 13:11:05 -0500
+X-MC-Unique: 7slZCrGpOmu-8uON0nKqsw-1
+X-Mimecast-MFC-AGG-ID: 7slZCrGpOmu-8uON0nKqsw
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3fe991854so5018a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 10:11:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736359582; x=1736964382;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v0pEvL10WI8Li3AFy5zxtxLbDSZO+5YyIxzTkXMmTuA=;
- b=b/T0Yc06KogQ20BXihhbeuUC8+iKhqMHckjOYavTlQCxlW2Gg98tlvn09O1JF24p4m
- n/CPvXy2nSsrej3zA10VRrc2q+tOoEbX7N/a0Df0khte9AWkRKLj5j08dl0xUvsApS3W
- 57VzzQoDAbh6o9otURzEcieEhnCS+P+MnXEqsk0U3l2oJwwjqcXFnZjJxLFXFjMBlriZ
- 2Y9CGgkzWTDxU4/sQvJ5JRNP6cJe21dKrTui9HtVvnuRJruB8+lSI2ednlu2NKsv/6Dh
- O1YxM5iPhcXu0NHAZoWvEnCCApwFYq7Cqc9ZcJlNaH8xcnDjCA0YgybqulyrkvIaXtwT
- wBDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtwysf+DDZA+0+2a0kc9+AazvLjY5+I8B3liURVaVM7s8ZmDJuvl8WOPAe4Us+LlKvJBSKCtxBeVw1@nongnu.org
-X-Gm-Message-State: AOJu0YzNzhPaUuyRDoyl9XIPu2VijeywfA/cSuaYd1ZVnFgl1jMuMVxd
- WEm6S4HTEQgmtCoHg/VfYCs6eUkTn3cFmcIwgDpW9P2Hc1no9sd9nMAOOFoCw01V+43sk0GLJlA
- /lcSvJ3Ukkb+Uxtm5ont13GJ1ecknRG6YOoPGm02GVkoAKmPlB7J2
-X-Gm-Gg: ASbGnct0ef5x/qgPZhkRm++nKDY4Vhk2VwJc12co4Eh9dhq6F7K7tTTTpFD40Dj3o9N
- BoAcZXfz4CPpqfmziXdBJuiF40c4FBt4dr6ot8wYR43j90wkeJrQMTzRIJcT0tZmX5C7LIb+mH+
- dm937AwEMHuoqdeeogLxMqvLy1wdbZxNs0CFhzWAOcFCZr6YfD15GRMnfe8SPAbvY3heDrAnJyQ
- x7IvN/rP4CFHa41HK8SKHNJSUH1th4oUxrsRRP31VYUPJ1880g7tjpg4FpXAnuTYd1XCHbdMBON
- bUo2FcR40DsySgKpWQ==
-X-Received: by 2002:a05:622a:118a:b0:466:9938:91f6 with SMTP id
- d75a77b69052e-46c7108eee0mr55482001cf.51.1736359582263; 
- Wed, 08 Jan 2025 10:06:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE/Wo6zSCCtNLFjObrUpu5Nd0mTTp6hO/TAwpM2kHZIOvEu3pSTViNiPG6MdF7GGU7PhamuIA==
-X-Received: by 2002:a05:622a:118a:b0:466:9938:91f6 with SMTP id
- d75a77b69052e-46c7108eee0mr55481571cf.51.1736359581936; 
- Wed, 08 Jan 2025 10:06:21 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46a3eb16c7bsm198935231cf.63.2025.01.08.10.06.19
+ d=1e100.net; s=20230601; t=1736359864; x=1736964664;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KNWudEl395pTSAcJEXvWCSz589uTZDBEcgkVToTSIkY=;
+ b=kNjgfvyKC4ti6xmk/bKvqx1nqUeOvHa6oYgcjbgtFlGPDxuBlmcakp6ISbqPw4lTT3
+ CShKdpRlx57wAr4N9W9am7M0d76YPG1OnDktq1d/nTkI3uuos5rpXoqxMuBFlRv5Cz5c
+ 1dVTLmw70BTxqfs5hQeHs+lXBaz0I9cLgawMg46dnQluE12W+vkrD5jcSommnuVVxZAS
+ N+DMZXS87DaBYpR1NR6EzxNGr/evbSsMU+X2VN7DK9fqRQ5/7//YyAqza51BWFlTeebF
+ VfC73Qek1HArqHu8oL8gvTYTGbDOC8lVndMjwSiHmtklOwEZBq1N8fMFOk36u3rJlIkc
+ GrOw==
+X-Gm-Message-State: AOJu0Ywpy7ka254AbM3Wx0ZLtAGCO95NmSioBW19fUNHNf/IZgWRoob2
+ oyzHv1++iE7tY3Lv6x47sHtGOgNXZeS5DhMbhITBYAQkl+XLshye6yfrk2y4fNtxV+e+vF46T7G
+ 5W4Cvevr/aF5Uj+V9JP4IFM62vALPO1pbiLUuAv6bY9tI+HgY7xPR
+X-Gm-Gg: ASbGncuv2pJ6RXVS14bikfHLbzGWrYE4XlHWJ/E7C6+bTiIevo35OD+bXqxVHm5VS+h
+ naNaMPEwdS6vMQQo8vH3UI8mXveFyboeon95FK8CcW9eTK8BluwMo7Aa70CgZKWvtANyOc/CGfQ
+ DALRUM+JdXtx5kG4BQ3XQR47a4kYX0fahQf5prY/i1k3wlHueKylo5/HH/X/4EzrnTwTEJEQDxT
+ dU1gRfcrdwvQ3dDgR9pslTUtjYlYryy/0x6hBkTgrN93xrtj7U=
+X-Received: by 2002:a05:6402:354c:b0:5cf:e71c:ff88 with SMTP id
+ 4fb4d7f45d1cf-5d972dfeb8bmr3665104a12.4.1736359863888; 
+ Wed, 08 Jan 2025 10:11:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFO/LHXjhXvKugSa60iDkb/Gsbb1+Gi0/mNIfAxuNmwWmnxQ1ayS6VfRyNU/Fdxexk0tZtNtw==
+X-Received: by 2002:a05:6402:354c:b0:5cf:e71c:ff88 with SMTP id
+ 4fb4d7f45d1cf-5d972dfeb8bmr3665061a12.4.1736359863468; 
+ Wed, 08 Jan 2025 10:11:03 -0800 (PST)
+Received: from redhat.com ([2a02:14f:175:d62d:93ef:d7e2:e7da:ed72])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d80701c9d7sm25440683a12.87.2025.01.08.10.10.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 10:06:21 -0800 (PST)
-Date: Wed, 8 Jan 2025 13:06:17 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH v6 1/2] memory: Update inline documentation
-Message-ID: <Z36-mSpLJevHbInb@x1n>
-References: <20250105-san-v6-0-11fc859b99b7@daynix.com>
- <20250105-san-v6-1-11fc859b99b7@daynix.com>
+ Wed, 08 Jan 2025 10:11:01 -0800 (PST)
+Date: Wed, 8 Jan 2025 13:10:57 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "tjeznach@rivosinc.com" <tjeznach@rivosinc.com>,
+ "minwoo.im@samsung.com" <minwoo.im@samsung.com>
+Subject: Re: [PATCH v1 15/19] memory: Add an API for ATS support
+Message-ID: <20250108131034-mutt-send-email-mst@kernel.org>
+References: <20241129074332.87535-1-clement.mathieu--drif@eviden.com>
+ <20241129074332.87535-16-clement.mathieu--drif@eviden.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250105-san-v6-1-11fc859b99b7@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241129074332.87535-16-clement.mathieu--drif@eviden.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,51 +114,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jan 05, 2025 at 05:56:18PM +0900, Akihiko Odaki wrote:
-> Do not refer to "memory region's reference count"
-> -------------------------------------------------
+On Fri, Nov 29, 2024 at 07:44:00AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 > 
-> Now MemoryRegions do have their own reference counts, but they will not
-> be used when their owners are not themselves. However, the documentation
-> of memory_region_ref() says it adds "1 to a memory region's reference
-> count", which is confusing. Avoid referring to "memory region's
-> reference count" and just say: "Add a reference to a memory region".
-> Make a similar change to memory_region_unref() too.
+> IOMMU have to implement iommu_ats_request_translation to support ATS.
 > 
-> Refer to docs/devel/memory.rst for "owner"
-> ------------------------------------------
+> Devices can use IOMMU_TLB_ENTRY_TRANSLATION_ERROR to check the tlb
+> entries returned by a translation request.
 > 
-> memory_region_ref() and memory_region_unref() used to have their own
-> descriptions of "owner", but they are somewhat out-of-date and
-> misleading.
+> We decided not to use the existing translation operation for 2 reasons.
+> First, ATS is designed to translate ranges and not isolated addresses.
+> Second, we need ATS-specific parameters.
 > 
-> In particular, they say "whenever memory regions are accessed outside
-> the BQL, they need to be preserved against hot-unplug", but protecting
-> against hot-unplug is not mandatory if it is known that they will never
-> be hot-unplugged. They also say "MemoryRegions actually do not have
-> their own reference count", but they actually do. They just will not be
-> used unless their owners are not themselves.
+> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> ---
+>  include/exec/memory.h | 26 ++++++++++++++++++++++++++
+>  system/memory.c       | 20 ++++++++++++++++++++
+>  2 files changed, 46 insertions(+)
 > 
-> Refer to docs/devel/memory.rst as the single source of truth instead of
-> maintaining duplicate descriptions of "owner".
-> 
-> Clarify that owner may be missing
-> 
-> ---------------------------------
-> A memory region may not have an owner, and memory_region_ref() and
-> memory_region_unref() do nothing for such.
-> 
-> memory: Clarify owner must not call memory_region_ref()
-> --------------------------------------------------------
-> 
-> The owner must not call this function as it results in a circular
-> reference.
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index c0d064dbd8..14166e2874 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -148,6 +148,10 @@ struct IOMMUTLBEntry {
+>      uint32_t         pasid;
+>  };
+>  
+> +/* Check if an IOMMU TLB entry indicates a translation error */
+> +#define IOMMU_TLB_ENTRY_TRANSLATION_ERROR(entry) ((((entry)->perm) & IOMMU_RW) \
+> +                                                    == IOMMU_NONE)
+> +
+>  /*
+>   * Bitmap for different IOMMUNotifier capabilities. Each notifier can
+>   * register with one or multiple IOMMU Notifier capability bit(s).
+> @@ -525,6 +529,20 @@ struct IOMMUMemoryRegionClass {
+>       * @iommu: the IOMMUMemoryRegion
+>       */
+>      int (*num_indexes)(IOMMUMemoryRegion *iommu);
+> +
+> +    /**
+> +     * @iommu_ats_request_translation:
+> +     * This method must be implemented if the IOMMU has ATS enabled
+> +     *
+> +     * @see pci_ats_request_translation_pasid
+> +     */
+> +    ssize_t (*iommu_ats_request_translation)(IOMMUMemoryRegion *iommu,
+> +                                             bool priv_req, bool exec_req,
+> +                                             hwaddr addr, size_t length,
+> +                                             bool no_write,
+> +                                             IOMMUTLBEntry *result,
+> +                                             size_t result_length,
+> +                                             uint32_t *err_count);
+>  };
+>  
+>  typedef struct RamDiscardListener RamDiscardListener;
+> @@ -1883,6 +1901,14 @@ void memory_region_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n);
+>  void memory_region_unregister_iommu_notifier(MemoryRegion *mr,
+>                                               IOMMUNotifier *n);
+>  
+> +ssize_t memory_region_iommu_ats_request_translation(IOMMUMemoryRegion *iommu_mr,
+> +                                                bool priv_req, bool exec_req,
+> +                                                hwaddr addr, size_t length,
+> +                                                bool no_write,
+> +                                                IOMMUTLBEntry *result,
+> +                                                size_t result_length,
+> +                                                uint32_t *err_count);
+> +
+>  /**
+>   * memory_region_iommu_get_attr: return an IOMMU attr if get_attr() is
+>   * defined on the IOMMU.
+> diff --git a/system/memory.c b/system/memory.c
+> index 85f6834cb3..7f6f3798e6 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2011,6 +2011,26 @@ void memory_region_unregister_iommu_notifier(MemoryRegion *mr,
+>      memory_region_update_iommu_notify_flags(iommu_mr, NULL);
+>  }
+>  
+> +ssize_t memory_region_iommu_ats_request_translation(IOMMUMemoryRegion *iommu_mr,
+> +                                                    bool priv_req,
+> +                                                    bool exec_req,
+> +                                                    hwaddr addr, size_t length,
+> +                                                    bool no_write,
+> +                                                    IOMMUTLBEntry *result,
+> +                                                    size_t result_length,
+> +                                                    uint32_t *err_count)
+> +{
+> +    IOMMUMemoryRegionClass *imrc = memory_region_get_iommu_class_nocheck(iommu_mr);
+> +
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
 
--- 
-Peter Xu
+line too long - just call the variable mr.
+
+> +    if (!imrc->iommu_ats_request_translation) {
+> +        return -ENODEV;
+> +    }
+> +
+> +    return imrc->iommu_ats_request_translation(iommu_mr, priv_req, exec_req,
+> +                                               addr, length, no_write, result,
+> +                                               result_length, err_count);
+> +}
+> +
+>  void memory_region_notify_iommu_one(IOMMUNotifier *notifier,
+>                                      const IOMMUTLBEvent *event)
+>  {
+> -- 
+> 2.47.0
 
 
