@@ -4,102 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7FBE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 17:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E34E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 17:21:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVZeg-0006xh-Tm; Wed, 08 Jan 2025 12:15:43 -0500
+	id 1tVZjp-00088n-7L; Wed, 08 Jan 2025 12:21:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVZeR-0006xJ-DD
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:15:27 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVZjm-00088A-UF
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:20:58 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVZeO-00030w-MH
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:15:26 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D153721157;
- Wed,  8 Jan 2025 17:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736356522; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b9D1ohLEqsOnEcXu+RaSs8F4BXBT7K8aLAajVQD3028=;
- b=gyrzEIqcgt8tJvhi4mrD24SxzSc8b66JaeKc1+wg5F642DdsZMy8si9J9OaDeEWZqYGznV
- RJi5xJe5ZK5VA+bl8O5Qxe/4Q0Z1kw90idWKf8hadABDlKshm2h1InEMGG+aQvD3zbPv86
- 4CwAf4vARXn2V4c3oZUnjZqCX7HYJD0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736356522;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b9D1ohLEqsOnEcXu+RaSs8F4BXBT7K8aLAajVQD3028=;
- b=X+JutC5+b6Pybo/jvwl6bXDaxdkAa90qD1QnbMSeumJT9gsNOfHDR/qEVWJsKBX/ShkHNP
- 1ua6gonJ/Zw0DGAQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736356522; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b9D1ohLEqsOnEcXu+RaSs8F4BXBT7K8aLAajVQD3028=;
- b=gyrzEIqcgt8tJvhi4mrD24SxzSc8b66JaeKc1+wg5F642DdsZMy8si9J9OaDeEWZqYGznV
- RJi5xJe5ZK5VA+bl8O5Qxe/4Q0Z1kw90idWKf8hadABDlKshm2h1InEMGG+aQvD3zbPv86
- 4CwAf4vARXn2V4c3oZUnjZqCX7HYJD0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736356522;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b9D1ohLEqsOnEcXu+RaSs8F4BXBT7K8aLAajVQD3028=;
- b=X+JutC5+b6Pybo/jvwl6bXDaxdkAa90qD1QnbMSeumJT9gsNOfHDR/qEVWJsKBX/ShkHNP
- 1ua6gonJ/Zw0DGAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 596DF13A86;
- Wed,  8 Jan 2025 17:15:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0+P6B6qyfmcLAgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 08 Jan 2025 17:15:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 6/7] migration: Fix arrays of pointers in JSON writer
-In-Reply-To: <Z36kScJti9LrWVU7@x1n>
-References: <20250107195025.9951-1-farosas@suse.de>
- <20250107195025.9951-7-farosas@suse.de> <Z3231YxnKrjtwX6h@x1n>
- <87cygx4dlt.fsf@suse.de> <Z36kScJti9LrWVU7@x1n>
-Date: Wed, 08 Jan 2025 14:15:19 -0300
-Message-ID: <875xmp447s.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVZjk-0005QE-QZ
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:20:58 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0d32cd31aso25346730a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 09:20:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736356855; x=1736961655; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AbpkaucunY4b+fTUw/PaFTglC8a/K9MkTNBBUqfX5DM=;
+ b=NNby8SgbUJOvrQugnH+34Tw53g6WImgZdQQG1SnoJpILEdeCASquUN6JJ4mc7bybZY
+ 4N2KH5hDNoNddXatLXZPfyRIcsLV0P+FbQRNqUITOJ39RvwxJzC9Qgvozi9C0xCJRlVW
+ /cJ+b9NEgytwGHI7XINXCAFpH9BIjiCUtoTTT9wiwfYZR6DdpXjQQUl3jjNgy7wzjr3K
+ e+rapILtLutTSRG+qVeNDos3gF5yZsCCxBLmVfjt0X9K0TIEXBh9/clA4EpRdm0BVYl2
+ H9+Io9fQWyER08oNxSDOv6nUTTIajQdKkYKJK2BrR+svDqib0Sv+TvbPpplfj3DImYYM
+ zuUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736356855; x=1736961655;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AbpkaucunY4b+fTUw/PaFTglC8a/K9MkTNBBUqfX5DM=;
+ b=ZnKQqTKhikaGnoc6KpkZY+CZnaVuAF26FgWfKDRjEfDsdzv5n9sNOt1iE369dj518a
+ UGgHryocJIVQGH0eF7DeLZYDZzunRQsbnKr3hXh8bzGORydY4NcBk/4wN6Clz8ysN8i9
+ l8onPF5kKdw9Htbz+6ZnX/5+f5MOU6AwueRYUhtR7a7YCEfbM6GF+VD1+C260t2p7PCf
+ hQfcq8IC4PYvdtSuKcrjVHoslf41heSNBlbQFuH2l68CSZ5pg66vdyiG1VH6esykVYEw
+ +N5wNTDAEK9C3VJv4rnq9O+cRLv75A8YfeyQlqCeb5fgxZGZOt7BXmFZGbTM5A8AaEMn
+ Blfw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUF+nJsjMXc/AMEfBS1VwLSpzV0bA8Ckc9g+2+dAPqL4zNNYRFRiA2k7yMPli6/nQraKCDhtnWV00Ts@nongnu.org
+X-Gm-Message-State: AOJu0YxW2NspV/u/CgfeqfGlYc2z+XJkn/hktSlyLBjJ7NGgOlDiW23L
+ 3LmEw3jypKD0RcHGa+r76O/qPdgO0drbvEO9V4s4f2uhBXrW/0lwgzijsAzAtLqRyKHkCv1xw9z
+ Wf0k=
+X-Gm-Gg: ASbGncugUKeKCLDKOj4N/pGMOavcZTbkGaGnEv+Gfkenl6XZAJZfwczQ6aTZqrGmwim
+ vUD1HPOF0xrYB+WMDc/aasWP9/GEk4d+fUOe8n/Ub2A0vt7HXXPBKTz584/PRuVHb25ydSxNyZg
+ 4rextrndoXtQhcuXWasUUPIuML21+JhDWQNnxpmzeycpvJNsfoLzeqmphboKAETxYaYu9voY/V1
+ rJGxqTsyIleJL3s21kOefcBOkOBvVN8uuYCGE2W79tAJQJfLWHxdTk=
+X-Google-Smtp-Source: AGHT+IFL+BjT0FRXuCTfzyT+AoPU4q7GNpVjLrUaqUaXL3uPBC09ZE3UytKAWMS4ZFrP2qVuQeOpoA==
+X-Received: by 2002:a05:6402:5251:b0:5d0:bf5e:eb8 with SMTP id
+ 4fb4d7f45d1cf-5d972e63ddfmr7252635a12.23.1736356854957; 
+ Wed, 08 Jan 2025 09:20:54 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aac0e82f2fasm2508243866b.9.2025.01.08.09.20.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jan 2025 09:20:53 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 762235F8AC;
+ Wed,  8 Jan 2025 17:20:52 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Kyle Evans
+ <kevans@freebsd.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 6/8] gdbstub: Allow late attachment
+In-Reply-To: <20241216123412.77450-7-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Mon, 16 Dec 2024 13:33:24 +0100")
+References: <20241216123412.77450-1-iii@linux.ibm.com>
+ <20241216123412.77450-7-iii@linux.ibm.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Wed, 08 Jan 2025 17:20:52 +0000
+Message-ID: <87tta99q8b.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,244 +109,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-> On Wed, Jan 08, 2025 at 10:52:30AM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Tue, Jan 07, 2025 at 04:50:24PM -0300, Fabiano Rosas wrote:
->> >> Currently, if an array of pointers contains a NULL pointer, that
->> >> pointer will be encoded as '0' in the stream. Since the JSON writer
->> >> doesn't define a "pointer" type, that '0' will now be an uint64, which
->> >> is different from the original type being pointed to, e.g. struct.
->> >> 
->> >> That mixed-type array shouldn't be compressed, otherwise data is lost
->> >> as the code currently makes the whole array have the type of the first
->> >> element.
->> >> 
->> >> While we could disable the array compression when a NULL pointer is
->> >> found, the JSON part of the stream still makes part of downtime, so we
->> >> should avoid writing unecessary bytes to it.
->> >> 
->> >> Keep the array compression in place, but break the array into several
->> >> type-contiguous pieces if NULL and non-NULL pointers are mixed.
->> >
->> > Could I request for a sample JSON dump for an example array in the commit
->> > log?  This whole solution looks working but is tricky.  A sample could help
->> > people understand (e.g. showing the same "name" being dumped multiple
->> > times..).
->> 
->> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
->>  "version": 1, "fields": [
->>    ...,
->>    {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
->>    {"name": "css", "type": "struct", "struct": {
->>     "vmsd_name": "s390_css_img", "version": 1, "fields": [{"name":
->>     "chpids", "array_len": 256, "type": "struct", "struct": {"vmsd_name":
->>     "s390_chp_info", "version": 1, "fields": [{"name": "in_use", "type":
->>     "uint8", "size": 1}, {"name": "type", "type": "uint8", "size": 1},
->>     {"name": "is_virtual", "type": "uint8", "size": 1}]}, "size": 3}]},
->>     "size": 768},
->>    {"name": "css", "type": "uint8", "size": 1},
->>    ...
->> ]}
+> Allow debugging individual processes in multi-process applications by
+> starting them with export QEMU_GDB=3D/tmp/qemu-%d.sock,suspend=3Dn.
+> Currently one would have to attach to every process to ensure the app
+> makes progress.
 >
-> Yes something like this would work, thanks.  We could even omit most of the
-> struct details but only show the important ones:
+> In case suspend=3Dn is not specified, the flow remains unchanged. If it
+> is specified, then accepting the client connection is delegated to a
+> thread. In the future this machinery may be reused for handling
+> reconnections and interruptions.
 >
->   {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
->    "version": 1, "fields": [
->      ...,
->      {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
->      {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
->      {"name": "css", "type": "uint8", "size": 1},
->      ...
->   ]}
+> On accepting a connection, the thread schedules gdb_handlesig() on the
+> first CPU and wakes it up with host_interrupt_signal. Note that the
+> result of this gdb_handlesig() invocation is handled, as opposed to
+> many other existing call sites. These other call sites probably need to
+> be fixed separately.
 >
->> 
->> >
->> > Side note: I tried to dump a very basic VM's JSON out to disk, it scares me
->> > on the size:
->> >
->> > $ ls -lhS JSON.out 
->> > -rw-r--r--. 1 peterx peterx 106K Jan  7 17:18 JSON.out
->> >
->> > That's a simplest VM with all default stuff, mostly nothing complex.. I may
->> > really need to measure how the JSON debug strings affect migration function
->> > or perf at some point..
->> >
->> 
->> Agreed.
->> 
->> >> 
->> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> >> ---
->> >>  migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
->> >>  scripts/analyze-migration.py |  9 ++++++++-
->> >>  2 files changed, 40 insertions(+), 2 deletions(-)
->> >> 
->> >> diff --git a/migration/vmstate.c b/migration/vmstate.c
->> >> index 52704c822c..a79ccf3875 100644
->> >> --- a/migration/vmstate.c
->> >> +++ b/migration/vmstate.c
->> >> @@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->> >>              int size = vmstate_size(opaque, field);
->> >>              uint64_t old_offset, written_bytes;
->> >>              JSONWriter *vmdesc_loop = vmdesc;
->> >> +            bool is_prev_null = false;
->> >>  
->> >>              trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
->> >>              if (field->flags & VMS_POINTER) {
->> >>                  first_elem = *(void **)first_elem;
->> >>                  assert(first_elem || !n_elems || !size);
->> >>              }
->> >> +
->> >>              for (i = 0; i < n_elems; i++) {
->> >>                  void *curr_elem = first_elem + size * i;
->> >>                  const VMStateField *inner_field;
->> >> +                bool is_null;
->> >> +                int max_elems = n_elems - i;
->> >>  
->> >>                  old_offset = qemu_file_transferred(f);
->> >>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
->> >> @@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->> >>                       * not follow.
->> >>                       */
->> >>                      inner_field = vmsd_create_fake_nullptr_field(field);
->> >> +                    is_null = true;
->> >>                  } else {
->> >>                      inner_field = field;
->> >> +                    is_null = false;
->> >> +                }
->> >> +
->> >> +                /*
->> >> +                 * Due to the fake nullptr handling above, if there's mixed
->> >> +                 * null/non-null data, it doesn't make sense to emit a
->> >> +                 * compressed array representation spanning the entire array
->> >> +                 * because the field types will be different (e.g. struct
->> >> +                 * vs. uint64_t). Search ahead for the next null/non-null
->> >> +                 * element and start a new compressed array if found.
->> >> +                 */
->> >> +                if (field->flags & VMS_ARRAY_OF_POINTER &&
->> >> +                    is_null != is_prev_null) {
->> >> +
->> >> +                    is_prev_null = is_null;
->> >> +                    vmdesc_loop = vmdesc;
->> >> +
->> >> +                    for (int j = i + 1; j < n_elems; j++) {
->> >> +                        void *elem = *(void **)(first_elem + size * j);
->> >> +                        bool elem_is_null = !elem && size;
->> >> +
->> >> +                        if (is_null != elem_is_null) {
->> >> +                            max_elems = j - i;
->> >> +                            break;
->> >> +                        }
->> >> +                    }
->> >>                  }
->> >>  
->> >>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
->> >> -                                      i, n_elems);
->> >> +                                      i, max_elems);
->> >>  
->> >>                  if (inner_field->flags & VMS_STRUCT) {
->> >>                      ret = vmstate_save_state(f, inner_field->vmsd,
->> >> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
->> >> index 4836920ddc..9138e91a11 100755
->> >> --- a/scripts/analyze-migration.py
->> >> +++ b/scripts/analyze-migration.py
->> >> @@ -497,7 +497,14 @@ def read(self):
->> >>                      raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
->> >>                  a.append(field['data'])
->> 
->> There's actually a bug here, the code above does:
->> 
->>   if len(a) != int(field['index']):
->>       raise Exception()
->> 
->> Which only works with this patch because the compressed array happens to
->> come first.
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>  bsd-user/main.c   |   1 -
+>  gdbstub/user.c    | 120 ++++++++++++++++++++++++++++++++++++++++++----
+>  linux-user/main.c |   1 -
+>  3 files changed, 110 insertions(+), 12 deletions(-)
 >
-> I think it will work no matter how it's ordered after your patch?  IOW I'd
-> hope it'll keep working if the 1st is a nullptr:
->
->      {"name": "css", "type": "uint8", "size": 1},
->      {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
->      {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
->
-> Because IIUC the python script will parse each of the lines above into a
-> VMSD field.
+> diff --git a/bsd-user/main.c b/bsd-user/main.c
+> index 61ca73c4781..ca4773a3f40 100644
+> --- a/bsd-user/main.c
+> +++ b/bsd-user/main.c
+> @@ -628,7 +628,6 @@ int main(int argc, char **argv)
+>=20=20
+>      if (gdbstub) {
+>          gdbserver_start(gdbstub);
+> -        gdb_handlesig(cpu, 0, NULL, NULL, 0);
+>      }
+>      cpu_loop(env);
+>      /* never exits */
+> diff --git a/gdbstub/user.c b/gdbstub/user.c
+> index c900d0a52fe..6ada0d687b9 100644
+> --- a/gdbstub/user.c
+> +++ b/gdbstub/user.c
+> @@ -10,6 +10,7 @@
+>   */
+>=20=20
+>  #include "qemu/osdep.h"
+> +#include <sys/syscall.h>
 
-Yes, but all fields go into self.data of the VMSDFieldStruct, so
-self.data["css"] will increase beyond the size of the array.
+Whats this needed for? I can build without it.
 
->> 
->> >>              else:
->> >> -                self.data[field['name']] = field['data']
->> >> +                # There could be multiple entries for the same field
->> >> +                # name, e.g. when a compressed array was broken in
->> >> +                # more than one piece.
->> >> +                if (field['name'] in self.data and
->> >> +                    type(self.data[field['name']]) == list):
->> >> +                    self.data[field['name']].append(field['data'])
->> >> +                else:
->> >> +                    self.data[field['name']] = field['data']
->> >
->> > Do we realy need these script changes?  I thought VMSDFieldStruct always
->> > breaks array_len field into "index" based anyway?
->> >
->> >         new_fields = []
->> >         for field in self.desc['struct']['fields']:
->> >             if not 'array_len' in field:
->> >                 new_fields.append(field)
->> >                 continue
->> >             array_len = field.pop('array_len')
->> >             field['index'] = 0
->> >             new_fields.append(field)
->> >             for i in range(1, array_len):
->> >                 c = field.copy()
->> >                 c['index'] = i
->> >                 new_fields.append(c)
->> >
->> >         self.desc['struct']['fields'] = new_fields
->> 
->> This code is about decompressing the array, it doesn't handle multiple
->> entries with the same name. See the JSON I posted up there.
->> 
->> This makes the single:
->> 
->>   {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
->> 
->> become multiple:
->> 
->>   {"name": "css", "index": 0, "type": "uint8", "size": 1},
->>   {"name": "css", "index": 1, "type": "uint8", "size": 1},
->>   ...
->>   {"name": "css", "index": 253, "type": "uint8", "size": 1},
->
-> Correct.
->
-> I think that means for each of the break-down entries there'll be an
-> "index" if it's an array.  What you changed above is the case where "index"
-> is not available, which is processing the non-array entry.  Why does that
-> need change?
+>  #include "qemu/bitops.h"
+>  #include "qemu/cutils.h"
+>  #include "qemu/sockets.h"
+> @@ -21,6 +22,7 @@
+>  #include "gdbstub/user.h"
+>  #include "gdbstub/enums.h"
+>  #include "hw/core/cpu.h"
+> +#include "user/signal.h"
+>  #include "trace.h"
+>  #include "internals.h"
+>=20=20
+> @@ -416,11 +418,101 @@ static int gdbserver_open_port(int port)
+>      return fd;
+>  }
+>=20=20
+> -int gdbserver_start(const char *port_or_path)
+> +static bool gdbserver_accept(int port, int gdb_fd, const char *port_or_p=
+ath)
+>  {
+> -    int port =3D g_ascii_strtoull(port_or_path, NULL, 10);
+> +    bool ret;
+> +
+> +    if (port > 0) {
+> +        ret =3D gdb_accept_tcp(gdb_fd);
+> +    } else {
+> +        ret =3D gdb_accept_socket(gdb_fd);
+> +        if (ret) {
+> +            gdbserver_user_state.socket_path =3D g_strdup(port_or_path);
+> +        }
+> +    }
+> +
+> +    if (!ret) {
+> +        close(gdb_fd);
+> +    }
+> +
+> +    return ret;
+> +}
 
-It needs to append to, not overwrite the previous self.data[name]
+Is the clean-up worth it here for the extra level of indirection. Is the
+string even port_or_path at this point because if it was a port the int
+port > 0?
 
-> What happens if you run this without the python part you
-> changed in this patch?
+> +
+> +struct {
+> +    int port;
+>      int gdb_fd;
+> +    char *port_or_path;
+> +} gdbserver_args;
+> +
+> +static void do_gdb_handlesig(CPUState *cs, run_on_cpu_data arg)
+> +{
+> +    int sig;
+> +
+> +    sig =3D target_to_host_signal(gdb_handlesig(cs, 0, NULL, NULL, 0));
+> +    if (sig >=3D 1 && sig < NSIG) {
+> +        qemu_kill_thread(gdb_get_cpu_index(cs), sig);
+> +    }
+> +}
+> +
+> +static void *gdbserver_accept_thread(void *arg)
+> +{
+> +    if (gdbserver_accept(gdbserver_args.port, gdbserver_args.gdb_fd,
+> +                         gdbserver_args.port_or_path)) {
+> +        CPUState *cs =3D first_cpu;
+> +
+> +        async_safe_run_on_cpu(cs, do_gdb_handlesig, RUN_ON_CPU_NULL);
+> +        qemu_kill_thread(gdb_get_cpu_index(cs), host_interrupt_signal);
+> +    }
+> +
+> +    g_free(gdbserver_args.port_or_path);
 
-The last nullptr overwrites everything else:
+Should we set gdbserver_args.port_or_path =3D NULL here to avoid trying to
+reference or free it again?
 
-    "s390_css (14)": {
-        "pending_crws": "00",
-        "sei_pending": false,
-        "do_crw_mchk": true,
-        "crws_lost": false,
-        "max_cssid": "0x00",
-        "max_ssid": "0x00",
-        "chnmon_active": false,
-        "chnmon_area": "0x0000000000000000",
--->     "css": "nullptr",
-        "default_cssid": "0xfe"
-    },
+> +
+> +    return NULL;
+> +}
+> +
+> +__attribute__((__format__(__printf__, 1, 2)))
+> +static void print_usage(const char *format, ...)
+> +{
+> +    va_list ap;
+> +
+> +    va_start(ap, format);
+> +    vfprintf(stderr, format, ap);
+> +    va_end(ap);
+> +    fprintf(stderr, "Usage: -g {port|path}[,suspend=3D{y|n}]\n");
+> +}
+> +
+> +#define SUSPEND "suspend=3D"
+> +
+> +int gdbserver_start(const char *args)
+> +{
+> +    g_auto(GStrv) argv =3D g_strsplit(args, ",", 0);
+> +    const char *port_or_path =3D NULL;
+> +    bool suspend =3D true;
+> +    int gdb_fd, port;
+> +    GStrv arg;
+>=20=20
+> +    for (arg =3D argv; *arg; arg++) {
+> +        if (g_str_has_prefix(*arg, SUSPEND)) {
+> +            const char *val =3D *arg + strlen(SUSPEND);
+> +
+> +            suspend =3D (strcmp(val, "y") =3D=3D 0);
+> +            if (!suspend && (strcmp(val, "n") !=3D 0)) {
+> +                print_usage("Bad option value: %s", *arg);
+> +                return -1;
+> +            }
+> +        } else {
+> +            if (port_or_path) {
+> +                print_usage("Unknown option: %s", *arg);
+> +                return -1;
+> +            }
+> +            port_or_path =3D *arg;
+> +        }
+> +    }
+
+We have some useful utility functions to parsing all the bools,
+something like:
+
+    for (arg =3D argv; *arg; arg++) {
+        g_auto(GStrv) tokens =3D g_strsplit(*arg, "=3D", 2);
+        if (g_strcmp0(tokens[0], "suspend") =3D=3D 0 && tokens[1]) {
+            qapi_bool_parse(tokens[0], tokens[1], &suspend, &error_fatal);
+        } else {
+            if (port_or_path) {
+                print_usage("Unknown option: %s", *arg);
+                return -1;
+            }
+            port_or_path =3D *arg;
+        }
+    }
+
+which also avoids the #define and strlen messing about as well.
+
+(side note to no one in particular: should qapi_bool_parse being using g_st=
+rcmp0()?)
+
+> +    if (!port_or_path) {
+> +        print_usage("Port or path not specified");
+> +        return -1;
+> +    }
+> +
+> +    port =3D g_ascii_strtoull(port_or_path, NULL, 10);
+>      if (port > 0) {
+>          gdb_fd =3D gdbserver_open_port(port);
+>      } else {
+> @@ -431,16 +523,24 @@ int gdbserver_start(const char *port_or_path)
+>          return -1;
+>      }
+>=20=20
+> -    if (port > 0 && gdb_accept_tcp(gdb_fd)) {
+> -        return 0;
+> -    } else if (gdb_accept_socket(gdb_fd)) {
+> -        gdbserver_user_state.socket_path =3D g_strdup(port_or_path);
+> +    if (suspend) {
+> +        if (gdbserver_accept(port, gdb_fd, port_or_path)) {
+> +            gdb_handlesig(first_cpu, 0, NULL, NULL, 0);
+> +            return 0;
+> +        } else {
+> +            return -1;
+> +        }
+> +    } else {
+> +        QemuThread thread;
+> +
+> +        gdbserver_args.port =3D port;
+> +        gdbserver_args.gdb_fd =3D gdb_fd;
+> +        gdbserver_args.port_or_path =3D g_strdup(port_or_path);
+> +        qemu_thread_create(&thread, "gdb-accept",
+> +                           &gdbserver_accept_thread, NULL,
+> +                           QEMU_THREAD_DETACHED);
+>          return 0;
+>      }
+> -
+> -    /* gone wrong */
+> -    close(gdb_fd);
+> -    return -1;
+>  }
+
+Not a problem with this patch in particular but it seems to me
+gdbserver_start should probably look like:
+
+  bool gdbserver_start(const char *args, Error **errp)
+
+so we can do the right thing when starting from the command line or via
+HMP. I'll see if I can clean that up on gdbstub/next.
+
+>=20=20
+>  void gdbserver_fork_start(void)
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index b09af8d4365..97245ab37c2 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -1027,7 +1027,6 @@ int main(int argc, char **argv, char **envp)
+>                      gdbstub);
+>              exit(EXIT_FAILURE);
+>          }
+> -        gdb_handlesig(cpu, 0, NULL, NULL, 0);
+>      }
+>=20=20
+>  #ifdef CONFIG_SEMIHOSTING
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
