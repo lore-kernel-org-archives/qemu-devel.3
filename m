@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 216ACE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F06E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 06:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVPNh-0000bS-5h; Wed, 08 Jan 2025 01:17:29 -0500
+	id 1tVPOP-0000hi-HD; Wed, 08 Jan 2025 01:18:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tVPNe-0000aj-Tu; Wed, 08 Jan 2025 01:17:26 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tVPNd-0000Cp-1Z; Wed, 08 Jan 2025 01:17:26 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5080012L026708;
- Wed, 8 Jan 2025 06:17:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=J/kS/R
- Gj8pW/TMeyjkgB7rGOhnwrxfJM0pZzwSnzhWk=; b=FXd8/rX5IaVp5YwsKImT3N
- QA83wBXPJ6EmRcCwWiEFzzmeOkitmP82/VD+mwC40ie0QXVCZDYQOrRl2hbmCroH
- xpApl2GsS5gU9et60Ac2me6siZJRHAG64aPw0+5DvjI+e0RhWDmRXTpiJJAU3IKx
- e4iTZjpz8mCBTyQkB8MOJsh3mLq5XR4sBJE++jw6zgY6eF9GLqEyL95c6C6TDmJM
- Z0Gha8muIGo/Mw48C8tl55Euqudwz6qM06MMT31XHKjB9x2TkkJDE1SwK36OKKmH
- TsxQJXBf8z2htByIATUU75Us/wE1rpbIU3b/2mW48G7n7DGxsQiPGIO9dXrzwjbA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441edj17v5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 06:17:21 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5086EF9a016817;
- Wed, 8 Jan 2025 06:17:20 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441edj17v3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 06:17:20 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50821UHM027963;
- Wed, 8 Jan 2025 06:17:19 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yhhk64ak-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 06:17:19 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5086HJtF29098646
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jan 2025 06:17:19 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1579D58056;
- Wed,  8 Jan 2025 06:17:19 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CE3F58052;
- Wed,  8 Jan 2025 06:17:16 +0000 (GMT)
-Received: from [9.124.223.97] (unknown [9.124.223.97])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jan 2025 06:17:16 +0000 (GMT)
-Message-ID: <09859162-6319-48a7-8564-ba6023b38dd9@linux.ibm.com>
-Date: Wed, 8 Jan 2025 11:47:14 +0530
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tVPON-0000h6-GZ
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:18:11 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tVPOL-0000GL-EI
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 01:18:11 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-216281bc30fso25418205ad.0
+ for <qemu-devel@nongnu.org>; Tue, 07 Jan 2025 22:18:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736317088; x=1736921888;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=EN+qqbOe1sSXYPmH2HeJgFF7KPD7SBBT9uZwyt+R3fE=;
+ b=FqVpzpX/YWN/Ht8pwpwOxaQYWUcuF7Oam8iO+XNYkKHnfXhNJo64zulCMNI8SNJM6x
+ RyhwwIy7/dpJkSL2s8RdgNPO14gDWtcvpUU8GjxNh3fOnJbl1G6XwDMi+nWtVj0d1Mdg
+ Um62BbIFJC73i6995DhsOra0dH5NEUtGFTYygk5kM5MA2aAEf3mAsInx8oUM5eo4AEAo
+ rUjmFe5oNO5qqKp+Gti2LlWj9LziHQGXzSQm/ZzcI/0ft+YRHKFAOh2cINd3xwyQlDsQ
+ r5S5SBnIWcov3w2FJUaMdPCM5UUP2DCPSpINgG2SlPxVH639yCo1jDk3sodvumeltzsl
+ vo+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736317088; x=1736921888;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EN+qqbOe1sSXYPmH2HeJgFF7KPD7SBBT9uZwyt+R3fE=;
+ b=QnUsSJYgvA0+IXC16XyZgNS3jFHPqzPIN/HfthACH6GPD43xOY1bQcQlG/FVXnlBIC
+ BklcuhQHTsXQmK0Jcmu8wVjDtUjEGuBDJASzN1FomjeEUDhlHYTs+JzjOy2H1n686mUe
+ yQJei9HIde+vSzHpsoO8WuGq98pBrqhwhq0kEHpITt9x+q2OVOIRC8fxYmnjgLgvD6F5
+ Gs1BNRiRbFl8+jWtrEJjR/XBcF0SLo9LfUX8xCP634L2mRaJEv9Jb+fksS79smVf5MH6
+ iqlLsxHEmG6Dpvi6uegN+OQyZJFNdgUTSLYIHdSnU4fdZUm9J1jHGRrUmAw6Y45atH8y
+ 96VQ==
+X-Gm-Message-State: AOJu0Yxq/UGN93t5IzubYdlQRKW1xZzpJDnjv/byTH8sCUZCfYV9voqz
+ 2fjTBl5acccRRgr/Ep6wVaXRtPI3RFz4bGZRSp76ReA4V4EejEhvZOiGDrxbL3Y=
+X-Gm-Gg: ASbGnctGQFBFI8hBt9jVPOweH2NAgsojAh5l94anFYNqsN2fq/QVVgGF98zNvho87zO
+ BHlbYHtA4EeXQAevdAIQXBBvcomg6TQWclOHRX3xORxgvUpNIpsUizDpClT9uQMj9rywy1SEP6o
+ YZNnpkBG8bpf6t+2NZGzM7eyJFp/br1eezO0GPpmam70c665HWRPuxNZoV284mnfJuE3ZqLMPia
+ UeZV29Zb3qLyK95R62V9KCLwDQ/e5uUPKgBa55/H1K8ac4B0oLWoiT7Ouo=
+X-Google-Smtp-Source: AGHT+IEXlTmSqS2zl3C7FY9J+SGnB9yCDQen3MxQhKGoeW7uEYosnBkh43sAfeWomrPlhjnb2soM4g==
+X-Received: by 2002:a17:903:1d0:b0:216:2474:3c9f with SMTP id
+ d9443c01a7336-21a83fe2fb0mr24918145ad.52.1736317087851; 
+ Tue, 07 Jan 2025 22:18:07 -0800 (PST)
+Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-219dc9f4406sm320111165ad.170.2025.01.07.22.18.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Jan 2025 22:18:07 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Wed, 08 Jan 2025 15:17:50 +0900
+Subject: [PATCH v4 1/4] qapi: Do not consume a value if failed
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] Add new PowerPC Special Purpose Registers
-To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org,
- "sbhat@linux.ibm.com" <sbhat@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- dantan@linux.ibm.com
-References: <20250107205102.20242-1-dantan@linux.vnet.ibm.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250107205102.20242-1-dantan@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 6S1DH1q_zVWeZuL8Tqpz6BOZy4HoSRWR
-X-Proofpoint-ORIG-GUID: sMwxyTY1cubc3M1hOXPvODYU1BQ1c9NJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=852 phishscore=0 malwarescore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501080046
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Message-Id: <20250108-virtio-v4-1-cbf0aa04c9f9@daynix.com>
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+In-Reply-To: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+To: Jason Wang <jasowang@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Lei Yang <leiyang@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,49 +111,341 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Shivaprasad (had posted patches for DAWR1/DAWRX1 earlier)
+Do not consume a value if interpreting one failed so that we can
+reinterpret the value with a different type.
 
-https://lore.kernel.org/qemu-devel/170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com/
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ qapi/qobject-input-visitor.c | 103 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 69 insertions(+), 34 deletions(-)
 
-On 1/8/25 02:21, dan tan wrote:
-> From: dan tan <dantan@linux.ibm.com>
-> 
-> *** BLURB HERE ***
-> Version 3 summary:
->      RWMR (Region Weighted Mode Register) -
->          - change the register to generic read/write from nop/write
-> 
-> Version 2 summary:
->      (DAWR1,DAWRX1):
->          - spec reference: https://files.openpower.foundation/s/EgCy7C43p2NSRfR
->          - corrected commit message format
->          - combine DAWR(0/1) handling into a single function
->          - add DAWR1 & DAWRX1 to init_proc_POWER10() only.
-> 
->      RWMR (Region Weighted Mode Register) -
->          - corrected the previous definition as ITV1
->          - spec reference:
->              https://ibm.ent.box.com/s/tmklq90ze7aj8f4n32er1mu3sy9u8k3k (Power9)
->          - it appears that part of the previous upstream request SPRs
->            (SPR_POWER_MMCR3, SPR_POWER_SIER2, SPR_POWER_SIER3) are
->            already in the current master. Therefore, removed those
->            from this request.
-> 
-> dan tan (2):
->    ppc/pnv: Add new PowerPC Special Purpose Registers (DAWR1,DAWRX1)
->    ppc/pnv: Add new PowerPC Special Purpose Registers (RWMR)
-> 
->   include/hw/ppc/spapr.h   |  2 +-
->   target/ppc/cpu.h         |  8 +++--
->   target/ppc/helper.h      |  4 +--
->   target/ppc/spr_common.h  |  2 ++
->   hw/ppc/spapr_hcall.c     | 24 ++++++++------
->   target/ppc/cpu.c         | 69 ++++++++++++++++++++++++++--------------
->   target/ppc/cpu_init.c    | 20 ++++++++++++
->   target/ppc/excp_helper.c | 11 ++++++-
->   target/ppc/machine.c     |  5 ++-
->   target/ppc/misc_helper.c |  8 ++---
->   target/ppc/translate.c   | 21 ++++++++++--
->   11 files changed, 127 insertions(+), 47 deletions(-)
-> 
+diff --git a/qapi/qobject-input-visitor.c b/qapi/qobject-input-visitor.c
+index f110a804b2ae..799c1c9bd6bd 100644
+--- a/qapi/qobject-input-visitor.c
++++ b/qapi/qobject-input-visitor.c
+@@ -116,9 +116,8 @@ static const char *full_name(QObjectInputVisitor *qiv, const char *name)
+     return full_name_nth(qiv, name, 0);
+ }
+ 
+-static QObject *qobject_input_try_get_object(QObjectInputVisitor *qiv,
+-                                             const char *name,
+-                                             bool consume)
++static QObject *qobject_input_try_get_object(const QObjectInputVisitor *qiv,
++                                             const char *name)
+ {
+     StackObject *tos;
+     QObject *qobj;
+@@ -138,34 +137,19 @@ static QObject *qobject_input_try_get_object(QObjectInputVisitor *qiv,
+     if (qobject_type(qobj) == QTYPE_QDICT) {
+         assert(name);
+         ret = qdict_get(qobject_to(QDict, qobj), name);
+-        if (tos->h && consume && ret) {
+-            bool removed = g_hash_table_remove(tos->h, name);
+-            assert(removed);
+-        }
+     } else {
+         assert(qobject_type(qobj) == QTYPE_QLIST);
+         assert(!name);
+-        if (tos->entry) {
+-            ret = qlist_entry_obj(tos->entry);
+-            if (consume) {
+-                tos->entry = qlist_next(tos->entry);
+-            }
+-        } else {
+-            ret = NULL;
+-        }
+-        if (consume) {
+-            tos->index++;
+-        }
++        ret = tos->entry ? qlist_entry_obj(tos->entry) : NULL;
+     }
+ 
+     return ret;
+ }
+ 
+ static QObject *qobject_input_get_object(QObjectInputVisitor *qiv,
+-                                         const char *name,
+-                                         bool consume, Error **errp)
++                                         const char *name, Error **errp)
+ {
+-    QObject *obj = qobject_input_try_get_object(qiv, name, consume);
++    QObject *obj = qobject_input_try_get_object(qiv, name);
+ 
+     if (!obj) {
+         error_setg(errp, QERR_MISSING_PARAMETER, full_name(qiv, name));
+@@ -173,6 +157,38 @@ static QObject *qobject_input_get_object(QObjectInputVisitor *qiv,
+     return obj;
+ }
+ 
++static void qobject_input_consume_object(QObjectInputVisitor *qiv,
++                                         const char *name)
++{
++    StackObject *tos;
++    QObject *qobj;
++
++    if (QSLIST_EMPTY(&qiv->stack)) {
++        /* Starting at root, name is ignored. */
++        return;
++    }
++
++    /* We are in a container; find the next element. */
++    tos = QSLIST_FIRST(&qiv->stack);
++    qobj = tos->obj;
++    assert(qobj);
++
++    if (qobject_type(qobj) == QTYPE_QDICT) {
++        assert(name);
++        if (tos->h) {
++            bool removed = g_hash_table_remove(tos->h, name);
++            assert(removed);
++        }
++    } else {
++        assert(qobject_type(qobj) == QTYPE_QLIST);
++        assert(!name);
++        if (tos->entry) {
++            tos->entry = qlist_next(tos->entry);
++        }
++        tos->index++;
++    }
++}
++
+ static const char *qobject_input_get_keyval(QObjectInputVisitor *qiv,
+                                             const char *name,
+                                             Error **errp)
+@@ -180,7 +196,7 @@ static const char *qobject_input_get_keyval(QObjectInputVisitor *qiv,
+     QObject *qobj;
+     QString *qstr;
+ 
+-    qobj = qobject_input_get_object(qiv, name, true, errp);
++    qobj = qobject_input_get_object(qiv, name, errp);
+     if (!qobj) {
+         return NULL;
+     }
+@@ -233,6 +249,7 @@ static const QListEntry *qobject_input_push(QObjectInputVisitor *qiv,
+         tos->index = -1;
+     }
+ 
++    qobject_input_consume_object(qiv, name);
+     QSLIST_INSERT_HEAD(&qiv->stack, tos, node);
+     return tos->entry;
+ }
+@@ -279,7 +296,7 @@ static bool qobject_input_start_struct(Visitor *v, const char *name, void **obj,
+                                        size_t size, Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+ 
+     if (obj) {
+         *obj = NULL;
+@@ -316,7 +333,7 @@ static bool qobject_input_start_list(Visitor *v, const char *name,
+                                      Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+     const QListEntry *entry;
+ 
+     if (list) {
+@@ -382,7 +399,7 @@ static bool qobject_input_start_alternate(Visitor *v, const char *name,
+                                           Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, false, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+ 
+     if (!qobj) {
+         *obj = NULL;
+@@ -397,7 +414,7 @@ static bool qobject_input_type_int64(Visitor *v, const char *name, int64_t *obj,
+                                      Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+     QNum *qnum;
+ 
+     if (!qobj) {
+@@ -409,6 +426,7 @@ static bool qobject_input_type_int64(Visitor *v, const char *name, int64_t *obj,
+                    full_name(qiv, name));
+         return false;
+     }
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -428,6 +446,7 @@ static bool qobject_input_type_int64_keyval(Visitor *v, const char *name,
+                    full_name(qiv, name), "integer");
+         return false;
+     }
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -435,7 +454,7 @@ static bool qobject_input_type_uint64(Visitor *v, const char *name,
+                                       uint64_t *obj, Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+     QNum *qnum;
+     int64_t val;
+ 
+@@ -448,12 +467,14 @@ static bool qobject_input_type_uint64(Visitor *v, const char *name,
+     }
+ 
+     if (qnum_get_try_uint(qnum, obj)) {
++        qobject_input_consume_object(qiv, name);
+         return true;
+     }
+ 
+     /* Need to accept negative values for backward compatibility */
+     if (qnum_get_try_int(qnum, &val)) {
+         *obj = val;
++        qobject_input_consume_object(qiv, name);
+         return true;
+     }
+ 
+@@ -479,6 +500,7 @@ static bool qobject_input_type_uint64_keyval(Visitor *v, const char *name,
+                    full_name(qiv, name), "integer");
+         return false;
+     }
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -486,7 +508,7 @@ static bool qobject_input_type_bool(Visitor *v, const char *name, bool *obj,
+                                     Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+     QBool *qbool;
+ 
+     if (!qobj) {
+@@ -500,6 +522,7 @@ static bool qobject_input_type_bool(Visitor *v, const char *name, bool *obj,
+     }
+ 
+     *obj = qbool_get_bool(qbool);
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -518,6 +541,7 @@ static bool qobject_input_type_bool_keyval(Visitor *v, const char *name,
+                    full_name(qiv, name), "'on' or 'off'");
+         return false;
+     }
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -525,7 +549,7 @@ static bool qobject_input_type_str(Visitor *v, const char *name, char **obj,
+                                    Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+     QString *qstr;
+ 
+     *obj = NULL;
+@@ -540,6 +564,7 @@ static bool qobject_input_type_str(Visitor *v, const char *name, char **obj,
+     }
+ 
+     *obj = g_strdup(qstring_get_str(qstr));
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -549,15 +574,20 @@ static bool qobject_input_type_str_keyval(Visitor *v, const char *name,
+     QObjectInputVisitor *qiv = to_qiv(v);
+     const char *str = qobject_input_get_keyval(qiv, name, errp);
+ 
++    if (!str) {
++        return false;
++    }
++
+     *obj = g_strdup(str);
+-    return !!str;
++    qobject_input_consume_object(qiv, name);
++    return true;
+ }
+ 
+ static bool qobject_input_type_number(Visitor *v, const char *name, double *obj,
+                                       Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+     QNum *qnum;
+ 
+     if (!qobj) {
+@@ -571,6 +601,7 @@ static bool qobject_input_type_number(Visitor *v, const char *name, double *obj,
+     }
+ 
+     *obj = qnum_get_double(qnum);
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -593,6 +624,7 @@ static bool qobject_input_type_number_keyval(Visitor *v, const char *name,
+     }
+ 
+     *obj = val;
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -600,7 +632,7 @@ static bool qobject_input_type_any(Visitor *v, const char *name, QObject **obj,
+                                    Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+ 
+     *obj = NULL;
+     if (!qobj) {
+@@ -608,6 +640,7 @@ static bool qobject_input_type_any(Visitor *v, const char *name, QObject **obj,
+     }
+ 
+     *obj = qobject_ref(qobj);
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -615,7 +648,7 @@ static bool qobject_input_type_null(Visitor *v, const char *name,
+                                     QNull **obj, Error **errp)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_get_object(qiv, name, true, errp);
++    QObject *qobj = qobject_input_get_object(qiv, name, errp);
+ 
+     *obj = NULL;
+     if (!qobj) {
+@@ -628,6 +661,7 @@ static bool qobject_input_type_null(Visitor *v, const char *name,
+         return false;
+     }
+     *obj = qnull();
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+@@ -647,13 +681,14 @@ static bool qobject_input_type_size_keyval(Visitor *v, const char *name,
+                    full_name(qiv, name), "size");
+         return false;
+     }
++    qobject_input_consume_object(qiv, name);
+     return true;
+ }
+ 
+ static void qobject_input_optional(Visitor *v, const char *name, bool *present)
+ {
+     QObjectInputVisitor *qiv = to_qiv(v);
+-    QObject *qobj = qobject_input_try_get_object(qiv, name, false);
++    QObject *qobj = qobject_input_try_get_object(qiv, name);
+ 
+     if (!qobj) {
+         *present = false;
+
+-- 
+2.47.1
+
 
