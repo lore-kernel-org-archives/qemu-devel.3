@@ -4,151 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3303E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546CEE7719D
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 21:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVdzb-0005rr-Ep; Wed, 08 Jan 2025 16:53:35 -0500
+	id 1tVdyf-0008Sv-HQ; Wed, 08 Jan 2025 16:52:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdzZ-0005fM-D1
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:53:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tVdzX-0004Ba-Pn
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:53:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736373210;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vHvlQp1aQA5l/um+YechYvvftWyn9AOMcuaRx3SfcL8=;
- b=NfT8pOYttTSwyjDfSi9VAIr6rgLgLVWHFM+k3rkM9QntMnv6ZddVenPpTV5JHh5zSY0SFJ
- +tu8hV3n3+prV6o3TplUFdEehffC1TEDfs9wOEaYNL24t24gcqblLvgSyM1B7Fq451FKoP
- bJ8Tt/Dvv1iAzcznasSqooEvJCuTbog=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-yQIO5py2PjKqU-mVwVFWXg-1; Wed, 08 Jan 2025 16:53:27 -0500
-X-MC-Unique: yQIO5py2PjKqU-mVwVFWXg-1
-X-Mimecast-MFC-AGG-ID: yQIO5py2PjKqU-mVwVFWXg
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4362f893bfaso1385955e9.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:53:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVdyY-0008QS-BK
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:52:30 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVdyW-00042a-6c
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 16:52:29 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-435f8f29f8aso2366815e9.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 13:52:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736373146; x=1736977946; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BjurB30feh31L4vvKnOWTjLO5NeT2JI+C6yferOyGvM=;
+ b=umtpk+XLh8nRu3R0os2n2MCggzRW9i+qREl5FewbqDkVFOD8oYx3yqcvDEixqbyPBv
+ tcCogVW/pe68lF2+Wu97wo5e+xPnM7KsI+cqsrilbOmY4iCzrl4EX+f7y7YyT+Bm4u/M
+ SeJmOhQyQDEg30LITILgDseMFLRoBPW9GbyAKtQDIujS9qPfcub1wuUOjGzQYIBNERRt
+ IUaP++kQR8C3tGCXAsXbE36mrK+9jupxfmQCJYVQIVVsr7WnUc+FI2KyDs9WlTH5o/0E
+ 1aAmFHFzi4L4yTQX0nqeaA5JQrEvuXHljM7RqMcyN5kMwFLzwUcM2oDMCzhpPEIw1B5v
+ Dv+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736373206; x=1736978006;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=vHvlQp1aQA5l/um+YechYvvftWyn9AOMcuaRx3SfcL8=;
- b=RoDBIfgsmMAupbU3MSJE+9LK+arnvmKc4A6DJJdKlMhoMsh0dp6zJAiLJ4uzx7ckKQ
- BtLqpLljV4nOVJ7TgczY1Ydd9MacUvU6/P7JFfdVnYWANsVB71ye53g71IRWCu125Kpk
- YofDnuQ1DfJcvF2MM4dqWFrCcEQHiEZipjzcluNS5nr0p6N5tM8W5BGuXoNPb5wQ/jDg
- 6Z4PlGRC/XkS/3KxJ5d0P9PtbOhKJSlUMhwTzpKzC/GtNVidFn9Kq2o65aEvBjjSobdG
- ZfsPDdq7ctrK+R/GzYPDI3+YaLqO7k7RYcD5s4MAw4umKWInISB+1IAX6OoUlj9kkco7
- gW3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsI+sZ4Ws7Lv2p7j6zVByeeFLBR/DfFGpIQCCqXj8gQa8qxOOX9R4ScV1Hk+hZkjQi0m26ttC8lAee@nongnu.org
-X-Gm-Message-State: AOJu0YxGe9DTnp1IwFqZWKmfj0Wvb8wI+IDRC8zIOIR88SXd5QlJ7YTY
- aS3Z+xqqaePphYiDsk6cKE/2L8SAXHkWhxoWCWeUEhAktC7EIw2bKOg4gJdZpKWXVxv9tmek4iT
- Ji/0AOehLJbFWN610JZVilyuTWgwjfG3ST+T4Rlu9ZfWJ+hXJE0Pi
-X-Gm-Gg: ASbGnctVKCg4AVJyLVIpBlQVUKBFLcLVuN600aM4w3DdzcZGDPBmq5zTqXkMUOj961Z
- T99Lx5Blpa0vC1aTbMhRAB08r1dV0sryWpC2o1kfYfv3y9D4k9OKRJnleGq/bI7QSSzmNYVNQNg
- u2VBmchSlrl3f55VDB4vAKI/SVA343uVHu4BBUyyArP9YlYz9IYA/yPgyd8GIP7cxphvnQ0RWNd
- oyGBtcEUmQy9ebx+46e2Tz5LcdewGSDn4yZyjHlT+CF7sgyySqpRKh9I5ZiL8TUHJ83bdK7Q+tG
- +HrV3+B7Z+6WjEmGzyfEOC0sAR2INXNkoxQdnqFk2oOdPaJqbni9RxN2652gJNgbQOLsdkiJHUC
- OZpZgqw==
-X-Received: by 2002:a05:600c:1386:b0:434:f8e5:1bb with SMTP id
- 5b1f17b1804b1-436e26aeb43mr40080745e9.12.1736373206332; 
- Wed, 08 Jan 2025 13:53:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3rDS1hnE25fBfA1d5/lNO0uT9AX7FuBxSWBmfEMxNTmreerhi9TLvtnMmXsUDtITkyp8U6Q==
-X-Received: by 2002:a05:600c:1386:b0:434:f8e5:1bb with SMTP id
- 5b1f17b1804b1-436e26aeb43mr40080505e9.12.1736373205924; 
- Wed, 08 Jan 2025 13:53:25 -0800 (PST)
-Received: from ?IPV6:2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7?
- (p200300cbc70d3a00d73c06a8ca9f1df7.dip0.t-ipconnect.de.
- [2003:cb:c70d:3a00:d73c:6a8:ca9f:1df7])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e94ed7sm33441315e9.42.2025.01.08.13.53.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 13:53:24 -0800 (PST)
-Message-ID: <e13ddad7-77cf-489b-9e32-d336edb01c85@redhat.com>
-Date: Wed, 8 Jan 2025 22:53:23 +0100
+ d=1e100.net; s=20230601; t=1736373146; x=1736977946;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BjurB30feh31L4vvKnOWTjLO5NeT2JI+C6yferOyGvM=;
+ b=J+P71GLVvCMSpvWz4CW9TyibJ8hQFrvvhbxAIGdPPVsWp0s1nOZ7aXMsbh+NSn5Vjw
+ fUNvRoux2UU1tYl9eKgBZDkevyBw3ppP64AhHSpxht3nCzeEroUSBxY7yOfUHCi1y1Tb
+ PEfXTngsWodaNl9vJzRlpl0AV55fZuB+qjcm/wCI2n8p9meygUs/mHU1In1eVKr4cedi
+ 8V2DKds5OkSCgmupTx1hyRzk/mdouPtWhab2KXOR2NWA5jYshlISlKYyWzPlZn/dt/uj
+ 9gb9o19jZodmn2YuEYkGyo1VX24nWC5GaJn6/KaDUgIMbPNVU+IScqDmsFWoLYWmkRkT
+ WjLg==
+X-Gm-Message-State: AOJu0YzEN808JItmcOigaH+MEbdAGKGTpqypOALd59CziS4fnReGJgfU
+ BH1biwcLGVdFTJLtjmeqCZ8LGV+rl+U1JGTG9mcHX0QvcPjfsGY40QRC2SZHlZLVJcK0c69jLpw
+ MDFQ=
+X-Gm-Gg: ASbGncvFNj1xt4ueMcb6PEMeymzwI1FpRXKMXvCeybug3ljkk8EbjSiSkMPYcb1beSi
+ 9pqN03SnwruPNloOXg90mVPEaLdeR5Gw7G797n3KBqpyoLS5pFnvgqso7EtJzTo5Rh7TZXBlj8X
+ htC/u8pDdoes3OjoOg6SIQ6/rR/XMnGqDtAqUUEZh4sNabPM+gzHBYXbAa0q7T76mR7grY4CC+K
+ Jj1YHGloa3O07jR1/zvLoM7Ozy5aIcMQLlc6AKFL8RQnln45ZE7Ecr5Rayrz5M0/09wcNHlsNOv
+ Dl+RV7Ca6Ex9pk8aBD3Uh+CDTeF3r3s=
+X-Google-Smtp-Source: AGHT+IFM3zuGQag9k4rwxHqBhBbd5BJNpopf3ZNNFpJuyPwHH7/QoNO1DI6s1WlCcu9rwjciIfUOIg==
+X-Received: by 2002:a05:600c:3514:b0:434:a367:2bd9 with SMTP id
+ 5b1f17b1804b1-436e26a607fmr40625175e9.14.1736373146134; 
+ Wed, 08 Jan 2025 13:52:26 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2ddcda3sm33842665e9.22.2025.01.08.13.52.25
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 08 Jan 2025 13:52:25 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 06/14] tcg/loongarch64: Extract TCG_TARGET_HAS_foo defs to
+ 'tcg-target-has.h'
+Date: Wed,  8 Jan 2025 22:51:47 +0100
+Message-ID: <20250108215156.8731-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250108215156.8731-1-philmd@linaro.org>
+References: <20250107080112.1175095-19-richard.henderson@linaro.org>
+ <20250108215156.8731-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] system/physmem: Memory settings applied on remap
- notification
-To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
- kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
- imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
-References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
- <20241214134555.440097-1-william.roche@oracle.com>
- <20241214134555.440097-8-william.roche@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20241214134555.440097-8-william.roche@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,36 +102,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.12.24 14:45, “William Roche wrote:
-> From: William Roche <william.roche@oracle.com>
-> 
-> Merging and dump settings are handled by the remap notification
-> in addition to memory policy and preallocation.
-> 
-> Signed-off-by: William Roche <william.roche@oracle.com>
-> ---
->   system/physmem.c | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 9fc74a5699..c0bfa20efc 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2242,8 +2242,6 @@ void qemu_ram_remap(ram_addr_t addr)
->                       }
->                       qemu_ram_remap_mmap(block, vaddr, page_size, offset);
->                   }
-> -                memory_try_enable_merging(vaddr, page_size);
-> -                qemu_ram_setup_dump(vaddr, page_size);
->                   ram_block_notify_remap(block->host, offset, page_size);
->               }
->   
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Ah yes, indeed.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tcg/loongarch64/tcg-target-has.h | 113 +++++++++++++++++++++++++++++++
+ tcg/loongarch64/tcg-target.h     | 102 +---------------------------
+ 2 files changed, 114 insertions(+), 101 deletions(-)
+ create mode 100644 tcg/loongarch64/tcg-target-has.h
 
+diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-target-has.h
+new file mode 100644
+index 00000000000..e4333c36c65
+--- /dev/null
++++ b/tcg/loongarch64/tcg-target-has.h
+@@ -0,0 +1,113 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Define target-specific opcode support
++ * Copyright (c) 2021 WANG Xuerui <git@xen0n.name>
++ */
++
++#ifndef TCG_TARGET_HAS_H
++#define TCG_TARGET_HAS_H
++
++#include "host/cpuinfo.h"
++
++/* optional instructions */
++#define TCG_TARGET_HAS_negsetcond_i32   0
++#define TCG_TARGET_HAS_div_i32          1
++#define TCG_TARGET_HAS_rem_i32          1
++#define TCG_TARGET_HAS_div2_i32         0
++#define TCG_TARGET_HAS_rot_i32          1
++#define TCG_TARGET_HAS_deposit_i32      1
++#define TCG_TARGET_HAS_extract_i32      1
++#define TCG_TARGET_HAS_sextract_i32     0
++#define TCG_TARGET_HAS_extract2_i32     0
++#define TCG_TARGET_HAS_add2_i32         0
++#define TCG_TARGET_HAS_sub2_i32         0
++#define TCG_TARGET_HAS_mulu2_i32        0
++#define TCG_TARGET_HAS_muls2_i32        0
++#define TCG_TARGET_HAS_muluh_i32        1
++#define TCG_TARGET_HAS_mulsh_i32        1
++#define TCG_TARGET_HAS_ext8s_i32        1
++#define TCG_TARGET_HAS_ext16s_i32       1
++#define TCG_TARGET_HAS_ext8u_i32        1
++#define TCG_TARGET_HAS_ext16u_i32       1
++#define TCG_TARGET_HAS_bswap16_i32      1
++#define TCG_TARGET_HAS_bswap32_i32      1
++#define TCG_TARGET_HAS_not_i32          1
++#define TCG_TARGET_HAS_andc_i32         1
++#define TCG_TARGET_HAS_orc_i32          1
++#define TCG_TARGET_HAS_eqv_i32          0
++#define TCG_TARGET_HAS_nand_i32         0
++#define TCG_TARGET_HAS_nor_i32          1
++#define TCG_TARGET_HAS_clz_i32          1
++#define TCG_TARGET_HAS_ctz_i32          1
++#define TCG_TARGET_HAS_ctpop_i32        0
++#define TCG_TARGET_HAS_brcond2          0
++#define TCG_TARGET_HAS_setcond2         0
++#define TCG_TARGET_HAS_qemu_st8_i32     0
++
++/* 64-bit operations */
++#define TCG_TARGET_HAS_negsetcond_i64   0
++#define TCG_TARGET_HAS_div_i64          1
++#define TCG_TARGET_HAS_rem_i64          1
++#define TCG_TARGET_HAS_div2_i64         0
++#define TCG_TARGET_HAS_rot_i64          1
++#define TCG_TARGET_HAS_deposit_i64      1
++#define TCG_TARGET_HAS_extract_i64      1
++#define TCG_TARGET_HAS_sextract_i64     0
++#define TCG_TARGET_HAS_extract2_i64     0
++#define TCG_TARGET_HAS_extr_i64_i32     1
++#define TCG_TARGET_HAS_ext8s_i64        1
++#define TCG_TARGET_HAS_ext16s_i64       1
++#define TCG_TARGET_HAS_ext32s_i64       1
++#define TCG_TARGET_HAS_ext8u_i64        1
++#define TCG_TARGET_HAS_ext16u_i64       1
++#define TCG_TARGET_HAS_ext32u_i64       1
++#define TCG_TARGET_HAS_bswap16_i64      1
++#define TCG_TARGET_HAS_bswap32_i64      1
++#define TCG_TARGET_HAS_bswap64_i64      1
++#define TCG_TARGET_HAS_not_i64          1
++#define TCG_TARGET_HAS_andc_i64         1
++#define TCG_TARGET_HAS_orc_i64          1
++#define TCG_TARGET_HAS_eqv_i64          0
++#define TCG_TARGET_HAS_nand_i64         0
++#define TCG_TARGET_HAS_nor_i64          1
++#define TCG_TARGET_HAS_clz_i64          1
++#define TCG_TARGET_HAS_ctz_i64          1
++#define TCG_TARGET_HAS_ctpop_i64        0
++#define TCG_TARGET_HAS_add2_i64         0
++#define TCG_TARGET_HAS_sub2_i64         0
++#define TCG_TARGET_HAS_mulu2_i64        0
++#define TCG_TARGET_HAS_muls2_i64        0
++#define TCG_TARGET_HAS_muluh_i64        1
++#define TCG_TARGET_HAS_mulsh_i64        1
++
++#define TCG_TARGET_HAS_qemu_ldst_i128   (cpuinfo & CPUINFO_LSX)
++
++#define TCG_TARGET_HAS_tst              0
++
++#define TCG_TARGET_HAS_v64              (cpuinfo & CPUINFO_LSX)
++#define TCG_TARGET_HAS_v128             (cpuinfo & CPUINFO_LSX)
++#define TCG_TARGET_HAS_v256             (cpuinfo & CPUINFO_LASX)
++
++#define TCG_TARGET_HAS_not_vec          1
++#define TCG_TARGET_HAS_neg_vec          1
++#define TCG_TARGET_HAS_abs_vec          0
++#define TCG_TARGET_HAS_andc_vec         1
++#define TCG_TARGET_HAS_orc_vec          1
++#define TCG_TARGET_HAS_nand_vec         0
++#define TCG_TARGET_HAS_nor_vec          1
++#define TCG_TARGET_HAS_eqv_vec          0
++#define TCG_TARGET_HAS_mul_vec          1
++#define TCG_TARGET_HAS_shi_vec          1
++#define TCG_TARGET_HAS_shs_vec          0
++#define TCG_TARGET_HAS_shv_vec          1
++#define TCG_TARGET_HAS_roti_vec         1
++#define TCG_TARGET_HAS_rots_vec         0
++#define TCG_TARGET_HAS_rotv_vec         1
++#define TCG_TARGET_HAS_sat_vec          1
++#define TCG_TARGET_HAS_minmax_vec       1
++#define TCG_TARGET_HAS_bitsel_vec       1
++#define TCG_TARGET_HAS_cmpsel_vec       0
++#define TCG_TARGET_HAS_tst_vec          0
++
++
++#endif
+diff --git a/tcg/loongarch64/tcg-target.h b/tcg/loongarch64/tcg-target.h
+index 3bc9aafaf24..a3a6130720b 100644
+--- a/tcg/loongarch64/tcg-target.h
++++ b/tcg/loongarch64/tcg-target.h
+@@ -29,8 +29,6 @@
+ #ifndef LOONGARCH_TCG_TARGET_H
+ #define LOONGARCH_TCG_TARGET_H
+ 
+-#include "host/cpuinfo.h"
+-
+ #define TCG_TARGET_INSN_UNIT_SIZE 4
+ #define TCG_TARGET_NB_REGS 64
+ 
+@@ -87,105 +85,7 @@ typedef enum {
+     TCG_VEC_TMP0 = TCG_REG_V23,
+ } TCGReg;
+ 
+-/* optional instructions */
+-#define TCG_TARGET_HAS_negsetcond_i32   0
+-#define TCG_TARGET_HAS_div_i32          1
+-#define TCG_TARGET_HAS_rem_i32          1
+-#define TCG_TARGET_HAS_div2_i32         0
+-#define TCG_TARGET_HAS_rot_i32          1
+-#define TCG_TARGET_HAS_deposit_i32      1
+-#define TCG_TARGET_HAS_extract_i32      1
+-#define TCG_TARGET_HAS_sextract_i32     0
+-#define TCG_TARGET_HAS_extract2_i32     0
+-#define TCG_TARGET_HAS_add2_i32         0
+-#define TCG_TARGET_HAS_sub2_i32         0
+-#define TCG_TARGET_HAS_mulu2_i32        0
+-#define TCG_TARGET_HAS_muls2_i32        0
+-#define TCG_TARGET_HAS_muluh_i32        1
+-#define TCG_TARGET_HAS_mulsh_i32        1
+-#define TCG_TARGET_HAS_ext8s_i32        1
+-#define TCG_TARGET_HAS_ext16s_i32       1
+-#define TCG_TARGET_HAS_ext8u_i32        1
+-#define TCG_TARGET_HAS_ext16u_i32       1
+-#define TCG_TARGET_HAS_bswap16_i32      1
+-#define TCG_TARGET_HAS_bswap32_i32      1
+-#define TCG_TARGET_HAS_not_i32          1
+-#define TCG_TARGET_HAS_andc_i32         1
+-#define TCG_TARGET_HAS_orc_i32          1
+-#define TCG_TARGET_HAS_eqv_i32          0
+-#define TCG_TARGET_HAS_nand_i32         0
+-#define TCG_TARGET_HAS_nor_i32          1
+-#define TCG_TARGET_HAS_clz_i32          1
+-#define TCG_TARGET_HAS_ctz_i32          1
+-#define TCG_TARGET_HAS_ctpop_i32        0
+-#define TCG_TARGET_HAS_brcond2          0
+-#define TCG_TARGET_HAS_setcond2         0
+-#define TCG_TARGET_HAS_qemu_st8_i32     0
+-
+-/* 64-bit operations */
+-#define TCG_TARGET_HAS_negsetcond_i64   0
+-#define TCG_TARGET_HAS_div_i64          1
+-#define TCG_TARGET_HAS_rem_i64          1
+-#define TCG_TARGET_HAS_div2_i64         0
+-#define TCG_TARGET_HAS_rot_i64          1
+-#define TCG_TARGET_HAS_deposit_i64      1
+-#define TCG_TARGET_HAS_extract_i64      1
+-#define TCG_TARGET_HAS_sextract_i64     0
+-#define TCG_TARGET_HAS_extract2_i64     0
+-#define TCG_TARGET_HAS_extr_i64_i32     1
+-#define TCG_TARGET_HAS_ext8s_i64        1
+-#define TCG_TARGET_HAS_ext16s_i64       1
+-#define TCG_TARGET_HAS_ext32s_i64       1
+-#define TCG_TARGET_HAS_ext8u_i64        1
+-#define TCG_TARGET_HAS_ext16u_i64       1
+-#define TCG_TARGET_HAS_ext32u_i64       1
+-#define TCG_TARGET_HAS_bswap16_i64      1
+-#define TCG_TARGET_HAS_bswap32_i64      1
+-#define TCG_TARGET_HAS_bswap64_i64      1
+-#define TCG_TARGET_HAS_not_i64          1
+-#define TCG_TARGET_HAS_andc_i64         1
+-#define TCG_TARGET_HAS_orc_i64          1
+-#define TCG_TARGET_HAS_eqv_i64          0
+-#define TCG_TARGET_HAS_nand_i64         0
+-#define TCG_TARGET_HAS_nor_i64          1
+-#define TCG_TARGET_HAS_clz_i64          1
+-#define TCG_TARGET_HAS_ctz_i64          1
+-#define TCG_TARGET_HAS_ctpop_i64        0
+-#define TCG_TARGET_HAS_add2_i64         0
+-#define TCG_TARGET_HAS_sub2_i64         0
+-#define TCG_TARGET_HAS_mulu2_i64        0
+-#define TCG_TARGET_HAS_muls2_i64        0
+-#define TCG_TARGET_HAS_muluh_i64        1
+-#define TCG_TARGET_HAS_mulsh_i64        1
+-
+-#define TCG_TARGET_HAS_qemu_ldst_i128   (cpuinfo & CPUINFO_LSX)
+-
+-#define TCG_TARGET_HAS_tst              0
+-
+-#define TCG_TARGET_HAS_v64              (cpuinfo & CPUINFO_LSX)
+-#define TCG_TARGET_HAS_v128             (cpuinfo & CPUINFO_LSX)
+-#define TCG_TARGET_HAS_v256             (cpuinfo & CPUINFO_LASX)
+-
+-#define TCG_TARGET_HAS_not_vec          1
+-#define TCG_TARGET_HAS_neg_vec          1
+-#define TCG_TARGET_HAS_abs_vec          0
+-#define TCG_TARGET_HAS_andc_vec         1
+-#define TCG_TARGET_HAS_orc_vec          1
+-#define TCG_TARGET_HAS_nand_vec         0
+-#define TCG_TARGET_HAS_nor_vec          1
+-#define TCG_TARGET_HAS_eqv_vec          0
+-#define TCG_TARGET_HAS_mul_vec          1
+-#define TCG_TARGET_HAS_shi_vec          1
+-#define TCG_TARGET_HAS_shs_vec          0
+-#define TCG_TARGET_HAS_shv_vec          1
+-#define TCG_TARGET_HAS_roti_vec         1
+-#define TCG_TARGET_HAS_rots_vec         0
+-#define TCG_TARGET_HAS_rotv_vec         1
+-#define TCG_TARGET_HAS_sat_vec          1
+-#define TCG_TARGET_HAS_minmax_vec       1
+-#define TCG_TARGET_HAS_bitsel_vec       1
+-#define TCG_TARGET_HAS_cmpsel_vec       0
+-#define TCG_TARGET_HAS_tst_vec          0
++#include "tcg-target-has.h"
+ 
+ #define TCG_TARGET_DEFAULT_MO (0)
+ 
 -- 
-Cheers,
-
-David / dhildenb
+2.47.1
 
 
