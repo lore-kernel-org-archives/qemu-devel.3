@@ -4,96 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B525E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 13:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA47E7719A
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 13:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVVgq-00029S-H8; Wed, 08 Jan 2025 08:01:40 -0500
+	id 1tVViC-0002rA-C9; Wed, 08 Jan 2025 08:03:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tVVgG-0001xy-Nx
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 08:01:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tVVgt-0002AD-Lh
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 08:01:45 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tVVgE-0000nl-4T
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 08:01:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736341256;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ppSLB3jimQ6+BATOek5pxkP9Z7kOydZOb/ezrFK1uM8=;
- b=f9kgPhXxoIK+HxOaluSd75VXm2pkILCSyluia5v3V5CG+KgLBC79dx9j6kkuZVh+RNKfNF
- uVBeM6LweMAFrK9eidxPJkOUJIwJrAwpiVHN02DFk6omJN10DZ05yazBJhXg1RrRtFkhbL
- ElF5HfR3GlifdiPBWtu5sWXFqSeGghc=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-MOjYHF-IMf-rqAXtUYBMLw-1; Wed, 08 Jan 2025 08:00:54 -0500
-X-MC-Unique: MOjYHF-IMf-rqAXtUYBMLw-1
-X-Mimecast-MFC-AGG-ID: MOjYHF-IMf-rqAXtUYBMLw
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-21661949f23so403655025ad.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 05:00:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736341253; x=1736946053;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ppSLB3jimQ6+BATOek5pxkP9Z7kOydZOb/ezrFK1uM8=;
- b=fRLaMc0xaweIJH/1OWWLhkgkflzNQ+FqlkFbk9prBSPeYaE6cVJw2wK3QfPUM2UyGc
- ZECIbKZnyuWXRZXyREO1oNBJ8moy3o3yl3TflMElIRzduyXO8iyU6rN5CzdpcS3ngePJ
- 0aqQwnkVGeMWO9pvCVc+4ghq4phlnKtiFHYyrjeVYwcIgyyhDln3zShuYbA/r8RM3rKX
- 8v9xbuWRxEJpVY7mBf0gA7qF+Bv9yW47LiDl6Ywo/HdMLEAwPRAqlBNm90qo1R/uDRZS
- HnNfapW1DCtilZFqa7Yugi9igdFX43Avwjl/1fb/svzfo2++N/9i3DKX4wvwcbOYq0kN
- z/9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzVttteLJ2CR/WQfSUdpbLDGixRPnQIfoC9SqNMkEXLvkSyaNrh7cFasXGorFLfAfS77Ka9a2yVchX@nongnu.org
-X-Gm-Message-State: AOJu0YwAui6MwMoF13V7j7XRLAmkCCVFk/LOuJrLpg+EXG8zMUNV6wge
- I6OkpgEj/xwWgk9XPm+eaLuuf7CS5P7SUXQgc3x9oBHcdicNmO8pfU/tQTI5R30qXl6TrAMtEiZ
- d+O0lT36wyg9nTON2g5JZpCmKQ5YL2pgwokQv0jS+1NDWEc4WFRXD
-X-Gm-Gg: ASbGncuB1VIA8PUqzk1UD/B3OMcKDnGHgmSjgXEE6FaCbip1/kiAhlRBimDKxF9PVgt
- SbeSyMD477lb1Tbr1altopu1Dj2Z+Q6q8iAVhKqaVn+xiAy/jzMgPeiA0A3goSNluj2j46FK9ri
- 00ZMXQHRykq32OH4wSyvPwMBODLwbRfDDNJMKy96NlK4qLIL9wN4T4AyUBdmzP90jMLUh/wFhRt
- svd4e19Cetuo+HOsgX3PkeotOzWxVEz6d87EJYiAupuQ9aSqW2lnuxYm7tyQOk53ogt8svttesX
- wKZk
-X-Received: by 2002:a17:902:c406:b0:216:7ee9:21ff with SMTP id
- d9443c01a7336-21a83fdf307mr40158365ad.49.1736341252844; 
- Wed, 08 Jan 2025 05:00:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHiNTfZyOObhjRooGwqC/Rhos+CVqc82/uBDoVVvVN9p0gYtHzB/U5lzV8LcwmbZUBHXwXpgA==
-X-Received: by 2002:a17:902:c406:b0:216:7ee9:21ff with SMTP id
- d9443c01a7336-21a83fdf307mr40157195ad.49.1736341252092; 
- Wed, 08 Jan 2025 05:00:52 -0800 (PST)
-Received: from localhost.localdomain ([202.88.221.111])
- by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-842abd5920bsm32151393a12.6.2025.01.08.05.00.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 05:00:51 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: armbru@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3] tests/qtest/libqos: add DMA support for writing and
- reading fw_cfg files
-Date: Wed,  8 Jan 2025 18:27:50 +0530
-Message-ID: <20250108125751.199929-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tVVgq-0000vJ-LH
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 08:01:43 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 023A24E6036;
+ Wed, 08 Jan 2025 14:01:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id NFbZeSGYkxhn; Wed,  8 Jan 2025 14:01:34 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C9BE84E602F; Wed, 08 Jan 2025 14:01:34 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C6EB3757B28;
+ Wed, 08 Jan 2025 14:01:34 +0100 (CET)
+Date: Wed, 8 Jan 2025 14:01:34 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Rob Landley <rob@landley.net>
+cc: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Stafford Horne <shorne@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+ QEMU Developers <qemu-devel@nongnu.org>, 
+ Linux OpenRISC <linux-openrisc@vger.kernel.org>
+Subject: Re: or1k -M virt -hda and net.
+In-Reply-To: <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
+Message-ID: <6e5f24cf-02bf-1cf0-2d0d-e683866cc3d3@eik.bme.hu>
+References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+ <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
+ <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
+ <Z0LMqEqcdjkAxnN-@antec>
+ <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net> <Z2lgL31ZeSkO59MZ@antec>
+ <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
+ <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
+ <87y0zmbita.fsf@draig.linaro.org>
+ <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1940010094-1736341294=:17456"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,285 +80,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At present, the libqos/fw_cfg.c library does not support the modern DMA
-interface which is required to write to the fw_cfg files. It only uses the IO
-interface. Implement read and write methods based on DMA. This will enable
-developers to write tests that writes to the fw_cfg file(s). The structure of
-the code is taken from edk2 fw_cfg implementation. It has been tested by
-writing a qtest that writes to a fw_cfg file. This test will be part of a
-future patch series.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/libqos/fw_cfg.c | 204 ++++++++++++++++++++++++++++++++----
- tests/qtest/libqos/fw_cfg.h |   5 +
- 2 files changed, 186 insertions(+), 23 deletions(-)
+--3866299591-1940010094-1736341294=:17456
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-changelog:
-v3: fix bugs and code reorg. More testing to make sure this actually
-works.
-v2: refactor common code into a helper.
-diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
-index 89f053ccac..02d16b098c 100644
---- a/tests/qtest/libqos/fw_cfg.c
-+++ b/tests/qtest/libqos/fw_cfg.c
-@@ -17,6 +17,8 @@
- #include "../libqtest.h"
- #include "qemu/bswap.h"
- #include "hw/nvram/fw_cfg.h"
-+#include "malloc-pc.h"
-+#include "libqos-malloc.h"
- 
- void qfw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
- {
-@@ -60,6 +62,99 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-     qtest_writew(fw_cfg->qts, fw_cfg->base, key);
- }
- 
-+static void
-+qfw_cfg_dma_transfer(QFWCFG *fw_cfg, QOSState *qs, void *address,
-+                     uint32_t length, uint32_t control)
-+{
-+    FWCfgDmaAccess access;
-+    uint32_t addr;
-+    uint64_t guest_access_addr;
-+    uint64_t gaddr;
-+
-+    /* create a data buffer in guest memory */
-+    gaddr = guest_alloc(&qs->alloc, length);
-+    g_assert(gaddr);
-+
-+    if (control & FW_CFG_DMA_CTL_WRITE) {
-+        qtest_bufwrite(fw_cfg->qts, gaddr, address, length);
-+    }
-+    access.address = cpu_to_be64(gaddr);
-+    access.length = cpu_to_be32(length);
-+    access.control = cpu_to_be32(control);
-+
-+    /* now create a separate buffer in guest memory for 'access' */
-+    guest_access_addr = guest_alloc(&qs->alloc, sizeof(access));
-+    g_assert(guest_access_addr);
-+    qtest_bufwrite(fw_cfg->qts, guest_access_addr, &access, sizeof(access));
-+
-+    /* write lower 32 bits of address */
-+    addr = cpu_to_be32((uint32_t)(uintptr_t)guest_access_addr);
-+    qtest_outl(fw_cfg->qts, fw_cfg->base + 8, addr);
-+
-+    /* write upper 32 bits of address */
-+    addr = cpu_to_be32((uint32_t)(uintptr_t)(guest_access_addr >> 32));
-+    qtest_outl(fw_cfg->qts, fw_cfg->base + 4, addr);
-+
-+    g_assert(!(be32_to_cpu(access.control) & FW_CFG_DMA_CTL_ERROR));
-+
-+    if (control & FW_CFG_DMA_CTL_READ) {
-+        qtest_bufread(fw_cfg->qts, gaddr, address, length);
-+    }
-+
-+    guest_free(&qs->alloc, guest_access_addr);
-+    guest_free(&qs->alloc, gaddr);
-+}
-+
-+static void
-+qfw_cfg_write_entry(QFWCFG *fw_cfg, QOSState *qs, uint16_t key,
-+                    void *buf, uint32_t len)
-+{
-+    qfw_cfg_select(fw_cfg, key);
-+    qfw_cfg_dma_transfer(fw_cfg, qs, buf, len, FW_CFG_DMA_CTL_WRITE);
-+}
-+
-+static void
-+qfw_cfg_read_entry(QFWCFG *fw_cfg, QOSState *qs, uint16_t key,
-+                   void *buf, uint32_t len)
-+{
-+    qfw_cfg_select(fw_cfg, key);
-+    qfw_cfg_dma_transfer(fw_cfg, qs, buf, len, FW_CFG_DMA_CTL_READ);
-+}
-+
-+static bool
-+find_pdir_entry(QFWCFG *fw_cfg, const char *filename,
-+                uint16_t *sel, uint32_t *size)
-+{
-+    unsigned char *filesbuf = NULL;
-+    uint32_t count;
-+    size_t dsize;
-+    FWCfgFile *pdir_entry;
-+    uint32_t i;
-+    bool found = false;
-+
-+    *size = 0;
-+    *sel = 0;
-+
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
-+    count = be32_to_cpu(count);
-+    dsize = sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
-+    filesbuf = g_malloc(dsize);
-+    g_assert(filesbuf);
-+    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
-+    pdir_entry = (FWCfgFile *)(filesbuf + sizeof(uint32_t));
-+    for (i = 0; i < count; ++i, ++pdir_entry) {
-+        if (!strcmp(pdir_entry->name, filename)) {
-+            *size = be32_to_cpu(pdir_entry->size);
-+            *sel = be16_to_cpu(pdir_entry->select);
-+            found = true;
-+            break;
-+        }
-+    }
-+
-+    g_free(filesbuf);
-+    return found;
-+}
-+
- /*
-  * The caller need check the return value. When the return value is
-  * nonzero, it means that some bytes have been transferred.
-@@ -73,37 +168,100 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-  * populated, it has received only a starting slice of the fw_cfg file.
-  */
- size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
--                      void *data, size_t buflen)
-+                        void *data, size_t buflen)
- {
--    uint32_t count;
--    uint32_t i;
--    unsigned char *filesbuf = NULL;
--    size_t dsize;
--    FWCfgFile *pdir_entry;
-     size_t filesize = 0;
-+    uint32_t len;
-+    uint16_t sel;
- 
--    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, &count, sizeof(count));
--    count = be32_to_cpu(count);
--    dsize = sizeof(uint32_t) + count * sizeof(struct fw_cfg_file);
--    filesbuf = g_malloc(dsize);
--    qfw_cfg_get(fw_cfg, FW_CFG_FILE_DIR, filesbuf, dsize);
--    pdir_entry = (FWCfgFile *)(filesbuf + sizeof(uint32_t));
--    for (i = 0; i < count; ++i, ++pdir_entry) {
--        if (!strcmp(pdir_entry->name, filename)) {
--            uint32_t len = be32_to_cpu(pdir_entry->size);
--            uint16_t sel = be16_to_cpu(pdir_entry->select);
--            filesize = len;
--            if (len > buflen) {
--                len = buflen;
--            }
--            qfw_cfg_get(fw_cfg, sel, data, len);
--            break;
-+    if (find_pdir_entry(fw_cfg, filename, &sel, &len)) {
-+        filesize = len;
-+        if (len > buflen) {
-+            len = buflen;
-         }
-+        qfw_cfg_get(fw_cfg, sel, data, len);
-     }
--    g_free(filesbuf);
-+
-     return filesize;
- }
- 
-+/*
-+ * The caller need check the return value. When the return value is
-+ * nonzero, it means that some bytes have been transferred.
-+ *
-+ * If the fw_cfg file in question is smaller than the allocated & passed-in
-+ * buffer, then the first len bytes were read.
-+ *
-+ * If the fw_cfg file in question is larger than the passed-in
-+ * buffer, then the return value explains how much was actually read.
-+ *
-+ * It is illegal to call this function if fw_cfg does not support DMA
-+ * interface. The caller should ensure that DMA is supported before
-+ * calling this function.
-+ *
-+ * Passed QOSState pointer qs must be initialized. qs->alloc must also be
-+ * properly initialized.
-+ */
-+size_t qfw_cfg_read_file(QFWCFG *fw_cfg, QOSState *qs, const char *filename,
-+                         void *data, size_t buflen)
-+{
-+    uint32_t len = 0;
-+    uint16_t sel;
-+    uint32_t id;
-+
-+    g_assert(qs);
-+    /* check if DMA is supported since we use DMA for read */
-+    id = qfw_cfg_get_u32(fw_cfg, FW_CFG_ID);
-+    g_assert(id & FW_CFG_VERSION_DMA);
-+
-+    if (find_pdir_entry(fw_cfg, filename, &sel, &len)) {
-+        if (len > buflen) {
-+            len = buflen;
-+        }
-+        qfw_cfg_read_entry(fw_cfg, qs, sel, data, len);
-+    }
-+
-+    return (size_t) len;
-+}
-+
-+/*
-+ * The caller need check the return value. When the return value is
-+ * nonzero, it means that some bytes have been transferred.
-+ *
-+ * If the fw_cfg file in question is smaller than the allocated & passed-in
-+ * buffer, then the buffer has been partially written.
-+ *
-+ * If the fw_cfg file in question is larger than the passed-in
-+ * buffer, then the return value explains how much was actually written.
-+ *
-+ * It is illegal to call this function if fw_cfg does not support DMA
-+ * interface. The caller should ensure that DMA is supported before
-+ * calling this function.
-+ *
-+ * Passed QOSState pointer qs must be initialized. qs->alloc must also be
-+ * properly initialized.
-+ */
-+size_t qfw_cfg_write_file(QFWCFG *fw_cfg, QOSState *qs, const char *filename,
-+                          void *data, size_t buflen)
-+{
-+    uint32_t len = 0;
-+    uint16_t sel;
-+    uint32_t id;
-+
-+    g_assert(qs);
-+    /* write operation is only valid if DMA is supported */
-+    id = qfw_cfg_get_u32(fw_cfg, FW_CFG_ID);
-+    g_assert(id & FW_CFG_VERSION_DMA);
-+
-+    if (find_pdir_entry(fw_cfg, filename, &sel, &len)) {
-+        if (len > buflen) {
-+            len = buflen;
-+        }
-+        qfw_cfg_write_entry(fw_cfg, qs, sel, data, len);
-+    }
-+    return (size_t) len;
-+}
-+
- static void mm_fw_cfg_read(QFWCFG *fw_cfg, void *data, size_t len)
- {
-     uint8_t *ptr = data;
-diff --git a/tests/qtest/libqos/fw_cfg.h b/tests/qtest/libqos/fw_cfg.h
-index b0456a15df..63c1ac59d6 100644
---- a/tests/qtest/libqos/fw_cfg.h
-+++ b/tests/qtest/libqos/fw_cfg.h
-@@ -14,6 +14,7 @@
- #define LIBQOS_FW_CFG_H
- 
- #include "../libqtest.h"
-+#include "libqos.h"
- 
- typedef struct QFWCFG QFWCFG;
- 
-@@ -33,6 +34,10 @@ uint32_t qfw_cfg_get_u32(QFWCFG *fw_cfg, uint16_t key);
- uint64_t qfw_cfg_get_u64(QFWCFG *fw_cfg, uint16_t key);
- size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
-                         void *data, size_t buflen);
-+size_t qfw_cfg_write_file(QFWCFG *fw_cfg, QOSState *qs, const char *filename,
-+                          void *data, size_t buflen);
-+size_t qfw_cfg_read_file(QFWCFG *fw_cfg, QOSState *qs, const char *filename,
-+                         void *data, size_t buflen);
- 
- QFWCFG *mm_fw_cfg_init(QTestState *qts, uint64_t base);
- void mm_fw_cfg_uninit(QFWCFG *fw_cfg);
--- 
-2.45.2
+On Tue, 7 Jan 2025, Rob Landley wrote:
+> On 1/7/25 12:05, Alex Bennée wrote:
+>> Stafford Horne <shorne@gmail.com> writes:
+>>> I have not used -hda before, do you have it working with other targets?
+>>> 
+>>> According to the qemu docs in qemu-options.hx. I see:
+>>>
+>>>      Use file as hard disk 0, 1, 2 or 3 image on the default bus of the
+>>>      emulated machine (this is for example the IDE bus on most x86 
+>>> machines,
+>>>      but it can also be SCSI, virtio or something else on other target
+>>>      architectures). See also the :ref:`disk images` chapter in the System
+>>>      Emulation Users Guide.
+>>> 
+>>> I think, since we don't have a "default" bus in openrisc this doesn't work 
+>>> so we
+>>> need to specify the -drive explictly.
+>>> 
+>>> I checked the x86 machine code and confirm it seems to work like this. 
+>>> There is
+>>> code in the system setup to look for hd* drives and wire them into IDE. 
+>>> There
+>>> is no such code in openrisc.
+>> 
+>> Yeah don't use -hdX as they are legacy options with a lot of default
+>> assumptions. As the docs say: 
+>> https://qemu.readthedocs.io/en/master/system/invocation.html#hxtool-1
+>>
+>>    The QEMU block device handling options have a long history and have
+>>    gone through several iterations as the feature set and complexity of
+>>    the block layer have grown. Many online guides to QEMU often reference
+>>    older and deprecated options, which can lead to confusion.
+>
+> I want "a block device from this file" in a generic way that works the same 
+> across multiple architectures regardless of the board being emulated, where I 
+> only have to specify the file not explicitly micromanage bus plumbing 
+> details, and which is easy for a human to type from when explained over a 
+> voice call.
+>
+> What's the alternative to -hda you suggest for that?
+>
+> Can I do "./run-qemu.sh -drive file=blah.img" without the rest? Perhaps 
+> specify all the details in the script and then optionally add an extra 
+> argument at the end? I couldn't get that to work:
+>
+> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
+> virtio-net-device,netdev=net0 -drive format=raw,id=hd0 -device 
+> virtio-blk-device,drive=hd0 -drive file=README
 
+You need '-drive if=none,id=hd0,format=raw,file=README' as a single option 
+not split into two. With if=none -drive won't auto-create a device so you 
+then also need a corresponding -device option for the drive that you seem 
+to have already above. If you want -hda to work you may need something 
+like commit d36b2f4e78 (hw/ppc/sam460ex: Support short options for adding 
+drives) for the machine you use. In particular the MachineClass 
+block_default_type field says what's the default interface that -drive and 
+other short options should use (at least I think so, I'm no expert on this 
+either but searching for it should at least point to where it's handled).
+
+Regards,
+BALATON Zoltan
+
+> qemu-system-or1k: -drive format=raw,id=hd0: A block device must be specified 
+> for "file"
+>
+> Also, if you say -device and -drive but do NOT specify a file, qemu refuses 
+> to start. So I can't set the defaults but only optionally use them, the way 
+> -hda has defaults built into the image that don't cause a problem if I DON'T 
+> add a -hda argument to the command line.
+>
+>>    Older options like -hda are essentially macros which expand into -drive
+>>    options for various drive interfaces.
+>
+> Where the knowledge of "what this board needs in order to do that" is built 
+> into qemu rather than provided by the caller, yes.
+>
+>> The original forms bake in a lot
+>>    of assumptions from the days when QEMU was emulating a legacy PC, they
+>>    are not recommended for modern configurations.
+>
+> I'm building a kernel. It finds /dev/?da so I can mount it. That is my 
+> desired outcome.
+>
+> I am attempting to get generic behavior out of multiple architectures, among 
+> other reasons so I can cross-test and package up "it fails on X, here's a 
+> build and test" to point package maintainers at.
+>
+> "It natively builds under the emulator" is the easiest way to make that work, 
+> which is why https://landley.net/bin/toolchains/latest/ has a native.sqf for 
+> each cross.tar.xz.
+>
+> wget system-image-arch.txz
+> wget toolchain.sqf
+> wget test.img
+>
+> ./run-emulator.sh -hda test.img -hdb toolchain.sqf
+>
+> If I have to explain "-drive virtio-potato-walrus,inkpot=striated -device 
+> collect=striated,burbank-potato,ireland" at somebody whose domain expertise 
+> is xfce or something, the barrier to getting them to reproduce the issue I'm 
+> seeing is noticeably higher. If I have to MAKE a bespoke wrapper shell script 
+> for them with every bug report, the likelihood that it works differently for 
+> them than when I tried it is noticeably nonzero, and the likelihood of the 
+> issue going on my todo heap and never getting pursued upstream is also 
+> noticeably higher. Which is why I try to make generic tools...
+>
+> (Making a _test_ script to demonstrate the issue is normal. If it's their 
+> project, usually they can tell if I typoed it and fix it up themselves 
+> because they know what I MEANT. But if I typo the setup for the virtual 
+> environment, or are missing a prerequisite package install, or they hit qemu 
+> version skew, or I said /bin/sh and theirs points to dash... Brick wall. It 
+> either works or it doesn't.)
+>
+> (And when I have to set up the long version for a nightly cron job, and then 
+> when the test fails 6 months later and I look at it and go "huh? salad?" 
+> that's a bad 3am digression as well. And which is more likely to break from 
+> version skew during qemu version upgrades: two lines of micromanaging 
+> --longopts or -hda that gets adjusted by the maintainers?)
+>
+> Rob
+>
+> P.S. For some reason -hda grew an "I'm going to make the first block 
+> read-only just like loopback devices do because you can't be trusted" nag a 
+> few years back, but it's mostly yet more boot spam. I can tell the kernel to 
+> be quiet during boot, but never figured out the equivalent for qemu-system...
+>
+>
+--3866299591-1940010094-1736341294=:17456--
 
