@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF11E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 17:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3F0E77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 18:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVaIA-0001hV-9L; Wed, 08 Jan 2025 12:56:30 -0500
+	id 1tVaQx-0003YT-Kd; Wed, 08 Jan 2025 13:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVaI8-0001ff-KP
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:56:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVaI6-0007dL-Dm
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:56:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736358984;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EyExCrp9HZfZ1zLyeVE/Us+rWBBj2/lkllMMyuJd5Ag=;
- b=MBksZg++Nu9bvwvfh5zriVMMPEBIvCgHEXTZ8AG64Cts7FYQvWGfeM9Thg+0QomAzUkZ7p
- +ikc+GtSimb5SeiO+EmiL78JKkGzktSFZMNFGzgGYKx71rKldmziBOFGpdiezxBDM2m6O5
- Ndma/4iDjxXWiu9odcq+12Q74yLoUOA=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-JlQvHG3sONWNG85PH63Nzg-1; Wed, 08 Jan 2025 12:56:22 -0500
-X-MC-Unique: JlQvHG3sONWNG85PH63Nzg-1
-X-Mimecast-MFC-AGG-ID: JlQvHG3sONWNG85PH63Nzg
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-467ae19e34bso240948751cf.2
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 09:56:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVaQv-0003YE-P2
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:05:34 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVaQq-0002PD-PF
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 13:05:33 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-aaee0b309adso16723566b.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 10:05:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736359526; x=1736964326; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SwMr4fSmOj3kJ9Ya24/AHdSd7ci6Sdj2KKgonz0WcPE=;
+ b=sdBmRgtlReFKtOoBftuhgl+gXZuXFRzjr3X8IZtAgvAcFThWOfEJqeOmVfVeiFYkz/
+ SLGoOj3RaVzIEef2SD1V7qSf4YtIyO/tBLtEH1+7t0xnOiEvAcxDc+wcl44gfZSL9Q6K
+ IodIpDQdj+6wkp5wET27L8J5nw5NA5ozhZdlsfQEQOmgTo8ztYPafn0TMhV0L8UdF6t+
+ +a1t8bXtVgwCpkUxMgFeTwr3LG+ndsHqo5oBUaz31HdIAIirtb0cnnRMtEkRm7uGTaOb
+ NoM6q4k33TcsLjj3H7NhU2seyUml8A26mkyVbG4gPFFOQMjMewm1FmXz4G6zX+KcyKKT
+ uaXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736358982; x=1736963782;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EyExCrp9HZfZ1zLyeVE/Us+rWBBj2/lkllMMyuJd5Ag=;
- b=EClCcUtulsHYvckYxnwOVbZ0CcIERnRJyIvtbA8fsqHN/ogrYHp1cb3+H6T60XBBcR
- YahnP7ui5flC/ZOxs2fBw2yRRc55iZdNL4JPIrxqtsYEclaVst5fs66sz95Swciy/BJy
- 53QldkNBNZQ2RZ45QeWC7YjA1c07fGjzWHo/b3aWdtkaKfWU+1LPdUYuS/bTi6nHDI03
- pErBg9bZuATtyTzlGa6aWSaMpmUsjah3zubHFaYOKV58rv1Q2UmYhM4ZjVVCC5D3l8UL
- u1NtLjsQcIWL/LWXJUShvDUl9QTQNjc5ZWbFMHqlAexkY74wWF5UChSjJCEbCSNAIdWv
- HY8w==
-X-Gm-Message-State: AOJu0YyisMAZnTPSGlKShCWa3JH+jujiJzCvGhKAVD7U9aJrNlE0p3e+
- TBdtBIB8J/A5W3J7Hx3d7VKPl7jG9zyf7bRdYHR4uF8EcUbC8hlNMZvCNerxalt/fLn1FaVdnVz
- HrmexcqRtXFvFb8a1bodKBX55c1gnW4tAT4LbXsiBMoYZdlVE1vBI
-X-Gm-Gg: ASbGnct0HmqZi4Gf9IaBC4FVsuM9KEs6vsQYjXBX8c4968SbZy4KFXCFvq4gyklTvnC
- Dy/9YeUbPMo66aFo8HoX5fFaivIbe6qXyordU4I46aCRGAHkhafx68NEudOW06MKKatiiIjssw6
- AXW+LDmjfTTcatn3m+VzSkb5KkWfyZM9GRZkKbV8Y4dnMQxGfGx6zt85Mqe+rtA7Xm0+E4BSC8i
- 5NcDPKoGDh3ws+CFCSIWJzpXbWuavwA/MX8+L3WMFO7UBmnIVzv2cB+EGsU/TAHvQjqkfb5m+nL
- zmptBWw8ZvCkzBxx3Q==
-X-Received: by 2002:a05:622a:1a0d:b0:467:7cda:9388 with SMTP id
- d75a77b69052e-46c7102ff29mr63430001cf.31.1736358982098; 
- Wed, 08 Jan 2025 09:56:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+t5Bx+mpyykZ1zNFoa5D8SZPNrwd6/DbEOPjZ1W6zRn5Mub4raVylQrxasZc1VPjQaNHsjg==
-X-Received: by 2002:a05:622a:1a0d:b0:467:7cda:9388 with SMTP id
- d75a77b69052e-46c7102ff29mr63429771cf.31.1736358981850; 
- Wed, 08 Jan 2025 09:56:21 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46a3e64b845sm198724861cf.6.2025.01.08.09.56.20
+ d=1e100.net; s=20230601; t=1736359526; x=1736964326;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SwMr4fSmOj3kJ9Ya24/AHdSd7ci6Sdj2KKgonz0WcPE=;
+ b=Bj3gJX6TvHT0nbfMz2zAW3HRvGeE0CyfV4pJHm5QjPDEQ5rzzC7kxVOAzSu/cd/2I1
+ PAybs4FBKaX+hgcyly2h6HBpsHJQC/btWRm2+W8nX8ajpeRg7oQy1wbC97zQq+kilOul
+ rPxTlHTRxuPP+u8JIVPDPLSSch8ABfxZnf5T3/NLbhFRX0bu7CISZJr+1Xoa6oIehdKQ
+ YQtX4Ev1lKO/P2TPTK6j3Mw7GusoxosY3K27Vg+7kX14iwbw5etFZ0qymTIdwjL/YyQV
+ cABVEO/8CGloKaEPCQjk9J3Hb+LLF17XBQPkEp7vLA3Jn0aGFItcACIcyiHBiyuOv4dE
+ r28w==
+X-Gm-Message-State: AOJu0Yx/Kb1uqbMmRDlspZWm7MRyNUSlUzmOqQt5+0TQwG7T1/Ow/X/P
+ Rzsb7EphhBmIVoofCAnagVQvA8IVp3Wdm+EF/QsFs7prddNERpZGVOBzYa/rSLQ=
+X-Gm-Gg: ASbGncs+gGTqIKhZkiScu1Giw7mU3qc/bhwEWugwe7cfba5FzYAObQa4qcLqwnXZED3
+ T5M5EoyhWLQYfFJ7xe0iXu8r4U7/nExWP9YGeBC2M32S4HW8TWsobR+fMl3w9IWZJ8seukz9/ou
+ yedLc2jgZoUuOlYYCaFFbjJbvX/LXVjoP0H5Q34rFQK5HZRdgSEnzjdPbUDmmQEInKWeIO4xSzG
+ rAGf5husKFGStsKBbzAH79cW17cIRdqauiaKePtkPlZKFyhsDCPF+Y=
+X-Google-Smtp-Source: AGHT+IHY2PYIft/i+ku/Vk81a1crGrasBN/XiJfOVvph0vly98faLrmZ/fWbsSuMJOcXPl5lABsqEg==
+X-Received: by 2002:a17:907:2d1e:b0:aa6:93c4:c685 with SMTP id
+ a640c23a62f3a-ab2ab6bfe87mr299017066b.23.1736359526156; 
+ Wed, 08 Jan 2025 10:05:26 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aac0efe4184sm2492970266b.119.2025.01.08.10.05.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 09:56:20 -0800 (PST)
-Date: Wed, 8 Jan 2025 12:56:18 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 6/7] migration: Fix arrays of pointers in JSON writer
-Message-ID: <Z368QjYRk9aqJefd@x1n>
-References: <20250107195025.9951-1-farosas@suse.de>
- <20250107195025.9951-7-farosas@suse.de> <Z3231YxnKrjtwX6h@x1n>
- <87cygx4dlt.fsf@suse.de> <Z36kScJti9LrWVU7@x1n>
- <875xmp447s.fsf@suse.de>
+ Wed, 08 Jan 2025 10:05:25 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 801D95F8AC;
+ Wed,  8 Jan 2025 18:05:24 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH] gdbstub: propagate Error to gdbserver_start (and other
+ device setups)
+Date: Wed,  8 Jan 2025 18:05:15 +0000
+Message-Id: <20250108180515.1471177-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <875xmp447s.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,55 +103,407 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 08, 2025 at 02:15:19PM -0300, Fabiano Rosas wrote:
-> >> >>              else:
-> >> >> -                self.data[field['name']] = field['data']
-> >> >> +                # There could be multiple entries for the same field
-> >> >> +                # name, e.g. when a compressed array was broken in
-> >> >> +                # more than one piece.
-> >> >> +                if (field['name'] in self.data and
-> >> >> +                    type(self.data[field['name']]) == list):
-> >> >> +                    self.data[field['name']].append(field['data'])
-> >> >> +                else:
-> >> >> +                    self.data[field['name']] = field['data']
+This started as a clean-up to properly pass a Error handler to the
+gdbserver_start so we could do the right thing for command line and
+HMP invocations. To that end everything that used
+foreach_device_config() and failed was also an immediate exit case so
+I mechanically tweaked all the helper functions and simplified some.
 
-[...]
+Currently an RFC, I suspect we want to rename the foreach function to
+something more pithy like foreach_device_config_or_exit().
 
-> The last nullptr overwrites everything else:
-> 
->     "s390_css (14)": {
->         "pending_crws": "00",
->         "sei_pending": false,
->         "do_crw_mchk": true,
->         "crws_lost": false,
->         "max_cssid": "0x00",
->         "max_ssid": "0x00",
->         "chnmon_active": false,
->         "chnmon_area": "0x0000000000000000",
-> -->     "css": "nullptr",
->         "default_cssid": "0xfe"
->     },
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ include/exec/gdbstub.h |  8 +++-
+ gdbstub/system.c       | 22 +++++-----
+ gdbstub/user.c         | 20 +++++----
+ linux-user/main.c      |  6 +--
+ monitor/hmp-cmds.c     |  2 +-
+ system/vl.c            | 98 ++++++++++++++++--------------------------
+ 6 files changed, 70 insertions(+), 86 deletions(-)
 
-Oh I see what you meant..
-
-Then I am guessing the current change may not always work, e.g. when the
-1st entry only contains one element rather than an array, like:
-
-  {"name": "css", "type": "uint8", "size": 1},
-  {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
-  {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
-
-Here we may need something like:
-
-   name = field['name']
-   if (name in self.data):
-       if (type(self.data[name]) is not list):
-          self.data[name] = [self.data[name]]
-       self.data[name].append(field['data'])
-   else:
-       self.data[name] = field['data']
-
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index d73f424f56..0675b0b646 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -49,12 +49,18 @@ void gdb_unregister_coprocessor_all(CPUState *cpu);
+ /**
+  * gdbserver_start: start the gdb server
+  * @port_or_device: connection spec for gdb
++ * @errp: error handle
+  *
+  * For CONFIG_USER this is either a tcp port or a path to a fifo. For
+  * system emulation you can use a full chardev spec for your gdbserver
+  * port.
++ *
++ * The error handle should be either &error_fatal (for start-up) or
++ * &error_warn (for QMP/HMP initiated sessions).
++ *
++ * Returns true when server successfully started.
+  */
+-int gdbserver_start(const char *port_or_device);
++bool gdbserver_start(const char *port_or_device, Error **errp);
+ 
+ /**
+  * gdb_feature_builder_init() - Initialize GDBFeatureBuilder.
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 2d9fdff2fe..8ce79fa88c 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -330,26 +330,27 @@ static void create_processes(GDBState *s)
+     gdb_create_default_process(s);
+ }
+ 
+-int gdbserver_start(const char *device)
++bool gdbserver_start(const char *device, Error **errp)
+ {
+     Chardev *chr = NULL;
+     Chardev *mon_chr;
+     g_autoptr(GString) cs = g_string_new(device);
+ 
+     if (!first_cpu) {
+-        error_report("gdbstub: meaningless to attach gdb to a "
+-                     "machine without any CPU.");
+-        return -1;
++        error_setg(errp, "gdbstub: meaningless to attach gdb to a "
++                   "machine without any CPU.");
++        return false;
+     }
+ 
+     if (!gdb_supports_guest_debug()) {
+-        error_report("gdbstub: current accelerator doesn't "
+-                     "support guest debugging");
+-        return -1;
++        error_setg(errp, "gdbstub: current accelerator doesn't "
++                   "support guest debugging");
++        return false;
+     }
+ 
+     if (cs->len == 0) {
+-        return -1;
++        error_setg(errp, "gdbstub: missing connection string");
++        return false;
+     }
+ 
+     trace_gdbstub_op_start(cs->str);
+@@ -374,7 +375,8 @@ int gdbserver_start(const char *device)
+          */
+         chr = qemu_chr_new_noreplay("gdb", cs->str, true, NULL);
+         if (!chr) {
+-            return -1;
++            error_setg(errp, "gdbstub: couldn't create chardev");
++            return false;
+         }
+     }
+ 
+@@ -406,7 +408,7 @@ int gdbserver_start(const char *device)
+     gdbserver_system_state.mon_chr = mon_chr;
+     gdb_syscall_reset();
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static void register_types(void)
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 0b4bfa9c48..fb8f6867ea 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -13,6 +13,7 @@
+ #include "qemu/bitops.h"
+ #include "qemu/cutils.h"
+ #include "qemu/sockets.h"
++#include "qapi/error.h"
+ #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
+ #include "exec/gdbstub.h"
+@@ -372,15 +373,15 @@ static bool gdb_accept_tcp(int gdb_fd)
+     return true;
+ }
+ 
+-static int gdbserver_open_port(int port)
++static int gdbserver_open_port(int port, Error **errp)
+ {
+     struct sockaddr_in sockaddr;
+     int fd, ret;
+ 
+     fd = socket(PF_INET, SOCK_STREAM, 0);
+     if (fd < 0) {
+-        perror("socket");
+-        return -1;
++        error_setg(errp, "Failed to bind socket: %s", strerror(errno));
++        return false;
+     }
+     qemu_set_cloexec(fd);
+ 
+@@ -405,31 +406,32 @@ static int gdbserver_open_port(int port)
+     return fd;
+ }
+ 
+-int gdbserver_start(const char *port_or_path)
++bool gdbserver_start(const char *port_or_path, Error **errp)
+ {
+     int port = g_ascii_strtoull(port_or_path, NULL, 10);
+     int gdb_fd;
+ 
+     if (port > 0) {
+-        gdb_fd = gdbserver_open_port(port);
++        gdb_fd = gdbserver_open_port(port, errp);
+     } else {
+         gdb_fd = gdbserver_open_socket(port_or_path);
+     }
+ 
+     if (gdb_fd < 0) {
+-        return -1;
++        return false;
+     }
+ 
+     if (port > 0 && gdb_accept_tcp(gdb_fd)) {
+-        return 0;
++        return true;
+     } else if (gdb_accept_socket(gdb_fd)) {
+         gdbserver_user_state.socket_path = g_strdup(port_or_path);
+-        return 0;
++        return true;
+     }
+ 
+     /* gone wrong */
+     close(gdb_fd);
+-    return -1;
++    error_setg(errp, "gdbstub: failed to accept connection");
++    return false;
+ }
+ 
+ void gdbserver_fork_start(void)
+diff --git a/linux-user/main.c b/linux-user/main.c
+index b97634a32d..7198fa0986 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -1023,11 +1023,7 @@ int main(int argc, char **argv, char **envp)
+     target_cpu_copy_regs(env, regs);
+ 
+     if (gdbstub) {
+-        if (gdbserver_start(gdbstub) < 0) {
+-            fprintf(stderr, "qemu: could not open gdbserver on %s\n",
+-                    gdbstub);
+-            exit(EXIT_FAILURE);
+-        }
++        gdbserver_start(gdbstub, &error_fatal);
+         gdb_handlesig(cpu, 0, NULL, NULL, 0);
+     }
+ 
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 80b2e5ff9f..0aa22e1ae2 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -285,7 +285,7 @@ void hmp_gdbserver(Monitor *mon, const QDict *qdict)
+         device = "tcp::" DEFAULT_GDBSTUB_PORT;
+     }
+ 
+-    if (gdbserver_start(device) < 0) {
++    if (!gdbserver_start(device, &error_warn)) {
+         monitor_printf(mon, "Could not open gdbserver on device '%s'\n",
+                        device);
+     } else if (strcmp(device, "none") == 0) {
+diff --git a/system/vl.c b/system/vl.c
+index 0843b7ab49..1d2ca77b7f 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -811,29 +811,13 @@ static void configure_msg(QemuOpts *opts)
+ /***********************************************************/
+ /* USB devices */
+ 
+-static int usb_device_add(const char *devname)
++static bool usb_parse(const char *devname, Error **errp)
+ {
+-    USBDevice *dev = NULL;
+-
+-    if (!machine_usb(current_machine)) {
+-        return -1;
+-    }
+-
+-    dev = usbdevice_create(devname);
+-    if (!dev)
+-        return -1;
+-
+-    return 0;
+-}
+-
+-static int usb_parse(const char *cmdline)
+-{
+-    int r;
+-    r = usb_device_add(cmdline);
+-    if (r < 0) {
+-        error_report("could not add USB device '%s'", cmdline);
++    if (!usbdevice_create(devname)) {
++        error_setg(errp, "could not add USB device '%s'", devname);
++        return false;
+     }
+-    return r;
++    return true;
+ }
+ 
+ /***********************************************************/
+@@ -1307,22 +1291,20 @@ static void add_device_config(int type, const char *cmdline)
+     QTAILQ_INSERT_TAIL(&device_configs, conf, next);
+ }
+ 
+-static int foreach_device_config(int type, int (*func)(const char *cmdline))
++/*
++ * Run through the special device configs, any error will exit via error_fatal.
++ */
++static void foreach_device_config(int type, bool (*func)(const char *cmdline, Error **errp))
+ {
+     struct device_config *conf;
+-    int rc;
+ 
+     QTAILQ_FOREACH(conf, &device_configs, next) {
+         if (conf->type != type)
+             continue;
+         loc_push_restore(&conf->loc);
+-        rc = func(conf->cmdline);
++        func(conf->cmdline, &error_fatal);
+         loc_pop(&conf->loc);
+-        if (rc) {
+-            return rc;
+-        }
+     }
+-    return 0;
+ }
+ 
+ static void qemu_disable_default_devices(void)
+@@ -1452,7 +1434,7 @@ static void qemu_create_default_devices(void)
+     }
+ }
+ 
+-static int serial_parse(const char *devname)
++static bool serial_parse(const char *devname, Error **errp)
+ {
+     int index = num_serial_hds;
+ 
+@@ -1467,13 +1449,13 @@ static int serial_parse(const char *devname)
+ 
+         serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
+         if (!serial_hds[index]) {
+-            error_report("could not connect serial device"
+-                         " to character backend '%s'", devname);
+-            return -1;
++            error_setg(errp, "could not connect serial device"
++                       " to character backend '%s'", devname);
++            return false;
+         }
+     }
+     num_serial_hds++;
+-    return 0;
++    return true;
+ }
+ 
+ Chardev *serial_hd(int i)
+@@ -1485,44 +1467,44 @@ Chardev *serial_hd(int i)
+     return NULL;
+ }
+ 
+-static int parallel_parse(const char *devname)
++static bool parallel_parse(const char *devname, Error **errp)
+ {
+     static int index = 0;
+     char label[32];
+ 
+     if (strcmp(devname, "none") == 0)
+-        return 0;
++        return true;
+     if (index == MAX_PARALLEL_PORTS) {
+-        error_report("too many parallel ports");
+-        exit(1);
++        error_setg(errp, "too many parallel ports");
++        return false;
+     }
+     snprintf(label, sizeof(label), "parallel%d", index);
+     parallel_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
+     if (!parallel_hds[index]) {
+-        error_report("could not connect parallel device"
+-                     " to character backend '%s'", devname);
+-        return -1;
++        error_setg(errp, "could not connect parallel device"
++                   " to character backend '%s'", devname);
++        return false;
+     }
+     index++;
+-    return 0;
++    return true;
+ }
+ 
+-static int debugcon_parse(const char *devname)
++static bool debugcon_parse(const char *devname, Error **errp)
+ {
+     QemuOpts *opts;
+ 
+     if (!qemu_chr_new_mux_mon("debugcon", devname, NULL)) {
+-        error_report("invalid character backend '%s'", devname);
+-        exit(1);
++        error_setg(errp, "invalid character backend '%s'", devname);
++        return false;
+     }
+     opts = qemu_opts_create(qemu_find_opts("device"), "debugcon", 1, NULL);
+     if (!opts) {
+-        error_report("already have a debugcon device");
+-        exit(1);
++        error_setg(errp, "already have a debugcon device");
++        return false;
+     }
+     qemu_opt_set(opts, "driver", "isa-debugcon", &error_abort);
+     qemu_opt_set(opts, "chardev", "debugcon", &error_abort);
+-    return 0;
++    return true;
+ }
+ 
+ static gint machine_class_cmp(gconstpointer a, gconstpointer b)
+@@ -2044,12 +2026,10 @@ static void qemu_create_late_backends(void)
+     qemu_opts_foreach(qemu_find_opts("mon"),
+                       mon_init_func, NULL, &error_fatal);
+ 
+-    if (foreach_device_config(DEV_SERIAL, serial_parse) < 0)
+-        exit(1);
+-    if (foreach_device_config(DEV_PARALLEL, parallel_parse) < 0)
+-        exit(1);
+-    if (foreach_device_config(DEV_DEBUGCON, debugcon_parse) < 0)
+-        exit(1);
++    /* failures here will exit via error_fatal */
++    foreach_device_config(DEV_SERIAL, serial_parse);
++    foreach_device_config(DEV_PARALLEL, parallel_parse);
++    foreach_device_config(DEV_DEBUGCON, debugcon_parse);
+ 
+     /* now chardevs have been created we may have semihosting to connect */
+     qemu_semihosting_chardev_init();
+@@ -2668,10 +2648,9 @@ static void qemu_create_cli_devices(void)
+     qemu_opts_foreach(qemu_find_opts("fw_cfg"),
+                       parse_fw_cfg, fw_cfg_find(), &error_fatal);
+ 
+-    /* init USB devices */
++    /* init USB devices, failure will exit */
+     if (machine_usb(current_machine)) {
+-        if (foreach_device_config(DEV_USB, usb_parse) < 0)
+-            exit(1);
++        foreach_device_config(DEV_USB, usb_parse);
+     }
+ 
+     /* init generic devices */
+@@ -2718,10 +2697,9 @@ static bool qemu_machine_creation_done(Error **errp)
+         exit(1);
+     }
+ 
+-    if (foreach_device_config(DEV_GDB, gdbserver_start) < 0) {
+-        error_setg(errp, "could not start gdbserver");
+-        return false;
+-    }
++    /* failure will exit via error_fatal */
++    foreach_device_config(DEV_GDB, gdbserver_start);
++
+     if (!vga_interface_created && !default_vga &&
+         vga_interface_type != VGA_NONE) {
+         warn_report("A -vga option was passed but this machine "
 -- 
-Peter Xu
+2.39.5
 
 
