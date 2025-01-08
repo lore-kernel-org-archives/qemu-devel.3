@@ -4,88 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EFBBE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 16:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA5DE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 16:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVYqD-0002Qh-G4; Wed, 08 Jan 2025 11:23:33 -0500
+	id 1tVYt6-0003B1-I8; Wed, 08 Jan 2025 11:26:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVYqB-0002QP-PD
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:23:31 -0500
-Received: from fly.ash.relay.mailchannels.net ([23.83.222.61])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVYq9-0005H3-HP
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:23:31 -0500
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id A63541C1C30;
- Wed,  8 Jan 2025 16:23:25 +0000 (UTC)
-Received: from pdx1-sub0-mail-a309.dreamhost.com
- (100-110-108-165.trex-nlb.outbound.svc.cluster.local [100.110.108.165])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 4722C1C1BBD;
- Wed,  8 Jan 2025 16:23:25 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1736353405; a=rsa-sha256;
- cv=none;
- b=sFe1/rz5zPHx/Ovb/O6uC0tjPFVw+vMLPx7fM0x8j8xrM0KA58psHHRfWFqa3sTfEGT3OG
- IhtsdHvuPkEBNe8yO8GZnnMtvgd1bBVVvRiBrvwZ2dzc/n7c1dUS7Ykwd1qUltcs2YxiLQ
- x1w56oWFUwPUwcBbVzdv4OsVr6RxG8qGh9kyzds+RbxWlRLJp7taGna1L6DuR90BRGVrit
- xDNfsirJAkwITVygdU0hO4qf7uRIMZIPycSVENUhG+8cqEwyMH3So04wiRXmJRjC55sU5C
- JKAFMET56MBVdx9q4pUQwd4YNyi6iEQmYjx2haScpBsPHQ8045hq47f3j6MLxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1736353405;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=CGDrVvdqW0s36dkkSTkRGhSab9TZ1A3vOMkxmNwyxfY=;
- b=5GE+3eGYZQjcYU7UrrpguAE2e6JTB6oUbOTDoHdjfLx25Y3HTLh+nyZPRMMIp915cGStze
- e8EYWucEhTP3Pr9NugBXoAoXhbmC3BiP5gIewJzxto49LMArRCS1uoWToF2+x6WesEOXOM
- BjqW7EIN1sorRz0ZFHxcbJxiNuvPJlfEWH+HKeaMNkILoVVhAVh0kv1cuJe44JXshddX42
- XwNMbrRL2mk3Y9RqmGjxWWJZIIINfcnIBy45oDMHPF4oUN1Y2w7ew0ZmWoDSJwq54hVEn4
- 2iheEn+dbBySJv4w8hLDws9T0T1lCs9dtfiXy1zEvFM7lzBz9eAwcL7QWOazVQ==
-ARC-Authentication-Results: i=1; rspamd-7df4dcbd86-r9vfz;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
-X-MailChannels-Auth-Id: dreamhost
-X-Whistle-Desert: 5add090e240d9555_1736353405538_3883757128
-X-MC-Loop-Signature: 1736353405538:2201811337
-X-MC-Ingress-Time: 1736353405538
-Received: from pdx1-sub0-mail-a309.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.110.108.165 (trex/7.0.2); Wed, 08 Jan 2025 16:23:25 +0000
-Received: from [172.16.32.88] (unknown [198.232.126.202])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: rob@landley.net)
- by pdx1-sub0-mail-a309.dreamhost.com (Postfix) with ESMTPSA id 4YStWc30sFz7l; 
- Wed,  8 Jan 2025 08:23:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
- s=dreamhost; t=1736353404;
- bh=CGDrVvdqW0s36dkkSTkRGhSab9TZ1A3vOMkxmNwyxfY=;
- h=Content-Type:Date:Subject:To:Cc:From;
- b=piGGjA/fRIcNwcww47NaQXUjHStwDNTa5NyzcFrT124Guw1lktLNX4Z7I2S3aVHC3
- O5M1VeeWhV9B71Y2AK9FP6yS4gKk5v4AjSn3kFaAOPwqKQJuNAOy7OjhnIdLi40j2M
- 6aVtp4SFAWHVccQ3yc5I3zPrlhXAWskvnh3NuwX32lItZlSDatvHfcXCS7j+oAK8L9
- JZRjckM3AHi/uW0+b1Ke2MeWjKrUOXtyfIkgu7LepU+ZegZfdDO3Q4dabgozE0hHOm
- WfrHZgPmRzPaZLj/ySj5tXAh7qCp4PWSHuvXX3rgxN2qBRYvDS9wodevlBrt0H4mmy
- m+80ryw2eL6Nw==
-Content-Type: multipart/mixed; boundary="------------P08yIc0OD1j4aRX9JfFOjnEj"
-Message-ID: <ecdf9e8a-9886-43e6-bb02-bf04fc1e88a4@landley.net>
-Date: Wed, 8 Jan 2025 10:23:23 -0600
+ (Exim 4.90_1) (envelope-from <geert.uytterhoeven@gmail.com>)
+ id 1tVYt1-0003AX-34
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:26:27 -0500
+Received: from mail-ua1-f46.google.com ([209.85.222.46])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <geert.uytterhoeven@gmail.com>)
+ id 1tVYsz-0006Qz-6d
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 11:26:26 -0500
+Received: by mail-ua1-f46.google.com with SMTP id
+ a1e0cc1a2514c-86112ab1ad4so4229245241.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 08:26:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736353583; x=1736958383;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t9dwBsCn6Dej+H2X6wzFVUAriPyGB2FbdKvWMgwyGcw=;
+ b=VXHB1UDzdsQph2thOcKKewz6EHrhmxYGJfBI+WK6QtU6I25/ytx1tL+nHc2h3MePTr
+ Ckzet/JE07AaFb3NyF2Gpr0fpV2/3aXP6Wyio8JDk5piZ3Ph+8yz+TyPzLw7DypxIKbI
+ wT378xGOlzg3zKEMs9ORPREJLkuFk4+25ahS/u1BgpF/+DKVtAz3f5FgQbe0EF/0wA2J
+ DTuKP/lvWrdQqYbM0HEl3+ATX1rKInOpRCXzc3j1o2xHlRwJ9uzW1/vJYGNh1u6BKGAv
+ QgQQZ1Iocj6+CNyWxyMyDcghCb2jgUkdTJ5ANDnYw7+OjT5TBPUN4o7hK/p3c/rZiR4p
+ OkAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcRVYYYz3rA6iWJm5qZK15REhQMNAFddjsySIDM7ViAmD7BX1GBDNGr0rVm3zL4u4kDPAgMi5EonTw@nongnu.org
+X-Gm-Message-State: AOJu0YyAb8YWanT6XMwRgDTtpWfnbEwD9Tafq4a+pldoTX3EaRCzmprQ
+ 6anoVZIsjlL9Am0lJjPmuDPjQUGRR+olyOBJQx82rxMPFqX/fFSFWfjsEYhJ
+X-Gm-Gg: ASbGncvyg6MKzxA2BypO7rhyy8EXtfyCIHwJlpmUUW9WcUd+P6IkJQSM5dL5ZBq6HEw
+ 4PlIxFg08StlXHKFuxuDBOWRkEmcdTul3BxEp2rDUvQqKQm+7/sG0GsO99xZdbKWHt4SGZZyOc6
+ Z7aZqRxKOUZ/gLG75FnOMDb/Xo9485c8OPGWm85F2f1laebu4HRq+1+D0yTxbizviRyyLPhhdK2
+ 853LUeFYTamYNVhKV5x6fPIR41CYHMajDpcJrFCEWANhbPqBn3u/eASAEUAnx5P53VSJ2Yc8i/C
+ kD01yHXuEpCzBOe5hiw=
+X-Google-Smtp-Source: AGHT+IFJ9r9Xfkn29euUP6sw9oGH3pqdCGyuxFsiXaF8i4EJBbB/r49Av25TSrludwcvbi14wyg/yg==
+X-Received: by 2002:a05:6102:2acc:b0:4b2:cc94:187a with SMTP id
+ ada2fe7eead31-4b3d0d8442cmr2698460137.1.1736353583022; 
+ Wed, 08 Jan 2025 08:26:23 -0800 (PST)
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com.
+ [209.85.217.49]) by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-4b2bf98d122sm8520934137.7.2025.01.08.08.26.18
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jan 2025 08:26:18 -0800 (PST)
+Received: by mail-vs1-f49.google.com with SMTP id
+ ada2fe7eead31-4afd56903b7so4220137.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 08:26:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIQ7tdbvadj5ArimiBemo1GTwhpWkR7tymavZLQUStbC4O2V4uERfepzmZW9pUcp2xdCOLehppQrYk@nongnu.org
+X-Received: by 2002:a05:6102:511f:b0:4b1:1232:def with SMTP id
+ ada2fe7eead31-4b3d0d84163mr2204501137.4.1736353578692; Wed, 08 Jan 2025
+ 08:26:18 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: or1k -M virt -hda and net.
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Stafford Horne <shorne@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Linux OpenRISC <linux-openrisc@vger.kernel.org>
 References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
  <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
  <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
@@ -94,20 +71,31 @@ References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
  <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
  <0d2df37a-a167-445f-aacf-714a29587511@landley.net>
  <CAMuHMdU2XT=xHr3D4kWVSU=h4jJSoQj1RAdeXDNGEDXdOaqBjQ@mail.gmail.com>
-Content-Language: en-US
-From: Rob Landley <rob@landley.net>
-In-Reply-To: <CAMuHMdU2XT=xHr3D4kWVSU=h4jJSoQj1RAdeXDNGEDXdOaqBjQ@mail.gmail.com>
-Received-SPF: pass client-ip=23.83.222.61; envelope-from=rob@landley.net;
- helo=fly.ash.relay.mailchannels.net
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ <ecdf9e8a-9886-43e6-bb02-bf04fc1e88a4@landley.net>
+In-Reply-To: <ecdf9e8a-9886-43e6-bb02-bf04fc1e88a4@landley.net>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 8 Jan 2025 17:26:07 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdVDhdkLEc-YuDCXHaCpkdtj0QL6wudXDFi0E=PqXyJDtA@mail.gmail.com>
+X-Gm-Features: AbW1kvaWzqf26nImabkvqvG5nDawWn3pXa2qtdMQU5IFOL6qj_weGxNPM3O8VjQ
+Message-ID: <CAMuHMdVDhdkLEc-YuDCXHaCpkdtj0QL6wudXDFi0E=PqXyJDtA@mail.gmail.com>
+Subject: Re: or1k -M virt -hda and net.
+To: Rob Landley <rob@landley.net>
+Cc: Stafford Horne <shorne@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, QEMU Developers <qemu-devel@nongnu.org>,
+ Linux OpenRISC <linux-openrisc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.222.46;
+ envelope-from=geert.uytterhoeven@gmail.com; helo=mail-ua1-f46.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,98 +111,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------P08yIc0OD1j4aRX9JfFOjnEj
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi Rob,
 
-On 1/8/25 02:24, Geert Uytterhoeven wrote:
-> Hi Rob,
-> 
-> On Tue, Jan 7, 2025 at 11:53 PM Rob Landley <rob@landley.net> wrote:
->> Microblaze has no /dev/?da (as in there's no device I could attach it to
->> even with the long option, I'd have to use NBD), sh4eb has -hda is
->> working but it's having some endianness hiccup with the network card
->> (works in sh4 but not sh4eb, I'm trying to track it down, I thought this
->> worked at one point), and the two "No kernel" ones legitimately have no
-> 
-> That's using sh_eth, right?
+On Wed, Jan 8, 2025 at 5:23=E2=80=AFPM Rob Landley <rob@landley.net> wrote:
+> On 1/8/25 02:24, Geert Uytterhoeven wrote:
+> > On Tue, Jan 7, 2025 at 11:53=E2=80=AFPM Rob Landley <rob@landley.net> w=
+rote:
+> >> Microblaze has no /dev/?da (as in there's no device I could attach it =
+to
+> >> even with the long option, I'd have to use NBD), sh4eb has -hda is
+> >> working but it's having some endianness hiccup with the network card
+> >> (works in sh4 but not sh4eb, I'm trying to track it down, I thought th=
+is
+> >> worked at one point), and the two "No kernel" ones legitimately have n=
+o
+> >
+> > That's using sh_eth, right?
+>
+> 8139cp: 8139cp: 10/100 PCI Ethernet driver v1.3 (Mar 22, 2004)
+> 8139cp 0000:00:02.0: enabling device (0000 -> 0003)
+> 8139cp 0000:00:02.0 eth0: RTL-8139C+ at 0x(ptrval), 52:54:00:12:34:56,
+> IRQ 128
+>
+> Is there a different driver I should use? That one works on sh4 little
+> endian with almost the same config.
 
-8139cp: 8139cp: 10/100 PCI Ethernet driver v1.3 (Mar 22, 2004)
-8139cp 0000:00:02.0: enabling device (0000 -> 0003)
-8139cp 0000:00:02.0 eth0: RTL-8139C+ at 0x(ptrval), 52:54:00:12:34:56, 
-IRQ 128
+Oh, you're using an SH4 SoC without internal Ethernet (sh7751 in landisk
+or rts7751r2d, I guess?). That indeed doesn't use sh_eth.
 
-Is there a different driver I should use? That one works on sh4 little 
-endian with almost the same config.
+Gr{oetje,eeting}s,
 
-> Last time I tried booting a big endian ARM kernel on Koelsch (R-Car
-> M2-W), it booted fine until "unable to mount root" (I have no suitable
-> userspace), except for broken Ethernet, so it failed to obtain a
-> DHCP lease.
+                        Geert
 
-Miniconfig I'm using for 6.19 attached.
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
 
-If you don't want to build mkroot's toybox+musl userspace yourself, the 
-initramfs.cpio.gz in the last release from 
-https://landley.net/bin/mkroot/0.8.11/sh4eb.tgz presumably still works, 
-using the instructions in run-qemu.sh. (I'm trying to get a new release 
-out, hence poking at targets that don't quite pass muster.)
-
-You can also use the sh2eb fdpic userspace from the same directory, but 
-you'll need the "fdpic with mmu for sh" patch from 
-https://landley.net/bin/mkroot/0.8.11/linux-patches/0002-sh4-fdpic.patch 
-to enable the fdpic loader in your kernel config. (That's the current sh 
-big endian board I know people deploying today, but qemu doesn't emulate 
-it directly, so I run its userspace under qemu-system-sh4eb...)
-
-I think I've built a working static busybox defconfig with 
-https://landley.net/bin/toolchains/25-03-2024/sh4eb-linux-musl-cross.tar.xz 
-too, although not recently. Might need to switch a command or two off?
-
-The boot says "8139cp 0000:00:02.0 eth0: link down" and then pauses for 
-3 seconds while ntp fails to talk to time.google.com to set the clock 
-newer than 1970 (sadly no battery backed up clock in the board qemu's 
-emulating, there's config entries for one in the relevant kernel 
-defconfig but nothing in qemu last I checked), and then I get a shell 
-prompt that thinks it's 1970 and can't wget or scp with dropbear.
-
-Rob
-
-P.S: If you "./run-emulator.sh -hda file.img" the init script will try 
-to mount /dev/?da on /mnt for you, and then run /mnt/init if it exists 
-instead of a shell prompt. Easy automated testing.
---------------P08yIc0OD1j4aRX9JfFOjnEj
-Content-Type: text/plain; charset=UTF-8; name="linux-miniconfig"
-Content-Disposition: attachment; filename="linux-miniconfig"
-Content-Transfer-Encoding: base64
-
-IyBtYWtlIEFSQ0g9c2ggYWxsbm9jb25maWcgS0NPTkZJR19BTExDT05GSUc9bGludXgtbWlu
-aWNvbmZpZwojIG1ha2UgQVJDSD1zaCAtaiAkKG5wcm9jKQojIGJvb3QgekltYWdlIGNvbnNv
-bGU9dHR5U0MxIG5vaW90cmFwCgojIGFyY2hpdGVjdHVyZSBpbmRlcGVuZGVudApDT05GSUdf
-UEFOSUNfVElNRU9VVD0xCkNPTkZJR19OT19IWl9JRExFPXkKQ09ORklHX0hJR0hfUkVTX1RJ
-TUVSUz15CkNPTkZJR19SRF9HWklQPXkKQ09ORklHX0JJTkZNVF9FTEY9eQpDT05GSUdfQklO
-Rk1UX1NDUklQVD15CkNPTkZJR19CTEtfREVWPXkKQ09ORklHX0JMS19ERVZfSU5JVFJEPXkK
-Q09ORklHX0JMS19ERVZfTE9PUD15CkNPTkZJR19FWFQ0X0ZTPXkKQ09ORklHX0VYVDRfVVNF
-X0ZPUl9FWFQyPXkKQ09ORklHX1ZGQVRfRlM9eQpDT05GSUdfRkFUX0RFRkFVTFRfVVRGOD15
-CkNPTkZJR19NSVNDX0ZJTEVTWVNURU1TPXkKQ09ORklHX05MU19DT0RFUEFHRV80Mzc9eQpD
-T05GSUdfTkxTX0lTTzg4NTlfMT15CkNPTkZJR19TUVVBU0hGUz15CkNPTkZJR19TUVVBU0hG
-U19YQVRUUj15CkNPTkZJR19TUVVBU0hGU19aTElCPXkKQ09ORklHX1RNUEZTPXkKQ09ORklH
-X1RNUEZTX1BPU0lYX0FDTD15CkNPTkZJR19ERVZUTVBGUz15CkNPTkZJR19ERVZUTVBGU19N
-T1VOVD15CkNPTkZJR19ORVQ9eQpDT05GSUdfTkVUREVWSUNFUz15CkNPTkZJR19ORVRfQ09S
-RT15CkNPTkZJR19ORVRDT05TT0xFPXkKQ09ORklHX1BBQ0tFVD15CkNPTkZJR19VTklYPXkK
-Q09ORklHX0lORVQ9eQpDT05GSUdfSVBWNj15CkNPTkZJR19FVEhFUk5FVD15CkNPTkZJR19D
-T01QQVRfMzJCSVRfVElNRT15CkNPTkZJR19FQVJMWV9QUklOVEs9eQpDT05GSUdfSUtDT05G
-SUc9eQpDT05GSUdfSUtDT05GSUdfUFJPQz15CgojIGFyY2hpdGVjdHVyZSBzcGVjaWZpYwpD
-T05GSUdfQ1BVX1NVQlRZUEVfU0g3NzUxUj15CkNPTkZJR19NTVU9eQpDT05GSUdfVlNZU0NB
-TEw9eQpDT05GSUdfU0hfRlBVPXkKQ09ORklHX1NIX1JUUzc3NTFSMkQ9eQpDT05GSUdfUENJ
-PXkKQ09ORklHX1JUUzc3NTFSMkRfUExVUz15CkNPTkZJR19TRVJJQUxfU0hfU0NJPXkKQ09O
-RklHX1NFUklBTF9TSF9TQ0lfQ09OU09MRT15CkNPTkZJR19ORVRfVkVORE9SX1JFQUxURUs9
-eQpDT05GSUdfODEzOUNQPXkKQ09ORklHX0JMS19ERVZfU0Q9eQpDT05GSUdfQVRBPXkKQ09O
-RklHX0FUQV9TRkY9eQpDT05GSUdfQVRBX0JNRE1BPXkKQ09ORklHX1BBVEFfUExBVEZPUk09
-eQpDT05GSUdfQklORk1UX0VMRl9GRFBJQz15CkNPTkZJR19DTURMSU5FX0ZST01fQk9PVExP
-QURFUj15CkNPTkZJR19NRU1PUllfU1RBUlQ9MHgwYzAwMDAwMApDT05GSUdfQ1BVX0JJR19F
-TkRJQU49eQoKIyBhcmNoaXRlY3R1cmUgZXh0cmEK
-
---------------P08yIc0OD1j4aRX9JfFOjnEj--
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
