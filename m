@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5E4E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A13E77199
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 09:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVSK9-0003vW-TU; Wed, 08 Jan 2025 04:26:01 -0500
+	id 1tVSKR-0003y4-5z; Wed, 08 Jan 2025 04:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSK3-0003uW-9Y; Wed, 08 Jan 2025 04:25:56 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1tVSK3-0003uV-9D; Wed, 08 Jan 2025 04:25:56 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVSK1-0004la-5G; Wed, 08 Jan 2025 04:25:54 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e9a88793so4485218a12.1; 
- Wed, 08 Jan 2025 01:25:51 -0800 (PST)
+ id 1tVSK1-0004lj-P6; Wed, 08 Jan 2025 04:25:55 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5d90a5581fcso327131a12.1; 
+ Wed, 08 Jan 2025 01:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736328350; x=1736933150; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EbJAmmOYxoc1nbf2SceZRGqKmTWWmiM1s08mEm2FVGw=;
- b=Po1Idh/WIe8hYog05Yuppf8iBeYyktoWEn1TRehlWDL1ZlvH+O0Pbn0ISgG9XHgD5j
- f5HzvmbwkhxUU8MFplmxJlsD09l12YOoLm2z4KxSv48v3+D/ax+M1LOTYbQ51+WGR91e
- SljDo+OKFzeRxa3GzKF+vrThvXavxlwRHL6O0rVv4EhyK8E6BrUhWpweGOIwfxGlmkfY
- NJtCF1e9IPaLA+Bc+2KCZU1O0AHRLE9lwTcKzkzqpLrvYJ7CzC/y2oMY14GEV8HO6c+D
- 8TpOBWwAEQfCbPQdwShXWc/u/ZPM+OKba87AproRUjtVqc2nqpdOc+La6BtZeRbSE8ZQ
- ebxg==
+ d=gmail.com; s=20230601; t=1736328351; x=1736933151; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jXu/deQBUSnnpDSne97TzvwNxObiNI5E/wDmJP67j7k=;
+ b=bSLMuEeTMsmKBN5B7XrmrNkmcwyBsCbLhbI5hPIuxmC4WWIJdhVF1E7I98wKjq/Ke2
+ 3FBv2sx8EBpWhq0ZD2a0k95Bj4e+xEWwxVLI9AhdDrjBb/C/qqO77Y6HS/O3leQsMUrA
+ eoJcBamaRjjE4+y3jhMJkNcCRCyd0+Oag+pGOHL0WXKXrq/a5Ao/Pd+C80PBWhaZzdYc
+ NqOaOyLk10ZDxtUEC2ftW4k7JY3YLUsqzg3q5IvEPaS/kplqAFqlMbmK9x5nrHsU4sKP
+ Txs60waZPKl5qIMZUCzO77yIhw3cpLFFJlMG2yJW4lV/PiO2Crg2iow2ZooKo49zzbcY
+ zP9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736328350; x=1736933150;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EbJAmmOYxoc1nbf2SceZRGqKmTWWmiM1s08mEm2FVGw=;
- b=kA8T/Y/caOQkhnVb/thyn376C0YXunUAaO1bXRux2FhxkKDXFFJBKVZXh2GhpiXMXG
- 8+DgtAp+QneHrSqkkrH5tMpNvqzxHEZhpLmGZr6kDpQhsxq80248zcg5Pp8crIGVHJSx
- qV2dzsJ/l7GU2EfBl1vR0JogSXU8WOXw0zF0Ivm/06CGuYzjg2rbrVzUQAu4Sbf1QAIZ
- /RvV8SgdYbj5KisbQcHVo53/cTDtDvKLGjNY1n37g0LT62yeL3L1ssEYDmC56WgkTAnm
- HQJj2eQrfBp4vV2GAJyVhg/9H0T6BPJwoPyt6wugxxu4ou2KFeMOj9VBZ04kP8xNqMs+
- MczQ==
+ d=1e100.net; s=20230601; t=1736328351; x=1736933151;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jXu/deQBUSnnpDSne97TzvwNxObiNI5E/wDmJP67j7k=;
+ b=SxixJltMuBmIrsBR6eBlnvIKJ/PSJrrwhNtf0TI/YnfjPguhH2GLBB9M7tYM4DEAfW
+ MTZbiH584CK6NwPdlVdNgNACMuTnd5K7zZJ7Y1ilX8/ZWzBA1PBmVJ4wfZUelg87J56O
+ GH7F/4Y9wuXEZbEzFwqSH0NUflAIW/AeF/zaLnTuaX4T1n2cqb1m7eeuE+Mjt5Ace7LC
+ t6Vt4iXxHwnk1E2lvdBFKiVcV8rgf71kYTKWGsnJH1OdW0kn/n/YhaxBNtfO0b5pgM2f
+ Dm+4jy0hUHtIaoZhweVqv0QCw9iOE0c9gK/moW+V5OdNNDPcvlhD1yQsAl1zJGNcyiVf
+ bKsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuUP6q/WKxIYtgzTzuGgtJ/514Slehnz/UOvLkladlksBkqO9aShW0iJb0/MQNJgif/mQIsXZWglNqYA==@nongnu.org,
- AJvYcCXrZThTowNU4KhEJinghhISSgCG/qFpu1/OE5WpBiao26VAs3ROlxk+kJW1L8g0WGxG1dUX+OARGg==@nongnu.org
-X-Gm-Message-State: AOJu0YzuvxM8DiT3Ynzcgs8vSkvPOkNg53YWyNS3XjacEEIAeh964tf7
- bLzu1txX52u+jLBsaKvAF34T5lB95FJywzCm1sc+s9X060F3++BNFwW/9A==
-X-Gm-Gg: ASbGncs66Eag4FKgtPgBTA7gj50aJ/sNnoIMLgeIeNtsDOyyXi7ujn7fgbqfqDnoNdp
- VTS/gHYMzILVnsrrwkGxjftDnZTqlTB3MZZEGZ8pHc+jTau2WkmEe3y25bneuQpUTrLEzC9aS91
- LBGjQJafOwV7CSRWwf727fnlWxp55CdG9O0b6S1SSE2tw/Eg8Xve6zSx0245g2trbTfpamtoRWn
- PyzoNW/KKqMwjtgMnVsqjl0sYoHMbCU7M/tLcBQPlelYJts9UKUj12qcC9SGJ5jPV/oIX04GUNE
- VKUy56ngC3AzvqJugrRnfBtPDjIkLfZLsDf8nc+xwFEYtWY=
-X-Google-Smtp-Source: AGHT+IGTbZr+IbP61YM4f1x96qu4P9YeHhDisb6evnoIlZfXLwBOc8JM2qJamkx+uesAgnsnYp+IrA==
-X-Received: by 2002:a05:6402:518f:b0:5d0:abb8:79d with SMTP id
- 4fb4d7f45d1cf-5d972e083f8mr1631901a12.14.1736328349533; 
- Wed, 08 Jan 2025 01:25:49 -0800 (PST)
+ AJvYcCVZVmYhkmp7isB7a+GR1edgmcPqXH63e5yz5Bf630pbtm0d0SomnnNAgfLS0XpBDXDBNWeBpSxd8w==@nongnu.org,
+ AJvYcCX7ESo2vflDvZN0igpz3Tu/b//1RTHSiNK5gqVHMpnUBqcoEQXgtf58/vvJ2ogWI9EPiVUv+xWvMzmyBw==@nongnu.org
+X-Gm-Message-State: AOJu0YxJrFQHHxfkgwha4dOoYehNHSlI03ygkhu06tvWeykg6qnqeN8e
+ 5PTmj8sF0yOar3kpqMah/Gfb0XI423gWpczmt2pyqT5gPY63l0LtG2oDNXCj
+X-Gm-Gg: ASbGncu1KWvQSKLG0K7j/iC2vCqPhLslc4bSHvkKa6LqAmoekSuZtFaxbyi0LSXer01
+ JJBbSA7+U6siCn8WNZ0ZEqaD0JOfBttunb+X1FnwaVMY+cQQDhnFQSTx8vq33zyN+J3bEGCmrv/
+ MuhvzVO8zlB8jZrqebsxowOSdNhx3hWRlN0cHc1gxTX2n5/XdCCx9ArXE/oewenPwavQ476DHto
+ S12kW2iJSPbT8cKoco0d8V3EX0EP+CYY1ewQp8MiYGlMcfDzk/oq9KYNK5DkUDXNseZDDzQhwHu
+ aGOR5PybJKr5fqTYRZ6wuZg9bVNW0D8gz5FTvaW1HFaQqz0=
+X-Google-Smtp-Source: AGHT+IEdl0jXAisf4h7trCYbLzurFWxs9kxVpMSvY31SMbqVsugTdi+MxWUuUUa4zrb0mvLwGSE+Jg==
+X-Received: by 2002:a05:6402:2347:b0:5d2:729f:995f with SMTP id
+ 4fb4d7f45d1cf-5d972e6f957mr1368915a12.29.1736328350418; 
+ Wed, 08 Jan 2025 01:25:50 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-188-106-228.77.188.pool.telefonica.de. [77.188.106.228])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.25.48
+ 4fb4d7f45d1cf-5d806feddfasm26116096a12.58.2025.01.08.01.25.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 01:25:49 -0800 (PST)
+ Wed, 08 Jan 2025 01:25:50 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
@@ -76,15 +77,16 @@ Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 00/14] i.MX and SDHCI improvements
-Date: Wed,  8 Jan 2025 10:25:24 +0100
-Message-ID: <20250108092538.11474-1-shentey@gmail.com>
+Subject: [PATCH 01/14] hw/sd/sdhci: Set SDHC_NIS_DMA bit when appropriate
+Date: Wed,  8 Jan 2025 10:25:25 +0100
+Message-ID: <20250108092538.11474-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250108092538.11474-1-shentey@gmail.com>
+References: <20250108092538.11474-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,76 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes some details in i.MX platform devices, improves SDHCI=0D
-compatibility with U-Boot and modernizes some code.=0D
-=0D
-The first 6 patches are bugfixes 1/ resolving infinite loop in U-Boot esdhc=
-=0D
-driver, 2/ fixing a character echoing issue in imx-serial, 3/ fixing IRQ sh=
-aring=0D
-issue in Designware PCIe emulation, and 4/ fixing GPIO level preservation a=
-cross=0D
-resets in imx-gpio. The IRQ sharing issue is fixed using a new device type=
-=0D
-"TYPE_SHARED_IRQ" which is inspired by TYPE_SPLIT_IRQ.=0D
-=0D
-Patches 7 and 8 modernize SD card emulation by turning presence and=0D
-write-protect GPIOs into qdev GPIOs and then further allowing the GPIOs to =
-be=0D
-inverted, just like device tree allows.=0D
-=0D
-The rest of the series is cosmetics including turning DPRINTF() into trace=
-=0D
-events which eases debugging.=0D
-=0D
-Bernhard Beschow (14):=0D
-  hw/sd/sdhci: Set SDHC_NIS_DMA bit when appropriate=0D
-  hw/char/imx_serial: Fix reset value of UFCR register=0D
-  hw/char/imx_serial: Update all state before restarting ageing timer=0D
-  hw/core: Introduce TYPE_SHARED_IRQ=0D
-  hw/pci-host/designware: Expose MSI IRQ=0D
-  hw/gpio/imx_gpio: Don't clear input GPIO values upon reset=0D
-  hw/sd/sd: Remove legacy sd_set_cb() in favor of GPIOs=0D
-  hw/sd/sd: Allow for inverting polarities of presence and write-protect=0D
-    GPIOs=0D
-  hw/char/imx_serial: Turn some DPRINTF() statements into trace events=0D
-  hw/timer/imx_gpt: Remove unused define=0D
-  tests/qtest/libqos: Reuse TYPE_IMX_I2C define=0D
-  hw/i2c/imx_i2c: Convert DPRINTF() to trace events=0D
-  hw/misc/imx6_src: Convert DPRINTF() to trace events=0D
-  hw/gpio/imx_gpio: Turn DPRINTF() into trace events=0D
-=0D
- include/hw/arm/fsl-imx6.h                  |  4 +-=0D
- include/hw/arm/fsl-imx7.h                  |  4 +-=0D
- include/hw/char/imx_serial.h               |  2 +-=0D
- include/hw/core/shared-irq.h               | 39 ++++++++++=0D
- include/hw/pci-host/designware.h           |  1 +=0D
- include/hw/sd/sdcard_legacy.h              |  1 -=0D
- hw/arm/fsl-imx6.c                          | 13 +++-=0D
- hw/arm/fsl-imx7.c                          | 13 +++-=0D
- hw/char/imx_serial.c                       | 65 ++++++++++------=0D
- hw/core/shared-irq.c                       | 88 ++++++++++++++++++++++=0D
- hw/gpio/imx_gpio.c                         | 17 ++---=0D
- hw/i2c/imx_i2c.c                           | 21 ++----=0D
- hw/misc/imx6_src.c                         | 23 ++----=0D
- hw/pci-host/designware.c                   |  7 +-=0D
- hw/sd/sd.c                                 | 39 +++++-----=0D
- hw/sd/sdhci.c                              | 11 ++-=0D
- hw/timer/imx_gpt.c                         |  4 -=0D
- tests/qtest/libqos/arm-imx25-pdk-machine.c |  5 +-=0D
- tests/qtest/libqos/i2c-imx.c               |  4 +-=0D
- hw/arm/Kconfig                             |  2 +=0D
- hw/char/trace-events                       |  5 ++=0D
- hw/core/Kconfig                            |  3 +=0D
- hw/core/meson.build                        |  1 +=0D
- hw/gpio/trace-events                       |  5 ++=0D
- hw/i2c/trace-events                        |  5 ++=0D
- hw/misc/trace-events                       |  6 ++=0D
- 26 files changed, 280 insertions(+), 108 deletions(-)=0D
- create mode 100644 include/hw/core/shared-irq.h=0D
- create mode 100644 hw/core/shared-irq.c=0D
-=0D
--- =0D
-2.47.1=0D
-=0D
+In U-Boot, the fsl_esdhc[_imx] driver waits for both "transmit completed" and
+"DMA" bits in esdhc_send_cmd_common() by means of DATA_COMPLETE constant. QEMU
+currently misses to set the DMA bit which causes the driver to loop forever. Fix
+that by setting the DMA bit if enabled when doing DMA block transfers.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/sd/sdhci.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 299cd4bc1b..a958c11497 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -665,12 +665,13 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+         }
+     }
+ 
++    if (s->norintstsen & SDHC_NISEN_DMA) {
++        s->norintsts |= SDHC_NIS_DMA;
++    }
++
+     if (s->blkcnt == 0) {
+         sdhci_end_transfer(s);
+     } else {
+-        if (s->norintstsen & SDHC_NISEN_DMA) {
+-            s->norintsts |= SDHC_NIS_DMA;
+-        }
+         sdhci_update_irq(s);
+     }
+ }
+@@ -691,6 +692,10 @@ static void sdhci_sdma_transfer_single_block(SDHCIState *s)
+     }
+     s->blkcnt--;
+ 
++    if (s->norintstsen & SDHC_NISEN_DMA) {
++        s->norintsts |= SDHC_NIS_DMA;
++    }
++
+     sdhci_end_transfer(s);
+ }
+ 
+-- 
+2.47.1
+
 
