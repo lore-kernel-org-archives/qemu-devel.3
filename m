@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDFAE7719A
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 11:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4747EE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 11:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVTxS-0005Q1-8K; Wed, 08 Jan 2025 06:10:42 -0500
+	id 1tVU4l-00076e-0c; Wed, 08 Jan 2025 06:18:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+b94846bdbc75b454f255+7808+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVTxQ-0005Oz-9k
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 06:10:40 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tVU4i-00075m-Mr; Wed, 08 Jan 2025 06:18:12 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+b94846bdbc75b454f255+7808+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVTxL-00050U-Ak
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 06:10:39 -0500
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tVU4g-00083f-4p; Wed, 08 Jan 2025 06:18:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:
- To:From:Reply-To:Content-ID:Content-Description;
- bh=9m5qLJ5XZg144RDeokohYnamiyminRDMeZAVu7FI4Hc=; b=ipgTyGUGDRlVXBnb16qDLZ1CDZ
- LhuOQ5/9UNIHVfho+ssCT83+mAgF62nZu8EQxplbVOLL+P/5Q5EwWqz2pQg+/YuzfTSWD+Sl+rcE1
- Y/ynr1nHzkD1hXLPBzvb34ZEvm2mrHVonqnLqlJOxMypP+lUk8i83u0t7WCDXCr+jvA3XRglgbayY
- 4V6Ca/TyvwuFqSh17D51V2RfiuFNn+9E7nBpnzsm6l+Mq/zyXGr8o8SR8AI366uODjl4vuUij4/R1
- fWZBR9CrSYSpcEZUo1DkB2447j+PRPxwlWTAbRVzQdmSMfWpFb7D5kUf10M5/3j3RljYzc/gpuzEY
- 23U1v8yg==;
-Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tVTxA-0000000FoUa-1BZK; Wed, 08 Jan 2025 11:10:24 +0000
-Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
- Linux)) id 1tVTxA-00000000ebZ-0FY5; Wed, 08 Jan 2025 11:10:24 +0000
-From: David Woodhouse <dwmw2@infradead.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Hilber <quic_philber@quicinc.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>, paul <paul@xen.org>
-Subject: [PULL 1/1] hw/acpi: Add vmclock device
-Date: Wed,  8 Jan 2025 11:10:23 +0000
-Message-ID: <20250108111023.156073-2-dwmw2@infradead.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250108111023.156073-1-dwmw2@infradead.org>
-References: <20250108111023.156073-1-dwmw2@infradead.org>
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=jm4+L9nVoWYDXiBGIMkfj9QHnDXMeFoYLh5iFm5uAd8=; b=iRugOAMJ1vEcRaku+Np5Xs2U2O
+ EMVnTJklYqWJv7E3u6h7mLNKvrCNU448t9jU2koTfHXsKLuyxvdFvr9Yu6VTFxuWzB2GznZWGVM+R
+ sTQJXWttwcahFdNPNB9BdB7dp0K1zNsnY+NZMfK4DGe7dsdGmCXqrol5h8bjHU926O4rvOTOsIzun
+ ZhDDfyGqbrxZzKnm4A4rbCThwg8ECGbRi2hA+ZTfIpvs63mcQfPCQEs5ma3gHJWFiZua36dHBcs4h
+ m2BhJKy3JRen9BPls7IJL7wxwrpoOYi36NZIwgwwzwkUNA5EGvPfBQ/v0F8U2MhPt2CdfzfL2VuUO
+ iD9F4nNkERFZ2AjcwTYuvElFok8C65k+OGcfYo2GfIJllXj6qiyNuKMOl1rv2CfZCHOhipCt2Us66
+ AVCag+8gnTZZWKJnYx6ZGTgwFQnOt1FLi2+3z3GuyW2Go2VuV4xhla96zFtOnVzx2aSpE8TTmIT4U
+ 0GI6eWLUHcUkWmBlxruFBY9mToNgHPtTEBedcmfLCWvhdeEmThvLln9wzWzdcI1aOdSxZ//nJHtC3
+ BZvFy/AegQVa031Y7eTe2s2G6z+05ww+zNKxQYFSU4f3OSRs5CSBfYmgQDV+7/0lUvC6A3w72z3PV
+ tc44wC7yQDJWTH7pJ88+qvhhHmcJQd9+fUP41KWAc=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tVU3u-0000ht-CW; Wed, 08 Jan 2025 11:17:26 +0000
+Message-ID: <571ab9f2-e8cd-4371-88c0-ae4bb385d284@ilande.co.uk>
+Date: Wed, 8 Jan 2025 11:17:58 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+b94846bdbc75b454f255+7808+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ richard.henderson@linaro.org, harshpb@linux.ibm.com
+References: <20240618085831.546883-1-rathc@linux.ibm.com>
+ <20240618085831.546883-4-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240618085831.546883-4-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 3/4] target/ppc: Move VSX vector storage access insns
+ to decodetree.
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,559 +104,422 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+On 18/06/2024 09:58, Chinmay Rath wrote:
 
-The vmclock device addresses the problem of live migration with
-precision clocks. The tolerances of a hardware counter (e.g. TSC) are
-typically around ±50PPM. A guest will use NTP/PTP/PPS to discipline that
-counter against an external source of 'real' time, and track the precise
-frequency of the counter as it changes with environmental conditions.
+(resend due to qemu list outage during December)
 
-When a guest is live migrated, anything it knows about the frequency of
-the underlying counter becomes invalid. It may move from a host where
-the counter running at -50PPM of its nominal frequency, to a host where
-it runs at +50PPM. There will also be a step change in the value of the
-counter, as the correctness of its absolute value at migration is
-limited by the accuracy of the source and destination host's time
-synchronization.
+> Moving the following instructions to decodetree specification:
+> 
+>    lxv{b16, d2, h8, w4, ds, ws}x   : X-form
+>    stxv{b16, d2, h8, w4}x          : X-form
+> 
+> The changes were verified by validating that the tcg-ops generated for those
+> instructions remain the same, which were captured using the '-d in_asm,op' flag.
+> 
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/ppc/insn32.decode            |  10 ++
+>   target/ppc/translate/vsx-impl.c.inc | 199 ++++++++++++----------------
+>   target/ppc/translate/vsx-ops.c.inc  |  12 --
+>   3 files changed, 97 insertions(+), 124 deletions(-)
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 445fdb341f..3d31ef52f8 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -805,9 +805,19 @@ STXSIHX         011111 ..... ..... ..... 1110101101 .   @X_TSX
+>   STXSIWX         011111 ..... ..... ..... 0010001100 .   @X_TSX
+>   STXSSPX         011111 ..... ..... ..... 1010001100 .   @X_TSX
+>   
+> +LXVB16X         011111 ..... ..... ..... 1101101100 .   @X_TSX
+> +LXVD2X          011111 ..... ..... ..... 1101001100 .   @X_TSX
+> +LXVH8X          011111 ..... ..... ..... 1100101100 .   @X_TSX
+> +LXVW4X          011111 ..... ..... ..... 1100001100 .   @X_TSX
+> +LXVDSX          011111 ..... ..... ..... 0101001100 .   @X_TSX
+> +LXVWSX          011111 ..... ..... ..... 0101101100 .   @X_TSX
+>   LXVL            011111 ..... ..... ..... 0100001101 .   @X_TSX
+>   LXVLL           011111 ..... ..... ..... 0100101101 .   @X_TSX
+>   
+> +STXVB16X        011111 ..... ..... ..... 1111101100 .   @X_TSX
+> +STXVD2X         011111 ..... ..... ..... 1111001100 .   @X_TSX
+> +STXVH8X         011111 ..... ..... ..... 1110101100 .   @X_TSX
+> +STXVW4X         011111 ..... ..... ..... 1110001100 .   @X_TSX
+>   STXVL           011111 ..... ..... ..... 0110001101 .   @X_TSX
+>   STXVLL          011111 ..... ..... ..... 0110101101 .   @X_TSX
+>   
+> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+> index 46bab49215..e0fb4bad92 100644
+> --- a/target/ppc/translate/vsx-impl.c.inc
+> +++ b/target/ppc/translate/vsx-impl.c.inc
+> @@ -46,41 +46,37 @@ TRANS_FLAGS2(ISA300, LXSIHZX, do_lxs, gen_qemu_ld16u_i64);
+>   TRANS_FLAGS2(VSX207, LXSIWZX, do_lxs, gen_qemu_ld32u_i64);
+>   TRANS_FLAGS2(VSX207, LXSSPX, do_lxs, gen_qemu_ld32fs);
+>   
+> -static void gen_lxvd2x(DisasContext *ctx)
+> +static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
+>   {
+>       TCGv EA;
+>       TCGv_i64 t0;
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+> +
+>       t0 = tcg_temp_new_i64();
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       gen_qemu_ld64_i64(ctx, t0, EA);
+> -    set_cpu_vsr(xT(ctx->opcode), t0, true);
+> +    set_cpu_vsr(a->rt, t0, true);
+>       tcg_gen_addi_tl(EA, EA, 8);
+>       gen_qemu_ld64_i64(ctx, t0, EA);
+> -    set_cpu_vsr(xT(ctx->opcode), t0, false);
+> +    set_cpu_vsr(a->rt, t0, false);
+> +    return true;
+>   }
+>   
+> -static void gen_lxvw4x(DisasContext *ctx)
+> +static bool trans_LXVW4X(DisasContext *ctx, arg_LXVW4X *a)
+>   {
+>       TCGv EA;
+> -    TCGv_i64 xth;
+> -    TCGv_i64 xtl;
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+> +    TCGv_i64 xth, xtl;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+> +
+>       xth = tcg_temp_new_i64();
+>       xtl = tcg_temp_new_i64();
+> -
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       if (ctx->le_mode) {
+>           TCGv_i64 t0 = tcg_temp_new_i64();
+>           TCGv_i64 t1 = tcg_temp_new_i64();
+> @@ -97,55 +93,45 @@ static void gen_lxvw4x(DisasContext *ctx)
+>           tcg_gen_addi_tl(EA, EA, 8);
+>           tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
+>       }
+> -    set_cpu_vsr(xT(ctx->opcode), xth, true);
+> -    set_cpu_vsr(xT(ctx->opcode), xtl, false);
+> +    set_cpu_vsr(a->rt, xth, true);
+> +    set_cpu_vsr(a->rt, xtl, false);
+> +    return true;
+>   }
+>   
+> -static void gen_lxvwsx(DisasContext *ctx)
+> +static bool trans_LXVWSX(DisasContext *ctx, arg_LXVWSX *a)
+>   {
+>       TCGv EA;
+>       TCGv_i32 data;
+>   
+> -    if (xT(ctx->opcode) < 32) {
+> -        if (unlikely(!ctx->vsx_enabled)) {
+> -            gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -            return;
+> -        }
+> +    if (a->rt < 32) {
+> +        REQUIRE_VSX(ctx);
+>       } else {
+> -        if (unlikely(!ctx->altivec_enabled)) {
+> -            gen_exception(ctx, POWERPC_EXCP_VPU);
+> -            return;
+> -        }
+> +        REQUIRE_VECTOR(ctx);
+>       }
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+>   
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -
+> -    gen_addr_reg_index(ctx, EA);
+> -
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       data = tcg_temp_new_i32();
+>       tcg_gen_qemu_ld_i32(data, EA, ctx->mem_idx, DEF_MEMOP(MO_UL));
+> -    tcg_gen_gvec_dup_i32(MO_UL, vsr_full_offset(xT(ctx->opcode)), 16, 16, data);
+> +    tcg_gen_gvec_dup_i32(MO_UL, vsr_full_offset(a->rt), 16, 16, data);
+> +    return true;
+>   }
+>   
+> -static void gen_lxvdsx(DisasContext *ctx)
+> +static bool trans_LXVDSX(DisasContext *ctx, arg_LXVDSX *a)
+>   {
+>       TCGv EA;
+>       TCGv_i64 data;
+>   
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+>   
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -
+> -    gen_addr_reg_index(ctx, EA);
+> -
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       data = tcg_temp_new_i64();
+>       tcg_gen_qemu_ld_i64(data, EA, ctx->mem_idx, DEF_MEMOP(MO_UQ));
+> -    tcg_gen_gvec_dup_i64(MO_UQ, vsr_full_offset(xT(ctx->opcode)), 16, 16, data);
+> +    tcg_gen_gvec_dup_i64(MO_UQ, vsr_full_offset(a->rt), 16, 16, data);
+> +    return true;
+>   }
+>   
+>   static void gen_bswap16x8(TCGv_i64 outh, TCGv_i64 outl,
+> @@ -184,52 +170,47 @@ static void gen_bswap32x4(TCGv_i64 outh, TCGv_i64 outl,
+>       tcg_gen_deposit_i64(outl, outl, lo, 32, 32);
+>   }
+>   
+> -static void gen_lxvh8x(DisasContext *ctx)
+> +static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
+>   {
+>       TCGv EA;
+> -    TCGv_i64 xth;
+> -    TCGv_i64 xtl;
+> +    TCGv_i64 xth, xtl;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+>   
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+>       xth = tcg_temp_new_i64();
+>       xtl = tcg_temp_new_i64();
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       tcg_gen_qemu_ld_i64(xth, EA, ctx->mem_idx, MO_BEUQ);
+>       tcg_gen_addi_tl(EA, EA, 8);
+>       tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
+>       if (ctx->le_mode) {
+>           gen_bswap16x8(xth, xtl, xth, xtl);
+>       }
+> -    set_cpu_vsr(xT(ctx->opcode), xth, true);
+> -    set_cpu_vsr(xT(ctx->opcode), xtl, false);
+> +    set_cpu_vsr(a->rt, xth, true);
+> +    set_cpu_vsr(a->rt, xtl, false);
+> +    return true;
+>   }
+>   
+> -static void gen_lxvb16x(DisasContext *ctx)
+> +static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
+>   {
+>       TCGv EA;
+> -    TCGv_i64 xth;
+> -    TCGv_i64 xtl;
+> +    TCGv_i64 xth, xtl;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+>   
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+>       xth = tcg_temp_new_i64();
+>       xtl = tcg_temp_new_i64();
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       tcg_gen_qemu_ld_i64(xth, EA, ctx->mem_idx, MO_BEUQ);
+>       tcg_gen_addi_tl(EA, EA, 8);
+>       tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
+> -    set_cpu_vsr(xT(ctx->opcode), xth, true);
+> -    set_cpu_vsr(xT(ctx->opcode), xtl, false);
+> +    set_cpu_vsr(a->rt, xth, true);
+> +    set_cpu_vsr(a->rt, xtl, false);
+> +    return true;
+>   }
+>   
+>   #if defined(TARGET_PPC64)
+> @@ -319,42 +300,39 @@ TRANS_FLAGS2(ISA300, STXSIHX, do_stxs, gen_qemu_st16_i64);
+>   TRANS_FLAGS2(VSX207, STXSIWX, do_stxs, gen_qemu_st32_i64);
+>   TRANS_FLAGS2(VSX207, STXSSPX, do_stxs, gen_qemu_st32fs);
+>   
+> -static void gen_stxvd2x(DisasContext *ctx)
+> +static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
+>   {
+>       TCGv EA;
+>       TCGv_i64 t0;
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+> +
+>       t0 = tcg_temp_new_i64();
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> -    get_cpu_vsr(t0, xS(ctx->opcode), true);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+> +    get_cpu_vsr(t0, a->rt, true);
+>       gen_qemu_st64_i64(ctx, t0, EA);
+>       tcg_gen_addi_tl(EA, EA, 8);
+> -    get_cpu_vsr(t0, xS(ctx->opcode), false);
+> +    get_cpu_vsr(t0, a->rt, false);
+>       gen_qemu_st64_i64(ctx, t0, EA);
+> +    return true;
+>   }
+>   
+> -static void gen_stxvw4x(DisasContext *ctx)
+> +static bool trans_STXVW4X(DisasContext *ctx, arg_STXVW4X *a)
+>   {
+>       TCGv EA;
+> -    TCGv_i64 xsh;
+> -    TCGv_i64 xsl;
+> +    TCGv_i64 xsh, xsl;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+>   
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+>       xsh = tcg_temp_new_i64();
+>       xsl = tcg_temp_new_i64();
+> -    get_cpu_vsr(xsh, xS(ctx->opcode), true);
+> -    get_cpu_vsr(xsl, xS(ctx->opcode), false);
+> +    get_cpu_vsr(xsh, a->rt, true);
+> +    get_cpu_vsr(xsl, a->rt, false);
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       if (ctx->le_mode) {
+>           TCGv_i64 t0 = tcg_temp_new_i64();
+>           TCGv_i64 t1 = tcg_temp_new_i64();
+> @@ -371,25 +349,23 @@ static void gen_stxvw4x(DisasContext *ctx)
+>           tcg_gen_addi_tl(EA, EA, 8);
+>           tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
+>       }
+> +    return true;
+>   }
+>   
+> -static void gen_stxvh8x(DisasContext *ctx)
+> +static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
+>   {
+>       TCGv EA;
+> -    TCGv_i64 xsh;
+> -    TCGv_i64 xsl;
+> +    TCGv_i64 xsh, xsl;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+>   
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+>       xsh = tcg_temp_new_i64();
+>       xsl = tcg_temp_new_i64();
+> -    get_cpu_vsr(xsh, xS(ctx->opcode), true);
+> -    get_cpu_vsr(xsl, xS(ctx->opcode), false);
+> +    get_cpu_vsr(xsh, a->rt, true);
+> +    get_cpu_vsr(xsl, a->rt, false);
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       if (ctx->le_mode) {
+>           TCGv_i64 outh = tcg_temp_new_i64();
+>           TCGv_i64 outl = tcg_temp_new_i64();
+> @@ -403,28 +379,27 @@ static void gen_stxvh8x(DisasContext *ctx)
+>           tcg_gen_addi_tl(EA, EA, 8);
+>           tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
+>       }
+> +    return true;
+>   }
+>   
+> -static void gen_stxvb16x(DisasContext *ctx)
+> +static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
+>   {
+>       TCGv EA;
+> -    TCGv_i64 xsh;
+> -    TCGv_i64 xsl;
+> +    TCGv_i64 xsh, xsl;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+>   
+> -    if (unlikely(!ctx->vsx_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VSXU);
+> -        return;
+> -    }
+>       xsh = tcg_temp_new_i64();
+>       xsl = tcg_temp_new_i64();
+> -    get_cpu_vsr(xsh, xS(ctx->opcode), true);
+> -    get_cpu_vsr(xsl, xS(ctx->opcode), false);
+> +    get_cpu_vsr(xsh, a->rt, true);
+> +    get_cpu_vsr(xsl, a->rt, false);
+>       gen_set_access_type(ctx, ACCESS_INT);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       tcg_gen_qemu_st_i64(xsh, EA, ctx->mem_idx, MO_BEUQ);
+>       tcg_gen_addi_tl(EA, EA, 8);
+>       tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
+> +    return true;
+>   }
+>   
+>   static void gen_mfvsrwz(DisasContext *ctx)
+> diff --git a/target/ppc/translate/vsx-ops.c.inc b/target/ppc/translate/vsx-ops.c.inc
+> index 7f4326c974..91cde088bc 100644
+> --- a/target/ppc/translate/vsx-ops.c.inc
+> +++ b/target/ppc/translate/vsx-ops.c.inc
+> @@ -1,15 +1,3 @@
+> -GEN_HANDLER_E(lxvd2x, 0x1F, 0x0C, 0x1A, 0, PPC_NONE, PPC2_VSX),
+> -GEN_HANDLER_E(lxvwsx, 0x1F, 0x0C, 0x0B, 0, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER_E(lxvdsx, 0x1F, 0x0C, 0x0A, 0, PPC_NONE, PPC2_VSX),
+> -GEN_HANDLER_E(lxvw4x, 0x1F, 0x0C, 0x18, 0, PPC_NONE, PPC2_VSX),
+> -GEN_HANDLER_E(lxvh8x, 0x1F, 0x0C, 0x19, 0, PPC_NONE,  PPC2_ISA300),
+> -GEN_HANDLER_E(lxvb16x, 0x1F, 0x0C, 0x1B, 0, PPC_NONE, PPC2_ISA300),
+> -
+> -GEN_HANDLER_E(stxvd2x, 0x1F, 0xC, 0x1E, 0, PPC_NONE, PPC2_VSX),
+> -GEN_HANDLER_E(stxvw4x, 0x1F, 0xC, 0x1C, 0, PPC_NONE, PPC2_VSX),
+> -GEN_HANDLER_E(stxvh8x, 0x1F, 0x0C, 0x1D, 0, PPC_NONE,  PPC2_ISA300),
+> -GEN_HANDLER_E(stxvb16x, 0x1F, 0x0C, 0x1F, 0, PPC_NONE, PPC2_ISA300),
+> -
+>   GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_VSX207),
+>   GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_VSX207),
+>   GEN_HANDLER_E(mtvsrwz, 0x1F, 0x13, 0x07, 0x0000F800, PPC_NONE, PPC2_VSX207),
 
-The device exposes a shared memory region to guests, which can be mapped
-all the way to userspace. In the first phase, this merely advertises a
-'disruption_marker', which indicates that the guest should throw away any
-NTP synchronization it thinks it has, and start again.
+Hi Chinmay,
 
-Because the region can be exposed all the way to userspace, applications
-can still use time from a fast vDSO 'system call', and check the
-disruption marker to be sure that their timestamp is indeed truthful.
+Someone has reported that this patch (commit 7419dc5b in git) breaks booting 
+NetBSD/macppc on the qemu-system-ppc mac99 machine: 
+https://gitlab.com/qemu-project/qemu/-/issues/2741.
 
-The structure also allows for the precise time, as known by the host, to
-be exposed directly to guests so that they don't have to wait for NTP to
-resync from scratch.
+Please can you take a look using the reproducer provided?
 
-The values and fields are based on the nascent virtio-rtc specification,
-and the intent is that a version (hopefully precisely this version) of
-this structure will be included as an optional part of that spec. In the
-meantime, a simple ACPI device along the lines of VMGENID is perfectly
-sufficient and is compatible with what's being shipped in certain
-commercial hypervisors.
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Paul Durrant <paul@xen.org>
----
- hw/acpi/Kconfig                              |   5 +
- hw/acpi/meson.build                          |   1 +
- hw/acpi/vmclock.c                            | 179 ++++++++++++++++++
- hw/i386/Kconfig                              |   1 +
- hw/i386/acpi-build.c                         |  10 +-
- include/hw/acpi/vmclock.h                    |  34 ++++
- include/standard-headers/linux/vmclock-abi.h | 182 +++++++++++++++++++
- scripts/update-linux-headers.sh              |   1 +
- 8 files changed, 412 insertions(+), 1 deletion(-)
- create mode 100644 hw/acpi/vmclock.c
- create mode 100644 include/hw/acpi/vmclock.h
- create mode 100644 include/standard-headers/linux/vmclock-abi.h
+ATB,
 
-diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
-index e07d3204eb..1d4e9f0845 100644
---- a/hw/acpi/Kconfig
-+++ b/hw/acpi/Kconfig
-@@ -60,6 +60,11 @@ config ACPI_VMGENID
-     default y
-     depends on PC
- 
-+config ACPI_VMCLOCK
-+    bool
-+    default y
-+    depends on PC
-+
- config ACPI_VIOT
-     bool
-     depends on ACPI
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index c8854f4d48..73f02b9691 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -15,6 +15,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_NVDIMM', if_false: files('acpi-nvdimm-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCI', if_true: files('pci.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('cxl-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
-diff --git a/hw/acpi/vmclock.c b/hw/acpi/vmclock.c
-new file mode 100644
-index 0000000000..7387e5c9ca
---- /dev/null
-+++ b/hw/acpi/vmclock.c
-@@ -0,0 +1,179 @@
-+/*
-+ * Virtual Machine Clock Device
-+ *
-+ * Copyright © 2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-+ *
-+ * Authors: David Woodhouse <dwmw2@infradead.org>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "hw/i386/e820_memory_layout.h"
-+#include "hw/acpi/acpi.h"
-+#include "hw/acpi/aml-build.h"
-+#include "hw/acpi/vmclock.h"
-+#include "hw/nvram/fw_cfg.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+#include "system/reset.h"
-+
-+#include "standard-headers/linux/vmclock-abi.h"
-+
-+void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
-+                        BIOSLinker *linker, const char *oem_id)
-+{
-+    Aml *ssdt, *dev, *scope, *crs;
-+    AcpiTable table = { .sig = "SSDT", .rev = 1,
-+                        .oem_id = oem_id, .oem_table_id = "VMCLOCK" };
-+
-+    /* Put VMCLOCK into a separate SSDT table */
-+    acpi_table_begin(&table, table_data);
-+    ssdt = init_aml_allocator();
-+
-+    scope = aml_scope("\\_SB");
-+    dev = aml_device("VCLK");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("AMZNC10C")));
-+    aml_append(dev, aml_name_decl("_CID", aml_string("VMCLOCK")));
-+    aml_append(dev, aml_name_decl("_DDN", aml_string("VMCLOCK")));
-+
-+    /* Simple status method */
-+    aml_append(dev, aml_name_decl("_STA", aml_int(0xf)));
-+
-+    crs = aml_resource_template();
-+    aml_append(crs, aml_qword_memory(AML_POS_DECODE,
-+                                     AML_MIN_FIXED, AML_MAX_FIXED,
-+                                     AML_CACHEABLE, AML_READ_ONLY,
-+                                     0xffffffffffffffffULL,
-+                                     vms->physaddr,
-+                                     vms->physaddr + VMCLOCK_SIZE - 1,
-+                                     0, VMCLOCK_SIZE));
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+    aml_append(ssdt, scope);
-+
-+    g_array_append_vals(table_data, ssdt->buf->data, ssdt->buf->len);
-+    acpi_table_end(linker, &table);
-+    free_aml_allocator();
-+}
-+
-+static void vmclock_update_guest(VmclockState *vms)
-+{
-+    uint64_t disruption_marker;
-+    uint32_t seq_count;
-+
-+    if (!vms->clk) {
-+        return;
-+    }
-+
-+    seq_count = le32_to_cpu(vms->clk->seq_count) | 1;
-+    vms->clk->seq_count = cpu_to_le32(seq_count);
-+    /* These barriers pair with read barriers in the guest */
-+    smp_wmb();
-+
-+    disruption_marker = le64_to_cpu(vms->clk->disruption_marker);
-+    disruption_marker++;
-+    vms->clk->disruption_marker = cpu_to_le64(disruption_marker);
-+
-+    /* These barriers pair with read barriers in the guest */
-+    smp_wmb();
-+    vms->clk->seq_count = cpu_to_le32(seq_count + 1);
-+}
-+
-+/*
-+ * After restoring an image, we need to update the guest memory to notify
-+ * it of clock disruption.
-+ */
-+static int vmclock_post_load(void *opaque, int version_id)
-+{
-+    VmclockState *vms = opaque;
-+
-+    vmclock_update_guest(vms);
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_vmclock = {
-+    .name = "vmclock",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load = vmclock_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(physaddr, VmclockState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static void vmclock_handle_reset(void *opaque)
-+{
-+    VmclockState *vms = VMCLOCK(opaque);
-+
-+    if (!memory_region_is_mapped(&vms->clk_page)) {
-+        memory_region_add_subregion_overlap(get_system_memory(),
-+                                            vms->physaddr,
-+                                            &vms->clk_page, 0);
-+    }
-+}
-+
-+static void vmclock_realize(DeviceState *dev, Error **errp)
-+{
-+    VmclockState *vms = VMCLOCK(dev);
-+
-+    /*
-+     * Given that this function is executing, there is at least one VMCLOCK
-+     * device. Check if there are several.
-+     */
-+    if (!find_vmclock_dev()) {
-+        error_setg(errp, "at most one %s device is permitted", TYPE_VMCLOCK);
-+        return;
-+    }
-+
-+    vms->physaddr = VMCLOCK_ADDR;
-+
-+    e820_add_entry(vms->physaddr, VMCLOCK_SIZE, E820_RESERVED);
-+
-+    memory_region_init_ram(&vms->clk_page, OBJECT(dev), "vmclock_page",
-+                           VMCLOCK_SIZE, &error_abort);
-+    memory_region_set_enabled(&vms->clk_page, true);
-+    vms->clk = memory_region_get_ram_ptr(&vms->clk_page);
-+    memset(vms->clk, 0, VMCLOCK_SIZE);
-+
-+    vms->clk->magic = cpu_to_le32(VMCLOCK_MAGIC);
-+    vms->clk->size = cpu_to_le16(VMCLOCK_SIZE);
-+    vms->clk->version = cpu_to_le16(1);
-+
-+    /* These are all zero and thus default, but be explicit */
-+    vms->clk->clock_status = VMCLOCK_STATUS_UNKNOWN;
-+    vms->clk->counter_id = VMCLOCK_COUNTER_INVALID;
-+
-+    qemu_register_reset(vmclock_handle_reset, vms);
-+
-+    vmclock_update_guest(vms);
-+}
-+
-+static void vmclock_device_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->vmsd = &vmstate_vmclock;
-+    dc->realize = vmclock_realize;
-+    dc->hotpluggable = false;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+}
-+
-+static const TypeInfo vmclock_device_info = {
-+    .name          = TYPE_VMCLOCK,
-+    .parent        = TYPE_DEVICE,
-+    .instance_size = sizeof(VmclockState),
-+    .class_init    = vmclock_device_class_init,
-+};
-+
-+static void vmclock_register_types(void)
-+{
-+    type_register_static(&vmclock_device_info);
-+}
-+
-+type_init(vmclock_register_types)
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 32818480d2..d34ce07b21 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -43,6 +43,7 @@ config PC
-     select SERIAL_ISA
-     select ACPI_PCI
-     select ACPI_VMGENID
-+    select ACPI_VMCLOCK
-     select VIRTIO_PMEM_SUPPORTED
-     select VIRTIO_MEM_SUPPORTED
-     select HV_BALLOON_SUPPORTED
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 733b8f0851..d482f974df 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -43,6 +43,7 @@
- #include "system/tpm.h"
- #include "hw/acpi/tpm.h"
- #include "hw/acpi/vmgenid.h"
-+#include "hw/acpi/vmclock.h"
- #include "hw/acpi/erst.h"
- #include "hw/acpi/piix4.h"
- #include "system/tpm_backend.h"
-@@ -2432,7 +2433,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-     uint8_t *u;
-     GArray *tables_blob = tables->table_data;
-     AcpiSlicOem slic_oem = { .id = NULL, .table_id = NULL };
--    Object *vmgenid_dev;
-+    Object *vmgenid_dev, *vmclock_dev;
-     char *oem_id;
-     char *oem_table_id;
- 
-@@ -2505,6 +2506,13 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-                            tables->vmgenid, tables->linker, x86ms->oem_id);
-     }
- 
-+    vmclock_dev = find_vmclock_dev();
-+    if (vmclock_dev) {
-+        acpi_add_table(table_offsets, tables_blob);
-+        vmclock_build_acpi(VMCLOCK(vmclock_dev), tables_blob, tables->linker,
-+                           x86ms->oem_id);
-+    }
-+
-     if (misc.has_hpet) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_hpet(tables_blob, tables->linker, x86ms->oem_id,
-diff --git a/include/hw/acpi/vmclock.h b/include/hw/acpi/vmclock.h
-new file mode 100644
-index 0000000000..5605605812
---- /dev/null
-+++ b/include/hw/acpi/vmclock.h
-@@ -0,0 +1,34 @@
-+#ifndef ACPI_VMCLOCK_H
-+#define ACPI_VMCLOCK_H
-+
-+#include "hw/acpi/bios-linker-loader.h"
-+#include "hw/qdev-core.h"
-+#include "qemu/uuid.h"
-+#include "qom/object.h"
-+
-+#define TYPE_VMCLOCK    "vmclock"
-+
-+#define VMCLOCK_ADDR    0xfeffb000
-+#define VMCLOCK_SIZE    0x1000
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VmclockState, VMCLOCK)
-+
-+struct vmclock_abi;
-+
-+struct VmclockState {
-+    DeviceState parent_obj;
-+    MemoryRegion clk_page;
-+    uint64_t physaddr;
-+    struct vmclock_abi *clk;
-+};
-+
-+/* returns NULL unless there is exactly one device */
-+static inline Object *find_vmclock_dev(void)
-+{
-+    return object_resolve_path_type("", TYPE_VMCLOCK, NULL);
-+}
-+
-+void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
-+                        BIOSLinker *linker, const char *oem_id);
-+
-+#endif
-diff --git a/include/standard-headers/linux/vmclock-abi.h b/include/standard-headers/linux/vmclock-abi.h
-new file mode 100644
-index 0000000000..15b0316cb4
---- /dev/null
-+++ b/include/standard-headers/linux/vmclock-abi.h
-@@ -0,0 +1,182 @@
-+/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
-+
-+/*
-+ * This structure provides a vDSO-style clock to VM guests, exposing the
-+ * relationship (or lack thereof) between the CPU clock (TSC, timebase, arch
-+ * counter, etc.) and real time. It is designed to address the problem of
-+ * live migration, which other clock enlightenments do not.
-+ *
-+ * When a guest is live migrated, this affects the clock in two ways.
-+ *
-+ * First, even between identical hosts the actual frequency of the underlying
-+ * counter will change within the tolerances of its specification (typically
-+ * ±50PPM, or 4 seconds a day). This frequency also varies over time on the
-+ * same host, but can be tracked by NTP as it generally varies slowly. With
-+ * live migration there is a step change in the frequency, with no warning.
-+ *
-+ * Second, there may be a step change in the value of the counter itself, as
-+ * its accuracy is limited by the precision of the NTP synchronization on the
-+ * source and destination hosts.
-+ *
-+ * So any calibration (NTP, PTP, etc.) which the guest has done on the source
-+ * host before migration is invalid, and needs to be redone on the new host.
-+ *
-+ * In its most basic mode, this structure provides only an indication to the
-+ * guest that live migration has occurred. This allows the guest to know that
-+ * its clock is invalid and take remedial action. For applications that need
-+ * reliable accurate timestamps (e.g. distributed databases), the structure
-+ * can be mapped all the way to userspace. This allows the application to see
-+ * directly for itself that the clock is disrupted and take appropriate
-+ * action, even when using a vDSO-style method to get the time instead of a
-+ * system call.
-+ *
-+ * In its more advanced mode. this structure can also be used to expose the
-+ * precise relationship of the CPU counter to real time, as calibrated by the
-+ * host. This means that userspace applications can have accurate time
-+ * immediately after live migration, rather than having to pause operations
-+ * and wait for NTP to recover. This mode does, of course, rely on the
-+ * counter being reliable and consistent across CPUs.
-+ *
-+ * Note that this must be true UTC, never with smeared leap seconds. If a
-+ * guest wishes to construct a smeared clock, it can do so. Presenting a
-+ * smeared clock through this interface would be problematic because it
-+ * actually messes with the apparent counter *period*. A linear smearing
-+ * of 1 ms per second would effectively tweak the counter period by 1000PPM
-+ * at the start/end of the smearing period, while a sinusoidal smear would
-+ * basically be impossible to represent.
-+ *
-+ * This structure is offered with the intent that it be adopted into the
-+ * nascent virtio-rtc standard, as a virtio-rtc that does not address the live
-+ * migration problem seems a little less than fit for purpose. For that
-+ * reason, certain fields use precisely the same numeric definitions as in
-+ * the virtio-rtc proposal. The structure can also be exposed through an ACPI
-+ * device with the CID "VMCLOCK", modelled on the "VMGENID" device except for
-+ * the fact that it uses a real _CRS to convey the address of the structure
-+ * (which should be a full page, to allow for mapping directly to userspace).
-+ */
-+
-+#ifndef __VMCLOCK_ABI_H__
-+#define __VMCLOCK_ABI_H__
-+
-+#include "standard-headers/linux/types.h"
-+
-+struct vmclock_abi {
-+	/* CONSTANT FIELDS */
-+	uint32_t magic;
-+#define VMCLOCK_MAGIC	0x4b4c4356 /* "VCLK" */
-+	uint32_t size;		/* Size of region containing this structure */
-+	uint16_t version;	/* 1 */
-+	uint8_t counter_id; /* Matches VIRTIO_RTC_COUNTER_xxx except INVALID */
-+#define VMCLOCK_COUNTER_ARM_VCNT	0
-+#define VMCLOCK_COUNTER_X86_TSC		1
-+#define VMCLOCK_COUNTER_INVALID		0xff
-+	uint8_t time_type; /* Matches VIRTIO_RTC_TYPE_xxx */
-+#define VMCLOCK_TIME_UTC			0	/* Since 1970-01-01 00:00:00z */
-+#define VMCLOCK_TIME_TAI			1	/* Since 1970-01-01 00:00:00z */
-+#define VMCLOCK_TIME_MONOTONIC			2	/* Since undefined epoch */
-+#define VMCLOCK_TIME_INVALID_SMEARED		3	/* Not supported */
-+#define VMCLOCK_TIME_INVALID_MAYBE_SMEARED	4	/* Not supported */
-+
-+	/* NON-CONSTANT FIELDS PROTECTED BY SEQCOUNT LOCK */
-+	uint32_t seq_count;	/* Low bit means an update is in progress */
-+	/*
-+	 * This field changes to another non-repeating value when the CPU
-+	 * counter is disrupted, for example on live migration. This lets
-+	 * the guest know that it should discard any calibration it has
-+	 * performed of the counter against external sources (NTP/PTP/etc.).
-+	 */
-+	uint64_t disruption_marker;
-+	uint64_t flags;
-+	/* Indicates that the tai_offset_sec field is valid */
-+#define VMCLOCK_FLAG_TAI_OFFSET_VALID		(1 << 0)
-+	/*
-+	 * Optionally used to notify guests of pending maintenance events.
-+	 * A guest which provides latency-sensitive services may wish to
-+	 * remove itself from service if an event is coming up. Two flags
-+	 * indicate the approximate imminence of the event.
-+	 */
-+#define VMCLOCK_FLAG_DISRUPTION_SOON		(1 << 1) /* About a day */
-+#define VMCLOCK_FLAG_DISRUPTION_IMMINENT	(1 << 2) /* About an hour */
-+#define VMCLOCK_FLAG_PERIOD_ESTERROR_VALID	(1 << 3)
-+#define VMCLOCK_FLAG_PERIOD_MAXERROR_VALID	(1 << 4)
-+#define VMCLOCK_FLAG_TIME_ESTERROR_VALID	(1 << 5)
-+#define VMCLOCK_FLAG_TIME_MAXERROR_VALID	(1 << 6)
-+	/*
-+	 * If the MONOTONIC flag is set then (other than leap seconds) it is
-+	 * guaranteed that the time calculated according this structure at
-+	 * any given moment shall never appear to be later than the time
-+	 * calculated via the structure at any *later* moment.
-+	 *
-+	 * In particular, a timestamp based on a counter reading taken
-+	 * immediately after setting the low bit of seq_count (and the
-+	 * associated memory barrier), using the previously-valid time and
-+	 * period fields, shall never be later than a timestamp based on
-+	 * a counter reading taken immediately before *clearing* the low
-+	 * bit again after the update, using the about-to-be-valid fields.
-+	 */
-+#define VMCLOCK_FLAG_TIME_MONOTONIC		(1 << 7)
-+
-+	uint8_t pad[2];
-+	uint8_t clock_status;
-+#define VMCLOCK_STATUS_UNKNOWN		0
-+#define VMCLOCK_STATUS_INITIALIZING	1
-+#define VMCLOCK_STATUS_SYNCHRONIZED	2
-+#define VMCLOCK_STATUS_FREERUNNING	3
-+#define VMCLOCK_STATUS_UNRELIABLE	4
-+
-+	/*
-+	 * The time exposed through this device is never smeared. This field
-+	 * corresponds to the 'subtype' field in virtio-rtc, which indicates
-+	 * the smearing method. However in this case it provides a *hint* to
-+	 * the guest operating system, such that *if* the guest OS wants to
-+	 * provide its users with an alternative clock which does not follow
-+	 * UTC, it may do so in a fashion consistent with the other systems
-+	 * in the nearby environment.
-+	 */
-+	uint8_t leap_second_smearing_hint; /* Matches VIRTIO_RTC_SUBTYPE_xxx */
-+#define VMCLOCK_SMEARING_STRICT		0
-+#define VMCLOCK_SMEARING_NOON_LINEAR	1
-+#define VMCLOCK_SMEARING_UTC_SLS	2
-+	uint16_t tai_offset_sec; /* Actually two's complement signed */
-+	uint8_t leap_indicator;
-+	/*
-+	 * This field is based on the VIRTIO_RTC_LEAP_xxx values as defined
-+	 * in the current draft of virtio-rtc, but since smearing cannot be
-+	 * used with the shared memory device, some values are not used.
-+	 *
-+	 * The _POST_POS and _POST_NEG values allow the guest to perform
-+	 * its own smearing during the day or so after a leap second when
-+	 * such smearing may need to continue being applied for a leap
-+	 * second which is now theoretically "historical".
-+	 */
-+#define VMCLOCK_LEAP_NONE	0x00	/* No known nearby leap second */
-+#define VMCLOCK_LEAP_PRE_POS	0x01	/* Positive leap second at EOM */
-+#define VMCLOCK_LEAP_PRE_NEG	0x02	/* Negative leap second at EOM */
-+#define VMCLOCK_LEAP_POS	0x03	/* Set during 23:59:60 second */
-+#define VMCLOCK_LEAP_POST_POS	0x04
-+#define VMCLOCK_LEAP_POST_NEG	0x05
-+
-+	/* Bit shift for counter_period_frac_sec and its error rate */
-+	uint8_t counter_period_shift;
-+	/*
-+	 * Paired values of counter and UTC at a given point in time.
-+	 */
-+	uint64_t counter_value;
-+	/*
-+	 * Counter period, and error margin of same. The unit of these
-+	 * fields is 1/2^(64 + counter_period_shift) of a second.
-+	 */
-+	uint64_t counter_period_frac_sec;
-+	uint64_t counter_period_esterror_rate_frac_sec;
-+	uint64_t counter_period_maxerror_rate_frac_sec;
-+
-+	/*
-+	 * Time according to time_type field above.
-+	 */
-+	uint64_t time_sec;		/* Seconds since time_type epoch */
-+	uint64_t time_frac_sec;		/* Units of 1/2^64 of a second */
-+	uint64_t time_esterror_nanosec;
-+	uint64_t time_maxerror_nanosec;
-+};
-+
-+#endif /*  __VMCLOCK_ABI_H__ */
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index 99a8d9fa4c..8913e4fb99 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -258,6 +258,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
-          "$hdrdir/include/linux/kernel.h" \
-          "$hdrdir/include/linux/kvm_para.h" \
-          "$hdrdir/include/linux/vhost_types.h" \
-+         "$hdrdir/include/linux/vmclock-abi.h" \
-          "$hdrdir/include/linux/sysinfo.h"; do
-     cp_portable "$i" "$output/include/standard-headers/linux"
- done
--- 
-2.47.0
+Mark.
 
 
