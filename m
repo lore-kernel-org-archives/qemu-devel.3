@@ -4,127 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA4EE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C63E77199
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVeJ9-0002SZ-CD; Wed, 08 Jan 2025 17:13:47 -0500
+	id 1tVeJW-0002U5-GC; Wed, 08 Jan 2025 17:14:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tVeJ7-0002SL-EE
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:13:45 -0500
-Received: from mout.gmx.net ([212.227.17.22])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tVeJ5-0000GI-Ds
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:13:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1736374416; x=1736979216; i=deller@gmx.de;
- bh=Eb1MKDhCL5fFfdSHU6bsMMdirvNL1pcv48maTCfDgqk=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=lBr/UtSsSa9ExCmHcGoPJuEBi3VX8RTu4NmemSZWKilvSiKIuK9IaxFisMaqzb5Q
- SaZ2ekdwheGzp8oFbcCHzoPshzZrP3rP5pf16aVWY/fDBOT4gP+4GP035AMtABsmT
- vN8iGRc7funRvkJkvfEkXXHIDjKw2UHIUpep0ioTp189bdeSvgGAP+v9DgjVh5Nd4
- wTRSAi0dixWbWUzOQmwrH3nw57nuMeO+AKNhBECZpL8xNl8p8jJITjbljWywLhNP2
- Wua/y87X/FzxgY40IyLhfn50v0pouwdX73lNK+abZ+GrhOgskkseUQA8g/E7gbKoM
- 93WiDOnmFEz9x/SB7A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.172] ([83.135.220.169]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mof9F-1tpWf33IhV-00blbV; Wed, 08
- Jan 2025 23:13:36 +0100
-Message-ID: <3744588b-7fbc-4b38-8572-3e07678c4fc3@gmx.de>
-Date: Wed, 8 Jan 2025 23:13:38 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVeJU-0002Tb-Gh
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:14:08 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVeJR-0000IY-Db
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:14:08 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso2463115e9.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 14:14:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736374441; x=1736979241; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HkpVNvz8OiUHJly0dtgs3s5fVF4bZnDmiYZGR2NuTJo=;
+ b=pZVjm/vTlh1IeUj/3GzKRN0qXfwiE3uusbYNZi2j62S8r/eaKansevB0eZAxZXEPlg
+ 8cZVrvyS2j/B4YcJqR/4TnvXp4s1X70sKb+N2AYHYGexRoRhfiDhNT+z4IH7SYlPrCtI
+ PLNJSLi0CqZL/pLWDX0JyZcA5AqK7cvsRVX1VKesyp2PtIE5G/ksu4P2DFxF3X+/O/zj
+ J9Gh3ymxuhoiQ1kWlmhgirZwrGeporwr7mu9LgvBeCJX3zjvXalO9+V5qLJTsiOqCrsx
+ tAkVHAwCS39UtOCLsAce6plOwrzkTpMJ1mUwaMXuiNk5idJ3j4oxNVS1/s2frs1MObwl
+ 0dSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736374441; x=1736979241;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HkpVNvz8OiUHJly0dtgs3s5fVF4bZnDmiYZGR2NuTJo=;
+ b=vD5jT/goEQjnJEkyk/TE4NmHxBZgVrdP4RQvleR/pq/hDP+Bh4fRGNaDchP2KQhMwP
+ fKJkKk34NVngsfXYg2/upCtn8GZYbmA64/lPg9AOakZRFiSytFmz+gNz1GceP4DiVBNC
+ JEJ1nhiezplMwC108SkqCYdnczuWD0wi6aCN3P0PmYXBMGL/KXpyEqQZdVJ+1HDhyjjg
+ cmfi/GSZtUrym6/aNyDkvRdgbp+eWqOdkXCIK0d/HkRylJF9dlh+16S+uitA/S0sx5GE
+ IHUx0SIMQI++ncTHkUHVTkJbaq40VN22BJUIR60uctnZRGzOkDqsV/EMf9dhRXX4SI9L
+ MZEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXuYzn6VyEpHKOH7Ee/Pr3tPeVD2RX7QmT25zazjWSz7giAfGnwYcdP2CsA7q67j1ZoW6RlJIwImvZ/@nongnu.org
+X-Gm-Message-State: AOJu0YzAhyk1GdKbw/gsiE6PJLJazD9wIuvWa4lTzaHlSx/aBHVf+H7J
+ jDTKuZ4o5gxQ9AY6JEk3LQwy1Eyw6uEmQYDlUnAT2LqF9IyveicXV8kg09ziwGQ1z8YOCuoYzXr
+ vKao=
+X-Gm-Gg: ASbGncshjNQMlCshPqEJpAW0wwOmhh/SrEA6MHGQ7xUg6FMIr7zE2uJRDGfJJpBo4eC
+ yrs3ykTa1srG5vUS2NpjJuTplGTzj8gpR78hOv+1Yw53vQ56vNM5z2HDGRRj6ILQxIS/tD32rsT
+ 4ZcqgU1aXgHjLbB7UAazbPwVvc9EoDotTV0XtOJWxqB//WzaUeBO53XhCM3dwo+Je0hkHz/JkAV
+ HBTY23OelCSIOePQw8VPB2XbQkZgYrF0iiLFm0A9yu5VVWWwoxkjLQ8hwQ8wqhw97rHNxo/d68R
+ 8vAYqCPoxkdfJW9aYNdtvgNR
+X-Google-Smtp-Source: AGHT+IF9rlkowUbW/dWDP5pAAceIgDRtKCa9O7axjezkdxzgG9k53OMvKgham0fQU3KZuGBGvIi4+g==
+X-Received: by 2002:a05:600c:138f:b0:434:a4fe:cd71 with SMTP id
+ 5b1f17b1804b1-436e26a88d9mr40077135e9.12.1736374441476; 
+ Wed, 08 Jan 2025 14:14:01 -0800 (PST)
+Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9d26a7bsm400545e9.0.2025.01.08.14.14.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jan 2025 14:14:01 -0800 (PST)
+Message-ID: <2353d8be-843a-4054-86e8-a961aab62769@linaro.org>
+Date: Wed, 8 Jan 2025 23:14:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] tests: Add functional tests for HPPA machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20241231190620.24442-1-philmd@linaro.org>
- <20241231190620.24442-2-philmd@linaro.org>
+Subject: Re: [PATCH v2 07/81] target/arm: Do not test TCG_TARGET_HAS_bitsel_vec
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ <20250107080112.1175095-8-richard.henderson@linaro.org>
+ <eed31d9e-7c0f-4a96-9442-48bb2c56337f@linaro.org>
+ <393fb699-a360-416e-b1d1-df9372685c16@linaro.org>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241231190620.24442-2-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <393fb699-a360-416e-b1d1-df9372685c16@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:vAaxx/j5nzp8aR3qbd2z9yORTsFfMIlPBCe9lmJCm8+2yr4YcWf
- FcgE0duxRU01/ZsFvYdN37oAubV6LDg7uTExCNmDbgVAvghzbjAMatRiUWV7zecafCLKK0z
- lSMKqds6Ov+p7N/BO+ridx6zGl/faCyqfU55+gbjehZOE2ihNCupODG4RnNtgHjuVJISHYr
- PZYAK3Utuc8JvvDgwR3xQ==
-UI-OutboundReport: notjunk:1;M01:P0:nq5XWcGsiFw=;rButCy01Cf4kvTrxGI4pErJnq+S
- PmVsTLDW0+DIv3/9rbt8tHejGrPl8n/j+CS/yiGnexl5Q+TYYhNKfp5Jl+QqdsSyfar33KI8l
- Sj7DTeJY3EJLxpkOfG4J9wm7D9f71zilQkj1G7YwyKEa6K0pnwp2Xq+pYcGQdxk+wpGNMeqat
- qu0X9UOT+1UywS88nbA55g8xR8Frx4RgJwh5Bc1mZgPcqg1n5dKSatqTaMqSeMVY7y0XeW7AY
- TnSoSqD/qS1crpUEpc0hmLAh7p6SKmJshduwScM8v4O6tMGyE7P8lfbBP1y60IlEdswlppGm+
- UTKlBrAJpzs4fBO5PIjMHnYpjGhvLUadBMGy0SW0+KXkkE0/fXPugM17rNLLITDUGqorj5n4H
- OZ6ze1BQwv1BOrITutRP4O5FFYYpHgss0Z5ohB/TlRa9+VNmJdO3eqOeup7hr1Ov2v13v+Zzz
- MzZ0UYlkGboLNKgxfBTG8dzW4RKnZgENLBZ7xgQO2fsS/bQ7uYa5TZtWFUFI2kErITuzGDxZb
- 0V23vsSjwru7e1YWnJI2DgUHMvKg4cUtjkvv+bJ3L8ouk9zEY9fHkLquL/Hrljsg/3rH+5kOF
- RPLfL/qliHY4qQwUE3v4+gc4Jn9XmnuKgZFLNrrtidICPMsucWBugxIfz6L1iuCtEN2L8l4J8
- nv2wvZRutKDiMWIdFQaCl5GmvHqiZsUZiC0nGJPtp6rHFYfRgPnEFrZlkx83J+YOumYYxkYjm
- mw/tUmz9LVqAYXAEJb99VwG4dlBVdUUjQUicCxiZx4ScqYcnjS/1mOpxLnVOcT1c0lAz+d/vM
- mqlJOrTzHbGWuBvM+BhbhAitp7fdckz55oiYccofnzcsN20fl7fQh257zHS8AK88QonEzyhfz
- FrYQu0evgtXd9S54FB/R5r0F0zxKgsPeYp6Mb+AceL41lUy/Vvih+FbG651pkt2lOET/+YDUe
- rghVY6KN10kFHFW5/VvuXvl1SB3+0038SrIjepaVnQL6S9eSLjwltq2NEopCL7bo9V3LaV6na
- NKaZiDye8toEkIuKteywWMaqYaS/1l5IVtTX+gFXsYuHhDQnUgMyjA1RQPPf+a1nNGLO1NKI9
- y0I9/6y0twMz3TlAmMkg3JzymT1E69
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,102 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/31/24 20:06, Philippe Mathieu-Daud=C3=A9 wrote:
-> Add quick firmware boot tests (less than 1sec) for the
-> B160L (32-bit) and C3700 (64-bit) HPPA machines:
->
->    $ make check-functional-hppa
->    1/4 qemu:func-quick+func-hppa / func-hppa-empty_cpu_model OK 0.13s 1 =
-subtests passed
->    2/4 qemu:func-quick+func-hppa / func-hppa-version         OK 0.14s 1 =
-subtests passed
->    3/4 qemu:func-quick+func-hppa / func-hppa-info_usernet    OK 0.22s 1 =
-subtests passed
->    4/4 qemu:func-quick+func-hppa / func-hppa-hppa_seabios    OK 0.22s 2 =
-subtests passed
->
-> Suggested-by: Helge Deller <deller@gmx.de>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 8/1/25 22:38, Richard Henderson wrote:
+> On 1/8/25 09:46, Philippe Mathieu-Daudé wrote:
+>> On 7/1/25 08:59, Richard Henderson wrote:
+>>> Rely on tcg-op-vec.c to expand the opcode if missing.
+>>>
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>> ---
+>>>   target/arm/tcg/translate-sve.c | 20 ++++----------------
+>>>   1 file changed, 4 insertions(+), 16 deletions(-)
+>>>
+>>> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/ 
+>>> translate-sve.c
+>>> index 49d32fabc9..732453db6f 100644
+>>> --- a/target/arm/tcg/translate-sve.c
+>>> +++ b/target/arm/tcg/translate-sve.c
+>>> @@ -596,14 +596,8 @@ static void gen_bsl1n_i64(TCGv_i64 d, TCGv_i64 
+>>> n, TCGv_i64 m, TCGv_i64 k)
+>>>   static void gen_bsl1n_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
+>>>                             TCGv_vec m, TCGv_vec k)
+>>>   {
+>>> -    if (TCG_TARGET_HAS_bitsel_vec) {
+>>> -        tcg_gen_not_vec(vece, n, n);
+>>> -        tcg_gen_bitsel_vec(vece, d, k, n, m);
+>>> -    } else {
+>>
+>> Why aren't we doing the NOT n operation here?
+>>
+>>> -        tcg_gen_andc_vec(vece, n, k, n);
+>>> -        tcg_gen_andc_vec(vece, m, m, k);
+>>> -        tcg_gen_or_vec(vece, d, n, m);
+>>> -    }
+>>> +    tcg_gen_not_vec(vece, n, n);
+>>> +    tcg_gen_bitsel_vec(vece, d, k, n, m);
+> 
+> Pardon?  It's right there, unindented.
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+Sorry I'm not clear. Previous to your change, in the
+TCG_TARGET_HAS_bitsel_vec side we use the NOT opcode,
+but not in the other side where we expand, why?
 
-> ---
->   MAINTAINERS                           |  1 +
->   tests/functional/meson.build          |  4 +++
->   tests/functional/test_hppa_seabios.py | 35 +++++++++++++++++++++++++++
->   3 files changed, 40 insertions(+)
->   create mode 100755 tests/functional/test_hppa_seabios.py
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 38a290e9c2c..17c720dd2b9 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1201,6 +1201,7 @@ F: include/hw/pci-host/astro.h
->   F: include/hw/pci-host/dino.h
->   F: pc-bios/hppa-firmware.img
->   F: roms/seabios-hppa/
-> +F: tests/functional/test_hppa_seabios.py
->
->   LoongArch Machines
->   ------------------
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 24f7f8f2f1c..71810a3aa82 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -104,6 +104,10 @@ tests_avr_system_thorough =3D [
->     'avr_mega2560',
->   ]
->
-> +tests_hppa_system_quick =3D [
-> +  'hppa_seabios',
-> +]
-> +
->   tests_i386_system_thorough =3D [
->     'i386_tuxrun',
->   ]
-> diff --git a/tests/functional/test_hppa_seabios.py b/tests/functional/te=
-st_hppa_seabios.py
-> new file mode 100755
-> index 00000000000..a44d1a3eebe
-> --- /dev/null
-> +++ b/tests/functional/test_hppa_seabios.py
-> @@ -0,0 +1,35 @@
-> +#!/usr/bin/env python3
-> +#
-> +# SeaBIOS boot test for HPPA machines
-> +#
-> +# Copyright (c) 2024 Linaro, Ltd
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import QemuSystemTest
-> +from qemu_test import wait_for_console_pattern
-> +
-> +class HppaSeabios(QemuSystemTest):
-> +
-> +    timeout =3D 5
-> +    MACH_BITS =3D {'B160L': 32, 'C3700': 64}
-> +
-> +    def boot_seabios(self):
-> +        mach =3D self.machine
-> +        bits =3D self.MACH_BITS[mach]
-> +        self.vm.set_console()
-> +        self.vm.launch()
-> +        self.machine
-> +        wait_for_console_pattern(self, f'SeaBIOS PA-RISC {bits}-bit Fir=
-mware')
-> +        wait_for_console_pattern(self, f'Emulated machine:     HP {mach=
-} ({bits}-bit')
-> +
-> +    def test_hppa_32(self):
-> +        self.set_machine('B160L')
-> +        self.boot_seabios()
-> +
-> +    def test_hppa_64(self):
-> +        self.set_machine('C3700')
-> +        self.boot_seabios()
-> +
-> +if __name__ =3D=3D '__main__':
-> +    QemuSystemTest.main()
+> Anyway, maybe I'll keep this, as it's still used on pre-avx512 x86 hosts.
+> 
+> 
+> r~
 
 
