@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E090E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 17:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1581AE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 17:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVZkG-0008CO-Rn; Wed, 08 Jan 2025 12:21:28 -0500
+	id 1tVZlL-0000u9-Kz; Wed, 08 Jan 2025 12:22:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVZkE-0008BD-NE
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:21:27 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1tVZlJ-0000tj-Ge
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:22:33 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVZkC-0005Se-Ed
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:21:26 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d14336f0so10408872a12.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 09:21:24 -0800 (PST)
+ id 1tVZlI-0005Zz-0J
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 12:22:33 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d14336f0so10410331a12.3
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 09:22:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736356883; x=1736961683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736356950; x=1736961750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dnxgSEkG4KV9+x/d/BmwTJRhjB94gpcSPLQ6ZWPmJ6Y=;
- b=KxVY08ri0XtvpIdRT6WhlV9Ro7bYNMWmCdlDIQNvz4EwKQkcfEWx+CltGHW4NcLz3p
- eSKC2su2/nWcGwz/YMN02tgdYFcQYEvpGmpgegIgYrUsjRKIdizp3nWSC7U2klm00EUt
- rDsfcwE7tqb32PQJTU6yz3jOdrIEgrtvEAdUDD05O/SiRoVHMZs29Q/0q7p2a0ZfP3EL
- wGyrBZT9Eer2zUb2MaPpYP9e0290qgKqyeWu/O2pGUnx7MtV12LhpxI2SNsGCruWJO8b
- kV0b/TDutmTGMrEmboSb73ohcr83QrCf0Xl7Nq1K0pUIPaQz/ZwPrP5R84ERfKM9gsay
- oGoA==
+ bh=XoyEssfuFe7qvhQw0cEYVUHywmaP1ZkY8kC4vZt676Y=;
+ b=KjPgIK+BV/imRb5huiUwBKNwGqu3zhoYzrlvWUqjXVpn2hrQDWqFc075nlwmL50BSR
+ Gt8S2pMevM+j2YarpUU0DKzSPkioXYyAm89Dg/iaCw5x0tRv1DutlTVgrrkEGMPV3ugB
+ 44QRj6/fknNvD6eo1oOQlHioBNtdS1zGDwkWquTueE4n6SPoMqq/2M6uM1MXVPtlQ+6F
+ WyQ3oYcDnAd1YCnY1Xj5ukA5iaPm1Q7RnG2k9ZGrtoo85dwOiwSMHDkPTKZMNScVKfMS
+ YhR4XVWyQ3NV5I3e0ilBNbhCSk5BWkShb3IttHmXSrUl8fnsOP5cC8jkaqyZmklKjZVb
+ fgOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736356883; x=1736961683;
+ d=1e100.net; s=20230601; t=1736356950; x=1736961750;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dnxgSEkG4KV9+x/d/BmwTJRhjB94gpcSPLQ6ZWPmJ6Y=;
- b=m3wl4/8i0kfg9qBM8SEe0VrJqFdI+94FMxaF/o8m5MGm3ZhsfGdhejoIG2YIcpOMq1
- DVbG9ERdI2eQKHAZWDbOTvsDdJIBAYfqzgA1s+ib+/EciN2CaseLTEe982ppgiveDWKI
- +iBeJWya5PGYK49BfXlHJ0F7WzCakNc2WIQFuX7oHQqaI79xUMVVpXCSCEUj/1SnKW3w
- 0Znfoh6UEKGduue3y/mEwEVlkhyBML1rB5mRZPnCB1CK5iSMuLkaNbq4i82M8PphiLYA
- LMrpLgipqeHtDW8LGHJLA+/0wUCSVlwqtPRTAl0Om/IhPoHjSL9DMigPH2ND4s4cNA9a
- M53g==
+ bh=XoyEssfuFe7qvhQw0cEYVUHywmaP1ZkY8kC4vZt676Y=;
+ b=aPjRYsd320ko/BWmHBBxNRrRMLdUh5HIvF7cOwLWO6elEBUluDnbBHrCgH71XR5Q6S
+ UxFKRi5z/kqHDkAmmkK7f2XLJ7FQnYXjzEy7FAdprZdDeeGsdVDUkhiAghoZXyjQxkSw
+ VdtDP6gxKdt+waj+tKfGYa6zP36VvE/AMVnZ0Uld+1HOtzQXAnSikbi81nEOi6hv6NvA
+ S0fPTjnzTK5YG1zNu0kJDTXsjOPwnVuyFV4B6Qw/YHxr4jckd/7oKlKAn1cJds4ia0o7
+ GG5cE1Qs+miIj4CaAh9FY2eMjm2X89DxaT05pIBzArDcV2wVc51xv1m6ihnyfnL9SAfy
+ Z45Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+IvdJmY+fMg8rxRjTGp8SVk2a7tI3B4y6hvL1NHu6yecvJxbHP8wkszDctrc/+OpCR0ZVRAcRsSpx@nongnu.org
-X-Gm-Message-State: AOJu0YxerqmjtKtibyJRTFXBiVFMxdwFHs7U0VHy/wP/SgtenWP6ZjXi
- hjm1JqTuHnQJGQrhaIGm+7DHDXovZuuAyw1r2cDN+5J5Pf2DX8QYI2uv8SxdlX0=
-X-Gm-Gg: ASbGnctwkfw02Gq14DOlJ6TULvaQIu56iinJGEqZwHpHmM0x5yWSPO1uCqfYCXlzr8V
- 3fnBzHzekyMOXnVZURZMSCGKtkp8cTi7xGilHXRof0kg6CP9rnG/UxJh7StUYS35IDPLBQLvE06
- W+dvmwBSx4j7Nfb21hCYuax8Q9F60vR4nOvfKAlrtYfJodxTlGPeUwwxvGZfmgjuyUH0u4DIl/U
- q1cY5w00Dv4ZQNLDFPnVQ0KtqX7Q1fD4btPW2YSfFOIosyalTHi/28=
-X-Google-Smtp-Source: AGHT+IFndgNT8+F0MK2jtyXoW+Vs9xygfV0uNFF+xC97H2AH3i8sMnZBpBK+dofc3zQC+ml04sebtg==
-X-Received: by 2002:a05:6402:84f:b0:5d0:d330:c965 with SMTP id
- 4fb4d7f45d1cf-5d972d28da9mr3284643a12.0.1736356882968; 
- Wed, 08 Jan 2025 09:21:22 -0800 (PST)
+ AJvYcCVPyVBw/9CqlMXvyEvtYLXGGUX/Uq9svNjPep8b+iE9scDT8NFqUMEUgaW2qjoawfzh6aqBCJ+/nt+8@nongnu.org
+X-Gm-Message-State: AOJu0Yx5eJO7SYJuytgzuGiqJ6/Ohpxst16KYM/M1H+647svHF+juj0r
+ Jaev/ySzHL+5hUC4FZ89WeArZKw5/C8oH/SNRZYnkky9KIhrj9vAtQq2R6WQnaw=
+X-Gm-Gg: ASbGncvTjU2PcWTGuCvwxY9/OV1wu+gv6oYKqaVtujDENjxxgu9OfBozju1Z4AwGAcM
+ EAhLdcSXePtUmBMerA9bNsZbXxYIUMbl0XheNNjaeoXLZWZqYS68tfJhZgrh3YveUmgKfpQXHSN
+ IkJlNV3Ao574T9Nq+IGOLYAaAuuZ4TWEqtSIwPq0n0t5BP/aIh8qz7Lj/8IPLPnaP8JDSrt/1sG
+ QoP7FColmTXMgkkPCGwCT2vhj5FYnqNQPlJ/InoMV649ePLU190y38=
+X-Google-Smtp-Source: AGHT+IG1KOcdPm2tw3ljyv/aqeDrEVtuhvQXkLKnSHNFX0bulZkLPqNerYWNekONR27k0J0wiowNKQ==
+X-Received: by 2002:a05:6402:50d4:b0:5d0:aa2d:6eee with SMTP id
+ 4fb4d7f45d1cf-5d972e6460emr3523275a12.26.1736356949693; 
+ Wed, 08 Jan 2025 09:22:29 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d8baa29afasm15022656a12.59.2025.01.08.09.21.20
+ 4fb4d7f45d1cf-5d95a597faesm2780511a12.52.2025.01.08.09.22.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jan 2025 09:21:21 -0800 (PST)
+ Wed, 08 Jan 2025 09:22:29 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 39AF15F8AC;
- Wed,  8 Jan 2025 17:21:20 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C4D525F8AC;
+ Wed,  8 Jan 2025 17:22:27 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Ilya Leoshkevich <iii@linux.ibm.com>
 Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
@@ -73,20 +73,19 @@ Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,  Kyle Evans
  <kevans@freebsd.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 7/8] docs/user: Document the %d placeholder and
- suspend=n QEMU_GDB features
-In-Reply-To: <20241216123412.77450-8-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Mon, 16 Dec 2024 13:33:25 +0100")
+Subject: Re: [PATCH v3 8/8] tests/tcg: Add late gdbstub attach test
+In-Reply-To: <20241216123412.77450-9-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Mon, 16 Dec 2024 13:33:26 +0100")
 References: <20241216123412.77450-1-iii@linux.ibm.com>
- <20241216123412.77450-8-iii@linux.ibm.com>
+ <20241216123412.77450-9-iii@linux.ibm.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Wed, 08 Jan 2025 17:21:20 +0000
-Message-ID: <87o70h9q7j.fsf@draig.linaro.org>
+Date: Wed, 08 Jan 2025 17:22:27 +0000
+Message-ID: <87ikqp9q5o.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,6 +110,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
+> Add a small test to prevent regressions.
+> Make sure that host_interrupt_signal is not visible to the guest.
+>
 > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
