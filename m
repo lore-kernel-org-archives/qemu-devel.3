@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C63E77199
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C84DE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:17:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVeJW-0002U5-GC; Wed, 08 Jan 2025 17:14:10 -0500
+	id 1tVeMp-00047V-Fw; Wed, 08 Jan 2025 17:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVeJU-0002Tb-Gh
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:14:08 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVeMo-00047M-DW
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:17:34 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVeJR-0000IY-Db
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:14:08 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso2463115e9.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 14:14:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVeMm-0002ck-N3
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:17:34 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-385dece873cso157321f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 14:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736374441; x=1736979241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736374651; x=1736979451; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=HkpVNvz8OiUHJly0dtgs3s5fVF4bZnDmiYZGR2NuTJo=;
- b=pZVjm/vTlh1IeUj/3GzKRN0qXfwiE3uusbYNZi2j62S8r/eaKansevB0eZAxZXEPlg
- 8cZVrvyS2j/B4YcJqR/4TnvXp4s1X70sKb+N2AYHYGexRoRhfiDhNT+z4IH7SYlPrCtI
- PLNJSLi0CqZL/pLWDX0JyZcA5AqK7cvsRVX1VKesyp2PtIE5G/ksu4P2DFxF3X+/O/zj
- J9Gh3ymxuhoiQ1kWlmhgirZwrGeporwr7mu9LgvBeCJX3zjvXalO9+V5qLJTsiOqCrsx
- tAkVHAwCS39UtOCLsAce6plOwrzkTpMJ1mUwaMXuiNk5idJ3j4oxNVS1/s2frs1MObwl
- 0dSA==
+ bh=14Pwi8ItYDnHMjbwWLri3vuzRp8rec3z0/+pTBaNDdU=;
+ b=M2LkIBDyA/g8CMZmRuVzucMHIa94xDx56gRiwCpaf3e7dQmuDueJePUvPsmB2us+I8
+ xyUigUgVPUHZdLaPDBSGKBUWvVdgpw/bak2AsKhzMZvCnP9MYW6FNND/lWHnZylorvj8
+ Hl6J3Ny24bWt7/jNWUqLjVyN2mSth6bN51aTshtExjno/eAXOjCYpwPkDK0nUhi5bMEQ
+ H4PHkSBUiQF2EmUmLelEzes2gphLBwaSCmmXSXLANY1V6/ltS96OrSv1VGi1qVfCWpuy
+ DbqpWDjIWOUb+vcHeCegN+aMlt4AQ5x4k4Ur/9NM00HmwB66+t8KODQ8W4dHwwARfbO9
+ DJsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736374441; x=1736979241;
+ d=1e100.net; s=20230601; t=1736374651; x=1736979451;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HkpVNvz8OiUHJly0dtgs3s5fVF4bZnDmiYZGR2NuTJo=;
- b=vD5jT/goEQjnJEkyk/TE4NmHxBZgVrdP4RQvleR/pq/hDP+Bh4fRGNaDchP2KQhMwP
- fKJkKk34NVngsfXYg2/upCtn8GZYbmA64/lPg9AOakZRFiSytFmz+gNz1GceP4DiVBNC
- JEJ1nhiezplMwC108SkqCYdnczuWD0wi6aCN3P0PmYXBMGL/KXpyEqQZdVJ+1HDhyjjg
- cmfi/GSZtUrym6/aNyDkvRdgbp+eWqOdkXCIK0d/HkRylJF9dlh+16S+uitA/S0sx5GE
- IHUx0SIMQI++ncTHkUHVTkJbaq40VN22BJUIR60uctnZRGzOkDqsV/EMf9dhRXX4SI9L
- MZEg==
+ bh=14Pwi8ItYDnHMjbwWLri3vuzRp8rec3z0/+pTBaNDdU=;
+ b=DT0JwjBP6+91tPbnMgHm2H4ACKA/UgOWF0ebIqt3HgTMl+CStjg/0teH8nSYBoEfwb
+ wTm5TwU91qeH6AXZb1nq1QkiptfR90ZMOb5xAQ5td4BCYLk91NiuW8PbRW1hQjNinsvD
+ 49UHmhvJ6hk10txua1/1z+RCj4VJ09naOQoHjlInMx8oW90urTZ0GqWaed4VO0JOs5XX
+ o0DDZ/24vgK9AxU/xmvAHqbIXk4UpfdRIdCj23ge2b/7O25RzJOW2dp2HPq2LzahSFkX
+ cdtDgfTn7d8MmYvD0rC3BoUPF5DgfJNC9jDGAN0W9w9dT1bUnUrP9M93JQ6aQZPnOhHg
+ c3cA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuYzn6VyEpHKOH7Ee/Pr3tPeVD2RX7QmT25zazjWSz7giAfGnwYcdP2CsA7q67j1ZoW6RlJIwImvZ/@nongnu.org
-X-Gm-Message-State: AOJu0YzAhyk1GdKbw/gsiE6PJLJazD9wIuvWa4lTzaHlSx/aBHVf+H7J
- jDTKuZ4o5gxQ9AY6JEk3LQwy1Eyw6uEmQYDlUnAT2LqF9IyveicXV8kg09ziwGQ1z8YOCuoYzXr
- vKao=
-X-Gm-Gg: ASbGncshjNQMlCshPqEJpAW0wwOmhh/SrEA6MHGQ7xUg6FMIr7zE2uJRDGfJJpBo4eC
- yrs3ykTa1srG5vUS2NpjJuTplGTzj8gpR78hOv+1Yw53vQ56vNM5z2HDGRRj6ILQxIS/tD32rsT
- 4ZcqgU1aXgHjLbB7UAazbPwVvc9EoDotTV0XtOJWxqB//WzaUeBO53XhCM3dwo+Je0hkHz/JkAV
- HBTY23OelCSIOePQw8VPB2XbQkZgYrF0iiLFm0A9yu5VVWWwoxkjLQ8hwQ8wqhw97rHNxo/d68R
- 8vAYqCPoxkdfJW9aYNdtvgNR
-X-Google-Smtp-Source: AGHT+IF9rlkowUbW/dWDP5pAAceIgDRtKCa9O7axjezkdxzgG9k53OMvKgham0fQU3KZuGBGvIi4+g==
-X-Received: by 2002:a05:600c:138f:b0:434:a4fe:cd71 with SMTP id
- 5b1f17b1804b1-436e26a88d9mr40077135e9.12.1736374441476; 
- Wed, 08 Jan 2025 14:14:01 -0800 (PST)
+ AJvYcCWvxMPoS4qXn8JM8eG+I7PfoBMYtn9j/4JjsNrAoUJpX+gsIxHvZ9MW7K1oBOezmccbRmVEIwE3FmIA@nongnu.org
+X-Gm-Message-State: AOJu0Yy5LFNzAyX9bzG5OqcROs/HRMg38wNohrhu9DydnV9Fl0wxtSfr
+ scJL4hwxfu2Q6lTWSS6EvvyaH8ntlliclrFOjnTI+WD5JYusHIecnrGxi0Z7tR6enJxPtzBaP3m
+ Tcsk=
+X-Gm-Gg: ASbGncuwmLxHYJCBrxC34wUXmf/lksWNG870P4Yof7Qbn4aYnuINBy0U67McGjwRlFH
+ ekVNwg5kLuppFvnkdJbU6+NpPuCzOaoDd3TovNhW36Bt5FZ+MEh7HBvF2o8tet0NKgf7lNB3yiz
+ NbXwdtoteTb+YYlpwNbp0gWBqDC8rHO3Ft05fi6fkmE+wxy8AjjXqWZU2oixsJjne2QaOhVPU04
+ SWt1LCUTiP5DW+7U3v12d1/WMeZ9/sFVFg5nZXP7yD9xjRG3ftKwcdRUfpmZYGhSBUnXGdF6MOa
+ 8iiLxn+HBZnXD0MujD7mxHB4
+X-Google-Smtp-Source: AGHT+IEeP9CpPXcbF17Z7z0S4xmxUUa9uODB/DRWueOKtpY9jKKNprpxX/bdTIUEGkPRHPJUls1J3A==
+X-Received: by 2002:a05:6000:2c6:b0:385:f847:aa40 with SMTP id
+ ffacd0b85a97d-38a8733a209mr3612855f8f.38.1736374650826; 
+ Wed, 08 Jan 2025 14:17:30 -0800 (PST)
 Received: from [192.168.69.132] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d26a7bsm400545e9.0.2025.01.08.14.14.00
+ ffacd0b85a97d-38a8e38f176sm47055f8f.63.2025.01.08.14.17.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 14:14:01 -0800 (PST)
-Message-ID: <2353d8be-843a-4054-86e8-a961aab62769@linaro.org>
-Date: Wed, 8 Jan 2025 23:14:00 +0100
+ Wed, 08 Jan 2025 14:17:30 -0800 (PST)
+Message-ID: <7be534fe-55fc-4663-a388-efcb035e803a@linaro.org>
+Date: Wed, 8 Jan 2025 23:17:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/81] target/arm: Do not test TCG_TARGET_HAS_bitsel_vec
+Subject: Re: [PATCH v2 79/81] tcg: Merge INDEX_op_neg_{i32,i64}
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
 References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-8-richard.henderson@linaro.org>
- <eed31d9e-7c0f-4a96-9442-48bb2c56337f@linaro.org>
- <393fb699-a360-416e-b1d1-df9372685c16@linaro.org>
+ <20250107080112.1175095-80-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <393fb699-a360-416e-b1d1-df9372685c16@linaro.org>
+In-Reply-To: <20250107080112.1175095-80-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,49 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/25 22:38, Richard Henderson wrote:
-> On 1/8/25 09:46, Philippe Mathieu-Daudé wrote:
->> On 7/1/25 08:59, Richard Henderson wrote:
->>> Rely on tcg-op-vec.c to expand the opcode if missing.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   target/arm/tcg/translate-sve.c | 20 ++++----------------
->>>   1 file changed, 4 insertions(+), 16 deletions(-)
->>>
->>> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/ 
->>> translate-sve.c
->>> index 49d32fabc9..732453db6f 100644
->>> --- a/target/arm/tcg/translate-sve.c
->>> +++ b/target/arm/tcg/translate-sve.c
->>> @@ -596,14 +596,8 @@ static void gen_bsl1n_i64(TCGv_i64 d, TCGv_i64 
->>> n, TCGv_i64 m, TCGv_i64 k)
->>>   static void gen_bsl1n_vec(unsigned vece, TCGv_vec d, TCGv_vec n,
->>>                             TCGv_vec m, TCGv_vec k)
->>>   {
->>> -    if (TCG_TARGET_HAS_bitsel_vec) {
->>> -        tcg_gen_not_vec(vece, n, n);
->>> -        tcg_gen_bitsel_vec(vece, d, k, n, m);
->>> -    } else {
->>
->> Why aren't we doing the NOT n operation here?
->>
->>> -        tcg_gen_andc_vec(vece, n, k, n);
->>> -        tcg_gen_andc_vec(vece, m, m, k);
->>> -        tcg_gen_or_vec(vece, d, n, m);
->>> -    }
->>> +    tcg_gen_not_vec(vece, n, n);
->>> +    tcg_gen_bitsel_vec(vece, d, k, n, m);
-> 
-> Pardon?  It's right there, unindented.
+On 7/1/25 09:01, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-opc.h    |  3 +--
+>   tcg/optimize.c           | 30 ++++++------------------------
+>   tcg/tcg-op.c             |  4 ++--
+>   tcg/tcg.c                |  6 ++----
+>   tcg/tci.c                | 11 +++++------
+>   tcg/tci/tcg-target.c.inc |  2 +-
+>   6 files changed, 17 insertions(+), 39 deletions(-)
 
-Sorry I'm not clear. Previous to your change, in the
-TCG_TARGET_HAS_bitsel_vec side we use the NOT opcode,
-but not in the other side where we expand, why?
-
-> Anyway, maybe I'll keep this, as it's still used on pre-avx512 x86 hosts.
-> 
-> 
-> r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
