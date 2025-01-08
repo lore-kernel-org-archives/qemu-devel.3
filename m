@@ -4,102 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E73EE77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 13:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE80E77199
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 13:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVWUW-0005KL-B4; Wed, 08 Jan 2025 08:53:00 -0500
+	id 1tVWUm-0005bb-Me; Wed, 08 Jan 2025 08:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVWUF-0005F9-M2
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 08:52:47 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVWU8-0005BB-UN
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 08:52:38 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8D99D1F385;
- Wed,  8 Jan 2025 13:52:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736344353; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KUXjA/zpL64KLjVdBTsLg9/3vtO3SZ5cmRoRGjpZ7wo=;
- b=VDIoXMbKQwy7fEjtOBZ1EmUCK6z+MMRgVLCLsmPxbhoMzq6D9jgzfS7xNa0xgDuXpnkffB
- 26GyZ6Q66zI2MkemesHIz67qeWEHeVoT2Bpj/X+TWbneaoiqYBNHcqVCXnk1JUq1L7+wV4
- ffYS07Awjzw/RMJjnk7jEVX0kebW/PY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736344353;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KUXjA/zpL64KLjVdBTsLg9/3vtO3SZ5cmRoRGjpZ7wo=;
- b=2/URlalhJ5AVhL+v93bR6Ito/MV3c3ZsUEGvS+lLFvl2ZVGi6PrMevLRlFONEzjy28PBNj
- WS/ErhM8INfDjcBw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736344353; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KUXjA/zpL64KLjVdBTsLg9/3vtO3SZ5cmRoRGjpZ7wo=;
- b=VDIoXMbKQwy7fEjtOBZ1EmUCK6z+MMRgVLCLsmPxbhoMzq6D9jgzfS7xNa0xgDuXpnkffB
- 26GyZ6Q66zI2MkemesHIz67qeWEHeVoT2Bpj/X+TWbneaoiqYBNHcqVCXnk1JUq1L7+wV4
- ffYS07Awjzw/RMJjnk7jEVX0kebW/PY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736344353;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KUXjA/zpL64KLjVdBTsLg9/3vtO3SZ5cmRoRGjpZ7wo=;
- b=2/URlalhJ5AVhL+v93bR6Ito/MV3c3ZsUEGvS+lLFvl2ZVGi6PrMevLRlFONEzjy28PBNj
- WS/ErhM8INfDjcBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 151891351A;
- Wed,  8 Jan 2025 13:52:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id LLiNMSCDfmc+PgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 08 Jan 2025 13:52:32 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 6/7] migration: Fix arrays of pointers in JSON writer
-In-Reply-To: <Z3231YxnKrjtwX6h@x1n>
-References: <20250107195025.9951-1-farosas@suse.de>
- <20250107195025.9951-7-farosas@suse.de> <Z3231YxnKrjtwX6h@x1n>
-Date: Wed, 08 Jan 2025 10:52:30 -0300
-Message-ID: <87cygx4dlt.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tVWUj-0005Xu-VI; Wed, 08 Jan 2025 08:53:14 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tVWUh-0005lg-22; Wed, 08 Jan 2025 08:53:13 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E9E4B4E601D;
+ Wed, 08 Jan 2025 14:53:04 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id ZRt2igV2o-7v; Wed,  8 Jan 2025 14:53:03 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 066444E6010; Wed, 08 Jan 2025 14:53:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F399C746F60;
+ Wed, 08 Jan 2025 14:53:02 +0100 (CET)
+Date: Wed, 8 Jan 2025 14:53:02 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, 
+ Fabiano Rosas <farosas@suse.de>, Guenter Roeck <linux@roeck-us.net>, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 04/14] hw/core: Introduce TYPE_SHARED_IRQ
+In-Reply-To: <20250108092538.11474-5-shentey@gmail.com>
+Message-ID: <8c12f28d-ee24-d4dc-f472-a6fe2e401dee@eik.bme.hu>
+References: <20250108092538.11474-1-shentey@gmail.com>
+ <20250108092538.11474-5-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid, self.data:url]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,188 +72,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Tue, Jan 07, 2025 at 04:50:24PM -0300, Fabiano Rosas wrote:
->> Currently, if an array of pointers contains a NULL pointer, that
->> pointer will be encoded as '0' in the stream. Since the JSON writer
->> doesn't define a "pointer" type, that '0' will now be an uint64, which
->> is different from the original type being pointed to, e.g. struct.
->> 
->> That mixed-type array shouldn't be compressed, otherwise data is lost
->> as the code currently makes the whole array have the type of the first
->> element.
->> 
->> While we could disable the array compression when a NULL pointer is
->> found, the JSON part of the stream still makes part of downtime, so we
->> should avoid writing unecessary bytes to it.
->> 
->> Keep the array compression in place, but break the array into several
->> type-contiguous pieces if NULL and non-NULL pointers are mixed.
+On Wed, 8 Jan 2025, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+> include/hw/core/shared-irq.h | 39 ++++++++++++++++
+> hw/core/shared-irq.c         | 88 ++++++++++++++++++++++++++++++++++++
+> hw/core/Kconfig              |  3 ++
+> hw/core/meson.build          |  1 +
+> 4 files changed, 131 insertions(+)
+> create mode 100644 include/hw/core/shared-irq.h
+> create mode 100644 hw/core/shared-irq.c
 >
-> Could I request for a sample JSON dump for an example array in the commit
-> log?  This whole solution looks working but is tricky.  A sample could help
-> people understand (e.g. showing the same "name" being dumped multiple
-> times..).
+> diff --git a/include/hw/core/shared-irq.h b/include/hw/core/shared-irq.h
+> new file mode 100644
+> index 0000000000..803c303dd0
+> --- /dev/null
+> +++ b/include/hw/core/shared-irq.h
+> @@ -0,0 +1,39 @@
+> +/*
+> + * IRQ sharing device.
+> + *
+> + * Copyright (c) 2025 Bernhard Beschow <shentey@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +/*
+> + * This is a simple device which has one GPIO output line and multiple GPIO
+> + * input lines. The output line is active if at least one of the input lines is.
 
-{"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
- "version": 1, "fields": [
-   ...,
-   {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
-   {"name": "css", "type": "struct", "struct": {
-    "vmsd_name": "s390_css_img", "version": 1, "fields": [{"name":
-    "chpids", "array_len": 256, "type": "struct", "struct": {"vmsd_name":
-    "s390_chp_info", "version": 1, "fields": [{"name": "in_use", "type":
-    "uint8", "size": 1}, {"name": "type", "type": "uint8", "size": 1},
-    {"name": "is_virtual", "type": "uint8", "size": 1}]}, "size": 3}]},
-    "size": 768},
-   {"name": "css", "type": "uint8", "size": 1},
-   ...
-]}
+How is this different from TYPE_OR_IRQ. Also or-irq.h is in 
+include/hw/or-irq.h not in include/hw/core/ where split-irq.h is so maybe 
+these could all be moved to one place for consistency? Or-irq also has a 
+reset method, do you need one in this device?
 
+Regards,
+BALATON Zoltan
+
+> + *
+> + * QEMU interface:
+> + *  + N unnamed GPIO inputs: the input lines
+> + *  + one unnamed GPIO output: the output line
+> + *  + QOM property "num-lines": sets the number of input lines
+> + */
+> +#ifndef HW_SHARED_IRQ_H
+> +#define HW_SHARED_IRQ_H
+> +
+> +#include "hw/sysbus.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_SHARED_IRQ "shared-irq"
+> +
+> +#define MAX_SHARED_LINES 16
+> +
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(SharedIRQ, SHARED_IRQ)
+> +
+> +struct SharedIRQ {
+> +    DeviceState parent_obj;
+> +
+> +    qemu_irq out_irq;
+> +    uint16_t irq_states;
+> +    uint8_t num_lines;
+> +};
+> +
+> +#endif
+> diff --git a/hw/core/shared-irq.c b/hw/core/shared-irq.c
+> new file mode 100644
+> index 0000000000..b2a4ea4a66
+> --- /dev/null
+> +++ b/hw/core/shared-irq.c
+> @@ -0,0 +1,88 @@
+> +/*
+> + * IRQ sharing device.
+> + *
+> + * Copyright (c) 2025 Bernhard Beschow <shentey@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/core/shared-irq.h"
+> +#include "hw/irq.h"
+> +#include "hw/qdev-properties.h"
+> +#include "qapi/error.h"
+> +#include "migration/vmstate.h"
+> +
+> +static void shared_irq_handler(void *opaque, int n, int level)
+> +{
+> +    SharedIRQ *s = opaque;
+> +    uint16_t mask = BIT(n);
+> +
+> +    if (level) {
+> +        s->irq_states |= mask;
+> +    } else {
+> +        s->irq_states &= ~mask;
+> +    }
+> +
+> +    qemu_set_irq(s->out_irq, !!s->irq_states);
+> +}
+> +
+> +static void shared_irq_init(Object *obj)
+> +{
+> +    SharedIRQ *s = SHARED_IRQ(obj);
+> +
+> +    qdev_init_gpio_out(DEVICE(s), &s->out_irq, 1);
+> +}
+> +
+> +static void shared_irq_realize(DeviceState *dev, Error **errp)
+> +{
+> +    SharedIRQ *s = SHARED_IRQ(dev);
+> +
+> +    if (s->num_lines < 1 || s->num_lines >= MAX_SHARED_LINES) {
+> +        error_setg(errp,
+> +                   "IRQ shared number of lines %d must be between 1 and %d",
+> +                   s->num_lines, MAX_SHARED_LINES);
+> +        return;
+> +    }
+> +
+> +    qdev_init_gpio_in(dev, shared_irq_handler, s->num_lines);
+> +}
+> +
+> +static const Property shared_irq_properties[] = {
+> +    DEFINE_PROP_UINT8("num-lines", SharedIRQ, num_lines, 1),
+> +};
+> +
+> +static const VMStateDescription shared_irq_vmstate = {
+> +    .name = TYPE_SHARED_IRQ,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT16(irq_states, SharedIRQ),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static void shared_irq_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    /* No state to reset */
+> +    device_class_set_props(dc, shared_irq_properties);
+> +    dc->vmsd = &shared_irq_vmstate;
+> +    dc->realize = shared_irq_realize;
+> +
+> +    /* Reason: Needs to be wired up to work */
+> +    dc->user_creatable = false;
+> +}
+> +
+> +static const TypeInfo shared_irq_types[] = {
+> +    {
+> +       .name = TYPE_SHARED_IRQ,
+> +       .parent = TYPE_DEVICE,
+> +       .instance_size = sizeof(SharedIRQ),
+> +       .instance_init = shared_irq_init,
+> +       .class_init = shared_irq_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(shared_irq_types)
+> diff --git a/hw/core/Kconfig b/hw/core/Kconfig
+> index d1bdf765ee..ddff977963 100644
+> --- a/hw/core/Kconfig
+> +++ b/hw/core/Kconfig
+> @@ -32,6 +32,9 @@ config PLATFORM_BUS
+> config REGISTER
+>     bool
 >
-> Side note: I tried to dump a very basic VM's JSON out to disk, it scares me
-> on the size:
+> +config SHARED_IRQ
+> +    bool
+> +
+> config SPLIT_IRQ
+>     bool
 >
-> $ ls -lhS JSON.out 
-> -rw-r--r--. 1 peterx peterx 106K Jan  7 17:18 JSON.out
+> diff --git a/hw/core/meson.build b/hw/core/meson.build
+> index ce9dfa3f4b..6b5bdc8ec7 100644
+> --- a/hw/core/meson.build
+> +++ b/hw/core/meson.build
+> @@ -21,6 +21,7 @@ system_ss.add(when: 'CONFIG_OR_IRQ', if_true: files('or-irq.c'))
+> system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bus.c'))
+> system_ss.add(when: 'CONFIG_PTIMER', if_true: files('ptimer.c'))
+> system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
+> +system_ss.add(when: 'CONFIG_SHARED_IRQ', if_true: files('shared-irq.c'))
+> system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+> system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+> system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
 >
-> That's a simplest VM with all default stuff, mostly nothing complex.. I may
-> really need to measure how the JSON debug strings affect migration function
-> or perf at some point..
->
-
-Agreed.
-
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
->>  scripts/analyze-migration.py |  9 ++++++++-
->>  2 files changed, 40 insertions(+), 2 deletions(-)
->> 
->> diff --git a/migration/vmstate.c b/migration/vmstate.c
->> index 52704c822c..a79ccf3875 100644
->> --- a/migration/vmstate.c
->> +++ b/migration/vmstate.c
->> @@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->>              int size = vmstate_size(opaque, field);
->>              uint64_t old_offset, written_bytes;
->>              JSONWriter *vmdesc_loop = vmdesc;
->> +            bool is_prev_null = false;
->>  
->>              trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
->>              if (field->flags & VMS_POINTER) {
->>                  first_elem = *(void **)first_elem;
->>                  assert(first_elem || !n_elems || !size);
->>              }
->> +
->>              for (i = 0; i < n_elems; i++) {
->>                  void *curr_elem = first_elem + size * i;
->>                  const VMStateField *inner_field;
->> +                bool is_null;
->> +                int max_elems = n_elems - i;
->>  
->>                  old_offset = qemu_file_transferred(f);
->>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
->> @@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->>                       * not follow.
->>                       */
->>                      inner_field = vmsd_create_fake_nullptr_field(field);
->> +                    is_null = true;
->>                  } else {
->>                      inner_field = field;
->> +                    is_null = false;
->> +                }
->> +
->> +                /*
->> +                 * Due to the fake nullptr handling above, if there's mixed
->> +                 * null/non-null data, it doesn't make sense to emit a
->> +                 * compressed array representation spanning the entire array
->> +                 * because the field types will be different (e.g. struct
->> +                 * vs. uint64_t). Search ahead for the next null/non-null
->> +                 * element and start a new compressed array if found.
->> +                 */
->> +                if (field->flags & VMS_ARRAY_OF_POINTER &&
->> +                    is_null != is_prev_null) {
->> +
->> +                    is_prev_null = is_null;
->> +                    vmdesc_loop = vmdesc;
->> +
->> +                    for (int j = i + 1; j < n_elems; j++) {
->> +                        void *elem = *(void **)(first_elem + size * j);
->> +                        bool elem_is_null = !elem && size;
->> +
->> +                        if (is_null != elem_is_null) {
->> +                            max_elems = j - i;
->> +                            break;
->> +                        }
->> +                    }
->>                  }
->>  
->>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
->> -                                      i, n_elems);
->> +                                      i, max_elems);
->>  
->>                  if (inner_field->flags & VMS_STRUCT) {
->>                      ret = vmstate_save_state(f, inner_field->vmsd,
->> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
->> index 4836920ddc..9138e91a11 100755
->> --- a/scripts/analyze-migration.py
->> +++ b/scripts/analyze-migration.py
->> @@ -497,7 +497,14 @@ def read(self):
->>                      raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
->>                  a.append(field['data'])
-
-There's actually a bug here, the code above does:
-
-  if len(a) != int(field['index']):
-      raise Exception()
-
-Which only works with this patch because the compressed array happens to
-come first.
-
->>              else:
->> -                self.data[field['name']] = field['data']
->> +                # There could be multiple entries for the same field
->> +                # name, e.g. when a compressed array was broken in
->> +                # more than one piece.
->> +                if (field['name'] in self.data and
->> +                    type(self.data[field['name']]) == list):
->> +                    self.data[field['name']].append(field['data'])
->> +                else:
->> +                    self.data[field['name']] = field['data']
->
-> Do we realy need these script changes?  I thought VMSDFieldStruct always
-> breaks array_len field into "index" based anyway?
->
->         new_fields = []
->         for field in self.desc['struct']['fields']:
->             if not 'array_len' in field:
->                 new_fields.append(field)
->                 continue
->             array_len = field.pop('array_len')
->             field['index'] = 0
->             new_fields.append(field)
->             for i in range(1, array_len):
->                 c = field.copy()
->                 c['index'] = i
->                 new_fields.append(c)
->
->         self.desc['struct']['fields'] = new_fields
-
-This code is about decompressing the array, it doesn't handle multiple
-entries with the same name. See the JSON I posted up there.
-
-This makes the single:
-
-  {"name": "css", "array_len": 254, "type": "uint8", "size": 1},
-
-become multiple:
-
-  {"name": "css", "index": 0, "type": "uint8", "size": 1},
-  {"name": "css", "index": 1, "type": "uint8", "size": 1},
-  ...
-  {"name": "css", "index": 253, "type": "uint8", "size": 1},
-
 
