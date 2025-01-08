@@ -4,94 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD925E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D355FE77199
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 22:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVewA-00047I-UA; Wed, 08 Jan 2025 17:54:06 -0500
+	id 1tVezr-0004rZ-Tx; Wed, 08 Jan 2025 17:57:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tVew9-000479-FH
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:54:05 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tVew7-0004Dt-QS
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:54:05 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2167141dfa1so5215715ad.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 14:54:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736376842; x=1736981642; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GecFoJwbyxAr4Wifp+1guymnsZt+zqVyk3XNCvgyVMo=;
- b=AjRey2BZC/dW0eate0lV16Evej4wQw0jOdYEwNzsMfnyadZSVH/yrO1V29QiCzSKS/
- RW+94IN73fGgMHK2kisD+CxmSbJPU2bXedu4Nivq78ZubFVnAfWTOhJYL1EcuVs1i9mF
- aABA5pt2NR6S59NZ5cyYCMojW/MjX4qqe9S/r46Yl8xPjoFLaxbXDnq6dqcbVkn1F9vy
- 1y9E5d5gmv7D/EYcnoiu2fEpcwiuGniD8niTIWUgwrz03KZM9kilv3Njsdfj+Iu2KNUM
- afO9Blj9zWdvi8boaRJ+qxyuj2/cHu6Rgw7VasWaBslpqnuI+lUpP65UcAmWmOorpA2i
- sGmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736376842; x=1736981642;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GecFoJwbyxAr4Wifp+1guymnsZt+zqVyk3XNCvgyVMo=;
- b=uITqzgPO9Owfm9DS1bOBAOZl2ZWycPkiHCc6NsSjMuR9eEQNg304ZrCwy7FfdE5DOg
- r1Y8Mq3BQQeR70i07iHR5yJkPkD9wKxs9iXXVRTmxu+LppCFvScPE1iZXcrIHR1bMNpz
- sUPXDEAZ4vgRZsGG1A7jQQrOjuU+HCZrcbHV+GqKOn0R64FudqeGzDnpF2wkb1Qe9YIk
- Zp3dD2ld9+gwnJKbeb936queIKZtbBrMdhKUmXCFrwuESxGchrNjECpLE6agAP/6mMH1
- 0GnnNHK5qMxVrQA9B8C3U2o9OdGe2c8XOXDM7ZQGEYdTOJdc4VFroEbxh9KjW2C46YTK
- cYwg==
-X-Gm-Message-State: AOJu0YwJ2X2dMofyz97UCnGGRXuvZ03ABTHHz29JQvXg+EaECLNT55yR
- 8Ytb7dUTLUQ9u+ILmVsLGX9/7AytaCtqcDA7AH0X0ZP3bAQdYLyM1NPVm2x37ip6sifCGIO05Lp
- L
-X-Gm-Gg: ASbGncsH3qsNmJGOBAGzfmfzDhAPOVMpV514OvZS3e0ERW8ttnjU5smfWO2MP6ZmJvL
- QXdUA1G5cvsSmo8dBbX8/yBJo2bI4dGPJiFzJmVquToWReXMnReuZGuTTvnWF0VPs5UuXj47HkL
- OZ8IWfmqx57naxWXfOJxJYety62dG+r1Vxy+xblpPbzZMkfmkRz8CKhxc3Tql3bqv2t957pVqn1
- Eqhc5Jx0GqhmqviwTETdTmyo8CDMg5bgzAIbdpE+fdLdfLssVy+uKuMYqFFTBz8ZIlwTnD379or
- gA5qjOtJ+41zERgf0PHAd36TOE78eP4=
-X-Google-Smtp-Source: AGHT+IFrKPLhlymyMkRzFpTEt7zjelxMcjVX18jvAXqfIW6NryFT52yaPj5P07XvKOpo90sClv1Aig==
-X-Received: by 2002:a17:902:fb0c:b0:215:7e49:8202 with SMTP id
- d9443c01a7336-21a8d68dd9cmr14421295ad.13.1736376840587; 
- Wed, 08 Jan 2025 14:54:00 -0800 (PST)
-Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
- [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9f5dc5sm331894015ad.210.2025.01.08.14.53.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 14:54:00 -0800 (PST)
-Message-ID: <14a2173f-e1b4-4290-99e5-c46b4153d800@linaro.org>
-Date: Wed, 8 Jan 2025 14:53:57 -0800
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVezp-0004rP-UZ
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:57:53 -0500
+Received: from dormouse.elm.relay.mailchannels.net ([23.83.212.50])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1tVezn-0005E3-VA
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 17:57:53 -0500
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id E8590163EE7;
+ Wed,  8 Jan 2025 22:57:49 +0000 (UTC)
+Received: from pdx1-sub0-mail-a296.dreamhost.com
+ (trex-2.trex.outbound.svc.cluster.local [100.111.51.238])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 7AD60164025;
+ Wed,  8 Jan 2025 22:57:49 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1736377069; a=rsa-sha256;
+ cv=none;
+ b=MNECF7wlzN3iMv8afHOdtIpwHkJ9gPvc7gcjQo1aQsEkC0twxZY585IlpiOIcxDaDY/tp8
+ kNA7+9M4yv9Q8EUqADzxgOAaZDUSbj/0fEZrruI/PrM+ip3eiusVx1LoQp6BsQjOlM9/Qt
+ /6A48Oc5HN9Qyz41uBcAklVrkhiFBYK227Mf6hsCIG0zrAq52L0URpcmx8oxHTK7S6l6Kj
+ eYJed/MaeWqGRVWzKuJm/UC3ANTspM/Y5hYNzx3vA5erlddvebdeEBDWfMgNT7mmEmO1nt
+ /KgBzdw8xHuqVZRXIfkRysHHuNvYvkXxOu8hgQH9NqrCi16hShg2fIYUkg9oKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1736377069;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=85UeQmHRXWYgBxJkGx3G4QZkt8zTFOxNWlCoPlYO/Pg=;
+ b=3koJHSDKL3cHEQSE+S2xAjbA4T6yI58tNBBTgzLt4uJBXGvr0hCh/CBWMLjdUHHXQ00QUP
+ 2hluwSx6iEpSFt+Gf5Cyky9vAk4BA4mDiU+4tKk1oXLhO7QzYacT5C2Jvs8jzO9Ujyi0hq
+ 8bDxS6bMefn66hzhLZPT/sP3gpChlW95uXtbQiDaTXldrEW9KKZ86h3UN/kwct7gRbKu5c
+ eCZArDCAN5C9x942Cs45PeOrRtPfCLJxZRhfmN2nnKJA2LV4EapO1cL0MJhKi7hFghenAr
+ K/s895JckwE8n19pSgvGS9H0wglF5NUslxdYPB1+lz5cTQRBJ0uQNRC1cSLYkA==
+ARC-Authentication-Results: i=1; rspamd-b5645c5d4-2sk9h;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Stretch-Befitting: 7aac2cce210809f7_1736377069768_1020453084
+X-MC-Loop-Signature: 1736377069768:233838770
+X-MC-Ingress-Time: 1736377069767
+Received: from pdx1-sub0-mail-a296.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.111.51.238 (trex/7.0.2); Wed, 08 Jan 2025 22:57:49 +0000
+Received: from [172.16.32.88] (unknown [198.232.126.202])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: rob@landley.net)
+ by pdx1-sub0-mail-a296.dreamhost.com (Postfix) with ESMTPSA id 4YT3Gh0sLNz1h; 
+ Wed,  8 Jan 2025 14:57:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+ s=dreamhost; t=1736377068;
+ bh=85UeQmHRXWYgBxJkGx3G4QZkt8zTFOxNWlCoPlYO/Pg=;
+ h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
+ b=Ga8i61R+lZjK/PIKtIPx9VzvEQyiOJUIv6Xz2S6SpDImvA6S8eQ1WkV4MehIzE2ZR
+ oTTKGICHCBuZh08K9D4T97kcYI2zyo6RNSilaw7+dTiP6iZR1bzlR3U96C8BZ71vQJ
+ Tfe5XVMBpOVHDCS7ueq2gURzdfP911rJzbt8Xk2beyDJGYeXkFMOjOySpA7Rn1UKUx
+ AZ7SumTzQUJ84Z/waCvprbnao0AXptFe870xsC3WMfqC4AiTy7hR0hy2gawq9OAuXz
+ Y7mgq7MU6WC+VbGfvU5RE7G5EDzmu00DrEDnTzNucA/wKJ/OG1WDxvpARfisVT33MQ
+ Ja0Ca9QUIcA1Q==
+Message-ID: <c5efb6af-5fef-4938-aac9-c9c8b75a9a69@landley.net>
+Date: Wed, 8 Jan 2025 16:57:47 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] semihosting: Reduce target specific code
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Kito Cheng <kito.cheng@sifive.com>, Keith Packard <keithp@keithp.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250103171037.11265-1-philmd@linaro.org>
- <87h669ba39.fsf@draig.linaro.org>
+Subject: Re: or1k -M virt -hda and net.
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stafford Horne <shorne@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Linux OpenRISC <linux-openrisc@vger.kernel.org>
+References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+ <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
+ <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
+ <Z0LMqEqcdjkAxnN-@antec> <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net>
+ <Z2lgL31ZeSkO59MZ@antec> <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
+ <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
+ <87y0zmbita.fsf@draig.linaro.org>
+ <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
+ <6e5f24cf-02bf-1cf0-2d0d-e683866cc3d3@eik.bme.hu>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <87h669ba39.fsf@draig.linaro.org>
+From: Rob Landley <rob@landley.net>
+In-Reply-To: <6e5f24cf-02bf-1cf0-2d0d-e683866cc3d3@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=23.83.212.50; envelope-from=rob@landley.net;
+ helo=dormouse.elm.relay.mailchannels.net
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,61 +126,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 07:26, Alex Bennée wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> This series makes semihosting config.c and console.c
->> target agnostic, building them once, removing symbol
->> collision of the following functions in the single
->> binary:
-> 
-> Queued to semihosting/next, thanks.
-> 
->>   - qemu_semihosting_chardev_init
->>   - qemu_semihosting_config_options
->>   - qemu_semihosting_config_opts
->>   - qemu_semihosting_enable
->>   - semihosting_arg_fallback
->>   - semihosting_enabled
->>   - semihosting_get_argc
->>   - semihosting_get_target
+On 1/8/25 07:01, BALATON Zoltan wrote:
+> On Tue, 7 Jan 2025, Rob Landley wrote:
+>> What's the alternative to -hda you suggest for that?
 >>
->> This function is still problematic, being built for
->> each target:
+>> Can I do "./run-qemu.sh -drive file=blah.img" without the rest? 
+>> Perhaps specify all the details in the script and then optionally add 
+>> an extra argument at the end? I couldn't get that to work:
 >>
->>   - qemu_semihosting_guestfd_init
->>
->> Note, it depends on CONFIG_ARM_COMPATIBLE_SEMIHOSTING
->> which is target specific, so doesn't scale in a
->> heterogeneous setup like the ZynqMP machine, having
->> ARM cores with CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y and
->> MicroBlaze ones with CONFIG_ARM_COMPATIBLE_SEMIHOSTING=n.
+>> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device virtio-net- 
+>> device,netdev=net0 -drive format=raw,id=hd0 -device virtio-blk- 
+>> device,drive=hd0 -drive file=README
 > 
-> Does MicroBlaze even do semihosting?
-> 
->> I suppose the semihosting API needs rework to consider
->> the CPUClass? I'll let that investigation for the
->> maintainer ;)
-> 
-> Hmm most of it is already handled as EXCP_SEMIHOST exceptions are dealt
-> with withing the target specific exception handlers.
-> do_common_semihosting could be renamed though - do_armc_semihosting()
-> maybe?
-> 
-> If we have the full list of CPUs at qemu_semihosting_chardev_init() time
-> we could then selectively do the bits of qemu_semihosting_guestfd_init()
-> depending on what combination we have. For normal open/read/write stuff
-> I think they could co-exist.
-> 
-> Two independent cores could still write to stdout (0) though. Fixing
-> that would need a per-cpu semihosting config.
+> You need '-drive if=none,id=hd0,format=raw,file=README' as a single 
+> option not split into two.
 
-None of the semihosting stuff is smp safe.
+I'm not always specifying an -hda. Sometimes it does, and sometimes it 
+runs without it. I would like to have everything EXCEPT the media 
+specified, so it can be inserted into a ready drive or run without it.
 
-The assumption in the homogeneous cpu case is that the guest uses it's own mutexes to 
-protect the semihosting calls.  This is obviously more complicated in the heterogeneous 
-case, but it *still* should not be qemu's problem.
+That's what -hda traditionally does.
 
+> With if=none -drive won't auto-create a  device
 
-r~
+$ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
+virtio-net-device,netdev=net0 -drive if=none,id=hd0,format=raw
+qemu-system-or1k: -drive if=none,id=hd0,format=raw: A block device must 
+be specified for "file"
+
+> so you then also need a corresponding -device option for the 
+> drive that you seem to have already above.
+
+$ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
+virtio-net-device,netdev=net0 -device virtio-blk-device
+qemu-system-or1k: -device virtio-blk-device: drive property not set
+$ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
+virtio-net-device,netdev=net0 -device virtio-blk-device,drive=hd0
+qemu-system-or1k: -device virtio-blk-device,drive=hd0: Property 
+'virtio-blk-device.drive' can't find value 'hd0'
+$ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
+virtio-net-device,netdev=net0 -device virtio-blk-device,drive=hd0 -drive 
+id=hd0,if=none
+qemu-system-or1k: -device virtio-blk-device,drive=hd0: Device needs 
+media, but drive is empty
+
+That's as close as I can get. As far as I can tell, it's complaining 
+that I got it into the state I wanted, and it doesn't want to be in that 
+state. The "if=none" does not appear to help.
+
+I also don't know what drive=/id= pair "-hda" would be trying to 
+populate, so dunno what name to use there.
+
+Also, it requires -drive and its argument to be seperate:
+
+   qemu-system-or1k: -device=virtio-blk-device,drive=hda: invalid option
+
+Refusing to let them to be glued together with = (like most --longopt 
+parsers do, including the 
+https://github.com/landley/toybox/blob/master/lib/args.c I wrote) means 
+I can't use bash's brace expansion to set up multiple at once (to 
+preload support for -hda, -hdb, -hdc, and -hdd), ala:
+
+   -drive=id=hd{0,1,2,3},if=none
+
+Not that the current script has a bash dependency... :P
+
+> If you want -hda to work you 
+> may need something like commit d36b2f4e78 (hw/ppc/sam460ex: Support 
+> short options for adding drives) for the machine you use. In particular 
+> the MachineClass block_default_type field says what's the default 
+> interface that -drive and other short options should use (at least I 
+> think so, I'm no expert on this either but searching for it should at 
+> least point to where it's handled).
+
+Thanks for the pointer, I'll take a look.
+
+Rob
 
