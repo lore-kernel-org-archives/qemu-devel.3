@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D84E77188
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 20:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F56EE77188
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jan 2025 20:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVcdo-0007HW-Sp; Wed, 08 Jan 2025 15:27:00 -0500
+	id 1tVcdX-0007CH-SX; Wed, 08 Jan 2025 15:26:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdb-0007Ds-8F
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:49 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdV-0007Bf-Dz
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:41 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdZ-0006s2-AP
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:47 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tVcdS-0006qf-Mk
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 15:26:41 -0500
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508IRGOh022466;
- Wed, 8 Jan 2025 20:26:34 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 508I8hNF022614;
+ Wed, 8 Jan 2025 20:26:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=/hbt49r67rS3xCl1j
- HRcoMA5k7zqsxxjHM6BonbVVyc=; b=Wg1PSPzgPohBvg3wIp83m7QXSaekqsEQb
- WmSqF8f+ZbLA/l36yddgbIF/jA429jtqMPxilEUbmiUHvY01P/juwBjRJ67YthtS
- +pYytElhneVYhG8/P3z52vT1vsLqZa0szfWgalMvnhoOzhhE4pog9hcN6jgOqrEJ
- O6awnojTuHVf9vNp/fzWPl1l/QMMpf5BfuEiWpOJ2KSfSVZs2f5WNwM54fRJuh3a
- aCc9YqlLxPv/nEWSiBfSEbf4uq9mUmN+y4cuhv8ved/Jxzs/ZOuPLsG8kNep9aCh
- OSq7dKZ+9s0Lb2MF3G+7NceBxa/S11DEpt/jLgeqhUPnVs2LShJrg==
+ :mime-version:references:subject:to; s=pp1; bh=TQUSXeg1nRwj4LhdP
+ TK46AjA0uZM4Ycou0//eBvLHHE=; b=Qq8pD7y7JV/lXDUalZaRYJ0uCPKBvxHaH
+ V1HjnSJ0wBse2K1F0GYx3/UvfkIfG2845HykPSmDzIyGyphwSBcrQ93RGSCovhcb
+ waQNXPJnBzs2sXutHtXnUhjsqYNC5OQMjWx5ZcHEbmi7c8Hr/VgN9B2dmsoDYsDO
+ OHxcQ113akDRzsrWg5Qkcz6vj5uCMpJ/FMi8FwejDhGLpwXhBxdPY7zz8foEGHcY
+ jHVGlE4X1KvLwcsSUEUvGg/AoIHEnP0MDie0DCX+2TgCxNPPDDbcVG1XhIiunYAK
+ JNIO9tkFDviNRq7UIG49fAmOpsWKEQNtk7rC8x8UVWTD1hqfWV4CQ==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441nj3b84w-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 441nj3b84r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 20:26:34 +0000 (GMT)
+ Wed, 08 Jan 2025 20:26:31 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508JPuSN004143;
- Wed, 8 Jan 2025 20:26:33 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yfat9t12-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 508K1C1o003593;
+ Wed, 8 Jan 2025 20:26:30 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yfat9t0y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jan 2025 20:26:33 +0000
+ Wed, 08 Jan 2025 20:26:30 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 508KQVEl59376020
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 508KQT5331785246
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jan 2025 20:26:32 GMT
+ Wed, 8 Jan 2025 20:26:29 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAD8D20043;
- Wed,  8 Jan 2025 20:26:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 082E320043;
+ Wed,  8 Jan 2025 20:26:29 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3990820040;
- Wed,  8 Jan 2025 20:26:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5E28920040;
+ Wed,  8 Jan 2025 20:26:28 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.179.24.127])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jan 2025 20:26:31 +0000 (GMT)
+ Wed,  8 Jan 2025 20:26:28 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -64,26 +64,25 @@ To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Warner Losh <imp@bsidmp.com>
-Subject: [PATCH v4 6/9] osdep: Introduce qemu_kill_thread()
-Date: Wed,  8 Jan 2025 21:05:01 +0100
-Message-ID: <20250108202625.149869-7-iii@linux.ibm.com>
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v4 2/9] gdbstub: Allow the %d placeholder in the socket path
+Date: Wed,  8 Jan 2025 21:04:57 +0100
+Message-ID: <20250108202625.149869-3-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250108202625.149869-1-iii@linux.ibm.com>
 References: <20250108202625.149869-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: JtFTFsRK_p7Xrv21eNqckkcVokxJYtRc
-X-Proofpoint-GUID: JtFTFsRK_p7Xrv21eNqckkcVokxJYtRc
+X-Proofpoint-ORIG-GUID: 8-CSDKUXF6_Dh2ABK4qqWRrvKHcvVvgL
+X-Proofpoint-GUID: 8-CSDKUXF6_Dh2ABK4qqWRrvKHcvVvgL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0
  lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- clxscore=1015 adultscore=0 impostorscore=0 mlxlogscore=939 phishscore=0
+ clxscore=1015 adultscore=0 impostorscore=0 mlxlogscore=999 phishscore=0
  suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2501080163
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
@@ -111,64 +110,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a function for sending signals to individual threads. It does not make
-sense on Windows, so do not provide an implementation, so that if someone
-uses it by accident, they will get a linker error.
+Just like for QEMU_LOG_FILENAME, replace %d with PID in the GDB socket
+path. This allows running multi-process applications with, e.g.,
+export QEMU_GDB=/tmp/qemu-%d.sock. Currently this is not possible,
+since the first process will cause the subsequent ones to fail due to
+not being able to bind() the GDB socket.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Warner Losh <imp@bsidmp.com>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- include/qemu/osdep.h |  9 +++++++++
- util/oslib-posix.c   | 15 +++++++++++++++
- 2 files changed, 24 insertions(+)
+ gdbstub/user.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index b94fb5fab8c..37ee3eabae3 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -630,6 +630,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **errp);
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 0b4bfa9c488..ef52f249ce9 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -316,9 +316,19 @@ static bool gdb_accept_socket(int gdb_fd)
  
- int qemu_get_thread_id(void);
- 
-+/**
-+ * qemu_kill_thread:
-+ * @tid: thread id.
-+ * @sig: host signal.
-+ *
-+ * Send @sig to one of QEMU's own threads with identifier @tid.
-+ */
-+int qemu_kill_thread(int tid, int sig);
-+
- #ifndef CONFIG_IOVEC
- struct iovec {
-     void *iov_base;
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 7a542cb50b5..f8eb3f17b2f 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -111,6 +111,21 @@ int qemu_get_thread_id(void)
- #endif
- }
- 
-+int qemu_kill_thread(int tid, int sig)
-+{
-+#if defined(__linux__)
-+    return syscall(__NR_tgkill, getpid(), tid, sig);
-+#elif defined(__FreeBSD__)
-+    return thr_kill2(getpid(), tid, sig);
-+#elif defined(__NetBSD__)
-+    return _lwp_kill(tid, sig);
-+#elif defined(__OpenBSD__)
-+    return thrkill(tid, sig, NULL);
-+#else
-+    return kill(tid, sig);
-+#endif
-+}
-+
- int qemu_daemon(int nochdir, int noclose)
+ static int gdbserver_open_socket(const char *path)
  {
-     return daemon(nochdir, noclose);
++    g_autoptr(GString) buf = g_string_new("");
+     struct sockaddr_un sockaddr = {};
++    char *pid_placeholder;
+     int fd, ret;
+ 
++    pid_placeholder = strstr(path, "%d");
++    if (pid_placeholder != NULL) {
++        g_string_append_len(buf, path, pid_placeholder - path);
++        g_string_append_printf(buf, "%d", qemu_get_thread_id());
++        g_string_append(buf, pid_placeholder + 2);
++        path = buf->str;
++    }
++
+     fd = socket(AF_UNIX, SOCK_STREAM, 0);
+     if (fd < 0) {
+         perror("create socket");
 -- 
 2.47.1
 
