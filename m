@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B72E77197
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D56E77199
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 18:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVxeX-0002J7-Ap; Thu, 09 Jan 2025 13:53:09 -0500
+	id 1tVxed-0002KC-Pf; Thu, 09 Jan 2025 13:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVxeQ-0002HW-4L
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 13:53:04 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVxeT-0002IT-Rx
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 13:53:06 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVxeO-0005tX-As
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 13:53:01 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVxeR-0005uJ-Dc
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 13:53:05 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E70C52116E;
- Thu,  9 Jan 2025 18:52:58 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3CCE01F394;
+ Thu,  9 Jan 2025 18:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736448779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736448782; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EffxaSSeSINwWm8q32W+RUAkfUbnkplZk0uvvu2EVCo=;
- b=jWIFUlmlgZuMkyZI0KC74GTveYN5+o2B7tkYK11AdUBkXlWizBVeqWyYBdxPaxADBncvx1
- k95pOzeylFqbNKrUDJKryQeGY6WZB6IgmVSXRy/HYu28fquabYauqEbUoJj65RhHmDEIdU
- 0iyQnkmFwCmNDWWjTM8UNpzP4MIqYzA=
+ bh=XIP/6o+rKhv4khLch6PKY9TiDrv/CklNSeV4d0gYPtY=;
+ b=aFuM7kYEX0QxqOHR87AczMW4E52iY03uOKsQ/qVdWbHhzb663Jq2yN1GIOWgrS0LTO3Mdq
+ wuVZjvXOXSTG/11lHIw7mKtH1nMseYcJiw1bGZJrzORrRYhmYQrLHu+NxTIN4ggNnGWH0a
+ YU23lPoKDtZUmiLwHuf+QS9xCQHknlQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736448779;
+ s=susede2_ed25519; t=1736448782;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EffxaSSeSINwWm8q32W+RUAkfUbnkplZk0uvvu2EVCo=;
- b=OwIyb+4eXdbs6a443wtv9Y58SK5cuvq5k6Gq1BnCDYAJxSQTUnYm26SdRU67PCGuAiCbKA
- dKhlHwzJthjwgmDg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=x6itW1Sj;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xAOmPVGf
+ bh=XIP/6o+rKhv4khLch6PKY9TiDrv/CklNSeV4d0gYPtY=;
+ b=0330DnLGjjeDTt1u/2p9nhD6hZG2qgR7V8SJB3yElDZcji28Hm6zAABChr1oMPTahuMKsb
+ 6gZRJRjBhGJHknBg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=aFuM7kYE;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0330DnLG
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736448778; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736448782; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EffxaSSeSINwWm8q32W+RUAkfUbnkplZk0uvvu2EVCo=;
- b=x6itW1Sjjsd3WC39om1kxKYUhn1IP0JPzTbuVGHbmGMfIW+2XO0mizMnDgohoq6393uSnN
- xySQwK8vBCJTWzN2VpMpzL65+h8C763UQLR1atF1LhvmG47I9d1tb7A75N00Pi8IghAKMW
- cxQEqgxGH6+IbPCblotdQinwP9xN5AA=
+ bh=XIP/6o+rKhv4khLch6PKY9TiDrv/CklNSeV4d0gYPtY=;
+ b=aFuM7kYEX0QxqOHR87AczMW4E52iY03uOKsQ/qVdWbHhzb663Jq2yN1GIOWgrS0LTO3Mdq
+ wuVZjvXOXSTG/11lHIw7mKtH1nMseYcJiw1bGZJrzORrRYhmYQrLHu+NxTIN4ggNnGWH0a
+ YU23lPoKDtZUmiLwHuf+QS9xCQHknlQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736448778;
+ s=susede2_ed25519; t=1736448782;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EffxaSSeSINwWm8q32W+RUAkfUbnkplZk0uvvu2EVCo=;
- b=xAOmPVGfJLODqZlDcNg1EZgf6Yw9WcPydniTrDXzex3JSCLwrf83jT0vI/z4gzlV87JU7A
- pk8dYySOBv1mhrDA==
+ bh=XIP/6o+rKhv4khLch6PKY9TiDrv/CklNSeV4d0gYPtY=;
+ b=0330DnLGjjeDTt1u/2p9nhD6hZG2qgR7V8SJB3yElDZcji28Hm6zAABChr1oMPTahuMKsb
+ 6gZRJRjBhGJHknBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B53BE139AB;
- Thu,  9 Jan 2025 18:52:57 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0A8A7139AB;
+ Thu,  9 Jan 2025 18:53:00 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id oA1wHgkbgGdcMAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 09 Jan 2025 18:52:57 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eAwoMAwbgGdcMAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 09 Jan 2025 18:53:00 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
 	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 3/7] migration: Fix parsing of s390 stream
-Date: Thu,  9 Jan 2025 15:52:45 -0300
-Message-Id: <20250109185249.23952-4-farosas@suse.de>
+Subject: [PATCH v3 5/7] migration: Dump correct JSON format for nullptr
+ replacement
+Date: Thu,  9 Jan 2025 15:52:47 -0300
+Message-Id: <20250109185249.23952-6-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250109185249.23952-1-farosas@suse.de>
 References: <20250109185249.23952-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: E70C52116E
+X-Rspamd-Queue-Id: 3CCE01F394
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid];
  ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
@@ -102,15 +103,14 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,63 +127,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The parsing for the S390StorageAttributes section is currently leaving
-an unconsumed token that is later interpreted by the generic code as
-QEMU_VM_EOF, cutting the parsing short.
+From: Peter Xu <peterx@redhat.com>
 
-The migration will issue a STATTR_FLAG_DONE between iterations, which
-the script consumes correctly, but there's a final STATTR_FLAG_EOS at
-.save_complete that the script is ignoring. Since the EOS flag is a
-u64 0x1ULL and the stream is big endian, on little endian hosts a byte
-read from it will be 0x0, the same as QEMU_VM_EOF.
+QEMU plays a trick with null pointers inside an array of pointers in a VMSD
+field.  See 07d4e69147 ("migration/vmstate: fix array of ptr with
+nullptrs") for more details on why.  The idea makes sense in general, but
+it may overlooked the JSON writer where it could write nothing in a
+"struct" in the JSON hints section.
 
-Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py for s390x")
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+We hit some analyze-migration.py issues on s390 recently, showing that some
+of the struct field contains nothing, like:
+
+{"name": "css", "array_len": 256, "type": "struct", "struct": {}, "size": 1}
+
+As described in details by Fabiano:
+
+https://lore.kernel.org/r/87pll37cin.fsf@suse.de
+
+It could be that we hit some null pointers there, and JSON was gone when
+they're null pointers.
+
+To fix it, instead of hacking around only at VMStateInfo level, do that
+from VMStateField level, so that JSON writer can also be involved.  In this
+case, JSON writer will replace the pointer array (which used to be a
+"struct") to be the real representation of the nullptr field.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- scripts/analyze-migration.py | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ migration/vmstate.c | 118 ++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 91 insertions(+), 27 deletions(-)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index f2457b1dde..fcda11f31d 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -65,6 +65,9 @@ def readvar(self, size = None):
-     def tell(self):
-         return self.file.tell()
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index aa2821dec6..52704c822c 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -51,6 +51,36 @@ vmstate_field_exists(const VMStateDescription *vmsd, const VMStateField *field,
+     return result;
+ }
  
-+    def seek(self, a, b):
-+        return self.file.seek(a, b)
++/*
++ * Create a fake nullptr field when there's a NULL pointer detected in the
++ * array of a VMS_ARRAY_OF_POINTER VMSD field.  It's needed because we
++ * can't dereference the NULL pointer.
++ */
++static const VMStateField *
++vmsd_create_fake_nullptr_field(const VMStateField *field)
++{
++    VMStateField *fake = g_new0(VMStateField, 1);
 +
-     # The VMSD description is at the end of the file, after EOF. Look for
-     # the last NULL byte, then for the beginning brace of JSON.
-     def read_migration_debug_json(self):
-@@ -272,11 +275,24 @@ def __init__(self, file, version_id, device, section_key):
-         self.section_key = section_key
++    /* It can only happen on an array of pointers! */
++    assert(field->flags & VMS_ARRAY_OF_POINTER);
++
++    /* Some of fake's properties should match the original's */
++    fake->name = field->name;
++    fake->version_id = field->version_id;
++
++    /* Do not need "field_exists" check as it always exists (which is null) */
++    fake->field_exists = NULL;
++
++    /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
++    fake->size = 1;
++    fake->info = &vmstate_info_nullptr;
++    fake->flags = VMS_SINGLE;
++
++    /* All the rest fields shouldn't matter.. */
++
++    return (const VMStateField *)fake;
++}
++
+ static int vmstate_n_elems(void *opaque, const VMStateField *field)
+ {
+     int n_elems = 1;
+@@ -143,23 +173,39 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+             }
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
++                const VMStateField *inner_field;
  
-     def read(self):
-+        pos = 0
-         while True:
-             addr_flags = self.file.read64()
-             flags = addr_flags & 0xfff
--            if (flags & (self.STATTR_FLAG_DONE | self.STATTR_FLAG_EOS)):
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     curr_elem = *(void **)curr_elem;
+                 }
 +
-+            if flags & self.STATTR_FLAG_DONE:
-+                pos = self.file.tell()
-+                continue
-+            elif flags & self.STATTR_FLAG_EOS:
-                 return
-+            else:
-+                # No EOS came after DONE, that's OK, but rewind the
-+                # stream because this is not our data.
-+                if pos:
-+                    self.file.seek(pos, os.SEEK_SET)
-+                    return
-+                raise Exception("Unknown flags %x", flags)
+                 if (!curr_elem && size) {
+-                    /* if null pointer check placeholder and do not follow */
+-                    assert(field->flags & VMS_ARRAY_OF_POINTER);
+-                    ret = vmstate_info_nullptr.get(f, curr_elem, size, NULL);
+-                } else if (field->flags & VMS_STRUCT) {
+-                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
+-                                             field->vmsd->version_id);
+-                } else if (field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_load_state(f, field->vmsd, curr_elem,
+-                                             field->struct_version_id);
++                    /*
++                     * If null pointer found (which should only happen in
++                     * an array of pointers), use null placeholder and do
++                     * not follow.
++                     */
++                    inner_field = vmsd_create_fake_nullptr_field(field);
+                 } else {
+-                    ret = field->info->get(f, curr_elem, size, field);
++                    inner_field = field;
+                 }
 +
-             if (flags & self.STATTR_FLAG_ERROR):
-                 raise Exception("Error in migration stream")
-             count = self.file.read64()
++                if (inner_field->flags & VMS_STRUCT) {
++                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
++                                             inner_field->vmsd->version_id);
++                } else if (inner_field->flags & VMS_VSTRUCT) {
++                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
++                                             inner_field->struct_version_id);
++                } else {
++                    ret = inner_field->info->get(f, curr_elem, size,
++                                                 inner_field);
++                }
++
++                /* If we used a fake temp field.. free it now */
++                if (inner_field != field) {
++                    g_clear_pointer((gpointer *)&inner_field, g_free);
++                }
++
+                 if (ret >= 0) {
+                     ret = qemu_file_get_error(f);
+                 }
+@@ -387,29 +433,50 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+             }
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
++                const VMStateField *inner_field;
+ 
+-                vmsd_desc_field_start(vmsd, vmdesc_loop, field, i, n_elems);
+                 old_offset = qemu_file_transferred(f);
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     assert(curr_elem);
+                     curr_elem = *(void **)curr_elem;
+                 }
++
+                 if (!curr_elem && size) {
+-                    /* if null pointer write placeholder and do not follow */
+-                    assert(field->flags & VMS_ARRAY_OF_POINTER);
+-                    ret = vmstate_info_nullptr.put(f, curr_elem, size, NULL,
+-                                                   NULL);
+-                } else if (field->flags & VMS_STRUCT) {
+-                    ret = vmstate_save_state(f, field->vmsd, curr_elem,
+-                                             vmdesc_loop);
+-                } else if (field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_save_state_v(f, field->vmsd, curr_elem,
+-                                               vmdesc_loop,
+-                                               field->struct_version_id, errp);
++                    /*
++                     * If null pointer found (which should only happen in
++                     * an array of pointers), use null placeholder and do
++                     * not follow.
++                     */
++                    inner_field = vmsd_create_fake_nullptr_field(field);
+                 } else {
+-                    ret = field->info->put(f, curr_elem, size, field,
+-                                     vmdesc_loop);
++                    inner_field = field;
+                 }
++
++                vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
++                                      i, n_elems);
++
++                if (inner_field->flags & VMS_STRUCT) {
++                    ret = vmstate_save_state(f, inner_field->vmsd,
++                                             curr_elem, vmdesc_loop);
++                } else if (inner_field->flags & VMS_VSTRUCT) {
++                    ret = vmstate_save_state_v(f, inner_field->vmsd,
++                                               curr_elem, vmdesc_loop,
++                                               inner_field->struct_version_id,
++                                               errp);
++                } else {
++                    ret = inner_field->info->put(f, curr_elem, size,
++                                                 inner_field, vmdesc_loop);
++                }
++
++                written_bytes = qemu_file_transferred(f) - old_offset;
++                vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
++                                    written_bytes);
++
++                /* If we used a fake temp field.. free it now */
++                if (inner_field != field) {
++                    g_clear_pointer((gpointer *)&inner_field, g_free);
++                }
++
+                 if (ret) {
+                     error_setg(errp, "Save of field %s/%s failed",
+                                 vmsd->name, field->name);
+@@ -419,9 +486,6 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     return ret;
+                 }
+ 
+-                written_bytes = qemu_file_transferred(f) - old_offset;
+-                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes);
+-
+                 /* Compressed arrays only care about the first element */
+                 if (vmdesc_loop && vmsd_can_compress(field)) {
+                     vmdesc_loop = NULL;
 -- 
 2.35.3
 
