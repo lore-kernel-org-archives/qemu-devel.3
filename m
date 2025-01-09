@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218D7E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 238C5E7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVpy6-0003FQ-WF; Thu, 09 Jan 2025 05:40:51 -0500
+	id 1tVq4z-0004xr-NN; Thu, 09 Jan 2025 05:47:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVpy1-0003ED-Bf
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:40:45 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVpxx-0006QL-8j
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:40:44 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-aa6c0dbce1fso111421666b.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 02:40:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736419238; x=1737024038; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KNY9UDW3SddgF1XxwN+STkrhkBMltkGqpGwuospRT1U=;
- b=qEazp6DiUiMn+wsKsUWq7siPw2V9s15WtxBmohn55GLblAuiVURMpg1uOIicm2NAI/
- pHj59KVJX1MFu96B/23egFKEUDB7N95zvrkOqMBGKx6hfj1jDChOihSvUzAa9UukFuOE
- /+D1+zAKK8ZwIJjXZDpQ+bUcYWzwL2nwismVjjqC1nPZEeM4LHU7UDzbCf0g6TnA9BRx
- h7klD03echyq6fquTN/5JZ7LB4k/YyvYVcHtJCu6NE0MINVf0ZvEIF5B4MH8FXilypCx
- G916i+i3w2G1FOj0+cy3S5nBAbaff0OT7S3wpIjF+ruaW+lxl32SvXykmCW+uxG7Yc3s
- e2HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736419238; x=1737024038;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KNY9UDW3SddgF1XxwN+STkrhkBMltkGqpGwuospRT1U=;
- b=S3d88H7GxwvNqKDexChg4MHVssG9cyK4M8xTeJT6sdCA2pQfQaFS0Z63piDLUBmWVW
- DanuvKffCw7cHNxxsQtWNoyqm8amvUAzB/71o3nN0w+tvX/Qt59Z3ny2z2uTjnU7KmBX
- snSxUK7HAIWN9baRQd95oBe5oIxJdmbiyPWlIJ4GwSyvAf6oyALe0Z7ius8/R516Zet/
- Kt0YXmBBluShDXpYtb2AN0V37SKCm4qRytXxW8+ETJhPRfpKU+NUcJfuj9Ozte3+c+eG
- q3u1B8kGyLgJ55cTju/fIThIEepyM4XQUiw6DAfdNweH1J8cDt1jWhIPU//itz04qtFz
- M/MQ==
-X-Gm-Message-State: AOJu0Yy9Iqg5R9LKuePdC8L9+GrHCmZyIa2mDx//pgbHBC582Tgas22g
- L40RNFCLuaoZUhvDLZCFKu7rZSbjRwCavVsPSlE07ArvW+8OMTMo+ZzyCbPt0BQ=
-X-Gm-Gg: ASbGncvd6JXtqMfkSj9LKz6yeMz5GxHJZkHRlWPyfXTN0fmyyKDV4VNjCvh8Ct5zUCe
- nRXbNs9JfxM0QHtlO+ailaNOaODI+f82Mmx+R8caUoDTPgm+vja8ZQwdO2X0qMftVbkCQpwY6bw
- 72vBjE9Q/sXbnJnDbtcdKwtoG4x773t4ocLjEAXBt2VzDExwLuUTeSSOv7VutRy12Ec3jymt2JF
- RDSFRQ5GWGpZa5JjbTQdSzHjdW21rZr9dIuXpBjJVycMvx29ov3kmc=
-X-Google-Smtp-Source: AGHT+IF89mXwXzaZzGvlrUkSCriVSFrH0a80X8csuICcvWdEiNZOYWfFZj2lv1rDbw/QLFR2dZSnbQ==
-X-Received: by 2002:a05:6402:520d:b0:5d9:ae5:8318 with SMTP id
- 4fb4d7f45d1cf-5d972e1da12mr13600948a12.20.1736419238435; 
- Thu, 09 Jan 2025 02:40:38 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95af424sm58054466b.137.2025.01.09.02.40.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 02:40:37 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6DD565F87E;
- Thu,  9 Jan 2025 10:40:36 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Leif Lindholm <quic_llindhol@quicinc.com>,  Leif Lindholm
- <leif.lindholm@oss.qualcomm.com>,  Marcin Juszkiewicz
- <marcin.juszkiewicz@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  Radoslaw Biernacki <rad@semihalf.com>,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 0/5] target/arm: implement SEL2 physical and virtual
- timers
-In-Reply-To: <20241218181511.3575613-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 18 Dec 2024 18:15:06 +0000")
-References: <20241218181511.3575613-1-alex.bennee@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 09 Jan 2025 10:40:36 +0000
-Message-ID: <87cygw9snv.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tVq4x-0004xB-Ly
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:47:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tVq4v-00078x-DJ
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:47:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736419671;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=554rhkk05VCeOV81WA5uAj5cSf0hSZ+1ALR22a0wo0g=;
+ b=J0ewqLkEAMKBdSTnfwQuF0zJQfIBxEkkQ2tukuvTutZb68c5J29grepPYIQv36wbHMSaiB
+ 3xeKCDm7VA+KF1BIW4MGHvqA5nSvVkWoWqcOHV4g8mooYq9u6aUYyn6jy6cxJRJ7ucmFJR
+ 0mX9ZVdEgNDprbB9HiydnZwgIOH5zbQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-wqnyfWC5O3eff45NWH3B5Q-1; Thu,
+ 09 Jan 2025 05:47:47 -0500
+X-MC-Unique: wqnyfWC5O3eff45NWH3B5Q-1
+X-Mimecast-MFC-AGG-ID: wqnyfWC5O3eff45NWH3B5Q
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6563119560BB; Thu,  9 Jan 2025 10:47:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.231])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBB4530001BE; Thu,  9 Jan 2025 10:47:43 +0000 (UTC)
+Date: Thu, 9 Jan 2025 11:47:41 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH] block-backend: protect setting block root to NULL with
+ block graph write lock
+Message-ID: <Z3-pTUj66O2nfqc_@redhat.com>
+References: <20250108124649.333668-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250108124649.333668-1-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,33 +83,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Am 08.01.2025 um 13:46 hat Fiona Ebner geschrieben:
+> Setting blk->root is a graph change operation and thus needs to be
+> protected by the block graph write lock in blk_remove_bs(). The
+> assignment to blk->root in blk_insert_bs() is already protected by
+> the block graph write lock.
 
-> Follow Peter's review I've split this into a several patches as there
-> are some other fixes that should be made to other EL2 times that
-> shouldn't be rolled together.
->
-> v2
->   - split machine enabling into patches
->   - rename IRQ
->   - use CP_ACCESS_TRAP_UNCATEGORIZED for UNDEF cases
->
-> v1
->   - improve GTIMER docs
->   - fix gt_recalc bug
->   - address review comments for the main patch
->   - cc qemu-stable (no rush for 9.2.0)
->
-> The following still need review:
->
->   hw/arm: enable secure EL2 timers for sbsa machine
->   hw/arm: enable secure EL2 timers for virt machine
->   target/arm: implement SEL2 physical and virtual timers
->   target/arm: ensure cntvoff_el2 also used for EL2 virt timer
+Hm, if that's the case, then we should also enforce this in the
+declaration of BlockBackend:
 
-Gentle ping - I think everything is ready for merging.
+    BdrvChild * GRAPH_RDLOCK_PTR root;
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+However, this results in more compiler failures that we need to fix. You
+caught the only remaining writer, but the lock is only fully effective
+if all readers take it, too.
+
+> In particular, the graph read lock in blk_co_do_flush() could
+> previously not ensure that blk_bs(blk) would always return the same
+> value during the locked section, which could lead to a segfault [0] in
+> combination with migration [1].
+> 
+> From the user-provided backtraces in the forum thread [1], it seems
+> like blk_co_do_flush() managed to get past the
+> blk_co_is_available(blk) check, meaning that blk_bs(blk) returned a
+> non-NULL value during the check, but then, when calling
+> bdrv_co_flush(), blk_bs(blk) returned NULL.
+> 
+> [0]:
+> 
+> > 0  bdrv_primary_child (bs=bs@entry=0x0) at ../block.c:8287
+> > 1  bdrv_co_flush (bs=0x0) at ../block/io.c:2948
+> > 2  bdrv_co_flush_entry (opaque=0x7a610affae90) at block/block-gen.c:901
+> 
+> [1]: https://forum.proxmox.com/threads/158072
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+>  block/block-backend.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/block/block-backend.c b/block/block-backend.c
+> index c93a7525ad..9678615318 100644
+> --- a/block/block-backend.c
+> +++ b/block/block-backend.c
+> @@ -887,9 +887,9 @@ void blk_remove_bs(BlockBackend *blk)
+>       */
+>      blk_drain(blk);
+>      root = blk->root;
+> -    blk->root = NULL;
+>  
+>      bdrv_graph_wrlock();
+> +    blk->root = NULL;
+>      bdrv_root_unref_child(root);
+>      bdrv_graph_wrunlock();
+>  }
+
+I think the 'root = blk->root' needs to be inside the locked section,
+too. Otherwise blk->root could change during bdrv_graph_wrlock() (which
+has a nested event loop) and root would be stale. I assume clang would
+complain about this with the added GRAPH_RDLOCK_PTR.
+
+Kevin
+
 
