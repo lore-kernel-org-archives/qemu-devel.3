@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8115E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF12E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVwD4-0003EJ-TU; Thu, 09 Jan 2025 12:20:43 -0500
+	id 1tVwDD-0004Ml-FW; Thu, 09 Jan 2025 12:20:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwD0-00030o-BH
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:38 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwDB-0004CU-L1
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:49 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCy-0000tc-7u
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:38 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-385deda28b3so754842f8f.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:20:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwD9-0000vY-PP
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:49 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-436326dcb1cso9434545e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:20:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736443233; x=1737048033; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736443244; x=1737048044; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Fu8Vu673xpGHSEU3TsRnxhPoaDJwCSLcIbc+aa/VbVk=;
- b=vNTCrC03I1kA1P9lv4IKGfTW1cwJX+dqx6QGvOK7RoWWHk1JL393sBrGuL17NTOzv7
- C9vyHzNRKzH/m/s/+5/UfFoNo8IkL6oLVCJAmZfot9jCXB/z5O1x2a078Q6WR0ZkCPVm
- IvSUGBeMWZ1d6e4gcP7uLJ6wipbMLU2aH0x1iDf3P1RtAqjNdt1VPleK+kEVAkBKbDiq
- PKxB5Sm2k5DqtsyxR6tRcRVaSzDHaRvdrbYgKzYwvo6616v1p5AkM9DCvmooO47mnTg4
- teF4Q/XYf5bwNCGw4gQ0jWNz3/Vg7EOMh0QTl/No/JijpmvvcLZ3/eIVv8ZWXN9V8+WQ
- C47A==
+ bh=bEpqXVU8Ur/P9HPMuqzJk8wNNbtEkgm3VtINnkR/R0k=;
+ b=SGgYfRvcDJz5NA85QIeegH2NGC9g0gQCpWSHQIOOc9HxyH+lLAB5QUtt6+NlvY0N41
+ NSn2hvB8mHUcguDoOTBv1KJE09C5s6YM9xIOQZLYH51brxcheWf1HBsKUUisZnbkQP8q
+ 7p2LWn5PNaI1ORzeZkDyXSbOOFAiyDK5Pmzo0+Nk6esaP0vc5FX4JPT0EGosLkxnOMQa
+ TjghTekRYGr8paMLMC10yao6rND12vzdvmacexHNeO26OIDBF6twapZFyv7VZXA3s7MH
+ cr1ERlW4WZzX1aCpxhtOB8AD/lMtmaWVWFMKTgcLe1hf7xRT2p/OXwX1OHTabw+LybNJ
+ QaXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736443233; x=1737048033;
+ d=1e100.net; s=20230601; t=1736443244; x=1737048044;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Fu8Vu673xpGHSEU3TsRnxhPoaDJwCSLcIbc+aa/VbVk=;
- b=UFGo2o++NflStOL+hA8BK8Zh10O7mnNG+LkJ2DS7+ypps+EkHEm+hmRQsQWy683mPi
- Ov5k6L03/7EML/2zVARBPXd2tnsBXyQ0cpS6b0iqG+QDm99Jn82PR2GRAjpW7135cW7A
- X2/yYqcnhXvyr+fIr10IRjP8LuBpWv8HhzBSWfrHe1/nCzEv0dvQiMmG5u+K/bHveJqZ
- YnDwodpo4jbIc3HhMxbeOBKYSXhPQJ8PcBZmqnpaG6SLxE7ry5n5Inf/DnvbogmsC77p
- jTQpgyjmacmxrK+fw+6taLlb6SxF/seIftj0AGRGaRLThytfPRMuas9eEcRqdPyAJ3Bs
- kOCg==
-X-Gm-Message-State: AOJu0YyMXfK6RDQZXgJVtsop319/Uy5tzEsPtQv0AR8uSbIumZu+ML8l
- L3rueVodKEzQt2esX4JmPAxsGHJamnsaEb9Oy2JhEIQDhPF43KEIz8JgWD2mUve4IpgpEJtb+M1
- Whi8=
-X-Gm-Gg: ASbGncuECFNdUTGOgYTpTKK5aZFncA7fKX0BgdIYL0CD0SyeBx+R4u/aADzVxhQrmqK
- fMWSM0SNvTYDb3p1MckZCaEl1E4WcyBlKMZvy092ZKkLzIWA+RWomnbX+ziARZUjOg9LS9y667z
- TySd+/LsQWzlDD55EIOBfmyuj8AlI6qqMjZz5/jhDjLpg+B3dIEGDY0UL3riHLc0qLl3gpJzR1+
- ObsXNezMYuiRk1lMiNQbFa5f7ay/A1ZU/NLZevssQlVHMJD0WUaF1LAfSNBuVKM5TDkfV7JeLOP
- EkshjKQOhRMNTaaCU2e1ofuPVgyfdU6bLOr5
-X-Google-Smtp-Source: AGHT+IEGiXaB6FW/vO/gf2GWnn+Xd33BmrnC8hTxuJzXhqEDZikw+wRi/x0ZoPZF9rebXbAxYlxJLA==
-X-Received: by 2002:a05:6000:184e:b0:385:f64e:f163 with SMTP id
- ffacd0b85a97d-38a87312f41mr6302388f8f.32.1736443233646; 
- Thu, 09 Jan 2025 09:20:33 -0800 (PST)
+ bh=bEpqXVU8Ur/P9HPMuqzJk8wNNbtEkgm3VtINnkR/R0k=;
+ b=a0/qfn+jOW4lakdpEqJw2YAhhCFmQvSL8XWW2iARbjzq2cTgcAS1tYtDf2bVyMZmsP
+ hDfyYTs/1bTeF7h9FdmLXczLTpR7x3+FFrpiSVuYz/hBdaHypq8M2V4WUho7azio7jmK
+ iU8YWEMJZUchBYvcCtw85FYv1mGF4BQQynjJnCFpRfo7fDgRudUGZncIRc2OD+a9tgnp
+ 9bos3vjybMdPQwst6oLBTvquCzz3QlD39DvVD2zUiCs68tPZ3YOjugPzcpp+Moz+owS2
+ ZGLC3TkKswprYqvLoBBg0JPtL63LKzkiD9vKw3rrbO+2kfP1qmZGQcUINRCr7IKD/U6x
+ 3m9Q==
+X-Gm-Message-State: AOJu0Yyv9Xq7Y4Me2Km/1c94mugL+VHQ2ZwPhkZk+TCbVYLNqnlMJBDc
+ iH6fxsYk9r9t95imQw1u+333w7XEU+z2MH73mRqK0t2tdoFAG81PVJi/TWOv/BHworL9PxYKLoq
+ XOpI=
+X-Gm-Gg: ASbGncuBXP5DOHUihpsSac6Nq9Ih/2GxPqpv/Oi/M1NIXFftw7XJrpkhgxGvaJUJ64w
+ OL7jGgcbIz7OaPe+TvjXFp/d87NJQxVgUb4A3R0hlnd7HC/p80fbSIjRUcVf2qxlaqkEcOIRiNo
+ bLyvcjZrdJXIvbrgU8nSQ0Gs/ANzvXxmLzn0aP93xh4dUqG35LPlj4ngSAu4Qcqki5Qu+5Chd7s
+ j7qFedp1HCyFS6Eyyj63fcZbwprKO1EfzwHspuO1W/ADPSnmjmDVZq7P8vfxxmzUgrCpp0ExHqh
+ aHsMCBTsyxGSYgwGkgvtZliVticzb97d/C7D
+X-Google-Smtp-Source: AGHT+IHmmF2A+MA1ZCXsxdRGrsjDmUIhOzjDNv1N4dKcFmAOW946Kdq0v7C/tRY3Q6IHyRgJ95tm3g==
+X-Received: by 2002:a05:600c:310c:b0:434:f8a0:9dc5 with SMTP id
+ 5b1f17b1804b1-436e26a8c21mr73170825e9.13.1736443244508; 
+ Thu, 09 Jan 2025 09:20:44 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2ddd013sm62334295e9.24.2025.01.09.09.20.31
+ 5b1f17b1804b1-436e9d8fb99sm27331315e9.3.2025.01.09.09.20.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Jan 2025 09:20:31 -0800 (PST)
+ Thu, 09 Jan 2025 09:20:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/11] qom: Use object_get_container()
-Date: Thu,  9 Jan 2025 18:19:45 +0100
-Message-ID: <20250109171948.31092-9-philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 10/11] qom: remove unused InterfaceInfo::concrete_class field
+Date: Thu,  9 Jan 2025 18:19:47 +0100
+Message-ID: <20250109171948.31092-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250109171948.31092-1-philmd@linaro.org>
 References: <20250109171948.31092-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,120 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Use object_get_container() whenever applicable across the tree.
+The "concrete_class" field of InterfaceClass is only ever written, and as far
+as I can tell is not particularly useful when debugging either; remove it.
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241121192202.4155849-13-peterx@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20250107111308.21886-1-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- backends/cryptodev.c | 4 ++--
- chardev/char.c       | 2 +-
- qom/object.c         | 2 +-
- scsi/pr-manager.c    | 4 ++--
- ui/console.c         | 2 +-
- ui/dbus-chardev.c    | 2 +-
- 6 files changed, 8 insertions(+), 8 deletions(-)
+ include/qom/object.h | 5 ++++-
+ qom/object.c         | 1 -
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/backends/cryptodev.c b/backends/cryptodev.c
-index 1157a149d02..1187b08dacf 100644
---- a/backends/cryptodev.c
-+++ b/backends/cryptodev.c
-@@ -97,7 +97,7 @@ static int qmp_query_cryptodev_foreach(Object *obj, void *data)
- QCryptodevInfoList *qmp_query_cryptodev(Error **errp)
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 77935572894..9192265db76 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -573,12 +573,15 @@ struct InterfaceInfo {
+  *
+  * The class for all interfaces.  Subclasses of this class should only add
+  * virtual methods.
++ *
++ * Note that most of the fields of ObjectClass are unused (all except
++ * "type", in fact).  They are only present in InterfaceClass to allow
++ * @object_class_dynamic_cast to work with both regular classes and interfaces.
+  */
+ struct InterfaceClass
  {
-     QCryptodevInfoList *list = NULL;
--    Object *objs = container_get(object_get_root(), "/objects");
-+    Object *objs = object_get_container("objects");
+     ObjectClass parent_class;
+     /* private: */
+-    ObjectClass *concrete_class;
+     Type interface_type;
+ };
  
-     object_child_foreach(objs, qmp_query_cryptodev_foreach, &list);
- 
-@@ -557,7 +557,7 @@ static void cryptodev_backend_stats_cb(StatsResultList **result,
-     switch (target) {
-     case STATS_TARGET_CRYPTODEV:
-     {
--        Object *objs = container_get(object_get_root(), "/objects");
-+        Object *objs = object_get_container("objects");
-         StatsArgs stats_args;
-         stats_args.result.stats = result;
-         stats_args.names = names;
-diff --git a/chardev/char.c b/chardev/char.c
-index 44ff116fcda..7705da5ad02 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -48,7 +48,7 @@
- 
- Object *get_chardevs_root(void)
- {
--    return container_get(object_get_root(), "/chardevs");
-+    return object_get_container("chardevs");
- }
- 
- static void chr_be_event(Chardev *s, QEMUChrEvent event)
 diff --git a/qom/object.c b/qom/object.c
-index 81c06906d30..58897a79a76 100644
+index 58897a79a76..ec447f14a78 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -1774,7 +1774,7 @@ Object *object_get_root(void)
+@@ -314,7 +314,6 @@ static void type_initialize_interface(TypeImpl *ti, TypeImpl *interface_type,
+     g_free((char *)info.name);
  
- Object *object_get_objects_root(void)
- {
--    return container_get(object_get_root(), "/objects");
-+    return object_get_container("objects");
- }
+     new_iface = (InterfaceClass *)iface_impl->class;
+-    new_iface->concrete_class = ti->class;
+     new_iface->interface_type = interface_type;
  
- Object *object_get_internal_root(void)
-diff --git a/scsi/pr-manager.c b/scsi/pr-manager.c
-index fb5fc297309..1977d99ce0d 100644
---- a/scsi/pr-manager.c
-+++ b/scsi/pr-manager.c
-@@ -21,7 +21,7 @@
- #include "qemu/module.h"
- #include "qapi/qapi-commands-block.h"
- 
--#define PR_MANAGER_PATH     "/objects"
-+#define PR_MANAGER_PATH     "objects"
- 
- typedef struct PRManagerData {
-     PRManager *pr_mgr;
-@@ -135,7 +135,7 @@ PRManagerInfoList *qmp_query_pr_managers(Error **errp)
- {
-     PRManagerInfoList *head = NULL;
-     PRManagerInfoList **prev = &head;
--    Object *container = container_get(object_get_root(), PR_MANAGER_PATH);
-+    Object *container = object_get_container(PR_MANAGER_PATH);
- 
-     object_child_foreach(container, query_one_pr_manager, &prev);
-     return head;
-diff --git a/ui/console.c b/ui/console.c
-index 5165f171257..914ed2cc76b 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1160,7 +1160,7 @@ DisplayState *init_displaystate(void)
-          * all QemuConsoles are created and the order / numbering
-          * doesn't change any more */
-         name = g_strdup_printf("console[%d]", con->index);
--        object_property_add_child(container_get(object_get_root(), "/backend"),
-+        object_property_add_child(object_get_container("backend"),
-                                   name, OBJECT(con));
-         g_free(name);
-     }
-diff --git a/ui/dbus-chardev.c b/ui/dbus-chardev.c
-index 1d3a7122a11..bf061cbc930 100644
---- a/ui/dbus-chardev.c
-+++ b/ui/dbus-chardev.c
-@@ -106,7 +106,7 @@ dbus_chardev_init(DBusDisplay *dpy)
-     dpy->notifier.notify = dbus_display_on_notify;
-     dbus_display_notifier_add(&dpy->notifier);
- 
--    object_child_foreach(container_get(object_get_root(), "/chardevs"),
-+    object_child_foreach(object_get_container("chardevs"),
-                          dbus_display_chardev_foreach, dpy);
- }
- 
+     ti->class->interfaces = g_slist_append(ti->class->interfaces, new_iface);
 -- 
 2.47.1
 
