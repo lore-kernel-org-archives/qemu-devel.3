@@ -4,61 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B214E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 09:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2062CE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVozP-0000JX-BW; Thu, 09 Jan 2025 04:38:08 -0500
+	id 1tVpRo-0003yb-3r; Thu, 09 Jan 2025 05:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tVozI-0000Iq-5f
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 04:38:00 -0500
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tVpRm-0003yL-FD
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:07:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tVozC-0001tO-Ni
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 04:37:59 -0500
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tVpRk-0007US-5F
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:07:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736415473;
+ s=mimecast20190719; t=1736417241;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=LMpm3hGf4KttxMkBTX73iE32fBwyk5+ARfvLDCaGDVo=;
- b=MJZDCiYIzzyLPUI+vQ4xnj5Ml6l3IjkA3I9HKd9qNTVfJ6HLzX/ENn6sq/dejAKngWP1eK
- IUuM46auiyCvEt5FS1IK+qMm9MnSShztnlZA13ycn7vxuDtWOJi6hqBoB0f5XmuZd58sK0
- xI6nFJJCO/5GIvWL/wshn/V0i8ew2To=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-GYmnjhAoNp2bxzr0_0DhuQ-1; Thu,
- 09 Jan 2025 04:37:51 -0500
-X-MC-Unique: GYmnjhAoNp2bxzr0_0DhuQ-1
-X-Mimecast-MFC-AGG-ID: GYmnjhAoNp2bxzr0_0DhuQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D7E4E1956080
- for <qemu-devel@nongnu.org>; Thu,  9 Jan 2025 09:37:50 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.97])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6499419560AA; Thu,  9 Jan 2025 09:37:48 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Richard W.M. Jones" <rjones@redhat.com>
-Subject: [PATCH v2] crypto: fix bogus error benchmarking pbkdf on fast machines
-Date: Thu,  9 Jan 2025 09:37:46 +0000
-Message-ID: <20250109093746.1216300-1-berrange@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pr0SRpfso4c4/HtRFHD5QReubWWYiEvTKa20yaF4baU=;
+ b=Twk84OjtxZlkkDObom3kVsQoULFs4eXWRDeqptYKn4P2JNLotQVzt7xNmjVfPJQeUAv6+y
+ oGQqBjE80hKAwkhSRJKrxbkRscCdASCpErjg20wI4U30XMB74LfK123sR5xaOaHxDP9dfW
+ dnjR1jvg/aapQVhhq/Pkx47gEjrKFu0=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-189-0trA8YIrORSZ-eArBzYpRA-1; Thu, 09 Jan 2025 05:07:19 -0500
+X-MC-Unique: 0trA8YIrORSZ-eArBzYpRA-1
+X-Mimecast-MFC-AGG-ID: 0trA8YIrORSZ-eArBzYpRA
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ab2d052894bso24702566b.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 02:07:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736417238; x=1737022038;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Pr0SRpfso4c4/HtRFHD5QReubWWYiEvTKa20yaF4baU=;
+ b=EhGJV/TgnzB1oXZO2KJIijl5pernInzx6O24Gr22zeGG+YOHbmcz9EmlpKYH3hyzvH
+ OvLxkw2y/gaM9betIP6jEMGlnmXZdU/tAnwqdGLu5oh+whmwxx7I04dCU151dtk7jwTG
+ YwhxQTEvyJ3v9ntAHr4t1mJPB5TPD1q5x6eEzOYVMUe/sFDQ+eOR2dGPgcb+0nzfbmO6
+ bPfkC1qknuv7AQxwta8QsBBL4zz4GbwctRZzjXiSE89EOFBYU6hAj0k2y+L8dM5YV2Fi
+ 676df3XZmxY1dvbd7FttPjp/dsZS4pSLxoQINt01J1VXpwrqmPgsOxvFw0VjgspaOqf6
+ Dr5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeG/lvQGdOb1RPokc8e3ck9pIyd3XY1k/L4k+Kkz4ZW8ZWUeNBNhz65lSal94grfpHF0uio52Eecxp@nongnu.org
+X-Gm-Message-State: AOJu0YxJg/F3s+G2uIkx/zpQDDCOZef0kuR278++cOvTsJbAh5KNQDlD
+ HtsT0aPMWo2M4zjakBLomM/1TegFOQPGNR8o1aHyDelwqUxETolN2DNVGvRYn7njepsezjCy9uP
+ PgpdgGnzCiw8kYoKizab6kzNjb1rZE3kaGAy7PXbrE91Zz6UKHQHRnZC2leUNHXgMNVn4cOkm7J
+ xIqxFEjaM5lBI2DLHxRsylNPlf0qg=
+X-Gm-Gg: ASbGncvHgCTDz3eg7rT6uL78sXrY7U/JS3cssd3HplK0elwfyFxzo1hb1t5YuM9rPfF
+ /R364IMiM7WsqqPuXaqIkDhY9g/2a06JPCTCoJsk=
+X-Received: by 2002:a05:6402:1ed1:b0:5d0:d208:4cad with SMTP id
+ 4fb4d7f45d1cf-5d98a105e8emr1584612a12.2.1736417236946; 
+ Thu, 09 Jan 2025 02:07:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG5LKnxDz5QItEj1CoXAP10Tfy/SVaxn9OnAV1pHnBdeZVoGdLQSZADX/fHMLqCn2driVUAJQvRjCO+833AAHE=
+X-Received: by 2002:a05:6402:1ed1:b0:5d0:d208:4cad with SMTP id
+ 4fb4d7f45d1cf-5d98a105e8emr1584583a12.2.1736417236554; Thu, 09 Jan 2025
+ 02:07:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
+In-Reply-To: <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Thu, 9 Jan 2025 18:06:39 +0800
+X-Gm-Features: AbW1kvZd79yLTZnVj1T60rMuawRcDsantjHjkARrGDic9O2h7t8V0mEifeYbiUA
+Message-ID: <CAPpAL=y9-qYf0z2UXhjPpytFizk9oDvU0yDSUV0urovE9670Bw@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] virtio: Convert feature properties to OnOffAuto
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster <armbru@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -83,104 +119,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're seeing periodic reports of errors like:
+I tested this series of patches v4 with virtio-net regression tests,
+everything works fine. And the qemu core dump issues that hit it on v3
+have gone.
 
-$ qemu-img create -f luks --object secret,data=123456,id=sec0 \
-                  -o key-secret=sec0 luks-info.img 1M
-  Formatting 'luks-info.img', fmt=luks size=1048576 key-secret=sec0
-  qemu-img: luks-info.img: Unable to get accurate CPU usage
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-This error message comes from a recent attempt to workaround a
-kernel bug with measuring rusage in long running processes:
-
-  commit c72cab5ad9f849bbcfcf4be7952b8b8946cc626e
-  Author: Tiago Pasqualini <tiago.pasqualini@canonical.com>
-  Date:   Wed Sep 4 20:52:30 2024 -0300
-
-    crypto: run qcrypto_pbkdf2_count_iters in a new thread
-
-Unfortunately this has a subtle bug on machines which are very fast.
-
-On the first time around the loop, the 'iterations' value is quite
-small (1 << 15), and so will run quite fast. Testing has shown that
-some machines can complete this benchmarking task in as little as
-7 milliseconds.
-
-Unfortunately the 'getrusage' data is not updated at the time of
-the 'getrusage' call, it is done asynchronously by the scheduler.
-The 7 millisecond completion time for the benchmark is short
-enough that 'getrusage' sometimes reports 0 accumulated execution
-time.
-
-As a result the 'delay_ms == 0' sanity check in the above commit
-is triggering non-deterministically on such machines.
-
-The benchmarking loop intended to run multiple times, increasing
-the 'iterations' value until the benchmark ran for > 500 ms, but
-the sanity check doesn't allow this to happen.
-
-To fix it, we keep a loop counter and only run the sanity check
-after we've been around the loop more than 5 times. At that point
-the 'iterations' value is high enough that even with infrequent
-updates of 'getrusage' accounting data on fast machines, we should
-see a non-zero value.
-
-Fixes: https://lore.kernel.org/qemu-devel/ffe542bb-310c-4616-b0ca-13182f849fd1@redhat.com/
-Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2336437
-Reported-by: Thomas Huth <thuth@redhat.com>
-Reported-by: Richard W.M. Jones <rjones@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/pbkdf.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-Changed in v2:
-
- - Fixed typos
- - Add links to bug reports
-
-diff --git a/crypto/pbkdf.c b/crypto/pbkdf.c
-index 0dd7c3aeaa..2989fc0a40 100644
---- a/crypto/pbkdf.c
-+++ b/crypto/pbkdf.c
-@@ -107,7 +107,7 @@ static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
-     size_t nsalt = iters_data->nsalt;
-     size_t nout = iters_data->nout;
-     Error **errp = iters_data->errp;
--
-+    size_t scaled = 0;
-     uint64_t ret = -1;
-     g_autofree uint8_t *out = g_new(uint8_t, nout);
-     uint64_t iterations = (1 << 15);
-@@ -131,7 +131,17 @@ static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
- 
-         delta_ms = end_ms - start_ms;
- 
--        if (delta_ms == 0) { /* sanity check */
-+        /*
-+         * For very small 'iterations' values, CPU (or crypto
-+         * accelerator) might be fast enough that the scheduler
-+         * hasn't incremented getrusage() data, or incremented
-+         * it by a very small amount, resulting in delta_ms == 0.
-+         * Once we've scaled 'iterations' x10, 5 times, we really
-+         * should be seeing delta_ms != 0, so sanity check at
-+         * that point.
-+         */
-+        if (scaled > 5 &&
-+            delta_ms == 0) { /* sanity check */
-             error_setg(errp, "Unable to get accurate CPU usage");
-             goto cleanup;
-         } else if (delta_ms > 500) {
-@@ -141,6 +151,7 @@ static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
-         } else {
-             iterations = (iterations * 1000 / delta_ms);
-         }
-+        scaled++;
-     }
- 
-     iterations = iterations * 1000 / delta_ms;
--- 
-2.47.1
+On Wed, Jan 8, 2025 at 2:18=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
+com> wrote:
+>
+> Some features are not always available with vhost. Legacy features are
+> not available with vp_vdpa in particular. virtio devices used to disable
+> them when not available even if the corresponding properties were
+> explicitly set to "on".
+>
+> QEMU already has OnOffAuto type, which includes the "auto" value to let
+> it automatically decide the effective value. Convert feature properties
+> to OnOffAuto and set them "auto" by default to utilize it. This allows
+> QEMU to report an error if they are set "on" and the corresponding
+> features are not available.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
+>  hw/core/machine.c          |  4 +++-
+>  hw/virtio/virtio-bus.c     | 14 ++++++++++++--
+>  hw/virtio/virtio.c         |  4 +++-
+>  4 files changed, 39 insertions(+), 21 deletions(-)
+>
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 638691028050..b854c2cb1d04 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -113,7 +113,8 @@ struct VirtIODevice
+>      uint16_t queue_sel;
+>      /**
+>       * These fields represent a set of VirtIO features at various
+> -     * levels of the stack. @host_features indicates the complete
+> +     * levels of the stack. @requested_features indicates the feature
+> +     * set the user requested. @host_features indicates the complete
+>       * feature set the VirtIO device can offer to the driver.
+>       * @guest_features indicates which features the VirtIO driver has
+>       * selected by writing to the feature register. Finally
+> @@ -121,6 +122,7 @@ struct VirtIODevice
+>       * backend (e.g. vhost) and could potentially be a subset of the
+>       * total feature set offered by QEMU.
+>       */
+> +    OnOffAutoBit64 requested_features;
+>      uint64_t host_features;
+>      uint64_t guest_features;
+>      uint64_t backend_features;
+> @@ -149,6 +151,7 @@ struct VirtIODevice
+>      bool started;
+>      bool start_on_kick; /* when virtio 1.0 feature has not been negotiat=
+ed */
+>      bool disable_legacy_check;
+> +    bool force_features_auto;
+>      bool vhost_started;
+>      VMChangeStateEntry *vmstate;
+>      char *bus_name;
+> @@ -376,22 +379,23 @@ typedef struct VirtIOSCSIConf VirtIOSCSIConf;
+>  typedef struct VirtIORNGConf VirtIORNGConf;
+>
+>  #define DEFINE_VIRTIO_COMMON_FEATURES(_state, _field) \
+> -    DEFINE_PROP_BIT64("indirect_desc", _state, _field,    \
+> -                      VIRTIO_RING_F_INDIRECT_DESC, true), \
+> -    DEFINE_PROP_BIT64("event_idx", _state, _field,        \
+> -                      VIRTIO_RING_F_EVENT_IDX, true),     \
+> -    DEFINE_PROP_BIT64("notify_on_empty", _state, _field,  \
+> -                      VIRTIO_F_NOTIFY_ON_EMPTY, true), \
+> -    DEFINE_PROP_BIT64("any_layout", _state, _field, \
+> -                      VIRTIO_F_ANY_LAYOUT, true), \
+> -    DEFINE_PROP_BIT64("iommu_platform", _state, _field, \
+> -                      VIRTIO_F_IOMMU_PLATFORM, false), \
+> -    DEFINE_PROP_BIT64("packed", _state, _field, \
+> -                      VIRTIO_F_RING_PACKED, false), \
+> -    DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+> -                      VIRTIO_F_RING_RESET, true), \
+> -    DEFINE_PROP_BIT64("in_order", _state, _field, \
+> -                      VIRTIO_F_IN_ORDER, false)
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("indirect_desc", _state, _field, \
+> +                                  VIRTIO_RING_F_INDIRECT_DESC, \
+> +                                  ON_OFF_AUTO_AUTO), \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("event_idx", _state, _field, \
+> +                                  VIRTIO_RING_F_EVENT_IDX, ON_OFF_AUTO_A=
+UTO), \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("notify_on_empty", _state, _field, \
+> +                                  VIRTIO_F_NOTIFY_ON_EMPTY, ON_OFF_AUTO_=
+AUTO), \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("any_layout", _state, _field, \
+> +                                  VIRTIO_F_ANY_LAYOUT, ON_OFF_AUTO_AUTO)=
+, \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("iommu_platform", _state, _field, \
+> +                                  VIRTIO_F_IOMMU_PLATFORM, ON_OFF_AUTO_O=
+FF), \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("packed", _state, _field, \
+> +                                  VIRTIO_F_RING_PACKED, ON_OFF_AUTO_OFF)=
+, \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("queue_reset", _state, _field, \
+> +                                  VIRTIO_F_RING_RESET, ON_OFF_AUTO_AUTO)=
+, \
+> +    DEFINE_PROP_ON_OFF_AUTO_BIT64("in_order", _state, _field, \
+> +                                  VIRTIO_F_IN_ORDER, ON_OFF_AUTO_OFF)
+>
+>  hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+>  bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index c949af97668d..bff26b95dd74 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -36,7 +36,9 @@
+>  #include "hw/virtio/virtio-iommu.h"
+>  #include "audio/audio.h"
+>
+> -GlobalProperty hw_compat_9_2[] =3D {};
+> +GlobalProperty hw_compat_9_2[] =3D {
+> +    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
+> +};
+>  const size_t hw_compat_9_2_len =3D G_N_ELEMENTS(hw_compat_9_2);
+>
+>  GlobalProperty hw_compat_9_1[] =3D {
+> diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+> index 896feb37a1ca..75d433b252d5 100644
+> --- a/hw/virtio/virtio-bus.c
+> +++ b/hw/virtio/virtio-bus.c
+> @@ -50,6 +50,7 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Erro=
+r **errp)
+>      bool has_iommu =3D virtio_host_has_feature(vdev, VIRTIO_F_IOMMU_PLAT=
+FORM);
+>      bool vdev_has_iommu;
+>      Error *local_err =3D NULL;
+> +    uint64_t features;
+>
+>      DPRINTF("%s: plug device.\n", qbus->name);
+>
+> @@ -63,13 +64,22 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Er=
+ror **errp)
+>
+>      /* Get the features of the plugged device. */
+>      assert(vdc->get_features !=3D NULL);
+> -    vdev->host_features =3D vdc->get_features(vdev, vdev->host_features,
+> -                                            &local_err);
+> +    features =3D vdev->host_features | vdev->requested_features.auto_bit=
+s |
+> +               vdev->requested_features.on_bits;
+> +    features =3D vdc->get_features(vdev, features, &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+>          return;
+>      }
+>
+> +    if (!vdev->force_features_auto &&
+> +        (features & vdev->requested_features.on_bits) !=3D vdev->request=
+ed_features.on_bits) {
+> +        error_setg(errp, "A requested feature is not supported by the de=
+vice");
+> +        return;
+> +    }
+> +
+> +    vdev->host_features =3D features;
+> +
+>      if (klass->device_plugged !=3D NULL) {
+>          klass->device_plugged(qbus->parent, &local_err);
+>      }
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 85110bce3744..83f803fc703d 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -4013,11 +4013,13 @@ static void virtio_device_instance_finalize(Objec=
+t *obj)
+>  }
+>
+>  static const Property virtio_properties[] =3D {
+> -    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+> +    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
+>      DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+>      DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, use_disabled_fla=
+g, true),
+>      DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+>                       disable_legacy_check, false),
+> +    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
+> +                     force_features_auto, false),
+>  };
+>
+>  static int virtio_device_start_ioeventfd_impl(VirtIODevice *vdev)
+>
+> --
+> 2.47.1
+>
 
 
