@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7147E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 15:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C76BE7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 15:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVuSz-0008F0-TC; Thu, 09 Jan 2025 10:29:01 -0500
+	id 1tVuTO-0008Sx-Gb; Thu, 09 Jan 2025 10:29:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
- id 1tVuSr-0008Ds-Gh
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:28:54 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tVuTN-0008SP-CK
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:29:25 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
- id 1tVuSm-0006sB-Jj
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:28:51 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43634b570c1so8585595e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 07:28:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tVuTL-00070e-0H
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:29:24 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2163bd70069so17383495ad.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 07:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1736436526; x=1737041326; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=c6WJpUs4643oGwxH6y7zuN4dJbGbFyPImupCGr0ate8=;
- b=bDIqZINdUVxuDg+yfVGGr/vZjnXFMGrFkv1LZzV58KaoIx+tWWqvJ+DtzPaixRSNlz
- rDlO+M0tkInu7pDUppQU7MhxRyv/dILCjCkX5JVG7a9tQ4alKq39YhZGN5/EjHuvhEKQ
- Y8Er8KGMxPhayIwrm5Ys1OOPyjXJt9XBnV7UDNSTxJMTjJBc6nzSa1FdFjg6H9ve7/Sv
- ZzApK+/TVJARfTYJJwjG6Tnbj55nqWFG1K9HVae6LzorNHFYSgglMv6faxyTf8rZuLnx
- hNEjW55WSJTifXQ8mZ5jYuykvSyzF3vt2MjSeTs1saIH7Ft2YzuRZRk5L4e1q6vVAB12
- yRFA==
+ d=linaro.org; s=google; t=1736436561; x=1737041361; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TJvPwFwqoYUVJFGIOuQcANbtbOEw+OYpBfPrpWZvpUw=;
+ b=n+e8jQyPpXjnHHSYR2sgMi13DZcgYyB5a0CJz1tL374m2VIOdvH1u46+ZnWWvzRo2/
+ y6liTPU1jpESNS6Qk7wZUnAJRa1Ok408doJKh9pZTGSShmQ/dVlU+DMLV6clZXcvPbaF
+ zvRU4L7G63nFLBCZ4AO0Qd0+AXR8Bw0ICXJtY3GwyYb0zyjCQOj8eu/pQhPP9lentckv
+ WYjnZF7sU4XHwPVh62nRwQDXKiA2HcW/f29xvW2xIngtRr64ydA0dSpHSgO/yVicbQMq
+ qgLCkg7MAkW858B5FBe3H3huiOpt45aiOrCqJYqlCVecCjqXjyk+T37TR1jst4ua3V1f
+ YrGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736436526; x=1737041326;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=c6WJpUs4643oGwxH6y7zuN4dJbGbFyPImupCGr0ate8=;
- b=u+3F8Nzg2CwrWE9E3cOEFg7OQYAaFZiTZJpCtvCpmKzoQRTHeO+LDD3WKvx+Td6eyv
- Wd2A90t3gvCPlRNv9QDqs/d+u+zKEayKm5YDXapHUAGsqYd5adAq0+/8O8VtGMrjy41X
- L0aY88IH9a9WdgRmma2c2KEFIRalffRUjWgo+ZpD+da2CWFZutbOAYwK/GNQe+X3hIZg
- PY1Z4DBGPtJac4bcGTrqO2gjhkM7NZzgtIcb8aYmzBntW/OkgoWZxvqPBIh2WNQJ5L/Q
- Q/RwOqi+ZWAYHytGNlU8j/Lmyb/0hSsWBhc7fJ7WI74ee9tIJCgUed8MxwtReHzXR1oN
- rCWQ==
-X-Gm-Message-State: AOJu0YyVEnmLuwnw+p3sNwJ6KsezqJmh9XBwcGzicLGD8HiDZ+dpJ7uk
- PAleDBor+FO93foxXLy22rX31Taw+ppxrl/fvrmwxrjXuVdsp3a5rGwLXMCDIX7MQzAnqEdhejN
- cEuU=
-X-Gm-Gg: ASbGnct7zIwDuAw3F9P1dLqefIUTOXSqO6b24pr20tJRbBYW6Ph6Wmq+8gLiExD/dED
- yxZSoZEN2eVUFp4btxsm57+FwC6hhrB4fzB1SgPBAFSHh6uisYfy7ZDies/ywh3QWMZHZIkLeBU
- qsTigxjwoZjYpSsKUfMLZtocfz92SThZmSXWw8k2QLDMBFGmLFmD9KkMQwxyuEDV7QpOp89TOBG
- mO6hVQiOrL/7A+SfpHc3XTQhlIzJO8mQWfcEZEWGtwZq9srmheowJFUXvon79TmETUzf7jaWQ7c
- WfTiH0ySfYZd
-X-Google-Smtp-Source: AGHT+IHEycFJQjTsq6l4eiTjwRcOrJBPYNwtPSYMh1f55P2vtlqlk/7oehIN6kvopQj0qEiO9msPNA==
-X-Received: by 2002:a05:600c:4449:b0:435:192:63ca with SMTP id
- 5b1f17b1804b1-436e26f481cmr57297475e9.21.1736436525753; 
- Thu, 09 Jan 2025 07:28:45 -0800 (PST)
-Received: from dorian.sou.embecosm-corp.com ([212.69.42.53])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e92f7bsm59226775e9.38.2025.01.09.07.28.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 07:28:45 -0800 (PST)
-From: Craig Blackmore <craig.blackmore@embecosm.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Craig Blackmore <craig.blackmore@embecosm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v9 0/1] target/riscv: rvv: Use wider accesses for unit stride
- load/store
-Date: Thu,  9 Jan 2025 15:28:32 +0000
-Message-ID: <20250109152833.75385-1-craig.blackmore@embecosm.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1736436561; x=1737041361;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TJvPwFwqoYUVJFGIOuQcANbtbOEw+OYpBfPrpWZvpUw=;
+ b=Niaj5aH3ohBCZ3GSXdUw2oy0nKMhsqkNyPHGWUdUbjnXGn629XADTxZa8HTuYRCzXC
+ 1f+Hk9Om/dsvU9PPeoVV8+Hzc9v+acQVOG5Ho7gljfGDLVj17qvxXlLhPFlhQj9aFUs0
+ EOcV6rIMt9GSq91Pmwd2+o/qyG2cy/+KvtQ62gC6BjcOokGWbs4R6UY3R6zXuQPhp4QS
+ zWkNcxOazYRwnD9zHLX70G+zd11UtA17Ehu7/DPCFtnAhRo/r+mrQGhB4jjGQipLcQhD
+ gGh+NVGxeCHN2Niz6oWtE1tVsCkapJMzuwssSOcSgi+LfsaCxnYdV3LI38jknkhWdhRz
+ OMzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWWzJ+rnPJ6h6S10YsOE54VA6gyWKfSiXiT1dFFS5mL5CZyNvAkFMFQA8R1qZMgLBom2Mg74aKxWV75@nongnu.org
+X-Gm-Message-State: AOJu0YwYDPiAluo8SYT4yZHDbgXnB00rWXXZjX/u2GG72zjQaKn8h3pu
+ akjlP9zqgrVkroBvJb381QL4p4xsaiv9dMmnJSNLUWG8U8LR9MfkXE6yuznaIYgFoe4lKfPMGmo
+ G
+X-Gm-Gg: ASbGnctrSpv5Uxj5fHmljkdGDak6cGHDY/E93W0ShOyAV2glb9WcdoWWcN1jlxsMbBz
+ 8b29+kqHze3fGO/8ub2puQiL724SPwKsW+uUnFa7kCLieol9wB04/YlYS5esPSeJmGurVqFCwwl
+ cYvXmB2z+A0hN5TBB0WpmR4d80iBxWQdfd+BDOXBwi6uVkBPUTtXLza0L4ifGZkahiJ/EvCgbnN
+ 28fJ16uU07DLecjLI7KHvK33nGKfllC5ORjCC8PIUQ+8wlruK1WpnZhyEQk3+WXTNeDnbRxPi3N
+ hWjnIlJYVxJRF3nSLUDiXmIb/B2olg8=
+X-Google-Smtp-Source: AGHT+IFdNV0/I1URODg0EczzVisKLg+lbvH8x/IkrIRkxPBNwxcxGr5LvnhMBuL8A6ONfUr1voP7ZQ==
+X-Received: by 2002:a17:902:ec83:b0:215:e98c:c5d9 with SMTP id
+ d9443c01a7336-21a83f57012mr86766935ad.18.1736436561378; 
+ Thu, 09 Jan 2025 07:29:21 -0800 (PST)
+Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
+ [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9c435793sm761885ad.195.2025.01.09.07.29.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 07:29:20 -0800 (PST)
+Message-ID: <fae8c340-380d-4a20-b9c0-7a9c95f27320@linaro.org>
+Date: Thu, 9 Jan 2025 07:29:18 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=craig.blackmore@embecosm.com; helo=mail-wm1-x334.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Add missing /proc/cpuinfo fields for sparc
+To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-devel@nongnu.org
+References: <Z39B1wzNNpndmOxZ@p100>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <Z39B1wzNNpndmOxZ@p100>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,37 +103,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes since v8:
-- Add missing CONFIG_ATOMIC64 guard.
+On 1/8/25 19:26, Helge Deller wrote:
+> Add some missing fields which may be parsed by userspace
+> applications.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> 
+> v2:
+> - fixed cpu name and type depending on currently active CPU
+> 
+> diff --git a/linux-user/sparc/target_proc.h b/linux-user/sparc/target_proc.h
+> index 3bb3134a47..744fa10730 100644
+> --- a/linux-user/sparc/target_proc.h
+> +++ b/linux-user/sparc/target_proc.h
+> @@ -8,7 +8,25 @@
+>   
+>   static int open_cpuinfo(CPUArchState *cpu_env, int fd)
+>   {
+> -    dprintf(fd, "type\t\t: sun4u\n");
+> +    int i, num_cpus;
+> +    const char *cpu_type;
+> +
+> +    num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
+> +    if (cpu_env->def.features & CPU_FEATURE_HYPV) {
+> +        cpu_type = "sun4v";
+> +    } else {
+> +        cpu_type = "sun4u";
+> +    }
 
-Previous versions:
-- v1: https://lore.kernel.org/all/20240717153040.11073-1-paolo.savini@embecosm.com/
-- v2: https://lore.kernel.org/all/20241002135708.99146-1-paolo.savini@embecosm.com/
-- v3: https://lore.kernel.org/all/20241014220153.196183-1-paolo.savini@embecosm.com/
-- v4: https://lore.kernel.org/all/20241029194348.59574-1-paolo.savini@embecosm.com/
-- v5: https://lore.kernel.org/all/20241211143118.661268-1-craig.blackmore@embecosm.com/
-- v6: https://lore.kernel.org/all/20241218142937.1028602-1-craig.blackmore@embecosm.com/
-- v7: https://lore.kernel.org/all/20241220122109.2083215-1-craig.blackmore@embecosm.com/
-- v8: https://lore.kernel.org/all/20250108143523.153010-1-craig.blackmore@embecosm.com/
+Maybe
 
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: Bin Meng <bmeng.cn@gmail.com>
-Cc: Weiwei Li <liwei1518@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Helene Chelin <helene.chelin@embecosm.com>
-Cc: Nathan Egge <negge@google.com>
-Cc: Max Chou <max.chou@sifive.com>
+#ifdef CONFIG_SPARC64
+     ...
+#else
+     cpu_type = "sun4m";
+#endif
 
-Craig Blackmore (1):
-  target/riscv: rvv: Use wider accesses for unit stride load/store
+?
 
- target/riscv/vector_helper.c | 92 ++++++++++++++++++++++++++++++++----
- 1 file changed, 84 insertions(+), 8 deletions(-)
+Anyway, considering we always printed v4 before,
 
--- 
-2.43.0
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
+
+> +
+> +    dprintf(fd, "cpu\t\t: %s (QEMU)\n", cpu_env->def.name);
+> +    dprintf(fd, "type\t\t: %s\n", cpu_type);
+> +    dprintf(fd, "ncpus probed\t: %d\n", num_cpus);
+> +    dprintf(fd, "ncpus active\t: %d\n", num_cpus);
+> +    dprintf(fd, "State:\n");
+> +    for (i = 0; i < num_cpus; i++) {
+> +        dprintf(fd, "CPU%d:\t\t: online\n", i);
+> +    }
+> +
+>       return 0;
+>   }
+>   #define HAVE_ARCH_PROC_CPUINFO
 
 
