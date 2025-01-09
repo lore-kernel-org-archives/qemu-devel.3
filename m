@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE94E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A73CCE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 15:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVu0V-0008P5-60; Thu, 09 Jan 2025 09:59:35 -0500
+	id 1tVu4k-0001wG-A0; Thu, 09 Jan 2025 10:03:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVu0S-0008Jw-QR
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:59:33 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVu4i-0001vl-AW
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:03:56 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVu0R-0001Hs-5S
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:59:32 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3862b40a6e0so590655f8f.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:59:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVu4g-00027V-MW
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:03:56 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso8591805e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 07:03:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736434769; x=1737039569; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736435033; x=1737039833; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=t152XkAFiZPQBcHwoyLO5eQljKyBORLxn2F4A1VMNuw=;
- b=LLmn2QvX3eNo7Kzvg3v7YYfuhe4dGt6+4xULMedtTa2T7uANFjRDIcCBPU3IgTJ4J/
- l/0VUagjc751rSy1oRMNuXrHF7SkWaPImN6NPQRRhd4qM181hQXVMQ0oT23WpsSaJAKW
- Ie6kw5DaWQv3xfph+skEpe7+eRQ/FvnPhqSH9oTrKqntudHkZ+pBR20LdN6ngsNR4JTS
- bfMuQz7L7dwxf4VFao94PkE1JIDThxa7Z5LCWn1Sy+CDteyzU8RZox74LTTApIDgUDfm
- jxhdeWq07yI9EaT2rflBzFRkz53VgHO6O7YbZDssEvfbU1ZOr2lSPY8nI2p3ChKeUQMi
- GDpw==
+ bh=ZV9+RA3bWR5u/OiYfe9u0eTyfuuvo5IID0Yz3QU9FNM=;
+ b=p8N1jVjuFl4oZ/iV4ShcDJZuXyVl6BzPLhL614qjcF9kqvTxfeiUFUvTsFgJQQi/0G
+ b102yx8nQFeJ/FS29k6MEnli/CfhyOwQBd/ScUhgjzXo1PhkWvw/C3hyTy2uRxMCyLBS
+ +IxMf5BHJ2qZqljuR3ERBboxYshmkqQ+T/4QvSUGUntOkUtcbLVd5MtstRw9/XVCfVJx
+ wSlkVNBnu0koZ9Kw/+rOgMaOjZSA2hM5AGF0NeIbIxpZtpyLE2y5BVolh00thtyqQ9zu
+ LpuEeXQbpsST4kuS9f4xYSPwyDVdH5wTGLr+EuP5BZDmHn22IrAZY0X8OZ7XbvnR6jOf
+ XZow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736434769; x=1737039569;
+ d=1e100.net; s=20230601; t=1736435033; x=1737039833;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t152XkAFiZPQBcHwoyLO5eQljKyBORLxn2F4A1VMNuw=;
- b=QiRzqvNJ+DsiQjfZCb0EKkAFD/RzzYSE5/QtaOZTiq1K6bhT40IwYZgH9sVUBvHq+S
- Hsa8VYZtJUWvatTt0ABJcONzDygmhrNjyJFvZAI5gWlVOItPSM0iLS5QsqhrbEyhQW2m
- wswteZRZuF/SqUpL+cflfbX6kIZ6epyPx2b/UnylyH8tGWNMjAA8RIgbrkFwyUiD6pbo
- gCIFnQ2/92GquT6sROOm6C8DNFDXiTchNc6lJhwiAi3oywvg4nKAwvKGqxc1OwOQs9p5
- fyADxJYobYBg03SwjfhflRgSod3vwgdS0075Tfn26YIxxPjrqyl2C7O4OGwFzeyMfWft
- VzAw==
+ bh=ZV9+RA3bWR5u/OiYfe9u0eTyfuuvo5IID0Yz3QU9FNM=;
+ b=jQZXjBLl6L952sMyQsGexMp3AfTMLNlupI0rvPGV4AYwHYpf0OYpOFldLaMD5E4/GF
+ FBaxmNq8YbmX/gEey3FkY/PVlaOK98y8E8GpwkCieVFtf/Dl9y0DyacvaeYR8APPnA8c
+ SIKaqPQC4PppNiRvHsNIuAvWG50UaVm/GPa4sl0T5IUd2LtaP5wmx0BGxyLvyyZhujqT
+ bDVcgdGh2EC8qGGO7sflb6B4is+Aca+2LW8bnVM5joc2YSxO9dhijPDeQvdBpJi3Cbm4
+ 94vEttyEkOk0MZmyr8PpviDNLe7fJ/+PQ82hY6vy7RR1aiH44xzUc8s3GwD9oStPIYur
+ Y1rQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXU3AV+v3d2TOWLYKmqR60n6ijkKfscpWUqi876pYPJW9iOQOfVLtnJd2RhUK+YWK971Qys/Y1k/gDT@nongnu.org
-X-Gm-Message-State: AOJu0YwhGAhkhdA4W0Xk7xu6LJxnOn1i29aTaPoPemQi2098asp8dl1K
- HDj2fvSAMe+L0ac4A5ubO/t/stZPatXRhcajYkuM1zrVYSoTbDm7kftQD/aCpRg=
-X-Gm-Gg: ASbGncuZZlwPivJ2v1GF/pcxJNrgfqTjqT7xn8k5fm/CWdzFWwSBHV1oEhzCieYYhl1
- MYl7YrqMheo1KpzRlKhqV5gmuxsO/XaZUB21kUprPRg8D5ksrLTA3F/iQLjpFnOBiarrA7oBsa4
- fItcDQJuyzA5CurxNOkd3H8ft+HI2L4aymL1/9xoMVGxPM5o4Fdb57izevQHHezdT9DX8elMh+x
- MtDbxGshmSFwqSuwx1A+UYqFcoOJZFJMuIIo4Sb2HkHvzbBBXUHzpU8yLt5YZPHzEBZLj/KylEe
- wAYztX0u7UNYccoVhUm93KDBN8M=
-X-Google-Smtp-Source: AGHT+IH1MtCwfebZIs+KMCfSmxgIK2AMKX+amqcPaWG2NW7N0FIQWCSNlYvG8bHm4p0nwWSe2szGxg==
-X-Received: by 2002:a05:6000:4913:b0:385:fbb7:672d with SMTP id
- ffacd0b85a97d-38a8735638dmr6197267f8f.52.1736434768928; 
- Thu, 09 Jan 2025 06:59:28 -0800 (PST)
+ AJvYcCXHcAMu8po4yDif/mxPaaJVin27QpLs7qF+yM7w9OgxVsS1Aof2aTGAYYZ6XyQU7K3UZqrn+bOiNujr@nongnu.org
+X-Gm-Message-State: AOJu0YzNpH+TehGKS4tvWAIb/f3EkHGTqWDFqWCmYfWCCtrSLloQHG5A
+ Wo0sliucYL6QNxBqNIUYbkAT9+PtUWtHBZuSKNhdpAfPzgBxLwti9+EDUx0y2ls=
+X-Gm-Gg: ASbGncuWROQrfyOH4ob6nihdJ5kONx7AXg9HYwx4VpVqvHjJL6x1mZ8KujANpuipDsN
+ 6ruMtMdPdpog77v1wG9Wr07RHCojv7xbdZPYb/yzh+bU2BvubZ82xsa6Npzf1VCbX4cJtsxwkYJ
+ CK+5ZT8iDkJVAXmJhtppIPhS5t1TQWnn2ssgdh2Bo4lJ2KPZT0Wlte71uVoJf/+Ngo+qcW4HhkO
+ qGX9toUUGnBoVZAOvGZS2SM8UgQhr5vIs5EXp2GERqR6GhE7HksEpzamDDXaJ8+NbfLsbIM2TNL
+ YHTkJASIShhB6iBn0XoXTzr4ugI=
+X-Google-Smtp-Source: AGHT+IF/TzvP+0z/wbIUPWIrtiq2f2TKAwsgxZbyxbXkZroikNYrD2VVOyk2ZBBzDf7x1VZnKa8h1g==
+X-Received: by 2002:a5d:5848:0:b0:385:edd1:2245 with SMTP id
+ ffacd0b85a97d-38a8730dabfmr6200049f8f.30.1736435032480; 
+ Thu, 09 Jan 2025 07:03:52 -0800 (PST)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b8214sm2032034f8f.78.2025.01.09.06.59.28
+ ffacd0b85a97d-38a8e4b7ff0sm2066585f8f.77.2025.01.09.07.03.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 06:59:28 -0800 (PST)
-Message-ID: <ec028eff-764f-46e4-abd4-319e15a6bee1@linaro.org>
-Date: Thu, 9 Jan 2025 15:59:27 +0100
+ Thu, 09 Jan 2025 07:03:52 -0800 (PST)
+Message-ID: <f1a91701-0818-4987-b683-4f31abd5a35f@linaro.org>
+Date: Thu, 9 Jan 2025 16:03:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] backends/cryptodev-vhost-user: Fix local_error leaks
-To: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
- "pizhenwei@bytedance.com" <pizhenwei@bytedance.com>
-References: <DM8PR13MB50781054A4FDACE6F4FB6469B30F2@DM8PR13MB5078.namprd13.prod.outlook.com>
+Subject: Re: [PATCH v3 3/6] hw/usb/hcd-xhci-pci: Use event ring 0 if mapping
+ unsupported
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, thuth@redhat.com, zhao1.liu@intel.com,
+ imammedo@redhat.com, akihiko.odaki@daynix.com, npiggin@gmail.com
+References: <20241227121336.25838-1-phil@philjordan.eu>
+ <20241227121336.25838-4-phil@philjordan.eu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <DM8PR13MB50781054A4FDACE6F4FB6469B30F2@DM8PR13MB5078.namprd13.prod.outlook.com>
+In-Reply-To: <20241227121336.25838-4-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,30 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/12/24 02:16, Gabriel Barrantes wrote:
->  From 532af9eecee4695abb02b40f2c18b711370aa7d2 Mon Sep 17 00:00:00 2001
-> From: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
-> Date: Fri, 27 Dec 2024 18:02:32 -0600
-> Subject: [PATCH v2] backends/cryptodev-vhost-user: Fix local_error leaks
+On 27/12/24 13:13, Phil Dennis-Jordan wrote:
+> The XHCI specification, section 4.17.1 specifies that "If the
+> Number of Interrupters (MaxIntrs) field is greater than 1, then
+> Interrupter Mapping shall be supported." and "If Interrupter
+> Mapping is not supported, the Interrupter Target field shall be
+> ignored by the xHC and all Events targeted at Interrupter 0."
 > 
-> Do not propagate error to the upper, directly output the error to
-> avoid leaks.
+> QEMU's XHCI device has so far not specially addressed this case,
+> so we add a check to xhci_event() to redirect to event ring and
+> interrupt 0 if mapping is disabled.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2714
-> Fixes: 2fda101de07 ("virtio-crypto: Support asynchronous mode")
-> 
-> Signed-off-by: Gabriel Barrantes <gabriel.barrantes.dev@outlook.com>
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 > ---
-> Changes in v2:
-> 
->   *
->     Add full link to issue.
->   *
->     Add reference to first bad commit.
-> 
-> ---
-> backends/cryptodev-vhost-user.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
+>   hw/usb/hcd-xhci.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Patch queued adding zhenwei pi R-b tag from v1, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
