@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81D6E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03325E7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW2Bm-0003p7-Pe; Thu, 09 Jan 2025 18:43:46 -0500
+	id 1tW2Ck-0004RQ-E8; Thu, 09 Jan 2025 18:44:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tW2Bl-0003oh-7i
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:43:45 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tW2Bj-00058j-J5
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:43:45 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509ElPf4005236;
- Thu, 9 Jan 2025 23:43:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kFyNMv
- mf/kNnG24Gc/GIgnN5b6RBKoKcYlXh4WtHEiM=; b=oR6qDap+HO185PT4qkAP66
- OrwFuNPvEtR4EwMmi5oWg02VALzC8rSg4Ecc0/qJD0OBVqA6CSsQxWV4bIeMH5+z
- c4dd/f+Cx/ANQcj1WSo42He1kO8gqGIma37smvTiSVlia6gDRNlZ08oi2lBl6iaq
- p2ygsvLeWIWJ6iiQAJzZ1354XO0qsjaW2JqtL3SL6rKjSI6X9ypz1Et7QCYoS7RI
- Mh2YeIlR9y+kcCctTXhyRqpmqQZZM0VKTEHQ4GO+41hkxMRmDsmIHwutlDT+0wgo
- qBtn8yzwreTDDIBdvIMwO3bolUStcRJTj5u69196D6qA29dMb39557BNFzTI44pw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4426xccurn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jan 2025 23:43:38 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 509LC1kH027997;
- Thu, 9 Jan 2025 23:43:37 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yhhkfce5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jan 2025 23:43:37 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 509NhZwO51642728
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jan 2025 23:43:35 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5F6FE20043;
- Thu,  9 Jan 2025 23:43:35 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFE3420040;
- Thu,  9 Jan 2025 23:43:34 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Jan 2025 23:43:34 +0000 (GMT)
-Message-ID: <6d1171d8debb462f468bb47ff875e0e9db253b4e.camel@linux.ibm.com>
-Subject: Re: [PATCH 3/3] accel/tcg: Implement cpu_exec_reset_hold() on user
- emulation
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>, Riku
- Voipio <riku.voipio@iki.fi>, Richard Henderson
- <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
-Date: Fri, 10 Jan 2025 00:43:34 +0100
-In-Reply-To: <20250102182521.65428-4-philmd@linaro.org>
-References: <20250102182521.65428-1-philmd@linaro.org>
- <20250102182521.65428-4-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW2Ci-0004Qs-Cw
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:44:44 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW2Cg-0005DJ-Nc
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:44:44 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43634b570c1so11440095e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 15:44:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736466281; x=1737071081; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=HgrSRNpLpOMF/sxO+NuT5S6s4Jp5b3MaoopDHyZLPN0=;
+ b=cOiefTAPhSwFyil052hqa6jg7jv+xFC7mM9RYZ606wNtHEHFkO6dofJDive4gjZKWK
+ pDYunZRwaggnkFyQnfL9sqJD0p7ETShibKUi5+dMZbOhX4LlmQ09yhFw7eQBWLMn2xxm
+ 7r4qmlUXrIALmvFOjCAYkwzw2Orv4RLR+gq5loxOgUUJ20mQW97R39MBPhQP445YeKMO
+ Q1DBaA5DuEpcNKXZ5415VHjVWeToYNRNTf54T2F490/mrfy4v0Vcf51C3exOzbd0Zu3u
+ t5RXRgf+Il5tZQIesnRmd4uNA8dM2yaucQEQHb1vXiVcqVLvEM3mBNfnMahCZNPppcya
+ bcnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736466281; x=1737071081;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HgrSRNpLpOMF/sxO+NuT5S6s4Jp5b3MaoopDHyZLPN0=;
+ b=n18SMAwXmlQDhXw3h44tIy0xE1gB83wYta4GQS1UFuoApd8tY3boZZBomZDWnXeADb
+ tGwjfWFak4LvG6tBZ+LR0ER/9EQIbhM0gPeFeCEd5cb7cJ7YasG0tJlYjzRs593Dv0H8
+ fImGOrh4V7i28mbqOia8f8OCysEzJcU0z46kj8JYkY/90qdwvbJkWcs2+l9nQjnhx+8j
+ FmIa97CQI8eYTIZ2ybaSnsb4ywaKgQlbT3wLd6hWOD+oIeLGPxD4rshJ/IoDiJzeA/xC
+ Z7+FO2PkneZwlmhHB9QcwTgXVnRw+R4Rs0OjqiJXotLR4X9acPAtlYPPW2vazEpMHGMv
+ A9Vw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIuPGCJdzXJb9yU8rLuzZD/MF11mOELMdx5mHzyUYV3X+USQu96z/1QolkqW7KTbf8nDGPc9M2PmsH@nongnu.org
+X-Gm-Message-State: AOJu0YxanXnx2S42Sqn50br9qWjRQT6ixcfTi5tBWFcas3x5Pg0jNo1G
+ 2Nvew44CGQcg7xkxUBZh4+Wlo5F3ENZ0rbRiEL2/s2qXJDtwqaHFOKFfr0h88Yk=
+X-Gm-Gg: ASbGncuxAT4goQ6Ctg/25L4GPIns4BY08Ul241lPQm5SPnuQMucff6Xr940crV5qoj/
+ erFXz+5qoDthqyvBU01gt8NzC4GPxDRjwS2NP4Z3YzUrg/4Ssw56gsM2xOU7S5AbGuK+nPBuwMT
+ UKGgGF/hMbMZelOik7VfSr695FCqz0xWAO84kdsDPWjEzy5eQh8C7zSxZfjY2oV5GfnK4qz0J6D
+ LXopIT7GAvtsp/RkPUY4bvOjfvhmjUrp1MIRR06jo4UR8rsk52SY+dXnIgxh/d+lE4fZ16yYxRR
+ nC3fz2orlGN7i4uPn3exY1qMm8E=
+X-Google-Smtp-Source: AGHT+IEce+8I4yTBKHoDLvzVk0D3gKA/Dhmf05T+5dPgGp2XRgfxXhBoNUGsJqUwsTrFn1GSkeZxPA==
+X-Received: by 2002:a05:600c:1386:b0:434:f8e5:1bb with SMTP id
+ 5b1f17b1804b1-436e26aeb43mr83397075e9.12.1736466280645; 
+ Thu, 09 Jan 2025 15:44:40 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9e62116sm34296775e9.35.2025.01.09.15.44.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 15:44:39 -0800 (PST)
+Message-ID: <7911f9e6-a9d5-4457-978a-d0191ce172d1@linaro.org>
+Date: Fri, 10 Jan 2025 00:44:38 +0100
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 4i3ly2FCDDuKgdUyocD00sEzSXiRVH_4
-X-Proofpoint-ORIG-GUID: 4i3ly2FCDDuKgdUyocD00sEzSXiRVH_4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- priorityscore=1501 phishscore=0 suspectscore=0 adultscore=0
- impostorscore=0 mlxscore=0 malwarescore=0 spamscore=0 bulkscore=0
- mlxlogscore=861 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501090185
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 44/81] tcg/sparc64: Use SRA, SRL for {s}extract_i64
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ <20250107080112.1175095-45-richard.henderson@linaro.org>
+ <45d29837-466b-4439-a8d5-b522e1135263@linaro.org>
+Content-Language: en-US
+In-Reply-To: <45d29837-466b-4439-a8d5-b522e1135263@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,47 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-01-02 at 19:25 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> Commit bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold()
-> out") wanted to restrict tlb_flush() to system emulation,
-> but inadvertently also restricted tcg_flush_jmp_cache(),
-> which was before called on user emulation via:
->=20
-> =C2=A0 Realize -> Reset -> cpu_common_reset_hold()
->=20
-> Since threads (vCPUs) use a common CPUJumpCache, when many
-> threads are created / joined, they eventually end re-using
-> a CPUJumpCache entry, which was cleared when the first vCPU
-> was allocated (via Realize) but then stayed dirty, leading to:
+On 10/1/25 00:00, Philippe Mathieu-Daudé wrote:
+> On 7/1/25 09:00, Richard Henderson wrote:
+>> Extracts which abut bit 32 may use 32-bit shifts.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/sparc64/tcg-target-has.h |  9 +++++++--
+>>   tcg/sparc64/tcg-target.c.inc | 11 +++++++++++
+>>   2 files changed, 18 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/tcg/sparc64/tcg-target-has.h b/tcg/sparc64/tcg-target-has.h
+>> index d9ca14cc3d..2db461efed 100644
+>> --- a/tcg/sparc64/tcg-target-has.h
+>> +++ b/tcg/sparc64/tcg-target-has.h
+> 
+> Missing:
+> 
+> -- >8 --
+> @@ -33,8 +33,8 @@ extern bool use_vis3_instructions;
+>   #define TCG_TARGET_HAS_ctz_i32          0
+>   #define TCG_TARGET_HAS_ctpop_i32        0
+>   #define TCG_TARGET_HAS_deposit_i32      0
+> -#define TCG_TARGET_HAS_extract_i32      0
+> -#define TCG_TARGET_HAS_sextract_i32     0
+> +#define TCG_TARGET_HAS_extract_i32      1
+> +#define TCG_TARGET_HAS_sextract_i32     1
+>   #define TCG_TARGET_HAS_extract2_i32     0
+>   #define TCG_TARGET_HAS_negsetcond_i32   1
+>   #define TCG_TARGET_HAS_add2_i32         1
+> ---
 
-How are jump caches shared between qemu-user vCPUs?
-I found the following, but this looks private and zeroed out
-during initialization:
+Otherwise patch LGTM, so with that squashed:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-[...]
-    cpu->tb_jmp_cache =3D g_new0(CPUJumpCache, 1);
-
-I was also wondering whether vCPUs themselves may be recycled, but
-it doesn't seem to be the case, since do_fork() -> cpu_copy() ->
-cpu_create() -> object_new() -> object_new_with_type() calls
-g_malloc().
-
-
-
-Btw, I tried to reproduce the original issue, but bumped into something
-seemingly unrelated. To make matters worse, debugging seems to be
-broken, so it may take some time before I can properly test this
-change.
-
-Thread 2 received signal SIGSEGV, Segmentation fault.
-[Switching to Thread 37607.37622]
-0x000002aa00a6a64c in cs_option (ud=3D140251083477344,
-type=3DCS_OPT_SYNTAX, value=3D2) at capstone/cs.c:782
-782             return arch_configs[handle->arch].arch_option(handle,
-type, value);
-(gdb) info threads
-Ignoring packet error, continuing...
-
+> 
+>> @@ -68,8 +68,8 @@ extern bool use_vis3_instructions;
+>>   #define TCG_TARGET_HAS_ctz_i64          0
+>>   #define TCG_TARGET_HAS_ctpop_i64        0
+>>   #define TCG_TARGET_HAS_deposit_i64      0
+>> -#define TCG_TARGET_HAS_extract_i64      0
+>> -#define TCG_TARGET_HAS_sextract_i64     0
+>> +#define TCG_TARGET_HAS_extract_i64      1
+>> +#define TCG_TARGET_HAS_sextract_i64     1
+>>   #define TCG_TARGET_HAS_extract2_i64     0
+>>   #define TCG_TARGET_HAS_negsetcond_i64   1
+>>   #define TCG_TARGET_HAS_add2_i64         1
+>> @@ -83,4 +83,9 @@ extern bool use_vis3_instructions;
+>>   #define TCG_TARGET_HAS_tst              1
+>> +#define TCG_TARGET_extract_valid(type, ofs, len) \
+>> +    ((type) == TCG_TYPE_I64 && (ofs) + (len) == 32)
+>> +
+>> +#define TCG_TARGET_sextract_valid  TCG_TARGET_extract_valid
+>> +
+>>   #endif
+> 
 
 
