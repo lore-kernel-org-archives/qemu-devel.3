@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F434E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB00E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 09:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWAqQ-0007aF-Iv; Fri, 10 Jan 2025 03:58:18 -0500
+	id 1tWAtd-0000EI-IA; Fri, 10 Jan 2025 04:01:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tWAqK-0007Yx-SJ
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:58:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1tWAta-0000Dk-D8
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:01:34 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tWAqI-0004pB-BS
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:58:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736499488;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4xJOUqoFZVAQu6G5Zzcc03QJoyY3KNTn4hJlO55YmnM=;
- b=LakFGuG2ZAjaLcqZsy4XHLaryel6SCyzSlKOl9ekHHlqotcJDcwCATVdLEJllcs8LRjwaR
- Mn4hf+c3zN4BeSb2wXNWKoeafwisQyol4cTVuq1vS1qL6zNDkOPScUHE9NMNWtmBNRu9mC
- 5gYmhEA7eYgXIBG9c/k5zlrCOyCw/h0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-426-wLzsvqewPZuLj9PBStoeqg-1; Fri,
- 10 Jan 2025 03:58:05 -0500
-X-MC-Unique: wLzsvqewPZuLj9PBStoeqg-1
-X-Mimecast-MFC-AGG-ID: wLzsvqewPZuLj9PBStoeqg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD5121955DD0; Fri, 10 Jan 2025 08:58:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.82])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13F6319560AB; Fri, 10 Jan 2025 08:58:01 +0000 (UTC)
-Date: Fri, 10 Jan 2025 08:57:58 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Roman Penyaev <r.peniaev@gmail.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, "Bonzini, Paolo" <pbonzini@redhat.com>
-Subject: Re: [PATCH v6 6/8] chardev/char-mux: implement backend chardev
- multiplexing
-Message-ID: <Z4DhFtc9UgcKQHuh@redhat.com>
-References: <20241223132355.1417356-1-r.peniaev@gmail.com>
- <20241223132355.1417356-7-r.peniaev@gmail.com>
- <CAMxuvaxFGXDYpwPfqTUZuBVY4iF_BCm6jwOM=quUBn98hYPt=g@mail.gmail.com>
- <CACZ9PQVe1Axq6Lp_acaQuXpih2hwAU_7jz-NywyYBQ88hxt1og@mail.gmail.com>
- <CAMxuvaxzd41bRxa4=zNMdpe420W-w_GAmOjYJsYTMs1+jqdMdw@mail.gmail.com>
- <CACZ9PQW-RJHvkDzBO1T9YDAPX_6zcEuK3kQAEukybBL0PZEB5g@mail.gmail.com>
- <Z4AQQp_Kes-IRoK3@redhat.com>
- <CACZ9PQV8pfNq46cPcpv7NZ7cx2bEnuhBToa-DEg9oaLHFuGzHg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1tWAtY-00058r-G1
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:01:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736499692; x=1768035692;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=1us4fXVzOkfuT8fX3fvia/Fj4+R3C6A1nDoeCiptz7k=;
+ b=TtuAbYpVu9UbLk7+WJJagvgsymi0DRPS2T+sDUGDuHzeGUaBMWz+imnt
+ blc46e3m7PqQp6upSxPSk0vDoS28JvLzzoNNAbC/7tt9dsJ00piNb/Rep
+ RlZ7IR24NHGCU8s9KVB86mO7vVpVk7GN3LNxUqf6haiZUUxsm2fXvR/+S
+ OouRkVRgvHYd5XC2EnSBd0JE3LV1nG6Y2o5k0Z2LZlpH9f+af1T1zDEEw
+ OENH3yKZHanvGkefpjFXsUI11XCjZuEYyzFbYiFSOERYSnAyCb3z8Eejp
+ K8f1CIzO8dltApYVSLYpEJw9/9D5gBeKmslihzgYsHV8gZxhCVzFTrmaN A==;
+X-CSE-ConnectionGUID: DDwdnJYqT6azOJF+QJpseA==
+X-CSE-MsgGUID: teGEh1pUQdylb8iv5Z6ruw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11310"; a="36003712"
+X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="36003712"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jan 2025 01:01:28 -0800
+X-CSE-ConnectionGUID: 2pjZm/zQT9ypQ4cjDZMQJg==
+X-CSE-MsgGUID: ob4Ci4fNReCrV/2Uae5ZFA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="134514576"
+Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
+ ([10.239.159.165])
+ by orviesa002.jf.intel.com with ESMTP; 10 Jan 2025 01:01:26 -0800
+Date: Fri, 10 Jan 2025 05:00:22 +0800
+From: Xu Yilun <yilun.xu@linux.intel.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+Message-ID: <Z4A45glfrJtq2zS2@yilunxu-OptiPlex-7050>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-3-chenyi.qiang@intel.com>
+ <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
+ <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
+ <58b96b74-bf9c-45d3-8c2e-459ec2206fc8@intel.com>
+ <8c8e024d-03dc-4201-8038-9e9e60467fad@amd.com>
+ <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
+ <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
+ <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACZ9PQV8pfNq46cPcpv7NZ7cx2bEnuhBToa-DEg9oaLHFuGzHg@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
+Received-SPF: none client-ip=192.198.163.19;
+ envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.436, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,104 +95,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 10, 2025 at 09:43:52AM +0100, Roman Penyaev wrote:
-> On Thu, Jan 9, 2025 at 7:07 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Jan 09, 2025 at 01:56:40PM +0100, Roman Penyaev wrote:
-> > > Hi,
-> > >
-> > > On Tue, Jan 7, 2025 at 3:57 PM Marc-André Lureau
-> > > <marcandre.lureau@redhat.com> wrote:
-> > > > Whether we talk about multiplexing front-end or back-end, the issues
-> > > > are similar. In general, mixing input will create issues. Teeing
-> > > > output is less problematic, except to handle the buffering...
-> > >
-> > > I understand your concerns. What exact issues do you have in mind?
-> > > Are these issues related to the input buffer handling, so technical issues?
-> > > Or issues with usability?
-> >
-> > While the design / impl technically allows for concurrent input to be
-> > sent to the frontend, from multiple backends, in practice I don't think
-> > we need to be particularly concerned about it.
-> >
-> > I don't see this as being a way for multiple different users to interact
-> > concurrently. Rather I'd see 1 user of the VM just deciding to switch
-> > from one backend to the other on the fly. IOW, although technically
-> > possible, the user will only be leveraging one at a time to send input.
-> >
-> > We very definitely do need all backends to receive output from the guest
-> > concurrently too, as you'd want the historical output context to be
-> > visible on whatever backend you choose to use at any given point in time.
-> >
-> > If a user decides to be crazy and send input from multiple backends
-> > concurrently, then they get to keep the mess.
-> >
-> > > > > Do you think we need to artificially introduce multiplexing logic to be fully
-> > > > > compliant with multiplexer naming? It's not hard to do, repeating
-> > > > > `mux_proc_byte()` from `mux-fe`. In my use-case, I'll still need to disable
-> > > > > multiplexing in favor of 'mixing', for example with the 'mixer=on' option,
-> > > > > i.e. '-chardev mux-be,mixer=on,...`. Or do you think it should be some
-> > > > > completely different beast, something like mixer chardev?
-> > > >
-> > > > I think it would be saner to have the muxer be selectors: only work
-> > > > with one selected be or fe. Otherwise, we can run into various issues.
-> > >
-> > > In multiplexing (not mixing) for the use-case that I am describing, there is one
-> > > serious drawback: as soon as you switch the "focus" to another input device
-> > > (for example from vnc to socket chardev), you will not be able to s]witch back
-> > > from the same input console - the input now works on another device. This looks
-> > > strange and does not add convenience to the final user. Perhaps, for a case
-> > > other than console, this would be reasonable, but for console input -
-> > > I would like
-> > > to keep the mixer option: the front-end receives input from both back-ends.
-> >
-> > Agreed, I think this is desirable. If you did the exclusive access mode,
-> > it'd complicate things as you now need a way to switch between active
-> > backends, while also reducing the usefulness of it.
-> >
-> > The main thing I'm not a fan of here is the naming 'mux-fe', as I think we
-> > should have something distinct from current 'mux', to reduce confusion
-> > when we're talking about it.
+> > 
+> > https://github.com/aik/qemu/commit/3663f889883d4aebbeb0e4422f7be5e357e2ee46
+> > 
+> > but I am not sure if this ever saw the light of the day, did not it?
+> > (ironically I am using it as a base for encrypted DMA :) )
 > 
-> The idea to have mux-fe and mux-be (current implementation) was born to
-> distinguish what exactly we multiplex: front-ends or back-ends.
+> Yeah, we are doing the same work. I saw a solution from Michael long
+> time ago (when there was still
+> a dedicated hostmem-memfd-private backend for restrictedmem/gmem)
+> (https://github.com/AMDESE/qemu/commit/3bf5255fc48d648724d66410485081ace41d8ee6)
 > 
-> As Mark-Andre rightly noted, input from back-end devices is not multiplexed,
-> but rather mixed.
+> For your patch, it only implement the interface for
+> HostMemoryBackendMemfd. Maybe it is more appropriate to implement it for
+> the parent object HostMemoryBackend, because besides the
+> MEMORY_BACKEND_MEMFD, other backend types like MEMORY_BACKEND_RAM and
+> MEMORY_BACKEND_FILE can also be guest_memfd-backed.
 > 
-> >
-> > How about 'overlay' or 'replicator' ?
+> Think more about where to implement this interface. It is still
+> uncertain to me. As I mentioned in another mail, maybe ram device memory
+> region would be backed by guest_memfd if we support TEE IO iommufd MMIO
+
+It is unlikely an assigned MMIO region would be backed by guest_memfd or be
+implemented as part of HostMemoryBackend. Nowadays assigned MMIO resource is
+owned by VFIO types, and I assume it is still true for private MMIO.
+
+But I think with TIO, MMIO regions also need conversion. So I support an
+object, but maybe not guest_memfd_manager.
+
+Thanks,
+Yilun
+
+> in future. Then a specific object is more appropriate. What's your opinion?
 > 
-> Overlay for me has a strong association with the filesystem concept. This
-> would work for me if combined back-end inputs function by layering one
-> on top of another, with potentially higher-priority inputs overriding
-> lower-priority ones. It implies a hierarchical or layered merging approach.
-> Not quite well describes a simple mixing strategy.
-> 
-> Replicator - this can be a good name from front-end device point of view:
-> suggests a mechanism for distributing the same input (front-end) to different
-> destinations (back-ends).
-> 
-> Two more: what about 'aggregator' or even 'hub' ?
-
-Yes, those are ok
-
-> Also 'mixer'? So we have '-chardev mux' and '-chardev mix' (try not to get
-> confused :)
-
-AFAIR, users would not use '-chardev mux', but instead set 'mux=on' on the
-real chardev backend.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
 
