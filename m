@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA8E4E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A75E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvzl-0004pl-K9; Thu, 09 Jan 2025 12:06:57 -0500
+	id 1tVvzb-0004j6-1B; Thu, 09 Jan 2025 12:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvza-0004jg-QK
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:47 -0500
+ id 1tVvzQ-0004hW-QP
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:37 -0500
 Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzY-000713-NS
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:46 -0500
+ id 1tVvzP-0006zH-65
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:36 -0500
 Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-aaeec07b705so201615366b.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:44 -0800 (PST)
+ a640c23a62f3a-ab2aea81cd8so164078466b.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736442403; x=1737047203; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736442393; x=1737047193; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ut5L3H7ENukAVXMf9ucpT4mEYkt3Qt71rdTcSo9h+fA=;
- b=pNeAFtsS07JUQGrjKwQwmhuF9qR1RGXeF3fcCo1I+gLfofvYdPG4NZmelf2jY4QkiL
- 39FgRrvQ0TG7ZkcBAxsdpKM4s/pVbS16CaoWzETbeq6/Qnv/iCI9E/inPm2ibHFQlAjC
- TR7i7lHPxI4to9rFIQ6tIUnaYGUH7Lusi1TexKjJYBQB7L99XsQgujx0lREu/0c1dEg0
- AHxn2Qe1HVoTPBWTVyMFC8n6Rq5ojqcUbWQnM8Rw5bRnWlLa1ANbuDS6ksZ+FzTD21iq
- CZxwVzYA21JzATlro2c50oKuokE3tPwGcRQFIYJk3F1s1/9Joe/4xIjyqaNzAY5HuvqX
- WfHA==
+ bh=m4HscSGSbgGDvVgJtmItkpjxqeI2JXO5tblvojQlyxc=;
+ b=HeUPOBUYQQFyA25g4kvtKrB1ujRne8ADc2aJYvjaYbm0G3JmH0XW6LSBueQew/++gU
+ RPlktqkiNFTcCsIPTQCUHcXxmuDTGkBAtH7bVk5i20nX3wcNEuBKQOI4zF3En983vWsw
+ Snbzu8Z07VLPlecPuwAqEU+YRFV7gn0DgVAA3rvxw8N0o1maUg9X19jWW3Hhj6/08cuK
+ NznReSjWdPOmP2FcOQq+3EXgJiDuJBTBYePJ4k9NyoGv0ifpWDqZ5Pu0RBIx4iZqVOrv
+ /0Lz6rld7LVGZY5hEkeR3RVWb5u3Vpp5F4jAEF978inreU3RoP4X+yr3ZuX9aUQh/o16
+ DNCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736442403; x=1737047203;
+ d=1e100.net; s=20230601; t=1736442393; x=1737047193;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ut5L3H7ENukAVXMf9ucpT4mEYkt3Qt71rdTcSo9h+fA=;
- b=A9CVImicdtzlmfGkqG1xyy8geLgXkeZNuQA1IBCQzv6ud7mRoyqv2jsphsmVu7EGdO
- 3kFtsLz++2Mk3IFoFbLook17h7fJ4WAWMpXMPei4BxxcGcfFRHyYkvheF+ErlxQqBtrO
- 2U1x1Khz0DxfAQGZoFL2gf+958aSk9QQkoZp2o/3vGILITWgOVf8Ke55Ud3Ep8hnv4sr
- u3gC321T9JHh2o5xUcKfx32dhdK8gVe1TtO9bTKwRm08lnAOqvniGiT7b2o9qrPwNOG+
- C5Ol48G4Npqa8COrdiQGBaXLe/ee/6/gqFegx+IKHR+3zTpmKzZKIfZplzDCrmCw8JBM
- Sl2g==
-X-Gm-Message-State: AOJu0YzhP6avJFVJfbW4joBIPte3R6V9hQBXr2RYPIiXwN1HJMUWDlni
- CF+5GDRURN4OC4kYrvSMnDlcPZr3yXxS0CqDyEqE3VhFxSz+Dz7rbD9LsaGhZf0=
-X-Gm-Gg: ASbGncsEexvFagnPyTUP1APjDvKTJvZ92smEWUaBWQRP9r/nX++qchc9R00VzcVeAs6
- QY3IGkcTmudj6otDk+D4v5fVS5aJZtksUhpaVAUlvQgNvuCRcZREAdgQW7OndB32ixK7s3Ejml/
- Q6x6mSjJW+Z1HYcvL5rkXCdnwPr9s10vfaV44oFmof4hfnE8Ht1SGyvbaN0jqNE/M1YeQRBi3Ny
- 5I4EsdBKQH+cyDu3CcXp6YkBPzX0oa+PNrYJPbzmcCj7I3apRCp254=
-X-Google-Smtp-Source: AGHT+IEoaBRUevKB7EqKBW/bvgYG0c2NkjvCxp1sQC7VeUASL5aBBu4kA2UUpM2r4IioLM5PlFZBBA==
-X-Received: by 2002:a17:907:9722:b0:aab:d8e4:2062 with SMTP id
- a640c23a62f3a-ab2abde5646mr767667166b.56.1736442402883; 
- Thu, 09 Jan 2025 09:06:42 -0800 (PST)
+ bh=m4HscSGSbgGDvVgJtmItkpjxqeI2JXO5tblvojQlyxc=;
+ b=CM555AMAjX9bPkK8d554e4fdcY+aRz8jL+E21xCMNWwzBmRRZ3yiJdst6oY/Ux3jRh
+ rpZUuT7r0CncUTrdqdbf1/27WZeDHj1fOAFdiRhFofHTIk7CFK8YeY3sytX+rWv3e0wz
+ Q0XSDDSD111A4MyAlZSxjs/pZ4Clf3YEZTmFSqhg6apkUkGWyM4EzZsl8XO3Y7QoJL9T
+ MFRIrZhMB7YZv8eBFk3ladb/pxpR+vBQIR6ZOXh1qM/ZlGylBVF4SbCjOKwNzOdtADOX
+ LKqs8iXg4JSZNg7xMQ5P9iXsFjhocxTV/w2WzROgUx5e1sEqcJMINhEcFyRt9PCg08O8
+ Fp+g==
+X-Gm-Message-State: AOJu0YzEZE+DhbXffMK0ikeASCyLPPA/9qX+kfeYBf3difQ9nHnsQtIq
+ hSSw5lztc51C8FiBjg8u3tPE2Hlj2y5/UHnmvihxbVKFxIMHKzTo+ZGxmaqtyDg=
+X-Gm-Gg: ASbGncuzESmsoE1Qgy2rwj2qy9teQFU9OCfu5KI1ejVeFUn+ktdG59GiiCTakhZH5jP
+ zZiYWcmlqih1mA/mUPMaE7fINeudVk0/FKVA+y4NzwUmfGoYrGJEkWfHZm739sJn4aHKrXVcIVC
+ vzcQeQqYvMH0PhZ3MYS9W6HaSyDD3U5cjLyZ3ZZoUcrGixkPmgoZpi/x6S0E52dxV5SFlBI+/Yo
+ P0tM/nox1KwPzsj+w4jS2ztR2hCdiGQZBtXcKJ/zQ4SMqh9DSYgyko=
+X-Google-Smtp-Source: AGHT+IEdMW6yQgxXeq+98WR2f9UfOi5G/YrL93qHuoHlySuxq5eNwVouXjvQcF37CnK0NArneIrf9A==
+X-Received: by 2002:a17:907:7e86:b0:aa6:92de:ddae with SMTP id
+ a640c23a62f3a-ab2ab6a3fbemr654526166b.16.1736442393404; 
+ Thu, 09 Jan 2025 09:06:33 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95b0ab6sm87944666b.155.2025.01.09.09.06.33
+ a640c23a62f3a-ab2c9060a4fsm90134366b.15.2025.01.09.09.06.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 09:06:38 -0800 (PST)
+ Thu, 09 Jan 2025 09:06:31 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3A80D6017C;
- Thu,  9 Jan 2025 17:06:21 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 89A8C5FAA7;
+ Thu,  9 Jan 2025 17:06:20 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -74,9 +74,9 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 15/22] contrib/plugins/stoptrigger: fix 32-bit build
-Date: Thu,  9 Jan 2025 17:06:12 +0000
-Message-Id: <20250109170619.2271193-16-alex.bennee@linaro.org>
+Subject: [PATCH 08/22] system/vl: more error exit into config enumeration code
+Date: Thu,  9 Jan 2025 17:06:05 +0000
+Message-Id: <20250109170619.2271193-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250109170619.2271193-1-alex.bennee@linaro.org>
 References: <20250109170619.2271193-1-alex.bennee@linaro.org>
@@ -107,138 +107,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+All of the failures to configure devices will result in QEMU exiting
+with an error code. In preparation for passing Error * down the chain
+re-name the iterator to foreach_device_config_or_exit and exit using
+&error_fatal instead of returning a failure indication.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241217224306.2900490-6-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- contrib/plugins/stoptrigger.c | 48 ++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ system/vl.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
-index 03ee22f4c6..b3a6ed66a7 100644
---- a/contrib/plugins/stoptrigger.c
-+++ b/contrib/plugins/stoptrigger.c
-@@ -21,9 +21,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- /* Scoreboard to track executed instructions count */
- typedef struct {
-     uint64_t insn_count;
-+    uint64_t current_pc;
- } InstructionsCount;
- static struct qemu_plugin_scoreboard *insn_count_sb;
- static qemu_plugin_u64 insn_count;
-+static qemu_plugin_u64 current_pc;
- 
- static uint64_t icount;
- static int icount_exit_code;
-@@ -34,6 +36,11 @@ static bool exit_on_address;
- /* Map trigger addresses to exit code */
- static GHashTable *addrs_ht;
- 
-+typedef struct {
-+    uint64_t exit_addr;
-+    int exit_code;
-+} ExitInfo;
-+
- static void exit_emulation(int return_code, char *message)
- {
-     qemu_plugin_outs(message);
-@@ -43,23 +50,18 @@ static void exit_emulation(int return_code, char *message)
- 
- static void exit_icount_reached(unsigned int cpu_index, void *udata)
- {
--    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
-+    uint64_t insn_vaddr = qemu_plugin_u64_get(current_pc, cpu_index);
-     char *msg = g_strdup_printf("icount reached at 0x%" PRIx64 ", exiting\n",
-                                 insn_vaddr);
--
-     exit_emulation(icount_exit_code, msg);
+diff --git a/system/vl.c b/system/vl.c
+index 0843b7ab49..25d9968ccc 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1307,7 +1307,14 @@ static void add_device_config(int type, const char *cmdline)
+     QTAILQ_INSERT_TAIL(&device_configs, conf, next);
  }
  
- static void exit_address_reached(unsigned int cpu_index, void *udata)
+-static int foreach_device_config(int type, int (*func)(const char *cmdline))
++/**
++ * foreach_device_config_or_exit(): process per-device configs
++ * @type: device_config type
++ * @func: device specific config function, returning pass/fail
++ *
++ * Any failure is fatal and we exit with an error message.
++ */
++static void foreach_device_config_or_exit(int type, int (*func)(const char *cmdline))
  {
--    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
--    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", insn_vaddr);
--    int exit_code;
--
--    exit_code = GPOINTER_TO_INT(
--        g_hash_table_lookup(addrs_ht, GUINT_TO_POINTER(insn_vaddr)));
--
--    exit_emulation(exit_code, msg);
-+    ExitInfo *ei = udata;
-+    g_assert(ei);
-+    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", ei->exit_addr);
-+    exit_emulation(ei->exit_code, msg);
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -67,23 +69,25 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     size_t tb_n = qemu_plugin_tb_n_insns(tb);
-     for (size_t i = 0; i < tb_n; i++) {
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
--        gpointer insn_vaddr = GUINT_TO_POINTER(qemu_plugin_insn_vaddr(insn));
-+        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
- 
-         if (exit_on_icount) {
-             /* Increment and check scoreboard for each instruction */
-             qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                insn, QEMU_PLUGIN_INLINE_STORE_U64, current_pc, insn_vaddr);
-             qemu_plugin_register_vcpu_insn_exec_cond_cb(
-                 insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
--                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, insn_vaddr);
-+                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, NULL);
-         }
- 
-         if (exit_on_address) {
--            if (g_hash_table_contains(addrs_ht, insn_vaddr)) {
-+            ExitInfo *ei = g_hash_table_lookup(addrs_ht, &insn_vaddr);
-+            if (ei) {
-                 /* Exit triggered by address */
-                 qemu_plugin_register_vcpu_insn_exec_cb(
--                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS,
--                    insn_vaddr);
-+                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS, ei);
-             }
+     struct device_config *conf;
+     int rc;
+@@ -1319,10 +1326,10 @@ static int foreach_device_config(int type, int (*func)(const char *cmdline))
+         rc = func(conf->cmdline);
+         loc_pop(&conf->loc);
+         if (rc) {
+-            return rc;
++            error_setg(&error_fatal, "failed to configure: %s", conf->cmdline);
++            exit(1);
          }
      }
-@@ -99,11 +103,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info, int argc,
-                                            char **argv)
- {
--    addrs_ht = g_hash_table_new(NULL, g_direct_equal);
-+    addrs_ht = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, g_free);
+-    return 0;
+ }
  
-     insn_count_sb = qemu_plugin_scoreboard_new(sizeof(InstructionsCount));
-     insn_count = qemu_plugin_scoreboard_u64_in_struct(
-         insn_count_sb, InstructionsCount, insn_count);
-+    current_pc = qemu_plugin_scoreboard_u64_in_struct(
-+        insn_count_sb, InstructionsCount, current_pc);
+ static void qemu_disable_default_devices(void)
+@@ -2044,12 +2051,9 @@ static void qemu_create_late_backends(void)
+     qemu_opts_foreach(qemu_find_opts("mon"),
+                       mon_init_func, NULL, &error_fatal);
  
-     for (int i = 0; i < argc; i++) {
-         char *opt = argv[i];
-@@ -124,13 +130,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-             exit_on_icount = true;
-         } else if (g_strcmp0(tokens[0], "addr") == 0) {
-             g_auto(GStrv) addr_tokens = g_strsplit(tokens[1], ":", 2);
--            uint64_t exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
--            int exit_code = 0;
-+            ExitInfo *ei = g_malloc(sizeof(ExitInfo));
-+            ei->exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
-+            ei->exit_code = 0;
-             if (addr_tokens[1]) {
--                exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
-+                ei->exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
-             }
--            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
--                                GINT_TO_POINTER(exit_code));
-+            g_hash_table_insert(addrs_ht, &ei->exit_addr, ei);
-             exit_on_address = true;
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
+-    if (foreach_device_config(DEV_SERIAL, serial_parse) < 0)
+-        exit(1);
+-    if (foreach_device_config(DEV_PARALLEL, parallel_parse) < 0)
+-        exit(1);
+-    if (foreach_device_config(DEV_DEBUGCON, debugcon_parse) < 0)
+-        exit(1);
++    foreach_device_config_or_exit(DEV_SERIAL, serial_parse);
++    foreach_device_config_or_exit(DEV_PARALLEL, parallel_parse);
++    foreach_device_config_or_exit(DEV_DEBUGCON, debugcon_parse);
+ 
+     /* now chardevs have been created we may have semihosting to connect */
+     qemu_semihosting_chardev_init();
+@@ -2670,8 +2674,7 @@ static void qemu_create_cli_devices(void)
+ 
+     /* init USB devices */
+     if (machine_usb(current_machine)) {
+-        if (foreach_device_config(DEV_USB, usb_parse) < 0)
+-            exit(1);
++        foreach_device_config_or_exit(DEV_USB, usb_parse);
+     }
+ 
+     /* init generic devices */
+@@ -2718,10 +2721,8 @@ static bool qemu_machine_creation_done(Error **errp)
+         exit(1);
+     }
+ 
+-    if (foreach_device_config(DEV_GDB, gdbserver_start) < 0) {
+-        error_setg(errp, "could not start gdbserver");
+-        return false;
+-    }
++    foreach_device_config_or_exit(DEV_GDB, gdbserver_start);
++
+     if (!vga_interface_created && !default_vga &&
+         vga_interface_type != VGA_NONE) {
+         warn_report("A -vga option was passed but this machine "
 -- 
 2.39.5
 
