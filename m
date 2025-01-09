@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933E5E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BA1E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVs3B-0003aN-Bc; Thu, 09 Jan 2025 07:54:13 -0500
+	id 1tVs4A-00041g-8j; Thu, 09 Jan 2025 07:55:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVs39-0003Zs-FB
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:54:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVs37-0008EB-MZ
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:54:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736427247;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OFr+G0E7HJSO4JRpez1IJnVPu5nfzTCvNLWFttvGt3I=;
- b=h/usRCSs9bXMhBqzfhWApEQ/AO2jvf3/e5D32RvLB8iCmK+97qojR3kf/PBa9Z40a7kYo+
- fFHuzFzr27rgckVurRgj07wxItalZu/An6Bp2ANVvMxIP6LBPNbFqFImh1lnZxn42sYJ5H
- RThOUhFuzCInaTNhDwmuyNbbbpfq4QA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-iYSmV1eiNEKywzZ9cVtB-w-1; Thu,
- 09 Jan 2025 07:54:04 -0500
-X-MC-Unique: iYSmV1eiNEKywzZ9cVtB-w-1
-X-Mimecast-MFC-AGG-ID: iYSmV1eiNEKywzZ9cVtB-w
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A0B41955DD0; Thu,  9 Jan 2025 12:54:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E724B19560AB; Thu,  9 Jan 2025 12:53:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C379121E6924; Thu, 09 Jan 2025 13:53:57 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,  Dmitry Fleytman
- <dmitry.fleytman@gmail.com>,  Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Luigi Rizzo <rizzo@iet.unipi.it>,  Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>,  Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,  Yuri Benditovich
- <yuri.benditovich@daynix.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Michael Roth <michael.roth@amd.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Lei Yang <leiyang@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 0/4] virtio: Convert feature properties to OnOffAuto
-In-Reply-To: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com> (Akihiko Odaki's
- message of "Wed, 08 Jan 2025 15:17:49 +0900")
-References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
-Date: Thu, 09 Jan 2025 13:53:57 +0100
-Message-ID: <87msg09mhm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVs3r-0003sG-5F
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:54:57 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVs3p-0008M5-Ln
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:54:54 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43675b1155bso10920995e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:54:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736427291; x=1737032091; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H+BW7nrZ9Vn3bOI2kbpZ0Vi1Dm8eaHXOSrZKNNXHBz4=;
+ b=HkZbdY6ipMeT1lF6tdXc5S1XsS4MtjYgQZeVVaWF7Ek6+WwVJ9MXB8tGuViQbHHy6H
+ 43dZqTWMi+p4Z654atJvSQ1726d+N1L4QJqyS7TJ3Kty3RxZ4fY+LTVBfNBo5sug8c2i
+ RlPur4PX9qDCdFle0XHzkO/Ona0QnMPOIHkexzkNEb/Gs/zFkAVKlzbIYk7vw8JxGLTG
+ Ujs9gKFBcyXJWKCl3oC5CwGkhpfiYeyHay6qBhnIzxC4ejfRr7oSptoYY6jOmo0v9pSk
+ 1rKlMvwduMQictEF2D8FF3JBuiDpaD7Mz4Ydq0RQ3JgDjxno6zZ8sQrEzaslGThpnhfZ
+ eklQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736427291; x=1737032091;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H+BW7nrZ9Vn3bOI2kbpZ0Vi1Dm8eaHXOSrZKNNXHBz4=;
+ b=LG/u6FuHrkc2BhaC4DMCH4fAbm9eOXKX/jJg+NrsRYG9jNxgbafc0ms6Rm849tCiCn
+ 04ltierYmCA8iWVKgQqg4FtMyml1Zde3Dq/25Bdv8Er5XY3XvTiKZD1rQoD9/o6gWx0C
+ +bx9CWpsypyK1PDoMhqApUc5C7mY5d4JnYIlO9qgDfqMgHHyOIN7lZMq30qYOjMYoN5I
+ fC2/UuY/5J/Sk+zslAC7B5wfPO7Sj611fJn/C+gfP+0D/XZ0S8CeNDnsjS/lzCyTynbm
+ IcP/itIypjoRq+uytOBZYtxHr/4k2GEmAGlwtmLlnWPr0Oa0TBtYaUNuMtR7kHwmuLTQ
+ Haeg==
+X-Gm-Message-State: AOJu0YwRqQQN/kDj3pmNVquUt43Mefz4uotT9X151Edny7Mqula9C08n
+ DfwhdTq4P+BB7KhJx0OW2gDkJmcz4CJQb7dkms/t0DJi8mfYpuVxw5nb8scnre7eHsJ7LXKF8LL
+ TE2Q=
+X-Gm-Gg: ASbGncs2Cne5rl+RuVCiX/1TDU62/QE0YUgSHjKB3tqCn8K1IqYnIgpBPDeLo2qax+v
+ J00p7t19OnUY4OOvzwdr1Kv2+khCvgPbREJu+4dv18FMmc9fFjZqpVRDzXMKYmcEDhWXJ3Ser/6
+ tqo4Y7UpkomCqWgDgqKHy/JBhM4pr9RSdG64KjABO5z8k24BJNgpchXVOHMtHH/gHPNg/n+H6ko
+ 4EbZ/N6M0jZIaGkiBLXNWmN6ym66KCr0lgiqdXT9mE1PeNHXk3PmQtAtK1FIgPlZW1RFuH+k90j
+ 6e5R7iOGMT32hJJHmeUwjO+3
+X-Google-Smtp-Source: AGHT+IFd5+Iu+d9EtQOQoEVSmoIV5t+2AmjCLvebwO8MhvvJm+ZlOVkpV5hzVxnfZuAdfiwEoG4dSA==
+X-Received: by 2002:a05:600c:138a:b0:434:a781:f5d5 with SMTP id
+ 5b1f17b1804b1-436e271bcb3mr68245225e9.30.1736427291470; 
+ Thu, 09 Jan 2025 04:54:51 -0800 (PST)
+Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e4c1e0bsm1729304f8f.100.2025.01.09.04.54.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 04:54:51 -0800 (PST)
+Message-ID: <2568d2ea-8437-43ef-9d34-1fc1f2ae6242@linaro.org>
+Date: Thu, 9 Jan 2025 13:54:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/6] hw/ppc: Remove tswap() calls
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20241220213103.6314-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241220213103.6314-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,27 +103,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+Hi Nick,
 
-> This series was spun off from:
-> "[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
-> (https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
->
-> Some features are not always available with vhost. Legacy features are
-> not available with vp_vdpa in particular. virtio devices used to disable
-> them when not available even if the corresponding properties were
-> explicitly set to "on".
->
-> QEMU already has OnOffAuto type, which includes the "auto" value to let
-> it automatically decide the effective value. Convert feature properties
-> to OnOffAuto and set them "auto" by default to utilize it. This allows
-> QEMU to report an error if they are set "on" and the corresponding
-> features are not available.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Ping? (series fully reviewed)
 
-How is this related to "[PATCH v2 0/4] hw/pci: Convert rom_bar into
-OnOffAuto"?
-https://lore.kernel.org/all/20240714-rombar-v2-0-af1504ef55de@daynix.com/
-
+On 20/12/24 22:30, Philippe Mathieu-Daudé wrote:
+> Since v3:
+> - Addressed Nick & Harsh  review comments
+> 
+> Remove the tswap() calls on ePAPR, and convert
+> them to big-endian LD/ST API on sPAPR.
 
