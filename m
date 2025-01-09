@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F382E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E2AE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVt6j-000394-0U; Thu, 09 Jan 2025 09:01:57 -0500
+	id 1tVt9h-0004G2-86; Thu, 09 Jan 2025 09:05:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tVt6h-00038w-MY
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:01:55 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVt9f-0004Fq-QH
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:04:59 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tVt6f-0006di-N6
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:01:55 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-aae81f4fdc4so207173866b.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:01:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVt9e-0007WF-46
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:04:59 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-aa689a37dd4so182918766b.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:04:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736431312; x=1737036112; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1736431496; x=1737036296; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xa3ERALZA/1laSbhnkzjbN2X9sCxzl4VZ/y6FQ2maxM=;
- b=OhKeDQnqX5q+tI7VO/wSWO+jCvEdZfoUVypGMHxZvA8YdCWzgpXbwUCuyNFs9B1jzS
- 1qmTGk0LTQoAMiMPwOx9hIEKSRofRxt6sC9Hifs1MGQtwEqxtGT8DDyj7wIVopCKwSyr
- pWIYmulB+sn2yNNGPMmQG246czYVmPKjAOuprelU3rbar9MheeN+JHkUeXCD9S3wyj3u
- VVqK03V62OYElYrQHvfwOkbAZ+CQ8qp/xidCUsn4hQ1vnt4Mc59+3eZEVc0yg2C4uXV1
- 8TCoYuf4DMX4JY5Yr36ZBqKZ7Aj91FZ/SofrTPK6MUxVkUBeGf1gDpNLuDhOegZq1G2d
- oNWQ==
+ bh=VvamQ8txAZIhmP2RZ/9rAZHqDsGdYsGNSUqRlON/wVY=;
+ b=b1cMiUzLj3rTkNY+lrhAPtmPsmHnu5ICP4Hc5UT/cZG7SzehNrVjZ+7BfbUQgsEfSu
+ uHpaFvhN6106pdUZnVzS75QVGkd+Zpl18g2LdY6WEHP0IhIzxF976qnUpV8hfglMPUwh
+ 0UjV+JVaAz6tOSwU1SdYMdQRhzGveL+HH4FWgNp6MLPghRuz7qOLR4+il2FSg9OHUSK1
+ Z/b81l0hOcdX/csqjeu6ZutHLjxfneDAveKQTF604TJ+rdYHJA8T9M/+PmIfMqIL4UMM
+ sf/yPaE2TOnq8VEwu9EzDmkGPCQOL46GoqU+wpZDG8UZe8oGsRQB1MoRFfVpDPB3Atpf
+ caOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736431312; x=1737036112;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xa3ERALZA/1laSbhnkzjbN2X9sCxzl4VZ/y6FQ2maxM=;
- b=cN51JIPUXimcFivWSvInCn7V9c/0H55PfK7dVaFKpXU9fI/5CwqJ9qhTWrWlRFslXY
- Ofz5kaVejU+dWHseTxm0McVa1L69pYtpG7FScb6jUXuV8B+KXr6MF57r6bHGgGNzZWur
- zzi3IfCHoN7KGefGkghHWi0edL9aFPxASDjQfKe1z6348yGUwB8OL+sGc5JQ2vV8b99q
- aoe7bBm1+i7Upm98tU3Xy2/fgECFVXO9VneWjykeBja+ZRZZnViVyHvrrcHs8hI+oyWo
- lhK6CNqfs2FUkj82cWRyA7/EGTCTlaovgHXkRQV4RJJLVnhTzNo4flQib0An2U8mL9sY
- HvXw==
-X-Gm-Message-State: AOJu0YySaMENsJ3KR4jJh3e2jJ4Sn1Ufv476lWXmZ+ApMJLmW0oTc037
- yKQKAWM6ysMfk76qOopJ7OPcXEyFzUIVEDXAf63VrM5nBV2DptXksvz8CRPEq4nTOyRbMqfwDZD
- 0CFHEiKGJqnodWDynkqM99g2ASHfccw==
-X-Gm-Gg: ASbGncstmIhz+HPV/3M46HDoT+JuDSmSxYjtFjNvfXEqLeQfaJ4XGbKFEL15yDs3Rae
- VksdnDvBbDWsR+U8tzKP7Iu1oKsTT9t9bZKoC
-X-Google-Smtp-Source: AGHT+IEeIbi9EjIHyiw9ERix767KfXmnLsYT5iAwCdupK60o62Lfer+gO0RwLLzYU5I4NTjYFX6H1NtMRWLz455JGFM=
-X-Received: by 2002:a17:907:6022:b0:ab2:b6e2:fcc8 with SMTP id
- a640c23a62f3a-ab2b6e2ff0dmr446718266b.10.1736431309718; Thu, 09 Jan 2025
- 06:01:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736431496; x=1737036296;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VvamQ8txAZIhmP2RZ/9rAZHqDsGdYsGNSUqRlON/wVY=;
+ b=NiSAn8GADW50TZIKwnFtayNruxf/x9aXSn/fUyOaaYIwNKnwl1wsrIktvg6catgSbM
+ VByaUlGoM1yvYISOeGNH2vIytakjot8OlKH8M7PxDeP/UaBHy8Ped0xLZ8rQLhOAVtSn
+ nahtNUwlPnH/h/AOSNwnznLeoLDxEjidpvgcV7v2oBNtaS3p5+PiXD5xVs7Hyca80PyX
+ PYoJ72Lc8QWeAZ+Vy0/G5iibHr3MJObeo6NiM8EuwVPOvereSbyA7rVchS6atC1B5NqX
+ GxJT2jeiaDLohHR85zmIXfIP+8fGzzOWeb8Oyx8GTrlfRjKFRQms3iSaa/boqYVfX6g7
+ /H7g==
+X-Gm-Message-State: AOJu0YxYWLFFyRWrE3ktyQHi2+7aHVNviq1CjyJdpmUB/5Fzv5Wjayk4
+ PlsHkeSpLsYFQgYOwWzpZArCVtagGTJ9VS5yqnGtwb+qDyl0K8K2MMhV5v+qaFg=
+X-Gm-Gg: ASbGnctlIsey3OszFbUlJzMUY36nKaKQ9O+8Pc1ovFFixCw28JpS58Ea7OpqBcYyKkn
+ cHscxX6V4+I4vOQ9s2Ce3YGUZ06wZSQaWZasjmr6oTPXOAs0g02FLTS35qUl+zWbPBrTigb9D2m
+ Zy3UWRAVeXO2obTHBxf0NmrDtrH8dOa7AddPUrdRYli2AlreD67/l9axC5f5yB4G3XbftckDQqR
+ K1Ll1DAr6bK475JEctuWidvVgGZfUH1FTPLaUzeQ9x0Gn34DcHB06I=
+X-Google-Smtp-Source: AGHT+IGFOyWbdvC8d6uidbDTvj2Arm9pMZN6JtXdo5FqXmBpJ9oe2xDNzlLHReN0ntXSXZFHmH5qHA==
+X-Received: by 2002:a17:907:809:b0:aaf:117c:e929 with SMTP id
+ a640c23a62f3a-ab2abcb1440mr612464066b.57.1736431495948; 
+ Thu, 09 Jan 2025 06:04:55 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c90d9ae0sm76579566b.68.2025.01.09.06.04.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jan 2025 06:04:53 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 71ACD5F75D;
+ Thu,  9 Jan 2025 14:04:49 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud
+ Mandour <ma.mandourr@gmail.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v3 04/11] contrib/plugins: add plugin showcasing new
+ dicontinuity related API
+In-Reply-To: <fa02142d349ceb6c95e80301a7f5c57ae5df6329.1733063076.git.neither@nut.email>
+ (Julian Ganz's message of "Mon, 2 Dec 2024 20:26:45 +0100")
+References: <cover.1733063076.git.neither@nut.email>
+ <fa02142d349ceb6c95e80301a7f5c57ae5df6329.1733063076.git.neither@nut.email>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 09 Jan 2025 14:04:49 +0000
+Message-ID: <87frls6q2m.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250108111023.156073-1-dwmw2@infradead.org>
- <CAJSP0QUyq6RfYPPV2EXthMaLr82Z9htEohaP4f+P=MLUF=JCWg@mail.gmail.com>
- <de33977443334962bf85d1f7968d2609ac35d6a5.camel@infradead.org>
-In-Reply-To: <de33977443334962bf85d1f7968d2609ac35d6a5.camel@infradead.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 9 Jan 2025 09:01:37 -0500
-X-Gm-Features: AbW1kvZxWAUfqKUDeyJvlb0MFUdmRpZQ-vpwLFyZTu3rgv6-JBkO-Qsqdqi0TSQ
-Message-ID: <CAJSP0QXmJ2RdYuwHWPjMSXrTKzLAu-sa_eDFOsuJhG9ztr_LyQ@mail.gmail.com>
-Subject: Re: [PULL 0/1] vmclock queue
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Peter Hilber <quic_philber@quicinc.com>, 
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>, paul <paul@xen.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,90 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Jan 2025 at 08:18, David Woodhouse <dwmw2@infradead.org> wrote:
->
-> On Thu, 2025-01-09 at 07:52 -0500, Stefan Hajnoczi wrote:
-> > On Wed, 8 Jan 2025 at 06:11, David Woodhouse <dwmw2@infradead.org>
-> > wrote:
-> > >
-> > > From: David Woodhouse <dwmw@amazon.co.uk>
-> > >
-> > > The following changes since commit
-> > > 6528013b5f5ba6bb3934b7f5fe57a3110680530f:
-> > >
-> > >   Merge tag 'qga-pull-2025-01-06' of
-> > > https://github.com/kostyanf14/qemu into staging (2025-01-06
-> > > 09:39:02 -0500)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >   git://git.infradead.org/users/dwmw2/qemu.git tags/pull-vmclock-
-> > > 20250108
-> > >
-> > > for you to fetch changes up to
-> > > 6502ea82b26dc28c83fbc9c766af7a408a8ca827:
-> > >
-> > >   hw/acpi: Add vmclock device (2025-01-07 16:22:04 +0000)
-> > >
-> > > ----------------------------------------------------------------
-> > > Add vmclock device
-> > >
-> > > ----------------------------------------------------------------
-> > > David Woodhouse (1):
-> > >       hw/acpi: Add vmclock device
-> > >
-> > >  hw/acpi/Kconfig                              |   5 +
-> > >  hw/acpi/meson.build                          |   1 +
-> > >  hw/acpi/vmclock.c                            | 179 +++++++++++++++++=
-+++++++++
-> > >  hw/i386/Kconfig                              |   1 +
-> > >  hw/i386/acpi-build.c                         |  10 +-
-> > >  include/hw/acpi/vmclock.h                    |  34 +++++
-> > >  include/standard-headers/linux/vmclock-abi.h | 182 +++++++++++++++++=
-++++++++++
-> > >  scripts/update-linux-headers.sh              |   1 +
-> > >  8 files changed, 412 insertions(+), 1 deletion(-)
-> > >  create mode 100644 hw/acpi/vmclock.c
-> > >  create mode 100644 include/hw/acpi/vmclock.h
-> > >  create mode 100644 include/standard-headers/linux/vmclock-abi.h
-> >
-> > On IRC you mentioned that you'd like me to pick up this pull request.
-> > If the ACPI subsystem maintainers don't want to take this through
-> > their tree then let's set up pull request handling for vmclock:
-> >
-> > 1. Add a MAINTAINERS file entry for vmclock covering the new files
-> > (e.g. hw/acpi/vmclock.c) with yourself as maintainer.
->
-> Looks like Michael has taken it now; thanks.
->
-> > 2. Send pull requests with a GPG-signed tag (git tag --sign) and
-> > ensure that the repo URL in the email is https:// (the tooling rejects
-> > unencrypted http:// and git:// repo URLs).
->
-> You mean *or* rather than *and* in that sentence, right? Because if
-> it's GPG-signed, then I can send it to you over carrier pigeon and you
-> can validate it; the transport is irrelevant.
->
-> If you really did mean 'and'... is this a new bug in the tooling? Last
-> time I used Peter's make-pullreq script, it worked fine=C2=B9.
+Julian Ganz <neither@nut.email> writes:
 
-You're right, both are not required together for security. I still ask
-for both because we historically had some submaintainers without GPG
-keys and didn't want them to use unencrypted git:// or http:// URLs.
-It's easier if everyone does both so I don't have to check whether
-we've followed the right process depending on their GPG key status. I
-think QEMU submaintainers have now fully transitioned to GPG keys, so
-we could probably drop the https:// requirement.
-
-If it's not too much trouble to use https:// then that would be easiest.
-
+> We recently introduced new plugin API for registration of discontinuity
+> related callbacks. This change introduces a minimal plugin showcasing
+> the new API. It simply counts the occurances of interrupts, exceptions
+> and host calls per CPU and reports the counts when exitting.
+> ---
+>  contrib/plugins/meson.build |  3 +-
+>  contrib/plugins/traps.c     | 96 +++++++++++++++++++++++++++++++++++++
+>  2 files changed, 98 insertions(+), 1 deletion(-)
+>  create mode 100644 contrib/plugins/traps.c
 >
-> Obviously it doesn't matter for *this* one now Michael has picked it
-> up, but I sent another pull request today with some Xen emulation
-> fixes=C2=B2.
->
-> =C2=B9 https://lore.kernel.org/all/CAFEAcA9sjovBLdV1NsUnDGPs9hX1XYn7szbet=
-Q-crtZ84VO4dQ@mail.gmail.com/
-> =C2=B2 https://lore.kernel.org/qemu-devel/20250109104837.2532259-1-dwmw2@=
-infradead.org/
+> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+> index 63a32c2b4f..9a3015e1c1 100644
+> --- a/contrib/plugins/meson.build
+> +++ b/contrib/plugins/meson.build
+> @@ -1,5 +1,6 @@
+>  contrib_plugins =3D ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotbl=
+ocks',
+> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigge=
+r']
+> +                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigge=
+r',
+> +                   'traps']
+
+I wonder if this is better in tests/tcg/plugins? We need to do something
+to ensure it gets covered by CI although we might want to be smarter
+about running it together with a test binary that will actually pick up
+something.
+
+>  if host_os !=3D 'windows'
+>    # lockstep uses socket.h
+>    contrib_plugins +=3D 'lockstep'
+<snip>
+> +QEMU_PLUGIN_EXPORT
+> +int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> +                        int argc, char **argv)
+> +{
+> +    if (!info->system_emulation) {
+> +        fputs("trap plugin can only be used in system emulation mode.\n",
+> +              stderr);
+> +        return -1;
+> +    }
+> +
+> +    max_vcpus =3D info->system.max_vcpus;
+> +    traps =3D qemu_plugin_scoreboard_new(sizeof(TrapCounters));
+> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> +    qemu_plugin_vcpu_for_each(id, vcpu_init);
+
+Hmm at first glances this seems redundant - however I guess this is
+covering the use case you load the plugin after the system is up and
+running.
+
+I wonder if you have unearthed a foot-gun in the API that is easy to
+fall into? Maybe we should expand qemu_plugin_register_vcpu_init_cb to
+call the call back immediately for existing vcpus?
+
+> +
+> +    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_TRAPS,
+> +                                        vcpu_discon);
+> +
+> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> +
+> +    return 0;
+> +}
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
