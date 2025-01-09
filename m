@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB62FE77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1029FE77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVtjQ-0001su-UV; Thu, 09 Jan 2025 09:41:56 -0500
+	id 1tVtp3-0003hQ-P9; Thu, 09 Jan 2025 09:47:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVtjO-0001sB-IR
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:41:54 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVtp0-0003h0-1C
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:47:42 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVtjN-0007Ut-8K
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:41:54 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-436637e8c8dso11433645e9.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:41:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVtow-00088V-Ve
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:47:41 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso10647925e9.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:47:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736433711; x=1737038511; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736434057; x=1737038857; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7avrwuXPDlwcqIEGRw9oeZdH8XXFubTJn2xydz6Y2xU=;
- b=Axn54Elbz5OFIBHooxttxxP3x15gD/gKKffrN3ZuawogYyvc9vjyloRKWgDpTVJfDP
- CLv39z4b7TUbtUlXY/aU5saAEpLzccssLLBtH9HbEJFZhzamfeiFyBONcCPwtNpIpvQ0
- R54aJN6DXQ/qA4EtRe564XPRWs+O0gA189M6d1C3O8E41MuK7ZjAdrEdV4LmGLzQgw6z
- UgKbVRQCfClbYaYit1MVaRw8AfFYwWbDva3Ybgm7q+w69JVGy2obxFSdImXGRubsyvGf
- ZKoymX/jC/YUjV9m1Qd6QyfMq2QvRy895WyONuWF10qJvDsiWyoC53ZdKSDbPNyCXOow
- inZw==
+ bh=m6FQo5JO15y2HjqzZF2V4fu4tFCP1Ym9MxDRDNvrAZ8=;
+ b=CSUhOkxzZD34n/lvqnA7zP0rQ+eJuZC5lhYfjvAn6xiW3GCOAQJi3mHswvEpvMzbXQ
+ 7PBT5YpzFbXt9sJow2vwqFjDqcWiw1rgQh0Rx5xfgpROmhuyyNb7DzOAsmz5lNyVnSuK
+ vfB1iZxIdOB+Y8zuUmSUzed1Dm2kpU6lHu4Ed1B7GvGifgpfwhUZciaKuCYNqeqtzctA
+ j3O6uG4Dv3wZdyjoVXQaHtawVNn3Vwqia1z9NJ9+6UyaG0MtyWj7cHCV8slnwfCjdjI4
+ yVydEdDdWLDgPE4d/n4r7pCpHKRfNhruRmkgBY6Lm55hpLHiU2ngnAHa3ozuWp1UnunG
+ zMpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736433711; x=1737038511;
+ d=1e100.net; s=20230601; t=1736434057; x=1737038857;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7avrwuXPDlwcqIEGRw9oeZdH8XXFubTJn2xydz6Y2xU=;
- b=dH9dih+Hn3JVgoYxZe9rNUbmeIawDQM8KCL5OxpsSZmcJPQR88qK94x2h7aJmTfEUX
- pbmcN33pPkwxYlvWj6fiLzj5CZLwVInvVLZ357BNGHoZUU8MR9IefKOL5B1TddTYk5Ea
- y1gCLVCfx0EfkHST7MW+2ZxXkoMZsSqX+PF43n1zE4lVa1T1dfStExL5EPhpZXjKaXOx
- 0F/2BVr9zdHFIgjuRsOwnX2Ya/QzEkDoP5aaZjYUfaQ79MFToNIGeutfFvfXTt6ImkC3
- agZWJ5YySZ5VWep0G59sqgaaBWHvrnpYEOUQWI4voyhtaqitsuYr1+m+0f49mFhga+fQ
- 1HPQ==
-X-Gm-Message-State: AOJu0YxcB7YplqPpKNJX2OJsS9pTO05aTvKwtA5yNabU1TW4Lu3JTpi1
- z7tbZPphIYoGKvlp+/frV/+urKtOS/0ERHbLSECbqRzlOfz4V30APHnCulUBcT+iHs6vrm/jORo
- E78U=
-X-Gm-Gg: ASbGncsNLc/x2lDImr8pcqv9AcHZsetCaSFcxaqNRzoM23xlM9Fm95Tx6Rjs0SFDGqx
- zUO+S1IRD8VXLIKqGtd7zN9hMLcbf6hWmcD2jWNMPmo0BPzkHf2OicdVzAKnn9eROUBC5DmPQ6j
- un/dQeo6ra7/0fFYtduELx1nn/0I66+u1yNVY70dtgQexpBSJ3KXpt5XESjz/lEGwJQP6fj/xb5
- ORa+ilboYPIY873JgFhT2Ca5bkdv0wUtmWiCREuxuIgZISSbGX3hkTIv/m3sQCitoBAOmDevTmu
- 5ctHHSgSj7gyLzD2xOSFJJ9HaOU=
-X-Google-Smtp-Source: AGHT+IFND7btiXqZJ095ryNFe8fL36RRjMiS8ksTlmNnyjDDIt0C4F/eCVfIx8MvZaD2NZMc1v8FGg==
-X-Received: by 2002:a7b:c5ca:0:b0:436:e3e6:b725 with SMTP id
- 5b1f17b1804b1-436e3e6b799mr54156915e9.6.1736433711377; 
- Thu, 09 Jan 2025 06:41:51 -0800 (PST)
+ bh=m6FQo5JO15y2HjqzZF2V4fu4tFCP1Ym9MxDRDNvrAZ8=;
+ b=t8k2NYluLsY1/jyXVPOitHBOnFDh/t0AxGa7DfukAUaOORIcd+3kM9ntwtZZw3VhEC
+ DRZlbjZivnajWeNMjACJYGycJP9BVQhXqRN9rHGZBgfYHmE/6wsrhjbPG8amF0adxFzM
+ U1lCEmGD01TXGwxrKMDvEPs14IUmdT0tABqiOK/aw1x0T+4EFZMGeQ2KFAWZmibBcaZ+
+ Wyc3PJ41KA1/CBgFshNqDDfCthG3OasBvPj1vCCeXePNvH0mqPUlZQyhwV/miLEjpA5V
+ 2QK8BcxL329rYueb6K9ROYjdtqPGglUYuKhRcGRbUe4ci2+K56ckqKffup4iMCOTQRyl
+ p3IA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjYBcEtCoxkE45b46G9d/p2HsC5vQH2dlM2UKANOM/YpSBHdAgqtlEo/MMAl/41uGdu2NDQMaur4D+@nongnu.org
+X-Gm-Message-State: AOJu0YzK3S60sqf1lL4jYtpWHmObmyx/aBilKezgz89H3ZZoGVAzkNvl
+ OLoazthnBpIas9x/iktXnqXwRxO/l2CHURXSzYnJ6qH5QAIvJoeDEsMKO0P+RwU=
+X-Gm-Gg: ASbGncvUWf8VudK+r20sZZqoU23tmHALNI++LRmbLbOjBra9QrlYeSvwUDaNtnFxyHa
+ hEYUpXUpY9zjxpaUho5e/Xs99RRbEJApwJbAr7YUVIZe3rEX8WWk/veAkAPj+5V7JZ0P4NcUwdr
+ sgg6q++wiVWBzvCjAWwDhSqA2s95cO9NLX+sWHmjhfsOgbDiJYux6H99gfAFqlsux8udYIA75/8
+ 23xLItxq55+bylOYeaI0tohJFS7uiMYhBM+k/hpLaYcyMyw20W1Q8cmukToTdflh1giK2N1aLd4
+ n856FKY6rNeUNVXZzdZdqIfDC/I=
+X-Google-Smtp-Source: AGHT+IEyA/I0BX6UCKKLbYqrMyNAyYZVEwdescIdx6smRfhe/w2gxOPZddXyla0ks3htd+22/cmFcg==
+X-Received: by 2002:a5d:5f95:0:b0:385:fb8d:8658 with SMTP id
+ ffacd0b85a97d-38a8730fa6emr6435711f8f.40.1736434057271; 
+ Thu, 09 Jan 2025 06:47:37 -0800 (PST)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e89df1sm56732615e9.27.2025.01.09.06.41.50
+ ffacd0b85a97d-38a8e383882sm2022278f8f.34.2025.01.09.06.47.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 06:41:50 -0800 (PST)
-Message-ID: <eb40868e-886c-4c6a-88df-f6dfd4a5ce57@linaro.org>
-Date: Thu, 9 Jan 2025 15:41:50 +0100
+ Thu, 09 Jan 2025 06:47:36 -0800 (PST)
+Message-ID: <4a6188f6-2155-42d4-b9c3-897ef434c24e@linaro.org>
+Date: Thu, 9 Jan 2025 15:47:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/vmcoreinfo: Rename VMCOREINFO_DEVICE ->
- TYPE_VMCOREINFO
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250102132624.53443-1-philmd@linaro.org>
+Subject: Re: [PATCH] MAINTAINERS: Add me as the maintainer for ivshmem-flat
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+References: <20250107015639.27648-1-gustavo.romero@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250102132624.53443-1-philmd@linaro.org>
+In-Reply-To: <20250107015639.27648-1-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,19 +100,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/25 14:26, Philippe Mathieu-Daudé wrote:
-> Follow the assumed QOM type definition style, prefixing with
-> 'TYPE_', and dropping the '_DEVICE' suffix which doesn't add
-> any value.
+On 7/1/25 02:56, Gustavo Romero wrote:
+> Add me as the maintainer for the ivshmem-flat device.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
-> Supersedes: <20241219153857.57450-5-philmd@linaro.org>
-> Since v1:
-> - Drop '_DEVICE' suffix (danpb)
-> ---
->   include/hw/misc/vmcoreinfo.h | 7 +++----
->   hw/misc/vmcoreinfo.c         | 6 +++---
->   2 files changed, 6 insertions(+), 7 deletions(-)
-Patch queued.
+>   MAINTAINERS | 7 +++++++
+>   1 file changed, 7 insertions(+)
+
+Patch queued, thanks.
 
