@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2849E77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 03:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D29E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 03:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tViya-0000A9-SG; Wed, 08 Jan 2025 22:12:52 -0500
+	id 1tViyA-0008Rj-4p; Wed, 08 Jan 2025 22:12:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1tViyX-000088-I1; Wed, 08 Jan 2025 22:12:49 -0500
+ id 1tViy7-0008RD-S4; Wed, 08 Jan 2025 22:12:23 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1tViyV-0001Jd-Hx; Wed, 08 Jan 2025 22:12:49 -0500
+ id 1tViy6-0001HK-1b; Wed, 08 Jan 2025 22:12:23 -0500
 Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
- by Atcsqr.andestech.com with ESMTP id 5092je0r028724;
- Thu, 9 Jan 2025 10:45:40 +0800 (+08)
+ by Atcsqr.andestech.com with ESMTP id 5092jXSf028543;
+ Thu, 9 Jan 2025 10:45:33 +0800 (+08)
  (envelope-from ethan84@andestech.com)
 Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 5092j1BS027822
+ by Atcsqr.andestech.com with ESMTPS id 5092j0il027800
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jan 2025 10:45:01 +0800 (+08)
+ Thu, 9 Jan 2025 10:45:00 +0800 (+08)
  (envelope-from ethan84@andestech.com)
 Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
  (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Thu, 9 Jan 2025
- 10:45:01 +0800
+ 10:45:00 +0800
 To: <qemu-devel@nongnu.org>
 CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
  <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
@@ -38,10 +38,10 @@ CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
  <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
  <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
  Ethan Chen <ethan84@andestech.com>
-Subject: [PATCH v9 5/8] hw/misc/riscv_iopmp_txn_info: Add struct for
- transaction infomation
-Date: Thu, 9 Jan 2025 10:44:38 +0800
-Message-ID: <20250109024441.3283671-6-ethan84@andestech.com>
+Subject: [PATCH v9 3/8] system/physmem: Support IOMMU granularity smaller than
+ TARGET_PAGE size
+Date: Thu, 9 Jan 2025 10:44:36 +0800
+Message-ID: <20250109024441.3283671-4-ethan84@andestech.com>
 X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
 In-Reply-To: <20250109024441.3283671-1-ethan84@andestech.com>
 References: <20250109024441.3283671-1-ethan84@andestech.com>
@@ -51,7 +51,7 @@ Content-Type: text/plain
 X-Originating-IP: [10.0.1.106]
 X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 5092je0r028724
+X-MAIL: Atcsqr.andestech.com 5092jXSf028543
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -78,61 +78,75 @@ From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The entire valid transaction must fit within a single IOPMP entry.
-However, during IOMMU translation, the transaction size is not
-available. This structure defines the transaction information required
-by the IOPMP.
+If the IOMMU granularity is smaller than the TARGET_PAGE size, there may be
+ multiple entries within the same page. To obtain the correct result, pass
+the original address to the IOMMU.
+
+Similar to the RISC-V PMP solution, the TLB_INVALID_MASK will be set when
+there are multiple entries in the same page, ensuring that the IOMMU is
+checked on every access.
 
 Signed-off-by: Ethan Chen <ethan84@andestech.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/misc/riscv_iopmp_txn_info.h | 38 ++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
- create mode 100644 include/hw/misc/riscv_iopmp_txn_info.h
+ accel/tcg/cputlb.c | 20 ++++++++++++++++----
+ system/physmem.c   |  4 ++++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/misc/riscv_iopmp_txn_info.h b/include/hw/misc/riscv_iopmp_txn_info.h
-new file mode 100644
-index 0000000000..98bd26b68b
---- /dev/null
-+++ b/include/hw/misc/riscv_iopmp_txn_info.h
-@@ -0,0 +1,38 @@
-+/*
-+ * QEMU RISC-V IOPMP transaction information
-+ *
-+ * The transaction information structure provides the complete transaction
-+ * length to the IOPMP device
-+ *
-+ * Copyright (c) 2023-2025 Andes Tech. Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 71c16a1ac1..ed55f02eab 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1063,8 +1063,23 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+ 
+     prot = full->prot;
+     asidx = cpu_asidx_from_attrs(cpu, full->attrs);
+-    section = address_space_translate_for_iotlb(cpu, asidx, paddr_page,
++    section = address_space_translate_for_iotlb(cpu, asidx, full->phys_addr,
+                                                 &xlat, &sz, full->attrs, &prot);
++    /* Update page size */
++    full->lg_page_size = ctz64(sz);
++    if (full->lg_page_size > TARGET_PAGE_BITS) {
++        full->lg_page_size = TARGET_PAGE_BITS;
++    } else {
++        sz = TARGET_PAGE_SIZE;
++    }
 +
-+#ifndef RISCV_IOPMP_TXN_INFO_H
-+#define RISCV_IOPMP_TXN_INFO_H
++    is_ram = memory_region_is_ram(section->mr);
++    is_romd = memory_region_is_romd(section->mr);
++    /* If the translated mr is ram/rom, make xlat align the TARGET_PAGE */
++    if (is_ram || is_romd) {
++        xlat &= TARGET_PAGE_MASK;
++    }
 +
-+typedef struct {
-+    /* The id of requestor */
-+    uint32_t rrid:16;
-+    /* The start address of transaction */
-+    uint64_t start_addr;
-+    /* The end address of transaction */
-+    uint64_t end_addr;
-+    /* The stage of cascading IOPMP */
-+    uint32_t stage;
-+} riscv_iopmp_txn_info;
-+
-+#endif
+     assert(sz >= TARGET_PAGE_SIZE);
+ 
+     tlb_debug("vaddr=%016" VADDR_PRIx " paddr=0x" HWADDR_FMT_plx
+@@ -1077,9 +1092,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+         read_flags |= TLB_INVALID_MASK;
+     }
+ 
+-    is_ram = memory_region_is_ram(section->mr);
+-    is_romd = memory_region_is_romd(section->mr);
+-
+     if (is_ram || is_romd) {
+         /* RAM and ROMD both have associated host memory. */
+         addend = (uintptr_t)memory_region_get_ram_ptr(section->mr) + xlat;
+diff --git a/system/physmem.c b/system/physmem.c
+index c76503aea8..d64543b413 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -702,6 +702,10 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+         iotlb = imrc->translate(iommu_mr, addr, IOMMU_NONE, iommu_idx);
+         addr = ((iotlb.translated_addr & ~iotlb.addr_mask)
+                 | (addr & iotlb.addr_mask));
++        /* Update size */
++        if (iotlb.addr_mask != -1 && *plen > iotlb.addr_mask + 1) {
++            *plen = iotlb.addr_mask + 1;
++        }
+         /* Update the caller's prot bits to remove permissions the IOMMU
+          * is giving us a failure response for. If we get down to no
+          * permissions left at all we can give up now.
 -- 
 2.34.1
 
