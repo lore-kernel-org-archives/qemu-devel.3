@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76FFE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82F3FE77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVwCj-0002Qa-Lt; Thu, 09 Jan 2025 12:20:21 -0500
+	id 1tVwCq-0002e2-5U; Thu, 09 Jan 2025 12:20:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCi-0002QB-0Z
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:20 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCn-0002aB-Tw
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:26 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCg-0000f9-BI
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:19 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so8101515e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:20:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCl-0000qz-Sy
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:25 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso9691785e9.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736443216; x=1737048016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736443221; x=1737048021; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UYVoLWc90TjSnXBWQnMWyZY22lK6Lc4zmHvaduQQgBs=;
- b=mWME27ASY++JmgXplutd9EMHhCPY/i/hwiqP6shlsbl8LbMCS1QrkBn4m7cHbXNszn
- s5x0rTv/ucoHlZqFEcO0bhPdToPcAm2YgcqzhbiFPRIbg3UHqxr+WGmgB1raAQcO9j83
- QNP7zNa2O6ozVtSLpRlUMg2/GaKW6mkaJEnuMzAGP15qaRrq76qYh3tdGPf3MYqhV0HO
- SDH1senFfCPRzL1kZ3SS+J3QLEEv7FihTO58S54/l97R/AQDLzRInaY+1DGhKmV0rVyA
- n09QPe44nu6MM9xzII++DwujwNqZ6SH/AhdDp6IxlgrIbf59I++bJa7+kP5x8jnTs/bT
- P2oQ==
+ bh=EUzVGKeluHJTwIU2Bj0/kdJ+NUb+Ue/QhX3Ykfr1q8Q=;
+ b=ObO1+5a3632bwJPaPsV/KFWDbt8YCS/4gZgYwcFtIKEaQaYlo/KSjr7zqBPbg9yCTv
+ 7o8yBEB44nf2mCN8LMjkaOeEkinqiDOJuGmbCYEmjSTWJQivnOcrmaWL2DFxW9dYE7Yg
+ /C+hTkVal8ZbrvYZncj8Hwkf69kg9qcnsyBSZbbK7rPpPBXVpIqP4fu0igHXC12QBY4k
+ zkzWqL5tpaAZDpHFKHSdcje2N78BHlUc1RVXYysYFWAwxIcEwNhmzcHfVNhOuWdsLuXI
+ K1YrQni7Bk5SQ0sH5Ce5wkKhzYQSMuI4pqc5OG1L9CDbeRrwcm8kZRh4aPNLkU3iqKm7
+ Njlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736443216; x=1737048016;
+ d=1e100.net; s=20230601; t=1736443221; x=1737048021;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UYVoLWc90TjSnXBWQnMWyZY22lK6Lc4zmHvaduQQgBs=;
- b=TqMWwrNA+tgmEX9VBVWho6ljZUu78zdlXGchU4T0EEad3VyTc2h9bwdJ9ZJ+fjm5Sd
- lj1hSh5FLvznJ4cyjbVwxP3vBsfhyDYsnC736jIVEQqsVI9GW8iuE3pSrwuYUgoGEn3s
- x/fGXAp8qCQ8mjSsy8NtW/PU6SGMfcr+WYqZKgPoFMZRFnwT+W4VKW+6TnMcaqh8lTKR
- mWcmFbhTfLE0lrq7RZLtXfIQ9avpYy4aBGdssZo/jwflKpbfby9xOJm3RWpSDS+BGNlL
- 8hb+dQhUacSZp+W+RUrnO79z6fIizhw11qEPNLtM90LcCmf4ulNL2la+ZpSqxjvpxbx7
- ZtqQ==
-X-Gm-Message-State: AOJu0YzQe2Q3mTiwem5jVpgPZ+8RxKgdjp4R7HPuIYdxGal+HYwOJ4zm
- AVTll7B5kPmZQa1OuA1yeNG1uveUTYmaW/AkJPzIxm8E4VQRB5QDvzuv8Fj7NQnhU50AZ1LJBSl
- 4ueI=
-X-Gm-Gg: ASbGncseAMh4Kps/IIZYScI5da5krQC4SGf7byxRjCKu0fMVFacfoSoKhgxUDzgSkni
- MVAlkLjT1badd4NGCGJSkbNk82rAwaXI4yfFvueXVAtDCEt70SeW5QUvrAIHx557/8AGY2kT7jp
- p+JEVgLr4iicbPZcHThNKTaV0qd/OamwTP8Vkrru9NZxL70Cxo/ij0h4yJ715Aa3iOtpkvUdSC4
- g1bALC/Uy95OTCRtTlb+e/S3fT832V7z7CMER04S/W3ZBew8rnF+eTUwPmCLTLFerfPt3cEiHwK
- m7pDL00Cx1OmrkrBE/BQmQWvir5kDFQh1bnr
-X-Google-Smtp-Source: AGHT+IGdgqoXPnGF2lcK+LAQfU3ZdfrA1Ka0Kkrj/L+eQjTDCQPl9L/bg5MPbz0F0/mQyfX9hEaJxA==
-X-Received: by 2002:a05:600c:1c9b:b0:434:ffb2:f9cf with SMTP id
- 5b1f17b1804b1-436e9d80fc4mr29197855e9.14.1736443215826; 
- Thu, 09 Jan 2025 09:20:15 -0800 (PST)
+ bh=EUzVGKeluHJTwIU2Bj0/kdJ+NUb+Ue/QhX3Ykfr1q8Q=;
+ b=NL6FgoPib4KxZvvYQjk8imuS6YHyxxgejbFmSjHdXBDKoIlm5NQ3E8PorOl1pskBsq
+ +K+ew30eTdKAEdZBFA90qUUCXwCZY1YIDqFCYQnk56xyTpIuOJUbNhN76RKfqIhs9dpJ
+ +cuDf7DqV0GQNfUbsIlcuvrNmbYdboljhSQ10xR0J3WATu+5Br6+wtj6Sr+hcw7qIMxm
+ cI09aAh4UMWHLH8bthBDWkKpm91+l7Xmag+QHFTdfD268JcRyYHF9UhlxDlV2Odxt6oA
+ V7fRkou3QTifKUp9RcCFxUIf94Cjif64AmAvWvIi0mgM41bHwx54GI4JLlxLu7hungsp
+ dKNg==
+X-Gm-Message-State: AOJu0YzrUpm+X8bZGyrLP8gau67464aUYilrehfZPTlIrZ4RmWUSVEQL
+ IDLbq+ktBXQeaVwrA9FYT5wxRTXzmj6bA6D+8rLWeZg/XJZz6AoxBp4GmE/7miy/yTDO09Zdvb9
+ L1R0=
+X-Gm-Gg: ASbGncsSGf4JKf4c7+4abE9a9UmN/IUz7ON9KFlXIaY4nk5PvF9XPy6q35LJAOEInhD
+ 2pLsXXC+TW0mUaJE/ycvc/UbA+uwvMX1opvUZKZeCOMTUp6JxVJz2sW7e0ovHp2dRT17v5Z1ICa
+ IGqAPz5NJqwAbeoH47b3Bq8t6olc0JaAV4gYxwzyk4C5RPbcXoRiHw5qSclA6X3nccmKKGsXHsN
+ j3oNpIGX6S45HVHVx8qhsdXENrxJMa8HviU8DUbpo55HgyhJF/q6lDu4yW2sd3o9dleXnT8m5r0
+ AyyBRmc/XP7MnuzI4xaShKK4Myd9qoza3+9b
+X-Google-Smtp-Source: AGHT+IGq17mk+DRbE/b7puYLM34oZnYM6v8TQ1zLKxxYmh+xXfaQreWcYNM48rSqtLiMLFue9EbP2g==
+X-Received: by 2002:a05:600c:a08b:b0:431:5863:4240 with SMTP id
+ 5b1f17b1804b1-436e26dda73mr60242025e9.24.1736443221145; 
+ Thu, 09 Jan 2025 09:20:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e89fc3sm62157365e9.30.2025.01.09.09.20.14
+ ffacd0b85a97d-38a8e4c1b2asm2272284f8f.89.2025.01.09.09.20.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Jan 2025 09:20:14 -0800 (PST)
+ Thu, 09 Jan 2025 09:20:19 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/11] qdev: Add machine_get_container()
-Date: Thu,  9 Jan 2025 18:19:42 +0100
-Message-ID: <20250109171948.31092-6-philmd@linaro.org>
+Subject: [PULL 06/11] qdev: Use machine_get_container()
+Date: Thu,  9 Jan 2025 18:19:43 +0100
+Message-ID: <20250109171948.31092-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250109171948.31092-1-philmd@linaro.org>
 References: <20250109171948.31092-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,61 +102,161 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Add a helper to fetch machine containers.  Add some sanity check around.
+Use machine_get_container() whenever applicable across the tree.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Message-ID: <20241121192202.4155849-10-peterx@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241121192202.4155849-11-peterx@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/qdev-core.h | 10 ++++++++++
- hw/core/qdev.c         | 11 +++++++++++
- 2 files changed, 21 insertions(+)
+ hw/core/gpio.c        | 3 +--
+ hw/core/qdev.c        | 3 +--
+ hw/core/sysbus.c      | 4 ++--
+ hw/i386/pc.c          | 4 ++--
+ system/ioport.c       | 2 +-
+ system/memory.c       | 2 +-
+ system/qdev-monitor.c | 6 +++---
+ system/vl.c           | 3 +--
+ 8 files changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 50cbbf81211..89575e74e27 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -1033,6 +1033,16 @@ Object *qdev_get_machine(void);
-  */
- void qdev_create_fake_machine(void);
- 
-+/**
-+ * machine_get_container:
-+ * @name: The name of container to lookup
-+ *
-+ * Get a container of the machine (QOM path "/machine/NAME").
-+ *
-+ * Returns: the machine container object.
-+ */
-+Object *machine_get_container(const char *name);
-+
- /**
-  * qdev_get_human_name() - Return a human-readable name for a device
-  * @dev: The device. Must be a valid and non-NULL pointer.
+diff --git a/hw/core/gpio.c b/hw/core/gpio.c
+index 80d07a6ec99..6e32a8eec61 100644
+--- a/hw/core/gpio.c
++++ b/hw/core/gpio.c
+@@ -121,8 +121,7 @@ void qdev_connect_gpio_out_named(DeviceState *dev, const char *name, int n,
+                                      name ? name : "unnamed-gpio-out", n);
+     if (input_pin && !OBJECT(input_pin)->parent) {
+         /* We need a name for object_property_set_link to work */
+-        object_property_add_child(container_get(qdev_get_machine(),
+-                                                "/unattached"),
++        object_property_add_child(machine_get_container("unattached"),
+                                   "non-qdev-gpio[*]", OBJECT(input_pin));
+     }
+     object_property_set_link(OBJECT(dev), propname,
 diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index 48bc9a7b9c7..9abc4e8322f 100644
+index 9abc4e8322f..82bbdcb654e 100644
 --- a/hw/core/qdev.c
 +++ b/hw/core/qdev.c
-@@ -828,6 +828,17 @@ Object *qdev_get_machine(void)
-     return dev;
+@@ -476,8 +476,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+         if (!obj->parent) {
+             gchar *name = g_strdup_printf("device[%d]", unattached_count++);
+ 
+-            object_property_add_child(container_get(qdev_get_machine(),
+-                                                    "/unattached"),
++            object_property_add_child(machine_get_container("unattached"),
+                                       name, obj);
+             unattached_parent = true;
+             g_free(name);
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index e64d99c8edf..9355849ff0a 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -65,9 +65,9 @@ void foreach_dynamic_sysbus_device(FindSysbusDeviceFunc *func, void *opaque)
+     };
+ 
+     /* Loop through all sysbus devices that were spawned outside the machine */
+-    container = container_get(qdev_get_machine(), "/peripheral");
++    container = machine_get_container("peripheral");
+     find_sysbus_device(container, &find);
+-    container = container_get(qdev_get_machine(), "/peripheral-anon");
++    container = machine_get_container("peripheral-anon");
+     find_sysbus_device(container, &find);
  }
  
-+Object *machine_get_container(const char *name)
-+{
-+    Object *container, *machine;
-+
-+    machine = qdev_get_machine();
-+    container = object_resolve_path_component(machine, name);
-+    assert(object_dynamic_cast(container, TYPE_CONTAINER));
-+
-+    return container;
-+}
-+
- char *qdev_get_human_name(DeviceState *dev)
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 71118765884..9334b033f65 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -463,7 +463,7 @@ static int check_fdc(Object *obj, void *opaque)
+ }
+ 
+ static const char * const fdc_container_path[] = {
+-    "/unattached", "/peripheral", "/peripheral-anon"
++    "unattached", "peripheral", "peripheral-anon"
+ };
+ 
+ /*
+@@ -477,7 +477,7 @@ static ISADevice *pc_find_fdc0(void)
+     CheckFdcState state = { 0 };
+ 
+     for (i = 0; i < ARRAY_SIZE(fdc_container_path); i++) {
+-        container = container_get(qdev_get_machine(), fdc_container_path[i]);
++        container = machine_get_container(fdc_container_path[i]);
+         object_child_foreach(container, check_fdc, &state);
+     }
+ 
+diff --git a/system/ioport.c b/system/ioport.c
+index fd551d0375e..55c2a752396 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -258,7 +258,7 @@ static void portio_list_add_1(PortioList *piolist,
+     object_ref(&mrpio->mr);
+     object_unparent(OBJECT(&mrpio->mr));
+     if (!piolist->owner) {
+-        owner = container_get(qdev_get_machine(), "/unattached");
++        owner = machine_get_container("unattached");
+     } else {
+         owner = piolist->owner;
+     }
+diff --git a/system/memory.c b/system/memory.c
+index 78e17e0efa8..b17b5538ffa 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1238,7 +1238,7 @@ static void memory_region_do_init(MemoryRegion *mr,
+         char *name_array = g_strdup_printf("%s[*]", escaped_name);
+ 
+         if (!owner) {
+-            owner = container_get(qdev_get_machine(), "/unattached");
++            owner = machine_get_container("unattached");
+         }
+ 
+         object_property_add_child(owner, name_array, OBJECT(mr));
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 6a38b567876..23043b1e0d5 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -348,7 +348,7 @@ static Object *qdev_get_peripheral(void)
+     static Object *dev;
+ 
+     if (dev == NULL) {
+-        dev = container_get(qdev_get_machine(), "/peripheral");
++        dev = machine_get_container("peripheral");
+     }
+ 
+     return dev;
+@@ -359,7 +359,7 @@ static Object *qdev_get_peripheral_anon(void)
+     static Object *dev;
+ 
+     if (dev == NULL) {
+-        dev = container_get(qdev_get_machine(), "/peripheral-anon");
++        dev = machine_get_container("peripheral-anon");
+     }
+ 
+     return dev;
+@@ -1100,7 +1100,7 @@ static GSList *qdev_build_hotpluggable_device_list(Object *peripheral)
+ static void peripheral_device_del_completion(ReadLineState *rs,
+                                              const char *str)
  {
-     g_assert(dev != NULL);
+-    Object *peripheral = container_get(qdev_get_machine(), "/peripheral");
++    Object *peripheral = machine_get_container("peripheral");
+     GSList *list, *item;
+ 
+     list = qdev_build_hotpluggable_device_list(peripheral);
+diff --git a/system/vl.c b/system/vl.c
+index 3c5bd36d7d7..ed1623b26b9 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2137,8 +2137,7 @@ static void qemu_create_machine(QDict *qdict)
+     object_property_add_child(object_get_root(), "machine",
+                               OBJECT(current_machine));
+     qemu_create_machine_containers(OBJECT(current_machine));
+-    object_property_add_child(container_get(OBJECT(current_machine),
+-                                            "/unattached"),
++    object_property_add_child(machine_get_container("unattached"),
+                               "sysbus", OBJECT(sysbus_get_default()));
+ 
+     if (machine_class->minimum_page_bits) {
 -- 
 2.47.1
 
