@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF87FE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 16:36:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CD9E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 16:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvVp-0005D5-Ud; Thu, 09 Jan 2025 11:36:01 -0500
+	id 1tVvdT-0006Ys-L1; Thu, 09 Jan 2025 11:43:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvVo-0005CZ-AQ
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:36:00 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1tVvdR-0006YJ-R0
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:43:53 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvVm-0002Sw-FJ
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:36:00 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5d90a5581fcso1746484a12.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 08:35:57 -0800 (PST)
+ id 1tVvdP-0003Vv-Uy
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:43:53 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0ac27b412so1320339a12.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 08:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736440557; x=1737045357; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736441029; x=1737045829; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mgpRk2lAh7peEa3JTQ/+Q6ZEx3Kj9Dr2YIjd4Zw63Zk=;
- b=M3qkV51KJ81xiYhG7Vycu2Z55FIavHWA/QmTj141+Ll5BvvO9AhWvNGH4xNoeZTJIO
- JpAo3QjeJX2X0Dklib5LE7dN+Bzup9jUUD9/HVrnk36IUS5R4FoOOrmcjzlM27luwLVL
- BVZBQeQTH9e973xt8cgMZYUeUMtK1MBzr2N82NT9NtR2Rjj8VrPl1aiwP3y3a7Ru5l9Q
- 7uYMjTzFACO4p/DIt1Qn/kj9f2MQDTht+3rwTzMbIn3p9/9onBE1JY0JQ7FTV+76962j
- 3y6iRA09oqX/p6OZIgm+uIZmSRzXuGjBmTppILRI5BjIRC9L6knSxbJ681hZZHEFA8Nw
- 6Evg==
+ bh=hACR3wc4fY/kKLtIWBncjlVwPhtx79adSGiaa7XCXTM=;
+ b=a8td7EnerOEn5XphEW990Jy2Ikmujdro3q6hbXDTaQajIv8xUxiCTQWaIaoulJKxld
+ DZxffSyBvaz0p0StF2pn5DXejaJ0VDlo6U5EgSE6e09GgFE6DQsQC+Wz9LUfRDr+QkF8
+ eFQwA1xBrYjQV0jLedPgEU1J2n3g2IVA2OAoEXT+ju2hXBwV0t05yOeTrzb93Yjf/LEk
+ 2Hb/hXl43h4//D+2jAphlB/DuaPq1Drsq3TD+RP4+j3HaVEGUpzm5KQ53K3oYWL40d+E
+ dlT/wuxhEuE7oC+Mb75bW80vHTrppDktDjr4kXm4hS8UvzAlaOaz2m9JpwGeg0QY4QKw
+ sMFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736440557; x=1737045357;
+ d=1e100.net; s=20230601; t=1736441029; x=1737045829;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mgpRk2lAh7peEa3JTQ/+Q6ZEx3Kj9Dr2YIjd4Zw63Zk=;
- b=en4RwtZZ8JYA7aWOtdWuqgmx1VCgP7Rpmo8v2Nxf8GDnE1rFnlDqDzkyK3MVLUB+uI
- RzXEkv/btAPaDUFDYn6Be2ixa9cR1qTsGM03EBMAKf7pnN2O3ySMJHw74PR9kej2lnN1
- Z7mxtMwbfYcyyHqTNYGSczcA8Ox6grMZGwO4HltrlZc8R561EBYsSE8Dbd7w+L4TsYSl
- xEth8YKRUn940dyCEFvE61v/rm2nIjGcUDUEzbHgMoWoot3RSlfCuT2X2h859BxpuVM4
- fCJkPleqir0JMBrXgBnrVRJVxv2AdEmxtV5eZzLtdDtQi0DK4rOGgnnu+gnwYgIfWBs2
- Ppow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV6iz9I+d4dfnptc7VS8fzma5+996WXXKWYCptSru1Rpk7aPoP4PciamhAKV2HYptMyMeuSJIOFZ3E8@nongnu.org
-X-Gm-Message-State: AOJu0Yx1Q8SL8+I9zz/MFXcXH8Dr7Va6EEOHfBZ9Sfve0lZ+DafbSBvH
- vkImQuHsXPpvoLwtGNUnQunJvGvrVLk86noAg4aWBAciN0vLcBfqfYNz7aGGzpQ=
-X-Gm-Gg: ASbGnctWj50cW9eZgzlDe8Z3jJDHt78QQOIVyf+JBP/zqP7v0Y3F8yE+i2KGDUGV+Ld
- uetKfrerlyP4aqWxynEzXLDLMpN9T7h1p36qbiSh84yR9Ceg5wAH2JtfmuAJ93D81YrvAu+U9pC
- QwvUpNacab4s/YjCAJu4xVVDUl9LtaytOkpT7lqODK3GWssh8hvX83AlkTGQAb7Lh7M6Re2qB14
- eCypgY14MZEJ2pyq52Ro+/r7QjiWFSCfR+XfqXf+efprrNuRiT495w=
-X-Google-Smtp-Source: AGHT+IGDHJ9vufNJ3naHdppxxz3+0Cvlm0xVmovtabc1y1cDuPd095/tAq8Ad06sCk0tiHyX9Gb0ew==
-X-Received: by 2002:a05:6402:3585:b0:5cf:e66f:678d with SMTP id
- 4fb4d7f45d1cf-5d972e6f913mr6624057a12.28.1736440556540; 
- Thu, 09 Jan 2025 08:35:56 -0800 (PST)
+ bh=hACR3wc4fY/kKLtIWBncjlVwPhtx79adSGiaa7XCXTM=;
+ b=X/nVO19gg+mhsKdSTv+KfPQ2pAI4bqoTgzXUHadwuXeEfsOSJE71T9W24bgRaEzQow
+ Vi1lcz2R/wtvEDgM5GISLxtIszd4/fUpTApM2JD1g3bgqo1ca3uPrPHklrxSMO87V7nk
+ FMMcl3sX2dnY0zBdJ43fjauFbYTTf2jZ6tQ0IrFyHw5aLSxC4YB90axaxcCHqPXAFZTb
+ QGVpnBtCUIsZ5yrq1WmcTu/5AI20jOoKXP+TJxgXw395yK80y56VcajSDhsdkkC2l8Hf
+ bcaxs8/TGO9Yz1OK9r0tyuaF+r2EAmZ+XpX2IdUITakL2YuLlOnNZMirCCYtJ0YcX2B3
+ yPdw==
+X-Gm-Message-State: AOJu0YyL7F8DS9oUzWJFXW9WKLCnG2alNYl3Mx9OzDQh3LCn7FbLC9Cc
+ RynIig+JrcVWbNlTLvuvJU9NQb3IG/OM/MyArv72zRtx95wy3PFB0ZKv2QNqwEVqAeRQKKZ9RKb
+ Z2dk=
+X-Gm-Gg: ASbGncvl7T6NGvqJrNxi5UNZqP/wemTSg7fqPOnMICIN3UXEB/bX9Jb8KPn7p2fLoar
+ RhmDktSr63+lhWZsdP5OMJCywdpUK3w5B/6/wQkNREyo8E+DYPEVmqBPF1F9DUf6lkM/kR96ejm
+ ppnY1aR6lh4dEyI9xAAIwANLHmNrAL6QuFhbA+ofvRU2BbqlVN8VeW+7g7MAnhM55pbrCoxJ/Ua
+ s9bb7l10mIf3WRDzrrtqJs2N6Vta+OBwTtAro1/OCVh1F40ojJ905E=
+X-Google-Smtp-Source: AGHT+IEZadd9gNoWFN0ULnIGeRdIZc/D4zNgWfRoC9HUkrobH2+B+NsdpJtUR1u4e7YgSJtgGECEIw==
+X-Received: by 2002:a05:6402:210a:b0:5d9:a54:f8b4 with SMTP id
+ 4fb4d7f45d1cf-5d972e06cbcmr6868081a12.11.1736441029462; 
+ Thu, 09 Jan 2025 08:43:49 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d99046a07bsm759237a12.65.2025.01.09.08.35.55
+ 4fb4d7f45d1cf-5d9900c4b74sm738250a12.31.2025.01.09.08.43.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 08:35:55 -0800 (PST)
+ Thu, 09 Jan 2025 08:43:48 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C49315F75D;
- Thu,  9 Jan 2025 16:35:54 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 544C05F75D;
+ Thu,  9 Jan 2025 16:43:47 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Julian Ganz <neither@nut.email>,  qemu-devel@nongnu.org,  Alexandre
- Iooss <erdnaxe@crans.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-In-Reply-To: <11ae3330-71bb-4da9-9dcb-b7378f1682bc@linaro.org> (Pierrick
- Bouvier's message of "Fri, 20 Dec 2024 13:17:31 -0800")
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH v3 00/11] tcg-plugins: add hooks for discontinuities
+In-Reply-To: <cover.1733063076.git.neither@nut.email> (Julian Ganz's message
+ of "Mon, 2 Dec 2024 20:26:41 +0100")
 References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <590990025f1f43704ca8831254754661c176c42f@nut.email>
- <11ae3330-71bb-4da9-9dcb-b7378f1682bc@linaro.org>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 09 Jan 2025 16:35:54 +0000
-Message-ID: <874j286j2t.fsf@draig.linaro.org>
+Date: Thu, 09 Jan 2025 16:43:47 +0000
+Message-ID: <87y0zk5458.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,168 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Julian Ganz <neither@nut.email> writes:
 
-> Hi Julian,
+> Some analysis greatly benefits, or depends on, information about
+> certain types of dicontinuities such as interrupts. For example, we may
+> need to handle the execution of a new translation block differently if
+> it is not the result of normal program flow but of an interrupt.
 >
-> On 12/20/24 03:47, Julian Ganz wrote:
->> Hi Pierrick,
->> December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
->>> On 12/2/24 11:41, Julian Ganz wrote:
->>>>   +static void insn_exec(unsigned int vcpu_index, void *userdata)
->>>>   +{
->>>>   + struct cpu_state *state =3D qemu_plugin_scoreboard_find(states, vc=
-pu_index);
->>>>   + uint64_t pc =3D (uint64_t) userdata;
->>>>   + GString* report;
->>>>   +
->>>>   + if (state->has_next) {
->>>>   + if (state->next_pc !=3D pc) {
->>>>   + report =3D g_string_new("Trap target PC mismatch\n");
->>>>   + g_string_append_printf(report,
->>>>   + "Expected: %"PRIx64"\nEncountered: %"
->>>>   + PRIx64"\n",
->>>>   + state->next_pc, pc);
->>>>   + qemu_plugin_outs(report->str);
->>>>   + if (abort_on_mismatch) {
->>>>   + g_abort();
->>>>   + }
->>>>   + g_string_free(report, true);
->>>>   + }
->>>>   + state->has_next =3D false;
->>>>   + }
->>>>   +}
->>>>
->>> When booting an arm64 vm, I get this message:
->>> Trap target PC mismatch
->>> Expected: 23faf3a80
->>> Encountered: 23faf3a84
->> A colleague of mine went to great lengths trying to track and
->> reliably
->> reproduce this. We think that it's something amiss with the existing
->> instruction exec callback infrastructure. So... it's not something I'll
->> be addressing with the next iteration as it's out of scope. We'll
->> probably continue looking into it, though.
->> The mismatch is reported perfectly normal and boring exceptions and
->> interrupts with no indication of any differences to other (not reported)
->> events that fire on a regular basis. Apparently, once in a blue moon
->> (relatively speaking), for the first instruction of a handler (even
->> though it is definitely executed and qemu does print a trace-line for
->> that instruction):
->> | Trace 0: 0x7fffa0b03900
->> [00104004/000000023fde73b4/00000021/ff020200]
->> | Trace 0: 0x7fffa02d9580 [00104004/000000023fde72b8/00000021/ff020200]
->> | Trace 0: 0x7fffa02dfc40 [00104004/000000023fde7338/00000021/ff020200]
->> | Trace 0: 0x7fffa0b03d00 [00104004/000000023fde73d4/00000021/ff020200]
->> | Trace 0: 0x7fffa0b03e80 [00104004/000000023fde73d8/00000021/ff020200]
->> | Trace 0: 0x7fffa0b04140 [00104004/000000023fde7408/00000021/ff020200]
->> | Trace 0: 0x7fffa02dd6c0 [00104004/000000023fde70b8/00000021/ff020200]
->> | Trace 0: 0x7fffa02dd800 [00104004/000000023fde7b90/00000021/ff020200]
->> | cpu_io_recompile: rewound execution of TB to 000000023fde7b90
->> | Taking exception 5 [IRQ] on CPU 0
->> | ...from EL1 to EL1
->> | ...with ESR 0x0/0x3800000
->> | ...with SPSR 0x20000305
->> | ...with ELR 0x23fde7b90
->> | ...to EL1 PC 0x23fd77a80 PSTATE 0x23c5
->> | Trace 0: 0x7fffa13a8340 [00104004/000000023fd77a80/00000021/ff021201]
->> | Trace 0: 0x7fffa13a8480 [00104004/000000023fd77a84/00000021/ff020200]
->> | Trap target PC mismatch CPU 0
->> | Expected:    23fd77a80
->> | Encountered: 23fd77a84
->> | warning: 44	./nptl/pthread_kill.c: No such file or directory
->> | Couldn't get registers: No such process.
->> It does show up with both single-core and multi-core VMs, so that at
->> least eliminates some possibilities. Maybe :/
->> The issue is nasty to reproduce in a way that allows any meaningful
->> investigation. It usually involves sifting through many GBs of Qemu logs
->> for maybe one occurance. We could add another testing/dummy plugin that
->> just prints the PC for _any_ instruction executed and have a skript
->> check for non-alternating Trace-lines from Qemu and that Plugin. But
->> then we're talking nearly double the amount of Lines to look through
->> with probably little additional information.
->>=20
+> Even with the existing interfaces, it is more or less possible to
+> discern these situations, e.g. as done by the cflow plugin. However,
+> this process poses a considerable overhead to the core analysis one may
+> intend to perform.
 >
-> Thanks for the investigation.
-> I could reproduce this with this command line:
-> ./build/qemu-system-aarch64 -M virt -plugin
-> ./build/tests/tcg/plugins/libdiscons.so,abort=3Don -m 8G -device
-> virtio-blk-pci,drive=3Droot -drive
-> if=3Dnone,id=3Droot,file=3D/home/user/.work/images/debianaarch64.img -M v=
-irt
-> -cpu max,pauth=3Doff  -drive
-> if=3Dpflash,readonly=3Don,file=3D/usr/share/AAVMF/AAVMF_CODE.fd -drive
-> if=3Dpflash,file=3D/home/user/.work/images/AAVMF_VARS.fd -d
-> plugin,in_asm,op -D crash.log
+> These changes introduce a generic and easy-to-use interface for plugin
+> authors in the form of a callback for discontinuities. Patch 1 defines
+> an enumeration of some trap-related discontinuities including somewhat
+> narrow definitions of the discontinuity evetns and a callback type.
+> Patch 2 defines the callback registration function. Patch 3 adds some
+> hooks for triggering the callbacks. Patch 4 adds an example plugin
+> showcasing the new API. Patches 5 through 6 call the hooks for a
+> selection of architectures, mapping architecture specific events to the
+> three categories defined in patch 1. Future non-RFC patchsets will call
+> these hooks for all architectures (that have some concept of trap or
+> interrupt). Finally, patch 11 supplies a test plugin asserting that the
+> next PC provided to the plugin points to the next instruction executed.
 >
-> # -d plugin,in_asm,op allows to dump asm of every translated block,
->    plugin output (for discon plugin), and tcg op generated.
->
-> It reliably crashes with a single address.
-> Looking at the debug output (crash.log):
-> ----------------
-> IN:
-> 0x23faf3a80:  d108c3ff  sub      sp, sp, #0x230
-> # =3D> This bb has a single instruction as input
->
-> OP:
-> # this is the TB instrumentation
->  ld_i32 loc0,env,$0xfffffffffffffff8
->  brcond_i32 loc0,$0x0,lt,$L0
->  st8_i32 $0x1,env,$0xfffffffffffffffc
->
->  ---- 0000000000000a80 0000000000000000 0000000000000000
-> # =3D> we can see that there is no call_plugin, looks like
->   instrumentation # is not applied
+> Sidenote: I'm likely doing something wrong for one architecture or
+> the other. These patches are untested for most of them.
 
-That is expected. We have previously called the instrumentation for the
-instruction in the block that triggered cpu_io_recompile() so we suppress
-everything apart from memory instrumentation for the re-execution so we
-don't double count.
+I've finished my review pass. Overall I think the API is fine but I
+would like the arch maintainers to be happy the individual hooks capture
+the right semantics for their arches.
 
->  sub_i64 sp,sp,$0x230
->  add_i64 pc,pc,$0x4
->  goto_tb $0x1
->  exit_tb $0x7f7eedd355c1
->  set_label $L0
->  exit_tb $0x7f7eedd355c3
->
-> ----------------
-> IN:
-> 0x23faf3a84:  a9b007e0  stp      x0, x1, [sp, #-0x100]!
-> 0x23faf3a88:  a9010fe2  stp      x2, x3, [sp, #0x10]
-> ...
->
-> OP:
->  ld_i32 loc0,env,$0xfffffffffffffff8
->  brcond_i32 loc0,$0x0,lt,$L0
->  st8_i32 $0x0,env,$0xfffffffffffffffc
->
->  ---- 0000000000000a84 0000000000000000 0000000000000000
-> # instruction is correctly applied
-> call plugin(0x7f7eec96d530),$0x1,$0,$0x0,$0x23faf3a84
->  mov_i64 loc2,sp
->  ...
->
-> Trap target PC mismatch
-> Expected:    23faf3a80
-> Encountered: 23faf3a84
->
-> The thing interesting here is that we can notice that 23faf3a80 is a
-> translation block with a single instruction, and we can see that
-> instrumentation is not applied for this instruction (call_plugin is
-> not present).
->
-> Overall, it really looks like a bug on QEMU side, where we miss
-> instrumenting something. I'll take a look. You can ignore this for
-> now.
+I think Pierrick has already picked up some compile failures, you can
+see more from my gitlab CI run:
 
-See my other email. I think the bug was allowing an async IRQ to
-interfere with our "special" single instruction block.
+  https://gitlab.com/stsquad/qemu/-/pipelines/1618014020
 
->
->> Regards,
->> Julian
+As you have discovered with the discontinuity issue making sure the
+execution state is consistent with JIT'ed code has a few landmines in
+it. Given it is hard to trigger with our basic softmmu tests you should
+consider a few more aggressive tests like:
+
+  tests/functional/test_aarch64_tcg_plugins.py
+
+where we can pick exactly which plugin we want to use and run something
+that will have a lot of IRQs and exceptions in it. It doesn't have to be
+Aarch64 - whichever arch you are most familiar with. A test that
+includes a hypervisor would be ideal as that will trigger a wider range
+of execution state changes.
 
 --=20
 Alex Benn=C3=A9e
