@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB8DE7719B
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4185E77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVsMJ-00016N-IV; Thu, 09 Jan 2025 08:13:59 -0500
+	id 1tVsM6-00014K-Oi; Thu, 09 Jan 2025 08:13:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <f1b91e3a33a6502be816d88dfb6b719101b69d41@kylie.crudebyte.com>)
- id 1tVsMI-000166-5M
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:13:58 -0500
+ id 1tVsM5-00013s-5U
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:13:45 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <f1b91e3a33a6502be816d88dfb6b719101b69d41@kylie.crudebyte.com>)
- id 1tVsMG-0004nD-Jt
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:13:57 -0500
+ id 1tVsM3-0004j4-IS
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:13:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=QISezSY7oBObokWL0tL8UTCzKj4XmSnRBn+ToQwCAuE=; b=MA9hC
- lx3MpzGwiswsJAezSK/9Kwo2Xf47BtJtD2StHrmqs4YHUAzdFF6gEVWR8pbtWRFe7PdVFmLMSZtQ7
- cpoFWemYc75HaTjC1JRkxTh5M2K7fAIAevnfmMFW1TtZhppt+p6WCnGhtTfM0hMecds0o8QY37No9
- 7459aaZ0od4pZWpobAfiL0d3tbd50sRSwV8f8CE9MWNGq5xIty9RwKa2zNHlm6AJBTUmHuhq+E1oQ
- AwehHVOkO6FEWShdaPhnZ6KbMv6/bO5VNihKPeWY5ICj+Jni9vVXg5nND5Dw6Q/sUbWOHebw5roK7
- T72zQTHc1tcFk4CuE/UJYi6fAwkfuYOVkC+Eryjm8YugLrKVPqF0sAhUIXQZq8ktuVLbmNxsEIMau
- w1juEAAGz6ZJH/81MMY7I0YCnZ/Q/iha/y2/j2tdP6YPpYlPQMuMRTXLLiBXjf/cky16TSHnJGXOG
- LsoLhzdM/ABU3aQVBA2keH+BnD1YAYpOOacM4ELRdqLnKfoGKbWIjikca1Dw3g3t3Y73wuzHQI+ZA
- 5YSb8KtHhPtyWyf1aqk62L4C60xPwePAFMcWECV/70wQ8AYUvza2WZDiNZf5fn37TmwXka9Wd8pAc
- YS+2LTe1LqYCT3yXd+WlQ//7x06aFnmK7ULcHl0pRrr1gl1DxXNU7Z/EHvjvsM=;
-Message-Id: <f1b91e3a33a6502be816d88dfb6b719101b69d41.1736427878.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1736427878.git.qemu_oss@crudebyte.com>
-References: <cover.1736427878.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=GbOHLbIjqzojBhKVmXxsq5nhRytrHfeSfWZ4sGCY+M8=; b=sVXzJ
+ t6+fBXwVKj0u+UqTdGPb2+ayZVu+W6N/80Fm/yYuut5WSm6IQSxL72irHmhCK8XnzDP5IX+bzh1wf
+ DcD/6cXTQCDk7obE5433Z5KqoesL+7Gg2XAPCg6N3vluIsY5nCiC0qL6VUJjzKoTsD5c6lud/N/qt
+ wM55DM2NRVw2Ws5/mncBqTJ1V3mkVFdjHUJ5dZLYPx062oBc9vzEKCtElqrsZW85Uxv3VsPjrqzwT
+ qCNezzgkpevZxn54euGmKdbGxubdf4XqLP1agmkylYcOncAt+kkyy0HIkJpQ2WR0BUkSKRjWBYcyY
+ m2VxY3QFJ3xxgWiGxOXg3fK+FwzCoNqrvCBEg3HtbpgfgC2oJWbx+S8N708A54H5ARXfhwD9sZ6nO
+ DP3Nw+NHFluDWSgdyg2OCQzjhfiNSR8ZyKWtMTkJv4HA/0K3aWbyAeSLs4kpd4+/EvVKS7U9PFOha
+ 1yqza7v9MZ/nAGUvQAaZfCO/t3szrgyBozP7aGuw2m5MeRcxb3b6/s7q71vLyUvrjNFYYggNADolJ
+ IcfsG5BlLCnQbNtV9WtUGjx0mDQxrNuW33gG0siXfeEAiFtBunBqlZUj9FvBf4AnIHvWreil5JZvO
+ JKoADikUzPVdmGgaQIl2l9xUuwZsXbM3EkmJzpINpgzNged9b2oALjDogaJVeY=;
+Message-Id: <cover.1736427878.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Thu, 9 Jan 2025 13:59:56 +0100
-Subject: [PATCH 3/3] tests/9p: extend use_dir_after_unlink test with Treaddir
+Date: Thu, 9 Jan 2025 14:04:38 +0100
+Subject: [PATCH 0/3] tests/9p: add use-dir-after-unlink test
 To: qemu-devel@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>
 Received-SPF: pass client-ip=5.189.157.229;
@@ -68,33 +66,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sending a Treaddir request on an unlinked directory should also succeed
-if the directory was alread opened before unlink. We just check that no
-error occurs and that we get some kind of Treaddir result, but completely
-ignore the actual Treaddir result content. In fact, there should be no
-system as of to date that would allow a removed directory to have any
-content (files, links, devices, subdirectories) and POSIX specifies that
-a directory must be empty when trying to remove it from the file system.
+Add a test case that verifies that it is possible to do some basic operations
+on a deleted directory if 9p client opened the directory before directory was
+removed.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- tests/qtest/virtio-9p-test.c | 3 +++
- 1 file changed, 3 insertions(+)
+Unlike the previous open-unlink-fstat idiom: no fix required here. It already
+works with 9p server.
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 35c42cd0d7..10243247ab 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -772,6 +772,9 @@ static void fs_use_dir_after_unlink(void *obj, void *data,
-         .client = v9p, .fid = fid_dir, .request_mask = P9_GETATTR_BASIC,
-         .rgetattr.attr = &attr
-     });
-+    treaddir({
-+        .client = v9p, .fid = fid_dir, .offset = 0, .count = P9_MAX_SIZE - 11
-+    });
- }
- 
- static void cleanup_9p_local_driver(void *data)
+Christian Schoenebeck (3):
+  tests/9p: rename test use_after_unlink -> use_file_after_unlink
+  tests/9p: add use_dir_after_unlink test
+  tests/9p: extend use_dir_after_unlink test with Treaddir
+
+ tests/qtest/virtio-9p-test.c | 50 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 46 insertions(+), 4 deletions(-)
+
 -- 
 2.39.5
 
