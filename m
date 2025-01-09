@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31711E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 05:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A34E77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 05:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVlRD-0001yS-RW; Thu, 09 Jan 2025 00:50:35 -0500
+	id 1tVlRW-00022j-60; Thu, 09 Jan 2025 00:50:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVlRC-0001y3-2c
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 00:50:34 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tVlRU-00021z-B0
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 00:50:52 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVlR9-0002hQ-M9
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 00:50:33 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21669fd5c7cso7224185ad.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 21:50:31 -0800 (PST)
+ id 1tVlRR-0002jc-C7
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 00:50:52 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2efe25558ddso721337a91.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 21:50:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736401830; x=1737006630;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736401847; x=1737006647;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HrjmQS6sDIDwKO+UJvxDveSWdwDMaPIQvkl3e1u8m48=;
- b=Z+7LdDIFVseVaTWSWxj/GI1eecQJHhHi20VGdhG9z7vuPlCddnvg5ozx+23YBopP3r
- PffDdhMwVgQ6wj5V+TAR+0b3kBUeSQveXUJrTNdYAF86PXX/tKJD6nuHmcIs2odd1OP3
- i5HT7ad6zCA5aJiZGv7hq6x1lx2bN1vZXHa0qSxBy3qAOlZxeWP070DxRJTqk03HDu4/
- VSc/LTE+CiicFHlxfsGygXDsjmXjc0CADIHMUG9MUncuowFVrQe4s1C6CnYuHgFwg+dM
- pIetg53pDpSEURk3K9Bc2LCpaviHM3D9iUZszmx8/nwbXPd7dMoNDUrlqE8ZLQNcbzsB
- URhw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=jc95od6IQg6f70QGQpCellZ5qI3E748aCTYw0+hwN6M=;
+ b=TMaJJwCSoPQmyK35GmFmk8M2su1fpNn8k/KHVrPYphdhJ5MKNr8TW3cmUNUWTz21uP
+ BQK4Ndv7oVmfXIvLFVggoZmRD5Dv5+S6JUhJEQiZHGwYkplt9LsdaCVirluHjYB2sLzw
+ 70gmf66vebAu08zCILVrsDwP83AFreBze97nDhTCnzE6/0A4oumIQo9L52NvV0PyFac/
+ l1hMe3wDWo8k4f5qid8CoBL1AEPxtEh/N+StwTFU2Bse+eJgTvOsaYi8DW902ZbeP1kk
+ GwdXHtlvmg+BTudtuUV/IhVb/0RsEK6QWncGA3cujaxFP0sKvRQe6O/9bb1KgEF6s4vR
+ wU2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736401830; x=1737006630;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HrjmQS6sDIDwKO+UJvxDveSWdwDMaPIQvkl3e1u8m48=;
- b=uSx7BoKnewqwci9jUMbp1PxhTXXBX++axRP9DVGO1h07UN8TIIpaxMAa6J/s4u8DVC
- A50Lr6j9d4OnAS47Yz63R4BphEHGUp1lLOPKbu35kQbIxDn1CjKTJug5swC04JEiAoXS
- JewRrokYt+syC0M7qEhlMC51ehO1hLdvyQJ9fO3CQzL8Pt9IkQBSLCtJDomS90R+Fute
- T+JOO1hbsSWB0fp5bOu4ay2ztRgxTTXbJY/d7L3C8WcOB6Kfxy+hdO4Tl1lUrSvMQbmn
- rGybc/yCEt7NVK5NCyIyRot8zKifqhgeDD+cdIeaf/zGDq4TE5u218tPsJpTZKuvHLsa
- Qyhw==
-X-Gm-Message-State: AOJu0Yy6D/KsxPE0AjHNBxtafMIJw/XlJaX/PR/odaaeMWRQJKO64ywo
- quLOKq30DmAvgWo/le5dFoleWETVnxuxUJoEPVAvefebpMb2D3oy6M0kR1zlnx8=
-X-Gm-Gg: ASbGncsQWXYsw2R2q5+WmfMEaTBZUOeNaUxkuYoiF1pzjJOPSDlCgXPBRmBQKZ0UB7Y
- HDy0fVR3Jm0XFcjTPIe7zWCA+PQiFRx7AZ2fbqov06SRy+Gdx0wel7lom4X/2Js1nSE3AvxEKVe
- ScAiGoFhAKz9/j5wV54np97GmrSj0VsYzZjMqma+5aYMbuh+mLXDdaKUnAP/Y4rwlIQoTEOcEvI
- IL0q0bmx0skZzjR3v1cpmiVqVRHOb5wnxBmcggqPgFbEcnfIojSDNwd31s=
-X-Google-Smtp-Source: AGHT+IERQ54fABtvWgN2RTv17Jsfsr9C6EZNXHGFJO+/cvCXjplKNj2v8zUVi67Utytq796kQEHIfQ==
-X-Received: by 2002:a17:902:f644:b0:212:40e0:9562 with SMTP id
- d9443c01a7336-21a83f69651mr82857365ad.25.1736401829884; 
- Wed, 08 Jan 2025 21:50:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736401847; x=1737006647;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jc95od6IQg6f70QGQpCellZ5qI3E748aCTYw0+hwN6M=;
+ b=tbCaCFgkfnS4BdVtXY8YUH0OVsL/Xzl8NHiPvmceQ3VQUVOvLsbXxPbpa1J3onvUX2
+ Mp+FhW6WP4pZgfFY7nSAVi6zTDAlRKZTVNmXR3AUku+RqojGdxPu3UsrQx3j8gN3RVKn
+ B50wWFQNGJ4UZGdTHkKgdSDR7YHaXUDJ1OwJF4JHUM28eS4YFMqVsvvOGp57Fd5jbCLR
+ FLg2+Yc51sXfkREQeUU0eonwcraYPF/I7F7lTZbYdMy9pSZ05vWZv2XedUDHLPrYth5b
+ F5EyjwLQ02pA6EBnwhlKpIrC4V663uVToXeyZDwNDEyQs0d7D5bRpRst97Q11tBrMjFV
+ FO0Q==
+X-Gm-Message-State: AOJu0Yzb6RIanKn5jvKLAFA/3NoQjGCaMxvXHuc3jiMEfsjOBtZX34pQ
+ HuHdXG0Tz4m5B3kFgmzm9Yk5025TmJj18IrqJrOcs3viwyZeP5Q7LNShhzMlvm8=
+X-Gm-Gg: ASbGnctvdC0Oxkdretu08Bh5CU0XR7WBSSVP4ac9jMNuS2ala6lE2HYYiSuR+Wa8xMz
+ Dc2+gEc9mW0QdntE926HHV1zljpFno1C7ZmXwidScfFRGtrRncGiRnFxvEkCoj9jzYM2ELqZU8G
+ 4Y4MlcxuLbWrLlgpvp/u10uHhnXced61nmUnDsdjCZO6wlUgyPOY3iQteZv3yqWuJe4Olb6PQaF
+ Kca0vXafkdNT6kFCXwD9ot3AwSrxzdU0mtYly0AM4L1xvWuk/sTjomllsI=
+X-Google-Smtp-Source: AGHT+IGSsdc0DcgVVtQTvR0+LdFlHrYdwnblOCPSyX0rL+QavasK2yLQt9ZrVNsbyIgMAnmjouBcyg==
+X-Received: by 2002:a17:90b:2748:b0:2ee:ee5e:42fb with SMTP id
+ 98e67ed59e1d1-2f548eac034mr7936209a91.13.1736401847059; 
+ Wed, 08 Jan 2025 21:50:47 -0800 (PST)
 Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2f54a26accesm2670174a91.6.2025.01.08.21.50.23
+ 98e67ed59e1d1-2f559469fb8sm450921a91.45.2025.01.08.21.50.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 21:50:29 -0800 (PST)
+ Wed, 08 Jan 2025 21:50:46 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v7 0/2] Fix check-qtest-ppc64 sanitizer errors
-Date: Thu, 09 Jan 2025 14:50:19 +0900
-Message-Id: <20250109-san-v7-0-93c432a73024@daynix.com>
+Date: Thu, 09 Jan 2025 14:50:21 +0900
+Subject: [PATCH v7 2/2] memory: Do not create circular reference with subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAJtjf2cC/2XQy2oDMQwF0F8JXtdFtuVXV/2PkIWfjRedKeNiE
- sL8e50xISmzvELnInQjNS0lVfJxuJEltVLLPPWg3w4knN30lWiJPRMOHEFxSaubKFjtssuYWeC
- kb/4sKZfL1nI89Xwu9XderltpY/fpw6vNN0aBZhECcgGcGfsZ3XUql/cwf5N7QeOvSA/EO9ISv
- AeLKvq4Q+KJNJiBREceRFaaBYSgdgifyHAxEHbkOAYVs8OQ/A7JB5LAAAeSHRmPAlDqfuL+PPW
- KxiOb6oixHIy03lqv/6F1Xf8ABb5XlaABAAA=
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250109-san-v7-2-93c432a73024@daynix.com>
+References: <20250109-san-v7-0-93c432a73024@daynix.com>
+In-Reply-To: <20250109-san-v7-0-93c432a73024@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -91,14 +88,14 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,86 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I saw various sanitizer errors when running check-qtest-ppc64. While
-I could just turn off sanitizers, I decided to tackle them this time.
+memory_region_update_container_subregions() used to call
+memory_region_ref(), which creates a reference to the owner of the
+subregion, on behalf of the owner of the container. This results in a
+circular reference if the subregion and container have the same owner.
 
-Unfortunately, GLib versions older than 2.81.0 do not free test data in
-some cases so some sanitizer errors remain. All sanitizer errors will be
-gone with this patch series combined with the following change for GLib:
-https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
+memory_region_ref() creates a reference to the owner instead of the
+memory region to match the lifetime of the owner and memory region. We
+do not need such a hack if the subregion and container have the same
+owner because the owner will be alive as long as the container is.
+Therefore, create a reference to the subregion itself instead ot its
+owner in such a case; the reference to the subregion is still necessary
+to ensure that the subregion gets finalized after the container.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v7:
-- Don't open code memory_region_ref(). (Peter Xu)
-- Link to v6: https://lore.kernel.org/r/20250105-san-v6-0-11fc859b99b7@daynix.com
+ system/memory.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-Changes in v6:
-- Avoid referring owner as "the object that tracks the region's
-  reference count".
-- Noted that memroy_region_ref() and memroy_region_unref() do nothing
-  if the owner is not present.
-- Explicitly stated that memory_region_unref() may destroy the owner
-  along with the memory region itself.
-- Link to v5: https://lore.kernel.org/r/20250104-san-v5-0-8b430457b09d@daynix.com
+diff --git a/system/memory.c b/system/memory.c
+index 78e17e0efa83..972617b0192d 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1855,6 +1855,24 @@ void memory_region_unref(MemoryRegion *mr)
+     }
+ }
+ 
++static void memory_region_ref_subregion(MemoryRegion *subregion)
++{
++    if (subregion->container->owner == subregion->owner) {
++        object_ref(OBJECT(subregion));
++    } else {
++        memory_region_ref(subregion);
++    }
++}
++
++static void memory_region_unref_subregion(MemoryRegion *subregion)
++{
++    if (subregion->container->owner == subregion->owner) {
++        object_unref(OBJECT(subregion));
++     } else {
++        memory_region_unref(subregion);
++     }
++}
++
+ uint64_t memory_region_size(MemoryRegion *mr)
+ {
+     if (int128_eq(mr->size, int128_2_64())) {
+@@ -2644,7 +2662,8 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+ 
+     memory_region_transaction_begin();
+ 
+-    memory_region_ref(subregion);
++    memory_region_ref_subregion(subregion);
++
+     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+         if (subregion->priority >= other->priority) {
+             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+@@ -2702,7 +2721,8 @@ void memory_region_del_subregion(MemoryRegion *mr,
+         assert(alias->mapped_via_alias >= 0);
+     }
+     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+-    memory_region_unref(subregion);
++    memory_region_unref_subregion(subregion);
++
+     memory_region_update_pending |= mr->enabled && subregion->enabled;
+     memory_region_transaction_commit();
+ }
 
-Changes in v5:
-- Rebased.
-- Merged four patches to update inline documentation into one
-- Link to v4: https://lore.kernel.org/r/20240823-san-v4-0-a24c6dfa4ceb@daynix.com
-
-Changes in v4:
-- Changed to create a reference to the subregion instead of its owner
-  when its owner equals to the container's owner.
-- Dropped R-b from patch "memory: Do not create circular reference with
-  subregion".
-- Rebased.
-- Link to v3: https://lore.kernel.org/r/20240708-san-v3-0-b03f671c40c6@daynix.com
-
-Changes in v3:
-- Added patch "memory: Clarify that we use owner's reference count".
-- Added patch "memory: Refer to docs/devel/memory.rst for 'owner'".
-- Fixed the message of patch
-  "memory: Do not create circular reference with subregion".
-- Dropped patch "cpu: Free cpu_ases" in favor of:
-  https://lore.kernel.org/r/20240607115649.214622-7-salil.mehta@huawei.com/
-  ("[PATCH V13 6/8] physmem: Add helper function to destroy CPU
-  AddressSpace")
-- Dropped patches "hw/ide: Convert macio ide_irq into GPIO line" and
-  "hw/ide: Remove internal DMA qemu_irq" in favor of commit efb359346c7a
-  ("hw/ide/macio: switch from using qemu_allocate_irq() to qdev input
-  GPIOs")
-- Dropped patch "hw/isa/vt82c686: Define a GPIO line between vt82c686
-  and i8259" in favor of:
-  https://patchew.org/QEMU/20240704205854.18537-1-shentey@gmail.com/
-  ("[PATCH 0/3] Resolve vt82c686 and piix4 qemu_irq memory leaks")
-- Dropped pulled patches.
-- Link to v2: https://lore.kernel.org/r/20240627-san-v2-0-750bb0946dbd@daynix.com
-
-Changes in v2:
-- Rebased to "[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'".
-  (Philippe Mathieu-Daudé)
-- Converted IRQs into GPIO lines and removed one qemu_irq usage.
-  (Peter Maydell)
-- s/suppresses/fixes/ (Michael S. Tsirkin)
-- Corrected title of patch "hw/virtio: Free vqs after vhost_dev_cleanup()"
-  (was "hw/virtio: Free vqs before vhost_dev_cleanup()")
-- Link to v1: https://lore.kernel.org/r/20240626-san-v1-0-f3cc42302189@daynix.com
-
----
-Akihiko Odaki (2):
-      memory: Update inline documentation
-      memory: Do not create circular reference with subregion
-
- include/exec/memory.h | 59 ++++++++++++++++++++++++---------------------------
- system/memory.c       | 24 +++++++++++++++++++--
- 2 files changed, 50 insertions(+), 33 deletions(-)
----
-base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
-change-id: 20240625-san-097afaf4f1c2
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.47.1
 
 
