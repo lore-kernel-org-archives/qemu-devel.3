@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54628E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81D6E7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW28Y-00035n-E5; Thu, 09 Jan 2025 18:40:26 -0500
+	id 1tW2Bm-0003p7-Pe; Thu, 09 Jan 2025 18:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW28W-00035Y-8H
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:40:24 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW28U-0004sx-Ff
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:40:23 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso11787875e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 15:40:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736466020; x=1737070820; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w3fvygan0RdgUxJplyfATW0gkV1Zp6LwByjxu0dpBi0=;
- b=YMft10ax8XzIj0pNVNKZF737U/dWlsIy7w/2Y9NY9sBK70CpuCRZwA8JH3HTWp/Q4X
- pcBDVJo/SnxcFGHxMFKjcdeNn/uSH3RbtpeXvtBDlS/AcBLhKUFx+t9nbWA4yOXTAUYB
- LjPpZN4bfjn4cyY+QKtdhU3u70X3Z3rUa34NDGAKqwARCLbsB4oJShqNmCDxRV+mBejL
- 4fZea91QfYbF7b02hI70riT1snNWy5aw8JpoCcvgIy4V3ZfJ2N/ZWK1fCuMA2/oGttz7
- xKHfEiMIw0XgHX30E9uMnVU+mstb17z+n+E0PTrfVBa3pHajJvsn9uYXOr36dulYsIz5
- 5Beg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736466020; x=1737070820;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w3fvygan0RdgUxJplyfATW0gkV1Zp6LwByjxu0dpBi0=;
- b=fvHi4LbhprAFiW+qnGAHAnPjSfU+mu5qfv1fGY9eRMT5FQTI0OJdIZ2TF0s4ZGNO8f
- manykHWy8sXj1DzSBZ2rHW6Qb/bmqSeVVqkvPinEeOVjCPQALstlHbcJhlLUxyS2N9fD
- VxM4GD27JfjIlqScInnxu/7wP5amXTqrFdsfO0a8Os04cdTMObbbS4AfsJNvG42/Vu6g
- 3pCKgEPqOqQjleWI1jYnCyzbjpjxdtmJouG4ybSWbJnTv6WvTulXst5w7fJmmr9WTqmK
- p1sM7N58dgD0NOzGNf3iEX/+ucr+O6EOq29JdF4c5PjubWtGcNa6r8OfL625MO5a4nDc
- XBzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUucbYX3PvOLFrfGdyLeNQ3s0n1BdCAlrbBQ61NCFD5Z/8kBB4zjm8PMbLoaFBDxM9biJNKd0nUgOHS@nongnu.org
-X-Gm-Message-State: AOJu0YybFSfHdlu92oAvqo2F4XZOh2n0sJROOvP1iCYx2LmQhY03cwN+
- 7+mJj82zq/0g8WoM5raDH67lbGMaSxd7ijsGByJJLTD2xoKhnr/XkbUZGFISkTkoYLlHOfthASB
- Vgsc=
-X-Gm-Gg: ASbGncvRbpjxTIsb4jT2cKrGPPTHR1bBs+SxZRPAKP6RPh7ONLbcIakir1ZQQ1HJAXM
- mi52bcKUPp5FgSJqVorTBCdf9XbcemBnVZMoes3zkmJkBGSO9w0jOL2i7frSRnq3SqRLNc2WaGS
- yjJ8w25dLPMpX98SGdw3EWdCTsCK4zgWY64ax07Z7ibXvqI7MqY3lUcDEcokNphuMYm578BdtUz
- cii14HRCxOUt0cJYorU3FKIYispP7hxZQm6pm2adA7xG7tRYardw0UVLIMXre6DesaYHFl8oBXp
- WJBzyFkY5ICivfx5q00QbdlwFNQ=
-X-Google-Smtp-Source: AGHT+IFB0oc91t2PElBd45vOApvNZ0c76TNeukRbJAD5UoBPnolnKnXMb+cTIw4yA65V+5ifIxBnig==
-X-Received: by 2002:a05:600c:4f49:b0:435:194:3cdf with SMTP id
- 5b1f17b1804b1-436e26bd59amr76977645e9.19.1736466020579; 
- Thu, 09 Jan 2025 15:40:20 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e89dfesm69422805e9.32.2025.01.09.15.40.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 15:40:19 -0800 (PST)
-Message-ID: <d42bbe98-8221-41a2-83a5-58e537906969@linaro.org>
-Date: Fri, 10 Jan 2025 00:40:18 +0100
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tW2Bl-0003oh-7i
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:43:45 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tW2Bj-00058j-J5
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:43:45 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509ElPf4005236;
+ Thu, 9 Jan 2025 23:43:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kFyNMv
+ mf/kNnG24Gc/GIgnN5b6RBKoKcYlXh4WtHEiM=; b=oR6qDap+HO185PT4qkAP66
+ OrwFuNPvEtR4EwMmi5oWg02VALzC8rSg4Ecc0/qJD0OBVqA6CSsQxWV4bIeMH5+z
+ c4dd/f+Cx/ANQcj1WSo42He1kO8gqGIma37smvTiSVlia6gDRNlZ08oi2lBl6iaq
+ p2ygsvLeWIWJ6iiQAJzZ1354XO0qsjaW2JqtL3SL6rKjSI6X9ypz1Et7QCYoS7RI
+ Mh2YeIlR9y+kcCctTXhyRqpmqQZZM0VKTEHQ4GO+41hkxMRmDsmIHwutlDT+0wgo
+ qBtn8yzwreTDDIBdvIMwO3bolUStcRJTj5u69196D6qA29dMb39557BNFzTI44pw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4426xccurn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jan 2025 23:43:38 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 509LC1kH027997;
+ Thu, 9 Jan 2025 23:43:37 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43yhhkfce5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jan 2025 23:43:37 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 509NhZwO51642728
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Jan 2025 23:43:35 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F6FE20043;
+ Thu,  9 Jan 2025 23:43:35 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFE3420040;
+ Thu,  9 Jan 2025 23:43:34 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  9 Jan 2025 23:43:34 +0000 (GMT)
+Message-ID: <6d1171d8debb462f468bb47ff875e0e9db253b4e.camel@linux.ibm.com>
+Subject: Re: [PATCH 3/3] accel/tcg: Implement cpu_exec_reset_hold() on user
+ emulation
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>, Riku
+ Voipio <riku.voipio@iki.fi>, Richard Henderson
+ <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
+Date: Fri, 10 Jan 2025 00:43:34 +0100
+In-Reply-To: <20250102182521.65428-4-philmd@linaro.org>
+References: <20250102182521.65428-1-philmd@linaro.org>
+ <20250102182521.65428-4-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 38/81] tcg/loongarch64: Fold the ext{8, 16,
- 32}[us] cases into {s}extract
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-39-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-39-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4i3ly2FCDDuKgdUyocD00sEzSXiRVH_4
+X-Proofpoint-ORIG-GUID: 4i3ly2FCDDuKgdUyocD00sEzSXiRVH_4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 phishscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 mlxscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ mlxlogscore=861 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501090185
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,16 +113,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 09:00, Richard Henderson wrote:
-> Accept byte and word extensions with the extract opcodes.
-> This is preparatory to removing the specialized extracts.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/loongarch64/tcg-target-has.h | 15 ++++++++++++--
->   tcg/loongarch64/tcg-target.c.inc | 34 ++++++++++++++++++++++++++++++--
->   2 files changed, 45 insertions(+), 4 deletions(-)
+On Thu, 2025-01-02 at 19:25 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
+> Commit bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold()
+> out") wanted to restrict tlb_flush() to system emulation,
+> but inadvertently also restricted tcg_flush_jmp_cache(),
+> which was before called on user emulation via:
+>=20
+> =C2=A0 Realize -> Reset -> cpu_common_reset_hold()
+>=20
+> Since threads (vCPUs) use a common CPUJumpCache, when many
+> threads are created / joined, they eventually end re-using
+> a CPUJumpCache entry, which was cleared when the first vCPU
+> was allocated (via Realize) but then stayed dirty, leading to:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+How are jump caches shared between qemu-user vCPUs?
+I found the following, but this looks private and zeroed out
+during initialization:
+
+bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+[...]
+    cpu->tb_jmp_cache =3D g_new0(CPUJumpCache, 1);
+
+I was also wondering whether vCPUs themselves may be recycled, but
+it doesn't seem to be the case, since do_fork() -> cpu_copy() ->
+cpu_create() -> object_new() -> object_new_with_type() calls
+g_malloc().
+
+
+
+Btw, I tried to reproduce the original issue, but bumped into something
+seemingly unrelated. To make matters worse, debugging seems to be
+broken, so it may take some time before I can properly test this
+change.
+
+Thread 2 received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 37607.37622]
+0x000002aa00a6a64c in cs_option (ud=3D140251083477344,
+type=3DCS_OPT_SYNTAX, value=3D2) at capstone/cs.c:782
+782             return arch_configs[handle->arch].arch_option(handle,
+type, value);
+(gdb) info threads
+Ignoring packet error, continuing...
+
 
 
