@@ -4,109 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A47CCE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08554E77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVspM-0005vn-Bt; Thu, 09 Jan 2025 08:44:00 -0500
+	id 1tVspK-0005vL-Ug; Thu, 09 Jan 2025 08:43:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVspJ-0005uz-Dp
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVspI-0003c5-5c
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVspI-0005up-P0
  for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736430234;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0786u4iJInsHVvSrcuJUnfn4useWu9D1HBXhDMMX5P0=;
- b=iDumQGzqxoaITFrdc3xb99Xl70YxEPabU3WCj6fV65bG1nS/WJhMIIdHmq8GJu/XQ/2JY5
- Sjo5CzBXf6dnQzPWt/WzCa7qY5c4MCv3KdQi6vs99bl1z8wFBSbX05iU84Jp65n4RoN8ka
- 2y/n1+VOgpcFZTlzPzJf7qm0WzWQm64=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-cXU8MjH3No2wYhZDkXMgkw-1; Thu, 09 Jan 2025 08:43:51 -0500
-X-MC-Unique: cXU8MjH3No2wYhZDkXMgkw-1
-X-Mimecast-MFC-AGG-ID: cXU8MjH3No2wYhZDkXMgkw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43628594d34so5112465e9.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 05:43:51 -0800 (PST)
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVspH-0003bw-1q
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:56 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-aaef00ab172so167814966b.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 05:43:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736430233; x=1737035033; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/gwqkHJXVNF0TWTT9SqwUAvu25Jy2OeRif2u47hJ4P0=;
+ b=WwfeCj9vJ0d9igCgZoNhx+9ek7m2UTtmjxyx4gL6kart1e/ymTs3pIifwb8QLV/qLZ
+ oCsn7joRnqLWXbEj/AUJefhZlNwELDlkZ4E2pOiPnu1vXRlux498vcIkWAJuvzGPtjhi
+ jea8ZtIB/a5tphcbyHLvVG8qJ7al2RXXw3/dUIj6lORXFu+3RqYnZiL6do/f4l/fIGPU
+ qT9+lrQOFKUOuYCCS+jkROqpBMivpPlEf9glkp40xIFw+uWl6/By0NlndJWIlQ0869qi
+ aeg/zNYs4Pj02WgkAdIz/urc2Ll09WDhbArJj9APOciqkPnAssNzqrmQGU0rZYog56xw
+ ZSJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736430230; x=1737035030;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0786u4iJInsHVvSrcuJUnfn4useWu9D1HBXhDMMX5P0=;
- b=KirB/fnXs/m6TDuDO3wV5RmLZIWSuUu5WpXQXfBkxtHvicBUqhazKTZbFaTc1WsOcK
- Itu9zH2Y4hO2oKVsx470ywjQZ5ybFKh/eTxhpZZGrtj5BL5BGSIfWWQ2LNE6U35C0hjV
- 7xQZOAHJosSV7DxCaFgmAUGRNzSNOEFkCHv2mj14s9uRaddzQUxruI5h7JoXi6iLqrd0
- 7blJlfgVwmrDTEkKzFgNJIxIS41lNXSW3Z2lbNDPtC46GDtshAIHrqWyrZiR3J/1n1Di
- nCJSdmGdH8QzSTn9CzVjBk6WqOl8GnlBPo1tVLLkDruCQgRwQiuzcUtAN6sfMd2l4pED
- O/rA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3E8C8aej7ga63HX1HSoA4fJxWep1yG55C6FjDrxsMaNpcX1mrsGyloF97y5pkEeDWL87UFMaoKRUA@nongnu.org
-X-Gm-Message-State: AOJu0YyYkISB6uOXUxLEGXw5dNkWHIJU8/jPPgVhppUd8aDFIFyJ5XXe
- OdA7m78fNC+Kh66i3ds1z/NHPM6mFz71cBon9/eUIm/DUg83TiXimxhsGETeUwYG90f1nqlx4DE
- XbVmvztFw6V7rZ/NN3iH2U6QjBeWjxW0mpKpgYpgI326qxr0u67lS
-X-Gm-Gg: ASbGncsBSrEB+i+hKEbKux2qpPN9STEslsxRIGEjIhV4H3MFUvfCVtxUdTPKZpPDJ1D
- 5WmIrV7Jf324jEQhtTH53705kX6GVyzZkt3fZNAtXtIvsBgzi6XlR0lweVmckUppFy1HkBvZcWi
- lUN4gufJwIyUjUFcMOvNb8kgvLb2kua9ErdiV8a0LWs5DoPk2+Dbp8EhnAgxv8nceElSqmSu65f
- 9PZWxnX/zSpIz/aVSnuRLjAbRBK3IUpXuHEGZou7V7o9fUMc/c=
-X-Received: by 2002:a5d:64af:0:b0:38a:8e2e:9fcc with SMTP id
- ffacd0b85a97d-38a8e2ea11cmr2516686f8f.45.1736430230131; 
- Thu, 09 Jan 2025 05:43:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFC3NwaqaPqm+7CAChl2hzC/Oe3iq4QPBPHiLKmCQp5T/gWPuAk1uYfxoykEr8rAwEDQAbBFg==
-X-Received: by 2002:a5d:64af:0:b0:38a:8e2e:9fcc with SMTP id
- ffacd0b85a97d-38a8e2ea11cmr2516657f8f.45.1736430229806; 
- Thu, 09 Jan 2025 05:43:49 -0800 (PST)
-Received: from redhat.com ([2a02:14f:175:d62d:93ef:d7e2:e7da:ed72])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e92dc4sm55306375e9.39.2025.01.09.05.43.46
+ d=1e100.net; s=20230601; t=1736430233; x=1737035033;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/gwqkHJXVNF0TWTT9SqwUAvu25Jy2OeRif2u47hJ4P0=;
+ b=LOUzzJL3Jyim1EA7xkJFEBA+mBHTj1gzA4k7AOsK7btnpfQr5BaXEWWtE9TUZ/biMc
+ GGAk+H3vrdIdsgJdZnTnkKYsS4gYFD6ccak2KSXIfwp2BS115wQQotUpfBWWhH6ojwEo
+ OjD2OUQb/tTXOSTRF3eQtPutw21e8wyp4jl/Set4wYWZ4sR5ZSc2qU2YtnYX0OfJcrG5
+ J4p8sNQX0nzNI5gHe+2gPtUltjjZOSTA9MMB4dhKkAoR7UGMmZ75cSY9JXnHtUWIRAqD
+ YNb+C6c8DPjcwZyp+UYvpp5EKMoIUj611ORvvYN3ETDu0pyvEPKLVSq4PlJspp2HJbPW
+ iZEg==
+X-Gm-Message-State: AOJu0YxFCaMe/APovaoxhMvWcUPogNMA7+E/72gnfYBsYC/A2TOew8Eq
+ 9ryduf01elAQA5Fx7Hu1z6XC5V2B8wXEcSRQkM1VMXu0XW9l/nHWL0FZW3hfnKc=
+X-Gm-Gg: ASbGnculv7y5t0TrXRwcZWWKWIgkjJOaip5mJ00stMKeKo8tqShDS3ZuLM9SlvKEMZk
+ h4MAehmM0+SjADAuPrW9qrcgY95FszaAzBMA7RrlPe277Cp5MYGl5//ExT570Nlot43Gf1O8NXP
+ Y6ZpZKNzwybc6aNKllfdHtfOqj8KxJRL+Maw/8riOvGiE7MhfDAuGIpcOwuhADE7g9QJME0QxKt
+ /urANyL4/qbO32LmecvbU/HUM5KsLHCtCnUJs1kK3HLJj3srgl07So=
+X-Google-Smtp-Source: AGHT+IF0DOOdGkDpQ1uWfh3z+lC9/e+POLF98ikPpS+aTf4fhE4os7M16ZWBYGWthSeF65lDBsCS1A==
+X-Received: by 2002:a05:6402:3596:b0:5d0:ea4f:972f with SMTP id
+ 4fb4d7f45d1cf-5d972e0b068mr14723569a12.8.1736430233165; 
+ Thu, 09 Jan 2025 05:43:53 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d99008c35bsm631655a12.2.2025.01.09.05.43.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 05:43:48 -0800 (PST)
-Date: Thu, 9 Jan 2025 08:43:44 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH v19 00/14] hw/pci: SR-IOV related fixes and improvements
-Message-ID: <20250109084258-mutt-send-email-mst@kernel.org>
-References: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
- <86efce30-2727-4581-963c-3424dddf46e2@linaro.org>
+ Thu, 09 Jan 2025 05:43:51 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CD5D65F75D;
+ Thu,  9 Jan 2025 13:43:50 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Aurelien Jarno <aurelien@aurel32.net>,  Jiaxun Yang
+ <jiaxun.yang@flygoat.com>,  Aleksandar Rikalo <arikalo@gmail.com>
+Subject: Re: [RFC PATCH v3 08/11] target/mips: call plugin trap callbacks
+In-Reply-To: <5a165b308d75718e185806607df583596270181d.1733063076.git.neither@nut.email>
+ (Julian Ganz's message of "Mon, 2 Dec 2024 20:26:49 +0100")
+References: <cover.1733063076.git.neither@nut.email>
+ <5a165b308d75718e185806607df583596270181d.1733063076.git.neither@nut.email>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 09 Jan 2025 13:43:50 +0000
+Message-ID: <878qrk85m1.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <86efce30-2727-4581-963c-3424dddf46e2@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,21 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 09, 2025 at 01:04:11PM +0100, Philippe Mathieu-Daudé wrote:
-> On 9/1/25 07:29, Akihiko Odaki wrote:
-> 
-> > Akihiko Odaki (14):
-> >        hw/pci: Rename has_power to enabled
-> 
-> >        hw/pci: Use -1 as the default value for rombar
-> >        hw/qdev: Remove opts member
-> 
-> I'm queuing patches 1,13-14 which are generic, hoping
-> it helps you not carrying a bit less over respins.
+Julian Ganz <neither@nut.email> writes:
 
-I mean if Akihiko wants me to do that, just post them separately.
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
+>
+> This change places hooks for MIPS targets.
+> ---
+>  target/mips/tcg/sysemu/tlb_helper.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu=
+/tlb_helper.c
+> index e98bb95951..2b19975d53 100644
+> --- a/target/mips/tcg/sysemu/tlb_helper.c
+> +++ b/target/mips/tcg/sysemu/tlb_helper.c
+> @@ -18,6 +18,7 @@
+>   */
 
--- 
-MST
+merge failure as this is now in system/tlb_helper.c
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
