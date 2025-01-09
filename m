@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B84E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 591C9E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVtNj-0004mn-1g; Thu, 09 Jan 2025 09:19:36 -0500
+	id 1tVtQt-0005k0-55; Thu, 09 Jan 2025 09:22:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtNg-0004lw-LL
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:19:29 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtQr-0005jo-Kp
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:22:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtNf-0001tH-3F
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:19:28 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtQq-0002Mq-3u
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:22:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736432364;
+ s=mimecast20190719; t=1736432563;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lkmqkv2mprE5t/ET+K44GrDuoaHXToS6/lVM0sWGRGs=;
- b=adTBddNeJ+UkYEY0vh3hZmrTu9HYA2iEYdLlTMbjOlH2cfVGWtI5aPNJ0giUhno3loZBDj
- 95dtTCq+DG7NJSH3uelX2HGGilE+mBWSWIoGytIgDlW/Unkkzjlt2jes0AJCNwwhPKXVfK
- YoptxtabdGDBjnx8LNkEzsCe9tlPvnE=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/D/jq/w3AQBawSwoGIqPduPOHfK1v/fhJ2+g7v2eKCY=;
+ b=UceRmiSXnCED2Ex9ui+A21T3gsnZjWeF6TROlXTbooKHGnoLZ4dUkrDWHiqnUZlh6gdfuz
+ Czku35oGnSTU3634m4284dtrbQuiLq+9u3rfHTGKsr54odvD/Nn6jNg4idxxIsd1IB0LCG
+ dHcxsh7azliGq6YhV65goeWsXqO2YU0=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-CqiiVujOO--EpCgz775O3A-1; Thu, 09 Jan 2025 09:18:12 -0500
-X-MC-Unique: CqiiVujOO--EpCgz775O3A-1
-X-Mimecast-MFC-AGG-ID: CqiiVujOO--EpCgz775O3A
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-468f6f2f57aso11942591cf.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:18:12 -0800 (PST)
+ us-mta-681-cabidH4zOYK9IFByvXRKbg-1; Thu, 09 Jan 2025 09:22:42 -0500
+X-MC-Unique: cabidH4zOYK9IFByvXRKbg-1
+X-Mimecast-MFC-AGG-ID: cabidH4zOYK9IFByvXRKbg
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6e852eeabso153433485a.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:22:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736432292; x=1737037092;
+ d=1e100.net; s=20230601; t=1736432562; x=1737037362;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lkmqkv2mprE5t/ET+K44GrDuoaHXToS6/lVM0sWGRGs=;
- b=C5STiEcDkTi51w5zgjssk/gCJC5AdtSK3dYxgQyO8Q8HDuCr02WvS2PqUIPQW7Sm4z
- 3w71IlLrgsSD4hxb9w78mlC2Y6edVZEFZblomFbThaF9evsdGg0ncOdJQfPevpR3qg1G
- ectCBZFlPkBazdmFHPwNyc+COruH3kHFRBM+ZqblwMCFbM52tgvuMTx2ibU0/AEU/7AQ
- UANwXpB3pw6swhuNQLHPFcHduzAGj8lwJOr9qbmbRBBeRzC6S2L4Xb8dUJ5sHL+h2Iqu
- 9pnQ/sEQ1Y8Zk3C+PFeJylGwoKYgzQVyJrOxTUrZ8gzB6iC4P9IMAfrQLy8DkheH2eOD
- XD2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcGpgewLHh+qOwygbGsDJZ5nICzGfwpM4RzP0NCiCoqnUUYAfcf6Pvx9+NmhLSK+rAwDvUVzCnj/B+@nongnu.org
-X-Gm-Message-State: AOJu0YzlXD30d0Y0JQDXU4eXD6Khs10bcM5oRh8HO2gLXWK8Gn5Z6PeI
- xfyE3FNDxm4R0qb6mum3+hi4063gJI/I6ceoS4tIym3Oy4ZCcvn4xmFAVlVtnKkAOJ9G0JeK3Jv
- Ktow1H5gfEP9DVbNHEaV9dn6sHvJlisSdkc81mCBGP4QS6M3FFotA
-X-Gm-Gg: ASbGncuEb4Qcyk3rLpK5qh71C6mUryZByU62dsfyn1FTBTtrnNiiXPr2j2Tfu52gFKF
- WzR1mPWg5EX60pQD45Xk+j9y8tNacAlJBCsDEUXFovTxrbmwkCnBWOl4Ogcyz+TiFoWqQXvJ3Lo
- UahxPU/anFtv3VWiB7DPKWXlfQQoDJ0AngoIjC5gwlX2epaex7dpyKm94LsFGjYRN7CwW1AV9dY
- 69M3rDdHX29/95ntQr6fUrz17JhG8o3ZbTfNd+/IoVU4EKIpNPUsv7BoeHA2IRwM3h1Op+YE25V
- tUafBEP4bA51xlNwwA==
-X-Received: by 2002:a05:620a:28d6:b0:7b6:ce4c:69d2 with SMTP id
- af79cd13be357-7bcd9718591mr1043466785a.36.1736432292501; 
- Thu, 09 Jan 2025 06:18:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErNc8Zp51CPNFPjkle5K527uLhYlVBs6hGYfc1F2zwkK78rIJesoNHfzL0/vR2pj0OIJC35g==
-X-Received: by 2002:a05:620a:28d6:b0:7b6:ce4c:69d2 with SMTP id
- af79cd13be357-7bcd9718591mr1043462085a.36.1736432292100; 
- Thu, 09 Jan 2025 06:18:12 -0800 (PST)
+ bh=/D/jq/w3AQBawSwoGIqPduPOHfK1v/fhJ2+g7v2eKCY=;
+ b=SZWHmTlQpsdeNC3Up/42AuOefuk0YUHeeQjV+ha6iVybwWl8TpTyRYwBWmwn/tR2cz
+ ceiQpqv5vZ6bhGt9R2VNTeCy8xcFW54mfk7k/rgbk9evERC3j6z9/u4qSgapSmYpkXG0
+ UPFa7fQErZkThRQ378SMeplSBnLLusjWMy7WKZszRggq3o9ZYQA1mhDta4USvI+1xEtV
+ jqbxBCj1V4P/Aj/vLBumdEcfBOrV5sg19z5yzS15Y8Y4veVLh0KLKhLHcubmS3Wc/FmI
+ 6hou/SFAzhAwkDog6XpGJWFNa6l5Xz2O5R64OT1Y0UqfVHOqn6uCkgE3A7toRW9+y57t
+ RHiw==
+X-Gm-Message-State: AOJu0YxxrNoPmJfKotxEgkaHB458/80SGIrFW6msWtg0Uke/4g2mWALr
+ wQbgq0XvblAmWQYUbAfXs/xM4QDFxozBu4K40BW4mMeMtfGJRTsNJhs2ojCu+AIlTaQbrrnPJpK
+ L7DkKtOP05lHmLJG/GyQyz7bUKJQJywjJ3jodi4ay+oZoVL1ztGjD
+X-Gm-Gg: ASbGnctUc1tjUQ829/Aj005bVILTZsM/Spu1lbd4Lhh/1O8AwNwWnPvNmfO5xcnD834
+ YfqWso6qAsmHansJBNSM5pQiLePL64XUPAD35CAYnm5y0B60EMczl+GoM7/bCtnQKRNKI/Q70At
+ uc1dmQ4FYcFGPQAMKPhzYyvlVyK7UNmvoRu7qtJp7+1n3J8tCFgqu6LglsrA97svstYtPuq4l/i
+ tSB1VzsLm25ZnV+ozl6xWmYB9yxWLdeSCk15ToncQPbLkbk7HkT0QqBQ4xQcBbYZMfpqsRW3tKu
+ GTQNVZCZmnj+v5Awug==
+X-Received: by 2002:a05:620a:a016:b0:7bc:db11:4945 with SMTP id
+ af79cd13be357-7bcdb114b95mr759575285a.51.1736432561915; 
+ Thu, 09 Jan 2025 06:22:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGZ9ysB7ZOq+AKl9SRVa0oBM2Gr24EgjTQfjHRxLteXDZNXCTdQXGttVJmwckSBgt3WyY0HrA==
+X-Received: by 2002:a05:620a:a016:b0:7bc:db11:4945 with SMTP id
+ af79cd13be357-7bcdb114b95mr759572785a.51.1736432561576; 
+ Thu, 09 Jan 2025 06:22:41 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7bce3502ac6sm70863885a.75.2025.01.09.06.18.09
+ af79cd13be357-7bce327b8besm71277585a.59.2025.01.09.06.22.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 06:18:11 -0800 (PST)
-Date: Thu, 9 Jan 2025 09:18:08 -0500
+ Thu, 09 Jan 2025 06:22:40 -0800 (PST)
+Date: Thu, 9 Jan 2025 09:22:39 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 4/4] overcommit: introduce mem-lock=on-fault
-Message-ID: <Z3_aoLOjzQ8M0h81@x1n>
-References: <20241211230433.1371327-1-d-tatianin@yandex-team.ru>
- <20241211230433.1371327-5-d-tatianin@yandex-team.ru>
- <Z1sNV-kHCJw9S9Di@x1n>
- <b5ec2f53-4a03-499b-be17-49729a6efca9@yandex-team.ru>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 4/7] migration: Rename vmstate_info_nullptr
+Message-ID: <Z3_br0JVQ0F_Zas6@x1n>
+References: <20250109140959.19464-1-farosas@suse.de>
+ <20250109140959.19464-5-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b5ec2f53-4a03-499b-be17-49729a6efca9@yandex-team.ru>
+In-Reply-To: <20250109140959.19464-5-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -113,26 +105,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 09, 2025 at 11:47:40AM +0300, Daniil Tatianin wrote:
-> On 12/12/24 7:20 PM, Peter Xu wrote:
+On Thu, Jan 09, 2025 at 11:09:56AM -0300, Fabiano Rosas wrote:
+> Rename vmstate_info_nullptr from "uint64_t" to "nullptr". This vmstate
+> actually reads and writes just a byte, so the proper name would be
+> uint8. However, since this is a marker for a NULL pointer, it's
+> convenient to have a more explicit name that can be identified by the
+> consumers of the JSON part of the stream.
 > 
-> > On Thu, Dec 12, 2024 at 02:04:33AM +0300, Daniil Tatianin wrote:
-> > > Locking the memory without MCL_ONFAULT instantly prefaults any mmaped
-> > > anonymous memory with a write-fault, which introduces a lot of extra
-> > > overhead in terms of memory usage when all you want to do is to prevent
-> > > kcompactd from migrating and compacting QEMU pages. Add an option to
-> > > only lock pages lazily as they're faulted by the process by using
-> > > MCL_ONFAULT if asked.
-> > > 
-> > > Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> Change the name to "nullptr" and add support for it in the
+> analyze-migration.py script. Arbitrarily use the name of the type as
+> the value of the field to avoid the script showing 0x30 or '0', which
+> could be confusing for readers.
 > 
-> Hi there! This series has 2 reviewed-bys, is there any way you could queue
-> it?
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/vmstate-types.c    |  2 +-
+>  scripts/analyze-migration.py | 22 ++++++++++++++++++++++
+>  2 files changed, 23 insertions(+), 1 deletion(-)
+> 
+> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> index e83bfccb9e..d70d573dbd 100644
+> --- a/migration/vmstate-types.c
+> +++ b/migration/vmstate-types.c
+> @@ -338,7 +338,7 @@ static int put_nullptr(QEMUFile *f, void *pv, size_t size,
+>  }
+>  
+>  const VMStateInfo vmstate_info_nullptr = {
+> -    .name = "uint64",
+> +    .name = "nullptr",
+>      .get  = get_nullptr,
+>      .put  = put_nullptr,
+>  };
+> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+> index fcda11f31d..134c25f20a 100755
+> --- a/scripts/analyze-migration.py
+> +++ b/scripts/analyze-migration.py
+> @@ -377,6 +377,8 @@ def read(self):
+>  
+>  
+>  class VMSDFieldInt(VMSDFieldGeneric):
+> +    NULL_PTR_MARKER = 0x30
+> +
+>      def __init__(self, desc, file):
+>          super(VMSDFieldInt, self).__init__(desc, file)
+>          self.size = int(desc['size'])
+> @@ -385,6 +387,16 @@ def __init__(self, desc, file):
+>          self.udtype = '>u%d' % self.size
+>  
+>      def __repr__(self):
+> +
+> +        # A NULL pointer is encoded in the stream as a '0' to
+> +        # disambiguate from a mere 0x0 value and avoid consumers
+> +        # trying to follow the NULL pointer. Displaying '0', 0x30 or
+> +        # 0x0 when analyzing the JSON debug stream could become
+> +        # confusing, so use an explicit term instead. The actual value
+> +        # in the stream was already validated by VMSDFieldNull.
+> +        if self.data == self.NULL_PTR_MARKER:
+> +            return "nullptr"
 
-I think this part belongs to mainloop/posix.. so maybe Paolo?
+What happens if a real int field has value 0x30 which is not a marker?
+Would it be wrongly represented as "nullptr"?
 
-Also copied Phil and Peter Maydell.
+> +
+>          if self.data < 0:
+>              return ('%s (%d)' % ((self.format % self.udata), self.data))
+>          else:
+> @@ -417,6 +429,15 @@ def __init__(self, desc, file):
+>          super(VMSDFieldIntLE, self).__init__(desc, file)
+>          self.dtype = '<i%d' % self.size
+>  
+> +class VMSDFieldNull(VMSDFieldUInt):
+> +    def __init__(self, desc, file):
+> +        super(VMSDFieldUInt, self).__init__(desc, file)
+> +
+> +    def read(self):
+> +        super(VMSDFieldUInt, self).read()
+> +        assert(self.data == self.NULL_PTR_MARKER)
+> +        return self.data
+> +
+>  class VMSDFieldBool(VMSDFieldGeneric):
+>      def __init__(self, desc, file):
+>          super(VMSDFieldBool, self).__init__(desc, file)
+> @@ -558,6 +579,7 @@ def getDict(self):
+>      "bitmap" : VMSDFieldGeneric,
+>      "struct" : VMSDFieldStruct,
+>      "capability": VMSDFieldCap,
+> +    "nullptr": VMSDFieldNull,
+>      "unknown" : VMSDFieldGeneric,
+>  }
+>  
+> -- 
+> 2.35.3
+> 
 
 -- 
 Peter Xu
