@@ -4,82 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95CAE77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 19:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6780FE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 19:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVxvm-0001wl-A1; Thu, 09 Jan 2025 14:11:00 -0500
+	id 1tVyE1-0005P1-7B; Thu, 09 Jan 2025 14:29:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVxvb-0001sl-6E
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 14:10:50 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVyDl-0005Mb-4H
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 14:29:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVxvZ-0000hx-Gf
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 14:10:46 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVyDj-0003BX-FR
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 14:29:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736449844;
+ s=mimecast20190719; t=1736450967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=eFtK4QTOEjj3NzBuDpHJtoffvgCLyW0eHHJjE5ejD00=;
- b=DlUP5CPa65XxrvPndqMJJfYDoo4Git4hIoQn1vftRlO/uINilmmPtW5nqb9IpGOPzo88YJ
- cyRNnTkAWxRAMFsqJgcDN6w4WN+BjwIAXjhSfT+XOda086yhZPhxVp7gZSzIDAjmxASVJ7
- KBF3YSBYFebMa6qULwaoj1Bp3NZ6ZVs=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cne2WxLOcCYVcf0zbyv1wkxxNzlJAdgG4pyebQOlMgk=;
+ b=Jz5dTgxW1Wu+Mtj65lAt+evddqrzDg3KiR76zBLa7cwR2u1l3LNQSMRvPuVZ969LmU+nfw
+ 0Wrguwd/4BEOp7WziBVi/mMyVWADm0L59ZK3+M9T7Dya7jY0xJvW9IbAXTW2Bfof/vXlQw
+ lABtrE3Q2YUrmIw8GriYO53Tk8vpZWg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-4FsPFNhsO9W1YF1z3bNmLg-1; Thu, 09 Jan 2025 14:10:43 -0500
-X-MC-Unique: 4FsPFNhsO9W1YF1z3bNmLg-1
-X-Mimecast-MFC-AGG-ID: 4FsPFNhsO9W1YF1z3bNmLg
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d8f51b49e5so23236626d6.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 11:10:43 -0800 (PST)
+ us-mta-630-eukcC0qrO3SQZXKOYSVhSA-1; Thu, 09 Jan 2025 14:29:26 -0500
+X-MC-Unique: eukcC0qrO3SQZXKOYSVhSA-1
+X-Mimecast-MFC-AGG-ID: eukcC0qrO3SQZXKOYSVhSA
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-467a0a6c846so23832421cf.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 11:29:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736449842; x=1737054642;
+ d=1e100.net; s=20230601; t=1736450966; x=1737055766;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eFtK4QTOEjj3NzBuDpHJtoffvgCLyW0eHHJjE5ejD00=;
- b=GP91ahCLL/4HbfOG+D3S8mvxCpX7fpc3WfbHGz2YyeIe8rJi+GMJhu4sLQBZ3ZUfhr
- fiRBV9/Efj7P9sQp3qRKuUmTbsOD8cvILRUnisI9hvdbZ03BtwstYRfjTxxMyOfdFR1U
- rNzhK3AYgBMZGcnqSFAPEU2bk9Awh3W8GjXIm0oNHEGk+6+INhQFt8VsMcjU8OJgwQH5
- ncdWFyr7EbdriTqKod48Tb0mbI+mc6CFmvUGU5u/OAFXc+MOa6T+/WseoFzKTfU2Y/6y
- S6yFmcv9lRqnzRV7iqcxbbpussdhy2IBXpm8QM/Zmw1tS5JFgiIuGe3gOstlajIyYkFN
- cCww==
-X-Gm-Message-State: AOJu0YwSd59iBy+VWhL7djPa+l27+GaVs+tuzJ0B9d8O6clZ9djDD1Hg
- TjvwAoNLSxbJ5YTI9siKwAkHpyhBs4GaRDW8TdJ7el/AUwgpOEuprGq55KCbX5jiPlRy6gkF8a9
- qgUj9JBqsjT9R3GW5RKz3kP2fT4pB8aFrKTOWBzcsYdjvhuYSDS2K
-X-Gm-Gg: ASbGnctxFFB36Uqip9kTbqHfmGOKKTTuxKuCD/3nBT0u+Xo6lpVhsPuF1XERk3I579l
- J0hE0HXM4UeBepezb4qULhfaf9Yg98pbygi9aU7bXxrRInQ02A8nIzjktjXQMsJURE5QGXFcBkZ
- 5CQKTnjSaqBi6GeNe+hm/W+oyAwLPLd+NbY5C/jCuSX2Gg71e79Qw4z4uOu5WmJY6OOAK1M81CT
- 3F1bwo2IzGCHU48tBM5hiVVm0La1QLtH5LTMIVe7JABq94ouhNa46VUubpF0I5uIoSPE9aNolws
- M1SHgk3dsL01AuA83g==
-X-Received: by 2002:a05:6214:5097:b0:6d8:d79c:1cb2 with SMTP id
- 6a1803df08f44-6df9b1f4714mr132321246d6.21.1736449842538; 
- Thu, 09 Jan 2025 11:10:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFlGFy4HHwWuQCXm69nt4D5U/wzPU1dRAEH9sx8LQHulYPJQyqUYM6FeBFhECCpWw3ce4HacQ==
-X-Received: by 2002:a05:6214:5097:b0:6d8:d79c:1cb2 with SMTP id
- 6a1803df08f44-6df9b1f4714mr132320996d6.21.1736449842227; 
- Thu, 09 Jan 2025 11:10:42 -0800 (PST)
+ bh=cne2WxLOcCYVcf0zbyv1wkxxNzlJAdgG4pyebQOlMgk=;
+ b=aOAzI0gCLaGPmy+aJCPosw39guue5DcmesMttpHmBQxjee6LQ5b0i2MVaMPPKQBjhI
+ A9rIr4ZawkWxmkFEY5mKb4aVvoTfgaKyKaNuUAdYJ35HCvD7wq9um/te7lLH9TaAe4v+
+ CObXEy2rwFRBWC2GvqxYcxvAuZWLFsnxTY56LU7XP6DQs4+DQAPemyEMokrW2OSA1j80
+ 0u9z6z3M5yUeIi/wzMnWSdxxYp3IBFhEFB/yGi5NvJ4Uuol6oF2m08GKwbpOYzoFwl8u
+ RZwl7NG9IZvwk/ZZiWcQwEWBvR8JF58b5G/iyFoLty0M17y5lP0CYLwadIgTqps8taRt
+ kbbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxHeSeCOZZzo4tbOup8c2VtiO16GWQmstRmPC2W8gcHCBw9iyqyWGx5/QwN9pLE3ihdkocv8AaPVXD@nongnu.org
+X-Gm-Message-State: AOJu0YzFAyQe4qqjL5sLfaMelZgvidEqALNh/xgUxfHlWZhg4ZPABha6
+ LxsrsigxBEcEQWzv3J0eGj8ExxwpoEIip+uagBcXl3ORsv2VMHon9pkgPWUafl9+eY1WsKJ7+9t
+ ty0rGgc6CuBdycfq8SWWj2tI6NmqY8Y42PwJRJmMi1JLh2Qo39Pl0
+X-Gm-Gg: ASbGncu3jjxrardDBrNOITG7VetmfzLkfmkIXh+GU8kuQ0W82bgZFMG0FSceGCPlEBo
+ yPtft1PsEFIKkK0y6kTmi6OPceVeQQP5g73N5inr4ViBS2HnJplK76LdS8fFNdyRWwAnpa0ObKr
+ OPX6u8BPzjZJ4/1j2Fai0JPsbKBSJaLf9FeObFOD57WymCGfQSc9rUCHQc6u+hnoTK9OziL4tKu
+ LbZJMHRMafqSXV/6gzSEB1PEAkr8WocywYlWn8x+89extvplpwdStEAUI7qtwzulLsInZ5935/Y
+ 7/oNrWd0OHSTpeW8rg==
+X-Received: by 2002:a05:622a:152:b0:467:5711:bdb8 with SMTP id
+ d75a77b69052e-46c7109e4f8mr119408431cf.46.1736450965918; 
+ Thu, 09 Jan 2025 11:29:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG8Srd4QyzlvRig7hRRWAfT1ZSoKBug4DuiSnZ++mb367MMY5rxYxuu7miLpVfzEqja6jLAJw==
+X-Received: by 2002:a05:622a:152:b0:467:5711:bdb8 with SMTP id
+ d75a77b69052e-46c7109e4f8mr119408181cf.46.1736450965597; 
+ Thu, 09 Jan 2025 11:29:25 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dfad89f1desm1382976d6.48.2025.01.09.11.10.41
+ d75a77b69052e-46c87340e2dsm1513381cf.37.2025.01.09.11.29.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 11:10:41 -0800 (PST)
-Date: Thu, 9 Jan 2025 14:10:40 -0500
+ Thu, 09 Jan 2025 11:29:24 -0800 (PST)
+Date: Thu, 9 Jan 2025 14:29:21 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v3 6/7] migration: Fix arrays of pointers in JSON writer
-Message-ID: <Z4AfMFohWV_QNdbP@x1n>
-References: <20250109185249.23952-1-farosas@suse.de>
- <20250109185249.23952-7-farosas@suse.de>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
+Message-ID: <Z4AjkXbZeu3T94Y1@x1n>
+References: <20250109-san-v7-0-93c432a73024@daynix.com>
+ <20250109-san-v7-1-93c432a73024@daynix.com>
+ <59e70978-8895-f513-1b5e-1dc599e288ff@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250109185249.23952-7-farosas@suse.de>
+In-Reply-To: <59e70978-8895-f513-1b5e-1dc599e288ff@eik.bme.hu>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,7 +108,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,80 +124,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 09, 2025 at 03:52:48PM -0300, Fabiano Rosas wrote:
-> Currently, if an array of pointers contains a NULL pointer, that
-> pointer will be encoded as '0' in the stream. Since the JSON writer
-> doesn't define a "pointer" type, that '0' will now be an uint8, which
-> is different from the original type being pointed to, e.g. struct.
+On Thu, Jan 09, 2025 at 01:30:35PM +0100, BALATON Zoltan wrote:
+> On Thu, 9 Jan 2025, Akihiko Odaki wrote:
+> > Do not refer to "memory region's reference count"
+> > -------------------------------------------------
+> > 
+> > Now MemoryRegions do have their own reference counts, but they will not
+> > be used when their owners are not themselves. However, the documentation
+> > of memory_region_ref() says it adds "1 to a memory region's reference
+> > count", which is confusing. Avoid referring to "memory region's
+> > reference count" and just say: "Add a reference to a memory region".
+> > Make a similar change to memory_region_unref() too.
+> > 
+> > Refer to docs/devel/memory.rst for "owner"
+> > ------------------------------------------
+> > 
+> > memory_region_ref() and memory_region_unref() used to have their own
+> > descriptions of "owner", but they are somewhat out-of-date and
+> > misleading.
+> > 
+> > In particular, they say "whenever memory regions are accessed outside
+> > the BQL, they need to be preserved against hot-unplug", but protecting
+> > against hot-unplug is not mandatory if it is known that they will never
+> > be hot-unplugged. They also say "MemoryRegions actually do not have
+> > their own reference count", but they actually do. They just will not be
+> > used unless their owners are not themselves.
+> > 
+> > Refer to docs/devel/memory.rst as the single source of truth instead of
+> > maintaining duplicate descriptions of "owner".
+> > 
+> > Clarify that owner may be missing
+> > 
+> > ---------------------------------
+> > A memory region may not have an owner, and memory_region_ref() and
+> > memory_region_unref() do nothing for such.
+> > 
+> > memory: Clarify owner must not call memory_region_ref()
+> > --------------------------------------------------------
+> > 
+> > The owner must not call this function as it results in a circular
+> > reference.
+> > 
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > ---
+> > include/exec/memory.h | 59 ++++++++++++++++++++++++---------------------------
+> > 1 file changed, 28 insertions(+), 31 deletions(-)
+> > 
+> > diff --git a/include/exec/memory.h b/include/exec/memory.h
+> > index 9458e2801d50..ca247343f433 100644
+> > --- a/include/exec/memory.h
+> > +++ b/include/exec/memory.h
+> > @@ -1210,7 +1210,7 @@ void memory_region_section_free_copy(MemoryRegionSection *s);
+> >  * memory_region_add_subregion() to add subregions.
+> >  *
+> >  * @mr: the #MemoryRegion to be initialized
+> > - * @owner: the object that tracks the region's reference count
+> > + * @owner: the object that keeps the region alive
+> >  * @name: used for debugging; not visible to the user or ABI
+> >  * @size: size of the region; any subregions beyond this size will be clipped
+> >  */
+> > @@ -1220,29 +1220,26 @@ void memory_region_init(MemoryRegion *mr,
+> >                         uint64_t size);
+> > 
+> > /**
+> > - * memory_region_ref: Add 1 to a memory region's reference count
+> > + * memory_region_ref: Add a reference to the owner of a memory region
+> >  *
+> > - * Whenever memory regions are accessed outside the BQL, they need to be
+> > - * preserved against hot-unplug.  MemoryRegions actually do not have their
+> > - * own reference count; they piggyback on a QOM object, their "owner".
+> > - * This function adds a reference to the owner.
+> > - *
+> > - * All MemoryRegions must have an owner if they can disappear, even if the
+> > - * device they belong to operates exclusively under the BQL.  This is because
+> > - * the region could be returned at any time by memory_region_find, and this
+> > - * is usually under guest control.
+> > + * This function adds a reference to the owner of a memory region to keep the
+> > + * memory region alive. It does nothing if the owner is not present as a memory
+> > + * region without owner will never die.
+> > + * For references internal to the owner, use object_ref() instead to avoid a
+> > + * circular reference.
 > 
-> (we're further calling uint8 "nullptr", but that's irrelevant to the
-> issue)
-> 
-> That mixed-type array shouldn't be compressed, otherwise data is lost
-> as the code currently makes the whole array have the type of the first
-> element:
-> 
-> css = {NULL, NULL, ..., 0x5555568a7940, NULL};
-> 
-> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
->  "version": 1, "fields": [
->     ...,
->     {"name": "css", "array_len": 256, "type": "nullptr", "size": 1},
->     ...,
-> ]}
-> 
-> In the above, the valid pointer at position 254 got lost among the
-> compressed array of nullptr.
-> 
-> While we could disable the array compression when a NULL pointer is
-> found, the JSON part of the stream still makes part of downtime, so we
-> should avoid writing unecessary bytes to it.
-> 
-> Keep the array compression in place, but if NULL and non-NULL pointers
-> are mixed break the array into several type-contiguous pieces :
-> 
-> css = {NULL, NULL, ..., 0x5555568a7940, NULL};
-> 
-> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
->  "version": 1, "fields": [
->      ...,
->      {"name": "css", "array_len": 254, "type": "nullptr", "size": 1},
->      {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
->      {"name": "css", "type": "nullptr", "size": 1},
->      ...,
-> ]}
-> 
-> Now each type-discontiguous region will become a new JSON entry. The
-> reader should interpret this as a concatenation of values, all part of
-> the same field.
-> 
-> Parsing the JSON with analyze-script.py now shows the proper data
-> being pointed to at the places where the pointer is valid and
-> "nullptr" where there's NULL:
-> 
-> "s390_css (14)": {
->     ...
->     "css": [
->         "nullptr",
->         "nullptr",
->         ...
->         "nullptr",
->         {
->             "chpids": [
->             {
->                 "in_use": "0x00",
->                 "type": "0x00",
->                 "is_virtual": "0x00"
->             },
->             ...
->             ]
->         },
->         "nullptr",
->     }
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Reading this again I'm still confused by this last sentence. Do you mean
+> references internal to the memory region should use object_ref on the memory
+> region or that other references to the owner should use object_ref on the
+> owner? This sentence is still not clear about that.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Having two refcounts are definitely confusing.. especially IIRC all MRs'
+obj->free==NULL, so the MR's refcount isn't working.  Dynamic MR's needs
+its g_free() on its own.
+
+I acked both patches, but maybe it could indeed be slightly better we drop
+this sentence, meanwhile in patch 2 we can drop the object_ref() too: it
+means for parent/child MRs that share the same owner, QEMU does nothing on
+the child MRs when add subregion, because it assumes the child MR will
+never go away when the parent is there who shares the owner.
+
+So maybe we try not to touch MR's refcount manually, but fix what can be
+problematic for owner->ref only.
 
 -- 
 Peter Xu
