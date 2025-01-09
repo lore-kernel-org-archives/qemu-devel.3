@@ -4,120 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD861E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A47CCE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVsoU-0005Kk-CY; Thu, 09 Jan 2025 08:43:06 -0500
+	id 1tVspM-0005vn-Bt; Thu, 09 Jan 2025 08:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVsoS-0005KF-Ob
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:04 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVsoO-0003Te-Hn
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:04 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3925E210F6;
- Thu,  9 Jan 2025 13:42:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736430176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVspJ-0005uz-Dp
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tVspI-0003c5-5c
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736430234;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2DuMouE5rNiX0kTkjkQyLyWMFDmQLBv2AGIMLyXxh1Y=;
- b=MUy7jln/92ZkfDkSjmAIAyUU34+yueHIdUQebSyGIw21DRQi+Qu2+YD1cf2AWS6aTV8L3r
- nihmWNA7yDeqXiGDuCWCBdiQDt/KES2vmVUX0d0tBU8/HReOB+TLb5kFjxA0rAHASSe0QJ
- SJtoBP+Hw4R0BqU3uuVFXnkiTqPeh+A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736430176;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2DuMouE5rNiX0kTkjkQyLyWMFDmQLBv2AGIMLyXxh1Y=;
- b=/ZAyDvc0GbM//Uchy9OhDaWyGRv4MFGpe281US78T8wgi0dcTOlkPLh6x+4WOW1ZEbLnVe
- qkS3fvXroFpVlqBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="MUy7jln/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="/ZAyDvc0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736430176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2DuMouE5rNiX0kTkjkQyLyWMFDmQLBv2AGIMLyXxh1Y=;
- b=MUy7jln/92ZkfDkSjmAIAyUU34+yueHIdUQebSyGIw21DRQi+Qu2+YD1cf2AWS6aTV8L3r
- nihmWNA7yDeqXiGDuCWCBdiQDt/KES2vmVUX0d0tBU8/HReOB+TLb5kFjxA0rAHASSe0QJ
- SJtoBP+Hw4R0BqU3uuVFXnkiTqPeh+A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736430176;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2DuMouE5rNiX0kTkjkQyLyWMFDmQLBv2AGIMLyXxh1Y=;
- b=/ZAyDvc0GbM//Uchy9OhDaWyGRv4MFGpe281US78T8wgi0dcTOlkPLh6x+4WOW1ZEbLnVe
- qkS3fvXroFpVlqBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B3B9813876;
- Thu,  9 Jan 2025 13:42:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SrAiHl/Sf2dmUQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 09 Jan 2025 13:42:55 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Helge
- Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v6 0/2] tests: Add functional tests for HPPA machines
-In-Reply-To: <a7eb9e91-8feb-456c-8ce8-f2b7e940118a@linaro.org>
-References: <20250102100340.43014-1-philmd@linaro.org>
- <a7eb9e91-8feb-456c-8ce8-f2b7e940118a@linaro.org>
-Date: Thu, 09 Jan 2025 10:42:53 -0300
-Message-ID: <8734hs3xya.fsf@suse.de>
+ bh=0786u4iJInsHVvSrcuJUnfn4useWu9D1HBXhDMMX5P0=;
+ b=iDumQGzqxoaITFrdc3xb99Xl70YxEPabU3WCj6fV65bG1nS/WJhMIIdHmq8GJu/XQ/2JY5
+ Sjo5CzBXf6dnQzPWt/WzCa7qY5c4MCv3KdQi6vs99bl1z8wFBSbX05iU84Jp65n4RoN8ka
+ 2y/n1+VOgpcFZTlzPzJf7qm0WzWQm64=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-349-cXU8MjH3No2wYhZDkXMgkw-1; Thu, 09 Jan 2025 08:43:51 -0500
+X-MC-Unique: cXU8MjH3No2wYhZDkXMgkw-1
+X-Mimecast-MFC-AGG-ID: cXU8MjH3No2wYhZDkXMgkw
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43628594d34so5112465e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 05:43:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736430230; x=1737035030;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0786u4iJInsHVvSrcuJUnfn4useWu9D1HBXhDMMX5P0=;
+ b=KirB/fnXs/m6TDuDO3wV5RmLZIWSuUu5WpXQXfBkxtHvicBUqhazKTZbFaTc1WsOcK
+ Itu9zH2Y4hO2oKVsx470ywjQZ5ybFKh/eTxhpZZGrtj5BL5BGSIfWWQ2LNE6U35C0hjV
+ 7xQZOAHJosSV7DxCaFgmAUGRNzSNOEFkCHv2mj14s9uRaddzQUxruI5h7JoXi6iLqrd0
+ 7blJlfgVwmrDTEkKzFgNJIxIS41lNXSW3Z2lbNDPtC46GDtshAIHrqWyrZiR3J/1n1Di
+ nCJSdmGdH8QzSTn9CzVjBk6WqOl8GnlBPo1tVLLkDruCQgRwQiuzcUtAN6sfMd2l4pED
+ O/rA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3E8C8aej7ga63HX1HSoA4fJxWep1yG55C6FjDrxsMaNpcX1mrsGyloF97y5pkEeDWL87UFMaoKRUA@nongnu.org
+X-Gm-Message-State: AOJu0YyYkISB6uOXUxLEGXw5dNkWHIJU8/jPPgVhppUd8aDFIFyJ5XXe
+ OdA7m78fNC+Kh66i3ds1z/NHPM6mFz71cBon9/eUIm/DUg83TiXimxhsGETeUwYG90f1nqlx4DE
+ XbVmvztFw6V7rZ/NN3iH2U6QjBeWjxW0mpKpgYpgI326qxr0u67lS
+X-Gm-Gg: ASbGncsBSrEB+i+hKEbKux2qpPN9STEslsxRIGEjIhV4H3MFUvfCVtxUdTPKZpPDJ1D
+ 5WmIrV7Jf324jEQhtTH53705kX6GVyzZkt3fZNAtXtIvsBgzi6XlR0lweVmckUppFy1HkBvZcWi
+ lUN4gufJwIyUjUFcMOvNb8kgvLb2kua9ErdiV8a0LWs5DoPk2+Dbp8EhnAgxv8nceElSqmSu65f
+ 9PZWxnX/zSpIz/aVSnuRLjAbRBK3IUpXuHEGZou7V7o9fUMc/c=
+X-Received: by 2002:a5d:64af:0:b0:38a:8e2e:9fcc with SMTP id
+ ffacd0b85a97d-38a8e2ea11cmr2516686f8f.45.1736430230131; 
+ Thu, 09 Jan 2025 05:43:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFC3NwaqaPqm+7CAChl2hzC/Oe3iq4QPBPHiLKmCQp5T/gWPuAk1uYfxoykEr8rAwEDQAbBFg==
+X-Received: by 2002:a5d:64af:0:b0:38a:8e2e:9fcc with SMTP id
+ ffacd0b85a97d-38a8e2ea11cmr2516657f8f.45.1736430229806; 
+ Thu, 09 Jan 2025 05:43:49 -0800 (PST)
+Received: from redhat.com ([2a02:14f:175:d62d:93ef:d7e2:e7da:ed72])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2e92dc4sm55306375e9.39.2025.01.09.05.43.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jan 2025 05:43:48 -0800 (PST)
+Date: Thu, 9 Jan 2025 08:43:44 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH v19 00/14] hw/pci: SR-IOV related fixes and improvements
+Message-ID: <20250109084258-mutt-send-email-mst@kernel.org>
+References: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
+ <86efce30-2727-4581-963c-3424dddf46e2@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 3925E210F6
-X-Spamd-Result: default: False [-3.69 / 50.00]; BAYES_HAM(-2.18)[96.11%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; URIBL_BLOCKED(0.00)[linaro.org:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmx.de]; RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,linaro.org,gmx.de];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,linaro.org:email]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <86efce30-2727-4581-963c-3424dddf46e2@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,22 +122,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On Thu, Jan 09, 2025 at 01:04:11PM +0100, Philippe Mathieu-Daudé wrote:
+> On 9/1/25 07:29, Akihiko Odaki wrote:
+> 
+> > Akihiko Odaki (14):
+> >        hw/pci: Rename has_power to enabled
+> 
+> >        hw/pci: Use -1 as the default value for rombar
+> >        hw/qdev: Remove opts member
+> 
+> I'm queuing patches 1,13-14 which are generic, hoping
+> it helps you not carrying a bit less over respins.
 
-> On 2/1/25 11:03, Philippe Mathieu-Daud=C3=A9 wrote:
->> Since v5:
->> - Correct boot-serial-test machine name for stable (th_huth)
->>=20
->> Philippe Mathieu-Daud=C3=A9 (2):
->>    tests/qtest/boot-serial-test: Correct HPPA machine name
->>    tests: Add functional tests for HPPA machines
->
-> Fabiano, if you don't object, I'm queuing this via my hw-misc tree.
->
+I mean if Akihiko wants me to do that, just post them separately.
 
-Sure, go ahead, thanks!
+-- 
+MST
 
-> Regards,
->
-> Phil.
 
