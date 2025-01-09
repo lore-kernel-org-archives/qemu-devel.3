@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84271E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F9C3E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVqTW-00068v-G6; Thu, 09 Jan 2025 06:13:18 -0500
+	id 1tVqYx-0007RV-LD; Thu, 09 Jan 2025 06:18:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqTQ-00068X-R0
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:13:13 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqYv-0007Qa-R4
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:18:53 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqTP-0003ED-3U
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:13:12 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43623f0c574so6254695e9.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:13:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqYt-0004XZ-Un
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:18:53 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4361f664af5so9854105e9.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:18:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736421189; x=1737025989; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736421530; x=1737026330; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eK37jaFLz8GvFBxLuBGQeby3QcG/VZgIu86cNaSfMkM=;
- b=jx6DO/obwQxLJGDU/5BrVOloi/Mf+stTBVPwFd/HVGTgDeBlgCskZGIxvhLH/TCIlZ
- esoC8vUbAROGnAyjnkvUNMk6jigYKa7mNKPVo7PIyg19Anj5Hr4RfsOTn8u2Q+hEjeRh
- v+o8bnPmytgVN5vupgsTbPBl7eZt5zhmIXGv1cU/eCaNtUvEWdqsc44sMo2RI0+MvVpR
- wQXhf4NZPRhChNJz4MfOJjSAyEXo+at82kWleepG9DJSaPTXFwIqlXV7jdGpkmV369BM
- fsWdM4yfg0NjORGkMjtXnE6ulZQ3MGkAIc2/W4eGdobx4jU4ZPKEjJA4+w4+E9uLAE83
- 8vhQ==
+ bh=ME0+3AFyXLGdqFXUo3zVv+IGspfWxTahIBFqoUfx1Ns=;
+ b=R7Z/QS74XLa3+9Zeevfj1kYfWI95r9JOAPqHMPTT8JtJBuNne4wpO6ypdypN5p/gnl
+ Q08qtdZoRpTEEr7sYMGqNasSQpyQ+HnCLtES08d92jvGRxgqSFTO/xX7vVVAVz4wMy8x
+ 5Lv4KIRBahOwwlab0mUI1wZ214l5Y5wTXbuPWX5l4Q5UeQ7/6kWF9Q1dbCGAjnzTRgwt
+ BJk296aZ6Vh0U6v40OUHxNw0gGAWtk4Njl+CWu9gX690Oi170/9lj2/oOipmPKyvkbS1
+ GQ+h1C1ABzMIfySqfMGSdRlEQbXuWEOfFd+3xp8mUIj8z9ZcTDqPCSqesqIlSzAVbDwB
+ Cs3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736421189; x=1737025989;
+ d=1e100.net; s=20230601; t=1736421530; x=1737026330;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eK37jaFLz8GvFBxLuBGQeby3QcG/VZgIu86cNaSfMkM=;
- b=D0svjb/0j6nM4FXditykkeiE4UOXjW7cSe2sU3s/b1ZfhbTKqw6CqfKbt2qCupkFTX
- 7qGZctHFH53cBGpARN/1ysbWDHficZV2KW+5uGnvPDzXY68XYfovMz2Zt50Fg5/JsHVJ
- BgpP3VXifVr5fU+ZayZ2ZJNbEzvsJVcRLAOb6a9Y5b3oP4NyEMW+EbLPzHcSG8CU+2X9
- gM4NpAEBrNLB+d0TbE78mDTu2qapHh9pg+CR1k9eNJ3dCP1jXah52M5mpXx+m5bDgGxg
- yXMYcuTFE9Plq8dl2t7L6/XxmDDqSttzfJ5viqQTJja0tyRVnJlUYUCrgurvmY+zgja/
- R0vw==
-X-Gm-Message-State: AOJu0YxxgOB7VyOGVe0UCJYbGjanY8e36LLUlVrPbs43jwIJM0E/QRiC
- 3Sj6BlP6Cx4mMur1/SAgwfs47w3d51jqQbneHMUDBPyeR0sPQToke0Do0TdlNY8=
-X-Gm-Gg: ASbGncue5ra5AQlcs/6FfcuevMCUqgSG/aXlIV5IfXp9p8kDgV/wRNABid7joYzIiuq
- ayHm9FMiNz/OG9uNoaJksAWxgSNdgWpN/uwFVN1pzGV2DHNMQ2c9wRayk0JATtN+bj1YE02TUS7
- ydmJP7y0DRSSNPesjClEzy5YqB7ZJuQHkIQp0N/FQiouAOXhqi3RJACL0oXx5qgKvYsAsvmxjyz
- Iha7aTb9d6sjvMc56etcbb2gP+5pHHN8NPhlyCEL9agYfKcHVDck6wj4wvogN93jB5k8PPo0iNH
- hjTIIx0g/yQolP9NU9Vn3jHV
-X-Google-Smtp-Source: AGHT+IGG6GnJh/iKfHcF2AaG0/gRzypOHMrip4+ZG/yl13wf0xi1mMPPxjT9HCeasyL+ymjnHlN34g==
-X-Received: by 2002:a05:600c:5117:b0:431:60ec:7a96 with SMTP id
- 5b1f17b1804b1-436e26ddc53mr47234745e9.25.1736421189491; 
- Thu, 09 Jan 2025 03:13:09 -0800 (PST)
+ bh=ME0+3AFyXLGdqFXUo3zVv+IGspfWxTahIBFqoUfx1Ns=;
+ b=D2n/O2l5V5f6w+XV36JsR/ekcIFtBJMqBeqXJ110t4W2CxC8nhHIlKA1oLgb/K8fLN
+ vDWmtPtSJORR7BPU292ri63d6WhBVcB2/yHTL5AZFSTPFkWxgWPXQc3PAIbS2Igw7R3F
+ RAfLRx8vkCkKVGnu3CngWtRn8X5nxNr5XqzLIVUbrUqUOAgiItDRiKHQ9yLDFiehSd2e
+ zyaeh0Av5bs87rm8e0iknz2HDr9XFg4NjAGauSaTzQFyeZLfnbqqp0AT60x73TgsDRI0
+ w1u+AoSsHveYjx/r792t6+Bx5eLXtJStPMWzH68rC12TtvGKXFyNpoCORpBxGA8ud93K
+ fkSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/5dQnrtIVdw6i61rRSAb1Ud7gINre3cihHneo5E3OTNjV2pFc3F3v1jyihA4pFTEctcHk2yR0mW5t@nongnu.org
+X-Gm-Message-State: AOJu0YxIFU94Uqjxe5j2Iz0mFDxdj7Bl2j2gthk/RXXD2HsQkpSZP1NY
+ VfxZVS93GNaeJ54krEfWL5x9N35zUu8Ajj9giZcWuVCNi5ZuXjSVCyKULGoNQRM=
+X-Gm-Gg: ASbGncubYGQrhCo+Xxok/KurVkF3wwnM8EGeS/tNPyJoZQd5vRI8T2mrZ7uMCb1tk1u
+ 4NYJrMqu0WlysMzJpSq353Lsn59Nl6kT1itWRf/UWLOaoe8PPIwWhP6qnbL3+sgmm4iZGeq7NZN
+ CbiVl0Ae3TUvZ+KFkIylb2BfQItsQxhVifm9orcLANc8qzsmwI7AZ42cCrp6gwyGOJim7wh+mLk
+ SDImQLES+5vWAxDHHkD6tuT3GAXcLa1elbB+rpklkF65/vQbpeCQA/vq03kREJ8EL5Q7YD9xD24
+ hkmBrcEhS+56Pd7cuhBoJq9K
+X-Google-Smtp-Source: AGHT+IHxltDmN8R2Exw0WE83WeQQVgR4NuppXtMw+Va+iaxJ0DlHZ5eXIb6MJb4IqtyMUFDEgri9wg==
+X-Received: by 2002:a5d:5986:0:b0:385:e37a:2a56 with SMTP id
+ ffacd0b85a97d-38a8733a214mr5702120f8f.52.1736421529927; 
+ Thu, 09 Jan 2025 03:18:49 -0800 (PST)
 Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e89df1sm51108205e9.27.2025.01.09.03.13.08
+ ffacd0b85a97d-38a8e37d2dfsm1529283f8f.7.2025.01.09.03.18.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 03:13:08 -0800 (PST)
-Message-ID: <8bc4699d-c7fc-4ac5-946c-093061f217a5@linaro.org>
-Date: Thu, 9 Jan 2025 12:13:07 +0100
+ Thu, 09 Jan 2025 03:18:49 -0800 (PST)
+Message-ID: <718a0ab6-cc07-4721-9560-7745ed1c04a6@linaro.org>
+Date: Thu, 9 Jan 2025 12:18:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] virtio: Convert feature properties to OnOffAuto
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang
- <jasowang@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Lei Yang <leiyang@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
- <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
- <ab58d4f7-6c73-4cf0-846c-ff20e3f5b481@linaro.org>
- <e340ea4b-3d8d-4b08-a1af-6514fab838a2@daynix.com>
+Subject: Re: [PATCH v2 3/5] target/arm: implement SEL2 physical and virtual
+ timers
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Leif Lindholm <quic_llindhol@quicinc.com>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
+ qemu-stable@nongnu.org, Andrei Homescu <ahomescu@google.com>,
+ =?UTF-8?Q?Arve_Hj=C3=B8nnev=C3=A5g?= <arve@google.com>,
+ =?UTF-8?Q?R=C3=A9mi_Denis-Courmont?= <remi.denis.courmont@huawei.com>
+References: <20241218181511.3575613-1-alex.bennee@linaro.org>
+ <20241218181511.3575613-4-alex.bennee@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e340ea4b-3d8d-4b08-a1af-6514fab838a2@daynix.com>
+In-Reply-To: <20241218181511.3575613-4-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,65 +110,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/25 12:08, Akihiko Odaki wrote:
-> On 2025/01/09 19:56, Philippe Mathieu-Daudé wrote:
->> On 8/1/25 07:17, Akihiko Odaki wrote:
->>> Some features are not always available with vhost. Legacy features are
->>> not available with vp_vdpa in particular. virtio devices used to disable
->>> them when not available even if the corresponding properties were
->>> explicitly set to "on".
->>>
->>> QEMU already has OnOffAuto type, which includes the "auto" value to let
->>> it automatically decide the effective value. Convert feature properties
->>> to OnOffAuto and set them "auto" by default to utilize it. This allows
->>> QEMU to report an error if they are set "on" and the corresponding
->>> features are not available.
->>>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> ---
->>>   include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
->>>   hw/core/machine.c          |  4 +++-
->>>   hw/virtio/virtio-bus.c     | 14 ++++++++++++--
->>>   hw/virtio/virtio.c         |  4 +++-
->>>   4 files changed, 39 insertions(+), 21 deletions(-)
->>
->>
->>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>> index c949af97668d..bff26b95dd74 100644
->>> --- a/hw/core/machine.c
->>> +++ b/hw/core/machine.c
->>> @@ -36,7 +36,9 @@
->>>   #include "hw/virtio/virtio-iommu.h"
->>>   #include "audio/audio.h"
->>> -GlobalProperty hw_compat_9_2[] = {};
->>> +GlobalProperty hw_compat_9_2[] = {
->>> +    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
->>> +};
->>>   const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
->>
->>
->>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
->>> index 85110bce3744..83f803fc703d 100644
->>> --- a/hw/virtio/virtio.c
->>> +++ b/hw/virtio/virtio.c
->>> @@ -4013,11 +4013,13 @@ static void 
->>> virtio_device_instance_finalize(Object *obj)
->>>   }
->>>   static const Property virtio_properties[] = {
->>> -    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
->>> +    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
->>>       DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
->>>       DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, 
->>> use_disabled_flag, true),
->>>       DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
->>>                        disable_legacy_check, false),
->>> +    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
->>> +                     force_features_auto, false),
->>
->> This doesn't seem an experiment, so can we not use the 'x-' prefix?
+On 18/12/24 19:15, Alex Bennée wrote:
+> When FEAT_SEL2 was implemented the SEL2 timers where missed. This
+> shows up when building the latest Hafnium with SPMC_AT_EL=2. The
+> actual implementation utilises the same logic as the rest of the
+> timers so all we need to do is:
 > 
-> I put x- prefix because it is only intended to be used for compatibility 
-> purpose and users will not be interested in this.
+>    - define the timers and their access functions
+>    - conditionally add the correct system registers
+>    - create a new accessfn as the rules are subtly different to the
+>      existing secure timer
+> 
+> Fixes: e9152ee91c (target/arm: add ARMv8.4-SEL2 system registers)
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: qemu-stable@nongnu.org
+> Cc: Andrei Homescu <ahomescu@google.com>
+> Cc: Arve Hjønnevåg <arve@google.com>
+> Cc: Rémi Denis-Courmont <remi.denis.courmont@huawei.com>
+> 
+> ---
+> v1
+>    - add better comments to GTIMER descriptions
+>    - also define new timers for sbsa-ref
+>    - don't conditionally gate qemu_timer creation on the feature
+>    - take cntvoff_el2 int account for SEC_VEL2 in gt_recalc/g_tval_[read|write]
+> v2
+>    - rename IRQ to ARCH_TIMER_S_EL2_VIRT_IRQ
+>    - split machine enablement into separate patches
+>    - return CP_ACCESS_TRAP_UNCATEGORIZED for UNDEF cases
+> ---
+>   include/hw/arm/bsa.h |   2 +
+>   target/arm/cpu.h     |   2 +
+>   target/arm/gtimer.h  |   4 +-
+>   target/arm/cpu.c     |   4 ++
+>   target/arm/helper.c  | 158 +++++++++++++++++++++++++++++++++++++++++++
+>   5 files changed, 169 insertions(+), 1 deletion(-)
 
-I guess that's OK then.
+
+> diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
+> index de016e6da3..f8f7425a5f 100644
+> --- a/target/arm/gtimer.h
+> +++ b/target/arm/gtimer.h
+> @@ -15,7 +15,9 @@ enum {
+>       GTIMER_HYP      = 2, /* EL2 physical timer */
+>       GTIMER_SEC      = 3, /* EL3 physical timer */
+
+Should we rename as GTIMER_SEC_PEL3 for consistency?
+
+>       GTIMER_HYPVIRT  = 4, /* EL2 virtual timer */
+
+Also GTIMER_HYP     -> GTIMER_PEL2,
+      GTIMER_HYPVIRT -> GTIMER_VEL2?
+
+> -#define NUM_GTIMERS   5
+> +    GTIMER_SEC_PEL2 = 5, /* Secure EL2 physical timer */
+> +    GTIMER_SEC_VEL2 = 6, /* Secure EL2 virtual timer */
+> +#define NUM_GTIMERS   7
+>   };
+>   
+>   #endif|
 
