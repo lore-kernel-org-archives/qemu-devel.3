@@ -4,67 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044E0E77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 02:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD36E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 02:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVhvc-0007y8-9g; Wed, 08 Jan 2025 21:05:44 -0500
+	id 1tVi1F-0000sd-3j; Wed, 08 Jan 2025 21:11:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tVhva-0007xy-4Q
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:05:42 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tVi1C-0000sL-Ta
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:11:30 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tVhvU-0001xh-9P
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:05:40 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DE2A14E6004;
- Thu, 09 Jan 2025 03:05:32 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id VyD1wgEJoTw6; Thu,  9 Jan 2025 03:05:30 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9F0584E601D; Thu, 09 Jan 2025 03:05:30 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9C6AC757B27;
- Thu, 09 Jan 2025 03:05:30 +0100 (CET)
-Date: Thu, 9 Jan 2025 03:05:30 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Rob Landley <rob@landley.net>
-cc: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Stafford Horne <shorne@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- "Jason A. Donenfeld" <Jason@zx2c4.com>, 
- QEMU Developers <qemu-devel@nongnu.org>, 
- Linux OpenRISC <linux-openrisc@vger.kernel.org>
-Subject: Re: or1k -M virt -hda and net.
-In-Reply-To: <c5efb6af-5fef-4938-aac9-c9c8b75a9a69@landley.net>
-Message-ID: <ef302909-d94d-4bec-2a2d-3c26898c089b@eik.bme.hu>
-References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
- <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
- <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
- <Z0LMqEqcdjkAxnN-@antec>
- <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net> <Z2lgL31ZeSkO59MZ@antec>
- <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
- <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
- <87y0zmbita.fsf@draig.linaro.org>
- <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
- <6e5f24cf-02bf-1cf0-2d0d-e683866cc3d3@eik.bme.hu>
- <c5efb6af-5fef-4938-aac9-c9c8b75a9a69@landley.net>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tVi19-0003A6-JU
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:11:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736388688; x=1767924688;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=feVa9DwpG+6vZ8jXHaCoIgnLSzN/9VKsdy6dw9kmwD4=;
+ b=ITOcbtw6FVyASrp7c9C2T0puKkvPIj7E5JsFZQNfbqVdU4A/d7pW1A3g
+ BZbqkMXVaIm0d0R4Rz2o7lsdFVE+zhPTXq3CLiMbWlafye1XbwxmncLmc
+ 2BUbeMWAurkpQsM3QnesEMneV6phc/qFl9bPpD6fzkZWpXI/WXt/7V60t
+ T6yEoWd8PfLPr1zAj+jcvYdfmaSmKO4F8RWCVh9Rp4b/UIVX1JnvKCUZN
+ qjhetOwznQifG8IBSI6i5djpyp9isxodLq9Kkkqlup4q9xXMacLkecnA4
+ sw0nAdfXm3L5IXEgxEP3IYEDHfY3gaE3xZHSI3itzz9DpvvsVj2dzerOW A==;
+X-CSE-ConnectionGUID: N8ZKtypARnO4L8igxlpX+A==
+X-CSE-MsgGUID: DsV3C1ETQIeUtBS3hoqeBg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11309"; a="62011781"
+X-IronPort-AV: E=Sophos;i="6.12,300,1728975600"; d="scan'208";a="62011781"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jan 2025 18:11:25 -0800
+X-CSE-ConnectionGUID: CpGszwxGSOmJ3IvwNzcQvg==
+X-CSE-MsgGUID: BZVL99qvS5eIZzIzZlzZIg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="126564237"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 08 Jan 2025 18:11:24 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Wed, 8 Jan 2025 18:11:23 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Wed, 8 Jan 2025 18:11:23 -0800
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.176)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Wed, 8 Jan 2025 18:11:23 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PyqtcuY30sJZWnWazvwkhu2IfvJhPcLVd0gs/AmXeKVVHTGUcFMyqcM1ssHidO90JLteg/J0ppmLH/l2VW0+25WbANzrHvfWcGmUFfPMgWa3Xg8JvrHCQZtAFbdf1TJRoZjKkBPlux9ZYeommAL1x/Gs1ZzyHfbvBDi0CeZfnVW/UVVuwARUUaHT6iom8a0tOU5+e40VRNGxdqqmi3kU4KVSt7vrZzItR3djRki9T753sKPrsBDRn+Gtcv28qtUdbxPm9M/97/I+fgxO1emVSaDdsxsOx2lQkmrVjLj6EjFMelKJLtZF00V7hi9hlf/PIVRNjxiEMumFQoLgh+KSkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Z8c21ddyjBfJDORx5e6m4GhyZqmFe2imTYuTS/aplL0=;
+ b=Tsu0uS7AXZkkXgUTfNPKGwTMqK/gB2wDzzl8edzgqOyIlnUGx+XnPrlWyg1cKPbvUUIyC9qSueaBMxhurVR5VZMBxXZpmWQoF0b/S+AQY5Z0ZkVxtlFmpfCXdMsOqOPB+l5tBLUWD4zGOFvflsK7DzDgadjPuJd9WQjS5vMl2+cFP4FyqTzeBDHNdGqsjifm7CaV5/GXAc8sMq2lipCbj4QdcswbLDvYmLPxc+WRUl2ZCL6t5+BaQi9yJ/Vm0T8zwy7jsA/VJFIbGf8muVWm78kSq4htdmf0Er2QvgWGlUlODQIZk+mIcMUmMhhz4JHKVJua6q6KcDolnelB7oxMBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ SA0PR11MB4622.namprd11.prod.outlook.com (2603:10b6:806:9c::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8335.10; Thu, 9 Jan 2025 02:11:21 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%5]) with mapi id 15.20.8314.018; Thu, 9 Jan 2025
+ 02:11:21 +0000
+Message-ID: <58b96b74-bf9c-45d3-8c2e-459ec2206fc8@intel.com>
+Date: Thu, 9 Jan 2025 10:11:11 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
+ <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-3-chenyi.qiang@intel.com>
+ <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
+ <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SG2P153CA0010.APCP153.PROD.OUTLOOK.COM (2603:1096::20) To
+ DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|SA0PR11MB4622:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2d4451e1-ac43-4433-dec5-08dd3052e8c7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z0ZKQVl6c2hiNm1wZ0ZQMk1TUWdha2JtSEcycms0STBzWkhtTURKbi9RYktp?=
+ =?utf-8?B?Qkh0aG11MG9ZOWdxMHVGbW9aOTdtV25yQ0daSkNyODI4d1hpVnREb3Q3RnVz?=
+ =?utf-8?B?RmsvNUNpMzQySjUvcEpPbmdoR3ZwUk9zSVJJZU5EYzBRQjFHZkMweVN2QlNo?=
+ =?utf-8?B?TU5NYWFWNXA5ZE5KTmpMdGxYY0ErWVVKR2MxNk1mZWtCalFmLy8wTjFFUU5Z?=
+ =?utf-8?B?aU45cHdmWW1BL1dBVmZsVTZxblN1MzY1Nmlyd0YyWXpvRWlsaXhjOTNtSFNO?=
+ =?utf-8?B?UUp3UllDdGcxaGI3a0VpV2NQT2RlaHYwaU9SaEFIUFdwL3Vxdlp1MHZ0dmNy?=
+ =?utf-8?B?VzJCNTFFTWZIcVdVdkpnRjVSbVA5NkJOa3dsYkYveUJFeVdCT3h0Z3F3WFlp?=
+ =?utf-8?B?R3N2bGlrN1d6M1RZL2RFZkxMSDZQRWxROEVBNTJLL25UeHUveHZLZWpTSFZW?=
+ =?utf-8?B?emVqRU9UcVVtRHB2Z0cwTExZN1ZkcW9UNHpWWGtYb0FTc3RVSkR6NHBaYzdK?=
+ =?utf-8?B?VUQzT2JINE9JRDNWa0ZzQVBvZEwvT1FlbVVLVHoxc1lLUGZVOTVlNnVSY3hZ?=
+ =?utf-8?B?QmdGdWgyUWNUYTVYZTJmeGlGcFE3UVlHb2JNdHdmS3JXN0tjNWkyZDYvSUQx?=
+ =?utf-8?B?RTVibWxvV3I5dVg3cktxZlo1OEFVZWJIYkwvUEFaU005WXZmRG5iY1hrQmNF?=
+ =?utf-8?B?STBZV3V5allHN0VqZFA5N0JkNG1ubCtCVXNraVRLUnVvVTBWZHFTcUg0Y3hq?=
+ =?utf-8?B?M0QxdXpDK3EvSlJxWFlvdm42ck8xckFLeEEzblIxVjY5dmxwd09yYU1yeWhH?=
+ =?utf-8?B?QTZrYVNEdkx4K2ZycENPMHpRYUtSU29tSzlCbTBJOWoyYmZwTEw2WEVSSTZU?=
+ =?utf-8?B?MXFybWlvQmJUdGNsTWlBUmhKK1g3WFFnTEFJZWhOeG0zcCtYT1FZamRhZ1V0?=
+ =?utf-8?B?Uk43ai9pSy9vWTVEcGpKWk1jQWhZSGJZM1pzRjk2TTZBTUZPMFAyUXQ5dDhs?=
+ =?utf-8?B?TEtIVi9oKzlxRW5QOGpYMEx6eElneUdmamNGTWRTQ3JQSUZqVnprYzh5RzY3?=
+ =?utf-8?B?alpXRVlidUFEckFmMlVVdmJuaFhDNS9RZzNVOW84WERLc21lVzVNQzlYNVhk?=
+ =?utf-8?B?UU14QStaMHNJSzFTU1lCdjU4SzNoTHUrS3ByZjF5ajAvVzJrS0dNS2NKL2t1?=
+ =?utf-8?B?b3QvRXRFajhBY080ODVkZHR5bXFiQVhwZU9qcVFDeE1Jc0hKM0ttK0RpZHlN?=
+ =?utf-8?B?bEZJZmNkdHljcUlxc0hQVjdiRXpsd0s4WWdYSXZFZWZlTUhiR0h1eU9KZzR6?=
+ =?utf-8?B?K2w1b2N6Sk1pR05MbHZOQjV6TDhtandSUzJiV0w3YzBYUlBHcVRiRzZsVTAx?=
+ =?utf-8?B?NUErSjZ0WWdBQWVqUXgrbFU2MUxOWXJmTHprZ1FCeVRvWHI3MHZvSExuVFZW?=
+ =?utf-8?B?dElISkl0amRwbDkxRGd2c3R6aktvWEttekJZb1ZaNERMeEltcmY2R1ZJeklx?=
+ =?utf-8?B?dmpDcEVDbSsrZDhhRVNxaHB6eFhRVFFBNGlyeExjSHBZbU5GbFB5ZGtvY2oz?=
+ =?utf-8?B?d0cveEFNREdtcFpzM3NyVnEvRVA0Q2tCNlU3TmV2ZXJiMFM5L05iQ0RlY1dl?=
+ =?utf-8?B?ZDVFU0ZhbEZzTGJ5WElqcFAxcytMWDFnbzl0ZmtoeGprczNCbk8xeFZyL2s1?=
+ =?utf-8?B?TW1NV0Q3eTFEZldvUFJiZXhka0xQeHRMQWxIQzA0aHN5M2dOOXA2V1JKVERh?=
+ =?utf-8?B?RnAzdXlnZ3ZCSmVZRGtKdDYxemVHWkZ4eGlyQWJwcDFzZ3BUWUVDUEViZ2xQ?=
+ =?utf-8?B?QnMzcFE4bWpPZ0dFVWRzNWs1TmVZK2ROWndLRjVvTTlHK0lOSWVOa21oVlZj?=
+ =?utf-8?Q?rEDjqpyFzQDcz?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WnQ5U0RpT01pRGRMZWkxYmlpd2VCOW4rZzhKUStMemwvdFhLS29MTTlqYUlh?=
+ =?utf-8?B?alV6UnIrN3luK1BnMzBrVVd6dTU2YmJkelZyZC9iY0d1WDl5bDhreGdhR0JV?=
+ =?utf-8?B?bU0xTGF0Yzk3SGUvaU5ybzVtelBLS0VZYUNCODlGTks1RWtPVUhaYjBoaWdJ?=
+ =?utf-8?B?cW1RZS82cm1yeXJxNkprMmhrMU1BVXdjSjhhak5XSHU2MU9uQlIzUkhIbXQw?=
+ =?utf-8?B?RjkwSjJ5eXIwMHVEWGZWVmpzWWFvc3BJY0NSUDBBSjRCamZhdE1MYjd6RlJx?=
+ =?utf-8?B?akQwUExVTG5RY01GaDY3cFBIUkVhYXR6cGwvOVp2NExwaEtBRG5SdklVbklj?=
+ =?utf-8?B?SGJhcnZYK0NwSDVDd2RCUFI3K0E0ZUdRNnovSyt6MWxTbTN6YXZ5dUJoblp4?=
+ =?utf-8?B?YWtDUGdjREJDWVUzYnlzVWRLVW9Qa1gzdUpmRmRwN1lLQm9Nb0Z2YjdQd2hm?=
+ =?utf-8?B?elpvY09ETnBBVU1xR2N0czlDeFdoTmVJdnd2Yk0xbXppeTBHYThBcGQ4anly?=
+ =?utf-8?B?MzFoYmI2RWJ2bDloRDcvaDZHNVJOY1ZWclpIdmM4L2xycm1JTHF5b1lrNnBW?=
+ =?utf-8?B?QVZQODFmQmdWTUdQakhKbFVQdmRsZGZEMnRhZm1BZGx0aFpGWHdFVk9Ra2Fy?=
+ =?utf-8?B?b3QwS0RiQnhacXlyTlBIZHFBbHQ4YkJ3WWIySlFQYzJDVnkrbjVBaGhhWXJP?=
+ =?utf-8?B?ZDg3bHlXMXFDV01WaUwxQmttcit4Z0pEVytnc1hHQmV0c0t4TjExTXBUMzdp?=
+ =?utf-8?B?SXA4TEFIV3lXNk9heUM1aCswQ0VoZ1FZQTIzVE9KbXJ5QW1CTE1FY2JHQVBt?=
+ =?utf-8?B?UEttR243emRHRVBhNVAwQmtQSFNndVYwdmkzdEZ5N1l2TWszWkVVNGVmL0ZM?=
+ =?utf-8?B?cDgrbGtxY3dCL3RuWGxndEdHTXlJWFFzNysxbGNjdTVTQ2huZlpoNnNKZjNR?=
+ =?utf-8?B?eWhxc2ZDMHp6c1VZVS8zUmlQTnBoRXp5dXBoY1Z3bE1ITHFEbFY5RnlINk1R?=
+ =?utf-8?B?Yk1CUTkwS3FnWDBaaXQzRG9aenBXMnVROS8yQVk1Wmp1anVVYkYzOHBzQ3dl?=
+ =?utf-8?B?emVpdFQrZ1dtZmdFUU1POFNQV2FpZ0lNNkNkWm9pSlZFSm1pU3lLWDRPMFRx?=
+ =?utf-8?B?aDkydENCZ2dyejZ3ZVhMN0UxZHU5b3k3UlZBVjBwb1VYV1NzT1AzUkNSTTda?=
+ =?utf-8?B?dTE4Tm1UUUVsNFlOaE5iTCtDUDFHcE5HWGgrNmRnSk9zTHJiOVdrckRTM241?=
+ =?utf-8?B?RDdpcGFPMERsVDRmblYzSTFmTXFNQVdtbmVVK1JQeEgzWVNORDY4Yk1hRnoz?=
+ =?utf-8?B?U3J3aEZaVlVBZzZxT0ZCRjYvOHdqUEE1OENmOGZLUHJBRXhvdnZzMG02dzNl?=
+ =?utf-8?B?L0gyVFh1QU0yOXBXKzNXVEJadGs0MEZSZWZhR1NiSzFKeWNYOVdLbEdFZDFK?=
+ =?utf-8?B?czVDTVJVVWVTelRxcmFvZ1ZGYTVJSzgzNlBtS0tUbUQ1V1R1eTE2cGcrTUdE?=
+ =?utf-8?B?NzdrcFQ1OHY5MENKSXY2cHNtVDUvYWkyT1hRdk96UHJMU1pkaEZCNGo2RlpG?=
+ =?utf-8?B?cmw3cjlQNTZDanRuT0Q1R0NGWk9rNDJKUms0cHRSd2MvVXdmZVlYdndtc3hW?=
+ =?utf-8?B?NE15dHp2N1A1S1FhQmRheVB4MUhBQzdCdCtjamUzYloyQjI4QTJBVUp5dWtR?=
+ =?utf-8?B?aU5wTVRSeVMrTk5mbHZ2QWhUSlRXOFBSMkZIek9TTG01QUNKbUVzclFISVFO?=
+ =?utf-8?B?SGN1T0R1R1duSVdXanZoUk42M1NuQnJ2YzhEakpnU0VLMG85eTlDbktpTmN6?=
+ =?utf-8?B?K0ptcUZuVXFVV3JLbjU3TGl5cm50ckZSc0dQT052Q2J2TmZ4T3Bnb1FYVEJx?=
+ =?utf-8?B?ZFVhZGRuQldLVytqcEFCdzA0M1ZOUWJJdG5UMU1KZ21pOHBkdVZzTXJwbEd3?=
+ =?utf-8?B?bDdVQUZtRGtwcWtEUFJvWEc2L1BxbGIyQVRRLzVpZXk5ZmF1bUJxTVg2VmdS?=
+ =?utf-8?B?b2oyNWVYdDFwWWtuNlNiUjVqMFcyVnJaTy9MMzU2MXVmc1h5NzFLbWZSS1NK?=
+ =?utf-8?B?dnBEYW8vRDhUNmVrd2lkRkw2RzBIWXExMFZBMFNQa3R1cEo4cFoydzVMSm5q?=
+ =?utf-8?B?eUZmanhpK0FLdDZTY01LdTVFa051Ym1kR1lVVjlKc0VEK000VG1iYkQ5aGo4?=
+ =?utf-8?B?UlE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d4451e1-ac43-4433-dec5-08dd3052e8c7
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2025 02:11:20.9379 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: j3LHR1x33v5/52NsXKIn1uoXiqR575atYVQpjdKhBy4oeF0xeIfmWLwvR8RGrpQzZNigWddG/XEYdbQEj3si1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4622
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.7;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,113 +218,524 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Jan 2025, Rob Landley wrote:
-> On 1/8/25 07:01, BALATON Zoltan wrote:
->> On Tue, 7 Jan 2025, Rob Landley wrote:
->>> What's the alternative to -hda you suggest for that?
->>> 
->>> Can I do "./run-qemu.sh -drive file=blah.img" without the rest? Perhaps 
->>> specify all the details in the script and then optionally add an extra 
->>> argument at the end? I couldn't get that to work:
->>> 
->>> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device virtio-net- 
->>> device,netdev=net0 -drive format=raw,id=hd0 -device virtio-blk- 
->>> device,drive=hd0 -drive file=README
->> 
->> You need '-drive if=none,id=hd0,format=raw,file=README' as a single option 
->> not split into two.
->
-> I'm not always specifying an -hda. Sometimes it does, and sometimes it runs 
-> without it. I would like to have everything EXCEPT the media specified, so it 
-> can be inserted into a ready drive or run without it.
->
-> That's what -hda traditionally does.
 
-I think you can't do that with -drive. You either do
 
--drive if=none,id=d,format=raw,file=raw.img -device whatever,drive=d
+On 1/8/2025 7:20 PM, Alexey Kardashevskiy wrote:
+> 
+> 
+> On 8/1/25 21:56, Chenyi Qiang wrote:
+>>
+>>
+>> On 1/8/2025 12:48 PM, Alexey Kardashevskiy wrote:
+>>> On 13/12/24 18:08, Chenyi Qiang wrote:
+>>>> As the commit 852f0048f3 ("RAMBlock: make guest_memfd require
+>>>> uncoordinated discard") highlighted, some subsystems like VFIO might
+>>>> disable ram block discard. However, guest_memfd relies on the discard
+>>>> operation to perform page conversion between private and shared memory.
+>>>> This can lead to stale IOMMU mapping issue when assigning a hardware
+>>>> device to a confidential VM via shared memory (unprotected memory
+>>>> pages). Blocking shared page discard can solve this problem, but it
+>>>> could cause guests to consume twice the memory with VFIO, which is not
+>>>> acceptable in some cases. An alternative solution is to convey other
+>>>> systems like VFIO to refresh its outdated IOMMU mappings.
+>>>>
+>>>> RamDiscardManager is an existing concept (used by virtio-mem) to adjust
+>>>> VFIO mappings in relation to VM page assignment. Effectively page
+>>>> conversion is similar to hot-removing a page in one mode and adding it
+>>>> back in the other, so the similar work that needs to happen in response
+>>>> to virtio-mem changes needs to happen for page conversion events.
+>>>> Introduce the RamDiscardManager to guest_memfd to achieve it.
+>>>>
+>>>> However, guest_memfd is not an object so it cannot directly implement
+>>>> the RamDiscardManager interface.
+>>>>
+>>>> One solution is to implement the interface in HostMemoryBackend. Any
+>>>
+>>> This sounds about right.
+>>>
+>>>> guest_memfd-backed host memory backend can register itself in the
+>>>> target
+>>>> MemoryRegion. However, this solution doesn't cover the scenario where a
+>>>> guest_memfd MemoryRegion doesn't belong to the HostMemoryBackend, e.g.
+>>>> the virtual BIOS MemoryRegion.
+>>>
+>>> What is this virtual BIOS MemoryRegion exactly? What does it look like
+>>> in "info mtree -f"? Do we really want this memory to be DMAable?
+>>
+>> virtual BIOS shows in a separate region:
+>>
+>>   Root memory region: system
+>>    0000000000000000-000000007fffffff (prio 0, ram): pc.ram KVM
+>>    ...
+>>    00000000ffc00000-00000000ffffffff (prio 0, ram): pc.bios KVM
+> 
+> Looks like a normal MR which can be backed by guest_memfd.
 
-or try to have -drive create the device by specifying the type in if 
-and hope it works such as
+Yes, virtual BIOS memory region is initialized by
+memory_region_init_ram_guest_memfd() which will be backed by a guest_memfd.
 
--drive if=virtio,format=raw,file=raw.img
+The tricky thing is, for Intel TDX (not sure about AMD SEV), the virtual
+BIOS image will be loaded and then copied to private region. After that,
+the loaded image will be discarded and this region become useless. So I
+feel like this virtual BIOS should not be backed by guest_memfd?
 
-and then you don't need corresponding device but this may not work for 
-every machine. The -hda option should expand to such -drive option but it 
-cannot if the machine does not define a default interface for block 
-devices. So maybe just setting block_default_type in the MachineClass to 
-IF_VIRTIO might be enough, otherwise you may need to implement handling 
-for it in the machine. In the sam460ex I had to implement it because it 
-uses SATA with only two ports which only takes one device per IDE bus 
-while the default in QEMU expects PATA IDE that can have two devices per 
-bus and two buses but for virtio maybe it works without additional 
-handling of drives and only the default is missing which -hda would use.
+> 
+>>    0000000100000000-000000017fffffff (prio 0, ram): pc.ram
+>> @0000000080000000 KVM
+> 
+> Anyway if there is no guest_memfd backing it and
+> memory_region_has_ram_discard_manager() returns false, then the MR is
+> just going to be mapped for VFIO as usual which seems... alright, right?
 
->> With if=none -drive won't auto-create a  device
->
-> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
-> virtio-net-device,netdev=net0 -drive if=none,id=hd0,format=raw
-> qemu-system-or1k: -drive if=none,id=hd0,format=raw: A block device must be 
-> specified for "file"
->
->> so you then also need a corresponding -device option for the drive that you 
->> seem to have already above.
->
-> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
-> virtio-net-device,netdev=net0 -device virtio-blk-device
-> qemu-system-or1k: -device virtio-blk-device: drive property not set
-> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
-> virtio-net-device,netdev=net0 -device virtio-blk-device,drive=hd0
-> qemu-system-or1k: -device virtio-blk-device,drive=hd0: Property 
-> 'virtio-blk-device.drive' can't find value 'hd0'
-> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device 
-> virtio-net-device,netdev=net0 -device virtio-blk-device,drive=hd0 -drive 
-> id=hd0,if=none
-> qemu-system-or1k: -device virtio-blk-device,drive=hd0: Device needs media, 
-> but drive is empty
->
-> That's as close as I can get. As far as I can tell, it's complaining that I 
-> got it into the state I wanted, and it doesn't want to be in that state. The 
-> "if=none" does not appear to help.
+Correct. As the vBIOS is backed by guest_memfd and we implement the RDM
+for guest_memfd_manager, the vBIOS MR won't be mapped by VFIO.
 
-I think you can only have empty cdrom devices which can be created without 
-a drive option but not devices that don't have removable media. You also 
-can't define a drive without a file or some other backing store.
+If we go with the HostMemoryBackend instead of guest_memfd_manager, this
+MR would be mapped by VFIO. Maybe need to avoid such vBIOS mapping, or
+just ignore it since the MR is useless (but looks not so good).
 
-> I also don't know what drive=/id= pair "-hda" would be trying to populate, so 
-> dunno what name to use there.
+> 
+> 
+>> We also consider to implement the interface in HostMemoryBackend, but
+>> maybe implement with guest_memfd region is more general. We don't know
+>> if any DMAable memory would belong to HostMemoryBackend although at
+>> present it is.
+>>
+>> If it is more appropriate to implement it with HostMemoryBackend, I can
+>> change to this way.
+> 
+> Seems cleaner imho.
 
-Maybe you can try 'info block' in QEMU monitor to see what drives are 
-defined and 'info qtree' to see what devices are attached to them. But if 
--hda option does not work this won't help, you can only check on other 
-machines what -hda defines.
+I can go this way.
 
-Regards,
-BALATON Zoltan
+> 
+>>>
+>>>
+>>>> Thus, choose the second option, i.e. define an object type named
+>>>> guest_memfd_manager with RamDiscardManager interface. Upon creation of
+>>>> guest_memfd, a new guest_memfd_manager object can be instantiated and
+>>>> registered to the managed guest_memfd MemoryRegion to handle the page
+>>>> conversion events.
+>>>>
+>>>> In the context of guest_memfd, the discarded state signifies that the
+>>>> page is private, while the populated state indicated that the page is
+>>>> shared. The state of the memory is tracked at the granularity of the
+>>>> host page size (i.e. block_size), as the minimum conversion size can be
+>>>> one page per request.
+>>>>
+>>>> In addition, VFIO expects the DMA mapping for a specific iova to be
+>>>> mapped and unmapped with the same granularity. However, the
+>>>> confidential
+>>>> VMs may do partial conversion, e.g. conversion happens on a small
+>>>> region
+>>>> within a large region. To prevent such invalid cases and before any
+>>>> potential optimization comes out, all operations are performed with 4K
+>>>> granularity.
+>>>>
+>>>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>>>> ---
+>>>>    include/sysemu/guest-memfd-manager.h |  46 +++++
+>>>>    system/guest-memfd-manager.c         | 250 ++++++++++++++++++++++
+>>>> +++++
+>>>>    system/meson.build                   |   1 +
+>>>>    3 files changed, 297 insertions(+)
+>>>>    create mode 100644 include/sysemu/guest-memfd-manager.h
+>>>>    create mode 100644 system/guest-memfd-manager.c
+>>>>
+>>>> diff --git a/include/sysemu/guest-memfd-manager.h b/include/sysemu/
+>>>> guest-memfd-manager.h
+>>>> new file mode 100644
+>>>> index 0000000000..ba4a99b614
+>>>> --- /dev/null
+>>>> +++ b/include/sysemu/guest-memfd-manager.h
+>>>> @@ -0,0 +1,46 @@
+>>>> +/*
+>>>> + * QEMU guest memfd manager
+>>>> + *
+>>>> + * Copyright Intel
+>>>> + *
+>>>> + * Author:
+>>>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
+>>>> + *
+>>>> + * This work is licensed under the terms of the GNU GPL, version 2 or
+>>>> later.
+>>>> + * See the COPYING file in the top-level directory
+>>>> + *
+>>>> + */
+>>>> +
+>>>> +#ifndef SYSEMU_GUEST_MEMFD_MANAGER_H
+>>>> +#define SYSEMU_GUEST_MEMFD_MANAGER_H
+>>>> +
+>>>> +#include "sysemu/hostmem.h"
+>>>> +
+>>>> +#define TYPE_GUEST_MEMFD_MANAGER "guest-memfd-manager"
+>>>> +
+>>>> +OBJECT_DECLARE_TYPE(GuestMemfdManager, GuestMemfdManagerClass,
+>>>> GUEST_MEMFD_MANAGER)
+>>>> +
+>>>> +struct GuestMemfdManager {
+>>>> +    Object parent;
+>>>> +
+>>>> +    /* Managed memory region. */
+>>>
+>>> Do not need this comment. And the period.
+>>
+>> [...]
+>>
+>>>
+>>>> +    MemoryRegion *mr;
+>>>> +
+>>>> +    /*
+>>>> +     * 1-setting of the bit represents the memory is populated
+>>>> (shared).
+>>>> +     */
+>>
+>> Will fix it.
+>>
+>>>
+>>> Could be 1 line comment.
+>>>
+>>>> +    int32_t bitmap_size;
+>>>
+>>> int or unsigned
+>>>
+>>>> +    unsigned long *bitmap;
+>>>> +
+>>>> +    /* block size and alignment */
+>>>> +    uint64_t block_size;
+>>>
+>>> unsigned?
+>>>
+>>> (u)int(32|64)_t make sense for migrations which is not the case (yet?).
+>>> Thanks,
+>>
+>> I think these fields would be helpful for future migration support.
+>> Maybe defining as this way is more straightforward.
+>>
+>>>
+>>>> +
+>>>> +    /* listeners to notify on populate/discard activity. */
+>>>
+>>> Do not really need this comment either imho.
+>>>
+>>
+>> I prefer to provide the comment for each field as virtio-mem do. If it
+>> is not necessary, I would remove those obvious ones.
+> 
+> [bikeshedding on] But the "RamDiscardListener" word says that already,
+> why repeating? :) It should add information, not duplicate. Like the
+> block_size comment which mentions "alignment" [bikeshedding off]
 
-> Also, it requires -drive and its argument to be seperate:
->
->  qemu-system-or1k: -device=virtio-blk-device,drive=hda: invalid option
->
-> Refusing to let them to be glued together with = (like most --longopt parsers 
-> do, including the https://github.com/landley/toybox/blob/master/lib/args.c I 
-> wrote) means I can't use bash's brace expansion to set up multiple at once 
-> (to preload support for -hda, -hdb, -hdc, and -hdd), ala:
->
->  -drive=id=hd{0,1,2,3},if=none
->
-> Not that the current script has a bash dependency... :P
->
->> If you want -hda to work you may need something like commit d36b2f4e78 
->> (hw/ppc/sam460ex: Support short options for adding drives) for the machine 
->> you use. In particular the MachineClass block_default_type field says 
->> what's the default interface that -drive and other short options should use 
->> (at least I think so, I'm no expert on this either but searching for it 
->> should at least point to where it's handled).
->
-> Thanks for the pointer, I'll take a look.
->
-> Rob
->
->
+Got it. Thanks!
+
+> 
+>>>> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
+>>>> +};
+>>>> +
+>>>> +struct GuestMemfdManagerClass {
+>>>> +    ObjectClass parent_class;
+>>>> +};
+>>>> +
+>>>> +#endif
+>>
+>> [...]
+>>
+>>             void *arg,
+>>>> +
+>>>> guest_memfd_section_cb cb)
+>>>> +{
+>>>> +    unsigned long first_one_bit, last_one_bit;
+>>>> +    uint64_t offset, size;
+>>>> +    int ret = 0;
+>>>> +
+>>>> +    first_one_bit = section->offset_within_region / gmm->block_size;
+>>>> +    first_one_bit = find_next_bit(gmm->bitmap, gmm->bitmap_size,
+>>>> first_one_bit);
+>>>> +
+>>>> +    while (first_one_bit < gmm->bitmap_size) {
+>>>> +        MemoryRegionSection tmp = *section;
+>>>> +
+>>>> +        offset = first_one_bit * gmm->block_size;
+>>>> +        last_one_bit = find_next_zero_bit(gmm->bitmap, gmm-
+>>>> >bitmap_size,
+>>>> +                                          first_one_bit + 1) - 1;
+>>>> +        size = (last_one_bit - first_one_bit + 1) * gmm->block_size;
+>>>
+>>> This tries calling cb() on bigger chunks even though we say from the
+>>> beginning that only page size is supported?
+>>>
+>>> May be simplify this for now and extend if/when VFIO learns to split
+>>> mappings,  or  just drop it when we get in-place page state convertion
+>>> (which will make this all irrelevant)?
+>>
+>> The cb() will call with big chunks but actually it do the split with the
+>> granularity of block_size in the cb(). See the
+>> vfio_ram_discard_notify_populate(), which do the DMA_MAP with
+>> granularity size.
+> 
+> 
+> Right, and this all happens inside QEMU - first the code finds bigger
+> chunks and then it splits them anyway to call the VFIO driver. Seems
+> pointless to bother about bigger chunks here.
+> 
+>>
+>>>
+>>>
+>>>> +
+>>>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>>>> size)) {
+>>>> +            break;
+>>>> +        }
+>>>> +
+>>>> +        ret = cb(&tmp, arg);
+>>>> +        if (ret) {
+>>>> +            break;
+>>>> +        }
+>>>> +
+>>>> +        first_one_bit = find_next_bit(gmm->bitmap, gmm->bitmap_size,
+>>>> +                                      last_one_bit + 2);
+>>>> +    }
+>>>> +
+>>>> +    return ret;
+>>>> +}
+>>>> +
+>>>> +static int guest_memfd_for_each_discarded_section(const
+>>>> GuestMemfdManager *gmm,
+>>>> +                                                  MemoryRegionSection
+>>>> *section,
+>>>> +                                                  void *arg,
+>>>> +
+>>>> guest_memfd_section_cb cb)
+>>>> +{
+>>>> +    unsigned long first_zero_bit, last_zero_bit;
+>>>> +    uint64_t offset, size;
+>>>> +    int ret = 0;
+>>>> +
+>>>> +    first_zero_bit = section->offset_within_region / gmm->block_size;
+>>>> +    first_zero_bit = find_next_zero_bit(gmm->bitmap, gmm->bitmap_size,
+>>>> +                                        first_zero_bit);
+>>>> +
+>>>> +    while (first_zero_bit < gmm->bitmap_size) {
+>>>> +        MemoryRegionSection tmp = *section;
+>>>> +
+>>>> +        offset = first_zero_bit * gmm->block_size;
+>>>> +        last_zero_bit = find_next_bit(gmm->bitmap, gmm->bitmap_size,
+>>>> +                                      first_zero_bit + 1) - 1;
+>>>> +        size = (last_zero_bit - first_zero_bit + 1) * gmm->block_size;
+>>>> +
+>>>> +        if (!memory_region_section_intersect_range(&tmp, offset,
+>>>> size)) {
+>>>> +            break;
+>>>> +        }
+>>>> +
+>>>> +        ret = cb(&tmp, arg);
+>>>> +        if (ret) {
+>>>> +            break;
+>>>> +        }
+>>>> +
+>>>> +        first_zero_bit = find_next_zero_bit(gmm->bitmap, gmm-
+>>>>> bitmap_size,
+>>>> +                                            last_zero_bit + 2);
+>>>> +    }
+>>>> +
+>>>> +    return ret;
+>>>> +}
+>>>> +
+>>>> +static uint64_t guest_memfd_rdm_get_min_granularity(const
+>>>> RamDiscardManager *rdm,
+>>>> +                                                    const
+>>>> MemoryRegion *mr)
+>>>> +{
+>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(rdm);
+>>>> +
+>>>> +    g_assert(mr == gmm->mr);
+>>>> +    return gmm->block_size;
+>>>> +}
+>>>> +
+>>>> +static void guest_memfd_rdm_register_listener(RamDiscardManager *rdm,
+>>>> +                                              RamDiscardListener *rdl,
+>>>> +                                              MemoryRegionSection
+>>>> *section)
+>>>> +{
+>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(rdm);
+>>>> +    int ret;
+>>>> +
+>>>> +    g_assert(section->mr == gmm->mr);
+>>>> +    rdl->section = memory_region_section_new_copy(section);
+>>>> +
+>>>> +    QLIST_INSERT_HEAD(&gmm->rdl_list, rdl, next);
+>>>> +
+>>>> +    ret = guest_memfd_for_each_populated_section(gmm, section, rdl,
+>>>> +
+>>>> guest_memfd_notify_populate_cb);
+>>>> +    if (ret) {
+>>>> +        error_report("%s: Failed to register RAM discard listener:
+>>>> %s", __func__,
+>>>> +                     strerror(-ret));
+>>>> +    }
+>>>> +}
+>>>> +
+>>>> +static void guest_memfd_rdm_unregister_listener(RamDiscardManager
+>>>> *rdm,
+>>>> +                                                RamDiscardListener
+>>>> *rdl)
+>>>> +{
+>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(rdm);
+>>>> +    int ret;
+>>>> +
+>>>> +    g_assert(rdl->section);
+>>>> +    g_assert(rdl->section->mr == gmm->mr);
+>>>> +
+>>>> +    ret = guest_memfd_for_each_populated_section(gmm, rdl->section,
+>>>> rdl,
+>>>> +
+>>>> guest_memfd_notify_discard_cb);
+>>>> +    if (ret) {
+>>>> +        error_report("%s: Failed to unregister RAM discard listener:
+>>>> %s", __func__,
+>>>> +                     strerror(-ret));
+>>>> +    }
+>>>> +
+>>>> +    memory_region_section_free_copy(rdl->section);
+>>>> +    rdl->section = NULL;
+>>>> +    QLIST_REMOVE(rdl, next);
+>>>> +
+>>>> +}
+>>>> +
+>>>> +typedef struct GuestMemfdReplayData {
+>>>> +    void *fn;
+>>>
+>>> s/void */ReplayRamPopulate/
+>>
+>> [...]
+>>
+>>>
+>>>> +    void *opaque;
+>>>> +} GuestMemfdReplayData;
+>>>> +
+>>>> +static int guest_memfd_rdm_replay_populated_cb(MemoryRegionSection
+>>>> *section, void *arg)
+>>>> +{
+>>>> +    struct GuestMemfdReplayData *data = arg;
+>>>
+>>> Drop "struct" here and below.
+>>
+>> Fixed. Thanks!
+>>
+>>>
+>>>> +    ReplayRamPopulate replay_fn = data->fn;
+>>>> +
+>>>> +    return replay_fn(section, data->opaque);
+>>>> +}
+>>>> +
+>>>> +static int guest_memfd_rdm_replay_populated(const RamDiscardManager
+>>>> *rdm,
+>>>> +                                            MemoryRegionSection
+>>>> *section,
+>>>> +                                            ReplayRamPopulate
+>>>> replay_fn,
+>>>> +                                            void *opaque)
+>>>> +{
+>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(rdm);
+>>>> +    struct GuestMemfdReplayData data = { .fn = replay_fn, .opaque =
+>>>> opaque };
+>>>> +
+>>>> +    g_assert(section->mr == gmm->mr);
+>>>> +    return guest_memfd_for_each_populated_section(gmm, section, &data,
+>>>> +
+>>>> guest_memfd_rdm_replay_populated_cb);
+>>>> +}
+>>>> +
+>>>> +static int guest_memfd_rdm_replay_discarded_cb(MemoryRegionSection
+>>>> *section, void *arg)
+>>>> +{
+>>>> +    struct GuestMemfdReplayData *data = arg;
+>>>> +    ReplayRamDiscard replay_fn = data->fn;
+>>>> +
+>>>> +    replay_fn(section, data->opaque);
+>>>
+>>>
+>>> guest_memfd_rdm_replay_populated_cb() checks for errors though.
+>>
+>> It follows current definiton of ReplayRamDiscard() and
+>> ReplayRamPopulate() where replay_discard() doesn't return errors and
+>> replay_populate() returns errors.
+> 
+> A trace would be appropriate imho. Thanks,
+
+Sorry, can't catch you. What kind of info to be traced? The errors
+returned by replay_populate()?
+
+> 
+>>>
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>> +static void guest_memfd_rdm_replay_discarded(const RamDiscardManager
+>>>> *rdm,
+>>>> +                                             MemoryRegionSection
+>>>> *section,
+>>>> +                                             ReplayRamDiscard
+>>>> replay_fn,
+>>>> +                                             void *opaque)
+>>>> +{
+>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(rdm);
+>>>> +    struct GuestMemfdReplayData data = { .fn = replay_fn, .opaque =
+>>>> opaque };
+>>>> +
+>>>> +    g_assert(section->mr == gmm->mr);
+>>>> +    guest_memfd_for_each_discarded_section(gmm, section, &data,
+>>>> +
+>>>> guest_memfd_rdm_replay_discarded_cb);
+>>>> +}
+>>>> +
+>>>> +static void guest_memfd_manager_init(Object *obj)
+>>>> +{
+>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(obj);
+>>>> +
+>>>> +    QLIST_INIT(&gmm->rdl_list);
+>>>> +}
+>>>> +
+>>>> +static void guest_memfd_manager_finalize(Object *obj)
+>>>> +{
+>>>> +    g_free(GUEST_MEMFD_MANAGER(obj)->bitmap);
+>>>
+>>>
+>>> bitmap is not allocated though. And 5/7 removes this anyway. Thanks,
+>>
+>> Will remove it. Thanks.
+>>
+>>>
+>>>
+>>>> +}
+>>>> +
+>>>> +static void guest_memfd_manager_class_init(ObjectClass *oc, void
+>>>> *data)
+>>>> +{
+>>>> +    RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
+>>>> +
+>>>> +    rdmc->get_min_granularity = guest_memfd_rdm_get_min_granularity;
+>>>> +    rdmc->register_listener = guest_memfd_rdm_register_listener;
+>>>> +    rdmc->unregister_listener = guest_memfd_rdm_unregister_listener;
+>>>> +    rdmc->is_populated = guest_memfd_rdm_is_populated;
+>>>> +    rdmc->replay_populated = guest_memfd_rdm_replay_populated;
+>>>> +    rdmc->replay_discarded = guest_memfd_rdm_replay_discarded;
+>>>> +}
+>>>> diff --git a/system/meson.build b/system/meson.build
+>>>> index 4952f4b2c7..ed4e1137bd 100644
+>>>> --- a/system/meson.build
+>>>> +++ b/system/meson.build
+>>>> @@ -15,6 +15,7 @@ system_ss.add(files(
+>>>>      'dirtylimit.c',
+>>>>      'dma-helpers.c',
+>>>>      'globals.c',
+>>>> +  'guest-memfd-manager.c',
+>>>>      'memory_mapping.c',
+>>>>      'qdev-monitor.c',
+>>>>      'qtest.c',
+>>>
+>>
+> 
+
 
