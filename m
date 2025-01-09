@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CD6E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494AFE7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW22P-0000nJ-2G; Thu, 09 Jan 2025 18:34:05 -0500
+	id 1tW24l-0001Za-3B; Thu, 09 Jan 2025 18:36:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW22N-0000n4-Qc
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:34:03 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW24k-0001ZS-GE
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:36:30 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW22M-0003lk-9p
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:34:03 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so11229275e9.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 15:34:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW24i-0004Bv-SK
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:36:30 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3862d6d5765so863401f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 15:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736465640; x=1737070440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736465787; x=1737070587; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7Bbg4cBmBgkN7h0482imXsi4czXzn+KkYZz0j2H1w74=;
- b=wncF9esDQv1kPsELFKqbiYtXyOuVmJ3nQ5M3PKw4Dj1aylod7+Oxf3UZOk5DdPszmy
- kCtn9YJUx8QyORO/yBD84565xZf5gqKyPnkyiheWGwkvu7lqU1s5RWdXCxvZSBegO3mw
- jIMNphopfHau33K9E1IqadwckNVqnaah6ZDzoglpdnLSlPINdvdC/zlYyuS5etG/4pKv
- 8NpSDi0qtBq1DxsSRc3tT/zki08ZksVuDiwoSAvL340U5d7mDK1hQHJZf/ufewHIKWrW
- tPO/SWwvtoS8X+4ZGFErTsKa4YFG8pIjz8PCLQztduiV8w1DyWyaQ+YianaIELDeDJTK
- m/mQ==
+ bh=QtVRnH16gx13GY+bBA39wFX1i9mUcubyRjQKjhFk7Ho=;
+ b=y9wv6PT0Q5Ba4qGDxjbbCewqCAcAkgYpkpqZfdbMPRNTE13LnWedTGyOXdrvs7wNwm
+ 8PKi9rya8/n14dkghIlzOeXxrMoeub/lhCFZuMx3iZkdbaeOt/QUAgGKt54j3Q4FBYP/
+ xJYEh3YFWlItPIKF0Yz4GbMa8RMP2v64Z5fKLz5HXQlykyCdPWOckLcKf16plYTaimu/
+ UqvcLF4cP0n8l+fkCH/vBdzlINdjmAQ7lXZMS4iFZrQoy52euu8S+ThZi/zGELT14jZN
+ wApQD6LW0Kyxh25kzGXDXre4dWvQjTNcDveW9TIGnLn8isE0XUhDvQrFGlStdYeXqCTx
+ +AZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736465640; x=1737070440;
+ d=1e100.net; s=20230601; t=1736465787; x=1737070587;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7Bbg4cBmBgkN7h0482imXsi4czXzn+KkYZz0j2H1w74=;
- b=qhlHjTWnVLH5vI3S7aaARaCMkcnZAPw02mmwZjsmd5hB+yRASEiSTlo5GRcFQI7R/I
- pIdm292LKepyTxXSOa+e/NJrGOxPB85hUSrfaXvW3BGlECadwS37HvbpQEbX7vnawZEN
- sHVxoBU3NW3J+dvnnxPoBmlRs95K4prMfSYB3BIVJeCqoM7VCHjFahJchru3A6gaD7zO
- Bqho0MOIC2XWnGAFEDjBYg4do8kwa5KIBfyYHqA6jk5DAlqPyeP7RBOk7Qghb9SNM47s
- COVjFo7aM+N5LxsGlr/QWIeCnccxuj2ENahqvTMHQ32urSsEQvgd1F/xJshrDzVz2I9K
- Twww==
+ bh=QtVRnH16gx13GY+bBA39wFX1i9mUcubyRjQKjhFk7Ho=;
+ b=tMWXAZAFiXHqzvXBno97gXjP+4hwj8ZTu0nOZpxiujQHB7aO6d7IwE19rknpm9cTvP
+ lNozDG69mcPnOWHt6DuR1+kmJoZ7D3lH5OjvSjlDwkqvMXbHccBpbcQDiWt4ZRNjZKTj
+ 4mTL1qYkYBxGZB1Mr7T6ozzsHc4ZL8ljN/06t11vwFytdR5izRVI/EyRYcFzcmbGtzxI
+ OePNeKgfham2/nwRquHlQveTrGe1jSDetDcv5ah1riWo7d4nrL3gDRwdUlLFRtjv+F8a
+ +lqk/dzTj7E6XBR3VeGhAVC4g11BQG1VMvTStJlELK74EQyeH91VyhNgd/pDYb25gQ0O
+ B99g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVbsY3OTpCD0e6huNfqC5w8dx6X9S0IyeycMJeJaor2kW2FZxAvuRYzSO1GN3TDCd/Nqfs6w7w6rzx@nongnu.org
-X-Gm-Message-State: AOJu0YzA6aDFS4HToji6pVJkI0Kbmha72rJHHWkyS3SCXzneAyqFZoUM
- ltSvXit+xYR/34Wwo2gVYBmbNhMGLVWVlxhX0uUUygYmiJSvF5irZ1e9ITEXYLxa/UCKFPBDiVI
- GkX0=
-X-Gm-Gg: ASbGncvRf53sFKtCKLI4Rjwe9KUfexNyg3b+j8vg0ATchiWydd/R81vQf5YB0TE+zLR
- rSMu8Q7xBuT6JJnWw+cMnBNDQnk7PLeMtqjuUrsHgszPPNbipFqMbTDUxLHsmr4AUsDJVxUdzPc
- s4Bs9wM+K9DZJinXDRA5r+Cv4Z+ZV2WZrUMup6yi+kb8i3vZbAmf+biVCR0t6hvMK9pt98hk3Cn
- xtCEcKgtJSqwkFhwIpp4PwLO4Plxe8h65+4lETe1x2c1JQgnOhYK6v+DVf9STw8xeydVybi6tAa
- 45UWvLy2e8uZxyYWeFmZd6QEt9M=
-X-Google-Smtp-Source: AGHT+IEEuge6mosrFFEtgCi953E46rSjCxincqE4tVnfm7rYvloyBkErN598N0pZOiiPVlu+pIP3Aw==
-X-Received: by 2002:a05:600c:5355:b0:436:ed33:1526 with SMTP id
- 5b1f17b1804b1-436ed33162amr26424365e9.9.1736465640136; 
- Thu, 09 Jan 2025 15:34:00 -0800 (PST)
+ AJvYcCU2U8xfuE0LfRWVE0hw0ov06hh0sdxORmOW5v9q40pHH2nltzV8Qe3qTyXFP/s8uCc8oB+50vtJFMi5@nongnu.org
+X-Gm-Message-State: AOJu0Yxykg1etDUaSV0ru+TG2DNrnNM/8/6kAvsE7fCXs9QrAx5koHSu
+ EeV/ly1zpqlYnO0I0dRVu6XUDZ4UsC+hS5QjXvFxVqXl971FBGXGLnVOiOcOU80=
+X-Gm-Gg: ASbGnctijtoHYBlxkbKxeZYohBIaFBetNQxqb7pzQ3dHsJnxTLQHeG8TER+CqSRRkAt
+ bjxFa0Qxu5wzy9thN7FmO2qNd2/1ns7B7610Jg7lpQXQi74iHkPyPbtxcfUMWBT7Djj+24M5vwx
+ Y6qk1ND6PpsUakXWHq0UZcKjiiry3u8hvV+lmk0zecSzQW6v88qK8eLA1lLWMPOqQjlIu34CAJw
+ qC2THfJFfovf/qBO3wZTdDo0UVGh8E8Z3sgIhJH8MUrAvt7HtLPcW47CWf1vuKBG+FLkGRmoalf
+ nEJB6N103ZU3okt8biwgvPIneL0=
+X-Google-Smtp-Source: AGHT+IGEtB6PtCocvlBbNgc5WgwW1G5ZGY6aRzBez4YIs1JG43KfYYV82qXmcdMZrrcjLde36pOb4A==
+X-Received: by 2002:a05:6000:1f81:b0:386:1cd3:8a03 with SMTP id
+ ffacd0b85a97d-38a872ec38fmr7327482f8f.32.1736465787062; 
+ Thu, 09 Jan 2025 15:36:27 -0800 (PST)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b8116sm2936361f8f.79.2025.01.09.15.33.57
+ 5b1f17b1804b1-436dcc8ddddsm65813825e9.0.2025.01.09.15.36.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 15:33:58 -0800 (PST)
-Message-ID: <55be2c4d-4c44-4337-8cc8-ffed201ac582@linaro.org>
-Date: Fri, 10 Jan 2025 00:33:57 +0100
+ Thu, 09 Jan 2025 15:36:26 -0800 (PST)
+Message-ID: <99baafff-092c-4a98-ae08-e23882acd729@linaro.org>
+Date: Fri, 10 Jan 2025 00:36:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 36/81] tcg/aarch64: Expand extract with offset 0 with
- andi
+Subject: Re: [PATCH v2 41/81] tcg/riscv64: Fold the ext{8,16,32}[us] cases
+ into {s}extract
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
 References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-37-richard.henderson@linaro.org>
+ <20250107080112.1175095-42-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-37-richard.henderson@linaro.org>
+In-Reply-To: <20250107080112.1175095-42-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,13 +103,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 09:00, Richard Henderson wrote:
-> We're about to change canonicalization of masks as extract
-> instead of and.  Retain the andi expansion here.
+> Accept byte and word extensions with the extract opcodes.
+> This is preparatory to removing the specialized extracts.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/aarch64/tcg-target.c.inc | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+>   tcg/riscv/tcg-target-has.h | 39 ++++++++++++++++++++++++++++++++++----
+>   tcg/riscv/tcg-target.c.inc | 34 +++++++++++++++++++++++++++++++++
+>   2 files changed, 69 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
