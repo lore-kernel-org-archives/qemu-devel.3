@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A017E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933E5E77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVs1d-0002lp-PW; Thu, 09 Jan 2025 07:52:37 -0500
+	id 1tVs3B-0003aN-Bc; Thu, 09 Jan 2025 07:54:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tVs1c-0002le-S6
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:52:36 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tVs1a-0007o1-3g
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:52:36 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5d41848901bso1663390a12.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:52:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736427151; x=1737031951; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/4K1Tzj+mjbPz6oH9xzb/Q/lOqYbIx8Zuv9auoeSrgs=;
- b=XCFicJ7M3t2XdgtZDIubjOL5mkNQPQX1Th2JVGPacGaRjUJVIQtGMDGWqN0K0sPu3/
- w+0gXqE38BZ4oJV9dSnLO0301sT974HhPqXKv0ucX/Ak8SZ7S+Q3sSc1ZkvKDifosWUP
- I48mr6yr7h/tfRt8suk3TH6vPctVOzfqAAAJhxlJnqC+jtn3IM2BiOdEq8fxpLN5xQgL
- OB6VUpOxT5iUB9TB5iZ/5yXNa1NS/Dk4DOLGPR2UZWnCsGkKVbujy4M86kVrFTi42uVo
- vEtxe/Z1qM2Ec6G8YpmtF3mvBcF4I5aT2pE2FtdFtbQ9smY5D26NhtjJ5Hm7cvGKbYxZ
- wS7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736427151; x=1737031951;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/4K1Tzj+mjbPz6oH9xzb/Q/lOqYbIx8Zuv9auoeSrgs=;
- b=PpsEdnasYRTHVI7b9pvVczrONz2U5BRsVcV+FWiLQA63rAl5VWEdzNBseA94HZbYiA
- AzyqHaSNqqujqymo+M1bXqrO+KI9sZWGifb0lhZw5lgujUzojlWak0H+9EgwJx7yrqPZ
- u81KG71zgZEXmPuYJsY0IoRWUGI3nxDcBTWjoMMqF5yl6z4ddW5tHvMULYhS4IMRU/I0
- IyP24HHMuV8I2c8OtOUrjWc8pH+iGaauSBj8hd1xuL42hvoVChUzlmqWkUs7UB2jnBpb
- np21Olf5VlbtxXnqKZqMZScOk+mQkjPoTwb571oj4MKeRu7mp4IRRTqs63nOpVGALgv7
- /KjQ==
-X-Gm-Message-State: AOJu0YwoM0eGOnB2EQO4hxi2nPG5YXdCQNOlzvs+ZMtyC2hB1nT6I0fk
- Q4UWMKv2ie0Khva5iU4DkZIDIjmq5NF1m526jj4G7fc79VA0MdpVoR99aJqtj4xzMP9vu6fVuNr
- 7MKP7HMTqfNC86/4/CTEgUrXWQTM=
-X-Gm-Gg: ASbGncvLxYE6fKrauhgkRqg7j+a99tELfvMyY9cbFx6It60bWXkm0ljgakQrXV5jAKM
- AMYcccxy0wQjDBLqdJ2ga6m8GSleASlEgkIyQ
-X-Google-Smtp-Source: AGHT+IHU6leJ5TPR8jV0KMNZTsfxT24LSsZs5XKvis7b9NUj4EW73IWq9OMz9yiLmeCQkWyvw6/S5+kfudsJnSIKC74=
-X-Received: by 2002:a05:6402:84d:b0:5d3:fcca:cab1 with SMTP id
- 4fb4d7f45d1cf-5d986288138mr2180966a12.15.1736427151239; Thu, 09 Jan 2025
- 04:52:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVs39-0003Zs-FB
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:54:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVs37-0008EB-MZ
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:54:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736427247;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OFr+G0E7HJSO4JRpez1IJnVPu5nfzTCvNLWFttvGt3I=;
+ b=h/usRCSs9bXMhBqzfhWApEQ/AO2jvf3/e5D32RvLB8iCmK+97qojR3kf/PBa9Z40a7kYo+
+ fFHuzFzr27rgckVurRgj07wxItalZu/An6Bp2ANVvMxIP6LBPNbFqFImh1lnZxn42sYJ5H
+ RThOUhFuzCInaTNhDwmuyNbbbpfq4QA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-iYSmV1eiNEKywzZ9cVtB-w-1; Thu,
+ 09 Jan 2025 07:54:04 -0500
+X-MC-Unique: iYSmV1eiNEKywzZ9cVtB-w-1
+X-Mimecast-MFC-AGG-ID: iYSmV1eiNEKywzZ9cVtB-w
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A0B41955DD0; Thu,  9 Jan 2025 12:54:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E724B19560AB; Thu,  9 Jan 2025 12:53:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C379121E6924; Thu, 09 Jan 2025 13:53:57 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Jason Wang <jasowang@redhat.com>,  Dmitry Fleytman
+ <dmitry.fleytman@gmail.com>,  Sriram Yagnaraman
+ <sriram.yagnaraman@ericsson.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Luigi Rizzo <rizzo@iet.unipi.it>,  Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>,  Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,  Yuri Benditovich
+ <yuri.benditovich@daynix.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Michael Roth <michael.roth@amd.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Lei Yang <leiyang@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 0/4] virtio: Convert feature properties to OnOffAuto
+In-Reply-To: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com> (Akihiko Odaki's
+ message of "Wed, 08 Jan 2025 15:17:49 +0900")
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+Date: Thu, 09 Jan 2025 13:53:57 +0100
+Message-ID: <87msg09mhm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250108111023.156073-1-dwmw2@infradead.org>
-In-Reply-To: <20250108111023.156073-1-dwmw2@infradead.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 9 Jan 2025 07:52:19 -0500
-X-Gm-Features: AbW1kvbRL6TWFrshipa1TsW0BOZv7uTDuBEqGiKdyLcSToKIICRvjhbP9zMMxT4
-Message-ID: <CAJSP0QUyq6RfYPPV2EXthMaLr82Z9htEohaP4f+P=MLUF=JCWg@mail.gmail.com>
-Subject: Re: [PULL 0/1] vmclock queue
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Peter Hilber <quic_philber@quicinc.com>, 
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>, paul <paul@xen.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,53 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Jan 2025 at 06:11, David Woodhouse <dwmw2@infradead.org> wrote:
->
-> From: David Woodhouse <dwmw@amazon.co.uk>
->
-> The following changes since commit 6528013b5f5ba6bb3934b7f5fe57a3110680530f:
->
->   Merge tag 'qga-pull-2025-01-06' of https://github.com/kostyanf14/qemu into staging (2025-01-06 09:39:02 -0500)
->
-> are available in the Git repository at:
->
->   git://git.infradead.org/users/dwmw2/qemu.git tags/pull-vmclock-20250108
->
-> for you to fetch changes up to 6502ea82b26dc28c83fbc9c766af7a408a8ca827:
->
->   hw/acpi: Add vmclock device (2025-01-07 16:22:04 +0000)
->
-> ----------------------------------------------------------------
-> Add vmclock device
->
-> ----------------------------------------------------------------
-> David Woodhouse (1):
->       hw/acpi: Add vmclock device
->
->  hw/acpi/Kconfig                              |   5 +
->  hw/acpi/meson.build                          |   1 +
->  hw/acpi/vmclock.c                            | 179 ++++++++++++++++++++++++++
->  hw/i386/Kconfig                              |   1 +
->  hw/i386/acpi-build.c                         |  10 +-
->  include/hw/acpi/vmclock.h                    |  34 +++++
->  include/standard-headers/linux/vmclock-abi.h | 182 +++++++++++++++++++++++++++
->  scripts/update-linux-headers.sh              |   1 +
->  8 files changed, 412 insertions(+), 1 deletion(-)
->  create mode 100644 hw/acpi/vmclock.c
->  create mode 100644 include/hw/acpi/vmclock.h
->  create mode 100644 include/standard-headers/linux/vmclock-abi.h
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-On IRC you mentioned that you'd like me to pick up this pull request.
-If the ACPI subsystem maintainers don't want to take this through
-their tree then let's set up pull request handling for vmclock:
+> This series was spun off from:
+> "[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
+> (https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
+>
+> Some features are not always available with vhost. Legacy features are
+> not available with vp_vdpa in particular. virtio devices used to disable
+> them when not available even if the corresponding properties were
+> explicitly set to "on".
+>
+> QEMU already has OnOffAuto type, which includes the "auto" value to let
+> it automatically decide the effective value. Convert feature properties
+> to OnOffAuto and set them "auto" by default to utilize it. This allows
+> QEMU to report an error if they are set "on" and the corresponding
+> features are not available.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-1. Add a MAINTAINERS file entry for vmclock covering the new files
-(e.g. hw/acpi/vmclock.c) with yourself as maintainer.
-2. Send pull requests with a GPG-signed tag (git tag --sign) and
-ensure that the repo URL in the email is https:// (the tooling rejects
-unencrypted http:// and git:// repo URLs).
+How is this related to "[PATCH v2 0/4] hw/pci: Convert rom_bar into
+OnOffAuto"?
+https://lore.kernel.org/all/20240714-rombar-v2-0-af1504ef55de@daynix.com/
 
-Thank you!
-
-Stefan
 
