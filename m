@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D10BE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B8CE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvze-0004l1-UW; Thu, 09 Jan 2025 12:06:50 -0500
+	id 1tVvzf-0004lD-NH; Thu, 09 Jan 2025 12:06:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzQ-0004hU-70
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:36 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1tVvzc-0004kN-60
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:48 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzO-0006zA-Kq
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:35 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-aaf60d85238so230470266b.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:34 -0800 (PST)
+ id 1tVvza-00071d-Ji
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:47 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5d982de9547so2088757a12.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736442393; x=1737047193; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736442405; x=1737047205; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8J/ApKgPVXOVC7MF+COAj1wGpBADeRQ/mLFnBALjiW0=;
- b=K9nnGKhQ3+F9O4UwB+iuOo1BoAbqrxPaGr3GakRokLdrUEpxCIQpP+/C4dBT5jZ1R0
- bNuPPwPH24wd565j7i3b/9krWgcQr2u3ZW9nTtyKz/PLzc7wj7BeqbUu6t+h1oPWv0ob
- fhfPEsy/0XQtwax2AzlFt9DkS4++T8U+vMc2mwsG2GnaVeCf5msmuuE0UP7r2vqikxXE
- Ed7rDbyIK58Wt6iTP8wa2ee7cNKexIlI09YER+4XE4JmQouI/Se/l2bPKng+8nyqlTQU
- TM04USxfwfq+PdS5OTuffIJxoj5GWfO0OaC+ZEIFVhmdtgca1YMSYjS/OI3psKvZ2KfL
- KhKg==
+ bh=4WxsgJL7chOGbG+/17n3vpjWqUAThC5sUhtSd92NFE0=;
+ b=vvYBbl19KP5MVN838skQ62mP6o9yCISQmJlcMNkBQKUcDU2oIvnOAXC+UNccEQqLhf
+ aj3muIL04sgnp6swsixCxArVBc47x7kl7OJ9RInQQM+e/8J2j0IEs6D7s3slBytBG4u0
+ UjeYuUhaAnNGgfJo0mnJ20R9M30eiX78Nh68Odu/W+pv/+5s6AMiCgb33EOiTpB3v6xw
+ h+5eapFeuNLcy6dVfg54uzaMM7GGr48nzzBhrGXM4jWn4spKycECA545U2EdAghV3MHG
+ Y1X4nPczhIx+1MogoJB767t1WA23wHED9Css9aVDlBTgJsbz4rSmKnkxqMokzSH3wp8Y
+ 2RdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736442393; x=1737047193;
+ d=1e100.net; s=20230601; t=1736442405; x=1737047205;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8J/ApKgPVXOVC7MF+COAj1wGpBADeRQ/mLFnBALjiW0=;
- b=DuDv2hT65uSZZ+BGd9bGC+rPQMFAvwA+O9NaoZLr37QYtJM5eN5B0wvuqO4tvAsZC6
- OKf0tBld5EnocTQjwosrPJxy8kjHXax8sZHpNUNsHVTKt440HKdk4Z3Y3lZ2ALJQKf+h
- 8WLCE82ehc+Yba17AHAAel15saT4IJAy7uOUnKMC15ABFM+a+1nxTSIHYcyM3a9sqaY3
- S+GisIttI7S9DuRbKEqGAcRdVlyGF5/TN9qy9xsLhpydkml1Lk04mqnRRS5HQFQgo/qb
- rOIKzKGhPcDyIcMSygMpkLZ1JtWpAs+rYr3AwXbgMb7q8mn7o//ShpQqDjatqoDpD0sG
- H3yA==
-X-Gm-Message-State: AOJu0YwFBXQlmK6KOAUS8CQcI7QCElhMZGE+bln2TeYQo5mSu6zAcpTU
- zsAssses6G9bRgN5y0UXxcDq0B47KKbLkzcloTuOZNitgJW/WAPUBZleCWP7opo=
-X-Gm-Gg: ASbGnctSmfeo/fTdz7qMtlu19OSePcA6CiZ4pboBd8+sVHQtv19KhfJyQ4Tm+nvVWm/
- T/nS5H2WILntC0Inx74Z4+lbSmrjAVS2D1KPRGmRG3kRhsV+2zBBcYhwwZrZiCp/T10oDiygpjC
- t8As0QpA0/kWOB2cmsEFOVefdejoQq+THZTJOqUwka58If1WaOMWBL+9cC4tplgGPYGi1M86HqE
- QeOSz9jzc8z88llHm4X7dOK4E2zAiSwVU6mr2IzYpMQs8DsLL/hcqw=
-X-Google-Smtp-Source: AGHT+IH1WwSrucQjhY5tgtkj2lKyMRqnqRWyp7oKmf6PMjNI2EgHOx43PLM6Tr5JRtG7Jb6BueVTig==
-X-Received: by 2002:a17:907:971e:b0:aa6:800a:1292 with SMTP id
- a640c23a62f3a-ab2ab70be05mr581209066b.25.1736442392804; 
- Thu, 09 Jan 2025 09:06:32 -0800 (PST)
+ bh=4WxsgJL7chOGbG+/17n3vpjWqUAThC5sUhtSd92NFE0=;
+ b=to9HsttrdUN4YnBtfyK5eRAalgoYxl/QLvbgz6xQr43h9mMOyU72F0UHMuxbliloGP
+ v5glvv3ib+d7MkcAIupU+NMuaBfh4vSUrv8rZ8HXqrxVGZSuz7aHuT42bHIZs7FOmiFW
+ WHop7a+WzvWYwE5Fyi2LAcbBcI8vebJajib3FuIjpo8zIP6oG/gVNNS7tiK3l9M254uf
+ T3F84mIkB4OFQtpQ5ZVdkQ35Cy5X5Xa9aUwa3kRTXG6sCW1LjimgCkduKw58h989RZsN
+ PLaFubBolWHuqwvQvFwV4ypbdtbuYiAVcGgr8+4YJyP0P+vdeKHYboOrvJi0vhv6LhUI
+ OWWw==
+X-Gm-Message-State: AOJu0YxoIW32tpR5dKQaOmFxcuEYJGIppM3fbjxy17AhYYzbIaq1sZXF
+ skSPMkLwk/SRTVlCZtZrIUOg9qq8KM53ciZ7czoVlO5Vz2q6z05WEe7sWAige+E=
+X-Gm-Gg: ASbGnctEvqTuoQUo0X1LHS24NyNQQDIhDlraGtaiG7VCDCiuoxIjDf+ZIWEtb3diGVK
+ ie+/rjddrJOJ4/hxbZ+jwmhhkJvRfc6cwevHzOXLVOTuhnwo5ECjtnQUxYTyV6HSTN8of+TgtUy
+ xOwANk4z8O2ldKKJlUNmjSv27OOvZ02WNNxGYoZjzNkrJyZ29s+rA4CKfoNMYxtFidR2HFrzYT1
+ tb6D9i8pP6fz+ThOQmtRzuEJyE5mJGiNLF+Z599w9GAuvY17a1R4y0=
+X-Google-Smtp-Source: AGHT+IFdJT8QZSt3ckJzPVfU/vpWIxhv53dQGCArdAhe2i/p/O+HRGOMjeyTPi7bS0L/GEKNmgXc5A==
+X-Received: by 2002:a05:6402:26c4:b0:5d0:cca6:233a with SMTP id
+ 4fb4d7f45d1cf-5d972e04ba8mr7336880a12.10.1736442404696; 
+ Thu, 09 Jan 2025 09:06:44 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c9564865sm89347666b.108.2025.01.09.09.06.23
+ 4fb4d7f45d1cf-5d9900c4b2fsm759923a12.29.2025.01.09.09.06.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 09:06:31 -0800 (PST)
+ Thu, 09 Jan 2025 09:06:38 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4311C5F9E2;
+ by draig.lan (Postfix) with ESMTP id E8B215FEF9;
  Thu,  9 Jan 2025 17:06:20 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,17 +74,18 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 05/22] semihosting/arm-compat: Include missing 'cpu.h' header
-Date: Thu,  9 Jan 2025 17:06:02 +0000
-Message-Id: <20250109170619.2271193-6-alex.bennee@linaro.org>
+Subject: [PATCH 12/22] contrib/plugins/howvec: ensure we don't regress if this
+ plugin is extended
+Date: Thu,  9 Jan 2025 17:06:09 +0000
+Message-Id: <20250109170619.2271193-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250109170619.2271193-1-alex.bennee@linaro.org>
 References: <20250109170619.2271193-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,38 +108,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-ARM semihosting implementations in "common-semi-target.h"
-must de-reference the target CPUArchState, which is declared
-in each target "cpu.h" header. Include it in order to avoid
-when refactoring:
-
-  In file included from ../../semihosting/arm-compat-semi.c:169:
-  ../target/riscv/common-semi-target.h:16:5: error: use of undeclared identifier 'RISCVCPU'
-     16 |     RISCVCPU *cpu = RISCV_CPU(cs);
-        |     ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250103171037.11265-4-philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241217224306.2900490-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- semihosting/arm-compat-semi.c | 1 +
- 1 file changed, 1 insertion(+)
+ contrib/plugins/howvec.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index d78c6428b9..86e5260e50 100644
---- a/semihosting/arm-compat-semi.c
-+++ b/semihosting/arm-compat-semi.c
-@@ -166,6 +166,7 @@ static LayoutInfo common_semi_find_bases(CPUState *cs)
+diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
+index 9be67f7453..2aa9029c3f 100644
+--- a/contrib/plugins/howvec.c
++++ b/contrib/plugins/howvec.c
+@@ -253,6 +253,8 @@ static struct qemu_plugin_scoreboard *find_counter(
+     int i;
+     uint64_t *cnt = NULL;
+     uint32_t opcode = 0;
++    /* if opcode is greater than 32 bits, we should refactor insn hash table. */
++    G_STATIC_ASSERT(sizeof(opcode) == sizeof(uint32_t));
+     InsnClassExecCount *class = NULL;
  
- #endif
+     /*
+@@ -284,7 +286,7 @@ static struct qemu_plugin_scoreboard *find_counter(
  
-+#include "cpu.h"
- #include "common-semi-target.h"
+         g_mutex_lock(&lock);
+         icount = (InsnExecCount *) g_hash_table_lookup(insns,
+-                                                       GUINT_TO_POINTER(opcode));
++                                                       (gpointer)(intptr_t) opcode);
  
- /*
+         if (!icount) {
+             icount = g_new0(InsnExecCount, 1);
+@@ -295,8 +297,7 @@ static struct qemu_plugin_scoreboard *find_counter(
+                 qemu_plugin_scoreboard_new(sizeof(uint64_t));
+             icount->count = qemu_plugin_scoreboard_u64(score);
+ 
+-            g_hash_table_insert(insns, GUINT_TO_POINTER(opcode),
+-                                (gpointer) icount);
++            g_hash_table_insert(insns, (gpointer)(intptr_t) opcode, icount);
+         }
+         g_mutex_unlock(&lock);
+ 
 -- 
 2.39.5
 
