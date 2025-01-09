@@ -4,64 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7307E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC24E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVpY4-0005m2-SZ; Thu, 09 Jan 2025 05:13:56 -0500
+	id 1tVpiY-0007dE-U8; Thu, 09 Jan 2025 05:24:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
- id 1tVpY3-0005lo-31
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:13:55 -0500
-Received: from mail.xenproject.org ([104.130.215.37])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
- id 1tVpY1-0008RG-JX
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:13:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date;
- bh=9tmbhfhUfBgbbojY26HWM7Bm8oOBTYN0N1sCjYdDK/o=; b=DxY3FbPQPuQw1c5MViigEAbIP8
- MZ1jDg09m7OpztLiJhAPUD0FpbQY7szXezM3Pbw2Y4kg1hqAY+IjNQKzysuznc0Zb/HUmaQAiT0ht
- StUM8NiNtULQltoN5gU4afQohn4GJNzpW16WsGfDRJmzEkhJ7IKoPHM58AJxiRtrULMM=;
-Received: from xenbits.xenproject.org ([104.239.192.120])
- by mail.xenproject.org with esmtp (Exim 4.96)
- (envelope-from <anthony@xenproject.org>) id 1tVpXw-00CjsF-08;
- Thu, 09 Jan 2025 10:13:48 +0000
-Received: from lfbn-gre-1-248-145.w90-112.abo.wanadoo.fr ([90.112.205.145]
- helo=l14) by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <anthony@xenproject.org>) id 1tVpXv-009DaG-37;
- Thu, 09 Jan 2025 10:13:48 +0000
-Date: Thu, 9 Jan 2025 11:13:45 +0100
-From: Anthony PERARD <anthony@xenproject.org>
-To: Roger Pau Monne <roger.pau@citrix.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 1/2] xen/console: fix error handling in
- xen_console_device_create()
-Message-ID: <Z3-hWRLyMldV4ZZD@l14>
-References: <20250107093140.86180-1-roger.pau@citrix.com>
- <20250107093140.86180-2-roger.pau@citrix.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tVpiV-0007cW-90; Thu, 09 Jan 2025 05:24:44 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tVpiT-0001xD-M4; Thu, 09 Jan 2025 05:24:43 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5d4e2aa7ea9so1367590a12.2; 
+ Thu, 09 Jan 2025 02:24:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736418278; x=1737023078; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eRoIMIi21M6vwwNhicE57OWAMwS939scuKW+CkLRrQU=;
+ b=hi0ihbhG4NO19tFSlNu33FC/XEK89SNBU1ENu+Bh7LpAQleat/G6jh2i1EpXAH0Wz9
+ FT9rkac//8Q3UOg/nKuFdVOiH+JZ0reeZosHQaeDEcbqJp/CH/kneNYvRyoBCVYuxgTA
+ ikq8m0NsFTGSfw/evtjG2x3Az5d32Ymsf5fD4NzrK7qeVyj+8UeiYN6zc8zULq2TAb44
+ njqsh3TLcqWxCQJjwCsJI1XEf3xRSglpzzOg4rPDHQYsnYmlKUheMznipXpesafb4wLW
+ jTxuFtwSPjLoclmMhGCELAVG/+rlm7Ji1NdLSOZV6rtJHahEIM4JYksLbq0dUjx6qPPR
+ wcdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736418278; x=1737023078;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eRoIMIi21M6vwwNhicE57OWAMwS939scuKW+CkLRrQU=;
+ b=rKO2vfwZuVOvEXuhtdfp/LH5qX5X6iXCtC2yTGXbghahkn7bYlGlJTzSZN3JTUxUuB
+ vy8VfCVjdC8wqUcEoD0KEd0XIM28LJ/N3CLoBGItm97CbIeVikmFmGEyrBDjvD1y0YM1
+ G4dR1+l6W2y63xc5CESHvR/8yCAJjwxOHsVZgiVJndjK88u1ngrY9OuebhUJ6C2fTJ3y
+ r9qDWuWCy3scpPOOOElPPQ9tcfHV6IVIexnXv099v6UcgMFAyPpfOxXl5I3v8tkJ0tre
+ dED1CCnbOwX2iMM2r6MdLrYzMhxi1lNxYPRRXahNz2DcLBDCZ/80EdU23e71S9PXIl6U
+ 3FnA==
+X-Gm-Message-State: AOJu0YxmVgtRuYgp2Cctu2qB2HEchZTwLgSSKQYdF7bFK3CdN6YKPtvK
+ /CiK2xwDzQy512CYNFQwsoQSvz++UBIQUsdikCwzV44Aesc15A1cImD7xw==
+X-Gm-Gg: ASbGncuU2jOKBEp2neXSv4ORjjG9ZY9AouX7jbWnUTu8ab/SumPAD8znTnNk+pINR4L
+ Er+eSNwM0FWZspNbvVjZJdHfBnWHGShhru1HdofIhWubRwaSG8v6Lvh/iQkQr1c4Gy8TMOVwcqe
+ 5FHrh7l1SQlwWnPM6Lg1u+zntu6NqBzUgDRV8VKHesG2/G7D2o9gAXdeX1UhnRnK/TdpEg2m6Hh
+ UmEellTMdTQYsEm9KSfN2ljO5poeHndCe8PflfDEmqDYU/QVW2sQNGuI9jXK0GehT1/AI9VXuX4
+ +xkO9h1ro7xBC4H9GnOKFWkThDI=
+X-Google-Smtp-Source: AGHT+IGvM+7zjK+tMjQ22rYH5fH10GqZ2E+FNoe2hw10reyOoVcXvzcNG558UZASvDHxl2ipxToCWA==
+X-Received: by 2002:a17:906:fd87:b0:aab:cce0:f8b4 with SMTP id
+ a640c23a62f3a-ab2abc9ed6cmr533032966b.52.1736418278097; 
+ Thu, 09 Jan 2025 02:24:38 -0800 (PST)
+Received: from [127.0.0.1] (business-90-187-110-129.pool2.vodafone-ip.de.
+ [90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c90d52edsm56810166b.42.2025.01.09.02.24.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 02:24:37 -0800 (PST)
+Date: Thu, 09 Jan 2025 10:22:58 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+CC: qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+Subject: Re: [PATCH] hw/sd/sdcard: Remove sd_set_cb()
+In-Reply-To: <76dfa092-7d20-46db-beb1-43848cb5ee4f@linaro.org>
+References: <20250108100240.960593-1-clg@redhat.com>
+ <76dfa092-7d20-46db-beb1-43848cb5ee4f@linaro.org>
+Message-ID: <B66657AC-BD7E-4F5B-ABC4-FF373279FEC3@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250107093140.86180-2-roger.pau@citrix.com>
-Received-SPF: pass client-ip=104.130.215.37;
- envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,82 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 07, 2025 at 10:31:39AM +0100, Roger Pau Monne wrote:
-> The usage of error_prepend() in some of the error contexts of
-> xen_console_device_create() is incorrect, as `errp` hasn't been initialized.
-> This leads to the following segmentation fault on error paths resulting from
-> xenstore reads:
-> 
-> Program terminated with signal SIGSEGV, Segmentation fault.
-> Address not mapped to object.
->     fmt=0x15c4dfeade42 "failed to read console device type: ", ap=0x15cd0165ab50)
->     at ../qemu-xen-dir-remote/util/error.c:142
-> 142         g_string_append(newmsg, (*errp)->msg);
-> [...]
-> (gdb) bt
->     (errp=0x15cd0165ae10, fmt=0x15c4dfeade42 "failed to read console device type: ", ap=0x15cd0165ab50) at ../qemu-xen-dir-remote/util/error.c:142
->     (errp=0x15cd0165ae10, fmt=0x15c4dfeade42 "failed to read console device type: ")
->     at ../qemu-xen-dir-remote/util/error.c:152
->     (backend=0x43944de00660, opts=0x43944c929000, errp=0x15cd0165ae10)
->     at ../qemu-xen-dir-remote/hw/char/xen_console.c:555
-> 
-> Replace usages of error_prepend() with error_setg() where appropriate.
-> 
-> Fixes: 9b7737469080 ('hw/xen: update Xen console to XenDevice model')
-> Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-> ---
->  hw/char/xen_console.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-> index ef0c2912efa1..af706c7ef440 100644
-> --- a/hw/char/xen_console.c
-> +++ b/hw/char/xen_console.c
-> @@ -551,7 +551,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
->      }
->  
->      if (xs_node_scanf(xsh, XBT_NULL, fe, "type", errp, "%ms", &type) != 1) {
-> -        error_prepend(errp, "failed to read console device type: ");
-> +        error_setg(errp, "failed to read console device type: ");
-
-According to error_setg() doc, *errp must be NULL but xs_node_scanf may
-set it. Looking at the implementation, error_setg() seems to simply
-discard this new error message if *errp is already set.
-
-Currently, when there's an I/O error, we get something like:
-    failed to read console device type: failed to read from /xenstore/path: doesn't exist
-and when the format scan failed:
-    SEGV
-
-With this patch, when there's an I/O error, I think we get something
-like:
-    failed to read from /xenstore/path: doesn't exist
-and when the format scan failed:
-    failed to read console device type: 
 
 
-So I think we'll want to distiguish between IO error from
-xs_node_scanf() and format error, first one returns EOF (like vsscanf)
-and second one returns a value >= 0 but we expect exactly 1.
+Am 8=2E Januar 2025 10:43:07 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <ph=
+ilmd@linaro=2Eorg>:
+>On 8/1/25 11:02, C=C3=A9dric Le Goater wrote:
+>> Last user of sd_set_cb() was removed in commit ce5dd27534b0 ("hw/sd:
+>> Remove omap2_mmc device")=2E
+>
+>https://lore=2Ekernel=2Eorg/qemu-devel/20240903200446=2E25921-2-philmd@li=
+naro=2Eorg/
+>;)
 
+https://lore=2Ekernel=2Eorg/qemu-devel/20250108092538=2E11474-8-shentey@gm=
+ail=2Ecom/ ;)
 
->          goto fail;
->      }
->  
-> @@ -582,7 +582,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
->      } else if (number) {
->          cd = serial_hd(number);
->          if (!cd) {
-> -            error_prepend(errp, "console: No serial device #%ld found: ",
-> +            error_setg(errp, "console: No serial device #%ld found: ",
->                            number);
-
-This change looks correct, ableit we could remove ":  " from the end of
-the string since they shouldn't be anything after it.
-
-
-Cheers,
-
--- 
-Anthony PERARD
+>
+>>=20
+>> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
+>> ---
+>>   include/hw/sd/sdcard_legacy=2Eh | 1 -
+>>   hw/sd/sd=2Ec                    | 8 --------
+>>   2 files changed, 9 deletions(-)
+>
+>
 
