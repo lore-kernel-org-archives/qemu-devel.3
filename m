@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B049E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 22:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D2FE7719C
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 22:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW0p8-0004cf-02; Thu, 09 Jan 2025 17:16:18 -0500
+	id 1tW109-0005vK-A6; Thu, 09 Jan 2025 17:27:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tW0p5-0004cG-1W
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 17:16:15 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tW0p3-0002nu-Nh
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 17:16:14 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509DbTZf027783;
- Thu, 9 Jan 2025 22:16:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=CrVFm2
- vvzaVCtKoxnEKdqjeX4pKleh7dEFGSjwFFhqo=; b=IG5XmhssDhVx/egTHbe0M2
- yy+Z7ZAfkuasKAJPl+nUggT0BWtBOuCwR4j2VSbxLlYw/hvpVF0zREWKLdSscxWX
- SnH0ij99I9KmBVoGHdLSFXzU/QMIG5r/zz0VooCFcPY3OyH+u0jgRZtgE2Kek332
- z4OPqDvcH6v/l52OuBE6aFithVXcJOF/j/3XWv0gzoGc3wznSKw5hoCdTesKnj2M
- BViIduyvUrVtnDXGdZvx7KjxkUg8IH7ha3zA6n4MnIY24vA7YeNz5qMfDLhG6jMW
- gZeh/txZToEaxLekcrynaRfQM8UIdmfYsCQhe6+5Y9o5dqD8RpCCAa8kq5H79bjQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44236b57p3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jan 2025 22:16:09 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 509KJOFV015851;
- Thu, 9 Jan 2025 22:16:08 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygtm796h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jan 2025 22:16:08 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 509MG6v650463062
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jan 2025 22:16:06 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 580AA20063;
- Thu,  9 Jan 2025 22:16:06 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D1F1B2005A;
- Thu,  9 Jan 2025 22:16:05 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Jan 2025 22:16:05 +0000 (GMT)
-Message-ID: <aa3ccf2bce7fbb884fdc229c2bf534a2b5fc014a.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] accel/tcg: Factor out common tcg_exec_reset() helper
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>, Riku
- Voipio <riku.voipio@iki.fi>, Richard Henderson
- <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
-Date: Thu, 09 Jan 2025 23:16:05 +0100
-In-Reply-To: <20250102182521.65428-3-philmd@linaro.org>
-References: <20250102182521.65428-1-philmd@linaro.org>
- <20250102182521.65428-3-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW107-0005v0-I4
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 17:27:39 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW106-0003sm-0k
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 17:27:39 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4361b6f9faeso9478595e9.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 14:27:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736461656; x=1737066456; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2A3/hRtCtyWIqGeK5SwuKAvx7AqF6RwYbdQxqZ3bIHw=;
+ b=AiA3c7xEXLWslOeLzyf3xx0/Kww0Zr3y4Pv0igmm4ckwmgfcdAJjrmUa1pM/qHS5h3
+ VImYbOeSIOiswviDzA0bHHEYXSjqn/wCTWXJMHaeajn6dYSFF4GO0ZBYV0LQDAEpVJ9q
+ ei6yHW+ChGKqb8LdfMQMAfwm0XG1P0HJXVoxqBQM2Rw51XPsFyX+nmp7Vo8yWjOmi+JI
+ Kw1c+t2fWZoJctEq42u6pzTN5+m20n1VrbIvfgePngIBxZfCSOQ9f5pI/tp7ywcqf5HZ
+ 1yA9oCMwcO61m0dM6uLy6ladUVsJVbgAOBqi1njWfz9ghUPpbAcOcGG4dVmwBk2Uvn1y
+ 2N4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736461656; x=1737066456;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2A3/hRtCtyWIqGeK5SwuKAvx7AqF6RwYbdQxqZ3bIHw=;
+ b=HfRngjlpC2OE0po3Sjpl0aadXqixCxyI0JXoFhVoBlpFbBg5zutE0cmMlKmz/ajW4W
+ N+BOQYJQ392dFCoNXokwt9LGwTpf0APEOM0jtW1QdEb8ug1Z1iuJfvhBiYTbp4A1Lp32
+ VsBCzY3DpQSmDAicocoZVWWwwDlIywWQBU7y8K/6TTWTRip+s33bICthhM9LwCFnPBjU
+ wshmv8e/gN9Y7OnNgzEp9gOkcS3L7tC0FmnSj7N/zPQqCEwwkf+v9HkhiJ4xJCF+Soyo
+ 8DCJ+NcnjFBQZMjxPKN6xeDJEIXV30rxfTW7Q64Ar/hoLc3QBTOrT7Mt4MqFR8imleTl
+ 1W1w==
+X-Gm-Message-State: AOJu0YwC3gdO26zC5QU+BRLo1V64pL2FVe+GQmahvbMV5PvBXZ73dWVJ
+ PV7vcNFxCGWvb37tS7LpmfxHSf63ZUiwm/xTrUwOfcVSGZ+wUhJnk9u4BF+hq+E=
+X-Gm-Gg: ASbGncspRstnIJUaYqk4owBJYXKnplQHss/844EO4bF33TWXfBMtdc3PoPdw/PynI07
+ 9CTDBP71APQxQf9XIaiZ10T7+bXXNN8YqEwmf/IqVxzQ/d3Rialw7VfPTD5xHNrLBS1Os3aOAFA
+ CxPbNfS7cBJHK63IPegPhc4khaRJiN82afZq7rmmSmOJzicDQQX0kbPh/4r/8qSRFbogpzxY/7l
+ kn4DGah4UKULXgt/3+R3SRt77B6sW2+eXiFzJ6PLm5N210YWJd0Ygd2WIBtq73LTC55kC8V/0Qj
+ m4LZCaPeYGx0clVnRga6gjVftnE=
+X-Google-Smtp-Source: AGHT+IE2Xvf5guDu4uooh4NL9rVcfGNXM5AahnQ8lW9T92bQP5kgJloSSZXgUf6sxhF0V8RpWiy4LQ==
+X-Received: by 2002:a05:600c:1c9b:b0:434:ffb2:f9cf with SMTP id
+ 5b1f17b1804b1-436e9d80fc4mr35942935e9.14.1736461656348; 
+ Thu, 09 Jan 2025 14:27:36 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9e37d69sm32955605e9.30.2025.01.09.14.27.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 14:27:34 -0800 (PST)
+Message-ID: <b46d7d01-ae4d-4c47-a3df-93ad46ff6a1d@linaro.org>
+Date: Thu, 9 Jan 2025 23:27:33 +0100
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 5qPaa07p23Xeuj2HuDWzfPluM3ovHRc9
-X-Proofpoint-ORIG-GUID: 5qPaa07p23Xeuj2HuDWzfPluM3ovHRc9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- malwarescore=0 mlxscore=0 mlxlogscore=810 lowpriorityscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501090173
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/22] system: propagate Error to gdbserver_start (and
+ other device setups)
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Thomas Huth <thuth@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250109170619.2271193-1-alex.bennee@linaro.org>
+ <20250109170619.2271193-11-alex.bennee@linaro.org>
+ <da769717-0823-45b4-8b1c-9fd2611d0092@linaro.org>
+ <87bjwf6abf.fsf@draig.linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87bjwf6abf.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,18 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-01-02 at 19:25 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> Since tcg_cpu_reset_hold() is a system emulation specific
-> helper, factor tcg_exec_reset() out so we can use it from
-> user emulation, similarly to the [un]realize() handlers.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> =C2=A0accel/tcg/internal-common.h | 1 +
-> =C2=A0accel/tcg/cpu-exec-common.c | 6 ++++++
-> =C2=A0accel/tcg/tcg-accel-ops.c=C2=A0=C2=A0 | 4 ++--
-> =C2=A03 files changed, 9 insertions(+), 2 deletions(-)
+On 9/1/25 20:45, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+>> On 1/9/25 09:06, Alex Bennée wrote:
+>>> This started as a clean-up to properly pass a Error handler to the
+>>> gdbserver_start so we could do the right thing for command line and
+>>> HMP invocations.
+>>> Now that we have cleaned up foreach_device_config_or_exit() in
+>>> earlier
+>>> patches we can further simplify by it by passing &error_fatal instead
+>>> of checking the return value. Having a return value is still useful
+>>> for HMP though so tweak the return to use a simple bool instead.
+>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>>>
+>>
+>> <snip>
+>>
+>>> -static int gdbserver_open_port(int port)
+>>> +static int gdbserver_open_port(int port, Error **errp)
+>>
+>> Did you mean:
+>> static bool gdbserver_open_port...?
+> 
+> yes, yes I did. Will fix.
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+This is returning a socket file descriptor, why bool?
+
+> 
+>>
+>> With that,
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
 
 
