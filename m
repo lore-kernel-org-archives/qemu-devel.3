@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D88E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB7BE77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVq5s-0005bZ-0p; Thu, 09 Jan 2025 05:48:52 -0500
+	id 1tVq5t-0005cC-8m; Thu, 09 Jan 2025 05:48:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+2ecee9f010fd6b9329bb+7809+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1tVq5p-0005YD-8q
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:48:49 -0500
-Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ <BATV+10359aeb926cd7703950+7809+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tVq5p-0005YH-KD
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:48:50 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+2ecee9f010fd6b9329bb+7809+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1tVq5n-0007D8-6f
+ <BATV+10359aeb926cd7703950+7809+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tVq5n-0007Cv-6f
  for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:48:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:
- Content-ID:Content-Description:In-Reply-To:References;
- bh=z4x1H6xjja6RODmOND3tieoUmn/C9w3hi8f31PApUYM=; b=IRqwKXK6wi2G42bt9zDvhElRvk
- PWBZABcnP10FQyiHhQnDVYRMUmx0aQIVbvqIPbi39INfa4lnEIKjF6knvsBYl/cvWyVpyrcE+1OXz
- 9hS14dZ41X2mvTaE8ANYzZpbJLXp7MhqE5gabv41obzczA3KAKOKuUwZLhFxB/Uy1g+BrNm9CnFeW
- t1gHaWuLeJNEqcsY7MhAmRJD864aLMZMZGnA4D5coTMptDjFvHySyS5YZvm1OwKLyQGZ0n5FKxqLV
- SisjvX4vfEKKrUFvxCQFUObNQyN24FkG/sQB5jCvPZdqYmYTxbV365Xj9ENNeuobcQWLm/TES0Irc
- xznEPqtQ==;
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:
+ To:From:Reply-To:Content-ID:Content-Description;
+ bh=gEEm0XmWgGxYNqlZSR/BIfsrWHk/pz1tfIvuH5Me270=; b=twL6bHT4E47Yme/UfySWkqm+jb
+ yccVUq/OWEZg6R6kBqSQSB2xs7h3pFWMxG2cL4MIkN+dFz1EtSHPZFgh/eX4vuA2fjL+1JFXZkOf/
+ 4Fr1fN/eBrK0sWofgI5p1rSU5/LSA4j4GsHKLiu/5PthPaoUnZAcvSDdXG+clZeETC9nRnBJwIFYz
+ Ar34JkJT/mV8pR0UagFa5V5ZyV1F0PseW7De7sEQDVlEnXQX81Mb8vDtu08PvTIRND2ETjZfBm5Cn
+ kBtX9hcAmjYMD0ISTpH8DMU6W2PEdQzswn3UbXWvoAXCvFDyLCsv9T1mwamqe7AW4VXTyqkqHb9v4
+ B93v+aGw==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tVq5f-00000009Y3v-3Bf8; Thu, 09 Jan 2025 10:48:40 +0000
+ by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tVq5e-00000005P9n-2B7e; Thu, 09 Jan 2025 10:48:38 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
- Linux)) id 1tVq5d-0000000Acl0-4BB1; Thu, 09 Jan 2025 10:48:37 +0000
+ Linux)) id 1tVq5e-0000000Acl6-0Lx7; Thu, 09 Jan 2025 10:48:38 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S . Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
@@ -46,18 +46,20 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 0/2] xenfv queue
-Date: Thu,  9 Jan 2025 10:48:35 +0000
-Message-ID: <20250109104837.2532259-1-dwmw2@infradead.org>
+Subject: [PULL 2/2] hw/xen: Check if len is 0 before memcpy()
+Date: Thu,  9 Jan 2025 10:48:37 +0000
+Message-ID: <20250109104837.2532259-3-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250109104837.2532259-1-dwmw2@infradead.org>
+References: <20250109104837.2532259-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
- envelope-from=BATV+2ecee9f010fd6b9329bb+7809+infradead.org+dwmw2@desiato.srs.infradead.org;
- helo=desiato.infradead.org
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+10359aeb926cd7703950+7809+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -80,33 +82,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The following changes since commit 3f8bcbba3b320c610689576fc47595f1076198dd:
+data->data can be NULL when len is 0. Strictly speaking, the behavior
+of memcpy() in such a scenario is undefined so UBSan complaints.
 
-  Merge tag 'pull-request-2025-01-08' of https://gitlab.com/thuth/qemu into staging (2025-01-08 11:38:21 -0500)
+Satisfy UBSan by checking if len is 0 before memcpy().
 
-are available in the Git repository at:
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+ hw/i386/kvm/xen_xenstore.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-  git://git.infradead.org/users/dwmw2/qemu.git tags/pull-xenfv-20250109-1
+diff --git a/hw/i386/kvm/xen_xenstore.c b/hw/i386/kvm/xen_xenstore.c
+index 5969105667..17802aa33d 100644
+--- a/hw/i386/kvm/xen_xenstore.c
++++ b/hw/i386/kvm/xen_xenstore.c
+@@ -532,6 +532,10 @@ static void xs_read(XenXenstoreState *s, unsigned int req_id,
+         return;
+     }
+ 
++    if (!len) {
++        return;
++    }
++
+     memcpy(&rsp_data[rsp->len], data->data, len);
+     rsp->len += len;
+ }
+-- 
+2.47.0
 
-for you to fetch changes up to b6014c5089a313ac84fe74970eee56e3fc87b49b:
-
-  hw/xen: Check if len is 0 before memcpy() (2025-01-09 10:43:13 +0000)
-
-----------------------------------------------------------------
-Xen emulation fixes
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      hw/xen: Check if len is 0 before memcpy()
-
-David Woodhouse (1):
-      hw/i386/pc: Fix level interrupt sharing for Xen event channel GSI
-
- hw/i386/kvm/xen_evtchn.c   | 60 ++++++++++++++++++++++++++++++++++++----------
- hw/i386/kvm/xen_evtchn.h   |  2 +-
- hw/i386/kvm/xen_xenstore.c |  4 ++++
- hw/i386/x86-common.c       | 32 ++++++++++++++++---------
- 4 files changed, 73 insertions(+), 25 deletions(-)
 
