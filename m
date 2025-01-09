@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B391CE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218D7E77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVptf-0002Ke-GA; Thu, 09 Jan 2025 05:36:15 -0500
+	id 1tVpy6-0003FQ-WF; Thu, 09 Jan 2025 05:40:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVptV-0002K0-4b
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:36:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVptT-0005FI-P3
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:36:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736418960;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Jai8jvUDA1gIzaSIcxh6F5HonR30p3ctLIBQLS6kYAs=;
- b=NNmXxjhYUYmgYpnNB2m+QIyTa0/x289ni73lNnJFgKfNSTO8aEdHbGuvXoCzn6wzDumcSG
- zsvgu1894I8iQNimE4jqFrqLDutEF4PhVYP9Bm355BqtVmlmnmPKfWTn0Z/HKf5O8ymT2t
- 33rFRnLclAxvR9nI99nMV1OYBPFXP54=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-lJs8w9XnMbCs3hAKMyDnCA-1; Thu,
- 09 Jan 2025 05:35:57 -0500
-X-MC-Unique: lJs8w9XnMbCs3hAKMyDnCA-1
-X-Mimecast-MFC-AGG-ID: lJs8w9XnMbCs3hAKMyDnCA
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5819F1955DCB; Thu,  9 Jan 2025 10:35:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C1EFC19560AB; Thu,  9 Jan 2025 10:35:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 881CB21E6924; Thu, 09 Jan 2025 11:35:53 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 17/23] docs/qapidoc: record current documented entity in
- transmogrifier
-In-Reply-To: <CAFn=p-Y4AwYfgCVAWJ-tTCjnr0dwJ6EOnF4aNYXdd5VPTr__DQ@mail.gmail.com>
- (John Snow's message of "Wed, 8 Jan 2025 16:11:24 -0500")
-References: <20241213021827.2956769-1-jsnow@redhat.com>
- <20241213021827.2956769-18-jsnow@redhat.com>
- <878qsa302b.fsf@pond.sub.org>
- <CAFn=p-Y4AwYfgCVAWJ-tTCjnr0dwJ6EOnF4aNYXdd5VPTr__DQ@mail.gmail.com>
-Date: Thu, 09 Jan 2025 11:35:53 +0100
-Message-ID: <87o70gs29i.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVpy1-0003ED-Bf
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:40:45 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVpxx-0006QL-8j
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:40:44 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-aa6c0dbce1fso111421666b.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 02:40:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736419238; x=1737024038; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KNY9UDW3SddgF1XxwN+STkrhkBMltkGqpGwuospRT1U=;
+ b=qEazp6DiUiMn+wsKsUWq7siPw2V9s15WtxBmohn55GLblAuiVURMpg1uOIicm2NAI/
+ pHj59KVJX1MFu96B/23egFKEUDB7N95zvrkOqMBGKx6hfj1jDChOihSvUzAa9UukFuOE
+ /+D1+zAKK8ZwIJjXZDpQ+bUcYWzwL2nwismVjjqC1nPZEeM4LHU7UDzbCf0g6TnA9BRx
+ h7klD03echyq6fquTN/5JZ7LB4k/YyvYVcHtJCu6NE0MINVf0ZvEIF5B4MH8FXilypCx
+ G916i+i3w2G1FOj0+cy3S5nBAbaff0OT7S3wpIjF+ruaW+lxl32SvXykmCW+uxG7Yc3s
+ e2HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736419238; x=1737024038;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KNY9UDW3SddgF1XxwN+STkrhkBMltkGqpGwuospRT1U=;
+ b=S3d88H7GxwvNqKDexChg4MHVssG9cyK4M8xTeJT6sdCA2pQfQaFS0Z63piDLUBmWVW
+ DanuvKffCw7cHNxxsQtWNoyqm8amvUAzB/71o3nN0w+tvX/Qt59Z3ny2z2uTjnU7KmBX
+ snSxUK7HAIWN9baRQd95oBe5oIxJdmbiyPWlIJ4GwSyvAf6oyALe0Z7ius8/R516Zet/
+ Kt0YXmBBluShDXpYtb2AN0V37SKCm4qRytXxW8+ETJhPRfpKU+NUcJfuj9Ozte3+c+eG
+ q3u1B8kGyLgJ55cTju/fIThIEepyM4XQUiw6DAfdNweH1J8cDt1jWhIPU//itz04qtFz
+ M/MQ==
+X-Gm-Message-State: AOJu0Yy9Iqg5R9LKuePdC8L9+GrHCmZyIa2mDx//pgbHBC582Tgas22g
+ L40RNFCLuaoZUhvDLZCFKu7rZSbjRwCavVsPSlE07ArvW+8OMTMo+ZzyCbPt0BQ=
+X-Gm-Gg: ASbGncvd6JXtqMfkSj9LKz6yeMz5GxHJZkHRlWPyfXTN0fmyyKDV4VNjCvh8Ct5zUCe
+ nRXbNs9JfxM0QHtlO+ailaNOaODI+f82Mmx+R8caUoDTPgm+vja8ZQwdO2X0qMftVbkCQpwY6bw
+ 72vBjE9Q/sXbnJnDbtcdKwtoG4x773t4ocLjEAXBt2VzDExwLuUTeSSOv7VutRy12Ec3jymt2JF
+ RDSFRQ5GWGpZa5JjbTQdSzHjdW21rZr9dIuXpBjJVycMvx29ov3kmc=
+X-Google-Smtp-Source: AGHT+IF89mXwXzaZzGvlrUkSCriVSFrH0a80X8csuICcvWdEiNZOYWfFZj2lv1rDbw/QLFR2dZSnbQ==
+X-Received: by 2002:a05:6402:520d:b0:5d9:ae5:8318 with SMTP id
+ 4fb4d7f45d1cf-5d972e1da12mr13600948a12.20.1736419238435; 
+ Thu, 09 Jan 2025 02:40:38 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c95af424sm58054466b.137.2025.01.09.02.40.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jan 2025 02:40:37 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6DD565F87E;
+ Thu,  9 Jan 2025 10:40:36 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Leif Lindholm <quic_llindhol@quicinc.com>,  Leif Lindholm
+ <leif.lindholm@oss.qualcomm.com>,  Marcin Juszkiewicz
+ <marcin.juszkiewicz@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Radoslaw Biernacki <rad@semihalf.com>,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 0/5] target/arm: implement SEL2 physical and virtual
+ timers
+In-Reply-To: <20241218181511.3575613-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 18 Dec 2024 18:15:06 +0000")
+References: <20241218181511.3575613-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 09 Jan 2025 10:40:36 +0000
+Message-ID: <87cygw9snv.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,33 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-> On Fri, Dec 20, 2024 at 9:23=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
+> Follow Peter's review I've split this into a several patches as there
+> are some other fixes that should be made to other EL2 times that
+> shouldn't be rolled together.
 >
->> John Snow <jsnow@redhat.com> writes:
->>
->> > Keep a record of which entity we're working on documenting for the
->> > purposes of being able to change certain generative features
->> > conditionally and create stronger assertions.
->> >
->> > If you find yourself asking: "Wait, but where does the current entity
->> > actually get recorded?!", you're right! That part comes with the
->> > visit_entity() implementation, which gets added later.
->>
->> That's fine, except your title promises "record current documented
->> entity".  Perhaps "Prepare to record entity being transmogrified".
->>
+> v2
+>   - split machine enabling into patches
+>   - rename IRQ
+>   - use CP_ACCESS_TRAP_UNCATEGORIZED for UNDEF cases
 >
-> Sometimes, I think I exist in a time and space that doesn't actually exis=
-t;
-> a hallucination of multiple timelines that might exist only in my own
-> consciousness. I'd be worried if I wasn't an ardent solipsist.
+> v1
+>   - improve GTIMER docs
+>   - fix gt_recalc bug
+>   - address review comments for the main patch
+>   - cc qemu-stable (no rush for 9.2.0)
+>
+> The following still need review:
+>
+>   hw/arm: enable secure EL2 timers for sbsa machine
+>   hw/arm: enable secure EL2 timers for virt machine
+>   target/arm: implement SEL2 physical and virtual timers
+>   target/arm: ensure cntvoff_el2 also used for EL2 virt timer
 
-I'm glad I haven't caused you worry!  Perhaps I should try this
-solipsism thing myself some day.
+Gentle ping - I think everything is ready for merging.
 
-[...]
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
