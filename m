@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E79E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 16:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A34E77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvoc-0000ji-O7; Thu, 09 Jan 2025 11:55:26 -0500
+	id 1tVvzd-0004kZ-7T; Thu, 09 Jan 2025 12:06:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roger.pau@cloud.com>)
- id 1tVvob-0000jW-Bo
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:55:25 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVvza-0004jf-QO
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:47 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roger.pau@cloud.com>)
- id 1tVvoZ-00054e-F1
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:55:24 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5d3cf094768so1843990a12.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 08:55:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVvzY-00070t-NH
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:46 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-aa6a92f863cso241074266b.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1736441721; x=1737046521; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=cAZUAQvOu49U0hMeCh88veBnObf9ztRSpbDykRVZvls=;
- b=MZq/wlDtzNKxyfLrdFTJRqa/CXIkceyfcLc4t6va90r6/uGLr6RhCUgr1WTUtfpb1D
- XRqlQpXiLjVPAGaFqLdWUyv0PnS1h95y18phA3XfyHK8gO6nqZSJTZd+ZY/gHguTQLa9
- UtmRp/v5VrSkKKQFuII/IjbvyDRIsHD7doBD0=
+ d=linaro.org; s=google; t=1736442402; x=1737047202; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xbdq8PuzmcKgRuOS6aY93DBa464+R41QKxYxX1E5oro=;
+ b=qRA0C7Pnvk3CrPfvG/QzWuEmWmTOkfgRfg7E3BjXjo/94RdsMctt2qs1nxzgS1+Jog
+ qhhQhpvTuVmSiP8tJBEtHive7Bq27gh4+2XnpzluT+3y3Fi6kuLRlvNmSNuVZsaN0MM1
+ Drlbj1f2iEad/1JRWWzz841u+J3v4ne5h6sRa4WyRyNP0Wq3kpT1WwDsybcIaP51aOMo
+ 0UQ5uXTj1mdpimt5CAHbPxnr64ncrijF71sTpsxA3SnrqUuz1G4UFMBwFYOZucrwVbui
+ y4lT80mn0HF65dZZPzfS3Rs0SkeSFYS9THd0I/Bg6ifamU84Eknklefl1KFkER7YrpAB
+ YFTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736441721; x=1737046521;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cAZUAQvOu49U0hMeCh88veBnObf9ztRSpbDykRVZvls=;
- b=b4Qu3b2qNBG9bcgDHqb6MeiGX1k/QzasugigyOoUKxzGXXEnCgn19/IeFyHmHd8Kmg
- HYWo6nUjJLq7lVJmLKFKFSATW+R6Vlui1BrSDl5G3DDZzOK1XlvqWcV3I++rKwYt9PSJ
- 7FeQ7HBVdCDGgp8w9RU5CZ08JvxFw8+IOf88sQvVtQjKOoOsWmMcmJccFZNjQjtZ+oFX
- pAhVS/eNs/+m336FBnrgIKdsk0tFvAQkURgNEoDA9NuElnnnAjLep7DqNK9F9/I/frOJ
- pU2bN6qEAaJSfDGgeDAUyZCd9B0rbe6GlOjIjK0HfgeAhOTxuyVDP3XTaB/RddYKR/zP
- EHsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUADUo/htPvyjG3/VqNhXON+Oq6FritPzTSzdw7lnT9h5xA76RRaDYnOHO5qHGPpDhlxZ/sctD8ecfk@nongnu.org
-X-Gm-Message-State: AOJu0YyO/s+AWlDRnGa07+0g58kebp1lf5HTr0ncw0+3N9Obwd4FKzB3
- xszXrw7SSWh+7lAv0pMzhMmu6b3IahAHH5V2lOWuQQ2dunRjMPM8D5HHwF7P6ww=
-X-Gm-Gg: ASbGncuBSIaCQvZBIi1yAtP6DvFZLahiBDxrPguvzbuplPKqau7Mpmg30Qdj7IDneiK
- iJyOAsOJ7xkvHvHrPG5eTOVDianwxrspazG3YFYkjTe089mw7uFzcsrt4dKn5aURhbmIKokz3+o
- GsrpxrkKOprEBCJJKLNPH55rVO10aoMg0e+8XvxHEGupdOkA2AX5md6VUXpcTpYO8ytNAyri2ug
- AUt8Rz9TsQ74dAEJgMpJe3QaMKmzEz9RLx2t4qrgPHIPQb2S+fBFyDV5yzsmvlH9xA=
-X-Google-Smtp-Source: AGHT+IEPfaoIteOnCS1BZkrnCp2XmLg4coGnDJ6lEs9RhKv2NEsZx36bQjMcFZH/VY0iyaYox8xY1g==
-X-Received: by 2002:a17:907:1c24:b0:aa6:85d0:1492 with SMTP id
- a640c23a62f3a-ab2abc6d423mr636122966b.37.1736441721609; 
- Thu, 09 Jan 2025 08:55:21 -0800 (PST)
-Received: from localhost ([84.78.159.3]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c9060bccsm87855766b.22.2025.01.09.08.55.21
+ d=1e100.net; s=20230601; t=1736442402; x=1737047202;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xbdq8PuzmcKgRuOS6aY93DBa464+R41QKxYxX1E5oro=;
+ b=FleZ6/KJXi8I71HefJdSeZctby8QVG8ZcsQEK81HXy5xhD9TkxMNocCMgcdNOhUQgv
+ BqiF+C18kPGA52UxVytzbe62bRamvWMecLZ6Gz7QXY0y9Cu6WUIVjkqZ8ni4/0cNsSIf
+ TiuxRuKdLB7r2gNng2XbYjM6oHBpgbrLwVa6Linu1gk7mJM3ckBeA54buCfrNvDUUm7J
+ eCmoLtj3ZU0c+fA7lkN0XDiTWYIjIrsLv+ANNrwReHF0KdP9UbSNO+l11fxsvzmOTnC9
+ D1y8cNWTni6//sqq+MWkkID2BDrUkVcvECedLAWQGPlbx6UFXOWWj+GYsQ5d2WQ8hjzh
+ +/tw==
+X-Gm-Message-State: AOJu0YzacUn5LIf6VmtWE5cKTjEEaHIobe/P9cLEvLsFAPKy2m7IuHI6
+ WTRAsRuZ0umsgKfoixYAZgjck/M0fKkcbDVUfIhJ3BtyDH1pdceBHubM0yAFY/I=
+X-Gm-Gg: ASbGncvdWR4lW2X+yGvbGXV/htEeHO9rGjuuxIiALK+zEA/viH6U+TBP2lS/+4A2eA2
+ vK+tlit9KltXJEdi8F1sAN8HIZ1K6yHw4FU5FgK0h0TWNBG13iUFnsY8i6yDI+YCUTkkS6oTt1F
+ Y9g3g9jclqG2sf3Ln5CAYebioB60r6IE5rp9fZAL5244CskdXuGyLDQvjhk6bqVUo6sPGhzHoV/
+ JvWEWWvCClOIzZhelSR6zu3E3ChElILazZNfVO5j6i804OB5FScOWk=
+X-Google-Smtp-Source: AGHT+IH6dT8d2jMmByGgSiYPn+KIYll83lFCU9Zm9sA4wwWr4o0xgsoLPDJlKYrCMx7BNMY5nIWCVA==
+X-Received: by 2002:a17:907:3f86:b0:aa6:c169:4e21 with SMTP id
+ a640c23a62f3a-ab2ab6a8e8emr619263266b.6.1736442401987; 
+ Thu, 09 Jan 2025 09:06:41 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c956258fsm89110266b.107.2025.01.09.09.06.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 08:55:21 -0800 (PST)
-Date: Thu, 9 Jan 2025 17:55:20 +0100
-From: Roger Pau =?utf-8?B?TW9ubsOp?= <roger.pau@citrix.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Anthony PERARD <anthony@xenproject.org>, qemu-devel@nongnu.org,
- Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 2/2] xen: do not use '%ms' scanf specifier
-Message-ID: <Z3__eDp4hShe79Pl@macbook.local>
-References: <20250107093140.86180-1-roger.pau@citrix.com>
- <20250107093140.86180-3-roger.pau@citrix.com>
- <Z3-sJMXpiFUoATHz@l14>
- <974ab6743d168d34babd458fe5e2e7766bb280b4.camel@infradead.org>
+ Thu, 09 Jan 2025 09:06:38 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2436260132;
+ Thu,  9 Jan 2025 17:06:21 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 14/22] tests/tcg/plugins/mem: fix 32-bit build
+Date: Thu,  9 Jan 2025 17:06:11 +0000
+Message-Id: <20250109170619.2271193-15-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250109170619.2271193-1-alex.bennee@linaro.org>
+References: <20250109170619.2271193-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <974ab6743d168d34babd458fe5e2e7766bb280b4.camel@infradead.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=roger.pau@cloud.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,37 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 09, 2025 at 11:25:13AM +0000, David Woodhouse wrote:
-> On Thu, 2025-01-09 at 11:59 +0100, Anthony PERARD wrote:
-> > 
-> > >       char label[32];
-> > >       XenDevice *xendev = NULL;
-> > >       XenConsole *con;
-> > > @@ -550,7 +551,10 @@ static void xen_console_device_create(XenBackendInstance *backend,
-> > >           goto fail;
-> > >       }
-> > >   
-> > > -    if (xs_node_scanf(xsh, XBT_NULL, fe, "type", errp, "%ms", &type) != 1) {
-> > > +    node_path = g_strdup_printf("%s/type", fe);
-> > > +    type = qemu_xen_xs_read(xsh, XBT_NULL, node_path, NULL);
-> > > +    g_free(node_path);
-> > 
-> > I feel like we want "xs_node_read()" which would be similair to
-> > xs_node_vscanf() but would simply return the result of
-> > qemu_xen_xs_read(). This would avoid the need format of the node path in
-> > several place in the code. But it's OK like that as well.
-> 
-> If you look at the other callers of qemu_xen_xs_read(), it looks like
-> the majority of them create the path with snprintf and then pass it in.
-> Or with g_strdup_printf(), pass it in, then free it afterwards.
-> 
-> So perhaps qemu_xen_xs_read() should be a printf-style function too,
-> with its last arg(s) being the node name.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-I just went with Anthony suggestion and introduced xs_node_read(), as
-I didn't want to play with qemu_xen_xs_read().  Not that I think the
-suggestion is not valid, just seemed more work than what I wanted to
-do right now.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241217224306.2900490-5-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/tcg/plugins/mem.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Thanks, Roger.
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index b0fa8a9f27..d87d6628e0 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -135,14 +135,14 @@ static void update_region_info(uint64_t region, uint64_t offset,
+     g_assert(offset + size <= region_size);
+ 
+     g_mutex_lock(&lock);
+-    ri = (RegionInfo *) g_hash_table_lookup(regions, GUINT_TO_POINTER(region));
++    ri = (RegionInfo *) g_hash_table_lookup(regions, &region);
+ 
+     if (!ri) {
+         ri = g_new0(RegionInfo, 1);
+         ri->region_address = region;
+         ri->data = g_malloc0(region_size);
+         ri->seen_all = true;
+-        g_hash_table_insert(regions, GUINT_TO_POINTER(region), (gpointer) ri);
++        g_hash_table_insert(regions, &ri->region_address, ri);
+     }
+ 
+     if (is_store) {
+@@ -392,7 +392,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+ 
+     if (do_region_summary) {
+         region_mask = (region_size - 1);
+-        regions = g_hash_table_new(NULL, g_direct_equal);
++        regions = g_hash_table_new(g_int64_hash, g_int64_equal);
+     }
+ 
+     counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
+-- 
+2.39.5
+
 
