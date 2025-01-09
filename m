@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8ACE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 07:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF73EE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 08:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVnOU-0006gF-9z; Thu, 09 Jan 2025 02:55:54 -0500
+	id 1tVnTB-0007V7-Vg; Thu, 09 Jan 2025 03:00:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVnOH-0006fF-2g
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 02:55:46 -0500
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVnT8-0007Ux-RB
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 03:00:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tVnOD-0004gQ-Mv
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 02:55:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736409338; x=1767945338;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=pyZmZFyKDBHekyYEQGRVyICCu9kWdK7pV256wvcoNRI=;
- b=f4Mpp2XjNlDd9GcQgEAKN2laCYE99/7/WyDXsWncYJcDtjegYOgz3ls3
- JrbXydJyoG+a4QGd43ILqnzlYlaXtdHyJ9xihTTCFhK9I7C3fRPptaMtH
- IqqBGpJI3P3sjL9whfrEW7iQGIY1gIy1ya0S3eppgb5Y/ifohCDKVMiVX
- txmJyrZIaf9Zx4Uf0v8WpFu+fBG+eV+uNF7YN31KpYCO91FlrbIgYWlGz
- Roopc1Tel6l1OgLa/qj77JB+AqcrgH6yAsFWYFUknHC1aLsPgpuo6wFDe
- IB9DUSWL7FknYmgCC3HxzpctIo8IJzli0zJUII/lNhu2lewlW/Zi4vC7a A==;
-X-CSE-ConnectionGUID: tgJCSFVaR9manGK2YRCAKA==
-X-CSE-MsgGUID: q9KA5WRyR3eUT0BC5yd+Ug==
-X-IronPort-AV: E=McAfee;i="6700,10204,11309"; a="36885075"
-X-IronPort-AV: E=Sophos;i="6.12,300,1728975600"; d="scan'208";a="36885075"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jan 2025 23:55:31 -0800
-X-CSE-ConnectionGUID: In0HEq3YQQWKLhk9Q1wvMg==
-X-CSE-MsgGUID: WI+43nBfQFaAxKWBm/njXA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,300,1728975600"; d="scan'208";a="103872722"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 08 Jan 2025 23:55:28 -0800
-Date: Thu, 9 Jan 2025 16:14:17 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 5/7] memory: Register the RamDiscardManager instance upon
- guest_memfd creation
-Message-ID: <Z3+FWW9v3QqL/gEw@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-6-chenyi.qiang@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVnT4-0005Iu-10
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 03:00:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736409636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7yjJuauq7x2OldAm+jaA68Jr/YS6BukR/kZE0GH2y0A=;
+ b=eIzcNgC1wffX6it3g1WuhMCJNNyOQPHcLl57eRBdNyKqfo+SmwU61JBJzkwTGv1U0FFRPi
+ 8mmAl4GrKBu/W3dH60ZkG+/CJR6wMabFUdMRQ0WjN/aCI2j/4P+gSji8q2PlXe17Gy/uoh
+ W0JMW32dH6PYQeHAzcDZJuMVxrev/Pk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-EbznLtnrNamxzqm8nKHVNg-1; Thu,
+ 09 Jan 2025 03:00:33 -0500
+X-MC-Unique: EbznLtnrNamxzqm8nKHVNg-1
+X-Mimecast-MFC-AGG-ID: EbznLtnrNamxzqm8nKHVNg
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3435D19560AB; Thu,  9 Jan 2025 08:00:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1867A19560AD; Thu,  9 Jan 2025 08:00:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CF44821E6924; Thu, 09 Jan 2025 09:00:28 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 09/23] qapi/source: allow multi-line QAPISourceInfo
+ advancing
+In-Reply-To: <CAFn=p-YBsJBNFWrX=XLF1TaWPjSA5kNhg3spf83Cw9_JnS2_pw@mail.gmail.com>
+ (John Snow's message of "Wed, 8 Jan 2025 16:18:07 -0500")
+References: <20241213021827.2956769-1-jsnow@redhat.com>
+ <20241213021827.2956769-10-jsnow@redhat.com>
+ <87h66y4hgl.fsf@pond.sub.org>
+ <CAFn=p-YBsJBNFWrX=XLF1TaWPjSA5kNhg3spf83Cw9_JnS2_pw@mail.gmail.com>
+Date: Thu, 09 Jan 2025 09:00:28 +0100
+Message-ID: <87plkwto0z.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241213070852.106092-6-chenyi.qiang@intel.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,41 +91,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->  #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-> @@ -1885,6 +1886,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->              qemu_mutex_unlock_ramlist();
->              goto out_free;
->          }
-> +
-> +        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(object_new(TYPE_GUEST_MEMFD_MANAGER));
-> +        guest_memfd_manager_realize(gmm, new_block->mr, new_block->mr->size);
+John Snow <jsnow@redhat.com> writes:
 
-realize & unrealize are usually used for QDev. I think it's not good to use
-*realize and *unrealize here.
+> On Fri, Dec 20, 2024 at 8:22=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > This is for the sake of the new rST generator (the "transmogrifier") so
+>> > we can advance multiple lines on occasion while keeping the
+>> > generated<-->source mappings accurate.
+>> >
+>> > next_line now simply takes an optional n parameter which chooses the
+>> > number of lines to advance.
+>> >
+>> >
+>> > RFC: Here's the exorbitant detail on why I want this:
+>> >
+>> > This is used mainly when converting section syntax in free-form
+>> > documentation to more traditional rST section header syntax, which
+>> > does not always line up 1:1 for line counts.
+>> >
+>> > For example:
+>> >
+>> > ```
+>> >  ##
+>> >  # =3D Section     <-- Info is pointing here, "L1"
+>> >  #
+>> >  # Lorem Ipsum
+>> >  ##
+>> > ```
+>> >
+>> > would be transformed to rST as:
+>> >
+>> > ```
+>> > =3D=3D=3D=3D=3D=3D=3D        <-- L1
+>> > Section        <-- L1
+>> > =3D=3D=3D=3D=3D=3D=3D        <-- L1
+>> >                <-- L2
+>> > Lorem Ipsum    <-- L3
+>> > ```
+>>
+>> I can't help to wonder...  Could we simply use rST markup instead?
+>>
+>> "Later", "maybe later", or even "please ask me later" would be perfectly
+>> acceptable answers.
+>>
+>
+> Yeah, I'd be happy with that, I just didn't want to add more complexity to
+> the pile so I went for what I felt was "simplest":
 
-Why about "guest_memfd_manager_attach_ram"?
+Avoiding mission creep is good.
 
-In addition, it seems the third parameter is unnecessary and we can access
-MemoryRegion.size directly in guest_memfd_manager_realize().
+> - Leave source syntax alone
+> - Copy and modify the existing freeform doc parser
+> - Quickly allow for multi-line advancing where it appeared to be importan=
+t.
+>
+> Modifying freeform syntax to be purely rST that isn't modified or rewritt=
+en
+> at all has benefits:
+>
+> - No need to mangle or multiplex source line source information
+> - Less code
+> - More straightforward
+>
+> I'm quite happy to do it later, is there some kind of "ticket" system you=
+'d
+> tolerate using for tracking nits for cleanup? I *will* forget if we don't
+> listify and track them, I'm sorry (but wise enough) to admit. I just don't
+> want to get sidetracked on little side-quests right now. (Quite prone to
+> this...)
 
->      }
->  
->      ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-> @@ -2139,6 +2143,9 @@ static void reclaim_ramblock(RAMBlock *block)
->  
->      if (block->guest_memfd >= 0) {
->          close(block->guest_memfd);
-> +        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(block->mr->rdm);
-> +        guest_memfd_manager_unrealize(gmm);
+TODO comment in code this would obviously kill?  Not exactly a ticket
+system...
 
-Similiarly, what about "guest_memfd_manager_unattach_ram"?
+scripts/qapi/TODO?  Still not a ticket system...
 
-> +        object_unref(OBJECT(gmm));
->          ram_block_discard_require(false);
->      }
->  
+Other ideas?
 
-Regards,
-Zhao
+>> > After consuming the single "Section" line from the source, we want to
+>> > advance the source pointer to the next non-empty line which requires
+>> > jumping by more than one line.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > ---
+>> >  scripts/qapi/source.py | 4 ++--
+>> >  1 file changed, 2 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
+>> > index 7b379fdc925..ffdc3f482ac 100644
+>> > --- a/scripts/qapi/source.py
+>> > +++ b/scripts/qapi/source.py
+>> > @@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
+>> >          self.defn_meta =3D meta
+>> >          self.defn_name =3D name
+>> >
+>> > -    def next_line(self: T) -> T:
+>> > +    def next_line(self: T, n: int =3D 1) -> T:
+>> >          info =3D copy.copy(self)
+>> > -        info.line +=3D 1
+>> > +        info.line +=3D n
+>> >          return info
+>> >
+>> >      def loc(self) -> str:
+>>
+>> Assuming we need this:
+>> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
+> Thanks! We can always drop stuff later if we wind up not needing it, it's
+> just a means to an end.
+
+Yes, and this one isn't exactly a complexity bomb :)
 
 
