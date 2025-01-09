@@ -4,63 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD217E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA3BE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVqGb-0002fz-Lc; Thu, 09 Jan 2025 05:59:57 -0500
+	id 1tVqOd-0004if-Ao; Thu, 09 Jan 2025 06:08:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
- id 1tVqGa-0002fg-8X
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:59:56 -0500
-Received: from mail.xenproject.org ([104.130.215.37])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
- id 1tVqGY-0000VJ-36
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:59:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date;
- bh=Xb8WmGVRb/vr/z5nwf4UmXY3kfsCsZcEmJes/p0baWo=; b=ghRRgBC3k/9uFoYqGU8pKpLzEL
- LnxzcjNJZxalmdPHZz3imf+etNf2Lu0rvndDrdIVCEIFVFV4iXiJdkhqW3/InpA8M9r2M8Y8bHHdK
- wm+dk2HNMDKVolfJP+CBYaMILNQ2dQe7dobqc3tcRBSGSrochTA2alblX0PkQITE8oSA=;
-Received: from xenbits.xenproject.org ([104.239.192.120])
- by mail.xenproject.org with esmtp (Exim 4.96)
- (envelope-from <anthony@xenproject.org>) id 1tVqGU-00Ckur-38;
- Thu, 09 Jan 2025 10:59:51 +0000
-Received: from lfbn-gre-1-248-145.w90-112.abo.wanadoo.fr ([90.112.205.145]
- helo=l14) by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <anthony@xenproject.org>) id 1tVqGU-009H4r-2j;
- Thu, 09 Jan 2025 10:59:51 +0000
-Date: Thu, 9 Jan 2025 11:59:48 +0100
-From: Anthony PERARD <anthony@xenproject.org>
-To: Roger Pau Monne <roger.pau@citrix.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 2/2] xen: do not use '%ms' scanf specifier
-Message-ID: <Z3-sJMXpiFUoATHz@l14>
-References: <20250107093140.86180-1-roger.pau@citrix.com>
- <20250107093140.86180-3-roger.pau@citrix.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tVqOb-0004iS-Rb
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:08:14 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tVqOZ-0002gV-Rs
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:08:13 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2efd81c7ca4so1067876a91.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:08:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736420890; x=1737025690;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qrZ34Yt+E9yeUIj956uMzWETJkcLW+RsxmJW/rJJr4I=;
+ b=E19vL0nEvQlmaPLLy8Ix3b3TthQI21ar1wJ/V6JZPm6byp3AZ7JlMEoSUQs8L7EOpp
+ 2f2EtLi8bo/aTF3tbA6lvpZeJwO0ulaBLaK+FG+wRgzDlEx6hRSLwGKbAH77SKqx6KhO
+ OcnfwjfLxt5bHe5UHLmwZiw3kiou418JqGcnxLLYNgZL3yRkb2W6dG22iyTf1Eo4eKkd
+ 2heZmHedt1d6CpBCAlTn+TEkP3eu3K6YlXNTRBJe7OLmTgnjwHwq0CIBnxtad3/876pG
+ CIjjGWaecNhpktBO4ehx+p6DnO/PdvPwEYqEBxQp7YoDGZcsmX5REWjwuh8JR+/V8OJa
+ ib0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736420890; x=1737025690;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qrZ34Yt+E9yeUIj956uMzWETJkcLW+RsxmJW/rJJr4I=;
+ b=EgZv5Ua1YqXH6NHAP6i39EfiUyb/ajF9eAaqJrSc6gxLao8nK1BArZycxTXGWDK/+i
+ cTEy38Lgx3/vqKkc9g9XTpIHY50YoqqjNqkzKdljhwVGTiOgo6E3zwNU6EF9uTlCyO/y
+ IOvRs6p5es0qOWAOvQmQzw8cJAKwpM54QhKoEDSALB5lWGz7R6YS5Vlp13uEwVe5ZnlV
+ h225ugHONszxj9id4ObWyOLGQl/t7loikETQ2GXXbq8f5nfw8cppJtPtTKvP3vz2q7rZ
+ 1JmeIu4ro84ZEUEPzWxI8YxbAHz6MWd1+sMvlnvtAH4o8Osl+FBqzDjVqKXMulcYLX/o
+ es1g==
+X-Gm-Message-State: AOJu0YyA68e5da22ZQeFt/cm69INq98qarFmDUAhTxj+armuv+hmJFe/
+ fByAYioxlssnoYkqIU/vifjk15HYzReWa3SuBW0bPquFpA89JJDiwyQh+VRSYIY=
+X-Gm-Gg: ASbGnctJsCBiatjPVuRjwIQo/BBqBYGAQ6Z6PEwN5XPMMxaw3iYCvmXnTg0BRU627wj
+ zgFwOE02IJILrRMOUpolbDd2vIXh+vj5mBGcvTSaqmJ1Imtf4S+HO6AM9YWvHkZ7FyCfGoGF96w
+ IilsWnfLjTaYMvIonTsPCBMZwnLfvT99ATJAmv8pVLgnan7CfTxENPKLw08ksdw4i7k0j8AB8QF
+ c+ptGUvxh75dRWrd8AUi+zAs3//WjjJfSRgGzxtoG/GUEGFOzZC3RVUOmK5K7nsbYI=
+X-Google-Smtp-Source: AGHT+IHm6pbGlPasUfC2a+YpodYF8x0eh1k7Uz8zjqlev4csoLTuzBhGq2X2Ppt0F8IPWf1b79eRaA==
+X-Received: by 2002:a17:90b:3a0c:b0:2ee:accf:9685 with SMTP id
+ 98e67ed59e1d1-2f548ea4c98mr8939825a91.4.1736420889707; 
+ Thu, 09 Jan 2025 03:08:09 -0800 (PST)
+Received: from [157.82.203.37] ([157.82.203.37])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dca02397sm344569625ad.238.2025.01.09.03.08.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 03:08:09 -0800 (PST)
+Message-ID: <e340ea4b-3d8d-4b08-a1af-6514fab838a2@daynix.com>
+Date: Thu, 9 Jan 2025 20:08:03 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/4] virtio: Convert feature properties to OnOffAuto
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Dmitry Fleytman
+ <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Lei Yang <leiyang@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
+ <ab58d4f7-6c73-4cf0-846c-ff20e3f5b481@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <ab58d4f7-6c73-4cf0-846c-ff20e3f5b481@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250107093140.86180-3-roger.pau@citrix.com>
-Received-SPF: pass client-ip=104.130.215.37;
- envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,55 +115,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 07, 2025 at 10:31:40AM +0100, Roger Pau Monne wrote:
-> The 'm' parameter used to request auto-allocation of the destination variable
-> is not supported on FreeBSD, and as such leads to failures to parse.
+On 2025/01/09 19:56, Philippe Mathieu-Daudé wrote:
+> On 8/1/25 07:17, Akihiko Odaki wrote:
+>> Some features are not always available with vhost. Legacy features are
+>> not available with vp_vdpa in particular. virtio devices used to disable
+>> them when not available even if the corresponding properties were
+>> explicitly set to "on".
+>>
+>> QEMU already has OnOffAuto type, which includes the "auto" value to let
+>> it automatically decide the effective value. Convert feature properties
+>> to OnOffAuto and set them "auto" by default to utilize it. This allows
+>> QEMU to report an error if they are set "on" and the corresponding
+>> features are not available.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
+>>   hw/core/machine.c          |  4 +++-
+>>   hw/virtio/virtio-bus.c     | 14 ++++++++++++--
+>>   hw/virtio/virtio.c         |  4 +++-
+>>   4 files changed, 39 insertions(+), 21 deletions(-)
 > 
-> What's more, the current usage of '%ms' with xs_node_scanf() is pointless, as
-> it just leads to a double allocation of the same string.  Instead use
-> qemu_xen_xs_read() to read the whole xenstore node.
 > 
-> Fixes: a783f8ad4ec9 ('xen: add a mechanism to automatically create XenDevice-s...')
-> Fixes: 9b7737469080 ('hw/xen: update Xen console to XenDevice model')
-> Signed-off-by: Roger Pau Monn� <roger.pau@citrix.com>
-> ---
->  hw/char/xen_console.c | 11 +++++++++--
->  hw/xen/xen-bus.c      |  7 +++++--
->  2 files changed, 14 insertions(+), 4 deletions(-)
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index c949af97668d..bff26b95dd74 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -36,7 +36,9 @@
+>>   #include "hw/virtio/virtio-iommu.h"
+>>   #include "audio/audio.h"
+>> -GlobalProperty hw_compat_9_2[] = {};
+>> +GlobalProperty hw_compat_9_2[] = {
+>> +    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
+>> +};
+>>   const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
 > 
-> diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-> index af706c7ef440..18afd214c2f6 100644
-> --- a/hw/char/xen_console.c
-> +++ b/hw/char/xen_console.c
-> @@ -531,6 +531,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
->      const char *name = xen_backend_get_name(backend);
->      unsigned long number;
->      char *fe = NULL, *type = NULL, *output = NULL;
-> +    const char *node_path;
+> 
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index 85110bce3744..83f803fc703d 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -4013,11 +4013,13 @@ static void 
+>> virtio_device_instance_finalize(Object *obj)
+>>   }
+>>   static const Property virtio_properties[] = {
+>> -    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+>> +    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
+>>       DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+>>       DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, 
+>> use_disabled_flag, true),
+>>       DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+>>                        disable_legacy_check, false),
+>> +    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
+>> +                     force_features_auto, false),
+> 
+> This doesn't seem an experiment, so can we not use the 'x-' prefix?
 
-Is "const" correct when we are changing to which string `node_path` is
-pointing at? Also, why "const"? Also, compiler complains that we can't
-free a "const something*".
-
->      char label[32];
->      XenDevice *xendev = NULL;
->      XenConsole *con;
-> @@ -550,7 +551,10 @@ static void xen_console_device_create(XenBackendInstance *backend,
->          goto fail;
->      }
->  
-> -    if (xs_node_scanf(xsh, XBT_NULL, fe, "type", errp, "%ms", &type) != 1) {
-> +    node_path = g_strdup_printf("%s/type", fe);
-> +    type = qemu_xen_xs_read(xsh, XBT_NULL, node_path, NULL);
-> +    g_free(node_path);
-
-I feel like we want "xs_node_read()" which would be similair to
-xs_node_vscanf() but would simply return the result of
-qemu_xen_xs_read(). This would avoid the need format of the node path in
-several place in the code. But it's OK like that as well.
-
-Cheers,
-
--- 
-Anthony PERARD
+I put x- prefix because it is only intended to be used for compatibility 
+purpose and users will not be interested in this.
 
