@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BDDE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A972EE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVrFx-0004dD-GG; Thu, 09 Jan 2025 07:03:21 -0500
+	id 1tVrGx-0005Ed-68; Thu, 09 Jan 2025 07:04:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVrFw-0004cQ-1o
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:03:20 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVrGt-00059G-6i
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:04:19 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVrFu-0003Je-HC
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:03:19 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-aab6fa3e20eso160744866b.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:03:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVrGr-0003jT-LC
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:04:18 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3862a921123so546834f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:04:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736424197; x=1737028997; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TctM9tPlNSHj1T8mh1Qrv+3PKR9QCM9/IuTpKZPwInk=;
- b=g8lIzJycQrsfPSt+BpoCuA1+kayAIX51y5ZgAsvI0OG+L26V0iWqE9Gm8+4Uwds6Y/
- x88BWOBnWwXGHTFhlORDp9vQOm/dcdw+xf8NSPEG5W2zPJR76EN1uO6Nw+xVaI7qBEis
- qqb5zU8RDEQqxzKx7m060xgW0ONb3/MbM9oiercgIWXnjlfjx5FdfzQOHVXYZEXgVXjP
- hfKwYrnIp+45G+xiuhrByKjwyhtqFC6o6pHod0WChxIpdNZvTUXsB0+8KqnhjYdt5FwD
- p4MDQLTFoFrPDcgkSYaw63o0QF3lKXOHlrYgTvO+NtbJbYrqiGiBJzay6tu/IqMCy2+r
- BwPA==
+ d=linaro.org; s=google; t=1736424254; x=1737029054; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=a+R6pBhsZXgc3wkYvoH6TSplCUmeXxZ7KzHdQ8M9T0s=;
+ b=W3MnFn7Hi8XP8VYPgOSz8LzYYPl5nW6GwIllJEeudYfxzyNKiK5bC61X2MBHOw99NY
+ ZoP/tjDsF5r3qkQrwarUKrJwzBm82lSmlpiNEvoMK3/RxCc6D/k5G5kCOm8GWyQBly8I
+ xoL9VaqlUJnkHFwuNonc7GGQCR1meHKJOrG/dPDEFw157pRa8c7MbATTYtwWWw5YXRYY
+ Vyhi8LncdvmQSlAAePgcCRI+BhGawXDfdMF143t40wXmGGJXQkfx2Bc5b06oL28B6Xoa
+ fbG9p/rTfkw5/1D8U8rItfGNloJvO1FDwEa3taLM/nRtt0qoA5tEQtLU4Hlpn6Z1TZ8Q
+ 1IGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736424197; x=1737028997;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TctM9tPlNSHj1T8mh1Qrv+3PKR9QCM9/IuTpKZPwInk=;
- b=FxY6r6yqhoGS8CmjFNWb0yBqWIDIj4qEN5Du8+N+dpfETi6Cx2mcnNETegA+WzUK/m
- stbn3+R5jSyWWDXQYwOOoBrW2CowFyuWZ2wVuNGdQDj2gzHKPIqn3TebUXxn2f/qgfnt
- k6AkQKu1MQdip3G9PYWUgSp0sLQ98J7bo30SM1ZOo0bh5F+LCnyBLQII+f+oYYQjvEJU
- ewJ87T1Hr9qOqRqtQRk4b1iTMUAwoQn57z1qEZ4tk4neDBVvViD/CJHLVOLJoPeHmtfF
- fS2q7DbGP5O5uS8fDe/wGUvwLoujll7dI6c2T+Fj4zYCcrHLoDnyyhiecLT0weBHsLPK
- heiw==
-X-Gm-Message-State: AOJu0YyvU5SiyYaU8lp7XXGxsA/cXVFAn8245HUrAjR5BVLTkN27uFc2
- zmoigmeFBKM6HnVW9j9HcpF87F+THvjZsffUMV1AeEokDY+CZsCPyoGEHmjni1o=
-X-Gm-Gg: ASbGncvy3GoKXR3RsFIcqutglRPlJXpCXoYPwy1e7pcFLwOrcRXA8mlMIzCUbudFpbV
- HgZlqgsHDiydLN6aV2Zeg5iodYQAZtxq5+KQrnjmf4ILWPYhG3T6RGscG3tbBAQ2WmhuD4xlWtZ
- SM6IVgOkBC0y2Q9JMIU2daUlizP66wsDXvCvmTH6Tf4dT3X+7dgSpstc+2chGT1gMpqs4srdHCq
- ggnCHHWoTazVX9niKJFUjNUji99lV13rZmpWcTOT+N8ixIIgsK1vpk=
-X-Google-Smtp-Source: AGHT+IETd2jD9Fo6dG5ZpsgcI6UirtjdZPwMdndcVO7QEyg932HIWQ1ldPXZ4gQ5s55dIzWVmxSStg==
-X-Received: by 2002:a17:906:7956:b0:aac:43e:ffa5 with SMTP id
- a640c23a62f3a-ab2ab6c493bmr500544466b.15.1736424196512; 
- Thu, 09 Jan 2025 04:03:16 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95b72ddsm64578766b.163.2025.01.09.04.03.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 04:03:15 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 52F8D5F87E;
- Thu,  9 Jan 2025 12:03:14 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
- Alexandre Iooss <erdnaxe@crans.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 1/3] Expose gdb_write_register function to consumers
- of gdbstub
-In-Reply-To: <20241206102605.961658-2-rowanbhart@gmail.com> (Rowan Hart's
- message of "Fri, 6 Dec 2024 02:26:02 -0800")
-References: <20241206102605.961658-1-rowanbhart@gmail.com>
- <20241206102605.961658-2-rowanbhart@gmail.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 09 Jan 2025 12:03:14 +0000
-Message-ID: <87plkw8a9p.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1736424254; x=1737029054;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a+R6pBhsZXgc3wkYvoH6TSplCUmeXxZ7KzHdQ8M9T0s=;
+ b=Pm9TQM2hhYEt1LwJgga9sW8fXcXfK8ZhEAgMNJLZ+aYkylq1rb2X+WezIYFlpr9c+A
+ exq2WYdR+Z2Qp26NOvguCEzHiVoeaoIzK0D4MMFP88iOU0dZtd/6rpZtHL7VL1aGvc2f
+ 36R6V8sxIhpdpE5XuVp+rt19iNJnmVuGSCa0aC7eENWfcge7r/Xu51LTbIK/brhEv4cP
+ bydNvMdV/pbTUY8XeXyazQCGjtKRGyGAtVxiZT1ENJoyqNaFd3wRNcGsKFynysyybvE6
+ AKqFcq/2iXt/0Bz+l6hCg7U1fhgNbf0XknMo5mh4C7bu6qlQxvB6O1WzHzDFx/OpHvs8
+ 3xkg==
+X-Gm-Message-State: AOJu0YyAJ6CwtxUO03uOvt5mDX9LEjWT6m2SYuMXOVJwEOQCXFiHssIh
+ K302nHG6nZs6Yn5dEwijO+y1Kk/7MHtOS7CoFCCvuyicykKYFoEmBL0EVEQirWA=
+X-Gm-Gg: ASbGnctJVhvIMApKCNHbvc19ksGbsL6IzD3pK1uB5v5Dke99Ydi9qkXsLdDdp7DbEWv
+ +0MBeVgLmUX/SVrhkrMTZdJ8cSrUCRpEnWhtR1RSkfmA95BEjaCq0E0SdZY/DT+uzRcdg4YvrnH
+ lbJ9fjGuNZZvGgwtdZo+T0aJizULkJoL3cltfoGg724qwmZPDNBI0oHB4pbcSVlfcEjODFc1XLB
+ AEajLO/DVm91Hkcl61W6XnTW3JV+046zJuxv+3c+7hJ6jiPl0V7Dz9cEF5yg0OOqHzeWVI7ek+3
+ RPY6jE8w2zyVQJJ75VJkM083
+X-Google-Smtp-Source: AGHT+IGCCOQCfOC+65Igpl/F6iWwsNqmG8s+W2yby2ce0ERRc5wQc95DYOger47fAyWlOFRgdtgOfA==
+X-Received: by 2002:a05:6000:4b0a:b0:385:fae2:f443 with SMTP id
+ ffacd0b85a97d-38a87313975mr5686184f8f.34.1736424253858; 
+ Thu, 09 Jan 2025 04:04:13 -0800 (PST)
+Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2e92f60sm52480405e9.40.2025.01.09.04.04.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 04:04:13 -0800 (PST)
+Message-ID: <86efce30-2727-4581-963c-3424dddf46e2@linaro.org>
+Date: Thu, 9 Jan 2025 13:04:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v19 00/14] hw/pci: SR-IOV related fixes and improvements
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com
+References: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,62 +110,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
+On 9/1/25 07:29, Akihiko Odaki wrote:
 
-> From: novafacing <rowanbhart@gmail.com>
+> Akihiko Odaki (14):
+>        hw/pci: Rename has_power to enabled
 
-You need to include Signed-of-by tags for anything to get accepted.
+>        hw/pci: Use -1 as the default value for rombar
+>        hw/qdev: Remove opts member
 
->
-> ---
->  gdbstub/gdbstub.c      |  2 +-
->  include/exec/gdbstub.h | 14 ++++++++++++++
->  2 files changed, 15 insertions(+), 1 deletion(-)
->
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index b1def7e71d..7d87a3324c 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -536,7 +536,7 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf,=
- int reg)
->      return 0;
->  }
->=20=20
-> -static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
-> +int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
->  {
->      CPUClass *cc =3D CPU_GET_CLASS(cpu);
->      GDBRegisterState *r;
-> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-> index d73f424f56..584ed73fc9 100644
-> --- a/include/exec/gdbstub.h
-> +++ b/include/exec/gdbstub.h
-> @@ -118,6 +118,20 @@ const GDBFeature *gdb_find_static_feature(const char=
- *xmlname);
->   */
->  int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
->=20=20
-> +/**
-> + * gdb_write_register() - Write a register associated with a CPU.
-> + * @cpu: The CPU associated with the register.
-> + * @buf: The buffer that the register contents will be set to.
-> + * @reg: The register's number returned by gdb_find_feature_register().
-> + *
-> + * The size of @buf must be at least the size of the register being
-> + * written.
-> + *
-> + * Return: The number of written bytes, or 0 if an error occurred (for
-> + * example, an unknown register was provided).
-> + */
-> +int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg);
-> +
->  /**
->   * typedef GDBRegDesc - a register description from gdbstub
->   */
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I'm queuing patches 1,13-14 which are generic, hoping
+it helps you not carrying a bit less over respins.
 
