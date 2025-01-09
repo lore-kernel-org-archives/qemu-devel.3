@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE8BE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27EDCE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvzY-0004iU-5M; Thu, 09 Jan 2025 12:06:44 -0500
+	id 1tVvzg-0004lZ-AP; Thu, 09 Jan 2025 12:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzG-0004go-HU
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:27 -0500
+ id 1tVvzY-0004jG-UL
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:46 -0500
 Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzE-0006xv-Pw
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:26 -0500
+ id 1tVvzW-00070V-SE
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:44 -0500
 Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-aaf8f0ea963so235339566b.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:23 -0800 (PST)
+ a640c23a62f3a-ab2b29dfc65so189233966b.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736442382; x=1737047182; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Xev3MylNica8tJvKDRxAEt4qG+psA/6bp/Uvkw9USTg=;
- b=Fc0GDnwe1mGDi8RPIsBYJqciuPFW5XrFEUGJiLf7xK3Rtr21WxRy89VxV4ypBpuq8N
- UmY6j30W3FU7IlaF+VluTP+VrPYKwdJHUgPVanyuL1c6NsSWWvo0sUMkoYyOf3Lz1SIi
- d2v/Y7a5c6QYcyQ/TPqKnLKiPEuwYyFjb20uGy28kqaN//1ZZvSLDPU9RbWXI3tekSuv
- 05c4TG7WlKZi+j98VkXNhEC3aEsN48MP5j2Fsum1sT/b7k0/XQ9TyBWQDeb8uLLb5Zqt
- zZwQiT3YfPBV1HtVcGMElb5clQoaK34qCgy4tosdjQUR6oBivnQ98UM0Oi+Li91jZokT
- KFfA==
+ d=linaro.org; s=google; t=1736442400; x=1737047200; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YoVYHxIQ6FzVx9Ejwb1qRhaSC8vYXzudlK+d3/Xo6Gs=;
+ b=LS5sJYGxgl0bHdUEUNXEUY1wdMJjAHXIHyfLpsI3LRpL35z10ap8+KUOGxqxvl/Dtx
+ C+GlJPjFTcpZaUHMGBcLyRr3s2e010cab8R0iQ/MmdTyPQKCS0R/0kaexXG70p7DXucf
+ 4B+tvWTXsCtRKyiFU6M1C3XWhpokqj6rsV/zfZbJHDDgUMwK8EZFKsgUa7xnNqaBXesi
+ qvNLevkthpIH8vItIRjGxEOKUbj7dgAPRZ5XfMtRgjYyq9pKXSxxG1Q6psG6BL4+LN14
+ /Hp++BmmnMoZV7VMmHP4b6HPTbieD0vZw44rjmkhqcHBzFikkKeJob39oGSE2J85qAst
+ ao9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736442382; x=1737047182;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Xev3MylNica8tJvKDRxAEt4qG+psA/6bp/Uvkw9USTg=;
- b=FIUsB0TPejBSueNBaaw0R8us65A+5wqRNcZUuaKi3fKBz68L0cUw2Wq8TPsoP3lhIm
- UOCOHRwsLUTrcONM91Sc3ajwAlB7Zj5WEw6HGxO7Zm7ZZIYbyLILbaQ03aRy9VVvs49W
- Rx0w/YM+qj099n7Sn1nt+SkNqMJ/TsqLDs76h3X2KZ8EU51rw/5FEfIyOrjhhHEKilFt
- svxk8jpOBhSjltdhDBGc4gTsFeZGFeCir9XfTttNtNQ4xN86pfIGpDquIT3xkqL5rJJC
- oQ3Eu0n2NQiH06XXDg8G5aEpTL/+YHeUiMsnBhd8oVg/mSFo1nu85lr3WNXob+yLCo8f
- qvOw==
-X-Gm-Message-State: AOJu0YwgzMUY9t7VCQF2LqXQSxcwDG2h/M0AHUAM8w3eTkYkDvtrq82s
- ZNmOqrsh+qzLy3IciT649bHI2gQpZ02hfY2JK4yYV9IQDu4oJ2m6Fs0QWdAeXco=
-X-Gm-Gg: ASbGnctQjmkn4t4K5g+H0X5NrLnK2+m6BiDeMbApsCteS0vWwxakZ6e6Y7vS9JjRxXT
- vYYiXbJg9lSpVzviuQ7czY9Mf/U3InqqKjHlTYa4ugOfa2npwEqQ26scm2PRGvczwwD+2NBT655
- nev9bPdifhOvO6+jRNC3L6P75ymcV6SazZpcaoRCZJStqaExXD8TvP/B9ne/1Prn8x5I5h3L01P
- 5de8o7pZx2PMb3xU9AQXM1R80XgBv+UMw6SgEwiB7YlMhoWn/UgZu0=
-X-Google-Smtp-Source: AGHT+IHla8n15db7gTAgCexyIBdayUFuYT1+cTj3mhUm1d7JbJgTCzsxtGvGDI4jVa6NKS+fHKCuRw==
-X-Received: by 2002:a17:907:1a4e:b0:aaf:f32:cce8 with SMTP id
- a640c23a62f3a-ab2ab6f3481mr478807366b.30.1736442382426; 
- Thu, 09 Jan 2025 09:06:22 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736442400; x=1737047200;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YoVYHxIQ6FzVx9Ejwb1qRhaSC8vYXzudlK+d3/Xo6Gs=;
+ b=rakxKqftRXd69JEzkHFlQRAsAtZkn5j17ywhXzz50sXv2g6dYtvxXgvFIHNfoBdlvw
+ OZEQCyPFjsksAXu/1VEmhENwf5cV/jJ/fqrz754uepmPiBoHKash3AjJL3DG4o9ZAuaF
+ jSJUpWySVjg8wia6/cW/VRWFhHbfPYiNIsZt1duoJIn6uHwsNGxFp5GDgWfk26jvYGkb
+ /NMbw8vkKhSb0K7CSjcbEXQU5F6ZWdmwdsKMFEQykkZZ4tFo4NYkIRs9hOcyj2Uy1C0+
+ EEASDh2DpiYfegEL8D79TxSlzqFmO7+9XiHHUUVI+M6CkyjEQL4f4aXlBEQiCvSGBmLa
+ Dr9A==
+X-Gm-Message-State: AOJu0YycAd+WH0mVU3pcKO0ViauneXWCaXlXlhfmD98W+ZByq649I0WX
+ xfybk1hpAzMiOhAgOjQhgpwmzz2INgh2c962O3M61IpbNmdJAgsVCFsxEoTNvw3azTyYpYeILKp
+ TGrQ=
+X-Gm-Gg: ASbGncvOrrMrNmuVDj4lzwxWSSdavcCUIA0JhHstpqPCXFY6qbh3XqmIr9Eix1QtyXu
+ yzHZKvEyeecFHiql+aYp6EOEoAhxipQE/ecJRgAjzha1pWh4HJt789PBDtyMduav5WODeDYkHYl
+ gZEj66LuQDO06gAWuLgcFJO+Wox/zhGg/FydZKOUO0vZ7JFsl/3By1v/Oc6oBV8aVHhWyIY6b48
+ PPS3jLv36WkjeGS0bFkZvcMTXn/Lr6IumTrMgFsSSYDdfm9eDWGr8A=
+X-Google-Smtp-Source: AGHT+IEQL8mWewsJ6Yk5T/+hGPd0lLKOT6JRgNzRdID0uqMKqUrF/Xsq9EQRyKbEb6Ql4AOj4uqFWQ==
+X-Received: by 2002:a17:907:72cb:b0:aab:daf0:3198 with SMTP id
+ a640c23a62f3a-ab2abca7800mr620002166b.40.1736442400418; 
+ Thu, 09 Jan 2025 09:06:40 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c9646be5sm89611666b.174.2025.01.09.09.06.20
+ a640c23a62f3a-ab2c9060f9asm88891966b.1.2025.01.09.09.06.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 09:06:21 -0800 (PST)
+ Thu, 09 Jan 2025 09:06:38 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C9BC25F75D;
- Thu,  9 Jan 2025 17:06:19 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D57BB5FC85;
+ Thu,  9 Jan 2025 17:06:20 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -73,13 +75,14 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 00/22] maintainer updates for jan '25 (semihosting, gdb,
- plugins)
-Date: Thu,  9 Jan 2025 17:05:57 +0000
-Message-Id: <20250109170619.2271193-1-alex.bennee@linaro.org>
+Subject: [PATCH 11/22] tests/tcg/plugins/insn: remove unused callback parameter
+Date: Thu,  9 Jan 2025 17:06:08 +0000
+Message-Id: <20250109170619.2271193-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250109170619.2271193-1-alex.bennee@linaro.org>
+References: <20250109170619.2271193-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
  envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
@@ -105,100 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This covers my remaining trees outside of testing/next and is mostly a
-consolidation of patches I've pulled from other people.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-For semihosting:
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241217224306.2900490-2-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/tcg/plugins/insn.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-  - a bunch of cleanups from Philippe to aide single binary builds
-
-For gdbstub (touches system/vl.c as well):
-
-  - propagate *Error to setup functions
-
-Ilya, I know about [PATCH v4 0/9] gdbstub: Allow late attachment and
-will look at that later. I didn't want to delay the rest of my reviews
-fighting with a messy re-base. If you are up for it you can post a
-branch on the thread and I can potentially merge from that. Apologies
-for the rug-pull between v3 and v4.
-
-For plugins
-
-  - mostly fixes from Pierrick
-  - a speculative fix for cpu_io_recompile() case exposed by Julian's
-    discontinuity patches.
-
-Most are already reviewed, the following remain:
-
-  accel/tcg: also suppress asynchronous IRQs for cpu_io_recompile
-  system: propagate Error to gdbserver_start (and other device setups) (1 acks, 1 sobs, 0 tbs)
-  system: squash usb_parse into a single function
-  system/vl: more error exit into config enumeration code
-  semihosting: add guest_error logging for failed opens
-
-There will likely be a v2 anyway once I've got testing/next merged and
-Ilya's gdbstub patches. I don't think I have anything else pending but
-do shout if there is.
-
-Alex.
-
-Alex Bennée (5):
-  semihosting: add guest_error logging for failed opens
-  system/vl: more error exit into config enumeration code
-  system: squash usb_parse into a single function
-  system: propagate Error to gdbserver_start (and other device setups)
-  accel/tcg: also suppress asynchronous IRQs for cpu_io_recompile
-
-Philippe Mathieu-Daudé (6):
-  semihosting/uaccess: Briefly document returned values
-  semihosting/syscalls: Include missing 'exec/cpu-defs.h' header
-  semihosting/uaccess: Include missing 'exec/cpu-all.h' header
-  semihosting/arm-compat: Include missing 'cpu.h' header
-  semihosting/console: Avoid including 'cpu.h'
-  semihosting/meson: Build config.o and console.o once
-
-Pierrick Bouvier (11):
-  tests/tcg/plugins/insn: remove unused callback parameter
-  contrib/plugins/howvec: ensure we don't regress if this plugin is
-    extended
-  tests/tcg/plugins/syscall: fix 32-bit build
-  tests/tcg/plugins/mem: fix 32-bit build
-  contrib/plugins/stoptrigger: fix 32-bit build
-  contrib/plugins/cache: fix 32-bit build
-  contrib/plugins/hotblocks: fix 32-bit build
-  contrib/plugins/cflow: fix 32-bit build
-  contrib/plugins/hwprofile: fix 32-bit build
-  contrib/plugins/hotpages: fix 32-bit build
-  configure: reenable plugins by default for 32-bit hosts
-
- configure                      | 21 +-------
- include/exec/gdbstub.h         |  8 ++-
- include/semihosting/console.h  |  2 -
- include/semihosting/syscalls.h |  1 +
- include/semihosting/uaccess.h  | 55 +++++++++++++++++++
- accel/tcg/translate-all.c      |  5 +-
- contrib/plugins/cache.c        | 18 +++----
- contrib/plugins/cflow.c        | 17 +++---
- contrib/plugins/hotblocks.c    | 29 ++++++++--
- contrib/plugins/hotpages.c     |  6 +--
- contrib/plugins/howvec.c       |  7 +--
- contrib/plugins/hwprofile.c    | 27 ++++++----
- contrib/plugins/stoptrigger.c  | 48 +++++++++--------
- gdbstub/system.c               | 22 ++++----
- gdbstub/user.c                 | 20 +++----
- linux-user/main.c              |  6 +--
- monitor/hmp-cmds.c             |  2 +-
- semihosting/arm-compat-semi.c  |  1 +
- semihosting/console.c          |  3 +-
- semihosting/syscalls.c         |  2 +
- semihosting/uaccess.c          |  1 +
- system/vl.c                    | 99 ++++++++++++++--------------------
- tests/tcg/plugins/insn.c       |  4 +-
- tests/tcg/plugins/mem.c        |  6 +--
- tests/tcg/plugins/syscall.c    |  6 +--
- semihosting/meson.build        |  9 ++--
- 26 files changed, 243 insertions(+), 182 deletions(-)
-
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index baf2d07205..0c723cb9ed 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -150,10 +150,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+             qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
+         } else {
+-            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
+             qemu_plugin_register_vcpu_insn_exec_cb(
+-                insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS,
+-                GUINT_TO_POINTER(vaddr));
++                insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS, NULL);
+         }
+ 
+         if (do_size) {
 -- 
 2.39.5
 
