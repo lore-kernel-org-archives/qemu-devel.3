@@ -4,101 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB8FE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 08:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A937EE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 08:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVoEb-00071L-1J; Thu, 09 Jan 2025 03:49:45 -0500
+	id 1tVoEr-00072V-32; Thu, 09 Jan 2025 03:50:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <geert.uytterhoeven@gmail.com>)
- id 1tVoEZ-00071D-8p
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 03:49:43 -0500
-Received: from mail-vs1-f44.google.com ([209.85.217.44])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <geert.uytterhoeven@gmail.com>)
- id 1tVoEX-00078j-CT
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 03:49:43 -0500
-Received: by mail-vs1-f44.google.com with SMTP id
- ada2fe7eead31-4b1279ca1d2so213084137.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 00:49:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736412579; x=1737017379;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=980cp5wg6VreAhZrvif3H7Z9Otc1vWhF3tByoZBAw1Y=;
- b=XsnBAngG04Qg4NZ3wL4saMS5r2/v4cm4SqzwiZK5arbtzcdj8j9I7pZAn5tjO1iDlY
- V2nyEUbwTUxwW9k53BnUQsgZ+Inm7z2//Apt40YNR1AAMFzKzNGFYGql16A0TPUPkIMQ
- 7E3gT85w2xbk4amWCDHOaTQCx0gemBjRSIn8jUv1Mrxi9HhIP3OjYc7hxGDo7ShGTE50
- yGK7Jvq8FAUu39/y22TodStGN2gD7xaIgBpu097pjSHCFYckIZyaw5nmjETYYwzm7+fy
- eGzVYk9wkNJg5A6rxXBNBK9GJK08qw4u0Sw+boOl/m2SyRtwQ4pW7J4aCVdIfFKNlLnn
- wnFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuWgmNiwCcF8h1r+aRw6kUd+QdRXBtuQ6vWdaQF1hPMkapMSVLmxWdi/PpHXAm6WjDqmdlKvWcof48@nongnu.org
-X-Gm-Message-State: AOJu0YxATsyyUd0MeMFRSttFP++/W4ft9aC9AWFtkLDAlvy/8Gq0NuGH
- XplqzsCJPiAsZQwJ+gprpq2QGZZdBNSlUDYv3Ia1GEo3d1Kpd+WImZYPS9WJ
-X-Gm-Gg: ASbGncsx2tDaLOi7djk4fith76dP9TpKgLTOdHZtyNJRCkBwutlAJXqiWvm3SE51u2U
- JQnj2qjt/DvxdkKYYrvg/ZICLWn4ScqDg3I0iV0pEv0tuZHAyqY4nWo+UMzq67YRmy5iq6l18OR
- YyUPk0c7yzihDYtX24oMahM4Xdl1+ECTxcBZ1LpAQq/uEDIrb5QIK8Jl7BdZTQONyCFQ3Kb8XDz
- 4Lv0axAfFdASFRVJTbhQ9kJ+iqsHSadeswitOJyEL9hKnRvNoJoxhBaM+aLMjaJ6YYG6Mh+umjq
- YpbyRH5X83XxLXPOV9c=
-X-Google-Smtp-Source: AGHT+IFi5wa/lQ1fgqhhV/USMoVDcuV4kGfWx9V4BGPXyidQZowg1v3fAcnFtobcSLIB3t2rqeej/g==
-X-Received: by 2002:a05:6102:b12:b0:4b2:5ca2:5b5a with SMTP id
- ada2fe7eead31-4b3d0f05be1mr4454037137.9.1736412579457; 
- Thu, 09 Jan 2025 00:49:39 -0800 (PST)
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com.
- [209.85.217.52]) by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-4b608f890easm532272137.19.2025.01.09.00.49.37
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 00:49:38 -0800 (PST)
-Received: by mail-vs1-f52.google.com with SMTP id
- ada2fe7eead31-4b11a110e4eso170922137.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 00:49:37 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdpaZak7/yTapJJBtUHaxsxw+mc4PEWfdSh+iZcGkXbV4FrTdW8btfqSM5/7RfCy82I3Zkn4R4elYU@nongnu.org
-X-Received: by 2002:a05:6102:290f:b0:4b2:5d63:a0f3 with SMTP id
- ada2fe7eead31-4b3d0f2d89cmr4381603137.15.1736412577224; Thu, 09 Jan 2025
- 00:49:37 -0800 (PST)
-MIME-Version: 1.0
-References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
- <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
- <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
- <Z0LMqEqcdjkAxnN-@antec> <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net>
- <Z2lgL31ZeSkO59MZ@antec> <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
- <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
- <0d2df37a-a167-445f-aacf-714a29587511@landley.net>
- <CAMuHMdU2XT=xHr3D4kWVSU=h4jJSoQj1RAdeXDNGEDXdOaqBjQ@mail.gmail.com>
- <ecdf9e8a-9886-43e6-bb02-bf04fc1e88a4@landley.net>
- <CAMuHMdVDhdkLEc-YuDCXHaCpkdtj0QL6wudXDFi0E=PqXyJDtA@mail.gmail.com>
- <4b9b20a0-ab3a-4ef5-9ae5-5a32a2eb6be7@landley.net>
-In-Reply-To: <4b9b20a0-ab3a-4ef5-9ae5-5a32a2eb6be7@landley.net>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 9 Jan 2025 09:49:25 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdVZU1JBFg_Z8gkvi=ovXdyFomvG4R-oUUCKiiuyXs2LKQ@mail.gmail.com>
-X-Gm-Features: AbW1kva_tBde59Tj-FtT2FMM0NeMlWqY72yftUafHQ8o4qk5LZMDGlu0s4tj9bc
-Message-ID: <CAMuHMdVZU1JBFg_Z8gkvi=ovXdyFomvG4R-oUUCKiiuyXs2LKQ@mail.gmail.com>
-Subject: Re: or1k -M virt -hda and net.
-To: Rob Landley <rob@landley.net>
-Cc: Stafford Horne <shorne@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, QEMU Developers <qemu-devel@nongnu.org>,
- Linux OpenRISC <linux-openrisc@vger.kernel.org>,
- Linux-sh list <linux-sh@vger.kernel.org>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tVoEp-00072H-TO
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 03:49:59 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tVoEl-00079f-W7
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 03:49:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736412596; x=1767948596;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=K2aNmBHJZ10FGDr4/0di6J7ptDzliUtnHXb1KUzsABI=;
+ b=S7EtkXEYRkOAK0Kov3rQeKjfx2892hrsXwamX6TsoMjqHP2IsNMmgksn
+ 5MbiRJXr1V/ENLYURYgVvGz05CR9R8x9hwx3zw736QKuppzMfUK/0YCgd
+ 1fEVzZit1YxW8sRsAsPgazWx82gbyZRNw8A8TaSkySge8klxl5hAAbTdj
+ +4N2r1e64XX+NMlH7Smv8MZFPE2bjPffr7uSfBDEsjoAdJm5hndMDKPwE
+ hvFjmv8myq+d5DG7tEiXS1LaRQNehUvVuKOopFGndborqVQGKprtw0Yuz
+ QK6TdpDwqaMaaMgIFONpBBtQkCubeYPWhtBjZ+uo8DMraECkovVwYnFBM Q==;
+X-CSE-ConnectionGUID: B7J784ynSHybl9hqPmjg1Q==
+X-CSE-MsgGUID: jDcau8qmSXawUGhet/nvpw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11309"; a="36824332"
+X-IronPort-AV: E=Sophos;i="6.12,300,1728975600"; d="scan'208";a="36824332"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Jan 2025 00:49:53 -0800
+X-CSE-ConnectionGUID: pyzpVezQSPemXZYqsLz2jw==
+X-CSE-MsgGUID: ijtofnCXSu+nEnb1a4rFuQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="108401006"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 09 Jan 2025 00:49:52 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Thu, 9 Jan 2025 00:49:51 -0800
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Thu, 9 Jan 2025 00:49:51 -0800
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.41) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Thu, 9 Jan 2025 00:49:51 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xPKNod60MfG6SLJ0cuWyzlNpXw85EmtTsXT8+AJiaL7IuwRMZEEvpjKi0uNxPnLc91bvD7DZGjsHrBlJBZnvKwb1wTloLJU/XgAbud0aXib+ysWZl6bj5Xr/TBDDhqoocHW2ptLt675bbD4/W70JpqR9jHQRlDuuS0s5NbET+uWHNpHDm9lU5y4Z4v7N1EHdxq8I2M8M7EDezZ/SCALdn0V0AWrpEQqOYHV1wTFUOCMgLCZrbNkb7JiaKx4Br5stBo6071MGVnQGsSaCGmtz8KGxwjKBmmdRk9BOU2I9LlwpvW11ZRHeoeGmKFz/Y7S3Bgs4bthBIEWNlda5OpcnDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VKxBpkiZc7iaFnDVkabNYssudaAqqO/Auu9BVugMUAg=;
+ b=Fcy0z59gh2g/ZM50IsPDZ92GPjbAuhhBJT6p81yuZqjTBYmFrOBVLE+R68CeT+/WIbJqzZ40DrchyYMtT1BwhBSxPh7HO+Q0y0l2DAbg5Kyr8pvIJlqc8YqAW80gwhFccAaynPgcnKTO8AIDL/30rnPJNCOH4nh1u7eRrBtBVKQjcyj3CGmaX4uyPydA5mtzFNdGJTVGBQWCtwTw2wmDVDARrYlfSBAJnBB2DycU0KOnxOAiase2H1rWBwP6Oeo9KzU5p094wa6ygHrc2+8VPl1qmC/gBuzJNlJxhzf3gFW1IgQjcyrLwyLbLOhFf2Ir6Q4vuk0SXXPxEypreFeSwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CYXPR11MB8729.namprd11.prod.outlook.com (2603:10b6:930:dc::17)
+ by DM4PR11MB6167.namprd11.prod.outlook.com (2603:10b6:8:ac::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.10; Thu, 9 Jan
+ 2025 08:49:44 +0000
+Received: from CYXPR11MB8729.namprd11.prod.outlook.com
+ ([fe80::680a:a5bc:126d:fdfb]) by CYXPR11MB8729.namprd11.prod.outlook.com
+ ([fe80::680a:a5bc:126d:fdfb%7]) with mapi id 15.20.8335.011; Thu, 9 Jan 2025
+ 08:49:44 +0000
+Message-ID: <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
+Date: Thu, 9 Jan 2025 16:49:36 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Enable shared device assignment
+To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
+ <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
+ <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
+ <6ac5ddea-42d8-40f2-beec-be490f6f289c@amd.com>
+ <8f953ffc-6408-4546-a439-d11354b26665@intel.com>
+ <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.217.44;
- envelope-from=geert.uytterhoeven@gmail.com; helo=mail-vs1-f44.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SG2PR02CA0135.apcprd02.prod.outlook.com
+ (2603:1096:4:188::23) To CYXPR11MB8729.namprd11.prod.outlook.com
+ (2603:10b6:930:dc::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CYXPR11MB8729:EE_|DM4PR11MB6167:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6b6a1b7e-ba7e-4c95-e3db-08dd308a901b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WGpLZVdqdm1CenpoZG5pU08raTNxeE53YTFxUTJiTmRMMll3ZHpuTVQ4Q2FB?=
+ =?utf-8?B?a0dVZVNwYWhVZlFtRERqblF3Z2VuTlAybncvYU5rMkVNR0Z1aEZ0ZThhZVJX?=
+ =?utf-8?B?cXAyRldTdmN6ZmdBa25kcjJOWnhlTDBxS25xUlh4ejlNb2NmYXN3OHBzWk5G?=
+ =?utf-8?B?bFFoKysvTEpWS21VdXpVWEloQ0d2M0k3QkR2cDFBMzBQM2czZmVGanYrR2VM?=
+ =?utf-8?B?K2gyb0gzaENaN0tCSGRsS1VRVG45aGJoTm9oMG1UWHF3NDd3dlA5K0hiaEMr?=
+ =?utf-8?B?MDE4ZDVUMGIzZkNJUjR6U0V0aXprK1ZiZkF5TFkzcE9Yb1REMjhoemdndVIv?=
+ =?utf-8?B?Vkg1Sk9jRlpUV3M0d0FCS3p0VVFwR3RmbGRZRmxOdTdzRjlKWGtWOXMyWmpt?=
+ =?utf-8?B?Z0t0WkNoT0dwNTJJbFoydm5CZ2Z2eHk5ODdkQTh3cVBXanYyRjl0SFYxODR1?=
+ =?utf-8?B?bE0yMGtVMWwyMnVkck92RTRQYlJCY1RQY294OXNjcWptaEFyMTZoU3pDUW1a?=
+ =?utf-8?B?b2tLL3BhUUl3TlFoY0p0bjZrMU1hbHc3ZWdMWTNJTk1mdDJDU0kvRjNhS2Ns?=
+ =?utf-8?B?bzNKWkJOK2dncEs3Y2dDSm52Sjgrb05nSFF5aEVKalVPc1B3ZjhWRVhkT09Y?=
+ =?utf-8?B?dk8rZE5qNCtKSVYxRm0wMHhNOE5GWUo3TG16RGxDNW04V1pYNStIYjFpaFMv?=
+ =?utf-8?B?NkhTZU5NdUxibjNMY3NNTkJRSGJEZW95dnFIL3BuMU9yRFkwSFk0M1NCT0lv?=
+ =?utf-8?B?djF6ZktScUJTakpwdTRPb2luL0xrWnVIckFRb0xQRWRmNEZkeEhzNGFKNVlt?=
+ =?utf-8?B?ZUlMQnlUbDI5bHNIZ2xQNG1UTUw5clZFWDJHVVhpSUVuaEljZFBFS0VFWita?=
+ =?utf-8?B?VU5qNEVSeHYxeFRZOGRuSFZ0ZmkzaEZLN2VKemVWVitFeXdHRWwyOXIrMXlZ?=
+ =?utf-8?B?UHFETjQ5Tk9yQ2NIN2p4cnlnT3NtaHF4QWkxUUMxN0dZWDBqaDF1MEZ3bHYy?=
+ =?utf-8?B?SGhHUUtPSXVHQUdTSXYvMldmdUhiSGpIalFGWCtpa2NuV0YvZEpHd2tpdUdS?=
+ =?utf-8?B?SXlUaXhTWVV2VHJzM2tZSFZQK2tOSWQyMU45TWNaZ3Z1emh0VzJyU2w5aVMy?=
+ =?utf-8?B?RmZSczlILzhDWU1nbVhNbXIvcEhNSEp3UnB1aHpUT1g4QTRwbytlQ2Q5NFVI?=
+ =?utf-8?B?RFRmL3lGWGpUOXNpdXA2K1M3MkNSZGptMDdsNFNsZ0lLeEU3OG1ZMWQwa1VE?=
+ =?utf-8?B?M09iYXpQN0xrckZwazEramwzeWV5WjRyQXNPSnFkQ3BiNS9TQmdwVHZUY1J2?=
+ =?utf-8?B?ZkJNam9yRmFqYm1VOWFxdXJyZy9PQmUxY29QK0lkQmtNWVRrZW5ZUFhQQVNv?=
+ =?utf-8?B?Umo5b0l5NmVtL1JHdEUzWjI5YkhWaU55NlhOdnBqcTVOaGtuZmdrSE9BTGpM?=
+ =?utf-8?B?TVhPYXhrZ2l1RmwydWJUWEltUnJqdVVyQTYvejhTUk0zYUdLd3VnMEd1Y3lQ?=
+ =?utf-8?B?VVJjVW5ydzdJUmh4dGUreG8xeUJPZWdNTHo5WmVzNGIwYWQ1M2kvengzaGlB?=
+ =?utf-8?B?Y2pEdnV4aW1iT0tHVHp1bWRUV011SkZ6c0s1R2J0ZHVDSCtNSTRFL1lSalN3?=
+ =?utf-8?B?akhQcTJveXc4ZXV6bkNuSW1qWTU2Z3duQUMrbWdRa2hvcDJzbGVvTXQyajBP?=
+ =?utf-8?B?SVVRRkR6VndYbEpxbGFVS3ZWN2hBYnN0dlR2bTRzU2g0cnNORHRoa2MvbVll?=
+ =?utf-8?B?WjFoREJIYTlud1dTN0RQUGE3bUEwc0ZmeXdyUndlZXJXak9mYzQrLy9WdUJn?=
+ =?utf-8?B?a0szS3B6L3c1bFVhUkordz09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CYXPR11MB8729.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QkxiY2hiR2pIWkxBZ1l6N0R4ODJpMUluelZQU0JoUWRtRTFFL2NLR2h3aVlq?=
+ =?utf-8?B?UVVFcjdBd0dDUHJrNGNFODlOL3pXMHc2VXJ1aWE0bCtZZ2dNQ0xrMkxYZ2tU?=
+ =?utf-8?B?MHpXd3hpdHFZdDJrbk8vRnpRUHU2VnlONUhjblNGcHFGVEd2UDlUQWpGUHl4?=
+ =?utf-8?B?UzRMTlZhWUtLSGV2bWRiUnhXZjZXYnp5V25ncWRaTGZZK3RnS0FOVjVsREJL?=
+ =?utf-8?B?RURxRVNLdy9zVXZwa3dsT0wvaWVieklmblZPTUtWdGJXbTNEN2h0YnVJaWIv?=
+ =?utf-8?B?eDNiWWdtRnZKdE1VNGYrV1h1cjNWMVJWNmZVdUppWVhTL1U4QTRWZm5lTEhL?=
+ =?utf-8?B?c0gwVWprMjhwSjNjYTNHancwd3BmRDVkSUhnRlBNVmxrMFdEdllKQm5EU3ds?=
+ =?utf-8?B?OGhhZzFZQXVZZzFyakFIbW0vWlNzSGt0Q2RUbndmY1U2VlhTbW00Wk91eDZH?=
+ =?utf-8?B?Nk5NdFNIWHI2T3YvbkpRTWdBUFRXTlpFeVRmTkhjYzRFNlBSWS9laXA3N2Nw?=
+ =?utf-8?B?c3dDazEyaEhRSHhCdXM2RHJxWWVQdDlKVWk4RytNVFBQc2xTalhPMTZzMEtT?=
+ =?utf-8?B?Q3JEck0yRndOaEFQbUREc04raldYYjRqZ0NRN01QZUg0RDlQQXd1aG53OHJr?=
+ =?utf-8?B?MFlUQ08yTitrZkRSVUdNNU9MeTV1cDlkL2tFa1hwUGljNTNLcmo5OUsyWWlo?=
+ =?utf-8?B?TWlaQTVIWnV4Ujk4dm5SMHdycE81SS9oMGxubmpTMVJzTndCS0UrTDZxeUox?=
+ =?utf-8?B?cXBHaytCQjJKM0JlaFRWQUw4WG8zWnBuQmM4RFgvbDJueWFXUHJJb3VualBy?=
+ =?utf-8?B?SnRnMzIycUFBLytFYXp4K1JtTHdLUnluL3AwZUVWUExIMmE5UWl6YUZHTkdI?=
+ =?utf-8?B?VnNtRVpXdThrZWdhd0llVUpLeVZ6T2hlUTF2bUV1U3doNDMyOW9lbVcvRVFD?=
+ =?utf-8?B?TFZCcXNtNStDOUMwY0w4cFUyYmk5NXQ3ZG5JUWRjVGNKSER3ZnZSbGlGbGYw?=
+ =?utf-8?B?aXNQVWtrbnl0bnNCQ080WUhoZkdJbkVkWTY5ak1FU2QwdEFPYVlFMEROQ3lL?=
+ =?utf-8?B?U0hPK0FYVFJ1eHh2R0RWNHNKdjY5UmlJOWxIME92YmtxNCtaWFF4UHBjc0x6?=
+ =?utf-8?B?WjNWcVJ5VWUyYmVRa1d4QUo1c3g0TUxpa2FBemtSZjVxc1RYdUhhN0IzTzlk?=
+ =?utf-8?B?OWNteUhkeThOVjl0UFNBS0lwVmRhM1piN3VSRmw5djN1Y0pWV3dzWVlnZTlJ?=
+ =?utf-8?B?RkFnZENRbEVtQXd5NzhucWt1WGFocDhRY1B2Vk85UktPWmxtWTFDalhhS1ND?=
+ =?utf-8?B?UTJiS2NyRmVCZ3FGdXpvQWRMRTZSSWlZZ0plbzNFL1h6cWx5WkgvM3graWEy?=
+ =?utf-8?B?R0lzY25USU9zV0dwcDUrNDB4SHdZVTNzeVNSYlNnU1dWZUdSOFd0N0p6S2tw?=
+ =?utf-8?B?cHZZWGgwaVRYcjd2SCs3eEJ5RTZjRlFNN0xON2gzOW93NEZtQ0VycHFPNmhN?=
+ =?utf-8?B?ZVFXcjE0Mm12eWpqV1JuL0gvSGRvUTRuU1RiL3JNQkhQMkppc0RtZUFnUGRr?=
+ =?utf-8?B?VzE0MHFmblFta2ppdkdJaG9hdEE2NVJDLzlMRlpHWXhJQ2thN1AwTUdISDQx?=
+ =?utf-8?B?UzRNcitsd0Z3VExLMFFjYXEvbEFsVEhtUGFmTHhXMC9PMWs1cFVNS2xoNFlS?=
+ =?utf-8?B?QjVwUmhGS1dkMk9malVyaWR5R3BLaGRwOXdld09FQk1IeGRHQUVJa0RRanFX?=
+ =?utf-8?B?UWxMRlJBeVdKTm1JN3RJVHRQd29PZ2szd1cyb0M3YlZCRG04OTc3Q3VVL3lM?=
+ =?utf-8?B?Wmw3VmtpM1lGOStMTUtMTS85dzR5ZDBLWFRPS09tdVRsUTJydWdYcm53a1Aw?=
+ =?utf-8?B?ak9FUjRXcGI3ZGk1MERCbGtnS3ZwdXJQWS94Q2x3Vk9ZazZCM3ZXNHhaaEEv?=
+ =?utf-8?B?N0xBWGcxRTFHelk3cElmMHVmTDlFYUpWbVAwaVFXY1lianRydmpXR012Q2xT?=
+ =?utf-8?B?RFYxVEo2WXp5L3BaQjZ0WHVLdmJWakVOWUkydDRTNUNITkRkL0R4aVZGcU9X?=
+ =?utf-8?B?a0UxaTJ6cnB1VjBkdHZsN0czMTlBR0d0amU0YnlHN051WThQTnJnT1NacW5C?=
+ =?utf-8?B?SGdJb1daQTNnWEM3SytRRm5OM1RZMVFsanV0TVZvREFxbWtSQ09KeGF6cDBy?=
+ =?utf-8?B?MHc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6b6a1b7e-ba7e-4c95-e3db-08dd308a901b
+X-MS-Exchange-CrossTenant-AuthSource: CYXPR11MB8729.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2025 08:49:44.0439 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: cupGXnthYaz30btqEnIMd4OsFtCwP+3tHzk7huzeq9RvWuGQHCyZWcB70PJMTgquZsgHiZRA6ISY8n1aHR4miQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6167
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,64 +218,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Rob,
 
-CC linux-sh
 
-On Wed, Jan 8, 2025 at 11:40=E2=80=AFPM Rob Landley <rob@landley.net> wrote=
-:
-> The sh2eb turtle board uses JCORE_EMAC which is still an out of tree
-> driver. It's not secret, just too ugly to go upstream: done by a
-> contractor and never cleaned up, full of half-finished IEEE-1588 support
-> and so on. It used to be on
-> https://web.archive.org/web/20200812035510/http://git.musl-libc.org/cgit/=
-linux-sh/
-> but alas Rich purged his trees when he stopped being maintainer and
-> archive.org didn't crawl that far down.
->
-> I have the patch locally if you care, but without the corresponding
-> hardware, not much point attaching 1600 lines. (We sent several turtle
-> boards to Glaubitz and his assistants last year, and at least one of the
-> recipients asked for a copy of the ethernet driver patch, which I sent.
+On 1/9/2025 4:18 PM, Alexey Kardashevskiy wrote:
+> 
+> 
+> On 9/1/25 18:52, Chenyi Qiang wrote:
+>>
+>>
+>> On 1/8/2025 7:38 PM, Alexey Kardashevskiy wrote:
+>>>
+>>>
+>>> On 8/1/25 17:28, Chenyi Qiang wrote:
+>>>> Thanks Alexey for your review!
+>>>>
+>>>> On 1/8/2025 12:47 PM, Alexey Kardashevskiy wrote:
+>>>>> On 13/12/24 18:08, Chenyi Qiang wrote:
+>>>>>> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+>>>>>> discard") effectively disables device assignment when using
+>>>>>> guest_memfd.
+>>>>>> This poses a significant challenge as guest_memfd is essential for
+>>>>>> confidential guests, thereby blocking device assignment to these VMs.
+>>>>>> The initial rationale for disabling device assignment was due to
+>>>>>> stale
+>>>>>> IOMMU mappings (see Problem section) and the assumption that TEE I/O
+>>>>>> (SEV-TIO, TDX Connect, COVE-IO, etc.) would solve the device-
+>>>>>> assignment
+>>>>>> problem for confidential guests [1]. However, this assumption has
+>>>>>> proven
+>>>>>> to be incorrect. TEE I/O relies on the ability to operate devices
+>>>>>> against
+>>>>>> "shared" or untrusted memory, which is crucial for device
+>>>>>> initialization
+>>>>>> and error recovery scenarios. As a result, the current implementation
+>>>>>> does
+>>>>>> not adequately support device assignment for confidential guests,
+>>>>>> necessitating
+>>>>>> a reevaluation of the approach to ensure compatibility and
+>>>>>> functionality.
+>>>>>>
+>>>>>> This series enables shared device assignment by notifying VFIO of
+>>>>>> page
+>>>>>> conversions using an existing framework named RamDiscardListener.
+>>>>>> Additionally, there is an ongoing patch set [2] that aims to add 1G
+>>>>>> page
+>>>>>> support for guest_memfd. This patch set introduces in-place page
+>>>>>> conversion,
+>>>>>> where private and shared memory share the same physical pages as the
+>>>>>> backend.
+>>>>>> This development may impact our solution.
+>>>>>>
+>>>>>> We presented our solution in the guest_memfd meeting to discuss its
+>>>>>> compatibility with the new changes and potential future directions
+>>>>>> (see [3]
+>>>>>> for more details). The conclusion was that, although our solution may
+>>>>>> not be
+>>>>>> the most elegant (see the Limitation section), it is sufficient for
+>>>>>> now and
+>>>>>> can be easily adapted to future changes.
+>>>>>>
+>>>>>> We are re-posting the patch series with some cleanup and have removed
+>>>>>> the RFC
+>>>>>> label for the main enabling patches (1-6). The newly-added patch 7 is
+>>>>>> still
+>>>>>> marked as RFC as it tries to resolve some extension concerns
+>>>>>> related to
+>>>>>> RamDiscardManager for future usage.
+>>>>>>
+>>>>>> The overview of the patches:
+>>>>>> - Patch 1: Export a helper to get intersection of a
+>>>>>> MemoryRegionSection
+>>>>>>      with a given range.
+>>>>>> - Patch 2-6: Introduce a new object to manage the guest-memfd with
+>>>>>>      RamDiscardManager, and notify the shared/private state change
+>>>>>> during
+>>>>>>      conversion.
+>>>>>> - Patch 7: Try to resolve a semantics concern related to
+>>>>>> RamDiscardManager
+>>>>>>      i.e. RamDiscardManager is used to manage memory plug/unplug
+>>>>>> state
+>>>>>>      instead of shared/private state. It would affect future users of
+>>>>>>      RamDiscardManger in confidential VMs. Attach it behind as a RFC
+>>>>>> patch[4].
+>>>>>>
+>>>>>> Changes since last version:
+>>>>>> - Add a patch to export some generic helper functions from virtio-mem
+>>>>>> code.
+>>>>>> - Change the bitmap in guest_memfd_manager from default shared to
+>>>>>> default
+>>>>>>      private. This keeps alignment with virtio-mem that 1-setting in
+>>>>>> bitmap
+>>>>>>      represents the populated state and may help to export more
+>>>>>> generic
+>>>>>> code
+>>>>>>      if necessary.
+>>>>>> - Add the helpers to initialize/uninitialize the guest_memfd_manager
+>>>>>> instance
+>>>>>>      to make it more clear.
+>>>>>> - Add a patch to distinguish between the shared/private state change
+>>>>>> and
+>>>>>>      the memory plug/unplug state change in RamDiscardManager.
+>>>>>> - RFC: https://lore.kernel.org/qemu-devel/20240725072118.358923-1-
+>>>>>> chenyi.qiang@intel.com/
+>>>>>>
+>>>>>> ---
+>>>>>>
+>>>>>> Background
+>>>>>> ==========
+>>>>>> Confidential VMs have two classes of memory: shared and private
+>>>>>> memory.
+>>>>>> Shared memory is accessible from the host/VMM while private memory is
+>>>>>> not. Confidential VMs can decide which memory is shared/private and
+>>>>>> convert memory between shared/private at runtime.
+>>>>>>
+>>>>>> "guest_memfd" is a new kind of fd whose primary goal is to serve
+>>>>>> guest
+>>>>>> private memory. The key differences between guest_memfd and normal
+>>>>>> memfd
+>>>>>> are that guest_memfd is spawned by a KVM ioctl, bound to its owner
+>>>>>> VM and
+>>>>>> cannot be mapped, read or written by userspace.
+>>>>>
+>>>>> The "cannot be mapped" seems to be not true soon anymore (if not
+>>>>> already).
+>>>>>
+>>>>> https://lore.kernel.org/all/20240801090117.3841080-1-
+>>>>> tabba@google.com/T/
+>>>>
+>>>> Exactly, allowing guest_memfd to do mmap is the direction. I mentioned
+>>>> it below with in-place page conversion. Maybe I would move it here to
+>>>> make it more clear.
+>>>>
+>>>>>
+>>>>>
+>>>>>>
+>>>>>> In QEMU's implementation, shared memory is allocated with normal
+>>>>>> methods
+>>>>>> (e.g. mmap or fallocate) while private memory is allocated from
+>>>>>> guest_memfd. When a VM performs memory conversions, QEMU frees pages
+>>>>>> via
+>>>>>> madvise() or via PUNCH_HOLE on memfd or guest_memfd from one side and
+>>>>>> allocates new pages from the other side.
+>>>>>>
+>>>>
+>>>> [...]
+>>>>
+>>>>>>
+>>>>>> One limitation (also discussed in the guest_memfd meeting) is that
+>>>>>> VFIO
+>>>>>> expects the DMA mapping for a specific IOVA to be mapped and unmapped
+>>>>>> with
+>>>>>> the same granularity. The guest may perform partial conversions,
+>>>>>> such as
+>>>>>> converting a small region within a larger region. To prevent such
+>>>>>> invalid
+>>>>>> cases, all operations are performed with 4K granularity. The possible
+>>>>>> solutions we can think of are either to enable VFIO to support
+>>>>>> partial
+>>>>>> unmap
+>>>
+>>> btw the old VFIO does not split mappings but iommufd seems to be capable
+>>> of it - there is iopt_area_split(). What happens if you try unmapping a
+>>> smaller chunk that does not exactly match any mapped chunk? thanks,
+>>
+>> iopt_cut_iova() happens in iommufd vfio_compat.c, which is to make
+>> iommufd be compatible with old VFIO_TYPE1. IIUC, it happens with
+>> disable_large_page=true. That means the large IOPTE is also disabled in
+>> IOMMU. So it can do the split easily. See the comment in
+>> iommufd_vfio_set_iommu().
+>>
+>> iommufd VFIO compatible mode is a transition from legacy VFIO to
+>> iommufd. For the normal iommufd, it requires the iova/length must be a
+>> superset of a previously mapped range. If not match, will return error.
+> 
+> 
+> This is all true but this also means that "The former requires complex
+> changes in VFIO" is not entirely true - some code is already there. Thanks,
 
-I still have to ask you for that driver, so yes I am interested in
-the patch ;-)
+Hmm, my statement is a little confusing.  The bottleneck is that the
+IOMMU driver doesn't support the large page split. So if we want to
+enable large page and want to do partial unmap, it requires complex change.
 
-> Still applies and works as of the last kernel I updated on the board,
-> 6.18 I think? The update is a "pop the sd card, stick in laptop, copy
-> files, move sd card back" kinda thing.
+> 
+> 
+> 
 
-... which has been the main obstacle for me to integrate turtleboard
-in my regular kernel testing workflow. There are only 24 hours in a day,
-so usually there is no time left for juggling SD cards :-(
-
-> I should do a linux image that
-> can wget and kexec, but haven't yet... Anyway, doesn't help with this
-> issue.)
-
-Does kexec work on MMU-less J2?
-On SH4, there was never an upstream kernel that worked with upstream
-kexec-tools. The only one that works is the kexec binary from the old
-landisk distro, which predates SH support in upstream kexec-tools,
-and can only start a new kernel from a system that is running kernel
-2.6.22...
-
-BTW, this is seriously off-topic for openrisc and qemu, so please
-reduce the CC list when continuing the linux-sh discussion..
-
-Thanks!
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
 
