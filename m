@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC7F8E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE8BE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvzX-0004iX-6u; Thu, 09 Jan 2025 12:06:44 -0500
+	id 1tVvzY-0004iU-5M; Thu, 09 Jan 2025 12:06:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzP-0004hS-96
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:36 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tVvzG-0004go-HU
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:27 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVvzN-0006yu-KJ
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:35 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aab6fa3e20eso222872966b.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:32 -0800 (PST)
+ id 1tVvzE-0006xv-Pw
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:06:26 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-aaf8f0ea963so235339566b.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:06:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736442390; x=1737047190; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DjEsdOpQ49q8jWvklUeiIlGfQQiMPZKhuPb/zwxQMo4=;
- b=ICWHP5oaVPqalbCZQ9bur6mGgSI/Zle7dN21vSJlV0teh9xNkcqypoTDryt26kP0XA
- j2JievHuD3+PaUZwTeA7eq9qsegwwfBFevay0T0xkYZn0ksTo3hBcAJrdEE3d4t/X1Le
- YVILv7MZzh8dWISjBHJ93Gzx9n45rRV/uW3XN3cMDFMjLYubu6ctOuYT+HZay4YYBRh1
- A0YwZBu7CDx6d2h+QNYvUCtl1RQjQHnsqcCg1g66GHG0WUDYcYnTWqv7dxvqECbXd1KX
- AF5BAGBww01tj6eV1N7jd/b+9Q0COWqyruoX/VOHlWEUcaZn1XFXqTCy5hs5nFQTjG15
- huUQ==
+ d=linaro.org; s=google; t=1736442382; x=1737047182; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xev3MylNica8tJvKDRxAEt4qG+psA/6bp/Uvkw9USTg=;
+ b=Fc0GDnwe1mGDi8RPIsBYJqciuPFW5XrFEUGJiLf7xK3Rtr21WxRy89VxV4ypBpuq8N
+ UmY6j30W3FU7IlaF+VluTP+VrPYKwdJHUgPVanyuL1c6NsSWWvo0sUMkoYyOf3Lz1SIi
+ d2v/Y7a5c6QYcyQ/TPqKnLKiPEuwYyFjb20uGy28kqaN//1ZZvSLDPU9RbWXI3tekSuv
+ 05c4TG7WlKZi+j98VkXNhEC3aEsN48MP5j2Fsum1sT/b7k0/XQ9TyBWQDeb8uLLb5Zqt
+ zZwQiT3YfPBV1HtVcGMElb5clQoaK34qCgy4tosdjQUR6oBivnQ98UM0Oi+Li91jZokT
+ KFfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736442390; x=1737047190;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DjEsdOpQ49q8jWvklUeiIlGfQQiMPZKhuPb/zwxQMo4=;
- b=ohw9SusHBta8Wg9bo9mjC1wIQHPAEgWxEWRw5TXZZ5oo0X43t/Wdy/GVUREONt7l5T
- J9HO6kKy5BN9UORWJBakue7IA8BFRzpxttZwbri4awHEWxo35QmbOOi6BFrAzZFMt3am
- Ju0NkELjDugWDdWOwB+VGyJ4DsF3UrTr20G+dhdeG0ljvEguZ32yDcAQfVqQF7HDsPQ1
- llGCE9E0FEL8P+h4kICX3hcmwwjxAUeZ9hGDC3VLIQNH7W4H0bETDdNeGnOYb3DS9IXM
- bYxGv4SDBuw86bXSaKHOsAoA+GfuZ27EUvPz8Aq71fNzz3gV5R0TryPxCaroPfYuY9LQ
- l6jg==
-X-Gm-Message-State: AOJu0YzhMkAtIJLdtG+ErbnOQK3z1jINqIxQ0iRGbLRBceFDATABKvgq
- 6KqoY4rhjFDaLuGGgsczD/jq0A1P3g6RbEt8tu4mCjKftU8CrMbUrd6izFMYvrk=
-X-Gm-Gg: ASbGncsFrgdmBizJhjxA7QNZUgqbK1mdME2PtN0tE5qZlTwPcfVh2Q4XXgDMWl49yWf
- +BGg6ivvQmd8VHIzLew/cxjNL9DoMQugAIuNlvzqx8NFXniePbosvd9dTMdWYr5NJNUvttIaPb0
- wb8eFbKi1o8LaZs/VsNSCk+O2FstHPrsS1RYiLG0rKEzujIRLcERQRoJS5gwITTIZexfjdml07x
- iBC5FnmnaBkQx0gYA1CrBMJWeYC7F64u28vYPlu94dL7IH316bPdZ4=
-X-Google-Smtp-Source: AGHT+IG4opGGhG1rDrCnze0YWcLspvZpuLl5akvU6vE11V5mE8vPm4tWROYbBoleWG+AAPFn6FLB9Q==
-X-Received: by 2002:a17:906:fe0c:b0:aab:75f1:e51a with SMTP id
- a640c23a62f3a-ab2abc78dc8mr688853766b.38.1736442388881; 
- Thu, 09 Jan 2025 09:06:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736442382; x=1737047182;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Xev3MylNica8tJvKDRxAEt4qG+psA/6bp/Uvkw9USTg=;
+ b=FIUsB0TPejBSueNBaaw0R8us65A+5wqRNcZUuaKi3fKBz68L0cUw2Wq8TPsoP3lhIm
+ UOCOHRwsLUTrcONM91Sc3ajwAlB7Zj5WEw6HGxO7Zm7ZZIYbyLILbaQ03aRy9VVvs49W
+ Rx0w/YM+qj099n7Sn1nt+SkNqMJ/TsqLDs76h3X2KZ8EU51rw/5FEfIyOrjhhHEKilFt
+ svxk8jpOBhSjltdhDBGc4gTsFeZGFeCir9XfTttNtNQ4xN86pfIGpDquIT3xkqL5rJJC
+ oQ3Eu0n2NQiH06XXDg8G5aEpTL/+YHeUiMsnBhd8oVg/mSFo1nu85lr3WNXob+yLCo8f
+ qvOw==
+X-Gm-Message-State: AOJu0YwgzMUY9t7VCQF2LqXQSxcwDG2h/M0AHUAM8w3eTkYkDvtrq82s
+ ZNmOqrsh+qzLy3IciT649bHI2gQpZ02hfY2JK4yYV9IQDu4oJ2m6Fs0QWdAeXco=
+X-Gm-Gg: ASbGnctQjmkn4t4K5g+H0X5NrLnK2+m6BiDeMbApsCteS0vWwxakZ6e6Y7vS9JjRxXT
+ vYYiXbJg9lSpVzviuQ7czY9Mf/U3InqqKjHlTYa4ugOfa2npwEqQ26scm2PRGvczwwD+2NBT655
+ nev9bPdifhOvO6+jRNC3L6P75ymcV6SazZpcaoRCZJStqaExXD8TvP/B9ne/1Prn8x5I5h3L01P
+ 5de8o7pZx2PMb3xU9AQXM1R80XgBv+UMw6SgEwiB7YlMhoWn/UgZu0=
+X-Google-Smtp-Source: AGHT+IHla8n15db7gTAgCexyIBdayUFuYT1+cTj3mhUm1d7JbJgTCzsxtGvGDI4jVa6NKS+fHKCuRw==
+X-Received: by 2002:a17:907:1a4e:b0:aaf:f32:cce8 with SMTP id
+ a640c23a62f3a-ab2ab6f3481mr478807366b.30.1736442382426; 
+ Thu, 09 Jan 2025 09:06:22 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c905cd8asm89286566b.7.2025.01.09.09.06.20
+ a640c23a62f3a-ab2c9646be5sm89611666b.174.2025.01.09.09.06.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 09 Jan 2025 09:06:21 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 043965F95A;
- Thu,  9 Jan 2025 17:06:20 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C9BC25F75D;
+ Thu,  9 Jan 2025 17:06:19 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -74,17 +73,16 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 02/22] semihosting/uaccess: Briefly document returned values
-Date: Thu,  9 Jan 2025 17:05:59 +0000
-Message-Id: <20250109170619.2271193-3-alex.bennee@linaro.org>
+Subject: [PATCH 00/22] maintainer updates for jan '25 (semihosting, gdb,
+ plugins)
+Date: Thu,  9 Jan 2025 17:05:57 +0000
+Message-Id: <20250109170619.2271193-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250109170619.2271193-1-alex.bennee@linaro.org>
-References: <20250109170619.2271193-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,121 +105,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+This covers my remaining trees outside of testing/next and is mostly a
+consolidation of patches I've pulled from other people.
 
-Since it is not obvious the get/put_user*() methods
-can return an error, add brief docstrings about it.
-Also remind to use *unlock_user() when appropriate.
+For semihosting:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212115413.42109-1-philmd@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/semihosting/uaccess.h | 55 +++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+  - a bunch of cleanups from Philippe to aide single binary builds
 
-diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
-index c2fa5a655d..6bc90b12d6 100644
---- a/include/semihosting/uaccess.h
-+++ b/include/semihosting/uaccess.h
-@@ -19,41 +19,96 @@
- #include "exec/tswap.h"
- #include "exec/page-protection.h"
- 
-+/**
-+ * get_user_u64:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u64(val, addr)                                         \
-     ({ uint64_t val_ = 0;                                               \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = tswap64(val_); ret_; })
- 
-+/**
-+ * get_user_u32:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u32(val, addr)                                         \
-     ({ uint32_t val_ = 0;                                               \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = tswap32(val_); ret_; })
- 
-+/**
-+ * get_user_u8:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u8(val, addr)                                          \
-     ({ uint8_t val_ = 0;                                                \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = val_; ret_; })
- 
-+/**
-+ * get_user_ual:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_ual(arg, p) get_user_u32(arg, p)
- 
-+/**
-+ * put_user_u64:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_u64(val, addr)                                         \
-     ({ uint64_t val_ = tswap64(val);                                    \
-        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
- 
-+/**
-+ * put_user_u32:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_u32(val, addr)                                         \
-     ({ uint32_t val_ = tswap32(val);                                    \
-        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
- 
-+/**
-+ * put_user_ual:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_ual(arg, p) put_user_u32(arg, p)
- 
-+/**
-+ * uaccess_lock_user:
-+ *
-+ * The returned pointer should be freed using uaccess_unlock_user().
-+ */
- void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-                         target_ulong len, bool copy);
-+/**
-+ * lock_user:
-+ *
-+ * The returned pointer should be freed using unlock_user().
-+ */
- #define lock_user(type, p, len, copy) uaccess_lock_user(env, p, len, copy)
- 
-+/**
-+ * uaccess_lock_user_string:
-+ *
-+ * The returned string should be freed using uaccess_unlock_user().
-+ */
- char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
-+/**
-+ * uaccess_lock_user_string:
-+ *
-+ * The returned string should be freed using unlock_user().
-+ */
- #define lock_user_string(p) uaccess_lock_user_string(env, p)
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
+For gdbstub (touches system/vl.c as well):
+
+  - propagate *Error to setup functions
+
+Ilya, I know about [PATCH v4 0/9] gdbstub: Allow late attachment and
+will look at that later. I didn't want to delay the rest of my reviews
+fighting with a messy re-base. If you are up for it you can post a
+branch on the thread and I can potentially merge from that. Apologies
+for the rug-pull between v3 and v4.
+
+For plugins
+
+  - mostly fixes from Pierrick
+  - a speculative fix for cpu_io_recompile() case exposed by Julian's
+    discontinuity patches.
+
+Most are already reviewed, the following remain:
+
+  accel/tcg: also suppress asynchronous IRQs for cpu_io_recompile
+  system: propagate Error to gdbserver_start (and other device setups) (1 acks, 1 sobs, 0 tbs)
+  system: squash usb_parse into a single function
+  system/vl: more error exit into config enumeration code
+  semihosting: add guest_error logging for failed opens
+
+There will likely be a v2 anyway once I've got testing/next merged and
+Ilya's gdbstub patches. I don't think I have anything else pending but
+do shout if there is.
+
+Alex.
+
+Alex Bennée (5):
+  semihosting: add guest_error logging for failed opens
+  system/vl: more error exit into config enumeration code
+  system: squash usb_parse into a single function
+  system: propagate Error to gdbserver_start (and other device setups)
+  accel/tcg: also suppress asynchronous IRQs for cpu_io_recompile
+
+Philippe Mathieu-Daudé (6):
+  semihosting/uaccess: Briefly document returned values
+  semihosting/syscalls: Include missing 'exec/cpu-defs.h' header
+  semihosting/uaccess: Include missing 'exec/cpu-all.h' header
+  semihosting/arm-compat: Include missing 'cpu.h' header
+  semihosting/console: Avoid including 'cpu.h'
+  semihosting/meson: Build config.o and console.o once
+
+Pierrick Bouvier (11):
+  tests/tcg/plugins/insn: remove unused callback parameter
+  contrib/plugins/howvec: ensure we don't regress if this plugin is
+    extended
+  tests/tcg/plugins/syscall: fix 32-bit build
+  tests/tcg/plugins/mem: fix 32-bit build
+  contrib/plugins/stoptrigger: fix 32-bit build
+  contrib/plugins/cache: fix 32-bit build
+  contrib/plugins/hotblocks: fix 32-bit build
+  contrib/plugins/cflow: fix 32-bit build
+  contrib/plugins/hwprofile: fix 32-bit build
+  contrib/plugins/hotpages: fix 32-bit build
+  configure: reenable plugins by default for 32-bit hosts
+
+ configure                      | 21 +-------
+ include/exec/gdbstub.h         |  8 ++-
+ include/semihosting/console.h  |  2 -
+ include/semihosting/syscalls.h |  1 +
+ include/semihosting/uaccess.h  | 55 +++++++++++++++++++
+ accel/tcg/translate-all.c      |  5 +-
+ contrib/plugins/cache.c        | 18 +++----
+ contrib/plugins/cflow.c        | 17 +++---
+ contrib/plugins/hotblocks.c    | 29 ++++++++--
+ contrib/plugins/hotpages.c     |  6 +--
+ contrib/plugins/howvec.c       |  7 +--
+ contrib/plugins/hwprofile.c    | 27 ++++++----
+ contrib/plugins/stoptrigger.c  | 48 +++++++++--------
+ gdbstub/system.c               | 22 ++++----
+ gdbstub/user.c                 | 20 +++----
+ linux-user/main.c              |  6 +--
+ monitor/hmp-cmds.c             |  2 +-
+ semihosting/arm-compat-semi.c  |  1 +
+ semihosting/console.c          |  3 +-
+ semihosting/syscalls.c         |  2 +
+ semihosting/uaccess.c          |  1 +
+ system/vl.c                    | 99 ++++++++++++++--------------------
+ tests/tcg/plugins/insn.c       |  4 +-
+ tests/tcg/plugins/mem.c        |  6 +--
+ tests/tcg/plugins/syscall.c    |  6 +--
+ semihosting/meson.build        |  9 ++--
+ 26 files changed, 243 insertions(+), 182 deletions(-)
+
 -- 
 2.39.5
 
