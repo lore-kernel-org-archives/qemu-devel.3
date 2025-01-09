@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08554E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA861E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVspK-0005vL-Ug; Thu, 09 Jan 2025 08:43:59 -0500
+	id 1tVssC-0007Xi-KC; Thu, 09 Jan 2025 08:46:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVspI-0005up-P0
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:57 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1tVssA-0007X8-IM
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:46:54 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVspH-0003bw-1q
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:43:56 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-aaef00ab172so167814966b.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 05:43:54 -0800 (PST)
+ id 1tVss8-0004At-Qw
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:46:54 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d9837f201aso2044839a12.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 05:46:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736430233; x=1737035033; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736430411; x=1737035211; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/gwqkHJXVNF0TWTT9SqwUAvu25Jy2OeRif2u47hJ4P0=;
- b=WwfeCj9vJ0d9igCgZoNhx+9ek7m2UTtmjxyx4gL6kart1e/ymTs3pIifwb8QLV/qLZ
- oCsn7joRnqLWXbEj/AUJefhZlNwELDlkZ4E2pOiPnu1vXRlux498vcIkWAJuvzGPtjhi
- jea8ZtIB/a5tphcbyHLvVG8qJ7al2RXXw3/dUIj6lORXFu+3RqYnZiL6do/f4l/fIGPU
- qT9+lrQOFKUOuYCCS+jkROqpBMivpPlEf9glkp40xIFw+uWl6/By0NlndJWIlQ0869qi
- aeg/zNYs4Pj02WgkAdIz/urc2Ll09WDhbArJj9APOciqkPnAssNzqrmQGU0rZYog56xw
- ZSJg==
+ bh=LI2uRGOP3s7NrT+u7oSzBa0sVGOsXjxvRLarDImf9oo=;
+ b=vg4T8KH3frrzx5Zr4o1ZeB56354Vsrz1gN4/ScHqCZwpSit4U+mWPc7vbqLpeEjr+y
+ FypAiF7y2vEkOtzZwcx4zqsMDRFv03iJVs0NTHrVa39sWzdYPTGnto8LjtAq5Mlsgopz
+ SwhrY95DJ42jMG2R9VSnroTRfHEefAX1M7VG4r8o8ED988vGJ7Qj/OajNoqs9G5jQ8gY
+ ePjs3rc6BBRaO1Uk7bkYNanheExgP6uFKO7WYqsFvUo+4ALIDRdnlUgVi9IwfseY/miR
+ KiXyJXivvxOUWHcoQ61CciFOQjXw+fIPJrkqzgyIC3NS1LaR875d8gnSQUlJUw4Qrpah
+ 8ucQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736430233; x=1737035033;
+ d=1e100.net; s=20230601; t=1736430411; x=1737035211;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/gwqkHJXVNF0TWTT9SqwUAvu25Jy2OeRif2u47hJ4P0=;
- b=LOUzzJL3Jyim1EA7xkJFEBA+mBHTj1gzA4k7AOsK7btnpfQr5BaXEWWtE9TUZ/biMc
- GGAk+H3vrdIdsgJdZnTnkKYsS4gYFD6ccak2KSXIfwp2BS115wQQotUpfBWWhH6ojwEo
- OjD2OUQb/tTXOSTRF3eQtPutw21e8wyp4jl/Set4wYWZ4sR5ZSc2qU2YtnYX0OfJcrG5
- J4p8sNQX0nzNI5gHe+2gPtUltjjZOSTA9MMB4dhKkAoR7UGMmZ75cSY9JXnHtUWIRAqD
- YNb+C6c8DPjcwZyp+UYvpp5EKMoIUj611ORvvYN3ETDu0pyvEPKLVSq4PlJspp2HJbPW
- iZEg==
-X-Gm-Message-State: AOJu0YxFCaMe/APovaoxhMvWcUPogNMA7+E/72gnfYBsYC/A2TOew8Eq
- 9ryduf01elAQA5Fx7Hu1z6XC5V2B8wXEcSRQkM1VMXu0XW9l/nHWL0FZW3hfnKc=
-X-Gm-Gg: ASbGnculv7y5t0TrXRwcZWWKWIgkjJOaip5mJ00stMKeKo8tqShDS3ZuLM9SlvKEMZk
- h4MAehmM0+SjADAuPrW9qrcgY95FszaAzBMA7RrlPe277Cp5MYGl5//ExT570Nlot43Gf1O8NXP
- Y6ZpZKNzwybc6aNKllfdHtfOqj8KxJRL+Maw/8riOvGiE7MhfDAuGIpcOwuhADE7g9QJME0QxKt
- /urANyL4/qbO32LmecvbU/HUM5KsLHCtCnUJs1kK3HLJj3srgl07So=
-X-Google-Smtp-Source: AGHT+IF0DOOdGkDpQ1uWfh3z+lC9/e+POLF98ikPpS+aTf4fhE4os7M16ZWBYGWthSeF65lDBsCS1A==
-X-Received: by 2002:a05:6402:3596:b0:5d0:ea4f:972f with SMTP id
- 4fb4d7f45d1cf-5d972e0b068mr14723569a12.8.1736430233165; 
- Thu, 09 Jan 2025 05:43:53 -0800 (PST)
+ bh=LI2uRGOP3s7NrT+u7oSzBa0sVGOsXjxvRLarDImf9oo=;
+ b=W8JKUs2VpD2q9iDEu0LYl9nqgbCcjlfWnW6FTDCICWaeXNASyzUArnUljEHHXpuI9r
+ V736JAP8UxLEqZlb3slgmuf1DF3gICjrz6S30G0TPQHN7HUg1cnWnfF5mm0Sn/PYpDgS
+ mHy5SuO6d+WtAKki+cbPLLVS5cMnAtqorpKE6sYYEmCnUKxe0oKSTFw/z/T5RbM/mRiz
+ z9TT28i6xiQYBt11EM5wiwkRsJtCgsHmnx2YKvL777cEfJwRTy3WyxmDpU/oe/i803yB
+ l4LdMpzWQPF1I/KNDF36YAnTnOYuTob23WT77pdwS33o6+FJYYHXoR1xdDxHLd2ic79J
+ urkQ==
+X-Gm-Message-State: AOJu0YwsYUEU9CoRc/KPmlI5/N4nuq64+rYj8AdCo6i6FtQcNQZjd2js
+ EyoSMfiemZRFosx2slpAh8d5qPjKiuQ+JoBnHTZ2qvFnGj/aYz3dP4bt7CjnuOzLjX0XOxuEWQT
+ xt7U=
+X-Gm-Gg: ASbGncvzoUcfDVIIGxMFZ5vCatweYPlpXfy5XcdzKNRdGle9oRpU24EsOPXgBIYI0o+
+ NRVkP7njzytgHaMEwOwRzWiXOaUa6KGXEDlWBfen22ohFuD2lt2rshcVu1GtzPECvB9wlF4jSkX
+ QLpq1kPgUEOWwl3amHo/20cjPZsq3EqvZiyVTGW1ie7qw0AnJblKUWJkqJ3Legiex6PUXuevJhT
+ mCbQ8TXKvli3aJrmfdYAlXx4WFYhVe6Bvh686GBs1qWT0/wrIR/Hwo=
+X-Google-Smtp-Source: AGHT+IGeo2eOGH8/KNaZl4odCzs4WUVomGcvoIwQsbGKiixXs99k2ALhgfdI6TYSyYDcQszyT0eK0w==
+X-Received: by 2002:a17:907:3f12:b0:aa6:112f:50ba with SMTP id
+ a640c23a62f3a-ab2c3c78887mr304012766b.13.1736430410929; 
+ Thu, 09 Jan 2025 05:46:50 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d99008c35bsm631655a12.2.2025.01.09.05.43.51
+ a640c23a62f3a-ab2c95aedf6sm74117866b.138.2025.01.09.05.46.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 05:43:51 -0800 (PST)
+ Thu, 09 Jan 2025 05:46:49 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CD5D65F75D;
- Thu,  9 Jan 2025 13:43:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 326435F75D;
+ Thu,  9 Jan 2025 13:46:49 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Aurelien Jarno <aurelien@aurel32.net>,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,  Aleksandar Rikalo <arikalo@gmail.com>
-Subject: Re: [RFC PATCH v3 08/11] target/mips: call plugin trap callbacks
-In-Reply-To: <5a165b308d75718e185806607df583596270181d.1733063076.git.neither@nut.email>
- (Julian Ganz's message of "Mon, 2 Dec 2024 20:26:49 +0100")
+Cc: qemu-devel@nongnu.org,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [RFC PATCH v3 10/11] target/sparc: call plugin trap callbacks
+In-Reply-To: <51c6069c8a2d50d70d21a10c167066e5f0aa096a.1733063076.git.neither@nut.email>
+ (Julian Ganz's message of "Mon, 2 Dec 2024 20:41:36 +0100")
 References: <cover.1733063076.git.neither@nut.email>
- <5a165b308d75718e185806607df583596270181d.1733063076.git.neither@nut.email>
+ <51c6069c8a2d50d70d21a10c167066e5f0aa096a.1733063076.git.neither@nut.email>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 09 Jan 2025 13:43:50 +0000
-Message-ID: <878qrk85m1.fsf@draig.linaro.org>
+Date: Thu, 09 Jan 2025 13:46:49 +0000
+Message-ID: <8734hs85h2.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,20 +111,26 @@ Julian Ganz <neither@nut.email> writes:
 > between architectures, the latter need to be called from target specific
 > code.
 >
-> This change places hooks for MIPS targets.
+> This change places hooks for SPARC (32bit and 64bit) targets. We treat
+> any interrupt other than EXTINT and IVEC as exceptions as they appear to
+> be synchroneous events.
 > ---
->  target/mips/tcg/sysemu/tlb_helper.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>  target/sparc/int32_helper.c |  7 +++++++
+>  target/sparc/int64_helper.c | 10 ++++++++++
+>  2 files changed, 17 insertions(+)
 >
-> diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu=
-/tlb_helper.c
-> index e98bb95951..2b19975d53 100644
-> --- a/target/mips/tcg/sysemu/tlb_helper.c
-> +++ b/target/mips/tcg/sysemu/tlb_helper.c
-> @@ -18,6 +18,7 @@
->   */
+> diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+> index f2dd8bcb2e..86b21eecb6 100644
+> --- a/target/sparc/int32_helper.c
+> +++ b/target/sparc/int32_helper.c
+> @@ -24,6 +24,7 @@
+>  #include "exec/cpu_ldst.h"
+>  #include "exec/log.h"
+>  #include "sysemu/runstate.h"
+> +#include "qemu/plugin.h"
 
-merge failure as this is now in system/tlb_helper.c
+Also a merge failure due to tidying up of target/sparc/sysemu
+directories.
 
 --=20
 Alex Benn=C3=A9e
