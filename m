@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FDC0E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F7CE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVsQW-0003x5-SV; Thu, 09 Jan 2025 08:18:21 -0500
+	id 1tVsfw-00079U-Ll; Thu, 09 Jan 2025 08:34:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+10359aeb926cd7703950+7809+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVsQJ-0003tE-DZ
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:18:07 -0500
+ id 1tVsft-00078x-Qn
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:34:13 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+10359aeb926cd7703950+7809+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tVsQH-0005zq-LP
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:18:07 -0500
+ id 1tVsfp-0001GG-QW
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 08:34:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=hPwulwXE9AyQmda7y4QCExUtnF3EUWJSkT4uo7sAZlQ=; b=XpcMKtBF+KK20iBMJcvlePjj2T
- rkrImeUV5N4DZOBMnR9rutYqJaqvnEendCBU0gfueXZwQgmf5XXqC6yQdgbpNslz+ADCzDWxyU+V3
- AenwmjXnsPLG+BaEqRfV2fJsHFSOi25WHfm6BM3znsTp4slWOac9fbrQLOVCochRmpwtlgM983C3M
- vErRZlGxQmUnrrrbTLKA4B1aKdAp2EXcEqO70dUTJy7BU1+ZsepRDuHd58U9/K8hVYtxBK3+fN8rb
- vtsJJf4Zt9mhqpcPpE3RSba7n0TaLnu2EaWsbu5UtVrasXYDvnwEd2/zwl272WGw2z/S4UVlUlqwc
- hgrofUng==;
+ bh=IM9BC+8Ayhte8AbEQhl+/KXSS3XOo1OqTdNjGDkNdhY=; b=vrmPr1KesUiYCqgSe2+i0X1PuH
+ qfZ/4nigu6ThDnOh86GvObH0gwAbHqn/1n90n4R8EhbXZjZKkFgE+nugvpTMnawZ5hzbRrzam/D3e
+ LNyIon89AInu3ZOxvSs9T3D6QsNPrBqIbFufkGfXWGovbKb/2KsMWq1Qf2RlEujS/XfirLyZS/OLK
+ 87/bZHwn6dLqGhxDCAxmflANBjgLHrwJp5/Djz1rLHXAWJ7LFENBU2k3vbaNmCPxmP2AAz0BwaQ5G
+ rsFMxJxKLvfPETkWpFmkv5WQH6GCW/F5FLfTiqL/Qu7kLhVMWuDvh0qwooHyHr6sDjcSkatTxASvi
+ hNV/aPsQ==;
 Received: from 54-240-197-239.amazon.com ([54.240.197.239]
  helo=edge-dns-1.e-iad53.amazon.com)
  by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tVsQD-000000065Ca-2rki; Thu, 09 Jan 2025 13:18:01 +0000
-Message-ID: <de33977443334962bf85d1f7968d2609ac35d6a5.camel@infradead.org>
-Subject: Re: [PULL 0/1] vmclock queue
+ id 1tVsfk-00000006BJ1-1qVJ; Thu, 09 Jan 2025 13:34:04 +0000
+Message-ID: <b0ddc298051c1b0c8e4c966ad83c08058678476a.camel@infradead.org>
+Subject: Re: [PULL 0/2] xenfv queue
 From: David Woodhouse <dwmw2@infradead.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Hilber
- <quic_philber@quicinc.com>,  "Mohamed Abuelfotoh, Hazem"
- <abuehaze@amazon.com>, paul <paul@xen.org>
-Date: Thu, 09 Jan 2025 13:18:00 +0000
-In-Reply-To: <CAJSP0QUyq6RfYPPV2EXthMaLr82Z9htEohaP4f+P=MLUF=JCWg@mail.gmail.com>
-References: <20250108111023.156073-1-dwmw2@infradead.org>
- <CAJSP0QUyq6RfYPPV2EXthMaLr82Z9htEohaP4f+P=MLUF=JCWg@mail.gmail.com>
+To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,  Akihiko
+ Odaki <akihiko.odaki@daynix.com>
+Date: Thu, 09 Jan 2025 13:34:03 +0000
+In-Reply-To: <20250109104837.2532259-1-dwmw2@infradead.org>
+References: <20250109104837.2532259-1-dwmw2@infradead.org>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/pkcs7-signature"; 
- boundary="=-yM+17Wc05eH+Ejdramuz"
+ boundary="=-6PXHQPhvBL6sdMiHnrQ+"
 User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -84,97 +82,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-yM+17Wc05eH+Ejdramuz
+--=-6PXHQPhvBL6sdMiHnrQ+
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, 2025-01-09 at 07:52 -0500, Stefan Hajnoczi wrote:
-> On Wed, 8 Jan 2025 at 06:11, David Woodhouse <dwmw2@infradead.org>
-> wrote:
-> >=20
-> > From: David Woodhouse <dwmw@amazon.co.uk>
-> >=20
-> > The following changes since commit
-> > 6528013b5f5ba6bb3934b7f5fe57a3110680530f:
-> >=20
-> > =C2=A0 Merge tag 'qga-pull-2025-01-06' of
-> > https://github.com/kostyanf14/qemu=C2=A0into staging (2025-01-06
-> > 09:39:02 -0500)
-> >=20
-> > are available in the Git repository at:
-> >=20
-> > =C2=A0 git://git.infradead.org/users/dwmw2/qemu.git tags/pull-vmclock-
-> > 20250108
-> >=20
-> > for you to fetch changes up to
-> > 6502ea82b26dc28c83fbc9c766af7a408a8ca827:
-> >=20
-> > =C2=A0 hw/acpi: Add vmclock device (2025-01-07 16:22:04 +0000)
-> >=20
-> > ----------------------------------------------------------------
-> > Add vmclock device
-> >=20
-> > ----------------------------------------------------------------
-> > David Woodhouse (1):
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/acpi: Add vmclock device
-> >=20
-> > =C2=A0hw/acpi/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 5 +
-> > =C2=A0hw/acpi/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0hw/acpi/vmclock.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 179 ++++++++++++++++++++++++++
-> > =C2=A0hw/i386/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0hw/i386/acpi-build.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 10 +-
-> > =C2=A0include/hw/acpi/vmclock.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- |=C2=A0 34 +++++
-> > =C2=A0include/standard-headers/linux/vmclock-abi.h | 182 ++++++++++++++=
-+++++++++++++
-> > =C2=A0scripts/update-linux-headers.sh=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A08 files changed, 412 insertions(+), 1 deletion(-)
-> > =C2=A0create mode 100644 hw/acpi/vmclock.c
-> > =C2=A0create mode 100644 include/hw/acpi/vmclock.h
-> > =C2=A0create mode 100644 include/standard-headers/linux/vmclock-abi.h
+On Thu, 2025-01-09 at 10:48 +0000, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
 >=20
-> On IRC you mentioned that you'd like me to pick up this pull request.
-> If the ACPI subsystem maintainers don't want to take this through
-> their tree then let's set up pull request handling for vmclock:
+> The following changes since commit 3f8bcbba3b320c610689576fc47595f1076198=
+dd:
 >=20
-> 1. Add a MAINTAINERS file entry for vmclock covering the new files
-> (e.g. hw/acpi/vmclock.c) with yourself as maintainer.
+> =C2=A0 Merge tag 'pull-request-2025-01-08' of https://gitlab.com/thuth/qe=
+mu=C2=A0into staging (2025-01-08 11:38:21 -0500)
+>=20
+> are available in the Git repository at:
+>=20
+> =C2=A0 git://git.infradead.org/users/dwmw2/qemu.git tags/pull-xenfv-20250=
+109-1
+>=20
+In case what you said about the tooling not allowing git:// URIs is
+true, this is also now pushed to
 
-Looks like Michael has taken it now; thanks.
+   https://gitlab.com/dwmw2/qemu tags/pull-xenfv-20250109-1
 
-> 2. Send pull requests with a GPG-signed tag (git tag --sign) and
-> ensure that the repo URL in the email is https:// (the tooling rejects
-> unencrypted http:// and git:// repo URLs).
+> for you to fetch changes up to b6014c5089a313ac84fe74970eee56e3fc87b49b:
+>=20
+> =C2=A0 hw/xen: Check if len is 0 before memcpy() (2025-01-09 10:43:13 +00=
+00)
+>=20
+> ----------------------------------------------------------------
+> Xen emulation fixes
+>=20
+> ----------------------------------------------------------------
+> Akihiko Odaki (1):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/xen: Check if len is 0 before memcpy()
+>=20
+> David Woodhouse (1):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/i386/pc: Fix level interrupt sharing fo=
+r Xen event channel GSI
+>=20
+> =C2=A0hw/i386/kvm/xen_evtchn.c=C2=A0=C2=A0 | 60 +++++++++++++++++++++++++=
++++++++++++----------
+> =C2=A0hw/i386/kvm/xen_evtchn.h=C2=A0=C2=A0 |=C2=A0 2 +-
+> =C2=A0hw/i386/kvm/xen_xenstore.c |=C2=A0 4 ++++
+> =C2=A0hw/i386/x86-common.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 32 +++++=
++++++++++++---------
+> =C2=A04 files changed, 73 insertions(+), 25 deletions(-)
+>=20
 
-You mean *or* rather than *and* in that sentence, right? Because if
-it's GPG-signed, then I can send it to you over carrier pigeon and you
-can validate it; the transport is irrelevant.
 
-If you really did mean 'and'... is this a new bug in the tooling? Last
-time I used Peter's make-pullreq script, it worked fine=C2=B9.
-
-Obviously it doesn't matter for *this* one now Michael has picked it
-up, but I sent another pull request today with some Xen emulation
-fixes=C2=B2.
-
-=C2=B9 https://lore.kernel.org/all/CAFEAcA9sjovBLdV1NsUnDGPs9hX1XYn7szbetQ-=
-crtZ84VO4dQ@mail.gmail.com/
-=C2=B2 https://lore.kernel.org/qemu-devel/20250109104837.2532259-1-dwmw2@in=
-fradead.org/
-
---=-yM+17Wc05eH+Ejdramuz
+--=-6PXHQPhvBL6sdMiHnrQ+
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -253,22 +210,22 @@ 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
-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
+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
-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
+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
 
 
---=-yM+17Wc05eH+Ejdramuz--
+--=-6PXHQPhvBL6sdMiHnrQ+--
 
