@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B35EE7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 22:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F4CE7719C
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 23:01:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW1TS-0000j6-R8; Thu, 09 Jan 2025 17:57:58 -0500
+	id 1tW1WJ-0001Yv-GZ; Thu, 09 Jan 2025 18:00:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW1TR-0000iu-Gl
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 17:57:57 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW1WH-0001Yn-V4
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:00:54 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW1TQ-00088B-06
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 17:57:57 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so9709475e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 14:57:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW1WF-0008TZ-V2
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 18:00:53 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-436326dcb1cso11240625e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 15:00:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736463474; x=1737068274; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736463650; x=1737068450; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wH+K6oUpzDH4Za0j4WDbFTRNWu1mcAEUP1Hbot4NK0w=;
- b=NuwAkmqmtOc6idKFYMpI2ckoWhwd1UI7ymh0q8mDX2icerzf+FArYV8n9LLXrZ9fx8
- YnzV/dxKUqSuBYB7rHpr/9o83CvBRHx52YayRV623s0fGfbyMDZci0T0sarwL+jY1QdU
- /Suob4rToITSyFbpFOdhxYclMsEgmtBmJ3co8OyaPMFhJpQ7IhKqu2xckZ3DlM9zBi4g
- 5vVKWN6F8yUxWFpJC77ufeu35cx9bHj1mdm9Hdtxr7PdmDIcbRaOHVeZAmKH13XSi6Er
- DWH0p/8GjHU5qZDRCTTAROqMlFgl7VyjChiwmwsCYj9vIO9D1JJK2ix2BsdGk7ySwh2Z
- 3Fig==
+ bh=YjygxAKM95Rct/ctuPEP9lcVB5DIBN18J/oGiX4mUww=;
+ b=v9S7EHnbVRLnvSa82W3hg9B3YuNMXb5U4eLNdF3bIcwdke9H4tho9vJ70mVVAgVFh8
+ 1sLydnRoYQowjmXqFrXVaYArWZ9SOBWranE14lRoYE2/PXZEz3sBw1VBYUwjbRj6dpad
+ NW1iA4DR6/dUprInt1cZpoMvRtyrMtOHcfmxxfMpW0XQkaiKBC5m7jRPntr7BYGPRd2E
+ lAU7kTH/6dIhedp5GXbKy7VNs++blk/xvqDlRt9xfhwwXMH7DWWPJqqAs6Ow6xVziN8v
+ ZbCQaDjXYbq4ehOuVWIzOPVbGx1jUDmBEGpFS17SuH11A1eRO7282/uD3alz+XQxz6TW
+ PVaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736463474; x=1737068274;
+ d=1e100.net; s=20230601; t=1736463650; x=1737068450;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wH+K6oUpzDH4Za0j4WDbFTRNWu1mcAEUP1Hbot4NK0w=;
- b=MF1bvpcuEb9Bnm4UGQeMT8nGPW1KWGtrXyeAz5wY9bp0t770Docugg+v8U4JTwkmRj
- NuKAR7s0N+EwLrWcvTOJ6cjtMDRbnXt3F7FnoM7Vpv8O2D5IAjVbCGLOR7i+Zd0T0l3Y
- u6e4acanKs6rXVZPmWwh5oD4thC8766DR/VWKlDnkzsdExRfHHZYRzJpK6eNNeHoHDpQ
- tezAO6wluVNmVGRb+ujLCdfW+8xAlnb+GKk2OKxIJ46PiCAqbP1viouyUmkoROSoyWRT
- I8W1R6+1GDID+EOMm3gVU3kR+8pn8jr47LU7FKjvgBibQx58inmqRBEXVaS7ZeYhQVRy
- 7YNg==
+ bh=YjygxAKM95Rct/ctuPEP9lcVB5DIBN18J/oGiX4mUww=;
+ b=FJXe6bhAvcqetL+TP7kqF7VlG00KYAgkLEqQRoa1g81otF5/Sc6D+2ov6R1+uSn5lm
+ GjxCQIQPieAW6rMxqdmMsAnBsYyhwfatHWkBA7RJSS9dFOd+jlRpb6TZkSxtJiYq4LYC
+ /KOL8dKW9BuwD5eH+ZAtHRqIIA8xfwrw1hBXOOTuUKGxZixxJa++OMH3Jb5Oz461YDZe
+ qNkbbnpiKI9TB3DJY4bZmDdI3SkfzZolbIdXO0AE9Zkpv4Bjy+41YBoXWTW/tvEn6owR
+ MzUpeQ0AWn0bH99665pCkLGy75dQxZZMnKPPcN3jVpjxTrYBII9I2w7blzwLg/VSFPHy
+ owJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqrQE3etHoIDj5PYVnT4FetL+42X2eGv5t4HrYGQa34/7jsFuvDxc6gUHlQ73M0WOYBxNlMH5HhEsF@nongnu.org
-X-Gm-Message-State: AOJu0Yy7xkxXy4Npne25sBj243Aa+BW0EKdnPJar5LFtLz8UNyp2VplE
- y3fAo3vbW8pdRzw6MsGF9p+qjCzrWB/UIb6IyWxmxsvhwLP+3CAsiYi36bmRl/s=
-X-Gm-Gg: ASbGncvSNJSZ9SbM0Tb/Mo5fbABEH/Fql9ikHOzJdf4c0WihOFc5FTHzJQtCPBMhOU2
- 6e4IOsOZEJkhl0Ip1Kx+KDr3DOQ8firD48hzD/8KwzPe5t0n+CrWpMfIH7pkoZ3U51pgNUxC7P3
- smO6fg1mluy1v/lbD4AAuUlFh3poXvsuH2ksi7+/6MpRCNVrG2mTDh5mBWIrJj4UfGj+ikxj8Ce
- T+A+3d1LDhnK+rBLdbsXnzEuZj53igXpLMAQo3eFt+VEWczCyNQxo/0ju4mxDGBKPS42aMdgUAo
- v6gUjzsdLFpvMSQOsTsj8GPY5QI=
-X-Google-Smtp-Source: AGHT+IErjc1OGztfQhzyNwG+Mwpnr1/VRV5+qTucrZe0FUJAcm6KZAqNXWqwkh9i9zJg1JGNkd4EBw==
-X-Received: by 2002:a05:600c:458d:b0:436:1b86:f05 with SMTP id
- 5b1f17b1804b1-436e9d7b925mr35297815e9.11.1736463474148; 
- Thu, 09 Jan 2025 14:57:54 -0800 (PST)
+ AJvYcCU60lTkaO7cc4oRcYvq19nhWEIZUBfZ0o48bO3oLZPgqybCTS82VQ3eg6zFWGRETH5OpGjY1Bx1llJb@nongnu.org
+X-Gm-Message-State: AOJu0Yzi72vMzv/CXAmrUAh4tZgDAnyGyMSQWnlZyUd8qJEMvOxmYdCi
+ nMybVxaaJtL0EpjMguCmdMcEkLoT3yJYTL+6Yd6BKk0LFnOzYITWAO99wGDcZpE=
+X-Gm-Gg: ASbGncszQq1ixARZj3/74JH9TEy0Jd5o4IeBwulv1kx4IwCZCg1BATSCj08ff6PFlPh
+ bWFhxv9j9HWrt036C3aHrBv/IF+U1PsZS6CMXgWTHpemBdD8x2da8lxhZfeHOkpPY1haM6BW8hn
+ upHGv555cgdtz3N0pKMzOXK3RnSo4gAlJo2WYZfI2qEuTze86+d0LLbIHNoGKn/PE2YEMli5yy5
+ KZD+AW5oXu5daUKMc+JriaVmOL/l5mL7hPgGYQoPxMder75EcNRJTWyC7Qbck8r6IAi0Lerbj4u
+ i45MLZpHCzyQRPfOyACXFu+Nt/Y=
+X-Google-Smtp-Source: AGHT+IGe1aV4tUU8W/gdoWOVrUz3thzMV4Ne82XzjHKxAY0oJJTFlZ8PcwEVBslqTt+Ux9AeKwWofA==
+X-Received: by 2002:a05:600c:4314:b0:434:a802:e9b2 with SMTP id
+ 5b1f17b1804b1-436eedef4damr7995295e9.4.1736463649932; 
+ Thu, 09 Jan 2025 15:00:49 -0800 (PST)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1bebsm2903368f8f.95.2025.01.09.14.57.53
+ 5b1f17b1804b1-436e9e37d3bsm33586825e9.31.2025.01.09.15.00.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 14:57:53 -0800 (PST)
-Message-ID: <5312f830-c530-433a-a000-4c9ea1cc16d4@linaro.org>
-Date: Thu, 9 Jan 2025 23:57:53 +0100
+ Thu, 09 Jan 2025 15:00:48 -0800 (PST)
+Message-ID: <45d29837-466b-4439-a8d5-b522e1135263@linaro.org>
+Date: Fri, 10 Jan 2025 00:00:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 37/81] tcg/arm: Add full [US]XT[BH] into {s}extract
+Subject: Re: [PATCH v2 44/81] tcg/sparc64: Use SRA, SRL for {s}extract_i64
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
 References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-38-richard.henderson@linaro.org>
+ <20250107080112.1175095-45-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-38-richard.henderson@linaro.org>
+In-Reply-To: <20250107080112.1175095-45-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,57 +102,55 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 09:00, Richard Henderson wrote:
-> The armv6 uxt and sxt opcodes have a 2-bit rotate field
-> which supports extractions from ofs = {0,8,16,24}.
-> Special case ofs = 0, len <= 8 as AND.
+> Extracts which abut bit 32 may use 32-bit shifts.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/arm/tcg-target-has.h | 17 +++++++++++++
->   tcg/arm/tcg-target.c.inc | 54 +++++++++++++++++++++++++++++++++++-----
->   2 files changed, 65 insertions(+), 6 deletions(-)
+>   tcg/sparc64/tcg-target-has.h |  9 +++++++--
+>   tcg/sparc64/tcg-target.c.inc | 11 +++++++++++
+>   2 files changed, 18 insertions(+), 2 deletions(-)
 > 
-> diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
-> index 316185500d..d6ca35ed1a 100644
+> diff --git a/tcg/sparc64/tcg-target-has.h b/tcg/sparc64/tcg-target-has.h
+> index d9ca14cc3d..2db461efed 100644
+> --- a/tcg/sparc64/tcg-target-has.h
+> +++ b/tcg/sparc64/tcg-target-has.h
 
 Missing:
 
 -- >8 --
-@@ -41,8 +41,8 @@ extern bool use_neon_instructions;
-  #define TCG_TARGET_HAS_ctz_i32          use_armv7_instructions
+@@ -33,8 +33,8 @@ extern bool use_vis3_instructions;
+  #define TCG_TARGET_HAS_ctz_i32          0
   #define TCG_TARGET_HAS_ctpop_i32        0
-  #define TCG_TARGET_HAS_deposit_i32      use_armv7_instructions
--#define TCG_TARGET_HAS_extract_i32      use_armv7_instructions
--#define TCG_TARGET_HAS_sextract_i32     use_armv7_instructions
+  #define TCG_TARGET_HAS_deposit_i32      0
+-#define TCG_TARGET_HAS_extract_i32      0
+-#define TCG_TARGET_HAS_sextract_i32     0
 +#define TCG_TARGET_HAS_extract_i32      1
 +#define TCG_TARGET_HAS_sextract_i32     1
-  #define TCG_TARGET_HAS_extract2_i32     1
+  #define TCG_TARGET_HAS_extract2_i32     0
   #define TCG_TARGET_HAS_negsetcond_i32   1
-  #define TCG_TARGET_HAS_mulu2_i32        1
+  #define TCG_TARGET_HAS_add2_i32         1
 ---
 
-> --- a/tcg/arm/tcg-target-has.h
-> +++ b/tcg/arm/tcg-target-has.h
-> @@ -82,4 +82,21 @@ extern bool use_neon_instructions;
->   #define TCG_TARGET_HAS_cmpsel_vec       0
->   #define TCG_TARGET_HAS_tst_vec          1
+> @@ -68,8 +68,8 @@ extern bool use_vis3_instructions;
+>   #define TCG_TARGET_HAS_ctz_i64          0
+>   #define TCG_TARGET_HAS_ctpop_i64        0
+>   #define TCG_TARGET_HAS_deposit_i64      0
+> -#define TCG_TARGET_HAS_extract_i64      0
+> -#define TCG_TARGET_HAS_sextract_i64     0
+> +#define TCG_TARGET_HAS_extract_i64      1
+> +#define TCG_TARGET_HAS_sextract_i64     1
+>   #define TCG_TARGET_HAS_extract2_i64     0
+>   #define TCG_TARGET_HAS_negsetcond_i64   1
+>   #define TCG_TARGET_HAS_add2_i64         1
+> @@ -83,4 +83,9 @@ extern bool use_vis3_instructions;
 >   
-> +static inline bool
-> +tcg_target_extract_valid(TCGType type, unsigned ofs, unsigned len)
-> +{
-> +    if (use_armv7_instructions) {
-> +        return true;  /* SBFX or UBFX */
-> +    }
-> +    switch (len) {
-> +    case 8:   /* SXTB or UXTB */
-> +    case 16:  /* SXTH or UXTH */
-> +        return (ofs % 8) == 0;
-> +    }
-> +    return false;
-> +}
+>   #define TCG_TARGET_HAS_tst              1
+>   
+> +#define TCG_TARGET_extract_valid(type, ofs, len) \
+> +    ((type) == TCG_TYPE_I64 && (ofs) + (len) == 32)
 > +
-> +#define TCG_TARGET_extract_valid   tcg_target_extract_valid
-> +#define TCG_TARGET_sextract_valid  tcg_target_extract_valid
+> +#define TCG_TARGET_sextract_valid  TCG_TARGET_extract_valid
 > +
 >   #endif
+
 
