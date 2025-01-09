@@ -4,127 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BDAE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 02:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DF3E7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 02:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tViMo-0003x4-71; Wed, 08 Jan 2025 21:33:50 -0500
+	id 1tVibP-0005No-Cy; Wed, 08 Jan 2025 21:48:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tViMl-0003wp-Ke
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:33:47 -0500
-Received: from mout.gmx.net ([212.227.15.15])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tVibN-0005NR-PH
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:48:53 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tViMj-0001CW-8d
- for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:33:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1736390022; x=1736994822; i=deller@gmx.de;
- bh=+c11MutoioLJIU53EujqyA3HIiIifyAllMe42d7vQ0U=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=fRcKhEjdZi/Kzkx6THVLBrMVKKtV1aZkYDHqtdaiw1e8BcKNVZAXq76gpem1LFqt
- X3Y+m+ktkx9akHm2koNMOrMpITXpjlG/WGjgqST51exn9rFimmLR7SNbJtEvuHNY8
- T6dEbzsLi4wZAUJQzCI4RZ5jxqPZnGhXtHKqZYVET5UfJEw5izGTQg+0FBGdYLfBO
- sQPUnWZ0PsUk1rKUqaQoeUcntyCO2ShfjNHy1N/HsvQacZi10b4A+Pl6lRQpAzG4B
- AY5Mf5ordAUXeuuKv9MImIqa3jA+nGUPKk9PIV6WXUz6mdnc6Og+WWeLQn6rh6CgB
- vVxpYLKrZNPMiFRAMg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.172] ([83.135.220.169]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1McYCl-1u1TgG3ovF-00lr4z; Thu, 09
- Jan 2025 03:33:41 +0100
-Message-ID: <c76fa107-1ed5-4247-9745-65c7ae5d6061@gmx.de>
-Date: Thu, 9 Jan 2025 03:33:44 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tVibJ-0004b2-NC
+ for qemu-devel@nongnu.org; Wed, 08 Jan 2025 21:48:53 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7BABB4E601D;
+ Thu, 09 Jan 2025 03:48:46 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id wUIt-3s1gMnq; Thu,  9 Jan 2025 03:48:44 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 403274E6004; Thu, 09 Jan 2025 03:48:44 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3DE8B746F60;
+ Thu, 09 Jan 2025 03:48:44 +0100 (CET)
+Date: Thu, 9 Jan 2025 03:48:44 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Rob Landley <rob@landley.net>
+cc: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Stafford Horne <shorne@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+ QEMU Developers <qemu-devel@nongnu.org>, 
+ Linux OpenRISC <linux-openrisc@vger.kernel.org>
+Subject: Re: or1k -M virt -hda and net.
+In-Reply-To: <fe70397e-671b-4c7e-b73b-bc45cd376b15@landley.net>
+Message-ID: <27a425df-a9f4-29cc-8200-60285c49368d@eik.bme.hu>
+References: <9b2761aa-8ee0-4399-b237-31e70e3ed165@landley.net>
+ <Z0Cyx3i3z7Zl7XPm@antec> <31fa6255-8e0c-4d05-bad9-dd843c676244@landley.net>
+ <Z0GSETLeT5w8B2DX@antec> <87a6b910-5af6-47ad-ad8d-b79f11a7cbf2@landley.net>
+ <Z0LMqEqcdjkAxnN-@antec>
+ <57c5207c-3aca-47cd-bfd3-3d7eb7be3c0f@landley.net> <Z2lgL31ZeSkO59MZ@antec>
+ <8807078a-0673-4b27-8d58-4a2a3ce4987d@landley.net>
+ <39511711-b86a-4ac6-8bd6-8dab824b693e@landley.net> <Z31k3zNN3pOdGWWK@antec>
+ <87y0zmbita.fsf@draig.linaro.org>
+ <e2f1c14c-f5d2-48f3-bb6e-d1db0ce6d1fa@landley.net>
+ <87msg1bbd0.fsf@draig.linaro.org>
+ <fe70397e-671b-4c7e-b73b-bc45cd376b15@landley.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Add missing /proc/cpuinfo fields for sparc
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <Z37rL5jVYpOk6ufc@p100>
- <f36ec87d-d384-4671-a80e-27d4ad4fe7b3@linaro.org>
- <b8ce1a5e-d239-4c4d-8515-171312ebdffb@gmx.de>
- <787ed640-60eb-4466-ba11-0ac9c9cca3c0@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <787ed640-60eb-4466-ba11-0ac9c9cca3c0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:gKJ9CO0As+fZfV4CDMhciKfcaYpnuZJhtxd7W0qOWwkECeVXKTE
- unPj4yolB3YOnCpKQ2GEjB6ChzR6yvTCTQ/ZAYRcOxDNKfVDtnqVD0m3HJJuQqGtrdSz4nE
- /G/OTOIx8BXXstcVMQCIz5ZFmdLLH0whyJ5UW4BSIcu4PhF2iCxEBidQtw66hUmyGdYZUNG
- +mYxeDCVpxlotWI6a2jVg==
-UI-OutboundReport: notjunk:1;M01:P0:2Kugm3mLYDM=;tZgCpZ6bMGAvdP/Hf/5DTN1k5PP
- +IgVzmEqYXI74/51km1hTTWZBrY8wafkijU0CG0HyfKIEdnZRk5iAxb6jZTvdHxZsmzFntFHY
- 5yhgtR8HcrQU770DyULN/11dG3fS4rTaKUAJGd0YFb4hFzhG54R0JhO0w9f+XR0l8fvjO9GWc
- oeEDAb+ZK6RCibXyeyfQgw0qs63Ru9rxJn+gw+c30/ExIuYGjwqHzoQ0CC1kCCAUnv66eU2jv
- 4JTXO0Fzww1BmIPzaMXTjEh1iNiAHN6PzNl4oiILxAbkG+s9aeaNYRN5dsjK1nPYD/yZDAaMz
- NpZGlPfLRiDOEESNJJhGowzadRvxXZmZQqaNvBedCffvVxEJwVQzi4PBxcQvNAzhrQwvFGYRt
- 5aVyBlPsavcP8Z53/B98RSSnwqs2VyI719Gfas09Lr/Mpo9PrtWByzXdZt1KdU7kdCmBPj0WE
- h98OPbBRA2wecKME2Or78uh9T/3AHBZ2dh2lVoSFOS+oqm9Pm9bYhKzhstQkExl45hkNmCeCq
- UDsSNb3NynAtqatSkcvd97DI/c+5vpKkTYCe//AxJkTO9oTTi5ut72IDLNQ1tii11KCND7WOs
- /+05hD4/HboyV8hLvWALfKHFx4Puog6klSvEXLaui6qf4w1F0qBWvTrWbcGXUzbByeh1uB2l1
- RgsHFn+jBqOJ0zYqeDttTru8/Hcunm/aPaVVMSqt/dnIkiiTv3Pev480XD4LXaNCkt/PDPvRV
- QMxNdr6Jxl3/bjRfMVtmFhDn3Lls9mEvnzBpBL4m+Cte7b5qurrpOIjjERw9p9Et+NxtBglrl
- kiPCkf/VCLSDXmNAgn+/31FrkvHvhqGdKheZg+Y7aB8Xl6yyRb8Tna9HEmb07jOl7GLQowOLZ
- dPcBLU6a4Ly2ulz1cHHXFKKiOrYyOUPdz7cP0rLMnZ1FtvGJxYQMFxmEQS13C3tTxPFgbhHkI
- wZKVl2UsXIlqsG8ersqboZXbjGjVqCyH6RMwpTV35xFAk85+7WUKbVWsuY40Cn2D/3vHOYMlG
- +RmRTD62ztBhgLcClj/rAU7ZiruvW+n/Pl9Ca+OxgfUV1Wkbc2nadPuOp3UF1rYiiuZs3423S
- evdb9hKZaG9EnGhWSqesoqoFVzBIAy
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-339921134-1736390924=:30386"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,33 +82,398 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 01:40, Richard Henderson wrote:
-> On 1/8/25 15:21, Helge Deller wrote:
->> My suggestion:
->> I change my patch to just add:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-339921134-1736390924=:30386
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Wed, 8 Jan 2025, Rob Landley wrote:
+> On 1/8/25 08:59, Alex Bennée wrote:
+>> Rob Landley <rob@landley.net> writes:
+>> 
+>>> On 1/7/25 12:05, Alex Bennée wrote:
+>>>> Stafford Horne <shorne@gmail.com> writes:
+>>>>> I have not used -hda before, do you have it working with other targets?
+>>>>> 
+>>>>> According to the qemu docs in qemu-options.hx. I see:
+>>>>>
+>>>>>       Use file as hard disk 0, 1, 2 or 3 image on the default bus of the
+>>>>>       emulated machine (this is for example the IDE bus on most x86 
+>>>>> machines,
+>>>>>       but it can also be SCSI, virtio or something else on other target
+>>>>>       architectures). See also the :ref:`disk images` chapter in the 
+>>>>> System
+>>>>>       Emulation Users Guide.
+>>>>> 
+>>>>> I think, since we don't have a "default" bus in openrisc this doesn't 
+>>>>> work so we
+>>>>> need to specify the -drive explictly.
+>> 
+>> Well if you want a simple drive command you need something. For example
+>> on -M virt for aarch64:
 >>
->> +=C2=A0=C2=A0=C2=A0 dprintf(fd, "ncpus probed\t: %d\n", num_cpus);
->> +=C2=A0=C2=A0=C2=A0 dprintf(fd, "ncpus active\t: %d\n", num_cpus);
->> +=C2=A0=C2=A0=C2=A0 dprintf(fd, "State:\n");
->> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < num_cpus; i++) {
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dprintf(fd, "CPU%d:\t\t: on=
-line\n", i);
->> +=C2=A0=C2=A0=C2=A0 }
->>
->> Those were the lines which I was mostly interested in since
->> I found one application which wants to parse /proc/cpuinfo
->> to get number of CPUs in system.
->> Would that be acceptable (for now) ?
+>>    -drive 
+>> driver=raw,file.driver=host_device,file.filename=/dev/zen-ssd2/trixie-arm64,discard=unmap
 >
-> Yes, thanks.=C2=A0 If only linux had added a prctl or something to not r=
-equire parsing...
+> echo "We've replaced the dilithium they normally use with Folger's Crystals." 
+>> file.img
+> qemu-system-aarch64 -M virt -cpu cortex-a57 -m 256 -nographic \
+>  -no-reboot -kernel linux-kernel -initrd initramfs.cpio.gz \
+>  -append "HOST=aarch64 console=ttyAMA0" -hda README
+> ...
+> Type exit when done.
+> $ cat /dev/vda
+> We've replaced the dilithium they normally use with Folger's Crystals.
+> $ exit
+> reboot: Restarting system
+>
+> Seems like a sane default is already there. (And on most other boards.)
+>
+> I also note that 90% of the above qemu invocation is the same for all 
+> targets. My build system's entire configuration for the m68k architecture is 
+> just:
+>
+>>   elif [ "$CROSS" == m68k ]; then
+>>     QEMU_M=q800 KARCH=m68k
+>>     KCONF="$(be2csv MMU M68040 M68KFPU_EMU MAC BLK_DEV_SD MACINTOSH_DRIVERS 
+>> \
+>>       NET_VENDOR_NATSEMI MACSONIC SCSI{,_LOWLEVEL,_MAC_ESP} \
+>>       SERIAL_PMACZILOG{,_TTYS,_CONSOLE})"
+>
+> And here's the or1k target under discussion:
+>
+>>   elif [ "$CROSS" == or1k ]; then
+>>     KARCH=openrisc QEMU_M=virt KARGS=ttyS0
+>>     KCONF="$(be2csv ETHOC SERIO SERIAL_OF_PLATFORM SERIAL_8250{,_CONSOLE} \
+>>       VIRTIO_{MENU,NET,BLK,PCI,MMIO} POWER_RESET{,_SYSCON{,_POWEROFF}} 
+>> SYSCON_REBOOT_MODE)"
+>
+> There are some targets I have to poke harder, armv5l and armv4tl have
+> "qemu-system-arm -M versatilepb -net nic,model=rtl8139 -net user" for some 
+> reason... Huh, apparently I've been doing that since 2007?
+>
+> https://github.com/landley/aboriginal/commit/5a51e551568a
+>
+> Why did I do that... https://landley.net/notes-2007.html#04-07-2007 says 
+> "switch to using the rtl8139 driver because PIO doesn't work on
+> the qemu-system-arm PCI controller yet so I need something with mmio." Maybe 
+> that's fixed by now and I can go back to the default network card there? 
+> Hmmm, hw/arm/versatilepb.c says the default is smc91c111, the kernel driver 
+> for that is CONFIG_SMC91X... which needs GPIOLIB for some reason (why is that 
+> a depends not a selects?) And yes, the board's default network card works if 
+> I flip on the right driver and remove the --micromanagement.
+>
+> Ok, fixed: https://github.com/landley/toybox/commit/65887c2f3cd8
+>
+> But the point was it _can_ do that. Just seldom needs to. I was asking for a 
+> "that" prefix which let me use -hda on or1k (and still worked when I didn't 
+> supply one). I don't mind supplementing or overriding an unworkable default 
+> in the wrapper script, I've done it before. But what I was asking for was 
+> something to make -hda work when $@ expanded to it.
+>
+>> only really contains backend options. By default this will attach the
+>> block device to the virtio-pci bus, see virt.c:
+>>
+>>    mc->block_default_type = IF_VIRTIO;
+>> 
+>> The backend options might look a bit much, a simpler case with qcow2
+>> would be:
+>>
+>>    -drive driver=qcow2,file=trixie-x86_64.qcow2
+>
+> A raw block device can be loopback mounted on the host and mounted within 
+> qemu in the same way. (Qemu doesn't even mind if they're sparse, although 
+> loopback still did last I checked.)
+>
+> The block device isn't even always a filesystem, sometimes it's a tarball. 
+> And when it is a filesystem, half the time it's squashfs. Why wrap it in a 
+> ubifs-style block remapping layer? Extra step, more tools, can't look at the 
+> data in hexedit (which comes up)... It may be nice to have a more complicated 
+> option, but "raw image" is the generic version.
+>
+>> However if you don't have any default bus for your block devices you
+>> must use -device/-blockdev pairs. It doesn't add much:
+>>
+>>   -device virtio-scsi-pci \
+>>   -device scsi-hd,drive=hd \
+>>   -blockdev 
+>> driver=raw,node-name=hd,file.driver=host_device,file.filename=/dev/zen-ssd2/trixie-arm64,discard=unmap 
+>> \
+>
+> Where "you don't" means "the board doesn't"? So the user of the board has to 
+> manually tell the board emulation what bus type it has available? (And guess 
+> right, because I can't add arbitrary types, the board will only ACCEPT 
+> certain ones...)
+>
+>> So all I've added is the bus, a device and then linked them with the
+>> drive/node-name ids.
+>
+> With hda I'm saying "here's the filename for your block device", and I'm 
+> usually externally supplying it to an existing board setup. When comparing 
+> the m68k behavior with the arm behavior of the same piece of software, I 
+> don't need to tell each system how to be itself. (It already knows.)
+>
+> With your suggested API, specifying the filename as its own argument separate 
+> from the rest doesn't seem to have occurred to the designers.
+>
+> If I don't provide an -hda then there isn't one. Cleanly drops out. If I 
+> specify -device without a filename, qemu tends to get upset and refuse to 
+> start.
+>
+> You jumped into the thread to encouraging a move from -hda to -drive. In what 
+> way is -drive the superior option from a user perspective?
+>
+>>>>> I checked the x86 machine code and confirm it seems to work like this. 
+>>>>> There is
+>>>>> code in the system setup to look for hd* drives and wire them into IDE. 
+>>>>> There
+>>>>> is no such code in openrisc.
+>>>> Yeah don't use -hdX as they are legacy options with a lot of default
+>>>> assumptions. As the docs say: 
+>>>> https://qemu.readthedocs.io/en/master/system/invocation.html#hxtool-1
+>>>>     The QEMU block device handling options have a long history and
+>>>> have
+>>>>     gone through several iterations as the feature set and complexity of
+>>>>     the block layer have grown. Many online guides to QEMU often 
+>>>> reference
+>>>>     older and deprecated options, which can lead to confusion.
+>>> 
+>>> I want "a block device from this file" in a generic way that works the
+>>> same across multiple architectures regardless of the board being
+>>> emulated, where I only have to specify the file not explicitly
+>>> micromanage bus plumbing details, and which is easy for a human to
+>>> type from when explained over a voice call.
+>> 
+>> You shouldn't need to micro manage bus details, you just need to link
+>> the device to the backend via an id.
+>
+> By "shouldn't need to micro manage the bus details", are you saying I can 
+> link the device to the backend without ever having manually specified the bus 
+> type on the command line?
+>
+> Inside the VM, my init script does something like:
+>
+>  [ -e /dev/?da ] && mount /dev/?da /mnt
+>  [ -x /mnt/init ] && exec /mnt/init
+>
+> So it doesn't care if it's sda or vda and "just works" as long as the device 
+> shows up in /dev. And it just works if it's _not_ there either. (And used to 
+> work with /dev/hda before they made everything pretend to be scsi.)
+>
+> To trigger it, I go "./run-qemu.sh -hda filename.img" because my run script 
+> has "$@" in the qemu command line, so I don't need to know how it will be 
+> used. (This isn't the ONLY thing they can add, another common thing is to set 
+> up port forwarding so a server in the emulator can appear on a host loopback 
+> port.) It's a generic tool like a hammer. It works the same whether 
+> ./run-qemu.sh is in the m68k directory, sh4eb, powerpc, etc.
+>
+>>> What's the alternative to -hda you suggest for that?
+>>> 
+>>> Can I do "./run-qemu.sh -drive file=blah.img" without the rest?
+>>> Perhaps specify all the details in the script and then optionally add
+>>> an extra argument at the end? I couldn't get that to work:
+>>> 
+>>> $ root/or1k/run-qemu.sh -netdev user,id=net0 -device
+>>> virtio-net-device,netdev=net0 -drive format=raw,id=hd0 -device
+>>> virtio-blk-device,drive=hd0 -drive file=README
+>>> qemu-system-or1k: -drive format=raw,id=hd0: A block device must be
+>>> specified for "file"
+>>> 
+>>> Also, if you say -device and -drive but do NOT specify a file, qemu
+>>> refuses to start. So I can't set the defaults but only optionally use
+>>> them, the way -hda has defaults built into the image that don't cause
+>>> a problem if I DON'T add a -hda argument to the command line.
+>> 
+>> device and blockdev pairs are required.
+>
+> Required when -hda doesn't work.
+>
+>> -drive attempts to do both in one command line option
+>
+> If I can -drive setup,setup,setup and then -hda filename.img (or not) later, 
+> then the details can get hidden in run-qemu.sh, which is what I was asking 
+> how to do earlier in this thread.
+>
+> Or does -drive still require I know what filename to attach, and whether or 
+> not to do it? So if I wanted to support -hda command.sqf -hdb workspace.ext3 
+> -hdc toolchain.iso that got intercepted and turned into
+> -drive by a shell script I would need... I dunno, some sort of loop?
+>
+> Do you want my wrapper script to include a regex to notice one of its 
+> arguments was "-hda", find the argument after that and convert it into a 
+> -drive line, with error handling for "there wasn't another argument" or , and 
+> = in the filename? Plus it needs to know -hdb and -hdc and -hdd as well to 
+> keep parity with what was previously there...
+>
+> Or do you want the users to have to externally specify the -drive line to the 
+> script, with target-specific bus type they didn't need to know before in 
+> order to attach a disk to a VM?
+>
+> Which of these is the improvement that makes a move from -hda to -drive 
+> better for the user?
+>
+>>> I am attempting to get generic behavior out of multiple architectures,
+>>> among other reasons so I can cross-test and package up "it fails on X,
+>>> here's a build and test" to point package maintainers at.
+>> 
+>> We support a wide variety of boards some with fixed block device buses
+>> and some with the ability to add stuff dynamically. While we certainly
+>> could do better documenting the edge cases (patches welcome ;-) I'm not
+>> sure its possible to come up with a generic command line that works
+>> across all boards.
+>
+> I have one already. The qemu devs deprecated it for some reason, and made it 
+> spit warnings and break fdisk when using "raw" images. (If you can wipe 
+> everything _except_ the first few blocks, what exactly have you improved? 
+> Never understood that part...)
+>
+>> That said any of the VirtIO enabled platforms (often
+>> called virt) will have fairly similar command lines for adding devices
+>> (modulo PCI/MMIO support).
+>
+> The test I ran upthread said that aarch64, armv7l, riscv32, riscv64, and 
+> s390x were all using /dev/vda for -hda.
+>
+> And armv4l, armv5l, i486, i686, m68k, mips, mips64, mipsel, powerpc, 
+> powerpc64, powerpc64le, sh4, sh4eb, and x86_64 weren't.
+>
+> And the caller didn't need to know the difference.
+>
+>>> If I have to explain "-drive virtio-potato-walrus,inkpot=striated
+>>> -device collect=striated,burbank-potato,ireland" at somebody whose
+>>> domain expertise is xfce or something, the barrier to getting them to
+>>> reproduce the issue I'm seeing is noticeably higher. If I have to MAKE
+>>> a bespoke wrapper shell script for them with every bug report, the
+>>> likelihood that it works differently for them than when I tried it is
+>>> noticeably nonzero, and the likelihood of the issue going on my todo
+>>> heap and never getting pursued upstream is also noticeably higher.
+>>> Which is why I try to make generic tools...
+>> 
+>> Just put it in a script then.
+>
+> Which is why my question upthread was if there was a way to use the 
+> micromanaging --longopts to tell qemu what plumbing -hda (and -hdb, etc) 
+> should attach to, without actually requiring there to _be_ one.
+>
+> The answer seems to be "no, it needs a patch and rebuild".
+>
+> If I have to agglutinate a supplied filename into a -drive thing,thing,thing 
+> list, how do you suggest I do that without #!/bin/bash having to be present 
+> because I wrote shell plumbing to make elaborate command line option parsing 
+> decisions that were never tested on "fish" or "zsh" or "dash" or busybox ash 
+> or...
 
-True, but most people forget about glibc providing sysconf(_SC_NPROCESSORS=
-_ONLN)
-as portable function so that people do not need to implement parsing
-/proc/cpuinfo for each architecture themselves.
+Sometimes sed can do wonders (or break completely) but maybe it can turn a 
+-hda filename option into -drive if=virtio,file=filename if you can't fix 
+hda for some machines.
 
-I'll respin the patch.
+> Keep in mind the current shell plumbing is literally "$@" from posix.
+>
+>>> (And when I have to set up the long version for a nightly cron job,
+>>> and then when the test fails 6 months later and I look at it and go
+>>> "huh? salad?" that's a bad 3am digression as well. And which is more
+>>> likely to break from version skew during qemu version upgrades: two
+>>> lines of micromanaging --longopts or -hda that gets adjusted by the
+>>> maintainers?)
+>> 
+>> QEMU's command line reputation is not undeserved but it is at least
+>> consistent with the modern composable options. If we can improve the
+>> documentation then let us know:
+>>
+>>    https://qemu.readthedocs.io/en/master/system/device-emulation.html
+>> 
+>> But expanding the use of automagical options is not really a long term
+>> solution.
+>
+> Do you plan to replace "-m 256" with a longopt that requires you to specify 
+> the physical address range of the new memory using multiple name=value comma 
+> separated arguments?
+>
+> Or is "-m 256" a useful control knob indicating a thing a user wants to have 
+> happen without needing to know all the board-specific implementation details 
+> to invoke it?
+>
+>>> Rob
+>>> 
+>>> P.S. For some reason -hda grew an "I'm going to make the first block
+>>> read-only just like loopback devices do because you can't be trusted"
+>>> nag a few years back, but it's mostly yet more boot spam. I can tell
+>>> the kernel to be quiet during boot, but never figured out the
+>>> equivalent for qemu-system...
+>> 
+>> -append passes options to the kernel command line if you are doing a
+>> direct kernel boot or your firmware supports direct kernel booting.
+>
+> I asked why append doesn't 8 years ago:
+>
+> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg03127.html
 
-Helge
+I think this originates from lilo which had an append option to specify 
+options to append to kernel command line and then had addappend to append 
+more options to that... QEMU only took the append which like in lilo 
+overrides earlier instances despite what its name might suggest.
+
+> I'm not sure how your response relates to "-hda complains about raw images". 
+> The commit in question that broke it (38f3ef574b48) preserved the probe for 
+> image types, instead of having -hda just default to "raw" always, and
+
+The commit explains why this was a security issue. Making -hda only accept 
+raw would also less inconvenient and would have changed how it worked 
+before so I think this solution was chose to preserve as much 
+functionality as possible.
+
+> requiring the --longopt version to specify the types. That's the part I never 
+> understood, THAT seemed a really weird decision. "The qcow image format is 
+> insecure, because qcow can always #include arbitrary external files so if you 
+> run qemu as root it can read /etc/shadow which is apparently a thing people 
+> do". There is indeed a problem, but it's not raw?
+>
+> For that matter, why not do what qemu did for:
+>
+> -m [size=]megs[,slots=n,maxmem=size]
+>
+> You _can_ have a short option do a sane thing by default but add _optional_ 
+> compostable csv nonsense to it, where "in order to use an image file with an 
+> = or , in it you need -hda name=thing,thing and name= will always eat the 
+> rest of its argument", possibly with an informative error message when -hda 
+> file,name or -hda file=name doesn't understand what it was given.
+
+Patches are welcome, I guess. Originally QEMU had a less options and they 
+were simple. If you look at -help it still says:
+
+usage: qemu-system-x86_64 [options] [disk_image]
+
+'disk_image' is a raw hard disk image for IDE hard disk 0
+
+So in the simplest form you can just pass a disk image to boot without any 
+options but not sure it still works.
+
+But later QEMU got more complex and this needed more complex options. Then 
+a lot of the mess in the command line came from that it needs to serve 
+both users and management apps which require low level control for 
+everything and these apps took over QEMU for a while, that's how a lot of 
+non-user friendly options crept in and then user friendly options were 
+changed to be high level wrappers on those low level ones to avoid having 
+two independent set of options for the same thing but maybe this was not 
+always done and there's still room to improve. Also having those 
+management apps meant less people cared about user friendly options and 
+just used those apps instead.
+
+Regards,
+BALATON Zoltan
+
+> The UI decisions here struck me as very strange, and deprecating the way -hda 
+> has worked since 2005 seemed odd to me. (Possibly earlier but 
+> https://landley.net/notes-2005.html#02-12-2005 is when I first got an -hda of 
+> a partitioned disk image with LILO installed on it to boot under qemu. That 
+> was before even aboriginal linux, that was 
+> https://landley.net/aboriginal/old/ and most of the progress reports about 
+> _that_ were on livejournal. I switched from User Mode Linux _to_ qemu.)
+>
+> Rob
+>
+>
+--3866299591-339921134-1736390924=:30386--
 
