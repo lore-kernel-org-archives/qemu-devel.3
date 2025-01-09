@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37401E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 16:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D0C7E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 16:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVvCs-0006VV-AO; Thu, 09 Jan 2025 11:16:26 -0500
+	id 1tVvDc-00077w-2q; Thu, 09 Jan 2025 11:17:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVvCl-0006Ql-40; Thu, 09 Jan 2025 11:16:19 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVvDH-0006pQ-1j
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:17:00 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tVvCj-0006xx-Fx; Thu, 09 Jan 2025 11:16:18 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-aaf8f0ea963so224379366b.3; 
- Thu, 09 Jan 2025 08:16:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736439375; x=1737044175; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3P6B7cN90sb0P7F9FYFrgYnlz+CEgisiDOu013qBXD0=;
- b=Gf9QSxYdLoM82YII+DXzKxcJTyaR8jnozmCNS67SeWxkz0SwRV2WoctfEBo8HSDrhf
- fDOFv9vzIozqSTrXRjaQsgW+5JQb/oYhTDwgwcjsT8VJe5+mnQ/W2fIzmvwICtOC/gFk
- gPI8lVNYCiVxdlpnR3jzti2w15O7O35JSkZj1W0h7Rx+45ANDX0/vOWCTIDhDs8pu+Ul
- Negw/9F7tNpvCUyKvT18+XGMOEeC0zZ2LA089GXUZSTEwitAN0FVw1tzL0EIIYTNny6M
- Sy8YvsNa5bIoHt8I3iaD8y7UbXcnWXzUSllAgpSio3RDwKgY2Op4JriO9tP1NtWbE/Tr
- R9RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736439375; x=1737044175;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3P6B7cN90sb0P7F9FYFrgYnlz+CEgisiDOu013qBXD0=;
- b=Otb2VX7e/rFK6PBZC95E4b2Ct6Cp0sQ4F5LdJ3IGIDhvgCpGFgy29P5FqG2n2rx1ya
- lunawx440yXHKyWRpXWwXjX9/Ftcs6023WkzE3rBN4cm5pTzmXRij+U6CO3PBhVS59Mu
- ymlhabRRP3tIw9RJ8Y1fokTKmQqaGV7XyCR2RgaIZafqDpzeVhleDAzFPnR6+XeakAOz
- iFRqEqXbmakhDh6tEzmyZGTXKmfp+gL2s2ugmfq13FjfAzBLaiSuG2T89DsbkPCe/jBF
- 48ugOcPaQ96Rtl22rE7G6p6/oC8L9gfxtCRTrK3xCiY4qs3K7KgOteLfhvagUUMHu++w
- ZZgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1XqkYEFpelFDrMjk1BH+U5ZfuIDJPCjQG2WUzkMqVO4IWZc5aaSd9KKFZYWqJ0sbQwQbfg9vcEg==@nongnu.org,
- AJvYcCVsBVQdL6FEWqAJPU0xRmN7gk2ZfbV6LCNKuAotT6s3tjqBbYV6ajB1trpW/8o1eTknyDuXYqFHZPK8Yw==@nongnu.org,
- AJvYcCWcSnxgncudb9ypGlb2tF/X368PuCo868mz+MK2f++wzPFwkzWkMn2khQL4t19gMMpbQlnNpjmiYVsxzQ==@nongnu.org
-X-Gm-Message-State: AOJu0Ywc3610KnbOJTLUxkct6zkuxAx0K2tmiyI07d2YE2F9aNEohH0k
- We8DR7emH7yVesyYh5kTnqXdBSo2y2gfBuucI09oIlypW8DmokMQ
-X-Gm-Gg: ASbGncvDIlwIQT5lKt5qhRhRtaja2Titn3KkHnDfxcUMDQLmwarmlJ3EeGgyJPnKlB9
- WaFVIi/i+k6ctWHDbKMWfsLzaMpmajwHKOhlEhzR04ABNAliBuRdv4a6pN5cdCKldiYGkDNM6e9
- ugXxyIYKZ7+5Ir2PBJdDxKt0aPWIZPh1XagMemkEWkHF9rOMzvHQVZ64Mcq+8Qoi7QPxuRiLGcS
- wDQY4Umrv48WyfDuZhJt7NTTZwLaNAlYjca/BJkVfFDi6WUUmVe0+nDtg6Wjf0VSorZEGJc/X7Z
- /hu4ksK0O+TQ002I3kpLe/bG6rs=
-X-Google-Smtp-Source: AGHT+IGwmbwtjaQapRFZWN6m0os2Ts5jqNF8vHLZXqBbFZMblLreOgkxOEApdfCWwPYgBK1/wRV+4g==
-X-Received: by 2002:a17:907:3d86:b0:aa6:557a:c36f with SMTP id
- a640c23a62f3a-ab2abc6d264mr761857066b.46.1736439374596; 
- Thu, 09 Jan 2025 08:16:14 -0800 (PST)
-Received: from [127.0.0.1] (business-90-187-110-129.pool2.vodafone-ip.de.
- [90.187.110.129]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c9563b06sm85631066b.100.2025.01.09.08.16.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 08:16:14 -0800 (PST)
-Date: Thu, 09 Jan 2025 16:16:11 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-CC: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Guenter Roeck <linux@roeck-us.net>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 12/14] hw/i2c/imx_i2c: Convert DPRINTF() to trace events
-In-Reply-To: <d1ee0d2b-0266-4d26-9832-0f9fc05fb3b9@linaro.org>
-References: <20250108092538.11474-1-shentey@gmail.com>
- <20250108092538.11474-13-shentey@gmail.com>
- <696c9a80-7311-4a95-ab3c-f85bc0b38e6e@linaro.org>
- <258e62c4-9e7f-432c-ace2-a5c459d8e016@linaro.org>
- <d1ee0d2b-0266-4d26-9832-0f9fc05fb3b9@linaro.org>
-Message-ID: <D6A2F8A2-9E3A-4A78-945B-220E008F71F1@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVvDB-00070F-2X
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 11:16:50 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D0D551F46E;
+ Thu,  9 Jan 2025 16:16:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1736439401; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7JP+Kk7LU76z+IIW26/EiMm2xxjkPw9DE5+fHEd7uzQ=;
+ b=N1/IkIMgaL78Vkxav78T1dcvB2d7TunZeo3qkJBk5hQVoe6fZqM62fC3AE8AheIRuT+6J+
+ qBovJ60rkHsufiFV/AIkV7jDDfnXnYo2Kr6KeeY2bFevIwsJo1DmOKLfNg/JYm0/Bits2y
+ Jq/t17RA6QR3oAUu+9F8XhZ9XIxYU/0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1736439401;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7JP+Kk7LU76z+IIW26/EiMm2xxjkPw9DE5+fHEd7uzQ=;
+ b=TUSm4OP0VrT9HVI4B2IOpM/yu/vGuvqBL71AAAS0kWgeAtU4G+Qn4PfWvfb2EGpJt2aK/j
+ 1ENZ79aSzvnDHIAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1736439400; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7JP+Kk7LU76z+IIW26/EiMm2xxjkPw9DE5+fHEd7uzQ=;
+ b=S7+qWTlFHd9xkX0iUa9IuotIuKncTsaYRSCxXpSsmO+e1MO9Xnfm8RBpxN/KB6tQjeU9s4
+ HD/LWKpOfIZjzWxEuG/6o86U1bH3xU98BA+C1kpC2kEAzThKY3WbKJRjwcRV0xivFyhbt5
+ zYwaKlRaIbIF1RNUAesBJMm4fPkPNGA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1736439400;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7JP+Kk7LU76z+IIW26/EiMm2xxjkPw9DE5+fHEd7uzQ=;
+ b=IFRhvCOPaXZCOIYCIABX6e82Zn7mK221TeAgZSYnUliA1g8kxvSjLUA/2WwaaJy627kODf
+ XdiuBUS/9jT/YLAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5802013876;
+ Thu,  9 Jan 2025 16:16:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nTqeB2j2f2fjAwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 09 Jan 2025 16:16:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 6/7] migration: Fix arrays of pointers in JSON writer
+In-Reply-To: <Z3_eZId2Ylj3bCU2@x1n>
+References: <20250109140959.19464-1-farosas@suse.de>
+ <20250109140959.19464-7-farosas@suse.de> <Z3_eZId2Ylj3bCU2@x1n>
+Date: Thu, 09 Jan 2025 13:16:37 -0300
+Message-ID: <87r05c2c9m.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,43 +114,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
-
-Am 9=2E Januar 2025 12:38:11 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <ph=
-ilmd@linaro=2Eorg>:
->On 9/1/25 12:56, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 9/1/25 12:43, Philippe Mathieu-Daud=C3=A9 wrote:
->>> On 8/1/25 10:25, Bernhard Beschow wrote:
->>>> Also print the MMIO address when tracing=2E This allows to distinguis=
-hing the
->>>> many instances a typical i=2EMX SoC has=2E
->>=20
->> I'm not a fan of using peripheral address access, because it
->> can change i=2Ee=2E when a vCPU is accessing it from secure or
->> non-secure mode=2E
->>=20
->> I'd rather use an 'id', a 'name' or even the QOM (canonical?)
->> path=2E
->>=20
->> Maybe we should directly cache that as Device::qom_path, so
->> all devices can use it for tracing, and we don't need to set
->> an id/name property when creating the device=2E=2E=2E
+> On Thu, Jan 09, 2025 at 11:09:58AM -0300, Fabiano Rosas wrote:
+>> Currently, if an array of pointers contains a NULL pointer, that
+>> pointer will be encoded as '0' in the stream. Since the JSON writer
+>> doesn't define a "pointer" type, that '0' will now be an uint8, which
+>> is different from the original type being pointed to, e.g. struct.
+>> 
+>> (we're further calling uint8 "nullptr", but that's irrelevant to the
+>> issue)
+>> 
+>> That mixed-type array shouldn't be compressed, otherwise data is lost
+>> as the code currently makes the whole array have the type of the first
+>> element:
+>> 
+>> css = {NULL, NULL, ..., 0x5555568a7940, NULL};
+>> 
+>> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+>>  "version": 1, "fields": [
+>>     ...,
+>>     {"name": "css", "array_len": 256, "type": "nullptr", "size": 1},
+>>     ...,
+>> ]}
+>> 
+>> In the above, the valid pointer at position 254 got lost among the
+>> compressed array of nullptr.
+>> 
+>> While we could disable the array compression when a NULL pointer is
+>> found, the JSON part of the stream still makes part of downtime, so we
+>> should avoid writing unecessary bytes to it.
+>> 
+>> Keep the array compression in place, but if NULL and non-NULL pointers
+>> are mixed break the array into several type-contiguous pieces :
+>> 
+>> css = {NULL, NULL, ..., 0x5555568a7940, NULL};
+>> 
+>> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+>>  "version": 1, "fields": [
+>>      ...,
+>>      {"name": "css", "array_len": 254, "type": "nullptr", "size": 1},
+>>      {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
+>>      {"name": "css", "type": "nullptr", "size": 1},
+>>      ...,
+>> ]}
+>> 
+>> Now each type-discontiguous region will become a new JSON entry. The
+>> reader should interpret this as a concatenation of values, all part of
+>> the same field.
+>> 
+>> Parsing the JSON with analyze-script.py now shows the proper data
+>> being pointed to at the places where the pointer is valid and
+>> "nullptr" where there's NULL:
+>> 
+>> "s390_css (14)": {
+>>     ...
+>>     "css": [
+>>         "nullptr",
+>>         "nullptr",
+>>         ...
+>>         "nullptr",
+>>         {
+>>             "chpids": [
+>>             {
+>>                 "in_use": "0x00",
+>>                 "type": "0x00",
+>>                 "is_virtual": "0x00"
+>>             },
+>>             ...
+>>             ]
+>>         },
+>>         "nullptr",
+>>     }
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
+>>  scripts/analyze-migration.py | 29 +++++++++++++++++++++--------
+>>  2 files changed, 53 insertions(+), 9 deletions(-)
+>> 
+>> diff --git a/migration/vmstate.c b/migration/vmstate.c
+>> index 52704c822c..a79ccf3875 100644
+>> --- a/migration/vmstate.c
+>> +++ b/migration/vmstate.c
+>> @@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>>              int size = vmstate_size(opaque, field);
+>>              uint64_t old_offset, written_bytes;
+>>              JSONWriter *vmdesc_loop = vmdesc;
+>> +            bool is_prev_null = false;
+>>  
+>>              trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+>>              if (field->flags & VMS_POINTER) {
+>>                  first_elem = *(void **)first_elem;
+>>                  assert(first_elem || !n_elems || !size);
+>>              }
+>> +
+>>              for (i = 0; i < n_elems; i++) {
+>>                  void *curr_elem = first_elem + size * i;
+>>                  const VMStateField *inner_field;
+>> +                bool is_null;
+>> +                int max_elems = n_elems - i;
+>>  
+>>                  old_offset = qemu_file_transferred(f);
+>>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+>> @@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>>                       * not follow.
+>>                       */
+>>                      inner_field = vmsd_create_fake_nullptr_field(field);
+>> +                    is_null = true;
+>>                  } else {
+>>                      inner_field = field;
+>> +                    is_null = false;
+>> +                }
+>> +
+>> +                /*
+>> +                 * Due to the fake nullptr handling above, if there's mixed
+>> +                 * null/non-null data, it doesn't make sense to emit a
+>> +                 * compressed array representation spanning the entire array
+>> +                 * because the field types will be different (e.g. struct
+>> +                 * vs. uint64_t). Search ahead for the next null/non-null
 >
->We already have that, it is Device::canonical_path :)
+> s/uint64_t/nullptr/
+>
 
-Will do!
+ok
+
+>> +                 * element and start a new compressed array if found.
+>> +                 */
+>> +                if (field->flags & VMS_ARRAY_OF_POINTER &&
+>> +                    is_null != is_prev_null) {
+>> +
+>> +                    is_prev_null = is_null;
+>> +                    vmdesc_loop = vmdesc;
+>> +
+>> +                    for (int j = i + 1; j < n_elems; j++) {
+>> +                        void *elem = *(void **)(first_elem + size * j);
+>> +                        bool elem_is_null = !elem && size;
+>> +
+>> +                        if (is_null != elem_is_null) {
+>> +                            max_elems = j - i;
+>> +                            break;
+>> +                        }
+>> +                    }
+>>                  }
+>
+> This definitely adds some slight more difficulty on reading this
+> code.. Let's have this first.
+>
+> If it's proved that the JSON is a measurable overhead, I think we may
+> consider turn that off by default even for precopy (postcopy never used
+> vmdesc), then maybe we can simplify this chunk (and probably the whole
+> compression idea, because when turned on it is for debugging).
+>
+>>  
+>>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+>> -                                      i, n_elems);
+>> +                                      i, max_elems);
+>>  
+>>                  if (inner_field->flags & VMS_STRUCT) {
+>>                      ret = vmstate_save_state(f, inner_field->vmsd,
+>> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+>> index 134c25f20a..7f0797308d 100755
+>> --- a/scripts/analyze-migration.py
+>> +++ b/scripts/analyze-migration.py
+>> @@ -501,15 +501,28 @@ def read(self):
+>>              field['data'] = reader(field, self.file)
+>>              field['data'].read()
+>>  
+>> -            if 'index' in field:
+>> -                if field['name'] not in self.data:
+>> -                    self.data[field['name']] = []
+>> -                a = self.data[field['name']]
+>> -                if len(a) != int(field['index']):
+>> -                    raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
+>> -                a.append(field['data'])
+>> +            fname = field['name']
+>> +            fdata = field['data']
+>> +
+>> +            # The field could be:
+>> +            # i) a single data entry, e.g. uint64
+>> +            # ii) an array, indicated by it containing the 'index' key
+>> +            #
+>> +            # However, the overall data after parsing the whole
+>> +            # stream, could be a mix of arrays and single data fields,
+>> +            # all sharing the same field name due to how QEMU breaks
+>> +            # up arrays with NULL pointers into multiple compressed
+>> +            # array segments.
+>> +            if fname not in self.data:
+>> +                if 'index' in field:
+>> +                    self.data[fname] = []
+>
+> This needs to be:
+>
+>      self.data[fname] = [fdata]
+>
+> ?
+
+Yes.
 
 >
->>=20
->>>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->>>> ---
->>>> =C2=A0 hw/i2c/imx_i2c=2Ec=C2=A0=C2=A0=C2=A0 | 21 +++++---------------=
--
->>>> =C2=A0 hw/i2c/trace-events |=C2=A0 5 +++++
->>>> =C2=A0 2 files changed, 10 insertions(+), 16 deletions(-)
->>>=20
->>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->>> Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->>=20
+> Btw, since the new code will process it correctly with non-array below,
+> IIUC here we can make it simple:
 >
+>   if 'index' in field:
+>       self.data[fname] = fdata
+>
+
+Sorry, I don't understand what you mean here. I changed it now to:
+
+    if fname not in self.data:
+        if 'index' in field:
+            self.data[fname] = [fdata]
+        else:
+            self.data[fname] = fdata
+    elif type(self.data[fname]) == list:
+        self.data[fname].append(fdata)
+    else:
+        tmp = self.data[fname]
+        self.data[fname] = [tmp, fdata]
+
+>> +                else:
+>> +                    self.data[fname] = fdata
+>> +            elif type(self.data[fname]) == list:
+>> +                self.data[fname].append(fdata)
+>>              else:
+>> -                self.data[field['name']] = field['data']
+>> +                tmp = self.data[fname]
+>> +                self.data[fname] = [tmp, fdata]
+>>  
+>>          if 'subsections' in self.desc['struct']:
+>>              for subsection in self.desc['struct']['subsections']:
+>> -- 
+>> 2.35.3
+>> 
 
