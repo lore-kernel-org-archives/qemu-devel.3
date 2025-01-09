@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB79E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BDDE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVrBr-0003j3-6h; Thu, 09 Jan 2025 06:59:07 -0500
+	id 1tVrFx-0004dD-GG; Thu, 09 Jan 2025 07:03:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVrBp-0003ic-70
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:59:05 -0500
+ id 1tVrFw-0004cQ-1o
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:03:20 -0500
 Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVrBn-0002md-Ee
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:59:04 -0500
+ id 1tVrFu-0003Je-HC
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:03:19 -0500
 Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-aa6b4cc7270so139123166b.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:59:02 -0800 (PST)
+ a640c23a62f3a-aab6fa3e20eso160744866b.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:03:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736423942; x=1737028742; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736424197; x=1737028997; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SdqfNWOoLrDAfp/WTM7Cud+NM9d+8ICRdauFTCj2afA=;
- b=RBBAnbeHEPB1a3RZPc1wte50MGVsG3LnViBCgVQ+5xj3JVv4+4sZhy3PlnAyAzMgiC
- I09a+gcFOLL0RlPBElrguigTkqVHzIkuZHRoT//yHvJSVTN063X3d3JRisc2RJNoH/AR
- yi/I2oNgpJZr0qqWNYxgMAcjlJ6RQsm4HUl2rulNKFf4u4u/zoBt1mlWE0f7Xkmv9zd4
- AgSfwrBoRYaja8qU74CppvAymLlsiDHK3IrRmHyrj4K51ey9Qu+CWw2WZblsh/QUaIJU
- whNEZWbc7RRzbkwms2A78cpeDDcUS0HLa0VLlgvQ8vIUimdKJ3Oq/UDi9yjcr6N4izQA
- Q0hw==
+ bh=TctM9tPlNSHj1T8mh1Qrv+3PKR9QCM9/IuTpKZPwInk=;
+ b=g8lIzJycQrsfPSt+BpoCuA1+kayAIX51y5ZgAsvI0OG+L26V0iWqE9Gm8+4Uwds6Y/
+ x88BWOBnWwXGHTFhlORDp9vQOm/dcdw+xf8NSPEG5W2zPJR76EN1uO6Nw+xVaI7qBEis
+ qqb5zU8RDEQqxzKx7m060xgW0ONb3/MbM9oiercgIWXnjlfjx5FdfzQOHVXYZEXgVXjP
+ hfKwYrnIp+45G+xiuhrByKjwyhtqFC6o6pHod0WChxIpdNZvTUXsB0+8KqnhjYdt5FwD
+ p4MDQLTFoFrPDcgkSYaw63o0QF3lKXOHlrYgTvO+NtbJbYrqiGiBJzay6tu/IqMCy2+r
+ BwPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736423942; x=1737028742;
+ d=1e100.net; s=20230601; t=1736424197; x=1737028997;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SdqfNWOoLrDAfp/WTM7Cud+NM9d+8ICRdauFTCj2afA=;
- b=wW62RIDthYscIcFeNHwLN5XiU+FoRGrROyUE2UvN62uQDa5YS7WuNRQ9gyz/mRg+M0
- KxLdOCrjwOVDnIRzNUPrC6tCnJlR/kTrakSl3sVhOss8EDsGCTk+5tMQ7PXbu/Ajl65+
- 4cgbnFbmV1JH/ipUoEB2Je6wOjVLfWTzcU8waGqAUzQ0yoUXYQsS70jSJW0XuagKAR/v
- XkjvANmkfmXDTSb3KdUpG59b6gDkHFOpksh/BZQMsfhE3DUO3ARvwIsS3UJnb2W6E+7f
- qCqDIsWwUbm9QcE3Y8mfyFim9sIhMN5TuFxPG5Lg3roG8Yx4TGCqgDI5gqBBoJaXWaJc
- n1Gg==
-X-Gm-Message-State: AOJu0YwKoiik8AEv3sh3mWSxvk8KmMe/m3SjeS4g92296xULn45tjkTu
- J5Bd+ZRK5DRy8M0XCPfe4LxafSvsdRog3kkk2tgzKISD/Ds+qxuPMijQPdwqRb3ndBg4VOutJmZ
- xF0g=
-X-Gm-Gg: ASbGnctxcrm4vkImQ4SwNgRPekQgaAl1OyF4x8as8k43boF48LjQehcXu7XvX8gqH1m
- LL9oJkikRcfVJNA8wQvhJThuNS68W4jj6Drny3bu9vq+rWfDZZpJiGn9eNJaoW1lyfL2CYY3h2q
- MVEVgc0mWtTdgYb14131PtZ11ifQSKeafrqY9Udvib/xK/nqXyBuiMfd2fCPuen5cp9amd6NeLP
- Y/w1KWveNhKikjBFOWyKDjS+ACFNE42finvhQ5jnQ8SffsbyTXfYao=
-X-Google-Smtp-Source: AGHT+IEJ7K1ydve4w1QaDWx+cI84sh5iXFkbR6xda5qYq/1vs/s2JoF1/OVWWUROHgOGYkklJ31G4w==
-X-Received: by 2002:a05:6402:26cf:b0:5d4:55e:f99e with SMTP id
- 4fb4d7f45d1cf-5d972e1d7dfmr15235024a12.18.1736423941510; 
- Thu, 09 Jan 2025 03:59:01 -0800 (PST)
+ bh=TctM9tPlNSHj1T8mh1Qrv+3PKR9QCM9/IuTpKZPwInk=;
+ b=FxY6r6yqhoGS8CmjFNWb0yBqWIDIj4qEN5Du8+N+dpfETi6Cx2mcnNETegA+WzUK/m
+ stbn3+R5jSyWWDXQYwOOoBrW2CowFyuWZ2wVuNGdQDj2gzHKPIqn3TebUXxn2f/qgfnt
+ k6AkQKu1MQdip3G9PYWUgSp0sLQ98J7bo30SM1ZOo0bh5F+LCnyBLQII+f+oYYQjvEJU
+ ewJ87T1Hr9qOqRqtQRk4b1iTMUAwoQn57z1qEZ4tk4neDBVvViD/CJHLVOLJoPeHmtfF
+ fS2q7DbGP5O5uS8fDe/wGUvwLoujll7dI6c2T+Fj4zYCcrHLoDnyyhiecLT0weBHsLPK
+ heiw==
+X-Gm-Message-State: AOJu0YyvU5SiyYaU8lp7XXGxsA/cXVFAn8245HUrAjR5BVLTkN27uFc2
+ zmoigmeFBKM6HnVW9j9HcpF87F+THvjZsffUMV1AeEokDY+CZsCPyoGEHmjni1o=
+X-Gm-Gg: ASbGncvy3GoKXR3RsFIcqutglRPlJXpCXoYPwy1e7pcFLwOrcRXA8mlMIzCUbudFpbV
+ HgZlqgsHDiydLN6aV2Zeg5iodYQAZtxq5+KQrnjmf4ILWPYhG3T6RGscG3tbBAQ2WmhuD4xlWtZ
+ SM6IVgOkBC0y2Q9JMIU2daUlizP66wsDXvCvmTH6Tf4dT3X+7dgSpstc+2chGT1gMpqs4srdHCq
+ ggnCHHWoTazVX9niKJFUjNUji99lV13rZmpWcTOT+N8ixIIgsK1vpk=
+X-Google-Smtp-Source: AGHT+IETd2jD9Fo6dG5ZpsgcI6UirtjdZPwMdndcVO7QEyg932HIWQ1ldPXZ4gQ5s55dIzWVmxSStg==
+X-Received: by 2002:a17:906:7956:b0:aac:43e:ffa5 with SMTP id
+ a640c23a62f3a-ab2ab6c493bmr500544466b.15.1736424196512; 
+ Thu, 09 Jan 2025 04:03:16 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90d81c4sm65671766b.64.2025.01.09.03.59.00
+ a640c23a62f3a-ab2c95b72ddsm64578766b.163.2025.01.09.04.03.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 03:59:00 -0800 (PST)
+ Thu, 09 Jan 2025 04:03:15 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C4CB55F87E;
- Thu,  9 Jan 2025 11:58:59 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 52F8D5F87E;
+ Thu,  9 Jan 2025 12:03:14 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "demin.han" <demin.han@starfivetech.com>
-Cc: qemu-devel@nongnu.org,  erdnaxe@crans.org,  ma.mandourr@gmail.com,
- pierrick.bouvier@linaro.org
-Subject: Re: [PATCH] plugins: add plugin API to get args passed to binary
-In-Reply-To: <20241101090032.1413255-1-demin.han@starfivetech.com> (demin
- han's message of "Fri, 1 Nov 2024 17:00:32 +0800")
-References: <20241101090032.1413255-1-demin.han@starfivetech.com>
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: qemu-devel@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/3] Expose gdb_write_register function to consumers
+ of gdbstub
+In-Reply-To: <20241206102605.961658-2-rowanbhart@gmail.com> (Rowan Hart's
+ message of "Fri, 6 Dec 2024 02:26:02 -0800")
+References: <20241206102605.961658-1-rowanbhart@gmail.com>
+ <20241206102605.961658-2-rowanbhart@gmail.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 09 Jan 2025 11:58:59 +0000
-Message-ID: <87v7uo8ags.fsf@draig.linaro.org>
+Date: Thu, 09 Jan 2025 12:03:14 +0000
+Message-ID: <87plkw8a9p.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -103,104 +108,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"demin.han" <demin.han@starfivetech.com> writes:
+Rowan Hart <rowanbhart@gmail.com> writes:
 
-> Why we need args?
-> When plugin outputs log files, only binary path can't distinguish multiple
-> runs if the binary passed with different args.
-> This is bad for CI using plugin.
+> From: novafacing <rowanbhart@gmail.com>
 
-New APIs should come with an example use case for testing. However for
-this use case why isn't the plugin using getpid() or gettid() a suitable
-solution?
+You need to include Signed-of-by tags for anything to get accepted.
 
-Some additional comments bellow...
-
-> Signed-off-by: demin.han <demin.han@starfivetech.com>
-> ---
->  include/qemu/qemu-plugin.h   | 11 +++++++++++
->  plugins/api.c                | 16 ++++++++++++++++
->  plugins/qemu-plugins.symbols |  1 +
->  3 files changed, 28 insertions(+)
 >
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 622c9a0232..daf75c9f5a 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -837,6 +837,17 @@ bool qemu_plugin_bool_parse(const char *name, const =
-char *val, bool *ret);
->  QEMU_PLUGIN_API
->  const char *qemu_plugin_path_to_binary(void);
->=20=20
-> +/**
-> + * qemu_plugin_argv_to_binary() - argv to binary file being executed
-> + *
-> + * Return a string array representing the argv to the binary. For user-m=
-ode
-> + * this is the main executable's argv. For system emulation we currently
-> + * return NULL.
-
-Maybe more explicit:
-
-qemu_plugin_get_user_argv() and be clear it is user mode only.
-
-Although I suspect a qemu_plugin_get_user_env() might be a more useful
-helper depending on the use case.
-
-> The user should g_free() the string array once no longer
-> + * needed.
-> + */
-> +QEMU_PLUGIN_API
-> +const char **qemu_plugin_argv_to_binary(void);
-> +
->  /**
->   * qemu_plugin_start_code() - returns start of text segment
->   *
-> diff --git a/plugins/api.c b/plugins/api.c
-> index 24ea64e2de..fa2735db03 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -485,6 +485,22 @@ const char *qemu_plugin_path_to_binary(void)
->      return path;
+> ---
+>  gdbstub/gdbstub.c      |  2 +-
+>  include/exec/gdbstub.h | 14 ++++++++++++++
+>  2 files changed, 15 insertions(+), 1 deletion(-)
+>
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index b1def7e71d..7d87a3324c 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -536,7 +536,7 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf,=
+ int reg)
+>      return 0;
 >  }
 >=20=20
-> +const char **qemu_plugin_argv_to_binary(void)
-> +{
-> +    const char **argv =3D NULL;
-> +#ifdef CONFIG_USER_ONLY
-> +    int i, argc;
-> +    TaskState *ts =3D get_task_state(current_cpu);
-> +    argc =3D ts->bprm->argc;
-> +    argv =3D g_malloc(sizeof(char *) * (argc + 1));
-
- argv =3D g_new0(char *, argc + 1);
-
-> +    for (i =3D 0; i < argc; ++i) {
-> +        argv[i] =3D g_strdup(ts->bprm->argv[i]);
-> +    }
-> +    argv[argc] =3D NULL;
-
-Allows you to drop this as well.
-
-> +#endif
-> +    return argv;
-> +}
+> -static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+> +int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+>  {
+>      CPUClass *cc =3D CPU_GET_CLASS(cpu);
+>      GDBRegisterState *r;
+> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+> index d73f424f56..584ed73fc9 100644
+> --- a/include/exec/gdbstub.h
+> +++ b/include/exec/gdbstub.h
+> @@ -118,6 +118,20 @@ const GDBFeature *gdb_find_static_feature(const char=
+ *xmlname);
+>   */
+>  int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+>=20=20
+> +/**
+> + * gdb_write_register() - Write a register associated with a CPU.
+> + * @cpu: The CPU associated with the register.
+> + * @buf: The buffer that the register contents will be set to.
+> + * @reg: The register's number returned by gdb_find_feature_register().
+> + *
+> + * The size of @buf must be at least the size of the register being
+> + * written.
+> + *
+> + * Return: The number of written bytes, or 0 if an error occurred (for
+> + * example, an unknown register was provided).
+> + */
+> +int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg);
 > +
->  uint64_t qemu_plugin_start_code(void)
->  {
->      uint64_t start =3D 0;
-> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-> index 032661f9ea..532582effe 100644
-> --- a/plugins/qemu-plugins.symbols
-> +++ b/plugins/qemu-plugins.symbols
-> @@ -1,4 +1,5 @@
->  {
-> +  qemu_plugin_argv_to_binary;
->    qemu_plugin_bool_parse;
->    qemu_plugin_end_code;
->    qemu_plugin_entry_code;
+>  /**
+>   * typedef GDBRegDesc - a register description from gdbstub
+>   */
 
-You can drop the symbols now we autogenerate them.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
