@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AF8E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 15:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD2CE77199
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 15:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVuqY-0006Jr-NU; Thu, 09 Jan 2025 10:53:22 -0500
+	id 1tVuqT-0006Hn-CR; Thu, 09 Jan 2025 10:53:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVuqX-0006JK-7Z
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:53:21 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tVuqR-0006Gv-9P
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:53:16 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tVuqV-0002Tw-Ew
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:53:20 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B35471F394;
- Thu,  9 Jan 2025 15:53:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736437997; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HUn/DCYjWtFdE+jJ9ja0rNr2cOTx5GnTpw/bq6XgCcY=;
- b=ZUte4Yk2LHlCPz3BvfoZwjPWyEfAgn9v4oJpNQz513gPCaN7oxPByRty0hmblIRdvPe05p
- fAL6Tjq+yA0VE+kV0eeSGScTlAziIRf/XBL50S1iQK8xec6wvr2XpJ+5MtKoeV4xSWjiYI
- MjmihvHGxGjj7cN1GGJhbYEDCyCIJ0Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736437997;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HUn/DCYjWtFdE+jJ9ja0rNr2cOTx5GnTpw/bq6XgCcY=;
- b=+M9v7JoSsQkCmSVX62LuSa4HnaolhTAmDETF5OlBbPHWbKLxSZB9mj7eocs/FqWnEVSeHK
- cMqj/x9KYmB2PdBw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736437997; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HUn/DCYjWtFdE+jJ9ja0rNr2cOTx5GnTpw/bq6XgCcY=;
- b=ZUte4Yk2LHlCPz3BvfoZwjPWyEfAgn9v4oJpNQz513gPCaN7oxPByRty0hmblIRdvPe05p
- fAL6Tjq+yA0VE+kV0eeSGScTlAziIRf/XBL50S1iQK8xec6wvr2XpJ+5MtKoeV4xSWjiYI
- MjmihvHGxGjj7cN1GGJhbYEDCyCIJ0Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736437997;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HUn/DCYjWtFdE+jJ9ja0rNr2cOTx5GnTpw/bq6XgCcY=;
- b=+M9v7JoSsQkCmSVX62LuSa4HnaolhTAmDETF5OlBbPHWbKLxSZB9mj7eocs/FqWnEVSeHK
- cMqj/x9KYmB2PdBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 35EC413876;
- Thu,  9 Jan 2025 15:53:16 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2isaO+zwf2cfewAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 09 Jan 2025 15:53:16 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2 4/7] migration: Rename vmstate_info_nullptr
-In-Reply-To: <Z3_br0JVQ0F_Zas6@x1n>
-References: <20250109140959.19464-1-farosas@suse.de>
- <20250109140959.19464-5-farosas@suse.de> <Z3_br0JVQ0F_Zas6@x1n>
-Date: Thu, 09 Jan 2025 12:53:14 -0300
-Message-ID: <87tta82dcl.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tVuqP-0002Sc-38
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 10:53:15 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21619108a6bso18018915ad.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 07:53:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736437979; x=1737042779; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PxAYVqsb6CEaTqgp8MsnpCsVpeTXhTf0kuyXHkUfDRI=;
+ b=TQ4dup5Z6K7iCEp4Xk7qrzd1mQuN3m7/9hSoP3hzhrFImc06Xb1yI3B4eWAwzwADaZ
+ YP6a2PgN0xC7Q07ArDcAlS3WCxbxPJjYU/ZqQxgvzKtfEDVti5Sj2mui1r+C/U3xJ8v8
+ eZMDGjg394GruVIqDxYhNaW0sQv+6AR4dA5zxbHM6MIhJXETGkt4sWIRM/RfzREyyUie
+ thCdYgFeL/C7np6HmTFggyXlwqQRgsLlvdjbTzVUFuMrTnQcw6I1sXkCAR7FBO1KntKJ
+ 3cdzB1P4mklrgpZNE+PKwpWATzxlw2KOUQqNqgVkQRBvjVOfEo7pBHQyy+QbUkgCnk7j
+ Jspw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736437979; x=1737042779;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PxAYVqsb6CEaTqgp8MsnpCsVpeTXhTf0kuyXHkUfDRI=;
+ b=tbbBKhSdee95JRjh/hvHpPnOd3cFpzlS+o1isLUNKL9EqEIVWfnEC5DJSlWhS7JODF
+ dhOge7D1IvO9QCHtdHaMhAVoqgWVHnS5Jrt6gjrW6JEvIyQrDLgTp+smTTkCKepPvxSc
+ 2e+lePYeU/PSAGO+FOx4cuKciwSx5sYSQG6jEe9JhLPSNBFe8J3fVeVQIZYJsp4p5aFI
+ gakwBop+4cHUYk5CBuSGcgHEjU19jaMnQqY9l4sqS9kMCFwyZpzTqiFZg17akQfLrdoC
+ Egmqiug+P2jfK6K+n750t2du5f4UlTjk0FT1k3gn1VgVmL9+N+PtyV1nBXvFGqOFUfzb
+ cM0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUokL6HCUifcRHEpbxEfrl0KK3WbZQNijh2HRTJ2fJwzPgol7tVdoXwDr+4WEGoKY+kyk6ZcBDP2deq@nongnu.org
+X-Gm-Message-State: AOJu0YypK0WIFSXSxjhsC8rqiki3zlvNRHF9efuL1wiJXxDTEjLhnOVt
+ 6ro/3NolMCzaiPJk+pxcJnmqIuMhrsHge5VV659xI4E1/Q4LrWOZi+8Eo+Mop/Q=
+X-Gm-Gg: ASbGncvFo/DxTS9FgKefQ5PSP2ltzZQBOdFBqdi1Zr6w3tN0WrQElWyMtW2vEFcDX/q
+ OqY1SlQRUMdoU8E0SNvnxLD8G9RtE2SYghl+aQofOJ/kq6To8i+HnPbFcbPSktBn8T+v0GzyNcO
+ wAWOPSiX3TXowWUEO9VLY3pPYud1h8fDUfxQ9CWGFq+rfIPpr0Z/0/89x9XxGMbhj1Sky0rlDCI
+ 36YckBdkedDvhx2EXlJ2Of01apiRuDOa5Y4iv0iQU0TBNHHyAdDrs1fXrqoRmMxQmHr3nDn0/D/
+ Iju3JbURTtxTVRt4jLnHYACPBRV7sCI=
+X-Google-Smtp-Source: AGHT+IHQjcldgX0DZNit5JPivzfCzlptEglN5Bnzb1QHZUk6LJgG3GWp0acE09IdB8Gmt/g6vCATmQ==
+X-Received: by 2002:a17:902:dad1:b0:21a:8716:fa97 with SMTP id
+ d9443c01a7336-21a87264051mr78793795ad.13.1736437979149; 
+ Thu, 09 Jan 2025 07:52:59 -0800 (PST)
+Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
+ [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a91766da1sm14415255ad.46.2025.01.09.07.52.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 07:52:58 -0800 (PST)
+Message-ID: <1612c0c9-7c45-4bda-a977-8b7cd51ee0f9@linaro.org>
+Date: Thu, 9 Jan 2025 07:52:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] target/cpus: Remove pointless re-assignment of
+ CPUState::halted
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Stafford Horne <shorne@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-ppc@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241230153929.87137-1-philmd@linaro.org>
+ <20241230153929.87137-4-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241230153929.87137-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,101 +110,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 12/30/24 07:39, Philippe Mathieu-Daudé wrote:
+> The CPUState::halted field is always re-initialized in
+> cpu_common_reset_hold(), itself called by cpu_reset().
+> No need to have targets manually initializing it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/misc/mips_cpc.c        | 1 -
+>   hw/ppc/e500.c             | 1 -
+>   target/arm/arm-powerctl.c | 2 --
+>   target/hppa/cpu.c         | 1 -
+>   4 files changed, 5 deletions(-)
 
-> On Thu, Jan 09, 2025 at 11:09:56AM -0300, Fabiano Rosas wrote:
->> Rename vmstate_info_nullptr from "uint64_t" to "nullptr". This vmstate
->> actually reads and writes just a byte, so the proper name would be
->> uint8. However, since this is a marker for a NULL pointer, it's
->> convenient to have a more explicit name that can be identified by the
->> consumers of the JSON part of the stream.
->> 
->> Change the name to "nullptr" and add support for it in the
->> analyze-migration.py script. Arbitrarily use the name of the type as
->> the value of the field to avoid the script showing 0x30 or '0', which
->> could be confusing for readers.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/vmstate-types.c    |  2 +-
->>  scripts/analyze-migration.py | 22 ++++++++++++++++++++++
->>  2 files changed, 23 insertions(+), 1 deletion(-)
->> 
->> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
->> index e83bfccb9e..d70d573dbd 100644
->> --- a/migration/vmstate-types.c
->> +++ b/migration/vmstate-types.c
->> @@ -338,7 +338,7 @@ static int put_nullptr(QEMUFile *f, void *pv, size_t size,
->>  }
->>  
->>  const VMStateInfo vmstate_info_nullptr = {
->> -    .name = "uint64",
->> +    .name = "nullptr",
->>      .get  = get_nullptr,
->>      .put  = put_nullptr,
->>  };
->> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
->> index fcda11f31d..134c25f20a 100755
->> --- a/scripts/analyze-migration.py
->> +++ b/scripts/analyze-migration.py
->> @@ -377,6 +377,8 @@ def read(self):
->>  
->>  
->>  class VMSDFieldInt(VMSDFieldGeneric):
->> +    NULL_PTR_MARKER = 0x30
->> +
->>      def __init__(self, desc, file):
->>          super(VMSDFieldInt, self).__init__(desc, file)
->>          self.size = int(desc['size'])
->> @@ -385,6 +387,16 @@ def __init__(self, desc, file):
->>          self.udtype = '>u%d' % self.size
->>  
->>      def __repr__(self):
->> +
->> +        # A NULL pointer is encoded in the stream as a '0' to
->> +        # disambiguate from a mere 0x0 value and avoid consumers
->> +        # trying to follow the NULL pointer. Displaying '0', 0x30 or
->> +        # 0x0 when analyzing the JSON debug stream could become
->> +        # confusing, so use an explicit term instead. The actual value
->> +        # in the stream was already validated by VMSDFieldNull.
->> +        if self.data == self.NULL_PTR_MARKER:
->> +            return "nullptr"
->
-> What happens if a real int field has value 0x30 which is not a marker?
-> Would it be wrongly represented as "nullptr"?
->
+This is a behavior change if cpu->start_powered_off.
 
-Yes, better to not inherit from VMSDFieldInt then.
+I think it's likely that "start powered off' should not apply to warm reset, and that 
+otherwise this change is ok.  But I think there's that nit to address first.
 
->> +
->>          if self.data < 0:
->>              return ('%s (%d)' % ((self.format % self.udata), self.data))
->>          else:
->> @@ -417,6 +429,15 @@ def __init__(self, desc, file):
->>          super(VMSDFieldIntLE, self).__init__(desc, file)
->>          self.dtype = '<i%d' % self.size
->>  
->> +class VMSDFieldNull(VMSDFieldUInt):
->> +    def __init__(self, desc, file):
->> +        super(VMSDFieldUInt, self).__init__(desc, file)
->> +
->> +    def read(self):
->> +        super(VMSDFieldUInt, self).read()
->> +        assert(self.data == self.NULL_PTR_MARKER)
->> +        return self.data
->> +
->>  class VMSDFieldBool(VMSDFieldGeneric):
->>      def __init__(self, desc, file):
->>          super(VMSDFieldBool, self).__init__(desc, file)
->> @@ -558,6 +579,7 @@ def getDict(self):
->>      "bitmap" : VMSDFieldGeneric,
->>      "struct" : VMSDFieldStruct,
->>      "capability": VMSDFieldCap,
->> +    "nullptr": VMSDFieldNull,
->>      "unknown" : VMSDFieldGeneric,
->>  }
->>  
->> -- 
->> 2.35.3
->> 
+
+r~
 
