@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A863E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 18:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE00E7719A
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 19:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVxgu-0006D0-QY; Thu, 09 Jan 2025 13:55:37 -0500
+	id 1tVxvF-0001cI-V7; Thu, 09 Jan 2025 14:10:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tVxgf-000652-OL
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 13:55:25 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tVxgd-0006L1-V4
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 13:55:21 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21669fd5c7cso20397935ad.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 10:55:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736448918; x=1737053718; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NgJhSKvv4Fl1r5bGyBeNP2FbkM//DKOYtOmfW4bl+2I=;
- b=qg0lLpJFb9dm/joB4BQDb7SGcHAWMhCPAz0h9aLZqorVq211VWEOm48zQg+hwt9u+k
- DF91PawfjKbk1B2f8fUEY3tjjZlAqeUeWFRAMaAr9ouFdVuYiXYDmIqHsB3MFOHu3TQe
- 4cVjvdLRh/0UshWGbzhz0V1hDseHRhWZuahHzPSIOZVafJgFCPqaAzRG6erqNJNEmQDS
- YzCFhjoNzbKxvjz6re3EfReMFi3LlhS1KsQxi8NV+INDTKSlL0Agis73NNptfEcVc0z4
- A+mvN916uqQDTf+A7EeAFR8wVf1qOmBVUms4gckLqFpxgyBhvoGrtqoUGtaQewjLwkJH
- VLVg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVxv4-0001Tw-SN
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 14:10:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVxv3-0000dj-90
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 14:10:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736449811;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lrBHSRViDf0/eXCR+bUXNC0wt3XffTjlAVW4cZo4lQY=;
+ b=UOwmnGz+uza3X/Hk7lFitQTwwtH/yPJYZ/fAVoBkPOfO5q9ynYT6/RO67iHJPjdn7YlRW9
+ KCcxCNph6kY8Wlc0eE0mL9nQvkmuDYD8tAKw5HZNmsBrNcYn9v81yY6+9+4VuKSQARNlvA
+ 7rzvo20CzMmd4tt7HDSs/roea1uETOQ=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-151-UU7vU67tMgOrYBIUUnxYFQ-1; Thu, 09 Jan 2025 14:10:08 -0500
+X-MC-Unique: UU7vU67tMgOrYBIUUnxYFQ-1
+X-Mimecast-MFC-AGG-ID: UU7vU67tMgOrYBIUUnxYFQ
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-46791423fc9so22451701cf.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 11:10:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736448918; x=1737053718;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NgJhSKvv4Fl1r5bGyBeNP2FbkM//DKOYtOmfW4bl+2I=;
- b=XoEcQATK14cr9mPTOna0mFkDbAmfcu9UW1DLluRBQJJHRT0nGNIfVjlEgQj1rZh9wP
- T0i78QUsDKJYluy5mTXnkCWLbefLp3I8jEjNwvBqEHYa8/0aiuTtEInpZmNJ2iFW84yA
- UXPZxdoXeNkqvSxM07bEI0WXZw7mb0yBq+7uv2o6lk63aCh4Vblgm00ZVXdpj3jVi/BC
- pk0WtN+ima/HFG6s5cpiKtdlW2EHV3PKrmIBfP5wWZG4K5NsQhuUpbLmn8xd/K0WuWbw
- knC9mCwIa3OoM2C6cfAluhqABY0/hFCYhLRPjdpXKgOdq8vmT92tARQir/cIb6IGol2v
- 9zjA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyeVz9EVxupOqqkY8M6Cv06EDFyL0CpsRaJEaedN4Lntv31vRPD6zDc7wNpKfJzlQucr9d6GGsP8vM@nongnu.org
-X-Gm-Message-State: AOJu0YxOonGJizaN4hf2RXDKItZcSQ/2gcIBb3O+KXH+1ojYy3ti7Slf
- xzhFz7VSosXsn+QEdbF3IGMpraLkJbVjO/QtY6BHt9ftXLM8bkVrpDbCRSBessk=
-X-Gm-Gg: ASbGnctoonoC/CiPMzq68zP30IbcTKnoZGPtkfEXJFpT6XO0ZjnycHt9CJvme8qQPsf
- UlsZoPDg+ceZzxlt+GWY7CQcihvs0CEF6WS91B8gITPJP32E3oQ9xpxFH1XBXKw5WvX1J+wb17n
- 12QG0B+n6Qi5QewZDbc4PR0SYbF8LObN5ADxAki5LtMxZuvDHsKrfNyyuHOQ1pSZBukoeM76Z9a
- Gbr3la2lj/pOr7l2Z0CxeXduz7O4N5b3IHUYXRlFi57XSWrrp/B+1cllXtoqOg00VMiWg==
-X-Google-Smtp-Source: AGHT+IHpBrT0MeOjEt70PWgZ0v2a/DCdqWS0lbOFDwqFr7GZya9UUTbV+rTpDbOZ7egtohKhDhOxPA==
-X-Received: by 2002:aa7:8887:0:b0:72a:bb83:7804 with SMTP id
- d2e1a72fcca58-72d21fd2e16mr11347518b3a.17.1736448918462; 
- Thu, 09 Jan 2025 10:55:18 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d4067e61asm115821b3a.128.2025.01.09.10.55.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 10:55:18 -0800 (PST)
-Message-ID: <da769717-0823-45b4-8b1c-9fd2611d0092@linaro.org>
-Date: Thu, 9 Jan 2025 10:55:17 -0800
+ d=1e100.net; s=20230601; t=1736449808; x=1737054608;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lrBHSRViDf0/eXCR+bUXNC0wt3XffTjlAVW4cZo4lQY=;
+ b=SAQTJsanXpyX4j9zYhUzIwaSsT8cqlsb3rKgWjJYIaPDXtEg7jf3NJTaYenC86HhlP
+ 5G3HpudJmtd/ha4J0L7yqqd5tQbUOnhm7tNk42+HLdui+K4Ff6cQ6efCRlAQz5MBUq10
+ jVd3p1vr1CMKcHlSgdc+ZqD/pVzUbx8lnJHyyh/lJzLkzkIW4Vm2ztc7Y4tzE6ypET6k
+ uu4OzvCsNcf2HedTp8E2i/bU377gfLl7dbn7u19tZWofGQ+uRDum2nx65o06KHX8FjSA
+ duCTKwmuDNPHEFdA/wwJXup7N9ICJgJCfWkUQMN/9h06r0SbsOKUsrRjksA8AsYAizAD
+ ilMg==
+X-Gm-Message-State: AOJu0Yy0AVBChyDR1X+v0oXcNrbiL83eUh7Ytb3fYVojpu46EQ8Gmf+A
+ v7S0Mqecu4NyovLmRVuXV9hAFOwSzXomtHTai9RAeG/OpbZrIX9raPK+ZH3dy+GLyCHlNreTuOV
+ Ea3341VTZI+9+YDLYAip9UeDOmLao471sRTzf16SAD5L1HdQi7/0B
+X-Gm-Gg: ASbGncvHhpCOMYINfopyvMmGn6rWwW3J4GPXw2awfaBuA3Qqu8ExF/n5zNws6G85yWj
+ wQPqGQKTSobXfdemWFAAHL9MkKFWGGypTxy/7uJ+hQyB/ai3pVD7tj/p1SQO3+tvImTN8G0SxaT
+ Y8NvjpEUvSyZM4OPRro9URCKQHuiPuDEIF6e9n3Zj09kCFV5thfEGYF4MI10HEKhQf3tX+i0ysR
+ ptFNhevILtwGNyYro3myFixCCghfrvUUKcWiPY0zWMYdjPj7dUgCLNE0d00baEEu9NH3JT+WuFS
+ OC3WL4LXOKp6L0VjkA==
+X-Received: by 2002:a05:622a:148c:b0:466:b122:5138 with SMTP id
+ d75a77b69052e-46c71005797mr113524291cf.17.1736449807843; 
+ Thu, 09 Jan 2025 11:10:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGq24Pkqg7BcUfSNNT44r1wc3e2RAd1kMYy8tfQHYlxeY6T+zVoKgkWC05A45EkoQOSqq8s8g==
+X-Received: by 2002:a05:622a:148c:b0:466:b122:5138 with SMTP id
+ d75a77b69052e-46c71005797mr113523991cf.17.1736449807540; 
+ Thu, 09 Jan 2025 11:10:07 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46c873216a0sm1408371cf.10.2025.01.09.11.10.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jan 2025 11:10:06 -0800 (PST)
+Date: Thu, 9 Jan 2025 14:10:04 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 4/7] migration: Rename vmstate_info_nullptr
+Message-ID: <Z4AfDIkIdxIdQCYZ@x1n>
+References: <20250109185249.23952-1-farosas@suse.de>
+ <20250109185249.23952-5-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/22] system: propagate Error to gdbserver_start (and
- other device setups)
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250109170619.2271193-1-alex.bennee@linaro.org>
- <20250109170619.2271193-11-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250109170619.2271193-11-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250109185249.23952-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,20 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMS85LzI1IDA5OjA2LCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFRoaXMgc3RhcnRlZCBh
-cyBhIGNsZWFuLXVwIHRvIHByb3Blcmx5IHBhc3MgYSBFcnJvciBoYW5kbGVyIHRvIHRoZQ0K
-PiBnZGJzZXJ2ZXJfc3RhcnQgc28gd2UgY291bGQgZG8gdGhlIHJpZ2h0IHRoaW5nIGZvciBj
-b21tYW5kIGxpbmUgYW5kDQo+IEhNUCBpbnZvY2F0aW9ucy4NCj4gDQo+IE5vdyB0aGF0IHdl
-IGhhdmUgY2xlYW5lZCB1cCBmb3JlYWNoX2RldmljZV9jb25maWdfb3JfZXhpdCgpIGluIGVh
-cmxpZXINCj4gcGF0Y2hlcyB3ZSBjYW4gZnVydGhlciBzaW1wbGlmeSBieSBpdCBieSBwYXNz
-aW5nICZlcnJvcl9mYXRhbCBpbnN0ZWFkDQo+IG9mIGNoZWNraW5nIHRoZSByZXR1cm4gdmFs
-dWUuIEhhdmluZyBhIHJldHVybiB2YWx1ZSBpcyBzdGlsbCB1c2VmdWwNCj4gZm9yIEhNUCB0
-aG91Z2ggc28gdHdlYWsgdGhlIHJldHVybiB0byB1c2UgYSBzaW1wbGUgYm9vbCBpbnN0ZWFk
-Lg0KPiANCj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5h
-cm8ub3JnPg0KPiBBY2tlZC1ieTogSWx5YSBMZW9zaGtldmljaCA8aWlpQGxpbnV4LmlibS5j
-b20+DQo+IA0KDQo8c25pcD4NCg0KPiAtc3RhdGljIGludCBnZGJzZXJ2ZXJfb3Blbl9wb3J0
-KGludCBwb3J0KQ0KPiArc3RhdGljIGludCBnZGJzZXJ2ZXJfb3Blbl9wb3J0KGludCBwb3J0
-LCBFcnJvciAqKmVycnApDQoNCkRpZCB5b3UgbWVhbjoNCnN0YXRpYyBib29sIGdkYnNlcnZl
-cl9vcGVuX3BvcnQuLi4/DQoNCldpdGggdGhhdCwNClJldmlld2VkLWJ5OiBQaWVycmljayBC
-b3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQoNCg==
+On Thu, Jan 09, 2025 at 03:52:46PM -0300, Fabiano Rosas wrote:
+> Rename vmstate_info_nullptr from "uint64_t" to "nullptr". This vmstate
+> actually reads and writes just a byte, so the proper name would be
+> uint8. However, since this is a marker for a NULL pointer, it's
+> convenient to have a more explicit name that can be identified by the
+> consumers of the JSON part of the stream.
+> 
+> Change the name to "nullptr" and add support for it in the
+> analyze-migration.py script. Arbitrarily use the name of the type as
+> the value of the field to avoid the script showing 0x30 or '0', which
+> could be confusing for readers.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
+
 
