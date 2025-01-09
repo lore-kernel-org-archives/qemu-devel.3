@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 591C9E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60123E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 14:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVtQt-0005k0-55; Thu, 09 Jan 2025 09:22:47 -0500
+	id 1tVtc6-0007YO-Tp; Thu, 09 Jan 2025 09:34:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtQr-0005jo-Kp
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:22:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtc5-0007YF-LO
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:34:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtQq-0002Mq-3u
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:22:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tVtc3-00069j-L2
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 09:34:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736432563;
+ s=mimecast20190719; t=1736433256;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/D/jq/w3AQBawSwoGIqPduPOHfK1v/fhJ2+g7v2eKCY=;
- b=UceRmiSXnCED2Ex9ui+A21T3gsnZjWeF6TROlXTbooKHGnoLZ4dUkrDWHiqnUZlh6gdfuz
- Czku35oGnSTU3634m4284dtrbQuiLq+9u3rfHTGKsr54odvD/Nn6jNg4idxxIsd1IB0LCG
- dHcxsh7azliGq6YhV65goeWsXqO2YU0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kYG5T02+AgxUnE75lwHKl4YaBgSQaTeIwaxa0bO5k14=;
+ b=iX3KE8dwXQLOI+NtguzqEcK2Z9d/3HOa+h6PHfPm+i6dyXefRp8U1LnUVRWeNFEqKQy5FQ
+ 91bfDnkuAsBO0WIN80QRHG/k006X1Bn1PkMSE7i/5QL51SGjFS5ie42UMpGqJoHO+30NBi
+ 09CkRt7o07J7fSlPWbHK7qE3W3/EQ5Y=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-cabidH4zOYK9IFByvXRKbg-1; Thu, 09 Jan 2025 09:22:42 -0500
-X-MC-Unique: cabidH4zOYK9IFByvXRKbg-1
-X-Mimecast-MFC-AGG-ID: cabidH4zOYK9IFByvXRKbg
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6e852eeabso153433485a.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:22:42 -0800 (PST)
+ us-mta-591-E0M4pc5pPfS-8luNdqJ9Hg-1; Thu, 09 Jan 2025 09:34:15 -0500
+X-MC-Unique: E0M4pc5pPfS-8luNdqJ9Hg-1
+X-Mimecast-MFC-AGG-ID: E0M4pc5pPfS-8luNdqJ9Hg
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-46790c5b1a5so22691121cf.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 06:34:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736432562; x=1737037362;
+ d=1e100.net; s=20230601; t=1736433255; x=1737038055;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/D/jq/w3AQBawSwoGIqPduPOHfK1v/fhJ2+g7v2eKCY=;
- b=SZWHmTlQpsdeNC3Up/42AuOefuk0YUHeeQjV+ha6iVybwWl8TpTyRYwBWmwn/tR2cz
- ceiQpqv5vZ6bhGt9R2VNTeCy8xcFW54mfk7k/rgbk9evERC3j6z9/u4qSgapSmYpkXG0
- UPFa7fQErZkThRQ378SMeplSBnLLusjWMy7WKZszRggq3o9ZYQA1mhDta4USvI+1xEtV
- jqbxBCj1V4P/Aj/vLBumdEcfBOrV5sg19z5yzS15Y8Y4veVLh0KLKhLHcubmS3Wc/FmI
- 6hou/SFAzhAwkDog6XpGJWFNa6l5Xz2O5R64OT1Y0UqfVHOqn6uCkgE3A7toRW9+y57t
- RHiw==
-X-Gm-Message-State: AOJu0YxxrNoPmJfKotxEgkaHB458/80SGIrFW6msWtg0Uke/4g2mWALr
- wQbgq0XvblAmWQYUbAfXs/xM4QDFxozBu4K40BW4mMeMtfGJRTsNJhs2ojCu+AIlTaQbrrnPJpK
- L7DkKtOP05lHmLJG/GyQyz7bUKJQJywjJ3jodi4ay+oZoVL1ztGjD
-X-Gm-Gg: ASbGnctUc1tjUQ829/Aj005bVILTZsM/Spu1lbd4Lhh/1O8AwNwWnPvNmfO5xcnD834
- YfqWso6qAsmHansJBNSM5pQiLePL64XUPAD35CAYnm5y0B60EMczl+GoM7/bCtnQKRNKI/Q70At
- uc1dmQ4FYcFGPQAMKPhzYyvlVyK7UNmvoRu7qtJp7+1n3J8tCFgqu6LglsrA97svstYtPuq4l/i
- tSB1VzsLm25ZnV+ozl6xWmYB9yxWLdeSCk15ToncQPbLkbk7HkT0QqBQ4xQcBbYZMfpqsRW3tKu
- GTQNVZCZmnj+v5Awug==
-X-Received: by 2002:a05:620a:a016:b0:7bc:db11:4945 with SMTP id
- af79cd13be357-7bcdb114b95mr759575285a.51.1736432561915; 
- Thu, 09 Jan 2025 06:22:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGZ9ysB7ZOq+AKl9SRVa0oBM2Gr24EgjTQfjHRxLteXDZNXCTdQXGttVJmwckSBgt3WyY0HrA==
-X-Received: by 2002:a05:620a:a016:b0:7bc:db11:4945 with SMTP id
- af79cd13be357-7bcdb114b95mr759572785a.51.1736432561576; 
- Thu, 09 Jan 2025 06:22:41 -0800 (PST)
+ bh=kYG5T02+AgxUnE75lwHKl4YaBgSQaTeIwaxa0bO5k14=;
+ b=jNOHaUM+OaKVpAgrj2hy81Vm6gHzryRMui/W1vHpoB0pbkexseTgyB1c1sdxEntSsa
+ NERN6P2mqeeRioEuf9ACaA4wTWO5WEvRrf4mtKD5i1RLPFoJ5AXmylc9wdze1zwZ2EZt
+ BkVqFiHO37HkhX/s/Zo+8SG9GAhG0pcw2CrvHb29lwVQqN8cfhSf8CJrbJoryKmgNxP+
+ T8lgTC2MOoGUoCkGK5BGJTzsPHZTOdcyktKmJPbOArrY92rYGToZGXNAAbk1ZpuP4Wip
+ auWqAa0t+t0eoyacQg5X2OtyKGREisKjAUN1QcQgUX+EGi7CJ6pZYQPQvqoBbJwtEf2Y
+ LNgw==
+X-Gm-Message-State: AOJu0YywN8RjzMfGzOzd0YHwFC3w7WFsmHrbJwLZgj/MwSDMbjQC26gT
+ muWfHTt23ZihO5/cmiyacTlYbMsgElF5OwVXkQxDXUsBwsED/+9oKu1Itb6+FoP76ZK+H0rMo1m
+ geRMiw39Z4ARL77WW1mMtM26it7/kCYeMh7JwENakRNpNt/ETUVU6
+X-Gm-Gg: ASbGncs7ft6nCixbSQpn9Lz0sMOorphvuL3Nd9clo+iuj1jmi3B5JDBnDDIBahjHzjU
+ 2H2yPIPwI5MCdIxoneh68gAHvyZD7+Elj7874phYWe8UwzJIoYaSQmMvR1AVZD1RMdERrMIz5pg
+ 7CUKHaa0vZnBh+UJa0ZGI968YRpoxEI3G83lNvsR+IDBflsLuXvDE9wOYZp1Iof/enBZ5jfTTZq
+ YgTD6IkYtUwSFKrxOjxFguJn6ufxId+c/LFnlIM65EY47/oVW92Bk8wZSooJqEcSnC2+957OxbB
+ ZlPKyt8x94Q/ZFqZLw==
+X-Received: by 2002:a05:622a:40b:b0:46c:7737:c4ef with SMTP id
+ d75a77b69052e-46c7737ca9dmr70670281cf.22.1736433254826; 
+ Thu, 09 Jan 2025 06:34:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEERh25K5f5kJofn6hws8ktVYY+Eh3wfPAUDsvSz6BYOfkgEQinokCjxpbfDMdrN3iBpbI7dQ==
+X-Received: by 2002:a05:622a:40b:b0:46c:7737:c4ef with SMTP id
+ d75a77b69052e-46c7737ca9dmr70669981cf.22.1736433254453; 
+ Thu, 09 Jan 2025 06:34:14 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7bce327b8besm71277585a.59.2025.01.09.06.22.40
+ d75a77b69052e-46a3e64cf7fsm206869431cf.5.2025.01.09.06.34.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 06:22:40 -0800 (PST)
-Date: Thu, 9 Jan 2025 09:22:39 -0500
+ Thu, 09 Jan 2025 06:34:13 -0800 (PST)
+Date: Thu, 9 Jan 2025 09:34:12 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2 4/7] migration: Rename vmstate_info_nullptr
-Message-ID: <Z3_br0JVQ0F_Zas6@x1n>
+Subject: Re: [PATCH v2 6/7] migration: Fix arrays of pointers in JSON writer
+Message-ID: <Z3_eZId2Ylj3bCU2@x1n>
 References: <20250109140959.19464-1-farosas@suse.de>
- <20250109140959.19464-5-farosas@suse.de>
+ <20250109140959.19464-7-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250109140959.19464-5-farosas@suse.de>
+In-Reply-To: <20250109140959.19464-7-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -105,95 +105,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 09, 2025 at 11:09:56AM -0300, Fabiano Rosas wrote:
-> Rename vmstate_info_nullptr from "uint64_t" to "nullptr". This vmstate
-> actually reads and writes just a byte, so the proper name would be
-> uint8. However, since this is a marker for a NULL pointer, it's
-> convenient to have a more explicit name that can be identified by the
-> consumers of the JSON part of the stream.
+On Thu, Jan 09, 2025 at 11:09:58AM -0300, Fabiano Rosas wrote:
+> Currently, if an array of pointers contains a NULL pointer, that
+> pointer will be encoded as '0' in the stream. Since the JSON writer
+> doesn't define a "pointer" type, that '0' will now be an uint8, which
+> is different from the original type being pointed to, e.g. struct.
 > 
-> Change the name to "nullptr" and add support for it in the
-> analyze-migration.py script. Arbitrarily use the name of the type as
-> the value of the field to avoid the script showing 0x30 or '0', which
-> could be confusing for readers.
+> (we're further calling uint8 "nullptr", but that's irrelevant to the
+> issue)
+> 
+> That mixed-type array shouldn't be compressed, otherwise data is lost
+> as the code currently makes the whole array have the type of the first
+> element:
+> 
+> css = {NULL, NULL, ..., 0x5555568a7940, NULL};
+> 
+> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+>  "version": 1, "fields": [
+>     ...,
+>     {"name": "css", "array_len": 256, "type": "nullptr", "size": 1},
+>     ...,
+> ]}
+> 
+> In the above, the valid pointer at position 254 got lost among the
+> compressed array of nullptr.
+> 
+> While we could disable the array compression when a NULL pointer is
+> found, the JSON part of the stream still makes part of downtime, so we
+> should avoid writing unecessary bytes to it.
+> 
+> Keep the array compression in place, but if NULL and non-NULL pointers
+> are mixed break the array into several type-contiguous pieces :
+> 
+> css = {NULL, NULL, ..., 0x5555568a7940, NULL};
+> 
+> {"name": "s390_css", "instance_id": 0, "vmsd_name": "s390_css",
+>  "version": 1, "fields": [
+>      ...,
+>      {"name": "css", "array_len": 254, "type": "nullptr", "size": 1},
+>      {"name": "css", "type": "struct", "struct": {"vmsd_name": "s390_css_img", ... }, "size": 768},
+>      {"name": "css", "type": "nullptr", "size": 1},
+>      ...,
+> ]}
+> 
+> Now each type-discontiguous region will become a new JSON entry. The
+> reader should interpret this as a concatenation of values, all part of
+> the same field.
+> 
+> Parsing the JSON with analyze-script.py now shows the proper data
+> being pointed to at the places where the pointer is valid and
+> "nullptr" where there's NULL:
+> 
+> "s390_css (14)": {
+>     ...
+>     "css": [
+>         "nullptr",
+>         "nullptr",
+>         ...
+>         "nullptr",
+>         {
+>             "chpids": [
+>             {
+>                 "in_use": "0x00",
+>                 "type": "0x00",
+>                 "is_virtual": "0x00"
+>             },
+>             ...
+>             ]
+>         },
+>         "nullptr",
+>     }
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  migration/vmstate-types.c    |  2 +-
->  scripts/analyze-migration.py | 22 ++++++++++++++++++++++
->  2 files changed, 23 insertions(+), 1 deletion(-)
+>  migration/vmstate.c          | 33 ++++++++++++++++++++++++++++++++-
+>  scripts/analyze-migration.py | 29 +++++++++++++++++++++--------
+>  2 files changed, 53 insertions(+), 9 deletions(-)
 > 
-> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-> index e83bfccb9e..d70d573dbd 100644
-> --- a/migration/vmstate-types.c
-> +++ b/migration/vmstate-types.c
-> @@ -338,7 +338,7 @@ static int put_nullptr(QEMUFile *f, void *pv, size_t size,
->  }
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 52704c822c..a79ccf3875 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -425,15 +425,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>              int size = vmstate_size(opaque, field);
+>              uint64_t old_offset, written_bytes;
+>              JSONWriter *vmdesc_loop = vmdesc;
+> +            bool is_prev_null = false;
 >  
->  const VMStateInfo vmstate_info_nullptr = {
-> -    .name = "uint64",
-> +    .name = "nullptr",
->      .get  = get_nullptr,
->      .put  = put_nullptr,
->  };
+>              trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+>              if (field->flags & VMS_POINTER) {
+>                  first_elem = *(void **)first_elem;
+>                  assert(first_elem || !n_elems || !size);
+>              }
+> +
+>              for (i = 0; i < n_elems; i++) {
+>                  void *curr_elem = first_elem + size * i;
+>                  const VMStateField *inner_field;
+> +                bool is_null;
+> +                int max_elems = n_elems - i;
+>  
+>                  old_offset = qemu_file_transferred(f);
+>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+> @@ -448,12 +452,39 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                       * not follow.
+>                       */
+>                      inner_field = vmsd_create_fake_nullptr_field(field);
+> +                    is_null = true;
+>                  } else {
+>                      inner_field = field;
+> +                    is_null = false;
+> +                }
+> +
+> +                /*
+> +                 * Due to the fake nullptr handling above, if there's mixed
+> +                 * null/non-null data, it doesn't make sense to emit a
+> +                 * compressed array representation spanning the entire array
+> +                 * because the field types will be different (e.g. struct
+> +                 * vs. uint64_t). Search ahead for the next null/non-null
+
+s/uint64_t/nullptr/
+
+> +                 * element and start a new compressed array if found.
+> +                 */
+> +                if (field->flags & VMS_ARRAY_OF_POINTER &&
+> +                    is_null != is_prev_null) {
+> +
+> +                    is_prev_null = is_null;
+> +                    vmdesc_loop = vmdesc;
+> +
+> +                    for (int j = i + 1; j < n_elems; j++) {
+> +                        void *elem = *(void **)(first_elem + size * j);
+> +                        bool elem_is_null = !elem && size;
+> +
+> +                        if (is_null != elem_is_null) {
+> +                            max_elems = j - i;
+> +                            break;
+> +                        }
+> +                    }
+>                  }
+
+This definitely adds some slight more difficulty on reading this
+code.. Let's have this first.
+
+If it's proved that the JSON is a measurable overhead, I think we may
+consider turn that off by default even for precopy (postcopy never used
+vmdesc), then maybe we can simplify this chunk (and probably the whole
+compression idea, because when turned on it is for debugging).
+
+>  
+>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+> -                                      i, n_elems);
+> +                                      i, max_elems);
+>  
+>                  if (inner_field->flags & VMS_STRUCT) {
+>                      ret = vmstate_save_state(f, inner_field->vmsd,
 > diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-> index fcda11f31d..134c25f20a 100755
+> index 134c25f20a..7f0797308d 100755
 > --- a/scripts/analyze-migration.py
 > +++ b/scripts/analyze-migration.py
-> @@ -377,6 +377,8 @@ def read(self):
+> @@ -501,15 +501,28 @@ def read(self):
+>              field['data'] = reader(field, self.file)
+>              field['data'].read()
 >  
->  
->  class VMSDFieldInt(VMSDFieldGeneric):
-> +    NULL_PTR_MARKER = 0x30
+> -            if 'index' in field:
+> -                if field['name'] not in self.data:
+> -                    self.data[field['name']] = []
+> -                a = self.data[field['name']]
+> -                if len(a) != int(field['index']):
+> -                    raise Exception("internal index of data field unmatched (%d/%d)" % (len(a), int(field['index'])))
+> -                a.append(field['data'])
+> +            fname = field['name']
+> +            fdata = field['data']
 > +
->      def __init__(self, desc, file):
->          super(VMSDFieldInt, self).__init__(desc, file)
->          self.size = int(desc['size'])
-> @@ -385,6 +387,16 @@ def __init__(self, desc, file):
->          self.udtype = '>u%d' % self.size
->  
->      def __repr__(self):
-> +
-> +        # A NULL pointer is encoded in the stream as a '0' to
-> +        # disambiguate from a mere 0x0 value and avoid consumers
-> +        # trying to follow the NULL pointer. Displaying '0', 0x30 or
-> +        # 0x0 when analyzing the JSON debug stream could become
-> +        # confusing, so use an explicit term instead. The actual value
-> +        # in the stream was already validated by VMSDFieldNull.
-> +        if self.data == self.NULL_PTR_MARKER:
-> +            return "nullptr"
+> +            # The field could be:
+> +            # i) a single data entry, e.g. uint64
+> +            # ii) an array, indicated by it containing the 'index' key
+> +            #
+> +            # However, the overall data after parsing the whole
+> +            # stream, could be a mix of arrays and single data fields,
+> +            # all sharing the same field name due to how QEMU breaks
+> +            # up arrays with NULL pointers into multiple compressed
+> +            # array segments.
+> +            if fname not in self.data:
+> +                if 'index' in field:
+> +                    self.data[fname] = []
 
-What happens if a real int field has value 0x30 which is not a marker?
-Would it be wrongly represented as "nullptr"?
+This needs to be:
 
-> +
->          if self.data < 0:
->              return ('%s (%d)' % ((self.format % self.udata), self.data))
->          else:
-> @@ -417,6 +429,15 @@ def __init__(self, desc, file):
->          super(VMSDFieldIntLE, self).__init__(desc, file)
->          self.dtype = '<i%d' % self.size
+     self.data[fname] = [fdata]
+
+?
+
+Btw, since the new code will process it correctly with non-array below,
+IIUC here we can make it simple:
+
+  if 'index' in field:
+      self.data[fname] = fdata
+
+> +                else:
+> +                    self.data[fname] = fdata
+> +            elif type(self.data[fname]) == list:
+> +                self.data[fname].append(fdata)
+>              else:
+> -                self.data[field['name']] = field['data']
+> +                tmp = self.data[fname]
+> +                self.data[fname] = [tmp, fdata]
 >  
-> +class VMSDFieldNull(VMSDFieldUInt):
-> +    def __init__(self, desc, file):
-> +        super(VMSDFieldUInt, self).__init__(desc, file)
-> +
-> +    def read(self):
-> +        super(VMSDFieldUInt, self).read()
-> +        assert(self.data == self.NULL_PTR_MARKER)
-> +        return self.data
-> +
->  class VMSDFieldBool(VMSDFieldGeneric):
->      def __init__(self, desc, file):
->          super(VMSDFieldBool, self).__init__(desc, file)
-> @@ -558,6 +579,7 @@ def getDict(self):
->      "bitmap" : VMSDFieldGeneric,
->      "struct" : VMSDFieldStruct,
->      "capability": VMSDFieldCap,
-> +    "nullptr": VMSDFieldNull,
->      "unknown" : VMSDFieldGeneric,
->  }
->  
+>          if 'subsections' in self.desc['struct']:
+>              for subsection in self.desc['struct']['subsections']:
 > -- 
 > 2.35.3
 > 
