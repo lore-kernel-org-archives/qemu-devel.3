@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD12E7719A
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 06:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED20E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 06:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVm40-0000xw-KR; Thu, 09 Jan 2025 01:30:40 -0500
+	id 1tVm45-00011C-Cr; Thu, 09 Jan 2025 01:30:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVm3l-0000sQ-Lg
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 01:30:32 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tVm3z-0000xz-Iv
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 01:30:40 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tVm3k-0003gW-2b
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 01:30:25 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-216426b0865so8025015ad.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 22:30:23 -0800 (PST)
+ id 1tVm3y-0003iS-10
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 01:30:39 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2ee67e9287fso987344a91.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jan 2025 22:30:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736404222; x=1737009022;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736404237; x=1737009037;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2gQd0Jy4rc+uI1Ti92SqV/hr0DQj0ZpBWM4CmdOjypM=;
- b=KnqX6E1uBKjt/aW19GROzIx3m9FK29HyL1g8Jcz44SvcyxsgglSRGzNqiXWf2/IHaO
- zAq1yzJ7syzsDiyB6hylsZhQXl5P4TRHmVqz+MBoDy47FilQdA4+qvDuJi8u46e8nRvT
- FaI9k2Gr0rNPcTaR3ku5iEbed8wSWqUPFP4Wi6ybXtArdZn0TMt/6dfAkqSIMEmLMqeI
- dDfIkaUZEuCithfVnETkQ8BQf1MDVJSadFnFjbO4hNdaSF0bWmUnYA+8TvYLy06qjnNl
- 4hkAhYFRHjjbLaMDeQNcB+5D5tTWo3A0lHm5W0S6S3ifUy3xfwQGyC96r9PfwE7QdHSK
- GgAQ==
+ :reply-to; bh=DRA5SFwLixA5p1Smgb33TcMmhiFuTV2U9nSiZzVSvuY=;
+ b=lPyBmI/BkRcGJjlvSPBsoQm9SuYD4YQqcwGAlcpFkVQD4zyni9lARP1kwdgwzumHcz
+ aZT2VoGAxoPCzr//T1lJiJ6t+63wOLtalY7FagsiQXPxehye/6CzK0k9DGEaJglbsgIs
+ t6jTcPscIZ2xaFaaCBebZQ/+HUAFE3tigeAhCFUMzmCPOiOcJFKtKXlQpH/+fFPU3Dvq
+ BTlUpZgO6abyK526qwd8E7SEjmvMH2Wc66zPteieeRW7qHwC+xA0U5ya5WQuIIl5J5Sa
+ Hg4r971qzJnLoHqKyNF66OrN3vVKQvt5BsIvYsbCcawcDRa7Um/D2IBH/GmtgFeUDdxK
+ zYAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736404222; x=1737009022;
+ d=1e100.net; s=20230601; t=1736404237; x=1737009037;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2gQd0Jy4rc+uI1Ti92SqV/hr0DQj0ZpBWM4CmdOjypM=;
- b=wS5gPJCPh3FMw8PE7BGgmjQB0WspQc0twcyGAQBeS89cwkbe/U/J3OEYdCg5XBHSAS
- j+FWqhp14YUAEy+vCN7aQYYnqHUMPDIDuPqUVE4c/3bpvJe9fU8xxiHTeVt4U7PmYqa/
- G0BnrW6dtpG/mvdIvT/ZtO4QSnHdetHw1FBh+w3y9F7HUJSX1uGBi1ATr7ew4XsXPrqx
- ULV63Wb6gWGU6sj7ZM7xfL1RVOMQHMK9Fk6tbt6ZmGl1zsNd2EwSggA4lyLkWhx/ZhtQ
- TMQuB5sEgmZPdciIkJyK4dhyd92aRoegsu6rSwHKGyp9RRfW5nsklsqaLZcA4J20k5gB
- AErA==
-X-Gm-Message-State: AOJu0Yx+uURenPHTuABB2ndhv8xFEvo+Fv9u3BLZTwlqMBTWvon5zrm8
- cXBkCFcNP7AMOl2zbGoRjpOvdgl2Qg3n6RxoZY/adYWIo1stMrHhY00nlC+AEEo=
-X-Gm-Gg: ASbGncv55iGfarr0mnOFWa2ofwqBescXG+DuoAjZU9NA3fAHHcqA9HVyGSzrGzdvJHf
- cJvBn3xEO8tGJ3Ss/bPlkyekmqjeTaxcuEyRrnnm3x8O/+oxx65I4GJy/mZsKOD7dpMK43u7LeT
- YHkyPJxoyp98ydxfuRUtsxwjfoFBUF/0az5vjLgFj+GBT68vO643rVZAV0N6DPSFGyv+cIDKzh5
- nJVOHrUacUUZTcVxYFb/FWmgVs5Mz6hYgXgI9GrouqVpNxobqRiF7Ho2aw=
-X-Google-Smtp-Source: AGHT+IEydGEPV3mvle42V616MZrv5dVTqShwy7ZfRwNBFMOpBKMV82cbi8zoma8GK6yxfJC5aWy5OQ==
-X-Received: by 2002:a17:902:ec84:b0:218:a4ea:a786 with SMTP id
- d9443c01a7336-21a8400b2a8mr95718275ad.53.1736404222354; 
- Wed, 08 Jan 2025 22:30:22 -0800 (PST)
+ bh=DRA5SFwLixA5p1Smgb33TcMmhiFuTV2U9nSiZzVSvuY=;
+ b=D624EDHsXU3wnpKBTJXd9EXhZpdsMIaTuEO3xIL56RoN9n3ZgwwNRTZqn2nxOWq8G9
+ pLVdQCrCXBbNIgJPaVZeR3/Hr+FS6tbHIC+mS3ey3uTrFNGAglfNBENX2QcJovFE+uv5
+ LRcyC6vwpV6jQncywgG4glSZ5DiSieiEUuxq/9h4B6A0cgS6EsBcVpSZqsYHqG//Phr+
+ 09pgl1Y0lPR2OewUBvCtWGwNkO0Fl3M176BQN77oxq2U1WOJUQSJmABBwj5Tpym5U/Fu
+ FAlQzjsTmNH92RpEN0ciiZwXteOor8Zi5fUke60DyWF04r0Fg/fwpHYGtsx+UUhfH6sg
+ 0HDw==
+X-Gm-Message-State: AOJu0Yz5NlKI0vce11fnt4ZTYE0YztbZ9uELz3aER29F08tB9tFApOLK
+ CRFlBb0Z/LdKzXAE3oIUeOQdFQfrqfpQoMLfyWXdFltPcCdrqx8pZhpWepoam5o=
+X-Gm-Gg: ASbGncu/HxXO6voWV6nioXhlOmqVbtG7ZdYfwj3U/gVkArAk47pr3pTwdLL0dHg6FSL
+ Kh4lJh9rsZOSFfYwRKHNsCktXw7g78jJRzsVyexjsP3a22FFZODQkvX/EZm+dI3j09Tuv10iZ4l
+ BzhjPuTzMY67A198ZLPhXpw7vX/9WiQSRw6hWgu3qvYSqBKdKPmtA/T8wvOVf/CVuLHxKx8vHer
+ t38ns7rOTMyN9XOjYP4UDTsY3wWyAvZhAQEgUH5uEoeikaOFg/Us7RCfWA=
+X-Google-Smtp-Source: AGHT+IGJ1b31ammQd8jufl11w6CQ/Pv4K0pc8vItIOKueEFTB34McA38BzCkpJLJeDzBbM6Anl8kvQ==
+X-Received: by 2002:a17:90b:2b8e:b0:2ee:d433:7c54 with SMTP id
+ 98e67ed59e1d1-2f548eceae7mr7950115a91.19.1736404236661; 
+ Wed, 08 Jan 2025 22:30:36 -0800 (PST)
 Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-21a91a3ad56sm4722705ad.214.2025.01.08.22.30.17
+ 98e67ed59e1d1-2f54a34e44bsm2774676a91.36.2025.01.08.22.30.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jan 2025 22:30:21 -0800 (PST)
+ Wed, 08 Jan 2025 22:30:36 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 09 Jan 2025 15:29:47 +0900
-Subject: [PATCH v19 02/14] hw/ppc/spapr_pci: Do not create DT for disabled
- PCI device
+Date: Thu, 09 Jan 2025 15:29:49 +0900
+Subject: [PATCH v19 04/14] s390x/pci: Avoid creating zpci for VFs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250109-reuse-v19-2-f541e82ca5f7@daynix.com>
+Message-Id: <20250109-reuse-v19-4-f541e82ca5f7@daynix.com>
 References: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
 In-Reply-To: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -88,14 +87,14 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,58 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Disabled means it is a disabled SR-IOV VF and hidden from the guest.
-Do not create DT when starting the system and also keep the disabled PCI
-device not linked to DRC, which generates DT in case of hotplug.
+VFs are automatically created by PF, and creating zpci for them will
+result in unexpected usage of fids. Currently QEMU does not support
+multifunction for s390x so we don't need zpci for VFs anyway.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Shivaprasad G Bhat<sbhat@linux.ibm.com>
-Tested-by: Shivaprasad G Bhat<sbhat@linux.ibm.com>
 ---
- hw/ppc/spapr_pci.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ hw/s390x/s390-pci-bus.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 904227d9aa1f..b94e4ba1314f 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1283,8 +1283,7 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
-     PciWalkFdt *p = opaque;
-     int err;
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index eead269cc285..8c5eb69f7d76 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1080,6 +1080,16 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
  
--    if (p->err) {
--        /* Something's already broken, don't keep going */
-+    if (p->err || !pdev->enabled) {
-         return;
-     }
- 
-@@ -1572,6 +1571,14 @@ static void spapr_pci_plug(HotplugHandler *plug_handler,
-     SpaprDrc *drc = drc_from_dev(phb, pdev);
-     uint32_t slotnr = PCI_SLOT(pdev->devfn);
- 
-+    /*
-+     * If DR or the PCI device is disabled we don't need to do anything
-+     * in the case of hotplug or coldplug callbacks.
-+     */
-+    if (!pdev->enabled) {
-+        return;
-+    }
+         pbdev = s390_pci_find_dev_by_target(s, dev->id);
+         if (!pbdev) {
++            /*
++             * VFs are automatically created by PF, and creating zpci for them
++             * will result in unexpected usage of fids. Currently QEMU does not
++             * support multifunction for s390x so we don't need zpci for VFs
++             * anyway.
++             */
++            if (pci_is_vf(pdev)) {
++                return;
++            }
 +
-     g_assert(drc);
+             pbdev = s390_pci_device_new(s, dev->id, errp);
+             if (!pbdev) {
+                 return;
+@@ -1167,7 +1177,10 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         int32_t devfn;
  
-     if (IS_PCI_BRIDGE(plugged_dev)) {
-@@ -1647,6 +1654,11 @@ static void spapr_pci_unplug_request(HotplugHandler *plug_handler,
-     SpaprDrc *drc = drc_from_dev(phb, pdev);
+         pbdev = s390_pci_find_dev_by_pci(s, PCI_DEVICE(dev));
+-        g_assert(pbdev);
++        if (!pbdev) {
++            g_assert(pci_is_vf(pci_dev));
++            return;
++        }
  
-     g_assert(drc);
+         s390_pci_generate_plug_event(HP_EVENT_STANDBY_TO_RESERVED,
+                                      pbdev->fh, pbdev->fid);
+@@ -1206,7 +1219,11 @@ static void s390_pcihost_unplug_request(HotplugHandler *hotplug_dev,
+          * we've checked the PCI device already (to prevent endless recursion).
+          */
+         pbdev = s390_pci_find_dev_by_pci(s, PCI_DEVICE(dev));
+-        g_assert(pbdev);
++        if (!pbdev) {
++            g_assert(pci_is_vf(PCI_DEVICE(dev)));
++            return;
++        }
 +
-+    if (!drc->dev) {
-+        return;
-+    }
-+
-     g_assert(drc->dev == plugged_dev);
- 
-     if (!spapr_drc_unplug_requested(drc)) {
+         pbdev->pci_unplug_request_processed = true;
+         qdev_unplug(DEVICE(pbdev), errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
 
 -- 
 2.47.1
