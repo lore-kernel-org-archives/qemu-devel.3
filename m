@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E42E77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05ED5E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 10:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVq8S-0007X8-Tu; Thu, 09 Jan 2025 05:51:32 -0500
+	id 1tVqD5-0008WE-My; Thu, 09 Jan 2025 05:56:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVq8O-0007W2-FT
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:51:28 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqD3-0008VZ-NE
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:56:17 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVq8M-0007bN-Uz
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:51:28 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43626213fffso11781155e9.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 02:51:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqD1-0008Kk-Ts
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 05:56:17 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so563071f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 02:56:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736419880; x=1737024680; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736420174; x=1737024974; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CI/kIU53QavW/MIQDGwS2J0plaHH50TR2I7O/Dng8YM=;
- b=i7jVhkbtmPiMakWMmGmrBDUbzcxisXFibr7hObuTWfDl/DatNt+PmxiAU/n1KDuLxb
- ih2QExiqIqwOh0TrAYXOirvkWnRcO8/dGHhD968HJP77m06WaUkibwdcqMZUGVBjC8jI
- edjSM5V6SCfzyVx+CNSN+Q21SUhICY4QDqNUwY5C2okqChx/DjSTp4nu1b5/S3BTdKSq
- mZnLkYd9qs4B1VVMLAdpAoic00PlYk+fEQgnmeSrtYRzd5NFS6FgPPpV+7udQovmWue5
- Hck78kU8H6RhUs9LtKRl+rHfKwE8bmOPH1OPf6dWtkzbbOeKqRlzil33TVdlc7OFFut1
- DqwQ==
+ bh=X0zaaqz+HMs+2kzPCv/+GoYdD8KNAf/Ner0/Pr4VVyo=;
+ b=iws0if7iC6lFz+/VMSTLnl2iRLADh1cd9WDbKzHIPrSEPRo2EiThWGw2bI5sPzj2dN
+ HyYnMzVYGv0oAE0/5ht8NM+n2EdHI1mX4J/1FZ3aEJ7G7D3c/fmMRzADj9YVwCPNj5LQ
+ QHyZN6YTbMBTBNE75RkzDTJHpVSNR8tMc19wXG4N4yg6EpPdOe8B2IOv5+nE0ZCy8a4I
+ Mx/TA29ArYO4K0NezWE5RXR77t2gYXgGhyuUkMm2T5EnGZBKc540zNvbhOQkewiYbvbQ
+ 5zTSVv1Q8Kv2hUwZZua189HtRX11wXZqQ93LBTgopobqg7oBTOTgPlvC5EX+4pAkYktx
+ GKcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736419880; x=1737024680;
+ d=1e100.net; s=20230601; t=1736420174; x=1737024974;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CI/kIU53QavW/MIQDGwS2J0plaHH50TR2I7O/Dng8YM=;
- b=EBNM9q8gRapw1VFf5rOP2+llYltd3cmWWR5TTsmqHVIVu9ETPFOWvWKT6H3Gmw9Ozi
- TRWlN4sAxrdmK76Q3lee2njXtGnliJwPJzx7mhqrvlDxJGCmHAlpIazgLTrtAG/WS/9q
- e/3pVhQbnZG6QUip6hOYzEtk7EirQg3J7xmD5MQxb3WG+PoLWKn+XhW92wz0xuCHnJEC
- tjARKlrCnCS0luZiMMBna5pA1Nux92KfCqjYj6hny5g/pSsZxxnDYElRb3lDv/gLIAiv
- otj6hOEH4ob6kkEJk+ntakGSW5LbnaKyUMQrPXN7/6UT6xnSeYshKi132pUVaUylWIIn
- 59LA==
-X-Gm-Message-State: AOJu0Yxm/wr30DkxlQm29g2BpHvVxJYQ1FUBC/r2Ce9krXSy+S34Wt31
- USsRjf1FPcS5XVxnOKeFFGj/IkoeDcoSj+5/XSlBpcQtmjNxZrXx3Qv8/rztyIE=
-X-Gm-Gg: ASbGncslf83S3qpIEuogAM5GPGzFGuxHksOnKLtP97nBZ6RenvoxfJnC9nZ2R+syX0L
- rI1nqX7+r5gGmbtJuujk8kFtwyNnKQuJVeNsoPsaOWwaFzV69YCUXftsnH6czBqmkJShyvXcLLK
- eBRs7wY/IHBoLqG0JDiScDiE4c4xmDpDJpqPqFFogi+7mHRxCG228KM+T11tX//0Cb4APGKbtSj
- Wbb/m37nEQ/+reCURi6wTIyG+puP+GVqGMRzqbmJshyCm/NeVLBQvr2w4BXIF9Yq6S3X4IHllIF
- Oo9WNUFMvQOxdf54uewVkCLT
-X-Google-Smtp-Source: AGHT+IF9YcmDHhlK3eZAfMFhskfBXZCvrdJofwCP+DxKifaXd/HX03s8gygVUdSyRRhRKxYJC1TSmw==
-X-Received: by 2002:a05:600c:358a:b0:436:e69a:7341 with SMTP id
- 5b1f17b1804b1-436e9d686b2mr15097845e9.3.1736419879718; 
- Thu, 09 Jan 2025 02:51:19 -0800 (PST)
+ bh=X0zaaqz+HMs+2kzPCv/+GoYdD8KNAf/Ner0/Pr4VVyo=;
+ b=NcAKhkjUsnTzNVT7TJcgyOoC65tsPBtZOpVQ7w+yLiuy09a8jXYtNsVTWN4bsr+WsF
+ KNSdnY5Ml0PU+4mWUn7hdw90iJPwLAyGuJs0myTLRmd05m5rbfsxv/+hK9NqjP8CsWfe
+ BRXp4dtGV7yuD9X/qqUkv0O5p52gGXDL254zQ0PHwfHmYZr5+UInOCkNyD7wE+HmsCGJ
+ 3GOhfHYmKDgRm76DcXk4It3s/x9+6xjoPKCKUifEQmA6/gV5Qj7a6BepzVp7FqpGS6fL
+ IS/6KflzFI3HUb35ajudDrb7LDc0gCi0jKw/FCl0lJzEhK2FjJ7IGFJxgeukOWXPX3zy
+ SHAw==
+X-Gm-Message-State: AOJu0Yz2GCHPQH6DUJioCroh/Bk4JgHG8Ud0UfdYPBT1oZx/ZYplM4Ji
+ RJIWlyZYh6kxheThzuZhi7lEnOqyJY3qcinesj4spXF43P1Y4WMcafeBmc1WfQY=
+X-Gm-Gg: ASbGnctfmMZsrTvAAsPEpPE368w80em0nbqZWrCY8AtDlOXfsRtSD8HMrLIsUuOaJzg
+ 3EGa31gSJYwAciDhyQMtHSy9NR23nXFswVbF73yBr4dtKz4qwjODDdBYY7rdZfklh1DNmDQeyTQ
+ ylISFC2E5zXzCYI4GyiiRdIL+dzYOn4Q0cRhmYCfHyK1WX9zYxAXD0m514MRXo7hX8odC1vOpo2
+ zXTvoiEJFl+0R5tVJgGZuuTZAgr+o1rkcwXVARzWBpnmOoxs3fM4Ty67wXwcqNp1oqp1ei5MhvG
+ 3K8HDZSTGwMvioDuFWj//5Do
+X-Google-Smtp-Source: AGHT+IHawUG1H8XFuyWYJxIr3Ab6HzuoiuJPK40bDBrqHiBtCa+hhLByoZYWWzDV3axPjZ5nxvdnWg==
+X-Received: by 2002:a05:6000:2a2:b0:38a:8906:6b66 with SMTP id
+ ffacd0b85a97d-38a89066f45mr4874258f8f.38.1736420174226; 
+ Thu, 09 Jan 2025 02:56:14 -0800 (PST)
 Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fc5csm16871635e9.2.2025.01.09.02.51.18
+ ffacd0b85a97d-38a8e37e36asm1468551f8f.5.2025.01.09.02.56.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 02:51:19 -0800 (PST)
-Message-ID: <01eac6ff-e128-4b1c-a5de-66ffa28b43b1@linaro.org>
-Date: Thu, 9 Jan 2025 11:51:17 +0100
+ Thu, 09 Jan 2025 02:56:13 -0800 (PST)
+Message-ID: <ab58d4f7-6c73-4cf0-846c-ff20e3f5b481@linaro.org>
+Date: Thu, 9 Jan 2025 11:56:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 09/14] pcie_sriov: Reuse SR-IOV VF device instances
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+Subject: Re: [PATCH v4 4/4] virtio: Convert feature properties to OnOffAuto
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang
+ <jasowang@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
  Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com
-References: <20250109-reuse-v19-0-f541e82ca5f7@daynix.com>
- <20250109-reuse-v19-9-f541e82ca5f7@daynix.com>
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Lei Yang <leiyang@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250109-reuse-v19-9-f541e82ca5f7@daynix.com>
+In-Reply-To: <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,38 +112,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
-
-On 9/1/25 07:29, Akihiko Odaki wrote:
-> Disable SR-IOV VF devices by reusing code to power down PCI devices
-> instead of removing them when the guest requests to disable VFs. This
-> allows to realize devices and report VF realization errors at PF
-> realization time.
+On 8/1/25 07:17, Akihiko Odaki wrote:
+> Some features are not always available with vhost. Legacy features are
+> not available with vp_vdpa in particular. virtio devices used to disable
+> them when not available even if the corresponding properties were
+> explicitly set to "on".
+> 
+> QEMU already has OnOffAuto type, which includes the "auto" value to let
+> it automatically decide the effective value. Convert feature properties
+> to OnOffAuto and set them "auto" by default to utilize it. This allows
+> QEMU to report an error if they are set "on" and the corresponding
+> features are not available.
 > 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->   include/hw/pci/pcie_sriov.h |  1 -
->   hw/pci/pci.c                | 14 ++++++-
->   hw/pci/pcie_sriov.c         | 94 +++++++++++++++++++--------------------------
->   3 files changed, 51 insertions(+), 58 deletions(-)
+>   include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
+>   hw/core/machine.c          |  4 +++-
+>   hw/virtio/virtio-bus.c     | 14 ++++++++++++--
+>   hw/virtio/virtio.c         |  4 +++-
+>   4 files changed, 39 insertions(+), 21 deletions(-)
 
 
->   void pci_set_enabled(PCIDevice *d, bool state)
-> @@ -2977,7 +2987,7 @@ void pci_set_enabled(PCIDevice *d, bool state)
->       memory_region_set_enabled(&d->bus_master_enable_region,
->                                 (pci_get_word(d->config + PCI_COMMAND)
->                                  & PCI_COMMAND_MASTER) && d->enabled);
-> -    if (!d->enabled) {
-> +    if (d->qdev.realized) {
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index c949af97668d..bff26b95dd74 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -36,7 +36,9 @@
+>   #include "hw/virtio/virtio-iommu.h"
+>   #include "audio/audio.h"
+>   
+> -GlobalProperty hw_compat_9_2[] = {};
+> +GlobalProperty hw_compat_9_2[] = {
+> +    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
+> +};
+>   const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
 
-I'm not a big fan of accessing an internal field that way, without
-accessor. Besides, we use this field atomicly within qdev.c.
 
->           pci_device_reset(d);
-
-Anyhow, resetting an unrealized device is a bug IMO.
-
->       }
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 85110bce3744..83f803fc703d 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -4013,11 +4013,13 @@ static void virtio_device_instance_finalize(Object *obj)
 >   }
+>   
+>   static const Property virtio_properties[] = {
+> -    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+> +    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
+>       DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+>       DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, use_disabled_flag, true),
+>       DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+>                        disable_legacy_check, false),
+> +    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
+> +                     force_features_auto, false),
 
+This doesn't seem an experiment, so can we not use the 'x-' prefix?
+
+>   };
 
