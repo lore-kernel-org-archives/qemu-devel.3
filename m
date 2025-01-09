@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710EDE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84271E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVqSP-0005ZH-6F; Thu, 09 Jan 2025 06:12:09 -0500
+	id 1tVqTW-00068v-G6; Thu, 09 Jan 2025 06:13:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqSN-0005Z9-Tn
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:12:07 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqTQ-00068X-R0
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:13:13 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqSM-0003Ae-7C
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:12:07 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-436a39e4891so6003095e9.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:12:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVqTP-0003ED-3U
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:13:12 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43623f0c574so6254695e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:13:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736421123; x=1737025923; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736421189; x=1737025989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VQOqLqPVsQLkJ7mQzvwXrpD03zDxGNA8vZbt+bDq4DQ=;
- b=rePK94zBxWKtZODaxi/TrF2RpLNoeXWyBOKArgGm44QpcYNEdWzZMDPXQX4Jf8Q9DV
- WRseN4hHaeIn8XpQfgZ/UdQzMTRQPgS2fyfX/2Iex/3GdF1Pz+93sIczHhnnzlzo8hjj
- KfiPEh3pc/oHPBmA9rmmZAEZu+OO+c5GHhca1YSXfI+Gl9xlhCwza2l+5qJauLkM3J/j
- SV5qADeCjCJe0eL/vS0+4bSamkJEWQBWxK+RsRRKda93AkX/8LMVVkTKS/rF8Nd4/j6Q
- 9PcgRbybIT+At5heRnpAtyLLWi4GgwJIfLGISGv8JDLNzDiWlid35d3ARFYKMKeKCQy0
- Z4WQ==
+ bh=eK37jaFLz8GvFBxLuBGQeby3QcG/VZgIu86cNaSfMkM=;
+ b=jx6DO/obwQxLJGDU/5BrVOloi/Mf+stTBVPwFd/HVGTgDeBlgCskZGIxvhLH/TCIlZ
+ esoC8vUbAROGnAyjnkvUNMk6jigYKa7mNKPVo7PIyg19Anj5Hr4RfsOTn8u2Q+hEjeRh
+ v+o8bnPmytgVN5vupgsTbPBl7eZt5zhmIXGv1cU/eCaNtUvEWdqsc44sMo2RI0+MvVpR
+ wQXhf4NZPRhChNJz4MfOJjSAyEXo+at82kWleepG9DJSaPTXFwIqlXV7jdGpkmV369BM
+ fsWdM4yfg0NjORGkMjtXnE6ulZQ3MGkAIc2/W4eGdobx4jU4ZPKEjJA4+w4+E9uLAE83
+ 8vhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736421123; x=1737025923;
+ d=1e100.net; s=20230601; t=1736421189; x=1737025989;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VQOqLqPVsQLkJ7mQzvwXrpD03zDxGNA8vZbt+bDq4DQ=;
- b=kqk1iM8Lu6erpvs/Y49a+Nc+rau0/6aLBzSBIQk4pfErMvGe7YcY3s1SwLatg8YrwQ
- 7mVmGE/vP/je/Ze3fwOExPIL95ea9MKNSZFYK3OsT4vPBaIqnYCOD8HDMcRJwrUyQFt2
- TzWKl5wi/BAql3dIudjO3+n9e3Twww4xF+8A0GiyHiwOtmwNQQFqapmipfbwZ1Yr16I+
- F7Pqbm3vJ+mXR2DYGFcfHC24PecE+XvL3UOOBgKb0T3CcBqrh845/cXMWy9DK/XJf0KB
- yG99LEELUsYN7dOSnPBZO5NLptbynI+DgW07yJIYZjbs9ACp7m4XzFXEucUeEJAFlHpF
- l4JQ==
-X-Gm-Message-State: AOJu0YzT1EctvnNwZyLIjRwFvaNxvaYQWAO9EhjxQw+MDgCEPFOiQsCT
- TJj1p5xazKcc07KjPqOnvrQwnj81ve14AxP/+/V6YI1rYR09IU3U8dPanskWiaY=
-X-Gm-Gg: ASbGncsI2eTvjkniuVDzu1OqXIOMtmvuqfTGZ2CF/8dpx26dkIoVk+TzvjZvuvCo1SQ
- ilURzekbarGviTjl2euwACrf4PyjNXgq2yzct4jeaO+DJK1xatvFMTVOgxkSNFzBYYa02r9Ljt5
- SJvHvmFEjqMao0ZHP3ffGBfoyKhWC47NBn1M86ja1gn0tLpRnNdJFGAHgrzkk8zNGoDjMNrhxRe
- GRnJtek2ZEz8zVhkQN7ajCns2HvIpSMVIYmlmJaFBADYol36y2qP8CdcVcldxbmta3+7T+q5rre
- QZJhuxfyfXxiL/ECW7qjGfKQ
-X-Google-Smtp-Source: AGHT+IGjLUISPeRuEUnBkBHh/NUTKUmcQd0CT2H2NNeMKrQGq2rMosxhxgBu4YlJJWMsRS1KvlrhpQ==
-X-Received: by 2002:a05:600c:314f:b0:435:9ed3:5688 with SMTP id
- 5b1f17b1804b1-436e26a1f79mr52271155e9.18.1736421123273; 
- Thu, 09 Jan 2025 03:12:03 -0800 (PST)
+ bh=eK37jaFLz8GvFBxLuBGQeby3QcG/VZgIu86cNaSfMkM=;
+ b=D0svjb/0j6nM4FXditykkeiE4UOXjW7cSe2sU3s/b1ZfhbTKqw6CqfKbt2qCupkFTX
+ 7qGZctHFH53cBGpARN/1ysbWDHficZV2KW+5uGnvPDzXY68XYfovMz2Zt50Fg5/JsHVJ
+ BgpP3VXifVr5fU+ZayZ2ZJNbEzvsJVcRLAOb6a9Y5b3oP4NyEMW+EbLPzHcSG8CU+2X9
+ gM4NpAEBrNLB+d0TbE78mDTu2qapHh9pg+CR1k9eNJ3dCP1jXah52M5mpXx+m5bDgGxg
+ yXMYcuTFE9Plq8dl2t7L6/XxmDDqSttzfJ5viqQTJja0tyRVnJlUYUCrgurvmY+zgja/
+ R0vw==
+X-Gm-Message-State: AOJu0YxxgOB7VyOGVe0UCJYbGjanY8e36LLUlVrPbs43jwIJM0E/QRiC
+ 3Sj6BlP6Cx4mMur1/SAgwfs47w3d51jqQbneHMUDBPyeR0sPQToke0Do0TdlNY8=
+X-Gm-Gg: ASbGncue5ra5AQlcs/6FfcuevMCUqgSG/aXlIV5IfXp9p8kDgV/wRNABid7joYzIiuq
+ ayHm9FMiNz/OG9uNoaJksAWxgSNdgWpN/uwFVN1pzGV2DHNMQ2c9wRayk0JATtN+bj1YE02TUS7
+ ydmJP7y0DRSSNPesjClEzy5YqB7ZJuQHkIQp0N/FQiouAOXhqi3RJACL0oXx5qgKvYsAsvmxjyz
+ Iha7aTb9d6sjvMc56etcbb2gP+5pHHN8NPhlyCEL9agYfKcHVDck6wj4wvogN93jB5k8PPo0iNH
+ hjTIIx0g/yQolP9NU9Vn3jHV
+X-Google-Smtp-Source: AGHT+IGG6GnJh/iKfHcF2AaG0/gRzypOHMrip4+ZG/yl13wf0xi1mMPPxjT9HCeasyL+ymjnHlN34g==
+X-Received: by 2002:a05:600c:5117:b0:431:60ec:7a96 with SMTP id
+ 5b1f17b1804b1-436e26ddc53mr47234745e9.25.1736421189491; 
+ Thu, 09 Jan 2025 03:13:09 -0800 (PST)
 Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2dc0f69sm51198615e9.13.2025.01.09.03.12.02
+ 5b1f17b1804b1-436e2e89df1sm51108205e9.27.2025.01.09.03.13.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 03:12:02 -0800 (PST)
-Message-ID: <03cf1b53-aa42-401e-af3b-e73890984be4@linaro.org>
-Date: Thu, 9 Jan 2025 12:12:01 +0100
+ Thu, 09 Jan 2025 03:13:08 -0800 (PST)
+Message-ID: <8bc4699d-c7fc-4ac5-946c-093061f217a5@linaro.org>
+Date: Thu, 9 Jan 2025 12:13:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] semihosting: Reduce target specific code
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Kito Cheng <kito.cheng@sifive.com>, Keith Packard <keithp@keithp.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250103171037.11265-1-philmd@linaro.org>
- <87h669ba39.fsf@draig.linaro.org>
- <14a2173f-e1b4-4290-99e5-c46b4153d800@linaro.org>
+Subject: Re: [PATCH v4 4/4] virtio: Convert feature properties to OnOffAuto
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang
+ <jasowang@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Lei Yang <leiyang@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-4-cbf0aa04c9f9@daynix.com>
+ <ab58d4f7-6c73-4cf0-846c-ff20e3f5b481@linaro.org>
+ <e340ea4b-3d8d-4b08-a1af-6514fab838a2@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <14a2173f-e1b4-4290-99e5-c46b4153d800@linaro.org>
+In-Reply-To: <e340ea4b-3d8d-4b08-a1af-6514fab838a2@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,77 +114,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Paolo & Marc-André Lureau for chardev backend.
-
-On 8/1/25 23:53, Richard Henderson wrote:
-> On 1/8/25 07:26, Alex Bennée wrote:
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> This series makes semihosting config.c and console.c
->>> target agnostic, building them once, removing symbol
->>> collision of the following functions in the single
->>> binary:
->>
->> Queued to semihosting/next, thanks.
->>
->>>   - qemu_semihosting_chardev_init
->>>   - qemu_semihosting_config_options
->>>   - qemu_semihosting_config_opts
->>>   - qemu_semihosting_enable
->>>   - semihosting_arg_fallback
->>>   - semihosting_enabled
->>>   - semihosting_get_argc
->>>   - semihosting_get_target
+On 9/1/25 12:08, Akihiko Odaki wrote:
+> On 2025/01/09 19:56, Philippe Mathieu-Daudé wrote:
+>> On 8/1/25 07:17, Akihiko Odaki wrote:
+>>> Some features are not always available with vhost. Legacy features are
+>>> not available with vp_vdpa in particular. virtio devices used to disable
+>>> them when not available even if the corresponding properties were
+>>> explicitly set to "on".
 >>>
->>> This function is still problematic, being built for
->>> each target:
+>>> QEMU already has OnOffAuto type, which includes the "auto" value to let
+>>> it automatically decide the effective value. Convert feature properties
+>>> to OnOffAuto and set them "auto" by default to utilize it. This allows
+>>> QEMU to report an error if they are set "on" and the corresponding
+>>> features are not available.
 >>>
->>>   - qemu_semihosting_guestfd_init
->>>
->>> Note, it depends on CONFIG_ARM_COMPATIBLE_SEMIHOSTING
->>> which is target specific, so doesn't scale in a
->>> heterogeneous setup like the ZynqMP machine, having
->>> ARM cores with CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y and
->>> MicroBlaze ones with CONFIG_ARM_COMPATIBLE_SEMIHOSTING=n.
+>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>> ---
+>>>   include/hw/virtio/virtio.h | 38 +++++++++++++++++++++-----------------
+>>>   hw/core/machine.c          |  4 +++-
+>>>   hw/virtio/virtio-bus.c     | 14 ++++++++++++--
+>>>   hw/virtio/virtio.c         |  4 +++-
+>>>   4 files changed, 39 insertions(+), 21 deletions(-)
 >>
->> Does MicroBlaze even do semihosting?
 >>
->>> I suppose the semihosting API needs rework to consider
->>> the CPUClass? I'll let that investigation for the
->>> maintainer ;)
+>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>> index c949af97668d..bff26b95dd74 100644
+>>> --- a/hw/core/machine.c
+>>> +++ b/hw/core/machine.c
+>>> @@ -36,7 +36,9 @@
+>>>   #include "hw/virtio/virtio-iommu.h"
+>>>   #include "audio/audio.h"
+>>> -GlobalProperty hw_compat_9_2[] = {};
+>>> +GlobalProperty hw_compat_9_2[] = {
+>>> +    { TYPE_VIRTIO_DEVICE, "x-force-features-auto", "on" },
+>>> +};
+>>>   const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
 >>
->> Hmm most of it is already handled as EXCP_SEMIHOST exceptions are dealt
->> with withing the target specific exception handlers.
->> do_common_semihosting could be renamed though - do_armc_semihosting()
->> maybe?
 >>
->> If we have the full list of CPUs at qemu_semihosting_chardev_init() time
->> we could then selectively do the bits of qemu_semihosting_guestfd_init()
->> depending on what combination we have. For normal open/read/write stuff
->> I think they could co-exist.
+>>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>>> index 85110bce3744..83f803fc703d 100644
+>>> --- a/hw/virtio/virtio.c
+>>> +++ b/hw/virtio/virtio.c
+>>> @@ -4013,11 +4013,13 @@ static void 
+>>> virtio_device_instance_finalize(Object *obj)
+>>>   }
+>>>   static const Property virtio_properties[] = {
+>>> -    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+>>> +    DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, requested_features),
+>>>       DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+>>>       DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, 
+>>> use_disabled_flag, true),
+>>>       DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+>>>                        disable_legacy_check, false),
+>>> +    DEFINE_PROP_BOOL("x-force-features-auto", VirtIODevice,
+>>> +                     force_features_auto, false),
 >>
->> Two independent cores could still write to stdout (0) though. Fixing
->> that would need a per-cpu semihosting config.
-
-What I'd expect here is one VC per semihosting context stdout. If we
-want to mux, we use the chardev mux.
-
-Anyhow this in particular is not a blocker, it was just an opened
-question.
-
-> None of the semihosting stuff is smp safe.
+>> This doesn't seem an experiment, so can we not use the 'x-' prefix?
 > 
-> The assumption in the homogeneous cpu case is that the guest uses it's 
-> own mutexes to protect the semihosting calls.  This is obviously more 
-> complicated in the heterogeneous case, but it *still* should not be 
-> qemu's problem.
+> I put x- prefix because it is only intended to be used for compatibility 
+> purpose and users will not be interested in this.
 
-FYI the use case requested is $n Hexagon cores writing to $n semihosting
-file descriptors, and a user-mode process on an ARM core able to read
-each of these FDs.
-
-Regards,
-
-Phil.
-
+I guess that's OK then.
 
