@@ -4,76 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDA9E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EAFE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 11:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVr1j-000078-F9; Thu, 09 Jan 2025 06:48:39 -0500
+	id 1tVr9G-0001Fh-KB; Thu, 09 Jan 2025 06:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVr1f-00006r-Nx
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:48:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tVr1Z-00013f-S9
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:48:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736423308;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l5IvpQdmfb47KrYq/toTzG7W8/y+AIUGQrKQdHiSqG8=;
- b=jFDlt6P0jAH2PO3vwlxWkjuk6h9nD00vL88tdgaR9+ne3yFzzjE3xAeq7VRmFwptJ9iPaE
- 2x4AHdak4qJqp4MwhjwOQvqBhb96nTKJGb+VkpOG12TZQ0x4+AYyLBjSsFvK0RH1par5sJ
- gQ1lLP1kOPKZYj95b3TMeQOjHG31SdI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-487-FjJezqBlOOmXcPT1WCwbfg-1; Thu,
- 09 Jan 2025 06:48:21 -0500
-X-MC-Unique: FjJezqBlOOmXcPT1WCwbfg-1
-X-Mimecast-MFC-AGG-ID: FjJezqBlOOmXcPT1WCwbfg
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C52971955D80; Thu,  9 Jan 2025 11:48:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 278211955BE3; Thu,  9 Jan 2025 11:48:20 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 08C5821E6924; Thu, 09 Jan 2025 12:48:18 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 00/23] docs: add basic sphinx-domain rST generator to
- qapidoc
-In-Reply-To: <CAFn=p-YynNgOTb7-rzJeF69hG_3c1ojosHAOsnc-CW-a_SYrUA@mail.gmail.com>
- (John Snow's message of "Wed, 8 Jan 2025 16:08:40 -0500")
-References: <20241213021827.2956769-1-jsnow@redhat.com>
- <87ikrfkg6y.fsf@pond.sub.org>
- <CAFn=p-YynNgOTb7-rzJeF69hG_3c1ojosHAOsnc-CW-a_SYrUA@mail.gmail.com>
-Date: Thu, 09 Jan 2025 12:48:18 +0100
-Message-ID: <87sepsqkcd.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVr9E-0001Ev-Oy
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:56:24 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVr9D-0002aL-80
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 06:56:24 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so9151005e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 03:56:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736423781; x=1737028581; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=O9VXFn6cDlg2KNMj4juv3MUjuu4wI/ay9QGJ5CBzEV8=;
+ b=Ny8U9f7GGH31KEhtQs1br/F3NZHOfTsg1regJGFhczY+yvlpNThsyA/YTiHSCwrGQj
+ bzplQVXN/noVAoBMdRAhX8/RHy8XJ2la03U+R9fhUHdwa6Ag+X22MRRZ5UUCwz4sXhMu
+ xzstghwxddnVSGyD5wIlNRUL5FMc9EZu7jKHySHXS6bFW1JxJ31QnxAd3eBodXICIvSm
+ tJFNXzR7vO1mhuEQh4iJa6C0zHDLi+ZJp3tcyLRqLcdK90x8y0+EEkjsQwt7Bt2K1yz1
+ DvdrTuPismexjL8R+YgPIzNuif8rX772qJaRlCMEiPJZ4/fYHUTakz6iODLNI+ff63z+
+ 6n+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736423781; x=1737028581;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O9VXFn6cDlg2KNMj4juv3MUjuu4wI/ay9QGJ5CBzEV8=;
+ b=ZskRqOgJ4fo9NTO32y+/TLuxQP9kj5pbyqavyJv09q4e+9HgP9xZJ2Hi3W/L/Mi7w8
+ lWsOTwzDnmHeQ1d3kCf9MZKLf7QcGRJcfYJ/tkppT0d5LXE91BGg4HkmUXjJw9pXCs+e
+ IU6kSEm/dm5Ey/CpsxDyviVsZZ79orYE0vXr2S84veX06nhPBNuiJ7emKB2dEVxidvdq
+ SnhX1pOaYlCi6m2MZKfOwf1KBMkDz/DrEnby2i25eEgKv2+zZdiklqgQr2NKP8gxl6HR
+ Lj32fGh4+E0aWttBq/sfOJUUPwiXnOa2/5wtlYhwTHu/Lg1DWapP75+ACIwEsJc3N4/1
+ HlyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWD9jV4xI+Sbkirzpn+J8nO0Cx3a+CTbCs2pIqncOkHpZLh3oT/HS8YHiBEbmNhitAyx5AzMz11xqCO@nongnu.org
+X-Gm-Message-State: AOJu0Yya9Viqtked9HgP8ZUt7a5fUnkcy6yspRy/+Fo42Q9eFnbWDWw3
+ c303oHMlpYIFkWt0eskxd/6gmxCn09SKZ3M2DbvKEOgRrgAZGAuL13Evd5Nj+jg=
+X-Gm-Gg: ASbGncuHDem2YF9F6hTi2cfb5IOk8OwLdTeEO6cr+EjaNXqNXxONoODPwrXd+remnW3
+ g1rOT+yzYajJy5u3fddibJSHDaSFKr0ZG1C6Yxgw7gjutLorIHGLg98RTajEyQ9fy1UuqTNlFiy
+ Bk/crOBs4PDfXiFHfKMfPXrvmh9v2Gh9aEOxGujSUlvp+Tk6o4tOIYj1n3c5Jc+XpirC7BCs/a2
+ 6vpxEUtj3gZyNpO5zVspk2o0rXCPPu67WlluoysWyfZMY2k8xSLWC8CdcOI1O0O4zHkiwDfRB/H
+ V4C9m6si3iF5qWP+pgbzveTW
+X-Google-Smtp-Source: AGHT+IEZhgZfjLXTc2gBId8FRi+pRJAPvWZrGJ/KLSDwsfiH3lZocTi5+22wBybPWZ16rzBgboIweg==
+X-Received: by 2002:a05:600c:4586:b0:434:f817:4492 with SMTP id
+ 5b1f17b1804b1-436e26f47f9mr66556085e9.31.1736423781255; 
+ Thu, 09 Jan 2025 03:56:21 -0800 (PST)
+Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2da66e6sm53380935e9.4.2025.01.09.03.56.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 03:56:20 -0800 (PST)
+Message-ID: <258e62c4-9e7f-432c-ace2-a5c459d8e016@linaro.org>
+Date: Thu, 9 Jan 2025 12:56:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/14] hw/i2c/imx_i2c: Convert DPRINTF() to trace events
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Guenter Roeck <linux@roeck-us.net>, Andrey Smirnov
+ <andrew.smirnov@gmail.com>, Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250108092538.11474-1-shentey@gmail.com>
+ <20250108092538.11474-13-shentey@gmail.com>
+ <696c9a80-7311-4a95-ab3c-f85bc0b38e6e@linaro.org>
+Content-Language: en-US
+In-Reply-To: <696c9a80-7311-4a95-ab3c-f85bc0b38e6e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,132 +109,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 9/1/25 12:43, Philippe Mathieu-Daudé wrote:
+> On 8/1/25 10:25, Bernhard Beschow wrote:
+>> Also print the MMIO address when tracing. This allows to 
+>> distinguishing the
+>> many instances a typical i.MX SoC has.
 
-> On Thu, Dec 19, 2024 at 7:31=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > based-on:
->> https://patchew.org/QEMU/20241213011307.2942030-1-jsnow@redhat.com/
->> >
->> > Hi!
->> >
->> > This series is a very, very barebones implementation for the new QAPI
->> > doc generator. It does not have many features that I presented on at K=
-VM
->> > Forum; the point of this patch set is instead to present a stripped do=
-wn
->> > basis for ongoing work so we can discuss on-list with full context of
->> > the code available to do so.
->> >
->> > The documentation this series generates is *not suitable* for replacing
->> > the current document generator, it has a few glaring omissions - on
->> > purpose - those features have been factored out intentionally so they
->> > can be reviewed with fuller context and more careful review.
->> >
->> > What this series does:
->> >
->> > - Adds the new "Transmogrifier" rST generator to qapidoc.py, which
->> >   generates an in-memory rST document using qapi-domain directives.
->> > - Adds a test document that showcases this new transmogrifier.
->>
->> Note to other reviewers: transmogrifier output is
->> docs/manual/qapi/index.html.
->>
->> > What this series very notably does not do (yet):
->> >
->> > - "ifcond" data for anything other than top-level entities is not
->> >   considered or rendered. This means "if" statements for features and
->> >   members are entirely absent.
->> >
->> > - The inliner is not present at all. This series renders only
->> >   documentation exactly as it is exists in the source files.
->>
->> This item is not even a regression.
->>
->
-> No; but the version of this series as sent also does not add "The members
-> of ..." stubs, which would be a regression.
+I'm not a fan of using peripheral address access, because it
+can change i.e. when a vCPU is accessing it from secure or
+non-secure mode.
 
-Right.
+I'd rather use an 'id', a 'name' or even the QOM (canonical?)
+path.
 
->                                             I didn't necessarily intend f=
-or
-> this to be merged as-is; more of a "part one, with additional tricky
-> elements that require more careful thought isolated into separate patches
-> for later".
->
-> where "later" means "in v2" or "as a follow-up series as we stage things =
-in
-> a development branch before final submission for inclusion to
-> origin/master" or whatever the actual mechanism is. I don't have a strong
-> vision there, really; I just wanted to nail down the basics out in the op=
-en
-> even if that was just between you (Markus) and I and we have a gentleman's
-> agreement that it looks tentatively OK.
+Maybe we should directly cache that as Device::qom_path, so
+all devices can use it for tracing, and we don't need to set
+an id/name property when creating the device...
 
-Got it.
-
->> > - *branches* are themselves not considered at all; they're skipped
->> >    entirely for now. They will be included alongside the inliner in
->> >    either a subsequent series or a followup to this series.
->> >
->> > - Undocumented members and return statements are not autogenerated.
->>
->> The current doc generator auto-generates missing member documentation
->> ("Not documented").  It doesn't auto-generate missing returns
->> documentation.  I explored auto-generating them, but shelved my work to
->> not interfere with yours.
->>
->> > - Pseudofeatures (Things like allow-oob) are not generated as document=
-ed
->> >   features.
->>
->> What exactly are "pseudofeatures"?
->>
->
-> What I've named things like allow-oob that aren't features, but ought to =
-be
-> documented. We may well decide to promote them to real-deal special
-> features, or maybe not. My work-in-progress branch currently just adds
-> "dummy" features to document them. We can discuss this later alongside the
-> patch that implements this.
-
-I agree this is a digression, so feel free to ignore the remainder of my
-reply for now.
-
-We have two kinds of flags in the QAPI schema language: features and ad
-hoc flags.  The ad hoc flags are 'boxed' (commands and events), 'gen',
-'success-response', 'allow-oob', 'allow-preconfig', 'coroutine'
-(commands only).
-
-The flags sort into three buckets:
-
-1. Code generation directives that do not affect the external interface,
-and thus should not be visible in introspection: 'boxed', 'gen',
-'coroutine'.
-
-2. Flags that are visible at the external interface, but don't affect
-code generation beyond making them visible in introspection: the
-non-special features.
-
-3. Code generation directives that affect the external interface, and
-thus are (or should be) visible in introspection.
-
-3a. The special features: are visible.
-
-3b. 'allow-oob': is visible, but differently, because it predates
-special features.
-
-3c. 'allow-preconfig': not visible.
-
-3d. 'success-response': not visible, because we use it for QGA only,
-which doesn't provide introspection.
-
-Bucket 3 could use cleanup.
-
-[...]
+>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>> ---
+>>   hw/i2c/imx_i2c.c    | 21 +++++----------------
+>>   hw/i2c/trace-events |  5 +++++
+>>   2 files changed, 10 insertions(+), 16 deletions(-)
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
