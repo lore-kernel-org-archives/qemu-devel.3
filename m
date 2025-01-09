@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 401BBE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB3AE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 12:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVrYm-0002LD-PO; Thu, 09 Jan 2025 07:22:48 -0500
+	id 1tVrcm-0004Kj-Vv; Thu, 09 Jan 2025 07:26:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVrYh-0002Kf-8U
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:22:43 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVrcb-00040e-1g
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:26:45 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tVrYf-0000Ih-5m
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:22:42 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-aaee0b309adso150099066b.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:22:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVrcZ-0001EG-E5
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 07:26:44 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so9237245e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 04:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736425358; x=1737030158; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bi8q+/8KOOtB/mPHR104e5FE0utg9E+MUUFRCW0Tn6s=;
- b=l+dPkd1AXY9Spyh2VFnlhEaBLoLEXLs1Gd16s8gP5pEv9GttoxFOru+m6gSRmgLRaR
- L0ivgrILIiBzABvscjPU3smVWOOnVPEjD9VYTPu152gSHui+vPFr0uf8QF3bwI4nrZlf
- 98CLfaWNq2RxL3NiXjtj7WVtlmqNDWkGRvl63ui/Oz49N4nR/3pAwnkndtvvtn965f5p
- SIDMbMgkM7zOMqR1LiruJDE0bbXKjEvNu1uJ8dsTmydChsEfKB96b/hqanNfC2xEhoBm
- e3FMb8DCuSwt0OOEVe078IaurrN4HuG1Q7cLH6/PD6Ni1y93L2K0h2+puo+11wn8U8sz
- ZFwA==
+ d=linaro.org; s=google; t=1736425600; x=1737030400; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=95tsd8yaEgjoEh0Yt9n2tNNpEuOmeSsAfz4hvt6acME=;
+ b=eaz8iIVn+Yw6LerNMwhLccdZs4G+ue+GwpnFDbHG5qtzPe/Wa1/uHbjj+5jnFo1clI
+ Q5reola+V6C6caRRjR9hDwRRZd5bHSWLz3nK7OicPtdupdCKlqjpcJfn6BfdSYrhjWu2
+ 8McODQOrIGq9xj0yO9KADSDBjScsPgYUHYPw0zxC+aZMdEW3z9vhu+MlzYlw5e3ElCNC
+ us0KZ6azz41ExthFitX/yIDJTNY338FxXtorsakbwVPwCEKZdBpg3Wdl2cPjgRcarKQe
+ Qq4H4Qe35GY6lFSo1e4h1RK7jFOo+E7YqyTdP/h3PqAVUyKqC33x+0Ltd92OvsxtdjwU
+ HGuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736425358; x=1737030158;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bi8q+/8KOOtB/mPHR104e5FE0utg9E+MUUFRCW0Tn6s=;
- b=Lzp3q/zvLKQ1t1ggbQbevufwYDS7G0Aa/pS/TjSnO3BUs9YvnhGWvJxhP1l8/ktF8m
- NwliMBlRH+XF7pBa546Bolq99GJKvDx4mO6Lo/VsJngl3gdUkmWpvfe1/gEV8f/NOl1Q
- UFtbp/R3zM4qa7kH46dJLARweTS3kh+4pL0B7FL3v2jjrKYaDMhIElHPU83dBsz3oaW3
- sACuQ+Xy619jWvU2AMfyNPk8eH/4z7F8S7cGyic7JimxOiazNsyzhBwnE7uV+eh/vGo8
- DbdN0R16WAh4WBKdFe0n+jN5ohCeNNNqXdpLhkMGbCz+XWAXVHzNvrMh9Ax/nNbvbRuf
- lygA==
-X-Gm-Message-State: AOJu0YzjJt2pKjUEYiQCQIJ0btbLOhHy8Y4ciMc+jlLj2C+wiwUOnN/F
- Si4wEP/VqoVsW0tJ7tai1Snrp1smuGknYjRYqG8ViLsNbBCMHHPDZv0ygV1aUaQ=
-X-Gm-Gg: ASbGncvs1eGR39N0qSnHtY0QU6BI/r/VxfLiNiyzEY4TkSARzjZI/MYInEKDAQZjvcw
- BLfJq2OB77eqxC5ouWxqG4dVxal3Oiu8mSh0mUxkIz2uKFASt7Sm0Y47PVC8U4qqkaEc5VD+rm5
- JYnnjmCVEwAAX8y7s55Repz80290ifK9HoDRD8vyEJLZKsDYsb05hTQLmYr7ecBeksulBb2K166
- HT2ztBFGQB8P1darst16hrqMBFbHzZQQZg+esg8eKYOFdnfkrejdFU=
-X-Google-Smtp-Source: AGHT+IHOwnRKj6NRfWJ0QgQ7EbIAaeGxxw+OhU5BHuUul7TnHsOJmW2MJQ7PqzY8Q/9GNFDmd/CdKA==
-X-Received: by 2002:a17:907:2d2c:b0:aac:1ea4:8410 with SMTP id
- a640c23a62f3a-ab2ab70ad5dmr584549566b.36.1736425358404; 
- Thu, 09 Jan 2025 04:22:38 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95ae536sm66439666b.139.2025.01.09.04.22.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jan 2025 04:22:37 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 53A0E5F87E;
- Thu,  9 Jan 2025 12:22:36 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
- Alexandre Iooss <erdnaxe@crans.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 2/3] Add plugin API functions for register R/W,
- hwaddr R/W, vaddr W
-In-Reply-To: <20241206102605.961658-3-rowanbhart@gmail.com> (Rowan Hart's
- message of "Fri, 6 Dec 2024 02:26:03 -0800")
-References: <20241206102605.961658-1-rowanbhart@gmail.com>
- <20241206102605.961658-3-rowanbhart@gmail.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Thu, 09 Jan 2025 12:22:36 +0000
-Message-ID: <87ed1c89df.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1736425600; x=1737030400;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=95tsd8yaEgjoEh0Yt9n2tNNpEuOmeSsAfz4hvt6acME=;
+ b=KmQ4Qmkp71ZYcAT7Kfn95vbHnpOYY69drSMFcjr+PUyjDDuyrrP/kqc+2lb+imBEpD
+ SyVr8h7t9W3dDg7T4p3xybfO8zCuP1D6PgwXWTDhlCdPP7ODSD7Z7Xfa+bPM9r851/fF
+ U13L9/dvIfB08O0l2S3c2qyGLbH/JApuT0Ct5lmxlm9x3M/JsDghSIzQKAlFDgWlZ/Xy
+ jx2rsVaSsXkPYUr33dEEX+ZTRiS1Lxfilz6Bt+5r11xeGwPVPZg9/CnybLFP0EjIdGe+
+ WtRMK/eeicMBGy7lh22AJppfTWNyPeet/fpadET3dwRcZC3mfFWzfRZBzqpOgKcX+H1z
+ MqUQ==
+X-Gm-Message-State: AOJu0YzS1dJ2yC04SjL3KBuD8PyffaN9Hz95PkspSKtizvX5nnsApGM0
+ vsX5mnQa+5BCyk92zeZLDwaNRFDxkigIjB6/U1G5rc7tpkoF/gHPad4DIRCdZ5Frsga1o+6Gzmm
+ t7NU=
+X-Gm-Gg: ASbGncslrohFHlurbSMCe4SO3fn1lOuHV81TvY/lx1dCKObZuCu9acVJRvBYo584udy
+ /Ti45cZxxxL+JTI5EnQ/2NEzYwGE+VT5W9I5SjaOYrL4/vbKVMExvxTRlty7e+yc+PXInPvbz+u
+ gClzL1638ReFfkQXvIvHMVxXNXCaGVOpmFoLY+s0+w8319zxPbMpgOOxx7TF6DXNbGBpwKFj2T2
+ 47BPaMNBoV3X5jJ4550fxd6t/4XYHUgGe89wNelS0z1LXs1L0NMfu0zrSCTeq5QV1uiS+YpWqtg
+ O3ZNECXyyrwUhW40nbhjKsRE
+X-Google-Smtp-Source: AGHT+IFMu9rBlCkCDbtBP11qo8elhSxUgHRodjVYUmZJ+NL7rkQUMqwdgVEhNAUNOqBsVnP8Ni1F/A==
+X-Received: by 2002:a05:600c:4f4e:b0:436:1ac2:1acf with SMTP id
+ 5b1f17b1804b1-436e26e28cemr61495855e9.20.1736425600280; 
+ Thu, 09 Jan 2025 04:26:40 -0800 (PST)
+Received: from [192.168.69.102] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e3853b6sm1688249f8f.44.2025.01.09.04.26.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 04:26:39 -0800 (PST)
+Message-ID: <a7eb9e91-8feb-456c-8ce8-f2b7e940118a@linaro.org>
+Date: Thu, 9 Jan 2025 13:26:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/2] tests: Add functional tests for HPPA machines
+To: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250102100340.43014-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250102100340.43014-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,45 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
+On 2/1/25 11:03, Philippe Mathieu-Daudé wrote:
+> Since v5:
+> - Correct boot-serial-test machine name for stable (th_huth)
+> 
+> Philippe Mathieu-Daudé (2):
+>    tests/qtest/boot-serial-test: Correct HPPA machine name
+>    tests: Add functional tests for HPPA machines
 
-> From: novafacing <rowanbhart@gmail.com>
->
-> ---
->  include/qemu/qemu-plugin.h | 116 +++++++++++++++++++++++++++++++++----
->  plugins/api.c              |  66 ++++++++++++++++++++-
->  2 files changed, 168 insertions(+), 14 deletions(-)
->
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 0fba36ae02..b812593e7f 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -65,11 +65,18 @@ typedef uint64_t qemu_plugin_id_t;
->   *
->   * version 4:
->   * - added qemu_plugin_read_memory_vaddr
-> + *
-> + * version 5:
-> + * - added qemu_plugin_write_memory_vaddr
-> + * - added qemu_plugin_read_memory_hwaddr
-> + * - added qemu_plugin_write_memory_hwaddr
-> + * - added qemu_plugin_write_register
-> + *
->   */
+Fabiano, if you don't object, I'm queuing this via my hw-misc tree.
 
-In the next version please split up the API additions to make it easier
-to review. For now w.r.t. hwaddr I refer to:
+Regards,
 
-  Subject: Re: [PATCH 1/1] plugins: add API to read guest CPU memory from h=
-waddr
-  In-Reply-To: <20240828063224.291503-2-rowanbhart@gmail.com> (Rowan Hart's=
- message of "Tue, 27 Aug 2024 23:32:24 -0700")
-  References: <20240828063224.291503-1-rowanbhart@gmail.com> <2024082806322=
-4.291503-2-rowanbhart@gmail.com>
-  Date: Thu, 09 Jan 2025 11:38:48 +0000
-  Message-ID: <877c749pyv.fsf@draig.linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Phil.
 
