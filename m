@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37BCAE77188
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 03:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F139E77188
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 03:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVixy-0008Pb-VO; Wed, 08 Jan 2025 22:12:14 -0500
+	id 1tViyz-0000k1-P9; Wed, 08 Jan 2025 22:13:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1tVixx-0008PJ-0U; Wed, 08 Jan 2025 22:12:13 -0500
+ id 1tViyt-0000hm-2K; Wed, 08 Jan 2025 22:13:11 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1tVixu-0001Fm-Pu; Wed, 08 Jan 2025 22:12:12 -0500
+ id 1tViyq-0001MK-Rz; Wed, 08 Jan 2025 22:13:10 -0500
 Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
- by Atcsqr.andestech.com with ESMTP id 5092jR77028466;
- Thu, 9 Jan 2025 10:45:27 +0800 (+08)
+ by Atcsqr.andestech.com with ESMTP id 5092jniQ028932;
+ Thu, 9 Jan 2025 10:45:49 +0800 (+08)
  (envelope-from ethan84@andestech.com)
 Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 5092j0oe027722
+ by Atcsqr.andestech.com with ESMTPS id 5092j2Fd027904
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jan 2025 10:45:00 +0800 (+08)
+ Thu, 9 Jan 2025 10:45:02 +0800 (+08)
  (envelope-from ethan84@andestech.com)
 Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
  (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Thu, 9 Jan 2025
- 10:44:59 +0800
+ 10:45:02 +0800
 To: <qemu-devel@nongnu.org>
 CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
  <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
@@ -38,9 +38,9 @@ CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>,
  <zhiwei_liu@linux.alibaba.com>, <peterx@redhat.com>,
  <david@redhat.com>, <philmd@linaro.org>, <qemu-riscv@nongnu.org>,
  Ethan Chen <ethan84@andestech.com>
-Subject: [PATCH v9 2/8] memory: Introduce memory region fetch operation
-Date: Thu, 9 Jan 2025 10:44:35 +0800
-Message-ID: <20250109024441.3283671-3-ethan84@andestech.com>
+Subject: [PATCH v9 8/8] hw/riscv/virt: Add IOPMP support
+Date: Thu, 9 Jan 2025 10:44:41 +0800
+Message-ID: <20250109024441.3283671-9-ethan84@andestech.com>
 X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
 In-Reply-To: <20250109024441.3283671-1-ethan84@andestech.com>
 References: <20250109024441.3283671-1-ethan84@andestech.com>
@@ -50,7 +50,7 @@ Content-Type: text/plain
 X-Originating-IP: [10.0.1.106]
 X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 5092jR77028466
+X-MAIL: Atcsqr.andestech.com 5092jniQ028932
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -77,232 +77,216 @@ From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow memory regions to have different behaviors for read and fetch
-operations.
-
-For example, the RISC-V IOPMP could raise an interrupt when the CPU
-tries to fetch from a non-executable region.
-
-If the fetch operation for a memory region is not implemented, the read
-operation will still be used for fetch operations.
+- Add 'iopmp=on' option to enable IOPMP. It adds iopmp devices virt machine
+  to protect all regions of system memory.
 
 Signed-off-by: Ethan Chen <ethan84@andestech.com>
 ---
- accel/tcg/cputlb.c    |   9 +++-
- include/exec/memory.h |  27 +++++++++++
- system/memory.c       | 104 ++++++++++++++++++++++++++++++++++++++++++
- system/trace-events   |   2 +
- 4 files changed, 140 insertions(+), 2 deletions(-)
+ docs/system/riscv/virt.rst |  7 ++++
+ hw/riscv/Kconfig           |  1 +
+ hw/riscv/virt.c            | 75 ++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h    |  4 ++
+ 4 files changed, 87 insertions(+)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index b4ccf0cdcb..71c16a1ac1 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1947,8 +1947,13 @@ static uint64_t int_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
-         this_size = 1 << this_mop;
-         this_mop |= MO_BE;
+diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+index 60850970ce..6b5fc1d37d 100644
+--- a/docs/system/riscv/virt.rst
++++ b/docs/system/riscv/virt.rst
+@@ -146,6 +146,13 @@ The following machine-specific options are supported:
  
--        r = memory_region_dispatch_read(mr, mr_offset, &val,
--                                        this_mop, full->attrs);
-+        if (type == MMU_INST_FETCH) {
-+            r = memory_region_dispatch_fetch(mr, mr_offset, &val,
-+                                             this_mop, full->attrs);
-+        } else {
-+            r = memory_region_dispatch_read(mr, mr_offset, &val,
-+                                            this_mop, full->attrs);
-+        }
-         if (unlikely(r != MEMTX_OK)) {
-             io_failed(cpu, full, addr, this_size, type, mmu_idx, r, ra);
-         }
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 9458e2801d..ed15d99c3c 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -273,6 +273,11 @@ struct MemoryRegionOps {
-                   hwaddr addr,
-                   uint64_t data,
-                   unsigned size);
-+    /* Fetch from the memory region. @addr is relative to @mr; @size is
-+     * in bytes. */
-+    uint64_t (*fetch)(void *opaque,
-+                      hwaddr addr,
-+                      unsigned size);
+   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
  
-     MemTxResult (*read_with_attrs)(void *opaque,
-                                    hwaddr addr,
-@@ -284,6 +289,11 @@ struct MemoryRegionOps {
-                                     uint64_t data,
-                                     unsigned size,
-                                     MemTxAttrs attrs);
-+    MemTxResult (*fetch_with_attrs)(void *opaque,
-+                                    hwaddr addr,
-+                                    uint64_t *data,
-+                                    unsigned size,
-+                                    MemTxAttrs attrs);
- 
-     enum device_endian endianness;
-     /* Guest-visible constraints: */
-@@ -2605,6 +2615,23 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
-                                          MemOp op,
-                                          MemTxAttrs attrs);
- 
++- iopmp=[on|off]
 +
-+/**
-+ * memory_region_dispatch_fetch: perform a fetch directly to the specified
-+ * MemoryRegion.
-+ *
-+ * @mr: #MemoryRegion to access
-+ * @addr: address within that region
-+ * @pval: pointer to uint64_t which the data is written to
-+ * @op: size, sign, and endianness of the memory operation
-+ * @attrs: memory transaction attributes to use for the access
-+ */
-+MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
-+                                         hwaddr addr,
-+                                         uint64_t *pval,
-+                                         MemOp op,
-+                                         MemTxAttrs attrs);
++  When this option is "on", IOPMP devices are added to machine. IOPMP checks
++  memory transcations in system memory. This option is assumed to be "off". To
++  enable the CPU to perform transactions with a specified RRID, use the CPU
++  option "-cpu <cpu>,iopmp=true,iopmp_rrid=<rrid>"
 +
- /**
-  * address_space_init: initializes an address space
-  *
-diff --git a/system/memory.c b/system/memory.c
-index 78e17e0efa..f57a86ce0e 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -477,6 +477,51 @@ static MemTxResult memory_region_read_with_attrs_accessor(MemoryRegion *mr,
-     return r;
+ Running Linux kernel
+ --------------------
+ 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index e6a0ac1fa1..637438af2c 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -68,6 +68,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    select RISCV_IOPMP
+ 
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 2bc5a9dd98..95f8946ae1 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -57,6 +57,8 @@
+ #include "hw/acpi/aml-build.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "hw/misc/riscv_iopmp.h"
++#include "hw/misc/riscv_iopmp_dispatcher.h"
+ 
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+@@ -94,6 +96,7 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_UART0] =        { 0x10000000,         0x100 },
+     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
++    [VIRT_IOPMP] =        { 0x10200000,      0x100000 },
+     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+@@ -102,6 +105,11 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_DRAM] =         { 0x80000000,           0x0 },
+ };
+ 
++static const MemMapEntry iopmp_protect_memmap[] = {
++    /* IOPMP protect all regions by default */
++    {0x0, 0xFFFFFFFF},
++};
++
+ /* PCIe high mmio is fixed for RV32 */
+ #define VIRT32_HIGH_PCIE_MMIO_BASE  0x300000000ULL
+ #define VIRT32_HIGH_PCIE_MMIO_SIZE  (4 * GiB)
+@@ -1117,6 +1125,24 @@ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
  }
  
-+static MemTxResult memory_region_fetch_accessor(MemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                uint64_t *value,
-+                                                unsigned size,
-+                                                signed shift,
-+                                                uint64_t mask,
-+                                                MemTxAttrs attrs)
-+{
-+    uint64_t tmp;
++static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntry *memmap,
++                             uint32_t irq_mmio_phandle) {
++    g_autofree char *name = NULL;
++    MachineState *ms = MACHINE(s);
 +
-+    tmp = mr->ops->fetch(mr->opaque, addr, size);
-+    if (mr->subpage) {
-+        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
-+    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
-+        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
-+        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
-+                                     memory_region_name(mr));
-+    }
-+    memory_region_shift_read_access(value, shift, mask, tmp);
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult memory_region_fetch_with_attrs_accessor(MemoryRegion *mr,
-+                                                          hwaddr addr,
-+                                                          uint64_t *value,
-+                                                          unsigned size,
-+                                                          signed shift,
-+                                                          uint64_t mask,
-+                                                          MemTxAttrs attrs)
-+{
-+    uint64_t tmp = 0;
-+    MemTxResult r;
-+
-+    r = mr->ops->fetch_with_attrs(mr->opaque, addr, &tmp, size, attrs);
-+    if (mr->subpage) {
-+        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
-+    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
-+        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
-+        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
-+                                      memory_region_name(mr));
-+    }
-+    memory_region_shift_read_access(value, shift, mask, tmp);
-+    return r;
-+}
-+
- static MemTxResult memory_region_write_accessor(MemoryRegion *mr,
-                                                 hwaddr addr,
-                                                 uint64_t *value,
-@@ -1493,6 +1538,65 @@ MemTxResult memory_region_dispatch_read(MemoryRegion *mr,
-     return r;
- }
- 
-+static MemTxResult memory_region_dispatch_fetch1(MemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                uint64_t *pval,
-+                                                unsigned size,
-+                                                MemTxAttrs attrs)
-+{
-+    *pval = 0;
-+
-+    if (mr->ops->fetch) {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_fetch_accessor,
-+                                         mr, attrs);
-+    } else if (mr->ops->fetch_with_attrs) {
-+        return access_with_adjusted_size(addr, pval, size,
-+            mr->ops->impl.min_access_size,
-+            mr->ops->impl.max_access_size,
-+            memory_region_fetch_with_attrs_accessor,
-+            mr, attrs);
-+    } else if (mr->ops->read) {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_read_accessor,
-+                                         mr, attrs);
++    name = g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT_IOPMP].base);
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_iopmp");
++    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIRT_IOPMP].base,
++        0x0, memmap[VIRT_IOPMP].size);
++    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
++    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
++        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP_IRQ);
 +    } else {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_read_with_attrs_accessor,
-+                                         mr, attrs);
++        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPMP_IRQ, 0x4);
 +    }
 +}
 +
-+MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
-+                                        hwaddr addr,
-+                                        uint64_t *pval,
-+                                        MemOp op,
-+                                        MemTxAttrs attrs)
+ static void finalize_fdt(RISCVVirtState *s)
+ {
+     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+@@ -1141,6 +1167,10 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
+ 
+     create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
++
++    if (s->have_iopmp) {
++        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
++    }
+ }
+ 
+ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+@@ -1529,6 +1559,8 @@ static void virt_machine_init(MachineState *machine)
+     DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+     int i, base_hartid, hart_count;
+     int socket_count = riscv_socket_count(machine);
++    DeviceState *iopmp_dev, *iopmp_disp_dev;
++    StreamSink *iopmp_ss, *iopmp_disp_ss;
+ 
+     /* Check socket count limit */
+     if (VIRT_SOCKETS_MAX < socket_count) {
+@@ -1710,6 +1742,29 @@ static void virt_machine_init(MachineState *machine)
+     }
+     virt_flash_map(s, system_memory);
+ 
++    if (s->have_iopmp) {
++        iopmp_dev = iopmp_create(memmap[VIRT_IOPMP].base,
++            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
++
++        iopmp_setup_system_memory(iopmp_dev, &iopmp_protect_memmap[0], 1, 0);
++
++        iopmp_disp_dev = qdev_new(TYPE_RISCV_IOPMP_DISP);
++        qdev_prop_set_uint32(DEVICE(iopmp_disp_dev), "target-num", 1);
++        qdev_prop_set_uint32(DEVICE(iopmp_disp_dev), "stage-num", 1);
++        qdev_realize(DEVICE(iopmp_disp_dev), NULL, &error_fatal);
++
++        /* Add memmap inforamtion to dispatcher */
++        iopmp_ss = (StreamSink *)&(RISCV_IOPMP(iopmp_dev)->txn_info_sink);
++        iopmp_dispatcher_add_target(DEVICE(iopmp_disp_dev), iopmp_ss,
++                                    iopmp_protect_memmap[0].base,
++                                    iopmp_protect_memmap[0].size,
++                                    0, 0);
++
++        iopmp_disp_ss =
++            (StreamSink *)&(RISCV_IOPMP_DISP(iopmp_disp_dev)->txn_info_sink);
++        iopmp_setup_sink(iopmp_dev, iopmp_disp_ss);
++    }
++
+     /* load/create device tree */
+     if (machine->dtb) {
+         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
+@@ -1845,6 +1900,20 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
+     visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
+ }
+ 
++static bool virt_get_iopmp(Object *obj, Error **errp)
 +{
-+    unsigned size = memop_size(op);
-+    MemTxResult r;
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
 +
-+    if (mr->alias) {
-+        return memory_region_dispatch_fetch(mr->alias,
-+                                           mr->alias_offset + addr,
-+                                           pval, op, attrs);
-+    }
-+    if (!memory_region_access_valid(mr, addr, size, false, attrs)) {
-+        *pval = unassigned_mem_read(mr, addr, size);
-+        return MEMTX_DECODE_ERROR;
-+    }
-+
-+    r = memory_region_dispatch_fetch1(mr, addr, pval, size, attrs);
-+    adjust_endianness(mr, pval, op);
-+    return r;
++    return s->have_iopmp;
 +}
 +
- /* Return true if an eventfd was signalled */
- static bool memory_region_dispatch_write_eventfds(MemoryRegion *mr,
-                                                     hwaddr addr,
-diff --git a/system/trace-events b/system/trace-events
-index 5bbc3fbffa..4e78bb515b 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -18,8 +18,10 @@ cpu_out(unsigned int addr, char size, unsigned int val) "addr 0x%x(%c) value %u"
- # memory.c
- memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
-+memory_region_ops_fetch(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
-+memory_region_subpage_fetch(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
++static void virt_set_iopmp(Object *obj, bool value, Error **errp)
++{
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
++
++    s->have_iopmp = value;
++}
++
+ bool virt_is_acpi_enabled(RISCVVirtState *s)
+ {
+     return s->acpi != ON_OFF_AUTO_OFF;
+@@ -1972,6 +2041,12 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+                               NULL, NULL);
+     object_class_property_set_description(oc, "iommu-sys",
+                                           "Enable IOMMU platform device");
++
++    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
++                                   virt_set_iopmp);
++    object_class_property_set_description(oc, "iopmp",
++                                          "Set on/off to enable/disable "
++                                          "iopmp device");
+ }
+ 
+ static const TypeInfo virt_machine_typeinfo = {
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 48a14bea2e..77dcbd5450 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -55,6 +55,7 @@ struct RISCVVirtState {
+ 
+     int fdt_size;
+     bool have_aclint;
++    bool have_iopmp;
+     RISCVVirtAIAType aia_type;
+     int aia_guests;
+     char *oem_id;
+@@ -87,11 +88,14 @@ enum {
+     VIRT_PLATFORM_BUS,
+     VIRT_PCIE_ECAM,
+     VIRT_IOMMU_SYS,
++    VIRT_IOPMP,
+ };
+ 
+ enum {
+     UART0_IRQ = 10,
+     RTC_IRQ = 11,
++    IOPMP_IRQ = 12,
++    DMA_IRQ = 13,
+     VIRTIO_IRQ = 1, /* 1 to 8 */
+     VIRTIO_COUNT = 8,
+     PCIE_IRQ = 0x20, /* 32 to 35 */
 -- 
 2.34.1
 
