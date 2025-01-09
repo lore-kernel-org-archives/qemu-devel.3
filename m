@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0694E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD095E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 13:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVsl5-00009d-JH; Thu, 09 Jan 2025 08:39:35 -0500
+	id 1tVslA-0000JC-Hq; Thu, 09 Jan 2025 08:39:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wielandtdan@gmail.com>)
- id 1tVq9T-00089a-N2; Thu, 09 Jan 2025 05:52:36 -0500
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ id 1tVqfa-0000M9-Vj; Thu, 09 Jan 2025 06:25:47 -0500
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <wielandtdan@gmail.com>)
- id 1tVq9Q-0007kN-Iq; Thu, 09 Jan 2025 05:52:35 -0500
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-467a1ee7ff2so6607701cf.0; 
- Thu, 09 Jan 2025 02:52:31 -0800 (PST)
+ id 1tVqfZ-0005Rx-0H; Thu, 09 Jan 2025 06:25:46 -0500
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-6d8ece4937fso6138606d6.2; 
+ Thu, 09 Jan 2025 03:25:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736419950; x=1737024750; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736421943; x=1737026743; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Cc6ZeY5GxwXJI/f/e67cz/DF6o+fx3zn1Fdx79OP900=;
- b=UOJZfAe6zBgq8QTvxzBtDMFY2ZfekrSb54UGuAadZbL40QOrQzeKMtl11K2zqz1Fqk
- VQn9EDqZaY++LOutIpqSia5v0FaV+WPDBawyOKRhaJxEaMxQo++WtlULcLE2po1p9++i
- s2D5NCOzTaIDFwDYR6JAojT+ybDmfAGJKUGogSaMpjrrp+XRzDKki5wxHtimOQ+DAPZg
- mHZgIJLrEF0UPzC165Byg0b1DLzmr3nUwHgEaQqGdXGKGRql6GjuTX3GZVLm9FF4HXFH
- oghMZrW5lRtARKUJODZNSZKHC/mLv+LNLUqHjIW1iUQpdQfRauO1HRUmlu/QiELbLOeI
- S2Ig==
+ bh=XMeD5lDVpb1YJEsVtFO/csxTRuXtZpT83jX0pLiBs2Q=;
+ b=ZGDxOKMOI47LPJfrQjECKbSSHGsMSziRVOO4h8pzJ1+ctlvnwS2lv0k6GwqmayiChG
+ RWNCpPXS0h4tYiX4xXACaa0DJQRU3TPMzc96pTleFTol6x1MyZ9dgRaf7/dSIjWpsoKh
+ Ps126kTSroRfg5J8Xbj28Jnu4YHbqm+AVWZ+gqyh2Iyu680qvcPphwg8FnhTF7D8Fbjp
+ ghccbMu8fGcpaMC3L2acfOrc2Co8jN60NWIXju6Gtup8xA6JJOs1qwwfWEhsrp43RAMu
+ nuCXGDqfZO0pPLPkICZg3KJKXi9aC2PQITZqHD2ViZHf4DOvkEMxAtTgG83Ir7yK9xGL
+ WFgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736419950; x=1737024750;
+ d=1e100.net; s=20230601; t=1736421943; x=1737026743;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Cc6ZeY5GxwXJI/f/e67cz/DF6o+fx3zn1Fdx79OP900=;
- b=NDOWAd8gbnqefaDDuQVmSqUs8WE9r0cDbKgSivHptcHgzU39wRQVciOGdz6FgNhFiU
- UcgDuN6mn0h6+kxZ0iKxDAWSivnnQkNgbMymlPQ+HpPOR+yiKWMknYBszTeXpc6LDv3Z
- KIogJZqwOTFfN+kzaH5Hm0ws1U599HQKzAztPDfw5ck9GUn9M/szLy+zckyYepOFefo7
- 7gRAKcFe4KqjwIxVIIWnxe+GgGsRhMcs/ek4ZSZjZxjHQLsKHCi648gSowWsey9/SdPG
- PMAp5LxjFqxerGNMS3uIS/4XpV77ThOZvQDXRZMrNhNaHQ4SCFo6ONEr2Pw/qfEETO9J
- nqcg==
+ bh=XMeD5lDVpb1YJEsVtFO/csxTRuXtZpT83jX0pLiBs2Q=;
+ b=FPaItwPLrp0mFlVsG83amucmuBAyYDlblrM89MtZxd8ApOg6kG6DZ9ra9SLOomjTDr
+ lLXIi5R7pwAdyQ0EIih3I+S2wir7kr+YywKa7i4AFNdiXIwoZwISXmi7fyh+2Cp8iVxS
+ Op6I7C41KtpW/quYHRa43KdhbOKx4NG4M6A8qub+zQJ3KUMCW2gedc8Of0pakDk2QdOZ
+ GTcfPBpw7lpIXNolCoTL+zrLCI46LbmdQpTTyRQccblYnrt/qAbPcoOgWbBUSpqB4oIS
+ 6uqH59zEJWCEUkPPzHFa1MYqYHI2wsjJc0myRnssxYgAQ00O35DMpnzdQaFbtkQXNShr
+ T1PQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUINBTf/Jp4mu3hASY0mUsJJv0ZCWtppW+104x0kDbTbPqMH6jbn+dvLG/53nlPgdUNGsODi/m7oRGWtA==@nongnu.org,
- AJvYcCWfxCuU63eA506c6rKCFv9fW4rHlkp5QtcgGztLoTyqT729N69hRnEyonjxWBoHaEhEPtcWvVfOMRIiI8s=@nongnu.org,
- AJvYcCX/vNa0X/+H6sFJxakwlgz0uEwf0golIq7B9do6SovA7BG0ZvsSPN56cAkK0BSbWqV4kCOyjf7yW/KW@nongnu.org
-X-Gm-Message-State: AOJu0YyydB04/uIdlYdgt/yJH4RgDSK5qSfMLqCHOpNS3YdxtyqbZBHm
- g/VT1VqgKLwnYp5Mhmhur4wZqcyzcxI1446bPymtNYwKbsCs3/xsob4PHVJ5BcwZHCYaUv3to39
- zJ9PG2pTchHzTbBvlPIPxaI+Wb0E=
-X-Gm-Gg: ASbGncsGn+RDIQv8CBm/2EJVeUVBmKw9+H2mXrMBikIlppigXj6PplHzt7uANQ468o7
- lbVMDHZEzf9kXWt6A7V3jCIjNt4M9bedvlyNA
-X-Google-Smtp-Source: AGHT+IHHFVs5Cov9G0l214ejmzW+FG4w6Cvmr9cd9cM+FXDECZSeO6SysVxjIt/NGrjrAV1lvre6flyhscfP2V9gQQE=
-X-Received: by 2002:a05:6214:2463:b0:6d8:ab7e:e552 with SMTP id
- 6a1803df08f44-6df9b2de7edmr109730026d6.39.1736419950438; Thu, 09 Jan 2025
- 02:52:30 -0800 (PST)
+ AJvYcCUEf4YraGsbogOtWRgUIoyxpcmUFUyMrkdCE5a62iFh3Pe3DaDT1UU06ZtSIc+ALD2HfVff/q+yBQ==@nongnu.org,
+ AJvYcCV3kjidfByq1rMFQJeU1QLQ7l2pkrAph41rF/NGWP0JldL1cdl4dhoFbjdhrHko0MkfW426GWGmsF8TyA==@nongnu.org,
+ AJvYcCX9dOEGIS82j5oRy/+og27Vy8HYj5i5dn+NQOl5yGX6ZDrMB+DKMu/GHau8bXef62ydplG00ciuLUqw3Ow=@nongnu.org
+X-Gm-Message-State: AOJu0Yz7TkWOsZiMLXd8vqD4QNS/MxzchNLYnS2x0h1Ypogub1hErvKi
+ p9oUOszpBeNAFu2NlyIggHDuOYJ3J/tzeXarlVuqjQ+ghbM1bHEq+Qka283KvAYbyIHmHoBNOUJ
+ EeOQWRf61ZEjn3pBWLg4B7Gu1mA8=
+X-Gm-Gg: ASbGncs024kPjH0ygm6TG40lQq6zZpuCe7tvr9cbZRNjANZk677VIA2x1+JZ9lSS5Hj
+ XPaAoKVPWaWa7J1Ppzdc1eFbER5tfbRieqQpn
+X-Google-Smtp-Source: AGHT+IFpNIl2Y2aL6XrsE6Ed3+ys8rwTyb3MS4IqTeq74L7MF1XnXP2M0Ady6B9UL5z690Zov1/sSED83JdRVlokbp4=
+X-Received: by 2002:a05:6214:c25:b0:6df:99e9:39b3 with SMTP id
+ 6a1803df08f44-6df9b1eebccmr98397376d6.15.1736421942799; Thu, 09 Jan 2025
+ 03:25:42 -0800 (PST)
 MIME-Version: 1.0
-References: <20250108124649.333668-1-f.ebner@proxmox.com>
- <Z3-pTUj66O2nfqc_@redhat.com>
-In-Reply-To: <Z3-pTUj66O2nfqc_@redhat.com>
+References: <20241218181511.3575613-1-alex.bennee@linaro.org>
+ <20241218181511.3575613-4-alex.bennee@linaro.org>
+ <718a0ab6-cc07-4721-9560-7745ed1c04a6@linaro.org>
+In-Reply-To: <718a0ab6-cc07-4721-9560-7745ed1c04a6@linaro.org>
 From: Daniel Wielandt <wielandtdan@gmail.com>
-Date: Thu, 9 Jan 2025 04:52:19 -0600
-X-Gm-Features: AbW1kvbmrscI8lHLmZzyF4Ug0iHWGj32_u2AM3eSVGUs5AC3M6RV8_L1x05mz54
-Message-ID: <CA+7p6PKEx552-wN_5ueq6E=mNTNYpGpUYgo3wGRM+fxbG=icyQ@mail.gmail.com>
-Subject: Re: [PATCH] block-backend: protect setting block root to NULL with
- block graph write lock
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000053ae0c062b43c696"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=wielandtdan@gmail.com; helo=mail-qt1-x82d.google.com
+Date: Thu, 9 Jan 2025 05:25:32 -0600
+X-Gm-Features: AbW1kvaTPNBtSvRdchYiKenHB3PVhoj18TtmBI3OVwRdTGlOlh8uzqgyezsBjJE
+Message-ID: <CA+7p6P+UAHEX_CFy6VNCGWYtCRBPd7mf1v6OMZ3=70d+kxsHgw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] target/arm: implement SEL2 physical and virtual
+ timers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
+ qemu-stable@nongnu.org, Andrei Homescu <ahomescu@google.com>,
+ =?UTF-8?B?QXJ2ZSBIasO4bm5ldsOlZw==?= <arve@google.com>, 
+ =?UTF-8?Q?R=C3=A9mi_Denis=2DCourmont?= <remi.denis.courmont@huawei.com>
+Content-Type: multipart/alternative; boundary="00000000000014b339062b443dcb"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=wielandtdan@gmail.com; helo=mail-qv1-xf32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,176 +104,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000053ae0c062b43c696
+--00000000000014b339062b443dcb
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Suggestions hold pattern.. programmers obviously understand control logic.
-Systems built with operational flaws. Will freeze up when u start repairing
-it while it's running.
+It's not the context that lacks its the protocol.. lol. I wish I was good
+with words and a genius... oh no wait. It's easier being simple..you
+think.u could find the s
+B listers. There's gotta b a mpatch
 
-On Thu, Jan 9, 2025, 4:48=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote:
+On Thu, Jan 9, 2025, 5:19=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@li=
+naro.org>
+wrote:
 
-> Am 08.01.2025 um 13:46 hat Fiona Ebner geschrieben:
-> > Setting blk->root is a graph change operation and thus needs to be
-> > protected by the block graph write lock in blk_remove_bs(). The
-> > assignment to blk->root in blk_insert_bs() is already protected by
-> > the block graph write lock.
->
-> Hm, if that's the case, then we should also enforce this in the
-> declaration of BlockBackend:
->
->     BdrvChild * GRAPH_RDLOCK_PTR root;
->
-> However, this results in more compiler failures that we need to fix. You
-> caught the only remaining writer, but the lock is only fully effective
-> if all readers take it, too.
->
-> > In particular, the graph read lock in blk_co_do_flush() could
-> > previously not ensure that blk_bs(blk) would always return the same
-> > value during the locked section, which could lead to a segfault [0] in
-> > combination with migration [1].
+> On 18/12/24 19:15, Alex Benn=C3=A9e wrote:
+> > When FEAT_SEL2 was implemented the SEL2 timers where missed. This
+> > shows up when building the latest Hafnium with SPMC_AT_EL=3D2. The
+> > actual implementation utilises the same logic as the rest of the
+> > timers so all we need to do is:
 > >
-> > From the user-provided backtraces in the forum thread [1], it seems
-> > like blk_co_do_flush() managed to get past the
-> > blk_co_is_available(blk) check, meaning that blk_bs(blk) returned a
-> > non-NULL value during the check, but then, when calling
-> > bdrv_co_flush(), blk_bs(blk) returned NULL.
+> >    - define the timers and their access functions
+> >    - conditionally add the correct system registers
+> >    - create a new accessfn as the rules are subtly different to the
+> >      existing secure timer
 > >
-> > [0]:
-> >
-> > > 0  bdrv_primary_child (bs=3Dbs@entry=3D0x0) at ../block.c:8287
-> > > 1  bdrv_co_flush (bs=3D0x0) at ../block/io.c:2948
-> > > 2  bdrv_co_flush_entry (opaque=3D0x7a610affae90) at block/block-gen.c=
-:901
-> >
-> > [1]: https://forum.proxmox.com/threads/158072
-> >
+> > Fixes: e9152ee91c (target/arm: add ARMv8.4-SEL2 system registers)
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> > Cc: Andrei Homescu <ahomescu@google.com>
+> > Cc: Arve Hj=C3=B8nnev=C3=A5g <arve@google.com>
+> > Cc: R=C3=A9mi Denis-Courmont <remi.denis.courmont@huawei.com>
+> >
 > > ---
-> >  block/block-backend.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > v1
+> >    - add better comments to GTIMER descriptions
+> >    - also define new timers for sbsa-ref
+> >    - don't conditionally gate qemu_timer creation on the feature
+> >    - take cntvoff_el2 int account for SEC_VEL2 in
+> gt_recalc/g_tval_[read|write]
+> > v2
+> >    - rename IRQ to ARCH_TIMER_S_EL2_VIRT_IRQ
+> >    - split machine enablement into separate patches
+> >    - return CP_ACCESS_TRAP_UNCATEGORIZED for UNDEF cases
+> > ---
+> >   include/hw/arm/bsa.h |   2 +
+> >   target/arm/cpu.h     |   2 +
+> >   target/arm/gtimer.h  |   4 +-
+> >   target/arm/cpu.c     |   4 ++
+> >   target/arm/helper.c  | 158 ++++++++++++++++++++++++++++++++++++++++++=
++
+> >   5 files changed, 169 insertions(+), 1 deletion(-)
+>
+>
+> > diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
+> > index de016e6da3..f8f7425a5f 100644
+> > --- a/target/arm/gtimer.h
+> > +++ b/target/arm/gtimer.h
+> > @@ -15,7 +15,9 @@ enum {
+> >       GTIMER_HYP      =3D 2, /* EL2 physical timer */
+> >       GTIMER_SEC      =3D 3, /* EL3 physical timer */
+>
+> Should we rename as GTIMER_SEC_PEL3 for consistency?
+>
+> >       GTIMER_HYPVIRT  =3D 4, /* EL2 virtual timer */
+>
+> Also GTIMER_HYP     -> GTIMER_PEL2,
+>       GTIMER_HYPVIRT -> GTIMER_VEL2?
+>
+> > -#define NUM_GTIMERS   5
+> > +    GTIMER_SEC_PEL2 =3D 5, /* Secure EL2 physical timer */
+> > +    GTIMER_SEC_VEL2 =3D 6, /* Secure EL2 virtual timer */
+> > +#define NUM_GTIMERS   7
+> >   };
 > >
-> > diff --git a/block/block-backend.c b/block/block-backend.c
-> > index c93a7525ad..9678615318 100644
-> > --- a/block/block-backend.c
-> > +++ b/block/block-backend.c
-> > @@ -887,9 +887,9 @@ void blk_remove_bs(BlockBackend *blk)
-> >       */
-> >      blk_drain(blk);
-> >      root =3D blk->root;
-> > -    blk->root =3D NULL;
-> >
-> >      bdrv_graph_wrlock();
-> > +    blk->root =3D NULL;
-> >      bdrv_root_unref_child(root);
-> >      bdrv_graph_wrunlock();
-> >  }
->
-> I think the 'root =3D blk->root' needs to be inside the locked section,
-> too. Otherwise blk->root could change during bdrv_graph_wrlock() (which
-> has a nested event loop) and root would be stale. I assume clang would
-> complain about this with the added GRAPH_RDLOCK_PTR.
->
-> Kevin
->
+> >   #endif|
 >
 >
 
---00000000000053ae0c062b43c696
+--00000000000014b339062b443dcb
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<p dir=3D"ltr">Suggestions hold pattern.. programmers obviously understand =
-control logic. Systems built with operational flaws. Will freeze up when u =
-start repairing it while it&#39;s running.<br>
-</p>
+<p dir=3D"ltr">It&#39;s not the context that lacks its the protocol.. lol. =
+I wish I was good with words and a genius... oh no wait. It&#39;s easier be=
+ing simple..you think.u could find the s<br>
+B listers. There&#39;s gotta b a mpatch</p>
 <br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Thu, Jan 9, 2025, 4:48=E2=80=AFAM Kevin Wolf &lt;<a href=
-=3D"mailto:kwolf@redhat.com">kwolf@redhat.com</a>&gt; wrote:<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #cc=
-c solid;padding-left:1ex">Am 08.01.2025 um 13:46 hat Fiona Ebner geschriebe=
-n:<br>
-&gt; Setting blk-&gt;root is a graph change operation and thus needs to be<=
-br>
-&gt; protected by the block graph write lock in blk_remove_bs(). The<br>
-&gt; assignment to blk-&gt;root in blk_insert_bs() is already protected by<=
-br>
-&gt; the block graph write lock.<br>
-<br>
-Hm, if that&#39;s the case, then we should also enforce this in the<br>
-declaration of BlockBackend:<br>
-<br>
-=C2=A0 =C2=A0 BdrvChild * GRAPH_RDLOCK_PTR root;<br>
-<br>
-However, this results in more compiler failures that we need to fix. You<br=
->
-caught the only remaining writer, but the lock is only fully effective<br>
-if all readers take it, too.<br>
-<br>
-&gt; In particular, the graph read lock in blk_co_do_flush() could<br>
-&gt; previously not ensure that blk_bs(blk) would always return the same<br=
->
-&gt; value during the locked section, which could lead to a segfault [0] in=
-<br>
-&gt; combination with migration [1].<br>
+=3D"gmail_attr">On Thu, Jan 9, 2025, 5:19=E2=80=AFAM Philippe Mathieu-Daud=
+=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
+;border-left:1px #ccc solid;padding-left:1ex">On 18/12/24 19:15, Alex Benn=
+=C3=A9e wrote:<br>
+&gt; When FEAT_SEL2 was implemented the SEL2 timers where missed. This<br>
+&gt; shows up when building the latest Hafnium with SPMC_AT_EL=3D2. The<br>
+&gt; actual implementation utilises the same logic as the rest of the<br>
+&gt; timers so all we need to do is:<br>
 &gt; <br>
-&gt; From the user-provided backtraces in the forum thread [1], it seems<br=
->
-&gt; like blk_co_do_flush() managed to get past the<br>
-&gt; blk_co_is_available(blk) check, meaning that blk_bs(blk) returned a<br=
->
-&gt; non-NULL value during the check, but then, when calling<br>
-&gt; bdrv_co_flush(), blk_bs(blk) returned NULL.<br>
+&gt;=C2=A0 =C2=A0 - define the timers and their access functions<br>
+&gt;=C2=A0 =C2=A0 - conditionally add the correct system registers<br>
+&gt;=C2=A0 =C2=A0 - create a new accessfn as the rules are subtly different=
+ to the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 existing secure timer<br>
 &gt; <br>
-&gt; [0]:<br>
-&gt; <br>
-&gt; &gt; 0=C2=A0 bdrv_primary_child (bs=3Dbs@entry=3D0x0) at ../block.c:82=
-87<br>
-&gt; &gt; 1=C2=A0 bdrv_co_flush (bs=3D0x0) at ../block/io.c:2948<br>
-&gt; &gt; 2=C2=A0 bdrv_co_flush_entry (opaque=3D0x7a610affae90) at block/bl=
-ock-gen.c:901<br>
-&gt; <br>
-&gt; [1]: <a href=3D"https://forum.proxmox.com/threads/158072" rel=3D"noref=
-errer noreferrer" target=3D"_blank">https://forum.proxmox.com/threads/15807=
-2</a><br>
-&gt; <br>
+&gt; Fixes: e9152ee91c (target/arm: add ARMv8.4-SEL2 system registers)<br>
+&gt; Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@lina=
+ro.org" target=3D"_blank" rel=3D"noreferrer">alex.bennee@linaro.org</a>&gt;=
+<br>
 &gt; Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank" rel=3D=
 "noreferrer">qemu-stable@nongnu.org</a><br>
-&gt; Signed-off-by: Fiona Ebner &lt;<a href=3D"mailto:f.ebner@proxmox.com" =
-target=3D"_blank" rel=3D"noreferrer">f.ebner@proxmox.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 block/block-backend.c | 2 +-<br>
-&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt; Cc: Andrei Homescu &lt;<a href=3D"mailto:ahomescu@google.com" target=
+=3D"_blank" rel=3D"noreferrer">ahomescu@google.com</a>&gt;<br>
+&gt; Cc: Arve Hj=C3=B8nnev=C3=A5g &lt;<a href=3D"mailto:arve@google.com" ta=
+rget=3D"_blank" rel=3D"noreferrer">arve@google.com</a>&gt;<br>
+&gt; Cc: R=C3=A9mi Denis-Courmont &lt;<a href=3D"mailto:remi.denis.courmont=
+@huawei.com" target=3D"_blank" rel=3D"noreferrer">remi.denis.courmont@huawe=
+i.com</a>&gt;<br>
 &gt; <br>
-&gt; diff --git a/block/block-backend.c b/block/block-backend.c<br>
-&gt; index c93a7525ad..9678615318 100644<br>
-&gt; --- a/block/block-backend.c<br>
-&gt; +++ b/block/block-backend.c<br>
-&gt; @@ -887,9 +887,9 @@ void blk_remove_bs(BlockBackend *blk)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 blk_drain(blk);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 root =3D blk-&gt;root;<br>
-&gt; -=C2=A0 =C2=A0 blk-&gt;root =3D NULL;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bdrv_graph_wrlock();<br>
-&gt; +=C2=A0 =C2=A0 blk-&gt;root =3D NULL;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bdrv_root_unref_child(root);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bdrv_graph_wrunlock();<br>
-&gt;=C2=A0 }<br>
+&gt; ---<br>
+&gt; v1<br>
+&gt;=C2=A0 =C2=A0 - add better comments to GTIMER descriptions<br>
+&gt;=C2=A0 =C2=A0 - also define new timers for sbsa-ref<br>
+&gt;=C2=A0 =C2=A0 - don&#39;t conditionally gate qemu_timer creation on the=
+ feature<br>
+&gt;=C2=A0 =C2=A0 - take cntvoff_el2 int account for SEC_VEL2 in gt_recalc/=
+g_tval_[read|write]<br>
+&gt; v2<br>
+&gt;=C2=A0 =C2=A0 - rename IRQ to ARCH_TIMER_S_EL2_VIRT_IRQ<br>
+&gt;=C2=A0 =C2=A0 - split machine enablement into separate patches<br>
+&gt;=C2=A0 =C2=A0 - return CP_ACCESS_TRAP_UNCATEGORIZED for UNDEF cases<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0include/hw/arm/bsa.h |=C2=A0 =C2=A02 +<br>
+&gt;=C2=A0 =C2=A0target/arm/cpu.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
+&gt;=C2=A0 =C2=A0target/arm/gtimer.h=C2=A0 |=C2=A0 =C2=A04 +-<br>
+&gt;=C2=A0 =C2=A0target/arm/cpu.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A04 ++<br>
+&gt;=C2=A0 =C2=A0target/arm/helper.c=C2=A0 | 158 ++++++++++++++++++++++++++=
++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A05 files changed, 169 insertions(+), 1 deletion(-)<br>
 <br>
-I think the &#39;root =3D blk-&gt;root&#39; needs to be inside the locked s=
-ection,<br>
-too. Otherwise blk-&gt;root could change during bdrv_graph_wrlock() (which<=
+<br>
+&gt; diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h<br>
+&gt; index de016e6da3..f8f7425a5f 100644<br>
+&gt; --- a/target/arm/gtimer.h<br>
+&gt; +++ b/target/arm/gtimer.h<br>
+&gt; @@ -15,7 +15,9 @@ enum {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0GTIMER_HYP=C2=A0 =C2=A0 =C2=A0 =3D 2, /* EL2=
+ physical timer */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0GTIMER_SEC=C2=A0 =C2=A0 =C2=A0 =3D 3, /* EL3=
+ physical timer */<br>
+<br>
+Should we rename as GTIMER_SEC_PEL3 for consistency?<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0GTIMER_HYPVIRT=C2=A0 =3D 4, /* EL2 virtual t=
+imer */<br>
+<br>
+Also GTIMER_HYP=C2=A0 =C2=A0 =C2=A0-&gt; GTIMER_PEL2,<br>
+=C2=A0 =C2=A0 =C2=A0 GTIMER_HYPVIRT -&gt; GTIMER_VEL2?<br>
+<br>
+&gt; -#define NUM_GTIMERS=C2=A0 =C2=A05<br>
+&gt; +=C2=A0 =C2=A0 GTIMER_SEC_PEL2 =3D 5, /* Secure EL2 physical timer */<=
 br>
-has a nested event loop) and root would be stale. I assume clang would<br>
-complain about this with the added GRAPH_RDLOCK_PTR.<br>
-<br>
-Kevin<br>
-<br>
+&gt; +=C2=A0 =C2=A0 GTIMER_SEC_VEL2 =3D 6, /* Secure EL2 virtual timer */<b=
+r>
+&gt; +#define NUM_GTIMERS=C2=A0 =C2=A07<br>
+&gt;=C2=A0 =C2=A0};<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#endif|<br>
 <br>
 </blockquote></div>
 
---00000000000053ae0c062b43c696--
+--00000000000014b339062b443dcb--
 
