@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B9CE77197
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F71E77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVwMn-0003Fh-NJ; Thu, 09 Jan 2025 12:30:46 -0500
+	id 1tVwQM-0004vm-U6; Thu, 09 Jan 2025 12:34:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwMj-0003FO-Cl
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:30:41 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVwQL-0004v9-Cw
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:34:25 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwMh-0002st-Jj
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:30:40 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-385ef8b64b3so1087462f8f.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:30:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tVwQJ-0003Ow-Ug
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:34:25 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aaedd529ba1so174522066b.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736443837; x=1737048637; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C2cKzrhqL83T5vH9ia9BW4cX630tgscG7HBCVjqB2jw=;
- b=OFDFBcJwmhS4aBoARrgVfTlzgXQZ6b6YJebB6V2v7/IU0F2DOXCi2gJMHikJUlFWii
- ivnEdWGUhIA+BzY+FLzur7as/fggaFQDHSCVqVZBPbamZqDSLnmVLuXgfkuaAdd3L0Vf
- FpA3ntz3FTHtlt5eA+HoGWCn/TnwfxgSkbIk7PQhQzZW3LjNo6Z0MU4BMIoZyGNQnBqG
- y6/uTFlSrtHXS/uGO1gyMlvhpl/S2zt6RibVFgNzz1HUZzP62SdCfJbCKQNmGkZYDVI9
- VdwQSISnl/KZ2Lo15Y6an/H4fESp54X9ffl8LxrUSGkgztJiKswBUf7rAxmJo5fZIykL
- C+Dw==
+ d=linaro.org; s=google; t=1736444062; x=1737048862; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nrmknCsxdatabuV8zxlG+lrjUW7Vi4THLFTRJrD1IMM=;
+ b=pI9Rswzb6gJU4BPdNW+vpVkq4mfMOoReiLTNJ0bxaSPNvFDJotQivJGPXES7c1XXsc
+ kO0Y0Irgzdft96RyP+zVN4X7VHSASZYm184+UbHlSSVkL6NyUE18/LlLRhvNZeD/wzxz
+ Egr7t05a68Pl5Zqo2kJqDG2B2ARS8ssl/d66wOagzshi6AmJRGsmLaNfLDayloENRh3D
+ pmkJfbjmx8jn/By2WAJ0Mx0qZVJbzNeImKTacvpNO7+Enj+c7zUmIF6B8IDMGPU+n1Hs
+ V3tHyW1ocOKCEFIXKodTJuqlHXAn6ZeEn0dGoA/ymsOpkHQD0MsLWH9EPoFbvS+ldJPv
+ eR6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736443837; x=1737048637;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C2cKzrhqL83T5vH9ia9BW4cX630tgscG7HBCVjqB2jw=;
- b=inuspFaaaev3BwqKJKDhGMyici52BxflH1Cjg6k9DD3ydUkiXZamSB8huLCY+EgNhp
- pDJWpKcVtfm/t87eJKGqoLKma4MaxFjKFimRNs296990i2sruUZWr9+aAfeNsnQO9Ade
- 2rugP6cB1cxha0KtxMCiD688nnRQ8Z50xjqeZcq0HArVPfkZ6r7Fe/isG8f6pEFFjAbX
- NpH+8h9QVopFGUrcuPVtnWbQRKzpk/lJUAEWjHI1oQ3OdNrBdsqp5Q4NbqF0PUj7BqYV
- BCdeLZP/34D13RYczJgO+i2cUF6dJffVhzjvf1p1IOUrOtT5W77kbOPy8s7v9mQ1TAa5
- bRaA==
+ d=1e100.net; s=20230601; t=1736444062; x=1737048862;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nrmknCsxdatabuV8zxlG+lrjUW7Vi4THLFTRJrD1IMM=;
+ b=CYJi/fIyFuR/79lDwVc+OdL2lwaKja518sKTyRcEoDoU7UF68ke9823F7B7sjJ6F2P
+ /H1OqX3xTGV4IRbWfYU+7bquGaXo1mjK+2k5d78JAAy5VKcpdmaeGDpvl51Ed/zD6qvr
+ I7EG5fLAkD7mL7kteMYBDGRHmgHy6MM2xoFiIYFUOyHzvvsl1VwhZYdn9s4cCgn9c9h7
+ KAdtrjEyhrX0EiwEk64aVs1ycGwDZEFeurmG6Fx8VJE48J7VUHulKY4giPZfw0Ij+0Yt
+ DNBCDdj87eeTAx7dNyXY7kF3AwCiYFacHDC69maBhuYAnTSC4S2nDGiVobDxtd13WAX3
+ 20ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWduYgqwi56ZB2ByUHTx8KXzt3Il7e376YPl4yQQgJsGJatt0Kbr/HVfDgc8dRaupzby6tTLYuuZ3Sd@nongnu.org
-X-Gm-Message-State: AOJu0Yyh2NMyoq5I8ytT58/yYu2BZ4LQ2cEqZ3cAgx0snxgZ9ouMrP+R
- gEgK8CpVmpTPFJcYJ1xdQjpEbE34K9Vk4syHgHEZGhdx/FUJ53fFi7QriPJYAv4=
-X-Gm-Gg: ASbGncth7Y8QiLrOqdnwP5gsFcFiCBGk0dm43eZ8DjpAj4hOlXQnUmu1k2Khe/FgXVZ
- K22zbCaRP2dTdBR/Y5kZN18UeyJ3RvI2+ngFJhD3iJoymFHobB4CaFAag/m5Mlblv0i2NGt+S+u
- 9p72ipVHVwRwmcDUR6Do8HdZzwx2rC+SS/1ralfTw3+naLpKIgJMdzfeuoDKKmaKyz+0XQweqec
- HWEKQfZxz3zH7Dtwd/w3tXwergCUdJjwetrHAFiqih0+5bnqcczsCq3crTv7rnBT1nuywl1O0k4
- VJzbmXL4i+2RmtCG60N+OzAM6TM=
-X-Google-Smtp-Source: AGHT+IEa+Q4BkvU+RY7Cs+pVRxt7wfxaXdoelzq2PDiprAtMUHydkCW/om7pfS/Dz6kSgOnsBjAmKQ==
-X-Received: by 2002:a5d:5f44:0:b0:386:3e3c:efd with SMTP id
- ffacd0b85a97d-38a8730fa79mr6790834f8f.44.1736443837549; 
- Thu, 09 Jan 2025 09:30:37 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9e6236bsm26962785e9.37.2025.01.09.09.30.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 09:30:36 -0800 (PST)
-Message-ID: <df5bf2d9-04f6-4263-829b-a1eae946c0af@linaro.org>
-Date: Thu, 9 Jan 2025 18:30:35 +0100
+ AJvYcCV1dtLiytpS3U9gS5MMSK9QywBZKVd1rjoQ9LGZmwc+5G2oB9rAuiC3JRbi2Kyk8E3IAltxadQFFEc0@nongnu.org
+X-Gm-Message-State: AOJu0YwgvEFvefa2J3/eX81BMWuGUyl0ePKKCoMZDCVauRzjYWVdlrBB
+ 2vGa+PnRcD6YySwrRPZcmj0+xqe/KDjsFWUCWZrDv/hyY3EPqy+lCLV7UNmJ7D4=
+X-Gm-Gg: ASbGncv0Q5EV7BQM1dN5yxjGzuOTkUL/MY4BWm8lrS6zGdvL7ePLFaAJ8Vs1/tGOwql
+ Igijn2kGATHM5yIqXhWaVG26sVuqnImtgwziKj0j3Ltjt6pg3Fd0NSFfgFFQbYFRyK2e03T+rif
+ 7oW8qVSdrZLN9LIfm8w0jcREzNF8pqNkuBhEA/v81ogyO2lgjeyMk3NJ1Vw/0q0W7cV89WpSKHS
+ n+9HzxCxmHEQ3xqt3gAMkhF6WFVwLigT00AX1b1ZRhxI7Bq9W5Fpr4=
+X-Google-Smtp-Source: AGHT+IGmeZyrfKuGz2SLVDzfNOd3KvpUkfgHBJjpJTiJ7ZC4DtXb0RY+CduOJ/wmui1nQbSqaPWKjg==
+X-Received: by 2002:a05:6402:26cf:b0:5d4:55e:f99e with SMTP id
+ 4fb4d7f45d1cf-5d972e1d7dfmr17974980a12.18.1736444062135; 
+ Thu, 09 Jan 2025 09:34:22 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d9900c4ba2sm773646a12.30.2025.01.09.09.34.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jan 2025 09:34:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 572FE5F75D;
+ Thu,  9 Jan 2025 17:34:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: peter.maydell@linaro.org,  qemu-arm@nongnu.org,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  its@irrelevant.dk,  kbusch@kernel.org,
+ eric.auger@redhat.com,  roqueh@google.com
+Subject: Re: [PATCH 0/2] ARM SMMUv3 StreamID Implementation
+In-Reply-To: <20240221171716.1260192-1-nabihestefan@google.com> (Nabih
+ Estefan's message of "Wed, 21 Feb 2024 17:17:14 +0000")
+References: <20240221171716.1260192-1-nabihestefan@google.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 09 Jan 2025 17:34:20 +0000
+Message-ID: <87h6676gdf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/22] system: squash usb_parse into a single function
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
-References: <20250109170619.2271193-1-alex.bennee@linaro.org>
- <20250109170619.2271193-10-alex.bennee@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250109170619.2271193-10-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,16 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/25 18:06, Alex Bennée wrote:
-> We don't need to wrap usb_device_add as usb_parse is already gated
-> with an if (machine_usb(current_machine)) check. Instead just assert
-> and directly fail if usbdevice_create returns NULL.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   system/vl.c | 22 ++++------------------
->   1 file changed, 4 insertions(+), 18 deletions(-)
+Nabih Estefan <nabihestefan@google.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> This patch series modifies the ARM SMMUv3 to be able to work with an
+> implementation specific StreamID that does not match exactly the PCIe BDF.
+> The way to achieve this is by converting the smmu_get_sid and smmu_iommu_=
+mr
+> functions to virtual functions that can be overridden by inheritance, mak=
+ing
+> sure the StreamID is consistently 32 bits and removing the hardcoding of =
+the
+> SMMU_IDR1.SIDSIZE to 16 bits.
 
+I was just going through my outstanding review queue for '24 and saw
+this didn't get merged. Was there a re-spin that I missed? I see Eric
+left a comment on 2/2.
+
+>
+> Roque Arcudia Hernandez (2):
+>   hw/arm/smmuv3: Check StreamIDs against SMMU_IDR1.SIDSIZE value
+>   hw/arm/smmu-common: Create virtual function for implementation defined
+>     StreamID
+>
+>  hw/arm/smmu-common.c         | 12 ++++++++++++
+>  hw/arm/smmuv3.c              |  4 +++-
+>  include/hw/arm/smmu-common.h | 16 +++++++++++-----
+>  3 files changed, 26 insertions(+), 6 deletions(-)
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
