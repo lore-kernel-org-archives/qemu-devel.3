@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FDE8E77199
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A651BE77197
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jan 2025 17:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tVwCv-0002s7-QC; Thu, 09 Jan 2025 12:20:33 -0500
+	id 1tVwCf-0002Oo-5w; Thu, 09 Jan 2025 12:20:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCu-0002mI-2K
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:32 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCd-0002Mh-SR
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:16 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCs-0000sH-E4
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:31 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-385e3621518so683526f8f.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:20:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tVwCb-0000ef-Mo
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 12:20:15 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4361b0ec57aso12581535e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 09:20:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736443228; x=1737048028; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736443211; x=1737048011; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SAkpQ1iPeEc9FavMfrE5ZMAHDuM/hnnhJGDNmUL3hkk=;
- b=DPm4mPvaWVWDkwyQq4930Pw9asVYNlEi4obki63Z9hxpbnmfqvBgzfITufqDG2JUBP
- U6b6kaEiB1xrWqMTItg7kxEpAwvAC17H//yvOu7nt/lQmXrYBGKPtagLVexeiGoG1UaM
- LmsWNsTJpJvjc7vBvMzFmLlerFBIuIN0PlMD7zp7k/YEOXKynhM+J+UKkagHlwL/S2Or
- f+L+p2vAzbdn8GPmqorrM5pkVJ0JDtlNqF5kGKH3P73UUOgY25jbXs7AcOHI9JpJtBV9
- qcW86ve5Nr/yL/zQpc+kvfp+VBL95IooDDtpHNQDnbdV07aajr4VV7bcv05MrR385zY5
- leog==
+ bh=qz3bj6rw803M1uR6VsFauScvvIZVsKyPf1NJH8U1zkU=;
+ b=sXVDktixxqNr4foVZKXSnJCiBqZ4xHs81ZNJvYCqr3QcWEJG/BZwHJxT48h/yDUaF1
+ 5gAtyy7PYx0xw2GnjG4S4QEOInAJxAuB+lUEcG8Xi2hpqHu0+i2fqh6wUqsN8qEzlRoR
+ 3WdLnA8mXYP1H6F65OiwTT6PvtUOQIgwFzNWS7vjmJ0Kk3aakH6i2ijvJFeK+GyNI3vg
+ SkFJteVbQ3HFM6oiUmrhGfHH2KqY/1gGYdPz8UuJCDoJZc6WRmrhDXy4Mq+dj3ugikgd
+ kI2/Ddq9R+BDy+WmNTCbu/ibqNIoHIs5RdwsVcwM/oqMlTdKmwUNXLA6qYf4v0pAl5CG
+ qm1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736443228; x=1737048028;
+ d=1e100.net; s=20230601; t=1736443211; x=1737048011;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SAkpQ1iPeEc9FavMfrE5ZMAHDuM/hnnhJGDNmUL3hkk=;
- b=e4Fi17x6X2ZybgK51ol//R9hxoR8cWohjMTYgHy9da2fstL07esxLMEo9RTd3rm8Hi
- w/5DQQW8m0ss2yKJg5gj6yDXlyGr7/NHoBnGnr0L1y9XCHEsQT3oNxZgMj06lXCoTt/0
- W43JlruRA1OUrGwmd3OyYbw0LwGaGGuvPvTSS6muV4E4WxJqhYh0CEL8uIm1A+smoJUv
- EbXD2ToNp56TKtpG/ndTGjrHNHhZIRdwhgcEi36sJLp+XIx7DI+pz2iVN9DHMrJfUdCP
- PQ6AdHmSTeNiIFWwpvz+XuZ1SHfVi3yhcJ/oDR04reFtmaIp6zxa5wcdbjrHFPRlnKcc
- A+9w==
-X-Gm-Message-State: AOJu0Yxi+erCgTLpGHvBWfGyzHCiGn0FJ8z07Ws/pcc8hUF9KGvv6ygy
- j1jJ/aNwgcfFP1g0k9sgK9mnrDFKBzmVeHCesLKZ+qeW5VT2QOD9xrTIu9it+log7JiIMQTR1u5
- g5YM=
-X-Gm-Gg: ASbGncu+vpoefmJWJOK5n9ybNi7iKoxdHSHs5Hfs8zXmJAv82uy2VzfueluIxay51M/
- t8A8UYztk4oAYA4OR7EokkLmvUHmrnx3wGbvJA+hnOhdj85UhvavL5uLZ0wy39wyQnp9o8TnhBl
- NtCPNdyO/CCQOQ76gWZX4lzSoyYONzm7ClNFnz3t6pgNI9K7wmshT+rNDLSUCQnyjAfdo8ggv9t
- 0DCmILr6YEQHvcQTvaFBy/iTIpixmwwIovCW9s/kUTKm0ACM5wfFlQ81SqaBHWt1n8vToOFps0F
- cwwNhXNNtQYofvxdAztFNmzgAMctoGKtbq++
-X-Google-Smtp-Source: AGHT+IGSuJk4lWB6tPRViHuFddmQsMG/6P2N4ccDhknJxFNY9hsZP3XnLPI1XgMQ8M82WoicmJ0TQw==
-X-Received: by 2002:a05:6000:1446:b0:385:fc97:9c76 with SMTP id
- ffacd0b85a97d-38a872f7fd9mr7017156f8f.3.1736443227979; 
- Thu, 09 Jan 2025 09:20:27 -0800 (PST)
+ bh=qz3bj6rw803M1uR6VsFauScvvIZVsKyPf1NJH8U1zkU=;
+ b=ON/3qop5xPEuytB4UOsYLiApTL9e+CtvDxamokYbnqvM7bDMaFhXfC0PPnqSyIOLFw
+ OQS1mnbmFLuwtja7s6dL0Nf7sEZFS5VjfIV5m1u5vptaa9ahWC9WtBCnp7rQyGU8Qu0y
+ 3HqQf77HBKAeMen2TlRng3iX5IxodQU0CzrZzdffr/zAnpizSypibBpYLBtRPDhnTg/G
+ v/w0nkkjWRf0lQ0K1MJu1ZdQPkIKB3Xfh6rhulKkicsnUgxKS+1Rveym17Lby+FPMIz8
+ ZeWUBPj17SdsprYUf4nAD64pdK5EqmRQR4bIkiJUc4OJjHPlddKHAQWpM2n/Rsnh1R5J
+ TxYw==
+X-Gm-Message-State: AOJu0Yw9EWE+yPPgz6Mfcvlo1ZE8gMBMJCza68aKNSKTGPOgiB7nhIF/
+ h7qYgixnyiykrmCYZawHGiyWAS4edq3lpooBAjCoRzFEjY/Julu9HimER9v0WA6VHv38zvWCwGA
+ RHAA=
+X-Gm-Gg: ASbGnctjHQfVNnnOu5KyqAWbwsBOCXLJJmjBSLbI4BwG2TXbk0s7pD+uLmFvXjHNePU
+ KLo7TGFuvTe07g+cUldMFQr8jJjYaRXqrGMJ4vPnxW1+TyEmjM18EtyYlZwLdKNVd1PQKL14B9I
+ bxplmpdc0J3YGLLtD6+bnrb0na8dP9oyEvT+qJMdxIErHQGojlFiaZqYOZJd14AGqqOgZmY8LfS
+ j9qXyIAWKDCemiRPzNY/KdzeFSKagGkzRgvoCSkAxNhrioauaB/a2dR0u6P+Gbt/rMpdRsnCUGk
+ A8ddS7Z57+t0w2ZeBr/FMiUiMtZny8daRAQI
+X-Google-Smtp-Source: AGHT+IEXJMYOV1taRVFlCVKzS97GhTEvb0dXWNf7+KUvG8AX4EJQtCcmLDtCNJ1S0re1fipnieSg9w==
+X-Received: by 2002:a05:600c:3b02:b0:435:1a2:2633 with SMTP id
+ 5b1f17b1804b1-436e26cf8a5mr32814435e9.15.1736443210960; 
+ Thu, 09 Jan 2025 09:20:10 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38c596sm2348386f8f.51.2025.01.09.09.20.25
+ ffacd0b85a97d-38a8e37e375sm2295146f8f.22.2025.01.09.09.20.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Jan 2025 09:20:25 -0800 (PST)
+ Thu, 09 Jan 2025 09:20:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 07/11] qom: Add object_get_container()
-Date: Thu,  9 Jan 2025 18:19:44 +0100
-Message-ID: <20250109171948.31092-8-philmd@linaro.org>
+Subject: [PULL 04/11] qdev: Make qdev_get_machine() not use container_get()
+Date: Thu,  9 Jan 2025 18:19:41 +0100
+Message-ID: <20250109171948.31092-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250109171948.31092-1-philmd@linaro.org>
 References: <20250109171948.31092-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,62 +102,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Add a helper to fetch a root container (under object_get_root()).  Sanity
-check on the type of the object.
+Currently, qdev_get_machine() has a slight misuse on container_get(), as
+the helper says "get a container" but in reality the goal is to get the
+machine object.  It is still a "container" but not strictly.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Note that it _may_ get a container (at "/machine") in our current unit test
+of test-qdev-global-props.c before all these changes, but it's probably
+unexpected and worked by accident.
+
+Switch to an explicit object_resolve_path_component(), with a side benefit
+that qdev_get_machine() can happen a lot, and we don't need to split the
+string ("/machine") every time.  This also paves way for making the helper
+container_get() never try to return a non-container at all.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Message-ID: <20241121192202.4155849-12-peterx@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241121192202.4155849-9-peterx@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qom/object.h | 10 ++++++++++
- qom/object.c         | 10 ++++++++++
- 2 files changed, 20 insertions(+)
+ hw/core/qdev.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 95d6e064d9b..bcf9910b42c 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1510,6 +1510,16 @@ const char *object_property_get_type(Object *obj, const char *name,
-  */
- Object *object_get_root(void);
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index 09c4489e3c4..48bc9a7b9c7 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -817,7 +817,12 @@ Object *qdev_get_machine(void)
+     static Object *dev;
  
-+/**
-+ * object_get_container:
-+ * @name: the name of container to lookup
-+ *
-+ * Lookup a root level container.
-+ *
-+ * Returns: the container with @name.
-+ */
-+Object *object_get_container(const char *name);
-+
+     if (dev == NULL) {
+-        dev = container_get(object_get_root(), "/machine");
++        dev = object_resolve_path_component(object_get_root(), "machine");
++        /*
++         * Any call to this function before machine is created is treated
++         * as a programming error as of now.
++         */
++        assert(dev);
+     }
  
- /**
-  * object_get_objects_root:
-diff --git a/qom/object.c b/qom/object.c
-index b4c52d055d9..81c06906d30 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1751,6 +1751,16 @@ static Object *object_root_initialize(void)
-     return root;
- }
- 
-+Object *object_get_container(const char *name)
-+{
-+    Object *container;
-+
-+    container = object_resolve_path_component(object_get_root(), name);
-+    assert(object_dynamic_cast(container, TYPE_CONTAINER));
-+
-+    return container;
-+}
-+
- Object *object_get_root(void)
- {
-     static Object *root;
+     return dev;
 -- 
 2.47.1
 
