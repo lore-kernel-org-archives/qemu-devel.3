@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5073BE7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 10:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF6CE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 10:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWCae-00052C-CR; Fri, 10 Jan 2025 05:50:09 -0500
+	id 1tWCai-00055b-PV; Fri, 10 Jan 2025 05:50:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
- id 1tWCac-00051V-1K
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:50:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tWCaf-000543-CR
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:50:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
- id 1tWCaZ-00014T-PL
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:50:05 -0500
+ id 1tWCad-0001GK-9j
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:50:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736506202;
+ s=mimecast20190719; t=1736506206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mQSJOdgiSOlqiXJR6rfGpe+GH3UXNVAPHUps8UGk3E0=;
- b=d2LsTWhWe/Hiu+bqScjo9pdq2X3aszb1Fl6GH7zmsbGpTIL7oMdn6/H39z/8/H9em4a8z8
- rJkEOumGwMkfFsdpbSR+gN1lnj2wbI4GedHs0agoFHQZqrYXK5kX9AYy7khCKm3+gZaTnc
- oCFuhWanDLf12me70PlDQJQqqvP0nwk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=XUx9qC+EjkbMllxMBJQcin1uYLi0gdtIM3oc0kcoKFw=;
+ b=HguowF+7Gw3jeFH8lE05AlkFLzrb9VLJts0PipEWlmmhMQDbrO1oVQbXgPq9xCyzN0rDx8
+ 5h0gEqUrshA4wCvw1XESfp1trX+xl3AE/34EvtdlMI4PqCrwkOAYskHsybZI9BmVDPXWF7
+ D6lSwjs7+2hJNtAXjcRVaT3QeldCfu0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-oylLBccrMTSyzgzqvhZh4g-1; Fri,
- 10 Jan 2025 05:50:00 -0500
-X-MC-Unique: oylLBccrMTSyzgzqvhZh4g-1
-X-Mimecast-MFC-AGG-ID: oylLBccrMTSyzgzqvhZh4g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-2T1nt7tnMo642PjNpnnfgw-1; Fri,
+ 10 Jan 2025 05:50:05 -0500
+X-MC-Unique: 2T1nt7tnMo642PjNpnnfgw-1
+X-Mimecast-MFC-AGG-ID: 2T1nt7tnMo642PjNpnnfgw
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 822A9195608A
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:49:59 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 567D219560BD
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:50:04 +0000 (UTC)
 Received: from tapioca.redhat.com (unknown [10.45.225.126])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A73B61955BE3; Fri, 10 Jan 2025 10:49:57 +0000 (UTC)
+ id 7D6F11954B24; Fri, 10 Jan 2025 10:50:02 +0000 (UTC)
 From: Victor Toso <victortoso@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Andrea Bolognani <abologna@redhat.com>
-Subject: [PATCH v3 3/8] qapi: golang: Generate struct types
-Date: Fri, 10 Jan 2025 11:49:41 +0100
-Message-ID: <20250110104946.74960-4-victortoso@redhat.com>
+Subject: [PATCH v3 5/8] qapi: golang: Generate union type
+Date: Fri, 10 Jan 2025 11:49:43 +0100
+Message-ID: <20250110104946.74960-6-victortoso@redhat.com>
 In-Reply-To: <20250110104946.74960-1-victortoso@redhat.com>
 References: <20250110104946.74960-1-victortoso@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=victortoso@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,345 +86,362 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch handles QAPI struct types and generates the equivalent
-types in Go. The following patch adds extra logic when a member of the
-struct has a Type that can take JSON Null value (e.g: StrOrNull in
-QEMU)
+This patch handles QAPI union types and generates the equivalent data
+structures and methods in Go to handle it.
 
-The highlights of this implementation are:
+The QAPI union type has two types of fields: The @base and the
+@Variants members. The @base fields can be considered common members
+for the union while only one field maximum is set for the @Variants.
 
-1. Generating a Go struct that requires a @base type, the @base type
-   fields are copied over to the Go struct. The advantage of this
-   approach is to not have embed structs in any of the QAPI types.
-   Note that embedding a @base type is recursive, that is, if the
-   @base type has a @base, all of those fields will be copied over.
+In the QAPI specification, it defines a @discriminator field, which is
+an Enum type. The purpose of the  @discriminator is to identify which
+@variant type is being used.
 
-2. About the Go struct's fields:
+For the @discriminator's enum that are not handled by the QAPI Union,
+we add in the Go struct a separate block as "Unbranched enum fields".
+The rationale for this extra block is to allow the user to pass that
+enum value under the discriminator, without extra payload.
 
-   i) They can be either by Value or Reference.
-
-  ii) Every field that is marked as optional in the QAPI specification
-      are translated to Reference fields in its Go structure. This
-      design decision is the most straightforward way to check if a
-      given field was set or not. Exception only for types that can
-      take JSON Null value.
-
- iii) Mandatory fields are always by Value with the exception of QAPI
-      arrays, which are handled by Reference (to a block of memory) by
-      Go.
-
-  iv) All the fields are named with Uppercase due Golang's export
-      convention.
-
-Example:
+The union types implement the Marshaler and Unmarshaler interfaces to
+seamless decode from JSON objects to Golang structs and vice versa.
 
 qapi:
  | ##
- | # @BlockdevCreateOptionsFile:
+ | # @SetPasswordOptions:
  | #
- | # Driver specific image creation options for file.
+ | # Options for set_password.
  | #
- | # @filename: Filename for the new image file
+ | # @protocol:
+ | #     - 'vnc' to modify the VNC server password
+ | #     - 'spice' to modify the Spice server password
  | #
- | # @size: Size of the virtual disk in bytes
+ | # @password: the new password
  | #
- | # @preallocation: Preallocation mode for the new image (default: off;
- | #     allowed values: off, falloc (if CONFIG_POSIX_FALLOCATE), full
- | #     (if CONFIG_POSIX))
+ | # @connected: How to handle existing clients when changing the
+ | #     password.  If nothing is specified, defaults to 'keep'.  For
+ | #     VNC, only 'keep' is currently implemented.
  | #
- | # @nocow: Turn off copy-on-write (valid only on btrfs; default: off)
- | #
- | # @extent-size-hint: Extent size hint to add to the image file; 0 for
- | #     not adding an extent size hint (default: 1 MB, since 5.1)
- | #
- | # Since: 2.12
+ | # Since: 7.0
  | ##
- | { 'struct': 'BlockdevCreateOptionsFile',
- |   'data': { 'filename':             'str',
- |             'size':                 'size',
- |             '*preallocation':       'PreallocMode',
- |             '*nocow':               'bool',
- |             '*extent-size-hint':    'size'} }
+ | { 'union': 'SetPasswordOptions',
+ |   'base': { 'protocol': 'DisplayProtocol',
+ |             'password': 'str',
+ |             '*connected': 'SetPasswordAction' },
+ |   'discriminator': 'protocol',
+ |   'data': { 'vnc': 'SetPasswordOptionsVnc' } }
 
 go:
- | // Driver specific image creation options for file.
+ | // Options for set_password.
  | //
- | // Since: 2.12
- | type BlockdevCreateOptionsFile struct {
- | 	// Filename for the new image file
- | 	Filename string `json:"filename"`
- | 	// Size of the virtual disk in bytes
- | 	Size uint64 `json:"size"`
- | 	// Preallocation mode for the new image (default: off; allowed
- | 	// values: off, falloc (if CONFIG_POSIX_FALLOCATE), full (if
- | 	// CONFIG_POSIX))
- | 	Preallocation *PreallocMode `json:"preallocation,omitempty"`
- | 	// Turn off copy-on-write (valid only on btrfs; default: off)
- | 	Nocow *bool `json:"nocow,omitempty"`
- | 	// Extent size hint to add to the image file; 0 for not adding an
- | 	// extent size hint (default: 1 MB, since 5.1)
- | 	ExtentSizeHint *uint64 `json:"extent-size-hint,omitempty"`
+ | // Since: 7.0
+ | type SetPasswordOptions struct {
+ | 	// the new password
+ | 	Password string `json:"password"`
+ | 	// How to handle existing clients when changing the password. If
+ | 	// nothing is specified, defaults to 'keep'. For VNC, only 'keep'
+ | 	// is currently implemented.
+ | 	Connected *SetPasswordAction `json:"connected,omitempty"`
+ | 	// Variants fields
+ | 	Vnc *SetPasswordOptionsVnc `json:"-"`
+ | 	// Unbranched enum fields
+ | 	Spice bool `json:"-"`
+ | }
+ |
+ | func (s SetPasswordOptions) MarshalJSON() ([]byte, error) {
+ |      ...
+ | }
+
+ |
+ | func (s *SetPasswordOptions) UnmarshalJSON(data []byte) error {
+ |      ...
  | }
 
 Signed-off-by: Victor Toso <victortoso@redhat.com>
 ---
- scripts/qapi/golang.py | 199 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 197 insertions(+), 2 deletions(-)
+ scripts/qapi/golang.py | 208 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 205 insertions(+), 3 deletions(-)
 
 diff --git a/scripts/qapi/golang.py b/scripts/qapi/golang.py
-index 805e54427c..df40bd89f2 100644
+index ada89f0ce8..330891ede9 100644
 --- a/scripts/qapi/golang.py
 +++ b/scripts/qapi/golang.py
-@@ -148,6 +148,14 @@ def gen_golang(schema: QAPISchema, output_dir: str, prefix: str) -> None:
-     vis.write(output_dir)
+@@ -164,6 +164,81 @@
+ """
  
  
-+def qapi_name_is_base(name: str) -> bool:
-+    return qapi_name_is_object(name) and name.endswith("-base")
++TEMPLATE_UNION_CHECK_VARIANT_FIELD = """
++    if s.{field} != nil && err == nil {{
++        if len(bytes) != 0 {{
++            err = errors.New(`multiple variant fields set`)
++        }} else if err = unwrapToMap(m, s.{field}); err == nil {{
++            m["{discriminator}"] = {go_enum_value}
++            bytes, err = json.Marshal(m)
++        }}
++    }}
++"""
++
++TEMPLATE_UNION_CHECK_UNBRANCHED_FIELD = """
++    if s.{field} && err == nil {{
++        if len(bytes) != 0 {{
++            err = errors.New(`multiple variant fields set`)
++        }} else {{
++            m["{discriminator}"] = {go_enum_value}
++            bytes, err = json.Marshal(m)
++        }}
++    }}
++"""
++
++TEMPLATE_UNION_DRIVER_VARIANT_CASE = """
++    case {go_enum_value}:
++        s.{field} = new({member_type})
++        if err := json.Unmarshal(data, s.{field}); err != nil {{
++            s.{field} = nil
++            return err
++        }}"""
++
++TEMPLATE_UNION_DRIVER_UNBRANCHED_CASE = """
++    case {go_enum_value}:
++        s.{field} = true
++"""
++
++TEMPLATE_UNION_METHODS = """
++func (s {type_name}) MarshalJSON() ([]byte, error) {{
++    var bytes []byte
++    var err error
++    m := make(map[string]any)
++    {{
++        type Alias {type_name}
++        v := Alias(s)
++        unwrapToMap(m, &v)
++    }}
++{check_fields}
++    if err != nil {{
++        return nil, fmt.Errorf("marshal {type_name} due:'%s' struct='%+v'", err, s)
++    }} else if len(bytes) == 0 {{
++        return nil, fmt.Errorf("marshal {type_name} unsupported, struct='%+v'", s)
++    }}
++    return bytes, nil
++}}
++
++func (s *{type_name}) UnmarshalJSON(data []byte) error {{
++{base_type_def}
++    tmp := struct {{
++        {base_type_name}
++    }}{{}}
++
++    if err := json.Unmarshal(data, &tmp); err != nil {{
++        return err
++    }}
++{base_type_assign_unmarshal}
++    switch tmp.{discriminator} {{
++{driver_cases}
++    default:
++        return fmt.Errorf("unmarshal {type_name} received unrecognized value '%s'",
++            tmp.{discriminator})
++    }}
++    return nil
++}}
++"""
 +
 +
-+def qapi_name_is_object(name: str) -> bool:
-+    return name.startswith("q_obj_")
+ # Takes the documentation object of a specific type and returns
+ # that type's documentation and its member's docs.
+ def qapi_to_golang_struct_docs(doc: QAPIDoc) -> (str, Dict[str, str]):
+@@ -211,6 +286,12 @@ def qapi_name_is_object(name: str) -> bool:
+     return name.startswith("q_obj_")
+ 
+ 
++def qapi_base_name_to_parent(name: str) -> str:
++    if qapi_name_is_base(name):
++        name = name[6:-5]
++    return name
 +
 +
  def qapi_to_field_name(name: str) -> str:
      return name.title().replace("_", "").replace("-", "")
  
-@@ -156,6 +164,27 @@ def qapi_to_field_name_enum(name: str) -> str:
-     return name.title().replace("-", "")
+@@ -648,7 +729,7 @@ def recursive_base(
+         embed_base = self.schema.lookup_entity(base.base.name)
+         fields, with_nullable = recursive_base(self, embed_base, discriminator)
+ 
+-    doc = self.docmap.get(base.name, None)
++    doc = self.docmap.get(qapi_base_name_to_parent(base.name), None)
+     _, docfields = qapi_to_golang_struct_docs(doc)
+ 
+     for member in base.local_members:
+@@ -728,6 +809,24 @@ def qapi_to_golang_struct(
+             fields.append(field)
+             with_nullable = True if nullable else with_nullable
+ 
++    if info.defn_meta == "union" and variants:
++        enum_name = variants.tag_member.type.name
++        enum_obj = self.schema.lookup_entity(enum_name)
++        if len(exists) != len(enum_obj.members):
++            fields.append({"comment": "Unbranched enum fields"})
++            for member in enum_obj.members:
++                if member.name in exists:
++                    continue
++
++                field_doc = (
++                    docfields.get(member.name, "") if doc_enabled else ""
++                )
++                field, nullable = get_struct_field(
++                    self, member.name, "bool", field_doc, False, False, True
++                )
++                fields.append(field)
++                with_nullable = True if nullable else with_nullable
++
+     type_name = qapi_to_go_type_name(name)
+     content = string_to_code(
+         generate_struct_type(
+@@ -741,6 +840,98 @@ def qapi_to_golang_struct(
+     return content
  
  
-+def qapi_to_go_type_name(name: str) -> str:
-+    # We want to keep CamelCase for Golang types. We want to avoid removing
-+    # already set CameCase names while fixing uppercase ones, eg:
-+    # 1) q_obj_SocketAddress_base -> SocketAddressBase
-+    # 2) q_obj_WATCHDOG-arg -> WatchdogArg
-+
-+    if qapi_name_is_object(name):
-+        # Remove q_obj_ prefix
-+        name = name[6:]
-+
-+    # Handle CamelCase
-+    words = list(name.replace("_", "-").split("-"))
-+    name = words[0]
-+    if name.islower() or name.isupper():
-+        name = name.title()
-+
-+    name += "".join(word.title() for word in words[1:])
-+
-+    return name
-+
-+
- def qapi_schema_type_to_go_type(qapitype: str) -> str:
-     schema_types_to_go = {
-         "str": "string",
-@@ -323,6 +352,131 @@ def generate_struct_type(
-     return f"""{type_doc}{with_type} struct{members}"""
- 
- 
-+def get_struct_field(
-+    self: QAPISchemaGenGolangVisitor,
-+    qapi_name: str,
-+    qapi_type_name: str,
-+    field_doc: str,
-+    is_optional: bool,
-+    is_variant: bool,
-+) -> dict[str:str]:
-+    field = qapi_to_field_name(qapi_name)
-+    member_type = qapi_schema_type_to_go_type(qapi_type_name)
-+
-+    optional = ""
-+    if is_optional:
-+        if member_type not in self.accept_null_types:
-+            optional = ",omitempty"
-+
-+    # Use pointer to type when field is optional
-+    isptr = "*" if is_optional and member_type[0] not in "*[" else ""
-+
-+    fieldtag = (
-+        '`json:"-"`' if is_variant else f'`json:"{qapi_name}{optional}"`'
-+    )
-+    arg = {
-+        "name": f"{field}",
-+        "type": f"{isptr}{member_type}",
-+        "tag": f"{fieldtag}",
-+    }
-+    if field_doc != "":
-+        arg["doc"] = field_doc
-+
-+    return arg
-+
-+
-+def recursive_base(
-+    self: QAPISchemaGenGolangVisitor,
-+    base: Optional[QAPISchemaObjectType],
-+) -> List[dict[str:str]]:
-+    fields: List[dict[str:str]] = []
-+
-+    if not base:
-+        return fields
-+
-+    if base.base is not None:
-+        embed_base = self.schema.lookup_entity(base.base.name)
-+        fields = recursive_base(self, embed_base)
-+
-+    doc = self.docmap.get(base.name, None)
-+    _, docfields = qapi_to_golang_struct_docs(doc)
-+
-+    for member in base.local_members:
-+        field_doc = docfields.get(member.name, "")
-+        field = get_struct_field(
-+            self,
-+            member.name,
-+            member.type.name,
-+            field_doc,
-+            member.optional,
-+            False,
-+        )
-+        fields.append(field)
-+
-+    return fields
-+
-+
-+# Helper function that is used for most of QAPI types
-+def qapi_to_golang_struct(
++def qapi_to_golang_methods_union(
 +    self: QAPISchemaGenGolangVisitor,
 +    name: str,
-+    info: Optional[QAPISourceInfo],
-+    __: QAPISchemaIfCond,
-+    ___: List[QAPISchemaFeature],
 +    base: Optional[QAPISchemaObjectType],
-+    members: List[QAPISchemaObjectTypeMember],
 +    variants: Optional[QAPISchemaVariants],
-+    indent: int = 0,
-+    doc_enabled: bool = True,
 +) -> str:
-+    fields = recursive_base(self, base)
++    type_name = qapi_to_go_type_name(name)
 +
-+    doc = self.docmap.get(name, None)
-+    type_doc, docfields = qapi_to_golang_struct_docs(doc)
-+    if not doc_enabled:
-+        type_doc = ""
++    assert base
++    base_type_assign_unmarshal = ""
++    base_type_name = qapi_to_go_type_name(base.name)
++    base_type_def = qapi_to_golang_struct(
++        self,
++        base.name,
++        base.info,
++        base.ifcond,
++        base.features,
++        base.base,
++        base.members,
++        base.branches,
++        indent=1,
++        doc_enabled=False,
++    )
 +
-+    if members:
-+        for member in members:
-+            field_doc = docfields.get(member.name, "") if doc_enabled else ""
-+            field = get_struct_field(
-+                self,
-+                member.name,
-+                member.type.name,
-+                field_doc,
-+                member.optional,
-+                False,
-+            )
-+            fields.append(field)
++    discriminator = qapi_to_field_name(variants.tag_member.name)
++    for member in base.local_members:
++        field = qapi_to_field_name(member.name)
++        if field == discriminator:
++            continue
++        base_type_assign_unmarshal += f"""
++    s.{field} = tmp.{field}"""
 +
++    driver_cases = ""
++    check_fields = ""
 +    exists = {}
++    enum_name = variants.tag_member.type.name
 +    if variants:
-+        fields.append({"comment": "Variants fields"})
-+        for variant in variants.variants:
-+            if variant.type.is_implicit():
++        for var in variants.variants:
++            if var.type.is_implicit():
 +                continue
 +
-+            exists[variant.name] = True
-+            field_doc = docfields.get(variant.name, "") if doc_enabled else ""
-+            field = get_struct_field(
-+                self,
-+                variant.name,
-+                variant.type.name,
-+                field_doc,
-+                True,
-+                True,
-+            )
-+            fields.append(field)
++            field = qapi_to_field_name(var.name)
++            enum_value = qapi_to_field_name_enum(var.name)
++            member_type = qapi_schema_type_to_go_type(var.type.name)
++            go_enum_value = f"""{enum_name}{enum_value}"""
++            exists[go_enum_value] = True
 +
-+    type_name = qapi_to_go_type_name(name)
-+    content = string_to_code(
-+        generate_struct_type(
-+            type_name, type_doc=type_doc, args=fields, indent=indent
++            check_fields += TEMPLATE_UNION_CHECK_VARIANT_FIELD.format(
++                field=field,
++                discriminator=variants.tag_member.name,
++                go_enum_value=go_enum_value,
++            )
++            driver_cases += TEMPLATE_UNION_DRIVER_VARIANT_CASE.format(
++                go_enum_value=go_enum_value,
++                field=field,
++                member_type=member_type,
++            )
++
++    enum_obj = self.schema.lookup_entity(enum_name)
++    if len(exists) != len(enum_obj.members):
++        for member in enum_obj.members:
++            value = qapi_to_field_name_enum(member.name)
++            go_enum_value = f"""{enum_name}{value}"""
++
++            if go_enum_value in exists:
++                continue
++
++            field = qapi_to_field_name(member.name)
++
++            check_fields += TEMPLATE_UNION_CHECK_UNBRANCHED_FIELD.format(
++                field=field,
++                discriminator=variants.tag_member.name,
++                go_enum_value=go_enum_value,
++            )
++            driver_cases += TEMPLATE_UNION_DRIVER_UNBRANCHED_CASE.format(
++                go_enum_value=go_enum_value,
++                field=field,
++            )
++
++    return string_to_code(
++        TEMPLATE_UNION_METHODS.format(
++            type_name=type_name,
++            check_fields=check_fields[1:],
++            base_type_def=base_type_def[1:],
++            base_type_name=base_type_name,
++            base_type_assign_unmarshal=base_type_assign_unmarshal,
++            discriminator=discriminator,
++            driver_cases=driver_cases[1:],
 +        )
 +    )
-+    return content
 +
 +
  def generate_template_alternate(
      self: QAPISchemaGenGolangVisitor,
      name: str,
-@@ -419,12 +573,14 @@ def __init__(self, _: str):
-             "alternate",
+@@ -851,6 +1042,7 @@ def __init__(self, _: str):
              "enum",
              "helper",
-+            "struct",
+             "struct",
++            "union",
          )
          self.target = dict.fromkeys(types, "")
          self.schema: QAPISchema
-         self.golang_package_name = "qapi"
+@@ -858,6 +1050,7 @@ def __init__(self, _: str):
          self.enums: dict[str, str] = {}
          self.alternates: dict[str, str] = {}
-+        self.structs: dict[str, str] = {}
+         self.structs: dict[str, str] = {}
++        self.unions: dict[str, str] = {}
          self.accept_null_types = []
          self.docmap = {}
  
-@@ -454,7 +610,11 @@ def visit_begin(self, schema: QAPISchema) -> None:
-             self.target[target] = f"package {self.golang_package_name}"
- 
-             imports = "\n"
--            if target == "helper":
-+            if target == "struct":
-+                imports += """
-+import "encoding/json"
-+"""
-+            elif target == "helper":
-                 imports += """
- import (
-     "encoding/json"
-@@ -479,6 +639,7 @@ def visit_end(self) -> None:
-         del self.schema
+@@ -918,6 +1111,7 @@ def visit_end(self) -> None:
          self.target["enum"] += generate_content_from_dict(self.enums)
          self.target["alternate"] += generate_content_from_dict(self.alternates)
-+        self.target["struct"] += generate_content_from_dict(self.structs)
+         self.target["struct"] += generate_content_from_dict(self.structs)
++        self.target["union"] += generate_content_from_dict(self.unions)
  
      def visit_object_type(
          self,
-@@ -490,7 +651,41 @@ def visit_object_type(
+@@ -929,11 +1123,11 @@ def visit_object_type(
          members: List[QAPISchemaObjectTypeMember],
          branches: Optional[QAPISchemaBranches],
      ) -> None:
--        pass
-+        # Do not handle anything besides struct.
-+        if (
-+            name == self.schema.the_empty_object_type.name
-+            or not isinstance(name, str)
-+            or info.defn_meta not in ["struct"]
-+        ):
-+            return
-+
-+        # Base structs are embed
-+        if qapi_name_is_base(name):
-+            return
-+
-+        # visit all inner objects as well, they are not going to be
-+        # called by python's generator.
-+        if branches:
-+            for branch in branches.variants:
-+                assert isinstance(branch.type, QAPISchemaObjectType)
-+                self.visit_object_type(
-+                    self,
-+                    branch.type.name,
-+                    branch.type.info,
-+                    branch.type.ifcond,
-+                    branch.type.base,
-+                    branch.type.local_members,
-+                    branch.type.branches,
-+                )
-+
-+        # Save generated Go code to be written later
-+        if info.defn_meta == "struct":
-+            assert name not in self.structs
-+            self.structs[name] = string_to_code(
-+                qapi_to_golang_struct(
-+                    self, name, info, ifcond, features, base, members, branches
-+                )
+-        # Do not handle anything besides struct.
++        # Do not handle anything besides struct and unions.
+         if (
+             name == self.schema.the_empty_object_type.name
+             or not isinstance(name, str)
+-            or info.defn_meta not in ["struct"]
++            or info.defn_meta not in ["struct", "union"]
+         ):
+             return
+ 
+@@ -964,6 +1158,14 @@ def visit_object_type(
+                     self, name, info, ifcond, features, base, members, branches
+                 )
+             )
++        else:
++            assert name not in self.unions
++            self.unions[name] = qapi_to_golang_struct(
++                self, name, info, ifcond, features, base, members, branches
++            )
++            self.unions[name] += qapi_to_golang_methods_union(
++                self, name, base, branches
 +            )
  
      def visit_alternate_type(
