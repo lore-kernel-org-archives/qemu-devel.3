@@ -4,97 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9847FE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B7DE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWDuZ-0001Ud-Lt; Fri, 10 Jan 2025 07:14:47 -0500
+	id 1tWDuZ-0001UY-At; Fri, 10 Jan 2025 07:14:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tWDuX-0001Tw-7E
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tWDuX-0001U6-Et
  for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:14:45 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tWDuU-0003MI-F8
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:14:44 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tWDuV-0003MX-SF
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:14:45 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2EC00210F2;
- Fri, 10 Jan 2025 12:14:41 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9C95821177;
+ Fri, 10 Jan 2025 12:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736511281; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736511282; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+tzeGvdH6vS8A/LD9lQ2r4g2j6uBmkgNsdhpSzn+ovU=;
- b=Y1bQ1buxWNrb9DjLT+iPWudD2j1JiVWVJ/4qC78Tt3fsYAIvEo1GaK5VXS1O9ZYjFJ7IO9
- YtOtkK4PQo/oykDjGfrh0eXgYXB1ZDEqA3yDiXBYvPsN1a7hdnYr1G9ypy1N8krg5Q+mpO
- I5ckBOtHBJisJGdeLqCiA9u9jZs5r4Q=
+ bh=6xgxcPNXD8/1JJMtCAc0UgSzFRJ8xnbkzFW1a99qkqQ=;
+ b=n3xSvOQciEkSCOEb/jhQ9IxXV+Yq+YWa6lbxYTaAH1uC8LjPw1//3ySuptrROPT93X4nXR
+ d5nigZeKMErMIyouDS0VsyHHqqJtWeY3xwwq1B3329/9WVV6QDtFeIEqkIV3RQH6dMA1G/
+ lgpNvuZBDe+WftxByZXA1ErXimMVunE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736511281;
+ s=susede2_ed25519; t=1736511282;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+tzeGvdH6vS8A/LD9lQ2r4g2j6uBmkgNsdhpSzn+ovU=;
- b=k5tiMcYwVBOBEr6OwmYP2TTuUkNBONcXXF75VZ5Gsx3/bvSWH6nWqPljYZ+CWFgiMdPXBd
- bQL8uyr1duyVIRBw==
+ bh=6xgxcPNXD8/1JJMtCAc0UgSzFRJ8xnbkzFW1a99qkqQ=;
+ b=NSqOjf77YLkKaO9c9fNYqEttW3CvIAMwhDRW+sjgI/3KhiYNKoU843ZdbMmxZL0kLoBNsK
+ EvV9dGf65zDX+eBQ==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=n3xSvOQc;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NSqOjf77
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736511281; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736511282; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+tzeGvdH6vS8A/LD9lQ2r4g2j6uBmkgNsdhpSzn+ovU=;
- b=Y1bQ1buxWNrb9DjLT+iPWudD2j1JiVWVJ/4qC78Tt3fsYAIvEo1GaK5VXS1O9ZYjFJ7IO9
- YtOtkK4PQo/oykDjGfrh0eXgYXB1ZDEqA3yDiXBYvPsN1a7hdnYr1G9ypy1N8krg5Q+mpO
- I5ckBOtHBJisJGdeLqCiA9u9jZs5r4Q=
+ bh=6xgxcPNXD8/1JJMtCAc0UgSzFRJ8xnbkzFW1a99qkqQ=;
+ b=n3xSvOQciEkSCOEb/jhQ9IxXV+Yq+YWa6lbxYTaAH1uC8LjPw1//3ySuptrROPT93X4nXR
+ d5nigZeKMErMIyouDS0VsyHHqqJtWeY3xwwq1B3329/9WVV6QDtFeIEqkIV3RQH6dMA1G/
+ lgpNvuZBDe+WftxByZXA1ErXimMVunE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736511281;
+ s=susede2_ed25519; t=1736511282;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+tzeGvdH6vS8A/LD9lQ2r4g2j6uBmkgNsdhpSzn+ovU=;
- b=k5tiMcYwVBOBEr6OwmYP2TTuUkNBONcXXF75VZ5Gsx3/bvSWH6nWqPljYZ+CWFgiMdPXBd
- bQL8uyr1duyVIRBw==
+ bh=6xgxcPNXD8/1JJMtCAc0UgSzFRJ8xnbkzFW1a99qkqQ=;
+ b=NSqOjf77YLkKaO9c9fNYqEttW3CvIAMwhDRW+sjgI/3KhiYNKoU843ZdbMmxZL0kLoBNsK
+ EvV9dGf65zDX+eBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 326B713A86;
- Fri, 10 Jan 2025 12:14:39 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C37513A86;
+ Fri, 10 Jan 2025 12:14:41 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yJa3OS8PgWdURwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 10 Jan 2025 12:14:39 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eKMNGDEPgWdURwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 10 Jan 2025 12:14:41 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 16/25] migration: Add more error handling to
- analyze-migration.py
-Date: Fri, 10 Jan 2025 09:14:04 -0300
-Message-Id: <20250110121413.12336-17-farosas@suse.de>
+Subject: [PULL 17/25] migration: Remove unused argument in vmsd_desc_field_end
+Date: Fri, 10 Jan 2025 09:14:05 -0300
+Message-Id: <20250110121413.12336-18-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250110121413.12336-1-farosas@suse.de>
 References: <20250110121413.12336-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: 9C95821177
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -120,139 +127,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The analyze-migration script was seen failing in s390x in misterious
-ways. It seems we're reaching the VMSDFieldStruct constructor without
-any fields, which would indicate an empty .subsection entry, a
-VMSTATE_STRUCT with no fields or a vmsd with no fields. We don't have
-any of those, at least not without the unmigratable flag set, so this
-should never happen.
-
-Add some debug statements so that we can see what's going on the next
-time the issue happens.
-
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20250109185249.23952-2-farosas@suse.de>
+Message-Id: <20250109185249.23952-3-farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- scripts/analyze-migration.py | 75 +++++++++++++++++++++---------------
- 1 file changed, 45 insertions(+), 30 deletions(-)
+ migration/vmstate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 8a254a5b6a..f2457b1dde 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -429,6 +429,9 @@ def __init__(self, desc, file):
-         super(VMSDFieldStruct, self).__init__(desc, file)
-         self.data = collections.OrderedDict()
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index fa002b24e8..aa2821dec6 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -311,7 +311,7 @@ static void vmsd_desc_field_start(const VMStateDescription *vmsd,
  
-+        if 'fields' not in self.desc['struct']:
-+            raise Exception("No fields in struct. VMSD:\n%s" % self.desc)
-+
-         # When we see compressed array elements, unfold them here
-         new_fields = []
-         for field in self.desc['struct']['fields']:
-@@ -477,6 +480,10 @@ def read(self):
-                     raise Exception("Subsection %s not found at offset %x" % ( subsection['vmsd_name'], self.file.tell()))
-                 name = self.file.readstr()
-                 version_id = self.file.read32()
-+
-+                if not subsection:
-+                    raise Exception("Empty description for subsection: %s" % name)
-+
-                 self.data[name] = VMSDSection(self.file, version_id, subsection, (name, 0))
-                 self.data[name].read()
+ static void vmsd_desc_field_end(const VMStateDescription *vmsd,
+                                 JSONWriter *vmdesc,
+-                                const VMStateField *field, size_t size, int i)
++                                const VMStateField *field, size_t size)
+ {
+     if (!vmdesc) {
+         return;
+@@ -420,7 +420,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 }
  
-@@ -574,10 +581,13 @@ def __init__(self, filename):
-         }
-         self.filename = filename
-         self.vmsd_desc = None
-+        self.vmsd_json = ""
+                 written_bytes = qemu_file_transferred(f) - old_offset;
+-                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes, i);
++                vmsd_desc_field_end(vmsd, vmdesc_loop, field, written_bytes);
  
--    def read(self, desc_only = False, dump_memory = False, write_memory = False):
-+    def read(self, desc_only = False, dump_memory = False,
-+             write_memory = False):
-         # Read in the whole file
-         file = MigrationFile(self.filename)
-+        self.vmsd_json = file.read_migration_debug_json()
- 
-         # File magic
-         data = file.read32()
-@@ -635,9 +645,11 @@ def read(self, desc_only = False, dump_memory = False, write_memory = False):
-         file.close()
- 
-     def load_vmsd_json(self, file):
--        vmsd_json = file.read_migration_debug_json()
--        self.vmsd_desc = json.loads(vmsd_json, object_pairs_hook=collections.OrderedDict)
-+        self.vmsd_desc = json.loads(self.vmsd_json,
-+                                    object_pairs_hook=collections.OrderedDict)
-         for device in self.vmsd_desc['devices']:
-+            if 'fields' not in device:
-+                raise Exception("vmstate for device %s has no fields" % device['name'])
-             key = (device['name'], device['instance_id'])
-             value = ( VMSDSection, device )
-             self.section_classes[key] = value
-@@ -666,31 +678,34 @@ def default(self, o):
- 
- jsonenc = JSONEncoder(indent=4, separators=(',', ': '))
- 
--if args.extract:
--    dump = MigrationDump(args.file)
--
--    dump.read(desc_only = True)
--    print("desc.json")
--    f = open("desc.json", "w")
--    f.truncate()
--    f.write(jsonenc.encode(dump.vmsd_desc))
--    f.close()
--
--    dump.read(write_memory = True)
--    dict = dump.getDict()
--    print("state.json")
--    f = open("state.json", "w")
--    f.truncate()
--    f.write(jsonenc.encode(dict))
--    f.close()
--elif args.dump == "state":
--    dump = MigrationDump(args.file)
--    dump.read(dump_memory = args.memory)
--    dict = dump.getDict()
--    print(jsonenc.encode(dict))
--elif args.dump == "desc":
--    dump = MigrationDump(args.file)
--    dump.read(desc_only = True)
--    print(jsonenc.encode(dump.vmsd_desc))
--else:
-+if not any([args.extract, args.dump == "state", args.dump == "desc"]):
-     raise Exception("Please specify either -x, -d state or -d desc")
-+
-+try:
-+    dump = MigrationDump(args.file)
-+
-+    if args.extract:
-+        dump.read(desc_only = True)
-+
-+        print("desc.json")
-+        f = open("desc.json", "w")
-+        f.truncate()
-+        f.write(jsonenc.encode(dump.vmsd_desc))
-+        f.close()
-+
-+        dump.read(write_memory = True)
-+        dict = dump.getDict()
-+        print("state.json")
-+        f = open("state.json", "w")
-+        f.truncate()
-+        f.write(jsonenc.encode(dict))
-+        f.close()
-+    elif args.dump == "state":
-+        dump.read(dump_memory = args.memory)
-+        dict = dump.getDict()
-+        print(jsonenc.encode(dict))
-+    elif args.dump == "desc":
-+        dump.read(desc_only = True)
-+        print(jsonenc.encode(dump.vmsd_desc))
-+except Exception:
-+    raise Exception("Full JSON dump:\n%s", dump.vmsd_json)
+                 /* Compressed arrays only care about the first element */
+                 if (vmdesc_loop && vmsd_can_compress(field)) {
 -- 
 2.35.3
 
