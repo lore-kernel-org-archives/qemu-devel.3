@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C9DAE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 20:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73EB9E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 20:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWLxg-00067x-MR; Fri, 10 Jan 2025 15:50:33 -0500
+	id 1tWM1T-0007QQ-0u; Fri, 10 Jan 2025 15:54:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tWLxU-00063a-Fe
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:50:20 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tWM1R-0007Q9-Tu
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:54:25 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tWLxR-0007Sy-Il
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:50:18 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21661be2c2dso40724985ad.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:50:16 -0800 (PST)
+ id 1tWM1Q-0007eU-An
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:54:25 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21636268e43so53267105ad.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:54:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736542216; x=1737147016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736542462; x=1737147262; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Az979v3mljxpCMSSzoc8pd6K5xzpfzwsnTnjg1aTEdE=;
- b=Eiq2DUPHwePaCNPCWSe3cvYjs8XvVlpv4FksC5rIfa+QYdwRj5gZPziZoMQ3L3ptLC
- YNWHYLJGxuytKYb40V1yJL45lk+RM9RjHVEk7/NeHFm/gYuenIpFim8Es1EMjxcYye1Y
- kdSfcvPBBckcyQQ20LXJeooUvEIJ6bKBm9NJnthDEeNUFH2lj3X57eYqGjsObzC5ELUf
- KZysk+hjpqBavEA721QkhWeW/VEo/s6IIWZrVUY8HRPh1dsOkePuiKZeVKKPEe2XhYyQ
- cVqcgS4lR5gJDl9ArnCUSom+qhBBI7848ZB9ia2etkIhBGCCRf+muvwbY/8cHRtpZLSS
- UucA==
+ bh=rBjVEyS8kdEWVLcyJonVubcc3foMHZv9sZlQiYhexXM=;
+ b=gIBklg2g/E0kqxOZMmUwxriCtdf0vQstLa+/NDp9j9lo5QqAQN7Ep64MoTKcCG2a9n
+ PzLDC8AjOViRcLnGHNPJVTzKGaNTPw2AtdWZVN5pJ6kF0GLUn44l1KaUbY4XTkrukqTx
+ ErB14ZgdxmTHWklchm57JyyoKjRKCaebBgvMSuZc6M2esQZINPUbd1859B2/V6TFU7R8
+ NsVrznRuLcMvTP4Z+hKshuAmIkFLik2Zai9OcJ0E5HveAz6jeQti8JrCyMkYka3X0K9S
+ HNLk4FGq5FbzQ4imkJXHYLm/SMREoaMNhYdbz0SDAAKs2MOKt4S4rRnXXUjLj9kzimqz
+ OO9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736542216; x=1737147016;
+ d=1e100.net; s=20230601; t=1736542462; x=1737147262;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Az979v3mljxpCMSSzoc8pd6K5xzpfzwsnTnjg1aTEdE=;
- b=r+1nwpbRWvUnSD2QPCgaNOKMa6qZFNJDEbSDIjS2MIhtwMfAgZVqjvjW1yyrxnWLfZ
- NcplP7Q9Ny23KQW7Od3XA+aU6KvRPwOUFWexseQf1FxXsYFNZPxMSYwCNaYcXuxKV8fF
- 3HfsUHFHBNg4MnRRAayzOjXV9FV9jECZfXozbErPj2FjLxZlQcuHArEgLGL9EmH6eyFs
- 2ZFfH1w5a9uGFvY7SiLQ3XEMCmDe4tBdTUy2Mkb8vMXPSH2HfaCNwTiQgJPvARxz7NH4
- KKGBxtXUER85TuDFhp1Zs3Mll+BKoFWmFrJ1j8hQ6odfrd/W16mLnUAhof+aEX9Xv8aW
- B2xw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWoXKF0HcQ96DXKyd5uXFfw10ibq/5Z9GcoeKNJLrQPHBoeQ/XY8/JW0Aq0Q7XwEubYkXlvhmydPFtq@nongnu.org
-X-Gm-Message-State: AOJu0Yzl3n2KU+i1XkpUSBK1GDLbVVnZB785VykwLmS3GprWPzEUARJn
- xLMT6fFBFOVX6R21UM8RZ1FRRw9wEO7n/5ppbRbTyXXUYOcnCJ4XI23bDOwQZKc=
-X-Gm-Gg: ASbGncsSmT7TfT4OdwEJGK+5XnKrLXYY075ePrGGdv/8Qbzdp+SG9XebFbwvWCKeIrd
- d9pzLeyVlbuemBZEf6KBixPyylJoc4ysG76CF0uHDsn/gx38Vl99h6SIO+Agn8bP2oYC8uKxtic
- MPsVP3wxavh4Faguv/4WqOwDbT7tehpG/zgykT35YwOD8n0YftgH8V4hyQ/3nDDyqtnf2wf4zYC
- kTJhR2Z0xxY6sUA7CU5DkYc5H5TvsGH0dBWnA7Rs3so0sRxf1vTDn5oWBvPfjVbYZHfqQ==
-X-Google-Smtp-Source: AGHT+IGvqCiBERMCNY9V6/ZOsRgrq3grgBBIg0RyO2/rW6e2R+2Ix3uo6s1zKugDUX6rWA05QO5ALw==
-X-Received: by 2002:a05:6a21:8906:b0:1e8:a374:ced7 with SMTP id
- adf61e73a8af0-1e8a374d2c4mr10843806637.23.1736542215868; 
- Fri, 10 Jan 2025 12:50:15 -0800 (PST)
+ bh=rBjVEyS8kdEWVLcyJonVubcc3foMHZv9sZlQiYhexXM=;
+ b=LX7f2BO1S1Rznoef8Sdc7mbcjfFrhPsfxbkPhPdbgqGZ9SJjwpWT9H28ypgqwKKwby
+ 5Ny53eEJUamq2HNF/uObuBUJ2tyS/5zK4zMsB1qK0Gf0nxbUxyA+yX7bH22aM5s+r9TI
+ zsncpJDGs+EPHQ2sm6EceuLFWb2gQy5hrGVDJSOn1UtfuFOaB+r1S+2+qUZ+1YDjr4qi
+ fbyWNHyFtSCPPyfO4DA9gGV5YbDyhslNzn0vBdJBwtADxaC8zkrEhps80FylSruhpsjc
+ Jij3HITnsjQlmzkoom/I06WGE3F/fPh40uaig4UBSf/ge9v6JS/QXIcW00m80mrVm0ci
+ U8AA==
+X-Gm-Message-State: AOJu0YxTmV8rS4uTyNp/guepJOw/QwNJTxGfZSCB/kXBmbdV6tIFMGCT
+ Fr/I72Xb7t1M/Y3STKvpFRJZiIwF+rNgUPBql8KYGvHZKkKiF3+SA6mosvxYeV0=
+X-Gm-Gg: ASbGncvadomJS2m4sUPbJZECItVMbQVspiQyZuhgzuiCBv0DG7ivrlk8eSGNDzf585B
+ mfHx/4KJb/brFwYnvGVLk5RitMbTQzoxbNdXy9ciopIunNEKdXy1d87JikDOxXEPt+GEeJiiMkP
+ UH0UvDVyDi3MSJWmORC5f6TzmVxne6FKCLtjHH17oZ45LKvmpD+xpbdEMHK+B3VAfz/B71Atndu
+ sEQ7X6cSwmpOLCvUAGUdQPRzxFas12nSNto355Qn6GmUFZ0M/wcQkkW12AZ6CXWO465Gg==
+X-Google-Smtp-Source: AGHT+IGeEwiREsp24qovdI7wZDrWh/J8z6c+jfHejXzHqKE4eu2i823v2NS9Z3hzGCwW3CFTYhEw0w==
+X-Received: by 2002:a17:902:db0e:b0:215:a57e:88e7 with SMTP id
+ d9443c01a7336-21a83f48cd6mr173206785ad.3.1736542462138; 
+ Fri, 10 Jan 2025 12:54:22 -0800 (PST)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-a31ddb9e52csm3254497a12.72.2025.01.10.12.50.15
+ d9443c01a7336-21a9f256e44sm17215635ad.216.2025.01.10.12.54.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 12:50:15 -0800 (PST)
-Message-ID: <9ed5fa46-3dfb-4620-bb7b-dd8f84d800be@linaro.org>
-Date: Fri, 10 Jan 2025 12:50:14 -0800
+ Fri, 10 Jan 2025 12:54:21 -0800 (PST)
+Message-ID: <70b28370-228d-41e6-88cd-eda686d55b21@linaro.org>
+Date: Fri, 10 Jan 2025 12:54:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/tricore/triboard: Remove use of &first_cpu
+Subject: Re: [PATCH v2 3/3] docs/system/arm/virt: mention specific migration
+ information
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-References: <20250110180909.83165-1-philmd@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, alex.bennee@linaro.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
+ <20241219183211.3493974-4-pierrick.bouvier@linaro.org>
+ <CAFEAcA-LYWhtFaUanq_qS8nDEVdhDOhDR2kcKv8Ch_5fKSnv-Q@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250110180909.83165-1-philmd@linaro.org>
+In-Reply-To: <CAFEAcA-LYWhtFaUanq_qS8nDEVdhDOhDR2kcKv8Ch_5fKSnv-Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,38 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMS8xMC8yNSAxMDowOSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IHRy
-aWJvYXJkX21hY2hpbmVfaW5pdCgpIGhhcyBhY2Nlc3MgdG8gdGhlIHNpbmdsZSBDUFUgdmlh
-Og0KPiANCj4gICAgVHJpQm9hcmRNYWNoaW5lU3RhdGUgew0KPiAgICAgIFRDMjdYU29DU3Rh
-dGUgew0KPiAgICAgICAgVHJpQ29yZUNQVSBjcHU7DQo+ICAgICAgICAuLi4NCj4gICAgICB9
-IHRjMjd4X3NvYzsNCj4gICAgfSBtczsNCj4gDQo+IFBhc3MgaXQgYXMgYXJndW1lbnQgdG8g
-dHJpY29yZV9sb2FkX2tlcm5lbCgpIHNvIHdlIGNhbg0KPiByZW1vdmUgdGhlICZmaXJzdF9j
-cHUgZ2xvYmFsIHVzZS4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUt
-RGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgaHcvdHJpY29yZS90cmli
-b2FyZC5jIHwgNiArKy0tLS0NCj4gICAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCsp
-LCA0IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2h3L3RyaWNvcmUvdHJpYm9h
-cmQuYyBiL2h3L3RyaWNvcmUvdHJpYm9hcmQuYw0KPiBpbmRleCA0ZGJhMDI1OWNkMy4uOWNj
-OGQyODJmZjIgMTAwNjQ0DQo+IC0tLSBhL2h3L3RyaWNvcmUvdHJpYm9hcmQuYw0KPiArKysg
-Yi9ody90cmljb3JlL3RyaWJvYXJkLmMNCj4gQEAgLTMxLDExICszMSwxMCBAQA0KPiAgICNp
-bmNsdWRlICJody90cmljb3JlL3RyaWJvYXJkLmgiDQo+ICAgI2luY2x1ZGUgImh3L3RyaWNv
-cmUvdGMyN3hfc29jLmgiDQo+ICAgDQo+IC1zdGF0aWMgdm9pZCB0cmljb3JlX2xvYWRfa2Vy
-bmVsKGNvbnN0IGNoYXIgKmtlcm5lbF9maWxlbmFtZSkNCj4gK3N0YXRpYyB2b2lkIHRyaWNv
-cmVfbG9hZF9rZXJuZWwoVHJpQ29yZUNQVSAqY3B1LCBjb25zdCBjaGFyICprZXJuZWxfZmls
-ZW5hbWUpDQo+ICAgew0KPiAgICAgICB1aW50NjRfdCBlbnRyeTsNCj4gICAgICAgbG9uZyBr
-ZXJuZWxfc2l6ZTsNCj4gLSAgICBUcmlDb3JlQ1BVICpjcHU7DQo+ICAgICAgIENQVVRyaUNv
-cmVTdGF0ZSAqZW52Ow0KPiAgIA0KPiAgICAgICBrZXJuZWxfc2l6ZSA9IGxvYWRfZWxmKGtl
-cm5lbF9maWxlbmFtZSwgTlVMTCwNCj4gQEAgLTQ2LDcgKzQ1LDYgQEAgc3RhdGljIHZvaWQg
-dHJpY29yZV9sb2FkX2tlcm5lbChjb25zdCBjaGFyICprZXJuZWxfZmlsZW5hbWUpDQo+ICAg
-ICAgICAgICBlcnJvcl9yZXBvcnQoIm5vIGtlcm5lbCBmaWxlICclcyciLCBrZXJuZWxfZmls
-ZW5hbWUpOw0KPiAgICAgICAgICAgZXhpdCgxKTsNCj4gICAgICAgfQ0KPiAtICAgIGNwdSA9
-IFRSSUNPUkVfQ1BVKGZpcnN0X2NwdSk7DQo+ICAgICAgIGVudiA9ICZjcHUtPmVudjsNCj4g
-ICAgICAgZW52LT5QQyA9IGVudHJ5Ow0KPiAgIH0NCj4gQEAgLTYyLDcgKzYwLDcgQEAgc3Rh
-dGljIHZvaWQgdHJpYm9hcmRfbWFjaGluZV9pbml0KE1hY2hpbmVTdGF0ZSAqbWFjaGluZSkN
-Cj4gICAgICAgc3lzYnVzX3JlYWxpemUoU1lTX0JVU19ERVZJQ0UoJm1zLT50YzI3eF9zb2Mp
-LCAmZXJyb3JfZmF0YWwpOw0KPiAgIA0KPiAgICAgICBpZiAobWFjaGluZS0+a2VybmVsX2Zp
-bGVuYW1lKSB7DQo+IC0gICAgICAgIHRyaWNvcmVfbG9hZF9rZXJuZWwobWFjaGluZS0+a2Vy
-bmVsX2ZpbGVuYW1lKTsNCj4gKyAgICAgICAgdHJpY29yZV9sb2FkX2tlcm5lbCgmbXMtPnRj
-Mjd4X3NvYy5jcHUsIG1hY2hpbmUtPmtlcm5lbF9maWxlbmFtZSk7DQo+ICAgICAgIH0NCj4g
-ICB9DQo+ICAgDQoNClJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5i
-b3V2aWVyQGxpbmFyby5vcmc+DQoNCg==
+On 1/10/25 08:30, Peter Maydell wrote:
+> On Thu, 19 Dec 2024 at 18:32, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   docs/system/arm/virt.rst | 14 +++++++++++---
+>>   1 file changed, 11 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+>> index d25275c27ce..9f1457cf9a2 100644
+>> --- a/docs/system/arm/virt.rst
+>> +++ b/docs/system/arm/virt.rst
+>> @@ -17,9 +17,17 @@ to have the same behaviour as that of previous QEMU releases, so
+>>   that VM migration will work between QEMU versions. For instance the
+>>   ``virt-5.0`` machine type will behave like the ``virt`` machine from
+>>   the QEMU 5.0 release, and migration should work between ``virt-5.0``
+>> -of the 5.0 release and ``virt-5.0`` of the 5.1 release. Migration
+>> -is not guaranteed to work between different QEMU releases for
+>> -the non-versioned ``virt`` machine type.
+>> +of the 5.0 release and ``virt-5.0`` of the 5.1 release.
+>> +
+>> +When saving a VM using the ``virt`` model, the snapshot is automatically set to
+>> +target the latest ``virt`` versioned model. When loading the VM with a more
+>> +recent QEMU version, you'll need to set machine model to match the version of
+>> +your snapshot. When loading it, QEMU will return an error with the expected
+>> +``virt`` version you should set, so you don't need to record it.
+> 
+> I don't think we should be encouraging this -- our standard approach
+> is "use the versioned machine types if you want migration", not
+> "you can start with an unversioned type on the source end". So I've
+> dropped this paragraph.
+> 
+
+That's fine for me, I don't have a strong opinion on this.
+I just had a (good) surprise when I saved a vm with virt machine, and 
+realised it's versioned by default. It's good to know that when you 
+export a virt machine, you are guaranteed it's bound to a specific 
+version, so you can always load it with new QEMU versions. This is what 
+I tried to express with this paragraph.
+
+>> +
+>> +VM migration is not guaranteed when using ``-cpu max``, as features supported
+>> +may change between QEMU versions. To ensure your VM can be migrated, it is
+>> +recommended to use another cpu model instead.
+> 
+> This paragraph is good, though -- that 'max' doesn't work for migration
+> is important, and we should definitely document that.
+> 
+
+Agree!
+
+> thanks
+> -- PMM
+
 
