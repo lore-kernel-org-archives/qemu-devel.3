@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D951E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 270E7E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWDuk-0001XF-Q8; Fri, 10 Jan 2025 07:14:58 -0500
+	id 1tWDuO-0001Qu-2g; Fri, 10 Jan 2025 07:14:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tWDuh-0001WY-2O; Fri, 10 Jan 2025 07:14:55 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ id 1tWDuM-0001QU-BH; Fri, 10 Jan 2025 07:14:34 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tWDuf-0003O1-5i; Fri, 10 Jan 2025 07:14:54 -0500
+ id 1tWDuK-0003Kc-Hz; Fri, 10 Jan 2025 07:14:34 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7F5AB210F2;
- Fri, 10 Jan 2025 12:14:50 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C0C9C1F396;
+ Fri, 10 Jan 2025 12:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736511290; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736511270; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
- b=etTGdjWOZfglHReJzo9Ts1MLAWKh6DvZozQ2/fmN/QWpbWKK3cVD5iheyIVsjFCDCEzUV9
- PalEy6qlseyT2UhyWRkEnUTnz2pZ1ONkjKbxGLixxgQX53c4GSfYlcKVQpUy1iRqwGFnNd
- oQnrGZCUUZs5bX4bbzLVy7AR6A7oNGA=
+ bh=IGIX6eUopLSHhRjZ/6kJyKQKELSW97bPyG9/vdYLRjs=;
+ b=VHelm+b3zFchBfe9Xfp75FNBRIfXCAFLfUqM0ZHLX4ySK7cnVSOd1FvsyLMfxeflafxISQ
+ EYnPHpkV6qdI+Oxq1ks2L5/Zebttm8K5Ht/SzMd/kMGmPlBatBI5+rWRGSgppwr1UprQPs
+ m+irrVwDCywU0sDK2B8/AOUH1uZaeGA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736511290;
+ s=susede2_ed25519; t=1736511270;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
- b=oguBPm24CEdD9Fx6Au0PTmSz0mYhzXztW7BxlFdqMQLfT9oKTEJ1KoL3EMG0Ep6ePfz0Ut
- wpX4RQh5wEIu9LBg==
-Authentication-Results: smtp-out1.suse.de;
+ bh=IGIX6eUopLSHhRjZ/6kJyKQKELSW97bPyG9/vdYLRjs=;
+ b=B7Q8usH30kScucf5lyoJbCce8NZBSwC33zTJhfq2koQqYNYzpC2j4pf+9SG3+4ArtvfB3C
+ ARjFQh+MaH3Kv9CQ==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736511290; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736511270; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
- b=etTGdjWOZfglHReJzo9Ts1MLAWKh6DvZozQ2/fmN/QWpbWKK3cVD5iheyIVsjFCDCEzUV9
- PalEy6qlseyT2UhyWRkEnUTnz2pZ1ONkjKbxGLixxgQX53c4GSfYlcKVQpUy1iRqwGFnNd
- oQnrGZCUUZs5bX4bbzLVy7AR6A7oNGA=
+ bh=IGIX6eUopLSHhRjZ/6kJyKQKELSW97bPyG9/vdYLRjs=;
+ b=VHelm+b3zFchBfe9Xfp75FNBRIfXCAFLfUqM0ZHLX4ySK7cnVSOd1FvsyLMfxeflafxISQ
+ EYnPHpkV6qdI+Oxq1ks2L5/Zebttm8K5Ht/SzMd/kMGmPlBatBI5+rWRGSgppwr1UprQPs
+ m+irrVwDCywU0sDK2B8/AOUH1uZaeGA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736511290;
+ s=susede2_ed25519; t=1736511270;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
- b=oguBPm24CEdD9Fx6Au0PTmSz0mYhzXztW7BxlFdqMQLfT9oKTEJ1KoL3EMG0Ep6ePfz0Ut
- wpX4RQh5wEIu9LBg==
+ bh=IGIX6eUopLSHhRjZ/6kJyKQKELSW97bPyG9/vdYLRjs=;
+ b=B7Q8usH30kScucf5lyoJbCce8NZBSwC33zTJhfq2koQqYNYzpC2j4pf+9SG3+4ArtvfB3C
+ ARjFQh+MaH3Kv9CQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C9D5F13A86;
- Fri, 10 Jan 2025 12:14:48 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8523C13A86;
+ Fri, 10 Jan 2025 12:14:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2BtcIzgPgWdURwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 10 Jan 2025 12:14:48 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cLGeEiUPgWdURwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 10 Jan 2025 12:14:29 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 22/25] s390x: Fix CSS migration
-Date: Fri, 10 Jan 2025 09:14:10 -0300
-Message-Id: <20250110121413.12336-23-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	qemu-stable@nongnu.org
+Subject: [PULL 09/25] migration/multifd: Fix compat with QEMU < 9.0
+Date: Fri, 10 Jan 2025 09:13:57 -0300
+Message-Id: <20250110121413.12336-10-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250110121413.12336-1-farosas@suse.de>
 References: <20250110121413.12336-1-farosas@suse.de>
@@ -90,12 +90,12 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,41 +119,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit a55ae46683 ("s390: move css_migration_enabled from machine to
-css.c") disabled CSS migration globally instead of doing it
-per-instance.
+Commit f5f48a7891 ("migration/multifd: Separate SYNC request with
+normal jobs") changed the multifd source side to stop sending data
+along with the MULTIFD_FLAG_SYNC, effectively introducing the concept
+of a SYNC-only packet. Relying on that, commit d7e58f412c
+("migration/multifd: Don't send ram data during SYNC") later came
+along and skipped reading data from SYNC packets.
 
-CC: Paolo Bonzini <pbonzini@redhat.com>
-CC: qemu-stable@nongnu.org #9.1
-Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250109185249.23952-8-farosas@suse.de>
+In a versions timeline like this:
+
+  8.2 f5f48a7 9.0 9.1 d7e58f41 9.2
+
+The issue arises that QEMUs < 9.0 still send data along with SYNC, but
+QEMUs > 9.1 don't gather that data anymore. This leads to various
+kinds of migration failures due to desync/missing data.
+
+Stop checking for a SYNC packet on the destination and unconditionally
+unfill the packet.
+
+>From now on:
+
+old -> new:
+the source sends data + sync, destination reads normally
+
+new -> new:
+source sends only sync, destination reads zeros
+
+new -> old:
+source sends only sync, destination reads zeros
+
+CC: qemu-stable@nongnu.org
+Fixes: d7e58f412c ("migration/multifd: Don't send ram data during SYNC")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2720
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Message-Id: <20241213160120.23880-2-farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/s390x/s390-virtio-ccw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ migration/multifd.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 8a242cc1ec..38aeba14ee 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1244,6 +1244,7 @@ static void ccw_machine_2_9_instance_options(MachineState *machine)
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_INT_SUPPRESSION);
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_EVENT_NOTIFICATION);
-+    css_migration_enabled = false;
- }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 64e0ac2488..ab73d6d984 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -252,9 +252,8 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+     p->packet_num = be64_to_cpu(packet->packet_num);
+     p->packets_recved++;
  
- static void ccw_machine_2_9_class_options(MachineClass *mc)
-@@ -1256,7 +1257,6 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
-     ccw_machine_2_10_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
-     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    css_migration_enabled = false;
- }
- DEFINE_CCW_MACHINE(2, 9);
+-    if (!(p->flags & MULTIFD_FLAG_SYNC)) {
+-        ret = multifd_ram_unfill_packet(p, errp);
+-    }
++    /* Always unfill, old QEMUs (<9.0) send data along with SYNC */
++    ret = multifd_ram_unfill_packet(p, errp);
  
+     trace_multifd_recv_unfill(p->id, p->packet_num, p->flags,
+                               p->next_packet_size);
+@@ -1156,9 +1155,13 @@ static void *multifd_recv_thread(void *opaque)
+             flags = p->flags;
+             /* recv methods don't know how to handle the SYNC flag */
+             p->flags &= ~MULTIFD_FLAG_SYNC;
+-            if (!(flags & MULTIFD_FLAG_SYNC)) {
+-                has_data = p->normal_num || p->zero_num;
+-            }
++
++            /*
++             * Even if it's a SYNC packet, this needs to be set
++             * because older QEMUs (<9.0) still send data along with
++             * the SYNC packet.
++             */
++            has_data = p->normal_num || p->zero_num;
+             qemu_mutex_unlock(&p->mutex);
+         } else {
+             /*
 -- 
 2.35.3
 
