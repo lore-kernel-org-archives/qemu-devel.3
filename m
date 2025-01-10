@@ -4,208 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23645E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 06:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53FB0E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 06:44:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW8f7-00039K-Cl; Fri, 10 Jan 2025 01:38:29 -0500
+	id 1tW8kV-00049H-KF; Fri, 10 Jan 2025 01:44:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tW8f4-00039C-Tk
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 01:38:26 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tW8f2-0002zh-DG
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 01:38:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736491104; x=1768027104;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=DC6DrfDn2Tu2nJKwO5+NJFEG1SIH2xAmTCGPucejMO4=;
- b=DzxUllTBEN5EbtIrXpnaKE6FViomjlsIyXZDU7CdWYuNQiWKM6Q0RDOY
- 0Hnznrpy2+j5ZDxDu4V2h6zKfsL5HmwAFloLWOZQ37Re5u87M0kE51Cot
- Y5WOMpON3No4SBjey2VngCxETYuCuorKNsejcdBBG+dj/XkDrHKBb9ri8
- zJUblHMtLir5RyYb1DVG7deeu4kkrMtPcUFyeY645m6joPXtgpOJ+ruBD
- qwqXOmNOyit6l/dOVn9zJg69XX0t0E9m1uYG/HlA9QVi/cuHJe7J0+9zW
- QONo/iRc2d2Yg6NMIpelF0HrNpecx3SIfpDfP1yQFQV9PZHx3iubYgr/I Q==;
-X-CSE-ConnectionGUID: qeLoQlczSy621ft2O6NjPA==
-X-CSE-MsgGUID: eVhaVbIPSCyKCoLHGM2mVg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11310"; a="54192650"
-X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="54192650"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Jan 2025 22:38:21 -0800
-X-CSE-ConnectionGUID: C0Tglnp5S2yispEOsAOJeg==
-X-CSE-MsgGUID: tEFrutUYQYaksgM+MzinZg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="103460462"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa006.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 09 Jan 2025 22:38:20 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Thu, 9 Jan 2025 22:38:20 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Thu, 9 Jan 2025 22:38:20 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.177)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Thu, 9 Jan 2025 22:38:19 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JRayg1qaqDwXWBALvi3D46VPxbFt+8xw0Usz1fsHjg+MXtgjwBkWptAcxyw4LW4MpRQkxNE4y0XpDg+MW/v2tybEAIMzqUOvIqgmQgfNP8WdfFc5QInm8tDVbJHOqfuwG3HwvjkF19hi5oXJdkMYs0MqFeOHy/rfMQP0bTIlsWml59i98sa3VFUPZr8lnZySFQwxdo3S/vJQwFCBdOvQkgXcfAXGioeyh3EpjUgcxGRfee9DDd04FUnFTg4kAZ7+VYw+7rFMAYyzbSV8hwM5Btn+8VzUiNS1/wO/mUR7EaJaq7KTzRAqywtH6Qe628QNYZPNcyQ3nxVU0A3xX+owQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uhmc1Rw13wWLGstHrJOxZgnrprVhmbalnKg700HkAIo=;
- b=ZkP3FMN9DR3y6u/gJovI9wgOnuuGcWy76rbiUM9GzcroGXSxrIHguQZ94SgUsi2HSFu4FYPXIhXtPCBrI4yx/2CLVy1wm5CGCTRnqyQSeSVzR9/KLAPoHt3dqCBkbL3SdBQYyoGYYOiDSwwP6JWsIJ5/1GjsPBbqsd4e/ikJMXIU+MikPI+CpNYoU7RJfcrKS4BhTOSILRHOQgiQirt5D4i4quLaPtOsBQ0tB3xZUmnotSuH+sw0OROiS1stF66n/UUiPajR75IdzXIzw2JQJKDs31hkhjYGRhpVq+GY04om7033QD2QDd7M0xvrdMD9ef8fGhgaOgYXcuc43chLFQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- DS0PR11MB7621.namprd11.prod.outlook.com (2603:10b6:8:143::16) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8335.11; Fri, 10 Jan 2025 06:38:12 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%5]) with mapi id 15.20.8335.011; Fri, 10 Jan 2025
- 06:38:12 +0000
-Message-ID: <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
-Date: Fri, 10 Jan 2025 14:38:04 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-To: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
- <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
- <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-3-chenyi.qiang@intel.com>
- <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
- <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
- <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
- <58b96b74-bf9c-45d3-8c2e-459ec2206fc8@intel.com>
- <8c8e024d-03dc-4201-8038-9e9e60467fad@amd.com>
- <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
- <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR02CA0008.apcprd02.prod.outlook.com
- (2603:1096:4:194::12) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW8kU-000498-9g
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 01:44:02 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW8kS-0003Wf-Nw
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 01:44:02 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-385eed29d17so898470f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 22:43:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736491439; x=1737096239; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eSxEtg27h4hFortmdG+sHOfqorbolxztnTl8uexH1NU=;
+ b=GyVqE2tRoy1pWpqEn8lCishBS/f3mfQkAdfUNX1YoLchcNixRJczIVXsuIs+pPAbQy
+ DdkicidCl4cUg88bzn4eWx1NWw9yyFiIGtkEzt0c8oVM0U+vqV5rJGcHDbsBdvcGf+66
+ zuvAZVY5O4632WxZ2yX09lLV4IDHm4p8LZKqw3rEZJ/XN1EvH5/vxjpW4X53yuE/5DgC
+ wCyhCTxonUFhRliAIheweVxs5gc/HgDR8AD1vjOaz9cOyjsN6xfys/EHAa0htDZXWzBw
+ WRQ2q1TD41aJTmaE0waqRxQ0W/seng1wdkChFTL8/RcELvE3epgkJHmcTOlLOM8sIHWM
+ Spdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736491439; x=1737096239;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eSxEtg27h4hFortmdG+sHOfqorbolxztnTl8uexH1NU=;
+ b=umk3DNF/joyNTw3HXzcNwUGkGJnGVVQMVM+KpAc5MS8tYLwix1z9liZ+QISQ3QKcZa
+ YcfvDIyoHzqNkyyfXqnRT6XX2qtAI7bZFOxUwdvFsH17WWlC6LaZB5VcI9m3QkDrrdEP
+ fCsjydWS6yTIR+RkPv3/J6K5KOK+QulQ8J/vhl5qMs0sO5ef74fyDj+dntmksxZK7Sg3
+ s9oFzQPWwJ1lnPdYSn/KQ4tCVmZEC6ixsLw5xcgmr70gORHUrARDV3C39zlcw5p5/usC
+ QnPmVuGgA5uHCOgnAjQY8CmE2huK6DjC/uert/eyRqimt74dKMXR/hlnzVJ5EwzUkBwH
+ pn7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSpjhif3fhxWoLKAsm3SfF4kt/rDL4HeCW4rrZpVedc8SooGr6VQeBJgjndv1w3u+5iemmHn7wE95X@nongnu.org
+X-Gm-Message-State: AOJu0YzZgO2P1ItF8U5ZmiPiQNE7E9tlir7sxkHw0TZyne8QgSt2DqdJ
+ PwCdah/tUattdfrTAZS9scMuT6RJ1RoIMjiYhO0AXXwVdONesRZ1QqLcD6/m7SE=
+X-Gm-Gg: ASbGncvNBxqTGI7eANJx/1yMGqq1h4Wxnvfvr+Z9Naj4kp81mQ6eArgygZkb0w/NKQr
+ GJTvP8JkiRG/MOrMFncEsqqiqRDlCSUVn6zo1ZAfF3zY8+iLo4P5t9eEnVLAcNyii0k7YkDO//x
+ d0E4PxYX3KoqU1Ma1ukNFXQpQt974SaC8cnCAxiHaCT+MiTPs5un0Dy+71uLUuvPbd9g3eLspZZ
+ nguB0DSvElOPq4IlM7pidEn5AOQXe6of5JMs7brpkI7qkDMAUFohoYlS+0IP/w5ui8lFK9N9EkY
+ DeFwQsPGFYtdMYM0ZvdlY/sCJso=
+X-Google-Smtp-Source: AGHT+IGDLf9nYmT0aNbr/wpzEyqKa3AHYb1DIisEVdSxtTGcdHPse5Pqev6eOrCUry0tYn3+vqUw8g==
+X-Received: by 2002:a5d:5f95:0:b0:38a:88e2:e703 with SMTP id
+ ffacd0b85a97d-38a88e2e75cmr4513727f8f.13.1736491438802; 
+ Thu, 09 Jan 2025 22:43:58 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2dc0babsm76636375e9.14.2025.01.09.22.43.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jan 2025 22:43:58 -0800 (PST)
+Message-ID: <1f229b58-02fb-4f92-96fd-dfc883c1ad0c@linaro.org>
+Date: Fri, 10 Jan 2025 07:43:57 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|DS0PR11MB7621:EE_
-X-MS-Office365-Filtering-Correlation-Id: 345fcbd3-3bbf-4e9e-2c61-08dd31415af7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?REdhTjBrT09jWGhyaHk2b2MyNi9vck1rN0V0eGdZeUVDV0I1V1F3cHBhOFNC?=
- =?utf-8?B?VlNtN1kzb3hYZWZ6bVdvZWdXYVJFUDJ4ckVaWitwT0FoRFpxY0hXc0dyclY5?=
- =?utf-8?B?WVZTZ1B6dHBBcTZCanJWZXdubXVwd21vd0Jlcms2cGxRZEFybWhrbTM1cWUr?=
- =?utf-8?B?WWZsT2MzYnlmOEJIaVBHYmxYcjZ5QmlkRWdxOU9QNUdIOU1vSll6TzJrWlQw?=
- =?utf-8?B?czFiS0thaGdUaHBSTGpnSTlhcGZ2R0o1UEFGRGY3cUN5eHNyNGFJaDlpUENT?=
- =?utf-8?B?dnBTVm9rSVFRaSt3RWxEeEE0emJPcmRCQUI2M1NFR01LZldLaHc4VTBBMnVW?=
- =?utf-8?B?ZGdiSzJEZHVqYzJ3UExUSTRvNkhFQTdzRWxMZ3M5Tmw4QmY4Q1R3dXQxcmFl?=
- =?utf-8?B?VTFjZTRIQjBybjZwKzNIVC9oVXRWREpHNlN2UGlKZG5GQ25PYS9TZWhaRDVn?=
- =?utf-8?B?VHhGTElCWlR5YURnUWc5ZElhSW9XTlh5T29QZGJNSFkzVGNQZTN3T2hjMU16?=
- =?utf-8?B?UlBNczRFVFY1RXg3WUlmOVFtd0RJWmUxQ2hpd1lqVHR3MWsxSjZLTHI3aDdF?=
- =?utf-8?B?ODQvVFIxNlY1N0dFYVIra1k3aHV6TWZlNlMzMHprdVJHWU0zNWJzMXh3S2JP?=
- =?utf-8?B?elhROHdGVVdrREZYQ2tBcGhUd3ZrVUlBWHRjbzhxS1lEVGxFcTJuQWl0RnB0?=
- =?utf-8?B?TTQ4T2JiNlkxSzhCbHdhVWtvcTNudnRDbmFkenA5VEZZeldaSDRLeDJYcFB0?=
- =?utf-8?B?a0I1SVZoTTRjMjk2RFhFUGdOVEJ4cTFyQkE4R1lPeFRGUmlma1VmS3A1YzVw?=
- =?utf-8?B?UGRrc0t2dmwzakkxRHN2Yjd2QzVxMDAwTzhSN2Q3Qm9wZWVqdm0vYlRrb0VP?=
- =?utf-8?B?ODJUVGlDT3p2eUFwSTVTWEhwQyt5MERHa1dHcjJmR3NNR2t5L05hR05PelZ0?=
- =?utf-8?B?MWN6QzVjQUdXYlRsdS9Md3JjeE9DQVJWS2dsSjNCWTN0L2hJWTd6RlJzMlY3?=
- =?utf-8?B?a0FVZExSUGVubDVqNkFQQWdsVm01K3RmbFBXdzhCaWZFKzVkeGxCS2FOOWNQ?=
- =?utf-8?B?bW80Qkd1RDFnL2NkMjA3M1FWNnVnVkpiaXU0Y2RYT3lhRXRJL1o1ZHlVZFdl?=
- =?utf-8?B?UFlxYzVtcVRPbUhIYzhJYTQ1dXFjVmFoTmlISlg1R2FGSHh0clJUU3VPalh5?=
- =?utf-8?B?dS94RHpZR1d5WnZoZXZKK2JiTFJCOVVYdytFYkdvTWNGTWxUTHM3UE0yOXY1?=
- =?utf-8?B?cExhV3VpT3oxYSs2bzZETENDMXE1TktSSGNsLzhVdjh2RVNoeThzQU9ESW5V?=
- =?utf-8?B?QVViKys3aEdVMksybmhYQ24wYjVTKzl6L1FNRmxLbEYwVGdzTGYzamFCUWN1?=
- =?utf-8?B?VCtiL001enBjZTNxV05tQ2V3bDczS2hKRm1MR0VVdkRCVXg0QkdKT1NBQ2Uw?=
- =?utf-8?B?Y1Q3Z1FiNFgvREdVNDJJYURrbmR2WkhETm80bkpGWUlnVkNZb2dCUWlKcEYx?=
- =?utf-8?B?V2hxaUM0WFdLeXZxcXZsM0wxRnhhNzZxaStlZ1lJeTRIeDZabXo3MzQ4aVJI?=
- =?utf-8?B?NHJxc0VhRWxJbnhQZktYRUpGWWhUSms4dDZwWjJqbUNjcFFNNFIwdFIxSGhj?=
- =?utf-8?B?Sm1jNS9uRE5RRmVLODlzbURINXhMQzNjZ28vRmV1V1h6N1RqcGtVZ2dNdXdF?=
- =?utf-8?B?STVsUWNKdUhZcFhySFFOSzJ5Z3NEdVE0UHJDQWtWTTJjc2hOWGxRS05EbDhN?=
- =?utf-8?B?OHpCRHdJanJwcm5tNjhXZjFEcU5ySDg3VS83MHFTZmptNElxNVhEaDJaVFFX?=
- =?utf-8?B?bmE1eWJ6Mm80dE80MTl3dz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y1IvVENDZG1nN2Z5OGE5SHVxVkRWNm94cloza005ZVBkMHlwVGo4dVhVR1R2?=
- =?utf-8?B?ZmFmWnRZSkduUkpGMTk4cFpHOVV5YzZHNUpadzJQWE1pNEpVQ1JhTEtTd2J4?=
- =?utf-8?B?ZW5tMUY5Y0ZNRCtqU3lSUnA4TVhkVW5XblRXYTk3Q0xMQmI2ZUk4Z0hmdldS?=
- =?utf-8?B?ZEdaWGU0WVhvQXY4NCtHRERoYWZuY1NtL3VNczNzaUpHVnQ4WWE4SXZVbjNM?=
- =?utf-8?B?alJRM3IrODNBd0l2Y2s0ejBQdy9YcnF2ZzN4MUg2aUxQRkRGWmUxZWlhbk9Q?=
- =?utf-8?B?NGcrVGVnbzlSL3A2ek9takJxSjE1MDdhck43N01hNEhDSnlCbGRiMWM4dUpU?=
- =?utf-8?B?QW1YM29jdGpNYjRJdXA4a1Q4OFZDS1dDWmxKbFhHZk1Za3FFVFlGRDNMekIw?=
- =?utf-8?B?bnc0WEtUaEJOeGdnMnU2WVk0WHIrVlE0VnU2V2tqZ29vY2x5SGxsejdxNnhr?=
- =?utf-8?B?cGFOMGIwcmVsZzlqc3d1VWpVcGRJaE9JeVJ3NTVwenQ1VG45dXU5ZWI4NkFI?=
- =?utf-8?B?eUlMZ01UZVd3VjVJZFM5NVR0UnZ4alpGdysvcDlwb1ZHK1FhbGdWWHdXcFFT?=
- =?utf-8?B?L3YwSEJjblhDcHRYcHcxMzhTbXZsdWJ6d0RoRThCQkxaSXBIK3AwQTNzck9E?=
- =?utf-8?B?WEM5Tlpob0ZtWVpxRWlOV1M3N3k1YXlkVm43cDBnZW9WVEhxenRqTnRMdi9u?=
- =?utf-8?B?NVAxcUJXMXYxVXA0ZGNrM3Y0MU9VWnlrTmVDem1EV1p5Z2o1WVZpYVpzTmdo?=
- =?utf-8?B?K0VhVzMyTUlKKzFOQXlrNHRlQUNQVXJCVmZJTHlSaVNURjBrYmVBOElWUEVH?=
- =?utf-8?B?Sm9aYldaUXh3Ny9WeG1XeUN4N25YZHQxNXZFYVh0b28vYkZONjZvZ1NNdUl6?=
- =?utf-8?B?VzhUK0dub3VFRndNMzl4YkdHd3U2RDl1eEFGVVZtOTJGaG02NjZaN29OOTRt?=
- =?utf-8?B?RFhJZkNveU5ONVE2Y2FZYTIzZmwrVkpSdFhkamg5TVREalZUZXYzaWcyeitD?=
- =?utf-8?B?VjdzeFkxdFFyNVArQ09oM2JQdFEyb0Q1QjYzVlNrNWw4UGJKVFZVZkRYUERW?=
- =?utf-8?B?NTdWK1FnbTJ3RHhRUENhMlRsd3EvUU1KTC94THdWdE1SanA0NHBmQ3lRL1N2?=
- =?utf-8?B?SDFmY3g4TmlaUFZWVHJGVWNYMDhnbUlpdWlLT3hoUUJjNVdKcHhrc1RGdlFh?=
- =?utf-8?B?L052b2N6UzVrUEQyYmhneC80dGI5UXFPMVlUMGNVOGpnN25LR09OYjFKS0xq?=
- =?utf-8?B?NG9SVjFJZXc5d0k5MlM0UGxIWEUwVXNyKzdYNlNhSkVINXgrWktKemRTQ1Rw?=
- =?utf-8?B?L2ZiZHZ0Vk5qREN6VXpOVUt0bFhEVW5FUy84UUFhQTZaTWpJK0c4eTlpeExP?=
- =?utf-8?B?SThrNGYyajBxN29oYXdPZ2pib3I5eGNtOHA0NEFkRjgrZnpIOTBlLzVvbUcv?=
- =?utf-8?B?Q2lBV1ZzUllsL090MHRiMHZsM1hlSUErOUZkNzliV0UwTlNNR2hINjR1TUxY?=
- =?utf-8?B?SzNOaExRNnpEYjhwRXhDOEkrQjROVmFnWlFWc3VoMDZKcmhxQzJUbEc1YnJa?=
- =?utf-8?B?c3RxdTJhckFRNzBBR0R0YUhTMEtiTjJRUlNoWUI3RWsrZ1ZnWlZaZEQvSGl1?=
- =?utf-8?B?SXp5WUc3b1U5d0hvTlUyVTR6V0h5TTJFYVlOQ0I0eFhqeTQ5TTFqUmRBU0dL?=
- =?utf-8?B?akl1Ykc1Y3h5Y3pzNFJqbDZnRUlTWWwyQS83MXo4djI5WXJiV2tmc2VyMEhK?=
- =?utf-8?B?UGxSRG9BUHFoVG12R0Nsa3ZDektNQnB4OXpNcElnUW1YVTh0dU1BdzBINU9x?=
- =?utf-8?B?WFB5VU5scFZSNVREL0loRllpOWZpYVQ0NUx4dnFEQlJCblB5NXU0cjc1SDdR?=
- =?utf-8?B?MEhtV3c4TWtja3dhWHZOSFpxL2hPWHRiWFlSRXBTMkRFZmFmclBvdmdIVXZ3?=
- =?utf-8?B?RFY2aHByZ2hIRmxIRnIxUkUwaVFFdWVIT2xaVGpQcE83NDRzY25jR2VlbWhJ?=
- =?utf-8?B?Z29hR2pIMDRqeTNIeGtHOHJWMm1pNVRNVWVRV3M1NHVmRjY5Y0ExcW14cjRL?=
- =?utf-8?B?bjdCVUxCM0hwbVdiRW9FWnBBZmxJcXFVWTFDd0lWajcySUR0M1BJZVZPSGc4?=
- =?utf-8?B?ajNBWTJKLzNkYWxTNWg4cUZ2NURUdU5HNkxrNlh3ZEJXUTE0NXZEMEpTUXN0?=
- =?utf-8?B?bHc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 345fcbd3-3bbf-4e9e-2c61-08dd31415af7
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2025 06:38:12.6357 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hFloxoOdSU58I/CcT4v87fyk8rUXB+5OepjQqfTcnGwqsQt7GD0O7RobTGTPkV687gpAwKYQpf35TPnWsDcq5w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7621
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] tests/qtest/libqos: add DMA support for writing
+ and reading fw_cfg files
+To: Fabiano Rosas <farosas@suse.de>, Ani Sinha <anisinha@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: berrange@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org
+References: <20250109074929.252339-1-anisinha@redhat.com>
+ <20250109074929.252339-3-anisinha@redhat.com> <87ikqnenn1.fsf@suse.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87ikqnenn1.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -222,293 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/1/25 21:30, Fabiano Rosas wrote:
+> Ani Sinha <anisinha@redhat.com> writes:
+> 
+>> At present, the libqos/fw_cfg.c library does not support the modern DMA
+>> interface which is required to write to the fw_cfg files. It only uses the IO
+>> interface. Implement read and write methods based on DMA. This will enable
+>> developers to write tests that writes to the fw_cfg file(s). The structure of
+>> the code is taken from edk2 fw_cfg implementation. It has been tested by
+>> writing a qtest that writes to a fw_cfg file. This test will be part of a
+>> future patch series.
+> 
+> What's the blocker for the rest of the series? It would be preferable to
+> merge it all together, rather than this going in first without any
+> users.
 
+Agreed. We could use a multiboot image, or a guest with vmcoreinfo
+support. Or a dumbier test just testing this API.
 
-On 1/10/2025 8:58 AM, Alexey Kardashevskiy wrote:
-> 
-> 
-> On 9/1/25 15:29, Chenyi Qiang wrote:
 >>
->>
->> On 1/9/2025 10:55 AM, Alexey Kardashevskiy wrote:
->>>
->>>
->>> On 9/1/25 13:11, Chenyi Qiang wrote:
->>>>
->>>>
->>>> On 1/8/2025 7:20 PM, Alexey Kardashevskiy wrote:
->>>>>
->>>>>
->>>>> On 8/1/25 21:56, Chenyi Qiang wrote:
->>>>>>
->>>>>>
->>>>>> On 1/8/2025 12:48 PM, Alexey Kardashevskiy wrote:
->>>>>>> On 13/12/24 18:08, Chenyi Qiang wrote:
->>>>>>>> As the commit 852f0048f3 ("RAMBlock: make guest_memfd require
->>>>>>>> uncoordinated discard") highlighted, some subsystems like VFIO
->>>>>>>> might
->>>>>>>> disable ram block discard. However, guest_memfd relies on the
->>>>>>>> discard
->>>>>>>> operation to perform page conversion between private and shared
->>>>>>>> memory.
->>>>>>>> This can lead to stale IOMMU mapping issue when assigning a
->>>>>>>> hardware
->>>>>>>> device to a confidential VM via shared memory (unprotected memory
->>>>>>>> pages). Blocking shared page discard can solve this problem, but it
->>>>>>>> could cause guests to consume twice the memory with VFIO, which is
->>>>>>>> not
->>>>>>>> acceptable in some cases. An alternative solution is to convey
->>>>>>>> other
->>>>>>>> systems like VFIO to refresh its outdated IOMMU mappings.
->>>>>>>>
->>>>>>>> RamDiscardManager is an existing concept (used by virtio-mem) to
->>>>>>>> adjust
->>>>>>>> VFIO mappings in relation to VM page assignment. Effectively page
->>>>>>>> conversion is similar to hot-removing a page in one mode and
->>>>>>>> adding it
->>>>>>>> back in the other, so the similar work that needs to happen in
->>>>>>>> response
->>>>>>>> to virtio-mem changes needs to happen for page conversion events.
->>>>>>>> Introduce the RamDiscardManager to guest_memfd to achieve it.
->>>>>>>>
->>>>>>>> However, guest_memfd is not an object so it cannot directly
->>>>>>>> implement
->>>>>>>> the RamDiscardManager interface.
->>>>>>>>
->>>>>>>> One solution is to implement the interface in HostMemoryBackend.
->>>>>>>> Any
->>>>>>>
->>>>>>> This sounds about right.
-> 
-> btw I am using this for ages:
-> 
-> https://github.com/aik/qemu/commit/3663f889883d4aebbeb0e4422f7be5e357e2ee46
-> 
-> but I am not sure if this ever saw the light of the day, did not it?
-> (ironically I am using it as a base for encrypted DMA :) )
-
-Yeah, we are doing the same work. I saw a solution from Michael long
-time ago (when there was still
-a dedicated hostmem-memfd-private backend for restrictedmem/gmem)
-(https://github.com/AMDESE/qemu/commit/3bf5255fc48d648724d66410485081ace41d8ee6)
-
-For your patch, it only implement the interface for
-HostMemoryBackendMemfd. Maybe it is more appropriate to implement it for
-the parent object HostMemoryBackend, because besides the
-MEMORY_BACKEND_MEMFD, other backend types like MEMORY_BACKEND_RAM and
-MEMORY_BACKEND_FILE can also be guest_memfd-backed.
-
-Think more about where to implement this interface. It is still
-uncertain to me. As I mentioned in another mail, maybe ram device memory
-region would be backed by guest_memfd if we support TEE IO iommufd MMIO
-in future. Then a specific object is more appropriate. What's your opinion?
-
-> 
->>>>>>>
->>>>>>>> guest_memfd-backed host memory backend can register itself in the
->>>>>>>> target
->>>>>>>> MemoryRegion. However, this solution doesn't cover the scenario
->>>>>>>> where a
->>>>>>>> guest_memfd MemoryRegion doesn't belong to the HostMemoryBackend,
->>>>>>>> e.g.
->>>>>>>> the virtual BIOS MemoryRegion.
->>>>>>>
->>>>>>> What is this virtual BIOS MemoryRegion exactly? What does it look
->>>>>>> like
->>>>>>> in "info mtree -f"? Do we really want this memory to be DMAable?
->>>>>>
->>>>>> virtual BIOS shows in a separate region:
->>>>>>
->>>>>>     Root memory region: system
->>>>>>      0000000000000000-000000007fffffff (prio 0, ram): pc.ram KVM
->>>>>>      ...
->>>>>>      00000000ffc00000-00000000ffffffff (prio 0, ram): pc.bios KVM
->>>>>
->>>>> Looks like a normal MR which can be backed by guest_memfd.
->>>>
->>>> Yes, virtual BIOS memory region is initialized by
->>>> memory_region_init_ram_guest_memfd() which will be backed by a
->>>> guest_memfd.
->>>>
->>>> The tricky thing is, for Intel TDX (not sure about AMD SEV), the
->>>> virtual
->>>> BIOS image will be loaded and then copied to private region.
->>>> After that,
->>>> the loaded image will be discarded and this region become useless.
->>>
->>> I'd think it is loaded as "struct Rom" and then copied to the MR-
->>> ram_guest_memfd() which does not leave MR useless - we still see
->>> "pc.bios" in the list so it is not discarded. What piece of code are you
->>> referring to exactly?
->>
->> Sorry for confusion, maybe it is different between TDX and SEV-SNP for
->> the vBIOS handling.
->>
->> In x86_bios_rom_init(), it initializes a guest_memfd-backed MR and loads
->> the vBIOS image to the shared part of the guest_memfd MR.
->> For TDX, it
->> will copy the image to private region (not the vBIOS guest_memfd MR
->> private part) and discard the shared part. So, although the memory
->> region still exists, it seems useless.
->> It is different for SEV-SNP, correct? Does SEV-SNP manage the vBIOS in
->> vBIOS guest_memfd private memory?
-> 
-> This is what it looks like on my SNP VM (which, I suspect, is the same
-> as yours as hw/i386/pc.c does not distinguish Intel/AMD for this matter):
-
-Yes, the memory region object is created on both TDX and SEV-SNP.
-
-> 
->  Root memory region: system
->   0000000000000000-00000000000bffff (prio 0, ram): ram1 KVM gmemfd=20
->   00000000000c0000-00000000000dffff (prio 1, ram): pc.rom KVM gmemfd=27
->   00000000000e0000-000000001fffffff (prio 0, ram): ram1
-> @00000000000e0000 KVM gmemfd=20
-> ...
->   00000000ffc00000-00000000ffffffff (prio 0, ram): pc.bios KVM gmemfd=26
-> 
-> So the pc.bios MR exists and in use (hence its appearance in "info mtree
-> -f").
-> 
-> 
-> I added the gmemfd dumping:
-> 
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -3446,6 +3446,9 @@ static void mtree_print_flatview(gpointer key,
-> gpointer value,
->                  }
->              }
->          }
-> +        if (mr->ram_block && mr->ram_block->guest_memfd >= 0) {
-> +            qemu_printf(" gmemfd=%d", mr->ram_block->guest_memfd);
-> +        }
-> 
-
-Then I think the virtual BIOS is another case not belonging to
-HostMemoryBackend which convince us to implement the interface in a
-specific object, no?
-
-> 
->>>
->>>
->>>> So I
->>>> feel like this virtual BIOS should not be backed by guest_memfd?
->>>
->>>  From the above it sounds like the opposite, i.e. it should :)
->>>
->>>>>
->>>>>>      0000000100000000-000000017fffffff (prio 0, ram): pc.ram
->>>>>> @0000000080000000 KVM
->>>>>
->>>>> Anyway if there is no guest_memfd backing it and
->>>>> memory_region_has_ram_discard_manager() returns false, then the MR is
->>>>> just going to be mapped for VFIO as usual which seems... alright,
->>>>> right?
->>>>
->>>> Correct. As the vBIOS is backed by guest_memfd and we implement the RDM
->>>> for guest_memfd_manager, the vBIOS MR won't be mapped by VFIO.
->>>>
->>>> If we go with the HostMemoryBackend instead of guest_memfd_manager,
->>>> this
->>>> MR would be mapped by VFIO. Maybe need to avoid such vBIOS mapping, or
->>>> just ignore it since the MR is useless (but looks not so good).
->>>
->>> Sorry I am missing necessary details here, let's figure out the above.
->>>
->>>>
->>>>>
->>>>>
->>>>>> We also consider to implement the interface in HostMemoryBackend, but
->>>>>> maybe implement with guest_memfd region is more general. We don't
->>>>>> know
->>>>>> if any DMAable memory would belong to HostMemoryBackend although at
->>>>>> present it is.
->>>>>>
->>>>>> If it is more appropriate to implement it with HostMemoryBackend,
->>>>>> I can
->>>>>> change to this way.
->>>>>
->>>>> Seems cleaner imho.
->>>>
->>>> I can go this way.
->>
->> [...]
->>
->>>>>>>> +
->>>>>>>> +static int guest_memfd_rdm_replay_populated(const
->>>>>>>> RamDiscardManager
->>>>>>>> *rdm,
->>>>>>>> +                                            MemoryRegionSection
->>>>>>>> *section,
->>>>>>>> +                                            ReplayRamPopulate
->>>>>>>> replay_fn,
->>>>>>>> +                                            void *opaque)
->>>>>>>> +{
->>>>>>>> +    GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(rdm);
->>>>>>>> +    struct GuestMemfdReplayData data = { .fn =
->>>>>>>> replay_fn, .opaque =
->>>>>>>> opaque };
->>>>>>>> +
->>>>>>>> +    g_assert(section->mr == gmm->mr);
->>>>>>>> +    return guest_memfd_for_each_populated_section(gmm, section,
->>>>>>>> &data,
->>>>>>>> +
->>>>>>>> guest_memfd_rdm_replay_populated_cb);
->>>>>>>> +}
->>>>>>>> +
->>>>>>>> +static int guest_memfd_rdm_replay_discarded_cb(MemoryRegionSection
->>>>>>>> *section, void *arg)
->>>>>>>> +{
->>>>>>>> +    struct GuestMemfdReplayData *data = arg;
->>>>>>>> +    ReplayRamDiscard replay_fn = data->fn;
->>>>>>>> +
->>>>>>>> +    replay_fn(section, data->opaque);
->>>>>>>
->>>>>>>
->>>>>>> guest_memfd_rdm_replay_populated_cb() checks for errors though.
->>>>>>
->>>>>> It follows current definiton of ReplayRamDiscard() and
->>>>>> ReplayRamPopulate() where replay_discard() doesn't return errors and
->>>>>> replay_populate() returns errors.
->>>>>
->>>>> A trace would be appropriate imho. Thanks,
->>>>
->>>> Sorry, can't catch you. What kind of info to be traced? The errors
->>>> returned by replay_populate()?
->>>
->>> Yeah. imho these are useful as we expect this part to work in general
->>> too, right? Thanks,
->>
->> Something like?
->>
->> diff --git a/system/guest-memfd-manager.c b/system/guest-memfd-manager.c
->> index 6b3e1ee9d6..4440ac9e59 100644
->> --- a/system/guest-memfd-manager.c
->> +++ b/system/guest-memfd-manager.c
->> @@ -185,8 +185,14 @@ static int
->> guest_memfd_rdm_replay_populated_cb(MemoryRegionSection *section, voi
->>   {
->>       struct GuestMemfdReplayData *data = arg;
->>       ReplayRamPopulate replay_fn = data->fn;
->> +    int ret;
->>
->> -    return replay_fn(section, data->opaque);
->> +    ret = replay_fn(section, data->opaque);
->> +    if (ret) {
->> +        trace_guest_memfd_rdm_replay_populated_cb(ret);
->> +    }
->> +
->> +    return ret;
->>   }
->>
->> How about just adding some error output in
->> guest_memfd_for_each_populated_section()/
->> guest_memfd_for_each_discarded_section()
->> if the cb() (i.e. replay_populate()) returns error?
-> 
-> this will do too, yes. Thanks,
-> 
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>> ---
+>>   tests/qtest/libqos/fw_cfg.c | 138 ++++++++++++++++++++++++++++++++++++
+>>   tests/qtest/libqos/fw_cfg.h |   6 +-
+>>   2 files changed, 143 insertions(+), 1 deletion(-)
 
 
 
