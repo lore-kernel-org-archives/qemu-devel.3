@@ -4,162 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC884E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77651E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWFKy-0005ap-U2; Fri, 10 Jan 2025 08:46:09 -0500
+	id 1tWFS5-0007WH-4u; Fri, 10 Jan 2025 08:53:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWFKd-0005Zf-JR
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:45:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tWFS2-0007W8-Me
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:53:27 -0500
+Received: from mout.kundenserver.de ([212.227.17.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWFKb-0001DM-T7
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:45:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736516744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MgC1ykSz+B2npPAEBoQJVfWIGKdXFExdQ2eK7KNKeso=;
- b=ddd+2NcG12xnOXzcm+yaxSYds+GumwhoDdUsDJ1zrOmg0cQRQ2HEZNBapgmziBDYSsAZwO
- ngmrwifgV5uCa9XV8yJBMpGtLcbn/fPDluD8k+5OnB5ess2OhufztXcH1V0jh84kgoU5Ji
- 5perhrN977gfiauyX4Bkwn8LpcjRRKE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-he51SdsbMz6LxdUjl0799A-1; Fri, 10 Jan 2025 08:45:43 -0500
-X-MC-Unique: he51SdsbMz6LxdUjl0799A-1
-X-Mimecast-MFC-AGG-ID: he51SdsbMz6LxdUjl0799A
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361d4e8359so16455865e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:45:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736516742; x=1737121542;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=MgC1ykSz+B2npPAEBoQJVfWIGKdXFExdQ2eK7KNKeso=;
- b=u0lq9uWG49OCYPaC5OGj/kaUJL4q5jelJ53gLLrzvUHDcLtFcWw3rt1z7buepGAvKt
- vr5CjqwkThYeD+0BZlapPGjRlv9pZt2Jr2wJn+o8aQ+iQa/xAr+Qm+bV9xT/AtBamqX8
- k9Nz7YIbZB3cvK0aLDaFk3nNlnZ5FHt1RdmSNkGnlknfu7pxyNM4US49l65I2mJckPCu
- 5rPIbqs94wWiuJR+jR8Q6GlnxP7tsJ2IySyvZkx6DjtHtBeOcepUvUMQhKMbhzfZkSqK
- mllRlnhm8ZpO/fZJNw/cefopn0+vF59vgkJQdNO1Zt3lN5kTtPTH0y5M6qv9jz7dZKwM
- YZ8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXb8lXtI7rcp3djatMw4Rvg1N7qdhuOZs/JkCAMNtZhJxlPVbiL/zNLGp8ULLFcUUzpKrCyCUf0WG3k@nongnu.org
-X-Gm-Message-State: AOJu0Yx+zoGVi9mPMiD6ZrhDCVzcqIXCCMZyEa0PxnrBk0spJyzcYGgC
- /sghy5OmqF4aRzeDSzV/5e0SJDhVduCEen2t/3eYSiQcFm3KWp57FaVLcwMg7HqqamTYoouAVwS
- PifTIT9Maeq421DEmchUmR9rT71jWyYvmixubH2gCzvPjN3oE5e66
-X-Gm-Gg: ASbGncu7+D2a+zIoSYGLRPzUo4Ben7kCOQv2ae0X6M2RAZosZvR2exsIe4AArCM50gx
- JHSk5OHmV0aPV3pg18ERj+ECSMSGhD6URZf8jXOQhCphvspZfLPng6HZWsoDqz37UE76kDkp1Sc
- clLY+9n4GGBAfAa5q9Yz+Fm2KualJw2Qcvlz4O3VU+/nSXlaiL6fdLFo1gsblSm1IdoLmy6KzEM
- GN4/L9NVUqzuyVCIMicOO3N9zqqQ0/6K3TzF7570NttIellNLdbsCur0hFkt+cTxXBDJQBPIlFh
- p2AJ+lPWshB2ztYHsSTq6shfDBrBrIueeKBZLvyVr3ICDF1vRQ7V6NrFvpmNPobRzVe877EZFgo
- IpPt/idhB
-X-Received: by 2002:a05:600c:1d0c:b0:436:1bbe:f686 with SMTP id
- 5b1f17b1804b1-436e2707c59mr85179265e9.21.1736516741754; 
- Fri, 10 Jan 2025 05:45:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXoja55Oz8ju9Y5pIQ4zEfVd8CuyyhjgWKANpd/OCOmWrYWezUDG9OTIt45/30cstml/rNEA==
-X-Received: by 2002:a05:600c:1d0c:b0:436:1bbe:f686 with SMTP id
- 5b1f17b1804b1-436e2707c59mr85178975e9.21.1736516741372; 
- Fri, 10 Jan 2025 05:45:41 -0800 (PST)
-Received: from ?IPV6:2003:cb:c708:e100:4f41:ff29:a59f:8c7a?
- (p200300cbc708e1004f41ff29a59f8c7a.dip0.t-ipconnect.de.
- [2003:cb:c708:e100:4f41:ff29:a59f:8c7a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9e6251asm55521085e9.40.2025.01.10.05.45.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 05:45:40 -0800 (PST)
-Message-ID: <17db435a-8eca-4132-8481-34a6b0e986cb@redhat.com>
-Date: Fri, 10 Jan 2025 14:45:39 +0100
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tWFS1-00020n-1t
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:53:26 -0500
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue109 [213.165.67.119]) with ESMTPSA (Nemesis) id
+ 1Mg6mG-1t5SPf2U0s-00q9Ru; Fri, 10 Jan 2025 14:53:21 +0100
+Message-ID: <046d5854-8f4d-4095-9567-40179cd79393@vivier.eu>
+Date: Fri, 10 Jan 2025 14:53:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Enable shared device assignment
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
- <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
- <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
- <6ac5ddea-42d8-40f2-beec-be490f6f289c@amd.com>
- <8f953ffc-6408-4546-a439-d11354b26665@intel.com>
- <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
- <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
- <008bfbf2-3ea4-4e6c-ad0d-91655cdfc4e8@amd.com>
- <1361f0b4-ddf8-4a83-ba21-b68321d921da@intel.com>
- <c318c89b-967d-456e-ade1-3a8cacb21bd7@redhat.com>
- <20250110132021.GE5556@nvidia.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250110132021.GE5556@nvidia.com>
+Subject: Re: [PATCH v2 4/6] linux-user: netlink: Add emulation of
+ IP_MULTICAST_IF
+To: deller@kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: deller@gmx.de
+References: <20241227205449.29311-1-deller@kernel.org>
+ <20241227205449.29311-5-deller@kernel.org>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20241227205449.29311-5-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:dwqJ1hspuYG+JqTHhmaCh5duiMn0FMo8XihW9n8jpjFEzgb2RIK
+ T5LbOOKRcBhkw9kR3Mk2LTMQGoQEQcdzZqxLmsWXkeJJdpcZfCOd9psit+tw/Lo+P6hRuyy
+ qdEOY33upkdZJIri9d8NqK5p75GxWZg8bChsqHj7/gArb8qQDpK6SUvgg6+rkdYCdrkkcAd
+ 8aP+QlfVgU7JNGsZnYW8g==
+UI-OutboundReport: notjunk:1;M01:P0:ac6goJ0AvpY=;lW3Oqe7mmsnV4ZQSc3g29Fd/Ksz
+ 15z+BS6cTDKMalgk5Gt+LJO4KxqFwt5kVRrAZqbhL4sByKbPmA8rwA388T+zypW9R8GUL7DzI
+ apL2gPV2Ty93Zj2E1L5l2RJl3iYsWAq/QOwdmat3ymDtIx/ymbRWieP7Ig17xFNNV5GekIG1H
+ dp3A+9CZWLocZ7fd4mHA9+NwVpRMPYfram76PnivBqIIBwG3wLNLtXkPIfAafZBYLl32UXikx
+ VfNk0dcwv63x1ay9DWIgiOQ4qjobK1iZHeT4xvQWkysmtaMDijShyYq3JZ1KGWhNRU6P/Jrs4
+ YUurZjoADqmMDHN4o5B3MsUJCoxD/HzPCjrj3hS5c02Q/V522BYnny2zkU4hEAph6m9rODwm/
+ KceFzv2t6sUx7IkuM5ZkXDNqgm8KxelHMWQsTSdqekfWKCDwywdc+GFYWj+WjuvhDaFBU3G1o
+ uhTh9Od+g2j9BrGSKKaXqGVC+RUqLhlCq4OToaKW7HqFhZecVCWO8VmNgKqWT0qeveoFsoXhL
+ Fk02kgpoRjdy9YpAlIU3jhUhyCHqffCt4DGtHiwyvuQofmneP6gWvXKx6sSJ0KnP2kHJY6ivs
+ HAgU4aTt+k+AbKsj9821cjr90q1JJo8M5D1tzgbtmGhkMzNuHtbGECbDcpFZXZjfOh6tse9Cj
+ n9TSxrppP1rTvEezhYwpwgZ/v3ymj5KYkrS9Ludklbq90nJHx09vPBWTENAs2rsPD70Vy9+Fx
+ GSq32t6gcRzNAWlSX6ZX/fK5pGGRN/u8NChGSMjP9RJfBYAgJKfMgZ/vwgDLEztDpYTr6BCaD
+ ejefHjXIDB2dxwzZZ+Bx9iPhzYA2P7BgSUd+mqUSVn8ku/th/qILj3QgUceACI/NBamerbs3Q
+ jTRKc6oVJHLH4pZIYmzizus7po6BXys8DC209OpkyOHjweUDdG5wOYk2sZCQz9yuNHmgea/Dk
+ +0rlz2k4+0VLPSN8vvLZFCkcse57mPRg/eZTdo4/SsPhS63DxQ1rEAi72C5RuyQu0f4ew5D7I
+ /KXcrbETMJUqWnMpwAhNiVQTEv7WVb0kod7sZAo
+Received-SPF: pass client-ip=212.227.17.10; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,65 +124,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.01.25 14:20, Jason Gunthorpe wrote:
-
-Thanks for your reply, I knew CCing you would be very helpful :)
-
-> On Fri, Jan 10, 2025 at 09:26:02AM +0100, David Hildenbrand wrote:
->>>>>>>>>>> One limitation (also discussed in the guest_memfd
->>>>>>>>>>> meeting) is that VFIO expects the DMA mapping for
->>>>>>>>>>> a specific IOVA to be mapped and unmapped with the
->>>>>>>>>>> same granularity.
+Le 27/12/2024 à 21:54, deller@kernel.org a écrit :
+> From: Helge Deller <deller@gmx.de>
 > 
-> Not just same granularity, whatever you map you have to unmap in
-> whole. map/unmap must be perfectly paired by userspace.
-
-Right, that's what virtio-mem ends up doing by mapping each memory block 
-(e.g., 2 MiB) separately that could be unmapped separately.
-
-It adds "overhead", but at least you don't run into "no, you cannot 
-split this region because you would be out of memory/slots" or in the 
-past issues with concurrent ongoing DMA.
-
+> Share code with IP_ADD_MEMBERSHIP/IP_DROP_MEMBERSHIP.
 > 
->>>>>>>>>>> such as converting a small region within a larger
->>>>>>>>>>> region. To prevent such invalid cases, all
->>>>>>>>>>> operations are performed with 4K granularity. The
->>>>>>>>>>> possible solutions we can think of are either to
->>>>>>>>>>> enable VFIO to support partial unmap
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   linux-user/syscall.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
 > 
-> Yes, you can do that, but it is aweful for performance everywhere
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index bbe2560927..4360543e20 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -2130,16 +2130,23 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+>               }
+>               ret = get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
+>               break;
+> +        case IP_MULTICAST_IF:
+>           case IP_ADD_MEMBERSHIP:
+>           case IP_DROP_MEMBERSHIP:
 
-Absolutely.
+Could you put in the commit message the information from ip(7):
 
+        IP_MULTICAST_IF (since Linux 1.2)
+               Set the local device for a multicast socket.  The argument
+               for setsockopt(2) is an ip_mreqn or (since Linux 3.5)
+               ip_mreq structure similar to IP_ADD_MEMBERSHIP, or an
+               in_addr structure.  (The kernel determines which structure
+               is being passed based on the size passed in optlen.)  For
+               getsockopt(2), the argument is an in_addr structure.
 
-In your commit I read:
+It would help to understand why we merge IP_MULTICAST_IF and IP_ADD_MEMBERSHIP code.
 
-"Implement the cut operation to be hitless, changes to the page table
-during cutting must cause zero disruption to any ongoing DMA. This is 
-the expectation of the VFIO type 1 uAPI. Hitless requires HW support, it 
-is incompatible with HW requiring break-before-make."
+>           {
+>               struct ip_mreqn ip_mreq;
+>               struct target_ip_mreqn *target_smreqn;
+> +            int min_size;
+>   
+>               QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
+>                                 sizeof(struct target_ip_mreq));
+>   
+> -            if (optlen < sizeof (struct target_ip_mreq) ||
+> +            if (optname == IP_MULTICAST_IF) {
+> +                min_size = sizeof(struct in_addr);
+> +            } else {
+> +                min_size = sizeof(struct target_ip_mreq);
+> +            }
+> +            if (optlen < min_size ||
+>                   optlen > sizeof (struct target_ip_mreqn)) {
+>                   return -TARGET_EINVAL;
+>               }
+> @@ -2149,7 +2156,9 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+>                   return -TARGET_EFAULT;
+>               }
+>               ip_mreq.imr_multiaddr.s_addr = target_smreqn->imr_multiaddr.s_addr;
+> -            ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
+> +            if (optlen >= sizeof(struct target_ip_mreq)) {
+> +                ip_mreq.imr_address.s_addr = target_smreqn->imr_address.s_addr;
+> +            }
 
-So I guess that would mean that, depending on HW support, one could 
-avoid disabling large pages to still allow for atomic cuts / partial 
-unmaps that don't affect concurrent DMA.
+I think you should have 3 parts here (like in the kernel):
 
+if (optlen >= sizeof(struct target_ip_mreqn)) {
+    ...
+} else {
+    if (optlen >= sizeof(struct target_ip_mreq)) {
+       ...
+    } else if (optlen >= sizeof(struct in_addr)) {
+       ...
+    }
+}
+>               if (optlen == sizeof(struct target_ip_mreqn)) {
+>                   ip_mreq.imr_ifindex = tswapal(target_smreqn->imr_ifindex);
+>                   optlen = sizeof(struct ip_mreqn);
 
-What would be your suggestion here to avoid the "map each 4k page 
-individually so we can unmap it individually" ? I didn't completely 
-grasp that, sorry.
-
- From "IIRC you can only trigger split using the VFIO type 1 legacy API. 
-We would need to formalize split as an IOMMUFD native ioctl.
-Nobody should use this stuf through the legacy type 1 API!!!!"
-
-I assume you mean that we can only avoid the 4k map/unmap if we add 
-proper support to IOMMUFD native ioctl, and not try making it fly 
-somehow with the legacy type 1 API?
-
--- 
-Cheers,
-
-David / dhildenb
-
+Thanks.
 
