@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A9BE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618FFE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWK2t-0000jv-VR; Fri, 10 Jan 2025 13:47:48 -0500
+	id 1tWK49-0002rB-EC; Fri, 10 Jan 2025 13:49:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1y-0000Dc-Du
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tWK2d-0000PU-2A
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1v-000168-T3
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:49 -0500
+ id 1tWK2a-0001CI-L3
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736534805;
+ s=mimecast20190719; t=1736534847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aX24Q+tB77pzEZ+uLwRAl7jQIydZqUxNNDKMiOl7mBs=;
- b=U+/7rWXKMesPdOqR4EiUSMHxQXfTinlbXrazhUbOA3+JEECCjF6VcFpBPkbVajiq5wlbzc
- MAXsmPmHMrDhMLOxCIIZpbuv9sui1jAsZ4QwpMlqjlC5cMYiLrWB9zctSIMfdPMGJw3Mca
- +9TSk8XXeD+ts+M/jSnXXgx+WaPmdXM=
+ bh=u/jSh3phCjmXrmFZbNzmUVTDDUThSgA5sAsWR34V2mc=;
+ b=fua/zNkyp9iOeYlThrzYkbV2bTGHfQrA3fxVi/WfmBIX3yXmchYpRKyvW0AAlJNqOJZX80
+ Mnhu33HSAw9iW6LXbMUzDWL7cDi/2L+pxIkvmW1202vFfpUX5drpcdfE1FrCJMovd4XLCt
+ usnNyRd0Ii74hCMkXU9odnA0rVqxomw=
 Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
  [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-sR28UJ-6PPqAS5NupQN1mA-1; Fri, 10 Jan 2025 13:46:44 -0500
-X-MC-Unique: sR28UJ-6PPqAS5NupQN1mA-1
-X-Mimecast-MFC-AGG-ID: sR28UJ-6PPqAS5NupQN1mA
+ us-mta-509-WU6jeKFLPOuGBUeTUMlDLw-1; Fri, 10 Jan 2025 13:47:26 -0500
+X-MC-Unique: WU6jeKFLPOuGBUeTUMlDLw-1
+X-Mimecast-MFC-AGG-ID: WU6jeKFLPOuGBUeTUMlDLw
 Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d88d37abd0so2352981a12.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:43 -0800 (PST)
+ 4fb4d7f45d1cf-5d3fe991854so2899197a12.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:47:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736534802; x=1737139602;
+ d=1e100.net; s=20230601; t=1736534844; x=1737139644;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aX24Q+tB77pzEZ+uLwRAl7jQIydZqUxNNDKMiOl7mBs=;
- b=hHgYGFCFPxpips8+xMI0kzO0jk6mb6gddV7FoH5MHujdv4TqXwiKd1RfvX/OOwm1jT
- XiV/J6njzyROgR7vl30YMGrbPt4ZwNdUF89eCjbHOOGcdhu2XCl/IpXcZviBRmR2XPki
- 4XJW+N8QBGYA/eYaFMpEoubZU9KXkyFJULQmQLfIe2Jo04Flb3dBtoo+CnLLTN8xX6tK
- iW0dipvobOYPZjiyn61JOU0OoX3BCaAmURYY6pmDlXElt3C2eIcD1HIxzy5E/AhDdRTW
- NLahCyr1owAcBarUWi0ZqjcouaHCbIZJ9/rTyAzJTCTBL5zEGIfxLWGVqjeTzjVfx0nz
- QicA==
-X-Gm-Message-State: AOJu0Yz54Rx6MpzTQ5vOUtXnVLWXORSSaB9FBFDnJJT39gd4fs0Z6gx+
- jmUT66Tm4Kupqv0YmwlvM2SJ8kYhFTpZ9CzL0qX3CKge++YGJfbg44/xzFl8IYXAnAF50I5rnFU
- q+VwKJLLyvG+QGPdDIAaVjdthJvUZLlREN1Pm9rgYGYqPrWWlYLIuSnefimiyMFhhAC+tZZyJdy
- OlE9vclWCmWBa5+wSWQWr3ir5Cq9TTtCKdWidi4yA=
-X-Gm-Gg: ASbGncs9MkGZfvLjI+Pvj8185V38AxB/PO6OIHi/eESYeHweeB/bU8dBWK7eE81J132
- waZqyvq/OQS3LjUxCSkabwij89mxgA2GIddsCsJk0TBBNcwettDHaANRrLSKlFCRflv519cH4BD
- EX20SashnskHU4QjSXiYztjlBtoHnzNxSOgoDnUKrIMmx8ukNd1gf2u3FwvbyLRciIYy8CjhQPY
- m6oVQg9Hl7YKIS5Uy+GIxQ5CspIP2BBjCL/TGkz8BnF6nMdUn2qbf6FkkY=
-X-Received: by 2002:a05:6402:358a:b0:5d9:a62:33e with SMTP id
- 4fb4d7f45d1cf-5d972e162b0mr10754146a12.15.1736534802480; 
- Fri, 10 Jan 2025 10:46:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEyMqyWmrW0lTH/osdKXu5ANogZss5mgSvFJOeeXdy9sX4c4pbArHla0T+meklCekNzPvBYjA==
-X-Received: by 2002:a05:6402:358a:b0:5d9:a62:33e with SMTP id
- 4fb4d7f45d1cf-5d972e162b0mr10754132a12.15.1736534802098; 
- Fri, 10 Jan 2025 10:46:42 -0800 (PST)
+ bh=u/jSh3phCjmXrmFZbNzmUVTDDUThSgA5sAsWR34V2mc=;
+ b=hr1bnFONqmYCT7lKrIW9jfupKz7mXKB4T7A3SFDeuiilcmBInccvjepPCeWutTvfTH
+ 3m5/siE93qnBd5GM6c/NtD+h3pXLx1dG85jc8OU87aN24hCszdM4vZoCpR25FgXypwFN
+ nGwTwgNBfd5lwwVx3HVqGm2+2jaU6I9q30hydLJxNemfdrlGwjDKpMI610yjyHgKDsV/
+ 2UGB4h3n1NCfpRKUuumca1PKMSrf3BjLWWiD4UjDvXVNEZcn2V6+MVDwCFey60+KfD7b
+ f3bzWO9SUlYRfUjvSjRcHctpRrLVnu2ZpXcB0LRWRmC52fpDkgBSvI+NO5nPVplMZqyi
+ GOJQ==
+X-Gm-Message-State: AOJu0YzEaUZCyN/fEl4rsO3mS/Q7pwvbQ+x2/rQKFJVtIw2InwffhQbA
+ UqZ9P/RnVn39GrNXkNsL5GhuWRk9ysan3Yf4/kG119ve/8CvYdYxAJGjZg1DkSpsHRUhwRFIi2j
+ cAu33Dpc6nT9Hd3hLuUJL4LO9erEQLGyCeYlXGAj8iYqLhyZfDNDgO6gfY+L01v/634J5NAeaGN
+ asVzc5eI9liI3N2KC1HUSiY3gx7hn7vcbctcT2u50=
+X-Gm-Gg: ASbGncvajycP4qAz7y4biwaowztwQnuxozobCSF6HVpz6jI88MnLtda9xGGsCWjpFg7
+ 7XDsinHkFtIA+dAhoioQrzeLANBN2I+z3R7zlAsK7FGDsMYRPNlDdBQ4PdvxVAnzukZGpPVjf3/
+ tujmi//RZsz6clAxPYoSFsPi+JXJOmlQ13wiSQ56avtgcDejzD/TJTq3M/FQMb771gn0T4rzyrE
+ Nx3fw0Eco/+Ox2PLa95yD4Bic7EgpnujBUVIviHFAiaY8CcTOGZVO0fDC8=
+X-Received: by 2002:a05:6402:27cd:b0:5d9:a55:8104 with SMTP id
+ 4fb4d7f45d1cf-5d972e4cb87mr9775250a12.21.1736534844393; 
+ Fri, 10 Jan 2025 10:47:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE5AWBFycH3ZDFwFvcgt0PbW2JGhLn4J43JPcA3/Zjz9FOKUBh+wWU4/ykqP6ahu/b3Ku3UIg==
+X-Received: by 2002:a05:6402:27cd:b0:5d9:a55:8104 with SMTP id
+ 4fb4d7f45d1cf-5d972e4cb87mr9775239a12.21.1736534843887; 
+ Fri, 10 Jan 2025 10:47:23 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.105.73])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d99008c39fsm1936978a12.13.2025.01.10.10.46.40
+ 4fb4d7f45d1cf-5d99046a17fsm1919522a12.62.2025.01.10.10.47.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 10:46:40 -0800 (PST)
+ Fri, 10 Jan 2025 10:47:22 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 09/38] rust: pl011: only leave embedded object initialization
- in instance_init
-Date: Fri, 10 Jan 2025 19:45:50 +0100
-Message-ID: <20250110184620.408302-10-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+	Zide Chen <zide.chen@intel.com>
+Subject: [PULL 27/38] target/i386/kvm: Clean up error handling in
+ kvm_arch_init()
+Date: Fri, 10 Jan 2025 19:46:08 +0100
+Message-ID: <20250110184620.408302-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110184620.408302-1-pbonzini@redhat.com>
 References: <20250110184620.408302-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,86 +109,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Leave IRQ and MMIO initialization to instance_post_init.  In Rust the
-two callbacks are more distinct, because only instance_post_init has a
-fully initialized object available.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-While at it, add a wrapper for sysbus_init_mmio so that accesses to
-the SysBusDevice correctly use shared references.
+Currently, there're following incorrect error handling cases in
+kvm_arch_init():
+* Missed to handle failure of kvm_get_supported_feature_msrs().
+* Missed to return when kvm_vm_enable_disable_exits() fails.
+* MSR filter related cases called exit() directly instead of returning
+  to kvm_init(). (The caller of kvm_arch_init() - kvm_init() - needs to
+  know if kvm_arch_init() fails in order to perform cleanup).
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Fix the above cases.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Link: https://lore.kernel.org/r/20241106030728.553238-11-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 18 ++++++++++--------
- rust/qemu-api/src/sysbus.rs      | 12 ++++++++++++
- 2 files changed, 22 insertions(+), 8 deletions(-)
+ target/i386/kvm/kvm.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 215f94a6e4a..72a4cea042c 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -145,6 +145,7 @@ impl ObjectImpl for PL011State {
-     type ParentType = SysBusDevice;
- 
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
-+    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = Some(Self::post_init);
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 3624abbb397..6f424774b33 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3162,7 +3162,7 @@ static int kvm_vm_enable_userspace_msr(KVMState *s)
+     return 0;
  }
  
- impl DeviceImpl for PL011State {
-@@ -183,14 +184,6 @@ unsafe fn init(&mut self) {
-                 Self::TYPE_NAME.as_ptr(),
-                 0x1000,
-             );
--
--            let sbd: &mut SysBusDevice = self.upcast_mut();
--            sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
--        }
--
--        for irq in self.interrupts.iter() {
--            let sbd: &SysBusDevice = self.upcast();
--            sbd.init_irq(irq);
+-static void kvm_vm_enable_energy_msrs(KVMState *s)
++static int kvm_vm_enable_energy_msrs(KVMState *s)
+ {
+     int ret;
+ 
+@@ -3172,7 +3172,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+         if (ret < 0) {
+             error_report("Could not install MSR_RAPL_POWER_UNIT handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
          }
  
-         // SAFETY:
-@@ -213,6 +206,15 @@ unsafe fn init(&mut self) {
+         ret = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
+@@ -3180,7 +3180,7 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+         if (ret < 0) {
+             error_report("Could not install MSR_PKG_POWER_LIMIT handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
+         }
+ 
+         ret = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
+@@ -3188,17 +3188,17 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+         if (ret < 0) {
+             error_report("Could not install MSR_PKG_POWER_INFO handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
+         }
+         ret = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
+                              kvm_rdmsr_pkg_energy_status, NULL);
+         if (ret < 0) {
+             error_report("Could not install MSR_PKG_ENERGY_STATUS handler: %s",
+                          strerror(-ret));
+-            exit(1);
++            return ret;
+         }
+     }
+-    return;
++    return 0;
+ }
+ 
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+@@ -3265,7 +3265,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return ret;
+     }
+ 
+-    kvm_get_supported_feature_msrs(s);
++    ret = kvm_get_supported_feature_msrs(s);
++    if (ret < 0) {
++        return ret;
++    }
+ 
+     uname(&utsname);
+     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
+@@ -3301,6 +3304,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         if (ret < 0) {
+             error_report("kvm: guest stopping CPU not supported: %s",
+                          strerror(-ret));
++            return ret;
          }
      }
  
-+    fn post_init(&mut self) {
-+        let sbd: &SysBusDevice = self.upcast();
-+
-+        sbd.init_mmio(&self.iomem);
-+        for irq in self.interrupts.iter() {
-+            sbd.init_irq(irq);
-+        }
-+    }
-+
-     pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u64, u64> {
-         use RegisterOffset::*;
+@@ -3332,12 +3336,15 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         }
  
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index 8193734bde4..b96eaaf25f2 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -38,6 +38,18 @@ const fn as_mut_ptr(&self) -> *mut SysBusDevice {
-         addr_of!(*self) as *mut _
+         if (s->msr_energy.enable == true) {
+-            kvm_vm_enable_energy_msrs(s);
++            ret = kvm_vm_enable_energy_msrs(s);
++            if (ret < 0) {
++                return ret;
++            }
+ 
+             ret = kvm_msr_energy_thread_init(s, ms);
+             if (ret < 0) {
+                 error_report("kvm : error RAPL feature requirement not met");
+-                exit(1);
++                return ret;
+             }
+         }
      }
- 
-+    /// Expose a memory region to the board so that it can give it an address
-+    /// in guest memory.  Note that the ordering of calls to `init_mmio` is
-+    /// important, since whoever creates the sysbus device will refer to the
-+    /// region with a number that corresponds to the order of calls to
-+    /// `init_mmio`.
-+    pub fn init_mmio(&self, iomem: &bindings::MemoryRegion) {
-+        assert!(bql_locked());
-+        unsafe {
-+            bindings::sysbus_init_mmio(self.as_mut_ptr(), addr_of!(*iomem) as *mut _);
-+        }
-+    }
-+
-     /// Expose an interrupt source outside the device as a qdev GPIO output.
-     /// Note that the ordering of calls to `init_irq` is important, since
-     /// whoever creates the sysbus device will refer to the interrupts with
 -- 
 2.47.1
 
