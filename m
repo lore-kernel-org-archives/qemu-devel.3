@@ -4,78 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48FCE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 879FCE7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHxW-0001Bo-Qs; Fri, 10 Jan 2025 11:34:07 -0500
+	id 1tWI1f-0002mB-U0; Fri, 10 Jan 2025 11:38:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHxS-0001BD-Aj
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:34:02 -0500
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHxP-0000Hx-6Q
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:34:00 -0500
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e3fd6cd9ef7so5656155276.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:33:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736526837; x=1737131637; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9QkFzvLXENhdg677ICuQLwSEYKTcmCSdb4mz1Xb7oPI=;
- b=WiYqfc8WLqsdhnMzJ79kRiUfxxYQ558pLqAM6jYx5wXQkmtYq6t8P9HXmzXUw3fiRl
- JO8MtEnwnMoR48AWS0vtusU8cAQ6SHOJzonNZZp/D7HQSO3I8/RRWsAvveEoAPzRk/Av
- j7r+gg50s1qtvdCRAFZ+XQ7oaMZWKP/6/qhmyM/2rLmzYAYY3dmpQG4/b13tUr5if3DB
- goXJn5OcnymwLS9fbGOmXO/KvFqhKp3aB/7kT4ovqIiJ79CLVGc0gFoMHYdOZR/IS2Ab
- dA6hMmo9H2wOQmzpgy6KUol6XgcdHEip7FxToxRB3f/klWVQNfplzZiWaZnDUCzwdZUc
- PaiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736526837; x=1737131637;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9QkFzvLXENhdg677ICuQLwSEYKTcmCSdb4mz1Xb7oPI=;
- b=i2bY3SfQ4n2ubKc1/N17L9mlvsbiqXWdSLs1O1u3CcoQlGiE3rwUK0JuSN61sHayGr
- J97R+DCrh+1UteciUhWQeulRkj9qJu2/g/IbThBBR2//uQZ3Gfub+09kLIGNVFrd4cUZ
- W/71zruF+LitXCQMNzexN4BHMhEBNP2bp8/H15mqFK3xWcD7KdIdbTKdGkUEXFDiyudI
- SFbGMv2z/lwho8j3wttNTq7F0olqRTCIZZKoumBhpwqZmMQvLWARVPkcitpjIWbWRlZy
- mLwlKTZe0NiqcH5uGnl5CXAyPivMYa4kfBU7AR+sb+iwD71iRH5KrSTI2Ocq39WGokgW
- Dg5g==
-X-Gm-Message-State: AOJu0YyKsPvo5MDBYd6hprTXebgHdiVHK3XXbBXusjimBQKM+YYMzk3r
- DjMAJPJjacWcJpuGf7nV+v6CkvS9tHNiVdrHzerNP+QeU7tOxPZxw8dmK1JfZHhqgJaFCTN1ifz
- kK3bgSW26U0GACOHMZWWG+73tGixdRRkpooQK4g==
-X-Gm-Gg: ASbGncvuhSRd9vnFXCMVsE/aPwBKJ413G44rFei/MWArnY1nKpV+Us3PzRnrjlYxg5A
- bwPSGPQoUYGSA+ShKMY9FOjyHGJHXlALN3bO71DA=
-X-Google-Smtp-Source: AGHT+IH/irRGCdXYPspo956NxC7stTgc3w70S3x0Zt+tkFuuVtkOtsInSr7N3TFZMAoZBKp4i8bEWQhdmsCb6R9zQK8=
-X-Received: by 2002:a05:690c:d07:b0:6ef:f05a:ba6c with SMTP id
- 00721157ae682-6f543f2a7camr63286187b3.13.1736526837266; Fri, 10 Jan 2025
- 08:33:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1tWI14-0002fW-De; Fri, 10 Jan 2025 11:37:46 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1tWI12-00010f-Et; Fri, 10 Jan 2025 11:37:46 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3ADB348FDB;
+ Fri, 10 Jan 2025 17:37:34 +0100 (CET)
+Message-ID: <81befe6a-49fb-47bb-88fc-3fde73bb7c8c@proxmox.com>
+Date: Fri, 10 Jan 2025 17:37:33 +0100
 MIME-Version: 1.0
-References: <20241223093051.45648-1-j@getutm.app>
- <20241223093051.45648-4-j@getutm.app>
-In-Reply-To: <20241223093051.45648-4-j@getutm.app>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jan 2025 16:33:46 +0000
-X-Gm-Features: AbW1kvbXoLybWB2N2sdhWyKt04OyjhCuDkoxwVt_wV532vQHi4LUOZFtLhV9Dvg
-Message-ID: <CAFEAcA_HX+AGjO2ZaBsjQKi2d=5AO4V3p33fDG4NzsZ3J-D4QQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] hw/arm/virt: handle hvf with unknown max IPA size
-To: Joelle van Dyne <j@getutm.app>
-Cc: qemu-devel@nongnu.org, "open list:Virt" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block-backend: protect setting block root to NULL with
+ block graph write lock
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ qemu-block@nongnu.org
+References: <20250108124649.333668-1-f.ebner@proxmox.com>
+ <Z3-pTUj66O2nfqc_@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <Z3-pTUj66O2nfqc_@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,36 +60,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Dec 2024 at 09:30, Joelle van Dyne <j@getutm.app> wrote:
->
-> When it is not possible to determine the max IPA bit size, the helper
-> function will return 0. We do not try to set up the memmap in this case
-> and instead fall back to the default in machvirt_init().
->
-> Signed-off-by: Joelle van Dyne <j@getutm.app>
-> ---
->  hw/arm/virt.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index f9b3380815..8c431e24b3 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3053,6 +3053,11 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
->      int default_ipa_size = hvf_arm_get_default_ipa_bit_size();
->      int max_ipa_size = hvf_arm_get_max_ipa_bit_size();
->
-> +    /* Unknown max ipa size, we'll let the caller figure it out */
-> +    if (max_ipa_size == 0) {
-> +        return 0;
-> +    }
+Am 09.01.25 um 11:47 schrieb Kevin Wolf:
+> Am 08.01.2025 um 13:46 hat Fiona Ebner geschrieben:
+>> Setting blk->root is a graph change operation and thus needs to be
+>> protected by the block graph write lock in blk_remove_bs(). The
+>> assignment to blk->root in blk_insert_bs() is already protected by
+>> the block graph write lock.
+> 
+> Hm, if that's the case, then we should also enforce this in the
+> declaration of BlockBackend:
+> 
+>     BdrvChild * GRAPH_RDLOCK_PTR root;
+> 
+> However, this results in more compiler failures that we need to fix. You
+> caught the only remaining writer, but the lock is only fully effective
+> if all readers take it, too.
 
-When can this happen? There are other places where we call
-hvf_arm_get_max_ipa_bit_size() and assume it's valid.
-The implementation calls assert_hvf_ok(ret), so if it
-returns at all then we ought to have got a valid IPA size
-from macos...
+I started giving this a try, but quickly ran into some issues/questions:
 
-thanks
--- PMM
+1. For global state code, is it preferred to use
+GRAPH_RDLOCK_GUARD_MAINLOOP() to cover the whole function or better to
+use bdrv_graph_rd(un)lock_main_loop() to keep the locked section as
+small as necessary? I feel like the former can be more readable, e.g. in
+blk_insert_bs(), blk_new_open(), where blk->root is used in conditionals.
+
+2. In particular, protecting blk->root means that blk_bs() needs to have
+the read lock. In fact, blk_bs() is reading blk->root twice in a row, so
+it seems like it could suffer from a potential NULL pointer dereference
+(or I guess after compiler optimization a potential use-after-free)?
+
+Since blk_bs() is IO_CODE() and not a coroutine, I tried to mark it
+GRAPH_RDLOCK and move on to the callers.
+
+However, one caller is blk_nb_sectors() which itself is called by
+blk_get_geometry(). Both of these are manually-written coroutine wrappers:
+
+> commit 81f730d4d0e8af9c0211c3fedf406df0046341a9
+> Author: Paolo Bonzini <pbonzini@redhat.com>
+> Date:   Fri Apr 7 17:33:03 2023 +0200
+> 
+>     block, block-backend: write some hot coroutine wrappers by hand
+>     
+>     The introduction of the graph lock is causing blk_get_geometry, a hot function
+>     used in the I/O path, to create a coroutine.  However, the only part that really
+>     needs to run in coroutine context is the call to bdrv_co_refresh_total_sectors,
+>     which in turn only happens in the rare case of host CD-ROM devices.
+>     
+>     So, write by hand the three wrappers on the path from blk_co_get_geometry to
+>     bdrv_co_refresh_total_sectors, so that the coroutine wrapper is only created
+>     if bdrv_nb_sectors actually calls bdrv_refresh_total_sectors.
+
+Both the blk_bs() and blk_nb_sectors() functions are IO_CODE(), but not
+coroutines, and callers of blk_get_geometry are already in the device
+code. I'm not sure how to proceed here, happy to hear suggestions :)
+
+---snip---
+
+>> diff --git a/block/block-backend.c b/block/block-backend.c
+>> index c93a7525ad..9678615318 100644
+>> --- a/block/block-backend.c
+>> +++ b/block/block-backend.c
+>> @@ -887,9 +887,9 @@ void blk_remove_bs(BlockBackend *blk)
+>>       */
+>>      blk_drain(blk);
+>>      root = blk->root;
+>> -    blk->root = NULL;
+>>  
+>>      bdrv_graph_wrlock();
+>> +    blk->root = NULL;
+>>      bdrv_root_unref_child(root);
+>>      bdrv_graph_wrunlock();
+>>  }
+> 
+> I think the 'root = blk->root' needs to be inside the locked section,
+> too. Otherwise blk->root could change during bdrv_graph_wrlock() (which
+> has a nested event loop) and root would be stale. I assume clang would
+> complain about this with the added GRAPH_RDLOCK_PTR.
+
+Oh I see, good catch!
+
+Best Regards,
+Fiona
+
 
