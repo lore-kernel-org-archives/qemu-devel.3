@@ -4,110 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5513BE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB14E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWF3Y-00011i-Q3; Fri, 10 Jan 2025 08:28:08 -0500
+	id 1tWF8N-0001wj-BQ; Fri, 10 Jan 2025 08:33:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tWF3X-00011O-8M
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:28:07 -0500
-Received: from mout.kundenserver.de ([217.72.192.75])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tWF8M-0001wa-0T
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:33:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tWF3V-0006S9-BA
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:28:06 -0500
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue106 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1MRBWU-1ttQjd3r2S-00JKkr; Fri, 10 Jan 2025 14:27:54 +0100
-Message-ID: <c1bf028f-a6bb-43b8-a72d-756838b15866@vivier.eu>
-Date: Fri, 10 Jan 2025 14:27:53 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tWF8K-000747-2P
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:33:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736515981;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=elbS5kxOz81zaT/VZFcGTo4rbCsnR13yroBGsDtO+zM=;
+ b=eCCPWZ4FImyVcjhhkC+Xxyap5NQXveWKAMQlC3K93PNr2B4pTFXLyltO0BkahOvGQXSoKU
+ /NYOqJgz7uTMmcoaBkZBMhvKtyUq3XvgGOjRBcXNfOE/jJKPLHOkIMpoQN9++boWSKgG+M
+ qlP3vg6vj1XLslhRwfg3/+Xw52Og+fg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-QjGulpivN32U-FVcFet7cA-1; Fri,
+ 10 Jan 2025 08:32:58 -0500
+X-MC-Unique: QjGulpivN32U-FVcFet7cA-1
+X-Mimecast-MFC-AGG-ID: QjGulpivN32U-FVcFet7cA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9EE7D1956050; Fri, 10 Jan 2025 13:32:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.82])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 114031955BE3; Fri, 10 Jan 2025 13:32:51 +0000 (UTC)
+Date: Fri, 10 Jan 2025 13:32:48 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 1/9] qapi: Make qapi_bool_parse() gracefully handle
+ NULL value
+Message-ID: <Z4EhgEs-V215z34j@redhat.com>
+References: <20250108202625.149869-1-iii@linux.ibm.com>
+ <20250108202625.149869-2-iii@linux.ibm.com>
+ <Z4EFnOMRUDsH6cpd@redhat.com>
+ <cf8a0915434ec6c48cf88fffc27a53239cffe34a.camel@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] linux-user: netlink: Add IP_PKTINFO cmsg parsing
-To: deller@kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: deller@gmx.de
-References: <20241227205449.29311-1-deller@kernel.org>
- <20241227205449.29311-4-deller@kernel.org>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <20241227205449.29311-4-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:QADQF1ge6Ay/f2l64eoUV+7IAWNoSBDmHKxfFfu0O6sJRBpHfwl
- NHzUmjwxe42FgfpSrhXtPxAoUBDmkQ+OO6JYm+VnZXLJsil+WH3oC64BaYNybsdtLqB5U2J
- RFy5e737W1MFCHt/PqQljmjaHycAB3McquCKI1Wd+xAAFO9ozqwgEuzbWOaf8absRll7r0X
- euPAp4lB9a9MxtCUJgN/g==
-UI-OutboundReport: notjunk:1;M01:P0:GUDCZT2dOsk=;wOKqRC7LP7NaEE+GR6GqtJ/ENDu
- 61k6mnEuKNNYbtsE8wGocRY5t42kAPDQ29Zytvu0mrtZlzXh41i273ct/uHuMqyuXKePceVtT
- gzKl9xe2w7emFhKxtE3efStNVzFAFiU5I1GxqvPcThUjj4Q74od5g0TQHctbmMPCSWJbHq8FM
- O2jTeDf1cg1nBw3XgAYjKLKz4yDteJVGelic06GOF7eceetq3dA11hCH85D124juqpQiDB1q0
- 5cL6EV2lPDI+2pjHIJ50sCD1yKraxqrid4eSpvKBw5aGeG55QLvzY2k2Tc8USwJLIHlyCAo10
- k2w6n4WAz6PTrJPcjUZ1Y7Km3y9DN0q0Gy+rlUl80Kn2O1CZfmktvL5i/evo82wvG+Awx/IOW
- 2zgPJr77uTcmrB8T9WwoYP8LYs4urwKzyF3M61Q8X2nnAAAK7VDx8ATldqoQ31MRz0XyDh6gd
- 6ksgLWj46EN9K1irw0eozG/ou3eb6YwvvKvHm5WOlti2Vnu2GTir75tt9O10kPFKoWFiF3jw7
- akumdYGnlwB63wMSPZ0CGRqAmZUbvxi1HIKLe8v0a+BboTLt/0RRqC/cdZx9bY1GbDSH5gHQb
- zcTU8YXFrzXpjWVf2f593wCm6EiBQTtHlrPzsq1LkwHqT6/86QJVZwg9of7qLoOiv+s6S4YJp
- /hz9406x5HYcAlvv2b2n2FAbMiiYzqAwXHLvt1V/NikFget0Bd591zcHuHoN6v/iur+z5GSGu
- 1yHpPckG/V8dX5zwgpOxIzIcB7nls8vHvDSvAR2KWhUnXNpdbDlaRJ8FKXhTlv7NjVzHfiBlO
- GcOkmrDdXo2E0YegrOLX/9oyy8Bf7dxwAGRioFsBTqtckzpqyNi1TpaZE4wJB6MffGuqc9Cu/
- HMYNVcRajOg9T1sjpS0R5ZHfNpvmscFD3nLQQEfK5yT1WeaRjcErz7JrcxD8iLoJSP1Zev1vi
- fetWA/MEoVhRmzM/mVGPvEFsLhY+jHzsDVMS69HIweKzEI+b/YO0/TanrSWeACFAkFV2AW787
- Colu1WjgJTO//CzeJscTG0s2NDG6/BsJPsE3fna
-Received-SPF: pass client-ip=217.72.192.75; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <cf8a0915434ec6c48cf88fffc27a53239cffe34a.camel@linux.ibm.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,52 +94,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 27/12/2024 à 21:54, deller@kernel.org a écrit :
-> From: Helge Deller <deller@gmx.de>
+On Fri, Jan 10, 2025 at 02:03:09PM +0100, Ilya Leoshkevich wrote:
+> On Fri, 2025-01-10 at 11:33 +0000, Daniel P. Berrangé wrote:
+> > On Wed, Jan 08, 2025 at 09:04:56PM +0100, Ilya Leoshkevich wrote:
+> > > Use g_strcmp0(), so that NULL is considered an invalid parameter
+> > > value.
+> > 
+> > Why are we calling qapi_bool_parse with a NULL value in the first
+> > place ? IMHO this is a sign of a bug higher up the call chain
+> > that ought to be fixed, as in general all our input parsing code
+> > would expect non-NULL input values.
 > 
-> Fixes those warnings:
->   Unsupported host ancillary data: 0/8
+> The intended use case is the following (patch 7/9):
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/syscall.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>     g_auto(GStrv) tokens = g_strsplit(*arg, "=", 2);
+>     Error *err = NULL;
 > 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 494323efba..bbe2560927 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -1996,6 +1996,18 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
->                       (void *) &errh->offender, sizeof(errh->offender));
->                   break;
->               }
-> +            case IP_PKTINFO:
-> +            {
-> +                struct in_pktinfo *pkti = data;
-> +                struct in_pktinfo *target_pkti = target_data;
+>     if (g_strcmp0(tokens[0], "suspend") == 0) {
+>         if (!qapi_bool_parse(tokens[0], tokens[1], &suspend, &err)) {
+>             warn_report_err(err);
+>             [...]
+> 
+> The idea is to uniformly handle "suspend=y", "suspend=invalid" and
+> "suspend"; the latter requires checking whether token[1] is NULL.
+> Of course, this can be special-cased in the caller, but this would be
+> less elegant.
 
-I think we need to define a target_in_pktinfo structure.
+On the contrary, I think handling the latter in the caller explicitly
+is the correct approach.
 
-> +
-> +                __put_user(pkti->ipi_ifindex, &target_pkti->ipi_ifindex);
-> +                host_to_target_sockaddr((unsigned long) &target_pkti->ipi_spec_dst,
-> +                    (void *) &pkti->ipi_spec_dst, sizeof(pkti->ipi_spec_dst));
-> +                host_to_target_sockaddr((unsigned long) &target_pkti->ipi_addr,
-> +                    (void *) &pkti->ipi_addr, sizeof(pkti->ipi_addr));
+As written this code snippet gives readers the misleading impression
+that 'tokens[1]' is expected to be a non-NULL bool value. It is not
+at all obvious that the code is intentionally trying to support a
+NULL value for tokens[1]. Even if we can see that qapi_bool_parse
+accepts NULL, a reader has no idea whether this caller has
+intentionally passed NULL or simply forgot to raise an error when
+NULL is seen.
 
-Why do you use host_to_target_sockaddr()? The type of ipi_spec_dst and ipi_addr is in_addr.
-And in_addr is a __be32 so it doesn't need be translated from host endianness to target endianness.
+IMHO this patch should be dropped, and the desired behaviour made
+explicit in patch 7.
 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-> +                break;
-> +            }
->               default:
->                   goto unimplemented;
->               }
-
-Thanks,
-Laurent
 
