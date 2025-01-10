@@ -4,97 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9598FE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5304BE7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:09:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW9zN-0004in-JA; Fri, 10 Jan 2025 03:03:29 -0500
+	id 1tWA49-0006Wg-Hj; Fri, 10 Jan 2025 03:08:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW9zM-0004h7-6i
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:03:28 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tW9zK-0005eM-3a
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:03:27 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso13380355e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 00:03:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736496203; x=1737101003; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=24Xp6RUSIdTJUHRmXTfEa1fEW/jX7uYg/bhdB+B4Aps=;
- b=LvD3lq4k0qeP9IqucweMoFfZP+rsiNcFk/dfoYMzNDLD4PtYo5/AFyqJxpcjC+065q
- i5/7+Hoi11OeY9lEzMnpK06+SRLgtrlb2T5NdyIWS3Gd3r/8B4EDddM+scoJM5WCoaq3
- Nve5DHLypfZXvQlzDaQpTYXjRLarQlsZfJJMvlzKPkqtqhhOuYJkbq5YbDMIElWkVuM3
- Q9pLJsEz309u1Xs6ALwl4T3/ltfYUG/1vE3KjcUosgvZ3QQUB2soBrxK6Vju6ulu7XNt
- 0SG6bobeJ2FI+P5E9EMNu3WXZBM324byFLR82l7TO5EjvSQWeUX4kwLNch043k0gG2Ev
- H12w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736496203; x=1737101003;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=24Xp6RUSIdTJUHRmXTfEa1fEW/jX7uYg/bhdB+B4Aps=;
- b=gV3we/El6MwlrC2AJ2VsyX4Z1pfkSkV6ma0qINd2l7qW9HYxc14ZbTv+ND95XjOmvN
- JnYgPPXh5xBV3XDcrgXEUbw5p8AU3hstRmA8r39tQ1M7kKRiCtyUQQvSB+L7bdtUxZVi
- a+ALDPYB+7vu6deC9mIUFV09qM4P90MLXEpKOLnQMBSgSDtJTTYmEVW4frgDrOSiUfxZ
- rGCeqccLhUmSXnDBPaXbzpPwQmgCXDczbq/A/9CbRl93r9Yc+LDELJo+AdxChqPso07A
- Bf25V1i1bJmUEbH092M2nJKD+884JOclWOpV6Xeo4vF1rDYTO7i7XCIyg2ZMM1XgXhC8
- oucQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTThpNm3YCVfFSBUMOXYrILnICdyx1UJ2kKYI9a5Mvds8VE8WmrqTdW6U3M959DU4XnSi8YYQWhTxC@nongnu.org
-X-Gm-Message-State: AOJu0YwJ1XqfppzcIdYv96y0VAP7g03x4mzdCi7Py8jfDi5qvd5920o6
- EcbUnd4z3UcbI3LgiCFsgw3GNGgeMifY1dEmL2ZVQnBCjlxfeYz0xmoW/n9royQ=
-X-Gm-Gg: ASbGnctYu2XMFoAAQAU4kZexuNZ/koV6+LzSpdSwD2WSI9eLAKu4+8mKCa2Kk5Q+jhj
- HJTWiNjkW7cZ19RxhLcDoBa9TJXmDHT+yxRNzQrIHX/qqePpS0uM+wHxPhy3Jtq/7vetAqCCcff
- iHBe0QylnTZXvVTqgmUPG/e0+QratFWh8HLH9+BLe+YhIJ1/vL56hrkBgCYYNc8plk9QVuBnBxO
- n9DsO5qXo9+7hziu6vIEOG9DnMGgGdSTNVuRY0WVmmy824CBX4b+gs2xqbfshMFN1dQmYthlSJF
- NJgixfKzTqLW4Fm7bOO4pUyoBiI=
-X-Google-Smtp-Source: AGHT+IHar2s6b+o5E6tIAwRL6iTUaPJjOPf2msJBAXfaSXT5Ri/rrLu6MNtHhdNsccJF7uC3OuGJzA==
-X-Received: by 2002:a05:600c:19ce:b0:42c:bb96:340e with SMTP id
- 5b1f17b1804b1-436e26f857fmr94822905e9.31.1736496203380; 
- Fri, 10 Jan 2025 00:03:23 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e89e14sm78722395e9.33.2025.01.10.00.03.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 00:03:22 -0800 (PST)
-Message-ID: <c51d143c-1936-4661-af4a-21c3447579ec@linaro.org>
-Date: Fri, 10 Jan 2025 09:03:21 +0100
+ (Exim 4.90_1) (envelope-from
+ <BATV+4f8727a5892a49e75626+7810+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tWA47-0006WJ-5X
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:08:23 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+4f8727a5892a49e75626+7810+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tWA44-0006ge-3m
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:08:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=xjTgIqYHkldm6604nk+rcGuJN2kgAbKbeLYjNOBtiio=; b=FHBgG/AEumQf8aehaZy57AF6kL
+ lvaVrDFOSkMLgfG11t+8OcGT7w8cC+fxW+lUNtWPUEOVLgKXh0NXpkT1n7hDVukW2jqDs8DX9/GEN
+ wMY08gk8puqH5nG/Qui6n1yWzHnSJaJIGDqrNufbnK7CQ6vQJFo1uk2lfIPgskFWmyyaJQQXTEEeh
+ 99L27EqZFw1gLxBXz/2+TizcQC6wukRbxZvoPUhzXOQplTzLDZ89/OPXJ/OGydbYDMwOxsL7zDjSp
+ 2CNRN5Tn+BScUDmKpY9nFjbA8YIcHG/6pPIaR/ImgFpB9U+DaDJRp3MidhuKWWmYCrXvS4Kt1e+bO
+ DUNzmnHg==;
+Received: from 54-240-197-238.amazon.com ([54.240.197.238]
+ helo=edge-cache-192.e-lhr50.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tWA3w-0000000CRMv-0IcJ; Fri, 10 Jan 2025 08:08:12 +0000
+Message-ID: <17c134258de9517b677f08a865394f8075d67bdf.camel@infradead.org>
+Subject: Re: [PATCH 2/2] xen: do not use '%ms' scanf specifier
+From: David Woodhouse <dwmw2@infradead.org>
+To: Roger Pau =?ISO-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>
+Cc: Anthony PERARD <anthony@xenproject.org>, qemu-devel@nongnu.org, Stefano
+ Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>, "Edgar E.
+ Iglesias" <edgar.iglesias@gmail.com>, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ xen-devel@lists.xenproject.org
+Date: Fri, 10 Jan 2025 08:08:11 +0000
+In-Reply-To: <Z3__eDp4hShe79Pl@macbook.local>
+References: <20250107093140.86180-1-roger.pau@citrix.com>
+ <20250107093140.86180-3-roger.pau@citrix.com> <Z3-sJMXpiFUoATHz@l14>
+ <974ab6743d168d34babd458fe5e2e7766bb280b4.camel@infradead.org>
+ <Z3__eDp4hShe79Pl@macbook.local>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-iLcuI+S96c4sAIMas5cS"
+User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] plugins: enable linking with clang/lld
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Yonggang Luo <luoyonggang@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
- <20241128201510.869974-4-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241128201510.869974-4-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+4f8727a5892a49e75626+7810+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,122 +83,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Akihiko & Yonggang for
-https://lore.kernel.org/qemu-devel/20201006120900.1579-1-luoyonggang@gmail.com/
 
-On 28/11/24 21:15, Pierrick Bouvier wrote:
-> Windows uses a special mechanism to enable plugins to work (DLL delay
-> loading). Option for lld is different than ld.
-> 
-> MSYS2 clang based environment use lld by default, so restricting to this
-> config on Windows is safe, and will avoid false bug reports.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+--=-iLcuI+S96c4sAIMas5cS
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Thu, 2025-01-09 at 17:55 +0100, Roger Pau Monn=C3=A9 wrote:
+> On Thu, Jan 09, 2025 at 11:25:13AM +0000, David Woodhouse wrote:
+> > On Thu, 2025-01-09 at 11:59 +0100, Anthony PERARD wrote:
+> > >=20
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 char label[32];
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 XenDevice *xendev =3D NULL;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 XenConsole *con;
+> > > > @@ -550,7 +551,10 @@ static void xen_console_device_create(XenBacke=
+ndInstance *backend,
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto fail;
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > > =C2=A0=20
+> > > > -=C2=A0=C2=A0=C2=A0 if (xs_node_scanf(xsh, XBT_NULL, fe, "type", er=
+rp, "%ms", &type) !=3D 1) {
+> > > > +=C2=A0=C2=A0=C2=A0 node_path =3D g_strdup_printf("%s/type", fe);
+> > > > +=C2=A0=C2=A0=C2=A0 type =3D qemu_xen_xs_read(xsh, XBT_NULL, node_p=
+ath, NULL);
+> > > > +=C2=A0=C2=A0=C2=A0 g_free(node_path);
+> > >=20
+> > > I feel like we want "xs_node_read()" which would be similair to
+> > > xs_node_vscanf() but would simply return the result of
+> > > qemu_xen_xs_read(). This would avoid the need format of the node path=
+ in
+> > > several place in the code. But it's OK like that as well.
+> >=20
+> > If you look at the other callers of qemu_xen_xs_read(), it looks like
+> > the majority of them create the path with snprintf and then pass it in.
+> > Or with g_strdup_printf(), pass it in, then free it afterwards.
+> >=20
+> > So perhaps qemu_xen_xs_read() should be a printf-style function too,
+> > with its last arg(s) being the node name.
+>=20
+> I just went with Anthony suggestion and introduced xs_node_read(), as
+> I didn't want to play with qemu_xen_xs_read().=C2=A0 Not that I think the
+> suggestion is not valid, just seemed more work than what I wanted to
+> do right now.
 
-> ---
->   meson.build                   |  5 +++++
->   contrib/plugins/meson.build   |  2 +-
->   plugins/meson.build           | 24 ++++++++++++++++++++----
->   tests/tcg/plugins/meson.build |  3 +--
->   4 files changed, 27 insertions(+), 7 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 97cefb7cdd7..f286fb4f4a0 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -354,6 +354,11 @@ elif host_os == 'sunos'
->     qemu_common_flags += '-D__EXTENSIONS__'
->   elif host_os == 'haiku'
->     qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
-> +elif host_os == 'windows'
-> +  # plugins use delaylib, and clang needs to be used with lld to make it work.
-> +  if compiler.get_id() == 'clang' and compiler.get_linker_id() != 'ld.lld'
-> +    error('On windows, you need to use lld with clang - use msys2 clang64/clangarm64 env')
-> +  endif
->   endif
->   
->   # Choose instruction set (currently x86-only)
-> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> index 63a32c2b4f0..484b9a808c8 100644
-> --- a/contrib/plugins/meson.build
-> +++ b/contrib/plugins/meson.build
-> @@ -12,7 +12,7 @@ if get_option('plugins')
->         t += shared_module(i, files(i + '.c') + 'win32_linker.c',
->                           include_directories: '../../include/qemu',
->                           link_depends: [win32_qemu_plugin_api_lib],
-> -                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-> +                        link_args: win32_qemu_plugin_api_link_flags,
->                           dependencies: glib)
->       else
->         t += shared_module(i, files(i + '.c'),
-> diff --git a/plugins/meson.build b/plugins/meson.build
-> index 98542e926f8..d60be2a4d6d 100644
-> --- a/plugins/meson.build
-> +++ b/plugins/meson.build
-> @@ -17,14 +17,15 @@ if not enable_modules
->         capture: true,
->         command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
->       emulator_link_args += ['-Wl,-exported_symbols_list,plugins/qemu-plugins-ld64.symbols']
-> +  elif host_os == 'windows' and meson.get_compiler('c').get_id() == 'clang'
-> +    # LLVM/lld does not support exporting specific symbols. However, it works
-> +    # out of the box with dllexport/dllimport attribute we set in the code.
->     else
->       emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
->     endif
->   endif
->   
->   if host_os == 'windows'
-> -  dlltool = find_program('dlltool', required: true)
-> -
->     # Generate a .lib file for plugins to link against.
->     # First, create a .def file listing all the symbols a plugin should expect to have
->     # available in qemu
-> @@ -33,12 +34,27 @@ if host_os == 'windows'
->       output: 'qemu_plugin_api.def',
->       capture: true,
->       command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-> +
->     # then use dlltool to assemble a delaylib.
-> +  # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
-> +  # linker file we add with plugins (win32_linker.c) to identify that we want
-> +  # to find missing symbols in current program.
-> +  win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
-> +  if meson.get_compiler('c').get_id() == 'clang'
-> +    # With LLVM/lld, delaylib is specified at link time (-delayload)
-> +    dlltool = find_program('llvm-dlltool', required: true)
-> +    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
-> +    win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
-> +  else
-> +    # With gcc/ld, delay lib is built with a specific delay parameter.
-> +    dlltool = find_program('dlltool', required: true)
-> +    dlltool_cmd = [dlltool, '--input-def', '@INPUT@',
-> +                   '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
-> +  endif
->     win32_qemu_plugin_api_lib = configure_file(
->       input: win32_plugin_def,
->       output: 'libqemu_plugin_api.a',
-> -    command: [dlltool, '--input-def', '@INPUT@',
-> -              '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
-> +    command: dlltool_cmd
->     )
->   endif
->   specific_ss.add(files(
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index f847849b1b7..87a17d67bd4 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -5,9 +5,8 @@ if get_option('plugins')
->         t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
->                           include_directories: '../../../include/qemu',
->                           link_depends: [win32_qemu_plugin_api_lib],
-> -                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-> +                        link_args: win32_qemu_plugin_api_link_flags,
->                           dependencies: glib)
-> -
->       else
->         t += shared_module(i, files(i + '.c'),
->                           include_directories: '../../../include/qemu',
+Makes sense. Something like this=C2=B9?
 
+char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
+                   Error **errp, unsigned int *len,
+                   const char *node_fmt, ...)
+    G_GNUC_PRINTF(5, 6);
+
+There's a %ms in hw/xen/xen-block.c too, btw. Did you catch that one?
+
+
+=C2=B9 https://git.infradead.org/?p=3Dusers/dwmw2/qemu.git;a=3Dcommitdiff;h=
+=3Dpercentms;hp=3Dbc6afa1c711da5b4f37c9685a812c77b114d84cb
+
+--=-iLcuI+S96c4sAIMas5cS
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDExMDA4MDgx
+MVowLwYJKoZIhvcNAQkEMSIEICtz+7pWplJqxClyKyP/HtqQtPnbsnOjBk/wOKD+Du6mMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAp9j0vnVS4aNj
+WGSLQvoMz2ZZOohDKsv/1TIXpsD2QcKU1ivXXi8/n/axeJv3KChIIuKJzXquMQAFse9hHWvGJOKk
+Rrd4+FHdxvKLeTzobZ3toaoYjKOdzzr4vIiWao0y/E1VTSbfHcdmw0n0LN2ijKsDSkujxXkGzVTo
+FcDn3fYWnlt4VZBcNuNhCRWdnjANmKrCVsL+/1rikXo7BmUkSJnCkyndRin1Nqsp0sTfHzt643RP
+nwHUjzQCaEB6GRG8fyY7SFcaLK00bKdvjYFApnb05z3EaF50RjjannhDukMs0YdhhKEyOKVKzIX8
+QeCt32CLfOejfR0fIiWgXC3vkeb4x9ItwUK5e99Y3i87ha6lPBCWB8nIgqXQIMflPY67MiSB+H3a
+KXxswYjM2tCbJDlq/bqMw7VB0cSEnylWxiIoRDjtQRaLPt44cqYWKqoDrLUGBR69tjGjL/MRWP+q
+12K9v0BOPdIpCBHNoA5s/0pQ1gKAMHLYe3TrwWhpilloWTZXZVQ5nmKlem89OqT38f0IhgoZtCYc
+CsAo9y8wxOVDYN8Hek95KHJ1TrZjxiUIfbMMdE5UjRi2Ad8nvMo+b439aH1RbwWU8H+TNHTHaQcd
+xn4QQqm4PMZYhRJ+R0View4Y3qef/i5LQyoIUFRyaDlHxQvL5dZMjCZQFxk63asAAAAAAAA=
+
+
+--=-iLcuI+S96c4sAIMas5cS--
 
