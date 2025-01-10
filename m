@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4879E7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A9BE7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWK3J-0002OD-Mn; Fri, 10 Jan 2025 13:48:13 -0500
+	id 1tWK2t-0000jv-VR; Fri, 10 Jan 2025 13:47:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK2a-0000ON-Ah
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:29 -0500
+ id 1tWK1y-0000Dc-Du
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK2X-0001C6-PV
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:27 -0500
+ id 1tWK1v-000168-T3
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736534845;
+ s=mimecast20190719; t=1736534805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KwvMlaaL+tPMbyB1+Vl82XLEBLQqNeaz0XWCjaoRtTw=;
- b=VGLjURof/tVcmHj1tVssuS3BILZFW0gmcZRjwegxsumHaJocoLk7xFQQLQvD5An80Fd5a4
- ifF/o6FQIpmUhm7l+us9N+kGctQZbDsFyjdcUPSE676oLHFe0wL9M6BRsoF7OfkDUEOL9/
- bUxEE8yIGux8bfK8+kB1/1+jyW6pYm8=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aX24Q+tB77pzEZ+uLwRAl7jQIydZqUxNNDKMiOl7mBs=;
+ b=U+/7rWXKMesPdOqR4EiUSMHxQXfTinlbXrazhUbOA3+JEECCjF6VcFpBPkbVajiq5wlbzc
+ MAXsmPmHMrDhMLOxCIIZpbuv9sui1jAsZ4QwpMlqjlC5cMYiLrWB9zctSIMfdPMGJw3Mca
+ +9TSk8XXeD+ts+M/jSnXXgx+WaPmdXM=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-sNHVW9b6OMS7Fso_hPYbAg-1; Fri, 10 Jan 2025 13:47:24 -0500
-X-MC-Unique: sNHVW9b6OMS7Fso_hPYbAg-1
-X-Mimecast-MFC-AGG-ID: sNHVW9b6OMS7Fso_hPYbAg
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-aa67855b3deso200726566b.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:47:24 -0800 (PST)
+ us-mta-374-sR28UJ-6PPqAS5NupQN1mA-1; Fri, 10 Jan 2025 13:46:44 -0500
+X-MC-Unique: sR28UJ-6PPqAS5NupQN1mA-1
+X-Mimecast-MFC-AGG-ID: sR28UJ-6PPqAS5NupQN1mA
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5d88d37abd0so2352981a12.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736534842; x=1737139642;
+ d=1e100.net; s=20230601; t=1736534802; x=1737139602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KwvMlaaL+tPMbyB1+Vl82XLEBLQqNeaz0XWCjaoRtTw=;
- b=Lox7jsoKcGlYxXlx/u4U7l0e/iOqKHcMLJ78J59nyx9PjRnXhcWJdpMF64oJsOeAQ1
- SCBzp/f7hMm+7R88RZJRYZpPQbMhJyxdzUu5n4I+yDtqT0FJhVv4q7bibyN3iIKZpDMA
- weoVe8ZrruBi21Or1pC5gG8uWIhX4WUo5ZTar6fbgPokY78nb4VX8u8VQ3HDizbxiprL
- WDJKFgxskBaVhtDe9s+SqFtUal500JmvxjtWZQ5bDxSI4BL5ZL+FZmE9YllVmOe1/HT2
- lZIKte8f9zlnHCAppe3j3LKwoGl8B+odrIZ4MEuERSQTB6Zzqmt/OHM6iocybkJrUt5B
- kODg==
-X-Gm-Message-State: AOJu0Yz8V761u9PfXp6SLulaD5LJeOerVpgwDGsmHhl+2X2RIl63H8Kl
- CTsbgZ/aPyBzXdKrR216frSc/gZtVk5/853NGSNT2gD9WDn3ZzQZZfiCNEiXMjI7Xz5FGrmTugD
- BchA1rbbD7IVUH78oU+GcjGNxD0X0I+lBjczpP1Bnh31KKtsnCrvneL52ISsiFM3h+O+X5XRNWX
- CkzYJ0G6d1fALnGMIy0HzKB8tNLjCeADjBklZ/kgY=
-X-Gm-Gg: ASbGnct6KbFVDoie2quhDrsiGkJPcglpE65PpyDl+sRaivswyGxJ6vTGverT1GveerV
- oi8+rTUUYK4BmJsixUbtT7ANitskGY3zlztyLgTwT3KtpHn7iEhahxFA05softUfE4lc9nGKnoS
- 97wB4+YtfxSyr8jU6c7JqTMWZiz/LgoT8+PyK08P1q2uKGi0uasxEjp7YygqxTv5U9k/svqwsYC
- 79jDnWRWubhBmQDmoEwn1FFUjLMkKDtnRgHLgc85uwtU7bZCIKuAjJQXWQ=
-X-Received: by 2002:a17:906:c102:b0:aa6:7f99:81aa with SMTP id
- a640c23a62f3a-ab2ab676541mr974933266b.6.1736534842209; 
- Fri, 10 Jan 2025 10:47:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFSOtxbDmrlKrcpt/J7ZFm/gGnj3omYM4o1KKX8yxlVl+duSSQJUFniPqFWRRSA9ObS5oIJiA==
-X-Received: by 2002:a17:906:c102:b0:aa6:7f99:81aa with SMTP id
- a640c23a62f3a-ab2ab676541mr974930866b.6.1736534841748; 
- Fri, 10 Jan 2025 10:47:21 -0800 (PST)
+ bh=aX24Q+tB77pzEZ+uLwRAl7jQIydZqUxNNDKMiOl7mBs=;
+ b=hHgYGFCFPxpips8+xMI0kzO0jk6mb6gddV7FoH5MHujdv4TqXwiKd1RfvX/OOwm1jT
+ XiV/J6njzyROgR7vl30YMGrbPt4ZwNdUF89eCjbHOOGcdhu2XCl/IpXcZviBRmR2XPki
+ 4XJW+N8QBGYA/eYaFMpEoubZU9KXkyFJULQmQLfIe2Jo04Flb3dBtoo+CnLLTN8xX6tK
+ iW0dipvobOYPZjiyn61JOU0OoX3BCaAmURYY6pmDlXElt3C2eIcD1HIxzy5E/AhDdRTW
+ NLahCyr1owAcBarUWi0ZqjcouaHCbIZJ9/rTyAzJTCTBL5zEGIfxLWGVqjeTzjVfx0nz
+ QicA==
+X-Gm-Message-State: AOJu0Yz54Rx6MpzTQ5vOUtXnVLWXORSSaB9FBFDnJJT39gd4fs0Z6gx+
+ jmUT66Tm4Kupqv0YmwlvM2SJ8kYhFTpZ9CzL0qX3CKge++YGJfbg44/xzFl8IYXAnAF50I5rnFU
+ q+VwKJLLyvG+QGPdDIAaVjdthJvUZLlREN1Pm9rgYGYqPrWWlYLIuSnefimiyMFhhAC+tZZyJdy
+ OlE9vclWCmWBa5+wSWQWr3ir5Cq9TTtCKdWidi4yA=
+X-Gm-Gg: ASbGncs9MkGZfvLjI+Pvj8185V38AxB/PO6OIHi/eESYeHweeB/bU8dBWK7eE81J132
+ waZqyvq/OQS3LjUxCSkabwij89mxgA2GIddsCsJk0TBBNcwettDHaANRrLSKlFCRflv519cH4BD
+ EX20SashnskHU4QjSXiYztjlBtoHnzNxSOgoDnUKrIMmx8ukNd1gf2u3FwvbyLRciIYy8CjhQPY
+ m6oVQg9Hl7YKIS5Uy+GIxQ5CspIP2BBjCL/TGkz8BnF6nMdUn2qbf6FkkY=
+X-Received: by 2002:a05:6402:358a:b0:5d9:a62:33e with SMTP id
+ 4fb4d7f45d1cf-5d972e162b0mr10754146a12.15.1736534802480; 
+ Fri, 10 Jan 2025 10:46:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEyMqyWmrW0lTH/osdKXu5ANogZss5mgSvFJOeeXdy9sX4c4pbArHla0T+meklCekNzPvBYjA==
+X-Received: by 2002:a05:6402:358a:b0:5d9:a62:33e with SMTP id
+ 4fb4d7f45d1cf-5d972e162b0mr10754132a12.15.1736534802098; 
+ Fri, 10 Jan 2025 10:46:42 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.105.73])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95648b1sm192320666b.112.2025.01.10.10.47.19
+ 4fb4d7f45d1cf-5d99008c39fsm1936978a12.13.2025.01.10.10.46.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 10:47:19 -0800 (PST)
+ Fri, 10 Jan 2025 10:46:40 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 26/38] target/i386/kvm: Return -1 when
- kvm_msr_energy_thread_init() fails
-Date: Fri, 10 Jan 2025 19:46:07 +0100
-Message-ID: <20250110184620.408302-27-pbonzini@redhat.com>
+Subject: [PULL 09/38] rust: pl011: only leave embedded object initialization
+ in instance_init
+Date: Fri, 10 Jan 2025 19:45:50 +0100
+Message-ID: <20250110184620.408302-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110184620.408302-1-pbonzini@redhat.com>
 References: <20250110184620.408302-1-pbonzini@redhat.com>
@@ -108,118 +108,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Leave IRQ and MMIO initialization to instance_post_init.  In Rust the
+two callbacks are more distinct, because only instance_post_init has a
+fully initialized object available.
 
-It is common practice to return a negative value (like -1) to indicate
-an error, and other functions in kvm_arch_init() follow this style.
+While at it, add a wrapper for sysbus_init_mmio so that accesses to
+the SysBusDevice correctly use shared references.
 
-To avoid confusion (sometimes returned -1 indicates failure, and
-sometimes -1, in a same function), return -1 when
-kvm_msr_energy_thread_init() fails.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20241106030728.553238-10-zhao1.liu@intel.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 18 ++++++++++--------
+ rust/qemu-api/src/sysbus.rs      | 12 ++++++++++++
+ 2 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 097a040da30..3624abbb397 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2936,7 +2936,6 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     struct KVMMsrEnergy *r = &s->msr_energy;
--    int ret = 0;
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 215f94a6e4a..72a4cea042c 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -145,6 +145,7 @@ impl ObjectImpl for PL011State {
+     type ParentType = SysBusDevice;
  
-     /*
-      * Sanity check
-@@ -2946,13 +2945,11 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-     if (!is_host_cpu_intel()) {
-         error_report("The RAPL feature can only be enabled on hosts "
-                      "with Intel CPU models");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
+     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
++    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = Some(Self::post_init);
+ }
  
-     if (!is_rapl_enabled()) {
--        ret = 1;
--        goto out;
-+        return -1;
-     }
+ impl DeviceImpl for PL011State {
+@@ -183,14 +184,6 @@ unsafe fn init(&mut self) {
+                 Self::TYPE_NAME.as_ptr(),
+                 0x1000,
+             );
+-
+-            let sbd: &mut SysBusDevice = self.upcast_mut();
+-            sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
+-        }
+-
+-        for irq in self.interrupts.iter() {
+-            let sbd: &SysBusDevice = self.upcast();
+-            sbd.init_irq(irq);
+         }
  
-     /* Retrieve the virtual topology */
-@@ -2974,16 +2971,14 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-     r->host_topo.maxcpus = vmsr_get_maxcpus();
-     if (r->host_topo.maxcpus == 0) {
-         error_report("host max cpus = 0");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     /* Max number of packages on the host */
-     r->host_topo.maxpkgs = vmsr_get_max_physical_package(r->host_topo.maxcpus);
-     if (r->host_topo.maxpkgs == 0) {
-         error_report("host max pkgs = 0");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     /* Allocate memory for each package on the host */
-@@ -2995,8 +2990,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-     for (int i = 0; i < r->host_topo.maxpkgs; i++) {
-         if (r->host_topo.pkg_cpu_count[i] == 0) {
-             error_report("cpu per packages = 0 on package_%d", i);
--            ret = 1;
--            goto out;
-+            return -1;
+         // SAFETY:
+@@ -213,6 +206,15 @@ unsafe fn init(&mut self) {
          }
      }
  
-@@ -3013,8 +3007,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
- 
-     if (s->msr_energy.sioc == NULL) {
-         error_report("vmsr socket opening failed");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     /* Those MSR values should not change */
-@@ -3026,15 +3019,13 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-                                     s->msr_energy.sioc);
-     if (r->msr_unit == 0 || r->msr_limit == 0 || r->msr_info == 0) {
-         error_report("can't read any virtual msr");
--        ret = 1;
--        goto out;
-+        return -1;
-     }
- 
-     qemu_thread_create(&r->msr_thr, "kvm-msr",
-                        kvm_msr_energy_thread,
-                        s, QEMU_THREAD_JOINABLE);
--out:
--    return ret;
-+    return 0;
- }
- 
- int kvm_arch_get_default_type(MachineState *ms)
-@@ -3342,7 +3333,9 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
- 
-         if (s->msr_energy.enable == true) {
-             kvm_vm_enable_energy_msrs(s);
--            if (kvm_msr_energy_thread_init(s, ms)) {
++    fn post_init(&mut self) {
++        let sbd: &SysBusDevice = self.upcast();
 +
-+            ret = kvm_msr_energy_thread_init(s, ms);
-+            if (ret < 0) {
-                 error_report("kvm : error RAPL feature requirement not met");
-                 exit(1);
-             }
++        sbd.init_mmio(&self.iomem);
++        for irq in self.interrupts.iter() {
++            sbd.init_irq(irq);
++        }
++    }
++
+     pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u64, u64> {
+         use RegisterOffset::*;
+ 
+diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
+index 8193734bde4..b96eaaf25f2 100644
+--- a/rust/qemu-api/src/sysbus.rs
++++ b/rust/qemu-api/src/sysbus.rs
+@@ -38,6 +38,18 @@ const fn as_mut_ptr(&self) -> *mut SysBusDevice {
+         addr_of!(*self) as *mut _
+     }
+ 
++    /// Expose a memory region to the board so that it can give it an address
++    /// in guest memory.  Note that the ordering of calls to `init_mmio` is
++    /// important, since whoever creates the sysbus device will refer to the
++    /// region with a number that corresponds to the order of calls to
++    /// `init_mmio`.
++    pub fn init_mmio(&self, iomem: &bindings::MemoryRegion) {
++        assert!(bql_locked());
++        unsafe {
++            bindings::sysbus_init_mmio(self.as_mut_ptr(), addr_of!(*iomem) as *mut _);
++        }
++    }
++
+     /// Expose an interrupt source outside the device as a qdev GPIO output.
+     /// Note that the ordering of calls to `init_irq` is important, since
+     /// whoever creates the sysbus device will refer to the interrupts with
 -- 
 2.47.1
 
