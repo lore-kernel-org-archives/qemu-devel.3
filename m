@@ -4,103 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29949E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77881E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWGdL-0005EY-DQ; Fri, 10 Jan 2025 10:09:11 -0500
+	id 1tWGkK-00085K-1d; Fri, 10 Jan 2025 10:16:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tWGdJ-0005EN-Ki
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:09:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tWGdI-0003Ne-7R
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:09:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736521746;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Xj1dKyhdWuYTz6cGEjiYWamxJu9Nh0m0w7zvbR4G+Zw=;
- b=RWPkj1TgjiZJajHYmiId3V+ifZ0pEJ4nE8Z7kptA3pPMdueMSPYMQz4u7wdo5JyqkhaZc6
- QZxbgqGUrvhx3X5ZPcym3XR/AHATAoNSsYEBSbelGMD+GWR+VnZ3o8XYqwrku0HABXrQ+S
- fdO0RpM38yUPKyEPAxXuibFC1Ml4odo=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-5tpEdRL8PsucemqQjmFysA-1; Fri, 10 Jan 2025 10:09:03 -0500
-X-MC-Unique: 5tpEdRL8PsucemqQjmFysA-1
-X-Mimecast-MFC-AGG-ID: 5tpEdRL8PsucemqQjmFysA
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b6f943f59dso349626385a.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 07:09:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tWGkE-00084T-1r
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:16:18 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tWGk9-0004FT-5I
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:16:17 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e4930eca0d4so3050413276.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 07:16:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736522172; x=1737126972; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xFW3AqiH2OxJtqsDqzybe4ztFotFLMTPVfavlCSFn5M=;
+ b=R/l2lggL+rr3JDVSwafo85wT4eeId+bWxUQ//AzoNGEqvkb3UTFt1Fx4qFEwAENIHl
+ XLbH9Swg7gPYeTnw/3GrvEfnkyqc/p4wjOlvoo4Wmcn8hoYjdC9ZaEVDtPotGLfX4grL
+ hhsRVyp3RCjArF37doDyfuUwZwZPBVfJ/GIk6du+bGaxGivhTXUOQBe2RONmWeDOtO7m
+ M/KxYuNwO7J52ntJPtLQ9WIqWOqcaWA6j5dCfWfOgwVxN+L83zBNF6Hsb0gU/ZXRcPki
+ D1+3/Grkzku4GUbIoZ2/V02Mny0V/GchsjQcC3NsNfd8h7TZao8oMJucrt5/sFgZ88qq
+ 0syw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736521743; x=1737126543;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xj1dKyhdWuYTz6cGEjiYWamxJu9Nh0m0w7zvbR4G+Zw=;
- b=gKiipisYDIGVLdsMn66DFqwifcwZ7bvzDGxfNTgeWFPgOmqydOdmP9FRZoNthU9BDt
- msxOvs3rma/YhJZB92qUWcYRE4QOHbajvg2+ZpamB3JnXxMlv0ORN3DaJ9mS7Hnu55mA
- k08mtzVpm//kx7L16neA3aSFHyY0C2e/eWrkIc7km0c0FVXsOixR3BQbPp3NjdmP5Pgm
- 7VKgI45M+76rGU78R1d8n41oqRXxINRBE4y2tEnqxWyqdHz22cX7lMRolY8JLmQqHO4V
- WEm76S38p+xv9Bg0B4+kvHvUxVXsbB47iffUgiGYE0F0GUrT0dl8MIZmyZKJH3Qp0J0Z
- Lrvw==
-X-Gm-Message-State: AOJu0YythNjwyP7Ll/XDst2hX8azfjErkmYTf0EbEeDyPfz+yav2iUmw
- ZQ9gcryhao1AtOmu8T92fpTWb/gzEDLOxUxKNCnbU6ItkiPcYFIcz220WaLgyfvQrSu+DPPR2D2
- h3hdnm68QNnk+7I0y2W3uhGXx2m3TxYznkvdCEiRqV04HgMgp3K3X
-X-Gm-Gg: ASbGncv/Asi9WoZ6hkAHOXT1EMaXbVGR3fe/UqDdYU+U9IlQXK+QaaA2rnVuNtN4up9
- w85KSpth/J3R1s7s0269k0db3k//gKOFidgLV29nR1aWcDfsi0fFRW44u9G58PXEeOBDfBORSym
- rrpBEdnzterVXbuSmNyeFUr8QDa1r3k5uPrnvQpDD5RDdeTk0NQnADVEoVHC3jboneUd79+gFpp
- WY6FPtzu3IFHhHx8XSqJQWVsvUDclehcnKo0Bko6KIKjBOZFMEJbQnXfu3R+b5yauHCWddTHPVi
- YMjSkEQHRCbH/o8jiA==
-X-Received: by 2002:a05:620a:4613:b0:7b6:edd0:d752 with SMTP id
- af79cd13be357-7bcd97279d9mr1943305485a.5.1736521743237; 
- Fri, 10 Jan 2025 07:09:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHJLfjhdbTQrAh1pMGgg/uFclRhBol1DnVNCtlTmi9GvDJZZaglW5E1xk0RQ6caag8zgNfYuQ==
-X-Received: by 2002:a05:620a:4613:b0:7b6:edd0:d752 with SMTP id
- af79cd13be357-7bcd97279d9mr1943300085a.5.1736521742631; 
- Fri, 10 Jan 2025 07:09:02 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dfade73406sm9949676d6.78.2025.01.10.07.09.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 07:09:02 -0800 (PST)
-Date: Fri, 10 Jan 2025 10:08:59 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [RFC PATCH 2/5] system/memory: support unaligned access
-Message-ID: <Z4E4Cx0DRFyCVXog@x1n>
-References: <Z04lW_CdYBPJRah3@x1n>
- <2de74447-00f7-4bcf-81f3-c8461ec19a67@igel.co.jp>
- <Z1MpY7ZIAAoBDbZU@x1n>
- <9d1f07e5-2c08-455c-a653-e57e219666ab@igel.co.jp>
- <Z1oYIn5cMZeA4tes@x1n>
- <1ab0a747-e2c4-4545-bae9-31e19c77bd75@igel.co.jp>
- <Z1sFUxCiQp3Nziu_@x1n>
- <2e2dba3c-2bfc-478a-988d-fbf2e58cc293@igel.co.jp>
- <Z36su8G_hlkdBFy6@x1n>
- <6a4dd6ef-9d0c-4f1f-81eb-0d55fa32daf5@igel.co.jp>
+ d=1e100.net; s=20230601; t=1736522172; x=1737126972;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xFW3AqiH2OxJtqsDqzybe4ztFotFLMTPVfavlCSFn5M=;
+ b=bME7OBpZJc/DUssftN+TIF5IEoV3Q8CrwPFItGaNyppdba3726gE5FuByiHrLwfk7Z
+ YU1PXnLFMPh9DEMjjdJ6N2xQdS8395EvQhTSTYk0F8QzAgnw6v7dYlnLcHs5591WxWGQ
+ AWshfm6CjsBwuqj3a8Vt3yPLZFwdx35q/zEkGqon6sBBXW3hGr0FyAUaM1wzREYpTNas
+ aQ6r/YES4yG36RVOuXUBj1rcF34462nDCg5tuy1lLCgQN/S7aygeUpbs34Fuyx8aPoZb
+ sikSHk5BJQlvu8zXSOKv+epiuhFu4uFS8MdCN/ytZN7yaDZO8NoeRSd5l42+rKGEl72Y
+ jS2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWXZ38NLp418BGVLK0aLBwvoX1Z9Y6KAeLZ0jxHLnDf9nBkK3GGaJqFBqkgMiegcLoy69121PlFNcWx@nongnu.org
+X-Gm-Message-State: AOJu0YyZnwLWO2Iq635ETH28fD0Hd9fhJzPuZHeSW53McSJzNt0iwy6y
+ gIzC45RPkhTvwugXkOab+d8QIPdg+GXpD8hhVHQxTMW1BnFvwQPPC9zk5MvVMutjdDqL/yeslnP
+ EJEkLPDeoFFlUNFmV+7J+YjPj6Lfvqmi0sU0g7A==
+X-Gm-Gg: ASbGncuyqYOtJ/gF6aFeN43FCs8bKaSpycHF350wAIVKAOx8CKix9yRAf3RBESAhs2Z
+ FjjurceZhpJ0QiUAHEWBARwEFpZtT9Db4dv8W7Go=
+X-Google-Smtp-Source: AGHT+IEmI0C1gwvywrs+d0zU/ZnwCn+TVntLz1v7H/yT/PeN+4Q/jEpGM/0EEMBvLyP1rIZk2wEduo13j0jsmbAH5g8=
+X-Received: by 2002:a05:690c:660c:b0:6ef:4fba:8153 with SMTP id
+ 00721157ae682-6f531248264mr92938397b3.10.1736522171805; Fri, 10 Jan 2025
+ 07:16:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6a4dd6ef-9d0c-4f1f-81eb-0d55fa32daf5@igel.co.jp>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20241220195923.314208-1-git@zabka.it>
+ <a9313931-a41e-46e1-b8b9-d2cc83cd663c@redhat.com>
+ <44f99f89-edb6-4007-a367-f7f3b9e10b7b@zabka.it>
+ <b36f85c4-4f1b-4721-bab5-56e89550f421@redhat.com>
+ <f1d67bea-7389-40c3-a304-6cec459a2f49@zabka.it>
+In-Reply-To: <f1d67bea-7389-40c3-a304-6cec459a2f49@zabka.it>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Jan 2025 15:16:00 +0000
+X-Gm-Features: AbW1kvbVfRetUY5JcG1Kg7hVBuAYvV8MphVVrvVZAe-KddfkVgZj2YZr3rtVDgQ
+Message-ID: <CAFEAcA-nMhLYZ2UHeKDwaRU3V=dPAY8ROKJSgkGCKnCVYDR=Lg@mail.gmail.com>
+Subject: Re: [PATCH v2] physmem: allow cpu_memory_rw_debug to write to MMIO
+ devices
+To: Stefan Zabka <git@zabka.it>
+Cc: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,38 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 10, 2025 at 07:11:27PM +0900, Tomoyuki HIROSE wrote:
-> > > MR implementation to be safe when unaligned accessing (current xHCI
-> > > implementation does not handle unaligned accesses but the spec allows
-> > > unaligned accesses).
-> > > 
-> > > In addition, maybe it would be better to document the constraint that
-> > > the situation where 'valid.unaligned = true' and 'impl.unaligned =
-> > > false' is not supported.
-> > Do you perhaps mean this instead?
-> > 
-> >    valid.unaligned = FALSE && impl.unaligned == TRUE
-> > 
-> > If so, I agree.  I think we could even consider adding an assertion into
-> > memory_region_init_io() to make sure it won't be set.
-> > 
-> > Thanks,
-> > 
-> 
-> I'm sorry if I've misunderstood, but are the following understandings
-> correct?:
-> - Need to merge my patch that converts an unaligned access to aligned
->   accesses.
-> - Need to add 'impl.unaligned = true' in the following two places.
->   - hw/xtensa/mx_pic.c
->   - hw/ssi/npcm7xx_fiu.c
-> - Add an assertion that to check for invalid patterns, additionally.
+On Wed, 8 Jan 2025 at 18:36, Stefan Zabka <git@zabka.it> wrote:
+>
+> On 21/12/2024 15:55, David Hildenbrand wrote:
+>  > Let's wait for opinions from others first.
+>
+> <https://www.qemu.org/docs/master/devel/submitting-a-patch.html#if-your-patch-seems-to-have-been-ignored>
+> states that two weeks is a reasonable amount of time for follow-up.
+>
+> Should I also ping the original patch? I thought pinging the thread
+> would be more appropriate, as it contains relevant information.
 
-Yes, all these sound good to me.
+Two weeks is fine, but in this case the two weeks are across the
+Christmas holidays, so it's likely that people might not have
+got to things yet...
 
-Thanks,
-
--- 
-Peter Xu
-
+-- PMM
 
