@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07232E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148D7E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHTq-0007jO-3F; Fri, 10 Jan 2025 11:03:26 -0500
+	id 1tWHVI-0002Yu-S0; Fri, 10 Jan 2025 11:04:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHTC-0007Kj-CU
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:02:49 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHVE-0002TO-Qy
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:04:52 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHT6-0004Hr-Bb
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:02:42 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43675b1155bso25823215e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:02:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHVD-0004bb-Ac
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:04:52 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so1554939f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:04:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736524958; x=1737129758; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DdLTUyiJZXg+Jy7eGhrfWWJqUYAsXZouUvxtiAwdX4U=;
- b=nOVySbNnyTBgoPClvI3NoUgqfmIzyVf8l2JywQ5d7VQQHLKEIVLN3cIUiXloHqH59Y
- Y/QGHTaofs17yVSEEJF4uwC2U1oHRgQQa8SwwkNqdfNudsIaQxYzSKx+KuCeNtI66NKB
- D3wrpEfLQKaZMIWw4dAGVldL/8F+t+Cr4BgC06mkhDdy49ik5/wuoSxnC/9t/WWcZ0CG
- T1r6yKkDieh+fTai+BTtpVJaTbvEGlBy3jDjnvbJf69ulCcaJMxqvXA3t31Ndi293k+B
- tVXhB4jKSD2lEJvH8G/lAPVCwBdeVW+wgLw1ZSGFbPJ4PS9nzXU+sAF7h6reYLCKplwn
- 4ftg==
+ d=linaro.org; s=google; t=1736525089; x=1737129889; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IXI/XYLW2H4aB40RcCSFKK3Ej+zc4PI7vc2Qy+wjzYs=;
+ b=SvFQjj0cVPnmzp5UKKZKc93IB21912Rnp+FVpBjn/QQMz4WFqhG0GXfVYtOSl5eqrL
+ mnSaX5p2VANCoRFwtiico9Y9F6BUMYRoFDGFh9LaDD7rvWNaf4J6IvpxtNlJLZxDhfsi
+ ATGD//Y1Ib/dFocuRF6i29K2nF1JgXQGh3tkZyLRK314Upk22mDXml/SFd7CPT638Sn3
+ pAPZDmDem4tbno/BHRr+nF8cIlj5I1Qt8zKkIgwbHDioPvtGDtfPbZRkk2w3YVIo1AkJ
+ TbqrjFojd6ceDesEZKmTGne/CepD1mOPMN/fMnrK0KhTmrnx+xSZB2VRALicBq/k7zjD
+ Ks1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736524958; x=1737129758;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DdLTUyiJZXg+Jy7eGhrfWWJqUYAsXZouUvxtiAwdX4U=;
- b=j+3f+TEPjuWfmmzK79HsWlfPGs7tQ9elkv1HeG4KsMfyD41jVPavloJQpNmOSyXbB4
- 64WLzpkh9XfHGnWKCiACjtNvIXEyye5rmkCNGxtuCe5u+0A/nysaEa9gysgZeME2vEt8
- MtK3ClmQZl+U5OiAc0zUnoK2/kyK1ISOpxEnY9HGTLbvQqOtkO8cBmWWF+3fGQ2nXDAz
- WMHgVmh1EaDhxlThA2yIgg0rp72t9pj12WjWDzbBhjmhX5lYqlVsEhinOGIZ1fsHOahg
- Gmf2+gIzb9QD0OWe1xhuzs1QnclSKl40w0tLRkaZ3UBjjO/Xy84JnOdxJsaCzFx30rj1
- Ngzw==
-X-Gm-Message-State: AOJu0YyWsEC0/DVdo8O6YrabVzLXJNgyhElDQQEB+yc4Z4a4jr9zRRmd
- fPZoBuJJTRIOlkn+eVPRFrsT7go05I64m4ELHhrOtJAVWMfI6tF6u8Q+bGHyKPV1jBTaUXcL43p
- DPYQ=
-X-Gm-Gg: ASbGncv76Mn3CHXne2uK4jWybYUerKZiZdGrlONkMeiyLviCQvykUL3//lVARNzRL06
- cOITroTv7nMzsPZLa5HD0CG7c7JJWgjPB3qa5wgj5O5C9iTf+hTdkCDyy7eDA7rVwEthnz2PUGn
- pKGVaYWUYkgWuLX+IQSesNWfBVNrQdR63NbyXALIoTsHMbAjX9NHoYpJWtAom1NTkzU/lqSrWrA
- hpAmnrIShdbRwgWsKvgXQx8I5eWejUKUPZrIXPsDsNBE3rpq0qgDcxnns5bB5X1Kc7aecpTGq8T
- IopSN6/UnuLiYZkK2LcrgAoCfkfpWds=
-X-Google-Smtp-Source: AGHT+IF0E8oxcLuBHXaUffKOJ/ByULhRSrOs5kdgzk5GTrdSSeCicvxwHpTn8BMxfaZnGPFuDai+mw==
-X-Received: by 2002:a05:600c:3b88:b0:435:192:63fb with SMTP id
- 5b1f17b1804b1-436e2686662mr101223575e9.3.1736524958131; 
- Fri, 10 Jan 2025 08:02:38 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1736525089; x=1737129889;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IXI/XYLW2H4aB40RcCSFKK3Ej+zc4PI7vc2Qy+wjzYs=;
+ b=pAfWp+3fEBVF//nfB4dSY7wyyfd23aYJEapmh2JIpHvttUTI+23k3cODy8wtlRX2hN
+ H0U4wA9TopYuug3l8kku1tj6IVUbKab7EVlwTwbg4N8jvErwfn71JMIQlRpYJhXchElM
+ 4TELnos7Ax4MvBouWsWtZRLt0TAB+RiOk7DCzL79WvpRRT81GF8/aWGbbceNNgCT6RfR
+ KbXJTnx/vt6Nf5y0WxpDCg1QcT0atVCwWb80o7eb6+npLztdFoAqeXhluNR2iyS0K/Ut
+ Ip1FpZXQC7Wol8lTc6JmHMxxMWU8282fyyOXVxN1sAgVvZxqMKC80f1MdyI2jaFHe1E3
+ wexg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX479uob8tw7x6Ms3PMNVbA9ErjQ2o0Eb9y48A5mx1xEfiE41j9VtU439EbJqDCw/gyxG3IJCOfue2W@nongnu.org
+X-Gm-Message-State: AOJu0YwaYLIhh7dpCQMqgzRZeyXeZvB/qtkT/mL4CRIiMfV7Ir2jxO5M
+ sRF2L0A8wgCghxwPEnvmbK0oMn4XD01Z9cNhokqlYe03cnwtKLIzlia9bkBynhs=
+X-Gm-Gg: ASbGncvurWMaZDltCJHk9w7cE3aLEf0ABgbo4XdU/YAAEciFvqjiHso37NDRj+DiHHb
+ o8W8oFYCh1CrJ5/vgn9WdswAqf1mrkGvv2WT97XKNrlZ6vNKvaGNoJb+F5AQyS0mwYYYPGFiCvS
+ AjAXEWKXAn3jZLXKk8V4n2I/taPAFd2zRylbZIPu4m0hw0Q170HfER/LFVWulGzQ5pFo+cyO6vq
+ S2qaKA9rDB0gk9mD4JR31O+uKl2Y9Vjy091TU9rWTtnVPB/XDDO4blTBFFJXxdseGDbO5/U8r0X
+ Ssyu4MD6DCECdGKqUiYQakQr
+X-Google-Smtp-Source: AGHT+IH8RajXnigs8mjUL6yQuwUxyMbnYsailZ6AqC2EFe6Y5BRN3Q903AbsxGJwDbu6+M5dEuiHOg==
+X-Received: by 2002:a05:6000:1564:b0:38a:8c9f:dd61 with SMTP id
+ ffacd0b85a97d-38a8c9fdeeamr7431552f8f.46.1736525089366; 
+ Fri, 10 Jan 2025 08:04:49 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2dc08bbsm89879665e9.12.2025.01.10.08.02.37
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 08:02:37 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 7/9] hw/arm/stellaris: Only create MPU when available
-Date: Fri, 10 Jan 2025 17:02:02 +0100
-Message-ID: <20250110160204.74997-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250110160204.74997-1-philmd@linaro.org>
-References: <20250110160204.74997-1-philmd@linaro.org>
+ ffacd0b85a97d-38a8e3840bfsm4966176f8f.39.2025.01.10.08.04.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 08:04:48 -0800 (PST)
+Message-ID: <3523c701-d234-4f41-834a-ae762ac7cd30@linaro.org>
+Date: Fri, 10 Jan 2025 17:04:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/9] ppc/ppc405: Remove tests
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20250110141800.1587589-1-clg@redhat.com>
+ <20250110141800.1587589-2-clg@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250110141800.1587589-2-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,26 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/stellaris.c | 3 +++
- 1 file changed, 3 insertions(+)
+On 10/1/25 15:17, Cédric Le Goater wrote:
+> Since we are about to remove all support for PPC 405, start by
+> removing the tests referring to the ref405ep machine.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   tests/qtest/m48t59-test.c        |  5 -----
+>   tests/functional/meson.build     |  1 -
+>   tests/functional/test_ppc_405.py | 37 --------------------------------
+>   tests/qtest/meson.build          |  1 -
+>   4 files changed, 44 deletions(-)
+>   delete mode 100755 tests/functional/test_ppc_405.py
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 655bf85e89e..d87587225c2 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1128,6 +1128,9 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     qdev_prop_set_uint8(nvic, "num-prio-bits", NUM_PRIO_BITS);
-     qdev_prop_set_string(nvic, "cpu-type", ms->cpu_type);
-     qdev_prop_set_bit(nvic, "enable-bitband", true);
-+    if (!DEV_CAP(1, MPU)) {
-+        qdev_prop_set_uint32(nvic, "mpu-ns-regions", 0); /* Disable MPU */
-+    }
-     qdev_connect_clock_in(nvic, "cpuclk",
-                           qdev_get_clock_out(ssys_dev, "SYSCLK"));
-     /* This SoC does not connect the systick reference clock */
--- 
-2.47.1
+Missing removal of MAINTAINERS' entry for the test.
 
 
