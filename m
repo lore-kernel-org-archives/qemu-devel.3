@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F5F3E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 23:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DAEE7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 23:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWO3L-00045P-0Y; Fri, 10 Jan 2025 18:04:31 -0500
+	id 1tWO3R-00046W-AZ; Fri, 10 Jan 2025 18:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWO3J-00045B-N5
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 18:04:30 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWO3P-000464-1b
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 18:04:35 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWO3H-0006UE-UN
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 18:04:29 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWO3M-0006UX-R8
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 18:04:34 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so16555285e9.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 15:04:27 -0800 (PST)
+ 5b1f17b1804b1-436ce2ab251so19081545e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 15:04:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736550266; x=1737155066; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736550271; x=1737155071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Muk3Xr8MIihrIrbDkjhh00FHcA0k7qw08J1GSh04wv4=;
- b=AeunHivgmZDcyh8p58ZkvQt5OgXez61Ijguk1J0YlGVO4Y6O2k3fD5wK6ftN/DNnxb
- /OwjZXERXOVX1Ic9YJMGNorE3c45WmPdhRYgcE/DkMXKPsNYQgSoVefduOzYGa/aTo+1
- dqW8ev3lFzuv6TXwKv6LI2c9NTnpHdXyPFnZMYkh8A/fRFQ9C1aNI5UFcgaa/8cQmLpG
- MjBkj5elHmiEKjOOMrBm7jJ4gwqs4Z/zdAeZkJFLbDwqcy60we7aPs+QCXd6e7AgekwZ
- HieRtgVsJHkd/ZPhA2wGbp+cudwFIelkBzgr1+K9TOuqax2Gl72dgzcBFBCJGUG5rGMQ
- YVQQ==
+ bh=W25jCjTw3zL4NQze2wpgw5aayT5u4S6jWvsz4SFODlI=;
+ b=WafzVO0LLirEsQv8AalekUHxG/WwCMDbjKlaHwfAUPdy6McphL9y3zWlthBib62Hbl
+ rtC0QbL9sygfurd+VMjgF6dXlp0frTuitvZb0/NJBg8heQ/1xC0p3zclApzO18l9S1UF
+ t3aZ6r8ejqjF08hvShjUAnhlNQMwNsYrcm4aYAzPFt3jiqkaLIeTlTP8tVe7fYhWMQW+
+ /oRdv4gQmM4yK2o6XZ3ow8XwHkhfAamTLCce+EiQMy+8QcOqawh83T4mZTt0eTa2QI/v
+ 901h7vnXCoT9LFPLrRlsx5P28ZAjj46PJPtoXYKrwIOOBrSrOUW+N2ys9D6GWt8ItBri
+ QLnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736550266; x=1737155066;
+ d=1e100.net; s=20230601; t=1736550271; x=1737155071;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Muk3Xr8MIihrIrbDkjhh00FHcA0k7qw08J1GSh04wv4=;
- b=E/13tsOTCwcJRSa8JNT/o/ttj97JFj8iymTZC6wdTuIVe3yrBhTV0cQ/E8OSWXS51q
- V0wnZ+TBRQv53658GL4pbL5JDwIhhy4gRce97imLx8os6s/QksR5jYAz4/kWW+f+ad+A
- P1Q2oSgU3mRKSC+cmu6T2cr/4tpV3dH211K7AB7puKi+f2MrNSedWMxm9RE/sPr6wKq/
- obwCTP6cZ5+SaTcrroeXI4rIC2gLSjOTlJCbW3l7GQZTGFwevLsC2+wvSCePZPLqk3Bp
- +kFHX21TMNpVkzVDNtoOJ3zOJos75pKXrmFQCfxa0ZckBWDevfP2YlQG9jW93WZZLhZl
- siWA==
-X-Gm-Message-State: AOJu0Yypleodnrl7psm19Q2RDEy18Dbf/gU8cEGTzlSCfq3qJJKs3k2H
- Us18qslXPgdREGLvtrsV10Sh28ALlYWaQP+ODA2M1vcXOxKsA+kXBtdQYLvQwowawLBbzwDYrJM
- gz64=
-X-Gm-Gg: ASbGncuuVDmRRhMJANtlRvSqwQ1fOWYuHs5JSP0eIuA2L2oiEtDL2LcG3RO3KU9hPIZ
- NxGmZjqh9sUexVQgVkBZm8VbfgqNZvja0umdmnF6wX9jNoqjFV3EbRarw1aCNBM76J9SbcOzVcg
- X75uX5DBzD1jA8VuIajAX2s6xSu1xUdISdj5mpXjGZkyjXWrRFN8aq/b0hkdmhDto+DvMEzaX+J
- tG7Je2ZJgcWMWYuNT5Xe/pziVVzWIts6Wb6kFfVQUvOVbEEmCr3JnRpr2svg+HF6CQ+NxgSpY8l
- U+wZPl9YCod7Lxw7hbKkkr610Kd7gYh4RPXa
-X-Google-Smtp-Source: AGHT+IFd+6FHa3SOSQk9GWHFjuzDL0cZxVBBhz9C3/FPYssrNCSpfAxGNtnC9Kq9FK6QcNRL+MW5ow==
-X-Received: by 2002:a05:600c:4f14:b0:434:92f8:54a8 with SMTP id
- 5b1f17b1804b1-436ec060a4cmr59189325e9.0.1736550266032; 
- Fri, 10 Jan 2025 15:04:26 -0800 (PST)
+ bh=W25jCjTw3zL4NQze2wpgw5aayT5u4S6jWvsz4SFODlI=;
+ b=aiQQpcYTQKEY1xIBg6v2saMakIZTICYBUTukn+xcluo/uFSaNt3WJPUFi1EXjZt9Yl
+ +SEO5CCT3KFRSAsTWa7jrkqOSX7wBarph3vBfTXrPdeaIAZcJeFq4dXwkwqxWOUyp73b
+ oUxsx3q9NgWj5sOMyx2JdJ+gpKEL3wKdwhYryg626bXKlxJU6svLvN5j+HaVeuaPIwMc
+ jalci+jhl3HidW1bScffMbSEuBRUKipPSGOS/tZY127gybYbKRbjNiwur+9YMwCHlfkL
+ imqSGfhArw/36ygGQVCzUw2xzuam2A46KuDN/b/G2gtXL191ISNkEihOH3UKCkdKu4JC
+ Zhjw==
+X-Gm-Message-State: AOJu0Yx8g+ArNowTxpX0AqQNnTgHcQOPLTaH54bdRalDkl+ueMvLBJH8
+ O+fbOeg2omJ4FWRkmpsVrkpAi/EUb48rZi0x5lDOpll4NXwUOTy2F0itdBY7Luz6PBz8w2o9Yqs
+ WFcc=
+X-Gm-Gg: ASbGncu7trbWmvDi/E6tLPTWE6NY2C/R+wDB2mnMEL5YNRFGcX0aorsTZBCZfVUGJbS
+ IovcEwKxxiuDTMP3soLzRayXElL4q32tIySGy5pfSzLQDXyfgg8RoeXNAEbbftHVENPwx+dQW0m
+ CvzRaVLmBnEeYelA25iUckevQYW+YhlAtf7mIRFs3aHodXGgwyNvMxyWVY3L9mdxccRUN1RBx4h
+ OvsPK5EHev0Fkbe55qUUcGEZjMjCcPYh6ZYCPtaOEAfEv+SZwgfEQurCPvpJpk7gbGMJRqmpl7y
+ RzZK2ZFcZYkys76xvW5xLhjFT0pQ5u9acdOo
+X-Google-Smtp-Source: AGHT+IEUSPCrcAgqW6AFbYmGbNXgVOCuMRREaRBFtEd10bXg76kJBtn4IWJQy2pkCIetluf1OMs35w==
+X-Received: by 2002:a05:600c:1c14:b0:434:f0df:a14 with SMTP id
+ 5b1f17b1804b1-436e26786a3mr109228595e9.2.1736550270949; 
+ Fri, 10 Jan 2025 15:04:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e89e14sm100144905e9.33.2025.01.10.15.04.25
+ ffacd0b85a97d-38a8e4c23dcsm5542241f8f.101.2025.01.10.15.04.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 15:04:25 -0800 (PST)
+ Fri, 10 Jan 2025 15:04:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,9 +71,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 1/2] hw/char/serial: Expose SerialState::irq as QDev GPIO
-Date: Sat, 11 Jan 2025 00:04:17 +0100
-Message-ID: <20250110230418.95571-2-philmd@linaro.org>
+Subject: [PATCH v3 2/2] hw/char/serial: Convert to three-phase reset
+Date: Sat, 11 Jan 2025 00:04:18 +0100
+Message-ID: <20250110230418.95571-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110230418.95571-1-philmd@linaro.org>
 References: <20250110230418.95571-1-philmd@linaro.org>
@@ -104,74 +104,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the QDev GPIO API to set the TYPE_SERIAL output
-IRQ, this way we don't have to explicitly set the
-SerialState::irq pointer before realizing the object.
+Convert the TYPE_SERIAL (16550A UART) based devices
+to three-phase reset.
+
+Only local states are reset so use the ResetHold
+handler, like other legacy devices.
+
+TYPE_SERIAL is a plain QDev object:
+- Implement and register ResetHold
+- Remove call to serial_reset() in DeviceRealize
+- Remove qemu_[un]register_reset() calls
+
+For TYPE_ISA_SERIAL, TYPE_PCI_SERIAL (single and
+multi):
+- Implement and register ResetHold
+- Call device_cold_reset(TYPE_SERIAL) in ResetHold
+
+For TYPE_SERIAL_MM, since it is not on a QBus, we
+register a global reset hook to reset the embedded
+TYPE_SERIAL (see commits surrounding 751b4b7b4b7).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/serial-isa.c       | 2 +-
- hw/char/serial-pci-multi.c | 2 +-
- hw/char/serial-pci.c       | 2 +-
- hw/char/serial.c           | 2 ++
- 4 files changed, 5 insertions(+), 3 deletions(-)
+ hw/char/serial-isa.c       | 10 ++++++++++
+ hw/char/serial-mm.c        | 11 +++++++++++
+ hw/char/serial-pci-multi.c | 19 +++++++++++++++++++
+ hw/char/serial-pci.c       | 12 ++++++++++++
+ hw/char/serial.c           | 10 ++++------
+ 5 files changed, 56 insertions(+), 6 deletions(-)
 
 diff --git a/hw/char/serial-isa.c b/hw/char/serial-isa.c
-index 3d913891dcb..2e755eaf440 100644
+index 2e755eaf440..29894737c61 100644
 --- a/hw/char/serial-isa.c
 +++ b/hw/char/serial-isa.c
-@@ -76,8 +76,8 @@ static void serial_isa_realizefn(DeviceState *dev, Error **errp)
-     }
-     index++;
+@@ -53,6 +53,14 @@ static const int isa_serial_irq[MAX_ISA_SERIAL_PORTS] = {
+     4, 3, 4, 3
+ };
  
--    s->irq = isa_get_irq(isadev, isa->isairq);
-     qdev_realize(DEVICE(s), NULL, errp);
-+    qdev_connect_gpio_out(DEVICE(s), 0, isa_get_irq(isadev, isa->isairq));
-     qdev_set_legacy_instance_id(dev, isa->iobase, 3);
++static void serial_isa_reset_hold(Object *obj, ResetType type)
++{
++    ISASerialState *isa = ISA_SERIAL(obj);
++    SerialState *s = &isa->state;
++
++    device_cold_reset(DEVICE(s));
++}
++
+ static void serial_isa_realizefn(DeviceState *dev, Error **errp)
+ {
+     static int index;
+@@ -123,11 +131,13 @@ static void serial_isa_class_initfn(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     AcpiDevAmlIfClass *adevc = ACPI_DEV_AML_IF_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
  
-     memory_region_init_io(&s->io, OBJECT(isa), &serial_io_ops, s, "serial", 8);
+     dc->realize = serial_isa_realizefn;
+     dc->vmsd = &vmstate_isa_serial;
+     adevc->build_dev_aml = serial_isa_build_aml;
+     device_class_set_props(dc, serial_isa_properties);
++    rc->phases.hold = serial_isa_reset_hold;
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+ }
+ 
+diff --git a/hw/char/serial-mm.c b/hw/char/serial-mm.c
+index 6338e7c0ba8..7208fbda526 100644
+--- a/hw/char/serial-mm.c
++++ b/hw/char/serial-mm.c
+@@ -29,6 +29,7 @@
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "hw/qdev-properties.h"
++#include "system/reset.h"
+ 
+ static uint64_t serial_mm_read(void *opaque, hwaddr addr, unsigned size)
+ {
+@@ -82,6 +83,16 @@ static void serial_mm_realize(DeviceState *dev, Error **errp)
+                           8 << smm->regshift);
+     sysbus_init_mmio(SYS_BUS_DEVICE(smm), &s->io);
+     sysbus_init_irq(SYS_BUS_DEVICE(smm), &smm->serial.irq);
++
++    /*
++     * Because this Device is not on any bus in the qbus tree (it is
++     * not a sysbus device and it's not on some other bus like a PCI
++     * bus) it will not be automatically reset by the 'reset the
++     * sysbus' hook registered by vl.c like most devices. So we must
++     * manually register a reset hook for it.
++     * TODO: there should be a better way to do this.
++     */
++    qemu_register_reset(resettable_cold_reset_fn, DEVICE(s));
+ }
+ 
+ static const VMStateDescription vmstate_serial_mm = {
 diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-index 7578e863cfe..54b6224f4da 100644
+index 54b6224f4da..4c7081198a0 100644
 --- a/hw/char/serial-pci-multi.c
 +++ b/hw/char/serial-pci-multi.c
-@@ -110,7 +110,7 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
-             multi_serial_pci_exit(dev);
-             return;
-         }
--        s->irq = pci->irqs[i];
-+        qdev_connect_gpio_out(DEVICE(s), 0, pci->irqs[i]);
-         pci->name[i] = g_strdup_printf("uart #%zu", i + 1);
-         memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s,
-                               pci->name[i], 8);
+@@ -90,6 +90,19 @@ static size_t multi_serial_get_port_count(PCIDeviceClass *pc)
+     g_assert_not_reached();
+ }
+ 
++static void multi_serial_pci_reset_hold(Object *obj, ResetType type)
++{
++    PCIDevice *dev = PCI_DEVICE(obj);
++    PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(dev);
++    PCIMultiSerialState *pci = DO_UPCAST(PCIMultiSerialState, dev, dev);
++    size_t nports = multi_serial_get_port_count(pc);
++
++    for (size_t i = 0; i < nports; i++) {
++        SerialState *s = &pci->state[i];
++
++        device_cold_reset(DEVICE(s));
++    }
++}
+ 
+ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
+ {
+@@ -150,6 +163,8 @@ static void multi_2x_serial_pci_class_initfn(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
+     pc->realize = multi_serial_pci_realize;
+     pc->exit = multi_serial_pci_exit;
+     pc->vendor_id = PCI_VENDOR_ID_REDHAT;
+@@ -159,12 +174,15 @@ static void multi_2x_serial_pci_class_initfn(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_pci_multi_serial;
+     device_class_set_props(dc, multi_2x_serial_pci_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
++    rc->phases.hold = multi_serial_pci_reset_hold;
+ }
+ 
+ static void multi_4x_serial_pci_class_initfn(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
+     pc->realize = multi_serial_pci_realize;
+     pc->exit = multi_serial_pci_exit;
+     pc->vendor_id = PCI_VENDOR_ID_REDHAT;
+@@ -174,6 +192,7 @@ static void multi_4x_serial_pci_class_initfn(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_pci_multi_serial;
+     device_class_set_props(dc, multi_4x_serial_pci_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
++    rc->phases.hold = multi_serial_pci_reset_hold;
+ }
+ 
+ static void multi_serial_init(Object *o)
 diff --git a/hw/char/serial-pci.c b/hw/char/serial-pci.c
-index 6659cef5d4b..4291bfc4e7f 100644
+index 4291bfc4e7f..e3e762d871c 100644
 --- a/hw/char/serial-pci.c
 +++ b/hw/char/serial-pci.c
-@@ -52,10 +52,10 @@ static void serial_pci_realize(PCIDevice *dev, Error **errp)
-     if (!qdev_realize(DEVICE(s), NULL, errp)) {
-         return;
-     }
-+    qdev_connect_gpio_out(DEVICE(s), 0, pci_allocate_irq(&pci->dev));
+@@ -44,6 +44,15 @@ struct PCISerialState {
+ #define TYPE_PCI_SERIAL "pci-serial"
+ OBJECT_DECLARE_SIMPLE_TYPE(PCISerialState, PCI_SERIAL)
  
-     pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
-     pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
--    s->irq = pci_allocate_irq(&pci->dev);
++static void serial_pci_reset_hold(Object *obj, ResetType type)
++{
++    PCIDevice *dev = PCI_DEVICE(obj);
++    PCISerialState *pci = DO_UPCAST(PCISerialState, dev, dev);
++    SerialState *s = &pci->state;
++
++    device_cold_reset(DEVICE(s));
++}
++
+ static void serial_pci_realize(PCIDevice *dev, Error **errp)
+ {
+     PCISerialState *pci = DO_UPCAST(PCISerialState, dev, dev);
+@@ -89,6 +98,8 @@ static void serial_pci_class_initfn(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
+     pc->realize = serial_pci_realize;
+     pc->exit = serial_pci_exit;
+     pc->vendor_id = PCI_VENDOR_ID_REDHAT;
+@@ -98,6 +109,7 @@ static void serial_pci_class_initfn(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_pci_serial;
+     device_class_set_props(dc, serial_pci_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
++    rc->phases.hold = serial_pci_reset_hold;
+ }
  
-     memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s, "serial", 8);
-     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
+ static void serial_pci_init(Object *o)
 diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 70044e14a0f..cdff29ccee2 100644
+index cdff29ccee2..587f04c24ef 100644
 --- a/hw/char/serial.c
 +++ b/hw/char/serial.c
-@@ -923,6 +923,8 @@ static void serial_realize(DeviceState *dev, Error **errp)
- {
-     SerialState *s = SERIAL(dev);
+@@ -851,9 +851,9 @@ const VMStateDescription vmstate_serial = {
+     }
+ };
  
-+    qdev_init_gpio_out(dev, &s->irq, 1);
-+
+-static void serial_reset(void *opaque)
++static void serial_reset_hold(Object *obj, ResetType type)
+ {
+-    SerialState *s = opaque;
++    SerialState *s = (SerialState *)obj;
+ 
+     if (s->watch_tag > 0) {
+         g_source_remove(s->watch_tag);
+@@ -928,13 +928,11 @@ static void serial_realize(DeviceState *dev, Error **errp)
      s->modem_status_poll = timer_new_ns(QEMU_CLOCK_VIRTUAL, (QEMUTimerCB *) serial_update_msl, s);
  
      s->fifo_timeout_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, (QEMUTimerCB *) fifo_timeout_int, s);
+-    qemu_register_reset(serial_reset, s);
+ 
+     qemu_chr_fe_set_handlers(&s->chr, serial_can_receive1, serial_receive1,
+                              serial_event, serial_be_change, s, NULL, true);
+     fifo8_create(&s->recv_fifo, UART_FIFO_LENGTH);
+     fifo8_create(&s->xmit_fifo, UART_FIFO_LENGTH);
+-    serial_reset(s);
+ }
+ 
+ static void serial_unrealize(DeviceState *dev)
+@@ -949,8 +947,6 @@ static void serial_unrealize(DeviceState *dev)
+ 
+     fifo8_destroy(&s->recv_fifo);
+     fifo8_destroy(&s->xmit_fifo);
+-
+-    qemu_unregister_reset(serial_reset, s);
+ }
+ 
+ const MemoryRegionOps serial_io_ops = {
+@@ -975,12 +971,14 @@ static const Property serial_properties[] = {
+ static void serial_class_init(ObjectClass *klass, void* data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     /* internal device for serialio/serialmm, not user-creatable */
+     dc->user_creatable = false;
+     dc->realize = serial_realize;
+     dc->unrealize = serial_unrealize;
+     device_class_set_props(dc, serial_properties);
++    rc->phases.hold = serial_reset_hold;
+ }
+ 
+ static const TypeInfo serial_info = {
 -- 
 2.47.1
 
