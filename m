@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03991E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 21:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA87E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 22:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWMqV-0001ZI-1g; Fri, 10 Jan 2025 16:47:11 -0500
+	id 1tWNf1-0000Xh-Ac; Fri, 10 Jan 2025 17:39:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWMqL-0001YP-1w
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 16:47:03 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWNf0-0000XZ-89
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 17:39:22 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWMqI-0006LI-9c
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 16:47:00 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-38637614567so1280401f8f.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 13:46:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWNey-0003t7-Oj
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 17:39:22 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so1337787f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 14:39:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736545615; x=1737150415; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736548758; x=1737153558; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sg7wo5Zc4DNJh7ebpBH7rIAGSnt3xDSucN4q8Glzgic=;
- b=XEYqIXYxqUP3TB+B2V9B4R9/A2pgC8eaua7mxH0QYblZSuZunAvr+r4oAmjLO7vN3L
- K+I5sy/60bJrfiMORlabFa6250C23dy2LUQrTwQGzJZ24BEM59hZkz36wstwt6yXeqPz
- ohXlV8GaeWHV2o3Ljk9R+Y/J3jTr9bXryBgyksCxKTS3QsNSs4hyzIybA/v4Nl/Sq+/c
- xnCXaJFcQsTNppUXWtwDCOWU0b47N49FtvbMCSDQKsAeu/QZ29uvcJPrygeWtQ1tYWgZ
- QYH0+j8+1Kw2jY/46frycpcxGZ1FyByg02dTtgAez1LbZ9LLc4GqaxvF5ulGuus4wOJB
- eneg==
+ bh=LQWdR3Vo6mOzRVAsCrK7anjNxS9xSoc/aFefj2w9tcU=;
+ b=NnjLEyf/iBCHv1zqjCqxftw6qgHnsFvx3//x1nHCGKHO+M0b80o5oLPc4i2eQJmDPJ
+ DDt1KbeCws+v6/KIzmExTnQGPjHK0aJebzyVK19TAQegIO3AGsWiSCyd4gOsrgzDfOvX
+ TW4+JcaP0E+JeQkzmaGehBdEi9fPZFxDiyTh58ItGe+48xpXxPj0Uqm+VbrwOIJ2eNQ6
+ 5hcCNXEf5yoAMt6/ADEx7iHZnt3ktC+2xkRPAAGvVVwwVyo7m3l5FF9zkDcb1QMjP3BH
+ Lv/VMCk35MFbUi+qDb1t4LFqCklVKRlZzadt0naSfk9VIKeLIGlOCueaXWq5tJko4urG
+ 8aMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736545615; x=1737150415;
+ d=1e100.net; s=20230601; t=1736548758; x=1737153558;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sg7wo5Zc4DNJh7ebpBH7rIAGSnt3xDSucN4q8Glzgic=;
- b=Hi37KnBBZzR6myf3ArYIpz44OcP0Ic3pdNLJXv5/fWx+DdBDVFq1zDggAR22QsP7BD
- MpWwCF+03RDscMvqO3PHurzTCqLsbtaqm35cQmgw7Kmc9bdQ0J+TBuAgCzxVVfFQYVsU
- bvKwz0klg7K91++4v0KFdynoajHPe8yxJkXJ0KOd30KLTdIQqdcp7Rlk36j9nRuUryEd
- G7ZDLI9mDqiwZaAGoSW9sWLFVFfNv2mNNCbNme3iXgxgWjTz/EMYELzWaECov+RHYIy+
- DRwfsG2Jdcwnpv+JFpxZb5ZiJYM0YMXayucdlJbk5iLE+mum8y0lgzAOMB/n383tiCNe
- 9WPA==
-X-Gm-Message-State: AOJu0YxLVQgQ3AsSULOLCSWqSGslohKDsJW6Bg3OAotaCOTMzDod3w28
- kBD/NpWM9AgTCXlPiUa84B2RuXma8qqCiCOMiAfsMhC+JQKb4rZHAHZdpOnwrGzmjK6u7AAJKP9
- oLo4=
-X-Gm-Gg: ASbGncsT6cJNK3iLdWf3d/x+7wqw2GbO8NIG3yru267nmWJeR3KbcYfbbocmKZ/UGDa
- ZH/O0li39HL42VHkTQXeC/oOUZBuv8HJ7ZnsIc27FbdZkjQq7bE6pal9hg9E6RuUoKVWlq/sR2A
- KPkbxU+qdJUJpspzP/+A2tlEZ+5G2zSKWEWkeOoLdSBqu3EHBNE8rCAGgl0b7r0SZc+y086SWBc
- yuJ8KhJCe6IY2VkFhHlt1dluNJdh/F2pIU60HwS71kce0uNZKlmtjuSmF5eoEN3WU/TasHlZ7F8
- 86LKTUrhiXEdMnzmrihaKXa+EwGsDQ==
-X-Google-Smtp-Source: AGHT+IFFcvoGbysMdheqlXySBhP6rTRXeZb4hKaR77QgS5mwpFNTmd1xBGX9j2MKVcEn9J5RaSRgSQ==
-X-Received: by 2002:a05:6000:1f88:b0:385:fc97:9c63 with SMTP id
- ffacd0b85a97d-38a872f6915mr9734937f8f.9.1736545615592; 
- Fri, 10 Jan 2025 13:46:55 -0800 (PST)
+ bh=LQWdR3Vo6mOzRVAsCrK7anjNxS9xSoc/aFefj2w9tcU=;
+ b=sxNNmV3yoYg68tcNmiaSUJF+cjj+UZfY77NIJey7i//+DCn2KgluTnxqIPzvx2ZaPX
+ LSBkV6ox6iwlqJZ5sIBX95qzx3vrt0A5J+2sEqOI7eGbOAyVs/qUOeuClSO0UyvlkoFK
+ evvc42o9Pt273YQprpVK7GxEqPgmozYOAMYiSp2BW3uSUMzQpsRUBGYqMog6Fu27sNCE
+ 1IXYhxZd3uY0GT6Tw4gjr7dg2BhuQZKHCNK8pfpwGGc1GdxOeLuTABsmbQETHL188GXf
+ MifU/eeCQAxZcuAvyn46CV+HKbcLIJSpYUaebwDXU/2AXOkAYetAChJoFdAIP7zz4Ccz
+ 5Jag==
+X-Gm-Message-State: AOJu0Yxkqab8JBTYVux1xATm2GYiwJRKdLRUGjzkJ13N+zs2uZsjlK5k
+ gf9MrO6OGUBgEE09Q1ROZYLTrpy6m6MD889eKY2Tt9Ql974TrFf8jQk1gCsvfT0a594b9IVjM1R
+ pKAc=
+X-Gm-Gg: ASbGncswOe5nFTEYjtSf6Gl0PBkJ16uhEw4Sn79aBd2bys/ZptLZhvnFuab/X3lA+O1
+ CBJf+MuEA+Obszdkxerje5gnZfvjnHuFdHBkAr6Hzi8r5Xs0b0RpQ+/Z5KG3KWg2E3XqqxtR9w7
+ vQixwtpk4efnFNRi+hKEUl/RnexhtYbcGCO1/qVoDEM49Uexxez4fi3wkDnKT2M0atMZ14Qo4yK
+ Z82BENVcrQbVy0AnuqCpJTgAFMax2VcG27vUHHIwELaZJDMKw6OqtRhwALZJ8DpI9vOy3ZlnqMd
+ akVIwupYSzu2JsBSCZMkjRhl0mAUwA==
+X-Google-Smtp-Source: AGHT+IEAjXfAFF1mQbUyBfHKlRVJU6FeFpiR9tYQ2vMuEX2n79PniqkcgMNgMD0tmMA0bHaHzc7U3w==
+X-Received: by 2002:a05:6000:481b:b0:385:f44a:a68 with SMTP id
+ ffacd0b85a97d-38a87313a6dmr11856807f8f.35.1736548758443; 
+ Fri, 10 Jan 2025 14:39:18 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38325esm5497960f8f.27.2025.01.10.13.46.54
+ ffacd0b85a97d-38a8e4b80d4sm5477097f8f.85.2025.01.10.14.39.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 13:46:55 -0800 (PST)
-Message-ID: <7be26557-2ecb-40b4-86d5-721b0c285f71@linaro.org>
-Date: Fri, 10 Jan 2025 22:46:54 +0100
+ Fri, 10 Jan 2025 14:39:17 -0800 (PST)
+Message-ID: <42324d00-5e1b-4f19-bb85-5c01e35ef35c@linaro.org>
+Date: Fri, 10 Jan 2025 23:39:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] hw/char/serial: Ensure SerialState::irq is set
- when realizing
+Subject: Re: [PATCH v2 2/2] hw/char/serial: Convert to three-phase reset
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
  <mst@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
@@ -77,14 +76,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20250110182759.84071-1-philmd@linaro.org>
- <20250110182759.84071-2-philmd@linaro.org>
+ <20250110182759.84071-3-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250110182759.84071-2-philmd@linaro.org>
+In-Reply-To: <20250110182759.84071-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,26 +107,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/1/25 19:27, Philippe Mathieu-Daudé wrote:
-> SerialState::irq must be set by parent when the object is realized.
+> Convert the TYPE_SERIAL (16550A UART) to three-phase reset.
 > 
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+> Only local states are reset so use the ResetHold handler,
+> like other legacy devices.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/char/serial-pci-multi.c | 2 +-
->   hw/char/serial-pci.c       | 2 +-
->   hw/char/serial.c           | 2 ++
->   3 files changed, 4 insertions(+), 2 deletions(-)
+>   hw/char/serial.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
 
-
-> diff --git a/hw/char/serial.c b/hw/char/serial.c
-> index 70044e14a0f..562931685e7 100644
-> --- a/hw/char/serial.c
-> +++ b/hw/char/serial.c
-> @@ -923,6 +923,8 @@ static void serial_realize(DeviceState *dev, Error **errp)
->   {
->       SerialState *s = SERIAL(dev);
->   
-> +    assert(s->irq);
-
-Patch incomplete, missing to update serial_mm_realize().
+Since this object is not on a bus, this patch is crap, sorry.
 
