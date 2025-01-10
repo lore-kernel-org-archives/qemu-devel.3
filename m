@@ -4,90 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19623E7719A
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 01:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C622E7719A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 01:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW405-0002BP-7Z; Thu, 09 Jan 2025 20:39:49 -0500
+	id 1tW42b-00033J-SY; Thu, 09 Jan 2025 20:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tW401-0002Ag-Mv
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 20:39:48 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tW3zv-0002Pk-6V
- for qemu-devel@nongnu.org; Thu, 09 Jan 2025 20:39:44 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2164b1f05caso26158705ad.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 17:39:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736473177; x=1737077977; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IWoYa8Tq2Iqy0RVtRWeqNc8gWw69km03OztpeuuT6JA=;
- b=O7dSB7MlK/urEbfBBNs+2FFsA/YPqMSQX4HQHSBHpD3SExNn+Sw4b3J3MyXdvuLmVS
- vxMH+UEw3YkAxAUUA9zrxiUB9zCUpU8HBqJq2Um/66o/n0b4CEyB/F2AFbL1pYQRpkR0
- T372U8NWmzChmN6NwMBubEMKls1yAJ2A5yzwfIdEoSdLvoREB8s2M3xXntFqetpb2feB
- b3SINJ0xGN1PMc8X8HKJWLus0PG9u3DYruai5jnucBVNDC1SGsin8OfFpPc9FhI9E/1o
- TfEWyWl+/3JPc5hIjcREm6KWMLzTHMuELiyIfwGI4j/7UBSBpAgdASYQx0NtBhuc83Rr
- Y/sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736473177; x=1737077977;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IWoYa8Tq2Iqy0RVtRWeqNc8gWw69km03OztpeuuT6JA=;
- b=HIhxQdBXSCjxyMSbkqTNO2ccL8U/OAnFjh/MFNLqsjcxh+PumWTv2/z3UuL10jl3Ut
- sRW1z1roSIO37i4LN9ZHnIcY3Cdgp4CPFCX6DP7xwQQCkxAMNCeGNjyLvrtA/1SaNYlG
- K5XUjkFpZrBLmIqG6iwMBi6qvm/UcRzOlQTP6kOX72rtcAeSq1xyN1FNrR07MU+XIqK4
- w8Fcu6Xc/QF22CRwiSw32oH3Tr04XWDmnhYCF0kxvsFQ9aoLbXwilzQ2tkCe4Aqfa521
- BdKVojm1spZcmY4o09iIw9oWYUBVqN/4+VbcuWnVNHGn3SBcuLvKsnxTVzzguc5UOmhC
- dfLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKzV3pUkudssX0n912REq9uukx3/8JyMF+ZYeYIsJ/z61Fudf5VmdVUIFDxfAVVAQ0XWQbbu9pa9uH@nongnu.org
-X-Gm-Message-State: AOJu0Yxi5iXvSVwtni8cKuu5wwcd8EH5wndAzldbFwZKG+0V9+PpYMb8
- jPLYZA1daJFfhjENttSxaHdFwVhpKGV+LLqCtk+YHJQJyOz6P4gwBToSlqSVxF8=
-X-Gm-Gg: ASbGncsajLN2S3DP2+ckmgxghhtBgVLdcpSv3kkfHVCAYFKQJk1v9bYuz6FRIAuf4S7
- Yezg1cm/a3RSp/uijjHSBuNJGonI7NAWhc8/RTi0k0AmEMdU5qUeTHMFJ634+ihVViSlmVKd1Hm
- CFu6CMky3+n7c1kB9kyxWOx+44uZqpcxVArsCKsIfWCL5KG6nPKYyE+wfDYb6Iig9hZS+wPuNps
- gwIHT5VED14EMnu5kVJK9JSA/jjtckZ41RDuPdvySXtIx7HNxyxKfo2mcwCJlUrarUBYQ==
-X-Google-Smtp-Source: AGHT+IFlVo/Qf/ZKLTa197NJxWVe1d7YV6rFQKAZ9mcAkA47rlvUgpM0hEN3qz912nbkRI4XBPBlzg==
-X-Received: by 2002:a17:902:ce06:b0:216:5561:70d7 with SMTP id
- d9443c01a7336-21a83fe48c0mr142323375ad.52.1736473177378; 
- Thu, 09 Jan 2025 17:39:37 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f12f925sm4216135ad.61.2025.01.09.17.39.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2025 17:39:36 -0800 (PST)
-Message-ID: <a24bd0e8-d6f7-4297-90b8-b69f6b3080fc@linaro.org>
-Date: Thu, 9 Jan 2025 17:39:35 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vvfat: fix out of bounds array write
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1tW42Z-000335-Kj
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 20:42:23 -0500
+Received: from mail-bn7nam10on20604.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::604]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1tW42X-0002s6-2a
+ for qemu-devel@nongnu.org; Thu, 09 Jan 2025 20:42:23 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GCFFTOrRiTAYFXZJ/JoFdAedPLcSaF4wCsqU7BfSVwyubz3NRIBkwM7vIO//aGT1RV31G2AKo9CW0OYqt8bVvgmt5/T1OVF7/5eDvt2pc48SMAsMLn7rNXrXgigbfw0Nx1YDJaCWdbrAyXP09lgIBWsaaCb2zA0zHeJX/Y3mK+7A8JwdIAr9L+9XiFDvvO2bAMo28VZwUH/YKyJsrjLMH5Pyhk3OnVDGB9HXD4f5GqGPV8YatOxd2X+upMsMkmu4kzipdTIyls4SDFQ+Q2IQfi5p+kL6xg4bO7L6Bb2dvYiiC26G9RL0nK1h2QGN4BKWf93mJP6sNgSwP0lzdWGtlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HHKyNhhohKG56jsk1I1jX/0Pcy3q8F+HYBfd4fh9GSs=;
+ b=pXkRp9CyhQC65s1sj1wzd2hryntMOLD/IvcQ/hBEhi2A2+4iC1U+WwuhcepIPfnAMGYa1CCVHlEEA7uXKWlu6EKa10eU46HUFL2bddNrEETT2ce2z/k574EnDricSsfDS7nI19gC70g5gZ/wTBwFEbhEGBMW4BQ2MuPt81Bde/PedV8Th1pn4otKYH0KzgA86ozrxe4b+HRuabO8LSWTio2eUdXxtlazw34FaQLsLQVLXrED0NUQtrhdIOiU3ply59ErrwlNa7BSPlp5o/zqepzi6Eu5QZu+RNUZST+EXUcswyDoDX9MnAXjIpYslgOtnZb81goo/kmGhPCKK4eCLw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HHKyNhhohKG56jsk1I1jX/0Pcy3q8F+HYBfd4fh9GSs=;
+ b=gXEp1Kj5zoqTHngPabALNvcrtuF4ChJeUw/JaYoVdWQ9+a/1v0Fi4FcHsAHwgKkyuQJdLpSPIgtEhkthMmqdi89uABGN4jRz1cTb1ACIKJjIA1qICrw3THPQRW+kuGK5ZgvoXQhyqmid7dLGpFuPrZ05wiDLi8UPjjD8pXUAXxA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
+ by PH7PR12MB8015.namprd12.prod.outlook.com (2603:10b6:510:26a::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.10; Fri, 10 Jan
+ 2025 01:42:15 +0000
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8335.011; Fri, 10 Jan 2025
+ 01:42:14 +0000
+Message-ID: <008bfbf2-3ea4-4e6c-ad0d-91655cdfc4e8@amd.com>
+Date: Fri, 10 Jan 2025 12:42:06 +1100
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 0/7] Enable shared device assignment
 Content-Language: en-US
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20250105135929.6286-1-vr_qemu@t-online.de>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250105135929.6286-1-vr_qemu@t-online.de>
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
+ <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
+ <6ac5ddea-42d8-40f2-beec-be490f6f289c@amd.com>
+ <8f953ffc-6408-4546-a439-d11354b26665@intel.com>
+ <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
+ <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
+From: Alexey Kardashevskiy <aik@amd.com>
+In-Reply-To: <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: OS0PR01CA0155.jpnprd01.prod.outlook.com
+ (2603:1096:604:27::30) To CH3PR12MB9194.namprd12.prod.outlook.com
+ (2603:10b6:610:19f::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|PH7PR12MB8015:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc5320e0-d289-460f-34bf-08dd31180286
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7416014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YndPd3hOdnA3SFY4QTJORzZ4dy8xRTZYOHQxT2YweGVsWkJ1eGlXQ0VjZm9M?=
+ =?utf-8?B?cWlKME5GcEk5Qk53dkRTeU1uWnZYbSt6bWI1OTlrQ3MvU2E0QTlyT3d1TWJ3?=
+ =?utf-8?B?YzBLRXBHaEtIYkU5eWZDVUY1RkdFNmpBV2lQaVQzdnZLWGRXYWcvMEcxYmhx?=
+ =?utf-8?B?aTFibTdSTVpnRHZJTklob2J6ZzFEckx4V2MyTk8vZGZISndWa3hnODB6WSth?=
+ =?utf-8?B?ZG9iSzBoMDlIeSsxZzEvbUE4WGJaM2FQSGViTVVYWHE3UXJyVjFhTklSbzM4?=
+ =?utf-8?B?c091eHNIanQvSGxBUVc5a2Z2QWR5Njc3QytPTFMzQmdTY1IwMzNsRVU4YmF2?=
+ =?utf-8?B?STR3RkpCL3A2L2lGS3RuWUdCaGU1ZXBUOHJBM3RHS3VpU2s1NzBtdm1OZDly?=
+ =?utf-8?B?MUJuYVEwaVp2eGJHa0F5OVJMK1NUZHptbFhZOHMwcHU2SVlzQjhXbDQ5RWpx?=
+ =?utf-8?B?WWZFVElObjBIU2E2bitsaWRvMGVqdWlSV3dYMDNCVk9qM1VUUVRxbnpoQjJ3?=
+ =?utf-8?B?QXBSckV1RnBmd0JJZUVZWlluQ2ROL1NiZzhBU3ZxSGRxTTJHRjhtUlFVL0pS?=
+ =?utf-8?B?VU42dWNNZ0J2VGtKMUtjWEhPeFppT0RqRUdFUmZUTm4yWUtWV0dEUk9oYkRn?=
+ =?utf-8?B?SGV4KzBia0NpQWdFcEh1a09iSGRST2NHak5ab0xMTmJ1cm0xKy9hcEFnSlVl?=
+ =?utf-8?B?NTVoNUVyemtHSUY4dWxBb21IVFJxa0lGSXZpM1pZMGtxZGd4RU83TmtFeTF2?=
+ =?utf-8?B?N0w5V3BWV0U0QmYvM2t3VDhuc0ZlRkhQQ0lkcVVTQSsrS0hNZDF4WWI3Y0Nu?=
+ =?utf-8?B?eHdmSndQbmEyRlE5bHdSaE5jODkxUzNJWEJKTEVHZHh3VWl6WkN3bkZSbFpG?=
+ =?utf-8?B?LzBTRlhDOHZUL1dxWmIrUUNhd21QMjFPeUlKOTFHbTdQNDdwdjU0VTQva0U5?=
+ =?utf-8?B?cUVEN1VVdHk4NFQvWlZna3pHb3J6WDEvTklQR2QvK0l3YnBkQjFYSW5SY25R?=
+ =?utf-8?B?RTRxVGIxT3NYSmNacVllVXhKUDhKTmc5Vjk3a1p5VmpZZTQyQ2dTYnU4c2o2?=
+ =?utf-8?B?NXlseS9TRGxPbTFpdWlRKzRKZmlqZjIvRGx3T1dIL3g0TTVUYTVaTUhIbXda?=
+ =?utf-8?B?ZjBMNmJ0SFZHQ2hPTHBDRzVyWGIyTHdUU1FhYkdBMUVGTFA3SW1SV3F3VGla?=
+ =?utf-8?B?RHduQitOZTZRM1AvcVJPRHNvclhaTTVpSnoyeWJQaVN4V0RZNlYwTWNRSzdy?=
+ =?utf-8?B?T0ZVVTBDT2ZqNVpidGVvNklFeVJSZXRoZE44dER3aURhWGx0MWVpam11elA0?=
+ =?utf-8?B?eDc1NDNWU3o0MHZGYS80OUVkVUJUdGgrKzJNQ3hWVzR3bmgrWjNNdFNPU1Bo?=
+ =?utf-8?B?ZVY1UzRFUEF5Vlo2SVkybDNHY0hjRmtWWWNNQm4vWTNVU0FQR2x2eXhxTGNQ?=
+ =?utf-8?B?SlIyMXFnQkg0NTc1T2VETFhXQXRJMmtrRDJxYXN2MzBVc2RjbGpHNDlCcHNp?=
+ =?utf-8?B?Z0NiNVhMeGEwT0xEWGM5dlVQRDRkeEF3UzNnZHhHVExCR3MvcThrT3FXbEJK?=
+ =?utf-8?B?NHV1QWNyYWdYTUtUWTR0NXRmc1U1R0RFbVFtNWx4S0VVZ041blFiQ3JKSVc5?=
+ =?utf-8?B?OTUvUXVnOFZxVFR0TVRLbGhSQ2ZxZjEwaVdVakl3Njhna01OZHNhVUQrcDZj?=
+ =?utf-8?B?aEZEUmVwTEN1OXZPOURob2s1Wk5pZm1oWHljd2xLaXk4MHZWQjNmOHVoMHNX?=
+ =?utf-8?B?MDVxTEJESVVhNXJuc3ZQcUF4Q1FDT1JtYUFyMWl4aHFQY3hsaGx5N3RmbmNx?=
+ =?utf-8?B?eDNVTktWNVV5dmZKM3g0QT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(7416014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WUZodHZMM1d2cTBEMHBWTUg2dFJEYkdZUXJmRFNRcmdCb1AyWHpsM1d0c1Nx?=
+ =?utf-8?B?VmZHZWpPckpyb0g2SWtKdVhaalZpU3FYUUF5eXZQTEtWQmJ5aUNNS0lwaHg4?=
+ =?utf-8?B?cHlJOTQ5OEo0WStJeFNURE8zWjFHMWxwWXFzZ3BXK2pTdHR1UTIyeUFNRmI4?=
+ =?utf-8?B?ZTl1RC94VVJHV201NGZqclNpRVdIYTd4SjIvSUhyc1M4VDlaTnJRR2ZVS1Bu?=
+ =?utf-8?B?NHU0Ylc0WHJsaEVhczlrL0NTa25GazJwSWtOM01nb01UYTN5Q1hqZUVrQlRa?=
+ =?utf-8?B?OHN4NVEwS3RDTU5OcHh0dGpTUDk2NzBlbHE4ZE1zaDgvRVBxZ3dkVEhkb0NE?=
+ =?utf-8?B?Tm9VemNWcjhraks1NFVjOC9NWFk0a2I5NVovZHZ5aW1xenVGUG96amVQZkpM?=
+ =?utf-8?B?ekZQaEorSzNKU21BK3B2Z29HSFRLMVhGcEpQc1JHeFZWUzRqYUQwOFdtRGNF?=
+ =?utf-8?B?QWRaUjF5eGE2ZDlEU29EMW5sRzZGMVd5M0VWdzlpK1ZSRUd2V1dGYXRYTDJz?=
+ =?utf-8?B?eVp5V21RVkpPZjRyYjdORHFjUW8zYVptc1BtYkFScWNXYjc5dEMvelJmZkx0?=
+ =?utf-8?B?bUNaVEJScE9NZ2VkWjZDc0ZLUmRDQjkrdk1id0Z4RllWZi9POUFUMGo0dnhZ?=
+ =?utf-8?B?WXJRMjNDQlN3YjJ4SnAzRDE2OFVBYnFCTmRsZ3g2NVE3MkdkOWw2cGlxR3ow?=
+ =?utf-8?B?dCtXVGVzZGNIcWgxZVlUYngyNzdDZjBkempyemRPSk4rWHhBQ3g1emNxbllt?=
+ =?utf-8?B?ZTlCRnljNzBnYnExM1IxekVUNnRQT2hwNy9USXR6VDNlRFZuMWFvR0pLQzds?=
+ =?utf-8?B?OTQ4VE8xcWJ4TnNVM21obXAvdFMrK1VPOHNVZ2tzUjlPZjNPZzZMRlp2a05R?=
+ =?utf-8?B?OFRidEVsR09sVk10a1BkYTYxZktuSGtXaTlUa2FLVSt0VjNldDJDdWN0M2JU?=
+ =?utf-8?B?MTlEWDQ1TlQwMjlZWitaVDF2eCtaT2RWRmQvejc0NEpNQzhicVhHUkZKN0Jr?=
+ =?utf-8?B?WWt5TXZjYm1xQXIycUFtd0ZtTEcrSE04Njh5VEhTbnhWc2htUTVmYVhRV2FH?=
+ =?utf-8?B?dmtKK3U4TS9ydU9qSVNsNTIxbnpDWDRwaFhBbmdJdWd6MnI3RGFWNVVRZGx3?=
+ =?utf-8?B?TGJWeEh0MGQ4SVhVb0QyQXdyM0hHZlhLR0ZVKzhTcVhSRWw4UVpSd0RFb0VV?=
+ =?utf-8?B?bGNVMXVBQUlKTGhRWktjcGxnbkpuZ25BdzM3ZzlKSTBNdXZBQis4RXNHR2p1?=
+ =?utf-8?B?WmZEWEtCZE5tUWF1Mmd3L0dUZ0VLL2twUmU4Wloxa0lLYzJOUnJEZWFNSm80?=
+ =?utf-8?B?Mk5VMGhGekhRdVpJY3hEbTd0b2lnZkZFN3MvK0RlL2pCZGZaSUJLNHdFUnk2?=
+ =?utf-8?B?SXRvUEpXNERSOTJTakpmMFZzVlhPVGRqK1A4RDhsdUtsblJvMlFXQ0lEZldr?=
+ =?utf-8?B?U1c1MzV1aFBjUXZXMnNRV2d2WE50T3VCdUtKMjRKTmdTRlRGS2ZlMzhpUzAz?=
+ =?utf-8?B?b2JINHhYTk5GOXVyeWoxZXB5c0lpS3lENHdDRElKM0lvODIydGcwSzZmQWVn?=
+ =?utf-8?B?SVdMOXhnTk5HSUlUUHppMk5SVkJSWVhKQUJRWmdGMUZIZjE5SXdhbjFtMk5a?=
+ =?utf-8?B?ZU1KcWlla3NUYzNkeXFidzloS3FjeURzMXdhaVMyWGRGbjhJY3hCMDRlV0Zo?=
+ =?utf-8?B?ODFjci9uQzN3M3I4b0hxRmJQRHh6L0N4ZmczQXZlMVJKVzRzZkdtTFdUOHR0?=
+ =?utf-8?B?RWh6Sng0UWI5bEpqakN4VDd2d1VCSXpLbjJLbjkrb0xDZ0FpcjFMckYzclYy?=
+ =?utf-8?B?MFY1NWFUQ1dpVHNPM3ZYRWduUkVtMnRiYXNrRmVDN2FIQUpXQjFLQkRiYzNT?=
+ =?utf-8?B?SmZVZFhLbUtlZncyRnZwRU12QUhVVzdyZXZPTkNkSnRxc092SFRIek9lUmw5?=
+ =?utf-8?B?MFB4UUkwS2RES3ZjYngvbFlwQ2x1ZVBCYlVMdXA3ZXJPamFDamNNZDIrUnpL?=
+ =?utf-8?B?QjRPV2FlRTR0YWtBb2ZRSDd3N3FhUnVBNWhVbmlqRjdBYnFUVGZwQUN5V21S?=
+ =?utf-8?B?eGdsaUtuSG9iOVB3a0ZTMUlsY3lXcEhrWitJcy9GNDU5Zm5tdG12T3RvKzl1?=
+ =?utf-8?Q?Luhnl43o4up4vdCEuLFD0Q+Pf?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc5320e0-d289-460f-34bf-08dd31180286
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2025 01:42:14.8785 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yfNUOWSN6H1IuYmOgYJ70SvqB9AGwN+txI62u9oSEta9+EvS6MYgLkScaIjCB7WZ12zoSUK8IMGtcktdEfCE1A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8015
+Received-SPF: permerror client-ip=2a01:111:f403:2009::604;
+ envelope-from=Alexey.Kardashevskiy@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,91 +186,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgVm9sa2VyLA0KDQpPbiAxLzUvMjUgMDU6NTksIFZvbGtlciBSw7xtZWxpbiB3cm90ZToN
-Cj4gSW4gZnVuY3Rpb24gY3JlYXRlX2xvbmdfZmlsbmFtZSgpLCB0aGUgYXJyYXkgbmFtZVs4
-ICsgM10gaW4NCj4gc3RydWN0IGRpcmVudHJ5X3QgaXMgdXNlZCBhcyBpZiBpdCB3ZXJlIGRl
-ZmluZWQgYXMgbmFtZVszMl0uDQo+IFRoaXMgaXMgaW50ZW50aW9uYWwgYW5kIHdvcmtzLiBJ
-dCdzIG5ldmVydGhlbGVzcyBhbiBvdXQgb2YNCj4gYm91bmRzIGFycmF5IGFjY2Vzcy4gVG8g
-YXZvaWQgdGhpcyBwcm9ibGVtLCB0aGlzIHBhdGNoIGFkZHMgYQ0KPiBzdHJ1Y3QgbGZuX2Rp
-cmVudHJ5X3Qgd2l0aCBtdWx0aXBsZSBuYW1lIGFycmF5cy4gQSBkaXJlY3RvcnkNCj4gZW50
-cnkgZm9yIGEgbG9uZyBGQVQgZmlsZSBuYW1lIGlzIHNpZ25pZmljYW50bHkgZGlmZmVyZW50
-IGZyb20NCj4gYSBkaXJlY3RvcnkgZW50cnkgZm9yIGEgcmVndWxhciBGQVQgZmlsZSBuYW1l
-Lg0KPiANCj4gU2lnbmVkLW9mZi1ieTogVm9sa2VyIFLDvG1lbGluIDx2cl9xZW11QHQtb25s
-aW5lLmRlPg0KPiAtLS0NCj4gICBibG9jay92dmZhdC5jIHwgNTUgKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tDQo+ICAgMSBmaWxlIGNoYW5n
-ZWQsIDQxIGluc2VydGlvbnMoKyksIDE0IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdp
-dCBhL2Jsb2NrL3Z2ZmF0LmMgYi9ibG9jay92dmZhdC5jDQo+IGluZGV4IDhmZmU4YjNiOWIu
-LjYyNmM0ZjAxNjMgMTAwNjQ0DQo+IC0tLSBhL2Jsb2NrL3Z2ZmF0LmMNCj4gKysrIGIvYmxv
-Y2svdnZmYXQuYw0KPiBAQCAtMjU1LDYgKzI1NSwxNyBAQCB0eXBlZGVmIHN0cnVjdCBkaXJl
-bnRyeV90IHsNCj4gICAgICAgdWludDMyX3Qgc2l6ZTsNCj4gICB9IFFFTVVfUEFDS0VEIGRp
-cmVudHJ5X3Q7DQo+ICAgDQo+ICt0eXBlZGVmIHN0cnVjdCBsZm5fZGlyZW50cnlfdCB7DQo+
-ICsgICAgdWludDhfdCBzZXF1ZW5jZTsNCj4gKyAgICB1aW50OF90IG5hbWUwMVsxMF07DQo+
-ICsgICAgdWludDhfdCBhdHRyaWJ1dGVzOw0KPiArICAgIHVpbnQ4X3QgZGlyZW50cnlfdHlw
-ZTsNCj4gKyAgICB1aW50OF90IHNmbl9jaGVja3N1bTsNCj4gKyAgICB1aW50OF90IG5hbWUw
-ZVsxMl07DQo+ICsgICAgdWludDE2X3QgYmVnaW47DQo+ICsgICAgdWludDhfdCBuYW1lMWNb
-NF07DQo+ICt9IFFFTVVfUEFDS0VEIGxmbl9kaXJlbnRyeV90Ow0KPiArDQo+ICAgLyogdGhp
-cyBzdHJ1Y3R1cmUgYXJlIHVzZWQgdG8gdHJhbnNwYXJlbnRseSBhY2Nlc3MgdGhlIGZpbGVz
-ICovDQo+ICAgDQo+ICAgdHlwZWRlZiBzdHJ1Y3QgbWFwcGluZ190IHsNCj4gQEAgLTM5OSwx
-MSArNDEwLDI4IEBAIHN0YXRpYyB2b2lkIGluaXRfbWJyKEJEUlZWVkZBVFN0YXRlICpzLCBp
-bnQgY3lscywgaW50IGhlYWRzLCBpbnQgc2VjcykNCj4gICANCj4gICAvKiBkaXJlbnRyeSBm
-dW5jdGlvbnMgKi8NCj4gICANCj4gK3N0YXRpYyB2b2lkIHdyaXRlX2xvbmdfZmlsZW5hbWUo
-bGZuX2RpcmVudHJ5X3QgKmVudHJ5LCBpbnQgaW5kZXgsIHVpbnQ4X3QgYykNCj4gK3sNCj4g
-KyAgICBpZiAoaW5kZXggPCBBUlJBWV9TSVpFKGVudHJ5LT5uYW1lMDEpKSB7DQo+ICsgICAg
-ICAgIGVudHJ5LT5uYW1lMDFbaW5kZXhdID0gYzsNCj4gKyAgICAgICAgcmV0dXJuOw0KPiAr
-ICAgIH0NCj4gKyAgICBpbmRleCAtPSBBUlJBWV9TSVpFKGVudHJ5LT5uYW1lMDEpOw0KPiAr
-ICAgIGlmIChpbmRleCA8IEFSUkFZX1NJWkUoZW50cnktPm5hbWUwZSkpIHsNCj4gKyAgICAg
-ICAgZW50cnktPm5hbWUwZVtpbmRleF0gPSBjOw0KPiArICAgICAgICByZXR1cm47DQo+ICsg
-ICAgfQ0KPiArICAgIGluZGV4IC09IEFSUkFZX1NJWkUoZW50cnktPm5hbWUwZSk7DQo+ICsg
-ICAgaWYgKGluZGV4IDwgQVJSQVlfU0laRShlbnRyeS0+bmFtZTFjKSkgew0KPiArICAgICAg
-ICBlbnRyeS0+bmFtZTFjW2luZGV4XSA9IGM7DQo+ICsgICAgfQ0KPiArfQ0KPiArDQo+ICAg
-c3RhdGljIGRpcmVudHJ5X3QgKmNyZWF0ZV9sb25nX2ZpbGVuYW1lKEJEUlZWVkZBVFN0YXRl
-ICpzLCBjb25zdCBjaGFyICpmaWxlbmFtZSkNCj4gICB7DQo+ICAgICAgIGludCBudW1iZXJf
-b2ZfZW50cmllcywgaTsNCj4gICAgICAgZ2xvbmcgbGVuZ3RoOw0KPiAtICAgIGRpcmVudHJ5
-X3QgKmVudHJ5Ow0KPiArICAgIGxmbl9kaXJlbnRyeV90ICplbnRyeTsNCj4gICANCj4gICAg
-ICAgZ3VuaWNoYXIyICpsb25nbmFtZSA9IGdfdXRmOF90b191dGYxNihmaWxlbmFtZSwgLTEs
-IE5VTEwsICZsZW5ndGgsIE5VTEwpOw0KPiAgICAgICBpZiAoIWxvbmduYW1lKSB7DQo+IEBA
-IC00MTUsMjQgKzQ0MywyMyBAQCBzdGF0aWMgZGlyZW50cnlfdCAqY3JlYXRlX2xvbmdfZmls
-ZW5hbWUoQkRSVlZWRkFUU3RhdGUgKnMsIGNvbnN0IGNoYXIgKmZpbGVuYW1lKQ0KPiAgIA0K
-PiAgICAgICBmb3IoaT0wO2k8bnVtYmVyX29mX2VudHJpZXM7aSsrKSB7DQo+ICAgICAgICAg
-ICBlbnRyeT1hcnJheV9nZXRfbmV4dCgmKHMtPmRpcmVjdG9yeSkpOw0KPiArICAgICAgICBl
-bnRyeS0+c2VxdWVuY2UgPSAobnVtYmVyX29mX2VudHJpZXMgLSBpKSB8IChpID09IDAgPyAw
-eDQwIDogMCk7DQo+ICAgICAgICAgICBlbnRyeS0+YXR0cmlidXRlcz0weGY7DQo+IC0gICAg
-ICAgIGVudHJ5LT5yZXNlcnZlZFswXT0wOw0KPiArICAgICAgICBlbnRyeS0+ZGlyZW50cnlf
-dHlwZSA9IDA7DQo+ICAgICAgICAgICBlbnRyeS0+YmVnaW49MDsNCj4gLSAgICAgICAgZW50
-cnktPm5hbWVbMF09KG51bWJlcl9vZl9lbnRyaWVzLWkpfChpPT0wPzB4NDA6MCk7DQo+IC0g
-ICAgfQ0KPiAtICAgIGZvcihpPTA7aTwyNipudW1iZXJfb2ZfZW50cmllcztpKyspIHsNCj4g
-LSAgICAgICAgaW50IG9mZnNldD0oaSUyNik7DQo+IC0gICAgICAgIGlmKG9mZnNldDwxMCkg
-b2Zmc2V0PTErb2Zmc2V0Ow0KPiAtICAgICAgICBlbHNlIGlmKG9mZnNldDwyMikgb2Zmc2V0
-PTE0K29mZnNldC0xMDsNCj4gLSAgICAgICAgZWxzZSBvZmZzZXQ9Mjgrb2Zmc2V0LTIyOw0K
-PiAtICAgICAgICBlbnRyeT1hcnJheV9nZXQoJihzLT5kaXJlY3RvcnkpLHMtPmRpcmVjdG9y
-eS5uZXh0LTEtKGkvMjYpKTsNCj4gKyAgICB9DQo+ICsgICAgZm9yIChpID0gMDsgaSA8IDI2
-ICogbnVtYmVyX29mX2VudHJpZXM7IGkrKykgew0KPiArICAgICAgICB1aW50OF90IGM7DQo+
-ICsNCj4gKyAgICAgICAgZW50cnkgPSBhcnJheV9nZXQoJnMtPmRpcmVjdG9yeSwgcy0+ZGly
-ZWN0b3J5Lm5leHQgLSBpIC8gMjYgLSAxKTsNCj4gICAgICAgICAgIGlmIChpID49IDIgKiBs
-ZW5ndGggKyAyKSB7DQo+IC0gICAgICAgICAgICBlbnRyeS0+bmFtZVtvZmZzZXRdID0gMHhm
-ZjsNCj4gKyAgICAgICAgICAgIGMgPSAweGZmOw0KPiAgICAgICAgICAgfSBlbHNlIGlmIChp
-ICUgMiA9PSAwKSB7DQo+IC0gICAgICAgICAgICBlbnRyeS0+bmFtZVtvZmZzZXRdID0gbG9u
-Z25hbWVbaSAvIDJdICYgMHhmZjsNCj4gKyAgICAgICAgICAgIGMgPSBsb25nbmFtZVtpIC8g
-Ml0gJiAweGZmOw0KPiAgICAgICAgICAgfSBlbHNlIHsNCj4gLSAgICAgICAgICAgIGVudHJ5
-LT5uYW1lW29mZnNldF0gPSBsb25nbmFtZVtpIC8gMl0gPj4gODsNCj4gKyAgICAgICAgICAg
-IGMgPSBsb25nbmFtZVtpIC8gMl0gPj4gODsNCj4gICAgICAgICAgIH0NCj4gKyAgICAgICAg
-d3JpdGVfbG9uZ19maWxlbmFtZShlbnRyeSwgaSAlIDI2LCBjKTsNCj4gICAgICAgfQ0KPiAg
-ICAgICBnX2ZyZWUobG9uZ25hbWUpOw0KPiAgICAgICByZXR1cm4gYXJyYXlfZ2V0KCYocy0+
-ZGlyZWN0b3J5KSxzLT5kaXJlY3RvcnkubmV4dC1udW1iZXJfb2ZfZW50cmllcyk7DQo+IEBA
-IC03MzEsNyArNzU4LDcgQEAgc3RhdGljIGlubGluZSBkaXJlbnRyeV90KiBjcmVhdGVfc2hv
-cnRfYW5kX2xvbmdfbmFtZShCRFJWVlZGQVRTdGF0ZSogcywNCj4gICAgICAgICAgIC8qIGNh
-bGN1bGF0ZSBhbmV3LCBiZWNhdXNlIHJlYWxsb2MgY291bGQgaGF2ZSB0YWtlbiBwbGFjZSAq
-Lw0KPiAgICAgICAgICAgZW50cnlfbG9uZz1hcnJheV9nZXQoJihzLT5kaXJlY3RvcnkpLGxv
-bmdfaW5kZXgpOw0KPiAgICAgICAgICAgd2hpbGUoZW50cnlfbG9uZzxlbnRyeSAmJiBpc19s
-b25nX25hbWUoZW50cnlfbG9uZykpIHsNCj4gLSAgICAgICAgICAgIGVudHJ5X2xvbmctPnJl
-c2VydmVkWzFdPWNoa3N1bTsNCj4gKyAgICAgICAgICAgICgobGZuX2RpcmVudHJ5X3QgKill
-bnRyeV9sb25nKS0+c2ZuX2NoZWNrc3VtID0gY2hrc3VtOw0KPiAgICAgICAgICAgICAgIGVu
-dHJ5X2xvbmcrKzsNCj4gICAgICAgICAgIH0NCj4gICAgICAgfQ0KDQpJIHRlc3RlZCB0aGlz
-IHBhdGNoIGFuZCBpdCBjb3JyZWN0bHkgZml4ZXMgdGhlIGlzc3VlIHJlcG9ydGVkIGJ5IHVi
-c2FuLCANCndoaWxlIGtlZXBpbmcgdGhlIGZlYXR1cmUgd29ya2luZyBhcyBleHBlY3RlZC4N
-Cg0KVGVzdGVkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFy
-by5vcmc+DQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmll
-ckBsaW5hcm8ub3JnPg0KDQpUaHVzLCBpdCBjYW4gYmUgbWVyZ2VkIChjYyB0byBxZW11LXRy
-aXZpYWwgZm9yIHF1aWNrIGludGVncmF0aW9uKS4NCg0KVGhhbmsgeW91IFZvbGtlciwNClBp
-ZXJyaWNrDQoNCg==
+
+
+On 9/1/25 19:49, Chenyi Qiang wrote:
+> 
+> 
+> On 1/9/2025 4:18 PM, Alexey Kardashevskiy wrote:
+>>
+>>
+>> On 9/1/25 18:52, Chenyi Qiang wrote:
+>>>
+>>>
+>>> On 1/8/2025 7:38 PM, Alexey Kardashevskiy wrote:
+>>>>
+>>>>
+>>>> On 8/1/25 17:28, Chenyi Qiang wrote:
+>>>>> Thanks Alexey for your review!
+>>>>>
+>>>>> On 1/8/2025 12:47 PM, Alexey Kardashevskiy wrote:
+>>>>>> On 13/12/24 18:08, Chenyi Qiang wrote:
+>>>>>>> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+>>>>>>> discard") effectively disables device assignment when using
+>>>>>>> guest_memfd.
+>>>>>>> This poses a significant challenge as guest_memfd is essential for
+>>>>>>> confidential guests, thereby blocking device assignment to these VMs.
+>>>>>>> The initial rationale for disabling device assignment was due to
+>>>>>>> stale
+>>>>>>> IOMMU mappings (see Problem section) and the assumption that TEE I/O
+>>>>>>> (SEV-TIO, TDX Connect, COVE-IO, etc.) would solve the device-
+>>>>>>> assignment
+>>>>>>> problem for confidential guests [1]. However, this assumption has
+>>>>>>> proven
+>>>>>>> to be incorrect. TEE I/O relies on the ability to operate devices
+>>>>>>> against
+>>>>>>> "shared" or untrusted memory, which is crucial for device
+>>>>>>> initialization
+>>>>>>> and error recovery scenarios. As a result, the current implementation
+>>>>>>> does
+>>>>>>> not adequately support device assignment for confidential guests,
+>>>>>>> necessitating
+>>>>>>> a reevaluation of the approach to ensure compatibility and
+>>>>>>> functionality.
+>>>>>>>
+>>>>>>> This series enables shared device assignment by notifying VFIO of
+>>>>>>> page
+>>>>>>> conversions using an existing framework named RamDiscardListener.
+>>>>>>> Additionally, there is an ongoing patch set [2] that aims to add 1G
+>>>>>>> page
+>>>>>>> support for guest_memfd. This patch set introduces in-place page
+>>>>>>> conversion,
+>>>>>>> where private and shared memory share the same physical pages as the
+>>>>>>> backend.
+>>>>>>> This development may impact our solution.
+>>>>>>>
+>>>>>>> We presented our solution in the guest_memfd meeting to discuss its
+>>>>>>> compatibility with the new changes and potential future directions
+>>>>>>> (see [3]
+>>>>>>> for more details). The conclusion was that, although our solution may
+>>>>>>> not be
+>>>>>>> the most elegant (see the Limitation section), it is sufficient for
+>>>>>>> now and
+>>>>>>> can be easily adapted to future changes.
+>>>>>>>
+>>>>>>> We are re-posting the patch series with some cleanup and have removed
+>>>>>>> the RFC
+>>>>>>> label for the main enabling patches (1-6). The newly-added patch 7 is
+>>>>>>> still
+>>>>>>> marked as RFC as it tries to resolve some extension concerns
+>>>>>>> related to
+>>>>>>> RamDiscardManager for future usage.
+>>>>>>>
+>>>>>>> The overview of the patches:
+>>>>>>> - Patch 1: Export a helper to get intersection of a
+>>>>>>> MemoryRegionSection
+>>>>>>>       with a given range.
+>>>>>>> - Patch 2-6: Introduce a new object to manage the guest-memfd with
+>>>>>>>       RamDiscardManager, and notify the shared/private state change
+>>>>>>> during
+>>>>>>>       conversion.
+>>>>>>> - Patch 7: Try to resolve a semantics concern related to
+>>>>>>> RamDiscardManager
+>>>>>>>       i.e. RamDiscardManager is used to manage memory plug/unplug
+>>>>>>> state
+>>>>>>>       instead of shared/private state. It would affect future users of
+>>>>>>>       RamDiscardManger in confidential VMs. Attach it behind as a RFC
+>>>>>>> patch[4].
+>>>>>>>
+>>>>>>> Changes since last version:
+>>>>>>> - Add a patch to export some generic helper functions from virtio-mem
+>>>>>>> code.
+>>>>>>> - Change the bitmap in guest_memfd_manager from default shared to
+>>>>>>> default
+>>>>>>>       private. This keeps alignment with virtio-mem that 1-setting in
+>>>>>>> bitmap
+>>>>>>>       represents the populated state and may help to export more
+>>>>>>> generic
+>>>>>>> code
+>>>>>>>       if necessary.
+>>>>>>> - Add the helpers to initialize/uninitialize the guest_memfd_manager
+>>>>>>> instance
+>>>>>>>       to make it more clear.
+>>>>>>> - Add a patch to distinguish between the shared/private state change
+>>>>>>> and
+>>>>>>>       the memory plug/unplug state change in RamDiscardManager.
+>>>>>>> - RFC: https://lore.kernel.org/qemu-devel/20240725072118.358923-1-
+>>>>>>> chenyi.qiang@intel.com/
+>>>>>>>
+>>>>>>> ---
+>>>>>>>
+>>>>>>> Background
+>>>>>>> ==========
+>>>>>>> Confidential VMs have two classes of memory: shared and private
+>>>>>>> memory.
+>>>>>>> Shared memory is accessible from the host/VMM while private memory is
+>>>>>>> not. Confidential VMs can decide which memory is shared/private and
+>>>>>>> convert memory between shared/private at runtime.
+>>>>>>>
+>>>>>>> "guest_memfd" is a new kind of fd whose primary goal is to serve
+>>>>>>> guest
+>>>>>>> private memory. The key differences between guest_memfd and normal
+>>>>>>> memfd
+>>>>>>> are that guest_memfd is spawned by a KVM ioctl, bound to its owner
+>>>>>>> VM and
+>>>>>>> cannot be mapped, read or written by userspace.
+>>>>>>
+>>>>>> The "cannot be mapped" seems to be not true soon anymore (if not
+>>>>>> already).
+>>>>>>
+>>>>>> https://lore.kernel.org/all/20240801090117.3841080-1-
+>>>>>> tabba@google.com/T/
+>>>>>
+>>>>> Exactly, allowing guest_memfd to do mmap is the direction. I mentioned
+>>>>> it below with in-place page conversion. Maybe I would move it here to
+>>>>> make it more clear.
+>>>>>
+>>>>>>
+>>>>>>
+>>>>>>>
+>>>>>>> In QEMU's implementation, shared memory is allocated with normal
+>>>>>>> methods
+>>>>>>> (e.g. mmap or fallocate) while private memory is allocated from
+>>>>>>> guest_memfd. When a VM performs memory conversions, QEMU frees pages
+>>>>>>> via
+>>>>>>> madvise() or via PUNCH_HOLE on memfd or guest_memfd from one side and
+>>>>>>> allocates new pages from the other side.
+>>>>>>>
+>>>>>
+>>>>> [...]
+>>>>>
+>>>>>>>
+>>>>>>> One limitation (also discussed in the guest_memfd meeting) is that
+>>>>>>> VFIO
+>>>>>>> expects the DMA mapping for a specific IOVA to be mapped and unmapped
+>>>>>>> with
+>>>>>>> the same granularity. The guest may perform partial conversions,
+>>>>>>> such as
+>>>>>>> converting a small region within a larger region. To prevent such
+>>>>>>> invalid
+>>>>>>> cases, all operations are performed with 4K granularity. The possible
+>>>>>>> solutions we can think of are either to enable VFIO to support
+>>>>>>> partial
+>>>>>>> unmap
+>>>>
+>>>> btw the old VFIO does not split mappings but iommufd seems to be capable
+>>>> of it - there is iopt_area_split(). What happens if you try unmapping a
+>>>> smaller chunk that does not exactly match any mapped chunk? thanks,
+>>>
+>>> iopt_cut_iova() happens in iommufd vfio_compat.c, which is to make
+>>> iommufd be compatible with old VFIO_TYPE1. IIUC, it happens with
+>>> disable_large_page=true. That means the large IOPTE is also disabled in
+>>> IOMMU. So it can do the split easily. See the comment in
+>>> iommufd_vfio_set_iommu().
+>>>
+>>> iommufd VFIO compatible mode is a transition from legacy VFIO to
+>>> iommufd. For the normal iommufd, it requires the iova/length must be a
+>>> superset of a previously mapped range. If not match, will return error.
+>>
+>>
+>> This is all true but this also means that "The former requires complex
+>> changes in VFIO" is not entirely true - some code is already there. Thanks,
+> 
+> Hmm, my statement is a little confusing.  The bottleneck is that the
+> IOMMU driver doesn't support the large page split. So if we want to
+> enable large page and want to do partial unmap, it requires complex change.
+
+We won't need to split large pages (if we stick to 4K for now), we need 
+to split large mappings (not large pages) to allow partial unmapping and 
+iopt_area_split() seems to be doing this. Thanks,
+
+
+> 
+>>
+>>
+>>
+> 
+
+-- 
+Alexey
+
 
