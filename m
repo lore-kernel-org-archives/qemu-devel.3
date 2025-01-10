@@ -4,95 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2D5FE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC46E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 20:10:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWK2x-00012u-9W; Fri, 10 Jan 2025 13:47:51 -0500
+	id 1tWLK1-00042J-G8; Fri, 10 Jan 2025 15:09:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1w-0000C3-3w
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tWLJx-0003zg-2I
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:09:29 -0500
+Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1q-00015Z-56
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736534799;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VgkejbxfBm5Z+fcfrq4PM2AVjZL5LxnPI4rmsBdS2Ng=;
- b=Gju39WL4RiUyRssQ6YMfbe44ZNK4wpsNIyysq4ErXdD+koVF+tbvuYk+Ecu8i2HtX1pjxr
- UogesI3XpyIeuhuDeiE6h7iwyvgDQQDsGnYyNklG2phDi7y99Vc4kHp9zaznOhzoDw63V6
- 9kDbn7v53z6+U9zuk1eNgkU7dbEYaws=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-wvQozBUSMjWkSxFN08LEcg-1; Fri, 10 Jan 2025 13:46:38 -0500
-X-MC-Unique: wvQozBUSMjWkSxFN08LEcg-1
-X-Mimecast-MFC-AGG-ID: wvQozBUSMjWkSxFN08LEcg
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d3fe75a9f0so2264524a12.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736534796; x=1737139596;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VgkejbxfBm5Z+fcfrq4PM2AVjZL5LxnPI4rmsBdS2Ng=;
- b=HOoXA2lFwIDPtYoxS+Im3RNy6nu1VCrsJxLsvKdV63Ir6A/XwykTNqg24tmv25cgwd
- mR967HVOr05TkDNy8vwKgkFBv9r8wQdd9XiHJ1SmaGesKKDylZzZvexeCixebu2jxj+o
- 3BWN3J908zZguy/RToGA2VUM1WVtCtYz0mgwGzv3kptUI64mU7FBMFtj5fyXCkwNeRWZ
- jVF3t4JEmzxyOLwK5BzhPaCpBr843bPHIbD/ovJ3acqzowx2ID1M3RFLPQS2tzpe/1V/
- RgU6mWx61xlrgk+e0cVeeSbBwYGXAQNlJHg49tw8542N9YRq1a7uJ4uJD7PG9cyRd9Qh
- F7Zw==
-X-Gm-Message-State: AOJu0YxaaRSqTCCLpBqmc5dSXp3lvTlD/pEe3FyW2qoGI3ZYP7pPoW7/
- /1sKMU3V5w5CI+15RGyishY/tgWywMpwNsVAlW8lVFgHqVDFNDlBrw82sP1eq2BzrBI/tdJgOZA
- yP4FrofHJO1EHXaPj7UADogMsVTxVNeH1qsRG3uQBtRaweQQDwJ92jX1Wa9XyINZcfOvnQcMT/O
- Nfy/+lFtbEbM2djosKIP7FoAsEUShqeRi+VqyiEI8=
-X-Gm-Gg: ASbGncuFiNGY08GJm460fJzIC80ZjIE5x/LHADFZ3wSHiDwVRoC4a8rt/zw2EW4d4+9
- rZFeHLgrbJ5T8kY7MwLKa1xtsk/05gAx88g8A/q7NkZOfMqmXHLyXP9bktVtJmzVuSXi2CrBsle
- sGOkQzwygURjxo0NlgklLeoiB4I+i3nPygH/8EzCH0QE1He4s2cWhSELxGNYOwRFOwvSQ99B6F7
- Gvj9sAHxNCsI35m1JjnVal9FOTCtPq9A2PRJvP4lMDgeAnCnzHJggPPBMM=
-X-Received: by 2002:a05:6402:51cf:b0:5d3:bc1d:e56d with SMTP id
- 4fb4d7f45d1cf-5d972e70310mr10034831a12.31.1736534796159; 
- Fri, 10 Jan 2025 10:46:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH6TPbCmZKnWbaWfGBaUn0/ENicWa7Esf12w48vFKCAWso9g2vdYvh+njXfN1tUVVQD5xHnAw==
-X-Received: by 2002:a05:6402:51cf:b0:5d3:bc1d:e56d with SMTP id
- 4fb4d7f45d1cf-5d972e70310mr10034801a12.31.1736534795644; 
- Fri, 10 Jan 2025 10:46:35 -0800 (PST)
-Received: from [192.168.10.3] ([151.62.105.73])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d99008c39fsm1936935a12.13.2025.01.10.10.46.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 10:46:34 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 06/38] rust: macros: check that the first field of a
- #[derive(Object)] struct is a ParentField
-Date: Fri, 10 Jan 2025 19:45:47 +0100
-Message-ID: <20250110184620.408302-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250110184620.408302-1-pbonzini@redhat.com>
-References: <20250110184620.408302-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tWLJt-00032i-Ho
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:09:27 -0500
+Received: from [192.168.1.8] (default-rdns.vocus.co.nz [202.150.110.104] (may
+ be forged)) (authenticated bits=0)
+ by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
+ 50AK9Ed01398678
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+ Fri, 10 Jan 2025 20:09:17 GMT
+Authentication-Results: anarch128.org; auth=pass;
+ dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
+ header.i=@anarch128.org header.b=kQaJ+L8k header.a=rsa-sha256 header.s=100003;
+ x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org); 
+ x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
+ s=100003; t=1736539759;
+ bh=3lXjPdltr6+BbrJ/KAMp6fSKB23d/RFmDGGDHcqsheg=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=kQaJ+L8kRU+ZpGYs9H/bZt4EtBJDN8LhaXOtc6jLCZaez5LcTWTgxq5dxMI96fgoN
+ 4/cmAsdHQ3nrm21qqyrwMvsKMVM9dTIzPAhEW/PTXoWxqO8cj/HDmnZbrQlkZSi7+z
+ dywCSdjt0JnyYZn5uhsjhhoNqEU5kEW+vGr5gJaVy5N25iXtg+U4H4bZrfWY/CpaKB
+ h2CrvVFJwXd8CTp6mdy+ijaF6KiL8DfXjJB/j309WI2w1g/JeSquwFdiXMne4cJ+gY
+ hAk0cV0LzIxAoktJmJNETI99qUefZdTJXx9YuKOv+S/QvFTITrsx/aK7eJRWE0s77o
+ 19AVIy6ItYx3A==
+Message-ID: <da1c8e7d-4c5a-403f-ab01-d3e30939626f@anarch128.org>
+Date: Sat, 11 Jan 2025 09:09:09 +1300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC]: port of embedded x86-mini disassembler to QEMU
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
+References: <20250110094400.512788-1-michael@anarch128.org>
+ <CABgObfY_GOQN5OWBQXYvfrBtNVZGGc75p3gRHrpqQNxUErfB3A@mail.gmail.com>
+ <5244f8e9-b58d-4d37-9fe7-2236a862fd91@anarch128.org>
+ <CABgObfYdaBun9pZqTtZS_PzSKvrF=f5DE-Vb5pLMWq1HPcAVAg@mail.gmail.com>
+Content-Language: en-US
+From: Michael Clark <michael@anarch128.org>
+In-Reply-To: <CABgObfYdaBun9pZqTtZS_PzSKvrF=f5DE-Vb5pLMWq1HPcAVAg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
+ envelope-from=michael@anarch128.org; helo=anarch128.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,90 +84,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api-macros/src/lib.rs | 46 +++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 19 deletions(-)
+On 1/11/25 05:05, Paolo Bonzini wrote:
+> Il ven 10 gen 2025, 14:03 Michael Clark <michael@anarch128.org> ha scritto:
+> 
+>> On 1/11/25 00:07, Paolo Bonzini wrote:
+>>> Il ven 10 gen 2025, 10:52 Michael Clark <michael@anarch128.org> ha
+>> scritto:
+>>>
+>>>> a note to announce a port of the x86-mini disassembler to QEMU.
+>>>>
+>>>> - https://github.com/michaeljclark/qemu/tree/x86-mini
+>>>
+>>> I assume the huge .h files are autogenerated? If so, QEMU cannot use them
+>>> without including the human-readable sources in the tree.
+>>
+>> yes indeed. there is an x86_tablegen.py python script in the other repo
+>> but it is not in the current patch. it would be somewhat easy to read
+>> the tables from CSV files directly into arrays at the expense of several
+>> more milliseconds during startup. the revised operand formats maps
+>> relatively strictly to enum definitions with string tables in the source
+>> so a reader in C would not be impossible
+> 
+> 
+> Building the tables at compile time is fine, only leaving out the script is
+> not.
 
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index 160b283d7fd..0f04cca3841 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -19,6 +19,27 @@ fn from(err: CompileError) -> Self {
-     }
- }
- 
-+fn get_fields<'a>(
-+    input: &'a DeriveInput,
-+    msg: &str,
-+) -> Result<&'a Punctuated<Field, Comma>, CompileError> {
-+    if let Data::Struct(s) = &input.data {
-+        if let Fields::Named(fs) = &s.fields {
-+            Ok(&fs.named)
-+        } else {
-+            Err(CompileError(
-+                format!("Named fields required for {}", msg),
-+                input.ident.span(),
-+            ))
-+        }
-+    } else {
-+        Err(CompileError(
-+            format!("Struct required for {}", msg),
-+            input.ident.span(),
-+        ))
-+    }
-+}
-+
- fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), CompileError> {
-     let expected = parse_quote! { #[repr(C)] };
- 
-@@ -36,7 +57,12 @@ fn derive_object_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream
-     is_c_repr(&input, "#[derive(Object)]")?;
- 
-     let name = &input.ident;
-+    let parent = &get_fields(&input, "#[derive(Object)]")?[0].ident;
-+
-     Ok(quote! {
-+        ::qemu_api::assert_field_type!(#name, #parent,
-+            ::qemu_api::qom::ParentField<<#name as ::qemu_api::qom::ObjectImpl>::ParentType>);
-+
-         ::qemu_api::module_init! {
-             MODULE_INIT_QOM => unsafe {
-                 ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::qom::ObjectImpl>::TYPE_INFO);
-@@ -53,30 +79,12 @@ pub fn derive_object(input: TokenStream) -> TokenStream {
-     TokenStream::from(expanded)
- }
- 
--fn get_fields(input: &DeriveInput) -> Result<&Punctuated<Field, Comma>, CompileError> {
--    if let Data::Struct(s) = &input.data {
--        if let Fields::Named(fs) = &s.fields {
--            Ok(&fs.named)
--        } else {
--            Err(CompileError(
--                "Cannot generate offsets for unnamed fields.".to_string(),
--                input.ident.span(),
--            ))
--        }
--    } else {
--        Err(CompileError(
--            "Cannot generate offsets for union or enum.".to_string(),
--            input.ident.span(),
--        ))
--    }
--}
--
- #[rustfmt::skip::macros(quote)]
- fn derive_offsets_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, CompileError> {
-     is_c_repr(&input, "#[derive(offsets)]")?;
- 
-     let name = &input.ident;
--    let fields = get_fields(&input)?;
-+    let fields = get_fields(&input, "#[derive(offsets)]")?;
-     let field_names: Vec<&Ident> = fields.iter().map(|f| f.ident.as_ref().unwrap()).collect();
-     let field_types: Vec<&Type> = fields.iter().map(|f| &f.ty).collect();
-     let field_vis: Vec<&Visibility> = fields.iter().map(|f| &f.vis).collect();
--- 
-2.47.1
+fair enough. I wanted to test the disassembler and I figured out how to 
+do that with both QEMU host and target. I haven't learned how to create 
+generative dependencies in meson yet but it can't be as bad as CMake.
+
+QEMU running openssl is a pretty good torture test. I am going to spend 
+time analyzing the -d in_asm,out_asm logs for openssl. I don't yet have 
+a pseudo alias translation step so NOP still shows as XCHG eax,eax.
+
+and fuzzing x86_64 was extremely interesting as it uncovered some 
+hardware bugs that led to historic findings inside the QEMU translator. 
+so I know that the level of accuracy is somewhat good. for example:
+
+   NOP -> XCHG eax,eax
+   REX.B XCHG eax,eax -> XCHG eax,r8d
+   PAUSE -> REP NOP -> REP XCHG eax,eax
+   REX.B PAUSE -> REP REX.B XCHG eax,eax -> REP XCHG eax,r8d
+
+it seems Intel filters out REX.B for NOP but not REP NOP. and I know 
+what QEMU does. it does what one expects. unused REP is undefined but 
+typically is ignored for non string instructions with the exception of 
+0F, 0F38, 0F3A where REP/F3 is interpreted as part of the opcode. but 
+Intel has made REP XCHG eax,r8d act like REP NOP. I haven't tested this 
+out on AMD hardware but I consider it a silicon bug on Intel. there is a 
+test case on this binutils issue. in any case, this is in QEMU history.
+
+- https://sourceware.org/bugzilla/show_bug.cgi?id=32462
+- 
+https://www.blackhat.com/docs/us-17/thursday/us-17-Domas-Breaking-The-x86-ISA.pdf
+
+>> I can see how that might be interesting for x86 virtualization where you
+>>> have only one target and therefore you can get rid of the capstone
+>>> dependency. At the same time, other virtualization targets like arm64 and
+>>> RISC-V are going to become more and more important—not less—and not
+>> having
+>>> to maintain a disassembler ourselves as part of QEMU is also a big
+>> plus...
+>>
+>> yes indeed. but in an ideal world the encoders and decoders are matched
+>> pairs. I would like to work on a translator or interpreter that uses the
+>> same codec as the disassembler
+> 
+> 
+> Ok, that makes sense. QEMU already has a decoder that is very table-based
+> though the tables are hand written. I am not wed to it though—as long as
+> the code generators remain more or less unmodified, I would love to only
+> keep "these is how the operands are prepared for use in the IR emitters"
+> and make the details of x86 decoding Someone Else's Problem. So if you can
+> kill most (certainly not all) of the tables in
+> target/i386/tcg/decode-new.c.inc that would be interesting.
+> 
+> (I am sure you'd find some underspecified and/or wrong parts of the x86
+> spec, too :) For example many VEX classes are bollocks, plus some more
+> examples hinted at at the top of that file).
+
+yes indeed. the metadata in the Intel SDM is littered with mistakes such 
+as field transpositions, typos and missing data. I would hazard a guess 
+that maybe ~71% of the metadata is usable in a machine readable manner. 
+given that LLVM tablegen has its own format, I consider x86-mini the 
+source of truth for metadata derived from the Intel format. although I 
+haven't fuzz tested again NASM yet, but I found a small number of errors 
+in LLVM. albeit mostly in instructions that are not used in anger.
+
+Michael.
+
+> Paolo
+> 
+> anyway, in fact it is just yet another disassembler at this point, but
+>> the codec emitter works. it doesn't yet have an arch-neutral TCG-like
+>> API and IR to drive it yet.
+>>
+> 
 
 
