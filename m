@@ -4,106 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11891E7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC884E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWFDp-0003Pg-4n; Fri, 10 Jan 2025 08:38:45 -0500
+	id 1tWFKy-0005ap-U2; Fri, 10 Jan 2025 08:46:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWFDa-0003OC-HO
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:38:30 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWFDW-0000EL-Uk
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:38:30 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aa6b4cc7270so316006566b.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:38:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736516304; x=1737121104; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vpQj4BFCE1XuPDJhOPjGM7CKZ5gVbq435CfdiVO6xTM=;
- b=BVPFWFFdd44lykNASVzw89OE32kvSNWjKKwjF//mmq0LzEwuhP1NxoYHBunW783EYi
- L3D40Y3FmP1Cq6D3uAF30h7yBrB1BJccTCG+8ksLIIGUceAEE1f/OiB6Z/9xcDwU2fRA
- x1UCZIcCkKQu0usMoZ+PKDBFLSjBYUpgkusy2XIHD8g+sNYmWnoIgSHu7kTpk4USAV7O
- FfjRDOZDeQhwiU8EGE82pSMfkOWA1LmXFm47l3p2Xfvui5NlktnzjHUkQwS/ZfbdgT5m
- iOLm26cwq52z3QbQd6fX5orUpprtmkv4rBPFD8t+sFJPSWL86QGxKbegp/fu5wJspuXc
- rmeA==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWFKd-0005Zf-JR
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:45:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWFKb-0001DM-T7
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:45:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736516744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MgC1ykSz+B2npPAEBoQJVfWIGKdXFExdQ2eK7KNKeso=;
+ b=ddd+2NcG12xnOXzcm+yaxSYds+GumwhoDdUsDJ1zrOmg0cQRQ2HEZNBapgmziBDYSsAZwO
+ ngmrwifgV5uCa9XV8yJBMpGtLcbn/fPDluD8k+5OnB5ess2OhufztXcH1V0jh84kgoU5Ji
+ 5perhrN977gfiauyX4Bkwn8LpcjRRKE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-448-he51SdsbMz6LxdUjl0799A-1; Fri, 10 Jan 2025 08:45:43 -0500
+X-MC-Unique: he51SdsbMz6LxdUjl0799A-1
+X-Mimecast-MFC-AGG-ID: he51SdsbMz6LxdUjl0799A
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4361d4e8359so16455865e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:45:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736516304; x=1737121104;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vpQj4BFCE1XuPDJhOPjGM7CKZ5gVbq435CfdiVO6xTM=;
- b=SgFLDKUzwtYtO7mYgT9MvlgHuN1Kc/Mh49/4OmoqT5IxY1uewSP1YDHwve74/+eOSy
- Nw2k+fyAia6Iy6BxUoMG7FT1w4/U+3f6tR5SnHSXJnZY8gzJUvFYacyEutfswGT3FT1c
- L3MlSUNkSQDtJvXMtkgJLDY1Azr7wPCK67cND5+lJ3FMwxLN7GiygjaxIPGp3OyWivBA
- JP/mu0golNBa9q1+wYMZlWp/93EqWqo4CVlXOrZPxxLTbb0oaiw4/tgueqneipPmZL2H
- FqK/VrN/TiA3mWxlXQiClRAkUsPMJBDK9x7BBe4SDspkmaQS0WJKMCG+ufGNdUBNSjKX
- /LYQ==
+ d=1e100.net; s=20230601; t=1736516742; x=1737121542;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=MgC1ykSz+B2npPAEBoQJVfWIGKdXFExdQ2eK7KNKeso=;
+ b=u0lq9uWG49OCYPaC5OGj/kaUJL4q5jelJ53gLLrzvUHDcLtFcWw3rt1z7buepGAvKt
+ vr5CjqwkThYeD+0BZlapPGjRlv9pZt2Jr2wJn+o8aQ+iQa/xAr+Qm+bV9xT/AtBamqX8
+ k9Nz7YIbZB3cvK0aLDaFk3nNlnZ5FHt1RdmSNkGnlknfu7pxyNM4US49l65I2mJckPCu
+ 5rPIbqs94wWiuJR+jR8Q6GlnxP7tsJ2IySyvZkx6DjtHtBeOcepUvUMQhKMbhzfZkSqK
+ mllRlnhm8ZpO/fZJNw/cefopn0+vF59vgkJQdNO1Zt3lN5kTtPTH0y5M6qv9jz7dZKwM
+ YZ8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWY2Ec8umirPMl/pCYYQgCwQ1FGA044oKrS7Zf/2BIe8b29P+V6eK7bLKMlV0Up+pK5nAU9asZAI2g@nongnu.org
-X-Gm-Message-State: AOJu0YzhxyWtjf8E2j7UJiSicUveNI+/YHBGytqGGiKLaBTvusuRnQ7+
- ZFg7plSVtncr/9b8OrFLZeyfmn8qmtU+vVmp/zr+lUzWiPxQ1nIh+IaWdvuZ5gg=
-X-Gm-Gg: ASbGnct/AHhboqQp7aBdhxj7UufBAU+DisFnG5EwkbQ9prJPzVy6NK9Si9m2ocMRu+A
- 95zeQZk1FujdU7HGrDa4LnBRb77b1nsuViSIjLUSq+CoIm8J+FciE3oH2oHmYKXu4njELc7Cc/q
- hSWGnccmKSRo3zBd0GjgUuZwmW8HtZoXoD6yvakmtC0CjU/b4N59uimbQzCY57wyNq07+l/YuFS
- PyY/TGlpagsmtB+RAIFaYtxbC1TM8vTsGzdrjvNEw5TKtMJIf2O/Pc=
-X-Google-Smtp-Source: AGHT+IEuJGoQTUNuQXrxbwnEPSQg8YBaeRZdXDcJ93fdV8kOFXLJHYKG1qa07TIQ/55fZ8Gtjlm+Bw==
-X-Received: by 2002:a05:6402:4415:b0:5d0:abb8:7a3 with SMTP id
- 4fb4d7f45d1cf-5d972e000c5mr25751040a12.6.1736516304373; 
- Fri, 10 Jan 2025 05:38:24 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90da0casm168693966b.61.2025.01.10.05.38.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 05:38:23 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E226F5F8C8;
- Fri, 10 Jan 2025 13:38:22 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
- Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
- <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
- <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
-Subject: Re: [PATCH v4 0/5] Support virtio-gpu DRM native context
-In-Reply-To: <20241110221838.2241356-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Mon, 11 Nov 2024 01:18:32 +0300")
-References: <20241110221838.2241356-1-dmitry.osipenko@collabora.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Fri, 10 Jan 2025 13:38:22 +0000
-Message-ID: <87ikqm4wmp.fsf@draig.linaro.org>
+ AJvYcCXb8lXtI7rcp3djatMw4Rvg1N7qdhuOZs/JkCAMNtZhJxlPVbiL/zNLGp8ULLFcUUzpKrCyCUf0WG3k@nongnu.org
+X-Gm-Message-State: AOJu0Yx+zoGVi9mPMiD6ZrhDCVzcqIXCCMZyEa0PxnrBk0spJyzcYGgC
+ /sghy5OmqF4aRzeDSzV/5e0SJDhVduCEen2t/3eYSiQcFm3KWp57FaVLcwMg7HqqamTYoouAVwS
+ PifTIT9Maeq421DEmchUmR9rT71jWyYvmixubH2gCzvPjN3oE5e66
+X-Gm-Gg: ASbGncu7+D2a+zIoSYGLRPzUo4Ben7kCOQv2ae0X6M2RAZosZvR2exsIe4AArCM50gx
+ JHSk5OHmV0aPV3pg18ERj+ECSMSGhD6URZf8jXOQhCphvspZfLPng6HZWsoDqz37UE76kDkp1Sc
+ clLY+9n4GGBAfAa5q9Yz+Fm2KualJw2Qcvlz4O3VU+/nSXlaiL6fdLFo1gsblSm1IdoLmy6KzEM
+ GN4/L9NVUqzuyVCIMicOO3N9zqqQ0/6K3TzF7570NttIellNLdbsCur0hFkt+cTxXBDJQBPIlFh
+ p2AJ+lPWshB2ztYHsSTq6shfDBrBrIueeKBZLvyVr3ICDF1vRQ7V6NrFvpmNPobRzVe877EZFgo
+ IpPt/idhB
+X-Received: by 2002:a05:600c:1d0c:b0:436:1bbe:f686 with SMTP id
+ 5b1f17b1804b1-436e2707c59mr85179265e9.21.1736516741754; 
+ Fri, 10 Jan 2025 05:45:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHXoja55Oz8ju9Y5pIQ4zEfVd8CuyyhjgWKANpd/OCOmWrYWezUDG9OTIt45/30cstml/rNEA==
+X-Received: by 2002:a05:600c:1d0c:b0:436:1bbe:f686 with SMTP id
+ 5b1f17b1804b1-436e2707c59mr85178975e9.21.1736516741372; 
+ Fri, 10 Jan 2025 05:45:41 -0800 (PST)
+Received: from ?IPV6:2003:cb:c708:e100:4f41:ff29:a59f:8c7a?
+ (p200300cbc708e1004f41ff29a59f8c7a.dip0.t-ipconnect.de.
+ [2003:cb:c708:e100:4f41:ff29:a59f:8c7a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9e6251asm55521085e9.40.2025.01.10.05.45.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 05:45:40 -0800 (PST)
+Message-ID: <17db435a-8eca-4132-8481-34a6b0e986cb@redhat.com>
+Date: Fri, 10 Jan 2025 14:45:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Enable shared device assignment
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
+ <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
+ <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
+ <6ac5ddea-42d8-40f2-beec-be490f6f289c@amd.com>
+ <8f953ffc-6408-4546-a439-d11354b26665@intel.com>
+ <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
+ <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
+ <008bfbf2-3ea4-4e6c-ad0d-91655cdfc4e8@amd.com>
+ <1361f0b4-ddf8-4a83-ba21-b68321d921da@intel.com>
+ <c318c89b-967d-456e-ade1-3a8cacb21bd7@redhat.com>
+ <20250110132021.GE5556@nvidia.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250110132021.GE5556@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,113 +175,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+On 10.01.25 14:20, Jason Gunthorpe wrote:
 
-> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
->
-> Contarary to Virgl and Venus contexts which mediate high level GFX APIs,
-> DRM native context [1] mediates lower level kernel driver UAPI, which
-> reflects in a less CPU overhead and less/simpler code needed to support i=
-t.
-> DRM context consists of a host and guest parts that have to be implemented
-> for each GPU driver. On a guest side, DRM context presents a virtual GPU =
-as
-> a real/native host GPU device for GL/VK applications.
->
-> [1] https://www.youtube.com/watch?v=3D9sFP_yddLLQ
->
-> Today there are four known DRM native context drivers existing in a wild:
->
->   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->   - AMDGPU, mostly merged into upstreams
->   - Intel (i915), merge requests are opened
->   - Asahi (Apple SoC GPUs), WIP status
->
->
-> # How to try out DRM context:
->
-> 1. DRM context uses host blobs and requires latest developer version=20
-> of Linux kernel [2] that has necessary KVM fixes.
->
-> [2] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/
->
-> 2. Use latest libvirglrenderer from upstream git/main for Freedreno
-> and AMDGPU native contexts. For Intel use patches [3].
->
-> [3] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1=
-384
->
-> 3. On guest, use latest Mesa version for Freedreno. For AMDGPU use
-> Mesa patches [4], for Intel [5].
->
-> [4] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21658
-> [5] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
->
-> 4. On guest, use latest Linux kernel v6.6+. Apply patch [6] if you're
->    running Xorg in guest.
+Thanks for your reply, I knew CCing you would be very helpful :)
 
-Have you seen this failure before:
+> On Fri, Jan 10, 2025 at 09:26:02AM +0100, David Hildenbrand wrote:
+>>>>>>>>>>> One limitation (also discussed in the guest_memfd
+>>>>>>>>>>> meeting) is that VFIO expects the DMA mapping for
+>>>>>>>>>>> a specific IOVA to be mapped and unmapped with the
+>>>>>>>>>>> same granularity.
+> 
+> Not just same granularity, whatever you map you have to unmap in
+> whole. map/unmap must be perfectly paired by userspace.
 
-  =E2=9E=9C  ./qemu-system-x86_64 \
-                    -machine type=3Dq35,accel=3Dkvm,kernel-irqchip=3Dsplit \
-                    -cpu host \
-                    -smp 4 \
-                    -device virtio-net-pci,netdev=3Dunet \
-                    -netdev user,id=3Dunet,hostfwd=3Dtcp::2222-:22 \
-                    -drive driver=3Dqcow2,file=3Dtrixie-x86_64.qcow2 \
-                    -serial mon:stdio \
-                    -m 24G \
-                    -object memory-backend-memfd,id=3Dmem,size=3D24G,share=
-=3Don \
-                    -device virtio-vga-gl,hostmem=3D4G,blob=3Don,drm_native=
-_context=3Don \
-                    -display gtk,gl=3Don,show-cursor=3Don \
-                    -device virtio-tablet-pci -device virtio-keyboard-pci \
-                    -d guest_errors,unimp,trace:virtio_gpu_cmd_get_display_=
-info
-  vmport: unknown command 56
-  virtio_gpu_cmd_get_display_info=20
-  context 4 failed to dispatch CREATE_VIDEO_BUFFER: 22
-  vrend_decode_ctx_submit_cmd: context error reported 4 "gst-plugin-scan" I=
-llegal command buffer 327735
-  context 4 failed to dispatch CREATE_VIDEO_BUFFER: 22
-  vrend_decode_ctx_submit_cmd: context error reported 4 "gst-plugin-scan" I=
-llegal command buffer 327735
-  context 4 failed to dispatch CREATE_VIDEO_BUFFER: 22
-  vrend_decode_ctx_submit_cmd: context error reported 4 "gst-plugin-scan" I=
-llegal command buffer 327735
-  error: kvm run failed Bad address
-  RAX=3D00007fb1e8fbefa0 RBX=3D00005649f1f4fb34 RCX=3D00000000fffffffc RDX=
-=3D0000000000000004
-  RSI=3D0000000000000000 RDI=3D0000000000100000 RBP=3D00005649f2063710 RSP=
-=3D00007ffe221807d0
-  R8 =3D0000000000000003 R9 =3D00007ffe22180808 R10=3D0000000000000302 R11=
-=3D0000000000000000
-  R12=3D0000000000000001 R13=3D00007ffe22180800 R14=3D0000000000000002 R15=
-=3D0000000000000001
-  RIP=3D00007fb20bfc3f7f RFL=3D00010202 [-------] CPL=3D3 II=3D0 A20=3D1 SM=
-M=3D0 HLT=3D0
-  ES =3D0000 0000000000000000 ffffffff 00c00000
-  CS =3D0033 0000000000000000 ffffffff 00a0fb00 DPL=3D3 CS64 [-RA]
-  SS =3D002b 0000000000000000 ffffffff 00c0f300 DPL=3D3 DS   [-WA]
-  DS =3D0000 0000000000000000 ffffffff 00c00000
-  FS =3D0000 00007fb203aace80 ffffffff 00c00000
-  GS =3D0000 0000000000000000 ffffffff 00c00000
-  LDT=3D0000 0000000000000000 ffffffff 00c00000
-  TR =3D0040 fffffe67eec85000 00004087 00008b00 DPL=3D0 TSS64-busy
-  GDT=3D     fffffe67eec83000 0000007f
-  IDT=3D     fffffe0000000000 00000fff
-  CR0=3D80050033 CR2=3D00005646b7f7d018 CR3=3D000000012852a000 CR4=3D00750e=
-f0
-  DR0=3D0000000000000000 DR1=3D0000000000000000 DR2=3D0000000000000000 DR3=
-=3D0000000000000000=20
-  DR6=3D00000000ffff0ff0 DR7=3D0000000000000400
-  EFER=3D0000000000000d01
-  Code=3Df3 0f 11 40 58 f3 0f 10 43 08 f3 0f 11 40 5c f3 0f 10 43 0c <f3> 0=
-f 11 78 64 f3 0f 11 50 68 f3 44 0f 11 40 6c f3 0f 11 48 70 f3 0f 11 60 74 f=
-3 0f 11 40
+Right, that's what virtio-mem ends up doing by mapping each memory block 
+(e.g., 2 MiB) separately that could be unmapped separately.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+It adds "overhead", but at least you don't run into "no, you cannot 
+split this region because you would be out of memory/slots" or in the 
+past issues with concurrent ongoing DMA.
+
+> 
+>>>>>>>>>>> such as converting a small region within a larger
+>>>>>>>>>>> region. To prevent such invalid cases, all
+>>>>>>>>>>> operations are performed with 4K granularity. The
+>>>>>>>>>>> possible solutions we can think of are either to
+>>>>>>>>>>> enable VFIO to support partial unmap
+> 
+> Yes, you can do that, but it is aweful for performance everywhere
+
+Absolutely.
+
+
+In your commit I read:
+
+"Implement the cut operation to be hitless, changes to the page table
+during cutting must cause zero disruption to any ongoing DMA. This is 
+the expectation of the VFIO type 1 uAPI. Hitless requires HW support, it 
+is incompatible with HW requiring break-before-make."
+
+So I guess that would mean that, depending on HW support, one could 
+avoid disabling large pages to still allow for atomic cuts / partial 
+unmaps that don't affect concurrent DMA.
+
+
+What would be your suggestion here to avoid the "map each 4k page 
+individually so we can unmap it individually" ? I didn't completely 
+grasp that, sorry.
+
+ From "IIRC you can only trigger split using the VFIO type 1 legacy API. 
+We would need to formalize split as an IOMMUFD native ioctl.
+Nobody should use this stuf through the legacy type 1 API!!!!"
+
+I assume you mean that we can only avoid the 4k map/unmap if we add 
+proper support to IOMMUFD native ioctl, and not try making it fly 
+somehow with the legacy type 1 API?
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
