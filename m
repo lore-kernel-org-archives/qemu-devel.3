@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BCF4E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51151E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWEzU-0000HK-Bd; Fri, 10 Jan 2025 08:23:56 -0500
+	id 1tWEzY-0000bO-Q1; Fri, 10 Jan 2025 08:24:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWEz6-0008MY-8H
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:23:32 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1tWEz7-0008OI-N3
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:23:36 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWEz4-0005dc-7g
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:23:31 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3862ca8e0bbso1619798f8f.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:23:29 -0800 (PST)
+ id 1tWEz5-0005e8-Md
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:23:33 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-aaee2c5ee6eso341970266b.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:23:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736515408; x=1737120208; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736515410; x=1737120210; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yv0P0wrEbC6sAp6kQa5O/Cjc+4V7VV+VslM7BVlUX/0=;
- b=IV1Zd7prAiSYr5SbyHpfkUkUFyU/2g2bKmpNXUZthhKikZKP2BXUiKcIHZ2lxT9tFY
- 7STn7HLu2nGO6dnWqWtlaejscBb4iq5GfyLx7Bzt7swj3Ga+IwLU+xuoExKiSq9l+/C2
- UnKR8edeqKlownKCNEwRvkwWqD4Mo6MhFcKDRf2D9pkb9Rdw+gfonI+brCsrif4gX45p
- naO6gMfzdvV8jd7Q/9s+eA6DtJg5hlqRIkxOqZTAgG2fY73BcPqCBM07OHRk1nuoioSV
- Z3U9cW4yxRpZxjWiBT1vLLbna5l7Z+Hv+7ft4IjgFavFiXpgk+F/5QOGlgd9CktMPUOu
- I3Uw==
+ bh=tGvy/F1fDgUfBPiL+7E48KKTfhRYEDJs/NtU4xaiBlE=;
+ b=lnluB3VBm9toKUmLeoDotqmW9OpAvHj/GyAg8InnvLEKWjERCbw1ZTQxAO3ySYQSLA
+ F3RJ3t1sauxl5LHUO6frHYLAFtcHKEujLBi++y8jzn7NON4Qskmr9PUfLwqsE/Sx5YDE
+ JXXPiLoh7z3A2QzaAPr9rdF1Mh/8vIT9CTYH9wdviiwmKBdkGaRwKHVpToTHiJC3nVU8
+ 1VRTXWX9wR5n+Gz/kenejXbVk5k+ihJgVohNrMUlAS1vjrGKZIIicjH53bHL2/FkVtRo
+ SwZu3PjzpQ9vWodIK2gFMM+nl+ihxJF9PUC05t5vaT3eAc02uWDzMEO+bcIKeOXiFs4A
+ Tsxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736515408; x=1737120208;
+ d=1e100.net; s=20230601; t=1736515410; x=1737120210;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yv0P0wrEbC6sAp6kQa5O/Cjc+4V7VV+VslM7BVlUX/0=;
- b=Suijrl+zw3ZQmoyGny0AepxEClp9SD/WTI3nbmhRArFY1KDP+vBuV57gZIdYOSI2dq
- twFkJn7zIZXodDJe7uIJqnlnEv3Sjiwxx26THsA49jkwqUfj45IxG9e5/BKT8/pkdzc4
- zhJlJyWALQlowrHr+EFfHeHCwrqadB4aNebGi+2d+JqsaSiHe8p7V0udTdhlWXhcfvPw
- dEH8mYZXU0Ud/PoWn0G5yknp47QqlOl+Y+Bnl4V+AAOlhod4+yt8EAmYBldTpgq9UfuL
- u87OGiGvtimc3vN83C7yjBRTQ+y6EsdSxMHqof+2W7OH6y8YIYQ57EfAFpO1NASr18bQ
- YiVg==
-X-Gm-Message-State: AOJu0Yydy3Z1WQ0k9LT/lVUVRmAlYOWkFxc5pZAPV1r12v0oqBUZxGF2
- t2ifAjD5cciROERuPLgxNqzUvB4sA4ZbUcgYflOt32hHyyd7r71yYlbJw4EUPyQ=
-X-Gm-Gg: ASbGncvuokjIKzhbCxqGzCt6nhGGX6NvO+Twb9dSAaku85TefKgqZGpQko6AFgxXnjw
- pJFFC8f4ZQbRbUnHIybXiby7eW7UYxaUNirNIyxeSIoxjDZNS1tCxGmKYchM2oqSwnQhiDv50HW
- 3DEqOo9cEBLfm0MY9NF4j07D5FY2QBUIE3bAPij3iZYiK6wj1mNi1huwYDzP5cajfiRox9INmDv
- fb7QuxlHRWQHSGiglPZh9h3uu2O9gziE7GHr26XQjBSJI2w5cDTIY8=
-X-Google-Smtp-Source: AGHT+IFgmhBwDCwhP3HZMzOkqHqee7c/TL6XRKJs4/C+isMEPox2p/jMlRL5aS4OPqu/1jfnY0UIlg==
-X-Received: by 2002:a05:6000:4618:b0:385:f560:7916 with SMTP id
- ffacd0b85a97d-38a8732aeefmr11025274f8f.35.1736515408424; 
- Fri, 10 Jan 2025 05:23:28 -0800 (PST)
+ bh=tGvy/F1fDgUfBPiL+7E48KKTfhRYEDJs/NtU4xaiBlE=;
+ b=PN07trIMCfKdArqbg1OCXLG6ug3fPSvKQPAfDqNtxgTS7+SJ5VITAp27TvAQh/rcG8
+ Bz1Y1OispnwNMcjUll/aY2ud6FjAtFskPhOmlrRD94R/NvxNjhJhK+apJgLJ9TnTgc0z
+ Xft6vyU5Y7yvJbYnEh7mTyq6Tc37EYyNhzKKxXYpXSp+7B1/JX4u+ixI5fza8PT1Lg3o
+ /jTF8M5VJuZwhW1FIuW9AoUdHKCfBZgVYxeKEcykXud9sIykl7FD3BM/dwdfa8q1/wXn
+ d5HEHKGZ62XICZ9mYo5XF3WH0637WCrl6ZEnctgDlAdf03tJQq1oAP1PT3O1lI9+eyLT
+ DZrw==
+X-Gm-Message-State: AOJu0Yy/+eC/qMtysal+c+bfg3x2yWyZ1MeWmWWVUqPCDqTp+yTWWoPt
+ v8DsKdAZVkHXQthgtQfzkwoUNspy9dggAkMpiOyPdrrfRGMGnLf6wiUrpewwdjU=
+X-Gm-Gg: ASbGncsMYa3q9GpXNSdrvndBh/Fx/dgnwm+cbMv+Zc4nObgvr6oEJpYfWncTXGlG7am
+ Wj8BAAGrbA3dOftVjnChnDOVU77OmRyzZu5wGvu0xc7AGMrBIzFQlyggso3ijJd6mXonrA4kmoC
+ S2d7KcEcYc3zSzc86aBno/f2uC+uqmJ8mAMaMr663nzaIRKDMtXAs0g+lbJEdF24gQpx9hH3s9F
+ 5IbqyyIFuDsIkJi81posSNq2MJPF7PbQwEaJC6NGs+cGlmiquFin2o=
+X-Google-Smtp-Source: AGHT+IGK+OQjIipK8usb50DfwIcKeth8Fp1e/TcG1ftxE7PJOe8V7DxJ7fpnKXaUkcWvhQeWduuGyA==
+X-Received: by 2002:a17:907:3e91:b0:aaf:74b3:80db with SMTP id
+ a640c23a62f3a-ab2ab670608mr825065266b.3.1736515410220; 
+ Fri, 10 Jan 2025 05:23:30 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c912f165sm165890666b.83.2025.01.10.05.23.23
+ a640c23a62f3a-ab2c95615a6sm168041366b.94.2025.01.10.05.23.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 10 Jan 2025 05:23:26 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6C07B617A2;
- Fri, 10 Jan 2025 13:17:56 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id DB32C5F9CC;
+ Fri, 10 Jan 2025 13:17:55 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/32] tests/lcitool: remove temp workaround for debian mips64el
-Date: Fri, 10 Jan 2025 13:17:48 +0000
-Message-Id: <20250110131754.2769814-27-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 20/32] tests/functional: update tuxruntest to use uncompress
+ utility
+Date: Fri, 10 Jan 2025 13:17:42 +0000
+Message-Id: <20250110131754.2769814-21-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250110131754.2769814-1-alex.bennee@linaro.org>
 References: <20250110131754.2769814-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,112 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Use the utility functions to reduce code duplication.
 
-The workaround applied in
-
-  commit c60473d29254b79d9437eface8b342e84663ba66
-  Author: Alex Bennée <alex.bennee@linaro.org>
-  Date:   Wed Oct 2 10:03:33 2024 +0200
-
-    testing: bump mips64el cross to bookworm and fix package list
-
-Is no longer required since the affected builds are now fixed.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241217133525.3836570-1-berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250108121054.1126164-27-alex.bennee@linaro.org>
+Message-Id: <20250108121054.1126164-21-alex.bennee@linaro.org>
 
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index c09a8da890..9f6c4763c5 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -93,13 +93,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcmocka-dev:mips64el \
-                       libcurl4-gnutls-dev:mips64el \
-                       libdaxctl-dev:mips64el \
-+                      libdrm-dev:mips64el \
-+                      libepoxy-dev:mips64el \
-                       libfdt-dev:mips64el \
-                       libffi-dev:mips64el \
-                       libfuse3-dev:mips64el \
-+                      libgbm-dev:mips64el \
-                       libgcrypt20-dev:mips64el \
-                       libglib2.0-dev:mips64el \
-                       libglusterfs-dev:mips64el \
-                       libgnutls28-dev:mips64el \
-+                      libgtk-3-dev:mips64el \
-+                      libgtk-vnc-2.0-dev:mips64el \
-                       libibverbs-dev:mips64el \
-                       libiscsi-dev:mips64el \
-                       libjemalloc-dev:mips64el \
-@@ -119,6 +124,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       librbd-dev:mips64el \
-                       librdmacm-dev:mips64el \
-                       libsasl2-dev:mips64el \
-+                      libsdl2-dev:mips64el \
-+                      libsdl2-image-dev:mips64el \
-                       libseccomp-dev:mips64el \
-                       libselinux1-dev:mips64el \
-                       libslirp-dev:mips64el \
-@@ -134,6 +141,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libusb-1.0-0-dev:mips64el \
-                       libusbredirhost-dev:mips64el \
-                       libvdeplug-dev:mips64el \
-+                      libvirglrenderer-dev:mips64el \
-+                      libvte-2.91-dev:mips64el \
-                       libxdp-dev:mips64el \
-                       libzstd-dev:mips64el \
-                       nettle-dev:mips64el \
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index f8186b0e69..74eb13d62b 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -6,23 +6,6 @@ mappings:
-   flake8:
-     OpenSUSELeap15:
+diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+index 7227a83757..41a4945a14 100644
+--- a/tests/functional/qemu_test/tuxruntest.py
++++ b/tests/functional/qemu_test/tuxruntest.py
+@@ -73,17 +73,7 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
+         Fetch the TuxBoot assets.
+         """
+         kernel_image =  kernel_asset.fetch()
+-        disk_image_zst = rootfs_asset.fetch()
+-
+-        disk_image = self.scratch_file("rootfs.ext4")
+-
+-        check_call(['zstd', "-f", "-d", disk_image_zst,
+-                    "-o", disk_image],
+-                   stdout=DEVNULL, stderr=DEVNULL)
+-        # zstd copies source archive permissions for the output
+-        # file, so must make this writable for QEMU
+-        os.chmod(disk_image, stat.S_IRUSR | stat.S_IWUSR)
+-
++        disk_image = self.uncompress(rootfs_asset)
+         dtb = dtb_asset.fetch() if dtb_asset is not None else None
  
--  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
--  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
--  gtk3:
--    mips64el-deb:
--
--  libdrm:
--    mips64el-deb:
--
--  libepoxy:
--    mips64el-deb:
--
--  gtk-vnc:
--    mips64el-deb:
--
--  mesa-libgbm:
--    mips64el-deb:
--
-   meson:
-     OpenSUSELeap15:
- 
-@@ -81,18 +64,6 @@ mappings:
-   python3-wheel:
-     OpenSUSELeap15: python311-pip
- 
--  sdl2:
--    mips64el-deb:
--
--  sdl2-image:
--    mips64el-deb:
--
--  virglrenderer:
--    mips64el-deb:
--
--  vte:
--    mips64el-deb:
--
- pypi_mappings:
-   # Request more recent version
-   meson:
+         return (kernel_image, disk_image, dtb)
 -- 
 2.39.5
 
