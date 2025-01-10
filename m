@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6412E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 07:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E3DDE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 07:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tW9Gk-0002rJ-2P; Fri, 10 Jan 2025 02:17:22 -0500
+	id 1tW9Wb-00072y-KT; Fri, 10 Jan 2025 02:33:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tW9Gh-0002qP-TJ
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 02:17:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tW9WY-00072k-J6
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 02:33:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tW9Gg-0000QW-CV
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 02:17:19 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tW9WU-0002kI-MW
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 02:33:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736493436;
+ s=mimecast20190719; t=1736494416;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QJ/gQSOBAspcGk6u4zr3HLJbfFZXg0qX00OL4lqsJvw=;
- b=XzQGQV6wBOayscDlXFBUgO6rjTOXOSnVcX0IU19XiIlJGk8GUKokHnGZ4EFWl2wmn6o7UK
- dVkKVwK0Aqo00mJSSBHpof5XOfTGRdTXUOgL8Nz9XTWIT/SRIAfwgI+AHqS6/905Xi0BfR
- wFCjbDvC8XJVeQU77buNegAO4YL2J5I=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-dd56rCHWN8SM-sPvN977hw-1; Fri, 10 Jan 2025 02:17:14 -0500
-X-MC-Unique: dd56rCHWN8SM-sPvN977hw-1
-X-Mimecast-MFC-AGG-ID: dd56rCHWN8SM-sPvN977hw
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ab2e529dc35so26632466b.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jan 2025 23:17:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736493433; x=1737098233;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QJ/gQSOBAspcGk6u4zr3HLJbfFZXg0qX00OL4lqsJvw=;
- b=otXgMy9qelXOXkrV+NdwokaBor0hYcITY7ozoQGpDjP8lUZiKiTaf2IOtpkWc6TlZC
- eNPExT7EWKDjEuxP3JTly6d6jCLT2t2PBMkkotCIldZXEQ1VaYn3WzzY681r2aPXtes5
- PF7cAAhovcw8kC7ncjeOkCX52g6oVAn8VTuWRaoVygJ3CnhlHmN1263K3ZzYoH8q5kEU
- e+hKf/Jdw7auamVk6Qth5BR+gN32eCkHGPC5Ck66H0upeH/Tcrw0KedP3qwlIn8m8YqF
- cbA0YYdwKqyBXbxjkWJveeJMdZTzcBWvCqVU1FfqHYMEMWTsH9Fbymw0QS4G4HTztJ8l
- xctg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViy2bnJN7stMEmDW1PZjk/8TOR9eerMLsrFMZbE+Z/uCuEEPvVkvzjE7EVxf6ilu58NugUIgmV+cJC@nongnu.org
-X-Gm-Message-State: AOJu0YweZOtJwDE3IpyaFK2VGyWgE0PAl76I8i6pDwQvZkRnNfYNlb30
- hPHEN8dhwWxpOzmwF9ffDNBcnXLtFZ/3qilWixWI7h0TkvnaOLRpEUznYzpqmsk9wo0tSBW9bCB
- kE9ME/JbPTtr1m3Dblbfa8JJVezKKOQM7QS5JgvhcogIrloZxEGuykf8+dqcRIQu61C4eTcuTt5
- DRnqWbS26NS3E7bHuuD1NY3tEUr2M=
-X-Gm-Gg: ASbGnctRRnq+o8kgAICGUMh3a+SWG6Ur4ypbFUvuv7WE90iqKq3Pg+zJ6oVfEvRRT8w
- U0Z+bsNH4fnyrHv0J4Z+sDd7C2nMoUiLElRFL4bw=
-X-Received: by 2002:a05:6402:13c1:b0:5d1:2631:b88a with SMTP id
- 4fb4d7f45d1cf-5d972e167dcmr9285133a12.17.1736493433377; 
- Thu, 09 Jan 2025 23:17:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGRaZXqY1YevhtZ+paAEz1jIfdSVTZtoRQ/aNK6dnq4a1TAnqcOqbO66h5ildMme1H7bfZFD7SRunvBI0+baVQ=
-X-Received: by 2002:a05:6402:13c1:b0:5d1:2631:b88a with SMTP id
- 4fb4d7f45d1cf-5d972e167dcmr9285121a12.17.1736493433064; Thu, 09 Jan 2025
- 23:17:13 -0800 (PST)
+ bh=ZkWXwOBpPj4qDkXhNKrv6QbMZS/qmViJVPz4ah/zlPo=;
+ b=KwrB+1iZF+qiXlRm00Mv0eTUKjhRXVr6zHMGtqan54WbVJH1SkQ5dtAVcUd9pRVhgZMGq+
+ A9xPAzZ8LTXWGLeXHv/4UWG9NaH2NlUfmJTFbxROvv2dKUqnkNJO2rJdAMrBztj98joa6W
+ E/tjrB335FATMWZ/GSIdKN9ZGdjVtOM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-aBA4PTQbP4aS2tLMzLa44Q-1; Fri,
+ 10 Jan 2025 02:33:34 -0500
+X-MC-Unique: aBA4PTQbP4aS2tLMzLa44Q-1
+X-Mimecast-MFC-AGG-ID: aBA4PTQbP4aS2tLMzLa44Q
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE7F81956051; Fri, 10 Jan 2025 07:33:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3983819560AB; Fri, 10 Jan 2025 07:33:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4BB0B21E6924; Fri, 10 Jan 2025 08:33:29 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 04/23] qapi: expand tags to all doc sections
+In-Reply-To: <CAFn=p-b51afQQDo7qd_T5EPyunuxGY-N8hjzbim5894JGwTEjA@mail.gmail.com>
+ (John Snow's message of "Thu, 9 Jan 2025 13:49:13 -0500")
+References: <20241213021827.2956769-1-jsnow@redhat.com>
+ <20241213021827.2956769-5-jsnow@redhat.com>
+ <87ldwa4hwj.fsf@pond.sub.org>
+ <CAFn=p-b51afQQDo7qd_T5EPyunuxGY-N8hjzbim5894JGwTEjA@mail.gmail.com>
+Date: Fri, 10 Jan 2025 08:33:29 +0100
+Message-ID: <87a5bz6s3a.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250108-buffers-v1-1-a0c85ff31aeb@daynix.com>
-In-Reply-To: <20250108-buffers-v1-1-a0c85ff31aeb@daynix.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Fri, 10 Jan 2025 15:16:36 +0800
-X-Gm-Features: AbW1kvZCuilgIAkONM9eu9p7ASZtik1M7shoOzCkXoUa1caaw6uDtiPMJneZtos
-Message-ID: <CAPpAL=zW7HtpDkBji26UuU_4nCLj5tgfSFUs=hyHtE8-6OJe6g@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: Fix num_buffers for version 1
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- qemu-devel@nongnu.org, devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,48 +90,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I tested this patch with virtio-net regression tests and tests
-"mrg_rxbuf" on/off status with netperf tests, everything works fine.
+John Snow <jsnow@redhat.com> writes:
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+> On Fri, Dec 20, 2024, 8:13=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > This patch adds an explicit section tag to all QAPIDoc
+>> > sections. Members/Features are now explicitly tagged as such, with the
+>> > name now being stored in a dedicated "name" field (which qapidoc.py was
+>> > not actually using anyway.)
+>> >
+>> > WIP: Yeah, the difference between "tagged" and "untagged" sections is
+>> > now pretty poorly named, and explicitly giving "untagged" sections an
+>> > "UNTAGGED" tag is ... well, worse. but mechanically, this accomplishes
+>> > what I need for the series.
+>> >
+>> > Please suggest better naming conventions, keeping in mind that I
+>> > currently have plans for a future patch that splits the "UNTAGGED" tag
+>> > into "INTRO" and "DETAILS" tags. But, we still need a meta-name for the
+>> > category of sections that are "formerly known as untagged" but cannot =
+be
+>> > called "freeform" because that name is used for the category of
+>> > docblocks that are not attached to an entity (but happens to be
+>> > comprised entirely of "formerly known as untagged" sections.)
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>>
+>> A free-form doc comment consists of just one untagged section, actually.
+>> I don't remember whether anything relies on "just one".
+>>
+>
+> Sure, yes. Sorry, I keep thinking of documentation as containing "any
+> number of sections" but keep eliding the fact that our parser
+> implementation currently will never actually create multiple adjacent
+> "untagged" sections.
 
-On Wed, Jan 8, 2025 at 8:23=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
-com> wrote:
+Yes, the parsers grows an untagged section until another section starts.
+An untagged section can consist of multiple paragraphs, just like tagged
+sections.
+
+> I don't even change this anywhere even in my offline WIP, so it's just me
+> being over-general.
 >
-> The specification says the device MUST set num_buffers to 1 if
-> VIRTIO_NET_F_MRG_RXBUF has not been negotiated.
+> (I don't think it winds up being relevant or mattering to anything in this
+> series or my larger project beyond some word choices.)
 >
-> Fixes: df91055db5c9 ("virtio-net: enable virtio 1.0")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/net/virtio-net.c | 2 ++
->  1 file changed, 2 insertions(+)
+>> The term "tagged" is rooted in doc comment syntax.
+>> docs/devel/qapi-code-gen.rst section "Definition documentation":
+>>
+>>     Definition documentation starts with a line naming the definition,
+>>     followed by an optional overview, a description of each argument (for
+>>     commands and events), member (for structs and unions), branch (for
+>>     alternates), or value (for enums), a description of each feature (if
+>>     any), and finally optional tagged sections.
+>>
+>> Sadly, this isn't fully accurate anymore.
+>>
+>>     Descriptions start with '\@name:'.  The description text must be
+>>     indented [...]
+>>
+>>     A tagged section begins with a paragraph that starts with one of the
+>>     following words: "Since:", "Returns:", "Errors:", "TODO:".  It ends
+>> with
+>>     the start of a new section.
+>>
+>>     The second and subsequent lines of tagged sections must be indented
+>>     [...]
+>>
+>> Nothing about untagged sections.  These are sections that aren't
+>> descriptions or tagged.  Example:
+>>
+>>     # @Returns: Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+>>     #     sed do eiusmod tempor incididunt ut labore et dolore magna
+>>     #     aliqua.
+>>     #
+>>     # Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+>>     # nisi ut aliquip ex ea commodo consequat.
+>>     #
+>>     # Duis aute irure dolor in reprehenderit in voluptate velit esse
+>>     # cillum dolore eu fugiat nulla pariatur.
+>>     ##
+>>
+>> Here, the tagged "Returns" section ends after "aliqua."  Why?  Because
+>> "Ut enim" isn't indented.  The untagged section ends after "pariatur."
+>>
+>> We parse a definition doc comment as a sequence of sections.
+>>
+>> The first one is the overview.
+>>
+>> Member / argument descriptions, if any, are next.
+>>
+>> Then we may have any number of tagged or untagged sections.  If I
+>> remember correctly, you'd like to banish them.  Let's pretend they can't
+>> exist here.
+>>
 >
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 06f096abf678..b241cd4bb48a 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1992,6 +1992,8 @@ static ssize_t virtio_net_receive_rcu(NetClientStat=
-e *nc, const uint8_t *buf,
->                                      offsetof(typeof(hdr),
->                                               virtio_net.hdr.num_buffers)=
-,
->                                      sizeof(hdr.virtio_net.hdr.num_buffer=
-s));
-> +            } else {
-> +                hdr.virtio_net.hdr.num_buffers =3D cpu_to_le16(1);
->              }
+> I think you're referring to my desire to banish "untagged" sections from
+> appearing *between* "tagged" sections.
+
+Editing accident, sorry!  You interpreted it correctly.
+
+>                                        Yes, that's still a desire; though=
+ I
+> make no movement on it in this series as sent to list, and this change is
+> entirely unrelated to that desire.
 >
->              guest_offset =3D n->has_vnet_hdr ?
+> (It's more related to being able to distinguish features from members, and
+> later, distinguishing intro/details. This patch still serves a purpose ev=
+en
+> without the inliner or the complexities it brings, but serves both needs.)
 >
-> ---
-> base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
-> change-id: 20241227-buffers-6bd3493c287e
+> ((Reminder: the reason for this desire is because "tagged sections" are
+> rendered in html as a two-column list, and free paragraphs appearing
+> between list entries looks bad in the rendered documentation, because it
+> means ending the table, starting paragraph(s), then starting a new table.
+> If free text is meant to be associated with a specific
+> member/feature/section-group, it should be marked up (in SOME way) so that
+> the renderer can achieve that grouping visually.
 >
-> Best regards,
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+> (There will be a standalone patch that implements this restriction and we
+> can debate this there, I'm only giving you context here.)))
 >
 >
+>> Then we may have a "Features:" line followed by feature descriptions.
+>>
+>> Finally, we may have any number of tagged or untagged sections.
+>>
+>> Each of these sections is represented as an instance of type Section,
+>> and the entire definition doc as an instance of type QAPIDoc.
+>>
+>> Section has a member @tag of type str.
+>>
+>> For tagged sections, it's the tag, i.e "Since", "Returns", ...  Obvious
+>> enough.
+>>
+>> For overview and other untagged sections, it's None.  Still obvious.
+>>
+>> For descriptions, it's the name of the thing being described.  Less than
+>> obvious.  Note that descriptions are actually instances of ArgSection, a
+>> subtype of Section, which prevents confusion with tagged sections.
+>>
+>
+> Note that this patch changes this as well; it becomes "member" or "featur=
+e"
+> as appropriate and the name is moved into a dedicated name field that
+> belongs to the ArgSection class.
+>
+> (Turns out legacy qapidoc doesn't use this stored name at all anyway, it
+> fetches the name via the linked feature/member instead.)
+>
+>
+>> QAPIDoc has the overview in member @body, member / argument descriptions
+>> in @args, feature descriptions in @features, and the remaining sections
+>> in @sections.
+>>
+>> I'm in favor of cleaning this up some.
+>>
+>> I think we can keep the Section name.
+>>
+>> Moving the name of the thing being described from @tag to @name is good.
+>> What value to put into @tag then?  Whatever suits you.
+>>
+>
+> What suits me is "member" and "feature". :)
+
+Okay.
+
+Doesn't entirely clean up the terminology mess.  According to
+docs/devel/qapi-code-gen.rst, struct and union types have members,
+alternate types have alternatives, enum types have values, commands have
+arguments, and events have event-specific data, which is a mouthful, so
+we often say arguments.  Using one of them ("member") to refer to the
+generalization of them all is suboptimal, but it's no worse than before.
+
+ArgSection is even more general: it's features, too.  Again, no worse
+than before.
+
+I'm *not* asking you to clean this up.  I'm just pointing out we could
+use fresh naming ideas here.
+
+>> Perhaps we should rename @tag to avoid undue ties to tagged sections.
+>> @kind would work for me.
+>>
+>
+> Sold!
+>
+>
+>> Value None for untagged sections is fine with me.  If a string suits you
+>> better, that's fine, too.  "untagged", "plain", I don't know, propose
+>> something.
+>>
+>
+> For static typing reasons, an explicit tag is preferred to distinguish fr=
+om
+> it being "optional".
+>
+> I could cope with any of:
+>
+> "plain",
+> "text",
+> "plaintext",
+> "paragraphs",
+> "unstructured",
+> "free"
+>
+> ... keeping in mind that I do intend to "split" this tag/kind into "intro"
+> and "details" later. i.e. this is a temporary tag/kind label.
+>
+> I think I like "text" the most because it says the least. What about you?
+
+Point, but the other kinds of section are text, too.  "plain"?
+
+>> @body, @args, and so forth aren't exactly great names.  If they truly
+>> annoy or confuse you, feel free to propose better ones.
+>>
+>
+> I believe they can be removed entirely once the old qapidoc is sunset,
+> leaving only .sections[] behind.
+>
+> This removes the temptation to pick out sections "out of order".
+
+I've long wanted strict in-order processing, to avoid surprising
+reordering of input in the output.
+
+> We only need the list of sections in their source order to generate the
+> appropriate rST.
+>
+> (Note: the inliner actually does need to filter sections somewhat to do i=
+ts
+> inlining magic, but we'll talk about that later. All you need to know rig=
+ht
+> now is that my WIP does not utilize any field except .sections[], so the
+> others can in fact be dropped as redundant once we make the switch. This
+> patch helps enable the paradigm of "everything you need to render a secti=
+on
+> is contained within the Section object itself" which lends itself well to
+> the new transmogrifier, the goal of always processing/rendering in source
+> order, and facilitating the mechanics of the inliner.)
+>
+> ...
+>
+> In case I got too rambly, my action items for this patch are:
+>
+> - fix the test (already done)
+> - rename tag to kind
+> - rename "untagged" to "text", possibly changing it again pending your
+> feedback.
+
+Sounds good!
 
 
