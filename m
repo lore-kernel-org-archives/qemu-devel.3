@@ -4,157 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48062E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8A2E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWALl-0001Zm-7l; Fri, 10 Jan 2025 03:26:38 -0500
+	id 1tWAMI-0002OO-MH; Fri, 10 Jan 2025 03:27:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWALP-0001Vg-CY
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:26:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWALL-0000aL-Qn
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:26:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736497568;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZNCdfMLciPiU+Hqi6K7rO2KnG2CaaYlJQOkXTQzD/+Q=;
- b=KPofUSFf3t3x4JwODdQn1vS4GKrNA1mmLD+XYUqRCohEyKvIE5/pN/g9spNYyiACOq9Sa7
- M4mScGVuCBPSvy+RZYmTVou7iChwd7878O/v1FG4Brdt0zL/O1wFAjEHYpOuHFjftoisgI
- gv4wruu8/IQYD34g1rREkj9JcyQ/Y0I=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-ymz4WDz-OKq60Tcg39ncLg-1; Fri, 10 Jan 2025 03:26:07 -0500
-X-MC-Unique: ymz4WDz-OKq60Tcg39ncLg-1
-X-Mimecast-MFC-AGG-ID: ymz4WDz-OKq60Tcg39ncLg
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so747448f8f.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 00:26:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1tWAME-0002NM-Oy
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:27:07 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1tWAMB-0000n9-MM
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:27:05 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-21634338cfdso40403955ad.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 00:27:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736497622; x=1737102422;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bgZGVh+ycwDsOSKFa9SNlTClj0dfHISpgNjgoYAIZi0=;
+ b=YdqTO5B0NvRI6NfQyEtivWXf9zQDn+yuJ+DJ5zctpBJABDS30fHf4JR3Hqe/Vb7Z4k
+ 58a/CR9rt8suW2VhH+EHxhpHV14GyhvoamaFOUc2gLoxdVr6KQ+FLLzBnWclAbrwAy8G
+ WTm0M2FQRXh2m6atDOKbLxhW6S8XuCH6yEi3exs1hkMEJ3QZvl1PSXe055ez14/x8dFc
+ lCVVGns3Oh6noioK9K18RMw1U1hWVcBU8KJ2f6HDjwe84tIa6LuXhjeH8DFUdv5gOEgP
+ llen85i/1haoecg/GtE376iFu+OC+NBU49LaWOOrho5IrijBSWBwdcadoGONH6yzkTCU
+ tuVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736497566; x=1737102366;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ZNCdfMLciPiU+Hqi6K7rO2KnG2CaaYlJQOkXTQzD/+Q=;
- b=fCan8hNQGTfKU6IyNLhd7NX9oDirlFXV1vrGY5mngjfFvni5dVvHOx54FcpDBc1pJ0
- Vidyx77ueSdjjB+oSNSoPoywX5J1acpD7/qbqeQdui9lQXP8psB2+6j8fx3VFK4URb7P
- wqi3zVEXIbBMVBzTKBsOSob1yJC+ufo5BMRdcT8QGixwWmERHmWZdiM7bEhr+ZP6r11x
- dTRKt4Pk1bxsJ9NBSr5AzuWEd6lFiCJK+kH624PYh2R6QPVZuBGoorhbSJ5i7Tq3nW49
- 3nL9laLfOSb7pFQolHVsH1CU4NHpgtU4ohiqOmVVii8LIfwFpxb1BFMntev1fjYtODwv
- LGZg==
-X-Gm-Message-State: AOJu0YyUyx4ssjz0TEHmOqB7T5YtY6TA9kYDL23STaEuEYrhEa6gvlXB
- O5k4WDvm3fx4/4XEPVk8jPpl0xeTeyK8oa4544m17qFqsSwQWSCheUHSi2bdeBScwLveLvAmurn
- 3UlwjFGGIcbKwbAnfCsiAiQx5LYErQkmLQNFSJr+Gjb99D12HWSQ9
-X-Gm-Gg: ASbGncudrLS3/0z8QuuXfV40ik4QZzvx6USafK3IF5/aDa0v2O44BadkMxQVAI4bLtT
- NkC8CjK9FvhFxgb9NQXG/QOiILMuVoSZfP5zjNiC6LiD1RuEYM6y82kWsi7ZvZDyZZZjhmk9UgI
- Cosd5O+pXdtSy4mpuW0cROd1eLE9TSJsk0DyVIj4iqR16VY1ML8wmsoj6xKM4JPrPsnWgfu9oKZ
- 7GBFnxme6rnmH8h/7xru96cTmU5YWfTJVNwDHlgdlz1vpBxEUA4XbjKL7cEvWg7zRlc30631OOy
- r5lcUgmW/B/tsklapUH4sNwrqOP7pmWhTU3RW2qutzNHeIX/p7EiTVSeCA06soCJIDj7w4If/O6
- F1zPN1qbm
-X-Received: by 2002:a5d:59af:0:b0:382:31a1:8dc3 with SMTP id
- ffacd0b85a97d-38a87313151mr8810659f8f.35.1736497565793; 
- Fri, 10 Jan 2025 00:26:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlaHN9Zr4/ISK7a2mU4PnTAA3whAhhSfTaCWDxQQoyOOZUSqkWurhV/8+nhu5/HWOZvcv71A==
-X-Received: by 2002:a5d:59af:0:b0:382:31a1:8dc3 with SMTP id
- ffacd0b85a97d-38a87313151mr8810628f8f.35.1736497565343; 
- Fri, 10 Jan 2025 00:26:05 -0800 (PST)
-Received: from ?IPV6:2003:cb:c708:e100:4f41:ff29:a59f:8c7a?
- (p200300cbc708e1004f41ff29a59f8c7a.dip0.t-ipconnect.de.
- [2003:cb:c708:e100:4f41:ff29:a59f:8c7a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e320329sm3896657f8f.0.2025.01.10.00.26.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 00:26:04 -0800 (PST)
-Message-ID: <c318c89b-967d-456e-ade1-3a8cacb21bd7@redhat.com>
-Date: Fri, 10 Jan 2025 09:26:02 +0100
+ d=1e100.net; s=20230601; t=1736497622; x=1737102422;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bgZGVh+ycwDsOSKFa9SNlTClj0dfHISpgNjgoYAIZi0=;
+ b=F9VHRxgOzgsX7pKm7Uh8Buh/mWxiQE6H1TZ9E+bCYoePgo4vrKUEGac/Gb86WSRVNw
+ V8QLgyWrl+o1fbBjkx+Xx/8iY/B6RPX14npFR+5/MNcmBpkZfWhThfeU2Z5suOcYLGfG
+ 1xQurHXqfDn1oSNM/gU5N5Z0bEtfy6/jO0QlfrVQ163SuSpEo4JjujFy1oDroWFqLf80
+ 6nHDypEJ/tonHUqupN98inzHRPY5J6OiuqGiN+t5Xzk1XzvsxMCrvJIF7YPb+Fuaam6u
+ 4myq9hJhALbFU2UVkteha5Zlp5scHYVRL4qaNEz5Dd15PAUQ4UirFq926Z7ag5ES8KA5
+ CNWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVt1noCpS6ZUBdmrYujSKp9/uMrN6Rayb9gsHLXPJ9xVfTpsAO6mMm7v8fb4nkJBlp6Mh9kbfCE+3/D@nongnu.org
+X-Gm-Message-State: AOJu0YwU+fClUdB6Qu+AYs6DMkzajxZzrJ6kkyZYzAwRaiJLDwfRWOka
+ 16fhzbnBnezxEYvXwKWv0g5qwaInJzBsSsnDoX1QANkJCpa5HrBjPzXVwSFv15tydRqgqtaXpjR
+ CLpTbqsLl6uxwzn8EWq8oloQ2ApgaNS7uPSJCCvrZzmPRogrb3GU=
+X-Gm-Gg: ASbGnctj3PlKwWdQ4QgPbaqkMON3jVTCK7eIFxZnqpTrYZ5SWoXCG6JE5wxZw6Cmn0K
+ mJcMK+E7SXITuG6+j0ZA8CyxLLj+Wn11YeMSF
+X-Google-Smtp-Source: AGHT+IEFGXYiV13vbFHUp6WfPA0AZfjtwKsgdsSpmDsaRdTSrlOZLRUUEosGt6blRoRQYeVA1Wu37GNN3cHM59O8dbk=
+X-Received: by 2002:a05:6a00:2388:b0:72a:a7a4:9c6d with SMTP id
+ d2e1a72fcca58-72d21ff97b1mr16598428b3a.24.1736497622020; Fri, 10 Jan 2025
+ 00:27:02 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Enable shared device assignment
-To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
- <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>,
- Jason Gunthorpe <jgg@nvidia.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <2737cca7-ef2d-4e73-8b5a-67698c835e77@amd.com>
- <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
- <6ac5ddea-42d8-40f2-beec-be490f6f289c@amd.com>
- <8f953ffc-6408-4546-a439-d11354b26665@intel.com>
- <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
- <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
- <008bfbf2-3ea4-4e6c-ad0d-91655cdfc4e8@amd.com>
- <1361f0b4-ddf8-4a83-ba21-b68321d921da@intel.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <1361f0b4-ddf8-4a83-ba21-b68321d921da@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.436,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241203-counter_delegation-v4-0-c12a89baed86@rivosinc.com>
+ <CAKmqyKMBSoTR7-UexAu2qrur5bOgWBGOOQOPXgrh+k6LC3vG-A@mail.gmail.com>
+In-Reply-To: <CAKmqyKMBSoTR7-UexAu2qrur5bOgWBGOOQOPXgrh+k6LC3vG-A@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Fri, 10 Jan 2025 00:26:51 -0800
+X-Gm-Features: AbW1kva0Xq4do8qvoR3sf3egip_uGkUSfHOHMZ22R2msBeLH7EfuifmknEVew0M
+Message-ID: <CAHBxVyE7vd1TjgnV5Cd_yDKwnNuEORz2O5gU9qS0SVqK+t95WQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/11] Add RISC-V Counter delegation ISA extension
+ support
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, kaiwenxue1@gmail.com, 
+ palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Kaiwen Xue <kaiwenx@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,243 +99,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.01.25 08:06, Chenyi Qiang wrote:
-> 
-> 
-> On 1/10/2025 9:42 AM, Alexey Kardashevskiy wrote:
->>
->>
->> On 9/1/25 19:49, Chenyi Qiang wrote:
->>>
->>>
->>> On 1/9/2025 4:18 PM, Alexey Kardashevskiy wrote:
->>>>
->>>>
->>>> On 9/1/25 18:52, Chenyi Qiang wrote:
->>>>>
->>>>>
->>>>> On 1/8/2025 7:38 PM, Alexey Kardashevskiy wrote:
->>>>>>
->>>>>>
->>>>>> On 8/1/25 17:28, Chenyi Qiang wrote:
->>>>>>> Thanks Alexey for your review!
->>>>>>>
->>>>>>> On 1/8/2025 12:47 PM, Alexey Kardashevskiy wrote:
->>>>>>>> On 13/12/24 18:08, Chenyi Qiang wrote:
->>>>>>>>> Commit 852f0048f3 ("RAMBlock: make guest_memfd require
->>>>>>>>> uncoordinated
->>>>>>>>> discard") effectively disables device assignment when using
->>>>>>>>> guest_memfd.
->>>>>>>>> This poses a significant challenge as guest_memfd is essential for
->>>>>>>>> confidential guests, thereby blocking device assignment to these
->>>>>>>>> VMs.
->>>>>>>>> The initial rationale for disabling device assignment was due to
->>>>>>>>> stale
->>>>>>>>> IOMMU mappings (see Problem section) and the assumption that TEE
->>>>>>>>> I/O
->>>>>>>>> (SEV-TIO, TDX Connect, COVE-IO, etc.) would solve the device-
->>>>>>>>> assignment
->>>>>>>>> problem for confidential guests [1]. However, this assumption has
->>>>>>>>> proven
->>>>>>>>> to be incorrect. TEE I/O relies on the ability to operate devices
->>>>>>>>> against
->>>>>>>>> "shared" or untrusted memory, which is crucial for device
->>>>>>>>> initialization
->>>>>>>>> and error recovery scenarios. As a result, the current
->>>>>>>>> implementation
->>>>>>>>> does
->>>>>>>>> not adequately support device assignment for confidential guests,
->>>>>>>>> necessitating
->>>>>>>>> a reevaluation of the approach to ensure compatibility and
->>>>>>>>> functionality.
->>>>>>>>>
->>>>>>>>> This series enables shared device assignment by notifying VFIO of
->>>>>>>>> page
->>>>>>>>> conversions using an existing framework named RamDiscardListener.
->>>>>>>>> Additionally, there is an ongoing patch set [2] that aims to add 1G
->>>>>>>>> page
->>>>>>>>> support for guest_memfd. This patch set introduces in-place page
->>>>>>>>> conversion,
->>>>>>>>> where private and shared memory share the same physical pages as
->>>>>>>>> the
->>>>>>>>> backend.
->>>>>>>>> This development may impact our solution.
->>>>>>>>>
->>>>>>>>> We presented our solution in the guest_memfd meeting to discuss its
->>>>>>>>> compatibility with the new changes and potential future directions
->>>>>>>>> (see [3]
->>>>>>>>> for more details). The conclusion was that, although our
->>>>>>>>> solution may
->>>>>>>>> not be
->>>>>>>>> the most elegant (see the Limitation section), it is sufficient for
->>>>>>>>> now and
->>>>>>>>> can be easily adapted to future changes.
->>>>>>>>>
->>>>>>>>> We are re-posting the patch series with some cleanup and have
->>>>>>>>> removed
->>>>>>>>> the RFC
->>>>>>>>> label for the main enabling patches (1-6). The newly-added patch
->>>>>>>>> 7 is
->>>>>>>>> still
->>>>>>>>> marked as RFC as it tries to resolve some extension concerns
->>>>>>>>> related to
->>>>>>>>> RamDiscardManager for future usage.
->>>>>>>>>
->>>>>>>>> The overview of the patches:
->>>>>>>>> - Patch 1: Export a helper to get intersection of a
->>>>>>>>> MemoryRegionSection
->>>>>>>>>        with a given range.
->>>>>>>>> - Patch 2-6: Introduce a new object to manage the guest-memfd with
->>>>>>>>>        RamDiscardManager, and notify the shared/private state change
->>>>>>>>> during
->>>>>>>>>        conversion.
->>>>>>>>> - Patch 7: Try to resolve a semantics concern related to
->>>>>>>>> RamDiscardManager
->>>>>>>>>        i.e. RamDiscardManager is used to manage memory plug/unplug
->>>>>>>>> state
->>>>>>>>>        instead of shared/private state. It would affect future
->>>>>>>>> users of
->>>>>>>>>        RamDiscardManger in confidential VMs. Attach it behind as
->>>>>>>>> a RFC
->>>>>>>>> patch[4].
->>>>>>>>>
->>>>>>>>> Changes since last version:
->>>>>>>>> - Add a patch to export some generic helper functions from
->>>>>>>>> virtio-mem
->>>>>>>>> code.
->>>>>>>>> - Change the bitmap in guest_memfd_manager from default shared to
->>>>>>>>> default
->>>>>>>>>        private. This keeps alignment with virtio-mem that 1-
->>>>>>>>> setting in
->>>>>>>>> bitmap
->>>>>>>>>        represents the populated state and may help to export more
->>>>>>>>> generic
->>>>>>>>> code
->>>>>>>>>        if necessary.
->>>>>>>>> - Add the helpers to initialize/uninitialize the
->>>>>>>>> guest_memfd_manager
->>>>>>>>> instance
->>>>>>>>>        to make it more clear.
->>>>>>>>> - Add a patch to distinguish between the shared/private state
->>>>>>>>> change
->>>>>>>>> and
->>>>>>>>>        the memory plug/unplug state change in RamDiscardManager.
->>>>>>>>> - RFC: https://lore.kernel.org/qemu-devel/20240725072118.358923-1-
->>>>>>>>> chenyi.qiang@intel.com/
->>>>>>>>>
->>>>>>>>> ---
->>>>>>>>>
->>>>>>>>> Background
->>>>>>>>> ==========
->>>>>>>>> Confidential VMs have two classes of memory: shared and private
->>>>>>>>> memory.
->>>>>>>>> Shared memory is accessible from the host/VMM while private
->>>>>>>>> memory is
->>>>>>>>> not. Confidential VMs can decide which memory is shared/private and
->>>>>>>>> convert memory between shared/private at runtime.
->>>>>>>>>
->>>>>>>>> "guest_memfd" is a new kind of fd whose primary goal is to serve
->>>>>>>>> guest
->>>>>>>>> private memory. The key differences between guest_memfd and normal
->>>>>>>>> memfd
->>>>>>>>> are that guest_memfd is spawned by a KVM ioctl, bound to its owner
->>>>>>>>> VM and
->>>>>>>>> cannot be mapped, read or written by userspace.
->>>>>>>>
->>>>>>>> The "cannot be mapped" seems to be not true soon anymore (if not
->>>>>>>> already).
->>>>>>>>
->>>>>>>> https://lore.kernel.org/all/20240801090117.3841080-1-
->>>>>>>> tabba@google.com/T/
->>>>>>>
->>>>>>> Exactly, allowing guest_memfd to do mmap is the direction. I
->>>>>>> mentioned
->>>>>>> it below with in-place page conversion. Maybe I would move it here to
->>>>>>> make it more clear.
->>>>>>>
->>>>>>>>
->>>>>>>>
->>>>>>>>>
->>>>>>>>> In QEMU's implementation, shared memory is allocated with normal
->>>>>>>>> methods
->>>>>>>>> (e.g. mmap or fallocate) while private memory is allocated from
->>>>>>>>> guest_memfd. When a VM performs memory conversions, QEMU frees
->>>>>>>>> pages
->>>>>>>>> via
->>>>>>>>> madvise() or via PUNCH_HOLE on memfd or guest_memfd from one
->>>>>>>>> side and
->>>>>>>>> allocates new pages from the other side.
->>>>>>>>>
->>>>>>>
->>>>>>> [...]
->>>>>>>
->>>>>>>>>
->>>>>>>>> One limitation (also discussed in the guest_memfd meeting) is that
->>>>>>>>> VFIO
->>>>>>>>> expects the DMA mapping for a specific IOVA to be mapped and
->>>>>>>>> unmapped
->>>>>>>>> with
->>>>>>>>> the same granularity. The guest may perform partial conversions,
->>>>>>>>> such as
->>>>>>>>> converting a small region within a larger region. To prevent such
->>>>>>>>> invalid
->>>>>>>>> cases, all operations are performed with 4K granularity. The
->>>>>>>>> possible
->>>>>>>>> solutions we can think of are either to enable VFIO to support
->>>>>>>>> partial
->>>>>>>>> unmap
->>>>>>
->>>>>> btw the old VFIO does not split mappings but iommufd seems to be
->>>>>> capable
->>>>>> of it - there is iopt_area_split(). What happens if you try
->>>>>> unmapping a
->>>>>> smaller chunk that does not exactly match any mapped chunk? thanks,
->>>>>
->>>>> iopt_cut_iova() happens in iommufd vfio_compat.c, which is to make
->>>>> iommufd be compatible with old VFIO_TYPE1. IIUC, it happens with
->>>>> disable_large_page=true. That means the large IOPTE is also disabled in
->>>>> IOMMU. So it can do the split easily. See the comment in
->>>>> iommufd_vfio_set_iommu().
->>>>>
->>>>> iommufd VFIO compatible mode is a transition from legacy VFIO to
->>>>> iommufd. For the normal iommufd, it requires the iova/length must be a
->>>>> superset of a previously mapped range. If not match, will return error.
->>>>
->>>>
->>>> This is all true but this also means that "The former requires complex
->>>> changes in VFIO" is not entirely true - some code is already there.
->>>> Thanks,
->>>
->>> Hmm, my statement is a little confusing.  The bottleneck is that the
->>> IOMMU driver doesn't support the large page split. So if we want to
->>> enable large page and want to do partial unmap, it requires complex
->>> change.
->>
->> We won't need to split large pages (if we stick to 4K for now), we need
->> to split large mappings (not large pages) to allow partial unmapping and
->> iopt_area_split() seems to be doing this. Thanks,
-> 
-> You mean we can disable large page in iommufd and then VFIO will be able
-> to do partial unmap. Yes, I think it is doable and we can avoid many
-> ioctl context switches overhead.
+On Thu, Jan 9, 2025 at 6:10=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Wed, Dec 4, 2024 at 9:18=E2=80=AFAM Atish Patra <atishp@rivosinc.com> =
+wrote:
+> >
+> > This series adds the counter delegation extension support. The counter
+> > delegation ISA extension(Smcdeleg/Ssccfg) actually depends on multiple =
+ISA
+> > extensions.
+> >
+> > 1. S[m|s]csrind : The indirect CSR extension[1] which defines additiona=
+l
+> >    5 ([M|S|VS]IREG2-[M|S|VS]IREG6) register to address size limitation =
+of
+> >    RISC-V CSR address space.
+> > 2. Smstateen: The stateen bit[60] controls the access to the registers
+> >    indirectly via the above indirect registers.
+> > 3. Smcdeleg/Ssccfg: The counter delegation extensions[2]
+> >
+> > The counter delegation extension allows Supervisor mode to program the
+> > hpmevent and hpmcounters directly without needing the assistance from t=
+he
+> > M-mode via SBI calls. This results in a faster perf profiling and very
+> > few traps. This extension also introduces a scountinhibit CSR which all=
+ows
+> > to stop/start any counter directly from the S-mode. As the counter
+> > delegation extension potentially can have more than 100 CSRs, the speci=
+ficaiton
+> > leverages the indirect CSR extension to save the precious CSR address r=
+ange.
+> >
+> > Due to the dependancy of these extensions, the following extensions mus=
+t be
+> > enabled to use the counter delegation feature in S-mode.
+> >
+> > "smstateen=3Dtrue,sscofpmf=3Dtrue,ssccfg=3Dtrue,smcdeleg=3Dtrue,smcsrin=
+d=3Dtrue,sscsrind=3Dtrue"
+> >
+> > This makes the qemu command line quite tedious. The previous version, I=
+ tried
+> > to introduce a preferred rule to enable all but it was decided that an =
+user
+> > should opt to use max cpu if they don't want to enable all the dependan=
+t ISA
+> > extensions by hand. This series got rid of the preferred rule and added=
+ 2
+> > patches for specifiying the mandatory ISA extensions via implied rule.
+> >
+> > The first 2 patches decouple the indirect CSR usage from AIA implementa=
+tion
+> > while patch3 adds stateen bits validation for AIA.
+> > The PATCH4 implements indirect CSR extensions while remaining patches
+> > implement the counter delegation extensions.
+> >
+> > The Qemu patches can be found here:
+> > https://github.com/atishp04/qemu/tree/b4/counter_delegation_v4
+> > The Linux kernel patches can be found here (WIP version due to onging u=
+pstream
+> > dependant patches):
+> > https://github.com/atishp04/linux/tree/b4/counter_delegation_v2
+> >
+> > [1] https://github.com/riscv/riscv-indirect-csr-access
+> > [2] https://github.com/riscv/riscv-smcdeleg-ssccfg
+> >
+> > Cc: kaiwenxue1@gmail.com
+> >
+> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> > ---
+> > Changes in v4:
+> > - Fixed the comments recieved on v3.
+> > - code style comments and removed 1 redundant if else block.
+> > - Link to v3: https://lore.kernel.org/r/20241117-counter_delegation-v3-=
+0-476d6f36e3c8@rivosinc.com
+> >
+> > Changes in v3:
+> > 1. Updated the priv version in extensions
+> > 2. Fixed minor issues pointed out in v2.
+> > 3. Dropped preferred rule and added an implied rule for AIA and counter
+> >    delegation.
+> > - Link to v2: https://lore.kernel.org/r/20240723-counter_delegation-v2-=
+0-c4170a5348ca@rivosinc.com
+> >
+> > Changes from previous RFC version:
+> >
+> > 1. Renamed sxcsrind to csrind to align with other function names.
+> > 2. Enable sscofpmf by default for virt machine.
+> > 3. Introduced a preferred extension enabling rule strategy for generic
+> > mult-extension dependencies.
+> > 4. Enables all PMU related extensions if ssccfg extension is set.
+> >
+> > RFC Link:
+> > https://lore.kernel.org/all/35a4d40c-9d0d-4a0a-a2c9-5d5f7def9b9c@ventan=
+amicro.com/T/
+> >
+> > ---
+> > Atish Patra (5):
+> >       target/riscv: Enable S*stateen bits for AIA
+> >       target/riscv: Add properties for counter delegation ISA extension=
+s
+> >       target/riscv: Invoke pmu init after feature enable
+> >       target/riscv: Add implied rule for counter delegation extensions
+> >       target/riscv: Add configuration for S[m|s]csrind, Smcdeleg/Ssccfg
+> >
+> > Kaiwen Xue (6):
+> >       target/riscv: Add properties for Indirect CSR Access extension
+> >       target/riscv: Decouple AIA processing from xiselect and xireg
+> >       target/riscv: Support generic CSR indirect access
+> >       target/riscv: Add counter delegation definitions
+> >       target/riscv: Add select value range check for counter delegation
+> >       target/riscv: Add counter delegation/configuration support
+> >
+> >  target/riscv/cpu.c         |  20 +-
+> >  target/riscv/cpu.h         |   1 +
+> >  target/riscv/cpu_bits.h    |  34 ++-
+> >  target/riscv/cpu_cfg.h     |   4 +
+> >  target/riscv/csr.c         | 718 +++++++++++++++++++++++++++++++++++++=
++++++---
+> >  target/riscv/machine.c     |   1 +
+> >  target/riscv/tcg/tcg-cpu.c |  28 +-
+> >  7 files changed, 753 insertions(+), 53 deletions(-)
+>
+> This has all been Acked now, do you mind rebasing on
+> https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
+>
 
-So I understand this correctly: the disable_large_pages=true will imply 
-that we never have PMD mappings such that we can atomically poke a hole 
-in a mapping, without temporarily having to remove a PMD mapping in the 
-iommu table to insert a PTE table?
+Done. I have coordinated with clement as well in case his Ssdbltrp
+rebase has some conflicts due to this.
 
-batch_iommu_map_small() seems to document that behavior.
-
-It's interesting that that comment points out that this is purely "VFIO 
-compatibility", and that it otherwise violates the iommufd invariant: 
-"pairing map/unmap". So, it is against the real iommufd design ...
-
-Back when working on virtio-mem support (RAMDiscardManager), thought 
-there was not way to reliably do atomic partial unmappings.
-
--- 
-Cheers,
-
-David / dhildenb
-
+> Alistair
+>
+> > ---
+> > base-commit: 27652f9ca9d831c67dd447346c6ee953669255f0
+> > change-id: 20240715-counter_delegation-10ab44c7d2c0
+> > --
+> > Regards,
+> > Atish patra
+> >
+> >
 
