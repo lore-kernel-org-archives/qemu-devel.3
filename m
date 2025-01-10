@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689DDE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F07E7719D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWEYD-0004rm-41; Fri, 10 Jan 2025 07:55:45 -0500
+	id 1tWEYS-00066R-Mw; Fri, 10 Jan 2025 07:56:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tWEXX-0004Cw-FS
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:55:07 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1tWEXc-0004Gw-G9
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:55:10 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tWEXT-0000z1-0Z
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:55:00 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-385d7f19f20so1071813f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 04:54:56 -0800 (PST)
+ id 1tWEXZ-00010R-Em
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:55:07 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38633b5dbcfso2024777f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 04:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736513695; x=1737118495;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736513701; x=1737118501;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qWRo6Nv6sZWB2iYCQV3cOAbXEDznF+sv8nfS34tLEB4=;
- b=cyRpWNVCKhk8uIRPFI0jcOMcp8M/Ft2PNJNXtPxKWMG/6c8uhy2Pq/Y0ooO+6BkBFO
- 0Jstwph2LXznlGGQn8tumlkttYiqIX8r4g6ufh72AsGY3ubxsrTAG+WYhnGHi0j2BdrV
- R6dQ8cHUtDqIjWH/5ZqPJNKXXGz1PjlSqDUWHCK/WrIa7DJSL6eGp6Yc9oG1Ncw69M+7
- ZBXxT0fm9chGxBeLtS4uk9ZPvSsI0YJWGbgjPQyoKHjJgiATjBZ5zJSqlY9O01tXghwE
- ncajg/60mirfWoy+xyG5tcMEwNIzNX5G8sUV62ZOddtCOiLHqKDrv4fMQpSt12509+SI
- wB/g==
+ bh=ES38JNi2wkZtqIVUhzbnhhmRln9I5UNeXdmWAdv7Rig=;
+ b=kI/GP5MhCNZBFmPf0o+RYhtOLwx7oyC+hMDH4NneZZ+izUfgrVUni6Nn84neskD9M4
+ CqBKxr5+vFXCPxWgoHLLmNjtUtx4c7SCGcD29UsjfDKlKxB3CmQ4juAuFebuPnX0te9T
+ +quISDgjGjUkvOc+Zx0zUCXfdJ0Mf6k/ZYBPaWWZvJbJtxNrXws+33GUWXD5xxSHEOca
+ y0JQQUzz1r1hqdzacwAKn3+P9exK+T/SZGFFxQMolNcTgkYm7u0HXDWJoyCZgIy39Y0+
+ 6kQfiT0LEWVrqjBEac3HT2yGPKW+8XLSGpKirnCg/OJNKRoncy5M9Qm2lYjA7TR1setL
+ kfwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736513695; x=1737118495;
+ d=1e100.net; s=20230601; t=1736513701; x=1737118501;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qWRo6Nv6sZWB2iYCQV3cOAbXEDznF+sv8nfS34tLEB4=;
- b=sVed3DZYIX2jnLONL5DwTByuUW+zL0omv295HAq72ok/1PW8kBnWfKXvphZP+uETjg
- Kj6NHnWn5LoDI6qNs8umbsPvyN1RFCWxF8acBl0zNQL8o1JAT39/Z3pM43Atnfmx3TTl
- RaQOA8RNNdr77ploEoJzex6nJBq84mxdBGmaY2GFsI2xS6d+uhx9Nm3WLj6XsZNrguvu
- n6WmIAiupdkdRC2jCsgMuTw9SC8vDoUlQ0hfoiOZJj3jEQgem0X3inV/wafik2cDG3mV
- oVoNftCghyMXsL6r/QVfLtGub05u3eRbx30iabTporfaua/TFX8id/RwNfSnEPdB/95L
- 2OxA==
+ bh=ES38JNi2wkZtqIVUhzbnhhmRln9I5UNeXdmWAdv7Rig=;
+ b=fdsoSXIXTdOs/9ytIImRDla06ppQ4iSc3nu/fC4g3dCOJ+PkwRzhCBEsSM+1IC++C9
+ TzzPpjxzzjevJYGejwC5GuCX4VL21uw+Y7QNbYox1+USMi/7mvhqB8R1LX/Pjs/IqI36
+ 4t7f8aLLIdgVRg5UXbBUefsd8GZpTAu3LzZ2+H12HsOQOrCmH6uf8V+4GaeU5Z3cPml0
+ twgqvfdhZz55W9rxYUit1eEd0AjdX8opmIBqFvE7CN5cdD7rPXlkQwgEEsN8zO3WP8po
+ nb0wAX0rjR7JryvdeXbZJ3Ro3BlRXvKlgStaqpmAO7tUIHtoJp3mc/yVdxe/XF7l/DCK
+ zr2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2pYvFpjfWrGR7GbFbEtsdZ00QdAEk+k1bfJTBXSGRvOJ4CNicUpnC/PakGhjNRe9vJw6OscGRigDK@nongnu.org
-X-Gm-Message-State: AOJu0YwT4ZiwDbhCQxXUyTN47Jd3RUXiF5gkEykSO9XbWTEEn3/kXb3U
- KOFYXE/9j1y401sQeC4VKf32jlnUngJR0W4RSEJl7ZuRnNZMv8l2fCDRD/WuxOA=
-X-Gm-Gg: ASbGncs79kcESva9yvfKANc6YgikRQZlcT6xasDAR5HuukvSo0kDQ/oVguzEpzIpBxt
- pgsDyU6VuveAWk/trMUCkcP8A5N6Dlc19V+MvEv7x2h5rYcdDdt4PoTC0ewmfe407ZTKkBaLafk
- cLRWopxznO+4y4zdl9ZWsH/vJek/2IW5kIXHwGrCEV8n5UMouCVolydFNxf7E6ADjIRqR8kE9gA
- LziJyuDnYSXn9xtoe18OjV3sCfiwVHwtnKXAoWMbtVVMHBPUPwzO303mg==
-X-Google-Smtp-Source: AGHT+IEmKNIMEDvvXgq3UOUXNeXUrfLyl8W/ibeL/mei+Z6SA9KfYqKX1zALFUnVHdPLaTCFVi0sqQ==
-X-Received: by 2002:a05:6000:144a:b0:385:fc70:832 with SMTP id
- ffacd0b85a97d-38a87303cacmr10050464f8f.16.1736513695276; 
- Fri, 10 Jan 2025 04:54:55 -0800 (PST)
+ AJvYcCXb4n7XisoxmA3xYwl7NLTWLs+VWz/0NTO2kg+lKr/V7BvFA3q8Td3n/COm5s/Nvm3DwxaY7eda3dQE@nongnu.org
+X-Gm-Message-State: AOJu0Yy54wr3TKBydw5kWHu1zMJ3TDXYPjkULskM7eePmzkUYF5ZyoTZ
+ LQp4JF47HzGjDwZTfwuQ3SAhHs0YY3hyA0Tx0GxA8R65Wehp3c9rf+Dn+ke32Xk=
+X-Gm-Gg: ASbGncuwCljKUu6J9NuFvT71R7xdn3ju+9/lBkUFcbvhc13/OJBF+q0s5/ZVqJHKE3+
+ sQW75Esm6rsPZ0aPDKmEHRCVsXIWMnliL4+m6Taij1rXW7yRRqkXSENhLnCwYVWtim11009AHhl
+ 6Yd13j5PJC9vjX1xSU571b7RM0TmQmrt5FpnvR6gXiL34Y8Yn19+QMf3jRx+UqWxontrq4lmJFa
+ 4bUNSBtfZ44YBFzWVFqKCvSf1WvitqfMRCENqivhT8QL86nPc1JpJDnbA==
+X-Google-Smtp-Source: AGHT+IE/oDlNRbH6/z977x5ubMgUKQE3gtDUP3U+sUOa8YXlbLiPXOiEWF6iiqWGVLYM+Sd89RlVFA==
+X-Received: by 2002:a5d:6c6e:0:b0:385:d7f9:f16c with SMTP id
+ ffacd0b85a97d-38a87356cd4mr9301025f8f.46.1736513700961; 
+ Fri, 10 Jan 2025 04:55:00 -0800 (PST)
 Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1c01sm4548921f8f.97.2025.01.10.04.54.54
+ ffacd0b85a97d-38a8e4c1c01sm4548921f8f.97.2025.01.10.04.54.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 04:54:54 -0800 (PST)
+ Fri, 10 Jan 2025 04:55:00 -0800 (PST)
 From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
 To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -75,18 +75,17 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
  qemu-devel@nongnu.org, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v8 3/9] target/riscv: Implement Ssdbltrp sret,
- mret and mnret behavior
-Date: Fri, 10 Jan 2025 13:54:34 +0100
-Message-ID: <20250110125441.3208676-4-cleger@rivosinc.com>
+Subject: [PATCH v8 8/9] target/riscv: Implement Smdbltrp behavior
+Date: Fri, 10 Jan 2025 13:54:39 +0100
+Message-ID: <20250110125441.3208676-9-cleger@rivosinc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110125441.3208676-1-cleger@rivosinc.com>
 References: <20250110125441.3208676-1-cleger@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=cleger@rivosinc.com; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,91 +107,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the Ssdbltrp extension is enabled, SSTATUS.SDT field is cleared
-when executing sret. When executing mret/mnret, SSTATUS.SDT is cleared
-when returning to U, VS or VU and VSSTATUS.SDT is cleared when returning
-to VU from HS.
+When the Smsdbltrp ISA extension is enabled, if a trap happens while
+MSTATUS.MDT is already set, it will trigger an abort or an NMI is the
+Smrnmi extension is available.
 
 Signed-off-by: Clément Léger <cleger@rivosinc.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/op_helper.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ target/riscv/cpu_helper.c | 57 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 41 insertions(+), 16 deletions(-)
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index c825336519..59c4bf28ed 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -294,6 +294,18 @@ target_ulong helper_sret(CPURISCVState *env)
-                         get_field(mstatus, MSTATUS_SPIE));
-     mstatus = set_field(mstatus, MSTATUS_SPIE, 1);
-     mstatus = set_field(mstatus, MSTATUS_SPP, PRV_U);
-+
-+    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-+        if (riscv_has_ext(env, RVH)) {
-+            target_ulong prev_vu = get_field(env->hstatus, HSTATUS_SPV) &&
-+                                   prev_priv == PRV_U;
-+            /* Returning to VU from HS, vsstatus.sdt = 0 */
-+            if (!env->virt_enabled && prev_vu) {
-+                env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
-+            }
-+        }
-+        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
-+    }
-     if (env->priv_ver >= PRIV_VERSION_1_12_0) {
-         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
-     }
-@@ -304,7 +316,6 @@ target_ulong helper_sret(CPURISCVState *env)
-         target_ulong hstatus = env->hstatus;
- 
-         prev_virt = get_field(hstatus, HSTATUS_SPV);
--
-         hstatus = set_field(hstatus, HSTATUS_SPV, 0);
- 
-         env->hstatus = hstatus;
-@@ -344,6 +355,22 @@ static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
-         riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
-     }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 539ba327e7..e1dfc4ecbf 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1938,6 +1938,24 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
+     /* if no promotion, return original cause */
+     return orig_cause;
  }
-+static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
-+                                   target_ulong prev_priv,
-+                                   target_ulong prev_virt)
++
++static void riscv_do_nmi(CPURISCVState *env, target_ulong cause, bool virt)
 +{
-+    /* If returning to U, VS or VU, sstatus.sdt = 0 */
-+    if (prev_priv == PRV_U || (prev_virt &&
-+        (prev_priv == PRV_S || prev_priv == PRV_U))) {
-+        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
-+        /* If returning to VU, vsstatus.sdt = 0 */
-+        if (prev_virt && prev_priv == PRV_U) {
-+            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
-+        }
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV, virt);
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP, env->priv);
++    env->mncause = cause;
++    env->mnepc = env->pc;
++    env->pc = env->rnmi_irqvec;
++
++    if (cpu_get_fcfien(env)) {
++        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP, env->elp);
 +    }
 +
-+    return mstatus;
++    /* Trapping to M mode, virt is disabled */
++    riscv_cpu_set_mode(env, PRV_M, false);
 +}
++
+ /*
+  * Handle Traps
+  *
+@@ -1977,22 +1995,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     bool nnmi_excep = false;
  
- target_ulong helper_mret(CPURISCVState *env)
- {
-@@ -361,6 +388,9 @@ target_ulong helper_mret(CPURISCVState *env)
-     mstatus = set_field(mstatus, MSTATUS_MPP,
-                         riscv_has_ext(env, RVU) ? PRV_U : PRV_M);
-     mstatus = set_field(mstatus, MSTATUS_MPV, 0);
-+    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-+        mstatus = ssdbltrp_mxret(env, mstatus, prev_priv, prev_virt);
-+    }
-     if ((env->priv_ver >= PRIV_VERSION_1_12_0) && (prev_priv != PRV_M)) {
-         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
+-        env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+-        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV,
+-                                  env->virt_enabled);
+-        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP,
+-                                  env->priv);
+-        env->mncause = cause | ((target_ulong)1U << (mxlen - 1));
+-        env->mnepc = env->pc;
+-        env->pc = env->rnmi_irqvec;
+-
+-        if (cpu_get_fcfien(env)) {
+-            env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP, env->elp);
+-        }
+-
+-        /* Trapping to M mode, virt is disabled */
+-        riscv_cpu_set_mode(env, PRV_M, false);
+-
++        riscv_do_nmi(env, cause | ((target_ulong)1U << (mxlen - 1)),
++                     env->virt_enabled);
+         return;
      }
-@@ -402,6 +432,9 @@ target_ulong helper_mnret(CPURISCVState *env)
-     if (prev_priv < PRV_M) {
-         env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, false);
-     }
-+    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-+        env->mstatus = ssdbltrp_mxret(env, env->mstatus, prev_priv, prev_virt);
-+    }
  
-     if (riscv_has_ext(env, RVH) && prev_virt) {
-         riscv_cpu_swap_hypervisor_regs(env);
+@@ -2204,11 +2208,32 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             /* Trapping to M mode, virt is disabled */
+             virt = false;
+         }
++        /*
++         * If the hart encounters an exception while executing in M-mode,
++         * with the mnstatus.NMIE bit clear, the program counter is set to
++         * the RNMI exception trap handler address.
++         */
++        nnmi_excep = cpu->cfg.ext_smrnmi &&
++                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
++                     !async;
+ 
+         s = env->mstatus;
+         s = set_field(s, MSTATUS_MPIE, get_field(s, MSTATUS_MIE));
+         s = set_field(s, MSTATUS_MPP, env->priv);
+         s = set_field(s, MSTATUS_MIE, 0);
++        if (cpu->cfg.ext_smdbltrp) {
++            if (env->mstatus & MSTATUS_MDT) {
++                assert(env->priv == PRV_M);
++                if (!cpu->cfg.ext_smrnmi || nnmi_excep) {
++                    cpu_abort(CPU(cpu), "M-mode double trap\n");
++                } else {
++                    riscv_do_nmi(env, cause, false);
++                    return;
++                }
++            }
++
++            s = set_field(s, MSTATUS_MDT, 1);
++        }
+         env->mstatus = s;
+         env->mcause = cause | ((target_ulong)async << (mxlen - 1));
+         if (smode_double_trap) {
 -- 
 2.47.1
 
