@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 043CAE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9441E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHTp-0007ie-CT; Fri, 10 Jan 2025 11:03:25 -0500
+	id 1tWHWM-0005bs-B6; Fri, 10 Jan 2025 11:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHSt-0007GS-UV
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:02:29 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHWH-0005R5-VI
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:05:58 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHSo-0004DD-MY
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:02:25 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso16641315e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:02:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWHWF-0004vs-2X
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:05:57 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-38633b5dbcfso2270673f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736524940; x=1737129740; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f63ecg0nif+jK+DGCLVe+u7mEjni/luwZDTHSRxVLnk=;
- b=K6NlI/3LfsFjXpj7n1dvjxw9nJ0wR6RQ6h1cmakTekEknBKEBgY2mG9wX9rrN9AKaF
- BhgQd+o5lY6j/YuTpyKopSTBpfEwN/ZOiB942Yq+Xow0goFaM3w/eY2wHXC1L5aNbxZa
- JQDQ8gZVOu8mQO/MxiuBKQnJsgFiS02EVLtYUmQLSlKKIuCqnf/bNIFSKmYYSQICvqPs
- YhKoq4ky/odDjektYA4KZBneeP+E8YJxyO4xBLOcH0j4vaJfxvkW2+HWWjjHFiCLBChB
- mRq9MmNRIB2zvPBd66qk5kmqZTQa+WDPbxaFCybDIV5sy8mKwL6MXFlLq8tk8WZsCkGi
- sa1g==
+ d=linaro.org; s=google; t=1736525153; x=1737129953; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=w4HO32OyKgE9d8qEFBdltfZE1NtRQ8nlFnmeJTnk3IQ=;
+ b=aCW7AyQ5BcWFG3yiEueEteDb3P5liJriNabw/VbuO0ifF6M/Ja2E3xaPsYJ6wNt/ru
+ LQpoMELAF0OXpaOO7uFdCcXSx5UYEXJjQUVIpV+VQk4dCj+Edtc6KTgcCK1UQgi3IFTy
+ tn+nuwdrjbQ0SKWATk393n8MPfkOKKMInHFtX5k94GUN+8wDesLHw0wkN5sTKwjN3yZA
+ 8yCg1J68KNZVjfwwIfdh/CloFGLI4VKf0h7Q1PHyvKZl93K9LkvEsh6AxD68AwXvqJZA
+ hZZZ66Y8UQLvxyYXQzEyn5KzIeSnd5Zqfs/AVtfVyqIJ5ZSyTAhAQGeFoKrgeYzHARKu
+ +gyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736524940; x=1737129740;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f63ecg0nif+jK+DGCLVe+u7mEjni/luwZDTHSRxVLnk=;
- b=qVAElYiYMhaNHeCrUcGi+NcA9ZpWZYXLRTsPVdX5+FrGp22ZdvwxiULGRKSvxcKcv0
- na92yroUeHSx5MEFE2MgkWuCS1E+hw0WrKyJg3QpG03/0jrV7U+u+E/UL+b/gYw7zHUA
- /UnJcDXdGs4htxTmgGfORfOtsAlLUA5NUQreMJUF/kkvGURjoyBQmjtEQteE/hVEQR1s
- 47WrLx6LfF8vaJN1Aewvc1DxmRA7TKnM7m0FqGwTnvH/NbFvXf90rV2x4R+EsczepPZ0
- 7Vfems46pwxv9Z88SbKTAOB4TpC8Iqp4rCWPWlIyT4KPiSwbTEfVBTmO4S9krt6GcQHZ
- h8Zg==
-X-Gm-Message-State: AOJu0YyDvLbNyjM8momJ9dnCgB7T9D6O1i4VAYFFjk4gq7xgEopXx6Nx
- Uzt786Xm8sNb5YB5k+RrD3r2rAHtHOHLmPZEDdrp9ckWjVx+DoWpn/e83njpcVYyeYFHmBkbvAd
- cSJY=
-X-Gm-Gg: ASbGncsL4TJBj1WCZgXTa1WldOYpQBRGhAbFq5YxAmqT9E0L1FjhwP0QvPB9ea/IiH+
- reiTVpCSacKTnnAlhozLL7QlLQAAQNNe7FcW5Ymb8HP0oytiRZ1mHhabHBAmoD6x69m5mC/no06
- cab3VY/XougsQDMVhHXu3HgSWrQHj+6v7FpO4JdeZehmfEoeBiUQGZ+zrMtTbxAvS5C/onlXMQN
- E1S7d9bXl5jZANuPcSJY/PpJELTLMpk72gH4REQrun7BxxUmIbZoVa3wdstaqz3q+hBxZMOHqq2
- S+EfjmthYFV0NGNU/rbUhZVOmsuyvLo=
-X-Google-Smtp-Source: AGHT+IHtxnjxgKA8nlpo7bMxA67/vxmyyp6LnO8nbiySraPe1AGbiiavtg5PUWrfIks1ezUxeteojQ==
-X-Received: by 2002:a05:600c:3b02:b0:434:f5c0:328d with SMTP id
- 5b1f17b1804b1-436e26d971emr94638765e9.23.1736524939809; 
- Fri, 10 Jan 2025 08:02:19 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1736525153; x=1737129953;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=w4HO32OyKgE9d8qEFBdltfZE1NtRQ8nlFnmeJTnk3IQ=;
+ b=nl3qyPpfk6XZYT7zrh6O6IecjsufoOkDwG2jcL9561mMNt+fz5zHkql4EXi3hgCzik
+ NJevmf4ftQQlWHRHW1RsRMA5sF0MBloaTENVdrm+jyUTNMeJBwr7HknQp3xHKUkh73Um
+ ysuIdWT7vQ6O7AH0rbkSbgtIw4nLbrDRCksmXzlfNPks8xQ8FOKO+WrlGQnZ59OnxaCO
+ 92vWym48WBu+RggK5lhHj5QQh8WdT1gGFQcipti2ivw9OVRFs/Ma9Cd71hVR0KwuzhdY
+ eTE4vcZYczCaAdYlckaPzs1PgMX19NQBkQl8LUGb9nmIoO9ytxuvLFoMHuKZH5JD2xzn
+ eVnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnV9Fvllli4S3RXYQItHnekHEEC0/gVmTojm0QRSr5oHyFIZpErV0y1s2Q2EH2WJG5PHrxUD+PtNg1@nongnu.org
+X-Gm-Message-State: AOJu0Yxt14Q8A9oe7iHcUKCFBozFksN6ODZuQHs6u1Uj5BWAkYaxiuFH
+ enXNEAlg2l0KHa0KpxOQOwao4V9VUoEnAXq4sodcTIbB7zhyhOB3qIQ9QSP4XKw=
+X-Gm-Gg: ASbGncuxD4kf5epjThIArXDC/7vwhI7/GD/OBwJkSwlrw4mb4OrrGlBmthE4Ph5sUvz
+ ZuYmlA4m6xjY5to3GuQFvu/MFIOkvajYQUFx2sEYL3TKTlH7FFut70b82BC8D+bd3vHY5xOKPMv
+ 6XoIqJMLF8Qnpenw8PmaA8cJwKJssdnfAw4b+CqjxAU7LylYyULr9V5XkG6zv/7Z+jjHINkTC7z
+ dIe6CO5CyFAC0Ze50G45BAEk92sQ81xyP7YFt8QrrcpH4VHOLNwwN/UTi6A3vU08PYb7OnC4K3o
+ JT38AS4jUKQVwcNgbpFvXOlr
+X-Google-Smtp-Source: AGHT+IHeP2IWTj1CjGTz4xVtOz4BdCIW23IB5fLeNVi4cHCSdJx4XiSQKPHXQWk3evJsfy6oBoiODw==
+X-Received: by 2002:a5d:47c9:0:b0:385:f66a:4271 with SMTP id
+ ffacd0b85a97d-38a872fbcefmr9128638f8f.4.1736525152832; 
+ Fri, 10 Jan 2025 08:05:52 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2da63eesm90389005e9.3.2025.01.10.08.02.19
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 08:02:19 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/9] hw/arm/stellaris: Remove incorrect unimplemented i2c-0 at
- 0x40002000
-Date: Fri, 10 Jan 2025 17:01:58 +0100
-Message-ID: <20250110160204.74997-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250110160204.74997-1-philmd@linaro.org>
-References: <20250110160204.74997-1-philmd@linaro.org>
+ ffacd0b85a97d-38a8e4b8124sm4832170f8f.81.2025.01.10.08.05.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 08:05:52 -0800 (PST)
+Message-ID: <84effbe4-085b-4e6c-9fc9-5d44cba49c82@linaro.org>
+Date: Fri, 10 Jan 2025 17:05:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/9] ppc/ppc405: Remove boards
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20250110141800.1587589-1-clg@redhat.com>
+ <20250110141800.1587589-3-clg@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250110141800.1587589-3-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,38 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is nothing mapped at 0x40002000.
+On 10/1/25 15:17, Cédric Le Goater wrote:
+> The ref405ep machine is the only PPC 405 machine. Drop all support by
+> removing the SoC and associated devices as-well as the machine.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   MAINTAINERS                     |    6 -
+>   docs/about/deprecated.rst       |    8 -
+>   docs/about/removed-features.rst |    7 +
+>   docs/system/ppc/embedded.rst    |    1 -
+>   hw/ppc/ppc405.h                 |  186 -----
+>   hw/ppc/ppc405_boards.c          |  520 -------------
+>   hw/ppc/ppc405_uc.c              | 1216 -------------------------------
+>   hw/ppc/Kconfig                  |    9 -
+>   hw/ppc/meson.build              |    3 -
+>   9 files changed, 7 insertions(+), 1949 deletions(-)
+>   delete mode 100644 hw/ppc/ppc405.h
+>   delete mode 100644 hw/ppc/ppc405_boards.c
+>   delete mode 100644 hw/ppc/ppc405_uc.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2101b5121756..dc48ec4ac081 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1387,12 +1387,6 @@ F: hw/openrisc/openrisc_sim.c
+>   
+>   PowerPC Machines
+>   ----------------
+> -405 (ref405ep)
+> -L: qemu-ppc@nongnu.org
+> -S: Orphan
+> -F: hw/ppc/ppc405*
+> -F: tests/functional/test_ppc_405.py
 
-I2C#0 is already mapped at 0x40021000.
-
-Remove the invalid mapping added in commits aecfbbc97a2 & 394c8bbfb7a.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/stellaris.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 7c9e7e6c15b..254f7a234bf 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1001,7 +1001,6 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-      * http://www.ti.com/lit/ds/symlink/lm3s6965.pdf
-      *
-      * 40000000 wdtimer
--     * 40002000 i2c (unimplemented)
-      * 40004000 GPIO
-      * 40005000 GPIO
-      * 40006000 GPIO
-@@ -1356,7 +1355,6 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     /* Add dummy regions for the devices we don't implement yet,
-      * so guest accesses don't cause unlogged crashes.
-      */
--    create_unimplemented_device("i2c-0", 0x40002000, 0x1000);
-     create_unimplemented_device("i2c-2", 0x40021000, 0x1000);
-     create_unimplemented_device("PWM", 0x40028000, 0x1000);
-     create_unimplemented_device("QEI-0", 0x4002c000, 0x1000);
--- 
-2.47.1
+Ah here we go :) This line belong to the previous patch (nitpicking...)
 
 
