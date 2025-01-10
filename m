@@ -4,62 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C044E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 10:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F21E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 10:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWBxD-0004mY-6e; Fri, 10 Jan 2025 05:09:23 -0500
+	id 1tWBzP-0005kZ-S8; Fri, 10 Jan 2025 05:11:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tWBxC-0004m4-70
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:09:22 -0500
-Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tWBx9-0004u5-T5
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:09:21 -0500
-Received: from localhost.localdomain (default-rdns.vocus.co.nz
- [202.150.110.104] (may be forged)) (authenticated bits=0)
- by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 50AA96QV1373110
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Fri, 10 Jan 2025 10:09:09 GMT
-Authentication-Results: anarch128.org; auth=pass;
- dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=OI0HkQBj header.a=rsa-sha256 header.s=100003;
- x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org); 
- x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1736503750;
- bh=1n6KI0Q4uH1IgaUkQ2tkzkBToyc8YTrG4vuAOO6YuMs=;
- h=From:To:Cc:Subject:Date:From;
- b=OI0HkQBj22g1kKhe7fipHgP65qQp+A2Xpf9OD1LX/cej23F7E1I61WubOGiWR444j
- lYvP35I/ChX/Bk8515VVLkOp1gjagWjKx5Jt1t4UHe1mtInT+fKbH+XmQdDVU9Ro3l
- wCbKjaAkm/WsoSkux1VGWOymvi5LF1bJ+jdlrOgV7Wa2Cj4Yiohrs292hyW74TuhLP
- a0asKkr4TbZnSiBSvEru0cuicrDk7qWvd4DKP/kY0Jjupo526Spytpu7Sok39AMZv5
- pYq5P85BHBq0aL1a8X483KPXAGuk1sCvLhH2GfG+AjkkX3nHwHcRazH2/QecyYYZDH
- nvOc8jtssHM1A==
-From: Michael Clark <michael@anarch128.org>
-To: qemu-devel@nongnu.org
-Cc: Michael Clark <michael@anarch128.org>
-Subject: [RFC]: port of embedded x86-mini disassembler to QEMU
-Date: Fri, 10 Jan 2025 23:08:21 +1300
-Message-ID: <20250110100822.513498-1-michael@anarch128.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
+ id 1tWBzN-0005kN-MY
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:11:37 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
+ id 1tWBzL-0005Bk-An
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 05:11:37 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2166f1e589cso37092415ad.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 02:11:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1736503893; x=1737108693;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=peRy/BjUZvhBiGZOZT6CR7hVqi0C0WLqOpRsAuXJkfU=;
+ b=ar1aOXolXYLb9UiF4BRBqnMixlxYeo6O6opU99g43GMG+0RDfuiMMepVFVLA+Yibyj
+ Vb9k5aHoV4fJ01mACG6pjApX9tdDOdAXTAI3Zk9yLJoap3r1QVIzasqaoExO4UaEaju1
+ 1ONDb4oFGMY9mRXbH7aaibUFP13Ixp7JjilNpNgPOb6Q913TBoi6vyCSN1GUuPl7hSkj
+ 3wLFA871CtG9oIG0M5wLSSMuJuntyJtsOrPD6CgpbZxEn1ppPt49s4UiqwjJ7PFPOCFv
+ Ly1dNs/XOQlRZqtJFA32ka4xrcV4gxGRiryWx7sQrAWJb1mRapW5Np8uGwvQcpCgSJk/
+ oVEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736503893; x=1737108693;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=peRy/BjUZvhBiGZOZT6CR7hVqi0C0WLqOpRsAuXJkfU=;
+ b=EfD03+3mGZD3myYI2ybBIZbp9FFiQE6ZaU5zJlp+GjzHX++qm2ch2URLk5P89PJzKY
+ Mc11DmRhlHxh/kTNP7eytyWk310LnAHTcJ/vxZV09foGP3YGFyD6mu35cSWDrVQ4vkAR
+ 5iiE+x4hvEkjWGGGDNt7r1n1soOhx5TdKcpCMD3FnXY3cZUh1vdLfCP9CbJlhkDn1laD
+ +wXYugJf3/JZzdDYgG5fpDckenMkGYtyZg3lehmpUY6ejazmJi8ZhJNneMJgwzuJimze
+ RMWCR9+u6+EqSSIsg9o0poXiD+ejfoFhQVOqqfrhbdhPAokimb0THy5nTId2+VNSgO0K
+ 6rew==
+X-Gm-Message-State: AOJu0YwHBAzQtlj75M73lxLBXmBsP9lpLB0zvIGXRTJesE95h78W+LqM
+ cj2GYhEhxPlREATj8RqLAu+qnHNls8bTn7B0jD4+6/t/4OlRSyhVJqTNZpD8a6A=
+X-Gm-Gg: ASbGncuvPpfbFH6TuzD8f5AUJpjmn4v8yg63L1zv1xbgzgq9emQ9a14DF99bv0EoE0p
+ YNeOJ3fykYhzd8wLb3dWaTLbBNu9bFHYIIpIre9jVh1vXGGO+df5DXmzAMm8qE9MvVFS45wzWJu
+ WbeXDQae0o212CW4q3CREVXAnieqBHgnjPgg5GaePAEdbaYDfBOmfIF+wFWBvaSq/c+Q918Z+0V
+ VqG+5/BGp3J2+gGZ0W2t92CDEWg5KqFAsBbrEI6vdERC51BkBhgVA8Q4UGxFOp2SXm6tAHk4NJO
+ QcZXLh0=
+X-Google-Smtp-Source: AGHT+IFxWdPbRdWapKcimsI9sRh9NRENBflbj4h/Lz25WkDFtylBGdKpCshNbGOHa5jOsqdO2rc+HA==
+X-Received: by 2002:a17:903:2451:b0:215:b74c:d7ad with SMTP id
+ d9443c01a7336-21a83fc389cmr167621805ad.36.1736503892770; 
+ Fri, 10 Jan 2025 02:11:32 -0800 (PST)
+Received: from [10.16.129.24] (napt.igel.co.jp. [219.106.231.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f22ebb9sm10940635ad.179.2025.01.10.02.11.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 02:11:32 -0800 (PST)
+Message-ID: <6a4dd6ef-9d0c-4f1f-81eb-0d55fa32daf5@igel.co.jp>
+Date: Fri, 10 Jan 2025 19:11:27 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/5] system/memory: support unaligned access
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
+ <20241108032952.56692-3-tomoyuki.hirose@igel.co.jp> <Z04lW_CdYBPJRah3@x1n>
+ <2de74447-00f7-4bcf-81f3-c8461ec19a67@igel.co.jp> <Z1MpY7ZIAAoBDbZU@x1n>
+ <9d1f07e5-2c08-455c-a653-e57e219666ab@igel.co.jp> <Z1oYIn5cMZeA4tes@x1n>
+ <1ab0a747-e2c4-4545-bae9-31e19c77bd75@igel.co.jp> <Z1sFUxCiQp3Nziu_@x1n>
+ <2e2dba3c-2bfc-478a-988d-fbf2e58cc293@igel.co.jp> <Z36su8G_hlkdBFy6@x1n>
+Content-Language: en-US
+From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
+In-Reply-To: <Z36su8G_hlkdBFy6@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
- envelope-from=michael@anarch128.org; helo=anarch128.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,98 +107,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-a note to announce a port of the x86-mini disassembler to QEMU.
 
-- https://github.com/michaeljclark/qemu/tree/x86-mini
-- https://github.com/michaeljclark/x86/tree/x86-mini
+On 2025/01/09 1:50, Peter Xu wrote:
+> Hi, Tomoyuki,
+>
+> On Wed, Jan 08, 2025 at 11:58:10AM +0900, Tomoyuki HIROSE wrote:
+>> Happy new year, Peter.
+>> I had another job and was late in replying to your email, sorry.
+> Happy new year.  That's fine. :)
+>
+> [...]
+>
+>>> So.. it turns out we shouldn't drop impl.unaligned?  Because above two
+>>> seems to be the real user of such.  What we may want to do is:
+>>>
+>>>     - Change above two use cases, adding impl.unaligned=true.
+>>>
+>>>       This step should hopefully have zero effect in reality on the two
+>>>       devices.  One thing to mention is both of them do not look like to have
+>>>       an upper bound of max_access_size (either 8 which is the maximum, or
+>>>       not specified).
+>> This might be a good way. In this way, we need to add 'impl.unaligned
+>> = true' to the xHCI Capability Register's MR. We also need to fix the
+> We need to keep xHCI's impl.unaligned to FALSE?  IIUC only if it's FALSE
+> would it start to use your new code in this series to automatically convert
+> the unaligned access request into one or multiple aligned accesses (without
+> changing xHCI's MR ops implementation, IOW resolve this in memory core).
 
-# x86-mini
+Yes, we need to keep it to 'false' because xHCI's MR implementation
+does not supported unaligned accesses.
 
-the x86-mini library is a lightweight x86 encoder, decoder, and
-disassembler that uses extensions to the Intel instruction set
-metadata format to encode modern VEX/EVEX instructions and legacy
-instructions using a parameterized LEX (legacy extension) format.
+> I just had another look at your last patch:
+>
+> https://lore.kernel.org/qemu-devel/20241108032952.56692-6-tomoyuki.hirose@igel.co.jp/
+>
+> index d85adaca0d..f35cbe526f 100644
+> --- a/hw/usb/hcd-xhci.c
+> +++ b/hw/usb/hcd-xhci.c
+> @@ -3165,9 +3165,11 @@ static const MemoryRegionOps xhci_cap_ops = {
+>       .read = xhci_cap_read,
+>       .write = xhci_cap_write,
+>       .valid.min_access_size = 1,
+> -    .valid.max_access_size = 4,
+> +    .valid.max_access_size = 8,
+> +    .valid.unaligned = true,
+>       .impl.min_access_size = 4,
+>       .impl.max_access_size = 4,
+> +    .impl.unaligned = false,
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>   };
+>
+> I think that should keep being valid.  So "valid.unaligned = true" will
+> start enable unaligned accesses from the API level which will start to
+> follow the xHCI controller's spec, then ".impl.unaligned = false" tells the
+> memory core to _not_ pass unaligned accesses to MR ops, instead break them
+> down properly.
+>
+>> MR implementation to be safe when unaligned accessing (current xHCI
+>> implementation does not handle unaligned accesses but the spec allows
+>> unaligned accesses).
+>>
+>> In addition, maybe it would be better to document the constraint that
+>> the situation where 'valid.unaligned = true' and 'impl.unaligned =
+>> false' is not supported.
+> Do you perhaps mean this instead?
+>
+>    valid.unaligned = FALSE && impl.unaligned == TRUE
+>
+> If so, I agree.  I think we could even consider adding an assertion into
+> memory_region_init_io() to make sure it won't be set.
+>
+> Thanks,
+>
 
-- metadata-driven disassembler with Intel format output.
-- written in C11 for compatibility with projects written in C.
-- low-level instruction encoder and decoder uses <= 32-bytes.
-- python tablegen program to generate C tables from CSV metadata.
-- metadata table tool to inspect operand encode and decode tables.
-- carefully checked machine-readable instruction set metadata.
-- support for REX/VEX/EVEX and preliminary support for REX2.
+I'm sorry if I've misunderstood, but are the following understandings
+correct?:
+- Need to merge my patch that converts an unaligned access to aligned
+   accesses.
+- Need to add 'impl.unaligned = true' in the following two places.
+   - hw/xtensa/mx_pic.c
+   - hw/ssi/npcm7xx_fiu.c
+- Add an assertion that to check for invalid patterns, additionally.
 
-the x86-mini x86 encoder and decoder library has been written from
-scratch to be modern and as simple as possible while also covering
-recent additions to the Intel and AMD 64-bit instruction sets such
-as the EVEX encodings for recent AVX-512 extensions and soon REX2/
-EVEX encodings for Intel APX, as it is written with that in mind.
+Thanks,
+Tomoyuki HIROSE
 
-## interest to the QEMU community
-
-- x86-mini is fast. raw decode performance is ~100-200MiB/sec.
-- x86-mini is small. 5 files, ~5 KLOC or ~13 KLOC including tables.
-- x86-mini is complete and includes the latest AVX-512 extensions.
-- x86-mini is easy to extend and uses extended Intel format metadata.
-- x86-mini is documented with detailed info on the metadata format.
-- x86-mini has CLI tools for searching x86 instruction set metadata.
-
-## techinical notes
-
-- the decoder is table-based and uses a metadata interpreter.
-- the decode table is ~66KiB with a ~150KiB acceleration trie.
-- there are currently 3658 opcode entries active on x86-64
-  which expands to 4775 table entries due to parameterization.
-- it could be made faster by vectorizing the prefix decoder and
-  generating decode templates from the metadata to consteval
-  metadata interpretation to eliminate some L1 D$ traffic.
-
-after cherry-picking the commit, one can test host and target
-disassembly support. e.g. for an x86-64 target on an x86-64 host:
-
-$ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
-
-## caveats and limitations
-
-- supports 32-bit and 64-bit disassembly, and theoretically 16-bit.
-- designed to support 16-bit but base index formats are not done yet.
-- x86-64 is exhaustively fuzz-tested against the LLVM disassembler.
-- but x86-mini is new and hasn't been battle-tested in production.
-
-if you already link with capstone then it doesn't provide very many
-immediate benefits, however, I think it is potentially useful as a
-small embeddable disassembler to evaluate for potential inclusion.
-
-## rationale
-
-I worked on the QEMU disassembler while working on the QEMU RISC-V
-target back in 2017/2018 and I was curious about vector support.
-it seemed at the time that TCG vector support was piecemeal, plus
-the old x86 disassembler seemed messy and incomplete. I also needed
-an MIT-licensed disassembler to enable use in a commercial product.
-basically, I was looking for a lightweight symmetric x86 instruction
-encoder and decoder library in pure C with simple build requirements.
-that is what prompted this initiative.
-
-it would be nice to have an x86 disassembler building out-of-the-box
-as I find QEMU's built-in tracing extremely useful and given x86 is
-a popular target, a small embedded disassembler might be practical.
-
-## summary and conclusion
-
-at minimum, the metedata may be useful for x86 EVEX support. note
-I see `tests/tcg/i386/x86.csv` in the source tree. the metadata is
-also based on x86-csv but has had numerous inaccuracies fixed as
-well as conversion of legacy instructions to the new LEX format.
-in effect the metadata has been fuzz-tested against LLVM for x86-64
-and ISA coverage is in the order of ~99.7%. the main branch of the
-linked repo has a procedural fuzzer for metadata-based instruction
-synthesis that could be useful for generating test cases for QEMU.
-
-I am kind of throwing this over the fence, although the code is quite
-self-contained and my stress and mental health is now under control.
-also I have not yet run checkpatch.pl on this code. it is a preview.
-
-x86-mini submaintainer.
-Michael Clark.
---
 
