@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A5BE7719E
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B5B9E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWJk4-00023U-Jm; Fri, 10 Jan 2025 13:28:20 -0500
+	id 1tWJmM-0004Xn-QM; Fri, 10 Jan 2025 13:30:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJk2-00022S-8L
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:28:18 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tWJmA-0004Wi-Aw
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:30:32 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJjy-0007QA-LP
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:28:16 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso17827445e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:28:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tWJm7-0007vn-MJ
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:30:29 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-216281bc30fso47011895ad.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736533692; x=1737138492; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A/yUFaRyzJYE/4lcFjJ8uzhfiQFfrwtitfN415Djc8k=;
- b=SNUoBJkdu1QA5YJwaIQXfsdVuJpFWOZpdbT0aOcS4o7kfyIKfPFOqGD7uhfUjqVN/U
- hBaSRc1kpFgV+jSg9tMkrDYt2DLAFwq589pzIahnQzW89O8U3uPu6X+O26CyYMlnVWB7
- A5gCcLtuhBF8F8lE2Xl3mgxVHBDcsxGxBbZDXIjmwuvKllc+TWkL6k/pzOjo9AHZskYm
- xqC3Hgh92KVQpRyPqadByNoc0nt2pRojC4dUcWn0ezW2hS1AqC80HwiwgcaBHEOvfS18
- NCTyQf3wyFQvwuuGq3A07f7mFrSVqNv+3ihSccnbA6OPAcCT/qMRPrIgetAvAttgG/15
- 48Uw==
+ d=linaro.org; s=google; t=1736533826; x=1737138626; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tUepOYp6Lw8jtWDrVv48Ktbx9HnTAIj/haIhxO/CZRE=;
+ b=DKYPzUZP6QLtA4a/6kk6nxmEjGTBNQWVnMJ2V3nQjzY3W6N39WDkVMm1MF0Ipt4EKg
+ krtXAccvz2bVe4hEDNr/6//gTaMjQ8HQl6rO/KhHrd77xI8OrCqMVXLRCohLaw13b7zv
+ w1k/LutcABp132wa9z7sO3wN2nAxRYgbR2ssoEUH5cYQ22suEoGkHk923P5WduNhtxaW
+ vACAMObT+C4C2y9lpRZYN4ePC64bzLCnxeqLprqMm8qdfg8A+lVpAB4kAzQRVErQish4
+ tqsyCq8KpLODNUd3baohoeUyEP1FVsqIJbhPoiy6x9abm6nt+zdJF394Zvz+mQdIp50j
+ LD9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736533692; x=1737138492;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A/yUFaRyzJYE/4lcFjJ8uzhfiQFfrwtitfN415Djc8k=;
- b=IAL+E5wuCzDJimxUvQ5lzWPP34l97LdWYtAOB+OFNTy56mhJG5Ux6HdE9yPvLs016D
- 9A2xhT2u+N0amBkmRmg68/MDVDLU+7f1C++lS/RWQdAwdFpc1goAs92BP8gbHv95utIJ
- QWO/qZGhLqRftQ5Y58iiKMeM04P+nlEIeEpGt5NjO240c7IvohDyIwJ4iOz1nRvRdXR5
- /orTSsxqN23os46tsSJLsdi/eFssLPO829K4qNudBQCUngNoHsFX59SeGGg2wiMqwIgF
- MFUk+0c4O2nJec4I4UkvLvq+MInbWNJARJuuvKY1UTWG/bQJ3OpN9wT6Dx30LoT780/P
- omwQ==
-X-Gm-Message-State: AOJu0YwmyoVVbetlJggIOw1xGeFkglkPPe+tGgqfXS+qLV5pEFHyagRv
- Ov2TMTAZi8SdiskQirwxgYss6dYoobUVfpGdBZmcmKwd1KwL0TzjZ+ZCxXfYVdPaspqSPD6dk5j
- 9KAU=
-X-Gm-Gg: ASbGncuh+TVg3MWrZfEwhAh2w1v2WIvOZxCS1iCbwiNb1vdmhZnXxglRn3s1qjmU8Pd
- aFDs18efyrHljS1uwlKoCwHNJFBnKId3STyySboSPjbzjd5cMArm4WtMZrY01BmCpG9Yif9VLzf
- 5m5/fpxJ3KGcsTTyARFiGYJlMRdBnJTLrqdgI4jX+W4hct9cKNGXZmspweU6dPYDHgV2aYCe8ed
- 88e+KSGmTH3SOfD5CKRaEZxTURS5OVojFkpPl/wmx48wrTcljBJXkJdHiM2Gf2DRFa0FgGkYXbQ
- 2VndVx3pRDlXLjMAZGV2B0JM852eSWQ=
-X-Google-Smtp-Source: AGHT+IFojk3zpZpqZhrxbfoGfJRIV8en3JrqqWCWbZDCeXKhZHzj2jztZxTUBERwoa/p7I0SaOKHCA==
-X-Received: by 2002:a05:600c:1c8b:b0:434:f5c0:32b1 with SMTP id
- 5b1f17b1804b1-436e26a7578mr116218715e9.15.1736533692137; 
- Fri, 10 Jan 2025 10:28:12 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436dcc8ddddsm82415595e9.0.2025.01.10.10.28.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 10:28:11 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] hw/char/serial: Convert to three-phase reset
-Date: Fri, 10 Jan 2025 19:27:59 +0100
-Message-ID: <20250110182759.84071-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250110182759.84071-1-philmd@linaro.org>
-References: <20250110182759.84071-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1736533826; x=1737138626;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tUepOYp6Lw8jtWDrVv48Ktbx9HnTAIj/haIhxO/CZRE=;
+ b=KqLg2oexxlCabEAcxznxAAPQJRTZIE6Yrm4LkSGr0ryIXJYcOZKXE3pqzkUjTKQ50/
+ TB+nh9tJwLvUkAfSSEabzEg4R3OPrUUs0Vyc5SFe/xrH8uWznIIO4kLz6rrZJHB7wx4P
+ p6tJuBk7mcDuNEQ0l4dieHgYoC8PjbcEHVkv8J0LUY9L8/4fHpqw0Ht4Zd8EoH+RBTmf
+ gf9VvVbUWHICrSFom8/t7iqbqQ2nB0oVUAvz+pGsHhTDHGR0plDNHDTeJleWqGPaGRKz
+ k0A0Z1jq9KcaHChARwX7IySXnRX7IvK3oJLAmaw5/rGU5zBFW1gXMdpWL1BbHCb9MKu0
+ AFRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyTeKez2WYXLbA4HYPVTn6NZlDat7f7z3xSpbtxKpPqv0Wx/vpcFU3hNQWcjsVO1HIaNpHvY/C/gYt@nongnu.org
+X-Gm-Message-State: AOJu0Yx5t2z1L+fBEMD2U6zADXEIpSf3TY0ZxePokTCQ3rNVQxaAYp3n
+ sesrb5BHGcH64zUv4GUUntTVvRcwTzXN/Q8gxY7/8f4d6qUySZtC1U/Qn/Wi+sc=
+X-Gm-Gg: ASbGncugu0aQb6vdJP0LTK3zi6W534xGw4ave3xx0OqK24l7iOnWZ1/YJTTGgk1v25S
+ 7jYOp1oBm+ja7UgY2FUz5XtM9yeU8s5FPFOzTXvzO67MHvN2wnKttthzoSOTnoDDM9lyWyTrcXw
+ 95hKgkym102nLn59BSPBXbBf4RXXRJmcWpwvZBy9IHBJDq3b6N6+f4jiRUGEtJQmRYyiULCvTvP
+ 1jTc8eWq/b9tMYT1zlt7SRn/A9bZ71dVwjzbbXUvOlKq67fr95nubRf+G/XFugNF0QuZLwFvfXJ
+ MxlnAQ4OdF7Bvj1Q8Fq4pRwSlAvnwHI=
+X-Google-Smtp-Source: AGHT+IHATVZ9ll8CRq4VEx8jiURPjLJWChsen40V8je1Njg0BAGMvAl3cujDgX39W1hBcDWv0pBIlQ==
+X-Received: by 2002:a05:6a00:1255:b0:726:54f1:d133 with SMTP id
+ d2e1a72fcca58-72d21f4be75mr15443462b3a.12.1736533826054; 
+ Fri, 10 Jan 2025 10:30:26 -0800 (PST)
+Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
+ [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72d4054942dsm1804165b3a.21.2025.01.10.10.30.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 10:30:25 -0800 (PST)
+Message-ID: <d4ba9559-3d6d-4abb-abfb-7de8b143578e@linaro.org>
+Date: Fri, 10 Jan 2025 10:30:23 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/rx/rx-gdbsim: Remove uses of &first_cpu
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250110180442.82687-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250110180442.82687-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,71 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the TYPE_SERIAL (16550A UART) to three-phase reset.
+On 1/10/25 10:04, Philippe Mathieu-Daudé wrote:
+> rx_gdbsim_init() has access to the single CPU via:
+> 
+>    RxGdbSimMachineState {
+>      RX62NState {
+>        RXCPU cpu;
+>        ...
+>      } mcu;
+>    } s;
+> 
+> Directly use that instead of the &first_cpu global.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Only local states are reset so use the ResetHold handler,
-like other legacy devices.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/char/serial.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+r~
 
-diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 562931685e7..9cb6e30c9ce 100644
---- a/hw/char/serial.c
-+++ b/hw/char/serial.c
-@@ -851,9 +851,9 @@ const VMStateDescription vmstate_serial = {
-     }
- };
- 
--static void serial_reset(void *opaque)
-+static void serial_reset_hold(Object *obj, ResetType type)
- {
--    SerialState *s = opaque;
-+    SerialState *s = (SerialState *)obj;
- 
-     if (s->watch_tag > 0) {
-         g_source_remove(s->watch_tag);
-@@ -928,13 +928,11 @@ static void serial_realize(DeviceState *dev, Error **errp)
-     s->modem_status_poll = timer_new_ns(QEMU_CLOCK_VIRTUAL, (QEMUTimerCB *) serial_update_msl, s);
- 
-     s->fifo_timeout_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, (QEMUTimerCB *) fifo_timeout_int, s);
--    qemu_register_reset(serial_reset, s);
- 
-     qemu_chr_fe_set_handlers(&s->chr, serial_can_receive1, serial_receive1,
-                              serial_event, serial_be_change, s, NULL, true);
-     fifo8_create(&s->recv_fifo, UART_FIFO_LENGTH);
-     fifo8_create(&s->xmit_fifo, UART_FIFO_LENGTH);
--    serial_reset(s);
- }
- 
- static void serial_unrealize(DeviceState *dev)
-@@ -949,8 +947,6 @@ static void serial_unrealize(DeviceState *dev)
- 
-     fifo8_destroy(&s->recv_fifo);
-     fifo8_destroy(&s->xmit_fifo);
--
--    qemu_unregister_reset(serial_reset, s);
- }
- 
- const MemoryRegionOps serial_io_ops = {
-@@ -975,12 +971,14 @@ static const Property serial_properties[] = {
- static void serial_class_init(ObjectClass *klass, void* data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     /* internal device for serialio/serialmm, not user-creatable */
-     dc->user_creatable = false;
-     dc->realize = serial_realize;
-     dc->unrealize = serial_unrealize;
-     device_class_set_props(dc, serial_properties);
-+    rc->phases.hold = serial_reset_hold;
- }
- 
- static const TypeInfo serial_info = {
--- 
-2.47.1
+> ---
+>   hw/rx/rx-gdbsim.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
+> index 02fdbdf824b..88c8f12c101 100644
+> --- a/hw/rx/rx-gdbsim.c
+> +++ b/hw/rx/rx-gdbsim.c
+> @@ -127,7 +127,7 @@ static void rx_gdbsim_init(MachineState *machine)
+>            * the latter half of the SDRAM space.
+>            */
+>           kernel_offset = machine->ram_size / 2;
+> -        rx_load_image(RX_CPU(first_cpu), kernel_filename,
+> +        rx_load_image(&s->mcu.cpu, kernel_filename,
+>                         SDRAM_BASE + kernel_offset, kernel_offset);
+>           if (dtb_filename) {
+>               ram_addr_t dtb_offset;
+> @@ -153,7 +153,7 @@ static void rx_gdbsim_init(MachineState *machine)
+>               qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
+>                                   rom_ptr(SDRAM_BASE + dtb_offset, dtb_size));
+>               /* Set dtb address to R1 */
+> -            RX_CPU(first_cpu)->env.regs[1] = SDRAM_BASE + dtb_offset;
+> +            s->mcu.cpu.env.regs[1] = SDRAM_BASE + dtb_offset;
+>           }
+>       }
+>   }
 
 
