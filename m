@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C111E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9CDE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWJNY-0003fs-17; Fri, 10 Jan 2025 13:05:04 -0500
+	id 1tWJRe-0004u4-3X; Fri, 10 Jan 2025 13:09:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJNI-0003cz-Mu
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:04:49 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJRc-0004tf-GX
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:09:16 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJNH-0003sL-3e
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:04:48 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3863c36a731so1718218f8f.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:04:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJRa-0004ev-Ii
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:09:16 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4361fe642ddso25165045e9.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:09:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736532285; x=1737137085; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736532551; x=1737137351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=q3tDYW/FZQAb+LrrJkOjtGoxqsuktWpm6SvboahZVVo=;
- b=JvUgCCptPiaSlJ8Npq04f7a/b601oKRxDduCT3GF1xOAxhTl3Cjc6sQnzB5Mn9CdUe
- CWqP/xI6mh0eAAF6Oj99NJd3rTrrsNflSd51r+hzrCMMbOwSvQLLRq1NR4rOQD3UHoz2
- K0fNGNPa+kcFdCN+rFdqtYqRqg8XOAI3gOdc8NJvkW6c8HPbdUolUfqCdieEdcV3TLIg
- QfDeVjCofjGFqyNN7FA7Q3ZTm7Ry996lvRm/ffD/Ikgt5SX7sfDv152l9/5ECW9VC7zq
- 32qXAJYtlRDjRpfSLEaIZPiL1X7DoLoDvN7YtNIXFp25n3tvtOK7X8aG+XQMffMrW1IY
- deYg==
+ bh=94dPOddxHoStyFe5gHQ+E8+YoIAsJ120fCrM5/9xEVo=;
+ b=d6x/+AdLWP8z9/4jpms8hXb73jsxCZXGcsvxuxI7699/5kr2r/pttL56RZZu5Q2FPW
+ g6DN4olr12eEkqS94CND8TdSVpSiM4B4LqoDUHYCkU02r2AeKMbC6ulA+ebdgoYytduH
+ fyncjNJYbjbecNiWhEHCDUap3P08EusOHuXYKP9cOTBVtasor3MJGBAgfTr/tJn65N7Q
+ AJOZejM+jFCZGilIXkwDXBUTlJ6EhBxOwq8XgLAMXXMRwKKsyb547LTg+bCuki4IgTTE
+ TLBrR3U/9ojCKw65qauAnQgIdJ0h8To86/C2l7JGLDKQmh96oUzjTt2wcePNwbcx2Ecg
+ FMLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736532285; x=1737137085;
+ d=1e100.net; s=20230601; t=1736532551; x=1737137351;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=q3tDYW/FZQAb+LrrJkOjtGoxqsuktWpm6SvboahZVVo=;
- b=bfxGRLGRIvoC3A2DtvafoiVxI52Sac0XG2B/ungNOg5lyMd66aShH6xU2yt1pD+RYp
- Ei2uK8nj8f+nwdBnJSlweju22ql1WcVCTi772YaxhWXDEXGF0jxsoTR8wQwIUE0wBXlg
- oTotoj4p5jZv80IeyfebbK8Ahxh/hTSQYLZ0mzgpyoBrMduIbv/cSmkDQ+l7Pk+LX+rU
- F53yEX9KUWrJvaLAenBqkgYML6ClGJERA9W5ewZ+58vNJ8cTfnC9A76BWDiGZGVkODEv
- mAvGfzLUtSw485rOCUtIi8jIVD2ea/jTcINIaEWOx6q0cvGYDnZbaU0w9O3HzLFYCoK3
- PBgg==
-X-Gm-Message-State: AOJu0YzbI3UcyBdmpgbDJs/oiKmvJcPjTguQi6fXzm3dtWZtEhfo4whs
- v325a5QdKor2Y0cqf2IoSRHTShgmeA+2P8hn297q44dW2PrUyYJ32niQ8hseSf0/CycrxPwys4L
- oELg=
-X-Gm-Gg: ASbGncvJaVCPsHCYKhggzYeZPcM6ysjRV/5TMWpnhw1QX+d5Rc+qvAzRl/KFODWQY4/
- TEGttjlTdsclyR/3jAu90BG6geo8lRSTL/hWpTZBFP0mtYpZ7uC95fLT3eZE+ppAWbM/5UwtWwN
- c7rXknjf6HkYihm+0s2bPgDmaAEFM748EwTlqms9fQ9FN+Wpq0Lru2p393XxOY9gZnIafeq1OvA
- SxAvbpfqZzmjPI8A18NfP1udjOVfhAiCtnkEsfDdMKzMey+6r9NStcO2LDmoxJBS3V8hJHbYwEx
- zVNkW3C/62b2NQhZXgYHtEdR2Ztqmro=
-X-Google-Smtp-Source: AGHT+IHREvfJbO+3EB/ltHN7W48TH4Jmq45Q3t7JjknFNFvrGoTr3w19zR22VJN359X7We3qoGGaWA==
-X-Received: by 2002:a05:6000:4011:b0:386:3835:9fec with SMTP id
- ffacd0b85a97d-38a873306cemr11936213f8f.44.1736532284757; 
- Fri, 10 Jan 2025 10:04:44 -0800 (PST)
+ bh=94dPOddxHoStyFe5gHQ+E8+YoIAsJ120fCrM5/9xEVo=;
+ b=kbSUbYlCw0A07+Qy8RUYa4YzFU7ZWCl+G+W+9I1T/zW7kfKPdfzUXWOChqYvc2jquZ
+ w6YytF3Oong3PgDmAuiLx+vc5RNVrpVFwmwsXuAwlAXGIYmc/SYLq32dbI1R2KjXnfQ7
+ vmcn/CarBV3TLpidnKX/yWdHfCHFSlzjkSc9/WFf5fG5uH1O8nTAC5vJTHaqq2WPXQVg
+ 6/E3JK01as7Pj1RhMxuUlzS7Q3mWfjYjk0ehjhiKPZ+LYsCmLJ/3hcFHaJyDetWEVU97
+ mj/3Qm6Ok2Q3rKOLUR3CcjUAKzawoIGtExb3ba0zMgXLrI+qIlB2yYqPxxROdECKIqGa
+ sArA==
+X-Gm-Message-State: AOJu0Yyd24Ez2rh8oE2rlEEWeKttS3vK6KgG3bS1bPgIXXwqMaunqxEM
+ 5kUZzM+psFnjZLDzpHd1wyGvxwmY0aRjQl+LMa9dkn2AnIlwUwH2FUwe8tNm1Bun5vY4MfQgTuk
+ XHjQ=
+X-Gm-Gg: ASbGncsiTKu6oT4SoLkTGe42iiqUzFIjeoROkLwWw7C4F5E4NAEBzururcCdshblOKT
+ 1EawW62fczGVJRjtSytauHffBMvpn5aWhvPmQgnKAqvpf2opsDHNVUd/WlFMH6ttRb9IqczN0yu
+ u8KeKoJgLdayVmRhfVq53yad5VMZh1YuGTIFMUcDI2LB1PpGhvkK6VkWEWPINgF0+2IjlglzSv1
+ ODnc34nXvCgetVW3f46kRC8T0i65W1Fysvz5GEIU87gLxdfVmGjiCauoXnRJPZTSetJszN21zA0
+ tBaX3jiE0+meEy5znV56ARjsxozVmrY=
+X-Google-Smtp-Source: AGHT+IF9h+Lg5s+kt+FlASSUD6NcoF2rY4aiumH+tpQl5hpRX2ojK6j8XlCCdlesClpThrG4vTwTog==
+X-Received: by 2002:a05:600c:1d07:b0:434:fa73:a907 with SMTP id
+ 5b1f17b1804b1-436e269a5f5mr111516085e9.13.1736532550547; 
+ Fri, 10 Jan 2025 10:09:10 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2ddcda3sm93762025e9.22.2025.01.10.10.04.43
+ 5b1f17b1804b1-436e2da66e6sm94655495e9.4.2025.01.10.10.09.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 10:04:43 -0800 (PST)
+ Fri, 10 Jan 2025 10:09:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/rx/rx-gdbsim: Remove uses of &first_cpu
-Date: Fri, 10 Jan 2025 19:04:42 +0100
-Message-ID: <20250110180442.82687-1-philmd@linaro.org>
+Subject: [PATCH] hw/tricore/triboard: Remove use of &first_cpu
+Date: Fri, 10 Jan 2025 19:09:09 +0100
+Message-ID: <20250110180909.83165-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,44 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rx_gdbsim_init() has access to the single CPU via:
+triboard_machine_init() has access to the single CPU via:
 
-  RxGdbSimMachineState {
-    RX62NState {
-      RXCPU cpu;
+  TriBoardMachineState {
+    TC27XSoCState {
+      TriCoreCPU cpu;
       ...
-    } mcu;
-  } s;
+    } tc27x_soc;
+  } ms;
 
-Directly use that instead of the &first_cpu global.
+Pass it as argument to tricore_load_kernel() so we can
+remove the &first_cpu global use.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/rx/rx-gdbsim.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/tricore/triboard.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
-index 02fdbdf824b..88c8f12c101 100644
---- a/hw/rx/rx-gdbsim.c
-+++ b/hw/rx/rx-gdbsim.c
-@@ -127,7 +127,7 @@ static void rx_gdbsim_init(MachineState *machine)
-          * the latter half of the SDRAM space.
-          */
-         kernel_offset = machine->ram_size / 2;
--        rx_load_image(RX_CPU(first_cpu), kernel_filename,
-+        rx_load_image(&s->mcu.cpu, kernel_filename,
-                       SDRAM_BASE + kernel_offset, kernel_offset);
-         if (dtb_filename) {
-             ram_addr_t dtb_offset;
-@@ -153,7 +153,7 @@ static void rx_gdbsim_init(MachineState *machine)
-             qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
-                                 rom_ptr(SDRAM_BASE + dtb_offset, dtb_size));
-             /* Set dtb address to R1 */
--            RX_CPU(first_cpu)->env.regs[1] = SDRAM_BASE + dtb_offset;
-+            s->mcu.cpu.env.regs[1] = SDRAM_BASE + dtb_offset;
-         }
+diff --git a/hw/tricore/triboard.c b/hw/tricore/triboard.c
+index 4dba0259cd3..9cc8d282ff2 100644
+--- a/hw/tricore/triboard.c
++++ b/hw/tricore/triboard.c
+@@ -31,11 +31,10 @@
+ #include "hw/tricore/triboard.h"
+ #include "hw/tricore/tc27x_soc.h"
+ 
+-static void tricore_load_kernel(const char *kernel_filename)
++static void tricore_load_kernel(TriCoreCPU *cpu, const char *kernel_filename)
+ {
+     uint64_t entry;
+     long kernel_size;
+-    TriCoreCPU *cpu;
+     CPUTriCoreState *env;
+ 
+     kernel_size = load_elf(kernel_filename, NULL,
+@@ -46,7 +45,6 @@ static void tricore_load_kernel(const char *kernel_filename)
+         error_report("no kernel file '%s'", kernel_filename);
+         exit(1);
+     }
+-    cpu = TRICORE_CPU(first_cpu);
+     env = &cpu->env;
+     env->PC = entry;
+ }
+@@ -62,7 +60,7 @@ static void triboard_machine_init(MachineState *machine)
+     sysbus_realize(SYS_BUS_DEVICE(&ms->tc27x_soc), &error_fatal);
+ 
+     if (machine->kernel_filename) {
+-        tricore_load_kernel(machine->kernel_filename);
++        tricore_load_kernel(&ms->tc27x_soc.cpu, machine->kernel_filename);
      }
  }
+ 
 -- 
 2.47.1
 
