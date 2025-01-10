@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A74E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 10:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA581E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 10:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWBrh-0000J6-MP; Fri, 10 Jan 2025 05:03:41 -0500
+	id 1tWBrl-0000f7-JY; Fri, 10 Jan 2025 05:03:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+4d36ee5d223a5d86d66e+7810+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1tWBrc-0000DL-96; Fri, 10 Jan 2025 05:03:36 -0500
+ id 1tWBrd-0000Gf-G5; Fri, 10 Jan 2025 05:03:39 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+4d36ee5d223a5d86d66e+7810+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1tWBra-0003rH-85; Fri, 10 Jan 2025 05:03:35 -0500
+ id 1tWBra-0003rI-8X; Fri, 10 Jan 2025 05:03:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=Xoo+xm3Tw2CkYCxIV3PtG0Wlpe8+ZC90junJ+uK4GHw=; b=peyUPkgzt+cH4h/xbt1pVyqhYy
- IJt7rina2x756yrTxng++yuyPDzQZ4pI0XICMTyTy/uRV2ramirDoVa+obGvj1xghHgvGykSTeckP
- +eZrwM4YSO4HeWKqgznC+j6hOf5SQ0M5XcMXuhAyanlOndclQI2AhCfKgDZR2mqxXkPXLvJA6nvLr
- 5By/prH62avmOLpsdzv323RBV83Vi9DvbI9qUn7J9CcsbmRo/5fK/boU3EFEHlUKa0ORD9B6IhjCm
- hoPOFZQhLkf56B2mljrClQ8Y0eVTBK75OQqAG0If7pZPbeFcYwdgOKsyEoT6PrZkIstBluJGb+jl7
- Mx+1HBwA==;
+ bh=X9zPJARrpqAjJWmqv/5Ourv8FRQelInhZmfRvKOuCvE=; b=p5CUhAGkiy/Ab65rEyWrr+bC/e
+ R4Ww/x6oWNsGbvYIgqh5v++zG7YpiB1LauJCN+l1yK41FHft1fOgE827KN8mn5K86vqq5SjIeuXCd
+ bgp7f5nxwT8i+ZnrXi0Y5fEz8FVeKd//w+GOwvb8LQ8dabPvo8a3iIRfpsbIv9PfkJo+S7BvIHFrj
+ qJN/KjsRxXLXyaKzrdaOjcZHSkeVLD8Hv372ooE7E/nLi1VrLMX2xwcbIXQYZqsMC/I9QsNnJgAxO
+ nOSa7L3UXpZTqvNbm6BCBHR4iiTfk9fWDDIqALBv4mtUQDVA24+8hsBJxzDunP4dqviW7pntf1GuT
+ 3xsgmF0Q==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tWBrT-00000009jwk-46jj; Fri, 10 Jan 2025 10:03:28 +0000
+ id 1tWBrT-00000009jwm-47GC; Fri, 10 Jan 2025 10:03:28 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
- Linux)) id 1tWBrS-00000002D85-3diG; Fri, 10 Jan 2025 10:03:26 +0000
+ Linux)) id 1tWBrS-00000002D8J-41Ad; Fri, 10 Jan 2025 10:03:26 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: Roger Pau Monne <roger.pau@citrix.com>,
 	qemu-devel@nongnu.org
@@ -45,9 +45,10 @@ Cc: Stefano Stabellini <sstabellini@kernel.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
  qemu-block@nongnu.org
-Subject: [PATCH 2/4] hw/xen: Use xs_node_read() from xen_console_get_name()
-Date: Fri, 10 Jan 2025 10:03:24 +0000
-Message-ID: <20250110100326.527101-2-dwmw2@infradead.org>
+Subject: [PATCH 4/4] hw/xen: Use xs_node_read() from xenstore_read_str()
+ instead of open-coding it
+Date: Fri, 10 Jan 2025 10:03:26 +0000
+Message-ID: <20250110100326.527101-4-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250110100326.527101-1-dwmw2@infradead.org>
 References: <fc9b22c55eaaa79a3ef9829c270bc4b4e93be7a0.camel@infradead.org>
@@ -83,55 +84,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Now that xs_node_read() can construct a node path, no need to open-code it.
-
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 ---
- hw/char/xen_console.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ hw/xen/xen_pvdev.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-index 989e75fef8..9338e00473 100644
---- a/hw/char/xen_console.c
-+++ b/hw/char/xen_console.c
-@@ -367,28 +367,28 @@ static char *xen_console_get_name(XenDevice *xendev, Error **errp)
+diff --git a/hw/xen/xen_pvdev.c b/hw/xen/xen_pvdev.c
+index c5ad71e8dc..c9143ba259 100644
+--- a/hw/xen/xen_pvdev.c
++++ b/hw/xen/xen_pvdev.c
+@@ -22,6 +22,7 @@
+ #include "qemu/main-loop.h"
+ #include "hw/qdev-core.h"
+ #include "hw/xen/xen-legacy-backend.h"
++#include "hw/xen/xen-bus-helper.h"
+ #include "hw/xen/xen_pvdev.h"
  
-     if (con->dev == -1) {
-         XenBus *xenbus = XEN_BUS(qdev_get_parent_bus(DEVICE(xendev)));
--        char fe_path[XENSTORE_ABS_PATH_MAX + 1];
-         int idx = (xen_mode == XEN_EMULATE) ? 0 : 1;
-+        Error *local_err = NULL;
-         char *value;
+ /* private */
+@@ -81,12 +82,9 @@ int xenstore_write_str(const char *base, const char *node, const char *val)
  
-         /* Theoretically we could go up to INT_MAX here but that's overkill */
-         while (idx < 100) {
-             if (!idx) {
--                snprintf(fe_path, sizeof(fe_path),
--                         "/local/domain/%u/console", xendev->frontend_id);
-+                value = xs_node_read(xenbus->xsh, XBT_NULL, NULL, &local_err,
-+                                     "/local/domain/%u/console",
-+                                     xendev->frontend_id);
-             } else {
--                snprintf(fe_path, sizeof(fe_path),
--                         "/local/domain/%u/device/console/%u",
--                         xendev->frontend_id, idx);
-+                value = xs_node_read(xenbus->xsh, XBT_NULL, NULL, &local_err,
-+                                     "/local/domain/%u/device/console/%u",
-+                                     xendev->frontend_id, idx);
-             }
--            value = qemu_xen_xs_read(xenbus->xsh, XBT_NULL, fe_path, NULL);
-             if (!value) {
-                 if (errno == ENOENT) {
-                     con->dev = idx;
-+                    error_free(local_err);
-                     goto found;
-                 }
--                error_setg(errp, "cannot read %s: %s", fe_path,
--                           strerror(errno));
-+                error_propagate(errp, local_err);
-                 return NULL;
-             }
-             free(value);
+ char *xenstore_read_str(const char *base, const char *node)
+ {
+-    char abspath[XEN_BUFSIZE];
+-    unsigned int len;
+     char *str, *ret = NULL;
+ 
+-    snprintf(abspath, sizeof(abspath), "%s/%s", base, node);
+-    str = qemu_xen_xs_read(xenstore, 0, abspath, &len);
++    str = xs_node_read(xenstore, 0, NULL, NULL, "%s/%s", base, node);
+     if (str != NULL) {
+         /* move to qemu-allocated memory to make sure
+          * callers can safely g_free() stuff. */
 -- 
 2.47.0
 
