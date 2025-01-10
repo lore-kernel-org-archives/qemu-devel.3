@@ -4,101 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E85CEE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 11:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B86E5E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 11:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWDbU-0006CC-15; Fri, 10 Jan 2025 06:55:04 -0500
+	id 1tWDf3-0006xR-8v; Fri, 10 Jan 2025 06:58:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWDbQ-0006Bw-2Q
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:55:00 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWDf2-0006xE-4i
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:58:44 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWDbO-0008QV-Ic
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:54:59 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-aa69107179cso392171566b.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 03:54:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736510097; x=1737114897; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g8fAIRRo0+6zPrMEvvHB1BY6adWi/YL+xrnwVZIMSaE=;
- b=ZKyGInQMbJX6RDDj7H0ruu0t4/fbeU1+NgjQyJpFMT/vLbj+H+ouDvQFxl4tVzpa/Y
- auHbEOEo/ovDt0Wp8SgrzUByEZ3RNj9BEeVlMKdsiHjLmZS1Gl8zmDvqrKOtBFkLH2C0
- hoz4vINmpWDbM0gCWvN/pvabmNeoMBcciG35wMuu9RSFjhUXadktGc0K3gHQnWvoqYfB
- AHMHGuoGlvhexmkoLPwkUtk77IHXM5z4fF21FIbQFevskiSW7rJmzOaQ0KQs9OEFQwVs
- hAA8mXmjNnG7AbP0BSkb8Ldj45fVdGi0HQXqlNBpw/+U+x0FMep3Y7TzhGOLsiMZtNtd
- 6Hfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736510097; x=1737114897;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=g8fAIRRo0+6zPrMEvvHB1BY6adWi/YL+xrnwVZIMSaE=;
- b=meuoxHJBUTyYwwDrG9MM1oEEsUb62zMfzYnrofsgNTsxPYqVnRuoRQcngea+Q6RYY1
- it1P8IsuiFlIpnaxxcrtOZt15Xgr5B0MheJ/PZZ5z/TFWgA/c+KEKq7fdsd4S183zVd7
- w6gMX/figF/vzQQZ8acJVq0ISZN16g/n7mNC2K87raPv+UEEUNK+e+Sp/SrGhpGprc5y
- hRuIE0nYpsK2CXs+if6aR/PyHKTc2ny22lpO1q6wkqPwyCwNhbt+16LjuVwGXxDtHvDW
- nn54uKK2UUKZw1clnJb0nn/PSN9ClDjNvnVU8iZE/IWpsOsxEMt6ARamQynTnZ5lm3sx
- j11w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzc5SwXpZmvPUYP8HDDiYDPG3A0sdIWduloraEsMXMzKdwRR2NxMK0actuPSGG39n/vpdEvZ+dohTb@nongnu.org
-X-Gm-Message-State: AOJu0YwBmoV/Uwy2bodYPjnz77gP9XaJ1jINOK/7KkmAbRZ6S1V73IOe
- 2DFvcSGwz4cACWs7AuWl9bd/KsDCs9sn8fHSLMO6dtIYkvSlpBJYa3ndm4hpCds=
-X-Gm-Gg: ASbGncth4txqFeu9Jdfv+ogvH6aD/IPsyUuPn6X11w5tSdLRKEMivvMvvYVvtgw3IyJ
- Bb29IjKj4EoRv5yMadk9SGwrHsbQJgRkvoKIernWHc6Tnz9G9I7j4d0zmb1tju4cMSeW1iMuviK
- Em1q+0y05JVEGOF68s5JXiFYKztztEWOu9mT0i04Uy8zbgN91v/QbUqZQYbvl+AoNMaoZtZqtYs
- 1te0RLNYfiiNVk0YrJwccsony93FJHe4O86RQIiPEbZg0Az8TmAILU=
-X-Google-Smtp-Source: AGHT+IFoPFYO98Z6L+ygMRlmRNKED15lSyeyEmSyoQLJR9Zo1/guz4QcsE4e5poXuitF4Puebp/ccg==
-X-Received: by 2002:a17:906:c156:b0:aa6:2704:4840 with SMTP id
- a640c23a62f3a-ab2abc8f108mr925228866b.51.1736510096811; 
- Fri, 10 Jan 2025 03:54:56 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90dacf1sm161739366b.63.2025.01.10.03.54.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 03:54:56 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 728935F8C8;
- Fri, 10 Jan 2025 11:54:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- "Dr. David Alan Gilbert" <dave@treblig.org>,  Thomas Huth
- <thuth@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Alexandre
- Iooss <erdnaxe@crans.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: Re: [PATCH 10/22] system: propagate Error to gdbserver_start (and
- other device setups)
-In-Reply-To: <b46d7d01-ae4d-4c47-a3df-93ad46ff6a1d@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 9 Jan 2025 23:27:33
- +0100")
-References: <20250109170619.2271193-1-alex.bennee@linaro.org>
- <20250109170619.2271193-11-alex.bennee@linaro.org>
- <da769717-0823-45b4-8b1c-9fd2611d0092@linaro.org>
- <87bjwf6abf.fsf@draig.linaro.org>
- <b46d7d01-ae4d-4c47-a3df-93ad46ff6a1d@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Fri, 10 Jan 2025 11:54:55 +0000
-Message-ID: <87tta651f4.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWDf0-0000Kb-Be
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:58:43 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 38F6D1814AF
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:58:39 +0100 (CET)
+Received: (qmail 17340 invoked by uid 990); 10 Jan 2025 11:58:39 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Fri, 10 Jan 2025 12:58:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Date: Fri, 10 Jan 2025 11:58:38 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <6a8376f614cf26112a81d5d870c684a653b6952e@nut.email>
+TLS-Required: No
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
+To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
+Cc: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ "Alexandre Iooss" <erdnaxe@crans.org>, "Mahmoud  Mandour"
+ <ma.mandourr@gmail.com>, "Richard Henderson" <richard.henderson@linaro.org>
+In-Reply-To: <87a5c06j7b.fsf@draig.linaro.org>
+References: <cover.1733063076.git.neither@nut.email>
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+ <590990025f1f43704ca8831254754661c176c42f@nut.email>
+ <87a5c06j7b.fsf@draig.linaro.org>
+X-Rspamd-Bar: +
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) MIME_GOOD(-0.1)
+X-Rspamd-Score: 1.4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=LSH1nSJmyfhNRNVWO2SLmnQp072MPX8FC2MZxk/Zwh8=;
+ b=KwCItIGO8qmp1FVr/CrN5T2xLIJYiUDyHfKNSIggB+mk3Kr6m8aZRlQ8eJk8J0oBhWhyF5aPgu
+ X6lvj/J0SFEYY384LkTUd5JUD4zG7PE7ZbQ5/UOQPe1nsZ1zjsVTHz5N4iz1daKmumQ8PsUGfYO/
+ CRn12l0S1pIkDZfccHAADJ6Yhr6TGASgCx9Zi0aUvR0C7au2LAnrxJdfWMG2J6HJXDo6t2KYD4Yj
+ NR03Z0JQ5nZ+lTmua2ebyutbY1cEgKnmDdUHg57IE6KrcDyAf/DhC7PYpjbM0bUWUzUmpS9yRLm/
+ S5CXwvoeMuajhN2IzOjwO3G/QIsahOJJHy1VCH3QBCfznQaavnzNz5wZZkOpDNgZtF9ourJidrxP
+ 83XaFFhuuSL0ZjKoha+/D4/QqrrtMweKbR70TyMIuL7COqzM7pHVIH/Ja8oUbbCOyUe0Qnebo389
+ 3Y10pCqvxRzy0Fisfm9PBvE+bknzYrgmc2qMRiGoiLW7ynCNCwJXzmt/jQ1z9kJqgbtWIRDtWqgN
+ aeX7eACs77GpXEWDdYC8WUXgN+1ifNUSnIcizL5nhLDhBh6RXVirt+ZMkIV7ap2ldL3UJRQUevmF
+ uxYKnJ35qXBy38z51TxoACSuJZeEat0uuiFSoX+Z2FVPNeqTN1FYb1SwLMvmrY9L2PxqhJxNp1td
+ Q=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,45 +86,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Hi Alex,
 
-> On 9/1/25 20:45, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>=20
->>> On 1/9/25 09:06, Alex Benn=C3=A9e wrote:
->>>> This started as a clean-up to properly pass a Error handler to the
->>>> gdbserver_start so we could do the right thing for command line and
->>>> HMP invocations.
->>>> Now that we have cleaned up foreach_device_config_or_exit() in
->>>> earlier
->>>> patches we can further simplify by it by passing &error_fatal instead
->>>> of checking the return value. Having a return value is still useful
->>>> for HMP though so tweak the return to use a simple bool instead.
->>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>>> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
->>>>
->>>
->>> <snip>
->>>
->>>> -static int gdbserver_open_port(int port)
->>>> +static int gdbserver_open_port(int port, Error **errp)
->>>
->>> Did you mean:
->>> static bool gdbserver_open_port...?
->> yes, yes I did. Will fix.
->
-> This is returning a socket file descriptor, why bool?
+Sorry for tha late reply.
 
-Doh - misread - I thought this was gdbserver_start... let me check.
+January 9, 2025 at 5:33 PM, "Alex Benn=C3=A9e" wrote:
+> "Julian Ganz" <neither@nut.email> writes:
+>=20
+>=20(Add Richard to CC)
+>=20
+>=20>=20
+>=20> Hi Pierrick,
+> >=20
+>=20>  December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
+> >=20
+>=20> >=20
+>=20> > On 12/2/24 11:41, Julian Ganz wrote:
+> > >  > +static void insn_exec(unsigned int vcpu_index, void *userdata)
+> > >  > +{
+> > >  > + struct cpu_state *state =3D qemu_plugin_scoreboard_find(states=
+, vcpu_index);
+> > >  > + uint64_t pc =3D (uint64_t) userdata;
+> > >  > + GString* report;
+> > >  > +
+> > >  > + if (state->has_next) {
+> > >  > + if (state->next_pc !=3D pc) {
+> > >  > + report =3D g_string_new("Trap target PC mismatch\n");
+> > >  > + g_string_append_printf(report,
+> > >  > + "Expected: %"PRIx64"\nEncountered: %"
+> > >  > + PRIx64"\n",
+> > >  > + state->next_pc, pc);
+> > >  > + qemu_plugin_outs(report->str);
+> > >  > + if (abort_on_mismatch) {
+> > >  > + g_abort();
+> > >  > + }
+> > >  > + g_string_free(report, true);
+> > >  > + }
+> > >  > + state->has_next =3D false;
+> > >  > + }
+> > >  > +}
+> > >  >=20
+>=20> >  When booting an arm64 vm, I get this message:
+> > >  Trap target PC mismatch
+> > >  Expected: 23faf3a80
+> > >  Encountered: 23faf3a84
+> > >=20
+>=20>  A colleague of mine went to great lengths trying to track and reli=
+ably
+> >  reproduce this. We think that it's something amiss with the existing
+> >  instruction exec callback infrastructure. So... it's not something I=
+'ll
+> >  be addressing with the next iteration as it's out of scope. We'll
+> >  probably continue looking into it, though.
+> >=20
+>=20>  The mismatch is reported perfectly normal and boring exceptions an=
+d
+> >  interrupts with no indication of any differences to other (not repor=
+ted)
+> >  events that fire on a regular basis. Apparently, once in a blue moon
+> >  (relatively speaking), for the first instruction of a handler (even
+> >  though it is definitely executed and qemu does print a trace-line fo=
+r
+> >  that instruction):
+> >=20
+>=20>  | Trace 0: 0x7fffa0b03900 [00104004/000000023fde73b4/00000021/ff02=
+0200]
+> >  | Trace 0: 0x7fffa02d9580 [00104004/000000023fde72b8/00000021/ff0202=
+00]
+> >  | Trace 0: 0x7fffa02dfc40 [00104004/000000023fde7338/00000021/ff0202=
+00]
+> >  | Trace 0: 0x7fffa0b03d00 [00104004/000000023fde73d4/00000021/ff0202=
+00]
+> >  | Trace 0: 0x7fffa0b03e80 [00104004/000000023fde73d8/00000021/ff0202=
+00]
+> >  | Trace 0: 0x7fffa0b04140 [00104004/000000023fde7408/00000021/ff0202=
+00]
+> >  | Trace 0: 0x7fffa02dd6c0 [00104004/000000023fde70b8/00000021/ff0202=
+00]
+> >  | Trace 0: 0x7fffa02dd800 [00104004/000000023fde7b90/00000021/ff0202=
+00]
+> >  | cpu_io_recompile: rewound execution of TB to 000000023fde7b90
+> >=20
+>=20So this happens when an instruction that is not the last instruction =
+of
+> the block does some IO. As IO accesses can potentially change system
+> state we can't allow more instructions to run in the block that might
+> not have that change of state captured
+>=20
+>=20cpu_io_recompile exits the loop and forces the next TranslationBlock =
+to
+> be only one (or maybe two instructions). We have to play games with
+> instrumentation to avoid double counting execution:
+>=20
+>=20 /*
+>  * Exit the loop and potentially generate a new TB executing the
+>  * just the I/O insns. We also limit instrumentation to memory
+>  * operations only (which execute after completion) so we don't
+>  * double instrument the instruction.
+>  */
+>  cpu->cflags_next_tb =3D curr_cflags(cpu) | CF_MEMI_ONLY | n;
+>=20
+>=20The instruction is in a weird state having both executed (from the
+> plugin point of view) but not changed any state (stopped from doing MMI=
+O
+> until the next instruction).
+>=20
+>=20>=20
+>=20> | Taking exception 5 [IRQ] on CPU 0
+> >  | ...from EL1 to EL1
+> >  | ...with ESR 0x0/0x3800000
+> >  | ...with SPSR 0x20000305
+> >  | ...with ELR 0x23fde7b90
+> >  | ...to EL1 PC 0x23fd77a80 PSTATE 0x23c5
+> >=20
+>=20I guess before we re-executed the new block an asynchronous interrupt
+> came in?
+>=20
+>=20Does changing the above to:
+>=20
+>=20 cpu->cflags_next_tb =3D curr_cflags(cpu) | CF_MEMI_ONLY | CF_NOIRQ |=
+ n;
+>=20
+>=20make the problem go away? It should ensure the next 1/2 instruction
+> block execute without checking for async events. See gen_tb_start() for
+> the gory details.
 
->
->>=20
->>>
->>> With that,
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>=20
+So my collegue was tracing this issue himself over the last week(a) and
+arrived more or less at the same conclusion. According to him we don't
+observe the issue anymore, either.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks for the fix!
+
+Regards,
+Julian
 
