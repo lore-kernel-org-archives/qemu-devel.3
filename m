@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85574E7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D951E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWDuL-0001Pp-EO; Fri, 10 Jan 2025 07:14:33 -0500
+	id 1tWDuk-0001XF-Q8; Fri, 10 Jan 2025 07:14:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tWDuI-0001Od-KC
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:14:30 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tWDuh-0001WY-2O; Fri, 10 Jan 2025 07:14:55 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tWDuG-0003KG-T0
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:14:30 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tWDuf-0003O1-5i; Fri, 10 Jan 2025 07:14:54 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A5C1F1F396;
- Fri, 10 Jan 2025 12:14:27 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7F5AB210F2;
+ Fri, 10 Jan 2025 12:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736511267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736511290; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YILkL8gIZpd2M8zlAaeS2NRxwcKi1GXQ4OHbI20hopE=;
- b=Hko3E7cfT2Upq+WKk7R+Ud+tuhCZyCx3L0j5g80syAkywgImsPTjUZqsCyLUsItcHbmXVC
- dMYtBb6mNzHHladUfTLWGrk5zkjOsaywywYg6/bY5UG8CqXaWpmwG9udjlSjUCq75yFuv+
- lH7n6FA/Mp5hiGhW3ygwVet+GnK+72U=
+ bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
+ b=etTGdjWOZfglHReJzo9Ts1MLAWKh6DvZozQ2/fmN/QWpbWKK3cVD5iheyIVsjFCDCEzUV9
+ PalEy6qlseyT2UhyWRkEnUTnz2pZ1ONkjKbxGLixxgQX53c4GSfYlcKVQpUy1iRqwGFnNd
+ oQnrGZCUUZs5bX4bbzLVy7AR6A7oNGA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736511267;
+ s=susede2_ed25519; t=1736511290;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YILkL8gIZpd2M8zlAaeS2NRxwcKi1GXQ4OHbI20hopE=;
- b=nr572TT9nYKU81r2ExXs4BDUnvxrZg0mUajZx1hfeyzjc4r6jvMEN+gDn3Ls8STWdOiO2I
- 1JJJ97+YoDvpqhAg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Hko3E7cf;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=nr572TT9
+ bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
+ b=oguBPm24CEdD9Fx6Au0PTmSz0mYhzXztW7BxlFdqMQLfT9oKTEJ1KoL3EMG0Ep6ePfz0Ut
+ wpX4RQh5wEIu9LBg==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736511267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1736511290; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YILkL8gIZpd2M8zlAaeS2NRxwcKi1GXQ4OHbI20hopE=;
- b=Hko3E7cfT2Upq+WKk7R+Ud+tuhCZyCx3L0j5g80syAkywgImsPTjUZqsCyLUsItcHbmXVC
- dMYtBb6mNzHHladUfTLWGrk5zkjOsaywywYg6/bY5UG8CqXaWpmwG9udjlSjUCq75yFuv+
- lH7n6FA/Mp5hiGhW3ygwVet+GnK+72U=
+ bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
+ b=etTGdjWOZfglHReJzo9Ts1MLAWKh6DvZozQ2/fmN/QWpbWKK3cVD5iheyIVsjFCDCEzUV9
+ PalEy6qlseyT2UhyWRkEnUTnz2pZ1ONkjKbxGLixxgQX53c4GSfYlcKVQpUy1iRqwGFnNd
+ oQnrGZCUUZs5bX4bbzLVy7AR6A7oNGA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736511267;
+ s=susede2_ed25519; t=1736511290;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YILkL8gIZpd2M8zlAaeS2NRxwcKi1GXQ4OHbI20hopE=;
- b=nr572TT9nYKU81r2ExXs4BDUnvxrZg0mUajZx1hfeyzjc4r6jvMEN+gDn3Ls8STWdOiO2I
- 1JJJ97+YoDvpqhAg==
+ bh=Nnb9qg9SwxVeGOoZHpmOcvrRS2RlGj5OFbi+CwMfivM=;
+ b=oguBPm24CEdD9Fx6Au0PTmSz0mYhzXztW7BxlFdqMQLfT9oKTEJ1KoL3EMG0Ep6ePfz0Ut
+ wpX4RQh5wEIu9LBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ADBBD13A86;
- Fri, 10 Jan 2025 12:14:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C9D5F13A86;
+ Fri, 10 Jan 2025 12:14:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cDN3HCIPgWdURwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 10 Jan 2025 12:14:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2BtcIzgPgWdURwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 10 Jan 2025 12:14:48 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 07/25] migration/multifd: Cleanup src flushes on condition check
-Date: Fri, 10 Jan 2025 09:13:55 -0300
-Message-Id: <20250110121413.12336-8-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 22/25] s390x: Fix CSS migration
+Date: Fri, 10 Jan 2025 09:14:10 -0300
+Message-Id: <20250110121413.12336-23-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250110121413.12336-1-farosas@suse.de>
 References: <20250110121413.12336-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A5C1F1F396
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- RCPT_COUNT_TWO(0.00)[2];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,130 +119,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+Commit a55ae46683 ("s390: move css_migration_enabled from machine to
+css.c") disabled CSS migration globally instead of doing it
+per-instance.
 
-The src flush condition check is over complicated, and it's getting more
-out of control if postcopy will be involved.
-
-In general, we have two modes to do the sync: legacy or modern ways.
-Legacy uses per-section flush, modern uses per-round flush.
-
-Mapped-ram always uses the modern, which is per-round.
-
-Introduce two helpers, which can greatly simplify the code, and hopefully
-make it readable again.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-Id: <20241206224755.1108686-7-peterx@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+CC: qemu-stable@nongnu.org #9.1
+Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250109185249.23952-8-farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd-nocomp.c | 42 ++++++++++++++++++++++++++++++++++++++
- migration/multifd.h        |  2 ++
- migration/ram.c            | 10 +++------
- 3 files changed, 47 insertions(+), 7 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 58372db0f4..c1f686c0ce 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -344,6 +344,48 @@ retry:
-     return true;
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 8a242cc1ec..38aeba14ee 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1244,6 +1244,7 @@ static void ccw_machine_2_9_instance_options(MachineState *machine)
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_INT_SUPPRESSION);
+     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_EVENT_NOTIFICATION);
++    css_migration_enabled = false;
  }
  
-+/*
-+ * We have two modes for multifd flushes:
-+ *
-+ * - Per-section mode: this is the legacy way to flush, it requires one
-+ *   MULTIFD_FLAG_SYNC message for each RAM_SAVE_FLAG_EOS.
-+ *
-+ * - Per-round mode: this is the modern way to flush, it requires one
-+ *   MULTIFD_FLAG_SYNC message only for each round of RAM scan.  Normally
-+ *   it's paired with a new RAM_SAVE_FLAG_MULTIFD_FLUSH message in network
-+ *   based migrations.
-+ *
-+ * One thing to mention is mapped-ram always use the modern way to sync.
-+ */
-+
-+/* Do we need a per-section multifd flush (legacy way)? */
-+bool multifd_ram_sync_per_section(void)
-+{
-+    if (!migrate_multifd()) {
-+        return false;
-+    }
-+
-+    if (migrate_mapped_ram()) {
-+        return false;
-+    }
-+
-+    return migrate_multifd_flush_after_each_section();
-+}
-+
-+/* Do we need a per-round multifd flush (modern way)? */
-+bool multifd_ram_sync_per_round(void)
-+{
-+    if (!migrate_multifd()) {
-+        return false;
-+    }
-+
-+    if (migrate_mapped_ram()) {
-+        return true;
-+    }
-+
-+    return !migrate_multifd_flush_after_each_section();
-+}
-+
- int multifd_ram_flush_and_sync(QEMUFile *f)
- {
-     MultiFDSyncReq req;
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 0fef431f6b..bd785b9873 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -355,6 +355,8 @@ static inline uint32_t multifd_ram_page_count(void)
- void multifd_ram_save_setup(void);
- void multifd_ram_save_cleanup(void);
- int multifd_ram_flush_and_sync(QEMUFile *f);
-+bool multifd_ram_sync_per_round(void);
-+bool multifd_ram_sync_per_section(void);
- size_t multifd_ram_payload_size(void);
- void multifd_ram_fill_packet(MultiFDSendParams *p);
- int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
-diff --git a/migration/ram.c b/migration/ram.c
-index 9eeb77665b..d9336d8a09 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1302,9 +1302,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
-         pss->page = 0;
-         pss->block = QLIST_NEXT_RCU(pss->block, next);
-         if (!pss->block) {
--            if (migrate_multifd() &&
--                (!migrate_multifd_flush_after_each_section() ||
--                 migrate_mapped_ram())) {
-+            if (multifd_ram_sync_per_round()) {
-                 QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
-                 int ret = multifd_ram_flush_and_sync(f);
-                 if (ret < 0) {
-@@ -3178,8 +3176,7 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+ static void ccw_machine_2_9_class_options(MachineClass *mc)
+@@ -1256,7 +1257,6 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
+     ccw_machine_2_10_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    css_migration_enabled = false;
+ }
+ DEFINE_CCW_MACHINE(2, 9);
  
- out:
-     if (ret >= 0 && migration_is_running()) {
--        if (migrate_multifd() && migrate_multifd_flush_after_each_section() &&
--            !migrate_mapped_ram()) {
-+        if (multifd_ram_sync_per_section()) {
-             ret = multifd_ram_flush_and_sync(f);
-             if (ret < 0) {
-                 return ret;
-@@ -3252,8 +3249,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-         }
-     }
- 
--    if (migrate_multifd() &&
--        migrate_multifd_flush_after_each_section()) {
-+    if (multifd_ram_sync_per_section()) {
-         /*
-          * Only the old dest QEMU will need this sync, because each EOS
-          * will require one SYNC message on each channel.
 -- 
 2.35.3
 
