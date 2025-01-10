@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC77E7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 14:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B06E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 14:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWFqD-0002v0-P5; Fri, 10 Jan 2025 09:18:25 -0500
+	id 1tWFqH-00030L-L7; Fri, 10 Jan 2025 09:18:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tWFqB-0002t7-0w
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:18:23 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tWFqF-0002xh-4y
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:18:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tWFq9-00059y-Cm
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:18:22 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tWFqD-0005At-7B
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:18:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736518700;
+ s=mimecast20190719; t=1736518704;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jC0SzzuEE4pf0D06oY+b+ihgJQJrBdiXMgseL+om+P8=;
- b=Sg3AsQHz1ATfrctXSXRBsbV4I1c4Xw9FkkN4a7nyNHvLW5Ax3HG4PFdP5auwD8wnaJbNGJ
- a9cz378O+UWBCk8beV9iflaWl7YLAKjOHGON4nLY1lvR+mMt42QvE8zNuxU1zHyaccu0wT
- x5p0KhCneV/lO0HSo4sl9/NtaLS2Gds=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=73J5AxObrHK1njsS/fTYzNNFMPH3GWXhxq0kyMI+1Tg=;
+ b=ca6sbTN1RXF+zwGM/LNWxURdH4hSPwUueVg/U20wrPlbm4BYk3EU6BOH4vkwMi067332w0
+ CHZMEE0RpRf5XSqGjpSWUp9Nco153q1VdpSywJmplvvQsXoCXNIROTJ4j08aMPMKLPN/A0
+ WB6SdWOAgVRdXd7GWFf98D8OtPzgF9U=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-Tm9hzjl1O8qJvu93c-40iA-1; Fri,
- 10 Jan 2025 09:18:17 -0500
-X-MC-Unique: Tm9hzjl1O8qJvu93c-40iA-1
-X-Mimecast-MFC-AGG-ID: Tm9hzjl1O8qJvu93c-40iA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-E-qFjrlyPmmLlmF3m3oGZg-1; Fri,
+ 10 Jan 2025 09:18:20 -0500
+X-MC-Unique: E-qFjrlyPmmLlmF3m3oGZg-1
+X-Mimecast-MFC-AGG-ID: E-qFjrlyPmmLlmF3m3oGZg
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76BFC19560B0; Fri, 10 Jan 2025 14:18:16 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B17911955D80; Fri, 10 Jan 2025 14:18:18 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.35])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CFEEC195E3D9; Fri, 10 Jan 2025 14:18:13 +0000 (UTC)
+ id E3779195E3D9; Fri, 10 Jan 2025 14:18:16 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 4/9] ppc/ppc405: Remove storage control (SLER) SPR
-Date: Fri, 10 Jan 2025 15:17:55 +0100
-Message-ID: <20250110141800.1587589-5-clg@redhat.com>
+Subject: [PATCH 5/9] ppc/ppc405: Remove 40x exception model
+Date: Fri, 10 Jan 2025 15:17:56 +0100
+Message-ID: <20250110141800.1587589-6-clg@redhat.com>
 In-Reply-To: <20250110141800.1587589-1-clg@redhat.com>
 References: <20250110141800.1587589-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,117 +84,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the 405 CPU family was phased out, the SLER SPR has no users
-anymore.
+This exception model was only used by the 405 CPU family which was
+removed. The rest of the PPC 4xx CPUs use the BookE exception model.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- target/ppc/cpu.h         |  2 --
- target/ppc/helper.h      |  1 -
- target/ppc/spr_common.h  |  1 -
- target/ppc/helper_regs.c | 10 ----------
- target/ppc/misc_helper.c |  5 -----
- target/ppc/translate.c   |  6 ------
- 6 files changed, 25 deletions(-)
+ target/ppc/cpu.h         |   8 +--
+ target/ppc/helper.h      |   1 -
+ target/ppc/cpu_init.c    |  11 ----
+ target/ppc/excp_helper.c | 116 ---------------------------------------
+ target/ppc/translate.c   |  14 -----
+ 5 files changed, 1 insertion(+), 149 deletions(-)
 
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0fe44cedb1b3..2f3741860076 100644
+index 2f3741860076..32423cfb7368 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
-@@ -1620,7 +1620,6 @@ void cpu_ppc_store_purr(CPUPPCState *env, uint64_t value);
- target_ulong load_40x_pit(CPUPPCState *env);
- void store_40x_pit(CPUPPCState *env, target_ulong val);
- void store_40x_dbcr0(CPUPPCState *env, uint32_t val);
--void store_40x_sler(CPUPPCState *env, uint32_t val);
- void store_40x_tcr(CPUPPCState *env, target_ulong val);
- void store_40x_tsr(CPUPPCState *env, target_ulong val);
- void store_booke_tcr(CPUPPCState *env, target_ulong val);
-@@ -2172,7 +2171,6 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_7XX_PMC1          (0x3B9)
- #define SPR_7XX_PMC2          (0x3BA)
- #define SPR_7XX_SIAR          (0x3BB)
--#define SPR_405_SLER          (0x3BB)
- #define SPR_7XX_MMCR1         (0x3BC)
- #define SPR_405_SU0R          (0x3BC)
- #define SPR_401_SKR           (0x3BC)
+@@ -196,8 +196,6 @@ typedef enum powerpc_excp_t {
+     POWERPC_EXCP_UNKNOWN   = 0,
+     /* Standard PowerPC exception model */
+     POWERPC_EXCP_STD,
+-    /* PowerPC 40x exception model      */
+-    POWERPC_EXCP_40x,
+     /* PowerPC 603/604/G2 exception model */
+     POWERPC_EXCP_6xx,
+     /* PowerPC 7xx exception model      */
+@@ -2206,9 +2204,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_403_TBL           (0x3DC)
+ #define SPR_403_TBU           (0x3DD)
+ #define SPR_SEBR              (0x3DE)
+-#define SPR_40x_SRR2          (0x3DE)
+ #define SPR_SER               (0x3DF)
+-#define SPR_40x_SRR3          (0x3DF)
+ #define SPR_L3OHCR            (0x3E8)
+ #define SPR_L3ITCR1           (0x3E9)
+ #define SPR_L3ITCR2           (0x3EA)
+@@ -2405,8 +2401,6 @@ enum {
+ 
+     /* Embedded PowerPC dedicated instructions                               */
+     PPC_WRTEE          = 0x0001000000000000ULL,
+-    /* PowerPC 40x exception model                                           */
+-    PPC_40x_EXCP       = 0x0002000000000000ULL,
+     /* PowerPC 405 Mac instructions                                          */
+     PPC_405_MAC        = 0x0004000000000000ULL,
+     /* PowerPC 440 specific instructions                                     */
+@@ -2450,7 +2444,7 @@ enum {
+                         | PPC_CACHE_DCBA | PPC_CACHE_LOCK \
+                         | PPC_EXTERN | PPC_SEGMENT | PPC_6xx_TLB \
+                         | PPC_40x_TLB | PPC_SEGMENT_64B \
+-                        | PPC_SLBI | PPC_WRTEE | PPC_40x_EXCP \
++                        | PPC_SLBI | PPC_WRTEE \
+                         | PPC_405_MAC | PPC_440_SPEC | PPC_BOOKE \
+                         | PPC_MFAPIDI | PPC_TLBIVA | PPC_TLBIVAX \
+                         | PPC_4xx_COMMON | PPC_40x_ICBT | PPC_RFMCI \
 diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 5a77e761bd3f..86f3bbc087f6 100644
+index 86f3bbc087f6..8272ceb5d7b1 100644
 --- a/target/ppc/helper.h
 +++ b/target/ppc/helper.h
-@@ -753,7 +753,6 @@ DEF_HELPER_FLAGS_2(store_40x_tcr, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_2(store_40x_tsr, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_2(store_40x_pid, void, env, tl)
- DEF_HELPER_2(store_40x_dbcr0, void, env, tl)
--DEF_HELPER_2(store_40x_sler, void, env, tl)
- DEF_HELPER_FLAGS_2(store_booke_tcr, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_2(store_booke_tsr, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_3(store_ibatl, void, env, i32, tl)
-diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
-index 01aff449bccc..e98fb07bb285 100644
---- a/target/ppc/spr_common.h
-+++ b/target/ppc/spr_common.h
-@@ -138,7 +138,6 @@ void spr_write_sdr1(DisasContext *ctx, int sprn, int gprn);
- void spr_read_40x_pit(DisasContext *ctx, int gprn, int sprn);
- void spr_write_40x_pit(DisasContext *ctx, int sprn, int gprn);
- void spr_write_40x_dbcr0(DisasContext *ctx, int sprn, int gprn);
--void spr_write_40x_sler(DisasContext *ctx, int sprn, int gprn);
- void spr_write_40x_tcr(DisasContext *ctx, int sprn, int gprn);
- void spr_write_40x_tsr(DisasContext *ctx, int sprn, int gprn);
- void spr_write_40x_pid(DisasContext *ctx, int sprn, int gprn);
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 3ad4273c1649..1e5ba9a1c64b 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -354,16 +354,6 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
+@@ -12,7 +12,6 @@ DEF_HELPER_4(HASHCHKP, void, env, tl, tl, tl)
+ DEF_HELPER_2(store_msr, void, env, tl)
+ DEF_HELPER_1(ppc_maybe_interrupt, void, env)
+ DEF_HELPER_1(rfi, void, env)
+-DEF_HELPER_1(40x_rfci, void, env)
+ DEF_HELPER_1(rfci, void, env)
+ DEF_HELPER_1(rfdi, void, env)
+ DEF_HELPER_1(rfmci, void, env)
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index da92dce54624..14573d1d8b92 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7420,17 +7420,6 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+          * they can be read with "p $ivor0", "p $ivor1", etc.
+          */
+         break;
+-    case POWERPC_EXCP_40x:
+-        qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
+-                     "    ESR " TARGET_FMT_lx "   DEAR " TARGET_FMT_lx "\n",
+-                     env->spr[SPR_40x_TCR], env->spr[SPR_40x_TSR],
+-                     env->spr[SPR_40x_ESR], env->spr[SPR_40x_DEAR]);
+-
+-        qemu_fprintf(f, " EVPR " TARGET_FMT_lx "  SRR2 " TARGET_FMT_lx
+-                     "   SRR3 " TARGET_FMT_lx  "   PID " TARGET_FMT_lx "\n",
+-                     env->spr[SPR_40x_EVPR], env->spr[SPR_40x_SRR2],
+-                     env->spr[SPR_40x_SRR3], env->spr[SPR_40x_PID]);
+-        break;
+     default:
+         break;
+     }
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index fde9912230e9..1a4c0ae5c0f0 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -473,114 +473,6 @@ static void powerpc_mcheck_checkstop(CPUPPCState *env)
+ #endif
  }
  
- #ifndef CONFIG_USER_ONLY
--void store_40x_sler(CPUPPCState *env, uint32_t val)
+-static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
 -{
--    /* XXX: TO BE FIXED */
--    if (val != 0x00000000) {
--        cpu_abort(env_cpu(env),
--                  "Little-endian regions are not supported by now\n");
+-    CPUPPCState *env = &cpu->env;
+-    target_ulong msr, new_msr, vector;
+-    int srr0 = SPR_SRR0, srr1 = SPR_SRR1;
+-
+-    /* new srr1 value excluding must-be-zero bits */
+-    msr = env->msr & ~0x783f0000ULL;
+-
+-    /* new interrupt handler msr preserves ME unless explicitly overridden */
+-    new_msr = env->msr & (((target_ulong)1 << MSR_ME));
+-
+-    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
+-    if (excp == POWERPC_EXCP_HV_EMU) {
+-        excp = POWERPC_EXCP_PROGRAM;
 -    }
--    env->spr[SPR_405_SLER] = val;
+-
+-    vector = env->excp_vectors[excp];
+-    if (vector == (target_ulong)-1ULL) {
+-        cpu_abort(env_cpu(env),
+-                  "Raised an exception without defined vector %d\n", excp);
+-    }
+-    vector |= env->excp_prefix;
+-
+-    switch (excp) {
+-    case POWERPC_EXCP_CRITICAL:    /* Critical input                         */
+-        srr0 = SPR_40x_SRR2;
+-        srr1 = SPR_40x_SRR3;
+-        break;
+-    case POWERPC_EXCP_MCHECK:    /* Machine check exception                  */
+-        powerpc_mcheck_checkstop(env);
+-        /* machine check exceptions don't have ME set */
+-        new_msr &= ~((target_ulong)1 << MSR_ME);
+-        srr0 = SPR_40x_SRR2;
+-        srr1 = SPR_40x_SRR3;
+-        break;
+-    case POWERPC_EXCP_DSI:       /* Data storage exception                   */
+-        trace_ppc_excp_dsi(env->spr[SPR_40x_ESR], env->spr[SPR_40x_DEAR]);
+-        break;
+-    case POWERPC_EXCP_ISI:       /* Instruction storage exception            */
+-        trace_ppc_excp_isi(msr, env->nip);
+-        break;
+-    case POWERPC_EXCP_EXTERNAL:  /* External input                           */
+-        break;
+-    case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
+-        break;
+-    case POWERPC_EXCP_PROGRAM:   /* Program exception                        */
+-        switch (env->error_code & ~0xF) {
+-        case POWERPC_EXCP_FP:
+-            if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
+-                trace_ppc_excp_fp_ignore();
+-                powerpc_reset_excp_state(cpu);
+-                return;
+-            }
+-            env->spr[SPR_40x_ESR] = ESR_FP;
+-            break;
+-        case POWERPC_EXCP_INVAL:
+-            trace_ppc_excp_inval(env->nip);
+-            env->spr[SPR_40x_ESR] = ESR_PIL;
+-            break;
+-        case POWERPC_EXCP_PRIV:
+-            env->spr[SPR_40x_ESR] = ESR_PPR;
+-            break;
+-        case POWERPC_EXCP_TRAP:
+-            env->spr[SPR_40x_ESR] = ESR_PTR;
+-            break;
+-        default:
+-            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
+-                      env->error_code);
+-            break;
+-        }
+-        break;
+-    case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+-        dump_syscall(env);
+-
+-        /*
+-         * We need to correct the NIP which in this case is supposed
+-         * to point to the next instruction
+-         */
+-        env->nip += 4;
+-        break;
+-    case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
+-        trace_ppc_excp_print("FIT");
+-        break;
+-    case POWERPC_EXCP_WDT:       /* Watchdog timer interrupt                 */
+-        trace_ppc_excp_print("WDT");
+-        break;
+-    case POWERPC_EXCP_DTLB:      /* Data TLB error                           */
+-    case POWERPC_EXCP_ITLB:      /* Instruction TLB error                    */
+-        break;
+-    case POWERPC_EXCP_PIT:       /* Programmable interval timer interrupt    */
+-        trace_ppc_excp_print("PIT");
+-        break;
+-    case POWERPC_EXCP_DEBUG:     /* Debug interrupt                          */
+-        cpu_abort(env_cpu(env), "%s exception not implemented\n",
+-                  powerpc_excp_name(excp));
+-        break;
+-    default:
+-        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
+-                  excp);
+-        break;
+-    }
+-
+-    env->spr[srr0] = env->nip;
+-    env->spr[srr1] = msr;
+-    powerpc_set_excp_state(cpu, vector, new_msr);
 -}
 -
- void check_tlb_flush(CPUPPCState *env, bool global)
+ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
  {
-     CPUState *cs = env_cpu(env);
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index f0ca80153b2b..78bb29d441a7 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -404,11 +404,6 @@ void helper_store_40x_dbcr0(CPUPPCState *env, target_ulong val)
-     /* Bits 28 & 29 affect reset or shutdown. */
-     store_40x_dbcr0(env, val);
- }
--
--void helper_store_40x_sler(CPUPPCState *env, target_ulong val)
--{
--    store_40x_sler(env, val);
--}
- #endif
+     CPUPPCState *env = &cpu->env;
+@@ -1635,9 +1527,6 @@ static void powerpc_excp(PowerPCCPU *cpu, int excp)
+     env->excp_stats[excp]++;
+ 
+     switch (env->excp_model) {
+-    case POWERPC_EXCP_40x:
+-        powerpc_excp_40x(cpu, excp);
+-        break;
+     case POWERPC_EXCP_6xx:
+         powerpc_excp_6xx(cpu, excp);
+         break;
+@@ -2779,11 +2668,6 @@ void raise_ebb_perfm_exception(CPUPPCState *env)
  
  /*****************************************************************************/
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 80638ab53597..918bf8f3a0cc 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -967,12 +967,6 @@ void spr_write_40x_dbcr0(DisasContext *ctx, int sprn, int gprn)
-     ctx->base.is_jmp = DISAS_EXIT_UPDATE;
- }
- 
--void spr_write_40x_sler(DisasContext *ctx, int sprn, int gprn)
+ /* Embedded PowerPC specific helpers */
+-void helper_40x_rfci(CPUPPCState *env)
 -{
--    translator_io_start(&ctx->base);
--    gen_helper_store_40x_sler(tcg_env, cpu_gpr[gprn]);
+-    do_rfi(env, env->spr[SPR_40x_SRR2], env->spr[SPR_40x_SRR3]);
 -}
 -
- void spr_write_40x_tcr(DisasContext *ctx, int sprn, int gprn)
+ void helper_rfci(CPUPPCState *env)
  {
-     translator_io_start(&ctx->base);
+     do_rfi(env, env->spr[SPR_BOOKE_CSRR0], env->spr[SPR_BOOKE_CSRR1]);
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 918bf8f3a0cc..0f19949897f4 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -5090,19 +5090,6 @@ static void gen_icread(DisasContext *ctx)
+     /* interpreted as no-op */
+ }
+ 
+-/* rfci (supervisor only) */
+-static void gen_rfci_40x(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    CHK_SV(ctx);
+-    /* Restore CPU state */
+-    gen_helper_40x_rfci(tcg_env);
+-    ctx->base.is_jmp = DISAS_EXIT;
+-#endif /* defined(CONFIG_USER_ONLY) */
+-}
+-
+ static void gen_rfci(DisasContext *ctx)
+ {
+ #if defined(CONFIG_USER_ONLY)
+@@ -5924,7 +5911,6 @@ GEN_HANDLER(dcread, 0x1F, 0x06, 0x0F, 0x00000001, PPC_4xx_COMMON),
+ GEN_HANDLER2(icbt_40x, "icbt", 0x1F, 0x06, 0x08, 0x03E00001, PPC_40x_ICBT),
+ GEN_HANDLER(iccci, 0x1F, 0x06, 0x1E, 0x00000001, PPC_4xx_COMMON),
+ GEN_HANDLER(icread, 0x1F, 0x06, 0x1F, 0x03E00001, PPC_4xx_COMMON),
+-GEN_HANDLER2(rfci_40x, "rfci", 0x13, 0x13, 0x01, 0x03FF8001, PPC_40x_EXCP),
+ GEN_HANDLER_E(rfci, 0x13, 0x13, 0x01, 0x03FF8001, PPC_BOOKE, PPC2_BOOKE206),
+ GEN_HANDLER(rfdi, 0x13, 0x07, 0x01, 0x03FF8001, PPC_RFDI),
+ GEN_HANDLER(rfmci, 0x13, 0x06, 0x01, 0x03FF8001, PPC_RFMCI),
 -- 
 2.47.1
 
