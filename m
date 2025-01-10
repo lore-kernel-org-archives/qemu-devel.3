@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5617E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 11:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB13E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 11:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWDQI-0004GI-IF; Fri, 10 Jan 2025 06:43:30 -0500
+	id 1tWDWf-0005Hk-7Y; Fri, 10 Jan 2025 06:50:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWDQH-0004GA-N1
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:43:29 -0500
-Received: from mailgate02.uberspace.is ([185.26.156.114])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWDWd-0005Fc-57
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:50:03 -0500
+Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWDQF-0007cM-HY
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:43:28 -0500
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWDWb-0007zy-BM
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 06:50:02 -0500
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 234DC18154D
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:43:19 +0100 (CET)
-Received: (qmail 5926 invoked by uid 990); 10 Jan 2025 11:43:19 -0000
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id A5A95181540
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:49:57 +0100 (CET)
+Received: (qmail 14393 invoked by uid 990); 10 Jan 2025 11:49:57 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Fri, 10 Jan 2025 12:43:18 +0100
+ Fri, 10 Jan 2025 12:49:57 +0100
 MIME-Version: 1.0
-Date: Fri, 10 Jan 2025 11:43:18 +0000
+Date: Fri, 10 Jan 2025 11:49:57 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 From: "Julian Ganz" <neither@nut.email>
-Message-ID: <e746423c27c0b0646bc1c27905d04c17ed7ebb91@nut.email>
+Message-ID: <957c8754b588a3355e18519d644d9bb05d58645f@nut.email>
 TLS-Required: No
-Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
- certain discontinuities
-To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Pierrick
- Bouvier" <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org
-In-Reply-To: <87wmf46qmm.fsf@draig.linaro.org>
+Subject: Re: [RFC PATCH v3 04/11] contrib/plugins: add plugin showcasing new
+ dicontinuity related API
+To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Alexandre Iooss" <erdnaxe@crans.org>, "Mahmoud 
+ Mandour" <ma.mandourr@gmail.com>, "Pierrick Bouvier"
+ <pierrick.bouvier@linaro.org>
+In-Reply-To: <87frls6q2m.fsf@draig.linaro.org>
 References: <cover.1733063076.git.neither@nut.email>
- <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
- <6f182c71-2600-4bbf-ab4c-985ed7e99f71@linaro.org>
- <87wmf46qmm.fsf@draig.linaro.org>
-X-Rspamd-Bar: ---
-X-Rspamd-Report: BAYES_HAM(-3) MIME_GOOD(-0.1)
-X-Rspamd-Score: -3.1
+ <fa02142d349ceb6c95e80301a7f5c57ae5df6329.1733063076.git.neither@nut.email>
+ <87frls6q2m.fsf@draig.linaro.org>
+X-Rspamd-Bar: -
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.999987) MIME_GOOD(-0.1)
+X-Rspamd-Score: -1.599987
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=hC4rMNASC8Z8dpCD8/ONi9WDq8NHKEWI/vsu2tisXiQ=;
- b=gZECQOqX2LFc2m9JdPS1s9w8L3gtCZTNUSKLesn4SC2l2QVdTsoFHtG0Vd0f5ehgvhWnIUXZi9
- 7JURFxTcoKwEd1SnYggHVjeZwlrr5C7r2XZ2Ml7aR+LvgXddKhVp56ajg5mF2KGPY5LoEit2tbBT
- MKubU0fxxKE6vMWn8x3v1hf9Fy13wQApvKeDZBIEEymtv4G+M1E/70N0NL/acQOJRHZuOAtZV985
- Q/pRVWjN6WnKfgI/aIy5o/ZbCYTx+bbLhBBG+SloA+g1G69XvrRUves4FLy3/om6wQQ13iMou0br
- f1ZNkkdFqp3+o7TDqhYE/95BZ6Ix9F6P6yY2sX0vYO1zI9UHrFn4Y12CXBRHmhr9UTHWuKoNl2Pd
- SJmvGr9yyTlk7mbvDwCscMrY9i8KeLZyoixhDA1zA96fo5AjHPPgQItrJqwBsQpKA2BZlAoUFJoj
- y9YSXFHXTY3GIQvgsHnenvA7WDQzfMqejVuL+6H85v2oozRWZARL7ewzIGyolNBxLJpmKJO5DgVi
- dnowYqsbOiWcgSRWrW1Fp/MRhHNkbXcYfeMjEWlGOPmp1Ch4b6JfVjrxZmNYLOzkh9glNqGFMBbE
- /ZZ/sn7OiTbZMx9dlBd5QN0FXSsTwtNmG26BiLevv5gWZqy6EBjqO0/Uacg/Lut7WFqHefCOAaQ2
- E=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ bh=t3gQiKnyuQ26oxxAyZIOmhFyiB45Wr8ydPViSQl+b10=;
+ b=dOasg2UNYrMYd1WtthJHENQlOWfWvRGk4OmjPmj26LJ+GtfTMxvOJzSMSf6+JO3YTveCzhKNOM
+ chVswIxVik76eSstvwfcjBkX8lYDBxYve0oRlSHyeBTYNdwnTe62E5GegrvIOhrmMAPsy1sqa+TK
+ 2kdCS+Ui8fWC4soIz1eDAcJLn22O8i1MQaUP9/jyA69R0cGMrEvCWu/xx5dPnx+wv7YKMwyhqRX6
+ 763E02NN8RynCqYmOuLu/72CP3XuvegHWvtpYfG/ZkS265y2E4MBajX0+sGFU8W7t/a0dkSyozFz
+ Rjstdqb+zkvpBBZKHnNUgDG+eT/+sSwGDwIUOMqw1TZfaNnC2BW6LuPL5N28/ncpRYI8JYq0onO5
+ E1lVkC2UPnqFGKXya2zIKkE93LTZwEoJsYK03dcyMbZeq+S3p7Jv1FY0+ZTuoj6xmgRx8tvsPV9G
+ omkBv3U7iikWOwpFwo6bjAYLLEJNo7h2OH02rKXfxTTPo9gRr5+Vgs5kNJoHY6uCziUO0bcBz29T
+ JGd4fQNapssLzTZCI+/s6g1mcl14SHswieRz4mJpBzTTSA41ejW7VSUwjz1gf1roa3v2VSubDkMJ
+ cLbdTZgkgbvYkgWLSL7AW0/LFPd2/TRwPax/tXQlBlwVpgzn4zxirYkjSsuvSOS2dQRFmThfPBmy
+ w=
+Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
+ envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1.249,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,64 +85,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Alex,
 
-January 9, 2025 at 2:52 PM, "Alex Benn=C3=A9e" wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-> >  On 12/2/24 11:26, Julian Ganz wrote:
-> > >  diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin=
-.h
-> > >  index 0fba36ae02..9c67374b7e 100644
-> > >  --- a/include/qemu/qemu-plugin.h
-> > >  +++ b/include/qemu/qemu-plugin.h
-> > >  @@ -154,6 +154,49 @@ typedef void (*qemu_plugin_vcpu_simple_cb_t)(=
-qemu_plugin_id_t id,
-> > >  typedef void (*qemu_plugin_vcpu_udata_cb_t)(unsigned int vcpu_inde=
-x,
-> > >  void *userdata);
-> > >  +
-> > >  +/**
-> > >  + * enum qemu_plugin_discon_type - type of a (potential) PC discon=
-tinuity
-> > >  + *
-> > >  + * @QEMU_PLUGIN_DISCON_INTERRUPT: an interrupt, defined across al=
-l architectures
-> > >  + * as an asynchronous event, usually originating
-> > >  + * from outside the CPU
-> > >  + * @QEMU_PLUGIN_DISCON_EXCEPTION: an exception, defined across al=
-l architectures
-> > >  + * as a synchronous event in response to a
-> > >  + * specific instruction being executed
-> > >  + * @QEMU_PLUGIN_DISCON_HOSTCALL: a host call, functionally a spec=
-ial kind of
-> > >  + * exception that is not handled by code run by
-> > >  + * the vCPU but machinery outside the vCPU
-> > >  + * @QEMU_PLUGIN_DISCON_ALL: all types of disconinuity events curr=
-ently covered
-> > >  + */
-> > >  +enum qemu_plugin_discon_type {
-> > >  + QEMU_PLUGIN_DISCON_INTERRUPT =3D 1,
-> > >  + QEMU_PLUGIN_DISCON_EXCEPTION =3D 2,
-> > >  + QEMU_PLUGIN_DISCON_HOSTCALL =3D 4,
-> > >  + QEMU_PLUGIN_DISCON_ALL =3D 7
-> > >  +};
-> > >=20
->=20>  Matter of style, but would be better to use:
+January 9, 2025 at 3:04 PM, "Alex Benn=C3=A9e" wrote:
+> Julian Ganz <neither@nut.email> writes:
+> > We recently introduced new plugin API for registration of discontinui=
+ty
+> >  related callbacks. This change introduces a minimal plugin showcasin=
+g
+> >  the new API. It simply counts the occurances of interrupts, exceptio=
+ns
+> >  and host calls per CPU and reports the counts when exitting.
+> >  ---
+> >  contrib/plugins/meson.build | 3 +-
+> >  contrib/plugins/traps.c | 96 +++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 98 insertions(+), 1 deletion(-)
+> >  create mode 100644 contrib/plugins/traps.c
 > >=20
->=20>  enum qemu_plugin_discon_type {
-> >  QEMU_PLUGIN_DISCON_INTERRUPT =3D 1 << 0,
-> >  QEMU_PLUGIN_DISCON_EXCEPTION =3D 1 << 1,
-> >  QEMU_PLUGIN_DISCON_HOSTCALL =3D 1 << 2,
-> >  QEMU_PLUGIN_DISCON_ALL =3D -1
-> >  };
+>=20>  diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.b=
+uild
+> >  index 63a32c2b4f..9a3015e1c1 100644
+> >  --- a/contrib/plugins/meson.build
+> >  +++ b/contrib/plugins/meson.build
+> >  @@ -1,5 +1,6 @@
+> >  contrib_plugins =3D ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'h=
+otblocks',
+> >  - 'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
+> >  + 'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
+> >  + 'traps']
 > >=20
->=20<snip>
->=20
->=20Is this really a bit field though? If you will only report type of
-> discontinuity at a time a simple 0 based enum with
-> QEMU_PLUGIN_DISCON_MAX would be simpler.
+>=20I wonder if this is better in tests/tcg/plugins? We need to do someth=
+ing
+> to ensure it gets covered by CI although we might want to be smarter
+> about running it together with a test binary that will actually pick up
+> something.
 
-We don't only use this type to communicate the kind of discontinuity but
-also when registering callbacks. I'll make this more clear in the commit
-message and/or documentation in the next series.
+The callback is intended as an example. The patch-series does contain a
+dedicated testing plugin. And iirc the contrib plugins are now built
+with the rest of qemu anyway?
+
+> > +QEMU_PLUGIN_EXPORT
+> >  +int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *inf=
+o,
+> >  + int argc, char **argv)
+> >  +{
+> >  + if (!info->system_emulation) {
+> >  + fputs("trap plugin can only be used in system emulation mode.\n",
+> >  + stderr);
+> >  + return -1;
+> >  + }
+> >  +
+> >  + max_vcpus =3D info->system.max_vcpus;
+> >  + traps =3D qemu_plugin_scoreboard_new(sizeof(TrapCounters));
+> >  + qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> >  + qemu_plugin_vcpu_for_each(id, vcpu_init);
+> >=20
+>=20Hmm at first glances this seems redundant - however I guess this is
+> covering the use case you load the plugin after the system is up and
+> running.
+
+Yep, but really that was just me being paranoid.
+
+> I wonder if you have unearthed a foot-gun in the API that is easy to
+> fall into? Maybe we should expand qemu_plugin_register_vcpu_init_cb to
+> call the call back immediately for existing vcpus?
+
+Would probably not hurt.
 
 Regards,
 Julian
