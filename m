@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DE6E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 09:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A06E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 09:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWBB6-0007Hw-U3; Fri, 10 Jan 2025 04:19:40 -0500
+	id 1tWBAt-0007GR-6i; Fri, 10 Jan 2025 04:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWBAy-0007HG-Om
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:19:35 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWBAp-0007Fq-DY
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:19:23 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWBAw-0007K8-Pt
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:19:32 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-436a03197b2so13149875e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 01:19:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWBAn-0007JF-LL
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:19:23 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-385deda28b3so1140345f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 01:19:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736500769; x=1737105569; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736500759; x=1737105559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kD0YeZytB7UERXH+U1/WTkP8VblNUjv1vSiXUSIDBr4=;
- b=KrWfHecWM6fwME10tI/1QODDVMLXbrmHi3JhU9nN3fK4ATV16BDUvpebTUCCIXqFRP
- 5qpMQiBjG7FG5yhSwErkb7N67DlT6Rbd0SOmsWpfHGWET6+dK+FeqfQ9x8PzTo53HAJr
- jxmE7NF/MI6fCeJBkOjznXhQzXmhTYDRF3F4500sqnajOhcMKZzB5ftkK4VtW994NvCq
- G88a2u4qQgZ81BLAlRVA2z+Df3tNejHm2DSDQu9tjjpHndJxu3LvbsUFpitUPOxlnhtn
- 9INikQfyU1Rd2yIVFspI355ivLZnBC7xuXmsU66U7u6VX9FUtJQLoMi7FPI//LJjA+9H
- ftZw==
+ bh=vF5lGOX4v2031Uz2Kj5gxqQl2XDpdfzIKHMWP9T6C90=;
+ b=xoxi69WWMeWDuubazWodX5EX+V0LKUJIHql82qpB15s70jx929EjzE6k6aiVxcVNUJ
+ TwQ1URzfL6HN14Awpo7UatF8CZZOcQRh3JEmIvfWcTGRTVGjnUh1WGkKIMkWVO4LSe90
+ 1VreEQd2OHi9Izssdk1kaCTe/8GvQvi2lXq4zh4aUPs4MZsanTzq5b3PavL/nMF3PgWE
+ iwlO9z+HQ1P+UWtWkj1KCc32wIKhAKKkzuBAo+gGvk2quTc+JZwE7d3Negn4ct2ToD15
+ t4N7OjDkpiByU8BvT+TjQTvbRjDdIuC1aiA7iN8BN1KtLZPZb2N+NNJTABG7jm570xmH
+ TrdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736500769; x=1737105569;
+ d=1e100.net; s=20230601; t=1736500759; x=1737105559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kD0YeZytB7UERXH+U1/WTkP8VblNUjv1vSiXUSIDBr4=;
- b=A6jf47ftnZalpDXmL+plBXDGXAXn9wf7s3+vMrShi3rlkYVIcIbR1+Gh1/pZnqrEd6
- HxMQ48GtWIJXThiloVgjV6N5l6psl95SYAU4pEvpDG5ekF0A4BFDa6slMgQ+MO4CJPIa
- +lLohNY7HdIVPuqza9DMu4POHjK83mR379L70Te7HV7PaDY4dxhRRiCTc+nZzjc/Kg+g
- JaIIBu4bgetxbqVLVtliMu4Rgr2xtu6OI8eYmYu5eQGuKKSg4OGvwgOsegWU1z0dz2pZ
- l0IXJI8ocW19hLT6pj2mYGWUZMuLFZqTtCtSaN8XVIu2M/bSOYWr0D6UjUmlqQaItf+1
- tfIg==
-X-Gm-Message-State: AOJu0YypApD9+c6xO+B7mdz65F+kCEgIY6Fs23/hTQ0QpWJdGbfft4lR
- 52hOLNfzJK7xPqvgIG+1D27FsxAnmpVe632SszXi+RVqJtxeVm1oixyZ2WqDhZc5pJsug80BTiX
- 6hHM=
-X-Gm-Gg: ASbGncuo5D7Fr1MLmPl1ClpFWlOb4JP9OAEDmosWu34O2tYLYY2HA0HIQAw+mPbQum4
- mi6vUne96/5tneQ5gYTlz8XK7HhrBh4/3kYBx793D86HGia1JiXprQQd7t1zkLcvsFWoFFXLF3R
- V8Vp5B5K9yUtusJ0COZK9vyX/YwLzrEMz90+0ydnRzT3a3NlGhUPph/QMBTC2HjQ+ZyFpsSCVYr
- wE7AmiN5se2hWjYd/eGaSXg6aF+eoH/EIxnqir2IZ4YDMLBKAxeUJJJE8QBbSu7d2b3UblV8Y4t
- JkDpCzPrBx0w+9Gpm9zJ7aqj9lS2FsIHvbF0
-X-Google-Smtp-Source: AGHT+IEWG2C+cIBMaC/KDdpwpFvJBIWizBRY1Fb6pmxUMZ3G9mPNCvA3uDlXIlVwP1eIo61G7AnJYg==
-X-Received: by 2002:a05:6000:471c:b0:385:e38f:8cc with SMTP id
- ffacd0b85a97d-38a8730e0b8mr10424243f8f.38.1736500769016; 
- Fri, 10 Jan 2025 01:19:29 -0800 (PST)
+ bh=vF5lGOX4v2031Uz2Kj5gxqQl2XDpdfzIKHMWP9T6C90=;
+ b=n3am4gQQAhUEDWoNzlLF85j0Z5eRgeubm99UEz7/lt2+5+B3fR7XB/hoXCGNOlY5SX
+ /SnpEEj/kDnuuaPcZ/fArSfrI33XSqGhxfUT0RpjDmUvEdiL6HuMnkmPd7vYbNgUl/yB
+ UAY+MRkZxI3lGgwm+1ZQakfXta3X3vN3dYZbneg/KcxBxltLyfNQwlgVXKt6SH7Kd6EU
+ MHlFUQBbsdPpwVoCnKyvVfhLRj3NC1UMZaTOxaLeAF9tGF/aVdP5f6xQ9FNksnyHWLCD
+ 3zN97TZxeGzP/DjL6GUXxx2ZEFhmWn7Fu9AK7KMvcnZQDWv1xh/uuXcnJKSDEdTrs0Po
+ QpHA==
+X-Gm-Message-State: AOJu0Ywv6sKkKh6KF4h29qRyGvuto9VTqzc2C39UyWoY8wyZ9ZvuMO05
+ DovuM6+bimjO8njFUgKJTrVO6coQEsw2Q2T2abo4+HVxqF9N0QkHefKAZF/1VTVShhtwzuc5t4T
+ aCzk=
+X-Gm-Gg: ASbGncs5hAQXc+zBE6zZIEYQCUocIWSP3BLTrcpqt4qNPrZW00n5EPrMMNfgrLf7Aeh
+ l8z0Cvm7whT/UYtZBqsJfQT7t8kPGtmlu2TRaEDpLt1N3NUEbftGm64TGP5o2EBXOPUYkUlCIqQ
+ bFUAh1yHSlgZaeXodytMXnxpa8UIqTHQuxvnlgMPUtinn95xVcAevPA4069hHrFATclUSziwIE+
+ XeXw9cen2CJ55zPHcmtVaKxOUcXTuca59v/ckqQ+5EH4miVNA7imSv/B5YZsNnv5sb0bovxc9LL
+ cnkJUQY73og5Qe6DT0n7RTXgc2I6LxKaWBs0
+X-Google-Smtp-Source: AGHT+IF+OBL8J8evYSi+1nFMk4ptM6+mJWX7XttOmFvM1G+5Q2NVbRgQVcDwf0RMDpm3L7h1+1wiJQ==
+X-Received: by 2002:a5d:6da2:0:b0:385:fc70:7f6 with SMTP id
+ ffacd0b85a97d-38a872fadf3mr8494964f8f.7.1736500759360; 
+ Fri, 10 Jan 2025 01:19:19 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2dc08eesm81989005e9.10.2025.01.10.01.19.28
+ ffacd0b85a97d-38a8e37d472sm3964167f8f.1.2025.01.10.01.19.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 01:19:28 -0800 (PST)
+ Fri, 10 Jan 2025 01:19:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -70,18 +70,17 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 4/6] hw/qdev: Check DevClass::hotpluggable in
- hotplug_unplug_allowed_common
-Date: Fri, 10 Jan 2025 10:19:06 +0100
-Message-ID: <20250110091908.64454-5-philmd@linaro.org>
+Subject: [PATCH v5 2/6] hw/qdev: Factor qdev_hotunplug_allowed() out
+Date: Fri, 10 Jan 2025 10:19:04 +0100
+Message-ID: <20250110091908.64454-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110091908.64454-1-philmd@linaro.org>
 References: <20250110091908.64454-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,77 +105,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Check the same code once in the common helper.
+Factor qdev_hotunplug_allowed() out of qdev_unplug().
+Start checking the device is not blocked.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/qdev-hotplug.c |  9 +++++++++
- system/qdev-monitor.c  | 10 +---------
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ include/hw/qdev-core.h | 1 +
+ hw/core/qdev-hotplug.c | 5 +++++
+ system/qdev-monitor.c  | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index b4a5b203aab..c417d4f92bd 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -545,6 +545,7 @@ void qdev_set_legacy_instance_id(DeviceState *dev, int alias_id,
+ HotplugHandler *qdev_get_bus_hotplug_handler(DeviceState *dev);
+ HotplugHandler *qdev_get_machine_hotplug_handler(DeviceState *dev);
+ bool qdev_hotplug_allowed(DeviceState *dev, BusState *bus, Error **errp);
++bool qdev_hotunplug_allowed(DeviceState *dev, Error **errp);
+ 
+ /**
+  * qdev_get_hotplug_handler() - Get handler responsible for device wiring
 diff --git a/hw/core/qdev-hotplug.c b/hw/core/qdev-hotplug.c
-index 168d7964740..1d77fffb5e0 100644
+index 19fbb11a316..dc35110e735 100644
 --- a/hw/core/qdev-hotplug.c
 +++ b/hw/core/qdev-hotplug.c
-@@ -12,6 +12,7 @@
- #include "qemu/osdep.h"
- #include "hw/qdev-core.h"
- #include "hw/boards.h"
-+#include "qapi/error.h"
- 
- HotplugHandler *qdev_get_machine_hotplug_handler(DeviceState *dev)
- {
-@@ -33,6 +34,14 @@ HotplugHandler *qdev_get_machine_hotplug_handler(DeviceState *dev)
- static bool qdev_hotplug_unplug_allowed_common(DeviceState *dev, BusState *bus,
-                                                Error **errp)
- {
-+    DeviceClass *dc = DEVICE_GET_CLASS(dev);
-+
-+    if (!dc->hotpluggable) {
-+        error_setg(errp, "Device '%s' does not support hotplugging",
-+                   object_get_typename(OBJECT(dev)));
-+        return false;
-+    }
-+
+@@ -47,6 +47,11 @@ bool qdev_hotplug_allowed(DeviceState *dev, BusState *bus, Error **errp)
      return true;
  }
  
++bool qdev_hotunplug_allowed(DeviceState *dev, Error **errp)
++{
++    return !qdev_unplug_blocked(dev, errp);
++}
++
+ HotplugHandler *qdev_get_bus_hotplug_handler(DeviceState *dev)
+ {
+     if (dev->parent_bus) {
 diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index e1c8e847d1f..f28b2e95459 100644
+index bf1afb81886..e1c8e847d1f 100644
 --- a/system/qdev-monitor.c
 +++ b/system/qdev-monitor.c
-@@ -263,8 +263,7 @@ static DeviceClass *qdev_get_device_class(const char **driver, Error **errp)
-     }
- 
-     dc = DEVICE_CLASS(oc);
--    if (!dc->user_creatable ||
--        (phase_check(PHASE_MACHINE_READY) && !dc->hotpluggable)) {
-+    if (!dc->user_creatable) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "driver",
-                    "a pluggable device type");
-         return NULL;
-@@ -902,7 +901,6 @@ static DeviceState *find_device_state(const char *id, bool use_generic_error,
- 
- void qdev_unplug(DeviceState *dev, Error **errp)
- {
--    DeviceClass *dc = DEVICE_GET_CLASS(dev);
-     HotplugHandler *hotplug_ctrl;
+@@ -907,7 +907,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
      HotplugHandlerClass *hdc;
      Error *local_err = NULL;
-@@ -917,12 +915,6 @@ void qdev_unplug(DeviceState *dev, Error **errp)
+ 
+-    if (qdev_unplug_blocked(dev, errp)) {
++    if (!qdev_hotunplug_allowed(dev, errp)) {
          return;
      }
  
--    if (!dc->hotpluggable) {
--        error_setg(errp, "Device '%s' does not support hotplugging",
--                   object_get_typename(OBJECT(dev)));
--        return;
--    }
--
-     if (migration_is_running() && !dev->allow_unplug_during_migration) {
-         error_setg(errp, "device_del not allowed while migrating");
-         return;
 -- 
 2.47.1
 
