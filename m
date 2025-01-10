@@ -4,103 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B659E7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:33:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAF0E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 12:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWEC7-0004e3-I1; Fri, 10 Jan 2025 07:32:55 -0500
+	id 1tWEDi-0005VF-VZ; Fri, 10 Jan 2025 07:34:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tWEC5-0004bd-6Y
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:32:53 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tWEDf-0005Ui-Au
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:34:32 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tWEC2-0006aG-QV
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:32:52 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-216401de828so31502045ad.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 04:32:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tWEDd-0006iu-NO
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 07:34:31 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e46ebe19368so2987960276.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 04:34:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736512369; x=1737117169;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kpk5Q7Mg4B3jArpTQeujTFbUYPSwPiKxtYgZmtiQjPY=;
- b=Ku327LbXRQLj84M1hHEhTBqtHQNRqUUM7bvoTRcozjUTHFiit6g+rqMeeKIWd3lfwq
- 9TUYpHxrJjvQvAyjbfVv2a89wBnmxPkHKjW2kb2GfIKHG6Rehg/B0Jduklg41eY+V4P7
- akbGbMz18LMksW2hlggeVQcDp6LmcK1NVDy3mOtq11dlFqPiinjR9JSUwhAXGI7K+qOk
- zJM+GAVn3dNg3T3cJTHQi4EkCPU7OR9Mu+o5nE9q7kImjYVD/rNpwU5gG6Xx2rgi6rgS
- zC2qk+LcE5UatHW2s1gvB6ZqGsSrvG0G9VsyuuHc461xI9pLJcU3Ivu+rlEbMYqOiGNX
- qPug==
+ d=linaro.org; s=google; t=1736512468; x=1737117268; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3x9LW72fIXku6a+jEamZTn0B9GuFfWKBRcYWlgMfvA4=;
+ b=J31yfREILOk/SaND69WavQXYnLP25pSTj2JxOTV2n173anMZQzwVAlwGAT4z9PE/WT
+ 4zGC9HeDL01e6jgLY8nx5jVsz4yEq+F4wgatrT9b7qdU3V2B1Bw0Q/OQ0VIR31WVmuam
+ jgBk3QtumVSQpq3eajJk4/k68eCJ9RrGnZfYI76nC8eSex8Dj28KlVgvFSqNVCBONRek
+ PiVeEj51OmUzHjM3ecnzEQIHzPCyxiWGanl5hLiIDNX2wpnH5fJxnEkfiLgneN7vrsu2
+ gJetyIGUvSbBK6jKV97eOxxUANf/aHMjRY078QMNXasIABnY4nPC1irzSIKL8cKyYHFS
+ OjCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736512369; x=1737117169;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kpk5Q7Mg4B3jArpTQeujTFbUYPSwPiKxtYgZmtiQjPY=;
- b=hlK0dSj+WP5T/No5tdC2GNQLMQ6fJZndlpoYRCz29PL7Exfv15dxYPv6SR1PXWS9mO
- Wrej2yTXsYthvM1c0rq2DEwYeEXw8FBgmnhueHvUF8SkK2NWZr1/oCwd5nO5MLrlzZh+
- eXjYsewibmjQ4yB7jU54Xjxs5/edZqbiNFR7EPXvF/GXiwLx2NqASDudxnZdGJWXLWf/
- 3+6ntytag3wwqwZDdIWj9HAGeQ/m1/QUDD/4IlWT1tSaH0QaxhFI3XxtVYkgVSxTtRo7
- /6SvDqisa0cqKFLlEMZk39s5cz0YPKym4IhOdzbw5SoAkNs28Mkj+BlsWOWEHKbGn4oI
- aB/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+9FpvWtMIZQuXAKZexuGb0jzPwshtAuWfo15jkeFX/cckpm6jMl4/novFzEL3EcbJx8d/88x6esD9@nongnu.org
-X-Gm-Message-State: AOJu0YxRRXHNicGn31vGcPBNAB7lyuS6FqLZSEkQRxrienVI3Y+Renbq
- drt5Q1yndrXXr9Bp8FNXLS8GWc9QvVkrjbeh+noFhu14geVOmz0dci4/1A+duE4=
-X-Gm-Gg: ASbGncshd+oxZAkjPhT9RInHXLSw/rmnYwe691l4bwjqPzHFkZ98YqYXWTgCR6tpTa8
- NzQ7PC2AHO+1uIJrOPO6aG6A02JqyQuZZXclCw/cCdl2/V0jM1AVmv8s5FCzNOEb4PUVwLaM8fy
- YYHyLcbLnuGZgUa+jy99MUCTRuR7bkVhLOS6C78YaVnZN0ch5CGbd0w5EGKrM1z9cYOvcIvnj9F
- HGZoyVv2xZx5TzsD5NBRA9ZNkhVI4C7+kAl1XvO7QmCT9kgKU9XTHNY55ZZ8Ggbsjc=
-X-Google-Smtp-Source: AGHT+IFzsRCXLZ76u0bp1Au8RzgTKN5PIzLR28Fh5nioWAAPiPNY+yhns5js5Eq//oMCRIt3jb2FAg==
-X-Received: by 2002:a05:6a00:854:b0:725:f18a:da52 with SMTP id
- d2e1a72fcca58-72d21f178e9mr15327219b3a.4.1736512369027; 
- Fri, 10 Jan 2025 04:32:49 -0800 (PST)
-Received: from [157.82.203.37] ([157.82.203.37])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d4056a766sm1523453b3a.61.2025.01.10.04.32.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 04:32:48 -0800 (PST)
-Message-ID: <2299cb79-f03e-45e6-b536-66dab16830d1@daynix.com>
-Date: Fri, 10 Jan 2025 21:32:42 +0900
+ d=1e100.net; s=20230601; t=1736512468; x=1737117268;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3x9LW72fIXku6a+jEamZTn0B9GuFfWKBRcYWlgMfvA4=;
+ b=cdq5gSEfmRH9CjkXlv2OBbkL84YKA+9/KWNb+v9AeYhNalfL8nr9PvPNJkReKRvpeZ
+ luTpN7YZzRDCHd9hiW4Qfz53TOSyMTkWSHhrpF6DPQkpRWRwsiuabew9FYASSRdDI6tz
+ rHddtcfZJ+Z4w70Mv4iDj5A9CJhYGBHx0jbzwrHr3H/0rSpuOOyegWU/I957keU7AAAu
+ 7EgOCHGje2tI2tagSlX6pS8Ox2004D4dmz+TLek0ofpyIF+Ywiwuu1pgFayebDsAGE0m
+ XWHUHJv1ebqgkyceJbIBmRzEiH3IXl+6Yfm3rTH2jRDAqtCC/Eebv69lMzhn1cXpXkBh
+ BQvQ==
+X-Gm-Message-State: AOJu0YwktkP41WKYI2YbUTEXhKyEntAjRhVxwIvjzU56/mx4JpRnG4sI
+ D+f08bv57SlPSZmaqLTC8dZDwHuNLYcskKtRNHvGIa5wP4Uk044QToldLAtGbYHqGrSjsN28F6d
+ c9ALUNtQHzYeioem/DVWu61aHDJwgai1f++qrKx1gQZ9std6y5DM=
+X-Gm-Gg: ASbGnctWcB+9crMW2TE3RQKhNQcq0x/q1hCChEGBxIMD4LhkctVWXENK1+/YrCEZkBE
+ dtuiweCn+hDmadjgozhnXeXzll4tfGqR4ELbwuQ0=
+X-Google-Smtp-Source: AGHT+IEXSBM+5OzVqP1ICHLIj2OyhzoetnZlrEo27/uetto/FfotAriFPN/8VXIWuqXYpIj/GkBowlLqAigQicw/1hY=
+X-Received: by 2002:a05:690c:9c0f:b0:6ef:641a:2a7b with SMTP id
+ 00721157ae682-6f5312068abmr95015617b3.2.1736512467762; Fri, 10 Jan 2025
+ 04:34:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] qdev-properties: Accept bool for OnOffAuto
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Lei Yang <leiyang@redhat.com>, qemu-devel@nongnu.org
-References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
- <20250108-virtio-v4-2-cbf0aa04c9f9@daynix.com> <Z4D_zK-QIN07EXR5@redhat.com>
- <65364ac5-3d8e-4f43-a371-4661bf8b5437@daynix.com>
- <Z4EPuISnjKJ-P0j2@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <Z4EPuISnjKJ-P0j2@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <CAOYM0N1sbP=xRfNPaNK6ZzzhD3A-5PKimaeSrDzXHGxAYH3oCQ@mail.gmail.com>
+In-Reply-To: <CAOYM0N1sbP=xRfNPaNK6ZzzhD3A-5PKimaeSrDzXHGxAYH3oCQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Jan 2025 12:34:16 +0000
+X-Gm-Features: AbW1kvYrWPojJYDSk39ggWzPxGG7WmwQlbLCWQrBb3VDWp1W6f1TtOmVjqC7cr8
+Message-ID: <CAFEAcA-jc3jC2ovUrpzhwc+etJxKL4490uUb+akrWn+7=0X-9g@mail.gmail.com>
+Subject: Re: macaddr: ignore the checking from index to 0xFF
+To: Liu Jaloo <liu.jaloo@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,75 +90,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/10 21:16, Daniel P. Berrangé wrote:
-> On Fri, Jan 10, 2025 at 08:31:57PM +0900, Akihiko Odaki wrote:
->> On 2025/01/10 20:09, Daniel P. Berrangé wrote:
->>> On Wed, Jan 08, 2025 at 03:17:51PM +0900, Akihiko Odaki wrote:
->>>> Accept bool literals for OnOffAuto properties for consistency with bool
->>>> properties. This enables users to set the "on" or "off" value in a
->>>> uniform syntax without knowing whether the "auto" value is accepted.
->>>> This behavior is especially useful when converting an existing bool
->>>> property to OnOffAuto or vice versa.
->>>
->>> Again, to repeat my previous feedback, OnOffAuto is a well defined
->>> QAPI type - making it secretly accept other values/types behind
->>> the scenes which are not visible in QAPI scheme is not acceptable.
->>>
->>> Effectively this is a backdoor impl of a QAPI alternate
->>>
->>>     { 'alternate': 'OnOffAutoOrBool',
->>>       'data': {
->>>         'o': 'OnOffAuto',
->>>         'b': 'bool'
->>>       }
->>>     }
->>>
->>> except this isn't permitted as the QAPI generator explicitly blocks
->>> use of alternate when the two branches are 'bool' and 'enum'.
->>
->> The QAPI generator specifically blocks the case where the enum contains 'on'
->> or 'off'.
->>
->>>
->>> I'm assuming this is because in the QemuOpts scenario, it cannot
->>> guess upfront whether the input is a bool or enum. This is unfortunate
->>> though, because at the JSON visitor level it is unambiguous.
->>
->> It's probably for the command line and possibly HMP.
->>
->>>
->>> I wonder if the QAPI generator could be relaxed in any viable way ?
->> It will make the interpretation of 'on' and 'off' on the command line
->> ambigious; it can be either of OnOffAuto or bool.
-> 
-> The ambiguity would not neccessarily matter from a functional POV
-> though.
-> 
-> The consumer of an "OnOffAutoOrBool" field, would likely want to apply
-> logic to collapse it into just "OnOffAuto". As such, whether "on" is
-> parsed as a enum value or a bool value would have no functional
-> difference in the end. The OnOffAutoOrBool is essentially there to
-> just make sure we clearly express our input schema.
+On Tue, 24 Dec 2024 at 03:27, Liu Jaloo <liu.jaloo@gmail.com> wrote:
+>
+> bash-5.1$ git diff net/net.c
+> diff --git a/net/net.c b/net/net.c
+> index c1bb19a523..af68029428 100644
+> --- a/net/net.c
+> +++ b/net/net.c
+> @@ -173,6 +173,7 @@ static void qemu_macaddr_set_used(MACAddr *macaddr)
+>      for (index = 0x56; index < 0xFF; index++) {
+>          if (macaddr->a[5] == index) {
+>              mac_table[index]++;
+> +           return;
+>          }
+>      }
+>  }
+> @@ -188,6 +189,7 @@ static void qemu_macaddr_set_free(MACAddr *macaddr)
+>      for (index = 0x56; index < 0xFF; index++) {
+>          if (macaddr->a[5] == index) {
+>              mac_table[index]--;
+> +           return;
+>          }
+>      }
+>  }
 
-I think it is worth creating a special type that requires the logic to 
-collapse into OnOffAuto.
+Hi; thanks for this patch. Unfortunately we can't accept it
+without a Signed-off-by: line from you (which tells us that you're
+OK for it to be contributed to QEMU under our usual license:
+for more details see:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
 
-If we don't have a special type, the QAPI generator will write C struct 
-like as follows:
+Could you also provide a commit message explaining the reason
+for the change?
 
-struct OnOffAutoOrBool {
-     QType type;
-     union { /* union tag is @type */
-         OnOffAuto o;
-         bool b;
-     } u;
-};
+(The code changes themselves seem sensible; I would use "break" rather
+than "return", personally, but the effect is the same.)
 
-It's easier if we have a special type that directly maps into a 
-tristate. The story shouldn't be different for other possible consumers; 
-a special type will make it easy to map QAPI types into 
-consumer-specific type systems.
-
-Regards,
-Akihiko Odaki
+thanks
+-- PMM
 
