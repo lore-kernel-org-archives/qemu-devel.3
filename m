@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 432A9E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4879E7719D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWK2z-0001Fy-CI; Fri, 10 Jan 2025 13:47:54 -0500
+	id 1tWK3J-0002OD-Mn; Fri, 10 Jan 2025 13:48:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK22-0000FE-BR
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:56 -0500
+ id 1tWK2a-0000ON-Ah
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1y-00016W-5X
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:54 -0500
+ id 1tWK2X-0001C6-PV
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736534808;
+ s=mimecast20190719; t=1736534845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yyNO/JTwvXtw4mxmLChlF/whck0cJNX1PORaIe032Kw=;
- b=SnD7tT270G72zMcKXjAVvrtvzkP/jp/ryqRzVIt3aq91s8DIrFj65lcnoN4ZbbkDSMnhIH
- qoaq8PVkPq1KNDS/DtN6il2Kb1s0ci4wa3I6JUrdkKR5MKVTtXBWfzSpczrkIZSennDl04
- aO+DAR4Fd//dPghsW8V0+ElCs4FihH0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KwvMlaaL+tPMbyB1+Vl82XLEBLQqNeaz0XWCjaoRtTw=;
+ b=VGLjURof/tVcmHj1tVssuS3BILZFW0gmcZRjwegxsumHaJocoLk7xFQQLQvD5An80Fd5a4
+ ifF/o6FQIpmUhm7l+us9N+kGctQZbDsFyjdcUPSE676oLHFe0wL9M6BRsoF7OfkDUEOL9/
+ bUxEE8yIGux8bfK8+kB1/1+jyW6pYm8=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-QVZ9-NVoPSeA8xFFXH49jg-1; Fri, 10 Jan 2025 13:46:46 -0500
-X-MC-Unique: QVZ9-NVoPSeA8xFFXH49jg-1
-X-Mimecast-MFC-AGG-ID: QVZ9-NVoPSeA8xFFXH49jg
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aab954d1116so237129466b.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:46 -0800 (PST)
+ us-mta-686-sNHVW9b6OMS7Fso_hPYbAg-1; Fri, 10 Jan 2025 13:47:24 -0500
+X-MC-Unique: sNHVW9b6OMS7Fso_hPYbAg-1
+X-Mimecast-MFC-AGG-ID: sNHVW9b6OMS7Fso_hPYbAg
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa67855b3deso200726566b.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:47:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736534804; x=1737139604;
+ d=1e100.net; s=20230601; t=1736534842; x=1737139642;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yyNO/JTwvXtw4mxmLChlF/whck0cJNX1PORaIe032Kw=;
- b=ho1vyIJf98SfCJIlViK0o1bXiYlgbk4ZxeUvomT1tDv4QFqcde8DjlxA/jauY1JrMe
- PJVtlUUQ4wAkbkza6OOMZWAiDga+9KHZhQv8TsrXY1xHNjwAyUDn3SumgSuA/rmylhiY
- CIccWLRM6ujpZAZ3nlryaWWOkULCZ3uL+A9/aCp6IyE+o/FcVkjv6jCve8zrC5+kQxyw
- HBoRAsTyAUEWdalD4jWFV9S5/cYLvHE9o6mPke5Nmo+QN7rrPuTNc3qOcwO6EwTlZQ6R
- 1u2l5U9yROHngck0zlYuJs4sfbpzS6p0TJb01LbXBtZo3BAF7UPVZXwxYYaPtAb9rXcH
- t2iw==
-X-Gm-Message-State: AOJu0Yy5xkpKSrvLfXhlHVZbDVIvTvEz9LlDgVXvA9hEfdQVr5h6QsVx
- SXGEQBIPoYRHnicLfGtRDHIbZweuyO0XOA0C1LsIOQkboXBSIi6laWvgOqpM6K804wZBfe99sXh
- wzf9nP1YVXRYCXkZRXCez/zuUvELz2Ku474/9DXUru+k9z0BW1bxYt/m0zXpFHlZqh+pWeI38Su
- yzf6XSfjy3RpD93IjBWyP/hzfTx5mEi36GY+v0j8w=
-X-Gm-Gg: ASbGncucMVgupFEx/fq5VKhiO6pZCmBlJbyquo/1UVZZ5XUz4vrIfoNIVGbeMjdeY1n
- DjiOw2aoiP9cT8KgHvmvoXcN7YmXODIU7EiEy0OLcNz4RxzmAQoAMRl7i/Yh2qLpM9MyNAwF74o
- 5dTd6gtYuZzLMbyB1rl3UlRmCun3CgAH9GNSAKci1ECT390tFyGQQGx0Ed102HWeK3hpo4Lnrwu
- 5mi2dV3jx90YgYi7xqt8RQGA+wsxNNTfwKlLvRlOv4yePXLv32o8St9fsA=
-X-Received: by 2002:a17:907:3da1:b0:aaf:3f57:9d2e with SMTP id
- a640c23a62f3a-ab2aaaf6571mr1070985866b.0.1736534804237; 
- Fri, 10 Jan 2025 10:46:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE+EbD5AWg+0Aviz6NYcbc6h9WY6tyecY758T69z79KF5nM936PvF/63yBLePnhWQC3laN2hA==
-X-Received: by 2002:a17:907:3da1:b0:aaf:3f57:9d2e with SMTP id
- a640c23a62f3a-ab2aaaf6571mr1070983866b.0.1736534803802; 
- Fri, 10 Jan 2025 10:46:43 -0800 (PST)
+ bh=KwvMlaaL+tPMbyB1+Vl82XLEBLQqNeaz0XWCjaoRtTw=;
+ b=Lox7jsoKcGlYxXlx/u4U7l0e/iOqKHcMLJ78J59nyx9PjRnXhcWJdpMF64oJsOeAQ1
+ SCBzp/f7hMm+7R88RZJRYZpPQbMhJyxdzUu5n4I+yDtqT0FJhVv4q7bibyN3iIKZpDMA
+ weoVe8ZrruBi21Or1pC5gG8uWIhX4WUo5ZTar6fbgPokY78nb4VX8u8VQ3HDizbxiprL
+ WDJKFgxskBaVhtDe9s+SqFtUal500JmvxjtWZQ5bDxSI4BL5ZL+FZmE9YllVmOe1/HT2
+ lZIKte8f9zlnHCAppe3j3LKwoGl8B+odrIZ4MEuERSQTB6Zzqmt/OHM6iocybkJrUt5B
+ kODg==
+X-Gm-Message-State: AOJu0Yz8V761u9PfXp6SLulaD5LJeOerVpgwDGsmHhl+2X2RIl63H8Kl
+ CTsbgZ/aPyBzXdKrR216frSc/gZtVk5/853NGSNT2gD9WDn3ZzQZZfiCNEiXMjI7Xz5FGrmTugD
+ BchA1rbbD7IVUH78oU+GcjGNxD0X0I+lBjczpP1Bnh31KKtsnCrvneL52ISsiFM3h+O+X5XRNWX
+ CkzYJ0G6d1fALnGMIy0HzKB8tNLjCeADjBklZ/kgY=
+X-Gm-Gg: ASbGnct6KbFVDoie2quhDrsiGkJPcglpE65PpyDl+sRaivswyGxJ6vTGverT1GveerV
+ oi8+rTUUYK4BmJsixUbtT7ANitskGY3zlztyLgTwT3KtpHn7iEhahxFA05softUfE4lc9nGKnoS
+ 97wB4+YtfxSyr8jU6c7JqTMWZiz/LgoT8+PyK08P1q2uKGi0uasxEjp7YygqxTv5U9k/svqwsYC
+ 79jDnWRWubhBmQDmoEwn1FFUjLMkKDtnRgHLgc85uwtU7bZCIKuAjJQXWQ=
+X-Received: by 2002:a17:906:c102:b0:aa6:7f99:81aa with SMTP id
+ a640c23a62f3a-ab2ab676541mr974933266b.6.1736534842209; 
+ Fri, 10 Jan 2025 10:47:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSOtxbDmrlKrcpt/J7ZFm/gGnj3omYM4o1KKX8yxlVl+duSSQJUFniPqFWRRSA9ObS5oIJiA==
+X-Received: by 2002:a17:906:c102:b0:aa6:7f99:81aa with SMTP id
+ a640c23a62f3a-ab2ab676541mr974930866b.6.1736534841748; 
+ Fri, 10 Jan 2025 10:47:21 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.105.73])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90dace5sm196437966b.60.2025.01.10.10.46.42
+ a640c23a62f3a-ab2c95648b1sm192320666b.112.2025.01.10.10.47.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 10:46:43 -0800 (PST)
+ Fri, 10 Jan 2025 10:47:19 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 10/38] rust: qom: make INSTANCE_POST_INIT take a shared
- reference
-Date: Fri, 10 Jan 2025 19:45:51 +0100
-Message-ID: <20250110184620.408302-11-pbonzini@redhat.com>
+Subject: [PULL 26/38] target/i386/kvm: Return -1 when
+ kvm_msr_energy_thread_init() fails
+Date: Fri, 10 Jan 2025 19:46:07 +0100
+Message-ID: <20250110184620.408302-27-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110184620.408302-1-pbonzini@redhat.com>
 References: <20250110184620.408302-1-pbonzini@redhat.com>
@@ -108,61 +108,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+From: Zhao Liu <zhao1.liu@intel.com>
+
+It is common practice to return a negative value (like -1) to indicate
+an error, and other functions in kvm_arch_init() follow this style.
+
+To avoid confusion (sometimes returned -1 indicates failure, and
+sometimes -1, in a same function), return -1 when
+kvm_msr_energy_thread_init() fails.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20241106030728.553238-10-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 4 ++--
- rust/qemu-api/src/qom.rs         | 8 ++------
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ target/i386/kvm/kvm.c | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 72a4cea042c..6792d13fb77 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -145,7 +145,7 @@ impl ObjectImpl for PL011State {
-     type ParentType = SysBusDevice;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 097a040da30..3624abbb397 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2936,7 +2936,6 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+     struct KVMMsrEnergy *r = &s->msr_energy;
+-    int ret = 0;
  
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
--    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = Some(Self::post_init);
-+    const INSTANCE_POST_INIT: Option<fn(&Self)> = Some(Self::post_init);
- }
+     /*
+      * Sanity check
+@@ -2946,13 +2945,11 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+     if (!is_host_cpu_intel()) {
+         error_report("The RAPL feature can only be enabled on hosts "
+                      "with Intel CPU models");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
  
- impl DeviceImpl for PL011State {
-@@ -206,7 +206,7 @@ unsafe fn init(&mut self) {
+     if (!is_rapl_enabled()) {
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Retrieve the virtual topology */
+@@ -2974,16 +2971,14 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+     r->host_topo.maxcpus = vmsr_get_maxcpus();
+     if (r->host_topo.maxcpus == 0) {
+         error_report("host max cpus = 0");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Max number of packages on the host */
+     r->host_topo.maxpkgs = vmsr_get_max_physical_package(r->host_topo.maxcpus);
+     if (r->host_topo.maxpkgs == 0) {
+         error_report("host max pkgs = 0");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Allocate memory for each package on the host */
+@@ -2995,8 +2990,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+     for (int i = 0; i < r->host_topo.maxpkgs; i++) {
+         if (r->host_topo.pkg_cpu_count[i] == 0) {
+             error_report("cpu per packages = 0 on package_%d", i);
+-            ret = 1;
+-            goto out;
++            return -1;
          }
      }
  
--    fn post_init(&mut self) {
-+    fn post_init(&self) {
-         let sbd: &SysBusDevice = self.upcast();
+@@ -3013,8 +3007,7 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
  
-         sbd.init_mmio(&self.iomem);
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index b0332ba2477..97901fb9084 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -163,11 +163,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-     // SAFETY: obj is an instance of T, since rust_instance_post_init<T>
-     // is called from QOM core as the instance_post_init function
-     // for class T
--    //
--    // FIXME: it's not really guaranteed that there are no backpointers to
--    // obj; it's quite possible that they have been created by instance_init().
--    // The receiver should be &self, not &mut self.
--    T::INSTANCE_POST_INIT.unwrap()(unsafe { &mut *obj.cast::<T>() })
-+    T::INSTANCE_POST_INIT.unwrap()(unsafe { &*obj.cast::<T>() })
+     if (s->msr_energy.sioc == NULL) {
+         error_report("vmsr socket opening failed");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     /* Those MSR values should not change */
+@@ -3026,15 +3019,13 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+                                     s->msr_energy.sioc);
+     if (r->msr_unit == 0 || r->msr_limit == 0 || r->msr_info == 0) {
+         error_report("can't read any virtual msr");
+-        ret = 1;
+-        goto out;
++        return -1;
+     }
+ 
+     qemu_thread_create(&r->msr_thr, "kvm-msr",
+                        kvm_msr_energy_thread,
+                        s, QEMU_THREAD_JOINABLE);
+-out:
+-    return ret;
++    return 0;
  }
  
- unsafe extern "C" fn rust_class_init<T: ObjectType + ClassInitImpl<T::Class>>(
-@@ -463,7 +459,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+ int kvm_arch_get_default_type(MachineState *ms)
+@@ -3342,7 +3333,9 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
  
-     /// Function that is called to finish initialization of an object, once
-     /// `INSTANCE_INIT` functions have been called.
--    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = None;
-+    const INSTANCE_POST_INIT: Option<fn(&Self)> = None;
- 
-     /// Called on descendent classes after all parent class initialization
-     /// has occurred, but before the class itself is initialized.  This
+         if (s->msr_energy.enable == true) {
+             kvm_vm_enable_energy_msrs(s);
+-            if (kvm_msr_energy_thread_init(s, ms)) {
++
++            ret = kvm_msr_energy_thread_init(s, ms);
++            if (ret < 0) {
+                 error_report("kvm : error RAPL feature requirement not met");
+                 exit(1);
+             }
 -- 
 2.47.1
 
