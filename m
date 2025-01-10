@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C7C5E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A83D7E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWK4E-0003Os-7z; Fri, 10 Jan 2025 13:49:10 -0500
+	id 1tWK2w-0000xA-SZ; Fri, 10 Jan 2025 13:47:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK3C-000278-0n
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:48:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tWK2O-0000HR-Av
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK3A-0001Gj-4J
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:48:05 -0500
+ id 1tWK2I-00019f-9p
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:47:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736534883;
+ s=mimecast20190719; t=1736534828;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=88Lnido+/J4sUIJeN8buUF3YDTjA0MP2vOjpZog+Shs=;
- b=VwDGUHuYuYMDt+eri9QMuuSpKqjitn4TaTjF4eTM5r40VmgkCaoGbsrmakf/I/MaCsu2z0
- Ux8l/PJWtXLyXUnL7Ph6tSzJ4YLIv9jXJjeubRvsumS3RQtfhj3f/slgeKsLn9qd5SM34B
- havj8RzkLJyiyu5p70mDTE3/7tjWlDg=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lheQe9oBiSwdA3AEighJH8+9qG+im1PfUhZWsSUYH5o=;
+ b=WKy0OlwwazpGG7z+dWAsO3RTT+RotdIy9jZQfu/oHSYHnbWwkOjw3VhTkH9mKB3Axs8sKR
+ h1OZ0CXngYYvr0NW7ckJJulPQ52lCx0ZEVPtHC91fF1Ks8SETYNVe+fMy1tLStd2nslGd7
+ qN1xntgJeiDrZzydhJJlzicSekrY+cE=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-9dVBjbP1NsucWMs2csdnCw-1; Fri, 10 Jan 2025 13:46:51 -0500
-X-MC-Unique: 9dVBjbP1NsucWMs2csdnCw-1
-X-Mimecast-MFC-AGG-ID: 9dVBjbP1NsucWMs2csdnCw
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d2cccbe4so2692479a12.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:51 -0800 (PST)
+ us-mta-637-NxLL07ZxPcG-Bde8gCqCqA-1; Fri, 10 Jan 2025 13:47:07 -0500
+X-MC-Unique: NxLL07ZxPcG-Bde8gCqCqA-1
+X-Mimecast-MFC-AGG-ID: NxLL07ZxPcG-Bde8gCqCqA
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-aa66f6ce6bfso197519066b.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:47:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736534809; x=1737139609;
+ d=1e100.net; s=20230601; t=1736534825; x=1737139625;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=88Lnido+/J4sUIJeN8buUF3YDTjA0MP2vOjpZog+Shs=;
- b=RbswvjpwF/D16yhKi9L1+w5bSSNvOyNgrOZcGS3Z52o152o8Q1nh1cdlH36zRmbbRY
- 7s7AR5FsZ0rg21QGVZtEI0jWzHAxzJHzIoV41rMwYJdNWlIxgdqo6uIW3eqiwqREe2gU
- 5T0xpU1xVipuxPpA2df4UBic3YGcT4CfmXvdlOZdRYYVAjBRCk0N81oQuLZwQi8tcIcE
- DCRq8yoyqJf30i0rCmiVQ2rHmJQTxrU5n2OteVt6Qpt0NeZX1U5Ej8kE2emy8SjEdaR3
- OH7Z/2mDy+rs2Dmi9Q+bRTOq1ygp1++lasSSBaxU28gZ6699obxOin+JWnGfKSW1VRCh
- /6tQ==
-X-Gm-Message-State: AOJu0YxTeUdpqnnzqcm6Lj8MNJ8aulutjRIyU3ZHyx1oOIKO4zQsYsNR
- xBF5g9Klp7lBsiHrs20ZVI5gtzMW/UJIl2ZFOW39Yokbqp2nOVaw1MRHER+Lw5AVTJmMPg/eAN5
- BYM4qDxvI4scIRqseVrcO/PvybLnGx8xn+l9fzyXbzO31uuf6scNFBDpuGvpaOZcE7x348rS9hw
- A+lVcxNyspoOMfjg3jxtDPUMa8icQoeTvkNnC/mdU=
-X-Gm-Gg: ASbGnctE1do1vqMlj1QQc3cHBhD8YhI1+RSuOON6Je/7DLufsvGWr6NI4vyZwDaRC3w
- J158Fz2Vv533dlxMFDMx/gZdpJEi+nragaSInWp8KleqSPD+muOmacaK1Xp9P9MWeNzuTNk8vCW
- +mN6U9Mc0xO4dvD+OtJaGgz94s9yMzejT/9qrRXLJ8DIyxXgztHz8OjUpsGnoWPWr9bLATNaHZd
- othsij4wCbUGSYLqYErjbmQnhU0gUNploDtIiscfUC27qNS9EDEixWiv24=
-X-Received: by 2002:a05:6402:270d:b0:5d3:d4cf:fea0 with SMTP id
- 4fb4d7f45d1cf-5d972e4c62emr9669957a12.21.1736534809379; 
- Fri, 10 Jan 2025 10:46:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGZNtxcF55o60VmqOVUIE+KIBufqGCdUqcSEtMDqK+albPDR+2ofPFhcgVnrPoRnId0rX2fkQ==
-X-Received: by 2002:a05:6402:270d:b0:5d3:d4cf:fea0 with SMTP id
- 4fb4d7f45d1cf-5d972e4c62emr9669946a12.21.1736534808928; 
- Fri, 10 Jan 2025 10:46:48 -0800 (PST)
+ bh=lheQe9oBiSwdA3AEighJH8+9qG+im1PfUhZWsSUYH5o=;
+ b=XXy4NDBbyrYXFe3WgvnTY3BYl7NZESaf77FJjk+ZORFdyWCkHjdNAzrCWers7PpVH2
+ ehw7wCN2MIjDeQX/6us36FuSzQpdXxz4oRi7oKvjrP32ElrLVDn3jMAnJU3XV6xY/rqI
+ WKoSPgwuyGKyoDaFzP6oSwceXYq1nbWO/tY5HZr4uDtBlZ+QFv3SVh9GY1ZEI5Uhcw92
+ ZvnQYtEzVlNVu4s73gnyMdJDri6RWnIAbrGKTzZsEJyMY8rhM90s7i76Zd5aaI0YI5wF
+ NtcKH3kuAqnVB+5X/0ZD4L4UODw7ANaMeu9WQCFELBEKuXbHf1wGxSUVpHeg9G71wPsk
+ XSuw==
+X-Gm-Message-State: AOJu0YzVjgzW9k49GBWI8XR5pCY+dsne4jgiBMvFYdREPLxd2GE7lAAz
+ 6pX+RYSyz+vN17Jsm/jgH2YLUEuXCZmUcmc8kqi1K6ekBBkVPMzwvloY9p2+FgOLNM+psZn85Wu
+ G002cJUUei4NPEqu4wJYAVn/2OyJfdim1L+lCfri8I35/Io6BzqVhcTVpAdMDTcs53yFpWrIRQt
+ W5yphQVHtfL2gOh/x7BpzPGe3q3u6n4LLT30OffCs=
+X-Gm-Gg: ASbGncsSF4b9Z9bUZL52U6LOD03BucOKSrJfqlcM31cA83hGZxs47djXlYf1ULjUMhV
+ o8DpUU0o+PMk8ftETGg28eQIUmpTPQ3JeF9VMBL15jCHVCFdkotFGLoscnlVU/urv7fEFNLKXLn
+ 2rmdDJxO38vk7hHqs1wMQYFTJp0o5JN+PABlrDnPYWNJrYbfrAX9JxbqVIho7gW3d0913cec4qm
+ dRCJBJ91M6lrdD/Xl+ymqruwtIZnSH4MI+QPll8rM9/BfwefMwD5s3SznM=
+X-Received: by 2002:a17:907:60cf:b0:aab:92bd:1a8f with SMTP id
+ a640c23a62f3a-ab2ab6fd014mr1014827166b.26.1736534825033; 
+ Fri, 10 Jan 2025 10:47:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQSbyE0lVRU+apt9SfK90NVRCicY/pU3NyB9MxKJa39+IGoQLl3jKVvSXJhkXuisJ1e5Xe4A==
+X-Received: by 2002:a17:907:60cf:b0:aab:92bd:1a8f with SMTP id
+ a640c23a62f3a-ab2ab6fd014mr1014824566b.26.1736534824555; 
+ Fri, 10 Jan 2025 10:47:04 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.105.73])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d9904a411csm1906598a12.72.2025.01.10.10.46.47
+ a640c23a62f3a-ab2c90d4f92sm195595866b.57.2025.01.10.10.47.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 10:46:47 -0800 (PST)
+ Fri, 10 Jan 2025 10:47:03 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 12/38] rust: qemu-api-macros: add automatic TryFrom/TryInto
- derivation
-Date: Fri, 10 Jan 2025 19:45:53 +0100
-Message-ID: <20250110184620.408302-13-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-stable@nongnu.org,
+ Tao Su <tao1.su@linux.intel.com>
+Subject: [PULL 19/38] i386/cpu: Mark avx10_version filtered when prefix is NULL
+Date: Fri, 10 Jan 2025 19:46:00 +0100
+Message-ID: <20250110184620.408302-20-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110184620.408302-1-pbonzini@redhat.com>
 References: <20250110184620.408302-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,156 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is going to be fairly common. Using a custom procedural macro
-provides better error messages and automatically finds the right
-type.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Note that this is different from the same-named macro in the
-derive_more crate.  That one provides conversion from e.g. tuples
-to enums with tuple variants, not from integers to enums.
+In x86_cpu_filter_features(), if host doesn't support AVX10, the
+configured avx10_version should be marked as filtered regardless of
+whether prefix is NULL or not.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Check prefix before warn_report() instead of checking for
+have_filtered_features.
+
+Cc: qemu-stable@nongnu.org
+Fixes: commit bccfb846fd52 ("target/i386: add AVX10 feature and AVX10 version property")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Tao Su <tao1.su@linux.intel.com>
+Link: https://lore.kernel.org/r/20241106030728.553238-2-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/lib.rs   | 28 +------------
- rust/qemu-api-macros/src/lib.rs | 74 ++++++++++++++++++++++++++++++++-
- 2 files changed, 73 insertions(+), 29 deletions(-)
+ target/i386/cpu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 69064d6929b..0a89d393e0f 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -45,7 +45,7 @@
- #[doc(alias = "offset")]
- #[allow(non_camel_case_types)]
- #[repr(u64)]
--#[derive(Debug)]
-+#[derive(Debug, qemu_api_macros::TryInto)]
- pub enum RegisterOffset {
-     /// Data Register
-     ///
-@@ -102,32 +102,6 @@ pub enum RegisterOffset {
-     //Reserved = 0x04C,
- }
- 
--impl core::convert::TryFrom<u64> for RegisterOffset {
--    type Error = u64;
--
--    fn try_from(value: u64) -> Result<Self, Self::Error> {
--        macro_rules! case {
--            ($($discriminant:ident),*$(,)*) => {
--                /* check that matching on all macro arguments compiles, which means we are not
--                 * missing any enum value; if the type definition ever changes this will stop
--                 * compiling.
--                 */
--                const fn _assert_exhaustive(val: RegisterOffset) {
--                    match val {
--                        $(RegisterOffset::$discriminant => (),)*
--                    }
--                }
--
--                match value {
--                    $(x if x == Self::$discriminant as u64 => Ok(Self::$discriminant),)*
--                     _ => Err(value),
--                }
--            }
--        }
--        case! { DR, RSR, FR, FBRD, ILPR, IBRD, LCR_H, CR, FLS, IMSC, RIS, MIS, ICR, DMACR }
--    }
--}
--
- pub mod registers {
-     //! Device registers exposed as typed structs which are backed by arbitrary
-     //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index 539c48df298..7ec218202f4 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -5,8 +5,8 @@
- use proc_macro::TokenStream;
- use quote::quote;
- use syn::{
--    parse_macro_input, parse_quote, punctuated::Punctuated, token::Comma, Data, DeriveInput, Field,
--    Fields, Ident, Type, Visibility,
-+    parse_macro_input, parse_quote, punctuated::Punctuated, spanned::Spanned, token::Comma, Data,
-+    DeriveInput, Field, Fields, Ident, Meta, Path, Token, Type, Variant, Visibility,
- };
- 
- mod utils;
-@@ -98,3 +98,73 @@ pub fn derive_offsets(input: TokenStream) -> TokenStream {
- 
-     TokenStream::from(expanded)
- }
-+
-+#[allow(non_snake_case)]
-+fn get_repr_uN(input: &DeriveInput, msg: &str) -> Result<Path, MacroError> {
-+    let repr = input.attrs.iter().find(|attr| attr.path().is_ident("repr"));
-+    if let Some(repr) = repr {
-+        let nested = repr.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)?;
-+        for meta in nested {
-+            match meta {
-+                Meta::Path(path) if path.is_ident("u8") => return Ok(path),
-+                Meta::Path(path) if path.is_ident("u16") => return Ok(path),
-+                Meta::Path(path) if path.is_ident("u32") => return Ok(path),
-+                Meta::Path(path) if path.is_ident("u64") => return Ok(path),
-+                _ => {}
-+            }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0b639848cd6..579d9bac955 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7719,8 +7719,10 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+             env->avx10_version = version;
+             have_filtered_features = true;
+         }
+-    } else if (env->avx10_version && prefix) {
+-        warn_report("%s: avx10.%d.", prefix, env->avx10_version);
++    } else if (env->avx10_version) {
++        if (prefix) {
++            warn_report("%s: avx10.%d.", prefix, env->avx10_version);
 +        }
-+    }
-+
-+    Err(MacroError::Message(
-+        format!("#[repr(u8/u16/u32/u64) required for {}", msg),
-+        input.ident.span(),
-+    ))
-+}
-+
-+fn get_variants(input: &DeriveInput) -> Result<&Punctuated<Variant, Comma>, MacroError> {
-+    if let Data::Enum(e) = &input.data {
-+        if let Some(v) = e.variants.iter().find(|v| v.fields != Fields::Unit) {
-+            return Err(MacroError::Message(
-+                "Cannot derive TryInto for enum with non-unit variants.".to_string(),
-+                v.fields.span(),
-+            ));
-+        }
-+        Ok(&e.variants)
-+    } else {
-+        Err(MacroError::Message(
-+            "Cannot derive TryInto for union or struct.".to_string(),
-+            input.ident.span(),
-+        ))
-+    }
-+}
-+
-+#[rustfmt::skip::macros(quote)]
-+fn derive_tryinto_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
-+    let repr = get_repr_uN(&input, "#[derive(TryInto)]")?;
-+
-+    let name = &input.ident;
-+    let variants = get_variants(&input)?;
-+    let discriminants: Vec<&Ident> = variants.iter().map(|f| &f.ident).collect();
-+
-+    Ok(quote! {
-+        impl core::convert::TryFrom<#repr> for #name {
-+            type Error = #repr;
-+
-+            fn try_from(value: #repr) -> Result<Self, Self::Error> {
-+                #(const #discriminants: #repr = #name::#discriminants as #repr;)*;
-+                match value {
-+                    #(#discriminants => Ok(Self::#discriminants),)*
-+                    _ => Err(value),
-+                }
-+            }
-+        }
-+    })
-+}
-+
-+#[proc_macro_derive(TryInto)]
-+pub fn derive_tryinto(input: TokenStream) -> TokenStream {
-+    let input = parse_macro_input!(input as DeriveInput);
-+    let expanded = derive_tryinto_or_error(input).unwrap_or_else(Into::into);
-+
-+    TokenStream::from(expanded)
-+}
+         have_filtered_features = true;
+     }
+ 
 -- 
 2.47.1
 
