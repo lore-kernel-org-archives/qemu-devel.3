@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17D1E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A454E7719E
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWEtw-0004iS-Ba; Fri, 10 Jan 2025 08:18:12 -0500
+	id 1tWEtw-0004hd-53; Fri, 10 Jan 2025 08:18:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWEtl-0004cA-Pw
+ id 1tWEtl-0004c7-Os
  for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:18:01 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tWEtj-0004hJ-98
+ id 1tWEti-0004h1-AM
  for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:18:01 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso21891355e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:17:58 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so24061895e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:17:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736515077; x=1737119877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736515076; x=1737119876; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7XsOBuDsdsXncH1mjxaZnWXPtp0PeddlD/M2VgDxx0s=;
- b=xkpvZrrpIqznqIXWEBIpS3luZIDWCZ0mNOAOigMnqOz50PexAQjmOgAz5a6XMGDXwl
- cRYQpgjsLLAKOFN+n2eCC5EEv/fP2YV0WJd7zov5VtoQPtxLE+7Oc2+0DxnlKI2nbXPM
- siaFu2WGusiWx+qBTUFif6eArvEHtiPY4+W+NFyxGZoUaR7ZDBVZBRFtJzg7uns8OKAa
- D3GeNtTTwGrD6RZvV6qACAVFZi6HsCmifZ2HZ4vizipl25QyDm4zzPEpXv8N24rdyySf
- 4WY34Gca0CntXNEaEVsK3GsCoxtw9hSxVWDZuL3/FGoh/GPJP53JnZ3nuS3c9qaa8bLu
- ZxUw==
+ bh=APotq0+3EJuwxRhMo93UPR6eJLZZtzlTb7igZFjtUqw=;
+ b=hfmJwj/JGnjqEKIv+NGXCMhd9I0wQ9QHfYB2+y25mOYtT6tJVyHOiuJ9gnUvtOF/wd
+ NamyFzhgciwi4jniCqJOZIo/NJ+xaikZ/SAgrIqy9+E43E/YufNLXrqZjeUZjS9vG/KF
+ MMp87jWSU21fh2BcZZ4nXTeyRJfPnmlO1/OyZhXbxmvIDtZj2LNsv7EX/IriijvbwKij
+ cIPZvNnohwx7+2QmtRHR6OZqOV8rtaU0OIHFLtQ0WU5DoEDZBmO24OMM1nLIYyuzjBJt
+ 9IJvIOOMIisG+rlFNHvzkaDqu14UlIm3dS0kAbWGGP1tUeA629IetG38bM3EDB70Seyu
+ gYuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736515077; x=1737119877;
+ d=1e100.net; s=20230601; t=1736515076; x=1737119876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7XsOBuDsdsXncH1mjxaZnWXPtp0PeddlD/M2VgDxx0s=;
- b=U24ts1Uw0G5IEEIHcvey4mUcnBJqXp+2p78ruZcCWA8Yatln1RdzyLk/b6388wKCKt
- MGOGSkNCADkUVGoEgXxn3v00yRpq2z69dE/NsU5Z/7fyULLHErCIAgLvLoTGTkbHEyiK
- ZoCodsya1WEAVngAhYv4XmegIMs0bu7y5cy2+MSMdTFFqC5MpLAwcdR6kSygv1ThJ31i
- oK96m9cJ+MGADqZG5qpBmJ8Af9vORDA5NvTogN4qQp8h7nVplkC78gJUeU/gIt4/H7Z4
- hYN76HHRDnw8/2w/EusDO4Mv2o7ia0swD/NrdkHC5NJ9jWhUbRXYMwLDjrPsS/td589s
- RTBw==
-X-Gm-Message-State: AOJu0Yz1PN3jnJKBvFzdf4O52eNzq4jmWswS9cFj4Lgt2KPjtYHm/+PR
- psYRyZr3tYelMKJIyEvdzbH/Vktppspbef3EdQHBfZvd4lXyS6nSOvN8+LAW7mMHfXH5R6iet/s
- Swv8=
-X-Gm-Gg: ASbGnct9zcRqrku330b/RvEMFQWWKzlyFqWzh8bR1bDxrf3H/uAQJOqWmA09IdHSFa1
- dzdBfz7KXEObQWXLLW6oU1GrlWYLWHbkOsgQceS6JlRGY8yxGQ5E/FB2jMw2NxlDf5+Jq0nk6+J
- spg85ADmTHlKLJoIqpZ/jBZTtes4nRHRLNoXiKS0oKoMugAoiBYY+ulIhpRsPLSueXBcP+HF6Zc
- bIA/E9HZmAYZlhZR40RDrhgQNWTSGS8HiExyBExG22TGn6IKgfSQkw=
-X-Google-Smtp-Source: AGHT+IHLtw1CBRPMhBQd6OZHSt73A19EGUmsjwVJSR2q6DoWq0EgYAp/0HNE5eDGVSutO422Nc72yA==
-X-Received: by 2002:a05:600c:6b6f:b0:436:e86e:e4ab with SMTP id
- 5b1f17b1804b1-436e86ee529mr81675945e9.30.1736515076999; 
+ bh=APotq0+3EJuwxRhMo93UPR6eJLZZtzlTb7igZFjtUqw=;
+ b=ePlJKN0F0c1EkdQdjX6x34gCf0BEBzNDatUanCH1wsGOFNo+8LtbYGcV7OO2qzRAzS
+ IB0WaqtXbgS9o5GcUo1p3J0jliRSy9bZ+KjrBcaGb/FcqTi/TAKSoGszhhr3ws7C2PV5
+ +F13wFv1usuVSQcw+7E1YielMbOnwSvLstNHGnhWQovhUvDgTbq8EOGNr7tGVrdPLpSj
+ PmlH3SeltuLqn3I6H6dZRuXuf0U+gYW9fkYeymVLa/gh1iBxcR0pupy4hyS32fYqTBxT
+ prXqn2ZFmxV6kMRs+F3ImORsIRL5ih1f2B9lVzLdgIsjMqyjTLWAUECaveo6b0mTXkzN
+ /fgQ==
+X-Gm-Message-State: AOJu0YynD73B1Gzkft9bR8GTgVDK4uklqtT3OCnzUMkUQerw9ncEXDHE
+ Zm9u9CO0252BaWzquiNQfzTgH4SKIsBQwKndDYYzPB8cMdHJe8koKS5fqEJyPnU=
+X-Gm-Gg: ASbGncsS+GKu65oXUWpvzI2WMlvFHSu2Qu0xokBlJJTePTVXPXOvIQozZUMUdsNBac7
+ U7qIvJ0lztrAKW46QGUmC8gW395c2wA0HR6qA2vUPfHRuHMmnlsqgSY/w6bJLNAU5oWDHAQDUjD
+ 6ilVOoSjHBghEHs3P6BaspMy/c1uLITECMLb6zgZ3W+dZMlzsyz2jw3IvPSaMDseqWdL2BFCFap
+ HqoKrW897IhJIH58/n0oBWlKRar0V8yeuXPeKnL84HIGpfcrd5uDm0=
+X-Google-Smtp-Source: AGHT+IEMWjeEHuf8FXmbx+NJ9dMikVeNxS5TkPUIIYhzTDW/MwXk6AFg4fQARvDQgF6vXVb14cyo/Q==
+X-Received: by 2002:a05:6000:470d:b0:385:df2c:91b5 with SMTP id
+ ffacd0b85a97d-38a87085becmr10454512f8f.0.1736515076489; 
  Fri, 10 Jan 2025 05:17:56 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9e03f8bsm51712215e9.23.2025.01.10.05.17.54
+ ffacd0b85a97d-38a8e3834fbsm4482071f8f.26.2025.01.10.05.17.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 05:17:55 -0800 (PST)
+ Fri, 10 Jan 2025 05:17:54 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5E5895F9E2;
+ by draig.lan (Postfix) with ESMTP id 479AB5F9D7;
  Fri, 10 Jan 2025 13:17:54 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
  Anders Roxell <anders.roxell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/32] tests/functional: add a m68k tuxrun tests
-Date: Fri, 10 Jan 2025 13:17:25 +0000
-Message-Id: <20250110131754.2769814-4-alex.bennee@linaro.org>
+Subject: [PULL 02/32] tests/functional: update the i386 tuxrun tests
+Date: Fri, 10 Jan 2025 13:17:24 +0000
+Message-Id: <20250110131754.2769814-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250110131754.2769814-1-alex.bennee@linaro.org>
 References: <20250110131754.2769814-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,80 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We didn't have this before and as it exercises the m68k virt platform
-it seems worth adding. We don't wait for the shutdown because QEMU
-will auto-exit on the shutdown.
+Now there are new up to date images available we should update to them.
 
-Cc: Laurent Vivier <laurent@vivier.eu>
 Cc: Anders Roxell <anders.roxell@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250108121054.1126164-4-alex.bennee@linaro.org>
+Message-Id: <20250108121054.1126164-3-alex.bennee@linaro.org>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2101b51217..cab9018d9f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1288,6 +1288,7 @@ F: include/hw/intc/goldfish_pic.h
- F: include/hw/intc/m68k_irqc.h
- F: include/hw/misc/virt_ctrl.h
- F: docs/specs/virt-ctlr.rst
-+F: tests/functional/test_m68k_tuxrun.py
+diff --git a/tests/functional/test_i386_tuxrun.py b/tests/functional/test_i386_tuxrun.py
+index c593ffbe8c..f3ccf11ae8 100755
+--- a/tests/functional/test_i386_tuxrun.py
++++ b/tests/functional/test_i386_tuxrun.py
+@@ -17,11 +17,11 @@
+ class TuxRunI386Test(TuxRunBaselineTest):
  
- MicroBlaze Machines
- -------------------
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index a5087fcb34..7890dcb86d 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -116,6 +116,7 @@ tests_m68k_system_thorough = [
-   'm68k_mcf5208evb',
-   'm68k_nextcube',
-   'm68k_q800',
-+  'm68k_tuxrun',
- ]
+     ASSET_I386_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/i386/bzImage',
+-        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
++        'https://storage.tuxboot.com/buildroot/20241119/i386/bzImage',
++        '47fb44e38e34101eb0f71a2a01742b959d40ed5fd67cefb5608a39be11d3b74e')
+     ASSET_I386_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/i386/rootfs.ext4.zst',
+-        'f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a')
++        'https://storage.tuxboot.com/buildroot/20241119/i386/rootfs.ext4.zst',
++        'a1a3b3b4c9dccd6475b58db95c107b468b736b700f6620985a8ed050a73d51c8')
  
- tests_microblaze_system_thorough = [
-diff --git a/tests/functional/test_m68k_tuxrun.py b/tests/functional/test_m68k_tuxrun.py
-new file mode 100755
-index 0000000000..7eacba135f
---- /dev/null
-+++ b/tests/functional/test_m68k_tuxrun.py
-@@ -0,0 +1,34 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots known good tuxboot images the same way
-+# that tuxrun (www.tuxrun.org) does. This tool is used by things like
-+# the LKFT project to run regression tests on kernels.
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from qemu_test.tuxruntest import TuxRunBaselineTest
-+
-+class TuxRunM68KTest(TuxRunBaselineTest):
-+
-+    ASSET_M68K_KERNEL = Asset(
-+        'https://storage.tuxboot.com/buildroot/20241119/m68k/vmlinux',
-+        '7754e1d5cec753ccf1dc6894729a7f54c1a4965631ebf56df8e4ce1163ad19d8')
-+    ASSET_M68K_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/buildroot/20241119/m68k/rootfs.ext4.zst',
-+        '557962ffff265607912e82232cf21adbe0e4e5a88e1e1d411ce848c37f0213e9')
-+
-+    def test_m68k(self):
-+        self.set_machine('virt')
-+        self.cpu="m68040"
-+        self.common_tuxrun(kernel_asset=self.ASSET_M68K_KERNEL,
-+                           rootfs_asset=self.ASSET_M68K_ROOTFS,
-+                           drive="virtio-blk-device")
-+
-+if __name__ == '__main__':
-+    TuxRunBaselineTest.main()
+     def test_i386(self):
+         self.set_machine('q35')
 -- 
 2.39.5
 
