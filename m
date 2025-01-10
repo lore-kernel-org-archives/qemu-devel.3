@@ -4,100 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40F0E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C31E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWEfu-0005Ix-PH; Fri, 10 Jan 2025 08:03:42 -0500
+	id 1tWEgo-0005qG-PS; Fri, 10 Jan 2025 08:04:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tWEfi-0005BV-Mc
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:03:32 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tWEfn-0005HI-Sj
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:03:39 -0500
+Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tWEfg-0002E1-3N
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:03:29 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50A3sCRs030166;
- Fri, 10 Jan 2025 13:03:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jqFUKc
- YfXlr2vM7Nv2whBNXMYva5Qart/Xd/Q48kEHA=; b=oWGH7e9Y9jEKejhvMCowO9
- uC0PcwZ1JgkjNIzcdufTWKDkeibr/IHlye1jtUni3mMksgwACCvwDu39wlsJed1c
- QXASQi1TIPwnM6SuDHGAJDgEmrHu8YXA74KksZsbQ4QlSGqdWUDHRX0DaOf/6q1m
- 3njjYP2mdAE94iJKhzIbLHXGQidc3LClpefezEXjoIh2lzegMDWJjYD/QBB5CiQs
- 6HsznfG8B8ZrmcJm2Xj8/EkpVX568LDkvRfWUJZHvuEOGdBbcBLIiYFmP4MWqub6
- byg/Q4xhSc1WIT4nwOiNVp82bM4NsVgngThkHh5bSmPabpiNQY5Vfe3pOngqhvzw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 442v1q21p1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Jan 2025 13:03:13 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50A9t9gF013576;
- Fri, 10 Jan 2025 13:03:12 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43ygapa9b5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Jan 2025 13:03:12 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50AD3Ar840370658
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Jan 2025 13:03:10 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B76AA2004D;
- Fri, 10 Jan 2025 13:03:10 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED5CE2004B;
- Fri, 10 Jan 2025 13:03:09 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Jan 2025 13:03:09 +0000 (GMT)
-Message-ID: <cf8a0915434ec6c48cf88fffc27a53239cffe34a.camel@linux.ibm.com>
-Subject: Re: [PATCH v4 1/9] qapi: Make qapi_bool_parse() gracefully handle
- NULL value
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
-Cc: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>, Laurent
- Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Kyle Evans <kevans@freebsd.org>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, qemu-devel@nongnu.org
-Date: Fri, 10 Jan 2025 14:03:09 +0100
-In-Reply-To: <Z4EFnOMRUDsH6cpd@redhat.com>
-References: <20250108202625.149869-1-iii@linux.ibm.com>
- <20250108202625.149869-2-iii@linux.ibm.com> <Z4EFnOMRUDsH6cpd@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
+ id 1tWEfl-0002Fu-FW
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:03:35 -0500
+Received: from [192.168.1.8] (default-rdns.vocus.co.nz [202.150.110.104] (may
+ be forged)) (authenticated bits=0)
+ by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
+ 50AD3Mro1380907
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+ Fri, 10 Jan 2025 13:03:25 GMT
+Authentication-Results: anarch128.org; auth=pass;
+ dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
+ header.i=@anarch128.org header.b=a/pqHKwI header.a=rsa-sha256 header.s=100003;
+ x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org); 
+ x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
+ s=100003; t=1736514207;
+ bh=WauTmJIKiWxAbQ2koPhZPbysIfJzXaHvsfcJgr9PiEs=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=a/pqHKwIWs3v7b1sfG0yuzbtMSXiNGgDAmLO2pBRl9FSKk5HXgKJ/Wa/td1OvXBuu
+ cgWk2bLUKr/z6nG3ANAINeU1elgdETb/8W7+jQ78465P1iTV9DUgNllMaEWzJF/luz
+ IJUinXCGVAGrwTG0JcQEKvtDrrEvwnG8N5G3mzIlnytCSuLfgn1UgjANU79E4q/HkP
+ mJiadOnfpXaSe+27ofCj4abEeGzzfXPX7qMaCjzhMFO9nrzKkbeoslOqbMCCPmx2HH
+ ZAcTNGNp4V4bCPyBFR5comJA7l65k++3JcCLW5p/dhgc2ZDQxUwc7z84A61fp9+Jq7
+ r4BW1j4LTWvOQ==
+Message-ID: <5244f8e9-b58d-4d37-9fe7-2236a862fd91@anarch128.org>
+Date: Sat, 11 Jan 2025 02:03:16 +1300
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bYWUOOzabgFA5_GKfYTHHPeiYix3euxT
-X-Proofpoint-ORIG-GUID: bYWUOOzabgFA5_GKfYTHHPeiYix3euxT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=435
- priorityscore=1501 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 mlxscore=0 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501100102
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC]: port of embedded x86-mini disassembler to QEMU
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
+References: <20250110094400.512788-1-michael@anarch128.org>
+ <CABgObfY_GOQN5OWBQXYvfrBtNVZGGc75p3gRHrpqQNxUErfB3A@mail.gmail.com>
+Content-Language: en-US
+From: Michael Clark <michael@anarch128.org>
+In-Reply-To: <CABgObfY_GOQN5OWBQXYvfrBtNVZGGc75p3gRHrpqQNxUErfB3A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
+ envelope-from=michael@anarch128.org; helo=anarch128.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,32 +82,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-01-10 at 11:33 +0000, Daniel P. Berrang=C3=A9 wrote:
-> On Wed, Jan 08, 2025 at 09:04:56PM +0100, Ilya Leoshkevich wrote:
-> > Use g_strcmp0(), so that NULL is considered an invalid parameter
-> > value.
->=20
-> Why are we calling qapi_bool_parse with a NULL value in the first
-> place ? IMHO this is a sign of a bug higher up the call chain
-> that ought to be fixed, as in general all our input parsing code
-> would expect non-NULL input values.
+On 1/11/25 00:07, Paolo Bonzini wrote:
+> Il ven 10 gen 2025, 10:52 Michael Clark <michael@anarch128.org> ha scritto:
+> 
+>> a note to announce a port of the x86-mini disassembler to QEMU.
+>>
+>> - https://github.com/michaeljclark/qemu/tree/x86-mini
+> 
+> I assume the huge .h files are autogenerated? If so, QEMU cannot use them
+> without including the human-readable sources in the tree.
 
-The intended use case is the following (patch 7/9):
+yes indeed. there is an x86_tablegen.py python script in the other repo 
+but it is not in the current patch. it would be somewhat easy to read 
+the tables from CSV files directly into arrays at the expense of several 
+more milliseconds during startup. the revised operand formats maps 
+relatively strictly to enum definitions with string tables in the source 
+so a reader in C would not be impossible. it needs a Lisp interpreter so 
+that it could unexec the compiled tables into a translation cache :-).
 
-    g_auto(GStrv) tokens =3D g_strsplit(*arg, "=3D", 2);
-    Error *err =3D NULL;
+> I can see how that might be interesting for x86 virtualization where you
+> have only one target and therefore you can get rid of the capstone
+> dependency. At the same time, other virtualization targets like arm64 and
+> RISC-V are going to become more and more important—not less—and not having
+> to maintain a disassembler ourselves as part of QEMU is also a big plus...
 
-    if (g_strcmp0(tokens[0], "suspend") =3D=3D 0) {
-        if (!qapi_bool_parse(tokens[0], tokens[1], &suspend, &err)) {
-            warn_report_err(err);
-            [...]
+yes indeed. but in an ideal world the encoders and decoders are matched 
+pairs. I would like to work on a translator or interpreter that uses the 
+same codec as the disassembler that it uses. although I guess there is a 
+point to having different codecs and disassemblers for differential 
+fuzzing. but there is also a point to having a matched encoder and 
+decoder. it just seems to me that if you write a machine lowering rule 
+you should write a machine lifting rule.
 
-The idea is to uniformly handle "suspend=3Dy", "suspend=3Dinvalid" and
-"suspend"; the latter requires checking whether token[1] is NULL.
-Of course, this can be special-cased in the caller, but this would be
-less elegant.
+anyway, in fact it is just yet another disassembler at this point, but 
+the codec emitter works. it doesn't yet have an arch-neutral TCG-like 
+API and IR to drive it yet. but if I wrote an interpreter it would be 
+the exact same data structures. now I need to write an assembler. e.g.
 
-[...]
->=20
+   // VMOVD xmm,xmm/m32 [rm: evex.128.66.0f.w0 6e /r]
+   // asm: vmovd xmm31,DWORD PTR [r14+r13*8-8]
+
+   x86_buffer buf;
+   x86_codec codec;
+
+   x86_buffer_init_ex(&buf, mem_addr, 0, mem_length);
+   memset(&codec, 0, sizeof(codec));
+
+   codec.opc[0] = 0x6e;
+   codec.opclen = 1;
+   codec.flags |= x86_cf_amd64;
+   codec.flags |= x86_cf_modrm;
+   codec.flags |= x86_ce_evex;
+   codec.evex = x86_enc_evex(
+     x86_map_0f, x86_pfx_66, x86_vex_l128, x86_vex_w0,
+     /*r*/ x86_xmm31, /*x*/ x86_r13, /*b*/ x86_r14, /*v*/ 0,
+     /*k*/ 0, /*brd*/ 0, /*z*/ 0
+   );
+   codec.modrm = x86_enc_modrm(x86_mod_disp8, x86_xmm31, x86_rm_sp_sib);
+   codec.sib = x86_enc_sib(x86_scale_8, x86_r13, x86_r14);
+   codec.disp32 = -2;
+
+   x86_codec_write(&buf, codec, &nbytes)
+
+the trunk branch in the repo has examples for a disassembler with the 
+LLVM C-API and C++API. it would be a tiny piece of glue to link in an 
+LLVM based disassembler too. but this code is faster than LLVM. :-D
+
+Michael
+
+> Paolo
+> 
+> 
+>> - https://github.com/michaeljclark/x86/tree/x86-mini
+>>
+>> # x86-mini
+>>
+>> the x86-mini library is a lightweight x86 encoder, decoder, and
+>> disassembler that uses extensions to the Intel instruction set
+>> metadata format to encode modern VEX/EVEX instructions and legacy
+>> instructions using a parameterized LEX (legacy extension) format.
+>>
+>> - metadata-driven disassembler with Intel format output.
+>> - written in C11 for compatibility with projects written in C.
+>> - low-level instruction encoder and decoder uses <= 32-bytes.
+>> - python tablegen program to generate C tables from CSV metadata.
+>> - metadata table tool to inspect operand encode and decode tables.
+>> - carefully checked machine-readable instruction set metadata.
+>> - support for REX/VEX/EVEX and preliminary support for REX2.
+>>
+>> the x86-mini x86 encoder and decoder library has been written from
+>> scratch to be modern and as simple as possible while also covering
+>> recent additions to the Intel and AMD 64-bit instruction sets such
+>> as the EVEX encodings for recent AVX-512 extensions and soon REX2/
+>> EVEX encodings for Intel APX, as it is written with that in mind.
+>>
+>> ## interest to the QEMU community
+>>
+>> - x86-mini is fast. raw decode performance is ~100-200MiB/sec.
+>> - x86-mini is small. 5 files, ~5 KLOC or ~13 KLOC including tables.
+>> - x86-mini is complete and includes the latest AVX-512 extensions.
+>> - x86-mini is easy to extend and uses extended Intel format metadata.
+>> - x86-mini is documented with detailed info on the metadata format.
+>> - x86-mini has CLI tools for searching x86 instruction set metadata.
+>>
+>> ## techinical notes
+>>
+>> - the decoder is table-based and uses a metadata interpreter.
+>> - the decode table is ~66KiB with a ~150KiB acceleration trie.
+>> - there are currently 3658 opcode entries active on x86-64
+>>    which expands to 4775 table entries due to parameterization.
+>> - it could be made faster by vectorizing the prefix decoder and
+>>    generating decode templates from the metadata to consteval
+>>    metadata interpretation to eliminate some L1 D$ traffic.
+>>
+>> after cherry-picking the commit, one can test host and target
+>> disassembly support. e.g. for an x86-64 target on an x86-64 host:
+>>
+>> $ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
+>>
+>> ## caveats and limitations
+>>
+>> - supports 32-bit and 64-bit disassembly, and theoretically 16-bit.
+>> - designed to support 16-bit but base index formats are not done yet.
+>> - x86-64 is exhaustively fuzz-tested against the LLVM disassembler.
+>> - but x86-mini is new and hasn't been battle-tested in production.
+>>
+>> if you already link with capstone then it doesn't provide very many
+>> immediate benefits, however, I think it is potentially useful as a
+>> small embeddable disassembler to evaluate for potential inclusion.
+>>
+>> ## rationale
+>>
+>> I worked on the QEMU disassembler while working on the QEMU RISC-V
+>> target back in 2017/2018 and I was curious about vector support.
+>> it seemed at the time that TCG vector support was piecemeal, plus
+>> the old x86 disassembler seemed messy and incomplete. I also needed
+>> an MIT-licensed disassembler to enable use in a commercial product.
+>> basically, I was looking for a lightweight symmetric x86 instruction
+>> encoder and decoder library in pure C with simple build requirements.
+>> that is what prompted this initiative.
+>>
+>> it would be nice to have an x86 disassembler building out-of-the-box
+>> as I find QEMU's built-in tracing extremely useful and given x86 is
+>> a popular target, a small embedded disassembler might be practical.
+>>
+>> ## summary and conclusion
+>>
+>> at minimum, the metedata may be useful for x86 EVEX support. note
+>> I see `tests/tcg/i386/x86.csv` in the source tree. the metadata is
+>> also based on x86-csv but has had numerous inaccuracies fixed as
+>> well as conversion of legacy instructions to the new LEX format.
+>> in effect the metadata has been fuzz-tested against LLVM for x86-64
+>> and ISA coverage is in the order of ~99.7%. the main branch of the
+>> linked repo has a procedural fuzzer for metadata-based instruction
+>> synthesis that could be useful for generating test cases for QEMU.
+>>
+>> I am kind of throwing this over the fence, although the code is quite
+>> self-contained and my stress and mental health is now under control.
+>> also I have not yet run checkpatch.pl on this code. it is a preview.
+>>
+>> x86-mini submaintainer.
+>> Michael Clark.
+>> --
+>>
+>>
+> 
 
 
