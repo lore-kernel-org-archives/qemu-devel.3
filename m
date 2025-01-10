@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CA4E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC8A5E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWAHW-0000T8-LD; Fri, 10 Jan 2025 03:22:14 -0500
+	id 1tWAHX-0000Us-SR; Fri, 10 Jan 2025 03:22:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tWAHE-0000NH-Lg
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:21:56 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tWAHL-0000Oa-Gx
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:22:06 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tWAHC-0008Ly-R3
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:21:56 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21619108a6bso29470545ad.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 00:21:54 -0800 (PST)
+ id 1tWAHI-0008Nw-JW
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:22:01 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2163dc5155fso31281655ad.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 00:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736497313; x=1737102113;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736497318; x=1737102118;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WRfq1p2xMwLv+FpB5rIe9iQy0wFQqaVZ+1FOGRhVlXM=;
- b=DflmALIkFxsnsbDbEYdxbdnTJzhXaJn3lJCch+fEqqarooO+U0lvP0Ei6LE1WB/5gT
- +hITBsguEP+zvLI6nfwVrEjQpRmjgFuTX9j+LL5/Bm62br0lhwYrpxO4B2OFSSPCPBpM
- sKV3veYpu7weTLo3JKhbZeCRL2Yck3uJ9aMX5mN79/JHxLNOWYq1o0vlMX6uGWbZP+eK
- Cyqy+0n/dA4XycDKAuJ+c2YveCHNH6irkh5dlJu0jU3wgoYMh7+u+ra2tIkK7ByPAkEJ
- DBS8riqPJsX0qApESVx+/ByMVFaqHYmXqsIbFyCiOgUU4t8nQqWQVd8hu77rdUOh/8pA
- lEmg==
+ :reply-to; bh=WhRFTFyF7033JbYEv2f5UqjBlbc3fA9FaT4irnVKl7c=;
+ b=OW1iT5ss5ZX0jGaXalcbR/DSZhbJEOparLtAnqBDOuOM980ZmshFlwa6NlITTaOsRo
+ tLTJO8rneidvX+wTDufQ0NJDSdsxBDnBpPlMYEb1sNrsI11fjkcele8vousTD3r0sHTX
+ ElCHDRpMDkMw29cSeUX/bycx/CcCMw1ak1466Q+ac1URMzGt7bOluZ5k0Ig7dexKxHOU
+ /JOD37N8lw1Vnf7vTati4Zd68HEzQqwuJ8hOXmwYznswQXTo5VTAHXQtEx4v8eItTa3K
+ SKXN34/8gKbvmbZBwEc2F4w+A06Ea2jJcyjrphJTKmTsyUf0Br1qw7Jlqs/diqjoMKpb
+ QMig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736497313; x=1737102113;
+ d=1e100.net; s=20230601; t=1736497318; x=1737102118;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WRfq1p2xMwLv+FpB5rIe9iQy0wFQqaVZ+1FOGRhVlXM=;
- b=dB67SWDmSEu9IRAT1P4Q04ok6v668CIPwWwdc+pr7Xy+jvkrs88yDKkH5a9PVGTZ+x
- czyFCCsZ0fWa6s6/o8aYztGOK08MMDSoASVikt6mJLEto01pknHNQSk9SFs3xeBhLOwZ
- kf85aHHfTbLXFV6Nx66c1wArENPXhA4fQ0BIX3wQd8yKBKfs7BEh+3FAR2Zo0VGoGJ0k
- u2gb2ru+8NZswCZt8+eNFEAwmPyWcQy244yLfakDqpcB+ctFC9+ZYIDextk84x2kJcmE
- UmPhdntd4Gt5UnoijiECmRHzBonc5oAFCU/RrlDeLEIslCmwG+8X4+ASNg05GsTKwEQy
- ua3A==
+ bh=WhRFTFyF7033JbYEv2f5UqjBlbc3fA9FaT4irnVKl7c=;
+ b=Fynh+1NlUJmBBPe++A1bdyvH/o5qnIBiklaKG0Mg+v8b3MoWgr+HRpk9VaSEKPtXeg
+ G+WhhApFbcVHJkpNsZ6+OEuWVgDioeDSMYhABkfJYaj9D73Ml2ckoHtuV7REoeVGJhra
+ 4ruuGt0IlpcT1GOmTVdrZogqRMrkwZuQ3f7Eu55XXk7k75l94E4aXXks9hOFYNsan6Tz
+ WLauWLUjP2avQXREZ4V2pAoqHacvQXKeiFtouoPVOEtF8JtDATwVVr/Kretbu9CXtUYJ
+ iZ7MoMXIC6iUl2BcZ3ZVtsvjmdQzEs2gyLSc0sRcPenuutVcAe0AJVmkOJ2KhIcU1buM
+ VQQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXC4sGrJafSMQg5Fmjw3nJv5V2a4ROrApR9tHD62/dIqiLqTRG33ERfmSYrCeE0PAwa+ctl7q3ysomE@nongnu.org
-X-Gm-Message-State: AOJu0Yw6q7hrrlmwQDNxYPO0i7A1GBP5Cyft+UYu+UELCotWq+oD5U00
- 6afAQqQTlvBdXsmGYPieubsmGrNBYAdlZjgIwaM0GeH1ICLzea9XxoT1EhyyBCo=
-X-Gm-Gg: ASbGncv0D+qatvAlKaAq4Kl3IVse0SRLTKzkoq7rkt33eAa2FPukq3WGqgTFQ+jd0uh
- vTv0MY884tkPUrYsfisD1ig80BZZtTjIKD/rWh2KutNLIyr/iTp3KE1rn7qkfNoDdyHDvS1qloo
- BzqqgOIzntvNkNng+svaYqJvIkRkk8zO/UJYwFhkXlLFEcoNYiktteKLC/9lkCRuoHwZz7AY3Hq
- fM2U1RDNZ/5rpHAUPzXBvTnF2R3KAgk6I71Nq+9WRi2FPPGJPBMTNmAHAJdV8F9g+55Qw==
-X-Google-Smtp-Source: AGHT+IFSlLCjkIEK5M7OzE2w2P3L4KxqZeGdA2ef+zWlru9nbnvkkvAn4V7zoteDEm7zmanuxLgtMA==
-X-Received: by 2002:a17:903:2311:b0:215:a2e2:53ff with SMTP id
- d9443c01a7336-21a83f36e1dmr151955815ad.11.1736497313568; 
- Fri, 10 Jan 2025 00:21:53 -0800 (PST)
+ AJvYcCVaGlDC3KoIIvAvnMJ6G/1uk77qA7kM01d6QBRX1ARYUbWLNdVzNLTBFC2hzbC3JfmGBSo+DhnXE8oR@nongnu.org
+X-Gm-Message-State: AOJu0Yw7yW01db5gyR6K8V/3bTvKJaJsMFblofzRZ4/gWjWgY7vZrSIn
+ 5FDpKr3fzvRHqoIyMom4b540N/nd4pW181Y1HGLO8cKvwZv8Y78CbBu+XD6ThYYwPpl1HAiHjuM
+ R
+X-Gm-Gg: ASbGnct7SUe6786VvBt/ovGbX7eIkWNOkusj9j2cWbmEhRwo0iBM+RiuOOJbTUcHfRZ
+ /fyqeOiwH0Mb9Dn0xWIbr0Nf0BVJEq7z0xu146JqpodxrQQKZd9M8UrRVC2AKEVaf+eZP1vzdsg
+ 7XXibldT1IheptW+Z4GKNhP1GO+nsgQw/GGxuSmqxmxgTDEtDHCgYHQGMpx6X7Om2Xt3zS5XOIW
+ p2CAFMTWUh6b+D/NjDsrG0Z1Le/g1YgY7ev9qQQj44ebuyBOgX5O3hzPI01/f6btP1m2Q==
+X-Google-Smtp-Source: AGHT+IHxYzNtH30GrSoBIGgHf0u8THkm1EA1hQnYBJEF3p9rDUCDXJ9FIB5ysCZjbIYUN9/kTR0M6A==
+X-Received: by 2002:a17:902:f644:b0:216:59ed:1aa3 with SMTP id
+ d9443c01a7336-21a83f70f0fmr134765985ad.27.1736497318371; 
+ Fri, 10 Jan 2025 00:21:58 -0800 (PST)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f22ee09sm9278715ad.200.2025.01.10.00.21.52
+ d9443c01a7336-21a9f22ee09sm9278715ad.200.2025.01.10.00.21.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 00:21:53 -0800 (PST)
+ Fri, 10 Jan 2025 00:21:58 -0800 (PST)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Fri, 10 Jan 2025 00:21:34 -0800
-Subject: [PATCH v5 06/11] target/riscv: Add counter delegation definitions
+Date: Fri, 10 Jan 2025 00:21:39 -0800
+Subject: [PATCH v5 11/11] target/riscv: Add configuration for S[m|s]csrind,
+ Smcdeleg/Ssccfg
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250110-counter_delegation-v5-6-e83d797ae294@rivosinc.com>
+Message-Id: <20250110-counter_delegation-v5-11-e83d797ae294@rivosinc.com>
 References: <20250110-counter_delegation-v5-0-e83d797ae294@rivosinc.com>
 In-Reply-To: <20250110-counter_delegation-v5-0-e83d797ae294@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: kaiwenxue1@gmail.com, Atish Patra <atishp@rivosinc.com>, 
  palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
- Kaiwen Xue <kaiwenx@rivosinc.com>
+ bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=atishp@rivosinc.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,77 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kaiwen Xue <kaiwenx@rivosinc.com>
+Add configuration options so that they can be enabled/disabld from
+qemu commandline.
 
-This adds definitions for counter delegation, including the new
-scountinhibit register and the mstateen.CD bit.
-
-Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
- target/riscv/cpu.h      | 1 +
- target/riscv/cpu_bits.h | 8 +++++++-
- target/riscv/machine.c  | 1 +
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 08215efb096c..a936300103af 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -392,6 +392,7 @@ struct CPUArchState {
-     uint32_t scounteren;
-     uint32_t mcounteren;
- 
-+    uint32_t scountinhibit;
-     uint32_t mcountinhibit;
- 
-     /* PMU cycle & instret privilege mode filtering */
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 6b1446fb7e99..73f7d37d80ee 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -210,6 +210,9 @@
- #define CSR_SSTATEEN2       0x10E
- #define CSR_SSTATEEN3       0x10F
- 
-+/* Supervisor Counter Delegation */
-+#define CSR_SCOUNTINHIBIT   0x120
-+
- /* Supervisor Trap Handling */
- #define CSR_SSCRATCH        0x140
- #define CSR_SEPC            0x141
-@@ -779,6 +782,7 @@ typedef enum RISCVException {
- #define MENVCFG_CBCFE                      BIT(6)
- #define MENVCFG_CBZE                       BIT(7)
- #define MENVCFG_PMM                        (3ULL << 32)
-+#define MENVCFG_CDE                        (1ULL << 60)
- #define MENVCFG_ADUE                       (1ULL << 61)
- #define MENVCFG_PBMTE                      (1ULL << 62)
- #define MENVCFG_STCE                       (1ULL << 63)
-@@ -826,7 +830,9 @@ typedef enum RISCVException {
- #define ISELECT_IMSIC_LAST                 ISELECT_IMSIC_EIE63
- #define ISELECT_MASK_AIA                   0x1ff
- 
--/* MISELECT, SISELECT, and VSISELECT bits (AIA) */
-+/* [M|S|VS]SELCT value for Indirect CSR Access Extension */
-+#define ISELECT_CD_FIRST                   0x40
-+#define ISELECT_CD_LAST                    0x5f
- #define ISELECT_MASK_SXCSRIND              0xfff
- 
- /* Dummy [M|S|VS]ISELECT value for emulating [M|S|VS]TOPEI CSRs */
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index d81621010dc7..d8445244ab25 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -423,6 +423,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.siselect, RISCVCPU),
-         VMSTATE_UINT32(env.scounteren, RISCVCPU),
-         VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
-         VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-         VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
-                              vmstate_pmu_ctr_state, PMUCTRState),
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 671fc3d1c1fc..fe470f646dc8 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1587,6 +1587,10 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     /* Defaults for standard extensions */
+     MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
+     MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
++    MULTI_EXT_CFG_BOOL("smcsrind", ext_smcsrind, false),
++    MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
++    MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
++    MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
+     MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
 
 -- 
 2.34.1
