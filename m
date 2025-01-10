@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F9B0E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD06E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWJhW-0008WG-3q; Fri, 10 Jan 2025 13:25:42 -0500
+	id 1tWJjm-0001p5-7A; Fri, 10 Jan 2025 13:28:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tWJhU-0008W0-Rj
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:25:40 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJjg-0001n3-7b
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:27:56 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tWJhT-0006ox-Cl
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:25:40 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21669fd5c7cso40897465ad.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:25:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJje-0007HQ-G4
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:27:56 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436ce2ab251so17913035e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:27:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736533537; x=1737138337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736533672; x=1737138472; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ruNVyzuzW8jO54zcQ0q3DqYEHSeL8e7cCjwMhhtReSM=;
- b=so+nI0X6q6h1jPsrlTD/aIUWpFxZpErQcf+nsI9s8klstmgthHt2chjpwVlc8PeGPG
- ooblnnKA5nWKPe4q2oAeaeX48G11cU7I04lK3ri0Efnt7506tFEUIQPPGBUy9XS8G0tv
- 4GEs+HpUcYPZK59GNKwnBuenazDnnZ80SE9nwdb02wUOaF1g6L/oF5l3WJgB3VvnSkAT
- b0PWmyco/y6ALC5tPAuZO85pqbg2nxPDx9NRoJdvHNO5DkODnl5gboukLG0rxB5xl2rN
- BiYfC41NOC70TMn4weRLTWYCA4GiVDzKUzw16jEdTFSGMs9gDCELt00R1ebMjidDatB4
- Wt1w==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Io4AqysyFjfAJGqhmMgH/s7Uq02PXFmlJ9QlWqXWNVo=;
+ b=GpOlClsSE+Dnj8lcznJlvpHzdSBsoMcXghh0SHqgRCMpiLaJ0OboSmfgpT64uBXxlp
+ aiUvx5wCsAjkhZuuGPTAWuoI3IFmufnhy7BMMUZvPHGITVKREf7XrGWncNIlKIW3uSHF
+ QIC2Fvl6+xiJEQLkzlRkcqWMnODBcJojeAavLQ/o/TR0A8epP3aS/fs5nF+eTZbqOtCX
+ 22XJS5ZWfrFQ+HaZA1FIAzFmYCet3z9kZf1YLi0cCHoAtM1cr7xc4kgeWMeblZ/d7G8J
+ s2JixcIGiBxOc/1ankbKeQ9p9gCx8xxS5lK2cPtiG6LvNWEOaDsv6LVv4XaTD6G002hZ
+ K3tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736533537; x=1737138337;
+ d=1e100.net; s=20230601; t=1736533672; x=1737138472;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ruNVyzuzW8jO54zcQ0q3DqYEHSeL8e7cCjwMhhtReSM=;
- b=YoiTlDJl3h5zFgWz1mBPRp7Wsmw7hcDw4EADhrbuTZ+agEl7dbXZRwhwZYFWEYBnEu
- otSgJFLRCZq0dnv8GyIsmcz+r8VDLl7Cw4lIdVJiQtHNBfLI9xAbCmZ8rexCjUm4B9wE
- pbsk8phP9k4FgsWmA8/GRyuLhXUSwFOpJajAK6hTH7uAgyE0GuQVmFvSnmY3FvauIYkL
- cnkZXaSI2M121FwhqwZQlpqD2PNdANgHqTSp7aY/bbAceALLFgMOqOFaRqAnwvm84waD
- t2EsRDWHrJlIQl0rhg4jCiYmbILNtW2nz1ASoXc4lXPFY61TtzMKjWXUuvda/uzELUn0
- 8JIw==
-X-Gm-Message-State: AOJu0YyjY2XmNZIauAp5IpyMP5w2J0zFEulPC/+XhFv9UxbyRfJAvU5O
- gNNoIAcFrBGGtpWINvVe8vhiJhoNRyrVbsbiZZvM1bZBH0AUczVdXPDXeZLHM85GjUEPk6Ozo4U
- 8
-X-Gm-Gg: ASbGncvabwjd1aiJ0CJKFlxzGslmhULaDKAYMPqyp9TqVEDmt1J0E4g7xJ5pqDKagT5
- Q/iBVDjAUzHtVTi7AuvGiVzMcOmNC/Hw4CmTq9Q/lkIZDtUiv8PA3CLVbGUSEEwdE7DJHkR0+6Q
- f7GsL22YiApLK0t4F8u5svkZO3SaH6WfNSIEW/XqEUVZ1FT13wGdfHj1jxtNsZWAJVxp7Vu2VV0
- ir3Vmt3T/uOBMvQEVyHPGHjjUPVciAyfNfa4wDnRbmHCbAQZ1+FSHdxWncM0ChFQtPQ3y6J6VS/
- BP1iYHaCPHD7cfeL57B6rNHznVauDrI=
-X-Google-Smtp-Source: AGHT+IFnjeZqydgow10KJoWoEN4EKqHiwpgvxz3P0PFkxjL4ljmoIl5Vm6d5l8Oqcp0SLZyy488hmQ==
-X-Received: by 2002:a05:6a20:7f99:b0:1e1:ab51:f531 with SMTP id
- adf61e73a8af0-1e88cfdc107mr22374349637.22.1736533537546; 
- Fri, 10 Jan 2025 10:25:37 -0800 (PST)
-Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
- [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-a31d5047e01sm3124398a12.54.2025.01.10.10.25.35
- for <qemu-devel@nongnu.org>
+ bh=Io4AqysyFjfAJGqhmMgH/s7Uq02PXFmlJ9QlWqXWNVo=;
+ b=j6bG4jhLuebtmt4EZIRu3jaUn7dyQHIyUO1TxXPzVRDp1+60dTWT3616wv8G9ZBogc
+ P7B+KL+8zYIEnTEsHpehICNd9oUiINnOpYB32DyAfwtUWZ84KwYuPXF+ELmLpztq3J3N
+ lWEYXYpMlr56tNGrJNvgd3tJUZCPk3e3Zs/iki9lbKHng6e968dm03Q4ySBvCnpi1dRX
+ JxRncwrjBzcaxRQV0NfXIFz7JovRFcu+r4RMIiNhgZXR392zmVOtbXeMGeJHVlnFmHL0
+ qVkaUkZ9+sARQQHGRHOypNOrplGK0Kz0hxRw6Mb0aNthYsnxvvq06g3KvGeZziyelglW
+ fiFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1mPn5MveeZo7a04BwE5VE3odyjIRWbfJQY/L3uvJdwXrltgS0vSn813Hryy14na6wXBAsdyfLUmCZ@nongnu.org
+X-Gm-Message-State: AOJu0YysGRZqpTZvB/543KJX71uAN4E3wTMzPU6sqzyydnByRCnu4ts3
+ dJi5jgRhUX3gwDk6aMdl/vMDTNDvDjzMNxIJ3iJEe3Wj8p/fDhhzl5bkunsZpaI=
+X-Gm-Gg: ASbGncuoryUq4lwC0+Ah7QXsAhAIfmsY/diEyTKfNbYaEAufQUfeHXgTNAsWDP9OxsI
+ 3COxkF3/yrZaczf6THvlmP4uxu62OrN4+M7y+w9vmou3NA8/LsfPE9JtOVEI/HIDJFSDp6H8YSk
+ C+MvL7O+S58FowKGfq28P2wFyEENeAmjmmUHdAFtYACfwfnjDUJhBv+ziJv7te2s8NyCOt3Z2Bs
+ oU3Vkc4cO83c0SeNbwKUadBuWb5qqCV1ayJkZ3AzWHbqE/7EI8dduG4HriFHbll+t79bNKfyAsl
+ g+mugCn7X+kHjxzVpkfuZ1v5
+X-Google-Smtp-Source: AGHT+IHIbS1BKXFlIORte7h9men2xGA27qkNgXbIB+RJXPhs8DpsukyawHjwq/HA4xBzqS5teXiY1Q==
+X-Received: by 2002:a05:600c:138d:b0:434:9936:c823 with SMTP id
+ 5b1f17b1804b1-436e26a85acmr17039125e9.18.1736533672119; 
+ Fri, 10 Jan 2025 10:27:52 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e3834a6sm5113914f8f.28.2025.01.10.10.27.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 10:25:37 -0800 (PST)
-Message-ID: <3e15ecc1-45cc-4375-876a-d72866a386c0@linaro.org>
-Date: Fri, 10 Jan 2025 10:25:33 -0800
+ Fri, 10 Jan 2025 10:27:51 -0800 (PST)
+Message-ID: <acaed2f3-e3ba-4ce1-8282-ed4dedeb30a4@linaro.org>
+Date: Fri, 10 Jan 2025 19:27:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/tricore/triboard: Remove use of &first_cpu
-To: qemu-devel@nongnu.org
-References: <20250110180909.83165-1-philmd@linaro.org>
+Subject: Re: [PATCH] hw/char/serial: Convert to three-phase reset
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250110175707.82097-1-philmd@linaro.org>
+ <798b6e65-8aaf-44cf-bab7-a145d6ea87f3@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250110180909.83165-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <798b6e65-8aaf-44cf-bab7-a145d6ea87f3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,25 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/25 10:09, Philippe Mathieu-Daudé wrote:
-> triboard_machine_init() has access to the single CPU via:
+On 10/1/25 19:12, Paolo Bonzini wrote:
+> On 1/10/25 18:57, Philippe Mathieu-Daudé wrote:
+>> Convert the TYPE_SERIAL (16550A UART) to three-phase reset.
+>>
+>> Local states are reset in the ResetHold handler.
+>> Move the IRQ lowering to ResetExit, since it an external
+>> object is accessed.
 > 
->    TriBoardMachineState {
->      TC27XSoCState {
->        TriCoreCPU cpu;
->        ...
->      } tc27x_soc;
->    } ms;
+> Accessing external objects is fine for hold; only "enter" cannot do so.
 > 
-> Pass it as argument to tricore_load_kernel() so we can
-> remove the &first_cpu global use.
+>> ---
+>> That said, externally creating IRQ like that is odd, see:
+>>
+>>    serial_pci_realize()
+>>    {
+>>      SerialState *s = &pci->state;
+>>      qdev_realize(DEVICE(s), NULL, ...);
+>>      s->irq = pci_allocate_irq(&pci->dev);
+>>
+>> But too much cleanup for now, one step at a time.
+>> ---
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/tricore/triboard.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+> serial_realize cannot fail.  Just move qdev_realize after the assignment 
+> and pass &error_abort?  Same for serial_mm_realize and 
+> multi_serial_pci_realize; serial_isa_realizefn instead is doing the 
+> right thing.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+OK, v2 coming (without &error_abort, can be done later).
 
