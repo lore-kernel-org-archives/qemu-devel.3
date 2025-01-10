@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32016E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C7C5E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWK2W-0000NJ-Ot; Fri, 10 Jan 2025 13:47:24 -0500
+	id 1tWK4E-0003Os-7z; Fri, 10 Jan 2025 13:49:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1l-0000BD-Lo
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:39 -0500
+ id 1tWK3C-000278-0n
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:48:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tWK1f-00014l-Nz
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:46:33 -0500
+ id 1tWK3A-0001Gj-4J
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:48:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736534790;
+ s=mimecast20190719; t=1736534883;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bvl+J5OWotTQVBe9dRZtuqKB1fUaMLXq6FgWP0i2SqQ=;
- b=AVOwjwfctDqborLU+NQHemSECpbDguGEZ5Jwug8g+4JYVsuL+CzzbkcbTlytcrfELxI/P2
- vYnv+0BlDbl/LlptF+03N6NQ+nPGmLhL7okJHr5LIXZaubtLM0Mu+Ydwp+pNOWGheoldQW
- V7LgyXGpx2cqH9YFgeGi2oSAD2ApNxs=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=88Lnido+/J4sUIJeN8buUF3YDTjA0MP2vOjpZog+Shs=;
+ b=VwDGUHuYuYMDt+eri9QMuuSpKqjitn4TaTjF4eTM5r40VmgkCaoGbsrmakf/I/MaCsu2z0
+ Ux8l/PJWtXLyXUnL7Ph6tSzJ4YLIv9jXJjeubRvsumS3RQtfhj3f/slgeKsLn9qd5SM34B
+ havj8RzkLJyiyu5p70mDTE3/7tjWlDg=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-6-aJMt2ZhWPM6K5hMeXB7FMQ-1; Fri, 10 Jan 2025 13:46:28 -0500
-X-MC-Unique: aJMt2ZhWPM6K5hMeXB7FMQ-1
-X-Mimecast-MFC-AGG-ID: aJMt2ZhWPM6K5hMeXB7FMQ
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-aaf8f016bb1so201318366b.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:28 -0800 (PST)
+ us-mta-103-9dVBjbP1NsucWMs2csdnCw-1; Fri, 10 Jan 2025 13:46:51 -0500
+X-MC-Unique: 9dVBjbP1NsucWMs2csdnCw-1
+X-Mimecast-MFC-AGG-ID: 9dVBjbP1NsucWMs2csdnCw
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d2cccbe4so2692479a12.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:46:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736534787; x=1737139587;
+ d=1e100.net; s=20230601; t=1736534809; x=1737139609;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Bvl+J5OWotTQVBe9dRZtuqKB1fUaMLXq6FgWP0i2SqQ=;
- b=bC9VS2r+kzx0A0P5+b/457a1bxXbD/qOiwhKXfbIf61/8yuVqMKoKYcNE175w/z675
- DCzZ0edMV7hDDvS/igSrBx1Se5Z8YnEeC4x820EKot58I/bh4qK0n/U5cCuM0qwePdyk
- qdzRGQA5powzHHoa9oiuEkY30pe+AYV0XB7rVnKqvzq1QVDkuo822xAZCV4CorOJoc+k
- SZv/bESk2YQJ6RCNPw1uf88pXtiUEI4DFu6/ibV4frsr/RxWm335XrYuv3YRvVdQlLS7
- Wt2K1Tyvj7D9ATUKlqy6JIbbIy5jcevHek6QgWtv7Zv/ArBA5ER/sq8rzZshNdpdJ+ZN
- ZUwg==
-X-Gm-Message-State: AOJu0YyZuRocyfJotzGsCLGqqS1urpBEPvCdAcwrrM2zHk6O1wZvhdVe
- c59AO23jWyd36r/xSnxtOVUFJRqrMTKSFMkDxJUM1zFlY/+fdsnKD3da/jsLGQLuXqq1uM528DZ
- +j/c0/dbbBFlYLcqWmBFz6l3iJ9ZaSvK0hrtXpDWkXFTiGvPtKW4p2AJPslwwnLRsUmq8DgMmZ5
- 8uI4wLLwFrp/v2jGrkr7VSnU6eQc+GozueOOZjB9A=
-X-Gm-Gg: ASbGnctLpn3nNF+0QV7n0sxknmky9IzhcTDO+5SuLIp00CusedcITeARo1cGH9pILcq
- jlBxshdx7/vLQcTokVynArqvxx1E+DM9utaBq5wx+KKJMfcLzTotNGaz61Rfb7b0dG0l1vBI0oF
- TEIoLYwHN92V4pfc+EtRBftUv90EQ8xR1/GgJU2dY2PZ7mANESAgkwVsW5T6U3aG/H4+tqgNvd8
- tha0kdFswLhBCq9SRGwCqrDxlrj4s9L8xICCgF4a2hKBJTRhGY7JjV2Zk4=
-X-Received: by 2002:a17:907:3f09:b0:aae:fb7c:50df with SMTP id
- a640c23a62f3a-ab2ab748e82mr991966266b.36.1736534787122; 
- Fri, 10 Jan 2025 10:46:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IETwfDyaxMZrGSGbeuDJn19ywgfYAs+GwWmw7sKA6LISg7Ak3qlCOW94eLTAfAMu3D8MFiSzg==
-X-Received: by 2002:a17:907:3f09:b0:aae:fb7c:50df with SMTP id
- a640c23a62f3a-ab2ab748e82mr991964366b.36.1736534786652; 
- Fri, 10 Jan 2025 10:46:26 -0800 (PST)
+ bh=88Lnido+/J4sUIJeN8buUF3YDTjA0MP2vOjpZog+Shs=;
+ b=RbswvjpwF/D16yhKi9L1+w5bSSNvOyNgrOZcGS3Z52o152o8Q1nh1cdlH36zRmbbRY
+ 7s7AR5FsZ0rg21QGVZtEI0jWzHAxzJHzIoV41rMwYJdNWlIxgdqo6uIW3eqiwqREe2gU
+ 5T0xpU1xVipuxPpA2df4UBic3YGcT4CfmXvdlOZdRYYVAjBRCk0N81oQuLZwQi8tcIcE
+ DCRq8yoyqJf30i0rCmiVQ2rHmJQTxrU5n2OteVt6Qpt0NeZX1U5Ej8kE2emy8SjEdaR3
+ OH7Z/2mDy+rs2Dmi9Q+bRTOq1ygp1++lasSSBaxU28gZ6699obxOin+JWnGfKSW1VRCh
+ /6tQ==
+X-Gm-Message-State: AOJu0YxTeUdpqnnzqcm6Lj8MNJ8aulutjRIyU3ZHyx1oOIKO4zQsYsNR
+ xBF5g9Klp7lBsiHrs20ZVI5gtzMW/UJIl2ZFOW39Yokbqp2nOVaw1MRHER+Lw5AVTJmMPg/eAN5
+ BYM4qDxvI4scIRqseVrcO/PvybLnGx8xn+l9fzyXbzO31uuf6scNFBDpuGvpaOZcE7x348rS9hw
+ A+lVcxNyspoOMfjg3jxtDPUMa8icQoeTvkNnC/mdU=
+X-Gm-Gg: ASbGnctE1do1vqMlj1QQc3cHBhD8YhI1+RSuOON6Je/7DLufsvGWr6NI4vyZwDaRC3w
+ J158Fz2Vv533dlxMFDMx/gZdpJEi+nragaSInWp8KleqSPD+muOmacaK1Xp9P9MWeNzuTNk8vCW
+ +mN6U9Mc0xO4dvD+OtJaGgz94s9yMzejT/9qrRXLJ8DIyxXgztHz8OjUpsGnoWPWr9bLATNaHZd
+ othsij4wCbUGSYLqYErjbmQnhU0gUNploDtIiscfUC27qNS9EDEixWiv24=
+X-Received: by 2002:a05:6402:270d:b0:5d3:d4cf:fea0 with SMTP id
+ 4fb4d7f45d1cf-5d972e4c62emr9669957a12.21.1736534809379; 
+ Fri, 10 Jan 2025 10:46:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGZNtxcF55o60VmqOVUIE+KIBufqGCdUqcSEtMDqK+albPDR+2ofPFhcgVnrPoRnId0rX2fkQ==
+X-Received: by 2002:a05:6402:270d:b0:5d3:d4cf:fea0 with SMTP id
+ 4fb4d7f45d1cf-5d972e4c62emr9669946a12.21.1736534808928; 
+ Fri, 10 Jan 2025 10:46:48 -0800 (PST)
 Received: from [192.168.10.3] ([151.62.105.73])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c905f04fsm193136266b.27.2025.01.10.10.46.25
- for <qemu-devel@nongnu.org>
+ 4fb4d7f45d1cf-5d9904a411csm1906598a12.72.2025.01.10.10.46.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jan 2025 10:46:25 -0800 (PST)
+ Fri, 10 Jan 2025 10:46:47 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/38] rust: add --check-cfg test to rustc arguments
-Date: Fri, 10 Jan 2025 19:45:43 +0100
-Message-ID: <20250110184620.408302-3-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 12/38] rust: qemu-api-macros: add automatic TryFrom/TryInto
+ derivation
+Date: Fri, 10 Jan 2025 19:45:53 +0100
+Message-ID: <20250110184620.408302-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110184620.408302-1-pbonzini@redhat.com>
 References: <20250110184620.408302-1-pbonzini@redhat.com>
@@ -107,29 +108,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rustc will check that every reachable #[cfg] matches a list of
-the expected config names and values.  Recent versions of rustc are
-also complaining about #[cfg(test)], even if it is basically a standard
-part of the language.  So, always allow it.
+This is going to be fairly common. Using a custom procedural macro
+provides better error messages and automatically finds the right
+type.
 
+Note that this is different from the same-named macro in the
+derive_more crate.  That one provides conversion from e.g. tuples
+to enums with tuple variants, not from integers to enums.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/rust/rustc_args.py | 2 ++
- 1 file changed, 2 insertions(+)
+ rust/hw/char/pl011/src/lib.rs   | 28 +------------
+ rust/qemu-api-macros/src/lib.rs | 74 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 73 insertions(+), 29 deletions(-)
 
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index 5525b3886fa..d79dc6d81f1 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -215,6 +215,8 @@ def main() -> None:
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index 69064d6929b..0a89d393e0f 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -45,7 +45,7 @@
+ #[doc(alias = "offset")]
+ #[allow(non_camel_case_types)]
+ #[repr(u64)]
+-#[derive(Debug)]
++#[derive(Debug, qemu_api_macros::TryInto)]
+ pub enum RegisterOffset {
+     /// Data Register
+     ///
+@@ -102,32 +102,6 @@ pub enum RegisterOffset {
+     //Reserved = 0x04C,
+ }
  
-     if rustc_version >= (1, 80):
-         if args.lints:
-+            print("--check-cfg")
-+            print("test")
-             for cfg in sorted(cargo_toml.check_cfg):
-                 print("--check-cfg")
-                 print(cfg)
+-impl core::convert::TryFrom<u64> for RegisterOffset {
+-    type Error = u64;
+-
+-    fn try_from(value: u64) -> Result<Self, Self::Error> {
+-        macro_rules! case {
+-            ($($discriminant:ident),*$(,)*) => {
+-                /* check that matching on all macro arguments compiles, which means we are not
+-                 * missing any enum value; if the type definition ever changes this will stop
+-                 * compiling.
+-                 */
+-                const fn _assert_exhaustive(val: RegisterOffset) {
+-                    match val {
+-                        $(RegisterOffset::$discriminant => (),)*
+-                    }
+-                }
+-
+-                match value {
+-                    $(x if x == Self::$discriminant as u64 => Ok(Self::$discriminant),)*
+-                     _ => Err(value),
+-                }
+-            }
+-        }
+-        case! { DR, RSR, FR, FBRD, ILPR, IBRD, LCR_H, CR, FLS, IMSC, RIS, MIS, ICR, DMACR }
+-    }
+-}
+-
+ pub mod registers {
+     //! Device registers exposed as typed structs which are backed by arbitrary
+     //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
+diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
+index 539c48df298..7ec218202f4 100644
+--- a/rust/qemu-api-macros/src/lib.rs
++++ b/rust/qemu-api-macros/src/lib.rs
+@@ -5,8 +5,8 @@
+ use proc_macro::TokenStream;
+ use quote::quote;
+ use syn::{
+-    parse_macro_input, parse_quote, punctuated::Punctuated, token::Comma, Data, DeriveInput, Field,
+-    Fields, Ident, Type, Visibility,
++    parse_macro_input, parse_quote, punctuated::Punctuated, spanned::Spanned, token::Comma, Data,
++    DeriveInput, Field, Fields, Ident, Meta, Path, Token, Type, Variant, Visibility,
+ };
+ 
+ mod utils;
+@@ -98,3 +98,73 @@ pub fn derive_offsets(input: TokenStream) -> TokenStream {
+ 
+     TokenStream::from(expanded)
+ }
++
++#[allow(non_snake_case)]
++fn get_repr_uN(input: &DeriveInput, msg: &str) -> Result<Path, MacroError> {
++    let repr = input.attrs.iter().find(|attr| attr.path().is_ident("repr"));
++    if let Some(repr) = repr {
++        let nested = repr.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)?;
++        for meta in nested {
++            match meta {
++                Meta::Path(path) if path.is_ident("u8") => return Ok(path),
++                Meta::Path(path) if path.is_ident("u16") => return Ok(path),
++                Meta::Path(path) if path.is_ident("u32") => return Ok(path),
++                Meta::Path(path) if path.is_ident("u64") => return Ok(path),
++                _ => {}
++            }
++        }
++    }
++
++    Err(MacroError::Message(
++        format!("#[repr(u8/u16/u32/u64) required for {}", msg),
++        input.ident.span(),
++    ))
++}
++
++fn get_variants(input: &DeriveInput) -> Result<&Punctuated<Variant, Comma>, MacroError> {
++    if let Data::Enum(e) = &input.data {
++        if let Some(v) = e.variants.iter().find(|v| v.fields != Fields::Unit) {
++            return Err(MacroError::Message(
++                "Cannot derive TryInto for enum with non-unit variants.".to_string(),
++                v.fields.span(),
++            ));
++        }
++        Ok(&e.variants)
++    } else {
++        Err(MacroError::Message(
++            "Cannot derive TryInto for union or struct.".to_string(),
++            input.ident.span(),
++        ))
++    }
++}
++
++#[rustfmt::skip::macros(quote)]
++fn derive_tryinto_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
++    let repr = get_repr_uN(&input, "#[derive(TryInto)]")?;
++
++    let name = &input.ident;
++    let variants = get_variants(&input)?;
++    let discriminants: Vec<&Ident> = variants.iter().map(|f| &f.ident).collect();
++
++    Ok(quote! {
++        impl core::convert::TryFrom<#repr> for #name {
++            type Error = #repr;
++
++            fn try_from(value: #repr) -> Result<Self, Self::Error> {
++                #(const #discriminants: #repr = #name::#discriminants as #repr;)*;
++                match value {
++                    #(#discriminants => Ok(Self::#discriminants),)*
++                    _ => Err(value),
++                }
++            }
++        }
++    })
++}
++
++#[proc_macro_derive(TryInto)]
++pub fn derive_tryinto(input: TokenStream) -> TokenStream {
++    let input = parse_macro_input!(input as DeriveInput);
++    let expanded = derive_tryinto_or_error(input).unwrap_or_else(Into::into);
++
++    TokenStream::from(expanded)
++}
 -- 
 2.47.1
 
