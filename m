@@ -4,111 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B1CE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFE0E7719C
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHrx-0007CD-Tb; Fri, 10 Jan 2025 11:28:21 -0500
+	id 1tWHsq-0007fF-29; Fri, 10 Jan 2025 11:29:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tWHrq-0007BY-8D
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:28:14 -0500
-Received: from mout.kundenserver.de ([217.72.192.75])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1tWHrn-0007q5-1E
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:28:14 -0500
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue106 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1M3lLh-1tWYqc2LRr-004gJa; Fri, 10 Jan 2025 17:28:05 +0100
-Message-ID: <73c3efe6-d8d0-4504-b474-b2328c6817ce@vivier.eu>
-Date: Fri, 10 Jan 2025 17:28:04 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tWHsh-0007cd-9f
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:29:08 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tWHsf-0007wB-Mn
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:29:06 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e3983426f80so3559294276.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:29:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736526544; x=1737131344; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4P3RvkgYEkN/PcKVgKotdpH2Ww4nP6EziPFXrkthcqQ=;
+ b=am7H6AGOaoU+6F3k8lyBfBh+g1CxJJ9uQy8SSwxcujKurPd2MzKbnq+SYcCkCo/zC4
+ Vph4wWuGcgvwr39UowGtWU6t/lfIBpC5ZeYsiU7QDUy5cVAWkdP9FKK8qim2lNM5Ohkp
+ 6hxTYuHBk6gRPBAA5DqRx/KWVXg9fha0buiPxvQKq9s/Fh75/zSVtd7rdpbpQPPL5Npq
+ fDe8HZUqszIlBfBJCFCJpRDlYNt4QgG1oTTGeRJ6nAH99Sy75jw6kvx/SpMlFhOEwgmq
+ I+Z0DcLRhDeb7V8oThuKmkL3ab/nLLNgN41jvVZNZYIOx/x/RkMtkTg+VxnDDR3eFax2
+ +xKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736526544; x=1737131344;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4P3RvkgYEkN/PcKVgKotdpH2Ww4nP6EziPFXrkthcqQ=;
+ b=gbYtyMSkOjEDM1O4uexy+yBFN5Dwjl1NA83aIteRM138fciYkoJeuZ19/1ZSOXbH9O
+ Q2p/ZgX4oYNAtEVvdFtLAaFe7wVQBL2c+WYv2qqgRtT+DKoos8Lc+rbelTZZCBN4GS15
+ iu5nKqriyA2rktxtWBmSq1sNykIt5z7hVDuATI+VIdRZYi7xq0Is9xfobKbUi4vLzDSS
+ oAaoNQM5VOKIsnM4bbMgiiQGEhBKzCRWULtsoqoEHvIjB0OaEiH+E+0WQsUqZLhzcFzk
+ uaQj5PatMEIaXzXRMApozupxQdvHxd+dtW2Pgl80GIPUw/I37Qs3kYWjR+evhOS1SeQH
+ hyOA==
+X-Gm-Message-State: AOJu0YxYK/iszxIkcQ8aTeAMAGAicGMNuWjNtN7NkA0x0w7FqHulPbWG
+ 08siSx5rGSnoFdhrJ0S50NRHGntiGrHVnX0zYWV2PQFlT0Cgm8D2w/GpvVTfBsR/bicl1hVkSdP
+ JPQ3NPD1KlN5K8o2MXht6wRBWApFty6Xwj9yd/w==
+X-Gm-Gg: ASbGncuRBGh4VG16PotfaJlgsoEEWnfJPJqzfQ92aiLT/BLIK3X3Ar7vO+wF8ZBhZY/
+ 0ehw7EEHU9D1VrX7l9aPNYvCmqKJSNHBaOSMZE38=
+X-Google-Smtp-Source: AGHT+IGSQPPb4p21lFIAsHRRJ1ufv0nZ2Pc++jBHHW+w1ROe0ZcRBLTQt3v4uupnXO5Mq2h/77PKQJWNHsec/oe1BtE=
+X-Received: by 2002:a05:690c:4b05:b0:6ef:4a1f:36b7 with SMTP id
+ 00721157ae682-6f53125116fmr94441207b3.25.1736526544276; Fri, 10 Jan 2025
+ 08:29:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] linux-user: netlink: add netlink neighbour
- emulation
-To: deller@kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: deller@gmx.de
-References: <20241227205449.29311-1-deller@kernel.org>
- <20241227205449.29311-6-deller@kernel.org>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <20241227205449.29311-6-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:/au0VKIF+nCwxRYTTIFAqPE5dna/YD0PYyelAamnTnS8UoVAJKS
- NgAA9kXzneU3TPVkeRB1+d+0NhP6f5eU6aify/CHxSbY0hHzW71mBdhWr2/NWE3yaWQRCiN
- pj880/d7iwqdT4nSziinyc36Hpy48V3WIAKtRtnTqGrlZb+VPTAg8lcAPcrYhmYJYWsz9SG
- oCbuEOeRrNrT1CpuawAJA==
-UI-OutboundReport: notjunk:1;M01:P0:J8mXuXd38ig=;YbShQAC30IUcYIlhHtpXz/It1wV
- VCsflraOyhCukQuM3UnVwRYR8hPV2IAS9rw5hev0/oIPx75HFZQFjWxSvB8FYB/rbM9BR8Cl+
- yk04s1BSkQePsUIk50iRK/YIxTIOMXCKsAsDAn+s93VX6cQ7MnvpYRSGoZ8dzcubZZzgP4DON
- uLwvzvU5M/5cqx/H4grvIpTjvb4WBDWsa3TOPyiID4mm1yJIpTyLaukYqfAotwORMMTOvXGzX
- 5K3/w/4FUflU5RbzURmhU3B1sRBbCCu56E+ccqk8qMsKnVGYfVHEJcSNdfwWxsFT/UdYYD1+u
- 4EVrkG2BpxsD4F+ATePbIDqFhYDgPPpZq4d6LF6G4kV3rDgmunxX741GEPDcrFaGdzd09lNiN
- ogFKQ+KAiNtf6xg3trRA42mdliNWAFNvrjPUpML/Bc+YpkFLLXk3W8UxwpVbphOHHH1nIkOu0
- ctgeQg709Wm1uWehIeWY6fprzL8ELGV72dLpBqMH9qvW63fR0VAO2BRHFTYJDWNuNA9kjPnHw
- Ec2ZtvFz949R+vRQAk5pjSJUImGoa0HorB4776+VOBiIAcIbQCd5AHusFuzwLMXj4lZOvmnlq
- 6Rgi1ihS6NBmfIbVI7ZX0oxQ3c8Xc2tmxFvSNrBgDxuH+z8I245QP51UhbRUWehZgIxazO/PG
- 0yeZJbkX4okRUeYrw42jMJkihPAEfE43wLhspbEjS9iXH4KDbw9SRdEi/qHQVIkIO2vwrBpbF
- CrnTXgIyE7N/8a8XrRea95LyjQ12Q7j1edYYZR2IdOU4s3kUXGbs19SBhnLvTJwuTkSxqCgOt
- FzI3zmsKjOzeRmT7zSIvTI6s5sf/zMVAP+ZTZsWr2w7WIj+Bg/1/L6EgIOWIQ1CxFg1Ibts/J
- K/b5SMHva6fVmKK4MiI0S5qpyDmAdrqG0DEP4bied5q2F7IitKwc+lo4vS9XU5yjmZUgfn2uy
- D0QtJQCHoc5NsTu6EuklRoc3r2AiSoq2tPUD37t5g2uPRdOMtjCoURrmcRs3ptR6XkhwZP+Ik
- 74cXnNSyPDhZdf+UCzvweHybbkom9N1wp+YNDdU
-Received-SPF: pass client-ip=217.72.192.75; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 10 Jan 2025 16:28:53 +0000
+X-Gm-Features: AbW1kvYBYorNd6K3Xev2CdPCyku8Ffe0oLMvXxGOtPD0myxvI_4y9l2HxcfuYfw
+Message-ID: <CAFEAcA_ChARwKyvRXsEk1U3q1T2528753Eu7LgDSsDbF1s5tNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] Change default pointer authentication algorithm on
+ aarch64 to impdef
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ alex.bennee@linaro.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,202 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 27/12/2024 à 21:54, deller@kernel.org a écrit :
-> From: Helge Deller <deller@gmx.de>
-> 
-> Fixes various warnings in the testsuite while building gupnp:
->   gssdp-net-DEBUG: Failed to send netlink message: Operation not supported
->   gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: 127.0.0.1)
->   gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
->   gupnp-context-DEBUG: Mismatch between host header and host IP (192.168.1.2, expected: 127.0.0.1)
->   gupnp-context-DEBUG: Mismatch between host header and host IP (fe80::01, expected: 127.0.0.1)
->   gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
->   gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%1]? in URI
->   gupnp-context-DEBUG: Failed to parse HOST header from request: Invalid IPv6 address ?[fe80::01%eth0]? in URI
->   gupnp-context-DEBUG: Failed to parse HOST header from request: Could not parse port ?:1? in URI
->   gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
->   gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
->   gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
->   gupnp-context-DEBUG: Mismatch between host header and host port (80, expected 4711)
->   gupnp-context-DEBUG: Mismatch between host header and host IP (example.com, expected: ::1)
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/fd-trans.c | 100 ++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 100 insertions(+)
-> 
-> diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-> index a86ed2f4b4..a5e6c6b6f2 100644
-> --- a/linux-user/fd-trans.c
-> +++ b/linux-user/fd-trans.c
-> @@ -25,12 +25,16 @@
->   #ifdef CONFIG_RTNETLINK
->   #include <linux/rtnetlink.h>
->   #include <linux/if_bridge.h>
-> +#include <linux/neighbour.h>
->   #endif
->   #include "qemu.h"
->   #include "user-internals.h"
->   #include "fd-trans.h"
->   #include "signal-common.h"
->   
-> +#define NDM_RTA(r)  ((struct rtattr*)(((char*)(r)) + \
-> +                    NLMSG_ALIGN(sizeof(struct ndmsg))))
-> +
->   enum {
->       QEMU_IFLA_BR_UNSPEC,
->       QEMU_IFLA_BR_FORWARD_DELAY,
-> @@ -1210,6 +1214,35 @@ static abi_long host_to_target_data_route_rtattr(struct rtattr *rtattr)
->       return 0;
->   }
->   
-> +static abi_long host_to_target_data_neigh_rtattr(struct rtattr *rtattr)
-> +{
-> +    struct nda_cacheinfo *ndac;
-> +    uint32_t *u32;
-> +
-> +    switch (rtattr->rta_type) {
-> +    case NDA_UNSPEC:
-> +    case NDA_DST:
-> +    case NDA_LLADDR:
-> +        break;
-> +    case NDA_PROBES:
-> +        u32 = RTA_DATA(rtattr);
-> +        *u32 = tswap32(*u32);
-> +        break;
-> +    case NDA_CACHEINFO:
-> +        ndac = RTA_DATA(rtattr);
-> +        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
-> +        ndac->ndm_used      = tswap32(ndac->ndm_used);
-> +        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
-> +        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "Unknown host to target NEIGH type: %d\n",
-> +                      rtattr->rta_type);
-> +        break;
-> +    }
-> +    return 0;
-> +}
-> +
->   static abi_long host_to_target_link_rtattr(struct rtattr *rtattr,
->                                            uint32_t rtattr_len)
->   {
-> @@ -1231,12 +1264,20 @@ static abi_long host_to_target_route_rtattr(struct rtattr *rtattr,
->                                             host_to_target_data_route_rtattr);
->   }
->   
-> +static abi_long host_to_target_neigh_rtattr(struct rtattr *rtattr,
-> +                                         uint32_t rtattr_len)
-> +{
-> +    return host_to_target_for_each_rtattr(rtattr, rtattr_len,
-> +                                          host_to_target_data_neigh_rtattr);
-> +}
-> +
->   static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
->   {
->       uint32_t nlmsg_len;
->       struct ifinfomsg *ifi;
->       struct ifaddrmsg *ifa;
->       struct rtmsg *rtm;
-> +    struct ndmsg *ndm;
->   
->       nlmsg_len = nlh->nlmsg_len;
->       switch (nlh->nlmsg_type) {
-> @@ -1263,6 +1304,17 @@ static abi_long host_to_target_data_route(struct nlmsghdr *nlh)
->                                          nlmsg_len - NLMSG_LENGTH(sizeof(*ifa)));
->           }
->           break;
-> +    case RTM_NEWNEIGH:
-> +    case RTM_DELNEIGH:
-> +    case RTM_GETNEIGH:
-> +        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
-> +            ndm = NLMSG_DATA(nlh);
-> +            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
-> +            ndm->ndm_state = tswap16(ndm->ndm_state);
-> +            host_to_target_neigh_rtattr(NDM_RTA(ndm),
-> +                                    nlmsg_len - NLMSG_LENGTH(sizeof(*ndm)));
-> +        }
-> +        break;
->       case RTM_NEWROUTE:
->       case RTM_DELROUTE:
->       case RTM_GETROUTE:
-> @@ -1410,6 +1462,35 @@ static abi_long target_to_host_data_addr_rtattr(struct rtattr *rtattr)
->       return 0;
->   }
->   
-> +static abi_long target_to_host_data_neigh_rtattr(struct rtattr *rtattr)
-> +{
-> +    struct nda_cacheinfo *ndac;
-> +    uint32_t *u32;
-> +
-> +    switch (rtattr->rta_type) {
-> +    case NDA_UNSPEC:
-> +    case NDA_DST:
-> +    case NDA_LLADDR:
-> +        break;
-> +    case NDA_PROBES:
-> +        u32 = RTA_DATA(rtattr);
-> +        *u32 = tswap32(*u32);
-> +        break;
-> +    case NDA_CACHEINFO:
-> +        ndac = RTA_DATA(rtattr);
-> +        ndac->ndm_confirmed = tswap32(ndac->ndm_confirmed);
-> +        ndac->ndm_used      = tswap32(ndac->ndm_used);
-> +        ndac->ndm_updated   = tswap32(ndac->ndm_updated);
-> +        ndac->ndm_refcnt    = tswap32(ndac->ndm_refcnt);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "Unknown target NEIGH type: %d\n",
-> +                      rtattr->rta_type);
-> +        break;
-> +    }
-> +    return 0;
-> +}
-> +
->   static abi_long target_to_host_data_route_rtattr(struct rtattr *rtattr)
->   {
->       uint32_t *u32;
-> @@ -1448,6 +1529,13 @@ static void target_to_host_addr_rtattr(struct rtattr *rtattr,
->                                      target_to_host_data_addr_rtattr);
->   }
->   
-> +static void target_to_host_neigh_rtattr(struct rtattr *rtattr,
-> +                                     uint32_t rtattr_len)
-> +{
-> +    target_to_host_for_each_rtattr(rtattr, rtattr_len,
-> +                                   target_to_host_data_neigh_rtattr);
-> +}
-> +
->   static void target_to_host_route_rtattr(struct rtattr *rtattr,
->                                        uint32_t rtattr_len)
->   {
-> @@ -1460,6 +1548,7 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
->       struct ifinfomsg *ifi;
->       struct ifaddrmsg *ifa;
->       struct rtmsg *rtm;
-> +    struct ndmsg *ndm;
->   
->       switch (nlh->nlmsg_type) {
->       case RTM_NEWLINK:
-> @@ -1486,6 +1575,17 @@ static abi_long target_to_host_data_route(struct nlmsghdr *nlh)
->                                          NLMSG_LENGTH(sizeof(*ifa)));
->           }
->           break;
-> +    case RTM_NEWNEIGH:
-> +    case RTM_DELNEIGH:
-> +    case RTM_GETNEIGH:
-> +        if (nlh->nlmsg_len >= NLMSG_LENGTH(sizeof(*ndm))) {
-> +            ndm = NLMSG_DATA(nlh);
-> +            ndm->ndm_ifindex = tswap32(ndm->ndm_ifindex);
-> +            ndm->ndm_state = tswap16(ndm->ndm_state);
-> +            target_to_host_neigh_rtattr(NDM_RTA(ndm), nlh->nlmsg_len -
-> +                                       NLMSG_LENGTH(sizeof(*ndm)));
-> +        }
-> +        break;
->       case RTM_NEWROUTE:
->       case RTM_DELROUTE:
->       case RTM_GETROUTE:
+On Thu, 19 Dec 2024 at 18:32, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
+> spent up to 50% of the emulation time running it (when using TCG).
+>
+> Switching to pauth-impdef=on is often given as a solution to speed up execution.
+> Thus we talked about making it the new default.
+>
+> The first patch introduce a new property (pauth-qarma5) to allow to select
+> current default algorithm.
+> The second one change the default.
+> The third one updates documentation.
+>
+> v2:
+> - ensure we don't break migration compatibility, by using a specific backward
+>   compatible property.
+> - added some documentation about migration for arm virt machine model.
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Other than a minor change to the 3rd docs patch which I'll note there:
+applied to target-arm.next, thanks.
+
+-- PMM
 
