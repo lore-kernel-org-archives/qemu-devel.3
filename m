@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4E8E7719D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D27E77188
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 14:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWG4N-0002CB-LL; Fri, 10 Jan 2025 09:33:03 -0500
+	id 1tWG4U-0002Ey-Sx; Fri, 10 Jan 2025 09:33:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tWG4M-0002Bl-Cc
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:33:02 -0500
+ id 1tWG4T-0002Ed-Js
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:33:09 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tWG4I-0006dZ-0d
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:33:01 -0500
+ id 1tWG4R-0006dZ-Nv
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:33:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736519578; x=1768055578;
+ t=1736519587; x=1768055587;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XxcawsJjwt0uXtrUPQPiiDtVrQo5u15mRughzFtF3CA=;
- b=VUoMvHI4rNKdCw/dbHfbm4bsC/qErDcVUTl+FOK1W2pu47a8EABikNSH
- rTFawPyH0xLYhW5BYcG90fzaDAriJNxYQ9xBGVpAXl/8Oc+wCi2D+4c75
- NwRXxayXe3BF8zpQ+X8xqdfu+HTSP6pSuadXBiDob1cYbg0hR05+KVvwB
- MqiYQ35JhL6segUlgenyz8slOPAwp/lBjRWWTdAhSLQQoNP2MTAsDbm2R
- 2lb9K/6h5fyB/nz7k/OaAlOLzsPu0gjSCgNhZX6W2xeMIlZXXG8ktMBDf
- 4ZS/31LYHHE1wBXh6JXtKdN5XSlaZ5sAX+FiWgY4vDI9f839vMww4BLiY A==;
-X-CSE-ConnectionGUID: tFN+LN9RQfqhROrT+H3UJw==
-X-CSE-MsgGUID: NHl9b7N+S9uwEbcmDIBHRg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11311"; a="62185496"
-X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="62185496"
+ bh=GKO6Z3A/2gq1cK4JeQY1dLFLS2g//H2In2c4J8sWf4w=;
+ b=EFVkm2O19ncdZrD/HQxjppW1FDy1YXXtOKS9Y1prlrnoyVayQJROB4R5
+ PZ4EXTxUwd3dbbW2VB8jilkrkh2HibNLxF+Y0Cx86s/q8VNlJPAfXndf+
+ ezhlNyRlCkc81EGgw1qMFear/DosPEm7XMAzIE+35uL4Cp3EPNzHJszKR
+ cdGB75ViDyGKwuVx5SRm+AE+tD7cIf6MmfZs7O13CIadZiVlhLftjBBIs
+ Mhz006l+8qQ+W/Dl8TEvC3pTxH1PFaAqNWaqjKJuok8eUWtOyhPjnePke
+ TOp9NeUk3SoCjkQ1x40zzuUxPtKHKkmzl7rf604CE2ZsqOkK7pLdaTlaU Q==;
+X-CSE-ConnectionGUID: c1+747RFS72sEoE2xSsT+g==
+X-CSE-MsgGUID: AfmidpzqTv6yjuiFG6PnHQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11311"; a="62185533"
+X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="62185533"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Jan 2025 06:32:53 -0800
-X-CSE-ConnectionGUID: PR4HNW4MTkajG7vPAYKR3A==
-X-CSE-MsgGUID: /U+Vy3fNTjKRlYyQ4MXoEA==
+ 10 Jan 2025 06:33:07 -0800
+X-CSE-ConnectionGUID: Y1SdWWLcSFqJKrQcQ/dT4A==
+X-CSE-MsgGUID: KaeEoiZoTgekpe3lth96xg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="108790809"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="108790913"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 10 Jan 2025 06:32:50 -0800
+ by orviesa003.jf.intel.com with ESMTP; 10 Jan 2025 06:33:02 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -58,10 +58,12 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Alireza Sanaee <alireza.sanaee@huawei.com>,
  Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v7 RESEND 1/5] hw/core/machine: Reject thread level cache
-Date: Fri, 10 Jan 2025 22:51:11 +0800
-Message-Id: <20250110145115.1574345-2-zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>
+Subject: [PATCH v7 RESEND 4/5] i386/pc: Support cache topology in -machine for
+ PC machine
+Date: Fri, 10 Jan 2025 22:51:14 +0800
+Message-Id: <20250110145115.1574345-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250110145115.1574345-1-zhao1.liu@intel.com>
 References: <20250110145115.1574345-1-zhao1.liu@intel.com>
@@ -92,49 +94,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, neither i386 nor ARM have real hardware support for per-
-thread cache, and there is no clear demand for this specific cache
-topology.
+Allow user to configure l1d, l1i, l2 and l3 cache topologies for PC
+machine.
 
-Additionally, since ARM even can't support this special cache topology
-in device tree, it is unnecessary to support it at this moment, even
-though per-thread cache might have potential scheduling benefits for
-VMs without CPU affinity.
-
-Therefore, disable thread-level cache topology in the general machine
-part. At present, i386 has not enabled SMP cache, so disabling the
-thread parameter does not pose compatibility issues.
-
-In the future, if there is a clear demand for this feature, the correct
-approach would be to add a new control field in MachineClass.smp_props
-and enable it only for the machines that require it.
+Additionally, add the document of "-machine smp-cache" in
+qemu-options.hx.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
 Changes since Patch v6:
- * New commit to reject "thread" parameter when parse smp-cache.
----
- hw/core/machine-smp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ * Deleted the "thread" level from the allowed topology level parameters
+   in the doc.
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index b954eb849027..4e020c358b66 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -321,6 +321,13 @@ bool machine_parse_smp_cache(MachineState *ms,
-             return false;
-         }
+Changes since Patch v3:
+ * Described the omitting cache will use "default" level and described
+   the default cache topology model of i386 PC machine. (Daniel)
+---
+ hw/i386/pc.c    |  4 ++++
+ qemu-options.hx | 30 +++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
+
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 53a2f226d038..b9b83d1936ae 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1797,6 +1797,10 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     mc->nvdimm_supported = true;
+     mc->smp_props.dies_supported = true;
+     mc->smp_props.modules_supported = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1D] = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L1I] = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L2] = true;
++    mc->smp_props.cache_supported[CACHE_LEVEL_AND_TYPE_L3] = true;
+     mc->default_ram_id = "pc.ram";
+     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
  
-+        if (props->topology == CPU_TOPOLOGY_LEVEL_THREAD) {
-+            error_setg(errp,
-+                       "%s level cache not supported by this machine",
-+                       CpuTopologyLevel_str(props->topology));
-+            return false;
-+        }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index cc694d3b890c..60894fe2b52b 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -39,7 +39,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+     "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+-    "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
++    "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
++    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
+     QEMU_ARCH_ALL)
+ SRST
+ ``-machine [type=]name[,prop=value[,...]]``
+@@ -159,6 +160,33 @@ SRST
+         ::
+ 
+             -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
 +
-         if (!machine_check_topo_support(ms, props->topology, errp)) {
-             return false;
-         }
++    ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
++        Define cache properties for SMP system.
++
++        ``cache=cachename`` specifies the cache that the properties will be
++        applied on. This field is the combination of cache level and cache
++        type. It supports ``l1d`` (L1 data cache), ``l1i`` (L1 instruction
++        cache), ``l2`` (L2 unified cache) and ``l3`` (L3 unified cache).
++
++        ``topology=topologylevel`` sets the cache topology level. It accepts
++        CPU topology levels including ``core``, ``module``, ``cluster``, ``die``,
++        ``socket``, ``book``, ``drawer`` and a special value ``default``. If
++        ``default`` is set, then the cache topology will follow the architecture's
++        default cache topology model. If another topology level is set, the cache
++        will be shared at corresponding CPU topology level. For example,
++        ``topology=core`` makes the cache shared by all threads within a core.
++        The omitting cache will default to using the ``default`` level.
++
++        The default cache topology model for an i386 PC machine is as follows:
++        ``l1d``, ``l1i``, and ``l2`` caches are per ``core``, while the ``l3``
++        cache is per ``die``.
++
++        Example:
++
++        ::
++
++            -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
+ ERST
+ 
+ DEF("M", HAS_ARG, QEMU_OPTION_M,
 -- 
 2.34.1
 
