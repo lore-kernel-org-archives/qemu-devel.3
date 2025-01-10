@@ -4,85 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB00E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 09:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F583E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 09:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWAtd-0000EI-IA; Fri, 10 Jan 2025 04:01:38 -0500
+	id 1tWAwF-0001W8-9l; Fri, 10 Jan 2025 04:04:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1tWAta-0000Dk-D8
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:01:34 -0500
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1tWAwC-0001Vl-3D; Fri, 10 Jan 2025 04:04:16 -0500
+Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
- id 1tWAtY-00058r-G1
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 04:01:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736499692; x=1768035692;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=1us4fXVzOkfuT8fX3fvia/Fj4+R3C6A1nDoeCiptz7k=;
- b=TtuAbYpVu9UbLk7+WJJagvgsymi0DRPS2T+sDUGDuHzeGUaBMWz+imnt
- blc46e3m7PqQp6upSxPSk0vDoS28JvLzzoNNAbC/7tt9dsJ00piNb/Rep
- RlZ7IR24NHGCU8s9KVB86mO7vVpVk7GN3LNxUqf6haiZUUxsm2fXvR/+S
- OouRkVRgvHYd5XC2EnSBd0JE3LV1nG6Y2o5k0Z2LZlpH9f+af1T1zDEEw
- OENH3yKZHanvGkefpjFXsUI11XCjZuEYyzFbYiFSOERYSnAyCb3z8Eejp
- K8f1CIzO8dltApYVSLYpEJw9/9D5gBeKmslihzgYsHV8gZxhCVzFTrmaN A==;
-X-CSE-ConnectionGUID: DDwdnJYqT6azOJF+QJpseA==
-X-CSE-MsgGUID: teGEh1pUQdylb8iv5Z6ruw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11310"; a="36003712"
-X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="36003712"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Jan 2025 01:01:28 -0800
-X-CSE-ConnectionGUID: 2pjZm/zQT9ypQ4cjDZMQJg==
-X-CSE-MsgGUID: ob4Ci4fNReCrV/2Uae5ZFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="134514576"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
- ([10.239.159.165])
- by orviesa002.jf.intel.com with ESMTP; 10 Jan 2025 01:01:26 -0800
-Date: Fri, 10 Jan 2025 05:00:22 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-Message-ID: <Z4A45glfrJtq2zS2@yilunxu-OptiPlex-7050>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-3-chenyi.qiang@intel.com>
- <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
- <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
- <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
- <58b96b74-bf9c-45d3-8c2e-459ec2206fc8@intel.com>
- <8c8e024d-03dc-4201-8038-9e9e60467fad@amd.com>
- <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
- <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
- <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1tWAw9-0005MN-Eu; Fri, 10 Jan 2025 04:04:15 -0500
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal
+ [10.202.2.49])
+ by mailfout.stl.internal (Postfix) with ESMTP id 106F111400E6;
+ Fri, 10 Jan 2025 04:04:09 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-09.internal (MEProxy); Fri, 10 Jan 2025 04:04:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1736499848; x=
+ 1736586248; bh=hUA3nmMhJyK9hdrOaj1evG+66g2Op91EbA0ROtgSIt8=; b=W
+ 7eHHW1pVWpxZgNuUS/RN1cSeJlpZTTL8PoyND+ZJ+QkIUrc3AoQq2H9DcNShzJKl
+ 5TnnAaSbGBavhLCgTZfCCHiuDYySH8a8eQ93SA7yAotNCkVkvVQy9/tBL4r8HYJn
+ en+pK6TWrmNbTxsEgv0ZlebGPwZ3Zdz80ZPoi8galfl+5UTKtR19QDuu0UM+Qjdd
+ mD14g5MWB38x1fMWhWVp8wawNUml9dUFqaR4novhreDYikDuBd4h5NOST3SE51nc
+ FG82MOh2bWN0fjt1n25ok42acRZzO436VloMmfOQlbcst3EmNqbDb1Nx07RUX9mk
+ HBDgTDpNs/fLlIQSvuZUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1736499848; x=1736586248; bh=hUA3nmMhJyK9hdrOaj1evG+66g2Op91EbA0
+ ROtgSIt8=; b=v60LloTLD5PTAEYEcxdbq2PDNN8rIK3hQsxQl/ptIVOhg2Lbu6h
+ IJGCcu9+/AzfFMf2x8bFAvliuiV4mULpinrgjcDhSWXctDf2rDMWm4m8oCp+gYOJ
+ fikHEF+VQz9xr5veTeuQCEMf+LSUf9z3zlCqITDkZ+LFacspK2/bi5XaHkgHw3Ri
+ fVIDBHM3qo6uIKR4pL36tAs/a5BknzDBDjbWGlXZu3QuoUh8IW/ate08AYr36Y6w
+ Jehs55Jk4TM3RfLDEfo9Cxg5ZRIMTaYuOWK0crCs2nCm+tmb1zFZCH30pjs5aFPC
+ X+v7dHXO1LwGdpQgawRGGnK+x43F6SPreGQ==
+X-ME-Sender: <xms:h-KAZ_mDWyKAGP689TffiNxejaSwk7k0Q1b5bJyAWn9vA1YY5qO4mQ>
+ <xme:h-KAZy0DC7nWrIjE3md5_iMMa2WMz0AxjuYfdxUG_VYKEwY1DHTwsX-8_gY_CgNjS
+ o_f0Dolj2QBNztOEFE>
+X-ME-Received: <xmr:h-KAZ1ogZ5mgGg_zspfWl4bCbYjhmrP7cXj5OqsjIT5TgCn3jDVsDZD7zLbN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegkecutefuodetggdotefrodftvfcurf
+ hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
+ kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
+ dlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhr
+ ohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqe
+ enucggtffrrghtthgvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtddu
+ udegieegteffffejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+ hlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedu
+ gedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepfihilhhfrhgvugdrmhgrlhhlrg
+ ifrgesfigutgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhu
+ rdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprh
+ gtphhtthhopegrlhhishhtrghirhdrfhhrrghntghishesfigutgdrtghomhdprhgtphht
+ thhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvg
+ hfmhgrtghrohdrihhtpdhrtghpthhtohepshhtvghfrghnhhgrsehrvgguhhgrthdrtgho
+ mhdprhgtphhtthhopehfrghmsegvuhhphhhonhdrnhgvthdprhgtphhtthhopehphhhilh
+ hmugeslhhinhgrrhhordhorhhg
+X-ME-Proxy: <xmx:h-KAZ3kO1RscRBfl0WInrGWrDSexlVB3b44mwgmM2icwyhSjfJzSSw>
+ <xmx:h-KAZ92jh8biatqZkugHDvLlIpb1gZOqbegbCvIVcOvy2GfnDOvQOA>
+ <xmx:h-KAZ2vvm5tuoAxppDQVeHXWrBpMyaU4cmOxRTw85iBXFJiycnXb_g>
+ <xmx:h-KAZxWkwE2G8-dHyRemV8vuFKZCZMwBJSFOXM4HZbfMLA2ePEAPcA>
+ <xmx:iOKAZ3O26N0eGVlvlIXrJMZnjq2bUku6Xn8RG4XeAG1Tqcxfy6pkP5pF>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jan 2025 04:04:07 -0500 (EST)
+Date: Fri, 10 Jan 2025 10:04:06 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, alistair.francis@wdc.com,
+ kbusch@kernel.org, foss@defmacro.it, stefanha@redhat.com,
+ fam@euphon.net, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com
+Subject: Re: [RFC 2/4] spdm: add spdm storage transport virtual header
+Message-ID: <Z4DihskLy0wS9ts3@AALNPWKJENSEN.aal.scsc.local>
+References: <20250107052906.249973-2-wilfred.mallawa@wdc.com>
+ <20250107052906.249973-5-wilfred.mallawa@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="8IKRZgLi89MO+UGB"
 Content-Disposition: inline
-In-Reply-To: <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
-Received-SPF: none client-ip=192.198.163.19;
- envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIMWL_WL_HIGH=-0.436, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250107052906.249973-5-wilfred.mallawa@wdc.com>
+Received-SPF: pass client-ip=202.12.124.147; envelope-from=its@irrelevant.dk;
+ helo=fout-b4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +116,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > 
-> > https://github.com/aik/qemu/commit/3663f889883d4aebbeb0e4422f7be5e357e2ee46
-> > 
-> > but I am not sure if this ever saw the light of the day, did not it?
-> > (ironically I am using it as a base for encrypted DMA :) )
-> 
-> Yeah, we are doing the same work. I saw a solution from Michael long
-> time ago (when there was still
-> a dedicated hostmem-memfd-private backend for restrictedmem/gmem)
-> (https://github.com/AMDESE/qemu/commit/3bf5255fc48d648724d66410485081ace41d8ee6)
-> 
-> For your patch, it only implement the interface for
-> HostMemoryBackendMemfd. Maybe it is more appropriate to implement it for
-> the parent object HostMemoryBackend, because besides the
-> MEMORY_BACKEND_MEMFD, other backend types like MEMORY_BACKEND_RAM and
-> MEMORY_BACKEND_FILE can also be guest_memfd-backed.
-> 
-> Think more about where to implement this interface. It is still
-> uncertain to me. As I mentioned in another mail, maybe ram device memory
-> region would be backed by guest_memfd if we support TEE IO iommufd MMIO
 
-It is unlikely an assigned MMIO region would be backed by guest_memfd or be
-implemented as part of HostMemoryBackend. Nowadays assigned MMIO resource is
-owned by VFIO types, and I assume it is still true for private MMIO.
+--8IKRZgLi89MO+UGB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But I think with TIO, MMIO regions also need conversion. So I support an
-object, but maybe not guest_memfd_manager.
+On Jan  7 15:29, Wilfred Mallawa via wrote:
+> This header contains the transport encoding for an SPDM message that
+> uses the SPDM over Storage transport as defined by the DMTF DSP0286.
+>=20
+> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> ---
+>  include/system/spdm-socket.h | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>=20
+> diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
+> index 2b7d03f82d..fc007e5b48 100644
+> --- a/include/system/spdm-socket.h
+> +++ b/include/system/spdm-socket.h
+> @@ -88,6 +88,18 @@ bool spdm_socket_send(const int socket, uint32_t socke=
+t_cmd,
+>   */
+>  void spdm_socket_close(const int socket, uint32_t transport_type);
+> =20
+> +/*
+> + * Defines the transport encoding for SPDM, this information shall be pa=
+ssed
+> + * down to the SPDM server, when conforming to the SPDM over Storage sta=
+ndard
+> + * as defined by DSP0286.
+> + */
+> +typedef struct QEMU_PACKED {
+> +    uint8_t security_protocol;
+> +    uint16_t security_protocol_specific;
+> +    bool inc_512;
+> +    uint32_t length;
+> +} StorageSpdmTransportHeader;
 
-Thanks,
-Yilun
+Does it make sense to pack a bool? Is this defined by the SPDM server in
+use? I can't find the definition of this header anywhere.
 
-> in future. Then a specific object is more appropriate. What's your opinion?
-> 
+> +
+>  #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
+>  #define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
+>  #define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
+> --=20
+> 2.47.1
+>=20
+>=20
+
+--8IKRZgLi89MO+UGB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmeA4oMACgkQTeGvMW1P
+Dele/Af9Gns0ZZXekLWbWCrJsBlv/l/1jq4Y/HcDHrYHMpBvvPrP9v0IU6XpM8ef
+ChWvcHMhOqHw5WKyWJdBdtVlv4P4SRqbpiziDGGE//io3ILAZhtupGBtmOym93cv
+iUzD9Xxwqk/OpQupHj5cTC+t6+xKz7WesK+kMgXRytgHfREVFw25sQ5VfJZ7rOCI
+O6G+XCgzhlW6hl04EpsbNgvvM6EaqgxhkwbTI9Oj0CROx6qhgIUVp42LU7FkrISg
+vGiUundsH3Rck8wWDTVV+bSaJdQCB1TxYI4wDqfhijEqnJiABPQt+c7E7UisxBQf
+CRXBPIWcS1gXqmnuYTUPj9OTUfJz1g==
+=4Cih
+-----END PGP SIGNATURE-----
+
+--8IKRZgLi89MO+UGB--
 
