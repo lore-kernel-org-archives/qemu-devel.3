@@ -4,81 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D43E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 14:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111A0E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 14:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWG4R-0002EA-BX; Fri, 10 Jan 2025 09:33:07 -0500
+	id 1tWGL4-0000ll-Sx; Fri, 10 Jan 2025 09:50:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tWG4P-0002DF-0B
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:33:05 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWGL3-0000lV-J5
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:50:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tWG4N-0006dZ-7H
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:33:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736519583; x=1768055583;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=4zIiyRBJx2uUEgy/m5M23r7WgU1QXI3Eb0MeZznc3Pk=;
- b=l+hwbVwgwVeDAZRER/MsM29GASjBVWgasWzJpYNgO3LhUq6CI1GpiNx9
- eATQOuj2+qCKyqwCbYFXOLrTXjfW3qQrUVzwJraiv6MVU4I67u2Y+8S/Z
- 9yEdSc/p3U+BSX5s/Dn3PYo78I258q51y1qfNuuwARyjuuaXy5kpdO91o
- UyPJJTNzWvQZamCuaBGKoakwJMLnwcKwiD6Xj1T5ANtmY6XZQz4qW/Ryu
- ke0hjaWkaIASZHQ6XKFLtnKGKWxz5HnI/VgeZR1C3HWMN0TW8H6y9LlsD
- qIMEWNXZG5rh+pim3Lf6dHdXP/j7mguJ5vd4me+9WVYYPwFKY9hs/ldKN Q==;
-X-CSE-ConnectionGUID: VYZNccc5TpCwiCi39rOrUg==
-X-CSE-MsgGUID: 4N4UpR0yRHea0HckE3NOtA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11311"; a="62185523"
-X-IronPort-AV: E=Sophos;i="6.12,303,1728975600"; d="scan'208";a="62185523"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Jan 2025 06:33:02 -0800
-X-CSE-ConnectionGUID: 5uvsCvEhStiwdcSy6Bcagg==
-X-CSE-MsgGUID: bNUJw0NfRi2Q7V2MmXdSoQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="108790869"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 10 Jan 2025 06:32:58 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>
-Subject: [PATCH v7 RESEND 3/5] i386/cpu: Update cache topology with machine's
- configuration
-Date: Fri, 10 Jan 2025 22:51:13 +0800
-Message-Id: <20250110145115.1574345-4-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250110145115.1574345-1-zhao1.liu@intel.com>
-References: <20250110145115.1574345-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tWGL1-0000av-VQ
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:50:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736520615;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=T+dn5zx8sybwL655A8cvbrkGYW0aEcEOgReGvTCY5E8=;
+ b=Cr/aq+A5wgymcZul0G1zTJ2qzVFX+mprrRpSOD6QeEoPNVl9sOUStaUjuW11tm+mPdZSv1
+ 7/SnsfMwD3SGDyjN13Kze6OAapvDWULyv/qvsbZo0RNf9w3tiTvbIF9NXYW49YnmKTRpxa
+ fGF4KBKGKX0vk/RbkN7rHxj276d4om4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-74-JR4tiv1MOi28vZuShdprpw-1; Fri, 10 Jan 2025 09:50:14 -0500
+X-MC-Unique: JR4tiv1MOi28vZuShdprpw-1
+X-Mimecast-MFC-AGG-ID: JR4tiv1MOi28vZuShdprpw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385e1339790so1367430f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 06:50:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736520613; x=1737125413;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=T+dn5zx8sybwL655A8cvbrkGYW0aEcEOgReGvTCY5E8=;
+ b=aQdG20/AcevVyHchBXU43kzA+LoDpnkfjRnUBOLRf1Q215T2l8Ul3KzQKINpGaVk2r
+ FjeoyjsbBU1dPe62a+bcyNh5zWWdoghn6kUacJ84sRnZkiBtlPN4rNyY9Et+RcP6Jxkn
+ gkhxZxnOjH5eEE+cCaprB0zF+2++RKpKfrshgpfNTIL5sD0KB/jjUSznzwz2xuytu/Gu
+ rNO6SKXnRkxrYew3r/HqLvMx15lym8rAqut2z5Y3hTPpf+Ax9vtJ4LBSf0EpSeUSxmFW
+ sNA8UW7EAYX+AG5I8BTYaJKDvWJ8Lu67VLmVrKzGZ7pkLu72sWk7rLGTRU/LVJ1B8dbf
+ atrQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWXhgY53JsBsvo5VrEl7/qtQKQQSD1FUzys4QCWk7QM3kjgeiMapFDRbMDEhUQI2JHTsMY5u2Z/IaRj@nongnu.org
+X-Gm-Message-State: AOJu0YxvzT/DtjfAymJ5PHqaV2Xjja3OZd+RNxPvr0cwqAMw4YRa55s7
+ zy6Cpflh7Th1DJnDes058bIG5qWPQwoQW1D0z/QqtmXR8Qh9Mq/ylniRt4Foj2l+7oKf+/EmKBN
+ 24WTMBq3pLJzEXCBFqukSh6/WTxBfpu5SCRqGAFPemO9Vnpqv64iJ
+X-Gm-Gg: ASbGncs+HS0QPSwf/R08DiC0HsQVsEFDIV2EJG6Hn1kHAAJhkN6DuV2s0rEktitVUCr
+ AiIAyRve8AINqrTJCLlkGsW43PTPvo2ez6jSsEEDMhikd8/K8n+xephe40w5yzFoPDNxckfmJRC
+ 25Esbd6UxfqL22pb9RGChCg4q89HGTiAXxQz0qM93xTtXLFtuV3A6Vb9BBJLBA0oljydv9xeCdF
+ +KoERG1aRYuMjDHeBNeqyX0FNQ7ldEC3Gzm4CEM9iTkJfVBmwl6aOSmonGRfxGbacY8vgZ8JWsF
+ qpALccqrQ0JKQF0LXDlukXAIPg3/ovb7yrUqHSZ6dCqodPMQrYPMyniiMQBxD2njNedkiZrxhHS
+ LW/lKmdVb
+X-Received: by 2002:a05:6000:1fa1:b0:385:f062:c2d4 with SMTP id
+ ffacd0b85a97d-38a87338c01mr11081581f8f.37.1736520612774; 
+ Fri, 10 Jan 2025 06:50:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHEjPNOvQcqE6YNpKOq6FH9tky/TkiWm4L1aV74ulonKhdQxOSf+kNAwkQEOdXbJcU7YkiIyg==
+X-Received: by 2002:a05:6000:1fa1:b0:385:f062:c2d4 with SMTP id
+ ffacd0b85a97d-38a87338c01mr11081553f8f.37.1736520612415; 
+ Fri, 10 Jan 2025 06:50:12 -0800 (PST)
+Received: from ?IPV6:2003:cb:c708:e100:4f41:ff29:a59f:8c7a?
+ (p200300cbc708e1004f41ff29a59f8c7a.dip0.t-ipconnect.de.
+ [2003:cb:c708:e100:4f41:ff29:a59f:8c7a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e38bf78sm4665272f8f.48.2025.01.10.06.50.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 06:50:11 -0800 (PST)
+Message-ID: <cce0bff5-51ca-42e9-98d7-b72ed23c9a1b@redhat.com>
+Date: Fri, 10 Jan 2025 15:50:09 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Enable shared device assignment
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
+ <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <8457e035-40b0-4268-866e-baa737b6be27@intel.com>
+ <6ac5ddea-42d8-40f2-beec-be490f6f289c@amd.com>
+ <8f953ffc-6408-4546-a439-d11354b26665@intel.com>
+ <d4b57eb8-03f1-40f3-bc7a-23b24294e3d7@amd.com>
+ <57a3869d-f3d1-4125-aaa5-e529fb659421@intel.com>
+ <008bfbf2-3ea4-4e6c-ad0d-91655cdfc4e8@amd.com>
+ <1361f0b4-ddf8-4a83-ba21-b68321d921da@intel.com>
+ <c318c89b-967d-456e-ade1-3a8cacb21bd7@redhat.com>
+ <20250110132021.GE5556@nvidia.com>
+ <17db435a-8eca-4132-8481-34a6b0e986cb@redhat.com>
+ <20250110141401.GG5556@nvidia.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250110141401.GG5556@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,108 +175,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User will configure smp cache topology via -machine smp-cache.
+On 10.01.25 15:14, Jason Gunthorpe wrote:
+> On Fri, Jan 10, 2025 at 02:45:39PM +0100, David Hildenbrand wrote:
+>>
+>> In your commit I read:
+>>
+>> "Implement the cut operation to be hitless, changes to the page table
+>> during cutting must cause zero disruption to any ongoing DMA. This is the
+>> expectation of the VFIO type 1 uAPI. Hitless requires HW support, it is
+>> incompatible with HW requiring break-before-make."
+>>
+>> So I guess that would mean that, depending on HW support, one could avoid
+>> disabling large pages to still allow for atomic cuts / partial unmaps that
+>> don't affect concurrent DMA.
+> 
+> Yes. Most x86 server HW will do this, though ARM support is a bit newish.
+> 
+>> What would be your suggestion here to avoid the "map each 4k page
+>> individually so we can unmap it individually" ? I didn't completely grasp
+>> that, sorry.
+> 
+> Map in large ranges in the VMM, lets say 1G of shared memory as a
+> single mapping (called an iommufd area)
+> 
+> When the guest makes a 2M chunk of it private you do a ioctl to
+> iommufd to split the area into three, leaving the 2M chunk as a
+> seperate area.
+> 
+> The new iommufd ioctl to split areas will go down into the iommu driver
+> and atomically cut the 1G PTEs into smaller PTEs as necessary so that
+> no PTE spans the edges of the 2M area.
+> 
+> Then userspace can unmap the 2M area and leave the remainder of the 1G
+> area mapped.
+> 
+> All of this would be fully hitless to ongoing DMA.
+> 
+> The iommufs code is there to do this assuming the areas are mapped at
+> 4k, what is missing is the iommu driver side to atomically resize
+> large PTEs.
+> 
+>>  From "IIRC you can only trigger split using the VFIO type 1 legacy API. We
+>> would need to formalize split as an IOMMUFD native ioctl.
+>> Nobody should use this stuf through the legacy type 1 API!!!!"
+>>
+>> I assume you mean that we can only avoid the 4k map/unmap if we add proper
+>> support to IOMMUFD native ioctl, and not try making it fly somehow with the
+>> legacy type 1 API?
+> 
+> The thread was talking about the built-in support in iommufd to split
+> mappings. That built-in support is only accessible through legacy APIs
+> and should never be used in new qemu code. To use that built in
+> support in new code we need to build new APIs. The advantage of the
+> built-in support is qemu can map in large regions (which is more
+> efficient) and the kernel will break it down to 4k for the iommu
+> driver.
+> 
+> Mapping 4k at a time through the uAPI would be outrageously
+> inefficient.
 
-For this case, update the x86 CPUs' cache topology with user's
-configuration in MachineState.
+Got it, makes all sense, thanks!
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
-Changes since Patch v3:
- * Updated MachineState.smp_cache to consume "default" level and did a
-   check to ensure topological hierarchical relationships are correct.
----
- target/i386/cpu.c | 67 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4728373fdf03..b6d6c4b96d49 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7758,6 +7758,64 @@ static void x86_cpu_hyperv_realize(X86CPU *cpu)
-     cpu->hyperv_limits[2] = 0;
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+static bool x86_cpu_update_smp_cache_topo(MachineState *ms, X86CPU *cpu,
-+                                          Error **errp)
-+{
-+    CPUX86State *env = &cpu->env;
-+    CpuTopologyLevel level;
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l1d_cache->share_level = level;
-+        env->cache_info_amd.l1d_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D,
-+            env->cache_info_cpuid4.l1d_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D,
-+            env->cache_info_amd.l1d_cache->share_level);
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l1i_cache->share_level = level;
-+        env->cache_info_amd.l1i_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I,
-+            env->cache_info_cpuid4.l1i_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I,
-+            env->cache_info_amd.l1i_cache->share_level);
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l2_cache->share_level = level;
-+        env->cache_info_amd.l2_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2,
-+            env->cache_info_cpuid4.l2_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2,
-+            env->cache_info_amd.l2_cache->share_level);
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
-+    if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
-+        env->cache_info_cpuid4.l3_cache->share_level = level;
-+        env->cache_info_amd.l3_cache->share_level = level;
-+    } else {
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3,
-+            env->cache_info_cpuid4.l3_cache->share_level);
-+        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3,
-+            env->cache_info_amd.l3_cache->share_level);
-+    }
-+
-+    if (!machine_check_smp_cache(ms, errp)) {
-+        return false;
-+    }
-+    return true;
-+}
-+#endif
-+
- static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
- {
-     CPUState *cs = CPU(dev);
-@@ -7982,6 +8040,15 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
- 
- #ifndef CONFIG_USER_ONLY
-     MachineState *ms = MACHINE(qdev_get_machine());
-+
-+    /*
-+     * TODO: Add a SMPCompatProps.has_caches flag to avoid useless updates
-+     * if user didn't set smp_cache.
-+     */
-+    if (!x86_cpu_update_smp_cache_topo(ms, cpu, errp)) {
-+        return;
-+    }
-+
-     qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
- 
-     if (cpu->env.features[FEAT_1_EDX] & CPUID_APIC || ms->smp.cpus > 1) {
 -- 
-2.34.1
+Cheers,
+
+David / dhildenb
 
 
