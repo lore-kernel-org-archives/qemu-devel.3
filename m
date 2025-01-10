@@ -4,87 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1998EE7719D
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E451FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHDe-0003Pv-92; Fri, 10 Jan 2025 10:46:43 -0500
+	id 1tWHBs-0001zM-QM; Fri, 10 Jan 2025 10:44:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHCA-0002Rk-LQ
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:45:12 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHC6-0008GT-Hp
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:45:09 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e3fd6cd9ef7so5564071276.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 07:45:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736523903; x=1737128703; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=511Z+41OEUqcFab25iPvQUjyLzAT2pDdqxvoPH5a6BI=;
- b=lSxSfLIgUzoKYSsyktvFoXg+mJRmvDnCxb/RngJt/z7Xoi7Y5eK3IJQIVeQFvPLocp
- iayfDEIcfv2SOiF4/+cyAhIeLdxRQXy9fjF2Z+6Ttqzy6nLd6wOduB5zPqZp/c9BoIdv
- ZdUgjXiRGePyA5oXL7niEAqEJ6nUmeKGz44/f7fiE/h2UBvUF1/QV1OKEzEdX7IirbI7
- b57DSZUBCvf2m1x5PMjSU0ovdPmDzsof19vtbo8eUDJyBcznG7kzkmS1YVZZb2rsXfYi
- f1vynIDXAfalBilLFhdpuV3IXZ/zL4z6VkJng7DBytyt3ajXfGrf4p+l9uZOgXidnFRS
- /0Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736523903; x=1737128703;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=511Z+41OEUqcFab25iPvQUjyLzAT2pDdqxvoPH5a6BI=;
- b=YN7cY2nNl48gJ1qy1qqClE7Dfox9lNiIZWaTrLGQ2ZFrpV7U8NVQiHEfTfGv0a2wta
- G6jfBKn+zlA72d8AeI/DeVfOOPL4G2c6JNr3FIppDxYv4kl23LuZryOwwXgpXqCVLHEh
- U3+9HIi9Me2gm/Yh+uiAinBAujKrJqRKaTXRpV/AFiw+sVADuHxgctKe7Sh/OSAdDnKA
- yA0zhhVqflCEsIiucANvFJXpJye98ZyuRsXC/Xhj1TYPZiXswH8jRdg1GRb18wT120B4
- +03aoWpXKgxSnFWNducKAiUevl/4bkE4Y8u6ntPPPGln8PmJjr8mcB5ZLiLuToBgoPWb
- rnZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuETPpVG1foVVeb2L4GLbOu323fKhF4epKRu6VmdgD+qbrenjF1/STDeFF22N6TyAICnogWqhntvFt@nongnu.org
-X-Gm-Message-State: AOJu0YxTUBBO/7lzFD/gRNjRdLLScooeZvFneENDUdGlmVOI1UE4B9jT
- lmX5HljwMBnI91EPEQ8yTDuPqpkwdnzNKI6VWz84RG81R7KV8JQzo96+D3oDKFuDpOKZPeGkD3x
- zfvgNJ/hpAHsinA+2aHLdtKqhk7bCz+5v/8K3kA==
-X-Gm-Gg: ASbGncv6I22LpbkYsah+ildMhCSzuU/5YSmYACwzMye63EP1E99OCPJaf+jR6Gr9xLi
- IX6jsg/yhbkYcozLWpVOH/nYyAIHKMPBlB0iktd4=
-X-Google-Smtp-Source: AGHT+IHSDTFhnf4Fk9iHV+3pKr6XgWBSk7LJ2bfmoWDJXoDC+L58j4PvU5S4vs+ZFbl7oScvbVbnQ0z5jqpHns26+Es=
-X-Received: by 2002:a05:690c:b84:b0:6ee:8515:6730 with SMTP id
- 00721157ae682-6f54964144dmr45818637b3.17.1736523902793; Fri, 10 Jan 2025
- 07:45:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tWHBg-0001gS-F9
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:44:40 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tWHBe-00082B-0w
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:44:40 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YV5X019Pjz6D9JL;
+ Fri, 10 Jan 2025 23:42:56 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 13674140CF4;
+ Fri, 10 Jan 2025 23:44:34 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 10 Jan
+ 2025 16:44:33 +0100
+Date: Fri, 10 Jan 2025 15:44:32 +0000
+To: Li Zhijian <lizhijian@fujitsu.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH v2] hw/cxl: Fix msix_notify: Assertion `vector <
+ dev->msix_entries_nr`
+Message-ID: <20250110154432.000031b0@huawei.com>
+In-Reply-To: <20241213093602.3248246-1-lizhijian@fujitsu.com>
+References: <20241213093602.3248246-1-lizhijian@fujitsu.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20241220195923.314208-1-git@zabka.it>
- <a9313931-a41e-46e1-b8b9-d2cc83cd663c@redhat.com>
- <44f99f89-edb6-4007-a367-f7f3b9e10b7b@zabka.it>
- <b36f85c4-4f1b-4721-bab5-56e89550f421@redhat.com>
- <f1d67bea-7389-40c3-a304-6cec459a2f49@zabka.it>
- <4aa676ea-331f-4c8b-be1d-208804ede674@redhat.com>
-In-Reply-To: <4aa676ea-331f-4c8b-be1d-208804ede674@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jan 2025 15:44:51 +0000
-X-Gm-Features: AbW1kvaFO2kQbhhpny1eFTGF5HNEKuFN9q3NizdO_i62XwvmUUNMZ0tBUXTDqaY
-Message-ID: <CAFEAcA_2CEJKFyjvbwmpt=on=GgMVamQ5hiiVt+zUr6AY3X=Xg@mail.gmail.com>
-Subject: Re: [PATCH v2] physmem: allow cpu_memory_rw_debug to write to MMIO
- devices
-To: David Hildenbrand <david@redhat.com>
-Cc: Stefan Zabka <git@zabka.it>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,132 +67,152 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Jan 2025 at 20:10, David Hildenbrand <david@redhat.com> wrote:
->
-> On 08.01.25 19:35, Stefan Zabka wrote:
-> > On 21/12/2024 15:55, David Hildenbrand wrote:
-> >   > Let's wait for opinions from others first.
-> >
-> > <https://www.qemu.org/docs/master/devel/submitting-a-patch.html#if-your-patch-seems-to-have-been-ignored>
-> > states that two weeks is a reasonable amount of time for follow-up.
-> >
-> > Should I also ping the original patch? I thought pinging the thread
-> > would be more appropriate, as it contains relevant information.
-> >
->
-> I just pushed a compiling version of the attrs.debug approach to:
->
->         https://github.com/davidhildenbrand/qemu/tree/debug_access
+On Fri, 13 Dec 2024 17:36:02 +0800
+Li Zhijian <lizhijian@fujitsu.com> wrote:
 
-I think this approach (having a 'debug' attribute in the MemTxAttrs
-seems reasonable. I do note that if we allow this kind of access
-to write to MMIO devices then we are also permitting ELF (and other)
-image loads to write to MMIO devices where currently we ignore those.
-That means there's probably a class of guest images (of dubious
-correctness) which will start writing junk (likely zeroes) into
-device model registers; we previously would silently ignore any
-such bogus ELF sections.
-
-Q: should we suggest behaviour for device models if they see a
-'debug = 1' transaction, e.g. "don't update your internal state
-for a debug read if you have clear-on-read or similar kinds of
-register fields" ?
-
-> With two preparation patches, the relevant patch is:
->
->
->  From 2e85cb1724385e4b8640364415832c030e5c5e6d Mon Sep 17 00:00:00 2001
-> From: David Hildenbrand <david@redhat.com>
-> Date: Wed, 8 Jan 2025 20:58:00 +0100
-> Subject: [PATCH] physmem: allow cpu_memory_rw_debug to write to MMIO devices
->
-> Signed-off-by: David Hildenbrand <david@redhat.com>
+> This assertion always happens when we sanitize the CXL memory device.
+> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
+> 
+> It is incorrect to register an MSIX number beyond the device's capability.
+> 
+> Expand the device's MSIX number and use the enum to maintain the *USED*
+> and MAX MSIX number
+> 
+> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 > ---
->   hw/core/cpu-sysemu.c    | 13 +++++++++----
->   include/exec/memattrs.h |  5 ++++-
->   include/exec/memory.h   |  2 ++
->   system/physmem.c        |  9 ++-------
->   4 files changed, 17 insertions(+), 12 deletions(-)
->
-> diff --git a/hw/core/cpu-sysemu.c b/hw/core/cpu-sysemu.c
-> index 2a9a2a4eb5..0aa0a569e4 100644
-> --- a/hw/core/cpu-sysemu.c
-> +++ b/hw/core/cpu-sysemu.c
-> @@ -51,13 +51,18 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
->                                        MemTxAttrs *attrs)
->   {
->       CPUClass *cc = CPU_GET_CLASS(cpu);
-> +    hwaddr paddr;
->
->       if (cc->sysemu_ops->get_phys_page_attrs_debug) {
-> -        return cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
-> +        paddr = cc->sysemu_ops->get_phys_page_attrs_debug(cpu, addr, attrs);
-> +    } else {
-> +        /* Fallback for CPUs which don't implement the _attrs_ hook */
-> +        *attrs = MEMTXATTRS_UNSPECIFIED;
-> +        paddr = cc->sysemu_ops->get_phys_page_debug(cpu, addr);
->       }
-> -    /* Fallback for CPUs which don't implement the _attrs_ hook */
-> -    *attrs = MEMTXATTRS_UNSPECIFIED;
-> -    return cc->sysemu_ops->get_phys_page_debug(cpu, addr);
-> +    /* Indicate that this is a debug access. */
-> +    attrs->debug = 1;
-> +    return paddr;
->   }
->
->   hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
-> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-> index e27c18f3dc..14e0edaa58 100644
-> --- a/include/exec/memattrs.h
-> +++ b/include/exec/memattrs.h
-> @@ -26,7 +26,8 @@ typedef struct MemTxAttrs {
->       /* Bus masters which don't specify any attributes will get this
->        * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
->        * distinguish "all attributes deliberately clear" from
-> -     * "didn't specify" if necessary.
-> +     * "didn't specify" if necessary. "debug" can be set alongside
-> +     * "unspecified".
->        */
+> V2: just increase msix number and add enum to maintainer their values #
+> Jonathan
 
-This feels like one of those changes which is "*probably* OK,
-but breaks a thing that was previously an invariant" ones.
-But trying to get all targets to support reporting real
-attributes is probably too long a side-quest (we can't really
-do it in cpu_get_phys_page_attrs_debug() because I don't think
-we have a pre-existing way to ask the target "are you in usermode
-now"; the rest of the fields we could validly leave 0).
+Ah. Sorry I was unclear. Two patches please
 
->       unsigned int unspecified:1;
->       /*
-> @@ -50,6 +51,8 @@ typedef struct MemTxAttrs {
->        * (see MEMTX_ACCESS_ERROR).
->        */
->       unsigned int memory:1;
-> +    /* Debug access that can even write to ROM. */
-> +    unsigned int debug:1;
->       /* Requester ID (for MSI for example) */
->       unsigned int requester_id:16;
->
-> diff --git a/include/exec/memory.h b/include/exec/memory.h
-> index 3dcadcf3a2..7458082455 100644
-> --- a/include/exec/memory.h
-> +++ b/include/exec/memory.h
-> @@ -2990,6 +2990,8 @@ static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write,
->                                              MemTxAttrs attrs)
->   {
->       if (is_write) {
-> +        if (attrs.debug)
-> +            return memory_region_is_ram(mr) || memory_region_is_romd(mr);
+1. Make the number bigger to fix the bug. Only this one gets a fixes tag and
+   is suitable for backporting.
 
-It's a bit weird that the condition for "debug access can write"
-is not the same as the one for "debug access can read"...
+2. Add an enum including all numbers currently used and use that throughout the
+   type3 related code. That will prevent use accidentally introducing the
+   bug in future but doesn't need to be backported. 
+ 
+A few other comments inline.
 
->           return memory_region_is_ram(mr) && !mr->readonly &&
->                  !mr->rom_device && !memory_region_is_ram_device(mr);
->       } else {
+Thanks
 
--- PMM
+Jonathan
+
+> ---
+>  hw/cxl/cxl-device-utils.c   |  6 ++----
+>  hw/mem/cxl_type3.c          | 10 +++++-----
+>  include/hw/cxl/cxl_device.h |  7 +++++++
+>  3 files changed, 14 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
+> index 035d034f6d..bc2171e3d4 100644
+> --- a/hw/cxl/cxl-device-utils.c
+> +++ b/hw/cxl/cxl-device-utils.c
+> @@ -354,8 +354,6 @@ static void device_reg_init_common(CXLDeviceState *cxl_dstate)
+>  
+>  static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+>  {
+> -    const uint8_t msi_n = 9;
+> -
+>      /* 2048 payload size */
+>      ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+>                       PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
+> @@ -364,8 +362,8 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+>      ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+>                       BG_INT_CAP, 1);
+>      ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> -                     MSI_N, msi_n);
+> -    cxl_dstate->mbox_msi_n = msi_n;
+> +                     MSI_N, CXL_MSIX_MBOX);
+
+Should be passed in from the type 3 specific call so add a parameter to this
+function and pass this from cxl_device_register_init_t3.
+Even better pass it into there from ct3d_reset()
+
+Will potentially be a different number for the switch CCI passed in from
+the call of cxl_device_register_init_swcci() in switch-mailbox-cci.c
+
+
+> +    cxl_dstate->mbox_msi_n = CXL_MSIX_MBOX;
+>      ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+>                       MBOX_READY_TIME, 0); /* Not reported */
+>      ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 5cf754b38f..f2f060ed9e 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -843,7 +843,6 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>      ComponentRegisters *regs = &cxl_cstate->crb;
+>      MemoryRegion *mr = &regs->component_registers;
+>      uint8_t *pci_conf = pci_dev->config;
+> -    unsigned short msix_num = 6;
+>      int i, rc;
+>      uint16_t count;
+>  
+> @@ -884,16 +883,17 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>                       &ct3d->cxl_dstate.device_registers);
+>  
+>      /* MSI(-X) Initialization */
+> -    rc = msix_init_exclusive_bar(pci_dev, msix_num, 4, NULL);
+> +    rc = msix_init_exclusive_bar(pci_dev, CXL_MSIX_MAX, 4, NULL);
+>      if (rc) {
+>          goto err_address_space_free;
+>      }
+> -    for (i = 0; i < msix_num; i++) {
+> +    for (i = 0; i < CXL_MSIX_MAX; i++) {
+>          msix_vector_use(pci_dev, i);
+>      }
+>  
+>      /* DOE Initialization */
+> -    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true, 0);
+> +    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
+> +                  CXL_MSIX_PCIE_DOE);
+>  
+>      cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
+>      cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+> @@ -908,7 +908,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>      if (rc) {
+>          goto err_release_cdat;
+>      }
+> -    cxl_event_init(&ct3d->cxl_dstate, 2);
+> +    cxl_event_init(&ct3d->cxl_dstate, CXL_MSIX_EVENT_START);
+>  
+>      /* Set default value for patrol scrub attributes */
+>      ct3d->patrol_scrub_attrs.scrub_cycle_cap =
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 561b375dc8..3f89b041ce 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -133,6 +133,13 @@ typedef enum {
+>      CXL_MBOX_MAX = 0x20
+>  } CXLRetCode;
+>  
+> +enum {
+
+Maybe worth naming these to be type3 specific.
+
+> +    CXL_MSIX_PCIE_DOE = 0,
+Name it to include that this is specifically the DOE for the table access protocol.
+
+   CXL_MSIX_PCIE_DOE_TABLE_ACCESS
+
+
+This should be private to cxl_type3.c which should be possible by passing
+it to a few more calls from there. 
+
+> +    CXL_MSIX_EVENT_START = 2,
+> +    CXL_MSIX_MBOX = CXL_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
+> +    CXL_MSIX_MAX
+> +};
+> +
+>  typedef struct CXLCCI CXLCCI;
+>  typedef struct cxl_device_state CXLDeviceState;
+>  struct cxl_cmd;
+
 
