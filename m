@@ -4,69 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C926AE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 21:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03991E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 21:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWMcT-0007wd-6o; Fri, 10 Jan 2025 16:32:41 -0500
+	id 1tWMqV-0001ZI-1g; Fri, 10 Jan 2025 16:47:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tWMcR-0007wQ-Bl
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 16:32:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tWMcP-0004pU-Nf
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 16:32:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736544750;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=K4106GMTUJ0/alW2jtOkYC93r7QRMay1HUCXwwWfnbY=;
- b=QMBnRgVGNJIpf5iHli1tgAOrsF+UoN+g4VmoStKbmTtFVQY368nkFcoacLMsoRQdubTDuk
- QctqiAESeqUDrfKGqOxZfxlQ7M+Y8iKWVXDuSxemhf7kE5RsE2l9FHrwDEHGQP0nt/gQxx
- BfBUKsqEuz0GJfQZ0NzHNZJ+JEw/mKU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-RgFK6RprOWaYR_F9ACkNHA-1; Fri,
- 10 Jan 2025 16:31:20 -0500
-X-MC-Unique: RgFK6RprOWaYR_F9ACkNHA-1
-X-Mimecast-MFC-AGG-ID: RgFK6RprOWaYR_F9ACkNHA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F130919560BB
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 21:31:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.248])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8EB130001BE; Fri, 10 Jan 2025 21:31:18 +0000 (UTC)
-Date: Fri, 10 Jan 2025 22:31:16 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 02/38] rust: add --check-cfg test to rustc arguments
-Message-ID: <Z4GRpOqXOka2f8Up@redhat.com>
-References: <20250110184620.408302-1-pbonzini@redhat.com>
- <20250110184620.408302-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWMqL-0001YP-1w
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 16:47:03 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWMqI-0006LI-9c
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 16:47:00 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38637614567so1280401f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 13:46:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736545615; x=1737150415; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sg7wo5Zc4DNJh7ebpBH7rIAGSnt3xDSucN4q8Glzgic=;
+ b=XEYqIXYxqUP3TB+B2V9B4R9/A2pgC8eaua7mxH0QYblZSuZunAvr+r4oAmjLO7vN3L
+ K+I5sy/60bJrfiMORlabFa6250C23dy2LUQrTwQGzJZ24BEM59hZkz36wstwt6yXeqPz
+ ohXlV8GaeWHV2o3Ljk9R+Y/J3jTr9bXryBgyksCxKTS3QsNSs4hyzIybA/v4Nl/Sq+/c
+ xnCXaJFcQsTNppUXWtwDCOWU0b47N49FtvbMCSDQKsAeu/QZ29uvcJPrygeWtQ1tYWgZ
+ QYH0+j8+1Kw2jY/46frycpcxGZ1FyByg02dTtgAez1LbZ9LLc4GqaxvF5ulGuus4wOJB
+ eneg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736545615; x=1737150415;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sg7wo5Zc4DNJh7ebpBH7rIAGSnt3xDSucN4q8Glzgic=;
+ b=Hi37KnBBZzR6myf3ArYIpz44OcP0Ic3pdNLJXv5/fWx+DdBDVFq1zDggAR22QsP7BD
+ MpWwCF+03RDscMvqO3PHurzTCqLsbtaqm35cQmgw7Kmc9bdQ0J+TBuAgCzxVVfFQYVsU
+ bvKwz0klg7K91++4v0KFdynoajHPe8yxJkXJ0KOd30KLTdIQqdcp7Rlk36j9nRuUryEd
+ G7ZDLI9mDqiwZaAGoSW9sWLFVFfNv2mNNCbNme3iXgxgWjTz/EMYELzWaECov+RHYIy+
+ DRwfsG2Jdcwnpv+JFpxZb5ZiJYM0YMXayucdlJbk5iLE+mum8y0lgzAOMB/n383tiCNe
+ 9WPA==
+X-Gm-Message-State: AOJu0YxLVQgQ3AsSULOLCSWqSGslohKDsJW6Bg3OAotaCOTMzDod3w28
+ kBD/NpWM9AgTCXlPiUa84B2RuXma8qqCiCOMiAfsMhC+JQKb4rZHAHZdpOnwrGzmjK6u7AAJKP9
+ oLo4=
+X-Gm-Gg: ASbGncsT6cJNK3iLdWf3d/x+7wqw2GbO8NIG3yru267nmWJeR3KbcYfbbocmKZ/UGDa
+ ZH/O0li39HL42VHkTQXeC/oOUZBuv8HJ7ZnsIc27FbdZkjQq7bE6pal9hg9E6RuUoKVWlq/sR2A
+ KPkbxU+qdJUJpspzP/+A2tlEZ+5G2zSKWEWkeOoLdSBqu3EHBNE8rCAGgl0b7r0SZc+y086SWBc
+ yuJ8KhJCe6IY2VkFhHlt1dluNJdh/F2pIU60HwS71kce0uNZKlmtjuSmF5eoEN3WU/TasHlZ7F8
+ 86LKTUrhiXEdMnzmrihaKXa+EwGsDQ==
+X-Google-Smtp-Source: AGHT+IFFcvoGbysMdheqlXySBhP6rTRXeZb4hKaR77QgS5mwpFNTmd1xBGX9j2MKVcEn9J5RaSRgSQ==
+X-Received: by 2002:a05:6000:1f88:b0:385:fc97:9c63 with SMTP id
+ ffacd0b85a97d-38a872f6915mr9734937f8f.9.1736545615592; 
+ Fri, 10 Jan 2025 13:46:55 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e38325esm5497960f8f.27.2025.01.10.13.46.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 13:46:55 -0800 (PST)
+Message-ID: <7be26557-2ecb-40b4-86d5-721b0c285f71@linaro.org>
+Date: Fri, 10 Jan 2025 22:46:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250110184620.408302-3-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] hw/char/serial: Ensure SerialState::irq is set
+ when realizing
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250110182759.84071-1-philmd@linaro.org>
+ <20250110182759.84071-2-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250110182759.84071-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,39 +107,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.01.2025 um 19:45 hat Paolo Bonzini geschrieben:
-> rustc will check that every reachable #[cfg] matches a list of
-> the expected config names and values.  Recent versions of rustc are
-> also complaining about #[cfg(test)], even if it is basically a standard
-> part of the language.  So, always allow it.
+On 10/1/25 19:27, Philippe Mathieu-Daudé wrote:
+> SerialState::irq must be set by parent when the object is realized.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/char/serial-pci-multi.c | 2 +-
+>   hw/char/serial-pci.c       | 2 +-
+>   hw/char/serial.c           | 2 ++
+>   3 files changed, 4 insertions(+), 2 deletions(-)
 
-error: invalid `--check-cfg` argument: `test`
-  |
-  = note: expected `cfg(name, values("value1", "value2", ... "valueN"))`
-  = note: visit <https://doc.rust-lang.org/nightly/rustc/check-cfg.html> for more details
 
->  scripts/rust/rustc_args.py | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-> index 5525b3886fa..d79dc6d81f1 100644
-> --- a/scripts/rust/rustc_args.py
-> +++ b/scripts/rust/rustc_args.py
-> @@ -215,6 +215,8 @@ def main() -> None:
->  
->      if rustc_version >= (1, 80):
->          if args.lints:
-> +            print("--check-cfg")
-> +            print("test")
+> diff --git a/hw/char/serial.c b/hw/char/serial.c
+> index 70044e14a0f..562931685e7 100644
+> --- a/hw/char/serial.c
+> +++ b/hw/char/serial.c
+> @@ -923,6 +923,8 @@ static void serial_realize(DeviceState *dev, Error **errp)
+>   {
+>       SerialState *s = SERIAL(dev);
+>   
+> +    assert(s->irq);
 
-Should this be print("cfg(test)")?
-
->              for cfg in sorted(cargo_toml.check_cfg):
->                  print("--check-cfg")
->                  print(cfg)
-
-Kevin
-
+Patch incomplete, missing to update serial_mm_realize().
 
