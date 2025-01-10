@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FC0E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 14:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF9BE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWGM9-0001Bn-0G; Fri, 10 Jan 2025 09:51:25 -0500
+	id 1tWGWq-0003Bv-12; Fri, 10 Jan 2025 10:02:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tWGM4-00018I-5h
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:51:22 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1tWGWo-00039w-2Z
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:02:26 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tWGM1-0000om-2p
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 09:51:19 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2f4448bf96fso2860155a91.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 06:51:14 -0800 (PST)
+ id 1tWGWm-0002Jl-8i
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:02:25 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2163b0c09afso38078815ad.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 07:02:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736520673; x=1737125473; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736521342; x=1737126142; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XjgY0HgB1/m+MlTavdon8zZqE7x250kOtu7Nc4lvl6k=;
- b=WTFog+U6cCTda9Nwd8cfxgIXHXdGzrnz1RQrcvG/AMMODCLWTi2Mb1QQu4xLPiEZeA
- BwqzzJckK8fn8wYk5ru09/nkZebK59fnraDA3mKVfFVhGT4aDAzv6rReqBQe1Hq3sl0y
- 1FT6ibiiCpdmfJFhFFHmq5LXO4tArMG4g22gMbHVEDhlhIegli2faSb4HXKBbfap7+W6
- 1w11pFjCkhBx+idVaroweSLKWJ6lbcICDNgeB9kQbvXIi+zNHG8VmvPacEDVufzQdkPj
- jAGYR6snNTvL1rXsYnln7OMsAehVhTVHH56vqcyCsg4FPvDuxEZEjiuyVwhe/YXdLbKh
- vCpA==
+ bh=Ek+uyOLF1atCbWyakug3u6hJF1xPQjfK4a2Lzu5BY9w=;
+ b=d933aFZASkmeA7jntgiWaH4P2AYi9k0ZMjOUdwjf5ExbGGmvp8xWD4LGiP4tf+IzBj
+ Yj5bAW/bhB7mBNRSJJ4AFBaH1g1fRJ4GOFl5AOZ4AkPcVf5bTNh3DPWPV9ah/Z1BjoPj
+ 5eXh4/Af6liWEAO6HG6K/g7IECI6MN78tszS2lzJ4vwo7zpggijv68B3aVI4Ia53hGbg
+ tY6SwApMZ9WgJWpjdUa81XfD64WEUwa5Ld2Le/A7cndAFufUMM2lebkInbxHQsDjWxCQ
+ NBTEvJbKrhrZtC/ld+Y+ZL0V5yExDTujaAA5fYcwIhQ36weD6mK1KE0lHg+CF++K89F1
+ HY1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736520673; x=1737125473;
+ d=1e100.net; s=20230601; t=1736521342; x=1737126142;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XjgY0HgB1/m+MlTavdon8zZqE7x250kOtu7Nc4lvl6k=;
- b=RyKE7bL/bcKugi2FS/qkN6o63LfnDrtoXQDtHtAVU8ylnJFedcdFWqYKCQZNxLOzl8
- Ty2sImhZTYXLkpHDVhc83ZjOIQ1AdZLXZZLl024J53LrBSsOPev0FV0c8Y/dcz+JS74f
- toxtn+Fz/V8rq9dsEJSdXBhV+3hCRHKR4vV25EdlwwHIRpq9ZRHuzNxVP8HBOqeCcnPs
- dxZYhgv30vkCqtAVMtbEQ+BjOvJHxqkgS6xsTKbSarCke9l46ix7v3d5yTp8chSWSxQ9
- 4DqVB01AFwQsLErQOiR7NFCaFm2QSYZh1XaNJslQJujZyAyCrrJQqa/JXWXatzsR4ar1
- CIfg==
+ bh=Ek+uyOLF1atCbWyakug3u6hJF1xPQjfK4a2Lzu5BY9w=;
+ b=oq80KJwpyfMz5+a03877B4mVeZaAA6lPfOTB4sT4LR4DjgKkuhSrrUi+VvG4SC0Aaj
+ yni8Idpe2NDqIprp6Pn4Lxj1a7lxiAWGT9WhS4Mmy2KX1ieXmmjzftWcPgmUq5IpRPLA
+ d7Yk7TyDAZytkPe+JRpCq2Ugyg9ILF8OY/hHHKqn66RxZBxDF8ukvVN9GluJxAjQk1Ck
+ ycDEQHuZjiwhHfwYAjgmAOdMnGdIxNvfF3YaRVaJwnOQNyY6o8RyfWW1L/e4rO+mM13x
+ TO8xmDHZvWVyox01BRGe9AkDcdEdf1x43OJuuPl+YawaGNgKSU72tuIecn9rfDlGSGrg
+ ykIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYWzNGkWuPBOE3Kjek+wmLwyG95G2FY+hhFA9oWXxuVty2nINxoeV7tyEk4FDBLIPXNpJ1vtBTGfGB@nongnu.org
-X-Gm-Message-State: AOJu0Yx4yhqe6DsUPk3ws+kSrsEcbgEwA3uuczW0XUCZzznVHshEfaLQ
- peLtU4apRlHcd55R1EwFVV8U2tYjzLbF1ZHHGhIJsUcIqrzGFpe04VbJSNVlwIA=
-X-Gm-Gg: ASbGncsUbSK/j1/ZT2Q/KLuGF+pHKuF8CPNRVnC34tpMacHI7BYmLvBLpFYeNxfJVic
- xb6CByzRiNEBQTYs247mU95j+IKiq91Q0TnasN+iDtcy/tQ3/Hou0BimJhjrb/VKaY3roviJJoU
- HHBfuzkU8J3TdMeSS2EISFvYgEf9eDJqQwkY91wMtUkUeQ/Ej1w9oihTdk+AtuQz50IXyoLw+1+
- fIP/qRj5X6el3788eunhHb0rQqrzHFKvdoP0iicnUtYdxieUDxTmPl0DwEGKGYhe7mjgEmDvi/y
- Hehopts4XFzmO3qxo56TPuKFcIx+AtQ=
-X-Google-Smtp-Source: AGHT+IGW7lQUnS1tTMu0r/fU4CerrXiXk2gwbWMPgzZLUak0EqnQ3ICZ7Vsw0LePKSxTPkqeV7Ik/w==
-X-Received: by 2002:a17:90a:d003:b0:2ee:7c65:ae8e with SMTP id
- 98e67ed59e1d1-2f548eae095mr16629055a91.11.1736520673291; 
- Fri, 10 Jan 2025 06:51:13 -0800 (PST)
+ AJvYcCXd3tAKtsWFo1WRR0NyqRtKZ7/5vIpfmY1C7HU7CKNiIyh8PjO+C+rd4ARJi0PGr73xGB4QTKnLWfRR@nongnu.org
+X-Gm-Message-State: AOJu0YwaNyLhyiPAvN8d6DQZLDPRhHx2EF6KoSo/BxaDRk3HUM3Ypedy
+ Zd4dc2iXsHqAfgBoprPSnkkK7Kd+PrYhCCDPfyqDg9MKohOLLtYZHbhvNCwS9M0=
+X-Gm-Gg: ASbGncueIDMIbvThGEcd2IyAvje8EFhkJne7c552eKE33GO5fwsoUY8u54+JSMhxMl4
+ y9VqrJdWgwdb/BD8dWFcpKeUemfNX0zG4vk9P+yV19PrCcgRr0/66smQ28ocjK3MIjEoWqwP4MW
+ YzwEl1MhU+6r8UNnzBmvEEzvGniHKbkYmcmt6d/EVq/5dZ8mpIpNZstY7mY4nLZxPmkWgfDRKB4
+ 6suHIfAtpCHKgPKg8h05WruuEn6lOWbCSncS9WeuzwhYdyV+CXRQfBB1E6ZFBIULzKqmMWRFdPh
+ 5DWu14+kqDQ9X9ifHyLtjxqDKJMxdlw=
+X-Google-Smtp-Source: AGHT+IE4xFqR2xiM1NOCK2c/F3PxVT/xQqH2U8wWJ0viU09D/2yvQN0DMwdOwIRT7lG6fkcd5u/anw==
+X-Received: by 2002:a05:6a00:3019:b0:725:f376:f4f4 with SMTP id
+ d2e1a72fcca58-72d21f477f0mr16400730b3a.13.1736521342320; 
+ Fri, 10 Jan 2025 07:02:22 -0800 (PST)
 Received: from [192.168.132.227] (76-14-228-138.or.wavecable.com.
  [76.14.228.138]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f5593fecc6sm3411667a91.19.2025.01.10.06.51.12
+ d2e1a72fcca58-72d4056a34esm1647210b3a.49.2025.01.10.07.02.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 06:51:12 -0800 (PST)
-Message-ID: <2af438ca-644f-4d8f-9a5d-1cedbc698a28@linaro.org>
-Date: Fri, 10 Jan 2025 06:51:10 -0800
+ Fri, 10 Jan 2025 07:02:21 -0800 (PST)
+Message-ID: <d16368ac-79da-4ec7-a412-92c17d67d9a9@linaro.org>
+Date: Fri, 10 Jan 2025 07:02:19 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 50/81] tcg: Add all_outop[]
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 22/22] accel/tcg: also suppress asynchronous IRQs for
+ cpu_io_recompile
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-51-richard.henderson@linaro.org>
- <fd696582-0b9f-48b0-8721-2afc0a28c6ea@linaro.org>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Julian Ganz <neither@nut.email>
+References: <20250109170619.2271193-1-alex.bennee@linaro.org>
+ <20250109170619.2271193-23-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <fd696582-0b9f-48b0-8721-2afc0a28c6ea@linaro.org>
+In-Reply-To: <20250109170619.2271193-23-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,61 +110,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 15:21, Philippe Mathieu-Daudé wrote:
-> On 7/1/25 09:00, Richard Henderson wrote:
->> Add infrastructure for more consolidated output of opcodes.
->> The base structure allows for constraints to be either static
->> or dynamic, and for the existence of those constraints to
->> replace TCG_TARGET_HAS_* and the bulk of tcg_op_supported.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   tcg/tcg.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++-------
->>   1 file changed, 53 insertions(+), 7 deletions(-)
+On 1/9/25 09:06, Alex Bennée wrote:
+> While it would be technically correct to allow an IRQ to happen (as
+> the offending instruction never really completed) it messes up
+> instrumentation. We already take care to only use memory
+> instrumentation on the block, we should also suppress IRQs.
 > 
-> 
->> +static const TCGOutOp outop_notreached = {
->> +    .static_constraint = C_NotReached,
->> +};
->> +
->> +static const TCGOutOp * const all_outop[NB_OPS] = {
->> +    [0 ... NB_OPS - 1] = &outop_notreached,
->> +};
-> 
-> 
->> @@ -3331,18 +3370,25 @@ static void process_constraint_sets(TCGContext *s)
->>   static const TCGArgConstraint *opcode_args_ct(const TCGOp *op)
->>   {
->> -    const TCGOpDef *def = &tcg_op_defs[op->opc];
->> +    TCGOpcode opc = op->opc;
->> +    TCGType type = TCGOP_TYPE(op);
->> +    unsigned flags = TCGOP_FLAGS(op);
->> +    const TCGOpDef *def = &tcg_op_defs[opc];
->> +    const TCGOutOp *outop = all_outop[opc];
->>       TCGConstraintSetIndex con_set;
->> -#ifdef CONFIG_DEBUG_TCG
->> -    assert(tcg_op_supported(op->opc, TCGOP_TYPE(op), TCGOP_FLAGS(op)));
->> -#endif
->> -
->>       if (def->flags & TCG_OPF_NOT_PRESENT) {
->>           return empty_cts;
->>       }
->> -    con_set = tcg_target_op_def(op->opc, TCGOP_TYPE(op), TCGOP_FLAGS(op));
->> +    if (outop) {
-> 
-> Always true,
-> 
->> +        con_set = outop->static_constraint;
->> +        if (con_set == C_Dynamic) {
->> +            con_set = outop->dynamic_constraint(type, flags);
->> +        }
->> +    } else {
->> +        con_set = tcg_target_op_def(opc, type, flags);
-> 
-> so unreachable. Gremlins?
-Yes, this was the midnight gremlin of which we spoke.
-The outop_unreached thing has to wait until the end of the conversion.
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Julian Ganz <neither@nut.email>
+> ---
+>   accel/tcg/translate-all.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> index 453eb20ec9..d56ca13cdd 100644
+> --- a/accel/tcg/translate-all.c
+> +++ b/accel/tcg/translate-all.c
+> @@ -633,9 +633,10 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr)
+>        * Exit the loop and potentially generate a new TB executing the
+>        * just the I/O insns. We also limit instrumentation to memory
+>        * operations only (which execute after completion) so we don't
+> -     * double instrument the instruction.
+> +     * double instrument the instruction. Also don't let an IRQ sneak
+> +     * in before we execute it.
+>        */
+> -    cpu->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | n;
+> +    cpu->cflags_next_tb = curr_cflags(cpu) | CF_MEMI_ONLY | CF_NOIRQ | n;
+>   
+>       if (qemu_loglevel_mask(CPU_LOG_EXEC)) {
+>           vaddr pc = cpu->cc->get_pc(cpu);
+
 
