@@ -4,85 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9CDE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E057BE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:12:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWJRe-0004u4-3X; Fri, 10 Jan 2025 13:09:18 -0500
+	id 1tWJUn-000642-MH; Fri, 10 Jan 2025 13:12:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJRc-0004tf-GX
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:09:16 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJRa-0004ev-Ii
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:09:16 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361fe642ddso25165045e9.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:09:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736532551; x=1737137351; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=94dPOddxHoStyFe5gHQ+E8+YoIAsJ120fCrM5/9xEVo=;
- b=d6x/+AdLWP8z9/4jpms8hXb73jsxCZXGcsvxuxI7699/5kr2r/pttL56RZZu5Q2FPW
- g6DN4olr12eEkqS94CND8TdSVpSiM4B4LqoDUHYCkU02r2AeKMbC6ulA+ebdgoYytduH
- fyncjNJYbjbecNiWhEHCDUap3P08EusOHuXYKP9cOTBVtasor3MJGBAgfTr/tJn65N7Q
- AJOZejM+jFCZGilIXkwDXBUTlJ6EhBxOwq8XgLAMXXMRwKKsyb547LTg+bCuki4IgTTE
- TLBrR3U/9ojCKw65qauAnQgIdJ0h8To86/C2l7JGLDKQmh96oUzjTt2wcePNwbcx2Ecg
- FMLw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tWJUi-00063Z-Jg
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:12:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tWJUh-0004zF-9r
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:12:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736532744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8X/D83fS7pxCA0wwBZx6Bs7mPrlIDeLmpUGA6YB64X0=;
+ b=AceAflaGJ8P2VqgCimqZNr6utm8B77oNGxtZpvYKb89EhHSuJ7QMi3ioVJV6oz1XhZF/+q
+ ZxZyQYztqslv70FRnSwgLoV0qw53hg22r65Z+0zDHUO2hDeB+sQwFHpeokhFWOvFgQzHHQ
+ XnyINPRrpSSVwgQlreWd2ciiU+U31Os=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122-3GH4FkTTOVu96AOqcFnNeg-1; Fri, 10 Jan 2025 13:12:23 -0500
+X-MC-Unique: 3GH4FkTTOVu96AOqcFnNeg-1
+X-Mimecast-MFC-AGG-ID: 3GH4FkTTOVu96AOqcFnNeg
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aaf901a0ef9so200162966b.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:12:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736532551; x=1737137351;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1736532742; x=1737137542;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=94dPOddxHoStyFe5gHQ+E8+YoIAsJ120fCrM5/9xEVo=;
- b=kbSUbYlCw0A07+Qy8RUYa4YzFU7ZWCl+G+W+9I1T/zW7kfKPdfzUXWOChqYvc2jquZ
- w6YytF3Oong3PgDmAuiLx+vc5RNVrpVFwmwsXuAwlAXGIYmc/SYLq32dbI1R2KjXnfQ7
- vmcn/CarBV3TLpidnKX/yWdHfCHFSlzjkSc9/WFf5fG5uH1O8nTAC5vJTHaqq2WPXQVg
- 6/E3JK01as7Pj1RhMxuUlzS7Q3mWfjYjk0ehjhiKPZ+LYsCmLJ/3hcFHaJyDetWEVU97
- mj/3Qm6Ok2Q3rKOLUR3CcjUAKzawoIGtExb3ba0zMgXLrI+qIlB2yYqPxxROdECKIqGa
- sArA==
-X-Gm-Message-State: AOJu0Yyd24Ez2rh8oE2rlEEWeKttS3vK6KgG3bS1bPgIXXwqMaunqxEM
- 5kUZzM+psFnjZLDzpHd1wyGvxwmY0aRjQl+LMa9dkn2AnIlwUwH2FUwe8tNm1Bun5vY4MfQgTuk
- XHjQ=
-X-Gm-Gg: ASbGncsiTKu6oT4SoLkTGe42iiqUzFIjeoROkLwWw7C4F5E4NAEBzururcCdshblOKT
- 1EawW62fczGVJRjtSytauHffBMvpn5aWhvPmQgnKAqvpf2opsDHNVUd/WlFMH6ttRb9IqczN0yu
- u8KeKoJgLdayVmRhfVq53yad5VMZh1YuGTIFMUcDI2LB1PpGhvkK6VkWEWPINgF0+2IjlglzSv1
- ODnc34nXvCgetVW3f46kRC8T0i65W1Fysvz5GEIU87gLxdfVmGjiCauoXnRJPZTSetJszN21zA0
- tBaX3jiE0+meEy5znV56ARjsxozVmrY=
-X-Google-Smtp-Source: AGHT+IF9h+Lg5s+kt+FlASSUD6NcoF2rY4aiumH+tpQl5hpRX2ojK6j8XlCCdlesClpThrG4vTwTog==
-X-Received: by 2002:a05:600c:1d07:b0:434:fa73:a907 with SMTP id
- 5b1f17b1804b1-436e269a5f5mr111516085e9.13.1736532550547; 
- Fri, 10 Jan 2025 10:09:10 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2da66e6sm94655495e9.4.2025.01.10.10.09.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 10:09:10 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/tricore/triboard: Remove use of &first_cpu
-Date: Fri, 10 Jan 2025 19:09:09 +0100
-Message-ID: <20250110180909.83165-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ bh=8X/D83fS7pxCA0wwBZx6Bs7mPrlIDeLmpUGA6YB64X0=;
+ b=FH7onqu/8gP2jWsPe9MIeK2sVrag28b0Jq6NZdA05CAPrkoF6glQoVhZ1DdprvjzRl
+ eiV+i3zTGTzlbsCHF2kSpERXmkXvX5wrzD7Y41+7b15USAJzuQBYkkVcvQ/0AcIxox06
+ r/kaNScmlyPnxu12PGz3XyduYs059hN/f6JMJYmetfe/WxoJMzc94opSeIxfEyomEcLJ
+ 3qI8QX/RkQPx5Q2Ug84YkrF7m9BOTbxhnC6HQG24ukoEELN166Fa4UPX7P9BxEiO66It
+ JbGdYWzjcP0ZSA0v65E/lrH7lpahBR83o9NkzxsfdeDZjh8uKBEoaTa8lkvit2g78SHL
+ IaHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXAxuVPAgQPe2VP5jgSChYAZlkvrVwZzA0b2ieOeMlpCgD9F47NvjS2XZ9c+96asu58e5SHJFX7IvBm@nongnu.org
+X-Gm-Message-State: AOJu0YxDn7JiCQQ77DlQhNzb2hjHD4HuEIC9Qqx0mp38ZISSd0HB1lQx
+ AeTAI/BDvHJfHURqLc2XNs/Q8djm6Hj1tt/tAKYMBnO90k6D5OPW1qbtFCGxaNxzBPE0WOLiAsE
+ GK7iAPmNrxLsJi7OKvZVEI7D0PMcjC/PHsvqtwnC5W/alwkZbQWg+
+X-Gm-Gg: ASbGncsysZ6ad3/SCEWJj7V681VrKj0cFr25cjcDeF6Szgq0uy1DohaApq8yYe8TMZT
+ J5x4EmGYX4fCDptrMUvFhJqorjeB0BEtWaWO/L48TRaCQXwoKHG5Rbg/DROyQlvGs9rrI5sqq3K
+ z6g0guzqGmpDfw+DiiIf+zegpjcYm3ev+4sm6xFry4wxB28fe17VYBRPRxRPpPOogxhewUjiDm5
+ orweWQvWQBu5zRfnPg1Ewdo2RX8Oeo4T8EanosW3bNY0rG2EYHvjmcfA8A=
+X-Received: by 2002:a17:907:9687:b0:aa6:912f:7ec1 with SMTP id
+ a640c23a62f3a-ab2abc779dcmr1176626266b.39.1736532742459; 
+ Fri, 10 Jan 2025 10:12:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGuGXSNhp+mYeZzboKbfyEJDnFxj+RciXUgSGe0T8dhjZvf2t8jmjOnoslfwpsv5QFJy1h5CQ==
+X-Received: by 2002:a17:907:9687:b0:aa6:912f:7ec1 with SMTP id
+ a640c23a62f3a-ab2abc779dcmr1176623166b.39.1736532742051; 
+ Fri, 10 Jan 2025 10:12:22 -0800 (PST)
+Received: from [192.168.10.3] ([151.62.105.73])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-ab2c956306bsm190901366b.104.2025.01.10.10.12.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 10:12:21 -0800 (PST)
+Message-ID: <798b6e65-8aaf-44cf-bab7-a145d6ea87f3@redhat.com>
+Date: Fri, 10 Jan 2025 19:12:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/char/serial: Convert to three-phase reset
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250110175707.82097-1-philmd@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250110175707.82097-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,58 +151,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-triboard_machine_init() has access to the single CPU via:
+On 1/10/25 18:57, Philippe Mathieu-Daudé wrote:
+> Convert the TYPE_SERIAL (16550A UART) to three-phase reset.
+> 
+> Local states are reset in the ResetHold handler.
+> Move the IRQ lowering to ResetExit, since it an external
+> object is accessed.
 
-  TriBoardMachineState {
-    TC27XSoCState {
-      TriCoreCPU cpu;
-      ...
-    } tc27x_soc;
-  } ms;
+Accessing external objects is fine for hold; only "enter" cannot do so.
 
-Pass it as argument to tricore_load_kernel() so we can
-remove the &first_cpu global use.
+> ---
+> That said, externally creating IRQ like that is odd, see:
+> 
+>    serial_pci_realize()
+>    {
+>      SerialState *s = &pci->state;
+>      qdev_realize(DEVICE(s), NULL, ...);
+>      s->irq = pci_allocate_irq(&pci->dev);
+> 
+> But too much cleanup for now, one step at a time.
+> ---
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/tricore/triboard.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+serial_realize cannot fail.  Just move qdev_realize after the assignment 
+and pass &error_abort?  Same for serial_mm_realize and 
+multi_serial_pci_realize; serial_isa_realizefn instead is doing the 
+right thing.
 
-diff --git a/hw/tricore/triboard.c b/hw/tricore/triboard.c
-index 4dba0259cd3..9cc8d282ff2 100644
---- a/hw/tricore/triboard.c
-+++ b/hw/tricore/triboard.c
-@@ -31,11 +31,10 @@
- #include "hw/tricore/triboard.h"
- #include "hw/tricore/tc27x_soc.h"
- 
--static void tricore_load_kernel(const char *kernel_filename)
-+static void tricore_load_kernel(TriCoreCPU *cpu, const char *kernel_filename)
- {
-     uint64_t entry;
-     long kernel_size;
--    TriCoreCPU *cpu;
-     CPUTriCoreState *env;
- 
-     kernel_size = load_elf(kernel_filename, NULL,
-@@ -46,7 +45,6 @@ static void tricore_load_kernel(const char *kernel_filename)
-         error_report("no kernel file '%s'", kernel_filename);
-         exit(1);
-     }
--    cpu = TRICORE_CPU(first_cpu);
-     env = &cpu->env;
-     env->PC = entry;
- }
-@@ -62,7 +60,7 @@ static void triboard_machine_init(MachineState *machine)
-     sysbus_realize(SYS_BUS_DEVICE(&ms->tc27x_soc), &error_fatal);
- 
-     if (machine->kernel_filename) {
--        tricore_load_kernel(machine->kernel_filename);
-+        tricore_load_kernel(&ms->tc27x_soc.cpu, machine->kernel_filename);
-     }
- }
- 
--- 
-2.47.1
+Paolo
 
 
