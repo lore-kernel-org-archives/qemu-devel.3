@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFE0E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357FFE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 16:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHsq-0007fF-29; Fri, 10 Jan 2025 11:29:18 -0500
+	id 1tWHui-0000I7-O8; Fri, 10 Jan 2025 11:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHsh-0007cd-9f
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:29:08 -0500
-Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ id 1tWHua-0000GZ-V1
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:31:06 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHsf-0007wB-Mn
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:29:06 -0500
-Received: by mail-yb1-xb2f.google.com with SMTP id
- 3f1490d57ef6-e3983426f80so3559294276.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:29:05 -0800 (PST)
+ id 1tWHuY-0008Kj-By
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 11:31:04 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e3a0acba5feso2859219276.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 08:30:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736526544; x=1737131344; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736526655; x=1737131455; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4P3RvkgYEkN/PcKVgKotdpH2Ww4nP6EziPFXrkthcqQ=;
- b=am7H6AGOaoU+6F3k8lyBfBh+g1CxJJ9uQy8SSwxcujKurPd2MzKbnq+SYcCkCo/zC4
- Vph4wWuGcgvwr39UowGtWU6t/lfIBpC5ZeYsiU7QDUy5cVAWkdP9FKK8qim2lNM5Ohkp
- 6hxTYuHBk6gRPBAA5DqRx/KWVXg9fha0buiPxvQKq9s/Fh75/zSVtd7rdpbpQPPL5Npq
- fDe8HZUqszIlBfBJCFCJpRDlYNt4QgG1oTTGeRJ6nAH99Sy75jw6kvx/SpMlFhOEwgmq
- I+Z0DcLRhDeb7V8oThuKmkL3ab/nLLNgN41jvVZNZYIOx/x/RkMtkTg+VxnDDR3eFax2
- +xKw==
+ bh=tOjN8m6pAWWKlrF+UoiZ9BUWdCEnhAqrkAD4Lc4wiQU=;
+ b=wgfJg+ejYflCm7qFz/fbitxol7zVoF2Dy7NiCEEN/knS/nWlj0oET8CxahVyOwH6NG
+ sGQHRFwlK2o8QKUyDEuGMb49z4U8K4nnAlWpLmRXNu6ZHkqGpkyR7lJAw/WAGvSDq2+M
+ wyzFyTI9zLCOclz7/oeqEzz9grTNQe4mZUv6a2AlLbP/acJo07ZrQnt3DZZ+csQvHqiQ
+ uSQ41pY7CFa0w71gkzWrtcm5TK4k1VWAF7iAuFv80hYJh+dm4CYnZE7i3jKOt0cYxHRF
+ 6D75qAsMdUyjvuO/5ANU/6w5h9HwamBat7AgwXnpsSMj4dCtC6iXlPGA9n7JK74Ha8Qv
+ ZxdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736526544; x=1737131344;
+ d=1e100.net; s=20230601; t=1736526655; x=1737131455;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4P3RvkgYEkN/PcKVgKotdpH2Ww4nP6EziPFXrkthcqQ=;
- b=gbYtyMSkOjEDM1O4uexy+yBFN5Dwjl1NA83aIteRM138fciYkoJeuZ19/1ZSOXbH9O
- Q2p/ZgX4oYNAtEVvdFtLAaFe7wVQBL2c+WYv2qqgRtT+DKoos8Lc+rbelTZZCBN4GS15
- iu5nKqriyA2rktxtWBmSq1sNykIt5z7hVDuATI+VIdRZYi7xq0Is9xfobKbUi4vLzDSS
- oAaoNQM5VOKIsnM4bbMgiiQGEhBKzCRWULtsoqoEHvIjB0OaEiH+E+0WQsUqZLhzcFzk
- uaQj5PatMEIaXzXRMApozupxQdvHxd+dtW2Pgl80GIPUw/I37Qs3kYWjR+evhOS1SeQH
- hyOA==
-X-Gm-Message-State: AOJu0YxYK/iszxIkcQ8aTeAMAGAicGMNuWjNtN7NkA0x0w7FqHulPbWG
- 08siSx5rGSnoFdhrJ0S50NRHGntiGrHVnX0zYWV2PQFlT0Cgm8D2w/GpvVTfBsR/bicl1hVkSdP
- JPQ3NPD1KlN5K8o2MXht6wRBWApFty6Xwj9yd/w==
-X-Gm-Gg: ASbGncuRBGh4VG16PotfaJlgsoEEWnfJPJqzfQ92aiLT/BLIK3X3Ar7vO+wF8ZBhZY/
- 0ehw7EEHU9D1VrX7l9aPNYvCmqKJSNHBaOSMZE38=
-X-Google-Smtp-Source: AGHT+IGSQPPb4p21lFIAsHRRJ1ufv0nZ2Pc++jBHHW+w1ROe0ZcRBLTQt3v4uupnXO5Mq2h/77PKQJWNHsec/oe1BtE=
+ bh=tOjN8m6pAWWKlrF+UoiZ9BUWdCEnhAqrkAD4Lc4wiQU=;
+ b=KLmh3hlpR6buAF8n6Ur8q1g6B9970U+oNWgGgTB0cmXZ4tiiwfjynMSrK/lgo40MTS
+ Ny0IU2pM5u9BQafILMEG/ChwNFjsxSY1pK3oIfd9n8tW06SrsuwtRCZ8eX2tceC7ylDP
+ eknROWbRfGm4VTwTZbTJSQgwgTLvSSDZPaWQU1GEq7ApSjOs8MtZAdaoYVom/EcKAkev
+ DlBP63DLYm6rKE6Q2Qb2yiEZRrk1dgv5HTVyO04qiMCQaxP7xeqiuX38sNjSugb/fd4B
+ pSDTdd1AuhEfEo7pUtD7eXhQ+I2aDzmKbPzOKN4S747uehB+lC+kUtmiXqmeds0TYW5N
+ Ib6g==
+X-Gm-Message-State: AOJu0Yw+q6zXTJsZHk7bN2kFsGF3hakXCVhMlOmJbptHmSyfA5lwH1Wv
+ SSuWmxT44nyiGDVMwUvIrH0KCSiIYeTu7vaSasYfJUBBygWTFeEEnkN1WeCTrKR6y6T9nD936A0
+ vZ7VvQZworcjgr8nXv1XWjHj2OnqdQEtNj6XYxQ==
+X-Gm-Gg: ASbGncvy89gpsjNVOunKLTX9CZik94QqwD5v58zCeMlAPDfpMkHU1AEiuQ2x/Q4iDoX
+ xtlh/OeVqitZGPhLATlIzK4AWg7F+dVfKWq8dV1k=
+X-Google-Smtp-Source: AGHT+IFIThR1nWg2E2ZbcTQ1CB6HxWK3gXQFQb3UMHPNlFswAmVdNbpsenaVwBSS6Nzr5+VyewZOoFjzWUxAry+zRKU=
 X-Received: by 2002:a05:690c:4b05:b0:6ef:4a1f:36b7 with SMTP id
- 00721157ae682-6f53125116fmr94441207b3.25.1736526544276; Fri, 10 Jan 2025
- 08:29:04 -0800 (PST)
+ 00721157ae682-6f53125116fmr94518747b3.25.1736526653899; Fri, 10 Jan 2025
+ 08:30:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
+ <20241219183211.3493974-4-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241219183211.3493974-4-pierrick.bouvier@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jan 2025 16:28:53 +0000
-X-Gm-Features: AbW1kvYBYorNd6K3Xev2CdPCyku8Ffe0oLMvXxGOtPD0myxvI_4y9l2HxcfuYfw
-Message-ID: <CAFEAcA_ChARwKyvRXsEk1U3q1T2528753Eu7LgDSsDbF1s5tNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] Change default pointer authentication algorithm on
- aarch64 to impdef
+Date: Fri, 10 Jan 2025 16:30:42 +0000
+X-Gm-Features: AbW1kvbDlPjtMqJ70EJJAZfqo4gcYiCApNqqwcyLmxpQWs7Vv0GP0MPiMsqw-po
+Message-ID: <CAFEAcA-LYWhtFaUanq_qS8nDEVdhDOhDR2kcKv8Ch_5fKSnv-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] docs/system/arm/virt: mention specific migration
+ information
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
  Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
@@ -74,8 +75,8 @@ Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,24 +102,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, 19 Dec 2024 at 18:32, Pierrick Bouvier
 <pierrick.bouvier@linaro.org> wrote:
 >
-> qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
-> spent up to 50% of the emulation time running it (when using TCG).
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  docs/system/arm/virt.rst | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
 >
-> Switching to pauth-impdef=on is often given as a solution to speed up execution.
-> Thus we talked about making it the new default.
->
-> The first patch introduce a new property (pauth-qarma5) to allow to select
-> current default algorithm.
-> The second one change the default.
-> The third one updates documentation.
->
-> v2:
-> - ensure we don't break migration compatibility, by using a specific backward
->   compatible property.
-> - added some documentation about migration for arm virt machine model.
+> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+> index d25275c27ce..9f1457cf9a2 100644
+> --- a/docs/system/arm/virt.rst
+> +++ b/docs/system/arm/virt.rst
+> @@ -17,9 +17,17 @@ to have the same behaviour as that of previous QEMU releases, so
+>  that VM migration will work between QEMU versions. For instance the
+>  ``virt-5.0`` machine type will behave like the ``virt`` machine from
+>  the QEMU 5.0 release, and migration should work between ``virt-5.0``
+> -of the 5.0 release and ``virt-5.0`` of the 5.1 release. Migration
+> -is not guaranteed to work between different QEMU releases for
+> -the non-versioned ``virt`` machine type.
+> +of the 5.0 release and ``virt-5.0`` of the 5.1 release.
+> +
+> +When saving a VM using the ``virt`` model, the snapshot is automatically set to
+> +target the latest ``virt`` versioned model. When loading the VM with a more
+> +recent QEMU version, you'll need to set machine model to match the version of
+> +your snapshot. When loading it, QEMU will return an error with the expected
+> +``virt`` version you should set, so you don't need to record it.
 
-Other than a minor change to the 3rd docs patch which I'll note there:
-applied to target-arm.next, thanks.
+I don't think we should be encouraging this -- our standard approach
+is "use the versioned machine types if you want migration", not
+"you can start with an unversioned type on the source end". So I've
+dropped this paragraph.
 
+> +
+> +VM migration is not guaranteed when using ``-cpu max``, as features supported
+> +may change between QEMU versions. To ensure your VM can be migrated, it is
+> +recommended to use another cpu model instead.
+
+This paragraph is good, though -- that 'max' doesn't work for migration
+is important, and we should definitely document that.
+
+thanks
 -- PMM
 
