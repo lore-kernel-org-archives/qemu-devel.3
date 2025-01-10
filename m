@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D538AE7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A5BE7719E
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 18:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWJk0-00020u-L3; Fri, 10 Jan 2025 13:28:16 -0500
+	id 1tWJk4-00023U-Jm; Fri, 10 Jan 2025 13:28:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJjv-00020L-Ck
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:28:11 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJk2-00022S-8L
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:28:18 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJjt-0007OX-3H
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:28:10 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso17484385e9.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:28:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWJjy-0007QA-LP
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 13:28:16 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso17827445e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 10:28:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736533687; x=1737138487; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736533692; x=1737138492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zE4qjB0uSRkjg+MUXEy5a73ggSq4M0TRcq7NiIJZjTs=;
- b=fo4SA+W+L6epcOyn9/VDBAm8ZSi8k3EwHmdChUZD8kJvfrmDrAUlrl4xINZI2tqyS7
- vwQRK9Zr1ZhY5i225UOo39qOdwMy69cF6oIXDhjUllj9QV+ckMmzMxVEQggal2by57S1
- OaYIsVBCZBe4QX7I5ZfA06Ow/sWQX0PI99e6KUhrteywWRVm6A1noJ5AA+ujQBaCO2CP
- BLygbX2O3ec4XBshk/oGUgBdJUOcYL06Tp4+kWx4FyY1mXezxJOZGDN8qGOu2lxN2YPw
- 5/kaHNaKvqfm3hb0x+Lwfp8GyS4G/Zf5rGl5/fSvYLib01LhhVhXzRjJLrwpW0JfHihA
- WVZg==
+ bh=A/yUFaRyzJYE/4lcFjJ8uzhfiQFfrwtitfN415Djc8k=;
+ b=SNUoBJkdu1QA5YJwaIQXfsdVuJpFWOZpdbT0aOcS4o7kfyIKfPFOqGD7uhfUjqVN/U
+ hBaSRc1kpFgV+jSg9tMkrDYt2DLAFwq589pzIahnQzW89O8U3uPu6X+O26CyYMlnVWB7
+ A5gCcLtuhBF8F8lE2Xl3mgxVHBDcsxGxBbZDXIjmwuvKllc+TWkL6k/pzOjo9AHZskYm
+ xqC3Hgh92KVQpRyPqadByNoc0nt2pRojC4dUcWn0ezW2hS1AqC80HwiwgcaBHEOvfS18
+ NCTyQf3wyFQvwuuGq3A07f7mFrSVqNv+3ihSccnbA6OPAcCT/qMRPrIgetAvAttgG/15
+ 48Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736533687; x=1737138487;
+ d=1e100.net; s=20230601; t=1736533692; x=1737138492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zE4qjB0uSRkjg+MUXEy5a73ggSq4M0TRcq7NiIJZjTs=;
- b=QdZRokCp0OP3pcxeurkDbjj/HJX7IkMMOTWcuJDJJthMy51ZMOuV7zULM3SCmrvim7
- qfLINJzuiOZqMonhD0P+RPhlxLwuQ/Nyf1XIDrq6m0lKceltPY4TYJrzo+Ftma4AG9z0
- WGYTF3oKsiSDAR4LmgXkWX4avuDENLuq9CiENhw5OFBdJoizO1kSPQclsAE5ihsRd1jA
- v6RUxWPCgi1gotewzIWcgnS6lW0vQ1Rewnc4iMcp8lLZxHkBBaqkl2GwZKg4+bzXV60u
- l2ACghhCzZGAbBdXToA/uSKeoAoaPexPWkOeRHVeLPxUsRiqFuEMS5a4PdmCkSMPv7y7
- nZqw==
-X-Gm-Message-State: AOJu0YyuytjCwk/O/YCgAMltzLLUDwcmzMCavIOaTqWMlbpT5FEwKO5z
- O7jlMbKOu+AsQwkbygv8xdyiKTgxCwAsLR59K6nmiRMPFb4wtpQOUXYkJx2pycRMeaXrM0p87qU
- WiXs=
-X-Gm-Gg: ASbGncuCZo/T/FNB/QbYYYhPSy8UrQ3ZQQnmmvLEYrMKAqJCFrxe5ELaMd01p3a/KCw
- +rzFi7Sr0uzByUsUCqQ90gM+M/3ooEpcGpbBWKQZ11i5J63CEi9Y7Sw9v+qt9RMnmNz42qia83H
- 6MRsgZQDdsT59CHmHVxEpSl6N0WAdyK99vyX0y1BvVi0Rc2a8r8ObCI2RpYmz8EvsNFkI5u/2vm
- tjUJzN198bcziwhnC3NqvQIYlWQRxrMyDfGfBgDJDffFxnOfmNXKg+8bOll/tLX+R/hBJzD2RrX
- FiR94J4guXjcYeKetkI2y+NDBpxnsxs=
-X-Google-Smtp-Source: AGHT+IFtWy8r9T7rpcO22c3LXmU8AWfu8InbU5L6ijkdAOWcCh8uaIMPUf0j/u2izh6126TwIkNO2g==
-X-Received: by 2002:a05:600c:310c:b0:434:f8a0:9dc5 with SMTP id
- 5b1f17b1804b1-436e26a8c21mr111801255e9.13.1736533687220; 
- Fri, 10 Jan 2025 10:28:07 -0800 (PST)
+ bh=A/yUFaRyzJYE/4lcFjJ8uzhfiQFfrwtitfN415Djc8k=;
+ b=IAL+E5wuCzDJimxUvQ5lzWPP34l97LdWYtAOB+OFNTy56mhJG5Ux6HdE9yPvLs016D
+ 9A2xhT2u+N0amBkmRmg68/MDVDLU+7f1C++lS/RWQdAwdFpc1goAs92BP8gbHv95utIJ
+ QWO/qZGhLqRftQ5Y58iiKMeM04P+nlEIeEpGt5NjO240c7IvohDyIwJ4iOz1nRvRdXR5
+ /orTSsxqN23os46tsSJLsdi/eFssLPO829K4qNudBQCUngNoHsFX59SeGGg2wiMqwIgF
+ MFUk+0c4O2nJec4I4UkvLvq+MInbWNJARJuuvKY1UTWG/bQJ3OpN9wT6Dx30LoT780/P
+ omwQ==
+X-Gm-Message-State: AOJu0YwmyoVVbetlJggIOw1xGeFkglkPPe+tGgqfXS+qLV5pEFHyagRv
+ Ov2TMTAZi8SdiskQirwxgYss6dYoobUVfpGdBZmcmKwd1KwL0TzjZ+ZCxXfYVdPaspqSPD6dk5j
+ 9KAU=
+X-Gm-Gg: ASbGncuh+TVg3MWrZfEwhAh2w1v2WIvOZxCS1iCbwiNb1vdmhZnXxglRn3s1qjmU8Pd
+ aFDs18efyrHljS1uwlKoCwHNJFBnKId3STyySboSPjbzjd5cMArm4WtMZrY01BmCpG9Yif9VLzf
+ 5m5/fpxJ3KGcsTTyARFiGYJlMRdBnJTLrqdgI4jX+W4hct9cKNGXZmspweU6dPYDHgV2aYCe8ed
+ 88e+KSGmTH3SOfD5CKRaEZxTURS5OVojFkpPl/wmx48wrTcljBJXkJdHiM2Gf2DRFa0FgGkYXbQ
+ 2VndVx3pRDlXLjMAZGV2B0JM852eSWQ=
+X-Google-Smtp-Source: AGHT+IFojk3zpZpqZhrxbfoGfJRIV8en3JrqqWCWbZDCeXKhZHzj2jztZxTUBERwoa/p7I0SaOKHCA==
+X-Received: by 2002:a05:600c:1c8b:b0:434:f5c0:32b1 with SMTP id
+ 5b1f17b1804b1-436e26a7578mr116218715e9.15.1736533692137; 
+ Fri, 10 Jan 2025 10:28:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fc81sm60544255e9.5.2025.01.10.10.28.06
+ 5b1f17b1804b1-436dcc8ddddsm82415595e9.0.2025.01.10.10.28.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jan 2025 10:28:06 -0800 (PST)
+ Fri, 10 Jan 2025 10:28:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -71,18 +71,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] hw/char/serial: Ensure SerialState::irq is set when
- realizing
-Date: Fri, 10 Jan 2025 19:27:58 +0100
-Message-ID: <20250110182759.84071-2-philmd@linaro.org>
+Subject: [PATCH v2 2/2] hw/char/serial: Convert to three-phase reset
+Date: Fri, 10 Jan 2025 19:27:59 +0100
+Message-ID: <20250110182759.84071-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250110182759.84071-1-philmd@linaro.org>
 References: <20250110182759.84071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,65 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SerialState::irq must be set by parent when the object is realized.
+Convert the TYPE_SERIAL (16550A UART) to three-phase reset.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Only local states are reset so use the ResetHold handler,
+like other legacy devices.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/serial-pci-multi.c | 2 +-
- hw/char/serial-pci.c       | 2 +-
- hw/char/serial.c           | 2 ++
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ hw/char/serial.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-index 7578e863cfe..5ad2c0e8443 100644
---- a/hw/char/serial-pci-multi.c
-+++ b/hw/char/serial-pci-multi.c
-@@ -106,11 +106,11 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
- 
-     for (i = 0; i < nports; i++) {
-         s = pci->state + i;
-+        s->irq = pci->irqs[i];
-         if (!qdev_realize(DEVICE(s), NULL, errp)) {
-             multi_serial_pci_exit(dev);
-             return;
-         }
--        s->irq = pci->irqs[i];
-         pci->name[i] = g_strdup_printf("uart #%zu", i + 1);
-         memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s,
-                               pci->name[i], 8);
-diff --git a/hw/char/serial-pci.c b/hw/char/serial-pci.c
-index 6659cef5d4b..d31a3ccf03b 100644
---- a/hw/char/serial-pci.c
-+++ b/hw/char/serial-pci.c
-@@ -49,13 +49,13 @@ static void serial_pci_realize(PCIDevice *dev, Error **errp)
-     PCISerialState *pci = DO_UPCAST(PCISerialState, dev, dev);
-     SerialState *s = &pci->state;
- 
-+    s->irq = pci_allocate_irq(&pci->dev);
-     if (!qdev_realize(DEVICE(s), NULL, errp)) {
-         return;
-     }
- 
-     pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
-     pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
--    s->irq = pci_allocate_irq(&pci->dev);
- 
-     memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s, "serial", 8);
-     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
 diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 70044e14a0f..562931685e7 100644
+index 562931685e7..9cb6e30c9ce 100644
 --- a/hw/char/serial.c
 +++ b/hw/char/serial.c
-@@ -923,6 +923,8 @@ static void serial_realize(DeviceState *dev, Error **errp)
- {
-     SerialState *s = SERIAL(dev);
+@@ -851,9 +851,9 @@ const VMStateDescription vmstate_serial = {
+     }
+ };
  
-+    assert(s->irq);
-+
+-static void serial_reset(void *opaque)
++static void serial_reset_hold(Object *obj, ResetType type)
+ {
+-    SerialState *s = opaque;
++    SerialState *s = (SerialState *)obj;
+ 
+     if (s->watch_tag > 0) {
+         g_source_remove(s->watch_tag);
+@@ -928,13 +928,11 @@ static void serial_realize(DeviceState *dev, Error **errp)
      s->modem_status_poll = timer_new_ns(QEMU_CLOCK_VIRTUAL, (QEMUTimerCB *) serial_update_msl, s);
  
      s->fifo_timeout_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, (QEMUTimerCB *) fifo_timeout_int, s);
+-    qemu_register_reset(serial_reset, s);
+ 
+     qemu_chr_fe_set_handlers(&s->chr, serial_can_receive1, serial_receive1,
+                              serial_event, serial_be_change, s, NULL, true);
+     fifo8_create(&s->recv_fifo, UART_FIFO_LENGTH);
+     fifo8_create(&s->xmit_fifo, UART_FIFO_LENGTH);
+-    serial_reset(s);
+ }
+ 
+ static void serial_unrealize(DeviceState *dev)
+@@ -949,8 +947,6 @@ static void serial_unrealize(DeviceState *dev)
+ 
+     fifo8_destroy(&s->recv_fifo);
+     fifo8_destroy(&s->xmit_fifo);
+-
+-    qemu_unregister_reset(serial_reset, s);
+ }
+ 
+ const MemoryRegionOps serial_io_ops = {
+@@ -975,12 +971,14 @@ static const Property serial_properties[] = {
+ static void serial_class_init(ObjectClass *klass, void* data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     /* internal device for serialio/serialmm, not user-creatable */
+     dc->user_creatable = false;
+     dc->realize = serial_realize;
+     dc->unrealize = serial_unrealize;
+     device_class_set_props(dc, serial_properties);
++    rc->phases.hold = serial_reset_hold;
+ }
+ 
+ static const TypeInfo serial_info = {
 -- 
 2.47.1
 
