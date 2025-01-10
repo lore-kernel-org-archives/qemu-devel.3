@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A540E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFEEE7719E
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 13:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWEu3-0004mv-4R; Fri, 10 Jan 2025 08:18:19 -0500
+	id 1tWEzG-0008RJ-Ft; Fri, 10 Jan 2025 08:23:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWEtx-0004j8-5q
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:18:13 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tWEz1-0008FF-HQ
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:23:27 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWEtv-0004lJ-AK
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:18:12 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-385e1fcb0e1so1135133f8f.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:18:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tWEyz-0005ap-Ff
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 08:23:27 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aa6c0dbce1fso278090166b.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 05:23:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736515087; x=1737119887; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=G6m+LB9f0+FAeO/cFtzArunkaJPA+oUICfxUzb3XVSM=;
- b=e3RXPLsZqMNP9QR65uVV3bbGbe6nIBb6PXzylNMZ07zCg6SRswEvDm9bVIVjYN8c5T
- Fe7xgv5Q6D3RzgQRoFT6wXg2CD/7gCJzFxuKPRQ4uUIzsmJT2saThKDn0+s4Dc0ZAi54
- HuMWCHNRbaaerh43tS7Hnz5xnSLyiAmCFMzxP5WZJ2Se4n59CUKxuFQoDKWzdSoLrrjI
- uPMoLg40eP+9NFjae4+DcKdr6KwBqdgJkxZrWpfFfwH0KxkGWGDdlUr08OvnbFA96yK2
- rwGSdgh0gIECaJJXaSePmY5o4Ce0V5fHWQmN8yKJtsqCm7xuOnCsEOxnPRWYQofS+WHZ
- FX+w==
+ d=linaro.org; s=google; t=1736515403; x=1737120203; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+VKfQWDeXKLODbQaZ6d7RnCTImhLUxizRICJ8N9Qz/o=;
+ b=tw/rIEKh04PODvxl4w8DRNpWNJTFiNXnd7mxJY3Xe+64KGHpm5WSFxd3wfvJnWUgnB
+ WpzqEd2pBc6J18/YyS1UWBi4MR7vPiWyRCyBHtkMNIc8x1L5ACc9Ncd+rzvSdY4dLt1V
+ RQTx3sdp6BhGXCP2+LBJWmwc6DKcWsgtIVUCuVR+XRsIqtN91atmcIKCtbmDatm6s0+4
+ EDhyZwrZl2YBtrMXKprolGjFmF1PJ8D9US+QQu0WUsFSUTEsM1lDZfa66eV9vPkBBaL+
+ 1uV1gHJYRupcw9SlgNY91oE+6PT/PE06lVoNdoo/XPKVzulDlciYcCvGqjvEoxZ4q9TS
+ lgWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736515087; x=1737119887;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G6m+LB9f0+FAeO/cFtzArunkaJPA+oUICfxUzb3XVSM=;
- b=HN90hUPP9OHUR98rvI3NsjAyR15SHVBUHVMlEMHjzC3oeb4fBIcAIQQZMfEBv+duN1
- +EkAJW2V+MV+PkrEvylIcvFqTRK+iuSr4bz0g3I+vgzQg8s2YTyJmrufrSVKxQ5JF9z1
- CKBxLO8nFtfe6GwHWZILXbjo7YmotPS4fcviXcZEARwhHw4OvEYd4zhGUnWcG2ydIgfb
- 7+qe12oT7lz1d6QXc/EbThkhzJMWf48qgCpaVtfGshZklW2yikTCZsnqkIB2bB66HE/n
- hsW4rih5pI1NWsQwp2kyu6qnlrlkb772QUGFbVFVmqYEGilcEApBIErnowYkCjagml+W
- HyVA==
-X-Gm-Message-State: AOJu0Yw2ryNTaTFHnr7kL50gqCbWSe68YLTWzbU1WM680bcrBF8seXhT
- SKRLv1/Y+ZpCzon/ASPJNWnGNU5ouDm8MiHqZGG8E4A5cJZTRF6dvRMpuSySpggezew75nXnC0W
- si5Y=
-X-Gm-Gg: ASbGncuEyA9RSvRNTwdO4Ztf9uX1W0DsFXwUpmPIeUX6USRIYGgYnGy7Sf+Uw3gqIoe
- X5EVjtstieWswu6CDNFiTo/Q+Ex02RJp2tBTFkSxcCJup0B8WZbjE14WKejIFoieNwR720aOafs
- STtL5m2/Mqi4iCGWOzwacjFx+srEAh8LwvKCOi7pyjDxBR7A5oPSzh817ioGKmaARv2fThWcVZW
- lXFZZDDw4GCs0E22ocAv+a+dw/fjUireh5wFJgFsuBsponVcjPdz/fjKf0KuhPQf2oUmzNuUlWP
- EPE7YCpWWnHXyznseD3wITciBhY=
-X-Google-Smtp-Source: AGHT+IGbVrk9o4b2kM/ohgmhzb0qZTvg9IPgyiDsfNvU7cWENAY+r9LLkbQ0yYNxyDn9evWXKwTaCA==
-X-Received: by 2002:a05:6000:1a85:b0:385:e0d6:fb48 with SMTP id
- ffacd0b85a97d-38a872f6f22mr8570700f8f.7.1736515086686; 
- Fri, 10 Jan 2025 05:18:06 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436dd1682e4sm59714125e9.1.2025.01.10.05.18.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 05:18:06 -0800 (PST)
-Message-ID: <0882cfb2-367f-4a6e-a1ba-784f2b1714e6@linaro.org>
-Date: Fri, 10 Jan 2025 14:18:05 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/6] hw/core: Unify hotplug decision logic
+ d=1e100.net; s=20230601; t=1736515403; x=1737120203;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+VKfQWDeXKLODbQaZ6d7RnCTImhLUxizRICJ8N9Qz/o=;
+ b=XZi8gGshmgUTWeHMVsbqK8gduWQmH2vASofzKugCFl/6jRtCUvxjP9zpohrcqhyxPD
+ jxnfvv4EZznXnXlutfwa4zJOPCF1/ndyDRadkB9NTpFO/PpX/fLtdFT7u8HirztbeKvB
+ /2/Ju8GKB9FSYeZR0VZjowrRlMTJrpdZxoHB/f3iCLCYX07zX1At8rAL0240Z9ydA0Ku
+ qgurnHSlSAFfCJHpWZBSSTTuL2Fpc3AnOnRQ9cPplXopYGc/rGWFA/O33AJxu1IiNvhc
+ BimZe8GA0JqJHj15xXdyH+oIVg898pLDZN+bmWzeGmXParQu/YC1o0T4pRW1p5cdOOHR
+ M5ew==
+X-Gm-Message-State: AOJu0YyVbvWXmiNzSUo4exflB1uahqZ4MLgBtAJ0w9nLq13/7LZKtjPS
+ l6/ZWQb1aS9B/kTB6yRgjb42bX8sPqFPdSTqcJG3UTUjFYbGY4ZjfsEwq/sj6sY=
+X-Gm-Gg: ASbGncvWhR3tyxczZJFplU0t9/WMvgKvcfyoouvR2yWkMhNeAYdcgx+hH6fsbCRmoIi
+ FESuX2O18Jgm/gVe4RGZ80xwPd/L2x68loduB4rF7QwhGew5qfPElNUjyN43MJs4KibpFBx3MNU
+ z9RHt8wiiINfn+h90JmODRQgYtuOJXr7V7ZpsVK3T9M6goCGH8/4a7kk9YQ1qzoEOHp37Rh+y4c
+ zaKtfy8YiECXWkzCAAWqezRBWc7TeQPPBlz054se25Vl1pe8Sq/2Ls=
+X-Google-Smtp-Source: AGHT+IGNylbrz7pHPEGbmT1fsZLX+w3KFappw1Xx1c3vXqB4pxuv1cAosSWcU5HvTFmealcMhptYNw==
+X-Received: by 2002:a05:6402:35ca:b0:5d0:d818:559d with SMTP id
+ 4fb4d7f45d1cf-5d972e0b954mr26003148a12.11.1736515402678; 
+ Fri, 10 Jan 2025 05:23:22 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c956306bsm166756566b.104.2025.01.10.05.23.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jan 2025 05:23:22 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 54B6B61779;
+ Fri, 10 Jan 2025 13:17:56 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250110091908.64454-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250110091908.64454-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 25/32] tests/docker: move riscv64 cross container from sid to
+ trixie
+Date: Fri, 10 Jan 2025 13:17:47 +0000
+Message-Id: <20250110131754.2769814-26-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250110131754.2769814-1-alex.bennee@linaro.org>
+References: <20250110131754.2769814-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 10:19, Philippe Mathieu-Daudé wrote:
-> Akihiko's v4 patch was doing too many things at once to
-> my taste, so I split it to follow dumbly each steps.
-> https://lore.kernel.org/qemu-devel/20250104-bus-v4-1-244cf1c6e2aa@daynix.com/
-> 
-> Akihiko Odaki (6):
->    hw/qdev: Pass bus argument to qdev_hotplug_allowed()
->    hw/qdev: Factor qdev_hotunplug_allowed() out
->    hw/qdev: Introduce qdev_hotplug_unplug_allowed_common()
->    hw/qdev: Check DevClass::hotpluggable in hotplug_unplug_allowed_common
->    hw/qdev: Check qbus_is_hotpluggable in hotplug_unplug_allowed_common
->    hw/qdev: Check machine_hotplug_handler in
->      hotplug_unplug_allowed_common
+Although riscv64 isn't going to be a release architecture for trixie
+the packages are still built while it is testing. Moving from sid will
+also avoid some of the volatility we get from tracking the bleeding
+edge.
 
-Akihiko, are you OK with this split?
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250108121054.1126164-26-alex.bennee@linaro.org>
+
+diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+index 4d8ca83cb3..b0386cd3a1 100644
+--- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
++++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch riscv64 debian-sid qemu-minimal
++#  $ lcitool dockerfile --layers all --cross-arch riscv64 debian-13 qemu-minimal
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM docker.io/library/debian:sid-slim
++FROM docker.io/library/debian:trixie-slim
+ 
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 6720516b94..53f8d2585f 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -220,7 +220,9 @@ try:
+                         trailer=cross_build("powerpc64le-linux-gnu-",
+                                             "ppc64-softmmu,ppc64-linux-user"))
+ 
+-    generate_dockerfile("debian-riscv64-cross", "debian-sid",
++    # while not yet a release architecture the packages are still
++    # build while part of testing
++    generate_dockerfile("debian-riscv64-cross", "debian-13",
+                         project="qemu-minimal",
+                         cross="riscv64",
+                         trailer=cross_build("riscv64-linux-gnu-",
+-- 
+2.39.5
+
 
