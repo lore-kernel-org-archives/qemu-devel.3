@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF953E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D852E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 15:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWHJF-0002eM-0L; Fri, 10 Jan 2025 10:52:30 -0500
+	id 1tWHKq-00051o-8R; Fri, 10 Jan 2025 10:54:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHIr-0002T0-Q8
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:52:08 -0500
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tWHKW-0004yQ-Sr
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:53:49 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tWHIo-0002fw-Sp
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:52:04 -0500
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e398484b60bso3416080276.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 07:52:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tWHKV-0003Ci-1I
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 10:53:48 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-aab6fa3e20eso396420166b.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 07:53:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736524321; x=1737129121; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1736524425; x=1737129225; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=acshiMArm7srx5Pa2I2/Hx8sleuA/XkPYzxDNAwY+ME=;
- b=aHoZxRnShaE32BNnM6JOh/pOvz3nMIkLZCBhsBfGUib+ocr+oZkzFiNyr3oP4Spob2
- c5UGj5Muc+qF4dJS1NastSnRBcx+Jcs18gkZCDItL8tLGJIsBGhkkNjnvTxCCsChlPy2
- VjleY+CEYKVvvfVYilsUMbbiuSP1V80E+x3BcdLgwZ2xsIH7YPLqOxTZ3DoY3q1oLzL2
- v1P2+rYQKjKz9O1xos+oaf3gP87ltW9Q+VZEEyAeZlIH1o4UkHldkWKq7F1Bx6K+cHXM
- J6JxwbJhjSXFCAqzPqs2ZR6eohVa4NReLHtcxf9LJMwrMcnK5qSsVqetJzL31HWyOOq7
- HfiA==
+ bh=WeSfkq1E7WfczTL6fYifsnuqQrit11jE1yqgEB+jIWU=;
+ b=KEtrztmK4Glo6D46Vp1imzgY8w0/YOWAO72wwA9FghnDvLQ/qb6BYvHGOVCj1UflYd
+ odbGXZTrBwoHO0j2vZHkmwmCUX8oF1Y8iDeS5lgHVFzHM6L+wfGaH1zHrPuNug8AZGUr
+ Y5Uo+OelRqxrx7PIOoZCHmEo4BggDgZ+5EGkgmsngl9gvzUW9H8tTu5vq3JnlYcdtOqi
+ BCiz2xnekAE2KRiCgTYClj9pChQNPYC1/u5KiBm3Had1DdOu2o9SfrINokP5zqOJKVb3
+ tAV7ZVgzUFhIQApjQuplW3CTFnrR8aGR71E238xG8eUB1sr0X5Tl+pigQG/tyMpmOzQH
+ 0gFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736524321; x=1737129121;
+ d=1e100.net; s=20230601; t=1736524425; x=1737129225;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=acshiMArm7srx5Pa2I2/Hx8sleuA/XkPYzxDNAwY+ME=;
- b=rNC2+W4zQw+M2FOXHZ0oC3j+EIiSNO360WchHAuVXbjmZ++SWsXWzxWLIfj0GLpSMm
- xhzjfBAvSD0miLS8vNJD5CZPyAXe7iIMDOOdCHuGnbInOUSkgd5zFtohrKuiP/VdiP9T
- nJZH3Kc6GUgjnvNWz1um8BP3/zJcbba6G/JUbR8Pb3jJ6etnsy6fSpaeLDXdTaZkM3CL
- ICY6XWTEk1Wbcrfru0EVpS3B3hG7pgZ2TR2OmmgnwXmf6tDJP3J0RKTL4XSqW+MAnv9I
- ebEjyFjo6LUvUdmNvtnyt+k4EPN1mD1IA6XhXobGZbUQSRcKXCqgQMlcTs9QLU4EU0Pk
- 7bzg==
+ bh=WeSfkq1E7WfczTL6fYifsnuqQrit11jE1yqgEB+jIWU=;
+ b=g2431XS66t92S7aiQRXLjWv7z1r7uDsjm4CVvKoF05gMrd/6FLq3xmDjnNL+c6aRBP
+ dxD+g6PoayUSHx+yqpy6VlrSovh6WLustX5sSGO3dYI/frzBwHclEbKYTa1+NKcWnVa1
+ rc1kUXwMhjg5RWPJLVNb32rHzSCOjcxkuiQScXD/9D2rR2AgM7w8fMvvg6BaU5UDUV1m
+ J2YOHmZHJKLWiCVOgPWdYe2KKuXKIvUzZbDXJEpTotN0NLOAJJutbBiEN35GnZEo0YUB
+ XuqxXidDd1RoRRJOUsdqDbQNQQPaWwn+WU5rYplI9Is2wyOPIKGnMZ7lulzC+9Zxni17
+ L3sw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXxr9Wo4rHfh83eifUfJ8EjVBv7D6wO90+vh08sNhz+qJjRqwSIHmYz9x1BjLtnHgGjYBOOocOfh8Mz@nongnu.org
-X-Gm-Message-State: AOJu0Yxo2R/oPRhP7XSskNzJPSZESR72tZe+icDtQLh3IWK4wfZ0B9Bg
- Y9Jl1vn5Fz4X6oOXfy1WQSuw/zseXWvoeCwulFomamXKs1Xg5SnvTfAYnixK0CxXSNd1t4JmOxq
- lQfHV324gaWsM3oss0HbLsKZ4RO/tkUXVUzWqQA==
-X-Gm-Gg: ASbGnct5clkBdoggN2AukV5LzA9LkH3CSeM5h5QufMnJCLjM9XUbeCYUOHDBXU2Y/uj
- ZsqRjFYmly8TJUnstKqvNo21JnnEUi3gL+fNu2fo=
-X-Google-Smtp-Source: AGHT+IEockeIEtarpkLBbSdsWp8DoSVNtEIj03oQ6c97crRmnEuxl6QeLIwkKMfAbapk5yMJwYDOtRACdNkUXJHFcNE=
-X-Received: by 2002:a05:690c:6a12:b0:6ef:4696:f1d0 with SMTP id
- 00721157ae682-6f531248bddmr95117747b3.12.1736524321691; Fri, 10 Jan 2025
- 07:52:01 -0800 (PST)
+ AJvYcCU1L+GIlvU0HJ29LHBC/OcYoSw6UlEJoBq5iIG2mykK02yTfPruDjs23eo55OTIJUOPy/zuZkTjui6o@nongnu.org
+X-Gm-Message-State: AOJu0YxvhQnrpnnWS/3zSb9YqJUHRd13jmYKkzdEF3hixA8BcUGycgnj
+ e01o1+vmYpGBl0DMWRyTaGqm1M/Dn+GEnK9d6m5uNTAJwwOHaZpXqPMAMPlJEAL/S0RabfBQzZ2
+ bQpbkiQUWSttaPBC9bCYKNQLOwtw=
+X-Gm-Gg: ASbGncvs2sUkUfvOLT2uPdhsHAWuxjbNa6pNANLnx6QLhjdlcq8JaZVvI913QVEK4hD
+ 1FGn9592Ftu3eGzUfMgnpIRG/l4lEC6vyx7+3
+X-Google-Smtp-Source: AGHT+IGyf+fEHd4Cic5Pm/iSz/Blw4/wg1YL19pJatVY/VWxXMO2TbGIuIC6QZfa0rNk9Ho3XCiZnpmLHNWw6d1j/CQ=
+X-Received: by 2002:a17:907:7e95:b0:aaf:c19a:cc1c with SMTP id
+ a640c23a62f3a-ab2ab6c6625mr892774666b.22.1736524425029; Fri, 10 Jan 2025
+ 07:53:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20250110131211.2546314-1-peter.maydell@linaro.org>
- <877c724rcu.fsf@draig.linaro.org>
-In-Reply-To: <877c724rcu.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jan 2025 15:51:50 +0000
-X-Gm-Features: AbW1kvZu6nHPy9KBXVipDdmgKfqneFBZj-dzPOlzuAGKjushJT1y9R9R8ULphHw
-Message-ID: <CAFEAcA9sK4GkQwdkQuPkQqSPUCaARN5edjAk6s_EeX-NHTQzxg@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: Move minor arithmetic helpers out of
- helper.c
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
+References: <20250108220422.169967-1-deller@kernel.org>
+In-Reply-To: <20250108220422.169967-1-deller@kernel.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Fri, 10 Jan 2025 10:53:32 -0500
+X-Gm-Features: AbW1kvZRtYOUbGQz0h_5L3rigA_lIYlzNBWFZ6xWWq3SZw2CSLi79Tr6Uof-thU
+Message-ID: <CAJSP0QUuyZ99jMVbEV1gMa=3kz03C2Dn0JwH4_ndjmaVGeaP6g@mail.gmail.com>
+Subject: Re: [PULL v2 0/6] Linux user fix gupnp patches
+To: deller@kernel.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, deller@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,36 +97,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Jan 2025 at 15:32, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Wed, 8 Jan 2025 at 17:04, <deller@kernel.org> wrote:
 >
-> Peter Maydell <peter.maydell@linaro.org> writes:
+> From: Helge Deller <deller@gmx.de>
 >
-> > helper.c includes some small TCG helper functions used for mostly
-> > arithmetic instructions.  These are TCG only and there's no need for
-> > them to be in the large and unwieldy helper.c.  Move them out to
-> > their own source file in the tcg/ subdirectory, together with the
-> > op_addsub.h multiply-included template header that they use.
-> >
-> > Since we are moving op_addsub.h, we take the opportunity to
-> > give it a name which matches our convention for files which
-> > are not true header files but which are #included from other
-> > C files: op_addsub.c.inc.
-> >
-> > (Ironically, this means that helper.c no longer contains
-> > any TCG helper function definitions at all.)
+> The following changes since commit 791e3837c1105aec4e328674aad32e34056957=
+e2:
 >
-> What's left? It mostly looks like cpreg related stuff. I guess it could
-> become cpreg.c?
+>   Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into s=
+taging (2024-11-25 10:44:11 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/hdeller/qemu-hppa.git tags/linux-user-fix-gupnp-pull=
+-request
+>
+> for you to fetch changes up to 526635dc5edf989781219c1ee7d50846c0555a46:
+>
+>   linux-user: netlink: Add missing QEMU_IFLA entries (2024-12-27 21:30:27=
+ +0100)
+>
+> ----------------------------------------------------------------
+> linux-user: Add support for various missing netlink sockopt entries
+>
+> This patchset adds various missing sockopt calls, so that qemu linux-user
+> is able to successfully build the debian gupnp package in a chroot.
+>
+> Tested with a 32-bit big-endian hppa linux-user chroot running on a phyis=
+cal
+> x86-64 little-endian host.
+>
+> This fixes debian's bug report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1044651
+>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+>
+> Stefan, please merge it now in mainline (unless Laurent
+> finally answers differently). It just adds until-now unsupporzted
+> functionality, so nothing existing can break.
+>
+> ----------------------------------------------------------------
+>
+> Helge Deller (6):
+>   linux-user: netlink: Add missing IFA_PROTO to
+>     host_to_target_data_addr_rtattr()
+>   linux-user: Use unique error messages for cmsg parsing
+>   linux-user: netlink: Add IP_PKTINFO cmsg parsing
+>   linux-user: netlink: Add emulation of IP_MULTICAST_IF
+>   linux-user: netlink: add netlink neighbour emulation
+>   linux-user: netlink: Add missing QEMU_IFLA entries
+>
+>  linux-user/fd-trans.c | 137 +++++++++++++++++++++++++++++++++++++++++-
+>  linux-user/syscall.c  |  29 +++++++--
+>  2 files changed, 161 insertions(+), 5 deletions(-)
 
-It is mostly cpreg stuff by volume, but if I were going to try to
-improve the situation I'd start by moving chunks of that out, e.g.
-the PMU related cpregs and associated code could probably
-going into their own file, similarly for the generic timer
-cpregs and code.
+Hi Helge,
+Please take a look at this CI job failure and send a v3:
+https://gitlab.com/qemu-project/qemu/-/jobs/8820703947
 
-helper.c also has code like the "take an interrupt" functions
-for A-profile (arm_cpu_do_interrupt() and the things it calls).
+FAILED: libqemu-aarch64-linux-user.a.p/linux-user_fd-trans.c.o
+cc -Ilibqemu-aarch64-linux-user.a.p -I. -I.. -Itarget/arm
+-I../target/arm -I../common-user/host/aarch64
+-I../linux-user/include/host/aarch64 -I../linux-user/include
+-Ilinux-user -I../linux-user -Ilinux-user/aarch64
+-I../linux-user/aarch64 -Iqapi -Itrace -Iui/shader
+-I/usr/include/capstone -I/usr/include/glib-2.0
+-I/usr/lib/aarch64-linux-gnu/glib-2.0/include -fdiagnostics-color=3Dauto
+-Wall -Winvalid-pch -Werror -std=3Dgnu11 -O0 -g -fstack-protector-strong
+-Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security
+-Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
+-Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
+-Wold-style-declaration -Wold-style-definition -Wredundant-decls
+-Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
+-Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
+-Wno-shift-negative-value -isystem
+/home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu/linux-headers
+-isystem linux-headers -iquote . -iquote
+/home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu -iquote
+/home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu/include
+-iquote /home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu/host/includ=
+e/aarch64
+-iquote /home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu/host/includ=
+e/generic
+-iquote /home/gitlab-runner/builds/E8PpwMky/0/qemu-project/qemu/tcg/aarch64
+-D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE
+-fno-strict-aliasing -fno-common -fwrapv -fno-pie -no-pie
+-fzero-call-used-regs=3Dused-gpr -isystem../linux-headers
+-isystemlinux-headers -DCOMPILING_PER_TARGET
+'-DCONFIG_TARGET=3D"aarch64-linux-user-config-target.h"' -MD -MQ
+libqemu-aarch64-linux-user.a.p/linux-user_fd-trans.c.o -MF
+libqemu-aarch64-linux-user.a.p/linux-user_fd-trans.c.o.d -o
+libqemu-aarch64-linux-user.a.p/linux-user_fd-trans.c.o -c
+../linux-user/fd-trans.c
+../linux-user/fd-trans.c: In function =E2=80=98host_to_target_data_addr_rta=
+ttr=E2=80=99:
+../linux-user/fd-trans.c:1181:10: error: =E2=80=98IFA_PROTO=E2=80=99 undecl=
+ared (first
+use in this function); did you mean =E2=80=98IFA_RTA=E2=80=99?
+1181 | case IFA_PROTO:
+| ^~~~~~~~~
+| IFA_RTA
 
--- PMM
+Thanks,
+Stefan
 
