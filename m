@@ -4,73 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6C0E7719C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 176D3E7719D
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 08:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWAHA-0000Jq-AG; Fri, 10 Jan 2025 03:21:52 -0500
+	id 1tWAHW-0000T1-80; Fri, 10 Jan 2025 03:22:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+4f8727a5892a49e75626+7810+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tWAH8-0000JS-Dm
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:21:50 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+4f8727a5892a49e75626+7810+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tWAH6-0008Jc-1M
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:21:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=tGMjyQd2+jGi5ezrE20+Dh0F2Vs0fb19lFk8NfL0r9k=; b=TwokirjTExSWPrqRFq3QqI4LtL
- aLG3v/z52LdIDGYh8bWV/V1TUW/bxKkHQBMMuAkXPSffEDoMQ5ynLY95Lu+taBnXozycK5HWqij5m
- 7YB5uhxS3bxxq3TxCYWgDaWjWEKCE6DiFzwYViOOxsgrQCsuAL+mV7rNRGMoCBYOmy3H0l/4rLTpY
- M1G5N9fuw+poNG1/pgJ5Z2rTfKSOD7fhYB+i15CxiwbAUTuKB6E5mdzSaL+FAX9xFH4DXY8zFdGpp
- s3/RQ/gmcHRJ8paiStTcg0BV23vYFuYtiBKNfNhuA1VoWwvI+OYjq7IqTrrUJcg8+uoajT0neSG6I
- DvhR0nig==;
-Received: from 54-240-197-238.amazon.com ([54.240.197.238]
- helo=edge-cache-192.e-lhr50.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tWAH0-0000000CSWD-04Zw; Fri, 10 Jan 2025 08:21:42 +0000
-Message-ID: <868327eef674cb45d4230f388c1674fe1dced86f.camel@infradead.org>
-Subject: Re: [PATCH 2/2] xen: do not use '%ms' scanf specifier
-From: David Woodhouse <dwmw2@infradead.org>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Roger
- Pau =?ISO-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>
-Cc: Anthony PERARD <anthony@xenproject.org>, qemu-devel@nongnu.org, Stefano
- Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>, "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- xen-devel@lists.xenproject.org
-Date: Fri, 10 Jan 2025 08:21:41 +0000
-In-Reply-To: <73307130-f03e-413d-98fb-7e6c05383851@linaro.org>
-References: <20250107093140.86180-1-roger.pau@citrix.com>
- <20250107093140.86180-3-roger.pau@citrix.com> <Z3-sJMXpiFUoATHz@l14>
- <974ab6743d168d34babd458fe5e2e7766bb280b4.camel@infradead.org>
- <Z3__eDp4hShe79Pl@macbook.local>
- <17c134258de9517b677f08a865394f8075d67bdf.camel@infradead.org>
- <73307130-f03e-413d-98fb-7e6c05383851@linaro.org>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-LCYR3IEEqcqhJw1BSRXw"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1tWAHF-0000Nz-Kv
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:21:58 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1tWAHE-0008MD-6H
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 03:21:57 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-216728b1836so29023275ad.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 00:21:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736497314; x=1737102114;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=UKy96d8r4jHtyTvK2W+7wl1ztaYGPUzMssxRhp0rSko=;
+ b=WzHdDBNz6rRLrRqOeR35lTHF6bo0MNzUmUqQa8RGS1GFKf3ZMS1FWqwW/at4jmQvSB
+ 90+Fj3y6gkV64DDPgTWBBR1QD9Ssei9D8+JMbgt6p0/LH4thi64UiVw4+EBfw27VEsSF
+ 5HwY4nXycQuT1AhwPpswOmmDQpxNO6oYVzhSl/U4mY+OtLZNP/xgaFG8/Urc6BYhpvSd
+ MhBHfr3moUr573V8Z8hEA/lZ4pUGIVMd0A7DPrLALuohqFfjAUPRuFEZ+xPKgXptxy9j
+ gd3Yv/DXhbT1H8uv0AHiPx8WEdOjGP7T3UBNtfIPk6tYr/y+9LTZcX1swNhDgULt5Vw2
+ tpEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736497314; x=1737102114;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UKy96d8r4jHtyTvK2W+7wl1ztaYGPUzMssxRhp0rSko=;
+ b=kaBFZpTWHJswmZNAsxYUTwt99Z20w80kI895cCpmxJQYAzUXtG/vh/na3BZ3gLNWVC
+ cPVcTyj7r++0Pnj1W3vfjWNH5fVeFdzOZQaJ2aSlRdPCFkEU5nn7rJfwAQAN9YPs7UZE
+ Z8rxD2qQDgErBziRgCXU+lkjIrDhdly9V8xN+mmaRy5Q1HP3QTAYbQStzRKYiA0I0wXd
+ q7NlyGuaSsv+4gA7DuKYsILPs5z3Uw9t+UzJqmp//7TOOq+EYLXR2zFLH8qS/h9OZJmm
+ 3PLk/IMfbTCgvLcn0XzeLqFvhWp75BVyginvmEO83W4/nz40Y9tG62VEgNsN1zeKtA9s
+ WBNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHiU+GtR9ueYYgsodzC7IHlKkX4bThQUAiQ5QdDhXizs2p30THf7VNcJmciELQN0ygrEjx6FiIfNMa@nongnu.org
+X-Gm-Message-State: AOJu0YxsUH2nffmup8jh6JPyi9XgJc3n+ftL4bT6/bmjwMBM79BCPrFn
+ enEs4dO8S8hDSrF2arisPT4ajsKS24JlPxWjiSgLCr/EFKqu5xJwRgbQTq0YqdM=
+X-Gm-Gg: ASbGncvk2zTI2c+3HRd3fP01XLEXdEOzxlScm+gMo8KQhdwa0MptO7cN9tjJ00dQz3h
+ Yi/ZPM1BY1PA/Zx9UDHWEmg/Rf5va9E3gWNZBHrZnGUj3Ushdh4nKd4Irc9rZLJrQ9aUYxy5gnv
+ zWU4VPi7KyUXyWRLvUG+/rDF+fJKfbBhh2pldQKBWvxNtjy0qNPKvSjANGsTEznkyPL9t5SiaFO
+ Ij71Iw3G2FLvmTXXN3IK4FA76qudSJeIDtFvVgXFDoWo/gpI25681Do28d+rIvSw5P7kw==
+X-Google-Smtp-Source: AGHT+IHNZaL1rMHrYGOk50lXxKaZZfowryvI7gJ1VDVwQD74bpZAtfxS8P/rNI2D3mWTx2TtGiJ50A==
+X-Received: by 2002:a17:902:d4d2:b0:215:9642:4d6d with SMTP id
+ d9443c01a7336-21a83f55157mr141221365ad.17.1736497314520; 
+ Fri, 10 Jan 2025 00:21:54 -0800 (PST)
+Received: from atishp.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f22ee09sm9278715ad.200.2025.01.10.00.21.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jan 2025 00:21:54 -0800 (PST)
+From: Atish Patra <atishp@rivosinc.com>
+Date: Fri, 10 Jan 2025 00:21:35 -0800
+Subject: [PATCH v5 07/11] target/riscv: Add select value range check for
+ counter delegation
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+4f8727a5892a49e75626+7810+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250110-counter_delegation-v5-7-e83d797ae294@rivosinc.com>
+References: <20250110-counter_delegation-v5-0-e83d797ae294@rivosinc.com>
+In-Reply-To: <20250110-counter_delegation-v5-0-e83d797ae294@rivosinc.com>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: kaiwenxue1@gmail.com, Atish Patra <atishp@rivosinc.com>, 
+ palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Kaiwen Xue <kaiwenx@rivosinc.com>
+X-Mailer: b4 0.15-dev-13183
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,166 +103,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Kaiwen Xue <kaiwenx@rivosinc.com>
 
---=-LCYR3IEEqcqhJw1BSRXw
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This adds checks in ops performed on xireg and xireg2-xireg6 so that the
+counter delegation function will receive a valid xiselect value with the
+proper extensions enabled.
 
-On Fri, 2025-01-10 at 09:16 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 10/1/25 09:08, David Woodhouse wrote:
-> > On Thu, 2025-01-09 at 17:55 +0100, Roger Pau Monn=C3=A9 wrote:
-> > > On Thu, Jan 09, 2025 at 11:25:13AM +0000, David Woodhouse wrote:
-> > > > On Thu, 2025-01-09 at 11:59 +0100, Anthony PERARD wrote:
-> > > > >=20
-> > > > > > =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 char label[32];
-> > > > > > =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 XenDevice *xendev =3D NUL=
-L;
-> > > > > > =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 XenConsole *con;
-> > > > > > @@ -550,7 +551,10 @@ static void xen_console_device_create(XenB=
-ackendInstance *backend,
-> > > > > > =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g=
-oto fail;
-> > > > > > =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > > > > > =C2=A0=C2=A0=C2=A0=20
-> > > > > > -=C2=A0=C2=A0=C2=A0 if (xs_node_scanf(xsh, XBT_NULL, fe, "type"=
-, errp, "%ms", &type) !=3D 1) {
-> > > > > > +=C2=A0=C2=A0=C2=A0 node_path =3D g_strdup_printf("%s/type", fe=
-);
-> > > > > > +=C2=A0=C2=A0=C2=A0 type =3D qemu_xen_xs_read(xsh, XBT_NULL, no=
-de_path, NULL);
-> > > > > > +=C2=A0=C2=A0=C2=A0 g_free(node_path);
-> > > > >=20
-> > > > > I feel like we want "xs_node_read()" which would be similair to
-> > > > > xs_node_vscanf() but would simply return the result of
-> > > > > qemu_xen_xs_read(). This would avoid the need format of the node =
-path in
-> > > > > several place in the code. But it's OK like that as well.
-> > > >=20
-> > > > If you look at the other callers of qemu_xen_xs_read(), it looks li=
-ke
-> > > > the majority of them create the path with snprintf and then pass it=
- in.
-> > > > Or with g_strdup_printf(), pass it in, then free it afterwards.
-> > > >=20
-> > > > So perhaps qemu_xen_xs_read() should be a printf-style function too=
-,
-> > > > with its last arg(s) being the node name.
-> > >=20
-> > > I just went with Anthony suggestion and introduced xs_node_read(), as
-> > > I didn't want to play with qemu_xen_xs_read().=C2=A0 Not that I think=
- the
-> > > suggestion is not valid, just seemed more work than what I wanted to
-> > > do right now.
-> >=20
-> > Makes sense. Something like this=C2=B9?
-> >=20
-> > char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Error **errp, unsigned =
-int *len,
->=20
-> Maybe switch len <-> errp arg order.
+Co-developed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+---
+ target/riscv/csr.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-Ack. Changed in my 'percentms' branch in case Roger wants to use it.
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 49648ddc95f0..df748dffa38c 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2159,6 +2159,11 @@ static bool xiselect_aia_range(target_ulong isel)
+            (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST);
+ }
+ 
++static bool xiselect_cd_range(target_ulong isel)
++{
++    return (ISELECT_CD_FIRST <= isel && isel <= ISELECT_CD_LAST);
++}
++
+ static int rmw_iprio(target_ulong xlen,
+                      target_ulong iselect, uint8_t *iprio,
+                      target_ulong *val, target_ulong new_val,
+@@ -2284,6 +2289,17 @@ done:
+     return RISCV_EXCP_NONE;
+ }
+ 
++static int rmw_xireg_cd(CPURISCVState *env, int csrno,
++                        target_ulong isel, target_ulong *val,
++                        target_ulong new_val, target_ulong wr_mask)
++{
++    if (!riscv_cpu_cfg(env)->ext_smcdeleg) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++    /* TODO: Implement the functionality later */
++    return RISCV_EXCP_NONE;
++}
++
+ /*
+  * rmw_xireg_csrind: Perform indirect access to xireg and xireg2-xireg6
+  *
+@@ -2295,7 +2311,25 @@ static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
+                               target_ulong isel, target_ulong *val,
+                               target_ulong new_val, target_ulong wr_mask)
+ {
+-    return -EINVAL;
++    int ret = -EINVAL;
++    bool virt = csrno == CSR_VSIREG ? true : false;
++
++    if (xiselect_cd_range(isel)) {
++        ret = rmw_xireg_cd(env, csrno, isel, val, new_val, wr_mask);
++    } else {
++        /*
++         * As per the specification, access to unimplented region is undefined
++         * but recommendation is to raise illegal instruction exception.
++         */
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    if (ret) {
++        return (env->virt_enabled && virt) ?
++               RISCV_EXCP_VIRT_INSTRUCTION_FAULT : RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    return RISCV_EXCP_NONE;
+ }
+ 
+ static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
 
-We can then clean up a few users of snprintf+qemu_xen_xs_read() to use
-xs_node_read() too.
+-- 
+2.34.1
 
---=-LCYR3IEEqcqhJw1BSRXw
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDExMDA4MjE0
-MVowLwYJKoZIhvcNAQkEMSIEIFSdPAXclUH18tGfOnC/GHFtG2BFOq2oeLX0lN8ZPj7hMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAohs9pUWAtc1s
-NcpVNygVAe33v9oci8I5lUtGKkNt5Qve8Cavav2P1GZh+FUoFmH93BmEKw82/GT47tqP2XSxVmX9
-CSAs4svypEMW737BXzrWwzYKOuesoG8IxMMglz1FkBMHkVwp0v25UFPxm/jnFU9KMoK15yCOIbfH
-xu5YId5j/M0XANE6A28NoqaJXq9uyftjzbrnWh7Z42XMD/4/vrlBHJxsREd9vrwCVptwUq/ttjX9
-FqztnWikoQcfIEV48u2wwn4k76Qh2l4YqwJauuuw10zr7IPR8QMgBaitlfd8ieTx0dtFiBrpBHL6
-N9RdJ6HmhxMRXUo52hTeZ0i34Urdlqt3NdRxUOz8G128XLzoNPkzTxLH2Ch9ltuauO8QeGottbSc
-e+VSEv68NN0UoUnqnAk7ovX2zFHVApYm+l7U88NorpaKLcCov6U51kqvOV1gvK6VGIiP0GaeSj3W
-LShZ16tUtxuw5l+P0OG48jlMYgu9g7TacDGrBMIfYhCfvrbH6l8N9nLGxp7NmtX/BymwpXvmsXUt
-DgKdOoziHpUA+88/wz/GEOpKcmb5ppypGMMr43Ur0SuvT56R7WXzfeiVk3ZEODpk3+MQyoiCsXly
-9PqnoQSdxiSw6Eq+pnXIH5QehGBERhCNuQQEoZ64PEMxKFkI1cSlIlTIfmHYAK4AAAAAAAA=
-
-
---=-LCYR3IEEqcqhJw1BSRXw--
 
