@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285A1E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 20:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 147CBE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 20:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWLl0-0003PD-BR; Fri, 10 Jan 2025 15:37:26 -0500
+	id 1tWLwq-0005PS-W5; Fri, 10 Jan 2025 15:49:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tWLkz-0003OP-2m
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:37:25 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1tWLwn-0005P3-QL
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:49:37 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tWLkx-00062U-3I
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:37:24 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ee51f8c47dso3403854a91.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:37:22 -0800 (PST)
+ id 1tWLwm-0007EY-Ah
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 15:49:37 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2164b1f05caso43545945ad.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 12:49:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736541441; x=1737146241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736542174; x=1737146974; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=p8DmYKFWWsyjc4B3ztk4tJe7NDrLkV1jaoXYH/suVI0=;
- b=nbUdF8aqL8PiHv4hol0mfV2FjegeqBCALQCoSpoRVTWsWld3felTZaEOsFGBujrCFx
- N7H/3chVanw9N/n8eI32ZYrpd/TM0zx0yOLMaZY69kvnL6OPXox+ZOgIPWiOn/bPkyEe
- lEOEq4rl4nSPE8aWfvxqUHPMt2/TsUHUsY+gyQJvTRvKME2YWufpo9yc1t+jq1og+fow
- /2/F/dDWq1+6MpNINapmZ6E76iVlaAIVSOsjACDFoizJ9yVLkjAS7ASZJ7sUuhrRu16t
- IMPuyBiCVAbXyUiJiWhPpvapT2lNBA1IaKTUGJ4hWNtJ4KrLKP6Z0QVrwGp6CWQajSZ0
- dZtA==
+ bh=NCPOt+9fHY+BCUA9UBGjmfD80gBuMkE/kanEfZgzZJw=;
+ b=bixvIjCcGRpqge5yh51pHvd3yARzJnCJYSUXonfUxJbgzysDg4GNk9EuF/Mw8ejfLH
+ QOADUQyQoxh4o9RCHU63V038R22t6phriveOgmD8QVt/wzT8Pgvv3xJHc+vtm7BckM40
+ MIBhI7Kyg+ATKksx6fxoRMLwxpMmNN52W2OoC0VqxmiEHTnRwgqeFLJeRTYfU7XRUfAr
+ xnZURJc/3Pvft+nDZYCgw/Yzd+Aw9fm9vayT0adWUjuhHwT8CpytmRLgmJM1CKijsdEX
+ NiF0406tJ+9J2ICmYBTzzT5GfrMN0afjW9eWP0Jrjpwv5ojnt/Si+pu10lNW9P/FU5IH
+ vrdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736541441; x=1737146241;
+ d=1e100.net; s=20230601; t=1736542174; x=1737146974;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p8DmYKFWWsyjc4B3ztk4tJe7NDrLkV1jaoXYH/suVI0=;
- b=Ud5QZgh//WnNCnu+NW2ftVs1FA6BURWcmc8YSzM+ynt5g6P+wK46R02vBHAvT0GrBI
- 2Ee+L9e46icYEAAr9zwRzJSMJ3mb7ULeIflNDHUV51M7tkLyUTktgYRzWCLTYM+HNOiy
- HHqODKMYz/0sSppOziT5yyjyPXWr5fmC+D0p9zMMJvuxBTwR79Nccc1oasGdjTdBSmIT
- nxfqPPVtqNYcs2/dgDhxQpihQC/QsCFETCc5anZsT9Cuk31KwZp0XbMw7m8iordLx3XU
- owL2k+JuvdqqIsew3qXkykgxTgpe2gHZg32rTobDI1ntbFIpXZ7MFhTR2enoSfAXVyTG
- pToA==
-X-Gm-Message-State: AOJu0Yw+0jQmFXwz6vBncOADiJDrNIB86LfNsvHdzyo5V2wZpdoSEjoZ
- ijA94HVM9j7j95h06tDRs92H5VVoz+sYwUFrt4iKOrC+6F9eBzYgN4a9TthFvOYbeed8E0eGKGF
- Xf1SEcw==
-X-Gm-Gg: ASbGncs1mu03iX7AD6/4PhKEXhFQxXUgDcI5n8iB+pnu9hSezCU0cl0kcvugTZ/WGwg
- QiqcTQg1AbU/3if2dUJpnnC9CSMwzeCCr+izGmNn16i0H3APXY/06K39yCOF0Jf++NKh2lQ6nMD
- aGtk+ZsLzicXQeC2nNq84/av0QJ0CknWlsOV3vXvy+q+o5X1XZ14U4NlR3d5dm0HdF+DDshty8O
- tdvnsbv4B3qn4DrDUFiFqWCkcg5y+cyXfF2YTIHXDHVeFEjXnAbgsWESBa0FtwUOWsxPQ==
-X-Google-Smtp-Source: AGHT+IG44Z6RlBj1wfrHpGEUul0QD5bXXMebAVm16vZbR5ofgSoAw1fOQRqUqO0ZR5xIVC2VgXKQ/w==
-X-Received: by 2002:a17:90b:254e:b0:2ef:19d0:2261 with SMTP id
- 98e67ed59e1d1-2f548eae703mr19700429a91.16.1736541441219; 
- Fri, 10 Jan 2025 12:37:21 -0800 (PST)
+ bh=NCPOt+9fHY+BCUA9UBGjmfD80gBuMkE/kanEfZgzZJw=;
+ b=MKI1QO6dGkU2b8A+fkqYyqy5xPxJq+qiuT4be66tdh7pjHtNumCdDajlay+KrMwsx8
+ tzOESvzH/96VxGFUmeTFhAC+51u0W2aRbZmGEsWc3KCB/cwZsDlL6/paDfqgQP1TL33r
+ yj09k0ItiVpVd0lqFB1iF1ZdzAJUlbBtkiGqTO6bXoREIRWxogtCNEPAOKG7aJ7jlEZE
+ Whrcb6DcHCaVW3bpoEKdDRjDC9bkPvGDAS/6vCDXeGCRO71j/XzeN6AG34tselfEmVMn
+ GclctecVkEgYjQsONgodkITpW1PVkTRp4xovik+VTVQHbF0b5p/Rqt61r44R5RJ5VPdq
+ 0jsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJx85ddrAEZ+L+iGNDt6tPZNAv2Mh2ylouHNPURw3sBSXqE0tqPpTyWlv7z860wb/o+c/G+RWd0Rc5@nongnu.org
+X-Gm-Message-State: AOJu0Yy2WWzgg4TeWx7FoMh2X5xxJXOInUErvY1mzV7+VF1fzFqPPvHE
+ LUQojBGreCN34an8j8EEgBIm52LoSnamxYVNwsxhTmHb0JyUs7aE1XZTZKj1Q4w=
+X-Gm-Gg: ASbGncsUT8MT5MIveFNcgZt8u6tStxsZLA3mvU4e0vsJuAghU/PSheNO5mdDwWi7UyI
+ NwCHNPu8brkownp/+mQoBuKJxf3belZ1ETyR4qIMq0mXVDKL0DfzoLr7wMoX9Uo36+llYRr0CO9
+ lcGchi8+ScRALD7znquDlpkP8OM0OdP6oxZmaHjSb6eywbB4PoKqfKWACmwKSH/mA45cHSJBMGx
+ /dtt41C8G/CuwoyUqGSvvfMwWALg1gAo6H2hSo1fB8dxsjq6pTi7Ww8R2HvHWUvunHmiA==
+X-Google-Smtp-Source: AGHT+IGWf2nD0VvViZAkOV1Q22E9QBFlUXxfaa13TYz0FNiqCyriUBIWkwh5XYlvlrsarfJtJwd6fA==
+X-Received: by 2002:a05:6a00:4c18:b0:72a:8f07:2bf2 with SMTP id
+ d2e1a72fcca58-72d21fb1cc8mr15300290b3a.9.1736542174577; 
+ Fri, 10 Jan 2025 12:49:34 -0800 (PST)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f5594512f0sm3644612a91.36.2025.01.10.12.37.20
+ d2e1a72fcca58-72d406a935csm1963406b3a.179.2025.01.10.12.49.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 12:37:20 -0800 (PST)
-Message-ID: <73fd2f38-76a0-4274-875a-6f96faed79f6@linaro.org>
-Date: Fri, 10 Jan 2025 12:37:20 -0800
+ Fri, 10 Jan 2025 12:49:34 -0800 (PST)
+Message-ID: <5a4072bb-1dee-4023-ad78-67f9f49632c1@linaro.org>
+Date: Fri, 10 Jan 2025 12:49:33 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
+Subject: Re: [PATCH v2 2/2] hw/char/serial: Convert to three-phase reset
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250110182759.84071-1-philmd@linaro.org>
+ <20250110182759.84071-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250110182759.84071-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,58 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/25 12:33, Pierrick Bouvier wrote:
-> For now, it was only possible to build plugins using GCC on Windows. However,
-> windows-aarch64 only supports Clang.
-> This biggest roadblock was to get rid of gcc_struct attribute, which is not
-> supported by Clang. After investigation, we proved it was safe to drop it.
-> 
-> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
-> hosts.
-> 
-> v1 contained warning fixes and various bits that have been upstreamed already.
-> The only bits left in this series are the gcc_struct removal, and fixing the
-> plugins build with clang.
-> 
-> This series is for 10.0, as we decided to not include the gcc_struct removal is
-> 9.2 release.
-> 
-> All patches are now reviewed, so this series can be pulled. I'll report that to
-> MSYS2 too, so we can enable clang environments for QEMU.
-> 
-> v1: https://patchew.org/QEMU/20241031040426.772604-1-pierrick.bouvier@linaro.org/
-> 
-> v2:
-> - drop attribute gcc_struct instead of using -mno-ms-bitfields option
-> - add a section about bitfields in documentation
-> 
-> v3:
-> - explain why gcc_struct attribute matters in packed structs in commit message
-> - reword the bitfields documentation with suggestions given
-> 
-> v4:
-> - edit for bitfields doc requested by Philippe
-> 
-> Pierrick Bouvier (3):
->    win32: remove usage of attribute gcc_struct
->    docs/devel/style: add a section about bitfield, and disallow them for
->      packed structures
->    plugins: enable linking with clang/lld
-> 
->   docs/devel/style.rst                      | 20 +++++++++++++++++++
->   meson.build                               |  6 +++---
->   include/qemu/compiler.h                   |  7 +------
->   scripts/cocci-macro-file.h                |  6 +-----
->   subprojects/libvhost-user/libvhost-user.h |  6 +-----
->   contrib/plugins/meson.build               |  2 +-
->   plugins/meson.build                       | 24 +++++++++++++++++++----
->   tests/tcg/plugins/meson.build             |  3 +--
->   8 files changed, 48 insertions(+), 26 deletions(-)
-> 
-
-It would be nice if a maintainer could pull this, so we can get this 
-merged upstream.
-
-Thanks,
-Pierrick
+T24gMS8xMC8yNSAxMDoyNywgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IENv
+bnZlcnQgdGhlIFRZUEVfU0VSSUFMICgxNjU1MEEgVUFSVCkgdG8gdGhyZWUtcGhhc2UgcmVz
+ZXQuDQo+IA0KPiBPbmx5IGxvY2FsIHN0YXRlcyBhcmUgcmVzZXQgc28gdXNlIHRoZSBSZXNl
+dEhvbGQgaGFuZGxlciwNCj4gbGlrZSBvdGhlciBsZWdhY3kgZGV2aWNlcy4NCj4gDQo+IFNp
+Z25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9y
+Zz4NCj4gLS0tDQo+ICAgaHcvY2hhci9zZXJpYWwuYyB8IDEwICsrKystLS0tLS0NCj4gICAx
+IGZpbGUgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQ0KPiANCj4g
+ZGlmZiAtLWdpdCBhL2h3L2NoYXIvc2VyaWFsLmMgYi9ody9jaGFyL3NlcmlhbC5jDQo+IGlu
+ZGV4IDU2MjkzMTY4NWU3Li45Y2I2ZTMwYzljZSAxMDA2NDQNCj4gLS0tIGEvaHcvY2hhci9z
+ZXJpYWwuYw0KPiArKysgYi9ody9jaGFyL3NlcmlhbC5jDQo+IEBAIC04NTEsOSArODUxLDkg
+QEAgY29uc3QgVk1TdGF0ZURlc2NyaXB0aW9uIHZtc3RhdGVfc2VyaWFsID0gew0KPiAgICAg
+ICB9DQo+ICAgfTsNCj4gICANCj4gLXN0YXRpYyB2b2lkIHNlcmlhbF9yZXNldCh2b2lkICpv
+cGFxdWUpDQo+ICtzdGF0aWMgdm9pZCBzZXJpYWxfcmVzZXRfaG9sZChPYmplY3QgKm9iaiwg
+UmVzZXRUeXBlIHR5cGUpDQo+ICAgew0KPiAtICAgIFNlcmlhbFN0YXRlICpzID0gb3BhcXVl
+Ow0KPiArICAgIFNlcmlhbFN0YXRlICpzID0gKFNlcmlhbFN0YXRlICopb2JqOw0KPiAgIA0K
+PiAgICAgICBpZiAocy0+d2F0Y2hfdGFnID4gMCkgew0KPiAgICAgICAgICAgZ19zb3VyY2Vf
+cmVtb3ZlKHMtPndhdGNoX3RhZyk7DQo+IEBAIC05MjgsMTMgKzkyOCwxMSBAQCBzdGF0aWMg
+dm9pZCBzZXJpYWxfcmVhbGl6ZShEZXZpY2VTdGF0ZSAqZGV2LCBFcnJvciAqKmVycnApDQo+
+ICAgICAgIHMtPm1vZGVtX3N0YXR1c19wb2xsID0gdGltZXJfbmV3X25zKFFFTVVfQ0xPQ0tf
+VklSVFVBTCwgKFFFTVVUaW1lckNCICopIHNlcmlhbF91cGRhdGVfbXNsLCBzKTsNCj4gICAN
+Cj4gICAgICAgcy0+Zmlmb190aW1lb3V0X3RpbWVyID0gdGltZXJfbmV3X25zKFFFTVVfQ0xP
+Q0tfVklSVFVBTCwgKFFFTVVUaW1lckNCICopIGZpZm9fdGltZW91dF9pbnQsIHMpOw0KPiAt
+ICAgIHFlbXVfcmVnaXN0ZXJfcmVzZXQoc2VyaWFsX3Jlc2V0LCBzKTsNCj4gICANCj4gICAg
+ICAgcWVtdV9jaHJfZmVfc2V0X2hhbmRsZXJzKCZzLT5jaHIsIHNlcmlhbF9jYW5fcmVjZWl2
+ZTEsIHNlcmlhbF9yZWNlaXZlMSwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IHNlcmlhbF9ldmVudCwgc2VyaWFsX2JlX2NoYW5nZSwgcywgTlVMTCwgdHJ1ZSk7DQo+ICAg
+ICAgIGZpZm84X2NyZWF0ZSgmcy0+cmVjdl9maWZvLCBVQVJUX0ZJRk9fTEVOR1RIKTsNCj4g
+ICAgICAgZmlmbzhfY3JlYXRlKCZzLT54bWl0X2ZpZm8sIFVBUlRfRklGT19MRU5HVEgpOw0K
+PiAtICAgIHNlcmlhbF9yZXNldChzKTsNCj4gICB9DQo+ICAgDQo+ICAgc3RhdGljIHZvaWQg
+c2VyaWFsX3VucmVhbGl6ZShEZXZpY2VTdGF0ZSAqZGV2KQ0KPiBAQCAtOTQ5LDggKzk0Nyw2
+IEBAIHN0YXRpYyB2b2lkIHNlcmlhbF91bnJlYWxpemUoRGV2aWNlU3RhdGUgKmRldikNCj4g
+ICANCj4gICAgICAgZmlmbzhfZGVzdHJveSgmcy0+cmVjdl9maWZvKTsNCj4gICAgICAgZmlm
+bzhfZGVzdHJveSgmcy0+eG1pdF9maWZvKTsNCj4gLQ0KPiAtICAgIHFlbXVfdW5yZWdpc3Rl
+cl9yZXNldChzZXJpYWxfcmVzZXQsIHMpOw0KPiAgIH0NCj4gICANCj4gICBjb25zdCBNZW1v
+cnlSZWdpb25PcHMgc2VyaWFsX2lvX29wcyA9IHsNCj4gQEAgLTk3NSwxMiArOTcxLDE0IEBA
+IHN0YXRpYyBjb25zdCBQcm9wZXJ0eSBzZXJpYWxfcHJvcGVydGllc1tdID0gew0KPiAgIHN0
+YXRpYyB2b2lkIHNlcmlhbF9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgdm9pZCog
+ZGF0YSkNCj4gICB7DQo+ICAgICAgIERldmljZUNsYXNzICpkYyA9IERFVklDRV9DTEFTUyhr
+bGFzcyk7DQo+ICsgICAgUmVzZXR0YWJsZUNsYXNzICpyYyA9IFJFU0VUVEFCTEVfQ0xBU1Mo
+a2xhc3MpOw0KPiAgIA0KPiAgICAgICAvKiBpbnRlcm5hbCBkZXZpY2UgZm9yIHNlcmlhbGlv
+L3NlcmlhbG1tLCBub3QgdXNlci1jcmVhdGFibGUgKi8NCj4gICAgICAgZGMtPnVzZXJfY3Jl
+YXRhYmxlID0gZmFsc2U7DQo+ICAgICAgIGRjLT5yZWFsaXplID0gc2VyaWFsX3JlYWxpemU7
+DQo+ICAgICAgIGRjLT51bnJlYWxpemUgPSBzZXJpYWxfdW5yZWFsaXplOw0KPiAgICAgICBk
+ZXZpY2VfY2xhc3Nfc2V0X3Byb3BzKGRjLCBzZXJpYWxfcHJvcGVydGllcyk7DQo+ICsgICAg
+cmMtPnBoYXNlcy5ob2xkID0gc2VyaWFsX3Jlc2V0X2hvbGQ7DQo+ICAgfQ0KPiAgIA0KPiAg
+IHN0YXRpYyBjb25zdCBUeXBlSW5mbyBzZXJpYWxfaW5mbyA9IHsNCg0KUmV2aWV3ZWQtYnk6
+IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCg0K
 
