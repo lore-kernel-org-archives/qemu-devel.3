@@ -4,95 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63186E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jan 2025 23:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B30E7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 04:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWO5D-00060m-85; Fri, 10 Jan 2025 18:06:27 -0500
+	id 1tWSpu-0002zN-Ll; Fri, 10 Jan 2025 23:10:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWO5A-000602-SI
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 18:06:24 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWO59-0007Ms-48
- for qemu-devel@nongnu.org; Fri, 10 Jan 2025 18:06:24 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso27253535e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 15:06:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736550381; x=1737155181; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9WvEiz7oRaAe+ed3CIaBlI+rsVdRU+nVSLZIrb/e8xA=;
- b=p8hpos9V2g6UVsKl6qII9wL96ky2Ej6Si2Wpq8s8EF0AfXE0LtXdZX3/V+69OtQCfK
- oTevlEyNF5AZ5C7twm9H9NDMRJBpsrwl9yLYvwOwFr/KIxxTWUmk4hfeYnMJkatUyWsC
- ogKrdDSn1ECExMhzlMYzzxAVQ2sJn+pBj9N7611ySqkfL/TXQaAw4F+K+rajkMzfv7kj
- 2/xQbuxCxHp4f/BRH+y70VuzhZYGu5h0Fw93RnA1U8JJcYBGWvNqlejVP3UDxCP8/duS
- 4XKP233EL3gbXW1SNYNooQFsJCtoXQXXZOWl5ddBsstJCYfAmDPzdOVT1g3VOIgP9AgE
- lZ+A==
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tWSlH-0008CA-Lu
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 23:06:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tWSlF-0004y2-Br
+ for qemu-devel@nongnu.org; Fri, 10 Jan 2025 23:06:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736568366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+qj+9mz/QvIa3LS+3FXk+hh3iv5MxugOp9C8kJzQEK0=;
+ b=jRpudCc9k09QoTgTuhFEO+Z8UewI+BvG7uNS8CDGlF7+5WcbsIMxXLuSKMMLrL6cjV5lVJ
+ /ReZvXCh4TytUPBasYiMDiM7SOmAVGa5cxhiy3436MH65TnTRIlahZtuiuGlObvaHFxEu9
+ ov+tmznd/X/ClxpRaIyAUg3Hm7su4C4=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-vR_MUTl0PdqLO_IC_tdXdQ-1; Fri, 10 Jan 2025 23:06:02 -0500
+X-MC-Unique: vR_MUTl0PdqLO_IC_tdXdQ-1
+X-Mimecast-MFC-AGG-ID: vR_MUTl0PdqLO_IC_tdXdQ
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b864496708so678311185a.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 20:06:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736550381; x=1737155181;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1736568362; x=1737173162;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9WvEiz7oRaAe+ed3CIaBlI+rsVdRU+nVSLZIrb/e8xA=;
- b=cDZJnsrICZOTbMZiwt/PbUWC2+vEjhxphSDU5yYX60U+w4AmFNYxDrOgWZk8Z/Bm1x
- CSYdkixpClPQw4IV0ikAY7THoWoWNtZpajmqW2HG+Tge/EvWfA8naOzYO7ygPRLG5RQe
- QqdBH0tq8Xc+3qqjh7w5gvmfruex/0YexeNSC9fxV4ipR6n0rApUDDte877r33bj16wL
- m8JztRIKiqWJnA+R9rxTd7I4zny1RqHJrcCvkfT1Tbt2WSDMYZG646pHYrrvCvjEzSH5
- aeAMrrB3UJHvXTR/mFd7B7wr7/NmOtLitfLaz5C17DjiGiYh0VRq6rPXa325CcO4gLlm
- 7vmQ==
-X-Gm-Message-State: AOJu0YxiR0oWdLS7ZRUHRL7zK7G+b6O+IWUSMtHjFuSxMXehEMK0WQny
- hwW+wrq8Q7EVtbX9+M3Zun6h2hikcPU7y2ghLtwvZIYf+d22L1t48mQrliu5p1Y=
-X-Gm-Gg: ASbGnctCIViVSt53YKxL7X6lB9CzEGPC9SJLXYqV6rJXY30qhgOkoVg7i/wt1sq2JIf
- 16c9yVdZJPDqsIK68b043VfGJ5RDoaHshJTIOE8Hf7L6ECkhEhnRzR2av+EPoOvqDemVvaPaf9r
- I56VLhvaduXssY105LrjHoUcDQnijxpdE2E+n0Ag3oDjiF2/hLl0Yp6icUB/Uk31Bx0B6uE4cTx
- 0gkkHTjihHCtnbkwPL35kqflGsDwaKjoMPzkWzRmvUF8RbTlpPlncsqWhyM77uzRIL5jiV/Cgom
- 8E0cN2HVFpVeG4wx3kNeVLSaeyS/HQ==
-X-Google-Smtp-Source: AGHT+IHpF8D887abFDPO14FrPzkdLY625uKWEyjv9MKG+wSN5u5jA2Z7ku3bOO8lVQCcI0WKqUYrDA==
-X-Received: by 2002:a05:600c:3c85:b0:436:18d0:aa6e with SMTP id
- 5b1f17b1804b1-436e2679a7cmr131881975e9.5.1736550381551; 
- Fri, 10 Jan 2025 15:06:21 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fba4sm65855165e9.4.2025.01.10.15.06.19
+ bh=+qj+9mz/QvIa3LS+3FXk+hh3iv5MxugOp9C8kJzQEK0=;
+ b=tFZcHHEDV0NUnWjCLJX0CPKADovTD/XjslINIQWcuJ4a4FYFA4AOc9oHgsnzeLKmM+
+ FDsScRS4Bvsh4XIJjSNraKvBtzyMI/xDP4E8/j+Ip/NkL/iGqtslaRkpD6TGGWqrSFLv
+ h15YObRrkjIMCuZ0+sTVt7OvexXNfqYgC8c3tJaHi0XupEiMDMsqA4c2Shc+ccSKvXaD
+ zkrd20rhW8qjFVIxpw26Cu1RD+5LdBqetZCA3tRXvtji3IAc67rU6R8thEO1kRYqWROX
+ eiB2sQmswIDdgyfHZ3q2tZ2BRhR0OZZWjqZRs/xTD7G+vBcGGkrOcc8LltTuYwfBLnsN
+ dULw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUX7kMtT6mxH8fvNy1khDSLxB9r21Ij0DW5nXBkMz0MRMbK0gYf+Kn11y1F7JVnt+5ZzTvvMQV3+i+z@nongnu.org
+X-Gm-Message-State: AOJu0Ywu/IOhtSWTHcVVxOrGoEopRBDahiMBbzLH2HmVzr7dmCs5IkMZ
+ ey5WE6XG13cL7RSs3c+ch/mIgcvgc7NEO6lpKVYLkKQAYHg4EcgauY8eVhutDRmETQGd18V+Dhx
+ 6J9f4IL3MvFE0RRn0yFN/FiJmGzfaGi6lJSEI/yNxKMOLQI0jMwv0
+X-Gm-Gg: ASbGnctP9EcG/B/gXk1nZwL37PwDhdguw2Ml1YAHQS5UNi6KBdEFhn0vQ3tm/KhcJTx
+ FsuE9K6oCb+Q3eS7xooUVT49U5ZuRrSS1Og5I+PSaWmtYeHmUNlJEw4fX6m+uGZP9XUgIbFKmp+
+ PKLoW81hTc/E4o/o9Kk32ks2HAA2F0uZ5RMEmxMj4kASIuwoBiPiBuJ41dslNIHD9VobusaJw5p
+ 21aX+Fgd08zjtw9XiC2JQ9Mc876OfWaVfX5Z50GXp1KogI5Ma97
+X-Received: by 2002:a05:620a:4407:b0:7a9:afef:33e6 with SMTP id
+ af79cd13be357-7bcd97893a1mr1770827385a.34.1736568361821; 
+ Fri, 10 Jan 2025 20:06:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGuKxx4vMEE1KgX2pAn/AcY5CiRLkCSSfxU/YHIYRiBxgzOXEOSUodQiCgxnhO6YhBSz+2oPA==
+X-Received: by 2002:a05:620a:4407:b0:7a9:afef:33e6 with SMTP id
+ af79cd13be357-7bcd97893a1mr1770825485a.34.1736568361537; 
+ Fri, 10 Jan 2025 20:06:01 -0800 (PST)
+Received: from [172.20.4.54] ([12.177.140.20])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7bce350e0e6sm242400285a.96.2025.01.10.20.05.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 15:06:20 -0800 (PST)
-Message-ID: <11eae685-4bf4-4d64-8cd9-733775df82ed@linaro.org>
-Date: Sat, 11 Jan 2025 00:06:19 +0100
+ Fri, 10 Jan 2025 20:06:00 -0800 (PST)
+Message-ID: <568014f5-25fd-439b-b70c-9cf50f31255b@redhat.com>
+Date: Fri, 10 Jan 2025 23:05:24 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] docs/system/arm/virt: mention specific migration
- information
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
- <20241219183211.3493974-4-pierrick.bouvier@linaro.org>
- <CAFEAcA-LYWhtFaUanq_qS8nDEVdhDOhDR2kcKv8Ch_5fKSnv-Q@mail.gmail.com>
- <331d0b7b-40db-4a6b-80ba-178892f60506@linaro.org>
- <77f1cf6d-afba-4311-a15b-50594cb5fda0@linaro.org>
+Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <77f1cf6d-afba-4311-a15b-50594cb5fda0@linaro.org>
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z1wh69_gZ9izr1iU@redhat.com> <Z1wsslDnwlth3A8+@nvidia.com>
+ <CAFEAcA8TW2RKyFnh-TZRpfaKfZipHD5TZy_hymUr41GJ4rs4xA@mail.gmail.com>
+ <329445b2f68a47269292aefb34584375@huawei.com>
+ <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <Z39Ugx2M+FRFVVpB@Asurada-Nvidia>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.432,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,45 +124,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 23:59, Pierrick Bouvier wrote:
-> On 1/10/25 13:29, Philippe Mathieu-Daudé wrote:
->> On 10/1/25 17:30, Peter Maydell wrote:
->>> On Thu, 19 Dec 2024 at 18:32, Pierrick Bouvier
->>> <pierrick.bouvier@linaro.org> wrote:
->>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> ---
->>>>    docs/system/arm/virt.rst | 14 +++++++++++---
->>>>    1 file changed, 11 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
->>>> index d25275c27ce..9f1457cf9a2 100644
->>>> --- a/docs/system/arm/virt.rst
->>>> +++ b/docs/system/arm/virt.rst
->>
->>
->>>> +VM migration is not guaranteed when using ``-cpu max``, as features 
->>>> supported
->>>> +may change between QEMU versions. To ensure your VM can be 
->>>> migrated, it is
->>>> +recommended to use another cpu model instead.
->>>
->>> This paragraph is good, though -- that 'max' doesn't work for migration
->>> is important, and we should definitely document that.
->>
->> Ah yes, I've been there. 2 close-by comments:
->>
->> - 'max' is not restricted to the 'virt' ARM machine, but this document
->>     is about it, what about other ARM machines?
->>
->> - More generally, "max" CPU won't migrate easily (in different versions)
->>     on all target archs.
->>
->> Not sure where to document that; maybe a generic chapter that can be
->> included in a board.rst template?
-> 
-> It's a good point.
-> Maybe somewhere in docs/devel/migration, where versioning is mentioned?
+Nicolin,
+Hi!
 
-Yep. docs/devel/migration/compatibility.rst sounds the best place.
+
+On 1/8/25 11:45 PM, Nicolin Chen wrote:
+> On Mon, Dec 16, 2024 at 10:01:29AM +0000, Shameerali Kolothum Thodi wrote:
+>> And patches prior to this commit adds that support:
+>> 4ccdbe3: ("cover-letter: Add HW accelerated nesting support for arm
+>> SMMUv3")
+>>
+>> Nicolin is soon going to send out those for review. Or I can include
+>> those in this series so that it gives a complete picture. Nicolin?
+> 
+> Just found that I forgot to reply this one...sorry
+> 
+> I asked Don/Eric to take over that vSMMU series:
+> https://lore.kernel.org/qemu-devel/Zy0jiPItu8A3wNTL@Asurada-Nvidia/
+> (The majority of my effort has been still on the kernel side:
+>   previously vIOMMU/vDEVICE, and now vEVENTQ/MSI/vCMDQ..)
+> 
+> Don/Eric, is there any update from your side?
+> 
+Apologies for delayed response, been at customer site, and haven't been keeping up w/biz email.
+Eric is probably waiting for me to get back and chat as well.
+Will look to reply early next week.
+- Don
+
+> I think it's also a good time to align with each other so we
+> can take our next step in the new year :)
+> 
+> Thanks
+> Nicolin
+> 
+
 
