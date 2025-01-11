@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AA6E7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 15:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45817E7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 15:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWd5O-0001T3-W7; Sat, 11 Jan 2025 10:07:39 -0500
+	id 1tWd7S-000395-ET; Sat, 11 Jan 2025 10:09:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rahul@chandra.net>) id 1tWd5L-0001SS-88
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:07:35 -0500
-Received: from sender4-of-o54.zoho.com ([136.143.188.54])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rahul@chandra.net>) id 1tWd5I-0001D8-EH
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:07:34 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1736608046; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=b1jFhh3qLBzhXQ1PZgxb+N9RoORT31Jk2LG20WxuT5B6mqvVtIloWjbEPLn400WyaHfoury7C7nX6PDhYQDkVamvqS4KMVyE5BJHZcLghAQYjKryJayP3qKHjq+xm5Ykqtd07JvgY6kqtVSVvwYDH90inJXpwrWj/iWeRhBd3oc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1736608046;
- h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc;
- bh=jA6LqzxkqEXVE7iD0DuhekHEi3vE5l+KIObB1IuK1PY=; 
- b=Xc+WHRcAnBZW2n2JEPNGJcgFYLk2YV/2Cfui8IaJl+DUttUn65MIXFsOLVkFAWtYwAgX7G7UHhSGY6qCLig99T9kpn3tmsYj1CYzvYYQi9ljHtmJOoyAV4zEC8/0funmXJFayR1hRr9JD6tDZhygWdOI++4nXLggijx6HkAfHK8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=chandra.net;
- spf=pass  smtp.mailfrom=rahul@chandra.net;
- dmarc=pass header.from=<rahul@chandra.net>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1736608046; 
- s=zmail; d=chandra.net; i=rahul@chandra.net;
- h=From:From:To:To:MIME-Version:Date:Date:Subject:Subject:Message-ID:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
- bh=jA6LqzxkqEXVE7iD0DuhekHEi3vE5l+KIObB1IuK1PY=;
- b=Rzbf6GQ/Fx9pQQO9Hr2j/O0XukZa9svnhO0lNH/xBMdwuPBaGhiuLafWgBGGryte
- Wl3HfkluIxAOSS769WlOwBj3xfoU6V0kMolYcTsi4kSEN3Xgy73IIj23MpEO+ouAgc6
- V7O9IANRvvOQiRfMVSmH900W4x/RZ1qgRN6aUUlE=
-Received: by mx.zohomail.com with SMTPS id 1736608044402353.3992764766058;
- Sat, 11 Jan 2025 07:07:24 -0800 (PST)
-Received: from sogo (pool-108-5-102-140.nwrknj.fios.verizon.net
- [108.5.102.140])
- by mailserver.projecteclipse.org (Postfix) with ESMTPSA id B4F29E7820
- for <qemu-devel@nongnu.org>; Sat, 11 Jan 2025 15:07:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=chandra.net;
- s=default; t=1736608042;
- bh=jA6LqzxkqEXVE7iD0DuhekHEi3vE5l+KIObB1IuK1PY=;
- h=From:To:Date:Subject:From;
- b=iNDq/rn7S0K43iVyPXTvYAS7O23b1NCJRC4cA3VEBSro0pDqeZL/detczsjdwoJ4U
- avuHRge3Rbdow699JbVfQZDB6FC3deXSH0SVlBAYP9SFxXX1hoKl7xElV/qAn2p3cb
- //lkcrR1bZvDvZyp577hFJtQzoc88SkPKbwGinkddBzRft5rwhW8hCUfTM39UeqOsD
- 89v11BGyUklJ5SIEh8G8h93Bk4UpOwJ2DSlkHOE0fsTBheGJ5dekVcsHYper5fGXoP
- tpMtD+Mk/rPhgmisG8+m0goNFcC0CnjaXbrirZ6CINbd1qUyxYHFe19UZRTAJsgkB7
- OZ6MzhwzfwI7w==
-From: "Rahul Chandra" <rahul@chandra.net>
-To: qemu-devel@nongnu.org
-User-Agent: SOGoMail 5.11.0
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWd7Q-00038x-O9
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:09:44 -0500
+Received: from mailgate02.uberspace.is ([185.26.156.114])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWd7P-0001Kc-1O
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:09:44 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 28C86180C42
+ for <qemu-devel@nongnu.org>; Sat, 11 Jan 2025 16:09:34 +0100 (CET)
+Received: (qmail 27451 invoked by uid 990); 11 Jan 2025 15:09:33 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Sat, 11 Jan 2025 16:09:33 +0100
 MIME-Version: 1.0
-Date: Sat, 11 Jan 2025 10:07:22 -0500
-Subject: =?utf-8?q?download=2Eqemu=2Eorg?= file list
-Message-ID: <1fa-67828900-3-616bbe80@197637592>
-X-Forward: 192.168.1.147
+Date: Sat, 11 Jan 2025 15:09:33 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.54; envelope-from=rahul@chandra.net;
- helo=sender4-of-o54.zoho.com
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <ac8afd094ff19d2e3acf19d08a55f98815001318@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH 22/22] accel/tcg: also suppress asynchronous IRQs for 
+ cpu_io_recompile
+To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, "Pierrick Bouvier"
+ <pierrick.bouvier@linaro.org>,
+ "=?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@linaro.org>,
+ "Thomas Huth" <thuth@redhat.com>, "Mahmoud Mandour"
+ <ma.mandourr@gmail.com>, "Alexandre Iooss" <erdnaxe@crans.org>, "Richard 
+ Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Laurent Vivier" <laurent@vivier.eu>,
+ "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
+In-Reply-To: <20250109170619.2271193-23-alex.bennee@linaro.org>
+References: <20250109170619.2271193-1-alex.bennee@linaro.org>
+ <20250109170619.2271193-23-alex.bennee@linaro.org>
+X-Rspamd-Bar: -
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.936487) MIME_GOOD(-0.1)
+X-Rspamd-Score: -1.536487
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=smNhWhLPld+rckYUnK1aTF/H/wy9s0DkJW/uRHlzZQY=;
+ b=MQdyQC+xNjQ2jUWPDSV+0SKt3gJ/a+DLwSwsz3DD7aHmeEVvWjVuXPi4f9VSGAOCoxu1j2NdxN
+ Z6M24P24l5nflIJth7te9dIYs+Tnxcl/QXs4+ZsANTDAVpVvN2tPioW53+9CzhFyhhDx7PBg0KrU
+ aAOcQukbxHTJ8m2dqCDlgNeKqrfzbp0AG8AsfqBpcUrLbeMxcWgBHaoNFt5/s3UJsOq1gnVu1zKU
+ 5CATm3vPz+GqUuXfIYn18VfmbsoOc4LIB7YXWOjOFr/VGHExjoAeq9pu6dRcAQgyCZ+dLLsXnDc7
+ cuLOi9E+3evvPSL4FqYUxtbJqmqJfGwfn4VbVQ7+aU0Bd2dY+siBeTWNvPUoYzefWyBoNak7mChG
+ 3fHCQbIqRW9DHNcln9kuuP28U4Mm6tXlTZ275kw90ZT1MT86W401sca0kJHfUjroZ5ySa7e0hJnM
+ 3OgoE+lWy4Rv9ySm+CI4dFIURVv3oZM7DosDijLsvxvnwc3cUUhjdrwLCDX8oJjdgb53ii4YL9uQ
+ 2AM+RGB+JJu14u6K2rCrYuy2SlKimw2GqP45eVYGh2DguBCMMn659n0dYYUB/oyDpJcP0mvzl/sm
+ gMa8sVmdKpErOy/9j/ThkVXWjLQoOhdudMOxaOKhM3ENu3w+KdF6dV79rOZ+KdemXT3A3XLgGC0y
+ 8=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,14 +89,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Alex,
 
-I am not sure if this is the right list to send this to, but the https:=
-//download.qemu.org/ download server is showing no files available for =
-listing. Is this unintentional? Or should I be querying the Gitlab tags=
- from now on for version info?
+January 9, 2025 at 6:06 PM, "Alex Benn=C3=A9e" wrote:
+> While it would be technically correct to allow an IRQ to happen (as
+> the offending instruction never really completed) it messes up
+> instrumentation. We already take care to only use memory
+> instrumentation on the block, we should also suppress IRQs.
+>=20
+>=20Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Julian Ganz <neither@nut.email>
+> ---
+>  accel/tcg/translate-all.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>=20
+>=20diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> index 453eb20ec9..d56ca13cdd 100644
+> --- a/accel/tcg/translate-all.c
+> +++ b/accel/tcg/translate-all.c
+> @@ -633,9 +633,10 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t ret=
+addr)
+>  * Exit the loop and potentially generate a new TB executing the
+>  * just the I/O insns. We also limit instrumentation to memory
+>  * operations only (which execute after completion) so we don't
+> - * double instrument the instruction.
+> + * double instrument the instruction. Also don't let an IRQ sneak
+> + * in before we execute it.
+>  */
+> - cpu->cflags_next_tb =3D curr_cflags(cpu) | CF_MEMI_ONLY | n;
+> + cpu->cflags_next_tb =3D curr_cflags(cpu) | CF_MEMI_ONLY | CF_NOIRQ | =
+n;
+>=20=20
+>=20 if (qemu_loglevel_mask(CPU_LOG_EXEC)) {
+>  vaddr pc =3D cpu->cc->get_pc(cpu);
+> --=20
+>=202.39.5
 
-Thanks,
---Rahul
-
+Reviewed-by: Julian Ganz <neither@nut.email>
 
