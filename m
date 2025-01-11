@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96369E7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 15:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717E8E7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 18:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWdiU-00065p-Aw; Sat, 11 Jan 2025 10:48:02 -0500
+	id 1tWgMU-000733-AX; Sat, 11 Jan 2025 13:37:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWdiT-00065d-5F
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:48:01 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tWgMS-000713-7n; Sat, 11 Jan 2025 13:37:28 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWdiR-0006cY-DR
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:48:00 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43626213fffso25139605e9.1
- for <qemu-devel@nongnu.org>; Sat, 11 Jan 2025 07:47:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tWgMQ-0003uH-R1; Sat, 11 Jan 2025 13:37:27 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aa6a92f863cso592340566b.1; 
+ Sat, 11 Jan 2025 10:37:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736610478; x=1737215278; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OXnEMdaJmB3wmmJxgorT/L3VHkT9x6PzpoX3V0r81nU=;
- b=eO5Tj7iatta5fialXiKC/IOnzdpiY1yAUtre/vlqmCL6KHLXDd9geHjma7SXltWZUc
- 4f6A5WTGeoRKplZ6dRRYOrSks7jYQR2qZnaYjt4tcHR0L54UOXPEQE/xJLyig3az9icw
- Nja5NBfrfi/TYFxsCqhcLIsSqdXUycKkVbb2Vqd7dIfZptZ64am719X8y3SmWbdXAZ4D
- EQqst+8VfJhYxSNyF3pFfe2/0zDk1IWFrYX2NRgiDeyGbP5EWccWgFnTf8bQGZS8UXdx
- GPQ6teq6vbrNYj+917RP0Nz29L5H0uOLaOdp2hOqORLztWXOZXThb0rVIqNOHMfMXhFJ
- 9tlQ==
+ d=gmail.com; s=20230601; t=1736620644; x=1737225444; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0PqxDnBjevTT4lcWrIDnfXMGDt0Ne6U2zvgq/38zAcs=;
+ b=bct1y9rZGKD2nbX2nL8QvscPDpf+dL9dVsV6OcRMSBz1mO0/qIeheyvd6Q8NoUPrli
+ 9nIo6I8yBX93JryBByTD+v0uUbUNtudwigx+b2vyzsqQC/lKSrJRg/ux7FgOwITiakTh
+ xpzMyCzrzwWXmhWVj2WbC5COBg17WMFOtI1suzVdugpTKNwVrWUgH69Y0sQWyAzhw/dr
+ 8e016uioHKP4vtVTLH0spHNLJbipzttgM6H51OEFCAXuQyToqp7tfRCHxshvh694IWVd
+ /ygmVRWvMAB5SfYKpK4rNaAyKIlNQ+fjUFiaWb3KE52gKU/POmQ+FBeMqCDwyte87Il/
+ KKvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736610478; x=1737215278;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OXnEMdaJmB3wmmJxgorT/L3VHkT9x6PzpoX3V0r81nU=;
- b=v6HQLiLZ31iiK0LfSW2u8I5ExMzzJ816Dh4WGsN08iz1Xn/j10/6Zs6bQ0tBoULDOq
- 286XOmxF+FMyvKc+yjT8qQ05B4gWEGYKVQkYT0MtLAatd+T1cLA4Kwc6Fg0XJaCbeeSv
- 6xyu1BiG0RA1y7Uvh7QNkC6kUDMHh0Aqj/M2FWOFz80+aqJYj+VCLLnbpeEyAEv0F+qX
- ZXuvLwceOQMrta1IpU09yka7l+bg5d7tGNv4VuQYlY/eten9vDboIwIdCjb+ficgcPPs
- iD3StCTCrQh32rdf1SutVBf1tBeJpYwG5V2Pb1mDyLQ9awgLcxNRKTk2p7Gfg5gxg4oM
- YOeA==
+ d=1e100.net; s=20230601; t=1736620644; x=1737225444;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0PqxDnBjevTT4lcWrIDnfXMGDt0Ne6U2zvgq/38zAcs=;
+ b=mEHWPZZgvQb2H/SZjXN9+9rlY7pxsd2GFZg8rz+qq7Gd7xoTtueR0kIanu2cTSwIVE
+ epcA1qrUa6vZpAOCRCF0SxoqUFGhXrXA67Wj7WsTAFMs3yxZMorBZIYwJfuqp/eap5Nu
+ bZBFcrdORiUTpxBnPK07v6FoKzNqAVFj4GsXiTbB+ZCW2tqJ0UM4KlBmHA/Uz1cNbiAB
+ 3A4UEJNIN90EUu3U5NNT85cmHoPqEMbWpWxMtSNZn2uQsObTXRSQUuOUsb7QgNbOigVK
+ IUfJPOkR/RpIL5Hw6noTRZvm8jRhV8ooS3tjeulKNr/Xp50GWb9x/Wf5tk1+l6f5Z9pw
+ DjGg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdoDcS5pFroP7TmWoXV0gy0DgB/44AebD5cIISvnJWZtu587n4kpka4PxbhETNce5JRFLL87dEtKPs@nongnu.org
-X-Gm-Message-State: AOJu0YzuniPhU5yXoGQ2UDukZzWcCqH7ll6Korq3EXHQaoHoh93hz5nM
- PCQbhmr/2m9xrwyhf3h0lruG+Nb5NiZHnyWyPHTWP9oXSGMU0XAMprMXbh6i++A=
-X-Gm-Gg: ASbGncuBZTy7msEsh+BXT4Yl00Mf8lhND1DRzbIyPU6i4FzcTJeTB97snk/Sq5SlEJG
- 1997LpHGOIDZuG6F01xV1n8Z9bzvCr6VQlykkkzmst6tCb0xqpjxaRPorogsQdgxdhLLu4DHlIG
- K9weHY9mivm2vxxuyOE9uQ/kOtA1PP2PkmIBWmvJIWq9LTqyfbL3d+vN2TqeYWQFZ1DrYdbi6wS
- TYWBeMxAfASrhWUV1zVXHn3W1A/opQyP3xdISVGD/BUZy9KovU6kTxpsFFsynssotnA0rPabHxd
- 760krC7kLB9J62QtQw+/lBV0
-X-Google-Smtp-Source: AGHT+IGqG9PjbDiN/sUC8Uoo28b3oa62gRC02x9PEhjrBgt7SGiSrZRyaotEa/wiRLOI08dsrw5Nhg==
-X-Received: by 2002:a5d:6c6c:0:b0:386:4244:15c7 with SMTP id
- ffacd0b85a97d-38a8b0faaadmr10482632f8f.25.1736610477864; 
- Sat, 11 Jan 2025 07:47:57 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2df3610sm119858985e9.20.2025.01.11.07.47.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Jan 2025 07:47:57 -0800 (PST)
-Message-ID: <bc22d713-201e-414c-838e-6c0dc1fb3807@linaro.org>
-Date: Sat, 11 Jan 2025 16:47:56 +0100
+ AJvYcCX8scoBbj8F+lwXctejTUlbLdQW/dTog+k89MBMsO2t7rjvoPMQeQIw7fbT3lflriVqbtUjua7wpg==@nongnu.org,
+ AJvYcCXAJGCisDJL99uqyO1FFprdhLEnk6pzapiSNYJJxCr4XfWyfraUqT1mzhysehEsywC/4JxJazPgw9uupw==@nongnu.org
+X-Gm-Message-State: AOJu0YzHMaaVncs6uqEAx8TI9Bl/WK43XnhjhdbcB9An+9BdQFdbcxTb
+ E9Ah3asdVMFsltqUWDh0wMaORlyg1PfO0SSI9uPGgEol2BquBHFBX4UzyA==
+X-Gm-Gg: ASbGncvj+GC35E2MU3yM2IuUY2u5y/08g7GGCxWOuW1I0i7814y7AGC5b8ao75Z9ARx
+ PONGxM3EqcbOAmslH0KhwkTMnnCOu88XR+mnP6jWzlW51gUc6vvzbe+Mq4UXZXaSmAiZiRl0K0B
+ MfdcyEovZCU+qGb+AVwT4wqWBxBdhr+k8tTxRaRijSTPcj0sgyE1ACLWxqpKryjbFoQjDcuo8/Y
+ dBGZRe8lnMJeNJPdvH2oqFRv50kFIsRGeQcTwXpxEu8858K/zOaJZqThBj32N9g1eCwfXD/yBKz
+ MghtSd7dgDJBtVVfaipMtjxTQGaEz2exsd8dpAEIpaI=
+X-Google-Smtp-Source: AGHT+IGu+ZJNKOi4dbgTGRgsIs4Ojn44voEJH4WzHk62IEeSXhlJzu0ebrp/NS+05OVlSHx4Jt4H9A==
+X-Received: by 2002:a17:907:1c21:b0:aab:d8df:9bbb with SMTP id
+ a640c23a62f3a-ab2abc925cbmr1429988466b.41.1736620643942; 
+ Sat, 11 Jan 2025 10:37:23 -0800 (PST)
+Received: from Provence.localdomain
+ (dynamic-078-054-101-099.78.54.pool.telefonica.de. [78.54.101.99])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c95af187sm299026666b.142.2025.01.11.10.37.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 Jan 2025 10:37:22 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v2 03/13] hw/char/imx_serial: Update all state before
+ restarting ageing timer
+Date: Sat, 11 Jan 2025 19:37:01 +0100
+Message-ID: <20250111183711.2338-4-shentey@gmail.com>
+X-Mailer: git-send-email 2.48.0
+In-Reply-To: <20250111183711.2338-1-shentey@gmail.com>
+References: <20250111183711.2338-1-shentey@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
- <73fd2f38-76a0-4274-875a-6f96faed79f6@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <73fd2f38-76a0-4274-875a-6f96faed79f6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,68 +109,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 21:37, Pierrick Bouvier wrote:
-> On 1/10/25 12:33, Pierrick Bouvier wrote:
->> For now, it was only possible to build plugins using GCC on Windows. 
->> However,
->> windows-aarch64 only supports Clang.
->> This biggest roadblock was to get rid of gcc_struct attribute, which 
->> is not
->> supported by Clang. After investigation, we proved it was safe to drop 
->> it.
->>
->> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and 
->> aarch64
->> hosts.
->>
->> v1 contained warning fixes and various bits that have been upstreamed 
->> already.
->> The only bits left in this series are the gcc_struct removal, and 
->> fixing the
->> plugins build with clang.
->>
->> This series is for 10.0, as we decided to not include the gcc_struct 
->> removal is
->> 9.2 release.
->>
->> All patches are now reviewed, so this series can be pulled. I'll 
->> report that to
->> MSYS2 too, so we can enable clang environments for QEMU.
->>
->> v1: https://patchew.org/QEMU/20241031040426.772604-1- 
->> pierrick.bouvier@linaro.org/
->>
->> v2:
->> - drop attribute gcc_struct instead of using -mno-ms-bitfields option
->> - add a section about bitfields in documentation
->>
->> v3:
->> - explain why gcc_struct attribute matters in packed structs in commit 
->> message
->> - reword the bitfields documentation with suggestions given
->>
->> v4:
->> - edit for bitfields doc requested by Philippe
->>
->> Pierrick Bouvier (3):
->>    win32: remove usage of attribute gcc_struct
->>    docs/devel/style: add a section about bitfield, and disallow them for
->>      packed structures
->>    plugins: enable linking with clang/lld
->>
->>   docs/devel/style.rst                      | 20 +++++++++++++++++++
->>   meson.build                               |  6 +++---
->>   include/qemu/compiler.h                   |  7 +------
->>   scripts/cocci-macro-file.h                |  6 +-----
->>   subprojects/libvhost-user/libvhost-user.h |  6 +-----
->>   contrib/plugins/meson.build               |  2 +-
->>   plugins/meson.build                       | 24 +++++++++++++++++++----
->>   tests/tcg/plugins/meson.build             |  3 +--
->>   8 files changed, 48 insertions(+), 26 deletions(-)
->>
-> 
-> It would be nice if a maintainer could pull this, so we can get this 
-> merged upstream.
+Fixes characters to be "echoed" after each keystroke rather than after every
+other since imx_serial_rx_fifo_ageing_timer_restart() would see ~UTS1_RXEMPTY
+only after every other keystroke.
 
-That'd be Thomas or Alex I suppose.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/char/imx_serial.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index f805da23ff..be06f39a4d 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -381,14 +381,14 @@ static void imx_put_data(void *opaque, uint32_t value)
+     if (fifo32_num_used(&s->rx_fifo) >= rxtl) {
+         s->usr1 |= USR1_RRDY;
+     }
+-
+-    imx_serial_rx_fifo_ageing_timer_restart(s);
+-
+     s->usr2 |= USR2_RDR;
+     s->uts1 &= ~UTS1_RXEMPTY;
+     if (value & URXD_BRK) {
+         s->usr2 |= USR2_BRCD;
+     }
++
++    imx_serial_rx_fifo_ageing_timer_restart(s);
++
+     imx_update(s);
+ }
+ 
+-- 
+2.48.0
+
 
