@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AB1E7719C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2778FE7719A
 	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 05:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWTmR-0005B9-Lb; Sat, 11 Jan 2025 00:11:27 -0500
+	id 1tWTmK-0005A7-VC; Sat, 11 Jan 2025 00:11:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tWTmE-0005A6-H3
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:11:15 -0500
-Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1tWTmC-0004AX-Mc
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:11:14 -0500
-Received: from [192.168.1.8] (default-rdns.vocus.co.nz [202.150.110.104] (may
- be forged)) (authenticated bits=0)
- by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 50B5AwT61425585
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
- Sat, 11 Jan 2025 05:11:01 GMT
-Authentication-Results: anarch128.org; auth=pass;
- dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=M80hAWAA header.a=rsa-sha256 header.s=100003;
- x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org); 
- x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1736572266;
- bh=VKcsFvEpoCV0UEQJaWkCmxzuKdM7ICQMdmjZDi14ZAs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=M80hAWAAXJf3xtb6nJZe04e6RyGydx56Z8fFsWfjYB4Zrr1Ihl2yww5x6M7A6GEV5
- 9DEgN+EBBjclhY45VAQSUTIy8feYjCUD/SFrCOCAiUDyhL3XfNCZ2c871qslyMoDvP
- mbDYLKMoRANJn32QjjIZ3C4d1oJubBVLoRKJslvypJF6xIKlGccbRNA8bz3phQooOK
- eX8VY+hUEzwKTqCwRsKQ2NyJpQV1bn7x52d9TMCIw9CspJW4WjitPjtW5crKMkRhc6
- NbsPcD+0Hd8iVhcmAYAnVBJ53fh3qCXVXQjZHegRAPnhjHEfIh5n8fFB7Moem9LtqV
- DCENNmYFFseHA==
-Message-ID: <1384aea6-5381-4080-99ed-1da4494aa41a@anarch128.org>
-Date: Sat, 11 Jan 2025 18:10:52 +1300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tWTmA-00059D-L8
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:11:11 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tWTm6-0004AA-7V
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:11:10 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21634338cfdso17105435ad.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 21:11:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736572261; x=1737177061;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dFuJF1KReuxRF3mRy9Hhvq66Vzo7aVpYQKTTh2YU67g=;
+ b=EPHJWoYvSxzg8s5T1ZOL53YqiIA3Y9vUwlzV2Z0Nv0NweoNgk+krlk7UDp7qSQOKlW
+ h4EnWzB1ykiUPuA+VeO+fdWlX4u1mNyY16+wBTKqQIDCZGV+YusiF1Vlan6mltfaj/Uk
+ 0OBEuAxFgPhvc8UuXjwG5anlTJbixiL7+yoRK00O328yUbfUiN6pXAz1u1yvXKGAQzqq
+ anmVsyduy1wnjjUHI/vlZijIOi4khI20i8HVvXzUdxmslhWW+TEDC+QgM0r6L8M69Mtv
+ pkWHj5iIELu3ktHoc6/nShLHQOj6mdbc2/EA4hwfGhPcEPyRT/PxaYAHPNqPMdqdMr0c
+ 45nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736572261; x=1737177061;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dFuJF1KReuxRF3mRy9Hhvq66Vzo7aVpYQKTTh2YU67g=;
+ b=Hq9YjoovXV4pTKON4XTHuw3SopJbBNooMFGIoqYt0M/BeoCZQWYUubPzF3hwOGDGAn
+ 4a1Lz7V45u6ClY72XDiaQF5u/9LE9PPQfpoO2NOv0vFQbyL/cyk3fSHHtmczS6zvJABo
+ U42ChzTfEMJwstTilkjyG5CZZTv55Ll0GMPyprNIjgyV5Wc1JwkQSHWUHH+JT8DJ39Ta
+ 1vFu62yF3A9KvPRr5IEm93mNW9wMt1M2nWm/OUdIxHMCiLNZTwr6YvcAmEWfaKJSJOCB
+ zhjQJA/+pq4ymXxyjfLkMiKFwTng0wdrRbhaLvixzsgHCqCviCg38d6tdFQxelZXoGEE
+ k1DA==
+X-Gm-Message-State: AOJu0YwOoSrgoIeQpx7UsnnMdqnjSfws6y4y+EYQ9viq4SVsyT/vd5hU
+ VqZAV28ijWpUY9/wy5XtggfuaodvyTpF2VyQZE3NZsZ1LJNag9Ph6L7ypF5l3oY=
+X-Gm-Gg: ASbGncuX7tSsXs6ulhc0yRC/uMNXBKBET66w0DWfJwmKfdfJJ4CfD/AX/ZEXiL/Iat7
+ IjEjBzrf0R/5q6gqN7zrWlIFaHbAmmCwBjdvwKu5JnUP9rml83bIHRKPlF/bff0UQOEVaHJ3ZLM
+ Fds6jYZuSGQsqaVT58njTKKjcvKeWj7IVf6gl0x+95czdg7d2jbMUsApwda0iHLiVdr+PISAcz6
+ ggUwG+2KDAn99NQ5wYQFcUu+WpHLzUlluBAWRc/1p5mmtzU7YNjLn+KPGBcQsqDfKc=
+X-Google-Smtp-Source: AGHT+IFMTivELwrSJeBbuLF1AZOsOJGzLbHrclhXvCHvdL5+sIiSOA2sOawGoCxyr6WbsGj8XgJLGw==
+X-Received: by 2002:a17:902:da87:b0:215:9642:4d7a with SMTP id
+ d9443c01a7336-21a83da6a40mr209662975ad.0.1736572261469; 
+ Fri, 10 Jan 2025 21:11:01 -0800 (PST)
+Received: from [157.82.203.37] ([157.82.203.37])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f2179b6sm20813735ad.115.2025.01.10.21.10.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jan 2025 21:11:01 -0800 (PST)
+Message-ID: <2cdcba63-00dd-4580-8a84-19f342ccb9c5@daynix.com>
+Date: Sat, 11 Jan 2025 14:10:58 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC]: port of embedded x86-mini disassembler to QEMU
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
-References: <20250110094400.512788-1-michael@anarch128.org>
- <CABgObfY_GOQN5OWBQXYvfrBtNVZGGc75p3gRHrpqQNxUErfB3A@mail.gmail.com>
- <5244f8e9-b58d-4d37-9fe7-2236a862fd91@anarch128.org>
- <CABgObfYdaBun9pZqTtZS_PzSKvrF=f5DE-Vb5pLMWq1HPcAVAg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] util/iov: Do not assert offset is in iov
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Dmitry Fleytman <dmitry.fleytman@gmail.com>
+References: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
+ <20240428-iov-v1-1-7b2dd601d80b@daynix.com>
+ <07258bb4-bc8f-4b21-a662-402d3164b68a@linaro.org>
 Content-Language: en-US
-From: Michael Clark <michael@anarch128.org>
-In-Reply-To: <CABgObfYdaBun9pZqTtZS_PzSKvrF=f5DE-Vb5pLMWq1HPcAVAg@mail.gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <07258bb4-bc8f-4b21-a662-402d3164b68a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
- envelope-from=michael@anarch128.org; helo=anarch128.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,99 +102,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/11/25 05:05, Paolo Bonzini wrote:
-> Il ven 10 gen 2025, 14:03 Michael Clark<michael@anarch128.org> ha scritto:
+Jason, can you pull this series?
+
+Regards,
+Akihiko Odaki
+
+On 2024/05/08 23:51, Philippe Mathieu-Daudé wrote:
+> ping?
 > 
->> On 1/11/25 00:07, Paolo Bonzini wrote:
->>> Il ven 10 gen 2025, 10:52 Michael Clark<michael@anarch128.org> ha
->> scritto:
->>>> a note to announce a port of the x86-mini disassembler to QEMU.
->>>>
->>>> -https://github.com/michaeljclark/qemu/tree/x86-mini
->>> I assume the huge .h files are autogenerated? If so, QEMU cannot use them
->>> without including the human-readable sources in the tree.
->> yes indeed. there is an x86_tablegen.py python script in the other repo
->> but it is not in the current patch. it would be somewhat easy to read
->> the tables from CSV files directly into arrays at the expense of several
->> more milliseconds during startup. the revised operand formats maps
->> relatively strictly to enum definitions with string tables in the source
->> so a reader in C would not be impossible
-> 
-> Building the tables at compile time is fine, only leaving out the script is
-> not.
+> On 28/4/24 13:11, Akihiko Odaki wrote:
+>> iov_from_buf(), iov_to_buf(), iov_memset(), and iov_copy() asserts
+>> that the given offset fits in the iov while tolerating the specified
+>> number of bytes to operate with to be greater than the size of iov.
+>> This is inconsistent so remove the assertions.
+>>
+>> Asserting the offset fits in the iov makes sense if it is expected that
+>> there are other operations that process the content before the offset
+>> and the content is processed in order. Under this expectation, the
+>> offset should point to the end of bytes that are previously processed
+>> and fit in the iov. However, this expectation depends on the details of
+>> the caller, and did not hold true at least one case and required code to
+>> check iov_size(), which is added with commit 83ddb3dbba2e
+>> ("hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()").
+>>
+>> Adding such a check is inefficient and error-prone. These functions
+>> already tolerate the specified number of bytes to operate with to be
+>> greater than the size of iov to avoid such checks so remove the
+>> assertions to tolerate invalid offset as well. They return the number of
+>> bytes they operated with so their callers can still check the returned
+>> value to ensure there are sufficient space at the given offset.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   include/qemu/iov.h | 5 +++--
+>>   util/iov.c         | 5 -----
+>>   2 files changed, 3 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/include/qemu/iov.h b/include/qemu/iov.h
+>> index 63a1c01965d1..33548058d2ee 100644
+>> --- a/include/qemu/iov.h
+>> +++ b/include/qemu/iov.h
+>> @@ -30,7 +30,7 @@ size_t iov_size(const struct iovec *iov, const 
+>> unsigned int iov_cnt);
+>>    * only part of data will be copied, up to the end of the iovec.
+>>    * Number of bytes actually copied will be returned, which is
+>>    *  min(bytes, iov_size(iov)-offset)
+>> - * `Offset' must point to the inside of iovec.
+>> + * Returns 0 when `offset' points to the outside of iovec.
+>>    */
+>>   size_t iov_from_buf_full(const struct iovec *iov, unsigned int iov_cnt,
+>>                            size_t offset, const void *buf, size_t bytes);
+>> @@ -66,11 +66,12 @@ iov_to_buf(const struct iovec *iov, const unsigned 
+>> int iov_cnt,
+>>   /**
+>>    * Set data bytes pointed out by iovec `iov' of size `iov_cnt' 
+>> elements,
+>>    * starting at byte offset `start', to value `fillc', repeating it
+>> - * `bytes' number of times.  `Offset' must point to the inside of iovec.
+>> + * `bytes' number of times.
+>>    * If `bytes' is large enough, only last bytes portion of iovec,
+>>    * up to the end of it, will be filled with the specified value.
+>>    * Function return actual number of bytes processed, which is
+>>    * min(size, iov_size(iov) - offset).
+>> + * Returns 0 when `offset' points to the outside of iovec.
+>>    */
+>>   size_t iov_memset(const struct iovec *iov, const unsigned int iov_cnt,
+>>                     size_t offset, int fillc, size_t bytes);
+>> diff --git a/util/iov.c b/util/iov.c
+>> index 7e73948f5e3d..a523b406b7f8 100644
+>> --- a/util/iov.c
+>> +++ b/util/iov.c
+>> @@ -36,7 +36,6 @@ size_t iov_from_buf_full(const struct iovec *iov, 
+>> unsigned int iov_cnt,
+>>               offset -= iov[i].iov_len;
+>>           }
+>>       }
+>> -    assert(offset == 0);
+>>       return done;
+>>   }
+>> @@ -55,7 +54,6 @@ size_t iov_to_buf_full(const struct iovec *iov, 
+>> const unsigned int iov_cnt,
+>>               offset -= iov[i].iov_len;
+>>           }
+>>       }
+>> -    assert(offset == 0);
+>>       return done;
+>>   }
+>> @@ -74,7 +72,6 @@ size_t iov_memset(const struct iovec *iov, const 
+>> unsigned int iov_cnt,
+>>               offset -= iov[i].iov_len;
+>>           }
+>>       }
+>> -    assert(offset == 0);
+>>       return done;
+>>   }
+>> @@ -266,7 +263,6 @@ unsigned iov_copy(struct iovec *dst_iov, unsigned 
+>> int dst_iov_cnt,
+>>           bytes -= len;
+>>           offset = 0;
+>>       }
+>> -    assert(offset == 0);
+>>       return j;
+>>   }
+>> @@ -337,7 +333,6 @@ size_t qemu_iovec_concat_iov(QEMUIOVector *dst,
+>>               soffset -= src_iov[i].iov_len;
+>>           }
+>>       }
+>> -    assert(soffset == 0); /* offset beyond end of src */
+>>       return done;
+>>   }
+>>
 
-
-okay. now it's even smaller. I don't mind if folks kick the tyres on the
-code but I'm not asking for it to be merged. I'd want it to be in better
-shape if folks decide they like it. and I don't want to expose anyone
-including myself to metadata format changes. so maybe 6-18 months time.
-
-$ git show | diffstat
-  b/disas/meson.build       |   93
-  b/disas/x86-core.c        |    5
-  b/disas/x86.h             |    2
-  b/scripts/x86-tablegen.py |  540 +++
-  disas/x86-enums.inc       | 1883 -----------
-  disas/x86-tables.inc      | 6218 --------------------------------------
-  6 files changed, 636 insertions(+), 8105 deletions(-)
-
-$ wc -l disas/x86*[ch] scripts/x86-tablegen.py
-   2846 disas/x86-core.c
-     92 disas/x86-disas.c
-   1758 disas/x86.h
-    540 scripts/x86-tablegen.py
-   5236 total
-
-$ wc -l disas/x86-data/*.csv | tail -5
-      4 disas/x86-data/x86_waitpkg.csv
-      2 disas/x86-data/x86_wbnoinvd.csv
-    145 disas/x86-data/x86_x87.csv
-      3 disas/x86-data/x86_xsaveopt.csv
-   3731 total
-
-x86_fuzzer.c in the other repo might be interesting. ~900 LOC showing
-instruction set metadata reflection for generative fuzzing. it has a
-tiny combinatorial expansion algorithm with constraints for conditional
-domain reduction to prune the graph. like I vary imm when we have RAX
-as the base register and various other pruning heuristics such as riz.
-it needs some random synthesis but I will get to that at some point.
-
-https://github.com/michaeljclark/x86/blob/trunk/tests/x86_fuzzer.c
-
-it exposes some of the internals of the codec. the tables exclusively
-have a maximum of two opcode bytes with one conditionally being ModRM.
-the codec converts REX.W/VEX/EVEX/prefix/map into trie page selectors.
-it also expands out ModRM masks if multiple instructions straddle the
-same opcode byte with different mod values. like this curiosity where
-the same opcode is used for two instructions, one as reg, one as mem.
-
-   f3 0f c7 f7          senduipi    edi
-   f3 0f c7 77 01       vmxon       qword ptr [rdi + 1]
-
-so I spent time on instrumentation (output is snipped due to width).
-
-$ ./build/x86_opcodes -o -g | egrep '(senduipi|vmxon|cmpxchg8b)'
-| cmpxchg8b m64     | c7 08 | ff f8 | .lex.0f.w0 c7 /1 .lock   |
-| cmpxchg8b m64     | c7 48 | ff f8 | .lex.0f.w0 c7 /1 .lock   |
-| cmpxchg8b m64     | c7 88 | ff f8 | .lex.0f.w0 c7 /1 .lock   |
-| vmxon m64         | c7 30 | ff f8 | .lex.f3.0f.w0 c7 /6      |
-| vmxon m64         | c7 70 | ff f8 | .lex.f3.0f.w0 c7 /6      |
-| vmxon m64         | c7 b0 | ff f8 | .lex.f3.0f.w0 c7 /6      |
-| senduipi rw       | c7 f0 | ff f8 | .lex.f3.0f.w0 c7 /6      |
-
-this shows you the LEX format which has new suffixes like 'wx' and 'ww'
-for default 32 or default 64 operand sizes. looks a lot like VEX/EVEX.
-and all legacy instructions have been converted to use this form so it
-is much easier to reason about decoding them. in any case, folks might
-be curious and decide they want to experiment with it.
-
-$ echo aaa | qemu-x86_64 -d in_asm,out_asm /usr/bin/openssl sha256
-
-I see SSE2/AVX instructions in the output and it doesn't crash. :D
-it's quite eye-opening to see the codegen. it would be nice to get
-qemu-system to use the MMU by running the translator with the HV on.
-
-btw Intel XED is pretty neat but its build system is totally alien.
-
-Michael.
 
