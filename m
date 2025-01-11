@@ -4,88 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13614E7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 08:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF280E7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 09:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWWXH-0002rO-7f; Sat, 11 Jan 2025 03:07:59 -0500
+	id 1tWXdT-0003tt-Eq; Sat, 11 Jan 2025 04:18:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tWWXF-0002ql-8q
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 03:07:57 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tWWXD-0005eq-AB
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 03:07:57 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2166f1e589cso57568395ad.3
- for <qemu-devel@nongnu.org>; Sat, 11 Jan 2025 00:07:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736582873; x=1737187673;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=v8cNyBdobIkz0QyaNuyQLNKJ7RJ2RaALxJcA2fyRj8Y=;
- b=lwv6ceS6lsQb3Xa6JIY4ORZ0Zfatct3755FbnDk8OCJ2EERIzE02UMiAiBUyqtlzk1
- C+hIDFIzwTr+J50tGtjKWd6acRyvqMpzpln+NdvXD3WE0lKLbE+JSwf0s36ZGdA1TUxN
- hFZmj8fx/eQC/Vt11wAyC4yKev4xKXvr5piupaEtMTqKV0Q6IW8iVa84PGwj9r38j6aR
- bzeDAEMzg14m7qGAEVHdO8csO8eZTedA8glGILFnEyWv3xsQnLM9uP6ytxpD+/J7mjM2
- F8KdbiIfIEgTlXO3owPK0bR4PJIPl4370XyLXOcFXu87B5bZwIE7nk1Mc5gVyqsAfT7N
- SSQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736582873; x=1737187673;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=v8cNyBdobIkz0QyaNuyQLNKJ7RJ2RaALxJcA2fyRj8Y=;
- b=GnWqOxldP28gko1Dg9480ZxqPxmgF+5Xf1/dBb1whMzJLmzzK7oS/CP4TzXK1Yjy3i
- SNlMe/EHj0dwBpVliVND6k66GkEa/rE2vAhsLHnFccTt8Lksf+69x+ynWaLwEZSuQZ/u
- JtJsZJMEHuAZmzaNA0WBLXoTrOOo5GaLLZv582pGEtjXf1P7AflGiITTz2UdbVeReCCa
- 2z6zzkVbWYARhIpaGclzp6ffyl//q8tYdWgzUMAkq5pgYj3Uec2DuNdY23FEcflOxxxA
- KLhC5Inj838yZm46Em+dphfd6AzkRgOJprliAzWeZ0MimY5z61REOoRd/UzBNx08Hcp0
- 5wlg==
-X-Gm-Message-State: AOJu0Yw6DjQkkhQK63qGjfkLtlxYRWLRVNhHupxoGgyLyDWn2Wee9LNm
- I9sjeQC0PIwfh9qojRtiUu+P3EXIGTGtXj8c0NNJHGpiY5MJrdX4dajHx+K+rpk=
-X-Gm-Gg: ASbGncs9aVJ65/54L811cDKasnvtqt27btCL252323w2YtUuyc2x/q7U/Q2ZI0NjV7s
- U8yBM8xiR7VCHMF2lTLS9HeUOyeWUWHDtmYiOMU7eDg6kmhlY+wLSTqLXECiz8Bx0198D7y8fYb
- mf50hZ/GyV/9icvRbM5lvXCP2ouo38uQwwmjI6/Nu20fuvMsVh7GdhRNG4FvyEY7B1QhaXBNrO/
- 7mMDHuRrkm12fj8QT4+n/6TsI2qAk5ARO2iajfvs0FAQYU6zOe1AM8/WEI=
-X-Google-Smtp-Source: AGHT+IGd0plujXc1VHDoGQQ0bwk1fnJC8kJ0fHvIuEDg9za+r98Q+6wONuIjIspyRa28X3pIupsmQQ==
-X-Received: by 2002:aa7:820b:0:b0:72d:2444:da2d with SMTP id
- d2e1a72fcca58-72d2444dacemr13233902b3a.9.1736582873530; 
- Sat, 11 Jan 2025 00:07:53 -0800 (PST)
-Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-72d40569fddsm2571701b3a.39.2025.01.11.00.07.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Jan 2025 00:07:53 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 11 Jan 2025 17:07:48 +0900
-Subject: [PATCH v2] checkpatch: Check .m, .build, .hx, .json and .plist
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tWXdS-0003td-G5
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 04:18:26 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tWXdQ-0004WZ-S1
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 04:18:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=JK74cYQJmRZcuqNJurb8MNH5OGLR8kvyJjcxu0Rtb6s=; b=cjjQWVKJD2d0h3rzI1646hUFxY
+ hija7hXi10+y4L7zm44Rv77WKjXPuP/OJVZ4fQXHANXO2h4wNHr5kNbz54X1yvvWJGtVQoeFd29wt
+ D1VwNcM2LbvaO/UhfEFEb18AaHY5A2D6M17Nhvb0Z6OmUcOLfNVYmyIOrBILlOyQ0UeVIKzvDilOJ
+ zzC1tSJdLJwlPApFNmnctye/bL0nHT9s0jTCR1nO+f2Qg+tqV7FIc/KFZnPK/mnzrF4e/h3AwiJcl
+ RVGuf6zlYALDn/CwKGTTLYCvxKcfDBHaCcNn3O849uqoukPOJCwnbmAqMGPE94auS8V3WZjKbmUkw
+ YDcupIN1R38tBq2DKqhbGT0K/1wGhOFHuHXJuTyuuBpgNuTnE2snXYaODKyWprxeSZwb+zC49qatT
+ Pet7K/kaNwBmtxR2+ibunmrshtS6R1HQR98wSC4muEVlfLsYDau7Z4va3pxOdWwFIIcd73jCs1pg4
+ ch5mILHyjrn5wiqjIxTZzmxKh7PqbZn9sVZXRFk/vissBfTuv/cf2Mju6fXXeF++7y0XwAGAdbEFj
+ Cd1G8LiY8T5Pj//FqzTB+D0mM1U5umYYh+YrNJN4Dxo/wmRUzP60XneVha3hdAVrGepqzgieVrTjK
+ rMBqBC4MZ/adbJEj3wOUebmePCfjAYWqsfEUhW5E8=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: Re: [PATCH] MAINTAINERS: Update path to coreaudio.m
+Date: Sat, 11 Jan 2025 10:18:16 +0100
+Message-ID: <2698029.rbXPDIGej7@silver>
+In-Reply-To: <20250111-maintainers-v1-1-faebe6ef0fec@daynix.com>
+References: <20250111-maintainers-v1-1-faebe6ef0fec@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250111-checkpatch-v2-1-db77a522ab6a@daynix.com>
-X-B4-Tracking: v=1; b=H4sIANMmgmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
- vPSU3UzU4B8JSMDI1MDQ0ND3eSM1OTsgsSS5AxdI7PURMsUC7Nkc7NEJaCGgqLUtMwKsGHRsbW
- 1AD6ecZ1cAAAA
-To: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,34 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check more text files: Objective-C, Meson, "hx", JSON, and property
-list.
+On Saturday, January 11, 2025 7:42:36 AM CET Akihiko Odaki wrote:
+> Commit 8b46d7e2dc8e ("audio: Rename coreaudio extension to use
+> Objective-C compiler") renamed coreaudio.c to coreaudio.m.
+>=20
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- scripts/checkpatch.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 06d07e6c225c..94ac5230b48f 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -12,7 +12,7 @@ use Term::ANSIColor qw(:constants);
- my $P = $0;
- $P =~ s@.*/@@g;
- 
--our $SrcFile    = qr{\.(?:(h|c)(\.inc)?|cpp|s|S|pl|py|sh)$};
-+our $SrcFile = qr{\.(?:(h|c|m)(\.inc)?|cpp|s|S|pl|py|sh|build|hx|json|plist)$};
- 
- my $V = '0.31';
- 
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 38a290e9c2ce..1e30c0f14057 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2786,7 +2786,7 @@ M: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+>  S: Odd Fixes
+>  F: audio/
+>  X: audio/alsaaudio.c
+> -X: audio/coreaudio.c
+> +X: audio/coreaudio.m
+>  X: audio/dsound*
+>  X: audio/jackaudio.c
+>  X: audio/ossaudio.c
+> @@ -2808,7 +2808,7 @@ M: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+>  R: Christian Schoenebeck <qemu_oss@crudebyte.com>
+>  R: Akihiko Odaki <akihiko.odaki@daynix.com>
+>  S: Odd Fixes
+> -F: audio/coreaudio.c
+> +F: audio/coreaudio.m
+> =20
+>  DSound Audio backend
+>  M: Gerd Hoffmann <kraxel@redhat.com>
+>=20
+> ---
+> base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
+> change-id: 20250111-maintainers-28bbada9fd02
+>=20
+> Best regards,
+>=20
 
----
-base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
-change-id: 20250111-checkpatch-26ea9d86c76a
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
