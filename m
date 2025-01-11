@@ -4,69 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94EBBE7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 21:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 773EEE7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 22:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWjPh-0007PF-L6; Sat, 11 Jan 2025 16:53:01 -0500
+	id 1tWjep-0001mo-1f; Sat, 11 Jan 2025 17:08:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
- id 1tWjPf-0007OY-F1; Sat, 11 Jan 2025 16:52:59 -0500
+ (Exim 4.90_1) (envelope-from <stefan.weil@weilnetz.de>)
+ id 1tWjen-0001mg-44
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 17:08:37 -0500
 Received: from mail.weilnetz.de ([37.120.169.71]
  helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
- id 1tWjPd-00032n-Nk; Sat, 11 Jan 2025 16:52:59 -0500
-Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id 6C79DDA07BC;
- Sat, 11 Jan 2025 22:52:53 +0100 (CET)
-Authentication-Results: mail.v2201612906741603.powersrv.de; dkim=none;
- dmarc=fail reason="No valid SPF, No valid DKIM" header.from=weilnetz.de
- (policy=none); 
- spf=softfail (mail.v2201612906741603.powersrv.de: 188.68.58.204 is neither
- permitted nor denied by domain of stefan@weilnetz.de)
- smtp.mailfrom=stefan@weilnetz.de
-Received: by qemu.weilnetz.de (Postfix, from userid 1000)
- id 31906460023; Sat, 11 Jan 2025 22:52:53 +0100 (CET)
-To: Bin Meng <bin.meng@windriver.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH] scripts/nsis.py: Run dependency check for each DLL file only
- once
-Date: Sat, 11 Jan 2025 22:52:44 +0100
-Message-Id: <20250111215244.1680931-1-sw@weilnetz.de>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <stefan.weil@weilnetz.de>)
+ id 1tWjek-0004sR-OV
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 17:08:36 -0500
+Received: from [192.168.178.96] (p57b4248b.dip0.t-ipconnect.de [87.180.36.139])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id AF350DA0795;
+ Sat, 11 Jan 2025 23:08:30 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1736633311;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nH8QJ3iFpmm2taBx7sgznpYSi6spGtsjtMK14A7WqDE=;
+ b=VmJJKNZKyFfdZFu6qORufYaEIoJHHt81G/Fj0w7uGvt6jtLIGjfeNCqBPY+EwTkSwA+1RI
+ aAZpVlA+F7OvzUJexnsie1V402LAUnzm+9szeXfI/X609ND22RmfcxlBn32SEkUuUXmOxv
+ vFAW9hxao2rn5KazkxkooYR4R2QIhK4=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de
+ smtp.mailfrom=stefan.weil@weilnetz.de
+Message-ID: <b3ef0b9f-df09-4444-b0aa-3b2a36f7cd3a@weilnetz.de>
+Date: Sat, 11 Jan 2025 23:08:30 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 6C79DDA07BC
-X-Spamd-Bar: ++
-X-Spamd-Result: default: False [2.60 / 12.00]; VIOLATED_DIRECT_SPF(3.50)[];
- BAYES_HAM(-3.00)[99.99%]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- FORGED_SENDER(0.30)[sw@weilnetz.de,stefan@weilnetz.de];
- ONCE_RECEIVED(0.20)[];
- DMARC_POLICY_SOFTFAIL(0.10)[weilnetz.de : No valid SPF, No valid
- DKIM,quarantine,sampled_out]; MIME_GOOD(-0.10)[text/plain];
- RCVD_NO_TLS_LAST(0.10)[]; RCVD_COUNT_ONE(0.00)[1];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- ASN(0.00)[asn:197540, ipnet:188.68.56.0/22, country:DE];
- R_DKIM_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_NEQ_ENVFROM(0.00)[sw@weilnetz.de,stefan@weilnetz.de];
- R_SPF_SOFTFAIL(0.00)[~all]; ARC_NA(0.00)[]
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
+Autocrypt: addr=stefan.weil@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: v2201612906741603
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Rspamd-Queue-Id: AF350DA0795
+X-Spamd-Bar: -
+X-Spamd-Result: default: False [-1.60 / 12.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; MIME_GOOD(-0.10)[text/plain];
+ RCPT_COUNT_TWELVE(0.00)[13]; TAGGED_RCPT(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ RCVD_COUNT_ZERO(0.00)[0];
+ ASN(0.00)[asn:3320, ipnet:87.128.0.0/10, country:DE];
+ MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,redhat.com,linaro.org,crans.org];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[patchew.org:url]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71;
+ envelope-from=stefan.weil@weilnetz.de; helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,61 +139,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
+Reply-to:  Stefan Weil <stefan.weil@weilnetz.de>
 From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each DLL should only be checked once for dependencies, but
-several hundred (781 in my test) unneeded checks were done.
+Am 10.01.25 um 21:33 schrieb Pierrick Bouvier:
+> For now, it was only possible to build plugins using GCC on Windows. However,
+> windows-aarch64 only supports Clang.
+> This biggest roadblock was to get rid of gcc_struct attribute, which is not
+> supported by Clang. After investigation, we proved it was safe to drop it.
+> 
+> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
+> hosts.
+> 
+> v1 contained warning fixes and various bits that have been upstreamed already.
+> The only bits left in this series are the gcc_struct removal, and fixing the
+> plugins build with clang.
+> 
+> This series is for 10.0, as we decided to not include the gcc_struct removal is
+> 9.2 release.
+> 
+> All patches are now reviewed, so this series can be pulled. I'll report that to
+> MSYS2 too, so we can enable clang environments for QEMU.
+> 
+> v1: https://patchew.org/QEMU/20241031040426.772604-1-pierrick.bouvier@linaro.org/
+> 
+> v2:
+> - drop attribute gcc_struct instead of using -mno-ms-bitfields option
+> - add a section about bitfields in documentation
+> 
+> v3:
+> - explain why gcc_struct attribute matters in packed structs in commit message
+> - reword the bitfields documentation with suggestions given
+> 
+> v4:
+> - edit for bitfields doc requested by Philippe
+> 
+> Pierrick Bouvier (3):
+>    win32: remove usage of attribute gcc_struct
+>    docs/devel/style: add a section about bitfield, and disallow them for
+>      packed structures
+>    plugins: enable linking with clang/lld
+> 
+>   docs/devel/style.rst                      | 20 +++++++++++++++++++
+>   meson.build                               |  6 +++---
+>   include/qemu/compiler.h                   |  7 +------
+>   scripts/cocci-macro-file.h                |  6 +-----
+>   subprojects/libvhost-user/libvhost-user.h |  6 +-----
+>   contrib/plugins/meson.build               |  2 +-
+>   plugins/meson.build                       | 24 +++++++++++++++++++----
+>   tests/tcg/plugins/meson.build             |  3 +--
+>   8 files changed, 48 insertions(+), 26 deletions(-)
 
-Now the script is significantly faster (16 s in my build).
+This nice series allows building QEMU for Windows with the LLVM cross 
+compiler on my ARM64 machine, so you can add
 
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
----
- scripts/nsis.py | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Tested-by: Stefan Weil <sw@weilnetz.de>
 
-diff --git a/scripts/nsis.py b/scripts/nsis.py
-index d0914c88a7..d0ac61f6ab 100644
---- a/scripts/nsis.py
-+++ b/scripts/nsis.py
-@@ -37,10 +37,10 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
- 
-         analyzed_deps.add(dep)
-         # locate the dll dependencies recursively
--        rdeps = find_deps(dll, search_path, analyzed_deps)
-+        analyzed_deps, rdeps = find_deps(dll, search_path, analyzed_deps)
-         deps.extend(rdeps)
- 
--    return deps
-+    return analyzed_deps, deps
- 
- def main():
-     parser = argparse.ArgumentParser(description="QEMU NSIS build helper.")
-@@ -92,18 +92,18 @@ def main():
-         dlldir = os.path.join(destdir + prefix, "dll")
-         os.mkdir(dlldir)
- 
-+        analyzed_deps = set()
-         for exe in glob.glob(os.path.join(destdir + prefix, "*.exe")):
-             signcode(exe)
- 
-             # find all dll dependencies
--            deps = set(find_deps(exe, search_path, set()))
-+            analyzed_deps, deps = find_deps(exe, search_path, analyzed_deps)
-+            deps = set(deps)
-             deps.remove(exe)
- 
-             # copy all dlls to the DLLDIR
-             for dep in deps:
-                 dllfile = os.path.join(dlldir, os.path.basename(dep))
--                if (os.path.exists(dllfile)):
--                    continue
-                 print("Copying '%s' to '%s'" % (dep, dllfile))
-                 shutil.copy(dep, dllfile)
- 
--- 
-2.45.2
+I only needed a trivial additional fix in scripts/nsis.py for `make 
+installer` because the usual GNU objdump and the LLVM objdump (or the 
+cross x86_64-w64-mingw32-objdump in my test) produce slightly different 
+output (indentation with \t, indentation with four spaces). I'll prepare 
+a patch which eliminates the need for objdump, so no intermediate fix is 
+needed for this.
+
+Stefan W.
 
 
