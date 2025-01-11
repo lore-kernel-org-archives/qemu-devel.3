@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B06E7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 18:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7692BE7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 18:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWgMR-00070x-Sw; Sat, 11 Jan 2025 13:37:27 -0500
+	id 1tWgMc-0007E6-3p; Sat, 11 Jan 2025 13:37:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tWgMP-000709-N2; Sat, 11 Jan 2025 13:37:25 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tWgMZ-00078E-Ib; Sat, 11 Jan 2025 13:37:35 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tWgMO-0003tp-41; Sat, 11 Jan 2025 13:37:25 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aaf3c3c104fso528238566b.1; 
- Sat, 11 Jan 2025 10:37:22 -0800 (PST)
+ id 1tWgMX-0003w5-Sz; Sat, 11 Jan 2025 13:37:35 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-aaee0b309adso502398966b.3; 
+ Sat, 11 Jan 2025 10:37:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736620640; x=1737225440; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RoziYUKRnYnrxagpLXRXx22rtFkGtEbmADAZ6jidbtg=;
- b=OwvfuzPOdQZHszqMwynIoTfA5qlgqfi18H4oJHmJX/Si2+7/Q5JymMjJX0A9myT8c/
- hOG47uVlsaV/OC0ffVMs96c8uVBBMS/Dm4hSqAP3+Cvl9MSrH2foKDk4/43mbZeZxNx3
- hnRfyssQE9vU7FktVu7wMLsrNMSHhGLS1wK3rvDkkC+pyLvNJEB79FU0CAtR3OWfmdHT
- vQh7XeA8UDWk9PYD9Np+fMbPfmLsSkCMqA0KbZvapZPbm1367dvKEIaD88VjXOtAQkps
- IJHhnU1wo4hmG9FM7+6ix2OY/FhueDpW/BVLG1LQTCGhTVBX+0XgDtbKqrq81PAqDsG7
- bU7A==
+ d=gmail.com; s=20230601; t=1736620651; x=1737225451; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W0GVvSvysjxJEz2UaynSqQCCG8fvIEfWJUlnUTYHgNk=;
+ b=ZG/IPvgmeVf9GnCGekV+Ope75sUrtHn2CpaHkfVrSNStTZokbizrnKsyJO+G9xgNbG
+ KqRB6qTZisvdbFTe3bIxSn88QAI91WuvYBD8gwb9OeHuC4zjWYaYdaJ/ejmxMpflC6Eb
+ mzPJV7BAZ+iZwidGZ0sFebjHdRqS27tsmUqsN2/xmzO4qCqH40vRBa4JMRZYm+CWqyQT
+ 2dnJIpnuit7QZbeAdgoP1D42FRsJ+rNaYmixZ2hp4V9w6xklA/WqP16wDdmftNsUUL7g
+ Zqz8w63iPUTkIk9X7lBJ0+6J+SADHu5vBVS2TdAO2Ls4RVUoMNoSjT7/NQcb0ahr2VBX
+ Fp/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736620640; x=1737225440;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RoziYUKRnYnrxagpLXRXx22rtFkGtEbmADAZ6jidbtg=;
- b=jaQ06C8grMurkfOMiu3V5K6fq5ZQ29gqsqvIdfwnwimEkSwnpGAGhGa8nw/4CuXFqH
- o/gdlqE+AtZhNB3bPvpUGUfskzqJ6+qhwl5DTUjLDftzqQH3WTBH2b6yhmGC7AbuhUOZ
- I11tA52blj9SjZFQkCAELYZroJPyAQsQa+bILDlND3rinufsKdThzTkjgwwFW2vGaxQ8
- IcZOfaMesUFZDZxgePDbxXnF0geJn1Dsqc84AbLpT2mlXdBOI27d8soAoVUC4D7WhFZi
- udQlNv0hM/p8lnAESE/8EQlKKuA0mSuY5bw8JpzwvpGBAAIhwVEVQD4XPMcQspd4cmtu
- tThQ==
+ d=1e100.net; s=20230601; t=1736620651; x=1737225451;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=W0GVvSvysjxJEz2UaynSqQCCG8fvIEfWJUlnUTYHgNk=;
+ b=ShcCuHUcLODRMebSzrvfCX+y6Pqx1sxnaV2Wpb2E4qcgzG1bLpYxCYTmI5Ldy0+Ayo
+ iPftsrzGuBMjs2ATy5BBopxIWpCSrnWVHGBWC0Pw99Zi1NSZysKrvW96ZKCqI1eUVM6v
+ BjhDW8P6loPvLsFkWZ9eBWG1MdVXYGSPNrwL14m9XSK7zLKfT/VFM945bIQxf8EtgogP
+ rqcrE2x+C3Awu+WN020SemtNpHv/9MzdsTDEx8Ti14ZbRiKcxuWfyNOnTTaQRoi9q/Xb
+ XMZ3aqVvNM8oLmmoI6H/oJcTQ38wZdSzOJtE2afHkP3yYHLGky8YNQiuYVU1WsBOEOrf
+ xdPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1miFvCSJe7XZHiZKO17GH3HtuTXj+fg3re31XwQJ+FKdXp0MqC+5EO3c9P8mwIVi6LL1oUiS6aQZUyw==@nongnu.org,
- AJvYcCUDjKCN4roJVOpY4LB6vJV9+BsuNPz4ia3dcjyKOKkkmls+KOZdHMv+QhrD8agVRrrISvM+EWFqNg==@nongnu.org
-X-Gm-Message-State: AOJu0Yyp20mbCpS7c1MckK3fOGUCC7/80dXiUp6YyAYwr54WIoNNRx97
- dHkXD/KH7Rnodd9ripNUG745bclvLFniHRpLElfInwtNc8iDjVMDU9KNIg==
-X-Gm-Gg: ASbGncuTj0A1wxbAgPANhV7XEcQatESzH/SCaEXwABfLcKgJKwI0bG54SNSbW8x3K/I
- Z+UembypqamE49nGK8DZEjJcOo6Y52Y1uRP+zecUkRb4Mn/KjeSv2OeyPpZkf2yGxhCCY3fCMCX
- J3fiiWd6qjTWqhj3wYvT0yPfdz1qw8JnDWdd0hJF5IizTSFufJb9L4Pl90LnPpNeT/+7j2mcTl2
- EgUDIOFuFp/PzTknwPDnQ4rsQAcnJKibcV/8mxfpTtHmscyv6IufGuX40Rfi4btz9fYr6WwpG2M
- 3Zjx76Qa8ZKCB6UaWChsVJt+yAnv+XEKlsJX8ztC9D8=
-X-Google-Smtp-Source: AGHT+IEo9jM0CqOrvAxD15rCaGEwbz1WfiRt4FyB7MwtqZHr62JhXzdLVkhTU8qGvPTX3xt/mcmZAQ==
-X-Received: by 2002:a17:907:6d23:b0:aae:a087:f972 with SMTP id
- a640c23a62f3a-ab2ab16b1d6mr1255846866b.11.1736620639504; 
- Sat, 11 Jan 2025 10:37:19 -0800 (PST)
+ AJvYcCUxWb95oGJm1Pie3nGpIuWHDo8QmiR1BBH10iFQDg0jroTMp1ySWhwPtmyGGOom5lWAb7n4B/rv3Q==@nongnu.org,
+ AJvYcCXyb+oCYdbtXR3l5FIQJOJ+85sDt/8xheLVC645aU6t0OoAjVGX1mVpVG5tdJirKc74Cm4quGXKlw6W6w==@nongnu.org
+X-Gm-Message-State: AOJu0Yzk+QCB7+lu+wYGjtv5AcdcRKgqTVGoCsvsIm0sbMeOGpfyLzNw
+ P9+/GFnu1GQZKlZQN4zeT1V+4bL9b5B4WYVEa1v2myJCq4zwIg9o/7P30Q==
+X-Gm-Gg: ASbGncsqkyGMW+Yysne2xchXyVj0xOCPExLpFCdKH1+Zz3H4jrISihh7dU4cCXzf+Sa
+ idtsyPheeQjd3K20eYbrrFFMWCRONvSPO6OTw00jki2MdamenxxtQ7NmcsOotDGka3a6E4iu/Gx
+ 0tgl2dutEUPn6NmYd3I0dszUot2J+xq67h3C72NXVYSHSpl/5V7FDMI/X9m7u24sgMii2RXKVO8
+ 1Xqa4lrB6FP6FgQn0rgjwnVp1ospvJrgXdQYEdmfBXB3F20/wJYFl+N/uHLQ3o7bb4z4E8+qSf/
+ AIx5XEUR84akrHiEXqrRkil0Ip63Mw2BXUbS3FBX7Hc=
+X-Google-Smtp-Source: AGHT+IF160m7OYBbGTdXlf15ijGg9ZC3ovcJvKxBMkO3tlzK2arN+zdPOzuJljboJ3qBL4Ks++FtcA==
+X-Received: by 2002:a17:907:6d01:b0:aab:d8de:64ed with SMTP id
+ a640c23a62f3a-ab2ab6fcf85mr1487594966b.25.1736620650618; 
+ Sat, 11 Jan 2025 10:37:30 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-078-054-101-099.78.54.pool.telefonica.de. [78.54.101.99])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95af187sm299026666b.142.2025.01.11.10.37.18
+ a640c23a62f3a-ab2c95af187sm299026666b.142.2025.01.11.10.37.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Jan 2025 10:37:19 -0800 (PST)
+ Sat, 11 Jan 2025 10:37:29 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -75,15 +76,18 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
  qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 00/13] i.MX and SDHCI improvements
-Date: Sat, 11 Jan 2025 19:36:58 +0100
-Message-ID: <20250111183711.2338-1-shentey@gmail.com>
+Subject: [PATCH v2 08/13] hw/char/imx_serial: Turn some DPRINTF() statements
+ into trace events
+Date: Sat, 11 Jan 2025 19:37:06 +0100
+Message-ID: <20250111183711.2338-9-shentey@gmail.com>
 X-Mailer: git-send-email 2.48.0
+In-Reply-To: <20250111183711.2338-1-shentey@gmail.com>
+References: <20250111183711.2338-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,75 +110,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes some details in i.MX platform devices, improves SDHCI=0D
-compatibility with U-Boot and modernizes some code.=0D
-=0D
-The first 5 patches are bugfixes 1/ resolving infinite loop in U-Boot esdhc=
-=0D
-driver, 2/ fixing a character echoing issue in imx-serial, 3/ fixing IRQ sh=
-aring=0D
-issue in Designware PCIe emulation, and 4/ fixing GPIO level preservation a=
-cross=0D
-resets in imx-gpio.=0D
-=0D
-Patches 6 and 7 modernize SD card emulation by turning presence and=0D
-write-protect GPIOs into qdev GPIOs and then further allowing the GPIOs to =
-be=0D
-inverted, just like device tree allows.=0D
-=0D
-The rest of the series is cosmetics including turning DPRINTF() into trace=
-=0D
-events which eases debugging.=0D
-=0D
-v2:=0D
-* Drop redundant implementation of TYPE_OR_IRQ (David, Zoltan)=0D
-* Use absolute QOM paths when tracing in imx_gpio and imx_i2c (Phil)=0D
-* Trace hexadecimal values in imx_serial (Phil)=0D
-* Do NOT move inversion of presence and write-protect GPIOs since that chan=
-ges=0D
-the internal logic of the device=0D
-=0D
-Bernhard Beschow (13):=0D
-  hw/sd/sdhci: Set SDHC_NIS_DMA bit when appropriate=0D
-  hw/char/imx_serial: Fix reset value of UFCR register=0D
-  hw/char/imx_serial: Update all state before restarting ageing timer=0D
-  hw/pci-host/designware: Expose MSI IRQ=0D
-  hw/gpio/imx_gpio: Don't clear input GPIO values upon reset=0D
-  hw/sd/sd: Remove legacy sd_set_cb() in favor of GPIOs=0D
-  hw/sd/sd: Allow for inverting polarities of presence and write-protect=0D
-    GPIOs=0D
-  hw/char/imx_serial: Turn some DPRINTF() statements into trace events=0D
-  hw/timer/imx_gpt: Remove unused define=0D
-  tests/qtest/libqos: Reuse TYPE_IMX_I2C define=0D
-  hw/i2c/imx_i2c: Convert DPRINTF() to trace events=0D
-  hw/misc/imx6_src: Convert DPRINTF() to trace events=0D
-  hw/gpio/imx_gpio: Turn DPRINTF() into trace events=0D
-=0D
- include/hw/arm/fsl-imx6.h                  |  4 +-=0D
- include/hw/arm/fsl-imx7.h                  |  4 +-=0D
- include/hw/char/imx_serial.h               |  2 +-=0D
- include/hw/pci-host/designware.h           |  1 +=0D
- include/hw/sd/sdcard_legacy.h              |  1 -=0D
- hw/arm/fsl-imx6.c                          | 13 ++++-=0D
- hw/arm/fsl-imx7.c                          | 13 ++++-=0D
- hw/char/imx_serial.c                       | 65 ++++++++++++++--------=0D
- hw/gpio/imx_gpio.c                         | 19 +++----=0D
- hw/i2c/imx_i2c.c                           | 21 ++-----=0D
- hw/misc/imx6_src.c                         | 23 ++------=0D
- hw/pci-host/designware.c                   |  7 +--=0D
- hw/sd/sd.c                                 | 39 ++++++-------=0D
- hw/sd/sdhci.c                              | 11 +++-=0D
- hw/timer/imx_gpt.c                         |  4 --=0D
- tests/qtest/libqos/arm-imx25-pdk-machine.c |  5 +-=0D
- tests/qtest/libqos/i2c-imx.c               |  4 +-=0D
- hw/arm/Kconfig                             |  2 +=0D
- hw/char/trace-events                       |  5 ++=0D
- hw/gpio/trace-events                       |  5 ++=0D
- hw/i2c/trace-events                        |  5 ++=0D
- hw/misc/trace-events                       |  6 ++=0D
- 22 files changed, 151 insertions(+), 108 deletions(-)=0D
-=0D
--- =0D
-2.48.0=0D
-=0D
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/char/imx_serial.c | 58 +++++++++++++++++++++++++++++---------------
+ hw/char/trace-events |  5 ++++
+ 2 files changed, 44 insertions(+), 19 deletions(-)
+
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index be06f39a4d..38b4865157 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -27,6 +27,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qemu/fifo32.h"
++#include "trace.h"
+ 
+ #ifndef DEBUG_IMX_UART
+ #define DEBUG_IMX_UART 0
+@@ -185,10 +186,10 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
+                                 unsigned size)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
++    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     uint32_t c, rx_used;
+     uint8_t rxtl = s->ufcr & TL_MASK;
+-
+-    DPRINTF("read(offset=0x%" HWADDR_PRIx ")\n", offset);
++    uint64_t value;
+ 
+     switch (offset >> 2) {
+     case 0x0: /* URXD */
+@@ -209,49 +210,67 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
+             imx_serial_rx_fifo_ageing_timer_restart(s);
+             qemu_chr_fe_accept_input(&s->chr);
+         }
+-        return c;
++        value = c;
++        break;
+ 
+     case 0x20: /* UCR1 */
+-        return s->ucr1;
++        value = s->ucr1;
++        break;
+ 
+     case 0x21: /* UCR2 */
+-        return s->ucr2;
++        value = s->ucr2;
++        break;
+ 
+     case 0x25: /* USR1 */
+-        return s->usr1;
++        value = s->usr1;
++        break;
+ 
+     case 0x26: /* USR2 */
+-        return s->usr2;
++        value = s->usr2;
++        break;
+ 
+     case 0x2A: /* BRM Modulator */
+-        return s->ubmr;
++        value = s->ubmr;
++        break;
+ 
+     case 0x2B: /* Baud Rate Count */
+-        return s->ubrc;
++        value = s->ubrc;
++        break;
+ 
+     case 0x2d: /* Test register */
+-        return s->uts1;
++        value = s->uts1;
++        break;
+ 
+     case 0x24: /* UFCR */
+-        return s->ufcr;
++        value = s->ufcr;
++        break;
+ 
+     case 0x2c:
+-        return s->onems;
++        value = s->onems;
++        break;
+ 
+     case 0x22: /* UCR3 */
+-        return s->ucr3;
++        value = s->ucr3;
++        break;
+ 
+     case 0x23: /* UCR4 */
+-        return s->ucr4;
++        value = s->ucr4;
++        break;
+ 
+     case 0x29: /* BRM Incremental */
+-        return 0x0; /* TODO */
++        value = 0x0; /* TODO */
++        break;
+ 
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
+                       HWADDR_PRIx "\n", TYPE_IMX_SERIAL, __func__, offset);
+-        return 0;
++        value = 0;
++        break;
+     }
++
++    trace_imx_serial_read(chr ? chr->label : "NODEV", offset, value);
++
++    return value;
+ }
+ 
+ static void imx_serial_write(void *opaque, hwaddr offset,
+@@ -261,8 +280,7 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+     Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     unsigned char ch;
+ 
+-    DPRINTF("write(offset=0x%" HWADDR_PRIx ", value = 0x%x) to %s\n",
+-            offset, (unsigned int)value, chr ? chr->label : "NODEV");
++    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
+ 
+     switch (offset >> 2) {
+     case 0x10: /* UTXD */
+@@ -374,9 +392,11 @@ static int imx_can_receive(void *opaque)
+ static void imx_put_data(void *opaque, uint32_t value)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
++    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     uint8_t rxtl = s->ufcr & TL_MASK;
+ 
+-    DPRINTF("received char\n");
++    trace_imx_serial_put_data(chr ? chr->label : "NODEV", value);
++
+     imx_serial_rx_fifo_push(s, value);
+     if (fifo32_num_used(&s->rx_fifo) >= rxtl) {
+         s->usr1 |= USR1_RRDY;
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 59e1f734a7..92e002da7a 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -52,6 +52,11 @@ escc_sunkbd_event_out(int ch) "Translated keycode 0x%2.2x"
+ escc_kbd_command(int val) "Command %d"
+ escc_sunmouse_event(int dx, int dy, int buttons_state) "dx=%d dy=%d buttons=0x%01x"
+ 
++# imx_serial.c
++imx_serial_read(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] -> 0x%08" PRIx64
++imx_serial_write(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] <- 0x%08" PRIx64
++imx_serial_put_data(const char *chrname, uint32_t value) "%s: 0x%" PRIx32
++
+ # pl011.c
+ pl011_irq_state(int level) "irq state %d"
+ pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
+-- 
+2.48.0
+
 
