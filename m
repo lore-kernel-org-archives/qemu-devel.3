@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45817E7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 15:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8F8E7719C
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 15:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWd7S-000395-ET; Sat, 11 Jan 2025 10:09:46 -0500
+	id 1tWdfT-00056I-JF; Sat, 11 Jan 2025 10:44:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWd7Q-00038x-O9
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:09:44 -0500
-Received: from mailgate02.uberspace.is ([185.26.156.114])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWdfR-00055x-T1
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:44:53 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tWd7P-0001Kc-1O
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:09:44 -0500
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 28C86180C42
- for <qemu-devel@nongnu.org>; Sat, 11 Jan 2025 16:09:34 +0100 (CET)
-Received: (qmail 27451 invoked by uid 990); 11 Jan 2025 15:09:33 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sat, 11 Jan 2025 16:09:33 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tWdfQ-0005zn-8T
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 10:44:53 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4362f61757fso28975465e9.2
+ for <qemu-devel@nongnu.org>; Sat, 11 Jan 2025 07:44:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736610290; x=1737215090; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L447D60CgUZfIyvkLe7HDbo13PCbviM1cAXNkP9qux4=;
+ b=A8u8l/c4LX7qQKhxzI4Np0ukTHY2nSMbf3fCwBixMEE0eW1ZPetpvrBKcKEfLBKcVI
+ c3cGdodJhf6q5rZucKgDoKpsR+5KNulCe1l1tDk9AZY0ZnFocDQN7DbiJdRQop97Nn7Y
+ Wasp3G+lK8o3PrJISXaoMuLL8fkthe1D2KIbqShVnIluh8M316Rhtm4MlJvD/3dqBzGa
+ B2WMM/3rVBHsMKB8Bp9gFVW6H+2plxrOZeEJLtapg2W48rGVk8BnWIenAPb4/PugU8Qg
+ qR0FoxcgKzxrH3xsLfv3wPdvD6TaflNzhfBI77WStnSy7M4w3lnPJvRar49iUKG9EGUk
+ P/Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736610290; x=1737215090;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=L447D60CgUZfIyvkLe7HDbo13PCbviM1cAXNkP9qux4=;
+ b=UYNXCbqrEBTkqDbsa297lYQ065UxDTng/EKuDTE+3lUdwnFwIgQ+cWQaHK8C2YuOIr
+ rdTugeRIKNph6BF9xyUBK/PlU0SVyo/1kZnC2NRjjFIQr3baZKSmEh3XETo1G4QsrVED
+ 2DXELr2sqDR4MeFf4MsAncBSHr1rnw9UxGltWpKCIzCb+IZ4i2Q4OUpiVyAsVffuOydi
+ eJK4o3obTULinIRPar6Poe+LA3juGhIP4eqfVy2r7QBtdPdqnOD4nyTSb+qAq3eViyWL
+ bprVEguQfcBSQ99FufD61dgy+OxqWjq8cUYsLuH8Ck1XQMH9Wg/bZ2MwubZ/5QKjXH89
+ oNgw==
+X-Gm-Message-State: AOJu0YwqxW257tj1xgu9UK5tB0p8TNnRNCNI3I+w3YkXp5KxDNRSMLeh
+ Of27oxiPJu6Z+bHKrlTjMv/o57DkUcyvcZykvpgAw/eUI65uKxeqsAP+vt41xcY=
+X-Gm-Gg: ASbGnctHlCQFrNHfsczJFx1satnIPFEH6cDbN/RsWerM6cY16QSEZtFpMJTiZwYVprO
+ wVmO+mw45sgbnWWJ1Tkc6f09v8AI2dh70T5wzZI9Q0+6sDEgFStdNWGa6fpQC6dAF3dDtTMqeMZ
+ r1h9szcfCHcSm7L+/NRcbjb+u0N36q6HaWHF27YAKuBYvnTSYM5CGRRlUGhD+OjWU9No35vNxoK
+ 6r94B7Zra1Xt6+ajjqz8sRhcLE//n6VfGdXBQK9Isxi2KBRqbA7hRqOPK3ReauHz0ZDBxN1H5U2
+ 6oLy+u0FsQNuKxzWXxwgG+wP
+X-Google-Smtp-Source: AGHT+IHqL/oF398wwtdAcWF6l+CGmejW+JHMl946fjuUf4hHX1mXBqOWlMrPNoiIkHcpdZ6MqM7kfQ==
+X-Received: by 2002:a05:600c:4745:b0:434:9c60:95a3 with SMTP id
+ 5b1f17b1804b1-436e26c4218mr145018485e9.11.1736610289956; 
+ Sat, 11 Jan 2025 07:44:49 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2dc14ebsm119112985e9.17.2025.01.11.07.44.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 11 Jan 2025 07:44:48 -0800 (PST)
+Message-ID: <1e168f4a-c0c3-4beb-97e9-93200d3c045b@linaro.org>
+Date: Sat, 11 Jan 2025 16:44:47 +0100
 MIME-Version: 1.0
-Date: Sat, 11 Jan 2025 15:09:33 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <ac8afd094ff19d2e3acf19d08a55f98815001318@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH 22/22] accel/tcg: also suppress asynchronous IRQs for 
- cpu_io_recompile
-To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, "Pierrick Bouvier"
- <pierrick.bouvier@linaro.org>,
- "=?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@linaro.org>,
- "Thomas Huth" <thuth@redhat.com>, "Mahmoud Mandour"
- <ma.mandourr@gmail.com>, "Alexandre Iooss" <erdnaxe@crans.org>, "Richard 
- Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
- <pbonzini@redhat.com>, "Laurent Vivier" <laurent@vivier.eu>,
- "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
-In-Reply-To: <20250109170619.2271193-23-alex.bennee@linaro.org>
-References: <20250109170619.2271193-1-alex.bennee@linaro.org>
- <20250109170619.2271193-23-alex.bennee@linaro.org>
-X-Rspamd-Bar: -
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.936487) MIME_GOOD(-0.1)
-X-Rspamd-Score: -1.536487
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=smNhWhLPld+rckYUnK1aTF/H/wy9s0DkJW/uRHlzZQY=;
- b=MQdyQC+xNjQ2jUWPDSV+0SKt3gJ/a+DLwSwsz3DD7aHmeEVvWjVuXPi4f9VSGAOCoxu1j2NdxN
- Z6M24P24l5nflIJth7te9dIYs+Tnxcl/QXs4+ZsANTDAVpVvN2tPioW53+9CzhFyhhDx7PBg0KrU
- aAOcQukbxHTJ8m2dqCDlgNeKqrfzbp0AG8AsfqBpcUrLbeMxcWgBHaoNFt5/s3UJsOq1gnVu1zKU
- 5CATm3vPz+GqUuXfIYn18VfmbsoOc4LIB7YXWOjOFr/VGHExjoAeq9pu6dRcAQgyCZ+dLLsXnDc7
- cuLOi9E+3evvPSL4FqYUxtbJqmqJfGwfn4VbVQ7+aU0Bd2dY+siBeTWNvPUoYzefWyBoNak7mChG
- 3fHCQbIqRW9DHNcln9kuuP28U4Mm6tXlTZ275kw90ZT1MT86W401sca0kJHfUjroZ5ySa7e0hJnM
- 3OgoE+lWy4Rv9ySm+CI4dFIURVv3oZM7DosDijLsvxvnwc3cUUhjdrwLCDX8oJjdgb53ii4YL9uQ
- 2AM+RGB+JJu14u6K2rCrYuy2SlKimw2GqP45eVYGh2DguBCMMn659n0dYYUB/oyDpJcP0mvzl/sm
- gMa8sVmdKpErOy/9j/ThkVXWjLQoOhdudMOxaOKhM3ENu3w+KdF6dV79rOZ+KdemXT3A3XLgGC0y
- 8=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update path to coreaudio.m
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, devel@daynix.com
+References: <20250111-maintainers-v1-1-faebe6ef0fec@daynix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250111-maintainers-v1-1-faebe6ef0fec@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,42 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
-
-January 9, 2025 at 6:06 PM, "Alex Benn=C3=A9e" wrote:
-> While it would be technically correct to allow an IRQ to happen (as
-> the offending instruction never really completed) it messes up
-> instrumentation. We already take care to only use memory
-> instrumentation on the block, we should also suppress IRQs.
->=20
->=20Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Julian Ganz <neither@nut.email>
+On 11/1/25 07:42, Akihiko Odaki wrote:
+> Commit 8b46d7e2dc8e ("audio: Rename coreaudio extension to use
+> Objective-C compiler") renamed coreaudio.c to coreaudio.m.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  accel/tcg/translate-all.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->=20
->=20diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-> index 453eb20ec9..d56ca13cdd 100644
-> --- a/accel/tcg/translate-all.c
-> +++ b/accel/tcg/translate-all.c
-> @@ -633,9 +633,10 @@ void cpu_io_recompile(CPUState *cpu, uintptr_t ret=
-addr)
->  * Exit the loop and potentially generate a new TB executing the
->  * just the I/O insns. We also limit instrumentation to memory
->  * operations only (which execute after completion) so we don't
-> - * double instrument the instruction.
-> + * double instrument the instruction. Also don't let an IRQ sneak
-> + * in before we execute it.
->  */
-> - cpu->cflags_next_tb =3D curr_cflags(cpu) | CF_MEMI_ONLY | n;
-> + cpu->cflags_next_tb =3D curr_cflags(cpu) | CF_MEMI_ONLY | CF_NOIRQ | =
-n;
->=20=20
->=20 if (qemu_loglevel_mask(CPU_LOG_EXEC)) {
->  vaddr pc =3D cpu->cc->get_pc(cpu);
-> --=20
->=202.39.5
+>   MAINTAINERS | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Julian Ganz <neither@nut.email>
+Oops, thanks!
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Queued.
 
