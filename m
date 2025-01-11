@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A86FE7719A
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 05:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313FBE7719A
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jan 2025 05:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWUEI-0001Tq-4a; Sat, 11 Jan 2025 00:40:14 -0500
+	id 1tWUH4-0002Df-Sh; Sat, 11 Jan 2025 00:43:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tWUEG-0001Tg-Eb
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:40:12 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tWUH2-0002DV-Ro
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:43:05 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tWUED-0007Ic-Ph
- for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:40:12 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21a1e6fd923so61200475ad.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 21:40:09 -0800 (PST)
+ id 1tWUH1-0007SD-78
+ for qemu-devel@nongnu.org; Sat, 11 Jan 2025 00:43:04 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2f43da61ba9so3698961a91.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jan 2025 21:43:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736574008; x=1737178808;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736574181; x=1737178981;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yOSvtagptYw+NpCKjysV15pLrROR3Wppp0AI2AaUmHM=;
- b=mm7raH/5aYEUBSc3YEapmV3RQD3ghv4Q05KWKyx9+cqQL65AuV+dhi7LF/lhT9baBq
- 4sgKV7YMkg5/olweM++HSdLik1eZZOs5+XclJj8Ld5KCP78/C/wAmbvu0zWowTb6pON4
- oSYTcAOPjLD0WQ0Ry8z1hG20k/UTWEj83GEMZZiQyG/VBEg3yIGuFhYoNPKnBJ2/9NFM
- 6afXkzPs3BYDkz58ojfnozxLTEj0RjlHAmsg/RMZzaXQLPYuhHkMtwjGXynHh//+hD9I
- yS8l/kwokUZTLT6pwMYr5MTVCUbQ57Mn8egM73KMPMt93NKgDVTgdBxKFnbS2u8LreoO
- D91w==
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nKm5OiS1njPEZZLYX6s7XzfgG5hCAAevmqprhpDK6XY=;
+ b=ikbaOY2f/2NqLebWRPThSFAEGhlC9i9+kYMmWNFe3XxVf6Zoz6huq+tyUEFJl/sTxj
+ SRtpeaFAdhZnYRZns0xqQ+Ho9NuajDKNYphRhhnCkAwBevdTAEFb3/Jj8VCknlSrqdk2
+ f72BURPGajuW7EGf4h7/uHI03NmjgcAUBZCH5l0UdAaD2+FFShMPUGNUhMJCL6bCWkjX
+ H35AXbtzcjmP1t35CrqPyXj6rZ46izU3TGCwuQQWq5ohB6TFtDhFSQNOSHKOLWcPPUEY
+ wu+U0mXtIpt4bpDhSewpsq122ks+ZSe6l8KfOiMGvaQTmHJNvbURvc1DA1b8pdl+hlKK
+ x5DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736574008; x=1737178808;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1736574181; x=1737178981;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yOSvtagptYw+NpCKjysV15pLrROR3Wppp0AI2AaUmHM=;
- b=cnhYCS3ooNl6cu7aLRmSbPxnh+ceddn7Uvmzv2JwfYIv4ntsJ8DRDVUTpxMilnjNsI
- 74nehPzgzJ6qyn/86WwRgxOMM6FWUTx+na1cjZkCIIjbPUxpYOudhVT+2VYg/ZRCKbkI
- eDAmQvCbS7oKz2npoXXQRjlniB7fba0gTUikFDlIg34eTYRPLvB44ABLcCFxq9uRI3RH
- chI9SbbfLY6LP87La5dsQLbBgfRPbL92GwTr/KsfRdL5dH0XnU2Sw+Mf22ib7imdIwAq
- ENVdGmn5v/GbnsPK/tBQWOe1HesV7EWHsmCfEs/n8rE04UPuZN5gsrEHluHFbyefK8Vs
- TgIg==
-X-Gm-Message-State: AOJu0Yw+XCVeH9I0MxgUjZ6gk486nJDdUdF9nE7DQ6ulBRtlWgx3P7hR
- HhFU00cphsXTqpKmSA0k/30G8VINUr1U7URUlQ1gfwBDabg/oDYaBEnQQkn6XfA=
-X-Gm-Gg: ASbGncsDunuGFAyODvToqZ8fZgVcPiEwL+DGUOOfp7+b6Wk9+3kRudcxTyG2FYsBzTN
- 6wuFHzwuNk4Gw7VRG4fmqadseOGYCCUq2/Py6xSbFDJwRGOsO7znEHZaq4I11zzByRe8L2QoQBH
- DAes7TWVuK5wDVByhoYpyrA3/IuYTLqNskJ8AuTr6GX8Tz/pWDpNPSiNJOaMUNmIgVuo02AH5n4
- 6OeIk7At18OPCTI0MoJWc/rfpdIuPbsHf285Bfzo82HEOlkCl9J3niLmOSZ13QOk+4=
-X-Google-Smtp-Source: AGHT+IFndUVWemjHYFG96COKXZaZLesR7XNEKrzJzKg/4ztwTvm5+5PPOKZaxUlmjk/FlS2uFDOmMg==
-X-Received: by 2002:a17:903:185:b0:215:b190:de6 with SMTP id
- d9443c01a7336-21a83f3f59amr172008285ad.3.1736574008118; 
- Fri, 10 Jan 2025 21:40:08 -0800 (PST)
+ bh=nKm5OiS1njPEZZLYX6s7XzfgG5hCAAevmqprhpDK6XY=;
+ b=OyLVi/wjbdFHqRczoRVYbLrp2R2vFo2sx/GB0CFbe4PrVC+Z7rhxR3hk90CA3U2bRS
+ oCPbjsEta5KQ+ny/TIxfkpE0zrMBfWpjK+szfMoXsST5wb7wa2qquEce9TXttl7BLALj
+ m7eKB+kCp7+bul1zKqcXqb+iLFBMWzF21Ld0/aFDIzP3kIlKWZBIPtKoIMUhxnMTqkjp
+ s40oa5+wn9wG1wbGeBTcj8wOhE5HAFd9PGYxTLk9qSVyuh7IXgZ39O0FvyXlxFCBeUKJ
+ VwLGUwmbrTtMFqq7/74RE0shQcbSKcDnXyt7DKlvwffUXt2Oi/pQkkWhVwV7wsGGdvIa
+ VdNw==
+X-Gm-Message-State: AOJu0Yzn9xouRhBfPRSy2sCT1/7i/sv9lyMJ5nuQAR38FWIaS0bpH0X6
+ CkjaGWcMrt+6LJE7i3LQ2fQu5nofrgPBJCE6vUukzmpBFnwQkiWfKz1z+ckfazo=
+X-Gm-Gg: ASbGncvqfPTYabiQ3FNNWxtdjYAiVal1KabFYrGY1c8PtCo6WjpmTT0HaKILxZVLtT5
+ yjbwCL7wJJB/FwSpinOejnpfhde+KjTiHLxjg4YOwoKey+KXU8ZB6Ng/f1PLBoKd53RlW8OkJMo
+ +cFaMzgaDl8ogkGAmBzFiBS1ZSrJfLHogK/r0uReCOSZXdJvQZm0/GZtuPieRleT9pQp8BwGwa9
+ oc2F3+x+H+1EWtdn8Fni8ChGoX75sK64WF8z2G5To9Q05m4jFP6XTVTC1KmEfab3TM=
+X-Google-Smtp-Source: AGHT+IG3bgFMJRC9rBIflCLzfJXQz2A00z47fr34sCswe5SeaPaOUsq45gvsWJbFxpR5C3kZ7G9VDg==
+X-Received: by 2002:a17:90b:4d0c:b0:2ee:8619:210b with SMTP id
+ 98e67ed59e1d1-2f5490bd21dmr19577465a91.29.1736574181528; 
+ Fri, 10 Jan 2025 21:43:01 -0800 (PST)
 Received: from [157.82.203.37] ([157.82.203.37])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f10dd84sm21187385ad.14.2025.01.10.21.40.06
+ 98e67ed59e1d1-2f55f76e5a0sm3450405a91.26.2025.01.10.21.42.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jan 2025 21:40:07 -0800 (PST)
-Message-ID: <4d3ab3a9-b683-4bf8-9608-73d895d8e195@daynix.com>
-Date: Sat, 11 Jan 2025 14:40:04 +0900
+ Fri, 10 Jan 2025 21:43:00 -0800 (PST)
+Message-ID: <50e784b2-850d-4d1b-9fc8-7fb6076f101e@daynix.com>
+Date: Sat, 11 Jan 2025 14:42:57 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rcu: Call drain_call_rcu at exit
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20241013-rcu-v1-1-a93b7c5957f3@daynix.com>
-Content-Language: en-US
+Subject: Re: [PATCH] tap-linux: Open ipvtap and macvtap
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241013-rcu-v1-1-a93b7c5957f3@daynix.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20241008-macvtap-v1-1-2032caa25b6d@daynix.com>
+ <CACGkMEvmEsFdLRgF9CLQCEo0jt3dX8wAPLjRC2pNb4ofD8dLNQ@mail.gmail.com>
+ <469f9995-9182-43c2-93d7-ab8dbefb9eb9@daynix.com>
+ <CACGkMEs2hkX7S3QJK1yLbJjSxW=obiSOYwKA4w2xiJwuOooq4g@mail.gmail.com>
+ <74d218be-2119-4977-8d2e-40a51cccde9d@daynix.com>
+Content-Language: en-US
+In-Reply-To: <74d218be-2119-4977-8d2e-40a51cccde9d@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,47 +103,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+Hi Jason,
 
-Please review this patch.
+Can you check this patch again?
 
 Regards,
 Akihiko Odaki
 
-On 2024/10/13 16:31, Akihiko Odaki wrote:
-> call_rcu() callbacks may have potential memory leaks, but QEMU may
-> sometimes exit before draining the callbacks and leave the leaks
-> undetected by LeakSanitizer. For example, PCI devices register a
-> call_rcu() callback by calling address_space_destroy() and they will
-> not be freed until it gets drained. This hides memory leaks that
-> is going to happen when PCI devices loose references to the memory
-> allocations.
+On 2024/10/22 13:59, Akihiko Odaki wrote:
+> On 2024/10/18 17:10, Jason Wang wrote:
+>> On Sat, Oct 12, 2024 at 5:05 PM Akihiko Odaki 
+>> <akihiko.odaki@daynix.com> wrote:
+>>>
+>>> On 2024/10/09 16:41, Jason Wang wrote:
+>>>> On Tue, Oct 8, 2024 at 2:52 PM Akihiko Odaki 
+>>>> <akihiko.odaki@daynix.com> wrote:
+>>>>>
+>>>>> ipvtap and macvtap create a file for each interface unlike tuntap, 
+>>>>> which
+>>>>> creates one file shared by all interfaces. Try to open a file 
+>>>>> dedicated
+>>>>> to the interface first for ipvtap and macvtap.
+>>>>>
+>>>>
+>>>> Management layers usually pass these fds via SCM_RIGHTS. Is this for
+>>>> testing purposes? (Note that we can use something like -netdev
+>>>> tap,fd=10 10<>/dev/tap0).
+>>>
+>>> I used this for testing.
+>>
+>> Anything that prevents you from using fd redirection? If not
+>> management interest and we had already had a way for testing, I tend
+>> to not introduce new code as it may bring bugs.
 > 
-> Call drain_call_rcu at exit to expose memory leaks by call_rcu()
-> callbacks deterministically.
+> I don't know what ifindex the macvtap device has so it's easier to use 
+> if QEMU can automatically figure out the it.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   util/rcu.c | 1 +
->   1 file changed, 1 insertion(+)
+>>
+>>>
+>>>>
+>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>> ---
+>>>>>    net/tap-linux.c | 17 ++++++++++++++---
+>>>>>    1 file changed, 14 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/net/tap-linux.c b/net/tap-linux.c
+>>>>> index 1226d5fda2d9..22ec2f45d2b7 100644
+>>>>> --- a/net/tap-linux.c
+>>>>> +++ b/net/tap-linux.c
+>>>>> @@ -45,10 +45,21 @@ int tap_open(char *ifname, int ifname_size, int 
+>>>>> *vnet_hdr,
+>>>>>        int len = sizeof(struct virtio_net_hdr);
+>>>>>        unsigned int features;
+>>>>>
+>>>>> -    fd = RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
+>>>>> +
+>>>>> +    ret = if_nametoindex(ifname);
+>>>>> +    if (ret) {
+>>>>> +        g_autofree char *file = g_strdup_printf("/dev/tap%d", ret);
+>>>>> +        fd = open(file, O_RDWR);
+>>>>> +    } else {
+>>>>> +        fd = -1;
+>>>>> +    }
+>>>>> +
+>>>>>        if (fd < 0) {
+>>>>> -        error_setg_errno(errp, errno, "could not open %s", 
+>>>>> PATH_NET_TUN);
+>>>>> -        return -1;
+>>>>> +        fd = RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
+>>>>
+>>>> Any reason tuntap were tried after the macvtap/ipvtap?
+>>>
+>>> If we try tuntap first, we will know that it is not tuntap when calling
+>>> TUNSETIFF. We will need to call TUNGETFEATURES and TUNSETVNETHDRSZ again
+>>> in such a case because they precede TUNSETIFF. Calling them twice is
+>>> troublesome.
+>>
+>> I may miss something, we are only at the phase of open() not TUNSETIFF?
 > 
-> diff --git a/util/rcu.c b/util/rcu.c
-> index fa32c942e4bb..118a974e3438 100644
-> --- a/util/rcu.c
-> +++ b/util/rcu.c
-> @@ -415,6 +415,7 @@ static void rcu_init_complete(void)
->       qemu_thread_create(&thread, "call_rcu", call_rcu_thread,
->                          NULL, QEMU_THREAD_DETACHED);
->   
-> +    atexit(drain_call_rcu);
->       rcu_register_thread();
->   }
->   
+> We can tell if it is macvtap/ipvtap just by trying opening the device 
+> file. That is not possible with tuntap because tuntap uses /dev/net/tun, 
+> a device file common for all tuntap interfaces and its presence does not 
+> tell if the interface is tuntap.
 > 
-> ---
-> base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-> change-id: 20241013-rcu-b4864052a103
+>>
+>>>
+>>> This is also consistent with libvirt. libvirt first checks if
+>>> g_strdup_printf("/dev/tap%d", ifindex) exists, and falls back to tuntap
+>>> otherwise.
+>>
+>> This is not what I understand from how layered products work. Libvirt
+>> should align with Qemu for low level things like TAP, not the reverse.
 > 
-> Best regards,
+> This change is intended for the use case where libvirt is not in use. In 
+> particular, I use mkosi, which is not a full fledged layering mechanism.
+> 
+> Regards,
+> Akihiko Odaki
 
 
