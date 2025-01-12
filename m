@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB1BE7719C
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:33:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C85BE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX1pD-0007uF-JC; Sun, 12 Jan 2025 12:32:35 -0500
+	id 1tX28G-0002U3-8c; Sun, 12 Jan 2025 12:52:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1p2-0007tj-NL
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:32:25 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tX28D-0002TI-Go
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:52:13 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1p0-0000Sx-O5
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:32:24 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4361e89b6daso25381765e9.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:32:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tX28B-0002EW-4c
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:52:12 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2165cb60719so61528625ad.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:52:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736703140; x=1737307940; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736704328; x=1737309128; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1UVOydxaBftTDJA9IS2xai9YhUYwPPnbCWE3Z0cGEos=;
- b=mwdMb+5cvvRlk7sfByOtKkS5DgMoxxPSK2I52vgqNv6Jwk0rLOsEehwQv/3vyfa6UO
- oQDf7I3+TFhxJ69yWZp/9vlEtErj06IvqOtBTX0u16htjp2eIMue6LrhN2pn5LTrPpgR
- VHsptFBPkoyFHmYurcAhQKDnokJn0DO6m/+iA5hU4mHNqkXWj8Ak68A3IwU+65P6sHhm
- LT5voxc/BvjpZv4lyjBH4b5qDI00ta67+5mjmbc+WN0Y31luk+QDy3Ze0GAXGKhLcbKJ
- R+3EFpGZRPJKZV/wMjVdqKTKD1QnDeX1cj0ZI6wQGvXJv8C58bV7Y63r2DttGI/jSdaY
- h72Q==
+ bh=nrj9LdmClEjvzcWeexh+VwC/9/Q4bvfAYui3iYSCF4o=;
+ b=vneU5k0hIVDFT5jv6mAMiCq27z4bV0+AngV/3Jf0Sgn5nABcfpW6FjP6dYom5S1A3d
+ cDQY1lnOwVlWQ3HvZbpYoujHND926TzdV+qTSrIzhfbAz4/YEkD31f3nuPk6yjQ2XW3m
+ Ts+lzsvmOEDwasvgQ4Wb3/1fpK9jLcZk0qROl9wr1kwwqh3TeAj+Ue6hcbIC7PEyvqjL
+ l3BcuPcoHDVO0L1p9P4RQA6nu2snRkGt8hnQr7gPYZd6XPzuAS3Z9up17Q8jaXOiaour
+ NVFTj6FjdJnBf0UWZLbfBkKaz5t1raIo7TyOc+IGBpqEeIfsv7VMBo8qy4ZObHyMNrz8
+ VHsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736703140; x=1737307940;
+ d=1e100.net; s=20230601; t=1736704328; x=1737309128;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1UVOydxaBftTDJA9IS2xai9YhUYwPPnbCWE3Z0cGEos=;
- b=s4CRAKHC1LOjpJ2Lb8ZnDB9Wb883sW9JlDuQJricSRUT9yG+2AYmDSF1vaRWbfE1ck
- AO0KUGZp4kJtdQ0comrsMtRoQsR+3+PrDqm6Qj6l8/fysyikCrUyzeZw5bMloPoW7uxX
- wM6JB0wPmXwEAspn3OSFJxdsfRh9c6Xspd4L+BeLPnVsJK7nOhmGuFADzN5rrPNzZxit
- frj8W85if1srrAR4alv3wn0ecpY9BVyBt6975JBaC8eLlUK+pQhKcCN8cE1O0spxCJ9P
- R99tjPn1BwMUSxbdB4zOMyzukt2aaI6L0un3mlxCsYbwt9L+vs2ZuOXcW2Js1T+UbDY5
- pRQg==
-X-Gm-Message-State: AOJu0Yy8090J9hSwudnS0D+n5PedCrLQRSvSOD/I/2IMKgHS5QuRUH0i
- AZx7JyusaThX9mMYNLyytR8wDwIwCqFHHQV0A0fkt9dQaf7c4vUU/ZPkk9AvmxY=
-X-Gm-Gg: ASbGnctG+EmHsTaNdE+Q/T98mUH1jFZYOAdCKheO9gtUxBP+VBY6TyLOKOM2+m8pAEQ
- /3b1LnS2jxt1ZG/yMDI5br/gSRcTqecFHQPsRWuSYPDCLZt/MLU4BBJA3xO0DN9iDTo56XfE5/q
- I/90GS4MoD7c4/cbiV4U8vtvuYE+19A+csLBJ6EU8SyMgXqnP7e5qzGMdrBlElo/90Q9BweBoxR
- 4/DS2B0YJ723ogdKkol1GaXOJxe51+iczXEz9lPTnnaRnTRtoBG1VjK49SM1lE0oZJFGVPf2A2e
- Y8QTTfmquVarEjhmniShJGi9
-X-Google-Smtp-Source: AGHT+IHFUTM6Id7P83aAS9QsAOgf/6TcYIGBszhhu24Fer1eQ2bzoQTEREuq0Fh997gB7OtcN0QBiQ==
-X-Received: by 2002:a5d:6d87:0:b0:385:ef2f:92ad with SMTP id
- ffacd0b85a97d-38a872f7f80mr15690677f8f.10.1736703140233; 
- Sun, 12 Jan 2025 09:32:20 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e383dedsm10266969f8f.35.2025.01.12.09.32.19
+ bh=nrj9LdmClEjvzcWeexh+VwC/9/Q4bvfAYui3iYSCF4o=;
+ b=Yy+xpgOb6xzRYq9gYLsG8rNYostAPLKlv3hasYqYWJ4oNdNkQBxbzmPjLP9yWfG5ku
+ Dn7LVCsYaSkTGXIevJsC53vk1ZWDsAg8ZWH+/p9ueFe4qK19PImJfzduAkvrLF+DKghF
+ rRFaeP6w/KfLFI6cVZe7OEJdkS6JNLL75Hbj3GwfEUiQPrY205T969WTUv2epZD0GSf4
+ ug64P6Ihj5pwT1wJslyFTDJJgiVP8+PEy9wdoAj6euwxS6uClfddtMG+oDjM08dOdQrz
+ 2ShrNUqIR7z8c0mU0iVgWuafZ9aDDYuxBfr4OTTJ/JL3rKq67imOgwkBaxNoUAW7nkip
+ 3vkg==
+X-Gm-Message-State: AOJu0YzCYDYDDCm+4xHK0GQztWTMh4iNxQO8X4rE0lJE+rkrgT1xMjW2
+ YRBhe7pEpHLdhxaGKZbhNTAyJSAI13+ARrboQdW9V64qlgJcvACwz8Sf22ae7gE=
+X-Gm-Gg: ASbGnctBuJHPhi7de2usI2Nd9VoUzoy5eyPP5mCEyPg3Bc5NKd2VyVC4gFj0C7VRes9
+ HSFa0oP9s78ZAOpSqAUjU3PJvsyMK9OW5yNNs0lH9ANqFX7j5Kh5vL/k2Bg/V+85qAZY04oWNFJ
+ UudgPzZQolCl8m90fQME/XwnBjJBYyO91lJ4r25S2sBYzqpm1D9r8nnvWIcxF6fsvuV54hM/F1o
+ qkEuoY1S1T4qTd0RaQlDDyLXLaPjsdUoovmV7sxXPXF/byoDFYRwC3cTkXNcQCvDoNj+Q==
+X-Google-Smtp-Source: AGHT+IHbNTMW66CqkXtH2NxMJRDQ4cUUjOCrMBFWT88wMNiO7QQHsWgRE+stvlkJeDYYcbCBXNldfw==
+X-Received: by 2002:a05:6a00:bd2:b0:72d:3b2e:fef9 with SMTP id
+ d2e1a72fcca58-72d3b2f00f1mr13987974b3a.20.1736704328402; 
+ Sun, 12 Jan 2025 09:52:08 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72d405485c2sm4533004b3a.5.2025.01.12.09.52.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 09:32:19 -0800 (PST)
-Message-ID: <dd12a227-0990-42b7-b241-301bca90915c@linaro.org>
-Date: Sun, 12 Jan 2025 18:32:19 +0100
+ Sun, 12 Jan 2025 09:52:07 -0800 (PST)
+Message-ID: <21dedb00-a958-4a57-98a2-922328133947@linaro.org>
+Date: Sun, 12 Jan 2025 09:52:07 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] scripts/nsis.py: Run dependency check for each DLL file
  only once
 To: Stefan Weil <sw@weilnetz.de>, Bin Meng <bin.meng@windriver.com>,
  John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
 References: <20250111215244.1680931-1-sw@weilnetz.de>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 In-Reply-To: <20250111215244.1680931-1-sw@weilnetz.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,7 +101,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/1/25 22:52, Stefan Weil via wrote:
+On 1/11/25 13:52, Stefan Weil via wrote:
 > Each DLL should only be checked once for dependencies, but
 > several hundred (781 in my test) unneeded checks were done.
 > 
@@ -152,6 +152,6 @@ On 11/1/25 22:52, Stefan Weil via wrote:
 >                   shutil.copy(dep, dllfile)
 >   
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
