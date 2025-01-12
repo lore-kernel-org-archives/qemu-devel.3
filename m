@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25325E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1ADE7719F
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Ha-0007WF-3n; Sun, 12 Jan 2025 17:18:10 -0500
+	id 1tX6HY-0007VN-26; Sun, 12 Jan 2025 17:18:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HO-0007Tb-7x
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HO-0007Tc-OZ
  for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:03 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HI-0006Og-Sj
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:17:57 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4363ae65100so38315945e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:17:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HM-0006PA-7H
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:17:58 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4361b0ec57aso36061905e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:17:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720262; x=1737325062; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720268; x=1737325068; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RRilqG0RRzc/tLS+/K4TJ6YsxHq+JDiiCxUzzS2N1LY=;
- b=EnrmkeWV5hicqQ7cryUySmTtzA3tNMH5s2rA4H0k7O/qtWG8/b6S/zGDQqy5yXr9AX
- IFFJ5VzV4JceEYbWLVOCMMp1zWhvGj0sLWaPP2bHY9Cdm5y4v4RSNzZg8Gw/kDFERAyM
- NhinP/QmQp4PMbDyaSUw9jZJ4PUWUFRa+ItWUv9fAw04kqU3OO0v+iTScHrS+Mnxd2gz
- MwaH0bo07jhBBRswj2LCDcb62S8MIHUPpzFkpxy33rht5Gzb08BnMYul8gK2p47PQ22q
- 5a4ZH6AFTOxX2fRosxgAmqp3wl4T4cyLxnmxlcnymrVZ+U1OAWhF6qLLbxaBNnGsBxuI
- 2uRg==
+ bh=DlEj3ANe4I1Uz5rznp2DVq0ieFeAR6XbYMp+YuA15wg=;
+ b=fhNYUhrTxdd78hmUpf674+PkTJmigH+B/sOjcG5Va1VrInfuqzit3RXFe1HEat/H2/
+ eiLcwlo1Uj1NJ8aoVc7NpfX/k4NsUpuDkKRDlaicy8gy8V9NKaBbeXqlnQ4TJo/YnQth
+ 3KFP17USMs/YBT437nohUU6pwn40y1kztyHlR/3opZD7nPFw2Fr/HY0SOSeSZ5uB8ppk
+ gk0Q4JpBoCrzfgJ/T+SiULyC2dN375BFPAkfCfc58QJRGRFnZrS9Ny0N0WRUJriNiWn/
+ T1mQe/pg6D3cZO0V0iEd/jMvE2fHh63l2LF4/Sd1dTDWmrnRdFRZuD2Rfd7dO0wsTtUG
+ N4Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720262; x=1737325062;
+ d=1e100.net; s=20230601; t=1736720268; x=1737325068;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RRilqG0RRzc/tLS+/K4TJ6YsxHq+JDiiCxUzzS2N1LY=;
- b=sW6pP4SUbqAO0v//6UTO3U3jKlysuOueP/QvF8hXG9rb6ZJMuCgPmqRbtRbXJqg1L4
- AeCU8j79d2zKNwRjr/+sdgVPH0CmHTsB7VpQVVW5cETtk+zFi3vLE47RFGD+5ShuBiC9
- /XzU7XbEmTatM1GTLAiu0gVGE8BQBtVNg6NxeKYI/UTBoKgFsNTCR8CDJzKadrsOwaoB
- FYlioYxEoXmV1HffzRjhtgc+wnsTa/QOmP86sqtl/YSPl84doj+5pH0Zr1/nqbRa3YF8
- hU44aW/dVU5t7Fl45OP/1JR3mQtTTFXtYut53ds20k6emSY4Ane1geXmYuIuMnQeLu2K
- 4zsQ==
-X-Gm-Message-State: AOJu0YwL8b5JGZVdsfDXvJv1rYpycaykHm2LYCLg4TXBUcINRfjgNAc4
- Pk4/f5wCJ+iB0uk6CfvieNYnmgFjv08oKBp+eiMV3e4D24isj2qIZ9AfC10DCbkaKrB7iykBOdn
- MNwc=
-X-Gm-Gg: ASbGncuINjcj7zcuOblwhpUWEykZ3XhVujcgLWjNunTHmnTQ54sL959xmDSgTauX5I7
- WOYakCzhrXmXJWta6EtjVnXsNza0jDkmYBgXyNMxN31goHVa+SuK2FF9W7IRT7KmdchZ6XkOk5K
- N89fGf1xf+XHaU0w2C3mP11K/8nrF7pptQLFeUJ7GbKOcFF4Fd41B3jGEjpulTITHiIDhieL7Ph
- tlhCVbSQlm0bsFKxEP1H9NVHySiVhhVB5t01n3Wn4JW5funDPVp2Lok7JAyc67u70AyP4bEDwyd
- ey0n8hwBKia6A7YvJCBsq57gmuQUgTY=
-X-Google-Smtp-Source: AGHT+IH9TOWJZadiSEpDlZJ8zL8X2L7kGUhzzDP97Vk2L1eK8rCqJyX/67bM6O9HGa4i0ukOX74e/w==
-X-Received: by 2002:a05:600c:3ca4:b0:434:a26c:8291 with SMTP id
- 5b1f17b1804b1-436e26e203emr147457395e9.24.1736720262574; 
- Sun, 12 Jan 2025 14:17:42 -0800 (PST)
+ bh=DlEj3ANe4I1Uz5rznp2DVq0ieFeAR6XbYMp+YuA15wg=;
+ b=f1PIoilkJda8MkqpwV7WjVr+5RVA6Kv4Shpf6+bSuw0t+CH9ele3rn1gRrBwy5KRld
+ Kogjn4fcVwIst8K5N5P5oIK0Kqsp4hSlK4+lSOTB7OF6qT6kqX56dqJiZULxluFuQyex
+ E8uhJ3eKWbmR+ebX4WiBzknm/Hx5Y6+7ktLj3gtG031SRKHWh1860qlyL6LXr05z3U8p
+ SaVIrb3iIrXWuad5ULqVubxYhAlNZEBpro47QVcwZUFtlGw4u8US2dwrTYTjza1EqqM9
+ cqTTOii4fiA40RrnqT4cka7otUofJMvOtfN/UhGGBVZtDvIpLvIxKDB4J/2/pMqNtcPp
+ 5P3g==
+X-Gm-Message-State: AOJu0YyxpSfjwyhXeYp76+W6ohmY0Du3vkmfrxnY0tnRau40bJMMr4P0
+ FPJSen2FGm4PUdfjDzLNvPbs1pjH0HGMs+OhNI0h7QDZiuhocWS34wNoEeTNhIcOcfneCM9T7UY
+ 1qgI=
+X-Gm-Gg: ASbGncvewIFvc0cpdFEXF2k5f47G2rIHkN+E+zXn7UEntIHJvKUxP6bdZXqtDqgMUOP
+ ncRH+ch47VGEpT5ovYWQD/GGuYYH2mhl6HM10E7O9mepwdBQiyYnG1eviI9/44/QChLyfni7KyN
+ XGKomJHW7oa5RzvlwAo9ffJfSrMgre6mBxYWMVKRw1CLp7eVX3XpP3tR/kMDBH1cchBm+lCNhVv
+ I33OkfoaHe9F7F2qYGlqg36KxN6o/erC0PZeEKzqZPFSkjtpQwxU+NH675UBK5pJjmi5H/Dv/+x
+ pmXEdSdA7WzvbFMsnkyyx7ejq/HR3qQ=
+X-Google-Smtp-Source: AGHT+IFuCXP2VKCUNxfQe3dsW6Y7TZSE9dOGq8dNi89oNTFsmYTzDgyJAvH6UQCSBDEwYF63bszwXQ==
+X-Received: by 2002:a05:600c:4745:b0:434:9c60:95a3 with SMTP id
+ 5b1f17b1804b1-436e26c4218mr180621855e9.11.1736720267876; 
+ Sun, 12 Jan 2025 14:17:47 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9dc895esm122279135e9.13.2025.01.12.14.17.41
+ 5b1f17b1804b1-436e2dc0f69sm156716585e9.13.2025.01.12.14.17.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:17:41 -0800 (PST)
+ Sun, 12 Jan 2025 14:17:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 03/49] hw: Replace DEVICE(object_new) -> qdev_new()
-Date: Sun, 12 Jan 2025 23:16:39 +0100
-Message-ID: <20250112221726.30206-4-philmd@linaro.org>
+Subject: [PULL 04/49] hw: Add QOM parentship relation with CPUs
+Date: Sun, 12 Jan 2025 23:16:40 +0100
+Message-ID: <20250112221726.30206-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer QDev API for QDev objects, avoid the underlying QOM layer.
+QDev objects created with object_new() need to manually add
+their parent relationship with object_property_add_child().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240216110313.17039-7-philmd@linaro.org>
+Message-Id: <20240216110313.17039-22-philmd@linaro.org>
 ---
- hw/arm/musicpal.c | 2 +-
- hw/sparc/sun4m.c  | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/i386/x86-common.c                     | 1 +
+ hw/microblaze/petalogix_ml605_mmu.c      | 1 +
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
+ hw/mips/cps.c                            | 1 +
+ hw/ppc/e500.c                            | 1 +
+ hw/ppc/spapr.c                           | 1 +
+ 6 files changed, 6 insertions(+)
 
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index a712ff954bd..48a32c24079 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -1238,7 +1238,7 @@ static void musicpal_init(MachineState *machine)
-                           qdev_get_gpio_in(pic, MP_TIMER4_IRQ), NULL);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 97b4f7d4a0d..9c9ffb3484a 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -60,6 +60,7 @@ static void x86_cpu_new(X86MachineState *x86ms, int64_t apic_id, Error **errp)
+     if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
+         goto out;
+     }
++    object_property_add_child(OBJECT(x86ms), "cpu[*]", OBJECT(cpu));
+     qdev_realize(DEVICE(cpu), NULL, errp);
  
-     /* Logically OR both UART IRQs together */
--    uart_orgate = DEVICE(object_new(TYPE_OR_IRQ));
-+    uart_orgate = qdev_new(TYPE_OR_IRQ);
-     object_property_set_int(OBJECT(uart_orgate), "num-lines", 2, &error_fatal);
-     qdev_realize_and_unref(uart_orgate, NULL, &error_fatal);
-     qdev_connect_gpio_out(uart_orgate, 0,
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 217a69e4d5d..e070360a2c7 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -974,7 +974,7 @@ static void sun4m_hw_init(MachineState *machine)
-     sysbus_mmio_map(s, 0, hwdef->ms_kb_base);
+ out:
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 8b44be75a22..b6be40915ac 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -83,6 +83,7 @@ petalogix_ml605_init(MachineState *machine)
  
-     /* Logically OR both its IRQs together */
--    ms_kb_orgate = DEVICE(object_new(TYPE_OR_IRQ));
-+    ms_kb_orgate = qdev_new(TYPE_OR_IRQ);
-     object_property_set_int(OBJECT(ms_kb_orgate), "num-lines", 2, &error_fatal);
-     qdev_realize_and_unref(ms_kb_orgate, NULL, &error_fatal);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(ms_kb_orgate, 0));
-@@ -995,7 +995,7 @@ static void sun4m_hw_init(MachineState *machine)
-     sysbus_mmio_map(s, 0, hwdef->serial_base);
+     /* init CPUs */
+     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
++    object_property_add_child(OBJECT(machine), "cpu", OBJECT(cpu));
+     object_property_set_str(OBJECT(cpu), "version", "8.10.a", &error_abort);
+     /* Use FPU but don't use floating point conversion and square
+      * root instructions
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 2c0d8c34cd2..29629310ba2 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -73,6 +73,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+     MemoryRegion *sysmem = get_system_memory();
  
-     /* Logically OR both its IRQs together */
--    serial_orgate = DEVICE(object_new(TYPE_OR_IRQ));
-+    serial_orgate = qdev_new(TYPE_OR_IRQ);
-     object_property_set_int(OBJECT(serial_orgate), "num-lines", 2,
-                             &error_fatal);
-     qdev_realize_and_unref(serial_orgate, NULL, &error_fatal);
+     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
++    object_property_add_child(OBJECT(machine), "cpu", OBJECT(cpu));
+     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
+     object_property_set_bool(OBJECT(cpu), "little-endian",
+                              !TARGET_BIG_ENDIAN, &error_abort);
+diff --git a/hw/mips/cps.c b/hw/mips/cps.c
+index 0d8cbdc8924..293b405b965 100644
+--- a/hw/mips/cps.c
++++ b/hw/mips/cps.c
+@@ -87,6 +87,7 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+         /* All cores use the same clock tree */
+         qdev_connect_clock_in(DEVICE(cpu), "clk-in", s->clock);
+ 
++        object_property_add_child(OBJECT(dev), "cpu[*]", OBJECT(cpu));
+         if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
+             return;
+         }
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 4551157c011..17d63ced907 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -955,6 +955,7 @@ void ppce500_init(MachineState *machine)
+          */
+         object_property_set_bool(OBJECT(cs), "start-powered-off", i != 0,
+                                  &error_abort);
++        object_property_add_child(OBJECT(machine), "cpu[*]", OBJECT(cpu));
+         qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
+ 
+         if (!firstenv) {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 623842f8064..125be6d29fd 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2705,6 +2705,7 @@ static void spapr_init_cpus(SpaprMachineState *spapr)
+                                     &error_fatal);
+             object_property_set_int(core, CPU_CORE_PROP_CORE_ID, core_id,
+                                     &error_fatal);
++            object_property_add_child(OBJECT(spapr), "cpu[*]", OBJECT(core));
+             qdev_realize(DEVICE(core), NULL, &error_fatal);
+ 
+             object_unref(core);
 -- 
 2.47.1
 
