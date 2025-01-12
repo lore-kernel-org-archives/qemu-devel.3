@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CF9E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798FCE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 18:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX2AB-0003Pn-SD; Sun, 12 Jan 2025 12:54:15 -0500
+	id 1tX2HJ-0005SV-Of; Sun, 12 Jan 2025 13:01:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tX2AA-0003PE-BB
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:54:14 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX2HH-0005Rr-If
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 13:01:35 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tX2A8-0002MP-H3
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:54:14 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so80422025ad.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:54:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX2HF-00037P-Ne
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 13:01:35 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-388cae9eb9fso1877261f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 10:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736704451; x=1737309251; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1736704887; x=1737309687; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fzxb0sgdtCfKQ/OD0YQlOf0rYr2aPsdk4YLcccqisHc=;
- b=Agi4dFUKhPOko770hNFpbDqbatqcH4Pq9GZjw+J3BiM2aBPUNlKLibFPhUenxx8LT/
- nPIS4jtnrngoJQgfkByIz3xzeGLhB6csMQjbqe/eCT9aItI1jBv96fwJnubkjg1SGYOW
- iAyTM9QwqkKRlTreXV90qXRBHduxfIizCbtVABV+SwROsEYboc0b8oCNo2rLGbq6Df0p
- Ut0hy5ulx0kPW4FcVGX4RVbuVl4Nv12NMbjyQb17yIdqq7wkIq8QKRnGvqZhy6nwIOGU
- VgMBREdgOkDLO9V0MIgcvZMWO/8ZjtVMKBrdK0RRNEkDmUX4Y+KwI8d6MAF8KQkqNBcb
- rlMA==
+ bh=ZJ47eQrSvoFEHaxjjWYBy1IbAgBze63V7XOjdJCsQk8=;
+ b=AjQ3nJHTqDK7l5OsE1wzr1neIJlf5dcdKQNq+ZodPhLIFL14E30ys0qD5qQf7GG/eo
+ ObtNnfzwJHm7mErOJLwhHgQd3aMNuI8DWBnAIim5ILZ2okjV8BZWwqdODQQQUiXQa7XG
+ soB0OcA372+eYDgSu0y7uT9+ECVy994JO8rc8wiHZ5esyJhl96hq/lNi8HW96EB2upiO
+ EiOS+bPfNZ+IE7uIcA1mI5dgR/J/fyQXVQ8oNA4+x/FHA0tY7yrTCBAiTqk8yIaCF3kB
+ aN6rfOIQx9ahRQW18kkA6MSzkaQUuv3Yib6stB18CNXtLb3bK6O3IyZRjx7S/zIxRyi/
+ 7wqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736704451; x=1737309251;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1736704887; x=1737309687;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fzxb0sgdtCfKQ/OD0YQlOf0rYr2aPsdk4YLcccqisHc=;
- b=GC4JhBLCUXeLq0R7SZgMeU7s72blIAyh4OeewgnPQbNRsavWfmSfGkV6K4i4/NNsP/
- xHMDKxQlMRm9IJhGeJ6fa1yZmOscrTQ3XBE77V5RoYh4pUsA/Orfnq7QAokskrayCpFh
- EqBSRX7InngmNHa1U8Uw8D0B3rARX9lzrPN+XKpEDzlPlrrQ1k47nH5XSAZGxqXxgOYu
- 7o+dNwFP+wp1CJtf2/L50mUhQaUfMOexqrywnGiUMGjax+4mjot9m03XKeWx9DB9kr2z
- P1cKQUq6A5dUUHuctxNSRWvtzaICUZyR3SD05kEKliGLzeX5BF/PIp/0Y0yMm32Ir4A6
- 5q+Q==
+ bh=ZJ47eQrSvoFEHaxjjWYBy1IbAgBze63V7XOjdJCsQk8=;
+ b=qTBo7ZsK9q9iV8QgFfqrhAsYb2h/GFmSJdQgbcimfyvNsoN7YKWAaXF0MqNLxBLF59
+ 0LjBuWR2rJfpj+5rz7lfWILbdZS2T40CmnpuwIpqgAdvT1+i2agMmV70x92X4cTB2AT+
+ 5rPfcDHJ4samQZldLsMeKyTxV19BJ++xlWthRQ1nIPRCzUmz3ZfLI/HmZiH9JlziDB9n
+ urgvtuhqaBy/pzMvZdTh+SyI8U8G/PtT/jWL/lmowKFMT600M7m38ntAB8vKMCCCjRTA
+ PEd/iJKggjheIB+ddLVjBN9Ol++geiwCxZDeZoduQ70khKrBXap8gHH9oaB32XYjj+yS
+ WTVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTKFlS5GZRLQlT0HyybQIjJbOVrS6uxrZIJbv4viP2Yp5ZLfqbSXBK82Q018i1hyo+ZUZ6xYXzi54q@nongnu.org
-X-Gm-Message-State: AOJu0Yz3xgNKIbN8LJSFQmlM1H3Zy8SO6n0fYVs/Ymh/c0Rd9usCvnz6
- f/x5kAU+8xQdAZaL7afOlLYUbRie5yAn70oLN14UpMeUwWZ94jQwDNhjF3WTXFQ=
-X-Gm-Gg: ASbGncu3dmikIbKbLNXaSuG2fBbxehvx2BgyJlAEDkb6S1X7YRU5tC1aAFQ3c7IJZH3
- rny6JvPtCvVJrUx/XqaHAueec9lzBXhWFUVjvFG/WLQb7DheYw+ewp5uXKeCzhmHQzUCca715kp
- bVuFquHVsVXV0SgSG1HK9pysf0nZ3z0u/ibJC6wOC8/6GHz9BS5FEjuloUwmkIKTbJ7XYZptOK1
- 91B5+m7+RKdW+FW54Dp2hsXKjOm0CyZVyslXNFKH8L475V6GoFNSDXqsdzfU9Rpw/jtyA==
-X-Google-Smtp-Source: AGHT+IEPXhDEImLLqXEXMfoET03kFcIJApZA3YZ+ozjO5tw9IhBekdlU3ylINdD9lVx88/wCrmlhZA==
-X-Received: by 2002:a05:6a00:66cb:b0:72a:83ec:b1cb with SMTP id
- d2e1a72fcca58-72d3021368emr20558424b3a.0.1736704450945; 
- Sun, 12 Jan 2025 09:54:10 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d4056a5d2sm4639297b3a.50.2025.01.12.09.54.10
+ AJvYcCWyXjzObavCMz3sIMmxpndhg4+6SDKZ8HWwQv4t8vWsTrFZ1hEbUSvS8AfwNTqECPJ9Lz6uthllAo2A@nongnu.org
+X-Gm-Message-State: AOJu0YzuQkvO5KPWhDRMt1TeXmJwrog/98T4qdHbWdYJ+ByhV5hb0sk8
+ q1WNfoL43TMSLsSnlZsxsrq7EOitQZfqKH5mtLSAv+JaP7Fr75yTEH54XssmTorjbAcNAe/LQuR
+ qdNY=
+X-Gm-Gg: ASbGncvwqSpOynlY7RdlsR+MeoKA1+HlwdPcv4dMOHeAagE8Z2buB/zSTAv1wgP0pjp
+ 6A9itmFKsyEwOB3k94cqJRp51cWFAvzewKJcoouM+F0P6VBlkvurydrirZH/jW3FK/d12x6ODJS
+ yn07ELMzQi0/XDYVr76SeghTWxaW9A6zU6PNCilj9P3gSDFTIRnFqRJqkonELJpmCE0KKhnq6pi
+ wCghfNwniVsTjADOB1//cBOTiwuLm78NPDzCZcraH9CYBEb2g9tq8YNzqdI7eymYSvep51aAQu8
+ qVmqrRSzDO+xaOPemqP1KlvX
+X-Google-Smtp-Source: AGHT+IHeodSrOx4xZCaI+z+8mMuQGc+naH7WvkXAcm+qCngDczLwBsHX9Tl25okT07vXjmER1Ph69w==
+X-Received: by 2002:a5d:64af:0:b0:38a:8e2e:9fcc with SMTP id
+ ffacd0b85a97d-38a8e2ea11cmr13315220f8f.45.1736704887428; 
+ Sun, 12 Jan 2025 10:01:27 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e38c697sm10348274f8f.52.2025.01.12.10.01.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 09:54:10 -0800 (PST)
-Message-ID: <626ac26e-840a-4d0b-ab40-aab8499a4287@linaro.org>
-Date: Sun, 12 Jan 2025 09:54:09 -0800
+ Sun, 12 Jan 2025 10:01:26 -0800 (PST)
+Message-ID: <b7d08568-153c-4a35-9395-214cd8d0a228@linaro.org>
+Date: Sun, 12 Jan 2025 19:01:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
-Content-Language: en-US
-To: Stefan Weil <stefan.weil@weilnetz.de>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
+Subject: Re: [PATCH v2] Add a b4 configuration file
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
- <b3ef0b9f-df09-4444-b0aa-3b2a36f7cd3a@weilnetz.de>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <b3ef0b9f-df09-4444-b0aa-3b2a36f7cd3a@weilnetz.de>
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20250102-b4-config-v2-1-cc7299e399bb@flygoat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250102-b4-config-v2-1-cc7299e399bb@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,76 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/11/25 14:08, Stefan Weil wrote:
-> Am 10.01.25 um 21:33 schrieb Pierrick Bouvier:
->> For now, it was only possible to build plugins using GCC on Windows. However,
->> windows-aarch64 only supports Clang.
->> This biggest roadblock was to get rid of gcc_struct attribute, which is not
->> supported by Clang. After investigation, we proved it was safe to drop it.
->>
->> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
->> hosts.
->>
->> v1 contained warning fixes and various bits that have been upstreamed already.
->> The only bits left in this series are the gcc_struct removal, and fixing the
->> plugins build with clang.
->>
->> This series is for 10.0, as we decided to not include the gcc_struct removal is
->> 9.2 release.
->>
->> All patches are now reviewed, so this series can be pulled. I'll report that to
->> MSYS2 too, so we can enable clang environments for QEMU.
->>
->> v1: https://patchew.org/QEMU/20241031040426.772604-1-pierrick.bouvier@linaro.org/
->>
->> v2:
->> - drop attribute gcc_struct instead of using -mno-ms-bitfields option
->> - add a section about bitfields in documentation
->>
->> v3:
->> - explain why gcc_struct attribute matters in packed structs in commit message
->> - reword the bitfields documentation with suggestions given
->>
->> v4:
->> - edit for bitfields doc requested by Philippe
->>
->> Pierrick Bouvier (3):
->>     win32: remove usage of attribute gcc_struct
->>     docs/devel/style: add a section about bitfield, and disallow them for
->>       packed structures
->>     plugins: enable linking with clang/lld
->>
->>    docs/devel/style.rst                      | 20 +++++++++++++++++++
->>    meson.build                               |  6 +++---
->>    include/qemu/compiler.h                   |  7 +------
->>    scripts/cocci-macro-file.h                |  6 +-----
->>    subprojects/libvhost-user/libvhost-user.h |  6 +-----
->>    contrib/plugins/meson.build               |  2 +-
->>    plugins/meson.build                       | 24 +++++++++++++++++++----
->>    tests/tcg/plugins/meson.build             |  3 +--
->>    8 files changed, 48 insertions(+), 26 deletions(-)
+On 2/1/25 23:53, Jiaxun Yang wrote:
+> b4 [1] is a convenient tool to manage patch series with mailing list
+> working flow.
 > 
-> This nice series allows building QEMU for Windows with the LLVM cross
-> compiler on my ARM64 machine, so you can add
+> Add a project default config file to match QEMU's mailing list conventions
+> as well as adopting differences on scripting.
 > 
-> Tested-by: Stefan Weil <sw@weilnetz.de>
+> Examples of b4:
 > 
-> I only needed a trivial additional fix in scripts/nsis.py for `make
-> installer` because the usual GNU objdump and the LLVM objdump (or the
-> cross x86_64-w64-mingw32-objdump in my test) produce slightly different
-> output (indentation with \t, indentation with four spaces). I'll prepare
-> a patch which eliminates the need for objdump, so no intermediate fix is
-> needed for this.
+> ```
+> $ b4 prep --check
+> Checking patches using:
+>    scripts/checkpatch.pl -q --terse --no-summary --mailback -
 > 
-> Stefan W.
+> ---
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+> Changes in v2:
+> - Add lore masks (philmd) from:
+>    https://lore.kernel.org/qemu-devel/20241224135054.10243-1-philmd@linaro.org/
+> - Link to v1: https://lore.kernel.org/r/20241222-b4-config-v1-1-b3667beb30a4@flygoat.com
+> ---
+> ● cc5a4c890fed: Add a b4 configuration file
+>    ● checkpatch.pl: 27: WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+> ---
+> Success: 0, Warning: 1, Error: 0
+> ```
 > 
+> ```
+> $ b4 prep -c
+> Will collect To: addresses using echo
+> Will collect Cc: addresses using get_maintainer.pl
+> Collecting To/Cc addresses
+>      + To: qemu-devel@nongnu.org
+> ---
+> You can trim/expand this list with: b4 prep --edit-cover
+> Invoking git-filter-repo to update the cover letter.
+> New history written in 0.02 seconds...
+> Completely finished after 0.06 seconds
+> ```
+> 
+> [1]: https://b4.docs.kernel.org/
+> 
+> Co-developed-by: Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+>   .b4-config | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
 
-Thanks for testing it Stefan.
+Squashing in order to avoid checkpatch.pl error:
 
-Once merged, I'll share this with MSYS2 folks, so they can backport this 
-series to 9.2, and enable clang based environments (including for 
-windows-arm64).
+-- >8 --
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ec898a3cbc6..0c71eb3f925 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4310,3 +4310,9 @@ Machine development tool
+  M: Maksim Davydov <davydov-max@yandex-team.ru>
+  S: Supported
+  F: scripts/compare-machine-types.py
++
++b4 tool configuration
++M: Jiaxun Yang <jiaxun.yang@flygoat.com>
++M: Philippe Mathieu-Daudé <philmd@linaro.org>
++S: Odd Fixes
++F: .b4-config
+---
 
-Regards,
-Pierrick
+and queued, thanks!
 
