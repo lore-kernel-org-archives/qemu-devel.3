@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927CCE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 989A5E7719E
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 23:14:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6ul-0001a8-Mc; Sun, 12 Jan 2025 17:58:39 -0500
+	id 1tX79X-0003yQ-Dz; Sun, 12 Jan 2025 18:13:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6uj-0001Yx-U3
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:58:38 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX79R-0003xz-QC
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 18:13:51 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6ui-0001ji-Cy
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:58:37 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4361f664af5so42865725e9.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:58:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX79Q-0003Tv-7P
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 18:13:49 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-385ddcfc97bso3179396f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 15:13:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736722714; x=1737327514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jh8TTghxPbyTQJFgWVhN0JvpcsBQ7bEf6F9d2W0xjv4=;
- b=rzUTAvF2bAx3C54xbq0KujXIVz/0pEZflc4sRCmyRC5QPkC2fCsEMuT1LNUmnEtvV2
- /E5ebR9FR96ODz8wqF3EEp1rRwUl8YhQDf9Y3iUVtG3JLxUCqewmbwu3UxC04ICbh/TQ
- fefgN4i/BJutEquUXIjfyWKpDsDSQvUsI8qsMec4g+f9LYE92TdKAamlOnGum2W19Rk1
- BVsXrV+YWy02ZWtNlU+4AkDhiFAnH3yAmZAiNTz6Xsu7vqhz8hJ9W9zVnntOzBk0K7A3
- Qlpx1ek88d2MvdMliLRkMiuAaRyejmlMKwHd6MrSmOHfNDDkw4rcBTDzmAkLAduC9pJc
- xKLA==
+ d=linaro.org; s=google; t=1736723626; x=1737328426; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=q1BZuJ/3m/XEdW/VfGC3pXpwHIJtrElJlYbu+OJQj4Y=;
+ b=JxqtrhBaiysti9bXafYlXRfH0BjzfnQITJFHmB08h59PuzaOfZqWS2J92sdIEK9OaR
+ AGZmk5vK5EDVO9pQT0CQllyso77rBALzfteArZ8/26se8BImLRsBIIm/lmGWLmz/dsQU
+ OmcRfiiVMnmeCwGKCZGJ7eFcXG+8NCybOgFcx0NSZhb8YXhTEhqLPgEi7APCQ0YTZIU2
+ V50CD5fRd/uk88UMH9FTufYVJGuKP94wwFOctRUYBrj6hl4ctqhKthFfD/dYNhszY7c1
+ QBCo8KjOc8OsgmbjV1dxdmMDfSz+x/B/2MXpUY6Qe/pPdxAUSCDDPd4XZBcqREuX55Cf
+ X10Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736722714; x=1737327514;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jh8TTghxPbyTQJFgWVhN0JvpcsBQ7bEf6F9d2W0xjv4=;
- b=drTP197QIl4tNQO/Ub+KWyfi5Q1jv1zbdD6DLTNr9/q15PIMZTrHNfJ092F/kXovOk
- UYrAlVL68ZCgCaWBgZgPO6cDdi7u+YZrWUGp0WPbQs9bUzKuawFVMxQMxhgVmtqItxmG
- 1BeTwhhZ/PvZkgxgpwhZvRlmKuIG8XtHR+prd+3AXjnhjG0UKgiF6q6dOl8WOHI1TM4G
- Pllgz0j1P3jiWukU1Wyg2DP1AONkeWPSm5kV6Z2Bw2+5Fko3ZbshNTn54z97g538wZgP
- /Lo2qCHV1pmD0dtuEeB7nMpwc/gJ3yV+9TH/AxXTcVeCoD6uIF0wyqK8pJUnZPkZ6UCL
- 3ktQ==
-X-Gm-Message-State: AOJu0Yz2fm7j6xH0zs8fthweKna97STUCeut1Btm49QweF6fpWfgOy/E
- sAp+bIQhL+8nGq1QUqYHl1jMLgIcxqcrP1tYVXWptX0iJe/pDh1cDu77fVaCnVzomTbdEUSaQER
- EgeA=
-X-Gm-Gg: ASbGncsrIb0HgvDgcmaI8jH3Ypoqm00YUrVSG1mi3j4uJmxRke/kUXjcatwzaPss51e
- w02zmlj3Ksj33SW02dmfshMLWxq9hcMvEoNYC2RGkhC+yKbVP3njybvKC+hBaJe/SXtNUv02ww4
- zvZ/sqyAVJj7g+ttvJr8eoOZm6PTc6bB4LDhao1kZcydVyCFAiXzh3jdE7ISyKIUgI34l+pMaWX
- fhOYx7pbxSj31+o86NpRPm5prBlMTs3F5o+0a53n2s3fw5Ty6FgZmUx3uRTuT9NmR5NFDa5eXvG
- +/Mg8es1doeyfw2ugae6oQy3
-X-Google-Smtp-Source: AGHT+IGIg/pWgnD8oJeSNpdt7EuddkZjau+/K79fvRM8EuEn/lnvS24Tyjtu+iYQdcB6JCrTccSiRg==
-X-Received: by 2002:a05:600c:3ca4:b0:436:6460:e680 with SMTP id
- 5b1f17b1804b1-436e26c3331mr136479525e9.16.1736722714298; 
- Sun, 12 Jan 2025 14:58:34 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1736723626; x=1737328426;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q1BZuJ/3m/XEdW/VfGC3pXpwHIJtrElJlYbu+OJQj4Y=;
+ b=IiFpY6EAeQRIL044heetOPIsRgsJMq8u28qOGdRHC2lMI7+pS+ghYaRGcKlrhZo0Ak
+ MslBJRGvZTs/l0CvDFsctJwbj1zfaT70Ng7FVkk/6Tbra+Oz2EMtwoSOiJMS0VXGKFzE
+ IIRDXyQb7ZM7lQTteibN9h6yAVPDN0gshW5T2Vb0ruhlk+1EKxU6nJc11z5/4fI/MXPI
+ H7KImU6bHM+XfXkVzaoRW6vy2RmCxWtEGCwdR6B6cIAuyIfzXMG+0ovyYolYG9ptFwZ9
+ YajzihS2KcvWF88TjurlCjHclJtQ3Cf+HQgxXBpQCXmzHJ7MUDtxnq3zczQGBhUj6xCh
+ yeoA==
+X-Gm-Message-State: AOJu0YyjC0pMEAIXlEdN4DUaLwHbizlHRacYgd/b0vZWEoVvrrxDn8LA
+ FyNhJuhTd7NaQYt1hbjlYlSNkhXUnOy+As3rAHpQYGpo3h7aPEvCMxchZGtAzR8S/7hFNoACj0z
+ 46No=
+X-Gm-Gg: ASbGncuJk2FkYt2oGp1K/JFe1HWjeAyHMxKQ2y+ZlhEuyN2b1Ni+J3DOx+KFkNwgUSt
+ 9gt0DLwuuqgPPqMePElAwsh0HQ3a45edPCwHWQsKD9glSCadn02tlC9NsSbOYgHY34j2Gwf1Vgi
+ uUv6lBTzMeB8Dplmp6AOUfp7e5eXuB0aLao66EkPZTxlSJuKOGqOtxtjgPInxzHteSpybsikpth
+ yCa7fdr0cDdBlUWpD8RFA9gkttbRyPilvomW4lu1gcDosMMUGCZUJhnXm8mgQ8nb2j0kgfU5ZXA
+ eUyjPBUOdeIpDASmlCg0nDKTF3kKoOo=
+X-Google-Smtp-Source: AGHT+IH2ptvawcohnb/6MklZRBJiyUSiD223cNAo1GSPhVP3xZF+K6tz6xv+iQ/wsCxRb6uBV/NwyQ==
+X-Received: by 2002:a05:6000:481e:b0:386:37af:dd9a with SMTP id
+ ffacd0b85a97d-38a872f534dmr17772354f8f.35.1736723625957; 
+ Sun, 12 Jan 2025 15:13:45 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2e92794sm157177235e9.37.2025.01.12.14.58.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 14:58:33 -0800 (PST)
-Message-ID: <8a2e8401-a1b7-4401-a720-851a75e4c3de@linaro.org>
-Date: Sun, 12 Jan 2025 23:58:32 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hw/arm/stellaris: Add 'armv7m' local variable
+ ffacd0b85a97d-38a8e38c76esm10455112f8f.47.2025.01.12.15.13.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 12 Jan 2025 15:13:45 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Felipe Balbi <balbi@kernel.org>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Joel Stanley <joel@jms.id.au>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250112225614.33723-1-philmd@linaro.org>
- <20250112225614.33723-3-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250112225614.33723-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/2] hw/riscv/virt: Remove unnecessary use of &first_cpu
+Date: Mon, 13 Jan 2025 00:13:42 +0100
+Message-ID: <20250112231344.34632-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/25 23:56, Philippe Mathieu-Daudé wrote:
-> While the TYPE_ARMV7M object forward its NVIC interrupt lines,
-> it is somehow misleading to name it 'nvic'. Add the 'armv7m'
-> local variable for clarity, but also keep the 'nvic' variable
-> behaving like before when used for wiring IRQ lines.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/arm/stellaris.c | 21 +++++++++++----------
->   1 file changed, 11 insertions(+), 10 deletions(-)
+Pass RISCVCPU to kvm_riscv_get_timebase_frequency(),
+then access the first vCPU via Virt::Array::Hart[]
+rather than the &first_cpu global, which is going to
+be removed as part of the heterogeneous emulation
+effort.
 
-Note this patch diverges with my other Stellaris series:
-https://lore.kernel.org/qemu-devel/20250110160204.74997-1-philmd@linaro.org/
+Philippe Mathieu-Daudé (2):
+  target/riscv: Have kvm_riscv_get_timebase_frequency() take RISCVCPU
+    cpu
+  hw/riscv/virt: Remove unnecessary use of &first_cpu
 
-I'm OK to rebase whichever isn't merged first (this one
-being less work).
+ target/riscv/kvm/kvm_riscv.h | 4 +++-
+ hw/riscv/virt.c              | 2 +-
+ target/riscv/kvm/kvm-cpu.c   | 4 ++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+
+-- 
+2.47.1
+
 
