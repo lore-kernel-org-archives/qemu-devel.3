@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B7EE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 14:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 290F6E7719C
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 14:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWyye-0001fh-3a; Sun, 12 Jan 2025 09:30:08 -0500
+	id 1tWz2X-0002gA-SB; Sun, 12 Jan 2025 09:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tWyya-0001ej-Am; Sun, 12 Jan 2025 09:30:05 -0500
+ id 1tWz2V-0002ff-HP; Sun, 12 Jan 2025 09:34:07 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tWyyY-0001jB-C9; Sun, 12 Jan 2025 09:30:04 -0500
+ id 1tWz2U-0002qq-13; Sun, 12 Jan 2025 09:34:07 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 86A5AD600F;
- Sun, 12 Jan 2025 17:29:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 42DCDD6016;
+ Sun, 12 Jan 2025 17:34:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 622B219A17B;
- Sun, 12 Jan 2025 17:29:54 +0300 (MSK)
-Message-ID: <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
-Date: Sun, 12 Jan 2025 17:29:54 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1FE2E19A180;
+ Sun, 12 Jan 2025 17:34:04 +0300 (MSK)
+Message-ID: <a23bf1a7-70fc-46d0-b465-6e9851feb669@tls.msk.ru>
+Date: Sun, 12 Jan 2025 17:34:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] migration: Fix parsing of s390 stream
-From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH v3 7/7] s390x: Fix CSS migration
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
 References: <20250109185249.23952-1-farosas@suse.de>
- <20250109185249.23952-4-farosas@suse.de>
- <35911935-6f5c-40a3-aa73-3586dfdf3268@tls.msk.ru>
+ <20250109185249.23952-8-farosas@suse.de>
 Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -80,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <35911935-6f5c-40a3-aa73-3586dfdf3268@tls.msk.ru>
+In-Reply-To: <20250109185249.23952-8-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -106,57 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.01.2025 16:06, Michael Tokarev wrote:
-> 09.01.2025 21:52, Fabiano Rosas wrote:
->> The parsing for the S390StorageAttributes section is currently leaving
->> an unconsumed token that is later interpreted by the generic code as
->> QEMU_VM_EOF, cutting the parsing short.
->>
->> The migration will issue a STATTR_FLAG_DONE between iterations, which
->> the script consumes correctly, but there's a final STATTR_FLAG_EOS at
->> .save_complete that the script is ignoring. Since the EOS flag is a
->> u64 0x1ULL and the stream is big endian, on little endian hosts a byte
->> read from it will be 0x0, the same as QEMU_VM_EOF.
->>
->> Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py for s390x")
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+09.01.2025 21:52, Fabiano Rosas wrote:
+> Commit a55ae46683 ("s390: move css_migration_enabled from machine to
+> css.c") disabled CSS migration globally instead of doing it
+> per-instance.
 > 
-> This looks like a qemu-stable material (if not only for tests), is it not?
+> CC: Paolo Bonzini <pbonzini@redhat.com>
+> CC: qemu-stable@nongnu.org #9.1
+> Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Message-Id: <20241213160120.23880-3-farosas@suse.de>
 
-This one, when applied to 9.2 together with "s390x: Fix CSS migration",
-causes s390x-migration-test failure.
+And this one causes s390x-migration-test failure on 9.2 on s390x.
+While this test succeeds on x86_64.
 
-First, it goes:
+https://gitlab.com/qemu-project/qemu/-/jobs/8829799108
 
-# starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/qtest-1137270.sock -qtest-log /dev/null -chardev 
-socket,path=/tmp/qtest-1137270.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine 
-s390-ccw-virtio-9.2, -name target,debug-threads=on -m 128M -serial file:/tmp/migration-test-T987Z2/dest_serial -incoming tcp:127.0.0.1:0 -bios 
-/tmp/migration-test-T987Z2/bootsect     -accel qtest
-Traceback (most recent call last):
-   File "/tmp/q/scripts/analyze-migration.py", line 704, in <module>
-     dump.read(dump_memory = args.memory)
-   File "/tmp/q/scripts/analyze-migration.py", line 641, in read
-     section.read()
-   File "/tmp/q/scripts/analyze-migration.py", line 477, in read
-     field['data'] = reader(field, self.file)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^
-   File "/tmp/q/scripts/analyze-migration.py", line 450, in __init__
-     for field in self.desc['struct']['fields']:
-                  ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-KeyError: 'fields'
-# Failed to analyze the migration stream
-
-and finally
-
-**
-ERROR:../../build/qemu/9.2/tests/qtest/migration-test.c:4039:main: assertion failed (ret == 0): (1 == 0)
-Bail out! ERROR:../../build/qemu/9.2/tests/qtest/migration-test.c:4039:main: assertion failed (ret == 0): (1 == 0)
-
-It doesn't happen when both these patches are applied to 9.1 though -
-there, the test succeeds.
-
-Hmm..
+Help? :)
 
 Thanks,
 
