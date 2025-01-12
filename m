@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A80E7719E
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1A3E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Iq-0001LD-8Q; Sun, 12 Jan 2025 17:19:30 -0500
+	id 1tX6Kp-0005S5-Fx; Sun, 12 Jan 2025 17:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6IV-0000pM-HK
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:08 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Kn-0005J5-C7
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:29 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6IT-0006VH-V2
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:07 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3863494591bso1955543f8f.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Kl-0006v0-Pt
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:29 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-385eed29d17so1818706f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:21:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720344; x=1737325144; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720486; x=1737325286; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6K7t3TbXwHAqgGaxmfHNMiMSManKTTs7a5XM/qzWt5U=;
- b=Y7iYF4cfsRFZVsgrPYLWEhLtQMjFJz7n59QaHSADyN8B2HhkUsj3qabkkpcqvt5Beq
- W12O4vZv3Nh/LFIZ6rwFhSXgJ31gAYA/Yv5dcHxuGxivwC7rzrMxZkNGRPF9xDmmvJN+
- paIGnNVOfh/LCx2tZuhgpF2j6ivtn3HZhxdspCJhxI7wS6bM8QklJhPzB3H4GwiiRAy7
- qKSZ8paKMBnNGZ3zabrVltvrkBIp93K5l4W8NQD+qfs1c4YiidtnS59hEH3uJhplIYcd
- FOeI6Omlm1NYe6EUxgZwBYSDDofM6QNQxoYaW7fTVhooQpy/xHSQqfvIkAA3mjZvWase
- 9DzQ==
+ bh=OZ+oTr2+oExZOJr5kMbRlsZawz728meOH00rrdIgtF8=;
+ b=ieTdYGu0GQu+O+cp4g4bGpJLQQjSUOqiPKjgxweyqNRq3oNLC61jCfFY4e9DTxVIOk
+ ojInaBdoYJMmoSGQOfb5WGusuAknagx2rwNredsB/XZk1UczOLOSX8MrtMeWUGUUDRL9
+ 5ocN5JUYWFd8xo2tFw311InGMs4vU3eDIdlMuSnBf3SvFjC10wp2dkg85XMt7RBZcGdN
+ 5VsyTIUKFWApNd/AG3uKpQI561gowglOXRmqNNinUoaFCa5H0154WPtEgDsVpIF4xrCt
+ T/3Sz2TAnOrmSTheWqGPMEEBBtd/pNHsopb3XfoxQxYkTC6EsLz2BGVDcD2cS0ADsQ57
+ C9aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720344; x=1737325144;
+ d=1e100.net; s=20230601; t=1736720486; x=1737325286;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6K7t3TbXwHAqgGaxmfHNMiMSManKTTs7a5XM/qzWt5U=;
- b=AUf1tGlNsM5nnkLrf0cL2nhneuY3soz1a7SSJzk1RqEQ7J82LU+Eu6PvXiJEuwiusk
- nnGpdSNjStob1t+ap+rriPmrTcyZPWeB3kFeYE/7Dxzz685lXbX+HLVvSPQoU4onJoEb
- Ab45cdBWPpGVMjRdjPqLmPzX2wd144xbmXps21avYAbm5m42u8fZAoFdWGLSHDX+iD8g
- OrxmB5poZK1/tlH6xD4fpOfA+D5QyEwacazLpS+g7B5MP1V4g8wgRXFo6Vy78toli4Sg
- 4TKjQ+lnvfcV+fw9oO44NOzLc/iK9M7FVde9IwxZUrDa37omV9YSzK2BA0TW6tFwoaZj
- llkg==
-X-Gm-Message-State: AOJu0Yy/ERGUvtR4MI59mrVQv3Lx15RaRoHfEmkTUdfjHaEFtKAZgyiF
- n44Aow5Ozb1cONT8i2+EXoOvzr34rKa/jlqRW3NHGrc1wFflAB/mpvQSZt+c1ldoC7TT+4gljPL
- ccn4=
-X-Gm-Gg: ASbGncsxMU4fgPL/+pnUlqMKVrKjLPGqT58CHVxTQ0TKPC09Y6Q7XOXY1AEl5WIUr6g
- 4v7/rXfD6vCvpTRvF3yToPilj14RgX5WB6n4pDMWak5iesIfjl5AjCP7VqaMMfH4p9qfMJzynzk
- iWoYCwBNRY+1tiqXIm3WMc20UVCC2e7F+c4AejWwzKR2V3RsfARJxQ22UbgO8qyUXaspwF/Trhs
- ehdzo0pinuWjrIkqnpSR5Gcbhhedw1rtWy77NcX0R0x2Zc3MEJtINXp+SqFKYhry2R1ye4dKHZO
- zG5MM8LxiOc7oTON7veWtD3cKHFS2hA=
-X-Google-Smtp-Source: AGHT+IE7UdjiGadiGRCMcxOV4LqJ7V9c9KMl/YK+boRt9X2T46K88TDH8+Ncp2snBCjEKg7Fs5TjcQ==
-X-Received: by 2002:a05:6000:1f81:b0:386:1cd3:8a03 with SMTP id
- ffacd0b85a97d-38a872ec38fmr14919936f8f.32.1736720344078; 
- Sun, 12 Jan 2025 14:19:04 -0800 (PST)
+ bh=OZ+oTr2+oExZOJr5kMbRlsZawz728meOH00rrdIgtF8=;
+ b=YEi9zUuWTU4xvez36fCbm3Pb0wFJ5EN3KxTZJ+6G6PZ4nFfu/YLSevE9KqgP5TOCg5
+ 6IdIihwUfk6dNmSOTJRb6ytfHADkL8O/fwiiegXmda/saYN/Vuo85Ujp0GOkl4ZZfoXv
+ 0ioIHGwwoZytI3deCOdiJcJyXM4WWmCduyU4/OVsoBSn5CcK2T9BthOxuiKu7WqipFEK
+ g4s7zuDjbWZ3hAY9Fne3RG42wtLiIiyTsnn1Lj+7mf4dtsEUk1pBzTkdYIopnnsV0L4g
+ t6xtrm5WZT+kCMD/bGD5qVOWKECUwA9sKTRIu0o9f9oAjf6+TiaRdxTYCRguTpJ8TPJv
+ TsqQ==
+X-Gm-Message-State: AOJu0YzKtJcw1ilrOpHzqvVS7FwQ6O4SKbLnxCsR4CO2nT/3aytpGNXB
+ IEwbvVx/quns6t5eeK+GXz2eMggiuZTo7/ueKf+H0fZY45/lGAsrh8vaBC8NVRD8FS+inLFo53R
+ wYEM=
+X-Gm-Gg: ASbGncu8l83fYuDPJKq/gM5eqhFsoA7RymYiA3S6E15iZKtWlEGnTfC+UPYcME9VNVq
+ hKrY44Cifo6bxXEfl3P6ujUg0/IMq6/2pYynolanUCiG3B1l55l3+nW43NsBL4W1Znk6sUdNG2U
+ EUoGiX/DztBU1DTvZUdf5V2OkpqTTzm6Pbk8F2Z9dNjKdapRFc3pCSNHMFFzmrdnOndY+ptyLrS
+ sIM5Hbr6Y+PpmTR6WZXIs0jh6d1TlaeYL6092eKwvdI/rhETUvdEy/ccWNscD4N8dD3ihSiukP4
+ jpVVjkXOJA7QXhSli3LpgrdTWUwCGJA=
+X-Google-Smtp-Source: AGHT+IEGFkkxTFZF1jf/BHt2EVBZd8Ktnq9fdT/COYSwypXSB9iH4vluW6eYb9TVQrcRiRnkAkH6oA==
+X-Received: by 2002:a05:6000:1569:b0:38a:a117:3da8 with SMTP id
+ ffacd0b85a97d-38aa11741d0mr4699287f8f.49.1736720486129; 
+ Sun, 12 Jan 2025 14:21:26 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e383882sm10664710f8f.34.2025.01.12.14.19.03
+ ffacd0b85a97d-38a9fcb7a11sm5065626f8f.75.2025.01.12.14.21.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:19:03 -0800 (PST)
+ Sun, 12 Jan 2025 14:21:25 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 19/49] hw/net/xilinx_ethlite: Rename 'mmio' MR as 'container'
-Date: Sun, 12 Jan 2025 23:16:55 +0100
-Message-ID: <20250112221726.30206-20-philmd@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 48/49] MAINTAINERS: Update path to coreaudio.m
+Date: Sun, 12 Jan 2025 23:17:24 +0100
+Message-ID: <20250112221726.30206-49-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,85 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having all its address range mapped by subregions,
-s->mmio MemoryRegion effectively became a container.
-Rename it as 'container' for clarity.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Commit 8b46d7e2dc8e ("audio: Rename coreaudio extension to use
+Objective-C compiler") renamed coreaudio.c to coreaudio.m.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250111-maintainers-v1-1-faebe6ef0fec@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20241112181044.92193-21-philmd@linaro.org>
 ---
- hw/net/xilinx_ethlite.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index 758226a65dd..a7f6d1b368c 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -85,7 +85,7 @@ struct XlnxXpsEthLite
- {
-     SysBusDevice parent_obj;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0727579cdec..ec898a3cbc6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2800,7 +2800,7 @@ M: Marc-André Lureau <marcandre.lureau@redhat.com>
+ S: Odd Fixes
+ F: audio/
+ X: audio/alsaaudio.c
+-X: audio/coreaudio.c
++X: audio/coreaudio.m
+ X: audio/dsound*
+ X: audio/jackaudio.c
+ X: audio/ossaudio.c
+@@ -2822,7 +2822,7 @@ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Christian Schoenebeck <qemu_oss@crudebyte.com>
+ R: Akihiko Odaki <akihiko.odaki@daynix.com>
+ S: Odd Fixes
+-F: audio/coreaudio.c
++F: audio/coreaudio.m
  
--    MemoryRegion mmio;
-+    MemoryRegion container;
-     qemu_irq irq;
-     NICState *nic;
-     NICConf conf;
-@@ -300,7 +300,7 @@ static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
- {
-     XlnxXpsEthLite *s = XILINX_ETHLITE(dev);
- 
--    memory_region_init(&s->mmio, OBJECT(dev),
-+    memory_region_init(&s->container, OBJECT(dev),
-                        "xlnx.xps-ethernetlite", 0x2000);
- 
-     object_initialize_child(OBJECT(dev), "ethlite.mdio", &s->mdio,
-@@ -308,31 +308,31 @@ static void xilinx_ethlite_realize(DeviceState *dev, Error **errp)
-     qdev_prop_set_string(DEVICE(&s->mdio), "name", "ethlite.mdio");
-     qdev_prop_set_uint64(DEVICE(&s->mdio), "size", 4 * 4);
-     sysbus_realize(SYS_BUS_DEVICE(&s->mdio), &error_fatal);
--    memory_region_add_subregion(&s->mmio, A_MDIO_BASE,
-+    memory_region_add_subregion(&s->container, A_MDIO_BASE,
-                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->mdio), 0));
- 
-     for (unsigned i = 0; i < 2; i++) {
-         memory_region_init_ram(&s->port[i].txbuf, OBJECT(dev),
-                                i ? "ethlite.tx[1]buf" : "ethlite.tx[0]buf",
-                                BUFSZ_MAX, &error_abort);
--        memory_region_add_subregion(&s->mmio, 0x0800 * i, &s->port[i].txbuf);
-+        memory_region_add_subregion(&s->container, 0x0800 * i, &s->port[i].txbuf);
-         memory_region_init_io(&s->port[i].txio, OBJECT(dev),
-                               &eth_porttx_ops, s,
-                               i ? "ethlite.tx[1]io" : "ethlite.tx[0]io",
-                               4 * TX_MAX);
--        memory_region_add_subregion(&s->mmio, i ? A_TX_BASE1 : A_TX_BASE0,
-+        memory_region_add_subregion(&s->container, i ? A_TX_BASE1 : A_TX_BASE0,
-                                     &s->port[i].txio);
- 
-         memory_region_init_ram(&s->port[i].rxbuf, OBJECT(dev),
-                                i ? "ethlite.rx[1]buf" : "ethlite.rx[0]buf",
-                                BUFSZ_MAX, &error_abort);
--        memory_region_add_subregion(&s->mmio, 0x1000 + 0x0800 * i,
-+        memory_region_add_subregion(&s->container, 0x1000 + 0x0800 * i,
-                                     &s->port[i].rxbuf);
-         memory_region_init_io(&s->port[i].rxio, OBJECT(dev),
-                               &eth_portrx_ops, s,
-                               i ? "ethlite.rx[1]io" : "ethlite.rx[0]io",
-                               4 * RX_MAX);
--        memory_region_add_subregion(&s->mmio, i ? A_RX_BASE1 : A_RX_BASE0,
-+        memory_region_add_subregion(&s->container, i ? A_RX_BASE1 : A_RX_BASE0,
-                                     &s->port[i].rxio);
-     }
- 
-@@ -348,7 +348,7 @@ static void xilinx_ethlite_init(Object *obj)
-     XlnxXpsEthLite *s = XILINX_ETHLITE(obj);
- 
-     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
--    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->container);
- }
- 
- static const Property xilinx_ethlite_properties[] = {
+ DSound Audio backend
+ M: Gerd Hoffmann <kraxel@redhat.com>
 -- 
 2.47.1
 
