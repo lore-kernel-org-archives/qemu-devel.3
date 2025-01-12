@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00992C02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7B2E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Hc-0007XB-Lk; Sun, 12 Jan 2025 17:18:12 -0500
+	id 1tX6J4-0001sP-Dz; Sun, 12 Jan 2025 17:19:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HZ-0007W3-Ue
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:09 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Ie-0001CW-T8
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:17 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HW-0006Q2-QM
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:08 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3863494591bso1955405f8f.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:18:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Id-0006WX-9e
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:16 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-38789e5b6a7so2017194f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720284; x=1737325084; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720353; x=1737325153; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C/k//ojvQ0ecXxbrd+D/WoEqwCLOQehsHZqlLpHp/lg=;
- b=Zdz+wGVwxISvBTJQNzEwORjSRl2ftl5rqBmwZq9tbdVaPGeRv5FGyB8Ybhzf4cBtWK
- CzVXvpuc9EdYt3hR2CDhG7OIacEkilvvyObCR0ujG5jlvFmImqoDV19W44EKtVS0KEyn
- 1auMB7/xAXjnYlxC7pDm01gNoG49k5GLI//pPGxael6gbemK15Ym/fFz7JIQsOBLuFxj
- gL4MI27FzVpk+fVK39OIAoEzo7F2+BZrojPyyEFGnKpw0Hnk+uoPm2AlI6l34msbGAb9
- k59JJEx5orWHfmCYQ/iq3o7W9d8OyU9qRo/D25KJJHY14r/7ssL+q8GGrgQNIDJzDUtd
- 1FWA==
+ bh=axL74DBGZ6nBWb/u1b/AX04nS7YLLg7dL20DomACELE=;
+ b=S7imJtZqEQHPLzqYCg/XFQ7VHfHveCO11DyAlBDPSrhn8P7Z30DKY70vXzQ0t+utfn
+ uiLVendte4X84Am+e6Z7N+ak9S3XKZ31TqWO7e2u3nc2VKDscyqPS79A0d/9EspV3FrH
+ k+gjyG6kIX5h92ppCL7GQ9tc/1lbAdOz+yQ6LR4o4Zm/pfF+jBk2OabzRj4yqJMLdyWb
+ F+JYilcBTthwtyJAFs6s1vTmlpve4aqj1ssjRq4ygu0Or5pTWamv6Jp/N4QTxuUpkF0z
+ YeuI21AKhHlaCeT6zUiYgCwn1yMJZtkw45HnSSwvpDACOoDhlA2YgV+TbRnR1heIU2JA
+ eW6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720284; x=1737325084;
+ d=1e100.net; s=20230601; t=1736720353; x=1737325153;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C/k//ojvQ0ecXxbrd+D/WoEqwCLOQehsHZqlLpHp/lg=;
- b=FidFEcTUi+QRPxsJkeGxbLrNdxa0LsZfl4pRzSVKpGvDebQXoicl2cK/3p9rHHVEpw
- jzhIBOhDYt5OBJQOFruzVBZX6CZ7qYsV9jjPNRo8EdoOtCJRae86ENPjRA8PmbFR4MhH
- KEfcQ77XDH4ipQmU7m+C4f1oDbgRP02FN064pSaz57uCus5pYWji8KafihtLFelj9ih7
- dOruweNwAfcYMexyKLZR9VxuzR2qo3JVFdCZnpA6c7+cQwx0G1RGY/oMk7Udj9yJxJ4z
- 3EaaUBjsHCnA5IEVSA6+bopmqkRpaD7Zyb6LeGj6dPsm+K2yq7BynNZc9+h5SQM52y61
- ae7w==
-X-Gm-Message-State: AOJu0YwPjxMQCxUiS1ldAYSLD6s7lV3p4VaNbr7nJvgn3Wym165eNTu/
- UXPCvUq++rOvRF6/ZBr+CMmQfdmXhFs1czHhmsW9ZYEdiJOKMTCD+afnhg/9PiZf/FXHkPOYHfB
- zJ/4=
-X-Gm-Gg: ASbGncsLXykSBGtuqLUGP6rZYhCvhivvqS1q+ryHq/k/Q3fY4Odafe3FbSZxoNTWw0A
- NLai8oBphmdYYwkKi3PVgvdGfiu3D6FryKMIFHCihg7kMqpu9DK207XdDD5D/m6+PBHJVYTOZXH
- gsMDAv35Q+bkXrhyjqfQgwxX4Wh5cw4/ueSj9fEZQXlXhCgguKa8V9oN2kek391QYunLocHXjDC
- ESozXiQ5cnXLgJ1vpAYVL77i6Z+yVbvtDIPFKjsyi3Nd1+HQaDEGklb5iBGlIc4CSE2Zik/gOov
- eGTMNOzvRGT4PysSJKjxDRspWev6gN4=
-X-Google-Smtp-Source: AGHT+IHk9WgAti4NvE6crV1sv7LLEZ4vz9tmQPqkjW7q+Du7LdLCO3aBT5EqV9uOUA4XggaHP/ayPg==
-X-Received: by 2002:adf:a411:0:b0:38a:87cc:fbee with SMTP id
- ffacd0b85a97d-38a87ccfd10mr12095295f8f.14.1736720284392; 
- Sun, 12 Jan 2025 14:18:04 -0800 (PST)
+ bh=axL74DBGZ6nBWb/u1b/AX04nS7YLLg7dL20DomACELE=;
+ b=juTEMbUSTIqoanbMmN1JGG9yx4DVnqKEdmnX8hFkRFvAZqBQ9RXJSuuhxqNtaPLP7x
+ A7aoTmYG1XFUVTxiGQ5YvPmuHNn5FWqukggCizv0EkyjeaKWbH6pnrs5gP4mb9QpQ7bx
+ 5PA9VDM/ogueeBKToV4sQEFzvZNewNnif8RTc+KMKpqW2mL0GXvGpX62swAExSIol7MS
+ asIAaWUEngq0imBAd6XE38QraMvQARXfdP2awSUQJoWks2LNTkAyFnYDvv23ZD1oAy3v
+ hfewGIdzRS13j770L5VOY/dcVH6sjQQjGRrLKWJR/Jy/IWseizg0EVK4uKQrj+sGGrYn
+ soXg==
+X-Gm-Message-State: AOJu0YyIgXpCiskzCijnqd7uoZiY8DfwKvswWlL5oWuB+esJVMDVrvYG
+ y8X9StgzPcyiimzxN1K5qP8Uzoj8HhG+9ckh5dl7eKU31XySZdoAo4PhZCIT2A8RfuU9mcSgOCA
+ 3bTY=
+X-Gm-Gg: ASbGnctHvJ9EjgfidrxHNyui/A1qE8qfoegJ33wOf9XsEqUlRiuAbrKJtY6o20hQenV
+ eQDEaigOZloDWIpcDNOf7HNgdIEdE5BKEwZknnL/5VslQ0MDDyq+zTg3Dz53rXn1qRM3UtuZEQQ
+ ZZXPHlyWnaDZiPW0xrGeYdstw2ZRo4Rttfx8TkicJ0zow+vvDbRyIkWcYOGqWCCK68BFKPcGDMI
+ 0do3bcKkJ1Az9WR/3B4Ihf7nB+jzbjWTH3G7ehpMherY7dB/o4MZOuOC3yHfyTB5G7UPfpwc1pU
+ GWBBkfG3JTf6n7owYeAjjNZI+mhRZVY=
+X-Google-Smtp-Source: AGHT+IGFnhvxlPcYFIbq2Y7CbtZjDulvb4ZXsK9sSze1m/GYgHNG6bZQRWyuAT5BTrMCk4ZBC8EQAw==
+X-Received: by 2002:a05:6000:402a:b0:385:fa20:658b with SMTP id
+ ffacd0b85a97d-38a8730a17emr14616705f8f.24.1736720353110; 
+ Sun, 12 Jan 2025 14:19:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b7f86sm10605149f8f.67.2025.01.12.14.18.02
+ ffacd0b85a97d-38a8e4c1bebsm10626974f8f.95.2025.01.12.14.19.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:18:03 -0800 (PST)
+ Sun, 12 Jan 2025 14:19:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PULL 07/49] hw/microblaze: Restrict MemoryRegionOps are implemented
- as 32-bit
-Date: Sun, 12 Jan 2025 23:16:43 +0100
-Message-ID: <20250112221726.30206-8-philmd@linaro.org>
+Cc: Alexander Graf <graf@amazon.com>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 21/49] docs/nitro-enclave: Clarify Enclave and Firecracker
+ relationship
+Date: Sun, 12 Jan 2025 23:16:57 +0100
+Message-ID: <20250112221726.30206-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,64 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All these MemoryRegionOps read() and write() handlers are
-implemented expecting 32-bit accesses. Clarify that setting
-.impl.min/max_access_size fields.
+From: Alexander Graf <graf@amazon.com>
 
+The documentation says that Nitro Enclaves are based on Firecracker.
+AWS has never made that statement.
+
+This patch nudges the wording to instead say it "looks like a
+Firecracker microvm".
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Message-ID: <20241211222512.95660-1-graf@amazon.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20241105130431.22564-8-philmd@linaro.org>
 ---
- hw/intc/xilinx_intc.c   | 4 ++++
- hw/net/xilinx_ethlite.c | 4 ++++
- hw/timer/xilinx_timer.c | 4 ++++
- 3 files changed, 12 insertions(+)
+ docs/system/i386/nitro-enclave.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
-index d99cf567aeb..6930f83907a 100644
---- a/hw/intc/xilinx_intc.c
-+++ b/hw/intc/xilinx_intc.c
-@@ -144,6 +144,10 @@ static const MemoryRegionOps pic_ops = {
-     .read = pic_read,
-     .write = pic_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index 4c0c7fcae3e..88ab331acce 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -166,6 +166,10 @@ static const MemoryRegionOps eth_ops = {
-     .read = eth_read,
-     .write = eth_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4
-diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index 4955fe1b01b..6595cf5f517 100644
---- a/hw/timer/xilinx_timer.c
-+++ b/hw/timer/xilinx_timer.c
-@@ -193,6 +193,10 @@ static const MemoryRegionOps timer_ops = {
-     .read = timer_read,
-     .write = timer_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4
+diff --git a/docs/system/i386/nitro-enclave.rst b/docs/system/i386/nitro-enclave.rst
+index 48eda5bd9ec..7317f547dce 100644
+--- a/docs/system/i386/nitro-enclave.rst
++++ b/docs/system/i386/nitro-enclave.rst
+@@ -13,7 +13,7 @@ the enclave VM gets a dynamic CID. Enclaves use an EIF (`Enclave Image Format`_)
+ file which contains the necessary kernel, cmdline and ramdisk(s) to boot.
+ 
+ In QEMU, ``nitro-enclave`` is a machine type based on ``microvm`` similar to how
+-AWS nitro enclaves are based on `Firecracker`_ microvm. This is useful for
++AWS nitro enclaves look like a `Firecracker`_ microvm. This is useful for
+ local testing of EIF files using QEMU instead of running real AWS Nitro Enclaves
+ which can be difficult for debugging due to its roots in security. The vsock
+ device emulation is done using vhost-user-vsock which means another process that
 -- 
 2.47.1
 
