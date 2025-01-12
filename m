@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4620E7719E
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F586E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Ju-0003sW-Le; Sun, 12 Jan 2025 17:20:34 -0500
+	id 1tX6Jx-00044U-KL; Sun, 12 Jan 2025 17:20:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J5-00022d-RA
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:45 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JB-0002KY-Oe
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:51 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J4-0006Zd-8z
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:43 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436ce2ab251so26231395e9.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J9-0006aA-Rs
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:49 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3862d16b4f5so2192640f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720380; x=1737325180; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720386; x=1737325186; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iAeWlekp0I6VowiluDZapbh9k9d5Kq9MZ32VfBn8/0g=;
- b=qlC36qKjjyf4bFXKd4dnt3lPO/cNxp3CFTs1LqBglnJ20O5n75e69hG3ACuS6uNKtx
- a3bhlnnU9y8UQLERdt7uV2Kv5beNyoPdFB37yP9PwJLjZi1eCwm8mDcI1NXClaplewEH
- 5Vv4R+1QI/VqJvV3Ndx9g+Wt+aRuXy1ALXdqBZtH/l0z8wXALBCu5/2zSkKeDcgC5Svo
- Cj3GgLFRDvWfR0nXpkCIJqgO5cbXgytwhXf2ye5XqidmKmTjd9EOXFo0uRmlpMkv88De
- 38kYrtHxFnRk/CC53oC7qaql0NGUA+0w0ylUuFXSo0vnt+/DpXW8FAFkswYYRGyLgs4f
- /PbQ==
+ bh=ypXBSvYmGiFDPRAAmIeWBvHigmsiA58P6W0SM1nQp5o=;
+ b=rOPnAVPW3T1SQ/j1ySJxovZlf0ilzN3/16aiJeNB/SCgzZNN4yP2+Jxq7nC0dfea1w
+ Q17y7SxzATIA4mpRuekgMxtAhTIGLp+vK9jy5nEGk3z9wMxnwoIt1vzQIbSH7mL7Mkgx
+ oV+7QkLNCTrOp+fpMW+6Jdj2W5PJIxfaGcR0RVvv2uJFbJlhXdqb38pHnCdCfKFdUH6S
+ 5LRyouAzx7ArJsmK/1eXfsdxUMIP58HS1IrfybT0eXMI6Fau0NGQWE4uVpqFh9g+09mN
+ RUpKMd1Xxmg4+Mx6fyvOQXnjdOA/bOP1YFb/Gc+xmAGUIrlWVHJig3UCBRFXpBO/fyyV
+ eFMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720380; x=1737325180;
+ d=1e100.net; s=20230601; t=1736720386; x=1737325186;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iAeWlekp0I6VowiluDZapbh9k9d5Kq9MZ32VfBn8/0g=;
- b=PKlvyHy2l5c7PQA90674c01Nz/zyMVaFNv5mOD/K5WadeRjCASjZRFSm9K94FLMwCQ
- xwPxx40mWfTpieFb66jUZFw7Os/sRcfx8cr1NoOCGx/Nbgc8mW+LtTwaj38LBAfC8eBg
- PkCSYtsU+xuwDPPdOtd2v1iiYttnKVuVcn4mj4CSX8KRKsaBQ2JIP/WZRO9uGrFPYmYt
- FYPZtfMwMveiv2QU4tzJ9udg8j6KXQ9mWNq9Z1HMmvmU+WkZj/8nWeGHyoh0LZdCsiXu
- Xj7NrFAk/u221d9CAGKus2u24jTFDsJldfGkei5P4QjsIlcp7+yA9WGizKtq6xbvgaeY
- uXdQ==
-X-Gm-Message-State: AOJu0YyS8e5g5nbOHdV3L9C4t53UrWnrWVTkJFu/UMW3strino90gAQD
- SyktYKD0cHe1YTHEswFwHd2HlK8Iqg47j1OPGPStVJ0NFIbxZRkcqvuWCZhbERW1LoVSlI/eVzS
- FnEE=
-X-Gm-Gg: ASbGncvyqTjeHi4yPdldKIsSROr7A3XuvYtDP2rznBDMJzjCG7I7fQUUH7cZF5m4Y91
- mlHwhZqsWdho8oq8s2D24EcNU6CPiQqmqwmTrG8jnrhgqcMcSUNXF4/b34SrhEi2fgZQB2wuAeq
- X6bnG5yfbbCIzlesdNIhPt21Mqk6oZaoCJiYjd0+ksK6E9cWCen4KeGucW0E9MBTexnC7gu211Q
- gNizWzsNAaF9HYTVNqMWuIBMxD/NuOVO7GDVesqKjkcEFsnse5Avp3a3wUc4+YxLL9LaXvJczpD
- Vo13Ti0zzT5xHSDk5uznGbjpqELRYG0=
-X-Google-Smtp-Source: AGHT+IF9cHGgEXMlrA1X7knljM0lI8FZG5FW2DRSqQu8nn6iPVobBJTa95sKFMZvjuHkmfdS3nlEBw==
-X-Received: by 2002:a05:600c:3b8a:b0:434:f270:a4f0 with SMTP id
- 5b1f17b1804b1-436e26dda80mr139563475e9.21.1736720380606; 
- Sun, 12 Jan 2025 14:19:40 -0800 (PST)
+ bh=ypXBSvYmGiFDPRAAmIeWBvHigmsiA58P6W0SM1nQp5o=;
+ b=pNAS9VFy92n4xWeFZfQz5BlCjWnnTKZRZxgy+sDJbqrSQL1Ne5EKo0ermHlrtIzE71
+ ISH87SPGzlifmdDH4OvauxCeSd63jNAsQM/DZE1My3kISARydcYjlDq3K/90EN+vMgO3
+ Zk8jLVDSSRyTD6vVj8k92jiQtOIKWkObcqmiZHsdpAG7LDco+rumgj1EHVxHy4XQcaNN
+ LSGJYy/oMXy7KoTt9ZQ7OdcAU1baDHX26gqvEPPNzfb/I/Zr2h3LrQWA5y0jW5dvNzxo
+ 6WDnB7obI4QjqsWONYlJKNPbUgcXG7FilKrmD2zSoFwxnTB0mr3vql3JEEVdoq5fR51a
+ MCqg==
+X-Gm-Message-State: AOJu0YxKD2a/Nn23pctKQZaEtrxPb0u/93ncTEeFOYv+hsS05g3ll0O8
+ e4GuuapZW3hDSw5lo6Yf9IHdDXrNo0S94msBekgBE/Hz1tWo+t7iFXwYK/Mrfl5HY0ZepOS6WSn
+ F3a0=
+X-Gm-Gg: ASbGnct4niknzBqcJyPY3Z1GcfaqfVcDMg/+pFKEz1S40Dd9jP0+4UYe9abqP3++GTl
+ EXNiVrgGo4kL4ha7VXgPTP894crqmoXrOxx2HHwug7zKH1mxVzo5nvBmvs1bTSJu/u2hUpoZohG
+ n+YCaSiC/Jm8Rp4IvSXvKpsmBQ5h5V7FpVAmSC17FDLX10wwqDsfYmp96GecRCeJ35jPUvakFwG
+ xjkzxMFzj02fE5i0WlakKtb8BnnpD/4wWkILQz1YM/tY0O+3NdxjQHLn2du/UPaM/j+7RUYMNcA
+ 8IE1yRnNL/Kl1mMhSyTQ90aK7AUOno8=
+X-Google-Smtp-Source: AGHT+IFJNx2Q6MB6KdGYWgWcXq8LGB1PIP8uGQY9XRjM+IxvLdGlB0LwamHGCb/tD9s1X7EvqIgAmA==
+X-Received: by 2002:a05:6000:1aca:b0:386:3bde:9849 with SMTP id
+ ffacd0b85a97d-38a8b0caa82mr12288534f8f.12.1736720385950; 
+ Sun, 12 Jan 2025 14:19:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2dc0babsm157488615e9.14.2025.01.12.14.19.39
+ 5b1f17b1804b1-436e2df2faesm158881605e9.26.2025.01.12.14.19.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:19:40 -0800 (PST)
+ Sun, 12 Jan 2025 14:19:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PULL 27/49] hw/sd/sdhci: Factor sdhci_sdma_transfer() out
-Date: Sun, 12 Jan 2025 23:17:03 +0100
-Message-ID: <20250112221726.30206-28-philmd@linaro.org>
+Cc: Nikita Shubin <nshubin@yadro.com>, Nikita Shubin <n.shubin@yadro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 28/49] hw/char/stm32f2xx_usart: replace print with trace
+Date: Sun, 12 Jan 2025 23:17:04 +0100
+Message-ID: <20250112221726.30206-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,64 +100,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor sdhci_sdma_transfer() out of sdhci_data_transfer().
-Re-use it in sdhci_write(), so we don't try to run multi
-block transfer for a single block.
+From: Nikita Shubin <nshubin@yadro.com>
 
+Drop debug printing macros and replace them with according trace
+functions.
+
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241220111756.16511-1-nikita.shubin@maquefel.me>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-Id: <20250109122029.22780-1-philmd@linaro.org>
 ---
- hw/sd/sdhci.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ hw/char/stm32f2xx_usart.c | 49 ++++++++++++++++++---------------------
+ hw/char/trace-events      |  6 +++++
+ 2 files changed, 29 insertions(+), 26 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index a958c114974..318587ff57c 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -699,6 +699,15 @@ static void sdhci_sdma_transfer_single_block(SDHCIState *s)
-     sdhci_end_transfer(s);
+diff --git a/hw/char/stm32f2xx_usart.c b/hw/char/stm32f2xx_usart.c
+index ebcc510f4ea..87882daa715 100644
+--- a/hw/char/stm32f2xx_usart.c
++++ b/hw/char/stm32f2xx_usart.c
+@@ -30,17 +30,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ 
+-#ifndef STM_USART_ERR_DEBUG
+-#define STM_USART_ERR_DEBUG 0
+-#endif
+-
+-#define DB_PRINT_L(lvl, fmt, args...) do { \
+-    if (STM_USART_ERR_DEBUG >= lvl) { \
+-        qemu_log("%s: " fmt, __func__, ## args); \
+-    } \
+-} while (0)
+-
+-#define DB_PRINT(fmt, args...) DB_PRINT_L(1, fmt, ## args)
++#include "trace.h"
+ 
+ static int stm32f2xx_usart_can_receive(void *opaque)
+ {
+@@ -67,10 +57,11 @@ static void stm32f2xx_update_irq(STM32F2XXUsartState *s)
+ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+ 
+     if (!(s->usart_cr1 & USART_CR1_UE && s->usart_cr1 & USART_CR1_RE)) {
+         /* USART not enabled - drop the chars */
+-        DB_PRINT("Dropping the chars\n");
++        trace_stm32f2xx_usart_drop(d->id);
+         return;
+     }
+ 
+@@ -79,7 +70,7 @@ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
+ 
+     stm32f2xx_update_irq(s);
+ 
+-    DB_PRINT("Receiving: %c\n", s->usart_dr);
++    trace_stm32f2xx_usart_receive(d->id, *buf);
  }
  
-+static void sdhci_sdma_transfer(SDHCIState *s)
-+{
-+    if ((s->blkcnt == 1) || !(s->trnmod & SDHC_TRNS_MULTI)) {
-+        sdhci_sdma_transfer_single_block(s);
-+    } else {
-+        sdhci_sdma_transfer_multi_blocks(s);
-+    }
-+}
-+
- typedef struct ADMADescr {
-     hwaddr addr;
-     uint16_t length;
-@@ -930,12 +939,7 @@ static void sdhci_data_transfer(void *opaque)
-     if (s->trnmod & SDHC_TRNS_DMA) {
-         switch (SDHC_DMA_TYPE(s->hostctl1)) {
-         case SDHC_CTRL_SDMA:
--            if ((s->blkcnt == 1) || !(s->trnmod & SDHC_TRNS_MULTI)) {
--                sdhci_sdma_transfer_single_block(s);
--            } else {
--                sdhci_sdma_transfer_multi_blocks(s);
--            }
+ static void stm32f2xx_usart_reset(DeviceState *dev)
+@@ -101,49 +92,55 @@ static uint64_t stm32f2xx_usart_read(void *opaque, hwaddr addr,
+                                        unsigned int size)
+ {
+     STM32F2XXUsartState *s = opaque;
+-    uint64_t retvalue;
 -
-+            sdhci_sdma_transfer(s);
-             break;
-         case SDHC_CTRL_ADMA1_32:
-             if (!(s->capareg & R_SDHC_CAPAB_ADMA1_MASK)) {
-@@ -1179,11 +1183,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-             if (!(mask & 0xFF000000) && s->blkcnt &&
-                 (s->blksize & BLOCK_SIZE_MASK) &&
-                 SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA) {
--                if (s->trnmod & SDHC_TRNS_MULTI) {
--                    sdhci_sdma_transfer_multi_blocks(s);
--                } else {
--                    sdhci_sdma_transfer_single_block(s);
--                }
-+                sdhci_sdma_transfer(s);
-             }
-         }
-         break;
+-    DB_PRINT("Read 0x%"HWADDR_PRIx"\n", addr);
++    DeviceState *d = DEVICE(s);
++    uint64_t retvalue = 0;
+ 
+     switch (addr) {
+     case USART_SR:
+         retvalue = s->usart_sr;
+         qemu_chr_fe_accept_input(&s->chr);
+-        return retvalue;
++        break;
+     case USART_DR:
+-        DB_PRINT("Value: 0x%" PRIx32 ", %c\n", s->usart_dr, (char) s->usart_dr);
+         retvalue = s->usart_dr & 0x3FF;
+         s->usart_sr &= ~USART_SR_RXNE;
+         qemu_chr_fe_accept_input(&s->chr);
+         stm32f2xx_update_irq(s);
+-        return retvalue;
++        break;
+     case USART_BRR:
+-        return s->usart_brr;
++        retvalue = s->usart_brr;
++        break;
+     case USART_CR1:
+-        return s->usart_cr1;
++        retvalue = s->usart_cr1;
++        break;
+     case USART_CR2:
+-        return s->usart_cr2;
++        retvalue = s->usart_cr2;
++        break;
+     case USART_CR3:
+-        return s->usart_cr3;
++        retvalue = s->usart_cr3;
++        break;
+     case USART_GTPR:
+-        return s->usart_gtpr;
++        retvalue = s->usart_gtpr;
++        break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
+         return 0;
+     }
+ 
+-    return 0;
++    trace_stm32f2xx_usart_read(d->id, size, addr, retvalue);
++
++    return retvalue;
+ }
+ 
+ static void stm32f2xx_usart_write(void *opaque, hwaddr addr,
+                                   uint64_t val64, unsigned int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+     uint32_t value = val64;
+     unsigned char ch;
+ 
+-    DB_PRINT("Write 0x%" PRIx32 ", 0x%"HWADDR_PRIx"\n", value, addr);
++    trace_stm32f2xx_usart_write(d->id, size, addr, val64);
+ 
+     switch (addr) {
+     case USART_SR:
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 59e1f734a7d..140b994fd4d 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -125,3 +125,9 @@ xen_console_unrealize(unsigned int idx) "idx %u"
+ xen_console_realize(unsigned int idx, const char *chrdev) "idx %u chrdev %s"
+ xen_console_device_create(unsigned int idx) "idx %u"
+ xen_console_device_destroy(unsigned int idx) "idx %u"
++
++# stm32f2xx_usart.c
++stm32f2xx_usart_read(char *id, unsigned size, uint64_t ofs, uint64_t val) " %s size %d ofs 0x%02" PRIx64 " -> 0x%02" PRIx64
++stm32f2xx_usart_write(char *id, unsigned size, uint64_t ofs, uint64_t val) "%s size %d ofs 0x%02" PRIx64 " <- 0x%02" PRIx64
++stm32f2xx_usart_drop(char *id) " %s dropping the chars"
++stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving '%c'"
 -- 
 2.47.1
 
