@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2D5E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 13:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0BCE7719C
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 13:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tWxlr-0005B6-W8; Sun, 12 Jan 2025 08:12:53 -0500
+	id 1tWxlt-0005Di-HK; Sun, 12 Jan 2025 08:12:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tWxli-00056B-PS; Sun, 12 Jan 2025 08:12:44 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tWxlf-00017R-OZ; Sun, 12 Jan 2025 08:12:42 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D812D5FDE;
- Sun, 12 Jan 2025 16:12:33 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 43B2519A135;
- Sun, 12 Jan 2025 16:12:34 +0300 (MSK)
-Message-ID: <d565340c-8e81-4582-a2dd-1abed5879e95@tls.msk.ru>
-Date: Sun, 12 Jan 2025 16:12:34 +0300
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tWxli-00056C-Q6; Sun, 12 Jan 2025 08:12:44 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tWxlf-00016I-4s; Sun, 12 Jan 2025 08:12:40 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3cf094768so6102549a12.0; 
+ Sun, 12 Jan 2025 05:12:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736687553; x=1737292353; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H8c/UCICLRBXHpkJfG5pRUpK2IfBWdGLk+BZkMzxMUw=;
+ b=faY+S6oNfu29c62eqd1dS5sKi1BWwLqAvmoaULrmjR+RjF3Q4L3u3MI9dXPs0JhTy8
+ JaMYh/zdlodLlGe3A5fppE/n+p1lNgkQRqxL5fEFEdBvdtlmLAwfBPGkwJbGsrVWK6lB
+ Uwn+UaEYWXkxyk/OgG3uqvb7HAbXNXHbFxxjvzF/TADTxR+T4uQEkHo0kTGMzDuJ1uyB
+ MngEsHqqpokvm1NADDdL4Ox0wVXnqtNFFYi4Wsqr5Kpp4rKFspZV4ADrb5tYPtawoBwF
+ RdkrLxyENYC3hvDehwrYehNLWqwBsVUFKHF2igM0V1Egi2eGFlfH7iDjK/AUSFVAxvR+
+ 9L+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736687553; x=1737292353;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H8c/UCICLRBXHpkJfG5pRUpK2IfBWdGLk+BZkMzxMUw=;
+ b=kWKZqYaRNVt4WlVTA2fTH8hBKvwYU3hjeJPR6DNNXD06XNZfUF8+b68/+ZcRgziqCL
+ UIdX4ALsPr895pWNHmnKTTGRaWQ8XWkXqezPQSUg+T68JpuWf02yvluaDar7iMZdiOOx
+ p/VSGCDAukkMu9vqHa/NHPGGtdvXHIDgjK85TO4lV75hx+JIqgIKLGw9ruEuJqF3W/sb
+ 2B0dLnk63DCRwhnL+u2ETYwbc+ZGut/BYSc831FN7vZqX1CPxX9/LttKfjq8D7N6AkhQ
+ gwus1t/W6qli4Od8hLDpO6nU5on4Bdk1MYEoGIzVPTLFh906yL1U2ByVeyQ+qLSJkljs
+ UCaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRcQLnb10r6rIGBGdHBGrtgxMD8+RgpfoqOCRA/TS5//p737TgfgSsWmyORLFESJyDOuWyG33R30/C@nongnu.org
+X-Gm-Message-State: AOJu0YzvBgIc9oTcp0eOjkxehOmhTdtFvmyc02vI4NB4xlDvMB3iHeso
+ v+qNOBJ9RrttTLVnFHakyAuxrgzl6aBOSsToeFJv3sxMCYZjGTnh
+X-Gm-Gg: ASbGncvtzHryiuFc58uQLNFPi3da/g9IUw4RKnYv3kyGMLfcByk5o59EZUDbVEWjkBv
+ A9XY6z8esoxaUNmYot64rPhB3QB+5nnEgLZfz+JVVDYe2+RFKaiyXNi//3bvtOVofK7cIOxKoTH
+ 1EMvXbKzOxsnUzRSnDxRDb+TxHY8QwxhFspRqio19gqbxkJzJQVd+ygQ0OYr2O3yPEqZnoMsIIn
+ 2ZHnc/16sH8LZGerV73bCOEuTBHfTk6E+opRD0d4h+qVxztTOWeC8Hu7dOVxJorFDPyeqcmrv4k
+ zcGZXxWFwMLvBcAohSezFNtUzGH2C4g=
+X-Google-Smtp-Source: AGHT+IEJilvs6VBJZGyAgvAC/udeESjbHZi+keHunnRaROEes/Jxl6Djs6InJyvf5EA5pyp95BIPQQ==
+X-Received: by 2002:a17:907:3e9b:b0:aae:d199:6eae with SMTP id
+ a640c23a62f3a-ab2ab6a38bbmr1431328766b.14.1736687552305; 
+ Sun, 12 Jan 2025 05:12:32 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-077-013-193-192.77.13.pool.telefonica.de.
+ [77.13.193.192]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab2c905e1fesm373785666b.2.2025.01.12.05.12.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 12 Jan 2025 05:12:31 -0800 (PST)
+Date: Sun, 12 Jan 2025 13:12:31 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: qemu-block@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+Subject: Re: [PATCH] hw/sd/sdhci: Factor sdhci_sdma_transfer() out
+In-Reply-To: <20250109122029.22780-1-philmd@linaro.org>
+References: <20250109122029.22780-1-philmd@linaro.org>
+Message-ID: <AA6E1DC2-B956-480C-AA5A-3ABB90526E43@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] bugfixes for migration using compression methods
-To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, farosas@suse.de
-Cc: qemu-devel@nongnu.org, jason.zeng@intel.com, yichen.wang@bytedance.com,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20241218091413.140396-1-yuan1.liu@intel.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20241218091413.140396-1-yuan1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,40 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-18.12.2024 12:14, Yuan Liu wrote:
-> This set of patches is used to fix the bugs of incorrect migration
-> memory data when compression is enabled.
-> 
-> The method to reproduce this bug is as follows
-> 1. Run "stress-ng --class memory --all 1" in the source side, the
-> stress-ng tool comes from https://github.com/ColinIanKing/stress-ng.git
-> 
-> 2. Enable the multifd compression methods and start migration
->     e.g. migrate_set_parameter multifd-compression qpl
-> 
-> 3. The guest kernel will crash automatically or crash at shutdown after
->     the migration is complete
-> 
-> The root cause of the bugs and the solutions are described in detail in
-> the patch.
-> 
-> My verification method as follows
-> 1. Start the VM and run the stess-ng test command on the source side.
-> 2. Start the VM with "-S" parameter on the target side, it is
->     used to pause the vCPUs after migration.
-> 3. After the migration is successful, use the dump-guest-memory command
->     to export the memory data of the source and target VMs respectively.
-> 4. Use "cmp -l source_memory target_memory" to verify memory data.
-> 
-> Yuan Liu (3):
->    multifd: bugfix for migration using compression methods
->    multifd: bugfix for incorrect migration data with QPL compression
->    multifd: bugfix for incorrect migration data with qatzip compression
 
-Should just the first patch be applied to qemu-stable branches, or all 3?
-The first one has been Cc'd qemu-stable, but the other two hasn't?
 
-Thanks,
+Am 9=2E Januar 2025 12:20:29 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <ph=
+ilmd@linaro=2Eorg>:
+>Factor sdhci_sdma_transfer() out of sdhci_data_transfer()=2E
+>Re-use it in sdhci_write(), so we don't try to run multi
+>block transfer for a single block=2E
+>
+>Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
 
-/mjt
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+
+>---
+> hw/sd/sdhci=2Ec | 22 +++++++++++-----------
+> 1 file changed, 11 insertions(+), 11 deletions(-)
+>
+>diff --git a/hw/sd/sdhci=2Ec b/hw/sd/sdhci=2Ec
+>index 299cd4bc1b6=2E=2E332ea13fe55 100644
+>--- a/hw/sd/sdhci=2Ec
+>+++ b/hw/sd/sdhci=2Ec
+>@@ -694,6 +694,15 @@ static void sdhci_sdma_transfer_single_block(SDHCISt=
+ate *s)
+>     sdhci_end_transfer(s);
+> }
+>=20
+>+static void sdhci_sdma_transfer(SDHCIState *s)
+>+{
+>+    if ((s->blkcnt =3D=3D 1) || !(s->trnmod & SDHC_TRNS_MULTI)) {
+>+        sdhci_sdma_transfer_single_block(s);
+>+    } else {
+>+        sdhci_sdma_transfer_multi_blocks(s);
+>+    }
+>+}
+>+
+> typedef struct ADMADescr {
+>     hwaddr addr;
+>     uint16_t length;
+>@@ -925,12 +934,7 @@ static void sdhci_data_transfer(void *opaque)
+>     if (s->trnmod & SDHC_TRNS_DMA) {
+>         switch (SDHC_DMA_TYPE(s->hostctl1)) {
+>         case SDHC_CTRL_SDMA:
+>-            if ((s->blkcnt =3D=3D 1) || !(s->trnmod & SDHC_TRNS_MULTI)) =
+{
+>-                sdhci_sdma_transfer_single_block(s);
+>-            } else {
+>-                sdhci_sdma_transfer_multi_blocks(s);
+>-            }
+>-
+>+            sdhci_sdma_transfer(s);
+>             break;
+>         case SDHC_CTRL_ADMA1_32:
+>             if (!(s->capareg & R_SDHC_CAPAB_ADMA1_MASK)) {
+>@@ -1174,11 +1178,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t =
+val, unsigned size)
+>             if (!(mask & 0xFF000000) && s->blkcnt &&
+>                 (s->blksize & BLOCK_SIZE_MASK) &&
+>                 SDHC_DMA_TYPE(s->hostctl1) =3D=3D SDHC_CTRL_SDMA) {
+>-                if (s->trnmod & SDHC_TRNS_MULTI) {
+>-                    sdhci_sdma_transfer_multi_blocks(s);
+>-                } else {
+>-                    sdhci_sdma_transfer_single_block(s);
+>-                }
+>+                sdhci_sdma_transfer(s);
+>             }
+>         }
+>         break;
 
