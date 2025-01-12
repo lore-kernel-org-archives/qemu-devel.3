@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B71FCE7719E
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 386DBC02181
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6su-0007FB-6l; Sun, 12 Jan 2025 17:56:44 -0500
+	id 1tX6sX-000723-DU; Sun, 12 Jan 2025 17:56:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6sl-00079M-O4
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:56:36 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6sV-00071Q-U2
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:56:19 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6sj-0001Zp-TF
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:56:35 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso25582185e9.2
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:56:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6sU-0001Yb-58
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:56:19 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so38191365e9.2
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:56:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736722591; x=1737327391; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lib4OrNK5VdPwlvzVttsZjjREbL5pGt5xtvhCA9WJB4=;
- b=CvOQrVWzES5wzN1HzTU28ab3Q4Fsl2GBuwpVwxT3HC/4FzJQxg8R1jBkLp8uYRvRBG
- JrI+2DG8UbXtAyzGaiGXuHjhkwdU2gMlt/afP57jjuewjFqoUFQpq5qeL9XQDkh7F9I0
- ba1glyYve0tAsiCxfxTCtLltZAortHbQIviTUjtrM5gnXjwRuW3/PixADzivrZOa/7Tr
- BXnBai3jMtE8d/b/TGvzmcN9xYqRUFpKjpNTjy5p3+Qg9EEMhz1EGehtze/GRt+k+B0z
- Aibcclf8vAaLXi9GRm5+Jat0yeSIb0UgdyT5gX+PFZknUm79M+2kb2DQHNa9XnsV3Nm5
- HyZg==
+ d=linaro.org; s=google; t=1736722576; x=1737327376; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IOAYRcEECAAnm/ibPu65QtP1Fqg4u5OgmCZcVVc+/O8=;
+ b=ZYyrTqSC3piZlIWUd9Y7/IiU46oz1PK4EWkGKuJfLVR6T8IRFl7wnSRdT6OOpVeqjj
+ DR9fSrAjPeD5wdeL+tX/qAJSIAlTiMnmy0W4HKnIYo0xL9x3kcsQsutp0XvhcBTYWNWJ
+ 11ERdy9bsm+T62pmz3hC1zRfPAW4QdZnHxcmgEF9maBvjtpeb+XRScGi7rD0Pw/ObyeE
+ pQHHcPxMV3tpd/FanpRwE8Q/vlVEHKFjp2XDn/bT4h/BvsPC47dNLDutnb4Y87451XlF
+ DeZDpUl/GXsCpetWbncmvTZkaspAu/FgvyZywdqdzfjmd0R5EdE7cY5UjCG4miYB/928
+ xeeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736722591; x=1737327391;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lib4OrNK5VdPwlvzVttsZjjREbL5pGt5xtvhCA9WJB4=;
- b=wzsdXFHz3PXLXNNYITle+K59TexueUSbVS8Oee2+frHyw2Z9qBKjcQwbfNMVXl02x0
- DDmYMoo9r4vnpqJ6oMSqACJoduyWyI33faKB5iGElC215IScQBMaRquJRvfeSGfapTH+
- w8StsTBGRIq7G5TPVaKCK+f347DaEo/2lmkH7PfGmuuTxK16yYDJKo3iLDndRWhiA/AM
- QiWNoGogDYg91CRBk3LSGcPIHfG1JmjHEExmA+i/dIE5W8it+Ufo2Oqg/qlfua5VWKBN
- uAmWuSHWB2gPGuXVesxZwHoGOUwDPRTJTlgGedltxDC6TLeZ+W+20bS4iCHE1PmPIQJo
- todQ==
-X-Gm-Message-State: AOJu0Yza/7aQlKZHfA0fONjX16e0j9EPzrgZPVC3rJBOq2s9mGwEmCge
- dlhwme2+iMpSSKznZUHvuCyyrhd9C09x0jIbnnbFoB0fvKi6rNDWE3+kRFD/I8SeGGmpJj0Ko3Y
- /Tsk=
-X-Gm-Gg: ASbGncu3JK+l7DSFiAu+tsKSIt3v4hI2Nx9HxbOTlpLfhGD9fBhscPPQ0UHUlLUq6G4
- HcFYimQ1zsP0q6Gr8zpIWqlWCOrvNdhwcxSt+4BYWbK5tHWJjw0IMtJtyzL1W+K4NGjlosga1FN
- CKQLJpWtjdBH7/oYPBJ/6o2CPpzZ744T6a08NW7dEZc2hApJz3T+AKNgg1UxPajkaOjqN5IqWOv
- a3XapvpU0TvwkDDFuKpoQJSCQ8YeM+kilW8sgyfdHs1O96/x4vmmW3IxDTrAd+YcKDHSRaugEDC
- PjkX6Dsji3mtTiHZw/+LER6lzJ/INgI=
-X-Google-Smtp-Source: AGHT+IF1rzYv68giexpTGKmCXKEtlNrhmigsKGj/sk2J1RBawMBpxyNd+JR+AUWO6UJxYEmkiXws1A==
-X-Received: by 2002:a05:6000:18a7:b0:385:f220:f798 with SMTP id
- ffacd0b85a97d-38a872c93eemr13904757f8f.6.1736722591081; 
- Sun, 12 Jan 2025 14:56:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736722576; x=1737327376;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IOAYRcEECAAnm/ibPu65QtP1Fqg4u5OgmCZcVVc+/O8=;
+ b=ujnQm2hMGewpzZrIevGLJ3RKf1Y75ehw0HSseFsF8oRYpywpzDpMvz/tGaEs9sKkw/
+ YAZ8Ab662X1QhfvROmxyglCivEn4D4UqZHOs4hfvUixXD6rGY5FkmCUc5XrFX9Q5H2xJ
+ XPEDxYIa8Ib/lNRSoBpUoxQzf91mEFGr1Rppy2xfLP2Aez6vRK8dYO4Dv4scI9JQxuV5
+ XIRUWdXeYMM3Cuu4Wc3j7o0QtHlTUuyhy+b3fJfYc5N+dhZQ+1dgnyX9Y6kDa63U20f5
+ Sc+QNeWWlm0a3fp3fj5wco9v0TVAmUpneamQJzX71LcntOis3hZYNtpPWzGxGAAQ9XdT
+ /qZg==
+X-Gm-Message-State: AOJu0Yxc2BlAh9SSKnuR13fxQM80/roB2Dp/Nww/dWtchu/ngh5rL0S6
+ tLaPRysQIM4L6gmvFzGbat8cE6EYqrBwvdM7xkpFfMqPYXtdy9291uJ5BHZCpubNsSOExqNUMMz
+ gsNw=
+X-Gm-Gg: ASbGncsAogPYVWxwZnAi1IvwzCEVKQaS699tZ4EOlAG34GpzjPJTaGokVk8harugpkY
+ mBP+JAjUmkHJHDKapRi/qijZsEqDlGYMoycVyU5wiysR1tSL/diaI7I/RneIcj7I209a7pNmv+G
+ 1zn4tPR3OtLEH4LT1gR4A/5143M4kChBpkulrQ3sWoID9M75h9qEUDYhzTvKJImby/4FczulpUg
+ MVh67aQ2W5/1n1wgtEopWQ0JjLEqschU0BAte2B9HVEeLpvHphRLRm/A5i4Vgnugs3dG4LpShk0
+ +gxBcbwd4zHiOk3G7ykbPeLOLxb4L+E=
+X-Google-Smtp-Source: AGHT+IFhqSyD3TibCWU6/Rtu3pQ4Mb7OE2keVFEmXrJAOwPax8fMcVIBNzJ2HWgAMEMmHKDVfOmlsw==
+X-Received: by 2002:a05:600c:1c1a:b0:434:a802:e9a6 with SMTP id
+ 5b1f17b1804b1-436e2679a94mr177277555e9.7.1736722576040; 
+ Sun, 12 Jan 2025 14:56:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1c01sm10819644f8f.97.2025.01.12.14.56.30
+ 5b1f17b1804b1-436e2da65a3sm160930895e9.7.2025.01.12.14.56.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:56:30 -0800 (PST)
+ Sun, 12 Jan 2025 14:56:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
@@ -70,17 +69,15 @@ Cc: Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>, Joel Stanley <joel@jms.id.au>,
  Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/3] hw/arm/v7m: Remove use of &first_cpu in machine_init()
-Date: Sun, 12 Jan 2025 23:56:14 +0100
-Message-ID: <20250112225614.33723-4-philmd@linaro.org>
+Subject: [PATCH 0/3] hw/arm/v7m: Remove Cortex-M &first_cpu uses
+Date: Sun, 12 Jan 2025 23:56:11 +0100
+Message-ID: <20250112225614.33723-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250112225614.33723-1-philmd@linaro.org>
-References: <20250112225614.33723-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,169 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When instanciating the machine model, the machine_init()
-implementations usually create the CPUs, so have access
-to its first CPU. Use that rather then the &first_cpu
-global.
+After renaming a pair of fields in NRF51 & Stellaris boards,
+remove the &first_cpu global uses in Cortex-M boards.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/b-l475e-iot01a.c    | 2 +-
- hw/arm/microbit.c          | 2 +-
- hw/arm/mps2-tz.c           | 2 +-
- hw/arm/mps2.c              | 2 +-
- hw/arm/msf2-som.c          | 2 +-
- hw/arm/musca.c             | 2 +-
- hw/arm/netduino2.c         | 2 +-
- hw/arm/netduinoplus2.c     | 2 +-
- hw/arm/olimex-stm32-h405.c | 2 +-
- hw/arm/stellaris.c         | 2 +-
- hw/arm/stm32vldiscovery.c  | 2 +-
- 11 files changed, 11 insertions(+), 11 deletions(-)
+Rational is &first_cpu is going to be restricted to generic
+accelerator code, then be removed. Similarly the global
+'cpus_queue' containing target-agnostic CPUs is going to be
+restricted to generic accelerator, thus hw/ won't have direct
+access to it anymore.
 
-diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
-index 5002a40f06d..c9a5209216c 100644
---- a/hw/arm/b-l475e-iot01a.c
-+++ b/hw/arm/b-l475e-iot01a.c
-@@ -82,7 +82,7 @@ static void bl475e_init(MachineState *machine)
-     sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
- 
-     sc = STM32L4X5_SOC_GET_CLASS(&s->soc);
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename, 0,
-+    armv7m_load_kernel(s->soc.armv7m.cpu, machine->kernel_filename, 0,
-                        sc->flash_size);
- 
-     if (object_class_by_name(TYPE_DM163)) {
-diff --git a/hw/arm/microbit.c b/hw/arm/microbit.c
-index 374fbcb3618..3f56fb45ce1 100644
---- a/hw/arm/microbit.c
-+++ b/hw/arm/microbit.c
-@@ -56,7 +56,7 @@ static void microbit_init(MachineState *machine)
-     memory_region_add_subregion_overlap(&s->nrf51.container, NRF51_TWI_BASE,
-                                         mr, -1);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename,
-+    armv7m_load_kernel(s->nrf51.armv7m.cpu, machine->kernel_filename,
-                        0, s->nrf51.flash_size);
- }
- 
-diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
-index 0136e419bfd..d3a9f1b03ac 100644
---- a/hw/arm/mps2-tz.c
-+++ b/hw/arm/mps2-tz.c
-@@ -1211,7 +1211,7 @@ static void mps2tz_common_init(MachineState *machine)
-                                     mms->remap_irq);
-     }
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename,
-+    armv7m_load_kernel(mms->iotkit.armv7m[0].cpu, machine->kernel_filename,
-                        0, boot_ram_size(mms));
- }
- 
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index efb3500742f..56b2af40f1d 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -460,7 +460,7 @@ static void mps2_common_init(MachineState *machine)
-                  qdev_get_gpio_in(armv7m,
-                                   mmc->fpga_type == FPGA_AN511 ? 47 : 13));
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename,
-+    armv7m_load_kernel(mms->armv7m.cpu, machine->kernel_filename,
-                        0, 0x400000);
- }
- 
-diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
-index 5c415abe852..9b20f1e2c98 100644
---- a/hw/arm/msf2-som.c
-+++ b/hw/arm/msf2-som.c
-@@ -92,7 +92,7 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
-     cs_line = qdev_get_gpio_in_named(spi_flash, SSI_GPIO_CS, 0);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&soc->spi[0]), 1, cs_line);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename,
-+    armv7m_load_kernel(soc->armv7m.cpu, machine->kernel_filename,
-                        0, soc->envm_size);
- }
- 
-diff --git a/hw/arm/musca.c b/hw/arm/musca.c
-index 3c3b534cb72..e9c092abc3d 100644
---- a/hw/arm/musca.c
-+++ b/hw/arm/musca.c
-@@ -590,7 +590,7 @@ static void musca_init(MachineState *machine)
-                                                      "cfg_sec_resp", 0));
-     }
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename,
-+    armv7m_load_kernel(mms->sse.armv7m[0].cpu, machine->kernel_filename,
-                        0, 0x2000000);
- }
- 
-diff --git a/hw/arm/netduino2.c b/hw/arm/netduino2.c
-index 8b1a9a24379..df793c77fe1 100644
---- a/hw/arm/netduino2.c
-+++ b/hw/arm/netduino2.c
-@@ -48,7 +48,7 @@ static void netduino2_init(MachineState *machine)
-     qdev_connect_clock_in(dev, "sysclk", sysclk);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), machine->kernel_filename,
-+    armv7m_load_kernel(STM32F205_SOC(dev)->armv7m.cpu, machine->kernel_filename,
-                        0, FLASH_SIZE);
- }
- 
-diff --git a/hw/arm/netduinoplus2.c b/hw/arm/netduinoplus2.c
-index bccd1003549..81b6334cf72 100644
---- a/hw/arm/netduinoplus2.c
-+++ b/hw/arm/netduinoplus2.c
-@@ -48,7 +48,7 @@ static void netduinoplus2_init(MachineState *machine)
-     qdev_connect_clock_in(dev, "sysclk", sysclk);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu),
-+    armv7m_load_kernel(STM32F405_SOC(dev)->armv7m.cpu,
-                        machine->kernel_filename,
-                        0, FLASH_SIZE);
- }
-diff --git a/hw/arm/olimex-stm32-h405.c b/hw/arm/olimex-stm32-h405.c
-index 4ad7b043be0..1f15620f9fd 100644
---- a/hw/arm/olimex-stm32-h405.c
-+++ b/hw/arm/olimex-stm32-h405.c
-@@ -51,7 +51,7 @@ static void olimex_stm32_h405_init(MachineState *machine)
-     qdev_connect_clock_in(dev, "sysclk", sysclk);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu),
-+    armv7m_load_kernel(STM32F405_SOC(dev)->armv7m.cpu,
-                        machine->kernel_filename,
-                        0, FLASH_SIZE);
- }
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 7303e096ef7..284980ad4b5 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1366,7 +1366,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     create_unimplemented_device("hibernation", 0x400fc000, 0x1000);
-     create_unimplemented_device("flash-control", 0x400fd000, 0x1000);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu), ms->kernel_filename, 0, flash_size);
-+    armv7m_load_kernel(ARMV7M(armv7m)->cpu, ms->kernel_filename, 0, flash_size);
- }
- 
- /* FIXME: Figure out how to generate these from stellaris_boards.  */
-diff --git a/hw/arm/stm32vldiscovery.c b/hw/arm/stm32vldiscovery.c
-index cc419351605..e6c1f5b8d7d 100644
---- a/hw/arm/stm32vldiscovery.c
-+++ b/hw/arm/stm32vldiscovery.c
-@@ -51,7 +51,7 @@ static void stm32vldiscovery_init(MachineState *machine)
-     qdev_connect_clock_in(dev, "sysclk", sysclk);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
--    armv7m_load_kernel(ARM_CPU(first_cpu),
-+    armv7m_load_kernel(STM32F100_SOC(dev)->armv7m.cpu,
-                        machine->kernel_filename,
-                        0, FLASH_SIZE);
- }
+Note, Cortex-A boards already have been dealt with in
+https://lore.kernel.org/qemu-devel/20231212162935.42910-1-philmd@linaro.org/
+"hw/cpu/arm: Remove one use of qemu_get_cpu() in A7/A15 MPCore priv"
+
+Philippe Mathieu-Daudé (3):
+  hw/arm/nrf51: Rename ARMv7MState 'cpu' -> 'armv7m'
+  hw/arm/stellaris: Add 'armv7m' local variable
+  hw/arm/v7m: Remove use of &first_cpu in machine_init()
+
+ include/hw/arm/nrf51_soc.h |  2 +-
+ hw/arm/b-l475e-iot01a.c    |  2 +-
+ hw/arm/microbit.c          |  2 +-
+ hw/arm/mps2-tz.c           |  2 +-
+ hw/arm/mps2.c              |  2 +-
+ hw/arm/msf2-som.c          |  2 +-
+ hw/arm/musca.c             |  2 +-
+ hw/arm/netduino2.c         |  2 +-
+ hw/arm/netduinoplus2.c     |  2 +-
+ hw/arm/nrf51_soc.c         | 18 +++++++++---------
+ hw/arm/olimex-stm32-h405.c |  2 +-
+ hw/arm/stellaris.c         | 23 ++++++++++++-----------
+ hw/arm/stm32vldiscovery.c  |  2 +-
+ 13 files changed, 32 insertions(+), 31 deletions(-)
+
 -- 
 2.47.1
 
