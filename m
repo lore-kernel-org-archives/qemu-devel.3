@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9962CE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25325E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6HY-0007Vu-S0; Sun, 12 Jan 2025 17:18:08 -0500
+	id 1tX6Ha-0007WF-3n; Sun, 12 Jan 2025 17:18:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HP-0007Td-ET
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:06 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HO-0007Tb-7x
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:03 -0500
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HN-0006PG-DE
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:17:59 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HI-0006Og-Sj
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:17:57 -0500
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-436637e8c8dso39392225e9.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:17:54 -0800 (PST)
+ 5b1f17b1804b1-4363ae65100so38315945e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:17:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720273; x=1737325073; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720262; x=1737325062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+GoeTs3OwFxXFIF/0sszVZvTSkwjTETcrGfwBocwM+s=;
- b=T1vdYGt/BNcDErDAjxNxFcs3bhFrOU3Pq7dPtb6PUoPB0unMiprQeZGkBBkBroSdNv
- m/HjdqP9K34XApdqCvBFc/x/0SZEmMzzwnzeRPsTdErNCoc0lETK6lcRS59U4qJKEBVg
- E4zjHRsboLuSqhRSKsWoMjiFjc/+zsYuco/7on2Lp5GDiBAK2Fu/+VFbwQiAtfelc1R8
- XD1HcT27d/ZwlzgEf/9hVNpiTVZiUIKsBQNsCL4J2LbCoL5AIunpCaUOoH7V1ZnkqSQz
- 91J5iAkOcYIbf4i3ywK8jlUzYOortqk7xzyuEkcvGFLua8EjyqmwnYs2HIFZ59PVXhMo
- cSxQ==
+ bh=RRilqG0RRzc/tLS+/K4TJ6YsxHq+JDiiCxUzzS2N1LY=;
+ b=EnrmkeWV5hicqQ7cryUySmTtzA3tNMH5s2rA4H0k7O/qtWG8/b6S/zGDQqy5yXr9AX
+ IFFJ5VzV4JceEYbWLVOCMMp1zWhvGj0sLWaPP2bHY9Cdm5y4v4RSNzZg8Gw/kDFERAyM
+ NhinP/QmQp4PMbDyaSUw9jZJ4PUWUFRa+ItWUv9fAw04kqU3OO0v+iTScHrS+Mnxd2gz
+ MwaH0bo07jhBBRswj2LCDcb62S8MIHUPpzFkpxy33rht5Gzb08BnMYul8gK2p47PQ22q
+ 5a4ZH6AFTOxX2fRosxgAmqp3wl4T4cyLxnmxlcnymrVZ+U1OAWhF6qLLbxaBNnGsBxuI
+ 2uRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720273; x=1737325073;
+ d=1e100.net; s=20230601; t=1736720262; x=1737325062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+GoeTs3OwFxXFIF/0sszVZvTSkwjTETcrGfwBocwM+s=;
- b=CmsHDcPMPanYRUwp34pJ2EFuLIhB4XGW0HsbpKkQa1Xs4Dk62nLJvrLa+yM8HqNW1s
- B0Kehp1FLVKvQ5+n7LFgZa9VOzPF32+m/WcZq1JY8mCe9+6cOl+lqIPNLq8fq+RYMnxi
- qmJZhokPSJ59cSGsOpJqJTozkeqdS+F21IRTD5tUqZM4nS1MysiFUqHCAka7vfyL0elh
- IbwlyoXT+iCwqweTgTcvuyKG86DF9SERtc/1fs3TrdzUO1h0XCzuu6uovNt4tivywUZf
- mAiIocbirkJiiZQAZ52uND74gj+J2hQ7C0zwhjzb920vvki1/8pV2AGBnXL6WBoMBSF0
- TWUA==
-X-Gm-Message-State: AOJu0YzlNF5Ieb+SkLc5HWUz/Pfl+iNpDV5eFqrtsBEaahJuRZfZca4O
- iLJNXIYHW1yDIghPWWqGRkR4wOmCclVLYCTe5a5+gyJxkP4bQjE53TQ2q7wQeVM5brNdDHl3Hbn
- W2Mk=
-X-Gm-Gg: ASbGnctEqQSUDWYswVXtuzeFo0Zbtl6OIrDPSxos6q06VziI+sIILYeSgNB4IzgZZEh
- mjmwiHiZ0YRA9O4C+dS4uoCjVAmXpAFqo6HE24mPMDvm69FPJze6q0Yynscmusi7zH/IY1msfA2
- ql75l+b6n3Gn0lUJZmx4/j2eqoR+8LiJ1X6TylvOqdUVuexg5U3hpg+pjKtqEXdAFiSxqDmH3XQ
- V5nlpLfRV6oFlDm7GSWfeVrCU1QH9VW3yJXimCocdZYh/9QtBgwjrefUodmJa0LaZrqXT9Q64qP
- 1xPSzDpDS2mu/Gtln9k7DppX7ehyCk8=
-X-Google-Smtp-Source: AGHT+IEs24aJUBPMRXTZ4B8w0IpRd52IbWTRH1n/r53QH82XbaOhbiqFSUpCOV9eV9flbKvDS1+wdQ==
-X-Received: by 2002:a05:600c:4704:b0:436:469f:2210 with SMTP id
- 5b1f17b1804b1-436e267f796mr136934085e9.1.1736720273147; 
- Sun, 12 Jan 2025 14:17:53 -0800 (PST)
+ bh=RRilqG0RRzc/tLS+/K4TJ6YsxHq+JDiiCxUzzS2N1LY=;
+ b=sW6pP4SUbqAO0v//6UTO3U3jKlysuOueP/QvF8hXG9rb6ZJMuCgPmqRbtRbXJqg1L4
+ AeCU8j79d2zKNwRjr/+sdgVPH0CmHTsB7VpQVVW5cETtk+zFi3vLE47RFGD+5ShuBiC9
+ /XzU7XbEmTatM1GTLAiu0gVGE8BQBtVNg6NxeKYI/UTBoKgFsNTCR8CDJzKadrsOwaoB
+ FYlioYxEoXmV1HffzRjhtgc+wnsTa/QOmP86sqtl/YSPl84doj+5pH0Zr1/nqbRa3YF8
+ hU44aW/dVU5t7Fl45OP/1JR3mQtTTFXtYut53ds20k6emSY4Ane1geXmYuIuMnQeLu2K
+ 4zsQ==
+X-Gm-Message-State: AOJu0YwL8b5JGZVdsfDXvJv1rYpycaykHm2LYCLg4TXBUcINRfjgNAc4
+ Pk4/f5wCJ+iB0uk6CfvieNYnmgFjv08oKBp+eiMV3e4D24isj2qIZ9AfC10DCbkaKrB7iykBOdn
+ MNwc=
+X-Gm-Gg: ASbGncuINjcj7zcuOblwhpUWEykZ3XhVujcgLWjNunTHmnTQ54sL959xmDSgTauX5I7
+ WOYakCzhrXmXJWta6EtjVnXsNza0jDkmYBgXyNMxN31goHVa+SuK2FF9W7IRT7KmdchZ6XkOk5K
+ N89fGf1xf+XHaU0w2C3mP11K/8nrF7pptQLFeUJ7GbKOcFF4Fd41B3jGEjpulTITHiIDhieL7Ph
+ tlhCVbSQlm0bsFKxEP1H9NVHySiVhhVB5t01n3Wn4JW5funDPVp2Lok7JAyc67u70AyP4bEDwyd
+ ey0n8hwBKia6A7YvJCBsq57gmuQUgTY=
+X-Google-Smtp-Source: AGHT+IH9TOWJZadiSEpDlZJ8zL8X2L7kGUhzzDP97Vk2L1eK8rCqJyX/67bM6O9HGa4i0ukOX74e/w==
+X-Received: by 2002:a05:600c:3ca4:b0:434:a26c:8291 with SMTP id
+ 5b1f17b1804b1-436e26e203emr147457395e9.24.1736720262574; 
+ Sun, 12 Jan 2025 14:17:42 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436dd15766fsm98095965e9.2.2025.01.12.14.17.51
+ 5b1f17b1804b1-436e9dc895esm122279135e9.13.2025.01.12.14.17.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:17:51 -0800 (PST)
+ Sun, 12 Jan 2025 14:17:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/49] hw/usb: Inline usb_try_new()
-Date: Sun, 12 Jan 2025 23:16:41 +0100
-Message-ID: <20250112221726.30206-6-philmd@linaro.org>
+Subject: [PULL 03/49] hw: Replace DEVICE(object_new) -> qdev_new()
+Date: Sun, 12 Jan 2025 23:16:39 +0100
+Message-ID: <20250112221726.30206-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
@@ -99,45 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline the single use of usb_try_new().
+Prefer QDev API for QDev objects, avoid the underlying QOM layer.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240216110313.17039-10-philmd@linaro.org>
+Message-Id: <20240216110313.17039-7-philmd@linaro.org>
 ---
- include/hw/usb.h | 5 -----
- hw/usb/bus.c     | 2 +-
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ hw/arm/musicpal.c | 2 +-
+ hw/sparc/sun4m.c  | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/usb.h b/include/hw/usb.h
-index d46d96779ad..bb778cb844b 100644
---- a/include/hw/usb.h
-+++ b/include/hw/usb.h
-@@ -584,11 +584,6 @@ static inline USBDevice *usb_new(const char *name)
-     return USB_DEVICE(qdev_new(name));
- }
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index a712ff954bd..48a32c24079 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -1238,7 +1238,7 @@ static void musicpal_init(MachineState *machine)
+                           qdev_get_gpio_in(pic, MP_TIMER4_IRQ), NULL);
  
--static inline USBDevice *usb_try_new(const char *name)
--{
--    return USB_DEVICE(qdev_try_new(name));
--}
--
- static inline bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
- {
-     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index b19b0b13ebd..7e7deaadcaf 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -411,7 +411,7 @@ void usb_claim_port(USBDevice *dev, Error **errp)
-     } else {
-         if (bus->nfree == 1 && strcmp(object_get_typename(OBJECT(dev)), "usb-hub") != 0) {
-             /* Create a new hub and chain it on */
--            hub = usb_try_new("usb-hub");
-+            hub = USB_DEVICE(qdev_try_new("usb-hub"));
-             if (hub) {
-                 usb_realize_and_unref(hub, bus, NULL);
-             }
+     /* Logically OR both UART IRQs together */
+-    uart_orgate = DEVICE(object_new(TYPE_OR_IRQ));
++    uart_orgate = qdev_new(TYPE_OR_IRQ);
+     object_property_set_int(OBJECT(uart_orgate), "num-lines", 2, &error_fatal);
+     qdev_realize_and_unref(uart_orgate, NULL, &error_fatal);
+     qdev_connect_gpio_out(uart_orgate, 0,
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 217a69e4d5d..e070360a2c7 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -974,7 +974,7 @@ static void sun4m_hw_init(MachineState *machine)
+     sysbus_mmio_map(s, 0, hwdef->ms_kb_base);
+ 
+     /* Logically OR both its IRQs together */
+-    ms_kb_orgate = DEVICE(object_new(TYPE_OR_IRQ));
++    ms_kb_orgate = qdev_new(TYPE_OR_IRQ);
+     object_property_set_int(OBJECT(ms_kb_orgate), "num-lines", 2, &error_fatal);
+     qdev_realize_and_unref(ms_kb_orgate, NULL, &error_fatal);
+     sysbus_connect_irq(s, 0, qdev_get_gpio_in(ms_kb_orgate, 0));
+@@ -995,7 +995,7 @@ static void sun4m_hw_init(MachineState *machine)
+     sysbus_mmio_map(s, 0, hwdef->serial_base);
+ 
+     /* Logically OR both its IRQs together */
+-    serial_orgate = DEVICE(object_new(TYPE_OR_IRQ));
++    serial_orgate = qdev_new(TYPE_OR_IRQ);
+     object_property_set_int(OBJECT(serial_orgate), "num-lines", 2,
+                             &error_fatal);
+     qdev_realize_and_unref(serial_orgate, NULL, &error_fatal);
 -- 
 2.47.1
 
