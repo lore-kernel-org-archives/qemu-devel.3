@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B365CE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB1BE7719C
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX1mG-0007AB-QE; Sun, 12 Jan 2025 12:29:32 -0500
+	id 1tX1pD-0007uF-JC; Sun, 12 Jan 2025 12:32:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1mF-00079o-6e
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:29:31 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1p2-0007tj-NL
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:32:25 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1mD-0008JR-4b
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:29:30 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso24960475e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:29:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1p0-0000Sx-O5
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:32:24 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso25381765e9.3
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:32:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736702966; x=1737307766; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736703140; x=1737307940; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uM3ByAZmLlXOF286StyrwlwT9FweE+IfLhYTQ6nCIzk=;
- b=dPHQJZC0ypIZhdKtDcNaDwL+G2aczL6tFM14/rT9A25Forz235A4Ej4dIljrqLgP+d
- 5PHSbMFMhWW4TiBzh9atRVadF/IATVQScDEy9O2GexhzarIqE9VqYBzsnTAtT0r+iJBC
- lZpNNDs+3P3K+n4umfBmMLGHllutIegE6/N3CAVhzssO9tdnBmi+XgHQtPNJ1vAsoabU
- akcZ8ZBMpcKgaV5Ive1aJVxhmNuvlFAHJySU7FXampCs4Jee0uBmrF86pdgBAZh427TE
- ZNmioRdWh5ycVQovrMGh5bxvX4i7HrCwjNfntbFk2ys3zkDt0PuG2ZPFd8xbb2NS8AHl
- CAQA==
+ bh=1UVOydxaBftTDJA9IS2xai9YhUYwPPnbCWE3Z0cGEos=;
+ b=mwdMb+5cvvRlk7sfByOtKkS5DgMoxxPSK2I52vgqNv6Jwk0rLOsEehwQv/3vyfa6UO
+ oQDf7I3+TFhxJ69yWZp/9vlEtErj06IvqOtBTX0u16htjp2eIMue6LrhN2pn5LTrPpgR
+ VHsptFBPkoyFHmYurcAhQKDnokJn0DO6m/+iA5hU4mHNqkXWj8Ak68A3IwU+65P6sHhm
+ LT5voxc/BvjpZv4lyjBH4b5qDI00ta67+5mjmbc+WN0Y31luk+QDy3Ze0GAXGKhLcbKJ
+ R+3EFpGZRPJKZV/wMjVdqKTKD1QnDeX1cj0ZI6wQGvXJv8C58bV7Y63r2DttGI/jSdaY
+ h72Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736702966; x=1737307766;
+ d=1e100.net; s=20230601; t=1736703140; x=1737307940;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uM3ByAZmLlXOF286StyrwlwT9FweE+IfLhYTQ6nCIzk=;
- b=eMZRijDZOrDXEtYmVwYRiBlzE1QDUG7ejr6w9Q1yiL7v5P2QDgqqodTBfTbO6dpEpx
- 27WukrE6Tg2jEtiCf1kxabUEn3briDal7g3LiSwoY/UFophFI6UWlm9h2PJsgO7K3p/k
- RixatUndljG8uwCofMpUZEWtvVxUfj0tSYS0pBIzbgrLcgzUxU2uaSa88GCxZJbhPJ79
- kXV944yj9U/ZvDrMrXudxgj1rEVbld7gOMO4gEGk/jQXuN0xh0joqM2zBJkVNRxY1kJ/
- 9IMvzLv/JKllvBxzwm60Yzf/1flnokmVGBI1N/n6FA+M8RbwyiOCvXXf3CnAYSLJj//m
- kxYw==
-X-Gm-Message-State: AOJu0YxWUSW6ZBmqCPPXQcMg3LhJqW/5JU6wCW5ZKjaMZN6ntpBAC+eF
- fsGveIXPGmP4LsvNVhsETaY99JdFXYsP7otro4HYrVWJkExUgoxbkuclKrnnggFxGTxkAmebcxx
- R9V8=
-X-Gm-Gg: ASbGncvn9MfGQ0ueN+ZQxqUFBpNnXqmTMkAsOVAAMYD6XpQiEX+lba6/7Ht+uuj0KIU
- 2mZdt1ALbI4ebj7WnBimLiLhzDX+dQi7toSAJ5ggdiz8OA8Hyn15w9dNHlfziiFfRtmoNvqLLue
- y9yMe0ZemnlvGUCfgrv8BrnI3pe10GvBKFaMbzJsqVOg5wVeAT4u3VXcQ/OjHdxplIbAhCHHhMn
- BkW1hP68GYvccbtI3QsCnCNbUMGtbu5hGzm6C9Y64Z/bEH25r3qwzTHbR0eqEtyVPvWlWTzGNqL
- tLJGmOKWBGhmHzQ/QoJbtAGZ
-X-Google-Smtp-Source: AGHT+IFHCEaooveHLEyBssPwd9nYysNGPnet1JedvbM18hHoKTKgZKzm0ucOtIrb/F7vot93oocj3Q==
-X-Received: by 2002:a05:600c:354e:b0:431:5aea:95f with SMTP id
- 5b1f17b1804b1-436e26a175cmr193795695e9.16.1736702966578; 
- Sun, 12 Jan 2025 09:29:26 -0800 (PST)
+ bh=1UVOydxaBftTDJA9IS2xai9YhUYwPPnbCWE3Z0cGEos=;
+ b=s4CRAKHC1LOjpJ2Lb8ZnDB9Wb883sW9JlDuQJricSRUT9yG+2AYmDSF1vaRWbfE1ck
+ AO0KUGZp4kJtdQ0comrsMtRoQsR+3+PrDqm6Qj6l8/fysyikCrUyzeZw5bMloPoW7uxX
+ wM6JB0wPmXwEAspn3OSFJxdsfRh9c6Xspd4L+BeLPnVsJK7nOhmGuFADzN5rrPNzZxit
+ frj8W85if1srrAR4alv3wn0ecpY9BVyBt6975JBaC8eLlUK+pQhKcCN8cE1O0spxCJ9P
+ R99tjPn1BwMUSxbdB4zOMyzukt2aaI6L0un3mlxCsYbwt9L+vs2ZuOXcW2Js1T+UbDY5
+ pRQg==
+X-Gm-Message-State: AOJu0Yy8090J9hSwudnS0D+n5PedCrLQRSvSOD/I/2IMKgHS5QuRUH0i
+ AZx7JyusaThX9mMYNLyytR8wDwIwCqFHHQV0A0fkt9dQaf7c4vUU/ZPkk9AvmxY=
+X-Gm-Gg: ASbGnctG+EmHsTaNdE+Q/T98mUH1jFZYOAdCKheO9gtUxBP+VBY6TyLOKOM2+m8pAEQ
+ /3b1LnS2jxt1ZG/yMDI5br/gSRcTqecFHQPsRWuSYPDCLZt/MLU4BBJA3xO0DN9iDTo56XfE5/q
+ I/90GS4MoD7c4/cbiV4U8vtvuYE+19A+csLBJ6EU8SyMgXqnP7e5qzGMdrBlElo/90Q9BweBoxR
+ 4/DS2B0YJ723ogdKkol1GaXOJxe51+iczXEz9lPTnnaRnTRtoBG1VjK49SM1lE0oZJFGVPf2A2e
+ Y8QTTfmquVarEjhmniShJGi9
+X-Google-Smtp-Source: AGHT+IHFUTM6Id7P83aAS9QsAOgf/6TcYIGBszhhu24Fer1eQ2bzoQTEREuq0Fh997gB7OtcN0QBiQ==
+X-Received: by 2002:a5d:6d87:0:b0:385:ef2f:92ad with SMTP id
+ ffacd0b85a97d-38a872f7f80mr15690677f8f.10.1736703140233; 
+ Sun, 12 Jan 2025 09:32:20 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2dc08eesm153739815e9.10.2025.01.12.09.29.25
+ ffacd0b85a97d-38a8e383dedsm10266969f8f.35.2025.01.12.09.32.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 09:29:26 -0800 (PST)
-Message-ID: <43315ee4-3a0b-44fd-9562-99a761b1db41@linaro.org>
-Date: Sun, 12 Jan 2025 18:29:25 +0100
+ Sun, 12 Jan 2025 09:32:19 -0800 (PST)
+Message-ID: <dd12a227-0990-42b7-b241-301bca90915c@linaro.org>
+Date: Sun, 12 Jan 2025 18:32:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/tricore/triboard: Remove use of &first_cpu
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+Subject: Re: [PATCH] scripts/nsis.py: Run dependency check for each DLL file
+ only once
+To: Stefan Weil <sw@weilnetz.de>, Bin Meng <bin.meng@windriver.com>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250110180909.83165-1-philmd@linaro.org>
+References: <20250111215244.1680931-1-sw@weilnetz.de>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250110180909.83165-1-philmd@linaro.org>
+In-Reply-To: <20250111215244.1680931-1-sw@weilnetz.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,23 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/25 19:09, Philippe Mathieu-Daudé wrote:
-> triboard_machine_init() has access to the single CPU via:
+On 11/1/25 22:52, Stefan Weil via wrote:
+> Each DLL should only be checked once for dependencies, but
+> several hundred (781 in my test) unneeded checks were done.
 > 
->    TriBoardMachineState {
->      TC27XSoCState {
->        TriCoreCPU cpu;
->        ...
->      } tc27x_soc;
->    } ms;
+> Now the script is significantly faster (16 s in my build).
 > 
-> Pass it as argument to tricore_load_kernel() so we can
-> remove the &first_cpu global use.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
 > ---
->   hw/tricore/triboard.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+>   scripts/nsis.py | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/scripts/nsis.py b/scripts/nsis.py
+> index d0914c88a7..d0ac61f6ab 100644
+> --- a/scripts/nsis.py
+> +++ b/scripts/nsis.py
+> @@ -37,10 +37,10 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
+>   
+>           analyzed_deps.add(dep)
+>           # locate the dll dependencies recursively
+> -        rdeps = find_deps(dll, search_path, analyzed_deps)
+> +        analyzed_deps, rdeps = find_deps(dll, search_path, analyzed_deps)
+>           deps.extend(rdeps)
+>   
+> -    return deps
+> +    return analyzed_deps, deps
+>   
+>   def main():
+>       parser = argparse.ArgumentParser(description="QEMU NSIS build helper.")
+> @@ -92,18 +92,18 @@ def main():
+>           dlldir = os.path.join(destdir + prefix, "dll")
+>           os.mkdir(dlldir)
+>   
+> +        analyzed_deps = set()
+>           for exe in glob.glob(os.path.join(destdir + prefix, "*.exe")):
+>               signcode(exe)
+>   
+>               # find all dll dependencies
+> -            deps = set(find_deps(exe, search_path, set()))
+> +            analyzed_deps, deps = find_deps(exe, search_path, analyzed_deps)
+> +            deps = set(deps)
+>               deps.remove(exe)
+>   
+>               # copy all dlls to the DLLDIR
+>               for dep in deps:
+>                   dllfile = os.path.join(dlldir, os.path.basename(dep))
+> -                if (os.path.exists(dllfile)):
+> -                    continue
+>                   print("Copying '%s' to '%s'" % (dep, dllfile))
+>                   shutil.copy(dep, dllfile)
+>   
 
-Patch queued.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
