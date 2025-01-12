@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEA5C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133D5E7719E
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Jn-0003Ns-UA; Sun, 12 Jan 2025 17:20:27 -0500
+	id 1tX6Jx-00044K-96; Sun, 12 Jan 2025 17:20:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J1-0001sB-Hz
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:40 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Jk-0003Bh-HQ
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:25 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J0-0006ZL-22
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:39 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so42825605e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Je-0006ox-Os
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:23 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-435f8f29f8aso26174655e9.2
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720376; x=1737325176; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720417; x=1737325217; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EmxRTGMWROJpEWZSo1u+jDCiV46gwFTHUKYAuplU0Gc=;
- b=SXh4O31DEXF6kSz35CPArjT7T5ZXu5R8snUd6ZksTHwJxzF9uwukxAvdSwJSw3CLiI
- +Go90WcgA23g2hDJvJ7/yRwD+hfSaSYeGYAZGrqxrI7FaIG9xDtFh9GEm6vvdrffTary
- NEImkh5Nw3f8eYyKmqFoG0+SESSgMI/9XVhU7uIvfKzvZ8mtqj3tLGHkZPXf85AZDBni
- FgFm4KHc4ciSlM0Me/SAY5i9W7QK8I2257FlL0Ad3hTcfQ14TIZGtM5cTbpTZXUpeLVK
- sOggDhZzduy+Q32fYp/IBePwdShXEVE7/20xaroTAzySEvYy9Yvy3ITfnk0MDIF8KA0M
- CEUw==
+ bh=cFQoJdzHdUvE38GYcn/jd9wG7NJypEZhq9jeSgdzCu0=;
+ b=RrLyFnd84LMv06DOormNC19mdDnWuiJLeHlPVtxQuluxFvEO15HOjnhfhalOQiRtX4
+ O2bQX0OXBbC2UgwFNx4S24EIKC8h/8L21VJ+/r1f8Jns4d2uPnPC24pqgTKKfMDFmc0k
+ f/xnwYw+g4OKGGkvQbkYI/CQ0UKGcbQnduLn2hk6PlJDc73NmtPT+Xk4o2hug628rPm+
+ tY0zWZ9tmjIn3Ee0mMU2BPBFaT6dzYUxekSIzcttKeetDDgCtsQa4se18V3IIi1shE79
+ BTDIq1D5s/UUI261IAu8Km1u0IUHN6BGjP1lgcBhgxxDKV4c6FYmHe5kTh31lyWhOAA/
+ q/iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720376; x=1737325176;
+ d=1e100.net; s=20230601; t=1736720417; x=1737325217;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EmxRTGMWROJpEWZSo1u+jDCiV46gwFTHUKYAuplU0Gc=;
- b=gVkR6NP5G3RoyXUlCq5QbUnkDdsQfQ3wCdbew/eUH8DMrNM0cmb1yhATjh+WhR2X3i
- 3lwIVNyQhyfrueCeAqMPnEuzF4Obx8Wc/eIneJEQGtFVBeu6luf35xP8o0XTsmPK23iz
- /4OBjvKjuXXXYBkeodKOKrbDm6CoZX7PnF7WHq8VbsAS9ruEk72HQux0MkWdEBLWrjbf
- RrqlgjoPgdpqhIt3Vhm5xMtcD49Vypq2ew1FkCTLff7shFRhxH46ScsEccIi1/zHrijn
- wXIfrnBJOND0c9fHNRcKta+Bggq8W/0VBXR2nn+FJlCgRRmSz6pBqZS8fGxAUKh4W0Z3
- Njpg==
-X-Gm-Message-State: AOJu0YxsJhdYPrBDeLYtRXB2ZsTLx44JaBvhElVBTeh3gzNTHdVZMDfL
- CZEbXRRShV90HpPMWevZKYFvDaaSpYArU6zO/GWhz43ckxBbu7Gkg6T3AB0b9ykALDKUDP/j0VO
- bKnI=
-X-Gm-Gg: ASbGncs/3IdnfTZlH4Wit7GLOTpwpaNKWc8wTvJif3YbdYIaxq2qoRqmxWlkBOxRQIk
- F0sT7rNw2Q65wE66Qw+++8j+2SyJTyr5+ucWVpmKwgZQ/iiiWPxFDdGc8ZBgbXah8CdwP5noBSz
- 4ccZvlMhrKqKw4C8tRM3DltdFT+yKS7j6VijwWEJehcLSA/V+bxC6pEy1V9bJX+1k9kiCBvP+aO
- isoIpnO/aba+x2C1TMetVzAJ297o90+OMvtiLa3mg5MMNbhGtGVuqOrq/Yy43XFUheqdiKPAJGF
- 0XDqNosrjbjXDNzTkuvMIltaNlj3128=
-X-Google-Smtp-Source: AGHT+IHqZ6eR+ozvfAZllFw/XbYtMPuVV32e3GLDlYjJpOn5cnMI+Jjl16LTW6PPqx1Z5dmx9ZafJA==
-X-Received: by 2002:a05:600c:4e0b:b0:434:a7e3:db5c with SMTP id
- 5b1f17b1804b1-436e26aeeeemr183787435e9.11.1736720376145; 
- Sun, 12 Jan 2025 14:19:36 -0800 (PST)
+ bh=cFQoJdzHdUvE38GYcn/jd9wG7NJypEZhq9jeSgdzCu0=;
+ b=YhKXsfcmwAdBoRG/gWHxD8SZl1kTXBCZ0OVwD8ew63ISyseQBO1OFscTHXTPTyU9qi
+ 83tdDY1nh6pc5xs6p5Ag18eH7d+qsPg7jj3maTTf/RBpMi01c8mqKGkGjG6immRWUbah
+ FXycZ5en2oc0Rb7EFKD9hyVo8uMORhCB+I30gpUZhmAZc01xv4t6+7JkJNw4KsX8WO2+
+ hL7Or4OA9+aRhXJ2Zt9IV7ix0QZ0f64QwXOGhmy+ixCu8/qqsiutmZQJNzToEr0nNi54
+ 08wnFb0/Qhat6n04SVh33SHc4BUO9mAdM30hi08NsoHie2OOoNezQsUqE11arXfXfE8G
+ jftA==
+X-Gm-Message-State: AOJu0Yz0iAP+iX9DgmEoHX6ZMAyHfXLsUbVvW/Xxr8jWDhD78zpSGhWQ
+ v8UWLoq+IsaA5NHFKV/ICLKIq2om7XXRuYS8lxDHjB1iYq43KBSEOwOQ3EiivT4LTMBMY+W7J13
+ dYdU=
+X-Gm-Gg: ASbGnctvVhONyF0u6OoxDpUeLGbARMfjlZXW0/kDfsAr1y2a7ZmkeJopiiN6Ek2QTKZ
+ CTzwhRQEp1pnC4SyuQVtClYas+JDlSdXjDyOdBq/NSq9/jBlmjwhJjTsodthGDa/yOD/06P6o6Q
+ GxBDvzU+HucjWQ96RPhSGrAdbHG2gkfjrZEC2h8b7N2UFbv1+UteHYDwKZrdx8dqkTTPpysD2xh
+ nsQ+GXL4nTqcUIhLj1cPxtKFlOsyPRDrQLzmEXWsl9IBxOrJx8+aMJUVQ1s54Q5GPOClmJQ7Oyz
+ aK+esAzL6nYmiJBu7UhQFkVT86L+OPo=
+X-Google-Smtp-Source: AGHT+IGEkaYhb9HY5gJX68JJtGMG8NPAumlyuju04zIZU62SMCdtOU5JHS0MogJwekOSftAXcNOi/g==
+X-Received: by 2002:a05:600c:3143:b0:434:a929:42bb with SMTP id
+ 5b1f17b1804b1-436e26b9d45mr181464985e9.18.1736720416869; 
+ Sun, 12 Jan 2025 14:20:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38c697sm10782948f8f.52.2025.01.12.14.19.35
+ 5b1f17b1804b1-436e9d8fc81sm124757555e9.5.2025.01.12.14.20.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:19:35 -0800 (PST)
+ Sun, 12 Jan 2025 14:20:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/49] hw/sd/sdhci: Set SDHC_NIS_DMA bit when appropriate
-Date: Sun, 12 Jan 2025 23:17:02 +0100
-Message-ID: <20250112221726.30206-27-philmd@linaro.org>
+Subject: [PULL 34/49] hw/gpio/imx_gpio: Turn DPRINTF() into trace events
+Date: Sun, 12 Jan 2025 23:17:10 +0100
+Message-ID: <20250112221726.30206-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,51 +101,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-In U-Boot, the fsl_esdhc[_imx] driver waits for both "transmit completed" and
-"DMA" bits in esdhc_send_cmd_common() by means of DATA_COMPLETE constant. QEMU
-currently misses to set the DMA bit which causes the driver to loop forever. Fix
-that by setting the DMA bit if enabled when doing DMA block transfers.
+While at it add a trace event for input GPIO events.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250108092538.11474-2-shentey@gmail.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20250111183711.2338-14-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sdhci.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ hw/gpio/imx_gpio.c   | 18 +++++++-----------
+ hw/gpio/trace-events |  5 +++++
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 299cd4bc1b6..a958c114974 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -665,12 +665,13 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-         }
-     }
+diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
+index 898f80f8c83..549a281ed79 100644
+--- a/hw/gpio/imx_gpio.c
++++ b/hw/gpio/imx_gpio.c
+@@ -24,6 +24,7 @@
+ #include "migration/vmstate.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
++#include "trace.h"
  
-+    if (s->norintstsen & SDHC_NISEN_DMA) {
-+        s->norintsts |= SDHC_NIS_DMA;
-+    }
+ #ifndef DEBUG_IMX_GPIO
+ #define DEBUG_IMX_GPIO 0
+@@ -34,14 +35,6 @@ typedef enum IMXGPIOLevel {
+     IMX_GPIO_LEVEL_HIGH = 1,
+ } IMXGPIOLevel;
+ 
+-#define DPRINTF(fmt, args...) \
+-    do { \
+-        if (DEBUG_IMX_GPIO) { \
+-            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX_GPIO, \
+-                                             __func__, ##args); \
+-        } \
+-    } while (0)
+-
+ static const char *imx_gpio_reg_name(uint32_t reg)
+ {
+     switch (reg) {
+@@ -111,6 +104,8 @@ static void imx_gpio_set(void *opaque, int line, int level)
+     IMXGPIOState *s = IMX_GPIO(opaque);
+     IMXGPIOLevel imx_level = level ? IMX_GPIO_LEVEL_HIGH : IMX_GPIO_LEVEL_LOW;
+ 
++    trace_imx_gpio_set(DEVICE(s)->canonical_path, line, imx_level);
 +
-     if (s->blkcnt == 0) {
-         sdhci_end_transfer(s);
-     } else {
--        if (s->norintstsen & SDHC_NISEN_DMA) {
--            s->norintsts |= SDHC_NIS_DMA;
--        }
-         sdhci_update_irq(s);
-     }
- }
-@@ -691,6 +692,10 @@ static void sdhci_sdma_transfer_single_block(SDHCIState *s)
-     }
-     s->blkcnt--;
+     imx_gpio_set_int_line(s, line, imx_level);
  
-+    if (s->norintstsen & SDHC_NISEN_DMA) {
-+        s->norintsts |= SDHC_NIS_DMA;
-+    }
+     /* this is an input signal, so set PSR */
+@@ -200,7 +195,8 @@ static uint64_t imx_gpio_read(void *opaque, hwaddr offset, unsigned size)
+         break;
+     }
+ 
+-    DPRINTF("(%s) = 0x%" PRIx32 "\n", imx_gpio_reg_name(offset), reg_value);
++    trace_imx_gpio_read(DEVICE(s)->canonical_path, imx_gpio_reg_name(offset),
++                        reg_value);
+ 
+     return reg_value;
+ }
+@@ -210,8 +206,8 @@ static void imx_gpio_write(void *opaque, hwaddr offset, uint64_t value,
+ {
+     IMXGPIOState *s = IMX_GPIO(opaque);
+ 
+-    DPRINTF("(%s, value = 0x%" PRIx32 ")\n", imx_gpio_reg_name(offset),
+-            (uint32_t)value);
++    trace_imx_gpio_write(DEVICE(s)->canonical_path, imx_gpio_reg_name(offset),
++                         value);
+ 
+     switch (offset) {
+     case DR_ADDR:
+diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
+index b91cc7e9a45..cea896b28f6 100644
+--- a/hw/gpio/trace-events
++++ b/hw/gpio/trace-events
+@@ -1,5 +1,10 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
++# imx_gpio.c
++imx_gpio_read(const char *id, const char *reg, uint32_t value) "%s:[%s] -> 0x%" PRIx32
++imx_gpio_write(const char *id, const char *reg, uint32_t value) "%s:[%s] <- 0x%" PRIx32
++imx_gpio_set(const char *id, int line, int level) "%s:[%d] <- %d"
 +
-     sdhci_end_transfer(s);
- }
- 
+ # npcm7xx_gpio.c
+ npcm7xx_gpio_read(const char *id, uint64_t offset, uint64_t value) " %s offset: 0x%04" PRIx64 " value 0x%08" PRIx64
+ npcm7xx_gpio_write(const char *id, uint64_t offset, uint64_t value) "%s offset: 0x%04" PRIx64 " value 0x%08" PRIx64
 -- 
 2.47.1
 
