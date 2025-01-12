@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A4A0C02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6472DE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6KU-0004oN-Fc; Sun, 12 Jan 2025 17:21:10 -0500
+	id 1tX6JP-0002cj-4r; Sun, 12 Jan 2025 17:20:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KS-0004l0-1u
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:08 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Ir-0001X6-O1
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:30 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KQ-0006tB-EK
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:07 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385f06d0c8eso1949396f8f.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:21:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6In-0006XI-SL
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:29 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so38321715e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720464; x=1737325264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720363; x=1737325163; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=STm3h0ab+xe29Vo/LMzsJN1pZufVzApUsosxR88Bje0=;
- b=Xb5neO9ZGEJj5ujgvitJk32BDQDKoStpuuKnqyNq1KLKBABAJV1cqh3o+JW0t43Sao
- 6jFDZHxO5Cr0ulCedo2AgD4PQuvYZnPNQSPtm2TSw6Ckyf6exBDjqvxV4LfsmyAb/xFE
- bUYiDSWsr/bKwo/YsncsK0cf/rTdqMudOTBMjbhOOYuZyO32Cr0cCIwZ0XH79K72WDT0
- PX5G4q+IoHYscalu/DgF7utFR2utkNOJrJ7Khsl0SsPQrsVaulHZrFtdkjo0F863UXC3
- p0JIxQFeidVyNDVC2oUUjGUZfL3941KajOT8AR6fwofnT5CaF4Sdiwx34qDDg3tI5+2D
- CIAg==
+ bh=p6BLB98QOhYB9SJnN/K59or+VrLw70OVqLIYKmEsPfE=;
+ b=owbPDE08GxOZ3tqY3dP+Pb4+H//y8mWP2LNCoxvEznFamSagDvHWAyUXxYD7z/NBgj
+ s2nORXU/S/4J/ZyeYYUtTvnl8GlghqA6rGY3KA8rZYjBFpS3DOAraY89+T7sT6EOz0j6
+ t6Yo8/yq1y/81U/9AhjALjkBKNB+VlNZ0BwW1c/ABOo16qgu288HWZb+yDdUcommWSoH
+ lvDGRvf2EI6wsoq0+G/KN37sp8zlYpgVjHZ9IWt0KMDk53fdc3KxvB2v/IrtqrKc+qd4
+ KaVrpKNwLpEaFHawq6pedKTXk1jabT+87qNR+iS4z1W5a7ztaU83M8a9UMwjgWIZkkE0
+ kWDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720464; x=1737325264;
+ d=1e100.net; s=20230601; t=1736720363; x=1737325163;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=STm3h0ab+xe29Vo/LMzsJN1pZufVzApUsosxR88Bje0=;
- b=M7DnXwRbHC5DAfo3hhPNFI7KOXRlKpbfpK8ebJLA8aZN/vHCLgev6tP/t9R9RK3lBf
- DjP5HTAIk9F2FX3isQuhvE+FUyOiNHAhOGeYzYI5vR/XibrSFNLZI7UthUU9QwsWFa6T
- CtJhBfiHSkB0DLSxMArMBIvUBl6mPHsF0hwpd3CcHF3wb7vuU4/9CVL4HmP1dbV4rvID
- k1NWEekNEv2HuKCql/0u488o9CSm5v6MwNbCm11qx0RPI9jQdtDLljN8FF6RIlj2zIyY
- paekRY6koWz7vDr0tPUbvaRWBKDyscmlP6Ge3cfm+ctLlEAZSGN77sYsYyGEsLZBu7WI
- ecyg==
-X-Gm-Message-State: AOJu0YyT8IXaKJqcdTd8N7fiWBQMv6E63dAOISVFZXNYwfDAskQ4zVUY
- /m/g+Wjwu/W24crsRyFjHU/k+Z9I9RcOoa6em5sDjrUTKANGCufIKi+++0nYUKTejWb6HH3lcn5
- gw34=
-X-Gm-Gg: ASbGnct9dk99273eUuW2R3oaxbtFCHptO2pb9goYXpg82r06nTwMi/YmbGg/vGHH2zv
- 7WWCkr/zOwUMMLfl6R/mRFHLH4h2UqmQOi1kSjfBDqXswCsN61utuRhSiMQ2xSs2vsFZGx6UUPx
- 9ZRGjtuVfzqRI/iC89ullZVas6A4jAAUhYSZN2A+otWMf/qroRMsFBUCIoGeweVzauQbPVFZlbU
- AwUkvH+SoQWaVl1u1wvXKqyVfwtfMp9OUXQ8oBZnCAe811tZtwNb+RTQ0vRJUeMwX+NACw9xYzY
- X3DeWunZ09zVrNFuAC5h31fBLCp53qk=
-X-Google-Smtp-Source: AGHT+IF8XYM4SzBmCysIH4B2CZW4++Dfknd/+AQVrKLOi15emPsoLuZY/fK8d8yAT6qOn58hOYt+9g==
-X-Received: by 2002:adf:8b5b:0:b0:38a:88bc:aea4 with SMTP id
- ffacd0b85a97d-38a88bcaebfmr10831027f8f.30.1736720464504; 
- Sun, 12 Jan 2025 14:21:04 -0800 (PST)
+ bh=p6BLB98QOhYB9SJnN/K59or+VrLw70OVqLIYKmEsPfE=;
+ b=TyF6zDwOgyH9Gn9AS+409h/0vFhkqYNtN5xiHuCuiE8p/jvJg8rApLuPvAfB83NIBC
+ qkH7PavTcEuErZr3A+bDlSKa2akqLSJB0soN18XEUkheqt7aRw/Vz4CoPV3vJQNCZFb+
+ WG1+51sO8wTh1uLvXmFyBgJPEUkcHJ4rZnTgJSVAlymSlEq9pXBbjmHDjj1zRVhr7RAz
+ 1eabTkqUdAkbPAk0w319XflV2GWqw7iCEStZ8yka3+RoEKO73d1yURShW+MH8/o/hZ46
+ 37cd29iZaYI/h/gxRM11agt3hB5WTcZ/g/svgeyIGnGPt4Vcm1yWw7G5KbDfY0o4psn4
+ oseg==
+X-Gm-Message-State: AOJu0YymsuOwfrjNh6icZYT2OodhUx2tf3Ar78eMJMLlVXvDHvxCgR7M
+ ToZLiGeMWpGE1/3uGOG36czMei6JoHWsyutnvOpK3L+oM4WAUfIJAJyr5QM9p3uNuyHC9AFVhvU
+ BzYo=
+X-Gm-Gg: ASbGnctQNQHTfIuN5aD8CFZYBt1ss/Q3Qbsww7lsOpBea5Nj12So7jhTvi7osQRlF1N
+ y21w7TKuX4O14kbwBXqdX7+QT/9tSDZGvRWJxYrBfFcSi9HIbpy9DIIiWd30ZQg+6Th8E/gNdW3
+ fteNA5bfusoVXGFxfWjE5PKwoQ3lmQeZ3qYXfp7WE2dp+5W39prE6Gvix6YXdQGK5glE33O5mY8
+ dqiXZasgWu9xR6ANuvhhlIQUggU5joMDb/xREdMUTBlr7H9JotJumfm8KEMwlowyFXI/iNVOJLJ
+ ab3TSht9ZCs9ZdnlQRgz3jp8HI74AAg=
+X-Google-Smtp-Source: AGHT+IEBgLJOxMeJC8yw9St/ahnn6IsrC5Dv1YXOHYwmAEnSbHOgxZbAY6J/PLBU+TPWCQW8bGNxUg==
+X-Received: by 2002:a05:600c:198c:b0:430:57e8:3c7e with SMTP id
+ 5b1f17b1804b1-436e26f2a30mr139775635e9.28.1736720362777; 
+ Sun, 12 Jan 2025 14:19:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1d13sm10686761f8f.91.2025.01.12.14.21.03
+ 5b1f17b1804b1-436dcceb374sm151415725e9.0.2025.01.12.14.19.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:21:04 -0800 (PST)
+ Sun, 12 Jan 2025 14:19:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 44/49] hw/usb/hcd-xhci-pci: Use event ring 0 if mapping
- unsupported
-Date: Sun, 12 Jan 2025 23:17:20 +0100
-Message-ID: <20250112221726.30206-45-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 23/49] hw/misc/vmcoreinfo: Convert to three-phase reset
+ interface
+Date: Sun, 12 Jan 2025 23:16:59 +0100
+Message-ID: <20250112221726.30206-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,41 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-
-The XHCI specification, section 4.17.1 specifies that "If the
-Number of Interrupters (MaxIntrs) field is greater than 1, then
-Interrupter Mapping shall be supported." and "If Interrupter
-Mapping is not supported, the Interrupter Target field shall be
-ignored by the xHC and all Events targeted at Interrupter 0."
-
-QEMU's XHCI device has so far not specially addressed this case,
-so we add a check to xhci_event() to redirect to event ring and
-interrupt 0 if mapping is disabled.
-
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241227121336.25838-4-phil@philjordan.eu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20241219153857.57450-6-philmd@linaro.org>
 ---
- hw/usb/hcd-xhci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/misc/vmcoreinfo.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 7dc0994c89c..00d5bc37792 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -644,6 +644,10 @@ static void xhci_event(XHCIState *xhci, XHCIEvent *event, int v)
-     dma_addr_t erdp;
-     unsigned int dp_idx;
+diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
+index 145f13a65cf..b0145fa5044 100644
+--- a/hw/misc/vmcoreinfo.c
++++ b/hw/misc/vmcoreinfo.c
+@@ -26,9 +26,9 @@ static void fw_cfg_vmci_write(void *opaque, off_t offset, size_t len)
+         && s->vmcoreinfo.guest_format != FW_CFG_VMCOREINFO_FORMAT_NONE;
+ }
  
-+    if (xhci->numintrs == 1) {
-+        v = 0;
-+    }
-+
-     if (v >= xhci->numintrs) {
-         DPRINTF("intr nr out of range (%d >= %d)\n", v, xhci->numintrs);
-         return;
+-static void vmcoreinfo_reset(void *opaque)
++static void vmcoreinfo_reset_hold(Object *obj, ResetType type)
+ {
+-    VMCoreInfoState *s = opaque;
++    VMCoreInfoState *s = VMCOREINFO(obj);
+ 
+     s->has_vmcoreinfo = false;
+     memset(&s->vmcoreinfo, 0, sizeof(s->vmcoreinfo));
+@@ -65,7 +65,7 @@ static void vmcoreinfo_realize(DeviceState *dev, Error **errp)
+      * This device requires to register a global reset because it is
+      * not plugged to a bus (which, as its QOM parent, would reset it).
+      */
+-    qemu_register_reset(vmcoreinfo_reset, s);
++    qemu_register_resettable(OBJECT(s));
+     vmcoreinfo_state = s;
+ }
+ 
+@@ -86,11 +86,13 @@ static const VMStateDescription vmstate_vmcoreinfo = {
+ static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     dc->vmsd = &vmstate_vmcoreinfo;
+     dc->realize = vmcoreinfo_realize;
+     dc->hotpluggable = false;
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    rc->phases.hold = vmcoreinfo_reset_hold;
+ }
+ 
+ static const TypeInfo vmcoreinfo_types[] = {
 -- 
 2.47.1
 
