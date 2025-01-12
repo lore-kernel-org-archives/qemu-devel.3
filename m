@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A5FBC02181
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 566F2E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:22:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Jq-0003g9-VF; Sun, 12 Jan 2025 17:20:31 -0500
+	id 1tX6KC-0004Mn-RE; Sun, 12 Jan 2025 17:20:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Jl-0003DI-6S
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:25 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6K4-0004DZ-VX
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:45 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Jj-0006pO-AM
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:24 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3863c36a731so2642931f8f.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6K3-0006rh-Dg
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:44 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4363dc916ceso28861005e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720421; x=1737325221; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720441; x=1737325241; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NrAERIRi/4iWN1y29jrfSTmeSOjPW3PD2Bfh20J+jkc=;
- b=eDeWCywkFmCcx+e0JWUXJ4h5HYHNsbZNk5gtKor7b9i2I0NKeXpVTUELXGBiMurfZz
- Dl2OAcf00mRnGUj0iW4xYxwGmGzdwris2aQi/FHFPIdCvsItZm3YBQr9MZzgDOEzNLAx
- xdadFUlRUTjntkjCpxpHagBf2B41JPwqp676e9Gel6WDcqecpozFFF0sxoFXixz32XAn
- bP/5wGKz27DnjYpSxsJEiz0qWQ2TQiVa98ZBdsKHQM+yp0rZncI7FMqogHnZekY88m+K
- e+Qq5y7Q48X0SpLksKYyVWLmPtXKy9N6GUXnX2zyWAkgwQnJIP10iCl3nutZDSeg2Ga+
- eD9Q==
+ bh=LHQwz6WpRZiIMj0pKqCUWLnwCFUQnRWpgUl34aEsFJg=;
+ b=qkTnQYUbPKXkPKJZykx/i9/XOxZm4bJYXYT5ErJ3vBrPhU96MQyHqfTkRa6a9SCbfE
+ 59d3qWNFKQDcL2wAgoJ9JyOkJXYC/WvFiYDERo+yTU3VAwKYVOg3DukPBQG216lH/SNj
+ K4ligzaIF4GzlxIsT3nP16o34uRZRG0XzIhpNfH4LAK6FijEcQGU44sP8DXXr0kdw9qz
+ d0gUqKFKDaPdCyDA4zBERIBGT1hYxiK09uINHBQL/qfaDX43vcBPpvS0xJNdAwh46EZJ
+ BJ3Vc0zJ+WFSnAvgrbxYSsXPqqMsT3Mgj8cAWcFRkS0mioKOzokiWs2sIU0rCMW6VR3h
+ UNng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720421; x=1737325221;
+ d=1e100.net; s=20230601; t=1736720441; x=1737325241;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NrAERIRi/4iWN1y29jrfSTmeSOjPW3PD2Bfh20J+jkc=;
- b=ahR1RJ67ayv1QVJjJjJj7tr0UckxOwvm3IcIyhzp05lHqqpwE7ZcDUWAnN25/ypdKP
- D+OPKlfEBA2JH18q9g0MvohSkzBKhKM5M9s0eVLKzaNA5vAfR//ghbEsTO79jEk3lM9G
- wUAUAeDdNmV5pjF6HRRSxaShZu+DWrUcQbiw3CpUWYWL98f2XS3uVv9znwymXi0+5+je
- ZEFlg6m24g0QR2/LVfNjdwHcXZT69fFGTz2pkAbSWujVh+rdBJrGenbcXxnqO0ZXIo1G
- JwRHmWh40vROy9U6CdnXQmNhV3wcBGBzgicjjiJBXqX4/tdCfQEUQVj0TL7l8UoCZaW9
- sjnQ==
-X-Gm-Message-State: AOJu0Yy2JRMpD+trj+Y72TEI6HlD3UXXEfwB6dO0yNn8pK5Mkr6/UA1k
- 5Be9n4g+eoP6fQwLpj++qv5jg8fItOS7gRMV0NSFsVK8DMhkz2uO3X5xbKIoZZ0yRdy3WdoF81C
- P/50=
-X-Gm-Gg: ASbGncvzhXi05sTKhtN9jCVGHkfTzSsXZG9QJMLFkIULajn5u3WSH2srFF4lxXeSIUP
- VhghgyrsqbaB0sr9sUqBDt/QMsBUrSvI8AOLWUyA+wvgEQanLRmyt3owGYATONpKkuAsdSKjWX0
- y86s9NX0GUpp2BC7QdmMmfF9t28ik+XsEwQIZIPOXxieKt+XLNVU8befodERJoNBX9md+qWeycr
- njdQYJmKwMtET1+IbNnMqJOicYws4ihUXedxyiRydx5wrI6on4hn7x7LgCo1zv4FPM1ep2pEHCY
- 0Kji8TtWiKwXFZajhXTsjJJw/+tXlJM=
-X-Google-Smtp-Source: AGHT+IEpxrIx7c2tZbI+AfiE619OlGm9RjJHfwNfOXKDxMFROfRwGYqjiIUU8F5gSbkk/v30BHdQYQ==
-X-Received: by 2002:a5d:584f:0:b0:38a:68f4:66a2 with SMTP id
- ffacd0b85a97d-38a87312bdfmr16851999f8f.31.1736720421419; 
- Sun, 12 Jan 2025 14:20:21 -0800 (PST)
+ bh=LHQwz6WpRZiIMj0pKqCUWLnwCFUQnRWpgUl34aEsFJg=;
+ b=eVMa8HJFPGOWVvGjO+xRQiWE71hSBmvRsXhKVF31CEjBIcUAOmmLwpF6yjo8g5xAJD
+ Vu0ktcsZRvqj12RJar7pm6Kd4zII383SFSPEdemnPU6oVmi6mtaeQM7/1Aug8zSP1i21
+ /5alM6nw6LbpJkRAOYqu6C/D/6dybSv3emNum4VECqMhwDTyZ19dwiNdvJP0rLgisF9S
+ fJqdL48WXWxCBtkm1C3gvX5HR6rKYw3M7meg7hRykrpatN61rg2lEKM4iROz8SZZ9O3E
+ 6dS7Ms/xUOqPk6/YEyBPBZfCVEfxKXLQpvgrGhWfnIIqMs9nC2MbkB9ENsMAEW73IjBt
+ +KGA==
+X-Gm-Message-State: AOJu0YzpGVHOSanE5tSin5LkEE4PseB1Sw/W8l7v2KrDZ8UFhjia5OyE
+ 4YepQurwJoWhbrE+eo6axor7dkwygwETzVB4Kl7uZGft+hAQPBQnKUKq9hxickcde8rQ2tWTOR5
+ 8SbI=
+X-Gm-Gg: ASbGncv6kcJ+5R3xrFIerlDZKKZMMQIDyUi5/v456ibOZ6hFbgduZW970VHooO6l0P7
+ NWkSS22qt60y66A3++jcTmQD3iSyD0y4T+p4AzRhAo7l9mAHPLopfqLwzy56J/qOjs/tnyJkRPp
+ 1dWs2RD2iqjib8AFj3SawHSETblxA3ufU3ocd1ycK6cb6hZIaXcyWfa6ZW/pzzg/nFO2nrEBneO
+ v+bIezomxFjyLqd4DlN2eyM88+csFYdZZ3yJ8VdWTm8Omg//tCbyO0Qv0S7PcMuVMBwXqPu6Qi8
+ Z3yFvb2V+IsIp7omNsaBG5IH455ASGo=
+X-Google-Smtp-Source: AGHT+IHZe1KYE8wc/adwN5MwQdXvV+X+cZhzjqwRoQFob9j1V53VPxJPWi6sJ414ZybAgKLD9wFp6A==
+X-Received: by 2002:a5d:6c6c:0:b0:386:4244:15c7 with SMTP id
+ ffacd0b85a97d-38a8b0faaadmr13529907f8f.25.1736720440745; 
+ Sun, 12 Jan 2025 14:20:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e3838a3sm10658965f8f.33.2025.01.12.14.20.20
+ ffacd0b85a97d-38a8e4b81e4sm10752645f8f.64.2025.01.12.14.20.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:20:21 -0800 (PST)
+ Sun, 12 Jan 2025 14:20:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 35/49] tests/qtest/boot-serial-test: Correct HPPA machine name
-Date: Sun, 12 Jan 2025 23:17:11 +0100
-Message-ID: <20250112221726.30206-36-philmd@linaro.org>
+ Helge Deller <deller@gmx.de>
+Subject: [PULL 39/49] target/hppa: Only set PSW 'M' bit on reset
+Date: Sun, 12 Jan 2025 23:17:15 +0100
+Message-ID: <20250112221726.30206-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 7df6f751176 ("hw/hppa: Split out machine creation")
-renamed the 'hppa' machine as 'B160L', but forgot to update
-the boot serial test, which ended being skipped.
+On reset:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7df6f751176 ("hw/hppa: Split out machine creation")
-Reported-by: Thomas Huth <thuth@redhat.com>
+  "All PSW bits except the M bit is reset. The M bit is set."
+
+Commit 1a19da0da44 ("target/hppa: Fill in hppa_cpu_do_interrupt /
+hppa_cpu_exec_interrupt") inadvertently set the W bit at RESET,
+remove it and set the M bit.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250102100340.43014-2-philmd@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20241231190620.24442-5-philmd@linaro.org>
 ---
- tests/qtest/boot-serial-test.c | 2 +-
+ target/hppa/cpu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 3b92fa5d506..7759e8c9702 100644
---- a/tests/qtest/boot-serial-test.c
-+++ b/tests/qtest/boot-serial-test.c
-@@ -185,7 +185,7 @@ static const testdef_t tests[] = {
-       sizeof(kernel_plml605), kernel_plml605 },
-     { "arm", "raspi2b", "", "TT", sizeof(bios_raspi2), 0, bios_raspi2 },
-     /* For hppa, force bios to output to serial by disabling graphics. */
--    { "hppa", "hppa", "-vga none", "SeaBIOS wants SYSTEM HALT" },
-+    { "hppa", "B160L", "-vga none", "SeaBIOS wants SYSTEM HALT" },
-     { "aarch64", "virt", "-cpu max", "TT", sizeof(kernel_aarch64),
-       kernel_aarch64 },
-     { "arm", "microbit", "", "T", sizeof(kernel_nrf51), kernel_nrf51 },
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 41538d39d62..dbd46842841 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -209,7 +209,7 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+     memset(env, 0, offsetof(CPUHPPAState, end_reset_fields));
+ 
+     cpu_hppa_loaded_fr0(env);
+-    cpu_hppa_put_psw(env, PSW_W);
++    cpu_hppa_put_psw(env, PSW_M);
+ }
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
 -- 
 2.47.1
 
