@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CA9E7719E
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4620E7719E
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Kx-000651-Bv; Sun, 12 Jan 2025 17:21:39 -0500
+	id 1tX6Ju-0003sW-Le; Sun, 12 Jan 2025 17:20:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Kt-0005oS-VV
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:36 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J5-00022d-RA
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:45 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Kr-0006vU-5p
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:34 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38a25d4b9d4so1885574f8f.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:21:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6J4-0006Zd-8z
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:43 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436ce2ab251so26231395e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720491; x=1737325291; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720380; x=1737325180; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VIJbA99zO6H6feDMStmcLuf9WLOoJAXMvP2ITp16sic=;
- b=ZkPnTU6XdWl/EA5RYiqZWadJTNyEA4qJw/5eD6KRsX2o/o9IS7KtTsh+G7hXo2I02N
- t1rwfr9hPTJF0oPi9RKsJzGhvnsCOj5PwFBgkoaBtleb9MrAmGDNOyvF/fFvV5Fy1OIc
- OAhG9kviuGIGhoEOw1Tnd0couaoXS905sPsls5QTFx8tNAHaM5kf20W7/hDe3RfQEId0
- VjHqPVpMi/40OCxnlt3ay0I2b7HFt+D5DnHfgqCHvVnI0L1qtB684RogC9ZSb8wjd4U0
- IxdDcnLkNp7XWnjaAvT+T1vkdXNpCXr5BCHF6NqHp4FOuuFtaoaYerxXA44wD+JtHRdG
- TkwQ==
+ bh=iAeWlekp0I6VowiluDZapbh9k9d5Kq9MZ32VfBn8/0g=;
+ b=qlC36qKjjyf4bFXKd4dnt3lPO/cNxp3CFTs1LqBglnJ20O5n75e69hG3ACuS6uNKtx
+ a3bhlnnU9y8UQLERdt7uV2Kv5beNyoPdFB37yP9PwJLjZi1eCwm8mDcI1NXClaplewEH
+ 5Vv4R+1QI/VqJvV3Ndx9g+Wt+aRuXy1ALXdqBZtH/l0z8wXALBCu5/2zSkKeDcgC5Svo
+ Cj3GgLFRDvWfR0nXpkCIJqgO5cbXgytwhXf2ye5XqidmKmTjd9EOXFo0uRmlpMkv88De
+ 38kYrtHxFnRk/CC53oC7qaql0NGUA+0w0ylUuFXSo0vnt+/DpXW8FAFkswYYRGyLgs4f
+ /PbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720491; x=1737325291;
+ d=1e100.net; s=20230601; t=1736720380; x=1737325180;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VIJbA99zO6H6feDMStmcLuf9WLOoJAXMvP2ITp16sic=;
- b=aZj6sFoKInuIzd8+pV8CqeMMcrFdGEP/srLjAANG3OHo8PKh7U9nbcCQ8I188u/m1E
- BrX/NOwCng2sZf8UrwW+s60Dqm6hBSPNUpTYP1aY3MDtWx5uZyGScZHOqa2FG9AqwMR1
- JhvRsoJaz1JZl4F88m8hN10KFgT+8+m/BGMPa56xlBiuPsmwesyU5TDH2aDOoRRby7ps
- AFp4HznqfqWYIcsYn9siO3Jm8PvXTdIdP1WMysfJgB4+cFygUlWDcKghOXa4y022VSx/
- 5+hpIyrJI4aHQjtbVxNxGg0mBCTALJNUjb9vkmK6f1rdhblJLokOF7qsN8i7O6idQMxy
- 9Lgw==
-X-Gm-Message-State: AOJu0YwZUVO69Swsf9Jjudxi2DemSIIuTeoOBClqxsxnbe4S2prF7bTD
- 6KWVT9X3dtBcvJ6GKMe4OsSlNFzuuI/piZiPo+66i1mt+TEvXTk//Hwa/wWlmFg9frvD2Pd3FTT
- Z0zM=
-X-Gm-Gg: ASbGncsWFkpF9DnK0VVNhYtEfuTfgfyf2ln+ShTowcU3urMKtUh8sJNiUARKVDoG3mI
- KdEdzLQPw/Ui7NSKgrev+tpfyY3Wd1KLU0WpDri1Hh7CesTnjYaBOvPwVEXZp/g8R17MiQ9th79
- 2c6CLB/ffNQFbsU+XMyvCtAZzSv3BxIVeOnZR78MFswElFQjLrzgJnCTqsCBY1ksoM/5NsNdlSh
- zJw7ajKOCTpzFJwMEzFKPuLgIjHH3iV4cBm1JfOkbPJg0YfLavKdu1yeRy+P1HihfB0CwYGWmQb
- VLnS7enrYnwCz/Ww4ihwM6JykDId7rI=
-X-Google-Smtp-Source: AGHT+IFC7DtWGUW9zIEP+TfAbMC2zNpNdKQd/4idgtFr0bZkEeM+V+adtokguO9gB9+pQe6lIWYknQ==
-X-Received: by 2002:a05:6000:4612:b0:38a:39ad:3e2f with SMTP id
- ffacd0b85a97d-38a872cb1e1mr15568909f8f.2.1736720491441; 
- Sun, 12 Jan 2025 14:21:31 -0800 (PST)
+ bh=iAeWlekp0I6VowiluDZapbh9k9d5Kq9MZ32VfBn8/0g=;
+ b=PKlvyHy2l5c7PQA90674c01Nz/zyMVaFNv5mOD/K5WadeRjCASjZRFSm9K94FLMwCQ
+ xwPxx40mWfTpieFb66jUZFw7Os/sRcfx8cr1NoOCGx/Nbgc8mW+LtTwaj38LBAfC8eBg
+ PkCSYtsU+xuwDPPdOtd2v1iiYttnKVuVcn4mj4CSX8KRKsaBQ2JIP/WZRO9uGrFPYmYt
+ FYPZtfMwMveiv2QU4tzJ9udg8j6KXQ9mWNq9Z1HMmvmU+WkZj/8nWeGHyoh0LZdCsiXu
+ Xj7NrFAk/u221d9CAGKus2u24jTFDsJldfGkei5P4QjsIlcp7+yA9WGizKtq6xbvgaeY
+ uXdQ==
+X-Gm-Message-State: AOJu0YyS8e5g5nbOHdV3L9C4t53UrWnrWVTkJFu/UMW3strino90gAQD
+ SyktYKD0cHe1YTHEswFwHd2HlK8Iqg47j1OPGPStVJ0NFIbxZRkcqvuWCZhbERW1LoVSlI/eVzS
+ FnEE=
+X-Gm-Gg: ASbGncvyqTjeHi4yPdldKIsSROr7A3XuvYtDP2rznBDMJzjCG7I7fQUUH7cZF5m4Y91
+ mlHwhZqsWdho8oq8s2D24EcNU6CPiQqmqwmTrG8jnrhgqcMcSUNXF4/b34SrhEi2fgZQB2wuAeq
+ X6bnG5yfbbCIzlesdNIhPt21Mqk6oZaoCJiYjd0+ksK6E9cWCen4KeGucW0E9MBTexnC7gu211Q
+ gNizWzsNAaF9HYTVNqMWuIBMxD/NuOVO7GDVesqKjkcEFsnse5Avp3a3wUc4+YxLL9LaXvJczpD
+ Vo13Ti0zzT5xHSDk5uznGbjpqELRYG0=
+X-Google-Smtp-Source: AGHT+IF9cHGgEXMlrA1X7knljM0lI8FZG5FW2DRSqQu8nn6iPVobBJTa95sKFMZvjuHkmfdS3nlEBw==
+X-Received: by 2002:a05:600c:3b8a:b0:434:f270:a4f0 with SMTP id
+ 5b1f17b1804b1-436e26dda80mr139563475e9.21.1736720380606; 
+ Sun, 12 Jan 2025 14:19:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38c990sm10655419f8f.56.2025.01.12.14.21.30
+ 5b1f17b1804b1-436e2dc0babsm157488615e9.14.2025.01.12.14.19.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:21:31 -0800 (PST)
+ Sun, 12 Jan 2025 14:19:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Signed-off-by=3A=20Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: [PULL 49/49] Add a b4 configuration file
-Date: Sun, 12 Jan 2025 23:17:25 +0100
-Message-ID: <20250112221726.30206-50-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 27/49] hw/sd/sdhci: Factor sdhci_sdma_transfer() out
+Date: Sun, 12 Jan 2025 23:17:03 +0100
+Message-ID: <20250112221726.30206-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,94 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Factor sdhci_sdma_transfer() out of sdhci_data_transfer().
+Re-use it in sdhci_write(), so we don't try to run multi
+block transfer for a single block.
 
-b4 [1] is a convenient tool to manage patch series with mailing list
-working flow.
-
-Add a project default config file to match QEMU's mailing list conventions
-as well as adopting differences on scripting.
-
-Examples of b4:
-
-    ```
-    $ b4 prep --check
-    Checking patches using:
-      scripts/checkpatch.pl -q --terse --no-summary --mailback -
-
-    ---
-    Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-    ---
-    Changes in v2:
-    - Add lore masks (philmd) from:
-      https://lore.kernel.org/qemu-devel/20241224135054.10243-1-philmd@linaro.org/
-    - Link to v1: https://lore.kernel.org/r/20241222-b4-config-v1-1-b3667beb30a4@flygoat.com
-    ---
-    ● cc5a4c890fed: Add a b4 configuration file
-      ● checkpatch.pl: 27: WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-    ---
-    Success: 0, Warning: 1, Error: 0
-    ```
-
-    ```
-    $ b4 prep -c
-    Will collect To: addresses using echo
-    Will collect Cc: addresses using get_maintainer.pl
-    Collecting To/Cc addresses
-        + To: qemu-devel@nongnu.org
-    ---
-    You can trim/expand this list with: b4 prep --edit-cover
-    Invoking git-filter-repo to update the cover letter.
-    New history written in 0.02 seconds...
-    Completely finished after 0.06 seconds
-    ```
-
-[1]: https://b4.docs.kernel.org/
-
-Co-developed-by: Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-ID: <20250102-b4-config-v2-1-cc7299e399bb@flygoat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20250109122029.22780-1-philmd@linaro.org>
 ---
- MAINTAINERS |  6 ++++++
- .b4-config  | 14 ++++++++++++++
- 2 files changed, 20 insertions(+)
- create mode 100644 .b4-config
+ hw/sd/sdhci.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ec898a3cbc6..0c71eb3f925 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4310,3 +4310,9 @@ Machine development tool
- M: Maksim Davydov <davydov-max@yandex-team.ru>
- S: Supported
- F: scripts/compare-machine-types.py
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index a958c114974..318587ff57c 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -699,6 +699,15 @@ static void sdhci_sdma_transfer_single_block(SDHCIState *s)
+     sdhci_end_transfer(s);
+ }
+ 
++static void sdhci_sdma_transfer(SDHCIState *s)
++{
++    if ((s->blkcnt == 1) || !(s->trnmod & SDHC_TRNS_MULTI)) {
++        sdhci_sdma_transfer_single_block(s);
++    } else {
++        sdhci_sdma_transfer_multi_blocks(s);
++    }
++}
 +
-+b4 tool configuration
-+M: Jiaxun Yang <jiaxun.yang@flygoat.com>
-+M: Philippe Mathieu-Daudé <philmd@linaro.org>
-+S: Odd Fixes
-+F: .b4-config
-diff --git a/.b4-config b/.b4-config
-new file mode 100644
-index 00000000000..4b9b2fe290f
---- /dev/null
-+++ b/.b4-config
-@@ -0,0 +1,14 @@
-+#
-+# Common b4 settings that can be used to send patches to QEMU upstream.
-+# https://b4.docs.kernel.org/
-+#
-+
-+[b4]
-+    send-series-to = qemu-devel@nongnu.org
-+    send-auto-to-cmd = echo
-+    send-auto-cc-cmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback
-+    am-perpatch-check-cmd = scripts/checkpatch.pl -q --terse --no-summary --mailback -
-+    prep-perpatch-check-cmd = scripts/checkpatch.pl -q --terse --no-summary --mailback -
-+    searchmask = https://lore.kernel.org/qemu-devel/?x=m&t=1&q=%s
-+    linkmask = https://lore.kernel.org/qemu-devel/%s
-+    linktrailermask = Message-ID: <%s>
+ typedef struct ADMADescr {
+     hwaddr addr;
+     uint16_t length;
+@@ -930,12 +939,7 @@ static void sdhci_data_transfer(void *opaque)
+     if (s->trnmod & SDHC_TRNS_DMA) {
+         switch (SDHC_DMA_TYPE(s->hostctl1)) {
+         case SDHC_CTRL_SDMA:
+-            if ((s->blkcnt == 1) || !(s->trnmod & SDHC_TRNS_MULTI)) {
+-                sdhci_sdma_transfer_single_block(s);
+-            } else {
+-                sdhci_sdma_transfer_multi_blocks(s);
+-            }
+-
++            sdhci_sdma_transfer(s);
+             break;
+         case SDHC_CTRL_ADMA1_32:
+             if (!(s->capareg & R_SDHC_CAPAB_ADMA1_MASK)) {
+@@ -1179,11 +1183,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+             if (!(mask & 0xFF000000) && s->blkcnt &&
+                 (s->blksize & BLOCK_SIZE_MASK) &&
+                 SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA) {
+-                if (s->trnmod & SDHC_TRNS_MULTI) {
+-                    sdhci_sdma_transfer_multi_blocks(s);
+-                } else {
+-                    sdhci_sdma_transfer_single_block(s);
+-                }
++                sdhci_sdma_transfer(s);
+             }
+         }
+         break;
 -- 
 2.47.1
 
