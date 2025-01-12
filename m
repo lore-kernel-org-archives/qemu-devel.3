@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C23BE7719E
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 21:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E739E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 21:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX56N-0004oP-Bb; Sun, 12 Jan 2025 16:02:31 -0500
+	id 1tX5Td-0008Cz-A3; Sun, 12 Jan 2025 16:26:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tX55U-0004TO-9a
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 16:01:36 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1tX5Tb-0008Co-84
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 16:26:31 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tX55R-0006NX-EC
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 16:01:35 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5d3f28a4fccso5255903a12.2
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 13:01:32 -0800 (PST)
+ id 1tX5TY-0000vf-M3
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 16:26:30 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-aaee2c5ee6eso646550366b.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 13:26:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1736715692; x=1737320492;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1736717186; x=1737321986;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GvDhEz3acYJceXtOa/E3HfCa+FSJUVu7fX0WjN7zRao=;
- b=Lga7smrX+7rwfPjm4Uq3tZYxoHjCwXUTT/Somkxkqv73E9OWFupTtFgKSVgkW5k7yq
- vbblRRAAqAVefKy7nYwbGaOVJChhwSj7TCzEvfDu0UuKXir2mfKdAy02noY+olcJYCJW
- PVsejBwka9/DodecvfTMkyDBGinD7KC+37f7QVs3GvFYdRIdrdzScUhFnwNZiA6i7aEM
- FwAksMW59klRKeedUSgSkhDIk/xt7k79PMUkcdPn75OzRGCpkca5bfqMBlFI9X/Dw/uR
- 8yH1ttdR9cwb9K6aPC6wAKkuiY8Q5HOWmsbriEJJyLSzIJJBo1TGN9sqMihkkj5IhtTx
- btmw==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=d4NNepVux6n51/JRjYIzyWJMKeAsOsGXn2hlR+N3b1A=;
+ b=soPDn1ayuQB1qgT0oGLqQ/tlEv8iYDDTvQE8JcvOz+yGeSYNgGgWh8n1EuPfgMnbNf
+ 6m5u3XGA9vqrzXDSXgqXDF8Yczti8xVqYaRr0EpPZn2ld9mDW6/o3Hs17eE3eXATkyCq
+ md++SjyKONB3pFoGofOeNxAvOYrbOmoHxbo2UjVoeGBAGXRdnSE0zGA4UrJhI+CC0l9v
+ JsTU4VJ/BVqvpz7xYM14wcLz1+hcJRaCcw/9FZjStak2sdzeiPq3izbNT7qEvDxANdyd
+ ShUZYruspn2HxsE3Mf7A9+XTQ7RcPoABGY+FioOqluRb6Dr3MWhQNcYBFvdK1B0P8h2u
+ qoiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736715692; x=1737320492;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GvDhEz3acYJceXtOa/E3HfCa+FSJUVu7fX0WjN7zRao=;
- b=BeUxBGmiGNWzYt3h7nhHvFEMU5/uBblbMudVDjVPmKTMDSwqpIyb54PflVZSng3NTC
- 4wqOz7MUki5vHRMeYuDHFg+vlK664q7PRHCzoXb+mIe7IUWyG/BIjoUSAhNt1hdxFVEw
- 53qDp9Mi/JRv7d3BJTeOoH4V4oVKUUMtZULtaFdkARN0isoPQ940Dq7VTuAE2CsL4mIT
- nz12zdk4WDcFaFB8TIUYAaYsxKJH4oK84Q4erzRedpA+lpNYSOGIXS0f1hfB+yiWtgbi
- Gdd7vaJjH9osjptBsHaP55Y7FKlfCTGV8VeEWePgZ6vxVjD0ahdITpD8GtJKFAtVWMNZ
- VkCA==
-X-Gm-Message-State: AOJu0YwpOYLfv1Wdfnp7nJlEyHySw5h0rCgCFafcK/ZBIEi2aMJBQ/EN
- lHtAYodkuDmr5RP8x1LdHa8nAeC8wMtF+2H7mL8Yo6NqC6Dx5lk1ZkBHfkZP1eRNgOK2MJn0mXW
- cAQ==
-X-Gm-Gg: ASbGncsD+xJmbJmfXgEjZPRK0U/5/MhH6ftMG4D9Kl0aJRUSst11zTi0CmYdh0+LLrK
- 6HvOxJHnFVgR/osZzna1HdzQ4nmLK0/UL6OIToU8OBDfGR8gI0m0+yRr4BOSY32jDJzbo/PdeTv
- i7+hyFkdt/ZjDmSJ8YXXwtd+n8wImPv7OokWqlm0OW4p2rsNHWf9Vu3Wr/Ze05Kr9HvFWiW+UzS
- kfdZbS+qKmXoD+1Bs8n4xEuzl+pjBg6xZXuOuOedYlkOssQShwC8LRoCr+ztrYZPCUO1dIPtrl8
- g7m3ffFT0Pg7KwfzPalegEaf27vNyiM0
-X-Google-Smtp-Source: AGHT+IFOYlfdo3gXl+57p29DLtWoMertRVpUkwtPWvSBy5fcZ0tnTi1sBU6HyfjUGQly9Cv3L0wDqg==
-X-Received: by 2002:a17:906:3fcf:b0:ab2:f5cb:c039 with SMTP id
- a640c23a62f3a-ab2f5cbc22dmr529508166b.54.1736715691652; 
- Sun, 12 Jan 2025 13:01:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736717186; x=1737321986;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d4NNepVux6n51/JRjYIzyWJMKeAsOsGXn2hlR+N3b1A=;
+ b=YUBZSiLXJrXMnJnyt9BltiU6uC79WHzPB/isX9M5LycJps2zpkpt5327maZe5JaRVF
+ WzvmZoVZ40/DydVRkSxLQEAX1S6gqgEU55vJkrpY7ZLSJqEyrV8wwFCLflWXFe9CuS5F
+ pcLDBcp+gv3bHZ8ozpAIu7WHWQBtArPNKxUVUq9vZCwsReaTrm8tYM4X62BurRELqwrV
+ y5kOb6uhK0QsOrTNhe5jvk0uQeyYE4L6UJKh30III19qAvgIazVycjdMGUZlbJ39YsoT
+ H7xFvtLrCKmWvqCLKNOTZAJdj4fRqtgLZJJPxl+/UGE/ACIpuEGyBo3VGPsroYSXZVpV
+ QNyw==
+X-Gm-Message-State: AOJu0Yw09n71nIJV+YeT9PGUgcLdbxKQN5JkC5Jyuxx56SCIaupOKgqb
+ BGOThO0RRju2U0IW6vEr4r9CPOo1jegK1PO6TmWBPQF+05CXZqx0D1CBNyxSlOJlBQ2H4bs/7AS
+ Rlw==
+X-Gm-Gg: ASbGncuDVl/OZqSHiJz+Z2w4ShWwEhzUl3F3KzrydHjwOwWxCJy0wslAogOv3P70B7v
+ SHjagGL4yxdsyn8bbcTpdtLgyH1guS39qV/QNEhLxKU9YD6qjoSF9TROEYp5zQFn87uLeQlSx48
+ YcHo/vipPCWgZHTOQkGEfymAAAxU+Cvsu3t5x6Cw5u93zMfB4etnoOWhu8HKiAhzumBJFH/KptU
+ XOvJ3TF9BnKVS3s/CT9BEsQUkhJIpeGz+VwvZ6Bs8HPCgrNaHUxLCHm3cgx/qRPHK9vBKKQU2um
+ /gVDBn+Hl30CrOWiM4W3tgU3aW0JaJ4V
+X-Google-Smtp-Source: AGHT+IH74f7li2Sp7g9Yu5piX7mGEQUvlQ1vF8csMssjNaizZrv6KmHGIL88u9YkYifJ50p4BvchSg==
+X-Received: by 2002:a17:907:36c8:b0:aa6:9fad:3c1d with SMTP id
+ a640c23a62f3a-ab2abc6f5b9mr1928399466b.39.1736717186256; 
+ Sun, 12 Jan 2025 13:26:26 -0800 (PST)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c905e283sm418276666b.31.2025.01.12.13.01.30
+ a640c23a62f3a-ab2c8ccc1b5sm416470166b.0.2025.01.12.13.26.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 13:01:31 -0800 (PST)
+ Sun, 12 Jan 2025 13:26:25 -0800 (PST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
- pbonzini@redhat.com, mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, marcandre.lureau@redhat.com, philmd@linaro.org,
- eblake@redhat.com, armbru@redhat.com, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, Alexander Graf <graf@amazon.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v17 04/11] hw/misc/pvpanic: Add MMIO interface
-Date: Sun, 12 Jan 2025 22:00:49 +0100
-Message-Id: <20250112210056.16658-5-phil@philjordan.eu>
+Cc: phil@philjordan.eu, pbonzini@redhat.com, philmd@linaro.org,
+ akihiko.odaki@daynix.com, dwmw2@infradead.org
+Subject: [PATCH] system/runstate: Fix regression,
+ clarify BQL status of exit notifiers
+Date: Sun, 12 Jan 2025 22:26:09 +0100
+Message-Id: <20250112212609.17996-1-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250112210056.16658-1-phil@philjordan.eu>
-References: <20250112210056.16658-1-phil@philjordan.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::52d;
- envelope-from=phil@philjordan.eu; helo=mail-ed1-x52d.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::632;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -106,140 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+By changing the way the main QEMU event loop is invoked, I inadvertently
+changed the BQL status of exit notifiers: some of them implicitly
+assumed they would be called with the BQL held; the BQL is however
+not held during the exit(status) call in qemu_default_main().
 
-In addition to the ISA and PCI variants of pvpanic, let's add an MMIO
-platform device that we can use in embedded arm environments.
+Instead of attempting to ensuring we always call exit() from the BQL -
+including any transitive calls - this change adds a BQL lock guard to
+qemu_run_exit_notifiers, ensuring the BQL will always be held in the
+exit notifiers.
 
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Additionally, the BQL promise is now documented at the
+qemu_{add,remove}_exit_notifier() declarations.
+
+Fixes: f5ab12caba4f ("ui & main loop: Redesign of system-specific main
+thread event handling")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2771
+Reported-by: David Woodhouse <dwmw2@infradead.org>
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
+ include/system/system.h | 1 +
+ system/runstate.c       | 1 +
+ 2 files changed, 2 insertions(+)
 
-v3:
- * Rebased on upstream, updated a header path
-
-v15:
- * Constified the property table.
-
-v16:
- * Removed the DEFINE_PROP_END_OF_LIST marker to match recent upstream
-   changes.
-
- hw/misc/Kconfig           |  4 +++
- hw/misc/meson.build       |  1 +
- hw/misc/pvpanic-mmio.c    | 60 +++++++++++++++++++++++++++++++++++++++
- include/hw/misc/pvpanic.h |  1 +
- 4 files changed, 66 insertions(+)
- create mode 100644 hw/misc/pvpanic-mmio.c
-
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 8f9ce2f68c..16cf872e40 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -150,6 +150,10 @@ config PVPANIC_ISA
-     depends on ISA_BUS
-     select PVPANIC_COMMON
+diff --git a/include/system/system.h b/include/system/system.h
+index 5364ad4f27..0cbb43ec30 100644
+--- a/include/system/system.h
++++ b/include/system/system.h
+@@ -15,6 +15,7 @@ extern bool qemu_uuid_set;
  
-+config PVPANIC_MMIO
-+    bool
-+    select PVPANIC_COMMON
-+
- config AUX
-     bool
-     select I2C
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 55f493521b..6187caaf71 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -124,6 +124,7 @@ system_ss.add(when: 'CONFIG_ARMSSE_MHU', if_true: files('armsse-mhu.c'))
+ const char *qemu_get_vm_name(void);
  
- system_ss.add(when: 'CONFIG_PVPANIC_ISA', if_true: files('pvpanic-isa.c'))
- system_ss.add(when: 'CONFIG_PVPANIC_PCI', if_true: files('pvpanic-pci.c'))
-+system_ss.add(when: 'CONFIG_PVPANIC_MMIO', if_true: files('pvpanic-mmio.c'))
- system_ss.add(when: 'CONFIG_AUX', if_true: files('auxbus.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_hace.c',
-diff --git a/hw/misc/pvpanic-mmio.c b/hw/misc/pvpanic-mmio.c
-new file mode 100644
-index 0000000000..70097cecc7
---- /dev/null
-+++ b/hw/misc/pvpanic-mmio.c
-@@ -0,0 +1,60 @@
-+/*
-+ * QEMU simulated pvpanic device (MMIO frontend)
-+ *
-+ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "hw/qdev-properties.h"
-+#include "hw/misc/pvpanic.h"
-+#include "hw/sysbus.h"
-+#include "standard-headers/misc/pvpanic.h"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(PVPanicMMIOState, PVPANIC_MMIO_DEVICE)
-+
-+#define PVPANIC_MMIO_SIZE 0x2
-+
-+struct PVPanicMMIOState {
-+    SysBusDevice parent_obj;
-+
-+    PVPanicState pvpanic;
-+};
-+
-+static void pvpanic_mmio_initfn(Object *obj)
-+{
-+    PVPanicMMIOState *s = PVPANIC_MMIO_DEVICE(obj);
-+
-+    pvpanic_setup_io(&s->pvpanic, DEVICE(s), PVPANIC_MMIO_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->pvpanic.mr);
-+}
-+
-+static const Property pvpanic_mmio_properties[] = {
-+    DEFINE_PROP_UINT8("events", PVPanicMMIOState, pvpanic.events,
-+                      PVPANIC_PANICKED | PVPANIC_CRASH_LOADED),
-+};
-+
-+static void pvpanic_mmio_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_props(dc, pvpanic_mmio_properties);
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+}
-+
-+static const TypeInfo pvpanic_mmio_info = {
-+    .name          = TYPE_PVPANIC_MMIO_DEVICE,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(PVPanicMMIOState),
-+    .instance_init = pvpanic_mmio_initfn,
-+    .class_init    = pvpanic_mmio_class_init,
-+};
-+
-+static void pvpanic_register_types(void)
-+{
-+    type_register_static(&pvpanic_mmio_info);
-+}
-+
-+type_init(pvpanic_register_types)
-diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index 9a71a5ad0d..049a94c112 100644
---- a/include/hw/misc/pvpanic.h
-+++ b/include/hw/misc/pvpanic.h
-@@ -26,6 +26,7 @@
++/* Exit notifiers will run with BQL held. */
+ void qemu_add_exit_notifier(Notifier *notify);
+ void qemu_remove_exit_notifier(Notifier *notify);
  
- #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
- #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
-+#define TYPE_PVPANIC_MMIO_DEVICE "pvpanic-mmio"
+diff --git a/system/runstate.c b/system/runstate.c
+index 3a8fe866bc..272801d307 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -850,6 +850,7 @@ void qemu_remove_exit_notifier(Notifier *notify)
  
- #define PVPANIC_IOPORT_PROP "ioport"
+ static void qemu_run_exit_notifiers(void)
+ {
++    BQL_LOCK_GUARD();
+     notifier_list_notify(&exit_notifiers, NULL);
+ }
  
 -- 
 2.39.5 (Apple Git-154)
