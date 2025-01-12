@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A20DDE7719F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE332E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6IM-0000X6-Bo; Sun, 12 Jan 2025 17:18:59 -0500
+	id 1tX6sq-0007C0-UB; Sun, 12 Jan 2025 17:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6II-0000LW-DF
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:54 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6sg-000745-PF
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:56:30 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6IF-0006Sy-1J
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:54 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso25675245e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:18:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6sf-0001ZW-7l
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:56:30 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso25753855e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:56:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720329; x=1737325129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736722586; x=1737327386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JQ/yRHFRw+pRRef+zyQSK+jFDarKIc/XCW+pBv+XSCs=;
- b=aUVBvZvaZy/pU7shbKIaZuZ/6Rg2NH+pd2ufL8sYJ7V0a7ov5hfcHUji1dXWvc3+dB
- cWOgU1MiL0Dx2aYznUpQeSGADsA5h9R4Vmvqbe2Q5fvgN8OdVLWiCbE+q3FzDjXU/2y9
- EJcdDBY4UZgHuWkAm1QnFRG/N43SR8QqR4qNijcP4tBJI8reZQU8BYnnqND8Dska9KWT
- OUqPOkKs+BN8mrtMc/U8XotBxvjEHYt8v9bq6vdTnllsuBpqD6STrrI16nSNvlOsexPv
- QYdeN8Unl5eAYcc0jxq7/lkFuhUksPuaQhsz3meC1Vop9xLdO7vIQVW9JdPUfWP9bzHF
- nzNw==
+ bh=2P6utQTgIOG24muh2STqCnSn8EGidw/ozbeVNIgt5Qs=;
+ b=eqbY9VjZvl82B6wKXGXxwF/YtgopRob7R+s0pY/XEBNiFVdnQKgiClrXgqGlWM4eOZ
+ AUboeSFEDCFWVb1I57kvM/IYMYDlNLgyDuGPyunT0vxsGnTiKkR3+pwFBTRQMHMzpqfr
+ Sz8uXzbhljJ9Dyw+E4gvUfsINvF7DkJ6s/dA/Fs1oKQCJ40w3ln5Rr16ZfFmMAgXHjtn
+ fOp4LoDDVDTN5ogDjhS/nn+jUnboeUr16sJZGNzxxQL1EDWfmyg598dky8Gp8rbxtJ6j
+ DW6OA8Kl6ROjnsJVCTVt8NCptMmnRDVPpGWT57cU4EbHfxvda9EqV8r/FI/eJ243hg91
+ r3oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720329; x=1737325129;
+ d=1e100.net; s=20230601; t=1736722586; x=1737327386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JQ/yRHFRw+pRRef+zyQSK+jFDarKIc/XCW+pBv+XSCs=;
- b=esiLCnI2atiNxMe2oguqXR6tlQ6+1KcgKeKSfcunDqZLGA4FX4B8Boa0ghZOuiT4oK
- N6rPyYc1QynePfyh2qWZC6WymfQU329TTfLvFLwOzT8s/5Y8FsPVFE0Y2FOXZC1KsB7I
- fJmGRpIpYs9In8WmUlS1QUsSnhNGBT3S0lmMhPLdtkJZLVH530Yc4MjIMBuLzRVi+/NX
- Sbpk0qD6AkwPRIWn4wgo74s97aFlxhq7uB2QdYqUIRk2lWdBBihkWvdeIkk9DNA1AU9b
- 2DuetdSLm7fa49KkDsgAZpVy/rNBW+2v103tNgLvQbULQL2ylIKyrUJnkkPKmanCYkS1
- Aq4w==
-X-Gm-Message-State: AOJu0YzB8l0bAJsHFFPqI5hc6msFtNx0ZOIinxG24uMC1NuduG8eDBvo
- tuRJ6HF863bk1ji9Hcr8MEQpDxfKZfdlRhhiZBgPqKQRbWgX/zt8NhnPyHOik7uAcx9qTULd3Nx
- WHF4=
-X-Gm-Gg: ASbGncvJxU3u55vm8tDeApSsk15QyJw/BW3G+bqskb3IIPMpezku2gioTt6xGijNRq+
- 8NmXWvg9Itw+hQrYXlaZi/XhPLcL+dd2IQ3+xn5EDI8FUu+g9wIlOSGD7MzyhqpR1zYjSZasjez
- gKeJZab1n40O7SpUw84r+KNnC4V7TCjjQECxazHgkHAtTt20uYiXQvhz0lbtLoetDiCTWBncees
- ZYpfQDpkxa6w/EZiA+ah6vYO908sEVV3Vmd13dLTPq3AoFGZbTCZj6SD51Y6iXhoAcPFJ5JftON
- kcgYxO9YJoT0Fz8qiwERNx/auPsua+Q=
-X-Google-Smtp-Source: AGHT+IE9uw1bV2hNE5nVNSFkXjjuM8J9wxMt9MaBHcHssIuh8w8Xb4av5z6rh3Kt2PZF4hGgMVZDcQ==
-X-Received: by 2002:a05:600c:1c28:b0:434:a734:d268 with SMTP id
- 5b1f17b1804b1-436e2699dfbmr185976455e9.14.1736720329124; 
- Sun, 12 Jan 2025 14:18:49 -0800 (PST)
+ bh=2P6utQTgIOG24muh2STqCnSn8EGidw/ozbeVNIgt5Qs=;
+ b=iru3dctVN14nU/c+kynLeSVUrcIyMTDao3yiNqfwghfvLroqYuGwhcIA9GGJ0I9EcR
+ nqiTQGnE2dBS2NTisihW+C1Ztjwm12YzTV0BEF27FmUMbVXslt7EY0ZdKFvMtE3xxfiF
+ fkPyzhP2eVhVR3voX4b+3WaozgSw/TZ1yXVg5+Fs6ZygbxAq3eC0Aik593RVRB9T1Ybz
+ fZ7eDlwKtzFX+9j0Wdlp79eg3Z1R/HdG8e8Obute1qsGHfDupVMKQLkhwJJQ0XcHxJ5Z
+ xEU5VNUFSmTxLjHL8xcB6N0J8SD42T9iNLof1utMvmQhrbEVO3fkviJ1GgIALCtLSB3A
+ M8Qw==
+X-Gm-Message-State: AOJu0YxPTBY4W1ltNTZ7jjHuQI/8CcGd5v8Z3s8S1QQ8Y10+gV04cMnL
+ 5jVLiGiKcC8pcTpIAZZxZ8FoFsJ0HOWs19j1qg4QQ6fMwWwgoIhX4qmgIydzzjYbva+fgRNu72v
+ ZEpw=
+X-Gm-Gg: ASbGncsKNdP9hYlQT+PaHw7d+8wkyhhz0bxX3TCMRuflPuNdIzyuiHcQSUKmU2+JmsS
+ CJ3x6XLIXoI+S/TXelhDTprgmchwOsuUTRR7NoPhgBBfLcXGzo+en8CAX5EWTkvbB8Sy7Iix2cw
+ q4+tGyKhHCX+9lBvH0OH02g/ksn7+zOEBCXngQZJ/aLJHi9PJ97JhiMTzglDTFzfYg7f/1Kxr0B
+ At4V1D9PJivcZX4rv581C0rGBwJHBnl5hd/QMDnhF+N9TeGJDSz1UnMvg9yLpUxKNe4OUm/u/PO
+ sYf8+fSvqIVRWta3XfmBTuFselNRJkw=
+X-Google-Smtp-Source: AGHT+IH+5YafZH2P42CltqfpGc83dhL86YZLmypoK3N2S/d99qVlK9EdA6lwoAYn1L19DIRD3I156Q==
+X-Received: by 2002:a05:600c:3593:b0:431:6083:cd38 with SMTP id
+ 5b1f17b1804b1-436e2696e93mr147917025e9.6.1736722586315; 
+ Sun, 12 Jan 2025 14:56:26 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2da66fcsm158823095e9.6.2025.01.12.14.18.47
+ ffacd0b85a97d-38a8e4b80besm10442329f8f.83.2025.01.12.14.56.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:18:48 -0800 (PST)
+ Sun, 12 Jan 2025 14:56:25 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 16/49] hw/net/xilinx_ethlite: Map TX_GIE as MMIO
-Date: Sun, 12 Jan 2025 23:16:52 +0100
-Message-ID: <20250112221726.30206-17-philmd@linaro.org>
+Cc: Samuel Tardieu <sam@rfc1149.net>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Felipe Balbi <balbi@kernel.org>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Joel Stanley <joel@jms.id.au>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/3] hw/arm/stellaris: Add 'armv7m' local variable
+Date: Sun, 12 Jan 2025 23:56:13 +0100
+Message-ID: <20250112225614.33723-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
-References: <20250112221726.30206-1-philmd@linaro.org>
+In-Reply-To: <20250112225614.33723-1-philmd@linaro.org>
+References: <20250112225614.33723-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,96 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add TX_GIE to the TX registers MMIO region.
-
-Before TX_GIE1 was accessed as RAM, with no effect.
-Now it is accessed as MMIO, also without any effect.
-
-The memory flat view becomes:
-
-  (qemu) info mtree -f
-  FlatView #0
-   Root memory region: system
-    0000000081000000-00000000810007e3 (prio 0, i/o): xlnx.xps-ethernetlite
-    00000000810007e4-00000000810007f3 (prio 0, i/o): ethlite.mdio
-    00000000810007f4-00000000810007fb (prio 0, i/o): ethlite.tx[0]io
-    00000000810007fc-0000000081000ff3 (prio 0, i/o): xlnx.xps-ethernetlite @00000000000007fc
-    0000000081000ff4-0000000081000ffb (prio 0, i/o): ethlite.tx[1]io
-    0000000081000ffc-00000000810017fb (prio 0, i/o): xlnx.xps-ethernetlite @0000000000000ffc
-    00000000810017fc-00000000810017ff (prio 0, i/o): ethlite.rx[0]io
-    0000000081001800-0000000081001ffb (prio 0, i/o): xlnx.xps-ethernetlite @0000000000001800
-    0000000081001ffc-0000000081001fff (prio 0, i/o): ethlite.rx[1]io
+While the TYPE_ARMV7M object forward its NVIC interrupt lines,
+it is somehow misleading to name it 'nvic'. Add the 'armv7m'
+local variable for clarity, but also keep the 'nvic' variable
+behaving like before when used for wiring IRQ lines.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-Id: <20241112181044.92193-18-philmd@linaro.org>
 ---
- hw/net/xilinx_ethlite.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ hw/arm/stellaris.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index 5dac44fa688..898c09b3981 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -42,7 +42,6 @@
- #define BUFSZ_MAX      0x07e4
- #define A_MDIO_BASE    0x07e4
- #define A_TX_BASE0     0x07f4
--#define R_TX_GIE0     (0x07f8 / 4)
- #define R_TX_CTRL0    (0x07fc / 4)
- #define R_TX_BUF1     (0x0800 / 4)
- #define A_TX_BASE1     0x0ff4
-@@ -56,6 +55,7 @@
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index 1bba96df14e..7303e096ef7 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -1031,7 +1031,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+      */
  
- enum {
-     TX_LEN =  0,
-+    TX_GIE =  1,
-     TX_MAX
- };
+     Object *soc_container;
+-    DeviceState *gpio_dev[7], *nvic;
++    DeviceState *gpio_dev[7], *armv7m, *nvic;
+     qemu_irq gpio_in[7][8];
+     qemu_irq gpio_out[7][8];
+     qemu_irq adc;
+@@ -1095,19 +1095,20 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     qdev_prop_set_uint32(ssys_dev, "dc4", board->dc4);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(ssys_dev), &error_fatal);
  
-@@ -141,6 +141,9 @@ static uint64_t port_tx_read(void *opaque, hwaddr addr, unsigned int size)
-     case TX_LEN:
-         r = s->port[port_index].reg.tx_len;
-         break;
-+    case TX_GIE:
-+        r = s->port[port_index].reg.tx_gie;
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -158,6 +161,9 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
-     case TX_LEN:
-         s->port[port_index].reg.tx_len = value;
-         break;
-+    case TX_GIE:
-+        s->port[port_index].reg.tx_gie = value;
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -237,10 +243,6 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
+-    nvic = qdev_new(TYPE_ARMV7M);
+-    object_property_add_child(soc_container, "v7m", OBJECT(nvic));
+-    qdev_prop_set_uint32(nvic, "num-irq", NUM_IRQ_LINES);
+-    qdev_prop_set_uint8(nvic, "num-prio-bits", NUM_PRIO_BITS);
+-    qdev_prop_set_string(nvic, "cpu-type", ms->cpu_type);
+-    qdev_prop_set_bit(nvic, "enable-bitband", true);
+-    qdev_connect_clock_in(nvic, "cpuclk",
++    armv7m = qdev_new(TYPE_ARMV7M);
++    object_property_add_child(soc_container, "v7m", OBJECT(armv7m));
++    qdev_prop_set_uint32(armv7m, "num-irq", NUM_IRQ_LINES);
++    qdev_prop_set_uint8(armv7m, "num-prio-bits", NUM_PRIO_BITS);
++    qdev_prop_set_string(armv7m, "cpu-type", ms->cpu_type);
++    qdev_prop_set_bit(armv7m, "enable-bitband", true);
++    qdev_connect_clock_in(armv7m, "cpuclk",
+                           qdev_get_clock_out(ssys_dev, "SYSCLK"));
+     /* This SoC does not connect the systick reference clock */
+-    object_property_set_link(OBJECT(nvic), "memory",
++    object_property_set_link(OBJECT(armv7m), "memory",
+                              OBJECT(get_system_memory()), &error_abort);
+     /* This will exit with an error if the user passed us a bad cpu_type */
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(nvic), &error_fatal);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(armv7m), &error_fatal);
++    nvic = armv7m;
  
-     switch (addr)
-     {
--        case R_TX_GIE0:
--            r = s->port[port_index].reg.tx_gie;
--            break;
--
-         case R_TX_CTRL1:
-         case R_TX_CTRL0:
-             r = s->port[port_index].reg.tx_ctrl;
-@@ -285,11 +287,6 @@ eth_write(void *opaque, hwaddr addr,
-             s->port[port_index].reg.tx_ctrl = value & ~(CTRL_P | CTRL_S);
-             break;
- 
--        /* Keep these native.  */
--        case R_TX_GIE0:
--            s->port[port_index].reg.tx_gie = value;
--            break;
--
-         default:
-             s->regs[addr] = tswap32(value);
-             break;
+     /* Now we can wire up the IRQ and MMIO of the system registers */
+     sysbus_mmio_map(SYS_BUS_DEVICE(ssys_dev), 0, 0x400fe000);
 -- 
 2.47.1
 
