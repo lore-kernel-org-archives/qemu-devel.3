@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 723CEE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CA9E7719E
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Ju-0003sk-OP; Sun, 12 Jan 2025 17:20:34 -0500
+	id 1tX6Kx-000651-Bv; Sun, 12 Jan 2025 17:21:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JS-0002q3-9V
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:08 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Kt-0005oS-VV
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:36 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JQ-0006bb-Ca
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:05 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385eed29d17so1818423f8f.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Kr-0006vU-5p
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:34 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so1885574f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:21:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720402; x=1737325202; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720491; x=1737325291; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uEXTfVWwEyfI2ErBw07cb0pz0mwpOOYlmcjjIUHCrbM=;
- b=cwV/jg47TslB2qloUXHBRbQP70zhivWhEnKsfoH2crsavZOGsqMYm+2UyrsZ7BpdoE
- ssBTdEntwU/1bNeNAN2nMRTtLb1ZcyjgORIyb3ptc3R2ioVNRjoBqbsnjIgLKgwxRi+u
- fMj1TJcUg0CuvFfXvZAjmdhxLzePynB1BG53G+ltP1cI5xbddc8sE0TBSytgAFOVkNMO
- Ql0B+zlD+NaSf+xV0dMEKSHB85jCG/nQlJUMrgJoFjLY4FDREspjFfRTWQF/DeDw0ejc
- 09S4kjswpFBNhqLWE8U8wLWNxIPUYaTq8G/VNLLnT+Q1GyHLvlIayRWjnkZV3Ka2ygt3
- xvIA==
+ bh=VIJbA99zO6H6feDMStmcLuf9WLOoJAXMvP2ITp16sic=;
+ b=ZkPnTU6XdWl/EA5RYiqZWadJTNyEA4qJw/5eD6KRsX2o/o9IS7KtTsh+G7hXo2I02N
+ t1rwfr9hPTJF0oPi9RKsJzGhvnsCOj5PwFBgkoaBtleb9MrAmGDNOyvF/fFvV5Fy1OIc
+ OAhG9kviuGIGhoEOw1Tnd0couaoXS905sPsls5QTFx8tNAHaM5kf20W7/hDe3RfQEId0
+ VjHqPVpMi/40OCxnlt3ay0I2b7HFt+D5DnHfgqCHvVnI0L1qtB684RogC9ZSb8wjd4U0
+ IxdDcnLkNp7XWnjaAvT+T1vkdXNpCXr5BCHF6NqHp4FOuuFtaoaYerxXA44wD+JtHRdG
+ TkwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720402; x=1737325202;
+ d=1e100.net; s=20230601; t=1736720491; x=1737325291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uEXTfVWwEyfI2ErBw07cb0pz0mwpOOYlmcjjIUHCrbM=;
- b=Umkv4bTrvrdAjrh43lX6KICNStfOO0DxzAxCuHBQIxCr7RPucWVTcg0DzkdWJg//sN
- Sq36hvCDlzQM/BH/THvBJStNQR72IANxaHj4drs+1tSQe+An7tVB+YMC8jjQX6P0wpiA
- Jr4ZTIwFSZM13ibtqiEzp4r9ZjMwaxM1spmuLIs4XnR8m+8Vhy+YVLPFalEIVItQyDp/
- QivM+hMMDExfGX8dEiimybbdUX8bbn8CrUmEjGXxyVWOU6WLGFf18IK4A9FB1jZVPYZM
- CcUJcTdMwUd3jnIXdRnAixTAVCCSKo8X6EA8xy2SaBfX4D86UdGJbB3P+WiSvSVpIhaM
- 0Oow==
-X-Gm-Message-State: AOJu0Yz0U39Vb2X2f6tIeK6/DybWJqw3qid1ndUvfhhGQtbB9dnoyMRA
- MCtg3khpxzciLnhvJO4omwPtOcdynfyaPKlQEMhvWHdpxPU5CW5AOTaTn6rgRMIhM8uOAE5K/+w
- xRdU=
-X-Gm-Gg: ASbGncvEOZXZqeykhgFU/jUoRCRv7Qc3tMLnKk4IPDOYLtojsELDBFZgiyv++Qc3O3E
- k1spjWOENa2kqu1vdmZSO5hpSaaZ+/sEKmm6RGYAE0oCVH4dxhUPajOYT5dvhRxpASJhPWgZWwR
- 4dTk5D49GLcPg0QpUEFeJfaj/46Ue6XXPGvH8Rrud3fxZu74ZnX1VArPKHzMe7p5A2XhOUdZp06
- XGLh/bWyRlhBONH4bQdlYpbNZiTd68SB8J/q2YzOXHNH+YQufgpYaez2yADUjpll5bnyUNUazC1
- WxP0Vu+OwC9KTeBu5pv70n/1FVF8AOQ=
-X-Google-Smtp-Source: AGHT+IH0sxNS3MkqOFhK1T8T4utheH4Pc0jgSnN6uYaLCq1oKltdvYg/8Q6uo4efiWa6a6/zuej+Kw==
-X-Received: by 2002:a05:6000:1a8c:b0:38a:4b8b:c57a with SMTP id
- ffacd0b85a97d-38a87336f7amr18319885f8f.44.1736720402251; 
- Sun, 12 Jan 2025 14:20:02 -0800 (PST)
+ bh=VIJbA99zO6H6feDMStmcLuf9WLOoJAXMvP2ITp16sic=;
+ b=aZj6sFoKInuIzd8+pV8CqeMMcrFdGEP/srLjAANG3OHo8PKh7U9nbcCQ8I188u/m1E
+ BrX/NOwCng2sZf8UrwW+s60Dqm6hBSPNUpTYP1aY3MDtWx5uZyGScZHOqa2FG9AqwMR1
+ JhvRsoJaz1JZl4F88m8hN10KFgT+8+m/BGMPa56xlBiuPsmwesyU5TDH2aDOoRRby7ps
+ AFp4HznqfqWYIcsYn9siO3Jm8PvXTdIdP1WMysfJgB4+cFygUlWDcKghOXa4y022VSx/
+ 5+hpIyrJI4aHQjtbVxNxGg0mBCTALJNUjb9vkmK6f1rdhblJLokOF7qsN8i7O6idQMxy
+ 9Lgw==
+X-Gm-Message-State: AOJu0YwZUVO69Swsf9Jjudxi2DemSIIuTeoOBClqxsxnbe4S2prF7bTD
+ 6KWVT9X3dtBcvJ6GKMe4OsSlNFzuuI/piZiPo+66i1mt+TEvXTk//Hwa/wWlmFg9frvD2Pd3FTT
+ Z0zM=
+X-Gm-Gg: ASbGncsWFkpF9DnK0VVNhYtEfuTfgfyf2ln+ShTowcU3urMKtUh8sJNiUARKVDoG3mI
+ KdEdzLQPw/Ui7NSKgrev+tpfyY3Wd1KLU0WpDri1Hh7CesTnjYaBOvPwVEXZp/g8R17MiQ9th79
+ 2c6CLB/ffNQFbsU+XMyvCtAZzSv3BxIVeOnZR78MFswElFQjLrzgJnCTqsCBY1ksoM/5NsNdlSh
+ zJw7ajKOCTpzFJwMEzFKPuLgIjHH3iV4cBm1JfOkbPJg0YfLavKdu1yeRy+P1HihfB0CwYGWmQb
+ VLnS7enrYnwCz/Ww4ihwM6JykDId7rI=
+X-Google-Smtp-Source: AGHT+IFC7DtWGUW9zIEP+TfAbMC2zNpNdKQd/4idgtFr0bZkEeM+V+adtokguO9gB9+pQe6lIWYknQ==
+X-Received: by 2002:a05:6000:4612:b0:38a:39ad:3e2f with SMTP id
+ ffacd0b85a97d-38a872cb1e1mr15568909f8f.2.1736720491441; 
+ Sun, 12 Jan 2025 14:21:31 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37e36asm10377281f8f.5.2025.01.12.14.20.01
+ ffacd0b85a97d-38a8e38c990sm10655419f8f.56.2025.01.12.14.21.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:20:01 -0800 (PST)
+ Sun, 12 Jan 2025 14:21:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 31/49] hw/misc/imx6_src: Convert DPRINTF() to trace events
-Date: Sun, 12 Jan 2025 23:17:07 +0100
-Message-ID: <20250112221726.30206-32-philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Signed-off-by=3A=20Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: [PULL 49/49] Add a b4 configuration file
+Date: Sun, 12 Jan 2025 23:17:25 +0100
+Message-ID: <20250112221726.30206-50-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,97 +100,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250108092538.11474-14-shentey@gmail.com>
+b4 [1] is a convenient tool to manage patch series with mailing list
+working flow.
+
+Add a project default config file to match QEMU's mailing list conventions
+as well as adopting differences on scripting.
+
+Examples of b4:
+
+    ```
+    $ b4 prep --check
+    Checking patches using:
+      scripts/checkpatch.pl -q --terse --no-summary --mailback -
+
+    ---
+    Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+    ---
+    Changes in v2:
+    - Add lore masks (philmd) from:
+      https://lore.kernel.org/qemu-devel/20241224135054.10243-1-philmd@linaro.org/
+    - Link to v1: https://lore.kernel.org/r/20241222-b4-config-v1-1-b3667beb30a4@flygoat.com
+    ---
+    ● cc5a4c890fed: Add a b4 configuration file
+      ● checkpatch.pl: 27: WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+    ---
+    Success: 0, Warning: 1, Error: 0
+    ```
+
+    ```
+    $ b4 prep -c
+    Will collect To: addresses using echo
+    Will collect Cc: addresses using get_maintainer.pl
+    Collecting To/Cc addresses
+        + To: qemu-devel@nongnu.org
+    ---
+    You can trim/expand this list with: b4 prep --edit-cover
+    Invoking git-filter-repo to update the cover letter.
+    New history written in 0.02 seconds...
+    Completely finished after 0.06 seconds
+    ```
+
+[1]: https://b4.docs.kernel.org/
+
+Co-developed-by: Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Message-ID: <20250102-b4-config-v2-1-cc7299e399bb@flygoat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/misc/imx6_src.c   | 23 +++++------------------
- hw/misc/trace-events |  6 ++++++
- 2 files changed, 11 insertions(+), 18 deletions(-)
+ MAINTAINERS |  6 ++++++
+ .b4-config  | 14 ++++++++++++++
+ 2 files changed, 20 insertions(+)
+ create mode 100644 .b4-config
 
-diff --git a/hw/misc/imx6_src.c b/hw/misc/imx6_src.c
-index dc6a2b92ba4..06cc46292ed 100644
---- a/hw/misc/imx6_src.c
-+++ b/hw/misc/imx6_src.c
-@@ -17,18 +17,7 @@
- #include "qemu/module.h"
- #include "target/arm/arm-powerctl.h"
- #include "hw/core/cpu.h"
--
--#ifndef DEBUG_IMX6_SRC
--#define DEBUG_IMX6_SRC 0
--#endif
--
--#define DPRINTF(fmt, args...) \
--    do { \
--        if (DEBUG_IMX6_SRC) { \
--            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX6_SRC, \
--                                             __func__, ##args); \
--        } \
--    } while (0)
-+#include "trace.h"
- 
- static const char *imx6_src_reg_name(uint32_t reg)
- {
-@@ -87,7 +76,7 @@ static void imx6_src_reset(DeviceState *dev)
- {
-     IMX6SRCState *s = IMX6_SRC(dev);
- 
--    DPRINTF("\n");
-+    trace_imx6_src_reset();
- 
-     memset(s->regs, 0, sizeof(s->regs));
- 
-@@ -111,7 +100,7 @@ static uint64_t imx6_src_read(void *opaque, hwaddr offset, unsigned size)
- 
-     }
- 
--    DPRINTF("reg[%s] => 0x%" PRIx32 "\n", imx6_src_reg_name(index), value);
-+    trace_imx6_src_read(imx6_src_reg_name(index), value);
- 
-     return value;
- }
-@@ -134,8 +123,7 @@ static void imx6_clear_reset_bit(CPUState *cpu, run_on_cpu_data data)
-     assert(bql_locked());
- 
-     s->regs[SRC_SCR] = deposit32(s->regs[SRC_SCR], ri->reset_bit, 1, 0);
--    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n",
--            imx6_src_reg_name(SRC_SCR), s->regs[SRC_SCR]);
-+    trace_imx6_clear_reset_bit(imx6_src_reg_name(SRC_SCR), s->regs[SRC_SCR]);
- 
-     g_free(ri);
- }
-@@ -173,8 +161,7 @@ static void imx6_src_write(void *opaque, hwaddr offset, uint64_t value,
-         return;
-     }
- 
--    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n", imx6_src_reg_name(index),
--            (uint32_t)current_value);
-+    trace_imx6_src_write(imx6_src_reg_name(index), value);
- 
-     change_mask = s->regs[index] ^ (uint32_t)current_value;
- 
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 0f5d2b56660..cf1abe69285 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -253,6 +253,12 @@ ccm_clock_freq(uint32_t clock, uint32_t freq) "(Clock = %d) = %d"
- ccm_read_reg(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
- ccm_write_reg(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
- 
-+# imx6_src.c
-+imx6_src_read(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
-+imx6_src_write(const char *reg_name, uint64_t value) "reg[%s] <= 0x%" PRIx64
-+imx6_clear_reset_bit(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
-+imx6_src_reset(void) ""
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ec898a3cbc6..0c71eb3f925 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4310,3 +4310,9 @@ Machine development tool
+ M: Maksim Davydov <davydov-max@yandex-team.ru>
+ S: Supported
+ F: scripts/compare-machine-types.py
 +
- # imx7_src.c
- imx7_src_read(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx7_src_write(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
++b4 tool configuration
++M: Jiaxun Yang <jiaxun.yang@flygoat.com>
++M: Philippe Mathieu-Daudé <philmd@linaro.org>
++S: Odd Fixes
++F: .b4-config
+diff --git a/.b4-config b/.b4-config
+new file mode 100644
+index 00000000000..4b9b2fe290f
+--- /dev/null
++++ b/.b4-config
+@@ -0,0 +1,14 @@
++#
++# Common b4 settings that can be used to send patches to QEMU upstream.
++# https://b4.docs.kernel.org/
++#
++
++[b4]
++    send-series-to = qemu-devel@nongnu.org
++    send-auto-to-cmd = echo
++    send-auto-cc-cmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback
++    am-perpatch-check-cmd = scripts/checkpatch.pl -q --terse --no-summary --mailback -
++    prep-perpatch-check-cmd = scripts/checkpatch.pl -q --terse --no-summary --mailback -
++    searchmask = https://lore.kernel.org/qemu-devel/?x=m&t=1&q=%s
++    linkmask = https://lore.kernel.org/qemu-devel/%s
++    linktrailermask = Message-ID: <%s>
 -- 
 2.47.1
 
