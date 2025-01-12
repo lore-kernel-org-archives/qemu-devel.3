@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6472DE77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 723CEE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6JP-0002cj-4r; Sun, 12 Jan 2025 17:20:04 -0500
+	id 1tX6Ju-0003sk-OP; Sun, 12 Jan 2025 17:20:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Ir-0001X6-O1
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:30 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JS-0002q3-9V
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:08 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6In-0006XI-SL
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:29 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4363ae65100so38321715e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JQ-0006bb-Ca
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:05 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385eed29d17so1818423f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720363; x=1737325163; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720402; x=1737325202; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p6BLB98QOhYB9SJnN/K59or+VrLw70OVqLIYKmEsPfE=;
- b=owbPDE08GxOZ3tqY3dP+Pb4+H//y8mWP2LNCoxvEznFamSagDvHWAyUXxYD7z/NBgj
- s2nORXU/S/4J/ZyeYYUtTvnl8GlghqA6rGY3KA8rZYjBFpS3DOAraY89+T7sT6EOz0j6
- t6Yo8/yq1y/81U/9AhjALjkBKNB+VlNZ0BwW1c/ABOo16qgu288HWZb+yDdUcommWSoH
- lvDGRvf2EI6wsoq0+G/KN37sp8zlYpgVjHZ9IWt0KMDk53fdc3KxvB2v/IrtqrKc+qd4
- KaVrpKNwLpEaFHawq6pedKTXk1jabT+87qNR+iS4z1W5a7ztaU83M8a9UMwjgWIZkkE0
- kWDw==
+ bh=uEXTfVWwEyfI2ErBw07cb0pz0mwpOOYlmcjjIUHCrbM=;
+ b=cwV/jg47TslB2qloUXHBRbQP70zhivWhEnKsfoH2crsavZOGsqMYm+2UyrsZ7BpdoE
+ ssBTdEntwU/1bNeNAN2nMRTtLb1ZcyjgORIyb3ptc3R2ioVNRjoBqbsnjIgLKgwxRi+u
+ fMj1TJcUg0CuvFfXvZAjmdhxLzePynB1BG53G+ltP1cI5xbddc8sE0TBSytgAFOVkNMO
+ Ql0B+zlD+NaSf+xV0dMEKSHB85jCG/nQlJUMrgJoFjLY4FDREspjFfRTWQF/DeDw0ejc
+ 09S4kjswpFBNhqLWE8U8wLWNxIPUYaTq8G/VNLLnT+Q1GyHLvlIayRWjnkZV3Ka2ygt3
+ xvIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720363; x=1737325163;
+ d=1e100.net; s=20230601; t=1736720402; x=1737325202;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p6BLB98QOhYB9SJnN/K59or+VrLw70OVqLIYKmEsPfE=;
- b=TyF6zDwOgyH9Gn9AS+409h/0vFhkqYNtN5xiHuCuiE8p/jvJg8rApLuPvAfB83NIBC
- qkH7PavTcEuErZr3A+bDlSKa2akqLSJB0soN18XEUkheqt7aRw/Vz4CoPV3vJQNCZFb+
- WG1+51sO8wTh1uLvXmFyBgJPEUkcHJ4rZnTgJSVAlymSlEq9pXBbjmHDjj1zRVhr7RAz
- 1eabTkqUdAkbPAk0w319XflV2GWqw7iCEStZ8yka3+RoEKO73d1yURShW+MH8/o/hZ46
- 37cd29iZaYI/h/gxRM11agt3hB5WTcZ/g/svgeyIGnGPt4Vcm1yWw7G5KbDfY0o4psn4
- oseg==
-X-Gm-Message-State: AOJu0YymsuOwfrjNh6icZYT2OodhUx2tf3Ar78eMJMLlVXvDHvxCgR7M
- ToZLiGeMWpGE1/3uGOG36czMei6JoHWsyutnvOpK3L+oM4WAUfIJAJyr5QM9p3uNuyHC9AFVhvU
- BzYo=
-X-Gm-Gg: ASbGnctQNQHTfIuN5aD8CFZYBt1ss/Q3Qbsww7lsOpBea5Nj12So7jhTvi7osQRlF1N
- y21w7TKuX4O14kbwBXqdX7+QT/9tSDZGvRWJxYrBfFcSi9HIbpy9DIIiWd30ZQg+6Th8E/gNdW3
- fteNA5bfusoVXGFxfWjE5PKwoQ3lmQeZ3qYXfp7WE2dp+5W39prE6Gvix6YXdQGK5glE33O5mY8
- dqiXZasgWu9xR6ANuvhhlIQUggU5joMDb/xREdMUTBlr7H9JotJumfm8KEMwlowyFXI/iNVOJLJ
- ab3TSht9ZCs9ZdnlQRgz3jp8HI74AAg=
-X-Google-Smtp-Source: AGHT+IEBgLJOxMeJC8yw9St/ahnn6IsrC5Dv1YXOHYwmAEnSbHOgxZbAY6J/PLBU+TPWCQW8bGNxUg==
-X-Received: by 2002:a05:600c:198c:b0:430:57e8:3c7e with SMTP id
- 5b1f17b1804b1-436e26f2a30mr139775635e9.28.1736720362777; 
- Sun, 12 Jan 2025 14:19:22 -0800 (PST)
+ bh=uEXTfVWwEyfI2ErBw07cb0pz0mwpOOYlmcjjIUHCrbM=;
+ b=Umkv4bTrvrdAjrh43lX6KICNStfOO0DxzAxCuHBQIxCr7RPucWVTcg0DzkdWJg//sN
+ Sq36hvCDlzQM/BH/THvBJStNQR72IANxaHj4drs+1tSQe+An7tVB+YMC8jjQX6P0wpiA
+ Jr4ZTIwFSZM13ibtqiEzp4r9ZjMwaxM1spmuLIs4XnR8m+8Vhy+YVLPFalEIVItQyDp/
+ QivM+hMMDExfGX8dEiimybbdUX8bbn8CrUmEjGXxyVWOU6WLGFf18IK4A9FB1jZVPYZM
+ CcUJcTdMwUd3jnIXdRnAixTAVCCSKo8X6EA8xy2SaBfX4D86UdGJbB3P+WiSvSVpIhaM
+ 0Oow==
+X-Gm-Message-State: AOJu0Yz0U39Vb2X2f6tIeK6/DybWJqw3qid1ndUvfhhGQtbB9dnoyMRA
+ MCtg3khpxzciLnhvJO4omwPtOcdynfyaPKlQEMhvWHdpxPU5CW5AOTaTn6rgRMIhM8uOAE5K/+w
+ xRdU=
+X-Gm-Gg: ASbGncvEOZXZqeykhgFU/jUoRCRv7Qc3tMLnKk4IPDOYLtojsELDBFZgiyv++Qc3O3E
+ k1spjWOENa2kqu1vdmZSO5hpSaaZ+/sEKmm6RGYAE0oCVH4dxhUPajOYT5dvhRxpASJhPWgZWwR
+ 4dTk5D49GLcPg0QpUEFeJfaj/46Ue6XXPGvH8Rrud3fxZu74ZnX1VArPKHzMe7p5A2XhOUdZp06
+ XGLh/bWyRlhBONH4bQdlYpbNZiTd68SB8J/q2YzOXHNH+YQufgpYaez2yADUjpll5bnyUNUazC1
+ WxP0Vu+OwC9KTeBu5pv70n/1FVF8AOQ=
+X-Google-Smtp-Source: AGHT+IH0sxNS3MkqOFhK1T8T4utheH4Pc0jgSnN6uYaLCq1oKltdvYg/8Q6uo4efiWa6a6/zuej+Kw==
+X-Received: by 2002:a05:6000:1a8c:b0:38a:4b8b:c57a with SMTP id
+ ffacd0b85a97d-38a87336f7amr18319885f8f.44.1736720402251; 
+ Sun, 12 Jan 2025 14:20:02 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436dcceb374sm151415725e9.0.2025.01.12.14.19.22
+ ffacd0b85a97d-38a8e37e36asm10377281f8f.5.2025.01.12.14.20.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:19:22 -0800 (PST)
+ Sun, 12 Jan 2025 14:20:01 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 23/49] hw/misc/vmcoreinfo: Convert to three-phase reset
- interface
-Date: Sun, 12 Jan 2025 23:16:59 +0100
-Message-ID: <20250112221726.30206-24-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 31/49] hw/misc/imx6_src: Convert DPRINTF() to trace events
+Date: Sun, 12 Jan 2025 23:17:07 +0100
+Message-ID: <20250112221726.30206-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,52 +99,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241219153857.57450-6-philmd@linaro.org>
----
- hw/misc/vmcoreinfo.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+From: Bernhard Beschow <shentey@gmail.com>
 
-diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
-index 145f13a65cf..b0145fa5044 100644
---- a/hw/misc/vmcoreinfo.c
-+++ b/hw/misc/vmcoreinfo.c
-@@ -26,9 +26,9 @@ static void fw_cfg_vmci_write(void *opaque, off_t offset, size_t len)
-         && s->vmcoreinfo.guest_format != FW_CFG_VMCOREINFO_FORMAT_NONE;
- }
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250108092538.11474-14-shentey@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/misc/imx6_src.c   | 23 +++++------------------
+ hw/misc/trace-events |  6 ++++++
+ 2 files changed, 11 insertions(+), 18 deletions(-)
+
+diff --git a/hw/misc/imx6_src.c b/hw/misc/imx6_src.c
+index dc6a2b92ba4..06cc46292ed 100644
+--- a/hw/misc/imx6_src.c
++++ b/hw/misc/imx6_src.c
+@@ -17,18 +17,7 @@
+ #include "qemu/module.h"
+ #include "target/arm/arm-powerctl.h"
+ #include "hw/core/cpu.h"
+-
+-#ifndef DEBUG_IMX6_SRC
+-#define DEBUG_IMX6_SRC 0
+-#endif
+-
+-#define DPRINTF(fmt, args...) \
+-    do { \
+-        if (DEBUG_IMX6_SRC) { \
+-            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX6_SRC, \
+-                                             __func__, ##args); \
+-        } \
+-    } while (0)
++#include "trace.h"
  
--static void vmcoreinfo_reset(void *opaque)
-+static void vmcoreinfo_reset_hold(Object *obj, ResetType type)
+ static const char *imx6_src_reg_name(uint32_t reg)
  {
--    VMCoreInfoState *s = opaque;
-+    VMCoreInfoState *s = VMCOREINFO(obj);
- 
-     s->has_vmcoreinfo = false;
-     memset(&s->vmcoreinfo, 0, sizeof(s->vmcoreinfo));
-@@ -65,7 +65,7 @@ static void vmcoreinfo_realize(DeviceState *dev, Error **errp)
-      * This device requires to register a global reset because it is
-      * not plugged to a bus (which, as its QOM parent, would reset it).
-      */
--    qemu_register_reset(vmcoreinfo_reset, s);
-+    qemu_register_resettable(OBJECT(s));
-     vmcoreinfo_state = s;
- }
- 
-@@ -86,11 +86,13 @@ static const VMStateDescription vmstate_vmcoreinfo = {
- static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
+@@ -87,7 +76,7 @@ static void imx6_src_reset(DeviceState *dev)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
+     IMX6SRCState *s = IMX6_SRC(dev);
  
-     dc->vmsd = &vmstate_vmcoreinfo;
-     dc->realize = vmcoreinfo_realize;
-     dc->hotpluggable = false;
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    rc->phases.hold = vmcoreinfo_reset_hold;
+-    DPRINTF("\n");
++    trace_imx6_src_reset();
+ 
+     memset(s->regs, 0, sizeof(s->regs));
+ 
+@@ -111,7 +100,7 @@ static uint64_t imx6_src_read(void *opaque, hwaddr offset, unsigned size)
+ 
+     }
+ 
+-    DPRINTF("reg[%s] => 0x%" PRIx32 "\n", imx6_src_reg_name(index), value);
++    trace_imx6_src_read(imx6_src_reg_name(index), value);
+ 
+     return value;
  }
+@@ -134,8 +123,7 @@ static void imx6_clear_reset_bit(CPUState *cpu, run_on_cpu_data data)
+     assert(bql_locked());
  
- static const TypeInfo vmcoreinfo_types[] = {
+     s->regs[SRC_SCR] = deposit32(s->regs[SRC_SCR], ri->reset_bit, 1, 0);
+-    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n",
+-            imx6_src_reg_name(SRC_SCR), s->regs[SRC_SCR]);
++    trace_imx6_clear_reset_bit(imx6_src_reg_name(SRC_SCR), s->regs[SRC_SCR]);
+ 
+     g_free(ri);
+ }
+@@ -173,8 +161,7 @@ static void imx6_src_write(void *opaque, hwaddr offset, uint64_t value,
+         return;
+     }
+ 
+-    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n", imx6_src_reg_name(index),
+-            (uint32_t)current_value);
++    trace_imx6_src_write(imx6_src_reg_name(index), value);
+ 
+     change_mask = s->regs[index] ^ (uint32_t)current_value;
+ 
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 0f5d2b56660..cf1abe69285 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -253,6 +253,12 @@ ccm_clock_freq(uint32_t clock, uint32_t freq) "(Clock = %d) = %d"
+ ccm_read_reg(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
+ ccm_write_reg(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
+ 
++# imx6_src.c
++imx6_src_read(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
++imx6_src_write(const char *reg_name, uint64_t value) "reg[%s] <= 0x%" PRIx64
++imx6_clear_reset_bit(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
++imx6_src_reset(void) ""
++
+ # imx7_src.c
+ imx7_src_read(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
+ imx7_src_write(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
 -- 
 2.47.1
 
