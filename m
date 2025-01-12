@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52461E7719E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A4A0C02181
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6K5-0004DH-0B; Sun, 12 Jan 2025 17:20:45 -0500
+	id 1tX6KU-0004oN-Fc; Sun, 12 Jan 2025 17:21:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JH-0002Wt-56
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:56 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KS-0004l0-1u
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:08 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JF-0006aY-Mn
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:54 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43634b570c1so26191985e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KQ-0006tB-EK
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:21:07 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385f06d0c8eso1949396f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720392; x=1737325192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720464; x=1737325264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6igD5E/nbtwSQ78SmLcXDRAtrSWvkZ+A6IpBZtctTjk=;
- b=IsABqRQEF9txkWLm0Tg8XvN+2m0qLFM+8OyS8GxgH4Lo/AcIHsk6Eb9X5/tCiOo07Y
- PrIvWLZTaDSz2Sw2zmlkNWYoV318DA/BqcbZ/OOv66MEuCAvMrTkHoy9vQ3qdXhE4iUM
- xlJ0gVyRCjX+yaBgvgfClp6+MsG+3J+n8jAmJJu304Mi9Ez5EWDRKJfyNWkZkM7gOFUP
- azhxx+2BkmJlg2u7AsmRvpiATJ09USLqo+V38FxHY2asgeJ8d6RhhYUR9QxP6Yng02dE
- 5RQgpRRku9DTPLQ6N8M6Cs8CsNpzcbtRh6RFrb3uBWzj7NCI61luFncU24RxVQc15uuV
- wpfw==
+ bh=STm3h0ab+xe29Vo/LMzsJN1pZufVzApUsosxR88Bje0=;
+ b=Xb5neO9ZGEJj5ujgvitJk32BDQDKoStpuuKnqyNq1KLKBABAJV1cqh3o+JW0t43Sao
+ 6jFDZHxO5Cr0ulCedo2AgD4PQuvYZnPNQSPtm2TSw6Ckyf6exBDjqvxV4LfsmyAb/xFE
+ bUYiDSWsr/bKwo/YsncsK0cf/rTdqMudOTBMjbhOOYuZyO32Cr0cCIwZ0XH79K72WDT0
+ PX5G4q+IoHYscalu/DgF7utFR2utkNOJrJ7Khsl0SsPQrsVaulHZrFtdkjo0F863UXC3
+ p0JIxQFeidVyNDVC2oUUjGUZfL3941KajOT8AR6fwofnT5CaF4Sdiwx34qDDg3tI5+2D
+ CIAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720392; x=1737325192;
+ d=1e100.net; s=20230601; t=1736720464; x=1737325264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6igD5E/nbtwSQ78SmLcXDRAtrSWvkZ+A6IpBZtctTjk=;
- b=NU5DyftATnFATFJOLo3k8d1CyQ7JeMFjaO7c+LUXvSljIhBuean0SdSpfsL0Pxca2y
- 1Oiq2H2bDUhfUhwCfpMLPhPYMK/UmOQzUUnJQVP6jkghWYZU9sAEviAzC+S8tV0YKfI5
- QDPYZ7QsBZ8VXbW4ntVOwyvk6iXaqIqc56HlU+Y84pt+cgRNs4qG18eyoPEB1l2uUf5A
- jzRgdcnvAE79CAmIAK3J+F8r9OiOwCrs8krYv4GlbQP/ZgVY6OC0+nzq9A0RAImDC+Tx
- cwzmDrV7yc/aobUU5XZg0x4r7I0SsFb4oKoCzbo3dbXapPAsidlPlZjeNYdy450Ijg4O
- 6b8w==
-X-Gm-Message-State: AOJu0Yw9mt//hJB09a9qH6+gim3Q85mFhIY+/mfuavbXM65GbMAIudnj
- SQ5V9EysHB1JWMxzZ/o+CKDj9De/4/PzkjaK9iylv40x7mQRZJt6cagGfLp/PYNSLvqswoB1KYH
- 2sBY=
-X-Gm-Gg: ASbGncs0rnUB6DdNheumN1hR3mfGN0XfpxPLhdro65YwOx7XW7DeJ1UloY8WPGfpDH8
- XcqtL+XPP8kHa/ocbWaciZ3c/LnIT3Ga2bqQf/sjrxtWDR4sX1odEU1ZQDNsFE7/Jre8TF79XV1
- stwm1HhLsV6ZKEQwFVPshCAAM5TIm6r9sTkQnn1tnDh7IvSKWjb9g1O9Pvn+uYnSBkxOS+Weowo
- bH2zuU/UHXkGQD3RnAGLCXkSjn+HYVqm2fQZKU2tQ6IA4+66Zn1lyRNBvaAhV31KdVs1Lt7uJmj
- GzK3OcfbxZwKSF4QeJu7JT3pOE9DC+8=
-X-Google-Smtp-Source: AGHT+IG225P8aOr6MKdzG1E4vNkut7SC5zr4OTLDFvMhToLX/q9PYBCa3sVrFd9d0TPAyrrF0H2new==
-X-Received: by 2002:a05:600c:510a:b0:434:faa9:5266 with SMTP id
- 5b1f17b1804b1-436e26adfc9mr164276005e9.13.1736720391870; 
- Sun, 12 Jan 2025 14:19:51 -0800 (PST)
+ bh=STm3h0ab+xe29Vo/LMzsJN1pZufVzApUsosxR88Bje0=;
+ b=M7DnXwRbHC5DAfo3hhPNFI7KOXRlKpbfpK8ebJLA8aZN/vHCLgev6tP/t9R9RK3lBf
+ DjP5HTAIk9F2FX3isQuhvE+FUyOiNHAhOGeYzYI5vR/XibrSFNLZI7UthUU9QwsWFa6T
+ CtJhBfiHSkB0DLSxMArMBIvUBl6mPHsF0hwpd3CcHF3wb7vuU4/9CVL4HmP1dbV4rvID
+ k1NWEekNEv2HuKCql/0u488o9CSm5v6MwNbCm11qx0RPI9jQdtDLljN8FF6RIlj2zIyY
+ paekRY6koWz7vDr0tPUbvaRWBKDyscmlP6Ge3cfm+ctLlEAZSGN77sYsYyGEsLZBu7WI
+ ecyg==
+X-Gm-Message-State: AOJu0YyT8IXaKJqcdTd8N7fiWBQMv6E63dAOISVFZXNYwfDAskQ4zVUY
+ /m/g+Wjwu/W24crsRyFjHU/k+Z9I9RcOoa6em5sDjrUTKANGCufIKi+++0nYUKTejWb6HH3lcn5
+ gw34=
+X-Gm-Gg: ASbGnct9dk99273eUuW2R3oaxbtFCHptO2pb9goYXpg82r06nTwMi/YmbGg/vGHH2zv
+ 7WWCkr/zOwUMMLfl6R/mRFHLH4h2UqmQOi1kSjfBDqXswCsN61utuRhSiMQ2xSs2vsFZGx6UUPx
+ 9ZRGjtuVfzqRI/iC89ullZVas6A4jAAUhYSZN2A+otWMf/qroRMsFBUCIoGeweVzauQbPVFZlbU
+ AwUkvH+SoQWaVl1u1wvXKqyVfwtfMp9OUXQ8oBZnCAe811tZtwNb+RTQ0vRJUeMwX+NACw9xYzY
+ X3DeWunZ09zVrNFuAC5h31fBLCp53qk=
+X-Google-Smtp-Source: AGHT+IF8XYM4SzBmCysIH4B2CZW4++Dfknd/+AQVrKLOi15emPsoLuZY/fK8d8yAT6qOn58hOYt+9g==
+X-Received: by 2002:adf:8b5b:0:b0:38a:88bc:aea4 with SMTP id
+ ffacd0b85a97d-38a88bcaebfmr10831027f8f.30.1736720464504; 
+ Sun, 12 Jan 2025 14:21:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e384f2bsm10504560f8f.41.2025.01.12.14.19.49
+ ffacd0b85a97d-38a8e4c1d13sm10686761f8f.91.2025.01.12.14.21.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:19:50 -0800 (PST)
+ Sun, 12 Jan 2025 14:21:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 29/49] hw/timer/imx_gpt: Remove unused define
-Date: Sun, 12 Jan 2025 23:17:05 +0100
-Message-ID: <20250112221726.30206-30-philmd@linaro.org>
+Subject: [PULL 44/49] hw/usb/hcd-xhci-pci: Use event ring 0 if mapping
+ unsupported
+Date: Sun, 12 Jan 2025 23:17:20 +0100
+Message-ID: <20250112221726.30206-45-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+The XHCI specification, section 4.17.1 specifies that "If the
+Number of Interrupters (MaxIntrs) field is greater than 1, then
+Interrupter Mapping shall be supported." and "If Interrupter
+Mapping is not supported, the Interrupter Target field shall be
+ignored by the xHC and all Events targeted at Interrupter 0."
+
+QEMU's XHCI device has so far not specially addressed this case,
+so we add a check to xhci_event() to redirect to event ring and
+interrupt 0 if mapping is disabled.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250108092538.11474-11-shentey@gmail.com>
+Message-ID: <20241227121336.25838-4-phil@philjordan.eu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/timer/imx_gpt.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/usb/hcd-xhci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
-index 2663a9d9ef4..11eca9fa4df 100644
---- a/hw/timer/imx_gpt.c
-+++ b/hw/timer/imx_gpt.c
-@@ -20,10 +20,6 @@
- #include "qemu/log.h"
- #include "trace.h"
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 7dc0994c89c..00d5bc37792 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -644,6 +644,10 @@ static void xhci_event(XHCIState *xhci, XHCIEvent *event, int v)
+     dma_addr_t erdp;
+     unsigned int dp_idx;
  
--#ifndef DEBUG_IMX_GPT
--#define DEBUG_IMX_GPT 0
--#endif
--
- static const char *imx_gpt_reg_name(uint32_t reg)
- {
-     switch (reg) {
++    if (xhci->numintrs == 1) {
++        v = 0;
++    }
++
+     if (v >= xhci->numintrs) {
+         DPRINTF("intr nr out of range (%d >= %d)\n", v, xhci->numintrs);
+         return;
 -- 
 2.47.1
 
