@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1150EE77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1869DE7719F
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6KM-0004Y1-B0; Sun, 12 Jan 2025 17:21:02 -0500
+	id 1tX6KM-0004Wy-1B; Sun, 12 Jan 2025 17:21:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KC-0004NN-V0
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:53 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KI-0004TW-MP
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:58 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KB-0006sQ-B3
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:52 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-385d7f19f20so1901655f8f.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6KG-0006sb-J8
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:58 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-386329da1d9so1904494f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720449; x=1737325249; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720455; x=1737325255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bHPlQnm3HsPVLvOhysF1ew4D4qv91kBHvXEYj4oE07s=;
- b=ajjHndTvXUg6vWDIFD7LqbQ756CN6ykYQqyH7xFb4A7Jl7QXLBw9o4kFDIPZwLxgQ5
- VrdGLlxi/HvMKC/botmTr0Kg8LdA7yGLZ6dteYZUxdzL/2NWx3oAKml2aC96AvCAOMLh
- 5lOH7ZlsXebmwt5uP2ouKS/gwdS7QdyMrV9uA30o/T8J1HkKO7igfMTjCDZRy7SRZD4r
- 840X94ftBjAUi5iQGWrGp8mbDqsRAXXzCII41A6sLt4CWtjyrgW/+QNWsgTPr4kXv3rd
- 7/JJOLTYI44RvM1EB6DVDbT20AQlGP35CqTZ7otFHva44PqOujYbl9obiMI5QDYvG9IE
- SKgg==
+ bh=PY2xzaJd4C4roXkkRjiU6ex9RApXwoXOgYcP70nq+ss=;
+ b=sGXUVGBWgWMVrDfOwzXmrax/Gfq/xRUB9TLlQnT9nuYngPlv8rKPyjoi4zehciyjuj
+ TUKJzRHJvSr0pnd1NMX46V24bFC57FaCFKD/eiF03GhHlPlwrJ4EZ97T8C5Vj/U9fKMv
+ LOVwnzZco5TRgEeMsVtlPFn1b2awfiigVMLU3FnKtIE1rGL9z5TL+oG8556yQ4G5sb4K
+ snCPyVbFqKrc2RPvYIqcsokN3mX7BRKFTNew3qNxw7Dpwz3Ng1vQMV8EhdSBOQfvkwyy
+ 0vWoaRIVImgORirzhw7B1pAO+iT9wbenkwVmRTQSg7hCvucakM9PDia7rHGEs1+42s/L
+ QBEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720449; x=1737325249;
+ d=1e100.net; s=20230601; t=1736720455; x=1737325255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bHPlQnm3HsPVLvOhysF1ew4D4qv91kBHvXEYj4oE07s=;
- b=mDMaXADIbRCfdR/CW/HmbXnL9eYalE6NfT/kSlDTmBeef7vdK+pY5qd8YkXsgGGeed
- 5vaC4FxxQ1AWmQH32sZ8Nbn5iKoXhdGe/fUvfvoGvV6+sfyqDjp/MXE1AQM3qiPN7Rjj
- rvFxUfDMxvJ+ooj4v7GYSketTqmkZ+SCbdUtsW0FU0CcEhFO2yEZYKOSF8y159o4Vap3
- 2QbN1xt70gvqmiCqeHFEhIbdOMZsDZPSnRcbenQWtDiKujAmG2f1KLLzfpRTie3x6GGa
- qXtQ2fE0Hr8/y8zqibiu6V1LUWNVs1wNeQEz5okp5NshpBB8pRctYTQkRpMH0OcqHPt7
- sagw==
-X-Gm-Message-State: AOJu0YwMVCwAcauTULTh/uTw4YgRgWeVK4WQj/TFwha383/0p4cwDz2S
- HcwOSD6SJ4xuGNyNVOgRvpYu7RqPK+26lRZALQ+MzkO0tMlZ1bhJF66dL2UrJqx0hYIGUlsfFoq
- Gt9A=
-X-Gm-Gg: ASbGncuZscP+VUBrWE4zFQMUIptvCEVPmEVYpt4ixqcKA9bi21b4A9jHj/m1z8zosz7
- eFcUG2HoeDDi0lRpG/sHul72tYcfAsq4bF4VyavjDF3nCck8BFhYO75eaMFY2BKOa85JT/2t6bB
- rmqA7tI6eGzqGjLbkmHxvu3OwAl68MZdtswA+RN2XDzj68ubHRO/K+gw7dJp1VZFFF5vSKAD4Bp
- tLWNPp3fF8YmXvRQfUvlXBZ55tw9nPu1+HzL0q81sWqf8FkaIMMq5Wi1aYjmp8Jmp/N+6qlAf5P
- T/9qAjb2mM2/l9V4a6GTeuSahhcc7Dc=
-X-Google-Smtp-Source: AGHT+IHNzDlXQ3SHUg63MX495FPtMXRghNJvwv+YPDDNCePCRGZtV0Ghwpt118309Npa1SpBZeVIfA==
-X-Received: by 2002:a5d:47c4:0:b0:385:f892:c8fe with SMTP id
- ffacd0b85a97d-38a87306ddcmr19966676f8f.21.1736720449570; 
- Sun, 12 Jan 2025 14:20:49 -0800 (PST)
+ bh=PY2xzaJd4C4roXkkRjiU6ex9RApXwoXOgYcP70nq+ss=;
+ b=ZnSP7GKFu9ah3uO4xcIa72BaTq70OQhLqc6V0jL9Oibkt1x9tWgBHQ5+f63b+II5p1
+ WYASD0WjEFcbALVXT/1shs+prMIimiNoBisFE/FLPuHcxnYqfzh3p7x5tH3AXosSCmtO
+ dUSQXI9ePnIacv9Q95lR3CG4EgSiI0Ndrspu8BhDoV9OZxa77DcsEgxFAv5cexzr3gQb
+ 7jvmz7gFRhAW0q94pcvxNRVO/ZgLn2lUOO7D2TN6ZKbVUyRuiQKg+aP46+EIEZdoVfPp
+ eAzDssuZkyvAm4ssTTbR/iAR3xoRTIT9Bt5YVCEGUxfZQhfKeWljS1fhJZejfzw22Vlw
+ iA2A==
+X-Gm-Message-State: AOJu0Yy4fq0rl3wjoY+i+0OEdAr7KdSilSH88a1FYa5i7Yx6ggLyWyvv
+ RYkxdgyO9Oqckfveu02BOi4yHIJ6WzKLDi+0khGoHO2g0aLpmmcUoWRsWv0bESE0ZNrj/QjH8Te
+ axEE=
+X-Gm-Gg: ASbGncu+cC9UxJth3J+KiRqflH6DsgkoRwy5xBsI23mQaQi0cI1lnF5qQ8jQ/3rtfV0
+ y95KQRAkb1laKVcydFzNUjQ4gVEBbKPslfr3n2IHfOZpZJ+gzQ2FIjWl2X6m6PIjgxbvBkab62k
+ gOVMiARO5LpjsMhVIUGDBIgUIAu5c/RXdo+VWD3d+6FKEXfJIgv6AoH2XOP8H06xB/YCY70Hzvk
+ xdTzVJAupHeQ345W9ytwlLDnvXudiRHzjmn6QgVTwEHH4Pvdolu4VBbLa8ume56DjEp7ghA5rX8
+ UZpWRZt8TyQs6z5DYB7cWvHfEgTyaU0=
+X-Google-Smtp-Source: AGHT+IEdqNqqfGIbCFfHG33qyK/9EffB2uSlrWlHZRajNdQJ2/84F+LicaL5/AL7/5Nzxr5JNrhRkg==
+X-Received: by 2002:a5d:47a3:0:b0:38a:4184:2510 with SMTP id
+ ffacd0b85a97d-38a872db629mr18532819f8f.23.1736720454772; 
+ Sun, 12 Jan 2025 14:20:54 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fc51sm124668755e9.7.2025.01.12.14.20.48
+ ffacd0b85a97d-38a8e3840bfsm10782722f8f.39.2025.01.12.14.20.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:20:49 -0800 (PST)
+ Sun, 12 Jan 2025 14:20:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
+Cc: Bibo Mao <maobibo@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 41/49] target/hppa: Speed up hppa_is_pa20()
-Date: Sun, 12 Jan 2025 23:17:17 +0100
-Message-ID: <20250112221726.30206-42-philmd@linaro.org>
+Subject: [PULL 42/49] hw/loongarch/virt: Checkpatch cleanup
+Date: Sun, 12 Jan 2025 23:17:18 +0100
+Message-ID: <20250112221726.30206-43-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,74 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Bibo Mao <maobibo@loongson.cn>
 
-Although the hppa_is_pa20() helper is costly due to string comparisons
-in object_dynamic_cast(), it is called quite often during memory lookups
-and at each start of a block of instruction translations.
-Speed hppa_is_pa20() up by calling object_dynamic_cast() only once at
-CPU creation and store the result in the is_pa20 of struct CPUArchState.
+Code cleanup with directory hw/loongarch/, removing errors from
+command "scripts/checkpatch.pl hw/loongarch/*"
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Co-developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250103064514.2660438-1-maobibo@loongson.cn>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20241231190620.24442-7-philmd@linaro.org>
 ---
- target/hppa/cpu.h | 6 ++++--
- target/hppa/cpu.c | 8 ++++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ hw/loongarch/acpi-build.c | 3 ++-
+ hw/loongarch/boot.c       | 4 ++--
+ hw/loongarch/virt.c       | 8 +++++---
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index c1d69c1a835..083d4f5a56a 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -266,6 +266,8 @@ typedef struct CPUArchState {
+diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+index 9eb5fb68bff..fdd62acf7e9 100644
+--- a/hw/loongarch/acpi-build.c
++++ b/hw/loongarch/acpi-build.c
+@@ -456,8 +456,9 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
  
-     /* Fields up to this point are cleared by a CPU reset */
-     struct {} end_reset_fields;
-+
-+    bool is_pa20;
- } CPUHPPAState;
+     acpi_table_begin(&table, table_data);
+     dsdt = init_aml_allocator();
+-    for (i = 0; i < VIRT_UART_COUNT; i++)
++    for (i = 0; i < VIRT_UART_COUNT; i++) {
+         build_uart_device_aml(dsdt, i);
++    }
+     build_pci_device_aml(dsdt, lvms);
+     build_la_ged_aml(dsdt, machine);
+     build_flash_aml(dsdt, lvms);
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 241c0eef1f0..bd8763c61c3 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -292,7 +292,7 @@ static void reset_load_elf(void *opaque)
  
- /**
-@@ -297,9 +299,9 @@ struct HPPACPUClass {
+     cpu_reset(CPU(cpu));
+     if (env->load_elf) {
+-	if (cpu == LOONGARCH_CPU(first_cpu)) {
++        if (cpu == LOONGARCH_CPU(first_cpu)) {
+             env->gpr[4] = env->boot_info->a0;
+             env->gpr[5] = env->boot_info->a1;
+             env->gpr[6] = env->boot_info->a2;
+@@ -354,7 +354,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+     if (info->kernel_filename) {
+         kernel_addr = load_kernel_info(info);
+     } else {
+-        if(!qtest_enabled()) {
++        if (!qtest_enabled()) {
+             warn_report("No kernel provided, booting from flash drive.");
+         }
+     }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index df56d75a6e7..db37ed6a717 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -331,8 +331,9 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "ns16550a");
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0x0, base, 0x0, size);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "clock-frequency", 100000000);
+-    if (chosen)
++    if (chosen) {
+         qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
++    }
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+                           *pch_pic_phandle);
+@@ -815,7 +816,7 @@ static void virt_devices_init(DeviceState *pch_pic,
+      * Create uart fdt node in reverse order so that they appear
+      * in the finished device tree lowest address first
+      */
+-    for (i = VIRT_UART_COUNT; i --> 0;) {
++    for (i = VIRT_UART_COUNT; i-- > 0;) {
+         hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
+         int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
+         serial_mm_init(get_system_memory(), base, 0,
+@@ -1175,8 +1176,9 @@ static void fw_cfg_add_memory(MachineState *ms)
+         size = ram_size - numa_info[0].node_mem;
+     }
  
- #include "exec/cpu-all.h"
- 
--static inline bool hppa_is_pa20(CPUHPPAState *env)
-+static inline bool hppa_is_pa20(const CPUHPPAState *env)
- {
--    return object_dynamic_cast(OBJECT(env_cpu(env)), TYPE_HPPA64_CPU) != NULL;
-+    return env->is_pa20;
+-   if (size)
++    if (size) {
+         memmap_add_entry(base, size, 1);
++    }
  }
  
- static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 7278b7ca6b5..b0bc9d35e4c 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -193,6 +193,13 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
-     tcg_cflags_set(cs, CF_PCREL);
- }
- 
-+static void hppa_cpu_initfn(Object *obj)
-+{
-+    CPUHPPAState *env = cpu_env(CPU(obj));
-+
-+    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
-+}
-+
- static void hppa_cpu_reset_hold(Object *obj, ResetType type)
- {
-     HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
-@@ -282,6 +289,7 @@ static const TypeInfo hppa_cpu_type_infos[] = {
-         .parent = TYPE_CPU,
-         .instance_size = sizeof(HPPACPU),
-         .instance_align = __alignof(HPPACPU),
-+        .instance_init = hppa_cpu_initfn,
-         .abstract = false,
-         .class_size = sizeof(HPPACPUClass),
-         .class_init = hppa_cpu_class_init,
+ static void virt_init(MachineState *machine)
 -- 
 2.47.1
 
