@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6268E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B365CE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 17:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX1gv-0005uq-Nd; Sun, 12 Jan 2025 12:24:01 -0500
+	id 1tX1mG-0007AB-QE; Sun, 12 Jan 2025 12:29:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1gu-0005u7-JL
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:24:00 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1mF-00079o-6e
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:29:31 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1gs-0007JW-8z
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:24:00 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4362bae4d7dso25295985e9.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:23:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX1mD-0008JR-4b
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 12:29:30 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso24960475e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 09:29:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736702636; x=1737307436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736702966; x=1737307766; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LVYVb1bxDW+nR29j3HrlxxRk6/o2MQ6s22PJWedoSD0=;
- b=xsX5EGq9IQVTaFrCZu/2aP5D1YcL1W3JGYkqbfZM8XT8+sF25zz62WTvbKSoRyuDa6
- pIWghhTUvSBt14ZA/P9NKYS67DelHbhJE1iyEhwmcZnZ96mHdOIK+6B3L5dsYzXHyfFH
- fVHxnE284psGk8cL2ZAk+7yh8iTfl2kRbNMUT/BzGcMyTwrqIc5Ptf76HN6eig5qM+Cq
- 9C6T6RZxoyMu4ORxHWAw2jC8PloAdwGLs6bvJwCMA1/T3nDskgeO8u9EjExpoHNvgIdv
- N8Xe0xx+d08e3/mcuQVlOTwdlv1D1ifsW/4O3ndXhnjteeGt6o+5gnGyxtn4L62WmzU2
- 8jNg==
+ bh=uM3ByAZmLlXOF286StyrwlwT9FweE+IfLhYTQ6nCIzk=;
+ b=dPHQJZC0ypIZhdKtDcNaDwL+G2aczL6tFM14/rT9A25Forz235A4Ej4dIljrqLgP+d
+ 5PHSbMFMhWW4TiBzh9atRVadF/IATVQScDEy9O2GexhzarIqE9VqYBzsnTAtT0r+iJBC
+ lZpNNDs+3P3K+n4umfBmMLGHllutIegE6/N3CAVhzssO9tdnBmi+XgHQtPNJ1vAsoabU
+ akcZ8ZBMpcKgaV5Ive1aJVxhmNuvlFAHJySU7FXampCs4Jee0uBmrF86pdgBAZh427TE
+ ZNmioRdWh5ycVQovrMGh5bxvX4i7HrCwjNfntbFk2ys3zkDt0PuG2ZPFd8xbb2NS8AHl
+ CAQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736702636; x=1737307436;
+ d=1e100.net; s=20230601; t=1736702966; x=1737307766;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LVYVb1bxDW+nR29j3HrlxxRk6/o2MQ6s22PJWedoSD0=;
- b=r5KEeaiAsj/7paA8mYOMWm6wqAOqj5ZhgqUdoxGKhukdE3HKTZcvnlKrLGvrY+7FeJ
- kmlFx1kuONT88SdqPpBeQhmU6wKeT7sdbuOUNDOMCG0GrkjDJ1NnK++wbWPbNtkggX/O
- CC7rZ04xFE2HZxQ9rtb1JEto17dNupf4P2JsePYOcV/4JZQUtxl22tQGipwt3N9ETPEz
- Bw9rQEkWPIpJdl1M/zdrIUqb5iaiRAQ/tfw0h8gVOhLcvsblgRbXD28BWcCG9uIMUTXd
- rXQzi7gmiZ17ABhDSzTUg1iCKkEfdkYz6PoKah/0+1bDiYUFtJfBpsaT0EienAP+zxd5
- Azmw==
-X-Gm-Message-State: AOJu0Yz8PWyRTzY6YE4nqvvlzfFSzg6E+cIayY1SfSIof+ZMBA0xG/MQ
- Xhu3tLhISgKbAMHqU9oa433Dd4x5PG9IL/NKoGyjQo7QFnM+jvIeLoU4FAAFHZUxZVoJEB3E0XI
- PPRU=
-X-Gm-Gg: ASbGncs1qwnD1NZLqYj6aE8xwj5Pa/T8BtV9zH5j3xLYFdLJnpIgYPwudyFt6TxaoyG
- V4XC0N5Pvq7A0ijgUVVjuNOeA3ui6GETQrzyhopO8JoZm9HBr7bi6hoOS5ZYTA3+0m0uS+7RuHI
- ZHU5isdYGs5PkOUo3CqjqO/txqEzJWa6pXVtdKP/9qZ5cAOY+Td6OwDhKBqRwlqfcnA/mXsp1ng
- B+4YcyNIwmoN83aC6ub40Yo2DEblU1EmdwylPcxPb6ELOoob7/WVSX/O+4xuWV/S3i+Ay4zD8QK
- lLPBXE61CX3g5oQOEEVhSbFh
-X-Google-Smtp-Source: AGHT+IG1epZlp7WO4FmlfSixm8bZC0x8uwpyDHw06Jc2zQ0m1ws8B34xBEESxWOGbWW4ESMSGwzVcg==
-X-Received: by 2002:a05:600c:198c:b0:435:306:e5dd with SMTP id
- 5b1f17b1804b1-436e26f47e0mr143622835e9.22.1736702636043; 
- Sun, 12 Jan 2025 09:23:56 -0800 (PST)
+ bh=uM3ByAZmLlXOF286StyrwlwT9FweE+IfLhYTQ6nCIzk=;
+ b=eMZRijDZOrDXEtYmVwYRiBlzE1QDUG7ejr6w9Q1yiL7v5P2QDgqqodTBfTbO6dpEpx
+ 27WukrE6Tg2jEtiCf1kxabUEn3briDal7g3LiSwoY/UFophFI6UWlm9h2PJsgO7K3p/k
+ RixatUndljG8uwCofMpUZEWtvVxUfj0tSYS0pBIzbgrLcgzUxU2uaSa88GCxZJbhPJ79
+ kXV944yj9U/ZvDrMrXudxgj1rEVbld7gOMO4gEGk/jQXuN0xh0joqM2zBJkVNRxY1kJ/
+ 9IMvzLv/JKllvBxzwm60Yzf/1flnokmVGBI1N/n6FA+M8RbwyiOCvXXf3CnAYSLJj//m
+ kxYw==
+X-Gm-Message-State: AOJu0YxWUSW6ZBmqCPPXQcMg3LhJqW/5JU6wCW5ZKjaMZN6ntpBAC+eF
+ fsGveIXPGmP4LsvNVhsETaY99JdFXYsP7otro4HYrVWJkExUgoxbkuclKrnnggFxGTxkAmebcxx
+ R9V8=
+X-Gm-Gg: ASbGncvn9MfGQ0ueN+ZQxqUFBpNnXqmTMkAsOVAAMYD6XpQiEX+lba6/7Ht+uuj0KIU
+ 2mZdt1ALbI4ebj7WnBimLiLhzDX+dQi7toSAJ5ggdiz8OA8Hyn15w9dNHlfziiFfRtmoNvqLLue
+ y9yMe0ZemnlvGUCfgrv8BrnI3pe10GvBKFaMbzJsqVOg5wVeAT4u3VXcQ/OjHdxplIbAhCHHhMn
+ BkW1hP68GYvccbtI3QsCnCNbUMGtbu5hGzm6C9Y64Z/bEH25r3qwzTHbR0eqEtyVPvWlWTzGNqL
+ tLJGmOKWBGhmHzQ/QoJbtAGZ
+X-Google-Smtp-Source: AGHT+IFHCEaooveHLEyBssPwd9nYysNGPnet1JedvbM18hHoKTKgZKzm0ucOtIrb/F7vot93oocj3Q==
+X-Received: by 2002:a05:600c:354e:b0:431:5aea:95f with SMTP id
+ 5b1f17b1804b1-436e26a175cmr193795695e9.16.1736702966578; 
+ Sun, 12 Jan 2025 09:29:26 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2da6336sm152122675e9.8.2025.01.12.09.23.55
+ 5b1f17b1804b1-436e2dc08eesm153739815e9.10.2025.01.12.09.29.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 09:23:55 -0800 (PST)
-Message-ID: <f2d4847e-0711-409a-898d-f1fe4977e977@linaro.org>
-Date: Sun, 12 Jan 2025 18:23:54 +0100
+ Sun, 12 Jan 2025 09:29:26 -0800 (PST)
+Message-ID: <43315ee4-3a0b-44fd-9562-99a761b1db41@linaro.org>
+Date: Sun, 12 Jan 2025 18:29:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/21] hw: More QDev cleanups
+Subject: Re: [PATCH] hw/tricore/triboard: Remove use of &first_cpu
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org
-References: <20240216110313.17039-1-philmd@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250110180909.83165-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240216110313.17039-1-philmd@linaro.org>
+In-Reply-To: <20250110180909.83165-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,24 +101,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/2/24 12:02, Philippe Mathieu-Daudé wrote:
-> Various QDev cleanups extracted to my "enforce QDev API" branch.
-> - When available, instead of plain QOM, use QDev API equivalent
-> - Add missing QOM parentship for some obj created with qdev_*new()
-> - Prefer object_initialize_child() over object_initialize()
+On 10/1/25 19:09, Philippe Mathieu-Daudé wrote:
+> triboard_machine_init() has access to the single CPU via:
 > 
-> Philippe Mathieu-Daudé (21):
+>    TriBoardMachineState {
+>      TC27XSoCState {
+>        TriCoreCPU cpu;
+>        ...
+>      } tc27x_soc;
+>    } ms;
+> 
+> Pass it as argument to tricore_load_kernel() so we can
+> remove the &first_cpu global use.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/tricore/triboard.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
 
->    hw: Replace DEVICE(object_new) -> qdev_new()
->    target: Replace DEVICE(object_new) -> qdev_new()
-
->    hw/usb: Inline usb_try_new()
->    hw/usb: Inline usb_new()
-
->    hw/net/can/versal: Prefer object_initialize_child over
->      object_initialize
-
->    hw: Add QOM parentship relation with CPUs
-
-Queuing reviewed patches.
+Patch queued.
 
