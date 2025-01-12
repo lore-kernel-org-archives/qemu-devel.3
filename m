@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1ADE7719F
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C568E77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6HY-0007VN-26; Sun, 12 Jan 2025 17:18:08 -0500
+	id 1tX6IF-0008UN-Ro; Sun, 12 Jan 2025 17:18:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HO-0007Tc-OZ
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:03 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6I3-0008BH-7o
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:39 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HM-0006PA-7H
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:17:58 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361b0ec57aso36061905e9.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:17:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6I0-0006Rx-IO
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:38 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-385e0e224cbso1929169f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:18:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720268; x=1737325068; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720314; x=1737325114; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DlEj3ANe4I1Uz5rznp2DVq0ieFeAR6XbYMp+YuA15wg=;
- b=fhNYUhrTxdd78hmUpf674+PkTJmigH+B/sOjcG5Va1VrInfuqzit3RXFe1HEat/H2/
- eiLcwlo1Uj1NJ8aoVc7NpfX/k4NsUpuDkKRDlaicy8gy8V9NKaBbeXqlnQ4TJo/YnQth
- 3KFP17USMs/YBT437nohUU6pwn40y1kztyHlR/3opZD7nPFw2Fr/HY0SOSeSZ5uB8ppk
- gk0Q4JpBoCrzfgJ/T+SiULyC2dN375BFPAkfCfc58QJRGRFnZrS9Ny0N0WRUJriNiWn/
- T1mQe/pg6D3cZO0V0iEd/jMvE2fHh63l2LF4/Sd1dTDWmrnRdFRZuD2Rfd7dO0wsTtUG
- N4Kg==
+ bh=mVeyTCl5h3W5QLqThsMAAyK0yBMC4OoyGuT39cU7uug=;
+ b=ixAPpkFURUEnseLhNEAXrI7X4vSsLNO+3g7d+SIB1RS2g5tj5l8jRoUICjzIsmdFoA
+ Sot2cQlaje4o0fode5tC6CHhPATHZezdJvf6hXb9lhzORNt0CmZ0oIS/wspLY6EKRpju
+ aS0goXPVWgr4ns8WyklJeTf5hZC6mJtFdE3FF01UmXp5Pdc5jcHyInVIdvr3AN6N9Cwj
+ qvdlhdSDBtSFGvltGBwDjA/RmCsOy2hcQsuACJpCDfwzsQ0dd78J0GscSxfxfXGCtEcb
+ 5YszwGqAsTOUOccYkOksnraeWBGoC3Gtk3dC+kfBYSdRKBA950ItAoj8Mw5ntqsH8Htt
+ bxsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720268; x=1737325068;
+ d=1e100.net; s=20230601; t=1736720314; x=1737325114;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DlEj3ANe4I1Uz5rznp2DVq0ieFeAR6XbYMp+YuA15wg=;
- b=f1PIoilkJda8MkqpwV7WjVr+5RVA6Kv4Shpf6+bSuw0t+CH9ele3rn1gRrBwy5KRld
- Kogjn4fcVwIst8K5N5P5oIK0Kqsp4hSlK4+lSOTB7OF6qT6kqX56dqJiZULxluFuQyex
- E8uhJ3eKWbmR+ebX4WiBzknm/Hx5Y6+7ktLj3gtG031SRKHWh1860qlyL6LXr05z3U8p
- SaVIrb3iIrXWuad5ULqVubxYhAlNZEBpro47QVcwZUFtlGw4u8US2dwrTYTjza1EqqM9
- cqTTOii4fiA40RrnqT4cka7otUofJMvOtfN/UhGGBVZtDvIpLvIxKDB4J/2/pMqNtcPp
- 5P3g==
-X-Gm-Message-State: AOJu0YyxpSfjwyhXeYp76+W6ohmY0Du3vkmfrxnY0tnRau40bJMMr4P0
- FPJSen2FGm4PUdfjDzLNvPbs1pjH0HGMs+OhNI0h7QDZiuhocWS34wNoEeTNhIcOcfneCM9T7UY
- 1qgI=
-X-Gm-Gg: ASbGncvewIFvc0cpdFEXF2k5f47G2rIHkN+E+zXn7UEntIHJvKUxP6bdZXqtDqgMUOP
- ncRH+ch47VGEpT5ovYWQD/GGuYYH2mhl6HM10E7O9mepwdBQiyYnG1eviI9/44/QChLyfni7KyN
- XGKomJHW7oa5RzvlwAo9ffJfSrMgre6mBxYWMVKRw1CLp7eVX3XpP3tR/kMDBH1cchBm+lCNhVv
- I33OkfoaHe9F7F2qYGlqg36KxN6o/erC0PZeEKzqZPFSkjtpQwxU+NH675UBK5pJjmi5H/Dv/+x
- pmXEdSdA7WzvbFMsnkyyx7ejq/HR3qQ=
-X-Google-Smtp-Source: AGHT+IFuCXP2VKCUNxfQe3dsW6Y7TZSE9dOGq8dNi89oNTFsmYTzDgyJAvH6UQCSBDEwYF63bszwXQ==
-X-Received: by 2002:a05:600c:4745:b0:434:9c60:95a3 with SMTP id
- 5b1f17b1804b1-436e26c4218mr180621855e9.11.1736720267876; 
- Sun, 12 Jan 2025 14:17:47 -0800 (PST)
+ bh=mVeyTCl5h3W5QLqThsMAAyK0yBMC4OoyGuT39cU7uug=;
+ b=ZczMJWOiEKWhIrgpve7PDWiMjietF6SO7D4lHqt0mYcTivFHNpMVAZ45j+vY+/ZnkK
+ UpGHwFhyywdHRjbuOr2O17h3hLSeRzEs7DTNcCiRyzDiVK1Pq/DsPvgsKQOjbP8DuaWE
+ WudryAowmNNCw4nqAYPx+LspBwyHo6pMvnt6VF+fxqeXsaELqiyS52/2g57zRCH5GPFB
+ gyDmTXuGy6LQLFsvHwWHp3FNSEp4gdgtHRbiK8nhokX80dEoJr/K8O6LsXS02QQ0qmrq
+ yQQljczXrwKkPjUsAIcrbGBXmOpQiQiTBjpQUjndG6UclNAEonDzfyjPP9ocmOaNqQRs
+ HQBg==
+X-Gm-Message-State: AOJu0YzHSfIDiAudcGG0weekQx0CcJxemR7Ftmq4FQ9x10j8jhNzgCdp
+ fb4u94kZfW79pAZ8LdqrTU0FC7DTSX4di7dw5vTEeIUAoNoTkZCcvLNXHE2xcT2CzywbqlA808f
+ vDNc=
+X-Gm-Gg: ASbGncvfGwwGcjtH4LvFS5PRtRPjboS6aEayMurDVridZRle5LRNhTzFsBrtNaiB9sM
+ IG0WAMl0D/TVvnjdXz968A7+Uc4ldwvqxplBH3IkcIRIXAFcTZiP1HK/JNr1DdCyB+BRlEzJMKx
+ Nxgi4PZPvM0S1TOX7k9GhJF/zM7FRzFQ1atXvsF8A17ECjr8yIfjj9pcB4a0SOEkvBwh3D+SM0T
+ KyWMZXX8DQxyv3OSUUXJkq2AJzuZX6fECv30BnyXqm402SjQzytCEm2FNc9RMe8YGW7wX0LP8zX
+ tMz+boZ5SHxlyZiExRKG5sPqMszXPN8=
+X-Google-Smtp-Source: AGHT+IFHf4dSgslizflMoWRm60TvOflmtwQpn2kOHM7wa+Pvk/sus4pvcU6+1GserpUBFOLfC5gIKA==
+X-Received: by 2002:a5d:6c63:0:b0:385:e22e:288f with SMTP id
+ ffacd0b85a97d-38a872ea33fmr16499846f8f.31.1736720314465; 
+ Sun, 12 Jan 2025 14:18:34 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e2dc0f69sm156716585e9.13.2025.01.12.14.17.46
+ 5b1f17b1804b1-436e2ddca2dsm158256285e9.21.2025.01.12.14.18.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:17:47 -0800 (PST)
+ Sun, 12 Jan 2025 14:18:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 04/49] hw: Add QOM parentship relation with CPUs
-Date: Sun, 12 Jan 2025 23:16:40 +0100
-Message-ID: <20250112221726.30206-5-philmd@linaro.org>
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Subject: [PULL 13/49] hw/net/xilinx_ethlite: Access TX_CTRL register for each
+ port
+Date: Sun, 12 Jan 2025 23:16:49 +0100
+Message-ID: <20250112221726.30206-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,93 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev objects created with object_new() need to manually add
-their parent relationship with object_property_add_child().
+Rather than accessing the registers within the mixed RAM/MMIO
+region as indexed register, declare a per-port TX_CTRL. This
+will help to map the RAM as RAM (keeping MMIO as MMIO) in few
+commits.
+
+Previous s->regs[R_TX_CTRL0] and s->regs[R_TX_CTRL1] are now
+unused. Not a concern, this array will soon disappear.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240216110313.17039-22-philmd@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-Id: <20241112181044.92193-15-philmd@linaro.org>
 ---
- hw/i386/x86-common.c                     | 1 +
- hw/microblaze/petalogix_ml605_mmu.c      | 1 +
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
- hw/mips/cps.c                            | 1 +
- hw/ppc/e500.c                            | 1 +
- hw/ppc/spapr.c                           | 1 +
- 6 files changed, 6 insertions(+)
+ hw/net/xilinx_ethlite.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 97b4f7d4a0d..9c9ffb3484a 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -60,6 +60,7 @@ static void x86_cpu_new(X86MachineState *x86ms, int64_t apic_id, Error **errp)
-     if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
-         goto out;
-     }
-+    object_property_add_child(OBJECT(x86ms), "cpu[*]", OBJECT(cpu));
-     qdev_realize(DEVICE(cpu), NULL, errp);
+diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+index ce9555bd1e2..f8b01fe9a62 100644
+--- a/hw/net/xilinx_ethlite.c
++++ b/hw/net/xilinx_ethlite.c
+@@ -64,6 +64,7 @@ typedef struct XlnxXpsEthLitePort {
+     struct {
+         uint32_t tx_len;
+         uint32_t tx_gie;
++        uint32_t tx_ctrl;
  
- out:
-diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-index 8b44be75a22..b6be40915ac 100644
---- a/hw/microblaze/petalogix_ml605_mmu.c
-+++ b/hw/microblaze/petalogix_ml605_mmu.c
-@@ -83,6 +83,7 @@ petalogix_ml605_init(MachineState *machine)
+         uint32_t rx_ctrl;
+     } reg;
+@@ -139,7 +140,7 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
  
-     /* init CPUs */
-     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-+    object_property_add_child(OBJECT(machine), "cpu", OBJECT(cpu));
-     object_property_set_str(OBJECT(cpu), "version", "8.10.a", &error_abort);
-     /* Use FPU but don't use floating point conversion and square
-      * root instructions
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index 2c0d8c34cd2..29629310ba2 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -73,6 +73,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
-     MemoryRegion *sysmem = get_system_memory();
+         case R_TX_CTRL1:
+         case R_TX_CTRL0:
+-            r = s->regs[addr];
++            r = s->port[port_index].reg.tx_ctrl;
+             break;
  
-     cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-+    object_property_add_child(OBJECT(machine), "cpu", OBJECT(cpu));
-     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
-     object_property_set_bool(OBJECT(cpu), "little-endian",
-                              !TARGET_BIG_ENDIAN, &error_abort);
-diff --git a/hw/mips/cps.c b/hw/mips/cps.c
-index 0d8cbdc8924..293b405b965 100644
---- a/hw/mips/cps.c
-+++ b/hw/mips/cps.c
-@@ -87,6 +87,7 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
-         /* All cores use the same clock tree */
-         qdev_connect_clock_in(DEVICE(cpu), "clk-in", s->clock);
+         case R_RX_CTRL1:
+@@ -160,7 +161,6 @@ eth_write(void *opaque, hwaddr addr,
+ {
+     XlnxXpsEthLite *s = opaque;
+     unsigned int port_index = addr_to_port_index(addr);
+-    unsigned int base = 0;
+     uint32_t value = val64;
  
-+        object_property_add_child(OBJECT(dev), "cpu[*]", OBJECT(cpu));
-         if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
-             return;
-         }
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 4551157c011..17d63ced907 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -955,6 +955,7 @@ void ppce500_init(MachineState *machine)
-          */
-         object_property_set_bool(OBJECT(cs), "start-powered-off", i != 0,
-                                  &error_abort);
-+        object_property_add_child(OBJECT(machine), "cpu[*]", OBJECT(cpu));
-         qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
+     addr >>= 2;
+@@ -168,24 +168,23 @@ eth_write(void *opaque, hwaddr addr,
+     {
+         case R_TX_CTRL0:
+         case R_TX_CTRL1:
+-            if (addr == R_TX_CTRL1)
+-                base = 0x800 / 4;
+-
+             if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
+                 qemu_send_packet(qemu_get_queue(s->nic),
+                                  txbuf_ptr(s, port_index),
+                                  s->port[port_index].reg.tx_len);
+-                if (s->regs[base + R_TX_CTRL0] & CTRL_I)
++                if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
+                     eth_pulse_irq(s);
++                }
+             } else if ((value & (CTRL_P | CTRL_S)) == (CTRL_P | CTRL_S)) {
+                 memcpy(&s->conf.macaddr.a[0], txbuf_ptr(s, port_index), 6);
+-                if (s->regs[base + R_TX_CTRL0] & CTRL_I)
++                if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
+                     eth_pulse_irq(s);
++                }
+             }
  
-         if (!firstenv) {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 623842f8064..125be6d29fd 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -2705,6 +2705,7 @@ static void spapr_init_cpus(SpaprMachineState *spapr)
-                                     &error_fatal);
-             object_property_set_int(core, CPU_CORE_PROP_CORE_ID, core_id,
-                                     &error_fatal);
-+            object_property_add_child(OBJECT(spapr), "cpu[*]", OBJECT(core));
-             qdev_realize(DEVICE(core), NULL, &error_fatal);
+             /* We are fast and get ready pretty much immediately so
+                we actually never flip the S nor P bits to one.  */
+-            s->regs[addr] = value & ~(CTRL_P | CTRL_S);
++            s->port[port_index].reg.tx_ctrl = value & ~(CTRL_P | CTRL_S);
+             break;
  
-             object_unref(core);
+         /* Keep these native.  */
 -- 
 2.47.1
 
