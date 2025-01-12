@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 556E8E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9962CE77188
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6Ha-0007Wa-Kz; Sun, 12 Jan 2025 17:18:10 -0500
+	id 1tX6HY-0007Vu-S0; Sun, 12 Jan 2025 17:18:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HX-0007Ut-BB
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:07 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HU-0006Pp-A9
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HP-0007Td-ET
  for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:18:06 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so35916795e9.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:18:00 -0800 (PST)
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6HN-0006PG-DE
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:17:59 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-436637e8c8dso39392225e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:17:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720279; x=1737325079; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720273; x=1737325073; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mFVPbF7stzQL/SqDLEkr/HWvwoJrRGJFOJxTEnGaiiQ=;
- b=Dw27Pdc1FVbZJcdQb2BULqpE+4etAfeMYvNaUz0dX2mCmYD7/3GGRRhDXHfAEotx4H
- yY59bi5ALHS63H1cPncAPCJ6GORXVSkv1hTj5YsevWVYG0ynXlcSvCdNQ0Gax/OYFnph
- bNHNivPiKaVFDYeFg+FBzO+1Y+H4BlSjeRIyrncPMkTkPiT5N2BLmU+Al0N5LPixaZo8
- 4b7c+Ty3YVo/XMmjc13jC7sP3lBtDXMaFsDiFsIRkXBVZUGVPjguMBDlgyNa1zLAI4aT
- k9fUeULqhl4BmD3e7RSZ7K85SGoJHe9WVClVz7Zfe/pTpusD15yzJJ5C8PKKUzM91NO9
- 1DQw==
+ bh=+GoeTs3OwFxXFIF/0sszVZvTSkwjTETcrGfwBocwM+s=;
+ b=T1vdYGt/BNcDErDAjxNxFcs3bhFrOU3Pq7dPtb6PUoPB0unMiprQeZGkBBkBroSdNv
+ m/HjdqP9K34XApdqCvBFc/x/0SZEmMzzwnzeRPsTdErNCoc0lETK6lcRS59U4qJKEBVg
+ E4zjHRsboLuSqhRSKsWoMjiFjc/+zsYuco/7on2Lp5GDiBAK2Fu/+VFbwQiAtfelc1R8
+ XD1HcT27d/ZwlzgEf/9hVNpiTVZiUIKsBQNsCL4J2LbCoL5AIunpCaUOoH7V1ZnkqSQz
+ 91J5iAkOcYIbf4i3ywK8jlUzYOortqk7xzyuEkcvGFLua8EjyqmwnYs2HIFZ59PVXhMo
+ cSxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720279; x=1737325079;
+ d=1e100.net; s=20230601; t=1736720273; x=1737325073;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mFVPbF7stzQL/SqDLEkr/HWvwoJrRGJFOJxTEnGaiiQ=;
- b=YVwwW29Lf8FXyR/eJnxsfua+hHXE+1iCGO640nm5YMAr3SOgtPfyzrx2dfrFt4ym07
- TeAiJUCjLSOoPpuAHxykpc1YQXGogtAdZ89xa4WOfkUUOms0G7/kf9IeYU1Ib6EhV7qo
- eKXAqUliIB5KlzzszKHFfmYpjPvKklv6QfUBisR4eoxqMctmKGfWZE8JgpS1KG6qdIzY
- u970P8oz9Ix9FpS/Z14MyHxjoWz+ktikYhFXjZ9uW828r5TKZqKS0ImNF29Rqb84YvSs
- GjR7YY1slFUvUlnh5COrbnuyMoZFebWVy1GKvRw9VKuZ9QW6x3gPaBS4twoaaTEuEIO2
- gx3g==
-X-Gm-Message-State: AOJu0YxKVIytNyqg2MK+N1uPpx+b8Dl0ViBImCMD4A7yIq5Hu9Mx1Owb
- EM8cGVY3ylz6f5Z1ztUleLYJBkiXe09NL8YuEkzKS+NT7k4m9TXfVwhPPZSGT7xujUqBrhGaipr
- 73SI=
-X-Gm-Gg: ASbGncsqF0hriVZAuF+rVsruEfTIpbrM6dbRQVmY9PxU/mdypnka4BrWUN5TLSAyq/W
- 97hdQ2d/9hcsSPo4P+5SyJ/kk1ofHhMZsakSsEMgreUP7jOhWLxnBtCUObUGtagOiK+B017E+Nn
- Bnov8Byakzg0J1F+kb+0Fu0EiXhq1yuqStKcUrN/VtvgirPKTXP9reooL1gQLrETb/uh25aUwl7
- uh2jfCdBKoVqoAINsD9E39gXxaoadmm3JLpouA5OLupg35rzjuuecOSToJS4J5FN5PF4K+o3Pa3
- IyNJonBG4Xv+7Y13ySJ84QEutaPu3ls=
-X-Google-Smtp-Source: AGHT+IH3dDRlA5jJBRXgYGKX+3TNZCeA3/XT1r74msV8PRnAGUjIjNKMNp2B+NtHwwESA3QRhlfVHQ==
-X-Received: by 2002:a05:600c:138d:b0:431:44f6:566f with SMTP id
- 5b1f17b1804b1-436e26c4a1amr161949855e9.13.1736720279176; 
- Sun, 12 Jan 2025 14:17:59 -0800 (PST)
+ bh=+GoeTs3OwFxXFIF/0sszVZvTSkwjTETcrGfwBocwM+s=;
+ b=CmsHDcPMPanYRUwp34pJ2EFuLIhB4XGW0HsbpKkQa1Xs4Dk62nLJvrLa+yM8HqNW1s
+ B0Kehp1FLVKvQ5+n7LFgZa9VOzPF32+m/WcZq1JY8mCe9+6cOl+lqIPNLq8fq+RYMnxi
+ qmJZhokPSJ59cSGsOpJqJTozkeqdS+F21IRTD5tUqZM4nS1MysiFUqHCAka7vfyL0elh
+ IbwlyoXT+iCwqweTgTcvuyKG86DF9SERtc/1fs3TrdzUO1h0XCzuu6uovNt4tivywUZf
+ mAiIocbirkJiiZQAZ52uND74gj+J2hQ7C0zwhjzb920vvki1/8pV2AGBnXL6WBoMBSF0
+ TWUA==
+X-Gm-Message-State: AOJu0YzlNF5Ieb+SkLc5HWUz/Pfl+iNpDV5eFqrtsBEaahJuRZfZca4O
+ iLJNXIYHW1yDIghPWWqGRkR4wOmCclVLYCTe5a5+gyJxkP4bQjE53TQ2q7wQeVM5brNdDHl3Hbn
+ W2Mk=
+X-Gm-Gg: ASbGnctEqQSUDWYswVXtuzeFo0Zbtl6OIrDPSxos6q06VziI+sIILYeSgNB4IzgZZEh
+ mjmwiHiZ0YRA9O4C+dS4uoCjVAmXpAFqo6HE24mPMDvm69FPJze6q0Yynscmusi7zH/IY1msfA2
+ ql75l+b6n3Gn0lUJZmx4/j2eqoR+8LiJ1X6TylvOqdUVuexg5U3hpg+pjKtqEXdAFiSxqDmH3XQ
+ V5nlpLfRV6oFlDm7GSWfeVrCU1QH9VW3yJXimCocdZYh/9QtBgwjrefUodmJa0LaZrqXT9Q64qP
+ 1xPSzDpDS2mu/Gtln9k7DppX7ehyCk8=
+X-Google-Smtp-Source: AGHT+IEs24aJUBPMRXTZ4B8w0IpRd52IbWTRH1n/r53QH82XbaOhbiqFSUpCOV9eV9flbKvDS1+wdQ==
+X-Received: by 2002:a05:600c:4704:b0:436:469f:2210 with SMTP id
+ 5b1f17b1804b1-436e267f796mr136934085e9.1.1736720273147; 
+ Sun, 12 Jan 2025 14:17:53 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d154sm10823837f8f.10.2025.01.12.14.17.56
+ 5b1f17b1804b1-436dd15766fsm98095965e9.2.2025.01.12.14.17.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:17:58 -0800 (PST)
+ Sun, 12 Jan 2025 14:17:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 06/49] hw/usb: Inline usb_new()
-Date: Sun, 12 Jan 2025 23:16:42 +0100
-Message-ID: <20250112221726.30206-7-philmd@linaro.org>
+Subject: [PULL 05/49] hw/usb: Inline usb_try_new()
+Date: Sun, 12 Jan 2025 23:16:41 +0100
+Message-ID: <20250112221726.30206-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,69 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline the 3 uses of usb_new().
+Inline the single use of usb_try_new().
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240216110313.17039-11-philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20240216110313.17039-10-philmd@linaro.org>
 ---
- include/hw/usb.h    | 7 +------
- hw/usb/bus.c        | 3 ++-
- hw/usb/dev-serial.c | 2 +-
- 3 files changed, 4 insertions(+), 8 deletions(-)
+ include/hw/usb.h | 5 -----
+ hw/usb/bus.c     | 2 +-
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/include/hw/usb.h b/include/hw/usb.h
-index bb778cb844b..e410693d0c6 100644
+index d46d96779ad..bb778cb844b 100644
 --- a/include/hw/usb.h
 +++ b/include/hw/usb.h
-@@ -579,11 +579,6 @@ void usb_pcap_init(FILE *fp);
- void usb_pcap_ctrl(USBPacket *p, bool setup);
- void usb_pcap_data(USBPacket *p, bool setup);
+@@ -584,11 +584,6 @@ static inline USBDevice *usb_new(const char *name)
+     return USB_DEVICE(qdev_new(name));
+ }
  
--static inline USBDevice *usb_new(const char *name)
+-static inline USBDevice *usb_try_new(const char *name)
 -{
--    return USB_DEVICE(qdev_new(name));
+-    return USB_DEVICE(qdev_try_new(name));
 -}
 -
  static inline bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
  {
      return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
-@@ -591,7 +586,7 @@ static inline bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **er
- 
- static inline USBDevice *usb_create_simple(USBBus *bus, const char *name)
- {
--    USBDevice *dev = usb_new(name);
-+    USBDevice *dev = USB_DEVICE(qdev_new(name));
- 
-     usb_realize_and_unref(dev, bus, &error_abort);
-     return dev;
 diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 7e7deaadcaf..f45b82c776d 100644
+index b19b0b13ebd..7e7deaadcaf 100644
 --- a/hw/usb/bus.c
 +++ b/hw/usb/bus.c
-@@ -662,7 +662,8 @@ USBDevice *usbdevice_create(const char *driver)
-         return NULL;
-     }
- 
--    dev = f->usbdevice_init ? f->usbdevice_init() : usb_new(f->name);
-+    dev = f->usbdevice_init ? f->usbdevice_init()
-+                            : USB_DEVICE(qdev_new(f->name));
-     if (!dev) {
-         error_report("Failed to create USB device '%s'", f->name);
-         return NULL;
-diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
-index a0821db902f..aa50a92e26f 100644
---- a/hw/usb/dev-serial.c
-+++ b/hw/usb/dev-serial.c
-@@ -624,7 +624,7 @@ static USBDevice *usb_braille_init(void)
-         return NULL;
-     }
- 
--    dev = usb_new("usb-braille");
-+    dev = USB_DEVICE(qdev_new("usb-braille"));
-     qdev_prop_set_chr(&dev->qdev, "chardev", cdrv);
-     return dev;
- }
+@@ -411,7 +411,7 @@ void usb_claim_port(USBDevice *dev, Error **errp)
+     } else {
+         if (bus->nfree == 1 && strcmp(object_get_typename(OBJECT(dev)), "usb-hub") != 0) {
+             /* Create a new hub and chain it on */
+-            hub = usb_try_new("usb-hub");
++            hub = USB_DEVICE(qdev_try_new("usb-hub"));
+             if (hub) {
+                 usb_realize_and_unref(hub, bus, NULL);
+             }
 -- 
 2.47.1
 
