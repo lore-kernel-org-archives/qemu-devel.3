@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD083E77188
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23527E7719E
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jan 2025 22:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX6JI-0002Tn-DT; Sun, 12 Jan 2025 17:19:57 -0500
+	id 1tX6Jt-0003pA-58; Sun, 12 Jan 2025 17:20:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6In-0001Pk-Mt
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:28 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JW-0002yH-NT
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:15 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6Ii-0006Ws-8c
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:19:22 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-385e3621518so1913029f8f.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:19:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX6JU-0006dF-Od
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 17:20:10 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361b0ec57aso36069265e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 14:20:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736720358; x=1737325158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736720407; x=1737325207; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kHYhV6C4zvi9bV3gw8In1CJAbx66/tuqvnD3Exk/IRE=;
- b=BTkSB3yDGhN02LKeVGCMq17rJaV61mtjQvr9mnCntm50X1K5t3Y/eiDgualPRAPSqW
- L43ipEpxyRFw2nY0M8PKEe2Z57DfiCDBdRHH9GLiUKaTqWz3TkhbAZct4sy3sZTrzsK8
- 5ptygU1YAKuOFTpDwmfWhozhEXln19uvojO2xSO1lB4uRUjmpxlqBa9UYJezZZUBCtbo
- 1EiLnvVf9ViySqi3hBOw72apewD9NdFW/B8n6E0usZDs4ZU2+eWNteDHEwtLc0LmoU7f
- b1yuSl3XAvYJ8XWzcGJGYMiWIhae+3HmhlFPcy6kb30PPQvO1FK9AmPlO6AQPAZ3fKOg
- x20A==
+ bh=14berGsIUi+LxFrCmkN7HjTFiZfCOUVRI5Z+rVUDf/Q=;
+ b=UtAB7HYygHXqaDaZRTSE9ruCpDss3YYY8MlTTLsqXvZHTSZOzmVN16ZUpPuibQPSWy
+ 4UKNEb6S6BG+vgNelVN5JUeXJSC1nhfX1r7K/vbfaZjnnRcWeUTIKLVDeHhgbWjBregE
+ ZkV8eKFnKSpGmh9o7etYPr3hHMJEdVqisNbeACIKhDScDoBYzEvQHR0wY9oPfth4/Ptj
+ JuSs1x0gRrXcfyioO2MiAIZpfL6p6uwg1PHxVIWUEdPdX0iiJib4AHZAQL7sPVGRfcym
+ dPEhGYOyJRVjfatMQ8cHFrnA9Fsg1Lb/FimRD5d6pqhVbVtrNo0cBO4obgpgNSPRUEa0
+ TaWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736720358; x=1737325158;
+ d=1e100.net; s=20230601; t=1736720407; x=1737325207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kHYhV6C4zvi9bV3gw8In1CJAbx66/tuqvnD3Exk/IRE=;
- b=oWOuWpHtJwlojgs2ZS49oAUPxDiOEArAPIcE6KfSv3PhwbDmlm9If2tZOjZDdH30UC
- dZlaCvcURLmkn2zsf4HgQLWc60m6RBLDZXlPvckNR6CRhTXfwlhxylDU6v57vOJXLtGW
- 2QRbOLq/gP9TB/CJO77inlwp+IOQKHvJyQeZ+9O58GGY1ofnpresGCvTgwOTI6iXlyQm
- EHOhprcSu0VO3gbUojVW8qLQ7pERQ/1UDLMF/eRMULuWNWDmDwcJc71SGNmgYcjBQTWG
- 3zJBaBr2lMJQYyT41EICsxlPgde8hAjaq79XlEOzMECjpleHrGxpxPIMfw6h/6bFSSag
- L9mQ==
-X-Gm-Message-State: AOJu0YzPPWR+ZSXEvl5qQkeclPlodfRd/fKWBpPlKfO7FgSjD5umX3lc
- hnGylFHenV395tNtQ3QUmjfg3v34ZCRbgRaftlm8PKaIvz1iOawI+2uVmsmUDIQxVo01MJb5lC+
- Fyks=
-X-Gm-Gg: ASbGncsrpunMQZpqzh0AfNDGANbXV6Q+rK9aKAdlS8KaCPs0x6BWiuSeVKEeMWgdNCc
- FoltQbMVQvp5vIPC/KLqFi05MM5P2px0JvY2HYCh6lFDE7Q9F7lMccFpxZ+AuhITUEsiRK0sDZ1
- haVwXQz4qVOxiLunwyThSjrLCYzTIgCfT4pO1ndi+m+aqmAgN7UCeUrPLE5PsmKFktoaDCdPBod
- Lhcq5sVSyNYmvhUZICu4Xq+Mts7uNK2BOi6YmUhEqIIvIKFthcH98q/rD6zae62HxGXYeCPBFGD
- 0XUgrOizdg5u8Rx0n5WRV7aac+o1X6I=
-X-Google-Smtp-Source: AGHT+IGWWfJ7LukZ04s/pKO/VaYtQ6VWRo+iNz5ZdR3snLFPPMGkR4GcjL4vbkHrICCE7fHOXWjpXg==
-X-Received: by 2002:a05:6000:2a3:b0:386:4a0d:bb21 with SMTP id
- ffacd0b85a97d-38a8730a11emr16529015f8f.22.1736720358331; 
- Sun, 12 Jan 2025 14:19:18 -0800 (PST)
+ bh=14berGsIUi+LxFrCmkN7HjTFiZfCOUVRI5Z+rVUDf/Q=;
+ b=ujCgojSxgihiZn+74iyiF/hJp3/vefqcedFkJNht5H7np0vmKD41pUfTzDrdl+obNI
+ VkySwHGe3kyfWOHdbdSvPUX1J2z2gkiuiNURIfmipO7BE7o7ClxK9Vq4U7ceOEKcdk09
+ LfZPszln+HeUNMbpV3DjYaBfqUgFdyn2nCHF9hxlETUrCIh4dt/PU/2KvRrDbpmJQRha
+ oCu3yXx0zcXW4NueqahlzjTNBJ6EqDNeP7wpOwMbbosGw11wOldQd6OKZRoNsFUu0d39
+ rc9m+/Z15y7k/fa2EkEnJNVpHl8OailGWEBe7ltwGmZbpVpZkKNvFkct76n3+sYloEs3
+ AyyQ==
+X-Gm-Message-State: AOJu0YztNlREmqOVz2j+8W1V6TN5UZ/k6QCiey/oipNrvx/Y71OYAX9P
+ v/YxYWQ4bhi+yKrL0LNVokuDzxF9LkG9IxcBw9E0UHknUqrlSt/HXOPoRdRruCu/RNya6bHm748
+ seig=
+X-Gm-Gg: ASbGncu/+QaTvvNtY7EzMw3LG75/RhbnSO6wo0opvsoh2pwem1H+ADyFQ4wcdT6G7Vl
+ 1Ve6ZwsyHQhh9BMWPCo/hYzAUeFyOYn++4mygIRr2RLYJiGzJ68i/RLt30r9/Z24uY08x7px3QT
+ nh8hF5q+OxKjLRo7Y99lJRyoTkCaS0XEP0QkeL8qzZ6MndsXUQyZJnCo3uYdMSOu8KkjubNnPM5
+ 6M58KQvh+Ofs9wx8MX0wMDoNuI/wulp3YhgDoGrvEn1ltBysRFaOD/GYjixbAoV8Z1Y0e1H9D/h
+ ia8YPNbL00Tcb0aj4b+yR6M6e/UX2GQ=
+X-Google-Smtp-Source: AGHT+IEZB7Hcz7AkaHyBJSKfIiVHiyzucb8GX3DIfS1lWa36cpa8QOdvVYL+l4MqI4PULhSPjh9DDg==
+X-Received: by 2002:a05:600c:3103:b0:434:a746:9c82 with SMTP id
+ 5b1f17b1804b1-436e26ae9b1mr182304575e9.5.1736720406807; 
+ Sun, 12 Jan 2025 14:20:06 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38428bsm10610306f8f.37.2025.01.12.14.19.16
+ 5b1f17b1804b1-436e9e03f49sm121928255e9.19.2025.01.12.14.20.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 14:19:17 -0800 (PST)
+ Sun, 12 Jan 2025 14:20:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 22/49] hw/misc/vmcoreinfo: Rename VMCOREINFO_DEVICE ->
- TYPE_VMCOREINFO
-Date: Sun, 12 Jan 2025 23:16:58 +0100
-Message-ID: <20250112221726.30206-23-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 32/49] hw/char/imx_serial: Turn some DPRINTF() statements into
+ trace events
+Date: Sun, 12 Jan 2025 23:17:08 +0100
+Message-ID: <20250112221726.30206-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250112221726.30206-1-philmd@linaro.org>
 References: <20250112221726.30206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,73 +100,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow the assumed QOM type definition style, prefixing with
-'TYPE_', and dropping the '_DEVICE' suffix which doesn't add
-any value.
+From: Bernhard Beschow <shentey@gmail.com>
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20250111183711.2338-9-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20250102132624.53443-1-philmd@linaro.org>
 ---
- include/hw/misc/vmcoreinfo.h | 7 +++----
- hw/misc/vmcoreinfo.c         | 6 +++---
- 2 files changed, 6 insertions(+), 7 deletions(-)
+ hw/char/imx_serial.c | 58 +++++++++++++++++++++++++++++---------------
+ hw/char/trace-events |  5 ++++
+ 2 files changed, 44 insertions(+), 19 deletions(-)
 
-diff --git a/include/hw/misc/vmcoreinfo.h b/include/hw/misc/vmcoreinfo.h
-index 0b7b55d400a..1aa44771632 100644
---- a/include/hw/misc/vmcoreinfo.h
-+++ b/include/hw/misc/vmcoreinfo.h
-@@ -16,10 +16,9 @@
- #include "standard-headers/linux/qemu_fw_cfg.h"
- #include "qom/object.h"
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index 12705a1337f..7c353fde509 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -27,6 +27,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qemu/fifo32.h"
++#include "trace.h"
  
--#define VMCOREINFO_DEVICE "vmcoreinfo"
-+#define TYPE_VMCOREINFO "vmcoreinfo"
- typedef struct VMCoreInfoState VMCoreInfoState;
--DECLARE_INSTANCE_CHECKER(VMCoreInfoState, VMCOREINFO,
--                         VMCOREINFO_DEVICE)
-+DECLARE_INSTANCE_CHECKER(VMCoreInfoState, VMCOREINFO, TYPE_VMCOREINFO)
- 
- typedef struct fw_cfg_vmcoreinfo FWCfgVMCoreInfo;
- 
-@@ -33,7 +32,7 @@ struct VMCoreInfoState {
- /* returns NULL unless there is exactly one device */
- static inline VMCoreInfoState *vmcoreinfo_find(void)
+ #ifndef DEBUG_IMX_UART
+ #define DEBUG_IMX_UART 0
+@@ -184,10 +185,10 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
+                                 unsigned size)
  {
--    Object *o = object_resolve_path_type("", VMCOREINFO_DEVICE, NULL);
-+    Object *o = object_resolve_path_type("", TYPE_VMCOREINFO, NULL);
+     IMXSerialState *s = (IMXSerialState *)opaque;
++    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     uint32_t c, rx_used;
+     uint8_t rxtl = s->ufcr & TL_MASK;
+-
+-    DPRINTF("read(offset=0x%" HWADDR_PRIx ")\n", offset);
++    uint64_t value;
  
-     return o ? VMCOREINFO(o) : NULL;
+     switch (offset >> 2) {
+     case 0x0: /* URXD */
+@@ -208,49 +209,67 @@ static uint64_t imx_serial_read(void *opaque, hwaddr offset,
+             imx_serial_rx_fifo_ageing_timer_restart(s);
+             qemu_chr_fe_accept_input(&s->chr);
+         }
+-        return c;
++        value = c;
++        break;
+ 
+     case 0x20: /* UCR1 */
+-        return s->ucr1;
++        value = s->ucr1;
++        break;
+ 
+     case 0x21: /* UCR2 */
+-        return s->ucr2;
++        value = s->ucr2;
++        break;
+ 
+     case 0x25: /* USR1 */
+-        return s->usr1;
++        value = s->usr1;
++        break;
+ 
+     case 0x26: /* USR2 */
+-        return s->usr2;
++        value = s->usr2;
++        break;
+ 
+     case 0x2A: /* BRM Modulator */
+-        return s->ubmr;
++        value = s->ubmr;
++        break;
+ 
+     case 0x2B: /* Baud Rate Count */
+-        return s->ubrc;
++        value = s->ubrc;
++        break;
+ 
+     case 0x2d: /* Test register */
+-        return s->uts1;
++        value = s->uts1;
++        break;
+ 
+     case 0x24: /* UFCR */
+-        return s->ufcr;
++        value = s->ufcr;
++        break;
+ 
+     case 0x2c:
+-        return s->onems;
++        value = s->onems;
++        break;
+ 
+     case 0x22: /* UCR3 */
+-        return s->ucr3;
++        value = s->ucr3;
++        break;
+ 
+     case 0x23: /* UCR4 */
+-        return s->ucr4;
++        value = s->ucr4;
++        break;
+ 
+     case 0x29: /* BRM Incremental */
+-        return 0x0; /* TODO */
++        value = 0x0; /* TODO */
++        break;
+ 
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
+                       HWADDR_PRIx "\n", TYPE_IMX_SERIAL, __func__, offset);
+-        return 0;
++        value = 0;
++        break;
+     }
++
++    trace_imx_serial_read(chr ? chr->label : "NODEV", offset, value);
++
++    return value;
  }
-diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
-index b1fcc22e92b..145f13a65cf 100644
---- a/hw/misc/vmcoreinfo.c
-+++ b/hw/misc/vmcoreinfo.c
-@@ -47,13 +47,13 @@ static void vmcoreinfo_realize(DeviceState *dev, Error **errp)
-      */
-     if (!vmcoreinfo_find()) {
-         error_setg(errp, "at most one %s device is permitted",
--                   VMCOREINFO_DEVICE);
-+                   TYPE_VMCOREINFO);
-         return;
-     }
  
-     if (!fw_cfg || !fw_cfg->dma_enabled) {
-         error_setg(errp, "%s device requires fw_cfg with DMA",
--                   VMCOREINFO_DEVICE);
-+                   TYPE_VMCOREINFO);
-         return;
-     }
+ static void imx_serial_write(void *opaque, hwaddr offset,
+@@ -260,8 +279,7 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+     Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     unsigned char ch;
  
-@@ -95,7 +95,7 @@ static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
+-    DPRINTF("write(offset=0x%" HWADDR_PRIx ", value = 0x%x) to %s\n",
+-            offset, (unsigned int)value, chr ? chr->label : "NODEV");
++    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
  
- static const TypeInfo vmcoreinfo_types[] = {
-     {
--        .name           = VMCOREINFO_DEVICE,
-+        .name           = TYPE_VMCOREINFO,
-         .parent         = TYPE_DEVICE,
-         .instance_size  = sizeof(VMCoreInfoState),
-         .class_init     = vmcoreinfo_device_class_init,
+     switch (offset >> 2) {
+     case 0x10: /* UTXD */
+@@ -373,9 +391,11 @@ static int imx_can_receive(void *opaque)
+ static void imx_put_data(void *opaque, uint32_t value)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
++    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+     uint8_t rxtl = s->ufcr & TL_MASK;
+ 
+-    DPRINTF("received char\n");
++    trace_imx_serial_put_data(chr ? chr->label : "NODEV", value);
++
+     imx_serial_rx_fifo_push(s, value);
+     if (fifo32_num_used(&s->rx_fifo) >= rxtl) {
+         s->usr1 |= USR1_RRDY;
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 140b994fd4d..3ee7cfcdff2 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -52,6 +52,11 @@ escc_sunkbd_event_out(int ch) "Translated keycode 0x%2.2x"
+ escc_kbd_command(int val) "Command %d"
+ escc_sunmouse_event(int dx, int dy, int buttons_state) "dx=%d dy=%d buttons=0x%01x"
+ 
++# imx_serial.c
++imx_serial_read(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] -> 0x%08" PRIx64
++imx_serial_write(const char *chrname, uint64_t addr, uint64_t value) "%s:[0x%03" PRIu64 "] <- 0x%08" PRIx64
++imx_serial_put_data(const char *chrname, uint32_t value) "%s: 0x%" PRIx32
++
+ # pl011.c
+ pl011_irq_state(int level) "irq state %d"
+ pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
 -- 
 2.47.1
 
