@@ -4,75 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6289E7719F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 12:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D21E7719F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 12:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXJvp-00050g-TX; Mon, 13 Jan 2025 07:52:37 -0500
+	id 1tXJz5-0005rB-M4; Mon, 13 Jan 2025 07:55:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tXJvn-00050S-Of
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:52:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tXJvl-0004te-AP
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:52:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736772751;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UP5I0yu8bNqvyMUcRh6JH2jmb1C9okyZHoncWmzVJ7s=;
- b=HUib4d1Mx67mra4liRIHuhD7qj/wNkWwxvhHK5pJe/H8atKfiCOkloVkHyQ2yw1REyLjER
- HBjOipQWWDnENEVfSC5OGsIjiMn2WJMt02YpQuRn96M+dsQuNOHUE/hk2PSvgqbDsmHT4u
- uuBI/foTlB6B8KplCL7/PK4mAv6vDM4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-Xvcmq92fNQ6uNCqUxb8miw-1; Mon,
- 13 Jan 2025 07:52:29 -0500
-X-MC-Unique: Xvcmq92fNQ6uNCqUxb8miw-1
-X-Mimecast-MFC-AGG-ID: Xvcmq92fNQ6uNCqUxb8miw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tXJz1-0005qZ-7P; Mon, 13 Jan 2025 07:55:56 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1tXJyz-0006Qg-3Y; Mon, 13 Jan 2025 07:55:54 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E9D91956050
- for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 12:52:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.48])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00D9E19560AD
- for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 12:52:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8C10521E6924; Mon, 13 Jan 2025 13:52:25 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Victor Toso <victortoso@redhat.com>
-Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Andrea Bolognani
- <abologna@redhat.com>
-Subject: Re: [PATCH v3 0/8] qapi-go: add generator for Golang interfaces
-In-Reply-To: <20250110104946.74960-1-victortoso@redhat.com> (Victor Toso's
- message of "Fri, 10 Jan 2025 11:49:38 +0100")
-References: <20250110104946.74960-1-victortoso@redhat.com>
-Date: Mon, 13 Jan 2025 13:52:25 +0100
-Message-ID: <874j22ooza.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 01FE12116F;
+ Mon, 13 Jan 2025 12:55:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1736772948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
+ b=wNh00f8wgQs24kvQl+k9SWnmRRsA1qdgeKLiZE5aouEt8u5oWdiIc4gbLMFXLkrqnng5bi
+ B+IAzzDxXabaaZL5H2EXMcwdo3NPF72Ujk6yyZumIh7PUCqaw6CdymTkC1Wo1C5ewOXE7x
+ VHyXDezWoX5EbPcLyxueQx9uZtjvDzU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1736772948;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
+ b=hBvXT75zQBsfrEJVGMMKOgx85LTkCYFucXevmzU9f1ss9D6+kPq0rw3A3xoqjA8kgl+/OZ
+ oFlmTdSz8aw0cvDw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1736772948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
+ b=wNh00f8wgQs24kvQl+k9SWnmRRsA1qdgeKLiZE5aouEt8u5oWdiIc4gbLMFXLkrqnng5bi
+ B+IAzzDxXabaaZL5H2EXMcwdo3NPF72Ujk6yyZumIh7PUCqaw6CdymTkC1Wo1C5ewOXE7x
+ VHyXDezWoX5EbPcLyxueQx9uZtjvDzU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1736772948;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
+ b=hBvXT75zQBsfrEJVGMMKOgx85LTkCYFucXevmzU9f1ss9D6+kPq0rw3A3xoqjA8kgl+/OZ
+ oFlmTdSz8aw0cvDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7A1E313876;
+ Mon, 13 Jan 2025 12:55:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QBcgEFMNhWeAGgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 13 Jan 2025 12:55:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Michael Tokarev <mjt@tls.msk.ru>, Shameer Kolothum
+ <shameerali.kolothum.thodi@huawei.com>, qemu-devel@nongnu.org,
+ peterx@redhat.com
+Cc: linuxarm@huawei.com, zhangfei.gao@linaro.org, qemu-stable
+ <qemu-stable@nongnu.org>
+Subject: Re: [PATCH] migration/multifd: Fix compile error caused by
+ page_size usage
+In-Reply-To: <0198d019-1d50-4b94-ab15-9d2bdef183db@tls.msk.ru>
+References: <20241203124943.52572-1-shameerali.kolothum.thodi@huawei.com>
+ <0198d019-1d50-4b94-ab15-9d2bdef183db@tls.msk.ru>
+Date: Mon, 13 Jan 2025 09:55:44 -0300
+Message-ID: <87h662hnzj.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.787,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ huawei.com:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,137 +118,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Victor Toso <victortoso@redhat.com> writes:
+Michael Tokarev <mjt@tls.msk.ru> writes:
 
-> This patch series intent is to introduce a generator that produces a Go
-> module for Go applications to interact over QMP with QEMU.
+> 03.12.2024 15:49, Shameer Kolothum via wrote:
+>>  From Commit 90fa121c6c07 ("migration/multifd: Inline page_size and
+>> page_count") onwards page_size is not part of MutiFD*Params but uses
+>> an inline constant instead.
+>> 
+>> However, it missed updating an old usage, causing a compile error.
+>> 
+>> Fixes: 90fa121c6c07 ("migration/multifd: Inline page_size and page_count")
+>> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 >
-> The initial Goal is to have a Go module that works as intended and can
-> be improved upon. I'd consider initial releases to be alpha while we
-> work with utilities tools and libraries on top of this.
+> This looks like a qemu-stable material, is it not?
 >
-> The generated code should reside in a separated Git repository, similar
-> to python-qemu-qmp.
+
+Yes.
+
+> I wonder how come thie code hasn't been compiled since 90fa121c6c07.
+
+The various pieces of code that support hardware accelerators in
+migration all depend on specific hardware and libraries, so it's all
+gated behind CONFIGs that are not enabled by default. We don't have
+resources to test this, it's up to the people interested in that code to
+check that it still works.
+
+I have suggested we move more code out of the CONFIGs to minimize the
+amount of untested code, but we've ended up deciding that since we need
+help from people to maintain it anyway, it's not worth the extra work to
+isolate the hw-specific code even more.
+
 >
-> Applications should be able to consume this under qemu.org
-> namespace (e.g: import "qemu.org/go/qemu"), see Daniel's suggestion:
-> https://lists.gnu.org/archive/html/qemu-devel/2023-09/msg07024.html
+> /mjt
 >
-> This is the third iteration:
-> v2: https://lists.gnu.org/archive/html/qemu-devel/2023-10/msg04785.html
->
-> I've pushed this series in my gitlab fork:
-> https://gitlab.com/victortoso/qapi-go/
->
-> The fork contains some tests, including tests that were generated from
-> QAPI's own examples from another generator created for testing, if you
-> are interested in it:
-> https://lists.gnu.org/archive/html/qemu-devel/2023-09/msg04946.html
->
-> I've generated the qapi-go module over each commit of this series, see:
-> https://gitlab.com/victortoso/qapi-go/-/commits/qapi-golang-v3-by-patch
->
-> I've also generated the qapi-go module over QEMU tags: v9.1.0, v9.2.0:
-> https://gitlab.com/victortoso/qapi-go/-/commits/qapi-golang-v3-by-tags
->
-> --
->
-> Sorry that its been awhile between v2 and v3, I had to prioritize other
-> things. I hope to get this back on track in 2025.
->
-> Cheers,
-> Victor
->
-> * Changes:
->
-> On generated go:
->  - the output should be formatted as gofmt/goimports tools (Daniel)
->
->  - Included QAPI's documentation too (Daniel), see:
->    https://lists.gnu.org/archive/html/qemu-devel/2024-11/msg01621.html
->     
->  - Commands and Events should Marshal directly (Andrea)
->
-> On python script:
->  - rebased: now uses QAPISchemaBranches, QAPISchemaAlternatives
->
->  - use textwrap as much as possible (Andrea)
->
->  - lots of changes to make the output like gofmt does
->
-> Victor Toso (8):
->   qapi: golang: Generate enum type
->   qapi: golang: Generate alternate types
->   qapi: golang: Generate struct types
->   qapi: golang: structs: Address nullable members
->   qapi: golang: Generate union type
->   qapi: golang: Generate event type
->   qapi: golang: Generate command type
->   docs: add notes on Golang code generator
->
->  docs/devel/index-build.rst          |    1 +
->  docs/devel/qapi-golang-code-gen.rst |  548 +++++++++
->  scripts/qapi/golang.py              | 1645 +++++++++++++++++++++++++++
->  scripts/qapi/main.py                |    3 +
->  4 files changed, 2197 insertions(+)
->  create mode 100644 docs/devel/qapi-golang-code-gen.rst
->  create mode 100644 scripts/qapi/golang.py
-
-This is series adds a backend that slots in cleanly, i.e. without any
-changes to the core.  That makes it as low-risk to merge as it gets.
-
-I'd like an Acked-by for the generated Go from someone familiar the kind
-of software that could use it.
-
-The Go backend is a single golang.py, which generates:
-
-* Types:
-  alternates.go enums.go structs.go unions.go
-
-* Commands:
-  commands.go
-
-* Events:
-  events.go
-
-It doesn't generate visitors or introspection code.
-
-Correct?
-
-The existing C backend generates code for
-
-* Types (types.py):
-  qapi-builtin-types.[ch]
-  qapi-types.[ch] qapi-types-*.[ch]
-
-* Visitors (visit.py):
-
-  qapi-builtin-visit.h
-  qapi-visit.[ch] qapi-visit-*.[ch]
-
-* Commands (commands.py):
-
-  qapi-init-commands.h
-  qapi-commands.[ch] qapi-commands-*.[ch]
-
-* Events (events.py):
-
-  qapi-emit-events.h
-  qapi-events.[ch] qapi-events-*.[ch]
-
-* Introspection (introspect.py):
-
-  qapi-introspect.h
-
-The -* files are all one pair of files per module (the things pulled in
-with include directives), if any.  We do this to avoid "touch the QAPI
-schema, recompile the world."
-
-The generated Go is monolithic.  No "recompile the world" problem with
-Go?
-
-golang.py is somewhat big.  Whether splitting it up along the lines of
-the C backend would improve things I can't say.  No need to worry about
-that now.
-
+>>   migration/multifd-uadk.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
+>> index 6e6a290ae9..6895c1f65a 100644
+>> --- a/migration/multifd-uadk.c
+>> +++ b/migration/multifd-uadk.c
+>> @@ -169,7 +169,7 @@ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
+>>               .src_len = page_size,
+>>               .dst     = buf,
+>>               /* Set dst_len to double the src in case compressed out >= page_size */
+>> -            .dst_len = p->page_size * 2,
+>> +            .dst_len = page_size * 2,
+>>           };
+>>   
+>>           if (uadk_data->handle) {
 
