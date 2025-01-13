@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62F7E7719E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DACAE77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX86i-000798-1d; Sun, 12 Jan 2025 19:15:04 -0500
+	id 1tX8cZ-0004Jo-VA; Sun, 12 Jan 2025 19:48:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tX86Z-00077g-VU; Sun, 12 Jan 2025 19:14:56 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8cW-0004J6-Pc
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:47:56 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tX86W-0003yg-V5; Sun, 12 Jan 2025 19:14:54 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-51bb020339fso1444793e0c.0; 
- Sun, 12 Jan 2025 16:14:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8cU-0000fy-13
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:47:56 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4361b0ec57aso36554435e9.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 16:47:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736727291; x=1737332091; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TD7MU9vPdejNwguB14lxVRUJfEDkji0WNdvY4VPa6mc=;
- b=GgUJaISq4CyBfbiWnXveNzDMnK42kmiK4srohS8+4BIvb/dWI2HQDkmHhEe/MyDCle
- Pf8//4ImsWGGtyp+M//H3tmIoswVRWExsE/l21ubtYpOsXWfDr1l6+nkyNhgqHKT79zi
- UIqqcCrZUDch8OlX36lFx3bM2zmyNo4IowwaxUA4yo+auD1f5V7weaHhag8/DdntTw2h
- cgayvIbf8bDOLqUTUw/GqOqmyX76eJbNKbVlu+LWixItWL7Dp+AEvFj3hWTcNqPJhcAZ
- K/B+EUeMij6pzXsMXsz4hndZUB3WJWg4lVDUeMDXRSNCVAhKRc1hDxO+k7YsqzffJror
- AFCw==
+ d=linaro.org; s=google; t=1736729272; x=1737334072; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mZ7F9oRarx8FS7cL5OgCcFv244CWrusVaSTKfTV+FRU=;
+ b=eyMPdn+q7vuQY5jN4hUwslZk7Vb1TUdD9eo6Qv/a+bEGPb4B9PRk6XoJ+U/5mfXvF6
+ CjxUsBNn2dQDosreiROYzFJlNuF3DyTT5tregERK9X516iI3y2KOyS04evth0+xgX2b4
+ +MZF2vbDInepBlRTe3cIWQmYeA3azLUuXIsr5t0/NlGOBIJSaHHt4CPGikUlgcTK2mFZ
+ H00zSWzxUNdLRkUKpzQUh7ZYYIcGDJVWw1qaXn2zg2HRX/bnZ/6zaub5M9cK5KFq1L0C
+ IBb0Qc0w6HScjvkxCYLbV86dCZ3T2BIiSa1HE6UeUNyPJ0ZWMgphWUey5y63UgZBSIlT
+ yhbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736727291; x=1737332091;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TD7MU9vPdejNwguB14lxVRUJfEDkji0WNdvY4VPa6mc=;
- b=ehEKwM7C03bzWFVQNULRCdeDYhgNvp051Lg12KK4mj5tz4Y7xqIR53TPUo/kXn+AkA
- 55sjj+7MzzWEm34wnO/bIj7xLqPGsc9GpYiOgTMYmiBf1Yp47tyGk4dyDDKAcf59Yg3O
- QySUgmWHcwcudBkMAOcttznZveBaLpCM5V06L7Ny6fUD88BOiJoH/PXLmd7i/TiZMmZf
- w1WGBbChKDJHoVKxHp5UbASrXITih8G2wnMQde1aNOHzzfjmoGHhc+o1F5lr6ynu+tsj
- +kczJeS/++MYY0ijbOwsmrDzY4cma3tPeqf+CqScSXyqwK2ghCg3egNON9hU5JOsaKo9
- 1ijQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJ1522IwmqGNrMBxt88O0KwgnZ9A8NvXfyAtSdyCmTLAw9eQ+BYW01fjYJ4r5exQTzQ3cjzXuPOKmc@nongnu.org
-X-Gm-Message-State: AOJu0Yyr2kMpXVbolSblrnDNl5V8CSIUMKgLYriq4NUptA0g+Z906S59
- UR7ErZ5Km6XkTi2pcSXnEXUIh4OxFnxlNTCd5XkAmkLmuvI5bfchhUycVW+/7prhxCizrxTlH5L
- pOGNTpMlcPK0+lfEX0RxPcmhj6OE=
-X-Gm-Gg: ASbGncvK2pk9L7k+NTfc4jLOkksBW0JAFC3eicuJL1PdA0frcnbBW5khfwfECIMsncK
- m6oCxQb8GR/BI+lA9azU2Yk4364UOW3eruhUvqKQXBPTKeufxWSu1TkwAlWQyw6l1Fb0=
-X-Google-Smtp-Source: AGHT+IFfSGuBNQiBS4O6D+UTtA10bNFllhl1aqhxsLzi+w4zwPsnS5TDKjHc20OOz03FUhspmA+1trV26+UDAFoOEQM=
-X-Received: by 2002:a05:6122:130b:b0:518:9582:db90 with SMTP id
- 71dfb90a1353d-51c6c535f0dmr16752521e0c.11.1736727291099; Sun, 12 Jan 2025
- 16:14:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736729272; x=1737334072;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mZ7F9oRarx8FS7cL5OgCcFv244CWrusVaSTKfTV+FRU=;
+ b=nGIFdhJ3mE6yhLgosFZ3lac1Qz13o/SLIUpJqPja+oiv38QKCFyxUIOF1zXBx0pFwd
+ ijgWoYBCBIOp3D9+Z3QgLi/yTubxpqBQBkVou1TCrirvGYHJJezpuOr0Q5z2EpOYWfhy
+ Rr7AwDHTjHkuYpHaVHlxnfcRYxzs073frzG3TYw0k16uhAMjv9p4QYwhZwVmkkMpDd7Y
+ GtkDjWayhVfyTvNS+HvM/ZFNpN2BoF9ECxe9ATZeziHFVf5ElrwuDJeWJDnx2mk8AvyN
+ Q8ayLpq2MP/3ZViAlNZuuM2p6HW17vU8frslFoprFLu4SI7NZKSTlu5BO9nyeMpcfsNY
+ l1KQ==
+X-Gm-Message-State: AOJu0Yw5KOT6Ya04bi2isWcerRcPaD6+Y9VbHkMYm+8l610tpFNLrno7
+ 0vADixdpSgtZMJXYFmHlMySrV733dJx8Rtyec9XwVtEAWrsNpIx8a3YUp43kV5Zrcc/IsM45TM0
+ wz1A=
+X-Gm-Gg: ASbGncvZoGrnMQc/DDv4aChPRBZ4ls3iN74gakJGtcC1+11TraVOslm5uRUoqnlwDHk
+ u8RjGD2+IdZ8KfLw7nqkmuz7cRvqY3UBxV1CSFLBcnsSvPKu/oYtpoGa/80v3UtRq2MGptWD4zB
+ q4USKHyguhl+MBaDXB/SvJVkexVR6HyC6oevFbkUnjpvZBsxhxcJvYDqiw82lNg4a9Frgdd9J4N
+ NDn4ckDng3M9SIu1Ln3hkfON0GxN8g9ijVrDUoKhXLkMobm4W7m1931HETo1jlhFNBT7zXjrQy8
+ NWdhacVkKru63Z5jaQgDa44uE6/Islc=
+X-Google-Smtp-Source: AGHT+IGT59kNEo8T+DCzFGlE06h9zlG9KtWLXIdnLejYtAP8FYmuzCR4mYo/zJMEZI4yyr4azTtMHg==
+X-Received: by 2002:a05:600c:1d9e:b0:436:8a6f:b6db with SMTP id
+ 5b1f17b1804b1-436e2707c41mr145481315e9.22.1736729271980; 
+ Sun, 12 Jan 2025 16:47:51 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9dc8802sm125732025e9.10.2025.01.12.16.47.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 12 Jan 2025 16:47:50 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Paul Burton <paulburton@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 00/23] hw/mips: Remove all uses of &first_cpu
+Date: Mon, 13 Jan 2025 01:47:25 +0100
+Message-ID: <20250113004748.41658-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <20250112231344.34632-1-philmd@linaro.org>
- <20250112231344.34632-2-philmd@linaro.org>
-In-Reply-To: <20250112231344.34632-2-philmd@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 13 Jan 2025 10:14:25 +1000
-X-Gm-Features: AbW1kvYMg4I4ISWxrIS52yrofKyvhh5U5kdD1WP5kXYfDPAsm6dLwvkqusJlnSk
-Message-ID: <CAKmqyKOXXj4Zq-yNqSPSRqQWW+x-=G78nRim_Nvc_LfGTyt13g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] target/riscv: Have kvm_riscv_get_timebase_frequency()
- take RISCVCPU cpu
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>, Alistair Francis <alistair.francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,83 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 13, 2025 at 9:14=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Keep kvm_riscv_get_timebase_frequency() prototype aligned with
-> the other ones declared in "kvm_riscv.h", have it take a RISCVCPU
-> cpu as argument. Include "target/riscv/cpu-qom.h" which declares
-> the RISCVCPU typedef.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+- Keep references to vCPUs in CPS and MaltaState,
+- Refactor the MIPS Bootloader API to take CPU argument
+- Access first CPU propagate from machine_init()
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Based-on: <20250112215835.29320-1-philmd@linaro.org>
+"hw/mips/loongson3: Remove uses of &first_cpu global"
 
-Alistair
+Philippe Mathieu-Daudé (23):
+  hw/mips/cps: Keep reference of vCPUs in MIPSCPSState
+  hw/mips/malta: Check CPU index instead of using &first_cpu
+  hw/mips/boston: Replace bl_gen_write_ulong() -> bl_gen_write_u64()
+  hw/mips/bootloader: Propagate CPU env to bootcpu_supports_isa()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_nop()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_dsll()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_jalr()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_sw()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_sd()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_li()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_dli()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_load_ulong()
+  hw/mips/bootloader: Propagate CPU to bl_gen_jump_to()
+  hw/mips/bootloader: Propagate CPU to bl_gen_jump_kernel()
+  hw/mips/bootloader: Propagate CPU to bl_gen_write_ulong()
+  hw/mips/bootloader: Propagate CPU to bl_gen_write_u32()
+  hw/mips/bootloader: Propagate CPU to bl_gen_write_u64()
+  hw/mips/boston: Propagate CPU to gen_firmware()
+  hw/mips/fuloong: Propagate CPU to write_bootloader()
+  hw/mips/malta: Keep reference of vCPUs in MaltaState
+  hw/mips/malta: Propagate MaltaState to write_bootloader()
+  hw/mips/malta: Propagate MaltaState to bl_setup_gt64120_jump_kernel()
+  hw/mips/malta: Remove all uses of &first_cpu global
 
-> ---
->  target/riscv/kvm/kvm_riscv.h | 4 +++-
->  hw/riscv/virt.c              | 2 +-
->  target/riscv/kvm/kvm-cpu.c   | 4 ++--
->  3 files changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-> index 58518988681..b2bcd1041f6 100644
-> --- a/target/riscv/kvm/kvm_riscv.h
-> +++ b/target/riscv/kvm/kvm_riscv.h
-> @@ -19,6 +19,8 @@
->  #ifndef QEMU_KVM_RISCV_H
->  #define QEMU_KVM_RISCV_H
->
-> +#include "target/riscv/cpu-qom.h"
-> +
->  void kvm_riscv_reset_vcpu(RISCVCPU *cpu);
->  void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level);
->  void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-> @@ -28,6 +30,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64=
-_t group_shift,
->  void riscv_kvm_aplic_request(void *opaque, int irq, int level);
->  int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
->  void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
-> -uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs);
-> +uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
->
->  #endif
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 2bc5a9dd981..9e8876be29b 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -750,7 +750,7 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
-st MemMapEntry *memmap,
->      qemu_fdt_add_subnode(ms->fdt, "/cpus");
->      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
->                            kvm_enabled() ?
-> -                          kvm_riscv_get_timebase_frequency(first_cpu) :
-> +                          kvm_riscv_get_timebase_frequency(RISCV_CPU(fir=
-st_cpu)) :
->                            RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
->      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
->      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 11278ea778d..23ce7793594 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -758,11 +758,11 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
->      env->kvm_timer_dirty =3D false;
->  }
->
-> -uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
-> +uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu)
->  {
->      uint64_t reg;
->
-> -    KVM_RISCV_GET_TIMER(cs, frequency, reg);
-> +    KVM_RISCV_GET_TIMER(CPU(cpu), frequency, reg);
->
->      return reg;
->  }
-> --
-> 2.47.1
->
->
+ include/hw/mips/bootloader.h |  14 +++--
+ include/hw/mips/cps.h        |   1 +
+ hw/mips/bootloader.c         | 103 +++++++++++++++++++----------------
+ hw/mips/boston.c             |  21 ++++---
+ hw/mips/cps.c                |   4 +-
+ hw/mips/fuloong2e.c          |   6 +-
+ hw/mips/malta.c              |  59 +++++++++++---------
+ 7 files changed, 118 insertions(+), 90 deletions(-)
+
+-- 
+2.47.1
+
 
