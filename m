@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1ABCE7719E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E98E77188
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:54:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX8eM-0006wx-FZ; Sun, 12 Jan 2025 19:49:51 -0500
+	id 1tX8eM-0006sN-0W; Sun, 12 Jan 2025 19:49:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8eF-0006ZU-Qc
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:45 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8dy-0006CW-NY
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:27 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8eD-0000xn-Eg
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:43 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3862d6d5765so2058933f8f.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 16:49:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8dw-0000tc-HF
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:26 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4362bae4d7dso26415745e9.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 16:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736729379; x=1737334179; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736729362; x=1737334162; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OTZEKKLS4PrCy1H2BI5piTVs8fWWFd13d+VvsRM6L5Y=;
- b=uuPd5TJQmx9W6i+B4ueJV1st9rxu/eKkrvaDThOW+0deqQsU7lZyu0oOyy7DZUUFEp
- IataLQ2OrA8ZYscBDqznB7HO2fMiTpBjq3f0if3q8Q+w0zVnnUv7McjUoPTDHrCv67Wv
- mA5NROtRTrfyMyfvn0pYOqvCINCY9Fph9u1Refzfzsfx4FJdkILsLikPeEhqo4QM21Ut
- Rsx7BMmRZUi1X7sj/SsemI/rE46OWtwLhCEJ1eNCpvjSt+Hv1oud+utfWwYBt/ta8CdB
- CQLgDiaRkshHOvk0vjGKGDSQxVN5OqqZ/zR8hnOgAf7DMZ8Y9IQx+4ED3z7mU315K0vY
- 3q+A==
+ bh=DnTQGGFB/yJvM735W+46gpi1tDgppAHE7XXXP07EEYQ=;
+ b=mWH1Fht0jgzQkeIzTnC4o3reDUAGv0D6gU8LU7kWLNMF/zee6PNDbDTpYkp4jbfcKA
+ rG6GqYtiYf7+9jsEWflku9V8HQ58O2jUUwIi/KiEN0ZWb/e8P5P4jefpGCpgfnBWIlKI
+ GfgDc1ZKeyc2FY/3NZNHtxGSzc3yhMDFxkQaxKycNyJKRLScGODIFnanZsi/83Oep8/q
+ 3SVHl8cjdmoPL+eNqWjv0tT5DvEsscCBVxc0zk1ae5HuMNsX0tKeCSzn54+CbSBnm4/w
+ Hds3+POq6bH2vEKt/01W72rsv59g1EMfAqAAtHaDiDK+/NujZBsv0PeCE/fKYyeUMfy9
+ huMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736729379; x=1737334179;
+ d=1e100.net; s=20230601; t=1736729362; x=1737334162;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OTZEKKLS4PrCy1H2BI5piTVs8fWWFd13d+VvsRM6L5Y=;
- b=pvUoRIosGUVLenCjWyjP6X/aAu7UWTu5QGHf2YvF4+ARFiyik4vXyLirpXHvQ8C6/R
- xm0Ml9fXZIEOujfkEfPb7IYGm+q1dhQxa9jYhUxfdpvyO/Iv/X8WaACNkcnqna8ZBgml
- TnOpJ47ESx8rhkIROgUETSLXP+wcpFyvd0uNcd2wQVakrpDBypY8QiJ560EP1ATmH3De
- 3iXMAka5iURuww43k+nOF8KFeoNXzjPtyPRz72MzJqI3gEDXcrfiF0w58qydzGO9XI1Z
- lH5ZL78l0KKNl2SNX0Lpi+cJxxj5OVmv7c026vHV7FazGfLnFjG0Ka+xaVzJlK1KgrRs
- /F3A==
-X-Gm-Message-State: AOJu0YzV7iSxCDhhyx+llA5Po3K9RiaRlnoxwen4AT7MRF09VM150OTz
- Go+yxm+QJmWOb1g0vjTbAHyKjIURUApMd+iS7mST6wSYu6cjQnnC1jt0LnqaijOOc1sNlaVZXJb
- NFL0=
-X-Gm-Gg: ASbGnct3YxpJKeY8xNNBq2ABFyrni36SbVCho5kK1QkDjfmJqXXWCk9YfdiCh8HbmwX
- MzXkdqb+SKyOf5itVKjAmXeslxsXiDnqcaxItCiClcN8pCDAsb7F02Ie0LzNGlm5UssesnxgBOB
- JRPseXahT0ccMPc3YLp5wmrImrINCTiHvJk2wLxSfWJ4w7x6hEY951kg3Or1oC7PQ0wArKUZC6d
- kCMXjBU6rMiL4L953glV9nMCk2svMyEjmU3VZMuHSYu3NlQq8UVkVZB5luADqPYtXkGFKowRnFM
- 5/ZsZekHT1alkFNqZsXGRSKmNjVT4Ms=
-X-Google-Smtp-Source: AGHT+IFkWDguG0lB1L45FBqNQKhmga83S/UYq8cfgnHwrvI3DVMWcXE+VLSGgnLLWW3hDTXubSxhzQ==
-X-Received: by 2002:a5d:5f44:0:b0:38a:864e:29b1 with SMTP id
- ffacd0b85a97d-38a8730ddf8mr17410096f8f.41.1736729379134; 
- Sun, 12 Jan 2025 16:49:39 -0800 (PST)
+ bh=DnTQGGFB/yJvM735W+46gpi1tDgppAHE7XXXP07EEYQ=;
+ b=m3H84Bb0FAdHEQTmZIPuljE6lY//uUG40JmMBC08Wb59rIVH79ghF4R6mEfpLSg8l0
+ 3SGeakmRQsIQAWhSK9llqg4LowEz8jQBhgDj+n7To+nLX2YATGLDNwUHUz6ZSWq7XDRu
+ SZEhkBJMmb73La5aFGq58dmSnWec+tx1iV3bzMWSQzKx5oDCkqNUoiOZw2/9XirF8+JX
+ XDQA5kWxSbPDoC4QBoqw+JVuLPzQd5iaeAyfzeeIxMGfi9Rk1xFpqFW+pDzh0mxiyqGV
+ obMMT8fZLxK15lkAixyaj2bJeOkKNowDBy+QFOcZNIARLyZVYkQpEZAl4zxzxBoYQFoY
+ fDkA==
+X-Gm-Message-State: AOJu0YwqeDmTd5O6yNPutCvGIQvXCagSpsRR8UL+ceDT6PxpXOovPS/4
+ RjHb6GXiifhJmASgtDUizpcUGKrHOK03cWyDs4hTO5gNcEdt0VZQAz/Qn6kFs8/yDyoIVfTO2cj
+ fjEo=
+X-Gm-Gg: ASbGncvsYcxs2yMSDIyVupTEtC2c1fLvskqWgMgfsElra4DlC41IddJjMpqhi60qLDb
+ r7yqQkecoxUdx3RJideaOFGSVIvRt8cpTaMvqdPDzIrmUYvy0A0JTKmMz5s5A5A1O778J3LQHYI
+ hQLJnmv1jdq+E8EKmIMeExQKpgLMX0Eamfb/k4c93j+gHh8P16gp0aW+1sUEo5npND8KWN12EUB
+ 9zpP3cpLNOx8DUXvsnq6e2Tb0hf0GFAQeRvaaF3Yu6kfMHT41QTNUHLdUDGCl3WSCf38L/CRqj2
+ l3PttTj3VKO7dTsierij1ljbxKyvJHg=
+X-Google-Smtp-Source: AGHT+IHONZCVA6soNUrGSpYRy4eBb1zfGylUuf4MD8eEsJ4nqz1m8t1K/YzuoAU+rkHEjAuk3Ve4FQ==
+X-Received: by 2002:a5d:6d8e:0:b0:38a:88be:bcb4 with SMTP id
+ ffacd0b85a97d-38a88bebd23mr15668163f8f.29.1736729362500; 
+ Sun, 12 Jan 2025 16:49:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d0casm10893890f8f.11.2025.01.12.16.49.37
+ ffacd0b85a97d-38a8e4c1b44sm10901970f8f.90.2025.01.12.16.49.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 16:49:37 -0800 (PST)
+ Sun, 12 Jan 2025 16:49:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
  Paul Burton <paulburton@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 19/23] hw/mips/fuloong: Propagate CPU to write_bootloader()
-Date: Mon, 13 Jan 2025 01:47:44 +0100
-Message-ID: <20250113004748.41658-20-philmd@linaro.org>
+Subject: [PATCH 16/23] hw/mips/bootloader: Propagate CPU to bl_gen_write_u32()
+Date: Mon, 13 Jan 2025 01:47:41 +0100
+Message-ID: <20250113004748.41658-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250113004748.41658-1-philmd@linaro.org>
 References: <20250113004748.41658-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,45 +101,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mips_fuloong2e_init() created the vCPU so has its reference,
-propagate it to write_bootloader(), removing the &first_cpu use.
+Propagate the target agnostic CPU pointer to the publicly
+declared bl_gen_write_u32() function.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/mips/fuloong2e.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/hw/mips/bootloader.h |  3 ++-
+ hw/mips/bootloader.c         |  9 +++++----
+ hw/mips/malta.c              | 18 +++++++++---------
+ 3 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index b87622ee6e3..1e55adacdd2 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -163,7 +163,7 @@ static uint64_t load_kernel(MIPSCPU *cpu)
-     return kernel_entry;
+diff --git a/include/hw/mips/bootloader.h b/include/hw/mips/bootloader.h
+index a7f174e16bc..cc2ffe3ab2c 100644
+--- a/include/hw/mips/bootloader.h
++++ b/include/hw/mips/bootloader.h
+@@ -22,7 +22,8 @@ void bl_gen_jump_kernel(const MIPSCPU *cpu, void **ptr,
+                         target_ulong kernel_addr);
+ void bl_gen_write_ulong(const MIPSCPU *cpu, void **ptr,
+                         target_ulong addr, target_ulong val);
+-void bl_gen_write_u32(void **ptr, target_ulong addr, uint32_t val);
++void bl_gen_write_u32(const MIPSCPU *cpu, void **ptr,
++                      target_ulong addr, uint32_t val);
+ void bl_gen_write_u64(void **ptr, target_ulong addr, uint64_t val);
+ 
+ #endif
+diff --git a/hw/mips/bootloader.c b/hw/mips/bootloader.c
+index c4fd85b9f42..6f0222faf48 100644
+--- a/hw/mips/bootloader.c
++++ b/hw/mips/bootloader.c
+@@ -295,11 +295,12 @@ void bl_gen_write_ulong(const MIPSCPU *cpu, void **p,
+     }
  }
  
--static void write_bootloader(CPUMIPSState *env, uint8_t *base,
-+static void write_bootloader(const MIPSCPU *cpu, uint8_t *base,
-                              uint64_t kernel_addr)
+-void bl_gen_write_u32(void **p, target_ulong addr, uint32_t val)
++void bl_gen_write_u32(const MIPSCPU *cpu, void **p,
++                      target_ulong addr, uint32_t val)
  {
-     uint32_t *p;
-@@ -179,7 +179,7 @@ static void write_bootloader(CPUMIPSState *env, uint8_t *base,
-     /* Second part of the bootloader */
-     p = (uint32_t *)(base + 0x040);
+-    bl_gen_li(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, val);
+-    bl_gen_load_ulong(&MIPS_CPU(first_cpu)->env, p, BL_REG_K1, addr);
+-    bl_gen_sw(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, BL_REG_K1, 0x0);
++    bl_gen_li(&cpu->env, p, BL_REG_K0, val);
++    bl_gen_load_ulong(&cpu->env, p, BL_REG_K1, addr);
++    bl_gen_sw(&cpu->env, p, BL_REG_K0, BL_REG_K1, 0x0);
+ }
  
--    bl_gen_jump_kernel(MIPS_CPU(first_cpu), (void **)&p,
-+    bl_gen_jump_kernel(cpu, (void **)&p,
-                        true, ENVP_VADDR - 64,
-                        true, 2, true, ENVP_VADDR,
-                        true, ENVP_VADDR + 8,
-@@ -258,7 +258,7 @@ static void mips_fuloong2e_init(MachineState *machine)
-         loaderparams.kernel_cmdline = kernel_cmdline;
-         loaderparams.initrd_filename = initrd_filename;
-         kernel_entry = load_kernel(cpu);
--        write_bootloader(env, memory_region_get_ram_ptr(bios), kernel_entry);
-+        write_bootloader(cpu, memory_region_get_ram_ptr(bios), kernel_entry);
-     } else {
-         filename = qemu_find_file(QEMU_FILE_TYPE_BIOS,
-                                   machine->firmware ?: FULOONG_BIOSNAME);
+ void bl_gen_write_u64(void **p, target_ulong addr, uint64_t val)
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index fe9e06f48f4..5ccff2cb0c1 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -636,29 +636,29 @@ static void bl_setup_gt64120_jump_kernel(void **p, uint64_t run_addr,
+     /* setup MEM-to-PCI0 mapping as done by YAMON */
+ 
+     /* move GT64120 registers from 0x14000000 to 0x1be00000 */
+-    bl_gen_write_u32(p, /* GT_ISD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_ISD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x14000000 + 0x68),
+                      cpu_to_gt32(0x1be00000 << 3));
+ 
+     /* setup PCI0 io window to 0x18000000-0x181fffff */
+-    bl_gen_write_u32(p, /* GT_PCI0IOLD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0IOLD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0x48),
+                      cpu_to_gt32(0x18000000 << 3));
+-    bl_gen_write_u32(p, /* GT_PCI0IOHD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0IOHD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0x50),
+                      cpu_to_gt32(0x08000000 << 3));
+ 
+     /* setup PCI0 mem windows */
+-    bl_gen_write_u32(p, /* GT_PCI0M0LD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0M0LD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0x58),
+                      cpu_to_gt32(0x10000000 << 3));
+-    bl_gen_write_u32(p, /* GT_PCI0M0HD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0M0HD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0x60),
+                      cpu_to_gt32(0x07e00000 << 3));
+-    bl_gen_write_u32(p, /* GT_PCI0M1LD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0M1LD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0x80),
+                      cpu_to_gt32(0x18200000 << 3));
+-    bl_gen_write_u32(p, /* GT_PCI0M1HD */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0M1HD */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0x88),
+                      cpu_to_gt32(0x0bc00000 << 3));
+ 
+@@ -669,12 +669,12 @@ static void bl_setup_gt64120_jump_kernel(void **p, uint64_t run_addr,
+      * Load the PIIX IRQC[A:D] routing config address, then
+      * write routing configuration to the config data register.
+      */
+-    bl_gen_write_u32(p, /* GT_PCI0_CFGADDR */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0_CFGADDR */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0xcf8),
+                      tswap32((1 << 31) /* ConfigEn */
+                              | PCI_BUILD_BDF(0, PIIX4_PCI_DEVFN) << 8
+                              | PIIX_PIRQCA));
+-    bl_gen_write_u32(p, /* GT_PCI0_CFGDATA */
++    bl_gen_write_u32(MIPS_CPU(first_cpu), p, /* GT_PCI0_CFGDATA */
+                      cpu_mips_phys_to_kseg1(NULL, 0x1be00000 + 0xcfc),
+                      tswap32(ldl_be_p(pci_pins_cfg)));
+ 
 -- 
 2.47.1
 
