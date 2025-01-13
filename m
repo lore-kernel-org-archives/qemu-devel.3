@@ -4,143 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ABF4E7719E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19349E7719F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXE70-0000oj-Up; Mon, 13 Jan 2025 01:39:47 -0500
+	id 1tXECb-0001zS-R9; Mon, 13 Jan 2025 01:45:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE6w-0000oD-Np
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:39:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tXECR-0001v0-Ma; Mon, 13 Jan 2025 01:45:28 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE6v-0003L4-0v
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:39:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736750380;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dmvSsBQ65czULd4QG6FbEdUpqNR2FCcvLHCA6exd86I=;
- b=cyKSp7+TCYBWYPX0F/9APT9CxqHJ+u5okE8SvfUx5mLTjtwld7ACz68TcXkhx8r5H844x/
- 8yX1Cy6ZFv5jPDClJ2ar5RlzslxuAm+JwNGHtTqkhqMQw0jhY6uAL4/qHEEfbPJ/FQTN9t
- w/9C7xgnlBtZIF2oloHTlFXZWZMXNwM=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-GrL_EFn4PGugy20wbwILqA-1; Mon, 13 Jan 2025 01:39:38 -0500
-X-MC-Unique: GrL_EFn4PGugy20wbwILqA-1
-X-Mimecast-MFC-AGG-ID: GrL_EFn4PGugy20wbwILqA
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d3cef3ed56so3745879a12.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:39:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736750377; x=1737355177;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dmvSsBQ65czULd4QG6FbEdUpqNR2FCcvLHCA6exd86I=;
- b=lVMZ9Hu7slQRzWwUrnPqs8FC8hpl20ed2RIZPVglj3qdeLhDv2R0X5erPEEeW+jXNb
- RL+B6e7ouu+uE/bGMGCfe5oI8YuOITdEL8no4jg7XBCOYtkrfgkGfMreMPCEv/+0zKA5
- JqyKH/L7WkEKamADTj/YtJgmkkEG7OaFINgIdg9qwsjx2Tl7ZoKapsmaCm2grTaZwk50
- C8GBFvbUhEpWlqyDgssGdPFXGCWEXLAkezUhu6CGCPZj2RdJbYmnyK/ZcXmb04w8ERAl
- 13V7mn8AxrJp8bmmxxv4BsW2kstQWMlW79Jicq1LG3xQFp8vk6JdcIlMb3QQliBQoCEM
- s/cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnDIICoqBubJ6jLLAV4YikRC9D2+oE2cwAlN2CPCzplQEmxr5eIxV9gHUhqpYn12Ly4mIlmUeiKlSO@nongnu.org
-X-Gm-Message-State: AOJu0YxJkUxmp87hPI1X5hQc2e9tUEBTjyC9KiaiNBgignZAw/ip6IBu
- NRKuA/MOOVwaIkozMYic+4QD4bpVPZLKUH+lR10HhmEol02XtYiTpBnTbm7OXTOKxX5nTVGo2P4
- QzofGTbI4HfZD96rQ1x9T+gwXMr99cXObeS5GDY5qFou9vynZdLhx
-X-Gm-Gg: ASbGncujzpcUT0UVZbPBGVlieZrYmHjs9wz0wSTMRlb9pbz1fC4z5w4Opd2UvQRn3yg
- 5CyH3tGL4Y1yUR7f3p1/oiueYEDnA0gDXZoZaA4kWGGvFshZXmhuI5inWt7ns0WvcS5v+HlKFE8
- /x4T1wzuOWPR3vGu7WS5DIoVFs7Hd0TmKIQ31L0G1a9bqvomNI4rUIibjVY8sYj+5I0L1vlTExt
- uHA/GRoGxTTWZsKcnWbAgj3Gnlpgro7rrhK0m1tfZpA6tLJM+zN+GE8DniHJdRA6JsbJ4z8s9ET
- thYs9g+WYQ==
-X-Received: by 2002:a05:6402:26c4:b0:5d0:cca6:233a with SMTP id
- 4fb4d7f45d1cf-5d972e04ba8mr19117333a12.10.1736750376785; 
- Sun, 12 Jan 2025 22:39:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEfY1/b6d9IJI0+riN5YTaoxIJ/zDhU4f0lF8CRWTjyN8O4so9RcOmJLSeNQGBXuN3fefmacg==
-X-Received: by 2002:a05:6402:26c4:b0:5d0:cca6:233a with SMTP id
- 4fb4d7f45d1cf-5d972e04ba8mr19117313a12.10.1736750376456; 
- Sun, 12 Jan 2025 22:39:36 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-16.web.vodafone.de. [109.42.48.16])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d99046d822sm4307055a12.56.2025.01.12.22.39.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 22:39:35 -0800 (PST)
-Message-ID: <3cc941b1-b09d-4076-9234-9a385c762d3f@redhat.com>
-Date: Mon, 13 Jan 2025 07:39:34 +0100
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1tXECQ-0003zU-4l; Mon, 13 Jan 2025 01:45:23 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 13 Jan
+ 2025 14:44:57 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Mon, 13 Jan 2025 14:44:57 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v2 3/3] aspeed/soc: Support Timer for AST2700
+Date: Mon, 13 Jan 2025 14:44:55 +0800
+Message-ID: <20250113064455.1660564-4-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20250113064455.1660564-1-jamin_lin@aspeedtech.com>
+References: <20250113064455.1660564-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] migration: Fix parsing of s390 stream
-To: Michael Tokarev <mjt@tls.msk.ru>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250109185249.23952-1-farosas@suse.de>
- <20250109185249.23952-4-farosas@suse.de>
- <35911935-6f5c-40a3-aa73-3586dfdf3268@tls.msk.ru>
- <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.025,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,57 +62,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/01/2025 15.29, Michael Tokarev wrote:
-> 12.01.2025 16:06, Michael Tokarev wrote:
->> 09.01.2025 21:52, Fabiano Rosas wrote:
->>> The parsing for the S390StorageAttributes section is currently leaving
->>> an unconsumed token that is later interpreted by the generic code as
->>> QEMU_VM_EOF, cutting the parsing short.
->>>
->>> The migration will issue a STATTR_FLAG_DONE between iterations, which
->>> the script consumes correctly, but there's a final STATTR_FLAG_EOS at
->>> .save_complete that the script is ignoring. Since the EOS flag is a
->>> u64 0x1ULL and the stream is big endian, on little endian hosts a byte
->>> read from it will be 0x0, the same as QEMU_VM_EOF.
->>>
->>> Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py 
->>> for s390x")
->>> Reviewed-by: Peter Xu <peterx@redhat.com>
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>
->> This looks like a qemu-stable material (if not only for tests), is it not?
-> 
-> This one, when applied to 9.2 together with "s390x: Fix CSS migration",
-> causes s390x-migration-test failure.
-> 
-> First, it goes:
-> 
-> # starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/ 
-> qtest-1137270.sock -qtest-log /dev/null -chardev socket,path=/tmp/ 
-> qtest-1137270.qmp,id=char0 -mon chardev=char0,mode=control -display none - 
-> audio none -accel kvm -accel tcg -machine s390-ccw-virtio-9.2, -name 
-> target,debug-threads=on -m 128M -serial file:/tmp/migration-test-T987Z2/ 
-> dest_serial -incoming tcp:127.0.0.1:0 -bios /tmp/migration-test-T987Z2/ 
-> bootsect     -accel qtest
-> Traceback (most recent call last):
->    File "/tmp/q/scripts/analyze-migration.py", line 704, in <module>
->      dump.read(dump_memory = args.memory)
->    File "/tmp/q/scripts/analyze-migration.py", line 641, in read
->      section.read()
->    File "/tmp/q/scripts/analyze-migration.py", line 477, in read
->      field['data'] = reader(field, self.file)
->                      ^^^^^^^^^^^^^^^^^^^^^^^^
->    File "/tmp/q/scripts/analyze-migration.py", line 450, in __init__
->      for field in self.desc['struct']['fields']:
->                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-> KeyError: 'fields'
-> # Failed to analyze the migration stream
+Add Timer model for AST2700 Timer support. The Timer controller include 8 sets
+of 32-bit decrement counters.
 
-I think you need to backport patch 1/7, too?
+The base address of TIMER0 to TIMER7 as following.
+Base Address of Timer 0 = 0x12C1_0000
+Base Address of Timer 1 = 0x12C1_0040
+Base Address of Timer 2 = 0x12C1_0080
+Base Address of Timer 3 = 0x12C1_00C0
+Base Address of Timer 4 = 0x12C1_0100
+Base Address of Timer 5 = 0x12C1_0140
+Base Address of Timer 6 = 0x12C1_0180
+Base Address of Timer 7 = 0x12C1_01C0
 
-  Thomas
+The interrupt of TIMER0 to TIMER7 as following.
+GICINT16 = TIMER 0 interrupt
+GICINT17 = TIMER 1 interrupt
+GICINT18 = TIMER 2 interrupt
+GICINT19 = TIMER 3 interrupt
+GICINT20 = TIMER 4 interrupt
+GICINT21 = TIMER 5 interrupt
+GICINT22 = TIMER 6 interrupt
+GICINT23 = TIMER 7 interrupt
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/arm/aspeed_ast27x0.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index fee3755837..4114e15ddd 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -66,6 +66,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_GPIO]      =  0x14C0B000,
+     [ASPEED_DEV_RTC]       =  0x12C0F000,
+     [ASPEED_DEV_SDHCI]     =  0x14080000,
++    [ASPEED_DEV_TIMER1]    =  0x12C10000,
+ };
+ 
+ #define AST2700_MAX_IRQ 256
+@@ -397,6 +398,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     object_initialize_child(obj, "emmc-controller.sdhci", &s->emmc.slots[0],
+                             TYPE_SYSBUS_SDHCI);
++
++    snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
++    object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
+ }
+ 
+ /*
+@@ -716,6 +720,19 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_EMMC));
+ 
++    /* Timer */
++    object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
++                    sc->memmap[ASPEED_DEV_TIMER1]);
++    for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
++        irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->timerctrl), i, irq);
++    }
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+-- 
+2.34.1
 
 
