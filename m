@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C297E7719E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ABF4E7719E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXE4i-0007eY-Bv; Mon, 13 Jan 2025 01:37:25 -0500
+	id 1tXE70-0000oj-Up; Mon, 13 Jan 2025 01:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE4g-0007eG-6C
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:37:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE6w-0000oD-Np
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:39:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE4e-000364-Hf
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:37:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE6v-0003L4-0v
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:39:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736750239;
+ s=mimecast20190719; t=1736750380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tEg84/W5FlerU0AsumwaCotEajSz9vCijjzrPwkGdes=;
- b=A86Am1N59FMtO9oZ9K23xhtfIVbqm+Ela6tjxcEXmzcaUaNUMcLagJHWA9lHrwYOhdvQgW
- PM/fhwpR16wiaDUsfBpCSFIN4s+jRpYbXHYIVm+OypwNm3hOoNL/XNnExDoTA3oykksMsd
- mYtQIz7xT1AGl/eDoMXgqYoYTcFybrY=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dmvSsBQ65czULd4QG6FbEdUpqNR2FCcvLHCA6exd86I=;
+ b=cyKSp7+TCYBWYPX0F/9APT9CxqHJ+u5okE8SvfUx5mLTjtwld7ACz68TcXkhx8r5H844x/
+ 8yX1Cy6ZFv5jPDClJ2ar5RlzslxuAm+JwNGHtTqkhqMQw0jhY6uAL4/qHEEfbPJ/FQTN9t
+ w/9C7xgnlBtZIF2oloHTlFXZWZMXNwM=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-bYPVLQ3oPo2P00vzDF7Ykg-1; Mon, 13 Jan 2025 01:37:17 -0500
-X-MC-Unique: bYPVLQ3oPo2P00vzDF7Ykg-1
-X-Mimecast-MFC-AGG-ID: bYPVLQ3oPo2P00vzDF7Ykg
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-aa69c41994dso279978466b.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:37:17 -0800 (PST)
+ us-mta-371-GrL_EFn4PGugy20wbwILqA-1; Mon, 13 Jan 2025 01:39:38 -0500
+X-MC-Unique: GrL_EFn4PGugy20wbwILqA-1
+X-Mimecast-MFC-AGG-ID: GrL_EFn4PGugy20wbwILqA
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3cef3ed56so3745879a12.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:39:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736750237; x=1737355037;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tEg84/W5FlerU0AsumwaCotEajSz9vCijjzrPwkGdes=;
- b=mcAI4uJvSCIKV40an2oPP49EFPxzm/o0b0eyjSDkaN36HRH3WScE1V7NDtoo4143W3
- Syi6wWxyZEQIB8p3Lp4vTVZeu2lMpaFcuof7Uk8eD/4vyRDagi+YuOEXgloPI/O2em1u
- zSOh/wZZlvs64TtkZDMtnhl4LPfROYJRlrwWQy5Y6He4fGlJEsTpbPvLeb5c+rOIs45A
- U6U3pmAvHAVIVs/IR8hrKcaI81OXPZ5kzIpYOi6IAD02f5q/tYLIuNWOAfQzVhAr9wwc
- 9DbC3ic6DBfTHoDQEMJxZqHwcN9Kk4lKo6zvw6reYzprY77tNzGJya/cwSxAr/smPWr2
- hkvw==
+ d=1e100.net; s=20230601; t=1736750377; x=1737355177;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dmvSsBQ65czULd4QG6FbEdUpqNR2FCcvLHCA6exd86I=;
+ b=lVMZ9Hu7slQRzWwUrnPqs8FC8hpl20ed2RIZPVglj3qdeLhDv2R0X5erPEEeW+jXNb
+ RL+B6e7ouu+uE/bGMGCfe5oI8YuOITdEL8no4jg7XBCOYtkrfgkGfMreMPCEv/+0zKA5
+ JqyKH/L7WkEKamADTj/YtJgmkkEG7OaFINgIdg9qwsjx2Tl7ZoKapsmaCm2grTaZwk50
+ C8GBFvbUhEpWlqyDgssGdPFXGCWEXLAkezUhu6CGCPZj2RdJbYmnyK/ZcXmb04w8ERAl
+ 13V7mn8AxrJp8bmmxxv4BsW2kstQWMlW79Jicq1LG3xQFp8vk6JdcIlMb3QQliBQoCEM
+ s/cw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEVXcxz47qKVK/VivwBkQ+geqB4jiH30rOEEOm/iHViS2bHkv062PywNU87rDu9cmPiUa5gXXzkV0Q@nongnu.org
-X-Gm-Message-State: AOJu0YyisrsWM0mVTkjG9SrgdqerzYlPSpIZlEH8ziAsqpJ0OYOQMWKc
- gw4INyJcvmZjAQGKMk6aM/QO8hBU8KFnWXQooO6XJ+hbFVNB4WTDf+ZTox050ZNqAT54plWK9pD
- sK1hOdbQ+w6hOvYDLXkrQX9hQaFmgY+XEGy+8YMowdIYqa7Ix0+1ep/h54Cn+
-X-Gm-Gg: ASbGncsn0QPv3ANpP2657TikE2tn12e1tlnEvUW8IOaTSjc5X+cazfCvh3Oz9CBvloS
- 9YFOxsSv+CQ4PgKu+XSamc2h+owi1B9PiPmlKsrJp2aHD7X5lB/5povkGLYuhZJCdtHiak8aOFc
- mxOBPUVGzGaTFcsESSEu35PkvTLVgr/o7DkQ5Qx5IWPpdYSN7VpueqLerviP6n6rxyoqqCUzpnP
- 9hf2/4sU+eNVe4lbiPaDN3qkEFWPurkpTl5FSrMXSFC2HXAeB4Z7RO0ApeDoDA3tGwyXkkua0lL
- ltLAoVxf+g==
-X-Received: by 2002:a05:6402:1eca:b0:5d6:688d:b683 with SMTP id
- 4fb4d7f45d1cf-5d972e0b18bmr45180726a12.9.1736750235815; 
- Sun, 12 Jan 2025 22:37:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHVjH8+in5YM/mnNsAUQxiBmawaw+MTia5QwAxB4281Y7y95d03nFALyELizycZ6F/b6YoIjw==
-X-Received: by 2002:a05:6402:1eca:b0:5d6:688d:b683 with SMTP id
- 4fb4d7f45d1cf-5d972e0b18bmr45180503a12.9.1736750234482; 
- Sun, 12 Jan 2025 22:37:14 -0800 (PST)
+ AJvYcCVnDIICoqBubJ6jLLAV4YikRC9D2+oE2cwAlN2CPCzplQEmxr5eIxV9gHUhqpYn12Ly4mIlmUeiKlSO@nongnu.org
+X-Gm-Message-State: AOJu0YxJkUxmp87hPI1X5hQc2e9tUEBTjyC9KiaiNBgignZAw/ip6IBu
+ NRKuA/MOOVwaIkozMYic+4QD4bpVPZLKUH+lR10HhmEol02XtYiTpBnTbm7OXTOKxX5nTVGo2P4
+ QzofGTbI4HfZD96rQ1x9T+gwXMr99cXObeS5GDY5qFou9vynZdLhx
+X-Gm-Gg: ASbGncujzpcUT0UVZbPBGVlieZrYmHjs9wz0wSTMRlb9pbz1fC4z5w4Opd2UvQRn3yg
+ 5CyH3tGL4Y1yUR7f3p1/oiueYEDnA0gDXZoZaA4kWGGvFshZXmhuI5inWt7ns0WvcS5v+HlKFE8
+ /x4T1wzuOWPR3vGu7WS5DIoVFs7Hd0TmKIQ31L0G1a9bqvomNI4rUIibjVY8sYj+5I0L1vlTExt
+ uHA/GRoGxTTWZsKcnWbAgj3Gnlpgro7rrhK0m1tfZpA6tLJM+zN+GE8DniHJdRA6JsbJ4z8s9ET
+ thYs9g+WYQ==
+X-Received: by 2002:a05:6402:26c4:b0:5d0:cca6:233a with SMTP id
+ 4fb4d7f45d1cf-5d972e04ba8mr19117333a12.10.1736750376785; 
+ Sun, 12 Jan 2025 22:39:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEfY1/b6d9IJI0+riN5YTaoxIJ/zDhU4f0lF8CRWTjyN8O4so9RcOmJLSeNQGBXuN3fefmacg==
+X-Received: by 2002:a05:6402:26c4:b0:5d0:cca6:233a with SMTP id
+ 4fb4d7f45d1cf-5d972e04ba8mr19117313a12.10.1736750376456; 
+ Sun, 12 Jan 2025 22:39:36 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-16.web.vodafone.de. [109.42.48.16])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90dc570sm464677766b.51.2025.01.12.22.37.13
+ 4fb4d7f45d1cf-5d99046d822sm4307055a12.56.2025.01.12.22.39.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 22:37:13 -0800 (PST)
-Message-ID: <ed6ea1e9-ade1-4c24-b151-803e141e4b26@redhat.com>
-Date: Mon, 13 Jan 2025 07:37:12 +0100
+ Sun, 12 Jan 2025 22:39:35 -0800 (PST)
+Message-ID: <3cc941b1-b09d-4076-9234-9a385c762d3f@redhat.com>
+Date: Mon, 13 Jan 2025 07:39:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/7] s390x: Fix CSS migration
+Subject: Re: [PATCH v3 3/7] migration: Fix parsing of s390 stream
 To: Michael Tokarev <mjt@tls.msk.ru>, Fabiano Rosas <farosas@suse.de>,
  qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
 References: <20250109185249.23952-1-farosas@suse.de>
- <20250109185249.23952-8-farosas@suse.de>
- <a23bf1a7-70fc-46d0-b465-6e9851feb669@tls.msk.ru>
-Content-Language: en-US
+ <20250109185249.23952-4-farosas@suse.de>
+ <35911935-6f5c-40a3-aa73-3586dfdf3268@tls.msk.ru>
+ <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,9 +128,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <a23bf1a7-70fc-46d0-b465-6e9851feb669@tls.msk.ru>
+In-Reply-To: <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -156,29 +156,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/01/2025 15.34, Michael Tokarev wrote:
-> 09.01.2025 21:52, Fabiano Rosas wrote:
->> Commit a55ae46683 ("s390: move css_migration_enabled from machine to
->> css.c") disabled CSS migration globally instead of doing it
->> per-instance.
+On 12/01/2025 15.29, Michael Tokarev wrote:
+> 12.01.2025 16:06, Michael Tokarev wrote:
+>> 09.01.2025 21:52, Fabiano Rosas wrote:
+>>> The parsing for the S390StorageAttributes section is currently leaving
+>>> an unconsumed token that is later interpreted by the generic code as
+>>> QEMU_VM_EOF, cutting the parsing short.
+>>>
+>>> The migration will issue a STATTR_FLAG_DONE between iterations, which
+>>> the script consumes correctly, but there's a final STATTR_FLAG_EOS at
+>>> .save_complete that the script is ignoring. Since the EOS flag is a
+>>> u64 0x1ULL and the stream is big endian, on little endian hosts a byte
+>>> read from it will be 0x0, the same as QEMU_VM_EOF.
+>>>
+>>> Fixes: 81c2c9dd5d ("tests/qtest/migration-test: Fix analyze-migration.py 
+>>> for s390x")
+>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 >>
->> CC: Paolo Bonzini <pbonzini@redhat.com>
->> CC: qemu-stable@nongnu.org #9.1
->> Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> Message-Id: <20241213160120.23880-3-farosas@suse.de>
+>> This looks like a qemu-stable material (if not only for tests), is it not?
 > 
-> And this one causes s390x-migration-test failure on 9.2 on s390x.
-> While this test succeeds on x86_64.
+> This one, when applied to 9.2 together with "s390x: Fix CSS migration",
+> causes s390x-migration-test failure.
 > 
-> https://gitlab.com/qemu-project/qemu/-/jobs/8829799108
+> First, it goes:
 > 
-> Help? :)
+> # starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/ 
+> qtest-1137270.sock -qtest-log /dev/null -chardev socket,path=/tmp/ 
+> qtest-1137270.qmp,id=char0 -mon chardev=char0,mode=control -display none - 
+> audio none -accel kvm -accel tcg -machine s390-ccw-virtio-9.2, -name 
+> target,debug-threads=on -m 128M -serial file:/tmp/migration-test-T987Z2/ 
+> dest_serial -incoming tcp:127.0.0.1:0 -bios /tmp/migration-test-T987Z2/ 
+> bootsect     -accel qtest
+> Traceback (most recent call last):
+>    File "/tmp/q/scripts/analyze-migration.py", line 704, in <module>
+>      dump.read(dump_memory = args.memory)
+>    File "/tmp/q/scripts/analyze-migration.py", line 641, in read
+>      section.read()
+>    File "/tmp/q/scripts/analyze-migration.py", line 477, in read
+>      field['data'] = reader(field, self.file)
+>                      ^^^^^^^^^^^^^^^^^^^^^^^^
+>    File "/tmp/q/scripts/analyze-migration.py", line 450, in __init__
+>      for field in self.desc['struct']['fields']:
+>                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+> KeyError: 'fields'
+> # Failed to analyze the migration stream
 
-That looks like the script error that should be fixed by patch 3/7, I think? 
-You likely need that patch, too...
+I think you need to backport patch 1/7, too?
 
   Thomas
 
