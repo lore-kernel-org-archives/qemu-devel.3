@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC6AE7719F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 959FCE77188
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX8eP-0007GN-0V; Sun, 12 Jan 2025 19:49:53 -0500
+	id 1tX8e4-0006Jj-BW; Sun, 12 Jan 2025 19:49:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8e4-0006S8-GJ
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:39 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8ds-00060O-V5
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:23 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8e2-0000vF-O2
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:32 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so39839095e9.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 16:49:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8dr-0000rt-Ay
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:20 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385d7b4da2bso3173574f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 16:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736729368; x=1737334168; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736729356; x=1737334156; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5dPxKQ/F0F5Y9fVdADeTYJnxnJvYLv/MwkaYYc0aiVY=;
- b=bheoitWtdxQbkerkqlsOZHi1Nc2yJeg2Cnam8mTC7Mtdp8JnAdECzAfsDn5+zh6DLX
- 2N1Te2io1oj6dSnv2V3M+iOpxg4D5cimdfAvvjgYKCOOfP0ofyCZmQhrpgxcwZiOqwi4
- Q6mi+rL1AxJ0H4LO4pZQ06Fm27lK97ILdNCGf0q8us1YeTMXC9uAI06SAQLOfsDVTwqh
- YourvnmkTBdWs6HR5qNo8rsQ/QyoucCF//23yZfOrn6pY7KUd0ErhguEOnyk5Rq6Clda
- jzsCsCtORIRHeHp4YaCEJ5HF/uqfd60oyk55RYJUQnJZO8I1uHnGT6GL3hWt9pOcXy1O
- 4qTw==
+ bh=aNFKP/FDejDxWOyb4w8GKSLrDtPHIPMWbfLURxKHRFg=;
+ b=Qa2ObTTnlJycU055II4LzsGjuAlPDo+gI/+MDdlhlp004VAHWlKAt7XmLrRnQwhi5D
+ zawdXj3hZf43q2Ru2JVFd0DSdRRFF18grYfW13qOchQnInoyugfFo/So/9NQjqyyX4ys
+ 5L7BjIxapur+9V7HQ1NdAMRY0JmGaCUHneIcTB1I5UdvQV+0ZK8gcUySZOpnzmT4Ebrq
+ B9Filn3hqaG/Dzrti1OOOR09tpk8hnwoiIRUPYT1VovGEiZCFk6yINQW3oPZLuH/oRXi
+ eRgL1LQ6apgnJxzRVb4D07/6hOhE7Dvcm8KogeBQVb59eLmVLttGrhgncHp3Pgk3OmUF
+ 1goQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736729368; x=1737334168;
+ d=1e100.net; s=20230601; t=1736729356; x=1737334156;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5dPxKQ/F0F5Y9fVdADeTYJnxnJvYLv/MwkaYYc0aiVY=;
- b=bOCuwnTfuj2BACoiWWOiKXDwi5EK16vemeX022pJLWI2vl6Arl8uV4rwRWbXV7BVPa
- 6eGr+q6J5So5QO6fiIv0cZxYvWcNM2AK1b2yKuELzRhZvMbadyHa0MvCBuQLi0DfV+13
- ba94cB3c+3BwB+Ot5ybHrKmeGDzXS0Qgy3+yJeBs++YSpPXAYfyMllz06WGmuDMc1kiX
- MLL9mHO6UHv01WxWph4AdHGOxO5ubX21+IOxWRh4KdXwMROlASGWsv4IwadhSpp0pTNZ
- XDoygfrewKKOgZZU8xQWEvw4KtB0Y9QzG3MDFdGz+k9TaTBWWJsncJX41QQEQEMEwfDL
- kUPw==
-X-Gm-Message-State: AOJu0YwRaXMhRx3hVYOdqjc2p1j0xThBWtohdea/6D+HIsrADl0B4ZRH
- nlJruFTIv9auBRfzvkNnCpYPrDhDfkP1DyFOWSy5tfAPhXEEA9DXcm3PtwZfuRdB7LhNiilT7Qc
- NYZI=
-X-Gm-Gg: ASbGncvPAw++rttnejTY9RMAGW2bC59NXSnpwk3D5v/p71iqmg3WsvB2c/E1+BI16jO
- Bys/Mkjt4YxNr+kGbFMnWAFd36Ti4oVhvgaGKGTezxI+Dx2Jucst67hOMW4DLrPw4e2JvCBm826
- BLv4NOHLNviLfFQw/ZZxJbtcbdTRGspce5Jc4p30FIa3yZmyX3sQFlnbLkKkpwwBfrc4PRmroeR
- pyWV6UKooCN74YE8Cec6CtvpTl/PKYo7ZB1PpqjNCLa3Dxto+jFj4fZM5tYsf8apVh9wnJsqivX
- WX7Ed2Teet4figprjX4Jd6pcqcTs2qI=
-X-Google-Smtp-Source: AGHT+IHkLaGjvjzOp2PJNqamaQOL4GM9Dzw9H5a8O0832ed9Tgdp4eOWkBGYyQ/a7w8+f1NpWDnViw==
-X-Received: by 2002:a05:6000:4011:b0:386:3835:9fec with SMTP id
- ffacd0b85a97d-38a873306cemr18348103f8f.44.1736729368552; 
- Sun, 12 Jan 2025 16:49:28 -0800 (PST)
+ bh=aNFKP/FDejDxWOyb4w8GKSLrDtPHIPMWbfLURxKHRFg=;
+ b=vuwUlG49W7whDthSWytfL2UulfXji4BonmbCh+qiX/8t0qGxV6SoISpNmVanTqLxVT
+ GZQ5VFlM9ZOdD93hAlXW42VjcSdLAeUe38X1URnciwQbzjOSXlojkK5hYZdCRcqA8nXI
+ IhPqD66IV61++Jsux6mrvzR5a1sKMj5oTZXnXuivd6i3a7zGJV8RwZ8U84OKJ8AmXj/n
+ zz2xcXzqKVm2taB53ttNpYLDfn3ERPeSuZg+yKvXL5OaQt/c78lk6jrLapC5TTzBN1/t
+ kTsSVrMa+2bO4xXPTr/36sxs6tLIK3gy7weWs9ZUMJuEc+NoYCwyxNKQOHve98Sbi7i8
+ 3F1A==
+X-Gm-Message-State: AOJu0YxMTM7zbO0IWXn+NGpZ//MPVMsmoF767/HF1X2B6GusVzB56zk8
+ zm/6xhai4ADVcv8Z2ZegjFSNc1FoWPHCVLk8oJEzcBXpx3Iy1oqDJy1sj0dT5XVzdjueC5wiluA
+ Qe+E=
+X-Gm-Gg: ASbGncubAhyGY9HAR6kSdpjAGWJ+d4rIe2lKtGxSQ8wlrurykWUFiBNtIMlgEBcbrLX
+ 4gSgOUZuvZqsafZQNBiw1vc7/6xkfr94nHIe+CXq7Qvb0Tjuzho3O/t69C4OShXszHtehf7YfND
+ YnbUXp05qdG7HgqIB/NlCTgyFN6Xwv+yaGD1Z5PLetGNDSR/nNcUHCvbwvVF7gmvUr/qmH6B0di
+ SFuPQTezhrQJ70/668igoWydcGDYcilOcRYuia4hTstDqbIp5cxzdi6MviD5kZ15I76zz5skvVv
+ sLjfCQv/ij3+/RDSrfE5oGu4HRTE3fQ=
+X-Google-Smtp-Source: AGHT+IHRPidUYOUuGm1tQ09mjI7APa5th/GsTBOxUkLn8solDvsg+dElVnAulMo3mmXHCGmfskRl5Q==
+X-Received: by 2002:a05:6000:186e:b0:385:dc45:ea22 with SMTP id
+ ffacd0b85a97d-38a87338d84mr20575885f8f.39.1736729356559; 
+ Sun, 12 Jan 2025 16:49:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38325esm10765264f8f.27.2025.01.12.16.49.26
+ ffacd0b85a97d-38a8e4b82a4sm10918902f8f.72.2025.01.12.16.49.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 16:49:27 -0800 (PST)
+ Sun, 12 Jan 2025 16:49:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
  Paul Burton <paulburton@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 17/23] hw/mips/bootloader: Propagate CPU to bl_gen_write_u64()
-Date: Mon, 13 Jan 2025 01:47:42 +0100
-Message-ID: <20250113004748.41658-18-philmd@linaro.org>
+Subject: [PATCH 15/23] hw/mips/bootloader: Propagate CPU to
+ bl_gen_write_ulong()
+Date: Mon, 13 Jan 2025 01:47:40 +0100
+Message-ID: <20250113004748.41658-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250113004748.41658-1-philmd@linaro.org>
 References: <20250113004748.41658-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,74 +103,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Propagate the target agnostic CPU pointer to the publicly
-declared bl_gen_write_u64() function.
+declared bl_gen_write_ulong() function.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/mips/bootloader.h | 3 ++-
- hw/mips/bootloader.c         | 9 +++++----
- hw/mips/boston.c             | 6 +++---
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ include/hw/mips/bootloader.h |  3 ++-
+ hw/mips/bootloader.c         | 13 +++++++------
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/include/hw/mips/bootloader.h b/include/hw/mips/bootloader.h
-index cc2ffe3ab2c..946580f6f5c 100644
+index 6b58eafb8bc..a7f174e16bc 100644
 --- a/include/hw/mips/bootloader.h
 +++ b/include/hw/mips/bootloader.h
-@@ -24,6 +24,7 @@ void bl_gen_write_ulong(const MIPSCPU *cpu, void **ptr,
-                         target_ulong addr, target_ulong val);
- void bl_gen_write_u32(const MIPSCPU *cpu, void **ptr,
-                       target_ulong addr, uint32_t val);
--void bl_gen_write_u64(void **ptr, target_ulong addr, uint64_t val);
-+void bl_gen_write_u64(const MIPSCPU *cpu, void **ptr,
-+                      target_ulong addr, uint64_t val);
+@@ -20,7 +20,8 @@ void bl_gen_jump_kernel(const MIPSCPU *cpu, void **ptr,
+                         bool set_a2, target_ulong a2,
+                         bool set_a3, target_ulong a3,
+                         target_ulong kernel_addr);
+-void bl_gen_write_ulong(void **ptr, target_ulong addr, target_ulong val);
++void bl_gen_write_ulong(const MIPSCPU *cpu, void **ptr,
++                        target_ulong addr, target_ulong val);
+ void bl_gen_write_u32(void **ptr, target_ulong addr, uint32_t val);
+ void bl_gen_write_u64(void **ptr, target_ulong addr, uint64_t val);
  
- #endif
 diff --git a/hw/mips/bootloader.c b/hw/mips/bootloader.c
-index 6f0222faf48..c5bad03b528 100644
+index 9804051ab2d..c4fd85b9f42 100644
 --- a/hw/mips/bootloader.c
 +++ b/hw/mips/bootloader.c
-@@ -303,9 +303,10 @@ void bl_gen_write_u32(const MIPSCPU *cpu, void **p,
-     bl_gen_sw(&cpu->env, p, BL_REG_K0, BL_REG_K1, 0x0);
+@@ -283,14 +283,15 @@ void bl_gen_jump_kernel(const MIPSCPU *cpu, void **p,
+     bl_gen_jump_to(cpu, p, kernel_addr);
  }
  
--void bl_gen_write_u64(void **p, target_ulong addr, uint64_t val)
-+void bl_gen_write_u64(const MIPSCPU *cpu, void **p,
-+                      target_ulong addr, uint64_t val)
+-void bl_gen_write_ulong(void **p, target_ulong addr, target_ulong val)
++void bl_gen_write_ulong(const MIPSCPU *cpu, void **p,
++                        target_ulong addr, target_ulong val)
  {
--    bl_gen_dli(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, val);
+-    bl_gen_load_ulong(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, val);
 -    bl_gen_load_ulong(&MIPS_CPU(first_cpu)->env, p, BL_REG_K1, addr);
--    bl_gen_sd(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, BL_REG_K1, 0x0);
-+    bl_gen_dli(&cpu->env, p, BL_REG_K0, val);
+-    if (bootcpu_supports_isa(&MIPS_CPU(first_cpu)->env, ISA_MIPS3)) {
+-        bl_gen_sd(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, BL_REG_K1, 0x0);
++    bl_gen_load_ulong(&cpu->env, p, BL_REG_K0, val);
 +    bl_gen_load_ulong(&cpu->env, p, BL_REG_K1, addr);
-+    bl_gen_sd(&cpu->env, p, BL_REG_K0, BL_REG_K1, 0x0);
++    if (bootcpu_supports_isa(&cpu->env, ISA_MIPS3)) {
++        bl_gen_sd(&cpu->env, p, BL_REG_K0, BL_REG_K1, 0x0);
+     } else {
+-        bl_gen_sw(&MIPS_CPU(first_cpu)->env, p, BL_REG_K0, BL_REG_K1, 0x0);
++        bl_gen_sw(&cpu->env, p, BL_REG_K0, BL_REG_K1, 0x0);
+     }
  }
-diff --git a/hw/mips/boston.c b/hw/mips/boston.c
-index 3a06b776fe8..09c4dfade12 100644
---- a/hw/mips/boston.c
-+++ b/hw/mips/boston.c
-@@ -329,19 +329,19 @@ static void gen_firmware(void *p, hwaddr kernel_entry, hwaddr fdt_addr)
  
-     /* Move CM GCRs */
-     regaddr = cpu_mips_phys_to_kseg1(NULL, GCR_BASE_ADDR + GCR_BASE_OFS),
--    bl_gen_write_u64(&p, regaddr,
-+    bl_gen_write_u64(MIPS_CPU(first_cpu), &p, regaddr,
-                      boston_memmap[BOSTON_CM].base);
- 
-     /* Move & enable GIC GCRs */
-     regaddr = cpu_mips_phys_to_kseg1(NULL, boston_memmap[BOSTON_CM].base
-                                            + GCR_GIC_BASE_OFS),
--    bl_gen_write_u64(&p, regaddr,
-+    bl_gen_write_u64(MIPS_CPU(first_cpu), &p, regaddr,
-                      boston_memmap[BOSTON_GIC].base | GCR_GIC_BASE_GICEN_MSK);
- 
-     /* Move & enable CPC GCRs */
-     regaddr = cpu_mips_phys_to_kseg1(NULL, boston_memmap[BOSTON_CM].base
-                                            + GCR_CPC_BASE_OFS),
--    bl_gen_write_u64(&p, regaddr,
-+    bl_gen_write_u64(MIPS_CPU(first_cpu), &p, regaddr,
-                      boston_memmap[BOSTON_CPC].base | GCR_CPC_BASE_CPCEN_MSK);
- 
-     /*
 -- 
 2.47.1
 
