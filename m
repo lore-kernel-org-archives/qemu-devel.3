@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B03DE77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 03:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7CEE7719E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 03:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXAhd-0008WE-ST; Sun, 12 Jan 2025 22:01:21 -0500
+	id 1tXAj8-0000mx-VF; Sun, 12 Jan 2025 22:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tXAhb-0008Vg-VI
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 22:01:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tXAha-00030G-Co
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 22:01:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736737277;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kJAedF2T7kxUO0pdpN0+pQQSACB+LDRt6k5x4lxfKpY=;
- b=clTJCaNHvkg3DltB0HHuJosEpfJltMVUqGwiwDYU14RAPGDrmSGi4Ijsz3+hc//jN//Bhm
- /220YDsUPqwV5h3QsvsoZLBUyGUTN3PKSrAGMkje2V90JxJKtJKZPS4qaDSLIAv4AeI3Ox
- etNODI2xKpumGPjsxxcL6pnEthIXhow=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-qK60hlwLPPieecsI1R4Bqg-1; Sun, 12 Jan 2025 22:01:15 -0500
-X-MC-Unique: qK60hlwLPPieecsI1R4Bqg-1
-X-Mimecast-MFC-AGG-ID: qK60hlwLPPieecsI1R4Bqg
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ef9204f898so6530576a91.2
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 19:01:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tXAj2-0000m9-JH; Sun, 12 Jan 2025 22:02:48 -0500
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tXAj0-00037f-AJ; Sun, 12 Jan 2025 22:02:47 -0500
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4afe1009960so1154208137.0; 
+ Sun, 12 Jan 2025 19:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736737365; x=1737342165; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=umLWiyFCx8qsZOmmTC5MPv2lgHRcqsUXDfRQmC2DloA=;
+ b=KG95vps29iMnLTb8RRJ/qP2WYlLcx3DlW8PK9bQaAXMig8qUXZ8F5N6NqkZWE+/nyl
+ 2aC6h8ok35pcCQGk4yC5rbLwGpvVnMQhfXvDEU/Gxfcm+l4BOzrYiD9hGVIDBhUMQEX/
+ Muvy+hGHdGaEbjUvD6uLWewqntlhBYF1dM3FyG8iG5cwaZkaZ1WsBLXE2g2M1FhvRYzJ
+ WcnKhgxI1RFGVfZLInNyiJZKLFmRlo85D5m7zRExZjsA6dozCYHfG1axcrM1hyJ/aFl1
+ ujbitPxZdJbyu8ulqioYqDOQF6AjazVVXx2eKQgg5ogr0BdUkZUzpxgXePQDncjsKquJ
+ cqoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736737273; x=1737342073;
+ d=1e100.net; s=20230601; t=1736737365; x=1737342165;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kJAedF2T7kxUO0pdpN0+pQQSACB+LDRt6k5x4lxfKpY=;
- b=o7+7sUJ1VPyc/t5b1CPZZxEDh0RUJz8ccTwTmUybzvX5UGhzqIvcwXaJq7bR9jB3B3
- 0nZ9Gz75h/wBDM6BoqcRv9LtLd/fiZFtKgYFogztUWVNh3VZ55KXUmRBwVjNwuN6IXEK
- flZIZYUOAWNbALT7Wuxk/g2VUVd6YF6NkKBgbGEsSh3wTX4pZjdcuiYQuxSFrJYDZGAL
- 69R+Jv+bkj8x19cGsNvCIUD8S2nDYfJ9N7E2fAGxf16d+W4w5r7j25n4HeynI4wdAAOs
- CmHXIGHmH3GJ/qHe50JDNAvUXIFVF59ebLWpIOdOK0eK32rXs3Df8Vs+lCY2nmn2r97N
- fvvg==
-X-Gm-Message-State: AOJu0YwnvudvX22jSjJbhANVT4pldIzlHeLOTGC8MlY6mjUGXkTPwrbA
- aETUJ0Cvy1hzPLgYuPs78zaC9pzdeeGgGxJZmBH1MpVbGpVZjd7rQ3azj2Kk8cyIr+2AezY2fU3
- EKhV5jlEmyN5Vqg+IDViJBwdQv+S22eUCvQQxQHGmiPPTRw5ninlUH1loOKNcC3uMtXSwM+biYS
- G0P1oI6FOHGc9NO6JutCooOljxqBYbJIQ/FxAIAg==
-X-Gm-Gg: ASbGnctbqPEcNZgdvrtjdwPnqOoArEpYg5rCD/RfYYZn4/H1NJB/eCLQowplXnMRhw7
- lhr3dfnpZs3goN0aY6MQyb66puyseNn4B7+94G/o=
-X-Received: by 2002:a17:90b:5241:b0:2ee:f076:20fb with SMTP id
- 98e67ed59e1d1-2f548f6a009mr31809279a91.17.1736737273329; 
- Sun, 12 Jan 2025 19:01:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHxgk+2cVRcmNtOuWZBA+qSfzstXIRXCq0E8H4ScUAwjniHS/bxYHw3OTIIDvEicvkqD5RYFQA1WUapG5sprkE=
-X-Received: by 2002:a17:90b:5241:b0:2ee:f076:20fb with SMTP id
- 98e67ed59e1d1-2f548f6a009mr31809241a91.17.1736737272954; Sun, 12 Jan 2025
- 19:01:12 -0800 (PST)
+ bh=umLWiyFCx8qsZOmmTC5MPv2lgHRcqsUXDfRQmC2DloA=;
+ b=Gl3N+tAtK4PuUlw+oy0mZmx95ShEuPIDK1UoBK+fNqJAlV7P3nymjIL8N5JzQgVAuw
+ nibDNEd2ac2FAYvHFPISrXvfrbC45eOuywJ1rs6NMbZ+lGXprCQoo22Mz3wRLJBbQb0d
+ f+JERfvIzTyoXYd/vvft447tEvWoF8imkrwbqVX5v6B3CcNJ7J1uqOd50rl9L6cBXpmo
+ pzTpBOpe4iYb3NvX9AxVDtvluVKku++VEzT8MwdvtOavVGJpA3i0wo7/AJx3YYwSqy1c
+ ZcbwYT1KoOtPMuw4ZqurPcCKu5QixEFsYzSR+Z4prf57yYpr4OcEvmHh2Gel/EW97Run
+ z64g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVayDKS0BCXnewaHUYfB8M6anokj2xFpWXekVgmML7cT2c1cDp3D1BHaH0deYutvPlg4KYj9zLOF/U4@nongnu.org
+X-Gm-Message-State: AOJu0YxRdwxaC+24rgF2/RxZbQbKSobkJVyuC/DcfedcKzGre+IvZ2cF
+ Ev0nbSvnLnMclB8Gh7Pa1zKZKhnyehNEvStl/QtTCJ/BgEG2fPO041jA780CdHtupQJw6Qf3y9p
+ e5PFulAJVYu0buTCpjzWYE2tDf/Q=
+X-Gm-Gg: ASbGncvCO+dgTulWR8LrYdCqyVz//hNhldUbcRgnMCthO7fPYEQiqjkk6gIvzxxk9V0
+ Md888WBxc6tPVd4oD5x3oK9otkI3PuW89CVpajDicbcjV0m8ihafDycCXP0gkbmrugb8=
+X-Google-Smtp-Source: AGHT+IGQbAL11pLG+K0RteAptVq5E33ej0THINPWK3zWkGUXWESFFnGN/pIOc/EVGiJYRCHr6RswQ6iZ7RVeF4YL33A=
+X-Received: by 2002:a05:6102:290e:b0:4b0:49ba:8278 with SMTP id
+ ada2fe7eead31-4b3d0ff5da9mr17480109137.25.1736737364868; Sun, 12 Jan 2025
+ 19:02:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20240428-iov-v1-0-7b2dd601d80b@daynix.com>
- <20240428-iov-v1-1-7b2dd601d80b@daynix.com>
- <07258bb4-bc8f-4b21-a662-402d3164b68a@linaro.org>
- <2cdcba63-00dd-4580-8a84-19f342ccb9c5@daynix.com>
-In-Reply-To: <2cdcba63-00dd-4580-8a84-19f342ccb9c5@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 13 Jan 2025 11:01:00 +0800
-X-Gm-Features: AbW1kvZWrjm44PJt8qumfnrmobpiMQ4Gc5jqOwJEvCHbFgiDh1PcD6DfeElac5k
-Message-ID: <CACGkMEsUxNx3bec2NKm8Edp4S-A4hbF-RK1SbY45anbwe3pvRA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] util/iov: Do not assert offset is in iov
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
+References: <20250110-counter_delegation-v5-0-e83d797ae294@rivosinc.com>
+In-Reply-To: <20250110-counter_delegation-v5-0-e83d797ae294@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 13 Jan 2025 13:02:18 +1000
+X-Gm-Features: AbW1kvYaoUQ8CRnRd86i9blte23SCKtAutoxOOXwaEeeV5-UGxnD8i4IZDX2KpQ
+Message-ID: <CAKmqyKMF7hqyUwZ6eNP+5besjfJMjtTa+EmVRsJ=rVSyXES10w@mail.gmail.com>
+Subject: Re: [PATCH v5 00/11] Add RISC-V Counter delegation ISA extension
+ support
+To: Atish Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, kaiwenxue1@gmail.com, 
+ palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Kaiwen Xue <kaiwenx@rivosinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.025,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.798,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,132 +97,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 11, 2025 at 1:11=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
+On Fri, Jan 10, 2025 at 6:23=E2=80=AFPM Atish Patra <atishp@rivosinc.com> w=
+rote:
 >
-> Jason, can you pull this series?
+> This series adds the counter delegation extension support. The counter
+> delegation ISA extension(Smcdeleg/Ssccfg) actually depends on multiple IS=
+A
+> extensions.
+>
+> 1. S[m|s]csrind : The indirect CSR extension[1] which defines additional
+>    5 ([M|S|VS]IREG2-[M|S|VS]IREG6) register to address size limitation of
+>    RISC-V CSR address space.
+> 2. Smstateen: The stateen bit[60] controls the access to the registers
+>    indirectly via the above indirect registers.
+> 3. Smcdeleg/Ssccfg: The counter delegation extensions[2]
+>
+> The counter delegation extension allows Supervisor mode to program the
+> hpmevent and hpmcounters directly without needing the assistance from the
+> M-mode via SBI calls. This results in a faster perf profiling and very
+> few traps. This extension also introduces a scountinhibit CSR which allow=
+s
+> to stop/start any counter directly from the S-mode. As the counter
+> delegation extension potentially can have more than 100 CSRs, the specifi=
+caiton
+> leverages the indirect CSR extension to save the precious CSR address ran=
+ge.
+>
+> Due to the dependancy of these extensions, the following extensions must =
+be
+> enabled to use the counter delegation feature in S-mode.
+>
+> "smstateen=3Dtrue,sscofpmf=3Dtrue,ssccfg=3Dtrue,smcdeleg=3Dtrue,smcsrind=
+=3Dtrue,sscsrind=3Dtrue"
+>
+> This makes the qemu command line quite tedious. The previous version, I t=
+ried
+> to introduce a preferred rule to enable all but it was decided that an us=
+er
+> should opt to use max cpu if they don't want to enable all the dependant =
+ISA
+> extensions by hand. This series got rid of the preferred rule and added 2
+> patches for specifiying the mandatory ISA extensions via implied rule.
+>
+> The first 2 patches decouple the indirect CSR usage from AIA implementati=
+on
+> while patch3 adds stateen bits validation for AIA.
+> The PATCH4 implements indirect CSR extensions while remaining patches
+> implement the counter delegation extensions.
+>
+> The Qemu patches can be found here:
+> https://github.com/atishp04/qemu/tree/b4/counter_delegation_v4
+> The Linux kernel patches can be found here (WIP version due to onging ups=
+tream
+> dependant patches):
+> https://github.com/atishp04/linux/tree/b4/counter_delegation_v2
+>
+> [1] https://github.com/riscv/riscv-indirect-csr-access
+> [2] https://github.com/riscv/riscv-smcdeleg-ssccfg
+>
+> Cc: kaiwenxue1@gmail.com
+>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> ---
+> Changes in v5:
+> - Rebased on top of the riscv-to-apply.next
+> - Added RB/AB tags.
+> - Link to v4: https://lore.kernel.org/r/20241203-counter_delegation-v4-0-=
+c12a89baed86@rivosinc.com
+>
+> Changes in v4:
+> - Fixed the comments recieved on v3.
+> - code style comments and removed 1 redundant if else block.
+> - Link to v3: https://lore.kernel.org/r/20241117-counter_delegation-v3-0-=
+476d6f36e3c8@rivosinc.com
+>
+> Changes in v3:
+> 1. Updated the priv version in extensions
+> 2. Fixed minor issues pointed out in v2.
+> 3. Dropped preferred rule and added an implied rule for AIA and counter
+>    delegation.
+> - Link to v2: https://lore.kernel.org/r/20240723-counter_delegation-v2-0-=
+c4170a5348ca@rivosinc.com
+>
+> Changes from previous RFC version:
+>
+> 1. Renamed sxcsrind to csrind to align with other function names.
+> 2. Enable sscofpmf by default for virt machine.
+> 3. Introduced a preferred extension enabling rule strategy for generic
+> mult-extension dependencies.
+> 4. Enables all PMU related extensions if ssccfg extension is set.
+>
+> RFC Link:
+> https://lore.kernel.org/all/35a4d40c-9d0d-4a0a-a2c9-5d5f7def9b9c@ventanam=
+icro.com/T/
+>
+> ---
+> Atish Patra (5):
+>       target/riscv: Enable S*stateen bits for AIA
+>       target/riscv: Add properties for counter delegation ISA extensions
+>       target/riscv: Invoke pmu init after feature enable
+>       target/riscv: Add implied rule for counter delegation extensions
+>       target/riscv: Add configuration for S[m|s]csrind, Smcdeleg/Ssccfg
+>
+> Kaiwen Xue (6):
+>       target/riscv: Add properties for Indirect CSR Access extension
+>       target/riscv: Decouple AIA processing from xiselect and xireg
+>       target/riscv: Support generic CSR indirect access
+>       target/riscv: Add counter delegation definitions
+>       target/riscv: Add select value range check for counter delegation
+>       target/riscv: Add counter delegation/configuration support
 
-Queued.
+Thanks!
 
-Thanks
+Applied to riscv-to-apply.next
+
+Alistair
 
 >
+>  target/riscv/cpu.c         |  20 +-
+>  target/riscv/cpu.h         |   1 +
+>  target/riscv/cpu_bits.h    |  34 ++-
+>  target/riscv/cpu_cfg.h     |   4 +
+>  target/riscv/csr.c         | 718 +++++++++++++++++++++++++++++++++++++++=
++++---
+>  target/riscv/machine.c     |   1 +
+>  target/riscv/tcg/tcg-cpu.c |  28 +-
+>  7 files changed, 753 insertions(+), 53 deletions(-)
+> ---
+> base-commit: b74e358af21fddb93228c4aed22520950cbe9dd7
+> change-id: 20240715-counter_delegation-10ab44c7d2c0
+> --
 > Regards,
-> Akihiko Odaki
+> Atish patra
 >
-> On 2024/05/08 23:51, Philippe Mathieu-Daud=C3=A9 wrote:
-> > ping?
-> >
-> > On 28/4/24 13:11, Akihiko Odaki wrote:
-> >> iov_from_buf(), iov_to_buf(), iov_memset(), and iov_copy() asserts
-> >> that the given offset fits in the iov while tolerating the specified
-> >> number of bytes to operate with to be greater than the size of iov.
-> >> This is inconsistent so remove the assertions.
-> >>
-> >> Asserting the offset fits in the iov makes sense if it is expected tha=
-t
-> >> there are other operations that process the content before the offset
-> >> and the content is processed in order. Under this expectation, the
-> >> offset should point to the end of bytes that are previously processed
-> >> and fit in the iov. However, this expectation depends on the details o=
-f
-> >> the caller, and did not hold true at least one case and required code =
-to
-> >> check iov_size(), which is added with commit 83ddb3dbba2e
-> >> ("hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()").
-> >>
-> >> Adding such a check is inefficient and error-prone. These functions
-> >> already tolerate the specified number of bytes to operate with to be
-> >> greater than the size of iov to avoid such checks so remove the
-> >> assertions to tolerate invalid offset as well. They return the number =
-of
-> >> bytes they operated with so their callers can still check the returned
-> >> value to ensure there are sufficient space at the given offset.
-> >>
-> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >> ---
-> >>   include/qemu/iov.h | 5 +++--
-> >>   util/iov.c         | 5 -----
-> >>   2 files changed, 3 insertions(+), 7 deletions(-)
-> >>
-> >> diff --git a/include/qemu/iov.h b/include/qemu/iov.h
-> >> index 63a1c01965d1..33548058d2ee 100644
-> >> --- a/include/qemu/iov.h
-> >> +++ b/include/qemu/iov.h
-> >> @@ -30,7 +30,7 @@ size_t iov_size(const struct iovec *iov, const
-> >> unsigned int iov_cnt);
-> >>    * only part of data will be copied, up to the end of the iovec.
-> >>    * Number of bytes actually copied will be returned, which is
-> >>    *  min(bytes, iov_size(iov)-offset)
-> >> - * `Offset' must point to the inside of iovec.
-> >> + * Returns 0 when `offset' points to the outside of iovec.
-> >>    */
-> >>   size_t iov_from_buf_full(const struct iovec *iov, unsigned int iov_c=
-nt,
-> >>                            size_t offset, const void *buf, size_t byte=
-s);
-> >> @@ -66,11 +66,12 @@ iov_to_buf(const struct iovec *iov, const unsigned
-> >> int iov_cnt,
-> >>   /**
-> >>    * Set data bytes pointed out by iovec `iov' of size `iov_cnt'
-> >> elements,
-> >>    * starting at byte offset `start', to value `fillc', repeating it
-> >> - * `bytes' number of times.  `Offset' must point to the inside of iov=
-ec.
-> >> + * `bytes' number of times.
-> >>    * If `bytes' is large enough, only last bytes portion of iovec,
-> >>    * up to the end of it, will be filled with the specified value.
-> >>    * Function return actual number of bytes processed, which is
-> >>    * min(size, iov_size(iov) - offset).
-> >> + * Returns 0 when `offset' points to the outside of iovec.
-> >>    */
-> >>   size_t iov_memset(const struct iovec *iov, const unsigned int iov_cn=
-t,
-> >>                     size_t offset, int fillc, size_t bytes);
-> >> diff --git a/util/iov.c b/util/iov.c
-> >> index 7e73948f5e3d..a523b406b7f8 100644
-> >> --- a/util/iov.c
-> >> +++ b/util/iov.c
-> >> @@ -36,7 +36,6 @@ size_t iov_from_buf_full(const struct iovec *iov,
-> >> unsigned int iov_cnt,
-> >>               offset -=3D iov[i].iov_len;
-> >>           }
-> >>       }
-> >> -    assert(offset =3D=3D 0);
-> >>       return done;
-> >>   }
-> >> @@ -55,7 +54,6 @@ size_t iov_to_buf_full(const struct iovec *iov,
-> >> const unsigned int iov_cnt,
-> >>               offset -=3D iov[i].iov_len;
-> >>           }
-> >>       }
-> >> -    assert(offset =3D=3D 0);
-> >>       return done;
-> >>   }
-> >> @@ -74,7 +72,6 @@ size_t iov_memset(const struct iovec *iov, const
-> >> unsigned int iov_cnt,
-> >>               offset -=3D iov[i].iov_len;
-> >>           }
-> >>       }
-> >> -    assert(offset =3D=3D 0);
-> >>       return done;
-> >>   }
-> >> @@ -266,7 +263,6 @@ unsigned iov_copy(struct iovec *dst_iov, unsigned
-> >> int dst_iov_cnt,
-> >>           bytes -=3D len;
-> >>           offset =3D 0;
-> >>       }
-> >> -    assert(offset =3D=3D 0);
-> >>       return j;
-> >>   }
-> >> @@ -337,7 +333,6 @@ size_t qemu_iovec_concat_iov(QEMUIOVector *dst,
-> >>               soffset -=3D src_iov[i].iov_len;
-> >>           }
-> >>       }
-> >> -    assert(soffset =3D=3D 0); /* offset beyond end of src */
-> >>       return done;
-> >>   }
-> >>
 >
-
 
