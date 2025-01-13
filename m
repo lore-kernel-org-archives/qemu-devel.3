@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C822EE7719E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C297E7719E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXE2f-0006kV-DL; Mon, 13 Jan 2025 01:35:20 -0500
+	id 1tXE4i-0007eY-Bv; Mon, 13 Jan 2025 01:37:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE2c-0006kF-Dj
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:35:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE4g-0007eG-6C
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:37:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE2a-0002sL-N7
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:35:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE4e-000364-Hf
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:37:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736750111;
+ s=mimecast20190719; t=1736750239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DEMCnPk7bYarjCEcmDkxcRFLLVWc6Hx36NE/oxI7FVA=;
- b=J5Aphfy9rRhF1efCcsLw3uTOm4yBjLePajD0viCigB0SkoB+FFZxaADA0KqgLtS2GKsQFy
- QwhFDHmHESA2sigpqQgVFTha2Y/gW/0MX9EyyoG3rFfZco5t5IWVSCKHI1eY+4PWowHMkT
- 8W+9USlcdl+baFaD+n9xXSP+ibzuCxU=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tEg84/W5FlerU0AsumwaCotEajSz9vCijjzrPwkGdes=;
+ b=A86Am1N59FMtO9oZ9K23xhtfIVbqm+Ela6tjxcEXmzcaUaNUMcLagJHWA9lHrwYOhdvQgW
+ PM/fhwpR16wiaDUsfBpCSFIN4s+jRpYbXHYIVm+OypwNm3hOoNL/XNnExDoTA3oykksMsd
+ mYtQIz7xT1AGl/eDoMXgqYoYTcFybrY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-HZX45jiZNSeJNo4Qnb36qg-1; Mon, 13 Jan 2025 01:35:09 -0500
-X-MC-Unique: HZX45jiZNSeJNo4Qnb36qg-1
-X-Mimecast-MFC-AGG-ID: HZX45jiZNSeJNo4Qnb36qg
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d0b5036394so4269359a12.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:35:09 -0800 (PST)
+ us-mta-679-bYPVLQ3oPo2P00vzDF7Ykg-1; Mon, 13 Jan 2025 01:37:17 -0500
+X-MC-Unique: bYPVLQ3oPo2P00vzDF7Ykg-1
+X-Mimecast-MFC-AGG-ID: bYPVLQ3oPo2P00vzDF7Ykg
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa69c41994dso279978466b.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:37:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736750108; x=1737354908;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DEMCnPk7bYarjCEcmDkxcRFLLVWc6Hx36NE/oxI7FVA=;
- b=sVAHhigzY+cOj3/yxdBvfs4sWDNkBjx7Uwd7RnZ5CWQV4FV3X1n5xo33nBQ5tqGWsM
- WHL21xSuZgpPUkenVfYmvaLOhv+u2rDIx0JP2HlvB+fwcKGfj8DXTwL+WGWp4gvkY3Ab
- 4EzeOVtBD8wpfK3WTcYCrn2LfBKhotvOQyP8+qxPGaHqY80M+BWuVTSvbwWK7jiyqkQw
- sG94TN+w2Uo8sf50PCe6WeAYlMczpNI4eNm5UvOqR6T2aj8whhy2SQy39N65M6kbhZT4
- URnLWi2NwdyOoIGZI9+2kortLjAbqmftrJVyYxalq+SCwKOxYd58IApsvOsz9EroUWgH
- Ecsg==
-X-Gm-Message-State: AOJu0Yyo2UFnHZtdjilE1AQyqei6o3MbxmdYogJSQOacui7BT0gGc70D
- 7A2uGQgafV0lpo2VVF2Aef6akvkXOeCbUzX0lQJQKZeFhw0/jc4H1kQs3uxji6bf986rbWmHjZN
- Sauzgwc+iWl9itOX1V+broXCsYaLNpo5AI3QUGrKRBfmEzngqWcFM3krJ2yhIVosjczjd0l+I/w
- d3a9Ty28lSVvNdxVYzxJZf5tz8J5bw9vU4
-X-Gm-Gg: ASbGncsLcyg0i0pTwLawgMuItahaX3tD6pOswR5lVErEnDeXfHf6cdxrmG5IaB3K4aK
- yuFdfuYC7TDhgvta7F58cEvbOjj9WKsF9cpZhDo5SQQY+y+Oizr5gqRdHR52FrAaQYouGOYnqAF
- nJRKf8T4QKXrORzGAky3ZboIM2X7OamUnAg1UftHbjqEewpTNl/8h5NHhBOhKMA3QOboi3Vn9Wy
- H1l3FqXed7wBjKClT5e2ynKmg8KxE4m/hcqW7mORTLWyS82oXG5EegqXsPEWYONQCiLSTyFhKEU
- HrfEo0j3Jg==
-X-Received: by 2002:a05:6402:34d2:b0:5d1:1f2:1143 with SMTP id
- 4fb4d7f45d1cf-5d972e1a602mr17886220a12.18.1736750108130; 
- Sun, 12 Jan 2025 22:35:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFG1hkyp7urOnF5im6752+QUY3dGeg7/V+e55tlJiK0jTq89Uz9I8ZzhkSHe7ZztHRWcScxgQ==
-X-Received: by 2002:a05:6402:34d2:b0:5d1:1f2:1143 with SMTP id
- 4fb4d7f45d1cf-5d972e1a602mr17886205a12.18.1736750107809; 
- Sun, 12 Jan 2025 22:35:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736750237; x=1737355037;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tEg84/W5FlerU0AsumwaCotEajSz9vCijjzrPwkGdes=;
+ b=mcAI4uJvSCIKV40an2oPP49EFPxzm/o0b0eyjSDkaN36HRH3WScE1V7NDtoo4143W3
+ Syi6wWxyZEQIB8p3Lp4vTVZeu2lMpaFcuof7Uk8eD/4vyRDagi+YuOEXgloPI/O2em1u
+ zSOh/wZZlvs64TtkZDMtnhl4LPfROYJRlrwWQy5Y6He4fGlJEsTpbPvLeb5c+rOIs45A
+ U6U3pmAvHAVIVs/IR8hrKcaI81OXPZ5kzIpYOi6IAD02f5q/tYLIuNWOAfQzVhAr9wwc
+ 9DbC3ic6DBfTHoDQEMJxZqHwcN9Kk4lKo6zvw6reYzprY77tNzGJya/cwSxAr/smPWr2
+ hkvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEVXcxz47qKVK/VivwBkQ+geqB4jiH30rOEEOm/iHViS2bHkv062PywNU87rDu9cmPiUa5gXXzkV0Q@nongnu.org
+X-Gm-Message-State: AOJu0YyisrsWM0mVTkjG9SrgdqerzYlPSpIZlEH8ziAsqpJ0OYOQMWKc
+ gw4INyJcvmZjAQGKMk6aM/QO8hBU8KFnWXQooO6XJ+hbFVNB4WTDf+ZTox050ZNqAT54plWK9pD
+ sK1hOdbQ+w6hOvYDLXkrQX9hQaFmgY+XEGy+8YMowdIYqa7Ix0+1ep/h54Cn+
+X-Gm-Gg: ASbGncsn0QPv3ANpP2657TikE2tn12e1tlnEvUW8IOaTSjc5X+cazfCvh3Oz9CBvloS
+ 9YFOxsSv+CQ4PgKu+XSamc2h+owi1B9PiPmlKsrJp2aHD7X5lB/5povkGLYuhZJCdtHiak8aOFc
+ mxOBPUVGzGaTFcsESSEu35PkvTLVgr/o7DkQ5Qx5IWPpdYSN7VpueqLerviP6n6rxyoqqCUzpnP
+ 9hf2/4sU+eNVe4lbiPaDN3qkEFWPurkpTl5FSrMXSFC2HXAeB4Z7RO0ApeDoDA3tGwyXkkua0lL
+ ltLAoVxf+g==
+X-Received: by 2002:a05:6402:1eca:b0:5d6:688d:b683 with SMTP id
+ 4fb4d7f45d1cf-5d972e0b18bmr45180726a12.9.1736750235815; 
+ Sun, 12 Jan 2025 22:37:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHVjH8+in5YM/mnNsAUQxiBmawaw+MTia5QwAxB4281Y7y95d03nFALyELizycZ6F/b6YoIjw==
+X-Received: by 2002:a05:6402:1eca:b0:5d6:688d:b683 with SMTP id
+ 4fb4d7f45d1cf-5d972e0b18bmr45180503a12.9.1736750234482; 
+ Sun, 12 Jan 2025 22:37:14 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-16.web.vodafone.de. [109.42.48.16])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d9900c362csm4331431a12.19.2025.01.12.22.35.05
+ a640c23a62f3a-ab2c90dc570sm464677766b.51.2025.01.12.22.37.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 22:35:06 -0800 (PST)
-Message-ID: <3debcad5-7740-42fd-b773-a5c54f703fa8@redhat.com>
-Date: Mon, 13 Jan 2025 07:35:04 +0100
+ Sun, 12 Jan 2025 22:37:13 -0800 (PST)
+Message-ID: <ed6ea1e9-ade1-4c24-b151-803e141e4b26@redhat.com>
+Date: Mon, 13 Jan 2025 07:37:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: download.qemu.org file list
-To: qemu-devel@nongnu.org
-References: <1fa-67828900-3-616bbe80@197637592>
+Subject: Re: [PATCH v3 7/7] s390x: Fix CSS migration
+To: Michael Tokarev <mjt@tls.msk.ru>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-stable@nongnu.org
+References: <20250109185249.23952-1-farosas@suse.de>
+ <20250109185249.23952-8-farosas@suse.de>
+ <a23bf1a7-70fc-46d0-b465-6e9851feb669@tls.msk.ru>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -123,19 +128,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <1fa-67828900-3-616bbe80@197637592>
+In-Reply-To: <a23bf1a7-70fc-46d0-b465-6e9851feb669@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.025,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.025,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.798,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,12 +156,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/01/2025 16.07, Rahul Chandra wrote:
-> Hi,
+On 12/01/2025 15.34, Michael Tokarev wrote:
+> 09.01.2025 21:52, Fabiano Rosas wrote:
+>> Commit a55ae46683 ("s390: move css_migration_enabled from machine to
+>> css.c") disabled CSS migration globally instead of doing it
+>> per-instance.
+>>
+>> CC: Paolo Bonzini <pbonzini@redhat.com>
+>> CC: qemu-stable@nongnu.org #9.1
+>> Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> Message-Id: <20241213160120.23880-3-farosas@suse.de>
 > 
-> I am not sure if this is the right list to send this to, but the https://download.qemu.org/ download server is showing no files available for listing. Is this unintentional? Or should I be querying the Gitlab tags from now on for version info?
+> And this one causes s390x-migration-test failure on 9.2 on s390x.
+> While this test succeeds on x86_64.
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/8829799108
+> 
+> Help? :)
 
-It seems to be working right now ... could you please check again?
+That looks like the script error that should be fixed by patch 3/7, I think? 
+You likely need that patch, too...
 
   Thomas
 
