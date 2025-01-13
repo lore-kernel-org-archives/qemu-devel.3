@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B1EE7719E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C822EE7719E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 06:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXDuo-0004zM-MG; Mon, 13 Jan 2025 01:27:10 -0500
+	id 1tXE2f-0006kV-DL; Mon, 13 Jan 2025 01:35:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXDuj-0004z3-Kf
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:27:05 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE2c-0006kF-Dj
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:35:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXDug-0001Tt-9Y
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:27:04 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tXE2a-0002sL-N7
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 01:35:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736749616;
+ s=mimecast20190719; t=1736750111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3xdCKSGMtKuYtcu8MK6yE6innDLTZCjuI0s8djG8elM=;
- b=YH0SiRNjOT2JzNJRlElXqj0nfN3E1DGpJAZiBX6IRzrXZ2RcvoOxV7L+i+WU4+EQKx/EKr
- g+gDRgvfBJtleKqmG2BAC9FxDEvfHws1M6rfioeIHJdNGZzeMn5mCVWHRZBbabjNc0ZSQ8
- EXGvMu2F9R5ZaMl7INJaq6fZIrL3e/4=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DEMCnPk7bYarjCEcmDkxcRFLLVWc6Hx36NE/oxI7FVA=;
+ b=J5Aphfy9rRhF1efCcsLw3uTOm4yBjLePajD0viCigB0SkoB+FFZxaADA0KqgLtS2GKsQFy
+ QwhFDHmHESA2sigpqQgVFTha2Y/gW/0MX9EyyoG3rFfZco5t5IWVSCKHI1eY+4PWowHMkT
+ 8W+9USlcdl+baFaD+n9xXSP+ibzuCxU=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-Vq4n9Pc5MW2fTaUeEeu0_g-1; Mon, 13 Jan 2025 01:26:50 -0500
-X-MC-Unique: Vq4n9Pc5MW2fTaUeEeu0_g-1
-X-Mimecast-MFC-AGG-ID: Vq4n9Pc5MW2fTaUeEeu0_g
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aa67fcbb549so494628166b.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:26:50 -0800 (PST)
+ us-mta-246-HZX45jiZNSeJNo4Qnb36qg-1; Mon, 13 Jan 2025 01:35:09 -0500
+X-MC-Unique: HZX45jiZNSeJNo4Qnb36qg-1
+X-Mimecast-MFC-AGG-ID: HZX45jiZNSeJNo4Qnb36qg
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0b5036394so4269359a12.3
+ for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 22:35:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736749609; x=1737354409;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1736750108; x=1737354908;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
+ :content-language:references:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3xdCKSGMtKuYtcu8MK6yE6innDLTZCjuI0s8djG8elM=;
- b=XzWaT5osDuvoEVg6h6uIxbxN+xXPKwT/4SHkcfvbu265/MX7HExx8Odcemo2yUbijm
- PTMO8au1guuxRfZ7bCJBp6vpvvA2Y7dr/e2yuKlOEdUG3cP2N3HLhbRrZNa8vR4oxnLC
- gMbF3VUxtRp3Aq+cPH9RYnr04D4EnTImMBVCeEDHTrW33IN89zKNIbSo3djqQeLdQP8g
- PfVksOs00MFNq8FCOh0TLMkHrUdOaKmeMGd2l3KF0zDGjjq/e0FCPwwbZ26VDtsSTVkA
- 2SznJs9bVRXUAmOPrjKGW/PTf8YHfx8SpYTN88tlTrhMEmUAUkXpnql38Khx3hk6At9l
- loZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVi00AFYiP+cSjdaio9VQ2Nib47IINoYE9ZW3UjQzXEGwuy7UnKUXDrmoBO1lZ+LAXcRUwo1wLqO5jq@nongnu.org
-X-Gm-Message-State: AOJu0YyuAkvEnDAlxqlTY4LMQy3QYAWMguH7WsSNWT0l63OP3cE+2t9N
- GlwacEyMnG0TG/u9jubOrJDeQoESFfti17G+JGCI8z9w2wcRah6Rl8UbPdB2zyt7Zz3sNXlKNFy
- cFrib/zfzSq2IATC7PmfSfzh/k0tsiKITVw0h/jbDcBWdwaDJQro0
-X-Gm-Gg: ASbGncu4uXZdl6ZnyJzdzM0ET9jbb0a40KXv4UrEWdESw3cfcoR+KkcF072FRsSeRnS
- Ax+DbvEcrvea8c/bQ6W01eNQogCubFkjSnSk+E8nWWJ0/ESClAN+uneRPfjewJhB8Omv08TgEQA
- y1JZk+Zsy66HI0b7LA4TRNqtgD1uUQ2ZT1FxhpKoP8zyYqxZra5/+DqbsFPS7Uz1V4CTS27C57X
- Zqa7epKVCShLhDrMssJAJhru+r4Hs0p+Kk5un+7fO2xBZVDGxvCcjbdnAfSG13JURxdzpPYqzBk
- sw1qAQpuZA==
-X-Received: by 2002:a17:907:7da7:b0:aae:85a9:e2d with SMTP id
- a640c23a62f3a-ab2ab6bfa39mr1856451266b.45.1736749609057; 
- Sun, 12 Jan 2025 22:26:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHIpE/2uv+imdDful7mer7tNE+HXGlwcutpIEiU0eos/spyZSMSEmOW+Q1lv1ZSMZHgOfUHg==
-X-Received: by 2002:a17:907:7da7:b0:aae:85a9:e2d with SMTP id
- a640c23a62f3a-ab2ab6bfa39mr1856449266b.45.1736749608644; 
- Sun, 12 Jan 2025 22:26:48 -0800 (PST)
+ bh=DEMCnPk7bYarjCEcmDkxcRFLLVWc6Hx36NE/oxI7FVA=;
+ b=sVAHhigzY+cOj3/yxdBvfs4sWDNkBjx7Uwd7RnZ5CWQV4FV3X1n5xo33nBQ5tqGWsM
+ WHL21xSuZgpPUkenVfYmvaLOhv+u2rDIx0JP2HlvB+fwcKGfj8DXTwL+WGWp4gvkY3Ab
+ 4EzeOVtBD8wpfK3WTcYCrn2LfBKhotvOQyP8+qxPGaHqY80M+BWuVTSvbwWK7jiyqkQw
+ sG94TN+w2Uo8sf50PCe6WeAYlMczpNI4eNm5UvOqR6T2aj8whhy2SQy39N65M6kbhZT4
+ URnLWi2NwdyOoIGZI9+2kortLjAbqmftrJVyYxalq+SCwKOxYd58IApsvOsz9EroUWgH
+ Ecsg==
+X-Gm-Message-State: AOJu0Yyo2UFnHZtdjilE1AQyqei6o3MbxmdYogJSQOacui7BT0gGc70D
+ 7A2uGQgafV0lpo2VVF2Aef6akvkXOeCbUzX0lQJQKZeFhw0/jc4H1kQs3uxji6bf986rbWmHjZN
+ Sauzgwc+iWl9itOX1V+broXCsYaLNpo5AI3QUGrKRBfmEzngqWcFM3krJ2yhIVosjczjd0l+I/w
+ d3a9Ty28lSVvNdxVYzxJZf5tz8J5bw9vU4
+X-Gm-Gg: ASbGncsLcyg0i0pTwLawgMuItahaX3tD6pOswR5lVErEnDeXfHf6cdxrmG5IaB3K4aK
+ yuFdfuYC7TDhgvta7F58cEvbOjj9WKsF9cpZhDo5SQQY+y+Oizr5gqRdHR52FrAaQYouGOYnqAF
+ nJRKf8T4QKXrORzGAky3ZboIM2X7OamUnAg1UftHbjqEewpTNl/8h5NHhBOhKMA3QOboi3Vn9Wy
+ H1l3FqXed7wBjKClT5e2ynKmg8KxE4m/hcqW7mORTLWyS82oXG5EegqXsPEWYONQCiLSTyFhKEU
+ HrfEo0j3Jg==
+X-Received: by 2002:a05:6402:34d2:b0:5d1:1f2:1143 with SMTP id
+ 4fb4d7f45d1cf-5d972e1a602mr17886220a12.18.1736750108130; 
+ Sun, 12 Jan 2025 22:35:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFG1hkyp7urOnF5im6752+QUY3dGeg7/V+e55tlJiK0jTq89Uz9I8ZzhkSHe7ZztHRWcScxgQ==
+X-Received: by 2002:a05:6402:34d2:b0:5d1:1f2:1143 with SMTP id
+ 4fb4d7f45d1cf-5d972e1a602mr17886205a12.18.1736750107809; 
+ Sun, 12 Jan 2025 22:35:07 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-16.web.vodafone.de. [109.42.48.16])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c905f067sm461806066b.14.2025.01.12.22.26.46
+ 4fb4d7f45d1cf-5d9900c362csm4331431a12.19.2025.01.12.22.35.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jan 2025 22:26:48 -0800 (PST)
-Message-ID: <876fe41d-df26-4a13-a465-feeee0004746@redhat.com>
-Date: Mon, 13 Jan 2025 07:26:45 +0100
+ Sun, 12 Jan 2025 22:35:06 -0800 (PST)
+Message-ID: <3debcad5-7740-42fd-b773-a5c54f703fa8@redhat.com>
+Date: Mon, 13 Jan 2025 07:35:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
- <73fd2f38-76a0-4274-875a-6f96faed79f6@linaro.org>
- <bc22d713-201e-414c-838e-6c0dc1fb3807@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: download.qemu.org file list
+To: qemu-devel@nongnu.org
+References: <1fa-67828900-3-616bbe80@197637592>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -134,9 +123,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <bc22d713-201e-414c-838e-6c0dc1fb3807@linaro.org>
+In-Reply-To: <1fa-67828900-3-616bbe80@197637592>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -38
@@ -162,72 +151,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/01/2025 16.47, Philippe Mathieu-Daudé wrote:
-> On 10/1/25 21:37, Pierrick Bouvier wrote:
->> On 1/10/25 12:33, Pierrick Bouvier wrote:
->>> For now, it was only possible to build plugins using GCC on Windows. 
->>> However,
->>> windows-aarch64 only supports Clang.
->>> This biggest roadblock was to get rid of gcc_struct attribute, which is not
->>> supported by Clang. After investigation, we proved it was safe to drop it.
->>>
->>> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and 
->>> aarch64
->>> hosts.
->>>
->>> v1 contained warning fixes and various bits that have been upstreamed 
->>> already.
->>> The only bits left in this series are the gcc_struct removal, and fixing the
->>> plugins build with clang.
->>>
->>> This series is for 10.0, as we decided to not include the gcc_struct 
->>> removal is
->>> 9.2 release.
->>>
->>> All patches are now reviewed, so this series can be pulled. I'll report 
->>> that to
->>> MSYS2 too, so we can enable clang environments for QEMU.
->>>
->>> v1: https://patchew.org/QEMU/20241031040426.772604-1- 
->>> pierrick.bouvier@linaro.org/
->>>
->>> v2:
->>> - drop attribute gcc_struct instead of using -mno-ms-bitfields option
->>> - add a section about bitfields in documentation
->>>
->>> v3:
->>> - explain why gcc_struct attribute matters in packed structs in commit 
->>> message
->>> - reword the bitfields documentation with suggestions given
->>>
->>> v4:
->>> - edit for bitfields doc requested by Philippe
->>>
->>> Pierrick Bouvier (3):
->>>    win32: remove usage of attribute gcc_struct
->>>    docs/devel/style: add a section about bitfield, and disallow them for
->>>      packed structures
->>>    plugins: enable linking with clang/lld
->>>
->>>   docs/devel/style.rst                      | 20 +++++++++++++++++++
->>>   meson.build                               |  6 +++---
->>>   include/qemu/compiler.h                   |  7 +------
->>>   scripts/cocci-macro-file.h                |  6 +-----
->>>   subprojects/libvhost-user/libvhost-user.h |  6 +-----
->>>   contrib/plugins/meson.build               |  2 +-
->>>   plugins/meson.build                       | 24 +++++++++++++++++++----
->>>   tests/tcg/plugins/meson.build             |  3 +--
->>>   8 files changed, 48 insertions(+), 26 deletions(-)
->>>
->>
->> It would be nice if a maintainer could pull this, so we can get this 
->> merged upstream.
+On 11/01/2025 16.07, Rahul Chandra wrote:
+> Hi,
 > 
-> That'd be Thomas or Alex I suppose.
+> I am not sure if this is the right list to send this to, but the https://download.qemu.org/ download server is showing no files available for listing. Is this unintentional? Or should I be querying the Gitlab tags from now on for version info?
 
-This touches plugins, so I think it should go through Alex' tree?
+It seems to be working right now ... could you please check again?
 
   Thomas
-
 
 
