@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF000E7719F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 12:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2379EE7719F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 12:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXJYl-00007C-Pg; Mon, 13 Jan 2025 07:28:47 -0500
+	id 1tXJge-0006wh-K0; Mon, 13 Jan 2025 07:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tXJYi-00006t-3k
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:28:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tXJYf-0004KG-JO
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:28:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736771318;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ueAYnrjsfuliqqlqQjxpt8xAeGGfZUbi3Wdoc5K2/yA=;
- b=CxVWYvPnOfkQ2jkOfInH+rtuPWo8rRB1l/mBY3UYBbz5TSFkuUslQUHTsOaD2KldytE1K9
- P8Y2FQ0TY5rWmPv4sFd60DbeL/wdNf4buVqsrNBk9fsrWxUFEuUQ7zi4rgPoKEK2+0z/RJ
- XoJDQts8Q9uP8v7LGzLdbNexvlZ+7I8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-BRmB6ISdN9Whs-ZzACxl8w-1; Mon, 13 Jan 2025 07:28:36 -0500
-X-MC-Unique: BRmB6ISdN9Whs-ZzACxl8w-1
-X-Mimecast-MFC-AGG-ID: BRmB6ISdN9Whs-ZzACxl8w
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385fdff9db5so1527169f8f.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 04:28:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tXJeC-000501-59
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:34:24 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tXJeA-0006k9-IZ
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:34:23 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e5447fae695so7212076276.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 04:34:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736771661; x=1737376461; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sWygGX54bUS6Xr9BP9hLEUCT7We4y0UtGm5Lh6nvwXA=;
+ b=y/9jZn98u676DLJfS7KM6W9pVF0ySHJm6bniiqOyvsN6LhD7BNzy+mw8MpouPNg/6U
+ zTyR/CasOD1u8Xi16RT/OJroomY+I7W57Sd9hhcPY3sLc43b1NoGfuHpNyDlfQbbE90W
+ i383Q7sjMm/hpJjeDHR/TJKumTVbMLrE38a+XSckp06NuMbsfkaHHEJtx97ms1RkCSsO
+ 2GJCrG8YzwHNfv3OdhqV3bU+gPQMXnJEi1SHVQAhjfQvx2RrT3pA5x4jfcTf2F7bjOQ3
+ l28YA/5XH5pyr9SyvpZ/9eyaT9mFSd+QIqtH3FeFYOGTLH1tI9OwpWtN6ouF4ipWp9sH
+ +VbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736771315; x=1737376115;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ueAYnrjsfuliqqlqQjxpt8xAeGGfZUbi3Wdoc5K2/yA=;
- b=lR/wE4s1Ac4uI/aCna+iCaddoXsEjfstQvwobYkAG8X5XgvSnoPVJVUiMSXcLTjg40
- 4SvkxqMJgDEahaxSJMISzSGwPQMxRbefYcQgNR0Ntx/NUP4NcX7vDOsvucUY0ctCngC9
- h677PqGo6kWZnDIFrGXiJunehh0nSek/lXXrUDnuAUmJ/KTGBt8bsGq9+sEfNzxem8SY
- qdqf8V1UBXt/bfLRXi2rZ2kgFh5d5J/ERvN07jYNTYCYFfmo7hltcpI5w+KbUNSIVsvv
- 312muLYcv4m7KsI2r5xfN0eXiMRvDHrV8TTgND14p7sHpPFM/wZQLDux8l9vG9o3UNJA
- ycVg==
-X-Gm-Message-State: AOJu0YxRpQP33OSdWtclh/WdesSWaEGt8CsCj4WCLVgfzU+a5GYxpZDb
- QDqA7PY2mBdZSrGGZ3DGniKo9tak3qYACZBVvncm69eVJmhWKWnHp38qMyFuPlPOHkJ6C+H0JSb
- PuqAhd7f8lzQqdZlSQlFJYCaRtfJHleZ+5UDQhox41uW02B0gD/aw
-X-Gm-Gg: ASbGncvq/BhMOlwJqHUaYhGnUNtFvbTsI9kZ7ILa14WRh/tTzp5nLt5ij7T3s3XEGSa
- 2suLlsQq0bE1VkY6iZ3ptr92vYoaWB80+qDaGa4Rubnu0x4juf55Id7f7uX2Njeysm4gId8CQ1V
- h63aWs5gE5ks6fZltV/5neiLkYF6b1AGayapga72r0DvLYKrgtSRjh7xKq426DYbg8DDq2l4dDa
- qi7qAar9SjmSw7LkgxGBq+dBo2poIgpTh1uKZJPyz4/K5m1Lxg1pR1zkbdZzmkhyb+60dVshM9T
- Kyz5DXw+i6PviFUJdi4I/QUkfit8
-X-Received: by 2002:a05:6000:710:b0:385:f4db:e33b with SMTP id
- ffacd0b85a97d-38a872db2c7mr19033480f8f.21.1736771315381; 
- Mon, 13 Jan 2025 04:28:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHivnzbEcM+E9djZTshciCID1Rn2guWpRtnpEGOrwBgX1QkY5XuVr3AIX6KTADZntug3XJ+Ew==
-X-Received: by 2002:a05:6000:710:b0:385:f4db:e33b with SMTP id
- ffacd0b85a97d-38a872db2c7mr19033453f8f.21.1736771314949; 
- Mon, 13 Jan 2025 04:28:34 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37e375sm11777951f8f.22.2025.01.13.04.28.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jan 2025 04:28:33 -0800 (PST)
-Date: Mon, 13 Jan 2025 13:28:32 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PULL 04/49] hw: Add QOM parentship relation with CPUs
-Message-ID: <20250113132832.049f651a@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250112221726.30206-5-philmd@linaro.org>
-References: <20250112221726.30206-1-philmd@linaro.org>
- <20250112221726.30206-5-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1736771661; x=1737376461;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sWygGX54bUS6Xr9BP9hLEUCT7We4y0UtGm5Lh6nvwXA=;
+ b=LvaRFOg9Wj1TqBw2AezZdM5FrGGnlfR4QpFxpN512qNWj5/MTihIZ0JOXJNF5nz2i8
+ E7gBomFMjk5epcWs9WeMdEV/K0Q6lt5NgmRzfyUcGkyGvLPyZDqHyu/yoCctVFCZlPv2
+ Npz+45V1eFNdqRNSXwlr5ZZtqYq68jdcYW7GGN5eZ4RKKaa1QpyhRLN4GgUA3tdLO3Ek
+ QEaLp+FabV7TIEjO1rxK7p32OxzIcqyuAB6KXJ9IS+yxDtZ3ESR36AsSmwFnIg9pA8gc
+ fCaVyg2BmuPOS2A2SPoiGchzTpQHrFPBLBkiHDdGO5f0xhSvLnkT/a8oiILfe8gQAOOi
+ 8YqQ==
+X-Gm-Message-State: AOJu0Yy7KkkhaANpTqeNQ5wgf2oKZ/Zw/UgpHYABHa3Vf+NT/kM8nOvj
+ ByD2GTy3keu8SqX3pt+7FCGAtEaRpCOXM6D+L6stjXsjUkG8j/0fehrwYpluRCywt986xmYwiW1
+ umiu0ZtdNOYFUatCCe7Pz7YG4wkcxn+FxS+wGMw==
+X-Gm-Gg: ASbGncsjXg7k8abWzNFigt3FJEmjramrCxWFxGvurI2rNe92jIkBIKA0LyIqdHuISlt
+ 8DZ7JjMDcDFgFm72zUmunZTTCmPgdq5yxHcZF/qc=
+X-Google-Smtp-Source: AGHT+IFrKpYd5kb50Opt5hUL7c74+3nb/MFsBxR0JS61r8IH5jEbPuDeh/NkZ4GebwSaz5zhAQVT+AVBi0SuosgyV6w=
+X-Received: by 2002:a05:690c:6b85:b0:6f0:237e:fc4c with SMTP id
+ 00721157ae682-6f531216d81mr154664387b3.12.1736771661080; Mon, 13 Jan 2025
+ 04:34:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
+ <CAFEAcA_ChARwKyvRXsEk1U3q1T2528753Eu7LgDSsDbF1s5tNQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_ChARwKyvRXsEk1U3q1T2528753Eu7LgDSsDbF1s5tNQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 13 Jan 2025 12:34:09 +0000
+X-Gm-Features: AbW1kvagXbO9F7jszKQ8n4Mp2TUE4_UDJZM71lyOoAUghuZkBzmh7LOOclHyXc0
+Message-ID: <CAFEAcA_SHz2a0ZU=3e9AmZyJ_qn3e7nNhNm-hR9MdiTRjOyqWg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] Change default pointer authentication algorithm on
+ aarch64 to impdef
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ alex.bennee@linaro.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,120 +99,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 12 Jan 2025 23:16:40 +0100
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+On Fri, 10 Jan 2025 at 16:28, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Thu, 19 Dec 2024 at 18:32, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+> >
+> > qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
+> > spent up to 50% of the emulation time running it (when using TCG).
+> >
+> > Switching to pauth-impdef=on is often given as a solution to speed up execution.
+> > Thus we talked about making it the new default.
+> >
+> > The first patch introduce a new property (pauth-qarma5) to allow to select
+> > current default algorithm.
+> > The second one change the default.
+> > The third one updates documentation.
+> >
+> > v2:
+> > - ensure we don't break migration compatibility, by using a specific backward
+> >   compatible property.
+> > - added some documentation about migration for arm virt machine model.
+>
+> Other than a minor change to the 3rd docs patch which I'll note there:
+> applied to target-arm.next, thanks.
 
-> QDev objects created with object_new() need to manually add
-> their parent relationship with object_property_add_child().
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Message-Id: <20240216110313.17039-22-philmd@linaro.org>
-> ---
->  hw/i386/x86-common.c                     | 1 +
->  hw/microblaze/petalogix_ml605_mmu.c      | 1 +
->  hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
->  hw/mips/cps.c                            | 1 +
->  hw/ppc/e500.c                            | 1 +
->  hw/ppc/spapr.c                           | 1 +
->  6 files changed, 6 insertions(+)
->=20
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index 97b4f7d4a0d..9c9ffb3484a 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -60,6 +60,7 @@ static void x86_cpu_new(X86MachineState *x86ms, int64_t=
- apic_id, Error **errp)
->      if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
->          goto out;
->      }
-> +    object_property_add_child(OBJECT(x86ms), "cpu[*]", OBJECT(cpu));
+I just noticed that this series breaks 'make check-tcg', because
+the pauth-3 test is explicitly checking the output of the
+pointer-auth operation. I'm going to add in this patch, which
+goes between patches 1 and 2 of this series:
 
-I might  be missing something but why it needs to be done manually?
+Author: Peter Maydell <peter.maydell@linaro.org>
+Date:   Mon Jan 13 11:42:57 2025 +0000
 
-device_set_realized() will place any parent-less device under (1) /machine/=
-unattached
-while devices created with device_add() are be placed under /machine/periph=
-eral[-anon]
+    tests/tcg/aarch64: force qarma5 for pauth-3 test
 
-The commit message unfortunately doesn't explain why [1] shall be replaced
-by direct cpu[*] array property directly under machine.
-=20
-Granted, those paths aren't any kind of ABI and wrt x86 cpus
-nothing should break (or I'd say it shouldn't break our promises)=20
-But I'd rather not do this without a good reason/explanation.
+    The pauth-3 test explicitly tests that a computation of the
+    pointer-authentication produces the expected result.  This means that
+    it must be run with the QARMA5 algorithm.
 
->      qdev_realize(DEVICE(cpu), NULL, errp);
-> =20
->  out:
-> diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogi=
-x_ml605_mmu.c
-> index 8b44be75a22..b6be40915ac 100644
-> --- a/hw/microblaze/petalogix_ml605_mmu.c
-> +++ b/hw/microblaze/petalogix_ml605_mmu.c
-> @@ -83,6 +83,7 @@ petalogix_ml605_init(MachineState *machine)
-> =20
->      /* init CPUs */
->      cpu =3D MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-> +    object_property_add_child(OBJECT(machine), "cpu", OBJECT(cpu));
->      object_property_set_str(OBJECT(cpu), "version", "8.10.a", &error_abo=
-rt);
->      /* Use FPU but don't use floating point conversion and square
->       * root instructions
-> diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/pet=
-alogix_s3adsp1800_mmu.c
-> index 2c0d8c34cd2..29629310ba2 100644
-> --- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> +++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-> @@ -73,6 +73,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
->      MemoryRegion *sysmem =3D get_system_memory();
-> =20
->      cpu =3D MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
-> +    object_property_add_child(OBJECT(machine), "cpu", OBJECT(cpu));
->      object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abo=
-rt);
->      object_property_set_bool(OBJECT(cpu), "little-endian",
->                               !TARGET_BIG_ENDIAN, &error_abort);
-> diff --git a/hw/mips/cps.c b/hw/mips/cps.c
-> index 0d8cbdc8924..293b405b965 100644
-> --- a/hw/mips/cps.c
-> +++ b/hw/mips/cps.c
-> @@ -87,6 +87,7 @@ static void mips_cps_realize(DeviceState *dev, Error **=
-errp)
->          /* All cores use the same clock tree */
->          qdev_connect_clock_in(DEVICE(cpu), "clk-in", s->clock);
-> =20
-> +        object_property_add_child(OBJECT(dev), "cpu[*]", OBJECT(cpu));
->          if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
->              return;
->          }
-> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-> index 4551157c011..17d63ced907 100644
-> --- a/hw/ppc/e500.c
-> +++ b/hw/ppc/e500.c
-> @@ -955,6 +955,7 @@ void ppce500_init(MachineState *machine)
->           */
->          object_property_set_bool(OBJECT(cs), "start-powered-off", i !=3D=
- 0,
->                                   &error_abort);
-> +        object_property_add_child(OBJECT(machine), "cpu[*]", OBJECT(cpu)=
-);
->          qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
-> =20
->          if (!firstenv) {
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 623842f8064..125be6d29fd 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -2705,6 +2705,7 @@ static void spapr_init_cpus(SpaprMachineState *spap=
-r)
->                                      &error_fatal);
->              object_property_set_int(core, CPU_CORE_PROP_CORE_ID, core_id,
->                                      &error_fatal);
-> +            object_property_add_child(OBJECT(spapr), "cpu[*]", OBJECT(co=
-re));
->              qdev_realize(DEVICE(core), NULL, &error_fatal);
-> =20
->              object_unref(core);
+    Explicitly set the pauth algorithm when running this test, so that it
+    doesn't break when we change the default algorithm the 'max' CPU
+    uses.
 
+    Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+diff --git a/tests/tcg/aarch64/Makefile.softmmu-target
+b/tests/tcg/aarch64/Makefile.softmmu-target
+index d08d9b01ded..9c52475b7ae 100644
+--- a/tests/tcg/aarch64/Makefile.softmmu-target
++++ b/tests/tcg/aarch64/Makefile.softmmu-target
+@@ -91,6 +91,9 @@ EXTRA_RUNS+=run-memory-replay
+
+ ifneq ($(CROSS_CC_HAS_ARMV8_3),)
+ pauth-3: CFLAGS += $(CROSS_CC_HAS_ARMV8_3)
++# This test explicitly checks the output of the pauth operation so we
++# must force the use of the QARMA5 algorithm for it.
++run-pauth-3: QEMU_BASE_MACHINE=-M virt -cpu max,pauth-qarma5=on -display none
+ else
+ pauth-3:
+        $(call skip-test, "BUILD of $@", "missing compiler support")
+
+
+thanks
+-- PMM
 
