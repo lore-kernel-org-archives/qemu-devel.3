@@ -4,42 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E7AC02183
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 15:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E37C02183
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 15:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXM8B-0000fq-MZ; Mon, 13 Jan 2025 10:13:32 -0500
+	id 1tXMGl-0002JQ-Sz; Mon, 13 Jan 2025 10:22:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tXM89-0000fZ-97; Mon, 13 Jan 2025 10:13:29 -0500
+ id 1tXMGc-0002FZ-Bh; Mon, 13 Jan 2025 10:22:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tXM87-0001jD-FJ; Mon, 13 Jan 2025 10:13:29 -0500
+ id 1tXMGa-0002c1-KS; Mon, 13 Jan 2025 10:22:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA59ED6C3A;
- Mon, 13 Jan 2025 18:13:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C19E2D6C79;
+ Mon, 13 Jan 2025 18:22:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 29C2A19AB93;
- Mon, 13 Jan 2025 18:13:11 +0300 (MSK)
-Message-ID: <e4401b30-8ec4-47b2-9583-2a921b1529d2@tls.msk.ru>
-Date: Mon, 13 Jan 2025 18:13:11 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 074F519AB9C;
+ Mon, 13 Jan 2025 18:22:06 +0300 (MSK)
+Message-ID: <15435e6d-a77c-4d3e-ae06-b1cd23fbee61@tls.msk.ru>
+Date: Mon, 13 Jan 2025 18:22:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] migration: Fix parsing of s390 stream
-To: Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+Subject: Re: [PATCH v4 17/32] system/qtest: properly feedback results of
+ clock_[step|set]
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250109185249.23952-1-farosas@suse.de>
- <20250109185249.23952-4-farosas@suse.de>
- <35911935-6f5c-40a3-aa73-3586dfdf3268@tls.msk.ru>
- <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
- <3cc941b1-b09d-4076-9234-9a385c762d3f@redhat.com>
- <fcc69fae-9c5a-4c7b-a6e3-cf445afc205d@tls.msk.ru>
- <a54d8f52-c11e-4eab-bdb7-c3ac1f353f3e@redhat.com>
- <d89067d5-31d0-42ba-b4e4-b9af1e921a3f@tls.msk.ru> <87ed16hnnd.fsf@suse.de>
+Cc: Halil Pasic <pasic@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>, 
+ qemu-riscv@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Beraldo Leal <bleal@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <lvivier@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Ed Maste <emaste@freebsd.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Bernhard Beschow <shentey@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Laurent Vivier
+ <laurent@vivier.eu>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Weiwei Li <liwei1518@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250108121054.1126164-1-alex.bennee@linaro.org>
+ <20250108121054.1126164-18-alex.bennee@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -85,7 +110,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <87ed16hnnd.fsf@suse.de>
+In-Reply-To: <20250108121054.1126164-18-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -111,59 +136,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.01.2025 16:03, Fabiano Rosas wrote:
-> Michael Tokarev <mjt@tls.msk.ru> writes:
+Ghrm. 46 recipients seems to be quite a bit too aggressive..
+
+08.01.2025 15:10, Alex Bennée wrote:
+> Time will not advance if the system is paused or there are no timer
+> events set for the future. In absence of pending timer events
+> advancing time would make no difference the system state. Attempting
+> to do so would be a bug and the test or device under test would need
+> fixing.
 > 
->> 13.01.2025 11:19, Thomas Huth wrote:
->>> On 13/01/2025 08.51, Michael Tokarev wrote:
->>
->>>> Picked up:
->>>>
->>>>    1/7 migration: Add more error handling to analyze-migration.py
->>>>    3/7 migration: Fix parsing of s390 stream
->>>>    7/7 s390x: Fix CSS migration
->>>>
->>>> but still getting the same error:
->>>>
->>>>    https://gitlab.com/mjt0k/qemu/-/jobs/8832218999 (9.2 branch)
->>>>    https://gitlab.com/mjt0k/qemu/-/jobs/8832224338 (9.1 branch)
->>>
->>> Blindly guessing: You need now patch 4/7 and 5/7, too? ... hopefully Fabiano could reply and point you to the exact set of patches that you need...
->>
->> Yes, after picking up ALL 7 out of 7 in this patchset (b/c even the
->> trivial 2/7, "migration: Remove unused argument in vmsd_desc_field_end",
->> is needed or else the subsequent fixes doesn't apply) it is now green
->> finally, eg, https://gitlab.com/mjt0k/qemu/-/jobs/8832849813
->>
->> Fabiano, what do you think, - should the whole patchset be picked up
->> for 9.2 and 9.1?
-> 
-> Yeah, sorry, I was focused on unbreaking the migration PR and added a
-> bunch of patches without thinking of stable.
+> Tighten up the result reporting to `FAIL` if time was not advanced.
 
-That's okay, it's already good (and large) enough to think about current
-master.
+Is this qemu-stable material?
 
-> So the s390x regression (7/7) is 9.1, but 9.0 already had the broken
-> analyze-script.py (3/7) and the broken array compression code (4-6/7).
-> 
-> We definitely need 7/7 for 9.1 and 9.2. The rest of the series is "just"
-> to avoid breaking the tests. If you can apply it easily I think that's
-> preferable. Otherwise maybe we could disable the analyze-migration.py
-> test for stable? I can also work on a backport if needed. Let me know
-> what you prefer.
-
-I applied all 7 to both 9.1 and 9.2.  9.0 is end-of-life at this point,
-so everything should be ok.  Both 9.1 and 9.2 passes the tests with this
-whole series applied.
-
-Thank you!
+Thanks,
 
 /mjt
-
->>
->> Thanks,
->>
->> /mjt
-
 
