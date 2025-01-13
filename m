@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727A6C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40736C02180
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 20:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXQqe-00034i-1E; Mon, 13 Jan 2025 15:15:45 -0500
+	id 1tXQqW-00032s-Pl; Mon, 13 Jan 2025 15:15:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tXQqT-00032x-3x
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 15:15:34 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tXQqQ-0001Xo-0e
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 15:15:32 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2166f1e589cso98837855ad.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 12:15:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736799327; x=1737404127; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Jok5TFWkxjvFxrhDzJJepVefflGzTmcAaNlIEo8m5xA=;
- b=u22uEkLxZuer+XMbxkZTyD2jd1mTl6sLgLvZbcL3iMIB8hcy57B8QrUQJUY42tyjn9
- AZrER1hwOJmE3Z+CPx+e+4WlAX3Hxc4EjbC40TdH/phvwmTdHVIV1eySc7jJgVAd/zp5
- MuJpG+3ryWGZK0FqcnIIqgVlm6lbed4TiiXGnzqYSkndYmAYlnkI2VdOv0VSa07WKtuV
- OlCC8kqrdILkr9abG2BoWPzFt80falmlCW51ZzsszevlU598YtFxMPjqgB0eGTBB3C70
- ip978iaj+UWnlkcHxXfIZqeMzghzxIWuspqWal0az/jPH4i9ThDzcFgLRgawkwxyFbQF
- RlBw==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXQqG-00031u-HE
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 15:15:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXQqE-0001Wq-JC
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 15:15:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736799314;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UF9LJ4jFyC9UC7/kDaX2KKGEGLe2P4mcVoujeqOofqs=;
+ b=fxX5Fg3zP9mpZXi8hGtAuKGFJuS765TTt2IuvKCCo2UVlGPqj8MSNEHq65T1sISYLjB9hT
+ YtjHY3NiaTkq6wz+uqc/AZpqK0O7C63i/1aHF8Md9AuVy7HLsH5/6odfOs6VxJV2cIKklY
+ 1rQzYL85W4nMSZF9sL4fs9UIzEqKlFA=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-3r8CtjZfPdONWO0M6PWm2w-1; Mon, 13 Jan 2025 15:15:12 -0500
+X-MC-Unique: 3r8CtjZfPdONWO0M6PWm2w-1
+X-Mimecast-MFC-AGG-ID: 3r8CtjZfPdONWO0M6PWm2w
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2ef9da03117so12256264a91.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 12:15:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736799327; x=1737404127;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jok5TFWkxjvFxrhDzJJepVefflGzTmcAaNlIEo8m5xA=;
- b=noP6+lzWNkOuL8wlj87Bqiw5HMVZ4rce179o0Ert1oOtVdCKEwqsSggiN+lASl7KfG
- T7K7iPjLLq8hOy/ET32NVOXy+NX2evWDvz26hvGgHAkxB00YxZJyCUNtwN+t825nxCHK
- u7vmSXOtSHBLE6bmULkdEyQMfOSPe7tfWSc6+7Y+xIXfnTQlzIapRhbCCuw2LUTLjdti
- FPA9Dc+3yGfL8R5RmaMhl8MpGyHZ240aX7hWZbCPQp/0GeciE0xEDGx/VJHK11OSs/Ed
- E5jKH7aqAgkFLnSDVOuYzg5QFhdYeM+r61h9D5Zgd4z1nmvdLDDV949ypqNnS/MFnRpe
- GHeQ==
-X-Gm-Message-State: AOJu0Yw4hnbMqKo8Sxfq/H+vjjxzysllq/eDxE5SbxK4lrP3bHlK7VHW
- CAY5wSjVI2OfXRRE5pOzIpsXyjC6Y9WQgfA1uZaAODHYWYszqFcvp8XxRilrActiIzOJ4IJgIkj
- dmy9uFw==
-X-Gm-Gg: ASbGncueB0QWYuWiQnWtN2yOahhlJNiNRfeJjN8FpMOhWHttvPWPCTeTvHsyJTE9JyO
- KOlOS9M2HWv9wz99wuQX16uvxIkD9GxeFehNJpfSxpWDzbZqJmGq1X+HLNmDUZ2YG9RTszaJZYi
- /HCj+53arwwbjJHfUoxZC+Mm5CLioBbzTtgyLEublkMeZn8SIKYCuxY0DtbmHjn48iwiXLQTRsv
- bOh4D7uF64ZbVMWw+LjrSHKijZDqnc1DvydKwop+GATcG3x2hcRQE1/IvgM81dr8EBKAw==
-X-Google-Smtp-Source: AGHT+IEYTN8ffsSwmjrHeZH3LsJjgfWnN96miImNiwji//eL24qr8ccl+q5r/Hs4nifik+zwzXAG3A==
-X-Received: by 2002:a17:90a:da8e:b0:2ee:b0b0:8e02 with SMTP id
- 98e67ed59e1d1-2f5490ac09cmr31280515a91.28.1736799326695; 
- Mon, 13 Jan 2025 12:15:26 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f5593fead5sm8185401a91.11.2025.01.13.12.15.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jan 2025 12:15:26 -0800 (PST)
-Message-ID: <a9b0cec7-2d2d-4f3c-8c07-588aed491920@linaro.org>
-Date: Mon, 13 Jan 2025 12:15:25 -0800
+ d=1e100.net; s=20230601; t=1736799311; x=1737404111;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UF9LJ4jFyC9UC7/kDaX2KKGEGLe2P4mcVoujeqOofqs=;
+ b=sQfPXcMyYIvEw/cl9Z6smFFbAGvqU1tqduk2OEi82f4EJ2octaeQ+aeQcDyL8INHgo
+ BH6MpUUAslhgRkcgPPgm+YG/yOqF6bwCzdpzGbAOdkwG3WYOYviUsIOu12fOM3S6Z+qA
+ MUmdazHEj1s5y2HQWqgsIsUzRvF854zzc+p+4JZZXP2eumOd7nRYQZZcV40JCk7UdBzo
+ vIEUU+0s3oFadf0GML6o/9Ebh6+SYhBmBQYNY6G3QJ8FwXMeZePagk6DtPG2xswD8uZ/
+ QqT56l0kigviPswLzy2NR/h27X/8ibJSPQWLksPI0ASfbT4cp8dAuvOHhksu6e2S8pjg
+ M1UQ==
+X-Gm-Message-State: AOJu0Yx6VRdJU9KAvdCL8k9SsN4Y9lpn6asm2zbxVOMNaOayT8F+Zg4y
+ t+n4ArO7dxREnNnGonLdczJuC9oj2pmYhtykjoiOaut/bInEmlBm+tse5YE5no3jZQxXhySRqa+
+ UAom4Exn/Q6vrg6dYXVb+LOt6+74lgeyq/OoDGwZCcksQP6eWekhizfLY8LAMtzOHd+16GSngf5
+ F7ttp81JWRARmdekAdgHAuc5pev4c=
+X-Gm-Gg: ASbGncs/UIQSQFibc2AxmV4HTsN43m3IlCZqoxH/YXAdtRu2jabLzCzbSHW1/2LsoDt
+ PO/E1KDy1fsOSOIBndzmDBzaRP/kBBWQdeVSUPzmbY+b13Ia5BiHkTROLs4EORHAJSr/mLQ==
+X-Received: by 2002:a17:90b:540f:b0:2ee:dcf6:1c8f with SMTP id
+ 98e67ed59e1d1-2f548eb3c95mr35373654a91.16.1736799311452; 
+ Mon, 13 Jan 2025 12:15:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFwvlSOV+PpdbbrettoMYc/h9T4Z1MLL/qi1GMoQXvmXUda2REdhcOwSHpMR9AWcBFUThNoNXbLIJGAO7mdqzE=
+X-Received: by 2002:a17:90b:540f:b0:2ee:dcf6:1c8f with SMTP id
+ 98e67ed59e1d1-2f548eb3c95mr35373614a91.16.1736799311030; Mon, 13 Jan 2025
+ 12:15:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Change default pointer authentication algorithm on
- aarch64 to impdef
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Fabiano Rosas <farosas@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, alex.bennee@linaro.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
- <CAFEAcA_ChARwKyvRXsEk1U3q1T2528753Eu7LgDSsDbF1s5tNQ@mail.gmail.com>
- <CAFEAcA_SHz2a0ZU=3e9AmZyJ_qn3e7nNhNm-hR9MdiTRjOyqWg@mail.gmail.com>
- <359e6921-fe3d-4f53-8ba9-5cf2b7ab6a6d@linaro.org>
-In-Reply-To: <359e6921-fe3d-4f53-8ba9-5cf2b7ab6a6d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20241213021827.2956769-1-jsnow@redhat.com>
+ <20241213021827.2956769-11-jsnow@redhat.com>
+ <87cyhm4hcc.fsf@pond.sub.org>
+In-Reply-To: <87cyhm4hcc.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 13 Jan 2025 15:14:59 -0500
+X-Gm-Features: AbW1kvYJb9mK9agbhrrPAxQNrar56zO1gAF6tgobxT7hWf_b829LUxZkZsSIIXg
+Message-ID: <CAFn=p-ZgT51ZCMHSt3Ot=5iOTPX8v8wM+89B-9JCkVDrT-4EDg@mail.gmail.com>
+Subject: Re: [PATCH 10/23] docs/qapidoc: add visit_freeform() method
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000fb0421062b9c1960"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.787,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,88 +100,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/25 11:32, Pierrick Bouvier wrote:
-> On 1/13/25 04:34, Peter Maydell wrote:
->> On Fri, 10 Jan 2025 at 16:28, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>
->>> On Thu, 19 Dec 2024 at 18:32, Pierrick Bouvier
->>> <pierrick.bouvier@linaro.org> wrote:
->>>>
->>>> qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
->>>> spent up to 50% of the emulation time running it (when using TCG).
->>>>
->>>> Switching to pauth-impdef=on is often given as a solution to speed up execution.
->>>> Thus we talked about making it the new default.
->>>>
->>>> The first patch introduce a new property (pauth-qarma5) to allow to select
->>>> current default algorithm.
->>>> The second one change the default.
->>>> The third one updates documentation.
->>>>
->>>> v2:
->>>> - ensure we don't break migration compatibility, by using a specific backward
->>>>     compatible property.
->>>> - added some documentation about migration for arm virt machine model.
->>>
->>> Other than a minor change to the 3rd docs patch which I'll note there:
->>> applied to target-arm.next, thanks.
->>
->> I just noticed that this series breaks 'make check-tcg', because
->> the pauth-3 test is explicitly checking the output of the
->> pointer-auth operation. I'm going to add in this patch, which
->> goes between patches 1 and 2 of this series:
->>
->> Author: Peter Maydell <peter.maydell@linaro.org>
->> Date:   Mon Jan 13 11:42:57 2025 +0000
->>
->>       tests/tcg/aarch64: force qarma5 for pauth-3 test
->>
->>       The pauth-3 test explicitly tests that a computation of the
->>       pointer-authentication produces the expected result.  This means that
->>       it must be run with the QARMA5 algorithm.
->>
->>       Explicitly set the pauth algorithm when running this test, so that it
->>       doesn't break when we change the default algorithm the 'max' CPU
->>       uses.
->>
->>       Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>
->> diff --git a/tests/tcg/aarch64/Makefile.softmmu-target
->> b/tests/tcg/aarch64/Makefile.softmmu-target
->> index d08d9b01ded..9c52475b7ae 100644
->> --- a/tests/tcg/aarch64/Makefile.softmmu-target
->> +++ b/tests/tcg/aarch64/Makefile.softmmu-target
->> @@ -91,6 +91,9 @@ EXTRA_RUNS+=run-memory-replay
->>
->>    ifneq ($(CROSS_CC_HAS_ARMV8_3),)
->>    pauth-3: CFLAGS += $(CROSS_CC_HAS_ARMV8_3)
->> +# This test explicitly checks the output of the pauth operation so we
->> +# must force the use of the QARMA5 algorithm for it.
->> +run-pauth-3: QEMU_BASE_MACHINE=-M virt -cpu max,pauth-qarma5=on -display none
->>    else
->>    pauth-3:
->>           $(call skip-test, "BUILD of $@", "missing compiler support")
->>
->>
->> thanks
->> -- PMM
-> 
-> Thanks Peter.
-> 
-> I'm a bit surprised because I ran all tests , and didn't find any failure.
-> 
-> I use container 'debian-all-test-cross' and ran 'make check-tcg'. Is the
-> container missing something that doesn't trigger this test?
+--000000000000fb0421062b9c1960
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I found that the build step I was using:
-- ./configure $QEMU_CONFIGURE_OPTS
-only builds user targets in this container.
-But failing test is related to a system target.
+On Fri, Dec 20, 2024 at 8:25=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-I updated this on my side, to make sure I won't miss that next time.
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/sphinx/qapidoc.py | 47 ++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 47 insertions(+)
+> >
+> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> > index 7d2f7bfb415..6f8f69077b1 100644
+> > --- a/docs/sphinx/qapidoc.py
+> > +++ b/docs/sphinx/qapidoc.py
+> > @@ -133,6 +133,53 @@ def visit_module(self, path: str) -> None:
+> >          self.add_line_raw(f".. qapi:module:: {name}", path, 1)
+> >          self.ensure_blank_line()
+> >
+> > +    def visit_freeform(self, doc) -> None:
+> > +        # Once the old qapidoc transformer is deprecated,
+> > +        # freeform sections can be transformed into pure rST.
+> > +        #
+> > +        # For now, translate our micro-format into rST.
+> > +        # Code adapted from Peter Maydell's freeform().
+> > +
+> > +        assert len(doc.all_sections) =3D=3D 1, doc.all_sections
+> > +        body =3D doc.all_sections[0]
+> > +        text =3D body.text
+> > +        info =3D doc.info
+> > +
+> > +        if re.match(r"=3D+ ", text):
+> > +            # Section/subsection heading (if present, will always be t=
+he
+> > +            # first line of the block)
+> > +            (heading, _, text) =3D text.partition("\n")
+> > +            (leader, _, heading) =3D heading.partition(" ")
+> > +            level =3D len(leader) + 1  # Implicit +1 for heading in .r=
+ST
+> stub
+> > +
+> > +            #
+> https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#s=
+ections
+> > +            markers =3D {
+> > +                1: "#",
+> > +                2: "*",
+> > +                3: "=3D",
+> > +                4: "-",
+> > +                5: "^",
+> > +                6: '"',
+> > +            }
+> > +            overline =3D level <=3D 2
+> > +            marker =3D markers[level]
+> > +
+> > +            self.ensure_blank_line()
+> > +            # This credits all 2 or 3 lines to the single source line.
+> > +            if overline:
+> > +                self.add_line(marker * len(heading), info)
+> > +            self.add_line(heading, info)
+> > +            self.add_line(marker * len(heading), info)
+> > +            self.ensure_blank_line()
+> > +
+> > +            # Eat blank line(s) and advance info
+> > +            trimmed =3D text.lstrip("\n")
+> > +            text =3D trimmed
+> > +            info =3D info.next_line(len(text) - len(trimmed) + 1)
+>
+> We could instead eat newlines one at a time, calling .next_line()
+> without an argument for each newline eaten.  Less efficient, but won't
+> matter here.  Possibly easier to understand.
+>
 
-Thanks again for the fix.
+Eh, I'm gonna delete this later anyway. Will send v2 without touching this,
+but I can touch it for next time if it still bothers you.
 
-Regards,
-Pierrick
+--js
+
+--000000000000fb0421062b9c1960
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Dec 20,=
+ 2024 at 8:25=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/sphinx/qapidoc.py | 47 ++++++++++++++++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 1 file changed, 47 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py<br>
+&gt; index 7d2f7bfb415..6f8f69077b1 100644<br>
+&gt; --- a/docs/sphinx/qapidoc.py<br>
+&gt; +++ b/docs/sphinx/qapidoc.py<br>
+&gt; @@ -133,6 +133,53 @@ def visit_module(self, path: str) -&gt; None:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line_raw(f&quot;.. qapi:mod=
+ule:: {name}&quot;, path, 1)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ensure_blank_line()<br>
+&gt;=C2=A0 <br>
+&gt; +=C2=A0 =C2=A0 def visit_freeform(self, doc) -&gt; None:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # Once the old qapidoc transformer is dep=
+recated,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # freeform sections can be transformed in=
+to pure rST.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 #<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # For now, translate our micro-format int=
+o rST.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # Code adapted from Peter Maydell&#39;s f=
+reeform().<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 assert len(doc.all_sections) =3D=3D 1, do=
+c.all_sections<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 body =3D doc.all_sections[0]<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 text =3D body.text<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 info =3D <a href=3D"http://doc.info" rel=
+=3D"noreferrer" target=3D"_blank">doc.info</a><br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if re.match(r&quot;=3D+ &quot;, text):<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Section/subsection headin=
+g (if present, will always be the<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # first line of the block)<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (heading, _, text) =3D text=
+.partition(&quot;\n&quot;)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (leader, _, heading) =3D he=
+ading.partition(&quot; &quot;)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 level =3D len(leader) + 1=
+=C2=A0 # Implicit +1 for heading in .rST stub<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # <a href=3D"https://www.sp=
+hinx-doc.org/en/master/usage/restructuredtext/basics.html#sections" rel=3D"=
+noreferrer" target=3D"_blank">https://www.sphinx-doc.org/en/master/usage/re=
+structuredtext/basics.html#sections</a><br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 markers =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 1: &quot;#&qu=
+ot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 2: &quot;*&qu=
+ot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 3: &quot;=3D&=
+quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 4: &quot;-&qu=
+ot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 5: &quot;^&qu=
+ot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 6: &#39;&quot=
+;&#39;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 overline =3D level &lt;=3D =
+2<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 marker =3D markers[level]<b=
+r>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ensure_blank_line()<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # This credits all 2 or 3 l=
+ines to the single source line.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if overline:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line=
+(marker * len(heading), info)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line(heading, info=
+)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.add_line(marker * len(=
+heading), info)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ensure_blank_line()<br=
+>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Eat blank line(s) and adv=
+ance info<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trimmed =3D text.lstrip(&qu=
+ot;\n&quot;)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 text =3D trimmed<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 info =3D info.next_line(len=
+(text) - len(trimmed) + 1)<br>
+<br>
+We could instead eat newlines one at a time, calling .next_line()<br>
+without an argument for each newline eaten.=C2=A0 Less efficient, but won&#=
+39;t<br>
+matter here.=C2=A0 Possibly easier to understand.<br></blockquote><div><br>=
+</div><div>Eh, I&#39;m gonna delete this later anyway. Will send v2 without=
+ touching this, but I can touch it for next time if it still bothers you.</=
+div><div><br></div><div>--js<br></div></div></div>
+
+--000000000000fb0421062b9c1960--
+
 
