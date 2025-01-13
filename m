@@ -4,105 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D21E7719F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 12:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59DEE7719F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 13:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXJz5-0005rB-M4; Mon, 13 Jan 2025 07:55:59 -0500
+	id 1tXK2e-0007Fv-PM; Mon, 13 Jan 2025 07:59:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tXJz1-0005qZ-7P; Mon, 13 Jan 2025 07:55:56 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tXJyz-0006Qg-3Y; Mon, 13 Jan 2025 07:55:54 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 01FE12116F;
- Mon, 13 Jan 2025 12:55:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736772948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tXK2d-0007Fk-3h
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:59:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tXK2a-0006jP-7n
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 07:59:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736773175;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
- b=wNh00f8wgQs24kvQl+k9SWnmRRsA1qdgeKLiZE5aouEt8u5oWdiIc4gbLMFXLkrqnng5bi
- B+IAzzDxXabaaZL5H2EXMcwdo3NPF72Ujk6yyZumIh7PUCqaw6CdymTkC1Wo1C5ewOXE7x
- VHyXDezWoX5EbPcLyxueQx9uZtjvDzU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736772948;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
- b=hBvXT75zQBsfrEJVGMMKOgx85LTkCYFucXevmzU9f1ss9D6+kPq0rw3A3xoqjA8kgl+/OZ
- oFlmTdSz8aw0cvDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736772948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
- b=wNh00f8wgQs24kvQl+k9SWnmRRsA1qdgeKLiZE5aouEt8u5oWdiIc4gbLMFXLkrqnng5bi
- B+IAzzDxXabaaZL5H2EXMcwdo3NPF72Ujk6yyZumIh7PUCqaw6CdymTkC1Wo1C5ewOXE7x
- VHyXDezWoX5EbPcLyxueQx9uZtjvDzU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736772948;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CBCZQq2JrHRZMNXoLgzekP/DxtmRNzfJD0ALiFFGDt8=;
- b=hBvXT75zQBsfrEJVGMMKOgx85LTkCYFucXevmzU9f1ss9D6+kPq0rw3A3xoqjA8kgl+/OZ
- oFlmTdSz8aw0cvDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7A1E313876;
- Mon, 13 Jan 2025 12:55:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QBcgEFMNhWeAGgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 13 Jan 2025 12:55:47 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Michael Tokarev <mjt@tls.msk.ru>, Shameer Kolothum
- <shameerali.kolothum.thodi@huawei.com>, qemu-devel@nongnu.org,
- peterx@redhat.com
-Cc: linuxarm@huawei.com, zhangfei.gao@linaro.org, qemu-stable
- <qemu-stable@nongnu.org>
-Subject: Re: [PATCH] migration/multifd: Fix compile error caused by
- page_size usage
-In-Reply-To: <0198d019-1d50-4b94-ab15-9d2bdef183db@tls.msk.ru>
-References: <20241203124943.52572-1-shameerali.kolothum.thodi@huawei.com>
- <0198d019-1d50-4b94-ab15-9d2bdef183db@tls.msk.ru>
-Date: Mon, 13 Jan 2025 09:55:44 -0300
-Message-ID: <87h662hnzj.fsf@suse.de>
+ bh=T8lWUeti1iR/7LXpJdRlgTQsBRt1ESJ+StJPeZp5l7c=;
+ b=QuhvGyqzyLVB1AlXUeCv9vGTsRLIYsQUQLts7yMjo3WlODUq16ijnPcPR8Zj+t5M3TOd7P
+ fL6yHZZ4+9Fe4ns6TWailnaXExmDxTgaY2EM3eq7PoP8LxPOG0e4XNVqrsfNPy4OBBT7mr
+ XKOueKCbR/b4QzgVLjwyd18/PRJuq+E=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-342-mVXbTX-7NY-UZUGdZ3ndEg-1; Mon, 13 Jan 2025 07:59:33 -0500
+X-MC-Unique: mVXbTX-7NY-UZUGdZ3ndEg-1
+X-Mimecast-MFC-AGG-ID: mVXbTX-7NY-UZUGdZ3ndEg
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3862b364578so2429610f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 04:59:33 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736773172; x=1737377972;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T8lWUeti1iR/7LXpJdRlgTQsBRt1ESJ+StJPeZp5l7c=;
+ b=XX4a89N99KLvLf4kzGXMDDwG4toO34V7sG9dL7OfIiotg8HUOVGgShBSBMp2A0VBnT
+ pDOancWry1zBgaUgovy5HeuNid1Z/8fVfB2O3/b6UspWuM7JOkfT4FSRzx1r86mq5zgx
+ eI5YiBPhBl0jMCwv9fL6jQRTNlmkEuc+j8JtG2I+btJmYHKERsri6D/h1KYLOarGwsRJ
+ cGLjDwyIigH2/h9KSfcaqKJZ5WtqZN+GK2hTdVHAV9Yq7RCdb1BCCgLnz0KacmUiDY49
+ 5BDbNPwjhiR1hpkkPNIQFLwxYYV8smJ5TA+CRD+h0szUBfZ2fP4OQK1OZi/nRSUo5m5u
+ XSRw==
+X-Gm-Message-State: AOJu0YxGUUDKAW58XPCV7fQod0Z5BqCxRtobD5Idf789Y8ZKb2GXJHGs
+ iEb7yKrmlZsh3/VsU8do+O2seT9EKUXEdd0lSO0mCYcr7n5hvqgnv8/VUouBS0E/9uf8Er5YvcI
+ JL+/Nth/wwpwrotCod6aKv9EKPwb0DTuDAuAYpt4ncXC3gdsZ/zyz
+X-Gm-Gg: ASbGncufQ1gB2mBHmSCcyEn2ndpFZ4blqfv9Sn1glfH0RZQGCUsr+iVxhUZgQxhyhzA
+ +ZfI9mvr7XVb3Ju6hZIl1sWLun9tTc+UhCJrvYAlOJAn0OnLaCoHqKSX5yijiAQQEC6MmMVYJix
+ xDCcxYe4w8/TslRUF4aPykcJQQHgnXQ8cQm1cLCjf5pidlN8mPjR43qBpii8dyqurKh6gEpuQGV
+ M2tcnx+KL6WlTacK8ZhslaNpziF9XEuRlmjRAW89m26Nmqz6lZDIF8Q9+CChLC1nx0Kzyqdeeee
+ BNfcDtu2G4dv+vmN5hXbOLR4nlH3
+X-Received: by 2002:a5d:6daf:0:b0:385:f64e:f177 with SMTP id
+ ffacd0b85a97d-38a8b0dafa2mr13293715f8f.11.1736773172621; 
+ Mon, 13 Jan 2025 04:59:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEe4I9dm7i1lfI5KXwRZ0S1LH+aTt3A4DYQBvR2E6Fvcfl9WZSxGCAj+mxd5E2tCu7xEdIqHQ==
+X-Received: by 2002:a5d:6daf:0:b0:385:f64e:f177 with SMTP id
+ ffacd0b85a97d-38a8b0dafa2mr13293696f8f.11.1736773172234; 
+ Mon, 13 Jan 2025 04:59:32 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e4b80besm11860116f8f.83.2025.01.13.04.59.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jan 2025 04:59:31 -0800 (PST)
+Date: Mon, 13 Jan 2025 13:59:31 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 0/6] hw/core: Unify hotplug decision logic
+Message-ID: <20250113135931.67f28681@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250110091908.64454-1-philmd@linaro.org>
+References: <20250110091908.64454-1-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- huawei.com:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.787,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,53 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+On Fri, 10 Jan 2025 10:19:02 +0100
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> 03.12.2024 15:49, Shameer Kolothum via wrote:
->>  From Commit 90fa121c6c07 ("migration/multifd: Inline page_size and
->> page_count") onwards page_size is not part of MutiFD*Params but uses
->> an inline constant instead.
->> 
->> However, it missed updating an old usage, causing a compile error.
->> 
->> Fixes: 90fa121c6c07 ("migration/multifd: Inline page_size and page_count")
->> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
->
-> This looks like a qemu-stable material, is it not?
->
+> Akihiko's v4 patch was doing too many things at once to
+> my taste, so I split it to follow dumbly each steps.
+> https://lore.kernel.org/qemu-devel/20250104-bus-v4-1-244cf1c6e2aa@daynix.=
+com/
 
-Yes.
+refactoring in some cases would lead to device being created
+and then deleted, where as before it we were bailing out earlier
+without creating a device.
+I guess there is no much harm in that overhead and we get
+consolidated handling instead of scattered checks.
 
-> I wonder how come thie code hasn't been compiled since 90fa121c6c07.
+Just make checkpatch happy, with that
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-The various pieces of code that support hardware accelerators in
-migration all depend on specific hardware and libraries, so it's all
-gated behind CONFIGs that are not enabled by default. We don't have
-resources to test this, it's up to the people interested in that code to
-check that it still works.
+>=20
+> Akihiko Odaki (6):
+>   hw/qdev: Pass bus argument to qdev_hotplug_allowed()
+>   hw/qdev: Factor qdev_hotunplug_allowed() out
+>   hw/qdev: Introduce qdev_hotplug_unplug_allowed_common()
+>   hw/qdev: Check DevClass::hotpluggable in hotplug_unplug_allowed_common
+>   hw/qdev: Check qbus_is_hotpluggable in hotplug_unplug_allowed_common
+>   hw/qdev: Check machine_hotplug_handler in
+>     hotplug_unplug_allowed_common
+>=20
+>  include/hw/qdev-core.h |  3 ++-
+>  hw/core/qdev-hotplug.c | 42 +++++++++++++++++++++++++++++++++++++++++-
+>  system/qdev-monitor.c  | 37 +++++--------------------------------
+>  3 files changed, 48 insertions(+), 34 deletions(-)
+>=20
 
-I have suggested we move more code out of the CONFIGs to minimize the
-amount of untested code, but we've ended up deciding that since we need
-help from people to maintain it anyway, it's not worth the extra work to
-isolate the hw-specific code even more.
-
->
-> /mjt
->
->>   migration/multifd-uadk.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
->> index 6e6a290ae9..6895c1f65a 100644
->> --- a/migration/multifd-uadk.c
->> +++ b/migration/multifd-uadk.c
->> @@ -169,7 +169,7 @@ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
->>               .src_len = page_size,
->>               .dst     = buf,
->>               /* Set dst_len to double the src in case compressed out >= page_size */
->> -            .dst_len = p->page_size * 2,
->> +            .dst_len = page_size * 2,
->>           };
->>   
->>           if (uadk_data->handle) {
 
