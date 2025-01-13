@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506D6E7719E
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE77E7719F
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 00:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tX8eT-0007o7-JC; Sun, 12 Jan 2025 19:49:57 -0500
+	id 1tX8j9-000825-TP; Sun, 12 Jan 2025 19:54:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8eP-0007P0-HP
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:53 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tX8j6-0007ra-9k; Sun, 12 Jan 2025 19:54:44 -0500
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tX8eN-00010l-QG
- for qemu-devel@nongnu.org; Sun, 12 Jan 2025 19:49:53 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so26340045e9.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jan 2025 16:49:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tX8j3-00032N-Q8; Sun, 12 Jan 2025 19:54:43 -0500
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4aff04f17c7so3059701137.0; 
+ Sun, 12 Jan 2025 16:54:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736729390; x=1737334190; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1736729679; x=1737334479; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5t7LN/wKZvE1noLloA1ScY9xrm7gHXj/oUl+gXuqqpU=;
- b=sntkCroIm9AADpXZ688KLaNL2EXoOYFJSmGwIl5bYmdWuH0/3PVtcBeWAGTibYh2zc
- fbv+QEElkYNdwqDfLQjSO6ibZrlz6uoVu/GYrMkWZ61PQQ3itQwTnp+Y1RHhuJkVeQ4h
- pDdDjuiphGi1XuFB76NMAjjExJcBVPZZcH1AYUWWcgfdxdyPfEwp1yDZt1IA7C4Z35St
- sXhZGszV2pnAnjnnPo7xDs9MG61ATHw2nkwWs88jxWvgt0rsX5e1o5G3bXvenUaho1TR
- Y9k3+MYhJ/3OU+aj5qOgrp4b6CuMZohnyRZq3sbiAI0Lcg4mzEjiIlKX6qOrKJxbxNzp
- /5nQ==
+ bh=jKziCxKEZvmGVoKSzZlgWvLs3ZtkNvBSB1Ne8OxhzuA=;
+ b=cnX/Sjzb4tEuPytTeQ2qK3MLqdY6OYaW6xLJMW6NkamWOmTFgjrUOoCiqNSR5ZlVNX
+ Zan4CiuGFJfRIuyCjvgY7FqQ5m5Ci931pPoau33n4tdjjhjKgRVGRvT0AJ8YGPJk+ZSS
+ 430x1ipJiy21dGrC2e4eVzfUIjbRDi35CeOK7+isTHpJlfDPONkClFY2tZK2/0RgXCjj
+ 7GRvNFrgARbZjgNbozudLlmh4o5wqVLifV7N9N+4bwqyqmCj5XggZzgwFLrFa3RjU+7w
+ NAzft49VK2HEwL6OWswr67hZRXrgCtqTfgRwccHxWT7PRoEniBZr4xHwk86bgPf2u4tS
+ O+oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736729390; x=1737334190;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1736729679; x=1737334479;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5t7LN/wKZvE1noLloA1ScY9xrm7gHXj/oUl+gXuqqpU=;
- b=A0T2j6oa8Y94V2DFV/wPwVaqDJDyoNtTOUoHXd12W/ucj1KT91IPhiaQ8si5AWNwll
- D9BzQEOj/RYVNhyuCThiqttO5tYkzJn7f3zIDT83z2DuNlOXOrgXqcISOmQhKfsj4zqT
- 4a3JCcA3LbK1eBpDxf63lQKXUrk5ksy20VrNL6B22r4i15Asg7AO5YwZKlHO8+LUb33o
- SQshr4Szc6kkTz7W5nyBKzOc91+gtcr7yyCimxckOPR8+3Q1Q6xQXioClc1TJoOfOCTA
- vXw91nj6yg7I3BQJkYKQq+JfZGJKcSGweXv7ztCC0yxBVlcTxOYMjlLfHw/Ex2epDarq
- qrVQ==
-X-Gm-Message-State: AOJu0Yz7aMsgfioXQYdPtxUCZlV+JZuo0bypXx0YHitZReS8vWejc+KK
- MVbgpwXqeQPHY/z/Pq3ITus5gCyq3vc0okg3RoSHtUjDFfdz/zbSXXQ8cQuz/BDIX5Kq3tYwQaQ
- BIgU=
-X-Gm-Gg: ASbGnctSHy5RGoWW8k5NJpxsvMVAdcmnKvByNxl23O2VKlb5eYvySWBdt3Ula79k9Qz
- +BvuE8hRRgsCSwkBZuvLY3A3Ea096wlUlGuhTn9I6EWsHtSEWiRSXS/Xi3Yrwf062uog39mBSPs
- jnG/UyQX+Cz/ouAUmyYU150Lw1UcJqAFTp8M3L4DUirDLCValysgz1XMyAhUlyZqhpEYAeZb75Z
- Z/5WVI+zl5BzY0Sv7cN+0Zp3mfFCXWfWIhTiMr76ryNWFbPoPnFs6xKp6AdReX4OB5YRi/0Q0/e
- U5p4Ygq9fD97JFWgfVRtyFZHM2PlfYk=
-X-Google-Smtp-Source: AGHT+IED2ZrvfsmkVYjiAmblygTMRodVkeQtnqamJdy+IIuJnKC8vCPowlTr3zJBYiQaidlI1m5xiw==
-X-Received: by 2002:a05:600c:4586:b0:434:9e1d:7626 with SMTP id
- 5b1f17b1804b1-436e26f4b91mr149209055e9.25.1736729389903; 
- Sun, 12 Jan 2025 16:49:49 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fd03sm129722785e9.6.2025.01.12.16.49.49
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jan 2025 16:49:49 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
- Paul Burton <paulburton@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 21/23] hw/mips/malta: Propagate MaltaState to
- write_bootloader()
-Date: Mon, 13 Jan 2025 01:47:46 +0100
-Message-ID: <20250113004748.41658-22-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250113004748.41658-1-philmd@linaro.org>
-References: <20250113004748.41658-1-philmd@linaro.org>
+ bh=jKziCxKEZvmGVoKSzZlgWvLs3ZtkNvBSB1Ne8OxhzuA=;
+ b=Hu+YbknHkrAeVqv1ztT8FlXFQAQ7B57qn6KDvIwnRdmrUeasRRcxoZBtRe+KOTVQZV
+ q4kdgSmfku+6fVsUVBOG1rwQQFfglhbfiv8kZwhek0Z1vMuICw7CL6dh6cZZ0FOzeOBr
+ dB5lTT3l7Njp0lhqn8qlT9VhJWAleEKoQ/UJQ7i/Ey4KCp1DCusHZuf2cQGBPDYZHsSB
+ Jv0iFiycUKx3Yu/f7/Y6lDJfpCX6vGjsMmcMRYWtTf85BQrCPoCs1jcr7jqwedLBygma
+ bRv2E30nrzad6pUUa96SRcJ8Jkt/yn/tgsw6LuHTzKjbkkD9YKpl7KpuBaYYW/X7SaVa
+ xKqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjrZ/JX4BD4iBjKSrLKdGqkW3ZKwV16dsHZHjxYmu1OhoBUTEe/I/fCFURQ/f27AmICDAO/g09y1Eo@nongnu.org
+X-Gm-Message-State: AOJu0YxwL1Cx63XVH517LqRIYdJ6TIdCOS6pB7DJDnwIcLWcvamjCp3j
+ BJnxtlxZwquX+Z8gtyq1rBiVuc05YQiEDYabSEM2CPVZYvvc/C7yDnTl3XuPTD0iHufEj9KS2xy
+ aCcWGw5c6TuoafGcWYWN0JV4uWgc=
+X-Gm-Gg: ASbGncs+m4HLSVNYVyHGVTjmndT5r8jlL4urJrSNbm4xjPVKs+8JOOn6E/AjGhE+rIX
+ AL620sjPVuE1NqOz4OvtuOl2d7+OS+LrIuY9kOQyhlivEaX+BVtlwLbJEu1GkmlBNJiY=
+X-Google-Smtp-Source: AGHT+IHqGuMGSj/TwH2qheBlFvFScQy7P/uT4wZf8HLPYvNER4JA+GmbuJkRjhjgV4hH9KfV/rCGTBq9NKsu7+5QnXI=
+X-Received: by 2002:a05:6102:5112:b0:4af:cb0c:390b with SMTP id
+ ada2fe7eead31-4b6092d86d7mr10044318137.7.1736729679261; Sun, 12 Jan 2025
+ 16:54:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250112231344.34632-1-philmd@linaro.org>
+In-Reply-To: <20250112231344.34632-1-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 13 Jan 2025 10:54:13 +1000
+X-Gm-Features: AbW1kvZUuJ8fEQ452Rxjq0TJEciBshr_d1C8kmlBobMauJDhfR6xCwKQZcgZZ8g
+Message-ID: <CAKmqyKMVFA6O_CunASBspYtuV=rfTckss=wNZHnAfr0XjfePDQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] hw/riscv/virt: Remove unnecessary use of &first_cpu
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Alistair Francis <alistair.francis@wdc.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,52 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass MaltaState as argument to write_bootloader() so next
-commit can propagate it to bl_setup_gt64120_jump_kernel().
+On Mon, Jan 13, 2025 at 9:14=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Pass RISCVCPU to kvm_riscv_get_timebase_frequency(),
+> then access the first vCPU via Virt::Array::Hart[]
+> rather than the &first_cpu global, which is going to
+> be removed as part of the heterogeneous emulation
+> effort.
+>
+> Philippe Mathieu-Daud=C3=A9 (2):
+>   target/riscv: Have kvm_riscv_get_timebase_frequency() take RISCVCPU
+>     cpu
+>   hw/riscv/virt: Remove unnecessary use of &first_cpu
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/mips/malta.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+Thanks!
 
-diff --git a/hw/mips/malta.c b/hw/mips/malta.c
-index a037ec2cc8d..589e1a07e47 100644
---- a/hw/mips/malta.c
-+++ b/hw/mips/malta.c
-@@ -692,7 +692,8 @@ static void bl_setup_gt64120_jump_kernel(void **p, uint64_t run_addr,
-                        kernel_entry);
- }
- 
--static void write_bootloader_nanomips(uint8_t *base, uint64_t run_addr,
-+static void write_bootloader_nanomips(MaltaState *s,
-+                                      uint8_t *base, uint64_t run_addr,
-                                       uint64_t kernel_entry)
- {
-     uint16_t *p;
-@@ -744,7 +745,8 @@ static void write_bootloader_nanomips(uint8_t *base, uint64_t run_addr,
-  *   a2 - 32-bit address of the environment variables table
-  *   a3 - RAM size in bytes
-  */
--static void write_bootloader(uint8_t *base, uint64_t run_addr,
-+static void write_bootloader(MaltaState *s,
-+                             uint8_t *base, uint64_t run_addr,
-                              uint64_t kernel_entry)
- {
-     uint32_t *p;
-@@ -1172,10 +1174,10 @@ void mips_malta_init(MachineState *machine)
-         kernel_entry = load_kernel();
- 
-         if (!cpu_type_supports_isa(machine->cpu_type, ISA_NANOMIPS32)) {
--            write_bootloader(memory_region_get_ram_ptr(bios),
-+            write_bootloader(s, memory_region_get_ram_ptr(bios),
-                              bootloader_run_addr, kernel_entry);
-         } else {
--            write_bootloader_nanomips(memory_region_get_ram_ptr(bios),
-+            write_bootloader_nanomips(s, memory_region_get_ram_ptr(bios),
-                                       bootloader_run_addr, kernel_entry);
-         }
-     } else {
--- 
-2.47.1
+Applied to riscv-to-apply.next
 
+Alistair
+
+>
+>  target/riscv/kvm/kvm_riscv.h | 4 +++-
+>  hw/riscv/virt.c              | 2 +-
+>  target/riscv/kvm/kvm-cpu.c   | 4 ++--
+>  3 files changed, 6 insertions(+), 4 deletions(-)
+>
+> --
+> 2.47.1
+>
+>
 
