@@ -4,85 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC1BE77188
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 03:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6565E7719E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 03:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXArt-0006Is-Qx; Sun, 12 Jan 2025 22:11:57 -0500
+	id 1tXBEV-0002Xc-5n; Sun, 12 Jan 2025 22:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tXArr-0006IT-PP; Sun, 12 Jan 2025 22:11:55 -0500
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tXArp-0004vZ-Kx; Sun, 12 Jan 2025 22:11:55 -0500
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-5161d5b8650so1295983e0c.3; 
- Sun, 12 Jan 2025 19:11:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736737912; x=1737342712; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZbLjuDBWUZZt9A2JgtxbsMmDT/geREqoWMoo71BDNrg=;
- b=HR217AzTS4+iwxFGosHA5E+V8W4D1w1k0/UQIM+XhUa+KcpZY+S6tDjMSHEPkmPBVO
- tIsJlBGSoZs/jQgiIQVcg3e7hSfJ4zTO62cXXimP6kl7tvI7ZzMsGb+qkz951TPACRwP
- mxuwQvCyMKmDg8bPqSSyEf8FXNY//+Pg8UrgRFQwHPP19oHtyfjmBPkcE62oMrgX5PPW
- PwpIHmr9vjr6cvM45szjJ0UVHj9Ckx0klfoOOBLVQ7HYdv25FtvZP/xZhj4hhVOsI9TQ
- egfc59+n5dkfyqglK3bXX9gN2lWM5KCurvs0FA+qrOCnu0P6hUCKp9j2aMhVZpRvDjPc
- XSgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736737912; x=1737342712;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZbLjuDBWUZZt9A2JgtxbsMmDT/geREqoWMoo71BDNrg=;
- b=awuGIeOU//mIktaCe8xtHQ4iUsSTtNEj39gd2QLSNU98GfqAKfWFbPi5EduPB+JHvE
- aHNHzu5Hxy2qMb2+TCuMab0oXa7ZAV0N2x/lkc0TD4W9QQQIKJWmwr+epkz8lk01mHkm
- DW909gVupx9Ji8lfW6WRlFUokX1zRaWleT5PbEJJafXHthSklFdBaJfhY/kokptayPcG
- GFTkLM4SyN2Fc7UXO7wdh8g2Q7f4VDF5/r8tEPgG7Qa7CTZgK1e6hYnIJ8cTzCbDGV2Z
- uZrw3ls8X3dJ+I4h0cPDewWro8QmMTc8gqJQ54+JEyIbSdUJLFP/acWegJgEDMzmySmL
- fF7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUn9jYVRb6PDTyiij+U5lAspbsOXRNiSnC0B0lZeUABqU6NPFfm2CAk4GPep5lYQfcWO0qsZWRUXqQP@nongnu.org
-X-Gm-Message-State: AOJu0YybJwZJf+Vrt8C0/FkSeG9GtNaiMPfOUaZQqdf5jzry9rmFNLAd
- by7LXj5hoKpu42/Cc3mhJ5nou4KGQiK2OEkVdOfbgaNqpSTKVw4sJcKyKKdwtHqB2UIzCdzlqHi
- WX6iQo+ihbyZuhNTfS9iVUTMDPZk=
-X-Gm-Gg: ASbGncvfLIeSH+p8isWdKq+Ib5mQwPYWyQ9txVa9VGXSss615x3oQwsmCGJo4HG2OlT
- MNUENjCoTeENRRlsoibkoeF+1f7voa7dqEOmXSqyAsm8msgpdEaoiKR77Svso3WqfKD4=
-X-Google-Smtp-Source: AGHT+IEL6YjM2fCP3kjXAZHtEoPcZMozxHeFYAfWzoSP55LP4zcKawvkGnbqSnVGheU82kPJ7ZUFxkQ/WREOp//AvzM=
-X-Received: by 2002:a05:6122:1acf:b0:516:24c4:963d with SMTP id
- 71dfb90a1353d-51c6c4303e1mr16976426e0c.2.1736737912056; Sun, 12 Jan 2025
- 19:11:52 -0800 (PST)
-MIME-Version: 1.0
-References: <20241108110147.11178-1-jason.chien@sifive.com>
-In-Reply-To: <20241108110147.11178-1-jason.chien@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 13 Jan 2025 13:11:26 +1000
-X-Gm-Features: AbW1kvZAI1NIlZGEPzDBArV7MfmKAUJHllFWgIkT3fINRjzfzhUMMIcgMTLqaNk
-Message-ID: <CAKmqyKP1SbJ0Mtuyigb0mK+HaKeUAoCy+9xroBa8OY8-oGi_yA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: Introduce a translation tag for
- the page table cache
-To: Jason Chien <jason.chien@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tXBET-0002X9-28
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 22:35:17 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tXBEQ-0007m1-PB
+ for qemu-devel@nongnu.org; Sun, 12 Jan 2025 22:35:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736739315; x=1768275315;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=diJppkgtBOgJDKJm/XlyVyapekelVFfQjvjScFLYxeo=;
+ b=B33cXQXTHitIO/Hk7/HztwBpPgyAxAKhuM5NXLqtHuxpZjs18fnFhI3j
+ wU322USVX5ulXgV88nlMrQdFiGQteUaKDY7t5a9IAjKAtXXxuNf4NhVhF
+ tTyF/AgIcsR39P4Om6C26XEMXW4WhKV9s77hXyBvEzsWyc5uXnWDyvD6g
+ yTdg9dUlThbEfpeAN6wr0Ve42fXxDmp1cr1DwtOh9cit1Wh4NQmK2bESt
+ VLwn7olR3NBx0HM7xcx5iDtiPsbjx2Ffx5bmvyZxfaUrDYohFONBXzhUE
+ gB/D7IRSZIbPlg0Yn3V/UAFIo+QMIbG9ZHEOC8NWznuvq1g5ZLYpzOdIT w==;
+X-CSE-ConnectionGUID: 5Jc5DQQcTdaUiWGUE5bdgA==
+X-CSE-MsgGUID: oLla0+GoSUalnL0pF27yBw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11313"; a="39796409"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="39796409"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jan 2025 19:35:10 -0800
+X-CSE-ConnectionGUID: DR8yDQkETvK+oXAdpqlvKg==
+X-CSE-MsgGUID: 8U8eTbFmTj6xPYGraFIY6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="104133788"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by orviesa009.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 12 Jan 2025 19:35:10 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Sun, 12 Jan 2025 19:35:09 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Sun, 12 Jan 2025 19:35:09 -0800
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.173)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Sun, 12 Jan 2025 19:35:09 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AuxM7KfuKibydhUhZauUM00MPdDOWnfYCVmy6cLHX2B8RFgf/iXWhq+K1MTwA/aFlJg41n0/ndAg5D1A9lkMU0KMy2SyIQL5De+mFHtGgS9fFKQr2IUmHHXSK7WbuE2H3f9r0KbnomIo6HEiRBaHbyA+iVR8pMETT75R1i/QjDwNeibhgci3XwnPcdv2ifbaWTMNWw7KQ84mfdRrGg3IpEtWlpNQqUgwTT2pUfEi7sHYrd7NqJ9z83PhPAdFM3RtqQPxTHgurOHzCK6T+ZF1+w8HkXAXcJ9tRy1yIUoOQ7aJ8kjq36Dfdp66JX+5PyAfM5ouP106mBEklkTV7TbNVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SIQTbgmnRhARvx9nO0N2MFscY1uwAKQnBKRfKZ67N/I=;
+ b=mchpOncDDNuUxavClZWsrPROxXOVm6iKJxsgrBg8xQzUeLF2l1vyyKExyI8gOATDLfVUIeRti+XUlmea6sy3pgWo7lJ2p3FFp/ri+3lm3UOAn1Gp+slzHgSmoIqI4dnF7siMmmTaBFX89cxBZA3BLshcMQw4Ujf0fEzezO8ddx26zVoFpdAB2UDmKFtHitKnh2KZ+6lrXAeEBKIBx6GSGmsc7vkrUme3SCUJigtxL68malrLwqoCAxIz7m49uwdc23FMHSclMqHc0QavCod9l3oQfyA+1XWmmvbYwHQ13n3X/jJ2wq+C83f9GWUMrZoF8NkjnkyMjiDKEPXFVDAN+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CYXPR11MB8729.namprd11.prod.outlook.com (2603:10b6:930:dc::17)
+ by SJ0PR11MB5133.namprd11.prod.outlook.com (2603:10b6:a03:2ac::24)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.18; Mon, 13 Jan
+ 2025 03:34:53 +0000
+Received: from CYXPR11MB8729.namprd11.prod.outlook.com
+ ([fe80::680a:a5bc:126d:fdfb]) by CYXPR11MB8729.namprd11.prod.outlook.com
+ ([fe80::680a:a5bc:126d:fdfb%7]) with mapi id 15.20.8335.015; Mon, 13 Jan 2025
+ 03:34:53 +0000
+Message-ID: <565fb987-a16d-4e15-ab03-807bf3920aa1@intel.com>
+Date: Mon, 13 Jan 2025 11:34:44 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+To: Xu Yilun <yilun.xu@linux.intel.com>
+CC: Alexey Kardashevskiy <aik@amd.com>, David Hildenbrand <david@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
+ Williams Dan J <dan.j.williams@intel.com>, Peng Chao P
+ <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>
+References: <20241213070852.106092-3-chenyi.qiang@intel.com>
+ <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
+ <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <219a4a7a-7c96-4746-9aba-ed06a1a00f3e@amd.com>
+ <58b96b74-bf9c-45d3-8c2e-459ec2206fc8@intel.com>
+ <8c8e024d-03dc-4201-8038-9e9e60467fad@amd.com>
+ <ca9bc239-d59b-4c53-9f14-aa212d543db9@intel.com>
+ <4d22d3ce-a5a1-49f2-a578-8e0fe7d26893@amd.com>
+ <2b799426-deaa-4644-aa17-6ef31899113b@intel.com>
+ <Z4A45glfrJtq2zS2@yilunxu-OptiPlex-7050>
+ <Z4BEqnzkfN2yQg63@yilunxu-OptiPlex-7050>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <Z4BEqnzkfN2yQg63@yilunxu-OptiPlex-7050>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SGAP274CA0022.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::34)
+ To CYXPR11MB8729.namprd11.prod.outlook.com
+ (2603:10b6:930:dc::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CYXPR11MB8729:EE_|SJ0PR11MB5133:EE_
+X-MS-Office365-Filtering-Correlation-Id: ed0fb33d-6b85-432a-4c77-08dd33833dc6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bDVTeWZ0bk10c1h5T3pKZzM3NUJlQ2ErdHYrdDVodTVnaldETlM1bkNYQWZY?=
+ =?utf-8?B?V095ZENqL0UwelNJNGpaSUlvVTZ2bGYvdHhlOGFQVDBYVWd1TG9qcDNnQUda?=
+ =?utf-8?B?aUJiUnhhU2t4Ym1qSEFGWGQvcEdzY1NoRmJFc1JtbFZuWlhCMzZPRGp2cita?=
+ =?utf-8?B?RXI2Yi9qaFNzZVQ2UzVETTg5RFVDWWZwYXUzM3VNdXYwT0syVXl2YmN2TUZl?=
+ =?utf-8?B?R3RiVFdGWS9NbXlTY3BSQkV2VWplYkdxTXcwL1EwZjQxcmMrUjdlZkpweVoz?=
+ =?utf-8?B?QjF4RW5rYWFDS2ZJTUpFMDMwdUR1engyZnNkY2lCdlA5V0hxc3BqVHIxZDBk?=
+ =?utf-8?B?L09kbHNTY1VyTUR0VXpmdVk3NlA2d1BRMXRNdGhMMjRLUW1obGYrUnAzdGZr?=
+ =?utf-8?B?MDNnbU1JZWtuTkE2cW11bU5NTVpRTGJDZWliOVQwaGtnSWJ5VTNMSHJJY0t4?=
+ =?utf-8?B?S3Z6RDBsYno2ajZ2WkxFbjBJVWFnRWQ2Z0pBamxiNUlDd1EyK04zbVdOaytH?=
+ =?utf-8?B?b1BUMlU2amUyVVlYakVucGd1UG4veUdkZkI0R3VyMXYyR0sxYTBqVmZrUlpJ?=
+ =?utf-8?B?aStoOVJIekFGcXJ5WlBhTjl2QlNrbTJxWTZORHB0SUhMcGMyM3prM09GSjZy?=
+ =?utf-8?B?ZEF0L0lUZ2NVVElBYjdCOFd1TUlaZkw2cGt6TzY3OENWVEtyS1R3M3Zab1Rj?=
+ =?utf-8?B?WnlZTDBSRGVWQ1lLMjI3OUl3WUE4MEhxWWxJK3BCVEtFZWd6RGpvKzFaeUt2?=
+ =?utf-8?B?VXBMODI5bmhzeDdzRmxNQ1h0dDRMZURLU1d4NnJwdkIwZTdvdEJtYkVWcHVo?=
+ =?utf-8?B?U1NFQmc0eHVrNHcrWWFzWmIvK2lUS0hQM2YvSFpmUk8xRXlTUG1vWS9QOTMz?=
+ =?utf-8?B?d0thV05PZkhBRUhUWUhEVVhtZks3SklnazlodkI2ZWVtblVYM3JrYk85N3JE?=
+ =?utf-8?B?ZnhKTkg4Z2lQTXVralRxUVFJdkNreHlGOVMxYy8vQnpLYURKaDc3Z09oTWJN?=
+ =?utf-8?B?MzM0MGdGK2R3TzFtNnAxR2ZDaVFnTU1XWjlZaDEyYVM5azNKUGRyV1dEQU5J?=
+ =?utf-8?B?dXU1THJrL200cDA0VUxEV1krOWE4S0ZrZFhCUkxUczJPS1RGUlJ5bzFtWExv?=
+ =?utf-8?B?ZkFFUEhEbUVNNVRpelgwa3NRTm9sTHN1WVdjSnVXNUhZT1EzYjhkSHliS1k0?=
+ =?utf-8?B?djNqUzM4bDVjOGc3MW5mWmZnbDRtYldYdGEzZHRPNU16S01Ed3lMY3dvTG5B?=
+ =?utf-8?B?OXdNMnRxL2UvanNRWnh6WCs2d1lVS0JjVmFFWEVMbTFxYit6dHVIUzc5V1Z1?=
+ =?utf-8?B?MnhFTkx4YUNQaGxWbUVnKzNYMHFTeUlldktjVXQyNVZmMXhObHo2RmV2RG5n?=
+ =?utf-8?B?bW9LVmlvUGw3cXNlNVM0RW5LSmFodGExbFVqbDVXT0hHNXRHelk4b3ZmL1Rr?=
+ =?utf-8?B?NGpQSGhUaTJFWm5aaUx6NTEyeGM5T3RtV2pMbmhYVXphOXR4aURRNk1PRXdW?=
+ =?utf-8?B?cUM3c2l0SklhTE5ZQ1hMdXV2RE9oK1JIQkdZNHFybFJWVjkxcEdZMnA4VGgr?=
+ =?utf-8?B?TnB0YnBTcWx1S25ob3gxS1hqNEpJczZvYXhPY09ZaHFPdGFYZmtwdFQ1TVJl?=
+ =?utf-8?B?dXFnZnNwWjE5TXpCdjlJV1FNSmJhTUd4eEpiN29FZzdpcTVWaXh5MkQ1T0cx?=
+ =?utf-8?B?cUo4bjh0eXZWNWRpcmlpaTFBdWhVdysxaWo4SVJLOXVqR1VpMkd5MFYyRFAr?=
+ =?utf-8?B?ZkFVU1Q3TGlYdFRqdDhLZFV1WlNLT28vK2lheXh2SFFQakpyeERSeHFSNWNo?=
+ =?utf-8?B?aThyUmFCKzJNNjZvc3JmK0poUlZNVUlyb3NuMU9KNllCcFgwL0ZqSU41Skdq?=
+ =?utf-8?B?QmtxUW9OZlBFa1dQZUNzR3dtcVEyUUN4dFdTSlBOTlZYVGc9PQ==?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CYXPR11MB8729.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eDF4RG9od1N4YzhMYzg0MVhHbzgvTllpeExrYlArY0RLS2t5UGN4dVA5QkJk?=
+ =?utf-8?B?WHp6eE5sTG5KWDdhcjF0Z2NLQmVyRzhQWXREK3MyQUUwMWtpVXhVTE5IeXZl?=
+ =?utf-8?B?Yi9BVUFwYWIwbVlGTjFkS2F6Z1d1S1NUQ3lyVUx0QXRnR3loWk5jVmc3N2c0?=
+ =?utf-8?B?RXBaWlBaZitnUU1uU0Y2OEV1dzk2d2JUSVg2SWNMdFJNSWdqQ0QxVkQyZ1pw?=
+ =?utf-8?B?cWNwY3djd29CdG5LbHE4ZExyNzBBSC9jZGVXNjdOUmJxcUd3MkprNVBxOVk5?=
+ =?utf-8?B?RkZzK2puUG5sRkJGemZKRFdPMjkzM3FHUTNDdytOVzdQZFhsV1VPWUpTMzRD?=
+ =?utf-8?B?Um5RQ0dsamY2YWFqK2FiZlI2OFZ3NWVxS251RE1tZ2tEWUNQMEFrYjEya2RC?=
+ =?utf-8?B?ZXNYbnlCYUpFRjNhWmN6YnlsbSthZXhmVVBNQm12Yk5KWVlqdlVZYnpHVDRF?=
+ =?utf-8?B?MlBVcTFwNVhWTnFXTFpLdkZZTGs4UEtaSXM4S3E1WC9DcmxTZnlhNnJMWitv?=
+ =?utf-8?B?ZjBHYmpiNWNYMi8vY1RYbHMwZ0x3Z2ZZYUIwYXNpOC9lL3RIZkp4bjZIWnY2?=
+ =?utf-8?B?U2paN3BqK1JiM01XNkR5S1hhczAvU01KUzdYNGRnWk1NSFVBKzd3TDlPRFRm?=
+ =?utf-8?B?U3NKZkJGYStKd1FQTkJvRkxjMHZnVWcySlhtRFJzWE1DU1A1elhyUG9ONFc4?=
+ =?utf-8?B?WnVnR294UUxVZ3UwSjRyN25OdlpxbC8yZDN6RzE2TGsvdmZtL0tjeFRTaUhM?=
+ =?utf-8?B?N3lEdUxEU0h2Tk80T1ZKenMzcitWd2tTalM5dE5sMm0wMmwxN2VQZFhPVTht?=
+ =?utf-8?B?N1AxWkFJbGlsMnpuR3ZWandCSHZvYWNqK25makxVQ2JZY2M2N1ZTbU1GWExa?=
+ =?utf-8?B?aU1pcUNqb2YyVHQyQzVSLzdTbEVtWitmOWluNHpOQVlvTGxsZnp3WmVqZFF0?=
+ =?utf-8?B?OVVuM0JSUlc3TWJYcU1rTk1MaUhweEdVQTZqRGYrTFBxYmN5SmNENXZ0Q0Ni?=
+ =?utf-8?B?bncwRlhuZGdUR0MrelpYWS9jOUZBa3ByRGNyc25VTWtMRlBmUGtlQVRuQTl4?=
+ =?utf-8?B?MU5TbThkbE5VajZHOUNmVXlKd28rQWJQeXowZDZxQjFUMHNGS3AyclpsNHU3?=
+ =?utf-8?B?SGh3Y2RIM3RpdHdSVnhySTVkdG16VitYM09HUXpFSHB0dC9Sc2tnNldGQkI2?=
+ =?utf-8?B?UCtNaVExZ24vaEdYVThiNExXaE9kNXJsZHZyVndldjFvZ3g1R0V3bEQ2aGhu?=
+ =?utf-8?B?TlJMcVhKbXpqRXlxUmJmUE9pZFJZalFFL1F1MC9hSm1BRzlNcUduRjd1d1Uy?=
+ =?utf-8?B?THpzY1V1cDh2RU9MclFRaU56OHQvL05VY0FKUVBVMThRUzlqVE5NYlZDdGRu?=
+ =?utf-8?B?S0JBSHJab0JOdzhyMERlQW5yRzlSU0xTOHZTOHBVR1Q5dVpITlFseEVPb1du?=
+ =?utf-8?B?QXVycVJJa1QrQ25JTmNwbE9mMm42ZXJnaEhZeGc5cWx6Q243RWJyRWQ1ZFl2?=
+ =?utf-8?B?ZmVBZnh0L2RKelpzT0Ywanp6cklkc000NGthUW5yWll5ZDZLekFRZnJvckwr?=
+ =?utf-8?B?OUN4ai96WUY2TVJxNG9oczdXcWdIK1B2bU9jTHRScXFjZDFYOHVDbDNvaTJv?=
+ =?utf-8?B?aFd2LzgzVmYzZE9wT3QvbXBoVE9VYWFnNk50ZDF2emNCTlByNStVSS9icVFI?=
+ =?utf-8?B?UkM0R2VKTXpPYzFleWNRdWZYMENEYXh1YlNHaVRvL01LM21nU1JnTDZVMStG?=
+ =?utf-8?B?QTRkYlhMUTF2alV4M2diNW5lTzNaaEpZOGJMUDNiNFkrZ2pzaTBrNDRNOFVs?=
+ =?utf-8?B?TFlaOW9CVmdlUGlsRVBMc0xmbWZraXI2RmRNYndVZ05jYmxMMXRxUSsyOTNk?=
+ =?utf-8?B?QUp5d0NQVGI5aTc0TDVOK1hMb0lrdi9BRGo1dTlGN2hld3c1L3oyNlJSam5X?=
+ =?utf-8?B?TUtWcEVWSXV4dzI1UlZ1Q0YxVXM1TXRKZ04xeGtveVZ2NE8vKzdkTHdiMzhF?=
+ =?utf-8?B?a21leFMvbTFod3NvVDBMQUZTVkg5RjhNMnVXS2s4U2p5TmNhMENSemZGOHlq?=
+ =?utf-8?B?L2NkbGhQNEgvdGxHYWd0aWUyL1p1eVBkRUNTWktEc2ZsbDFmYzNraUVpRWlZ?=
+ =?utf-8?B?RjZpVEVXOWRJd2laYlZDeEJqSjlOUUNTWGZlN1ZabXZGWnR6OS9Wdmt3ZnJt?=
+ =?utf-8?B?MUE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed0fb33d-6b85-432a-4c77-08dd33833dc6
+X-MS-Exchange-CrossTenant-AuthSource: CYXPR11MB8729.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2025 03:34:52.9555 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: n92y0MxCCx3UqjCuDqwxo2XhlzKmnCUE3q64KyPJ6FVfhagzXL5pGqW/XyUG/zrq9N1K458IWu5129+XSNGCHQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5133
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.13;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.025,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,381 +226,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 8, 2024 at 9:03=E2=80=AFPM Jason Chien <jason.chien@sifive.com>=
- wrote:
->
-> This commit introduces a translation tag to avoid invalidating an entry
-> that should not be invalidated when IOMMU executes invalidation commands.
-> E.g. IOTINVAL.VMA with GV=3D0, AV=3D0, PSCV=3D1 invalidates both a mappin=
-g
-> of single stage translation and a mapping of nested translation with
-> the same PSCID, but only the former one should be invalidated.
->
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
 
-Thanks!
 
-Applied to riscv-to-apply.next
+On 1/10/2025 5:50 AM, Xu Yilun wrote:
+> On Fri, Jan 10, 2025 at 05:00:22AM +0800, Xu Yilun wrote:
+>>>>
+>>>> https://github.com/aik/qemu/commit/3663f889883d4aebbeb0e4422f7be5e357e2ee46
+>>>>
+>>>> but I am not sure if this ever saw the light of the day, did not it?
+>>>> (ironically I am using it as a base for encrypted DMA :) )
+>>>
+>>> Yeah, we are doing the same work. I saw a solution from Michael long
+>>> time ago (when there was still
+>>> a dedicated hostmem-memfd-private backend for restrictedmem/gmem)
+>>> (https://github.com/AMDESE/qemu/commit/3bf5255fc48d648724d66410485081ace41d8ee6)
+>>>
+>>> For your patch, it only implement the interface for
+>>> HostMemoryBackendMemfd. Maybe it is more appropriate to implement it for
+>>> the parent object HostMemoryBackend, because besides the
+>>> MEMORY_BACKEND_MEMFD, other backend types like MEMORY_BACKEND_RAM and
+>>> MEMORY_BACKEND_FILE can also be guest_memfd-backed.
+>>>
+>>> Think more about where to implement this interface. It is still
+>>> uncertain to me. As I mentioned in another mail, maybe ram device memory
+>>> region would be backed by guest_memfd if we support TEE IO iommufd MMIO
+>>
+>> It is unlikely an assigned MMIO region would be backed by guest_memfd or be
+>> implemented as part of HostMemoryBackend. Nowadays assigned MMIO resource is
+>> owned by VFIO types, and I assume it is still true for private MMIO.
+>>
+>> But I think with TIO, MMIO regions also need conversion. So I support an
+>> object, but maybe not guest_memfd_manager.
+> 
+> Sorry, I mean the name only covers private memory, but not private MMIO.
 
-Alistair
+So you suggest renaming the object to cover the private MMIO. Then how
+about page_conversion_manager, or page_attribute_manager?
 
-> ---
->  hw/riscv/riscv-iommu.c | 205 ++++++++++++++++++++++++++++++-----------
->  1 file changed, 153 insertions(+), 52 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index ff9deefe37..ac6bbf91d6 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -64,8 +64,16 @@ struct RISCVIOMMUContext {
->      uint64_t msiptp;            /* MSI redirection page table pointer */
->  };
->
-> +typedef enum RISCVIOMMUTransTag {
-> +    RISCV_IOMMU_TRANS_TAG_BY,  /* Bypass */
-> +    RISCV_IOMMU_TRANS_TAG_SS,  /* Single Stage */
-> +    RISCV_IOMMU_TRANS_TAG_VG,  /* G-stage only */
-> +    RISCV_IOMMU_TRANS_TAG_VN,  /* Nested translation */
-> +} RISCVIOMMUTransTag;
-> +
->  /* Address translation cache entry */
->  struct RISCVIOMMUEntry {
-> +    RISCVIOMMUTransTag tag;     /* Translation Tag */
->      uint64_t iova:44;           /* IOVA Page Number */
->      uint64_t pscid:20;          /* Process Soft-Context identifier */
->      uint64_t phys:44;           /* Physical Page Number */
-> @@ -1228,7 +1236,7 @@ static gboolean riscv_iommu_iot_equal(gconstpointer=
- v1, gconstpointer v2)
->      RISCVIOMMUEntry *t1 =3D (RISCVIOMMUEntry *) v1;
->      RISCVIOMMUEntry *t2 =3D (RISCVIOMMUEntry *) v2;
->      return t1->gscid =3D=3D t2->gscid && t1->pscid =3D=3D t2->pscid &&
-> -           t1->iova =3D=3D t2->iova;
-> +           t1->iova =3D=3D t2->iova && t1->tag =3D=3D t2->tag;
->  }
->
->  static guint riscv_iommu_iot_hash(gconstpointer v)
-> @@ -1237,67 +1245,115 @@ static guint riscv_iommu_iot_hash(gconstpointer =
-v)
->      return (guint)t->iova;
->  }
->
-> -/* GV: 1 PSCV: 1 AV: 1 */
-> +/* GV: 0 AV: 0 PSCV: 0 GVMA: 0 */
-> +/* GV: 0 AV: 0 GVMA: 1 */
-> +static
-> +void riscv_iommu_iot_inval_all(gpointer key, gpointer value, gpointer da=
-ta)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->tag =3D=3D arg->tag) {
-> +        iot->perm =3D IOMMU_NONE;
-> +    }
-> +}
-> +
-> +/* GV: 0 AV: 0 PSCV: 1 GVMA: 0 */
-> +static
-> +void riscv_iommu_iot_inval_pscid(gpointer key, gpointer value, gpointer =
-data)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->tag =3D=3D arg->tag &&
-> +        iot->pscid =3D=3D arg->pscid) {
-> +        iot->perm =3D IOMMU_NONE;
-> +    }
-> +}
-> +
-> +/* GV: 0 AV: 1 PSCV: 0 GVMA: 0 */
-> +static
-> +void riscv_iommu_iot_inval_iova(gpointer key, gpointer value, gpointer d=
-ata)
-> +{
-> +    RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->tag =3D=3D arg->tag &&
-> +        iot->iova =3D=3D arg->iova) {
-> +        iot->perm =3D IOMMU_NONE;
-> +    }
-> +}
-> +
-> +/* GV: 0 AV: 1 PSCV: 1 GVMA: 0 */
->  static void riscv_iommu_iot_inval_pscid_iova(gpointer key, gpointer valu=
-e,
->                                               gpointer data)
->  {
->      RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
->      RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> -    if (iot->gscid =3D=3D arg->gscid &&
-> +    if (iot->tag =3D=3D arg->tag &&
->          iot->pscid =3D=3D arg->pscid &&
->          iot->iova =3D=3D arg->iova) {
->          iot->perm =3D IOMMU_NONE;
->      }
->  }
->
-> -/* GV: 1 PSCV: 1 AV: 0 */
-> -static void riscv_iommu_iot_inval_pscid(gpointer key, gpointer value,
-> -                                        gpointer data)
-> +/* GV: 1 AV: 0 PSCV: 0 GVMA: 0 */
-> +/* GV: 1 AV: 0 GVMA: 1 */
-> +static
-> +void riscv_iommu_iot_inval_gscid(gpointer key, gpointer value, gpointer =
-data)
->  {
->      RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
->      RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> -    if (iot->gscid =3D=3D arg->gscid &&
-> -        iot->pscid =3D=3D arg->pscid) {
-> +    if (iot->tag =3D=3D arg->tag &&
-> +        iot->gscid =3D=3D arg->gscid) {
->          iot->perm =3D IOMMU_NONE;
->      }
->  }
->
-> -/* GV: 1 GVMA: 1 */
-> -static void riscv_iommu_iot_inval_gscid_gpa(gpointer key, gpointer value=
-,
-> -                                            gpointer data)
-> +/* GV: 1 AV: 0 PSCV: 1 GVMA: 0 */
-> +static void riscv_iommu_iot_inval_gscid_pscid(gpointer key, gpointer val=
-ue,
-> +                                              gpointer data)
->  {
->      RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
->      RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> -    if (iot->gscid =3D=3D arg->gscid) {
-> -        /* simplified cache, no GPA matching */
-> +    if (iot->tag =3D=3D arg->tag &&
-> +        iot->gscid =3D=3D arg->gscid &&
-> +        iot->pscid =3D=3D arg->pscid) {
->          iot->perm =3D IOMMU_NONE;
->      }
->  }
->
-> -/* GV: 1 GVMA: 0 */
-> -static void riscv_iommu_iot_inval_gscid(gpointer key, gpointer value,
-> -                                        gpointer data)
-> +/* GV: 1 AV: 1 PSCV: 0 GVMA: 0 */
-> +/* GV: 1 AV: 1 GVMA: 1 */
-> +static void riscv_iommu_iot_inval_gscid_iova(gpointer key, gpointer valu=
-e,
-> +                                             gpointer data)
->  {
->      RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
->      RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> -    if (iot->gscid =3D=3D arg->gscid) {
-> +    if (iot->tag =3D=3D arg->tag &&
-> +        iot->gscid =3D=3D arg->gscid &&
-> +        iot->iova =3D=3D arg->iova) {
->          iot->perm =3D IOMMU_NONE;
->      }
->  }
->
-> -/* GV: 0 */
-> -static void riscv_iommu_iot_inval_all(gpointer key, gpointer value,
-> -                                      gpointer data)
-> +/* GV: 1 AV: 1 PSCV: 1 GVMA: 0 */
-> +static void riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key, gpointe=
-r value,
-> +                                                   gpointer data)
->  {
->      RISCVIOMMUEntry *iot =3D (RISCVIOMMUEntry *) value;
-> -    iot->perm =3D IOMMU_NONE;
-> +    RISCVIOMMUEntry *arg =3D (RISCVIOMMUEntry *) data;
-> +    if (iot->tag =3D=3D arg->tag &&
-> +        iot->gscid =3D=3D arg->gscid &&
-> +        iot->pscid =3D=3D arg->pscid &&
-> +        iot->iova =3D=3D arg->iova) {
-> +        iot->perm =3D IOMMU_NONE;
-> +    }
->  }
->
->  /* caller should keep ref-count for iot_cache object */
->  static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
-> -    GHashTable *iot_cache, hwaddr iova)
-> +    GHashTable *iot_cache, hwaddr iova, RISCVIOMMUTransTag transtag)
->  {
->      RISCVIOMMUEntry key =3D {
-> +        .tag   =3D transtag,
->          .gscid =3D get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID),
->          .pscid =3D get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
->          .iova  =3D PPN_DOWN(iova),
-> @@ -1323,10 +1379,11 @@ static void riscv_iommu_iot_update(RISCVIOMMUStat=
-e *s,
->  }
->
->  static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
-> -    uint32_t gscid, uint32_t pscid, hwaddr iova)
-> +    uint32_t gscid, uint32_t pscid, hwaddr iova, RISCVIOMMUTransTag tran=
-stag)
->  {
->      GHashTable *iot_cache;
->      RISCVIOMMUEntry key =3D {
-> +        .tag =3D transtag,
->          .gscid =3D gscid,
->          .pscid =3D pscid,
->          .iova  =3D PPN_DOWN(iova),
-> @@ -1337,9 +1394,24 @@ static void riscv_iommu_iot_inval(RISCVIOMMUState =
-*s, GHFunc func,
->      g_hash_table_unref(iot_cache);
->  }
->
-> +static RISCVIOMMUTransTag riscv_iommu_get_transtag(RISCVIOMMUContext *ct=
-x)
-> +{
-> +    uint64_t satp =3D get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-> +    uint64_t gatp =3D get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-> +
-> +    if (satp =3D=3D RISCV_IOMMU_DC_FSC_MODE_BARE) {
-> +        return (gatp =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE) ?
-> +            RISCV_IOMMU_TRANS_TAG_BY : RISCV_IOMMU_TRANS_TAG_VG;
-> +    } else {
-> +        return (gatp =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE) ?
-> +            RISCV_IOMMU_TRANS_TAG_SS : RISCV_IOMMU_TRANS_TAG_VN;
-> +    }
-> +}
-> +
->  static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *=
-ctx,
->      IOMMUTLBEntry *iotlb, bool enable_cache)
->  {
-> +    RISCVIOMMUTransTag transtag =3D riscv_iommu_get_transtag(ctx);
->      RISCVIOMMUEntry *iot;
->      IOMMUAccessFlags perm;
->      bool enable_pid;
-> @@ -1365,7 +1437,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s=
-, RISCVIOMMUContext *ctx,
->          }
->      }
->
-> -    iot =3D riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
-> +    iot =3D riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova, transtag=
-);
->      perm =3D iot ? iot->perm : IOMMU_NONE;
->      if (perm !=3D IOMMU_NONE) {
->          iotlb->translated_addr =3D PPN_PHYS(iot->phys);
-> @@ -1396,6 +1468,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s=
-, RISCVIOMMUContext *ctx,
->          iot->gscid =3D get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID=
-);
->          iot->pscid =3D get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
->          iot->perm =3D iotlb->perm;
-> +        iot->tag =3D transtag;
->          riscv_iommu_iot_update(s, iot_cache, iot);
->      }
->
-> @@ -1603,44 +1676,72 @@ static void riscv_iommu_process_cq_tail(RISCVIOMM=
-UState *s)
->
->          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_GVMA,
->                               RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
-> -            if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
-> +        {
-> +            bool gv =3D !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV);
-> +            bool av =3D !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV);
-> +            bool pscv =3D !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)=
-;
-> +            uint32_t gscid =3D get_field(cmd.dword0,
-> +                                       RISCV_IOMMU_CMD_IOTINVAL_GSCID);
-> +            uint32_t pscid =3D get_field(cmd.dword0,
-> +                                       RISCV_IOMMU_CMD_IOTINVAL_PSCID);
-> +            hwaddr iova =3D (cmd.dword1 << 2) & TARGET_PAGE_MASK;
-> +
-> +            if (pscv) {
->                  /* illegal command arguments IOTINVAL.GVMA & PSCV =3D=3D=
- 1 */
->                  goto cmd_ill;
-> -            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
-> -                /* invalidate all cache mappings */
-> -                func =3D riscv_iommu_iot_inval_all;
-> -            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
-> -                /* invalidate cache matching GSCID */
-> -                func =3D riscv_iommu_iot_inval_gscid;
-> -            } else {
-> -                /* invalidate cache matching GSCID and ADDR (GPA) */
-> -                func =3D riscv_iommu_iot_inval_gscid_gpa;
->              }
-> -            riscv_iommu_iot_inval(s, func,
-> -                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0=
-,
-> -                cmd.dword1 << 2 & TARGET_PAGE_MASK);
-> +
-> +            func =3D riscv_iommu_iot_inval_all;
-> +
-> +            if (gv) {
-> +                func =3D (av) ? riscv_iommu_iot_inval_gscid_iova :
-> +                              riscv_iommu_iot_inval_gscid;
-> +            }
-> +
-> +            riscv_iommu_iot_inval(
-> +                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VG);
-> +
-> +            riscv_iommu_iot_inval(
-> +                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VN);
->              break;
-> +        }
->
->          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
->                               RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
-> -            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
-> -                /* invalidate all cache mappings, simplified model */
-> -                func =3D riscv_iommu_iot_inval_all;
-> -            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
-> -                /* invalidate cache matching GSCID, simplified model */
-> -                func =3D riscv_iommu_iot_inval_gscid;
-> -            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
-> -                /* invalidate cache matching GSCID and PSCID */
-> -                func =3D riscv_iommu_iot_inval_pscid;
-> +        {
-> +            bool gv =3D !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV);
-> +            bool av =3D !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV);
-> +            bool pscv =3D !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)=
-;
-> +            uint32_t gscid =3D get_field(cmd.dword0,
-> +                                       RISCV_IOMMU_CMD_IOTINVAL_GSCID);
-> +            uint32_t pscid =3D get_field(cmd.dword0,
-> +                                       RISCV_IOMMU_CMD_IOTINVAL_PSCID);
-> +            hwaddr iova =3D (cmd.dword1 << 2) & TARGET_PAGE_MASK;
-> +            RISCVIOMMUTransTag transtag;
-> +
-> +            if (gv) {
-> +                transtag =3D RISCV_IOMMU_TRANS_TAG_VN;
-> +                if (pscv) {
-> +                    func =3D (av) ? riscv_iommu_iot_inval_gscid_pscid_io=
-va :
-> +                                  riscv_iommu_iot_inval_gscid_pscid;
-> +                } else {
-> +                    func =3D (av) ? riscv_iommu_iot_inval_gscid_iova :
-> +                                  riscv_iommu_iot_inval_gscid;
-> +                }
->              } else {
-> -                /* invalidate cache matching GSCID and PSCID and ADDR (I=
-OVA) */
-> -                func =3D riscv_iommu_iot_inval_pscid_iova;
-> +                transtag =3D RISCV_IOMMU_TRANS_TAG_SS;
-> +                if (pscv) {
-> +                    func =3D (av) ? riscv_iommu_iot_inval_pscid_iova :
-> +                                  riscv_iommu_iot_inval_pscid;
-> +                } else {
-> +                    func =3D (av) ? riscv_iommu_iot_inval_iova :
-> +                                  riscv_iommu_iot_inval_all;
-> +                }
->              }
-> -            riscv_iommu_iot_inval(s, func,
-> -                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
-> -                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
-> -                cmd.dword1 << 2 & TARGET_PAGE_MASK);
-> +
-> +            riscv_iommu_iot_inval(s, func, gscid, pscid, iova, transtag)=
-;
->              break;
-> +        }
->
->          case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
->                               RISCV_IOMMU_CMD_IODIR_OPCODE):
-> --
-> 2.43.2
->
->
+> 
+>>
+>> Thanks,
+>> Yilun
+>>
+>>> in future. Then a specific object is more appropriate. What's your opinion?
+>>>
+>>
+
 
