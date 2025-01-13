@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFAD9C02180
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 13:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0067C02180
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 13:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXKu4-0005ct-NF; Mon, 13 Jan 2025 08:54:53 -0500
+	id 1tXKu6-0005d6-4E; Mon, 13 Jan 2025 08:54:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tXKtX-0005YD-6f
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 08:54:23 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tXKtY-0005YJ-UK
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 08:54:26 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tXKtV-0007en-KG
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 08:54:18 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43618283dedso41304145e9.3
+ id 1tXKtW-0007f5-4I
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 08:54:19 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43621d27adeso29839095e9.2
  for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 05:54:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1736776456; x=1737381256; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GWUNcZKxKH1utC8rl9Z3vhv6hG0D9P5xMDHSC53HwPo=;
- b=CCthGWrHCb5536siOFOBSaWAxkekt3Q/pn2eAyK0rswUCzqL752uRwSW+bLPPu9eeL
- OLvpFwBr7EILmi8qn8lytCmv4MXVi9AAOmAX88Ga+0HKqN7eMCAm0hBAaHTavh6veWKI
- 2hbXLajvM/IgFPsJx4IRQaNbyIt4ANJJ9peRYLUbFKlrHBPoolToQYmQZXPOI+pdh9oT
- WCPXKdVQUBOk983AEkLg794AEMDxen4e7LKsaHlq+4KJumh1PzsXXE7xQiVZDEvMLZty
- f0bQMYZzKMnYvCRISaCYcteOJCjjwnvkWk4mbtLaoHQHrpNL1aWrUFx0XttX1eav00WW
- v+Eg==
+ :reply-to; bh=XyxQFIaesklbSi1xUcLqY7yAiP7hbZCiorkIOLRK+G8=;
+ b=JUpdaGnX4rEO4Sdi6uUJ9hHsfXtNnuFEQrfVezs0wKY8f/EeJ2PN9aLM//H+5ZKnkh
+ 3fhTwNM8LdtS6+IL3TY1ofxArHkbIREi2aQUfbNd9TK16hSuaW72R4YUAMlphEMBQgDn
+ uIrwjAC9sx+jF+xuMXzn7qksFKRVY1LzHspjX9mTF1cHTuhMjM40OwaCHBU1f72yFclv
+ utfftUMIA4uAYzwGiu2lNIiKbs5mm5m1uLhtqH5XuCD/7GoQC+EvK1xV55IUlqSILUqQ
+ cxaEb675MXA8KNhmdO+PyRTTFOQahjpFAuKmy6GLQUkBXJpK6lQRLPvFpY1S6YX0tlPi
+ Vi0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1736776456; x=1737381256;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GWUNcZKxKH1utC8rl9Z3vhv6hG0D9P5xMDHSC53HwPo=;
- b=fUS5W+hcQoNJhCagQ0zFthIw2d4DO2f9E+188hOf/3zEBdzuhUTWgK9WmnlYn6E5u6
- 58hET0KTPpKVAWKiqhNSfq7xlK7pAzwpl7sgNUqHZp1qHjQXU1FFsXtM/8Vs7XWy/rVA
- 7lYJRE7h8MLAhrthelWp6Uen1InfuNOX7ahyhDdMrlGTVvBJBPPK8qgrVnFFNmBvQktT
- ReDfBJnVHA7zJFFGu3hyxzuFqdFpQB4njIcPk5NlU/lb3kUyiKY54RR5pb7cpJEYhfrt
- 1YQUwy6t4UpkBmAxSmMv8aaQ0dAcckfZXAAP1ppRK7PyICpTYLEF68aXojUmL7QrNEY+
- /x1Q==
-X-Gm-Message-State: AOJu0YzG5FfH497Z9ovDs55jW3tcNnxR6JOJdWZ5u86jHYWe3xI1BoX7
- EvybWeBhDoNU8ztgD7Q+vA2Du7dX9d01NGC5xH85bcD9yYWMNXEirISpUZLSuK+Jc/p/sskYLEf
- p
-X-Gm-Gg: ASbGnctgxDdwLZlEJlUp6FeewMkGJ4M1DY1VUFxFr5msEa0V0Wm2Q+GjBxBqK6G0or0
- PTnXHR3YyoAvvyebEeUvtsRukOmJr4wD+Cpbs3Viba2MN42wQ9GGPKmzTXz4zV06MlAVvgtWGkz
- O+tVYMWC0CK2Q0mXACN9ohrjtTG2o89bvTL+w/X8DlU3nniitjpgb5ZdY896WS1EcycF6jqJfuc
- 66783x3wBPnGe1xT0hi8JOUgMKi3esp5UcvbDaVDvRk9I16jBL56LC3A3Q09nU=
-X-Google-Smtp-Source: AGHT+IHBWkdm7pXPIz0orpsnfjlXcUV2vKxU67zv53ZAbfJrMdyoBzREdPdVZ+4/aBcg9lTsln8cww==
-X-Received: by 2002:a05:600c:8711:b0:431:93d8:e1a1 with SMTP id
- 5b1f17b1804b1-436f475f6a3mr69790895e9.27.1736776455765; 
- Mon, 13 Jan 2025 05:54:15 -0800 (PST)
+ bh=XyxQFIaesklbSi1xUcLqY7yAiP7hbZCiorkIOLRK+G8=;
+ b=u1KUQwhnaDyXIs+W7huqnSmcUVE8Kn8871+wt2E/3tH0MhFksQ2VNzygRwACRZiaNc
+ kV05FT+4RuYH8fED2ywrLRe/r0Yle7im3nehzXSh3wm8f8/jFCN6Cz8pxJQVY6h3Uzkd
+ c/ZtteE8NwdHzrjZq48iMoy1vyBdPAeFA9wOCILN0rNpukNI1tKuQHjFiuSIjflajjhb
+ fu2dbaStNmQf9weLIi9eQwqhWICgk2S6E3L31KcqFuqiJMWNlF2j+hOsSTy7IJLmWDlH
+ B8wd+RhtM0kIKTieiEU7zApgd1m1oXWqadVg+k376roEes/xp4g8y1CU6NwjsnqLLcjf
+ S+iQ==
+X-Gm-Message-State: AOJu0YxSWJKEhveOHppCHc/pvmaYg8mA/nuLn9JEfzjmWkyLit4b7D8F
+ 1bpTLbnAnj9NxPJYN5bA18ibpYkBup8ZC4u6DUFdljtrTaXatdjLRoFQTIg6Se1/Wk3HQnX73t8
+ b
+X-Gm-Gg: ASbGncth2DSvnIs/OhBh6sU4ICf70ouJEegap+6kQ/BFoMfbmPLjErfUtrU1jCzOygH
+ pdL/N4Y/HflNNkmo6kaCo0HcLt8mwxtlqGCDf1H1d4coWv2R9XnULnJta6XkdokJl6yPoMcU5Nx
+ VUMEBLwdl7j+u68sHToiYulJox0ScyD90UGydAhaFqX3S7e0bi8GSBq/H9UShNnv1rbg82Ob4cw
+ WZu9PFhVzMY65vLR08mtgCRknVgNULqrM3oprqwNTooHjuZpXHqeiFXoBWkwA4=
+X-Google-Smtp-Source: AGHT+IGFBWiBXz7PtgZdMWImdmss+Giw6GrEeDbWqeGLWJJeLf1E/m7fL6uVjf+gfFBfym1xuUVgUA==
+X-Received: by 2002:a05:600c:3b99:b0:434:f925:f5c9 with SMTP id
+ 5b1f17b1804b1-436e266dfe9mr165345905e9.6.1736776456581; 
+ Mon, 13 Jan 2025 05:54:16 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fba4sm145245205e9.4.2025.01.13.05.54.14
+ 5b1f17b1804b1-436e9d8fba4sm145245205e9.4.2025.01.13.05.54.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jan 2025 05:54:14 -0800 (PST)
+ Mon, 13 Jan 2025 05:54:16 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/11] tests/qtest/boot-serial-test: Reorder pair of
- instructions in PL011 test
-Date: Mon, 13 Jan 2025 13:54:02 +0000
-Message-Id: <20250113135408.3164401-6-peter.maydell@linaro.org>
+Subject: [PULL 06/11] tests/qtest/boot-serial-test: Initialize PL011 Control
+ register
+Date: Mon, 13 Jan 2025 13:54:03 +0000
+Message-Id: <20250113135408.3164401-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250113135408.3164401-1-peter.maydell@linaro.org>
 References: <20250113135408.3164401-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +101,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-In the next commit we are going to use a different value
-for the $w1 register, maintaining the same $x2 value. In
-order to keep the next commit trivial to review, set $x2
-before $w1.
+The tests using the PL011 UART of the virt and raspi machines
+weren't properly enabling the UART and its transmitter previous
+to sending characters. Follow the PL011 manual initialization
+recommendation by setting the proper bits of the control register.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Update the ASM code prefixing:
+
+  *UART_CTRL = UART_ENABLE | TX_ENABLE;
+
+to:
+
+  while (true) {
+      *UART_DATA = 'T';
+  }
+
+Note, since commit 51b61dd4d56 ("hw/char/pl011: Warn when using
+disabled transmitter") incomplete PL011 initialization can be
+logged using the '-d guest_errors' command line option.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/boot-serial-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/boot-serial-test.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 553575ca75c..bcfa504826c 100644
+index bcfa504826c..ffa9e780ad6 100644
 --- a/tests/qtest/boot-serial-test.c
 +++ b/tests/qtest/boot-serial-test.c
-@@ -78,8 +78,8 @@ static const uint8_t bios_raspi2[] = {
+@@ -70,15 +70,20 @@ static const uint8_t kernel_plml605[] = {
+ };
+ 
+ static const uint8_t bios_raspi2[] = {
+-    0x08, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #8]   Get &UART0 */
++    0x10, 0x30, 0x9f, 0xe5,                 /*        ldr     r3, [pc, #16]  Get &UART0 */
++    0x10, 0x20, 0x9f, 0xe5,                 /*        ldr     r2, [pc, #16]  Get &CR */
++    0xb0, 0x23, 0xc3, 0xe1,                 /*        strh    r2, [r3, #48]  Set CR */
+     0x54, 0x20, 0xa0, 0xe3,                 /*        mov     r2, #'T' */
+     0x00, 0x20, 0xc3, 0xe5,                 /* loop:  strb    r2, [r3]       *TXDAT = 'T' */
+     0xff, 0xff, 0xff, 0xea,                 /*        b       -4             (loop) */
+     0x00, 0x10, 0x20, 0x3f,                 /* UART0: 0x3f201000 */
++    0x01, 0x01, 0x00, 0x00,                 /* CR:    0x101 = UARTEN|TXE */
  };
  
  static const uint8_t kernel_aarch64[] = {
--    0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
      0x02, 0x20, 0xa1, 0xd2,                 /*        mov    x2, #0x9000000  Load UART0 */
-+    0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
++    0x21, 0x20, 0x80, 0x52,                 /*        mov    w1, 0x101       CR = UARTEN|TXE */
++    0x41, 0x60, 0x00, 0x79,                 /*        strh   w1, [x2, #48]   Set CR */
+     0x81, 0x0a, 0x80, 0x52,                 /*        mov    w1, #'T' */
      0x41, 0x00, 0x00, 0x39,                 /* loop:  strb   w1, [x2]        *TXDAT = 'T' */
      0xff, 0xff, 0xff, 0x17,                 /*        b      -4              (loop) */
- };
 -- 
 2.34.1
 
