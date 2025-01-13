@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B675C02180
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 19:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F368AC02180
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 19:56:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXQMJ-00041O-3k; Mon, 13 Jan 2025 14:44:23 -0500
+	id 1tXQXB-0005yz-B9; Mon, 13 Jan 2025 14:55:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tXQMH-000415-Dx; Mon, 13 Jan 2025 14:44:21 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXQX7-0005yf-19
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 14:55:33 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tXQMF-00067F-PK; Mon, 13 Jan 2025 14:44:21 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-304d760f12aso37888871fa.2; 
- Mon, 13 Jan 2025 11:44:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXQX5-0007Qp-AH
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 14:55:32 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso33078075e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 11:55:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736797457; x=1737402257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736798128; x=1737402928; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ONUJOWTG5K9m4BMCbayoJ5whJsmuCoQNiYV/XCFpdck=;
- b=HscUpl3nYAVIxe/Kt1S0E5svALpRpwhtmptpONriyX6VvOV+V0OktzbVPwYk/Chnf0
- qLlYVrJVuu6656WjgDQJyoOxZ4xx6/n73JrNFvpyBLBvkCvqs4V7QmVKnzTZeIQPm+RZ
- q0gbWnKajqFpXTU+OOb3sMl5vz8EVFOoEAaqLWmZdCLEPYEpmQwNRjwuf8lc0dwjAei4
- WyYuCyfyC531h/OlgDE+G2DtNx2N976I0JBZ4llpHhUt45QjPfJxgsGOmxh/8I2iNVRa
- 2vjEG2w3mFUXZkqFC3SAbrJPt0iM+d81ak7F/IGKjfUQvSVS1IUG6kMBthKV6zfRy3oW
- zHAA==
+ bh=XU9SV1yi8mdrwIsHPJ6L3udCAs6NfuzN032vLWCnjUM=;
+ b=tAuu8n3VvxjN7i6q/YHa25jHB1h1pfNuLzxk6L80glBuBMM6qsYdbUDiHREyfQUtDU
+ To4C4ShKhP+gYZabNoqNq4hTb7JiEOCs1GomS0EsPrrLmKiRzEYbSvfkxIKuByzHAzYi
+ y0G5wYQ/FzRduBVozllQM1mgh6/b2uv7KFRyT81/D0TmvdaZqVK00y+mQQxSti/eddkK
+ 2tTJbutF4xDQUgkViOyHxB+fnOBKCpgTDlj7OF7+AIX73dxvSF0v6EUpWTkYo9F927BW
+ l5rV1ejdlDw/Tw0yy2MM1IVXj+OkSlJqKdx2+CnZAIpQIzUTzS2jYC5HLwoupuo5okKv
+ jDGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736797457; x=1737402257;
+ d=1e100.net; s=20230601; t=1736798128; x=1737402928;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ONUJOWTG5K9m4BMCbayoJ5whJsmuCoQNiYV/XCFpdck=;
- b=VTHO0sLxbmU4fFa6PwgJiQUvPGoNU5F/CvFQ4W5JfO4sDxbtPR16UEMX/BPd+QQpr+
- CgkKcAkuJ9FZdOa7B/8AeiGiey5bwH+wHDvgDvQFdgv7tF8346fcfqePodS3hl8vMX/H
- wUAtARKkXO+rAjSZB3f5I3LyMliuB9Z8Qcg53fg5h0xSIa3syEz0oOAaxJlDs8i9TZrw
- Zp2DA6f9aZKBspI0RNmfF7PuRsRJOrhoeCsmnFuOjSWObQ7w1I9KIU8BoBNTlKusw5R5
- IpESu/fpbsOCLSaWhp8W6sgwbuggrfJw3Um+Qh3jTWjuYMzZsTjvrjsz5i1HR9K6w/Mx
- 4RyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNZQuc+MLMExOYN6uMei7jvc5R3bt3b+dc1Z/DVpkt324weCjuRo8/yxbfwMWEOgMQKueMV/fxqphRQA==@nongnu.org,
- AJvYcCWjsMG41/pFCxf58t8nE9HAhxDfPXToVAFTn0HsD41DaRyt5xTPgtBnuOCJCnWchRTcxHg1sXgMYWDi@nongnu.org
-X-Gm-Message-State: AOJu0Yz4e0v5gO5wrDW9Sx9IJUmwVd3q+B64df8K18kIfhqYCLtJd83z
- DhT7DDjJQmCk0Qm5LnNCH+oZuUlc080MA+bQxbPkL0SjUfwkY1Vk
-X-Gm-Gg: ASbGnctONkrvAYz78bF4h90W+6dlpq26MeRizMpe4jbGwPoF6zzbMViyStXIIk2APPe
- QQxm52mg7dm8hiHmBQp7eZhMBkkVaocsXH0B+GDarR8Oh6kdQNrDlWZMp7Cq3PIjnyMxquS2bRB
- S/T4KYXiDR2zoq9OgeiOHY8lQoUv/QDsWZJdpsIu9aC/WPRp00QiNvUVAn9M6xxt4nbdsfrx+dS
- KSKvHZLRgi8nLpWVqxin0uGSIhr4bbd6Jk/teQj4hLj+b/QPxGR7Qxd6S6v
-X-Google-Smtp-Source: AGHT+IG6ZrejOpLPU8JUO/TI/z2bFCuqXw5k/G/8D/GpfBknVfXKHOhd1yVewSrXjoMq7Kep9Z+FKQ==
-X-Received: by 2002:a2e:a9a8:0:b0:300:324e:3506 with SMTP id
- 38308e7fff4ca-305f4575d06mr73071931fa.13.1736797456849; 
- Mon, 13 Jan 2025 11:44:16 -0800 (PST)
-Received: from vmdev.asgard ([81.200.11.243]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-305ff0ad592sm15738381fa.20.2025.01.13.11.44.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jan 2025 11:44:15 -0800 (PST)
-From: baturo.alexey@gmail.com
-To: 
-Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- liwei1518@gmail.com, frank.chang@sifive.com, palmer@dabbelt.com,
- Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: [PATCH v2] target/riscv: Support Supm and Sspm as part of Zjpm v1.0
-Date: Mon, 13 Jan 2025 22:44:09 +0300
-Message-Id: <20250113194410.1307494-1-baturo.alexey@gmail.com>
-X-Mailer: git-send-email 2.39.5
+ bh=XU9SV1yi8mdrwIsHPJ6L3udCAs6NfuzN032vLWCnjUM=;
+ b=IHvxYmkf/cvldniT3sugQjJ61aclto714ob6XPKAwa2nOmm+0+zINkBovI+HPD627R
+ 68is5y4lhq86GVTCqkYl0jBTJdr89ldv+vrLLi4Zo9EkhQzqhTre9bXr6I0+dlkp4LBv
+ eAkNBdJ77q2XpJ2F7415alpOAOcUdbhc5rTp/wIr92ZCGRX9xBVcc1qRHGUh17qUNsI5
+ 19QTmSnSIMZs+pmtgwrL/OyJCh4DUDGEve0hXZr8NGbg7fr8XhOXf31ZI8hKmBDC5Vb0
+ gzpFg/8VP/+kHNcd00+e4vyOf6QlI1FBWlTL0Cj8BswMtkXyRAl/0MkU6A7x0Xg2v9PM
+ sKag==
+X-Gm-Message-State: AOJu0YzCl6gVexbJoYg1r5HiM9lONT4jU8dE57dK0HUpdcDu8LFY7zfh
+ HYoEOsvwvcp4h1zeMBp1/ywN2iLSjFZQ+7H9gwo7a3iVZj4qBJQgc18PqC5Jkmey3FgWvb3PXXe
+ lkPc=
+X-Gm-Gg: ASbGnctr6nG49DIH/4r7n8LUQl1y9nSXwYa6Dwuz4g0t4ZhoQYHb6AZc2Ku6rWTQSws
+ 8zv4ox74F1rxpJ/uAPqYhLFLxzs/N570rFldBBiCi2R6ZfpSZtlfweEJZzzcjcf4j/rWSfJOvRI
+ KVGjCUT/xMUtW++DMiaGDWHPPIRr+kd+Gi7I7IxWV9d+ruK4Tw/3lQM1HEFmbyAZHMLBokwvW25
+ TVuY9iXW3yzP2VDQnfckP8/UriAvMRh1Cpckn/QtTNLri61ZS3g33sjG0MhiYMIjxiIkKz2Ox5+
+ jr4I0l/icXZ1AYk6t5h7fM9ydgJ1Te4=
+X-Google-Smtp-Source: AGHT+IHH1oGl5neQcq+I/vLn403T1oKVRQnFE44XBHg6z+XfkodAkSSGW+uzmys/rBQxfYdWx7D2ew==
+X-Received: by 2002:a05:600c:808:b0:436:488f:4f3 with SMTP id
+ 5b1f17b1804b1-436e26a1b3dmr215149065e9.17.1736798128461; 
+ Mon, 13 Jan 2025 11:55:28 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9e03f49sm150973435e9.19.2025.01.13.11.55.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 13 Jan 2025 11:55:26 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paul Burton <paulburton@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>
+Subject: [PATCH v2 00/19] hw/mips: Remove all uses of &first_cpu
+Date: Mon, 13 Jan 2025 20:55:06 +0100
+Message-ID: <20250113195525.57150-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=baturo.alexey@gmail.com; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,94 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Baturo <baturo.alexey@gmail.com>
+v2:
+- Add documentation
+- Reorder propagation to reduce code churn around &first_cpu
 
-Rebased against alistair/riscv-to-apply.next
+v1:
+- Keep references to vCPUs in CPS and MaltaState,
+- Refactor the MIPS Bootloader API to take CPU argument
+- Access first CPU propagate from machine_init()
 
-[v1]:
-The Zjpm v1.0 spec states there should be Supm and Sspm extensions that are used in profile specification.
-Enabling Supm extension enables both Ssnpm and Smnpm, while Sspm enables only Smnpm.
+Based-on: <20250112215835.29320-1-philmd@linaro.org>
+"hw/mips/loongson3: Remove uses of &first_cpu global"
 
-Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu.c     | 23 +++++++++++++++++++++++
- target/riscv/cpu_cfg.h |  2 ++
- 2 files changed, 25 insertions(+)
+Philippe Mathieu-Daudé (19):
+  hw/mips/cps: Keep reference of vCPUs in MIPSCPSState
+  hw/mips/malta: Check CPU index instead of using &first_cpu
+  hw/mips/malta: Keep reference of vCPUs in MaltaState
+  hw/mips/malta: Propagate MaltaState to write_bootloader()
+  hw/mips/malta: Propagate MaltaState to bl_setup_gt64120_jump_kernel()
+  hw/mips/boston: Replace bl_gen_write_ulong() -> bl_gen_write_u64()
+  hw/mips/boston: Propagate CPU to gen_firmware()
+  hw/mips/fuloong: Propagate CPU to write_bootloader()
+  hw/mips/bootloader: Document public API
+  hw/mips/bootloader: Propagate CPU to bl_gen_write_u[32,64,long]()
+  hw/mips/bootloader: Propagate CPU to bl_gen_jump_[to,kernel]()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_load_ulong()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_[d]li()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_s[w,d]()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_jalr()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_dsll()
+  hw/mips/bootloader: Propagate CPU env to bl_gen_nop()
+  hw/mips/bootloader: Propagate CPU env to bootcpu_supports_isa()
+  hw/mips/bootloader: Remove use of &first_cpu in bootcpu_supports_isa()
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index bddf1ba75e..3d4bd157d2 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -208,10 +208,12 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(sscsrind, PRIV_VERSION_1_12_0, ext_sscsrind),
-     ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
-     ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
-+    ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
-     ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
-     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-     ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-+    ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),
-     ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
-     ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
-     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-@@ -1625,6 +1627,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
-     MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
-     MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
-+    MULTI_EXT_CFG_BOOL("sspm", ext_sspm, false),
-+    MULTI_EXT_CFG_BOOL("supm", ext_supm, false),
- 
-     MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-     MULTI_EXT_CFG_BOOL("smdbltrp", ext_smdbltrp, false),
-@@ -2781,6 +2785,24 @@ static RISCVCPUImpliedExtsRule SSCFG_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule SUPM_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_supm),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_ssnpm), CPU_CFG_OFFSET(ext_smnpm),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
-+static RISCVCPUImpliedExtsRule SSPM_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_sspm),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_smnpm),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-     &RVM_IMPLIED, &RVV_IMPLIED, NULL
-@@ -2799,6 +2821,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
-     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
-     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
-+    &SUPM_IMPLIED, &SSPM_IMPLIED,
-     NULL
- };
- 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index aef896ba00..b410b1e603 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -139,6 +139,8 @@ struct RISCVCPUConfig {
-     bool ext_ssnpm;
-     bool ext_smnpm;
-     bool ext_smmpm;
-+    bool ext_sspm;
-+    bool ext_supm;
-     bool rvv_ta_all_1s;
-     bool rvv_ma_all_1s;
-     bool rvv_vl_half_avl;
+ include/hw/mips/bootloader.h |  69 +++++++++++++++++++--
+ include/hw/mips/cps.h        |   1 +
+ hw/mips/bootloader.c         | 113 ++++++++++++++++++++---------------
+ hw/mips/boston.c             |  21 ++++---
+ hw/mips/cps.c                |   4 +-
+ hw/mips/fuloong2e.c          |   6 +-
+ hw/mips/malta.c              |  60 +++++++++++--------
+ 7 files changed, 184 insertions(+), 90 deletions(-)
+
 -- 
-2.39.5
+2.47.1
 
 
