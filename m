@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB96C02181
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 09:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD32E7719E
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 09:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXGSW-0004dK-0A; Mon, 13 Jan 2025 04:10:08 -0500
+	id 1tXGqh-0000LZ-KQ; Mon, 13 Jan 2025 04:35:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tXGST-0004c7-MJ; Mon, 13 Jan 2025 04:10:05 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tXGSR-0002QV-KT; Mon, 13 Jan 2025 04:10:05 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9E675D6793;
- Mon, 13 Jan 2025 12:09:55 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B257319A7C1;
- Mon, 13 Jan 2025 12:09:57 +0300 (MSK)
-Message-ID: <d89067d5-31d0-42ba-b4e4-b9af1e921a3f@tls.msk.ru>
-Date: Mon, 13 Jan 2025 12:09:57 +0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tXGqF-0008Mc-6H
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 04:34:39 -0500
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1tXGqC-0004wv-Rm
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 04:34:38 -0500
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-467a8d2d7f1so33292241cf.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 01:34:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736760875; x=1737365675; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JFSfU5aMlgezsmwRHiwD4/rPhSe5E0ICveqF3maUUt4=;
+ b=Q9rdiiOLFhFIpgY32Dwl6cl/ZcFGUSziHDDfos+DvAJrSfmMVS9+wGPt6OJpugCu3O
+ 3v5Jogp+7d+wjOzZo9jzUy0FdOOneWJT9m3ox4f9llRtn3TmSswuKhUnrTdtXaSwGucV
+ oFVzfz7BDoBnkUVsyUXHqbtzFdewYLcHY+f3emWRQTc5XvZcV0n1IpDiI6aOA2LoO6Z0
+ 3FOZoWilmhBYBXBsfG5TzUBxUyBMB3fr0W9LDhei76j8J3yXH+2fEU7NHcdDVAUGToSI
+ 5wR746b18jA38H8p2O03nsgnTiUvLfM/AtTHH1xEqZHKThSwr9RtYYm9JWCptLlM3W8X
+ osdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736760875; x=1737365675;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JFSfU5aMlgezsmwRHiwD4/rPhSe5E0ICveqF3maUUt4=;
+ b=OnZloRP/sZOfF4XNiVHWc8Ydh9Jyz7YgGBSjRVLvAHqqPhHj/qSKM3D2wHle9V9YR+
+ fEoH/ehhXHMAlIvYBdjpnp5JmZilNUHTLayzU29Xq5DTVR/4liLsc0GTsZQzKmv3uFKu
+ N3kpedcxNVrv1ZC5VGWAJyqpBnSRrT1FXoGyKr0hes01zPp7z2iKo5jsDWnJ+nvV7dw9
+ ZL08tlR/uKFzF5O8U78d0ZnWJVVVgNCfHajZu5iq5978pCwnoLKzCHxLBIrAJ6Fl4STw
+ xX3mq8HBJVjf7agz9WDWOp1o8JNqIqxkclcPYtT4b/X1YcVtWDl76CHDJ+wyF4mlAm/k
+ e+GA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzadm8AgZrk1r74yMAOA9EBnMe3OkFj5RjMVfBTTapITCwqWqjB0AaGLg6pSCxTbIY0BXDz1PNEtgM@nongnu.org
+X-Gm-Message-State: AOJu0Yw9YgNikldsK2RWkXHFCKG2FLtsOs585Savp/q3GyBYBVL3Trys
+ HHHvDzradjf4Pg6UW9j2/kXyaATcm87Z6Pp9EyU/Q3mhIT9jDkvhMvtOQPynjt1elhce8iwl50Y
+ S73Yh9XJsMUHwQxmHwTaQQKlMMSA=
+X-Gm-Gg: ASbGncsm5RXd6SKILPXQY+LvzhjcRiCwH74nRo3mHRXPD+Z8yh3DHcOmTrqEyhlhGls
+ LYGEk9CbOWRejb8xLsv1FgkBe+ou8mOD+55R9
+X-Google-Smtp-Source: AGHT+IEAihpJsT68ZHBki0W+xVLFwBZbAVVfcAASVV2k0p2rBcGBv/dcS3awFPaBrhC5LtG0uiLy5dGH/V62adzGa2Y=
+X-Received: by 2002:a05:622a:6203:b0:46c:71f6:7aa5 with SMTP id
+ d75a77b69052e-46c71f67d9cmr325616321cf.41.1736760875126; Mon, 13 Jan 2025
+ 01:34:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] migration: Fix parsing of s390 stream
-To: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250109185249.23952-1-farosas@suse.de>
- <20250109185249.23952-4-farosas@suse.de>
- <35911935-6f5c-40a3-aa73-3586dfdf3268@tls.msk.ru>
- <de853776-69cc-4605-9f9b-e3a60964c3b6@tls.msk.ru>
- <3cc941b1-b09d-4076-9234-9a385c762d3f@redhat.com>
- <fcc69fae-9c5a-4c7b-a6e3-cf445afc205d@tls.msk.ru>
- <a54d8f52-c11e-4eab-bdb7-c3ac1f353f3e@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <a54d8f52-c11e-4eab-bdb7-c3ac1f353f3e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241223132355.1417356-1-r.peniaev@gmail.com>
+ <20241223132355.1417356-7-r.peniaev@gmail.com>
+ <CAMxuvaxFGXDYpwPfqTUZuBVY4iF_BCm6jwOM=quUBn98hYPt=g@mail.gmail.com>
+ <CACZ9PQVe1Axq6Lp_acaQuXpih2hwAU_7jz-NywyYBQ88hxt1og@mail.gmail.com>
+ <CAMxuvaxzd41bRxa4=zNMdpe420W-w_GAmOjYJsYTMs1+jqdMdw@mail.gmail.com>
+ <CACZ9PQW-RJHvkDzBO1T9YDAPX_6zcEuK3kQAEukybBL0PZEB5g@mail.gmail.com>
+ <Z4AQQp_Kes-IRoK3@redhat.com>
+ <CACZ9PQV8pfNq46cPcpv7NZ7cx2bEnuhBToa-DEg9oaLHFuGzHg@mail.gmail.com>
+ <Z4DhFtc9UgcKQHuh@redhat.com>
+ <CACZ9PQUCK+Zrk9rGktVsgNH7BYNTVjEOoVgcYnb=w6YyoqQRSA@mail.gmail.com>
+In-Reply-To: <CACZ9PQUCK+Zrk9rGktVsgNH7BYNTVjEOoVgcYnb=w6YyoqQRSA@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 13 Jan 2025 13:34:23 +0400
+X-Gm-Features: AbW1kvZPGddhmMVL6Y5qs8772AwSVyAc_7PrWgm6EXTSTOgXC-hpsi4DCNri4IM
+Message-ID: <CAJ+F1CKCuj5okrGjLoC9T0zN3gMWCMk+Yt65wwAeo89fi8Tw2w@mail.gmail.com>
+Subject: Re: [PATCH v6 6/8] chardev/char-mux: implement backend chardev
+ multiplexing
+To: Roman Penyaev <r.peniaev@gmail.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, "Bonzini, Paolo" <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,31 +105,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.01.2025 11:19, Thomas Huth wrote:
-> On 13/01/2025 08.51, Michael Tokarev wrote:
+Hi
 
->> Picked up:
->>
->>   1/7 migration: Add more error handling to analyze-migration.py
->>   3/7 migration: Fix parsing of s390 stream
->>   7/7 s390x: Fix CSS migration
->>
->> but still getting the same error:
->>
->>   https://gitlab.com/mjt0k/qemu/-/jobs/8832218999 (9.2 branch)
->>   https://gitlab.com/mjt0k/qemu/-/jobs/8832224338 (9.1 branch)
-> 
-> Blindly guessing: You need now patch 4/7 and 5/7, too? ... hopefully Fabiano could reply and point you to the exact set of patches that you need...
+On Fri, Jan 10, 2025 at 7:39=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
+ wrote:
+>
+> On Fri, Jan 10, 2025 at 9:58=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange=
+@redhat.com> wrote:
+> >
+> > On Fri, Jan 10, 2025 at 09:43:52AM +0100, Roman Penyaev wrote:
+> > > On Thu, Jan 9, 2025 at 7:07=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
+nge@redhat.com> wrote:
+> > > >
+> > > > On Thu, Jan 09, 2025 at 01:56:40PM +0100, Roman Penyaev wrote:
+> > > > > Hi,
+> > > > >
+> > > > > On Tue, Jan 7, 2025 at 3:57=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+> > > > > <marcandre.lureau@redhat.com> wrote:
+> > > > > > Whether we talk about multiplexing front-end or back-end, the i=
+ssues
+> > > > > > are similar. In general, mixing input will create issues. Teein=
+g
+> > > > > > output is less problematic, except to handle the buffering...
+> > > > >
+> > > > > I understand your concerns. What exact issues do you have in mind=
+?
+> > > > > Are these issues related to the input buffer handling, so technic=
+al issues?
+> > > > > Or issues with usability?
+> > > >
+> > > > While the design / impl technically allows for concurrent input to =
+be
+> > > > sent to the frontend, from multiple backends, in practice I don't t=
+hink
+> > > > we need to be particularly concerned about it.
+> > > >
+> > > > I don't see this as being a way for multiple different users to int=
+eract
+> > > > concurrently. Rather I'd see 1 user of the VM just deciding to swit=
+ch
+> > > > from one backend to the other on the fly. IOW, although technically
+> > > > possible, the user will only be leveraging one at a time to send in=
+put.
+> > > >
+> > > > We very definitely do need all backends to receive output from the =
+guest
+> > > > concurrently too, as you'd want the historical output context to be
+> > > > visible on whatever backend you choose to use at any given point in=
+ time.
+> > > >
+> > > > If a user decides to be crazy and send input from multiple backends
+> > > > concurrently, then they get to keep the mess.
+> > > >
+> > > > > > > Do you think we need to artificially introduce multiplexing l=
+ogic to be fully
+> > > > > > > compliant with multiplexer naming? It's not hard to do, repea=
+ting
+> > > > > > > `mux_proc_byte()` from `mux-fe`. In my use-case, I'll still n=
+eed to disable
+> > > > > > > multiplexing in favor of 'mixing', for example with the 'mixe=
+r=3Don' option,
+> > > > > > > i.e. '-chardev mux-be,mixer=3Don,...`. Or do you think it sho=
+uld be some
+> > > > > > > completely different beast, something like mixer chardev?
+> > > > > >
+> > > > > > I think it would be saner to have the muxer be selectors: only =
+work
+> > > > > > with one selected be or fe. Otherwise, we can run into various =
+issues.
+> > > > >
+> > > > > In multiplexing (not mixing) for the use-case that I am describin=
+g, there is one
+> > > > > serious drawback: as soon as you switch the "focus" to another in=
+put device
+> > > > > (for example from vnc to socket chardev), you will not be able to=
+ s]witch back
+> > > > > from the same input console - the input now works on another devi=
+ce. This looks
+> > > > > strange and does not add convenience to the final user. Perhaps, =
+for a case
+> > > > > other than console, this would be reasonable, but for console inp=
+ut -
+> > > > > I would like
+> > > > > to keep the mixer option: the front-end receives input from both =
+back-ends.
+> > > >
+> > > > Agreed, I think this is desirable. If you did the exclusive access =
+mode,
+> > > > it'd complicate things as you now need a way to switch between acti=
+ve
+> > > > backends, while also reducing the usefulness of it.
+> > > >
+> > > > The main thing I'm not a fan of here is the naming 'mux-fe', as I t=
+hink we
+> > > > should have something distinct from current 'mux', to reduce confus=
+ion
+> > > > when we're talking about it.
+> > >
+> > > The idea to have mux-fe and mux-be (current implementation) was born =
+to
+> > > distinguish what exactly we multiplex: front-ends or back-ends.
+> > >
+> > > As Mark-Andre rightly noted, input from back-end devices is not multi=
+plexed,
+> > > but rather mixed.
+> > >
+> > > >
+> > > > How about 'overlay' or 'replicator' ?
+> > >
+> > > Overlay for me has a strong association with the filesystem concept. =
+This
+> > > would work for me if combined back-end inputs function by layering on=
+e
+> > > on top of another, with potentially higher-priority inputs overriding
+> > > lower-priority ones. It implies a hierarchical or layered merging app=
+roach.
+> > > Not quite well describes a simple mixing strategy.
+> > >
+> > > Replicator - this can be a good name from front-end device point of v=
+iew:
+> > > suggests a mechanism for distributing the same input (front-end) to d=
+ifferent
+> > > destinations (back-ends).
+> > >
+> > > Two more: what about 'aggregator' or even 'hub' ?
+> >
+> > Yes, those are ok
+> >
+> > > Also 'mixer'? So we have '-chardev mux' and '-chardev mix' (try not t=
+o get
+> > > confused :)
+> >
+> > AFAIR, users would not use '-chardev mux', but instead set 'mux=3Don' o=
+n the
+> > real chardev backend.
+>
+> Yeah, right, I forgot about this peculiarity.
+>
+> If Mark-Andre or anyone else has no objections, I'll drop all changes
+> to the original front-end 'mux' (I tried to make all names and variables =
+reflect
+> the 'front-end' nature to reduce confusion with the back-end mux) and wil=
+l
+> resend modified series introducing a new 'hub' chardev. I will keep the
+> possibility to send input from several back-ends to a single front-end, a=
+s
+> in the current implementation.
+>
 
-Yes, after picking up ALL 7 out of 7 in this patchset (b/c even the
-trivial 2/7, "migration: Remove unused argument in vmsd_desc_field_end",
-is needed or else the subsequent fixes doesn't apply) it is now green
-finally, eg, https://gitlab.com/mjt0k/qemu/-/jobs/8832849813
+Based on the above discussion, I am okay with this plan.
+thanks
 
-Fabiano, what do you think, - should the whole patchset be picked up
-for 9.2 and 9.1?
 
-Thanks,
-
-/mjt
+--=20
+Marc-Andr=C3=A9 Lureau
 
