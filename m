@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFBEE7719F
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 13:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60663C02180
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 14:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXKuI-0005e6-KD; Mon, 13 Jan 2025 08:55:08 -0500
+	id 1tXLaK-0002gn-HF; Mon, 13 Jan 2025 09:38:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tXKtW-0005YA-Mg
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 08:54:18 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tXKtT-0007eT-4t
- for qemu-devel@nongnu.org; Mon, 13 Jan 2025 08:54:18 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so26700805e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 05:54:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736776453; x=1737381253; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=79v/1gKgmYQk7SK0X40y7DTYrx0JaX5qxpw+HIAXaes=;
- b=rBw3TyTOIC8nFfr5/QolX6sEK5CUop1LILfAaBrGXuqwX0lJv3eIpuGB7biroBl8vU
- ay03VzddiH6iAGkgjQuQDC0AhZUxS/zdkqYaNLc7XIH52ItqG0ada/J8dzEBTFYtpIKn
- 4LycFay7P3A9jaxBYJm8kYVUYGNhZATI4LUUvhtaEW9+n1RcdtScqvINtxqfz/hL6ie3
- NzxQtnAjuCV+Gl9jl56oWCqL+ss6axlytJl1CgUNkgNCiSt/cp4Api4XzL5/dnmzztSR
- 8R+Le7H9p2q9AnVTiMNttJsXs/Zr71a/dgCyxHiTZn96pn22B597aej5ZrftliMQ/clT
- /IeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736776453; x=1737381253;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=79v/1gKgmYQk7SK0X40y7DTYrx0JaX5qxpw+HIAXaes=;
- b=ZdpftqfPuWpuX0ps5MDYiFcLEq/pSxMY3MuXbc/zKbYG1TjzLjIRAd/H9MHHQl3InM
- N2944SlmI5krWWJa5wGNcmNRStZXySGsRL7TaQTvOaQOhyhEReNKLh7WguHISTS1M2VS
- FXIVZb6i69GSajKSOpenNfwr/3004pEbGR4x6RFpmGkurBiYSAc76HmeCBXeFBLu7z78
- mFiatqZZua7v/ufpU6rfIkTlV2jKbQke1LIAT1ezMmfKHKD4BgriMs+AKpzLMI+oYU/K
- zdCDO/5xlH0uusIbc3ByFzB4cf/w2xTdHzJVAM/xdxV5MVHKIuxVycy19RN+pjU4SP0i
- hecQ==
-X-Gm-Message-State: AOJu0YzMgL8fm0/2sLi1MNEhiWkM8o6f3S+WZNGksQ5wQRgDRCadvk7v
- gx3K+eCreCLvQD3S2kH5AhGk4h8Y5UwHrwP6YG2dPMJVPG2zchA5JW4IVwIuY2MgIIgt7ZgFe9a
- t
-X-Gm-Gg: ASbGnctr79YlLbyaqM7jGp/pwhVnZS1ewQiDf1ngPnJJ95NiQN3gQtbKT7Apwv7HNtp
- qGufsONUxiWFL2wVz2ebJZF/+1RYJLZr+YGsJPo8Z+pa5i6AkWh4bdYHpVZ5lFbgJOH2by47emy
- qwQJ1qdupk05bjSg51glGJcTfZcuvVRUWIuyFZLwpqtLcM037lu6gu9UgVOjF+FAfPnGFYgIFlw
- JWcFA3jIq9vy59fScA6PqzEh5Mziz9HBE+HLKxpYc8IzFKvf28COGK1x2TUy6A=
-X-Google-Smtp-Source: AGHT+IHeD7qM3gm07r0LeSt87T9GzqqRAfDMth0YqnJO5gxyG7saemVJg4yKHJJdrUjqyE3lzip8Ew==
-X-Received: by 2002:a05:600c:3143:b0:436:1b0b:2633 with SMTP id
- 5b1f17b1804b1-436e9d74908mr139135915e9.9.1736776453362; 
- Mon, 13 Jan 2025 05:54:13 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9d8fba4sm145245205e9.4.2025.01.13.05.54.12
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jan 2025 05:54:12 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 03/11] tests/qtest/boot-serial-test: Improve ASM comments of
- PL011 tests
-Date: Mon, 13 Jan 2025 13:54:00 +0000
-Message-Id: <20250113135408.3164401-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250113135408.3164401-1-peter.maydell@linaro.org>
-References: <20250113135408.3164401-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tXLa0-0002d8-3k
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 09:38:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tXLZy-0005S3-B0
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 09:38:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736779088;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ekeLMXSAWOhIx2L8xnDJXU7qy/c/4W+y25F45U7bQQ=;
+ b=Hft+YdZl3wMLV3pYS1VmpWs2xwgIpAoT2qfHTbS6QauJtHcGjIMmqrrdTdEv0vshL7uVTO
+ qGIMlta+eMrm/yyOr/4IGwj6b/yVsD6ITMMzPkkxFg4SnkMn6F7nfPpmfyAcGvZnJqb8JF
+ QxXCQsOxwx472EhGhs2w8Lip37bu064=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-hzLXkYPyNL-0dyakS8-5Ag-1; Mon,
+ 13 Jan 2025 09:38:04 -0500
+X-MC-Unique: hzLXkYPyNL-0dyakS8-5Ag-1
+X-Mimecast-MFC-AGG-ID: hzLXkYPyNL-0dyakS8-5Ag
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39E93190D5B8; Mon, 13 Jan 2025 14:38:01 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.122])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97A691956056; Mon, 13 Jan 2025 14:38:00 +0000 (UTC)
+Date: Mon, 13 Jan 2025 09:37:59 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PULL v2 00/32] testing updates for 10.0 (tuxrun, libvirt,
+ dockerfiles, misc)
+Message-ID: <20250113143759.GA5904@fedora>
+References: <20250111121341.141204-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="d4h4i0Zr2zSL1sfh"
+Content-Disposition: inline
+In-Reply-To: <20250111121341.141204-1-alex.bennee@linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,51 +86,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Re-indent ASM comments adding the 'loop:' label.
+--d4h4i0Zr2zSL1sfh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- tests/qtest/boot-serial-test.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Applied, thanks.
 
-diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 3b92fa5d506..a71d2857807 100644
---- a/tests/qtest/boot-serial-test.c
-+++ b/tests/qtest/boot-serial-test.c
-@@ -70,18 +70,18 @@ static const uint8_t kernel_plml605[] = {
- };
- 
- static const uint8_t bios_raspi2[] = {
--    0x08, 0x30, 0x9f, 0xe5,                 /* ldr   r3,[pc,#8]    Get base */
--    0x54, 0x20, 0xa0, 0xe3,                 /* mov     r2,#'T' */
--    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3] */
--    0xfb, 0xff, 0xff, 0xea,                 /* b       loop */
--    0x00, 0x10, 0x20, 0x3f,                 /* 0x3f201000 = UART0 base addr */
-+    0x08, 0x30, 0x9f, 0xe5,                 /* loop:  ldr     r3, [pc, #8]   Get &UART0 */
-+    0x54, 0x20, 0xa0, 0xe3,                 /*        mov     r2, #'T' */
-+    0x00, 0x20, 0xc3, 0xe5,                 /*        strb    r2, [r3]       *TXDAT = 'T' */
-+    0xfb, 0xff, 0xff, 0xea,                 /*        b       -12            (loop) */
-+    0x00, 0x10, 0x20, 0x3f,                 /* UART0: 0x3f201000 */
- };
- 
- static const uint8_t kernel_aarch64[] = {
--    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
--    0x02, 0x20, 0xa1, 0xd2,                 /* mov     x2, #0x9000000 */
--    0x41, 0x00, 0x00, 0x39,                 /* strb    w1, [x2] */
--    0xfd, 0xff, 0xff, 0x17,                 /* b       -12 (loop) */
-+    0x81, 0x0a, 0x80, 0x52,                 /* loop:  mov    w1, #'T' */
-+    0x02, 0x20, 0xa1, 0xd2,                 /*        mov    x2, #0x9000000  Load UART0 */
-+    0x41, 0x00, 0x00, 0x39,                 /*        strb   w1, [x2]        *TXDAT = 'T' */
-+    0xfd, 0xff, 0xff, 0x17,                 /*        b      -12             (loop) */
- };
- 
- static const uint8_t kernel_nrf51[] = {
--- 
-2.34.1
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+
+--d4h4i0Zr2zSL1sfh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeFJUYACgkQnKSrs4Gr
+c8gZSQf+IOHNQ0ZTWnkI/LMoOtqqIFK9KQVGR9+VUXCSooUziVf0oZy01MSThAdK
+HIpeLLtt5g9thCx36m5LRgLtAaG5Med57q9FktfbTGY0dnEEyBNisbH49mOxM5Ns
+KXpB4OEQO7QMeWa0eoTVISNCkOW5LJzx1P7DzNqm2/ECTlwb6As1ENzx8cEyigAp
+QWacUFtIwicxIWRPA5JTux+U1CBD9qh57w6+yInumSiTTsl9s9r0D22oQ1nbJ3KL
+easLB/rilHoC44+haoTkRKFNe3sazTrzKF7Nq8TZ3KiGEUWC/CF5dwIo/4C7fDVb
+GYymWi804RUN9u3I2vjLRr4VZcOUeA==
+=S6du
+-----END PGP SIGNATURE-----
+
+--d4h4i0Zr2zSL1sfh--
 
 
