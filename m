@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F63AC02180
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 17:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C256C02180
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jan 2025 18:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXOcH-0006yT-0j; Mon, 13 Jan 2025 12:52:45 -0500
+	id 1tXOvy-0003SF-PU; Mon, 13 Jan 2025 13:13:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tXOcB-0006xl-Jc; Mon, 13 Jan 2025 12:52:41 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tXOc8-0000xo-TE; Mon, 13 Jan 2025 12:52:38 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 363F8D6DC8;
- Mon, 13 Jan 2025 20:52:26 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D955119AC38;
- Mon, 13 Jan 2025 20:52:28 +0300 (MSK)
-Message-ID: <5e59bece-4475-4401-bcc5-e069cf367030@tls.msk.ru>
-Date: Mon, 13 Jan 2025 20:52:28 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXOvv-0003Rl-AZ
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 13:13:03 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXOvs-0003XF-F7
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 13:13:02 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43622267b2eso49072875e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jan 2025 10:12:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736791977; x=1737396777; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=llEJBtTAgOvNF94M0sIjRQZqk+Ar8n6bj+dwLqpltaw=;
+ b=cs25RmIm6A+x4yJ9EE2tptTkDuS0/TR1z04Yi+ROjTcxQ3y1BGUPy295eQ8UjCOG2P
+ dw61gW0KN0Kk7wIV1rlx4OJFAmum5VnW95ZJkvH3WGnhd1WzTJqHFKJnC30vb0SdHM6S
+ f3YMFy8pU6hQjGnf20nMGB419jRaB/EVTptpYQK3p5zJ7vdc5o5Z3Imhkx5holMdWG8X
+ zU3SFZ8VTPX0nceinb4wlGprY+Kafldze8M9eQc/2q7lp741NOrRtPdvTG8XTz8KmJbe
+ iWxkpGpZdWoWlkdphzMdAWl8qY7/01FVRfRE9egcaDfydo8NWSWBE5pj8qQ8rlh/6VWz
+ buSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736791977; x=1737396777;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=llEJBtTAgOvNF94M0sIjRQZqk+Ar8n6bj+dwLqpltaw=;
+ b=r/bBLTW8+pBhjtW5HTgbLJBSx29vvHrlQxq+QxOhyZwISoevM+/KHzxt5/b9Mll7/B
+ iZI+IKE2gN2RbrUWeB8rMTvmMelOs5yC2uKLRjORYqiRR4SNalItpn1qRNqnSCLBGz+i
+ p+UxAXY2y0YQ9t0BuYOn/jIhHAPWsMIi+a40xFAlf0RxXTNeVOFjuKoXJxt70mq+q6DM
+ Tq1jcGXyI0WLwdr7JwfOtxfdQ7Aodzgj2JoWqMpL5hlG9RnNaFWM4MvNCwtmWySeYYYR
+ uZ4m0xWbYzuLAcMOqnzZUB8kiX+pnyFdZKx+N24hhDQ9qJRxUq/xYaPqVtUipyEUEptP
+ IFvw==
+X-Gm-Message-State: AOJu0Yygt3urKnjQNYEUsWMwpDo8vmH1+4nUeKjYTllo0tV7wR6MO7L5
+ yCD/PBJ/Wx0mGGiJCoc5eeEZueFqgZ0eJpt5nkMOOUb/AuPsG+JtXOYOPbyA0GrHwpllQTsm/GY
+ olKk=
+X-Gm-Gg: ASbGncv8Rb/dajRKtPifT0XLWZu4fHxRObM7Xmqu2RsgXVF/lVJpaBhG7Npy2OdGcVT
+ oIeSJ3QX4qLVZYMvtS9i/7kJ7ljM9qfCuJAi1VhFqhneQv/y2QDcnLoJkA9Ag8MHT6R2QYdtiyU
+ 9fUs2iJ9jggwSKFUgaFCgNmcTb6DS07oFYFplu9w0jRPdFI97KUWM2Mf93PrwMG1+Ph4DMpj6oG
+ iDKSUzuLQ8e1zTAdTyagkbuP11QBBU55bxsX+/t+bC032QVaFPI+CPjpszNJ25pkwjAnvFZLabz
+ W6LDXU7KBcyqWeWnQ45yQ7tV
+X-Google-Smtp-Source: AGHT+IHUZY/LebG7pdcbF4JaEtgt9XG0EiWPSHBCIAxZHb+f13k9X1LjuZlrU20qbO/R0R72iL9SIw==
+X-Received: by 2002:a05:600c:46d0:b0:431:58cd:b259 with SMTP id
+ 5b1f17b1804b1-436e26f4d53mr202845255e9.31.1736791977274; 
+ Mon, 13 Jan 2025 10:12:57 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e2dc0bb7sm183460155e9.16.2025.01.13.10.12.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Jan 2025 10:12:56 -0800 (PST)
+Message-ID: <3b205b18-fcc0-4e3b-a4d9-890b1e235c9a@linaro.org>
+Date: Mon, 13 Jan 2025 19:12:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 17/32] system/qtest: properly feedback results of
- clock_[step|set]
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250108121054.1126164-1-alex.bennee@linaro.org>
- <20250108121054.1126164-18-alex.bennee@linaro.org>
- <15435e6d-a77c-4d3e-ae06-b1cd23fbee61@tls.msk.ru>
- <87frlmllyc.fsf@draig.linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <87frlmllyc.fsf@draig.linaro.org>
+Subject: Re: [PATCH 00/23] hw/mips: Remove all uses of &first_cpu
+To: qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen
+ <chenhuacai@kernel.org>, Paul Burton <paulburton@kernel.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20250113004748.41658-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250113004748.41658-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,34 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.01.2025 19:26, Alex Bennée wrote:
-> Michael Tokarev <mjt@tls.msk.ru> writes:
-> 
->> Ghrm. 46 recipients seems to be quite a bit too aggressive..
-> 
-> I think git-publish just accumulates Cc's from each run for a given
-> branch. While I can reset the version counter I'm not sure where I can
-> reset the Cc list from.
+On 13/1/25 01:47, Philippe Mathieu-Daudé wrote:
+> - Refactor the MIPS Bootloader API to take CPU argument
 
-I never used git-publish.  It's fun to know which other tools do people
-use :)
+> Philippe Mathieu-Daudé (23):
 
->> 08.01.2025 15:10, Alex Bennée wrote:
->>> Time will not advance if the system is paused or there are no timer
->>> events set for the future. In absence of pending timer events
->>> advancing time would make no difference the system state. Attempting
->>> to do so would be a bug and the test or device under test would need
->>> fixing.
->>> Tighten up the result reporting to `FAIL` if time was not advanced.
->>
->> Is this qemu-stable material?
-> 
-> Probably not - I guess that was a Cc from a previous series that stuck?
+>    hw/mips/bootloader: Propagate CPU env to bootcpu_supports_isa()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_nop()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_dsll()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_jalr()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_sw()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_sd()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_li()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_dli()
+>    hw/mips/bootloader: Propagate CPU env to bl_gen_load_ulong()
+>    hw/mips/bootloader: Propagate CPU to bl_gen_jump_to()
+>    hw/mips/bootloader: Propagate CPU to bl_gen_jump_kernel()
+>    hw/mips/bootloader: Propagate CPU to bl_gen_write_ulong()
+>    hw/mips/bootloader: Propagate CPU to bl_gen_write_u32()
+>    hw/mips/bootloader: Propagate CPU to bl_gen_write_u64()
 
-No, it's just that it fixes an issue reported on gitlab (!2687),
-which apparently weren't fixed in time for 9.2, - that's why :)
-
-Thanks,
-
-/mjt
+I'll respin propagating the other way around, less code churn.
 
