@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97EC2E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 23:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916F2E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 23:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXq2N-0004Bg-G9; Tue, 14 Jan 2025 18:09:32 -0500
+	id 1tXq0v-0001qL-E1; Tue, 14 Jan 2025 18:08:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq27-0003qS-B9
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:09:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq0t-0001q2-J5
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:07:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq25-0004IM-GN
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:09:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq0r-00042y-NI
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:07:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736896152;
+ s=mimecast20190719; t=1736896076;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=irKgyuwlTgCopG55dQ+ETYiKtWcHjCzYi9viy9UqP5I=;
- b=W9RY3KorhVghtmo4Xw8+RNrKBJu7+XZ7Y5mPRTQ8bh10H8NcUwqJpwcuBUOwQ7MJXS3ItA
- ZlB2TrBP5ZsI2YZd35cqEAHmKi7G+JwPnNcfmPCxtt6Q1LQ7tV3RgezHRRepeGsH/5EmqZ
- Dyy4IBhDhcrizhjgkVIZ7YiIo7lNIRU=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HJR38tp/bNFIvxL2s+ykIG6k6iWIvuZ+RXhgC0s5ndE=;
+ b=ZgJXQ5mLapWMe4ZmL7yltSBeZJoY7SUPTbfZm1+0FhTsWp8ymU+KIBKYjawrEujkQHropL
+ 259Cl51QY6HkpZhv0D0uRdeXw6UKqSGDloc5+1V4P4hJhKd9bKu39A+OtgYOpd7DiQoCpp
+ n9OZ6fEDIB1RBYTz/bN+91r23GMiPkw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-VpB0c27yPpOt808-YVBATQ-1; Tue, 14 Jan 2025 18:08:06 -0500
-X-MC-Unique: VpB0c27yPpOt808-YVBATQ-1
-X-Mimecast-MFC-AGG-ID: VpB0c27yPpOt808-YVBATQ
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b6f3b93f5cso59843085a.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 15:08:05 -0800 (PST)
+ us-mta-385-G8Nm5LH-Nw22VLT2Wa6EPA-1; Tue, 14 Jan 2025 18:07:54 -0500
+X-MC-Unique: G8Nm5LH-Nw22VLT2Wa6EPA-1
+X-Mimecast-MFC-AGG-ID: G8Nm5LH-Nw22VLT2Wa6EPA
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d8844560e9so127907766d6.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 15:07:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736896085; x=1737500885;
+ d=1e100.net; s=20230601; t=1736896074; x=1737500874;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=irKgyuwlTgCopG55dQ+ETYiKtWcHjCzYi9viy9UqP5I=;
- b=X6UKw5FiwoKwHkGHBPVnZmz94Pq1h0OAWdwb4x1SE21tjRNum55vWOp7g7v6+pV4vP
- uuS2dNTmQNJbStC+BM8F0h1owY5R/7GidOxhSCzJsQ5KhqHn7owZ5XyTMNKhytdasbRv
- /RIQ4YNdYhG33yVtoPzQ+OJdVP19zVIprqPJwoQqRTg3wjZSDDJeE+FQll7ClBeA4SXw
- 0pHtQwsTSUft7AZQDaV3amlbRAUELJlu5ML0oZ5SrMoKpaFR0lSDphEHns8vIpeszfbZ
- MUEm4qJz+vJ0vfGWsnTrdPnwkyCKpKe6n/NhzofjV/Z5++j/6LuOKLZ128IQSX0Lm4ev
- Fxsg==
-X-Gm-Message-State: AOJu0YyDeQA6cv+wdvqN1R2oeais3dUwOuD9/EA2J1QisaMCbjWDqRyw
- PFEpspTaKBnA/s8iiPAxn+IaS+HaHSybJiyged6C5qb+CLqA9fRFWpMelrHvkjLp3wGrf5no/9/
- zp0OiL4uQAN23CLlyhfbzozpDvo6fpRmqsbn8fACBX0sRNmXdisSR0y7c9kRAsmhrjdtRFw1RId
- k/WylfdjHATclmaOorYNFVZhE0eKmKVeZPRg==
-X-Gm-Gg: ASbGnctRVO4lBimVOVnIKAlA8hTTdwUWHP/gxoqK6ur+dMJplnc09ixJcP20Ke/M3/H
- hH+EwNkUUMDM4nGlIoA/LzQBtZNrtwFTJAZUOXfWBU/y3wbuUgRpu5uHItR2r4vHtFkKwQNcVLr
- Rx+xoW/+SaNENtq/UrIJToubAJhFyPzpzf46xOP+cXL9HbO4fck2mvkQ7n9AucUG4a6bFoQB4tr
- HkW/VD+q8j/1LtgjomhnSoni9L+XoDnqABFNtjtq6t/0UzXmSgNdMvBfpivVjXk6tTqjNrXcIzO
- QBU+cOaxYe8aAjpM4UKTfMMp1t/S1Sw7
-X-Received: by 2002:ad4:5d68:0:b0:6d8:893b:2a13 with SMTP id
- 6a1803df08f44-6e192acacb8mr14123026d6.0.1736896085162; 
- Tue, 14 Jan 2025 15:08:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFsMXaZrSKXmWGtmuQ5k0JobhExFbGUbgkJjmQTuJfxe4fV5xRDGJdJhXw52VxqYhCAMd8OuQ==
-X-Received: by 2002:ad4:5d68:0:b0:6d8:893b:2a13 with SMTP id
- 6a1803df08f44-6e192acacb8mr14122736d6.0.1736896084835; 
- Tue, 14 Jan 2025 15:08:04 -0800 (PST)
+ bh=HJR38tp/bNFIvxL2s+ykIG6k6iWIvuZ+RXhgC0s5ndE=;
+ b=sS9gQ357FjsAGxlB34T1D/tzMsXp2llXxiT+EnHHfEoTlPVg4FSxm8KYbiuWjVAiNc
+ xh5oKaGOXLm/R3A/rTk3CvFp//5C3pvFNua7QEdAV9c4C/Q1bFPkgoCDGhIf3QRlHluB
+ CUUQjLR789khEedmInInesyUQp1utArzJpGT08YnhtFF/Ei2xQ380hyG4FLO2iGMOS4j
+ lpZv8lbM0Erj1xp5h+H8X0e0Ou24ep8g+ji4vSyvXGFxDoR/AztgudPUVhTWB0M1mHU+
+ Q7JtlJ6X1VMvdqK2DK1L8k7mlVTq8ZAIGO5jbvQcp4Y+lhd0vxCDiI0XLm5KhFO214m1
+ 2wsg==
+X-Gm-Message-State: AOJu0Yx3aPKvWAqq8dlmHSPvBvGHoOc7tJIkUsYM22UxOYTRLpFBQY2d
+ qclDXUZWg2KjMC+0HKnua4SNesE/rcuzVT9igKd8PDkZFvm0ZdC0onn+ssO0Nqih0t8jRmmXUuA
+ 8ueGle/yprxPYzQa3t4Rg369Qf/WjfePBNmdPUNxrXG19DbGxfNJlQzlMWl2G+GP6B/T4r0UqUS
+ rlscz30AlX0vaRs0/GAX4/87Sv+jXe3ray9Q==
+X-Gm-Gg: ASbGncufJJCPetlEKj5vqDePLYgV+dhyH1gFORKTrUVO7P/0hK6y6dqaRuS16g1RV7L
+ 1gWNpUxt+kLUBGhS7eL7Q1HSwfcySfm74utKMemJPCAif7tjpvjk1WZ9TtF1etj8dDVXq5zx71U
+ W808FcIJMV89N+4YRgCTz6GOoqdTbQIDHfiVWYar39ag/pmj8dkCtlPYc0EZIdH/np9lJD7wL57
+ RYEbXEQt1QPk9SBTqD6Awb7fljrOODybM+nORg+Kc9b51TrU6NG2b1Anz3YGOHEQd0HGVYQqc1L
+ xdcDMHfHtb7I60ILlvY+gn12H0bAF3q6
+X-Received: by 2002:a05:6214:2428:b0:6d8:960e:5785 with SMTP id
+ 6a1803df08f44-6df9b234c28mr397065786d6.13.1736896073687; 
+ Tue, 14 Jan 2025 15:07:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEaVQ7cUOeZkDKamGe9n5EjP7CAWu9sKmnkY9zIoiZHSSm+3xLHZ2dJ0n69d4q+NC6zSyOAtg==
+X-Received: by 2002:a05:6214:2428:b0:6d8:960e:5785 with SMTP id
+ 6a1803df08f44-6df9b234c28mr397065356d6.13.1736896073195; 
+ Tue, 14 Jan 2025 15:07:53 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46c873cd1b0sm59268971cf.49.2025.01.14.15.08.03
+ d75a77b69052e-46c873cd1b0sm59268971cf.49.2025.01.14.15.07.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 15:08:03 -0800 (PST)
+ Tue, 14 Jan 2025 15:07:52 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  Julia Suvorova <jusual@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 09/16] migration: Drop cached migration state in
- migration_maybe_pause()
-Date: Tue, 14 Jan 2025 18:07:39 -0500
-Message-ID: <20250114230746.3268797-10-peterx@redhat.com>
+Subject: [PATCH 02/16] migration: Do not construct JSON description if
+ suppressed
+Date: Tue, 14 Jan 2025 18:07:32 -0500
+Message-ID: <20250114230746.3268797-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250114230746.3268797-1-peterx@redhat.com>
 References: <20250114230746.3268797-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,118 +109,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I can't see why we must cache the state now after we avoided possible
-CANCEL race: that's the only thing I can think of that can modify the
-migration state concurrently with the migration thread itself.  Make all
-the state updates to happen always, then we don't need to cache the state
-anymore.
+QEMU machine has a property "suppress-vmdesc". When it is enabled, QEMU
+will stop attaching JSON VM description at the end of the precopy migration
+stream (postcopy is never affected because postcopy never attach that).
+
+However even if it's suppressed by the user, the source QEMU will still
+construct the JSON descriptions, which is a complete waste of CPU and
+memory resources.
+
+To avoid it, only create the JSON writer object if suppress-vmdesc is not
+specified.
+
+Luckily, vmstate_save() already supports vmdesc==NULL, so only a few spots
+that are left to be prepared that vmdesc can be NULL now.
+
+When at it, move the init / destroy of the JSON writer object to start /
+end of the migration - the JSON writer object is a sub-struct of migration
+state, and that looks like the only object that was dynamically allocated /
+destroyed within migration process.  Make it the same as the rest objects
+that migration uses.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ migration/migration.h |  1 +
+ migration/migration.c |  9 +++++---
+ migration/savevm.c    | 49 +++++++++++++++++++++++--------------------
+ 3 files changed, 33 insertions(+), 26 deletions(-)
 
+diff --git a/migration/migration.h b/migration/migration.h
+index 0df2a187af..3f1927f79c 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -552,6 +552,7 @@ void migration_bitmap_sync_precopy(bool last_stage);
+ 
+ /* migration/block-dirty-bitmap.c */
+ void dirty_bitmap_mig_init(void);
++bool should_send_vmdesc(void);
+ 
+ /* migration/block-active.c */
+ void migration_block_active_setup(bool active);
 diff --git a/migration/migration.c b/migration/migration.c
-index 5c688059de..5850c90c9f 100644
+index 2d1da917c7..bad7b39293 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -102,9 +102,7 @@ static MigrationIncomingState *current_incoming;
- static GSList *migration_blockers[MIG_MODE__MAX];
+@@ -1406,8 +1406,8 @@ static void migrate_fd_cleanup(MigrationState *s)
  
- static bool migration_object_check(MigrationState *ms, Error **errp);
--static int migration_maybe_pause(MigrationState *s,
--                                 int *current_active_state,
--                                 int new_state);
-+static int migration_maybe_pause(MigrationState *s, int new_state);
- static void migrate_fd_cancel(MigrationState *s);
- static bool close_return_path_on_source(MigrationState *s);
- static void migration_completion_end(MigrationState *s);
-@@ -2502,7 +2500,6 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     int ret;
-     QIOChannelBuffer *bioc;
-     QEMUFile *fb;
--    int cur_state = MIGRATION_STATUS_ACTIVE;
+     g_free(s->hostname);
+     s->hostname = NULL;
+-    json_writer_free(s->vmdesc);
+-    s->vmdesc = NULL;
++
++    g_clear_pointer(&s->vmdesc, json_writer_free);
  
-     /*
-      * Now we're 100% sure to switch to postcopy, so JSON writer won't be
-@@ -2537,8 +2534,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-         goto fail;
-     }
+     qemu_savevm_state_cleanup();
  
--    ret = migration_maybe_pause(ms, &cur_state,
--                                MIGRATION_STATUS_POSTCOPY_ACTIVE);
-+    ret = migration_maybe_pause(ms, MIGRATION_STATUS_POSTCOPY_ACTIVE);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "%s: Failed in migration_maybe_pause()",
-                          __func__);
-@@ -2676,9 +2672,7 @@ fail:
-  * migrate_pause_before_switchover called with the BQL locked
-  * Returns: 0 on success
-  */
--static int migration_maybe_pause(MigrationState *s,
--                                 int *current_active_state,
--                                 int new_state)
-+static int migration_maybe_pause(MigrationState *s, int new_state)
+@@ -1681,7 +1681,10 @@ int migrate_init(MigrationState *s, Error **errp)
+     s->migration_thread_running = false;
+     error_free(s->error);
+     s->error = NULL;
+-    s->vmdesc = NULL;
++
++    if (should_send_vmdesc()) {
++        s->vmdesc = json_writer_new(false);
++    }
+ 
+     migrate_set_state(&s->state, MIGRATION_STATUS_NONE, MIGRATION_STATUS_SETUP);
+ 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 0c4df27177..fa03a0a264 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1231,8 +1231,7 @@ void qemu_savevm_non_migratable_list(strList **reasons)
+ void qemu_savevm_state_header(QEMUFile *f)
  {
-     if (!migrate_pause_before_switchover()) {
-         return 0;
-@@ -2701,21 +2695,19 @@ static int migration_maybe_pause(MigrationState *s,
-      * wait for the 'pause_sem' semaphore.
-      */
-     if (s->state != MIGRATION_STATUS_CANCELLING) {
--        migrate_set_state(&s->state, *current_active_state,
-+        migrate_set_state(&s->state, s->state,
-                           MIGRATION_STATUS_PRE_SWITCHOVER);
-         bql_unlock();
-         qemu_sem_wait(&s->pause_sem);
-         bql_lock();
-         migrate_set_state(&s->state, MIGRATION_STATUS_PRE_SWITCHOVER,
-                           new_state);
--        *current_active_state = new_state;
-     }
+     MigrationState *s = migrate_get_current();
+-
+-    s->vmdesc = json_writer_new(false);
++    JSONWriter *vmdesc = s->vmdesc;
  
-     return s->state == new_state ? 0 : -EINVAL;
+     trace_savevm_state_header();
+     qemu_put_be32(f, QEMU_VM_FILE_MAGIC);
+@@ -1241,16 +1240,21 @@ void qemu_savevm_state_header(QEMUFile *f)
+     if (s->send_configuration) {
+         qemu_put_byte(f, QEMU_VM_CONFIGURATION);
+ 
+-        /*
+-         * This starts the main json object and is paired with the
+-         * json_writer_end_object in
+-         * qemu_savevm_state_complete_precopy_non_iterable
+-         */
+-        json_writer_start_object(s->vmdesc, NULL);
++        if (vmdesc) {
++            /*
++             * This starts the main json object and is paired with the
++             * json_writer_end_object in
++             * qemu_savevm_state_complete_precopy_non_iterable
++             */
++            json_writer_start_object(vmdesc, NULL);
++            json_writer_start_object(vmdesc, "configuration");
++        }
++
++        vmstate_save_state(f, &vmstate_configuration, &savevm_state, vmdesc);
+ 
+-        json_writer_start_object(s->vmdesc, "configuration");
+-        vmstate_save_state(f, &vmstate_configuration, &savevm_state, s->vmdesc);
+-        json_writer_end_object(s->vmdesc);
++        if (vmdesc) {
++            json_writer_end_object(vmdesc);
++        }
+     }
  }
  
--static int migration_completion_precopy(MigrationState *s,
--                                        int *current_active_state)
-+static int migration_completion_precopy(MigrationState *s)
+@@ -1296,16 +1300,19 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
  {
-     int ret;
+     ERRP_GUARD();
+     MigrationState *ms = migrate_get_current();
++    JSONWriter *vmdesc = ms->vmdesc;
+     SaveStateEntry *se;
+     int ret = 0;
  
-@@ -2728,8 +2720,7 @@ static int migration_completion_precopy(MigrationState *s,
+-    json_writer_int64(ms->vmdesc, "page_size", qemu_target_page_size());
+-    json_writer_start_array(ms->vmdesc, "devices");
++    if (vmdesc) {
++        json_writer_int64(vmdesc, "page_size", qemu_target_page_size());
++        json_writer_start_array(vmdesc, "devices");
++    }
+ 
+     trace_savevm_state_setup();
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+         if (se->vmsd && se->vmsd->early_setup) {
+-            ret = vmstate_save(f, se, ms->vmdesc, errp);
++            ret = vmstate_save(f, se, vmdesc, errp);
+             if (ret) {
+                 migrate_set_error(ms, *errp);
+                 qemu_file_set_error(f, ret);
+@@ -1424,7 +1431,7 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
+     return all_finished;
+ }
+ 
+-static bool should_send_vmdesc(void)
++bool should_send_vmdesc(void)
+ {
+     MachineState *machine = MACHINE(qdev_get_machine());
+ 
+@@ -1564,21 +1571,17 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+         /* Postcopy stream will still be going */
+         qemu_put_byte(f, QEMU_VM_EOF);
+ 
+-        json_writer_end_array(vmdesc);
+-        json_writer_end_object(vmdesc);
+-        vmdesc_len = strlen(json_writer_get(vmdesc));
++        if (vmdesc) {
++            json_writer_end_array(vmdesc);
++            json_writer_end_object(vmdesc);
++            vmdesc_len = strlen(json_writer_get(vmdesc));
+ 
+-        if (should_send_vmdesc()) {
+             qemu_put_byte(f, QEMU_VM_VMDESCRIPTION);
+             qemu_put_be32(f, vmdesc_len);
+             qemu_put_buffer(f, (uint8_t *)json_writer_get(vmdesc), vmdesc_len);
          }
      }
  
--    ret = migration_maybe_pause(s, current_active_state,
--                                MIGRATION_STATUS_DEVICE);
-+    ret = migration_maybe_pause(s, MIGRATION_STATUS_DEVICE);
-     if (ret < 0) {
-         goto out_unlock;
-     }
-@@ -2782,11 +2773,10 @@ static void migration_completion_postcopy(MigrationState *s)
- static void migration_completion(MigrationState *s)
- {
-     int ret = 0;
--    int current_active_state = s->state;
-     Error *local_err = NULL;
+-    /* Free it now to detect any inconsistencies. */
+-    json_writer_free(vmdesc);
+-    ms->vmdesc = NULL;
+-
+     trace_vmstate_downtime_checkpoint("src-non-iterable-saved");
  
-     if (s->state == MIGRATION_STATUS_ACTIVE) {
--        ret = migration_completion_precopy(s, &current_active_state);
-+        ret = migration_completion_precopy(s);
-     } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-         migration_completion_postcopy(s);
-     } else {
-@@ -2826,8 +2816,7 @@ fail:
-         error_free(local_err);
-     }
- 
--    migrate_set_state(&s->state, current_active_state,
--                      MIGRATION_STATUS_FAILED);
-+    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
- }
- 
- /**
+     return 0;
 -- 
 2.47.0
 
