@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD83C02184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFB2C02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXgqP-0008Lr-Ab; Tue, 14 Jan 2025 08:20:33 -0500
+	id 1tXh3q-0005Ih-9d; Tue, 14 Jan 2025 08:34:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tXgqI-0008K1-En
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:20:26 -0500
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ id 1tXh3k-0005Ht-I2
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:34:20 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tXgqG-0003qt-Nw
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:20:26 -0500
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3eb9bbcc936so3144616b6e.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 05:20:21 -0800 (PST)
+ id 1tXh3i-0006l2-0y
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:34:19 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so89581465ad.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 05:34:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736860820; x=1737465620; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZoU6QnxQq9cq31fuw1ONPxwM9qu/LCG5eKvjACufAPA=;
- b=YI7xA9MnEkfiBjRxdViLBJJPYBO2Xnvk0beaFvkLPCrS96vW9GlIeYUZA4SCbWH3eo
- nOC6cn5SKYdEnzWTGJQB6reNH8Q1ZJStvVZVLHRoLtDoWOhPn277KfET44Uq4uyQJW/q
- AHahbghM7TG8P0+LdFfvn6MHDI7StMW0lkTz+fPlv9orM80R5tNS/V8XhlNUhUQUnD1o
- WA5smBuUYS5mqzU+8O0eU8urXzh2/kmABsel+AQg7WFsWW1/Btq0F/cdsba2fafwQj6Q
- nY1V+EoEHiU2Mnl8nJd+JcdHgQnBvYEIu8SnacQl3t/8myhYuLc4KzejC3mVrm6W//5p
- x4jA==
+ d=ventanamicro.com; s=google; t=1736861656; x=1737466456; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v6wuaPyDud7y+ceKMEfP/p/5jsuoQbihKSiTay+42Ck=;
+ b=EICqMXPW3nbWNOZH9/meYE/io9f+5q6KrOfs1z2MSGDialXKzVg125jblhe34OFSBD
+ cwOvyvBGDuSj1Vzv7t/Tsl1C2miJf57x+L7hEKs8RNvm93SQtGr889lFN0WZCU4SuMpS
+ zthuRdi8ror5TTgc8I31H1j9MsbkhzAoBmzntWUApF9QmEAfKlT7aEuVotetEvIwV7Qr
+ p6kTKhSfms72nR994BsQJ2LYdXU0H24LnV0vQIsG72S3BUlpsNLevsGu9gsDmj+HmzXC
+ xVCCGMqnjEAD8FAgkcPmTm25iI6BTTbCYdXmoluyMNZeRiuf4I4kTb2lLYpHJL4VxF9g
+ lqnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736860820; x=1737465620;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZoU6QnxQq9cq31fuw1ONPxwM9qu/LCG5eKvjACufAPA=;
- b=OjjNlR3MdAW2yFugm2CoB1RQTuszeC9r+86n9rfjEFgjANeSMsz2RVd6tahOiWgQ0b
- OJ04qNmL2qDiBJNM6kq35D/NUV81QTKJQcgus33Eaj3sOq9FQ1I28oZGS8KNGOVGtAnr
- pGZeq70jFwPppEYlG+3XiBKQLq0rcr3tkn8xmU1y4NKbtSRkK21wGYbXBfXxK53C4v2F
- 7D+iWWXz/LMlnzeenRaBdQTK0j8k+HKiYhKjMD4Kgcgh1D5nglEAMUQrUZN9ltT2olIn
- 6WlPjJzA+zxFJUKkp8mLTVMdtpxLOjhI0s6vUemwSoe4V8QGvu+uiEXKO6MCD3TQe22L
- sbMQ==
-X-Gm-Message-State: AOJu0YxD5bZpwPaqDqO5Xe3ymDLaMD0FK7FBcnK+s5CPd1xqmqaPaJcQ
- JZKUg4wIA31TIM/u7tDDzZ3rEiirE1OqFbSEpcnDNY9r4kYLEWDoHLPAfmkWQpm6so+3ej7q+6G
- vLyg=
-X-Gm-Gg: ASbGnctgLsKHGDIrRqN6yrJIiaXBK9zSzqFLqmKsk/y61zwbkyZfvCNi8cVdVPfrUB7
- zlFQ2zR6/NziOnO97y05a/t7B8U5QoF0YfChzuh07setV5UOfegvEr8N5MGvnTQqlP2W9M3hokL
- XAQXXrpPbETECZug0ggSKqCEUqIULASs1EYQgN1wvTRw/T7nvSWTZGj3MZEJ1VTn+rSvq6P57tn
- frdv17cu7ZPe7YdXCLaK4lVb/ctrR0g+/xeouTDSsZgHejmsVaqhpjvjUT700Uts92brDZuujW+
- ztC079/ZFw==
-X-Google-Smtp-Source: AGHT+IFbAKrBGIDt6kdiohPP8q/s/CIXA0y61VYwJTmXgTpo2SS3/AK9T0hJWGzqWP1gMlta08px4Q==
-X-Received: by 2002:a05:6870:ff08:b0:29e:5ac8:2c09 with SMTP id
- 586e51a60fabf-2aa066ed9d7mr12594599fac.13.1736860819967; 
- Tue, 14 Jan 2025 05:20:19 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([189.110.107.205])
+ d=1e100.net; s=20230601; t=1736861656; x=1737466456;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v6wuaPyDud7y+ceKMEfP/p/5jsuoQbihKSiTay+42Ck=;
+ b=ejp6OoV+K8P4A6whNu/b0zMK/fLy+VmdZ8CsgHluJ3O81nRSbWbDq3px14HjAv446Q
+ zD2EGAOPrPy46au3WPVpU8cQkHwEJk765R4vXXoF+2E6fb6vQXaU7fopegp2yeca1UqB
+ BQEYIjambPEPJeDz6304bTkfbO3mU7k4qGu9I5cenaMv9UBXq9Lc9QMaKXdLVy4by3WF
+ FRfosZMlAfc0B+npvmnni/JyP5lEfFAhM5z5vt4SCxIftyYOWOhnHcGmi4W56MN9XeVm
+ Pz9KQb2zt2wFiErp/dOI7PtKGQYYML4Unh4btts7VTLGJ+usD/DwTnPdNRiMagC34OFw
+ lCtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVB7QPfVOtNsQ50ZPi+pkf1rVQJf/qVjQ/nupScmpf0rcnx1m5CYJNP0OiJwQvtM8FKUi8FKhRpRQJ@nongnu.org
+X-Gm-Message-State: AOJu0Yw9pH1TV0B2r4rwkKaYgHZYlCSmHuYqCONJeg9+iozZyv8cfRBU
+ XWMJroPrghRoiWMe65B6TTm+sMq9M5ZIYG438Xfa5Mj8/5eTB3H7kZi/3bN50Hs=
+X-Gm-Gg: ASbGnctXxePgijt0ZlGUalMsoGLk8VnsoYHViQNA/VqJc08xbOjJMC5pYdodc8CC8TU
+ JKgoXpPTGYAIt8a3yql8KCgVGRS/6e3GbxlGGGnWD2iqnisjeTSborcFtMyWSGzIyctKD8xi33t
+ gDXWNQxmOBGczQj08lfIWURr8S0/msLP7PxV/fOEQzT6lyFa1JeX0SoiV1UPrAGXuqJRHi5m7LQ
+ VnXV8RASTLnpnMbGjuXpJsMV2yxN69KbBq/ye+cnYwW8xOo5zyCEtQotdOO301WH7Sy6UgO
+X-Google-Smtp-Source: AGHT+IFmpExB5c0+dLB6XSDsYdDhchHiQ1KvTViC4Q2a44s2u/3tbu69KSM7hgld6TADCwIyxd3EGg==
+X-Received: by 2002:a17:902:ecc7:b0:216:2259:a4bd with SMTP id
+ d9443c01a7336-21a83fda87cmr381668165ad.52.1736861656096; 
+ Tue, 14 Jan 2025 05:34:16 -0800 (PST)
+Received: from [192.168.68.110] ([189.110.107.205])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2ad809b10e4sm5052411fac.35.2025.01.14.05.20.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 05:20:18 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 0/4] target/riscv: RVA23 profile support
-Date: Tue, 14 Jan 2025 10:20:08 -0300
-Message-ID: <20250114132012.1224941-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
+ d9443c01a7336-21a9f21e279sm67742375ad.134.2025.01.14.05.34.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jan 2025 05:34:15 -0800 (PST)
+Message-ID: <5ae5a279-36ac-4a44-a5ad-2babc28a8705@ventanamicro.com>
+Date: Tue, 14 Jan 2025 10:34:10 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x229.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/riscv/riscv-iommu: Remove redundant variables
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20250114093647.4952-1-jason.chien@sifive.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250114093647.4952-1-jason.chien@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-After adding 'supm' and 'sspm' we're finally ready to add official RVA23
-support after adding a couple of trivial pieces:
 
-- add ssu64xl, another 'named feature' for something that we already
-  implement in TCG;
-- declare RVB in RVA22U64. This is more a cosmetic change to make it
-  straightforward to implement RVA23U64 as a child of RVA22.
+On 1/14/25 6:36 AM, Jason Chien wrote:
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> ---
 
-Adding RVA23U and RVA23S is done in the same model as we did with RVA22
-profiles, including a CPU for each of them for easier consumption.
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Patches based on alistair/riscv-to-apply.next.
-
-Daniel Henrique Barboza (4):
-  target/riscv: add ssu64xl
-  target/riscv: use RVB in RVA22U64
-  target/riscv: add RVA23U64 profile
-  target/riscv: add RVA23S64 profile
-
- target/riscv/cpu-qom.h            |   2 +
- target/riscv/cpu.c                |  83 ++++++++++++++++++++++++++++--
- tests/data/acpi/riscv64/virt/RHCT | Bin 390 -> 400 bytes
- 3 files changed, 82 insertions(+), 3 deletions(-)
-
--- 
-2.47.1
+>   hw/riscv/riscv-iommu.h | 5 -----
+>   1 file changed, 5 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index 9424989df4..fa8a50fa24 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -58,11 +58,6 @@ struct RISCVIOMMUState {
+>       /* interrupt notifier */
+>       void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
+>   
+> -    /* IOMMU State Machine */
+> -    QemuThread core_proc; /* Background processing thread */
+> -    QemuCond core_cond;   /* Background processing wake up signal */
+> -    unsigned core_exec;   /* Processing thread execution actions */
+> -
+>       /* IOMMU target address space */
+>       AddressSpace *target_as;
+>       MemoryRegion *target_mr;
 
 
