@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36664C02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 15:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18948E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 15:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXiYB-0002DR-8F; Tue, 14 Jan 2025 10:09:51 -0500
+	id 1tXigC-0004pl-BS; Tue, 14 Jan 2025 10:18:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tXiY9-0002D4-Pa
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 10:09:49 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tXiY7-0008Py-6P
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 10:09:49 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5d41848901bso3395708a12.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 07:09:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736867385; x=1737472185; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=SHQ2CtbQpkZKtZ4iS2qle4y4vOSZaS8O41b23tw/AAI=;
- b=hVyiS3srahDKOZ9ES61wdzagkNsxdnVV5jzvFHu7MFiAQ7zcrDgVhWZXNqbyyN/JU6
- bRjPDY8Mziwd0Y0d9Kk9I2AMxIoiFCz6bBvOEZ9LlmirWHv+ueqXBSNvIGQDC2A71w9d
- GZj3bIbtIMZgXbcb1QhTRCa25uP0g0FCA9hcaLCIqywnO4iM0y7q7vEogaexKKv1PQjV
- fhfJQ7NscfmlAK7bIfXPVKmagJEkhR87kuq2DD2+FtaVkXUZCO9yOsZ8T3T4CUwf5/dh
- /15AP5BkHv2DqmwmujOxq4xB2VPZvGAzWd8QvGt78+tQoCMaKVY3u0IIuuhiwEboVDpt
- 8GiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736867385; x=1737472185;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SHQ2CtbQpkZKtZ4iS2qle4y4vOSZaS8O41b23tw/AAI=;
- b=hH835iDeTZAz7sUilfB/XIIN134BO+hHzOn5bv12ruNn/kTnmtZY6tUiePP5i41FQQ
- 0xf6ZLlQWeqWtOv1bZ1ZTb/QtC9OFb4abElAXwc3jXJNeYXwV0NCoO39BE6nCK6XguSL
- bkFtmSfIDvLF/u41UG1/tlRVXO9kcwTC6wxyzmwZF95nI9lYrdUcc+JskcRnEPhTvien
- dY/oYREwUTY/97pvEGu8oGzIPys1npkWUIyP05WWpJ8rN8vKiePuSfWLc1lIxrXXml1C
- h/VrP3GVfr/zECHF4DEH1pW//ZFb5MBT6kwWb2Ari/7Ke3avtk5O9YX0ELpJ42rUPz/T
- p8zQ==
-X-Gm-Message-State: AOJu0Yzl8+u2x9HZ6zE9BScT37eWjdtKDhu2B7r+zAaPEmH7lrEYXBKJ
- cnF0ckhUupPxt5zrTIr+RtsmtISWk2F/B3cEUW3yzCgULHsZdCTFs1WnaJwrPQhIXL9WX5HHzfV
- 3EZs=
-X-Gm-Gg: ASbGncsrZMJvy8k6pcyeJpkFaA71X24GYELuQ1IjLDH6pOw2QL33NTJ0Vvy/XkaHYp8
- JKRaKHB6qITysj4l8kQGEmkCGz5t9NW/KHKtqhEH9O+5+kyFC8uJAMTumKomedZFS/9G7JI599E
- RWjnfc0627FNa0r7cHYi8NahMIS8kcch6zHB+li4jy/c2n0X9QEZEnvO08cmdIMPiX/tJaiksSs
- /fkIAE6nkdm2ukIcpx6KB0kDrO3jrhAzQK/F7y/ZgcvQx9pt9jpFyW1aV8XgNpnun5eoR+QJH6W
- M6etEPnG3rE5VYb1y6GSfRHLMq+Td8GXcb6NMaojdg==
-X-Google-Smtp-Source: AGHT+IGCIbNLbOWxpSvIeGmV735hTgeKYtOSB1TEv5wx/EF/zzqc6sbw+8UnshByY3mk7zNX98HPRA==
-X-Received: by 2002:a05:6402:50d0:b0:5d0:f6ed:4cd1 with SMTP id
- 4fb4d7f45d1cf-5d98a4bd87bmr19455467a12.10.1736867385485; 
- Tue, 14 Jan 2025 07:09:45 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d9903c4598sm6156659a12.53.2025.01.14.07.09.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 07:09:45 -0800 (PST)
-Date: Tue, 14 Jan 2025 16:09:44 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH 4/4] target/riscv: add RVA23S64 profile
-Message-ID: <20250114-96a4217891128dc91926b19c@orel>
-References: <20250114132012.1224941-1-dbarboza@ventanamicro.com>
- <20250114132012.1224941-5-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tXig9-0004pY-Nz; Tue, 14 Jan 2025 10:18:06 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tXig7-0001oe-AI; Tue, 14 Jan 2025 10:18:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736867884; x=1768403884;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=d/z2DwCxBGVBY51txIi6qB8VTsRbvxop0EHIbG+p9Z0=;
+ b=ei+uodQPZyPq6ltN9tubMA9lm5Wcj6CIe7mmRHYc4mdF7d169XL1pvGM
+ HM8b9ur0K0DkOM9tptQE30XAXw8JcbLkRXc0S4b7qqLP2yVTaFN6Mh+Ic
+ J3ERLhkwg7XOPmmlAQKhKqIs3edk0HKlHKkd3MEw4ugjdc5kHEWnUa3Lg
+ Mzn6YRF5j3wQQjQDo+g0C77wRHw7drSdDbUWEFVcIxEf7uIcWicbKyf/L
+ SN/9z94hgzUffY4zYWnlUiu3i3DonkVqGCQywcrpQVpRm34mmGGhXu65E
+ 4CBgQNNx2CDLD2Jgc4jHUZFO89p/DNBLUfCpf4+JT0pY3SX5awF7kd/bp g==;
+X-CSE-ConnectionGUID: rn9laQ2hS7aHDe1Tev8BvQ==
+X-CSE-MsgGUID: zYy4WXdgSTizQ+S/tRYF/w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="41107874"
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; d="scan'208";a="41107874"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2025 07:18:00 -0800
+X-CSE-ConnectionGUID: UnywE3kPROC0+fc1oWvQXw==
+X-CSE-MsgGUID: EAWxKbY5TAOBzMUJb6Evpw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="135705024"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 14 Jan 2025 07:17:57 -0800
+Date: Tue, 14 Jan 2025 23:36:48 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 07/13] rust: add bindings for timer
+Message-ID: <Z4aEkLhcGVbXX82O@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-8-zhao1.liu@intel.com>
+ <9cb123e2-5237-46e7-b6fe-ce8f813cc43c@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250114132012.1224941-5-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <9cb123e2-5237-46e7-b6fe-ce8f813cc43c@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-1.794,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,128 +88,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 10:20:12AM -0300, Daniel Henrique Barboza wrote:
-> Add RVA23S64 as described in [1]. This profile inherits all mandatory
-> extensions of RVA23U64, making it a child of the U64 profile.
-> 
-> A new "rva23s64" profile CPU is also added. This is the generated
-> riscv,isa for it (taken via -M dumpdtb):
-> 
-> rv64imafdcbvh_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_
-> ziccrse_zicond_zicntr_zicsr_zihintntl_zihintpause_zihpm_zimop_zmmul_
-> za64rs_zaamo_zalrsc_zawrs_zfa_zfhmin_zca_zcb_zcd_zcmop_zba_zbb_zbs_zkt_
+Hi Paolo,
 
-yeah, zba/zbb/zbs are still here as expected. So patch 2's bios table
-change was likely just the 'b', which we see at the start.
+Thanks for your FnCall and the guidance below...
 
-> zvbb_zve32f_zve32x_zve64f_zve64d_zve64x_zvfhmin_zvkb_zvkt_shcounterenw_
-> sha_shgatpa_shtvala_shvsatpa_shvstvala_shvstvecd_smnpm_smstateen_ssccptr_
-> sscofpmf_sscounterenw_ssnpm_ssstateen_sstc_sstvala_sstvecd_ssu64xl_
-> supm_svade_svinval_svnapot_svpbmt
+> This gets tricky when you have more than one timer per device.  With the right
+> infrastructure we can make this something like
 > 
-> [1] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 43 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 44 insertions(+)
-> 
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 53ead481a9..4cfdb74891 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -41,6 +41,7 @@
->  #define TYPE_RISCV_CPU_RVA22U64         RISCV_CPU_TYPE_NAME("rva22u64")
->  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
->  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
-> +#define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
->  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
->  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
->  #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e10ecc4ece..14af141349 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2419,10 +2419,45 @@ static RISCVCPUProfile RVA23U64 = {
->      }
->  };
->  
-> +/*
-> + * As with RVA23U64, RVA23S64 also defines 'named features'.
-> + *
-> + * Cache related features that we consider enabled since we don't
-> + * implement cache: Ssccptr
-> + *
-> + * Other named features that we already implement: Sstvecd, Sstvala,
-> + * Sscounterenw, Ssu64xl
-> + *
-> + * The remaining features/extensions comes from RVA23U64.
-> + */
-> +static RISCVCPUProfile RVA23S64 = {
-> +    .parent = &RVA23U64,
-> +    .name = "rva23s64",
-> +    .misa_ext = RVS,
-> +    .priv_spec = PRIV_VERSION_1_13_0,
-> +    .satp_mode = VM_1_10_SV39,
-> +    .ext_offsets = {
-> +        /* These were present in RVA22S64 */
-> +        CPU_CFG_OFFSET(ext_svade), CPU_CFG_OFFSET(ext_svpbmt),
-> +        CPU_CFG_OFFSET(ext_svinval),
+>     fn timer_init_full<'a, 'b: 'a, T, F: 'b Fn(&'b T)>(
+>         &'a mut self,
+>         timer_list_group: Option<&mut QEMUTimerListGroup>,
+>         clk_type: QEMUClockType,
+>         scale: u32,
+>         attributes: u32,
+>         f: &F,
+>         opaque: &'b T) {
+>         // SAFETY: the opaque outlives the timer
+>         unsafe {
+>             timer_init_full(...)
+>         }
+>     }
 
-I guess we can't inherit from both rva23u64 and rva22s64, which is what
-we'd like to do.
+...
 
-What about zifencei?
-
-> +
-> +        /* New in RVA23S64 */
-> +        CPU_CFG_OFFSET(ext_svnapot), CPU_CFG_OFFSET(ext_sstc),
-> +        CPU_CFG_OFFSET(ext_sscofpmf),
-> +
-> +        /* Named features: Sha, ssu64xl, ssnpm */
-> +        CPU_CFG_OFFSET(ext_sha),
-> +        CPU_CFG_OFFSET(ext_ssnpm),
-> +
-> +        RISCV_PROFILE_EXT_LIST_END
-> +    }
-> +};
-> +
->  RISCVCPUProfile *riscv_profiles[] = {
->      &RVA22U64,
->      &RVA22S64,
->      &RVA23U64,
-> +    &RVA23S64,
->      NULL,
->  };
->  
-> @@ -2916,6 +2951,13 @@ static void rva23u64_profile_cpu_init(Object *obj)
->  
->      RVA23U64.enabled = true;
->  }
-> +
-> +static void rva23s64_profile_cpu_init(Object *obj)
-> +{
-> +    rv64i_bare_cpu_init(obj);
-> +
-> +    RVA23S64.enabled = true;
-> +}
->  #endif
->  
->  static const gchar *riscv_gdb_arch_name(CPUState *cs)
-> @@ -3196,6 +3238,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  MXL_RV64,  rva22u64_profile_cpu_init),
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  MXL_RV64,  rva22s64_profile_cpu_init),
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  MXL_RV64,  rva23u64_profile_cpu_init),
-> +    DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23S64,  MXL_RV64,  rva23s64_profile_cpu_init),
->  #endif /* TARGET_RISCV64 */
->  };
->  
-> -- 
-> 2.47.1
+> pub struct Clock {
+>     id: QEMUClockType
+> }
 > 
+> impl Clock {
+>     pub fn get_ns() -> u64 {
+>         // SAFETY: cannot be created outside this module, therefore id
+>         // is valid
+>         (unsafe { qemu_clock_get_ns(self.id) }) as u64
+>     }
+> }
+> 
+> pub static CLOCK_VIRTUAL: Clock = Clock { id: QEMUClockType::QEMU_CLOCK_VIRTUAL };
+> // etc.
+> 
+> and then the user can do timer::CLOCK_VIRTUAL::get_ns().
 >
 
+...Now I have a draft for timer binding:
+
+* timer binding:
+
+impl QEMUTimer {
+    pub fn new() -> Self {
+        Zeroable::ZERO
+    }
+
+    pub fn timer_init_full<'a, 'b: 'a, T, F>(
+        &'a mut self,
+        timer_list_group: Option<&mut QEMUTimerListGroup>,
+        clk_type: QEMUClockType,
+        scale: u32,
+        attributes: u32,
+        _f: &F,
+        opaque: &'b T,
+    ) where
+        F: for<'c> FnCall<(&'c T,)> + 'b,
+    {
+        let timer_cb: unsafe extern "C" fn(*mut c_void) = rust_timer_handler::<T, F>;
+
+        // SAFETY: the opaque outlives the timer
+        unsafe {
+            timer_init_full(
+                self,
+                if let Some(g) = timer_list_group {
+                    g
+                } else {
+                    ::core::ptr::null_mut()
+                },
+                clk_type,
+                scale as c_int,
+                attributes as c_int,
+                Some(timer_cb),
+                opaque as *const T as *const c_void as *mut c_void,
+            )
+        }
+    }
+
+    pub fn timer_mod(&mut self, expire_time: u64) {
+        unsafe { timer_mod(self as *mut QEMUTimer, expire_time as i64) }
+    }
+}
+
+
+* use of timer binding:
+
+fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+    timer_cell.borrow_mut().callback()
+}
+
+impl HPETTimer {
+    ...
+
+    fn init_timer_with_state(&mut self) {
+        let index = self.index;
+        let cb = |cell: &BqlRefCell<HPETTimer>| {
+            timer_handler(cell);
+        };
+
+        self.qemu_timer = Some(Box::new({
+            let mut t = QEMUTimer::new();
+            t.timer_init_full(
+                None,
+                CLOCK_VIRTUAL.id,
+                SCALE_NS,
+                0,
+                &cb,
+                &self.get_state().timer[index],
+            );
+            t
+        }));
+    }
+    ...
+}
+
+---
+
+Is this timer binding as you expected? Hope I am on the right track. :-)
+
 Thanks,
-drew
+Zhao
+
+
 
