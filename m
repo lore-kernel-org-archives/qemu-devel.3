@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7FB8C02185
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF04C02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXm8j-0005o0-BY; Tue, 14 Jan 2025 13:59:49 -0500
+	id 1tXm8j-0005o2-Ka; Tue, 14 Jan 2025 13:59:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7v-0005f9-AY
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:01 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8G-0005hg-31
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7s-0002l5-Ll
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:58:59 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8D-0002o8-LI
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736881134;
+ s=mimecast20190719; t=1736881156;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Rc0m2D2zqILh3FIsSZ60/0LrwTOgd3pVJceaWbeKghE=;
- b=NaymaaGN4tlgWYRtHuAwkD81cPsQzr01jxHSdVZbagY/M5PKrDn1k7MS10N0NaR8X/uv9L
- Tga2NmaxEQyqvWpqYDyq5BjoH6Dt9o1HKi4yKfjHzP4O7rFfKs/5Cve9Q6ZfRyQWE9sH+o
- tb7SfLTjpPQthSbvuv69kdfhamij7co=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=QlFSE/xhTrjfXmytrp6J1YtbmtLIU5o1DgjRVS4RFIk=;
+ b=P8PDdVPabjrpESHxse+nLSOMoNgNxpudZJLVrvS7+MJGtKEFu96wGghpZH1F+iK5pSfwB1
+ 150DWzqOiwXcuhpdD/wHQDikhavA7EGy1eZOge4/vk4VcLYNxhJ55KmYq9fb2KsdimevlL
+ z0s4v2FAvDCalWcOb51Q2ZHRROGHM5w=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-5niZo2VOOjOa38T_9lxh5g-1; Tue,
- 14 Jan 2025 13:58:53 -0500
-X-MC-Unique: 5niZo2VOOjOa38T_9lxh5g-1
-X-Mimecast-MFC-AGG-ID: 5niZo2VOOjOa38T_9lxh5g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-502-xIWSfAkMO4-rJ7Svk6oDzA-1; Tue,
+ 14 Jan 2025 13:59:12 -0500
+X-MC-Unique: xIWSfAkMO4-rJ7Svk6oDzA-1
+X-Mimecast-MFC-AGG-ID: xIWSfAkMO4-rJ7Svk6oDzA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E51C1955DDA; Tue, 14 Jan 2025 18:58:52 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BA291955F69; Tue, 14 Jan 2025 18:59:11 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.175])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2FE4519560A3; Tue, 14 Jan 2025 18:58:50 +0000 (UTC)
+ id 4F56F19560A3; Tue, 14 Jan 2025 18:59:10 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 05/23] qapi/schema: add __repr__ to QAPIDoc.Section
-Date: Tue, 14 Jan 2025 13:58:22 -0500
-Message-ID: <20250114185840.3058525-6-jsnow@redhat.com>
+Subject: [PATCH v2 19/23] docs/qapidoc: add visit_member() method
+Date: Tue, 14 Jan 2025 13:58:36 -0500
+Message-ID: <20250114185840.3058525-20-jsnow@redhat.com>
 In-Reply-To: <20250114185840.3058525-1-jsnow@redhat.com>
 References: <20250114185840.3058525-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,28 +83,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makes debugging far more pleasant when you can just print(section) and
-get something reasonable to display.
+This method is used for generating the "members" of a wide variety of
+things, including structs, unions, enums, alternates, etc. The field
+name it uses to do so is dependent on the type of entity the "member"
+belongs to.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/parser.py | 3 +++
- 1 file changed, 3 insertions(+)
+ docs/sphinx/qapidoc.py | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index c3004aa70c6..cb259c42a6d 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -673,6 +673,9 @@ def __init__(
-             # section text without tag
-             self.text = ''
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index cbc62eb5084..5f00615ae32 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -74,6 +74,16 @@ def dedent(text: str) -> str:
  
-+        def __repr__(self) -> str:
-+            return f"<QAPIDoc.Section tag={self.tag!r} text={self.text!r}>"
+ 
+ class Transmogrifier:
++    # Field names used for different entity types:
++    field_types = {
++        "enum": "value",
++        "struct": "memb",
++        "union": "memb",
++        "event": "memb",
++        "command": "arg",
++        "alternate": "choice",
++    }
 +
-         def append_line(self, line: str) -> None:
-             self.text += line + '\n'
+     def __init__(self, schema):
+         self._curr_ent = None
+         self._result = StringList()
+@@ -84,6 +94,10 @@ def entity(self) -> QAPISchemaEntity:
+         assert self._curr_ent is not None
+         return self._curr_ent
  
++    @property
++    def member_field_type(self) -> str:
++        return self.field_types[self.entity.meta]
++
+     # General-purpose rST generation functions
+ 
+     def get_indent(self) -> str:
+@@ -194,6 +208,19 @@ def visit_paragraph(self, section: QAPIDoc.Section) -> None:
+         self.add_lines(section.text, section.info)
+         self.ensure_blank_line()
+ 
++    def visit_member(self, section: QAPIDoc.ArgSection) -> None:
++        # TODO: ifcond for members
++        # TODO?: features for members (documented at entity-level,
++        # but sometimes defined per-member. Should we add such
++        # information to member descriptions when we can?)
++        assert section.text
++        self.generate_field(
++            self.member_field_type,
++            section.member,
++            section.text,
++            section.info,
++        )
++
+     def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
+         # FIXME - ifcond for features is not handled at all yet!
+         # Proposal: decorate the right-hand column with some graphical
 -- 
 2.47.1
 
