@@ -4,90 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E086E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 16:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58302E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 16:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXjgF-0003xr-Dl; Tue, 14 Jan 2025 11:22:15 -0500
+	id 1tXjsF-00062R-KL; Tue, 14 Jan 2025 11:34:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tXjfz-0003wU-Bu
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 11:22:00 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tXjfx-0005HJ-1X
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 11:21:59 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5d7e527becaso9421469a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 08:21:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736871715; x=1737476515; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=g9L78fqpPk7QwZBlBO+06uOcH7mLAGIGJImnJHguXL4=;
- b=Yp6XfaLRzG4BWk2dFb68VWKR8+Hievfo4RVToyHE0svnsUSnV9wJe/GEZlYLFESL3K
- ZPvBIM8twQB3iFr/lvcpIqcrQHQICaX27CQUDg6vFcYJYdPFu1npL5RgRUgcP0R7ylHf
- 7Kni/Ia/bPo9dxz1fFhHax1Dx5hXfOXcIeyE1UmTrt0pG1zDU2JhGpoqgosuKomOISIO
- 2u8fkz+cDhhimubTSqaET6/abKCxPLYxZnXY/qAVse30eMwzW2JqHeG0U8BgBPK3ZbNM
- TJkUtOceCHk1ABgF5GI4Nj+tqYrDPQJCvEg9G67rYid8tsHdoi+FrSVgxhrrYuPdnksa
- sZfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736871715; x=1737476515;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g9L78fqpPk7QwZBlBO+06uOcH7mLAGIGJImnJHguXL4=;
- b=xLYG9LORcuk/gW8iFvidyTlFbjqO9COoItP94W6zFTusJ4+Q0/8Ivf8DjjgwuONnjO
- 5qQDE+gWkNqS87syK6x8YkulZUVgS3+mkDTYfYiiH6yrgrNeD0xx9pEvdJuqZD8sTNkg
- LYtvherzD+jfvTrM0J7N1uEITuZn6bfoEP12Fs1UlzJd1l3eriewhBw73zV56EDJZfBa
- q3vlUk5y8vU0pOZHfpxacSAmb2nvfctOT+JwPU0ZWa50OfMeebjanwl0zYFDz2+12RjC
- c7aTO5Fe7OF86lER8larGhaI7moysGp0ufLo9v0KxdNI5pd/2HUXkFO+RWh4T17m89Xl
- eWfg==
-X-Gm-Message-State: AOJu0YyGXtKhY9csUjTgVvpnvHP/w5sIgVSrk77/dB1AiHag9f72yjI2
- hXMJdSM9QJPiVHvUMpJQPfGmoH7ZDA/tjuCvfknGD9lSzNaIjYBWi7LoJKRZkM0=
-X-Gm-Gg: ASbGncueNpHDaEhvyUjL0EQCwo+zVkRwuRSEnfqth5BwKxx6GcXAviFR11kGaKuvkZ9
- c4JRRf31XNbAQ/xKBIOUy06WWNfS4KwyVDBU3zUMnPyIZiODFnktuzjfJQkOtj6yAk71XGntD+F
- KI/qo9s+1SEf4thf4va8zaYFQy6ec8clsYME4j7ZhssmR2FpqlsxkMUG5Nkzc3UDTluAOD2GoLa
- 11lQmZcbJPfL/9jybi40KLyNtDkNToFfusXGgMXVMkeTCgG0R7YZMjmpzQL3FtV47Jt5XsAzVrv
- iN9VZLa92dskLxZCkjkZV6KGPfKFIV1jFaHfnXUV7g==
-X-Google-Smtp-Source: AGHT+IHIdM2E68O4FFjoBCti4jWDUEhAHTHdZrkzFz2EPuD/U0NqMOA4gLj3857ydnRy/XgITF7kBw==
-X-Received: by 2002:a05:6402:2746:b0:5d0:c697:1f02 with SMTP id
- 4fb4d7f45d1cf-5d972e1c54emr65102825a12.17.1736871714880; 
- Tue, 14 Jan 2025 08:21:54 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c912f165sm644906866b.83.2025.01.14.08.21.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 08:21:54 -0800 (PST)
-Date: Tue, 14 Jan 2025 17:21:53 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH 2/4] target/riscv: use RVB in RVA22U64
-Message-ID: <20250114-8a8ae2fa3de2faa3a300b907@orel>
-References: <20250114132012.1224941-1-dbarboza@ventanamicro.com>
- <20250114132012.1224941-3-dbarboza@ventanamicro.com>
- <20250114-85b134099fa79adb42628ebc@orel>
- <f2919b99-d131-40ca-a5e8-63c91092e083@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1tXjsD-00061B-A9; Tue, 14 Jan 2025 11:34:37 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1tXjsA-0007iY-CW; Tue, 14 Jan 2025 11:34:36 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50EFUKdO020097;
+ Tue, 14 Jan 2025 16:34:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=b6H7NS
+ +hC1CS4WJm0yAKm3OEKxFMoKKtrT0iOmXgCz8=; b=dqR13Ftf/jIXuWLti1QuWr
+ rD6JRu9Unmd2tn9KnyMcc6CvX1mkL9C2u5BQlUqsc64e9r+eR2h/Zl2myg9642hQ
+ ZA7XayPLQ5/xYKhpsPj3mYUHWfZNYUrKa5iJ2wAkd/gG4jc0X1wyq+T/Nj2ytzU9
+ 0ezaVHqke517pz/yi1DTTTU4oIPo9skjeNgyNuX9hYckH/tVLmotVpc9gKYnel4t
+ kFl/gbuUvlehcY89aR2yrHuHybPJ1ZA2Qaa/p8jjyxgetHZd+qNBPt9PVlISvjdz
+ x2U2JEAWMhVK7bOaiIEC0Zqb7wRYpS8EX+8hJGsM+ao5bwyCaGKpJixbR1BBN2rw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 445tmgg9ys-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jan 2025 16:34:29 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50EDdBiw002693;
+ Tue, 14 Jan 2025 16:34:28 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443by44dw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jan 2025 16:34:28 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50EGYRxJ64880944
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Jan 2025 16:34:27 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EF65C5805E;
+ Tue, 14 Jan 2025 16:34:26 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4EB3758059;
+ Tue, 14 Jan 2025 16:34:26 +0000 (GMT)
+Received: from [9.61.248.9] (unknown [9.61.248.9])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jan 2025 16:34:26 +0000 (GMT)
+Message-ID: <38d5c9ea-f6cc-4260-9bba-6a0e47ec5e7a@linux.ibm.com>
+Date: Tue, 14 Jan 2025 11:34:25 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f2919b99-d131-40ca-a5e8-63c91092e083@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/5] Report vfio-ap configuration changes
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, pbonzini@redhat.com,
+ cohuck@redhat.com, pasic@linux.ibm.com, jjherne@linux.ibm.com,
+ borntraeger@linux.ibm.com, clg@redhat.com, thuth@redhat.com,
+ akrowiak@linux.ibm.com
+References: <20250107184354.91079-1-rreyes@linux.ibm.com>
+ <20250107140634.35cb33ba.alex.williamson@redhat.com>
+Content-Language: en-US
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <20250107140634.35cb33ba.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ElqUoi-FrviCDC1G-8TAkQ0s6A6TZERR
+X-Proofpoint-ORIG-GUID: ElqUoi-FrviCDC1G-8TAkQ0s6A6TZERR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ adultscore=0 mlxlogscore=736 mlxscore=0 spamscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501140129
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.794, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,122 +112,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 01:08:46PM -0300, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 1/14/25 11:52 AM, Andrew Jones wrote:
-> > On Tue, Jan 14, 2025 at 10:20:10AM -0300, Daniel Henrique Barboza wrote:
-> > >  From the time we added RVA22U64 until now the spec didn't declare 'RVB'
-> > > as a dependency, using zba/zbb/zbs instead. Since then the RVA22 spec
-> > > [1] added the following in the 'RVA22U64 Mandatory Extensions' section:
-> > > 
-> > > "B Bit-manipulation instructions
-> > > 
-> > > Note: The B extension comprises the Zba, Zbb, and Zbs extensions. At the
-> > > time of RVA22U64's ratification, the B extension had not yet been
-> > > defined, and so RVA22U64 explicitly mandated Zba, Zbb, and Zbs instead.
-> > > Mandating B is equivalent."
-> > > 
-> > > It is also equivalent to QEMU (see riscv_cpu_validate_b() in
-> > > target/riscv/tcg/tcg-cpu.c).
-> > > 
-> > > Finally, RVA23U64 [2] directly mentions RVB as a mandatory extension,
-> > > not citing zba/zbb/zbs.
-> > > 
-> > > To make it clear that RVA23U64 will extend RVA22U64 (i.e. RVA22 is a
-> > > parent of RVA23), use RVB in RVA22U64 as well. As a bonus we can also
-> > > exclude zba/zbb/zbs from 'ext_offsets' and make it a bit shorter.
-> > > 
-> > > (bios-tables-test change: zba/zbb/zbs no longer on riscv,isa)
-> > 
-> > We should still have zba/zbb/zbs on the ISA string. I don't think
-> > Linux yet supports expanding a 'B' bundle into them and other SW
-> > may also have not really cared about 'B' being designed to represent
-> > preexisting extensions after having already learned how to detect
-> > those extensions.
-> 
-> This has to do with how bios-tables-test works. The test doesn't boot the CPU
-> up to realize() and finalize() and, with this change, we ended up removing
-> zba/zbb/zbs from it because we won't reach riscv_cpu_validate_b() to add
-> them back.
+On 1/7/25 2:06 PM, Alex Williamson wrote:
 
-If we can't do a riscv_cpu_finalize_features() (and/or whatever else we
-need to do) to ensure we have a complete ISA string, then I think we
-should modify the test to somehow never check the ISA string entry of
-the RHCT table.
-
-> 
-> I guess that in the end, aside from having a smaller ext list, there's not
-> much to gain from removing zba/zbb/zbs from the profile definition. We
-> can just add RVB and keep them.
-
-While it doesn't really matter if we add them or not, I still think
-the test should be modified such that we don't have to try to out-smart
-it with profile and cpu definitions. Getting it to work would be best,
-but getting it to ignore is also good since we wouldn't need to bother
-modifying it every time we touch a cpu config.
-
-Thanks,
-drew
-
-> 
-> 
+> Why are configuration changes to the device allowed while the device is
+> in use?
+>
+> Would a uevent be considered an inefficient mechanism?  Why?
+>
 > Thanks,
-> 
-> Daniel
-> 
-> > 
-> > Anyway, what keeps them from being added? I don't see QEMU code
-> > for that. I do expect a bios tables change though, since the ISA
-> > string should now have 'B' added to it.
-> > 
-> > Thanks,
-> > drew
-> > 
-> > > 
-> > > [1] https://github.com/riscv/riscv-profiles/blob/main/src/profiles.adoc#61-rva22u64-profile
-> > > [2] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc#rva23u64-profile
-> > > 
-> > > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > > ---
-> > >   target/riscv/cpu.c                |   5 ++---
-> > >   tests/data/acpi/riscv64/virt/RHCT | Bin 398 -> 400 bytes
-> > >   2 files changed, 2 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > > index b187ef2e4b..8d0563527f 100644
-> > > --- a/target/riscv/cpu.c
-> > > +++ b/target/riscv/cpu.c
-> > > @@ -2351,13 +2351,12 @@ static const PropertyInfo prop_marchid = {
-> > >   static RISCVCPUProfile RVA22U64 = {
-> > >       .parent = NULL,
-> > >       .name = "rva22u64",
-> > > -    .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVU,
-> > > +    .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVU,
-> > >       .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
-> > >       .satp_mode = RISCV_PROFILE_ATTR_UNUSED,
-> > >       .ext_offsets = {
-> > >           CPU_CFG_OFFSET(ext_zicsr), CPU_CFG_OFFSET(ext_zihintpause),
-> > > -        CPU_CFG_OFFSET(ext_zba), CPU_CFG_OFFSET(ext_zbb),
-> > > -        CPU_CFG_OFFSET(ext_zbs), CPU_CFG_OFFSET(ext_zfhmin),
-> > > +        CPU_CFG_OFFSET(ext_zfhmin),
-> > >           CPU_CFG_OFFSET(ext_zkt), CPU_CFG_OFFSET(ext_zicntr),
-> > >           CPU_CFG_OFFSET(ext_zihpm), CPU_CFG_OFFSET(ext_zicbom),
-> > >           CPU_CFG_OFFSET(ext_zicbop), CPU_CFG_OFFSET(ext_zicboz),
-> > > diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
-> > > index b14ec15e553200760a63aad65586913d31ea2edc..13c8025b868051485be5ba62974a22971a07bc6a 100644
-> > > GIT binary patch
-> > > delta 53
-> > > zcmeBUp1{l%<l!7LfsuiM@#{n`13^7TMg~>JqB1j+%-qDZl;ot1UQ&#clNpsc(ij;S
-> > > I3K$s}0ARKZK>z>%
-> > > 
-> > > delta 52
-> > > zcmbQh+{ern<l!9B$H>6Im@tvcKtP9)kwJyAsLaeHGdD3UC3&N_6yxMHMkS6EMh1pF
-> > > HMg|4|IwT82
-> > > 
-> > > -- 
-> > > 2.47.1
-> > > 
-> > > 
-> 
+> Alex
+
+I believe a vfio device is typically used to pass through a single I/O 
+device, like a VGPU or PCI device. VFIO allows direct access to the 
+memory of the underlying device to perform the I/O. Our vfio device does 
+not follow that model. It represents a guest's AP configuration, not 
+individual AP devices. Granting guest access to the AP devices in the 
+configuration is controlled outside of VFIO. The purpose of the mediated 
+device is to provide a means for specifying the AP configuration for the 
+guest. When the mediated device is attached to the guest, the vfio_ap 
+device driver sets the AP configuration assigned to the mdev into the 
+control blocks used to start the guest.
+
+We could use the sysfs attributes of the mediated device to do hot 
+plug/unplug of devices for the guest. The vfio_ap host device driver 
+would perform the hot plug/unplug via an IBM Z mechanism. It was left up 
+to the AP bus driver running in the guest to detect these changes via a 
+polling mechanism. My patches allow us to notify the AP bus driver 
+immediately - via an eventfd to userspace - of those changes which is 
+far more efficient than relying on a polling mechanism.
+
 
