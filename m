@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C992DE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5A0DE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXhVG-0000Yz-Ek; Tue, 14 Jan 2025 09:02:46 -0500
+	id 1tXhaj-0002wr-6O; Tue, 14 Jan 2025 09:08:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhV9-0000M7-CV
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:02:39 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhaT-0002un-RL
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:08:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhV7-00034c-Dk
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:02:38 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhaQ-0004VE-6g
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:08:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736863356;
+ s=mimecast20190719; t=1736863684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RpUZ+GGieafLel0Gxe4KEIbQV4ju5WGCHcCJH31DYa0=;
- b=NEOm61hbiKJ3fAI2LGn86T8irER8FCL2IV4yxh1RCv1d/uqQJcI7EgGRheZwYkXTXTf8O0
- MhVt5k4MB88PfhupfyQAhvqbetUZ+BvWMNH9bfCzJwIRVMV+NuTIhFMA++JimUq58x4VZU
- I0bVoUFxspG9WI+69b7+cJ0GODOZ5UI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bq4gpVCuWRxilqmmULIZ76664+bjXBB++jnvhJ0jtQI=;
+ b=X2k2fFi0cCaBB3Ylb9jD6fAujgsGZSLs2gjzGX6pUEhsp3HmSLxHVI9P3kHOllIUbZLX5C
+ sqpXEwNlsUbI89U5LZjWcqammGooI+fErQDLqAOV4mdlVZ218u1ZqEbHINaHbGwYnvbLG2
+ fEN8h92AtFOA5cRzcyjzqSQc69fLKAM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-mT8X90U7O0K5oiOTns22Qg-1; Tue, 14 Jan 2025 09:02:31 -0500
-X-MC-Unique: mT8X90U7O0K5oiOTns22Qg-1
-X-Mimecast-MFC-AGG-ID: mT8X90U7O0K5oiOTns22Qg
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43673af80a6so42442235e9.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 06:02:31 -0800 (PST)
+ us-mta-587-LaTW-FBjOxKFT4-FeVKuiQ-1; Tue, 14 Jan 2025 09:08:03 -0500
+X-MC-Unique: LaTW-FBjOxKFT4-FeVKuiQ-1
+X-Mimecast-MFC-AGG-ID: LaTW-FBjOxKFT4-FeVKuiQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385d51ba2f5so2772029f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 06:08:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736863350; x=1737468150;
+ d=1e100.net; s=20230601; t=1736863682; x=1737468482;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=RpUZ+GGieafLel0Gxe4KEIbQV4ju5WGCHcCJH31DYa0=;
- b=qYNT/suCXCVybmMksUx0JKY9egzBZu1ajkXtQgNZQ9NCqd6tnfQncfqmhIc/QReCof
- o7hrVQ5YoQ1PBk6hKXe+hG5qO2F2me95Xl285YVedSLMNFdyBue7KMkqSaGL1yBXV1FJ
- OsaHkRySoQb1jHbaEW6k/y5+ZKxCcACF8Zn2shk302EEHBqvOiulYzlnAjamdxDRqESW
- Eilyn8f6yEmpdlQxampwwDmH6gPyUglc9c3GDGK51eOMNh1TnOg/6t8PrwGTTvE6sp4j
- KH8hzE3nAKfLL02ysVb7HiBErglYHBb/lcTEpU2zJvdtWR9lA5LHJl/fFBwbW6g0yXit
- wNUg==
+ bh=bq4gpVCuWRxilqmmULIZ76664+bjXBB++jnvhJ0jtQI=;
+ b=iX28oyfX57FbS6/4XMgqWurZjikiOKdlRAFtVSfXgA2pX44TLq2zFclGqxof/C5uSU
+ vYUPG2OZaaG4w+lFaOZA8/pmDipnboudlj7HXXOvgz3jeWjJ4amO+K9m+xsVLuqt+Zbf
+ BXsUS2gm/694a4diIsV4Zf7f5PWAb1LuS6Ufz3/Fbs3lbAUz84qUwtO7+2MSThCCDSQk
+ qlmxfQ8yrbzwrt7joEdD37zUvL5hQUgnq7a+BIXZts7n4K/5Zav8bHpajB+xYqi0PxVC
+ oBE5VPHQPMQc43XU/YYXAkoegGs6dT6fFFFkJbW73MqFECZHYvfjvZsW8py034cgU9Po
+ c6zQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIKnpKTZzp/MV38AkqyLBn3eJS9cbo3McseSpRuCTKu0EjGEHmHLq+h2R5q8TIYu9D1mZ+VdzoLYlk@nongnu.org
-X-Gm-Message-State: AOJu0YyuNz1mwj91huzxMB7LXr3BZYtgzUE+v+dJ02Muo/SERFVxEnTT
- XWrIpn8v72b6o4sfe9VYHobR8lV1RwppQD5C97GLwMCBrXaNugOujXCxjz64+XXG9z6PyHoTzX6
- W1A1rSTCOzUYTsbUyZwN0jro3N6azCypCOvb+m2WJ35jyYK9xcOa8
-X-Gm-Gg: ASbGnct4eavV6SUP57tuOKgoq7jqVvZDlkW4EbsAinDwd9jw+ywPsihbMIX+9QahWqr
- GwJykI8h0w7FUhTNXLRQ/Ou7WVgtQe/OUgQfVHb+tyC0Rir43baq3sZUMLgsOsRwUKNJVyqZsn5
- d/HpDHOCjiibhb0bYaXPuLjl1Mi1MKTT/x4IN24iJNR5JFnAmMdRBTbnBrhB9YduuPR08X/nhyQ
- 3MtD4+gihXX8ums43EAwFCsZGFRSM76amtoJ8bIQyiPi1MdNJLkxo026s5FtURl47iv8+RoVbEQ
- INTZYF3UInL7KhRLjJ6ZeK0DN9LVTK1SgYIkFo3xfMOsB8jCwca2tpTJsxi27GzLxnxOoSHfUdI
- 3+r2WMaTx
-X-Received: by 2002:a05:6000:2aa:b0:385:fa26:f0d9 with SMTP id
- ffacd0b85a97d-38a87086c15mr23569694f8f.0.1736863350329; 
- Tue, 14 Jan 2025 06:02:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFwJyCbLnWc+0oHQBOQk9bvC/zhSOLD2Js2QRVvPEKyvrbmCH2hAWnw1bqeczeP7Zg7ICvkiA==
-X-Received: by 2002:a05:6000:2aa:b0:385:fa26:f0d9 with SMTP id
- ffacd0b85a97d-38a87086c15mr23569627f8f.0.1736863349827; 
- Tue, 14 Jan 2025 06:02:29 -0800 (PST)
+ AJvYcCXB+0Ofw4S/l4x7kuqjxHurnFJ38Er3vosQ+72EiaN5KtwXsVj7YM1ju88j7OzqlvENPn7loepDzBE9@nongnu.org
+X-Gm-Message-State: AOJu0YwXm8H7IGG+vchivdW0ek7dRkXioL8EaHGBCkK/vTveu0WkEG5S
+ 6gIuoPZx/RD+JBPhigVQbgOpzNGI+yYgFwDC/9tSnIZyTzN50mxieRqC9wUvX2pycgC8n+qu4O9
+ o/Z0QXOVWXdrcKk7gx+LO4gPqKskaAgTQeJtdQMVkMhGUJnCl9Mbu
+X-Gm-Gg: ASbGncsVBFBLLcEY35YXUpZ3gXn8VLn0iJ1UXYUJ6ayudwtBcV3Nmz9ZU4p2xC7oFG8
+ /il7dzAFOqeh5EDguFnsUfih7oqekm5imtQPmAzNDygwqDZfW/FoiUeV95+gnMm+m5v54Lxpz2B
+ MyPlKgOXzISLCsK7hzWzblO5qWGBsS0QwUTvd+CeJxZPPwDaER3hTLYbQHPw/1NNIRqm2cKsZX9
+ UycooypEXaCGQC05w4a1t/ZqNvhMBBC+pHC78Wv8llYFIwAfwcCixdfn/VPbV5hnp+d+8VIqW6m
+ CuZbPpOFzAea9FTjXu0EAEIHXpDvB3JeROF0PsdDU59f5Tz/t55aoGw8DzenJrgbs3x6h05iOxx
+ rkJOx+ZA6
+X-Received: by 2002:a05:6000:1847:b0:385:f060:b7fc with SMTP id
+ ffacd0b85a97d-38a8730a60cmr23977246f8f.25.1736863681037; 
+ Tue, 14 Jan 2025 06:08:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH9xEqCaeRyof0lCkuoXA1eYcp8T3X9crUx1fpEgL6xbIoMiOieKC/KO01voLoAIbKzCrRj+Q==
+X-Received: by 2002:a05:6000:1847:b0:385:f060:b7fc with SMTP id
+ ffacd0b85a97d-38a8730a60cmr23977164f8f.25.1736863680366; 
+ Tue, 14 Jan 2025 06:08:00 -0800 (PST)
 Received: from ?IPV6:2003:cb:c738:3100:8133:26cf:7877:94aa?
  (p200300cbc7383100813326cf787794aa.dip0.t-ipconnect.de.
  [2003:cb:c738:3100:8133:26cf:7877:94aa])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38378csm14828197f8f.25.2025.01.14.06.02.27
+ ffacd0b85a97d-38a8e383dedsm15188834f8f.35.2025.01.14.06.07.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 06:02:29 -0800 (PST)
-Message-ID: <2a79643f-1d9e-4122-8932-954743a18c21@redhat.com>
-Date: Tue, 14 Jan 2025 15:02:26 +0100
+ Tue, 14 Jan 2025 06:07:59 -0800 (PST)
+Message-ID: <83c251ff-60b9-4a31-b61f-466942bcf34e@redhat.com>
+Date: Tue, 14 Jan 2025 15:07:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] system/physmem: handle hugetlb correctly in
- qemu_ram_remap()
+Subject: Re: [PATCH v5 2/6] system/physmem: poisoned memory discard on reboot
 To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
  kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
@@ -89,7 +88,7 @@ Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
  wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
 References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
  <20250110211405.2284121-1-william.roche@oracle.com>
- <20250110211405.2284121-2-william.roche@oracle.com>
+ <20250110211405.2284121-3-william.roche@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -137,7 +136,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250110211405.2284121-2-william.roche@oracle.com>
+In-Reply-To: <20250110211405.2284121-3-william.roche@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -149,7 +148,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,18 +167,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 10.01.25 22:14, “William Roche wrote:
 > From: William Roche <william.roche@oracle.com>
 > 
-> The list of hwpoison pages used to remap the memory on reset
-> is based on the backend real page size. When dealing with
-> hugepages, we create a single entry for the entire page.
+> Repair poisoned memory location(s), calling ram_block_discard_range():
+> punching a hole in the backend file when necessary and regenerating
+> a usable memory.
+> If the kernel doesn't support the madvise calls used by this function
+> and we are dealing with anonymous memory, fall back to remapping the
+> location(s).
 > 
-> To correctly handle hugetlb, we must mmap(MAP_FIXED) a complete
-> hugetlb page; hugetlb pages cannot be partially mapped.
-> 
-> Co-developed-by: David Hildenbrand <david@redhat.com>
 > Signed-off-by: William Roche <william.roche@oracle.com>
 > ---
+>   system/physmem.c | 57 ++++++++++++++++++++++++++++++------------------
+>   1 file changed, 36 insertions(+), 21 deletions(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 7a87548f99..ae1caa97d8 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2180,13 +2180,32 @@ void qemu_ram_free(RAMBlock *block)
+>   }
+>   
+>   #ifndef _WIN32
+> +/* Simply remap the given VM memory location from start to start+length */
+> +static void qemu_ram_remap_mmap(RAMBlock *block, uint64_t start, size_t length)
+> +{
+> +    int flags, prot;
+> +    void *area;
+> +    void *host_startaddr = block->host + start;
+> +
+> +    assert(block->fd < 0);
+> +    flags = MAP_FIXED | MAP_ANONYMOUS;
+> +    flags |= block->flags & RAM_SHARED ? MAP_SHARED : MAP_PRIVATE;
+> +    flags |= block->flags & RAM_NORESERVE ? MAP_NORESERVE : 0;
+> +    prot = PROT_READ;
+> +    prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
+> +    area = mmap(host_startaddr, length, prot, flags, -1, 0);
+> +    if (area != host_startaddr) {
+> +        error_report("Could not remap addr: " RAM_ADDR_FMT "@" RAM_ADDR_FMT "",
+> +                     length, start);
+> +        exit(1);
+> +    }
 
-See my comments to v4 version and my patch proposal.
+Can we return an error and have a single error printed in the caller?
+
+return area != host_startaddr ? -errno : 0;
+
+> +}
+> +
+>   void qemu_ram_remap(ram_addr_t addr)
+>   {
+>       RAMBlock *block;
+>       ram_addr_t offset;
+> -    int flags;
+> -    void *area, *vaddr;
+> -    int prot;
+> +    void *vaddr;
+>       size_t page_size;
+>   
+>       RAMBLOCK_FOREACH(block) {
+> @@ -2202,24 +2221,20 @@ void qemu_ram_remap(ram_addr_t addr)
+>               } else if (xen_enabled()) {
+>                   abort();
+>               } else {
+> -                flags = MAP_FIXED;
+> -                flags |= block->flags & RAM_SHARED ?
+> -                         MAP_SHARED : MAP_PRIVATE;
+> -                flags |= block->flags & RAM_NORESERVE ? MAP_NORESERVE : 0;
+> -                prot = PROT_READ;
+> -                prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
+> -                if (block->fd >= 0) {
+> -                    area = mmap(vaddr, page_size, prot, flags, block->fd,
+> -                                offset + block->fd_offset);
+> -                } else {
+> -                    flags |= MAP_ANONYMOUS;
+> -                    area = mmap(vaddr, page_size, prot, flags, -1, 0);
+> -                }
+> -                if (area != vaddr) {
+> -                    error_report("Could not remap addr: "
+> -                                 RAM_ADDR_FMT "@" RAM_ADDR_FMT "",
+> -                                 page_size, addr);
+> -                    exit(1);
+> +                if (ram_block_discard_range(block, offset, page_size) != 0) {
+> +                    /*
+> +                     * Fall back to using mmap() only for anonymous mapping,
+> +                     * as if a backing file is associated we may not be able
+> +                     * to recover the memory in all cases.
+> +                     * So don't take the risk of using only mmap and fail now.
+> +                     */
+> +                    if (block->fd >= 0) {
+> +                        error_report("Memory poison recovery failure addr: "
+> +                                     RAM_ADDR_FMT "@" RAM_ADDR_FMT "",
+> +                                     page_size, addr);
+
+See my error message proposal as reply to v4 patch #1: we should similarly
+just print rb->idstr, offset and page_size like ram_block_discard_range() does.
+
+ram_addr_t is weird and not helpful for users.
+
+
+To have a single error
+
+if (ram_block_discard_range(block, offset, page_size) != 0) {
+	/* ...
+	if (block->fd >= 0 || qemu_ram_remap_mmap(block, offset, page_size)) {
+		error_report() ... // use proposal from my reply to v4 patch #1
+		exit(1);
+	}
+}
 
 -- 
 Cheers,
