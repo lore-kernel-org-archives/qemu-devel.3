@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF04C02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273F3C02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXm8j-0005o2-Ka; Tue, 14 Jan 2025 13:59:49 -0500
+	id 1tXm8g-0005lj-0A; Tue, 14 Jan 2025 13:59:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8G-0005hg-31
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:25 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7w-0005fA-35
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:03 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8D-0002o8-LI
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:19 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7t-0002lJ-9H
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:58:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736881156;
+ s=mimecast20190719; t=1736881136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QlFSE/xhTrjfXmytrp6J1YtbmtLIU5o1DgjRVS4RFIk=;
- b=P8PDdVPabjrpESHxse+nLSOMoNgNxpudZJLVrvS7+MJGtKEFu96wGghpZH1F+iK5pSfwB1
- 150DWzqOiwXcuhpdD/wHQDikhavA7EGy1eZOge4/vk4VcLYNxhJ55KmYq9fb2KsdimevlL
- z0s4v2FAvDCalWcOb51Q2ZHRROGHM5w=
+ bh=AgLvY4Yqxv93JLq+I9d9qXSGhW5owB+tPXqiGJMRc+Y=;
+ b=SXYspgfqNfNOby3W9aBrwiIzSv6wLLHSJQD2LdpJsQS++GDOS0Z6Jy6TShnrIs/LGegwLg
+ A1djtpjshxei+fTwa6l8LI933ptC5tzSmUIn/uPZMdbhDHJSO/6GDrgMtgKsZmC62UVoo9
+ WCeVX94XCb1fCYxHwQt60MWsGCq6Jr0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-502-xIWSfAkMO4-rJ7Svk6oDzA-1; Tue,
- 14 Jan 2025 13:59:12 -0500
-X-MC-Unique: xIWSfAkMO4-rJ7Svk6oDzA-1
-X-Mimecast-MFC-AGG-ID: xIWSfAkMO4-rJ7Svk6oDzA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-494-Ra_N_3-vMd2piVquBHZJYA-1; Tue,
+ 14 Jan 2025 13:58:54 -0500
+X-MC-Unique: Ra_N_3-vMd2piVquBHZJYA-1
+X-Mimecast-MFC-AGG-ID: Ra_N_3-vMd2piVquBHZJYA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BA291955F69; Tue, 14 Jan 2025 18:59:11 +0000 (UTC)
+ id A166E1955F67; Tue, 14 Jan 2025 18:58:53 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.175])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F56F19560A3; Tue, 14 Jan 2025 18:59:10 +0000 (UTC)
+ id 9190C19560A3; Tue, 14 Jan 2025 18:58:52 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 19/23] docs/qapidoc: add visit_member() method
-Date: Tue, 14 Jan 2025 13:58:36 -0500
-Message-ID: <20250114185840.3058525-20-jsnow@redhat.com>
+Subject: [PATCH v2 06/23] docs/qapidoc: add transmogrifier stub
+Date: Tue, 14 Jan 2025 13:58:23 -0500
+Message-ID: <20250114185840.3058525-7-jsnow@redhat.com>
 In-Reply-To: <20250114185840.3058525-1-jsnow@redhat.com>
 References: <20250114185840.3058525-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,68 +83,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This method is used for generating the "members" of a wide variety of
-things, including structs, unions, enums, alternates, etc. The field
-name it uses to do so is dependent on the type of entity the "member"
-belongs to.
+This commit adds a stubbed option to the qapi-doc directive that opts-in
+to the new rST generator; the implementation of which will follow in
+subsequent commits.
+
+Once all QAPI documents have been converted, this option and the old
+qapidoc implementation can be dropped.
+
+Note that moving code outside of the try...except block has no impact
+because the code moved outside of that block does not ever raise a
+QAPIError.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ docs/sphinx/qapidoc.py | 41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index cbc62eb5084..5f00615ae32 100644
+index d622398f1da..dc72f3fd3f3 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -74,6 +74,16 @@ def dedent(text: str) -> str:
+@@ -452,9 +452,9 @@ def _parse_text_into_node(self, doctext, node):
+         rstlist.append("", self._cur_doc.info.fname, self._cur_doc.info.line)
+         self._sphinx_directive.do_parse(rstlist, node)
+ 
+-    def get_document_nodes(self):
+-        """Return the list of docutils nodes which make up the document"""
+-        return self._top_node.children
++    def get_document_node(self):
++        """Return the root docutils node which makes up the document"""
++        return self._top_node
  
  
- class Transmogrifier:
-+    # Field names used for different entity types:
-+    field_types = {
-+        "enum": "value",
-+        "struct": "memb",
-+        "union": "memb",
-+        "event": "memb",
-+        "command": "arg",
-+        "alternate": "choice",
+ # Turn the black formatter on for the rest of the file.
+@@ -503,7 +503,10 @@ class QAPIDocDirective(NestedDirective):
+ 
+     required_argument = 1
+     optional_arguments = 1
+-    option_spec = {"qapifile": directives.unchanged_required}
++    option_spec = {
++        "qapifile": directives.unchanged_required,
++        "transmogrify": directives.flag,
 +    }
-+
-     def __init__(self, schema):
-         self._curr_ent = None
-         self._result = StringList()
-@@ -84,6 +94,10 @@ def entity(self) -> QAPISchemaEntity:
-         assert self._curr_ent is not None
-         return self._curr_ent
+     has_content = False
  
-+    @property
-+    def member_field_type(self) -> str:
-+        return self.field_types[self.entity.meta]
-+
-     # General-purpose rST generation functions
+     def new_serialno(self):
+@@ -511,10 +514,24 @@ def new_serialno(self):
+         env = self.state.document.settings.env
+         return "qapidoc-%d" % env.new_serialno("qapidoc")
  
-     def get_indent(self) -> str:
-@@ -194,6 +208,19 @@ def visit_paragraph(self, section: QAPIDoc.Section) -> None:
-         self.add_lines(section.text, section.info)
-         self.ensure_blank_line()
- 
-+    def visit_member(self, section: QAPIDoc.ArgSection) -> None:
-+        # TODO: ifcond for members
-+        # TODO?: features for members (documented at entity-level,
-+        # but sometimes defined per-member. Should we add such
-+        # information to member descriptions when we can?)
-+        assert section.text
-+        self.generate_field(
-+            self.member_field_type,
-+            section.member,
-+            section.text,
-+            section.info,
-+        )
++    def transmogrify(self, schema) -> nodes.Element:
++        raise NotImplementedError
 +
-     def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
-         # FIXME - ifcond for features is not handled at all yet!
-         # Proposal: decorate the right-hand column with some graphical
++    def legacy(self, schema) -> nodes.Element:
++        vis = QAPISchemaGenRSTVisitor(self)
++        vis.visit_begin(schema)
++        for doc in schema.docs:
++            if doc.symbol:
++                vis.symbol(doc, schema.lookup_entity(doc.symbol))
++            else:
++                vis.freeform(doc)
++        return vis.get_document_node()
++
+     def run(self):
+         env = self.state.document.settings.env
+         qapifile = env.config.qapidoc_srctree + "/" + self.arguments[0]
+         qapidir = os.path.dirname(qapifile)
++        transmogrify = "transmogrify" in self.options
+ 
+         try:
+             schema = QAPISchema(qapifile)
+@@ -522,20 +539,18 @@ def run(self):
+             # First tell Sphinx about all the schema files that the
+             # output documentation depends on (including 'qapifile' itself)
+             schema.visit(QAPISchemaGenDepVisitor(env, qapidir))
+-
+-            vis = QAPISchemaGenRSTVisitor(self)
+-            vis.visit_begin(schema)
+-            for doc in schema.docs:
+-                if doc.symbol:
+-                    vis.symbol(doc, schema.lookup_entity(doc.symbol))
+-                else:
+-                    vis.freeform(doc)
+-            return vis.get_document_nodes()
+         except QAPIError as err:
+             # Launder QAPI parse errors into Sphinx extension errors
+             # so they are displayed nicely to the user
+             raise ExtensionError(str(err)) from err
+ 
++        if transmogrify:
++            contentnode = self.transmogrify(schema)
++        else:
++            contentnode = self.legacy(schema)
++
++        return contentnode.children
++
+ 
+ class QMPExample(CodeBlock, NestedDirective):
+     """
 -- 
 2.47.1
 
