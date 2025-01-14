@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E49C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF37E77188
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfFt-0005C1-0g; Tue, 14 Jan 2025 06:38:45 -0500
+	id 1tXfG0-0005Fp-4I; Tue, 14 Jan 2025 06:38:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFg-00056y-Df
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:32 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1tXfFm-000588-D0
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:39 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFe-0005Q4-G5
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:32 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d14336f0so9218364a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:30 -0800 (PST)
+ id 1tXfFk-0005S0-IN
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:37 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aaeec07b705so853684266b.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736854709; x=1737459509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736854715; x=1737459515; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JhuWbz37w1Y1jozAto2PdaStriGQyF5dVt49ZcJCRfQ=;
- b=wrPmxuh5qgxEsvFT/w9ColFq7CFUTz2nSqDz4VR5zEiLpR7Zk+bkpPaiZRRkvY4r2Q
- uVgihEo8WKGuR1k30pR8/jU2h7eTSaWmel3nPZFTWIhpD+NTTS+5mymjiIQPBKss8T+m
- O3qI257pqgMb3Ga+39+tp5g8EcoeTB8aQhQVIAP0DNDNze7+gzL4EKl6QTzvmwddZfHz
- 3xD4HkZJlnD+gb0mztEy2htxd+UsxA+IGSQKS4X4ChsLH+a1axpiH8gxiWiTKLSlv13B
- 2cTxW8rwgmmCAcNiWgrnuyAcw62BKPACBs6hHSO6SQu/5dmzRN4fPvCfDlFj5r5XjO2d
- nZBA==
+ bh=mDXNnBxwJoyhgKzJMRdJdgCJlpb7weenjpk6uMi/xEU=;
+ b=vkTjeihMvfC4FGejwkazgVoEKymzwpqpuWa3w07fd0bgaR6WDu+E6to/KEyd9gzEsl
+ MABI18ivqvfchtdXMjdnMeGlDLP5YrUS8xOXg5WKHgVedMNHjoULAkGdN8nY1Nja4Kt/
+ Obh3L72pJ/KByXixjHMzxY2+iTC9x6DsGuyn+Fg35A3dUD8NDmWEf/sf4milb8gKMPzF
+ AQXug/vyhaSJbISRCDKs5Ca9V2lCwmCvNROm8n7HxumuYkYfDRfXomc0lQXshq4aPzHA
+ TmGbt+Mo0Ke+9knATJub2MjlMimWr1qjISST/TAM7o+M3RgAuz5IehwwWVDgzuQo7bVA
+ 4+WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736854709; x=1737459509;
+ d=1e100.net; s=20230601; t=1736854715; x=1737459515;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JhuWbz37w1Y1jozAto2PdaStriGQyF5dVt49ZcJCRfQ=;
- b=m8xmPMoOAzqP3yJgty9XGmWdvYOtBNJAQPfR15WtaK6BG/o8puuu4Uxvt3jBj5PYTh
- VmxjK7ujpWEQkCjMd6s2377PYejqySxTDfbjwYUpXLf7vBJzPCXvDs8Nye0Yh7xMZ8F3
- e/7QPIlNjdAnS1dhvoiRv0farjjzWBEDEvF9ulhPuOcLfUbkx2T9tVvWUFNTvPdzOvmi
- domUr0FcQop7GOX/VjQajuH0Qmh9cJznZT/2FXBRPknvtdhbHzKBQDpY6H6DCCQO3EhM
- Iui1RFrZ8i4eUb6245C+pqPvtHp7IGsLq7OOIRLGtbKn4ERq43WbChINC1CrDteYeotv
- lg5Q==
-X-Gm-Message-State: AOJu0YyqEpnGMNBJcBaFt3X8nQpc8Br3BPKv//u9VTGGqFqVMo7ItJkm
- iIKAHyMFcScQmavlw26JGWF2ec2aeQJMPYVtRYj+Kz2CZu4n9n3n2jLvh4nayF9meuEac5jTGls
- B8v0=
-X-Gm-Gg: ASbGncvwygms+rTwcPLZ2JeCSXbLXrpqq21bFRoW2hnUY5N3YxqOL98C6+oDhGqy0LW
- r5Iu3gEf4s4tLicxMG5CeAkSDKd539v5i9sdb4MHcB4O0n2zgOzRLywYYAE2NyD+MgoP4y3TRMK
- bkZG3CgPFMv6G+d8x+YYWgS7PXxKq1CemiGFSRZZ17LgPbQm5xJpzKekN/gXMbLddF8Q9lZR18c
- dvlf7ACKUZrTQTymE6zcqbs5rtcr5S+tSLNy9Hwz4EGcfTHOT7QzkU=
-X-Google-Smtp-Source: AGHT+IFKkemRyuRcCVj7lg8AL+r70yww2bUC5tH0NctssZn6fTQWNnEnN8ayHWo+c4iWUXkUTvUR9w==
-X-Received: by 2002:a05:6402:540e:b0:5d0:b51c:8478 with SMTP id
- 4fb4d7f45d1cf-5d972e0e274mr22202061a12.12.1736854708901; 
- Tue, 14 Jan 2025 03:38:28 -0800 (PST)
+ bh=mDXNnBxwJoyhgKzJMRdJdgCJlpb7weenjpk6uMi/xEU=;
+ b=b/cRkFd5ly+l7+XU8L6Ch66EeFQKoOtPK2O81i8ONFggVVSU1OoLgSug+Kwrg51q2Z
+ 8YE/GvKIhiJTzcSSheK7vvJ3KraAgF3BWy0LBBt0Rt9ieGEkVJsPZm8gH0QgygHkTvLW
+ kbdRTB0YgqXxGEYYYV0wBJoGfQj/JmNchk3fwqc+jixSR7NhKLHrOsIujaVPhHfF19Np
+ S7jpbCC6pZx9ArQO0ZuD5ajnHoqEJWCkBtX0p32AArTr6jJubYm9Vy9LRkmi9Iwiz0RP
+ HvXkyfgRiBikrm6/f8Bih2oS5DR/DsKQ4YTuFJURIRSMu53oIz/RH0psUvWSfrnVJVvf
+ i46Q==
+X-Gm-Message-State: AOJu0YzgvSIa4EmKNFA/06IB4VgcgdS2/Pkned+fCV9xxSDYR2j2N8cU
+ adeMKIjqCIy2P4IqRdTMfqolCFn/VESM05kDb4bN4UBdFFwds7g5iD7TvvTDmetTuJE8z1AmHbT
+ LcxQ=
+X-Gm-Gg: ASbGncu2EsmvLGiTYHfmVCwOVWHCt/0PYeBBq1RVgijl1KpHSbXka6KI06+iXSbALC7
+ gI23yRprVTu0b8Dybl7v4LDwCMNFb6wqx/Bd3GuuqBAjYdoePybJ84d2yBXI1M66Bbt2lVA0HtR
+ DR/fhNZ5IQ5d6uctyiWfQ0kYM98dCT2BRI4cnYzfEAf54z8dWDKJY6a/Ezz1csNaEnlbYw2ewu1
+ Ol4VpnH1c25/ggIyxlpGFV4rR/8D971IiuEDcEfOUOMwYEcpmJmCss=
+X-Google-Smtp-Source: AGHT+IF6AB4hDlV3ZMwbBiLRdFpJ3HRrXBR/Mqiw9QdIMEd/dgQJvlBSQa1OVcSy6eSzrw6MVORGlQ==
+X-Received: by 2002:a17:907:96a0:b0:aa6:87e8:1d08 with SMTP id
+ a640c23a62f3a-ab2ab6bffc3mr1834463066b.8.1736854715006; 
+ Tue, 14 Jan 2025 03:38:35 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d99008c37csm6173423a12.6.2025.01.14.03.38.24
+ a640c23a62f3a-ab2c9060b9dsm621953966b.4.2025.01.14.03.38.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 03:38:26 -0800 (PST)
+ Tue, 14 Jan 2025 03:38:33 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 946EF5F9D8;
- Tue, 14 Jan 2025 11:38:22 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 6397D5F8B5;
+ Tue, 14 Jan 2025 11:38:25 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -72,18 +72,19 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Stefan Weil <sw@weilnetz.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 09/37] system: squash usb_parse into a single function
-Date: Tue, 14 Jan 2025 11:37:53 +0000
-Message-Id: <20250114113821.768750-10-alex.bennee@linaro.org>
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PATCH v2 37/37] scripts/nsis.py: Run dependency check for each DLL
+ file only once
+Date: Tue, 14 Jan 2025 11:38:21 +0000
+Message-Id: <20250114113821.768750-38-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
 References: <20250114113821.768750-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,56 +107,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't need to wrap usb_device_add as usb_parse is already gated
-with an if (machine_usb(current_machine)) check. Instead just assert
-and directly fail if usbdevice_create returns NULL.
+From: Stefan Weil via <qemu-devel@nongnu.org>
 
-Message-Id: <20250109170619.2271193-10-alex.bennee@linaro.org>
+Each DLL should only be checked once for dependencies, but
+several hundred (781 in my test) unneeded checks were done.
+
+Now the script is significantly faster (16 s in my build).
+
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250111215244.1680931-1-sw@weilnetz.de>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- system/vl.c | 22 ++++------------------
- 1 file changed, 4 insertions(+), 18 deletions(-)
+ scripts/nsis.py | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index 7e3e6fb353..e769132ba3 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -811,31 +811,17 @@ static void configure_msg(QemuOpts *opts)
- /***********************************************************/
- /* USB devices */
+diff --git a/scripts/nsis.py b/scripts/nsis.py
+index 03ed7608a2..af4e064819 100644
+--- a/scripts/nsis.py
++++ b/scripts/nsis.py
+@@ -37,10 +37,10 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
  
--static int usb_device_add(const char *devname)
-+static int usb_parse(const char *cmdline)
- {
--    USBDevice *dev = NULL;
-+    g_assert(machine_usb(current_machine));
+         analyzed_deps.add(dep)
+         # locate the dll dependencies recursively
+-        rdeps = find_deps(dll, search_path, analyzed_deps)
++        analyzed_deps, rdeps = find_deps(dll, search_path, analyzed_deps)
+         deps.extend(rdeps)
  
--    if (!machine_usb(current_machine)) {
-+    if (!usbdevice_create(cmdline)) {
-+        error_report("could not add USB device '%s'", cmdline);
-         return -1;
-     }
--
--    dev = usbdevice_create(devname);
--    if (!dev)
--        return -1;
--
-     return 0;
- }
+-    return deps
++    return analyzed_deps, deps
  
--static int usb_parse(const char *cmdline)
--{
--    int r;
--    r = usb_device_add(cmdline);
--    if (r < 0) {
--        error_report("could not add USB device '%s'", cmdline);
--    }
--    return r;
--}
--
- /***********************************************************/
- /* machine registration */
+ def main():
+     parser = argparse.ArgumentParser(description="QEMU NSIS build helper.")
+@@ -92,18 +92,18 @@ def main():
+         dlldir = os.path.join(destdir + prefix, "dll")
+         os.mkdir(dlldir)
+ 
++        analyzed_deps = set()
+         for exe in glob.glob(os.path.join(destdir + prefix, "*.exe")):
+             signcode(exe)
+ 
+             # find all dll dependencies
+-            deps = set(find_deps(exe, search_path, set()))
++            analyzed_deps, deps = find_deps(exe, search_path, analyzed_deps)
++            deps = set(deps)
+             deps.remove(exe)
+ 
+             # copy all dlls to the DLLDIR
+             for dep in deps:
+                 dllfile = os.path.join(dlldir, os.path.basename(dep))
+-                if (os.path.exists(dllfile)):
+-                    continue
+                 print("Copying '%s' to '%s'" % (dep, dllfile))
+                 shutil.copy(dep, dllfile)
  
 -- 
 2.39.5
