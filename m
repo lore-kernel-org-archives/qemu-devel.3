@@ -4,59 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C05DC02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190AFE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXl3E-0006R4-Qa; Tue, 14 Jan 2025 12:50:05 -0500
+	id 1tXl8l-0000pm-3q; Tue, 14 Jan 2025 12:55:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tXl3D-0006QR-Gn; Tue, 14 Jan 2025 12:50:03 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tXl3A-0005ky-LV; Tue, 14 Jan 2025 12:50:03 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YXc6l060tz6M4Jq;
- Wed, 15 Jan 2025 01:48:15 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id EAD601409EA;
- Wed, 15 Jan 2025 01:49:58 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.72.65) by
- frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 14 Jan 2025 18:49:57 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
- <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>, <farman@linux.ibm.com>,
- <peter.maydell@linaro.org>, <mst@redhat.com>, <anisinha@redhat.com>,
- <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>, <mtosatti@redhat.com>,
- <berrange@redhat.com>, <richard.henderson@linaro.org>, <linuxarm@huawei.com>, 
- <shameerali.kolothum.thodi@huawei.com>, <Jonathan.Cameron@Huawei.com>,
- <jiangkunkun@huawei.com>, <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
-Subject: [PATCH v6 7/7] Update the ACPI tables according to the acpi aml_build
- change, also empty bios-tables-test-allowed-diff.h.
-Date: Tue, 14 Jan 2025 17:46:01 +0000
-Message-ID: <20250114174601.23-8-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250114174601.23-1-alireza.sanaee@huawei.com>
-References: <20250114174601.23-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXl8g-0000pV-R6
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:55:43 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXl8e-0007gw-6U
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:55:42 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-436a39e4891so40623185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 09:55:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736877338; x=1737482138; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q16eQiaUy93SSjbT/AvPSjXfP1bE5EsrfnAHi7fo+3k=;
+ b=gi5udqP6A70bfn/+58MO+P9zdpD0Jwer9gpiSLTU/cDpTw1fmDR+nY58ZTs/RcSfvN
+ mMeWn07A7zO4hxZRU9AYu56Imd9b5lGiEGG5lW5K00/fysK0C9M0bt+BbmFNM5Ilc89t
+ 1Rju3p4wvxGg1pBJoiIxgLz1+zgCDBv33jqkU/Wkx5QR9KAB6yeFwkAHedp6LFMLnHd5
+ 6KhWQERvTp769cbhjeKhDaxiPAVP4qDKlSX11MMLe4ZEpU86HE3+bVLiCSt470Apacy5
+ uUgk/6WCrAH+/drb6YcpbNJE638BNsBYWHge2yZLtwHzWGFnsulc5PjwmswOW3hFjxRI
+ S+Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736877338; x=1737482138;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q16eQiaUy93SSjbT/AvPSjXfP1bE5EsrfnAHi7fo+3k=;
+ b=k3c3TQ4A6U7wj3uWM7y0mU226r2mz4YE3MhffzIUHP1sEA6maLxXQd38UYRiiQbcch
+ LKslhxg9TEIM7ui8K90mMOozdlU8/c2IKz9jsI4AHHucQMf3CWc675z5Tp4imIVDpviK
+ sr1W07aE77Qw5Azqg+8MHjcDxheWtrkXzG1MJMLTtbmQQ+A1uHFrvgdj66Cng9U6efhS
+ UtWQKfcL8mBOFxmssxzw7624kLMH5spNyp6qLh4wnLUND8m8is6gfoyljEG4YuvaTw0I
+ 1wWLD9LSXdrX/yw+96UMmL8FYV4uXAY5fKwAOTVomhRi13SaGaic+zTvE8r9XPKKkfbS
+ weOg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXT2+Yv7dSGg70W0FlWiC5FDw8WmzGTHxr9ljKlJYT7bG9QZiOqrpmpJYM53vtALxwaLhvzKCkd6ViC@nongnu.org
+X-Gm-Message-State: AOJu0YxSEm1qEtIDiNjgOSEEwdD1BoGMl/D7K2yjBkOvTCdUzNGgYu5U
+ pI+xGn5oBjQ86i9rlt+M9kj3xOyom28OtOMqqcY/KAE2z9ZDH5P/rmPPIzKeoc8D9QnUG/0TwhX
+ MjH8=
+X-Gm-Gg: ASbGncuq+lZ69cyC3KAB9i5sydSXTaf498GEErHcaplQQkplp2nhqGg+14NQf1i6VAU
+ Tdz39B0Mfy+nJ7SoOKsvt4MGTuXvLNwmc812qplfiZt8UjQkiRyryU3jMOYIhUCOG56hFUbrg6W
+ It59esNQSzCukj6llCP3l4VmNuSUxfrM0wa6pW+ztFp6zw0+T46Gd3B/fwIPtw3MaWpB715eASK
+ 3jyOSjcoBRzUKgBUwv4WTE11EaZTw3xyW3lYTdNGOgHVDPf1PkhG4qUn+qp4bWihI7AkYI1nVhc
+ NOmplb5+XvOSkcX/ZRkSXsm4
+X-Google-Smtp-Source: AGHT+IFHG1Bk83ge+dsxfhfOu3oT6Uz3kX3KEaoQNGoOlyx9RolB0F9dsRMQuvj33EZVsfOTzQzsfQ==
+X-Received: by 2002:a05:6000:1fa1:b0:388:caf4:e909 with SMTP id
+ ffacd0b85a97d-38a872e8bc4mr26519897f8f.25.1736877338611; 
+ Tue, 14 Jan 2025 09:55:38 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e37d447sm15173970f8f.4.2025.01.14.09.55.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jan 2025 09:55:38 -0800 (PST)
+Message-ID: <20a0768a-38d9-44b5-a050-f893226b5d4e@linaro.org>
+Date: Tue, 14 Jan 2025 18:55:37 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.72.65]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- frapeml500003.china.huawei.com (7.182.85.28)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-1.794, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 00/81] tcg: Merge *_i32 and *_i64 opcodes
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250107080112.1175095-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,445 +98,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The disassembled differences between actual and expected PPTT based on
-the following cache topology representation:
+Hi Richard,
 
-- l1d and l1i shared at cluster level
-- l2 shared at cluster level
-- l3 shared at cluster level
+On 7/1/25 08:59, Richard Henderson wrote:
+> Currently we have individual opcodes for each integer type.
+> This makes things difficult in tcg/optimize.c when we want
+> to transform the opcode stream.
+> 
+> Add TCGOP_TYPE() and use that instead.  Merge the opcodes that are
+> common to both TCG_TYPE_I32 and TCG_TYPE_I64.  We could eventually
+> merge some of the vector opcodes too, but that is a larger job.
 
-/*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20200925 (64-bit version)
- * Copyright (c) 2000 - 2020 Intel Corporation
- *
- * Disassembly of ../../../tests/data/acpi/aarch64/virt/PPTT.topology, Mon Oct  7 16:57:29 2024
- *
- * ACPI Data Table [PPTT]
- *
- * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
- */
 
-[000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
-[004h 0004   4]                 Table Length : 0000021C
-[008h 0008   1]                     Revision : 03
-[009h 0009   1]                     Checksum : 4D
-[00Ah 0010   6]                       Oem ID : "BOCHS "
-[010h 0016   8]                 Oem Table ID : "BXPC    "
-[018h 0024   4]                 Oem Revision : 00000001
-[01Ch 0028   4]              Asl Compiler ID : "BXPC"
-[020h 0032   4]        Asl Compiler Revision : 00000001
+> Richard Henderson (81):
+>    tcg: Move call abi parameters from tcg-target.h to tcg-target.c.inc
+>    tcg: Replace TCGOP_VECL with TCGOP_TYPE
+>    tcg: Move tcg_op_insert_{after,before} decls to tcg-internal.h
+>    tcg: Copy TCGOP_TYPE in tcg_op_insert_{after,before}
+>    tcg: Add TCGOP_FLAGS
+>    tcg: Add type and flags arguments to tcg_op_supported
+>    target/arm: Do not test TCG_TARGET_HAS_bitsel_vec
+>    target/arm: Use tcg_op_supported
+>    target/tricore: Use tcg_op_supported
+>    tcg: Add tcg_op_deposit_valid
+>    target/i386: Remove TCG_TARGET_extract_tl_valid
+>    target/i386: Use tcg_op_deposit_valid
+>    target/i386: Use tcg_op_supported
+>    tcg: Remove TCG_TARGET_NEED_LDST_LABELS and
+>      TCG_TARGET_NEED_POOL_LABELS
+>    tcg: Rename tcg-target.opc.h to tcg-target-opc.h.inc
+>    tcg/tci: Move TCI specific opcodes to tcg-target-opc.h.inc
+>    tcg: Move fallback tcg_can_emit_vec_op out of line
+>    tcg: Split out tcg-target-has.h and tcg-has.h
+>    tcg: Split out tcg-target-mo.h
+>    tcg: Use C_NotImplemented in tcg_target_op_def
+>    tcg: Change have_vec to has_type in tcg_op_supported
+>    tcg: Reorg process_op_defs
+>    tcg: Remove args_ct from TCGOpDef
+>    tcg: Constify tcg_op_defs
+>    tcg: Validate op supported in opcode_args_ct
+>    tcg: Add TCG_OPF_NOT_PRESENT to opcodes without inputs or outputs
+>    tcg: Pass type and flags to tcg_target_op_def
+>    tcg: Add TCGType argument to tcg_out_op
+>    tcg: Remove TCG_OPF_64BIT
+>    tcg: Drop implementation checks from tcg-opc.h
+>    tcg: Replace IMPLVEC with TCG_OPF_VECTOR
 
-[024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[025h 0037   1]                       Length : 14
-[026h 0038   2]                     Reserved : 0000
-[028h 0040   4]        Flags (decoded below) : 00000011
-                            Physical package : 1
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[02Ch 0044   4]                       Parent : 00000000
-[030h 0048   4]            ACPI Processor ID : 00000000
-[034h 0052   4]      Private Resource Number : 00000000
+I still have 3 patches to review, but looking at the overall
+maybe you can merge up to here, as the first part.
 
-[038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[039h 0057   1]                       Length : 14
-[03Ah 0058   2]                     Reserved : 0000
-[03Ch 0060   4]        Flags (decoded below) : 00000011
-                            Physical package : 1
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[040h 0064   4]                       Parent : 00000024
-[044h 0068   4]            ACPI Processor ID : 00000000
-[048h 0072   4]      Private Resource Number : 00000000
+>    tcg/mips: Expand bswap unconditionally
 
-[04Ch 0076   1]                Subtable Type : 01 [Cache Type]
-[04Dh 0077   1]                       Length : 1C
-[04Eh 0078   2]                     Reserved : 0000
-[050h 0080   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[054h 0084   4]          Next Level of Cache : 00000000
-[058h 0088   4]                         Size : 00200000
-[05Ch 0092   4]               Number of Sets : 00000800
-[060h 0096   1]                Associativity : 10
-[061h 0097   1]                   Attributes : 0F
-                             Allocation Type : 3
-                                  Cache Type : 3
-                                Write Policy : 0
-[062h 0098   2]                    Line Size : 0040
+(or up to here if I get this one reviewed in time).
 
-[068h 0104   1]                Subtable Type : 01 [Cache Type]
-[069h 0105   1]                       Length : 1C
-[06Ah 0106   2]                     Reserved : 0000
-[06Ch 0108   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[070h 0112   4]          Next Level of Cache : 0000004C
-[074h 0116   4]                         Size : 00008000
-[078h 0120   4]               Number of Sets : 00000080
-[07Ch 0124   1]                Associativity : 04
-[07Dh 0125   1]                   Attributes : 03
-                             Allocation Type : 3
-                                  Cache Type : 0
-                                Write Policy : 0
-[07Eh 0126   2]                    Line Size : 0040
+>    tcg/i386: Handle all 8-bit extensions for i686
+>    tcg/i386: Fold the ext{8,16,32}[us] cases into {s}extract
+>    tcg/aarch64: Provide TCG_TARGET_{s}extract_valid
+>    tcg/aarch64: Expand extract with offset 0 with andi
+>    tcg/arm: Add full [US]XT[BH] into {s}extract
+>    tcg/loongarch64: Fold the ext{8,16,32}[us] cases into {s}extract
+>    tcg/mips: Fold the ext{8,16,32}[us] cases into {s}extract
+>    tcg/ppc: Fold the ext{8,16,32}[us] cases into {s}extract
+>    tcg/riscv64: Fold the ext{8,16,32}[us] cases into {s}extract
+>    tcg/riscv: Use SRAIW, SRLIW for {s}extract_i64
+>    tcg/s390x: Fold the ext{8,16,32}[us] cases into {s}extract
+>    tcg/sparc64: Use SRA, SRL for {s}extract_i64
+>    tcg/tci: Provide TCG_TARGET_{s}extract_valid
+>    tcg/tci: Remove assertions for deposit and extract
+>    tcg: Remove TCG_TARGET_HAS_{s}extract_{i32,i64}
+>    tcg: Remove TCG_TARGET_HAS_deposit_{i32,i64}
+>    tcg: Remove INDEX_op_ext{8,16,32}*
+>    tcg: Add all_outop[]
+>    tcg: Merge INDEX_op_mov_{i32,i64}
+>    tcg: Convert add to TCGOutOpBinary
+>    tcg: Merge INDEX_op_add_{i32,i64}
+>    tcg: Convert and to TCGOutOpBinary
+>    tcg: Merge INDEX_op_and_{i32,i64}
+>    tcg/optimize: Fold andc with immediate to and
+>    tcg/optimize: Emit add r,r,-1 in fold_setcond_tst_pow2
+>    tcg: Convert andc to TCGOutOpBinary
+>    tcg: Merge INDEX_op_andc_{i32,i64}
+>    tcg: Convert or to TCGOutOpBinary
+>    tcg: Merge INDEX_op_or_{i32,i64}
+>    tcg/optimize: Fold orc with immediate to or
+>    tcg: Convert orc to TCGOutOpBinary
+>    tcg: Merge INDEX_op_orc_{i32,i64}
+>    tcg: Convert xor to TCGOutOpBinary
+>    tcg: Merge INDEX_op_xor_{i32,i64}
+>    tcg/optimize: Fold eqv with immediate to xor
+>    tcg: Convert eqv to TCGOutOpBinary
+>    tcg: Merge INDEX_op_eqv_{i32,i64}
+>    tcg: Convert nand to TCGOutOpBinary
+>    tcg: Merge INDEX_op_nand_{i32,i64}
+>    tcg/loongarch64: Do not accept constant argument to nor
+>    tcg: Convert nor to TCGOutOpBinary
+>    tcg: Merge INDEX_op_nor_{i32,i64}
+>    tcg/arm: Fix constraints for sub
+>    tcg: Convert sub to TCGOutOpSubtract
+>    tcg: Merge INDEX_op_sub_{i32,i64}
+>    tcg: Convert neg to TCGOutOpUnary
+>    tcg: Merge INDEX_op_neg_{i32,i64}
+>    tcg: Convert not to TCGOutOpUnary
+>    tcg: Merge INDEX_op_not_{i32,i64}
 
-[084h 0132   1]                Subtable Type : 01 [Cache Type]
-[085h 0133   1]                       Length : 1C
-[086h 0134   2]                     Reserved : 0000
-[088h 0136   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[08Ch 0140   4]          Next Level of Cache : 0000004C
-[090h 0144   4]                         Size : 0000C000
-[094h 0148   4]               Number of Sets : 00000100
-[098h 0152   1]                Associativity : 03
-[099h 0153   1]                   Attributes : 07
-                             Allocation Type : 3
-                                  Cache Type : 1
-                                Write Policy : 0
-[09Ah 0154   2]                    Line Size : 0040
+Here I'm missing the "Convert X to TCGOutOpY" patches. I haven't seen
+any blocking review difficulty, so will proceed soon.
 
-[0A0h 0160   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0A1h 0161   1]                       Length : 1C
-[0A2h 0162   2]                     Reserved : 0000
-[0A4h 0164   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[0A8h 0168   4]                       Parent : 00000038
-[0ACh 0172   4]            ACPI Processor ID : 00000000
-[0B0h 0176   4]      Private Resource Number : 00000002
-[0B4h 0180   4]             Private Resource : 00000084
-[0B8h 0184   4]             Private Resource : 00000068
+Regards,
 
-[0BCh 0188   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0BDh 0189   1]                       Length : 14
-[0BEh 0190   2]                     Reserved : 0000
-[0C0h 0192   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[0C4h 0196   4]                       Parent : 000000A0
-[0C8h 0200   4]            ACPI Processor ID : 00000000
-[0CCh 0204   4]      Private Resource Number : 00000000
-
-[0D0h 0208   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0D1h 0209   1]                       Length : 14
-[0D2h 0210   2]                     Reserved : 0000
-[0D4h 0212   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[0D8h 0216   4]                       Parent : 000000BC
-[0DCh 0220   4]            ACPI Processor ID : 00000000
-[0E0h 0224   4]      Private Resource Number : 00000000
-
-[0E4h 0228   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0E5h 0229   1]                       Length : 14
-[0E6h 0230   2]                     Reserved : 0000
-[0E8h 0232   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[0ECh 0236   4]                       Parent : 000000BC
-[0F0h 0240   4]            ACPI Processor ID : 00000001
-[0F4h 0244   4]      Private Resource Number : 00000000
-
-[0F8h 0248   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[0F9h 0249   1]                       Length : 14
-[0FAh 0250   2]                     Reserved : 0000
-[0FCh 0252   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[100h 0256   4]                       Parent : 000000A0
-[104h 0260   4]            ACPI Processor ID : 00000001
-[108h 0264   4]      Private Resource Number : 00000000
-
-[10Ch 0268   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[10Dh 0269   1]                       Length : 14
-[10Eh 0270   2]                     Reserved : 0000
-[110h 0272   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[114h 0276   4]                       Parent : 000000F8
-[118h 0280   4]            ACPI Processor ID : 00000002
-[11Ch 0284   4]      Private Resource Number : 00000000
-
-[120h 0288   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[121h 0289   1]                       Length : 14
-[122h 0290   2]                     Reserved : 0000
-[124h 0292   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[128h 0296   4]                       Parent : 000000F8
-[12Ch 0300   4]            ACPI Processor ID : 00000003
-[130h 0304   4]      Private Resource Number : 00000000
-
-[134h 0308   1]                Subtable Type : 01 [Cache Type]
-[135h 0309   1]                       Length : 1C
-[136h 0310   2]                     Reserved : 0000
-[138h 0312   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[13Ch 0316   4]          Next Level of Cache : 00000000
-[140h 0320   4]                         Size : 00200000
-[144h 0324   4]               Number of Sets : 00000800
-[148h 0328   1]                Associativity : 10
-[149h 0329   1]                   Attributes : 0F
-                             Allocation Type : 3
-                                  Cache Type : 3
-                                Write Policy : 0
-[14Ah 0330   2]                    Line Size : 0040
-
-[150h 0336   1]                Subtable Type : 01 [Cache Type]
-[151h 0337   1]                       Length : 1C
-[152h 0338   2]                     Reserved : 0000
-[154h 0340   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[158h 0344   4]          Next Level of Cache : 00000134
-[15Ch 0348   4]                         Size : 00008000
-[160h 0352   4]               Number of Sets : 00000080
-[164h 0356   1]                Associativity : 04
-[165h 0357   1]                   Attributes : 03
-                             Allocation Type : 3
-                                  Cache Type : 0
-                                Write Policy : 0
-[166h 0358   2]                    Line Size : 0040
-
-[16Ch 0364   1]                Subtable Type : 01 [Cache Type]
-[16Dh 0365   1]                       Length : 1C
-[16Eh 0366   2]                     Reserved : 0000
-[170h 0368   4]        Flags (decoded below) : 000000FF
-                                  Size valid : 1
-                        Number of Sets valid : 1
-                         Associativity valid : 1
-                       Allocation Type valid : 1
-                            Cache Type valid : 1
-                          Write Policy valid : 1
-                             Line Size valid : 1
-[174h 0372   4]          Next Level of Cache : 00000134
-[178h 0376   4]                         Size : 0000C000
-[17Ch 0380   4]               Number of Sets : 00000100
-[180h 0384   1]                Associativity : 03
-[181h 0385   1]                   Attributes : 07
-                             Allocation Type : 3
-                                  Cache Type : 1
-                                Write Policy : 0
-[182h 0386   2]                    Line Size : 0040
-
-[188h 0392   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[189h 0393   1]                       Length : 1C
-[18Ah 0394   2]                     Reserved : 0000
-[18Ch 0396   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[190h 0400   4]                       Parent : 00000038
-[194h 0404   4]            ACPI Processor ID : 00000001
-[198h 0408   4]      Private Resource Number : 00000002
-[19Ch 0412   4]             Private Resource : 0000016C
-[1A0h 0416   4]             Private Resource : 00000150
-
-[1A4h 0420   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1A5h 0421   1]                       Length : 14
-[1A6h 0422   2]                     Reserved : 0000
-[1A8h 0424   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[1ACh 0428   4]                       Parent : 00000188
-[1B0h 0432   4]            ACPI Processor ID : 00000000
-[1B4h 0436   4]      Private Resource Number : 00000000
-
-[1B8h 0440   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1B9h 0441   1]                       Length : 14
-[1BAh 0442   2]                     Reserved : 0000
-[1BCh 0444   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[1C0h 0448   4]                       Parent : 000001A4
-[1C4h 0452   4]            ACPI Processor ID : 00000004
-[1C8h 0456   4]      Private Resource Number : 00000000
-
-[1CCh 0460   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1CDh 0461   1]                       Length : 14
-[1CEh 0462   2]                     Reserved : 0000
-[1D0h 0464   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[1D4h 0468   4]                       Parent : 000001A4
-[1D8h 0472   4]            ACPI Processor ID : 00000005
-[1DCh 0476   4]      Private Resource Number : 00000000
-
-[1E0h 0480   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1E1h 0481   1]                       Length : 14
-[1E2h 0482   2]                     Reserved : 0000
-[1E4h 0484   4]        Flags (decoded below) : 00000010
-                            Physical package : 0
-                     ACPI Processor ID valid : 0
-                       Processor is a thread : 0
-                              Node is a leaf : 0
-                    Identical Implementation : 1
-[1E8h 0488   4]                       Parent : 00000188
-[1ECh 0492   4]            ACPI Processor ID : 00000001
-[1F0h 0496   4]      Private Resource Number : 00000000
-
-[1F4h 0500   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[1F5h 0501   1]                       Length : 14
-[1F6h 0502   2]                     Reserved : 0000
-[1F8h 0504   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[1FCh 0508   4]                       Parent : 000001E0
-[200h 0512   4]            ACPI Processor ID : 00000006
-[204h 0516   4]      Private Resource Number : 00000000
-
-[208h 0520   1]                Subtable Type : 00 [Processor Hierarchy Node]
-[209h 0521   1]                       Length : 14
-[20Ah 0522   2]                     Reserved : 0000
-[20Ch 0524   4]        Flags (decoded below) : 0000000E
-                            Physical package : 0
-                     ACPI Processor ID valid : 1
-                       Processor is a thread : 1
-                              Node is a leaf : 1
-                    Identical Implementation : 0
-[210h 0528   4]                       Parent : 000001E0
-[214h 0532   4]            ACPI Processor ID : 00000007
-[218h 0536   4]      Private Resource Number : 00000000
-
-Raw Table Data: Length 540 (0x21C)
-
-    0000: 50 50 54 54 1C 02 00 00 03 4D 42 4F 43 48 53 20  // PPTT.....MBOCHS
-    0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
-    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
-    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
-    0040: 24 00 00 00 00 00 00 00 00 00 00 00 01 1C 00 00  // $...............
-    0050: FF 00 00 00 00 00 00 00 00 00 20 00 00 08 00 00  // .......... .....
-    0060: 10 0F 40 00 00 00 02 02 01 1C 00 00 FF 00 00 00  // ..@.............
-    0070: 4C 00 00 00 00 80 00 00 80 00 00 00 04 03 40 00  // L.............@.
-    0080: 00 00 01 00 01 1C 00 00 FF 00 00 00 4C 00 00 00  // ............L...
-    0090: 00 C0 00 00 00 01 00 00 03 07 40 00 00 00 01 01  // ..........@.....
-    00A0: 00 1C 00 00 10 00 00 00 38 00 00 00 00 00 00 00  // ........8.......
-    00B0: 02 00 00 00 84 00 00 00 68 00 00 00 00 14 00 00  // ........h.......
-    00C0: 10 00 00 00 A0 00 00 00 00 00 00 00 00 00 00 00  // ................
-    00D0: 00 14 00 00 0E 00 00 00 BC 00 00 00 00 00 00 00  // ................
-    00E0: 00 00 00 00 00 14 00 00 0E 00 00 00 BC 00 00 00  // ................
-    00F0: 01 00 00 00 00 00 00 00 00 14 00 00 10 00 00 00  // ................
-    0100: A0 00 00 00 01 00 00 00 00 00 00 00 00 14 00 00  // ................
-    0110: 0E 00 00 00 F8 00 00 00 02 00 00 00 00 00 00 00  // ................
-    0120: 00 14 00 00 0E 00 00 00 F8 00 00 00 03 00 00 00  // ................
-    0130: 00 00 00 00 01 1C 00 00 FF 00 00 00 00 00 00 00  // ................
-    0140: 00 00 20 00 00 08 00 00 10 0F 40 00 04 00 02 02  // .. .......@.....
-    0150: 01 1C 00 00 FF 00 00 00 34 01 00 00 00 80 00 00  // ........4.......
-    0160: 80 00 00 00 04 03 40 00 04 00 01 00 01 1C 00 00  // ......@.........
-    0170: FF 00 00 00 34 01 00 00 00 C0 00 00 00 01 00 00  // ....4...........
-    0180: 03 07 40 00 04 00 01 01 00 1C 00 00 10 00 00 00  // ..@.............
-    0190: 38 00 00 00 01 00 00 00 02 00 00 00 6C 01 00 00  // 8...........l...
-    01A0: 50 01 00 00 00 14 00 00 10 00 00 00 88 01 00 00  // P...............
-    01B0: 00 00 00 00 00 00 00 00 00 14 00 00 0E 00 00 00  // ................
-    01C0: A4 01 00 00 04 00 00 00 00 00 00 00 00 14 00 00  // ................
-    01D0: 0E 00 00 00 A4 01 00 00 05 00 00 00 00 00 00 00  // ................
-    01E0: 00 14 00 00 10 00 00 00 88 01 00 00 01 00 00 00  // ................
-    01F0: 00 00 00 00 00 14 00 00 0E 00 00 00 E0 01 00 00  // ................
-    0200: 06 00 00 00 00 00 00 00 00 14 00 00 0E 00 00 00  // ................
-    0210: E0 01 00 00 07 00 00 00 00 00 00 00              // ............
-
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- tests/data/acpi/aarch64/virt/PPTT.topology  | Bin 356 -> 540 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
-index d0e5e11e90f33cbbbc231f9ad0bd48419e0fea65..f5f07b87c3777106e74f380de7941e1c01fc3447 100644
-GIT binary patch
-literal 540
-zcmZvXI}XAy5JV>*2o(g0GDQlGKtUNL4F!luq~Hh?93lk;$DrUC6gdjVpo1A>2S;LM
-z%e!y9_D)?lO%?*tuH09fLtY;1DrW=$l<UL-nCtYzvZcp@40!i-4orY_R*;0D)3(xE
-zvk*rGivR<yGYC;)v;cfFC0cVUI4UmOCl#DQ+D*9&vMKY2t95$J__56O`b@nqZvA7z
-z_KHOoxp}{3-usL_pDR7u{(Q!sPos6zc}G5}4ScFq|DT!EDy+||au;^4J6ZgPjXWlw
-S>h0TY?~`Ec-II5*#Ig@|86g1x
-
-literal 356
-zcmWFt2nk7HWME*P=H&0}5v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
-ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
-cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?*x0RR91
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index ba2a8180e9..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/PPTT.topology",
--- 
-2.34.1
-
+Phil.
 
