@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E2FE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3EB9E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXhPd-00067L-35; Tue, 14 Jan 2025 08:56:57 -0500
+	id 1tXhU2-00081H-1R; Tue, 14 Jan 2025 09:01:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhPU-00066W-NA
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:56:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhTl-00080s-6o
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:01:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhPS-0002F2-Nm
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:56:48 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhTi-0002qn-8G
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:01:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736863005;
+ s=mimecast20190719; t=1736863268;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=04hdS9EdI5M8MjBOo+JHrU5DWVhAC0TRFhb0/CfLM9I=;
- b=L3bF0gtOq4Hlb3ub31jf6Wpo2+bNDQrBK3/TYH1aLH/KJELUArmuh64iR8PuCvdCx4uho5
- jITPed57a5+LOOgHMc2dnKleJ0BjjsbyBQTBnVl5PwJYWB4sWv3qAJskcOb01nMLlTKS7Y
- zv5avyN/hCXKzkue0mn6nCVfqLL1Xvc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nlWleDUIMsS2jwvuNYiGOiFFuyxeQDHZ/qZSc7hmHcQ=;
+ b=U+Mwm2YrTOXhMe6bYPFPL1zH6wGyT/S5wenWZKir5FdG6Dkfn/9t0qitfaDo6iuX3yBkvN
+ 8OYttO3aAi93/rqktURJEuk91YcM5rjKuvtD2c5ZZO0IYvQJmgqG28JEqSVGiK45fOCKiu
+ E+n/wAhUobAo8t2KZCdMIsCLZ5ed8Ds=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-HItyzQq1M9e5ePOQ-Mg-hA-1; Tue, 14 Jan 2025 08:56:43 -0500
-X-MC-Unique: HItyzQq1M9e5ePOQ-Mg-hA-1
-X-Mimecast-MFC-AGG-ID: HItyzQq1M9e5ePOQ-Mg-hA
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso3341338f8f.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 05:56:42 -0800 (PST)
+ us-mta-92-qm1QB8OMOuOUOe5nvD_pGQ-1; Tue, 14 Jan 2025 09:01:06 -0500
+X-MC-Unique: qm1QB8OMOuOUOe5nvD_pGQ-1
+X-Mimecast-MFC-AGG-ID: qm1QB8OMOuOUOe5nvD_pGQ
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-388d1f6f3b2so2500074f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 06:01:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736863002; x=1737467802;
+ d=1e100.net; s=20230601; t=1736863265; x=1737468065;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=04hdS9EdI5M8MjBOo+JHrU5DWVhAC0TRFhb0/CfLM9I=;
- b=NlGtch2ozRW4ZUJN/rHkhJ+AL20Y1AwEJzj+oNF4mcW5lV7l2oKKtOuQLJ7KtUqsAZ
- LYIw60iRVfgYJ/ae9C5lClJLb6AzADNJdgPijb30Q6NEIugakW6j+43NFfmCZJzgyTij
- lSJW5SQBnTHlQIR2p/zvGvTJIDpReQfuoJ7Kv1bLFxm2dJ9Af/JbwU2lBlyw/iYSXwXl
- 25MLaE26ImtSbqxz6hMhptdRmiuWqsrKbSdM5T7bnI0Sy19GUQAd1Ce/BH5yWGmldq3C
- 9F5Ltri4NomR3ON41dkOhGKeuW69JMLZjt2FD4Q48Qp35m/WI8ZNFfUzfZtXkatHndOj
- pE8w==
+ bh=nlWleDUIMsS2jwvuNYiGOiFFuyxeQDHZ/qZSc7hmHcQ=;
+ b=VcTg8wOhuBwVjlKeOexZ8HyK6HkfJlV/L1ua+4BtMGN8lFO5y2swHNmOqxfCnFjYBR
+ 9B73v8uT8hyK+2BEU91YqMAvUZn9wJQpqQQI0fenujraT0SsN4lZHeA1ZX2Pa80h/ioa
+ UmchtW0elIdoXTp3/zNGkUzm3ZzvItWbu8ltkMI5drHRb1fKD8nQeDt984CEn2o+2iM7
+ e04j2/CN/4SWWIm9Bz6/8LYTIxrrMyWgrGKQQ1BNqZzAhEOHwYQ0/kPRWylg0yzkGBzU
+ rwpwtEGDp+jFcf45vXTUwmBu1DK1o41Wny9SSfHL7Sjbhj7OiI27YNjsS2TVSL9TQFAR
+ /6hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+03bmLEr80gToFYCuhb+ET/yVqEyS004fG0J7x74mWROIULZ6/N+DChBD46bCDv2v3b2MEx+jdKgb@nongnu.org
-X-Gm-Message-State: AOJu0YxlnUe2fb1bPzbzDRiJtIFMC/s1k2SFnlZe7DANvcogC9vZg2sm
- L0Lp3TlMJ4GspcRp4p5X7YbAGq/32JlOUCPtWKmi/AvcHkE7mrG364ajfQ2jvBNhcxiUC0Ti4HV
- ffUf6BJmsNys91a1yUqzP3Jde0jUoOeDeW7FMRjQPGYOM6pxzr3zT
-X-Gm-Gg: ASbGncuCDQsXRRiJoBY2PnACuYDuBJQLEenCXkcGy9z4GFqGRBj4iUSyCntbTpZiVP4
- wH6qG+EYRderH8dvJxVvmEjtk0jH8UY0zdjdb+x4jgvy+wNndyixHssM7mwNIPGLl0gSj1vgCMo
- 2yTSlRqfgZMS+zd5bOHj9R4nAxeJlKAgp9w5b2ytxfZAyP7BIXSEmK81s/GkVnXrVZS6TYub7IN
- ZliAlJvCUv8n8FrY7nZXtawL9V5lNYofzh/wc5nt4OQZZ2r+a5pOgoDfUKGInJAV7WzqunbtPzD
- Ue+y05cVKu5ZcX3/HnM1YopRtw31YXbuClzaPTnv+KEqy4XsMPt22waNrGjzfXQ6aAvF0Fy7RJa
- ruJ6lcCxj
-X-Received: by 2002:a05:6000:1f8d:b0:385:eb85:f111 with SMTP id
- ffacd0b85a97d-38a87305259mr22924546f8f.14.1736863001748; 
- Tue, 14 Jan 2025 05:56:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEeUs7O//Q6CzviBH+Gnx11JxFqaNxzMdnDmtyzbfTmXMuYjqiQ/elSkq6VtL8naR/CYpZ6Cw==
-X-Received: by 2002:a05:6000:1f8d:b0:385:eb85:f111 with SMTP id
- ffacd0b85a97d-38a87305259mr22924523f8f.14.1736863001313; 
- Tue, 14 Jan 2025 05:56:41 -0800 (PST)
+ AJvYcCXZ18kndzfFiJ768655Y67/hH5Mq5PczvUmqfOkXU+oUJM7CUiGPvtgGTWVWzAyCLuGxdjOl4Iskjn/@nongnu.org
+X-Gm-Message-State: AOJu0YxKeC9UHk0bl+KbruKxMnJ0zT+V+k7Nwbl+O4UgZ6X08+NAhb3T
+ Jksh6FqIKtHi+Xua5yqUUh6hIMLke2/NqJJC9vzPxr/oYGBv9KVTvMrxvV1+Zz0pcghqJiEFbaN
+ MY4DKifoS68FIlmwAhgZ5TrCMG5fh7hUJ/15aYQ6GbuQdGffmnP5Z
+X-Gm-Gg: ASbGncsFwtGrBiR7TH/d4UDq9dhX2IEg2uOLnwA7k32RoWVYpq+FnotQxuGVYkKHWKl
+ uMWlA4mpEOrNI3lt0t5mD25TMJGdfrmLra3/0AfiHR/iktrwT2hZGWq2rrnoZQJ0+GasGQgqEEU
+ LCDBzBxXdyGcPeJ+VHyBMDjJ37Ab7uGZtvOtZ1p2JT7n7JFqttg/K+dutaaFL6/n0OKMp1rVM6L
+ 5lhGqLO/3xzMFa2Ay7iEbgqCgK223fDgf0Skq7axBLmG0Lsy4dEmh3U15qutQWaqQGbTrqjKZ7a
+ JEkBp5kRHOQCSufuGSNtogfu0uCin5qJW/XhZ20un7u5xHB/4d2r6G00XYHfxNMTwyL50RQMnDo
+ RCAVOcF04
+X-Received: by 2002:a5d:6c63:0:b0:385:f38e:c0c3 with SMTP id
+ ffacd0b85a97d-38a872f6eb4mr19679305f8f.6.1736863263186; 
+ Tue, 14 Jan 2025 06:01:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFxwFQMVUCHSGLQ9DgFsnAU/aUPIjw3iKv0pKkRJvNfQO83MKMVpbo6Eqxcny4Gp0x1sjvOPA==
+X-Received: by 2002:a5d:6c63:0:b0:385:f38e:c0c3 with SMTP id
+ ffacd0b85a97d-38a872f6eb4mr19679214f8f.6.1736863262417; 
+ Tue, 14 Jan 2025 06:01:02 -0800 (PST)
 Received: from ?IPV6:2003:cb:c738:3100:8133:26cf:7877:94aa?
  (p200300cbc7383100813326cf787794aa.dip0.t-ipconnect.de.
  [2003:cb:c738:3100:8133:26cf:7877:94aa])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1f2esm14966876f8f.98.2025.01.14.05.56.39
+ ffacd0b85a97d-38a9fcb7a11sm9419173f8f.75.2025.01.14.06.00.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 05:56:40 -0800 (PST)
-Message-ID: <0c3da624-aa20-4703-87a3-6b3bfabaab22@redhat.com>
-Date: Tue, 14 Jan 2025 14:56:38 +0100
+ Tue, 14 Jan 2025 06:01:01 -0800 (PST)
+Message-ID: <dbdc0f83-5b5b-4104-b850-63c0a4ec795f@redhat.com>
+Date: Tue, 14 Jan 2025 15:00:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] hwpoison_page_list and qemu_ram_remap are based on
- pages
+Subject: Re: [PATCH v4 2/7] system/physmem: poisoned memory discard on reboot
 To: William Roche <william.roche@oracle.com>, kvm@vger.kernel.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
@@ -89,9 +88,9 @@ Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
  wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
 References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
  <20241214134555.440097-1-william.roche@oracle.com>
- <20241214134555.440097-2-william.roche@oracle.com>
- <a00d6d67-c0a1-4d54-9932-bf3b3a7054d8@redhat.com>
- <c45033b9-2ca6-430d-9719-72b123095b64@oracle.com>
+ <20241214134555.440097-3-william.roche@oracle.com>
+ <15d255c8-31fb-4155-83f0-bf294696621b@redhat.com>
+ <9d1ed0f2-f87a-4330-bf5b-375e570a74e1@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -139,19 +138,19 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <c45033b9-2ca6-430d-9719-72b123095b64@oracle.com>
+In-Reply-To: <9d1ed0f2-f87a-4330-bf5b-375e570a74e1@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,226 +166,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.01.25 21:56, William Roche wrote:
-> On 1/8/25 22:34, David Hildenbrand wrote:
->> On 14.12.24 14:45, “William Roche wrote:
->>> From: William Roche <william.roche@oracle.com>
->>
->> Subject should likely start with "system/physmem:".
->>
->> Maybe
->>
->> "system/physmem: handle hugetlb correctly in qemu_ram_remap()"
+> If we can get the current set of fixes integrated, I'll submit another
+> fix proposal to take the fd_offset into account in a second time. (Not
+> enlarging the current set)
 > 
-> I updated the commit title
+> But here is what I'm thinking about. That we can discuss later if you want:
 > 
->>
->>>
->>> The list of hwpoison pages used to remap the memory on reset
->>> is based on the backend real page size. When dealing with
->>> hugepages, we create a single entry for the entire page.
->>
->> Maybe add something like:
->>
->> "To correctly handle hugetlb, we must mmap(MAP_FIXED) a complete hugetlb
->> page; hugetlb pages cannot be partially mapped."
->>
+> @@ -3730,11 +3724,12 @@ int ram_block_discard_range(RAMBlock *rb,
+> uint64_t start, size_t length)
+>                }
 > 
-> Updated into the commit message
+>                ret = fallocate(rb->fd, FALLOC_FL_PUNCH_HOLE |
+> FALLOC_FL_KEEP_SIZE,
+> -                            start, length);
+> +                            start + rb->fd_offset, length);
+>                if (ret) {
+>                    ret = -errno;
+>                    error_report("%s: Failed to fallocate %s:%" PRIx64 "
+> +%zx (%d)",
+> -                             __func__, rb->idstr, start, length, ret);
+> +                             __func__, rb->idstr, start + rb->fd_offset,
+> +                            length, ret);
+>                    goto err;
+>                }
 > 
->>>
->>> Co-developed-by: David Hildenbrand <david@redhat.com>
->>> Signed-off-by: William Roche <william.roche@oracle.com>
->>> ---
->>>    accel/kvm/kvm-all.c       |  6 +++++-
->>>    include/exec/cpu-common.h |  3 ++-
->>>    system/physmem.c          | 32 ++++++++++++++++++++++++++------
->>>    3 files changed, 33 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>> index 801cff16a5..24c0c4ce3f 100644
->>> --- a/accel/kvm/kvm-all.c
->>> +++ b/accel/kvm/kvm-all.c
->>> @@ -1278,7 +1278,7 @@ static void kvm_unpoison_all(void *param)
->>>        QLIST_FOREACH_SAFE(page, &hwpoison_page_list, list, next_page) {
->>>            QLIST_REMOVE(page, list);
->>> -        qemu_ram_remap(page->ram_addr, TARGET_PAGE_SIZE);
->>> +        qemu_ram_remap(page->ram_addr);
->>>            g_free(page);
->>>        }
->>>    }
->>> @@ -1286,6 +1286,10 @@ static void kvm_unpoison_all(void *param)
->>>    void kvm_hwpoison_page_add(ram_addr_t ram_addr)
->>>    {
->>>        HWPoisonPage *page;
->>> +    size_t page_size = qemu_ram_pagesize_from_addr(ram_addr);
->>> +
->>> +    if (page_size > TARGET_PAGE_SIZE)
->>> +        ram_addr = QEMU_ALIGN_DOWN(ram_addr, page_size);
->>
->> Is that part still required? I thought it would be sufficient (at least
->> in the context of this patch) to handle it all in qemu_ram_remap().
->>
->> qemu_ram_remap() will calculate the range to process based on the
->> RAMBlock page size. IOW, the QEMU_ALIGN_DOWN() we do now in
->> qemu_ram_remap().
->>
->> Or am I missing something?
->>
->> (sorry if we discussed that already; if there is a good reason it might
->> make sense to state it in the patch description)
 > 
-> You are right, but at this patch level we still need to round up the
+> Or I can integrate that as an addition patch if you prefer.
 
-s/round up/align_down/
+Very good point! We missed to take fd_offset into account here.
 
-> address and doing it here is small enough.
+Can you send that out as a separate fix?
 
-Let me explain.
-
-qemu_ram_remap() in this patch here doesn't need an aligned addr. It
-will compute the offset into the block and align that down.
-
-The only case where we need the addr besides from that is the
-error_report(), where I am not 100% sure if that is actually what we
-want to print. We want to print something like ram_block_discard_range().
-
-
-Note that ram_addr_t is a weird, separate address space. The alignment
-does not have any guarantees / semantics there.
-
-
-See ram_block_add() where we set
-	new_block->offset = find_ram_offset(new_block->max_length);
-
-independent of any other RAMBlock properties.
-
-The only alignment we do is
-	candidate = ROUND_UP(candidate, BITS_PER_LONG << TARGET_PAGE_BITS);
-
-There is no guarantee that new_block->offset will be aligned to 1 GiB with
-a 1 GiB hugetlb mapping.
-
-
-Note that there is another conceptual issue in this function: offset
-should be of type uint64_t, it's not really ram_addr_t, but an
-offset into the RAMBlock.
-
-> Of course, the code changes on patch 3/7 where we change both x86 and
-> ARM versions of the code to align the memory pointer correctly in both
-> cases.
-
-Thinking about it more, we should never try aligning ram_addr_t, only
-the offset into the memory block or the virtual address.
-
-So please remove this from this ram_addr_t alignment from this patch, and look into
-aligning the virtual address / offset for the other user. Again, aligning
-ram_addr_t is not guaranteed to work correctly.
-
-
-So the patch itself should probably be (- patch description):
-
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 801cff16a5..8a47aa7258 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1278,7 +1278,7 @@ static void kvm_unpoison_all(void *param)
-  
-      QLIST_FOREACH_SAFE(page, &hwpoison_page_list, list, next_page) {
-          QLIST_REMOVE(page, list);
--        qemu_ram_remap(page->ram_addr, TARGET_PAGE_SIZE);
-+        qemu_ram_remap(page->ram_addr);
-          g_free(page);
-      }
-  }
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 638dc806a5..50a829d31f 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -67,7 +67,7 @@ typedef uintptr_t ram_addr_t;
-  
-  /* memory API */
-  
--void qemu_ram_remap(ram_addr_t addr, ram_addr_t length);
-+void qemu_ram_remap(ram_addr_t addr);
-  /* This should not be used by devices.  */
-  ram_addr_t qemu_ram_addr_from_host(void *ptr);
-  ram_addr_t qemu_ram_addr_from_host_nofail(void *ptr);
-diff --git a/system/physmem.c b/system/physmem.c
-index 03d3618039..355588f5d5 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2167,17 +2167,35 @@ void qemu_ram_free(RAMBlock *block)
-  }
-  
-  #ifndef _WIN32
--void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
-+/*
-+ * qemu_ram_remap - remap a single RAM page
-+ *
-+ * @addr: address in ram_addr_t address space.
-+ *
-+ * This function will try remapping a single page of guest RAM identified by
-+ * @addr, essentially discarding memory to recover from previously poisoned
-+ * memory (MCE). The page size depends on the RAMBlock (i.e., hugetlb). @addr
-+ * does not have to point at the start of the page.
-+ *
-+ * This function is only to be used during system resets; it will kill the
-+ * VM if remapping failed.
-+ */
-+void qemu_ram_remap(ram_addr_t addr)
-  {
-      RAMBlock *block;
--    ram_addr_t offset;
-+    uint64_t offset;
-      int flags;
-      void *area, *vaddr;
-      int prot;
-+    size_t page_size;
-  
-      RAMBLOCK_FOREACH(block) {
-          offset = addr - block->offset;
-          if (offset < block->max_length) {
-+            /* Respect the pagesize of our RAMBlock */
-+            page_size = qemu_ram_pagesize(block);
-+            offset = QEMU_ALIGN_DOWN(offset, page_size);
-+
-              vaddr = ramblock_ptr(block, offset);
-              if (block->flags & RAM_PREALLOC) {
-                  ;
-@@ -2191,21 +2209,22 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
-                  prot = PROT_READ;
-                  prot |= block->flags & RAM_READONLY ? 0 : PROT_WRITE;
-                  if (block->fd >= 0) {
--                    area = mmap(vaddr, length, prot, flags, block->fd,
-+                    area = mmap(vaddr, page_size, prot, flags, block->fd,
-                                  offset + block->fd_offset);
-                  } else {
-                      flags |= MAP_ANONYMOUS;
--                    area = mmap(vaddr, length, prot, flags, -1, 0);
-+                    area = mmap(vaddr, page_size, prot, flags, -1, 0);
-                  }
-                  if (area != vaddr) {
--                    error_report("Could not remap addr: "
--                                 RAM_ADDR_FMT "@" RAM_ADDR_FMT "",
--                                 length, addr);
-+                    error_report("Could not remap RAM %s:%" PRIx64 " +%zx",
-+                                 block->idstr, offset, page_size);
-                      exit(1);
-                  }
--                memory_try_enable_merging(vaddr, length);
--                qemu_ram_setup_dump(vaddr, length);
-+                memory_try_enable_merging(vaddr, page_size);
-+                qemu_ram_setup_dump(vaddr, page_size);
-              }
-+
-+            break;
-          }
-      }
-  }
--- 
-2.47.1
+Fixed: 4b870dc4d0c0 ("hostmem-file: add offset option")
 
 -- 
 Cheers,
