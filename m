@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296ACE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 12:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B20E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 12:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXgJn-0006TM-9z; Tue, 14 Jan 2025 07:46:51 -0500
+	id 1tXgOa-0007V6-DN; Tue, 14 Jan 2025 07:51:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tXgJY-0006SX-5D; Tue, 14 Jan 2025 07:46:38 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tXgJU-0006bl-B2; Tue, 14 Jan 2025 07:46:34 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-aaf6b1a5f2bso166659066b.1; 
- Tue, 14 Jan 2025 04:46:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736858787; x=1737463587; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lc6G0g6PijK+XrVeugz51uJN0px5BHFplyrpznO9mLo=;
- b=Je+HT88QI/p+YPkJrANsQxpB0uBlLBd3wGMxwexttYm6Kt+noNTTRRmSHvjg1dDeVC
- vG28M0LBDtX3RdRLJyWocit8TmSI5sONU7+fDCtf8YuSTPwS0ZgEnWyO50dbAGZnXbk4
- VNjvBUC7x6KN7+S3rLmyQ0nBTAXi16hks0gnhi/vGuHtBz3Vg3gZjzcAM9Ry2pukIedt
- s27L0XYpcpwbb+cy+bXlilpeagHana5cJfJIhVE2ogOvBhyK8vreAjz+pEHwmK8fEOS1
- QSDZ/G+BleM2Ig2BnC7kSXdN4Jxz6M3pQvRpDDGwO5cUL0RLi24dZybNOt6Jfz93Eucw
- 7v6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736858787; x=1737463587;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lc6G0g6PijK+XrVeugz51uJN0px5BHFplyrpznO9mLo=;
- b=WTGf4tfJFavx79AYdWCjfqJBe1UmG+ir9pQ671rXVukvReaHgX77Msd6VpA9nd7acE
- 9hCyVrimTF43lqoNICMGACWGhdM2mVNsG09r+gGs0RFAgrs5a6+cNGOfL3Q53/nJn8Ca
- yFfq2crzIjRpTHOCIgnXUmJqa5RzHm5hla/TnGNPmU9ZTHCNTvhy4dRsvkLxDNk5GsbN
- WSTacb83stb1bmF5180SgR/Sc2Cv9Bdl3YWpAsWAUVgw9kfIgnlZzOM/uyBMWfp/rpyU
- 9KyV2kO8hrgcj1zI5nCM65JpHaOIcRLodu+48ubdIHKJnRPKZbv+yKT5VixRP++6ftG+
- wLQQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUaPXmb64YRrgyXT8ES2Hzq+gG7JOtxFCsC4ehqF1C6No4C9HhdQrz3pHfEgNAunjU4i2zLOHMihQ==@nongnu.org,
- AJvYcCWNSd/cm0lJxqZCc0KMIwYvqBI6QVTRo0HBUBUI0nD29XPZY/pcyjuI/w2wOBWksd83DDXsp3Aq6VNBSQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzV+lJU3hw38xxVsaIQ1jMtbvozG/MoyTbOnWxKesWITmr+0O8I
- Q2pw8b9rbcNOcCX/n38ULGUVXy6RK0ZTdmaitIZdFQ7+AaFQiCZSWf4tug==
-X-Gm-Gg: ASbGncsMU5zOiAeQi5vmi6eV3o0JBKnLoc7b7aTGSLxwsAKPe4/33zBhvGIhxoGZZs9
- IN3AKI0Pt6hV7aONGqce4c0pcpRvZKtpRP0tCfOkr9RkWhP2RculiJc8quXiM4TmQCrNfLuY3Kr
- ie4vZvqa48s7FAe7Rq1Z0FcWRERBjIlmvzM4FZuyhdds+Uhpl1QaXQ63kERUkoMXangHp4ZiPkl
- phmmee2GR3eHMVK3qjXMPpeDbFmX2qpzHpfID8VtKEkqvJNo7ZXa5BrHw2B5K/RdyXbpVR+BLYJ
- vzJ/dhovYxP9K0ubnqJeoohRbZ4=
-X-Google-Smtp-Source: AGHT+IH/0KT2j91e+KUkkKWU2w6meYLubN3fH7uF2MQ0toPW+R4GH9GG6fbIbY3rVhM7EzmFHZu28Q==
-X-Received: by 2002:a17:907:72d5:b0:aab:ef03:6d46 with SMTP id
- a640c23a62f3a-ab2c3c63f95mr1900260866b.4.1736858787008; 
- Tue, 14 Jan 2025 04:46:27 -0800 (PST)
-Received: from [127.0.0.1] (business-90-187-110-129.pool2.vodafone-ip.de.
- [90.187.110.129]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90d73a9sm629541766b.58.2025.01.14.04.46.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 04:46:26 -0800 (PST)
-Date: Tue, 14 Jan 2025 12:46:26 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Guenter Roeck <linux@roeck-us.net>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v2 00/13] i.MX and SDHCI improvements
-In-Reply-To: <20250111183711.2338-1-shentey@gmail.com>
-References: <20250111183711.2338-1-shentey@gmail.com>
-Message-ID: <D73FEABB-ACDF-4B05-9494-81B9B8740AEB@gmail.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tXgOX-0007Ux-6p
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 07:51:45 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tXgOU-00076H-O9
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 07:51:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736859103; x=1768395103;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=gkfpF34uGftelqQ/DygtALvPegVAvMiRQAn2L35vbAQ=;
+ b=YCkO13s6h0YRX8mTqOBjzuT3iTq/3/yzSv1WkkKeOehOulQbh1DtR5Sc
+ N97WeASbVHfqlBjtwmWTCggHkQchdB4IUJCa4JepMMu7aEAccujjTs796
+ Iv+r/rN8S1KrKVYNQ6YlYQMX5cM7rreOLxBcQWSBHTaQiJ53mCzOpo2tG
+ TcN6biuBgA+zzQbJGozvepOzLNW6doNZSCj8BJHR8waLE2DXvis6Ma8gV
+ iZSE2xNtf5dQS2vkTszHJfuwHD+v2jK0N641zIvgLRptdr8hXRZRe9yu6
+ ++onDos7MSf8LiaI3Ukipw1LbC+0tDvwq0Ou4NykZluk4bGDMTjpJNGSf Q==;
+X-CSE-ConnectionGUID: zxBKZ1XbQzCBuz9s6SXXww==
+X-CSE-MsgGUID: H5ub1e7NRJCavkOixZO3pQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="24753380"
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; d="scan'208";a="24753380"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2025 04:51:40 -0800
+X-CSE-ConnectionGUID: hyA2s042ThasaEtnxdFrbQ==
+X-CSE-MsgGUID: 5Dl0wuMbQpyiUcwsRt4FGw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; d="scan'208";a="104621201"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2025 04:51:37 -0800
+Message-ID: <916034d2-7e02-49ad-9ae1-6201870a15eb@intel.com>
+Date: Tue, 14 Jan 2025 20:51:32 +0800
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 35/60] i386/cpu: Introduce enable_cpuid_0x1f to force
+ exposing CPUID 0x1f
+To: Ira Weiny <ira.weiny@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-36-xiaoyao.li@intel.com>
+ <Z1tgvQdLeafHKXIe@iweiny-mobl>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z1tgvQdLeafHKXIe@iweiny-mobl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,161 +98,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/13/2024 6:16 AM, Ira Weiny wrote:
+> On Tue, Nov 05, 2024 at 01:23:43AM -0500, Xiaoyao Li wrote:
+>> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
+>> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
+>> module level, are configured for the guest, e.g., -smp xx,dies=2.
+>>
+>> However, TDX architecture forces to require CPUID 0x1f to configure CPU
+>> topology.
+>>
+>> Introduce a bool flag, enable_cpuid_0x1f, in CPU for the case that
+>> requires CPUID leaf 0x1f to be exposed to guest.
+>>
+>> Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
+>> cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
+>> to enable cpuid leaf 0x1f for the guest.
+> 
+> Could you elaborate on the relation between cpuid_0x1f and the extended
+> topology support?  I feel like x86_has_cpuid_0x1f() is a poor name for this
+> check.
 
+CPUID leaf 0xb is "Exteneded Topology Enumeration leaf", which can only 
+enumerate topology level of thread and core.
 
-Am 11=2E Januar 2025 18:36:58 UTC schrieb Bernhard Beschow <shentey@gmail=
-=2Ecom>:
->This series fixes some details in i=2EMX platform devices, improves SDHCI=
+CPUID leaf 0x1f is "v2 Extended Topology Enumeration leaf" which can 
+enumerate more level than leaf 0xb, e.g., module, tile, die.
 
->
->compatibility with U-Boot and modernizes some code=2E
->
->
->
->The first 5 patches are bugfixes 1/ resolving infinite loop in U-Boot esd=
-hc
->
->driver, 2/ fixing a character echoing issue in imx-serial, 3/ fixing IRQ =
-sharing
->
->issue in Designware PCIe emulation, and 4/ fixing GPIO level preservation=
- across
->
->resets in imx-gpio=2E
->
->
->
->Patches 6 and 7 modernize SD card emulation by turning presence and
->
->write-protect GPIOs into qdev GPIOs and then further allowing the GPIOs t=
-o be
->
->inverted, just like device tree allows=2E
->
->
->
->The rest of the series is cosmetics including turning DPRINTF() into trac=
-e
->
->events which eases debugging=2E
->
->
->
->v2:
->
->* Drop redundant implementation of TYPE_OR_IRQ (David, Zoltan)
->
->* Use absolute QOM paths when tracing in imx_gpio and imx_i2c (Phil)
->
->* Trace hexadecimal values in imx_serial (Phil)
->
->* Do NOT move inversion of presence and write-protect GPIOs since that ch=
-anges
->
->the internal logic of the device
->
->
->
->Bernhard Beschow (13):
->
->  hw/sd/sdhci: Set SDHC_NIS_DMA bit when appropriate
->
+QEMU enumerates CPUID leaf to 0x1f to guest only when necessary. i.e., 
+when the topology of the guest is configured to have levels beyond 
+thread and core. However, TDX mandates to use CPUID leaf 0x1f for 
+topology configuration.
 
->  hw/char/imx_serial: Fix reset value of UFCR register
->
->  hw/char/imx_serial: Update all state before restarting ageing timer
->
->  hw/pci-host/designware: Expose MSI IRQ
->
->  hw/gpio/imx_gpio: Don't clear input GPIO values upon reset
->
+So this patch defines "enable_cpuid_0x1f" to expose CPUID leaf 0x1f even 
+when only thread and core level topology are configured.
 
-Does anybody feel comfortable enough reviewing the above four patches? I h=
-it those issues while working on i=2EMX machines=2E
+(BTW, x86_has_extended_topo() actually mean x86_has_v2_extended_topo())
 
-The below two patches are less critical for my work but there were patches=
- with discussions floating around recently, e=2Eg=2E [1]=2E
+> Perhaps I'm just not understanding what is required here?
+> 
+> Ira
+> 
+>>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   target/i386/cpu.c     | 4 ++--
+>>   target/i386/cpu.h     | 9 +++++++++
+>>   target/i386/kvm/kvm.c | 2 +-
+>>   3 files changed, 12 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index 1ffbafef03e7..119b38bcb0c1 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -6731,7 +6731,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>>           break;
+>>       case 0x1F:
+>>           /* V2 Extended Topology Enumeration Leaf */
+>> -        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
+>> +        if (!x86_has_cpuid_0x1f(cpu)) {
+>>               *eax = *ebx = *ecx = *edx = 0;
+>>               break;
+>>           }
+>> @@ -7588,7 +7588,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>>            * cpu->vendor_cpuid_only has been unset for compatibility with older
+>>            * machine types.
+>>            */
+>> -        if (x86_has_extended_topo(env->avail_cpu_topo) &&
+>> +        if (x86_has_cpuid_0x1f(cpu) &&
+>>               (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
+>>               x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
+>>           }
+>> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+>> index 59959b8b7a4d..dcc673262c06 100644
+>> --- a/target/i386/cpu.h
+>> +++ b/target/i386/cpu.h
+>> @@ -2171,6 +2171,9 @@ struct ArchCPU {
+>>       /* Compatibility bits for old machine types: */
+>>       bool enable_cpuid_0xb;
+>>   
+>> +    /* Force to enable cpuid 0x1f */
+>> +    bool enable_cpuid_0x1f;
+>> +
+>>       /* Enable auto level-increase for all CPUID leaves */
+>>       bool full_cpuid_auto_level;
+>>   
+>> @@ -2431,6 +2434,12 @@ void host_cpuid(uint32_t function, uint32_t count,
+>>                   uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx);
+>>   bool cpu_has_x2apic_feature(CPUX86State *env);
+>>   
+>> +static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
+>> +{
+>> +    return cpu->enable_cpuid_0x1f ||
+>> +           x86_has_extended_topo(cpu->env.avail_cpu_topo);
+>> +}
+>> +
+>>   /* helper.c */
+>>   void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
+>>   void cpu_sync_avx_hflag(CPUX86State *env);
+>> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+>> index dea0f83370d5..022809bad36e 100644
+>> --- a/target/i386/kvm/kvm.c
+>> +++ b/target/i386/kvm/kvm.c
+>> @@ -1874,7 +1874,7 @@ uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
+>>               break;
+>>           }
+>>           case 0x1f:
+>> -            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
+>> +            if (!x86_has_cpuid_0x1f(env_archcpu(env))) {
+>>                   cpuid_i--;
+>>                   break;
+>>               }
+>> -- 
+>> 2.34.1
+>>
 
-Thanks,
-Bernhard
-
-[1] <https://patchew=2Eorg/QEMU/20250108100240=2E960593-1-clg@redhat=2Ecom=
-/>
-
->  hw/sd/sd: Remove legacy sd_set_cb() in favor of GPIOs
->
->  hw/sd/sd: Allow for inverting polarities of presence and write-protect
-=
->
->    GPIOs
->
-
->  hw/char/imx_serial: Turn some DPRINTF() statements into trace events
->
->  hw/timer/imx_gpt: Remove unused define
->
->  tests/qtest/libqos: Reuse TYPE_IMX_I2C define
->
->  hw/i2c/imx_i2c: Convert DPRINTF() to trace events
->
->  hw/misc/imx6_src: Convert DPRINTF() to trace events
->
->  hw/gpio/imx_gpio: Turn DPRINTF() into trace events
->
->
->
-> include/hw/arm/fsl-imx6=2Eh                  |  4 +-
->
-> include/hw/arm/fsl-imx7=2Eh                  |  4 +-
->
-> include/hw/char/imx_serial=2Eh               |  2 +-
->
-> include/hw/pci-host/designware=2Eh           |  1 +
->
-> include/hw/sd/sdcard_legacy=2Eh              |  1 -
->
-> hw/arm/fsl-imx6=2Ec                          | 13 ++++-
->
-> hw/arm/fsl-imx7=2Ec                          | 13 ++++-
->
-> hw/char/imx_serial=2Ec                       | 65 ++++++++++++++--------=
-
->
-> hw/gpio/imx_gpio=2Ec                         | 19 +++----
->
-> hw/i2c/imx_i2c=2Ec                           | 21 ++-----
->
-> hw/misc/imx6_src=2Ec                         | 23 ++------
->
-> hw/pci-host/designware=2Ec                   |  7 +--
->
-> hw/sd/sd=2Ec                                 | 39 ++++++-------
->
-> hw/sd/sdhci=2Ec                              | 11 +++-
->
-> hw/timer/imx_gpt=2Ec                         |  4 --
->
-> tests/qtest/libqos/arm-imx25-pdk-machine=2Ec |  5 +-
->
-> tests/qtest/libqos/i2c-imx=2Ec               |  4 +-
->
-> hw/arm/Kconfig                             |  2 +
->
-> hw/char/trace-events                       |  5 ++
->
-> hw/gpio/trace-events                       |  5 ++
->
-> hw/i2c/trace-events                        |  5 ++
->
-> hw/misc/trace-events                       |  6 ++
->
-> 22 files changed, 151 insertions(+), 108 deletions(-)
->
->
->
->-- >
->2=2E48=2E0
->
->
->
 
