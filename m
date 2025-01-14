@@ -4,73 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A93CE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 10:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3285AC02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 10:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXeU5-00012V-DO; Tue, 14 Jan 2025 05:49:21 -0500
+	id 1tXeVk-0003hG-Gc; Tue, 14 Jan 2025 05:51:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tXeU2-00012E-V2
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:49:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1tXeU1-0006SB-C8
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:49:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736851756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=y5w9GkYTHemQJOOb0IkxCXO7ZntL9JjY+oeoeOdlIcU=;
- b=dAWg8I8koLWJfjekryM28Rwfw5/C15dLIqiybteIddQ7L9brOPHpLqtKk99duSmcvBt3bg
- lv3XFnqBwK1jFNczZ672wPQRRgfqHLrS+s63NjtTu7zRJLxfrs7WcrxfkJ5vA5QjYOGy3c
- SU2IEgkMVcAtA1SgjjaQVBNWQ9hNwUc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-JrOMgRaFPhOos7rJzQu7DA-1; Tue,
- 14 Jan 2025 05:48:00 -0500
-X-MC-Unique: JrOMgRaFPhOos7rJzQu7DA-1
-X-Mimecast-MFC-AGG-ID: JrOMgRaFPhOos7rJzQu7DA
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7689619560BD; Tue, 14 Jan 2025 10:47:59 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.9])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C8AE019560AD; Tue, 14 Jan 2025 10:47:56 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] ui/dbus: on win32, allow ANONYMOUS with p2p
-Date: Tue, 14 Jan 2025 14:47:53 +0400
-Message-ID: <20250114104753.2612342-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tXeVh-0003T7-Qt
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:51:01 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tXeVf-0006tz-Vz
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:51:01 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e3983f8ff40so7705205276.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 02:50:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736851858; x=1737456658; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=itglZr80LmqISpxSz190t/fkOURj1W6fq9VmZoJSMxI=;
+ b=nwXCqhfPaATksN6kHNBBSHW0QVIWw8a93jlupOYhvbUWtihzpfDbRYfmqrLsXeiyt1
+ IvzoHo/+S2z2fMLenvwgrgzIjkKO3AFy3EioZ1BQWvTcYwJvOi5Bgw5XBF87BmeagNJc
+ IWPzg7RnjqnMiQ6MqmdTMHnHjWw6hvYIiyJUeLv9KVCrE+XfDRUrHKCuKBkbSSC1EN+H
+ p6SlYJvDJNoJ8SUuCypP6fbLN+yOrHV4PzroIFK49LW7ejXDpVbmOIUHOE9Pj+lz/45i
+ Yb9MBIr/bJsoOYvpg8nFSAUbCD9CgR5w8/sgJDu9ba0emPTS28LfzOmEDv196FFetQoR
+ ujzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736851858; x=1737456658;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=itglZr80LmqISpxSz190t/fkOURj1W6fq9VmZoJSMxI=;
+ b=GunxjvdIiJhpSF42UoaYvikPZuTh2gMXGpU/HTY5VBpwFB46cTIs+qUe7phgpmuHG3
+ Tq0i1PfyingMhkhpIO3Ck6E+0UduviyqscwZkvO4Vt0WfWjRhju4RUrjpj3DPSAT/2lA
+ m77Ygg7ADMe0znskVU+pb/vC59OAUR1w2J8po+O/gNGegio6zFzaj0OLWqatbJ9TH+8P
+ 99ezY5AJjSoKK9W29WRq27oUUEr74NGEdDqTyciJvMHGWdejCu/BCngLJYIPOOCN/j2o
+ 2APphQ/V5o8CjNaRY8rQTwGgXj/T73czd14I9stuByrB77k+CTFDUnFFiz1eQTosEZ8r
+ nAQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxmaAM9nXcArc2VoQhThvSHI26R+T8uooygnloB3rpqhv2i8yBmP0Pjs4SQJNd22BfCpItGywNs4Qm@nongnu.org
+X-Gm-Message-State: AOJu0YyQsf12+u5FkcwuipcWWi4NlC8roJlsgb2PjPggd4M+0u9uhZLk
+ fNGQ1S4G/3Ixdpg9GttwA/e7VryJCGo0qhbNqExrUtiTl/8bgb8+SvyeivMztFFlu2Yw0HIJbCr
+ 2lJlshIK79JHDh0c62CU9wv9QzwTr9GAkkfOqjg==
+X-Gm-Gg: ASbGncvOoqBRua8Ch8REaz/InAhTVWATnoclnM3lUoHLA/28eZz3CdgNhQwy/4vTLLb
+ BUpEkwJSaFeuqQ0MQ7TySW8ryOKERn46nFd0eHeM=
+X-Google-Smtp-Source: AGHT+IG6NpI0ayQ/3BB/pElmhTynHnmy1h/d32gnipm4gRWPmMd/WYj8Ol6hK+pa6/CEYr6GXZg8D0x0NV1a7priPHk=
+X-Received: by 2002:a05:690c:688e:b0:6ef:91a0:dd30 with SMTP id
+ 00721157ae682-6f53123e372mr197569207b3.12.1736851857135; Tue, 14 Jan 2025
+ 02:50:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.787,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241106104041.624806-2-frolov@swemel.ru>
+ <CAFEAcA-b+XcYEm1MASzedYchmy0TOpv2djqssJtQdu2CTw_jTw@mail.gmail.com>
+ <7dd7787e-4eb3-47f9-bca6-2bfab69caf4a@swemel.ru>
+ <CAFEAcA9gBph_CXnBBmrf=WfAuiLAhz=JF1ux0SZK2RGJwnK+Ug@mail.gmail.com>
+ <4895cc5c-32cd-4b1c-93d1-1980cece90bb@redhat.com>
+In-Reply-To: <4895cc5c-32cd-4b1c-93d1-1980cece90bb@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 14 Jan 2025 10:50:45 +0000
+X-Gm-Features: AbW1kvY6mewvOAjo8wkUQpoqAaNCay1clNGTOToblG_sSts3SIMio7SIqu2q5ag
+Message-ID: <CAFEAcA953g82_0+7ZejKL0_j-X7ohqc1Wvr01tFt9M+iNNJX-g@mail.gmail.com>
+Subject: Re: [PATCH] hw/timer: fix int underflow
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>, 
+ sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,100 +97,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Tue, 14 Jan 2025 at 10:40, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> On 1/14/25 11:14, Peter Maydell wrote:
+> >> So, to my opinion, explicit cast to "long long" is necessary
+> >> here to get the expected behavior.
+> >
+> > I wasn't saying the existing code was necessarily correct,
+> > or that your proposed change was necessarily wrong.
+> > I was saying your patch didn't come with any analysis of
+> > what the actual hardware behaviour is, which is
+> > how you would determine whether the fix you propose
+> > is the correct one, or if it should be some other
+> > change instead. (Some of my response was trying to
+> > provide some of that analysis.)
+> I would say that the patch is more or less obvious in the sense that the
+> intent of the code is to model a counter (which counts up by 1 and
+> cannot miss a step) with a timer within a process that could be
+> preempted.  You probably will not find an answer in the datasheet, other
+> than by analyzing the signal diagrams, because this scenario simply
+> cannot exist with a hardware counter.
 
-GLib doesn't implement EXTERNAL on win32 at the moment, and disables
-ANONYMOUS by default. zbus dropped support for COOKIE_SHA1 in 5.0,
-making it no longer possible to connect to qemu -display dbus.
+Well, for a start, you want to look at the datasheet
+to check that this really is modelling a counter and
+how wide the counter is (32 bits in this case).
 
-Since p2p connections are gated by existing QMP (or a D-Bus connection),
-qemu -display dbus p2p can accept authentication with ANONYMOUS.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/dbusaudio.c        |  8 +++++++-
- ui/dbus-console.c        |  8 +++++++-
- ui/dbus.c                | 10 ++++++++--
- tests/lcitool/libvirt-ci |  2 +-
- 4 files changed, 23 insertions(+), 5 deletions(-)
-
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 095e739382..af77e7cc33 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -524,11 +524,17 @@ dbus_audio_register_listener(AudioState *s,
-             );
-     }
- 
-+    GDBusConnectionFlags flags =
-+        G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER;
-+#ifdef WIN32
-+    flags |= G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS;
-+#endif
-+
-     listener_conn =
-         g_dbus_connection_new_sync(
-             G_IO_STREAM(socket_conn),
-             guid,
--            G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER,
-+            flags,
-             NULL, NULL, &err);
-     if (err) {
-         error_report("Failed to setup peer connection: %s", err->message);
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 5eb1d40d16..85e215ef23 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -305,10 +305,16 @@ dbus_console_register_listener(DBusDisplayConsole *ddc,
- #endif
-     );
- 
-+    GDBusConnectionFlags flags =
-+        G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER;
-+#ifdef WIN32
-+    flags |= G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS;
-+#endif
-+
-     listener_conn = g_dbus_connection_new_sync(
-         G_IO_STREAM(socket_conn),
-         guid,
--        G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER,
-+        flags,
-         NULL, NULL, &err);
-     if (err) {
-         error_report("Failed to setup peer connection: %s", err->message);
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 7b258c6823..2eb03aa247 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -317,11 +317,17 @@ dbus_display_add_client(int csock, Error **errp)
-     conn = g_socket_connection_factory_create_connection(socket);
- 
-     dbus_display->add_client_cancellable = g_cancellable_new();
-+    GDBusConnectionFlags flags =
-+        G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER |
-+        G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING;
-+
-+#ifdef WIN32
-+    flags |= G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS;
-+#endif
- 
-     g_dbus_connection_new(G_IO_STREAM(conn),
-                           guid,
--                          G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER |
--                          G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING,
-+                          flags,
-                           NULL,
-                           dbus_display->add_client_cancellable,
-                           dbus_display_add_client_ready,
-diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-index b6a65806bc..9ad3f70bde 160000
---- a/tests/lcitool/libvirt-ci
-+++ b/tests/lcitool/libvirt-ci
-@@ -1 +1 @@
--Subproject commit b6a65806bc9b2b56985f5e97c936b77c7e7a99fc
-+Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
--- 
-2.47.0
-
+thanks
+-- PMM
 
