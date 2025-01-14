@@ -4,93 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B5EC02185
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EC7C02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXh3x-0005JQ-1N; Tue, 14 Jan 2025 08:34:35 -0500
+	id 1tXhEK-00026G-In; Tue, 14 Jan 2025 08:45:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tXh3p-0005IH-BW
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:34:25 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tXh3n-0006lf-Oq
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:34:25 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21669fd5c7cso98695595ad.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 05:34:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736861662; x=1737466462; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UE4tcrE+0Se41KZVAZ2E3a444+h7pNN3pCdBdrgbCSM=;
- b=jIZkVWKbDQH55a+qV791MLR+8J1QBoCKQTtW9WeBv3c8BV5sdeUjuMqfWEsstM1Gru
- Rb2c+oa03rk+/O/dA0hEB2oFpaLwfePHcSydWwi3h3/Xdt0Wq4aGsb/sA3LIWUfDWurw
- ZXXzoJnz2XOjaLFsERzgQNR5msXaLWCaJQGwrZXPbvhS2IKKsy+f6RAB54thoyYtDloA
- M2tzRymyuL6AdxYcShPMv89lat0XfUg56fQDV5Hs9uGIhOLdhUv6ZGECUDhYHmwbm9dh
- lptv8MJoItfj02cdx6kueu7wgsFcCx1lN5wGvUdg3oCWd7LgXTVo9oBs5pR5I0xooc05
- QUng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736861662; x=1737466462;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UE4tcrE+0Se41KZVAZ2E3a444+h7pNN3pCdBdrgbCSM=;
- b=GSTT7axZOM0otfgln9Qh4VGC3EijzwlJfW8DYscjVGAAVqp5JkVzWW+56VyZbUsa4G
- zepzXs40o0nCxybFO0hH1jC55y6GAtcQqw9DC8WwZuoyG3d+pi2hNxjkRK7LrwOJs8jW
- UYjUhnIeSjo5pWDQ0ERT0aLjNLwtikEQbPjSNFz58UYyXj49T39s+clgp9S/ZKvp5qD/
- WX28vozehuLmzTu97f7/SEAlAGxON9tb8NJd//ibzAzT7FWno22QDzKOMvP0ZzoFZzQD
- kick52WYzxYLk1NT0fSaCdZ29wrduFtvYw2fMAVOVt0Ube/MInxHPNywQbk4ISo9n+Vo
- iz+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJdcEx5Ld1dtdB/XZlP/4AX+7ClcAt5rf3yws1SbA5QIgB3+a0t/JbHFI44IUiXqp74ohtKGnVZ1e2@nongnu.org
-X-Gm-Message-State: AOJu0YzsDIStb47yS4aRvTmHx+MTJZTZcG0FPQfmCrsQuaqafbG2G/if
- 1bCkdWa2XAHvAlL5cElfqL6u26hQa9+xA8j8ywxg2LTW74ABEgkhfH7c7S69IsQ=
-X-Gm-Gg: ASbGncuwXSdeQOL3w3BGskE9pSSMgO4CIvzdu7B36qanxhvWUJ5ZCarjt2SpbY95Qrq
- cLLPqMhpGbUZcfcsk4S66Zhq61kelHsq0pUcGQn8h0QUp4otMgZKn904wC1ro9zjKvDBkGdQWNS
- Fm7XluJ1jQn51srr1TWTcJW98QTsHIUtzku6mv8r7ZbupFFChIAZwi+BZR/1StcbkjnU8qhzuXn
- 8GP3TPKpyiKcs92ubsvxWzsWn7kVxasyBz75x2dkClOs0IxFDtLHW5W3ldJCh16jP7Ck4/d
-X-Google-Smtp-Source: AGHT+IG2Zw0Cpf5CZ6zPxrA8NNS4lG3QeqiI8Qhq8Y9d4PGArEoC8+wI24yAz8JX8/MohwdToqHD+A==
-X-Received: by 2002:a17:903:1110:b0:215:7b7b:5cc9 with SMTP id
- d9443c01a7336-21a83f54bf6mr407876245ad.22.1736861662316; 
- Tue, 14 Jan 2025 05:34:22 -0800 (PST)
-Received: from [192.168.68.110] ([189.110.107.205])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f21e279sm67742375ad.134.2025.01.14.05.34.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 05:34:21 -0800 (PST)
-Message-ID: <be611034-8b5a-47f2-9b36-4554c1563002@ventanamicro.com>
-Date: Tue, 14 Jan 2025 10:34:19 -0300
+ (Exim 4.90_1) (envelope-from <hsu@peterdavehello.org>)
+ id 1tXhEJ-00025p-62
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:45:15 -0500
+Received: from mail-4317.proton.ch ([185.70.43.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hsu@peterdavehello.org>)
+ id 1tXhEF-0000Ae-Ov
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:45:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=peterdavehello.org;
+ s=protonmail3; t=1736862307; x=1737121507;
+ bh=amc/slHbGDnfzHw/Et20S57RdQEPM7ovgUGPMfFrcj0=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+ b=GjZAUWPISquJHASIsLKBLg2//7CLnI8ahCf7qfVDl9wNoQOnR4ykcorirXmasC3pq
+ sd2YrK8F2JNCViWYRtJjnknemHQYWXODiuUINWEwMuA7XIr8uJeSDyqqpFAS/QQX9v
+ MWStAiyO3szkDO9xA+QlouUNQ7aU6FHHPMByIrCwSRSThFYt9d+Ay7Y1ZwG855N9Ss
+ 1gfu6FJd7sQSloXOG00N1PPEyG4dokYCjWu3oOmKiL/pgwBz+exLwOh/7/BClOuN7n
+ WDL9kcN2sTdvOZj9HO8U4oOxnO4Sy2wvFO7xWCs7kSuUhpOr1jaWURbtLmbOm3FZ8Q
+ pd3WlCMpjGm1w==
+Date: Tue, 14 Jan 2025 13:45:03 +0000
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
+Message-ID: <w0C7I-STdtazH_QTikLVqdGlKEDYBJd-xCkX1BXBPY-rRhhU6E0ARjv0_t9QiJpptsNzSJeGpotLRYaBMa2VGyucNEE9zOaCQ8YKWhGPlYk=@peterdavehello.org>
+In-Reply-To: <Znmnr3XCiPM89Xag@redhat.com>
+References: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
+ <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
+ <Zh6qLCvyiSk6YkVy@intel.com> <Zh6oIH8Ihyn-9RwT@redhat.com>
+ <pTgk5-fHZzZe_qQn7RdevQ7Dg9Yz_-I4jWPpYknkgbiStJvLCRlTj9EpfRY_K9GCqdSABB_s_xzuGBCxxRqDfzDIoO6AVcvP-onYk8yRiWI=@peterdavehello.org>
+ <ZiCDzzFDRmQGPtDD@intel.com>
+ <Fu0jQm-Z4E7D_J11oxIlfRJ9ZYK_QDKMYOs-9NNVX_jH9_aS5_9cyysois3SaVVtuTqR-H77MiwWLaa5RkPTEnCEdy0NvUmOuwqyirCbdhY=@peterdavehello.org>
+ <5qJ0Q0ZnUCu-VdtMQOwzj54wLBfeXb9ozncO8PjFiOlXbu4RHQeVCZyn7ZMWq89yqqE7GZX3Bsuk9YqWugHmx-Wu4Oh1GZ5wboTuZ-QUk8k=@peterdavehello.org>
+ <CAFEAcA8q5O1i-EDviKf-yN5DAsxsSofA3xa9ChMbn_tC91iNuw@mail.gmail.com>
+ <Znmnr3XCiPM89Xag@redhat.com>
+Feedback-ID: 93059541:user:proton
+X-Pm-Message-ID: 9ff2e542aeb214a115b71cfe3ca1479e7a646477
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/riscv/riscv-iommu-bits: Remove redundant
- definitions
-To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250114093647.4952-1-jason.chien@sifive.com>
- <20250114093647.4952-2-jason.chien@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250114093647.4952-2-jason.chien@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x635.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.43.17; envelope-from=hsu@peterdavehello.org;
+ helo=mail-4317.proton.ch
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,61 +75,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Peter Dave Hello <hsu@peterdavehello.org>
+From:  Peter Dave Hello via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tuesday, June 25th, 2024 at AM 1:06, Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+> > We can't give legal advice, but the QEMU project doesn't do
+> > copyright assignment. Copyright remains with the original author
+> > (or with their employer).
+>=20
+>=20
+> While we can't give legal advice, going back to the original question
+> I have an observation that may resolve this.
+>=20
+> IIUC, the orignal question was what to put at the top of the .po file
+> where it has:
+>=20
+> # Copyright (C) 2024 THE QEMU'S COPYRIGHT HOLDER
+>=20
+> I don't believe the QEMU community has any stated requirement that every
+> file have a "Copyright" line present. Entirely omitting this line is a
+> valid choice from QEMU's POV.
+>=20
+> What matters to QEMU primarily is that the file has a declared license
+> statement.
+>=20
+> Any Copyright lines present are woefully inaccurate in most places, since
+> they're rarely updated despite 100's of contributors working on a file.
+> The respective contributors still retain copyright over their own work
+> regardless of what a 'copyright' line says or doesn't say.
+>=20
+> IOW, the contributor (or their employer) may decide for themselves
+> a policy of whether to include or omit such a "Copyright" line, on
+> contributions submitted.
 
+Thanks for the solution! So, to confirm, I will send PATCH v2 with the
+other metadata fixes but without the "Copyright" line. Is that correct?
 
-On 1/14/25 6:36 AM, Jason Chien wrote:
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> ---
+Best wishes,
+Peter
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/riscv/riscv-iommu-bits.h | 22 ++++++----------------
->   1 file changed, 6 insertions(+), 16 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> index 485f36b9c9..de599b80d6 100644
-> --- a/hw/riscv/riscv-iommu-bits.h
-> +++ b/hw/riscv/riscv-iommu-bits.h
-> @@ -50,8 +50,14 @@ struct riscv_iommu_pq_record {
->   #define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
->   #define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
->   #define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
-> +
->   /* Payload fields */
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
->   #define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
-> +#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
-> +#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
->   
->   /* Common field positions */
->   #define RISCV_IOMMU_PPN_FIELD           GENMASK_ULL(53, 10)
-> @@ -382,22 +388,6 @@ enum riscv_iommu_fq_ttypes {
->       RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 9,
->   };
->   
-> -/* Header fields */
-> -#define RISCV_IOMMU_PREQ_HDR_PID        GENMASK_ULL(31, 12)
-> -#define RISCV_IOMMU_PREQ_HDR_PV         BIT_ULL(32)
-> -#define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
-> -#define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
-> -#define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
-> -
-> -/* Payload fields */
-> -#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
-> -#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
-> -#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
-> -#define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
-> -#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
-> -#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
-> -
-> -
->   /*
->    * struct riscv_iommu_msi_pte - MSI Page Table Entry
->    */
 
 
