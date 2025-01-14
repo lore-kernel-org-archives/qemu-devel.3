@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A028E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 18:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34B3E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 18:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXlYk-00024B-0i; Tue, 14 Jan 2025 13:22:38 -0500
+	id 1tXlZg-0002dk-GC; Tue, 14 Jan 2025 13:23:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXlYh-00023a-HY
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:22:35 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tXlZc-0002ZN-Jf
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:23:33 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXlYf-0004EF-GM
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:22:35 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5d88c355e0dso10253372a12.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 10:22:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tXlZb-0004NN-1M
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:23:32 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2161eb95317so104210745ad.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 10:23:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736878951; x=1737483751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CR1XGoy+jnTDPy+e7vBvP4TFgYYpfs9zsMnWBCntSHI=;
- b=l9jj5UcIv1mmw3fqzvMIwlR2JLrrNmjHUxiDku9Kh6ha1gAUO+xofkBAIRJNdHPZb6
- HEIMLj5+mnykAlH+3JueZDkEUJpMhS6qGjZygrrmeTdcoPEBRFUqRR0VOnFrTUVU8k0c
- B37J3E31Bh9h6i85iMNGYKxT3QaaFDrO8mGHXvLrvitknbm1qQhOW0zBrdnRuZs2I0jq
- rtnWJeydGTErU2Xh/JIOdgCly7XOKPdKP8U1cyjWVQTq9guiqh0IUPOwD8ZQQXQQe7rG
- Z15U5uppNuDKQqvlJiTWz/M4QW3Ml4KKlwLCMnAUejiAdWiD5rkW6qgVCDxPVlZteDNY
- ZeAg==
+ d=linaro.org; s=google; t=1736879009; x=1737483809; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YfibVc8Vdktjuc3UhTFI6rFsbdmzWqCTl06AX/tpZco=;
+ b=WRNRa1dz6ByLn5xevKJZVryPRqcXHh10Ou0E0YVplHoMcBMXncM1GTlKrdQtxkUWjI
+ QLPDlGHOZF2LQ4MYwxTq5S0B4QZ3uZBXlfbCOToHpeULWh8HKc9EHs2KTznchlQejQgr
+ WsINIgiBqgNQKvi/GU+EQ99hqKAZ3r/p9bj+OD//naDB32s9pjb9857So501ZSErFlot
+ I1LejvGd/vHGON+oIf2/Kyjb5Hr7Gpmifm22QNPXG637ZzWEgqkRG5DQAyBh1QSrIQuc
+ VxX6DUhB2WM7xSsQNVhi1Y/xA/ruXJ0awfHi+aqV4ZDHsILfhWdBdh+vFxoLBMOtVz2A
+ oGzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736878951; x=1737483751;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CR1XGoy+jnTDPy+e7vBvP4TFgYYpfs9zsMnWBCntSHI=;
- b=echL0Xe0BcNvnN1PPVWBAhozI3xxZ9r5GUvFzxGIruUy4ABk1aXbD9jD6dBkbvU944
- 1shpMSiODrqYwNQhvV+FbBa+7Bi2LHAxHiqNIg7qBA0N3pyK2Bgu3cbpY7SRr5T4wVn/
- lrBQzIrHpOeQVX2h7fvL3/mY7CDuHw7yyD/XLcjfm15Dm2W6CQn2cwMwZ2QSO12lBiAQ
- GE9h6Umw37tvkYyhVmSiQEsGkZuDRKdXMA84HdQaoBejxSyXN/0iHlnMwVOROsayj2Xj
- MdmE6juBmXxwBLi7SRvw3sLBMrBrtei5UPsY5xF96mGtMOGfw3tIQ15QVZI7Zw+7mcEr
- 3APQ==
-X-Gm-Message-State: AOJu0YwtRU54WE+XO4UVfBPIosHqeKE0pvYrJpXbqZK8QNRgMPBu8Z16
- PwFtUAk+jL07kfWvVy99tTwBXxolm0rYW2rFBoMb1YEwhVfFrLcgpRQvTdPtDno=
-X-Gm-Gg: ASbGnctqWht4c0o69UxWpNMCeoGmYdRxvT93BH+uBIiIPoUiOx7zlR571t79Fp8ReBr
- tkUoDGjEnGu3CkOeoDmFPbic2wEvSKJqcyRNh4DASwXMcLo4tx3kztDe4zk4xfLnijgoAeD6g+l
- f84Vs12dcYcemQYinEz3COuc5siPmlRR0X5qVIdkyDdfvN8rGDtj8un4GmuzfPIOD2ZtBlFHKo8
- iUAc9SWoBy8wug3KQwltWK0zDeodinZ7lItodvpRZaBr7sQfTwSiPs=
-X-Google-Smtp-Source: AGHT+IGYEoRooCUj/I7OqTAB4tkpR4/BiIHodysVPtpjS1ropHeFD/Vbagw5TFzw3quqt/t3CcU8Rg==
-X-Received: by 2002:a17:907:8004:b0:ab2:b72e:cf44 with SMTP id
- a640c23a62f3a-ab2b72efaabmr1820765866b.2.1736878951101; 
- Tue, 14 Jan 2025 10:22:31 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c905f0b3sm655625666b.21.2025.01.14.10.22.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 10:22:30 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CBE9B5F89C;
- Tue, 14 Jan 2025 18:22:28 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Subject: [RFC PATCH] docs/system: expand the virtio-gpu documentation
-Date: Tue, 14 Jan 2025 18:22:21 +0000
-Message-Id: <20250114182221.840349-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d=1e100.net; s=20230601; t=1736879009; x=1737483809;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YfibVc8Vdktjuc3UhTFI6rFsbdmzWqCTl06AX/tpZco=;
+ b=BYE5+2cxlwGSHBzohIu1TCj0o2th1cXalqPD9mVuro1K+MmxrTVMVY21n7jyXAzw07
+ S953MhB9n9nxZwjMKo1SyjS/UGC2lRqCrdgc86cM/b5zVmw6oR/POEj9ZZRN6IbNwGtb
+ 4ucK8z4N4Hx0gszyZE8aUnNI1lEAgMHtUIXM04cfw7G6G9nfzEwKpDrPybOR3Tpi6Ajg
+ 7QpXk/mhU9tbAi6nIskCxgM+BtRtQERVN2vczys/rgh4Js4nmEnqhmo6TUGeddRIxE0R
+ +g9cQ1MW8LWA7dw9QZNtuHjp70a3bROonR6GR2+W4HKCk/Tbf0LfNPyqPc4erhK20gHP
+ GMhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUb2lU7WUvzdL2EtP/YYFSTktsUlN1P2t68hpsJmMj1GKX734iEAcM3B5t+nIBWYN9XlVjK0cyzGCpf@nongnu.org
+X-Gm-Message-State: AOJu0YzQWw7+ndcN1wFqQK/ZWX1vp088wlTA6qsAF1OIZn73F1V6+fY8
+ BrIwZLWYnKgMYyuJmGZVstfzQXkYhygYkn+QZ3eZC3d9YCpnXCZQfJZPzNtAvWs=
+X-Gm-Gg: ASbGnctAIJFP0dnZBEan0FmqP0lSIx7ckh6MTDy8p2BGSnibZknBULd8AD4rM6swf+p
+ 9fTGgo974gLnBzT/nMQSvA9wRJAD1W6AyWEbFoFuwfLD7RkDsC6/mFkp2JJ+ZJ7mO31m1KtUTli
+ 6gX1JevxpIOhaQsyh2FELLOdJppBOn4+l31Gl6v8RNrvXoVjCNa82YsvxzE6p/DrgTUJtse0bV3
+ VJ9+u8mgQD8HGO6aoMhs8ZWQcAjkfpulrxNsHbI03r6wr6oYNx0zKBVaDdNGIfRG/G5aQ==
+X-Google-Smtp-Source: AGHT+IEQl43CRbuiZj76UMCndJClJerI3E8tsyy15s4lxMuL065XuvJxlWHdJT+tKauileST7nXtBw==
+X-Received: by 2002:a05:6a00:ad0:b0:725:e957:1dd1 with SMTP id
+ d2e1a72fcca58-72d21fde02dmr34781851b3a.17.1736879009522; 
+ Tue, 14 Jan 2025 10:23:29 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72d406a57dcsm7917126b3a.170.2025.01.14.10.23.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jan 2025 10:23:29 -0800 (PST)
+Message-ID: <2c1b32d5-215b-48cf-b2da-220752532dfb@linaro.org>
+Date: Tue, 14 Jan 2025 10:23:28 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 26/37] plugins: fix kdoc annotation
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Stefan Weil <sw@weilnetz.de>
+References: <20250114113821.768750-1-alex.bennee@linaro.org>
+ <20250114113821.768750-27-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250114113821.768750-27-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,125 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This attempts to tidy up the VirtIO GPU documentation to make the list
-of requirements clearer. There are still a lot of moving parts and the
-distros have some catching up to do before this is all handled
-automatically.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Based-on: 20241110221838.2241356-1-dmitry.osipenko@collabora.com
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Sergio Lopez Pascual <slp@redhat.com>
-
----
-Dimitry, feel free to merge or adapt this incomplete RFC into v5
----
- docs/system/devices/virtio-gpu.rst | 89 ++++++++++++++++++++++++++++--
- 1 file changed, 83 insertions(+), 6 deletions(-)
-
-diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-index f20c600163..6226fb732e 100644
---- a/docs/system/devices/virtio-gpu.rst
-+++ b/docs/system/devices/virtio-gpu.rst
-@@ -4,14 +4,91 @@
- virtio-gpu
- ==========
- 
--This document explains the setup and usage of the virtio-gpu device.
--The virtio-gpu device paravirtualizes the GPU and display controller.
--
--Linux kernel support
----------------------
-+The virtio-gpu device provides a GPU and display controller
-+paravirtualized using VirtIO. It supports a number of different modes
-+from simple 2D displays to fully accelerated 3D graphics.
-+
-+Dependencies
-+............
-+
-+.. note::
-+  GPU virtualisation is still an evolving field. Depending on the mode
-+  you are running you may need to override distribution supplied
-+  libraries with more recent versions or enable build options.
-+
-+Host requirements
-+-----------------
-+
-+Depending on the mode there are a number of requirements the host must
-+meet to be able to be able to support guests. For 3D acceleration QEMU
-+must be able to access the hosts GPU and for the best performance be
-+able to reliably share GPU memory with the guest.
-+
-+.. list-table:: Host Requirements
-+  :header-rows: 1
-+
-+  * - Mode
-+    - Kernel
-+    - Userspace
-+  * - virtio-gpu
-+    - framebuffer enabled
-+    - GTK or SDL display
-+  * - virtio-gpu-gl (OpenGL pass-through)
-+    - GPU enabled
-+    - libvirglrenderer (virgl support)
-+  * - virtio-gpu-gl (rutabaga/gfxstream)
-+    - GPU enabled
-+    - aemu/rutabaga_gfx_ffi or vhost-user client with support
-+  * - virtio-gpu-gl (Vulkan pass-through)
-+    - Linux 6.13, CONFIG_UDMA
-+    - libvirglrenderer (>= 1.1.0, venus support)
-+  * - virtio-gpu-gl (Native Context)
-+    - Linux 6.13, CONFIG_UDMA
-+    - libvirglrenderer (master, possibly with patches)
-+
-+
-+Guest requirements
-+------------------
- 
- virtio-gpu requires a guest Linux kernel built with the
--``CONFIG_DRM_VIRTIO_GPU`` option.
-+``CONFIG_DRM_VIRTIO_GPU`` option. Otherwise for 3D accelerations you
-+will need support from Mesa configured for whichever encapsulation you
-+need.
-+
-+.. list-table:: Guest Requirements
-+  :header-rows: 1
-+
-+  * - Mode
-+    - Min Mesa Version
-+    - Mesa flags
-+  * - virtio-gpu
-+    - n/a
-+    - n/a
-+  * - virtio-gpu-gl (OpenGL pass-through)
-+    - 20.3.0+
-+    - -Dgallium-drivers=virgl
-+  * - virtio-gpu-gl (rutabaga/gfxstream)
-+    - 24.3.0+
-+    - -Dvulkan-drivers=gfxstream
-+  * - virtio-gpu-gl (Vulkan pass-through)
-+    - 24.2+
-+    - -Dvulkan-drivers=virtio
-+  * - virtio-gpu-gl (Native Context/Freedreno)
-+    - master
-+    - ?
-+  * - virtio-gpu-gl (Native Context/Intel)
-+    - `mr29870`_
-+    - -Dvulkan-drivers=iris -Dintel-virtio-experimental=true
-+  * - virtio-gpu-gl (Native Context/AMD)
-+    - `mr21658`_
-+    - -Dvulkan-drivers=radeonsi
-+
-+.. _mr29870: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
-+.. _mr21658: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21658
-+      
-+Further information
-+...................
-+
- 
- QEMU virtio-gpu variants
- ------------------------
--- 
-2.39.5
-
+T24gMS8xNC8yNSAwMzozOCwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBUaGUgZnVuY3Rpb24g
+aXMgcWVtdV9wbHVnaW5fbWVtX2dldF92YWx1ZSgpDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBB
+bGV4IEJlbm7DqWUgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+IC0tLQ0KPiAgIGluY2x1
+ZGUvcWVtdS9xZW11LXBsdWdpbi5oIHwgMiArLQ0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAxIGlu
+c2VydGlvbigrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUv
+cWVtdS9xZW11LXBsdWdpbi5oIGIvaW5jbHVkZS9xZW11L3FlbXUtcGx1Z2luLmgNCj4gaW5k
+ZXggMGZiYTM2YWUwMi4uM2E4NTBhYTIxNiAxMDA2NDQNCj4gLS0tIGEvaW5jbHVkZS9xZW11
+L3FlbXUtcGx1Z2luLmgNCj4gKysrIGIvaW5jbHVkZS9xZW11L3FlbXUtcGx1Z2luLmgNCj4g
+QEAgLTU4Myw3ICs1ODMsNyBAQCBRRU1VX1BMVUdJTl9BUEkNCj4gICBib29sIHFlbXVfcGx1
+Z2luX21lbV9pc19zdG9yZShxZW11X3BsdWdpbl9tZW1pbmZvX3QgaW5mbyk7DQo+ICAgDQo+
+ICAgLyoqDQo+IC0gKiBxZW11X3BsdWdpbl9tZW1fZ2V0X21lbV92YWx1ZSgpIC0gcmV0dXJu
+IGxhc3QgdmFsdWUgbG9hZGVkL3N0b3JlZA0KPiArICogcWVtdV9wbHVnaW5fbWVtX2dldF92
+YWx1ZSgpIC0gcmV0dXJuIGxhc3QgdmFsdWUgbG9hZGVkL3N0b3JlZA0KPiAgICAqIEBpbmZv
+OiBvcGFxdWUgbWVtb3J5IHRyYW5zYWN0aW9uIGhhbmRsZQ0KPiAgICAqDQo+ICAgICogUmV0
+dXJuczogbWVtb3J5IHZhbHVlDQoNClJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxw
+aWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQoNCg==
 
