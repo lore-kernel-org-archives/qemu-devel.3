@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F00C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA22C02187
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXm8U-0005js-Ha; Tue, 14 Jan 2025 13:59:34 -0500
+	id 1tXm8k-0005oK-Em; Tue, 14 Jan 2025 13:59:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7u-0005f6-B5
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:01 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8E-0005hb-OJ
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7s-0002l7-MC
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:58:58 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8A-0002ni-S3
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736881135;
+ s=mimecast20190719; t=1736881154;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vv7Wd/zlyBoYsTvEa+zFVj47uVH6QRHlKrjqyx9mRxk=;
- b=Phnur2tRAKE/+QBZaE326ZmA2diYjcqAL3e0jjQTiE1mzzBqNxsBrV2qTr7uncsD06HEWn
- vcj8fGlQASAiq5xghFT/jTbA8dcKUOamtu/CwNc4XZvQdnRGDATN4tLroyTAqls7CT1NZY
- DOqxc6Hi3O5bjbDL+iSDR2kznYkcE08=
+ bh=7SkKJq7J6miKZ7XBBLFjlPetmV9uXBPCbBp6OLgya3o=;
+ b=O/Ghc6ame15/4WBRM2rLZc3uYwHwsB2Q7sIwc6sVw5nGC/QCNMAmqPZo6+XYth42xVp2O2
+ /528v1QZ2ub5+u3K0qFVtejzKHmNbGYuYVOLfrnNP/nqKkMZqS+He3dIddclNE4w4oVvG2
+ DGtvNcdSS2FYPkg0AhFsZeXWESjaBug=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-iG7n9fidPLSOAC6XGkK5cA-1; Tue,
- 14 Jan 2025 13:58:50 -0500
-X-MC-Unique: iG7n9fidPLSOAC6XGkK5cA-1
-X-Mimecast-MFC-AGG-ID: iG7n9fidPLSOAC6XGkK5cA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-sCVxY3jJMe6VfuGIN651TA-1; Tue,
+ 14 Jan 2025 13:59:09 -0500
+X-MC-Unique: sCVxY3jJMe6VfuGIN651TA-1
+X-Mimecast-MFC-AGG-ID: sCVxY3jJMe6VfuGIN651TA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CB451955DCD; Tue, 14 Jan 2025 18:58:49 +0000 (UTC)
+ id 991691956048; Tue, 14 Jan 2025 18:59:08 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.175])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E24B619560A3; Tue, 14 Jan 2025 18:58:47 +0000 (UTC)
+ id 829C319560A3; Tue, 14 Jan 2025 18:59:07 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 03/23] docs/qapidoc: remove example section support
-Date: Tue, 14 Jan 2025 13:58:20 -0500
-Message-ID: <20250114185840.3058525-4-jsnow@redhat.com>
+Subject: [PATCH v2 17/23] docs/qapidoc: prepare to record entity being
+ transmogrified
+Date: Tue, 14 Jan 2025 13:58:34 -0500
+Message-ID: <20250114185840.3058525-18-jsnow@redhat.com>
 In-Reply-To: <20250114185840.3058525-1-jsnow@redhat.com>
 References: <20250114185840.3058525-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,41 +84,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 3c5f6114 (qapi: remove "Example" doc section), Example
-sections no longer exist, so this support in qapidoc is now dead code.
+Prepare to keep a record of which entity we're working on documenting
+for the purposes of being able to change certain generative features
+conditionally and create stronger assertions.
+
+If you find yourself asking: "Wait, but where does the current entity
+actually get recorded?!", you're right! That part comes with the
+visit_entity() implementation, which gets added later.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ docs/sphinx/qapidoc.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5a4d7388b29..61997fd21af 100644
+index e9af072c5a6..a4dbfa3b3dd 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -254,10 +254,6 @@ def _nodes_for_features(self, doc):
-         section += dlnode
-         return [section]
+@@ -74,9 +74,15 @@ def dedent(text: str) -> str:
  
--    def _nodes_for_example(self, exampletext):
--        """Return list of doctree nodes for a code example snippet"""
--        return [nodes.literal_block(exampletext, exampletext)]
--
-     def _nodes_for_sections(self, doc):
-         """Return list of doctree nodes for additional sections"""
-         nodelist = []
-@@ -275,10 +271,7 @@ def _nodes_for_sections(self, doc):
-                 continue
+ class Transmogrifier:
+     def __init__(self, schema):
++        self._curr_ent = None
+         self._result = StringList()
+         self.indent = 0
  
-             snode = self._make_section(section.tag)
--            if section.tag.startswith('Example'):
--                snode += self._nodes_for_example(dedent(section.text))
--            else:
--                self._parse_text_into_node(dedent(section.text), snode)
-+            self._parse_text_into_node(dedent(section.text), snode)
-             nodelist.append(snode)
-         return nodelist
++    @property
++    def entity(self) -> QAPISchemaEntity:
++        assert self._curr_ent is not None
++        return self._curr_ent
++
+     # General-purpose rST generation functions
  
+     def get_indent(self) -> str:
 -- 
 2.47.1
 
