@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E868C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8A6E77188
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 23:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXq1E-000204-VH; Tue, 14 Jan 2025 18:08:20 -0500
+	id 1tXq0y-0001rM-1F; Tue, 14 Jan 2025 18:08:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq19-0001ze-2u
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:08:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq0v-0001qZ-SW
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:08:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq17-000478-A2
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:08:14 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq0u-00043H-0u
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:08:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736896091;
+ s=mimecast20190719; t=1736896078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7tDkWWg6+jos1+qRgaPmbYXKxwn6YXWcJ9OlhS4rNJA=;
- b=hjQbJBRdGo9RQWUCZqbqXTkuAmSgIDOEcMQGbLV8xJNCMGNZKXqj4RMqSQub5+oI96sOS3
- kh+XeMooEqFO+L/P6MtoWdOBquHvZNFFY9zks1omQKznz32btHQUzpXeChWN2mS5geNdK7
- +krGuCgDo9VeQpDA66yE6CDJYMCOLq4=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3J/rPBYuBb2FewjBzx58s7MHMBJWtOIl+Z3hEAriHYI=;
+ b=WyEuC454pPO/PL6UA+5E+RblCoSSPUv5pfCHoZReq02+iTBs8getnt6M43KG8ELKa6jJca
+ hqYR6Bz89bHK6dsD0uTkiRJmQEkha8QSdso950IC+Z6+MyMfMtev1JGn0+8KpFtE1civii
+ ryeRa8B+HZW78GGOoYcji0X8gJiuwiI=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-300-Vd6OOj2ONEyiIyGW-8ujAA-1; Tue, 14 Jan 2025 18:08:07 -0500
-X-MC-Unique: Vd6OOj2ONEyiIyGW-8ujAA-1
-X-Mimecast-MFC-AGG-ID: Vd6OOj2ONEyiIyGW-8ujAA
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d92efa9ff4so92717156d6.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 15:08:07 -0800 (PST)
+ us-mta-308-eUUhcY8MPDWjG5gB5KlaCg-1; Tue, 14 Jan 2025 18:07:57 -0500
+X-MC-Unique: eUUhcY8MPDWjG5gB5KlaCg-1
+X-Mimecast-MFC-AGG-ID: eUUhcY8MPDWjG5gB5KlaCg
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d8edb40083so5804186d6.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 15:07:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736896087; x=1737500887;
+ d=1e100.net; s=20230601; t=1736896076; x=1737500876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7tDkWWg6+jos1+qRgaPmbYXKxwn6YXWcJ9OlhS4rNJA=;
- b=MNr7c1Doc8XW48lb3rfognaaqpCwiJjV8X7uBMsSZkVWuREnsQM4MdT7ky11ZHq0uZ
- AsM42HoGOXbjOcCCIAlOXX1+s5fSv00PbczWqSa/aUi2BPWVQQ8wQG/7wR3etGLsPQeX
- EnGSFEpWaILG3bsVFOBRxQ6gaW0MFAd6D7zanzHDJHo08il0DeD5/iPYPx20/0CEdBIx
- Ow5kLTrgj50QtfYjwYqLwQ12yYh2WnhDbspC24uA9Y7EO62zV1K6KhNasy3OTU5r9iBc
- LmJTeyxMnESuewZcg7WIRN+kqaayTwhZI7Fe7S9ZGxAD8kqyxRLfl5E0Uh9fBRf4bPn4
- UiIQ==
-X-Gm-Message-State: AOJu0Yyjv+wclgyhBi8z5OgqgaCA0gzmsFD/363DBqV2d/gFnkseWx1z
- lCHGN3O9hJEAaxbiDjP8WW4v/tPkVPEiUmp+9PcPmwkpmxFq9sLhmeMAuGV06OUdTXwTygLz3nn
- /JGX/iEWSgBy9tVbB/A2QuvPA10jiPbu6aPSSh52DmbV0vDolskji7GoXahgrGfTAzeW3iqFZfC
- eQWDGJwhhEbDrFRb7PWkclEWkTGzMQLuVJtQ==
-X-Gm-Gg: ASbGncvJsDMxQAq1dCG83TRf23hod3dP5q6do0HyV6k5yHY+g+ClgiI0nzEvszO5Pum
- P5bTMrjaIStHi29McHrXTLbqJNSYOavc3GuvF4ZbmKZkUEFrdkfOyPSoXR/y7VrFSnHQC/JLyYB
- LrFMIzxV2ww4cm1xl+WHL+Dcxav9hB2vTKDg7WGIduUgBCDqfyecTQjS6M1OYkLmx822oye/9yo
- tpN+GbZb3f7fGk4InttSVxGw8rA9jFlae2CReAkh7GA83NUh6/flFN1Ne04vz0fY07WiZoCn0yw
- JF0iebHpcHI67KNN1aJ6C9B9JRbDj364
-X-Received: by 2002:a05:6214:e83:b0:6d4:3437:d858 with SMTP id
- 6a1803df08f44-6df9b22e404mr410183856d6.25.1736896087067; 
- Tue, 14 Jan 2025 15:08:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEspMYjE2J2V7F2QCz2ZDLl4X3BwYy/S9aH7DTn3ewShqr7tTWsK7nWJCVDOHTbAH7K80ptyA==
-X-Received: by 2002:a05:6214:e83:b0:6d4:3437:d858 with SMTP id
- 6a1803df08f44-6df9b22e404mr410183496d6.25.1736896086719; 
- Tue, 14 Jan 2025 15:08:06 -0800 (PST)
+ bh=3J/rPBYuBb2FewjBzx58s7MHMBJWtOIl+Z3hEAriHYI=;
+ b=ZKe8CgPIpCDXz/WWomYS+e05iBuZlRygSowK7ldum3cNEh8xdiyYXhLilQdhJauEWQ
+ HN3dG7mjZDq+m1NECwfLhw2qaSY/3L4cyE5PjlvrDRWAin+pKWRVAFE2bh2/9O9hKaf6
+ nge2Fy6ccj2e6HCu0AB0Pikf+x9a4POvmb+Bzi3gpLhAyenuLL261aVMLw2nBFbb2ODd
+ D2CYHk2DYXiBNWtDUC6Uud/pB3sZjMV1dERd8dLb5bx2BBMZ8nBCJZMODmS24hVy+8ZR
+ G7Auopr/kUgUWZWoZ6xGO2ZJ+BEKLEWD9zCcD1ZoAugJOiAEZWk1KCDkBJwrTmksaYbS
+ zniA==
+X-Gm-Message-State: AOJu0YzjNVHTlnWJjfl5dGbRDStCkwZURFtdwbgWKjjOlkUnyZ8euD9g
+ 18uvSJuLmE2zJI0EDPS/EZ+cd0VdKMdk5ORgIQwL+q3XmUHEJT1pqfmbYnFisp9v4ifLD6mdt9o
+ 0UP8LV6eEnGbJg2qyZxaMNHsHvuQnxyQg7A4OuDV32b1z3/htNkfmQgXrlU/UmAhZAb7VRc7Jdz
+ kqMwyh+db6S6E5ukF5+OuAwT/Q+b/erbw34g==
+X-Gm-Gg: ASbGncvGKoax2pKb24i5QWtavb2LZkVzx39D+9JfTJmpbdoxRzdT+VmGEjwk653mre1
+ hKeMX/p28IiNWbDdyHZOvOymYnrgMl6MvBtfOhk1NULDV9LkJyqU7gdk/OBcO4E2fpx6bFSTxy4
+ c91ksQRmejMuzabwoEkXW/2igioHDwnZF11sB/6ioroXk1KH9iJRJmgoFWGdQdb2nlvKuN9o9Ds
+ dp9UeuuDlYPjA/J2ai0etepIygA3CYiwEpsrjRM9oKG0q/Lvh/uDOuPMfqtGIcqaA5tpm+1RaoD
+ GLNsoDMNUAkX9h6tWfNE8p2tKZ/jKTN+
+X-Received: by 2002:a05:6214:4304:b0:6d8:94f4:d2aa with SMTP id
+ 6a1803df08f44-6e192ba8f77mr13300656d6.13.1736896076597; 
+ Tue, 14 Jan 2025 15:07:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEA1j1uzcCfD952uDr001iSj5ctgQyLTwui95k2K9oiuvWnqScV+0HA6nI8eJD/RzYSP7FyHw==
+X-Received: by 2002:a05:6214:4304:b0:6d8:94f4:d2aa with SMTP id
+ 6a1803df08f44-6e192ba8f77mr13300426d6.13.1736896076320; 
+ Tue, 14 Jan 2025 15:07:56 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46c873cd1b0sm59268971cf.49.2025.01.14.15.08.04
+ d75a77b69052e-46c873cd1b0sm59268971cf.49.2025.01.14.15.07.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 15:08:05 -0800 (PST)
+ Tue, 14 Jan 2025 15:07:55 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  Julia Suvorova <jusual@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 10/16] migration: Take BQL slightly longer in postcopy_start()
-Date: Tue, 14 Jan 2025 18:07:40 -0500
-Message-ID: <20250114230746.3268797-11-peterx@redhat.com>
+Subject: [PATCH 04/16] migration: Avoid two src-downtime-end tracepoints for
+ postcopy
+Date: Tue, 14 Jan 2025 18:07:34 -0500
+Message-ID: <20250114230746.3268797-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250114230746.3268797-1-peterx@redhat.com>
 References: <20250114230746.3268797-1-peterx@redhat.com>
@@ -108,50 +109,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This paves way for some follow up patch to modify migration states at the
-end of postcopy_start(), which should better be with the BQL so that
-there's no way of concurrent cancellation.
-
-So we'll do something slightly more with BQL but they're really trivial,
-hopefully nothing will really chance with this.
-
-A side benefit is we can drop another explicit lock() in failure path.
+Postcopy can trigger this tracepoint twice, while only the 1st one is
+valid.  Avoid triggering the 2nd tracepoint just like what we do with
+recording the total downtime.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ migration/migration.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 5850c90c9f..f644a6306b 100644
+index 0eb28e850d..e1fc1a7fdc 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -2626,8 +2626,6 @@ static int postcopy_start(MigrationState *ms, Error **errp)
- 
-     migration_downtime_end(ms);
- 
--    bql_unlock();
--
-     if (migrate_postcopy_ram()) {
-         /*
-          * Although this ping is just for debug, it could potentially be
-@@ -2643,7 +2641,6 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     ret = qemu_file_get_error(ms->to_dst_file);
-     if (ret) {
-         error_setg_errno(errp, -ret, "postcopy_start: Migration stream error");
--        bql_lock();
-         goto fail;
-     }
-     trace_postcopy_preempt_enabled(migrate_postcopy_preempt());
-@@ -2654,6 +2651,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+@@ -125,9 +125,8 @@ static void migration_downtime_end(MigrationState *s)
       */
-     migration_rate_set(migrate_max_postcopy_bandwidth());
+     if (!s->downtime) {
+         s->downtime = now - s->downtime_start;
++        trace_vmstate_downtime_checkpoint("src-downtime-end");
+     }
+-
+-    trace_vmstate_downtime_checkpoint("src-downtime-end");
+ }
  
-+    bql_unlock();
-+
-     return ret;
- 
- fail_closefb:
+ static bool migration_needs_multiple_sockets(void)
 -- 
 2.47.0
 
