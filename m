@@ -4,87 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB746E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7147E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:49:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXl1u-00046U-BI; Tue, 14 Jan 2025 12:48:42 -0500
+	id 1tXl28-00055y-CP; Tue, 14 Jan 2025 12:48:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXl1l-0003tI-6w
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:48:36 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXl1i-0005JV-Ry
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:48:32 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso41337595e9.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 09:48:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736876908; x=1737481708; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xvN2XyyamhWgFch8PR1zDMvwICWSSkZMnIGqZbb7/gg=;
- b=NlwtehSUcQsI2pr4c5xQsRrSzvhEA6D+jwooGJ1/dM3crOFOE3bIj3rnoG4zIObXYj
- J97bRXz5rj65U+i92QM/LpkrLBhclNskwqsFwUAl3kXD3gxXMFWpk3J9sSTtZK8C3Cca
- mPYjfQXcwpuLX3/kfwxQPNEvH2onrpHMDPASBOwt2K70l3wTZByFJpw0hkvsNaix5mMg
- Y7MNelzIdoCZePF+CKPx+PxXH5/crcUlCJcvHcXJ9aG96e66wOgg6TT6FnyyLSSz7Uam
- n3bxPvzU+8KbNi0GLkznRdxIUxCn8h3AQuotJ8y0yRkovyyukfJrZsmtrUKkGsjIVStZ
- NDhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736876908; x=1737481708;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xvN2XyyamhWgFch8PR1zDMvwICWSSkZMnIGqZbb7/gg=;
- b=DmovCegqyruDT0p50M3Pe196Br4BrAbM15d8FWK/jvGWYRpmpTx8iHiCE2s3Ww1aA/
- Xu9twDJF890k6lmKkS/015p+a5YpBPKtp/k5HcXik6fCSi5dDXyeCDYyeL6py1NXcNBR
- D8yPyD4lDb+Bq1EK5ngstGq/x3ZF/Iorb0OMtut84KUjkUvNhvCGT0AcB1lIPklpgBB0
- ptzCrAqviOGxyvE7qaZKA0GnRoSbTxqwipkdcr/F3Xj5hJEuHcDSkMal1UvIxcXGH1q2
- MS2qQqiC0YzkGK+RKRDaIs1W2JUmPCAuF6DQ8tp95PFLQeCW3DIdhNMyGQxxS0PHv4oS
- hK0Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUImBmP3/RQAvs2RczT4tj8zYvH8sOfhs2US++6vwYXuSAf5/3R6g1b87XTtZPan/RwloeXcYxLrBUb@nongnu.org
-X-Gm-Message-State: AOJu0Yyz3//ZU6MgnaJumlzn1olLKJ7PsX1+ejW7Umr8QpVoQ9FJ1A0/
- wEP/+pzS8TxdhavK5hzQa1jDEBaLrChUhgJ3FKJY5KY1f5nWQ5ahV/l971RIpko=
-X-Gm-Gg: ASbGnctSglFSbfBHRsSyE8i2J+x5wXynSnSW+G8rOKAq49ZjU5G0GwymNK5BtY4iWtk
- Yb9M0ZOCa81avnp6Wxjgm4induKlX8eDPKJxI1HTOx1zVnHiD24xGVS6c6Uvb8gCCj/hlBiYLlt
- uPbmw0TEWiLYfEUP0XUZblE/huM8BrXxWFuRCJEwcdpykV7j5mnM1H0Mjswy6Cr/A4foCjv087z
- +NeLUfLCwezjvlDdI+5ofcQCXDHVA2JN5O3CsNsQxKG7wM6GJuEF3wOsNCUf8BD0Ie4KBPeJejI
- FGAhNqSRDJSzN816dJ0+LZ5J
-X-Google-Smtp-Source: AGHT+IEHewZXAsjRQPjytVLQpdqr5Qhrx7hgnvuYvFouo3PUBoAT+HkF7RaLKKYDvZgA+7lThQvTvg==
-X-Received: by 2002:a05:6000:186b:b0:385:ef97:78c with SMTP id
- ffacd0b85a97d-38a872d2ae8mr20481172f8f.6.1736876908497; 
- Tue, 14 Jan 2025 09:48:28 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1b2asm15050444f8f.89.2025.01.14.09.48.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 09:48:28 -0800 (PST)
-Message-ID: <9b0f8fe6-55f4-43f3-8d4f-66399d74ea6a@linaro.org>
-Date: Tue, 14 Jan 2025 18:48:27 +0100
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tXl26-00050F-3V; Tue, 14 Jan 2025 12:48:54 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tXl23-0005QC-TW; Tue, 14 Jan 2025 12:48:53 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YXc5Q0wwNz6M4NX;
+ Wed, 15 Jan 2025 01:47:06 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1239A140B63;
+ Wed, 15 Jan 2025 01:48:50 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.72.65) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 14 Jan 2025 18:48:48 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
+ <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>, <farman@linux.ibm.com>,
+ <peter.maydell@linaro.org>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>, <mtosatti@redhat.com>,
+ <berrange@redhat.com>, <richard.henderson@linaro.org>, <linuxarm@huawei.com>, 
+ <shameerali.kolothum.thodi@huawei.com>, <Jonathan.Cameron@Huawei.com>,
+ <jiangkunkun@huawei.com>, <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
+Subject: [PATCH v6 5/7] hw/acpi/aml-build.c: add cache hierarchy to pptt table
+Date: Tue, 14 Jan 2025 17:45:59 +0000
+Message-ID: <20250114174601.23-6-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250114174601.23-1-alireza.sanaee@huawei.com>
+References: <20250114174601.23-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 22/81] tcg: Reorg process_op_defs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-23-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-23-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.47.72.65]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.794, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,22 +69,355 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 09:00, Richard Henderson wrote:
-> Process each TCGConstraintSetIndex first.  Allocate TCGArgConstraint
-> arrays based on those.  Only afterward process the TCGOpcodes and
-> share those TCGArgConstraint arrays.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg.h |   7 +-
->   tcg/tcg.c         | 272 +++++++++++++++++++++++-----------------------
->   2 files changed, 136 insertions(+), 143 deletions(-)
+Add cache topology to PPTT table. With this patch, both ACPI PPTT table
+and device tree will represent the same cache topology given users
+input.
 
-Nice.
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+---
+ hw/acpi/aml-build.c         | 205 +++++++++++++++++++++++++++++++++++-
+ hw/arm/virt-acpi-build.c    |   8 +-
+ include/hw/acpi/aml-build.h |   4 +-
+ include/hw/cpu/core.h       |   1 +
+ 4 files changed, 211 insertions(+), 7 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index e5401dfdb1..e256852266 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2046,6 +2046,107 @@ void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+     acpi_table_end(linker, &table);
+ }
+ 
++static void build_cache_nodes(GArray *tbl, PPTTCPUCaches *cache,
++                              uint32_t next_offset, unsigned int id)
++{
++    int val;
++
++    /* Type 1 - cache */
++    build_append_byte(tbl, 1);
++    /* Length */
++    build_append_byte(tbl, 28);
++    /* Reserved */
++    build_append_int_noprefix(tbl, 0, 2);
++    /* Flags - everything except possibly the ID */
++    build_append_int_noprefix(tbl, 0xff, 4);
++    /* Offset of next cache up */
++    build_append_int_noprefix(tbl, next_offset, 4);
++    build_append_int_noprefix(tbl, cache->size, 4);
++    build_append_int_noprefix(tbl, cache->sets, 4);
++    build_append_byte(tbl, cache->associativity);
++    val = 0x3;
++    switch (cache->type) {
++    case INSTRUCTION:
++        val |= (1 << 2);
++        break;
++    case DATA:
++        val |= (0 << 2); /* Data */
++        break;
++    case UNIFIED:
++        val |= (3 << 2); /* Unified */
++        break;
++    }
++    build_append_byte(tbl, val);
++    build_append_int_noprefix(tbl, cache->linesize, 2);
++    build_append_int_noprefix(tbl,
++                              (cache->type << 24) | (cache->level << 16) | id,
++                              4);
++}
++
++/*
++ * builds caches from the top level (`level_high` parameter) to the bottom
++ * level (`level_low` parameter).  It searches for caches found in
++ * systems' registers, and fills up the table. Then it updates the
++ * `data_offset` and `instr_offset` parameters with the offset of the data
++ * and instruction caches of the lowest level, respectively.
++ */
++static bool build_caches(GArray *table_data, uint32_t pptt_start,
++                         int num_caches, PPTTCPUCaches *caches,
++                         int base_id,
++                         uint8_t level_high, /* Inclusive */
++                         uint8_t level_low,  /* Inclusive */
++                         uint32_t *data_offset,
++                         uint32_t *instr_offset)
++{
++    uint32_t next_level_offset_data = 0, next_level_offset_instruction = 0;
++    uint32_t this_offset, next_offset = 0;
++    int c, level;
++    bool found_cache = false;
++
++    /* Walk caches from top to bottom */
++    for (level = level_high; level >= level_low; level--) {
++        for (c = 0; c < num_caches; c++) {
++            if (caches[c].level != level) {
++                continue;
++            }
++
++            /* Assume only unified above l1 for now */
++            this_offset = table_data->len - pptt_start;
++            switch (caches[c].type) {
++            case INSTRUCTION:
++                next_offset = next_level_offset_instruction;
++                break;
++            case DATA:
++                next_offset = next_level_offset_data;
++                break;
++            case UNIFIED:
++                /* Either is fine here */
++                next_offset = next_level_offset_instruction;
++                break;
++            }
++            build_cache_nodes(table_data, &caches[c], next_offset, base_id);
++            switch (caches[c].type) {
++            case INSTRUCTION:
++                next_level_offset_instruction = this_offset;
++                break;
++            case DATA:
++                next_level_offset_data = this_offset;
++                break;
++            case UNIFIED:
++                next_level_offset_instruction = this_offset;
++                next_level_offset_data = this_offset;
++                break;
++            }
++            *data_offset = next_level_offset_data;
++            *instr_offset = next_level_offset_instruction;
++
++            found_cache = true;
++        }
++    }
++
++    return found_cache;
++}
++
+ /*
+  * ACPI spec, Revision 6.3
+  * 5.2.29.1 Processor hierarchy node structure (Type 0)
+@@ -2146,15 +2247,24 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+  * 5.2.29 Processor Properties Topology Table (PPTT)
+  */
+ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+-                const char *oem_id, const char *oem_table_id)
++                const char *oem_id, const char *oem_table_id,
++                int num_caches, PPTTCPUCaches *caches)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+     CPUArchIdList *cpus = ms->possible_cpus;
++    uint32_t core_data_offset = 0, core_instr_offset = 0;
++    uint32_t cluster_instr_offset = 0, cluster_data_offset = 0;
++    uint32_t node_data_offset = 0, node_instr_offset = 0;
++    int top_node = 3, top_cluster = 3, top_core = 3;
++    int bottom_node = 3, bottom_cluster = 3, bottom_core = 3;
+     int64_t socket_id = -1, cluster_id = -1, core_id = -1;
+     uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+     uint32_t pptt_start = table_data->len;
+     uint32_t root_offset;
+     int n;
++    uint32_t priv_rsrc[2];
++    uint32_t num_priv = 0;
++
+     AcpiTable table = { .sig = "PPTT", .rev = 3,
+                         .oem_id = oem_id, .oem_table_id = oem_table_id };
+ 
+@@ -2184,11 +2294,35 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+             socket_id = cpus->cpus[n].props.socket_id;
+             cluster_id = -1;
+             core_id = -1;
++            bottom_node = top_node;
++            num_priv = 0;
++            if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_SOCKET) &&
++                find_the_lowest_level_cache_defined_at_level(
++                    ms,
++                    &bottom_node,
++                    CPU_TOPOLOGY_LEVEL_SOCKET))
++            {
++                build_caches(table_data, pptt_start,
++                             num_caches, caches,
++                             n, top_node, bottom_node,
++                             &node_data_offset, &node_instr_offset);
++
++                priv_rsrc[0] = node_instr_offset;
++                priv_rsrc[1] = node_data_offset;
++
++                if (node_instr_offset || node_data_offset) {
++                    num_priv = node_instr_offset == node_data_offset ? 1 : 2;
++                }
++
++                top_cluster = bottom_node - 1;
++            }
++
+             socket_offset = table_data->len - pptt_start;
+             build_processor_hierarchy_node(table_data,
+                 (1 << 0) | /* Physical package */
+                 (1 << 4), /* Identical Implementation */
+-                root_offset, socket_id, NULL, 0);
++                root_offset, socket_id,
++                priv_rsrc, num_priv);
+         }
+ 
+         if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
+@@ -2196,21 +2330,81 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+                 assert(cpus->cpus[n].props.cluster_id > cluster_id);
+                 cluster_id = cpus->cpus[n].props.cluster_id;
+                 core_id = -1;
++                bottom_cluster = top_cluster;
++                num_priv = 0;
++
++                if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_CLUSTER) &&
++                    find_the_lowest_level_cache_defined_at_level(
++                        ms,
++                        &bottom_cluster,
++                        CPU_TOPOLOGY_LEVEL_CLUSTER))
++                {
++
++                    build_caches(table_data, pptt_start,
++                                 num_caches, caches, n, top_cluster,
++                                 bottom_cluster, &cluster_data_offset,
++                                 &cluster_instr_offset);
++
++                    priv_rsrc[0] = cluster_instr_offset;
++                    priv_rsrc[1] = cluster_data_offset;
++
++                    if (cluster_instr_offset || cluster_data_offset) {
++                        num_priv =
++                        cluster_instr_offset == cluster_data_offset ? 1 : 2;
++                    }
++
++                    top_core = bottom_cluster - 1;
++                } else if (top_cluster == bottom_node - 1) {
++                    /* socket cache but no cluster cache */
++                    top_core = bottom_node - 1;
++                }
++
+                 cluster_offset = table_data->len - pptt_start;
+                 build_processor_hierarchy_node(table_data,
+                     (0 << 0) | /* Not a physical package */
+                     (1 << 4), /* Identical Implementation */
+-                    socket_offset, cluster_id, NULL, 0);
++                    socket_offset, cluster_id,
++                    priv_rsrc, num_priv);
+             }
+         } else {
++            if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_CLUSTER)) {
++                error_setg(&error_fatal, "Not clusters found for the cache");
++                return;
++            }
++
+             cluster_offset = socket_offset;
++            top_core = bottom_node - 1; /* there is no cluster */
+         }
+ 
++        if (cpus->cpus[n].props.core_id != core_id) {
++            bottom_core = top_core;
++            num_priv = 0;
++
++            if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_CORE) &&
++                find_the_lowest_level_cache_defined_at_level(
++                    ms,
++                    &bottom_core,
++                    CPU_TOPOLOGY_LEVEL_CORE))
++            {
++                build_caches(table_data, pptt_start,
++                             num_caches, caches,
++                             n, top_core, bottom_core,
++                             &core_data_offset, &core_instr_offset);
++
++                priv_rsrc[0] = core_instr_offset;
++                priv_rsrc[1] = core_data_offset;
++
++                num_priv = core_instr_offset == core_data_offset ? 1 : 2;
++            }
++        }
++
++
+         if (ms->smp.threads == 1) {
+             build_processor_hierarchy_node(table_data,
+                 (1 << 1) | /* ACPI Processor ID valid */
+                 (1 << 3),  /* Node is a Leaf */
+-                cluster_offset, n, NULL, 0);
++                cluster_offset, n,
++                priv_rsrc, num_priv);
+         } else {
+             if (cpus->cpus[n].props.core_id != core_id) {
+                 assert(cpus->cpus[n].props.core_id > core_id);
+@@ -2219,7 +2413,8 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+                 build_processor_hierarchy_node(table_data,
+                     (0 << 0) | /* Not a physical package */
+                     (1 << 4), /* Identical Implementation */
+-                    cluster_offset, core_id, NULL, 0);
++                    cluster_offset, core_id,
++                    priv_rsrc, num_priv);
+             }
+ 
+             build_processor_hierarchy_node(table_data,
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c9b13057a3..78f47175fc 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -902,6 +902,11 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+     GArray *tables_blob = tables->table_data;
+     MachineState *ms = MACHINE(vms);
+ 
++    PPTTCPUCaches caches[CPU_MAX_CACHES]; /* Can select up to 16 */
++    unsigned int num_caches;
++
++    num_caches = virt_get_caches(vms, caches);
++
+     table_offsets = g_array_new(false, true /* clear */,
+                                         sizeof(uint32_t));
+ 
+@@ -923,7 +928,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+     if (!vmc->no_cpu_topology) {
+         acpi_add_table(table_offsets, tables_blob);
+         build_pptt(tables_blob, tables->linker, ms,
+-                   vms->oem_id, vms->oem_table_id);
++                   vms->oem_id, vms->oem_table_id,
++                   num_caches, caches);
+     }
+ 
+     acpi_add_table(table_offsets, tables_blob);
+diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+index c18f681342..e0fb512382 100644
+--- a/include/hw/acpi/aml-build.h
++++ b/include/hw/acpi/aml-build.h
+@@ -3,6 +3,7 @@
+ 
+ #include "hw/acpi/acpi-defs.h"
+ #include "hw/acpi/bios-linker-loader.h"
++#include "hw/cpu/core.h"
+ 
+ #define ACPI_BUILD_APPNAME6 "BOCHS "
+ #define ACPI_BUILD_APPNAME8 "BXPC    "
+@@ -497,7 +498,8 @@ void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+                 const char *oem_id, const char *oem_table_id);
+ 
+ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+-                const char *oem_id, const char *oem_table_id);
++                const char *oem_id, const char *oem_table_id,
++                int num_caches, PPTTCPUCaches *caches);
+ 
+ void build_fadt(GArray *tbl, BIOSLinker *linker, const AcpiFadtData *f,
+                 const char *oem_id, const char *oem_table_id);
+diff --git a/include/hw/cpu/core.h b/include/hw/cpu/core.h
+index 4746732b4f..cebf7007ed 100644
+--- a/include/hw/cpu/core.h
++++ b/include/hw/cpu/core.h
+@@ -11,6 +11,7 @@
+ 
+ #include "hw/qdev-core.h"
+ #include "qom/object.h"
++#include "qapi/qapi-types-machine-common.h"
+ 
+ #define TYPE_CPU_CORE "cpu-core"
+ 
+-- 
+2.34.1
 
 
