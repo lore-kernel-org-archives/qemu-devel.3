@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEA3C02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57635E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:28:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXken-0004w1-Pd; Tue, 14 Jan 2025 12:24:49 -0500
+	id 1tXkel-0004u7-7Y; Tue, 14 Jan 2025 12:24:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tXkeg-0004rP-Ln
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:24:44 -0500
+ id 1tXked-0004q7-5f
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:24:40 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tXkec-0004Yg-MS
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:24:40 -0500
+ id 1tXkeW-0004Xz-SZ
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:24:38 -0500
 Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50EC1U39021673;
- Tue, 14 Jan 2025 17:24:22 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50EC0pKH020614;
+ Tue, 14 Jan 2025 17:24:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=HSqt2QMeNLOEvBoTgIK84Cu9jeAqx0DbmxBjBsoInQ4=; b=
- HGTqOf4lcH0lMqerq3BPX4wEir5Zp2f8Pr9UpmuX6xvfyGry8ohv1Hx1Idulswrq
- hfIl9oClgq3ViB7/mclEjwIIn+oxid6MPzQOxz9+IcVgxhzUnYAVSazG3N+E0u1J
- ttAdKGjaTyM4FNvIfL/WxnEWVj+vEIP9i3C4ykvo/pde4vsN6gr0m1lQ3k4ktrlw
- d4q+cLAkInSuwEvB1poeCkutNfKo1bYF7fZykQanyz1X/6X6xMhfNLMn3oaTV/fq
- 7f+haXjs3xRmbgZ5Bw609HxOnP8bVl8a69kZX9vfPbpdt5w9F+hvdpUz1RqPsW/j
- d204dLX6p9Hjyrl/+0xWGA==
+ corp-2023-11-20; bh=yoDn6o/Y/daHM7gSpg9sxaWwJMvCYCtElhw3ehNCoY0=; b=
+ Xecb6pGTuaSR/1CxYKISd9iAGjz5YaSONRFgaxLO4sd3aDowgKo3rwJR5nJKI+vg
+ rwcJ00aoFrIRJ7VQWSnGEyztgJCrVY/UgpM6uq5UoEPEUH0FX7KixNuqC8eNCrd2
+ GHzuQ7OeImIzeK3DU9ffSxb7SELAv+BH+LGsR55LIHqGQ2m/wWLB9eZOGfy/dH0F
+ flMg7OvF4Y0pQC9Fj2bdlmv20xuCLbsvIuMAuyQhfD5Eb+QtCJ7Cu+MqysN8arsV
+ BDmO/ScFjOP4gFWu3qtmlhQcB7P0f58o2dP+CDV1Kyz1p3MzZNlI1dMQJKaeLmip
+ 6xyKGEAl4AQSdZ2+hzhI6w==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443f2bx8ev-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443f2bx8er-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jan 2025 17:24:22 +0000 (GMT)
+ Tue, 14 Jan 2025 17:24:20 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50EGjE78020411; Tue, 14 Jan 2025 17:24:22 GMT
+ with ESMTP id 50EG9UMu020345; Tue, 14 Jan 2025 17:24:19 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 443f3eq6je-1
+ 443f3eq6g4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jan 2025 17:24:22 +0000
+ Tue, 14 Jan 2025 17:24:19 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50EHNtY0013352;
- Tue, 14 Jan 2025 17:24:21 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50EHNtXu013352;
+ Tue, 14 Jan 2025 17:24:18 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 443f3eq5us-16; Tue, 14 Jan 2025 17:24:21 +0000
+ ESMTP id 443f3eq5us-14; Tue, 14 Jan 2025 17:24:18 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V6 15/24] migration: cpr-transfer save and load
-Date: Tue, 14 Jan 2025 09:23:45 -0800
-Message-Id: <1736875434-106563-16-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V6 13/24] migration: SCM_RIGHTS for QEMUFile
+Date: Tue, 14 Jan 2025 09:23:43 -0800
+Message-Id: <1736875434-106563-14-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1736875434-106563-1-git-send-email-steven.sistare@oracle.com>
 References: <1736875434-106563-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2501140133
-X-Proofpoint-ORIG-GUID: CcQ1UkBqe7rGEbRTR9NhfySEhQD_HpQH
-X-Proofpoint-GUID: CcQ1UkBqe7rGEbRTR9NhfySEhQD_HpQH
+X-Proofpoint-ORIG-GUID: QkEl7VsFJQPPDkZZdfafGXqsyHY4ZTMW
+X-Proofpoint-GUID: QkEl7VsFJQPPDkZZdfafGXqsyHY4ZTMW
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -105,138 +105,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add functions to create a QEMUFile based on a unix URI, for saving or
-loading, for use by cpr-transfer mode to preserve CPR state.
+Define functions to put/get file descriptors to/from a QEMUFile, for qio
+channels that support SCM_RIGHTS.  Maintain ordering such that
+  put(A), put(fd), put(B)
+followed by
+  get(A), get(fd), get(B)
+always succeeds.  Other get orderings may succeed but are not guaranteed.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/cpr.h  |  3 ++
- migration/cpr-transfer.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++
- migration/meson.build    |  1 +
- migration/trace-events   |  2 ++
- 4 files changed, 82 insertions(+)
- create mode 100644 migration/cpr-transfer.c
+ migration/qemu-file.c  | 83 +++++++++++++++++++++++++++++++++++++++++++++++---
+ migration/qemu-file.h  |  2 ++
+ migration/trace-events |  2 ++
+ 3 files changed, 83 insertions(+), 4 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index d9364f7..c669b8b 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -22,4 +22,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp);
- void cpr_state_close(void);
- struct QIOChannel *cpr_state_ioc(void);
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index b6d2f58..728c7dd 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -37,6 +37,11 @@
+ #define IO_BUF_SIZE 32768
+ #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
  
-+QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
-+QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
++typedef struct FdEntry {
++    QTAILQ_ENTRY(FdEntry) entry;
++    int fd;
++} FdEntry;
 +
+ struct QEMUFile {
+     QIOChannel *ioc;
+     bool is_writable;
+@@ -51,6 +56,9 @@ struct QEMUFile {
+ 
+     int last_error;
+     Error *last_error_obj;
++
++    bool can_pass_fd;
++    QTAILQ_HEAD(, FdEntry) fds;
+ };
+ 
+ /*
+@@ -109,6 +117,8 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
+     object_ref(ioc);
+     f->ioc = ioc;
+     f->is_writable = is_writable;
++    f->can_pass_fd = qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS);
++    QTAILQ_INIT(&f->fds);
+ 
+     return f;
+ }
+@@ -310,6 +320,10 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+     int len;
+     int pending;
+     Error *local_error = NULL;
++    g_autofree int *fds = NULL;
++    size_t nfd = 0;
++    int **pfds = f->can_pass_fd ? &fds : NULL;
++    size_t *pnfd = f->can_pass_fd ? &nfd : NULL;
+ 
+     assert(!qemu_file_is_writable(f));
+ 
+@@ -325,10 +339,9 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+     }
+ 
+     do {
+-        len = qio_channel_read(f->ioc,
+-                               (char *)f->buf + pending,
+-                               IO_BUF_SIZE - pending,
+-                               &local_error);
++        struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
++        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
++                                     &local_error);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+             if (qemu_in_coroutine()) {
+                 qio_channel_yield(f->ioc, G_IO_IN);
+@@ -348,9 +361,65 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+         qemu_file_set_error_obj(f, len, local_error);
+     }
+ 
++    for (int i = 0; i < nfd; i++) {
++        FdEntry *fde = g_new0(FdEntry, 1);
++        fde->fd = fds[i];
++        QTAILQ_INSERT_TAIL(&f->fds, fde, entry);
++    }
++
+     return len;
+ }
+ 
++int qemu_file_put_fd(QEMUFile *f, int fd)
++{
++    int ret = 0;
++    QIOChannel *ioc = qemu_file_get_ioc(f);
++    Error *err = NULL;
++    struct iovec iov = { (void *)" ", 1 };
++
++    /*
++     * Send a dummy byte so qemu_fill_buffer on the receiving side does not
++     * fail with a len=0 error.  Flush first to maintain ordering wrt other
++     * data.
++     */
++
++    qemu_fflush(f);
++    if (qio_channel_writev_full(ioc, &iov, 1, &fd, 1, 0, &err) < 1) {
++        error_report_err(error_copy(err));
++        qemu_file_set_error_obj(f, -EIO, err);
++        ret = -1;
++    }
++    trace_qemu_file_put_fd(f->ioc->name, fd, ret);
++    return ret;
++}
++
++int qemu_file_get_fd(QEMUFile *f)
++{
++    int fd = -1;
++    FdEntry *fde;
++
++    if (!f->can_pass_fd) {
++        Error *err = NULL;
++        error_setg(&err, "%s does not support fd passing", f->ioc->name);
++        error_report_err(error_copy(err));
++        qemu_file_set_error_obj(f, -EIO, err);
++        goto out;
++    }
++
++    /* Force the dummy byte and its fd passenger to appear. */
++    qemu_peek_byte(f, 0);
++
++    fde = QTAILQ_FIRST(&f->fds);
++    if (fde) {
++        qemu_get_byte(f);       /* Drop the dummy byte */
++        fd = fde->fd;
++        QTAILQ_REMOVE(&f->fds, fde, entry);
++    }
++out:
++    trace_qemu_file_get_fd(f->ioc->name, fd);
++    return fd;
++}
++
+ /** Closes the file
+  *
+  * Returns negative error value if any error happened on previous operations or
+@@ -361,11 +430,17 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+  */
+ int qemu_fclose(QEMUFile *f)
+ {
++    FdEntry *fde, *next;
+     int ret = qemu_fflush(f);
+     int ret2 = qio_channel_close(f->ioc, NULL);
+     if (ret >= 0) {
+         ret = ret2;
+     }
++    QTAILQ_FOREACH_SAFE(fde, &f->fds, entry, next) {
++        warn_report("qemu_fclose: received fd %d was never claimed", fde->fd);
++        close(fde->fd);
++        g_free(fde);
++    }
+     g_clear_pointer(&f->ioc, object_unref);
+     error_free(f->last_error_obj);
+     g_free(f);
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 11c2120..3e47a20 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -79,5 +79,7 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                           off_t pos);
+ 
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
++int qemu_file_put_fd(QEMUFile *f, int fd);
++int qemu_file_get_fd(QEMUFile *f);
+ 
  #endif
-diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-new file mode 100644
-index 0000000..0fbdf66
---- /dev/null
-+++ b/migration/cpr-transfer.c
-@@ -0,0 +1,76 @@
-+/*
-+ * Copyright (c) 2022, 2024 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "io/channel-file.h"
-+#include "io/channel-socket.h"
-+#include "io/net-listener.h"
-+#include "migration/cpr.h"
-+#include "migration/migration.h"
-+#include "migration/savevm.h"
-+#include "migration/qemu-file.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+
-+QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
-+{
-+    QIOChannel *ioc;
-+    MigrationAddress *addr = channel->addr;
-+
-+    if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
-+        addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
-+
-+        QIOChannelSocket *sioc = qio_channel_socket_new();
-+        SocketAddress *saddr = &addr->u.socket;
-+
-+        if (qio_channel_socket_connect_sync(sioc, saddr, errp)) {
-+            object_unref(OBJECT(sioc));
-+            return NULL;
-+        }
-+        ioc = QIO_CHANNEL(sioc);
-+
-+    } else {
-+        error_setg(errp, "bad cpr channel address; must be unix");
-+        return NULL;
-+    }
-+
-+    trace_cpr_transfer_output(addr->u.socket.u.q_unix.path);
-+    qio_channel_set_name(ioc, "cpr-out");
-+    return qemu_file_new_output(ioc);
-+}
-+
-+QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
-+{
-+    QIOChannel *ioc;
-+    MigrationAddress *addr = channel->addr;
-+
-+    if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
-+        addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
-+
-+        QIOChannelSocket *sioc;
-+        SocketAddress *saddr = &addr->u.socket;
-+        QIONetListener *listener = qio_net_listener_new();
-+
-+        qio_net_listener_set_name(listener, "cpr-socket-listener");
-+        if (qio_net_listener_open_sync(listener, saddr, 1, errp) < 0) {
-+            object_unref(OBJECT(listener));
-+            return NULL;
-+        }
-+
-+        sioc = qio_net_listener_wait_client(listener);
-+        ioc = QIO_CHANNEL(sioc);
-+
-+    } else {
-+        error_setg(errp, "bad cpr channel socket type; must be unix");
-+        return NULL;
-+    }
-+
-+    trace_cpr_transfer_input(addr->u.socket.u.q_unix.path);
-+    qio_channel_set_name(ioc, "cpr-in");
-+    return qemu_file_new_input(ioc);
-+}
-diff --git a/migration/meson.build b/migration/meson.build
-index 1eb8c96..d3bfe84 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -15,6 +15,7 @@ system_ss.add(files(
-   'channel.c',
-   'channel-block.c',
-   'cpr.c',
-+  'cpr-transfer.c',
-   'cpu-throttle.c',
-   'dirtyrate.c',
-   'exec.c',
 diff --git a/migration/trace-events b/migration/trace-events
-index abd9cdf..e03a914 100644
+index 4e3061b..abd9cdf 100644
 --- a/migration/trace-events
 +++ b/migration/trace-events
-@@ -350,6 +350,8 @@ cpr_delete_fd(const char *name, int id) "%s, id %d"
- cpr_find_fd(const char *name, int id, int fd) "%s, id %d returns %d"
- cpr_state_save(const char *mode) "%s mode"
- cpr_state_load(const char *mode) "%s mode"
-+cpr_transfer_input(const char *path) "%s"
-+cpr_transfer_output(const char *path) "%s"
+@@ -88,6 +88,8 @@ put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
  
- # block-dirty-bitmap.c
- send_bitmap_header_enter(void) ""
+ # qemu-file.c
+ qemu_file_fclose(void) ""
++qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
++qemu_file_get_fd(const char *name, int fd) "ioc %s -> fd %d"
+ 
+ # ram.c
+ get_queued_page(const char *block_name, uint64_t tmp_offset, unsigned long page_abs) "%s/0x%" PRIx64 " page_abs=0x%lx"
 -- 
 1.8.3.1
 
