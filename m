@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A4AE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23167E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfOJ-0004Oi-2x; Tue, 14 Jan 2025 06:47:28 -0500
+	id 1tXfOC-0004N4-BU; Tue, 14 Jan 2025 06:47:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfNp-0004KX-38
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:58 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1tXfNt-0004LM-FE
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:47:05 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfNm-0006e3-FW
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:56 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-385e06af753so2715894f8f.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:46:53 -0800 (PST)
+ id 1tXfNr-0006f6-Oh
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:47:01 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-437a92d7b96so6034545e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736855212; x=1737460012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736855217; x=1737460017; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wsJrQyXEWZvrTPX4VUVE9uBd8vvjXQHOnXreMlY89ek=;
- b=dqLrN7x9vIaMFIPTiGPzszoh9Vle0SZIdveecXAADpT7vwlVVrgH/KThwFSWuPzD6j
- J6cVsywdx5Kkrsd2Kl/7mEt87Dr/oZlky98TMV47sEN+LpxOZ3Rhr1c/SCMLfpIxxCUb
- FJyAl63bmyiJXJwT8jxvqQkJVaxBbBPUpk3QKhVrAy7P0GDPeKQBm96J3B1mG3hmsL4r
- IhsAxY9AhRituYjjDvFelimCtOUYoTg2bCRFEhdgfgJ9GzRjQzi0AYPsPWsFi/hw9BPg
- myc2QDRdfHP5L2j4OEHxicz2gAJSxrF4AgRUI1DtjnmEXteuJoFGrSyW4UhxcRfa9dQf
- dJZw==
+ bh=kTnA9glybPs3zdhSbJS9OZOTx27Sx361JrQqUOFibUA=;
+ b=bp2hQfHNSu9R7aAhZRUQAToOA4QVoltDXT40U6zVb0rfGthcYocLQ4slT4NHQluvkQ
+ PSdUa5bvao3DS3N861oz+YtoLNc7Mfxc4OUFJH4wDtvoJ+iU2sErfl7rPBm1nDBs8GdY
+ amr+p6nbEDEImpU4kYi5RU1xeBz3nUwqd2zZT0n2XkNzFGL5GZBMLJQ9bfX/7xEeaybW
+ VnFKJXoecaI2/Dmu4A6scduCaQ/OtbrwwCcGsdMylq99X6WMSMcAx6R1SiPVl8FIA+kd
+ aett5ww4yHePFpBLngOBUKbPLnTjbMHqFGXaT9YeH9HTZ+PoeBzv2IBhLDb/sBGOcsW0
+ PHFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736855212; x=1737460012;
+ d=1e100.net; s=20230601; t=1736855217; x=1737460017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wsJrQyXEWZvrTPX4VUVE9uBd8vvjXQHOnXreMlY89ek=;
- b=JhERNER6QV75OBV4Xe3kU93FlJuhOIh878G7lJXBdutbDf4afMapFBissEzGvyN7Oz
- a6gEh65CPdCLHF1dKf6h5lGP/tEzFf+LhYcb2MulUhkSa6hp4BVEpqLJPONSsSBxmyXv
- 9H3csKW5+IlTm3DfSFXADNTfyq15BNP0hYOVnyob1+H+mh4Tm9Y1/UhF6Vf+Izpk7iHH
- ogh12GywdbUH6SpKaxYrE1iZ8Da8DQKTbN7J8PjGUcBiJqC/buBTaLbhZFrGJSifsLvw
- MgBtetHsDy2P4W/x8RkZjsEl4aaGaqrJQHGVOg+sjhEEKyq2WSJaxaR6f8LQn9Uq5Jtk
- oOyg==
-X-Gm-Message-State: AOJu0YyG8+2JjmMVxO1RQekSo2/0YTEvvc1zoiovXdiPGltPM8d7dAbg
- 1d9+fDv4E8JEj61fZj9zzl6/jecR+vHAmPt5fnHlvmmEmvJbp+N0UAWjxoOi0wnqdh456eZdXh+
- vGyU=
-X-Gm-Gg: ASbGncvkOF1hiGSzWuRktKwUhlzYszcdZA6KvOUPhqh50Ts+4gAqP+OCKc4Iu00LUNB
- JlgckUqwBXdyMgAHuuwruRSwbuprLfVlFDtNT1F/1EP1Lytk0db6JHRuRycfFtjn2M3QH1zuMhv
- kyKxEwAZ8k3q68w4IETOvUeWmf0fKPqjbknf2/sc4xQ/lDmrlB2F29exdpjG/lSya4h4eFYcaJ6
- eUewM6oaoRXTpznkR6AiqW7R6Kyt7OyvFthzy0lOUZwnuh6ZjTIDEw=
-X-Google-Smtp-Source: AGHT+IE1DFN+OWPDp14+H/YgQki97VWAV3NLnStbT0X6sb+ofZLZxMSsL1CtkbJ3Y8sVU3fScSyTbQ==
-X-Received: by 2002:a5d:47c4:0:b0:38a:41f8:8abf with SMTP id
- ffacd0b85a97d-38a87312917mr23365848f8f.31.1736855212602; 
- Tue, 14 Jan 2025 03:46:52 -0800 (PST)
+ bh=kTnA9glybPs3zdhSbJS9OZOTx27Sx361JrQqUOFibUA=;
+ b=w8KpHEqwaGrRaAw3wXopmMi5CWN8WIMBc5xB7LPA2NPPJjzrkuHqpbByR8cCvt4tyg
+ +ECxuposhTzWUyg9Rprsb7GBmu5DLRr1yIaxm7V98Z4XEJYW6qzjNhTyVSUpYL8U/NU1
+ xAffiA6ylYgl4wrS8AwAgqErAvXZkNCgkXqXaWCw+lrdX0jdOyeB4VhgeyHKFxa9T/g9
+ a8Wk90IWyZMI8kUeMSG06oz3bHS+uaa3yAbYoav16xHo+gVHVyhhXXDUHqfscwBeaN9v
+ q2ibRLONYAtyHL07OyX2hmEltUHF00J/uQNTqOy6BJ62FwELDaU5NX4Di3IWMhr3O2nU
+ QNMQ==
+X-Gm-Message-State: AOJu0YyR9ALrszz9FHA10azhr3XciNw6u9MzHwJRWeb0vodnG5WNkPmd
+ pttbksfPi33yZDTvw8oRaAEose3slXHY4cGuE+A4myNoMiDJsd8R2oWCXd5XN7s=
+X-Gm-Gg: ASbGncukFuxa7WTtB+JQY/Htscx9ovuVJlSK9epDYLIGPkIHKecyCNKJdygiNKlMpft
+ wzV7M0dNwLwqMPinsJY8fNSeO2mhCnHUXJJJPhOobhlZfkWVRJCkvPQBk7gHcajm8gY6dfHU4WB
+ m48dED2R715dnr+dD4DZbEGz3lK8l7OasTKM9bR0iSFuHwgMVGDGniNWUctOt9ejbg6oL69U6I6
+ ppCLCDPrG3bGmB/EZBTZ7KWYWr/9DL0rRdJ3R6xpcsQbpHgPhgLHdw=
+X-Google-Smtp-Source: AGHT+IHSUNDh+GcBAAqkL4FkfAxGcBR98ti9n55moS+xcyX7hdsWEPj36o81KOF67pT+FGGYiXXm8Q==
+X-Received: by 2002:a05:600c:46d0:b0:431:58cd:b259 with SMTP id
+ 5b1f17b1804b1-436e26f4d53mr225863455e9.31.1736855216938; 
+ Tue, 14 Jan 2025 03:46:56 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b80c9sm14473802f8f.84.2025.01.14.03.46.50
+ 5b1f17b1804b1-436e9d8fd03sm177334135e9.6.2025.01.14.03.46.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 03:46:50 -0800 (PST)
+ Tue, 14 Jan 2025 03:46:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 735D15FB53;
- Tue, 14 Jan 2025 11:38:24 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 89ACA5F932;
+ Tue, 14 Jan 2025 11:38:23 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefan Weil <sw@weilnetz.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 28/37] tests/qtest: fix some copy and paste errors in kdoc
-Date: Tue, 14 Jan 2025 11:38:12 +0000
-Message-Id: <20250114113821.768750-29-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v2 19/37] contrib/plugins/hwprofile: fix 32-bit build
+Date: Tue, 14 Jan 2025 11:38:03 +0000
+Message-Id: <20250114113821.768750-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
 References: <20250114113821.768750-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,59 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A number of copy and paste kdoc comments are referring to the wrong
-definition. Fix those cases.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241217224306.2900490-10-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/qtest/libqos/qgraph.h | 2 +-
- tests/qtest/libqtest.h      | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ contrib/plugins/hwprofile.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/tests/qtest/libqos/qgraph.h b/tests/qtest/libqos/qgraph.h
-index 1b5de02e7b..81fbfdd0e2 100644
---- a/tests/qtest/libqos/qgraph.h
-+++ b/tests/qtest/libqos/qgraph.h
-@@ -355,7 +355,7 @@ void qos_object_start_hw(QOSGraphObject *obj);
- QOSGraphObject *qos_machine_new(QOSGraphNode *node, QTestState *qts);
+diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
+index 739ac0c66b..2a4cbc47d4 100644
+--- a/contrib/plugins/hwprofile.c
++++ b/contrib/plugins/hwprofile.c
+@@ -43,6 +43,8 @@ typedef struct {
  
- /**
-- * qos_machine_new(): instantiate a new driver node
-+ * qos_driver_new(): instantiate a new driver node
-  * @node: A driver node to be instantiated
-  * @parent: A #QOSGraphObject to be consumed by the new driver node
-  * @alloc: An allocator to be used by the new driver node.
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index f23d80e9e5..fa08c7eca5 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -365,7 +365,7 @@ QDict *qtest_qmp_event_ref(QTestState *s, const char *event);
- char *qtest_hmp(QTestState *s, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+ static GMutex lock;
+ static GHashTable *devices;
++static struct qemu_plugin_scoreboard *source_pc_scoreboard;
++static qemu_plugin_u64 source_pc;
  
- /**
-- * qtest_hmpv:
-+ * qtest_vhmp:
-  * @s: #QTestState instance to operate on.
-  * @fmt: HMP command to send to QEMU, formats arguments like vsprintf().
-  * @ap: HMP command arguments
-@@ -904,7 +904,7 @@ void qtest_qmp_assert_success(QTestState *qts, const char *fmt, ...)
+ /* track the access pattern to a piece of HW */
+ static bool pattern;
+@@ -159,7 +161,7 @@ static DeviceCounts *new_count(const char *name, uint64_t base)
+     count->name = name;
+     count->base = base;
+     if (pattern || source) {
+-        count->detail = g_hash_table_new(NULL, NULL);
++        count->detail = g_hash_table_new(g_int64_hash, g_int64_equal);
+     }
+     g_hash_table_insert(devices, (gpointer) name, count);
+     return count;
+@@ -169,7 +171,7 @@ static IOLocationCounts *new_location(GHashTable *table, uint64_t off_or_pc)
+ {
+     IOLocationCounts *loc = g_new0(IOLocationCounts, 1);
+     loc->off_or_pc = off_or_pc;
+-    g_hash_table_insert(table, (gpointer) off_or_pc, loc);
++    g_hash_table_insert(table, &loc->off_or_pc, loc);
+     return loc;
+ }
  
- #ifndef _WIN32
- /**
-- * qtest_qmp_fd_assert_success_ref:
-+ * qtest_qmp_fds_assert_success_ref:
-  * @qts: QTestState instance to operate on
-  * @fds: the file descriptors to send
-  * @nfds: number of @fds to send
-@@ -921,7 +921,7 @@ QDict *qtest_qmp_fds_assert_success_ref(QTestState *qts, int *fds, size_t nfds,
-     G_GNUC_PRINTF(4, 5);
+@@ -224,12 +226,12 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
  
- /**
-- * qtest_qmp_fd_assert_success:
-+ * qtest_qmp_fds_assert_success:
-  * @qts: QTestState instance to operate on
-  * @fds: the file descriptors to send
-  * @nfds: number of @fds to send
+         /* either track offsets or source of access */
+         if (source) {
+-            off = (uint64_t) udata;
++            off = qemu_plugin_u64_get(source_pc, cpu_index);
+         }
+ 
+         if (pattern || source) {
+             IOLocationCounts *io_count = g_hash_table_lookup(counts->detail,
+-                                                             (gpointer) off);
++                                                             &off);
+             if (!io_count) {
+                 io_count = new_location(counts->detail, off);
+             }
+@@ -247,10 +249,14 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ 
+     for (i = 0; i < n; i++) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+-        gpointer udata = (gpointer) (source ? qemu_plugin_insn_vaddr(insn) : 0);
++        if (source) {
++            uint64_t pc = qemu_plugin_insn_vaddr(insn);
++            qemu_plugin_register_vcpu_mem_inline_per_vcpu(
++                    insn, rw, QEMU_PLUGIN_INLINE_STORE_U64,
++                    source_pc, pc);
++        }
+         qemu_plugin_register_vcpu_mem_cb(insn, vcpu_haddr,
+-                                         QEMU_PLUGIN_CB_NO_REGS,
+-                                         rw, udata);
++                                         QEMU_PLUGIN_CB_NO_REGS, rw, NULL);
+     }
+ }
+ 
+@@ -306,10 +312,9 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+         return -1;
+     }
+ 
+-    /* Just warn about overflow */
+-    if (info->system.smp_vcpus > 64 ||
+-        info->system.max_vcpus > 64) {
+-        fprintf(stderr, "hwprofile: can only track up to 64 CPUs\n");
++    if (source) {
++        source_pc_scoreboard = qemu_plugin_scoreboard_new(sizeof(uint64_t));
++        source_pc = qemu_plugin_scoreboard_u64(source_pc_scoreboard);
+     }
+ 
+     plugin_init();
 -- 
 2.39.5
 
