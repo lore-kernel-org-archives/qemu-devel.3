@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 446C6E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 21:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798C4E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 22:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXoqG-0001ZY-Ux; Tue, 14 Jan 2025 16:52:56 -0500
+	id 1tXp8A-00048w-Iy; Tue, 14 Jan 2025 17:11:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXoqF-0001ZO-88
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:52:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tXp84-00048i-Bt
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 17:11:22 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXoqC-0003zd-O2
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:52:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736891570;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XEUkriz2fMyqzHItUw2pNS9V6qacperf1Oc3JgwYGz0=;
- b=dUl7aH9XO44W9TYE7EBKa+GwV9BbTfk6n+MCBS07ZHVXcIZIYWfSzObEuAiaAK++oVHdKK
- hwm21etS6z3S/PJcPDV0npyQ08X29UAgwZHRwPjSShvFuU06xm1x5CTLxNBMUdvJI+0/Ot
- aJWYoOxuDNjjW3IGzAbWWCdG0WADMro=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-86-1TdOU71DPpCT7HUbf5k74w-1; Tue, 14 Jan 2025 16:52:49 -0500
-X-MC-Unique: 1TdOU71DPpCT7HUbf5k74w-1
-X-Mimecast-MFC-AGG-ID: 1TdOU71DPpCT7HUbf5k74w
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d8f6b89dcdso98581536d6.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 13:52:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736891569; x=1737496369;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XEUkriz2fMyqzHItUw2pNS9V6qacperf1Oc3JgwYGz0=;
- b=ZWIYKFLA1ZmqfSJa51DXCMFzCQcMceLEdBE1qlPEwBhCGMDEu15esSjTmHMbJ3Hdlu
- kFksvfnb283IuOPIfdx8cWErm20T+wY2GHoJFrmVvJvMAp2L7B8iCziTx6y2Jhy9qkSP
- qAYpDotzf0FaT+nnD8wcryz5tsu2yylzJQGQ37qE15GmAhV0c7u/8E+LGoXOGT7UjiZd
- EBrrtBmbyggQvU9wPdH6qsTNBiyq0OT0kkR9dNFC4N6NO+g5BtuwSxZ4OibFFqdIaCcB
- jWV96ifvVngZSI3HLsGuCplqL5BlAAmmJ/xrPW5T06vOUhShH5TDJXK43o1DZuy3I8iz
- ucwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWS6NdSIN1bOp0uP5HdyXoU1FySautLhaw65lzLdxEF6Z6mZBLep+4JPFqSXAEgrIIYd7dWqX1Fle9C@nongnu.org
-X-Gm-Message-State: AOJu0Yx2RilIlQp9qSN8mxlOhwDuVkEq0xjAx66avClJnrjUAbyl6WGh
- vfBU1b4yKv/NlZPQXRiTqKWUy/PP7w6jRdckSO5Yjm8q4z+5gb/jr9I+SjAzpkRhhLUghxL42Vf
- /MTqU6QiqnqqqSqKMxN6bZ0c4uNpSUIqPitFSnOSP6c14sXTtK1Pi
-X-Gm-Gg: ASbGncuGzjL+tvl7Xpzh6d/KujuT6cGvBR7uRUHH4uaeSBvJ+SQJgLY/XPgRGshdjiW
- kIpQK/c0PqOySx285pyos+HBSKTZsrKIGNNxJkSbHQrTlkL+RnZyjjYK50SG/fYwC8cwiJIndVu
- lqD8lJVEZui+ctfI8Zik2hf3iqYQl1fSfut8AdMU9RpmLj0kZPjDX5a5CMFGzjlJA1MQ246TvVc
- jKiJz9X0vdIlWC2rUaZ64kQHkpTDzMEXOtbS3ab/WaY57rrSKE05DSwATqJIoFKlup3KPnda9+i
- pTEu5Rg6i3nAQ4q4+A==
-X-Received: by 2002:a05:6214:2f8e:b0:6df:ba24:2af2 with SMTP id
- 6a1803df08f44-6dfba242b5bmr284594506d6.25.1736891568761; 
- Tue, 14 Jan 2025 13:52:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEojH+i/cJ//IYug9ikjHnI4gnURNLtswq0an2hf6OrzO9HvwMPIzG1Ru8cUgpcgZto6XBCuA==
-X-Received: by 2002:a05:6214:2f8e:b0:6df:ba24:2af2 with SMTP id
- 6a1803df08f44-6dfba242b5bmr284594196d6.25.1736891568364; 
- Tue, 14 Jan 2025 13:52:48 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dfadec2acbsm56952426d6.122.2025.01.14.13.52.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 13:52:47 -0800 (PST)
-Date: Tue, 14 Jan 2025 16:52:45 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [RFC PATCH] tests/qtest/migration: Add cpu hotplug test
-Message-ID: <Z4bcrc2sfCCO8LWR@x1n>
-References: <20250113210833.1712-1-farosas@suse.de>
- <CAJSP0QWe+0_rjchH0hCszU-4r_PF+ZgZgWb+cgg6UZzZiYeTQA@mail.gmail.com>
- <8734hlh471.fsf@suse.de>
- <CAJSP0QUGfq0yPyzyjHy9D0=e2o_AVMvb1SaA69fm3oexYaH60g@mail.gmail.com>
- <Z4bF0FY_v8qKCGlb@x1n>
- <CAJSP0QXC+ZMECR0qkqns=ShWBBzabzf5B6eFUifM51eC9J6q8A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tXp82-0006d3-FH
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 17:11:20 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50EFDjp1004708;
+ Tue, 14 Jan 2025 22:11:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Fyd1Lx
+ BVIpIINvYhQRmeQdceLyXCb0j3bHkd2XaVHoc=; b=DuTvfoZWgEb5TC4P4H75eg
+ nHs6Eu+OBbJkOZqGxToyvND8fbXM7ZEBjsardx+lAQcGknlDGSTV1S6fBWmnLNUD
+ 9ruLXhWTB8SdOPCdOOF686fV7xC0lZJOTqMHAL60AMZtGOpjK/m+gg8/cQgkBoLC
+ su4O8iHa1nR/SqkKdNIvD6kYxk4o8xKei3/7kXEJvVWYFcM2lYCvF7Bq+LToZhp4
+ lAcL8hKMlOHR2GAJLztfkBAV4nBsL1vVikDCWsGEyPFwKDb/VTvaF/k/EP4myvUQ
+ RdMMUZOv48H852vWDiWfUaFg4Kguo+SfdpbUnKXHVOkuMjhjHhOhbZLDlzfEfOsA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 445gdjm91a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jan 2025 22:11:15 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50ELDeYq002663;
+ Tue, 14 Jan 2025 22:11:13 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443by5eqg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jan 2025 22:11:13 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50EMBB8K55640526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Jan 2025 22:11:11 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0DFD0205E3;
+ Tue, 14 Jan 2025 21:45:43 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7DFFB205E2;
+ Tue, 14 Jan 2025 21:45:42 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jan 2025 21:45:42 +0000 (GMT)
+Message-ID: <ac7210776db3b844ffb1af1d3e345da235bf986e.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 10/37] system: propagate Error to gdbserver_start
+ (and other device setups)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Stefan Weil
+ <sw@weilnetz.de>, Pierrick Bouvier <pierrick.bouvier@linaro.org>, Laurent
+ Vivier <laurent@vivier.eu>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 14 Jan 2025 22:45:42 +0100
+In-Reply-To: <20250114113821.768750-11-alex.bennee@linaro.org>
+References: <20250114113821.768750-1-alex.bennee@linaro.org>
+ <20250114113821.768750-11-alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJSP0QXC+ZMECR0qkqns=ShWBBzabzf5B6eFUifM51eC9J6q8A@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: r-N-Ty-DYXuUHWuAuSLuiUY66scxJsih
+X-Proofpoint-ORIG-GUID: r-N-Ty-DYXuUHWuAuSLuiUY66scxJsih
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-14_07,2025-01-13_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999
+ suspectscore=0 malwarescore=0 bulkscore=0 clxscore=1011 phishscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 spamscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501140166
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.794, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,102 +114,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 04:14:44PM -0500, Stefan Hajnoczi wrote:
-> On Tue, 14 Jan 2025 at 15:15, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Tue, Jan 14, 2025 at 02:28:46PM -0500, Stefan Hajnoczi wrote:
-> > > On Tue, 14 Jan 2025 at 09:15, Fabiano Rosas <farosas@suse.de> wrote:
-> > > >
-> > > > Stefan Hajnoczi <stefanha@gmail.com> writes:
-> > > >
-> > > > > On Mon, 13 Jan 2025 at 16:09, Fabiano Rosas <farosas@suse.de> wrote:
-> > > > >>
-> > > > >> Bug #2594 is about a failure during migration after a cpu hotplug. Add
-> > > > >> a test that covers that scenario. Start the source with -smp 2 and
-> > > > >> destination with -smp 3, plug one extra cpu to match and migrate.
-> > > > >>
-> > > > >> The issue seems to be a mismatch in the number of virtqueues between
-> > > > >> the source and destination due to the hotplug not changing the
-> > > > >> num_queues:
-> > > > >>
-> > > > >>   get_pci_config_device: Bad config data: i=0x9a read: 4 device: 5
-> > > > >>   cmask: ff wmask: 0 w1cmask:0
-> > > > >>
-> > > > >> Usage:
-> > > > >> $ QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-> > > > >>   ./tests/qtest/migration-test -p /x86_64/migration/hotplug/cpu
-> > > > >>
-> > > > >> References: https://gitlab.com/qemu-project/qemu/-/issues/2594
-> > > > >> References: https://issues.redhat.com/browse/RHEL-68302
-> > > > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > > > >> ---
-> > > > >> As you can see there's no fix attached to this. I haven't reached that
-> > > > >> part yet, suggestions welcome =). Posting the test case if anyone
-> > > > >> wants to play with this.
-> > > > >>
-> > > > >> (if someone at RH is already working on this, that's fine. I'm just
-> > > > >> trying to get some upstream bugs to move)
-> > > > >
-> > > > > The management tool should set num_queues on the destination to ensure
-> > > > > migration compatibility.
-> > > > >
-> > > >
-> > > > I'm not sure that's feasible. The default num-queues seem like an
-> > > > implementation detail that the management application would not have a
-> > > > way to query. Unless it starts the source with a fixed number that
-> > > > already accounts for all hotplug/unplug operations during the VM
-> > > > lifetime, which would be wasteful in terms of resources allocated
-> > > > upfront.
-> > > >
-> > > > That would also make the destination run with a suboptimal (< #vcpus)
-> > > > number of queues, although that's already the case in the source after
-> > > > the hotplug. Do we have any definition on what should happen durgin
-> > > > hotplug? If one plugs 100 vcpus, should num-queues remain as 2?
-> > >
-> > > QEMU defaults num_queues to the number of present CPUs. A management
-> > > tool that wants to ensure that all hotplugged CPUs will have their own
-> > > virtqueues must set num_queues to max_cpus instead. This wastes
-> > > resources upfront but in theory the guest can operate efficiently. I
-> > > haven't checked the Linux guest drivers to see if they actually handle
-> > > virtqueue allocation after hotplug. The Linux drivers vary in how they
-> > > allocate virtqueue interrupts, so be sure to check several device
-> > > types like virtio-net and virtio-blk as they may behave differently.
-> > >
-> > > Or the management tool can explicitly set num_queues to the number of
-> > > present CPUs and preserve that across live migration and CPU hotplug.
-> > > In that case num_queues can be updated across guest cold boot in order
-> > > to (eventually) achieve the optimal multi-queue configuration.
-> > >
-> > > Other approaches might be possible too. The management tool has a
-> > > choice of how to implement this and QEMU doesn't dictate a specific
-> > > approach.
-> >
-> > Thanks for the answer, Stefan.  I've left a comment in each of the issue
-> > reports so that reporter can verify this works properly.
-> >
-> > This also reminded me we could have specified a very large number of queues
-> > in many cases - I remember it used to be 1024 somehow (perhaps also the max
-> > vcpu number, but I'm not sure), which caused unwanted slowness on migration
-> > loading side (aka, downtime portion) due to MMIO regions of each queue -
-> > each of the queues may need a global address space update on the guest
-> > physical address space.  I didn't verify this issue, but if it can be
-> > reproduced and verified true, I wonder if the MMIO regions (or any relevant
-> > resources that would be enabled with num_queues even though some of them
-> > are not in use) can be plugged lazily, so that we can save quite some time
-> > on loadvm of migration.
-> 
-> Greg Kurz's commit 9cf4fd872d14 ("virtio: Clarify MR transaction
-> optimization") is about the scaling optimization where ioeventfd
-> changes are batched into a single transaction. This made a big
-> difference. Maybe something similar can be done in your case too?
+On Tue, 2025-01-14 at 11:37 +0000, Alex Benn=C3=A9e wrote:
+> This started as a clean-up to properly pass a Error handler to the
+> gdbserver_start so we could do the right thing for command line and
+> HMP invocations.
+>=20
+> Now that we have cleaned up foreach_device_config_or_exit() in
+> earlier
+> patches we can further simplify by it by passing &error_fatal instead
+> of checking the return value. Having a return value is still useful
+> for HMP though so tweak the return to use a simple bool instead.
+>=20
+> Message-Id: <20250109170619.2271193-11-alex.bennee@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Yes it could help.  I recall there used to be a more aggresive batching
-proposal for the whole VM loading process that covers all device loads, but
-that had some challenges elsewhere in some post_load()s.  It could indeed
-be a good idea to batch in an intemediate level like per-device if possible.
-I'll give it a shot when I hit that again anywhere.
+Apparently the BSD code needs to be adjusted:
 
--- 
-Peter Xu
+../qemu/bsd-user/main.c:631:32: error: too few arguments to function
+call, expected 2, have 1
+  631 |         gdbserver_start(gdbstub);
+      |         ~~~~~~~~~~~~~~~        ^
+/home/user/qemu/include/exec/gdbstub.h:63:6: note: 'gdbserver_start'
+declared here
+   63 | bool gdbserver_start(const char *port_or_device, Error **errp);
+      |      ^               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+
+> ---
+> v2
+> =C2=A0 - split some work into pre-cursor patches
+> ---
+> =C2=A0include/exec/gdbstub.h |=C2=A0 8 +++++-
+> =C2=A0gdbstub/system.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 22 ++++++++-=
+-------
+> =C2=A0gdbstub/user.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 20=
+ ++++++++-------
+> =C2=A0linux-user/main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 6 +----
+> =C2=A0monitor/hmp-cmds.c=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
+> =C2=A0system/vl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 58 ++++++++++++++++++++--------------------
+> --
+> =C2=A06 files changed, 59 insertions(+), 57 deletions(-)
+
+[...]
+
+> diff --git a/gdbstub/user.c b/gdbstub/user.c
+> index 0b4bfa9c48..fb8f6867ea 100644
+> --- a/gdbstub/user.c
+> +++ b/gdbstub/user.c
+> @@ -13,6 +13,7 @@
+> =C2=A0#include "qemu/bitops.h"
+> =C2=A0#include "qemu/cutils.h"
+> =C2=A0#include "qemu/sockets.h"
+> +#include "qapi/error.h"
+> =C2=A0#include "exec/hwaddr.h"
+> =C2=A0#include "exec/tb-flush.h"
+> =C2=A0#include "exec/gdbstub.h"
+> @@ -372,15 +373,15 @@ static bool gdb_accept_tcp(int gdb_fd)
+> =C2=A0=C2=A0=C2=A0=C2=A0 return true;
+> =C2=A0}
+> =C2=A0
+> -static int gdbserver_open_port(int port)
+> +static int gdbserver_open_port(int port, Error **errp)
+> =C2=A0{
+> =C2=A0=C2=A0=C2=A0=C2=A0 struct sockaddr_in sockaddr;
+> =C2=A0=C2=A0=C2=A0=C2=A0 int fd, ret;
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 fd =3D socket(PF_INET, SOCK_STREAM, 0);
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (fd < 0) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 perror("socket");
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -1;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "Failed to b=
+ind socket: %s",
+> strerror(errno));
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+
+I think return -1 needs to stay here.
+
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0=C2=A0 qemu_set_cloexec(fd);
+
+[...]
 
 
