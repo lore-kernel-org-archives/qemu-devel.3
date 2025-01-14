@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8039C02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2232E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfFe-00055g-2y; Tue, 14 Jan 2025 06:38:30 -0500
+	id 1tXfFr-0005BR-0K; Tue, 14 Jan 2025 06:38:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFc-00054Q-63
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:28 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1tXfFk-00057t-R7
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:39 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFa-0005Oq-BQ
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:27 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5d9f0a6adb4so2510967a12.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:25 -0800 (PST)
+ id 1tXfFh-0005Ql-Vu
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:36 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0ac27b412so7192202a12.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736854705; x=1737459505; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736854711; x=1737459511; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DjEsdOpQ49q8jWvklUeiIlGfQQiMPZKhuPb/zwxQMo4=;
- b=BPqPKrdh83zFleyreV9o7NUjIxSBZhBPQipuGt3B3CRliJTPYr66/oycp9/vTRHmE5
- 7SKUAjdg3s62dRNWlot7fo1qQyBjmX0WXx5ug8xidSLdGCg4W1qf2zPbCDWdcs2oRBKk
- tLmY+6EvbO7Y9XlRTw6Pg4coEufqViBygiJazyj1QS9hExBiXKdiWig7ytMl5AvJOUSE
- tN0h1WfD5M4595Myjk0YVulXtm4ld7R+DuXKDCCGKFCA+lane8zaqdfws9wS4PQgE4pl
- NQZvMWZAKJpHNdIKV1yU0iivpRhKvN43WjqHQiiIU5RCgvO5zwQBUu40KjQeYZVDkr07
- 6Uig==
+ bh=Ut5L3H7ENukAVXMf9ucpT4mEYkt3Qt71rdTcSo9h+fA=;
+ b=caQZd1pfnd8EZ2W3jDsJ0H/AocTRhT4pTJe1AMpBJ9TC1AhKissI86DVBAbozCgIKf
+ uzw0rF1tCQFA+W2rbvZJ0oV94yANJZPH+EOs8aXgaHg3XccM0sgkVquDMFhiRyYul2im
+ Y5QqNDMaSXcpn3VSRbIq6oAPTXf2i7piJujLUEw5k5RAn9GpaTWm8PqE6JKEORePUdO1
+ yKzOSsrgtZIRAGyjdRGYU6D9w382Nb0H7iO44q0/eis+7r6jDsW9ZopQAYMuFkr2FslD
+ /HogYkQlix/qBDGrFU4UYc2OfW6D2jhGKdupMvj169Rr8HdUDu6re416l0OhVP3qIQq6
+ OU3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736854705; x=1737459505;
+ d=1e100.net; s=20230601; t=1736854711; x=1737459511;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DjEsdOpQ49q8jWvklUeiIlGfQQiMPZKhuPb/zwxQMo4=;
- b=NfA7oEGQSE5a6pBtbsoGNeS/qCLbZG2ekw1U1ZbEMZXLg8OoUI+moLlPWL0mAJOqTx
- V9RVrimPQ2jxliXXCxy65r8POEfUFTu5Ys1GOt3QjXow/Cmp9Eg56i1fTRz9WjDo4Jhb
- smbiY204YE1BcXGsFJRGaGqXGYD+C81Ccey7R2XG1dvpuNtpc1ow70qJxjNSwkhJWoIM
- u3lFUUlQOM7gmiO85vplb/4ByXC9BmuqzNv+D2MjNwY67GgvR9Ma3UJlGbjWxUgwb45l
- 51WksIKWOMxgtcjGue+TgXXCgQmrAejaRuko1rCGB0DH8MGaTwvSseKrF7sw6KX5S6hY
- CKCQ==
-X-Gm-Message-State: AOJu0YzDjFg+ZsLocEN72kjqSlqOC7Du/G52f6POeltn+9WeDZcUVKBR
- xVLxfx2wyafaONACBaCq/lOQJiX+14aWXsCU/mngQNOyOB5dH4Gxr8C+Pycli+8=
-X-Gm-Gg: ASbGncvfiOtb+SZKcftKGPMoDQ44oCu7Av/NNRkOuohWFiNlZTVkSMCMlVJCYBv30Xf
- 7uLqXK4MexG8kmAkjJILF2YDrfXL3m1hN/GO+lRpToHmwUpU9TpTblZgqprMnLvAN6/KoH16U4q
- Rb3ms6eU25tpXxJF9SptInWt3QFLJEOGAYkxLgJr4hqFqX+L1/TyLgAKfxwKza/UH12mXmFJZ+D
- 1odDQFDpHpbfoK51RDrnPFxZn3AuAn7V8xUqsV39eGyXlg6YKQd8gw=
-X-Google-Smtp-Source: AGHT+IGSD9s1d/TdeGuj73QWEAjuBQBDdnXger8Z32G05UFkWFvPAAkrHCypMyEB4mBX5iYNFEf+Mg==
-X-Received: by 2002:a17:907:7f08:b0:aaf:c19b:728b with SMTP id
- a640c23a62f3a-ab2ab708d2cmr2339132566b.51.1736854704775; 
- Tue, 14 Jan 2025 03:38:24 -0800 (PST)
+ bh=Ut5L3H7ENukAVXMf9ucpT4mEYkt3Qt71rdTcSo9h+fA=;
+ b=X3Q6A1gDPSej+/b418TBiApfJTSyu/PR7iUhIlRLHGPtfj2M28S2+VM0TwfES7BtF8
+ i3+NHFuzWqGGOv/moEbJT0CpGEPGEIe/8IW6Jjcy0qid8yu+o0SKTBUhWcpVME10tkQW
+ /0WI66HhNTQDU2919V5CfF52HToxlWFogjvZ6bCZMBYK9KFJDGDefuynoXCQkM+xSJ1o
+ CWHom8tjaP0WVp5d0yQSyGKBEeUmwV3uxULU/bwn7gTToDb702dnE0Ukv5MiH0zJ64eJ
+ 6Wa8Q7Y2R3jrPtFkS8bft4B5inPs1QkQSXd44Sq9KFn0Ecu+BxhmO9qHEIi3PdPyeapI
+ T76g==
+X-Gm-Message-State: AOJu0YzqYJCnFRjW7WxvazWHK6oYMwaJONigXeUTxgy6RtS1iQf7/Roq
+ sj5N4GgAaraTrwEzZ1IG3rvSzxT966HrFEZNqYenJPj2nY2KLBBUqHttViGlBK0=
+X-Gm-Gg: ASbGncuOe+BdkpV1u11jYKQinZn1YdWQhlseuBFITNfVwe/rseOVrM9YQspQ+vgyYCt
+ AEKo6CGHEzKsJw8/FeR/gCMFhOwcse/+lPRYFlqqvwZL5vIp7nnY2PP57QNOgocQfnNcrxE/Jfo
+ clwdFqcK6x87GYfjODXMMH9TWCXgssv7yYKIam45rep1DjbMTtd/9lvAO5xV3gZlu7zduFP6Ccq
+ ZNZPM37QoyRYZKaN8PFIu3DkCjh965Iy5VK2I6/ptYNI4an3dt/ZY4=
+X-Google-Smtp-Source: AGHT+IFsSCpX8WFSpwkoKNzm1awGOqpIacxh+XT7KS6OmwEciMGEZiK7jqK86Tw34OWrGG4qeu1+Mg==
+X-Received: by 2002:a17:906:c155:b0:aa6:b5e0:8c59 with SMTP id
+ a640c23a62f3a-ab2ab74b2admr1811818166b.35.1736854711200; 
+ Tue, 14 Jan 2025 03:38:31 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95b0ab6sm615513066b.155.2025.01.14.03.38.22
+ a640c23a62f3a-ab2c90dc570sm630304666b.51.2025.01.14.03.38.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 03:38:22 -0800 (PST)
+ Tue, 14 Jan 2025 03:38:28 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F296F5F92B;
- Tue, 14 Jan 2025 11:38:21 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 2C11C5FA05;
+ Tue, 14 Jan 2025 11:38:23 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -71,18 +71,20 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Stefan Weil <sw@weilnetz.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 02/37] semihosting/uaccess: Briefly document returned values
-Date: Tue, 14 Jan 2025 11:37:46 +0000
-Message-Id: <20250114113821.768750-3-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v2 15/37] contrib/plugins/stoptrigger: fix 32-bit build
+Date: Tue, 14 Jan 2025 11:37:59 +0000
+Message-Id: <20250114113821.768750-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
 References: <20250114113821.768750-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,121 +107,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Since it is not obvious the get/put_user*() methods
-can return an error, add brief docstrings about it.
-Also remind to use *unlock_user() when appropriate.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212115413.42109-1-philmd@linaro.org>
+Message-Id: <20241217224306.2900490-6-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/semihosting/uaccess.h | 55 +++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ contrib/plugins/stoptrigger.c | 48 ++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
 
-diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
-index c2fa5a655d..6bc90b12d6 100644
---- a/include/semihosting/uaccess.h
-+++ b/include/semihosting/uaccess.h
-@@ -19,41 +19,96 @@
- #include "exec/tswap.h"
- #include "exec/page-protection.h"
+diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
+index 03ee22f4c6..b3a6ed66a7 100644
+--- a/contrib/plugins/stoptrigger.c
++++ b/contrib/plugins/stoptrigger.c
+@@ -21,9 +21,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ /* Scoreboard to track executed instructions count */
+ typedef struct {
+     uint64_t insn_count;
++    uint64_t current_pc;
+ } InstructionsCount;
+ static struct qemu_plugin_scoreboard *insn_count_sb;
+ static qemu_plugin_u64 insn_count;
++static qemu_plugin_u64 current_pc;
  
-+/**
-+ * get_user_u64:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u64(val, addr)                                         \
-     ({ uint64_t val_ = 0;                                               \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = tswap64(val_); ret_; })
+ static uint64_t icount;
+ static int icount_exit_code;
+@@ -34,6 +36,11 @@ static bool exit_on_address;
+ /* Map trigger addresses to exit code */
+ static GHashTable *addrs_ht;
  
-+/**
-+ * get_user_u32:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u32(val, addr)                                         \
-     ({ uint32_t val_ = 0;                                               \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = tswap32(val_); ret_; })
++typedef struct {
++    uint64_t exit_addr;
++    int exit_code;
++} ExitInfo;
++
+ static void exit_emulation(int return_code, char *message)
+ {
+     qemu_plugin_outs(message);
+@@ -43,23 +50,18 @@ static void exit_emulation(int return_code, char *message)
  
-+/**
-+ * get_user_u8:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u8(val, addr)                                          \
-     ({ uint8_t val_ = 0;                                                \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = val_; ret_; })
+ static void exit_icount_reached(unsigned int cpu_index, void *udata)
+ {
+-    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
++    uint64_t insn_vaddr = qemu_plugin_u64_get(current_pc, cpu_index);
+     char *msg = g_strdup_printf("icount reached at 0x%" PRIx64 ", exiting\n",
+                                 insn_vaddr);
+-
+     exit_emulation(icount_exit_code, msg);
+ }
  
-+/**
-+ * get_user_ual:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_ual(arg, p) get_user_u32(arg, p)
+ static void exit_address_reached(unsigned int cpu_index, void *udata)
+ {
+-    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
+-    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", insn_vaddr);
+-    int exit_code;
+-
+-    exit_code = GPOINTER_TO_INT(
+-        g_hash_table_lookup(addrs_ht, GUINT_TO_POINTER(insn_vaddr)));
+-
+-    exit_emulation(exit_code, msg);
++    ExitInfo *ei = udata;
++    g_assert(ei);
++    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", ei->exit_addr);
++    exit_emulation(ei->exit_code, msg);
+ }
  
-+/**
-+ * put_user_u64:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_u64(val, addr)                                         \
-     ({ uint64_t val_ = tswap64(val);                                    \
-        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+@@ -67,23 +69,25 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     size_t tb_n = qemu_plugin_tb_n_insns(tb);
+     for (size_t i = 0; i < tb_n; i++) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+-        gpointer insn_vaddr = GUINT_TO_POINTER(qemu_plugin_insn_vaddr(insn));
++        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
  
-+/**
-+ * put_user_u32:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_u32(val, addr)                                         \
-     ({ uint32_t val_ = tswap32(val);                                    \
-        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
+         if (exit_on_icount) {
+             /* Increment and check scoreboard for each instruction */
+             qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
++            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++                insn, QEMU_PLUGIN_INLINE_STORE_U64, current_pc, insn_vaddr);
+             qemu_plugin_register_vcpu_insn_exec_cond_cb(
+                 insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
+-                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, insn_vaddr);
++                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, NULL);
+         }
  
-+/**
-+ * put_user_ual:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_ual(arg, p) put_user_u32(arg, p)
+         if (exit_on_address) {
+-            if (g_hash_table_contains(addrs_ht, insn_vaddr)) {
++            ExitInfo *ei = g_hash_table_lookup(addrs_ht, &insn_vaddr);
++            if (ei) {
+                 /* Exit triggered by address */
+                 qemu_plugin_register_vcpu_insn_exec_cb(
+-                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS,
+-                    insn_vaddr);
++                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS, ei);
+             }
+         }
+     }
+@@ -99,11 +103,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                            const qemu_info_t *info, int argc,
+                                            char **argv)
+ {
+-    addrs_ht = g_hash_table_new(NULL, g_direct_equal);
++    addrs_ht = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, g_free);
  
-+/**
-+ * uaccess_lock_user:
-+ *
-+ * The returned pointer should be freed using uaccess_unlock_user().
-+ */
- void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-                         target_ulong len, bool copy);
-+/**
-+ * lock_user:
-+ *
-+ * The returned pointer should be freed using unlock_user().
-+ */
- #define lock_user(type, p, len, copy) uaccess_lock_user(env, p, len, copy)
+     insn_count_sb = qemu_plugin_scoreboard_new(sizeof(InstructionsCount));
+     insn_count = qemu_plugin_scoreboard_u64_in_struct(
+         insn_count_sb, InstructionsCount, insn_count);
++    current_pc = qemu_plugin_scoreboard_u64_in_struct(
++        insn_count_sb, InstructionsCount, current_pc);
  
-+/**
-+ * uaccess_lock_user_string:
-+ *
-+ * The returned string should be freed using uaccess_unlock_user().
-+ */
- char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
-+/**
-+ * uaccess_lock_user_string:
-+ *
-+ * The returned string should be freed using unlock_user().
-+ */
- #define lock_user_string(p) uaccess_lock_user_string(env, p)
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+@@ -124,13 +130,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+             exit_on_icount = true;
+         } else if (g_strcmp0(tokens[0], "addr") == 0) {
+             g_auto(GStrv) addr_tokens = g_strsplit(tokens[1], ":", 2);
+-            uint64_t exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
+-            int exit_code = 0;
++            ExitInfo *ei = g_malloc(sizeof(ExitInfo));
++            ei->exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
++            ei->exit_code = 0;
+             if (addr_tokens[1]) {
+-                exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
++                ei->exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
+             }
+-            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
+-                                GINT_TO_POINTER(exit_code));
++            g_hash_table_insert(addrs_ht, &ei->exit_addr, ei);
+             exit_on_address = true;
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
 -- 
 2.39.5
 
