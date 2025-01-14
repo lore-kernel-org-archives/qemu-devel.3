@@ -4,87 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 541FCE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9AEE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXkHf-0004W4-Cb; Tue, 14 Jan 2025 12:00:55 -0500
+	id 1tXkKg-0006Sm-JJ; Tue, 14 Jan 2025 12:04:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXkHQ-0004Ps-FM
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:00:50 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXkHO-0002Ry-81
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:00:39 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43624b2d453so60370895e9.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 09:00:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736874036; x=1737478836; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cDiaU6Ou4orh/p5f/yzAZTdOXna3lUmzM1168MiihZs=;
- b=SHG+F6yLk98eBZLN+skfqFv2cL8CeH0RY4ZyWKa19y8Nk68V2BPmRVGU9IVwM5RCiz
- SZch3zDdDrAjWUc+kYDt9sAcBfH7jwGHiHSXxEK4GzOkcGFSnwa+A/XWmEDW7g43zHk+
- 0wNzJlnkfa9eKNJfTM2ccwelWA+oksCziVjPE10/UvdCVAruLaAZrxFYil6rto6aFJ97
- l69Cztdg2EnqlQvn33UG/kv3zT02c+gg4aZofMLzNNQd45a6GiqnLc9Y1zsTQIgrmLNa
- yRs9GQfRDtSPLKpeKv7Vfe+qZfl76Bg4yWWdhQ2xD8r/ZUtxgfua6tpPViEFM9MvZpp8
- TCdg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXkJT-0005a0-2u
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:02:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXkJP-0002jK-7n
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:02:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736874161;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yqTrnxGXKdYZ9X2hzZTkEOZLA9tQLfHs3mkMSQ1+XWw=;
+ b=OscK7x56Jfqln+6zxoegaTOmUTAUYqzDt2lmk7S7z6V/54otkhX1qyo+Gts+1ocNkiMy3o
+ CtRmSJ9+3RKYwBCMAh1FeNkzSUEDSiEKOiPpsfKADOM9szUV1yvXglEgW3cz1/j9JIf4r6
+ wBdJTt9KB8LrX/9mp/rYRXXydQQodHY=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-153-GtvXd97OMF2BTg4ckj999w-1; Tue, 14 Jan 2025 12:02:37 -0500
+X-MC-Unique: GtvXd97OMF2BTg4ckj999w-1
+X-Mimecast-MFC-AGG-ID: GtvXd97OMF2BTg4ckj999w
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2167141e00eso105100085ad.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 09:02:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736874036; x=1737478836;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cDiaU6Ou4orh/p5f/yzAZTdOXna3lUmzM1168MiihZs=;
- b=vty2jVetzyksLqEzdEgAkf1P4bm0pVAuBu+uIHbelf/590wdSQCicC7VdFnKrF1GbP
- gIzlThuSBU5f98h2szRjzqdknNX+H9SNBv1mdNUqg7+0aeozas5hFXiEwpHCxutPlBnu
- QSvLlG+ZhLfDZB83qmQC7p2x+gAkqKuSkYcZcnZ0uOLOcb5kvvasoIsPJSshXShD4hEG
- I/MR51vvoV4+NpzUyVMdi7JwGlshAQodZYy/qM3IoC9+3P882+a1bh2U2PiPrAON2cBJ
- ovHTCysuHBsaLXUoJLA8VGCFDcZCsrnGNQSXzS6/sRAQDf3oUyRLc3Yr6GLNxbUP7jDi
- xUqQ==
+ d=1e100.net; s=20230601; t=1736874157; x=1737478957;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yqTrnxGXKdYZ9X2hzZTkEOZLA9tQLfHs3mkMSQ1+XWw=;
+ b=UGq9DOv6uLR3UZYU/EH+4YLImLpIeKAHNjR5HcJN/0lZXh+zMrpxiKDaFlYAYWomKd
+ /DaGDoCm6QvrcnTNx6GQ09uAIQLj0Xx1CAFkFUli6FP5PayfKRhGfMvHhyCXSV0sMOG0
+ U7LyD309EDt213xKw/AwIHSOOoikFceqXW41O8Rtvmy19sx/l7fsPi42p5DOTAHotikB
+ Ebj54mg9FWzicBkgkcNPE7PTHj4DhUAM3T1spdEr0P8T43oMHPdGhsXJ/owBoHAyIVZ5
+ iWfgFuxmQKou0IkIQAZsh/4hHLm7xI7WxPqGpp4Scy6/0AY7wLvNNrGPDxpISTOo1GT0
+ kHbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4ZyxIMP6iTq/3NO2r9c+0LAky/tVEPS96+iGSNmcQ3ZkDHFdP1YCLLbtEvJBnTdBY8O9RD3e5LTrN@nongnu.org
-X-Gm-Message-State: AOJu0YyOdDSczJOzFNZus+zw37/bh0GqIxkBoI/jE8V1jCh2usPJLezT
- VS+3nvWt5WmKQf34T9/9n8+FIq+hTeQgUMcZQbH7aurcdrKJWr7uaPYwHCRs4yQ=
-X-Gm-Gg: ASbGncuR3EBQdxmKVpxbynGCI5rFzFAWbSiQCGN+xZiGfCNSM3QFTYQ0YDDyKTtu2lO
- a2GsQ0fmFRym/S8iVtnekmyIhvKyGbPRNThtCQ3zXKoYiT0DilEnm2S40g5xJUg2z7/pDl8b4eE
- 0d7QD0YfvF4xVseJywr6O3gI+ilr5cK423BnpyPEG7lBEczU9vL/clGmxEq5+bmPS61pQFyy9BB
- Wa3ytHRY3DWfmLQ3OSeFfXHtEMSJnJ1DVrmZNVKooYJ09eHYI//UbgIn1hfM5z8yFvDJHLmWHES
- 8ldjjPdB6mPf6AF0Mfr7nxhg
-X-Google-Smtp-Source: AGHT+IHQrOw2BeT4MTKVroa4VxOKDQALDgYMPAK2bHMapUWuVQSsKQGbH0dQjiNhzsgLk6VzvIjlBg==
-X-Received: by 2002:a05:6000:1f85:b0:385:f909:eb2c with SMTP id
- ffacd0b85a97d-38a87338c26mr26948021f8f.38.1736874036293; 
- Tue, 14 Jan 2025 09:00:36 -0800 (PST)
-Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436e9e6249csm179665485e9.38.2025.01.14.09.00.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 09:00:34 -0800 (PST)
-Message-ID: <e4d00312-e708-46fe-8e2b-adfa98beda55@linaro.org>
-Date: Tue, 14 Jan 2025 18:00:34 +0100
+ AJvYcCXuurguu4GV7x/gJddWhdfR3oeZGP7RuoWQv4BVRflXhje82JL3AGdo+LN0xGcJi6G8cw+UZWZICavz@nongnu.org
+X-Gm-Message-State: AOJu0YyzELO2XguxcpOjtg/HA9Nut6VyjKt2ApqDrcP8nZ6dk/5xkTVm
+ KKOomybFiJ+CS4A2omZOqNGB4NrreI2lY6/3GZ9hdvjIAkF4205ZQ8DZoeGwnrQBy8gUG3l+gqy
+ QqG3SYss9kR26I2N3R/V7stU4ZiQGGmx1qkQWZn4awicHnvG5mktw
+X-Gm-Gg: ASbGncu+n7r35LqWvKboFpMyYydG2zdluPLHRUQ4GvWttlnNQa/7Y6yWczllLonZpsr
+ 7G9QunR0KtwVj4PVbGjSx1fHCCOPn1/oMwewv0PipYS4xte40uOKfZ47rwxB69D/+tbzpg9zFw2
+ jBzV1rcVCcwMBdUW7qpoAZImdQElYsla5vWQjnSLta1iWy6N8W5VK4sCT2K82DfqaIZLS2tdbCu
+ U40TpoO4Gb6J49TGLIIgZESHHGQEurNG3R08zM+g7BRyE6v/wuBq5ZjDDc/Tx1895lSg02H90tp
+ RJ/54EmthIMRJZSQyA==
+X-Received: by 2002:a05:6a20:9c9a:b0:1e1:b329:3cd with SMTP id
+ adf61e73a8af0-1e88cfd3f72mr38422768637.20.1736874156662; 
+ Tue, 14 Jan 2025 09:02:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGaoLtfAdn2VDAJwa5cr1K3DONzyz/SPXdAjsCCAD0Ypwa68xfZMEeu837Tgd3Voaq+9+ppbw==
+X-Received: by 2002:a05:6a20:9c9a:b0:1e1:b329:3cd with SMTP id
+ adf61e73a8af0-1e88cfd3f72mr38422727637.20.1736874156312; 
+ Tue, 14 Jan 2025 09:02:36 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72d40681bd0sm7629721b3a.150.2025.01.14.09.02.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jan 2025 09:02:35 -0800 (PST)
+Date: Tue, 14 Jan 2025 12:02:30 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
+Message-ID: <Z4aYpo0VEgaQedKp@x1n>
+References: <20250109-san-v7-0-93c432a73024@daynix.com>
+ <20250109-san-v7-1-93c432a73024@daynix.com>
+ <59e70978-8895-f513-1b5e-1dc599e288ff@eik.bme.hu>
+ <Z4AjkXbZeu3T94Y1@x1n> <Z4AldAcucTyqZ0HJ@x1n>
+ <811633f6-6bf8-4a22-a21a-789e9a4747d7@daynix.com>
+ <Z4E6TnKaUt8FMWIv@x1n>
+ <9bb5f964-f930-4428-b800-8b589920fe1d@daynix.com>
+ <Z4U30j9w1kPnKX9U@x1n>
+ <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 30/81] tcg: Drop implementation checks from tcg-opc.h
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-31-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-31-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,16 +129,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 09:00, Richard Henderson wrote:
-> Now that we use a functional interface to query whether the opcode
-> is supported, we can drop the TCG_OPF_NOT_PRESENT bit mapping from
-> TCG_TARGET_HAS_foo in tcg-opc.h
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg-opc.h | 306 +++++++++++++++++++-----------------------
->   1 file changed, 141 insertions(+), 165 deletions(-)
+On Tue, Jan 14, 2025 at 05:43:09PM +0900, Akihiko Odaki wrote:
+> memory_region_finalize() is not a function to tell the owner is leaving, but
+> the memory region itself is being destroyed.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+It is when the lifecycle of the MR is the same as the owner.  That holds
+true I suppose if without this patch, and that's why I don't prefer this
+patch because it makes that part more complicated.
+
+> It should not happen when a container is still referencing it. That is
+> also why it has memory_region_ref(subregion) in
+> memory_region_update_container_subregions() and assert(!mr->container) in
+> memory_region_finalize().
+
+Again, the line I added was sololy for what you said "automation" elsewhere
+and only should work within MR-links within the same owner.  Otherwise
+anyone referencing the MR would hold the owner ref then this finalize()
+will never happen.
+
+Now, if I could go back to your original purpose of this work, quotting
+from your cover letter:
+
+> I saw various sanitizer errors when running check-qtest-ppc64. While
+> I could just turn off sanitizers, I decided to tackle them this time.
+> 
+> Unfortunately, GLib versions older than 2.81.0 do not free test data in
+> some cases so some sanitizer errors remain. All sanitizer errors will be
+> gone with this patch series combined with the following change for GLib:
+> https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
+
+Is check-qtest-ppc64 the only one that will trigger this issue?  Does it
+mean that most of the devices will do proper removal of device-owned
+subregions (hence, not prone to circular reference of owner refcount)
+except some devices in ppc64?
+
+-- 
+Peter Xu
 
 
