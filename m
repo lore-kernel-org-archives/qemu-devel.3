@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2722EC02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 08:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23172E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 08:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXcAG-00089l-Sx; Tue, 14 Jan 2025 03:20:44 -0500
+	id 1tXcOb-00013P-7h; Tue, 14 Jan 2025 03:35:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXcAB-00089B-Sh
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:20:40 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXcOX-00012y-DV
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:35:29 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXcA9-0002Kl-Ut
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:20:39 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5d9b6b034easo5398664a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 00:20:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXcOS-00043J-7H
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:35:26 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-436345cc17bso36995765e9.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 00:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736842836; x=1737447636; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=01UomosEGDOz3UpdvVJNQC7YKgU7w50lbDQjtt/nOxQ=;
- b=VYf/Q36iaovgswIY8SimarezosZlj38ITiFPfM3YEZO04aUSoCjfdRoeKOEtspfT4/
- Jr9n29AiK2mXOcIqjhiJfGJcrqLDPNJv1UJXXUpXEyoZ4/p1vQur6QwSLMNR0HIifnSf
- h4lpKUIt8GgsF9TKVxkxl0RPTlJ2/tTwdU1Z9msLQvd5Ikm98S4vCm3MdM+xT8zUSUNH
- LCLhi7PHbvASjMzTP/s8znadXUfVt0uTx2MkhQRsf+mu/+CDi0ipmNamtQR2NRJTzj9a
- Ji6JRelWeBukDotBsxz7KxK3xbrD+2vFp9piAqmLy1PJlHMy21ZZ+cTE4+1N2q06jtBf
- UhVw==
+ d=linaro.org; s=google; t=1736843722; x=1737448522; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7+5ZC3V9kw4qLGC73M+ijkTpcVLjNeDBoXFfwl2NNaw=;
+ b=LeSqpMC+5+N+/FSV8kYmWpIKmFff1rzhcmEAVb7xp1GP6Dzpoe0svEp8E3I9mcW2qH
+ Unq2Kaf/rANIOzjO1/azoo2I8l/WECaC+49kvFbz8daLaAKx58WD/BcoJiE88YbT2bi+
+ DdXYEaexa0wpueO3cJ+J31ka86sEFuKZKsrSSFPZ+mHNvrIbAZugC6+noBQ6wTQgk3NF
+ 7mkOJS5qK0uVTnY6LqhOl88vVjIrNrPa4kB+4sgZQmK786AKIfUfItSgWtqGU9jAVPlP
+ ElVrx6X7V1611EUR7igomYpU6hUe6zw1g8uuLmyNRuj4VxwUCtaBE1fj7t1BOiOFdHNn
+ GzjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736842836; x=1737447636;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=01UomosEGDOz3UpdvVJNQC7YKgU7w50lbDQjtt/nOxQ=;
- b=ZaUPmLNKBcJkNznbnhENhZsVdBcc67Xu3alQXQ3/TrHMAQ8vCRQSLAy8w0sTOla9/T
- nuwi+897SxPuyQIVZkkSFa4l31xKew+cYGWI1iKn/MvQSuVCfYGdu6ZkhPyWBOqRj4to
- HRKIkd/4ok2Mn9eJlEp+pmLSyR8G9V9H3R247zL714LHQoxD5CjyGQD8tRbto3Wm/p3Q
- vrqJcV+pqFfkdRUxRP78ThrtUS0Ud3Fa+JYPFtckT1aqvYHzcl2pDyPCnudybeLDW+nr
- Qeo/ZpwVbL58ToCeZhesRlcEZve9ZiyLF4HbUpRDcEE2KJCj4ITvlKCFjQiA/98h6BVW
- pgdw==
-X-Gm-Message-State: AOJu0YzSPNuQntPtTmtKIqioKObgF/HOhSno4+FGXVaNq+GJT7uvIUNV
- 60jUskK0GTHlH+okU2j3cNFNrE4kpudkwTfxvI4RC0lF0AbUftpgZGkOoCNoUfg=
-X-Gm-Gg: ASbGncsM4m9o8ZKAfC3PcSGy/Dp3c9gke2robOIEzwM9mt2j/gpV93DTLQRdkj8uChG
- Ts3AEytBzeTkXANcbYnZrIoXJ2uVyNYoibM0jtK8+H+ooPcCf1nDHEoqvbLIaqKBVVued3cIUkQ
- cJVOrM9edYEq797yJ7q7I82N6htz9eU19wnJ6El2KHpNlcavYU8Nvi6he4ELdqFTJLdPlAp4T+x
- vKAd0lnjGYcm2bqfypQA61uwbj7EQN16vcTvKXE33vkmVGObshDSS0=
-X-Google-Smtp-Source: AGHT+IELYOwiQuNR3iq/cPvMjq8VXH2HAQNwzh/dNvatXyZFoWfqhr6zKnYsdeiKJTEU8vgRkoooCw==
-X-Received: by 2002:a05:6402:3553:b0:5cf:c97c:8206 with SMTP id
- 4fb4d7f45d1cf-5d972e4ccfemr22464078a12.25.1736842836016; 
- Tue, 14 Jan 2025 00:20:36 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d9900c45aasm5787704a12.28.2025.01.14.00.20.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 00:20:34 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AFAAC5F87C;
- Tue, 14 Jan 2025 08:20:33 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Markus
- Armbruster <armbru@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Da?=
- =?utf-8?Q?ud=C3=A9?=
- <philmd@linaro.org>,  "Michael S. Tsirkin" <mst@redhat.com>,  =?utf-8?Q?M?=
- =?utf-8?Q?arc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>
-Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
-In-Reply-To: <20250110203401.178532-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Fri, 10 Jan 2025 12:33:58 -0800")
-References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Tue, 14 Jan 2025 08:20:33 +0000
-Message-ID: <87jzaxkdri.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1736843722; x=1737448522;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7+5ZC3V9kw4qLGC73M+ijkTpcVLjNeDBoXFfwl2NNaw=;
+ b=UF3ag3K+LDteAYbfJaOIZHAjjUlXTC7lJTtn4goNHisvpsHmtcJatznBqRO88V+5qZ
+ wQi2g6wTwSE1SJlyfhLvLD4sVufQ4U5JzxB15KrZyXZfUzdv8Birc65T7QXVgz6eeAlZ
+ LNVbLVmLRXSngsoDU1RmTZtqR1UEzXBfddWyLBFxS/pGvq6TexUUAA06kfQqbQ2G3eIC
+ HQvQNDA/8ZBPKMMIapSp4Csi0hzY6F6hmVtOmD3dROCB5v8Opccdg1ed2SbeY3k7fgOP
+ WoJyYN8P4926O+PI89qaCvpde8XBryPaVeEBpmZKPRsDW9RVrWt05CRa8q0ZP9uP7E2p
+ vwKw==
+X-Gm-Message-State: AOJu0YwuEGSk7K8h1KLhvelkNhWP7+SpAh+CU171ZXjivyj0WVeOrK2C
+ eJ9MeasVIWgo1kYJOpzYxKuYA1h606DXmr/ocFaYcGb/dkRMD+R0TShajhBbyv4=
+X-Gm-Gg: ASbGncsyL/itgweNgRswFMbsiB5sj0l9bhDHChcAo+wjjF+sfFZ9/RETOrkXZhAS++g
+ 9hdW15+23kKLMOMLCdxJeDHC2/RJNW56JU1p8AOHXFr6V+dhd+yrXdVn7bqpuxj6c33goYYOc5G
+ mztrMCjyBJJLrMdgRj03A9I5n4JrKnV/b5MIdI7taiwH804UtATzMRPlhOCjGV86rdsz7eurwZx
+ PPx9vVPvYBe4JQRBv6chS07hAi1t++/Q3Yb2hQP9sEgTihcNIRKBzQhnW2CUCperhhRT42Q9Kli
+ KRwU3mL3Y3ss8zs1o3bEYJVG
+X-Google-Smtp-Source: AGHT+IE/o7MzRfrjiECmCBTWGBRlQ8AustEvVSnPGTIrzK5KLYr2RPqENGtHLQE1mDqdmMUdZ2JoZQ==
+X-Received: by 2002:a05:600c:8706:b0:434:f0df:9f6 with SMTP id
+ 5b1f17b1804b1-436e2677356mr205256715e9.3.1736843722206; 
+ Tue, 14 Jan 2025 00:35:22 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436e9dc8826sm167085705e9.11.2025.01.14.00.35.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jan 2025 00:35:21 -0800 (PST)
+Message-ID: <26b48106-e63e-43d2-bd49-3207c245e962@linaro.org>
+Date: Tue, 14 Jan 2025 09:35:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/3] Enable clang build on Windows
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>
+References: <20250110203401.178532-1-pierrick.bouvier@linaro.org>
+ <87jzaxkdri.fsf@draig.linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87jzaxkdri.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,23 +106,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 14/1/25 09:20, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+>> For now, it was only possible to build plugins using GCC on Windows. However,
+>> windows-aarch64 only supports Clang.
+>> This biggest roadblock was to get rid of gcc_struct attribute, which is not
+>> supported by Clang. After investigation, we proved it was safe to drop it.
+>>
+>> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aarch64
+>> hosts.
+> <snip>
+> 
+> Queued to maintainer/jan-2025 and testing/next, thanks.
 
-> For now, it was only possible to build plugins using GCC on Windows. Howe=
-ver,
-> windows-aarch64 only supports Clang.
-> This biggest roadblock was to get rid of gcc_struct attribute, which is n=
-ot
-> supported by Clang. After investigation, we proved it was safe to drop it.
->
-> Built and tested on Windows (all msys env)/Linux/MacOS for x86_64 and aar=
-ch64
-> hosts.
-<snip>
+Please also take this one on top:
+https://lore.kernel.org/qemu-devel/20250111215244.1680931-1-sw@weilnetz.de/
 
-Queued to maintainer/jan-2025 and testing/next, thanks.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks!
 
