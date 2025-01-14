@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F1E5E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD381E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfFf-00056B-1Y; Tue, 14 Jan 2025 06:38:31 -0500
+	id 1tXfFv-0005CR-7s; Tue, 14 Jan 2025 06:38:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFd-000556-BH
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:29 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1tXfFj-00057d-AB
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:35 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFb-0005Oy-Jg
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:29 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5d4e2aa7ea9so10497742a12.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:27 -0800 (PST)
+ id 1tXfFg-0005Qe-H8
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:35 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-aaeecbb7309so1009896066b.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736854706; x=1737459506; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736854711; x=1737459511; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3DqQTTK9Sh5XJ9myCGTy9pkOibsLIRbJz9Tu9rOcYZ4=;
- b=A4QB1mBlzVVvNZeOklzQs3EHauah8u/7Ii/Qm4ZQO1HhCa20Pv8aEQLcbSOTMUtAfC
- x01IzwANF9V55m6fsyXs216UHTessl9IE6XESyRuDSk/G51BPAIXGNPINp6hoQU7ljW6
- RxghuDEc17RSasRjJLAnRCQyBfXzidwbV4Y34Y0ErL1iX1JQ2KEDVWhETe1RpxbE/qdf
- gVSud62Z0BELEZ+QOpKaAZ8Y22IzNHPlk0QOPru3EYSVDbT3+S/HBsGNO4QUQ5c8gowi
- cF7OsIGkimizeCtX7x4NRE3SqqXAw+8QRPb6v6NSgK4fWkL0AZRIfHVV19zYEnSWLtIK
- o/zw==
+ bh=xbdq8PuzmcKgRuOS6aY93DBa464+R41QKxYxX1E5oro=;
+ b=IcvYR/FuUi1yW7WCDOOCnfJwliJcQMahBEDhNasxqI0H+aUe3HsA+VxNkY9nbKIKOh
+ FYIpt0SYeVmsjH60sM2AcKud8yq+lDt7/EmsZm7y3dGetQo+jcmIKQAfA43JLgs4Iddx
+ AZS+X0GmDlRJd1FX5+V9Zz5pE9kaD9eJAg9/oM8N8/laQQNZySY3UqKJ8Nv7VTXAUiaC
+ yXPdIMDfGKX393gy8axDkBy/ktdS4Wg9ENTv92NyayXx8iRyli0MpRSZAeweN2yayQyh
+ xAiTJBGQStyJRyzQsY2e71rX1N1QI47NFSfbxQJ7yiPT16CJJU4HOerF/CwDAIszjwYM
+ t2dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736854706; x=1737459506;
+ d=1e100.net; s=20230601; t=1736854711; x=1737459511;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3DqQTTK9Sh5XJ9myCGTy9pkOibsLIRbJz9Tu9rOcYZ4=;
- b=NvOXNH0YJyilQ2Gv+dN+O38oX3+Ov21PsvEv90WiT3KSuI0LvaAlSxO/hXB+ex4a5c
- 47eKOqqg+yivtYIRT/IgdX8skRh9FY1AdJCo8SK3TcT4AbbTy2FtY2oB5NKllz2rG80V
- nvV+HPz2XYbiaRfxNPG4No0TdPqvBkDOEV+FR8wxBbMX6EftuK9DXSMZk82I4Db4dONK
- oGXyQddWUcWdbGebdJvWaQ+4W3xKLZ+7w5dlqfjZNDZ92Wfnfca6JPdgqy3cQEDmXw5o
- 1O11JQm4NPkr5JFAvRrpQlF8z3sphxdEpPY6nP/Gr6csPXzUy5md28jRuB4lYpSDpnX9
- kODA==
-X-Gm-Message-State: AOJu0Yw4Yv/NCJytCXDGPCXgsGl8R96BeRR3cVcAEPSMzpTmPTVqAiVV
- f2Z+o3aq9/XdRFspeci8Ea1bmkEqCCTHa7T57VEAuHlVKQlVglE98jpnmwUKUW9xjp5ukwIzsbf
- DK7U=
-X-Gm-Gg: ASbGncsMSK26TGrg0e4QkkTUw9kgoQeKEZfZjWjN4Hx3W+IxOLeEKln9hetI4fd4jSN
- C5a8QjcyynM2A+qNeAGwpAUeOZnyiHuLqrcAJk1VGiPXuFCCBN4zo94T1+teFXnefCxmzx9QblE
- zDftmeCp53+kbsX7FxlMIsQi6am5oebLSSja1XRdN/FJkoJq3AfM12Z8xkHStXRw/DYDTjgn2n7
- GvxWmUX8KPlluZ9bTz9uc1BpXnsC9jILWt/mLL3WT+FPZvfH7yQzXI=
-X-Google-Smtp-Source: AGHT+IELSQpyZMkTIrI2S414p872NkGhs2AUUkgFQLRAbZ0dznXkH47Tp2d88oamqAHzZh7fh+JY6A==
-X-Received: by 2002:a05:6402:388a:b0:5d1:2631:b897 with SMTP id
- 4fb4d7f45d1cf-5d972e08403mr23149494a12.14.1736854705216; 
- Tue, 14 Jan 2025 03:38:25 -0800 (PST)
+ bh=xbdq8PuzmcKgRuOS6aY93DBa464+R41QKxYxX1E5oro=;
+ b=gZX2rMsUVeJhHRYeiEYQRxU5iBUfg0PlODcUegtTFzxdhg5i8pMH2nka8iU+b8Y3Ej
+ gsr/uxzjcRPDimmui+Gscz607uAsunAbR3XDI8jaC+qskXtNFUsdRMxDUW1++u+JWNfm
+ 179BDNWVgUraE+uEWEdM6dXUAxSuyn9Z7tlR52MX719sV6Za/O9sLzJRVrsCMJtlBY9O
+ RCm5AbLPRN23NOC/seliEC6F+nUaJaT0cJx6Uq7faYjQjaBfU08ri7kqU3kL4gRxl1Wc
+ brvtJ+ZE2EwWKRbe1+d9IShjHWIAzO39gipgagALAZ2QyhoVjeBhSpviLmyESvtyyVgl
+ il6g==
+X-Gm-Message-State: AOJu0Yx+t9CXkhdqDqsBmpLOCIt+NVAVDIsG91+AzJo6GrMWqJM6+4Or
+ 7+KOHy0OWmfxIwjE/UoFmqj4S+JYg0X5xAqyBTRU3LMT0IZTmgyGNE+POtzukyY=
+X-Gm-Gg: ASbGncvw+Nm995xiXOl8zx096kStdVu7AeOtF7oZZGlJmPuksQcPiSm2cLamNBHdicP
+ +CfHOtUG2HOlY5J1DS/tp3ceA6znT6WfDIIUofEuyJs+AxRAGaPGQD12BUTmYhSTAlYfiTYSmsM
+ qTVNoT8L5mkLmg9SGLuAt8M+pijZK6KyuHjHjNc/WfaPVhAi/A2vSXRK7oMf0/omnhUuyZ2zq4N
+ ofcgaLw7WAH9zrwkWRT02ZnMCGasubxINtgbUYTpVOHDE6EHOz8yQ8=
+X-Google-Smtp-Source: AGHT+IFvcNUZTjmsP8TbGxrBQwGNABXtfS9IckAQTWuz8uKyBtYL/VkIeaXDN4iyYFbsSnb39gPjvg==
+X-Received: by 2002:a17:906:bf49:b0:ab2:b8c3:be54 with SMTP id
+ a640c23a62f3a-ab2b8c3c3b4mr1832310666b.44.1736854710394; 
+ Tue, 14 Jan 2025 03:38:30 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d9900c4b56sm5954625a12.32.2025.01.14.03.38.22
+ a640c23a62f3a-ab2c90dc6a8sm615381066b.72.2025.01.14.03.38.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 03:38:24 -0800 (PST)
+ Tue, 14 Jan 2025 03:38:28 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DAA355F8B5;
- Tue, 14 Jan 2025 11:38:21 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 170325F9F8;
+ Tue, 14 Jan 2025 11:38:23 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefan Weil <sw@weilnetz.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 01/37] semihosting: add guest_error logging for failed opens
-Date: Tue, 14 Jan 2025 11:37:45 +0000
-Message-Id: <20250114113821.768750-2-alex.bennee@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v2 14/37] tests/tcg/plugins/mem: fix 32-bit build
+Date: Tue, 14 Jan 2025 11:37:58 +0000
+Message-Id: <20250114113821.768750-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
 References: <20250114113821.768750-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,36 +107,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This usually indicates the semihosting call was expecting to find
-something but didn't.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Message-Id: <20250109170619.2271193-2-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20241217224306.2900490-5-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- semihosting/syscalls.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tests/tcg/plugins/mem.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/semihosting/syscalls.c b/semihosting/syscalls.c
-index c40348f996..f6451d9bb0 100644
---- a/semihosting/syscalls.c
-+++ b/semihosting/syscalls.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index b0fa8a9f27..d87d6628e0 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -135,14 +135,14 @@ static void update_region_info(uint64_t region, uint64_t offset,
+     g_assert(offset + size <= region_size);
  
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
- #include "cpu.h"
- #include "gdbstub/syscalls.h"
- #include "semihosting/guestfd.h"
-@@ -287,6 +288,7 @@ static void host_open(CPUState *cs, gdb_syscall_complete_cb complete,
+     g_mutex_lock(&lock);
+-    ri = (RegionInfo *) g_hash_table_lookup(regions, GUINT_TO_POINTER(region));
++    ri = (RegionInfo *) g_hash_table_lookup(regions, &region);
  
-     ret = open(p, host_flags, mode);
-     if (ret < 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to open %s\n", __func__, p);
-         complete(cs, -1, errno);
-     } else {
-         int guestfd = alloc_guestfd();
+     if (!ri) {
+         ri = g_new0(RegionInfo, 1);
+         ri->region_address = region;
+         ri->data = g_malloc0(region_size);
+         ri->seen_all = true;
+-        g_hash_table_insert(regions, GUINT_TO_POINTER(region), (gpointer) ri);
++        g_hash_table_insert(regions, &ri->region_address, ri);
+     }
+ 
+     if (is_store) {
+@@ -392,7 +392,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+ 
+     if (do_region_summary) {
+         region_mask = (region_size - 1);
+-        regions = g_hash_table_new(NULL, g_direct_equal);
++        regions = g_hash_table_new(g_int64_hash, g_int64_equal);
+     }
+ 
+     counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
 -- 
 2.39.5
 
