@@ -4,83 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C2B9E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47060E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXi0T-0001je-DN; Tue, 14 Jan 2025 09:35:01 -0500
+	id 1tXi7W-0003nf-6J; Tue, 14 Jan 2025 09:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tXi0R-0001jM-3h
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:34:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tXi0O-0001hw-Sw
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:34:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736865295;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tXi7Q-0003lj-Le
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:42:13 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tXi7O-0003MF-Jq
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:42:12 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C950C21157;
+ Tue, 14 Jan 2025 14:41:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1736865720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=G/RyYW2/0oWAA2gt9rtQHFdROrKN27W5WR8O76GrMRs=;
- b=SqZYNwh/WJVw6ItUhi4pAy6CKXFaH2ZXEOfYrvoQe72qL9eZkjO18BmwHlCN4UtX6uqT/U
- BAwzO7fLFJH5xpdljxzugnlX10N889f8D3BkDITOIfkwTt4GGySEmet5sXEdRq1OPdE42H
- QhFJ79M7jjQlriiAjUYv1BqFTaWz7as=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-uOP7SnQNO5C_hGHFsEinRw-1; Tue,
- 14 Jan 2025 09:34:53 -0500
-X-MC-Unique: uOP7SnQNO5C_hGHFsEinRw-1
-X-Mimecast-MFC-AGG-ID: uOP7SnQNO5C_hGHFsEinRw
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ bh=tOMSptrN+Kwq+k8g6EcGJ1QlnyjwrAaefX0+1OP7Kgs=;
+ b=L9aeTIdxdbxBDyB2EJ3TVNXQNjkDcuxEh/K8fWVkG7O8i4vFf7gMgiz1k98RptIlQgwtHn
+ qmKRu1fJayJy6wy0kIc/yzOdGrHNK70IOD5DaN3WuTrSR1EzGaT4BDcNVblgGDjEcK58RI
+ /RXxuVemIpyldcMDr4uOkIhft0/slVQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1736865720;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tOMSptrN+Kwq+k8g6EcGJ1QlnyjwrAaefX0+1OP7Kgs=;
+ b=SJPn7OuRYxlmJLsKLiozh4J4c4waLQpAj1ZVSCSJhHHk9+chmU089jkIs2VknIsPhxZP0F
+ vTmyr3J4eh9yA5BA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=M+V64MAs;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CcOvRmJn
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1736865719; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tOMSptrN+Kwq+k8g6EcGJ1QlnyjwrAaefX0+1OP7Kgs=;
+ b=M+V64MAsV8ogEOc+n2alnNj7Guf+jGut6W1fz1RDloHiuE0CZarBz70GtDV2QfxOnswLdT
+ p2vj3rXJ3Vrq7Z0qDr7ctLEVICHBTyqlkzZxr1NQC4qqPN/xmssQvIAF7jDFa7KYM6lvjr
+ vpVqKMAxpV39EvaEhPJtT/QyEzDnnfg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1736865719;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tOMSptrN+Kwq+k8g6EcGJ1QlnyjwrAaefX0+1OP7Kgs=;
+ b=CcOvRmJnRfRJJGYk8jHY3Xtua2380BBfyTFhuQKN71S4gFB3CQC30+iXgnHpC/0wGxa2Oy
+ LwjJsPHyVSILMlDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C94019560B0; Tue, 14 Jan 2025 14:34:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.173])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5702119560A3; Tue, 14 Jan 2025 14:34:49 +0000 (UTC)
-Date: Tue, 14 Jan 2025 14:34:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Dave Hello <hsu@peterdavehello.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
-Message-ID: <Z4Z2BsF1QYSvjxqe@redhat.com>
-References: <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
- <Zh6qLCvyiSk6YkVy@intel.com> <Zh6oIH8Ihyn-9RwT@redhat.com>
- <pTgk5-fHZzZe_qQn7RdevQ7Dg9Yz_-I4jWPpYknkgbiStJvLCRlTj9EpfRY_K9GCqdSABB_s_xzuGBCxxRqDfzDIoO6AVcvP-onYk8yRiWI=@peterdavehello.org>
- <ZiCDzzFDRmQGPtDD@intel.com>
- <Fu0jQm-Z4E7D_J11oxIlfRJ9ZYK_QDKMYOs-9NNVX_jH9_aS5_9cyysois3SaVVtuTqR-H77MiwWLaa5RkPTEnCEdy0NvUmOuwqyirCbdhY=@peterdavehello.org>
- <5qJ0Q0ZnUCu-VdtMQOwzj54wLBfeXb9ozncO8PjFiOlXbu4RHQeVCZyn7ZMWq89yqqE7GZX3Bsuk9YqWugHmx-Wu4Oh1GZ5wboTuZ-QUk8k=@peterdavehello.org>
- <CAFEAcA8q5O1i-EDviKf-yN5DAsxsSofA3xa9ChMbn_tC91iNuw@mail.gmail.com>
- <Znmnr3XCiPM89Xag@redhat.com>
- <w0C7I-STdtazH_QTikLVqdGlKEDYBJd-xCkX1BXBPY-rRhhU6E0ARjv0_t9QiJpptsNzSJeGpotLRYaBMa2VGyucNEE9zOaCQ8YKWhGPlYk=@peterdavehello.org>
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 500721384C;
+ Tue, 14 Jan 2025 14:41:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6vqvBbd3hmdcZQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 14 Jan 2025 14:41:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, Peter Xu
+ <peterx@redhat.com>
+Subject: Re: [PATCH] migration: fix -Werror=maybe-uninitialized
+In-Reply-To: <20250114104811.2612846-1-marcandre.lureau@redhat.com>
+References: <20250114104811.2612846-1-marcandre.lureau@redhat.com>
+Date: Tue, 14 Jan 2025 11:41:56 -0300
+Message-ID: <87zfjtfoej.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <w0C7I-STdtazH_QTikLVqdGlKEDYBJd-xCkX1BXBPY-rRhhU6E0ARjv0_t9QiJpptsNzSJeGpotLRYaBMa2VGyucNEE9zOaCQ8YKWhGPlYk=@peterdavehello.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: C950C21157
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.47 / 50.00]; BAYES_HAM(-2.96)[99.84%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,51 +128,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 01:45:03PM +0000, Peter Dave Hello wrote:
-> On Tuesday, June 25th, 2024 at AM 1:06, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > We can't give legal advice, but the QEMU project doesn't do
-> > > copyright assignment. Copyright remains with the original author
-> > > (or with their employer).
-> > 
-> > 
-> > While we can't give legal advice, going back to the original question
-> > I have an observation that may resolve this.
-> > 
-> > IIUC, the orignal question was what to put at the top of the .po file
-> > where it has:
-> > 
-> > # Copyright (C) 2024 THE QEMU'S COPYRIGHT HOLDER
-> > 
-> > I don't believe the QEMU community has any stated requirement that every
-> > file have a "Copyright" line present. Entirely omitting this line is a
-> > valid choice from QEMU's POV.
-> > 
-> > What matters to QEMU primarily is that the file has a declared license
-> > statement.
-> > 
-> > Any Copyright lines present are woefully inaccurate in most places, since
-> > they're rarely updated despite 100's of contributors working on a file.
-> > The respective contributors still retain copyright over their own work
-> > regardless of what a 'copyright' line says or doesn't say.
-> > 
-> > IOW, the contributor (or their employer) may decide for themselves
-> > a policy of whether to include or omit such a "Copyright" line, on
-> > contributions submitted.
-> 
-> Thanks for the solution! So, to confirm, I will send PATCH v2 with the
-> other metadata fixes but without the "Copyright" line. Is that correct?
+marcandre.lureau@redhat.com writes:
 
-Yes, that is acceptable.
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> ../migration/savevm.c: In function =E2=80=98qemu_savevm_state_complete_pr=
+ecopy_non_iterable=E2=80=99:
+> ../migration/savevm.c:1560:20: error: =E2=80=98ret=E2=80=99 may be used u=
+ninitialized [-Werror=3Dmaybe-uninitialized]
+>  1560 |             return ret;
+>       |                    ^~~
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Weird that this didn't show up anywhere.
 
+>
+> Cc: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
+> ---
+>  migration/savevm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index c929da1ca5..6e56d4cf1d 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1557,7 +1557,7 @@ int qemu_savevm_state_complete_precopy_non_iterable=
+(QEMUFile *f,
+>              migrate_set_error(ms, local_err);
+>              error_report_err(local_err);
+>              qemu_file_set_error(f, -EFAULT);
+> -            return ret;
+> +            return -1;
+>          }
+>      }
+>      if (!in_postcopy) {
 
