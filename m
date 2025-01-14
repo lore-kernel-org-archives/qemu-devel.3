@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77952C02184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E49C02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfIu-0006Ys-84; Tue, 14 Jan 2025 06:41:52 -0500
+	id 1tXfFt-0005C1-0g; Tue, 14 Jan 2025 06:38:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1tXfIn-00066h-O4
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:41:47 -0500
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tXfFg-00056y-Df
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:32 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1tXfIm-000692-0G
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:41:45 -0500
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-467b955e288so58210681cf.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:41:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tXfFe-0005Q4-G5
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:32 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d14336f0so9218364a12.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736854902; x=1737459702; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1736854709; x=1737459509; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TcWFQyhNc6naKavdeUrSg2t59/lqijn7V6MfrdULN8M=;
- b=Fg6SshBJztq+PPHPdx6IuCgfRDTUWrL0ruTHZy9U+Rk/6fwgUQKGFGNizd+lvOxJTw
- xKTHh56kug9tbAjLzNVZmGmapr3RLJsRiHzQldRFq7beRPk7Y2KC0F91cxQnlBHYaLZi
- Qt8zKusawy8M/kqd0ASKMxOu2KJW6RfE4DH0bBcrM8nazBiVfKIYn3Brzu37trzhkMIa
- kNvp249bX/B4oSuywNUjy2Ycy6o6T8haZVEdwy9aK/Hzmccmk5+v3ZQU2HI5IRf3Sj/V
- uCmNSWb4OxLveLSmpGmp7eUuYK9+z1YCpFFGKOeI91q8zJuxRgkpUsQbbYobbHkJ20oq
- ldGA==
+ bh=JhuWbz37w1Y1jozAto2PdaStriGQyF5dVt49ZcJCRfQ=;
+ b=wrPmxuh5qgxEsvFT/w9ColFq7CFUTz2nSqDz4VR5zEiLpR7Zk+bkpPaiZRRkvY4r2Q
+ uVgihEo8WKGuR1k30pR8/jU2h7eTSaWmel3nPZFTWIhpD+NTTS+5mymjiIQPBKss8T+m
+ O3qI257pqgMb3Ga+39+tp5g8EcoeTB8aQhQVIAP0DNDNze7+gzL4EKl6QTzvmwddZfHz
+ 3xD4HkZJlnD+gb0mztEy2htxd+UsxA+IGSQKS4X4ChsLH+a1axpiH8gxiWiTKLSlv13B
+ 2cTxW8rwgmmCAcNiWgrnuyAcw62BKPACBs6hHSO6SQu/5dmzRN4fPvCfDlFj5r5XjO2d
+ nZBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736854902; x=1737459702;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1736854709; x=1737459509;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TcWFQyhNc6naKavdeUrSg2t59/lqijn7V6MfrdULN8M=;
- b=VT/2K9u8qEnIoqBx3u2p3vNRc3IlCtPMv7XOk7eT+ZnMJq5stak+sj+P6wHoel6YCY
- qtbCSbKMjPYGexRmv+hiaBwlkeTz14rm3UdJO0J27CA/0sasB0V2EJqu48/zBBZNn2v9
- 7Ls8CPmANNXhoSVZqoO09Lwbu7dq0bgb+mSuOFHotMyvn25GWJppDbwHHw3huyknrxhT
- jZCEgv3h9UINTFTaAf3U5GquIoEWVPmeogYlEG6L+fg1/zf6u2R/lTgfF1NxjEf+3y1d
- LkwfsaLvvxTrJrSQOS+6ZTUY2totevqB8ztCVZGEIr9UVfxTv8Fd17dhzfWlWOhmE1Sc
- DLUQ==
-X-Gm-Message-State: AOJu0YwwC6q+RIo7hNUjku1PmCmBz9w/YMbe0bY6lkdEQCTb4L/53O8T
- OOg5cL0o2FRxqfsxvk4HLGHsAs4GllJocdk2oWfH1eU7/Xi9zP4wnD2seal3IL1gJYJ6FXhIv4q
- k7cQR0iWwK1uU0WWdZGifqGnHgQZX3ADC
-X-Gm-Gg: ASbGncvxDOeA00/uTuVKgLXj5LLKIK/lY6+rz4iGzY3a8+IBGOLCGeDgEw3UeP+K/ME
- GQqMwh+x116TuAE+Y22nygY50My0JaE1ZnDg9
-X-Google-Smtp-Source: AGHT+IHSYijrmfFi/N48oTc9SsZFL5sK3crICAcDoeIZFa4qme6MxIOXYS5u76CVctBw5pz8WyBLEJAEMIV3C4KzmSo=
-X-Received: by 2002:ac8:594d:0:b0:466:8cc1:6221 with SMTP id
- d75a77b69052e-46c7109ddd9mr394651451cf.50.1736854901961; Tue, 14 Jan 2025
- 03:41:41 -0800 (PST)
-MIME-Version: 1.0
-References: <20250114104753.2612342-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20250114104753.2612342-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 14 Jan 2025 15:41:30 +0400
-X-Gm-Features: AbW1kvaa6A3BabSxoJyF1JOCWlk6pHSw6spRS3Djvg_HLeCQtb6DlVWRR-RBjME
-Message-ID: <CAJ+F1CK+9hcNc_2_ZtPGszOK+3dudkCkOcfxjKk_mDUA67yaag@mail.gmail.com>
-Subject: Re: [PATCH] ui/dbus: on win32, allow ANONYMOUS with p2p
+ bh=JhuWbz37w1Y1jozAto2PdaStriGQyF5dVt49ZcJCRfQ=;
+ b=m8xmPMoOAzqP3yJgty9XGmWdvYOtBNJAQPfR15WtaK6BG/o8puuu4Uxvt3jBj5PYTh
+ VmxjK7ujpWEQkCjMd6s2377PYejqySxTDfbjwYUpXLf7vBJzPCXvDs8Nye0Yh7xMZ8F3
+ e/7QPIlNjdAnS1dhvoiRv0farjjzWBEDEvF9ulhPuOcLfUbkx2T9tVvWUFNTvPdzOvmi
+ domUr0FcQop7GOX/VjQajuH0Qmh9cJznZT/2FXBRPknvtdhbHzKBQDpY6H6DCCQO3EhM
+ Iui1RFrZ8i4eUb6245C+pqPvtHp7IGsLq7OOIRLGtbKn4ERq43WbChINC1CrDteYeotv
+ lg5Q==
+X-Gm-Message-State: AOJu0YyqEpnGMNBJcBaFt3X8nQpc8Br3BPKv//u9VTGGqFqVMo7ItJkm
+ iIKAHyMFcScQmavlw26JGWF2ec2aeQJMPYVtRYj+Kz2CZu4n9n3n2jLvh4nayF9meuEac5jTGls
+ B8v0=
+X-Gm-Gg: ASbGncvwygms+rTwcPLZ2JeCSXbLXrpqq21bFRoW2hnUY5N3YxqOL98C6+oDhGqy0LW
+ r5Iu3gEf4s4tLicxMG5CeAkSDKd539v5i9sdb4MHcB4O0n2zgOzRLywYYAE2NyD+MgoP4y3TRMK
+ bkZG3CgPFMv6G+d8x+YYWgS7PXxKq1CemiGFSRZZ17LgPbQm5xJpzKekN/gXMbLddF8Q9lZR18c
+ dvlf7ACKUZrTQTymE6zcqbs5rtcr5S+tSLNy9Hwz4EGcfTHOT7QzkU=
+X-Google-Smtp-Source: AGHT+IFKkemRyuRcCVj7lg8AL+r70yww2bUC5tH0NctssZn6fTQWNnEnN8ayHWo+c4iWUXkUTvUR9w==
+X-Received: by 2002:a05:6402:540e:b0:5d0:b51c:8478 with SMTP id
+ 4fb4d7f45d1cf-5d972e0e274mr22202061a12.12.1736854708901; 
+ Tue, 14 Jan 2025 03:38:28 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d99008c37csm6173423a12.6.2025.01.14.03.38.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jan 2025 03:38:26 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 946EF5F9D8;
+ Tue, 14 Jan 2025 11:38:22 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 09/37] system: squash usb_parse into a single function
+Date: Tue, 14 Jan 2025 11:37:53 +0000
+Message-Id: <20250114113821.768750-10-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
+References: <20250114113821.768750-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,33 +106,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 2:50=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
-:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> GLib doesn't implement EXTERNAL on win32 at the moment, and disables
-> ANONYMOUS by default. zbus dropped support for COOKIE_SHA1 in 5.0,
-> making it no longer possible to connect to qemu -display dbus.
->
-> Since p2p connections are gated by existing QMP (or a D-Bus connection),
-> qemu -display dbus p2p can accept authentication with ANONYMOUS.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-....
+We don't need to wrap usb_device_add as usb_parse is already gated
+with an if (machine_usb(current_machine)) check. Instead just assert
+and directly fail if usbdevice_create returns NULL.
 
-> diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-> index b6a65806bc..9ad3f70bde 160000
-> --- a/tests/lcitool/libvirt-ci
-> +++ b/tests/lcitool/libvirt-ci
-> @@ -1 +1 @@
-> -Subproject commit b6a65806bc9b2b56985f5e97c936b77c7e7a99fc
-> +Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
-> --
+Message-Id: <20250109170619.2271193-10-alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ system/vl.c | 22 ++++------------------
+ 1 file changed, 4 insertions(+), 18 deletions(-)
 
-bad submodule update, my bad.
+diff --git a/system/vl.c b/system/vl.c
+index 7e3e6fb353..e769132ba3 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -811,31 +811,17 @@ static void configure_msg(QemuOpts *opts)
+ /***********************************************************/
+ /* USB devices */
+ 
+-static int usb_device_add(const char *devname)
++static int usb_parse(const char *cmdline)
+ {
+-    USBDevice *dev = NULL;
++    g_assert(machine_usb(current_machine));
+ 
+-    if (!machine_usb(current_machine)) {
++    if (!usbdevice_create(cmdline)) {
++        error_report("could not add USB device '%s'", cmdline);
+         return -1;
+     }
+-
+-    dev = usbdevice_create(devname);
+-    if (!dev)
+-        return -1;
+-
+     return 0;
+ }
+ 
+-static int usb_parse(const char *cmdline)
+-{
+-    int r;
+-    r = usb_device_add(cmdline);
+-    if (r < 0) {
+-        error_report("could not add USB device '%s'", cmdline);
+-    }
+-    return r;
+-}
+-
+ /***********************************************************/
+ /* machine registration */
+ 
+-- 
+2.39.5
 
-
---=20
-Marc-Andr=C3=A9 Lureau
 
