@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5764EE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 10:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A533C02184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 10:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXe0P-00026w-69; Tue, 14 Jan 2025 05:18:41 -0500
+	id 1tXe2j-0002wA-Mx; Tue, 14 Jan 2025 05:21:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tXe0M-00026g-Qk
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:18:38 -0500
+ id 1tXe2i-0002vd-5V
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:21:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tXe0K-0001zn-8y
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:18:38 -0500
+ id 1tXe2g-0002bI-Ic
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 05:21:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736849914;
+ s=mimecast20190719; t=1736850060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=myPq1uOm35JFGG7Y8AsaBvG68ds3085UXWbKY+ZXWec=;
- b=f5tyTxsGvGIOcw+/PC0XNaWksUoYvalGLZ1xC29KDTAIqlza5CWCL/Nhk9tq9vRXQc3ELK
- LSqMHGLHTRov0m8m9k6gIqKWG6zM1q9mDs92b1ezZnyNWnmImMIEqFULLtvG8IvIzjFlEX
- 9TAwcQsWyoSfGKXRQj3/wao4wp4aADM=
+ bh=j6Km4Vl2oNlcqrf1o8ykF8EaMLn60LBZ5H9pe/iXZXs=;
+ b=OIqorTAIZM2jEsbaEavwll8TyPfsjJjxixUlUOS97gesxY6/uIsW7MR5tVvA6Vsg1IIQiG
+ qvdWIOUwaTCncSL4RcOlBIl19ex+A/8/f8l3U6iv9BEi+v2BQY3RsWc9YdPWbEOeIryIeq
+ RYKCJfxfpAknV2Ruy4HZVyaL5TM7lAU=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-C5KdJcAGM3yuYG5Wo6Km1g-1; Tue, 14 Jan 2025 05:18:32 -0500
-X-MC-Unique: C5KdJcAGM3yuYG5Wo6Km1g-1
-X-Mimecast-MFC-AGG-ID: C5KdJcAGM3yuYG5Wo6Km1g
+ us-mta-479-ZJxG2jQQPqy9zOVYlOcMJw-1; Tue, 14 Jan 2025 05:20:59 -0500
+X-MC-Unique: ZJxG2jQQPqy9zOVYlOcMJw-1
+X-Mimecast-MFC-AGG-ID: ZJxG2jQQPqy9zOVYlOcMJw
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3862be3bfc9so3138102f8f.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 02:18:32 -0800 (PST)
+ ffacd0b85a97d-385d735965bso3683214f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 02:20:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736849911; x=1737454711;
+ d=1e100.net; s=20230601; t=1736850056; x=1737454856;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=myPq1uOm35JFGG7Y8AsaBvG68ds3085UXWbKY+ZXWec=;
- b=DPzNK1Of7s+Ezse4ajYb2H+Sd/yHWsy4zj8t2aOgzOpSLx5jkxDfCieBcWIpgydjsE
- CWpRmYVaCiTK3uLm392msQpuny30YzQSZk++/sFw+i8vf+QBQ2dSRPuf1MiBHp5K2zs8
- k/cg0e3POVG0JxnBEuZh+EXbZHaCxySCQEnf9YWR6qaFiOc5oBkItS076btR6K0i7V3Z
- HLV3iu4/QqWSA5AFGfnGgV7PTXXqR6oB+QfKVtwolu+aOsC9okEUQDIM2Xizef3CBAwf
- ycgVrN3X3CfoofsblZPFB/k27bwmzEDAicvn5gO0vJ0BZbO+PJOsxMAw2fUhOX5EdT3b
- mm+g==
-X-Gm-Message-State: AOJu0Yxdz3af7NmiJeHtKyw1WjiwUH1v1glYmTFSE9YR8yWv5nAxYSQe
- J3pmebHUFi2Qy7LDTKgEy3PTz2VTw9Skpt74coRztoPmAGxIpbXHYXZRIfRXTdDHtNe33g9Wbyh
- bPsjNNDnoG92O9sxdmEIHr81WfC5BzZBJyBatDWsLFn+06bwwnfiP
-X-Gm-Gg: ASbGncsEKAez1eUAWWxDIgU6lh03Bb+95sVq3k9XB2zxuVi4f+k8ics6BqUJ+X8nr0f
- MBmu1jUoZrFmYaLE1T18+4wNq1xv3YSyQn7CQIHn8t36lFWmNLAdC/xxIQvdkXy+wf/lMrcRinG
- oc2SvWii4Z763CqRxLISjlrR4VINA7aDcecgXX8NJOiFu+9ml/L3lKEdvn2CixM7bo5AVfZI5a0
- eGB0ONyLDHSQIEhslnwDZK4H77aCpmR28g4o4boXaQazcN5qmXTyiGG9j0hkiZnpwdJQXs5V7Ma
- TVBN/KYBoWMWj6/MZByaxLjxlPyK
-X-Received: by 2002:a5d:648a:0:b0:385:f0c9:4b66 with SMTP id
- ffacd0b85a97d-38a87313097mr20629935f8f.33.1736849910916; 
- Tue, 14 Jan 2025 02:18:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFixRcnG/f3BfGntKkbUoqSNeX8NrFro3eBe/w8F7N0InEkzhdWgSm2pANOtacUXcL76NnXCQ==
-X-Received: by 2002:a5d:648a:0:b0:385:f0c9:4b66 with SMTP id
- ffacd0b85a97d-38a87313097mr20629909f8f.33.1736849910506; 
- Tue, 14 Jan 2025 02:18:30 -0800 (PST)
+ bh=j6Km4Vl2oNlcqrf1o8ykF8EaMLn60LBZ5H9pe/iXZXs=;
+ b=EYnMSy3G2CUafTBtVPs/oxhUxRZWLCjqsgeuQpA8fxTYQOWrfXdU/YWH7nBf+bgN7y
+ A6wuSEnNjsD3wdZm1gXdAxMzljB0XIzKsnWfXeBqBAqH5hZkkwwvwKAEz3yZ8JoBKt3n
+ Oot5y5KRP/BuFY28GXxnXkwvBmD/7QMa9UBdMbx7FIRu3FrAFpp2+hxYgyzLPHUJv0cj
+ 53RmYvXCjijc7Ul/mCDkH8pHmam0dFhPmSRdJz+fby/8L4RrgG2ywjFj5muRYe/6d8Z8
+ pEXhuJjPY6HonLnSlVJf9qBVwMF6J7BzAcUasQN1eFA4/p0/5HR0QifUOfJgARZbrwJZ
+ UfhA==
+X-Gm-Message-State: AOJu0Yzx4Pk/DJ2bdtfjNUeywoOH1yVHTJc78eR0Pe3qRk6ycRembLUW
+ qw1OA1KzvIUBt8PqDbaH3OirwKL2RP30XShEjlEoRwLAcTFod9vN95cLUVasnGWnBOLLiacevrb
+ LKY5jq32tmueSOPZSxAHJUeFAP3fNb8GMd2vlssS3cSu8ALJ8bDQG5VhQQcPi7Hc7ghfhDrDA6d
+ ZbKo/n3CvjX2QuZyt8UlEDeFRJ9AKWah85SKQS
+X-Gm-Gg: ASbGncsyKU30J8uEKN5M9M9hJqRH1ByF62G5MnYef6/FDkcNygDHJmySVW37vshqKR0
+ 5oisZ/EuBR9VrWpHUn89k3DuuLMODsXU5LxnTmVtW/b75Gl8r8R+Tx4p4vmPTyzcpAbBIt599N5
+ F4Znb7Ot8KIGSMB5/i6UEv8DGh0Jp9p0iVOuCvfFF7ZPnaLbQ8YNpciqpoT09ZAw3txBDi9JLC6
+ X2HzhpcusJ8IqTvJPk02vmBpn1aNz4ItcIC6uKZYu+PhURFCTZvS9jG3/LxAAUNnpIgnGZdJsyK
+ AXyzPd7gLDMUqmwHcKvkVIcAYkrO
+X-Received: by 2002:a05:6000:186b:b0:388:da2a:12fa with SMTP id
+ ffacd0b85a97d-38a8733badamr19150892f8f.52.1736850056273; 
+ Tue, 14 Jan 2025 02:20:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG1XX4GyWwRGRAyhs2Gd1f9cXLmwh111sSO64Ixm3gcVYKIGFsVe9lc/wf5OLjBhEYprj3Y8Q==
+X-Received: by 2002:a05:6000:186b:b0:388:da2a:12fa with SMTP id
+ ffacd0b85a97d-38a8733badamr19150860f8f.52.1736850055792; 
+ Tue, 14 Jan 2025 02:20:55 -0800 (PST)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38bd0dsm14326817f8f.45.2025.01.14.02.18.29
+ ffacd0b85a97d-38be422191fsm431377f8f.56.2025.01.14.02.20.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 02:18:29 -0800 (PST)
-Date: Tue, 14 Jan 2025 11:18:29 +0100
+ Tue, 14 Jan 2025 02:20:55 -0800 (PST)
+Date: Tue, 14 Jan 2025 11:20:54 +0100
 From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, Markus Armbruster
- <armbru@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: Re: [PULL 04/49] hw: Add QOM parentship relation with CPUs
-Message-ID: <20250114111829.2f577596@imammedo.users.ipa.redhat.com>
-In-Reply-To: <6f9225ad-edc6-4fe0-b0e6-8a93e7f50102@linaro.org>
-References: <20250112221726.30206-1-philmd@linaro.org>
- <20250112221726.30206-5-philmd@linaro.org>
- <20250113132832.049f651a@imammedo.users.ipa.redhat.com>
- <6f9225ad-edc6-4fe0-b0e6-8a93e7f50102@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, eric.mackay@oracle.com, anisinha@redhat.com
+Subject: Re: [PATCH 0/3] cpuhp: ensure that cpu hotremove works the 1st time
+Message-ID: <20250114112054.6dcaa756@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20241210163945.3422623-1-imammedo@redhat.com>
+References: <20241210163945.3422623-1-imammedo@redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,90 +109,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Jan 2025 17:00:55 +0100
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+On Tue, 10 Dec 2024 17:39:42 +0100
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-> On 13/1/25 13:28, Igor Mammedov wrote:
-> > On Sun, 12 Jan 2025 23:16:40 +0100
-> > Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
-> >  =20
-> >> QDev objects created with object_new() need to manually add
-> >> their parent relationship with object_property_add_child().
-> >>
-> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> >> Message-Id: <20240216110313.17039-22-philmd@linaro.org>
-> >> ---
-> >>   hw/i386/x86-common.c                     | 1 +
-> >>   hw/microblaze/petalogix_ml605_mmu.c      | 1 +
-> >>   hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
-> >>   hw/mips/cps.c                            | 1 +
-> >>   hw/ppc/e500.c                            | 1 +
-> >>   hw/ppc/spapr.c                           | 1 +
-> >>   6 files changed, 6 insertions(+)
-> >>
-> >> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> >> index 97b4f7d4a0d..9c9ffb3484a 100644
-> >> --- a/hw/i386/x86-common.c
-> >> +++ b/hw/i386/x86-common.c
-> >> @@ -60,6 +60,7 @@ static void x86_cpu_new(X86MachineState *x86ms, int6=
-4_t apic_id, Error **errp)
-> >>       if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
-> >>           goto out;
-> >>       }
-> >> +    object_property_add_child(OBJECT(x86ms), "cpu[*]", OBJECT(cpu)); =
-=20
-> >=20
-> > I might  be missing something but why it needs to be done manually?
-> >=20
-> > device_set_realized() will place any parent-less device under (1) /mach=
-ine/unattached =20
->=20
-> This is exactly what we want to avoid, to eventually remove
-> the "/machine/unattached" container for good.
->=20
-> See "=3D Problem 4: The /machine/unattached/ orphanage =3D" in:
-> https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+> CPU hotremove event is not delivered to OSPM if the CPU
+> has been hotplugged before OS has booted.
+> For details see [2/3].
 
+Michael,
+can you pick it up please?
 
-QOM paths as far as I'm aware were never part ABI nor I'm aware of
-of any proposal to make it or some parts of it a public interface.
-
-IMHO for public ABI, QEMU provides explicit QMP commands while
-QOM should stay a playground for developers.
-
-I this specific case, one basically replaces /machine/unattached
-orphanage with explicit /machine one and many 'cpuN' children,
-which ain't any better than device[N].
-
-and in future I can imagine that at least in x86 case vcpus
-might have another parent depending on configuration.
-(i.e. being parented to cores instead)
-
-If goal is to get rid of /machine/unattached, that's fine.
-But please not make brittle naming under /machine/unattached
-as a reason as 'cpu[N]' is the same just in different place
-and scattered all over code (hence doubts if it's any better than current w=
-ay).
-(ps: don't we have exactly the same for peripheral-anon container)
-
-
-> > while devices created with device_add() are be placed under /machine/pe=
-ripheral[-anon]
-> >=20
-> > The commit message unfortunately doesn't explain why [1] shall be repla=
-ced
-> > by direct cpu[*] array property directly under machine. =20
->=20
-> Right. I'll drop for now and respin once reworded.
->=20
-> > Granted, those paths aren't any kind of ABI and wrt x86 cpus
-> > nothing should break (or I'd say it shouldn't break our promises)
-> > But I'd rather not do this without a good reason/explanation.
-> >  =20
-> >>       qdev_realize(DEVICE(cpu), NULL, errp);
-> >>  =20
-> >>   out: =20
->=20
+> 
+> Igor Mammedov (3):
+>   tests: acpi: whitelist expected blobs
+>   cpuhp: make sure that remove events are handled within the same SCI
+>   tests: acpi: update expected blobs
+> 
+>  hw/acpi/cpu.c                                 |  43 ++++++++++++++----
+>  tests/data/acpi/x86/pc/DSDT                   | Bin 8526 -> 8593 bytes
+>  tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8437 -> 8504 bytes
+>  tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9851 -> 9918 bytes
+>  tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15397 -> 15464 bytes
+>  tests/data/acpi/x86/pc/DSDT.cphp              | Bin 8990 -> 9057 bytes
+>  tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10180 -> 10247 bytes
+>  tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8477 -> 8544 bytes
+>  tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5033 -> 5100 bytes
+>  tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8598 -> 8665 bytes
+>  tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9885 -> 9952 bytes
+>  tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8384 -> 8451 bytes
+>  tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8532 -> 8599 bytes
+>  tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12319 -> 12386 bytes
+>  tests/data/acpi/x86/q35/DSDT                  | Bin 8355 -> 8422 bytes
+>  tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8372 -> 8439 bytes
+>  tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9680 -> 9747 bytes
+>  .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 12565 -> 12632 bytes
+>  .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8634 -> 8701 bytes
+>  tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8401 -> 8468 bytes
+>  tests/data/acpi/x86/q35/DSDT.bridge           | Bin 11968 -> 12035 bytes
+>  tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12913 -> 12980 bytes
+>  tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33770 -> 33837 bytes
+>  tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8819 -> 8886 bytes
+>  tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13146 -> 13213 bytes
+>  tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10009 -> 10076 bytes
+>  tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8430 -> 8497 bytes
+>  tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8443 -> 8510 bytes
+>  tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8372 -> 8439 bytes
+>  tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9714 -> 9781 bytes
+>  tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9485 -> 9552 bytes
+>  tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13208 -> 13275 bytes
+>  tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8235 -> 8302 bytes
+>  tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8213 -> 8280 bytes
+>  tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8361 -> 8428 bytes
+>  tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8456 -> 8523 bytes
+>  tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12913 -> 12980 bytes
+>  tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33770 -> 33837 bytes
+>  tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 8961 -> 9028 bytes
+>  tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 8987 -> 9054 bytes
+>  tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18589 -> 18656 bytes
+>  tests/data/acpi/x86/q35/DSDT.viot             | Bin 14612 -> 14679 bytes
+>  tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35718 -> 35785 bytes
+>  43 files changed, 34 insertions(+), 9 deletions(-)
+> 
 
 
