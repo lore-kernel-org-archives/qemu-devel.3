@@ -4,67 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F15AFE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 09:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B80E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 09:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXdID-0006xz-UJ; Tue, 14 Jan 2025 04:33:02 -0500
+	id 1tXdMS-0000U8-CB; Tue, 14 Jan 2025 04:37:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <evgenii.prokopiev@syntacore.com>)
- id 1tXdI9-0006xh-EQ; Tue, 14 Jan 2025 04:32:57 -0500
-Received: from m.syntacore.com ([178.249.69.228] helo=pmg.syntacore.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <evgenii.prokopiev@syntacore.com>)
- id 1tXdI7-0004WP-N9; Tue, 14 Jan 2025 04:32:57 -0500
-Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
- by pmg.syntacore.com (Proxmox) with ESMTP id 44B74B41C58;
- Tue, 14 Jan 2025 12:32:44 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:from:from:message-id:mime-version:reply-to:subject:subject
- :to:to; s=m; bh=UZfnSxO387Hfg9RUm/AcPnZuu9lKY544wJCkcpY94h4=; b=
- WTeBMmc+yNF1DiX0WdWve8E1855L+CTvYrkR5+WduS5u/pTPIU+p925m6Y7jtFWR
- /WK1T0Hqj7n/GuBWNECsJ3WBN1yTKFoouTBeJe9SFmr5D5S6iDpQXjtDfBIPEXVW
- akkUU6ixmWoynnzLoQyYA1OuhawKv1SHIv52Mf2MBDJOt/DDTNiBCAHIjINPNraT
- XVwsWHRJrDt/ZCPlMMerPN0/fUnxhr9ZZPHi07jyZU81LQVS4ThYbkRhHve0+YCA
- PXl4FI1w8ahAYGu3q4KUL8lcU1Ne5xAW4l/zEJjCwpRmaddMrVtA0qELMrxwGYRc
- /LY7QPmklEfHFXAdf/u9Xg==
-Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
- [10.76.202.20])
- by pmg.syntacore.com (Proxmox) with ESMTPS id 32128B412D4;
- Tue, 14 Jan 2025 12:32:44 +0300 (MSK)
-Received: from mail.syntacore.com (172.17.4.249) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 14 Jan 2025 12:31:54 +0300
-From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-To: <palmer@dabbelt.com>
-CC: <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
- <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, Evgenii Prokopiev
- <evgenii.prokopiev@syntacore.com>
-Subject: [PATCH] target/riscv/csr.c: Turn off mstatus.vs when misa.v is turned
- off
-Date: Tue, 14 Jan 2025 12:20:12 +0300
-Message-ID: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1tXdMH-0000T7-Gi
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 04:37:13 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1tXdME-000509-HF
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 04:37:13 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2162c0f6a39so111545715ad.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 01:37:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1736847427; x=1737452227; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=w/J421GUH7Mao74hk7jOCSi+yLl4BP1uUp1Mb4ir/rU=;
+ b=Uol8f4mQYZ25V2K4DaE0M9oBhMeRhsffkvy61/KQBLBI44dIAyMHFwHJwGpyj0Cn6/
+ BEh8EUe6HNp8f0p0bjh4rU+fS2WUo00wwEgH0YNGXGUdk2SaLvIzd7eLLUZKmh9Dj+CU
+ WA89DM/YnGZv5MyaDV0whW5R6VwmxQpFas4sV1rlqtURXqxJwgZiQp5W2yxFRa+EMyWe
+ r/TqCwfPooSiRx172fp6q/gL9S+PbQBLdFZU4vbrL5C2zv9aU+oLYeniI+XQx1r2HO9v
+ OaiFmo+PvR3vosxXy1rFZ2eg9ebur6AT2SSUV/tOg6FLrhp8BVfABCtQWXiHWLT0QZJR
+ d/Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736847427; x=1737452227;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w/J421GUH7Mao74hk7jOCSi+yLl4BP1uUp1Mb4ir/rU=;
+ b=k2zmjVRM4VgJJFIwtamzQi+tbTSlV2Fnw69UOwqfDhK9nrt6i28F+1yycxVOvU3NBa
+ awzV/G8Jhcn+3SvAhmj5g3Y1zw2gNLoktm5s3oNwq/kCbEAl3Hh9IGhrDFWQbITqm5X4
+ HOzROR1mCXMgkenYR5ZoRol60YRtdl72b+7cJHXFGFWCBPlqgVnrR7Aur9d5IN4NwxjW
+ XT8qxnL7SMLLQ7Ej2PWVeXy15gvf9hHitWFevCjS0450KHiB6LN02V57K2Th31Blguvn
+ H88KzzGVEkALBN8Zti/L1qzN7jbvBr7CfAlSCLcuf8nSwz9C7Xv+SwoJhGDHnQBVt536
+ M6EA==
+X-Gm-Message-State: AOJu0YyJB7ALuAvMmJhSrvvUdk9GchIedg2ppo8w7ORPID1G98005Z7Z
+ OWRzxyuVN4zWeg5vvcDshjzwJTU/yOpAXBdyZduQ6qv4ts6yRanrauv/x8VyB50M1UnhDB3z6Ge
+ hjx5EPJu7jmV7wGLgqsl1Vccb0vwrJzOn/ORbfEkP8fOgS2zF5GTZySJZ4NzzqIdK1Th/gv5QZu
+ FafDbMXR4gXGeeusRoTfX26o9jUoyhZTlXkQJhC3w=
+X-Gm-Gg: ASbGncueUmn3nzTDFbPJwWlkpqQcRJwwSSgcE2ch2eaB6HAcuNp7gqppfQfL1TJJxh4
+ gP8oQLdg3cUcF7AKqqYEuGPkPTVyztHvhLTEIn6fxk57uAO9U70rguus/NcWepi+iJlOEZQXxNq
+ 0bGblFFFxhTqYd2s0RKbai46zi6sp3oTi4JQL4qqDkpTvv3Ybxy/GqYGD+URdIX37WZMbDEBYHb
+ tts989Ix/d61MKBvnjCRqfiIaoiIWvajKQzJyJrtBEDw9wqQgSJHzlZRA441Jciu+2mHJE5nMk5
+ 0VPoVG48
+X-Google-Smtp-Source: AGHT+IEfFytGMS3sZIXK8rwGevqErUOvVDSCaSQoav987u4WTQMho52KEY473oivczemVOQpz5iZhw==
+X-Received: by 2002:a05:6a20:c896:b0:1e1:ad7:3282 with SMTP id
+ adf61e73a8af0-1e8b13d1ed6mr27046085637.7.1736847427183; 
+ Tue, 14 Jan 2025 01:37:07 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72d40658dccsm7300718b3a.92.2025.01.14.01.37.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jan 2025 01:37:06 -0800 (PST)
+From: Jason Chien <jason.chien@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jason Chien <jason.chien@sifive.com>
+Subject: [PATCH 1/2] hw/riscv/riscv-iommu: Remove redundant variables
+Date: Tue, 14 Jan 2025 17:36:45 +0800
+Message-ID: <20250114093647.4952-1-jason.chien@sifive.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [172.17.4.249]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=evgenii.prokopiev@syntacore.com; helo=pmg.syntacore.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=jason.chien@sifive.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,33 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A behavior of misa.v must be similar as misa.f.
-So when this bit's field is turned off, mstatus.vs must be turned off
-too. It follows from the privileged manual of RISC-V, paragraph 3.1.1.
-"Machine ISA (misa) Register".
-
-Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
 ---
- target/riscv/csr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/riscv/riscv-iommu.h | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index eab8e50012..fca2b1b40f 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1537,6 +1537,10 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
-         env->mstatus &= ~MSTATUS_FS;
-     }
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 9424989df4..fa8a50fa24 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -58,11 +58,6 @@ struct RISCVIOMMUState {
+     /* interrupt notifier */
+     void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
  
-+    if (!(env->misa_ext & RVV)) {
-+        env->mstatus &= ~MSTATUS_VS;
-+    }
-+
-     /* flush translation cache */
-     tb_flush(env_cpu(env));
-     env->xl = riscv_cpu_mxl(env);
+-    /* IOMMU State Machine */
+-    QemuThread core_proc; /* Background processing thread */
+-    QemuCond core_cond;   /* Background processing wake up signal */
+-    unsigned core_exec;   /* Processing thread execution actions */
+-
+     /* IOMMU target address space */
+     AddressSpace *target_as;
+     MemoryRegion *target_mr;
 -- 
-2.34.1
-
+2.43.2
 
 
