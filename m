@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7EFE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3638E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXkzq-0001dT-Nh; Tue, 14 Jan 2025 12:46:34 -0500
+	id 1tXl0B-0001g0-RH; Tue, 14 Jan 2025 12:46:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tXkzk-0001cl-2v; Tue, 14 Jan 2025 12:46:29 -0500
+ id 1tXl05-0001er-08; Tue, 14 Jan 2025 12:46:49 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tXkzg-0004cN-7u; Tue, 14 Jan 2025 12:46:27 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YXc2L1n6Vz6M4Q1;
- Wed, 15 Jan 2025 01:44:26 +0800 (CST)
+ id 1tXl02-0004mN-Mi; Tue, 14 Jan 2025 12:46:48 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YXc2y2tBPz6M4JJ;
+ Wed, 15 Jan 2025 01:44:58 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 2F13C140B35;
- Wed, 15 Jan 2025 01:46:10 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 594F814022E;
+ Wed, 15 Jan 2025 01:46:42 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.72.65) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 14 Jan 2025 18:46:08 +0100
+ 15.1.2507.39; Tue, 14 Jan 2025 18:46:41 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>, <farman@linux.ibm.com>,
@@ -36,10 +36,12 @@ CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <berrange@redhat.com>, <richard.henderson@linaro.org>, <linuxarm@huawei.com>, 
  <shameerali.kolothum.thodi@huawei.com>, <Jonathan.Cameron@Huawei.com>,
  <jiangkunkun@huawei.com>, <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
-Subject: [RFC PATCH v6 0/6] Specifying cache topology on ARM
-Date: Tue, 14 Jan 2025 17:45:54 +0000
-Message-ID: <20250114174601.23-1-alireza.sanaee@huawei.com>
+Subject: [PATCH v6 1/7] tests: virt: Update expected ACPI tables for virt test
+Date: Tue, 14 Jan 2025 17:45:55 +0000
+Message-ID: <20250114174601.23-2-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250114174601.23-1-alireza.sanaee@huawei.com>
+References: <20250114174601.23-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -72,138 +74,139 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Specifying the cache layout in virtual machines is useful for
-applications and operating systems to fetch accurate information about
-the cache structure and make appropriate adjustments. Enforcing correct
-sharing information can lead to better optimizations. This patch enables
-the specification of cache layout through a command line parameter,
-building on a patch set by Intel [1,2,3]. It uses this set as a
-foundation.  The device tree and ACPI/PPTT table, and device tree are
-populated based on user-provided information and CPU topology.
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-Example:
+Update the ACPI tables according to the acpi aml_build change, also
+empty bios-tables-test-allowed-diff.h.
 
+The disassembled differences between actual and expected PPTT shows
+below. Only about the root node adding and identification flag set
+as expected.
+  /*
+    * Intel ACPI Component Architecture
+    * AML/ASL+ Disassembler version 20210604 (64-bit version)
+    * Copyright (c) 2000 - 2021 Intel Corporation
+    *
+  - * Disassembly of tests/data/acpi/aarch64/virt/PPTT, Thu Sep 26 08:54:39 2024
+  + * Disassembly of /tmp/aml-QNEIU2, Thu Sep 26 08:54:39 2024
+    *
+    * ACPI Data Table [PPTT]
+    *
+    * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
+    */
 
-+----------------+                            +----------------+
-|    Socket 0    |                            |    Socket 1    |
-|    (L3 Cache)  |                            |    (L3 Cache)  |
-+--------+-------+                            +--------+-------+
-         |                                             |
-+--------+--------+                            +--------+--------+
-|   Cluster 0     |                            |   Cluster 0     |
-|   (L2 Cache)    |                            |   (L2 Cache)    |
-+--------+--------+                            +--------+--------+
-         |                                             |
-+--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
-|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
-+--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-         |                   |                       |                   |
-+--------+              +--------+              +--------+          +--------+
-|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
-+--------+              +--------+              +--------+          +--------+
-|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
-+--------+              +--------+              +--------+          +--------+
+   [000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
+  -[004h 0004   4]                 Table Length : 0000004C
+  -[008h 0008   1]                     Revision : 02
+  -[009h 0009   1]                     Checksum : A8
+  +[004h 0004   4]                 Table Length : 00000060
+  +[008h 0008   1]                     Revision : 03
+  +[009h 0009   1]                     Checksum : 26
+   [00Ah 0010   6]                       Oem ID : "BOCHS "
+   [010h 0016   8]                 Oem Table ID : "BXPC    "
+   [018h 0024   4]                 Oem Revision : 00000001
+   [01Ch 0028   4]              Asl Compiler ID : "BXPC"
+   [020h 0032   4]        Asl Compiler Revision : 00000001
 
+   [024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
+   [025h 0037   1]                       Length : 14
+   [026h 0038   2]                     Reserved : 0000
+  -[028h 0040   4]        Flags (decoded below) : 00000001
+  +[028h 0040   4]        Flags (decoded below) : 00000011
+                               Physical package : 1
+                        ACPI Processor ID valid : 0
+                          Processor is a thread : 0
+                                 Node is a leaf : 0
+  -                    Identical Implementation : 0
+  +                    Identical Implementation : 1
+   [02Ch 0044   4]                       Parent : 00000000
+   [030h 0048   4]            ACPI Processor ID : 00000000
+   [034h 0052   4]      Private Resource Number : 00000000
 
-The following command will represent the system relying on **ACPI PPTT tables**.
+   [038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
+   [039h 0057   1]                       Length : 14
+   [03Ah 0058   2]                     Reserved : 0000
+  -[03Ch 0060   4]        Flags (decoded below) : 0000000A
+  +[03Ch 0060   4]        Flags (decoded below) : 00000011
+  +                            Physical package : 1
+  +                     ACPI Processor ID valid : 0
+  +                       Processor is a thread : 0
+  +                              Node is a leaf : 0
+  +                    Identical Implementation : 1
+  +[040h 0064   4]                       Parent : 00000024
+  +[044h 0068   4]            ACPI Processor ID : 00000000
+  +[048h 0072   4]      Private Resource Number : 00000000
+  +
+  +[04Ch 0076   1]                Subtable Type : 00 [Processor Hierarchy Node]
+  +[04Dh 0077   1]                       Length : 14
+  +[04Eh 0078   2]                     Reserved : 0000
+  +[050h 0080   4]        Flags (decoded below) : 0000000A
+                               Physical package : 0
+                        ACPI Processor ID valid : 1
+                          Processor is a thread : 0
+                                 Node is a leaf : 1
+                       Identical Implementation : 0
+  -[040h 0064   4]                       Parent : 00000024
+  -[044h 0068   4]            ACPI Processor ID : 00000000
+  -[048h 0072   4]      Private Resource Number : 00000000
+  +[054h 0084   4]                       Parent : 00000038
+  +[058h 0088   4]            ACPI Processor ID : 00000000
+  +[05Ch 0092   4]      Private Resource Number : 00000000
 
-./qemu-system-aarch64 \
- -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
- -cpu max \
- -m 2048 \
- -smp sockets=2,clusters=1,cores=2,threads=2 \
- -kernel ./Image.gz \
- -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
- -initrd rootfs.cpio.gz \
- -bios ./edk2-aarch64-code.fd \
- -nographic
+  -Raw Table Data: Length 76 (0x4C)
+  +Raw Table Data: Length 96 (0x60)
 
-The following command will represent the system relying on **the device tree**.
+  -    0000: 50 50 54 54 4C 00 00 00 02 A8 42 4F 43 48 53 20  // PPTTL.....BOCHS
+  +    0000: 50 50 54 54 60 00 00 00 03 26 42 4F 43 48 53 20  // PPTT`....&BOCHS
+       0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+  -    0020: 01 00 00 00 00 14 00 00 01 00 00 00 00 00 00 00  // ................
+  -    0030: 00 00 00 00 00 00 00 00 00 14 00 00 0A 00 00 00  // ................
+  -    0040: 24 00 00 00 00 00 00 00 00 00 00 00              // $...........
+  +    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
+  +    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
+  +    0040: 24 00 00 00 00 00 00 00 00 00 00 00 00 14 00 00  // $...............
+  +    0050: 0A 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00  // ....8...........
 
-./qemu-system-aarch64 \
- -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
- -cpu max \
- -m 2048 \
- -smp sockets=2,clusters=1,cores=2,threads=2 \
- -kernel ./Image.gz \
- -append "console=ttyAMA0 root=/dev/ram rdinit=/init" \
- -initrd rootfs.cpio.gz \
- -nographic
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+---
+ tests/data/acpi/aarch64/virt/PPTT              | Bin 76 -> 96 bytes
+ tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt | Bin 156 -> 176 bytes
+ tests/data/acpi/aarch64/virt/PPTT.topology     | Bin 336 -> 356 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
 
-Failure cases:
-    1) There are scenarios where caches exist in systems' registers but
-    not left unspecified by users. In this case qemu returns failure.
+diff --git a/tests/data/acpi/aarch64/virt/PPTT b/tests/data/acpi/aarch64/virt/PPTT
+index 7a1258ecf123555b24462c98ccbb76b4ac1d0c2b..cafd4ee23cb4579234b36bc1b06d1380ac8fafea 100644
+GIT binary patch
+literal 96
+zcmWFt2nk7GU|?WYbMklg2v%^42yj*a0!E-1hz+6{L>L$ZK{PUeim9N9aRK=jNMZmJ
+Cw+8_L
 
-    2) At the moment, the device tree is not able to describe caches
-    shared at core level. In another word, SMT threads cannot share
-    caches. This will need adjustments in the SPEC. It is worth noting
-    that this particular case is completely OK in ACPI PPTT tables.
+delta 38
+kcmYfB;R*-{3GrcIU|?D?kxP!15y)bg=qSvi0%AY`0D`Lo$p8QV
 
-Currently only three levels of caches are supported to be specified from
-the command line. However, increasing the value does not require
-significant changes. Further, this patch assumes l2 and l3 unified
-caches and does not allow l(2/3)(i/d). The level terminology is
-thread/core/cluster/socket right now.
+diff --git a/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt b/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt
+index 4eef303a5b6168c6bc3795c2e2c53f65b4c4cfd4..8d560405bc7c557867efa32fef5b579f5709d729 100644
+GIT binary patch
+literal 176
+zcmWFt2npH1z`(%F<K*w`5v<@85#X!<1dKp25F11@h%hh+f@ov_6;nYI;{x(6aEO7;
+b0?8riMHU0;EdgRCkQxvGs)LC!Lqr$=th)&T
 
-Here is the hierarchy assumed in this patch:
-Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+literal 156
+zcmWFt2nm_Pz`(%t&&l7}BUr&HBEVSz2pEB4AU23*5Mf{d(;zks0L8d~Y!w(EL?em8
+b)g$Re76a)`0AeN}1_P+x1R#eQBEkRwWK9VH
 
-TODO:
-  1) Making the code to work with arbitrary levels
-  2) Separated data and instruction cache at L2 and L3.
-  3) Additional cache controls.  e.g. size of L3 may not want to just
-  match the underlying system, because only some of the associated host
-  CPUs may be bound to this VM.
+diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
+index 3fbcae5ff08aaf16fedf4da45e941661d79c1174..d0e5e11e90f33cbbbc231f9ad0bd48419e0fea65 100644
+GIT binary patch
+literal 356
+zcmWFt2nk7HWME*P=H&0}5v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
+ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
+cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?*x0RR91
 
-Depends-on: Building PPTT with root node and identical implementation flag
-Depends-on: Msg-id: 20240926113323.55991-1-yangyicong@huawei.com
-
-Depends-on: i386: Support SMP Cache Topology
-Depends-on: Msg-id: 20241219083237.265419-1-zhao1.liu@intel.com
-
-[1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
-[2] https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/ 
-[3] https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-
-Change Log:
-  v5->v6:
-   * Minor bug fix.
-   * rebase based on new Intel patchset.
-     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-  v4->v5:
-    * Added Reviewed-by tags.
-    * Applied some comments.
-  
-  v3->v4:
-    * Device tree added.
-
-
-Alireza Sanaee (6):
-  target/arm/tcg: increase cache level for cpu=max
-  arm/virt.c: add cache hierarchy to device tree
-  bios-tables-test: prepare to change ARM ACPI virt PPTT
-  hw/acpi/aml-build.c: add cache hierarchy to pptt table
-  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
-  Update the ACPI tables according to the acpi aml_build change, also
-    empty bios-tables-test-allowed-diff.h.
-
-Yicong Yang (1):
-  tests: virt: Update expected ACPI tables for virt test
-
- hw/acpi/aml-build.c                           | 205 +++++++++-
- hw/arm/virt-acpi-build.c                      |   8 +-
- hw/arm/virt.c                                 | 349 ++++++++++++++++++
- hw/cpu/core.c                                 |  92 +++++
- include/hw/acpi/aml-build.h                   |   4 +-
- include/hw/arm/virt.h                         |   4 +
- include/hw/cpu/core.h                         |  27 ++
- target/arm/tcg/cpu64.c                        |  13 +
- tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
- .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
- tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 540 bytes
- tests/qtest/bios-tables-test.c                |   4 +
- 12 files changed, 699 insertions(+), 7 deletions(-)
+literal 336
+zcmWFt2nh*bWME*baq@Te2v%^42yj*a0-z8Bhz+6{L>L&rG>8oYKrs+dflv?<DrSKu
+z#s}p4;1GkGi=-D>45YUMh?!vef$Csl%t&G&Cde(wdO>1GKm-gx_1*yTS+Iz)B8h>R
+aAic=uf$S9l3b27BK>%tVNQ@mK!T<mOd=3Es
 
 -- 
 2.34.1
