@@ -4,100 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434B4E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 21:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17DD0E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 21:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXoEN-0002Xi-Hv; Tue, 14 Jan 2025 16:13:47 -0500
+	id 1tXoFe-00031d-Jq; Tue, 14 Jan 2025 16:15:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tXoEI-0002XI-1o
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:13:42 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tXoEF-0006j6-JY
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:13:41 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50EE6kFg014295;
- Tue, 14 Jan 2025 21:13:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=y4cbnm
- gBC1NCTW85pwlQG8wzFbKC80KndlsHT+uzQWI=; b=SDrWpKHDZZcfqQOQOVHuDr
- PdtO6r/+hGpKHkKuPyl99RP5mEP/PF/2dxIS8pMcGf2YMPWjvxcxWOzXLRoJx8wF
- T0+pRSgN82GSWa2/DUu0t05Dy2LOxOrbVcQ6tOT1PE09ESBaOzXtGOava1Ej7Jlq
- WE9ta1logcc+54n0Yb7bTsdFBfXp+bd9dH2EibNgY8wonHRwQrTmpgeboDUtlEF8
- i91YxAzP79RVtsdwxNw3RWMTdFammTPGuEv8C8iS0DqSoG3DITUltL2ofZUVhSYd
- V4JxcuriIDNtzj/zl5goMsMbZarDeMni7Sgq4xzfa3hvdBctC3tF67GxG0tY9M/g
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 445sd61u5g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jan 2025 21:13:30 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50EKnxSx002738;
- Tue, 14 Jan 2025 21:13:30 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443by57rn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jan 2025 21:13:29 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50ELDRro43385254
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jan 2025 21:13:27 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF50520A96;
- Tue, 14 Jan 2025 20:52:04 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2FAEC20A94;
- Tue, 14 Jan 2025 20:52:04 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jan 2025 20:52:04 +0000 (GMT)
-Message-ID: <a049262b76fadb8fe0a3cd6968709b5cd1e0ec6b.camel@linux.ibm.com>
-Subject: Re: [PATCH 3/3] accel/tcg: Implement cpu_exec_reset_hold() on user
- emulation
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>, Riku
- Voipio <riku.voipio@iki.fi>, Richard Henderson
- <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
-Date: Tue, 14 Jan 2025 21:52:03 +0100
-In-Reply-To: <6d1171d8debb462f468bb47ff875e0e9db253b4e.camel@linux.ibm.com>
-References: <20250102182521.65428-1-philmd@linaro.org>
- <20250102182521.65428-4-philmd@linaro.org>
- <6d1171d8debb462f468bb47ff875e0e9db253b4e.camel@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tXoFZ-0002wJ-80
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:15:02 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tXoFX-0006qf-95
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:15:00 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3dce16a3dso374600a12.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 13:14:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1736889297; x=1737494097; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vinugn0Wqr7kU8uXGUN2RvepSFgd1H2BTfmjomBKRSQ=;
+ b=ToEeDkf3aJ+sWmJ0Pw9xdRS3eN4744cmB9ZeOkNxwVvlW/elIKLZX7CxvVMzvD4kYR
+ Zjm37tC47E+19XagZzaPMUuGMfifB3Zpfa6F3CgqYRxBFwUBrJtAkomIK0rCAv4QLCg7
+ tO1RcC9Coj3UUZqxH9Uqj0WCeNXskKcA2oHwpQ1Q74eWfwrKn4FvMYcUNPJDtVO9UqBV
+ w8aQYwNMxpFnDvKPQYxe+Tlnm09FF1AuNGMWaoavpWOSZW1H4Wf/s0M1fDcf71Q3zJDp
+ 5+Vnrfp+TFhI+HP2+30a/yLbRF+2c6rGUf5E2Y2Liv4VpiQgQSW7fTaeNsoA45BwnCPi
+ IABw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736889297; x=1737494097;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vinugn0Wqr7kU8uXGUN2RvepSFgd1H2BTfmjomBKRSQ=;
+ b=IFiTOPUyHgMXccUedZMDC9Lbx4rGpJ8BfZuB5uTLF5Hj99+vvMgjyra51vbLuVq+8R
+ 5rj0VBS7t//aS4iJDOgigrd3vSVeBKuk5fFsuPZBmxRQdTbp0T1pa4DxijWvXbtYeXg5
+ 3O5TGh447zOIHL+FxIdU2Zkm1xj4Hyb0Cl2ECuUkQdu6MQYVdF9ef2lHmcGkKA9DrptO
+ iTdkGsXDBhUv6OsFB1B4eLKb5vj0u5v1riOtHzgwsSgBbEvYXQk6KQanqlvwfHy/5fIa
+ WUOA3eV78F/FZcoQP/coqB19+uPUY/sTyaeB37vxniSOFZKv1WD+S6sfpHFv6WyQt8DM
+ Hg/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcgT9CubV/DzeVqCdgT5kBijeArRzhX6G1VNeXa7Sk4Xhb+m9uMbk+bZb3YgdOd7649FW7mPZ5DZvx@nongnu.org
+X-Gm-Message-State: AOJu0Yxl0MkuDDzkL7T1ZGTkPW+OoAbhbf1SIeqARULJf4aXio0tB5+B
+ ZpfoIjKtNAPz470QzjuI/eLrvK7zybVsCTr2LMhkcOyn9WRWqox6uwPvvaLtwDvAYrKN2l46e3b
+ 30KMrr71qQYrYiMAEF4etYoImv80=
+X-Gm-Gg: ASbGncscnRGMKZ6h8hXXCoRFszqcAB6ZueVoPo7APcM/Jq2Z6DrwL5kVO7hcAa/HeGe
+ CtD/BPB/INuL1kcjuSYTRcAwh3Z5Mjp8WzjLF
+X-Google-Smtp-Source: AGHT+IHTb+wnyL/1R12jMav6WLCh8ow2UINSS5TfOFpwEer/C7m/ZFs0esSWl341FAyRIuzZ5BG2zCNtyuCtwQosPNk=
+X-Received: by 2002:a05:6402:358f:b0:5d0:f6ed:4cd1 with SMTP id
+ 4fb4d7f45d1cf-5da0c2efefemr434115a12.10.1736889296668; Tue, 14 Jan 2025
+ 13:14:56 -0800 (PST)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: uzXlJDpvvqLNSwq6D2dh0tNm63EPMXnR
-X-Proofpoint-ORIG-GUID: uzXlJDpvvqLNSwq6D2dh0tNm63EPMXnR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-14_07,2025-01-13_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 adultscore=0
- clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- mlxlogscore=963 bulkscore=0 lowpriorityscore=0 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501140159
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.794, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250113210833.1712-1-farosas@suse.de>
+ <CAJSP0QWe+0_rjchH0hCszU-4r_PF+ZgZgWb+cgg6UZzZiYeTQA@mail.gmail.com>
+ <8734hlh471.fsf@suse.de>
+ <CAJSP0QUGfq0yPyzyjHy9D0=e2o_AVMvb1SaA69fm3oexYaH60g@mail.gmail.com>
+ <Z4bF0FY_v8qKCGlb@x1n>
+In-Reply-To: <Z4bF0FY_v8qKCGlb@x1n>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 14 Jan 2025 16:14:44 -0500
+X-Gm-Features: AbW1kvYqYCCS3XxfAw-bMxSLqCY78NgUzErbL06BVCWBZY0VhyLVxIJ2gpAi730
+Message-ID: <CAJSP0QXC+ZMECR0qkqns=ShWBBzabzf5B6eFUifM51eC9J6q8A@mail.gmail.com>
+Subject: Re: [RFC PATCH] tests/qtest/migration: Add cpu hotplug test
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,58 +97,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-01-10 at 00:43 +0100, Ilya Leoshkevich wrote:
-> On Thu, 2025-01-02 at 19:25 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Commit bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold()
-> > out") wanted to restrict tlb_flush() to system emulation,
-> > but inadvertently also restricted tcg_flush_jmp_cache(),
-> > which was before called on user emulation via:
-> >=20
-> > =C2=A0 Realize -> Reset -> cpu_common_reset_hold()
-> >=20
-> > Since threads (vCPUs) use a common CPUJumpCache, when many
-> > threads are created / joined, they eventually end re-using
-> > a CPUJumpCache entry, which was cleared when the first vCPU
-> > was allocated (via Realize) but then stayed dirty, leading to:
->=20
-> How are jump caches shared between qemu-user vCPUs?
-> I found the following, but this looks private and zeroed out
-> during initialization:
->=20
-> bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-> [...]
-> =C2=A0=C2=A0=C2=A0 cpu->tb_jmp_cache =3D g_new0(CPUJumpCache, 1);
->=20
-> I was also wondering whether vCPUs themselves may be recycled, but
-> it doesn't seem to be the case, since do_fork() -> cpu_copy() ->
-> cpu_create() -> object_new() -> object_new_with_type() calls
-> g_malloc().
->=20
->=20
->=20
-> Btw, I tried to reproduce the original issue, but bumped into
-> something
-> seemingly unrelated. To make matters worse, debugging seems to be
-> broken, so it may take some time before I can properly test this
-> change.
->=20
-> Thread 2 received signal SIGSEGV, Segmentation fault.
-> [Switching to Thread 37607.37622]
-> 0x000002aa00a6a64c in cs_option (ud=3D140251083477344,
-> type=3DCS_OPT_SYNTAX, value=3D2) at capstone/cs.c:782
-> 782=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 return arch_configs[handle->arch].arch_option(handle,
-> type, value);
-> (gdb) info threads
-> Ignoring packet error, continuing...
+On Tue, 14 Jan 2025 at 15:15, Peter Xu <peterx@redhat.com> wrote:
+>
+> On Tue, Jan 14, 2025 at 02:28:46PM -0500, Stefan Hajnoczi wrote:
+> > On Tue, 14 Jan 2025 at 09:15, Fabiano Rosas <farosas@suse.de> wrote:
+> > >
+> > > Stefan Hajnoczi <stefanha@gmail.com> writes:
+> > >
+> > > > On Mon, 13 Jan 2025 at 16:09, Fabiano Rosas <farosas@suse.de> wrote:
+> > > >>
+> > > >> Bug #2594 is about a failure during migration after a cpu hotplug. Add
+> > > >> a test that covers that scenario. Start the source with -smp 2 and
+> > > >> destination with -smp 3, plug one extra cpu to match and migrate.
+> > > >>
+> > > >> The issue seems to be a mismatch in the number of virtqueues between
+> > > >> the source and destination due to the hotplug not changing the
+> > > >> num_queues:
+> > > >>
+> > > >>   get_pci_config_device: Bad config data: i=0x9a read: 4 device: 5
+> > > >>   cmask: ff wmask: 0 w1cmask:0
+> > > >>
+> > > >> Usage:
+> > > >> $ QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+> > > >>   ./tests/qtest/migration-test -p /x86_64/migration/hotplug/cpu
+> > > >>
+> > > >> References: https://gitlab.com/qemu-project/qemu/-/issues/2594
+> > > >> References: https://issues.redhat.com/browse/RHEL-68302
+> > > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > > >> ---
+> > > >> As you can see there's no fix attached to this. I haven't reached that
+> > > >> part yet, suggestions welcome =). Posting the test case if anyone
+> > > >> wants to play with this.
+> > > >>
+> > > >> (if someone at RH is already working on this, that's fine. I'm just
+> > > >> trying to get some upstream bugs to move)
+> > > >
+> > > > The management tool should set num_queues on the destination to ensure
+> > > > migration compatibility.
+> > > >
+> > >
+> > > I'm not sure that's feasible. The default num-queues seem like an
+> > > implementation detail that the management application would not have a
+> > > way to query. Unless it starts the source with a fixed number that
+> > > already accounts for all hotplug/unplug operations during the VM
+> > > lifetime, which would be wasteful in terms of resources allocated
+> > > upfront.
+> > >
+> > > That would also make the destination run with a suboptimal (< #vcpus)
+> > > number of queues, although that's already the case in the source after
+> > > the hotplug. Do we have any definition on what should happen durgin
+> > > hotplug? If one plugs 100 vcpus, should num-queues remain as 2?
+> >
+> > QEMU defaults num_queues to the number of present CPUs. A management
+> > tool that wants to ensure that all hotplugged CPUs will have their own
+> > virtqueues must set num_queues to max_cpus instead. This wastes
+> > resources upfront but in theory the guest can operate efficiently. I
+> > haven't checked the Linux guest drivers to see if they actually handle
+> > virtqueue allocation after hotplug. The Linux drivers vary in how they
+> > allocate virtqueue interrupts, so be sure to check several device
+> > types like virtio-net and virtio-blk as they may behave differently.
+> >
+> > Or the management tool can explicitly set num_queues to the number of
+> > present CPUs and preserve that across live migration and CPU hotplug.
+> > In that case num_queues can be updated across guest cold boot in order
+> > to (eventually) achieve the optimal multi-queue configuration.
+> >
+> > Other approaches might be possible too. The management tool has a
+> > choice of how to implement this and QEMU doesn't dictate a specific
+> > approach.
+>
+> Thanks for the answer, Stefan.  I've left a comment in each of the issue
+> reports so that reporter can verify this works properly.
+>
+> This also reminded me we could have specified a very large number of queues
+> in many cases - I remember it used to be 1024 somehow (perhaps also the max
+> vcpu number, but I'm not sure), which caused unwanted slowness on migration
+> loading side (aka, downtime portion) due to MMIO regions of each queue -
+> each of the queues may need a global address space update on the guest
+> physical address space.  I didn't verify this issue, but if it can be
+> reproduced and verified true, I wonder if the MMIO regions (or any relevant
+> resources that would be enabled with num_queues even though some of them
+> are not in use) can be plugged lazily, so that we can save quite some time
+> on loadvm of migration.
 
-With a small debugger fix [1] I finally managed to investigate and fix
-the crash, which turned out to be not caused by QEMU [2], and with that
-the testsuite ran without further issues. So I don't seem to be able to
-reproduce the original issue to verify this series.
+Greg Kurz's commit 9cf4fd872d14 ("virtio: Clarify MR transaction
+optimization") is about the scaling optimization where ioeventfd
+changes are batched into a single transaction. This made a big
+difference. Maybe something similar can be done in your case too?
 
-[1]
-https://lore.kernel.org/qemu-devel/20250113134658.68376-1-iii@linux.ibm.com=
-/
-[2] https://github.com/capstone-rust/capstone-rs/pull/166
+Stefan
 
