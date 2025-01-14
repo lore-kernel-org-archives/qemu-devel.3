@@ -4,86 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 252C5C02180
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 00:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E361C02180
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 01:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXUvA-0004ro-9j; Mon, 13 Jan 2025 19:36:40 -0500
+	id 1tXVSJ-0000Q0-5e; Mon, 13 Jan 2025 20:10:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tXUv8-0004rC-6E; Mon, 13 Jan 2025 19:36:38 -0500
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tXUv5-000567-UZ; Mon, 13 Jan 2025 19:36:37 -0500
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4b11a110e4eso1176762137.1; 
- Mon, 13 Jan 2025 16:36:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736814994; x=1737419794; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CL1CmDDWWTjA7Ao/49rzONkyXpxTm83GoBMJW+CD5GA=;
- b=WkxzoW7K5ThBMH3biPT2/DZ/cMKeyEWeHx/Cn+YrVBDTVsrnLjGkNOxoHJHio60UcT
- S9zft2OTIiTemngkgVbE5lrQ3dYFLX+Bof6fYANSnGw+5D20L3wIPeXJTODBDzJ8P4Wu
- xYPmCtlHAxxrfK+gPGXLC9cZ5qRBu1x8Z3cpfgYyP/d+ldaOu91kGmSs3TOWTGvHYxH2
- yq0amMHhJYzC41liinnYCHrDW2fpOASbYLYAAZaAFkopyQVK30fGQ7i4Id/DToHytmJK
- IKFDOnhh8tyZLpbwJPVb4IhAaYKfPKRCSFfa3dk29uLKaWaqV5mgBLIpmMGKD6KGbUVS
- /Jcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736814994; x=1737419794;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CL1CmDDWWTjA7Ao/49rzONkyXpxTm83GoBMJW+CD5GA=;
- b=hFFIw9W8X2s7AAib/dq5kurCfpvZ54ukIL8u7D+YaW8z1cIAoYRR8gDXO7tweSvANY
- Aquu6Fss/zGxKI5POaPVXwaDpsty3lgMbZ3mkicR5/XIs4+V/ZxRvSorlipfifbGRZms
- vunDtELnF4wNYnQcV3+MtYIODbSpj60Jh/o97yCETd1+IC0KY5GnIG6t8yDfRgblUUUk
- wj6CjOZh7zMXBsMe2kMuyKqv22+8GMoSNVjQlORU6XdR1f4+hQXiRPo662cQfJEBggU+
- wTTsIpbNMQ933nuhQKbUHoB3sY2spIcvYt1qwNQne/+D+AznY6ufIQtnPJIW8r694BnP
- yeXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWP6kPPVr69hrel8kMDwLg3YV+EquJlIaO0jIpr3n1n8BC/6qiPHLTyCMjXTjQmJZ6+XM5l6craRhAg@nongnu.org
-X-Gm-Message-State: AOJu0YxVz0EwwUeYw0A+iscWoPrTplmoSp6mXbnpYSXL3lW/TkCUvfkm
- 5sj+ZQN+geAaItRleGgchT9vuL3VaL1HT7RIDmFUK8v+xI8QbZpFykA9yrn6qRzJivkxp8FXKIY
- SDJizO2k3Aq4+3GVXQEnUfv2PxM0=
-X-Gm-Gg: ASbGnctT3bTATNXzM+Co5jDrrA5xO36QGt6cTrMwKFqG7Y9a425YyBsrQ63OzTHME46
- BhszEKno6Pn34nsTdG7GWm/eFINWEu2jsBeXTqV27HfPOZ+OCuBD1jA7NVQWE6lyi3ac=
-X-Google-Smtp-Source: AGHT+IGTL7gXCDd6zc43wRs2I892LUxKyPihJ4u0ffvfS+CL/6ydcjgXnsz0xVVoBxbQGUsKUj9h0aYLM3TBQSZ2SWE=
-X-Received: by 2002:a05:6102:292b:b0:4b2:7446:fc18 with SMTP id
- ada2fe7eead31-4b3d0fb67bemr20508517137.17.1736814994045; Mon, 13 Jan 2025
- 16:36:34 -0800 (PST)
-MIME-Version: 1.0
-References: <20250110125441.3208676-1-cleger@rivosinc.com>
-In-Reply-To: <20250110125441.3208676-1-cleger@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 14 Jan 2025 10:36:08 +1000
-X-Gm-Features: AbW1kvYVHVT_Yw6hDij0URZAvbV9hdv2FHFiAn3tu6SAT7IyYOnE8M-2mC12Mcg
-Message-ID: <CAKmqyKM45q3goC06aPFkLFdW1U-Ktkcwyd3QPS1ZcyJm7LmXig@mail.gmail.com>
-Subject: Re: [PATCH v8 0/9] target/riscv: Add support for Smdbltrp and
- Ssdbltrp extensions
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
- Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org, 
- Frank Chang <frank.chang@sifive.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tXVSG-0000Po-7I
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 20:10:52 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1tXVSD-0000QB-Tp
+ for qemu-devel@nongnu.org; Mon, 13 Jan 2025 20:10:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736817050; x=1768353050;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=qA1WUHZjB2/JgRKyHbwVVx5JsdhQyjS9Q+RGOpH8B+M=;
+ b=ZMBh2x919g2+Yk8S2Xa3Ag5WME3889cvfwRZJ6v2Ul88gt/M8QrV7Kiv
+ lHtHfFTQB+HfcHZAAPIY8dEehe4Twh2YaQYXad72ZdHI+gSNrrHDUs6NF
+ rvOtzvfRYrYbKFRwaeq7+ppXdLBOlzwkDrw0rt6DmYYR15jwCQeXA6fdS
+ W6dTyBiBtJKr1SsV5zGrTuMMXkb20DN34huslFyjgF1FQG3R8SvEqpjpe
+ TNzlE99fqCyECQV+qJaJqg5b0D1GsRz6D1FrtoyLcn2qXIHBIKMuXSJYQ
+ +P/hYRox3bBDaHjVjmseVcmlQakMXBz4kFgPim0104Bt4uVVIItIe1Ez3 Q==;
+X-CSE-ConnectionGUID: k/Qfd1VKT/+L67s9Zuk+qw==
+X-CSE-MsgGUID: nOI4mvj5TtOZN6SKKLwKAw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="48481291"
+X-IronPort-AV: E=Sophos;i="6.12,312,1728975600"; d="scan'208";a="48481291"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jan 2025 17:10:46 -0800
+X-CSE-ConnectionGUID: wYjvjwtwTp6dwk7dHFAO0A==
+X-CSE-MsgGUID: H8NZKv1nQ6yS0jn6X2HvUg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="109669671"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 13 Jan 2025 17:10:46 -0800
+Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Mon, 13 Jan 2025 17:10:45 -0800
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Mon, 13 Jan 2025 17:10:45 -0800
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.45) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Mon, 13 Jan 2025 17:10:45 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FwhMBqhliRVWs3CCMcGu4LM//itefY7L5tIbGukomhqLZhuI5MmsbEEngupeMqxdzNlPkto6kfPxg+YCHElHLNEVqa/O2TZsWWY3Py1rQBMqT77Ou5sK9v+xQVCtabGgo6zNXX2yBgJFrc9jyj36iAxjDdCX3pHYBkCVW0+XfdZ0ST5zLcaC4n5grZ32NvRGhmRMipCT3qxWn/nm3uEBY5KU5GM34mqaMtcTHdSjSOgS9RC2Lr5eRcBYZvjJ2COXNJa8rf2DNgCl2HbZhjPxmheu2cWuQ3ryvFHqQNmWOD+tjKvM4XVoI0dP/PFRxMqrsh8SfmMXiBp8P+B9Xttl2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qJAUp9+cqmLW70SE1w2jI3z1IdYmbB3tsYZb2TAkAYk=;
+ b=ETFqB4bC+e1PD8XG5+x/Nr14nnXbOIy00GFYX17yhiG3AMayvGCNF6SLn5+0IOpQ1ApWYABjIANpitUVNdlxWeVtiFjXr/FCfvGnUEhUJ50MSZVnpS1RKT3m4nEngjLeC3Ss1KEYgGTGb7RVYqOUJ+SH0Ne7tRjZumZo9H5QXfAFQgV7ZOauspFlnCcSiEsg71apXtIrYt81VcOJDFW5UEMeiLxaPoYFgyldIUSfD+s6NxY2ydJgQuVdTSd8sWcXjaPdNx/n/7oz37ymOd+1HjneKrUvrkVJw6GIOe4iVpLu+ciC5nUN4W95NLODvPDOhxHl3aOdsGZzBsiwfJzwgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ PH7PR11MB6698.namprd11.prod.outlook.com (2603:10b6:510:1ac::9) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8335.18; Tue, 14 Jan 2025 01:10:43 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%5]) with mapi id 15.20.8335.017; Tue, 14 Jan 2025
+ 01:10:43 +0000
+Message-ID: <94763b5c-8e8a-4bff-92e0-66532ada7d5f@intel.com>
+Date: Tue, 14 Jan 2025 09:10:34 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
+ guest-memfd with RamDiscardManager
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
+ <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-3-chenyi.qiang@intel.com>
+ <d0b30448-5061-4e35-97ba-2d360d77f150@amd.com>
+ <80ac1338-a116-48f5-9874-72d42b5b65b4@intel.com>
+ <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <9dfde186-e3af-40e3-b79f-ad4c71a4b911@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SG2PR02CA0017.apcprd02.prod.outlook.com
+ (2603:1096:3:17::29) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|PH7PR11MB6698:EE_
+X-MS-Office365-Filtering-Correlation-Id: 70f72248-4cdf-4569-fd67-08dd34384474
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bW5TR3FPMlpkeGFjR0F2bU5EbXlLU0hSNE9vRWE4cU9KZjV0SXNKajFSdHl1?=
+ =?utf-8?B?STVsMTdCc1FOdW9xaDdlUlYxdCs1SUcwNnZVY2crSTFhbk1rVnJ1QlVpS0tT?=
+ =?utf-8?B?T0dDYVFQZkJ4SGdmMWZ6SXgrRzhsd0JiR0ZOTmRXNzhxVFhuNE8zSVBWZVhj?=
+ =?utf-8?B?UTNXdXk0UFBvczJGbUYxd2dUREh5WkVqK3R5N1RtTXBTRnFnYURHSm4reE55?=
+ =?utf-8?B?MkVnSDNTWXVqdlRWQnBFS2o1b3Q3ZE0vc2xEd1I3emJ6anFMR0VWTzd2YVNy?=
+ =?utf-8?B?elEyR05VdDFQLzltZlZPUER0VnBXYUI4bG0zTnBZQUtqdmdNclBkdW5DWHVZ?=
+ =?utf-8?B?NHpvVUVVYXk4RUpCMlBxUVk0U1U1cUM1WkZXNVRVYlJIRkltNEZaV2ovUW5V?=
+ =?utf-8?B?aG9LWkFjdHRuL04zcUFyVlBrZEhaWTZOWFVtUDhhYjZFdEJ1cmZPQ0puQTRx?=
+ =?utf-8?B?c2tVSjc4aWpldEdDc3k0QW10S2FEbUdsQ1YzL1VLeTdIa1NLNjR6M013bDNF?=
+ =?utf-8?B?VmhSZUY3VVhWd1NWTktWYzhKVXNwczM5VFVwY0c2bmQ0TnZoOVNKNUZKSWd3?=
+ =?utf-8?B?OUc0bUFrSERJNldtejdnVGY5Wk9Dd2xjTThWdmw5MXd1dWVHcTd5SmtsNkFW?=
+ =?utf-8?B?WDZwZDBSQzlBYTE2bVBTRmFVT0dWWG5JM1o0azd5K1FvdGwxWS9kUWtHTStD?=
+ =?utf-8?B?ckFTUGdsZXhhTytMU3BENkVCMG56SXh5UFFWbEtlN2NqSWtZdXBLUWdVNm9K?=
+ =?utf-8?B?YUhQa0l5ZWxWdmhIL3RXSVJjeWl4cjV0UGVxZ2FTbFloOU1IRTJQQytiSGI2?=
+ =?utf-8?B?ZnRiTEw1ZHVpdkJ4aGZCc2pZQTFEWFJRa3Qzb2Y0QU1yV3d4aWJvbkRjSkIw?=
+ =?utf-8?B?WFBmbVVZZm5NK2lBcjI0Qk1abmRSZlp6cUFEa0luL1JYbmdILzZaaW1uTUp1?=
+ =?utf-8?B?aFJzc1hpQzRsTzBrcmFOajk4eEYyNVpRbGNIcmo5bGx1MnZ3dUxSWjdXcmZk?=
+ =?utf-8?B?S0g1YWZITXhSdnFmV0QyY0lBeHZwMVQ5VWJEb0xISlJ5ekF5eE5Kd2ZBTXRH?=
+ =?utf-8?B?WnpyWHRkWnJZY05BMys4YU5kaVM2Z2kxZ0Q1TG5kalJIeE8yYzRaS05UOS9v?=
+ =?utf-8?B?VWxzMVNFSTVNd1R6aTU0cjRYWm9yRVFxckY2SmdCZ0VVRmQ1TEt2QXBLYXdD?=
+ =?utf-8?B?WVQ0QWhxRmh3RnZCelJHU2Fka3plcjZCUG8xbW5yc3dGK3p3VkNid1c5eDFL?=
+ =?utf-8?B?RUQ0VU5vSkRWbjYzODRjak9tcTVOSXpBMDJGdGJ5eGRYV0FSenBUNCswdjRY?=
+ =?utf-8?B?ZzBMVXNQaDhlUG9VRlBjcmlseEJCaFdrMEVlcjVKUlZOcUIwRUpkdTEzak5h?=
+ =?utf-8?B?Tkhuay9mNEtDVHBRMGlHM0gzUXFuaUlVTjBsQ0hiektXM3JSREIxTWxrSzRa?=
+ =?utf-8?B?VW11emkyNTB1ZkpKTE1sYjdKb0ZyM1ZVR2FjOEVWVzlaMEVyZ0R3UGZOdG1W?=
+ =?utf-8?B?Zmo0UjVtZEVvODlEdUZIWmxGTzJubUxObUIyRDloTG5IZTJPc1hyWlZtK0tX?=
+ =?utf-8?B?R05oUVFlM25OUkk5YW1oK3pMUFkxTHRjRGU3blp3cXNVcjZaZmhuV3RWY3I3?=
+ =?utf-8?B?cjBDSStFUGNYVDE5dUxhaVZ4dnNrVHJadVpjMG96a2I1YnJlK2QrcHcvUXg2?=
+ =?utf-8?B?VTRHV2ROSnEyRjBDY2xpQnFBTGVCVlphRXl0V1QyMHdtbzRKYnUvVEZkSXNL?=
+ =?utf-8?B?K1RtSzNZcnR6V2IzM21HdWVSRExZMmY1ekxZMEo2L0d6c1AzK3VTZVhsZ3Ny?=
+ =?utf-8?B?K21SNUZXVXRhRUNVK0V0dTNFV2ppLzg4RmUybWtpd1V6TG9UR0FUU2NEbzZY?=
+ =?utf-8?Q?7hhpW+aytx0qI?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aDhsV2RXbEwrUjQyVVUvQUxDVHhlK1JjN0prNnZudmNtQ3VSNC9Pdkd6eXZw?=
+ =?utf-8?B?WHpBV0l2SVVPdU9YS3JvcFp0SXhUYk5ISjBrOTJzYUZSOGtIajRxWkJPSlgx?=
+ =?utf-8?B?VTZJdS92ejhOQjRvL0U3bGVIU0VUbE5BL3htc2RSU1JkYi9DRklpc1RVUGJB?=
+ =?utf-8?B?alFyS1JHcTBKd2UvOElNalYxR0g1Y3RoOGYwTWdxM3dMM2szMEdlUmp3NUM1?=
+ =?utf-8?B?V0loVFdNeWtLOHZXTGNFTU4rS1JJWU5ENm5LV3BlbWZLWGd2R1lveFdRc2R1?=
+ =?utf-8?B?NkpHUXF3RU9FdTEyK2YxQllJU1lJcGlaTGtQWU1TTXlENDlDSW5JZGhRbWJs?=
+ =?utf-8?B?eVBhRXN1OStjcVRqeU5JcmpaMnRMcno2aVFnYjNjWS9Id3BGdDE4cTViTy9R?=
+ =?utf-8?B?bjNtR2ZQOUNuYUovOUFTYUl3aHJnMS9uTjNRZmtzT2RxcVFEQVZnZTVPL1Ez?=
+ =?utf-8?B?amlqSW1vSENIVENxWURmeWNZV1ozTHFRMnpSQnN4cXV3bnk4YnZIWDRZc1hP?=
+ =?utf-8?B?SnZsT2lGTHJyVnFDL2Y1L0lZekg0eU9YVW5BUGdBek9BbUg4MHhUSzBGbTIw?=
+ =?utf-8?B?R0lsMlJYamxNWVhRMUFLQjliSGI2YXd0aXBXTzgxL1JLRXd0VXRXK1RYZ2hT?=
+ =?utf-8?B?aFlML0VLQ2hHUjhhcmFtVVlOTjFsRlZoTkl0TXlSVlVsQXMyZUFXa1lUdFFx?=
+ =?utf-8?B?b3NyUGt3TXJFNk9MUHNYaTVjUXZTMFprdE1lRmJEUnV5ZkRnY1B0TytoM3ZJ?=
+ =?utf-8?B?RUtlaTVkd1lmam9TZ0F6bWNOUlN4ay9mVnhObWZucnQ1WjdYUEhpQVBvbnZS?=
+ =?utf-8?B?bU1YWTJyeDliOUlOYzBlM2V5OTJwN2hCeWR1K0k1V0xKelFoNmtYb1hrS1Bi?=
+ =?utf-8?B?VmkxRGVxcGhlVk9RQmpadVdXQnVTSnA2V0FQYldWZ04rd2VMVHdOTjEyMkE1?=
+ =?utf-8?B?VDhSWGZMRm01MXh5S3RsUnMyYjBXNmQxeEJNb0ROSUdwNS8zR0M3MzlVVzJY?=
+ =?utf-8?B?OE1pWlNxc3JMZ3ErUXVxKzBmU2sySXlmSk0vcXBSZzlST2lqYkN3LzU0d1dY?=
+ =?utf-8?B?Q0MrMURvaTRjbXkwSTV5THBTYjY3S3BucEg2Nkp6UGlUbk1iOVRieWZDYmpo?=
+ =?utf-8?B?OCtSM3JwSHQzZXVEN3VsMWlyQUZLM0ZCZGZMa0xBcEhWTDFMRmlXRHNiclpC?=
+ =?utf-8?B?VTB6bS8zQ3lObFJFK2hFbXdyZmNHTDhGbmlBZGI1cEhaUVV1VnVySzY4TEo0?=
+ =?utf-8?B?bmJBL0tkWnVycnJBK2dFUUh1bGNGZWhyU2x4dWdPeE5wdmhNRWhZcHNxT1gy?=
+ =?utf-8?B?Yi9BSGk4L0xyWEVMNGhNNUVVcDVLU3NKb0EzOVp5T2RDZDZTZVJ5bFdlVG5C?=
+ =?utf-8?B?V0dCejBydEtkUG90L2N5Z1ZZQmpRYkFnRkdUUFFWR2xpT2tnK1ZhTyt6L014?=
+ =?utf-8?B?a1ZkRVBMMHNNUTMyUjNYZHIzdVhkWUFMbWl6U29aNklicHFibVIyQ1ZKSzVV?=
+ =?utf-8?B?MWMzMnU0YVgvSytkcllsTHFnUE9xYXEydGs1NGU4aEVHYlpnblJ4TWJGM2s5?=
+ =?utf-8?B?OWVRUGJEblJPRWRWWmtFTUdkeG5wb2NCTC9rTTlDWHIxNmQ2bTJraTFvcTdk?=
+ =?utf-8?B?a3lqUWJ3Y0YvVVMwOExrR2JFeFhsOGJMT0ZaN1ZZWnRKMHZPS3dTZkFnVUYw?=
+ =?utf-8?B?Z09QdVlEYi8xaWVkK3dtOE9BdVBUUlJIUlI3RThNaFoyQ2tHZFBvOHBqV2tx?=
+ =?utf-8?B?M2c5ZzJJTk4yK3hHczZIaHBJL2o2VGlHT0tvZHZrTVV5MWVOTnpRcG55QURZ?=
+ =?utf-8?B?QzAwOHJXdHBjU1U0UmhsYTdlS1FpQ2UyeldnTTZEOGhyakRZV1hSSlE0ekY1?=
+ =?utf-8?B?T0FlQ2NZMVpIbmRYbHpEQ3c5ZkdpOFFZbERpL2lnTDJDN21odmtCMDBmbjhL?=
+ =?utf-8?B?c2RVZ3QvTnhJZ3ZIK2RBQkx5UXJCZ0JIbk1CWEhlRzZIVkJQUnRCYXZZYXBU?=
+ =?utf-8?B?eExFTkVqOHlwenN3OTgzRTdFQlhRZ01YUWlaQ1BEV2poZ295VE5TNWQvenBS?=
+ =?utf-8?B?bzI2SmpYVFRMaExpVUdrRnJsQ0dzcnNvSkVLUVVDQTRTekdGME0wcy9KVHV3?=
+ =?utf-8?B?S3Q3MUthSU5Mbk5iREY3cW4xeHhsS2Z4RXY1cDhjcUV0YWJyNmh0djlkRnpT?=
+ =?utf-8?B?RFE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70f72248-4cdf-4569-fd67-08dd34384474
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jan 2025 01:10:43.1739 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lMW0pKS+ee4Y8TCuc8ZxTPab/x7PoCSCID1M4rFx2EPYIYUt/eX3LTvSN4ltYU65hVyQiFpiQplAoPL41vI9/g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6698
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.12;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,252 +219,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 10, 2025 at 10:55=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
-vosinc.com> wrote:
->
-> A double trap typically arises during a sensitive phase in trap handling
-> operations =E2=80=94 when an exception or interrupt occurs while the trap
-> handler (the component responsible for managing these events) is in a
-> non-reentrant state. This non-reentrancy usually occurs in the early
-> phase of trap handling, wherein the trap handler has not yet preserved
-> the necessary state to handle and resume from the trap. The occurrence
-> of such event is unlikely but can happen when dealing with hardware
-> errors.
->
-> This series adds support for Ssdbltrp and Smdbltrp ratified ISA
-> extensions [1]. It is based on the Smrnmi series [5].
->
-> Ssdbltrp can be tested using qemu[2], opensbi (master branch), linux[3] a=
-nd
-> kvm-unit-tests[4]. Assuming you have a riscv environment available and
-> configured (CROSS_COMPILE), it can be built for riscv64 using the
-> following instructions:
->
-> Qemu:
->   $ git clone https://github.com/rivosinc/qemu.git
->   $ cd qemu
->   $ git switch -C dbltrp_v8 dev/cleger/dbltrp_v8
->   $ mkdir build && cd build
->   $ ../configure --target-list=3Driscv64-softmmu
->   $ make
->
-> OpenSBI:
->   $ git clone https://github.com/rivosinc/opensbi.git
->   $ cd opensbi
->   $ make O=3Dbuild PLATFORM_RISCV_XLEN=3D64 PLATFORM=3Dgeneric
->
-> Linux:
->   $ git clone https://github.com/rivosinc/linux.git
->   $ cd linux
->   $ git switch -C dbltrp_v1 dev/cleger/dbltrp_v1
->   $ export ARCH=3Driscv
->   $ make O=3Dbuild defconfig
->   $ ./script/config --file build/.config --enable RISCV_DBLTRP
->   $ make O=3Dbuild
->
-> kvm-unit-tests:
->   $ git clone https://github.com/clementleger/kvm-unit-tests.git
->   $ cd kvm-unit-tests
->   $ git switch -C dbltrp_v1 dev/cleger/dbltrp_v1
->   $ ./configure --arch=3Driscv64 --cross-prefix=3D$CROSS_COMPILE
->   $ make
->
-> You will also need kvmtool in your rootfs.
->
-> Run with kvm-unit-test test as kernel:
->   $ qemu-system-riscv64 \
->     -M virt \
->     -cpu rv64,ssdbltrp=3Dtrue,smdbltrp=3Dtrue \
->     -nographic \
->     -serial mon:stdio \
->     -bios opensbi/build/platform/generic/firmware/fw_jump.bin \
->     -kernel kvm-unit-tests-dbltrp/riscv/sbi_dbltrp.flat
->   ...
->   [OpenSBI boot partially elided]
->   Boot HART ISA Extensions  : sscofpmf,sstc,zicntr,zihpm,zicboz,zicbom,sd=
-trig,svadu,ssdbltrp
->   ...
->   #######################################################################=
-###
->   #    kvm-unit-tests
->   #######################################################################=
-###
->
->   PASS: sbi: fwft: FWFT extension probing no error
->   PASS: sbi: fwft: FWFT extension is present
->   PASS: sbi: fwft: dbltrp: Get double trap enable feature value
->   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 0
->   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 0
->   PASS: sbi: fwft: dbltrp: Double trap disabled, trap first time ok
->   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 1
->   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 1
->   PASS: sbi: fwft: dbltrp: Trapped twice allowed ok
->   INFO: sbi: fwft: dbltrp: Should generate a double trap and crash !
->
->   sbi_trap_error: hart0: trap0: double trap handler failed (error -10)
->
->   sbi_trap_error: hart0: trap0: mcause=3D0x0000000000000010 mtval=3D0x000=
-0000000000000
->   sbi_trap_error: hart0: trap0: mtval2=3D0x0000000000000003 mtinst=3D0x00=
-00000000000000
->   sbi_trap_error: hart0: trap0: mepc=3D0x00000000802000d8 mstatus=3D0x800=
-0000a01006900
->   sbi_trap_error: hart0: trap0: ra=3D0x00000000802001fc sp=3D0x0000000080=
-213e70
->   sbi_trap_error: hart0: trap0: gp=3D0x0000000000000000 tp=3D0x0000000080=
-088000
->   sbi_trap_error: hart0: trap0: s0=3D0x0000000080213e80 s1=3D0x0000000000=
-000001
->   sbi_trap_error: hart0: trap0: a0=3D0x0000000080213e80 a1=3D0x0000000080=
-208193
->   sbi_trap_error: hart0: trap0: a2=3D0x000000008020dc20 a3=3D0x0000000000=
-00000f
->   sbi_trap_error: hart0: trap0: a4=3D0x0000000080210cd8 a5=3D0x0000000080=
-2110d0
->   sbi_trap_error: hart0: trap0: a6=3D0x00000000802136e4 a7=3D0x0000000046=
-574654
->   sbi_trap_error: hart0: trap0: s2=3D0x0000000080210cd9 s3=3D0x0000000000=
-000000
->   sbi_trap_error: hart0: trap0: s4=3D0x0000000000000000 s5=3D0x0000000000=
-000000
->   sbi_trap_error: hart0: trap0: s6=3D0x0000000000000000 s7=3D0x0000000000=
-000001
->   sbi_trap_error: hart0: trap0: s8=3D0x0000000000002000 s9=3D0x0000000080=
-083700
->   sbi_trap_error: hart0: trap0: s10=3D0x0000000000000000 s11=3D0x00000000=
-00000000
->   sbi_trap_error: hart0: trap0: t0=3D0x0000000000000000 t1=3D0x0000000080=
-213ed8
->   sbi_trap_error: hart0: trap0: t2=3D0x0000000000001000 t3=3D0x0000000080=
-213ee0
->   sbi_trap_error: hart0: trap0: t4=3D0x0000000000000000 t5=3D0x0000000080=
-20f8d0
->   sbi_trap_error: hart0: trap0: t6=3D0x0000000000000000
->
-> Run with linux and kvm-unit-test test in kvm (testing VS-mode):
->   $ qemu-system-riscv64 \
->     -M virt \
->     -cpu rv64,ssdbltrp=3Dtrue,smdbltrp=3Dtrue \
->     -nographic \
->     -serial mon:stdio \
->     -bios opensbi/build/platform/generic/firmware/fw_jump.bin \
->     -kernel linux/build/arch/riscv/boot/Image
->   ...
->   [Linux boot partially elided]
->   [    0.735079] riscv-dbltrp: Double trap handling registered
->   ...
->
->   $ lkvm run -k sbi_dbltrp.flat -m 128 -c 2
->   #######################################################################=
-###
->   #    kvm-unit-tests
->   #######################################################################=
-###
->
->   PASS: sbi: fwft: FWFT extension probing no error
->   PASS: sbi: fwft: FWFT extension is present
->   PASS: sbi: fwft: dbltrp: Get double trap enable feature value
->   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 0
->   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 0
->   PASS: sbi: fwft: dbltrp: Double trap disabled, trap first time ok
->   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 1
->   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 1
->   PASS: sbi: fwft: dbltrp: Trapped twice allowed ok
->   INFO: sbi: fwft: dbltrp: Should generate a double trap and crash !
->   [   51.939077] Guest double trap
->   [   51.939323] kvm [93]: VCPU exit error -95
->   [   51.939683] kvm [93]: SEPC=3D0x802000d8 SSTATUS=3D0x200004520 HSTATU=
-S=3D0x200200180
->   [   51.939947] kvm [93]: SCAUSE=3D0x10 STVAL=3D0x0 HTVAL=3D0x3 HTINST=
-=3D0x0
->   KVM_RUN failed: Operation not supported
->   $
->
-> Testing Smbdbltrp can be done using gdb and trigger some trap. For
-> instance, interrupt M-mode firmware at some point, set mstatus.mdt =3D 1
-> and corrupt some register to generate a NULL pointer exception.
->
-> Link: https://github.com/riscv/riscv-isa-manual/commit/52a5742d5ab5a07920=
-19033631b2035a493ad981 [1]
-> Link: https://github.com/rivosinc/qemu/tree/dev/cleger/dbltrp_v8 [2]
-> Link: https://github.com/rivosinc/linux/tree/dev/cleger/dbltrp_v1 [3]
-> Link: https://github.com/clementleger/kvm-unit-tests/tree/dev/cleger/dblt=
-rp_v1 [4]
-> Link: https://lore.kernel.org/qemu-riscv/20241217062440.884261-1-frank.ch=
-ang@sifive.com/ [5]
->
-> ---
->
-> V8:
->  - Rebased on top of Atish counter_delegation_v4 series
->
-> V7:
->  - Rebased on riscv-to-apply.next, on top of snrmi v10 series
->
-> V6:
->  - Simplify and fix write_henvcfg() masking by assigning the written
->    value to henvcfg and mask the value to be written as well as clearing
->    the upper part of henvcfgh upon writing.
->  - Rebased on RNMI v9 series.
->
-> V5:
->  - Use 0 instead of false to set MSTATUS_MDT in helper_mnret()
->  - Added explicit comments about henvcfg write mask being tricky.
->  - Fixed a invalid menvcfg_mask in write_henvcfgh
->
-> V4:
->  - Remove DTE from sstatus_v1_10_mask variable and add specific if for
->    DTE masking where it's used.
->  - Use mstatus_hs.sdt field rather than setting DTE to 0 in
->    riscv_do_cpu_interrupt().
->  - Add a fix for henvcfg value which was incorrectly set after changing
->    menvcfg
->  - Remove useless ext_ssdbltrp check in
->    riscv_env_smode_dbltrp_enabled().
->  - Remove useless mstatus clear in write_mstatus().
->  - Add proper handling of SDT writing to vsstatus.
->  - Add clearing of vsstatus//mstatus SDT field when DTE is disabled.
->  - Fix wrong value being written for MDT/MIE in write_mstatush().
->  - Rebased on Frank Snrnmi v7
->
-> V3:
->  - Fix spec version from 1.12 to 1.13 for Smdbltrp and Ssdbltrp
->  - Add better comments for dte/sdt computation in
->    riscv_cpu_do_interrupt().
->  - Move some CSR related changes to the CSRs related commits.
->
-> V2:
->  - Squashed commits that added ext_s{s|m}dbltrp as suggested by Daniel
->
-> Cl=C3=A9ment L=C3=A9ger (9):
->   target/riscv: Fix henvcfg potentially containing stale bits
->   target/riscv: Add Ssdbltrp CSRs handling
->   target/riscv: Implement Ssdbltrp sret, mret and mnret behavior
->   target/riscv: Implement Ssdbltrp exception handling
->   target/riscv: Add Ssdbltrp ISA extension enable switch
->   target/riscv: Add Smdbltrp CSRs handling
->   target/riscv: Implement Smdbltrp sret, mret and mnret behavior
->   target/riscv: Implement Smdbltrp behavior
->   target/riscv: Add Smdbltrp ISA extension enable switch
->
->  target/riscv/cpu.c        |   9 ++-
->  target/riscv/cpu.h        |   1 +
->  target/riscv/cpu_bits.h   |   8 +++
->  target/riscv/cpu_cfg.h    |   2 +
->  target/riscv/cpu_helper.c | 116 +++++++++++++++++++++++++++++++-------
->  target/riscv/csr.c        |  94 +++++++++++++++++++++++++-----
->  target/riscv/op_helper.c  |  47 ++++++++++++++-
->  7 files changed, 240 insertions(+), 37 deletions(-)
+Thanks David for your review!
 
-Thanks!
+On 1/13/2025 6:54 PM, David Hildenbrand wrote:
+> On 08.01.25 11:56, Chenyi Qiang wrote:
+>>
+>>
+>> On 1/8/2025 12:48 PM, Alexey Kardashevskiy wrote:
+>>> On 13/12/24 18:08, Chenyi Qiang wrote:
+>>>> As the commit 852f0048f3 ("RAMBlock: make guest_memfd require
+>>>> uncoordinated discard") highlighted, some subsystems like VFIO might
+>>>> disable ram block discard. However, guest_memfd relies on the discard
+>>>> operation to perform page conversion between private and shared memory.
+>>>> This can lead to stale IOMMU mapping issue when assigning a hardware
+>>>> device to a confidential VM via shared memory (unprotected memory
+>>>> pages). Blocking shared page discard can solve this problem, but it
+>>>> could cause guests to consume twice the memory with VFIO, which is not
+>>>> acceptable in some cases. An alternative solution is to convey other
+>>>> systems like VFIO to refresh its outdated IOMMU mappings.
+>>>>
+>>>> RamDiscardManager is an existing concept (used by virtio-mem) to adjust
+>>>> VFIO mappings in relation to VM page assignment. Effectively page
+>>>> conversion is similar to hot-removing a page in one mode and adding it
+>>>> back in the other, so the similar work that needs to happen in response
+>>>> to virtio-mem changes needs to happen for page conversion events.
+>>>> Introduce the RamDiscardManager to guest_memfd to achieve it.
+>>>>
+>>>> However, guest_memfd is not an object so it cannot directly implement
+>>>> the RamDiscardManager interface.
+>>>>
+>>>> One solution is to implement the interface in HostMemoryBackend. Any
+>>>
+>>> This sounds about right.
+>>>
+>>>> guest_memfd-backed host memory backend can register itself in the
+>>>> target
+>>>> MemoryRegion. However, this solution doesn't cover the scenario where a
+>>>> guest_memfd MemoryRegion doesn't belong to the HostMemoryBackend, e.g.
+>>>> the virtual BIOS MemoryRegion.
+>>>
+>>> What is this virtual BIOS MemoryRegion exactly? What does it look like
+>>> in "info mtree -f"? Do we really want this memory to be DMAable?
+>>
+>> virtual BIOS shows in a separate region:
+>>
+>>   Root memory region: system
+>>    0000000000000000-000000007fffffff (prio 0, ram): pc.ram KVM
+>>    ...
+>>    00000000ffc00000-00000000ffffffff (prio 0, ram): pc.bios KVM
+>>    0000000100000000-000000017fffffff (prio 0, ram): pc.ram
+>> @0000000080000000 KVM
+>>
+>> We also consider to implement the interface in HostMemoryBackend, but
+>> maybe implement with guest_memfd region is more general. We don't know
+>> if any DMAable memory would belong to HostMemoryBackend although at
+>> present it is.
+>>
+>> If it is more appropriate to implement it with HostMemoryBackend, I can
+>> change to this way.
+> 
+> Not sure that's the right place. Isn't it the (cc) machine that controls
+> the state?
+> 
+> It's not really the memory backend, that's just the memory provider.
 
-Applied to riscv-to-apply.next
+Yes, the cc machine defines the require_guest_memfd. And besides the
+normal memory, there's also some other memory region requires the state
+control. See in another thread, For example, private mmio may require
+the state change notification but not belong to memory backend. So I
+think it is still better to define a specific object to control the state.
 
-Alistair
+> 
 
->
-> --
-> 2.47.1
->
->
 
