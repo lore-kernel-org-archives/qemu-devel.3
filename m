@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2232E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75232E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfFr-0005BR-0K; Tue, 14 Jan 2025 06:38:43 -0500
+	id 1tXfO0-0004LI-80; Tue, 14 Jan 2025 06:47:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFk-00057t-R7
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:39 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1tXfNn-0004KG-RS
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:56 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfFh-0005Ql-Vu
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:38:36 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5d0ac27b412so7192202a12.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:38:32 -0800 (PST)
+ id 1tXfNl-0006du-V8
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:55 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-388cae9eb9fso2862199f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:46:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736854711; x=1737459511; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736855211; x=1737460011; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ut5L3H7ENukAVXMf9ucpT4mEYkt3Qt71rdTcSo9h+fA=;
- b=caQZd1pfnd8EZ2W3jDsJ0H/AocTRhT4pTJe1AMpBJ9TC1AhKissI86DVBAbozCgIKf
- uzw0rF1tCQFA+W2rbvZJ0oV94yANJZPH+EOs8aXgaHg3XccM0sgkVquDMFhiRyYul2im
- Y5QqNDMaSXcpn3VSRbIq6oAPTXf2i7piJujLUEw5k5RAn9GpaTWm8PqE6JKEORePUdO1
- yKzOSsrgtZIRAGyjdRGYU6D9w382Nb0H7iO44q0/eis+7r6jDsW9ZopQAYMuFkr2FslD
- /HogYkQlix/qBDGrFU4UYc2OfW6D2jhGKdupMvj169Rr8HdUDu6re416l0OhVP3qIQq6
- OU3w==
+ bh=tO4+dhgDNIyv7ebOS6QWgeVxieJfX0lz0H9vGOgOWgE=;
+ b=dtE19hE/aLE2aoOL1e3pdqxs4NQisp+zsSEVCBzF9wAPdME0xKckLY+Wxwz8SU2Ov7
+ FmCtenf5++r+duyqxhJKDblmCKBuQfyUASpPyT4Sh2k97hqWO4o532DwFTh1mNjGAnlF
+ bZ0GNNtETGkOxsPvE9CxiFV7eXFIv2a50g9z1pr0/uPRVRnVz6Xc08nefvXYawkVa3Xm
+ m10/meqRhpJLFVHWA7OptaGIte3HLjdCpUDm/QLl5lINW7QXJ3kd9TzvF08Qd3i5UGiY
+ 9jL2Kk5cOk4n+W4YgKPfUdwtQ41cgggmuGEF+Bg6x6YXHeSv/TxmawjFsDP7Nk85vGGj
+ 2YgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736854711; x=1737459511;
+ d=1e100.net; s=20230601; t=1736855211; x=1737460011;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ut5L3H7ENukAVXMf9ucpT4mEYkt3Qt71rdTcSo9h+fA=;
- b=X3Q6A1gDPSej+/b418TBiApfJTSyu/PR7iUhIlRLHGPtfj2M28S2+VM0TwfES7BtF8
- i3+NHFuzWqGGOv/moEbJT0CpGEPGEIe/8IW6Jjcy0qid8yu+o0SKTBUhWcpVME10tkQW
- /0WI66HhNTQDU2919V5CfF52HToxlWFogjvZ6bCZMBYK9KFJDGDefuynoXCQkM+xSJ1o
- CWHom8tjaP0WVp5d0yQSyGKBEeUmwV3uxULU/bwn7gTToDb702dnE0Ukv5MiH0zJ64eJ
- 6Wa8Q7Y2R3jrPtFkS8bft4B5inPs1QkQSXd44Sq9KFn0Ecu+BxhmO9qHEIi3PdPyeapI
- T76g==
-X-Gm-Message-State: AOJu0YzqYJCnFRjW7WxvazWHK6oYMwaJONigXeUTxgy6RtS1iQf7/Roq
- sj5N4GgAaraTrwEzZ1IG3rvSzxT966HrFEZNqYenJPj2nY2KLBBUqHttViGlBK0=
-X-Gm-Gg: ASbGncuOe+BdkpV1u11jYKQinZn1YdWQhlseuBFITNfVwe/rseOVrM9YQspQ+vgyYCt
- AEKo6CGHEzKsJw8/FeR/gCMFhOwcse/+lPRYFlqqvwZL5vIp7nnY2PP57QNOgocQfnNcrxE/Jfo
- clwdFqcK6x87GYfjODXMMH9TWCXgssv7yYKIam45rep1DjbMTtd/9lvAO5xV3gZlu7zduFP6Ccq
- ZNZPM37QoyRYZKaN8PFIu3DkCjh965Iy5VK2I6/ptYNI4an3dt/ZY4=
-X-Google-Smtp-Source: AGHT+IFsSCpX8WFSpwkoKNzm1awGOqpIacxh+XT7KS6OmwEciMGEZiK7jqK86Tw34OWrGG4qeu1+Mg==
-X-Received: by 2002:a17:906:c155:b0:aa6:b5e0:8c59 with SMTP id
- a640c23a62f3a-ab2ab74b2admr1811818166b.35.1736854711200; 
- Tue, 14 Jan 2025 03:38:31 -0800 (PST)
+ bh=tO4+dhgDNIyv7ebOS6QWgeVxieJfX0lz0H9vGOgOWgE=;
+ b=Tk2fsPkNhz+kmIEFQPOmNaWBtQLjl5l0n75vXoE9MtbRPC0LwA4ryiDgfqCVt+bozJ
+ s3TgjnwtaJh6/JPKAqYZ9iKxlidGQT0McPJkwBNGGw97Z6cMZ6A56p++S4cZGY+Gq9d9
+ w561LP4gQg3yzcwH5xpLF0iSe/fjEotFbeUPH5GzpAGIEOOA7gECaPcHvhvOJ1i9DcLB
+ /xQGeCLuWKvCp9RkaF3IXLku8EDYhOkuMDdFeOdvVIKE4Va1TzH5ws7C8xys0ZUSZpVq
+ pNAVt7D14FeRAPFmD450jlEmdDULF8dIsHkBEpDF+44efmDmIvUQ1QDAXq6ucbML9c1t
+ 94sg==
+X-Gm-Message-State: AOJu0YxO9ko+o3KUbMRYmOdwjVN/MbE669hKVCHFXRU/L5jz1g6wqgSE
+ +f6AbTpz+lZN/DVWJg0SwnZsnfF6MS1naxZCXbhCwa8XSAnf/kTcmuTH2QiTWPU=
+X-Gm-Gg: ASbGncuOoJznNGh/dUVXG5mPwZ6q5ymAE5fhWAmmr6N39ncjrvAWCmqGnCcjgUCwmal
+ FUtHy8BdmHp7VaASr2AnmISjavASS+XcmwSMU1bPBySG9ZMYFMH+D3GiucbxgXQlzx5xspv/u9j
+ EG5oXHIt5rx/3INEm95cekEFRLpyenvGuaZYRZt4kmkmqaSDc69eJneqVTmjeg/52523jbs/vmq
+ +OKVrFPuJugRlaD4hUmjib18YzftJQJhh5aOFm3KnUK9uVzUn7IEQI=
+X-Google-Smtp-Source: AGHT+IEB3pBYYIDgnmQX1/g5jnRvq/4ALSpUHAK5J3XBauCB98xPIxZqO0oro9LWzftri9SaNkDF1Q==
+X-Received: by 2002:a5d:47c5:0:b0:38a:6161:2854 with SMTP id
+ ffacd0b85a97d-38a872c944amr22677658f8f.1.1736855211340; 
+ Tue, 14 Jan 2025 03:46:51 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c90dc570sm630304666b.51.2025.01.14.03.38.26
+ ffacd0b85a97d-38a8e4b80c9sm14473803f8f.84.2025.01.14.03.46.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 03:38:28 -0800 (PST)
+ Tue, 14 Jan 2025 03:46:50 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2C11C5FA05;
- Tue, 14 Jan 2025 11:38:23 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0E9035FA6C;
+ Tue, 14 Jan 2025 11:38:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -72,19 +72,20 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v2 15/37] contrib/plugins/stoptrigger: fix 32-bit build
-Date: Tue, 14 Jan 2025 11:37:59 +0000
-Message-Id: <20250114113821.768750-16-alex.bennee@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v2 24/37] docs/devel/style: add a section about bitfield,
+ and disallow them for packed structures
+Date: Tue, 14 Jan 2025 11:38:08 +0000
+Message-Id: <20250114113821.768750-25-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
 References: <20250114113821.768750-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,136 +110,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241217224306.2900490-6-pierrick.bouvier@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Stefan Weil <sw@weilnetz.de>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250110203401.178532-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- contrib/plugins/stoptrigger.c | 48 ++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ docs/devel/style.rst | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
-index 03ee22f4c6..b3a6ed66a7 100644
---- a/contrib/plugins/stoptrigger.c
-+++ b/contrib/plugins/stoptrigger.c
-@@ -21,9 +21,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- /* Scoreboard to track executed instructions count */
- typedef struct {
-     uint64_t insn_count;
-+    uint64_t current_pc;
- } InstructionsCount;
- static struct qemu_plugin_scoreboard *insn_count_sb;
- static qemu_plugin_u64 insn_count;
-+static qemu_plugin_u64 current_pc;
+diff --git a/docs/devel/style.rst b/docs/devel/style.rst
+index 2f68b50079..d025933808 100644
+--- a/docs/devel/style.rst
++++ b/docs/devel/style.rst
+@@ -416,6 +416,26 @@ definitions instead of typedefs in headers and function prototypes; this
+ avoids problems with duplicated typedefs and reduces the need to include
+ headers from other headers.
  
- static uint64_t icount;
- static int icount_exit_code;
-@@ -34,6 +36,11 @@ static bool exit_on_address;
- /* Map trigger addresses to exit code */
- static GHashTable *addrs_ht;
- 
-+typedef struct {
-+    uint64_t exit_addr;
-+    int exit_code;
-+} ExitInfo;
++Bitfields
++---------
 +
- static void exit_emulation(int return_code, char *message)
- {
-     qemu_plugin_outs(message);
-@@ -43,23 +50,18 @@ static void exit_emulation(int return_code, char *message)
++C bitfields can be a cause of non-portability issues, especially under windows
++where `MSVC has a different way to lay them out than GCC
++<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_, or where
++endianness matters.
++
++For this reason, we disallow usage of bitfields in packed structures and in any
++structures which are supposed to exactly match a specific layout in guest
++memory. Some existing code may use it, and we carefully ensured the layout was
++the one expected.
++
++We also suggest avoiding bitfields even in structures where the exact
++layout does not matter, unless you can show that they provide a significant
++usability benefit.
++
++We encourage the usage of ``include/hw/registerfields.h`` as a safe replacement
++for bitfields.
++
+ Reserved namespaces in C and POSIX
+ ----------------------------------
  
- static void exit_icount_reached(unsigned int cpu_index, void *udata)
- {
--    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
-+    uint64_t insn_vaddr = qemu_plugin_u64_get(current_pc, cpu_index);
-     char *msg = g_strdup_printf("icount reached at 0x%" PRIx64 ", exiting\n",
-                                 insn_vaddr);
--
-     exit_emulation(icount_exit_code, msg);
- }
- 
- static void exit_address_reached(unsigned int cpu_index, void *udata)
- {
--    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
--    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", insn_vaddr);
--    int exit_code;
--
--    exit_code = GPOINTER_TO_INT(
--        g_hash_table_lookup(addrs_ht, GUINT_TO_POINTER(insn_vaddr)));
--
--    exit_emulation(exit_code, msg);
-+    ExitInfo *ei = udata;
-+    g_assert(ei);
-+    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", ei->exit_addr);
-+    exit_emulation(ei->exit_code, msg);
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -67,23 +69,25 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     size_t tb_n = qemu_plugin_tb_n_insns(tb);
-     for (size_t i = 0; i < tb_n; i++) {
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
--        gpointer insn_vaddr = GUINT_TO_POINTER(qemu_plugin_insn_vaddr(insn));
-+        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
- 
-         if (exit_on_icount) {
-             /* Increment and check scoreboard for each instruction */
-             qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                insn, QEMU_PLUGIN_INLINE_STORE_U64, current_pc, insn_vaddr);
-             qemu_plugin_register_vcpu_insn_exec_cond_cb(
-                 insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
--                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, insn_vaddr);
-+                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, NULL);
-         }
- 
-         if (exit_on_address) {
--            if (g_hash_table_contains(addrs_ht, insn_vaddr)) {
-+            ExitInfo *ei = g_hash_table_lookup(addrs_ht, &insn_vaddr);
-+            if (ei) {
-                 /* Exit triggered by address */
-                 qemu_plugin_register_vcpu_insn_exec_cb(
--                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS,
--                    insn_vaddr);
-+                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS, ei);
-             }
-         }
-     }
-@@ -99,11 +103,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info, int argc,
-                                            char **argv)
- {
--    addrs_ht = g_hash_table_new(NULL, g_direct_equal);
-+    addrs_ht = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, g_free);
- 
-     insn_count_sb = qemu_plugin_scoreboard_new(sizeof(InstructionsCount));
-     insn_count = qemu_plugin_scoreboard_u64_in_struct(
-         insn_count_sb, InstructionsCount, insn_count);
-+    current_pc = qemu_plugin_scoreboard_u64_in_struct(
-+        insn_count_sb, InstructionsCount, current_pc);
- 
-     for (int i = 0; i < argc; i++) {
-         char *opt = argv[i];
-@@ -124,13 +130,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-             exit_on_icount = true;
-         } else if (g_strcmp0(tokens[0], "addr") == 0) {
-             g_auto(GStrv) addr_tokens = g_strsplit(tokens[1], ":", 2);
--            uint64_t exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
--            int exit_code = 0;
-+            ExitInfo *ei = g_malloc(sizeof(ExitInfo));
-+            ei->exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
-+            ei->exit_code = 0;
-             if (addr_tokens[1]) {
--                exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
-+                ei->exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
-             }
--            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
--                                GINT_TO_POINTER(exit_code));
-+            g_hash_table_insert(addrs_ht, &ei->exit_addr, ei);
-             exit_on_address = true;
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
 -- 
 2.39.5
 
