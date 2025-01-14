@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204ECE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72575E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 13:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXgZ5-00023O-2d; Tue, 14 Jan 2025 08:02:39 -0500
+	id 1tXgae-0003KQ-UO; Tue, 14 Jan 2025 08:04:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tXgYy-00021m-0D
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:02:33 -0500
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tXgYv-00005n-L9
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:02:31 -0500
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-71e22b2387cso3660579a34.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 05:02:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736859747; x=1737464547; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CUmYZjbKWifUgCqnJjjOKcesi76UgUVZ4zkWYA6FKGQ=;
- b=UvzFbHyGk0vcmRD7GUrSen0oVETZfPaC3DnEQHLs+rUrIN42u8xXXOSKH61kAup4Ju
- Dyovh6+68owjoUXC6aW7Tmfg4z0yNLmqetQnl1/ny4oqVdm6a+6qBiJCW++avWHj8cok
- l6jnILj2NfFMxWfkyz7JVErI7LHykzBjs1hJrtGLr+EJyN5nMF5/49ZsG3pYoSzctRsm
- z5//RDVzWu/wNgnERgeNfDvbEU+FhIM7+Itxjyx8PmkKX4RH8KWVGH8T+GhqBRivSTNd
- 15MrIIHCKuzFy4t7LXfJMvhMGCzJGgY455Rgp9w+YPtUPEYQ32x3tbuE5JtlKswplKdg
- 8zoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736859747; x=1737464547;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CUmYZjbKWifUgCqnJjjOKcesi76UgUVZ4zkWYA6FKGQ=;
- b=tF0lQrccWIOmRcApiRhcrDKdlF0dpNNMuVZ4Sh2Cmk4/j8X8b+XkaHJ7VKvwE3c7sn
- ZqfjcdaDsB8l5sLjtwHG/xwnqkSKkyGNaFayXqJX317a15eL43m6gj3auCAKXFGh5kax
- jbBWwUJn6JXNjIPgGMbZOjMO9mLPKPJpqjkY6p0os9U94NRNNq/WbX7GiDdijwYmt8VB
- l1+vG6K9SfuNbiLUxYNHydQfR8KOvie6gOkJ4soCXjfHmY6PZeT/iNpqv/YN+PTkDp0g
- fZ2xN9bwrrJP80rlhGhrlvcU+UAYgYNKpRNSxnnIXqUqXQ6+ucQiyVfZtpHqNXHKNRhv
- S0MQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTHLAP54JXSv/saxz/prpWfPBq9NstPs/AQIO52/67rnHCJ7OpCZNMCnkOD8VtvNilRx/d8LG8Ey/B@nongnu.org
-X-Gm-Message-State: AOJu0YyTrw0Cg9ODcRLWKbbFs/JmQ+XNJWl6ZqbLvN/ibRZ5/XvUYJ6f
- EnlGZuxq+Oaf6be5MVzTSGrg/w1p5MCjus8hW9P06UMBtDlOXvsr1qJuqJKdPiE=
-X-Gm-Gg: ASbGncvqoeZmHAcJduLe7AHYWaL3IaDVqx8mIzycTTSrGAuoZBq5SXMSgtxHhpOdoiN
- SUgpgOOWttZbnj6G6wFeGLO9RQlutADdEL1RzG5ia5tWUoylA0e0HDRl+1VkuUvRjM2bkkkws5s
- KUtIOQYKugmPCU7PeEUGN2/e89/BxvMmNLkSAGolhGqZu4rI4b+TgZtFq66a1nHGWlzlLOwViwP
- DxbT/i9LG/KfDk7HYjKtY3pRxNVxKO82YR44NSdUbGgL2x74bjKtlALdmXnRCCzNK1KFOoD
-X-Google-Smtp-Source: AGHT+IHmGlZO9jTpnzTgb2wTSeID/WOlMMlEM368+LcvUpm6IMlbut6ToYypeaJRTD98a4NsqY4MoQ==
-X-Received: by 2002:a05:6830:d0c:b0:71d:f97a:7b with SMTP id
- 46e09a7af769-721e2ecd2c3mr14488016a34.20.1736859746886; 
- Tue, 14 Jan 2025 05:02:26 -0800 (PST)
-Received: from [192.168.68.110] ([189.110.107.205])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f882756dd0sm4085108eaf.32.2025.01.14.05.02.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 05:02:25 -0800 (PST)
-Message-ID: <4326cc98-a280-4a47-9c9d-42709f5b8080@ventanamicro.com>
-Date: Tue, 14 Jan 2025 10:02:21 -0300
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tXgaT-0003F7-G0
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:04:08 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tXgaR-0000MP-HY
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 08:04:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736859844; x=1768395844;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=ILshQhygwdY6A9R7RYwHI2SkUDpcqX6WPA541tutJCo=;
+ b=NtTrXjVDKCVMq9E7qi3Zc9rbLn+8RMnK7sfnayu0fPMs8YYHGvZ/qezb
+ 8nBvZzTKWWGzAjvJLNRBcJOywgwcwfnepr9VJuD2fiQY7uXnnC4Eby7aP
+ bIS+428pEq4imKO0ZA5rvIQRQA5CluNFO4wwRfAJtWceX3BU0+UyuZy7y
+ Ql6WDNV4wtHgi27/J/cwwqn/Xc9HNbC07oHzOHydPyGr0mzNvXwpYVQ6q
+ CyudZ2CXH+JRXlM56g9Gx+5gdh0IvlQfrmFhFRgmm92RMniBYGvs3WqtA
+ nW51aZ+y7CtZsuvyPwfdZXYlMl5XUO43KmCGwjZPjpoOn6AfNYRvrvZCP w==;
+X-CSE-ConnectionGUID: HfmVvdRwTiCTYGOgG1P0ZA==
+X-CSE-MsgGUID: /+DEMXE9TPGraYM6DzTLZg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="37040753"
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; d="scan'208";a="37040753"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2025 05:04:02 -0800
+X-CSE-ConnectionGUID: LCvE05rNS7qCnCmroWHyjQ==
+X-CSE-MsgGUID: lVI+7ydwQ/u4U6ZMk9Pb3g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,314,1728975600"; d="scan'208";a="104739425"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2025 05:03:57 -0800
+Message-ID: <8bc79ae4-a9e9-4911-9af3-0b9964886511@intel.com>
+Date: Tue, 14 Jan 2025 21:03:54 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/csr.c: Turn off mstatus.vs when misa.v is
- turned off
-To: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>, palmer@dabbelt.com
-Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
+Subject: Re: [PATCH v6 55/60] i386/tdx: Fetch and validate CPUID of TD guest
+To: Ira Weiny <ira.weiny@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-56-xiaoyao.li@intel.com>
+ <Z1si66iUjsqCoUgL@iweiny-mobl>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250114092012.29024-1-evgenii.prokopiev@syntacore.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z1si66iUjsqCoUgL@iweiny-mobl>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +97,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 1/14/25 6:20 AM, Evgenii Prokopiev wrote:
-> A behavior of misa.v must be similar as misa.f.
-> So when this bit's field is turned off, mstatus.vs must be turned off
-> too. It follows from the privileged manual of RISC-V, paragraph 3.1.1.
-> "Machine ISA (misa) Register".
+On 12/13/2024 1:52 AM, Ira Weiny wrote:
+> On Tue, Nov 05, 2024 at 01:24:03AM -0500, Xiaoyao Li wrote:
+>> Use KVM_TDX_GET_CPUID to get the CPUIDs that are managed and enfored
+>> by TDX module for TD guest. Check QEMU's configuration against the
+>> fetched data.
+>>
+>> Print wanring  message when 1. a feature is not supported but requested
+>> by QEMU or 2. QEMU doesn't want to expose a feature while it is enforced
+>> enabled.
+>>
+>> - If cpu->enforced_cpuid is not set, prints the warning message of both
+>> 1) and 2) and tweak QEMU's configuration.
+>>
+>> - If cpu->enforced_cpuid is set, quit if any case of 1) or 2).
 > 
-> Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/csr.c | 4 ++++
->   1 file changed, 4 insertions(+)
+> Patches 52, 53, 54, and this one should probably be squashed
 > 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index eab8e50012..fca2b1b40f 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1537,6 +1537,10 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
->           env->mstatus &= ~MSTATUS_FS;
->       }
->   
-> +    if (!(env->misa_ext & RVV)) {
-> +        env->mstatus &= ~MSTATUS_VS;
-> +    }
-> +
->       /* flush translation cache */
->       tb_flush(env_cpu(env));
->       env->xl = riscv_cpu_mxl(env);
+> 53's commit message is non-existent and really only makes sense because the
+> function is used here.  52's commit message is pretty thin.  Both 52 and 53 are
+> used here, the size of this patch is not adversely affected, and the reason for
+> the changes are more clearly shown in this patch.
+
+It's my fault to forget adding the commit message for patch 53 before 
+posting.
+
+> 54 somewhat stands on its own.  But really it is just calling the functionality
+> of this patch.  So I don't see a big reason for it to be on its own but up to
+> you.
+
+I'll squash patch 52 and 53 into this one and leave patch 54 as-is.
+
+>>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   target/i386/kvm/tdx.c | 81 +++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 81 insertions(+)
+>>
+>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>> index e7e0f073dfc9..9cb099e160e4 100644
+>> --- a/target/i386/kvm/tdx.c
+>> +++ b/target/i386/kvm/tdx.c
+>> @@ -673,6 +673,86 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+>>       return value;
+>>   }
+>>   
+>> +
+>> +static void tdx_fetch_cpuid(CPUState *cpu, struct kvm_cpuid2 *fetch_cpuid)
+>> +{
+>> +    int r;
+>> +
+>> +    r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid);
+>> +    if (r) {
+>> +        error_report("KVM_TDX_GET_CPUID failed %s", strerror(-r));
+>> +        exit(1);
+>> +    }
+>> +}
+>> +
+>> +static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+>> +{
+>> +    uint64_t actual, requested, unavailable, forced_on;
+>> +    g_autofree struct kvm_cpuid2 *fetch_cpuid;
+>> +    const char *forced_on_prefix = NULL;
+>> +    const char *unav_prefix = NULL;
+>> +    struct kvm_cpuid_entry2 *entry;
+>> +    X86CPU *cpu = X86_CPU(cs);
+>> +    CPUX86State *env = &cpu->env;
+>> +    FeatureWordInfo *wi;
+>> +    FeatureWord w;
+>> +    bool mismatch = false;
+>> +
+>> +    fetch_cpuid = g_malloc0(sizeof(*fetch_cpuid) +
+>> +                    sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+> 
+> Is this a memory leak?  I don't see fetch_cpuid returned or free'ed.  If so, it
+> might be better to use g_autofree() for this allocation.
+> 
+> Alternatively, this allocation size is constant, could this be on the heap and
+> not allocated at all?  (I assume it is big enough that a stack allocation is
+> unwanted.)
+> 
+> Ira
+> 
+>> +    tdx_fetch_cpuid(cs, fetch_cpuid);
+>> +
+>> +    if (cpu->check_cpuid || cpu->enforce_cpuid) {
+>> +        unav_prefix = "TDX doesn't support requested feature";
+>> +        forced_on_prefix = "TDX forcibly sets the feature";
+>> +    }
+>> +
+>> +    for (w = 0; w < FEATURE_WORDS; w++) {
+>> +        wi = &feature_word_info[w];
+>> +        actual = 0;
+>> +
+>> +        switch (wi->type) {
+>> +        case CPUID_FEATURE_WORD:
+>> +            entry = cpuid_find_entry(fetch_cpuid, wi->cpuid.eax, wi->cpuid.ecx);
+>> +            if (!entry) {
+>> +                /*
+>> +                 * If KVM doesn't report it means it's totally configurable
+>> +                 * by QEMU
+>> +                 */
+>> +                continue;
+>> +            }
+>> +
+>> +            actual = cpuid_entry_get_reg(entry, wi->cpuid.reg);
+>> +            break;
+>> +        case MSR_FEATURE_WORD:
+>> +            /*
+>> +             * TODO:
+>> +             * validate MSR features when KVM has interface report them.
+>> +             */
+>> +            continue;
+>> +        }
+>> +
+>> +        requested = env->features[w];
+>> +        unavailable = requested & ~actual;
+>> +        mark_unavailable_features(cpu, w, unavailable, unav_prefix);
+>> +        if (unavailable) {
+>> +            mismatch = true;
+>> +        }
+>> +
+>> +        forced_on = actual & ~requested;
+>> +        mark_forced_on_features(cpu, w, forced_on, forced_on_prefix);
+>> +        if (forced_on) {
+>> +            mismatch = true;
+>> +        }
+>> +    }
+>> +
+>> +    if (cpu->enforce_cpuid && mismatch) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+>>   {
+>>       if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+>> @@ -1019,4 +1099,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
+>>       x86_klass->cpu_instance_init = tdx_cpu_instance_init;
+>>       x86_klass->cpu_realizefn = tdx_cpu_realizefn;
+>>       x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
+>> +    x86_klass->check_features = tdx_check_features;
+>>   }
+>> -- 
+>> 2.34.1
+>>
 
 
