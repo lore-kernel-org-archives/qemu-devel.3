@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02348E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 23:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15746E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 23:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXq1e-00025e-Dy; Tue, 14 Jan 2025 18:08:46 -0500
+	id 1tXq5y-0004JZ-AX; Tue, 14 Jan 2025 18:13:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq1K-00021j-V0
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:08:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXq1G-0004DF-SC
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:08:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736896101;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jSPuM/xQN55RkRx/S3nnX/mnwXvxno14BL0e7ID8OVM=;
- b=dLSiulXxPPKrEG8SOxq8+8sJYfDqKK0cQu3ArJ+LFkWKWlwzGajNM5KR5RJ0l/ryKVwEim
- UVCqHFUE65FShHKrInDM05IuxFRkbo51vMkIHmTeipnqjuG24d5fYrb+DUenYFj9Q1kr9b
- PiGsrBYqv711GemZXPZU4eUiWTgeupo=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-jxr_NqIqOjqv-opjs7SioQ-1; Tue, 14 Jan 2025 18:08:19 -0500
-X-MC-Unique: jxr_NqIqOjqv-opjs7SioQ-1
-X-Mimecast-MFC-AGG-ID: jxr_NqIqOjqv-opjs7SioQ
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-46790c5b1a5so151524391cf.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 15:08:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXq5v-0004Ix-Q2
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:13:11 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXq5u-0004tY-0b
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 18:13:11 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-38a8b17d7a7so3118456f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 15:13:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736896387; x=1737501187; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6wzr+JsOJLlCTx19NK38EsdglqkJR+xQVzO0RmwoSsg=;
+ b=lI9kBzOfvAe2ThncFag22/Oz0kTFtQY7reSyUnITu2u6H2zkwT6qGDsQQqrfVDyXzz
+ EQ9VfJEJhxXj1p3h0i25M9pXH6fybAfQ8tD5lRMEgW4MrkiJFDRam8LS1QcyqRU1jWS9
+ 7UyQvdGibgLjCuRYljQqttmapOCIdXPAxhMYKgkUWQO+oFb+NSXDo8SR0q4VD8YRKkxu
+ YAtqyjNWReD15yibB2E48TIZQbTcWqkMGatyKw44PpqdI8yKMdq4FMJxYS6ZK180Z6Hp
+ VT0PlBGeZfhKFGP5S+Odp1u7IHqu3hrvObdUYbA1qsy4eKt28qah0ocI6oHBU1o2D94m
+ 8bJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736896098; x=1737500898;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jSPuM/xQN55RkRx/S3nnX/mnwXvxno14BL0e7ID8OVM=;
- b=Zgoz3ouT8satE7Hldw5JUAv+j4RpEdkTp6UReYA99GlHPm8jBLffct5qcWinqm4fkW
- RZFsibEpwarfciAkCp33HeoIYFIH02s/dWxsC8/35Rg1q3dpVm2VPk/sxjVifjL7JyER
- HeNeHxSNJtNDv5sAAOq6YYvrR7xZIwPe6/f6l0WKaq+VX4ruSMkKmwSwpQfZcKHD0/3t
- be0CsxqYQaBcNX56JXH7RylaPC4wj+/urziUU6U7GZavyAxACLIB4G8GRk6bDqiePQPE
- 9iXYUOPwxi9Tkk1cX+2hbfx0UswYhvGVOG40t1wNvLOPwdmjiZdcufFB6EetyxLJkjmP
- Pn4A==
-X-Gm-Message-State: AOJu0YxT7ZSA8h9r5nkzG0+DV0ZajNUy5YDgKhMUnkOTCHKA0xje/EAE
- ep1iEYfVgSTDcPgvqqQbLfd6FcRal0Vx0gI3newLmsWz/Hcvx8uap1e5bVC6juoPpaES8zVR/ii
- 2KhxCIYFqVhoP2DPvgZuipL2Wmca3gI7AfW2BppHu82jyOwd+UiKdkbg9RUs88g+KGT3AQ7+FI8
- UMsGhaMtRG3j+RTHUzVdjsbvCu3qtlnwaciA==
-X-Gm-Gg: ASbGncvHKLs43OfpKTfb+WtUoWPTwCTRgx/lb3SxTbVwEtPf2eUcFfnTlPZt+46atYR
- 92fNZipMgbEJ7iE3Wwpi+h4b4WUK30rMSl1GddariQlp91QK+tkh7QFQPRcdmAtKTYq2q5HaetV
- ZDBy6ZQR0HbWav1/fv9KnocnUJaTOARIDvQkMrYoNZto33YcNFjd5S5AcUy5vdWppe5A0+XsyIR
- sE9RXt4aFEbq4d2mlLkE6TDb4/9PvCmFn+3HDKr1eaClG3AgaZvtKPpSTHRSommtOuqyhey4hH7
- HdzJNoTp5MShXFKEbDCNH/9BG2d+jNpF
-X-Received: by 2002:a05:622a:1a0d:b0:467:525b:e540 with SMTP id
- d75a77b69052e-46c70fd31d9mr387709011cf.8.1736896097963; 
- Tue, 14 Jan 2025 15:08:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGHHW69C9d68DiM1NK3PXF02OfpzQRaH4AH0+V4LHEgLBBw+tb9CCIn1FEGWOQsCF6uPCePgw==
-X-Received: by 2002:a05:622a:1a0d:b0:467:525b:e540 with SMTP id
- d75a77b69052e-46c70fd31d9mr387708661cf.8.1736896097537; 
- Tue, 14 Jan 2025 15:08:17 -0800 (PST)
-Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46c873cd1b0sm59268971cf.49.2025.01.14.15.08.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 15:08:16 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
+ d=1e100.net; s=20230601; t=1736896387; x=1737501187;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6wzr+JsOJLlCTx19NK38EsdglqkJR+xQVzO0RmwoSsg=;
+ b=uzCiHk/giIf3ALkniiIP0PhGOIBHWow1rMQvWtJQR5W+jrES5OgeFUHBuFcYOG5gc9
+ i0bmzzhMiqrNRjZVA9YJqbz0qE4TMpiX6E5qqo5IuZ7bmUWxQaKiMnU9ggLTF30zqdv1
+ W68uQf2gQSoFdzZLNGN9z/v1Jsrv1xxLIZFXV1pA6QKMRK9mK1TNnENYJucmvI+trdXz
+ IIEwVBNJI12CDMTyFrb9IuId0q6ryKaAhpcR8x8JvXHZmqVGoQk8oLi1o0k5XeuVtgnb
+ L/ljuz7N0hMmjxuPChb4cClMXzr0IQJPVGQh7VYfST3XGrtNRCzMSzTEQ5z4bSXm5aGx
+ +mUA==
+X-Gm-Message-State: AOJu0YwCw8HG5Ar/qPFtU9hOxzIWIcK7I57dMbY4j0Qv+kQFoG0NzQgP
+ /0ci1+lX7I6v3Tu3aWqTkS2eEyDvydBJy/RSK1wKpDfmOefSAPt65dR5LWwEAAXfRIU9tJRiW8y
+ un7Y=
+X-Gm-Gg: ASbGncvDPD743jiHUwIApLunsVQfOUt4Cj7owppjBfM+viBF7MngUGbOOz+nUxfdEzw
+ rliYYvS75wNyZr+boYYzQFpbRqS0XSfWwKhNvV+P5h8aiGhiOHRg8JZI7/aP9463hgoaCOWeHdp
+ eWUSy5gWOysfIVUtzxLGs9cPG6zi8UpzUrGaTJgYXo0r7nXHuFhAzVbDQGRbJV72Gwn+g9YQXya
+ 9cMfzDpTAsh+da2OjUK13DagsK7z9gJYU9Q8eN7WtEhE9B9gYMgHApEAcuuGktR3OtOJ/nQ0d9J
+ fVPa3w+tTKAcb3ZQbQlcSdszAFHoxfg=
+X-Google-Smtp-Source: AGHT+IG8RhPIllmAFbSnEzPhchZx0kebPpuqg/Qoojag8Yn3SxDTsi8Tw14nmMmqJI514Op1tfBIAA==
+X-Received: by 2002:a05:6000:712:b0:388:da10:ff13 with SMTP id
+ ffacd0b85a97d-38a87306e8bmr25764377f8f.21.1736896387317; 
+ Tue, 14 Jan 2025 15:13:07 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e4c1d13sm16228289f8f.91.2025.01.14.15.13.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 14 Jan 2025 15:13:06 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 16/16] migration: Trivial cleanup on JSON writer of
- vmstate_save()
-Date: Tue, 14 Jan 2025 18:07:46 -0500
-Message-ID: <20250114230746.3268797-17-peterx@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250114230746.3268797-1-peterx@redhat.com>
-References: <20250114230746.3268797-1-peterx@redhat.com>
+Cc: Stafford Horne <shorne@gmail.com>, Jia Liu <proljc@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH] target/openrisc: Call cpu_openrisc_clock_init() in
+ cpu_realize()
+Date: Wed, 15 Jan 2025 00:13:04 +0100
+Message-ID: <20250114231304.77150-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,51 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two small cleanups in the same section of vmstate_save():
+OpenRISC timer is architecturally tied to the CPU.
 
-  - Check vmdesc before the "mixed null/non-null data in array" logic, to
-  be crystal clear that it's only about the JSON writer, not the vmstate on
-  its own in the migration stream.
+It doesn't belong to the machine init() code to
+instanciate it: move its creation when a vCPU is
+realized (after being created).
 
-  - Since we have is_null variable now, use that to replace a check.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Reported-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- migration/vmstate.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/openrisc/openrisc_sim.c | 2 --
+ hw/openrisc/virt.c         | 2 --
+ target/openrisc/cpu.c      | 2 ++
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 82bd005a83..047a52af89 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -459,6 +459,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+index e0da4067ba3..d7f97d19913 100644
+--- a/hw/openrisc/openrisc_sim.c
++++ b/hw/openrisc/openrisc_sim.c
+@@ -306,8 +306,6 @@ static void openrisc_sim_init(MachineState *machine)
+             exit(1);
+         }
  
-                 /*
-+                 * This logic only matters when dumping VM Desc.
-+                 *
-                  * Due to the fake nullptr handling above, if there's mixed
-                  * null/non-null data, it doesn't make sense to emit a
-                  * compressed array representation spanning the entire array
-@@ -466,7 +468,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                  * vs. nullptr). Search ahead for the next null/non-null element
-                  * and start a new compressed array if found.
-                  */
--                if (field->flags & VMS_ARRAY_OF_POINTER &&
-+                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
-                     is_null != is_prev_null) {
+-        cpu_openrisc_clock_init(cpus[n]);
+-
+         qemu_register_reset(main_cpu_reset, cpus[n]);
+     }
  
-                     is_prev_null = is_null;
-@@ -504,7 +506,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                                     written_bytes);
+diff --git a/hw/openrisc/virt.c b/hw/openrisc/virt.c
+index 7b60bf85094..676cf8d692d 100644
+--- a/hw/openrisc/virt.c
++++ b/hw/openrisc/virt.c
+@@ -487,8 +487,6 @@ static void openrisc_virt_init(MachineState *machine)
+             exit(1);
+         }
  
-                 /* If we used a fake temp field.. free it now */
--                if (inner_field != field) {
-+                if (is_null) {
-                     g_clear_pointer((gpointer *)&inner_field, g_free);
-                 }
+-        cpu_openrisc_clock_init(cpus[n]);
+-
+         qemu_register_reset(main_cpu_reset, cpus[n]);
+     }
+ 
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index b7bab0d7abf..291fec04fda 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -165,6 +165,8 @@ static void openrisc_cpu_realizefn(DeviceState *dev, Error **errp)
+     qemu_init_vcpu(cs);
+     cpu_reset(cs);
+ 
++    cpu_openrisc_clock_init(OPENRISC_CPU(dev));
++
+     occ->parent_realize(dev, errp);
+ }
  
 -- 
-2.47.0
+2.47.1
 
 
