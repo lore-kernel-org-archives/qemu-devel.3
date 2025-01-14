@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B266DC02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC3CE77188
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 18:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXlJg-000387-EU; Tue, 14 Jan 2025 13:07:06 -0500
+	id 1tXlJU-000367-Mi; Tue, 14 Jan 2025 13:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tXlJX-00036v-Lo; Tue, 14 Jan 2025 13:06:56 -0500
+ id 1tXlJ4-00033T-Ii; Tue, 14 Jan 2025 13:06:27 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tXlJQ-0001S2-Uy; Tue, 14 Jan 2025 13:06:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YXcQS3xkBz6K5my;
- Wed, 15 Jan 2025 02:01:52 +0800 (CST)
+ id 1tXlIz-0001Oc-Dd; Tue, 14 Jan 2025 13:06:26 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YXcTn5l4Mz6L588;
+ Wed, 15 Jan 2025 02:04:45 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 81605140391;
- Wed, 15 Jan 2025 02:06:45 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 6B194140B35;
+ Wed, 15 Jan 2025 02:06:13 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.72.65) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 14 Jan 2025 19:06:44 +0100
+ 15.1.2507.39; Tue, 14 Jan 2025 19:06:12 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <zhao1.liu@intel.com>, <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>, 
  <farman@linux.ibm.com>, <peter.maydell@linaro.org>, <mst@redhat.com>,
@@ -36,12 +36,10 @@ CC: <zhao1.liu@intel.com>, <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>,
  <linuxarm@huawei.com>, <shameerali.kolothum.thodi@huawei.com>,
  <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>,
  <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
-Subject: [PATCH v6 1/6] target/arm/tcg: increase cache level for cpu=max
-Date: Tue, 14 Jan 2025 18:06:06 +0000
-Message-ID: <20250114180611.353-2-alireza.sanaee@huawei.com>
+Subject: [RFC PATCH v6 0/6] Specifying cache topology on ARM
+Date: Tue, 14 Jan 2025 18:06:05 +0000
+Message-ID: <20250114180611.353-1-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250114180611.353-1-alireza.sanaee@huawei.com>
-References: <20250114180611.353-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -74,40 +72,134 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch addresses cache description in the `aarch64_max_tcg_initfn`
-function for cpu=max. It introduces three layers of caches and modifies
-the cache description registers accordingly.
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. This patch enables
+the specification of cache layout through a command line parameter,
+building on a patch set by Intel [1,2,3]. It uses this set as a
+foundation.  The device tree and ACPI/PPTT table, and device tree are
+populated based on user-provided information and CPU topology.
 
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- target/arm/tcg/cpu64.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Example:
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 93573ceeb1..9434804061 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1086,6 +1086,19 @@ void aarch64_max_tcg_initfn(Object *obj)
-     uint64_t t;
-     uint32_t u;
+
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
+
+
+The following command will represent the system relying on **ACPI PPTT tables**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ -nographic
+
+The following command will represent the system relying on **the device tree**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init" \
+ -initrd rootfs.cpio.gz \
+ -nographic
+
+Failure cases:
+    1) There are scenarios where caches exist in systems' registers but
+    not left unspecified by users. In this case qemu returns failure.
+
+    2) At the moment, the device tree is not able to describe caches
+    shared at core level. In another word, SMT threads cannot share
+    caches. This will need adjustments in the SPEC. It is worth noting
+    that this particular case is completely OK in ACPI PPTT tables.
+
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now.
+
+Here is the hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+
+TODO:
+  1) Making the code to work with arbitrary levels
+  2) Separated data and instruction cache at L2 and L3.
+  3) Additional cache controls.  e.g. size of L3 may not want to just
+  match the underlying system, because only some of the associated host
+  CPUs may be bound to this VM.
+
+Depends-on: Building PPTT with root node and identical implementation flag
+Depends-on: Msg-id: 20240926113323.55991-1-yangyicong@huawei.com
+
+Depends-on: i386: Support SMP Cache Topology
+Depends-on: Msg-id: 20250110145115.1574345-1-zhao1.liu@intel.com
+
+[1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
+[2] https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/
+[3] https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+
+Change Log:
+  v5->v6:
+   * Minor bug fix.
+   * rebase based on new Intel patchset.
+     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+  v4->v5:
+    * Added Reviewed-by tags.
+    * Applied some comments.
+
+  v3->v4:
+    * Device tree added.
  
-+    /*
-+     * Expanded cache set
-+     */
-+    cpu->clidr = 0x8200123; /* 4 4 3 in 3 bit fields */
-+    /* 64KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
-+    /* 64KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
-+    /* 1MB L2 unified cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 1 * MiB, 7);
-+    /* 2MB L3 unified cache */
-+    cpu->ccsidr[4] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 2 * MiB, 7);
-+
-     /*
-      * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
-      * to because we started with aarch64_a57_initfn(). A 'max' CPU might
+
+Alireza Sanaee (6):
+  target/arm/tcg: increase cache level for cpu=max
+  arm/virt.c: add cache hierarchy to device tree
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  hw/acpi/aml-build.c: add cache hierarchy to pptt table
+  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
+  Update the ACPI tables according to the acpi aml_build change, also
+    empty bios-tables-test-allowed-diff.h.
+
+ hw/acpi/aml-build.c                        | 205 +++++++++++-
+ hw/arm/virt-acpi-build.c                   |   8 +-
+ hw/arm/virt.c                              | 349 +++++++++++++++++++++
+ hw/cpu/core.c                              |  92 ++++++
+ include/hw/acpi/aml-build.h                |   4 +-
+ include/hw/arm/virt.h                      |   4 +
+ include/hw/cpu/core.h                      |  27 ++
+ target/arm/tcg/cpu64.c                     |  13 +
+ tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
+ tests/qtest/bios-tables-test.c             |   4 +
+ 10 files changed, 699 insertions(+), 7 deletions(-)
+
 -- 
 2.34.1
 
