@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D5FBE77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1859C02185
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 16:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXkEk-0001jR-SG; Tue, 14 Jan 2025 11:57:56 -0500
+	id 1tXkEC-0001gf-4T; Tue, 14 Jan 2025 11:57:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXkEi-0001jE-Gp
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 11:57:52 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXkE7-0001gO-DJ
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 11:57:16 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXkEh-0001ye-3G
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 11:57:52 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-aaeec07b705so903712266b.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 08:57:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXkE4-0001wE-8E
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 11:57:14 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-385e3621518so2902355f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 08:57:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736873869; x=1737478669; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736873829; x=1737478629; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LIW6CVO/eS51KvpRNkgum6ONCVUiftzg8pT23bwcWEA=;
- b=ARD7pnnUciZNvHMM3gc7GLWA4cN2NvLPmudXsZ+DcMNMUTSKvWYl17a+NxkoYa7krC
- 3IFO7dBhSEDBVbVLkY1O/NXJ4uuHZ0syM+Rom6s21NkW6eakdTREpWxjO//9PKzUcevG
- 1HrJMAnR5YHHSWO62zx1BfCo8pEafT/KBLInbjxkAKq97AtRDnjsh6W8nKETKQs7NIwO
- dP+EGVsc0RNMfDUxKhC2pH1VZ0cCEupGjV1J9Yz6A3ZqOSgNSdaLP3MeB8lsn9EKpXTd
- 2N5WJEFn016hYe1T5TnZNj7cXKt9zXijYOQnlBUHO3kFqLRRy9moJ7tam7i+Dh5MoH38
- pHng==
+ bh=+GmVtIr9Yb7bCQHjU0FJMbZiYdYtR4o01Fr+QOYbKng=;
+ b=nkTLEI9f+ngeWSLM5uL/5LbH+EtH2K1oRMLy0LcF17JgJhtdPfEjjfUCdQTPI+fgt9
+ plmuzJxNShCs3UuIG8rnszG9Z0MsFn74l5YIPXuhYcA6kxYfrDifUjwcZ0V+/eV2D31w
+ ZI1+qnKBqCbvSewHxSH8gFsRiKLwZKoDBzPdhClPVv+uMvX5ifneQy9gyss7kZ0TiIDN
+ 6R8kZjQSs0RGhIx0Ub0yIk4YmzPpCMV6I4EccI/6WhVUnuZSf3tYc/wKKh3jZvNwgooJ
+ nZfLOBIpuWVMJGmLnPlPvMcb0+kBgQviUqnMPPHC7d3nXH9CqHVNEkladKaAvKj8mPpf
+ x0PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736873869; x=1737478669;
+ d=1e100.net; s=20230601; t=1736873829; x=1737478629;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LIW6CVO/eS51KvpRNkgum6ONCVUiftzg8pT23bwcWEA=;
- b=piKVMOe7nO9H78A6gI+loVPK0tumMEOxHYvg951Hi+bzN5DZvoVp8WGDjmwc6uBVJa
- V/oF7TKQIxZSeOBRDyUZSbBn3HlIh+fsyMJwZu2j0VnowROFp4vjHBB50ct+JlkRPRJw
- xK35axnHdKA5HFZZY2Ihs55JiMIEtMblu6BGf8KUIgKoLnessIr9il+WjAoVjRsHWfRR
- uzh5yJEEDaexfhgc7FGVZjfd+Zy61ZHooYxZdLYRR/fFW5ua/BoP+jo8Uu0YhTJqJmMJ
- lBO6pVKCWRbU9mhOdYegGrglXE7yIfvefl28V+uZ4ZI9OPJ8HK1l3u/OBXH07UWCKEbd
- sosA==
+ bh=+GmVtIr9Yb7bCQHjU0FJMbZiYdYtR4o01Fr+QOYbKng=;
+ b=K8TKSjOED+fKQNAdggIiDou+3tZBZCN1NrEt3fcrKoEMWxBni5kC+vxWKlGpbIPGwt
+ S3+m6UIpj8NX7ZXLLJCJYTWNLO+4E9+Gu+z7evbH3tIdDi4AeSxMxc9wJ+W4KfPq9QPs
+ nGxD0+L9curXf2OrjcPAbQTREGQqTGUTxa/6PZv8qoHRehY/EBIa0HniL4NjdRADbIHv
+ B7wHRpJEB7SOdcBFMMtSPPhxH2qqLAwp7yRDYZAbmO4Syk69nwa1n9fmmAnqHohEruxk
+ KBf36OAfz+VkfqF/0X3VSglF9EkT70DzIsmGEBU0QwTWUl3SO+0Cs/KRz1hM2/DeqHG9
+ 1q9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV77Emn33GGqs83UUkl7rrZGiJslAatye7OuCSCDqxzRA2if94esplqzql6KMIQlPS8rHpw9E6u4Z6A@nongnu.org
-X-Gm-Message-State: AOJu0YwsV7CfQaoaHpjjGZL6NZHwFyEdOaaau3IPEgJCOP7NQU1MjeAE
- eHpX85sEL0IQT/sQOcGrZxkIi0936cocs/nsJXVpj9PBkNFcNRCUB5p9tzoQwNqjVOUwSzcvYV7
- UEf8=
-X-Gm-Gg: ASbGncsl99thi2rtZ0MxffSZZWAjxD5b/OvKyPA7eBoea+w1fqpbBlGKQyds3tuSF4E
- wRxBdayrDm2Icp2vmBO3rWJdHm5KMq3BYlsFmZSxLTVlXGgwAuewBrwwCgnMkckaNFv6LM8DIed
- LOMKALSCgteUKVMlHmpiZEuc4tAP20XcM1o8OJ7XTzwCIxTS6/ZvNDo3r6FYVssEnmCIvQdRe1q
- uJCfwBtCH1AObtTN+dybD3ssFOcVH4HqO1o8L/w662n0HyLWZIzWnYHN9gfrrcPW+mKc/gQQ9Ub
- sV+BOCyTPldwHe1FH71zjff1
-X-Google-Smtp-Source: AGHT+IHCWajAQug3mi+auhnW7ijt8V1ncMIZwWcpqRtX2Spl3Ii1ie4hKS0fNGng+LEyttj7e024nA==
-X-Received: by 2002:a17:906:f6d7:b0:ab3:3b19:c0d6 with SMTP id
- a640c23a62f3a-ab33b19cfe9mr248648766b.13.1736873868078; 
- Tue, 14 Jan 2025 08:57:48 -0800 (PST)
+ AJvYcCV64D1hZJ5Boc3rOAq1Pd/YW6IOrc6PL7LNaujIhof+pStkVk+gEBeEXpY7VeENR8FITPukyLVqNgEq@nongnu.org
+X-Gm-Message-State: AOJu0Yy8d0hK2mvCn8vWSXwqpkICSLtqZCgkya6jXpZ6bm/0eSTGlik2
+ QN4F09RnnZdV2epIurY8e8zofzcowc35RSZs+Gi0Rs5Abz0FtlDT3h/Q1i4gSEE=
+X-Gm-Gg: ASbGncvjCGDKS+zTgq3XZkhFZQ3lHbpRIsfU7DDPJMX90WLDBCMVIZCkDubazIf5AkX
+ Ijn8gHGz9Ip8ngFIPZfncxOldggzZmvgbz8ndn1RuY1tAjl0DxTxKoyhzJuFvjdXGa1wzEbZN1X
+ GU2j51Uio2fDAJOR4dx5lZqFZiDMeHvp3hMeQx7lmYG8W2P8U/sGMor2g1spTdNPCYcp7CTIgP9
+ HglNhD82s8sl1DEsh/dTN5NwRiHrH9tT1LIDqHyXjz1apClXiG449cUL3LIOdpPRXurk57OKEJ9
+ 3a1YeEPVUtf1v6nAADcvtCUA
+X-Google-Smtp-Source: AGHT+IFzZkwV/YTjwPLF8uEy0Wt8p5b0BEnIWUQMN6g9vimoxbo/cuiHs2lsP24TOjWKAyKT+cJUkw==
+X-Received: by 2002:a05:6000:1848:b0:38a:8b2c:53b0 with SMTP id
+ ffacd0b85a97d-38a8b2c5649mr22124680f8f.35.1736873828838; 
+ Tue, 14 Jan 2025 08:57:08 -0800 (PST)
 Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab2c95647b6sm649074266b.115.2025.01.14.08.57.47
+ 5b1f17b1804b1-436e9d8fc67sm183719615e9.8.2025.01.14.08.57.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 08:57:47 -0800 (PST)
-Message-ID: <2be3d7a0-d80f-45be-9582-b42e532891e8@linaro.org>
-Date: Tue, 14 Jan 2025 17:57:46 +0100
+ Tue, 14 Jan 2025 08:57:08 -0800 (PST)
+Message-ID: <29b32a6c-3e1c-4a24-9272-13d2c1cb497c@linaro.org>
+Date: Tue, 14 Jan 2025 17:57:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 25/81] tcg: Validate op supported in opcode_args_ct
+Subject: Re: [PATCH v2 23/81] tcg: Remove args_ct from TCGOpDef
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
 References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-26-richard.henderson@linaro.org>
+ <20250107080112.1175095-24-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-26-richard.henderson@linaro.org>
+In-Reply-To: <20250107080112.1175095-24-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +102,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 09:00, Richard Henderson wrote:
-> We should have checked that the op is supported before
-> emitting it.  The backend cannot be expected to have a
-> constraint set for unsupported ops.
+> Introduce a new function, opcode_args_ct, to look up the argument
+> set for an opcode.  We lose the ability to assert the correctness
+> of the map from TCGOpcode to constraint sets at startup, but we can
+> still validate at runtime upon lookup.
+> 
+> Rename process_op_defs to process_constraint_sets, as it now does
+> nothing to TCGOpDef.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/tcg.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>   include/tcg/tcg.h |  1 -
+>   tcg/tcg-common.c  |  2 +-
+>   tcg/tcg.c         | 82 ++++++++++++++++++++++-------------------------
+>   3 files changed, 40 insertions(+), 45 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
