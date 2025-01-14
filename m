@@ -4,59 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A30E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 21:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 446C6E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 21:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXooD-0000rv-Ft; Tue, 14 Jan 2025 16:50:49 -0500
+	id 1tXoqG-0001ZY-Ux; Tue, 14 Jan 2025 16:52:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linux@weissschuh.net>)
- id 1tXooB-0000rT-F6
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:50:47 -0500
-Received: from todd.t-8ch.de ([2a01:4f8:c010:41de::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXoqF-0001ZO-88
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:52:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linux@weissschuh.net>)
- id 1tXoo8-0003fx-6I
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:50:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
- s=mail; t=1736891435;
- bh=uRwcJb3TjICUyPhUz/VimhDyFmB/p85NF8kCEbSI6rU=;
- h=From:Date:Subject:To:Cc:From;
- b=an8fopgQswiF/V2vvDZ1FiwbUwKXGQM27ZNAOzPSnKSKA55W3uWa1zfB7ePccxYuM
- JQzRrC7Z4SUkPaRVyWbjhytKLNfUbx7v8WdAZqpnbxhSQOrtPLTtTyubWD1AVsefcm
- HGs0ARVySZvBqf/gZlR89Vv7lzHTdJVslkBC10Ps=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Tue, 14 Jan 2025 22:50:20 +0100
-Subject: [PATCH] firmware: qemu_fw_cfg: constify 'struct bin_attribute'
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXoqC-0003zd-O2
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 16:52:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736891570;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XEUkriz2fMyqzHItUw2pNS9V6qacperf1Oc3JgwYGz0=;
+ b=dUl7aH9XO44W9TYE7EBKa+GwV9BbTfk6n+MCBS07ZHVXcIZIYWfSzObEuAiaAK++oVHdKK
+ hwm21etS6z3S/PJcPDV0npyQ08X29UAgwZHRwPjSShvFuU06xm1x5CTLxNBMUdvJI+0/Ot
+ aJWYoOxuDNjjW3IGzAbWWCdG0WADMro=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-1TdOU71DPpCT7HUbf5k74w-1; Tue, 14 Jan 2025 16:52:49 -0500
+X-MC-Unique: 1TdOU71DPpCT7HUbf5k74w-1
+X-Mimecast-MFC-AGG-ID: 1TdOU71DPpCT7HUbf5k74w
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d8f6b89dcdso98581536d6.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 13:52:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736891569; x=1737496369;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XEUkriz2fMyqzHItUw2pNS9V6qacperf1Oc3JgwYGz0=;
+ b=ZWIYKFLA1ZmqfSJa51DXCMFzCQcMceLEdBE1qlPEwBhCGMDEu15esSjTmHMbJ3Hdlu
+ kFksvfnb283IuOPIfdx8cWErm20T+wY2GHoJFrmVvJvMAp2L7B8iCziTx6y2Jhy9qkSP
+ qAYpDotzf0FaT+nnD8wcryz5tsu2yylzJQGQ37qE15GmAhV0c7u/8E+LGoXOGT7UjiZd
+ EBrrtBmbyggQvU9wPdH6qsTNBiyq0OT0kkR9dNFC4N6NO+g5BtuwSxZ4OibFFqdIaCcB
+ jWV96ifvVngZSI3HLsGuCplqL5BlAAmmJ/xrPW5T06vOUhShH5TDJXK43o1DZuy3I8iz
+ ucwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWS6NdSIN1bOp0uP5HdyXoU1FySautLhaw65lzLdxEF6Z6mZBLep+4JPFqSXAEgrIIYd7dWqX1Fle9C@nongnu.org
+X-Gm-Message-State: AOJu0Yx2RilIlQp9qSN8mxlOhwDuVkEq0xjAx66avClJnrjUAbyl6WGh
+ vfBU1b4yKv/NlZPQXRiTqKWUy/PP7w6jRdckSO5Yjm8q4z+5gb/jr9I+SjAzpkRhhLUghxL42Vf
+ /MTqU6QiqnqqqSqKMxN6bZ0c4uNpSUIqPitFSnOSP6c14sXTtK1Pi
+X-Gm-Gg: ASbGncuGzjL+tvl7Xpzh6d/KujuT6cGvBR7uRUHH4uaeSBvJ+SQJgLY/XPgRGshdjiW
+ kIpQK/c0PqOySx285pyos+HBSKTZsrKIGNNxJkSbHQrTlkL+RnZyjjYK50SG/fYwC8cwiJIndVu
+ lqD8lJVEZui+ctfI8Zik2hf3iqYQl1fSfut8AdMU9RpmLj0kZPjDX5a5CMFGzjlJA1MQ246TvVc
+ jKiJz9X0vdIlWC2rUaZ64kQHkpTDzMEXOtbS3ab/WaY57rrSKE05DSwATqJIoFKlup3KPnda9+i
+ pTEu5Rg6i3nAQ4q4+A==
+X-Received: by 2002:a05:6214:2f8e:b0:6df:ba24:2af2 with SMTP id
+ 6a1803df08f44-6dfba242b5bmr284594506d6.25.1736891568761; 
+ Tue, 14 Jan 2025 13:52:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEojH+i/cJ//IYug9ikjHnI4gnURNLtswq0an2hf6OrzO9HvwMPIzG1Ru8cUgpcgZto6XBCuA==
+X-Received: by 2002:a05:6214:2f8e:b0:6df:ba24:2af2 with SMTP id
+ 6a1803df08f44-6dfba242b5bmr284594196d6.25.1736891568364; 
+ Tue, 14 Jan 2025 13:52:48 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dfadec2acbsm56952426d6.122.2025.01.14.13.52.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jan 2025 13:52:47 -0800 (PST)
+Date: Tue, 14 Jan 2025 16:52:45 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [RFC PATCH] tests/qtest/migration: Add cpu hotplug test
+Message-ID: <Z4bcrc2sfCCO8LWR@x1n>
+References: <20250113210833.1712-1-farosas@suse.de>
+ <CAJSP0QWe+0_rjchH0hCszU-4r_PF+ZgZgWb+cgg6UZzZiYeTQA@mail.gmail.com>
+ <8734hlh471.fsf@suse.de>
+ <CAJSP0QUGfq0yPyzyjHy9D0=e2o_AVMvb1SaA69fm3oexYaH60g@mail.gmail.com>
+ <Z4bF0FY_v8qKCGlb@x1n>
+ <CAJSP0QXC+ZMECR0qkqns=ShWBBzabzf5B6eFUifM51eC9J6q8A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250114-sysfs-const-bin_attr-qemu_fw_cfg-v1-1-76f525a3ee72@weissschuh.net>
-X-B4-Tracking: v=1; b=H4sIABvchmcC/x3NPQ7DIAxA4atEnmsJUjLQq1QVotROPIQkmP4py
- t2LOn7LezsoFSGFS7dDoZeoLLnBnjpIU8wjoTyaoTf9YKx1qF9lxbRkrXiXHGKtBTean4HfIfG
- IHF30gz87bxy0zFqI5fNfXG/H8QMxw/qBcgAAAA==
-X-Change-ID: 20250114-sysfs-const-bin_attr-qemu_fw_cfg-fa4a95934904
-To: Gabriel Somlo <somlo@cmu.edu>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, linux-kernel@vger.kernel.org, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1736891434; l=1599;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=uRwcJb3TjICUyPhUz/VimhDyFmB/p85NF8kCEbSI6rU=;
- b=V9U8C+VpPf8QiCxoM33e4TVTUFnByc39D1XF6YXt5z3hK4HZlNwyy/pmUlQFi4gXxOpgsOWbv
- 4u8avJbXg2EBaUus0gzBwtySCHum5JEP4KdqTN2puzdjjO3uIIXT34m
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Received-SPF: pass client-ip=2a01:4f8:c010:41de::1;
- envelope-from=linux@weissschuh.net; helo=todd.t-8ch.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QXC+ZMECR0qkqns=ShWBBzabzf5B6eFUifM51eC9J6q8A@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,47 +113,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sysfs core now allows instances of 'struct bin_attribute' to be
-moved into read-only memory. Make use of that to protect them against
-accidental or malicious modifications.
+On Tue, Jan 14, 2025 at 04:14:44PM -0500, Stefan Hajnoczi wrote:
+> On Tue, 14 Jan 2025 at 15:15, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Tue, Jan 14, 2025 at 02:28:46PM -0500, Stefan Hajnoczi wrote:
+> > > On Tue, 14 Jan 2025 at 09:15, Fabiano Rosas <farosas@suse.de> wrote:
+> > > >
+> > > > Stefan Hajnoczi <stefanha@gmail.com> writes:
+> > > >
+> > > > > On Mon, 13 Jan 2025 at 16:09, Fabiano Rosas <farosas@suse.de> wrote:
+> > > > >>
+> > > > >> Bug #2594 is about a failure during migration after a cpu hotplug. Add
+> > > > >> a test that covers that scenario. Start the source with -smp 2 and
+> > > > >> destination with -smp 3, plug one extra cpu to match and migrate.
+> > > > >>
+> > > > >> The issue seems to be a mismatch in the number of virtqueues between
+> > > > >> the source and destination due to the hotplug not changing the
+> > > > >> num_queues:
+> > > > >>
+> > > > >>   get_pci_config_device: Bad config data: i=0x9a read: 4 device: 5
+> > > > >>   cmask: ff wmask: 0 w1cmask:0
+> > > > >>
+> > > > >> Usage:
+> > > > >> $ QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+> > > > >>   ./tests/qtest/migration-test -p /x86_64/migration/hotplug/cpu
+> > > > >>
+> > > > >> References: https://gitlab.com/qemu-project/qemu/-/issues/2594
+> > > > >> References: https://issues.redhat.com/browse/RHEL-68302
+> > > > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > > > >> ---
+> > > > >> As you can see there's no fix attached to this. I haven't reached that
+> > > > >> part yet, suggestions welcome =). Posting the test case if anyone
+> > > > >> wants to play with this.
+> > > > >>
+> > > > >> (if someone at RH is already working on this, that's fine. I'm just
+> > > > >> trying to get some upstream bugs to move)
+> > > > >
+> > > > > The management tool should set num_queues on the destination to ensure
+> > > > > migration compatibility.
+> > > > >
+> > > >
+> > > > I'm not sure that's feasible. The default num-queues seem like an
+> > > > implementation detail that the management application would not have a
+> > > > way to query. Unless it starts the source with a fixed number that
+> > > > already accounts for all hotplug/unplug operations during the VM
+> > > > lifetime, which would be wasteful in terms of resources allocated
+> > > > upfront.
+> > > >
+> > > > That would also make the destination run with a suboptimal (< #vcpus)
+> > > > number of queues, although that's already the case in the source after
+> > > > the hotplug. Do we have any definition on what should happen durgin
+> > > > hotplug? If one plugs 100 vcpus, should num-queues remain as 2?
+> > >
+> > > QEMU defaults num_queues to the number of present CPUs. A management
+> > > tool that wants to ensure that all hotplugged CPUs will have their own
+> > > virtqueues must set num_queues to max_cpus instead. This wastes
+> > > resources upfront but in theory the guest can operate efficiently. I
+> > > haven't checked the Linux guest drivers to see if they actually handle
+> > > virtqueue allocation after hotplug. The Linux drivers vary in how they
+> > > allocate virtqueue interrupts, so be sure to check several device
+> > > types like virtio-net and virtio-blk as they may behave differently.
+> > >
+> > > Or the management tool can explicitly set num_queues to the number of
+> > > present CPUs and preserve that across live migration and CPU hotplug.
+> > > In that case num_queues can be updated across guest cold boot in order
+> > > to (eventually) achieve the optimal multi-queue configuration.
+> > >
+> > > Other approaches might be possible too. The management tool has a
+> > > choice of how to implement this and QEMU doesn't dictate a specific
+> > > approach.
+> >
+> > Thanks for the answer, Stefan.  I've left a comment in each of the issue
+> > reports so that reporter can verify this works properly.
+> >
+> > This also reminded me we could have specified a very large number of queues
+> > in many cases - I remember it used to be 1024 somehow (perhaps also the max
+> > vcpu number, but I'm not sure), which caused unwanted slowness on migration
+> > loading side (aka, downtime portion) due to MMIO regions of each queue -
+> > each of the queues may need a global address space update on the guest
+> > physical address space.  I didn't verify this issue, but if it can be
+> > reproduced and verified true, I wonder if the MMIO regions (or any relevant
+> > resources that would be enabled with num_queues even though some of them
+> > are not in use) can be plugged lazily, so that we can save quite some time
+> > on loadvm of migration.
+> 
+> Greg Kurz's commit 9cf4fd872d14 ("virtio: Clarify MR transaction
+> optimization") is about the scaling optimization where ioeventfd
+> changes are batched into a single transaction. This made a big
+> difference. Maybe something similar can be done in your case too?
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
- drivers/firmware/qemu_fw_cfg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Yes it could help.  I recall there used to be a more aggresive batching
+proposal for the whole VM loading process that covers all device loads, but
+that had some challenges elsewhere in some post_load()s.  It could indeed
+be a good idea to batch in an intemediate level like per-device if possible.
+I'll give it a shot when I hit that again anywhere.
 
-diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
-index d58da3e4500a5e230b7da9a75e4d70df7c38c542..2615fb780e3c4500db36d4746880455f05479f1f 100644
---- a/drivers/firmware/qemu_fw_cfg.c
-+++ b/drivers/firmware/qemu_fw_cfg.c
-@@ -460,7 +460,7 @@ static const struct kobj_type fw_cfg_sysfs_entry_ktype = {
- 
- /* raw-read method and attribute */
- static ssize_t fw_cfg_sysfs_read_raw(struct file *filp, struct kobject *kobj,
--				     struct bin_attribute *bin_attr,
-+				     const struct bin_attribute *bin_attr,
- 				     char *buf, loff_t pos, size_t count)
- {
- 	struct fw_cfg_sysfs_entry *entry = to_entry(kobj);
-@@ -474,9 +474,9 @@ static ssize_t fw_cfg_sysfs_read_raw(struct file *filp, struct kobject *kobj,
- 	return fw_cfg_read_blob(entry->select, buf, pos, count);
- }
- 
--static struct bin_attribute fw_cfg_sysfs_attr_raw = {
-+static const struct bin_attribute fw_cfg_sysfs_attr_raw = {
- 	.attr = { .name = "raw", .mode = S_IRUSR },
--	.read = fw_cfg_sysfs_read_raw,
-+	.read_new = fw_cfg_sysfs_read_raw,
- };
- 
- /*
-
----
-base-commit: 7f5b6a8ec18e3add4c74682f60b90c31bdf849f2
-change-id: 20250114-sysfs-const-bin_attr-qemu_fw_cfg-fa4a95934904
-
-Best regards,
 -- 
-Thomas Weißschuh <linux@weissschuh.net>
+Peter Xu
 
 
