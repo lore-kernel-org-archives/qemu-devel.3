@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BF2C02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3027CE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 11:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXfOM-0004Rg-TM; Tue, 14 Jan 2025 06:47:31 -0500
+	id 1tXfOX-0004e1-4E; Tue, 14 Jan 2025 06:47:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfNo-0004KV-Rh
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:58 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1tXfNr-0004L2-WD
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:47:00 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tXfNl-0006dz-V9
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:56 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3862a921123so3111601f8f.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:46:53 -0800 (PST)
+ id 1tXfNp-0006ee-8C
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 06:46:58 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-436ce2ab251so38450865e9.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 03:46:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736855212; x=1737460012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736855216; x=1737460016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pduzs+UmjW63vib6FEKaDURuILe6p6CLJowHwsN6bcg=;
- b=aIB+xXU372h18WMO1ehatnhVpJWwEdM+Bh5smcISFB9hOJuRo639mz0ZuwIh2zRXV7
- MOlbXfMYGWwiJVuqU+MRdax5S4v8LOpVusJ+7+O+KDxpAIiNxursF61WsZM0G2FQ/qrM
- ImGiYwAPgCKYJXKO+OBE2KaaFkhnUT6U2hkrpb3til1nHSmUP0wZ2OB+4hx/zntMq4Tx
- MKuAXTXrNJsbmaKs25/vTmcn0TM6Nxocjqo0D4GN+Ftu9ea38D/VudB2Ah3Dcfb/Dfzr
- A/LNmr/g/qMdhlRbIFAXRSwPkPVAf0isTzar1Nx/0ckgGcBVihI49DSubU57djTj++u4
- hS9Q==
+ bh=r8aoZ+4wIpFt1loPUkrjNZIwpI4hyfnz2K8d4L8ae9I=;
+ b=g0+uU6/CsHp+Erbqo2m0MsAPZNeqvyo9Cze+ORQGjSyiywmiYrASK1Jag9HmT4qeAZ
+ 6E00O4dGBcYKUIbptYpKIjYLo7xN9EnVYCDHbFMgye2cyCZz3hC76WcmOFo9A8tb8c67
+ 4Q2eBTBL9b5XiuNkicA9cn5kARblutcHkWU8Ge+KKJFniVD2vT6oPkIAO94vrYPJbHxP
+ KJaj4jm/Mpz9oEhFk7gwN4dfGNOI850DhGnryqT4WwV8ca0Np9O7nhREJiGoQ5JbB+Ys
+ M6rjlHb320hg1fsDX6w4aidmr5LKFlSs/GizYWHr4KX1yVUGX2L6jRdJjHhrN3Qasqdn
+ xuiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736855212; x=1737460012;
+ d=1e100.net; s=20230601; t=1736855216; x=1737460016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pduzs+UmjW63vib6FEKaDURuILe6p6CLJowHwsN6bcg=;
- b=hNbPjTrIMRQyZbHHtURCA2M+iI8CdbM2H115J7yLpc3BbZg/E3jQq0k7wh+FYjlKMf
- u8FnQiLaIBnKCUqY9e+7ora9xX+g44N+MR/T4NMuikAjpihSaHQlM67ma+vtXjTA2J/G
- 95jki+pHcz0KX2/I8c8L7ZwVuYD1qF+gY59tZHc0gFC3SFmMY97dZQ+Av1yWETXcSBH2
- HyDYr2hQQgTwmsOcF9KYhePPbIdqDvvXwBarqPe4lXsb45LHEJ6/EUeN1ScUaNLW403R
- Fn7ymUBqnah4fZO3FiFM4wMu3HLxp2KCDhSpCJ9NWsTll+F2XHBaaHPP+GOFLr/NpvEi
- iOdA==
-X-Gm-Message-State: AOJu0Yz/DqexWmbbJav+vYlEQ8mMYWf+qldYmhQjnUolmLXvval05fov
- 5A7ANnsytmpuHdw5AKR3e/MbEzghp2QNlGVV4TdjMArRlP7mZy5riVMUC5OI9GM=
-X-Gm-Gg: ASbGncs+8kNpFbBAawsBzBH0eNW8qSQEMgyRVLi0CaUAxHHOfFQ2nOHUsHlcGquYVmW
- La+sd4SCVTl6KX3NLlYBbsl+rpNkXMmu9HHaqgp656m+lUU+rmIo/2WO5UpmgQjMZDpT2AxFgE/
- JE5UvSSMuVffdQKwB0GVjkN1acJv/MHmqayALX2aRtT+y+9XkgNlsvxxjS/FrFkdUSGL9PHhiEM
- 7ZTruW4gCrQDDf681VgJ6qi68O/pcg79Ck0K1czPHNuGDf9ihOvpsc=
-X-Google-Smtp-Source: AGHT+IGv5bxYmyhPCryfoF3RUrTR35O1qABD4hyyrYXW8FCfAwguGbE8/ORH10G7DucRMyMLtvY7nw==
-X-Received: by 2002:a05:6000:1561:b0:38a:9f47:557b with SMTP id
- ffacd0b85a97d-38a9f47568cmr11438776f8f.40.1736855212054; 
- Tue, 14 Jan 2025 03:46:52 -0800 (PST)
+ bh=r8aoZ+4wIpFt1loPUkrjNZIwpI4hyfnz2K8d4L8ae9I=;
+ b=aVe/C8rFYY/qXXYIIFxnlsWESEckYynJxxpcb7z3ueiAZlKqORrAoqT63h+vg4hs32
+ Jo7XY9DJXNBooavFZ28jKGcCVYzks/dQdifD7LdMu3J4hl9Z60e9/S/VKwfoNivoq2Iu
+ jQ0lkC40ui7mS4K2Iq+I76J9lIv2pqDAGRwjyreEK2x/xkPYFqrgub8rxNNaWZuBkF4d
+ Q2PJpgfWhMjC+Rh9F9jiLO6W1D5w0NWTEtD21KNZS6GeomjwOw8P1JaIU6v5FexMzuEy
+ MDqrkq7kz8fKLHmV+/AhQTgPJJWS3kUjkOP2AG5k9YaFpV60RxUpNOEreO4w0AggF71e
+ aH2A==
+X-Gm-Message-State: AOJu0YxQBZfJFBXUBDHac5LvG9rRoZbMiAjkDXvHdjg3KjlmY6bhuOzi
+ QmgzrNOyjOozQeQf0E3B4MAUzL25vmS5GOtMTrCxfk0g6SQyiw1SmTBmfx3WxAo=
+X-Gm-Gg: ASbGncse1GJNrat+lTetKndnN+zGxevvDwqFH0Xr+xEtDt5TXVnknbG0BzlzbQfidN7
+ 6yoIkrNxQDqKY9VFS9H1cj4ut8tazL6ZVB8rZWmex6PQXx14sCCVBktDm3/ci8hj3BalObl7gFO
+ tM7DWGFYk0eF2ULeAFZbKdWqouWHaEodABiv6RAp5LAl9Z+4pwIEW3S9n3/9GyiaB/onDVeOH8f
+ 7DevRnPsN3axOZ/teqMvnYkIfQeaTtHFaX6siLXvo3V0styZveJSy0=
+X-Google-Smtp-Source: AGHT+IFbMNMHx6ML0JUq4Mx6dDRsIeb1gFC9D84CGU5wYXl19q1NV2WvuPUiVkGT36mg83NWRyFeiQ==
+X-Received: by 2002:a05:600c:1c98:b0:436:1b7a:c0b4 with SMTP id
+ 5b1f17b1804b1-436e2677c65mr177990345e9.1.1736855215735; 
+ Tue, 14 Jan 2025 03:46:55 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1b44sm14746104f8f.90.2025.01.14.03.46.50
+ 5b1f17b1804b1-436e2e92f60sm207387445e9.40.2025.01.14.03.46.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 03:46:50 -0800 (PST)
+ Tue, 14 Jan 2025 03:46:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5AEFF5FB4D;
- Tue, 14 Jan 2025 11:38:24 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id EAD665F935;
+ Tue, 14 Jan 2025 11:38:23 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefan Weil <sw@weilnetz.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 27/37] editorconfig: update for perl scripts
-Date: Tue, 14 Jan 2025 11:38:11 +0000
-Message-Id: <20250114113821.768750-28-alex.bennee@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 23/37] win32: remove usage of attribute gcc_struct
+Date: Tue, 14 Jan 2025 11:38:07 +0000
+Message-Id: <20250114113821.768750-24-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250114113821.768750-1-alex.bennee@linaro.org>
 References: <20250114113821.768750-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,38 +110,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have two types of perl scripts in the tree. The ones from the
-kernel are mostly tab based where as scripts we have written ourselves
-use 4 space indentation.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Attempt to codify that in our .editorconfig
+This attribute is not recognized by clang.
 
+An investigation has been performed to ensure this attribute has no
+effect on layout of structures we use in QEMU [1], so it's safe to
+remove now.
+
+In the future, we'll forbid introducing new bitfields in packed struct,
+as they are the one potentially impacted by this change.
+
+[1] https://lore.kernel.org/qemu-devel/66c346de-7e20-4831-b3eb-1cda83240af9@linaro.org/
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Stefan Weil <sw@weilnetz.de>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250110203401.178532-2-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .editorconfig | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ meson.build                               | 5 -----
+ include/qemu/compiler.h                   | 7 +------
+ scripts/cocci-macro-file.h                | 6 +-----
+ subprojects/libvhost-user/libvhost-user.h | 6 +-----
+ 4 files changed, 3 insertions(+), 21 deletions(-)
 
-diff --git a/.editorconfig b/.editorconfig
-index 7303759ed7..a04cb9054c 100644
---- a/.editorconfig
-+++ b/.editorconfig
-@@ -47,3 +47,16 @@ emacs_mode = glsl
- [*.json]
- indent_style = space
- emacs_mode = python
-+
-+# by default follow QEMU's style
-+[*.pl]
-+indent_style = space
-+indent_size = 4
-+emacs_mode = perl
-+
-+# but user kernel "style" for imported scripts
-+[scripts/{kernel-doc,get_maintainer.pl,checkpatch.pl}]
-+indent_style = tab
-+indent_size = 8
-+emacs_mode = perl
-+
+diff --git a/meson.build b/meson.build
+index d06f59095c..da279cc112 100644
+--- a/meson.build
++++ b/meson.build
+@@ -377,11 +377,6 @@ elif host_os == 'sunos'
+   qemu_common_flags += '-D__EXTENSIONS__'
+ elif host_os == 'haiku'
+   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
+-elif host_os == 'windows'
+-  if not compiler.compiles('struct x { int y; } __attribute__((gcc_struct));',
+-                           args: '-Werror')
+-    error('Your compiler does not support __attribute__((gcc_struct)) - please use GCC instead of Clang')
+-  endif
+ endif
+ 
+ # Choose instruction set (currently x86-only)
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index c06954ccb4..d904408e5e 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -22,12 +22,7 @@
+ #define QEMU_EXTERN_C extern
+ #endif
+ 
+-#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
+-# define QEMU_PACKED __attribute__((gcc_struct, packed))
+-#else
+-# define QEMU_PACKED __attribute__((packed))
+-#endif
+-
++#define QEMU_PACKED __attribute__((packed))
+ #define QEMU_ALIGNED(X) __attribute__((aligned(X)))
+ 
+ #ifndef glue
+diff --git a/scripts/cocci-macro-file.h b/scripts/cocci-macro-file.h
+index d247a5086e..c64831d540 100644
+--- a/scripts/cocci-macro-file.h
++++ b/scripts/cocci-macro-file.h
+@@ -23,11 +23,7 @@
+ #define G_GNUC_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
+ #define G_GNUC_NULL_TERMINATED __attribute__((sentinel))
+ 
+-#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
+-# define QEMU_PACKED __attribute__((gcc_struct, packed))
+-#else
+-# define QEMU_PACKED __attribute__((packed))
+-#endif
++#define QEMU_PACKED __attribute__((packed))
+ 
+ #define cat(x,y) x ## y
+ #define cat2(x,y) cat(x,y)
+diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
+index deb40e77b3..2ffc58c11b 100644
+--- a/subprojects/libvhost-user/libvhost-user.h
++++ b/subprojects/libvhost-user/libvhost-user.h
+@@ -186,11 +186,7 @@ typedef struct VhostUserShared {
+     unsigned char uuid[UUID_LEN];
+ } VhostUserShared;
+ 
+-#if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__))
+-# define VU_PACKED __attribute__((gcc_struct, packed))
+-#else
+-# define VU_PACKED __attribute__((packed))
+-#endif
++#define VU_PACKED __attribute__((packed))
+ 
+ typedef struct VhostUserMsg {
+     int request;
 -- 
 2.39.5
 
