@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D7BC02185
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F00C02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 19:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXm8n-0005x0-G9; Tue, 14 Jan 2025 13:59:53 -0500
+	id 1tXm8U-0005js-Ha; Tue, 14 Jan 2025 13:59:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8H-0005hr-B8
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:27 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7u-0005f6-B5
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm8E-0002oB-HZ
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:59:20 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tXm7s-0002l7-MC
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 13:58:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736881156;
+ s=mimecast20190719; t=1736881135;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UU6tKbj3z69fVCsq+TL3rvZadQcZJFwnIgyzvYIplZ4=;
- b=GWCDqBisf7olpx2X6B2yesHJ+iCWyloj6CEqjNTCim05H47deaULBCG1bJyGXkoSB8+cyJ
- y5JBgrXeB2ld7GBwj9T6W5cJN8pdVn4Wq+cY/Po1G9FTGBWIaovoN8hbgt3pFBvs+zKdzG
- vYiPnKPNipLB76QzR4JqUnGdyvoNuIs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vv7Wd/zlyBoYsTvEa+zFVj47uVH6QRHlKrjqyx9mRxk=;
+ b=Phnur2tRAKE/+QBZaE326ZmA2diYjcqAL3e0jjQTiE1mzzBqNxsBrV2qTr7uncsD06HEWn
+ vcj8fGlQASAiq5xghFT/jTbA8dcKUOamtu/CwNc4XZvQdnRGDATN4tLroyTAqls7CT1NZY
+ DOqxc6Hi3O5bjbDL+iSDR2kznYkcE08=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-3WNf2F5pO1qV0MtOI8fiyQ-1; Tue,
- 14 Jan 2025 13:59:15 -0500
-X-MC-Unique: 3WNf2F5pO1qV0MtOI8fiyQ-1
-X-Mimecast-MFC-AGG-ID: 3WNf2F5pO1qV0MtOI8fiyQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-iG7n9fidPLSOAC6XGkK5cA-1; Tue,
+ 14 Jan 2025 13:58:50 -0500
+X-MC-Unique: iG7n9fidPLSOAC6XGkK5cA-1
+X-Mimecast-MFC-AGG-ID: iG7n9fidPLSOAC6XGkK5cA
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 153BC19560A2; Tue, 14 Jan 2025 18:59:14 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CB451955DCD; Tue, 14 Jan 2025 18:58:49 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.175])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EE32C19560A3; Tue, 14 Jan 2025 18:59:12 +0000 (UTC)
+ id E24B619560A3; Tue, 14 Jan 2025 18:58:47 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 21/23] docs/qapidoc: add visit_entity()
-Date: Tue, 14 Jan 2025 13:58:38 -0500
-Message-ID: <20250114185840.3058525-22-jsnow@redhat.com>
+Subject: [PATCH v2 03/23] docs/qapidoc: remove example section support
+Date: Tue, 14 Jan 2025 13:58:20 -0500
+Message-ID: <20250114185840.3058525-4-jsnow@redhat.com>
 In-Reply-To: <20250114185840.3058525-1-jsnow@redhat.com>
 References: <20250114185840.3058525-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,37 +83,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Finally, the core entry method for a qapi entity.
+Since commit 3c5f6114 (qapi: remove "Example" doc section), Example
+sections no longer exist, so this support in qapidoc is now dead code.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ docs/sphinx/qapidoc.py | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 73076a7d6ae..a2fc8d25ff7 100644
+index 5a4d7388b29..61997fd21af 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -355,6 +355,19 @@ def visit_freeform(self, doc) -> None:
-         self.add_lines(text, info)
-         self.ensure_blank_line()
+@@ -254,10 +254,6 @@ def _nodes_for_features(self, doc):
+         section += dlnode
+         return [section]
  
-+    def visit_entity(self, ent):
-+        assert ent is not None
-+
-+        try:
-+            self._curr_ent = ent
-+            # This line gets credited to the start of the /definition/.
-+            self.add_line(f".. qapi:{ent.meta}:: {ent.name}", ent.info)
-+            with self.indented():
-+                self.preamble(ent)
-+                self.visit_sections(ent)
-+        finally:
-+            self._curr_ent = None
-+
+-    def _nodes_for_example(self, exampletext):
+-        """Return list of doctree nodes for a code example snippet"""
+-        return [nodes.literal_block(exampletext, exampletext)]
+-
+     def _nodes_for_sections(self, doc):
+         """Return list of doctree nodes for additional sections"""
+         nodelist = []
+@@ -275,10 +271,7 @@ def _nodes_for_sections(self, doc):
+                 continue
  
- # Disable black auto-formatter until re-enabled:
- # fmt: off
+             snode = self._make_section(section.tag)
+-            if section.tag.startswith('Example'):
+-                snode += self._nodes_for_example(dedent(section.text))
+-            else:
+-                self._parse_text_into_node(dedent(section.text), snode)
++            self._parse_text_into_node(dedent(section.text), snode)
+             nodelist.append(snode)
+         return nodelist
+ 
 -- 
 2.47.1
 
