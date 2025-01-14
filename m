@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D03E77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8AE7C02183
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 08:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXcfI-0004dd-8R; Tue, 14 Jan 2025 03:52:48 -0500
+	id 1tXcf6-0004bz-Co; Tue, 14 Jan 2025 03:52:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tXcfF-0004ca-P3
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:52:46 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tXcf5-0004bq-8W
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:52:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tXcfD-00062W-Cl
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:52:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736844763; x=1768380763;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=f6usZVOc0+lmEHr0DktfiQxYv7Ud7H5qiOl4Zp/jjIM=;
- b=X9K+ICFvPtfgJGgtEzFtX7VIW+8EYbhddm8LJJCZRgZY+zA1UIDlRFjW
- IDcoA0/mFaqL+ZbW3FrsyTRf3kbGI3SnAUmxF8O15R4ICNBt0tUoUzevh
- L3emf2WeehbfF1PoTTqE4HkBBZxsb8L+MZTUB2Y/pvMTCSALeqqFB9vKR
- 19BjlEx6xuxlbXtfe6iHuVyccfZ7FT4u371A/ltak8FnhPvzg8jUDH7IO
- gYigESaQBvdpPkY+YB+OccmziZASCrLuAyhX6nULUHjlAVqXYsH6FXpVu
- Ud4veFOKXKAr6Glabxr6rziERHeA0eKZSQUXNCrG+uzGU3cbbhL/iFsYs Q==;
-X-CSE-ConnectionGUID: TZIoBba6SDOZSduEjEWDAQ==
-X-CSE-MsgGUID: KXKEwfAeTayaIgHNw3KKvw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="37046167"
-X-IronPort-AV: E=Sophos;i="6.12,313,1728975600"; d="scan'208";a="37046167"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2025 00:52:15 -0800
-X-CSE-ConnectionGUID: eYxL9b7MTreBT5+XO3zGYg==
-X-CSE-MsgGUID: nPLuQrqZR0aYhssEHp7RQQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,313,1728975600"; d="scan'208";a="104687300"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2025 00:52:09 -0800
-Message-ID: <8d56ba39-ce9e-4afb-abd1-25cb393214a5@intel.com>
-Date: Tue, 14 Jan 2025 16:52:07 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tXcf3-00062A-M2
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 03:52:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736844751;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vrjnCQ0RGaqWeX/eiFLMoCRbUYhouV8haCbKeKpcXiA=;
+ b=affRjcKfThwjSfIOKGNG6iqH75f9M5JOcapqGEjQBX5wtz6DjG/PvgR8mTH/iiHhCan/UX
+ R4eVkSTVjLv9gPHsTf1zfeSBupJdpF8/OAy9gGb3IXB2Zcz8r0VOl56s9KTg30FhMZJysy
+ n1ztdgVdOrYqSyQuyO6Qr2frvzOZyXQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-iv4cVBcPOLekmUZqILnXoQ-1; Tue,
+ 14 Jan 2025 03:52:28 -0500
+X-MC-Unique: iv4cVBcPOLekmUZqILnXoQ-1
+X-Mimecast-MFC-AGG-ID: iv4cVBcPOLekmUZqILnXoQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C54519560AF
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 08:52:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.48])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1166C19560AD
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 08:52:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EE0C121E6924; Tue, 14 Jan 2025 09:52:23 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Victor Toso <victortoso@redhat.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Andrea Bolognani
+ <abologna@redhat.com>
+Subject: Re: [PATCH v3 1/8] qapi: golang: Generate enum type
+In-Reply-To: <20250110104946.74960-2-victortoso@redhat.com> (Victor Toso's
+ message of "Fri, 10 Jan 2025 11:49:39 +0100")
+References: <20250110104946.74960-1-victortoso@redhat.com>
+ <20250110104946.74960-2-victortoso@redhat.com>
+Date: Tue, 14 Jan 2025 09:52:23 +0100
+Message-ID: <878qrdkcag.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 34/60] i386/tdx: implement tdx_cpu_realizefn()
-To: Ira Weiny <ira.weiny@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-35-xiaoyao.li@intel.com>
- <82b74218-f790-4300-ab3b-9c41de1f96b8@redhat.com>
- <2bedfcda-c2e7-4e5b-87a7-9352dfe28286@intel.com>
- <44627917-a848-4a86-bddb-20151ecfd39a@redhat.com>
- <Z1td_BZPlZ5G9Zaq@iweiny-mobl>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z1td_BZPlZ5G9Zaq@iweiny-mobl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.019,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.787,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,77 +89,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/13/2024 6:04 AM, Ira Weiny wrote:
-> On Tue, Nov 05, 2024 at 12:53:25PM +0100, Paolo Bonzini wrote:
->> On 11/5/24 12:38, Xiaoyao Li wrote:
->>> On 11/5/2024 6:06 PM, Paolo Bonzini wrote:
->>>> On 11/5/24 07:23, Xiaoyao Li wrote:
->>>>> +static void tdx_cpu_realizefn(X86ConfidentialGuest *cg, CPUState *cs,
->>>>> +                              Error **errp)
->>>>> +{
->>>>> +    X86CPU *cpu = X86_CPU(cs);
->>>>> +    uint32_t host_phys_bits = host_cpu_phys_bits();
->>>>> +
->>>>> +    if (!cpu->phys_bits) {
->>>>> +        cpu->phys_bits = host_phys_bits;
->>>>> +    } else if (cpu->phys_bits != host_phys_bits) {
->>>>> +        error_setg(errp, "TDX only supports host physical bits (%u)",
->>>>> +                   host_phys_bits);
->>>>> +    }
->>>>> +}
->>>>
->>>> This should be already handled by host_cpu_realizefn(), which is
->>>> reached via cpu_exec_realizefn().
->>>>
->>>> Why is it needed earlier, but not as early as instance_init?  If
->>>> absolutely needed I would do the assignment in patch 33, but I don't
->>>> understand why it's necessary.
->>>
->>> It's not called earlier but right after cpu_exec_realizefn().
->>>
->>> Patch 33 adds x86_confidenetial_guest_cpu_realizefn() right after
->>> ecpu_exec_realizefn(). This patch implements the callback and gets
->>> called in x86_confidenetial_guest_cpu_realizefn() so it's called after
->>> cpu_exec_realizefn().
->>>
->>> The reason why host_cpu_realizefn() cannot satisfy is that for normal
->>> VMs, the check in cpu_exec_realizefn() is just a warning and QEMU does
->>> allow the user to configure the physical address bit other than host's
->>> value, and the configured value will be seen inside guest. i.e., "-cpu
->>> phys-bits=xx" where xx != host_value works for normal VMs.
->>>
->>> But for TDX, KVM doesn't allow it and the value seen in TD guest is
->>> always the host value.  i.e., "-cpu phys-bits=xx" where xx != host_value
->>> doesn't work for TDX.
->>>
->>>> Either way, the check should be in tdx_check_features.
->>>
->>> Good idea. I will try to implement it in tdx_check_features()
-> 
-> Is there any reason the TDX code can't just force cpu->host_phys_bits to true?
+Victor Toso <victortoso@redhat.com> writes:
 
-That doesn't work for all the cases. e.g., when user set 
-"host-phys-bits-limit" to a smaller value. For this case, QEMU still 
-needs to validate the final cpu->phys_bits.
+> This patch handles QAPI enum types and generates its equivalent in Go.
+> We sort the output based on enum's type name.
 
-Of course, we can force host_phys_bits to true for TDX, and warn and 
-exit when user set "host-phys-bits-limit" to a smaller value than host 
-value.
+Any particular reason for sorting?
 
-But I prefer the current direction to check cpu->phys_bits directly, 
-which is straightforward.
+The existing backends generate output it source order, on the (bold?)
+assumption that developers care to pick an order that makes sense.
 
->>
->> Thanks, and I think there's no need to change cpu->phys_bits, either. So
->> x86_confidenetial_guest_cpu_realizefn() should not be necessary.
-> 
-> I was going to comment that patch 33 should be squashed here but better to just
-> drop it.
-> 
-> Ira
-> 
->>
->> Paolo
->>
+> Enums are being handled as strings in Golang.
+>
+> 1. For each QAPI enum, we will define a string type in Go to be the
+>    assigned type of this specific enum.
+>
+> 2. Naming: CamelCase will be used in any identifier that we want to
+>    export, which is everything.
+>
+> Example:
+>
+> qapi:
+>   | ##
+>   | # @DisplayProtocol:
+>   | #
+>   | # Display protocols which support changing password options.
+>   | #
+>   | # Since: 7.0
+>   | ##
+>   | { 'enum': 'DisplayProtocol',
+>   |   'data': [ 'vnc', 'spice' ] }
+>
+> go:
+>   | // Display protocols which support changing password options.
+>   | //
+>   | // Since: 7.0
+>   | type DisplayProtocol string
+>   |
+>   | const (
+>   | 	DisplayProtocolVnc   DisplayProtocol = "vnc"
+>   | 	DisplayProtocolSpice DisplayProtocol = "spice"
+>   | )
+>
+> Signed-off-by: Victor Toso <victortoso@redhat.com>
+> ---
+>  scripts/qapi/golang.py | 266 +++++++++++++++++++++++++++++++++++++++++
+>  scripts/qapi/main.py   |   3 +
+>  2 files changed, 269 insertions(+)
+>  create mode 100644 scripts/qapi/golang.py
+>
+> diff --git a/scripts/qapi/golang.py b/scripts/qapi/golang.py
+> new file mode 100644
+> index 0000000000..1e04c99f1c
+> --- /dev/null
+> +++ b/scripts/qapi/golang.py
+
+[...]
+
+> +class QAPISchemaGenGolangVisitor(QAPISchemaVisitor):
+
+[...]
+
+> +    def write(self, output_dir: str) -> None:
+> +        for module_name, content in self.target.items():
+> +            go_module = module_name + "s.go"
+> +            go_dir = "go"
+> +            pathname = os.path.join(output_dir, go_dir, go_module)
+> +            odir = os.path.dirname(pathname)
+> +            os.makedirs(odir, exist_ok=True)
+> +
+> +            with open(pathname, "w", encoding="utf8") as outfile:
+> +                outfile.write(content)
+
+Your write() serves the same purpose as QAPIGen.write().  The latter
+touches output files only when their contents actually changes.
+
+Have you considered use of QAPIGen?
+
+The backends generating C use QAPISchemaMonolithicCVisitor or
+QAPISchemaModularCVisitor, which use QAPIGenC, QAPIGenH and
+QAPIGenTrace, all specializations of QAPIGen.
+
+> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
+> index 316736b6a2..f1f813b466 100644
+> --- a/scripts/qapi/main.py
+> +++ b/scripts/qapi/main.py
+> @@ -15,6 +15,7 @@
+>  from .common import must_match
+>  from .error import QAPIError
+>  from .events import gen_events
+> +from .golang import gen_golang
+>  from .introspect import gen_introspect
+>  from .schema import QAPISchema
+>  from .types import gen_types
+> @@ -54,6 +55,8 @@ def generate(schema_file: str,
+>      gen_events(schema, output_dir, prefix)
+>      gen_introspect(schema, output_dir, prefix, unmask)
+>  
+> +    gen_golang(schema, output_dir, prefix)
+> +
+>  
+>  def main() -> int:
+>      """
 
 
