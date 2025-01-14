@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C71FC02183
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C992DE77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 14:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXhUR-00087T-Gs; Tue, 14 Jan 2025 09:01:55 -0500
+	id 1tXhVG-0000Yz-Ek; Tue, 14 Jan 2025 09:02:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhUO-00084D-Ry
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:01:53 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhV9-0000M7-CV
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:02:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhUL-0002tT-EV
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:01:51 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tXhV7-00034c-Dk
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 09:02:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736863308;
+ s=mimecast20190719; t=1736863356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5LiaySr94zDavTpMpv+RjEQ4WEDWDc58/LIfFci8ZtY=;
- b=UKUb0g7wYICr807f7pREaRKKfXDp9fgC1k4emaBhmLFDDj1S/rWouWMxfLQhB9q2RmP61L
- niNgVNaZaadZ3cWNXZH2ImDUykZsjU61HvrPoOQPFoj5mQ7nHvPMC7SX8t4tF7OCI7Iw8Y
- PAUY5RgFLEnRnVg5l/1emY+P4WkCfYs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RpUZ+GGieafLel0Gxe4KEIbQV4ju5WGCHcCJH31DYa0=;
+ b=NEOm61hbiKJ3fAI2LGn86T8irER8FCL2IV4yxh1RCv1d/uqQJcI7EgGRheZwYkXTXTf8O0
+ MhVt5k4MB88PfhupfyQAhvqbetUZ+BvWMNH9bfCzJwIRVMV+NuTIhFMA++JimUq58x4VZU
+ I0bVoUFxspG9WI+69b7+cJ0GODOZ5UI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-pU0BXI6sNYOTI4rOxu3WZQ-1; Tue, 14 Jan 2025 09:01:47 -0500
-X-MC-Unique: pU0BXI6sNYOTI4rOxu3WZQ-1
-X-Mimecast-MFC-AGG-ID: pU0BXI6sNYOTI4rOxu3WZQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385dcadffebso2675149f8f.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 06:01:47 -0800 (PST)
+ us-mta-519-mT8X90U7O0K5oiOTns22Qg-1; Tue, 14 Jan 2025 09:02:31 -0500
+X-MC-Unique: mT8X90U7O0K5oiOTns22Qg-1
+X-Mimecast-MFC-AGG-ID: mT8X90U7O0K5oiOTns22Qg
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43673af80a6so42442235e9.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 06:02:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736863306; x=1737468106;
+ d=1e100.net; s=20230601; t=1736863350; x=1737468150;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=5LiaySr94zDavTpMpv+RjEQ4WEDWDc58/LIfFci8ZtY=;
- b=SFvhuSeKpgoZyas0LZTaz1xV77Ovs78Twah5saykSr2DTwM+1VcPtdjIfSiCK2pdq8
- DR0V2KoA1xyAQVbKgH2bHKVt5FLWutXk0LiUVw8w/bWLNBszeG0I/ffi5J3cnEmEnzsB
- rueRiwybIux1U8LeBsal0302oBH/kiMnurGlSfKY333byBQ887GgQXH6tnWbOP6hc3Sq
- XQIbHUlKndh51SVdKMwmsxOW/TE2YbKxX1KGsajP6z2EujRk7GPisZI2fqMD98ddyy0h
- 1UIDkxWjYtqt9oYmhWnpNWvGPxAzNs/q+5yBHBINbJ88Ymjf/GsANOXWfJb9hSuE6OH0
- ki/Q==
+ bh=RpUZ+GGieafLel0Gxe4KEIbQV4ju5WGCHcCJH31DYa0=;
+ b=qYNT/suCXCVybmMksUx0JKY9egzBZu1ajkXtQgNZQ9NCqd6tnfQncfqmhIc/QReCof
+ o7hrVQ5YoQ1PBk6hKXe+hG5qO2F2me95Xl285YVedSLMNFdyBue7KMkqSaGL1yBXV1FJ
+ OsaHkRySoQb1jHbaEW6k/y5+ZKxCcACF8Zn2shk302EEHBqvOiulYzlnAjamdxDRqESW
+ Eilyn8f6yEmpdlQxampwwDmH6gPyUglc9c3GDGK51eOMNh1TnOg/6t8PrwGTTvE6sp4j
+ KH8hzE3nAKfLL02ysVb7HiBErglYHBb/lcTEpU2zJvdtWR9lA5LHJl/fFBwbW6g0yXit
+ wNUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpw5kWDlB0zxgxewI7DvP7V4fpTcppOjrusMqU0WLxFpZq4o471TVU6BSZkmEWJGaSc2V75ci08EOA@nongnu.org
-X-Gm-Message-State: AOJu0YzTdeoPUVk59a0aQV0YHKG7v5YwlS4nHyJFesIthX4FC3DJ0jqQ
- ej/nXkOlBWTFexIy+kR95nyBHuKa7xuHJ9VzXRfIJ7YPjE32eGdMu4L+S+yEsM+LvMg4Uo/pSk4
- 3oGS7DM2DdJY8N2j8DAMlZl7KBgC5qsL8NFxe8UcGEVD0gBlJfHfk
-X-Gm-Gg: ASbGncskoK2e5HYsE0KDwIQCLxvkaCcG+nbkx2AvgAR3fvV4EX2Fhagh+KLLq6pISpQ
- Ec9Z2UXjFT0pv4LuqjiEnsvj/bpbd69/+Bwpg0ZOoCHZ0jsMpvkkhRyAQcN4/JM+tqfdiMdO1DE
- 2bmJthQ63M+G2aUuQEtf9GiGo+ucbAAGwlJOYCTcdKjabPk4sJcyhOs76GZJKf/6ARGzPP02vnU
- wV9PQvVp8N+NZqr5x2RKtFLtFMkOM/g9WYvX2Xsxnt4fGjRBsX7+vkpfdYh2sxjbXvih3OI6LxV
- Rr5tjgC6H6Fio4GZBY2zaRd44bZPrAX6fbNod3QrZvIb6XoQiuYTujMjYmdVjayMs9TKNgyTbDo
- oZwoUdKge
-X-Received: by 2002:a5d:64e2:0:b0:38b:e32a:10ab with SMTP id
- ffacd0b85a97d-38be32a13a4mr1543604f8f.9.1736863304434; 
- Tue, 14 Jan 2025 06:01:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1IQu7Zm9/XDgYD1XGvNzRJ4NlPuB0JZEzpzJrrtSb6wLsy+lwUAThfh1kfVWfyLnsa4VAFQ==
-X-Received: by 2002:a5d:64e2:0:b0:38b:e32a:10ab with SMTP id
- ffacd0b85a97d-38be32a13a4mr1543559f8f.9.1736863303910; 
- Tue, 14 Jan 2025 06:01:43 -0800 (PST)
+ AJvYcCWIKnpKTZzp/MV38AkqyLBn3eJS9cbo3McseSpRuCTKu0EjGEHmHLq+h2R5q8TIYu9D1mZ+VdzoLYlk@nongnu.org
+X-Gm-Message-State: AOJu0YyuNz1mwj91huzxMB7LXr3BZYtgzUE+v+dJ02Muo/SERFVxEnTT
+ XWrIpn8v72b6o4sfe9VYHobR8lV1RwppQD5C97GLwMCBrXaNugOujXCxjz64+XXG9z6PyHoTzX6
+ W1A1rSTCOzUYTsbUyZwN0jro3N6azCypCOvb+m2WJ35jyYK9xcOa8
+X-Gm-Gg: ASbGnct4eavV6SUP57tuOKgoq7jqVvZDlkW4EbsAinDwd9jw+ywPsihbMIX+9QahWqr
+ GwJykI8h0w7FUhTNXLRQ/Ou7WVgtQe/OUgQfVHb+tyC0Rir43baq3sZUMLgsOsRwUKNJVyqZsn5
+ d/HpDHOCjiibhb0bYaXPuLjl1Mi1MKTT/x4IN24iJNR5JFnAmMdRBTbnBrhB9YduuPR08X/nhyQ
+ 3MtD4+gihXX8ums43EAwFCsZGFRSM76amtoJ8bIQyiPi1MdNJLkxo026s5FtURl47iv8+RoVbEQ
+ INTZYF3UInL7KhRLjJ6ZeK0DN9LVTK1SgYIkFo3xfMOsB8jCwca2tpTJsxi27GzLxnxOoSHfUdI
+ 3+r2WMaTx
+X-Received: by 2002:a05:6000:2aa:b0:385:fa26:f0d9 with SMTP id
+ ffacd0b85a97d-38a87086c15mr23569694f8f.0.1736863350329; 
+ Tue, 14 Jan 2025 06:02:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFwJyCbLnWc+0oHQBOQk9bvC/zhSOLD2Js2QRVvPEKyvrbmCH2hAWnw1bqeczeP7Zg7ICvkiA==
+X-Received: by 2002:a05:6000:2aa:b0:385:fa26:f0d9 with SMTP id
+ ffacd0b85a97d-38a87086c15mr23569627f8f.0.1736863349827; 
+ Tue, 14 Jan 2025 06:02:29 -0800 (PST)
 Received: from ?IPV6:2003:cb:c738:3100:8133:26cf:7877:94aa?
  (p200300cbc7383100813326cf787794aa.dip0.t-ipconnect.de.
  [2003:cb:c738:3100:8133:26cf:7877:94aa])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38332asm14738420f8f.23.2025.01.14.06.01.41
+ ffacd0b85a97d-38a8e38378csm14828197f8f.25.2025.01.14.06.02.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 06:01:43 -0800 (PST)
-Message-ID: <120b94cd-e0c8-41a6-9afb-2e3fad477454@redhat.com>
-Date: Tue, 14 Jan 2025 15:01:41 +0100
+ Tue, 14 Jan 2025 06:02:29 -0800 (PST)
+Message-ID: <2a79643f-1d9e-4122-8932-954743a18c21@redhat.com>
+Date: Tue, 14 Jan 2025 15:02:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] system/physmem: Memory settings applied on remap
- notification
-To: William Roche <william.roche@oracle.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Subject: Re: [PATCH v5 1/6] system/physmem: handle hugetlb correctly in
+ qemu_ram_remap()
+To: =?UTF-8?Q?=E2=80=9CWilliam_Roche?= <william.roche@oracle.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: peterx@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
  philmd@linaro.org, peter.maydell@linaro.org, mtosatti@redhat.com,
  imammedo@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
  wangyanan55@huawei.com, zhao1.liu@intel.com, joao.m.martins@oracle.com
 References: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
- <20241214134555.440097-1-william.roche@oracle.com>
- <20241214134555.440097-8-william.roche@oracle.com>
- <e13ddad7-77cf-489b-9e32-d336edb01c85@redhat.com>
- <fe018270-5c2f-4b13-9254-aa047fc48ccd@oracle.com>
+ <20250110211405.2284121-1-william.roche@oracle.com>
+ <20250110211405.2284121-2-william.roche@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -139,7 +137,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <fe018270-5c2f-4b13-9254-aa047fc48ccd@oracle.com>
+In-Reply-To: <20250110211405.2284121-2-william.roche@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -151,7 +149,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,45 +165,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.01.25 21:57, William Roche wrote:
-> On 1/8/25 22:53, David Hildenbrand wrote:
->> On 14.12.24 14:45, “William Roche wrote:
->>> From: William Roche <william.roche@oracle.com>
->>>
->>> Merging and dump settings are handled by the remap notification
->>> in addition to memory policy and preallocation.
->>>
->>> Signed-off-by: William Roche <william.roche@oracle.com>
->>> ---
->>>    system/physmem.c | 2 --
->>>    1 file changed, 2 deletions(-)
->>>
->>> diff --git a/system/physmem.c b/system/physmem.c
->>> index 9fc74a5699..c0bfa20efc 100644
->>> --- a/system/physmem.c
->>> +++ b/system/physmem.c
->>> @@ -2242,8 +2242,6 @@ void qemu_ram_remap(ram_addr_t addr)
->>>                        }
->>>                        qemu_ram_remap_mmap(block, vaddr, page_size,
->>> offset);
->>>                    }
->>> -                memory_try_enable_merging(vaddr, page_size);
->>> -                qemu_ram_setup_dump(vaddr, page_size);
->>>                    ram_block_notify_remap(block->host, offset, page_size);
->>>                }
->>
->> Ah yes, indeed.
+On 10.01.25 22:14, “William Roche wrote:
+> From: William Roche <william.roche@oracle.com>
 > 
-> I also merged this patch 7/7 [system/physmem: Memory settings applied on
-> remap notification] into your patch 6/7 [hostmem: Handle remapping of
-> RAM], removing also the unneeded vaddr.
+> The list of hwpoison pages used to remap the memory on reset
+> is based on the backend real page size. When dealing with
+> hugepages, we create a single entry for the entire page.
 > 
-> So now we are down to 6 patches  (unless you want me to integrate the
-> fix for ram_block_discard_range() I talked about for patch 2/7)
+> To correctly handle hugetlb, we must mmap(MAP_FIXED) a complete
+> hugetlb page; hugetlb pages cannot be partially mapped.
 > 
-> I'm sending my version v5 now.
+> Co-developed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: William Roche <william.roche@oracle.com>
+> ---
 
-Sorry for the delayed reply to v4.
+See my comments to v4 version and my patch proposal.
 
 -- 
 Cheers,
