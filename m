@@ -4,115 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9AEE77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E139CC02183
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jan 2025 17:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXkKg-0006Sm-JJ; Tue, 14 Jan 2025 12:04:02 -0500
+	id 1tXkRJ-0002fs-2J; Tue, 14 Jan 2025 12:10:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXkJT-0005a0-2u
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:02:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tXkJP-0002jK-7n
- for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:02:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736874161;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yqTrnxGXKdYZ9X2hzZTkEOZLA9tQLfHs3mkMSQ1+XWw=;
- b=OscK7x56Jfqln+6zxoegaTOmUTAUYqzDt2lmk7S7z6V/54otkhX1qyo+Gts+1ocNkiMy3o
- CtRmSJ9+3RKYwBCMAh1FeNkzSUEDSiEKOiPpsfKADOM9szUV1yvXglEgW3cz1/j9JIf4r6
- wBdJTt9KB8LrX/9mp/rYRXXydQQodHY=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-GtvXd97OMF2BTg4ckj999w-1; Tue, 14 Jan 2025 12:02:37 -0500
-X-MC-Unique: GtvXd97OMF2BTg4ckj999w-1
-X-Mimecast-MFC-AGG-ID: GtvXd97OMF2BTg4ckj999w
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2167141e00eso105100085ad.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 09:02:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tXkRG-0002fj-Mm
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:10:51 -0500
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tXkRC-0004mL-Od
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 12:10:50 -0500
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-216728b1836so101238825ad.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 09:10:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1736874645; x=1737479445; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TAky5vg5Ag3GZLa235vJgxAUlri8xAc7APzFcfCpyu0=;
+ b=jDW3IIKE+RNZl1/MPUI+M3V8FgawKwJ0jTSUMzmxynzUvx98hDW5/XOBC+2rkauBd0
+ jQyrdvbhxJ47Ee9V5LtjOnn4DwEyrPiuUK4mEq0gib660YZVlW94Mvh7nZG5Xevk/ngh
+ wJaTjBPml/qupqCpnweeLnKNDjMavGbQqe/Pr4TeVfI/vyi4brQDv1CajKod3MshJzke
+ VsDLHmxtq6PddQBkeEgY/awnpZquxO0z/xLd/LO7PfEUnbvk3zpQurd5c6xXD0iIVq5T
+ /hkq+dlkIwbYODy5zADcX1lTEBDLVSNbZHNUJN95+pAOLJhepdxRBCf9b7MoSdgJxw2/
+ FymQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736874157; x=1737478957;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yqTrnxGXKdYZ9X2hzZTkEOZLA9tQLfHs3mkMSQ1+XWw=;
- b=UGq9DOv6uLR3UZYU/EH+4YLImLpIeKAHNjR5HcJN/0lZXh+zMrpxiKDaFlYAYWomKd
- /DaGDoCm6QvrcnTNx6GQ09uAIQLj0Xx1CAFkFUli6FP5PayfKRhGfMvHhyCXSV0sMOG0
- U7LyD309EDt213xKw/AwIHSOOoikFceqXW41O8Rtvmy19sx/l7fsPi42p5DOTAHotikB
- Ebj54mg9FWzicBkgkcNPE7PTHj4DhUAM3T1spdEr0P8T43oMHPdGhsXJ/owBoHAyIVZ5
- iWfgFuxmQKou0IkIQAZsh/4hHLm7xI7WxPqGpp4Scy6/0AY7wLvNNrGPDxpISTOo1GT0
- kHbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuurguu4GV7x/gJddWhdfR3oeZGP7RuoWQv4BVRflXhje82JL3AGdo+LN0xGcJi6G8cw+UZWZICavz@nongnu.org
-X-Gm-Message-State: AOJu0YyzELO2XguxcpOjtg/HA9Nut6VyjKt2ApqDrcP8nZ6dk/5xkTVm
- KKOomybFiJ+CS4A2omZOqNGB4NrreI2lY6/3GZ9hdvjIAkF4205ZQ8DZoeGwnrQBy8gUG3l+gqy
- QqG3SYss9kR26I2N3R/V7stU4ZiQGGmx1qkQWZn4awicHnvG5mktw
-X-Gm-Gg: ASbGncu+n7r35LqWvKboFpMyYydG2zdluPLHRUQ4GvWttlnNQa/7Y6yWczllLonZpsr
- 7G9QunR0KtwVj4PVbGjSx1fHCCOPn1/oMwewv0PipYS4xte40uOKfZ47rwxB69D/+tbzpg9zFw2
- jBzV1rcVCcwMBdUW7qpoAZImdQElYsla5vWQjnSLta1iWy6N8W5VK4sCT2K82DfqaIZLS2tdbCu
- U40TpoO4Gb6J49TGLIIgZESHHGQEurNG3R08zM+g7BRyE6v/wuBq5ZjDDc/Tx1895lSg02H90tp
- RJ/54EmthIMRJZSQyA==
-X-Received: by 2002:a05:6a20:9c9a:b0:1e1:b329:3cd with SMTP id
- adf61e73a8af0-1e88cfd3f72mr38422768637.20.1736874156662; 
- Tue, 14 Jan 2025 09:02:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGaoLtfAdn2VDAJwa5cr1K3DONzyz/SPXdAjsCCAD0Ypwa68xfZMEeu837Tgd3Voaq+9+ppbw==
-X-Received: by 2002:a05:6a20:9c9a:b0:1e1:b329:3cd with SMTP id
- adf61e73a8af0-1e88cfd3f72mr38422727637.20.1736874156312; 
- Tue, 14 Jan 2025 09:02:36 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d40681bd0sm7629721b3a.150.2025.01.14.09.02.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 09:02:35 -0800 (PST)
-Date: Tue, 14 Jan 2025 12:02:30 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-Message-ID: <Z4aYpo0VEgaQedKp@x1n>
-References: <20250109-san-v7-0-93c432a73024@daynix.com>
- <20250109-san-v7-1-93c432a73024@daynix.com>
- <59e70978-8895-f513-1b5e-1dc599e288ff@eik.bme.hu>
- <Z4AjkXbZeu3T94Y1@x1n> <Z4AldAcucTyqZ0HJ@x1n>
- <811633f6-6bf8-4a22-a21a-789e9a4747d7@daynix.com>
- <Z4E6TnKaUt8FMWIv@x1n>
- <9bb5f964-f930-4428-b800-8b589920fe1d@daynix.com>
- <Z4U30j9w1kPnKX9U@x1n>
- <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
+ d=1e100.net; s=20230601; t=1736874645; x=1737479445;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TAky5vg5Ag3GZLa235vJgxAUlri8xAc7APzFcfCpyu0=;
+ b=PXn4o1f6g0XEB6aWOaF8ULz4RQFML3rZLPRMD1FkmFs8DBRtpxq9thxO2HQDUznyzc
+ fu8dYCQeis0OblBjqadEbS95Yy6oq9MpzThl3q6MiMQ+VKnZTHaQN6HI7TMtzeOtpEn2
+ AKiBdDUjziIMXDje0gZjb+GL+MsPZJL/1Dqr2hAaBu0qE6hBGGHAGiTW3GH76ruh2HjL
+ hCjQDYDL8rWf9IJFNPVzY+gTsQbbSLPbe6kVBYr1SgC76cl0qIL2TrVuTGVCqO/v2PRa
+ mkq7tF3Wx4a+rWUjVIB+2O4V2ScO19WqBA9czQpHIXsQJcFNUg5u6nXqo48qrUXeMPa7
+ 3t2w==
+X-Gm-Message-State: AOJu0YzMwFhI7h/gN+U3M+PLlkRqM9wwPhWvSQqAaf0lJW0e6fyYbSka
+ HxNllUllBm4G5lmb5wkwIUnfGO6p1F1dy2V2pdBUw6m5v7zalA8oeQiI4YM/eNY=
+X-Gm-Gg: ASbGnct9c1rXp5I/BFVL2qOeWFK0DVwLPlnCudTvCPs4RXFxKj+n4jvQUCt8kd6/ekg
+ mK6yLBw4xHCKCdrZ/bPodBRaHJOj9SrH7yEWikczrxWUOwg6UQgU9GR0lkJXBGUabjjIeX9oqTP
+ JDGgnu+EkciQ8JcOsRE65E1PgepXIR2GGDfivxuB3bsO7vl7tBgOz6Eo1DYBnaTdQLTBrMhp9c8
+ tFUEOXH7gvz6rdV4mzJLmc3e5fvqiJQC1ipgmkrSKGOiZFX0DFMJ5uDAwlqQgoR+/I7Lijo
+X-Google-Smtp-Source: AGHT+IHjF9Hi9NpIEmsjB9bi3Aw9HcDCQ2pCX6tkgpGcGp5b5mAnsSOqG4Kfa0ChcqXqUkdb4YMISA==
+X-Received: by 2002:a17:902:d2ca:b0:216:56d5:d87 with SMTP id
+ d9443c01a7336-21a83f8ea52mr404245415ad.34.1736874644618; 
+ Tue, 14 Jan 2025 09:10:44 -0800 (PST)
+Received: from [192.168.68.110] ([189.110.107.205])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f219324sm69933135ad.127.2025.01.14.09.10.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jan 2025 09:10:44 -0800 (PST)
+Message-ID: <d93fa5aa-ff25-45af-adf3-3ac4d386df42@ventanamicro.com>
+Date: Tue, 14 Jan 2025 14:10:40 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/riscv: use RVB in RVA22U64
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com
+References: <20250114132012.1224941-1-dbarboza@ventanamicro.com>
+ <20250114132012.1224941-3-dbarboza@ventanamicro.com>
+ <20250114-85b134099fa79adb42628ebc@orel>
+ <f2919b99-d131-40ca-a5e8-63c91092e083@ventanamicro.com>
+ <20250114-8a8ae2fa3de2faa3a300b907@orel>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250114-8a8ae2fa3de2faa3a300b907@orel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x642.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,41 +105,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 05:43:09PM +0900, Akihiko Odaki wrote:
-> memory_region_finalize() is not a function to tell the owner is leaving, but
-> the memory region itself is being destroyed.
 
-It is when the lifecycle of the MR is the same as the owner.  That holds
-true I suppose if without this patch, and that's why I don't prefer this
-patch because it makes that part more complicated.
 
-> It should not happen when a container is still referencing it. That is
-> also why it has memory_region_ref(subregion) in
-> memory_region_update_container_subregions() and assert(!mr->container) in
-> memory_region_finalize().
-
-Again, the line I added was sololy for what you said "automation" elsewhere
-and only should work within MR-links within the same owner.  Otherwise
-anyone referencing the MR would hold the owner ref then this finalize()
-will never happen.
-
-Now, if I could go back to your original purpose of this work, quotting
-from your cover letter:
-
-> I saw various sanitizer errors when running check-qtest-ppc64. While
-> I could just turn off sanitizers, I decided to tackle them this time.
+On 1/14/25 1:21 PM, Andrew Jones wrote:
+> On Tue, Jan 14, 2025 at 01:08:46PM -0300, Daniel Henrique Barboza wrote:
+>>
+>>
+>> On 1/14/25 11:52 AM, Andrew Jones wrote:
+>>> On Tue, Jan 14, 2025 at 10:20:10AM -0300, Daniel Henrique Barboza wrote:
+>>>>   From the time we added RVA22U64 until now the spec didn't declare 'RVB'
+>>>> as a dependency, using zba/zbb/zbs instead. Since then the RVA22 spec
+>>>> [1] added the following in the 'RVA22U64 Mandatory Extensions' section:
+>>>>
+>>>> "B Bit-manipulation instructions
+>>>>
+>>>> Note: The B extension comprises the Zba, Zbb, and Zbs extensions. At the
+>>>> time of RVA22U64's ratification, the B extension had not yet been
+>>>> defined, and so RVA22U64 explicitly mandated Zba, Zbb, and Zbs instead.
+>>>> Mandating B is equivalent."
+>>>>
+>>>> It is also equivalent to QEMU (see riscv_cpu_validate_b() in
+>>>> target/riscv/tcg/tcg-cpu.c).
+>>>>
+>>>> Finally, RVA23U64 [2] directly mentions RVB as a mandatory extension,
+>>>> not citing zba/zbb/zbs.
+>>>>
+>>>> To make it clear that RVA23U64 will extend RVA22U64 (i.e. RVA22 is a
+>>>> parent of RVA23), use RVB in RVA22U64 as well. As a bonus we can also
+>>>> exclude zba/zbb/zbs from 'ext_offsets' and make it a bit shorter.
+>>>>
+>>>> (bios-tables-test change: zba/zbb/zbs no longer on riscv,isa)
+>>>
+>>> We should still have zba/zbb/zbs on the ISA string. I don't think
+>>> Linux yet supports expanding a 'B' bundle into them and other SW
+>>> may also have not really cared about 'B' being designed to represent
+>>> preexisting extensions after having already learned how to detect
+>>> those extensions.
+>>
+>> This has to do with how bios-tables-test works. The test doesn't boot the CPU
+>> up to realize() and finalize() and, with this change, we ended up removing
+>> zba/zbb/zbs from it because we won't reach riscv_cpu_validate_b() to add
+>> them back.
 > 
-> Unfortunately, GLib versions older than 2.81.0 do not free test data in
-> some cases so some sanitizer errors remain. All sanitizer errors will be
-> gone with this patch series combined with the following change for GLib:
-> https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
+> If we can't do a riscv_cpu_finalize_features() (and/or whatever else we
+> need to do) to ensure we have a complete ISA string, then I think we
+> should modify the test to somehow never check the ISA string entry of
+> the RHCT table.
+> 
+>>
+>> I guess that in the end, aside from having a smaller ext list, there's not
+>> much to gain from removing zba/zbb/zbs from the profile definition. We
+>> can just add RVB and keep them.
+> 
+> While it doesn't really matter if we add them or not, I still think
+> the test should be modified such that we don't have to try to out-smart
+> it with profile and cpu definitions. Getting it to work would be best,
+> but getting it to ignore is also good since we wouldn't need to bother
+> modifying it every time we touch a cpu config.
 
-Is check-qtest-ppc64 the only one that will trigger this issue?  Does it
-mean that most of the devices will do proper removal of device-owned
-subregions (hence, not prone to circular reference of owner refcount)
-except some devices in ppc64?
+In theory the test is using rva22 cpus on purpose to try to minimize this
+kind of thing. Back then we were worried that the changes in rv64 CPU would
+trigger too much test changes. In practice every time we add some new
+riscv,isa DT entry, due to an innate QEMU feature that we're now advertising
+and whatnot, this test will break.
 
--- 
-Peter Xu
+One thing that crossed my mind but I didn't get to implement it is to provide
+a static riscv,isa based on accelerator, e.g. if we're running '-accel qtest'
+then we would always return the same riscv,isa regardless of the changes
+made in the common emulation. I'm not sure the implications of doing that but
+it's something that I think it's worth exploring. Otherwise we'll have to
+keep updating this ACPI bios table test from time to time.
+
+
+Thanks,
+
+Daniel
+
+> 
+> Thanks,
+> drew
+> 
+>>
+>>
+>> Thanks,
+>>
+>> Daniel
+>>
+>>>
+>>> Anyway, what keeps them from being added? I don't see QEMU code
+>>> for that. I do expect a bios tables change though, since the ISA
+>>> string should now have 'B' added to it.
+>>>
+>>> Thanks,
+>>> drew
+>>>
+>>>>
+>>>> [1] https://github.com/riscv/riscv-profiles/blob/main/src/profiles.adoc#61-rva22u64-profile
+>>>> [2] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc#rva23u64-profile
+>>>>
+>>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>>> ---
+>>>>    target/riscv/cpu.c                |   5 ++---
+>>>>    tests/data/acpi/riscv64/virt/RHCT | Bin 398 -> 400 bytes
+>>>>    2 files changed, 2 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>>> index b187ef2e4b..8d0563527f 100644
+>>>> --- a/target/riscv/cpu.c
+>>>> +++ b/target/riscv/cpu.c
+>>>> @@ -2351,13 +2351,12 @@ static const PropertyInfo prop_marchid = {
+>>>>    static RISCVCPUProfile RVA22U64 = {
+>>>>        .parent = NULL,
+>>>>        .name = "rva22u64",
+>>>> -    .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVU,
+>>>> +    .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVU,
+>>>>        .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
+>>>>        .satp_mode = RISCV_PROFILE_ATTR_UNUSED,
+>>>>        .ext_offsets = {
+>>>>            CPU_CFG_OFFSET(ext_zicsr), CPU_CFG_OFFSET(ext_zihintpause),
+>>>> -        CPU_CFG_OFFSET(ext_zba), CPU_CFG_OFFSET(ext_zbb),
+>>>> -        CPU_CFG_OFFSET(ext_zbs), CPU_CFG_OFFSET(ext_zfhmin),
+>>>> +        CPU_CFG_OFFSET(ext_zfhmin),
+>>>>            CPU_CFG_OFFSET(ext_zkt), CPU_CFG_OFFSET(ext_zicntr),
+>>>>            CPU_CFG_OFFSET(ext_zihpm), CPU_CFG_OFFSET(ext_zicbom),
+>>>>            CPU_CFG_OFFSET(ext_zicbop), CPU_CFG_OFFSET(ext_zicboz),
+>>>> diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
+>>>> index b14ec15e553200760a63aad65586913d31ea2edc..13c8025b868051485be5ba62974a22971a07bc6a 100644
+>>>> GIT binary patch
+>>>> delta 53
+>>>> zcmeBUp1{l%<l!7LfsuiM@#{n`13^7TMg~>JqB1j+%-qDZl;ot1UQ&#clNpsc(ij;S
+>>>> I3K$s}0ARKZK>z>%
+>>>>
+>>>> delta 52
+>>>> zcmbQh+{ern<l!9B$H>6Im@tvcKtP9)kwJyAsLaeHGdD3UC3&N_6yxMHMkS6EMh1pF
+>>>> HMg|4|IwT82
+>>>>
+>>>> -- 
+>>>> 2.47.1
+>>>>
+>>>>
+>>
 
 
