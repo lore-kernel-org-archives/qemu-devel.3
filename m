@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF1AC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EAD9C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYD0S-0005ZW-PE; Wed, 15 Jan 2025 18:41:04 -0500
+	id 1tYD4Z-0006PU-W5; Wed, 15 Jan 2025 18:45:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYD0N-0005Yu-Nd
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:40:59 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYD0L-0006MT-1e
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:40:58 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21675fd60feso5521715ad.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:40:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736984455; x=1737589255; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eU4s+1LjKlD9KbXrZMS0oJ8bcsP+ZYXoZaUXV7g+A9M=;
- b=WnlLD3azBRmjx+sj+2k+E5bkF0Rq6TZot1phPdbzZQ5Ywc4ih5rNNCNFG3TQq8bVnV
- POQk1KaqmOvV3T7RfdnkKehFlpx9TLY+NTbly0J9Ktar9fQknYS5rhrzSfFR901XXJq7
- S/AmmYIPYeSo/uz13Kpa9340SL/HqEtWXi56x7ATAWRlz6rsdOqCTZoXFAKAigGrhijb
- ARc6vdkb6rJEEbKbtwjhYSK4it1jKYcq+kQxvJwzBdIbCpUl+x2Oho8Si2k6ck1jFsKz
- hbpLIpExQbwgdR8ISbbLls4X8kditDJYC+WZF6yWGFAhdT5tg8/nebgkEeg52FlEPsAr
- 2tBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736984455; x=1737589255;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eU4s+1LjKlD9KbXrZMS0oJ8bcsP+ZYXoZaUXV7g+A9M=;
- b=i4Q22jQCy18FtsIYEdYHNCiRqdzF3iHghkzUGvE756AsoN2jeBKG3EOwMLvqQIVKoI
- sDAL1opupFBWaEAkmtH1Bsrqpy9JF+2a0EOEY2PSvPmPtXO4uzpp0UuvJZdN7vSKPleA
- l5qtU0oOL6e2aqCRN5IWfep6rOUhKZ7cba2NsJ2Ug1C3SaNKGYJ4KEESrmNZpZvBsHa3
- KA6gZCiS0g7rYiO2ilwqfwIg3aPkX3pK7HXXxgBJUvZ3+gwiklCDCV1MEPMLegZ+lA9I
- 07gbAFCyIKz4U7QpFOS8UcGU346qpxwcQ6JGSn+KLw0OeYGG8MhvO/wKLoe3eiH72EqT
- Tp8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhsYYil91UcOlzlFP++oWkXCCGN7sMJlU/j2FsVlkQZHHUG4xIryX6BDfDT8xaMKWqrHIPf6ii9MMb@nongnu.org
-X-Gm-Message-State: AOJu0YwFlgfCfYMyeXTg1V7Co+ylDNEClNpT/qoSqkL4ATYdlV5u6m9U
- bIibkhjT9QIADc2ruBz4amtKZLz0OiuFjLt4z19WfTwVuehzw5Ec632aWxH51uo=
-X-Gm-Gg: ASbGncsVqRxoJJmUyHSbZ2iTuePaghe3EcaLhFIKypbtjoBzcTfPphEPwxIrQG7BhR/
- 7vnV/zlhiQ78LIBgJX2e78DxXYz43bS8FexAbGZvTRM67xNMs2uQ24qpuZG9150iZr7ye7w7FQr
- hO5ybA8YLlUWTbCBsOcXigdGsoHH5bVFmoE6jo3ozjk5SCjZHTbiLuBvmLN7Lgk/RjcKax1nVnV
- umbaCc8IjLqOZJDyr1XWzZ8yftTzblgo6C40K/q+J2VlmVOm/Yv004DRuJ2uLkNKg0xlgRQBUAm
- EXIPFn/ogwhOKo52bAtHymk=
-X-Google-Smtp-Source: AGHT+IE3Hn5YvpJ+8RzUNtzYapaR+sOj2jheCQuaOSmjYB1+kG511yj7V4l/VXGUahLuLCDec3LXpw==
-X-Received: by 2002:a17:903:2452:b0:216:6f1e:5799 with SMTP id
- d9443c01a7336-21a83fe4f75mr484166125ad.35.1736984455140; 
- Wed, 15 Jan 2025 15:40:55 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f10df7asm87335225ad.47.2025.01.15.15.40.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 15:40:54 -0800 (PST)
-Message-ID: <f05247a6-b4b0-4c06-827a-74b3fe4d4f9f@linaro.org>
-Date: Wed, 15 Jan 2025 15:40:52 -0800
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYD4W-0006OA-Ts
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:45:17 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYD4U-0006p1-VD
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:45:16 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHX4Zx019771;
+ Wed, 15 Jan 2025 23:45:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zwKp+L
+ oxzrYO/2GpKZ10jp1cGwqyll6wkgWrImD7gKM=; b=Mhb0i0LSuRCCuTI53EQYzX
+ 5uLES8SSJ/Qv0TepGvudCX/u843I5hLKU/fFfl6lMxNjNl08rsYwLA3/OyqXjm64
+ hWcU2mHflUHoOY1bfWs7ymJxCuv5VAB1onQT5KfP4dRPVLHFGpgEkzNut5z4KzCg
+ 7v1NzerBgLeVuKwj56DcoaeRylH/ycffaQ0FIThjLUxUSy9soG+1J+XQHtG+0cZx
+ FbQFyp0RY1qK4ADKXpWDk6TupAlO//3r3XNAJuxEp8JTgkd7smrXje7zAG96BN8A
+ 0XSjMRdt4Vu3kAlRCtboGmHpBZzFs5Nz2LboZ1mdB5mNAcnshd1/yID5we+qFeGQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446eg5tj2f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jan 2025 23:45:04 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50FKkNFW007462;
+ Wed, 15 Jan 2025 23:45:04 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443ynb01s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jan 2025 23:45:04 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50FNj24u55837156
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jan 2025 23:45:02 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 31E3D20040;
+ Wed, 15 Jan 2025 23:45:02 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECCB820043;
+ Wed, 15 Jan 2025 23:45:01 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 15 Jan 2025 23:45:01 +0000 (GMT)
+Message-ID: <83530c56378f850d1908d12e50dcc40b214c35f7.camel@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: Add syscall dispatch support
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Arusekk <floss@arusekk.pl>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+Date: Thu, 16 Jan 2025 00:45:01 +0100
+In-Reply-To: <20250115143623.8257-1-floss@arusekk.pl>
+References: <20250115143623.8257-1-floss@arusekk.pl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/81] tcg: Add TCGOP_FLAGS
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-6-richard.henderson@linaro.org>
- <8ce2bb26-b2c3-4665-bb1a-2576859aaaca@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8ce2bb26-b2c3-4665-bb1a-2576859aaaca@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 1lonxTiqmtcDFuyoD5oHJTinlByGv3PL
+X-Proofpoint-ORIG-GUID: 1lonxTiqmtcDFuyoD5oHJTinlByGv3PL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_10,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0
+ clxscore=1011 phishscore=0 malwarescore=0 spamscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 lowpriorityscore=0 mlxlogscore=305
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501150169
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,30 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/25 13:16, Philippe Mathieu-Daudé wrote:
-> On 7/1/25 08:59, Richard Henderson wrote:
->> To be used by some integer operations instead of, or in addition to,
->> a trailing constant argument.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/tcg/tcg.h | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
->> index 5d96cdfc30..e80b1f6efc 100644
->> --- a/include/tcg/tcg.h
->> +++ b/include/tcg/tcg.h
->> @@ -440,6 +440,7 @@ struct TCGOp {
->>   #define TCGOP_CALLO(X)    (X)->param2
->>   #define TCGOP_TYPE(X)     (X)->param1
->> +#define TCGOP_FLAGS(X)    (X)->param1
-> 
-> I skipped this because there was some code smell around I
-> couldn't figure. Hopefully a typo :)
+On Wed, 2025-01-15 at 15:36 +0100, Arusekk via wrote:
+> This commit adds support for the `prctl(PR_SET_SYSCALL_DISPATCH)`
+> function in the Linux userspace emulator.
 
-Yes, a typo.  Thankfully this field isn't within these converted opcodes.
+Typo: this should be PR_SET_SYSCALL_USER_DISPATCH.
 
+> It is implemented as a fully host-independent function, by forcing a
+> SIGSYS early during syscall handling, if the PC is outside the
+> allowed
+> range.
+>=20
+> Tested on [uglendix][1], will probably also apply to recent versions
+> of
+> Wine that use syscall dispatch.
+>=20
+> [1]: https://sr.ht/~arusekk/uglendix
+>=20
+> Signed-off-by: Arusekk <floss@arusekk.pl>
+> ---
+> =C2=A0linux-user/main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 2 ++
+> =C2=A0linux-user/qemu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 5 +++
+> =C2=A0linux-user/syscall.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 64
+> ++++++++++++++++++++++++++++++++++++++-
+> =C2=A0linux-user/syscall_defs.h |=C2=A0 6 ++++
+> =C2=A04 files changed, 76 insertions(+), 1 deletion(-)
 
-r~
+[...]
+
+> @@ -13852,12 +13886,34 @@ static abi_long do_syscall1(CPUArchState
+> *cpu_env, int num, abi_long arg1,
+> =C2=A0=C2=A0=C2=A0=C2=A0 return ret;
+> =C2=A0}
+> =C2=A0
+> +static bool sys_dispatch(abi_ulong pc, TaskState *ts)
+> +{
+
+What about this line from the kernel implementation?
+
+        if (unlikely(arch_syscall_is_vdso_sigreturn(regs)))
+                return false;
+
+I think qemu's vdso implements sigreturn, e.g., in
+linux-user/arm/vdso.S.
+
+[...]
+
 
