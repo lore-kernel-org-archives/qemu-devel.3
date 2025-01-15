@@ -4,99 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665C8C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2E4C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY5Va-0007ED-I1; Wed, 15 Jan 2025 10:40:42 -0500
+	id 1tY5Vt-0007Od-1S; Wed, 15 Jan 2025 10:41:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY5VX-0007DX-6m
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:40:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tY5Vr-0007Iy-4G
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:40:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY5VR-0001NO-FS
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:40:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tY5Vn-0001OU-0h
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:40:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736955632;
+ s=mimecast20190719; t=1736955654;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KushLt9n93gQzjhZA4b407VrRrIk/NLQpTHZrkzg2IA=;
- b=Tx0l5KtB/DwERB5jkALN9Z0B1CKVg8bIHm/ecMWWtNUObP14JcByT6Bu7SQk+Tkt8HDAUL
- ZyGEkXyd3xhVyypEL8K5meadegPzhI3zpQHr/vWZGkxqhZl00dENJ0bxxJlywot0ak586s
- JjhPWbz1aU8zlzl1h25PGb//HdMBgsU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Zh4+8xlsdl3tqOU5t3CHQE59Xbr9modTQsuhaq3i2LQ=;
+ b=CaINa6vxT2p3udzJsNjg9R5gN8H/S9KOcT4r46DYhNPQK9403PdzgoB8v1oD+DcqKjGhYC
+ pwbbI2mGCWbWSJV8GuyzZPpohT4wIUUj6Sy4JMnPS6U1GkKgCykyrsDLghZznHXExbka/3
+ 6Odb0/gKpnM/A8yLybo9AdZA2fG6G4c=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-3dIWoa5LPuyfQ6k-DoLleQ-1; Wed, 15 Jan 2025 10:40:27 -0500
-X-MC-Unique: 3dIWoa5LPuyfQ6k-DoLleQ-1
-X-Mimecast-MFC-AGG-ID: 3dIWoa5LPuyfQ6k-DoLleQ
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38a891d2aa5so524388f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:40:27 -0800 (PST)
+ us-mta-49-j40JROQ1MhOX-HJXM0e_FA-1; Wed, 15 Jan 2025 10:40:52 -0500
+X-MC-Unique: j40JROQ1MhOX-HJXM0e_FA-1
+X-Mimecast-MFC-AGG-ID: j40JROQ1MhOX-HJXM0e_FA
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d8f6903d2eso116444146d6.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:40:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736955626; x=1737560426;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KushLt9n93gQzjhZA4b407VrRrIk/NLQpTHZrkzg2IA=;
- b=MLcHAoEvH0s0DKZ3QNd6pYuw7/U2LyMeRmXRJ6ZBwl+7ZsrXqKXe6ZaXoylCrxlGqj
- zYG50EjNtxNTZmudLw1jbzS4ZZLYcjGZgIp6W0pW7iaNiFvk0iGZXdRN03vFCqYcHgmw
- y14Zq7TzlmLTvBYneZhmjm0m49t0gEnqlEO8VHrSpl4T3rDrpnXSY9jdjenUG13U48uQ
- TP9SsC/EssT45KJgdO5Rlwkv3OsNW7Qrq2ZjxLKxP6ZNWrHLPyn0R+CPBotXnETkjyAU
- fUmLYqTIAuzFm5crF63QGl/24YVzXpQJwX/cFIK2j90EJBCWJa2qylHbWGCkCtY2qXkw
- hymA==
-X-Gm-Message-State: AOJu0YxznvMicEPdooJArxC3DzGVtwBfYPAK+U6s1E56u+EqcACwVFdF
- GFA1NUEWqf9Czt6L82n+8TPzWBKSM7FV/5gSV/IpCwB/VFA87S2iA+m+Il1HmmhW0/gHdm/kVwr
- Ab0Fvcl2qkgJixLJX/J59ak1xD7iCpy+vJh1V0S5awSE7pzEObnlq
-X-Gm-Gg: ASbGncut1OYQsr8c3tf2TVaQYxQxM9+MaVEqwbdYxH4il9VeL5t4uq0qCNw1w044H3e
- feNSz//k3ExecB9jV8cvdhGmleKkiM3TOM3A7qsxVX4yYJj9Pi30qMXw8UaL3Q91TEy8oboIaS7
- eN0DqWJabznrlAlcet4X2vxpDICAPg6+unboNdqupm9flPtAwwLJO485Ajekagy0UZmK1jqJNzG
- CJ4GiBb4ffx074tK8hN/wSSzWHghsU7oYVihOSaq4aTH5GYgA==
-X-Received: by 2002:a05:6000:400d:b0:38b:d7c3:377e with SMTP id
- ffacd0b85a97d-38bd7c33a56mr13434368f8f.2.1736955625966; 
- Wed, 15 Jan 2025 07:40:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFDPW0BdfveX6TP0vvQu2c+CT/DAJN0+3FPE0GLUWAra9HfC+lXYfRxmrr4WeNZa9ZDRnvAVA==
-X-Received: by 2002:a05:6000:400d:b0:38b:d7c3:377e with SMTP id
- ffacd0b85a97d-38bd7c33a56mr13434312f8f.2.1736955625422; 
- Wed, 15 Jan 2025 07:40:25 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1f5:8f43:2a76:9f8c:65e8:ce7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e383df8sm18256189f8f.38.2025.01.15.07.40.23
+ d=1e100.net; s=20230601; t=1736955651; x=1737560451;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zh4+8xlsdl3tqOU5t3CHQE59Xbr9modTQsuhaq3i2LQ=;
+ b=SZ8ET0lbaVFG89tFhWcXrGfvCQ+lIkTFjHBuAX5mjPDc3A+oZbdvqVYIFbqKNIWmj5
+ e4FzwUimUuwdjamlMbWhloTpp2k+fzPUlCKwHrqlvOWXvi3CBd2HTOgzZ/05S6jzPEzQ
+ QFCz+ZczP7gO7BvwJrV1G6ri54f02BNPdpj3eWxz26Jb8B2jkoMevEnWytrV1Z08CU+O
+ vDU4/Jaj2xV7O65+G1hyWoySbNqbGgqtA55sMc6rUVCSt/1e704IQN++xSIsdIxERM0Z
+ SmOF0XQAcK2jSmD+hMSHu3Sr2BhkKwj1Waruc3i8dnBv1ZXfC38WZyYqcM7FeXqwEFaI
+ nszQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPEAcxC9FFOtG+jC/UzB/sUEUntE05ZpqzF/DxD6TnRM7aphBDUIZ03gTc6BP9VhN1RBpxq/9n2BCH@nongnu.org
+X-Gm-Message-State: AOJu0YxIll9mkNloOksW4bpnQ7Ep9frX9DNVZ1jN+x6HRR8RmJciUPMY
+ o/BE2MYYj5kaPyIp1dOVEk4k3wTiBVc1jNESKl575viGGgd5MxsbASmfZLC6ChiNVpJKKOsoP+C
+ d2ELkWaEOFh56odyldLINVRsICnmoZ3QTa1R4e+rit5oHUFSi6Tg+
+X-Gm-Gg: ASbGncsfxWJGSJSzzcWRoVnBnmm/oo4aENW2gCtZ7DtolnnTiUcJK4LQ8tCKgBT1cPX
+ RlbPJR+2w/uOzPKxaleYNh+KFm6gndPkibiSYiagGiO8ySKrkkqAdTa4bqrdvP5h2X+ZJX5c2oh
+ 5fTuZ7IhfA0CE9bZ5pIxczUhBtJRppBLTmfGYsXOZWHtBiDVEyCEeS8B9NPeh7o1kTo3GClw8px
+ pJ7VZ1mlhAH4VKvJPgN/ZN9bUhNQpgS+/1n7rGlGk+n+I1tboypIyl56PhH4fWJgh/MZyleNbuk
+ Ac2ct3qzC3iXONhsjg==
+X-Received: by 2002:a05:6214:449f:b0:6d8:9677:fbe4 with SMTP id
+ 6a1803df08f44-6df9b1f6f51mr506229346d6.9.1736955651334; 
+ Wed, 15 Jan 2025 07:40:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNiPnnYKJRlXyVi+6SOcm0dyLyRzPpIUw3zSQyXtlfxRSGs/eLXE2Pa12oExbgMqPZEOED5A==
+X-Received: by 2002:a05:6214:449f:b0:6d8:9677:fbe4 with SMTP id
+ 6a1803df08f44-6df9b1f6f51mr506228796d6.9.1736955650873; 
+ Wed, 15 Jan 2025 07:40:50 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dfade88135sm65637756d6.94.2025.01.15.07.40.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 07:40:24 -0800 (PST)
-Date: Wed, 15 Jan 2025 10:40:21 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
- pbonzini@redhat.com, stefanha@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, marcandre.lureau@redhat.com,
- philmd@linaro.org, eblake@redhat.com, armbru@redhat.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH v17 00/11] New vmapple machine type and xhci fixes
-Message-ID: <20250115103953-mutt-send-email-mst@kernel.org>
-References: <20250112210056.16658-1-phil@philjordan.eu>
- <20250115100747-mutt-send-email-mst@kernel.org>
- <CAAibmn2-vP1ukGwQ8cj6aswjVXMFGi0KzJV3xDPD8SKVH44emg@mail.gmail.com>
+ Wed, 15 Jan 2025 07:40:50 -0800 (PST)
+Date: Wed, 15 Jan 2025 10:40:46 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
+Message-ID: <Z4fW_rI7Mfrtc1Fg@x1n>
+References: <Z4AldAcucTyqZ0HJ@x1n>
+ <811633f6-6bf8-4a22-a21a-789e9a4747d7@daynix.com>
+ <Z4E6TnKaUt8FMWIv@x1n>
+ <9bb5f964-f930-4428-b800-8b589920fe1d@daynix.com>
+ <Z4U30j9w1kPnKX9U@x1n>
+ <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
+ <Z4aYpo0VEgaQedKp@x1n>
+ <00a220df-b256-4b70-9974-f4c1fe018201@daynix.com>
+ <Z4e7gFSqdhcmJPYb@x1n>
+ <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAibmn2-vP1ukGwQ8cj6aswjVXMFGi0KzJV3xDPD8SKVH44emg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,441 +130,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 15, 2025 at 04:33:45PM +0100, Phil Dennis-Jordan wrote:
+On Wed, Jan 15, 2025 at 11:54:56PM +0900, Akihiko Odaki wrote:
+> On 2025/01/15 22:43, Peter Xu wrote:
+> > On Wed, Jan 15, 2025 at 01:46:29PM +0900, Akihiko Odaki wrote:
+> > > On 2025/01/15 2:02, Peter Xu wrote:
+> > > > On Tue, Jan 14, 2025 at 05:43:09PM +0900, Akihiko Odaki wrote:
+> > > > > memory_region_finalize() is not a function to tell the owner is leaving, but
+> > > > > the memory region itself is being destroyed.
+> > > > 
+> > > > It is when the lifecycle of the MR is the same as the owner.  That holds
+> > > > true I suppose if without this patch, and that's why I don't prefer this
+> > > > patch because it makes that part more complicated.
+> > > 
+> > > The lifecycle of the MR is not the same as the owner. The MR gets finalized
+> > > during the finalization of the owner, and the owner is still alive at the
+> > > moment. It is something you should always care when having a child object.
+> > 
+> > What is the benefit of having such explicit layering of different lifecycle
+> > between the owner and the MRs that it owns?
+> > 
+> > To ask in another way, what's the functional benefit that we order the
+> > destruction of MRs within the same owner, paying that with explicit two
+> > refcounts concept in memory core?
+
+[1]
+
+> > 
+> > AFAICT, that's the only purpose MR->refcount is servicing for in this
+> > patchset besides the property link.
+> > 
+> > Currently, memory_region_ref() takes the refcount _only_ from the host.
+> > Considering that's the only memory API to take a reference on a MR, it kind
+> > of implies to everyone that the MR and the owner shares the lifetime.
+> > 
+> > In reality, it's not 100% shared indeed, but almost.  We even have those
+> > document for dynamic MRs to make sure that is true even there.
+> > 
+> > Then it's about the "virtual lifecycle" which triggers a finalize(), or
+> > "real lifecycle" which triggers a free() that may make a difference to a
+> > MR.  And that's the part on whether we should try to not expose too much at
+> > all on these.  I want to keep the concept simple if possible that we stick
+> > with sharing lifetime between owner and all MRs underneath.  I want to see
+> > whether we can avoid complicating that part.
 > 
+> I would rather avoid virtual or real lifecycles notions because it's more
+> than free(). Memory regions constructed with functions like
+> memory_region_init_io() and memory_region_init_ram_ptr() requires the owner
+> to retain the backend resource to keep functioning. In other words, the
+> memory region refers to the owner, and that is no different from other kind
+> of references.
 > 
-> On Wed, 15 Jan 2025 at 16:08, Michael S. Tsirkin <mst@redhat.com> wrote:
+> The uniqueness of this relationship is that the owner also refers to the
+> memory region. Memory regions avoid a circular reference by omitting the
+> reference from them to the owner and instruct others to refer to the owner
+> instead.
 > 
->     On Sun, Jan 12, 2025 at 10:00:45PM +0100, Phil Dennis-Jordan wrote:
->     > This patch set introduces a new ARM and macOS HVF specific machine type
->     > called "vmapple". There are also some patches for fixing XHCI spec
->     > compliance issues and adding a workaround to a quirk in the macOS guest's
->     > XHCI driver.
->     >
->     > The vmapple machine type approximates the configuration in macOS's own
->     > Virtualization.framework when running arm64 macOS guests. In addition to
->     > generic components such as a GICv3 and an XHCI USB controller, it
->     > includes nonstandard extensions to the virtio block device, a special
->     > "hardware" aes engine, a configuration device, a pvpanic variant, a
->     > "backdoor" interface, and of course the apple-gfx paravirtualised display
->     > adapter.
->     >
->     >
->     > The macOS guest initially did not work well with QEMU's XHCI controller,
->     > which required some investigation, bug fixing, and a work-around.
->     >
->     > Essentially, the macOS driver attempts to use XHCI event rings 1 and 2
->     > even when there is only a single pin-based interrupt available. The
->     > interrupts for rings 1 and 2 are dropped, and so events are only handled
->     > after a timeout. The driver appears to expect the device to act as if
->     > interrupter mapping was not supported - the spec only mentions that
->     > interrupter mapping should be disabled if only one interrupter is
->     > enabled, not one interrupt, although there is potential ambiguity in
->     > the spec's wording around enabling and disabling interrupters.
->     >
->     > In any case, this investigation has led to 3 changes:
->     >
->     >  * The spec requires that modulo arithmetic be used for selecting
->     >    the MSI vector to notify from the interrupter/event ring index.
->     >    (Patch 1)
->     >  * The spec requires that all events be directed at ring 0 if
->     >    interrupter mapping is not available; the condition for this
->     >    mentioned in the spec is when there is only 1 interrupter
->     >    available. (Patch 2)
->     >  * A property is added to the PCI XHCI controller classes to disable
->     >    interrupter mapping when using pin-based interrupts. This makes
->     >    the macOS guest drivers work. (Patch 9) This is enabled in the
->     >    vmapple machine type, which does not offer MSI(-X) support.
->     >
->     > There are currently a few limitations to the vmapple machine. These
->     > aren't intrinsic, just imperfect emulation of the VZF, but it's good
->     > enough to be just about usable for some purposes:
->     >
->     >  * macOS 12 guests only. Versions 13+ currently fail during early boot.
->     >  * macOS 11+ arm64 hosts only, with hvf accel. (Perhaps some differences
->     >    between Apple M series CPUs and TCG's aarch64 implementation? macOS
->     >    hosts only because ParavirtualizedGraphics.framework is a black box
->     >    implementing most of the logic behind the apple-gfx device.)
->     >  * The guest OS must first be provisioned using Virtualization.framework;
->     >    the disk images can subsequently be used in Qemu. (See docs.)
->     >
->     >
->     > Previous versions of this series also included the macOS PV graphics
->     > device ("apple-gfx"); those patches have already been merged, so
->     > the title has been changed. Previous iteration:
->     > https://patchew.org/QEMU/20241223221645.29911-1-phil@philjordan.eu/
->     >
->     > Furthermore, the XHCI fixes and workaround were previously submitted
->     > as a separate patch set, of which a few patches have also been merged.
->     > "hw/usb/hcd-xhci: Fixes, improvements and macOS workaround"
->     > https://patchew.org/QEMU/20241227121336.25838-1-phil@philjordan.eu/
->     >
->     > Finally, I've included one of Philippe Mathieu-Daudé's GICv3 patches
->     > which arose out of the discovery that the software GICv3 dependency
->     > was missing when building v16 and earlier versions of this series
->     > in a HVF-only configuration.
->     > https://patchew.org/QEMU/20241227202435.48055-1-philmd@linaro.org/
+> > 
+> > I can see why you want to clearly separate the lifetimes, because it's
+> > cleaner to you.  But IMHO we already made a decision from that starting
+> > from when memory_region_ref() does not take MR->refcount, otherwise you
+> > should at least need something like this to make the lifecycle completely
+> > separate in your this patch:
+> > > diff --git a/system/memory.c b/system/memory.c
+> > index b17b5538ff..d4b88c389a 100644
+> > --- a/system/memory.c
+> > +++ b/system/memory.c
+> > @@ -1843,15 +1843,23 @@ void memory_region_ref(MemoryRegion *mr)
+> >        * Memory regions without an owner are supposed to never go away;
+> >        * we do not ref/unref them because it slows down DMA sensibly.
+> >        */
+> > -    if (mr && mr->owner) {
+> > -        object_ref(mr->owner);
+> > +    if (mr) {
+> > +        /* The MR has its own lifecycle.. even if in most cases, virtually */
+> > +        object_ref(mr);
+> > +        if (mr->owner) {
+> > +            object_ref(mr->owner);
+> > +        }
+> >       }
+> >   }
+> >   void memory_region_unref(MemoryRegion *mr)
+> >   {
+> > -    if (mr && mr->owner) {
+> > -        object_unref(mr->owner);
+> > +    if (mr) {
+> > +        /* The MR has its own lifecycle.. even if in most cases, virtually */
+> > +        object_unref(mr);
+> > +        if (mr->owner) {
+> > +            object_unref(mr->owner);
+> > +        }
+> >       }
+> >   }
+> > 
+> > To me, QEMU already went the other way.  So I sincerely don't know how that
+> > extra mr->refcount usage it could bring us.  It only makes it harder to
+> > understand to me.
 > 
+> The owner refers to the memory region in turn so it is fine omitting
+> object_ref(mr).
+
+So you decided to "sometimes" take mr->refcount because it needs to, then
+"sometimes" don't take mr->refcounts because it doesn't need to..
+
+Normally such complexity is ok, but to me it's ok only when it services,
+for example, a major performance improvements, so that it's justified to
+add complexity.  The pay is done whoever going to maintain this code.
+
+In this case, no, I don't yet see how important this idea is yet to
+introduce such difference into mr refcounts, which is already complicated
+as hell..  We're paying such complexity with some "technical cleanest",
+while when with different treatment of mr->refcount in different context,
+it isn't that clean either.
+
+> If you draw an object graph that originates from the
+> referrer, you can still reach the memory region. That is not true for your
+> patch; you cannot reach to the subregion from the container.
 > 
->     just to make sure, who is merging this? Me?
+> The separate lifetimes still matter even with your patch. In a hypothetical
+> world that the lifetime of owner and memory regions completely match, the
+> ordering of finalization of memory regions owned by one object simply does
+> not happen because they occur simultaneously. It is simply not true, and
+> even your patch does not make sense in such a hypothetical world.
+
+I hope that's obvious goal since start, yes, that patch will make
+finalize() in any order works for MRs under the same owner, as I don't know
+why that order matters.. taking that chance of almost still sticking with
+one refcount.
+
+I suppose you finally need to answer my above question [1] to say whether
+it makes sense.  To me, it doesn't make sense only if there's a functional
+difference on that order of finalize().
+
 > 
+> > 
+> > > 
+> > > > 
+> > > > > It should not happen when a container is still referencing it. That is
+> > > > > also why it has memory_region_ref(subregion) in
+> > > > > memory_region_update_container_subregions() and assert(!mr->container) in
+> > > > > memory_region_finalize().
+> > > > 
+> > > > Again, the line I added was sololy for what you said "automation" elsewhere
+> > > > and only should work within MR-links within the same owner.  Otherwise
+> > > > anyone referencing the MR would hold the owner ref then this finalize()
+> > > > will never happen.
+> > > > 
+> > > > Now, if I could go back to your original purpose of this work, quotting
+> > > > from your cover letter:
+> > > > 
+> > > > > I saw various sanitizer errors when running check-qtest-ppc64. While
+> > > > > I could just turn off sanitizers, I decided to tackle them this time.
+> > > > > 
+> > > > > Unfortunately, GLib versions older than 2.81.0 do not free test data in
+> > > > > some cases so some sanitizer errors remain. All sanitizer errors will be
+> > > > > gone with this patch series combined with the following change for GLib:
+> > > > > https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
+> > > > 
+> > > > Is check-qtest-ppc64 the only one that will trigger this issue?  Does it
+> > > > mean that most of the devices will do proper removal of device-owned
+> > > > subregions (hence, not prone to circular reference of owner refcount)
+> > > > except some devices in ppc64?
+> > > > 
+> > > 
+> > > Searching for memory_region_add_subregion() gives 1078 instances where there
+> > > are 142 instances of memory_region_del_subregion(). This is a rough estimate
+> > > but there are potentially 936 instances of subregions without explicit
+> > > deletion.
+> > > 
+> > > For example, hw/audio/intel-hda.c adds subregions immediately after their
+> > > containers never deletes the subregions. I think that's fine because their
+> > > lifetimes are obvious with reference counters.
+> > 
+> > OK, let's try to figure out a best way to move forward then.
+> > 
+> > Let me try to summarize the two approaches so far.
+> > 
+> > So in general I think I don't prefer this patch because this patch is kind
+> > of in the middle of something.
+> > 
+> > It neither provides 100% separation of MR lifecycle: as discussed above, on
+> > not referencing MR->refcount on memory_region_ref/unref at least yet so far
+> > together in this patch, but suddenly started considering it in MR links.
+> > To me, that's abuse if ordering of such finalize() is not justified.
+> > 
+> > Nor it provides best efficiency: needing to take a MR->refcount when
+> > linking two MRs, even if we essentially don't need to guarded by the fact
+> > that owner must exist already, which must hold true anyway for QEMU to work
+> > so far.
+> > 
+> > What I think the best is we either go one way or another: either we make MR
+> > lifecycle clearly separate, or we make it clearly efficient (meanwhile we
+> > still keep the concept easy, and we at least try to always stick with one
+> > refcount which is easier to maintain too).
+> > 
+> > IMHO that's what the other older patch does (plus my fixup squashed in):
+> > 
+> > https://lore.kernel.org/all/ZsenKpu1czQGYz7m@x1n/
+> > 
+> > That avoids taking a refcount for internal MRs, always stick with owner
+> > shares the same lifecycle with MRs, just like the same assumption we have
+> > already had in memory_region_ref().  The bad side effect is we need
+> > something slightly hackish in mr finalize(), but we can provide some better
+> > doc, and keep the comlexity there only (which I think is better than always
+> > having two refcounts all over).
 > 
-> ICYMI, Phil M-D has already pulled patches 1 & 2, and Stefan has merged them
-> into staging & master. 
+> Again, please forget about efficiency. It does not matter and makes noises
+> in our thoughts.
+
+It's not only about efficiency, that's pretty much side effect.
+
+It's more about how we should define refcount in the future, then if we
+stick with owner sharing lifetime with all MRs then taking that subregion
+refcount doesn't help anything except introducing a circular reference.  It
+solves the circular reference with even a good side effect of reducing one
+atomic op from that pov, even if in a slow path.
+
 > 
-> As I understand it, Phil M-D was also in the process of merging the rest of v16
-> of this series before discovering the GICv3 dependency/Kconfig issue:
+> > 
+> > If we worry about removal of that container assertion, we could assert
+> > instead on the owner.  I've attached a slightly modified full version of
+> > such alternative patch below, with the best comment I see suite.
 > 
-> https://lore.kernel.org/qemu-devel/
-> 8554330d-fd9b-4fa5-b37c-161f70b71f7d@linaro.org/
+> This is better as it tells the lifetimes of memory regions need to be dealt
+> with, but why don't you deal them with reference counters in that case?
+
+We discussed plenty in this area, obviously you don't care about keep
+having two refcounts on MRs but I do my best to avoid it.. that's all about
+it so far..
+
+> Reference counters are tools specifically designed for this.
+
+I hope I was trying to help.  We could wait for a 2nd opinion.
+
 > 
-> I don't really mind either way who merges this, but he might have some more
-> thoughts on the matter - there might be a specific reason he's so far only
-> picked up those two patches. :-)
+> > 
+> > diff --git a/system/memory.c b/system/memory.c
+> > index b17b5538ff..7b2d91ca6b 100644
+> > --- a/system/memory.c
+> > +++ b/system/memory.c
+> > @@ -1803,7 +1803,6 @@ static void memory_region_finalize(Object *obj)
+> >   {
+> >       MemoryRegion *mr = MEMORY_REGION(obj);
+> > -    assert(!mr->container);
+> >       /* We know the region is not visible in any address space (it
+> >        * does not have a container and cannot be a root either because
+> > @@ -1813,6 +1812,17 @@ static void memory_region_finalize(Object *obj)
+> >        */
+> >       mr->enabled = false;
+> >       memory_region_transaction_begin();
+> > +    if (mr->container) {
+> > +        /*
+> > +         * If this happens, it must be when MRs share the same owner,
+> > +         * because only share-owner-ed links doesn't take a refcount.  In
+> > +         * this specific case, we allow random order of finalize() on the
+> > +         * MRs the owner owns, so it's possible the child finalize()s
+> > +         * before a parent.  When it happens, unlink from the child.
+> > +         */
+> > +        assert(mr->container->owner == mr->owner);
+> > +        memory_region_del_subregion(mr->container, mr);
+> > +    }
+> >       while (!QTAILQ_EMPTY(&mr->subregions)) {
+> >           MemoryRegion *subregion = QTAILQ_FIRST(&mr->subregions);
+> >           memory_region_del_subregion(mr, subregion);
+> > @@ -2644,7 +2654,15 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+> >       memory_region_transaction_begin();
+> > -    memory_region_ref(subregion);
+> > +    if (mr->owner != subregion->owner) {
+> > +        /*
+> > +         * MRs always have the same lifecycle of its owner, so that when
+> > +         * adding a subregion that shares the same owner of the parent, we
+> > +         * don't need any refcounting, because the two MRs share the
+> > +         * lifecycle with owner, so they share between each other too.
+> > +         */
+> > +        memory_region_ref(subregion);
+> > +    }
+> >       QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+> >           if (subregion->priority >= other->priority) {
+> >               QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+> > @@ -2702,7 +2720,10 @@ void memory_region_del_subregion(MemoryRegion *mr,
+> >           assert(alias->mapped_via_alias >= 0);
+> >       }
+> >       QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+> > -    memory_region_unref(subregion);
+> > +    /* See the corresponding comment in add subregion path */
+> > +    if (mr->owner != subregion->owner) {
+> > +        memory_region_unref(subregion);
+> > +    }
+> >       memory_region_update_pending |= mr->enabled && subregion->enabled;
+> >       memory_region_transaction_commit();
+> >   }
 > 
 
-Excellent just making sure it's not lost.
-Thanks!
-
->     > ---
->     >
->     > v2 -> v3:
->     >
->     >  * Merged the apple-gfx and vmapple patchsets.
->     >  * Squashed a bunch of later apple-gfx patches into the main one.
->     >    (dGPU support, queried MMIO area size, host GPU picking logic.)
->     >  * Rebased on latest upstream, fixing any breakages due to internal
->     >    Qemu API changes.
->     >  * apple-gfx: Switched to re-entrant MMIO. This is supported by the
->     >    underlying framework and simplifies the MMIO forwarding code which
->     >    was previously different on x86-64 vs aarch64.
->     >  * vmapple: Fixes for minor bugs and comments from the last round of
->     >    review.
->     >  * vmapple aes, conf, apple-gfx: Switched reset methods to implement
->     >    the ResettableClass base's interface.
->     >  * vmapple: switched from virtio-hid to an XHCI USB controller and
->     >    USB mouse and tablet devices. macOS does not provide drivers for
->     >    virtio HID devices, at least not in version 12's vmapple kernel.
->     >    So input now sort of works (interrupt issues) rather than not
->     >    at all. Use network-based remote access to the guest OS as a
->     >    work-around.
->     >
->     > v3 -> v4:
->     >
->     >  * Complete rework of the mechanism for handling runloop/libdispatch
->     >    events on the main thread. PV graphics now work with the SDL UI.
->     >  * Renamed 'apple-gfx-vmapple' device to 'apple-gfx-mmio'
->     >  * hw/display/apple-gfx: threading model overhaul to be more consistent,
->     >    safer, and more QEMU-idiomatic.
->     >  * display-modes property on the apple-gfx devices now uses the
->     >    native array property mechanism and works on both device variants.
->     >  * hw/vmapple/aes: Improvements to logging and error handling.
->     >  * hw/vmapple/cfg: Bug fixes around device property default values.
->     >  * hw/vmapple/{aes,cfg,virtio-blk/vmapple}: Most header code moved into
->     >    .c files, only a single vmapple.h now contains the #defines for the
->     >    vmapple machine model-specific device type names.
->     >  * hw/block/virtio-blk: New patch for replacing virtio_blk_free_request
->     >    with g_free. (Optional)
->     >  * Various smaller changes following comments in v3 code review in
->     >    apple-gfx, aes, cfg, bdif, virtio-blk-vmapple, and the vmapple
->     >    machine type itself. See patch-specific v4 change notes for details.
->     >
->     > v4 -> v5:
->     >
->     >  * Simplified the main thread runloop mechanism. Back to setting
->     >        qemu_main directly, but narrowing the scope of what it needs to
->     do,
->     >        and it can now be NULL. (Meaning run the QEMU main event loop on
->     >        the main thread as is traditional.)
->     >  * hw/display/apple-gfx: Further improvements to the BH based job code
->     bridging
->     >    the libdispatch & QEMU thread synchronisation impedance mismatch.
->     >  * hw/display/apple-gfx: Thread safety and object lifetime improvements.
->     >  * hw/display/apple-gfx-*: Better buffer and error handling in display
->     mode
->     >    property setters and getters.
->     >  * hw/vmapple/aes: More consistent and safer logging/tracing
->     >  * hw/vmapple/cfg: Better error reporting on overlong property strings.
->     >  * hw/vmapple/virtio-blk: Fixed theoretically-unaligned write to config
->     buffer.
->     >  * vmapple machine type: Moved ecam region into machine state, improved
->     device
->     >    property setting error handling, improved ECID/UUID extraction script
->     and
->     >    docs.
->     >  * Various smaller fixes in apple-gfx/-mmio, apple-gfx-pci, vmapple/aes,
->     >    vmapple/cfg, vmapple/virtio-blk, and vmapple machine type.
->     >  * Added SPDX license identifiers where they were missing.
->     >
->     > v5 -> v6:
->     >
->     >  * 01/15 (main/Cocoa/runloop): Combined functions, fixed whitespace
->     >  * 02/15 (apple-gfx): Further refinement of PVG threading: reduced some
->     callback
->     >    tasks from BHs to merely acquiring RCU read lock; replaced some
->     libdispatch
->     >    tasks with BHs; last remaining synchronous BH now uses emphemeral
->     >    QemuSemaphore.
->     >  * 02/15 (apple-gfx): Readability improvements and other smaller tweaks
->     >    (see patch change notes for details)
->     >  * 04/15 (display modes): Replaced use of alloca() with NSMutableArray.
->     >
->     > v6 -> v7:
->     >
->     >  * 02/15 (apple-gfx): Use g_ptr_array_find() helper function, coding
->     style tweak
->     >  * 03/15 (apple-gfx-pci): Removed an unused function parameter
->     >  * 04/15 (apple-gfx display mode property): Simplified error handling in
->     >    property parsing.
->     >  * 10/15 (vmapple/aes): Coding style tweaks.
->     >  * 12/15 (vmapple/cfg): Changed error messages for overrun of properties
->     with
->     >    fixed-length strings to be more useful to users than developers.
->     >  * 15/15 (vmapple machine type): Tiny error handling fix, un-inlined
->     function
->     >
->     > v7 -> v8:
->     >
->     >  * 02/15 (apple-gfx): Naming and type use improvements, fixes for a bug
->     and a
->     >    leak.
->     >  * 04/15 (apple-gfx display mode property): Type use improvement
->     >  * 10/15 (vmapple/aes): Guest error logging tweaks.
->     >  * 11/15 (vmapple/bdif): Replaced uses of cpu_physical_memory_read with
->     >    dma_memory_read, and a g_free call with g_autofree.
->     >  * 12/15 (vmapple/cfg): Macro hygiene fix: consistently enclosing
->     arguments in
->     >    parens.
->     >  * 15/15 (vmapple machine type): Use less verbose pattern for defining
->     uuid
->     >    property.
->     >
->     > v8 -> v9:
->     >
->     >  * 01/16 (ui & main loop): Set qemu_main to NULL for GTK UI as well.
->     >  * 02/16 (apple-gfx): Pass device pointer to graphic_console_init(),
->     various
->     >        non-functional changes.
->     >  * 03/16 (apple-gfx-pci): Fixup of changed common call, whitespace and
->     comment
->     >    formatting tweaks.
->     >  * 04/16 (apple-gfx display modes): Re-ordered type definitions so we can
->     drop
->     >    a 'struct' keyword.
->     >  * 10/16 (vmapple/aes): Replaced a use of cpu_physical_memory_write with
->     >    dma_memory_write, minor style tweak.
->     >  * 11/16 (vmapple/bdif): Replaced uses of cpu_physical_memory_write with
->     >    dma_memory_write.
->     >  * 13/16 (vmapple/virtio-blk): Correctly specify class_size for
->     >    VMAppleVirtIOBlkClass.
->     >  * 15/16 (vmapple machine type): Documentation improvements, fixed
->     variable
->     >    name and struct field used during pvpanic device creation.
->     >  * 16/16 (NEW/RFC vmapple/virtio-blk): Proposed change to replace type
->     hierarchy
->     >    with a variant property. This seems cleaner and less confusing than
->     the
->     >    original approach to me, but I'm not sure if it warrants creation of a
->     new
->     >    QAPI enum and property type definition.
->     >
->     > v9 -> v10:
->     >
->     >  * 01/15 (ui & main loop): Added comments to qemu_main declaration and
->     GTK.
->     >  * 02/15 (apple-gfx): Reworked the way frame rendering code is threaded
->     to use
->     >    BHs for sections requiring BQL.
->     >  * 02/15 (apple-gfx): Fixed ./configure error on non-macOS platforms.
->     >  * 10/15 (vmapple/aes): Code style and comment improvements.
->     >  * 12/15 (vmapple/cfg): Slightly tidier error reporting for overlong
->     property
->     >    values.
->     >  * 13/15 (vmapple/virtio-blk): Folded v9 patch 16/16 into this one,
->     changing
->     >    the device type design to provide a single device type with a variant
->     >        property instead of 2 different subtypes for aux and root volumes.
->     >  * 15/15 (vmapple machine type): Documentation fixup for changed
->     virtio-blk
->     >    device type; small improvements to shell commands in documentation;
->     >    improved propagation of errors during cfg device instantiation.
->     >
->     > v10 -> v11:
->     >
->     >  * 01/15 (ui & main loop): Simplified main.c, better comments & commit
->     message
->     >  * 02/15 (apple-gfx): Give each PV display instance a unique serial
->     number.
->     >  * 02 & 03/15 (apple-gfx, -pci): Formatting/style tweaks
->     >  * 15/15 (vmapple machine type): Improvements to shell code in docs
->     >
->     > v11 -> v12:
->     >
->     >  * 01/15 (ui & main loop): More precise wording of code comments.
->     >  * 02/15 (apple-gfx): Fixed memory management regressions introduced in
->     v10;
->     >    improved error handling; various more conmetic code adjustments
->     >  * 09/15 (GPEX): Fixed uses of deleted GPEX_NUM_IRQS constant that have
->     been
->     >    added to QEMU since this patch was originally written.
->     >
->     > v12 -> v13:
->     >
->     >  * 15/15 (vmapple machine type): Bumped the machine type version from 9.2
->     >    to 10.0.
->     >  * All patches in the series now have been positively reviewed and
->     received
->     >    corresponding reviewed-by tags.
->     >
->     > v13 -> v14:
->     >
->     >  * 6/15 (hw/vmapple directory): Changed myself from reviewer
->     >    to maintainer, as that seemed appropriate at this point.
->     >  * 15/15 (vmapple machine type): Gate creation of XHCI and
->     >    USB HID devices behind if (defaults_enabled()).
->     >
->     > v14 -> v15
->     >
->     >  * Constified property tables to match Richard Henderson's recent
->     project-
->     >    wide convention change. (patches 4/15, 7/15, 11/15, 12/15, & 13/15)
->     >
->     > v15 -> v16
->     >
->     >  * 14 patches now, as patch 8 has already been pulled. (Thanks Philippe!)
->     >  * Fixed a bunch of conflicts with upstream code motion:
->     >     - DEFINE_PROP_END_OF_LIST removal (4/14 - apple-gfx mode list, 7/14 -
->     >       pvpanic-mmio, 10/14 - bdif, 11/14 - cfg device, and
->     >       12/14 - vmapple-virtio-blk)
->     >     - sysemu->system move/rename: (1/14 - ui/qemu-main, 2/14 - apple-gfx,
->     >       9/14 - aes, 10/14 - bdif, 14/14 - vmapple machine type)
->     >  * 14/14 (vmapple machine type):
->     >     - Moved compatibility setting for removing legacy mode from
->     virtio-pci
->     >       to proper global property table rather than (ab)using sugar
->     property.
->     >     - Removed a few superfluous #includes during sysemu rename cleanup.
->     >     - Removed machine type versioning as it's not necessary (yet?)
->     >     - Made memory map array const
->     >
->     > XHCI RFC -> v1:
->     >
->     >  * Gated conditional interrupter mapping support behind a property,
->     enabled
->     >    that property in the VMApple machine type.
->     >  * Added patch to fix the MSI vector assertion failure.
->     >  * Moved msi and msix properties from NEC XHCI controller to generic
->     xhci-pci
->     >    superclass as that also seems useful.
->     >  * Broke the workaround up into 2 patches, one for mapping disabling
->     required
->     >    by the standard, and one for the conditional disabling workaround.
->     >
->     > XHCI v1 -> v2:
->     >
->     >  * 1/6: Switch to modulo arithmetic for MSI vector number, as per spec.
->     >  * 6/6: Set the "conditional-intr-mapping" property via compat_props.
->     >  * Commit message tweaks
->     >
->     > XHCI v2 -> v3:
->     >
->     >  * 2/6: In line with recent upstream changes, the property table is now
->     >    const and no longer carries an end-of-list marker.
->     >  * The indentation fix (previously 5/6) has already been merged, so is no
->     >    longer included.
->     >  * Added patch fixing up logging of certain unhandled MMIO cases. (4/6)
->     >  * 6/6: Moved the compat global property table into vmapple patch set
->     -v16;
->     >    we now just add the conditional-intr-mapping property to it in this
->     >    patch. We also set the property on any device implementing the
->     abstract
->     >    TYPE_XHCI_PCI rather than only the TYPE_QEMU_XHCI device specifically.
->     >
->     > v16 -> v17
->     >
->     >  * Rebased on latest upstream (with minor conflict fixes)
->     >  * apple-gfx, GPEX, and ui/cocoa patches dropped as they have been
->     merged.
->     >  * Unmerged patches from xhci series v3 combined into this series.
->     >  * vmapple machine type: Explicitly depend on software GICv3.
->     >  * vmapple machine type: Enable the new XHCI PCI conditional-intr-mapping
->     >    property via the machine type's global compat property table.
->     >  * Integrated Philippe's patch on renaming the GICv3's confusing config
->     name,
->     >    and removing its TCG dependency. (It's needed with HVF too.)
->     >  * vmapple machine type: Dropped Tested-by tag because of above changes
->     >
->     >
->     > Alexander Graf (7):
->     >   hw: Add vmapple subdir
->     >   hw/misc/pvpanic: Add MMIO interface
->     >   hw/vmapple/aes: Introduce aes engine
->     >   hw/vmapple/bdif: Introduce vmapple backdoor interface
->     >   hw/vmapple/cfg: Introduce vmapple cfg region
->     >   hw/vmapple/virtio-blk: Add support for apple virtio-blk
->     >   hw/vmapple/vmapple: Add vmapple machine type
->     >
->     > Phil Dennis-Jordan (3):
->     >   hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
->     >   hw/usb/hcd-xhci-pci: Use event ring 0 if mapping unsupported
->     >   hw/usb/hcd-xhci-pci: Adds property for disabling mapping in IRQ mode
->     >
->     > Philippe Mathieu-Daudé (1):
->     >   hw/intc: Remove TCG dependency on ARM_GICV3
->     >
->     >  MAINTAINERS                         |   8 +
->     >  contrib/vmapple/uuid.sh             |   9 +
->     >  docs/system/arm/vmapple.rst         |  63 +++
->     >  docs/system/target-arm.rst          |   1 +
->     >  hw/Kconfig                          |   1 +
->     >  hw/block/virtio-blk.c               |  19 +-
->     >  hw/core/qdev-properties-system.c    |   8 +
->     >  hw/intc/Kconfig                     |   6 +-
->     >  hw/intc/meson.build                 |   4 +-
->     >  hw/meson.build                      |   1 +
->     >  hw/misc/Kconfig                     |   4 +
->     >  hw/misc/meson.build                 |   1 +
->     >  hw/misc/pvpanic-mmio.c              |  60 +++
->     >  hw/usb/hcd-xhci-pci.c               |  25 ++
->     >  hw/usb/hcd-xhci-pci.h               |   1 +
->     >  hw/usb/hcd-xhci.c                   |   5 +
->     >  hw/usb/hcd-xhci.h                   |   5 +
->     >  hw/vmapple/Kconfig                  |  32 ++
->     >  hw/vmapple/aes.c                    | 581 ++++++++++++++++++++++++++
->     >  hw/vmapple/bdif.c                   | 274 ++++++++++++
->     >  hw/vmapple/cfg.c                    | 195 +++++++++
->     >  hw/vmapple/meson.build              |   5 +
->     >  hw/vmapple/trace-events             |  21 +
->     >  hw/vmapple/trace.h                  |   1 +
->     >  hw/vmapple/virtio-blk.c             | 204 +++++++++
->     >  hw/vmapple/vmapple.c                | 618 ++++++++++++++++++++++++++++
->     >  include/hw/misc/pvpanic.h           |   1 +
->     >  include/hw/pci/pci_ids.h            |   1 +
->     >  include/hw/qdev-properties-system.h |   5 +
->     >  include/hw/virtio/virtio-blk.h      |  11 +-
->     >  include/hw/vmapple/vmapple.h        |  23 ++
->     >  include/qemu/cutils.h               |  15 +
->     >  meson.build                         |   1 +
->     >  qapi/virtio.json                    |  14 +
->     >  util/hexdump.c                      |  18 +
->     >  35 files changed, 2231 insertions(+), 10 deletions(-)
->     >  create mode 100755 contrib/vmapple/uuid.sh
->     >  create mode 100644 docs/system/arm/vmapple.rst
->     >  create mode 100644 hw/misc/pvpanic-mmio.c
->     >  create mode 100644 hw/vmapple/Kconfig
->     >  create mode 100644 hw/vmapple/aes.c
->     >  create mode 100644 hw/vmapple/bdif.c
->     >  create mode 100644 hw/vmapple/cfg.c
->     >  create mode 100644 hw/vmapple/meson.build
->     >  create mode 100644 hw/vmapple/trace-events
->     >  create mode 100644 hw/vmapple/trace.h
->     >  create mode 100644 hw/vmapple/virtio-blk.c
->     >  create mode 100644 hw/vmapple/vmapple.c
->     >  create mode 100644 include/hw/vmapple/vmapple.h
->     >
->     > --
->     > 2.39.5 (Apple Git-154)
-> 
-> 
+-- 
+Peter Xu
 
 
