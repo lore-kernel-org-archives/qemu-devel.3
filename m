@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22795E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 02:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34225C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 03:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXt9f-0001eU-LG; Tue, 14 Jan 2025 21:29:15 -0500
+	id 1tXtxa-0008Rj-8s; Tue, 14 Jan 2025 22:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tXt9W-0001e5-Gg; Tue, 14 Jan 2025 21:29:08 -0500
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tXt9R-0006FA-Uv; Tue, 14 Jan 2025 21:29:03 -0500
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-8622c3be2f4so1577180241.1; 
- Tue, 14 Jan 2025 18:28:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736908139; x=1737512939; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=p6MnQJ5SdoE3cwJjeXqbRM1iQhuqD/4XI8s5u7XsUnI=;
- b=Gnu//PBRQNzvZLnrB9Ck2Ttm2EdoOehiPvUZb6gVusC9q/ytPhdjyKutETojxr9SJn
- aRnbjB07mrgJfKRAwoCvihAE0FFyAWKGkzNU15moyQA236eihoopaeKBdX6zd/cAYScs
- VCQRrjAxTVB9Nh1ec6NW6fDSWOZRXPYKAtDH9Ey6s0PU0OONM+IilnStHP/nroUmTo/k
- Gppk4LMVdjmEhGvAew04ciHYM3KDNb007lRbJhuEokUYPom/RqOwKvNXcy7N16vG4tdQ
- 11olayQa9FmYzhm2ZeR0I2xMhD9VZy8eBL7QKGVgp83cI3Ba5E607oTEoRnIXMXkI2Jw
- ejpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736908139; x=1737512939;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=p6MnQJ5SdoE3cwJjeXqbRM1iQhuqD/4XI8s5u7XsUnI=;
- b=HANEUfmwlelO3V7ALMxieRP5ATjNhrzO+Hz3SjQkkeVVnXjBPRBemza/DTJZn4L5gY
- Zs3NDCMStwS5/SzseIAXgeW+LcCMjvaWKwnvqFEfSmSD7zL8jwkN/McYTZdmBJ2ib74E
- 70sbD9w+gAHeve+XVoOIWXERIP9MgHPdfdfG79txniRy9fmvXGIcrMl/2mlApUjtqOLE
- 4PDEQYu3uICieCMK95VqyTrUu/o9Uf94/TDxqzR6v0knz8iDiANUNmeWO3kFJxtUi+RF
- lP6fWHM+Q3p09CUCshZr44cEax9GA84nHwmxaTt+YE4Ei8p5158yygiYqv83KZ+In7hI
- BG4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBtZNyQvF8bsjDaKYuXLqJFWzokJujwNNdXsidnBKjdi8YDzvSOQllA94s4d3z2zQrVnCM9aCGTLjK@nongnu.org
-X-Gm-Message-State: AOJu0YwLqLGAIdvxHDfFal+p41ryFA0RnFMIbajZ2LK82OOt5/5pwM8o
- wRwzUdsGcFKydhOkfidC2UyTwp4haWUf/ln2Qcr87R3vOlPbPJ30Mc4fQjU43QoWO8ixyr540Uz
- nTYMZ87wLs739maEK2e8Z71mUZ+k=
-X-Gm-Gg: ASbGnct/hsi+fow7X3PYaSSXl3T8LplXyuaIHruoVBpN4TKSmLV2CESxx1LB0NVV9eI
- PQ3QllPyWtwTQUjC3X/CF+eiSaNisDmGLKmbpnXmMo3LMfe8j7MUuev36byFB0uuAnqcB
-X-Google-Smtp-Source: AGHT+IGc5AQnEVbYhehiY43rc8DOSOG/HM7Bu0BTakCu+Qut4XZOQDCgFlJ+rPFz+2wkMfz7Xx7eHI9rPlx+W76wRAU=
-X-Received: by 2002:a05:6102:50a3:b0:4b2:9e8b:54c with SMTP id
- ada2fe7eead31-4b3d106e36emr24839820137.24.1736908138832; Tue, 14 Jan 2025
- 18:28:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tXtxX-0008RT-NS
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 22:20:47 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tXtxU-0006kV-G3
+ for qemu-devel@nongnu.org; Tue, 14 Jan 2025 22:20:47 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx7eKDKYdndqtjAA--.3042S3;
+ Wed, 15 Jan 2025 11:20:36 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCx78d9KYdnshEjAA--.5907S3;
+ Wed, 15 Jan 2025 11:20:31 +0800 (CST)
+Subject: Re: [PATCH v3] feat: add loongarch page table walker support for
+ debugger memory access
+To: Miao Hao <haomiao23s@ict.ac.cn>, gaosong@loongson.cn
+Cc: qemu-devel@nongnu.org
+References: <20250114095444.392579-1-haomiao23s@ict.ac.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <958deda6-d300-fe6c-d683-172f82c0fbc1@loongson.cn>
+Date: Wed, 15 Jan 2025 11:20:45 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250107052906.249973-2-wilfred.mallawa@wdc.com>
- <20250107052906.249973-4-wilfred.mallawa@wdc.com>
-In-Reply-To: <20250107052906.249973-4-wilfred.mallawa@wdc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 15 Jan 2025 12:28:32 +1000
-X-Gm-Features: AbW1kvbfNGjhMNtFH0DSFWT21Xv-t6T9AqTr3PuQ0RbUJ6lr-1lqM9ynM2B6-P0
-Message-ID: <CAKmqyKOE+_7sq4zpCPjymaQZ9TV=+8owVKOyPO3wPeGovY9TUQ@mail.gmail.com>
-Subject: Re: [RFC 1/4] spdm-socket: add seperate send/recv functions
-To: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, alistair.francis@wdc.com, 
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, stefanha@redhat.com, 
- fam@euphon.net, philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, 
- mst@redhat.com, marcel.apfelbaum@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250114095444.392579-1-haomiao23s@ict.ac.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCx78d9KYdnshEjAA--.5907S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxKw4rCw4kGr4xuF1xCr1ruFX_yoWxtr1Upr
+ WxCFW3tF48KrWDAas3X34YvFn8ZrsxKw4a9a13KF9YkwsxXryfZFW0g3srJF48Jw4kWw4j
+ gan8AF15Ca45XFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.301,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,133 +82,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 8, 2025 at 12:04=E2=80=AFAM Wilfred Mallawa via
-<qemu-devel@nongnu.org> wrote:
->
-> This is to support uni-directional transports such as SPDM
-> over Storage. As specified by the DMTF DSP0286.
->
-> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Applied to loongarch-next with small modification with comments such as:
+
+target/loongarch: Add page table walker support for debugger usage
+
+When dump memory content with gva address, software page table walker is
+necessary to get responding gpa address.
+
+Here page table walker is added for debugger usage.
+
+Signed-off-by: Miao Hao <haomiao23s@ict.ac.cn>
+
+
+Regards
+Bibo Mao
+
+
+On 2025/1/14 下午5:54, Miao Hao wrote:
+> Signed-off-by: Miao Hao <haomiao23s@ict.ac.cn>
 > ---
->  backends/spdm-socket.c       | 25 +++++++++++++++++++++++++
->  include/system/spdm-socket.h | 35 +++++++++++++++++++++++++++++++++++
->  2 files changed, 60 insertions(+)
->
-> diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
-> index 2c709c68c8..4421b5c532 100644
-> --- a/backends/spdm-socket.c
-> +++ b/backends/spdm-socket.c
-> @@ -184,6 +184,31 @@ int spdm_socket_connect(uint16_t port, Error **errp)
->      return client_socket;
->  }
->
-> +uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-> +                             void *rsp, uint32_t rsp_len)
+>    v1 -> v2:
+>      1. Addressed review comments.
+>      2. Fix the assignment of variable shift.
+>    v2 -> v3:
+>      1. Remove variable shift.
+> 
+>   target/loongarch/cpu_helper.c     | 94 +++++++++++++++++++++++++++++--
+>   target/loongarch/internals.h      |  4 +-
+>   target/loongarch/tcg/tlb_helper.c |  4 +-
+>   3 files changed, 94 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+> index 580362ac3e..930466ca48 100644
+> --- a/target/loongarch/cpu_helper.c
+> +++ b/target/loongarch/cpu_helper.c
+> @@ -141,9 +141,85 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>       return false;
+>   }
+>   
+> +static int loongarch_page_table_walker(CPULoongArchState *env, hwaddr *physical,
+> +                                 int *prot, target_ulong address)
 > +{
-> +    uint32_t command;
-> +    bool result;
+> +    CPUState *cs = env_cpu(env);
+> +    target_ulong index, phys;
+> +    uint64_t dir_base, dir_width;
+> +    uint64_t base;
+> +    int level;
 > +
-> +    result =3D receive_platform_data(socket, transport_type, &command,
-> +                                   (uint8_t *)rsp, &rsp_len);
+> +    if ((address >> 63) & 0x1) {
+> +        base = env->CSR_PGDH;
+> +    } else {
+> +        base = env->CSR_PGDL;
+> +    }
+> +    base &= TARGET_PHYS_MASK;
 > +
-> +    if (!result) {
-> +        return 0;
+> +    for (level = 4; level > 0; level--) {
+> +        get_dir_base_width(env, &dir_base, &dir_width, level);
+> +
+> +        if (dir_width == 0) {
+> +            continue;
+> +        }
+> +
+> +        /* get next level page directory */
+> +        index = (address >> dir_base) & ((1 << dir_width) - 1);
+> +        phys = base | index << 3;
+> +        base = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+> +        if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+> +            /* base is a huge pte */
+> +            break;
+> +        }
 > +    }
 > +
-> +    assert(command !=3D 0);
-
-This should return an error instead of assert
-
+> +    /* pte */
+> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+> +        /* Huge Page. base is pte */
+> +        base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
+> +        base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
+> +        if (FIELD_EX64(base, TLBENTRY, HGLOBAL)) {
+> +            base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
+> +            base = FIELD_DP64(base, TLBENTRY, G, 1);
+> +        }
+> +    } else {
+> +        /* Normal Page. base points to pte */
+> +        get_dir_base_width(env, &dir_base, &dir_width, 0);
+> +        index = (address >> dir_base) & ((1 << dir_width) - 1);
+> +        phys = base | index << 3;
+> +        base = ldq_phys(cs->as, phys);
+> +    }
 > +
-> +    return rsp_len;
+> +    /* TODO: check plv and other bits? */
+> +
+> +    /* base is pte, in normal pte format */
+> +    if (!FIELD_EX64(base, TLBENTRY, V)) {
+> +        return TLBRET_NOMATCH;
+> +    }
+> +
+> +    if (!FIELD_EX64(base, TLBENTRY, D)) {
+> +        *prot = PAGE_READ;
+> +    } else {
+> +        *prot = PAGE_READ | PAGE_WRITE;
+> +    }
+> +
+> +    /* get TARGET_PAGE_SIZE aligned physical address */
+> +    base += (address & TARGET_PHYS_MASK) & ((1 << dir_base) - 1);
+> +    /* mask RPLV, NX, NR bits */
+> +    base = FIELD_DP64(base, TLBENTRY_64, RPLV, 0);
+> +    base = FIELD_DP64(base, TLBENTRY_64, NX, 0);
+> +    base = FIELD_DP64(base, TLBENTRY_64, NR, 0);
+> +    /* mask other attribute bits */
+> +    *physical = base & TARGET_PAGE_MASK;
+> +
+> +    return 0;
 > +}
 > +
-> +bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-> +                      uint32_t transport_type, void *req, uint32_t req_l=
-en)
-> +{
-> +    return send_platform_data(socket, transport_type,
-> +                              socket_cmd, req, req_len);
-> +}
-> +
->  uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
->                           void *req, uint32_t req_len,
->                           void *rsp, uint32_t rsp_len)
-> diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-> index 5d8bd9aa4e..2b7d03f82d 100644
-> --- a/include/system/spdm-socket.h
-> +++ b/include/system/spdm-socket.h
-> @@ -50,6 +50,35 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t tr=
-ansport_type,
->                           void *req, uint32_t req_len,
->                           void *rsp, uint32_t rsp_len);
->
-> +/**
-> + * spdm_socket_rsp: Receive a message from an SPDM server
-> + * @socket: socket returned from spdm_socket_connect()
-> + * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-> + * @rsp: response buffer
-> + * @rsp_len: response buffer length
-> + *
-> + * Receives a message from the SPDM server and returns the number of byt=
-es
-> + * received or 0 on failure. This can be used to receive a message from =
-the SPDM
-> + * server without sending anything first.
-> + */
-> +uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-> +                             void *rsp, uint32_t rsp_len);
-> +
-> +/**
-> + * spdm_socket_rsp: Sends a message to an SPDM server
-> + * @socket: socket returned from spdm_socket_connect()
-> + * @socket_cmd: socket command type (normal/if_recv/if_send etc...)
-> + * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-> + * @req: request buffer
-> + * @req_len: request buffer length
-> + *
-> + * Sends platform data to a SPDM server on socket, returns true on succe=
-ss.
-> + * The response from the server must then be fetched by using
-> + * spdm_socket_receive().
-> + */
-> +bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-> +                      uint32_t transport_type, void *req, uint32_t req_l=
-en);
-> +
->  /**
->   * spdm_socket_close: send a shutdown command to the server
->   * @socket: socket returned from spdm_socket_connect()
-> @@ -60,6 +89,9 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t tra=
-nsport_type,
->  void spdm_socket_close(const int socket, uint32_t transport_type);
->
->  #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
-> +#define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
-> +#define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
-> +#define SOCKET_SPDM_STORAGE_ACK_STATUS            0x0004
->  #define SPDM_SOCKET_COMMAND_OOB_ENCAP_KEY_UPDATE  0x8001
->  #define SPDM_SOCKET_COMMAND_CONTINUE              0xFFFD
->  #define SPDM_SOCKET_COMMAND_SHUTDOWN              0xFFFE
-> @@ -68,7 +100,10 @@ void spdm_socket_close(const int socket, uint32_t tra=
-nsport_type);
->
->  #define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
->  #define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
-> +#define SPDM_SOCKET_TRANSPORT_TYPE_SCSI           0x03
-> +#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
+>   static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>                                    int *prot, target_ulong address,
+> -                                 MMUAccessType access_type, int mmu_idx)
+> +                                 MMUAccessType access_type, int mmu_idx,
+> +                                 int is_debug)
+>   {
+>       int index, match;
+>   
+> @@ -151,6 +227,13 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>       if (match) {
+>           return loongarch_map_tlb_entry(env, physical, prot,
+>                                          address, access_type, index, mmu_idx);
+> +    } else if (is_debug) {
+> +        /*
+> +         * For debugger memory access, we want to do the map when there is a
+> +         * legal mapping, even if the mapping is not yet in TLB. return 0 if
+> +         * there is a valid map, else none zero.
+> +         */
+> +        return loongarch_page_table_walker(env, physical, prot, address);
+>       }
+>   
+>       return TLBRET_NOMATCH;
+> @@ -158,7 +241,8 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>   #else
+>   static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>                                    int *prot, target_ulong address,
+> -                                 MMUAccessType access_type, int mmu_idx)
+> +                                 MMUAccessType access_type, int mmu_idx,
+> +                                 int is_debug)
+>   {
+>       return TLBRET_NOMATCH;
+>   }
+> @@ -178,7 +262,7 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
+>   
+>   int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>                            int *prot, target_ulong address,
+> -                         MMUAccessType access_type, int mmu_idx)
+> +                         MMUAccessType access_type, int mmu_idx, int is_debug)
+>   {
+>       int user_mode = mmu_idx == MMU_USER_IDX;
+>       int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
+> @@ -222,7 +306,7 @@ int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>   
+>       /* Mapped address */
+>       return loongarch_map_address(env, physical, prot, address,
+> -                                 access_type, mmu_idx);
+> +                                 access_type, mmu_idx, is_debug);
+>   }
+>   
+>   hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+> @@ -232,7 +316,7 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+>       int prot;
+>   
+>       if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
+> -                             cpu_mmu_index(cs, false)) != 0) {
+> +                             cpu_mmu_index(cs, false), 1) != 0) {
+>           return -1;
+>       }
+>       return phys_addr;
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index 1a02427627..bc2ca30746 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -56,7 +56,9 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>                             int *index);
+>   int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>                            int *prot, target_ulong address,
+> -                         MMUAccessType access_type, int mmu_idx);
+> +                         MMUAccessType access_type, int mmu_idx, int is_debug);
+> +void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> +                               uint64_t *dir_width, target_ulong level);
+>   hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+>   
+>   #ifdef CONFIG_TCG
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 97f38fc391..564f336df9 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -18,7 +18,7 @@
+>   #include "exec/log.h"
+>   #include "cpu-csr.h"
+>   
+> -static void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> +void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+>                                  uint64_t *dir_width, target_ulong level)
+>   {
+>       switch (level) {
+> @@ -485,7 +485,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>   
+>       /* Data access */
+>       ret = get_physical_address(env, &physical, &prot, address,
+> -                               access_type, mmu_idx);
+> +                               access_type, mmu_idx, 0);
+>   
+>       if (ret == TLBRET_MATCH) {
+>           tlb_set_page(cs, address & TARGET_PAGE_MASK,
+> 
 
-This should be in a different patch
-
-Alistair
-
->
->  #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
-> +#define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
->
->  #endif
-> --
-> 2.47.1
->
->
 
