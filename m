@@ -4,90 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDAA9C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 10:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBE3C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 10:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY0OX-0003Gm-0q; Wed, 15 Jan 2025 05:13:05 -0500
+	id 1tY0Q3-0003xP-5C; Wed, 15 Jan 2025 05:14:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tY0OV-0003Gd-FV
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:13:03 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tY0OS-0001n6-Dr
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:13:02 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so46292275e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 02:12:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736935978; x=1737540778; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=8sDySd/gvOruBbEdgVqNbSumbllq5nWRNb3c9rDvTPE=;
- b=L1bbYRc+H29N8Kt5BcAI+zj/S7z6gCbvxeLiH92X6+/jq808vnt0YDJISfvQ6pjYOW
- Nga7aw6H1QVxa2Gln4p5XWP3v+/nWJ7ECc99ccm8o8hQyWvhvJTtfjOoQb/JBNUwco4G
- QgFKmBenMNorX+3bk/Pca2JpeLj5cnuWZ7oJRcwo1EjVgKZHPtxUPbHF116nP5F08MSv
- 9bR3fw5O9eN9+CJRWHa00rJ3dS5pTgd+f56plfKOsTWKmR3KGNJiSMzcLORgL1/uPM/e
- ci+2q8qdAUksyupLvId3hNnQWxAdMj/3DbVtXFDvx8V9M540O9kSsh7JTB5nxAQpgNK1
- y7NQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tY0Pz-0003wf-2P
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:14:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tY0Pj-0001rv-0J
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:14:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736936057;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Me9WQY6EBeV4wwEolMAXIhmUxCWUpgkVAiWnJ+WGn5A=;
+ b=GNIU5q76dX94DU0weAOFIsw0Ra3j3xjpYqsXtbGZ4LCbRlE+ZJPz5DGMBKRda+3bXVkuFA
+ psxg56CQIh8+1cXYnS99f48jp+ZTqvq58vSxs+WvZp1Sznvo/uX362BqO5NAtXJ5EDh5cv
+ 8F8xdrW4EfYzqGZuw3Vxwgqkxrwu0jw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-paUVVIG2OgyUXn1NTPkBAA-1; Wed, 15 Jan 2025 05:14:15 -0500
+X-MC-Unique: paUVVIG2OgyUXn1NTPkBAA-1
+X-Mimecast-MFC-AGG-ID: paUVVIG2OgyUXn1NTPkBAA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43631d8d9c7so3293465e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 02:14:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736935978; x=1737540778;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8sDySd/gvOruBbEdgVqNbSumbllq5nWRNb3c9rDvTPE=;
- b=PhoO9jJJHcwaj3/0yOKq/wgqH0vPUJJRu+RPZQk4m/GGyTEsJ2h9W9OgX1uVkNEJCX
- Sa/8PNvvUGbnp+/GlQdUG43Nxi1IPCuY1Ixe3E41w/D3RALim6XhrGzGoE/BZ0VqKteR
- H/ApQKtBP0BR8DwaMqrKy7FC9Dpbc86CpIID6Xul7pLWCHfN3UfUZiaPB6ntMQa953iG
- +UdSFOZ9oEFs+cly5AO1973wb5D7oNlX1HzgX9IG707iJG6DZTt7C4zRag7Pwm8Ayy6k
- wGKnHnCX6T2pV2T5ImpgJ/gH1cG8L51xT+9bzxUzFD5mQLyE9oqpf8d2l1LhVruAKAZK
- b07Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWub7UpaKcIFEIRV3epi7Of+aOLMa8yYoX6PbuB/5kSQjrbCRLeweiIevh7t97VEK7/P+1JBnJiU4A5@nongnu.org
-X-Gm-Message-State: AOJu0YxwYwtz09Fm51j3ONkidIK8RgYp3XD0F4DxzNG958K+PTqHaLcD
- 0uYHf8ysL92noWIa8NeuAkWwBJs9QI8AgnBn/1zQezW+Mw1/YT1rq/WMY40FjtI=
-X-Gm-Gg: ASbGncsdofGgGkLEUZ3FaGS6q+XLiwBQCnvLjyX5jqb46tFF1/twx6D2wv/HcyYyi8z
- g/h13H2iXIDs5gykFE/O/3DPTxUJ6gwZgJ4at0l7ktCuT9n5CaecYRvHNQr6+apu66H0Lk6J5Mb
- fflIr/Iw6rXKZEiSLYWKkI3ev67e4QtEtUdr2Dx+LyIOjcCBjidP1PCWpOOo56YO6iu3ik440KL
- ZL4JNr+D8vxMb9JgM1WvOAubmBFCUI1C1DOVLkiBhYx4vvmVFzQhEQuKbyhraxwafJOnlKNPFwK
- O4+RuZ0O2XapzNfBK+29dU3aO39o5LkoAY7Q8G0SDw==
-X-Google-Smtp-Source: AGHT+IECmlfyGK1rIkNl6ZnzdufJ+RKdsDsl25C7Uraqweig/uVx2a8mMF9XQFn8R3ueUkiGqWwwMg==
-X-Received: by 2002:a05:6000:709:b0:386:4277:6cf1 with SMTP id
- ffacd0b85a97d-38a8733a278mr28629688f8f.39.1736935978535; 
- Wed, 15 Jan 2025 02:12:58 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38f0eesm17472636f8f.61.2025.01.15.02.12.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 02:12:58 -0800 (PST)
-Date: Wed, 15 Jan 2025 11:12:57 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Huang Borong <huangborong@bosc.ac.cn>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] hw/intc/riscv_aplic: Remove redundant "hart_idx"
- masking
-Message-ID: <20250115-487f87619f8bb1d8ef71d0d9@orel>
-References: <20250115035105.19600-1-huangborong@bosc.ac.cn>
+ d=1e100.net; s=20230601; t=1736936053; x=1737540853;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Me9WQY6EBeV4wwEolMAXIhmUxCWUpgkVAiWnJ+WGn5A=;
+ b=LKmgLCKLGw7Yo0sUxE1f2uoHGOrqQB0g04BYDwR0GgQT1QNfaLBre9w6iC5PoENrRT
+ Hdm+JfjVeWGOCm9z6ewWU+9HEZnUfxfTxa/hzS1T+EoIC4X7rogpHbn3v9snl0N7g19O
+ igmFa7JTmA0A+vbZcN2tSAtk5eR7MlOXqyevYYlJIaxP4Ah53BPnxXZ9s80EG6e1sOYj
+ OqRyJ4Yen5LpJ9FTizOR7VjGQkgq0/ZG9BnEfluhxHkaWzFO9r+drrMVTfojixUDcih7
+ XxkJGCFbWxlcjFSgIswfKqWOs4oy53wTBLbMw1VNt1SYOj+o3YrkAqY++FHK/NAqEakP
+ HSGw==
+X-Gm-Message-State: AOJu0YxqczjUU4QnzrCS6enHY2agUv9nR99cZQjC7sqyxuVyIhSC02o3
+ 9ASSNEoJq/dhRzLFBt3UxezoRnXtbuT3JxllvExPAnWYKrtqBCUx/UQJoQkMTtToSz7zEl6TpFK
+ RQJv95Wj10GpSBvFi+Kri068bKN/ds29QarIwm6SPngw1LecEcZtXj4Dbi2RWmPM=
+X-Gm-Gg: ASbGncu26RzIwISaxUFejjU9YAeWTRuluci7dhxN2W4/4Pm0O+beWODLWq8u9TRmg82
+ W7O8i8YQeVBNd3KZ3gcnRSuiISiTY67RLnFT0YXO3zLTVdz08Odg1k9gAd/W9tOIofWkLI1u0fv
+ 4oVQsLk5Up9v8Y3mYPIVSDK8pMF/M0j+oyh7m2YycJ/glx0TxlW3nGvOqvO2V7bx+LSoth91HNC
+ 123ccJPSqAjOHUT3GEInr+6CM2dfkGbD8OxUe0ldRVztGFmjsfh3vvD1Y8b
+X-Received: by 2002:a05:600c:4c06:b0:434:92f8:54a8 with SMTP id
+ 5b1f17b1804b1-437c6a86b58mr17756265e9.0.1736936053435; 
+ Wed, 15 Jan 2025 02:14:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFUlQGFN224qrGoQhgJFBSJrA/2XZxUHpWk+JKYjYdrqzdiFC0XQ/W4fiLFT6f6ACcc1BpiIg==
+X-Received: by 2002:a05:600c:4c06:b0:434:92f8:54a8 with SMTP id
+ 5b1f17b1804b1-437c6a86b58mr17756095e9.0.1736936053125; 
+ Wed, 15 Jan 2025 02:14:13 -0800 (PST)
+Received: from [192.168.10.3] ([176.206.124.70])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-437c74d8cddsm17781285e9.30.2025.01.15.02.14.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jan 2025 02:14:12 -0800 (PST)
+Message-ID: <9a0389fa-765c-443b-ac2f-7c99ed862982@redhat.com>
+Date: Wed, 15 Jan 2025 11:14:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250115035105.19600-1-huangborong@bosc.ac.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 3/9] rust: vmstate: add varray support to vmstate_of!
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
+References: <20241231002336.25931-1-pbonzini@redhat.com>
+ <20241231002336.25931-4-pbonzini@redhat.com> <Z33w1ykoafUl2WD7@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z33w1ykoafUl2WD7@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,46 +145,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 15, 2025 at 11:51:05AM +0800, Huang Borong wrote:
-> Remove the redundant masking of "hart_idx", as the same operation is
-> performed later during address calculation.
+On 1/8/25 04:28, Zhao Liu wrote:
+>> +    #[must_use]
+>> +    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
+>> +        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
 > 
-> This change impacts the "hart_idx" value in the final qemu_log_mask()
-> call. The original "hart_idx" parameter should be used for logging to
-> ensure accuracy, rather than the masked value.
+> I understand you checked VMS_ARRAY here since [T; N] has this array
+> flag.
 > 
-> Signed-off-by: Huang Borong <huangborong@bosc.ac.cn>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
+> What if a Rust device just store a pointer to the array? If we allow
+> this use, then it seems also possible to set varray flags...Then what
+> about dropping this limitation?
 
-Please add a changelog here when sending new versions. In this case,
-it could just be
+Box can be added for that purpose:
 
-  v2: Improved commit message and added text about qemu_log_mask
-      to the commit message
+impl_vmstate_pointer!(Box<T> where T: VMState);
 
-Also CC reviewers of previous versions even if they weren't CC'ed
-on the version they reviewed.
+Also I need to drop Option<NonNull<>> because of
 
->  hw/intc/riscv_aplic.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 4866649115..0974c6a5db 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -421,7 +421,6 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
->              APLIC_xMSICFGADDRH_HHXW_MASK;
->  
->      group_idx = hart_idx >> lhxw;
-> -    hart_idx &= APLIC_xMSICFGADDR_PPN_LHX_MASK(lhxw);
->  
->      addr = msicfgaddr;
->      addr |= ((uint64_t)(msicfgaddrH & APLIC_xMSICFGADDRH_BAPPN_MASK)) << 32;
-> -- 
-> 2.34.1
-> 
->
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
+                 assert(first_elem || !n_elems || !size);
+             }
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+in migration/vmstate.c.
+
+> However, I also doube that pointer usage is bad; we should always use
+> Vec.
+
+Vec support is a bit tricky because the number of elements is not 
+accessible from C.  But unbounded arrays are rare in devices.  We can 
+think about it later.
+
+Paolo
+
 
