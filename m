@@ -4,132 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8243C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B94C1C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY8hl-0001e2-U2; Wed, 15 Jan 2025 14:05:30 -0500
+	id 1tY8dX-0007Fv-Ke; Wed, 15 Jan 2025 14:01:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tY8hd-0001Oh-Fe
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:05:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tY8dT-0007E7-TZ
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:03 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tY8ha-0006d3-U4
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:05:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736967916;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kowpaTu7bnYtvxT2FQEB41f+g099wMLJLcSIxVKxhkY=;
- b=HobGDa8chU8aDVgtC4XpBcQeV166dZAuasswqCsOgDKFLSUZBWed3blb1xPRgTi1tzV+HY
- gJGOn9gpEN/t+qlaD5NUXL8LOSjwXejGPx31vE5Eu2EkGFicQA/ac3c3vsJ41iPQB6v2cc
- YCtpWVLvEIEo76DBzu0KmCA3Wr9W2Vw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-gWuO2TkcNSehVq0hTYerCg-1; Wed, 15 Jan 2025 14:05:14 -0500
-X-MC-Unique: gWuO2TkcNSehVq0hTYerCg-1
-X-Mimecast-MFC-AGG-ID: gWuO2TkcNSehVq0hTYerCg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-436723bf7ffso225785e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 11:05:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736967913; x=1737572713;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kowpaTu7bnYtvxT2FQEB41f+g099wMLJLcSIxVKxhkY=;
- b=V0DiUMsAdZXPqHuAByjt7csrXMGVopXEd+X1GOsv3XPMeOX01RgKHVvl7MMRWf2/55
- Nrr6i2n3Dgcb8b16m4h6Oq/GSCDIPuDmY9CpHGb0Z+9XHsoML+AlF280DSqgDg3W3faR
- lWN1STK83fOWBu6/G3pDhCzkz+7lM+enQehubLnXnYA44htCCvg4zGs5l/TOnPiPjZk4
- w8APbqg49q3fESHf+zEAL7gwLh2d/dmeHcQ/zbY7eCqEodz6SVqLrJKBoGaV13hrcVQK
- Z5yv96WFSyMENnku05KAD6DeaLxdsESJ3QKp7C5vyHNoqmqOkgmJtz3W4vwM76u6/xey
- WNrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViuTnyhOEVhIbmGysKtHCniZHSJ+p30h2cDoWWjEVm5RKUOhd6bPmCUFIBc/RUHS3XEGXg2Pf1PEwr@nongnu.org
-X-Gm-Message-State: AOJu0Yy/GDfRfWIMZUDPyKK73UAoz4ZOj69pkt1unL9VN5MwZECUPUg0
- QNu68G6MuNF8/+tQokiqH9GnKHocntN0lXCQs+xhMvxqjicjQOImvtnta++B3uRACFF2AtQx84z
- d9Lod2qsDvVfJ5lOit00qMGZ9ElVatJwhUy8TVCoiORxF9PK9n4fH
-X-Gm-Gg: ASbGncvaWKC8jr896mUa4Px+x109zW64tny4ZdGIt1Dnvo7uG7de8SP8HLvzgZ2EL33
- 6g2CAyEMbTso9smI3rCP+a4PSAEXhhamc/SPU6nco2IR6Qf/iNuPKAH+0rrrG2FRZIJHLICEypO
- c6O978dXaXILR4NwClo/5J7szxcjCcfi1qSCrCshTqfJHRfTGHgS6uG11quVC1SnW+sMDWvlDHa
- MqhxPA1Ac19fn6IwIOd6RYPJvItnFvEuvVMbH0ene/AW3ug50aepf4XiQnt
-X-Received: by 2002:a05:600c:4f4e:b0:436:1ac2:1acf with SMTP id
- 5b1f17b1804b1-436e26e28cemr271163725e9.20.1736967913612; 
- Wed, 15 Jan 2025 11:05:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH9lrBcPfHS079Mcedf4reDWCRUrvEEohimeIyr++zSjZUNT9GeY4kByFU016uSBG0S5wrR/A==
-X-Received: by 2002:a05:600c:4f4e:b0:436:1ac2:1acf with SMTP id
- 5b1f17b1804b1-436e26e28cemr271163475e9.20.1736967913210; 
- Wed, 15 Jan 2025 11:05:13 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38c1d6sm18690132f8f.50.2025.01.15.11.05.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 11:05:12 -0800 (PST)
-Message-ID: <8dff3836-1c96-4ae8-a9d8-f86f97d78986@redhat.com>
-Date: Wed, 15 Jan 2025 20:05:07 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/runstate: Fix regression, clarify BQL status of
- exit notifiers
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, akihiko.odaki@daynix.com, dwmw2@infradead.org
-References: <20250112212609.17996-1-phil@philjordan.eu>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250112212609.17996-1-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tY8dS-0005bw-7g
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:03 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHtkoO008404;
+ Wed, 15 Jan 2025 19:01:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=+HadwAGdJ+iSEEMK4EvnnIajika603utvB3vpuYF8wc=; b=
+ LTRSNjQvLUIwCYBEzWiX823YLAFg7EeDJ8+EyBvGK1/YkR5p9J4wY5phfvagaXzL
+ 6QrGdnnkABmHTXRv4LN2nSNVxCMqb6VQPKfq8A6URkcDgCm3WlTJ8SsX683MaQ8J
+ v+r2dMSOsg911AgQlH97NB54CIlWIWBpWDiNFW4ntouIyelEIfc1jorcMmRHIJq6
+ uMnCNO4jq1V3rrgTUebb2+NkoOoIez3qg4s2x/MK6iCctTowY2jwT1sL/EzD6PEa
+ Y/WdWw9Yx1h7yXSAlq6o0/qyddcZB7wk4CFbbdnHH+t+g+c66Kz7GrO06BgM9rBB
+ BRUSMVVNzHuE4AlMwGUHCw==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443f2c0r1y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jan 2025 19:00:59 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50FIWYUI034946; Wed, 15 Jan 2025 19:00:58 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 443f39ur3d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jan 2025 19:00:58 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0peB016497;
+ Wed, 15 Jan 2025 19:00:58 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 443f39uqwr-10; Wed, 15 Jan 2025 19:00:58 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V7 09/24] hostmem-memfd: preserve for cpr
+Date: Wed, 15 Jan 2025 11:00:35 -0800
+Message-Id: <1736967650-129648-10-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_09,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ bulkscore=0 adultscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501150138
+X-Proofpoint-ORIG-GUID: bkJhyIq6sd5d4EjFtSg8Y1rk1ZbE8ewi
+X-Proofpoint-GUID: bkJhyIq6sd5d4EjFtSg8Y1rk1ZbE8ewi
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -147,38 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/25 22:26, Phil Dennis-Jordan wrote:
-> By changing the way the main QEMU event loop is invoked, I inadvertently
-> changed the BQL status of exit notifiers: some of them implicitly
-> assumed they would be called with the BQL held; the BQL is however
-> not held during the exit(status) call in qemu_default_main().
-> 
-> Instead of attempting to ensuring we always call exit() from the BQL -
-> including any transitive calls - this change adds a BQL lock guard to
-> qemu_run_exit_notifiers, ensuring the BQL will always be held in the
-> exit notifiers.
-> 
-> Additionally, the BQL promise is now documented at the
-> qemu_{add,remove}_exit_notifier() declarations.
-> 
-> Fixes: f5ab12caba4f ("ui & main loop: Redesign of system-specific main
-> thread event handling")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2771
-> Reported-by: David Woodhouse <dwmw2@infradead.org>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Preserve memory-backend-memfd memory objects during cpr-transfer.
 
-I'm worried that this breaks for exit() calls that happen within a 
-BQL-taken area (for example, anything that uses error_fatal) due to...
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+---
+ backends/hostmem-memfd.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-void bql_lock_impl(const char *file, int line)
-{
-     QemuMutexLockFunc bql_lock_fn = qatomic_read(&bql_mutex_lock_func);
-
-     g_assert(!bql_locked()); // <--- this
-     bql_lock_fn(&bql, file, line);
-     set_bql_locked(true);
-}
-
-Paolo
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 1672da9..85daa14 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -17,6 +17,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "qom/object.h"
++#include "migration/cpr.h"
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+@@ -33,15 +34,19 @@ static bool
+ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+ {
+     HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(backend);
+-    g_autofree char *name = NULL;
++    g_autofree char *name = host_memory_backend_get_name(backend);
++    int fd = cpr_find_fd(name, 0);
+     uint32_t ram_flags;
+-    int fd;
+ 
+     if (!backend->size) {
+         error_setg(errp, "can't create backend with size 0");
+         return false;
+     }
+ 
++    if (fd >= 0) {
++        goto have_fd;
++    }
++
+     fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+                            m->hugetlb, m->hugetlbsize, m->seal ?
+                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+@@ -49,9 +54,10 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     if (fd == -1) {
+         return false;
+     }
++    cpr_save_fd(name, 0, fd);
+ 
++have_fd:
+     backend->aligned = true;
+-    name = host_memory_backend_get_name(backend);
+     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+     ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+-- 
+1.8.3.1
 
 
