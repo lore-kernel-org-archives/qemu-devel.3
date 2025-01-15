@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F48C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A37C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYCq2-00061a-4C; Wed, 15 Jan 2025 18:30:18 -0500
+	id 1tYCq5-0006HO-4J; Wed, 15 Jan 2025 18:30:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCpr-0005rY-I4
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:30:09 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCq2-00066h-Ra
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:30:18 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCpk-0004ky-Q8
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:30:03 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-38a34e8410bso164628f8f.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:30:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCq1-00052X-91
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:30:18 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3862ca8e0bbso270003f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:30:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736983799; x=1737588599; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736983815; x=1737588615; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IAnsUgZcwbLVJsP/XsIEi+0G7e096dCuqBuVIP59Z6k=;
- b=U38IV2GEb/wluFa0/+zkSWXPjq3nsrV0j0XsryBu2FxqXqxctc/5+7lAwE8BJts0x6
- IXhZ1eL74lsQTTYOn6LYaL6NJ3/iihOg+c8oOh+W06pAW6df3cHGGfV9JK9TaD4aqlhP
- ihZOZ06icQfGjHPyF5jDA/OEXMzYEe6BKVafnx2nvzCRAwQKDGEhbqPque0Pt5ccof9D
- Q0CMCQdFA7Xw90TB+D8B2PjL/OIkAp6+1s2Sjiae0frGkIn/swoBEltj3bH8/fy0uTKh
- doqEN1hD4osZSFb0DTXWj6sb7sqdwKsTwCv9Iirs2/ZsLlwte/eRPcAsJRMqzHr8WY7z
- tm1w==
+ bh=lQE5apo0BwOCfvKDAYCRzW+MfDklvN0VdczsmfqZ8+c=;
+ b=g2aXa7dTkqWaCOGs3xMpKwOIa4gh63hN0eHbpPgcbDPNmr90aSHOmHkaxt1qNuctEc
+ I8oqfZz6RuDW1T08xd6yZDqnIhFdOcM28YZUXOU16JGtavUFrGB+DscKsjq0xaaQUmkM
+ GFJDK1OA2Vb1Xh6FXUA8i8JwnTJ/15/rGkJPc+2Zcizew3TLFR124lHiD5Whtig7kofu
+ NX8392GB4sMTrnVAGNIsYXvPoGp61jIHlF581mRpqaeChk7/uNqkjputdoEJF+95IrKw
+ b7TSWBreQbu6gQ5VQJxRxypZeG0J4Suvgc+YuvaO5M5YQg+lw2PY+pkP7FKlk2TTM6eQ
+ 7y+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736983799; x=1737588599;
+ d=1e100.net; s=20230601; t=1736983815; x=1737588615;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IAnsUgZcwbLVJsP/XsIEi+0G7e096dCuqBuVIP59Z6k=;
- b=g9zGvFgfz+a9+UvP3NPhVxfl/y0pqb/CDlF4FyPW/G07camhrU5XYabaGpL3k2TtuW
- pQ9MCAOTFMuxMKLRz4MofN9mxeFE7PnKlHs8daia4LsyBP4AfHuRd1oint8WbSN0U/uS
- aydy1bbzsMEzCfaJGpg4IK7unrruYy1Rf4xL2qQ1oW8Z0xR8YstItQBBNSGHDWn6itpZ
- iWykNrGg/onFqBNwF1HBpOWXv2YpwhytEbxEzQxSKnKFMLcEv1ysn4Y1M0bxb2zb9hD9
- w5ho6FOr3jFf+cMwuVgd0QLyC1Bt7H4uSoMRN1tve5eWVCjYPxgBBVeBII+SyaIMNiZh
- A++w==
-X-Gm-Message-State: AOJu0YwnmZKvq/Jo8Z0fVsbgGpTXiAB2irY9we5yTkjVssGWrpQpHkoW
- AkSavXuntJk6/fVPCfRdzuspzDt8ffgdjLbH31jHqmDasQDJfiOUut0uf/+aDZIDv/jhA0Ol+zg
- vUnw=
-X-Gm-Gg: ASbGnctVur+PXVpz9bI/GBNaoI9SRJSCI+/MU4k9sCfY058V7gyU8oQjwziEecz0qvX
- 56htgLqiMGlVv4DXucdNjG0xf6z5+3vrzUPQD7fDXcdpyYwfx4lWz6YaUtQOyVH9iqBHjPA8YKm
- wgh4mMGk7rfGTOkS9YokC4nV1Il06W18bevGibGJLzStG7BxwvZB79GVVSzzc35+ACqOifmaGeC
- E6v6buRT8n+iHrfmFGWRQuhUZgFxbWXt2VyRYuqQcZyQj+tfaINA0cJLUUS9wcNRvEb5LVXJthO
- e8OhgnU87S0M5ppo5nBwARQJ56Fsats=
-X-Google-Smtp-Source: AGHT+IHb1KTnaXuK6ME5yCwJClco1y813M6gd98dhSCAyEDFU76dOcyH/7eug+1THIJpaDVs7fIiPg==
-X-Received: by 2002:a5d:6da4:0:b0:385:de67:2269 with SMTP id
- ffacd0b85a97d-38a8730e04amr26216975f8f.36.1736983798887; 
- Wed, 15 Jan 2025 15:29:58 -0800 (PST)
+ bh=lQE5apo0BwOCfvKDAYCRzW+MfDklvN0VdczsmfqZ8+c=;
+ b=B+5W+g0C7c5sjk7EcbFRVBwvxbZfAIhk9dFf7BdLGOtk9wnNnA4FH2QTcquJA8sWT6
+ ZMZdcY9kPIcRANWe4FUUqZDcY1Uk6pw0OmnKeeUQhQZVaR7GtOT4zyN3K1ltNftlhv6N
+ JxgrtoVHLqRoisFPk4fOoQjGE3JPL4rUlK5KcbgFFmJcYazywnUG3jiPxjssYEAM9DnU
+ n/t0lg0uvQ6y3WX+2rKGyFqMP5tlX7/XqcDROdoIKO2gBfSRtzAoGxb3Rg6Te9BAoS6V
+ H5DUMwloylRTTd/yS3dXzjp5333H/kP5xQfCoLXdzDbS7lwymM65bW8z6DFDD5GcdU5H
+ ZfxA==
+X-Gm-Message-State: AOJu0YzhrYu8HxekkhzQ8yeI2Dl4cqdAIeV3kkcwkRAIQlpoD8W36ynV
+ rfyVh7bnLQh4kmG3NBBEGp2EXMiiXFKqWwvrV06qVWDL/DTucgy3socs60aovNoiHzuabgwx6p2
+ hAZk=
+X-Gm-Gg: ASbGncuStcKSWFE6Blm28NXWPJZaQoZrmhBnq+6Bk4ZdiWtVe2K0lw5zM2K+xafWbNX
+ uVWLr9ry7AvKM7GABFRmGWM/rpWwLCa0Zk674sl18Xj8No50CMQRKCmzovy/ihHRDgJLN4XlIeQ
+ YF2GgfCLdDeFcenA9B3hWLEUN++IrCBWPh0aPY6yw1bEt+EFK7XPC+pJosy2HydEAFIoxinDAKq
+ QwBjXa55zI3rwJGyVN9lSeTiY572fKH/DKR8sZV12x/tiMYq/5ai+CL0ftOkEYXsdvqp0fMF3yb
+ /VzMHDtI8DJwqxtxjSg6YHDKIYrBV38=
+X-Google-Smtp-Source: AGHT+IFlVLkcGIhwUJu3Yrlfva+Jv9uwjPcqHOeDjhlAm5gZICd70ZEhCL2aObmd1Nb2cNDe/vXmhA==
+X-Received: by 2002:a05:6000:4618:b0:385:f560:7916 with SMTP id
+ ffacd0b85a97d-38a8732aeefmr32441179f8f.35.1736983815580; 
+ Wed, 15 Jan 2025 15:30:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b7f79sm19196267f8f.69.2025.01.15.15.29.57
+ 5b1f17b1804b1-437c7499932sm38704655e9.7.2025.01.15.15.30.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 15:29:58 -0800 (PST)
+ Wed, 15 Jan 2025 15:30:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Huacai Chen <chenhuacai@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 01/11] hw/mips/loongson3_virt: Factor generic_cpu_reset()
- out
-Date: Thu, 16 Jan 2025 00:29:41 +0100
-Message-ID: <20250115232952.31166-2-philmd@linaro.org>
+Subject: [PATCH v2 04/11] hw/mips/loongson3_virt: Pass CPU argument to
+ get_cpu_freq_hz()
+Date: Thu, 16 Jan 2025 00:29:44 +0100
+Message-ID: <20250115232952.31166-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250115232952.31166-1-philmd@linaro.org>
 References: <20250115232952.31166-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,73 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-main_cpu_reset() is misleadingly named "main": it resets
-all vCPUs, with a special case for the first vCPU.
-
-Factor generic_cpu_reset() out of main_cpu_reset(),
-allowing to remove one &first_cpu use.
+Pass the first vCPU as argument, allowing to remove
+another &first_cpu global use.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/mips/loongson3_virt.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ hw/mips/loongson3_virt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index f3cc7a8376f..47d112981a2 100644
+index 1f5952d7082..9c2001295d1 100644
 --- a/hw/mips/loongson3_virt.c
 +++ b/hw/mips/loongson3_virt.c
-@@ -399,25 +399,33 @@ static uint64_t load_kernel(CPUMIPSState *env)
-     return kernel_entry;
- }
+@@ -153,7 +153,7 @@ static const MemoryRegionOps loongson3_pm_ops = {
  
--static void main_cpu_reset(void *opaque)
-+static void generic_cpu_reset(void *opaque)
+ #define DEF_LOONGSON3_FREQ (800 * 1000 * 1000)
+ 
+-static uint64_t get_cpu_freq_hz(void)
++static uint64_t get_cpu_freq_hz(const MIPSCPU *cpu)
  {
-     MIPSCPU *cpu = opaque;
-     CPUMIPSState *env = &cpu->env;
+ #ifdef CONFIG_KVM
+     int ret;
+@@ -164,7 +164,7 @@ static uint64_t get_cpu_freq_hz(void)
+     };
  
-     cpu_reset(CPU(cpu));
+     if (kvm_enabled()) {
+-        ret = kvm_vcpu_ioctl(first_cpu, KVM_GET_ONE_REG, &freq_reg);
++        ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_ONE_REG, &freq_reg);
+         if (ret >= 0) {
+             return freq * 2;
+         }
+@@ -632,7 +632,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
+      * Please use -L to set the BIOS path and -bios to set bios name.
+      */
  
--    /* Loongson-3 reset stuff */
-     if (loaderparams.kernel_filename) {
--        if (cpu == MIPS_CPU(first_cpu)) {
--            env->active_tc.gpr[4] = loaderparams.a0;
--            env->active_tc.gpr[5] = loaderparams.a1;
--            env->active_tc.gpr[6] = loaderparams.a2;
--            env->active_tc.PC = loaderparams.kernel_entry;
--        }
-         env->CP0_Status &= ~((1 << CP0St_BEV) | (1 << CP0St_ERL));
-     }
- }
- 
-+static void main_cpu_reset(void *opaque)
-+{
-+    generic_cpu_reset(opaque);
-+
-+    if (loaderparams.kernel_filename) {
-+        MIPSCPU *cpu = opaque;
-+        CPUMIPSState *env = &cpu->env;
-+
-+        env->active_tc.gpr[4] = loaderparams.a0;
-+        env->active_tc.gpr[5] = loaderparams.a1;
-+        env->active_tc.gpr[6] = loaderparams.a2;
-+        env->active_tc.PC = loaderparams.kernel_entry;
-+    }
-+}
-+
- static inline void loongson3_virt_devices_init(MachineState *machine,
-                                                DeviceState *pic)
- {
-@@ -572,7 +580,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-         /* Init internal devices */
-         cpu_mips_irq_init_cpu(cpu);
-         cpu_mips_clock_init(cpu);
--        qemu_register_reset(main_cpu_reset, cpu);
-+        qemu_register_reset(i ? generic_cpu_reset : main_cpu_reset, cpu);
- 
-         if (!kvm_enabled()) {
-             hwaddr base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
+-    loaderparams.cpu_freq = get_cpu_freq_hz();
++    loaderparams.cpu_freq = get_cpu_freq_hz(cpus[0]);
+     loaderparams.ram_size = ram_size;
+     if (kernel_filename) {
+         loaderparams.kernel_filename = kernel_filename;
 -- 
 2.47.1
 
