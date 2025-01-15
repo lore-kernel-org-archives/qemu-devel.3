@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57558C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BF9C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7rl-0003il-Mb; Wed, 15 Jan 2025 13:11:46 -0500
+	id 1tY7sL-0007H2-Ts; Wed, 15 Jan 2025 13:12:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qJ-0007TA-E7
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:17 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7rB-00018L-OX
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:11:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qF-0006wZ-FL
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:12 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7r9-00078p-SW
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:11:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964610;
+ s=mimecast20190719; t=1736964667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=jusc2KOu8CYjh6OpTg0cDGaXqteaxjITOrBf0/V0A/Q=;
- b=IiF/sz3XYfmHb6Ljv6Ml2JY17KIiwuDdanwpJafBml/EPzjwA2Mdpey7ce5z9T16zC9VGC
- HO8BIxk431fzaJzmM6yXw0QHWnumbsX5gRSNhqzpB2mNDhWd8FNnLK9pteJCTCEfLSds/U
- b45r7F1YwiRE/2ohx3jqhLPjGb4thrk=
+ bh=BEGdjo90qqstcjYDzVJsyocDHaSy9bqqB/C1TwUZ5n8=;
+ b=VWgSJnGcpdytGHcWBgh9IesEXsGZDhTfr+VtMU9Yj43k97FltUI3wpCvXbl228VTcEx2RE
+ gSlCdl2ZPjtoSzmZ0el5WhuyeCpTLmJ/nDt9GVgmM5NnK6+BJ9FCtUzafQh/YDcU6hCGv1
+ 0xyAvGJ2ONjhqjuL7ZKL/iHNn6jL6Mc=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-8R_nRV4pMMyFnGihCQy_4Q-1; Wed, 15 Jan 2025 13:10:07 -0500
-X-MC-Unique: 8R_nRV4pMMyFnGihCQy_4Q-1
-X-Mimecast-MFC-AGG-ID: 8R_nRV4pMMyFnGihCQy_4Q
+ us-mta-427-lXlZ7V0zPDmaN1bTpWk4gA-1; Wed, 15 Jan 2025 13:11:05 -0500
+X-MC-Unique: lXlZ7V0zPDmaN1bTpWk4gA-1
+X-Mimecast-MFC-AGG-ID: lXlZ7V0zPDmaN1bTpWk4gA
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-436219070b4so33428605e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:07 -0800 (PST)
+ 5b1f17b1804b1-4361ecebc5bso36870885e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:11:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964606; x=1737569406;
+ d=1e100.net; s=20230601; t=1736964664; x=1737569464;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jusc2KOu8CYjh6OpTg0cDGaXqteaxjITOrBf0/V0A/Q=;
- b=f8YjMBlqZEfBVquz50Ex/RqdoIZFbtd0HM4v55xnTt2LbyUDtP5teidX0xLEyGnbfB
- cXwLsYOOmPzEiXFeVulWO/tQpnuUKziyT6+o7zEKXz2lYSROFqj6GXdG1+e35t8hXbw4
- WS/wTWvNJeYwbjAXoyjHvq4XbxifBJgw97mU4PknAEXdmABdUwAnkHpGgWqhOiZPTc8x
- 5b+OGp1G7xol8vUKt+jqjuOizXmpF1pNaJHhB/SLLjFaQDkUP6vgMXwGhDjia0/F2EXD
- gEdpEYZ3wIKKk4erakzkgzWWOKkPTim5clibFDgfFx3Y2QN2NpxxrTUi92uuzhm+HUJY
- v0Mg==
-X-Gm-Message-State: AOJu0Yy9tp163czLdyrhe6SEdPxMdKOC43BSb7UCFc3fTsLMDZy1w1iR
- TAJw8OeaNDSssniWz2p+1PvWzV3KCM5IkU2QJVez6mxNaOg1ewwzSj1Qmt2fuJQ4S2GV9kZgoL9
- e17snpTqoIlyeYvt3zB5CrQPUKq2n7Yul1hWawFxuBiDGMOBlzU5v3LqfTRlLlTeaY0ndIDGpCY
- pq+n35WnUz78BXt41aM7RlP8BlkMoDUw==
-X-Gm-Gg: ASbGncuK/p2tyP5BfjMtvW64sdzgZO++D1T6mcWVicwzEyANI4KIxprCpqGrJ0GrZug
- J4RMYUk3HDu9N0mb/U67o0HMR6u8IJd6Mp/9qeNlxnVbVfyXJ7gZJr9Q4rnmsxRHWdeFgX4a71y
- +KNxieN0pIA/A5RRSqVoJxuQFVRm+ks8HyCFXJFxhOhI2FlyzjO8070idWRsKqdrMJbd+HD+9Pe
- +aQ6D5GvXJ37SCPRUz5ACFDkQ+w5RTnmsSlCe47tMiyLfghNN/B
-X-Received: by 2002:a05:600c:a08b:b0:431:5863:4240 with SMTP id
- 5b1f17b1804b1-436e26dda73mr234839525e9.24.1736964606403; 
- Wed, 15 Jan 2025 10:10:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH+UcDHey3YB0GtuhXY5QsfCKDHAKeg3yXN/XZN/OL3wZvIhBOUPHNGcn6ffH9qMuK63nQxzA==
-X-Received: by 2002:a05:600c:a08b:b0:431:5863:4240 with SMTP id
- 5b1f17b1804b1-436e26dda73mr234839235e9.24.1736964606030; 
- Wed, 15 Jan 2025 10:10:06 -0800 (PST)
+ bh=BEGdjo90qqstcjYDzVJsyocDHaSy9bqqB/C1TwUZ5n8=;
+ b=JnIzb87/z0J2Qpuln8NtOInGf8OTJTT3Mg1Z3/1b+2J2+YwW40t3/VQQRAFp7KL+Kr
+ EM7YAS3JYVSCW6f144nfQiuFSxZ0LsOD2Sz5u0YD5Vz9tXeOvoDdKvNS7yOY8Cj7kD/s
+ mc9AkZ36Fsvx6j6XBcCq00TDC/fyC9UsMxQe1wkTb/5sjwKBV9LjQcT8zUrtrwF+cWhw
+ jVYzRaqxhJbdQ0rw7UZyRRP1Xq2ONpDjISfujU9zyrBaO8xQsH9b9cIR7DmxTjE4m0LJ
+ 8UDl1muXPtW3D3YMroeMAbkUMyXkYfdfru7EcS/A2bzFSoyhV3lSVgj5SdyPUxH2XJhi
+ f6Wg==
+X-Gm-Message-State: AOJu0YxPFZjytznZ/biLfC5wKFesxnsrd/jQw9BxQXOrmDbJaXYcwq1a
+ HRnrM/AY1Ggo6nts3TETR3b1M542eRifie0lLuo5RuQaKb+/yWGaWet8KEF0pN9TEj0kACs7Fs4
+ HwjcRoiGrB2au1wT8TBEE7smFfxfv/XEswGql2HNEhiPHCd+4cJn4XVhOBqbL1upt1+YDsRRXCZ
+ zDt7vv94yIktFJL4vfpKE4lcUCnHc5ug==
+X-Gm-Gg: ASbGncv+SpyZt5gXJb6fASGvdYKdG2GwqOtu+9jRn4wKdP1pokMbeJgR5s3dn7D9ysj
+ sXXjGkA+lSdxBzOzjb6LYIjcpRgLbOhSI6YHzKhPpwroyi60CE3I+pveoY8JAQzz9s4E+oYEWj8
+ S0WPBs0OfomG4CTOOt0Vfa+9VGfh3CBOv4adsYzz1im36TmnW78oh/jbdTutymqlw3wC24Tnkdj
+ m1d/oUR3i3tVxgFR8FDAPFdC+iV7yMEoFPv9VvNADk4ybXWKQGQ
+X-Received: by 2002:a05:600c:4586:b0:431:44fe:fd9f with SMTP id
+ 5b1f17b1804b1-436e26f041bmr246316635e9.23.1736964664352; 
+ Wed, 15 Jan 2025 10:11:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+V2hQZZ9f5rOnSH6Sk4dEveyDzjCfNx8NCFMjPNHi2wdKyOzMNhGHuNbivQsZb3eiaxAPNg==
+X-Received: by 2002:a05:600c:4586:b0:431:44fe:fd9f with SMTP id
+ 5b1f17b1804b1-436e26f041bmr246316375e9.23.1736964663942; 
+ Wed, 15 Jan 2025 10:11:03 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74ac712sm31122965e9.12.2025.01.15.10.10.04
+ 5b1f17b1804b1-437c74e5e69sm31081175e9.37.2025.01.15.10.11.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:10:05 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:10:03 -0500
+ Wed, 15 Jan 2025 10:11:03 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:11:01 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL 30/48] acpi/ghes: better handle source_id and notification
-Message-ID: <a85a3b729b3c31d8cc878017308997a8112655b2.1736964488.git.mst@redhat.com>
+ Laurent Vivier <lvivier@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+Subject: [PULL 48/48] virtio-net: vhost-user: Implement internal migration
+Message-ID: <60f543ad917fad731e39ff8ce2ca83b9a9cc9d90.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -94,7 +92,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,84 +108,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Laurent Vivier <lvivier@redhat.com>
 
-GHES has two fields that are stored on HEST error source
-blocks associated with notifications:
+Add support of VHOST_USER_PROTOCOL_F_DEVICE_STATE in virtio-net
+with vhost-user backend.
 
-- notification type, which is a number defined at the ACPI spec
-  containing several arch-specific synchronous and assynchronous
-  types;
-- source id, which is a HW/FW defined number, used to distinguish
-  between different implemented sources.
-
-There could be several sources with the same notification type,
-which is dependent of the way each architecture maps notifications.
-
-Right now, build_ghes_v2() hardcodes a 1:1 mapping between such
-fields. Move it to two independent parameters, allowing the
-caller function to fill both.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <133ff72ea1041fed7dbcf97b7a2b0f4dfacde31a.1736945236.git.mchehab+huawei@kernel.org>
+Cc: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Message-Id: <20250115135044.799698-3-lvivier@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/ghes.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ hw/net/virtio-net.c | 135 ++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 112 insertions(+), 23 deletions(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 4a6c45bcb4..29cd7e4d81 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 06f096abf6..85e14b788c 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3337,6 +3337,117 @@ static const VMStateDescription vmstate_virtio_net_rss = {
+     },
+ };
  
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-+static void build_ghes_v2(GArray *table_data,
-+                          BIOSLinker *linker,
-+                          enum AcpiGhesNotifyType notify,
-+                          uint16_t source_id)
- {
-     uint64_t address_offset;
++static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
++{
++    VirtIONet *n = VIRTIO_NET(vdev);
++    NetClientState *nc;
++    struct vhost_net *net;
 +
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
- 
--    switch (source_id) {
--    case ACPI_HEST_SRC_ID_SEA:
--        /*
--         * Notification Structure
--         * Now only enable ARMv8 SEA notification type
--         */
--        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
--        break;
--    default:
--        error_report("Not support this error source");
--        abort();
--    }
-+    /* Notification Structure */
-+    build_ghes_hw_error_notification(table_data, notify);
- 
-     /* Error Status Block Length */
-     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-@@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
- 
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, linker,
-+                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
++    if (!n->nic) {
++        return NULL;
++    }
++
++    nc = qemu_get_queue(n->nic);
++    if (!nc) {
++        return NULL;
++    }
++
++    net = get_vhost_net(nc->peer);
++    if (!net) {
++        return NULL;
++    }
++
++    return &net->dev;
++}
++
++static int vhost_user_net_save_state(QEMUFile *f, void *pv, size_t size,
++                                     const VMStateField *field,
++                                     JSONWriter *vmdesc)
++{
++    VirtIONet *n = pv;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    struct vhost_dev *vhdev;
++    Error *local_error = NULL;
++    int ret;
++
++    vhdev = virtio_net_get_vhost(vdev);
++    if (vhdev == NULL) {
++        error_reportf_err(local_error,
++                          "Error getting vhost back-end of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return -1;
++    }
++
++    ret = vhost_save_backend_state(vhdev, f, &local_error);
++    if (ret < 0) {
++        error_reportf_err(local_error,
++                          "Error saving back-end state of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return ret;
++    }
++
++    return 0;
++}
++
++static int vhost_user_net_load_state(QEMUFile *f, void *pv, size_t size,
++                                     const VMStateField *field)
++{
++    VirtIONet *n = pv;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    struct vhost_dev *vhdev;
++    Error *local_error = NULL;
++    int ret;
++
++    vhdev = virtio_net_get_vhost(vdev);
++    if (vhdev == NULL) {
++        error_reportf_err(local_error,
++                          "Error getting vhost back-end of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return -1;
++    }
++
++    ret = vhost_load_backend_state(vhdev, f, &local_error);
++    if (ret < 0) {
++        error_reportf_err(local_error,
++                          "Error loading  back-end state of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return ret;
++    }
++
++    return 0;
++}
++
++static bool vhost_user_net_is_internal_migration(void *opaque)
++{
++    VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    struct vhost_dev *vhdev;
++
++    vhdev = virtio_net_get_vhost(vdev);
++    if (vhdev == NULL) {
++        return false;
++    }
++
++    return vhost_supports_device_state(vhdev);
++}
++
++static const VMStateDescription vhost_user_net_backend_state = {
++    .name = "virtio-net-device/backend",
++    .version_id = 0,
++    .needed = vhost_user_net_is_internal_migration,
++    .fields = (const VMStateField[]) {
++        {
++            .name = "backend",
++            .info = &(const VMStateInfo) {
++                .name = "virtio-net vhost-user backend state",
++                .get = vhost_user_net_load_state,
++                .put = vhost_user_net_save_state,
++            },
++         },
++         VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_virtio_net_device = {
+     .name = "virtio-net-device",
+     .version_id = VIRTIO_NET_VM_VERSION,
+@@ -3389,6 +3500,7 @@ static const VMStateDescription vmstate_virtio_net_device = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_virtio_net_rss,
++        &vhost_user_net_backend_state,
+         NULL
+     }
+ };
+@@ -3950,29 +4062,6 @@ static bool dev_unplug_pending(void *opaque)
+     return vdc->primary_unplug_pending(dev);
  }
+ 
+-static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
+-{
+-    VirtIONet *n = VIRTIO_NET(vdev);
+-    NetClientState *nc;
+-    struct vhost_net *net;
+-
+-    if (!n->nic) {
+-        return NULL;
+-    }
+-
+-    nc = qemu_get_queue(n->nic);
+-    if (!nc) {
+-        return NULL;
+-    }
+-
+-    net = get_vhost_net(nc->peer);
+-    if (!net) {
+-        return NULL;
+-    }
+-
+-    return &net->dev;
+-}
+-
+ static const VMStateDescription vmstate_virtio_net = {
+     .name = "virtio-net",
+     .minimum_version_id = VIRTIO_NET_VM_VERSION,
 -- 
 MST
 
