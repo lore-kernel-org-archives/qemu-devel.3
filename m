@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7340BC02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44293C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY6N0-0007Vq-UK; Wed, 15 Jan 2025 11:35:55 -0500
+	id 1tY6N2-0007Wh-3v; Wed, 15 Jan 2025 11:35:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tY6My-0007TG-9s; Wed, 15 Jan 2025 11:35:52 -0500
+ id 1tY6Mw-0007Sg-V0; Wed, 15 Jan 2025 11:35:50 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tY6Mu-0001e6-OM; Wed, 15 Jan 2025 11:35:52 -0500
+ id 1tY6Mu-0001e9-P7; Wed, 15 Jan 2025 11:35:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:
- To:From:Reply-To:Content-ID:Content-Description;
- bh=avIVcNVqQ6j0evk6/rCF7dghJGKxSFwtADzqzgfr/dc=; b=CMCvmvfDcdm9LD61HoKq/cRAPv
- i6lBUIect+qUzZMx/qDM3KhyWioS+yXn+XWAZxssNT97ml+5q5DZC/AKzXMmJbi+/BlnOfOZivDTj
- HRfOd4rOdFig6oPCfbzUXV0s3QNqA/ysEzwU/Imm3xaE6/KQlHUFGkL4S6HYGjeS60Tc9F2ms70Z/
- 4onciy0CBnQLh5londT61eAMmpkN0ZJaXemMhdglNNsB8MNbqsCH8E1qykMJAfYqBNgnU3KqIzUTN
- H4RS6tbm6SAKmEPNVN6eayfhLuSoDQptjwvM7gYIhDXN7OeqJoyzPrIayk7FTLz4AI6aR0aJaTqqT
- mwOiMB6A==;
+ Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:
+ Content-ID:Content-Description:In-Reply-To:References;
+ bh=rrBZA8lyQEOQWQ/8jP8VTP1JvBxjDjQmwbWIQpBZfxo=; b=bNgCieMNDffHCdWjm/68OAkXTG
+ d5w+ofW/5y5gRlSK97lAC1R66Sg+L2TSKt30Vt0HN8TGF8l8ThTmrOYOR5YdWa8FJLXSwEx/p7+p1
+ mdJUyZaRDzrbtOj01paIYHTzyYiqftFNDGQZie3ihQvnI8v8BEv+sb7c1JME9/etOAgBvD1lO1y7d
+ +CxQKnbgM6P5aRh+Gl7jzfnnWkIUHpDOg8FYO1ySbUU2+sOd4YmD3otlB7IuxlIevQ+Z39rjP1LKP
+ S5phfA9zv3PP2u+MrYdadmzCGy35rL1VR2fvUvulJxgUz2qYu4ah8uc6cIdzD/yh0iUix+aI38HXa
+ j/my6YBQ==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tY6Mq-0000000GF6G-0R8I; Wed, 15 Jan 2025 16:35:44 +0000
+ id 1tY6Mq-0000000GF6F-0HXR; Wed, 15 Jan 2025 16:35:44 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
- Linux)) id 1tY6Mp-00000001HhS-3ZNZ; Wed, 15 Jan 2025 16:35:43 +0000
+ Linux)) id 1tY6Mp-00000001HhI-3F67; Wed, 15 Jan 2025 16:35:43 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>
@@ -45,12 +45,10 @@ Cc: Stefano Stabellini <sstabellini@kernel.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  xen-devel@lists.xenproject.org, qemu-block@nongnu.org
-Subject: [PATCH v3 1/7] hw/xen: Add xs_node_read() helper function
-Date: Wed, 15 Jan 2025 16:27:19 +0000
-Message-ID: <20250115163542.291424-2-dwmw2@infradead.org>
+Subject: [PATCH v3 1/7] xen: error handling and FreeBSD compatibility fixes
+Date: Wed, 15 Jan 2025 16:27:18 +0000
+Message-ID: <20250115163542.291424-1-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250115163542.291424-1-dwmw2@infradead.org>
-References: <20250115163542.291424-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,89 +79,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+Add a new xs_node_read() helper function which constructs the node path 
+using a printf format string, and use it where appropriate.
 
-This returns the full contents of the node, having created the node path
-from the printf-style format string provided in its arguments.
+In particular, use it to eliminate the use of the %ms format specifier 
+for scanf(), which doesn't exist in FreeBSD.
 
-This will save various callers from having to do so for themselves (and
-from using xs_node_scanf() with the non-portable %ms format string.
+v3:
+ • Further cleanups using xs_node_read().
+ • Clean up errp handling for xen-console 'output' node.
+ • Improve comment for xs_node_read().
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-[remove double newline and constify trace parameters]
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
----
- hw/xen/trace-events             |  1 +
- hw/xen/xen-bus-helper.c         | 22 ++++++++++++++++++++++
- include/hw/xen/xen-bus-helper.h |  9 +++++++++
- 3 files changed, 32 insertions(+)
+v2:
+ • Add xs_node_read() helper.
+ • Also fix usage of %ms in xen-block.c
 
-diff --git a/hw/xen/trace-events b/hw/xen/trace-events
-index a07fe41c6d..461dee7b23 100644
---- a/hw/xen/trace-events
-+++ b/hw/xen/trace-events
-@@ -39,6 +39,7 @@ xs_node_create(const char *node) "%s"
- xs_node_destroy(const char *node) "%s"
- xs_node_vprintf(char *path, char *value) "%s %s"
- xs_node_vscanf(char *path, char *value) "%s %s"
-+xs_node_read(const char *path, const char *value) "%s %s"
- xs_node_watch(char *path) "%s"
- xs_node_unwatch(char *path) "%s"
- 
-diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
-index b2b2cc9c5d..22fd2f6c1a 100644
---- a/hw/xen/xen-bus-helper.c
-+++ b/hw/xen/xen-bus-helper.c
-@@ -142,6 +142,28 @@ int xs_node_scanf(struct qemu_xs_handle *h,  xs_transaction_t tid,
-     return rc;
- }
- 
-+char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
-+                   unsigned int *len, Error **errp,
-+                   const char *path_fmt, ...)
-+{
-+    char *path, *value;
-+    va_list ap;
-+
-+    va_start(ap, path_fmt);
-+    path = g_strdup_vprintf(path_fmt, ap);
-+    va_end(ap);
-+
-+    value = qemu_xen_xs_read(h, tid, path, len);
-+    trace_xs_node_read(path, value);
-+    if (!value) {
-+        error_setg_errno(errp, errno, "failed to read from '%s'", path);
-+    }
-+
-+    g_free(path);
-+
-+    return value;
-+}
-+
- struct qemu_xs_watch *xs_node_watch(struct qemu_xs_handle *h, const char *node,
-                                     const char *key, xs_watch_fn fn,
-                                     void *opaque, Error **errp)
-diff --git a/include/hw/xen/xen-bus-helper.h b/include/hw/xen/xen-bus-helper.h
-index d8dcc2f010..e9911115b3 100644
---- a/include/hw/xen/xen-bus-helper.h
-+++ b/include/hw/xen/xen-bus-helper.h
-@@ -38,6 +38,15 @@ int xs_node_scanf(struct qemu_xs_handle *h,  xs_transaction_t tid,
-                   const char *fmt, ...)
-     G_GNUC_SCANF(6, 7);
- 
-+/*
-+ * Unlike other functions here, the printf-formatted path_fmt is for
-+ * the XenStore path, not the contents of the node.
-+ */
-+char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
-+                   unsigned int *len, Error **errp,
-+                   const char *path_fmt, ...)
-+    G_GNUC_PRINTF(5, 6);
-+
- /* Watch node/key unless node is empty, in which case watch key */
- struct qemu_xs_watch *xs_node_watch(struct qemu_xs_handle *h, const char *node,
-                                     const char *key, xs_watch_fn fn,
--- 
-2.47.0
+David Woodhouse (6):
+      hw/xen: Add xs_node_read() helper function
+      hw/xen: Use xs_node_read() from xs_node_vscanf()
+      hw/xen: Use xs_node_read() from xen_console_get_name()
+      hw/xen: Use xs_node_read() from xen_netdev_get_name()
+      hw/xen: Use xs_node_read() from xenstore_read_str() instead of open-coding it
+      hw/xen: Fix errp handling in xen_console
+
+Roger Pau Monné (1):
+      xen: do not use '%ms' scanf specifier
+
+ hw/block/xen-block.c            |  3 ++-
+ hw/char/xen_console.c           | 56 ++++++++++++++++++++++++-----------------
+ hw/net/xen_nic.c                | 13 +++++-----
+ hw/xen/trace-events             |  2 +-
+ hw/xen/xen-bus-helper.c         | 37 ++++++++++++++++++++-------
+ hw/xen/xen-bus.c                | 14 +++++++++--
+ hw/xen/xen_pvdev.c              |  6 ++---
+ include/hw/xen/xen-bus-helper.h |  9 +++++++
+ include/hw/xen/xen-bus.h        |  1 +
+ 9 files changed, 94 insertions(+), 47 deletions(-)
 
 
