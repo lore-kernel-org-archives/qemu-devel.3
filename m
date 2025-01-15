@@ -4,95 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D24C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4A9C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYCjR-0000Wg-MS; Wed, 15 Jan 2025 18:23:29 -0500
+	id 1tYCpi-0005od-VN; Wed, 15 Jan 2025 18:29:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjP-0000QS-Kv
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:28 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCph-0005nc-9U
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:29:57 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjN-0003qk-SN
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:27 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38a88ba968aso317347f8f.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:23:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCpf-0004j5-Lz
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:29:57 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so1484595e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:29:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736983403; x=1737588203; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KUxPrJq33zbqetS3KdsFfaEYg8U4Um6tBpvIBoEhOmo=;
- b=Urj+UI/cC7YzUcZ+zR42IsDEC9hphQP2YH++S6N6XS7N2q58MaHU08mIwUa53pTx9J
- 0g6bK4E1zjCL24bt1z6ao6urue9qZcqOP9087/BO/I/Amnh/rxfmPNL8SrkQoqXlg7AL
- iJRMD9YyONn1NDXV+NXTox4HSAS8foUSvfUj6oROnHxGnVLOrbvEyCODTBxkZszPaKVw
- N0WIzP8OtPKIyd/3cGilWe6YceSZnYyO5TEGeTWHbFCTERsxUoLZ8TG+Iblo5rGzbwHx
- 2B58ZBrfKrjLLkaR+qtQrwabvnKH72bzBBQ9T3f9nqIx78v6tvnsKUXsTmWsrLGMnwEX
- coiQ==
+ d=linaro.org; s=google; t=1736983793; x=1737588593; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gxH2m8Vs1Fx3MxkvrohYLoheIuJ0UPaHaATdWh+YJQo=;
+ b=LQSAYFNq5Pm68/5ag9LdM3l611JbjdxjTKGFhdP+Tq99u2COdrnhBij7hEPjs3wljy
+ b5kZMUndCm4W9GBGn1cwz8LVyO546TuSFmbUpr4VfhE/z7XbGmdKdSo7tNCQr8sqPEXS
+ Zf+IZuj2Gcu/+PrtC+eHBnZyooqRUtBGnSIsbheQUrfE3/f/pClPnIRArrWTxAE7kIEb
+ X8AKHqWE68rim6yvJlmwwWaEgcgu8BGlehqHO9xhvGDnK3KBnw20lsVZAvgr17ha1jrt
+ 8TuAcXyCXbq7fT9sMbIklTea5YXBl/lmIoAhtPcHHWab4xWVKF6F78RW1WotiwvoeG72
+ +9tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736983403; x=1737588203;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KUxPrJq33zbqetS3KdsFfaEYg8U4Um6tBpvIBoEhOmo=;
- b=ah6K8A2/Fohi4GCeTrIjCvdxpd6HGmyrPhrf+feqgzxJu0r1jEs6HvZVF5rcHgZMD1
- XzXfMfcFQBcZU6BQ15Y+tGDOdc6UArcm1Jf8iwubyyvkxXWsfwYyr+tkx6yHhKuq4slp
- 9Xkp+LmFXZ6IqPNTyynWgZz9PfCJb7NiC9Br2AxPLYr5L9QO58/WxrgVMHndTlEmlzJ+
- MnshXzLLluxcoD5p0bCZtrmXKfXuYb6zCvrgr3vjtZ2vVd4Q320Wpt0j9BHLU2oUnch7
- SP4t6OA2M0RjTDCHbSNxhChwLhA2W0rkss+yBcEoB4H3uwGmLEiQrMaA9OK3b/oKK62O
- y/Fg==
-X-Gm-Message-State: AOJu0YzGS7cBQh5mgSDNiywIC/dOUb9UPFjFPC7/mRKDpRRa89LTCYzi
- 7psFoXEpbM/jjDaasuXStvRi5jnAUTdDKZTDJra6pCnX0tmINl3l8fwm6/BHfOuReEpb0Fh76vs
- VDVA=
-X-Gm-Gg: ASbGncsoonEt6CiK0a//CgYqqybaegiI4saOA/OCvQkGxBMhREeAbM5k2Mv8bV9i4Jj
- CKkodlhWrAI0lnUF4zAoHgT3VSVuMv/cWk88F0hNTElBTjd8dbvRLmpE27/eNJgv0pkkS1CELdj
- PGzt6s4iMOwwdWlGfLEul9BiNN7ZcJLC9o8wke+ZrgGEC+gIlE/muN4Q8KT2o0w4jRdHDJltnG4
- Z6e2WHryjWhbu93a6uKdM1keQtSud0OutJcxk+pp57v9BSYa7P6g64TuwEguHHilxW5RlEAGLFp
- m7aoX+6Lvor5dlVUpQr+cbA8/lguZTw=
-X-Google-Smtp-Source: AGHT+IEAOL0BiVVPNhg3ZJxG+vdyKt8Dc59/uzDX0sZYzNdKS/ldU5vA9XjjgjfFWFSVTrqEOjY0mw==
-X-Received: by 2002:a05:6000:4618:b0:385:f560:7916 with SMTP id
- ffacd0b85a97d-38a8732aeefmr32429907f8f.35.1736983402754; 
- Wed, 15 Jan 2025 15:23:22 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736983793; x=1737588593;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gxH2m8Vs1Fx3MxkvrohYLoheIuJ0UPaHaATdWh+YJQo=;
+ b=Avl/RTrki2S6UrljE1YuF7EbxdKg0KbnoJvkypaRQLb4sLhlYbFqX02gBg24V5KJ0Z
+ QROlHhH6XszkgmuxAVzN4Ewougx4ukStGWSO30LvnFI6KizTeyTQJ013XQkKKglKODTz
+ vMWaXwy35kt5JoB64e7uGBDzdTqYfkGB3r/kAYE99ZJlxM+eQYXzK6S5iBE/OYhvOnGX
+ qUTiSgdaVwJSQKwYALo/QOE+e896xrmlQh60k0sxwazIHxW22cir2UAQqXT2P9Dk/KUy
+ hEyqgKmdRBbI+Ic/A+hTOeAiYn+al4kzcP34Z5upi8Y7q1iinV/0gVQVu0W1rjthia2I
+ Faog==
+X-Gm-Message-State: AOJu0YwzvRLMS8HEnF76jJ3Dg28B7Twcrr++iZEzObV+mA+6A4l1xG88
+ 1TUK3DUVCVnx3yBMFPQXlxMYEM81H+/wxlUeTA8A7bySv7ym6YyMw+OtTqb7GvQFkhsSHgQ5xgi
+ 1jVA=
+X-Gm-Gg: ASbGncs7XwjEfD0sVjDIDV51HjzqpjDg3pZyjjGSNjcSAO22pTQIIPwVOwthVcMmvWg
+ Ota36fbcxXbj/XcM7GpzKCQLgtS3/E6JiPYhzXSb8pWuSB+RRPPhD9F3AHNnYb1uv2xU6+dREN5
+ EgvImaFaIUilj/zprNBm3vf/DUNmHhb6KrJbdz7gc9ImISK0UyYJUuGJ4T0AwCxvCwJXRU3P0Rn
+ Tr7+FgH/rP9uhHIZGVPp+JLA5ms91qKX+KFrUzZ2iodqPW7rTjZ9cB3I0x8nTPGNwusPmcQLQdB
+ Kt8y+65UZtifBdUUABaeo1vJuU4KR3c=
+X-Google-Smtp-Source: AGHT+IHAEu9XEyLzuCmGgLvG03h/KIGUkdBc9AgE38AWmwlCV5F1Hg/EN+/r/5+s4to4RSBIMqSl1Q==
+X-Received: by 2002:a05:600c:4fc2:b0:434:f3d8:62d0 with SMTP id
+ 5b1f17b1804b1-436e26803f4mr271602795e9.3.1736983793648; 
+ Wed, 15 Jan 2025 15:29:53 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e3853b6sm18634302f8f.44.2025.01.15.15.23.20
+ 5b1f17b1804b1-437c74ac707sm38260765e9.15.2025.01.15.15.29.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 15:23:22 -0800 (PST)
+ Wed, 15 Jan 2025 15:29:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 06/21] target/i386/cpu: Pass Error** to
- x86_cpu_filter_features()
-Date: Thu, 16 Jan 2025 00:22:32 +0100
-Message-ID: <20250115232247.30364-7-philmd@linaro.org>
+ Huacai Chen <chenhuacai@kernel.org>
+Subject: [PATCH v2 00/11] hw/mips/loongson3: Remove uses of &first_cpu global
+Date: Thu, 16 Jan 2025 00:29:40 +0100
+Message-ID: <20250115232952.31166-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250115232247.30364-1-philmd@linaro.org>
-References: <20250115232247.30364-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,90 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify x86_cpu_realizefn() by passing an Error**
-argument to x86_cpu_filter_features().
+Missing review: #2
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/i386/cpu.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+Since v1:
+- Reworked patch 2 (rth)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 42227643126..c48241fb902 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5896,7 +5896,7 @@ static void x86_cpu_parse_featurestr(const char *typename, char *features,
-     }
- }
- 
--static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose);
-+static bool x86_cpu_filter_features(X86CPU *cpu, Error **errp);
- 
- /* Build a list with the name of all features on a feature word array */
- static void x86_cpu_list_feature_names(FeatureWordArray features,
-@@ -6084,7 +6084,7 @@ static void x86_cpu_class_check_missing_features(X86CPUClass *xcc,
-         error_free(err);
-     }
- 
--    x86_cpu_filter_features(xc, false);
-+    x86_cpu_filter_features(xc, NULL);
- 
-     x86_cpu_list_feature_names(xc->filtered_features, tail);
- 
-@@ -7650,7 +7650,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-  *
-  * Returns: true if any flag is not supported by the host, false otherwise.
-  */
--static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-+static bool x86_cpu_filter_features(X86CPU *cpu, Error **errp)
- {
-     CPUX86State *env = &cpu->env;
-     FeatureWord w;
-@@ -7660,7 +7660,7 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-     uint32_t eax_0, ebx_0, ecx_0, edx_0;
-     uint32_t eax_1, ebx_1, ecx_1, edx_1;
- 
--    if (verbose) {
-+    if (errp) {
-         prefix = accel_uses_host_cpuid()
-                  ? "host doesn't support requested feature"
-                  : "TCG doesn't support requested feature";
-@@ -7712,15 +7712,13 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-         uint8_t version = ebx_0 & 0xff;
- 
-         if (version < env->avx10_version) {
--            if (prefix) {
--                warn_report("%s: avx10.%d. Adjust to avx10.%d",
--                            prefix, env->avx10_version, version);
--            }
-+            error_setg(errp, "%s: avx10.%d. Adjust to avx10.%d",
-+                       prefix, env->avx10_version, version);
-             env->avx10_version = version;
-             have_filtered_features = true;
-         }
-     } else if (env->avx10_version && prefix) {
--        warn_report("%s: avx10.%d.", prefix, env->avx10_version);
-+        error_setg(errp, "%s: avx10.%d.", prefix, env->avx10_version);
-         have_filtered_features = true;
-     }
- 
-@@ -7822,14 +7820,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         }
-     }
- 
--    if (x86_cpu_filter_features(cpu, cpu->enforce_cpuid)) {
--        if (cpu->enforce_cpuid) {
--            error_setg(&local_err,
--                       accel_uses_host_cpuid() ?
--                       "Host doesn't support requested features" :
--                       "TCG doesn't support requested features");
--            goto out;
--        }
-+    if (x86_cpu_filter_features(cpu, cpu->enforce_cpuid ? &local_err : NULL)) {
-+        goto out;
-     }
- 
-     /* On AMD CPUs, some CPUID[8000_0001].EDX bits must match the bits on
+Propagate values from machine_init() in order to remove
+use of globals such &first_cpu and &current_machine.
+
+Philippe Mathieu-Daudé (11):
+  hw/mips/loongson3_virt: Factor generic_cpu_reset() out
+  hw/mips/loongson3_virt: Invert vCPU creation order to remove
+    &first_cpu
+  hw/mips/loongson3_virt: Have fw_conf_init() access local loaderparams
+  hw/mips/loongson3_virt: Pass CPU argument to get_cpu_freq_hz()
+  hw/mips/loongson3_bootp: Include missing headers
+  hw/mips/loongson3: Propagate cpu_count to init_loongson_params()
+  hw/mips/loongson3_virt: Propagate cpu_count to init_boot_param()
+  hw/mips/loongson3_bootp: Propagate processor_id to init_cpu_info()
+  hw/mips/loongson3_virt: Propagate processor_id to
+    init_loongson_params()
+  hw/mips/loongson3_virt: Propagate %processor_id to init_boot_param()
+  hw/mips/loongson3_bootp: Move to common_ss[]
+
+ hw/mips/loongson3_bootp.h |  1 +
+ hw/mips/loongson3_bootp.c | 16 +++++++-----
+ hw/mips/loongson3_virt.c  | 54 ++++++++++++++++++++++-----------------
+ hw/mips/meson.build       |  3 ++-
+ 4 files changed, 42 insertions(+), 32 deletions(-)
+
 -- 
 2.47.1
 
