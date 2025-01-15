@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32550C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5FFC02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7om-0006If-0W; Wed, 15 Jan 2025 13:08:40 -0500
+	id 1tY7qG-0007JS-Da; Wed, 15 Jan 2025 13:10:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oj-0006I0-Tn
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:37 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pa-0006en-BJ
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oi-0006UV-Dk
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:37 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pY-0006dc-2Q
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964515;
+ s=mimecast20190719; t=1736964566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m6fmu5UNbIG+Zy8TKEXBZ0Py33cRbkHlfHziwEK/kCk=;
- b=ZQaO3yloSOQBjl9t/45YaAlTRNbJW+fBufx4B2lqtuvOtSoXmxee9wsDfWAqttrcq6ov5y
- lIrdEiQvN3bazfdMP4W5FpLvPM/yptnumJo+oJpDnqApXFfaJsnN3e1cHMIso/SKm2KJX+
- ghPZTcT4CZPe5ira5PxptrqqTg7/RiY=
+ bh=cb1uDbXRRItaCpZXeSioPd9EkaMevm8T9RBXmZ42Yp8=;
+ b=F4GYEtXktc76/fsPOCxA7SN5+vcdwyrvKeN8ag0Fw6sbadaaF+Ms91Dkj3CWcmqbKwym3u
+ e6nSI/RWrJ5hoOv6eZoXREmNZUVQi43Sjpbf3QoulAFWvdGMLh4UCC+PDAcWJqks8s5H/b
+ MOMqr1Oezk/3fb7xUIMMmWIDDD0TD/M=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-xxJtlPcJNseZcQJ-4VX8BA-1; Wed, 15 Jan 2025 13:08:33 -0500
-X-MC-Unique: xxJtlPcJNseZcQJ-4VX8BA-1
-X-Mimecast-MFC-AGG-ID: xxJtlPcJNseZcQJ-4VX8BA
+ us-mta-447-dujXYjqzM0u4K3ERkiapdg-1; Wed, 15 Jan 2025 13:09:25 -0500
+X-MC-Unique: dujXYjqzM0u4K3ERkiapdg-1
+X-Mimecast-MFC-AGG-ID: dujXYjqzM0u4K3ERkiapdg
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385d7611ad3so44609f8f.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:33 -0800 (PST)
+ ffacd0b85a97d-385e2579507so36297f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:09:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964512; x=1737569312;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m6fmu5UNbIG+Zy8TKEXBZ0Py33cRbkHlfHziwEK/kCk=;
- b=cJXxIsxjoFjDOC07lJdOLr/wMfL7Yz4jQ/SuBs6duFcCWf2perMVXAiWeWa9DtB4Um
- SVRIRKiqo6A8xbocUhFA42eYUk+FTF7OtaSB4oXL3VbBBIZKL1qz7Zvguvtee6g2+Hq3
- 37hTNib4BDQIKoHZXkNIbRhm1mnmk6KNJ0K3YTGph9lI/zun6W04fryztEk3QSikjuCU
- GmRCTGBFR+K8X0X0gPU2KudiOvLhCeFsCtbQJ6fWQ8Y1keoRyTBSpoAfM8uCHdowNW/x
- H9V6FQm//2GfI8sVCX8wp39Bws5XHMtmlOpEHrKDPFF2XtKy0HdPOTZS5xdVh5BeI6iz
- p8Qg==
-X-Gm-Message-State: AOJu0YzCZ0RyKiqSUHBUsaB39W/sLGRAH0q3a0KXnYr62mWzFldZXX9b
- VXv7fseZssE29dPxMIwlO2YUQP9Fl9rr7X6iB99AQ8gNnui150Auj48EOvXfrftZ4z0F02DJyvH
- QW5BgRTwrS5LZBE2OBxH6aek9mKBh2gse8O9ZhrxgaKWAzR0r9DNAiFkVR5X++EErMVUbzXCRA1
- PAYI40/Sdy/qhAl+SXg+l4lZVvWJ59Fg==
-X-Gm-Gg: ASbGncvjS7wIaCfP47xi8v+5Ill0+c4+0ZX1eslpCysfZp92Oft6IbHoQfZzLxl619w
- RqZ4csaMLXcPgNi+nQ9CN505iPgK5cpmKMVsrNSGXwOiir5/eRCSvW8jfMH6XEPW8gkY73QCnLp
- /F8W0r3u7KkZos9DB/U5hDoK3EDkXSXbrPdsMyht8CxQbjQfNvfO3egvydOHfqMpgbWP0fa3isc
- 0K3WHhFVQYTdC3IPeMTrKt3OlJGFvf1eC7zwCgKriU2M1rYZz10
-X-Received: by 2002:a05:6000:1563:b0:385:f44a:a53 with SMTP id
- ffacd0b85a97d-38a872cfe40mr21742476f8f.4.1736964512091; 
- Wed, 15 Jan 2025 10:08:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHDJaD8CKwez+RznVpLdNivNogm5ATuB3y63h+XfrYTOdlxbIWQxZGVvPN/VDISNafahRZZw==
-X-Received: by 2002:a05:6000:1563:b0:385:f44a:a53 with SMTP id
- ffacd0b85a97d-38a872cfe40mr21742449f8f.4.1736964511676; 
- Wed, 15 Jan 2025 10:08:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736964564; x=1737569364;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cb1uDbXRRItaCpZXeSioPd9EkaMevm8T9RBXmZ42Yp8=;
+ b=HFgE1eY7kuN0oShOlghZ+BEl1LnVxVOACZK+yIGzIN49ggbHTGFJQPl0CXQI3kYjKm
+ qU24YKSSSXLu6HnsXKGgtCdd3dRtMvNN8Azo0CJdvxiQ68MFiase6k/2N7R62fzlBpbn
+ P2fjEkVGnIAR+WOnVr/KtqxVRAJ8b36ynJgYYZhd02WUQmqfIZV4eNteGza9FJMnPruW
+ fSQ0bo/8+ZvU7VJT7j6n52JZIgr1+Y9hLbpsXjiUSD/jSjw/OrQTyw7fWHbedaiM8by/
+ ILY9Y4SAAmEOo/1hkpD9mPu9T1hM+vUI2mPdtTi66I3r/4cGE/zdoIN9P9Nm99Q8FBFD
+ Rtlw==
+X-Gm-Message-State: AOJu0YxHLohTtUYckYKvOVQNTreFQOqx1231Ym8YmPGCUKb43+FMrAWU
+ V2ZA4SzkwasV+6r8O1antTOxjSO4UpPHqlCWDpnSYP12/vs8btwB/UTNQ9h2V3UjoWWkbAMcOmV
+ th6yT+6v7eyYzB/sQscacHB+/O0qfg1ddp5qJ92Pa4oOoHl634ukjIqfLoKUMiV0ENKMfteg8w8
+ zSd+2qj3KAhfOHk6O//L/h2JWIAoCrpA==
+X-Gm-Gg: ASbGncuOT+jhH0EzaokMoTqraDyMY7Tx8DJfK9b6GJgdrdaqO73p5YnbxbSpjOGlpzL
+ 5KffCE/ASFGi8eEcRPWEsmV739H+Yp63TlQ4rLw7opSVyWq0Fcmc9r0WprsX2H4Y2HpNbVg1ShT
+ 9ugx+N3thhiF38mnS844v0La6aybTXY8ydmZEP6YMpDW2GyI0fOm/aoDINvVZ4A78uwFqd2RjUY
+ QO1S2eUH28QY0qtUBYUYoIScSipThMounVfLxToOPzGyXuvOawv
+X-Received: by 2002:a05:6000:18a4:b0:38a:a043:eacc with SMTP id
+ ffacd0b85a97d-38aa043ee63mr13471003f8f.1.1736964563965; 
+ Wed, 15 Jan 2025 10:09:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGsQagTnv3I232z/fF9csz2PfqcKqFVckBWArMJFh1/V1+WthI3USsAGzvwQvuny/3VxqL0FQ==
+X-Received: by 2002:a05:6000:18a4:b0:38a:a043:eacc with SMTP id
+ ffacd0b85a97d-38aa043ee63mr13470976f8f.1.1736964563583; 
+ Wed, 15 Jan 2025 10:09:23 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38378csm18138284f8f.25.2025.01.15.10.08.30
+ 5b1f17b1804b1-437c74ac707sm31022335e9.15.2025.01.15.10.09.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:08:31 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:08:28 -0500
+ Wed, 15 Jan 2025 10:09:22 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:09:20 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Dorinda Bassey <dbassey@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: [PULL 01/48] virtio-gpu: Add definition for resource_uuid feature
-Message-ID: <1e77a4a32f8b7b6699a2f8b1f98e8fada902ba1f.1736964488.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 17/48] intel_iommu: Add an internal API to find an address
+ space with PASID
+Message-ID: <1075645d430e291404d19c88fc80d989669fa4c8.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -109,75 +116,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dorinda Bassey <dbassey@redhat.com>
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-Add the VIRTIO_GPU_F_RESOURCE_UUID feature to enable the assignment
-of resources UUIDs for export to other virtio devices.
+This will be used to implement the device IOTLB invalidation
 
-Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
-Message-Id: <20241007070013.3350752-1-dbassey@redhat.com>
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Message-Id: <20241212083757.605022-13-zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio-gpu.h | 3 +++
- hw/display/vhost-user-gpu.c    | 8 ++++++++
- hw/display/virtio-gpu-base.c   | 3 +++
- 3 files changed, 14 insertions(+)
+ hw/i386/intel_iommu.c | 40 ++++++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index bd93672185..a42957c4e2 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -98,6 +98,7 @@ enum virtio_gpu_base_conf_flags {
-     VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,
-     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
-     VIRTIO_GPU_FLAG_VENUS_ENABLED,
-+    VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index c45a486bf8..9aa807593e 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -70,6 +70,11 @@ struct vtd_hiod_key {
+     uint8_t devfn;
  };
  
- #define virtio_gpu_virgl_enabled(_cfg) \
-@@ -114,6 +115,8 @@ enum virtio_gpu_base_conf_flags {
-     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED))
- #define virtio_gpu_rutabaga_enabled(_cfg) \
-     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED))
-+#define virtio_gpu_resource_uuid_enabled(_cfg) \
-+    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED))
- #define virtio_gpu_hostmem_enabled(_cfg) \
-     (_cfg.hostmem > 0)
- #define virtio_gpu_venus_enabled(_cfg) \
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 12d5c37ee5..2aed6243f6 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -631,6 +631,14 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
-         error_report("EDID requested but the backend doesn't support it.");
-         g->parent_obj.conf.flags &= ~(1 << VIRTIO_GPU_FLAG_EDID_ENABLED);
-     }
-+    if (virtio_has_feature(g->vhost->dev.features,
-+        VIRTIO_GPU_F_RESOURCE_UUID)) {
-+        g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
-+    }
-+    if (virtio_has_feature(g->vhost->dev.features,
-+        VIRTIO_GPU_F_RESOURCE_UUID)) {
-+        g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
-+    }
- 
-     if (!virtio_gpu_base_device_realize(qdev, NULL, NULL, errp)) {
-         return;
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 4fc7ef8896..7827536ac4 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -235,6 +235,9 @@ virtio_gpu_base_get_features(VirtIODevice *vdev, uint64_t features,
-     if (virtio_gpu_context_init_enabled(g->conf)) {
-         features |= (1 << VIRTIO_GPU_F_CONTEXT_INIT);
-     }
-+    if (virtio_gpu_resource_uuid_enabled(g->conf)) {
-+        features |= (1 << VIRTIO_GPU_F_RESOURCE_UUID);
-+    }
- 
-     return features;
++struct vtd_as_raw_key {
++    uint16_t sid;
++    uint32_t pasid;
++};
++
+ struct vtd_iotlb_key {
+     uint64_t gfn;
+     uint32_t pasid;
+@@ -1859,29 +1864,32 @@ static inline bool vtd_is_interrupt_addr(hwaddr addr)
+     return VTD_INTERRUPT_ADDR_FIRST <= addr && addr <= VTD_INTERRUPT_ADDR_LAST;
  }
+ 
+-static gboolean vtd_find_as_by_sid(gpointer key, gpointer value,
+-                                   gpointer user_data)
++static gboolean vtd_find_as_by_sid_and_pasid(gpointer key, gpointer value,
++                                             gpointer user_data)
+ {
+     struct vtd_as_key *as_key = (struct vtd_as_key *)key;
+-    uint16_t target_sid = *(uint16_t *)user_data;
++    struct vtd_as_raw_key *target = (struct vtd_as_raw_key *)user_data;
+     uint16_t sid = PCI_BUILD_BDF(pci_bus_num(as_key->bus), as_key->devfn);
+-    return sid == target_sid;
++
++    return (as_key->pasid == target->pasid) && (sid == target->sid);
++}
++
++static VTDAddressSpace *vtd_get_as_by_sid_and_pasid(IntelIOMMUState *s,
++                                                    uint16_t sid,
++                                                    uint32_t pasid)
++{
++    struct vtd_as_raw_key key = {
++        .sid = sid,
++        .pasid = pasid
++    };
++
++    return g_hash_table_find(s->vtd_address_spaces,
++                             vtd_find_as_by_sid_and_pasid, &key);
+ }
+ 
+ static VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
+ {
+-    uint8_t bus_num = PCI_BUS_NUM(sid);
+-    VTDAddressSpace *vtd_as = s->vtd_as_cache[bus_num];
+-
+-    if (vtd_as &&
+-        (sid == PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn))) {
+-        return vtd_as;
+-    }
+-
+-    vtd_as = g_hash_table_find(s->vtd_address_spaces, vtd_find_as_by_sid, &sid);
+-    s->vtd_as_cache[bus_num] = vtd_as;
+-
+-    return vtd_as;
++    return vtd_get_as_by_sid_and_pasid(s, sid, PCI_NO_PASID);
+ }
+ 
+ static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
 -- 
 MST
 
