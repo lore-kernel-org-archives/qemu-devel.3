@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B969C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83647C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY3n3-00063g-JK; Wed, 15 Jan 2025 08:50:37 -0500
+	id 1tY3nY-0006jW-Qf; Wed, 15 Jan 2025 08:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tY3my-00060K-9d
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:32 -0500
-Received: from mail-oi1-x241.google.com ([2607:f8b0:4864:20::241])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tY3mw-0007sq-6L
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:31 -0500
-Received: by mail-oi1-x241.google.com with SMTP id
- 5614622812f47-3eba559611aso1999503b6e.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 05:50:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736949029; x=1737553829; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x6/uHcxy8S071Ts6210PwMh1tRs0xCtUorTWG4sXCFw=;
- b=m3qMxckd7nNLrg6WVRuOow2EQ/Zl2nS1KLn20GZUZ+3UHiV1ZuLi1eF63fXSYoqnnQ
- k9DImMOVx9OSzc9Cd6alUexlPuMKkGxG8jIsq6qDGRnbg4XlblD/ktlQQcxhW1ih4WwQ
- k+FCL912P6odOewDCpotgOF3QWRO0o7XT3Si+nLScmXbjLThyXLrTNQ9DbjLIhiigbL4
- fVMRIMicUEVoACLvkznKfvtWAMrNmglT3uXlH7aLVs21ChppCJnZkmgrFGH7oFY6LZGA
- TmhVz3Iayfgj8bTKDQjie9lkP9HQWjpZMxAlNyCXfCVYlH7e30zKkcOhjYnPpMz8oirc
- F6Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736949029; x=1737553829;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x6/uHcxy8S071Ts6210PwMh1tRs0xCtUorTWG4sXCFw=;
- b=Lmzwdyezo5HWpZl9ZWh6YVwAmNAdTqYUViXXrlfXoa7rzbcw6+rwiV1q6JDSYnB/cL
- 6vMewTTeKuMs3y8MoILlj5HARXf6Psj79fdYmRkM3a1tg59c6ABiYlYUTuTN60UBtRPB
- 5PhgMsH5IsNow4rNvEAGzSQLrNKaKJ2KAyhbjzLdnPhKgh5mJqeM20ibH3lu19ro0/GU
- p4lsDndDDZadeqj+kyQllbLcRxGPGnWABL9vGD47CZctzt6DG7eCUwWmnSpDPQYBMqlb
- 9XmlkhUq8W99Lqr80NySRPBxC/rLOSIYSTWwaIC9cZ7+gazOt6IGxEFBSqSFX9j10r8s
- tqKA==
-X-Gm-Message-State: AOJu0YwALO8oF2xCk25hxx79rg70DgS3MFp6CiStLWGgwMNv0xwsA+qk
- nbeeVA7ALeCEipBvWpDV3TlxjCOkVMmWJWEbx4Hqos5mx5svuaZlykjcwTJtMCCiEGu7RVbzpSM
- 83Amr2Q==
-X-Gm-Gg: ASbGncuoATtrCar1/SE15k4n25ExsXGfze6BEhX7LOMEPbw56OSPTp2Kp38oB3j05vB
- HH1S4yZalhBhmYZHh7JAmjd8uKD1+vvTVa7lVVdg0f6QoopRIML9d4xM317MpNyUQhIJP+effEs
- q89QpDQcnpdB/Wi2nbXY6kJGH4v+Lt9EmpnRi50Le5H4tFvbvdfbflbFere1TWD3r/XGKYk4PY4
- z4S3MbniFFUHMBa5QPUqVBhuCh44OYf3HCaZccbgyungWKyeXo7DRZKwaE=
-X-Google-Smtp-Source: AGHT+IFc1u5E8l57Fp2oA/FJt4N4QIJv6YSJfH++l7pWSDd+fJIGIE0UqrIHTdwn4U1l02vX9A96qg==
-X-Received: by 2002:a05:6808:2e93:b0:3ea:4c54:51f3 with SMTP id
- 5614622812f47-3ef2ec61f23mr16909791b6e.16.1736949028724; 
- Wed, 15 Jan 2025 05:50:28 -0800 (PST)
-Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3f0379eff69sm4952177b6e.41.2025.01.15.05.50.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 05:50:27 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tY3nN-0006eH-Kq
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1tY3nM-0007uk-0m
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736949054;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wBVkcW5CGvtlFb1EfsIoXBs6ncD8DVmImAJX2HMJ6vg=;
+ b=cyzIGl2T+vfeCe07DqPc6xdp26+EptlSgRoTuoyYtCG50JgR4w9wg30v1gjjS7z2SWUdaV
+ sk1Pam6v1XgCeNhWIZgD34GVb2EzrwQvvmp+GZGLzGilkgip5B8EWUclRq5rSkr9D2MCmW
+ XFPtO109+J5Oa9gRl4BFLZE5Y5w2Hfg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-YTQ8Nif6PDC5ogc41gIRBg-1; Wed,
+ 15 Jan 2025 08:50:53 -0500
+X-MC-Unique: YTQ8Nif6PDC5ogc41gIRBg-1
+X-Mimecast-MFC-AGG-ID: YTQ8Nif6PDC5ogc41gIRBg
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 381181955D64
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 13:50:52 +0000 (UTC)
+Received: from lenovo-t14s.redhat.com (unknown [10.39.192.232])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C2DD619560AD; Wed, 15 Jan 2025 13:50:50 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v3 5/6] target/riscv: add RVA23U64 profile
-Date: Wed, 15 Jan 2025 10:49:56 -0300
-Message-ID: <20250115134957.2179085-6-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
-References: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+Subject: [PATCH v2 2/2] virtio-net: vhost-user: Implement internal migration
+Date: Wed, 15 Jan 2025 14:50:44 +0100
+Message-ID: <20250115135044.799698-3-lvivier@redhat.com>
+In-Reply-To: <20250115135044.799698-1-lvivier@redhat.com>
+References: <20250115135044.799698-1-lvivier@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::241;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x241.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,94 +85,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add RVA23U64 as described in [1]. Add it as a child of RVA22U64 since
-all RVA22U64 mandatory extensions are also present in RVA23U64. What's
-left then is to list the mandatory extensions that are RVA23 only.
+Add support of VHOST_USER_PROTOCOL_F_DEVICE_STATE in virtio-net
+with vhost-user backend.
 
-A new "rva23u64" CPU is also added.
-
-[1] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 ---
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ hw/net/virtio-net.c | 135 ++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 112 insertions(+), 23 deletions(-)
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index d56b067bf2..53ead481a9 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -40,6 +40,7 @@
- #define TYPE_RISCV_CPU_RV64E            RISCV_CPU_TYPE_NAME("rv64e")
- #define TYPE_RISCV_CPU_RVA22U64         RISCV_CPU_TYPE_NAME("rva22u64")
- #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
-+#define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
- #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
- #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
- #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e215b1004d..761da41e53 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2397,9 +2397,34 @@ static RISCVCPUProfile RVA22S64 = {
-     }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 06f096abf678..85e14b788cf2 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3337,6 +3337,117 @@ static const VMStateDescription vmstate_virtio_net_rss = {
+     },
  };
  
-+/*
-+ * All mandatory extensions from RVA22U64 are present
-+ * in RVA23U64 so set RVA22 as a parent. We need to
-+ * declare just the newly added mandatory extensions.
-+ */
-+static RISCVCPUProfile RVA23U64 = {
-+    .u_parent = &RVA22U64,
-+    .s_parent = NULL,
-+    .name = "rva23u64",
-+    .misa_ext = RVV,
-+    .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
-+    .satp_mode = RISCV_PROFILE_ATTR_UNUSED,
-+    .ext_offsets = {
-+        CPU_CFG_OFFSET(ext_zvfhmin), CPU_CFG_OFFSET(ext_zvbb),
-+        CPU_CFG_OFFSET(ext_zvkt), CPU_CFG_OFFSET(ext_zihintntl),
-+        CPU_CFG_OFFSET(ext_zicond), CPU_CFG_OFFSET(ext_zimop),
-+        CPU_CFG_OFFSET(ext_zcmop), CPU_CFG_OFFSET(ext_zcb),
-+        CPU_CFG_OFFSET(ext_zfa), CPU_CFG_OFFSET(ext_zawrs),
-+        CPU_CFG_OFFSET(ext_supm),
++static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
++{
++    VirtIONet *n = VIRTIO_NET(vdev);
++    NetClientState *nc;
++    struct vhost_net *net;
 +
-+        RISCV_PROFILE_EXT_LIST_END
++    if (!n->nic) {
++        return NULL;
++    }
++
++    nc = qemu_get_queue(n->nic);
++    if (!nc) {
++        return NULL;
++    }
++
++    net = get_vhost_net(nc->peer);
++    if (!net) {
++        return NULL;
++    }
++
++    return &net->dev;
++}
++
++static int vhost_user_net_save_state(QEMUFile *f, void *pv, size_t size,
++                                     const VMStateField *field,
++                                     JSONWriter *vmdesc)
++{
++    VirtIONet *n = pv;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    struct vhost_dev *vhdev;
++    Error *local_error = NULL;
++    int ret;
++
++    vhdev = virtio_net_get_vhost(vdev);
++    if (vhdev == NULL) {
++        error_reportf_err(local_error,
++                          "Error getting vhost back-end of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return -1;
++    }
++
++    ret = vhost_save_backend_state(vhdev, f, &local_error);
++    if (ret < 0) {
++        error_reportf_err(local_error,
++                          "Error saving back-end state of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return ret;
++    }
++
++    return 0;
++}
++
++static int vhost_user_net_load_state(QEMUFile *f, void *pv, size_t size,
++                                     const VMStateField *field)
++{
++    VirtIONet *n = pv;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    struct vhost_dev *vhdev;
++    Error *local_error = NULL;
++    int ret;
++
++    vhdev = virtio_net_get_vhost(vdev);
++    if (vhdev == NULL) {
++        error_reportf_err(local_error,
++                          "Error getting vhost back-end of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return -1;
++    }
++
++    ret = vhost_load_backend_state(vhdev, f, &local_error);
++    if (ret < 0) {
++        error_reportf_err(local_error,
++                          "Error loading  back-end state of %s device %s: ",
++                          vdev->name, vdev->parent_obj.canonical_path);
++        return ret;
++    }
++
++    return 0;
++}
++
++static bool vhost_user_net_is_internal_migration(void *opaque)
++{
++    VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    struct vhost_dev *vhdev;
++
++    vhdev = virtio_net_get_vhost(vdev);
++    if (vhdev == NULL) {
++        return false;
++    }
++
++    return vhost_supports_device_state(vhdev);
++}
++
++static const VMStateDescription vhost_user_net_backend_state = {
++    .name = "virtio-net-device/backend",
++    .version_id = 0,
++    .needed = vhost_user_net_is_internal_migration,
++    .fields = (const VMStateField[]) {
++        {
++            .name = "backend",
++            .info = &(const VMStateInfo) {
++                .name = "virtio-net vhost-user backend state",
++                .get = vhost_user_net_load_state,
++                .put = vhost_user_net_save_state,
++            },
++         },
++         VMSTATE_END_OF_LIST()
 +    }
 +};
 +
- RISCVCPUProfile *riscv_profiles[] = {
-     &RVA22U64,
-     &RVA22S64,
-+    &RVA23U64,
-     NULL,
+ static const VMStateDescription vmstate_virtio_net_device = {
+     .name = "virtio-net-device",
+     .version_id = VIRTIO_NET_VM_VERSION,
+@@ -3389,6 +3500,7 @@ static const VMStateDescription vmstate_virtio_net_device = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_virtio_net_rss,
++        &vhost_user_net_backend_state,
+         NULL
+     }
  };
- 
-@@ -2886,6 +2911,13 @@ static void rva22s64_profile_cpu_init(Object *obj)
- 
-     RVA22S64.enabled = true;
+@@ -3950,29 +4062,6 @@ static bool dev_unplug_pending(void *opaque)
+     return vdc->primary_unplug_pending(dev);
  }
-+
-+static void rva23u64_profile_cpu_init(Object *obj)
-+{
-+    rv64i_bare_cpu_init(obj);
-+
-+    RVA23U64.enabled = true;
-+}
- #endif
  
- static const gchar *riscv_gdb_arch_name(CPUState *cs)
-@@ -3165,6 +3197,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV64E,        MXL_RV64,  rv64e_bare_cpu_init),
-     DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  MXL_RV64,  rva22u64_profile_cpu_init),
-     DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  MXL_RV64,  rva22s64_profile_cpu_init),
-+    DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  MXL_RV64,  rva23u64_profile_cpu_init),
- #endif /* TARGET_RISCV64 */
- };
- 
+-static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
+-{
+-    VirtIONet *n = VIRTIO_NET(vdev);
+-    NetClientState *nc;
+-    struct vhost_net *net;
+-
+-    if (!n->nic) {
+-        return NULL;
+-    }
+-
+-    nc = qemu_get_queue(n->nic);
+-    if (!nc) {
+-        return NULL;
+-    }
+-
+-    net = get_vhost_net(nc->peer);
+-    if (!net) {
+-        return NULL;
+-    }
+-
+-    return &net->dev;
+-}
+-
+ static const VMStateDescription vmstate_virtio_net = {
+     .name = "virtio-net",
+     .minimum_version_id = VIRTIO_NET_VM_VERSION,
 -- 
 2.47.1
 
