@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B92EC02185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E713C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY6Mn-0007R1-1F; Wed, 15 Jan 2025 11:35:41 -0500
+	id 1tY6N1-0007WO-SF; Wed, 15 Jan 2025 11:35:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6Ml-0007Qo-QG
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:35:39 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6Mk-0001cr-BC
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:35:39 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38a25d4b9d4so11372f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 08:35:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736958936; x=1737563736; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kxPVgTnwJ+3G9kHhXmy7+cuvtjTdA95WIIzPZ54H9vo=;
- b=FYu8dKxZg2c06eughp8MpcT/ycU/fIMIEGaSTbz5k2xpZT94SU5S+xtAOZFocpHRic
- 0rdIdqYBFgqsxCN0QJ4BvFTpkwj790llAMLr+Bo4GDgv4PKKM4AUK41MAaz00CkpfrEE
- 2CFS1+7lrq0zWrDUSmjYu/W5iCJTxTQi01O2WtGMhTmtHVENUMlBePaTXSlUMpu3DZ65
- aYs+gwFyxu+nkINevyOJ5uvpUo07N4B5pTTOJwa2iLIS6dUvpCpa3zrJOc6qz4ov6PxN
- mDVOT8xz1L43k/0Afgine3+9Fqdmn0jKmgk2tkxoLix1pfCIaf0Z3btRc/DM8EohHNEg
- e6DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736958936; x=1737563736;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kxPVgTnwJ+3G9kHhXmy7+cuvtjTdA95WIIzPZ54H9vo=;
- b=wv/ItcPnuNTbUzS7OnJGnsQ0UVWUYNafH/mWrJeAC9g8gSW52bh8K5gMhZc8YbXypN
- uBgJuUBSN9LDceZdP+OZkPRhOOs+L5bgMs48kQF/vws7kkAUtiUllvBeooIDGX+Vwomb
- nK8ZU/SkOcjzhOCzp3PDfs6Gbsilfuz8k1qIhxRA/3Qh9rGAnC+nlqfL3JT5MCjx0qLv
- lnUw56CGeZaNkRVeV0EHUoT9Im9xFVHfb8xi8hSGPpomGCafCdHwWkcXEK6jompcQeVk
- NFI7ZivB1l+SdUETcSxRAS69b6+lt8I2bJ+bhvBwpQM9t5m4vC20+yXn5s5EMvS0mYdb
- 8LLw==
-X-Gm-Message-State: AOJu0YzuQ0A5K1W/Oh+9FasWF1BV/tMx1cGkHcdl3GPZeIMi/VQ0XKPs
- B3oxTsA0OgPIPzOXJqOGU4FWz7jJVu6K4kBVwJZ2lEiaYxsusVAuP+eCHw+IStY=
-X-Gm-Gg: ASbGncsF9EbpvN8TREzU4eCqn4H0klOhLaysflWr/2brTnLOpBGZaxe7zeCJ4OrwNx8
- OOUQQspw4lan4N7ovIYnMF7OECBCE4aC/tfDnu+ruBCZNyRO4b8EpUPhjkIesSfBPui6Gz2RKEu
- s4pQnwdZiVxP+YyJkvGoyzjm2BetIPT74GyqXzotzdvWWHOlbzT1ns84I2/KqG03Qi0KBEQe0cC
- t4T+HAVWvX1hh3+1fjtkYvv/s9YpqyUtLsq4owubAfjsXsrCgErA02ulOkN0O7CNUKew/39Fn91
- fNt2sRG5j+7N6E1/QVJj01Gwq9s=
-X-Google-Smtp-Source: AGHT+IHqslZrIHYqUxHTtub/K/LCerOdy7TyfMMafb/8+oA4Oz6munWZfvk2C8Pt8DoQG6FxiEHV7g==
-X-Received: by 2002:adf:c007:0:b0:385:eb8b:3ec6 with SMTP id
- ffacd0b85a97d-38a872e9356mr18050651f8f.29.1736958936605; 
- Wed, 15 Jan 2025 08:35:36 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b81ccsm18312944f8f.65.2025.01.15.08.35.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 08:35:36 -0800 (PST)
-Message-ID: <a20b0629-78ba-4ae6-981c-bbc1fbf0a866@linaro.org>
-Date: Wed, 15 Jan 2025 17:35:35 +0100
+ (Exim 4.90_1) (envelope-from
+ <BATV+7322ae3fcc6f32da564c+7815+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1tY6Mz-0007UX-LY; Wed, 15 Jan 2025 11:35:54 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+7322ae3fcc6f32da564c+7815+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1tY6Mx-0001eY-F9; Wed, 15 Jan 2025 11:35:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Reply-To:Content-Type:Content-ID:Content-Description;
+ bh=1aNikVIiBjTeQOc5N3unG1HCtdVZT5mT/c2k8TAmHbo=; b=g7RIvTdwfF6e4rW5vzi8S7NKNH
+ XHUKR9LWw4GRosTHdZgCh+g/KQs3mO9W1vMr5526JtvQXPCRQJ24U09J3573Z6Yb509OZNq9rV/DW
+ SQr2ejpnTxb4jWrBPDBwZlqtN2nSyAGH3syIaN0jptlD7ROWmrYOv3hKC5weTQIMWbhB9i0eaivqK
+ wQ1uEpf9xHO5kNd04T2ZiUw1eZdqCbH5L/AiN8UOhPSKj8qt9UFd9hYSHNLvTM2MuoFGAtnD1Nr+n
+ lJAdLxQdNiGd6MDj64GxGPGlAoGOypw1w1xyS/EUl1zKii6goQ1qG06Ljnur8MWHk8ZbJ/EfBapOl
+ iT7Y85ZA==;
+Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
+ by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tY6Mr-0000000Ataf-15Qx; Wed, 15 Jan 2025 16:35:45 +0000
+Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
+ Linux)) id 1tY6Mq-00000001Hi4-0h5i; Wed, 15 Jan 2025 16:35:44 +0000
+From: David Woodhouse <dwmw2@infradead.org>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ xen-devel@lists.xenproject.org, qemu-block@nongnu.org
+Subject: [PATCH v3 7/7] hw/xen: Fix errp handling in xen_console
+Date: Wed, 15 Jan 2025 16:27:25 +0000
+Message-ID: <20250115163542.291424-8-dwmw2@infradead.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250115163542.291424-1-dwmw2@infradead.org>
+References: <20250115163542.291424-1-dwmw2@infradead.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] s390x: Remove deprecated machine types v2.9 up to
- v2.12
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250115073819.15452-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250115073819.15452-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+7322ae3fcc6f32da564c+7815+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,17 +80,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/1/25 08:38, Thomas Huth wrote:
-> These machine types have been marked as deprecated two releases ago,
-> and are older than 6 years, so according to our support policy, it
-> should be fine to remove them now.
-> 
-> Thomas Huth (8):
->    hw/s390x/s390-virtio-ccw: Remove the deprecated 2.9 machine type
->    hw/s390x/s390-virtio-ccw: Remove the deprecated 2.10 and 2.11 machine
->      types
->    target/s390x/gen-features: Remove the v2.11 qemu CPU model
->    hw/s390x/s390-virtio-ccw: Remove the deprecated 2.12 machine type
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-Should this be documented in docs/about/removed-features.rst?
+When attempting to read the 'output' node, interpret any error *other*
+than ENOENT as a fatal error. For ENOENT, fall back to serial_hd() to
+find a character device, or create a null device.
+
+Do not attempt to prepend to errp when serial_hd() fails; the error
+isn't relevant (and prior to this change, wasn't set anyway).
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+ hw/char/xen_console.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
+
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index e61902461b..9e7f6da343 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -569,7 +569,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
+ 
+     snprintf(label, sizeof(label), "xencons%ld", number);
+ 
+-    output = xs_node_read(xsh, XBT_NULL, NULL, NULL, "%s/%s", fe, "output");
++    output = xs_node_read(xsh, XBT_NULL, NULL, errp, "%s/%s", fe, "output");
+     if (output) {
+         /*
+          * FIXME: sure we want to support implicit
+@@ -581,19 +581,27 @@ static void xen_console_device_create(XenBackendInstance *backend,
+                        output);
+             goto fail;
+         }
+-    } else if (number) {
+-        cd = serial_hd(number);
+-        if (!cd) {
+-            error_prepend(errp, "console: No serial device #%ld found: ",
+-                          number);
+-            goto fail;
+-        }
++    } else if (errno != ENOENT) {
++        error_prepend(errp, "console: No valid chardev found: ");
++        goto fail;
+     } else {
+-        /* No 'output' node on primary console: use null. */
+-        cd = qemu_chr_new(label, "null", NULL);
+-        if (!cd) {
+-            error_setg(errp, "console: failed to create null device");
+-            goto fail;
++        if (errp) {
++            error_free(*errp);
++        }
++        if (number) {
++            cd = serial_hd(number);
++            if (!cd) {
++                error_setg(errp, "console: No serial device #%ld found: ",
++                           number);
++                goto fail;
++            }
++        } else {
++            /* No 'output' node on primary console: use null. */
++            cd = qemu_chr_new(label, "null", NULL);
++            if (!cd) {
++                error_setg(errp, "console: failed to create null device");
++                goto fail;
++            }
+         }
+     }
+ 
+-- 
+2.47.0
+
 
