@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC21C02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDDFC02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7sD-0006gX-I8; Wed, 15 Jan 2025 13:12:13 -0500
+	id 1tY7sK-0007Bo-Ox; Wed, 15 Jan 2025 13:12:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qk-0008Da-92
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qz-0000Kd-Nx
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qe-00071W-G7
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:39 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qw-00076O-9k
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964634;
+ s=mimecast20190719; t=1736964653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=K7TcV59XEakRMbH2rRFcP0+60inS50NTD8WhVaPlkoo=;
- b=UTPkIkWHmy1RuUjdb41yztyABPwNeDFKtrCC6j3djj4IGwUSzfkUxONN8t7o6/FFsrQkqW
- i9IZkb1xX/0ueWN6vgjGIWpCJtDHPPJ9er4xRxAESRcC28KgG4yMdTbVzN2fZpb3qZVtb1
- OL519Siqe6j4m/smG0Yaww9A6ronGfg=
+ bh=Z+GU4R9++g+qf0tHlV9qLsyuoJZasMIvP+okqs4b+WU=;
+ b=WuSIS4Gg6UHHF+PoFj/f3+Fcjgz/x5uVaqU3y/G5GVDypeIuJw6cYMOaE1U9+pLyTVSnxW
+ vy7sSE16skhQrVlupRl5XPJOqxaw0IivUV6uUsgjWVhpbTKqK2YcYs7nbCaNGs4TIUpx2f
+ a2+Bql3USloyPi6WCrxHxLrL3dW7ovw=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-xjk6DicCPH2v6Bl1NpiRXg-1; Wed, 15 Jan 2025 13:10:33 -0500
-X-MC-Unique: xjk6DicCPH2v6Bl1NpiRXg-1
-X-Mimecast-MFC-AGG-ID: xjk6DicCPH2v6Bl1NpiRXg
+ us-mta-659-brGT_t7-PNyJME1K37h2fQ-1; Wed, 15 Jan 2025 13:10:51 -0500
+X-MC-Unique: brGT_t7-PNyJME1K37h2fQ-1
+X-Mimecast-MFC-AGG-ID: brGT_t7-PNyJME1K37h2fQ
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-436248d1240so33485325e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:33 -0800 (PST)
+ 5b1f17b1804b1-4361c040ba8so39306115e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964632; x=1737569432;
+ d=1e100.net; s=20230601; t=1736964650; x=1737569450;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K7TcV59XEakRMbH2rRFcP0+60inS50NTD8WhVaPlkoo=;
- b=ZY7HG6u5RCuf63h+8bOlOyviXuNW2sdariiFeGQZ3iEuXoXCm1MGULMSRsrvpkgjoV
- cgSJEcoYnb+DJIBqC05jPLTWX7PBg9djsJzH4Q8glAzwAIrPxELPz7LNg+0KbXPasZFt
- ir4F90CWPNQ+2DGQ8Sv5o/1zoUpYsqCSwbrhHiEeuospkAqHTnyCvevGl9zAZODNH2mW
- SfCmvX4AgGYD4g5Vz5t7zMZQlXdUUXUIF4ykGhbiz6TmyWnRvGOcGznIfkbYmezbwqvC
- VR7ZxjLms9lya2+OZQmUJU5nPuNyyAGb2q8lz1OObKEZWc4ncmQritSf/iQOYDC+1BVT
- 5dKA==
-X-Gm-Message-State: AOJu0Yzbxug3DWLbfRu2NbEmM+yXdE4hYtfJYShwqez2dpFYjbrlrX9D
- 40Elzs52tmZQoCHQQBGFF4Ty3db+QSG87sQg1bJyNvZLGThtU9jHL+fnfAbVdcDJJwdLg+cgPyY
- KEidxXWgPYCOGZ/ZI+M1HUNNYLun50vPXrhlm5saBzPEco+FYqHfXuDZUz+Qu5pdRjUUEZPesGn
- 48Eo7jIksEMOWjffYDItXkMdOEMolODg==
-X-Gm-Gg: ASbGncvct5wZCHjTQ5MjAhDBZhmJ3TEQOyL/fW92Fn6j52OZLDUN9b5YUEzK+2orKj6
- VUrxKf+DzMkxwOGJD5/gkJJgiKtJGb9yZolLckQcoQkMZyd9PSYQOiRb8kTE2qnBWbztL3hivbe
- KaZpKDWuJO4rCE3EAQl99tuialjRNzt6BIDgAKIItvnEYRNMHP/EunNGhOo0RusM9euzRWYEFWK
- l41vHCPTIs4h9+Rqoipsr3n8oXZ+hKycPmiSzZfbW1DQStiwmcU
-X-Received: by 2002:a5d:648b:0:b0:386:3e3c:ef1 with SMTP id
- ffacd0b85a97d-38a87312f36mr31933166f8f.35.1736964631656; 
- Wed, 15 Jan 2025 10:10:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGNYU9px69Bwn08aZIGn0EytgOIafkkuOs8HWJXp+4oMtAMZEors+fyzPmSAy8IPJFIPV6aiw==
-X-Received: by 2002:a5d:648b:0:b0:386:3e3c:ef1 with SMTP id
- ffacd0b85a97d-38a87312f36mr31933127f8f.35.1736964631210; 
- Wed, 15 Jan 2025 10:10:31 -0800 (PST)
+ bh=Z+GU4R9++g+qf0tHlV9qLsyuoJZasMIvP+okqs4b+WU=;
+ b=vmbOgvrrZbQi54xztcMx4m6+YzOlpr+DnnsIma8kHOFWDiui/QBzqS8GOvW9f9qgG8
+ bza5idcIWIx96y0E4sdIQQRZwU0+9hayvZKUsbV+B/KSv0CcY431IB6ZgrQzA//s+2/v
+ 4djrIX2uAOUXdZc5++hzHUWDLd4fjPI8rzTZB8U6yNGzZCnrAhtMHUlB0s1mDVfCae0D
+ /nuCV4RkxwS43KkXi341V+lZgKk38smFW/kh/+4cjTyuwd4ZHP6OqnLZxB5nS7qBvMVg
+ YHRKvfgxiO2u3+ObkhHwyllABShCXmKT4x9vguvRU7xzBguV7qrZPFfRAWqsF5l0b1L3
+ kwPA==
+X-Gm-Message-State: AOJu0Yy9OzVx1dQpin7gqyvLnWey9DsdHhroOou7Uy9hqCo+wzK9RgDr
+ ZD40FzH/2L2sRXEcFdAjRzJuzrSl+b3SZpSyZd0LSHJOgjeTUcuvv4OKfUz3g4GCpFCLeg2DJV1
+ G7o0mWfPn25iS0KCWm7WqEbE6kIPcTHcx+2eGz8JkR7NXYpoCpS2inlK8jxarO6FGsb6ZjdRo28
+ INCCY4G5vtU5K8r4sLZA0a1/hSiB+S2Q==
+X-Gm-Gg: ASbGncs+7a0U1QeXMXGWdzyZiDAWD0v+KECB4lalwnKCjRFrFgasYhOXr/Gf9YLADth
+ wYNkDEQTmYo+oLy7OtQhq6Sfun/qjLHAWU8R8LwlmnsIIpbbRjl1TicNcsUmP2pxVBB4Ou6Ttp+
+ 8M1RaliZec0tQTBegpl7iIptHQw6tDakjj0OcKl62fwL8rixtPRiI4dESQD9PRbrHFKDHdV792u
+ yHvwzMdiK8y5FHJfuU7IPtEbslBTqwa7df6kHDgAdKkbfUBm0bm
+X-Received: by 2002:a05:600c:4eca:b0:434:ea21:e14f with SMTP id
+ 5b1f17b1804b1-436e26937afmr267364545e9.13.1736964649819; 
+ Wed, 15 Jan 2025 10:10:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLQv6ChXKy+XMrZV9qU77ziEl5RcdrKgmd+vXTS336u5qXHslSMgOdTKfRJCryQlgK0drofw==
+X-Received: by 2002:a05:600c:4eca:b0:434:ea21:e14f with SMTP id
+ 5b1f17b1804b1-436e26937afmr267364275e9.13.1736964649410; 
+ Wed, 15 Jan 2025 10:10:49 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d2f5sm18409210f8f.17.2025.01.15.10.10.29
+ 5b1f17b1804b1-437c74c475csm32230185e9.20.2025.01.15.10.10.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:10:30 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:10:28 -0500
+ Wed, 15 Jan 2025 10:10:47 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:10:45 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org
-Subject: [PULL 38/48] acpi/ghes: rename etc/hardware_error file macros
-Message-ID: <4651745dfc8d384bd260969c23d8423741462eac.1736964488.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 43/48] tests: acpi: whitelist expected blobs
+Message-ID: <1ad32644fe4c9fb25086be15a66dde1d55d3410f.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -86,16 +82,16 @@ Content-Disposition: inline
 In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,117 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Igor Mammedov <imammedo@redhat.com>
 
-Now that we have also have a file to store HEST data location,
-which is part of GHES, better name the file where CPER records
-are stored.
-
-No functional changes.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <e79a013bcd9f634b46ff6b34756d1b1403713af3.1736945236.git.mchehab+huawei@kernel.org>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20250115125342.3883374-2-imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/ghes.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 40 +++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 6843ddf64b..3f94a5542b 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -28,8 +28,8 @@
- #include "hw/nvram/fw_cfg.h"
- #include "qemu/uuid.h"
- 
--#define ACPI_GHES_ERRORS_FW_CFG_FILE        "etc/hardware_errors"
--#define ACPI_GHES_DATA_ADDR_FW_CFG_FILE     "etc/hardware_errors_addr"
-+#define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
-+#define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
- 
- /* The max size in bytes for one error block */
- #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
-@@ -234,7 +234,7 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
-         ACPI_GHES_MAX_RAW_DATA_LENGTH * ACPI_GHES_ERROR_SOURCE_COUNT);
- 
-     /* Tell guest firmware to place hardware_errors blob into RAM */
--    bios_linker_loader_alloc(linker, ACPI_GHES_ERRORS_FW_CFG_FILE,
-+    bios_linker_loader_alloc(linker, ACPI_HW_ERROR_FW_CFG_FILE,
-                              hardware_errors, sizeof(uint64_t), false);
- 
-     for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-@@ -243,17 +243,21 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
-          * corresponding "Generic Error Status Block"
-          */
-         bios_linker_loader_add_pointer(linker,
--            ACPI_GHES_ERRORS_FW_CFG_FILE, sizeof(uint64_t) * i,
--            sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE,
--            error_status_block_offset + i * ACPI_GHES_MAX_RAW_DATA_LENGTH);
-+                                       ACPI_HW_ERROR_FW_CFG_FILE,
-+                                       sizeof(uint64_t) * i,
-+                                       sizeof(uint64_t),
-+                                       ACPI_HW_ERROR_FW_CFG_FILE,
-+                                       error_status_block_offset +
-+                                       i * ACPI_GHES_MAX_RAW_DATA_LENGTH);
-     }
- 
-     /*
-      * tell firmware to write hardware_errors GPA into
-      * hardware_errors_addr fw_cfg, once the former has been initialized.
-      */
--    bios_linker_loader_write_pointer(linker, ACPI_GHES_DATA_ADDR_FW_CFG_FILE,
--        0, sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE, 0);
-+    bios_linker_loader_write_pointer(linker, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, 0,
-+                                     sizeof(uint64_t),
-+                                     ACPI_HW_ERROR_FW_CFG_FILE, 0);
- }
- 
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
-@@ -290,8 +294,10 @@ static void build_ghes_v2(GArray *table_data,
-     build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
-                      4 /* QWord access */, 0);
-     bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
--        address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
--        ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
-+                                   address_offset + GAS_ADDR_OFFSET,
-+                                   sizeof(uint64_t),
-+                                   ACPI_HW_ERROR_FW_CFG_FILE,
-+                                   source_id * sizeof(uint64_t));
- 
-     /* Notification Structure */
-     build_ghes_hw_error_notification(table_data, notify);
-@@ -308,9 +314,11 @@ static void build_ghes_v2(GArray *table_data,
-     build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
-                      4 /* QWord access */, 0);
-     bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
--        address_offset + GAS_ADDR_OFFSET,
--        sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE,
--        (ACPI_GHES_ERROR_SOURCE_COUNT + source_id) * sizeof(uint64_t));
-+                                   address_offset + GAS_ADDR_OFFSET,
-+                                   sizeof(uint64_t),
-+                                   ACPI_HW_ERROR_FW_CFG_FILE,
-+                                   (ACPI_GHES_ERROR_SOURCE_COUNT + source_id)
-+                                   * sizeof(uint64_t));
- 
-     /*
-      * Read Ack Preserve field
-@@ -346,11 +354,11 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-                           GArray *hardware_error)
- {
-     /* Create a read-only fw_cfg file for GHES */
--    fw_cfg_add_file(s, ACPI_GHES_ERRORS_FW_CFG_FILE, hardware_error->data,
-+    fw_cfg_add_file(s, ACPI_HW_ERROR_FW_CFG_FILE, hardware_error->data,
-                     hardware_error->len);
- 
-     /* Create a read-write fw_cfg file for Address */
--    fw_cfg_add_file_callback(s, ACPI_GHES_DATA_ADDR_FW_CFG_FILE, NULL, NULL,
-+    fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
-         NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
- 
-     ags->present = true;
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..085dfa9ff4 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,41 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
 MST
 
