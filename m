@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 703DAC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFE0C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7ow-0006N6-5H; Wed, 15 Jan 2025 13:08:50 -0500
+	id 1tY7ov-0006Mo-GT; Wed, 15 Jan 2025 13:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7ot-0006MR-AJ
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:47 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7or-0006M1-Qr
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7or-0006VR-Ia
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:47 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7op-0006VI-ME
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964524;
+ s=mimecast20190719; t=1736964521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8wJJjJt30l1/qgQLW37za6mc4YGsCzqM5YuQJ0KkPbo=;
- b=PGLbMjth2o07lnsHYu7uXzVs4fkgL/7J+XYtJ02gFnAG6YHg5Rb4iHk5InPgVKrc67Sl14
- hZrQhHstsWNVlkHdFdKgvThkm0Td0Tx91cV8iIcjFf7onZMEoQODbPnssbJtcxTUAq8SEY
- 8n0hkUvar2wk+thhZv2/Fh8XAGZ0k4A=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eDEb1jmCYlGsY9igpHDK8At5L72Z0Fy0/80IJEPSb0E=;
+ b=Af8kAWTavQM3rO/e4dRWDGrHx9alJ9qepXAc4XIyZn+dVkrmS7VS9c8jKGV5PPFK6ECjUc
+ ALJTRZWdgNG2cKwQdAr5figpQvU6YLcVCxBG/obuEeBAqMdo1lqBhHcEb+n1lKqRV28Pmc
+ da/nP9aGmOWH2aqEPwnHlfmWKw2kaeI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-P4ShFd6vOrWzQrDQlRPoPw-1; Wed, 15 Jan 2025 13:08:42 -0500
-X-MC-Unique: P4ShFd6vOrWzQrDQlRPoPw-1
-X-Mimecast-MFC-AGG-ID: P4ShFd6vOrWzQrDQlRPoPw
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38a9118c486so62005f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:42 -0800 (PST)
+ us-mta-630-bC_ToINANyGpMyksH5xzzw-1; Wed, 15 Jan 2025 13:08:39 -0500
+X-MC-Unique: bC_ToINANyGpMyksH5xzzw-1
+X-Mimecast-MFC-AGG-ID: bC_ToINANyGpMyksH5xzzw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-436289a570eso32464695e9.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964521; x=1737569321;
+ d=1e100.net; s=20230601; t=1736964518; x=1737569318;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8wJJjJt30l1/qgQLW37za6mc4YGsCzqM5YuQJ0KkPbo=;
- b=oMMjhpqE7+bm7Z8v575qD54r7xBO6UrJuuaQ3uGLeAWuWabWGcA1J8PIiTXYfLDUsG
- zZc+nSZ4ikZHUyvT2ycfDjQb7SkjNHyhjwvZU2hEmGL1yUHhOqLOQz3rgUKKqmsX+XTf
- zfMYHCBepfisFA7P85s/Codtxm5O30a89MxOy8ss/ugkeXGq/rneHvYTVYXebOoShQAs
- y2vRtQqoMLvhLqblwnPr/10hOKZ9EZ4SLnjOgs8V9RR+oVlbW/DLR5W+jN1n7H7osLYa
- V7j5euhGmf0Np0aliaivk/uZs2MOQHjTun2OlEDB6ANQUEMR2bmrKB5Gajy/Ln17+SJ1
- 0L+Q==
-X-Gm-Message-State: AOJu0Yx9hBAQU2pgGsqanMIDmkxajg976njv8k4xaEeu6n2VOq6zpJ+s
- 9hlTHzDsqpEwmFrQ5/PH1Ugi1G4wBjARAFOCNG6MHb1GO4elWw7bFS9IjtuHSqkDyJz9hxYw1H3
- OGgqrxaKQegXQ7u4bgNr3Acoa1cYWFi5XNZsXhyzvh9w5U+5CqgAjadowBzAi2PGaZJBunOpQD+
- n1zLAPXofpTTHx+nt8C6ipR0JOB6qTpQ==
-X-Gm-Gg: ASbGncumq6ShsDbCMXfgowAHAsZDJ4iJ4nPgKSbKuZELRDv4Frl2UpbUctTHEFx76s0
- QU0RrSSzqWjsctgjyYWQEVS0/4B84TlPj7T2pYKWU79/D51c1TJ2LH0Kch7E++jZtZy6RQpEY6z
- 3HCdfNUF7vmS2bNGCSVjXShnto3q6pLE/5X2/w7eZmpm5BEOfEhVmrpDLm/j4mdx5J9oApmRGD8
- x3us/tDkWTMN9d11t8WnHJ0exJ0SSn/ZMmR7AbbPbdP0PPficq9
-X-Received: by 2002:adf:9b9a:0:b0:38a:4575:5ffd with SMTP id
- ffacd0b85a97d-38a8730fbedmr21782191f8f.45.1736964521034; 
- Wed, 15 Jan 2025 10:08:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHeWMus/iA2fkkBLWPOgRikLyUIsc5gxU7c78rB3JNReuG5lO00yzPsGht3zBzat+Y0/SKtjQ==
-X-Received: by 2002:adf:9b9a:0:b0:38a:4575:5ffd with SMTP id
- ffacd0b85a97d-38a8730fbedmr21782166f8f.45.1736964520569; 
- Wed, 15 Jan 2025 10:08:40 -0800 (PST)
+ bh=eDEb1jmCYlGsY9igpHDK8At5L72Z0Fy0/80IJEPSb0E=;
+ b=F0Knr/d+SwdG48s45orEm+2buWNLMA+Nt/1b0mDDA165ZC4NDhSyy1Zw/Y8IyJeVE8
+ 794ysECAVfXPidPL0wdkXm81x2hInoUXFOCkkcspI3rfsC7T/LH6PMaa5jJrbMG8Pz7Q
+ c9Qei0r5iA0qRTsBglFSsUi6nmCSmX8OA4OarGdhwwpfQcW6o8e1DHTY3eBJmid7GT0H
+ TN7koVEKvOwoe0af9Q+pSjswuoyotisFmwkJHScsMbeb5niKFUCEFe/oNWJHkKfzRkKt
+ +CG7jPhBSP1P53uU5mhc991VtIFBJAvxZeeHSqMITu82aXQG5iNLK5R77fpQ5JE01YmQ
+ /Miw==
+X-Gm-Message-State: AOJu0Yx9X/+ooi8WT9iLcx14Yhp+kDeHidCTtv2XBXSUjJ0o66mxknQy
+ LzqCfzwBUWGLvNVMJ+z6DM3/RPM6beBRySa3IkHk7Vl6u5vP5Ga31UFtPQtVmDsd8SqavwD8Ryn
+ AQTRRzkzCFBXln1kEF8rAOLlXwnWHCGBCBpNURhHRsANerKaRd1W2pwG6QdvXhy/oyclxbKRuNr
+ +oDLN17wspDc8+VEr3DD9CgWOU93EVEg==
+X-Gm-Gg: ASbGncsrc3Te2ZVQ4J/zO1M+LHUNFNskWptltkwKh/dGMMlhJxfZ2PkDf0rpXkk812i
+ ft8UuDLA14YXk96sn7MklLRUPZXzgrw30tP/rRfBc28voHeNddhnKToYI0tuB3/Jh0giHgobf4b
+ T+iZjB53wVZ1QHLWjjuyvOx33RuzKRWSTBYyUlT8H8Io9hVtqRvc3GqoGMLM9qSI67ppjM/aJps
+ iKkNusT6HyQsQHgjutN7dr+M4o4JGH765To8FtgBSVYV+XvpKtG
+X-Received: by 2002:a05:600c:1e02:b0:434:f131:1e71 with SMTP id
+ 5b1f17b1804b1-436f04e048cmr205157085e9.8.1736964517997; 
+ Wed, 15 Jan 2025 10:08:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGErAs7BJq0grzq6CVsX59y15FOyD2Vvu/EOBUzx2FqIr0DwQCLG2wx+zOqn4xKFoK4buAq9w==
+X-Received: by 2002:a05:600c:1e02:b0:434:f131:1e71 with SMTP id
+ 5b1f17b1804b1-436f04e048cmr205156825e9.8.1736964517618; 
+ Wed, 15 Jan 2025 10:08:37 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1b05sm18070503f8f.88.2025.01.15.10.08.39
+ ffacd0b85a97d-38a8e37d0b1sm18410878f8f.12.2025.01.15.10.08.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:08:39 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:08:37 -0500
+ Wed, 15 Jan 2025 10:08:36 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:08:35 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>, Eric Mackay <eric.mackay@oracle.com>,
  Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 04/48] cpuhp: make sure that remove events are handled within
- the same SCI
-Message-ID: <8aa35bebeeaed19ae57afbc3e110b8e7fe8587d0.1736964488.git.mst@redhat.com>
+Subject: [PULL 03/48] tests: acpi: whitelist expected blobs
+Message-ID: <e043be2290ffdd666ad2ab35d2341c137b21a3b4.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -111,163 +110,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Igor Mammedov <imammedo@redhat.com>
 
-CPU_SCAN_METHOD was processing insert events first and only if insert event was
-not present then it would check remove event.
-
-Normally it's not an issue as it doesn't make much sense tho hotplug and
-immediately unplug it. In this corner case, which can be reproduced with:
-
-   qemu -smp 1,maxcpus=2 -cpu host -monitor stdio \
-        -drive if=pflash,format=raw,readonly,file=edk2-x86_64-code.fd
-
-   * boot till GRUB prompt and pause guest (either via monitor or stop GRUB
-     from automatic boot)
-   * at monitor prompt add CPU:
-         device_add host-x86_64-cpu,socket-id=0,core-id=1,thread-id=0,id=foo
-   * let guest OS boot completely, and unplug CPU from monitor prompt:
-         device_del foo
-     which triggers GPE event that leads to CPU_SCAN_METHOD on guest side
-
-as result of above cpu 'foo' will not be hotunplugged, since QEMU sees
-insert event and ignores remove event (leaving it in pending state) for
-the GPE event.
-
-Any follow up CPU hotplug/unplug action from QEMU side will handle
-previously ignored event, so as workaround user can repeat device_del.
-
-Fix this corner-case by queuing remove events independently from insert
-events, aka the same way as we do with insert events. And then go over remove
-queue to send eject notify events to OSPM within the same GPE event.
-
-PS:
-Process remove queue after the cpu add queue has been processed 1st
-to ensure that OSPM gets hotadd evets after hotremove ones.
-
-PS2:
-Case where it's still borken happens when guest OS is Linux and
-device_del happens before guest OS initializes ACPI subsystem.
-Culprit in this case though is the guest kernel, which mangles GPE.sts
-(by clearing them up) and thus pending SCI turns to NOP leaving
-insert/remove events in pending state.
-That is the guest bug and should be fixed there.
-
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reported-by: Eric Mackay <eric.mackay@oracle.com>
-Message-Id: <20241210163945.3422623-3-imammedo@redhat.com>
+Message-Id: <20241210163945.3422623-2-imammedo@redhat.com>
 Tested-by: Eric Mackay <eric.mackay@oracle.com>
+Acked-by: Ani Sinha <anisinha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/cpu.c | 43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 42 +++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 9d530a24da..f70a2c045e 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -327,6 +327,7 @@ const VMStateDescription vmstate_cpu_hotplug = {
- #define CPU_EJECT_METHOD  "CEJ0"
- #define CPU_OST_METHOD    "COST"
- #define CPU_ADDED_LIST    "CNEW"
-+#define CPU_EJ_LIST       "CEJL"
- 
- #define CPU_ENABLED       "CPEN"
- #define CPU_SELECTOR      "CSEL"
-@@ -488,7 +489,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-         method = aml_method(CPU_SCAN_METHOD, 0, AML_SERIALIZED);
-         {
-             const uint8_t max_cpus_per_pass = 255;
--            Aml *else_ctx;
-             Aml *while_ctx, *while_ctx2;
-             Aml *has_event = aml_local(0);
-             Aml *dev_chk = aml_int(1);
-@@ -499,6 +499,8 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-             Aml *uid = aml_local(3);
-             Aml *has_job = aml_local(4);
-             Aml *new_cpus = aml_name(CPU_ADDED_LIST);
-+            Aml *ej_cpus = aml_name(CPU_EJ_LIST);
-+            Aml *num_ej_cpus = aml_local(5);
- 
-             aml_append(method, aml_acquire(ctrl_lock, 0xFFFF));
- 
-@@ -513,6 +515,8 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-              */
-             aml_append(method, aml_name_decl(CPU_ADDED_LIST,
-                                              aml_package(max_cpus_per_pass)));
-+            aml_append(method, aml_name_decl(CPU_EJ_LIST,
-+                                             aml_package(max_cpus_per_pass)));
- 
-             aml_append(method, aml_store(zero, uid));
-             aml_append(method, aml_store(one, has_job));
-@@ -527,6 +531,7 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
- 
-                 aml_append(while_ctx2, aml_store(one, has_event));
-                 aml_append(while_ctx2, aml_store(zero, num_added_cpus));
-+                aml_append(while_ctx2, aml_store(zero, num_ej_cpus));
- 
-                 /*
-                  * Scan CPUs, till there are CPUs with events or
-@@ -559,8 +564,10 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-                       * if CPU_ADDED_LIST is full, exit inner loop and process
-                       * collected CPUs
-                       */
--                     ifctx = aml_if(
--                         aml_equal(num_added_cpus, aml_int(max_cpus_per_pass)));
-+                     ifctx = aml_if(aml_lor(
-+                         aml_equal(num_added_cpus, aml_int(max_cpus_per_pass)),
-+                         aml_equal(num_ej_cpus, aml_int(max_cpus_per_pass))
-+                         ));
-                      {
-                          aml_append(ifctx, aml_store(one, has_job));
-                          aml_append(ifctx, aml_break());
-@@ -577,16 +584,16 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-                          aml_append(ifctx, aml_store(one, has_event));
-                      }
-                      aml_append(while_ctx, ifctx);
--                     else_ctx = aml_else();
-+
-                      ifctx = aml_if(aml_equal(rm_evt, one));
-                      {
--                         aml_append(ifctx,
--                             aml_call2(CPU_NOTIFY_METHOD, uid, eject_req));
--                         aml_append(ifctx, aml_store(one, rm_evt));
-+                         /* cache to be removed CPUs to Notify later */
-+                         aml_append(ifctx, aml_store(uid,
-+                             aml_index(ej_cpus, num_ej_cpus)));
-+                         aml_append(ifctx, aml_increment(num_ej_cpus));
-                          aml_append(ifctx, aml_store(one, has_event));
-                      }
--                     aml_append(else_ctx, ifctx);
--                     aml_append(while_ctx, else_ctx);
-+                     aml_append(while_ctx, ifctx);
-                      aml_append(while_ctx, aml_increment(uid));
-                 }
-                 aml_append(while_ctx2, while_ctx);
-@@ -620,6 +627,24 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-                     aml_append(while_ctx, aml_increment(cpu_idx));
-                 }
-                 aml_append(while_ctx2, while_ctx);
-+
-+                /*
-+                 * Notify OSPM about to be removed CPUs and clear remove flag
-+                 */
-+                aml_append(while_ctx2, aml_store(zero, cpu_idx));
-+                while_ctx = aml_while(aml_lless(cpu_idx, num_ej_cpus));
-+                {
-+                    aml_append(while_ctx,
-+                        aml_store(aml_derefof(aml_index(ej_cpus, cpu_idx)),
-+                                  uid));
-+                    aml_append(while_ctx,
-+                        aml_call2(CPU_NOTIFY_METHOD, uid, eject_req));
-+                    aml_append(while_ctx, aml_store(uid, cpu_selector));
-+                    aml_append(while_ctx, aml_store(one, rm_evt));
-+                    aml_append(while_ctx, aml_increment(cpu_idx));
-+                }
-+                aml_append(while_ctx2, while_ctx);
-+
-                 /*
-                  * If another batch is needed, then it will resume scanning
-                  * exactly at -- and not after -- the last CPU that's currently
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..a1047913af 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,43 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.hpbrroot",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.noacpihp",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
 MST
 
