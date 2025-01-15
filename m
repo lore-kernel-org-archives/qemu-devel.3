@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227F1C02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A120C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYCjF-0000H6-Vh; Wed, 15 Jan 2025 18:23:18 -0500
+	id 1tYCjW-0000rn-VO; Wed, 15 Jan 2025 18:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjD-0000G1-9c
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:15 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjU-0000jW-85
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:32 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjB-0003pr-RB
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:15 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso1500465e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:23:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjS-0003rB-Il
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:31 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4368a293339so2427745e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:23:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736983392; x=1737588192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736983408; x=1737588208; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L0j4K60G/+NPzfBz6VwUPX3RpYVnufxaRC/J6EqkjwQ=;
- b=OeAwRl8R1DtjiYSUEYn6GRIvLzX4adm566pH8ICfsYY3+H1J15ECdPWRrYxx/zIbYD
- CMbAlfzeOaBPW87gzxBxC8rCQRk2DzRRe2PE5Xi24GG27wqBC5W9S9CRf7tTNXQ0Om5h
- LYYwhaXtWBar0tdzKGe15D5ev7knPv9Xhgp6/m3ZanlJtO+Hf1wnP2t9D99JpeOYPdh3
- KnS6lvpRP8IBu9wTT8lUSym7caHiuk1BR02aDGwUD7OuZnOUkle8WuuweO2Ydaa66w5N
- yTbm9XmWeVKQZhaQDceXBEnwbMaInAAZ9ydE7Vbne1a4iJZTWbkl3dSr7witbPoqjyXv
- LlwA==
+ bh=snfcvZGJRSdw9CpfmPwjHfIiEi+hhZ6w0WHUO6QzqM8=;
+ b=NaqZ5ZGJCn793ePZZGpzE1xVhksco6P6HZ7jhYbamNGX0q+qxdcxuREehfZhvmgwl9
+ bR/yw0jBCHYK76GYuHViAJIpcmjCQpXJuhjOyT4zfTN7C1aqRIuT389noBOO3wkuda3q
+ UtPCp9HSykTgULtRGbDw8KO9sAY7TJZT9YdtTM/sHiVewLolnRXds3QPeAaSRtXaf+hM
+ 9VRN+Rd9cyhI2KgFLTXabVmRxOpF9//vrw6Mi2oHBDSmwj5zj/4fv900E7sib2vIaEE7
+ jW1oI915LxGuZ7qWF2quNLYnsVpvCYBDTGE9HeABMz3iv77qOWUmwhvcqsorKKx4kP8a
+ yIdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736983392; x=1737588192;
+ d=1e100.net; s=20230601; t=1736983408; x=1737588208;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L0j4K60G/+NPzfBz6VwUPX3RpYVnufxaRC/J6EqkjwQ=;
- b=EOe6F6CSI34PZ4NL8+WO2DTlBCjyNQjin2C8bngG4eaCh700KdnbF+TwF6sNOYN8D6
- W/fZ7Pnnm10IZWq75jUbQqFBhvhHHq/XXBj1jaYCSbnaJQ0/xo59zQKVWYmteJFZp8Un
- NKJB1aS2yGEyJqtT2/M3uTG+tsEDYn30wZd1p9hlZwgbsWX1rMbbWAkviX6E32rbJNzA
- QoGDMsnvXaAkaqjKcrG01/MOFx4A4fJTptc8eLyBB1+WvfTpPraUSNniyy6JXSKyDSk6
- 7MfQ/EHFWCGt6lNbWCRFYPQwnSfAyAZyhG8ZzhWVYcDuYR5WkQlLPtsbYF1kTYHk/Jqj
- vLgA==
-X-Gm-Message-State: AOJu0YzDo2MmYd8BbzT4qedg+CQ3Naec9qZebic8Jx8DRoMSzjOM4PAR
- i9GFuGYQInNurknNY9p3QvdBZvSvQLLCt32XUZMELCaHjhOlswLmT0zKPxzrDuW4Lqp4lQxBuCR
- htyQ=
-X-Gm-Gg: ASbGncuF+BPqMfFcdzbq6VydsJFy8mGy/6c9uHfmAVmGK5nu9Qfvtbd7RaOwLcK+wum
- i5YGz/TKxu7qk7dGPIgv2CvBCgJe/l98AlrWNSa0EtCVoM4bSa0R9QWCkdu9M5pl+ineiRywe71
- pvk6v9tO4QmDcI+r+wkcW8Bllylkh6zKIwyBUE3s0WvPKgo/mkr/dMS5l7dvYxw3CsmuE77OJnn
- u9lB6tqP4UW/jX8pgRbIMurAr+fNGG0wP2XxARAKNBSfcFhGIx+mnoURMWbe8zIqh4YszcSR/55
- ElOiKZxO/k6+yaaxB9o6uoasztyvlH4=
-X-Google-Smtp-Source: AGHT+IG5m+ucvFC6ezRuwfSJFcIil8xHuKtwE8Itvgp5ddw3WTU47NgNTI23V7VI/jcyvo/67IxqNw==
-X-Received: by 2002:a05:600c:4ecd:b0:434:f335:83b with SMTP id
- 5b1f17b1804b1-436e269723emr313900205e9.5.1736983392101; 
- Wed, 15 Jan 2025 15:23:12 -0800 (PST)
+ bh=snfcvZGJRSdw9CpfmPwjHfIiEi+hhZ6w0WHUO6QzqM8=;
+ b=sMWYNIyiRz7xANoixsTruvl5PvkXTlOIMMpqaNwTc5xmPLOOWrg49MKGTdv824bGZt
+ QkKHnXK9Y3rmZzdD5295MUdZY3bGST0K92FGX9PKw1m4tK2UgqbZmcP/XYS9YdyLCivt
+ fXmMgIzeDInP1s1mJdnbOMfOeDmEuoFJTSDk98TY3C5Sf773W38nFgLvSCPDoItq+kZg
+ 93IoTZkA+CP1ofYkarlOk8iqh+cYrJixGSwTImvrbo7qO/xbtX5RrnP1vYdgxbDe4A19
+ SlpQR90bT56x5/XVK9EFZIxsqR3KyMrsDGxVNszHqBcR9enn8KbxI6Cs4B7yFo0wWLja
+ 1qFA==
+X-Gm-Message-State: AOJu0Ywuj6UdHsO04+xYcG7B459nHSXTjbLlWQyW2iU1h6OzoAvnMt3E
+ bTWp7gcEaI0GDVFF8JNLo8Mq1H9haK51e8Pifwf+7AVng5tMgslI1FI7A3XQ4bZdgKhozpgOMtg
+ Nnu0=
+X-Gm-Gg: ASbGncsU86OVFwIibOmAyROJl6HZ0twzVeiQNIEFDSyI4BSDKTaHojOC9VHWjqAPXfi
+ vh+vetDCvVI62C3gN4PD0ZVxEag7lS//Yh+06jkX52JR9xjY0XTdsA4s2uQaIovivVaqQaygamw
+ 2njikNK/rkHcCAxi2U4s5PYx8rtvsg8xud1MjfJRtmaNMlba0y5XiL9S6+2OA0yqBhFD7j8xPsp
+ zi0J/czV1iDEOFInIk2XdG70I+ZIy94QzpdhvTbDKdnQ14Q3s0HsM/Vqe/HVJ4x9sCPC1WkiV6H
+ +9FOkJS4SxKCH8obbQH4iEFcfk5OJTU=
+X-Google-Smtp-Source: AGHT+IHQc5Ghd4EK8DHjkTYR4yEJtRhumv72h7MlL7Hk9xcjNkchGaVDw8e2DaUQPfYGOptzP+syFQ==
+X-Received: by 2002:a05:600c:5491:b0:434:fddf:5bfa with SMTP id
+ 5b1f17b1804b1-436e268626emr270176085e9.2.1736983408392; 
+ Wed, 15 Jan 2025 15:23:28 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c749989asm39785625e9.2.2025.01.15.15.23.10
+ 5b1f17b1804b1-437c7499878sm39944135e9.6.2025.01.15.15.23.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 15:23:11 -0800 (PST)
+ Wed, 15 Jan 2025 15:23:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -74,17 +74,17 @@ Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 04/21] hw/i386/pc: Remove pc_compat_2_4[] array
-Date: Thu, 16 Jan 2025 00:22:30 +0100
-Message-ID: <20250115232247.30364-5-philmd@linaro.org>
+Subject: [PATCH 07/21] hw/core/machine: Remove hw_compat_2_4[] array
+Date: Thu, 16 Jan 2025 00:22:33 +0100
+Message-ID: <20250115232247.30364-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250115232247.30364-1-philmd@linaro.org>
 References: <20250115232247.30364-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,59 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc_compat_2_4[] array was only used by the pc-q35-2.4
-and pc-i440fx-2.4 machines, which got removed. Remove it.
+The hw_compat_2_4[] array was only used by the pc-q35-2.4 and
+pc-i440fx-2.4 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h |  3 ---
- hw/i386/pc.c         | 19 -------------------
- 2 files changed, 22 deletions(-)
+ include/hw/boards.h | 3 ---
+ hw/core/machine.c   | 9 ---------
+ 2 files changed, 12 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 7fc34bb4a34..31e799061ef 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -298,9 +298,6 @@ extern const size_t pc_compat_2_6_len;
- extern GlobalProperty pc_compat_2_5[];
- extern const size_t pc_compat_2_5_len;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 2ad711e56db..e9e33c57f27 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -841,7 +841,4 @@ extern const size_t hw_compat_2_6_len;
+ extern GlobalProperty hw_compat_2_5[];
+ extern const size_t hw_compat_2_5_len;
  
--extern GlobalProperty pc_compat_2_4[];
--extern const size_t pc_compat_2_4_len;
+-extern GlobalProperty hw_compat_2_4[];
+-extern const size_t hw_compat_2_4_len;
 -
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
-     { \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index bf5308160e4..6d0c9014d63 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -257,25 +257,6 @@ const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
- GlobalProperty pc_compat_2_5[] = {};
- const size_t pc_compat_2_5_len = G_N_ELEMENTS(pc_compat_2_5);
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index c23b3994964..bdd4dee3d67 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -281,15 +281,6 @@ GlobalProperty hw_compat_2_5[] = {
+ };
+ const size_t hw_compat_2_5_len = G_N_ELEMENTS(hw_compat_2_5);
  
--GlobalProperty pc_compat_2_4[] = {
--    PC_CPU_MODEL_IDS("2.4.0")
--    { "Haswell-" TYPE_X86_CPU, "abm", "off" },
--    { "Haswell-noTSX-" TYPE_X86_CPU, "abm", "off" },
--    { "Broadwell-" TYPE_X86_CPU, "abm", "off" },
--    { "Broadwell-noTSX-" TYPE_X86_CPU, "abm", "off" },
--    { "host" "-" TYPE_X86_CPU, "host-cache-info", "on" },
--    { TYPE_X86_CPU, "check", "off" },
--    { "qemu64" "-" TYPE_X86_CPU, "sse4a", "on" },
--    { "qemu64" "-" TYPE_X86_CPU, "abm", "on" },
--    { "qemu64" "-" TYPE_X86_CPU, "popcnt", "on" },
--    { "qemu32" "-" TYPE_X86_CPU, "popcnt", "on" },
--    { "Opteron_G2" "-" TYPE_X86_CPU, "rdtscp", "on" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "rdtscp", "on" },
--    { "Opteron_G4" "-" TYPE_X86_CPU, "rdtscp", "on" },
--    { "Opteron_G5" "-" TYPE_X86_CPU, "rdtscp", "on", }
+-GlobalProperty hw_compat_2_4[] = {
+-    { "e1000", "extra_mac_registers", "off" },
+-    { "virtio-pci", "x-disable-pcie", "on" },
+-    { "virtio-pci", "migrate-extra", "off" },
+-    { "fw_cfg_mem", "dma_enabled", "off" },
+-    { "fw_cfg_io", "dma_enabled", "off" }
 -};
--const size_t pc_compat_2_4_len = G_N_ELEMENTS(pc_compat_2_4);
+-const size_t hw_compat_2_4_len = G_N_ELEMENTS(hw_compat_2_4);
 -
- /*
-  * @PC_FW_DATA:
-  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.47.1
 
