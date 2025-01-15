@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B084CC02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25F6C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY8Mj-00087O-ET; Wed, 15 Jan 2025 13:43:45 -0500
+	id 1tY8MV-00081x-9P; Wed, 15 Jan 2025 13:43:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tY8Mh-00086O-5c
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:43:43 -0500
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ id 1tY8MR-00081E-Fd
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:43:27 -0500
+Received: from mail-ot1-x342.google.com ([2607:f8b0:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tY8Mf-000395-Fh
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:43:42 -0500
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-71e35be77b5so26877a34.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:43:41 -0800 (PST)
+ id 1tY8MP-00035W-MG
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:43:27 -0500
+Received: by mail-ot1-x342.google.com with SMTP id
+ 46e09a7af769-71e2bc5b90fso48168a34.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:43:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736966620; x=1737571420; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AwZYeq4K+W1NQDBMX/lyZ5hy5MmdrAMvZUdnjdWaIb8=;
- b=hLXCjySec1Hu7oSmSvQ9bIfHCVMkV3tt188KAcNpmHo8BdxLrTrll0vQLeTLdLr3vr
- ZlGw9cXT5J3aVCydBTn8JFAgD4j/larMRwNugMn0Xai/Am6cnBLrpur37E3TYth0tEoQ
- WLyyT9FyguRAUjMuizFXx+Ra/7Y98RXzQL2Q6+p9Qse/NZGfjdJLGyPKHppnTfphm1Nl
- tp9zIoQ9Ge2I+nzpX28qLy/7erGilANtNx0ER+aGnYuwtIpOjdBGH+fdi6vq9AChBDuQ
- OwnVRSNmthBggq3xfUU5Aqr83T6GP4hy1KFlfQytm1FiYFb0boZwUNVQWbS+fdV7dpvX
- 5cBw==
+ d=ventanamicro.com; s=google; t=1736966603; x=1737571403; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4fFUGZQsFHRzLCcx9U1SO5cv91pLUKQEMj+p1DkwAeY=;
+ b=aWhF1BS6Sj5AU9v5MbqqwnOJWm7ZytcCOA2Iy1pKqAJvdnrLGnvdMWPqRdEt2KAuqC
+ pogD4EgjvSgvLkAo694XnuiQrZlGHxCVB0FjpeXToALwplNYNyd5oJkSp5WfNoiu0GZL
+ 51IKVqyykx3F8MCaIh3Y+IDzIFvLIs3YmT0f5mTWZ3WkvStUcxPAvpkOsRTobQflJCE8
+ iWpB+WIpzZdKNp/1Y42IuZHQM3TFL5sKS75LXT5WiEU+mlSiIEjs3yQYLsvLPcFw6mQD
+ T3h5k5OPQ0Ou1BFXBsh5Bu+Xi/TWcmSOjsdqZGXWinPHdYoNHPz7dqJeFu5yiZLdygdz
+ gVRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736966620; x=1737571420;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AwZYeq4K+W1NQDBMX/lyZ5hy5MmdrAMvZUdnjdWaIb8=;
- b=b3qv8PujLmYLA9nxc939A5Jkucv8pDHAUTVE+M4VPU/XjTJLtejDTCgNiV6evZHVwE
- sJmVgIExoqm621j/+WGVj2KaUvnDQMwLrESwB3Zy3+uvhGHUGQmjg/PG53YlWsadjThw
- FtX+Oi5XLrQab48RT6lISZmL2Nyv0Uo2xkWzPxCM7tHj6P1cUxcXGmWbHk/q2hwwutYu
- PVDF20VtScVEX2GAm0X1I/6TtQmpyvuRH6u/yJd/L7x7gZfxsXwYNsB0ggB96dyFcGhO
- eiVfFtRtwICuwjhAIWNE/xQe727I/mpt+sSw6R7NVIqATPJ8HOsiCIwDa01RC3aQU0EY
- MtBg==
-X-Gm-Message-State: AOJu0YwdBFt/L4nt4XgIIb9rBqCEs4EMW2cwrG/Qh8D6nGF5tsF78S+J
- Gq0tI0lXyHihXyJ2X0kQ/yCS4l5XQUTStFszMzbduN/+JKu3yjLIZOR6N6BGbQIHratpOllV3Lz
- hBs8=
-X-Gm-Gg: ASbGncvjswNmL7WhP/X/929p+/dDbXshDELWk/7wfYHOhacElvuYIJEUEaqX1hMJOJD
- gqOQrm3JDVXiOwMzMdJsU7GzSMX4gixp+6ZymT747BNsaSXQra2/xfoFVIVCcPJV5FVCaMG4M9g
- C10omySmIMQVyx11ek1Z3aIrbkpMO1jFZ/f7Y12BsBAdOM80NUl2Zs/bcYvguYj6zou1TWUfjFT
- cktmRs/9nAqqlJ2jNIgCmp6K1/WoHyFBtMnrlTB6TSh5dfmj3xzwR7jpJU=
-X-Google-Smtp-Source: AGHT+IGrcAC02vTQPlcacYUTbvLQs7XYAEzeWoxv2L/xxj+FH6ETaV+NC4PqRcJl3UltbyTxJZKdpA==
-X-Received: by 2002:a05:6871:5297:b0:29d:c870:74 with SMTP id
- 586e51a60fabf-2aa06922f71mr18633110fac.27.1736966620062; 
- Wed, 15 Jan 2025 10:43:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736966603; x=1737571403;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4fFUGZQsFHRzLCcx9U1SO5cv91pLUKQEMj+p1DkwAeY=;
+ b=bqNA6Ts/FOcRfCZHdofP971Cs041dW/JfdF29aKZOKiVK732znW2ZO5q5Yt71SvZjq
+ TilUboWWnaKllgJGbUiIwmEINCzhv59P6NcFzIcFVsW6BqEuvk4q/dsDYBSIDWJaQbx4
+ fRdQF/CkNQLYOg9agml+vEtZbwRX26L5gjGCHCTL9ScLS78yrYOq7WpruEdYzN4Woffc
+ lOH+AeN5ptJ3zn1rvYEtVBXE3t/Q5FLugLWyVaxiDmTbbqsJrrik3NEPMgpdKkxGCS19
+ xO/QvFflqQDoaigRhuHvE1CMZHKaNkdMsirB8d9NF/7HkzTNWEjlo9ghfLX+XfEicv3w
+ z/8g==
+X-Gm-Message-State: AOJu0YzqREArN9Vf0Bpm9bLosfauMkzVSxP+NI2kqy2tXcRGUips8Gac
+ ky1oBjXkWn6uyMil9+/Xl5Kmrm5Gfo19QRJhLEhpdGZmTfnkv65EareN/B8KgdZOtvXRfwjzxXe
+ wPKsA0w==
+X-Gm-Gg: ASbGncsIbsdsn8fF3l86YA8rdejDhXWFvo3luHISFdaY2j3+hStgJPh1j3TB9F4HIJV
+ Zz3Pg16oseo/bbHwoDjpL85GPwCgLECbkqZ+kDjACF4V3iunaU8cM12+LvOiC63wmwVjcMfKRto
+ v9CvKemWBteJW65ezIj9EBwC0eKWFG7pt9hO4PV7hlZnwm+8yt1dT38Vs7bDUEuzocVQ6b8nl7W
+ 84pLUOEKJtKXR2RAHRH1WR0rhdaY1sEAYCNjCFLQpcYzX6mtZ+x4jzu9/4=
+X-Google-Smtp-Source: AGHT+IHuzwDkydhaUvkUyKUs3fHHYPnx5Pf2pDW6nt2Y1LKnoBMEUmfVlkMjojCGMQAiTfcRjp0FXQ==
+X-Received: by 2002:a05:6808:144c:b0:3eb:62d4:7092 with SMTP id
+ 5614622812f47-3ef2eda23afmr19296638b6e.27.1736966603406; 
+ Wed, 15 Jan 2025 10:43:23 -0800 (PST)
 Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2ad80a5cb64sm6539196fac.47.2025.01.15.10.43.36
+ 586e51a60fabf-2ad80a5cb64sm6539196fac.47.2025.01.15.10.43.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:43:39 -0800 (PST)
+ Wed, 15 Jan 2025 10:43:22 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  ajones@ventanamicro.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v4 4/6] target/riscv: change priv_ver check in
- validate_profile()
-Date: Wed, 15 Jan 2025 15:43:14 -0300
-Message-ID: <20250115184316.2344583-5-dbarboza@ventanamicro.com>
+Subject: [PATCH v4 0/6] target/riscv: RVA23 profile support
+Date: Wed, 15 Jan 2025 15:43:10 -0300
+Message-ID: <20250115184316.2344583-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250115184316.2344583-1-dbarboza@ventanamicro.com>
-References: <20250115184316.2344583-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::342;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,44 +97,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The S profiles do a priv_ver check during validation to see if the
-running priv_ver is compatible with it. This check is done by comparing
-if the running priv_ver is equal to the priv_ver the profile specifies.
+Hi,
 
-There is an universe where we added RVA23S64 support based on both
-RVA23U64 and RVA22S64 and this error is being thrown:
+This new version has tweaks suggested by Drew in v3. No major changes
+were made.
 
-qemu-system-riscv64: warning: Profile rva22s64 requires
-    priv spec v1.12.0, but priv ver v1.13.0 was set
+Patches based on alistair/riscv-to-apply.next.
 
-We're enabling RVA22S64 (priv_ver 1.12) as a dependency of RVA23S64
-(priv_ver 1.13) and complaining to users about what we did ourselves.
+All patches acked.
 
-There's no drawback in allowing a profile to run in an env that has a
-priv_ver newer than it's required by it. So, like Hiro Nakamura saves
-the future by changing the past, change the priv_ver check now to allow
-profiles to run in a newer priv_ver. This universe will have one less
-warning to deal with.
+Changes from v3:
+- patch 3:
+  - fix commit msg
+  - drop the 'profile->enabled &&' check from riscv_cpu_check_parent_profile()
+- patch 6:
+  - fix RVA23U64 -> RVA23S64 comment in the profile description
+- v3 link: https://lore.kernel.org/qemu-riscv/20250115134957.2179085-1-dbarboza@ventanamicro.com/
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
----
- target/riscv/tcg/tcg-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Daniel Henrique Barboza (6):
+  target/riscv: add ssu64xl
+  target/riscv: use RVB in RVA22U64
+  target/riscv: add profile u_parent and s_parent
+  target/riscv: change priv_ver check in validate_profile()
+  target/riscv: add RVA23U64 profile
+  target/riscv: add RVA23S64 profile
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c060b65fbc..de2a8c3f35 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -746,7 +746,7 @@ static void riscv_cpu_validate_profile(RISCVCPU *cpu,
- #endif
- 
-     if (profile->priv_spec != RISCV_PROFILE_ATTR_UNUSED &&
--        profile->priv_spec != env->priv_ver) {
-+        profile->priv_spec > env->priv_ver) {
-         profile_impl = false;
- 
-         if (send_warn) {
+ target/riscv/cpu-qom.h            |   2 +
+ target/riscv/cpu.c                |  81 ++++++++++++++++++++++++++++--
+ target/riscv/cpu.h                |   3 +-
+ target/riscv/tcg/tcg-cpu.c        |  37 ++++++++++----
+ tests/data/acpi/riscv64/virt/RHCT | Bin 390 -> 400 bytes
+ 5 files changed, 109 insertions(+), 14 deletions(-)
+
 -- 
 2.47.1
 
