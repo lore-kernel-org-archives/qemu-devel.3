@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E6B0C02185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6A3C02187
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7p4-0006Oi-Pi; Wed, 15 Jan 2025 13:08:58 -0500
+	id 1tY7pE-0006Ql-Rw; Wed, 15 Jan 2025 13:09:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7p0-0006OA-UK
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:55 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pC-0006QG-E1
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oz-0006WY-5h
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:54 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pA-0006XU-LV
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964531;
+ s=mimecast20190719; t=1736964544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BA+AAiUYSVdwa0YScwU4cx7B/C7WfTspevhXkrQeIKc=;
- b=WTnNpIvIOc8+aQki81AdsdEdZKw5Y5tUaBahLBtLS2U+/zjilNj0h0zf9OqZeaDDT+WPoj
- 2sMIhzJ7hAkRq5a2UWjPiMR2APZtQ2kjy+QZW0C7IJsOaqeVLz7N4UYyoThoVUiIfOt1W8
- VqpWBkC+o9LigJOerkyJqHTUZIBtrmE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mAoiUmsYN9Y3NroFhTF2ZOwH0Iq7c411sIjbila1LWg=;
+ b=JVCMDpA4J/vgyQDEtJIW9vIjxdsk3CRBn8pzp38WqMIu8lQs6OSI54tFYVcQt7EEnSiHd+
+ fRh8yLYhnik0kcuamRkpeEcbJ5GpxcEn9tLEtjuNil+G2DrHfYudvvczSREW3iPo4v5ufV
+ cbD+YpccRyiUpxZHz5VMdFMAzoRp718=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-PVMmn7k0PsOtgECQyvRMTw-1; Wed, 15 Jan 2025 13:08:50 -0500
-X-MC-Unique: PVMmn7k0PsOtgECQyvRMTw-1
-X-Mimecast-MFC-AGG-ID: PVMmn7k0PsOtgECQyvRMTw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-436723db6c4so47624185e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:48 -0800 (PST)
+ us-mta-220-ghybGsBwPRGOhaYWD-OGcw-1; Wed, 15 Jan 2025 13:08:59 -0500
+X-MC-Unique: ghybGsBwPRGOhaYWD-OGcw-1
+X-Mimecast-MFC-AGG-ID: ghybGsBwPRGOhaYWD-OGcw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-38a684a0971so42307f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964527; x=1737569327;
+ d=1e100.net; s=20230601; t=1736964537; x=1737569337;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BA+AAiUYSVdwa0YScwU4cx7B/C7WfTspevhXkrQeIKc=;
- b=jpio+Ug6EvyTzyMDyRx8BS4igacFDBg+05YBE15GgzZdHU8JP306Qm+mBgEgQ0qTyh
- bpnaHR8V9oTZ5NFx1Nfb6CSMFQfJ/xvvBLw3rEcOILKceit3hNJkX6o+u/wMdZmfTvko
- ocwYeMMLzE2Y1/RnPfOl54IJb+v2z3Q25btDDg4yziZTY56tJkaMUmtL+JaIkYaCa99P
- 0OAm2VQgok0EpBKNjQv+E0J04Ww6/5SYiumTBO1VzGmIScwkbRsxkdUFyk2oVTDcZD0k
- 4dRtpGsZYue8MSfzlTupG9T4PHtuksP4vYn+87UKsJI7Re0gdYINoQ2XiVzPc0GGIRMr
- AX5w==
-X-Gm-Message-State: AOJu0Yw30RzN7NwEXrCiL84KZRXe7KqAjRvMkp9bCpVwDfgqRY6g7LTU
- mH7nOqx8TCg4bZTLERWgcTDEcsNsuzDhs3N/xFmFkuYtcbgs2XRTPJmG19yQ4aCWwcIbbZnm3ij
- /9UZq0P8bRtDEjNf6RYqJsgtDkuu0raj4m+ovnlk7QxgLjgzBJzDPFkK8VoecXYaLrxJXDj41cd
- 2WNq+QmtW3m2WO4FrHqnKfll/EmpX0Tg==
-X-Gm-Gg: ASbGncto84OqFqMpGrdyKaXEzk0kiZ7XU8mR/be1ZUVxtuJjzRYHWFiQVgyQxtkzPGa
- TIjH/L1r4kcMm5dIELtMF3i5F/7ULtttUmMJJwFzqwXQL79iR58k9tS8eJrDbBA/r3yogd2g3a4
- gui/58MvG8KgKkHVYE7NIPe2kicsgacUQ+TP3xbIJBAo2/HUttODV3MEg/Zx+tE1PUhO+2p6IM+
- M3aTh7XyMqumPX1bSoAV6umrXiJvnMIv9FrK1I63MqF7k4kLVn1
-X-Received: by 2002:a05:600c:3ba0:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-436e27170c7mr248548195e9.27.1736964527411; 
- Wed, 15 Jan 2025 10:08:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGi/RGdHLBf5LDbvhVDMM/MOlTqSeNTzFMKzF9AvI/GEK715h4l13UDc/Xmkd3tleUOgpw3Ig==
-X-Received: by 2002:a05:600c:3ba0:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-436e27170c7mr248547855e9.27.1736964526923; 
- Wed, 15 Jan 2025 10:08:46 -0800 (PST)
+ bh=mAoiUmsYN9Y3NroFhTF2ZOwH0Iq7c411sIjbila1LWg=;
+ b=u0wO3z21lhnu4zlRX51kRdf2FYQ80yW+Z/9U/W6FNiOEhAc2inF8geSAcRwaXIQ+nU
+ 5SLXB6jtHoF+9HtBk+fdsF0BCCoOAbYwfw7R55Jm9IVogvWmejYM6Iqh4ClUO7/7KaYV
+ +VqpS3LIbdTpx3bXcstgQa3n2f1PzF4k4cNOr2PNZCWFxuLI50iju068jYP8LL2pGTxs
+ FAWa7oxbWlzSbmr+qgHBHUM0X6Hc4E2DeqrmzEXmsMZT1JJhDPf/mSYHcIdn39fmHZb0
+ 1AldodkKqgRU3/Ha0RALFdDxFvV8YMhhTsIiUXQy8mCU7oFBrjfrU1XZSW8nOSdl/oO+
+ VPxg==
+X-Gm-Message-State: AOJu0Yyi96o4eEpgkVzR3tssbeFBJuAJGer6+FEQFM7bp8JIEKaqZ/k0
+ Vopva1Gs2ydnCsy943mAtyXzTu0FDH0OH7sc0p1N1CuFLZiBc2KEOBXCOeLQoz0JPP6+WLXX4dE
+ eeQ4q+xXce8ipKyDdYWCSfWjLkdCyUuerOZDOtRjWkqibipc7d0NCcB4KrDzL5ghwjUkGC18VeM
+ 2gO/XUKJRcUVu6PBA+4g3XQRN8k+CuLA==
+X-Gm-Gg: ASbGncsQOBG0OiJXn4s/8yfpmzmlYK73e8XjbIrR4k0okeUkuIf1LgaBbYY2xXwdE2K
+ XC8ZldnLjjckjsv30zVw+oVBkWNo1qFvlDJR05/eaZlt23qSIu5SWnp8SzuxBDSF/hv4sAgiWO2
+ BVxVYRdu5hKbAWrizevCeMJPRdgZVGjgkBTHuWJHb+5mAlgjYS5zDFbAFnH+TVN3SRVYia1m0uJ
+ 4RTenYqD4VBdw4wBlDpn+h3T/1+xogzLr8skEx/IoJnmeZy4IDX
+X-Received: by 2002:a05:6000:1446:b0:385:fc97:9c76 with SMTP id
+ ffacd0b85a97d-38a872f7fd9mr27082249f8f.3.1736964537483; 
+ Wed, 15 Jan 2025 10:08:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFWqqvsWIxG+EfDPXt5YY5Dv1FgQHYVYH5ep2U7s9WbPOtNlOSqi7l8j36ZLj8grpo++jfmSA==
+X-Received: by 2002:a05:6000:1446:b0:385:fc97:9c76 with SMTP id
+ ffacd0b85a97d-38a872f7fd9mr27082213f8f.3.1736964537040; 
+ Wed, 15 Jan 2025 10:08:57 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74e3b97sm30941335e9.32.2025.01.15.10.08.44
+ ffacd0b85a97d-38a8e38c6a2sm18336847f8f.54.2025.01.15.10.08.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:08:46 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:08:43 -0500
+ Wed, 15 Jan 2025 10:08:56 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:08:53 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yu Zhang <yu.c.zhang@linux.intel.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 06/48] intel_iommu: Use the latest fault reasons defined by spec
-Message-ID: <a84e37af36ca89880395bf999873f1a477bf6fa7.1736964488.git.mst@redhat.com>
+Subject: [PULL 09/48] intel_iommu: Flush stage-2 cache in PASID-selective
+ PASID-based iotlb invalidation
+Message-ID: <ad0a7f1e1edbe841d4285a6b56f071eb3de9c86c.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -116,136 +116,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yu Zhang <yu.c.zhang@linux.intel.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Spec revision 3.0 or above defines more detailed fault reasons for
-scalable mode. So introduce them into emulation code, see spec
-section 7.1.2 for details.
+Per VT-d spec 4.1, 6.5.2.4, "Table 21. PASID-based-IOTLB Invalidation",
+PADID-selective PASID-based iotlb invalidation will flush stage-2 iotlb
+entries with matching domain id and pasid.
 
-Note spec revision has no relation with VERSION register, Guest
-kernel should not use that register to judge what features are
-supported. Instead cap/ecap bits should be checked.
+With stage-1 translation introduced, guest could send PASID-selective
+PASID-based iotlb invalidation to flush either stage-1 or stage-2 entries.
 
-Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
+By this chance, remove old IOTLB related definitions which were unused.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20241212083757.605022-2-zhenzhong.duan@intel.com>
+Message-Id: <20241212083757.605022-5-zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h |  9 ++++++++-
- hw/i386/intel_iommu.c          | 25 ++++++++++++++++---------
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ hw/i386/intel_iommu_internal.h | 14 ++++--
+ hw/i386/intel_iommu.c          | 85 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 93 insertions(+), 6 deletions(-)
 
 diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 4323fc5d6d..a987023692 100644
+index a987023692..48019e2005 100644
 --- a/hw/i386/intel_iommu_internal.h
 +++ b/hw/i386/intel_iommu_internal.h
-@@ -311,7 +311,14 @@ typedef enum VTDFaultReason {
-                                   * request while disabled */
-     VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
+@@ -404,11 +404,6 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_IOTLB_AM(val)      ((val) & 0x3fULL)
+ #define VTD_INV_DESC_IOTLB_RSVD_LO      0xffffffff0000f100ULL
+ #define VTD_INV_DESC_IOTLB_RSVD_HI      0xf80ULL
+-#define VTD_INV_DESC_IOTLB_PASID_PASID  (2ULL << 4)
+-#define VTD_INV_DESC_IOTLB_PASID_PAGE   (3ULL << 4)
+-#define VTD_INV_DESC_IOTLB_PASID(val)   (((val) >> 32) & VTD_PASID_ID_MASK)
+-#define VTD_INV_DESC_IOTLB_PASID_RSVD_LO      0xfff00000000001c0ULL
+-#define VTD_INV_DESC_IOTLB_PASID_RSVD_HI      0xf80ULL
  
--    VTD_FR_PASID_TABLE_INV = 0x58,  /*Invalid PASID table entry */
-+    /* PASID directory entry access failure */
-+    VTD_FR_PASID_DIR_ACCESS_ERR = 0x50,
-+    /* The Present(P) field of pasid directory entry is 0 */
-+    VTD_FR_PASID_DIR_ENTRY_P = 0x51,
-+    VTD_FR_PASID_TABLE_ACCESS_ERR = 0x58, /* PASID table entry access failure */
-+    /* The Present(P) field of pasid table entry is 0 */
-+    VTD_FR_PASID_ENTRY_P = 0x59,
-+    VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
+ /* Mask for Device IOTLB Invalidate Descriptor */
+ #define VTD_INV_DESC_DEVICE_IOTLB_ADDR(val) ((val) & 0xfffffffffffff000ULL)
+@@ -443,6 +438,15 @@ typedef union VTDInvDesc VTDInvDesc;
+         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
+         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
  
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
++/* Masks for PIOTLB Invalidate Descriptor */
++#define VTD_INV_DESC_PIOTLB_G             (3ULL << 4)
++#define VTD_INV_DESC_PIOTLB_ALL_IN_PASID  (2ULL << 4)
++#define VTD_INV_DESC_PIOTLB_PSI_IN_PASID  (3ULL << 4)
++#define VTD_INV_DESC_PIOTLB_DID(val)      (((val) >> 16) & VTD_DOMAIN_ID_MASK)
++#define VTD_INV_DESC_PIOTLB_PASID(val)    (((val) >> 32) & 0xfffffULL)
++#define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
++#define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
++
+ /* Information about page-selective IOTLB invalidate */
+ struct VTDIOTLBPageInvInfo {
+     uint16_t domain_id;
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index a8c275f9ce..0ab1676d5f 100644
+index d0c1d73974..bb1f43c4b3 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -796,7 +796,7 @@ static int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base,
-     addr = pasid_dir_base + index * entry_size;
-     if (dma_memory_read(&address_space_memory, addr,
-                         pdire, entry_size, MEMTXATTRS_UNSPECIFIED)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_DIR_ACCESS_ERR;
-     }
+@@ -2692,6 +2692,83 @@ static bool vtd_process_iotlb_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
+     return true;
+ }
  
-     pdire->val = le64_to_cpu(pdire->val);
-@@ -814,6 +814,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-                                           dma_addr_t addr,
-                                           VTDPASIDEntry *pe)
++static gboolean vtd_hash_remove_by_pasid(gpointer key, gpointer value,
++                                         gpointer user_data)
++{
++    VTDIOTLBEntry *entry = (VTDIOTLBEntry *)value;
++    VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
++
++    return ((entry->domain_id == info->domain_id) &&
++            (entry->pasid == info->pasid));
++}
++
++static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
++                                        uint16_t domain_id, uint32_t pasid)
++{
++    VTDIOTLBPageInvInfo info;
++    VTDAddressSpace *vtd_as;
++    VTDContextEntry ce;
++
++    info.domain_id = domain_id;
++    info.pasid = pasid;
++
++    vtd_iommu_lock(s);
++    g_hash_table_foreach_remove(s->iotlb, vtd_hash_remove_by_pasid,
++                                &info);
++    vtd_iommu_unlock(s);
++
++    QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
++        if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
++                                      vtd_as->devfn, &ce) &&
++            domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
++            uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
++
++            if ((vtd_as->pasid != PCI_NO_PASID || pasid != rid2pasid) &&
++                vtd_as->pasid != pasid) {
++                continue;
++            }
++
++            if (!s->flts) {
++                vtd_address_space_sync(vtd_as);
++            }
++        }
++    }
++}
++
++static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
++                                    VTDInvDesc *inv_desc)
++{
++    uint16_t domain_id;
++    uint32_t pasid;
++    uint64_t mask[4] = {VTD_INV_DESC_PIOTLB_RSVD_VAL0,
++                        VTD_INV_DESC_PIOTLB_RSVD_VAL1,
++                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
++
++    if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, true,
++                                     __func__, "piotlb inv")) {
++        return false;
++    }
++
++    domain_id = VTD_INV_DESC_PIOTLB_DID(inv_desc->val[0]);
++    pasid = VTD_INV_DESC_PIOTLB_PASID(inv_desc->val[0]);
++    switch (inv_desc->val[0] & VTD_INV_DESC_PIOTLB_G) {
++    case VTD_INV_DESC_PIOTLB_ALL_IN_PASID:
++        vtd_piotlb_pasid_invalidate(s, domain_id, pasid);
++        break;
++
++    case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
++        break;
++
++    default:
++        error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
++                          ", lo=0x%"PRIx64" (type mismatch: 0x%llx)",
++                          __func__, inv_desc->val[1], inv_desc->val[0],
++                          inv_desc->val[0] & VTD_INV_DESC_IOTLB_G);
++        return false;
++    }
++    return true;
++}
++
+ static bool vtd_process_inv_iec_desc(IntelIOMMUState *s,
+                                      VTDInvDesc *inv_desc)
  {
-+    uint8_t pgtt;
-     uint32_t index;
-     dma_addr_t entry_size;
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
-@@ -823,7 +824,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-     addr = addr + index * entry_size;
-     if (dma_memory_read(&address_space_memory, addr,
-                         pe, entry_size, MEMTXATTRS_UNSPECIFIED)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_TABLE_ACCESS_ERR;
-     }
-     for (size_t i = 0; i < ARRAY_SIZE(pe->val); i++) {
-         pe->val[i] = le64_to_cpu(pe->val[i]);
-@@ -831,11 +832,13 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+@@ -2810,6 +2887,13 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+         }
+         break;
  
-     /* Do translation type check */
-     if (!vtd_pe_type_check(x86_iommu, pe)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_TABLE_ENTRY_INV;
-     }
- 
--    if (!vtd_is_level_supported(s, VTD_PE_GET_LEVEL(pe))) {
--        return -VTD_FR_PASID_TABLE_INV;
-+    pgtt = VTD_PE_GET_TYPE(pe);
-+    if (pgtt == VTD_SM_PASID_ENTRY_SLT &&
-+        !vtd_is_level_supported(s, VTD_PE_GET_LEVEL(pe))) {
-+            return -VTD_FR_PASID_TABLE_ENTRY_INV;
-     }
- 
-     return 0;
-@@ -876,7 +879,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
-     }
- 
-     if (!vtd_pdire_present(&pdire)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_DIR_ENTRY_P;
-     }
- 
-     ret = vtd_get_pe_from_pdire(s, pasid, &pdire, pe);
-@@ -885,7 +888,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
-     }
- 
-     if (!vtd_pe_present(pe)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_ENTRY_P;
-     }
- 
-     return 0;
-@@ -938,7 +941,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
-     }
- 
-     if (!vtd_pdire_present(&pdire)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_DIR_ENTRY_P;
-     }
- 
-     /*
-@@ -1795,7 +1798,11 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_ROOT_ENTRY_RSVD] = false,
-     [VTD_FR_PAGING_ENTRY_RSVD] = true,
-     [VTD_FR_CONTEXT_ENTRY_TT] = true,
--    [VTD_FR_PASID_TABLE_INV] = false,
-+    [VTD_FR_PASID_DIR_ACCESS_ERR] = false,
-+    [VTD_FR_PASID_DIR_ENTRY_P] = true,
-+    [VTD_FR_PASID_TABLE_ACCESS_ERR] = false,
-+    [VTD_FR_PASID_ENTRY_P] = true,
-+    [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-     [VTD_FR_MAX] = false,
- };
++    case VTD_INV_DESC_PIOTLB:
++        trace_vtd_inv_desc("p-iotlb", inv_desc.val[1], inv_desc.val[0]);
++        if (!vtd_process_piotlb_desc(s, &inv_desc)) {
++            return false;
++        }
++        break;
++
+     case VTD_INV_DESC_WAIT:
+         trace_vtd_inv_desc("wait", inv_desc.hi, inv_desc.lo);
+         if (!vtd_process_wait_desc(s, &inv_desc)) {
+@@ -2837,7 +2921,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+      * iommu driver) work, just return true is enough so far.
+      */
+     case VTD_INV_DESC_PC:
+-    case VTD_INV_DESC_PIOTLB:
+         if (s->scalable_mode) {
+             break;
+         }
 -- 
 MST
 
