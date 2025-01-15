@@ -4,94 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A110C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3285C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY2Gb-0001HA-RQ; Wed, 15 Jan 2025 07:13:02 -0500
+	id 1tY2Pq-00035q-QF; Wed, 15 Jan 2025 07:22:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
- id 1tY2GZ-0001Gp-S0
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:12:59 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tY2Pp-00035i-7O
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:22:33 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
- id 1tY2GX-00024v-3v
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:12:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736943177; x=1768479177;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=mC1XC4djPCDE99XU+hCt7StagXy+WLInG1/ESF761V4=;
- b=ERE75GkQbkEE17M/99w7xokeGO33x8QOqsuE7elGNmTegFWYgLqEkZhb
- Sz2yBnt/DdOG1PxNvQx2ZYjCjLmGJ9+FhqxYYEEKmHICVdXJEs4GjyyCF
- QhOHZaZLnDJ7IrpxYGqrumtCYY9U8SrvZSdCGWVqilO1RBFVKhpqyqYwY
- iJqoQJzhx8v3w1QjmLLgYjx8MM64DrNEAJNt0yD64DdS5DejaSPf1nwu7
- mod6m5s08tZMiFuOX+bhQJHHN8disAexK+GD6goKeZ0Q3nBfOjFTkk799
- Toq9gdxmWqJcZxvUF3TIQ4zej3g3h27wTdXdZMKqJcCNkX5HYnhfcgTEy Q==;
-X-CSE-ConnectionGUID: w0k22E1CQaOk26gf7Zjdgw==
-X-CSE-MsgGUID: JCqE9h3AQZuBKbbBiIlCzg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="41037582"
-X-IronPort-AV: E=Sophos;i="6.12,206,1728975600"; d="scan'208";a="41037582"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jan 2025 04:12:30 -0800
-X-CSE-ConnectionGUID: s0GYpNuFTU6eWWueralUcQ==
-X-CSE-MsgGUID: 5/95xIS+TsSjrweD/IvTGw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,206,1728975600"; d="scan'208";a="105078639"
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO localhost)
- ([10.245.246.31])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jan 2025 04:12:23 -0800
-Date: Wed, 15 Jan 2025 14:12:20 +0200
-From: Tony Lindgren <tony.lindgren@linux.intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>,
- "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
- "riku.voipio@iki.fi" <riku.voipio@iki.fi>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "Liu, Zhao1" <zhao1.liu@intel.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "anisinha@redhat.com" <anisinha@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "mtosatti@redhat.com" <mtosatti@redhat.com>,
- "eblake@redhat.com" <eblake@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
- "wangyanan55@huawei.com" <wangyanan55@huawei.com>,
- "berrange@redhat.com" <berrange@redhat.com>
-Subject: Re: [PATCH v6 09/60] i386/tdx: Initialize TDX before creating TD vcpus
-Message-ID: <Z4emJKi8LBnYKUUw@tlindgre-MOBL1>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-10-xiaoyao.li@intel.com>
- <1235bac6ffe7be6662839adb2630c1a97d1cc4c5.camel@intel.com>
- <c0ef6c19-756e-43f3-8342-66b032238265@intel.com>
- <Zyr7FA10pmLhZBxL@tlindgre-MOBL1> <Z1scMzIdT2cI4F5T@iweiny-mobl>
- <Z2F3mBlIqbf9h4QM@tlindgre-MOBL1>
- <1b03e7a4-c398-4646-9182-e3757f65980e@intel.com>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tY2Pl-0003HF-Jg
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:22:32 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YY4pJ0g6jz6D9Th;
+ Wed, 15 Jan 2025 20:20:40 +0800 (CST)
+Received: from frapeml100008.china.huawei.com (unknown [7.182.85.131])
+ by mail.maildlp.com (Postfix) with ESMTPS id 30105140442;
+ Wed, 15 Jan 2025 20:22:25 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (7.182.85.28) by
+ frapeml100008.china.huawei.com (7.182.85.131) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 15 Jan 2025 13:22:24 +0100
+Received: from frapeml500003.china.huawei.com ([7.182.85.28]) by
+ frapeml500003.china.huawei.com ([7.182.85.28]) with mapi id 15.01.2507.039;
+ Wed, 15 Jan 2025 13:22:24 +0100
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "zhao1.liu@intel.com" <zhao1.liu@intel.com>, "dapeng1.mi@linux.intel.com"
+ <dapeng1.mi@linux.intel.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "farman@linux.ibm.com" <farman@linux.ibm.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "anisinha@redhat.com" <anisinha@redhat.com>, "shannon.zhaosl@gmail.com"
+ <shannon.zhaosl@gmail.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "mtosatti@redhat.com" <mtosatti@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, Linuxarm <linuxarm@huawei.com>, "Shameerali
+ Kolothum Thodi" <shameerali.kolothum.thodi@huawei.com>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, jiangkunkun <jiangkunkun@huawei.com>,
+ yangyicong <yangyicong@huawei.com>, "sarsanaee@gmail.com"
+ <sarsanaee@gmail.com>
+Subject: RE: [RFC PATCH v6 0/6] Specifying cache topology on ARM
+Thread-Topic: [RFC PATCH v6 0/6] Specifying cache topology on ARM
+Thread-Index: AQHbZq8tUlyBinQe9kOCCI6eg2r3KbMXwaBA
+Date: Wed, 15 Jan 2025 12:22:24 +0000
+Message-ID: <e96a4aca0ece45e69888818e37116faa@huawei.com>
+References: <20250114180611.353-1-alireza.sanaee@huawei.com>
+In-Reply-To: <20250114180611.353-1-alireza.sanaee@huawei.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.47.75.97]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1b03e7a4-c398-4646-9182-e3757f65980e@intel.com>
-Received-SPF: none client-ip=198.175.65.14;
- envelope-from=tony.lindgren@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -61
-X-Spam_score: -6.2
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
 X-Spam_bar: ------
-X-Spam_report: (-6.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +83,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 08:39:37PM +0800, Xiaoyao Li wrote:
-> On 12/17/2024 9:10 PM, Tony Lindgren wrote:
-> > Hmm I don't think we should loop forever anywhere, the retries needed should
-> > be only a few. Or what do you have in mind?
-> 
-> "A few" seems not accurate. It depends on how heavy the RDRAND/RDSEED
-> traffic from others are. IIRC, it gets > 10 0000 -EAGAIN before success when
-> all the LPs in the system are doing RDRAND/RDSEED.
+Hi everyone,
 
-Oh OK :)
+There is a bug in this patch-set on loongarch (function signature of build_=
+pptt), that I will fix in the next version. Just wanted to point this out. =
+Anyhow I will allow time for hopefully some reviews first.
 
-> Maybe a timeout? E.g., QEMU exits when it cannot move forward for a certain
-> period.
-> 
-> However, I'm not sure what value is reasonable for the timeout.
+Thanks,
+Alireza
 
-Maybe some reasonable timeout could be multiplied by the number of CPUs
-or LPs available on the system?
+-----Original Message-----
+From: qemu-arm-bounces+alireza.sanaee=3Dhuawei.com@nongnu.org <qemu-arm-bou=
+nces+alireza.sanaee=3Dhuawei.com@nongnu.org> On Behalf Of Alireza Sanaee vi=
+a
+Sent: Tuesday, January 14, 2025 6:06 PM
+To: qemu-devel@nongnu.org; qemu-arm@nongnu.org
+Cc: zhao1.liu@intel.com; dapeng1.mi@linux.intel.com; armbru@redhat.com; far=
+man@linux.ibm.com; peter.maydell@linaro.org; mst@redhat.com; anisinha@redha=
+t.com; shannon.zhaosl@gmail.com; imammedo@redhat.com; mtosatti@redhat.com; =
+berrange@redhat.com; richard.henderson@linaro.org; Linuxarm <linuxarm@huawe=
+i.com>; Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>; J=
+onathan Cameron <jonathan.cameron@huawei.com>; jiangkunkun <jiangkunkun@hua=
+wei.com>; yangyicong <yangyicong@huawei.com>; sarsanaee@gmail.com
+Subject: [RFC PATCH v6 0/6] Specifying cache topology on ARM
 
-Regards,
+Specifying the cache layout in virtual machines is useful for applications =
+and operating systems to fetch accurate information about the cache structu=
+re and make appropriate adjustments. Enforcing correct sharing information =
+can lead to better optimizations. This patch enables the specification of c=
+ache layout through a command line parameter, building on a patch set by In=
+tel [1,2,3]. It uses this set as a foundation.  The device tree and ACPI/PP=
+TT table, and device tree are populated based on user-provided information =
+and CPU topology.
 
-Tony
+Example:
+
+
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+=
+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1=
+    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, =
+L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+=
+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +------=
+--+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread=
+ 0|
++--------+              +--------+              +--------+          +------=
+--+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread=
+ 1|
++--------+              +--------+              +--------+          +------=
+--+
+
+
+The following command will represent the system relying on **ACPI PPTT tabl=
+es**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=3Dl1i,smp-cache.0.topology=3Dcore,smp-cach=
+e.1.cache=3Dl1d,smp-cache.1.topology=3Dcore,smp-cache.2.cache=3Dl2,smp-cach=
+e.2.topology=3Dcluseter,smp-cache.3.cache=3Dl3,smp-cache.3.topology=3Dsocke=
+t \  -cpu max \  -m 2048 \  -smp sockets=3D2,clusters=3D1,cores=3D2,threads=
+=3D2 \  -kernel ./Image.gz \  -append "console=3DttyAMA0 root=3D/dev/ram rd=
+init=3D/init acpi=3Dforce" \  -initrd rootfs.cpio.gz \  -bios ./edk2-aarch6=
+4-code.fd \  -nographic
+
+The following command will represent the system relying on **the device tre=
+e**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=3Dl1i,smp-cache.0.topology=3Dcore,smp-cach=
+e.1.cache=3Dl1d,smp-cache.1.topology=3Dcore,smp-cache.2.cache=3Dl2,smp-cach=
+e.2.topology=3Dcluseter,smp-cache.3.cache=3Dl3,smp-cache.3.topology=3Dsocke=
+t \  -cpu max \  -m 2048 \  -smp sockets=3D2,clusters=3D1,cores=3D2,threads=
+=3D2 \  -kernel ./Image.gz \  -append "console=3DttyAMA0 root=3D/dev/ram rd=
+init=3D/init" \  -initrd rootfs.cpio.gz \  -nographic
+
+Failure cases:
+    1) There are scenarios where caches exist in systems' registers but
+    not left unspecified by users. In this case qemu returns failure.
+
+    2) At the moment, the device tree is not able to describe caches
+    shared at core level. In another word, SMT threads cannot share
+    caches. This will need adjustments in the SPEC. It is worth noting
+    that this particular case is completely OK in ACPI PPTT tables.
+
+Currently only three levels of caches are supported to be specified from th=
+e command line. However, increasing the value does not require significant =
+changes. Further, this patch assumes l2 and l3 unified caches and does not =
+allow l(2/3)(i/d). The level terminology is thread/core/cluster/socket righ=
+t now.
+
+Here is the hierarchy assumed in this patch:
+Socket level =3D Cluster level + 1 =3D Core level + 2 =3D Thread level + 3;
+
+TODO:
+  1) Making the code to work with arbitrary levels
+  2) Separated data and instruction cache at L2 and L3.
+  3) Additional cache controls.  e.g. size of L3 may not want to just
+  match the underlying system, because only some of the associated host
+  CPUs may be bound to this VM.
+
+Depends-on: Building PPTT with root node and identical implementation flag
+Depends-on: Msg-id: 20240926113323.55991-1-yangyicong@huawei.com
+
+Depends-on: i386: Support SMP Cache Topology
+Depends-on: Msg-id: 20250110145115.1574345-1-zhao1.liu@intel.com
+
+[1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.co=
+m/
+[2] https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@in=
+tel.com/
+[3] https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@i=
+ntel.com/
+
+Change Log:
+  v5->v6:
+   * Minor bug fix.
+   * rebase based on new Intel patchset.
+     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.li=
+u@intel.com/
+  v4->v5:
+    * Added Reviewed-by tags.
+    * Applied some comments.
+
+  v3->v4:
+    * Device tree added.
+=20
+
+Alireza Sanaee (6):
+  target/arm/tcg: increase cache level for cpu=3Dmax
+  arm/virt.c: add cache hierarchy to device tree
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  hw/acpi/aml-build.c: add cache hierarchy to pptt table
+  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
+  Update the ACPI tables according to the acpi aml_build change, also
+    empty bios-tables-test-allowed-diff.h.
+
+ hw/acpi/aml-build.c                        | 205 +++++++++++-
+ hw/arm/virt-acpi-build.c                   |   8 +-
+ hw/arm/virt.c                              | 349 +++++++++++++++++++++
+ hw/cpu/core.c                              |  92 ++++++
+ include/hw/acpi/aml-build.h                |   4 +-
+ include/hw/arm/virt.h                      |   4 +
+ include/hw/cpu/core.h                      |  27 ++
+ target/arm/tcg/cpu64.c                     |  13 +
+ tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
+ tests/qtest/bios-tables-test.c             |   4 +
+ 10 files changed, 699 insertions(+), 7 deletions(-)
+
+--
+2.34.1
+
+
 
