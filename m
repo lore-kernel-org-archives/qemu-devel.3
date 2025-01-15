@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2122C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDE2C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7rH-0001mk-C6; Wed, 15 Jan 2025 13:11:15 -0500
+	id 1tY7s1-0005UP-3c; Wed, 15 Jan 2025 13:12:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qP-0007cq-0y
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:23 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qt-0008Sl-9c
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qI-0006xI-3O
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qo-00073p-SL
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964612;
+ s=mimecast20190719; t=1736964644;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8oi9KOXhifPD6YPugI1W0xaqab0w+uWNDdH+YVyo2Gs=;
- b=gVjaAdHgHmn2q8O/scAaitQnfkGp/CAv+fWWCeeahrJCjoeU+AUuVm9kTKyQDqws0ibkQs
- IZMT+i/3cklLMDed6exA902HVoqr7uqJTer+2MzetIjD/JvqFALZgnGbTxxVnl9NSBP3cs
- kFFWxMW1vKId+f+FQvj+CmB0uomNR2I=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YTFWj4vrkS7z96ILKG6Zp39DvnbZjnd3FKkrmyKnnqk=;
+ b=CHFsJUqMMYKbWByAtqw24GGJOrMtCF+T6oKxnGo31lFa0dsTUZwemR4OIZjsDpuaaKLgOr
+ 5cdr9poeR6PKOLPeBGfNpPt3ce2ARgniQ8l9Jh1Fsnngq+57HUtEi9KKDlw0CLSzCChgmX
+ lWKiyDA0dmFGBb2Wml69OzeDG4MQt6M=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-pLIBgZOSNyytmsS-sjI28g-1; Wed, 15 Jan 2025 13:10:11 -0500
-X-MC-Unique: pLIBgZOSNyytmsS-sjI28g-1
-X-Mimecast-MFC-AGG-ID: pLIBgZOSNyytmsS-sjI28g
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385d52591d6so39266f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:10 -0800 (PST)
+ us-mta-584-eVgKupWYO9yhAjEkPMEaIA-1; Wed, 15 Jan 2025 13:10:43 -0500
+X-MC-Unique: eVgKupWYO9yhAjEkPMEaIA-1
+X-Mimecast-MFC-AGG-ID: eVgKupWYO9yhAjEkPMEaIA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362153dcd6so36836955e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964609; x=1737569409;
+ d=1e100.net; s=20230601; t=1736964642; x=1737569442;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8oi9KOXhifPD6YPugI1W0xaqab0w+uWNDdH+YVyo2Gs=;
- b=lX/qsSkbN8h9fizyQVJH2bE/SR1rlR1kv9MvNWsV5tNWkSIugdk9E1M7YsyLJs3F93
- 274NA9yK7HSJtloV4eVwckBrhJyLLcA0qMpkvj9Jphkd4ylA1PUmzYwZCH2HQqNVVdiL
- NpVWYBQa8vOKUu84P03hZAMR5Udlfsd5oCLpLawU/dfcsEqCZMJYsnUseakToqq/Omgw
- D8wGiByn/b5zV7MylOkDKsniHbUkqYpOR2npN3qd6OgUBxVWt5lIblCArzXKyaQm5PEn
- +e3uv8F+WdpW6IdKLxzjZvQwH0+z6asNVc0H4kR6q0HKMIpmkDKk72MBFDbBGckOoEOW
- eIjw==
-X-Gm-Message-State: AOJu0Yxx+XK+6W7OPmCBEjkGgqu3LwPRGRJd9+8rPTCtt7plMUQNIN/B
- EJLuPq1IF/8C6UW7iaROQbRZ/VAFWNuuWZhDGd2nZkKK67+5r7UNreJ+X4ZHUHqeo4WedXtzoFl
- SpfmeBE8YAv9cuzswdn5OX6s8ArvgHyZmr4AoQm4N3v82ge4lzKv77TnezASrKPLTRvfboe5h0o
- 7+dr9vhaWfaocBCyKbbwaUvg38uKMh2g==
-X-Gm-Gg: ASbGnctMIZ+zZ5jVqYs5k7ZPqug2w3z3AC/CDPnpJziHOjFllQwa0Bv4EFgo0VaZM2S
- AzQ4sCXFdlbdBg7qcCtgtSnHD2vL6lbq5cpGKaFK/fOgaXzRG14cYVUe0ZLuDayLw/LN/4jO6MP
- wHI+IZQIwiARSgun3qF1vR7wNlDLcIh7ISigd3TVGJgcymi+nOxn3kRSXXp462bzJRZsFTG4bUv
- pkYf/ldfUcomwJ2ySP7w+7G6jAJewwG+lJwcZ52M2Uyk3bajQoD
-X-Received: by 2002:adf:b64f:0:b0:38a:a117:3db0 with SMTP id
- ffacd0b85a97d-38aa11740b8mr10363952f8f.3.1736964609413; 
- Wed, 15 Jan 2025 10:10:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHtqidKngIe8ln12aOwRXhBjLzkqIkk0b2gJgADIc4ycOVYg4NPYZvuzVVWNne93XB3swaplg==
-X-Received: by 2002:adf:b64f:0:b0:38a:a117:3db0 with SMTP id
- ffacd0b85a97d-38aa11740b8mr10363924f8f.3.1736964609006; 
- Wed, 15 Jan 2025 10:10:09 -0800 (PST)
+ bh=YTFWj4vrkS7z96ILKG6Zp39DvnbZjnd3FKkrmyKnnqk=;
+ b=qTmv2QtlD39ao5f0iArOrib+XLoP3Bk32gQ4FpyQVBopGAnQqR0V6S4OVJY+ue7EN9
+ gIkbbpgm4nWY3j/73X+dNxFTXUoAEM0u8xXJ5785+luUVhwYSWYKdlM7Y4NZsLk6efAd
+ aoFqh17YYPx9XCFp102R37S2SqsEtA6e97TCzreLd0i/08gEMM6HrayWIEmSVtAqoNPo
+ AofsbUb0sybGfhwBqYZWSWQg/U7472tLAGn5meMGgcY+cRJv9KQnbq3aTMF28PgDx0zE
+ K5CCoUWnnpqX39U1GpnzSObYK3cQrckbw2kMyz/degTGM3ZtmfYXG3VX4hnO8Fn99/nP
+ mtJQ==
+X-Gm-Message-State: AOJu0YwvAEkiHjOlXobjuE8T0U4tm/NDw6cuN9eR3POF0ka0O5Y28OIl
+ mh0Mt0qmzoJTPFw1rtAcH4s/SVIFkLjsQQb3V7QQAoQTJdH468lgAoNMXUvugM1Y4e8ZnLwdT1c
+ SQ5rSkSRAdl0e7/230E49K1qJ0xEyijH+231koQbvuyM43pgZseeewyFMcjCCgo5EFh2/tRFD05
+ 8gGfZqoQJKOJ7XPs1g1gVVoJv1YSEWEw==
+X-Gm-Gg: ASbGncuFFmzsXMqH/cHdfT7oDwPfJY+dWUGZBQPGlet+/hmrxg2A7UrKKFzOMe8AVlJ
+ IhVlzNKw/Q+eKFLSRXv9eVFqsd/Ewwu5/S5ATMt2X3AhsfWfUzuu2n/Lso46g4Gxo8Tp9U9vXHw
+ hAag44mBpHZXueY8VxfcephIjYriSc69XsiqWcd5x4owfdw1sAQngeTORmFbS9p92uljBJg7lSD
+ BtOUE9VG2ATE4YETUVnIx8FmNWiFasfgeXdR8foYXOT2OV73Xuh
+X-Received: by 2002:a05:600c:4744:b0:434:a7e7:a1ca with SMTP id
+ 5b1f17b1804b1-436e26f043dmr254624775e9.20.1736964642064; 
+ Wed, 15 Jan 2025 10:10:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWW/2mdIrRZrdn0KmsMFg7vNvL2Cp5oP0G16i9jXeuCukrpPekidb68kmwoQKb+U0aittTPw==
+X-Received: by 2002:a05:600c:4744:b0:434:a7e7:a1ca with SMTP id
+ 5b1f17b1804b1-436e26f043dmr254624545e9.20.1736964641713; 
+ Wed, 15 Jan 2025 10:10:41 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c75298adsm31808245e9.30.2025.01.15.10.10.07
+ 5b1f17b1804b1-437c74ab250sm31338665e9.9.2025.01.15.10.10.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:10:08 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:10:06 -0500
+ Wed, 15 Jan 2025 10:10:40 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:10:37 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -76,8 +76,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Dongjiu Geng <gengdongjiu1@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL 31/48] acpi/ghes: Fix acpi_ghes_record_errors() argument
-Message-ID: <5eb07a4ff067053b4d6bf55d2d614b65b00a476b.1736964488.git.mst@redhat.com>
+Subject: [PULL 41/48] acpi/ghes: Change ghes fill logic to work with only one
+ source
+Message-ID: <47935fc1e56f02c892d186ef89be7c923f73c89b.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,34 +113,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Align the header file with the actual implementation of
-this function, as the first argument is source ID and not
-notification type.
+Extending to multiple sources require a BIOS pointer to the
+beginning of the HEST table, which in turn requires a backward-compatible
+code.
+
+So, the current code supports only one source. Ensure that and simplify
+the code.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-Message-Id: <d55f2a6ede5a168e42a20a228b2c066cb4c60939.1736945236.git.mchehab+huawei@kernel.org>
+Message-Id: <66bddd42a64c8515ad98b9975d953b4a70ffcc6d.1736945236.git.mchehab+huawei@kernel.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/ghes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/acpi/ghes.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 20016c226d..50e3a25ea3 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -73,7 +73,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
--int acpi_ghes_record_errors(uint8_t notify, uint64_t error_physical_addr);
-+int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index ddb576b940..b709c177cd 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -387,15 +387,13 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+      * As the current version supports only one source, the ack offset is
+      * just sizeof(uint64_t).
+      */
+-    *read_ack_register_addr = ghes_addr +
+-                              ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
++    *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+ }
  
- /**
-  * acpi_ghes_present: Report whether ACPI GHES table is present
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+     uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
+-    uint64_t start_addr;
+     AcpiGedState *acpi_ged_state;
+     AcpiGhesState *ags;
+ 
+@@ -412,11 +410,9 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     }
+     ags = &acpi_ged_state->ghes_state;
+ 
+-    start_addr = le64_to_cpu(ags->hw_error_le);
+-
+-    start_addr += source_id * sizeof(uint64_t);
+-
+-    get_hw_error_offsets(start_addr, &cper_addr, &read_ack_register_addr);
++    assert(ACPI_GHES_ERROR_SOURCE_COUNT == 1);
++    get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
++                         &cper_addr, &read_ack_register_addr);
+ 
+     if (!cper_addr) {
+         error_setg(errp, "can not find Generic Error Status Block");
 -- 
 MST
 
