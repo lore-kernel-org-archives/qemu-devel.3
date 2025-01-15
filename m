@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED064C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEE4C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7s3-0005kb-4s; Wed, 15 Jan 2025 13:12:03 -0500
+	id 1tY7s9-0006Oh-QZ; Wed, 15 Jan 2025 13:12:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pV-0006cx-75
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:27 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7r9-0000x9-4K
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:11:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pT-0006cO-IH
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7r7-00078O-4l
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:11:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964563;
+ s=mimecast20190719; t=1736964664;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yUuOMI9pfBriuw1YERiIKw5x8dB/u/FGXCgcdZJucXc=;
- b=JnSLgxo9FOoDVnMXeD+jlOrQGUDjlg7P4ZMChVFo1N+UX6I3zvltKrIqfJcvzl0MmNMz6s
- enXjAyymgVum2MwbwPyvRR8ke4PKOoKHBA41xN0Sw19mbIY7zJpLaqLpitzl0U/pMXGHng
- H8W9rYrEGL9cLKAjcnTzWeGh1jmNyv8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R1Q6ecuMvkKdBN1XJ6lghkDja+Y8Z2DVDPha29KkwYw=;
+ b=V7XUigFwNJb1voOUQ1XlNTPD/7M8WOxDQDFITYEtIFS+0h6ka9vFS1SrI++QTNxm3dfIAB
+ Pnj22CCzqmjYXK1VZt+3vjcdgKhM0JxvjBskJknopPJ5ig0VPCUdotxaA7yAxKPRoHmXX7
+ a31rxYNC6IX53oM34/jgQ5xHecrxrFA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-gfFyaFlKPgCbUcoPmMp7Kw-1; Wed, 15 Jan 2025 13:09:15 -0500
-X-MC-Unique: gfFyaFlKPgCbUcoPmMp7Kw-1
-X-Mimecast-MFC-AGG-ID: gfFyaFlKPgCbUcoPmMp7Kw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-436289a570eso32469415e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:09:15 -0800 (PST)
+ us-mta-76-Qzu4RRtUOWSo7jaRzdPUew-1; Wed, 15 Jan 2025 13:11:03 -0500
+X-MC-Unique: Qzu4RRtUOWSo7jaRzdPUew-1
+X-Mimecast-MFC-AGG-ID: Qzu4RRtUOWSo7jaRzdPUew
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3862be3bfc9so52986f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:11:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964554; x=1737569354;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yUuOMI9pfBriuw1YERiIKw5x8dB/u/FGXCgcdZJucXc=;
- b=kevC4j0yh3e2zp1O+bo0X2oeQqvcchy9cVpt3XdBNIyzSIn8xqN7pkdin2IO1jOcxb
- KyfowI9PeWVFaaIWTddk1rxB7uqsLnxBpFcpigIk4ttUTU9bg3ZvEafPYix/i9NSmfB9
- fQ4aDNI06p9Ai4uWb9rAYiUojZQL5tGBx9VMs0O1AUDf8vuIp+c/4ciSPGYa5FgoKg0t
- wvTsgwo5CC4TtncAC8f4cS9u1nju7ZL4k4fbq1KCVEKa5RqA32wiWhHsxbHgBtZe9mE4
- m+ys2GtvSloX0JF7IPBteEjMF6KGWg96SpKqCU3FWQscoFjZ6+2P2kP8gsLE8SUnSDKD
- MfSQ==
-X-Gm-Message-State: AOJu0Yw51C6jODsv10IxFM5Z51zIQKjt7tZsQTEi+OCkG3AOmTZKlPsH
- DgdE39qWuG67TfP3imrTx/kB/USP7l501fyW/vYbkkTiw6d8IuEV3fUyG1JDrko51K2XadmwOu1
- uzFp17fZp12uLGze1bvcFsvEv68XJdcusyfXTlIOsTLFyet3mVcv8CthmEoBMuCqaM0/2HZwgA2
- aUoNuXXKDS5gSuSPhddWrhmrvKgruXKg==
-X-Gm-Gg: ASbGncux5kqQO9bJuIkN2TpqIgKtu176AaCyTuyNtlZgh1iCYNXv4MldQXNBDPD2TPT
- SwhYae923iXpZbwShZc8Ae0FTBqhT3TFx5QlreSfVcR+Wbt2qsHeZJCgKIdKpwhMS5Z1menqHTg
- +dOfaAT3aBHcsN1Zxdr1Wm4N+QpWjbVnAAD/nMlmRdhkkZae2+41/5IjpRyfRn1VU4Fbivkoj06
- hf7omVzsyCRZu7vF7WizgwYeSiEUYC0VRW3pLLVqWUlthr01C1V
-X-Received: by 2002:a05:600c:1d03:b0:434:a781:f5d9 with SMTP id
- 5b1f17b1804b1-436e2697b32mr267376865e9.11.1736964554100; 
- Wed, 15 Jan 2025 10:09:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIneviXe17E+o3PnIig6VgM4OSau0R4EuAn4Q68ISo5oYe0VQd0Zlj4WjPCyDIeDVJQrnMZQ==
-X-Received: by 2002:a05:600c:1d03:b0:434:a781:f5d9 with SMTP id
- 5b1f17b1804b1-436e2697b32mr267376405e9.11.1736964553624; 
- Wed, 15 Jan 2025 10:09:13 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736964661; x=1737569461;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R1Q6ecuMvkKdBN1XJ6lghkDja+Y8Z2DVDPha29KkwYw=;
+ b=jEph52BVeCjYespOhF0aBi2H+OYt1b4xqiOYky+BBA4FtDCVwVZbSSDF7EWpVL/YiG
+ C0MkbvbUJlh31nJA2Nk6UvX5kWUUjq8l3uw9jr18twoW6OQBa9oBXgaygBeOARHWjiTR
+ r+ev/B4jkTKqvEBoIGbSw3CpANDrEZNPI8h+QtYsYUxmyMNU4wpp0EYUt+tXLqzT5kV4
+ s32rFH3UdmkF4+F3ISaJsfeZ/SRHG7xQH/vvgynKmhZzfLzvAxe8lnxqRz+JegVesDTJ
+ qKRmZNYdT2qwxbcS2nmZ6vaGFyhlmNgHZ34xoK0yxrCSTTnQnuse1FK1fIhdPz4VOouJ
+ 40tQ==
+X-Gm-Message-State: AOJu0Yy29rwKN+p3XbqyhU1nAaKJ6/br7tLnomRz76qCbez313LthYWd
+ DajHUOwnQkLP/hBRtlrRZRfDhNhRg5Y97/fZPi3aiv1gLX7Y5Onl13nctOb0rBTehISOnIgXgba
+ oxKa5MyngAPTriq9uxu5XXOvld5AP2bpj3Fe/Qiz/cppqqOT2lZLdWQEeebXGVlQI1chu5ACyu7
+ /GljKok5sRSKoKbgnV3imDr1q+ORgNZg==
+X-Gm-Gg: ASbGncuuDxZynMKda9I8m5tBecbtxrqlKYJ35nJsO/Z52NPd50HU/Fx+IqMDh9EFAHW
+ AKzDZR1j69WoF6RRlesu+9cyOD66LvkfVVIg2wC93GcyR6/n6/dmOxjy08uiP7o8Zvt7+NPClMf
+ djXz1fKxc2HAa7pvWkbj9fZoWuXFGB+QWralrjzO3RT/HtQXuNcFpo4QJcIAt7ZfrD5R9vakMDl
+ bdzi+KPmI7+Xt7wRaBXSLJ+OznKuFoszomf7vZse3DVf8bgc5ef
+X-Received: by 2002:a5d:598d:0:b0:385:f72a:a3b0 with SMTP id
+ ffacd0b85a97d-38a8733a3ecmr25541576f8f.55.1736964661560; 
+ Wed, 15 Jan 2025 10:11:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFUKM3Qq74VPjvClTWSW0xtGkd/Kupo29cYE32UuFQwfVMQdyPwk8ZEp2D+CUizXZ1xzzR3VA==
+X-Received: by 2002:a5d:598d:0:b0:385:f72a:a3b0 with SMTP id
+ ffacd0b85a97d-38a8733a3ecmr25541540f8f.55.1736964661098; 
+ Wed, 15 Jan 2025 10:11:01 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74c57ebsm30955795e9.20.2025.01.15.10.09.11
+ 5b1f17b1804b1-437c75290a2sm32182865e9.29.2025.01.15.10.10.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:09:13 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:09:10 -0500
+ Wed, 15 Jan 2025 10:11:00 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:10:58 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 14/48] intel_iommu: Set accessed and dirty bits during stage-1
- translation
-Message-ID: <65c4f0999991f6321d6a369fa56c81c57c5b87ad.1736964488.git.mst@redhat.com>
+ Laurent Vivier <lvivier@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: [PULL 47/48] vhost: Add stubs for the migration state transfer
+ interface
+Message-ID: <3f65357313e0f928e0bd3ff868b705855d0405bc.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -116,98 +108,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20241212083757.605022-10-zhenzhong.duan@intel.com>
+Migration state transfer interface is only used by vhost-user-fs,
+so the interface needs to be defined only when vhost is built.
+
+But I need to use this interface with virtio-net and vhost is not always
+enabled, and to avoid undefined reference error during build, define stub
+functions for vhost_supports_device_state(), vhost_save_backend_state() and
+vhost_load_backend_state().
+
+Cc: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Message-Id: <20250115135044.799698-2-lvivier@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h |  3 +++
- hw/i386/intel_iommu.c          | 25 ++++++++++++++++++++++++-
- 2 files changed, 27 insertions(+), 1 deletion(-)
+ include/hw/virtio/vhost.h | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 3e7365dfff..22dd3faf0c 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -332,6 +332,7 @@ typedef enum VTDFaultReason {
- 
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
-+    VTD_FR_FS_BIT_UPDATE_FAILED = 0x91, /* SFS.10 */
-     VTD_FR_MAX,                 /* Guard */
- } VTDFaultReason;
- 
-@@ -564,6 +565,8 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_FL_P                    1ULL
- #define VTD_FL_RW                   (1ULL << 1)
- #define VTD_FL_US                   (1ULL << 2)
-+#define VTD_FL_A                    (1ULL << 5)
-+#define VTD_FL_D                    (1ULL << 6)
- 
- /* Second Level Page Translation Pointer*/
- #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index d53ce01e82..0aeb0dbde9 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1806,6 +1806,7 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_FS_PAGING_ENTRY_US] = true,
-     [VTD_FR_SM_WRITE] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-+    [VTD_FR_FS_BIT_UPDATE_FAILED] = true,
-     [VTD_FR_MAX] = false,
- };
- 
-@@ -1925,6 +1926,20 @@ static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
-     }
- }
- 
-+static MemTxResult vtd_set_flag_in_pte(dma_addr_t base_addr, uint32_t index,
-+                                       uint64_t pte, uint64_t flag)
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 461c168c37..a9469d50bc 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -365,7 +365,14 @@ static inline int vhost_reset_device(struct vhost_dev *hdev)
+  * Returns true if the device supports these commands, and false if it
+  * does not.
+  */
++#ifdef CONFIG_VHOST
+ bool vhost_supports_device_state(struct vhost_dev *dev);
++#else
++static inline bool vhost_supports_device_state(struct vhost_dev *dev)
 +{
-+    if (pte & flag) {
-+        return MEMTX_OK;
-+    }
-+    pte |= flag;
-+    pte = cpu_to_le64(pte);
-+    return dma_memory_write(&address_space_memory,
-+                            base_addr + index * sizeof(pte),
-+                            &pte, sizeof(pte),
-+                            MEMTXATTRS_UNSPECIFIED);
++    return false;
 +}
-+
- /*
-  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-  * of the translation, can be used for deciding the size of large page.
-@@ -1938,7 +1953,7 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-     dma_addr_t addr = vtd_get_iova_pgtbl_base(s, ce, pasid);
-     uint32_t level = vtd_get_iova_level(s, ce, pasid);
-     uint32_t offset;
--    uint64_t flpte;
-+    uint64_t flpte, flag_ad = VTD_FL_A;
++#endif
  
-     if (!vtd_iova_fl_check_canonical(s, iova, ce, pasid)) {
-         error_report_once("%s: detected non canonical IOVA (iova=0x%" PRIx64 ","
-@@ -1985,6 +2000,14 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-             return -VTD_FR_FS_PAGING_ENTRY_RSVD;
-         }
+ /**
+  * vhost_set_device_state_fd(): Begin transfer of internal state from/to
+@@ -448,7 +455,15 @@ int vhost_check_device_state(struct vhost_dev *dev, Error **errp);
+  *
+  * Returns 0 on success, and -errno otherwise.
+  */
++#ifdef CONFIG_VHOST
+ int vhost_save_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp);
++#else
++static inline int vhost_save_backend_state(struct vhost_dev *dev, QEMUFile *f,
++                                           Error **errp)
++{
++    return -ENOSYS;
++}
++#endif
  
-+        if (vtd_is_last_pte(flpte, level) && is_write) {
-+            flag_ad |= VTD_FL_D;
-+        }
-+
-+        if (vtd_set_flag_in_pte(addr, offset, flpte, flag_ad) != MEMTX_OK) {
-+            return -VTD_FR_FS_BIT_UPDATE_FAILED;
-+        }
-+
-         if (vtd_is_last_pte(flpte, level)) {
-             *flptep = flpte;
-             *flpte_level = level;
+ /**
+  * vhost_load_backend_state(): High-level function to load a vhost
+@@ -465,6 +480,14 @@ int vhost_save_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp);
+  *
+  * Returns 0 on success, and -errno otherwise.
+  */
++#ifdef CONFIG_VHOST
+ int vhost_load_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp);
++#else
++static inline int vhost_load_backend_state(struct vhost_dev *dev, QEMUFile *f,
++                                           Error **errp)
++{
++    return -ENOSYS;
++}
++#endif
+ 
+ #endif
 -- 
 MST
 
