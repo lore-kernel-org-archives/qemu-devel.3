@@ -4,133 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E1D9C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 10:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FCE0C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 11:09:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY17L-0001NH-Cf; Wed, 15 Jan 2025 05:59:23 -0500
+	id 1tY1GJ-0003hC-BG; Wed, 15 Jan 2025 06:08:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tY17I-0001Mj-Un
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:59:21 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY1GH-0003cH-45
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 06:08:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1tY17F-00074A-T2
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:59:20 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY1GA-0000lB-Mq
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 06:08:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736938755;
+ s=mimecast20190719; t=1736939309;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RPd+RLuu2JRWNGCEHno2IcJ3kXoc5Rg4iXSxFoIXX9M=;
- b=FoOjNIxZA8Of6y9k7S4CZnq7P4zCrMDVDKVwQqFYNy8PnKrXrOkuvA8eUCD0PXSxA2Nh5n
- b7wZbWcLxfSTeSJRsogzOGZiC3HjJEzTgMSdDU5o+CwN77KuVZS1eI4O5iBodjCMAY61vZ
- amh6CwWsxUlF6zTOM63pMk4uf5Po5Lg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=36rty/kDx74kZZDX2L37q27rV7ZfinX6KX5+TAfh894=;
+ b=ihmbtw2GUoyqYvITQAnpJZ0HpUXokHEttHoVh8i0VqRD348R1hW2SC+eWKn6v/z/nCaNhI
+ iHQqpKMi173dwUOdjBVGvFvOR0CvNVPJ/Wlh8EhxQGtnuP3jZOuWjm+s5v3IlFWKGvcKtq
+ oWhp8wP+yCCL31Gb1LmVRfre6xzD8pc=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-vozhuUNeNouCHFBX3MG3ZQ-1; Wed, 15 Jan 2025 05:59:11 -0500
-X-MC-Unique: vozhuUNeNouCHFBX3MG3ZQ-1
-X-Mimecast-MFC-AGG-ID: vozhuUNeNouCHFBX3MG3ZQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4362552ce62so34573195e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 02:59:11 -0800 (PST)
+ us-mta-635-QWnPYUBsPq6nSJn2KnLliQ-1; Wed, 15 Jan 2025 06:08:26 -0500
+X-MC-Unique: QWnPYUBsPq6nSJn2KnLliQ-1
+X-Mimecast-MFC-AGG-ID: QWnPYUBsPq6nSJn2KnLliQ
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38a684a0971so2731659f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 03:08:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736938750; x=1737543550;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1736939305; x=1737544105;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RPd+RLuu2JRWNGCEHno2IcJ3kXoc5Rg4iXSxFoIXX9M=;
- b=vzO6HyjJqh7A6Xip1QRVkKwZWSv8FvMbb9dBvwP275ZZ/9XrqqM+pKzAoZFGLnm/RG
- gg+uZ+QHPM+TdnLsLXAMrkLpQ86khgwuzxg72LaG1afQKLB7WcmGucAWNN1btcT0x7t9
- aBj9WWLINBPhkB5yTcwT4brLROHyvRzfXxB6abNRZQdVZeI5BB4MabBbAIXYBX2m7uWk
- pRpjjjGnpvOB4KO3zX3l1zqP9f88ts8utMlJSBM4ZlkGQMrYVoYL0jNtU4w8CE8d+Kt+
- 9lc6Ng7IZmWEJikenV9mK91L3dGwyNOaPP4pA0ML7dA0aSvHDzgyivT3+B8lLesN/VWJ
- rk2Q==
-X-Gm-Message-State: AOJu0YyaiHpPzQji/dxrlwAbuapdlXyu4h/6NOoEcACA1EEzttxsUsjZ
- gLjNPPQQ6xlLT6aIZWALG1nPTHrjY/tjzv8l81a/31zC9gQRGo79laYkuS5aFDWYXwQsQjadVvn
- dZHsxse+K+x+mnisMD2T/q+OIVzbX0OLmkcsYgCejAHUHzNici3Jc
-X-Gm-Gg: ASbGncuJIO/k1dvcppUpqb3jrpjwx6SVav1iAxL50qrihkKLVTNG/jsfeuvblUmiAFB
- /hZCPqSts0rcHWo52MuyvR/Ch/aLS47YNbH2os1KJdRZYKZX9DadWl6XqNbdvuWD1icpJZQGWnE
- Z++wT4ZWn6BLOJ1U5JmlTKJH4oXx/oBtnyvVVJo1eU82J0lstR9Fqg2cbIHSvRd4s65A1oeF9NC
- y0PkoRHWhn7+rJRNALNLDOGe51vZNpYMuHkYFA+7pFJHHMwQthT7D02TmmPbjQV2E5ZgvlxW7A7
- FKupYWoNanYCW5KQ7Xc=
-X-Received: by 2002:a05:600c:1c88:b0:434:a350:207c with SMTP id
- 5b1f17b1804b1-436e26e5533mr239445255e9.23.1736938750003; 
- Wed, 15 Jan 2025 02:59:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEc9V26ULCZUGz3P2ZpI4g49MF0bAHI3RmaDjy2P/GVFasONhDYJ7bz2seP+VkYBpRSBnrMrA==
-X-Received: by 2002:a05:600c:1c88:b0:434:a350:207c with SMTP id
- 5b1f17b1804b1-436e26e5533mr239445055e9.23.1736938749547; 
- Wed, 15 Jan 2025 02:59:09 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
- ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ bh=36rty/kDx74kZZDX2L37q27rV7ZfinX6KX5+TAfh894=;
+ b=H4KVxKYLxYoTka9C5YtTF5BUldTVyiOryyczrmvjPXQTLEjMQCUqNA6S3a4nAG5PIi
+ BPtnKJtCt4PzetaOQhIbwuscXiedFTfw4S8TlSh/lYemfPcj4YBJmXC2bO8lqOO6qCOK
+ 9+0ouDjx26xkc5cOh+MJ8CnKh9lYGzBJn6G5gosmTureCrq5YM/AOjq2ZcsQ9yQq1xj+
+ OdsDWO6DvGyvpR8wWEl7PSsU3kZnCyT3YsR4TEbkQvnH1K4UYqpiA/UMZLLDCOLig4XZ
+ nzqyI5GfFgBc9iZOobu39icdGoSBMV7hnE56uL6cLWRqr/LREPnmw85607oXGmympIjX
+ A87Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/+cm+bI0igF3oKVT+ZIfs07WNw/Gm6/Gx5tUfmNS28IJ06p0LFodRIjpH+/8BSQmICZk2Ceo8uiHR@nongnu.org
+X-Gm-Message-State: AOJu0Yy8jSfTpoXw07HdRPGr08Ps6WtGP2JFXx7qtwiUVcoJmHbITnqK
+ ZLsC4l+tfi0zGT4TZk6LxdLQ5ep86TODN9yOFMjl/VMnXbHnAJi8DZ0ybOxRB1gnFy8QK1tBTzW
+ U9D7dJLOeHbbPsXPMqT25BYX8VdoEsWFb7s7eoCLgE1e3XyAEWZLZ
+X-Gm-Gg: ASbGnct5MPSzhjzJj9j7LQH5XD5RB6GwyjhbaeGSB4Y9xpxkZaJTUqyyiVp8BwrPPg4
+ bc4NaB7cfxczw2WI7Eq5rFNrMqQVfyrTV6Hh0rKX81R4HAB9+jCwqzzMUX5xZq9wU/qSdPku2ic
+ HMpfuB61fVhHiIzN3Gu3wL5UGi+Ee7n80dYSkPpDHyS8lGXOFZp2KLaWb0N6fsQI1EoGHe4VJz1
+ 3/P4ej0/dqcUNK5yEdo4xTkNJ4eDF4MIDhfc/ZQ45MPQmdRuQ==
+X-Received: by 2002:a5d:5f52:0:b0:38a:8647:3dac with SMTP id
+ ffacd0b85a97d-38a8731fac1mr24457016f8f.34.1736939305026; 
+ Wed, 15 Jan 2025 03:08:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcNjztNWJh0XdcA1OP78tnXFwp74BtScOqa1PpDBYtc8Dbs+21iKhL2aQO83sm5HlqsGkiDQ==
+X-Received: by 2002:a5d:5f52:0:b0:38a:8647:3dac with SMTP id
+ ffacd0b85a97d-38a8731fac1mr24456985f8f.34.1736939304628; 
+ Wed, 15 Jan 2025 03:08:24 -0800 (PST)
+Received: from redhat.com ([2a02:14f:1f5:8f43:2a76:9f8c:65e8:ce7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74f9ccasm18789675e9.39.2025.01.15.02.59.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 02:59:08 -0800 (PST)
-Message-ID: <2d4ed201-4ab5-4402-88be-d5a42e34aea8@redhat.com>
-Date: Wed, 15 Jan 2025 11:59:08 +0100
+ ffacd0b85a97d-38a8e4c1c01sm17586269f8f.97.2025.01.15.03.08.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 03:08:23 -0800 (PST)
+Date: Wed, 15 Jan 2025 06:08:20 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 09/16] acpi/ghes: make the GHES record generation more
+ generic
+Message-ID: <20250115060757-mutt-send-email-mst@kernel.org>
+References: <cover.1733561462.git.mchehab+huawei@kernel.org>
+ <a35a02028136f9d5445b41760c892de302801500.1733561462.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-net: vhost-user: Implement internal migration
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-References: <20241218143453.1573185-1-lvivier@redhat.com>
- <20250115051039-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <20250115051039-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a35a02028136f9d5445b41760c892de302801500.1733561462.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -139,7 +95,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,191 +111,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/01/2025 11:10, Michael S. Tsirkin wrote:
-> On Wed, Dec 18, 2024 at 03:34:53PM +0100, Laurent Vivier wrote:
->> Add support of VHOST_USER_PROTOCOL_F_DEVICE_STATE in virtio-net
->> with vhost-user backend.
->>
->> Cc: Hanna Czenczek <hreitz@redhat.com>
->> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+On Sat, Dec 07, 2024 at 09:54:15AM +0100, Mauro Carvalho Chehab wrote:
+> Split the code into separate functions to allow using the
+> common CPER filling code by different error sources.
 > 
+> The generic code was moved to ghes_record_cper_errors(),
+> and ghes_gen_err_data_uncorrectable_recoverable() now contains
+> only a logic to fill the Generic Error Data part of the record,
+> as described at:
 > 
-> Breaks windows builds:
+> 	ACPI 6.2: 18.3.2.7.1 Generic Error Data
 > 
-> https://gitlab.com/mstredhat/qemu/-/jobs/8855973625
+> The remaining code to generate a memory error now belongs to
+> acpi_ghes_record_errors() function.
+> 
+> A further patch will give it a better name.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> 
+> # Conflicts:
+> #	roms/edk2
+> ---
+>  hw/acpi/ghes.c         | 121 ++++++++++++++++++++++++-----------------
+>  include/hw/acpi/ghes.h |   3 +
+>  2 files changed, 73 insertions(+), 51 deletions(-)
+> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index a3dffd78b012..4b5332f8c667 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -181,51 +181,24 @@ static void acpi_ghes_build_append_mem_cper(GArray *table,
+>      build_append_int_noprefix(table, 0, 7);
+>  }
+>  
+> -static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+> -                                      uint64_t error_physical_addr)
+> +static void
+> +ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
+> +                                            const uint8_t *section_type,
+> +                                            int data_length)
+>  {
+> -    GArray *block;
+> -
+> -    /* Memory Error Section Type */
+> -    const uint8_t uefi_cper_mem_sec[] =
+> -          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+> -                  0xED, 0x7C, 0x83, 0xB1);
+> -
+>      /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+>       * Table 17-13 Generic Error Data Entry
+>       */
+>      QemuUUID fru_id = {};
+> -    uint32_t data_length;
+> -
+> -    block = g_array_new(false, true /* clear */, 1);
+> -
+> -    /* This is the length if adding a new generic error data entry*/
+> -    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
+> -    /*
+> -     * It should not run out of the preallocated memory if adding a new generic
+> -     * error data entry
+> -     */
+> -    assert((data_length + ACPI_GHES_GESB_SIZE) <=
+> -            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+>  
+>      /* Build the new generic error status block header */
+>      acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
+>          0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
+>  
+>      /* Build this new generic error data entry header */
+> -    acpi_ghes_generic_error_data(block, uefi_cper_mem_sec,
+> +    acpi_ghes_generic_error_data(block, section_type,
+>          ACPI_CPER_SEV_RECOVERABLE, 0, 0,
+>          ACPI_GHES_MEM_CPER_LENGTH, fru_id, 0);
+> -
+> -    /* Build the memory section CPER for above new generic error data entry */
+> -    acpi_ghes_build_append_mem_cper(block, error_physical_addr);
+> -
+> -    /* Write the generic error data entry into guest memory */
+> -    cpu_physical_memory_write(error_block_address, block->data, block->len);
+> -
+> -    g_array_free(block, true);
+> -
+> -    return 0;
+>  }
+>  
+>  /*
+> @@ -383,15 +356,18 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+>      ags->present = true;
+>  }
+>  
+> -int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
+> +void ghes_record_cper_errors(const void *cper, size_t len,
+> +                             uint16_t source_id, Error **errp)
+>  {
+>      uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
+>      uint64_t start_addr;
+> -    bool ret = -1;
+>      AcpiGedState *acpi_ged_state;
+>      AcpiGhesState *ags;
+>  
+> -    assert(source_id < ACPI_GHES_ERROR_SOURCE_COUNT);
+> +    if (len > ACPI_GHES_MAX_RAW_DATA_LENGTH) {
+> +        error_setg(errp, "GHES CPER record is too big: %ld", len);
 
-Thank you Michael.
 
-I fix that, test and send new version soon.
+size_t should be printed with %zd not %ld.
 
-Laurent
-> 
->> ---
->>   hw/net/virtio-net.c | 135 ++++++++++++++++++++++++++++++++++++--------
->>   1 file changed, 112 insertions(+), 23 deletions(-)
->>
->> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->> index 6e8c51a2dbce..b4d9e96dc0d7 100644
->> --- a/hw/net/virtio-net.c
->> +++ b/hw/net/virtio-net.c
->> @@ -3337,6 +3337,117 @@ static const VMStateDescription vmstate_virtio_net_rss = {
->>       },
->>   };
->>   
->> +static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
->> +{
->> +    VirtIONet *n = VIRTIO_NET(vdev);
->> +    NetClientState *nc;
->> +    struct vhost_net *net;
->> +
->> +    if (!n->nic) {
->> +        return NULL;
->> +    }
->> +
->> +    nc = qemu_get_queue(n->nic);
->> +    if (!nc) {
->> +        return NULL;
->> +    }
->> +
->> +    net = get_vhost_net(nc->peer);
->> +    if (!net) {
->> +        return NULL;
->> +    }
->> +
->> +    return &net->dev;
->> +}
->> +
->> +static int vhost_user_net_save_state(QEMUFile *f, void *pv, size_t size,
->> +                                     const VMStateField *field,
->> +                                     JSONWriter *vmdesc)
->> +{
->> +    VirtIONet *n = pv;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
->> +    struct vhost_dev *vhdev;
->> +    Error *local_error = NULL;
->> +    int ret;
->> +
->> +    vhdev = virtio_net_get_vhost(vdev);
->> +    if (vhdev == NULL) {
->> +        error_reportf_err(local_error,
->> +                          "Error getting vhost back-end of %s device %s: ",
->> +                          vdev->name, vdev->parent_obj.canonical_path);
->> +        return -1;
->> +    }
->> +
->> +    ret = vhost_save_backend_state(vhdev, f, &local_error);
->> +    if (ret < 0) {
->> +        error_reportf_err(local_error,
->> +                          "Error saving back-end state of %s device %s: ",
->> +                          vdev->name, vdev->parent_obj.canonical_path);
->> +        return ret;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static int vhost_user_net_load_state(QEMUFile *f, void *pv, size_t size,
->> +                                     const VMStateField *field)
->> +{
->> +    VirtIONet *n = pv;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
->> +    struct vhost_dev *vhdev;
->> +    Error *local_error = NULL;
->> +    int ret;
->> +
->> +    vhdev = virtio_net_get_vhost(vdev);
->> +    if (vhdev == NULL) {
->> +        error_reportf_err(local_error,
->> +                          "Error getting vhost back-end of %s device %s: ",
->> +                          vdev->name, vdev->parent_obj.canonical_path);
->> +        return -1;
->> +    }
->> +
->> +    ret = vhost_load_backend_state(vhdev, f, &local_error);
->> +    if (ret < 0) {
->> +        error_reportf_err(local_error,
->> +                          "Error loading  back-end state of %s device %s: ",
->> +                          vdev->name, vdev->parent_obj.canonical_path);
->> +        return ret;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static bool vhost_user_net_is_internal_migration(void *opaque)
->> +{
->> +    VirtIONet *n = opaque;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
->> +    struct vhost_dev *vhdev;
->> +
->> +    vhdev = virtio_net_get_vhost(vdev);
->> +    if (vhdev == NULL) {
->> +        return false;
->> +    }
->> +
->> +    return vhost_supports_device_state(vhdev);
->> +}
->> +
->> +static const VMStateDescription vhost_user_net_backend_state = {
->> +    .name = "virtio-net-device/backend",
->> +    .version_id = 0,
->> +    .needed = vhost_user_net_is_internal_migration,
->> +    .fields = (const VMStateField[]) {
->> +        {
->> +            .name = "backend",
->> +            .info = &(const VMStateInfo) {
->> +                .name = "virtio-net vhost-user backend state",
->> +                .get = vhost_user_net_load_state,
->> +                .put = vhost_user_net_save_state,
->> +            },
->> +         },
->> +         VMSTATE_END_OF_LIST()
->> +    }
->> +};
->> +
->>   static const VMStateDescription vmstate_virtio_net_device = {
->>       .name = "virtio-net-device",
->>       .version_id = VIRTIO_NET_VM_VERSION,
->> @@ -3389,6 +3500,7 @@ static const VMStateDescription vmstate_virtio_net_device = {
->>       },
->>       .subsections = (const VMStateDescription * const []) {
->>           &vmstate_virtio_net_rss,
->> +        &vhost_user_net_backend_state,
->>           NULL
->>       }
->>   };
->> @@ -3950,29 +4062,6 @@ static bool dev_unplug_pending(void *opaque)
->>       return vdc->primary_unplug_pending(dev);
->>   }
->>   
->> -static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
->> -{
->> -    VirtIONet *n = VIRTIO_NET(vdev);
->> -    NetClientState *nc;
->> -    struct vhost_net *net;
->> -
->> -    if (!n->nic) {
->> -        return NULL;
->> -    }
->> -
->> -    nc = qemu_get_queue(n->nic);
->> -    if (!nc) {
->> -        return NULL;
->> -    }
->> -
->> -    net = get_vhost_net(nc->peer);
->> -    if (!net) {
->> -        return NULL;
->> -    }
->> -
->> -    return &net->dev;
->> -}
->> -
->>   static const VMStateDescription vmstate_virtio_net = {
->>       .name = "virtio-net",
->>       .minimum_version_id = VIRTIO_NET_VM_VERSION,
->> -- 
->> 2.47.1
-> 
+> +        return;
+> +    }
+>  
+>      acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+>                                                         NULL));
+> @@ -406,6 +382,10 @@ int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
+>                               sizeof(error_block_addr));
+>  
+>      error_block_addr = le64_to_cpu(error_block_addr);
+> +    if (!error_block_addr) {
+> +        error_setg(errp, "can not find Generic Error Status Block");
+> +        return;
+> +    }
+>  
+>      read_ack_register_addr = start_addr +
+>                               ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
+> @@ -415,24 +395,63 @@ int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
+>  
+>      /* zero means OSPM does not acknowledge the error */
+>      if (!read_ack_register) {
+> -        error_report("OSPM does not acknowledge previous error,"
+> -                     " so can not record CPER for current error anymore");
+> -    } else if (error_block_addr) {
+> -        read_ack_register = cpu_to_le64(0);
+> -        /*
+> -         * Clear the Read Ack Register, OSPM will write it to 1 when
+> -         * it acknowledges this error.
+> -         */
+> -        cpu_physical_memory_write(read_ack_register_addr,
+> -                                  &read_ack_register, sizeof(uint64_t));
+> -
+> -        ret = acpi_ghes_record_mem_error(error_block_addr,
+> -                                         physical_address);
+> -    } else {
+> -        error_report("can not find Generic Error Status Block");
+> +        error_setg(errp,
+> +                   "OSPM does not acknowledge previous error,"
+> +                   " so can not record CPER for current error anymore");
+> +        return;
+>      }
+>  
+> -    return ret;
+> +    read_ack_register = cpu_to_le64(0);
+> +    /*
+> +     * Clear the Read Ack Register, OSPM will write 1 to this register when
+> +     * it acknowledges the error.
+> +     */
+> +    cpu_physical_memory_write(read_ack_register_addr,
+> +        &read_ack_register, sizeof(uint64_t));
+> +
+> +    /* Write the generic error data entry into guest memory */
+> +    cpu_physical_memory_write(error_block_addr, cper, len);
+> +
+> +    return;
+> +}
+> +
+> +int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
+> +{
+> +    /* Memory Error Section Type */
+> +    const uint8_t guid[] =
+> +          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+> +                  0xED, 0x7C, 0x83, 0xB1);
+> +    Error *errp = NULL;
+> +    int data_length;
+> +    GArray *block;
+> +
+> +    block = g_array_new(false, true /* clear */, 1);
+> +
+> +    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
+> +    /*
+> +     * It should not run out of the preallocated memory if adding a new generic
+> +     * error data entry
+> +     */
+> +    assert((data_length + ACPI_GHES_GESB_SIZE) <=
+> +            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+> +
+> +    ghes_gen_err_data_uncorrectable_recoverable(block, guid,
+> +                                                data_length);
+> +
+> +    /* Build the memory section CPER for above new generic error data entry */
+> +    acpi_ghes_build_append_mem_cper(block, physical_address);
+> +
+> +    /* Report the error */
+> +    ghes_record_cper_errors(block->data, block->len, source_id, &errp);
+> +
+> +    g_array_free(block, true);
+> +
+> +    if (errp) {
+> +        error_report_err(errp);
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+>  }
+>  
+>  bool acpi_ghes_present(void)
+> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> index 9295e46be25e..8859346af51a 100644
+> --- a/include/hw/acpi/ghes.h
+> +++ b/include/hw/acpi/ghes.h
+> @@ -23,6 +23,7 @@
+>  #define ACPI_GHES_H
+>  
+>  #include "hw/acpi/bios-linker-loader.h"
+> +#include "qapi/error.h"
+>  
+>  /*
+>   * Values for Hardware Error Notification Type field
+> @@ -73,6 +74,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+>                       const char *oem_id, const char *oem_table_id);
+>  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+>                            GArray *hardware_errors);
+> +void ghes_record_cper_errors(const void *cper, size_t len,
+> +                             uint16_t source_id, Error **errp);
+>  int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
+>  
+>  /**
+> -- 
+> 2.47.1
 
 
