@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B48C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1054CC02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY2BJ-0007GP-FO; Wed, 15 Jan 2025 07:07:33 -0500
+	id 1tY2BF-0007Ft-6m; Wed, 15 Jan 2025 07:07:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY2BF-0007Fw-Ap
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:07:30 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tY2B9-0007ES-3v
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:07:23 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY2BA-0001AY-Ks
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:07:28 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2164b1f05caso117842805ad.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 04:07:24 -0800 (PST)
+ id 1tY2B6-00019q-9U
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:07:22 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21a7ed0155cso113637895ad.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 04:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736942843; x=1737547643;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736942839; x=1737547639;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sjZycNOZCaijq9YoZP3XI2Nk/ik0UuNm9ezBnesNXjU=;
- b=cd3/Fm1TQ0WtD91uCgUvJuW68hJkRjaGlDJfDYUTkJnew8JIr+ULnHdRpro+5HGXBz
- Jv/vu2/i/x42/Zeo7sb2jetNvgUw/J4Tg9WAyzPCTbCyKk66vxLnGlQzbPiLO5FSvRiL
- CGio9T3sYZE2YNxpBTkDPFIFhmkZUPMcKQIdAXWFGeOoEAEOL2X2O9IvhgihCSZ+dGYz
- bvTNJW8xrauEEhbZ8ovMkFRFpYbevieTweEPiQOWnGju8tPN+JPFE2e36tZ4zw9Q203U
- XHP/Ie/HZ/Jb3VVktXOxKaOipyxONYxvlWldSeZScXAxwNcLp6NKKgistT87IS79embH
- RJ0w==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lQFjdceETSD5/425OU1xO0n984HLA1NXTxp9H2BhyUs=;
+ b=eghjLPDRlWeW+qISl6nkY5zzo4W3rOpgrGwgFvMXHHdBWX50ur8AG0D8Mj1Ra6GxnW
+ 9W3/KgOvxmUo4bfa/nxGw/u7cX2GdvsCGeVMn9QbQMzgktW7ZksUx7BOp6JodmG/oX1N
+ 3jbtxmzbEZYjNdckiMfKa8AAFbQCvtmQWiJn+fW9p6mjJxXa/ea+y3mLVQSu0Jv2PB52
+ nYtRzZJ6gig7OJ/9mnPZ15LLqwf9AgNj1HvMvRmKIbtg87Sy5XZ0EV4QMq0fOHh03afg
+ hDqo4JrccSauXksjm5c6bYMaGW71RgG80/kxSHEsws29YBXv9sm3FQ7yCYmBs2MDK3aS
+ GB3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736942843; x=1737547643;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sjZycNOZCaijq9YoZP3XI2Nk/ik0UuNm9ezBnesNXjU=;
- b=JaVtz1sBOB0YDslKr0psotoyU8ymjUwGsnLjfD28g3dUd9l4F3QvW6rp4CfXGsfUL6
- ge1h3foY0FHsYKPsr7zxWdTpbcMyj0KKPYyypNFU4xUi04XMojkp/oH7wn27ZRFNMN1g
- NkhTnHcMTQEMGF6V+osOPtqYUIC8Ecd+0z5E0XqfWq/kvkVO8PZZSzbnIlv0+dFO7Cgr
- zgO6Apa5lqbgtSbkFYe3UNxvS7nZskswk5FVYz8eAW+ulXbYvYjfAtYqnwcra4ZN9fBV
- gGYd/6UUPGWE3F11v0DDagsbUTSBPOH88UN5wp2yBAzPjrRShB02h/Ajxfs8keRQTc0m
- hwrw==
-X-Gm-Message-State: AOJu0YwaANLQu7WezdqFoCjqhWj09O8SX6doS2YlrEZc2Oylyg+VgBvt
- uPpxeb8GAtmiSPnZ30kqESPNrHcu38uH92fchXYAZ8B4ivggFfZsf1l4tGTEp6k=
-X-Gm-Gg: ASbGnctESChbE+ISvKt5lgLB5eDWTpdLqJBUwkKDJHqfWxM52Mg2V0AZpCx6Fa5bpsY
- 5HW+u0IuZLVx3POWGj90c2Yw0YRVgDFX9WbDns9jYMx5fD3/e4UK7n6IvfowWJmv3OOa98KcAdC
- 3vPj4eI4nVDYD03AaAaXfjgyJRAY15jxzZOIgXH3Gu//1UNcz+ZEgqVJqfvJw/sZVJ5U3mEYkwj
- Qmv7lOhcHwIfct8PO3cxry9+Um53fYd/hY03ajIlKVYSsbQ88iEkfVZJJGx
-X-Google-Smtp-Source: AGHT+IFl2aARzx/ijR34wnijxvno+8gvE2Wbi6gtzJly4XddNH0gpA7PsCwQ7ywn2zWfX4Tz3Yp5Xw==
-X-Received: by 2002:a17:902:d2c5:b0:216:51fb:bb28 with SMTP id
- d9443c01a7336-21a83fe4621mr407310165ad.51.1736942843207; 
- Wed, 15 Jan 2025 04:07:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736942839; x=1737547639;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lQFjdceETSD5/425OU1xO0n984HLA1NXTxp9H2BhyUs=;
+ b=pMoP+m8F6meV4EIEBFKjD2rAq1owa2fu78iIFtykRGITblEYZ1vftcvj8KMXFe/bPH
+ 1/FWJht4UPLIDJJ9WQB9pgwFbY3W5dfQ2ZbMXTAdKP5sr3OyAxgLUWtiWnO8kRda8irN
+ WOOQbFth+ldxLBl/uB4sIagiSqOwLPCpF/W6Z+7wQQJo8JsbYd9TqG49WyIe1ExILm7d
+ 370voQQh+bhQ/7TqlTQIVVmU76GJgUNlXYGOgTxb0jjIsPpFe57PGQv+Ih5wwvmEIe23
+ vCcx83R/17tDvF1ijtxlNRrw8hi8zSCigQ7mC0+GKWCp7svM9znNHT8gKBAquzfCxq0l
+ OSuQ==
+X-Gm-Message-State: AOJu0YwvJnEvVykGl99B48GFOuVL2ZF0kOSk9+nfPQvcAga13oKeAcIN
+ W9S9uAov9E5YKvi0BrOlmiw4Ip4tQ4H/qwLPpGrz7RdaAxAz2/wSR71U6JxWh8M=
+X-Gm-Gg: ASbGnct5WwM9SrjDCSF+G5UIBBePlzeG0ydOz7tMJWHlU55vSPu+GMT5/lF1nzjj/HN
+ RHiBITSAxBRWAXWKcMufHyUKSqPTBno5WaC/M7nElHFV96ytuXULjG6EyCFAxXhAfVpGAAeCWqG
+ a/z666Dvaq0JnxbcgQSMo1HEEep/OID52Yl3ePMrjujf+rGcbbZAjv3Y7aOudXGvY6k1T+Hz75x
+ l8Rm0gnrqkCSkc8hsbn92SvIb90XzJWoTkmUTUqe1PJlMOt9doAXCDwOXHC
+X-Google-Smtp-Source: AGHT+IEmVXvMRM6d+2kh0FgdUNlYtks2Ym0sd+Sixrw4yrDPZaA7RhryFhkCKMBBww8dROkWRsgmfw==
+X-Received: by 2002:a17:902:da84:b0:216:501e:e314 with SMTP id
+ d9443c01a7336-21a83f54b4bmr426524455ad.20.1736942838859; 
+ Wed, 15 Jan 2025 04:07:18 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-21a9f233836sm80217265ad.207.2025.01.15.04.07.20
+ d9443c01a7336-21a9f1386bbsm82295515ad.81.2025.01.15.04.07.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 04:07:22 -0800 (PST)
+ Wed, 15 Jan 2025 04:07:18 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 15 Jan 2025 21:06:55 +0900
-Subject: [PATCH v3 1/2] coreaudio: Commit the result of init in the end
+Subject: [PATCH v3 0/2] coreaudio fixes
+Date: Wed, 15 Jan 2025 21:06:54 +0900
+Message-Id: <20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250115-coreaudio-v3-1-bdb6bcb5bf9f@daynix.com>
-References: <20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com>
-In-Reply-To: <20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAN6kh2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDQwNL3eT8otTE0pTMfN1kSwsTMwPzVMMUi2QloPqCotS0zAqwWdGxtbU
+ AhbnKU1sAAAA=
 To: Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Christian Schoenebeck <qemu_oss@crudebyte.com>
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,163 +101,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-init_out_device may only commit some part of the result and leave the
-state inconsistent when it encounters an error. Commit the result in
-the end of the function so that it commits the result iff it sees no
-error.
-
-With this change, handle_voice_change can rely on core->outputDeviceID
-to know whether the output device is initialized after calling
-init_out_device.
+This series contains two fixes for coreaudio. See each one for details.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- audio/coreaudio.m | 49 +++++++++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+Akihiko Odaki (2):
+      coreaudio: Commit the result of init in the end
+      coreaudio: Initialize the buffer for device change
 
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index cadd729d5053..b9e1a952ed37 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -355,7 +355,10 @@ static OSStatus audioDeviceIOProc(
- static OSStatus init_out_device(coreaudioVoiceOut *core)
- {
-     OSStatus status;
-+    AudioDeviceID deviceID;
-     AudioValueRange frameRange;
-+    UInt32 audioDevicePropertyBufferFrameSize;
-+    AudioDeviceIOProcID ioprocid;
- 
-     AudioStreamBasicDescription streamBasicDescription = {
-         .mBitsPerChannel = core->hw.info.bits,
-@@ -368,20 +371,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         .mSampleRate = core->hw.info.freq
-     };
- 
--    status = coreaudio_get_voice(&core->outputDeviceID);
-+    status = coreaudio_get_voice(&deviceID);
-     if (status != kAudioHardwareNoError) {
-         coreaudio_playback_logerr (status,
-                                    "Could not get default output Device\n");
-         return status;
-     }
--    if (core->outputDeviceID == kAudioDeviceUnknown) {
-+    if (deviceID == kAudioDeviceUnknown) {
-         dolog ("Could not initialize playback - Unknown Audiodevice\n");
-         return status;
-     }
- 
-     /* get minimum and maximum buffer frame sizes */
--    status = coreaudio_get_framesizerange(core->outputDeviceID,
--                                          &frameRange);
-+    status = coreaudio_get_framesizerange(deviceID, &frameRange);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-@@ -392,31 +394,31 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-     }
- 
-     if (frameRange.mMinimum > core->frameSizeSetting) {
--        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-+        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-         dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
-     } else if (frameRange.mMaximum < core->frameSizeSetting) {
--        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-+        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-         dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
-     } else {
--        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-+        audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-     }
- 
-     /* set Buffer Frame Size */
--    status = coreaudio_set_framesize(core->outputDeviceID,
--                                     &core->audioDevicePropertyBufferFrameSize);
-+    status = coreaudio_set_framesize(deviceID,
-+                                     &audioDevicePropertyBufferFrameSize);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-     if (status != kAudioHardwareNoError) {
-         coreaudio_playback_logerr (status,
-                                     "Could not set device buffer frame size %" PRIu32 "\n",
--                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
-+                                    (uint32_t)audioDevicePropertyBufferFrameSize);
-         return status;
-     }
- 
-     /* get Buffer Frame Size */
--    status = coreaudio_get_framesize(core->outputDeviceID,
--                                     &core->audioDevicePropertyBufferFrameSize);
-+    status = coreaudio_get_framesize(deviceID,
-+                                     &audioDevicePropertyBufferFrameSize);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-@@ -425,11 +427,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-                                     "Could not get device buffer frame size\n");
-         return status;
-     }
--    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
- 
-     /* set Samplerate */
--    status = coreaudio_set_streamformat(core->outputDeviceID,
--                                        &streamBasicDescription);
-+    status = coreaudio_set_streamformat(deviceID, &streamBasicDescription);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-@@ -437,7 +437,6 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         coreaudio_playback_logerr (status,
-                                    "Could not set samplerate %lf\n",
-                                    streamBasicDescription.mSampleRate);
--        core->outputDeviceID = kAudioDeviceUnknown;
-         return status;
-     }
- 
-@@ -451,20 +450,24 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-      * Therefore, the specified callback must be designed to avoid a deadlock
-      * with the callers of AudioObjectGetPropertyData.
-      */
--    core->ioprocid = NULL;
--    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
-+    ioprocid = NULL;
-+    status = AudioDeviceCreateIOProcID(deviceID,
-                                        audioDeviceIOProc,
-                                        &core->hw,
--                                       &core->ioprocid);
-+                                       &ioprocid);
-     if (status == kAudioHardwareBadDeviceError) {
-         return 0;
-     }
--    if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
-+    if (status != kAudioHardwareNoError || ioprocid == NULL) {
-         coreaudio_playback_logerr (status, "Could not set IOProc\n");
--        core->outputDeviceID = kAudioDeviceUnknown;
-         return status;
-     }
- 
-+    core->outputDeviceID = deviceID;
-+    core->audioDevicePropertyBufferFrameSize = audioDevicePropertyBufferFrameSize;
-+    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-+    core->ioprocid = ioprocid;
-+
-     return 0;
- }
- 
-@@ -548,7 +551,9 @@ static OSStatus handle_voice_change(
-         fini_out_device(core);
-     }
- 
--    if (!init_out_device(core)) {
-+    init_out_device(core);
-+
-+    if (core->outputDeviceID) {
-         update_device_playback_state(core);
-     }
- 
+ audio/audio_int.h |  2 ++
+ audio/audio.c     | 24 ++++++++++++++++++------
+ audio/coreaudio.m | 50 ++++++++++++++++++++++++++++----------------------
+ 3 files changed, 48 insertions(+), 28 deletions(-)
+---
+base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
+change-id: 20250109-coreaudio-c984607e1d8c
 
+Best regards,
 -- 
-2.47.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
