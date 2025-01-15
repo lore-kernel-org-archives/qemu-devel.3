@@ -4,98 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2910C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 11:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AAF6C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 11:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY1H2-0003rL-J8; Wed, 15 Jan 2025 06:09:24 -0500
+	id 1tY1Tt-0006BR-1e; Wed, 15 Jan 2025 06:22:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY1H1-0003qr-8T
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 06:09:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tY1Tq-0006AL-MP
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 06:22:38 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY1Gz-0000mp-F2
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 06:09:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736939359;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pp3W/euv0r0qhGV6FGZjL/PZ+k8+BYGIfdPd25Fr7yw=;
- b=AiNQ9ucKaA8L1oFdglNZ91hTTMPBp4LSzBZ/zaxiAmZ5h3MNN8YGiul7L2cP40RLQtCAkZ
- aUWtCnhbT8rHFPtiaFcSaroyPTaItWkkRWJswWIJU4O8D7yt7kHpMfY/Wr4pkZTN16AbDO
- 01nTbAFjrYdQYFvctfIBn98gs7sbHyk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-RPQYJp1APN-dAPtojSTgiA-1; Wed, 15 Jan 2025 06:09:18 -0500
-X-MC-Unique: RPQYJp1APN-dAPtojSTgiA-1
-X-Mimecast-MFC-AGG-ID: RPQYJp1APN-dAPtojSTgiA
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385e49efd59so2538587f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 03:09:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736939357; x=1737544157;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pp3W/euv0r0qhGV6FGZjL/PZ+k8+BYGIfdPd25Fr7yw=;
- b=NNtSclGv7319HsLRcBaVnoj69GUWqTNzd+iQ2pyKYangCd3fz1kVJ0NSAAcEcVTcFq
- I9IGqi4N4Eho5xGn0YQhYXYlJNX1+5c4KMd2B9ZiFTxSl92Y4FRKzixUsM1bUDuGiC0C
- Nhv6f0kFXw4JXPn9DZCv43WGXpHMF8xs9rTFdfMPan3DaoKWwQchlOEssQq1EIIbOyNL
- 0khzlxzOR7i13trnarA7wdgLPrqPMEF84ZL54NFE96PbSE+s7JZ9w9iwqdLsnwNxNcDM
- o6BGZVV+6+Lh5jgulhhI5zHWGZnEYtgXbOP0PyMrDES0xyBiacs9lG9yHm4uXrnaZ79G
- RDog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdDbdapY4ERE8r7Yd4ctL61zeYc8E2blt/4qzGE739LFhhXk6mkoPiLTcWkY8ascepD3fkZ5pm4lAp@nongnu.org
-X-Gm-Message-State: AOJu0YxZ20vWPfYww2bu/hKBrYkmbspZXQ2IfNuexpzlPfum54u2JE2k
- 3+g59STGkX3fK6gEyCx97KhMSB0Ib7fvz/+TC99oFcbsJdCm3XPoxcaa5L8Kcc0zzOxKC+xDjbQ
- E/FR4dBQb7PVOGgiAsoSAT5eZdVsbeMW5V3WXWmrIQF2cWsCXsEXN
-X-Gm-Gg: ASbGncuMcDzqSD2+QzHEy0ZZf3SzT1rccNnS9fdllk2qLlbkP0vWm9Ua4btNAWQ/zfV
- XkTQWs68O7tbWJ+gCbMnyFacIorvdYJZ2OiBdw9Fkt9po+RcheZcNMsjC6W3BI9LOfMKUIXlniI
- e198C97CdQpCvhsnsbIzwOi6bH9xQzAGTRo1amUNJmMk1t8bCNubjYLDhthy6REFkS4CyIclUIZ
- LtjRwuDmH6Ct2+T3CU1T1bxmj11iT111CO2e5TB18vO/rzZVw==
-X-Received: by 2002:a5d:6489:0:b0:38b:da32:4f40 with SMTP id
- ffacd0b85a97d-38bda325049mr10094360f8f.2.1736939357170; 
- Wed, 15 Jan 2025 03:09:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjBjZqwkDRHQGNQexbwma8Lf2w9a+i4uejIYX1kRhn6RIQ+2tRuMIzzsXS14AdA49ut5IGFQ==
-X-Received: by 2002:a5d:6489:0:b0:38b:da32:4f40 with SMTP id
- ffacd0b85a97d-38bda325049mr10094332f8f.2.1736939356795; 
- Wed, 15 Jan 2025 03:09:16 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1f5:8f43:2a76:9f8c:65e8:ce7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38be4222dcdsm3342117f8f.51.2025.01.15.03.09.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 03:09:16 -0800 (PST)
-Date: Wed, 15 Jan 2025 06:09:12 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 00/16] Prepare GHES driver to support error injection
-Message-ID: <20250115060854-mutt-send-email-mst@kernel.org>
-References: <cover.1733561462.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tY1Tn-0002iG-Ff
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 06:22:38 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YY3PH2yZHz6K8qn;
+ Wed, 15 Jan 2025 19:17:23 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 67979140B35;
+ Wed, 15 Jan 2025 19:22:18 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 15 Jan
+ 2025 12:22:18 +0100
+Date: Wed, 15 Jan 2025 11:22:14 +0000
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Fan Ni
+ <fan.ni@samsung.com>, "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH v2] hw/cxl: Fix msix_notify: Assertion `vector <
+ dev->msix_entries_nr`
+Message-ID: <20250115112214.0000550f@huawei.com>
+In-Reply-To: <4d4a138f-4648-4733-933b-02cd8d934699@fujitsu.com>
+References: <20241213093602.3248246-1-lizhijian@fujitsu.com>
+ <20250110154432.000031b0@huawei.com>
+ <4d4a138f-4648-4733-933b-02cd8d934699@fujitsu.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1733561462.git.mchehab+huawei@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.794,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.794, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,104 +69,231 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Dec 07, 2024 at 09:54:06AM +0100, Mauro Carvalho Chehab wrote:
-> Hi Michael,
+On Wed, 15 Jan 2025 07:48:59 +0000
+"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
+
+> On 10/01/2025 23:44, Jonathan Cameron wrote:
+> > On Fri, 13 Dec 2024 17:36:02 +0800
+> > Li Zhijian <lizhijian@fujitsu.com> wrote:
+> >   
+> >> This assertion always happens when we sanitize the CXL memory device.
+> >> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
+> >>
+> >> It is incorrect to register an MSIX number beyond the device's capability.
+> >>
+> >> Expand the device's MSIX number and use the enum to maintain the *USED*
+> >> and MAX MSIX number
+> >>
+> >> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
+> >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> >> ---
+> >> V2: just increase msix number and add enum to maintainer their values #
+> >> Jonathan  
+> > 
+> > Ah. Sorry I was unclear. Two patches please
+> > 
+> > 1. Make the number bigger to fix the bug. Only this one gets a fixes tag and
+> >     is suitable for backporting.
+> > 
+> > 2. Add an enum including all numbers currently used and use that throughout the
+> >     type3 related code. That will prevent use accidentally introducing the
+> >     bug in future but doesn't need to be backported.
+> >     
 > 
-> Please ignore the patch series I sent yesterday:
-> 	https://lore.kernel.org/qemu-devel/20241207093922.1efa02ec@foz.lan/T/#t
+> Understood, it make sense.
 > 
-> The git range was wrong, and it was supposed to be v6. This is the right one.
-> It is based on the top of v9.2.0-rc3.
 > 
-> Could you please merge this series for ACPI stuff? All patches were already
-> reviewed by Igor. The changes against v4 are just on some patch descriptions,
-> plus the addition of Reviewed-by. No Code changes.
 > 
-> Thanks,
-> Mauro
+> > A few other comments inline.
+> > 
+> > Thanks
+> > 
+> > Jonathan
+> >   
+> >> ---
+> >>   hw/cxl/cxl-device-utils.c   |  6 ++----
+> >>   hw/mem/cxl_type3.c          | 10 +++++-----
+> >>   include/hw/cxl/cxl_device.h |  7 +++++++
+> >>   3 files changed, 14 insertions(+), 9 deletions(-)
+> >>
+> >> diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
+> >> index 035d034f6d..bc2171e3d4 100644
+> >> --- a/hw/cxl/cxl-device-utils.c
+> >> +++ b/hw/cxl/cxl-device-utils.c
+> >> @@ -354,8 +354,6 @@ static void device_reg_init_common(CXLDeviceState *cxl_dstate)
+> >>   
+> >>   static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+> >>   {
+> >> -    const uint8_t msi_n = 9;
+> >> -
+> >>       /* 2048 payload size */
+> >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> >>                        PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
+> >> @@ -364,8 +362,8 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+> >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> >>                        BG_INT_CAP, 1);
+> >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> >> -                     MSI_N, msi_n);
+> >> -    cxl_dstate->mbox_msi_n = msi_n;
+> >> +                     MSI_N, CXL_MSIX_MBOX);  
+> > 
+> > Should be passed in from the type 3 specific call so add a parameter to this
+> > function and pass this from cxl_device_register_init_t3.
+> > Even better pass it into there from ct3d_reset()
+> >   
+> 
+> At a glance, `ct3d_reset()` has the following prototype: `typedef void (*DeviceReset)(DeviceState *dev)`,
+> which is inherited from the QEMU device framework. Consequently, it is hard to extend `ct3d_reset()`
+> to include an additional parameter.
+
+I wasn't clear in that statement.   ct3d_reset() calls cxl_device_register_init_t3(). Change
+the signature of cxl_device_register_init_t3() so that takes the appropriate MSI index.
+that puts the source of the information in the cxl_type3.c code, not the core support in hw / CXL.
+No change to ct3d_reset() signature needed.
+
+> 
+> 
+> 
+> > Will potentially be a different number for the switch CCI passed in from
+> > the call of cxl_device_register_init_swcci() in switch-mailbox-cci.c  
+> 
+> It sounds reasonable, offering a more flexible design for the future.
+> 
+> Currently, mailbox_reg_init_common() will be called from type3 device and swcci,
+> however, I didn't see any where the swcci itself have setup the msi/msix at all.
+> 
+> Is this expected, feel free to let me know if I'm missing something.
+Currently that is in cxl_device_register_init_swcci() via
+mailbox_reg_init_common()
+Suggestion is to like the above type 3 case move it into the specific driver
+by having cxl_device_register_init_swcci() take it as a parameter and
+pass that in from cswmbcci_reset() in switch-mailbox-cci.c
 
 
-Still waiting for a version with minor nits fixed.
+> 
+> > 
+> >   
+> >> +    cxl_dstate->mbox_msi_n = CXL_MSIX_MBOX;
+> >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> >>                        MBOX_READY_TIME, 0); /* Not reported */
+> >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+> >> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> >> index 5cf754b38f..f2f060ed9e 100644
+> >> --- a/hw/mem/cxl_type3.c
+> >> +++ b/hw/mem/cxl_type3.c
+> >> @@ -843,7 +843,6 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+> >>       ComponentRegisters *regs = &cxl_cstate->crb;
+> >>       MemoryRegion *mr = &regs->component_registers;
+> >>       uint8_t *pci_conf = pci_dev->config;
+> >> -    unsigned short msix_num = 6;
+> >>       int i, rc;
+> >>       uint16_t count;
+> >>   
+> >> @@ -884,16 +883,17 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+> >>                        &ct3d->cxl_dstate.device_registers);
+> >>   
+> >>       /* MSI(-X) Initialization */
+> >> -    rc = msix_init_exclusive_bar(pci_dev, msix_num, 4, NULL);
+> >> +    rc = msix_init_exclusive_bar(pci_dev, CXL_MSIX_MAX, 4, NULL);
+> >>       if (rc) {
+> >>           goto err_address_space_free;
+> >>       }
+> >> -    for (i = 0; i < msix_num; i++) {
+> >> +    for (i = 0; i < CXL_MSIX_MAX; i++) {
+> >>           msix_vector_use(pci_dev, i);
+> >>       }
+> >>   
+> >>       /* DOE Initialization */
+> >> -    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true, 0);
+> >> +    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
+> >> +                  CXL_MSIX_PCIE_DOE);
+> >>   
+> >>       cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
+> >>       cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+> >> @@ -908,7 +908,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+> >>       if (rc) {
+> >>           goto err_release_cdat;
+> >>       }
+> >> -    cxl_event_init(&ct3d->cxl_dstate, 2);
+> >> +    cxl_event_init(&ct3d->cxl_dstate, CXL_MSIX_EVENT_START);
+> >>   
+> >>       /* Set default value for patrol scrub attributes */
+> >>       ct3d->patrol_scrub_attrs.scrub_cycle_cap =
+> >> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> >> index 561b375dc8..3f89b041ce 100644
+> >> --- a/include/hw/cxl/cxl_device.h
+> >> +++ b/include/hw/cxl/cxl_device.h
+> >> @@ -133,6 +133,13 @@ typedef enum {
+> >>       CXL_MBOX_MAX = 0x20
+> >>   } CXLRetCode;
+> >>   
+> >> +enum {  
+> > 
+> > Maybe worth naming these to be type3 specific.  
+> 
+> It sounds good to me.
+> 
+> 
+> >   
+> >> +    CXL_MSIX_PCIE_DOE = 0,  
+> > Name it to include that this is specifically the DOE for the table access protocol.
+> > 
+> >     CXL_MSIX_PCIE_DOE_TABLE_ACCESS  
+> 
+> make sense.
+> 
+> 
+> > 
+> > 
+> > This should be private to cxl_type3.c which should be possible by passing
+> > it to a few more calls from there.
+> >   
+> 
+> If we make the entire enumeration `cxl_type3` private, it appears unnecessary to pass it through several more calls.
 
-> -
+Key is to make sure it is in cxl_type3.c  For that to work you need to pass it as
+described above so that we can set the relevant values in various registers
+configured by the hw/cxl/* code.
+
 > 
-> During the development of a patch series meant to allow GHESv2 error injections,
-> it was requested a change on how CPER offsets are calculated, by adding a new
-> BIOS pointer and reworking the GHES logic. See:
+> How about this
 > 
-> https://lore.kernel.org/qemu-devel/cover.1726293808.git.mchehab+huawei@kernel.org/
+> +/* type3 device private */
+> +enum CXL_T3_MSIX_VECTOR {
+> +    CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS = 0,
+
+What is on 1?  We don't need to maintain backwards compatibility (migration
+is broken in lots of other ways and not high on priority list to fix) so should
+be no need to skip it. If you really want to add a reserved entry and we will
+fill it in later.
+
+> +    CXL_T3_MSIX_EVENT_START = 2,
+> +    CXL_T3_MSIX_MBOX = CXL_T3_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
+> +    CXL_T3_MSIX_VECTOR_NR
+> +};
+> +
 > 
-> Such change ended being a big patch, so several intermediate steps are needed,
-> together with several cleanups and renames.
+Hope that helps,
+
+Jonathan
+
 > 
-> As agreed duing v10 review, I'll be splitting the big patch series into separate pull 
-> requests, starting with the cleanup series. This is the first patch set, containing
-> only such preparation patches.
+> Thanks
+> Zhijian
 > 
-> The next series will contain the shift to use offsets from the location of the
-> HEST table, together with a migration logic to make it compatible with 9.1.
-> 
-> ---
-> 
-> v5:
-> - some changes at patches description and added some R-B;
-> - no changes at the code.
-> 
-> v4:
-> - merged a patch renaming the function which calculate offsets to:
->   get_hw_error_offsets(), to avoid the need of such change at the next
->   patch series;
-> - removed a functional change at the logic which makes
->   the GHES record generation more generic;
-> - a couple of trivial changes on patch descriptions and line break cleanups.
-> 
-> v3:
-> - improved some patch descriptions;
-> - some patches got reordered to better reflect the changes;
-> - patch v2 08/15: acpi/ghes: Prepare to support multiple sources on ghes
->   was split on two patches. The first one is in this cleanup series:
->       acpi/ghes: Change ghes fill logic to work with only one source
->   contains just the simplification logic. The actual preparation will
->   be moved to this series:
->      https://lore.kernel.org/qemu-devel/cover.1727782588.git.mchehab+huawei@kernel.org/
-> 
-> v2: 
-> - some indentation fixes;
-> - some description improvements;
-> - fixed a badly-solved merge conflict that ended renaming a parameter.
-> 
-> Mauro Carvalho Chehab (16):
->   acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
->   acpi/ghes: simplify acpi_ghes_record_errors() code
->   acpi/ghes: simplify the per-arch caller to build HEST table
->   acpi/ghes: better handle source_id and notification
->   acpi/ghes: Fix acpi_ghes_record_errors() argument
->   acpi/ghes: Remove a duplicated out of bounds check
->   acpi/ghes: Change the type for source_id
->   acpi/ghes: don't check if physical_address is not zero
->   acpi/ghes: make the GHES record generation more generic
->   acpi/ghes: better name GHES memory error function
->   acpi/ghes: don't crash QEMU if ghes GED is not found
->   acpi/ghes: rename etc/hardware_error file macros
->   acpi/ghes: better name the offset of the hardware error firmware
->   acpi/ghes: move offset calculus to a separate function
->   acpi/ghes: Change ghes fill logic to work with only one source
->   docs: acpi_hest_ghes: fix documentation for CPER size
-> 
->  docs/specs/acpi_hest_ghes.rst  |   6 +-
->  hw/acpi/generic_event_device.c |   4 +-
->  hw/acpi/ghes-stub.c            |   2 +-
->  hw/acpi/ghes.c                 | 259 +++++++++++++++++++--------------
->  hw/arm/virt-acpi-build.c       |   5 +-
->  include/hw/acpi/ghes.h         |  16 +-
->  target/arm/kvm.c               |   2 +-
->  7 files changed, 169 insertions(+), 125 deletions(-)
-> 
-> -- 
-> 2.47.1
-> 
+> >> +    CXL_MSIX_EVENT_START = 2,
+> >> +    CXL_MSIX_MBOX = CXL_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
+> >> +    CXL_MSIX_MAX
+> >> +};
+> >> +
+> >>   typedef struct CXLCCI CXLCCI;
+> >>   typedef struct cxl_device_state CXLDeviceState;
+> >>   struct cxl_cmd;  
+> >  
 
 
