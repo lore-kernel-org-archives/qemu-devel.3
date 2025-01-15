@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8313AC02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32550C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7op-0006JP-90; Wed, 15 Jan 2025 13:08:43 -0500
+	id 1tY7om-0006If-0W; Wed, 15 Jan 2025 13:08:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oo-0006JG-8Z
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:42 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oj-0006I0-Tn
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7ol-0006V9-UL
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:41 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oi-0006UV-Dk
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964518;
+ s=mimecast20190719; t=1736964515;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=J6zW/tI+F7p0x6goRAt5C2uJU7HPuN9SAqTiBTbnTho=;
- b=Laq/U5vRDVw4pQCyrUVnqUJukEjlJETIaaarWCfkyl2P0hsKTGnDN5Of03XfhTioFlcAhJ
- FDm8ON/tNGQFEJe1rAWXPN67awkykbS1siyQ/t8U4+awfLB61s3XMF24+I57q7qJSZGFgY
- PR84CB2ayKw9YJxxUbHK/tJDdJ53IxI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=m6fmu5UNbIG+Zy8TKEXBZ0Py33cRbkHlfHziwEK/kCk=;
+ b=ZQaO3yloSOQBjl9t/45YaAlTRNbJW+fBufx4B2lqtuvOtSoXmxee9wsDfWAqttrcq6ov5y
+ lIrdEiQvN3bazfdMP4W5FpLvPM/yptnumJo+oJpDnqApXFfaJsnN3e1cHMIso/SKm2KJX+
+ ghPZTcT4CZPe5ira5PxptrqqTg7/RiY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-Q5go176UMyeaYCDL9LuoAw-1; Wed, 15 Jan 2025 13:08:36 -0500
-X-MC-Unique: Q5go176UMyeaYCDL9LuoAw-1
-X-Mimecast-MFC-AGG-ID: Q5go176UMyeaYCDL9LuoAw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361ecebc5bso36861405e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:36 -0800 (PST)
+ us-mta-271-xxJtlPcJNseZcQJ-4VX8BA-1; Wed, 15 Jan 2025 13:08:33 -0500
+X-MC-Unique: xxJtlPcJNseZcQJ-4VX8BA-1
+X-Mimecast-MFC-AGG-ID: xxJtlPcJNseZcQJ-4VX8BA
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385d7611ad3so44609f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964515; x=1737569315;
+ d=1e100.net; s=20230601; t=1736964512; x=1737569312;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J6zW/tI+F7p0x6goRAt5C2uJU7HPuN9SAqTiBTbnTho=;
- b=dxHr3uIZ0J+FWkJflLtzhWYc2us7ZGPG6+gF3hZH/kzN5avPyXhmMncP5GgaEbrkkf
- /30NH0O44D8AW8YbAfEHX2YZDM4g2DUKgZEt1FVyfScJcaHwyJv/Qxx1BfeClngyWAMg
- xP7nDi704HCSqKXk6eoyaka5h/Mjp1FRukuWzv6MPUc0Lghe15oHVRQY0Nk0xUqbBH7h
- 1KPCt0GWgf3UGYA+fXiMrRBkdD+6iqCB7T5YNPcn0ycRCYElP6CrgY+BO+dmJBGsdIJq
- Xi22q4eiKv/5tlR5QGoxY96d24LXnd5bBHUNmndPNv2P9vzSdVcdqXbt/KfKBhS00Cv+
- qfyQ==
-X-Gm-Message-State: AOJu0Yx+ZN22Lu2xM7CYkuBxMgRJHYvZIuT3u/yyJf3uuyPmUvw0nHGZ
- KpNSO2B7FCFsOqhUeCmkaXZBc+vkqugKcZeZ2/udNZxBvFeFAGBojMvHAwQPk9PVJDwXpcCwM2B
- CrXqve9KmCObYSZBgM1o7cqteil+gPrzGV380teWZn4NfgcfdS8ZNaygGmN678Fi09QbxhQFfAR
- jAhe/O6XJm2vwdxeqzkyVM6bgv8YMxjA==
-X-Gm-Gg: ASbGncstlvkJy/V4hHA1nUiljOSX2rz3p+PhWedg/K6xavCWlVWg+DsCsFycJnlCR60
- 4BHwusjNIoxVMe1aarxc/eV0UwFMc2pSwc1c3IRbtIAeZn+o8qxoGnge3W8EbAwMcDqJXTHePUa
- sST+Usfhw8w6p9IvK4Dcqc5z3ibUa0KcdAqtV8ed4EalZ5STpKDIfjDCvrAUCf5D0XzzlNFD+IQ
- zGjkvUi6YxM0mQ9ImaDnRZ7jHY3ni2OvCqweRlNxWoBXa9wv/CZ
-X-Received: by 2002:a5d:5f85:0:b0:387:86cf:4e87 with SMTP id
- ffacd0b85a97d-38a872deb33mr27774461f8f.15.1736964515263; 
- Wed, 15 Jan 2025 10:08:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEkEdSlnyCI6GfyLWe8aYr6j8sU27WGhXY9nSoAfTgOoEkAxv8uLmqHuGImGuQOR/4iNrkrjw==
-X-Received: by 2002:a5d:5f85:0:b0:387:86cf:4e87 with SMTP id
- ffacd0b85a97d-38a872deb33mr27774423f8f.15.1736964514878; 
- Wed, 15 Jan 2025 10:08:34 -0800 (PST)
+ bh=m6fmu5UNbIG+Zy8TKEXBZ0Py33cRbkHlfHziwEK/kCk=;
+ b=cJXxIsxjoFjDOC07lJdOLr/wMfL7Yz4jQ/SuBs6duFcCWf2perMVXAiWeWa9DtB4Um
+ SVRIRKiqo6A8xbocUhFA42eYUk+FTF7OtaSB4oXL3VbBBIZKL1qz7Zvguvtee6g2+Hq3
+ 37hTNib4BDQIKoHZXkNIbRhm1mnmk6KNJ0K3YTGph9lI/zun6W04fryztEk3QSikjuCU
+ GmRCTGBFR+K8X0X0gPU2KudiOvLhCeFsCtbQJ6fWQ8Y1keoRyTBSpoAfM8uCHdowNW/x
+ H9V6FQm//2GfI8sVCX8wp39Bws5XHMtmlOpEHrKDPFF2XtKy0HdPOTZS5xdVh5BeI6iz
+ p8Qg==
+X-Gm-Message-State: AOJu0YzCZ0RyKiqSUHBUsaB39W/sLGRAH0q3a0KXnYr62mWzFldZXX9b
+ VXv7fseZssE29dPxMIwlO2YUQP9Fl9rr7X6iB99AQ8gNnui150Auj48EOvXfrftZ4z0F02DJyvH
+ QW5BgRTwrS5LZBE2OBxH6aek9mKBh2gse8O9ZhrxgaKWAzR0r9DNAiFkVR5X++EErMVUbzXCRA1
+ PAYI40/Sdy/qhAl+SXg+l4lZVvWJ59Fg==
+X-Gm-Gg: ASbGncvjS7wIaCfP47xi8v+5Ill0+c4+0ZX1eslpCysfZp92Oft6IbHoQfZzLxl619w
+ RqZ4csaMLXcPgNi+nQ9CN505iPgK5cpmKMVsrNSGXwOiir5/eRCSvW8jfMH6XEPW8gkY73QCnLp
+ /F8W0r3u7KkZos9DB/U5hDoK3EDkXSXbrPdsMyht8CxQbjQfNvfO3egvydOHfqMpgbWP0fa3isc
+ 0K3WHhFVQYTdC3IPeMTrKt3OlJGFvf1eC7zwCgKriU2M1rYZz10
+X-Received: by 2002:a05:6000:1563:b0:385:f44a:a53 with SMTP id
+ ffacd0b85a97d-38a872cfe40mr21742476f8f.4.1736964512091; 
+ Wed, 15 Jan 2025 10:08:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHHDJaD8CKwez+RznVpLdNivNogm5ATuB3y63h+XfrYTOdlxbIWQxZGVvPN/VDISNafahRZZw==
+X-Received: by 2002:a05:6000:1563:b0:385:f44a:a53 with SMTP id
+ ffacd0b85a97d-38a872cfe40mr21742449f8f.4.1736964511676; 
+ Wed, 15 Jan 2025 10:08:31 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e383882sm18422257f8f.34.2025.01.15.10.08.33
+ ffacd0b85a97d-38a8e38378csm18138284f8f.25.2025.01.15.10.08.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:08:34 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:08:32 -0500
+ Wed, 15 Jan 2025 10:08:31 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:08:28 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sebastian Ott <sebott@redhat.com>, Zhenyu Zhang <zhenyzha@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 02/48] pci: ensure valid link status bits for downstream ports
-Message-ID: <694632fd44987cc4618612a38ad151047524a590.1736964488.git.mst@redhat.com>
+ Dorinda Bassey <dbassey@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: [PULL 01/48] virtio-gpu: Add definition for resource_uuid feature
+Message-ID: <1e77a4a32f8b7b6699a2f8b1f98e8fada902ba1f.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -109,64 +109,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Ott <sebott@redhat.com>
+From: Dorinda Bassey <dbassey@redhat.com>
 
-PCI hotplug for downstream endpoints on arm fails because Linux'
-PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
+Add the VIRTIO_GPU_F_RESOURCE_UUID feature to enable the assignment
+of resources UUIDs for export to other virtio devices.
 
-  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
-  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
-  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
-
-There's 2 cases where LNKSTA isn't setup properly:
-* the downstream device has no express capability
-* max link width of the bridge is 0
-
-Move the sanity checks added via 88c869198aa63
-("pci: Sanity test minimum downstream LNKSTA") outside of the
-branch to make sure downstream ports always have a valid LNKSTA.
-
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Message-Id: <20241203121928.14861-1-sebott@redhat.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+Message-Id: <20241007070013.3350752-1-dbassey@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci/pcie.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/hw/virtio/virtio-gpu.h | 3 +++
+ hw/display/vhost-user-gpu.c    | 8 ++++++++
+ hw/display/virtio-gpu-base.c   | 3 +++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 0b455c8654..1b12db6fa2 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -1113,18 +1113,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
-         if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
-             lnksta &= ~PCI_EXP_LNKSTA_NLW;
-             lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
--        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
--            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
-         }
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index bd93672185..a42957c4e2 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -98,6 +98,7 @@ enum virtio_gpu_base_conf_flags {
+     VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,
+     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
+     VIRTIO_GPU_FLAG_VENUS_ENABLED,
++    VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
+ };
  
-         if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
-             lnksta &= ~PCI_EXP_LNKSTA_CLS;
-             lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
--        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
--            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
-         }
+ #define virtio_gpu_virgl_enabled(_cfg) \
+@@ -114,6 +115,8 @@ enum virtio_gpu_base_conf_flags {
+     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED))
+ #define virtio_gpu_rutabaga_enabled(_cfg) \
+     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED))
++#define virtio_gpu_resource_uuid_enabled(_cfg) \
++    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED))
+ #define virtio_gpu_hostmem_enabled(_cfg) \
+     (_cfg.hostmem > 0)
+ #define virtio_gpu_venus_enabled(_cfg) \
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 12d5c37ee5..2aed6243f6 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -631,6 +631,14 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
+         error_report("EDID requested but the backend doesn't support it.");
+         g->parent_obj.conf.flags &= ~(1 << VIRTIO_GPU_FLAG_EDID_ENABLED);
      }
++    if (virtio_has_feature(g->vhost->dev.features,
++        VIRTIO_GPU_F_RESOURCE_UUID)) {
++        g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
++    }
++    if (virtio_has_feature(g->vhost->dev.features,
++        VIRTIO_GPU_F_RESOURCE_UUID)) {
++        g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
++    }
  
-+    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
-+        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
+     if (!virtio_gpu_base_device_realize(qdev, NULL, NULL, errp)) {
+         return;
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 4fc7ef8896..7827536ac4 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -235,6 +235,9 @@ virtio_gpu_base_get_features(VirtIODevice *vdev, uint64_t features,
+     if (virtio_gpu_context_init_enabled(g->conf)) {
+         features |= (1 << VIRTIO_GPU_F_CONTEXT_INIT);
+     }
++    if (virtio_gpu_resource_uuid_enabled(g->conf)) {
++        features |= (1 << VIRTIO_GPU_F_RESOURCE_UUID);
 +    }
-+
-+    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
-+        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
-+    }
-+
-     pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
-                                  PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
-     pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
+ 
+     return features;
+ }
 -- 
 MST
 
