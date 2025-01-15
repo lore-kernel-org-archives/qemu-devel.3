@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE19C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 06:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3573C02185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 06:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXwqs-0005fG-EY; Wed, 15 Jan 2025 01:26:06 -0500
+	id 1tXx4w-0000M9-SP; Wed, 15 Jan 2025 01:40:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tXwqq-0005el-DL
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:26:04 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tXwqo-0006XT-FT
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:26:03 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2161eb94cceso77607265ad.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 22:26:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736922361; x=1737527161;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Pdcvm4r1FFh3mjhqnqaxRGqrOq+krKeGclEgq6h25tg=;
- b=Xq5jWB4N8crDa6D42Wy5UbO7Ep62/K8RwYu7HmVzKY7pOLdhTxe+MJVQU7s8GRELHH
- aa60qc2/jXhKmoydxoVqD66R51ARVXV7nHe1L+Y5Sc2HU1b6oQjN77IH26wdfYn6D6fH
- in8QFiNZbAp550I/Nuz+I73zx1B2cuj2gVG6CoMvM7mI4CnP943zFJ2Sex2Yn3p1plev
- sHEZCFRe7Nwx/c/DFEwgF4nt4nyd8QRnBkL8uZ5L7tZP5vGUnWFfK7chlrlD6Jtd2tTp
- iBJbzrKpGFVCD+kKeLaUFcNS3+JjvhOaPS5vd6XqAjxaEJ4uGihj5d4zN0GbXsuY/TDB
- HMYg==
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1tXx4u-0000LW-HZ
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:40:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1tXx4r-0008W7-RF
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:40:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736923232;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aaNF5o21t9JcD2Gj1DAUT9D0I3XOHT4f6U/7VGRMvm4=;
+ b=UTrK+GFa7/Fxgl2oXm9Jvb21T86m1LjHUOSHI4qIAX4Hw/B8p4jLBQU0LT8n0srAjGR37U
+ H3ExOxkR9mcXzSxsqy4UdApw2Y+qV1/hEOIKCUnu7fGqVPkoGlKxa7PvpJQX4D4HmfxsHL
+ Hhoo2lXws0dSVso+9S0S8eP0q8ByoK4=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-177-19YmmE1nM8aEvlabYjsCpg-1; Wed, 15 Jan 2025 01:40:30 -0500
+X-MC-Unique: 19YmmE1nM8aEvlabYjsCpg-1
+X-Mimecast-MFC-AGG-ID: 19YmmE1nM8aEvlabYjsCpg
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2ef8c7ef51dso1135244a91.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 22:40:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736922361; x=1737527161;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1736923229; x=1737528029;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pdcvm4r1FFh3mjhqnqaxRGqrOq+krKeGclEgq6h25tg=;
- b=ubauyHrgLhpkbjDclwUv9tbhpqip1aWZLx+Js/5dceQIyRgYOkLbrrwu2m3A0Gicpc
- TmpfqDHW4P5mMt0d+Ru5OrgbYGYmTICpDUfyrewAKCB2+5ND3VZQnteg/BpvBQufZxXx
- xBBLPm3jI2yBps7T6ltVtYn1PiN2nWMYCEPjIMQKppuhEaYTad4zijoh4I7ndGbetceM
- 69zFACV0Y+ZFoxkgMhRebHLGXIIXjmmUIrb1xvGepjm1crZ3sRMlFIOZ/CQ9e/+P/0Qq
- IzYo4HK/z31fOTDYlFEDSO9CYQTAryupIvpEhKNN2qyq04Or3Wl7c5ZUYgn8kl81bedj
- rpVg==
-X-Gm-Message-State: AOJu0Yx4c9z89rNwOSXCa1S7//w7RAb4VXo5qOWmeiKpHEFnshRXaPoQ
- XsvYDDzoShL3oB46InwI6uZrIN1QL4HA6aj3xhyowYyy5G9xdq++Sz7rvM/v2W0=
-X-Gm-Gg: ASbGnctmTyq1iJO32nElDDT83PLdy66TYh6lMBZW+ASETcEzyCrKW71ZVhO946M2/ZD
- SbD075tlqkP4fBcly/o+VjufgthTYmT6f581Ni/L7H20rFHtmGdnXLB3/EjQvQ2MaVOl0C4FRDi
- qti5sZYfwHGZeQDEQGa2M9DnARvjk7AZJVROV8crxbvbhZvTor2lRIYesyI2eu+0lldlOV6Y2YE
- eSVF8F8s8XBiL3PdmtBbjO3lB36HPUQA6ZrSQwi+mWfVaeY73itgDbzji0=
-X-Google-Smtp-Source: AGHT+IG7TdAwhLeVX2A4dCE/eNC9Oh9DqjvjsX2UJ9zSLDGU0IAo3zNr8oAgWMDKgfV3YU9AVXhlGA==
-X-Received: by 2002:a17:902:e84f:b0:216:410d:4c53 with SMTP id
- d9443c01a7336-21a83fc6db1mr389792495ad.41.1736922361061; 
- Tue, 14 Jan 2025 22:26:01 -0800 (PST)
-Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-21a9f10f97csm76565705ad.16.2025.01.14.22.25.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jan 2025 22:26:00 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 15 Jan 2025 15:25:46 +0900
-Subject: [PATCH v3 1/2] glib-compat: Define g_spawn_check_wait_status()
+ bh=aaNF5o21t9JcD2Gj1DAUT9D0I3XOHT4f6U/7VGRMvm4=;
+ b=J7CAWf7YHePyfVk8FOU5E2/uaaUSnwgR7LdO13FreSg+2tTi6RqZfgXhRB0JiFLsKa
+ nT/FkYkg/NjdIqT6ElU9wULbbua4g49InLK4O8hyoU8B/JJU/p7By6icRlplCq9gLf+x
+ m9WgIzItBJeBcvxod0mz360Y2MFdln6XWXCyuFuSbxETwlB6BzuadkAknchTfqDYLuIu
+ 6ng7D04efNh03Hm/GkysDQhRX9xD7DZ2LrYvCjMhPqz0gEytve1kFcrvVL+GKC+1/q4+
+ pFAW8RplN5xXN3dWVY6W6ZggcFzhji7p3/ccBL5xldS2WEDStT7Xg9PxgHpzdWIsmbOF
+ 4zqA==
+X-Gm-Message-State: AOJu0Yxqy9f3R7l4nHXOvO8/sdd80h0bFdgUpsPqlJ+JFGFKH6k+3c6o
+ 66mp1IefcxTUjRVBoC08szdA773L9ORsN6a1mDQoZSaAzUPwVGZaBMP4jBmkUJnNO4hEPlRsi/R
+ s/aV3wwQ0qOk8i5/NfWpeSNb0jfXadvBHTIpmkWhDB5y72hAIgZ0FQhwfUG1HRBQ4ARJdYGURF7
+ 7I8ibTR8D72oUzGSyktYHKTQf9V+4=
+X-Gm-Gg: ASbGnctzXGdrYWAbtEnIaU7kK/6l2kCDS2TY+Rn4Cdyb3W6peDRHBA4cmfvnwgL964w
+ Ww9lnYNEZF5pxZ04+GoaIEtNbJBeaSrATVG4j
+X-Received: by 2002:a17:90a:e18b:b0:2f2:a90e:74ef with SMTP id
+ 98e67ed59e1d1-2f728da6048mr2898731a91.1.1736923229138; 
+ Tue, 14 Jan 2025 22:40:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IETFX4epg+XEFC6uwG1ogGRKBLpBqQjr+Fhrx7qCnGpZmTduy1po1+jacpuqa4m39GHxLyxFiA52Pr+utNDS6A=
+X-Received: by 2002:a17:90a:e18b:b0:2f2:a90e:74ef with SMTP id
+ 98e67ed59e1d1-2f728da6048mr2898709a91.1.1736923228822; Tue, 14 Jan 2025
+ 22:40:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250115-glib-v3-1-bd3153344698@daynix.com>
-References: <20250115-glib-v3-0-bd3153344698@daynix.com>
-In-Reply-To: <20250115-glib-v3-0-bd3153344698@daynix.com>
-To: Jason Wang <jasowang@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>, Lei Yang <leiyang@redhat.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250114104820.2613099-1-marcandre.lureau@redhat.com>
+ <33501d8b-0035-404a-88ee-c6ff64c237a4@linaro.org>
+In-Reply-To: <33501d8b-0035-404a-88ee-c6ff64c237a4@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 15 Jan 2025 10:40:16 +0400
+X-Gm-Features: AbW1kvYrYEdIAfvwPHGeiyNvzgmJJMPCafq4dSBRlNXQunnE9OCgWbH7r6IhcBA
+Message-ID: <CAMxuvaxg_oTJyrWS7HU8F3MP==eVz_9dDogZ_ihHwCX_YX9Sfw@mail.gmail.com>
+Subject: Re: [PATCH] plugins: fix -Werror=maybe-uninitialized false-positive
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,39 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_spawn_check_exit_status() is renamed to g_spawn_check_wait_status()
-in 2.70.
+Hi
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
----
- include/glib-compat.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+On Tue, Jan 14, 2025 at 8:00=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 1/14/25 02:48, marcandre.lureau@redhat.com wrote:
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > ../contrib/plugins/cache.c:638:9: error: =E2=80=98l2_cache=E2=80=99 may=
+ be used uninitialized [-Werror=3Dmaybe-uninitialized]
+> >    638 |         append_stats_line(rep, l1_dmem_accesses, l1_dmisses,
+> >        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >
+> > Is a false-positive, since cores > 1, so the variable is set in the
+> > above loop.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   contrib/plugins/cache.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+> > index 512ef6776b..c2c274cfcd 100644
+> > --- a/contrib/plugins/cache.c
+> > +++ b/contrib/plugins/cache.c
+> > @@ -609,7 +609,7 @@ static int l2_cmp(gconstpointer a, gconstpointer b)
+> >   static void log_stats(void)
+> >   {
+> >       int i;
+> > -    Cache *icache, *dcache, *l2_cache;
+> > +    Cache *icache, *dcache, *l2_cache =3D NULL;
+> >
+> >       g_autoptr(GString) rep =3D g_string_new("core #, data accesses, d=
+ata misses,"
+> >                                             " dmiss rate, insn accesses=
+,"
+>
+> By the way,
+>
+> which compiler (version?) are you using?
+> Just curious to check if we don't have any other false positives in the
+> code base with it if it's a newer version.
 
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 86be439ba0ef..a553ba13a36e 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -68,6 +68,17 @@
-  * without generating warnings.
-  */
- 
-+static inline gboolean g_spawn_check_wait_status_qemu(gint wait_status,
-+                                                      GError **error)
-+{
-+#if GLIB_CHECK_VERSION(2, 70, 0)
-+    return g_spawn_check_wait_status(wait_status, error);
-+#else
-+    return g_spawn_check_exit_status(wait_status, error);
-+#endif
-+}
-+#define g_spawn_check_wait_status(w, e) g_spawn_check_wait_status_qemu(w, e)
-+
- /*
-  * g_memdup2_qemu:
-  * @mem: (nullable): the memory to copy.
 
--- 
-2.47.1
+GCC v14.2.1 from fc41.
+I use '--enable-debug' '--enable-asan' '-Doptimization=3Dg'
+'-Ddebug=3Dtrue' in my configure flags.
+All targets do not compile with those flags.
+ASAN reports various errors during make test.
+
+Help welcome!
 
 
