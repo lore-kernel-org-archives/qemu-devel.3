@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CD2C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665C8C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY5UU-0006My-6H; Wed, 15 Jan 2025 10:39:34 -0500
+	id 1tY5Va-0007ED-I1; Wed, 15 Jan 2025 10:40:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tY5UR-0006M3-W8
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:39:32 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tY5UQ-00015t-91
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:39:31 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso72900615e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:39:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736955568; x=1737560368; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pVcs6nhQLfkjHL7Jr+QBkQ7RCh20Iogl4hjagwL0gnI=;
- b=NBS9xko8TY+HYaxZUXS532PzEkBhHmSQeR3ydNwSj+2AxewKj9LnPDJJLAQcVImbKQ
- DzPl42vhgDtrtA9V6vguPM9pyPQ4ezPAGu9mfee9QcXbd387vl1FmiXhFvgMjs5FuU9z
- TzuTGsrVIbmQDKqIb1/4vpUZo/FAjdEynjs+qK7YG6pWFcLxtnQ61TUEHso64gvbA/pR
- a5ucqFcISrT5mndRI3rU7XIn9Uc85HSsQjAm909KHiyINc0owmfM0euiO3fSgyR/hVQf
- tiAaxsCVWr/b2q1Gnt7818PBSEk2L0CqNdkrkYYdhG1Cjphtf+vIRumXOP91IXhPboDA
- bp6Q==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY5VX-0007DX-6m
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:40:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY5VR-0001NO-FS
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:40:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736955632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KushLt9n93gQzjhZA4b407VrRrIk/NLQpTHZrkzg2IA=;
+ b=Tx0l5KtB/DwERB5jkALN9Z0B1CKVg8bIHm/ecMWWtNUObP14JcByT6Bu7SQk+Tkt8HDAUL
+ ZyGEkXyd3xhVyypEL8K5meadegPzhI3zpQHr/vWZGkxqhZl00dENJ0bxxJlywot0ak586s
+ JjhPWbz1aU8zlzl1h25PGb//HdMBgsU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-446-3dIWoa5LPuyfQ6k-DoLleQ-1; Wed, 15 Jan 2025 10:40:27 -0500
+X-MC-Unique: 3dIWoa5LPuyfQ6k-DoLleQ-1
+X-Mimecast-MFC-AGG-ID: 3dIWoa5LPuyfQ6k-DoLleQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-38a891d2aa5so524388f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:40:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736955568; x=1737560368;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pVcs6nhQLfkjHL7Jr+QBkQ7RCh20Iogl4hjagwL0gnI=;
- b=kVRmhnrh3eI9ZY1Xfv8XOhg5/5A5zBkjxESKgySixlmy2PXE/XgLyivpZLudDtbMkX
- lWtqPkaYx5tjL+vYCC6nwWTGwNWpDEqEl2QMkLeJ9wLpJcv2G/Jh6SW1PxuDWMbxyq4k
- 6L+XyIXR7y8b8Q7mDvXWpw5UdGPwUsn/hljjXsOuIRxbblgd+hml6UzUzhL0F3y5hU2T
- OJQR80GXVyq7FRQO55bu+byO9dOnI2XTskmYtOmQzwaXypgfyiQZURNIoXkPdAbeJcRG
- oT+Pfc9irEhguqO8vur/OULFnR3Rvq1qWUxfO1BUnEF7OPrkiPXpsLhLxjixm0esNeEA
- zdmw==
-X-Gm-Message-State: AOJu0YyIKuArWAYF94+Q7qm2UlVN8oXD8bJvT59ZOIfbVWp+rWPIZ04j
- vb8oR9l0pAZYr9laKtFsM3FTBNqOOS6jHnL5BU3RBGeNpjFXUENXmpHitaWOqYs=
-X-Gm-Gg: ASbGncuO00SjKIUFTmC5kpvoIKQcORWcmLazweEvPaHqtjneuyvRcggn2wsq7D73uJg
- DxCtpe+JlTPN1o5pEwWR0hiY00h5cXZVFof11eyn1fEJQFv4q8YiYg43806d+W2JFDM79ZDvHqP
- 6lIPntwh15Oav34lU1B9eyUOPGnOgF6xOigtKE3iArcPs9wzPE9Gcw7+8LsJ4cUZS0WLEpNyXQv
- PMiRHUSVvka3+nG27W8XOuwq/Mtl+Cyw2xGeiLn3l5PItYcv70OBWGy5y2xUBiOND4JlJok0CXP
- 73M7tl8mMKLBL1vJ4SSCnYq3B/c29ONntmvRuv/cbg==
-X-Google-Smtp-Source: AGHT+IGGOuHn3J8jUAC6I8+Aev2u4lz6FI2ZrxW5nGcBPg2l20i2zNoALJ0KefgbIgWK0G1BouKN8A==
-X-Received: by 2002:a05:600c:138a:b0:434:f0df:9fd with SMTP id
- 5b1f17b1804b1-436e2679a1cmr165168475e9.2.1736955568232; 
- Wed, 15 Jan 2025 07:39:28 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ d=1e100.net; s=20230601; t=1736955626; x=1737560426;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KushLt9n93gQzjhZA4b407VrRrIk/NLQpTHZrkzg2IA=;
+ b=MLcHAoEvH0s0DKZ3QNd6pYuw7/U2LyMeRmXRJ6ZBwl+7ZsrXqKXe6ZaXoylCrxlGqj
+ zYG50EjNtxNTZmudLw1jbzS4ZZLYcjGZgIp6W0pW7iaNiFvk0iGZXdRN03vFCqYcHgmw
+ y14Zq7TzlmLTvBYneZhmjm0m49t0gEnqlEO8VHrSpl4T3rDrpnXSY9jdjenUG13U48uQ
+ TP9SsC/EssT45KJgdO5Rlwkv3OsNW7Qrq2ZjxLKxP6ZNWrHLPyn0R+CPBotXnETkjyAU
+ fUmLYqTIAuzFm5crF63QGl/24YVzXpQJwX/cFIK2j90EJBCWJa2qylHbWGCkCtY2qXkw
+ hymA==
+X-Gm-Message-State: AOJu0YxznvMicEPdooJArxC3DzGVtwBfYPAK+U6s1E56u+EqcACwVFdF
+ GFA1NUEWqf9Czt6L82n+8TPzWBKSM7FV/5gSV/IpCwB/VFA87S2iA+m+Il1HmmhW0/gHdm/kVwr
+ Ab0Fvcl2qkgJixLJX/J59ak1xD7iCpy+vJh1V0S5awSE7pzEObnlq
+X-Gm-Gg: ASbGncut1OYQsr8c3tf2TVaQYxQxM9+MaVEqwbdYxH4il9VeL5t4uq0qCNw1w044H3e
+ feNSz//k3ExecB9jV8cvdhGmleKkiM3TOM3A7qsxVX4yYJj9Pi30qMXw8UaL3Q91TEy8oboIaS7
+ eN0DqWJabznrlAlcet4X2vxpDICAPg6+unboNdqupm9flPtAwwLJO485Ajekagy0UZmK1jqJNzG
+ CJ4GiBb4ffx074tK8hN/wSSzWHghsU7oYVihOSaq4aTH5GYgA==
+X-Received: by 2002:a05:6000:400d:b0:38b:d7c3:377e with SMTP id
+ ffacd0b85a97d-38bd7c33a56mr13434368f8f.2.1736955625966; 
+ Wed, 15 Jan 2025 07:40:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFDPW0BdfveX6TP0vvQu2c+CT/DAJN0+3FPE0GLUWAra9HfC+lXYfRxmrr4WeNZa9ZDRnvAVA==
+X-Received: by 2002:a05:6000:400d:b0:38b:d7c3:377e with SMTP id
+ ffacd0b85a97d-38bd7c33a56mr13434312f8f.2.1736955625422; 
+ Wed, 15 Jan 2025 07:40:25 -0800 (PST)
+Received: from redhat.com ([2a02:14f:1f5:8f43:2a76:9f8c:65e8:ce7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c7499821sm27124325e9.2.2025.01.15.07.39.27
+ ffacd0b85a97d-38a8e383df8sm18256189f8f.38.2025.01.15.07.40.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 07:39:27 -0800 (PST)
-Date: Wed, 15 Jan 2025 16:39:27 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH v3 6/6] target/riscv: add RVA23S64 profile
-Message-ID: <20250115-28bfced9dc48ff95a89a6f0c@orel>
-References: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
- <20250115134957.2179085-7-dbarboza@ventanamicro.com>
+ Wed, 15 Jan 2025 07:40:24 -0800 (PST)
+Date: Wed, 15 Jan 2025 10:40:21 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+Cc: qemu-devel@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
+ pbonzini@redhat.com, stefanha@redhat.com, kwolf@redhat.com,
+ hreitz@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, marcandre.lureau@redhat.com,
+ philmd@linaro.org, eblake@redhat.com, armbru@redhat.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org
+Subject: Re: [PATCH v17 00/11] New vmapple machine type and xhci fixes
+Message-ID: <20250115103953-mutt-send-email-mst@kernel.org>
+References: <20250112210056.16658-1-phil@philjordan.eu>
+ <20250115100747-mutt-send-email-mst@kernel.org>
+ <CAAibmn2-vP1ukGwQ8cj6aswjVXMFGi0KzJV3xDPD8SKVH44emg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250115134957.2179085-7-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAAibmn2-vP1ukGwQ8cj6aswjVXMFGi0KzJV3xDPD8SKVH44emg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,116 +112,441 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 15, 2025 at 10:49:57AM -0300, Daniel Henrique Barboza wrote:
-> Add RVA23S64 as described in [1]. This profile inherits all mandatory
-> extensions of RVA23U64 and RVA22S64, making it a child of both profiles.
+On Wed, Jan 15, 2025 at 04:33:45PM +0100, Phil Dennis-Jordan wrote:
 > 
-> A new "rva23s64" profile CPU is also added. This is the generated
-> riscv,isa for it (taken via -M dumpdtb):
 > 
-> rv64imafdcbvh_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_
-> ziccrse_zicond_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zimop_
-> zmmul_za64rs_zaamo_zalrsc_zawrs_zfa_zfhmin_zca_zcb_zcd_zcmop_zba_zbb_zbs_
-> zkt_zvbb_zve32f_zve32x_zve64f_zve64d_zve64x_zvfhmin_zvkb_zvkt_shcounterenw_
-> sha_shgatpa_shtvala_shvsatpa_shvstvala_shvstvecd_smnpm_smstateen_ssccptr_
-> sscofpmf_sscounterenw_ssnpm_ssstateen_sstc_sstvala_sstvecd_ssu64xl_
-> supm_svade_svinval_svnapot_svpbmt
+> On Wed, 15 Jan 2025 at 16:08, Michael S. Tsirkin <mst@redhat.com> wrote:
 > 
-> [1] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
+>     On Sun, Jan 12, 2025 at 10:00:45PM +0100, Phil Dennis-Jordan wrote:
+>     > This patch set introduces a new ARM and macOS HVF specific machine type
+>     > called "vmapple". There are also some patches for fixing XHCI spec
+>     > compliance issues and adding a workaround to a quirk in the macOS guest's
+>     > XHCI driver.
+>     >
+>     > The vmapple machine type approximates the configuration in macOS's own
+>     > Virtualization.framework when running arm64 macOS guests. In addition to
+>     > generic components such as a GICv3 and an XHCI USB controller, it
+>     > includes nonstandard extensions to the virtio block device, a special
+>     > "hardware" aes engine, a configuration device, a pvpanic variant, a
+>     > "backdoor" interface, and of course the apple-gfx paravirtualised display
+>     > adapter.
+>     >
+>     >
+>     > The macOS guest initially did not work well with QEMU's XHCI controller,
+>     > which required some investigation, bug fixing, and a work-around.
+>     >
+>     > Essentially, the macOS driver attempts to use XHCI event rings 1 and 2
+>     > even when there is only a single pin-based interrupt available. The
+>     > interrupts for rings 1 and 2 are dropped, and so events are only handled
+>     > after a timeout. The driver appears to expect the device to act as if
+>     > interrupter mapping was not supported - the spec only mentions that
+>     > interrupter mapping should be disabled if only one interrupter is
+>     > enabled, not one interrupt, although there is potential ambiguity in
+>     > the spec's wording around enabling and disabling interrupters.
+>     >
+>     > In any case, this investigation has led to 3 changes:
+>     >
+>     >  * The spec requires that modulo arithmetic be used for selecting
+>     >    the MSI vector to notify from the interrupter/event ring index.
+>     >    (Patch 1)
+>     >  * The spec requires that all events be directed at ring 0 if
+>     >    interrupter mapping is not available; the condition for this
+>     >    mentioned in the spec is when there is only 1 interrupter
+>     >    available. (Patch 2)
+>     >  * A property is added to the PCI XHCI controller classes to disable
+>     >    interrupter mapping when using pin-based interrupts. This makes
+>     >    the macOS guest drivers work. (Patch 9) This is enabled in the
+>     >    vmapple machine type, which does not offer MSI(-X) support.
+>     >
+>     > There are currently a few limitations to the vmapple machine. These
+>     > aren't intrinsic, just imperfect emulation of the VZF, but it's good
+>     > enough to be just about usable for some purposes:
+>     >
+>     >  * macOS 12 guests only. Versions 13+ currently fail during early boot.
+>     >  * macOS 11+ arm64 hosts only, with hvf accel. (Perhaps some differences
+>     >    between Apple M series CPUs and TCG's aarch64 implementation? macOS
+>     >    hosts only because ParavirtualizedGraphics.framework is a black box
+>     >    implementing most of the logic behind the apple-gfx device.)
+>     >  * The guest OS must first be provisioned using Virtualization.framework;
+>     >    the disk images can subsequently be used in Qemu. (See docs.)
+>     >
+>     >
+>     > Previous versions of this series also included the macOS PV graphics
+>     > device ("apple-gfx"); those patches have already been merged, so
+>     > the title has been changed. Previous iteration:
+>     > https://patchew.org/QEMU/20241223221645.29911-1-phil@philjordan.eu/
+>     >
+>     > Furthermore, the XHCI fixes and workaround were previously submitted
+>     > as a separate patch set, of which a few patches have also been merged.
+>     > "hw/usb/hcd-xhci: Fixes, improvements and macOS workaround"
+>     > https://patchew.org/QEMU/20241227121336.25838-1-phil@philjordan.eu/
+>     >
+>     > Finally, I've included one of Philippe Mathieu-Daudé's GICv3 patches
+>     > which arose out of the discovery that the software GICv3 dependency
+>     > was missing when building v16 and earlier versions of this series
+>     > in a HVF-only configuration.
+>     > https://patchew.org/QEMU/20241227202435.48055-1-philmd@linaro.org/
 > 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 39 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 40 insertions(+)
 > 
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 53ead481a9..4cfdb74891 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -41,6 +41,7 @@
->  #define TYPE_RISCV_CPU_RVA22U64         RISCV_CPU_TYPE_NAME("rva22u64")
->  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
->  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
-> +#define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
->  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
->  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
->  #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 761da41e53..50e65932f6 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2421,10 +2421,41 @@ static RISCVCPUProfile RVA23U64 = {
->      }
->  };
->  
-> +/*
-> + * As with RVA23U64, RVA23S64 also defines 'named features'.
-> + *
-> + * Cache related features that we consider enabled since we don't
-> + * implement cache: Ssccptr
-> + *
-> + * Other named features that we already implement: Sstvecd, Sstvala,
-> + * Sscounterenw, Ssu64xl
-> + *
-> + * The remaining features/extensions comes from RVA23U64.
-                                                   ^ RVA23S64
+>     just to make sure, who is merging this? Me?
+> 
+> 
+> ICYMI, Phil M-D has already pulled patches 1 & 2, and Stefan has merged them
+> into staging & master. 
+> 
+> As I understand it, Phil M-D was also in the process of merging the rest of v16
+> of this series before discovering the GICv3 dependency/Kconfig issue:
+> 
+> https://lore.kernel.org/qemu-devel/
+> 8554330d-fd9b-4fa5-b37c-161f70b71f7d@linaro.org/
+> 
+> I don't really mind either way who merges this, but he might have some more
+> thoughts on the matter - there might be a specific reason he's so far only
+> picked up those two patches. :-)
+> 
 
-> + */
-> +static RISCVCPUProfile RVA23S64 = {
-> +    .u_parent = &RVA23U64,
-> +    .s_parent = &RVA22S64,
-> +    .name = "rva23s64",
-> +    .misa_ext = RVS,
-> +    .priv_spec = PRIV_VERSION_1_13_0,
-> +    .satp_mode = VM_1_10_SV39,
-> +    .ext_offsets = {
-> +        /* New in RVA23S64 */
-> +        CPU_CFG_OFFSET(ext_svnapot), CPU_CFG_OFFSET(ext_sstc),
-> +        CPU_CFG_OFFSET(ext_sscofpmf), CPU_CFG_OFFSET(ext_ssnpm),
-> +
-> +        /* Named features: Sha */
-> +        CPU_CFG_OFFSET(ext_sha),
-> +
-> +        RISCV_PROFILE_EXT_LIST_END
-> +    }
-> +};
-> +
->  RISCVCPUProfile *riscv_profiles[] = {
->      &RVA22U64,
->      &RVA22S64,
->      &RVA23U64,
-> +    &RVA23S64,
->      NULL,
->  };
->  
-> @@ -2918,6 +2949,13 @@ static void rva23u64_profile_cpu_init(Object *obj)
->  
->      RVA23U64.enabled = true;
->  }
-> +
-> +static void rva23s64_profile_cpu_init(Object *obj)
-> +{
-> +    rv64i_bare_cpu_init(obj);
-> +
-> +    RVA23S64.enabled = true;
-> +}
->  #endif
->  
->  static const gchar *riscv_gdb_arch_name(CPUState *cs)
-> @@ -3198,6 +3236,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  MXL_RV64,  rva22u64_profile_cpu_init),
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  MXL_RV64,  rva22s64_profile_cpu_init),
->      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  MXL_RV64,  rva23u64_profile_cpu_init),
-> +    DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23S64,  MXL_RV64,  rva23s64_profile_cpu_init),
->  #endif /* TARGET_RISCV64 */
->  };
->  
-> -- 
-> 2.47.1
->
+Excellent just making sure it's not lost.
+Thanks!
 
-Otherwise,
+>     > ---
+>     >
+>     > v2 -> v3:
+>     >
+>     >  * Merged the apple-gfx and vmapple patchsets.
+>     >  * Squashed a bunch of later apple-gfx patches into the main one.
+>     >    (dGPU support, queried MMIO area size, host GPU picking logic.)
+>     >  * Rebased on latest upstream, fixing any breakages due to internal
+>     >    Qemu API changes.
+>     >  * apple-gfx: Switched to re-entrant MMIO. This is supported by the
+>     >    underlying framework and simplifies the MMIO forwarding code which
+>     >    was previously different on x86-64 vs aarch64.
+>     >  * vmapple: Fixes for minor bugs and comments from the last round of
+>     >    review.
+>     >  * vmapple aes, conf, apple-gfx: Switched reset methods to implement
+>     >    the ResettableClass base's interface.
+>     >  * vmapple: switched from virtio-hid to an XHCI USB controller and
+>     >    USB mouse and tablet devices. macOS does not provide drivers for
+>     >    virtio HID devices, at least not in version 12's vmapple kernel.
+>     >    So input now sort of works (interrupt issues) rather than not
+>     >    at all. Use network-based remote access to the guest OS as a
+>     >    work-around.
+>     >
+>     > v3 -> v4:
+>     >
+>     >  * Complete rework of the mechanism for handling runloop/libdispatch
+>     >    events on the main thread. PV graphics now work with the SDL UI.
+>     >  * Renamed 'apple-gfx-vmapple' device to 'apple-gfx-mmio'
+>     >  * hw/display/apple-gfx: threading model overhaul to be more consistent,
+>     >    safer, and more QEMU-idiomatic.
+>     >  * display-modes property on the apple-gfx devices now uses the
+>     >    native array property mechanism and works on both device variants.
+>     >  * hw/vmapple/aes: Improvements to logging and error handling.
+>     >  * hw/vmapple/cfg: Bug fixes around device property default values.
+>     >  * hw/vmapple/{aes,cfg,virtio-blk/vmapple}: Most header code moved into
+>     >    .c files, only a single vmapple.h now contains the #defines for the
+>     >    vmapple machine model-specific device type names.
+>     >  * hw/block/virtio-blk: New patch for replacing virtio_blk_free_request
+>     >    with g_free. (Optional)
+>     >  * Various smaller changes following comments in v3 code review in
+>     >    apple-gfx, aes, cfg, bdif, virtio-blk-vmapple, and the vmapple
+>     >    machine type itself. See patch-specific v4 change notes for details.
+>     >
+>     > v4 -> v5:
+>     >
+>     >  * Simplified the main thread runloop mechanism. Back to setting
+>     >        qemu_main directly, but narrowing the scope of what it needs to
+>     do,
+>     >        and it can now be NULL. (Meaning run the QEMU main event loop on
+>     >        the main thread as is traditional.)
+>     >  * hw/display/apple-gfx: Further improvements to the BH based job code
+>     bridging
+>     >    the libdispatch & QEMU thread synchronisation impedance mismatch.
+>     >  * hw/display/apple-gfx: Thread safety and object lifetime improvements.
+>     >  * hw/display/apple-gfx-*: Better buffer and error handling in display
+>     mode
+>     >    property setters and getters.
+>     >  * hw/vmapple/aes: More consistent and safer logging/tracing
+>     >  * hw/vmapple/cfg: Better error reporting on overlong property strings.
+>     >  * hw/vmapple/virtio-blk: Fixed theoretically-unaligned write to config
+>     buffer.
+>     >  * vmapple machine type: Moved ecam region into machine state, improved
+>     device
+>     >    property setting error handling, improved ECID/UUID extraction script
+>     and
+>     >    docs.
+>     >  * Various smaller fixes in apple-gfx/-mmio, apple-gfx-pci, vmapple/aes,
+>     >    vmapple/cfg, vmapple/virtio-blk, and vmapple machine type.
+>     >  * Added SPDX license identifiers where they were missing.
+>     >
+>     > v5 -> v6:
+>     >
+>     >  * 01/15 (main/Cocoa/runloop): Combined functions, fixed whitespace
+>     >  * 02/15 (apple-gfx): Further refinement of PVG threading: reduced some
+>     callback
+>     >    tasks from BHs to merely acquiring RCU read lock; replaced some
+>     libdispatch
+>     >    tasks with BHs; last remaining synchronous BH now uses emphemeral
+>     >    QemuSemaphore.
+>     >  * 02/15 (apple-gfx): Readability improvements and other smaller tweaks
+>     >    (see patch change notes for details)
+>     >  * 04/15 (display modes): Replaced use of alloca() with NSMutableArray.
+>     >
+>     > v6 -> v7:
+>     >
+>     >  * 02/15 (apple-gfx): Use g_ptr_array_find() helper function, coding
+>     style tweak
+>     >  * 03/15 (apple-gfx-pci): Removed an unused function parameter
+>     >  * 04/15 (apple-gfx display mode property): Simplified error handling in
+>     >    property parsing.
+>     >  * 10/15 (vmapple/aes): Coding style tweaks.
+>     >  * 12/15 (vmapple/cfg): Changed error messages for overrun of properties
+>     with
+>     >    fixed-length strings to be more useful to users than developers.
+>     >  * 15/15 (vmapple machine type): Tiny error handling fix, un-inlined
+>     function
+>     >
+>     > v7 -> v8:
+>     >
+>     >  * 02/15 (apple-gfx): Naming and type use improvements, fixes for a bug
+>     and a
+>     >    leak.
+>     >  * 04/15 (apple-gfx display mode property): Type use improvement
+>     >  * 10/15 (vmapple/aes): Guest error logging tweaks.
+>     >  * 11/15 (vmapple/bdif): Replaced uses of cpu_physical_memory_read with
+>     >    dma_memory_read, and a g_free call with g_autofree.
+>     >  * 12/15 (vmapple/cfg): Macro hygiene fix: consistently enclosing
+>     arguments in
+>     >    parens.
+>     >  * 15/15 (vmapple machine type): Use less verbose pattern for defining
+>     uuid
+>     >    property.
+>     >
+>     > v8 -> v9:
+>     >
+>     >  * 01/16 (ui & main loop): Set qemu_main to NULL for GTK UI as well.
+>     >  * 02/16 (apple-gfx): Pass device pointer to graphic_console_init(),
+>     various
+>     >        non-functional changes.
+>     >  * 03/16 (apple-gfx-pci): Fixup of changed common call, whitespace and
+>     comment
+>     >    formatting tweaks.
+>     >  * 04/16 (apple-gfx display modes): Re-ordered type definitions so we can
+>     drop
+>     >    a 'struct' keyword.
+>     >  * 10/16 (vmapple/aes): Replaced a use of cpu_physical_memory_write with
+>     >    dma_memory_write, minor style tweak.
+>     >  * 11/16 (vmapple/bdif): Replaced uses of cpu_physical_memory_write with
+>     >    dma_memory_write.
+>     >  * 13/16 (vmapple/virtio-blk): Correctly specify class_size for
+>     >    VMAppleVirtIOBlkClass.
+>     >  * 15/16 (vmapple machine type): Documentation improvements, fixed
+>     variable
+>     >    name and struct field used during pvpanic device creation.
+>     >  * 16/16 (NEW/RFC vmapple/virtio-blk): Proposed change to replace type
+>     hierarchy
+>     >    with a variant property. This seems cleaner and less confusing than
+>     the
+>     >    original approach to me, but I'm not sure if it warrants creation of a
+>     new
+>     >    QAPI enum and property type definition.
+>     >
+>     > v9 -> v10:
+>     >
+>     >  * 01/15 (ui & main loop): Added comments to qemu_main declaration and
+>     GTK.
+>     >  * 02/15 (apple-gfx): Reworked the way frame rendering code is threaded
+>     to use
+>     >    BHs for sections requiring BQL.
+>     >  * 02/15 (apple-gfx): Fixed ./configure error on non-macOS platforms.
+>     >  * 10/15 (vmapple/aes): Code style and comment improvements.
+>     >  * 12/15 (vmapple/cfg): Slightly tidier error reporting for overlong
+>     property
+>     >    values.
+>     >  * 13/15 (vmapple/virtio-blk): Folded v9 patch 16/16 into this one,
+>     changing
+>     >    the device type design to provide a single device type with a variant
+>     >        property instead of 2 different subtypes for aux and root volumes.
+>     >  * 15/15 (vmapple machine type): Documentation fixup for changed
+>     virtio-blk
+>     >    device type; small improvements to shell commands in documentation;
+>     >    improved propagation of errors during cfg device instantiation.
+>     >
+>     > v10 -> v11:
+>     >
+>     >  * 01/15 (ui & main loop): Simplified main.c, better comments & commit
+>     message
+>     >  * 02/15 (apple-gfx): Give each PV display instance a unique serial
+>     number.
+>     >  * 02 & 03/15 (apple-gfx, -pci): Formatting/style tweaks
+>     >  * 15/15 (vmapple machine type): Improvements to shell code in docs
+>     >
+>     > v11 -> v12:
+>     >
+>     >  * 01/15 (ui & main loop): More precise wording of code comments.
+>     >  * 02/15 (apple-gfx): Fixed memory management regressions introduced in
+>     v10;
+>     >    improved error handling; various more conmetic code adjustments
+>     >  * 09/15 (GPEX): Fixed uses of deleted GPEX_NUM_IRQS constant that have
+>     been
+>     >    added to QEMU since this patch was originally written.
+>     >
+>     > v12 -> v13:
+>     >
+>     >  * 15/15 (vmapple machine type): Bumped the machine type version from 9.2
+>     >    to 10.0.
+>     >  * All patches in the series now have been positively reviewed and
+>     received
+>     >    corresponding reviewed-by tags.
+>     >
+>     > v13 -> v14:
+>     >
+>     >  * 6/15 (hw/vmapple directory): Changed myself from reviewer
+>     >    to maintainer, as that seemed appropriate at this point.
+>     >  * 15/15 (vmapple machine type): Gate creation of XHCI and
+>     >    USB HID devices behind if (defaults_enabled()).
+>     >
+>     > v14 -> v15
+>     >
+>     >  * Constified property tables to match Richard Henderson's recent
+>     project-
+>     >    wide convention change. (patches 4/15, 7/15, 11/15, 12/15, & 13/15)
+>     >
+>     > v15 -> v16
+>     >
+>     >  * 14 patches now, as patch 8 has already been pulled. (Thanks Philippe!)
+>     >  * Fixed a bunch of conflicts with upstream code motion:
+>     >     - DEFINE_PROP_END_OF_LIST removal (4/14 - apple-gfx mode list, 7/14 -
+>     >       pvpanic-mmio, 10/14 - bdif, 11/14 - cfg device, and
+>     >       12/14 - vmapple-virtio-blk)
+>     >     - sysemu->system move/rename: (1/14 - ui/qemu-main, 2/14 - apple-gfx,
+>     >       9/14 - aes, 10/14 - bdif, 14/14 - vmapple machine type)
+>     >  * 14/14 (vmapple machine type):
+>     >     - Moved compatibility setting for removing legacy mode from
+>     virtio-pci
+>     >       to proper global property table rather than (ab)using sugar
+>     property.
+>     >     - Removed a few superfluous #includes during sysemu rename cleanup.
+>     >     - Removed machine type versioning as it's not necessary (yet?)
+>     >     - Made memory map array const
+>     >
+>     > XHCI RFC -> v1:
+>     >
+>     >  * Gated conditional interrupter mapping support behind a property,
+>     enabled
+>     >    that property in the VMApple machine type.
+>     >  * Added patch to fix the MSI vector assertion failure.
+>     >  * Moved msi and msix properties from NEC XHCI controller to generic
+>     xhci-pci
+>     >    superclass as that also seems useful.
+>     >  * Broke the workaround up into 2 patches, one for mapping disabling
+>     required
+>     >    by the standard, and one for the conditional disabling workaround.
+>     >
+>     > XHCI v1 -> v2:
+>     >
+>     >  * 1/6: Switch to modulo arithmetic for MSI vector number, as per spec.
+>     >  * 6/6: Set the "conditional-intr-mapping" property via compat_props.
+>     >  * Commit message tweaks
+>     >
+>     > XHCI v2 -> v3:
+>     >
+>     >  * 2/6: In line with recent upstream changes, the property table is now
+>     >    const and no longer carries an end-of-list marker.
+>     >  * The indentation fix (previously 5/6) has already been merged, so is no
+>     >    longer included.
+>     >  * Added patch fixing up logging of certain unhandled MMIO cases. (4/6)
+>     >  * 6/6: Moved the compat global property table into vmapple patch set
+>     -v16;
+>     >    we now just add the conditional-intr-mapping property to it in this
+>     >    patch. We also set the property on any device implementing the
+>     abstract
+>     >    TYPE_XHCI_PCI rather than only the TYPE_QEMU_XHCI device specifically.
+>     >
+>     > v16 -> v17
+>     >
+>     >  * Rebased on latest upstream (with minor conflict fixes)
+>     >  * apple-gfx, GPEX, and ui/cocoa patches dropped as they have been
+>     merged.
+>     >  * Unmerged patches from xhci series v3 combined into this series.
+>     >  * vmapple machine type: Explicitly depend on software GICv3.
+>     >  * vmapple machine type: Enable the new XHCI PCI conditional-intr-mapping
+>     >    property via the machine type's global compat property table.
+>     >  * Integrated Philippe's patch on renaming the GICv3's confusing config
+>     name,
+>     >    and removing its TCG dependency. (It's needed with HVF too.)
+>     >  * vmapple machine type: Dropped Tested-by tag because of above changes
+>     >
+>     >
+>     > Alexander Graf (7):
+>     >   hw: Add vmapple subdir
+>     >   hw/misc/pvpanic: Add MMIO interface
+>     >   hw/vmapple/aes: Introduce aes engine
+>     >   hw/vmapple/bdif: Introduce vmapple backdoor interface
+>     >   hw/vmapple/cfg: Introduce vmapple cfg region
+>     >   hw/vmapple/virtio-blk: Add support for apple virtio-blk
+>     >   hw/vmapple/vmapple: Add vmapple machine type
+>     >
+>     > Phil Dennis-Jordan (3):
+>     >   hw/usb/hcd-xhci-pci: Use modulo to select MSI vector as per spec
+>     >   hw/usb/hcd-xhci-pci: Use event ring 0 if mapping unsupported
+>     >   hw/usb/hcd-xhci-pci: Adds property for disabling mapping in IRQ mode
+>     >
+>     > Philippe Mathieu-Daudé (1):
+>     >   hw/intc: Remove TCG dependency on ARM_GICV3
+>     >
+>     >  MAINTAINERS                         |   8 +
+>     >  contrib/vmapple/uuid.sh             |   9 +
+>     >  docs/system/arm/vmapple.rst         |  63 +++
+>     >  docs/system/target-arm.rst          |   1 +
+>     >  hw/Kconfig                          |   1 +
+>     >  hw/block/virtio-blk.c               |  19 +-
+>     >  hw/core/qdev-properties-system.c    |   8 +
+>     >  hw/intc/Kconfig                     |   6 +-
+>     >  hw/intc/meson.build                 |   4 +-
+>     >  hw/meson.build                      |   1 +
+>     >  hw/misc/Kconfig                     |   4 +
+>     >  hw/misc/meson.build                 |   1 +
+>     >  hw/misc/pvpanic-mmio.c              |  60 +++
+>     >  hw/usb/hcd-xhci-pci.c               |  25 ++
+>     >  hw/usb/hcd-xhci-pci.h               |   1 +
+>     >  hw/usb/hcd-xhci.c                   |   5 +
+>     >  hw/usb/hcd-xhci.h                   |   5 +
+>     >  hw/vmapple/Kconfig                  |  32 ++
+>     >  hw/vmapple/aes.c                    | 581 ++++++++++++++++++++++++++
+>     >  hw/vmapple/bdif.c                   | 274 ++++++++++++
+>     >  hw/vmapple/cfg.c                    | 195 +++++++++
+>     >  hw/vmapple/meson.build              |   5 +
+>     >  hw/vmapple/trace-events             |  21 +
+>     >  hw/vmapple/trace.h                  |   1 +
+>     >  hw/vmapple/virtio-blk.c             | 204 +++++++++
+>     >  hw/vmapple/vmapple.c                | 618 ++++++++++++++++++++++++++++
+>     >  include/hw/misc/pvpanic.h           |   1 +
+>     >  include/hw/pci/pci_ids.h            |   1 +
+>     >  include/hw/qdev-properties-system.h |   5 +
+>     >  include/hw/virtio/virtio-blk.h      |  11 +-
+>     >  include/hw/vmapple/vmapple.h        |  23 ++
+>     >  include/qemu/cutils.h               |  15 +
+>     >  meson.build                         |   1 +
+>     >  qapi/virtio.json                    |  14 +
+>     >  util/hexdump.c                      |  18 +
+>     >  35 files changed, 2231 insertions(+), 10 deletions(-)
+>     >  create mode 100755 contrib/vmapple/uuid.sh
+>     >  create mode 100644 docs/system/arm/vmapple.rst
+>     >  create mode 100644 hw/misc/pvpanic-mmio.c
+>     >  create mode 100644 hw/vmapple/Kconfig
+>     >  create mode 100644 hw/vmapple/aes.c
+>     >  create mode 100644 hw/vmapple/bdif.c
+>     >  create mode 100644 hw/vmapple/cfg.c
+>     >  create mode 100644 hw/vmapple/meson.build
+>     >  create mode 100644 hw/vmapple/trace-events
+>     >  create mode 100644 hw/vmapple/trace.h
+>     >  create mode 100644 hw/vmapple/virtio-blk.c
+>     >  create mode 100644 hw/vmapple/vmapple.c
+>     >  create mode 100644 include/hw/vmapple/vmapple.h
+>     >
+>     > --
+>     > 2.39.5 (Apple Git-154)
+> 
+> 
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
