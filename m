@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC871C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 20:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BF4C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 20:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY9uO-00022k-06; Wed, 15 Jan 2025 15:22:36 -0500
+	id 1tYA3v-0003Vx-Lc; Wed, 15 Jan 2025 15:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY9uM-00022c-Is
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 15:22:34 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYA3u-0003Vp-Tk
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 15:32:26 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY9uL-0008GM-60
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 15:22:34 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-385de9f789cso156387f8f.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 12:22:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYA3t-0000xX-3b
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 15:32:26 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4361f796586so1044975e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 12:32:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736972551; x=1737577351; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736973143; x=1737577943; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wv6wy8EOuoU4LYP0/b9rzNWiK0/tS4mN1mRfgKaMddI=;
- b=GOLWzqjk75n7Fw7EnooF0/nRoxUeGew5kb7ICKkfGjWU8TGLk8ka4ngQpJPf/6VelK
- 5q5NLeaPra1a+GQ829zQC9j3FwybkwlHtznytci9RSo06r9OaiYnfTCyZ7J5BmB5ESYm
- Nn5FBnaNUbnGWx5F+jr2JhmC3aRTN6uJHKdK1liXcxR9gbA7aNQ9ZO/61E+vCj64a8f8
- s4pxj7a0pAWojIAXa5I1eyJl5r3bhrEPjkywxzchvEmQAiDJ8kDqg9NN2/zMSyC6GMbz
- WEesx+qqR7L4VcqMwaFd0s166I4DltQSOeyb7HQ2lR7B11+94XLKwudIqHV065MVBpBi
- irpw==
+ bh=wCIIgIMGJ8aAeQLt4psSpE+bBi3Y6NNWp8GaPwHwF+0=;
+ b=ar8CscoJv0S04dVldVWLaBAMd7z0kBtSreGD95Yo5L+KUyoWuoIj7XxKKV+0s7cTvL
+ pHwOt87zvOU3vTWgLql7nK0ka5Bf//ozitCRJ6u1f1fgGQSL0Xen4kCricKnXwrPbMsT
+ 6nhRNaETglbnDa9fJ2OPxFi0QPJJI/vLL2ZOGYkTBhWzqAEEpPdhiiZFHYD/5qTVZbf+
+ zVby5y9LJ9v3I+O9TOpVYyjgVuA/2QFNCjyh4ZYOi0hQ/SD19XMDh4Jm4XqUq2paGvwd
+ JONsdSA140Rp1ntJWAOf4Vi8FkmV5uwnusw86nAJO4l5NXtb0qaay443KJ+ktB9yTgLY
+ frcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736972551; x=1737577351;
+ d=1e100.net; s=20230601; t=1736973143; x=1737577943;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wv6wy8EOuoU4LYP0/b9rzNWiK0/tS4mN1mRfgKaMddI=;
- b=ZvkmNuyCYM+K/a1Oe+B/V84han0sfMtHYfCI0q1f+eST71xrEAx7GlkdBeA3gnX4LQ
- c1wvNK1+W7uXUiqQxf8MvpQY5H5vJGrnW0OiZed0WsYIuW8Z7jvcq8f+t4Xx36nDrUb5
- oor5oY4VbgItG0BR0IG/mf8tZe81LWZuo4Mw0km/hwoEazBoy8+TuIqlSpP7R7YkJgoh
- 9SCAVNELfOb6cGJomyq4Ur2G8MyZmE5KDxLhxTpcaFHpnLMtoEBKaQnFnYhPrfPlwaX/
- oYIpPHJvx+94J5LK2tlSawEmQwrfhUgyXLRHZAkhE/41egFvHORpa2zQPtnaIf4q9xV9
- GP3w==
+ bh=wCIIgIMGJ8aAeQLt4psSpE+bBi3Y6NNWp8GaPwHwF+0=;
+ b=eGPjYDiYrHvDM7VAUwUn4QyNV0crNyJD08d3p8oa4xYC686+G5qYZ7/irv1T39fRAA
+ gDueR9rmC+eSm7A45y2UIwRBotZaFY9AKlAR6LntN2JyCxbNNwfvOHV6a0gP53fdapzp
+ AtwKcI7saQ2HOu4oyB0nNSpug0faPaTs4oRPQ7eLhsCWReevmgacwZwRsfiuipBaNmu0
+ mUKk7WfmKyWQKYC5uqbSHHvLpUw5rA8S8QAwg++gGQVA3V+NC+v6zkPqITEnPlhDrvXM
+ QJBHdDqIVtqLwvVFFcsci/U3ksqaFcsUFbBJnB4nTPFcDVIx1yReSAqzJGNzDmMvMtmi
+ 09Jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVysf0rUnDxxiTmwgQOTNBZDQax0L5Bhrf+SYJV9yetUSvdJetCCM1YfGuYRufKXbT2m/zH2jOuh5QQ@nongnu.org
-X-Gm-Message-State: AOJu0YxejlxQr3Qk6quvRhCy/pP85GrgoMCJzC/35mrNw7kHbYP7kh7s
- HDWo0lW+gev4EH8BsEL6gZnwIkjn95txdMk20drsuhTMZif90nJZydGqXPx6KhsaFz54u+y5RHZ
- Q0xM=
-X-Gm-Gg: ASbGncs6vtrE+O467+/cTH5f3dYI/63NEu/sTIIOdonFfZ2tXkHtmRk0Wsw8iTE8uH8
- ZNc3qGZuNPhNDeDdHnjdtsskqQz0ZyXJk3C3wYF2iW6yz8u+KzQ4kmu3i81B4t59zkIp0J1RQhF
- Z8+0LZSe0n0ioA20S6Z+PgPqU4e1eJfNcVmifXRSuFfKHXCJcR7o4v+AbSckhWcnE12nRPRRFqq
- hfg9mTXixjTleht2/mRKLxtegirduxbCV2JhlW/U8KJutQy4xNTJB99i87BykYYZRDRhKAxGva8
- BiQrmTF4EdHGewUI1KBJQ1Py
-X-Google-Smtp-Source: AGHT+IENa0JEvKQ5v8jY83VyBCCPBeIburqrfNmGWZjrP1oFlWkPwYFuHFzrNG09ltBj0Scy4o65AQ==
-X-Received: by 2002:a5d:6484:0:b0:37d:4647:154e with SMTP id
- ffacd0b85a97d-38a872cff26mr24554762f8f.9.1736972551558; 
- Wed, 15 Jan 2025 12:22:31 -0800 (PST)
+ AJvYcCU7t33bqxJwQyBhHR+KRP3Xu1WVsNdxBFB3SJ4fmERk0ALWtbUyzDdG9rb2+OaIi29VAoiFnoaZFw1W@nongnu.org
+X-Gm-Message-State: AOJu0YxRTEfKhTq2+HZIxtn3nKiANzoXibJQRm6ghGucmcp2dNorCxUJ
+ snLV17G/YpAtSo66xE+injQcHO/G3Mn6Cp5c+0KQ6IrWJmkh4ZJeRSXBtyDSXfU=
+X-Gm-Gg: ASbGncvIRoTRmcSS4S9jHgqK2uEOHplJl50kV/zKsepX8ZC+hw1UUDU414yd3+28iOy
+ btW8kQBOMu7PfXAKTtJisaiKztVVCFsVbVkwz3zY5DQ8gVAC5tHk2OwZPqQt8sywyy2Z5zx028x
+ dYuUT5O/an28hUwMOcnx1G/xmmPmiifUsemPI1078gh/L3Yp3bfQOWmeIH/WNa4lxMcx+yjLUKu
+ gaUoISahyM0yTS8471tQSINDSn8781K0bh+170Fwtig6+JkfAP5IVcfa+o2PLljESnOB0np6S2z
+ VZhNi40QGeGbZmomEsme2SGH
+X-Google-Smtp-Source: AGHT+IE8qZr96m0zCsZRu6fva+Y2qgzLgB1jsCktSHMyyYibCbDdu04tNHOGkBYGQQjnaMWCEGKkyA==
+X-Received: by 2002:a05:600c:4f47:b0:431:542d:2599 with SMTP id
+ 5b1f17b1804b1-436e26e1f6dmr265068195e9.22.1736973142735; 
+ Wed, 15 Jan 2025 12:32:22 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1b44sm18702338f8f.90.2025.01.15.12.22.30
+ 5b1f17b1804b1-437c74d845esm34290345e9.27.2025.01.15.12.32.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 12:22:31 -0800 (PST)
-Message-ID: <6ab372bd-c668-43bf-8f5c-9c57130ae121@linaro.org>
-Date: Wed, 15 Jan 2025 21:22:30 +0100
+ Wed, 15 Jan 2025 12:32:22 -0800 (PST)
+Message-ID: <63214572-5012-42ea-9872-6d5e2bb39823@linaro.org>
+Date: Wed, 15 Jan 2025 21:32:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 72/81] tcg/loongarch64: Do not accept constant argument
- to nor
+Subject: Re: [PATCH 02/11] hw/mips/loongson3_virt: Keep reference of vCPUs in
+ machine_init()
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250107080112.1175095-1-richard.henderson@linaro.org>
- <20250107080112.1175095-73-richard.henderson@linaro.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20250112215835.29320-1-philmd@linaro.org>
+ <20250112215835.29320-3-philmd@linaro.org>
+ <6c194ca4-6d37-416b-8ebe-b4789eee0de5@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250107080112.1175095-73-richard.henderson@linaro.org>
+In-Reply-To: <6c194ca4-6d37-416b-8ebe-b4789eee0de5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +103,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 09:01, Richard Henderson wrote:
-> The instruction set does not implement nor with immediate.
-> There is no reason to pretend that we do.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/loongarch64/tcg-target.c.inc | 10 ++--------
->   1 file changed, 2 insertions(+), 8 deletions(-)
+On 15/1/25 06:18, Richard Henderson wrote:
+> On 1/12/25 13:58, Philippe Mathieu-Daudé wrote:
+>> Keep references of all vCPUs created. That allows
+>> to directly access the first vCPU without using the
+>> &first_cpu global.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/mips/loongson3_virt.c | 9 +++++----
+>>   1 file changed, 5 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+>> index 47d112981a2..4b19941c1dc 100644
+>> --- a/hw/mips/loongson3_virt.c
+>> +++ b/hw/mips/loongson3_virt.c
+>> @@ -492,9 +492,8 @@ static void mips_loongson3_virt_init(MachineState 
+>> *machine)
+>>   {
+>>       int i;
+>>       long bios_size;
+>> -    MIPSCPU *cpu;
+>> +    g_autofree MIPSCPU **cpus = NULL;
+>>       Clock *cpuclk;
+>> -    CPUMIPSState *env;
+>>       DeviceState *liointc;
+>>       DeviceState *ipi = NULL;
+>>       char *filename;
+>> @@ -569,13 +568,16 @@ static void 
+>> mips_loongson3_virt_init(MachineState *machine)
+>>       cpuclk = clock_new(OBJECT(machine), "cpu-refclk");
+>>       clock_set_hz(cpuclk, DEF_LOONGSON3_FREQ);
+>> +    cpus = g_new(MIPSCPU *, machine->smp.cpus);
+>>       for (i = 0; i < machine->smp.cpus; i++) {
+>> +        MIPSCPU *cpu;
+>>           int node = i / LOONGSON3_CORE_PER_NODE;
+>>           int core = i % LOONGSON3_CORE_PER_NODE;
+>>           int ip;
+>>           /* init CPUs */
+>>           cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, 
+>> false);
+>> +        cpus[i] = cpu;
+>>           /* Init internal devices */
+>>           cpu_mips_irq_init_cpu(cpu);
+>> @@ -609,7 +611,6 @@ static void mips_loongson3_virt_init(MachineState 
+>> *machine)
+>>                                  pin, cpu->env.irq[ip + 2]);
+>>           }
+>>       }
+>> -    env = &MIPS_CPU(first_cpu)->env;
+>>       /* Allocate RAM/BIOS, 0x00000000~0x10000000 is alias of 
+>> 0x80000000~0x90000000 */
+>>       memory_region_init_rom(bios, NULL, "loongson3.bios",
+>> @@ -640,7 +641,7 @@ static void mips_loongson3_virt_init(MachineState 
+>> *machine)
+>>           loaderparams.kernel_filename = kernel_filename;
+>>           loaderparams.kernel_cmdline = kernel_cmdline;
+>>           loaderparams.initrd_filename = initrd_filename;
+>> -        loaderparams.kernel_entry = load_kernel(env);
+>> +        loaderparams.kernel_entry = load_kernel(&cpus[0]->env);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> We only ever use cpu[0].  We don't really need the whole array.
 
+Yes. What about:
+
+-- >8 --
+commit ffc8c8873c0c102457f0e660437874555b022cc2
+Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+Date:   Sun Jan 12 21:01:24 2025 +0100
+
+     hw/mips/loongson3_virt: Invert vCPU creation order to remove &first_cpu
+
+     Create vCPUs from the last one to the first one.
+     No need to use the &first_cpu global since we already
+     have it referenced.
+
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 47d112981a2..488eba495cd 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -496,3 +496,2 @@ static void mips_loongson3_virt_init(MachineState 
+*machine)
+      Clock *cpuclk;
+-    CPUMIPSState *env;
+      DeviceState *liointc;
+@@ -571,3 +570,3 @@ static void mips_loongson3_virt_init(MachineState 
+*machine)
+
+-    for (i = 0; i < machine->smp.cpus; i++) {
++    for (i = machine->smp.cpus - 1; i >= 0; --i) {
+          int node = i / LOONGSON3_CORE_PER_NODE;
+@@ -611,3 +610,2 @@ static void mips_loongson3_virt_init(MachineState 
+*machine)
+      }
+-    env = &MIPS_CPU(first_cpu)->env;
+
+@@ -642,3 +640,3 @@ static void mips_loongson3_virt_init(MachineState 
+*machine)
+          loaderparams.initrd_filename = initrd_filename;
+-        loaderparams.kernel_entry = load_kernel(env);
++        loaderparams.kernel_entry = load_kernel(&cpu->env);
+
+---
 
