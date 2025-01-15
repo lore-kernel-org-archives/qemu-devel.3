@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B9DAC02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5056DC02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY27J-0003ZY-7S; Wed, 15 Jan 2025 07:03:25 -0500
+	id 1tY27W-0003j9-9s; Wed, 15 Jan 2025 07:03:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY27I-0003YE-18
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:03:24 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tY27P-0003dX-H7
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:03:32 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY27G-0008AA-CN
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:03:23 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21644aca3a0so145412945ad.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 04:03:21 -0800 (PST)
+ id 1tY27N-0008Aj-8T
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:03:31 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-21649a7bcdcso113007745ad.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 04:03:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736942600; x=1737547400;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736942608; x=1737547408;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Pdcvm4r1FFh3mjhqnqaxRGqrOq+krKeGclEgq6h25tg=;
- b=JqipSV2JR94WWepCwmGHXBKxCeO1npr9FSt7IQLQljfXmlolfry3zicPB5lkxObojf
- Igv4NED5V5HyCT0rfio+Ic8odkirgh2DLeinu9+69MvR4wNZxJpASz9nkS5xc+yXxFMR
- P+rItoHt6HZBMPNqf5sTWc6cd4h/+qc8Ck3D8Ua5vUjid8+3fRcl5JmxNDOqF9tOurRR
- jH5KtwCCejFQSY/+K+lWXXWn0Mz4TdcMqsaYL1mU1TnvF4/Naa423I/g6Sh3hVWvMS3E
- /6d95XmP1u5qHshqs6XOZfhbn+jmb2iU7DfDdtm3xkxMecYylnSqzi/KBnYfQMYrNwiK
- NrhQ==
+ :reply-to; bh=NPcUIuA+1v7HK1TMvnl73wkTi9fItVYjHIROGL3QJso=;
+ b=Pe/ENQT6dqRa4z2fpr7/1YS0VF0GwJ/tO0kPXOgig7q2opOw3Gk8O/SnoJpnCdh67F
+ K2WwPvOnW+67Zj+3XSV7v6kw40sAWZPkt+RK7y/DicqurGd3iLlaHKlNEikJdJE+73jz
+ drP3dkF1GhGeKx272GB1Zx9WAihqXJHXpXmC8MLv0MzXE+xwN/lNkqf8WoVs2BxA8BD2
+ rVVvCgjq8cpRIcWpmI7PoPjhl//QrPSTzPX3knrOFy2tTz3k9KiQTlvnbVkfnACYIZqw
+ oLmmkeGHnN0Mib/M0P0KD9MZBg2TyO71MHoOWd4tzzOfGY6zrxq/KUX9v0/DwSJMXXXL
+ wxww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736942600; x=1737547400;
+ d=1e100.net; s=20230601; t=1736942608; x=1737547408;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pdcvm4r1FFh3mjhqnqaxRGqrOq+krKeGclEgq6h25tg=;
- b=XWbhZhpK6wImnDs7TrUfatBdUj8Cm9ryEMNwZ18iXars1/W7GWfgYwsEAs3sPWc3dF
- K8dCdR6HI9OdBr9pBAOiJOWC8ZmdHcGjPL0BHs1VdJCzhFs2RHKO9ZPDY8Hzn+zEaZzj
- ZtNY/XSTD+Uj+lE8taAEGa6yEn+UsnsT8aDKNG1qS6Rd6sT4y5u10qgiA45gQNw84VIA
- UlXcftchj8v00QlqJ3s06pQvohItl2cFI8mnmIaJxTOurkJ5KtHCwY3UBKmTM5hzrDr0
- dtCKY3l5ZviWn7ZzW5zBnjhJFo8J3AR/BaVJMFMp68HXeOvu7NwQiN+/BLUopEU1U0Mw
- Lo8A==
-X-Gm-Message-State: AOJu0YwBeHE9ugEsxUXO/kk8MP1cYHy1+zNUR1UFrx9IHzjblYI3bdJO
- ZrXkb6biwYhoUC2Clstch/N5N1kXUQBhn9yXy5UMkDibHic5hytTQqkISCplXMc=
-X-Gm-Gg: ASbGnctoiLxYduupHF6eqiIj+DqAkXLpi5tfKgpW4bmw9IvF3nUYGXg29ZV5/zrehOk
- g9dMnI65cu53qImSmlBBTQ1lM+1nJmwEE2GLiIysdyIWjd6+wZIl2vPDQfX/b2CjL7xCaEdEP6R
- juHCuJUCxevvvjUVyvxixf66QBQ8xGjEs9wwq2y1b+YMnxzy1CUdBg0N7UtUY14fnMViJfo8LKs
- 7roJTF02va+rl+mOYotHoPaxP9qQ/VkB3KqpKgSXkMmucTSK7YAT8ik8khA
-X-Google-Smtp-Source: AGHT+IEV4UNSyiehZCiUvatqLFajTvW+mdS5YjCdjA2R0nkjuLZuofglBpVCwU8oFvpDPH2DwYGEmA==
-X-Received: by 2002:a05:6a20:841c:b0:1e1:a9dd:5a58 with SMTP id
- adf61e73a8af0-1e88d0b6d05mr51136157637.30.1736942600309; 
- Wed, 15 Jan 2025 04:03:20 -0800 (PST)
+ bh=NPcUIuA+1v7HK1TMvnl73wkTi9fItVYjHIROGL3QJso=;
+ b=It9AOYqm5iRjmrTt801WVYzQBfYaTDOQoUneox1Cf6C1qN+TwqZxvKgugWtIXKsrWu
+ mLCh3gU4IAzEeEYYOcfKnCkxFCy2rPYqYQ1ciUVs5KAGoAnnuAZv3HreP+ypE5i9Bqm6
+ 9KzjxN8awpSyIMIJnXs5grhoDfBW7j/eflLF8DR6luFj7NNfQKU5cY9iwex7VpuYgCNI
+ alLu8ABbxifAuUpVzhhUHI640oDFsFmWXNDkYDz+cKCnKCJIUiS2fF7fu0eJ/cC8Cmp7
+ DV+nKc+PASoyWVYDeLrnnynDAPPh7f7KIjEgV+TUqfBX+5oHPrTAcaIKTNM1Y072IAfG
+ 676g==
+X-Gm-Message-State: AOJu0Yx/Q6wS6iZTBfTZqNZamle4o/qydPM1Ln44mGblQIDa9XDkDXvc
+ TjavVim006m2LEaP+0yuyvyMLxi1hbySyhWhjOzqfFYF46qZzRXq0NUYUPS9jLk=
+X-Gm-Gg: ASbGncuhIAKD6Pb3LhEd7n5KAH2RPIAgGZpfLX7p5tZ5j1wqKiN045v3i3LIN1rlhmB
+ Di3vTHBeiRinImGHSCHsG2KHRKVdFNJ9tibnOjd3u7bu4LCDzXSQStQP68ObAKfm3sIqudSc7o8
+ /x9wZ0f8XQQJ4ObLRiK7hwsn6AfrR33erCJd2VPhgP7xZqYAmuYlexVgf/HMchuwgkk846UWArH
+ NdIzfXlZ43GhMrzCsLmrKsfnjiE1T/pBbGxTfcyDMTC5e8XHXszgqO9cnQd
+X-Google-Smtp-Source: AGHT+IHwF9rqf14Q99mM9bLnSiPXZh7CM3vfJwM8vQR9VPQmupTPiucL6mmbhn8VnDwOA4Ag212BeQ==
+X-Received: by 2002:a17:902:d2ca:b0:211:8404:a957 with SMTP id
+ d9443c01a7336-21a83fc0619mr437535545ad.41.1736942607768; 
+ Wed, 15 Jan 2025 04:03:27 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-a31844ba221sm9704801a12.24.2025.01.15.04.03.18
+ d9443c01a7336-21a9f219a94sm81685845ad.129.2025.01.15.04.03.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 04:03:20 -0800 (PST)
+ Wed, 15 Jan 2025 04:03:27 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 15 Jan 2025 21:03:07 +0900
-Subject: [PATCH v4 1/2] glib-compat: Define g_spawn_check_wait_status()
+Date: Wed, 15 Jan 2025 21:03:08 +0900
+Subject: [PATCH v4 2/2] tap: Use g_spawn_sync() and g_spawn_check_wait_status()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250115-glib-v4-1-a827b2676259@daynix.com>
+Message-Id: <20250115-glib-v4-2-a827b2676259@daynix.com>
 References: <20250115-glib-v4-0-a827b2676259@daynix.com>
 In-Reply-To: <20250115-glib-v4-0-a827b2676259@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
@@ -76,8 +76,8 @@ To: Jason Wang <jasowang@redhat.com>,
 Cc: qemu-devel@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>, Lei Yang <leiyang@redhat.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,37 +99,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_spawn_check_exit_status() is renamed to g_spawn_check_wait_status()
-in 2.70.
+g_spawn_sync() (for GLib < 2.68) or g_spawn_async_with_pipes_and_fds()
+(for the newer) gives an informative message if it fails to execute
+the script instead of reporting exiting status 1.
+
+g_spawn_check_wait_status() also gives an message easier to understand
+than the raw value returned by waitpid().
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Tested-by: Lei Yang <leiyang@redhat.com>
 ---
- include/glib-compat.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/tap.c | 220 +++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 117 insertions(+), 103 deletions(-)
 
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 86be439ba0ef..a553ba13a36e 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -68,6 +68,17 @@
-  * without generating warnings.
-  */
+diff --git a/net/tap.c b/net/tap.c
+index ae1c7e398321..f1e00de4181c 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -385,56 +385,59 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     return s;
+ }
  
-+static inline gboolean g_spawn_check_wait_status_qemu(gint wait_status,
-+                                                      GError **error)
-+{
-+#if GLIB_CHECK_VERSION(2, 70, 0)
-+    return g_spawn_check_wait_status(wait_status, error);
-+#else
-+    return g_spawn_check_exit_status(wait_status, error);
+-static void close_all_fds_after_fork(int excluded_fd)
++#if !GLIB_CHECK_VERSION(2, 68, 0)
++static void unset_cloexec(gpointer data)
+ {
+-    const int skip_fd[] = {STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO,
+-                           excluded_fd};
+-    unsigned int nskip = ARRAY_SIZE(skip_fd);
+-
+-    /*
+-     * skip_fd must be an ordered array of distinct fds, exclude
+-     * excluded_fd if already included in the [STDIN_FILENO - STDERR_FILENO]
+-     * range
+-     */
+-    if (excluded_fd <= STDERR_FILENO) {
+-        nskip--;
+-    }
+-
+-    qemu_close_all_open_fd(skip_fd, nskip);
++    g_assert(!fcntl(GPOINTER_TO_INT(data), F_SETFD, 0));
+ }
 +#endif
-+}
-+#define g_spawn_check_wait_status(w, e) g_spawn_check_wait_status_qemu(w, e)
+ 
+ static void launch_script(const char *setup_script, const char *ifname,
+                           int fd, Error **errp)
+ {
+-    int pid, status;
+-    char *args[3];
+-    char **parg;
++    int status;
++    const gchar *args[] = { setup_script, ifname, NULL };
++    g_autoptr(GError) error = NULL;
++    bool spawned;
+ 
+     /* try to launch network script */
+-    pid = fork();
+-    if (pid < 0) {
+-        error_setg_errno(errp, errno, "could not launch network script %s",
+-                         setup_script);
+-        return;
+-    }
+-    if (pid == 0) {
+-        close_all_fds_after_fork(fd);
+-        parg = args;
+-        *parg++ = (char *)setup_script;
+-        *parg++ = (char *)ifname;
+-        *parg = NULL;
+-        execv(setup_script, args);
+-        _exit(1);
+-    } else {
++#if GLIB_CHECK_VERSION(2, 68, 0)
++    pid_t pid;
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++    spawned = g_spawn_async_with_pipes_and_fds(NULL, args, NULL,
++                                               G_SPAWN_DO_NOT_REAP_CHILD |
++                                               G_SPAWN_CHILD_INHERITS_STDIN,
++                                               NULL, NULL, -1, -1, -1,
++                                               &fd, &fd, 1, &pid,
++                                               NULL, NULL, NULL, &error);
++#pragma GCC diagnostic pop
++    if (spawned) {
+         while (waitpid(pid, &status, 0) != pid) {
+             /* loop */
+         }
++    }
++#else
++    gchar *mutable_args[sizeof(args)];
+ 
+-        if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+-            return;
+-        }
+-        error_setg(errp, "network script %s failed with status %d",
+-                   setup_script, status);
++    for (size_t i = 0; i < ARRAY_SIZE(args); i++) {
++        mutable_args[i] = (gchar *)args[i];
++    }
 +
- /*
-  * g_memdup2_qemu:
-  * @mem: (nullable): the memory to copy.
++    spawned = g_spawn_sync(NULL, mutable_args, NULL,
++                           G_SPAWN_CHILD_INHERITS_STDIN,
++                           unset_cloexec, GINT_TO_POINTER(fd),
++                           NULL, NULL, &status, &error);
++#endif
++    if (!spawned) {
++        error_setg(errp, "could not launch network script %s: %s",
++                   setup_script, error->message);
++        return;
++    }
++
++    if (!g_spawn_check_wait_status(status, &error)) {
++        error_setg(errp, "network script %s failed: %s",
++                   setup_script, error->message);
+     }
+ }
+ 
+@@ -477,10 +480,17 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
+ {
+     sigset_t oldmask, mask;
+     g_autofree char *default_helper = NULL;
++    g_autofree char *fd_buf = NULL;
++    g_autofree char *br_buf = NULL;
++    g_autofree char *helper_cmd = NULL;
++    g_autoptr(GError) error = NULL;
++    int fd;
++    int saved_errno;
+     int pid, status;
+-    char *args[5];
+-    char **parg;
++    const char *args[5];
++    const char **parg;
+     int sv[2];
++    bool spawned;
+ 
+     sigemptyset(&mask);
+     sigaddset(&mask, SIGCHLD);
+@@ -495,82 +505,86 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
+         return -1;
+     }
+ 
+-    /* try to launch bridge helper */
+-    pid = fork();
+-    if (pid < 0) {
+-        error_setg_errno(errp, errno, "Can't fork bridge helper");
+-        return -1;
+-    }
+-    if (pid == 0) {
+-        char *fd_buf = NULL;
+-        char *br_buf = NULL;
+-        char *helper_cmd = NULL;
+-
+-        close_all_fds_after_fork(sv[1]);
+-        fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
++    fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
+ 
+-        if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
+-            /* assume helper is a command */
++    if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
++        /* assume helper is a command */
+ 
+-            if (strstr(helper, "--br=") == NULL) {
+-                br_buf = g_strdup_printf("%s%s", "--br=", bridge);
+-            }
+-
+-            helper_cmd = g_strdup_printf("%s %s %s %s", helper,
+-                            "--use-vnet", fd_buf, br_buf ? br_buf : "");
++        if (strstr(helper, "--br=") == NULL) {
++            br_buf = g_strdup_printf("%s%s", "--br=", bridge);
++        }
+ 
+-            parg = args;
+-            *parg++ = (char *)"sh";
+-            *parg++ = (char *)"-c";
+-            *parg++ = helper_cmd;
+-            *parg++ = NULL;
++        helper_cmd = g_strdup_printf("%s %s %s %s", helper,
++                        "--use-vnet", fd_buf, br_buf ? br_buf : "");
+ 
+-            execv("/bin/sh", args);
+-            g_free(helper_cmd);
+-        } else {
+-            /* assume helper is just the executable path name */
++        parg = args;
++        *parg++ = "sh";
++        *parg++ = "-c";
++        *parg++ = helper_cmd;
++        *parg++ = NULL;
++    } else {
++        /* assume helper is just the executable path name */
+ 
+-            br_buf = g_strdup_printf("%s%s", "--br=", bridge);
++        br_buf = g_strdup_printf("%s%s", "--br=", bridge);
+ 
+-            parg = args;
+-            *parg++ = (char *)helper;
+-            *parg++ = (char *)"--use-vnet";
+-            *parg++ = fd_buf;
+-            *parg++ = br_buf;
+-            *parg++ = NULL;
++        parg = args;
++        *parg++ = helper;
++        *parg++ = "--use-vnet";
++        *parg++ = fd_buf;
++        *parg++ = br_buf;
++        *parg++ = NULL;
++    }
+ 
+-            execv(helper, args);
+-        }
+-        g_free(fd_buf);
+-        g_free(br_buf);
+-        _exit(1);
++    /* try to launch bridge helper */
++#if GLIB_CHECK_VERSION(2, 68, 0)
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++    spawned = g_spawn_async_with_pipes_and_fds(NULL, args, NULL,
++                                               G_SPAWN_DO_NOT_REAP_CHILD |
++                                               G_SPAWN_CHILD_INHERITS_STDIN,
++                                               NULL, NULL, -1, -1, -1,
++                                               &fd, &fd, 1, &pid,
++                                               NULL, NULL, NULL, &error);
++#pragma GCC diagnostic pop
++#else
++    gchar *mutable_args[sizeof(args)];
++
++    for (size_t i = 0; i < ARRAY_SIZE(args); i++) {
++        mutable_args[i] = (gchar *)args[i];
++    }
+ 
+-    } else {
+-        int fd;
+-        int saved_errno;
++    spawned = g_spawn_async(NULL, mutable_args, NULL,
++                            G_SPAWN_DO_NOT_REAP_CHILD |
++                            G_SPAWN_CHILD_INHERITS_STDIN,
++                            unset_cloexec, GINT_TO_POINTER(sv[1]),
++                            &pid, &error);
++#endif
++    if (!spawned) {
++        error_setg(errp, "could not launch bridge helper: %s", error->message);
++        return -1;
++    }
+ 
+-        close(sv[1]);
++    close(sv[1]);
+ 
+-        fd = RETRY_ON_EINTR(recv_fd(sv[0]));
+-        saved_errno = errno;
++    fd = RETRY_ON_EINTR(recv_fd(sv[0]));
++    saved_errno = errno;
+ 
+-        close(sv[0]);
++    close(sv[0]);
+ 
+-        while (waitpid(pid, &status, 0) != pid) {
+-            /* loop */
+-        }
+-        sigprocmask(SIG_SETMASK, &oldmask, NULL);
+-        if (fd < 0) {
+-            error_setg_errno(errp, saved_errno,
+-                             "failed to recv file descriptor");
+-            return -1;
+-        }
+-        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+-            error_setg(errp, "bridge helper failed");
+-            return -1;
+-        }
+-        return fd;
++    while (waitpid(pid, &status, 0) != pid) {
++        /* loop */
+     }
++    sigprocmask(SIG_SETMASK, &oldmask, NULL);
++    if (fd < 0) {
++        error_setg_errno(errp, saved_errno,
++                            "failed to recv file descriptor");
++        return -1;
++    }
++    if (!g_spawn_check_wait_status(status, &error)) {
++        error_setg(errp, "bridge helper failed: %s", error->message);
++        return -1;
++    }
++    return fd;
+ }
+ 
+ int net_init_bridge(const Netdev *netdev, const char *name,
 
 -- 
 2.47.1
