@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B115C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F62C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY3mo-0005vc-UV; Wed, 15 Jan 2025 08:50:23 -0500
+	id 1tY3mw-0005xo-DN; Wed, 15 Jan 2025 08:50:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tY3mn-0005v9-NU
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:21 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tY3mj-0007qw-F3
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:21 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YY6lc4DgHz6LD3k;
- Wed, 15 Jan 2025 21:48:28 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id C0FB1140257;
- Wed, 15 Jan 2025 21:50:13 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 15 Jan
- 2025 14:50:13 +0100
-Date: Wed, 15 Jan 2025 13:50:11 +0000
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Fan Ni
- <fan.ni@samsung.com>, "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v2] hw/cxl: Fix msix_notify: Assertion `vector <
- dev->msix_entries_nr`
-Message-ID: <20250115135011.000015f3@huawei.com>
-In-Reply-To: <20250115112214.0000550f@huawei.com>
-References: <20241213093602.3248246-1-lizhijian@fujitsu.com>
- <20250110154432.000031b0@huawei.com>
- <4d4a138f-4648-4733-933b-02cd8d934699@fujitsu.com>
- <20250115112214.0000550f@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tY3mt-0005wg-F2
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:27 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tY3mp-0007s1-K4
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:25 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3ee29277d44so3294434b6e.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 05:50:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1736949021; x=1737553821; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=29DNBFKk4MNawdRctkWk2PBdF4ZL+YSuccvv3D3ogz0=;
+ b=hkU7t0Y5e5bV5Z9tZuMKJvG8S4Cy71xW8K4Tg9MvxHbdB1b3my1jJnhmtc1M4Kt8H7
+ rV9sp/1AT3qpoKwwEzLUbolawRxBNfJqc4RyRV691pqQUpbu9TDJ6aKXBzfi5ra1VsO5
+ n+Hy7mWkEoh1YQTX2ZcUjUM8mar3NP1KU97va1jZR/OY37ReMJWkltWdl8XIkZF2pKIO
+ 9efsBXPm71mj+n2noXB3qyI7So4sGfAFcMPP24zaa1NLPY8EbjRQbL7ip7gKcjoaNJSH
+ ejC1TFHo04F4cu137fWBBuzs5DmOJ3RRNyTp2VDwrMd+rfomwjQ27b73o45PBRi2wgB/
+ jFOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736949021; x=1737553821;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=29DNBFKk4MNawdRctkWk2PBdF4ZL+YSuccvv3D3ogz0=;
+ b=BpxuK9C2xU8KfFHP+8qG3v2pjpLBY/lLulvh6o3DGuvfAc/eF+0ViCbt0QgeDcB55S
+ M1P7YlykwaOtLe8QJE1lZz1E2p1zzx+ULW0lG0eD64J+rzgrr1W+CrNvTqoY+zendAKu
+ CNVfjkipce6NpuAqkhyZhxI2RFEj0BzrlQnyqWJozEwxkrQbOrlQO7GKpjNwrE4GsAVJ
+ f015xDFWTKq6gzq5hM5EVNLpMM3/Bik1RfT0+BShm6hLGd1NO9BUZvF+4sTjLtWZ7cCV
+ VF8P3qJuXkNbM6qp+ucu5ozFWJ2LtOrj/zgQ7Puhw5SqlbNP37+1Hqb1n3i0JyjC1ROj
+ ssMg==
+X-Gm-Message-State: AOJu0YwCe+t4EqXQQV1vFM0Es/oz9v5wfqQ8KfQS6d8Vuy1s2bQpOiK1
+ WT+sB7YbhuRqciF++zYRmZl7ZpSUxi0hteqWT9kYnSZtLYRUyDstjY5bA0enwRbLgXLOG3Gj/kG
+ lT4o=
+X-Gm-Gg: ASbGnctz4yj2Jv79KsVqhG8UMRAmiDvRl2kwuHAGxjM9G3Txn5dXslmjEO/IyHx4p/R
+ yeDL4CkBWPHI+Zm4dAaE0JFNuRCdqgjPrpAiTehohJMWWYage0VPB8KJxvdv7uAEizVdefq3Hug
+ 9Optrly3VqoODS1DKGPqgTCqcguXhePOgQkhSuMYB/IhdiPjdY5NPWXr+Q/Jv+Hm2ryk2rSZDZQ
+ Nv1N8Dy3eiCZMHBr4MbqBbpLrchMmnlbw7a8ulW8XLy/8saUAkWK6FkcZE=
+X-Google-Smtp-Source: AGHT+IHLwuRx0OR4XR+sGh7IUsh+pdLVGG7G0T8WassoE93yPZ13mCoQuQYDLnPkq0EgWmPkhe1q/w==
+X-Received: by 2002:a05:6808:319b:b0:3ec:d34f:4c6f with SMTP id
+ 5614622812f47-3ef2ec42dc3mr17782253b6e.15.1736949019728; 
+ Wed, 15 Jan 2025 05:50:19 -0800 (PST)
+Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3f0379eff69sm4952177b6e.41.2025.01.15.05.50.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 05:50:18 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v3 3/6] target/riscv: add profile u_parent and s_parent
+Date: Wed, 15 Jan 2025 10:49:54 -0300
+Message-ID: <20250115134957.2179085-4-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
+References: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,244 +97,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Jan 2025 11:22:14 +0000
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+The current 'parent' mechanic for profiles allows for one profile to be
+a child of a previous/older profile, enabling all its extensions (and
+the parent profile itself) and sparing us from tediously listing all
+extensions for every profile.
 
-> On Wed, 15 Jan 2025 07:48:59 +0000
-> "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
-> 
-> > On 10/01/2025 23:44, Jonathan Cameron wrote:  
-> > > On Fri, 13 Dec 2024 17:36:02 +0800
-> > > Li Zhijian <lizhijian@fujitsu.com> wrote:
-> > >     
-> > >> This assertion always happens when we sanitize the CXL memory device.
-> > >> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
-> > >>
-> > >> It is incorrect to register an MSIX number beyond the device's capability.
-> > >>
-> > >> Expand the device's MSIX number and use the enum to maintain the *USED*
-> > >> and MAX MSIX number
-> > >>
-> > >> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
-> > >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> > >> ---
-> > >> V2: just increase msix number and add enum to maintainer their values #
-> > >> Jonathan    
-> > > 
-> > > Ah. Sorry I was unclear. Two patches please
-> > > 
-> > > 1. Make the number bigger to fix the bug. Only this one gets a fixes tag and
-> > >     is suitable for backporting.
-> > > 
-> > > 2. Add an enum including all numbers currently used and use that throughout the
-> > >     type3 related code. That will prevent use accidentally introducing the
-> > >     bug in future but doesn't need to be backported.
-> > >       
-> > 
-> > Understood, it make sense.
-> > 
-> > 
-> >   
-> > > A few other comments inline.
-> > > 
-> > > Thanks
-> > > 
-> > > Jonathan
-> > >     
-> > >> ---
-> > >>   hw/cxl/cxl-device-utils.c   |  6 ++----
-> > >>   hw/mem/cxl_type3.c          | 10 +++++-----
-> > >>   include/hw/cxl/cxl_device.h |  7 +++++++
-> > >>   3 files changed, 14 insertions(+), 9 deletions(-)
-> > >>
-> > >> diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
-> > >> index 035d034f6d..bc2171e3d4 100644
-> > >> --- a/hw/cxl/cxl-device-utils.c
-> > >> +++ b/hw/cxl/cxl-device-utils.c
-> > >> @@ -354,8 +354,6 @@ static void device_reg_init_common(CXLDeviceState *cxl_dstate)
-> > >>   
-> > >>   static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
-> > >>   {
-> > >> -    const uint8_t msi_n = 9;
-> > >> -
-> > >>       /* 2048 payload size */
-> > >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-> > >>                        PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
-> > >> @@ -364,8 +362,8 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
-> > >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-> > >>                        BG_INT_CAP, 1);
-> > >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-> > >> -                     MSI_N, msi_n);
-> > >> -    cxl_dstate->mbox_msi_n = msi_n;
-> > >> +                     MSI_N, CXL_MSIX_MBOX);    
-> > > 
-> > > Should be passed in from the type 3 specific call so add a parameter to this
-> > > function and pass this from cxl_device_register_init_t3.
-> > > Even better pass it into there from ct3d_reset()
-> > >     
-> > 
-> > At a glance, `ct3d_reset()` has the following prototype: `typedef void (*DeviceReset)(DeviceState *dev)`,
-> > which is inherited from the QEMU device framework. Consequently, it is hard to extend `ct3d_reset()`
-> > to include an additional parameter.  
-> 
-> I wasn't clear in that statement.   ct3d_reset() calls cxl_device_register_init_t3(). Change
-> the signature of cxl_device_register_init_t3() so that takes the appropriate MSI index.
-> that puts the source of the information in the cxl_type3.c code, not the core support in hw / CXL.
-> No change to ct3d_reset() signature needed.
-> 
-> > 
-> > 
-> >   
-> > > Will potentially be a different number for the switch CCI passed in from
-> > > the call of cxl_device_register_init_swcci() in switch-mailbox-cci.c    
-> > 
-> > It sounds reasonable, offering a more flexible design for the future.
-> > 
-> > Currently, mailbox_reg_init_common() will be called from type3 device and swcci,
-> > however, I didn't see any where the swcci itself have setup the msi/msix at all.
-> > 
-> > Is this expected, feel free to let me know if I'm missing something.  
-> Currently that is in cxl_device_register_init_swcci() via
-> mailbox_reg_init_common()
-> Suggestion is to like the above type 3 case move it into the specific driver
-> by having cxl_device_register_init_swcci() take it as a parameter and
-> pass that in from cswmbcci_reset() in switch-mailbox-cci.c
+This works fine for u-mode profiles. For s-mode profiles this is not
+enough: a s-mode profile extends not only his equivalent u-mode profile
+but also the previous s-mode profile. This means, for example, that
+RVA23S64 extends both RVA23U64 and RVA22S64.
 
-Ah.  I now see what you mean - no msix bar setup.
-I guess the switch cci support has accidentally been falling back to polled mode.  
-That needs fixing but is a separate issue.
+To fit this usage, rename the existing 'parent' to 'u_parent' and add a
+new 's_parent' attribute for profiles. Handle both like we're doing with
+the previous 'profile' attribute, i.e. if set, enable it. This change
+does nothing for the existing profiles but will make RVA23S64 simpler.
 
-Jonathan
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu.c         |  6 ++++--
+ target/riscv/cpu.h         |  3 ++-
+ target/riscv/tcg/tcg-cpu.c | 35 ++++++++++++++++++++++++++---------
+ 3 files changed, 32 insertions(+), 12 deletions(-)
 
-> 
-> 
-> >   
-> > > 
-> > >     
-> > >> +    cxl_dstate->mbox_msi_n = CXL_MSIX_MBOX;
-> > >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-> > >>                        MBOX_READY_TIME, 0); /* Not reported */
-> > >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-> > >> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > >> index 5cf754b38f..f2f060ed9e 100644
-> > >> --- a/hw/mem/cxl_type3.c
-> > >> +++ b/hw/mem/cxl_type3.c
-> > >> @@ -843,7 +843,6 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-> > >>       ComponentRegisters *regs = &cxl_cstate->crb;
-> > >>       MemoryRegion *mr = &regs->component_registers;
-> > >>       uint8_t *pci_conf = pci_dev->config;
-> > >> -    unsigned short msix_num = 6;
-> > >>       int i, rc;
-> > >>       uint16_t count;
-> > >>   
-> > >> @@ -884,16 +883,17 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-> > >>                        &ct3d->cxl_dstate.device_registers);
-> > >>   
-> > >>       /* MSI(-X) Initialization */
-> > >> -    rc = msix_init_exclusive_bar(pci_dev, msix_num, 4, NULL);
-> > >> +    rc = msix_init_exclusive_bar(pci_dev, CXL_MSIX_MAX, 4, NULL);
-> > >>       if (rc) {
-> > >>           goto err_address_space_free;
-> > >>       }
-> > >> -    for (i = 0; i < msix_num; i++) {
-> > >> +    for (i = 0; i < CXL_MSIX_MAX; i++) {
-> > >>           msix_vector_use(pci_dev, i);
-> > >>       }
-> > >>   
-> > >>       /* DOE Initialization */
-> > >> -    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true, 0);
-> > >> +    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
-> > >> +                  CXL_MSIX_PCIE_DOE);
-> > >>   
-> > >>       cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
-> > >>       cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
-> > >> @@ -908,7 +908,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-> > >>       if (rc) {
-> > >>           goto err_release_cdat;
-> > >>       }
-> > >> -    cxl_event_init(&ct3d->cxl_dstate, 2);
-> > >> +    cxl_event_init(&ct3d->cxl_dstate, CXL_MSIX_EVENT_START);
-> > >>   
-> > >>       /* Set default value for patrol scrub attributes */
-> > >>       ct3d->patrol_scrub_attrs.scrub_cycle_cap =
-> > >> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> > >> index 561b375dc8..3f89b041ce 100644
-> > >> --- a/include/hw/cxl/cxl_device.h
-> > >> +++ b/include/hw/cxl/cxl_device.h
-> > >> @@ -133,6 +133,13 @@ typedef enum {
-> > >>       CXL_MBOX_MAX = 0x20
-> > >>   } CXLRetCode;
-> > >>   
-> > >> +enum {    
-> > > 
-> > > Maybe worth naming these to be type3 specific.    
-> > 
-> > It sounds good to me.
-> > 
-> >   
-> > >     
-> > >> +    CXL_MSIX_PCIE_DOE = 0,    
-> > > Name it to include that this is specifically the DOE for the table access protocol.
-> > > 
-> > >     CXL_MSIX_PCIE_DOE_TABLE_ACCESS    
-> > 
-> > make sense.
-> > 
-> >   
-> > > 
-> > > 
-> > > This should be private to cxl_type3.c which should be possible by passing
-> > > it to a few more calls from there.
-> > >     
-> > 
-> > If we make the entire enumeration `cxl_type3` private, it appears unnecessary to pass it through several more calls.  
-> 
-> Key is to make sure it is in cxl_type3.c  For that to work you need to pass it as
-> described above so that we can set the relevant values in various registers
-> configured by the hw/cxl/* code.
-> 
-> > 
-> > How about this
-> > 
-> > +/* type3 device private */
-> > +enum CXL_T3_MSIX_VECTOR {
-> > +    CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS = 0,  
-> 
-> What is on 1?  We don't need to maintain backwards compatibility (migration
-> is broken in lots of other ways and not high on priority list to fix) so should
-> be no need to skip it. If you really want to add a reserved entry and we will
-> fill it in later.
-> 
-> > +    CXL_T3_MSIX_EVENT_START = 2,
-> > +    CXL_T3_MSIX_MBOX = CXL_T3_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
-> > +    CXL_T3_MSIX_VECTOR_NR
-> > +};
-> > +
-> >   
-> Hope that helps,
-> 
-> Jonathan
-> 
-> > 
-> > Thanks
-> > Zhijian
-> >   
-> > >> +    CXL_MSIX_EVENT_START = 2,
-> > >> +    CXL_MSIX_MBOX = CXL_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
-> > >> +    CXL_MSIX_MAX
-> > >> +};
-> > >> +
-> > >>   typedef struct CXLCCI CXLCCI;
-> > >>   typedef struct cxl_device_state CXLDeviceState;
-> > >>   struct cxl_cmd;    
-> > >    
-> 
-> 
-> 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 6fb4d5f374..e215b1004d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2349,7 +2349,8 @@ static const PropertyInfo prop_marchid = {
+  * doesn't need to be manually enabled by the profile.
+  */
+ static RISCVCPUProfile RVA22U64 = {
+-    .parent = NULL,
++    .u_parent = NULL,
++    .s_parent = NULL,
+     .name = "rva22u64",
+     .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVU,
+     .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
+@@ -2381,7 +2382,8 @@ static RISCVCPUProfile RVA22U64 = {
+  * The remaining features/extensions comes from RVA22U64.
+  */
+ static RISCVCPUProfile RVA22S64 = {
+-    .parent = &RVA22U64,
++    .u_parent = &RVA22U64,
++    .s_parent = NULL,
+     .name = "rva22s64",
+     .misa_ext = RVS,
+     .priv_spec = PRIV_VERSION_1_12_0,
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 97713681cb..986131a191 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -81,7 +81,8 @@ const char *riscv_get_misa_ext_description(uint32_t bit);
+ #define CPU_CFG_OFFSET(_prop) offsetof(struct RISCVCPUConfig, _prop)
+ 
+ typedef struct riscv_cpu_profile {
+-    struct riscv_cpu_profile *parent;
++    struct riscv_cpu_profile *u_parent;
++    struct riscv_cpu_profile *s_parent;
+     const char *name;
+     uint32_t misa_ext;
+     bool enabled;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 48be24bbbe..c9e5a3b580 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -713,13 +713,29 @@ static bool riscv_cpu_validate_profile_satp(RISCVCPU *cpu,
+ }
+ #endif
+ 
++static void riscv_cpu_check_parent_profile(RISCVCPU *cpu,
++                                           RISCVCPUProfile *profile,
++                                           RISCVCPUProfile *parent)
++{
++    const char *parent_name;
++    bool parent_enabled;
++
++    if (!profile->enabled || !parent) {
++        return;
++    }
++
++    parent_name = parent->name;
++    parent_enabled = object_property_get_bool(OBJECT(cpu), parent_name, NULL);
++    profile->enabled = profile->enabled && parent_enabled;
++}
++
+ static void riscv_cpu_validate_profile(RISCVCPU *cpu,
+                                        RISCVCPUProfile *profile)
+ {
+     CPURISCVState *env = &cpu->env;
+     const char *warn_msg = "Profile %s mandates disabled extension %s";
+     bool send_warn = profile->user_set && profile->enabled;
+-    bool parent_enabled, profile_impl = true;
++    bool profile_impl = true;
+     int i;
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -773,12 +789,8 @@ static void riscv_cpu_validate_profile(RISCVCPU *cpu,
+ 
+     profile->enabled = profile_impl;
+ 
+-    if (profile->parent != NULL) {
+-        parent_enabled = object_property_get_bool(OBJECT(cpu),
+-                                                  profile->parent->name,
+-                                                  NULL);
+-        profile->enabled = profile->enabled && parent_enabled;
+-    }
++    riscv_cpu_check_parent_profile(cpu, profile, profile->u_parent);
++    riscv_cpu_check_parent_profile(cpu, profile, profile->s_parent);
+ }
+ 
+ static void riscv_cpu_validate_profiles(RISCVCPU *cpu)
+@@ -1181,8 +1193,13 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+     profile->user_set = true;
+     profile->enabled = value;
+ 
+-    if (profile->parent != NULL) {
+-        object_property_set_bool(obj, profile->parent->name,
++    if (profile->u_parent != NULL) {
++        object_property_set_bool(obj, profile->u_parent->name,
++                                 profile->enabled, NULL);
++    }
++
++    if (profile->s_parent != NULL) {
++        object_property_set_bool(obj, profile->s_parent->name,
+                                  profile->enabled, NULL);
+     }
+ 
+-- 
+2.47.1
 
 
