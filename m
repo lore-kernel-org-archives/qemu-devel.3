@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE151C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57558C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7r6-0000g6-Jp; Wed, 15 Jan 2025 13:11:04 -0500
+	id 1tY7rl-0003il-Mb; Wed, 15 Jan 2025 13:11:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qD-0007JC-Kl
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qJ-0007TA-E7
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qB-0006vL-4J
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:09 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qF-0006wZ-FL
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964606;
+ s=mimecast20190719; t=1736964610;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uGpzkzEPXjWW+cnhrycoe32wPN8igkpXmmUB96WL6XY=;
- b=JaRfHXi7ZcYONpYorHIfWCa2X4VOCVAokUoCz3kTboekWBE6MChpHD7nQwzOVM+O+uZnIH
- /I+2QTQTRmB9XYaAaWhEN0LoVKJ6ck5UEiZJrG09EVN83MmRQIwakOArb+zSOUowpFDboC
- 1Q5qrD7JaHeERLSR5JKRaOybaH0Y4f4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jusc2KOu8CYjh6OpTg0cDGaXqteaxjITOrBf0/V0A/Q=;
+ b=IiF/sz3XYfmHb6Ljv6Ml2JY17KIiwuDdanwpJafBml/EPzjwA2Mdpey7ce5z9T16zC9VGC
+ HO8BIxk431fzaJzmM6yXw0QHWnumbsX5gRSNhqzpB2mNDhWd8FNnLK9pteJCTCEfLSds/U
+ b45r7F1YwiRE/2ohx3jqhLPjGb4thrk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-A9oQdMIrPZ-CrUXwAmMI7Q-1; Wed, 15 Jan 2025 13:10:05 -0500
-X-MC-Unique: A9oQdMIrPZ-CrUXwAmMI7Q-1
-X-Mimecast-MFC-AGG-ID: A9oQdMIrPZ-CrUXwAmMI7Q
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38639b4f19cso91433f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:04 -0800 (PST)
+ us-mta-627-8R_nRV4pMMyFnGihCQy_4Q-1; Wed, 15 Jan 2025 13:10:07 -0500
+X-MC-Unique: 8R_nRV4pMMyFnGihCQy_4Q-1
+X-Mimecast-MFC-AGG-ID: 8R_nRV4pMMyFnGihCQy_4Q
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-436219070b4so33428605e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964603; x=1737569403;
+ d=1e100.net; s=20230601; t=1736964606; x=1737569406;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uGpzkzEPXjWW+cnhrycoe32wPN8igkpXmmUB96WL6XY=;
- b=MMR9zz/O1c4HARADvGL3nPK/OnGsp0WlHIZBwazRLsaEX7wwVA7FRb3kBhqUZ9zDSm
- OYpE/WoZ2eHC4FcvH/d1gt1B3W2ldfSbmg75Y/Rf2tQtTtWdYyY9hDYfQtwV+0fpAiQs
- mq7OliHywtV/57mSTuGCWmc4od924kkUH/JjU1UeriSbZl68JrqK96Cwn5gweVLAz/fj
- CzZ+kxtfCVxT8jQ56omxe8SNRFeYw6kZ0a4VIA0fzuzmSbhaibZpeeI996YAC/f4pGfo
- ifxfkwisSLxTF5r6sfI7R4pwuimN4exU7Ru6Y2nA5/91rX+efiL6ToN1/YsxJVatDoMw
- aONA==
-X-Gm-Message-State: AOJu0YzBZL1V79icbtPqGCckDjdQ/gX9BkRBNVQQLpqczvEPdLrfGn0O
- YeYp62K3F0HWDx3sKXOMQaBQpXDqX/x0x3vBANZQXlWiZOmxhIsPZqMamfxQI6W0Y3q6AmbZpcc
- r4fVdznna/KRc6Jlz1rS21esb2WJM9nOyd2lSsO6pYKVdtQZzcPsNT33puZCqO2IqU4tohbuIWR
- F+g4LdJbpxmy8KHJlHCPe6PZ/VdDcvlg==
-X-Gm-Gg: ASbGnctxHsbYiydPy252moCZByK7hlNSRL/JnF00YOQJXmyoAIns1mfscmlBzy1SdI2
- t/RPx+1WTUY54RwbPxjMb9N0LJg+e/1Mh36yw0s9gLKXYCR7EHtGXKa5rMdmtzh1mWtPws1GN8e
- MWIL21xjFS6a2a2anEXLcS4LiTBR+/4V8qNDa5g3rL1ETA2HCNCiXWeq4VJL1clV99nmYIoOygz
- VtJZVEHu4NDl3X3VstlxyVn642d6pubTQIbK7yvY3aC+4ml4YB/
-X-Received: by 2002:a05:6000:184e:b0:382:46ea:113f with SMTP id
- ffacd0b85a97d-38a872fc1b3mr29161512f8f.10.1736964603465; 
- Wed, 15 Jan 2025 10:10:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEoyPY8qKPIlAzIF65FSl/IiWWSA75r6C+kdnuMmKsI3XQxaDQW3OeSqnU5Okvi20qBRxy81w==
-X-Received: by 2002:a05:6000:184e:b0:382:46ea:113f with SMTP id
- ffacd0b85a97d-38a872fc1b3mr29161464f8f.10.1736964602858; 
- Wed, 15 Jan 2025 10:10:02 -0800 (PST)
+ bh=jusc2KOu8CYjh6OpTg0cDGaXqteaxjITOrBf0/V0A/Q=;
+ b=f8YjMBlqZEfBVquz50Ex/RqdoIZFbtd0HM4v55xnTt2LbyUDtP5teidX0xLEyGnbfB
+ cXwLsYOOmPzEiXFeVulWO/tQpnuUKziyT6+o7zEKXz2lYSROFqj6GXdG1+e35t8hXbw4
+ WS/wTWvNJeYwbjAXoyjHvq4XbxifBJgw97mU4PknAEXdmABdUwAnkHpGgWqhOiZPTc8x
+ 5b+OGp1G7xol8vUKt+jqjuOizXmpF1pNaJHhB/SLLjFaQDkUP6vgMXwGhDjia0/F2EXD
+ gEdpEYZ3wIKKk4erakzkgzWWOKkPTim5clibFDgfFx3Y2QN2NpxxrTUi92uuzhm+HUJY
+ v0Mg==
+X-Gm-Message-State: AOJu0Yy9tp163czLdyrhe6SEdPxMdKOC43BSb7UCFc3fTsLMDZy1w1iR
+ TAJw8OeaNDSssniWz2p+1PvWzV3KCM5IkU2QJVez6mxNaOg1ewwzSj1Qmt2fuJQ4S2GV9kZgoL9
+ e17snpTqoIlyeYvt3zB5CrQPUKq2n7Yul1hWawFxuBiDGMOBlzU5v3LqfTRlLlTeaY0ndIDGpCY
+ pq+n35WnUz78BXt41aM7RlP8BlkMoDUw==
+X-Gm-Gg: ASbGncuK/p2tyP5BfjMtvW64sdzgZO++D1T6mcWVicwzEyANI4KIxprCpqGrJ0GrZug
+ J4RMYUk3HDu9N0mb/U67o0HMR6u8IJd6Mp/9qeNlxnVbVfyXJ7gZJr9Q4rnmsxRHWdeFgX4a71y
+ +KNxieN0pIA/A5RRSqVoJxuQFVRm+ks8HyCFXJFxhOhI2FlyzjO8070idWRsKqdrMJbd+HD+9Pe
+ +aQ6D5GvXJ37SCPRUz5ACFDkQ+w5RTnmsSlCe47tMiyLfghNN/B
+X-Received: by 2002:a05:600c:a08b:b0:431:5863:4240 with SMTP id
+ 5b1f17b1804b1-436e26dda73mr234839525e9.24.1736964606403; 
+ Wed, 15 Jan 2025 10:10:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH+UcDHey3YB0GtuhXY5QsfCKDHAKeg3yXN/XZN/OL3wZvIhBOUPHNGcn6ffH9qMuK63nQxzA==
+X-Received: by 2002:a05:600c:a08b:b0:431:5863:4240 with SMTP id
+ 5b1f17b1804b1-436e26dda73mr234839235e9.24.1736964606030; 
+ Wed, 15 Jan 2025 10:10:06 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d01dsm18121376f8f.9.2025.01.15.10.10.00
+ 5b1f17b1804b1-437c74ac712sm31122965e9.12.2025.01.15.10.10.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:10:02 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:09:59 -0500
+ Wed, 15 Jan 2025 10:10:05 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:10:03 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL 29/48] acpi/ghes: simplify the per-arch caller to build HEST
- table
-Message-ID: <606a42c4c1d46b31a95cab09a7033e7f22f9ed3d.1736964488.git.mst@redhat.com>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, qemu-arm@nongnu.org
+Subject: [PULL 30/48] acpi/ghes: better handle source_id and notification
+Message-ID: <a85a3b729b3c31d8cc878017308997a8112655b2.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -87,16 +85,16 @@ Content-Disposition: inline
 In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,89 +112,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-The GHES driver requires not only a HEST table, but also a
-separate firmware file to store Error Structure records.
-It can't do one without the other.
+GHES has two fields that are stored on HEST error source
+blocks associated with notifications:
 
-Simplify the caller logic for it to require one function.
+- notification type, which is a number defined at the ACPI spec
+  containing several arch-specific synchronous and assynchronous
+  types;
+- source id, which is a HW/FW defined number, used to distinguish
+  between different implemented sources.
 
-No functional changes.
+There could be several sources with the same notification type,
+which is dependent of the way each architecture maps notifications.
+
+Right now, build_ghes_v2() hardcodes a 1:1 mapping between such
+fields. Move it to two independent parameters, allowing the
+caller function to fill both.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-Message-Id: <9584bb8953385e165681d5d185c503f8df8ef42f.1736945236.git.mchehab+huawei@kernel.org>
+Message-Id: <133ff72ea1041fed7dbcf97b7a2b0f4dfacde31a.1736945236.git.mchehab+huawei@kernel.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/ghes.h   | 4 ++--
- hw/acpi/ghes.c           | 7 +++++--
- hw/arm/virt-acpi-build.c | 5 ++---
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ hw/acpi/ghes.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 59e3b8fb24..20016c226d 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -68,8 +68,8 @@ typedef struct AcpiGhesState {
-     bool present; /* True if GHES is present at all on this board */
- } AcpiGhesState;
- 
--void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker);
--void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-+void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-+                     BIOSLinker *linker,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index e66f3be150..4a6c45bcb4 100644
+index 4a6c45bcb4..29cd7e4d81 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -233,7 +233,7 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
-  * Initialize "etc/hardware_errors" and "etc/hardware_errors_addr" fw_cfg blobs.
-  * See docs/specs/acpi_hest_ghes.rst for blobs format.
-  */
--void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
-+static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- {
-     int i, error_status_block_offset;
- 
-@@ -356,12 +356,15 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+@@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
  }
  
- /* Build Hardware Error Source Table */
--void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-+void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-+                     BIOSLinker *linker,
-                      const char *oem_id, const char *oem_table_id)
+ /* Build Generic Hardware Error Source version 2 (GHESv2) */
+-static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
++static void build_ghes_v2(GArray *table_data,
++                          BIOSLinker *linker,
++                          enum AcpiGhesNotifyType notify,
++                          uint16_t source_id)
  {
-     AcpiTable table = { .sig = "HEST", .rev = 1,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
- 
-+    build_ghes_error_table(hardware_errors, linker);
+     uint64_t address_offset;
 +
-     acpi_table_begin(&table, table_data);
+     /*
+      * Type:
+      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
+@@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
+         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
+ 
+-    switch (source_id) {
+-    case ACPI_HEST_SRC_ID_SEA:
+-        /*
+-         * Notification Structure
+-         * Now only enable ARMv8 SEA notification type
+-         */
+-        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
+-        break;
+-    default:
+-        error_report("Not support this error source");
+-        abort();
+-    }
++    /* Notification Structure */
++    build_ghes_hw_error_notification(table_data, notify);
+ 
+     /* Error Status Block Length */
+     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
+@@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
  
      /* Error Source Count */
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index c9b13057a3..3ac8f8e178 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -946,10 +946,9 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     build_dbg2(tables_blob, tables->linker, vms);
+     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
+-    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
++    build_ghes_v2(table_data, linker,
++                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
  
-     if (vms->ras) {
--        build_ghes_error_table(tables->hardware_errors, tables->linker);
-         acpi_add_table(table_offsets, tables_blob);
--        acpi_build_hest(tables_blob, tables->linker, vms->oem_id,
--                        vms->oem_table_id);
-+        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
-+                        vms->oem_id, vms->oem_table_id);
-     }
- 
-     if (ms->numa_state->num_nodes > 0) {
+     acpi_table_end(linker, &table);
+ }
 -- 
 MST
 
