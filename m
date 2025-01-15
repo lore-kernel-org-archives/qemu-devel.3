@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE39C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CD2C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY5Sd-0004Pj-Fp; Wed, 15 Jan 2025 10:37:39 -0500
+	id 1tY5UU-0006My-6H; Wed, 15 Jan 2025 10:39:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY5Sa-0004Ox-VD
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:37:36 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tY5UR-0006M3-W8
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:39:32 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY5SX-0000uQ-0e
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:37:35 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-21628b3fe7dso120035075ad.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:37:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tY5UQ-00015t-91
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:39:31 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso72900615e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736955451; x=1737560251;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8qhSagfIDrG1QBWAYhP92zKNdjRxULwb+RYGI2N8Hgc=;
- b=o5Rd2tDRFbmvrrZs9TrKDRIoXMWU3wwTJN2X2S59n+gKK4hhH4XvI7ClnFfgavcaZP
- aKH3zJA87s/m1zD2nUq8DQNrTxDnIz71r/mXJI3Avt5SNP/i4hAM1cFbWWuGhsgCaNyW
- ogTbEREQDAPJBytU+2inZ3Vi0GDXaphO/Wge0myVwZ3u4sL4thXUvLn3nk0AJMaGGCZ7
- 5VMdUXxqk1Gym9EPucDhqnb8ZTwwocPyxma7WCmSv+8QZlQJFZDJHPvO03YWtbOULKFZ
- OrlU9NoJ8SaBxTh4m0864zhLU/qR25lQPKKgG2PlRqiDVS1s3tEWeVZWPsKRPj3IoKc2
- 5K1w==
+ d=ventanamicro.com; s=google; t=1736955568; x=1737560368; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=pVcs6nhQLfkjHL7Jr+QBkQ7RCh20Iogl4hjagwL0gnI=;
+ b=NBS9xko8TY+HYaxZUXS532PzEkBhHmSQeR3ydNwSj+2AxewKj9LnPDJJLAQcVImbKQ
+ DzPl42vhgDtrtA9V6vguPM9pyPQ4ezPAGu9mfee9QcXbd387vl1FmiXhFvgMjs5FuU9z
+ TzuTGsrVIbmQDKqIb1/4vpUZo/FAjdEynjs+qK7YG6pWFcLxtnQ61TUEHso64gvbA/pR
+ a5ucqFcISrT5mndRI3rU7XIn9Uc85HSsQjAm909KHiyINc0owmfM0euiO3fSgyR/hVQf
+ tiAaxsCVWr/b2q1Gnt7818PBSEk2L0CqNdkrkYYdhG1Cjphtf+vIRumXOP91IXhPboDA
+ bp6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736955451; x=1737560251;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8qhSagfIDrG1QBWAYhP92zKNdjRxULwb+RYGI2N8Hgc=;
- b=AK/odx7FFRHflR9Ub8De9lH8SpWg2aNrjLqKkofIYfBHXF/ro/WQy2Jx0X86Sch9ax
- 44IdC97EHat5ZfioWCVAjUDRLv9zg8FJsjtM7tBHKcjjL/W4fxaXDZJtqW8M+2+jIuwv
- icQE4QSsIoQkFHXVL7UiVt0kuPaaiUYvw2Ss92TMH8niq882QQQq6XuF84dDv4UjHmMd
- 1ItuR3qN2WtGRNQtb7o/ohrbNUzhPXLJKlGYMC9T14l+wWGnum4y7y6ITf60MGrhc+vV
- rU5YakXMeMBiLwLb0pDkgoG4XWgy+YJjeUd6l744VUPC+VUcmwNPXd6BwfPTt/3T9vi4
- I6xQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6XACChYJU1R22aQGxn+svQm1xuNrHPLw4mlxo9/N/J4rrM1LlSjiEHjggqFTRcWro9EboLiHUIlGp@nongnu.org
-X-Gm-Message-State: AOJu0Yz3y+BgZPfuus6yCPfZbIFalpY8fXfDVCk0qiUR5V24Q02dOM8Q
- zpJ46uKqTWR/bGiz1LCmcvasIioj2cgzYVggSVUqGI6jMJhPOVsGOpTpWzXAZjU=
-X-Gm-Gg: ASbGnctbNVPSaD8TH2C1SfIjPPtkUHipr2cDmlRWTvxELNGQ+pE8QYxTV3eVmo8U69f
- FaIMNYOFIe5qtRzN87iTyVygV7yGIGp5KiS6WfQmH96iob5HPy6A3KQclg7qTKik1xGcwdZpMW3
- +n/BH+nwQsWHD52X7vUfAtWfpTqClf3hV+mVj5ehZIr6cQcW0zLAbETZrigU+3gi5JnqvkRiUzv
- gRUabo+HSHTfFqZuQELmDCiUvBwjrVEUkiuku/2S+V1DlEbuQ5xNAXi0K4gyKDB0datC0+UjfHf
- Q0bjNuOdOdimARZPe0X4/G7oFK+Dm2Y34BY=
-X-Google-Smtp-Source: AGHT+IGoIIicyEgbl3hxpQSm32vhEbgOEMAI2qaLkQc/DYdiUYWUdPf0PgFw27pPp6t8m0AuMmBufw==
-X-Received: by 2002:a05:6a00:846:b0:725:df1a:285 with SMTP id
- d2e1a72fcca58-72d21f476b9mr38969261b3a.12.1736955451260; 
- Wed, 15 Jan 2025 07:37:31 -0800 (PST)
-Received: from ?IPV6:2400:4050:b783:b00:4952:3c52:120a:27e9?
- ([2400:4050:b783:b00:4952:3c52:120a:27e9])
+ d=1e100.net; s=20230601; t=1736955568; x=1737560368;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pVcs6nhQLfkjHL7Jr+QBkQ7RCh20Iogl4hjagwL0gnI=;
+ b=kVRmhnrh3eI9ZY1Xfv8XOhg5/5A5zBkjxESKgySixlmy2PXE/XgLyivpZLudDtbMkX
+ lWtqPkaYx5tjL+vYCC6nwWTGwNWpDEqEl2QMkLeJ9wLpJcv2G/Jh6SW1PxuDWMbxyq4k
+ 6L+XyIXR7y8b8Q7mDvXWpw5UdGPwUsn/hljjXsOuIRxbblgd+hml6UzUzhL0F3y5hU2T
+ OJQR80GXVyq7FRQO55bu+byO9dOnI2XTskmYtOmQzwaXypgfyiQZURNIoXkPdAbeJcRG
+ oT+Pfc9irEhguqO8vur/OULFnR3Rvq1qWUxfO1BUnEF7OPrkiPXpsLhLxjixm0esNeEA
+ zdmw==
+X-Gm-Message-State: AOJu0YyIKuArWAYF94+Q7qm2UlVN8oXD8bJvT59ZOIfbVWp+rWPIZ04j
+ vb8oR9l0pAZYr9laKtFsM3FTBNqOOS6jHnL5BU3RBGeNpjFXUENXmpHitaWOqYs=
+X-Gm-Gg: ASbGncuO00SjKIUFTmC5kpvoIKQcORWcmLazweEvPaHqtjneuyvRcggn2wsq7D73uJg
+ DxCtpe+JlTPN1o5pEwWR0hiY00h5cXZVFof11eyn1fEJQFv4q8YiYg43806d+W2JFDM79ZDvHqP
+ 6lIPntwh15Oav34lU1B9eyUOPGnOgF6xOigtKE3iArcPs9wzPE9Gcw7+8LsJ4cUZS0WLEpNyXQv
+ PMiRHUSVvka3+nG27W8XOuwq/Mtl+Cyw2xGeiLn3l5PItYcv70OBWGy5y2xUBiOND4JlJok0CXP
+ 73M7tl8mMKLBL1vJ4SSCnYq3B/c29ONntmvRuv/cbg==
+X-Google-Smtp-Source: AGHT+IGGOuHn3J8jUAC6I8+Aev2u4lz6FI2ZrxW5nGcBPg2l20i2zNoALJ0KefgbIgWK0G1BouKN8A==
+X-Received: by 2002:a05:600c:138a:b0:434:f0df:9fd with SMTP id
+ 5b1f17b1804b1-436e2679a1cmr165168475e9.2.1736955568232; 
+ Wed, 15 Jan 2025 07:39:28 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d40681c05sm9505482b3a.141.2025.01.15.07.37.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 07:37:30 -0800 (PST)
-Message-ID: <6383b75b-2dae-4777-a794-644d87b604fc@daynix.com>
-Date: Thu, 16 Jan 2025 00:37:28 +0900
+ 5b1f17b1804b1-437c7499821sm27124325e9.2.2025.01.15.07.39.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 07:39:27 -0800 (PST)
+Date: Wed, 15 Jan 2025 16:39:27 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH v3 6/6] target/riscv: add RVA23S64 profile
+Message-ID: <20250115-28bfced9dc48ff95a89a6f0c@orel>
+References: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
+ <20250115134957.2179085-7-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] coreaudio: Commit the result of init in the end
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: devel@daynix.com
-References: <20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com>
- <20250115-coreaudio-v3-1-bdb6bcb5bf9f@daynix.com> <2489919.FfEH3XSh6J@silver>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <2489919.FfEH3XSh6J@silver>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250115134957.2179085-7-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,199 +101,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/16 0:14, Christian Schoenebeck wrote:
-> On Wednesday, January 15, 2025 1:06:55 PM CET Akihiko Odaki wrote:
->> init_out_device may only commit some part of the result and leave the
->> state inconsistent when it encounters an error. Commit the result in
->> the end of the function so that it commits the result iff it sees no
+On Wed, Jan 15, 2025 at 10:49:57AM -0300, Daniel Henrique Barboza wrote:
+> Add RVA23S64 as described in [1]. This profile inherits all mandatory
+> extensions of RVA23U64 and RVA22S64, making it a child of both profiles.
 > 
-> Typo "if".
+> A new "rva23s64" profile CPU is also added. This is the generated
+> riscv,isa for it (taken via -M dumpdtb):
+> 
+> rv64imafdcbvh_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_
+> ziccrse_zicond_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zimop_
+> zmmul_za64rs_zaamo_zalrsc_zawrs_zfa_zfhmin_zca_zcb_zcd_zcmop_zba_zbb_zbs_
+> zkt_zvbb_zve32f_zve32x_zve64f_zve64d_zve64x_zvfhmin_zvkb_zvkt_shcounterenw_
+> sha_shgatpa_shtvala_shvsatpa_shvstvala_shvstvecd_smnpm_smstateen_ssccptr_
+> sscofpmf_sscounterenw_ssnpm_ssstateen_sstc_sstvala_sstvecd_ssu64xl_
+> supm_svade_svinval_svnapot_svpbmt
+> 
+> [1] https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu-qom.h |  1 +
+>  target/riscv/cpu.c     | 39 +++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 40 insertions(+)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 53ead481a9..4cfdb74891 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -41,6 +41,7 @@
+>  #define TYPE_RISCV_CPU_RVA22U64         RISCV_CPU_TYPE_NAME("rva22u64")
+>  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+> +#define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+>  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibex")
+>  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>  #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 761da41e53..50e65932f6 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2421,10 +2421,41 @@ static RISCVCPUProfile RVA23U64 = {
+>      }
+>  };
+>  
+> +/*
+> + * As with RVA23U64, RVA23S64 also defines 'named features'.
+> + *
+> + * Cache related features that we consider enabled since we don't
+> + * implement cache: Ssccptr
+> + *
+> + * Other named features that we already implement: Sstvecd, Sstvala,
+> + * Sscounterenw, Ssu64xl
+> + *
+> + * The remaining features/extensions comes from RVA23U64.
+                                                   ^ RVA23S64
 
-I meant if and only if.
+> + */
+> +static RISCVCPUProfile RVA23S64 = {
+> +    .u_parent = &RVA23U64,
+> +    .s_parent = &RVA22S64,
+> +    .name = "rva23s64",
+> +    .misa_ext = RVS,
+> +    .priv_spec = PRIV_VERSION_1_13_0,
+> +    .satp_mode = VM_1_10_SV39,
+> +    .ext_offsets = {
+> +        /* New in RVA23S64 */
+> +        CPU_CFG_OFFSET(ext_svnapot), CPU_CFG_OFFSET(ext_sstc),
+> +        CPU_CFG_OFFSET(ext_sscofpmf), CPU_CFG_OFFSET(ext_ssnpm),
+> +
+> +        /* Named features: Sha */
+> +        CPU_CFG_OFFSET(ext_sha),
+> +
+> +        RISCV_PROFILE_EXT_LIST_END
+> +    }
+> +};
+> +
+>  RISCVCPUProfile *riscv_profiles[] = {
+>      &RVA22U64,
+>      &RVA22S64,
+>      &RVA23U64,
+> +    &RVA23S64,
+>      NULL,
+>  };
+>  
+> @@ -2918,6 +2949,13 @@ static void rva23u64_profile_cpu_init(Object *obj)
+>  
+>      RVA23U64.enabled = true;
+>  }
+> +
+> +static void rva23s64_profile_cpu_init(Object *obj)
+> +{
+> +    rv64i_bare_cpu_init(obj);
+> +
+> +    RVA23S64.enabled = true;
+> +}
+>  #endif
+>  
+>  static const gchar *riscv_gdb_arch_name(CPUState *cs)
+> @@ -3198,6 +3236,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  MXL_RV64,  rva22u64_profile_cpu_init),
+>      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  MXL_RV64,  rva22s64_profile_cpu_init),
+>      DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  MXL_RV64,  rva23u64_profile_cpu_init),
+> +    DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23S64,  MXL_RV64,  rva23s64_profile_cpu_init),
+>  #endif /* TARGET_RISCV64 */
+>  };
+>  
+> -- 
+> 2.47.1
+>
 
-> 
->> error.
->>
->> With this change, handle_voice_change can rely on core->outputDeviceID
->> to know whether the output device is initialized after calling
->> init_out_device.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   audio/coreaudio.m | 49 +++++++++++++++++++++++++++----------------------
->>   1 file changed, 27 insertions(+), 22 deletions(-)
->>
->> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->> index cadd729d5053..b9e1a952ed37 100644
->> --- a/audio/coreaudio.m
->> +++ b/audio/coreaudio.m
->> @@ -355,7 +355,10 @@ static OSStatus audioDeviceIOProc(
->>   static OSStatus init_out_device(coreaudioVoiceOut *core)
->>   {
->>       OSStatus status;
->> +    AudioDeviceID deviceID;
-> 
-> I would probably preserve the name 'outputDeviceID' to make it more clear that
-> it's for output.
+Otherwise,
 
-I omitted output because this function is for the output device; every 
-variable in this function is for output and prefixing them with output 
-makes the code verbose.
-
-> 
->>       AudioValueRange frameRange;
->> +    UInt32 audioDevicePropertyBufferFrameSize;
->> +    AudioDeviceIOProcID ioprocid;
->>   
->>       AudioStreamBasicDescription streamBasicDescription = {
->>           .mBitsPerChannel = core->hw.info.bits,
->> @@ -368,20 +371,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>           .mSampleRate = core->hw.info.freq
->>       };
->>   
->> -    status = coreaudio_get_voice(&core->outputDeviceID);
->> +    status = coreaudio_get_voice(&deviceID);
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr (status,
->>                                      "Could not get default output Device\n");
->>           return status;
->>       }
->> -    if (core->outputDeviceID == kAudioDeviceUnknown) {
->> +    if (deviceID == kAudioDeviceUnknown) {
->>           dolog ("Could not initialize playback - Unknown Audiodevice\n");
->>           return status;
->>       }
->>   
->>       /* get minimum and maximum buffer frame sizes */
->> -    status = coreaudio_get_framesizerange(core->outputDeviceID,
->> -                                          &frameRange);
->> +    status = coreaudio_get_framesizerange(deviceID, &frameRange);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -392,31 +394,31 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>       }
->>   
->>       if (frameRange.mMinimum > core->frameSizeSetting) {
->> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
->> +        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
->>           dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
->>       } else if (frameRange.mMaximum < core->frameSizeSetting) {
->> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
->> +        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
->>           dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
->>       } else {
->> -        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
->> +        audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
->>       }
->>   
->>       /* set Buffer Frame Size */
->> -    status = coreaudio_set_framesize(core->outputDeviceID,
->> -                                     &core->audioDevicePropertyBufferFrameSize);
->> +    status = coreaudio_set_framesize(deviceID,
->> +                                     &audioDevicePropertyBufferFrameSize);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr (status,
->>                                       "Could not set device buffer frame size %" PRIu32 "\n",
->> -                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
->> +                                    (uint32_t)audioDevicePropertyBufferFrameSize);
-> 
-> 'audioDevicePropertyBufferFrameSize' is declared as UInt32, so I guess the
-> cast can be dropped.
-
-It had a cast even though core->audioDevicePropertyBufferFrameSize is 
-also UInt32. I suspect there are some cases where uint32_t and UInt32 
-are defined as different types and the compiler complains for "wrong" 
-print format.
-
-> 
->>           return status;
->>       }
->>   
->>       /* get Buffer Frame Size */
->> -    status = coreaudio_get_framesize(core->outputDeviceID,
->> -                                     &core->audioDevicePropertyBufferFrameSize);
->> +    status = coreaudio_get_framesize(deviceID,
->> +                                     &audioDevicePropertyBufferFrameSize);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -425,11 +427,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>                                       "Could not get device buffer frame size\n");
->>           return status;
->>       }
->> -    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-> 
-> Are you sure this should be deferred to the end of the function?
-
-Yes. Setting core->hw.samples only makes sense after 
-AudioDeviceCreateIOProcID() succeeds, which starts generating samples 
-according to the set value.
-
-> 
->>   
->>       /* set Samplerate */
->> -    status = coreaudio_set_streamformat(core->outputDeviceID,
->> -                                        &streamBasicDescription);
->> +    status = coreaudio_set_streamformat(deviceID, &streamBasicDescription);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -437,7 +437,6 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>           coreaudio_playback_logerr (status,
->>                                      "Could not set samplerate %lf\n",
->>                                      streamBasicDescription.mSampleRate);
->> -        core->outputDeviceID = kAudioDeviceUnknown;
->>           return status;
->>       }
->>   
->> @@ -451,20 +450,24 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->>        * Therefore, the specified callback must be designed to avoid a deadlock
->>        * with the callers of AudioObjectGetPropertyData.
->>        */
->> -    core->ioprocid = NULL;
->> -    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
->> +    ioprocid = NULL;
->> +    status = AudioDeviceCreateIOProcID(deviceID,
->>                                          audioDeviceIOProc,
->>                                          &core->hw,
->> -                                       &core->ioprocid);
->> +                                       &ioprocid);
->>       if (status == kAudioHardwareBadDeviceError) {
->>           return 0;
->>       }
->> -    if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
->> +    if (status != kAudioHardwareNoError || ioprocid == NULL) {
->>           coreaudio_playback_logerr (status, "Could not set IOProc\n");
->> -        core->outputDeviceID = kAudioDeviceUnknown;
->>           return status;
->>       }
->>   
->> +    core->outputDeviceID = deviceID;
->> +    core->audioDevicePropertyBufferFrameSize = audioDevicePropertyBufferFrameSize;
->> +    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
->> +    core->ioprocid = ioprocid;
->> +
->>       return 0;
->>   }
->>   
->> @@ -548,7 +551,9 @@ static OSStatus handle_voice_change(
->>           fini_out_device(core);
->>       }
->>   
->> -    if (!init_out_device(core)) {
->> +    init_out_device(core);
->> +
->> +    if (core->outputDeviceID) {
->>           update_device_playback_state(core);
->>       }
->>   
->>
->>
-> 
-> 
-
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
