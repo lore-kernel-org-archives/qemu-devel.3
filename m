@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F47C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C66C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7rT-0002vR-PE; Wed, 15 Jan 2025 13:11:28 -0500
+	id 1tY7sE-0006is-3z; Wed, 15 Jan 2025 13:12:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pm-0006p3-8e
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qo-0008Jm-TH
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pk-0006fg-PP
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:42 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7qj-00072Q-PI
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:10:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964580;
+ s=mimecast20190719; t=1736964638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tenv3/Fn0175pDVwISZvpL0yo8/HEzy+5ymjzuGHC9U=;
- b=jGQiuISy2L1Yoy7vDg3R9lBmFI5SfQ67/2i44VSGwWLtc7sbt4FWzHzyeHDlaxZXPMXB0t
- GVys5CnbbmKWdG15Lme+BbMD9WnKy9y9Vwq9wfhg17Hymvol5A+TeoV/TfnuOx0MZMRVfc
- JsZQmFndTxMGCatuKKJS9w8+01Y7Zfk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jKE9c5M8qcrF2rVuiv+K3wTMAWn1KWYDQBuYnN9ug8U=;
+ b=EFStBpAwSAopDlYwpHAyySjSLFkTJWDGo00trQ23/REaabIolDTEAyFQIMuO3iEpPALs3q
+ xejGBfBEwhIrCC/Dzx45C+YRIPZr/kxlmATdp5binY4I1KV2zzNW7Qd8CWxI0VMLBYT+CT
+ ynwZOJ7eiii0Ynwt9rCxVmEdaV4o4wk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-vJBA7SRbM_aZvqzg9GRqjg-1; Wed, 15 Jan 2025 13:09:38 -0500
-X-MC-Unique: vJBA7SRbM_aZvqzg9GRqjg-1
-X-Mimecast-MFC-AGG-ID: vJBA7SRbM_aZvqzg9GRqjg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361c040ba8so39300825e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:09:38 -0800 (PST)
+ us-mta-155-g7Mgwla6OmGu7kuyP-F1wA-1; Wed, 15 Jan 2025 13:10:37 -0500
+X-MC-Unique: g7Mgwla6OmGu7kuyP-F1wA-1
+X-Mimecast-MFC-AGG-ID: g7Mgwla6OmGu7kuyP-F1wA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362b9c15d8so37111455e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:10:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964577; x=1737569377;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tenv3/Fn0175pDVwISZvpL0yo8/HEzy+5ymjzuGHC9U=;
- b=rHa/0MdhFC/PkBDRxOOqcHTIF58aznMYLFjUBQ0qTuCkQhRicaoHpX2hwMyyvUAQwH
- jx5NSiVK+Zw1A62st7qlGXtZHF3lGM2Rr5rKAaLRRNv7BwOJS4iswFfK4NgDeEFfUC2E
- C35KIkQNQ2uaFRYkTLNNTQWUZW+77qBYazfluhRYNnDv6DDvlDLy7nYQBumrhLS2cWDm
- gpu6liwTihw6rHFkFvPYQcej2f15TfINUOifmyHVksAeD5ItsquFPBpvbIMTOr5CVafw
- B0X0LYzUbW9RnzkWFqyEwLAdLHgJYzuVUehH1iRPAFhRMr1o54S6QwUaBB97hnZT+GHY
- 9xlQ==
-X-Gm-Message-State: AOJu0YzuNMQBvL3Z6pqDNTXIdVb89Ub3UQ63AZ/cvvVpGwUkDkEnHqBx
- UmBRpEavBuRKWVML+Zuuu5YdsS4+mjbBCwTFyZv45zkSfwgdG7Ydv5nBQ0Oy+E7sgYlFOZySGcx
- 77e5hDFMvCwnXwn4yYM2aC1U+JaerEm+W+mXxWrdfNcwNG8E4FojZdRD+3eEFPn1PQPjZDqV+Y6
- +FlpduBw67pDLQIvisIpLqZChuOJ8m9Q==
-X-Gm-Gg: ASbGncvFX9dadsrjXQzy7IAPD69QLsq5/rm2sD9NxYIJiBhQkEiSscML9ATgi7SwKDy
- WHyOj21F5A3NW7pHO1ne8wJv3RANLT2621or9X7gI/gppQnBS8unGki898qKCCZl7a4Dx5a1EBK
- gpQPuSIa1h08w4T0GQhmRaSiM19H3nIzqiSvEXvdTv09kYNtD1BS+A8LPkffDUZWIRX9WS/l/PC
- +wpUQiLhbYg3sdCJYCrnXTSNU3BT2WfuYhVTIaLwjVUyZflSoLD
-X-Received: by 2002:a05:600c:3c97:b0:436:840b:261c with SMTP id
- 5b1f17b1804b1-436e26ab54fmr243211765e9.19.1736964577116; 
- Wed, 15 Jan 2025 10:09:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGkWsvTlCCO0h3rZ8fopHRAB+doxkT01YEymJhlBChmWhc38vAC7/Frsc5HpY2hjvNZsIrFCA==
-X-Received: by 2002:a05:600c:3c97:b0:436:840b:261c with SMTP id
- 5b1f17b1804b1-436e26ab54fmr243211475e9.19.1736964576654; 
- Wed, 15 Jan 2025 10:09:36 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736964635; x=1737569435;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jKE9c5M8qcrF2rVuiv+K3wTMAWn1KWYDQBuYnN9ug8U=;
+ b=kup5/DjfcAq2xvplM0jjNOsdLe32lkeuAmjnE4nWS5bRNXk+aUQ+/ZkA0g3tzPlVUs
+ EO61fOTGqUQrmk4WStBAlx0TnR4bq6tsJvrJQceog0CPAvv5f3g4KAO4hO29u7bwbEKq
+ BHcJGEsbtDP6pbArImL/TbbwVmIJNmLrb80VHIEK+MMz2RtTilXI/FB2UIERWuD3GVYG
+ YEyyVVN4JnwUIlW7MltX8/PwPdk7+05bGURCC3Qz9y5pi8VT6EPUWC15ZCoG2EBvDvF+
+ eqHPmQJQWDYGlOaW6kpSmoqBDdXB8SGJRWg7AS2FO7/ewloZR+/WhZ7XAtlEyWiKRlXn
+ j7tw==
+X-Gm-Message-State: AOJu0YwPyG70x0dmoraDN6JQ1uziFoAJ9Y9FHo5fQMawlZu5QKi+TpCK
+ bIkD7X1vs1+X37KlDHzIkjbI4yRJQg9AaDgKY4q4/98/ABZT0MFdW5/RNz+Iqb9AfTfILI5Sxa1
+ nXfkRmqKzUmp3xy21DgFNHInl8mNKU4xRttXIq6da+x/tFqd8Yza+aiYM/0UwyqDgfgfc2htKPk
+ 5NrnpHbhZgpC32H2xXisjHmVV17tv0RQ==
+X-Gm-Gg: ASbGncu6Kja8fO/LLb51U1rtDX6tuP+LvRrD9eLlfsUcE81uzx/LgubllMH7N6amupr
+ s9T07Hovvpo3b+BwLfOgBIuz2Jw1cLCXG2WdlHnTIglz48+iKNUhwoMM464EyEd9dNOnMBD4UDj
+ D+UdmaVTxzwYnzGbb78kuLHCdz3O32pSsaLWzH+N0pg8tV1y0qo1KwgOQa5M8+qoLFglF0z3p3K
+ DZYUQzpyxwQWa5Mr2GHNJ2mujcG7fCKaumB4rz3Y/06zubpgQUA
+X-Received: by 2002:a05:6000:154f:b0:386:373f:47c4 with SMTP id
+ ffacd0b85a97d-38a873579b3mr26019287f8f.49.1736964634796; 
+ Wed, 15 Jan 2025 10:10:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGATvq4Q040yTIpCKdqV7z3EL3LTn2Lmdrfl5f9AiMvN2mqfgLEnqYuOVWmOESEbMxlSPjEgA==
+X-Received: by 2002:a05:6000:154f:b0:386:373f:47c4 with SMTP id
+ ffacd0b85a97d-38a873579b3mr26019261f8f.49.1736964634345; 
+ Wed, 15 Jan 2025 10:10:34 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c7499bbasm33026955e9.3.2025.01.15.10.09.34
+ ffacd0b85a97d-38a8e4b8214sm18165056f8f.78.2025.01.15.10.10.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:09:36 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:09:33 -0500
+ Wed, 15 Jan 2025 10:10:33 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:10:31 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 21/48] intel_iommu: Set default aw_bits to 48 starting from
- QEMU 9.2
-Message-ID: <ddd84fd0c1f8f62e8384591f7203aaabb935199a.1736964488.git.mst@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, qemu-arm@nongnu.org
+Subject: [PULL 39/48] acpi/ghes: better name the offset of the hardware error
+ firmware
+Message-ID: <652f6d86cbb60e193edc2510c365b75229734ccf.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,58 +111,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-According to VTD spec, stage-1 page table could support 4-level and
-5-level paging.
+The hardware error firmware is where HEST error structures are
+stored. Those can be GHESv2, but they can also be other types.
 
-However, 5-level paging translation emulation is unsupported yet.
-That means the only supported value for aw_bits is 48. So default
-aw_bits to 48 when stage-1 translation is turned on.
+Better name the location of the hardware error.
 
-For legacy and scalable modes, 48 is the default choice for modern
-OS when both 48 and 39 are supported. So it makes sense to set
-default to 48 for these two modes too starting from QEMU 9.2.
-Use pc_compat_9_1 to handle the compatibility for machines before
-9.2.
+No functional changes.
 
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20241212083757.605022-17-zhenzhong.duan@intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <ddbb94294bafee998f12fede3ba0b05dae5ee45f.1736945236.git.mchehab+huawei@kernel.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/i386/intel_iommu.h | 2 +-
- hw/i386/pc.c                  | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ include/hw/acpi/ghes.h         | 2 +-
+ hw/acpi/generic_event_device.c | 4 ++--
+ hw/acpi/ghes.c                 | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index a434c2489c..72428fefa4 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -45,7 +45,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
- #define DMAR_REG_SIZE               0x230
- #define VTD_HOST_AW_39BIT           39
- #define VTD_HOST_AW_48BIT           48
--#define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
-+#define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_48BIT
- #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
- 
- #define DMAR_REPORT_F_INTR          (1)
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 9334b033f6..b46975c8a4 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -86,6 +86,7 @@ GlobalProperty pc_compat_9_1[] = {
-     { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
-     { "ICH9-LPC", "x-smi-periodic-timer", "off" },
-     { TYPE_INTEL_IOMMU_DEVICE, "stale-tm", "on" },
-+    { TYPE_INTEL_IOMMU_DEVICE, "aw-bits", "39" },
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 21666a4bcc..39619a2457 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -65,7 +65,7 @@ enum {
  };
- const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
+ 
+ typedef struct AcpiGhesState {
+-    uint64_t ghes_addr_le;
++    uint64_t hw_error_le;
+     bool present; /* True if GHES is present at all on this board */
+ } AcpiGhesState;
+ 
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 58540c0aaf..c85d97ca37 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -363,7 +363,7 @@ static const VMStateDescription vmstate_ghes = {
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
++        VMSTATE_UINT64(hw_error_le, AcpiGhesState),
+         VMSTATE_END_OF_LIST()
+     },
+ };
+@@ -371,7 +371,7 @@ static const VMStateDescription vmstate_ghes = {
+ static bool ghes_needed(void *opaque)
+ {
+     AcpiGedState *s = opaque;
+-    return s->ghes_state.ghes_addr_le;
++    return s->ghes_state.hw_error_le;
+ }
+ 
+ static const VMStateDescription vmstate_ghes_state = {
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 3f94a5542b..983e28505a 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -359,7 +359,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+ 
+     /* Create a read-write fw_cfg file for Address */
+     fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+-        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
++        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
+ 
+     ags->present = true;
+ }
+@@ -385,7 +385,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     }
+     ags = &acpi_ged_state->ghes_state;
+ 
+-    start_addr = le64_to_cpu(ags->ghes_addr_le);
++    start_addr = le64_to_cpu(ags->hw_error_le);
+ 
+     start_addr += source_id * sizeof(uint64_t);
  
 -- 
 MST
