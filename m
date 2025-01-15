@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF4DC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 09:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133D8C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 09:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXzH9-0002jU-P6; Wed, 15 Jan 2025 04:01:23 -0500
+	id 1tXzJf-0003gL-HW; Wed, 15 Jan 2025 04:03:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzH7-0002fV-43
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:01:21 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzJe-0003g1-Hm
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:03:58 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzH5-0001Ld-JX
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:01:20 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-436a03197b2so45310405e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 01:01:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzJd-0001Ti-0c
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:03:58 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43621d27adeso44394365e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 01:03:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736931676; x=1737536476; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736931834; x=1737536634; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=E83QNQa5X5ZY90f2qQhpSXDnTl5nXXSGLhtrWqSOjR8=;
- b=ultsPp3gjXaI/4dNAY8rKgyNXV2hZAcLgPoZXUqRKJHK3jR855fNwENcHCIz+Gv39r
- qM76Cuk00a6hY55dKpSinYxsRqXIY7++zhqmCMsm+WI+4CASxXes/lHxqAQHSrzoKERd
- ImXcA0bLAzPmLu2S/1k08dNponNynCVOPlJzO/dCabe2BH/akZ2H5cIKpEx5RSfgRj8l
- sVctx6IPxet3NJtTaY07JM6Dt3VrgvkILeXPJOA2tetrggLH59BmccFEr6qk789qFSQ7
- SYdDqEXznKyr5OB47+BY+N1YNuAotJFyKp4KSePKE4pSf8Y2ryztFlQvOqYk6lBtTULM
- y54g==
+ bh=xxkIfTUSJx0OfXP0SS7AQUKyLooNQKVwHEYK8EQL1Lk=;
+ b=D0LDK1zUoh33tjH50ggBnzMvWNTFDXlwnHFQz6Oj/dSXX0xMQvPhZAdRk+0kzUwxuk
+ R0BrqsUaBsgPNEsAsRhjkEX/SG7kYkrY1iIkpl5a9HVxgRldByuwsXs9oAtfQLLDA4ST
+ /q1V5zYZAlkxjF/GXnwzpJvO8kU8alJaJIAvDS6LVWj2cZlYPvsR9Fr7c1SXsvW2/4HB
+ 40fTV+otj45tq07VaNAjD9zl6VFu3v8EMZ1WB7ki4Jjp0DgM3UnukXaH/XlVytei7KxR
+ p6Xhm9HYJeR3i8IT/S9MgftapenghyK3WMKXitaCeZGgQfRss4cuIdBTjFL5s1EdA6m0
+ wKnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736931676; x=1737536476;
+ d=1e100.net; s=20230601; t=1736931834; x=1737536634;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E83QNQa5X5ZY90f2qQhpSXDnTl5nXXSGLhtrWqSOjR8=;
- b=qnYzO0hVOcDzEcM+5O9UNh6UqgLdYMOgQ5wSFvqs35YW3Ih65R022SsgqrkHnTm/wA
- SGR4kbcdLEOGfkH8EIk18U6vbjNbEyceeaWm3AwANN1UtkV6K4R6Dbb48rNlT9jjbNps
- lNoJ0men6vekaLp1CYzsN1QFwtz0yYP9Q0lfPjrYMUIRAnrcw8uuByQ+gsXAgzK0UB0p
- X3Kcx/ELmzPMpI/5ea+mLjgVICG/PVaxrUtsBqd2W2+mQDWh2lrqBt7fdrgN6LDJuree
- 14t+xn4+y4/+xf0wsNZhfq5pkk02X5R6TzWneFcOUZOe3xM621KyUbk2fexUrj/TrLx+
- thEg==
-X-Gm-Message-State: AOJu0YwxSp469C1MjRRzEidiXMai5RrH8wcakqkQpsfYu0/Ju+U0vjkf
- wll6ofVlbuS8lm0TVOiMfQDGGVp4gWJ9QlfOtE+h+ax+OXHw1LG8S++UyuaMJCA=
-X-Gm-Gg: ASbGncviZzZq4iMWpz8jJB1P+xFxIgpvjRgk1h9VOwMKZtwI1dT7kj2LYV5yaUX5Quj
- 985B5S2RIpRBA/K5ePDV8OoMmqTg9gAHJqIXNOKaOmJYVeVvG7tYn6tD+58G/9ZgiBmQkDs44eY
- QKu+x5L2vApS7JMeEfbdWvFrIr81lvyjJkUavdUKc8pZoAeQ/WUqoQXU2ZiGemCyRslUDrXyOSF
- xnwVwed3wo1kmlnJggLvGTIVAz39qwgxLTOtjsh0L3A3ekMoXQ/iTnC0Z37TKFI1C6RV5ua5Stt
- 1+GU5/nJlogVTGN+TDr4wPUs
-X-Google-Smtp-Source: AGHT+IEivgMyMuhasdMNdd+lwSpgL3ZoM+SbU/8LA2slSQ3WPRfoe7RUOM2iaGOktyIMM/NKMsjRVw==
-X-Received: by 2002:a05:6000:402a:b0:38b:d824:df3 with SMTP id
- ffacd0b85a97d-38bd8240fa6mr9153124f8f.24.1736931676569; 
- Wed, 15 Jan 2025 01:01:16 -0800 (PST)
+ bh=xxkIfTUSJx0OfXP0SS7AQUKyLooNQKVwHEYK8EQL1Lk=;
+ b=VH8ibnv4IDzmHCB3z24W6uyR0aNVh3bYDMFBYglOLu9H4dAcEAsDopEcsSOJa8ob/v
+ zS6vpPpvVjS8UMHR+yKblJ8+ptDy05ZI55maMTH55bHshYH2IPLxazk73UieOfUMMaJV
+ VWRMl2Yt2QJhUcrULL153PxOYncjuU0dIUz74x2POZpB7WqcseLGOS5GvtdWBbvk8AAg
+ 8uODeWgKeB5UbqF4dP4oGgrCNJADQc3/wwvxmjRkq67MtTxoQegkhXIroMFKjmfa1otz
+ JQrnGbYDJoKXtu8ad2LL8cx0p7XUIOzObZjS2kyrtVN0kVI1GRSExNK48pHWpdFQXEWb
+ +kvQ==
+X-Gm-Message-State: AOJu0YxaRmt0aM3JwJf5E/U3iKQNZzF6zWX/2aWVOL0i9BaD/1/i27jl
+ ie7q5bSWHmMNjvWihl6PWF2OPY76A16Au27N/1GbZKYEAwEC8EaknirNPa5k6xx21fbsEKmGQlv
+ JEmg=
+X-Gm-Gg: ASbGnct1w3fLyuPAFcaPhUkkxCHHPLTQnj3Nk2j1oD5o8dIN49N6rdQg2gEH6e/AR0d
+ qpcQ4zKvC4/iOoLhiR7sS76hjLGODxgPioRFbDmmRiOybPyxQ1o8yH4kTJUgtRoFT7qGfPC+Wm6
+ c7kS+wMAFxoYBXYlQlAuwUZc+8JOXYytLHZb2VTbdWo/SyBQ1wsKrrhalVt/28bKAyGqAc+9hmO
+ js/lwRPOZFJgj+/CXY38wadSArDPVAo6zbMpM2uFC4PBdDFtjp1QP//l/VX8fLKj1jbdQzvAdW0
+ FI/KYlEmefte3DMozIc39eYU
+X-Google-Smtp-Source: AGHT+IEiEFl3X4Pol9kqCXnu/vq+BEG8iYsszmJF07v3rKDy8+blF1P75HV0ozWT1TmfiWvRQpvixQ==
+X-Received: by 2002:a05:600c:1f95:b0:434:a525:7257 with SMTP id
+ 5b1f17b1804b1-436e26d946cmr216198645e9.21.1736931834547; 
+ Wed, 15 Jan 2025 01:03:54 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e38f0eesm17319941f8f.61.2025.01.15.01.01.15
+ 5b1f17b1804b1-437c75290a2sm16002385e9.29.2025.01.15.01.03.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 01:01:16 -0800 (PST)
-Message-ID: <344075b1-9a45-4bee-99c5-e6bd3bc5ae8c@linaro.org>
-Date: Wed, 15 Jan 2025 10:01:15 +0100
+ Wed, 15 Jan 2025 01:03:54 -0800 (PST)
+Message-ID: <e78fe4b2-68ac-47a8-b1a3-b715074e2f4b@linaro.org>
+Date: Wed, 15 Jan 2025 10:03:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] hw/intc/s390_flic: Remove the obsolete
- migration_enabled flag
+Subject: Re: [PATCH 6/8] hw/s390x/event-facility: Remove the obsolete
+ "allow_all_mask_sizes" code
 To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  David Hildenbrand <david@redhat.com>
@@ -75,14 +76,14 @@ Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>
 References: <20250115073819.15452-1-thuth@redhat.com>
- <20250115073819.15452-5-thuth@redhat.com>
+ <20250115073819.15452-7-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250115073819.15452-5-thuth@redhat.com>
+In-Reply-To: <20250115073819.15452-7-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,14 +107,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/1/25 08:38, Thomas Huth wrote:
-> Now that the machine types that set the migration_enabled flag to
-> false are gone, we can remove it and the related code.
+> Now that the machine types 2.11 and older have been removed, we
+> don't need the "allow_all_mask_sizes" compatibility handling code
+> anymore and can remove it now.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   include/hw/s390x/s390_flic.h |  1 -
->   hw/intc/s390_flic.c          | 14 --------------
->   2 files changed, 15 deletions(-)
+>   hw/s390x/event-facility.c | 37 +------------------------------------
+>   1 file changed, 1 insertion(+), 36 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
