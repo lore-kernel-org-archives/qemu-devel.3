@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 823AFC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13C7C02185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY2sE-0008Kc-Lj; Wed, 15 Jan 2025 07:51:54 -0500
+	id 1tY2sD-0008EA-7x; Wed, 15 Jan 2025 07:51:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rO-0007dl-32; Wed, 15 Jan 2025 07:51:02 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ id 1tY2rQ-0007ee-B1; Wed, 15 Jan 2025 07:51:06 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rM-0006sP-Km; Wed, 15 Jan 2025 07:51:01 -0500
+ id 1tY2rM-0006sO-M9; Wed, 15 Jan 2025 07:51:02 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id D3813A41F47;
- Wed, 15 Jan 2025 12:48:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22341C4CEE8;
+ by nyc.source.kernel.org (Postfix) with ESMTP id 11BCCA41F4A;
+ Wed, 15 Jan 2025 12:48:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B003C4CEEB;
  Wed, 15 Jan 2025 12:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1736945441;
- bh=WUvT8Ughz2H3l7zFkf4yAqTlDCn4hpG5JQNObbE2feQ=;
+ bh=C2mXxM1hfVaEkYu3ugfE5aqpQfBVVNOvxF5g2WH4gn8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pCngK6/FPe60s4xcZs9ZOQERYwO8e/2N3vRoLApL6Qyc5dBXYzjJqiNk4wSVR7ifq
- wSu8MV6yYBJkOgWD6zeAGZskeTATmi5y6q2p74DR4ZQkfziQjn3x4wSTaGXXlVzXsD
- rgPben40QTI6PTCuxDqN+wHXHLfqWvzyN6CZSMSDluSxqEe/ucfmWsDt1KLC83jt3V
- C6bf2cJ6o8Mmx5n7ACHGwYlxAVqGRt4UBPjnNSeXocKQzeYPtazyyz4+1pkMoQK2Kl
- l2pQN1vvYwOimpgmGs6UMmb/3fk6hE5ONMXrwtnv587ngSlaVvy/UYw/ng4GKr5N3o
- S2DCv9oE8UrOQ==
+ b=mBQvI+xInCbMm+72IfLG8Rqly+cLgd+C5hMom/9J3G69fr00xiaZWb7xqjk56jMRv
+ jbpiYBJoBzbjCVTr3Pxjb+b1zPr7/j/XpH5VH/nTp26b2RrHYQtknBVxQWj0izEA6M
+ 3YhOV3G0rqgvUG9N64ztgb31oSwQurMWO1lngOgKKJ7taWrI6DPRwPG+1yPU/OG2FK
+ Scg49oHmBrjJIqVamK0+rWlpAVbWUvdzQYZXaWK2HSQK4mAxeSWfRXU/ivoJEI8Hb6
+ Ii8XQcpCBv8abyeStQwCHrTjRxEbBxj7/YNzRhx4388AM94yfs2sQxOPp0mMX28XFT
+ yqxj+InBPjFrg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2r1-00000004yFi-0d1e; Wed, 15 Jan 2025 13:50:39 +0100
+ id 1tY2r1-00000004yG2-1CGN; Wed, 15 Jan 2025 13:50:39 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v7 05/16] acpi/ghes: Fix acpi_ghes_record_errors() argument
-Date: Wed, 15 Jan 2025 13:50:21 +0100
-Message-ID: <d55f2a6ede5a168e42a20a228b2c066cb4c60939.1736945236.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v7 10/16] acpi/ghes: better name GHES memory error function
+Date: Wed, 15 Jan 2025 13:50:26 +0100
+Message-ID: <35b59121129d5e99cb5062cc3d775594bbb0905b.1736945236.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1736945236.git.mchehab+huawei@kernel.org>
 References: <cover.1736945236.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91;
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
  envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
 X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,39 +77,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Align the header file with the actual implementation of
-this function, as the first argument is source ID and not
-notification type.
+The current function used to generate GHES data is specific for
+memory errors. Give a better name for it, as we now have a generic
+function as well.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
----
-
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
-
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- include/hw/acpi/ghes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/acpi/ghes-stub.c    | 2 +-
+ hw/acpi/ghes.c         | 2 +-
+ include/hw/acpi/ghes.h | 4 ++--
+ target/arm/kvm.c       | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+index 2b64cbd2819a..7cec1812dad9 100644
+--- a/hw/acpi/ghes-stub.c
++++ b/hw/acpi/ghes-stub.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/acpi/ghes.h"
+ 
+-int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+ {
+     return -1;
+ }
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 6f40cd35a94f..66bd98337ac7 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -415,7 +415,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     return;
+ }
+ 
+-int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+ {
+     /* Memory Error Section Type */
+     const uint8_t guid[] =
 diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 20016c226d1f..50e3a25ea384 100644
+index 8859346af51a..21666a4bcc8b 100644
 --- a/include/hw/acpi/ghes.h
 +++ b/include/hw/acpi/ghes.h
-@@ -73,7 +73,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+@@ -74,15 +74,15 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
                       const char *oem_id, const char *oem_table_id);
  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
                            GArray *hardware_errors);
--int acpi_ghes_record_errors(uint8_t notify, uint64_t error_physical_addr);
-+int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
++int acpi_ghes_memory_errors(uint16_t source_id, uint64_t error_physical_addr);
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp);
+-int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
  
  /**
   * acpi_ghes_present: Report whether ACPI GHES table is present
+  *
+  * Returns: true if the system has an ACPI GHES table and it is
+- * safe to call acpi_ghes_record_errors() to record a memory error.
++ * safe to call acpi_ghes_memory_errors() to record a memory error.
+  */
+ bool acpi_ghes_present(void);
+ #endif
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index a9444a2c7a86..da30bdbb2349 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2387,7 +2387,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+              */
+             if (code == BUS_MCEERR_AR) {
+                 kvm_cpu_synchronize_state(c);
+-                if (!acpi_ghes_record_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
++                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
+                     kvm_inject_arm_sea(c);
+                 } else {
+                     error_report("failed to record the error");
 -- 
 2.47.1
 
