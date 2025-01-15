@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFA5C02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B92EC02185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY633-0003vY-7D; Wed, 15 Jan 2025 11:15:18 -0500
+	id 1tY6Mn-0007R1-1F; Wed, 15 Jan 2025 11:35:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbab@linux.ibm.com>)
- id 1tY62l-0003rr-4G
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:15:00 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbab@linux.ibm.com>)
- id 1tY62j-0006iO-C7
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:14:58 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FGEkZN017005;
- Wed, 15 Jan 2025 16:14:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=LQL5QF1J9vNc5KIQO/meinNDsBdBUDtXlMAkpoDuL
- oE=; b=kNDjLIWfV5U3gQR8T1K034S9Dbnk8M2tLQtSSXKYsR2xYDB+X3ur1kKAw
- REztJISwbEqLeaJ/VYPTT5PgjMFFgh7SM0GTAQ+Nexrg+nvp4D67uq0Lnr/Dgp9l
- Kj9KG+Oc4bRVqz4wMxvasMDuFaKOU2X0d0x0yM7OmSRiZjUmHQVXIHPqJOgbFovw
- 7lg0zIRJC8iBWjvDq0ZAWbeNYELs5/gJr7fXx2vbCNYdaOksaFbCB7Q4Gb1hKfNX
- DS6rJlNTW10DSCuhK++fI4OqtCflYGOso7Cmt63AYF3jkUEMtiCtEu9hNDTP2jp5
- fU3x8qQDwPZsDLQ4lhMFWSG2pkhVg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4465gbu7w8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Jan 2025 16:14:49 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50FGEmJJ017160;
- Wed, 15 Jan 2025 16:14:48 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4465gbu7uk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Jan 2025 16:14:48 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50FDxiEq007462;
- Wed, 15 Jan 2025 16:14:36 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443yn9791-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Jan 2025 16:14:36 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50FGEZCP39453116
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 16:14:35 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4AD8C58060;
- Wed, 15 Jan 2025 16:14:35 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A7285803F;
- Wed, 15 Jan 2025 16:14:35 +0000 (GMT)
-Received: from arbab-laptop.localdomain (unknown [9.53.178.221])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 15 Jan 2025 16:14:35 +0000 (GMT)
-Received: by arbab-laptop.localdomain (Postfix, from userid 152845)
- id 960F54C7844; Wed, 15 Jan 2025 10:14:34 -0600 (CST)
-From: Reza Arbab <arbab@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH v2] virtio-balloon-pci: Allow setting nvectors,
- so we can use MSI-X
-Date: Wed, 15 Jan 2025 10:14:25 -0600
-Message-ID: <20250115161425.246348-1-arbab@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6Ml-0007Qo-QG
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:35:39 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6Mk-0001cr-BC
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:35:39 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38a25d4b9d4so11372f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 08:35:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736958936; x=1737563736; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kxPVgTnwJ+3G9kHhXmy7+cuvtjTdA95WIIzPZ54H9vo=;
+ b=FYu8dKxZg2c06eughp8MpcT/ycU/fIMIEGaSTbz5k2xpZT94SU5S+xtAOZFocpHRic
+ 0rdIdqYBFgqsxCN0QJ4BvFTpkwj790llAMLr+Bo4GDgv4PKKM4AUK41MAaz00CkpfrEE
+ 2CFS1+7lrq0zWrDUSmjYu/W5iCJTxTQi01O2WtGMhTmtHVENUMlBePaTXSlUMpu3DZ65
+ aYs+gwFyxu+nkINevyOJ5uvpUo07N4B5pTTOJwa2iLIS6dUvpCpa3zrJOc6qz4ov6PxN
+ mDVOT8xz1L43k/0Afgine3+9Fqdmn0jKmgk2tkxoLix1pfCIaf0Z3btRc/DM8EohHNEg
+ e6DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736958936; x=1737563736;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kxPVgTnwJ+3G9kHhXmy7+cuvtjTdA95WIIzPZ54H9vo=;
+ b=wv/ItcPnuNTbUzS7OnJGnsQ0UVWUYNafH/mWrJeAC9g8gSW52bh8K5gMhZc8YbXypN
+ uBgJuUBSN9LDceZdP+OZkPRhOOs+L5bgMs48kQF/vws7kkAUtiUllvBeooIDGX+Vwomb
+ nK8ZU/SkOcjzhOCzp3PDfs6Gbsilfuz8k1qIhxRA/3Qh9rGAnC+nlqfL3JT5MCjx0qLv
+ lnUw56CGeZaNkRVeV0EHUoT9Im9xFVHfb8xi8hSGPpomGCafCdHwWkcXEK6jompcQeVk
+ NFI7ZivB1l+SdUETcSxRAS69b6+lt8I2bJ+bhvBwpQM9t5m4vC20+yXn5s5EMvS0mYdb
+ 8LLw==
+X-Gm-Message-State: AOJu0YzuQ0A5K1W/Oh+9FasWF1BV/tMx1cGkHcdl3GPZeIMi/VQ0XKPs
+ B3oxTsA0OgPIPzOXJqOGU4FWz7jJVu6K4kBVwJZ2lEiaYxsusVAuP+eCHw+IStY=
+X-Gm-Gg: ASbGncsF9EbpvN8TREzU4eCqn4H0klOhLaysflWr/2brTnLOpBGZaxe7zeCJ4OrwNx8
+ OOUQQspw4lan4N7ovIYnMF7OECBCE4aC/tfDnu+ruBCZNyRO4b8EpUPhjkIesSfBPui6Gz2RKEu
+ s4pQnwdZiVxP+YyJkvGoyzjm2BetIPT74GyqXzotzdvWWHOlbzT1ns84I2/KqG03Qi0KBEQe0cC
+ t4T+HAVWvX1hh3+1fjtkYvv/s9YpqyUtLsq4owubAfjsXsrCgErA02ulOkN0O7CNUKew/39Fn91
+ fNt2sRG5j+7N6E1/QVJj01Gwq9s=
+X-Google-Smtp-Source: AGHT+IHqslZrIHYqUxHTtub/K/LCerOdy7TyfMMafb/8+oA4Oz6munWZfvk2C8Pt8DoQG6FxiEHV7g==
+X-Received: by 2002:adf:c007:0:b0:385:eb8b:3ec6 with SMTP id
+ ffacd0b85a97d-38a872e9356mr18050651f8f.29.1736958936605; 
+ Wed, 15 Jan 2025 08:35:36 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e4b81ccsm18312944f8f.65.2025.01.15.08.35.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jan 2025 08:35:36 -0800 (PST)
+Message-ID: <a20b0629-78ba-4ae6-981c-bbc1fbf0a866@linaro.org>
+Date: Wed, 15 Jan 2025 17:35:35 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 3yCZSteNcQOXE6-kF7ZFC1yuksPodcbP
-X-Proofpoint-ORIG-GUID: lEkhzQ-Db1mH0J8VfrmIxGast3tsiEkd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-15_07,2025-01-15_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0
- adultscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501150119
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=arbab@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] s390x: Remove deprecated machine types v2.9 up to
+ v2.12
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250115073819.15452-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250115073819.15452-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,78 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most virtio-pci devices allow MSI-X. Add it to virtio-balloon-pci, but
-only enable it in new machine types, so we don't break migration of
-existing machine types between different qemu versions.
+On 15/1/25 08:38, Thomas Huth wrote:
+> These machine types have been marked as deprecated two releases ago,
+> and are older than 6 years, so according to our support policy, it
+> should be fine to remove them now.
+> 
+> Thomas Huth (8):
+>    hw/s390x/s390-virtio-ccw: Remove the deprecated 2.9 machine type
+>    hw/s390x/s390-virtio-ccw: Remove the deprecated 2.10 and 2.11 machine
+>      types
+>    target/s390x/gen-features: Remove the v2.11 qemu CPU model
+>    hw/s390x/s390-virtio-ccw: Remove the deprecated 2.12 machine type
 
-This copies what was done for virtio-rng-pci in:
-9ea02e8f1306 ("virtio-rng-pci: Allow setting nvectors, so we can use MSI-X")
-bad9c5a5166f ("virtio-rng-pci: fix migration compat for vectors")
-62bdb8871512 ("virtio-rng-pci: fix transitional migration compat for vectors")
-
-Acked-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Reza Arbab <arbab@linux.ibm.com>
----
-v2:
-- Remove DEFINE_PROP_END_OF_LIST()
-- Declare virtio_balloon_properties as const
-
- hw/core/machine.c              |  3 +++
- hw/virtio/virtio-balloon-pci.c | 12 ++++++++++++
- 2 files changed, 15 insertions(+)
-
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index c23b39949649..8f396ef8035a 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -38,6 +38,9 @@
- 
- GlobalProperty hw_compat_9_2[] = {
-     {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
-+    { "virtio-balloon-pci", "vectors", "0" },
-+    { "virtio-balloon-pci-transitional", "vectors", "0" },
-+    { "virtio-balloon-pci-non-transitional", "vectors", "0" },
- };
- const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
- 
-diff --git a/hw/virtio/virtio-balloon-pci.c b/hw/virtio/virtio-balloon-pci.c
-index ce2645ba7187..db7e1cb47537 100644
---- a/hw/virtio/virtio-balloon-pci.c
-+++ b/hw/virtio/virtio-balloon-pci.c
-@@ -35,11 +35,22 @@ struct VirtIOBalloonPCI {
-     VirtIOBalloon vdev;
- };
- 
-+static const Property virtio_balloon_properties[] = {
-+    DEFINE_PROP_BIT("ioeventfd", VirtIOPCIProxy, flags,
-+                    VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
-+    DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
-+                       DEV_NVECTORS_UNSPECIFIED),
-+};
-+
- static void virtio_balloon_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
-     VirtIOBalloonPCI *dev = VIRTIO_BALLOON_PCI(vpci_dev);
-     DeviceState *vdev = DEVICE(&dev->vdev);
- 
-+    if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
-+        vpci_dev->nvectors = 2;
-+    }
-+
-     vpci_dev->class_code = PCI_CLASS_OTHERS;
-     qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
- }
-@@ -55,6 +66,7 @@ static void virtio_balloon_pci_class_init(ObjectClass *klass, void *data)
-     pcidev_k->device_id = PCI_DEVICE_ID_VIRTIO_BALLOON;
-     pcidev_k->revision = VIRTIO_PCI_ABI_VERSION;
-     pcidev_k->class_id = PCI_CLASS_OTHERS;
-+    device_class_set_props(dc, virtio_balloon_properties);
- }
- 
- static void virtio_balloon_pci_instance_init(Object *obj)
-
-base-commit: 7433709a147706ad7d1956b15669279933d0f82b
--- 
-2.47.1
-
+Should this be documented in docs/about/removed-features.rst?
 
