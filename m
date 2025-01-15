@@ -4,88 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8269C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0489C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY5GO-0007Xi-6Z; Wed, 15 Jan 2025 10:25:00 -0500
+	id 1tY5Mm-0001Qp-V5; Wed, 15 Jan 2025 10:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tY5GL-0007XF-VO
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:24:58 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tY5GJ-0006tK-9l
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:24:57 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5d982de9547so13391202a12.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:24:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736954693; x=1737559493; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=uoYTnK0PpxncAWVpUQa9skhgGj0av0eg98PVmyGpktc=;
- b=N1zsVgo/5XPA+HqowzK3iCpgyI3kTzRL9/AQAG3GxaSrc7fufcg7nDTkfHsTQCVo9a
- 2DRssWVd7GgR5OWv3ATLFKQBv0frzifKOdLv5wVwv0Rdq7WTGsz7n1J/Ot+K5RVYurj7
- 7vyUre2Dfoe2B9iXG/shuVmTeE0IemjQMJgNheq1YVr7505NlPl8KguzU0P9pExnv9C6
- 2iJiMBSu7IjszFDytfHEl8OW1ZDKgG+SmWewjM/zGm9Wo32w0TqgVHId/5PwW0gr3IYh
- A+a5FGVIWb9HqtWv7ScAdyh+FxkwiDSIpSIQ4GBvsl/J/hc3ZLNU9LMcv8oYDW7/7kK1
- iydA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736954693; x=1737559493;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uoYTnK0PpxncAWVpUQa9skhgGj0av0eg98PVmyGpktc=;
- b=t0fk0ITpdXW565s6VMOzjdD6+psmi1JGZ6XZQUU7CbyBezcMJ3UdMFiWeOgt4uS3Kd
- Ca4agfT/y/zej4+6qCqPPL4RLd05W1odS8WsB/+xsF6+UI9VAS2DUL0haiI2T5BKztN8
- R+CEn7dT9ubEWUbMZ8H7ADGb8b9H0rGNd08W2t0se+FsUgH8A2xcdLAk9nYJwve3O4kB
- wEcIlAED6sfu3t7iqi6PGj11pnPD1K1EcHMgQEJFXn5pl2BbAikcl7cTkqJRhbpq14+V
- 9Fyj5K0AXdV0/YoBsstPYLXKCz9vtJWj4J4jCK0oPNKsw2Osul22DxdNRYkeay3hbcEU
- 9B/Q==
-X-Gm-Message-State: AOJu0YxccXylMH0jqYCyjiEJyAAXRPUbAowNoK1IaxpOHhfSSx21ZAGn
- RrdHWSiRzV/zmwacrftwIg/V90Sm4bgquQ8mXT2scbPic2xQTU0VTeGt1ek6i3s=
-X-Gm-Gg: ASbGncuuhmh0wINJdktF/44IcqhFpA7COBKQ+DXgdah7PClL9x9hwkYEKalPPirwgG5
- gntqFCVCKVzD7fjq3R/ClSn67IUJKsbnmBtMRfXSVt3IcsTzr0hgITnzaWG5pfYTg8QtXBptKCl
- CskPVNY08YOZ1lvtcEJg3lL4lwtBvwPvPWJqY3OQhSLoXdsNymGyfbw7jbuKgE6eFXAhsugXl/R
- 6lcrttikVD2wHLp0FvZNPj8ELNeVN6I5kaDIfoDCNYDrNv/k3QU/+MlMVDugDkMb1oAZuw08qfz
- aZ0GvRD/X+ar1zMFisBSN8+ob70I8QsmP0LXCBsdHA==
-X-Google-Smtp-Source: AGHT+IGPoocRV0D7G3Nhg9rnZU1ENy58XhbWTH1PEy7vrpu626YyMo3FFiWyud+0h3/SDiVCakbaCw==
-X-Received: by 2002:a17:907:97c6:b0:aaf:208:fd3f with SMTP id
- a640c23a62f3a-ab2ab558911mr2720111766b.13.1736954692863; 
- Wed, 15 Jan 2025 07:24:52 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d9900c4b56sm7355654a12.32.2025.01.15.07.24.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 07:24:51 -0800 (PST)
-Date: Wed, 15 Jan 2025 16:24:50 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH v3 3/6] target/riscv: add profile u_parent and s_parent
-Message-ID: <20250115-3af3c8e00a967f0538bfd4b5@orel>
-References: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
- <20250115134957.2179085-4-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tY5Mj-0001Q8-0e
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:31:33 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tY5Mg-0008Di-Vb
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:31:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=xVFnwv07dEVI0+SZNVT+yxcudKkEEjW5iFWQEbzLOs0=; b=FvcuHFnTq308ZKnMVjTdK0rLF+
+ GPnLEBwhzelykfuw+f1eNrZ92A3dQcMjFmTK+lr0oaxSx6piis0TVYsnS4WwqN8Isw+PzFWfgB5tU
+ yl8xqOkCnXomxST5k3dEUajsKwuZdTMQgGG/g6E8Sz6yZhVGNkHVGhbj2frFwvrOBHhMak/95ToLq
+ vCQKCPwN1hsX6DPBb8oeXyZjf6kc+E8QnHbEfiCxyy0i4Ajz6sNIVojsaw4ou6PurrGbgYZAKwR7L
+ Yw4xiNcIJH5BjR00NGn3YZFkuySw62BJkFx1d+rGh2ikVvc2dYqemMhyPcOClZ2DCVmbEY+lSR/Mc
+ zHs7TqbQ6tWkcCzglvv3l4tbiGV6B/JIaKzwUo9lxEThIRe8ZW7Y4h3qzSVx/uAegDFy4oCqoL1PA
+ rnEGWE/5XNLnzwxD1Q8A/yw8kbgkc4yP3laadkhblIO2yUixun+V2Sy7MeoF8J0JN7xH/h3nvrftl
+ X3sgAWhgsWBnC68mr5os+CIBAoasf0KGLZOYARsCzixu1DQri1tNW/SU7o+mBrkNPgDDUfXjG+hBO
+ 8QGCJWNhKrdwzsMfZT7s+jVY+qbFcKCDROcKDiAqWHPuMsoG105s0kzIn/1I0qiNu0FzsP8I75Kli
+ zcX2q2TB1fD7I/31n6yxWlwrUxmS7ull0ii0i/DmA=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, devel@daynix.com,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: Re: [PATCH v3 2/2] coreaudio: Initialize the buffer for device change
+Date: Wed, 15 Jan 2025 16:31:27 +0100
+Message-ID: <2563327.kqX6A2vZny@silver>
+In-Reply-To: <20250115-coreaudio-v3-2-bdb6bcb5bf9f@daynix.com>
+References: <20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com>
+ <20250115-coreaudio-v3-2-bdb6bcb5bf9f@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250115134957.2179085-4-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,149 +72,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 15, 2025 at 10:49:54AM -0300, Daniel Henrique Barboza wrote:
-> The current 'parent' mechanic for profiles allows for one profile to be
-> a child of a previous/older profile, enabling all its extensions (and
-> the parent profile itself) and sparing us from tediously listing all
-> extensions for every profile.
+On Wednesday, January 15, 2025 1:06:56 PM CET Akihiko Odaki wrote:
+> Reallocate buffers when the active device change as the required buffer
+> size may differ.
 > 
-> This works fine for u-mode profiles. For s-mode profiles this is not
-> enough: a s-mode profile extends not only his equivalent u-mode profile
-> but also the previous s-mode profile. This means, for example, that
-> RVA23S64 extends both RVA23U64 and RVA22S64.
-> 
-> To fit this usage, rename the existing 'parent' to 'u_parent' and add a
-> new 's_parent' attribute for profiles. Handle both like we're doing with
-> the previous 'profile' attribute, i.e. if set, enable it. This change
-
-...like we were doing with the previous 'parent'...
-
-> does nothing for the existing profiles but will make RVA23S64 simpler.
-> 
-> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  target/riscv/cpu.c         |  6 ++++--
->  target/riscv/cpu.h         |  3 ++-
->  target/riscv/tcg/tcg-cpu.c | 35 ++++++++++++++++++++++++++---------
->  3 files changed, 32 insertions(+), 12 deletions(-)
+>  audio/audio_int.h |  2 ++
+>  audio/audio.c     | 24 ++++++++++++++++++------
+>  audio/coreaudio.m |  1 +
+>  3 files changed, 21 insertions(+), 6 deletions(-)
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 6fb4d5f374..e215b1004d 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2349,7 +2349,8 @@ static const PropertyInfo prop_marchid = {
->   * doesn't need to be manually enabled by the profile.
->   */
->  static RISCVCPUProfile RVA22U64 = {
-> -    .parent = NULL,
-> +    .u_parent = NULL,
-> +    .s_parent = NULL,
->      .name = "rva22u64",
->      .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVU,
->      .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
-> @@ -2381,7 +2382,8 @@ static RISCVCPUProfile RVA22U64 = {
->   * The remaining features/extensions comes from RVA22U64.
->   */
->  static RISCVCPUProfile RVA22S64 = {
-> -    .parent = &RVA22U64,
-> +    .u_parent = &RVA22U64,
-> +    .s_parent = NULL,
->      .name = "rva22s64",
->      .misa_ext = RVS,
->      .priv_spec = PRIV_VERSION_1_12_0,
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 97713681cb..986131a191 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -81,7 +81,8 @@ const char *riscv_get_misa_ext_description(uint32_t bit);
->  #define CPU_CFG_OFFSET(_prop) offsetof(struct RISCVCPUConfig, _prop)
+> diff --git a/audio/audio_int.h b/audio/audio_int.h
+> index 2d079d00a259..9ba4a144d571 100644
+> --- a/audio/audio_int.h
+> +++ b/audio/audio_int.h
+> @@ -187,9 +187,11 @@ struct audio_pcm_ops {
+>      void   (*volume_in)(HWVoiceIn *hw, Volume *vol);
+>  };
 >  
->  typedef struct riscv_cpu_profile {
-> -    struct riscv_cpu_profile *parent;
-> +    struct riscv_cpu_profile *u_parent;
-> +    struct riscv_cpu_profile *s_parent;
->      const char *name;
->      uint32_t misa_ext;
->      bool enabled;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 48be24bbbe..c9e5a3b580 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -713,13 +713,29 @@ static bool riscv_cpu_validate_profile_satp(RISCVCPU *cpu,
->  }
+> +void audio_generic_initialize_buffer_in(HWVoiceIn *hw);
+>  void audio_generic_run_buffer_in(HWVoiceIn *hw);
+>  void *audio_generic_get_buffer_in(HWVoiceIn *hw, size_t *size);
+>  void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size);
+> +void audio_generic_initialize_buffer_out(HWVoiceOut *hw);
+>  void audio_generic_run_buffer_out(HWVoiceOut *hw);
+>  size_t audio_generic_buffer_get_free(HWVoiceOut *hw);
+>  void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size);
+> diff --git a/audio/audio.c b/audio/audio.c
+> index 87b4e9b6f2f3..17c6bbd0ae9e 100644
+> --- a/audio/audio.c
+> +++ b/audio/audio.c
+> @@ -1407,12 +1407,18 @@ void audio_run(AudioState *s, const char *msg)
 >  #endif
+>  }
 >  
-> +static void riscv_cpu_check_parent_profile(RISCVCPU *cpu,
-> +                                           RISCVCPUProfile *profile,
-> +                                           RISCVCPUProfile *parent)
+> +void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
 > +{
-> +    const char *parent_name;
-> +    bool parent_enabled;
-> +
-> +    if (!profile->enabled || !parent) {
-> +        return;
-> +    }
-> +
-> +    parent_name = parent->name;
-> +    parent_enabled = object_property_get_bool(OBJECT(cpu), parent_name, NULL);
-> +    profile->enabled = profile->enabled && parent_enabled;
-
-Could drop the 'profile->enabled &&' since we already know
-profile->enabled is true from the test above.
-
+> +    g_free(hw->buf_emul);
+> +    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> +    hw->buf_emul = g_malloc(hw->size_emul);
+> +    hw->pos_emul = hw->pending_emul = 0;
 > +}
 > +
->  static void riscv_cpu_validate_profile(RISCVCPU *cpu,
->                                         RISCVCPUProfile *profile)
+
+Better something like "reinit" in the name maybe?
+
+>  void audio_generic_run_buffer_in(HWVoiceIn *hw)
 >  {
->      CPURISCVState *env = &cpu->env;
->      const char *warn_msg = "Profile %s mandates disabled extension %s";
->      bool send_warn = profile->user_set && profile->enabled;
-> -    bool parent_enabled, profile_impl = true;
-> +    bool profile_impl = true;
->      int i;
->  
->  #ifndef CONFIG_USER_ONLY
-> @@ -773,12 +789,8 @@ static void riscv_cpu_validate_profile(RISCVCPU *cpu,
->  
->      profile->enabled = profile_impl;
->  
-> -    if (profile->parent != NULL) {
-> -        parent_enabled = object_property_get_bool(OBJECT(cpu),
-> -                                                  profile->parent->name,
-> -                                                  NULL);
-> -        profile->enabled = profile->enabled && parent_enabled;
-> -    }
-> +    riscv_cpu_check_parent_profile(cpu, profile, profile->u_parent);
-> +    riscv_cpu_check_parent_profile(cpu, profile, profile->s_parent);
->  }
->  
->  static void riscv_cpu_validate_profiles(RISCVCPU *cpu)
-> @@ -1181,8 +1193,13 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
->      profile->user_set = true;
->      profile->enabled = value;
->  
-> -    if (profile->parent != NULL) {
-> -        object_property_set_bool(obj, profile->parent->name,
-> +    if (profile->u_parent != NULL) {
-> +        object_property_set_bool(obj, profile->u_parent->name,
-> +                                 profile->enabled, NULL);
-> +    }
-> +
-> +    if (profile->s_parent != NULL) {
-> +        object_property_set_bool(obj, profile->s_parent->name,
->                                   profile->enabled, NULL);
+>      if (unlikely(!hw->buf_emul)) {
+> -        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> -        hw->buf_emul = g_malloc(hw->size_emul);
+> -        hw->pos_emul = hw->pending_emul = 0;
+> +        audio_generic_initialize_buffer_in(hw);
 >      }
 >  
-> -- 
-> 2.47.1
->
+>      while (hw->pending_emul < hw->size_emul) {
+> @@ -1446,6 +1452,14 @@ void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
+>      hw->pending_emul -= size;
+>  }
+>  
+> +void audio_generic_initialize_buffer_out(HWVoiceOut *hw)
+> +{
+> +    g_free(hw->buf_emul);
+> +    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> +    hw->buf_emul = g_malloc(hw->size_emul);
+> +    hw->pos_emul = hw->pending_emul = 0;
+> +}
+> +
+>  size_t audio_generic_buffer_get_free(HWVoiceOut *hw)
+>  {
+>      if (hw->buf_emul) {
+> @@ -1477,9 +1491,7 @@ void audio_generic_run_buffer_out(HWVoiceOut *hw)
+>  void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size)
+>  {
+>      if (unlikely(!hw->buf_emul)) {
+> -        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> -        hw->buf_emul = g_malloc(hw->size_emul);
+> -        hw->pos_emul = hw->pending_emul = 0;
+> +        audio_generic_initialize_buffer_out(hw);
+>      }
+>  
+>      *size = MIN(hw->size_emul - hw->pending_emul,
+> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+> index b9e1a952ed37..72a6df0f75ee 100644
+> --- a/audio/coreaudio.m
+> +++ b/audio/coreaudio.m
+> @@ -466,6 +466,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>      core->outputDeviceID = deviceID;
+>      core->audioDevicePropertyBufferFrameSize = audioDevicePropertyBufferFrameSize;
+>      core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
+> +    audio_generic_initialize_buffer_out(&core->hw);
+>      core->ioprocid = ioprocid;
 
-Otherwise,
+I would have probably separated this change into a separate patch, as changes
+above were more or less just refactoring, whereas this one changes behaviour.
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+And like my comment in the previous patch, I wonder whether that call comes
+too late. Keep in mind there are e.g. audio devices where you can't change
+certain parameters. So not every error here is a fatal error.
 
-Thanks,
-drew
+>  
+>      return 0;
+
+
 
