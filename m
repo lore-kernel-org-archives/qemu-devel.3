@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7CD6C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EE9C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY9Eo-0004Jr-8i; Wed, 15 Jan 2025 14:39:38 -0500
+	id 1tY9WN-0008Cj-3b; Wed, 15 Jan 2025 14:57:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <somlo@andrew.cmu.edu>)
- id 1tY9Ef-0004JH-5E
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:39:29 -0500
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY9WM-0008CH-5k
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:57:46 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <somlo@andrew.cmu.edu>)
- id 1tY9Ed-0002O6-7p
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:39:28 -0500
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-7bcf32a6582so6402085a.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 11:39:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY9WK-0004Me-DG
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:57:45 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3863c36a731so158706f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 11:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cmu.edu; s=google-2021; t=1736969965; x=1737574765; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=get4de+uPTAxdb+Tpx9fkFPkWi0H6NHzrboHxxxBysQ=;
- b=XV1l6ZByyxlE4nvLZpoHlWA1KNHBf37/3/giH1anX5FyBkDsPn+hkHFBovfPFzXiMi
- hIOwY+DdBY2XGrctVVGUTlxufyn7N2IkrKD9F21IW/NqdVW4tNqSuiafVskT2CuDOZMB
- ZANyr8UANQhnND3SJN8lYghNEGQBssn5xVd2I5GGe98KHWNVGztFFNSu0JIw4EXULhyi
- 2+FES7nDMaCnufrFyYeJqWD0b6eiRmkLs0Du+Q25VIeisSzr/XXbLPx1ykd8bpzuxpqN
- bWQoXFM7ZePRcsV4KYX0zK3iUma9/uW03JHbKMLPPoT/uRsEccJne0AY4FwmyLq3A6cB
- nsNQ==
+ d=linaro.org; s=google; t=1736971062; x=1737575862; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+lwDNfaw1hUUL4y5FqmyOvCm5+9BT713Hl+8038WI3M=;
+ b=aPDtBPMJfKoykHq8gUCjiC1P6RApauK/KaCmBhUXCKQZljAVNomi4ZmSlRwANQ1KQu
+ +2J7f2zsstHUY2SeUEgEXhjoOZVnuEC0ap3UKsblhVFpp17lJPIB4NA+vCdNSlSnLLec
+ tUGf2S+WWSWh1RYwmN9UWoBMIVslYAqrsLkXzzEFfkuMYUNfWzpb/Gsq52ogWz9nB3DI
+ 7Zi2w65LL01fnv37BJcL5J+sHzlAGpTGTyIB9QANT/zguQg1tZVVUajue7+6/S30CEEe
+ epMr1O4tAbFyLz8QWxrnnQBH23fa682f/XB8vXh/qZqGGsFRgmJdcj8AfuUVtvCJ7F86
+ hlXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736969965; x=1737574765;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1736971062; x=1737575862;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=get4de+uPTAxdb+Tpx9fkFPkWi0H6NHzrboHxxxBysQ=;
- b=m0wAvnwaBxe4/TZFll/8goVpa7Ugo4n3Eul2+fk7+WcTKG35oI196k+nGwODVfhW7d
- t8H6oSrMLjckSFn97RYhe6Gm2heRid2nL9ZrqAXiWPEbEmgIdb/T2G+36aDTwe0pHe9L
- OzVqFbFleSPasGMbj2Gl+mMoQYnx6oTkTPc4dJWV+ZqPRMmCRXxK3JM2T/TgN70pUVLz
- ieRIgGl8G+HPmmgI2Tsts9+KYM2IF15ptBCl64Hub4MRrv8myY5j4CfxJjN84vA62FOX
- Ec/lAQqslVdaU+a1heizyZFGe1bm769Q89AyrS8SREQ11k6NrKUqDsPb5wj3/yCLPt90
- tpQw==
+ bh=+lwDNfaw1hUUL4y5FqmyOvCm5+9BT713Hl+8038WI3M=;
+ b=mCEUE4AoXLtRxgFeHkLKYEFoXPWs7wa0H/USfmC4z41KDRL6MmZOYcOCfI2vuWyswy
+ 8bZ+X/t1F+iMWSo8jQBmEHWtya2XtnHdCcHiXZUshjhqUj0smEU3NIDJ/qUti5jpZNqA
+ XPvSY5kE1fvL6AWT7ayOEJaA7ZKEDRAoYYcxNMPeFjYPhOgJOfx/0emMHvtDHtB9VAOf
+ 8xNm5BL8QcBmhQLyBmEwzig91ASb+zFn5SyJQRKjrrUuXb2b0+ozNPtVFvoKXbXJRoE2
+ itVIBOp8mf5HVoJnt8RIMQwVm5s/fDsir+hMldMmf/nz+TlE929IYabEPa5x6qr05VKt
+ c5yQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4LvnSQxQhLdgWmP/3ddJIfTr4l31BXNZeiFNn7H53MpEtWdqy29vY00teWxZNUVRqqJCW43WEFaNA@nongnu.org
-X-Gm-Message-State: AOJu0Yytu82jRwvTOk8WCRz6N3V7ZT1r8MLBKKHIytzrPIAd9koda2/E
- 0PiWUqZW7xHQrAOiFBEHlXZJACZSBVuGGYSDUlkTydlAW0bM18dld6KXce/ikg==
-X-Gm-Gg: ASbGncsxldKfx3VvAUbgxVsOTVgMeTJ8sKav6Kk+AqqFW+IN0B3lj4QBJYzPDsWPWHv
- khuKQ4rATFqvmDPsflAfNBgfCAUNlPGf5zWWDX3UwjKogOuhTim2AX7GLxqKu4n9T2BK1LeqGcV
- NIj8cPrl5+DZae5R1N9+BEfrGAK/IrOzKlrqEljcolaT1CGE+QtM+BqGb2dWRXfcy8eoti7dkEr
- j3/U0sGWlU7lfZe79k6KpqPlFRPJR5xWT9TqGl83cC8RR/mmW9RQfov843z9mVN7LnkkHIo98c5
- vu5WON1JO2GC
-X-Google-Smtp-Source: AGHT+IH63zRB2cdFw6V/85DU3mhEk2WaJkqMz4exd8TKlqrjPFIRl/hw/tMrGiNm2EiFQY5Kq2sUFQ==
-X-Received: by 2002:a05:620a:2954:b0:7b6:91a4:845b with SMTP id
- af79cd13be357-7bcd9746116mr4097903585a.15.1736969965295; 
- Wed, 15 Jan 2025 11:39:25 -0800 (PST)
-Received: from glsmbp.wifi.local.cmu.edu (cmu-device2.nat.cmu.net.
- [128.2.149.252]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dfade73212sm67764926d6.80.2025.01.15.11.39.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 11:39:24 -0800 (PST)
-Date: Wed, 15 Jan 2025 14:39:23 -0500
-From: "Gabriel L. Somlo" <somlo@cmu.edu>
-To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] firmware: qemu_fw_cfg: constify 'struct bin_attribute'
-Message-ID: <Z4gO6-WLpIwBTqhn@glsmbp.wifi.local.cmu.edu>
-References: <20250114-sysfs-const-bin_attr-qemu_fw_cfg-v1-1-76f525a3ee72@weissschuh.net>
+ AJvYcCV9StAlMhdlXL4jYqjKMiIAlcD0KhdhGM7hzDxnK2e5ugPFHh0trAF3DMpmxifF2WqOUrYLVrOh8VUi@nongnu.org
+X-Gm-Message-State: AOJu0Yxku30jHVSbP9oRxX/BENkLLNVnNoh560sjvSehCYOcVGcNs1uC
+ dvVJIH61ml85dDvMzj1upFn5CKQeW1BJ5W0w4wfqsM9/5khB6/848PslEdE5aQ9efPIxi9GbeZ/
+ /JEE=
+X-Gm-Gg: ASbGncv3aAg+acKLaB+4l5nlqibsn6dNfo+UfBlbRaoHK4b858uYRY52TiNZfxfzNM6
+ 2Iigq1VdmQRQHwF6C1+XANDwt3eN0K7cl1Azlp+6VCncQ5xcxWt3Efw0THiGrcU6DLx6aoTKUNY
+ tABiQf6OkVZKPWJDl5IK4v3/JQcp3c2rrFReOP2KbjP8T8cUwaN5SeXl5vbnSS+UUY/DOByqO6e
+ SeT7YWOj/rb38305D6722q288796ExSj2ZfDTrIGct2ETc35sUSa+9n0mGKYrw6027oe+/zqrPx
+ nYHL2oam+oyAUxqbSyjKMvIh
+X-Google-Smtp-Source: AGHT+IHgmIUJ9YDUzXItrR0qG7l6FY0CywtweeA/IOiNsmZ9nYS+r5N7MNXTbBmJqcWDlwzROFDGUQ==
+X-Received: by 2002:a5d:5f8f:0:b0:38a:2b39:679d with SMTP id
+ ffacd0b85a97d-38a87313e2cmr25612019f8f.32.1736971062075; 
+ Wed, 15 Jan 2025 11:57:42 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c7527fd1sm34201505e9.31.2025.01.15.11.57.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jan 2025 11:57:40 -0800 (PST)
+Message-ID: <bdba5477-ebcc-4081-a8c9-63be7227932f@linaro.org>
+Date: Wed, 15 Jan 2025 20:57:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/81] tcg: Remove TCG_TARGET_NEED_LDST_LABELS and
+ TCG_TARGET_NEED_POOL_LABELS
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ <20250107080112.1175095-15-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250107080112.1175095-15-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250114-sysfs-const-bin_attr-qemu_fw_cfg-v1-1-76f525a3ee72@weissschuh.net>
-X-Clacks-Overhead: GNU Terry Pratchett
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=somlo@andrew.cmu.edu; helo=mail-qk1-x72c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,54 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 14, 2025 at 10:50:20PM +0100, Thomas Weiﬂschuh wrote:
-> The sysfs core now allows instances of 'struct bin_attribute' to be
-> moved into read-only memory. Make use of that to protect them against
-> accidental or malicious modifications.
+On 7/1/25 09:00, Richard Henderson wrote:
+> Make these features unconditional, as they're used by most
+> tcg backends anyway.  Merge tcg-ldst.c.inc and tcg-pool.c.inc
+> into tcg.c and mark some of the functions unused, so that
+> when the features are not used we won't get Werrors.
 > 
-> Signed-off-by: Thomas Weiﬂschuh <linux@weissschuh.net>
-
-Acked-by: Gabriel Somlo <somlo@cmu.edu>
-
-Thanks,
---Gabriel
-
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  drivers/firmware/qemu_fw_cfg.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
-> index d58da3e4500a5e230b7da9a75e4d70df7c38c542..2615fb780e3c4500db36d4746880455f05479f1f 100644
-> --- a/drivers/firmware/qemu_fw_cfg.c
-> +++ b/drivers/firmware/qemu_fw_cfg.c
-> @@ -460,7 +460,7 @@ static const struct kobj_type fw_cfg_sysfs_entry_ktype = {
->  
->  /* raw-read method and attribute */
->  static ssize_t fw_cfg_sysfs_read_raw(struct file *filp, struct kobject *kobj,
-> -				     struct bin_attribute *bin_attr,
-> +				     const struct bin_attribute *bin_attr,
->  				     char *buf, loff_t pos, size_t count)
->  {
->  	struct fw_cfg_sysfs_entry *entry = to_entry(kobj);
-> @@ -474,9 +474,9 @@ static ssize_t fw_cfg_sysfs_read_raw(struct file *filp, struct kobject *kobj,
->  	return fw_cfg_read_blob(entry->select, buf, pos, count);
->  }
->  
-> -static struct bin_attribute fw_cfg_sysfs_attr_raw = {
-> +static const struct bin_attribute fw_cfg_sysfs_attr_raw = {
->  	.attr = { .name = "raw", .mode = S_IRUSR },
-> -	.read = fw_cfg_sysfs_read_raw,
-> +	.read_new = fw_cfg_sysfs_read_raw,
->  };
->  
->  /*
-> 
-> ---
-> base-commit: 7f5b6a8ec18e3add4c74682f60b90c31bdf849f2
-> change-id: 20250114-sysfs-const-bin_attr-qemu_fw_cfg-fa4a95934904
-> 
-> Best regards,
-> -- 
-> Thomas Weiﬂschuh <linux@weissschuh.net>
-> 
+>   include/tcg/tcg.h                |   4 -
+>   tcg/aarch64/tcg-target.h         |   2 -
+>   tcg/arm/tcg-target.h             |   2 -
+>   tcg/i386/tcg-target.h            |   2 -
+>   tcg/loongarch64/tcg-target.h     |   2 -
+>   tcg/mips/tcg-target.h            |   2 -
+>   tcg/ppc/tcg-target.h             |   2 -
+>   tcg/riscv/tcg-target.h           |   3 -
+>   tcg/s390x/tcg-target.h           |   2 -
+>   tcg/sparc64/tcg-target.h         |   2 -
+>   tcg/tcg.c                        | 211 +++++++++++++++++++++++++++++--
+>   tcg/aarch64/tcg-target.c.inc     |   2 -
+>   tcg/arm/tcg-target.c.inc         |   2 -
+>   tcg/i386/tcg-target.c.inc        |   3 -
+>   tcg/loongarch64/tcg-target.c.inc |   9 +-
+>   tcg/mips/tcg-target.c.inc        |   3 -
+>   tcg/ppc/tcg-target.c.inc         |   2 -
+>   tcg/riscv/tcg-target.c.inc       |   3 -
+>   tcg/s390x/tcg-target.c.inc       |   2 -
+>   tcg/sparc64/tcg-target.c.inc     |   3 -
+>   tcg/tcg-ldst.c.inc               |  65 ----------
+>   tcg/tcg-pool.c.inc               | 162 ------------------------
+>   tcg/tci/tcg-target.c.inc         |  12 +-
+>   23 files changed, 216 insertions(+), 286 deletions(-)
+>   delete mode 100644 tcg/tcg-ldst.c.inc
+>   delete mode 100644 tcg/tcg-pool.c.inc
+
+Simpler to review using --color-moved=dimmed-zebra.
+
+Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
+
 
