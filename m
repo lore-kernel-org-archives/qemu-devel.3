@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36308C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF1AC02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYCqf-0007RM-IM; Wed, 15 Jan 2025 18:30:57 -0500
+	id 1tYD0S-0005ZW-PE; Wed, 15 Jan 2025 18:41:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCqY-0006rv-6t
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:30:50 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tYD0N-0005Yu-Nd
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:40:59 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCqV-00059n-FU
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:30:49 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38632b8ae71so269765f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:30:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tYD0L-0006MT-1e
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:40:58 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21675fd60feso5521715ad.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:40:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736983844; x=1737588644; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oBmzOwwa/rqiVq09wwGIeAFFq9Z7MiUbusM3HZSK1Bs=;
- b=lryqALIrnpwG61/VosLmHrbIcLUlJEewhsfGiOZPEJ5l1Ak4YFwCmu8n6dTlkBTcxi
- HK1ZwaEcRTNWXmY7jTIN4TsO01Vovg+TsGCs5yrPKMOKay6RyoBLW2IopxdB50lJF3We
- 1FaSPkNZnqQ8IWRxOXndZNy/zVrFVY4Pqa0GVU8RwXKLONt4bqiWFTtAvFUAxgbse94m
- qG5SXHJHObYM4JzyFXXYPforbSj4TdjzO8vA/uLC3j81Tt+lVoRIGqjFCtxtiWlloaxD
- 5XX2Hw6lrQMxSdLibS2Cc4dnBZuobpNbMqunQRpA8dZd6siG69Ab+59iyo99pxvwJf2D
- iTpw==
+ d=linaro.org; s=google; t=1736984455; x=1737589255; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eU4s+1LjKlD9KbXrZMS0oJ8bcsP+ZYXoZaUXV7g+A9M=;
+ b=WnlLD3azBRmjx+sj+2k+E5bkF0Rq6TZot1phPdbzZQ5Ywc4ih5rNNCNFG3TQq8bVnV
+ POQk1KaqmOvV3T7RfdnkKehFlpx9TLY+NTbly0J9Ktar9fQknYS5rhrzSfFR901XXJq7
+ S/AmmYIPYeSo/uz13Kpa9340SL/HqEtWXi56x7ATAWRlz6rsdOqCTZoXFAKAigGrhijb
+ ARc6vdkb6rJEEbKbtwjhYSK4it1jKYcq+kQxvJwzBdIbCpUl+x2Oho8Si2k6ck1jFsKz
+ hbpLIpExQbwgdR8ISbbLls4X8kditDJYC+WZF6yWGFAhdT5tg8/nebgkEeg52FlEPsAr
+ 2tBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736983844; x=1737588644;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oBmzOwwa/rqiVq09wwGIeAFFq9Z7MiUbusM3HZSK1Bs=;
- b=q02SgzyvpJscXg00n7xkncyq8hjgWsVwIGoVGBmhO8OaJqBfkonhi/13SH0pFAe8+y
- 1dGhBRYAMz4IJoUoN2QvpEYTmNJ3wASMLrWl4oPC7/SVQcsWKiZ8Wve/uEfJrkj2j29c
- 3vFa5lAXjuMASd7M+5rvjWqNjYAM1H0RArXgwmYiJNyVhcY2gFXnzs8lziLz11DbDSMY
- JXlDs5exjp2HI+k2MO1emfjYj6lndN6IPKghhrYGV8a/ZvOTu5xv+mw9Ad1RfZrs+tHJ
- Bo0XPrSlQIojF0klzvXRCibKE9zlIX8JiJ8goVEMoqkvnqh5iLSNejpU3jQbS5Fdcspw
- WHRQ==
-X-Gm-Message-State: AOJu0YyJnwwitVA6ofgAFxschWGeN2oIrxLsYCW3zZfaSRYEaiEP/ZIt
- 55BBhSo0PD95klJQFs7yBnPdAfae/xbidwcxA/9kdZDXdqJNKkBqDLx5DGw0p67EaaEZirRYli9
- bsa0=
-X-Gm-Gg: ASbGncszoryALlvEbWlR+/c3uvM+fhTNaKj/gnnAIF/2bCXpsXpHgY6OgYLkmR+Ilpu
- cTK+lAnk5tP23xGk5WH9ZINHwCxI/7w649WHMq0qR8rSTnGMpwsn3iuFNTfGJObZwliwWdG0l/x
- 2o16vfPPTyAuBiwbfOGddW68UjU2MnorM8ccwQLhFsGQwUkrr6DP79fojIeGeuckS6nB5iYnWCJ
- sXHKFUgejfVAO2nZukf5Aw4rt3iEClHX6hqvGQ/RKvBWwnZTJR+JiVxhjNOb4Th0vzScFNrcJMM
- a6kaEIKhAVYOWbYd3DCQE4a213DThvU=
-X-Google-Smtp-Source: AGHT+IECMYKwfs99AUPDlyT8MMED+2wzNOLIBYVrN8sF9XcniKU6ROqXqL3JmUp6tLqBjgHn7pBeNw==
-X-Received: by 2002:a05:6000:144d:b0:388:e377:8a1b with SMTP id
- ffacd0b85a97d-38a8730cc78mr28628549f8f.28.1736983843838; 
- Wed, 15 Jan 2025 15:30:43 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74aca93sm39607455e9.13.2025.01.15.15.30.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 15:30:43 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 10/11] hw/mips/loongson3_virt: Propagate %processor_id to
- init_boot_param()
-Date: Thu, 16 Jan 2025 00:29:50 +0100
-Message-ID: <20250115232952.31166-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250115232952.31166-1-philmd@linaro.org>
-References: <20250115232952.31166-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1736984455; x=1737589255;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eU4s+1LjKlD9KbXrZMS0oJ8bcsP+ZYXoZaUXV7g+A9M=;
+ b=i4Q22jQCy18FtsIYEdYHNCiRqdzF3iHghkzUGvE756AsoN2jeBKG3EOwMLvqQIVKoI
+ sDAL1opupFBWaEAkmtH1Bsrqpy9JF+2a0EOEY2PSvPmPtXO4uzpp0UuvJZdN7vSKPleA
+ l5qtU0oOL6e2aqCRN5IWfep6rOUhKZ7cba2NsJ2Ug1C3SaNKGYJ4KEESrmNZpZvBsHa3
+ KA6gZCiS0g7rYiO2ilwqfwIg3aPkX3pK7HXXxgBJUvZ3+gwiklCDCV1MEPMLegZ+lA9I
+ 07gbAFCyIKz4U7QpFOS8UcGU346qpxwcQ6JGSn+KLw0OeYGG8MhvO/wKLoe3eiH72EqT
+ Tp8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhsYYil91UcOlzlFP++oWkXCCGN7sMJlU/j2FsVlkQZHHUG4xIryX6BDfDT8xaMKWqrHIPf6ii9MMb@nongnu.org
+X-Gm-Message-State: AOJu0YwFlgfCfYMyeXTg1V7Co+ylDNEClNpT/qoSqkL4ATYdlV5u6m9U
+ bIibkhjT9QIADc2ruBz4amtKZLz0OiuFjLt4z19WfTwVuehzw5Ec632aWxH51uo=
+X-Gm-Gg: ASbGncsVqRxoJJmUyHSbZ2iTuePaghe3EcaLhFIKypbtjoBzcTfPphEPwxIrQG7BhR/
+ 7vnV/zlhiQ78LIBgJX2e78DxXYz43bS8FexAbGZvTRM67xNMs2uQ24qpuZG9150iZr7ye7w7FQr
+ hO5ybA8YLlUWTbCBsOcXigdGsoHH5bVFmoE6jo3ozjk5SCjZHTbiLuBvmLN7Lgk/RjcKax1nVnV
+ umbaCc8IjLqOZJDyr1XWzZ8yftTzblgo6C40K/q+J2VlmVOm/Yv004DRuJ2uLkNKg0xlgRQBUAm
+ EXIPFn/ogwhOKo52bAtHymk=
+X-Google-Smtp-Source: AGHT+IE3Hn5YvpJ+8RzUNtzYapaR+sOj2jheCQuaOSmjYB1+kG511yj7V4l/VXGUahLuLCDec3LXpw==
+X-Received: by 2002:a17:903:2452:b0:216:6f1e:5799 with SMTP id
+ d9443c01a7336-21a83fe4f75mr484166125ad.35.1736984455140; 
+ Wed, 15 Jan 2025 15:40:55 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f10df7asm87335225ad.47.2025.01.15.15.40.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jan 2025 15:40:54 -0800 (PST)
+Message-ID: <f05247a6-b4b0-4c06-827a-74b3fe4d4f9f@linaro.org>
+Date: Wed, 15 Jan 2025 15:40:52 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/81] tcg: Add TCGOP_FLAGS
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250107080112.1175095-1-richard.henderson@linaro.org>
+ <20250107080112.1175095-6-richard.henderson@linaro.org>
+ <8ce2bb26-b2c3-4665-bb1a-2576859aaaca@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <8ce2bb26-b2c3-4665-bb1a-2576859aaaca@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Propagate %processor_id from mips_loongson3_virt_init() where
-we have a reference to the first vCPU, so use it instead of
-the &first_cpu global.
+On 1/15/25 13:16, Philippe Mathieu-Daudé wrote:
+> On 7/1/25 08:59, Richard Henderson wrote:
+>> To be used by some integer operations instead of, or in addition to,
+>> a trailing constant argument.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/tcg/tcg.h | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+>> index 5d96cdfc30..e80b1f6efc 100644
+>> --- a/include/tcg/tcg.h
+>> +++ b/include/tcg/tcg.h
+>> @@ -440,6 +440,7 @@ struct TCGOp {
+>>   #define TCGOP_CALLO(X)    (X)->param2
+>>   #define TCGOP_TYPE(X)     (X)->param1
+>> +#define TCGOP_FLAGS(X)    (X)->param1
+> 
+> I skipped this because there was some code smell around I
+> couldn't figure. Hopefully a typo :)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/mips/loongson3_virt.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+Yes, a typo.  Thankfully this field isn't within these converted opcodes.
 
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index 4924ea88eda..7d6369876ba 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -173,7 +173,7 @@ static uint64_t get_cpu_freq_hz(const MIPSCPU *cpu)
-     return DEF_LOONGSON3_FREQ;
- }
- 
--static void init_boot_param(unsigned cpu_count)
-+static void init_boot_param(unsigned cpu_count, uint32_t processor_id)
- {
-     static void *p;
-     struct boot_params *bp;
-@@ -184,8 +184,7 @@ static void init_boot_param(unsigned cpu_count)
-     bp->efi.smbios.vers = cpu_to_le16(1);
-     init_reset_system(&(bp->reset_system));
-     p += ROUND_UP(sizeof(struct boot_params), 64);
--    init_loongson_params(&(bp->efi.smbios.lp), p, cpu_count,
--                         MIPS_CPU(first_cpu)->env.CP0_PRid,
-+    init_loongson_params(&(bp->efi.smbios.lp), p, cpu_count, processor_id,
-                          loaderparams.cpu_freq, loaderparams.ram_size);
- 
-     rom_add_blob_fixed("params_rom", bp,
-@@ -642,7 +641,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-         loaderparams.kernel_entry = load_kernel(&cpu->env);
- 
-         init_boot_rom();
--        init_boot_param(machine->smp.cpus);
-+        init_boot_param(machine->smp.cpus, cpus[0]->env.CP0_PRid);
-     } else {
-         filename = qemu_find_file(QEMU_FILE_TYPE_BIOS,
-                                   machine->firmware ?: LOONGSON3_BIOSNAME);
--- 
-2.47.1
 
+r~
 
