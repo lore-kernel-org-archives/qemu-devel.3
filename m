@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5056DC02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B360CC02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY27W-0003j9-9s; Wed, 15 Jan 2025 07:03:38 -0500
+	id 1tY2AG-0006ay-HS; Wed, 15 Jan 2025 07:06:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY27P-0003dX-H7
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:03:32 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tY2AC-0006Z7-7L
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:06:25 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tY27N-0008Aj-8T
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:03:31 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-21649a7bcdcso113007745ad.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 04:03:28 -0800 (PST)
+ id 1tY2A5-0000YF-PW
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:06:20 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-21628b3fe7dso112740995ad.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 04:06:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736942608; x=1737547408;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736942776; x=1737547576;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NPcUIuA+1v7HK1TMvnl73wkTi9fItVYjHIROGL3QJso=;
- b=Pe/ENQT6dqRa4z2fpr7/1YS0VF0GwJ/tO0kPXOgig7q2opOw3Gk8O/SnoJpnCdh67F
- K2WwPvOnW+67Zj+3XSV7v6kw40sAWZPkt+RK7y/DicqurGd3iLlaHKlNEikJdJE+73jz
- drP3dkF1GhGeKx272GB1Zx9WAihqXJHXpXmC8MLv0MzXE+xwN/lNkqf8WoVs2BxA8BD2
- rVVvCgjq8cpRIcWpmI7PoPjhl//QrPSTzPX3knrOFy2tTz3k9KiQTlvnbVkfnACYIZqw
- oLmmkeGHnN0Mib/M0P0KD9MZBg2TyO71MHoOWd4tzzOfGY6zrxq/KUX9v0/DwSJMXXXL
- wxww==
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9vxz7RIhvN/lfoDLKobSUYEh7xaDg1HDK5A2IR5Jlvs=;
+ b=OFio1n6UUBTkiC0zMi5clDGULwwWrzbNk4wuLTD+sRYg5V0HGhbnesAc87tQ5Bwe57
+ 1lazCA8qdTYvEDoPXfO0TW53EU2G08U1qjCgEFgdZdXBdx8zKk2QebGfOKjPx20mqK7v
+ E03hRxw1j8LbZDKgDHHQsSN1bEwT7a2zKnajAZnUD7ghUSCL9y/iLinS7Vu5AGxjaWH9
+ xMYY2SqcGGP8vBN1FNcyTbQSaltD0vgf/Is5lSbqJVcvUhUL3iITfl3bfvw3o+3iD04w
+ m7tTx6ZBavcpsDeCG2yWLgXEpmjZGMfLvSqoU66p7Hv1Cwq0xI90Tc8aU8+y8JJL9DpB
+ ps9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736942608; x=1737547408;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NPcUIuA+1v7HK1TMvnl73wkTi9fItVYjHIROGL3QJso=;
- b=It9AOYqm5iRjmrTt801WVYzQBfYaTDOQoUneox1Cf6C1qN+TwqZxvKgugWtIXKsrWu
- mLCh3gU4IAzEeEYYOcfKnCkxFCy2rPYqYQ1ciUVs5KAGoAnnuAZv3HreP+ypE5i9Bqm6
- 9KzjxN8awpSyIMIJnXs5grhoDfBW7j/eflLF8DR6luFj7NNfQKU5cY9iwex7VpuYgCNI
- alLu8ABbxifAuUpVzhhUHI640oDFsFmWXNDkYDz+cKCnKCJIUiS2fF7fu0eJ/cC8Cmp7
- DV+nKc+PASoyWVYDeLrnnynDAPPh7f7KIjEgV+TUqfBX+5oHPrTAcaIKTNM1Y072IAfG
- 676g==
-X-Gm-Message-State: AOJu0Yx/Q6wS6iZTBfTZqNZamle4o/qydPM1Ln44mGblQIDa9XDkDXvc
- TjavVim006m2LEaP+0yuyvyMLxi1hbySyhWhjOzqfFYF46qZzRXq0NUYUPS9jLk=
-X-Gm-Gg: ASbGncuhIAKD6Pb3LhEd7n5KAH2RPIAgGZpfLX7p5tZ5j1wqKiN045v3i3LIN1rlhmB
- Di3vTHBeiRinImGHSCHsG2KHRKVdFNJ9tibnOjd3u7bu4LCDzXSQStQP68ObAKfm3sIqudSc7o8
- /x9wZ0f8XQQJ4ObLRiK7hwsn6AfrR33erCJd2VPhgP7xZqYAmuYlexVgf/HMchuwgkk846UWArH
- NdIzfXlZ43GhMrzCsLmrKsfnjiE1T/pBbGxTfcyDMTC5e8XHXszgqO9cnQd
-X-Google-Smtp-Source: AGHT+IHwF9rqf14Q99mM9bLnSiPXZh7CM3vfJwM8vQR9VPQmupTPiucL6mmbhn8VnDwOA4Ag212BeQ==
-X-Received: by 2002:a17:902:d2ca:b0:211:8404:a957 with SMTP id
- d9443c01a7336-21a83fc0619mr437535545ad.41.1736942607768; 
- Wed, 15 Jan 2025 04:03:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736942776; x=1737547576;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9vxz7RIhvN/lfoDLKobSUYEh7xaDg1HDK5A2IR5Jlvs=;
+ b=bJvWqVHFAAijKvVooEDY8J8W7DAmcTrSBAPXYz888odXPlMZxWXeYuxHBk8W7V3N33
+ rQy3KM4bc0Id4trBdARco1m9B5zNt08RyYErussG4TENEJyTGaq6nGZ8Bear1urcFdEw
+ jXjbZH2PnVb2Vze6Vx/9Nb3NVQ85fA/jOeJBJXzYd4uGvOiHTnDSePSWI73iLApQd8lA
+ 4XUdnEdAl8rxkQ41W7tJQROIs6knvh2ho92rV1BV1Wa5FpR0HvTY/azeIDnA9UAXjvap
+ 7bWOnW+1WOev7U8vggcDeGq4NNAJ0QPfVmx/AE3CXkQfmcXYUxjwZ7VRaoE4yTLAJiCk
+ d9wQ==
+X-Gm-Message-State: AOJu0YxkqK2mgCex8WxUg34N0E8Q2SQckfiuOWae3DWoLzf49mUlMd28
+ Kg39NQlq+0wo70O5naJ0LMWQZmEy9qwRVi5D1aCTRn68VZH5BE/LbYTrxezJyoc=
+X-Gm-Gg: ASbGncvlIB72mhBdRMYTxsiLrFDPvYF2gMIcJVju/62pGJGli+FO/MoKnA6K/cd58aV
+ wLtNZn4RxzPwHxL8RjtBRTAB64nvQxq2PvYDC1j2Uw9CiOr43YiS2YDcV7Q13w4N62Ys0JxuPAn
+ M8lUwLolT7daNlvibwyRyDhkltT2HHCwrNNzKFw4SvKZwpdQPNYN1rqYRCgQVO4xZVcm5pKPHEI
+ DzF3AGfqZu64uQTUhxidcGALPRtr4vxJehf+3GLsnhP3M6DKQbE/KmixtpF
+X-Google-Smtp-Source: AGHT+IH74Mp66N3/gwxuUt1sQbNeCQPWo3F4igKz0NSm6AnfwlAuLJ8INpmbaDTHYPsR76H7f0IB3Q==
+X-Received: by 2002:a17:902:d2d2:b0:21a:8382:fcbb with SMTP id
+ d9443c01a7336-21a83f5db86mr448967775ad.25.1736942776097; 
+ Wed, 15 Jan 2025 04:06:16 -0800 (PST)
 Received: from localhost ([157.82.207.107])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-21a9f219a94sm81685845ad.129.2025.01.15.04.03.25
+ d9443c01a7336-21a9f21ada1sm81545585ad.138.2025.01.15.04.06.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 04:03:27 -0800 (PST)
+ Wed, 15 Jan 2025 04:06:15 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 15 Jan 2025 21:03:08 +0900
-Subject: [PATCH v4 2/2] tap: Use g_spawn_sync() and g_spawn_check_wait_status()
+Date: Wed, 15 Jan 2025 21:06:08 +0900
+Subject: [PATCH v2] ui/cocoa: Use qemu_input_map_osx_to_qcode
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250115-glib-v4-2-a827b2676259@daynix.com>
-References: <20250115-glib-v4-0-a827b2676259@daynix.com>
-In-Reply-To: <20250115-glib-v4-0-a827b2676259@daynix.com>
-To: Jason Wang <jasowang@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>, Lei Yang <leiyang@redhat.com>
+Message-Id: <20250115-osx-v2-1-ac3b38d91174@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAK+kh2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDQ0ND3fziCl0DQwvj1OQ0UyNDgzQloMqCotS0zAqwKdGxtbUA8xhl1lU
+ AAAA=
+To: Gerd Hoffmann <kraxel@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,293 +101,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-g_spawn_sync() (for GLib < 2.68) or g_spawn_async_with_pipes_and_fds()
-(for the newer) gives an informative message if it fails to execute
-the script instead of reporting exiting status 1.
+ui/cocoa used to have a conversion table from macOS keycode to QKeyCode.
+It is an unnecessary redundancy as ui/input-keymap.c already has such a
+table. Worse, I added an incorrect mapping of kVK_JIS_Eisu and
+kVK_JIS_Kana with commit 708b72557ff5 ("ui/cocoa: Support unique keys of
+JIS keyboards").
 
-g_spawn_check_wait_status() also gives an message easier to understand
-than the raw value returned by waitpid().
+According to the following documentations, the definitions in
+ui/keycodemapdb/keymaps.csv, which ui/input-keymap.c uses, are correct:
+https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang1?language=objc
+https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang2?language=objc
+https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime
 
+Use qemu_input_map_osx_to_qcode to eliminate the redundancy and
+incorrect mappings.
+
+Fixes: 708b72557ff5 ("ui/cocoa: Support unique keys of JIS keyboards")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
 ---
- net/tap.c | 220 +++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 117 insertions(+), 103 deletions(-)
+ ui/cocoa.m | 129 +------------------------------------------------------------
+ 1 file changed, 2 insertions(+), 127 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index ae1c7e398321..f1e00de4181c 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -385,56 +385,59 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
-     return s;
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 3a88535374de..e22c3c925678 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -139,138 +139,13 @@ static bool bool_with_bql(BoolCodeBlock block)
+     return val;
  }
  
--static void close_all_fds_after_fork(int excluded_fd)
-+#if !GLIB_CHECK_VERSION(2, 68, 0)
-+static void unset_cloexec(gpointer data)
- {
--    const int skip_fd[] = {STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO,
--                           excluded_fd};
--    unsigned int nskip = ARRAY_SIZE(skip_fd);
+-// Mac to QKeyCode conversion
+-static const int mac_to_qkeycode_map[] = {
+-    [kVK_ANSI_A] = Q_KEY_CODE_A,
+-    [kVK_ANSI_B] = Q_KEY_CODE_B,
+-    [kVK_ANSI_C] = Q_KEY_CODE_C,
+-    [kVK_ANSI_D] = Q_KEY_CODE_D,
+-    [kVK_ANSI_E] = Q_KEY_CODE_E,
+-    [kVK_ANSI_F] = Q_KEY_CODE_F,
+-    [kVK_ANSI_G] = Q_KEY_CODE_G,
+-    [kVK_ANSI_H] = Q_KEY_CODE_H,
+-    [kVK_ANSI_I] = Q_KEY_CODE_I,
+-    [kVK_ANSI_J] = Q_KEY_CODE_J,
+-    [kVK_ANSI_K] = Q_KEY_CODE_K,
+-    [kVK_ANSI_L] = Q_KEY_CODE_L,
+-    [kVK_ANSI_M] = Q_KEY_CODE_M,
+-    [kVK_ANSI_N] = Q_KEY_CODE_N,
+-    [kVK_ANSI_O] = Q_KEY_CODE_O,
+-    [kVK_ANSI_P] = Q_KEY_CODE_P,
+-    [kVK_ANSI_Q] = Q_KEY_CODE_Q,
+-    [kVK_ANSI_R] = Q_KEY_CODE_R,
+-    [kVK_ANSI_S] = Q_KEY_CODE_S,
+-    [kVK_ANSI_T] = Q_KEY_CODE_T,
+-    [kVK_ANSI_U] = Q_KEY_CODE_U,
+-    [kVK_ANSI_V] = Q_KEY_CODE_V,
+-    [kVK_ANSI_W] = Q_KEY_CODE_W,
+-    [kVK_ANSI_X] = Q_KEY_CODE_X,
+-    [kVK_ANSI_Y] = Q_KEY_CODE_Y,
+-    [kVK_ANSI_Z] = Q_KEY_CODE_Z,
+-
+-    [kVK_ANSI_0] = Q_KEY_CODE_0,
+-    [kVK_ANSI_1] = Q_KEY_CODE_1,
+-    [kVK_ANSI_2] = Q_KEY_CODE_2,
+-    [kVK_ANSI_3] = Q_KEY_CODE_3,
+-    [kVK_ANSI_4] = Q_KEY_CODE_4,
+-    [kVK_ANSI_5] = Q_KEY_CODE_5,
+-    [kVK_ANSI_6] = Q_KEY_CODE_6,
+-    [kVK_ANSI_7] = Q_KEY_CODE_7,
+-    [kVK_ANSI_8] = Q_KEY_CODE_8,
+-    [kVK_ANSI_9] = Q_KEY_CODE_9,
+-
+-    [kVK_ANSI_Grave] = Q_KEY_CODE_GRAVE_ACCENT,
+-    [kVK_ANSI_Minus] = Q_KEY_CODE_MINUS,
+-    [kVK_ANSI_Equal] = Q_KEY_CODE_EQUAL,
+-    [kVK_Delete] = Q_KEY_CODE_BACKSPACE,
+-    [kVK_CapsLock] = Q_KEY_CODE_CAPS_LOCK,
+-    [kVK_Tab] = Q_KEY_CODE_TAB,
+-    [kVK_Return] = Q_KEY_CODE_RET,
+-    [kVK_ANSI_LeftBracket] = Q_KEY_CODE_BRACKET_LEFT,
+-    [kVK_ANSI_RightBracket] = Q_KEY_CODE_BRACKET_RIGHT,
+-    [kVK_ANSI_Backslash] = Q_KEY_CODE_BACKSLASH,
+-    [kVK_ANSI_Semicolon] = Q_KEY_CODE_SEMICOLON,
+-    [kVK_ANSI_Quote] = Q_KEY_CODE_APOSTROPHE,
+-    [kVK_ANSI_Comma] = Q_KEY_CODE_COMMA,
+-    [kVK_ANSI_Period] = Q_KEY_CODE_DOT,
+-    [kVK_ANSI_Slash] = Q_KEY_CODE_SLASH,
+-    [kVK_Space] = Q_KEY_CODE_SPC,
+-
+-    [kVK_ANSI_Keypad0] = Q_KEY_CODE_KP_0,
+-    [kVK_ANSI_Keypad1] = Q_KEY_CODE_KP_1,
+-    [kVK_ANSI_Keypad2] = Q_KEY_CODE_KP_2,
+-    [kVK_ANSI_Keypad3] = Q_KEY_CODE_KP_3,
+-    [kVK_ANSI_Keypad4] = Q_KEY_CODE_KP_4,
+-    [kVK_ANSI_Keypad5] = Q_KEY_CODE_KP_5,
+-    [kVK_ANSI_Keypad6] = Q_KEY_CODE_KP_6,
+-    [kVK_ANSI_Keypad7] = Q_KEY_CODE_KP_7,
+-    [kVK_ANSI_Keypad8] = Q_KEY_CODE_KP_8,
+-    [kVK_ANSI_Keypad9] = Q_KEY_CODE_KP_9,
+-    [kVK_ANSI_KeypadDecimal] = Q_KEY_CODE_KP_DECIMAL,
+-    [kVK_ANSI_KeypadEnter] = Q_KEY_CODE_KP_ENTER,
+-    [kVK_ANSI_KeypadPlus] = Q_KEY_CODE_KP_ADD,
+-    [kVK_ANSI_KeypadMinus] = Q_KEY_CODE_KP_SUBTRACT,
+-    [kVK_ANSI_KeypadMultiply] = Q_KEY_CODE_KP_MULTIPLY,
+-    [kVK_ANSI_KeypadDivide] = Q_KEY_CODE_KP_DIVIDE,
+-    [kVK_ANSI_KeypadEquals] = Q_KEY_CODE_KP_EQUALS,
+-    [kVK_ANSI_KeypadClear] = Q_KEY_CODE_NUM_LOCK,
+-
+-    [kVK_UpArrow] = Q_KEY_CODE_UP,
+-    [kVK_DownArrow] = Q_KEY_CODE_DOWN,
+-    [kVK_LeftArrow] = Q_KEY_CODE_LEFT,
+-    [kVK_RightArrow] = Q_KEY_CODE_RIGHT,
+-
+-    [kVK_Help] = Q_KEY_CODE_INSERT,
+-    [kVK_Home] = Q_KEY_CODE_HOME,
+-    [kVK_PageUp] = Q_KEY_CODE_PGUP,
+-    [kVK_PageDown] = Q_KEY_CODE_PGDN,
+-    [kVK_End] = Q_KEY_CODE_END,
+-    [kVK_ForwardDelete] = Q_KEY_CODE_DELETE,
+-
+-    [kVK_Escape] = Q_KEY_CODE_ESC,
+-
+-    /* The Power key can't be used directly because the operating system uses
+-     * it. This key can be emulated by using it in place of another key such as
+-     * F1. Don't forget to disable the real key binding.
+-     */
+-    /* [kVK_F1] = Q_KEY_CODE_POWER, */
+-
+-    [kVK_F1] = Q_KEY_CODE_F1,
+-    [kVK_F2] = Q_KEY_CODE_F2,
+-    [kVK_F3] = Q_KEY_CODE_F3,
+-    [kVK_F4] = Q_KEY_CODE_F4,
+-    [kVK_F5] = Q_KEY_CODE_F5,
+-    [kVK_F6] = Q_KEY_CODE_F6,
+-    [kVK_F7] = Q_KEY_CODE_F7,
+-    [kVK_F8] = Q_KEY_CODE_F8,
+-    [kVK_F9] = Q_KEY_CODE_F9,
+-    [kVK_F10] = Q_KEY_CODE_F10,
+-    [kVK_F11] = Q_KEY_CODE_F11,
+-    [kVK_F12] = Q_KEY_CODE_F12,
+-    [kVK_F13] = Q_KEY_CODE_PRINT,
+-    [kVK_F14] = Q_KEY_CODE_SCROLL_LOCK,
+-    [kVK_F15] = Q_KEY_CODE_PAUSE,
+-
+-    // JIS keyboards only
+-    [kVK_JIS_Yen] = Q_KEY_CODE_YEN,
+-    [kVK_JIS_Underscore] = Q_KEY_CODE_RO,
+-    [kVK_JIS_KeypadComma] = Q_KEY_CODE_KP_COMMA,
+-    [kVK_JIS_Eisu] = Q_KEY_CODE_MUHENKAN,
+-    [kVK_JIS_Kana] = Q_KEY_CODE_HENKAN,
 -
 -    /*
--     * skip_fd must be an ordered array of distinct fds, exclude
--     * excluded_fd if already included in the [STDIN_FILENO - STDERR_FILENO]
--     * range
+-     * The eject and volume keys can't be used here because they are handled at
+-     * a lower level than what an Application can see.
 -     */
--    if (excluded_fd <= STDERR_FILENO) {
--        nskip--;
--    }
+-};
 -
--    qemu_close_all_open_fd(skip_fd, nskip);
-+    g_assert(!fcntl(GPOINTER_TO_INT(data), F_SETFD, 0));
- }
-+#endif
- 
- static void launch_script(const char *setup_script, const char *ifname,
-                           int fd, Error **errp)
+ static int cocoa_keycode_to_qemu(int keycode)
  {
--    int pid, status;
--    char *args[3];
--    char **parg;
-+    int status;
-+    const gchar *args[] = { setup_script, ifname, NULL };
-+    g_autoptr(GError) error = NULL;
-+    bool spawned;
- 
-     /* try to launch network script */
--    pid = fork();
--    if (pid < 0) {
--        error_setg_errno(errp, errno, "could not launch network script %s",
--                         setup_script);
--        return;
--    }
--    if (pid == 0) {
--        close_all_fds_after_fork(fd);
--        parg = args;
--        *parg++ = (char *)setup_script;
--        *parg++ = (char *)ifname;
--        *parg = NULL;
--        execv(setup_script, args);
--        _exit(1);
--    } else {
-+#if GLIB_CHECK_VERSION(2, 68, 0)
-+    pid_t pid;
-+#pragma GCC diagnostic push
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+    spawned = g_spawn_async_with_pipes_and_fds(NULL, args, NULL,
-+                                               G_SPAWN_DO_NOT_REAP_CHILD |
-+                                               G_SPAWN_CHILD_INHERITS_STDIN,
-+                                               NULL, NULL, -1, -1, -1,
-+                                               &fd, &fd, 1, &pid,
-+                                               NULL, NULL, NULL, &error);
-+#pragma GCC diagnostic pop
-+    if (spawned) {
-         while (waitpid(pid, &status, 0) != pid) {
-             /* loop */
-         }
-+    }
-+#else
-+    gchar *mutable_args[sizeof(args)];
- 
--        if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
--            return;
--        }
--        error_setg(errp, "network script %s failed with status %d",
--                   setup_script, status);
-+    for (size_t i = 0; i < ARRAY_SIZE(args); i++) {
-+        mutable_args[i] = (gchar *)args[i];
-+    }
-+
-+    spawned = g_spawn_sync(NULL, mutable_args, NULL,
-+                           G_SPAWN_CHILD_INHERITS_STDIN,
-+                           unset_cloexec, GINT_TO_POINTER(fd),
-+                           NULL, NULL, &status, &error);
-+#endif
-+    if (!spawned) {
-+        error_setg(errp, "could not launch network script %s: %s",
-+                   setup_script, error->message);
-+        return;
-+    }
-+
-+    if (!g_spawn_check_wait_status(status, &error)) {
-+        error_setg(errp, "network script %s failed: %s",
-+                   setup_script, error->message);
+-    if (ARRAY_SIZE(mac_to_qkeycode_map) <= keycode) {
++    if (qemu_input_map_osx_to_qcode_len <= keycode) {
+         error_report("(cocoa) warning unknown keycode 0x%x", keycode);
+         return 0;
      }
+-    return mac_to_qkeycode_map[keycode];
++    return qemu_input_map_osx_to_qcode[keycode];
  }
  
-@@ -477,10 +480,17 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
- {
-     sigset_t oldmask, mask;
-     g_autofree char *default_helper = NULL;
-+    g_autofree char *fd_buf = NULL;
-+    g_autofree char *br_buf = NULL;
-+    g_autofree char *helper_cmd = NULL;
-+    g_autoptr(GError) error = NULL;
-+    int fd;
-+    int saved_errno;
-     int pid, status;
--    char *args[5];
--    char **parg;
-+    const char *args[5];
-+    const char **parg;
-     int sv[2];
-+    bool spawned;
- 
-     sigemptyset(&mask);
-     sigaddset(&mask, SIGCHLD);
-@@ -495,82 +505,86 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
-         return -1;
-     }
- 
--    /* try to launch bridge helper */
--    pid = fork();
--    if (pid < 0) {
--        error_setg_errno(errp, errno, "Can't fork bridge helper");
--        return -1;
--    }
--    if (pid == 0) {
--        char *fd_buf = NULL;
--        char *br_buf = NULL;
--        char *helper_cmd = NULL;
--
--        close_all_fds_after_fork(sv[1]);
--        fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
-+    fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
- 
--        if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
--            /* assume helper is a command */
-+    if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
-+        /* assume helper is a command */
- 
--            if (strstr(helper, "--br=") == NULL) {
--                br_buf = g_strdup_printf("%s%s", "--br=", bridge);
--            }
--
--            helper_cmd = g_strdup_printf("%s %s %s %s", helper,
--                            "--use-vnet", fd_buf, br_buf ? br_buf : "");
-+        if (strstr(helper, "--br=") == NULL) {
-+            br_buf = g_strdup_printf("%s%s", "--br=", bridge);
-+        }
- 
--            parg = args;
--            *parg++ = (char *)"sh";
--            *parg++ = (char *)"-c";
--            *parg++ = helper_cmd;
--            *parg++ = NULL;
-+        helper_cmd = g_strdup_printf("%s %s %s %s", helper,
-+                        "--use-vnet", fd_buf, br_buf ? br_buf : "");
- 
--            execv("/bin/sh", args);
--            g_free(helper_cmd);
--        } else {
--            /* assume helper is just the executable path name */
-+        parg = args;
-+        *parg++ = "sh";
-+        *parg++ = "-c";
-+        *parg++ = helper_cmd;
-+        *parg++ = NULL;
-+    } else {
-+        /* assume helper is just the executable path name */
- 
--            br_buf = g_strdup_printf("%s%s", "--br=", bridge);
-+        br_buf = g_strdup_printf("%s%s", "--br=", bridge);
- 
--            parg = args;
--            *parg++ = (char *)helper;
--            *parg++ = (char *)"--use-vnet";
--            *parg++ = fd_buf;
--            *parg++ = br_buf;
--            *parg++ = NULL;
-+        parg = args;
-+        *parg++ = helper;
-+        *parg++ = "--use-vnet";
-+        *parg++ = fd_buf;
-+        *parg++ = br_buf;
-+        *parg++ = NULL;
-+    }
- 
--            execv(helper, args);
--        }
--        g_free(fd_buf);
--        g_free(br_buf);
--        _exit(1);
-+    /* try to launch bridge helper */
-+#if GLIB_CHECK_VERSION(2, 68, 0)
-+#pragma GCC diagnostic push
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+    spawned = g_spawn_async_with_pipes_and_fds(NULL, args, NULL,
-+                                               G_SPAWN_DO_NOT_REAP_CHILD |
-+                                               G_SPAWN_CHILD_INHERITS_STDIN,
-+                                               NULL, NULL, -1, -1, -1,
-+                                               &fd, &fd, 1, &pid,
-+                                               NULL, NULL, NULL, &error);
-+#pragma GCC diagnostic pop
-+#else
-+    gchar *mutable_args[sizeof(args)];
-+
-+    for (size_t i = 0; i < ARRAY_SIZE(args); i++) {
-+        mutable_args[i] = (gchar *)args[i];
-+    }
- 
--    } else {
--        int fd;
--        int saved_errno;
-+    spawned = g_spawn_async(NULL, mutable_args, NULL,
-+                            G_SPAWN_DO_NOT_REAP_CHILD |
-+                            G_SPAWN_CHILD_INHERITS_STDIN,
-+                            unset_cloexec, GINT_TO_POINTER(sv[1]),
-+                            &pid, &error);
-+#endif
-+    if (!spawned) {
-+        error_setg(errp, "could not launch bridge helper: %s", error->message);
-+        return -1;
-+    }
- 
--        close(sv[1]);
-+    close(sv[1]);
- 
--        fd = RETRY_ON_EINTR(recv_fd(sv[0]));
--        saved_errno = errno;
-+    fd = RETRY_ON_EINTR(recv_fd(sv[0]));
-+    saved_errno = errno;
- 
--        close(sv[0]);
-+    close(sv[0]);
- 
--        while (waitpid(pid, &status, 0) != pid) {
--            /* loop */
--        }
--        sigprocmask(SIG_SETMASK, &oldmask, NULL);
--        if (fd < 0) {
--            error_setg_errno(errp, saved_errno,
--                             "failed to recv file descriptor");
--            return -1;
--        }
--        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
--            error_setg(errp, "bridge helper failed");
--            return -1;
--        }
--        return fd;
-+    while (waitpid(pid, &status, 0) != pid) {
-+        /* loop */
-     }
-+    sigprocmask(SIG_SETMASK, &oldmask, NULL);
-+    if (fd < 0) {
-+        error_setg_errno(errp, saved_errno,
-+                            "failed to recv file descriptor");
-+        return -1;
-+    }
-+    if (!g_spawn_check_wait_status(status, &error)) {
-+        error_setg(errp, "bridge helper failed: %s", error->message);
-+        return -1;
-+    }
-+    return fd;
- }
- 
- int net_init_bridge(const Netdev *netdev, const char *name,
+ /* Displays an alert dialog box with the specified message */
 
+---
+base-commit: 38d0939b86e2eef6f6a622c6f1f7befda0146595
+change-id: 20250111-osx-0183ecf5210f
+
+Best regards,
 -- 
-2.47.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
