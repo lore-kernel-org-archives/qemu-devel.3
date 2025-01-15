@@ -4,55 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26933C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B703C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY3hc-0003pG-Qn; Wed, 15 Jan 2025 08:45:03 -0500
+	id 1tY3lE-0004sk-L7; Wed, 15 Jan 2025 08:48:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tY3hQ-0003oT-En
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:44:49 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tY3l8-0004rQ-3A
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:48:38 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tY3hN-000715-Rg
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:44:48 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YY6dT6WJCz6K5Xg;
- Wed, 15 Jan 2025 21:43:09 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 2AF30140257;
- Wed, 15 Jan 2025 21:44:40 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 15 Jan
- 2025 14:44:39 +0100
-Date: Wed, 15 Jan 2025 13:44:38 +0000
-To: Li Zhijian <lizhijian@fujitsu.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
- <fan.ni@samsung.com>, <mst@redhat.com>
-Subject: Re: [PATCH v3] hw/cxl: Fix msix_notify: Assertion `vector <
- dev->msix_entries_nr`
-Message-ID: <20250115134438.00006563@huawei.com>
-In-Reply-To: <20250115075834.167504-1-lizhijian@fujitsu.com>
-References: <20250115075834.167504-1-lizhijian@fujitsu.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tY3l5-0007YF-Am
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:48:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736948916; x=1768484916;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=AFrabdmpmcSy7/EM8FjAcZaFFEVWeqDV0byUNFgvGi0=;
+ b=PylmOahDABp8n25iMx+7MKZ9qGe8PFt2y4hGO3en97Pvr9ULkgK0SXoT
+ pA5cCNoyHKf6xjRFFkf+ZsKs68swzRzRByO2H8zf+m8sfhLP+WvRVV9p8
+ hROdjnlj04iJPu86GoYXi2AgRknaBJUMBANK1wlhOB+mcsQKKmFFycIJZ
+ kzNhZMB7KSl8orjwabLb/YiSwdJe9Dx4rriqQAO8A+4NYjvvwWqkym/EA
+ ClObTRX63Z//6H6fT1bu35jTtc0dkAQlpxYnBXl11Ar2EFFDKjT+TPf8n
+ voKcRjOsedYjnlLKtrI0EVng8nWxUfAYnINX7XHEwkrvwsyoEuU+dL3Vs w==;
+X-CSE-ConnectionGUID: Pev8/sUBQZ+otpTIXkAR3Q==
+X-CSE-MsgGUID: dggnEU0ZSOOD8NWWS25Sfw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11316"; a="48286909"
+X-IronPort-AV: E=Sophos;i="6.13,206,1732608000"; d="scan'208";a="48286909"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jan 2025 05:48:33 -0800
+X-CSE-ConnectionGUID: sc7LgFwaQyyj6qHSi2tdLQ==
+X-CSE-MsgGUID: aWcPhB69TJmclWv0wI/8qg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="105620309"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 15 Jan 2025 05:48:30 -0800
+Date: Wed, 15 Jan 2025 22:07:22 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Subject: Re: [PULL 04/49] hw: Add QOM parentship relation with CPUs
+Message-ID: <Z4fBGl1YxFuhNQFi@intel.com>
+References: <20250112221726.30206-1-philmd@linaro.org>
+ <20250112221726.30206-5-philmd@linaro.org>
+ <20250113132832.049f651a@imammedo.users.ipa.redhat.com>
+ <6f9225ad-edc6-4fe0-b0e6-8a93e7f50102@linaro.org>
+ <20250114111829.2f577596@imammedo.users.ipa.redhat.com>
+ <Z4Z25p0YvBEtV2/Z@intel.com>
+ <20250115141333.005ab3eb@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250115141333.005ab3eb@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -67,54 +87,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Jan 2025 15:58:34 +0800
-Li Zhijian <lizhijian@fujitsu.com> wrote:
-
-> This assertion always happens when we sanitize the CXL memory device.
-> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
+> > I remember that this was your idea all along, and I'm not sure if you're
+> > also referring to my previous patches about hybrid topology :-), which I'll
 > 
-> It is incorrect to register an MSIX number beyond the device's capability.
-> 
-> Increase the device's MSIX number to cover the mailbox msix number(9).
-> 
-> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> I'm sorry, I've should've reviewed it long time ago.
+> But it got lost in from my review queue, can you give me a pointer
+> to the latest you've posted, please? 
 
-Thanks.  I'll carry this on my tree and include it in next set I send to Michael.
+You are very kind, no need sorry :-). I have also been inspired by many
+of your previous ideas (although my work may not fully meet your
+expectations yet). Here are the links:
 
-Michael, feel free to pick this one up directly if you prefer.
-Its a silly mistake I made reordering a couple of series.
-A nice cleanup to avoid this problem happening again will follow.
+[1]: qom-topo series, which tries to abstract every topology levels as
+     devices and build a topology tree:
+     https://lore.kernel.org/qemu-devel/20240919015533.766754-1-zhao1.liu@intel.com/
+[2]: hybird-topo series, based on [1], which allows i386 to customize
+     topology tree:
+     https://lore.kernel.org/qemu-devel/20240919061128.769139-1-zhao1.liu@intel.com/
 
-Jonathan
-
-> ---
-> V3:
->   Just increate the device's msix number, A new enumeration will be introduced in later patch. # Jonathan
-> 
-> V2:
->   Just increase msix number and add enum to maintainer their values # Jonathan
-> ---
->  hw/mem/cxl_type3.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index bd7652740f4b..0ae1704a345c 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -843,7 +843,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->      ComponentRegisters *regs = &cxl_cstate->crb;
->      MemoryRegion *mr = &regs->component_registers;
->      uint8_t *pci_conf = pci_dev->config;
-> -    unsigned short msix_num = 6;
-> +    unsigned short msix_num = 10;
->      int i, rc;
->      uint16_t count;
->  
+Thanks,
+Zhao
 
 
