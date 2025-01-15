@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEF3C02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 17:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629ABC02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 17:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY6uY-0007N2-Rb; Wed, 15 Jan 2025 12:10:34 -0500
+	id 1tY6uX-0007LW-Ki; Wed, 15 Jan 2025 12:10:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uO-0007En-Vz
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:29 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uL-0007DN-Bx
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:22 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uN-0006Wp-DP
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:24 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43623f0c574so50095675e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 09:10:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uJ-0006Vm-L6
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:21 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-436a03197b2so49909065e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 09:10:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736961021; x=1737565821; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736961016; x=1737565816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pJ6BBYQDvZ7gZ5xmu7ZLpmPZjx7/EtZQE26i+5oao3w=;
- b=NFZ+9t/lvyR5wHBtZc/Vgx8NmuChbuOH5YgHmTPErawSpCJpE932V5944AMzYSH+RH
- 5fUCiM8Jyy2lHVdggxvpwLHzOILNkgm1FvkG5Dlxh+YcpEd5qrJ+BLyaDvZyEH4YdmA9
- avhOTY5Czypta714qoPW6ut4tfNmnuEFKXOtMdXL00zzDCQjknDOgE2m9cGpvqCv4PTU
- Fj6k9PosUBIvfeYsj3xiCoOajprmtk4Tm9xef7Ih/WxHQaqeY5Qf44pLBlnS1ch1dyi+
- jHg0mq13n9FtTdBHX/CPwXhg6O9c+QsqTovgay7Mytdvxh9NJL4uR5CDD6n2vPjWI2hj
- W0aw==
+ bh=tO82mELrC9ge/485uM+xBiac5JrZdcxe00dmNBeeW5o=;
+ b=KBxokSMaGDjGsnT6P1OT9RXr9xfywnz29iFe6xWnfNn3WxkV2DEjMd3rzauSDCLA+K
+ /txwqlWg2MTgpVknnjcKfyZ+7GbBpwwX0KWrrNXhN7zMi/6TlkKAU3XBBKCX+iCRnGh/
+ HYAmp6W0DujcHxUn+XUWWapMaGdQzU7Eleyb6Q+qTcV0Z8n3hrrelN3pMbycDM5j97mv
+ /xO39nAr2zKN4Tx8HXBGL6ZDFMzP7qYom6UUKtOtV1V+O+sgkoO5gQ9Dy+fKwI4CBU5o
+ y7w8uru5kFGAnM5a9gl2GY+dtlv2pTYo5xn+82kGu6eu9pyYnpuAWuFAWt2iOI6oW3BO
+ U9Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736961021; x=1737565821;
+ d=1e100.net; s=20230601; t=1736961016; x=1737565816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pJ6BBYQDvZ7gZ5xmu7ZLpmPZjx7/EtZQE26i+5oao3w=;
- b=t+0d+IqtCkUmfH1OKybJyszqQoYxmduLG+HRX1rb7Q0pVA7LxTCGVqj652nkiqigny
- gVHi9RAmt81k/RoqZ99GzIHBF2CNDsB8diP0w3w6aHfmSoGWlsa4Ek5dHPQu38Vhmq0+
- +tgGLYK/joKPK8m7vy7dfBdlBE5EomcVUgq7d4nqme0DftkPF96puUwnjWJ/yv+eWUDQ
- JcY23t6Yn5HRH5VtCvD6wqHN4ersTL/pzUu7TWiBIVPe1AzPU50Up0DUdt21cPh5qBwr
- 1CUpfL/OI3DhVS4BEV8oHSDXJ2Gqcn0oK32nP5110Syy8eMu0FJlr056/0P1sgD7wMtF
- jCew==
-X-Gm-Message-State: AOJu0YzEtZb06oNihvCHlAwbwJ7kRgG9ct+LK2xlosnXb9AXFiOdtnVE
- 63/XanWWZLkXiekgLNjUE961Ve5/KsrkYTjxrAJs5lcnlxDAu5/PSZ23dBQUhZYCk6wssSuJVP0
- eaVI=
-X-Gm-Gg: ASbGnct54TTFc5wzo+0wV02+YjRIcn1SqbEK6Vn+c23A55f4K5+iXdHNGEPvjCaQYfx
- Ul0th+/AhHM0j3APbf6OC9k4zgHJZwH3mqzVRul6zVnttFb+cK1UciDF7xkYTVXno+PuI9WBDOW
- v+q4sx5yeCf77MgclMVyWaaj8U1a9FIrZGH254NjZyVgejpHffwiLgr6eZ9uDKjRARuFtP60YAN
- XscstZUSvtQHZLMkFmT/gaKrx5fUeCVbZKky7LKtsuniC9ZCAaRVejY1tIhvLrTtyjTs45xLyJp
- LG4tS810KYN/2oU1q1vI7pltpwv8SGRCWekN
-X-Google-Smtp-Source: AGHT+IFdwR2V+vQPPucU2EZivG4J7Eb3Bpl1K+qUNUrrw+/AMe+lhzD1LKKd71s4yVkGQ4K//lVNRg==
-X-Received: by 2002:a05:600c:3b8a:b0:434:f270:a4f0 with SMTP id
- 5b1f17b1804b1-436e26dda80mr229248135e9.21.1736961020558; 
- Wed, 15 Jan 2025 09:10:20 -0800 (PST)
+ bh=tO82mELrC9ge/485uM+xBiac5JrZdcxe00dmNBeeW5o=;
+ b=sVrpPC78b0hAdGGHAx7teP3vNXRguIEAtcbGOzrwyf2vUNAcQvnlcliAlPkc8lAi5E
+ oDRTCcgrTKLaJfUlssq6Ghxi+bb4wIg5vfe7lWahGxE5BacSWiK9LNTCaJTTMkH3obEY
+ rjbo/rd0UrAPYafYe6sb9VGIhzsoRkXyxQiAvjlpCoGwwyX5/u+285G62ViGTNK/f1j0
+ vD+9Kd1CZqH032tG3khtL3g2lQf0nOFmV6Ua33BFNbbuhsdolcpMQQPfEiIt51QBCIgb
+ m/I+9xu6bvYRzeDqg3etAAsc0sKuw5plhdLa/LLbqVkCJUxH3H1g0qWtnF0H4f245U/L
+ H9nQ==
+X-Gm-Message-State: AOJu0YwJkPWl7M4ZlhsUifY0BvXhvK3HKBUg4O3/zFfAntY1Ah9p7mJ4
+ 89igiSIPHaZDaGU24cSpN9XhXuWzuh3gDO0a5xit+AuqZsSCMVy3CbKr3GVPz456TEZAWPanMSL
+ oAAA=
+X-Gm-Gg: ASbGncs0UuL31t6kdCwdiutGRkHwzrJyJwWBkBusPYCAeG8fNAUcDdPYZH8eTot1mK9
+ wu7gwLhxziDhAloeNW4elEX++syr2D+HfDGo0LUT8bfHq2wYaAmSvKb44niQGNmq75U2wRBaa0G
+ +5uKWlkQamTC8n3NIlfKsSUkznhcIv/WEPXKYK90nPR+/JNaLnRERG7yoi+6qwN+CepUyBNsui/
+ JJXUVkxesjhjoXOylqGQA+QvvfNcPj/KBqthUFs6zngIOT4dg3yjJN4GWttZebkZmLdFrjogvv3
+ jFUmRObrHyUpB0rGuwaHuhEIhptnhKVpqaY+
+X-Google-Smtp-Source: AGHT+IFiGSzmwCxqFZ/xX3I4s/b9Xp4asSsFxqy1N30kvRoi3PwEH+40dargU28XdMb6eIywhz2jmQ==
+X-Received: by 2002:a05:600c:3ca0:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-436e26f01aamr233136665e9.21.1736961015906; 
+ Wed, 15 Jan 2025 09:10:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c75290a2sm30508755e9.29.2025.01.15.09.10.19
+ 5b1f17b1804b1-437c74c475csm30575235e9.20.2025.01.15.09.10.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 09:10:20 -0800 (PST)
+ Wed, 15 Jan 2025 09:10:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -70,17 +70,17 @@ Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/13] hw/arm/virt: Remove VirtMachineClass::no_pmu field
-Date: Wed, 15 Jan 2025 18:09:58 +0100
-Message-ID: <20250115171009.19302-3-philmd@linaro.org>
+Subject: [PATCH 01/13] hw/arm/virt: Remove deprecated virt-2.6 machine
+Date: Wed, 15 Jan 2025 18:09:57 +0100
+Message-ID: <20250115171009.19302-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250115171009.19302-1-philmd@linaro.org>
 References: <20250115171009.19302-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,43 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtMachineClass::no_pmu field was only used by
-virt-2.6 machine, which got removed. Remove it and
-simplify machvirt_init().
+This machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") it can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/arm/virt.h | 1 -
- hw/arm/virt.c         | 4 ----
- 2 files changed, 5 deletions(-)
+ docs/about/removed-features.rst |  4 ++++
+ hw/arm/virt.c                   | 12 ------------
+ 2 files changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c8e94e6aedc..27c5bb585cb 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -120,7 +120,6 @@ struct VirtMachineClass {
-     bool disallow_affinity_adjustment;
-     bool no_its;
-     bool no_tcg_its;
--    bool no_pmu;
-     bool claim_edge_triggered_timers;
-     bool smbios_old_sys_ver;
-     bool no_highmem_compact;
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index c6616ce05e5..813988fad4a 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1065,6 +1065,10 @@ for all machine types using the PXA2xx and OMAP2 SoCs. We are also
+ dropping the ``cheetah`` OMAP1 board, because we don't have any
+ test images for it and don't know of anybody who does.
+ 
++Arm ``virt-2.6`` (removed in 10.0)
++''''''''''''''''''''''''''''''''''
++This versioned machine has been supported for a period of more than 6 years.
++
+ linux-user mode CPUs
+ --------------------
+ 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3bb8a9c7bd6..0080577e1a9 100644
+index 99e0a68b6c5..3bb8a9c7bd6 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -2262,10 +2262,6 @@ static void machvirt_init(MachineState *machine)
-             object_property_set_bool(cpuobj, "kvm-steal-time", false, NULL);
-         }
- 
--        if (vmc->no_pmu && object_property_find(cpuobj, "pmu")) {
--            object_property_set_bool(cpuobj, "pmu", false, NULL);
--        }
+@@ -3606,15 +3606,3 @@ static void virt_machine_2_7_options(MachineClass *mc)
+     mc->minimum_page_bits = 0;
+ }
+ DEFINE_VIRT_MACHINE(2, 7)
 -
-         if (vmc->no_tcg_lpa2 && object_property_find(cpuobj, "lpa2")) {
-             object_property_set_bool(cpuobj, "lpa2", false, NULL);
-         }
+-static void virt_machine_2_6_options(MachineClass *mc)
+-{
+-    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+-
+-    virt_machine_2_7_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    vmc->disallow_affinity_adjustment = true;
+-    /* Disable PMU for 2.6 as PMU support was first introduced in 2.7 */
+-    vmc->no_pmu = true;
+-}
+-DEFINE_VIRT_MACHINE(2, 6)
 -- 
 2.47.1
 
