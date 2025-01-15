@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D950FC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 17:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DEE1C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 17:11:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY6uX-0007Ld-No; Wed, 15 Jan 2025 12:10:33 -0500
+	id 1tY6ue-0007OU-B4; Wed, 15 Jan 2025 12:10:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uS-0007FI-Mp
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:30 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uc-0007O7-Dj
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:38 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6uR-0006XD-0R
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:28 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-437a92d7b96so22167285e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 09:10:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tY6ua-0006Yk-Cl
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 12:10:38 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-436341f575fso74225935e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 09:10:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736961025; x=1737565825; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736961034; x=1737565834; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KxP4KhsAoIrkijG1kO5uGQ16mZCFRr5vQmqFMkBbKho=;
- b=bUzX4RRfcRFBpDxZOruj8TseBkNkL9m9X5j58p1HMr5yg7S5g4UeN8u9RqcdMF3hQJ
- p4xyqRer14BRBJ8WV/JJpnQlkZothot5pR4Ksfsz2dwbjRbi3b4Q53AGk2pwWB45cRIf
- /9ICOML6iIKKzzwFeOjxlju3//kJbLkeRQYpBE71NCMQLCOUNEsT0Lkz9BDc/RRQGWXM
- JE8mb8sE4XLq2lK2jcby4VvYDatWMLtOYdPOwWWNs0R1JAZkEJTRJTlCUV2kJ0cssGO/
- KGuF1J5Fr9p5ooK+dL+UG9mxQbUWQRv3pL2k+yvlKxh9yXkweMUImum9cL+wnTKkEHh/
- wtXQ==
+ bh=ZpQYY+dgdMviIpUml6KdhqzTGvxqX3W0VvYn2a5rV6U=;
+ b=Ifu41O6QZhcpadZ39CgiSDcztnvchIZG5CgFd81aDO5YIc8SzlF7AzbRws8PZ11te5
+ X6PuDdfnm9UTncq9JRsmUQFTXmTjmNgRTNgxf0zcMPb7cUfIFU272ZIi1hFXfWOMbNoR
+ 1ggCetkCMVuv83y/5ilkaO4wWf626Dlmh7CaTHCxLFKjDnUjU1n9wNEY9jgvHMAlycDu
+ i77WdYKNY1gkss1Y3B5MtBkyG7pR1TnUnrXJmDWqcv7B94mEyG0GNfPYb/sAR11jdzWT
+ ywtYbxhq6PTqMJWRfmhL8kKoSvWiRGfsU2oFyHoLUMfWoXshwGMsa/0DzUmhXhapa2cK
+ Skqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736961025; x=1737565825;
+ d=1e100.net; s=20230601; t=1736961034; x=1737565834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KxP4KhsAoIrkijG1kO5uGQ16mZCFRr5vQmqFMkBbKho=;
- b=OnFFardvWzRHv04LXKRikMxNdjZ1wYzmAhwIrMUV+WAH2kZZM2241yQ1K6DoI0JxUU
- gHDbwW+KVCeTxVZ7cAYoSYoJFe5IrAwXAc5C4m51alMXCB6q0sVJ3cIbPImKTTE/vPJw
- gwS7OJEHhgfQyqpDC6y5MVE6jrCVTUSvOLTs8mpiHEFIdk3NUoYYaYqmaPlvyBdJc2OW
- zopmKJ1XQq4TQRTHBfhYixOTeZkKIkqaL7iW5HIcAqve00AGHe0SlkJvAD10iciKdqRz
- tIP6LD2NW/dJWueu3UhbVcHCT9JVN7dExRUnWX+7hdW64qGdP42eMJCDzbHFQqub1LkM
- iUOw==
-X-Gm-Message-State: AOJu0YxzcPxwdW2a204haXedxoiwZ3MMr7A56ntWoODiTLuW94KnlC0k
- tNaIGKkrWqqcnXBg4x62nURbAjp0SoBqYHMHZY5saNaDcg08dsL16uzOgYrKKexATHspMazkGGW
- 8pN8=
-X-Gm-Gg: ASbGnct5XWjk7olG4NlLcuHIrNBtKY8now70wJ7DOkxVxsN2gWRfYTc20T3zRH02foS
- pS0/yRcxcNkqWeoXHFsoteKvKB4Qt/xU9v7ur0gzwR2vdAKWx5tmSipa9urSfYRinn1PcvmZO5W
- yxqWfwxazPyLibtCv2JtMbmP6Zv88mfJiuZDfXbICEZgV1Qb8W3TNPvdl68TFp3w5N7jZFpFLtv
- FeHRIpI67T8IViNEhVOiRCGkWlhJrZbpZ4pqUyeKRIhlqvtDwY4qL7wFXFwxlxdpTbjamQ0a5Tp
- GZYKkQIi+lwAkW1CALoBTiw7ZiEta8d5ryLM
-X-Google-Smtp-Source: AGHT+IFgYAldhXNjIPEym55kT+EMyHeyOv6QYpJ/yAVxasdL+K3HD8c/cP6DvQLSMsrp/P/2YjL9DA==
-X-Received: by 2002:a05:600c:4586:b0:434:edcf:7461 with SMTP id
- 5b1f17b1804b1-436e26f135bmr299719435e9.30.1736961025128; 
- Wed, 15 Jan 2025 09:10:25 -0800 (PST)
+ bh=ZpQYY+dgdMviIpUml6KdhqzTGvxqX3W0VvYn2a5rV6U=;
+ b=NjRwu2mSuWRMvW+YLzd7SP2sVwj0eEVa3YOYgMkIDHMoANYXyQDjH3s0FTo3NgrH9x
+ W+JCBA2j05WVsYtpQOO2zw4rWnx4JCtanMgbTly707P9WdsJeiMhqsECSmlUx55MDgwR
+ Agz52JwuBBlxKxs3cUg1eHPrV0+LEIQ+1Tk6KH2UjbXEIPSiiS8rtyAUD2WjGbzwN3WE
+ 5gd3ot5qrvILq51OGuvZe6VfPuOoAGak1QWaxhz56dqw58wT8X7gvMxs/wj/bDbKNIy3
+ io2uMgpfmBx7T9pQ7LF29NvugyH4qlzWr6ZllzMqRMg0s7DLdI04Pom5vvhExML1YBay
+ UJwQ==
+X-Gm-Message-State: AOJu0YwEtD9PC8iKpeX3BDYXWdKX1Dtj+h/z7FQ9iAj5dkos09KV9Wnf
+ AN0lf1XtrH6Sd/vJtW0KWR9sbx8JrWrTEGGzzCAdZa3/34iKGF3fCU0MBDoSYBo4yaqLOyfra/c
+ x+QQ=
+X-Gm-Gg: ASbGncupoUbCLS9OGoEyg8655GH0yaXB0NygEXKOeo/8JrGNDk5UnH3ln3zLIMTM4tf
+ lqunk4b8m/tIBbYYm9fy65WjP1wijgAZlULnvxSvrRz4nmSlWBnFO9/omZpAi4emrlKSK1/It5j
+ YkjGyUE4SOVSKAt16+nWQsZUihU/lYk6MSJuEiHfrdNV4A3BnWB9CQLbkzNylXUbdnypN5zirYD
+ Y8AIwYPAzVCydzggrVMUZj5QZnBX4syKLCCTvkpRbPU7YtdRMF+PPBrGDbUj90+XsKdYmy4+rTG
+ CurghKspXMPF6CE0XVIpMfzzQWet7Hgy/Mgq
+X-Google-Smtp-Source: AGHT+IHpWPvqjQwMeUSXZ98zby5MmvBkVROMrpWWhbVVWcttenbsUtuQjxj4Nd6K0F5i5WHPwBtMdg==
+X-Received: by 2002:a05:600c:a09:b0:434:f753:6012 with SMTP id
+ 5b1f17b1804b1-436e26aa593mr307632195e9.17.1736961034507; 
+ Wed, 15 Jan 2025 09:10:34 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74ace90sm30491535e9.16.2025.01.15.09.10.24
+ 5b1f17b1804b1-437c74f9ccasm29516495e9.39.2025.01.15.09.10.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 09:10:24 -0800 (PST)
+ Wed, 15 Jan 2025 09:10:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -70,18 +70,17 @@ Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/13] hw/arm/virt: Remove
- VirtMachineClass::disallow_affinity_adjustment
-Date: Wed, 15 Jan 2025 18:09:59 +0100
-Message-ID: <20250115171009.19302-4-philmd@linaro.org>
+Subject: [PATCH 05/13] hw/arm/virt: Remove VirtMachineClass::no_its field
+Date: Wed, 15 Jan 2025 18:10:01 +0100
+Message-ID: <20250115171009.19302-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250115171009.19302-1-philmd@linaro.org>
 References: <20250115171009.19302-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,85 +103,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtMachineClass::disallow_affinity_adjustment
-field was only used by virt-2.6 machine, which got
-removed. Remove it along with the GIC*_TARGETLIST_BITS
-definitions, and simplify virt_cpu_mp_affinity().
+The VirtMachineClass::no_its field was only used by
+virt-2.7 machine, which got removed. Remove it and
+simplify virt_instance_init() and virt_acpi_build().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/arm/virt.h              |  1 -
- include/hw/intc/arm_gic.h          |  1 -
- include/hw/intc/arm_gicv3_common.h |  3 ---
- hw/arm/virt.c                      | 16 ----------------
- 4 files changed, 21 deletions(-)
+ include/hw/arm/virt.h    |  1 -
+ hw/arm/virt-acpi-build.c |  5 ++---
+ hw/arm/virt.c            | 16 ++++++----------
+ 3 files changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 27c5bb585cb..5d3b25509ff 100644
+index 5d3b25509ff..463ac09615e 100644
 --- a/include/hw/arm/virt.h
 +++ b/include/hw/arm/virt.h
 @@ -117,7 +117,6 @@ typedef enum VirtGICType {
  
  struct VirtMachineClass {
      MachineClass parent;
--    bool disallow_affinity_adjustment;
-     bool no_its;
+-    bool no_its;
      bool no_tcg_its;
      bool claim_edge_triggered_timers;
-diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
-index 48f6a51a70a..f5e6e5e70b4 100644
---- a/include/hw/intc/arm_gic.h
-+++ b/include/hw/intc/arm_gic.h
-@@ -68,7 +68,6 @@
- #include "qom/object.h"
+     bool smbios_old_sys_ver;
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c9b13057a34..ccecea9e09b 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -670,7 +670,6 @@ static void
+ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ {
+     int i;
+-    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     const MemMapEntry *memmap = vms->memmap;
+     AcpiTable table = { .sig = "APIC", .rev = 4, .oem_id = vms->oem_id,
+                         .oem_table_id = vms->oem_table_id };
+@@ -741,7 +740,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
+         }
  
- /* Number of SGI target-list bits */
--#define GIC_TARGETLIST_BITS 8
- #define GIC_MAX_PRIORITY_BITS 8
- #define GIC_MIN_PRIORITY_BITS 4
+-        if (its_class_name() && !vmc->no_its) {
++        if (its_class_name()) {
+             /*
+              * ACPI spec, Revision 6.0 Errata A
+              * (original 6.0 definition has invalid Length)
+@@ -974,7 +973,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+                           vms->oem_table_id);
+     }
  
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index a3d6a0e5077..fff5e55a97d 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -45,9 +45,6 @@
- #define GICV3_REDIST_SIZE 0x20000
- #define GICV4_REDIST_SIZE 0x40000
- 
--/* Number of SGI target-list bits */
--#define GICV3_TARGETLIST_BITS 16
--
- /* Maximum number of list registers (architectural limit) */
- #define GICV3_LR_MAX 16
- 
+-    if (its_class_name() && !vmc->no_its) {
++    if (its_class_name()) {
+         acpi_add_table(table_offsets, tables_blob);
+         build_iort(tables_blob, tables->linker, vms);
+     }
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0080577e1a9..2a2a0bd9154 100644
+index 7747dae4dc7..d7a7cee79df 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -1760,23 +1760,7 @@ void virt_machine_done(Notifier *notifier, void *data)
- static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
- {
-     uint8_t clustersz = ARM_DEFAULT_CPUS_PER_CLUSTER;
--    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+@@ -3278,17 +3278,13 @@ static void virt_instance_init(Object *obj)
+     vms->highmem_mmio = true;
+     vms->highmem_redists = true;
  
--    if (!vmc->disallow_affinity_adjustment) {
--        /* Adjust MPIDR like 64-bit KVM hosts, which incorporate the
--         * GIC's target-list limitations. 32-bit KVM hosts currently
--         * always create clusters of 4 CPUs, but that is expected to
--         * change when they gain support for gicv3. When KVM is enabled
--         * it will override the changes we make here, therefore our
--         * purposes are to make TCG consistent (with 64-bit KVM hosts)
--         * and to improve SGI efficiency.
--         */
--        if (vms->gic_version == VIRT_GIC_VERSION_2) {
--            clustersz = GIC_TARGETLIST_BITS;
+-    if (vmc->no_its) {
+-        vms->its = false;
+-    } else {
+-        /* Default allows ITS instantiation */
+-        vms->its = true;
++    /* Default allows ITS instantiation */
++    vms->its = true;
+ 
+-        if (vmc->no_tcg_its) {
+-            vms->tcg_its = false;
 -        } else {
--            clustersz = GICV3_TARGETLIST_BITS;
+-            vms->tcg_its = true;
 -        }
--    }
-     return arm_build_mp_affinity(idx, clustersz);
- }
++    if (vmc->no_tcg_its) {
++        vms->tcg_its = false;
++    } else {
++        vms->tcg_its = true;
+     }
  
+     /* Default disallows iommu instantiation */
 -- 
 2.47.1
 
