@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35444C02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20A8C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY2sG-0008OS-0Y; Wed, 15 Jan 2025 07:51:56 -0500
+	id 1tY2rr-0007p0-Eh; Wed, 15 Jan 2025 07:51:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rQ-0007ef-BD; Wed, 15 Jan 2025 07:51:06 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1tY2rL-0007bd-Aa; Wed, 15 Jan 2025 07:50:59 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rM-0006sc-PM; Wed, 15 Jan 2025 07:51:03 -0500
+ id 1tY2rH-0006q5-VG; Wed, 15 Jan 2025 07:50:58 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 4FA305C5C71;
- Wed, 15 Jan 2025 12:50:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33423C4CEEC;
+ by nyc.source.kernel.org (Postfix) with ESMTP id 5BB21A41F17;
+ Wed, 15 Jan 2025 12:48:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E78C4CEDF;
  Wed, 15 Jan 2025 12:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1736945441;
- bh=oVp3XpOKbd948VgOdJ8Xfp7/WBRW0R3mJMUfyy5sZvw=;
+ bh=mtr3SAhcJul8SH7gyq7dWJqCajR+YSKyCDlfSYBqOeM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=YEM7BM7XQOaDxHGzhXU4bDsEc9YIdw4a0qqJSmbzm7kM/iR0dvkCTt+CMnEPJhdyc
- RSo/8T5i1dMXVPeJnjOukS1PFn06s1zsRNCVogPQSeLmU7qB6JerbtI7rBSU91K3Ey
- aCUmamVxOoMpawKrz/dRs3S/zTmlnL5HE48Pjb3qFm8uhy3oMuWRW5s9a4u6KZiTdr
- n4F1J1PDo9GgbvjNRnkpwuBIhh3gE6BgrD1+WhxvCGnaezkVODZEQneZ2uiu+mfyzQ
- Y6RE1FuJ08JPSZmfvmMxBcixxfwMdlosfoNbtfAKYwfBol0GYmTAN2YrsBlmoHHuec
- nGDmpXWKQUbJA==
+ b=NVOU8H7OnppvA+3vtrSJKTIzVwhAEV3rt7EZn4j48Kw43A4CxGt1a9u3pOlqV81FL
+ DucXJ72DsYAfG44hhztiiTvjO1GCzkVToCCtTlVswuZEDSE420QNMbM4U6UzgTVsLQ
+ e/fiOmDCHZpyYF1aQuVL9N4QxIww46/hYiLQ4yJKSM2usN4ZOPs0jpaE8f1yILoq09
+ XW+60ICQfmdLAgzv7v7xgDllYuRnKPEDebRdMG4Ei0jIspadZSvcs3FKalgIA970/k
+ JukVDiPYzaVImSDy446NWEsyG294iuiwJmJgrURg2gkoGKowv3vp4EbKEqqKQX1tXp
+ qcWJqhm6kGTxQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2r1-00000004yGI-1eD5; Wed, 15 Jan 2025 13:50:39 +0100
+ id 1tY2r1-00000004yFm-0kAn; Wed, 15 Jan 2025 13:50:39 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -43,24 +43,22 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v7 14/16] acpi/ghes: move offset calculus to a separate
- function
-Date: Wed, 15 Jan 2025 13:50:30 +0100
-Message-ID: <60fdd1bf379ba1db3099710868802aa49a27febb.1736945236.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v7 06/16] acpi/ghes: Remove a duplicated out of bounds check
+Date: Wed, 15 Jan 2025 13:50:22 +0100
+Message-ID: <df33b004d85b7b9aa388fb2ac530dcdea94b7edc.1736945236.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1736945236.git.mchehab+huawei@kernel.org>
 References: <cover.1736945236.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,97 +75,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, CPER address location is calculated as an offset of
-the hardware_errors table. It is also badly named, as the
-offset actually used is the address where the CPER data starts,
-and not the beginning of the error source.
-
-Move the logic which calculates such offset to a separate
-function, in preparation for a patch that will be changing the
-logic to calculate it from the HEST table.
-
-While here, properly name the variable which stores the cper
-address.
+acpi_ghes_record_errors() has an assert() at the beginning
+to ensure that source_id will be lower than
+ACPI_GHES_ERROR_SOURCE_COUNT. Remove a duplicated check.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/acpi/ghes.c | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ hw/acpi/ghes.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 983e28505a08..8f59d327d3e5 100644
+index 29cd7e4d8171..5f67322bf0f2 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -364,10 +364,37 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     ags->present = true;
- }
- 
-+static void get_hw_error_offsets(uint64_t ghes_addr,
-+                                 uint64_t *cper_addr,
-+                                 uint64_t *read_ack_register_addr)
-+{
-+    if (!ghes_addr) {
-+        return;
-+    }
-+
-+    /*
-+     * non-HEST version supports only one source, so no need to change
-+     * the start offset based on the source ID. Also, we can't validate
-+     * the source ID, as it is stored inside the HEST table.
-+     */
-+
-+    cpu_physical_memory_read(ghes_addr, cper_addr,
-+                             sizeof(*cper_addr));
-+
-+    *cper_addr = le64_to_cpu(*cper_addr);
-+
-+    /*
-+     * As the current version supports only one source, the ack offset is
-+     * just sizeof(uint64_t).
-+     */
-+    *read_ack_register_addr = ghes_addr +
-+			      ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
-+}
-+
- void ghes_record_cper_errors(const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
- {
--    uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
-+    uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
-     uint64_t start_addr;
-     AcpiGedState *acpi_ged_state;
-     AcpiGhesState *ags;
-@@ -389,18 +416,13 @@ void ghes_record_cper_errors(const void *cper, size_t len,
- 
-     start_addr += source_id * sizeof(uint64_t);
- 
--    cpu_physical_memory_read(start_addr, &error_block_addr,
--                             sizeof(error_block_addr));
-+    get_hw_error_offsets(start_addr, &cper_addr, &read_ack_register_addr);
- 
--    error_block_addr = le64_to_cpu(error_block_addr);
--    if (!error_block_addr) {
-+    if (!cper_addr) {
-         error_setg(errp, "can not find Generic Error Status Block");
-         return;
+@@ -404,9 +404,7 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
+         return -1;
      }
  
--    read_ack_register_addr = start_addr +
--                             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
--
-     cpu_physical_memory_read(read_ack_register_addr,
-                              &read_ack_register, sizeof(read_ack_register));
+-    if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
+-        start_addr += source_id * sizeof(uint64_t);
+-    }
++    start_addr += source_id * sizeof(uint64_t);
  
-@@ -421,7 +443,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-                               &read_ack_register, sizeof(uint64_t));
- 
-     /* Write the generic error data entry into guest memory */
--    cpu_physical_memory_write(error_block_addr, cper, len);
-+    cpu_physical_memory_write(cper_addr, cper, len);
- 
-     return;
- }
+     cpu_physical_memory_read(start_addr, &error_block_addr,
+                              sizeof(error_block_addr));
 -- 
 2.47.1
 
