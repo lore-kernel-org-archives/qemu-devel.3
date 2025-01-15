@@ -4,94 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3BBC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 06:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB792C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 06:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXxCc-0002FW-BO; Wed, 15 Jan 2025 01:48:34 -0500
+	id 1tXxEe-0003te-39; Wed, 15 Jan 2025 01:50:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tXxCQ-0002E0-92
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:48:22 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tXxCO-0000pi-Sh
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:48:22 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-219f8263ae0so104778155ad.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 22:48:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1736923697; x=1737528497; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6pY9vdP9KrQzzUAagFD6e3VgrnW7ct4SyKNr03/IIzc=;
- b=APIu33dX+r1r094/wA2X+07GFgOGfWwELcfHxvsq7cZeP3lVGzjms/VPRZ9kSZAo+t
- dhKd5QscMjyBPV5j213ykyb2g7Wbce/5hbh764rJDVGbvnsGxIWjuUjBnIQCJU7zBCk0
- wRGWUbsxjea50NdOqaQX3+h+K7V8NC9RIN1haawPace9hUhq8mTXcV/qH1pVPne8c7ro
- /N/yjory1C7pydLFMNTMUQ/7elPPVrNVfrkY9h5XW8JVU6hZxXJ8GqKm7IWHwL6j8dog
- ChDHBq4JHhrcTJN3jKq/+dhWseET/kv0PT+Vzrf6wpACXUc9XU6+6HoWKgrQvCXDfKog
- bi8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736923697; x=1737528497;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6pY9vdP9KrQzzUAagFD6e3VgrnW7ct4SyKNr03/IIzc=;
- b=sCBFDxrUrW7luUTAzrWBH7UWiYFRCig8E3EMREHUvCEC+OBgCrABlgSppMsVGuoJyF
- 4IpKgUGoZvg5OKpjehfhNAeANmVnKjxpSfG7nu+u4mhIWDgYXVBSsChVFvEntR5pWX2v
- /Eljmj5cQnFR6KNty8X4cNOP/G832/i6A2PNSQNUUJ/8jW/7SgFT5fpmmrIVH9yQlI8A
- WfFWDt0+IzlveHb+dv2U8sso9SgirZsDVXFXj8BUYaeTjzR3eZT3lB10BlPIhKIkB8OD
- JARc9OUeWLfJju4wym9ZFxD1r6gBfO2dSjlNDrDxNl4HebrtzJsn/n8HOgTrb3m08JF6
- JIog==
-X-Gm-Message-State: AOJu0Yz9JcRYtd0CrUxB4dZQWtDmPiZ9ONAVglGGjstuO/S9BHiso+X5
- TgLkoQZAv+miB0wdiMRAOOPoWfGjdDFSAeRpZzUWs4csOPeiKFkjrVlQIR6lL9sDgZIiHD1tM01
- sMFYpKtJWYIR38kcBg2kxe/qs0XaUkp9mpeJXb7CnTY66SELrvJhRJskQHC16N/kyoZL3FdFXB3
- UbETY6WTQ+mqyInHVVd6M6hZVoUCh+vPytXOWUuwY=
-X-Gm-Gg: ASbGncsX9G8pmDwZ0JpdIbAGcMqd2hHjSS87ezXWSmMrLZmmaU1iEdAesUhLGCF0KBk
- EqHNPGGvW5vxgDDwM3HAgxQCrnOsgOza9XQkAgLfBWm2oyetvztRGCCKHsY8Ax6qOkg3y2tKjhq
- eMx11cxlCRDajVOcza3RIkWDFXO9mCI2Jl27aEnVFQpF35rgiBJgQpzglrPY36afdWONTQFQAmf
- 3ZCaC2/vgosIqgomuiCHRo85ZY7WVaqR7nJEn6yOkgCR74BgZIcsJ+Yf1SxcUkmitHLkKQRk+fO
- W6+BlGsf
-X-Google-Smtp-Source: AGHT+IHSrZXijupkuYB1HEg2VkUP1gfVxOifl29QPVUUCBNGQj+aMbfxeiD/WzDf5hEeLzmClwiEqg==
-X-Received: by 2002:a05:6a20:748b:b0:1e1:a0b6:9861 with SMTP id
- adf61e73a8af0-1e88d0e21dbmr45074921637.12.1736923697324; 
- Tue, 14 Jan 2025 22:48:17 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d4067ee81sm8668470b3a.132.2025.01.14.22.48.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jan 2025 22:48:16 -0800 (PST)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Jason Chien <jason.chien@sifive.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Subject: [PATCH v2 2/2] hw/riscv/riscv-iommu-bits: Remove duplicate definitions
-Date: Wed, 15 Jan 2025 14:47:37 +0800
-Message-ID: <20250115064737.16350-2-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20250115064737.16350-1-jason.chien@sifive.com>
-References: <20250115064737.16350-1-jason.chien@sifive.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tXxEZ-0003tC-Pk; Wed, 15 Jan 2025 01:50:36 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tXxES-0001AM-Nm; Wed, 15 Jan 2025 01:50:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1736923829; x=1768459829;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=w1W6rlQfcGyzJJxG5ZQpv6yqnDxH0DbXb3AANEBszhQ=;
+ b=AvX5e8LmjmvaucHBIVC/P3UOQQSqCbhovgNjzUF9NY7yEOY4/FskkP/0
+ RkeIYonYLY/9/IKsci0yKb/HMo8bfePj1gA6BmdFbibEV2z5xtfO30WKN
+ MRewRb6uc8ftGWTjAI8/ff17p4AQmicJlcTsbkKDpMe+A5sFLRbI+GU5V
+ TysvV1nOkJzRurQUDnLimtxobFKaF8psXsHxk2KOjqQYHr273fI3X2mgR
+ 6ErUdyUyT4QuamiY689beRSCGhZhh0PrLSaYe/p9d8foJAAEJjZ2E5e02
+ jyapCAlXRAJz02CSPgMkLq+1xf0PgeDr9i8hixXq5GbIyzxgHimiMDW4Z A==;
+X-CSE-ConnectionGUID: HtGBxQPqTauKc6Ge/ilkSw==
+X-CSE-MsgGUID: yaloiS38Q2STZikA9LY/bw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11315"; a="40925512"
+X-IronPort-AV: E=Sophos;i="6.12,316,1728975600"; d="scan'208";a="40925512"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2025 22:50:25 -0800
+X-CSE-ConnectionGUID: y6vRTzulR7q3LLL2IqdOzQ==
+X-CSE-MsgGUID: eVEVxukNQ4++drC6garH0A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="135901500"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 14 Jan 2025 22:50:22 -0800
+Date: Wed, 15 Jan 2025 15:09:13 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 07/13] rust: add bindings for timer
+Message-ID: <Z4dfGcf1SbXaNSEM@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-8-zhao1.liu@intel.com>
+ <9cb123e2-5237-46e7-b6fe-ce8f813cc43c@redhat.com>
+ <Z4aEkLhcGVbXX82O@intel.com>
+ <CABgObfYRAYPBidb+cUPCrtdAEXGZiSG2hf5CvJskXmTpR1ftpQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=jason.chien@sifive.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <CABgObfYRAYPBidb+cUPCrtdAEXGZiSG2hf5CvJskXmTpR1ftpQ@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-1.794,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,59 +91,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The header contains duplicate macro definitions.
-This commit eliminates the duplicate part.
+On Tue, Jan 14, 2025 at 05:14:48PM +0100, Paolo Bonzini wrote:
+> Date: Tue, 14 Jan 2025 17:14:48 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 07/13] rust: add bindings for timer
+> 
+> On Tue, Jan 14, 2025 at 4:18 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+> > ...Now I have a draft for timer binding:
+> >
+> > * timer binding:
+> >
+> > impl QEMUTimer {
+> >     pub fn new() -> Self {
+> >         Zeroable::ZERO
+> >     }
+> 
+> Maybe Default too (not sure if you even need new())?
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
----
- hw/riscv/riscv-iommu-bits.h | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+Yes, I find bindgen has already implemented Default for QEMUTimer:
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 485f36b9c9..de599b80d6 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -50,8 +50,14 @@ struct riscv_iommu_pq_record {
- #define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
- #define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
- #define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
-+
- /* Payload fields */
-+#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
-+#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
-+#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
- #define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
-+#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
-+#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
- 
- /* Common field positions */
- #define RISCV_IOMMU_PPN_FIELD           GENMASK_ULL(53, 10)
-@@ -382,22 +388,6 @@ enum riscv_iommu_fq_ttypes {
-     RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 9,
- };
- 
--/* Header fields */
--#define RISCV_IOMMU_PREQ_HDR_PID        GENMASK_ULL(31, 12)
--#define RISCV_IOMMU_PREQ_HDR_PV         BIT_ULL(32)
--#define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
--#define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
--#define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
--
--/* Payload fields */
--#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
--#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
--#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
--#define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
--#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
--#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
--
--
- /*
-  * struct riscv_iommu_msi_pte - MSI Page Table Entry
-  */
--- 
-2.43.2
+#[repr(C)]
+#[derive(Debug)]
+pub struct QEMUTimer {
+    pub expire_time: i64,
+    pub timer_list: *mut QEMUTimerList,
+    pub cb: QEMUTimerCB,
+    pub opaque: *mut std::os::raw::c_void,
+    pub next: *mut QEMUTimer,
+    pub attributes: std::os::raw::c_int,
+    pub scale: std::os::raw::c_int,
+}
+
+impl Default for QEMUTimer {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+
+HPETTimer just has a pointer to a QEMUTimer, so I need the new() in
+init_timer_with_state() to create QEMUTimer within a Box<>. I'll use
+Default instead in new().
+
+> >     pub fn timer_init_full<'a, 'b: 'a, T, F>(
+> 
+> It's better to use longer names like 'timer and 'opaque. But it's also
+> always possible to pass a longer lifetime, so 'opaque: 'timer is
+> strictly speaking not needed: you can just use &'timer T which in turn
+> means that lifetime elision applies. That said, I think I like the
+> idea of using 'timer and 'opaque lifetimes here, for clarity.
+
+Thanks, I'll change the lifetime names.
+
+> >         &'a mut self,
+> >         timer_list_group: Option<&mut QEMUTimerListGroup>,
+> 
+> I think QEMUTimerListGroup can (should) be shared because it's thread safe.
+
+I understand here I can pass the immutable reference like (and that's
+the updated timer_init_full()):
+
+    pub fn timer_init_full<'timer, 'opaque: 'timer, T, F>(
+        &'timer mut self,
+        timer_list_group: Option<&QEMUTimerListGroup>,
+        clk_type: QEMUClockType,
+        scale: u32,
+        attributes: u32,
+        _f: F,
+        opaque: &'opaque T,
+    ) where
+        F: for<'a> FnCall<(&'a T,)>,
+    {
+        let timer_cb: unsafe extern "C" fn(*mut c_void) = rust_timer_handler::<T, F>;
+
+        // SAFETY: the opaque outlives the timer
+        unsafe {
+            timer_init_full(
+                self,
+                if let Some(g) = timer_list_group {
+                    g as *const QEMUTimerListGroup as *mut QEMUTimerListGroup
+                } else {
+                    ::core::ptr::null_mut()
+                },
+                clk_type,
+                scale as c_int,
+                attributes as c_int,
+                Some(timer_cb),
+                opaque as *const T as *const c_void as *mut c_void,
+            )
+        }
+    }
+
+> >         clk_type: QEMUClockType,
+> >         scale: u32,
+> >         attributes: u32,
+> >         _f: &F,
+> 
+> Better: "_f: &'static F", or even "_f: F" if it works.
+
+"_f: F" can work since I passed a function reference (&cb, not a
+function pointer).
+
+With "_f: F", passing timer_handler directly is better.
+
+> >         opaque: &'b T,
+> >     ) where
+> >         F: for<'c> FnCall<(&'c T,)> + 'b,
+> 
+> 'b ('opaque) is not needed here because the opaque is passed _into_
+> the function (thus its lifetime is 'c). 'timer would make sense, but
+> in fact the function itself is always 'static (see FnCall declaration)
+> so it is unnecessary to add a lifetime to FnCall.
+
+I see! Thank you for clarification.
+
+> > fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+> >     timer_cell.borrow_mut().callback()
+> > }
+> >
+> > impl HPETTimer {
+> >     ...
+> >
+> >     fn init_timer_with_state(&mut self) {
+> >         let index = self.index;
+> >         let cb = |cell: &BqlRefCell<HPETTimer>| {
+> >             timer_handler(cell);
+> >         };
+> 
+> Why is the anonymous function needed?  Can you just pass "timer_handler"?
+
+Yes, I should clean up this closure...
+
+> > Is this timer binding as you expected? Hope I am on the right track. :-)
+> 
+> If the only correction is to the function declaration, that's as good
+> as it can be for Rust! ;)
+> 
+
+Thank you! Now I have a updated timer_init_full() (like I pasted above).
+
+Regards,
+Zhao
 
 
