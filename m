@@ -4,64 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73AC1C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0544C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7hl-0004z3-EZ; Wed, 15 Jan 2025 13:01:25 -0500
+	id 1tY7ol-0006IY-WF; Wed, 15 Jan 2025 13:08:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tY7hh-0004yB-Td
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:01:21 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oj-0006H5-1F
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tY7hf-0004dh-LF
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:01:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=OoL0s8sam5YmTZUEtCSs6iX6LrC5FEcoPs1HL2eU3yk=; b=coj9YWDjAZ5by8+Vb0RYsaNF1/
- yRSqMnU/YBzscklmCp5h0tu4ufAsFUeYKWunXHP+YOZhDMP6rNd+bwsNtFnwynk83VhEItOxgXdzI
- uiJV0IozbplyiIO9ki1aju8d2rdLW89aNbJQev4dAgPyMexFYEo2HXQQRHmhscPT5SINYSfm/H6dy
- 5fOstxmSbwochkbhG3ysRenkIQq8f4OqfG2rXea3l2H2hHUtWEll1+YSviAtROpqjlvnD3WMsNzWR
- D6XMVNZ2SvJMkyBBgh07YigdDPgLUN9O8kKtisnKdl7zNZPDU9c4DCvYSMLonTwNmP++mWbhDQ3QG
- UxTgaCjw==;
-Received: from 54-240-197-234.amazon.com ([54.240.197.234]
- helo=freeip.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tY7hb-0000000HARk-2gJo; Wed, 15 Jan 2025 18:01:15 +0000
-Message-ID: <876d003cfcb678d183f2a4ac349c3fb1c60eb5fd.camel@infradead.org>
-Subject: Re: [PATCH] system/runstate: Fix regression, clarify BQL status of
- exit notifiers
-From: David Woodhouse <dwmw2@infradead.org>
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org, akihiko.odaki@daynix.com
-Date: Wed, 15 Jan 2025 19:01:14 +0100
-In-Reply-To: <20250112212609.17996-1-phil@philjordan.eu>
-References: <20250112212609.17996-1-phil@philjordan.eu>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-/sOI90B3u/ooN5HPtG+8"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7of-0006UD-W0
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736964512;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9Y40wc+DZhits8ejNBj4b0Ojfrrmn6jpUjml+NjRDvs=;
+ b=dR0n8mnBDkSJIjwtkDi8UL5qcadnkR1eaOpmkffpW9QO7lSstFLF2s+gGqSl1ykb0nrAw/
+ d5LHyqwV9IJEeUez8AAZ8L0GYChKCs2FW2NTHZZFDanEan80xs2LNv6JvCbMt8Rwfue6eG
+ O9CXmf93Hj4rMEVUx9IYMdRTkUIo5vo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-19-pbaHgDU6MM-lIQ-XHClj9A-1; Wed, 15 Jan 2025 13:08:30 -0500
+X-MC-Unique: pbaHgDU6MM-lIQ-XHClj9A-1
+X-Mimecast-MFC-AGG-ID: pbaHgDU6MM-lIQ-XHClj9A
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385d52591d6so38825f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736964509; x=1737569309;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9Y40wc+DZhits8ejNBj4b0Ojfrrmn6jpUjml+NjRDvs=;
+ b=mU3V+sKyqZUeK7grt+GaECEHb7PfMr5NTi8+q7IUPWTn5FmmB8QV5Gl5eBeJ2PM26f
+ FMxisvflfCapUub1lCeAtF2M8JZ/fdh/nQpW8PPsEt7ZBBSf/+LLiUWEzjqUHXDsscGO
+ 4LaGaz8yz3Yl5ZnN3prhwHbqalBeIgXvipsKw+lnFq3Te52Uu0Kmg5Js78TnJ/SUcHyc
+ C1Nq57jC5SI4JxaT4Mcu1h9pDLk/GI8flDWwJqlM26LQA9vJ43e8gJxExRjcKvczejTT
+ 4PmiChVoJU/5+l8CQSnWvxKKJ34PlV84pf3dALbNvCq/8rV9AauTphpv+OX5vhCXowXc
+ Ev8w==
+X-Gm-Message-State: AOJu0YwTtm3hd+z3FntMsZ6D88BmMAGnz1g8JMc55itJ6cLwXQxgwQHy
+ q8CFUbCMTYUTbQws+syagIO5CDGgEYicxt09/NStcyrp18U0Q5Et4Z11TiqPvsORjgGASEOdtQE
+ nTCMtycrEHyIaWo9UrEakgHNIfwdHGX6P+Ngd7AW8mwZnH9/O2PcqhkdHdBsTza9XJ7rRRP9B3X
+ YOmx8qIK3oe3Ao/AAC3ueEU7aawAuKVQ==
+X-Gm-Gg: ASbGncvbkc/BgIAb+mgGHbteG+5WnLTP6ldfSEHkWcFibtFLhZNTKZiZoxPEXUdqJeL
+ ww+c+lL2mpO5BL8DogZuh8HTw9zl2RUP9rsZQ7S4IGqxZXo5o9AjNh7Yl8jXxdwRewX78iOYhVO
+ Fw9IrUlRKO+iWgt4BFGTybLALVK/vgFZmyy2DjpRHslLHaVxpg7eE8ADZ2b2zlwX4B53ZQxQ2RP
+ k7MW2O2FA/ypauMtbmluE+ldtSNQMua0UYN2zMZXZKhFfxikwIC
+X-Received: by 2002:a05:6000:1445:b0:386:4a16:dadb with SMTP id
+ ffacd0b85a97d-38a8b0c712fmr21160380f8f.11.1736964509083; 
+ Wed, 15 Jan 2025 10:08:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFKLAWaTK3OWJbnHyAQUiHxzihXHtOgU28MUdR/c1Qvcp+fKEbUKT3RpcfzxlznY3DsRH2yuw==
+X-Received: by 2002:a05:6000:1445:b0:386:4a16:dadb with SMTP id
+ ffacd0b85a97d-38a8b0c712fmr21160345f8f.11.1736964508542; 
+ Wed, 15 Jan 2025 10:08:28 -0800 (PST)
+Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c74c475csm32168725e9.20.2025.01.15.10.08.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 10:08:27 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:08:25 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/48] virtio,pc,pci: features, fixes, cleanups
+Message-ID: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,134 +105,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 7433709a147706ad7d1956b15669279933d0f82b:
 
---=-/sOI90B3u/ooN5HPtG+8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  Merge tag 'hw-misc-20250113' of https://github.com/philmd/qemu into staging (2025-01-14 12:46:56 -0500)
 
-On Sun, 2025-01-12 at 22:26 +0100, Phil Dennis-Jordan wrote:
-> By changing the way the main QEMU event loop is invoked, I inadvertently
-> changed the BQL status of exit notifiers: some of them implicitly
-> assumed they would be called with the BQL held; the BQL is however
-> not held during the exit(status) call in qemu_default_main().
->=20
-> Instead of attempting to ensuring we always call exit() from the BQL -
-> including any transitive calls - this change adds a BQL lock guard to
-> qemu_run_exit_notifiers, ensuring the BQL will always be held in the
-> exit notifiers.
->=20
-> Additionally, the BQL promise is now documented at the
-> qemu_{add,remove}_exit_notifier() declarations.
->=20
-> Fixes: f5ab12caba4f ("ui & main loop: Redesign of system-specific main
-> thread event handling")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2771
-> Reported-by: David Woodhouse <dwmw2@infradead.org>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+are available in the Git repository at:
 
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
 
-(Sorry, I thought I'd done that already).
+for you to fetch changes up to 60f543ad917fad731e39ff8ce2ca83b9a9cc9d90:
 
-Is someone else going to pick this up, or should I round it up with the
-Xen fixes for which I'm likely to send a pull request tomorrow?=20
+  virtio-net: vhost-user: Implement internal migration (2025-01-15 13:07:34 -0500)
 
---=-/sOI90B3u/ooN5HPtG+8
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+----------------------------------------------------------------
+virtio,pc,pci: features, fixes, cleanups
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDExNTE4MDEx
-NFowLwYJKoZIhvcNAQkEMSIEIOpEMlBxQgDj5Qi3M/pYXOmI0tE3wW8Wu5EuQWfyPZVzMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAVCiallcPI1iH
-RKgFEFb7ny0SAAtbKlIPUcEl/Pgqs1Ua8OXM5DP/PwefVvrhKaQU5c9dIk1JBaH4Tg0WwZ2XoWGY
-kGorjg5sOip9RbSloon1BdSDArMvABaEyvQqkUg2fdInqCPvzinOuo1aGSdwZaqDXFvruyKPw1Fg
-u0ZBPzWNkfpUPOA+WFTwVFsADPc57C8VdXkOH1b1nBqLkUJIt2lmijN8xzkW36qvNWo/14kCDoHg
-AarnNQf8OupOsFE1eouCu+7dottQe0MgJ22E/kMCeKDyORILou5aYexBxSWk8HCPfSFo/LsDkSHn
-19paLNoE1CfqmVwdBzfS5nBwcvODAtiddV3DsaeK03JBooEyqvh7pjUGdujbSYbHDYrpyWCN2WNv
-oMs1hmC6ulJsVAGlQNLjsPbSZwO6FRsJ09UbICCjZpz7ye+DeIKvfHh4uorTabA1eVe/F/u7ru1N
-rN+nbGCF/F3PXtQFecz6ZNXONlYKq9gnPmXzeCP8XRbGC+o+lnOml8wnUljViLVmWhLyP++Pfk01
-9w+JJVwELpG2i7z4J3kNrGwqoREKnXPWHaNKtMl2txb216PrheR9/5EcKhCWoS5WLt66DJCLBuR9
-YScIygM2Qubzxiwha4h5dn/IQcR8DUs+Bt4J/v1loucOol6TPx9WW80+tfJLPpQAAAAAAAA=
+The big thing here are:
+stage-1 translation in vtd
+internal migration in vhost-user
+ghes driver preparation for error injection
+new resource uuid feature in virtio gpu
 
+And as usual, fixes and cleanups.
 
---=-/sOI90B3u/ooN5HPtG+8--
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+----------------------------------------------------------------
+Clément Mathieu--Drif (4):
+      intel_iommu: Check if the input address is canonical
+      intel_iommu: Set accessed and dirty bits during stage-1 translation
+      intel_iommu: Add an internal API to find an address space with PASID
+      intel_iommu: Add support for PASID-based device IOTLB invalidation
+
+Dorinda Bassey (1):
+      virtio-gpu: Add definition for resource_uuid feature
+
+Igor Mammedov (6):
+      tests: acpi: whitelist expected blobs
+      cpuhp: make sure that remove events are handled within the same SCI
+      tests: acpi: update expected blobs
+      tests: acpi: whitelist expected blobs
+      pci: acpi: Windows 'PCI Label Id' bug workaround
+      tests: acpi: update expected blobs
+
+Laurent Vivier (2):
+      vhost: Add stubs for the migration state transfer interface
+      virtio-net: vhost-user: Implement internal migration
+
+Li Zhijian (1):
+      hw/cxl: Fix msix_notify: Assertion `vector < dev->msix_entries_nr`
+
+Mauro Carvalho Chehab (16):
+      acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
+      acpi/ghes: simplify acpi_ghes_record_errors() code
+      acpi/ghes: simplify the per-arch caller to build HEST table
+      acpi/ghes: better handle source_id and notification
+      acpi/ghes: Fix acpi_ghes_record_errors() argument
+      acpi/ghes: Remove a duplicated out of bounds check
+      acpi/ghes: Change the type for source_id
+      acpi/ghes: don't check if physical_address is not zero
+      acpi/ghes: make the GHES record generation more generic
+      acpi/ghes: better name GHES memory error function
+      acpi/ghes: don't crash QEMU if ghes GED is not found
+      acpi/ghes: rename etc/hardware_error file macros
+      acpi/ghes: better name the offset of the hardware error firmware
+      acpi/ghes: move offset calculus to a separate function
+      acpi/ghes: Change ghes fill logic to work with only one source
+      docs: acpi_hest_ghes: fix documentation for CPER size
+
+Nicholas Piggin (1):
+      pci/msix: Fix msix pba read vector poll end calculation
+
+Sebastian Ott (1):
+      pci: ensure valid link status bits for downstream ports
+
+Yi Liu (2):
+      intel_iommu: Rename slpte to pte
+      intel_iommu: Implement stage-1 translation
+
+Yu Zhang (1):
+      intel_iommu: Use the latest fault reasons defined by spec
+
+Zhenzhong Duan (13):
+      intel_iommu: Make pasid entry type check accurate
+      intel_iommu: Add a placeholder variable for scalable mode stage-1 translation
+      intel_iommu: Flush stage-2 cache in PASID-selective PASID-based iotlb invalidation
+      intel_iommu: Check stage-1 translation result with interrupt range
+      intel_iommu: Flush stage-1 cache in iotlb invalidation
+      intel_iommu: Process PASID-based iotlb invalidation
+      intel_iommu: piotlb invalidation should notify unmap
+      tests/acpi: q35: allow DMAR acpi table changes
+      intel_iommu: Set default aw_bits to 48 starting from QEMU 9.2
+      tests/acpi: q35: Update host address width in DMAR
+      intel_iommu: Introduce a property x-flts for stage-1 translation
+      intel_iommu: Introduce a property to control FS1GP cap bit setting
+      tests/qtest: Add intel-iommu test
+
+ hw/i386/intel_iommu_internal.h                    | 101 ++-
+ include/hw/acpi/ghes.h                            |  16 +-
+ include/hw/i386/intel_iommu.h                     |   8 +-
+ include/hw/virtio/vhost.h                         |  23 +
+ include/hw/virtio/virtio-gpu.h                    |   3 +
+ hw/acpi/cpu.c                                     |  43 +-
+ hw/acpi/generic_event_device.c                    |   4 +-
+ hw/acpi/ghes-stub.c                               |   2 +-
+ hw/acpi/ghes.c                                    | 256 ++++----
+ hw/arm/virt-acpi-build.c                          |   5 +-
+ hw/display/vhost-user-gpu.c                       |   8 +
+ hw/display/virtio-gpu-base.c                      |   3 +
+ hw/i386/acpi-build.c                              |  33 +-
+ hw/i386/intel_iommu.c                             | 734 +++++++++++++++++-----
+ hw/i386/pc.c                                      |   1 +
+ hw/mem/cxl_type3.c                                |   2 +-
+ hw/net/virtio-net.c                               | 135 +++-
+ hw/pci/msix.c                                     |   2 +-
+ hw/pci/pcie.c                                     |  12 +-
+ target/arm/kvm.c                                  |   2 +-
+ tests/qtest/intel-iommu-test.c                    |  64 ++
+ MAINTAINERS                                       |   1 +
+ docs/specs/acpi_hest_ghes.rst                     |   6 +-
+ tests/data/acpi/x86/pc/DSDT                       | Bin 8526 -> 8611 bytes
+ tests/data/acpi/x86/pc/DSDT.acpierst              | Bin 8437 -> 8522 bytes
+ tests/data/acpi/x86/pc/DSDT.acpihmat              | Bin 9851 -> 9936 bytes
+ tests/data/acpi/x86/pc/DSDT.bridge                | Bin 15397 -> 15482 bytes
+ tests/data/acpi/x86/pc/DSDT.cphp                  | Bin 8990 -> 9075 bytes
+ tests/data/acpi/x86/pc/DSDT.dimmpxm               | Bin 10180 -> 10265 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbridge              | Bin 8477 -> 8562 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbrroot              | Bin 5033 -> 5100 bytes
+ tests/data/acpi/x86/pc/DSDT.ipmikcs               | Bin 8598 -> 8683 bytes
+ tests/data/acpi/x86/pc/DSDT.memhp                 | Bin 9885 -> 9970 bytes
+ tests/data/acpi/x86/pc/DSDT.nohpet                | Bin 8384 -> 8469 bytes
+ tests/data/acpi/x86/pc/DSDT.numamem               | Bin 8532 -> 8617 bytes
+ tests/data/acpi/x86/pc/DSDT.roothp                | Bin 12319 -> 12404 bytes
+ tests/data/acpi/x86/q35/DMAR.dmar                 | Bin 120 -> 120 bytes
+ tests/data/acpi/x86/q35/DSDT                      | Bin 8355 -> 8440 bytes
+ tests/data/acpi/x86/q35/DSDT.acpierst             | Bin 8372 -> 8457 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat             | Bin 9680 -> 9765 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x   | Bin 12565 -> 12650 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator | Bin 8634 -> 8719 bytes
+ tests/data/acpi/x86/q35/DSDT.applesmc             | Bin 8401 -> 8486 bytes
+ tests/data/acpi/x86/q35/DSDT.bridge               | Bin 11968 -> 12053 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count           | Bin 12913 -> 12998 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count2          | Bin 33770 -> 33855 bytes
+ tests/data/acpi/x86/q35/DSDT.cphp                 | Bin 8819 -> 8904 bytes
+ tests/data/acpi/x86/q35/DSDT.cxl                  | Bin 13146 -> 13231 bytes
+ tests/data/acpi/x86/q35/DSDT.dimmpxm              | Bin 10009 -> 10094 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmibt               | Bin 8430 -> 8515 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmismbus            | Bin 8443 -> 8528 bytes
+ tests/data/acpi/x86/q35/DSDT.ivrs                 | Bin 8372 -> 8457 bytes
+ tests/data/acpi/x86/q35/DSDT.memhp                | Bin 9714 -> 9799 bytes
+ tests/data/acpi/x86/q35/DSDT.mmio64               | Bin 9485 -> 9570 bytes
+ tests/data/acpi/x86/q35/DSDT.multi-bridge         | Bin 13208 -> 13293 bytes
+ tests/data/acpi/x86/q35/DSDT.noacpihp             | Bin 8235 -> 8302 bytes
+ tests/data/acpi/x86/q35/DSDT.nohpet               | Bin 8213 -> 8298 bytes
+ tests/data/acpi/x86/q35/DSDT.numamem              | Bin 8361 -> 8446 bytes
+ tests/data/acpi/x86/q35/DSDT.pvpanic-isa          | Bin 8456 -> 8541 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count         | Bin 12913 -> 12998 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count2        | Bin 33770 -> 33855 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm12            | Bin 8961 -> 9046 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm2             | Bin 8987 -> 9072 bytes
+ tests/data/acpi/x86/q35/DSDT.type4-count          | Bin 18589 -> 18674 bytes
+ tests/data/acpi/x86/q35/DSDT.viot                 | Bin 14612 -> 14697 bytes
+ tests/data/acpi/x86/q35/DSDT.xapic                | Bin 35718 -> 35803 bytes
+ tests/qtest/meson.build                           |   1 +
+ 67 files changed, 1132 insertions(+), 333 deletions(-)
+ create mode 100644 tests/qtest/intel-iommu-test.c
+
 
