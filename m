@@ -4,111 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF6E8C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A98C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 17:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY6aW-0007qG-5t; Wed, 15 Jan 2025 11:49:52 -0500
+	id 1tY6ll-0002CF-I8; Wed, 15 Jan 2025 12:01:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tY6aO-0007pt-Ux
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:49:45 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tY6aM-0003DW-Pn
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 11:49:44 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 420721F7C0;
- Wed, 15 Jan 2025 16:49:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736959779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zA3RKcUixx4ZeTnWOP230OH0WBrF+g1aSEj2WD8eznk=;
- b=Q8iXpYMVtjQodf4Qsgoii/ZAk7Bhe2UwddSSqXRhfwn2xu5fv60eqlFIUmP3SYKXVcwRIh
- VaPMdJaFByBeQ94HNPvZXpgtN9xVJdPHFiv4JUqAgRoxlayEWYLU2dsfIbUQEB2SuZJYpb
- nhXChRMYl3m7okhOeanOA9aIezYOfAA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736959779;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zA3RKcUixx4ZeTnWOP230OH0WBrF+g1aSEj2WD8eznk=;
- b=9x5L0W1O8opYnXG+SowvG0W7kL1uXy9H4+p1r/vsJYxpfClkRKZdljTkiIt4JRwx2PKOhr
- C73f6nPoh+QTnpBA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Q8iXpYMV;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9x5L0W1O
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1736959779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zA3RKcUixx4ZeTnWOP230OH0WBrF+g1aSEj2WD8eznk=;
- b=Q8iXpYMVtjQodf4Qsgoii/ZAk7Bhe2UwddSSqXRhfwn2xu5fv60eqlFIUmP3SYKXVcwRIh
- VaPMdJaFByBeQ94HNPvZXpgtN9xVJdPHFiv4JUqAgRoxlayEWYLU2dsfIbUQEB2SuZJYpb
- nhXChRMYl3m7okhOeanOA9aIezYOfAA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1736959779;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zA3RKcUixx4ZeTnWOP230OH0WBrF+g1aSEj2WD8eznk=;
- b=9x5L0W1O8opYnXG+SowvG0W7kL1uXy9H4+p1r/vsJYxpfClkRKZdljTkiIt4JRwx2PKOhr
- C73f6nPoh+QTnpBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BC40713A6F;
- Wed, 15 Jan 2025 16:49:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cSDVHyLnh2djIwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 15 Jan 2025 16:49:38 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>, Julia Suvorova
- <jusual@redhat.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH 00/16] migration: Switchover phase refactoring
-In-Reply-To: <20250114230746.3268797-1-peterx@redhat.com>
-References: <20250114230746.3268797-1-peterx@redhat.com>
-Date: Wed, 15 Jan 2025 13:49:36 -0300
-Message-ID: <878qrcf2e7.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1tY6lO-00025U-Tx; Wed, 15 Jan 2025 12:01:22 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1tY6lK-0004cj-St; Wed, 15 Jan 2025 12:01:06 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FGYWtB002063;
+ Wed, 15 Jan 2025 17:00:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0ZZgPx
+ gFquZTcN46EiAokZobN9PdTLMPuJXd327rnt4=; b=gVGBsxTnFwpa+e8fvNQtkP
+ AWVv0UPA11E4IgpVrAN/V6M/yLrcxCoRmxVv6m670nveZPxyiKWQIBxQb1hlU9I+
+ v1kDIES2Xv+IQWf5Caz/WF9emG2dqE5xYwjkiOS/rjwkNwNyTANT17pg1mo7gjFS
+ 1KZnVk475a42Wzb4ISo7mPIE38DrCJXjyZMyTHmmF9T1hpKyH6gg+aWRLsNKrVRs
+ T7VCsoRy/ONin/XoDL5Rnf1x8Vh/yhzlvsdk28xYYOjgekes2opOjzJlsVGsNNVL
+ VQtVpt9F02J+iTS6WVq743oS7ugzUmTK4sWDtt178kTCGxB5L9H6adEgdfH/zcBA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4465gbugks-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jan 2025 17:00:58 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50FE97p5016976;
+ Wed, 15 Jan 2025 17:00:57 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4444fk9bmm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jan 2025 17:00:57 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50FH0ujx31589022
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jan 2025 17:00:56 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4C7925805E;
+ Wed, 15 Jan 2025 17:00:56 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2820F58058;
+ Wed, 15 Jan 2025 17:00:55 +0000 (GMT)
+Received: from [9.61.176.130] (unknown [9.61.176.130])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 15 Jan 2025 17:00:55 +0000 (GMT)
+Message-ID: <64671de6-f1c9-47df-997e-2cc15f7ff78c@linux.ibm.com>
+Date: Wed, 15 Jan 2025 12:00:54 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 420721F7C0
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/5] hw/vfio/ap: notification handler for AP config
+ changed event
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
+References: <20250107184354.91079-1-rreyes@linux.ibm.com>
+ <20250107184354.91079-3-rreyes@linux.ibm.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20250107184354.91079-3-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: GYzvntiFUuB3P86PSUKCE1V9pVNe__Cj
+X-Proofpoint-ORIG-GUID: GYzvntiFUuB3P86PSUKCE1V9pVNe__Cj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_08,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 spamscore=0
+ adultscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501150125
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,113 +113,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> CI: https://gitlab.com/peterx/qemu/-/pipelines/1625266692
->     (note: warning is present on rust stuff, but shouldn't be relevant)
->
-> This series refactors the migration switchover path quite a bit.  I started
-> this work initially to measure the JSON writer overhead, but then I decided
-> to cleanup the switchover path in general when I am at it altogether, as I
-> wanted to do this for a long time.
->
-> A few major things I tried to do:
->
->   - About the JSON writer
->
->     Currently, precopy migration always dumps a chunk of data called VM
->     description (QEMU_VM_VMDESCRIPTION) for debugging purpose.  That is a
->     JSON blob explaining all the vmstates dumped in the migration stream.
->     QEMU has a machine property suppress-vmdesc deciding whether migration
->     will have that JSON chunk included.
->
->     Postcopy does not have such JSON dump because postcopy is live session
->     and it can't normally be debugged from stream level (e.g. as a streamed
->     file).
->
->     A tiny problem is we don't yet have a clue on how much cpu cycles we
->     need to construct and dump these JSONs even if they're only for
->     debugging, and even if suppress-vmdesc=on QEMU will still try to
->     construct these JSONs (e.g. also for postcopy).
->
->     This series has a few patches just to make sure the JSON blob won't be
->     constructed if not needed (either postcopy, or suppress-vmdesc=on).  I
->     tried to measure the downtime diff with/without these changes, the time
->     QEMU takes to construct / dump the JSON blob is still not measurable.
->     So I suppose unconditionally having this is ok.  Said that, let's still
->     have these changes around so we avoid JSON operations if not needed.
->
->   - DEVICE migration state
->
->     QEMU has a very special DEVICE migration state, that only happens with
->     precopy, and only when pause-before-switchover capability is enabled.
->     Due to that specialty we can't merge precopy and postcopy code on
->     switchover starts, because the state machine will be different.
->
->     However after I checked the history and also with libvirt developers,
->     this seems unnecessary.  So I had one patch making DEVICE state to be
->     the "switchover" phase for precopy/postcopy unconditionally.  That will
->     make the state machine much easier for both modes, meanwhile nothing is
->     expected to break with it (but please still shoot if anyone knows /
->     suspect something will, or could, break..).
->
->   - General cleanups and fixes
->
->     Most of the rest changes are random cleanups and fixes in the
->     switchover path.
->
->     E.g., postcopy_start() has some code that isn't easy to read due to
->     some special flags here and there, mostly around the two calls of
->     qemu_savevm_state_complete_precopy().  This series will remove most of
->     those special treatments here and there.
->
->     We could have done something twice in the past in postcopy switchover
->     (e.g. I believe we sync CPU twice.. but only happens with postcopy),
->     now they should all be sorted out.
->
->     And quite some other things hopefully can be separately discussed and
->     justified in each patch.  After these cleanups, we will be able to have
->     an unified entrance for precopy/postcopy on switchover.
->
-> Initially I thought this could optimize the downtime slightly, but after
-> some tests, it turns out there's no measureable difference, at least in my
-> current setup... So let's take this as a cleanup series at least for now,
-> and I hope they would still make some sense.  Comments welcomed.
->
-> Thanks,
->
-> Peter Xu (16):
->   migration: Remove postcopy implications in should_send_vmdesc()
->   migration: Do not construct JSON description if suppressed
->   migration: Optimize postcopy on downtime by avoiding JSON writer
->   migration: Avoid two src-downtime-end tracepoints for postcopy
->   migration: Drop inactivate_disk param in qemu_savevm_state_complete*
->   migration: Synchronize all CPU states only for non-iterable dump
->   migration: Adjust postcopy bandwidth during switchover
->   migration: Adjust locking in migration_maybe_pause()
->   migration: Drop cached migration state in migration_maybe_pause()
->   migration: Take BQL slightly longer in postcopy_start()
->   migration: Notify COMPLETE once for postcopy
->   migration: Unwrap qemu_savevm_state_complete_precopy() in postcopy
->   migration: Cleanup qemu_savevm_state_complete_precopy()
->   migration: Always set DEVICE state
->   migration: Merge precopy/postcopy on switchover start
->   migration: Trivial cleanup on JSON writer of vmstate_save()
->
->  qapi/migration.json         |   7 +-
->  migration/migration.h       |   1 +
->  migration/savevm.h          |   6 +-
->  migration/migration.c       | 209 +++++++++++++++++++++++-------------
->  migration/savevm.c          | 116 ++++++++------------
->  migration/vmstate.c         |   6 +-
->  tests/qtest/libqos/libqos.c |   3 +-
->  migration/trace-events      |   2 +-
->  tests/qemu-iotests/194.out  |   1 +
->  tests/qemu-iotests/203.out  |   1 +
->  tests/qemu-iotests/234.out  |   2 +
->  tests/qemu-iotests/262.out  |   1 +
->  tests/qemu-iotests/280.out  |   1 +
->  13 files changed, 200 insertions(+), 156 deletions(-)
 
-Queued, thanks!
+
+On 1/7/25 1:43 PM, Rorie Reyes wrote:
+> Register an event notifier handler to process AP configuration
+> change events by queuing the event and generating a CRW to let
+> the guest know its AP configuration has changed
+>
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Tested-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> ---
+>   hw/vfio/ap.c | 27 +++++++++++++++++++++++++++
+>   1 file changed, 27 insertions(+)
+>
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 30b08ad375..533cadb2dd 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -18,6 +18,7 @@
+>   #include "hw/vfio/vfio-common.h"
+>   #include "system/iommufd.h"
+>   #include "hw/s390x/ap-device.h"
+> +#include "hw/s390x/css.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/event_notifier.h"
+>   #include "qemu/main-loop.h"
+> @@ -37,6 +38,7 @@ struct VFIOAPDevice {
+>       APDevice apdev;
+>       VFIODevice vdev;
+>       EventNotifier req_notifier;
+> +    EventNotifier cfg_notifier;
+>   };
+>   
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+> @@ -70,6 +72,18 @@ static void vfio_ap_req_notifier_handler(void *opaque)
+>       }
+>   }
+>   
+> +static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+> +{
+> +    VFIOAPDevice *vapdev = opaque;
+> +
+> +    if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
+> +        warn_report("Event notifier not initialized");
+> +        return;
+> +    }
+> +
+> +    css_generate_css_crws(0);
+> +}
+> +
+>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>                                             unsigned int irq, Error **errp)
+>   {
+> @@ -85,6 +99,10 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>           notifier = &vapdev->req_notifier;
+>           fd_read = vfio_ap_req_notifier_handler;
+>           break;
+> +    case VFIO_AP_CFG_CHG_IRQ_INDEX:
+> +        notifier = &vapdev->cfg_notifier;
+> +        fd_read = vfio_ap_cfg_chg_notifier_handler;
+> +        break;
+>       default:
+>           error_setg(errp, "vfio: Unsupported device irq(%d)", irq);
+>           return false;
+> @@ -175,6 +193,15 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+>           warn_report_err(err);
+>       }
+
+I missed this in my previous reviews; however, this needs a function to 
+unregister the
+VFIO_AP_CFG_CHG_IRQ_INDEX notifier.
+
+>   
+> +    if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_CFG_CHG_IRQ_INDEX, &err))
+> +    {
+> +        /*
+> +         * Report this error, but do not make it a failing condition.
+> +         * Lack of this IRQ in the host does not prevent normal operation.
+> +         */
+> +        warn_report_err(err);
+> +    }
+> +
+>       return;
+>   
+>   error:
+
 
