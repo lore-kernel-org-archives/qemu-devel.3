@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF52C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B317C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY8dg-0007MV-7c; Wed, 15 Jan 2025 14:01:16 -0500
+	id 1tY8dY-0007G8-E8; Wed, 15 Jan 2025 14:01:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tY8dd-0007L5-1X
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:13 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1tY8dU-0007EP-Bt
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:04 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tY8da-0005f0-Qs
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:12 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHtirT028972;
- Wed, 15 Jan 2025 19:01:08 GMT
+ id 1tY8dR-0005bS-7f
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:03 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHtkDH001689;
+ Wed, 15 Jan 2025 19:00:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=NnUPRI7X7LFv4CFp32WsOflp+dn76KgkG2C4V7Q/2LE=; b=
- PoMj9+b5qHEcTGYxVn4wuwrj48a24mmtGqGkfx/mjjV+jtRB/tfZNulJhrccVPHc
- O1eoxfCULcICPngRSUxAl1GbX7YtsLU8RraE83fSkhOhIukiTRBqOrBkWr3aebZv
- IAusrVoDDPcWHoZseRvs/kWW93TXFvarg/MmGy7jzqSy1nuRyPeIpm9Q/dUTiG7H
- gYK4hV1kcr7FrxF6zGPRyUlfLZEn9dwE/u7Xkah5earKO3d14ZqBNVWszI9bGVHn
- IOeo7yVmEQOmaxFtkUBZSdFGFodSabHxoAShjrbBl3rw7go/dmxOIu4HQN8KJzRo
- zifAwQbFC3A9R6k2haK2+Q==
+ corp-2023-11-20; bh=suvOzlC5rmbwSVpgbiHlcYi9rem2fvXpQ11p7DNzeB0=; b=
+ Sxis119w0a9V6Vw2joAM5air8T8f0JLug0LcDHBzZgGt2+Fr+vC34+yltb5+yTrR
+ LlC9WipLFrhQbORMnheZE9zmDMRaZe1SgP1ptDHXFRjURjnHuJ7Vwp7fp62hxaLz
+ cNuXvsCGb4bZqaZBSQDwsZFzSRA+9y3yILE7xSADECmOO3FXUaVTgrX0lqxsHiHQ
+ Peqj+0M13O7q0XU7KN1kypbVtjI3HUtVjq1riX9Sp5KmD7aOrzEmLBByt3MGt3qp
+ uuakSvBai7hxhhuLW3j6SyppekAreQtBM80MnNE3jBgyRRSL1DAiMg7OQB1dp+wN
+ WvE8HxmjVO5aNBQr7mGKTQ==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443fe2gu3u-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443f7y8q2k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 19:01:08 +0000 (GMT)
+ Wed, 15 Jan 2025 19:00:55 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50FHcjZi034966; Wed, 15 Jan 2025 19:01:07 GMT
+ with ESMTP id 50FHjXrZ034967; Wed, 15 Jan 2025 19:00:55 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 443f39urb6-1
+ 443f39ur0n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 19:01:07 +0000
+ Wed, 15 Jan 2025 19:00:55 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0peZ016497;
- Wed, 15 Jan 2025 19:01:06 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0pe1016497;
+ Wed, 15 Jan 2025 19:00:54 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 443f39uqwr-22; Wed, 15 Jan 2025 19:01:06 +0000
+ ESMTP id 443f39uqwr-5; Wed, 15 Jan 2025 19:00:54 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V7 21/24] tests/qtest: enhance migration channels
-Date: Wed, 15 Jan 2025 11:00:47 -0800
-Message-Id: <1736967650-129648-22-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V7 04/24] physmem: fd-based shared memory
+Date: Wed, 15 Jan 2025 11:00:30 -0800
+Message-Id: <1736967650-129648-5-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
 References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
@@ -78,16 +78,16 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2501150138
-X-Proofpoint-ORIG-GUID: Kr6DXmFoBjtta8o0DrV5p8hu-ciWzvha
-X-Proofpoint-GUID: Kr6DXmFoBjtta8o0DrV5p8hu-ciWzvha
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Proofpoint-ORIG-GUID: aoUie8YuJTGr_PGzHQVIyMqL-I9VIyVz
+X-Proofpoint-GUID: aoUie8YuJTGr_PGzHQVIyMqL-I9VIyVz
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.793,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,324 +105,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the migrate_qmp and migrate_qmp_fail channels argument to a QObject
-type so the caller can manipulate the object before passing it to the
-helper.  Define migrate_str_to_channel to aid such manipulation.
-Add a channels argument to migrate_incoming_qmp.
+Create MAP_SHARED RAMBlocks by mmap'ing a file descriptor rather than using
+MAP_ANON, so the memory can be accessed in another process by passing and
+mmap'ing the fd.  This will allow CPR to support memory-backend-ram and
+memory-backend-shm objects, provided the user creates them with share=on.
+
+Use memfd_create if available because it has no constraints.  If not, use
+POSIX shm_open.  However, allocation on the opened fd may fail if the shm
+mount size is too small, even if the system has free memory, so for backwards
+compatibility fall back to qemu_anon_ram_alloc/MAP_ANON on failure.
+
+For backwards compatibility on Windows, always use MAP_ANON.  share=on has
+no purpose there, but the syntax is accepted, and must continue to work.
+
+Lastly, quietly fall back to MAP_ANON if the system does not support
+qemu_ram_alloc_from_fd.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/framework.c     | 15 +++++++---
- tests/qtest/migration/migration-qmp.c | 53 +++++++++++++++++++++++++++++------
- tests/qtest/migration/migration-qmp.h | 10 ++++---
- tests/qtest/migration/misc-tests.c    |  9 +++++-
- tests/qtest/migration/precopy-tests.c |  6 ++--
- tests/qtest/virtio-net-failover.c     |  8 +++---
- 6 files changed, 76 insertions(+), 25 deletions(-)
+ system/physmem.c    | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ system/trace-events |  1 +
+ util/memfd.c        | 16 ++++++++++++---
+ 3 files changed, 70 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 03640e4..8d34cb2 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -18,6 +18,8 @@
- #include "migration/migration-qmp.h"
- #include "migration/migration-util.h"
- #include "ppc-util.h"
-+#include "qapi/error.h"
-+#include "qapi/qmp/qjson.h"
- #include "qapi/qmp/qlist.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
-@@ -686,6 +688,7 @@ void test_precopy_common(MigrateCommon *args)
+diff --git a/system/physmem.c b/system/physmem.c
+index 4d13761..e435564 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -48,6 +48,7 @@
+ #include "qemu/qemu-print.h"
+ #include "qemu/log.h"
+ #include "qemu/memalign.h"
++#include "qemu/memfd.h"
+ #include "exec/memory.h"
+ #include "exec/ioport.h"
+ #include "system/dma.h"
+@@ -1948,6 +1949,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+                                  bool grow,
+                                  Error **errp)
  {
-     QTestState *from, *to;
-     void *data_hook = NULL;
-+    QObject *out_channels = NULL;
- 
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return;
-@@ -718,12 +721,16 @@ void test_precopy_common(MigrateCommon *args)
-         }
-     }
- 
-+    if (args->connect_channels) {
-+        out_channels = qobject_from_json(args->connect_channels, &error_abort);
-+    }
-+
-     if (args->result == MIG_TEST_QMP_ERROR) {
--        migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
-+        migrate_qmp_fail(from, args->connect_uri, out_channels, "{}");
-         goto finish;
-     }
- 
--    migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
-+    migrate_qmp(from, to, args->connect_uri, out_channels, "{}");
- 
-     if (args->start.defer_target_connect) {
-         qtest_connect(to);
-@@ -873,7 +880,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
-      * We need to wait for the source to finish before starting the
-      * destination.
-      */
--    migrate_incoming_qmp(to, args->connect_uri, "{}");
-+    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
-     wait_for_migration_complete(to);
- 
-     if (stop_src) {
-@@ -909,7 +916,7 @@ void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
-     migrate_set_capability(to, "multifd", true);
- 
-     /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
-+    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
- 
-     return NULL;
++    ERRP_GUARD();
+     RAMBlock *new_block;
+     Error *local_err = NULL;
+     int64_t file_size, file_align;
+@@ -2068,6 +2070,25 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
  }
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 71b14b5..f7a597d 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -15,9 +15,13 @@
- #include "migration-qmp.h"
- #include "migration-util.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-migration.h"
-+#include "qapi/qapi-visit-migration.h"
- #include "qapi/qmp/qdict.h"
- #include "qapi/qmp/qjson.h"
- #include "qapi/qmp/qlist.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qapi/qobject-output-visitor.h"
+ #endif
  
- /*
-  * Number of seconds we wait when looking for migration
-@@ -47,8 +51,33 @@ void migration_event_wait(QTestState *s, const char *target)
-     } while (!found);
- }
- 
++#ifdef CONFIG_POSIX
 +/*
-+ * Convert a string representing a single channel to an object.
-+ * @str may be in JSON or dotted keys format.
++ * Create MAP_SHARED RAMBlocks by mmap'ing a file descriptor, so it can be
++ * shared with another process if CPR is being used.  Use memfd if available
++ * because it has no size limits, else use POSIX shm.
 + */
-+QObject *migrate_str_to_channel(const char *str)
++static int qemu_ram_get_shared_fd(const char *name, Error **errp)
 +{
-+    Visitor *v;
-+    MigrationChannel *channel;
-+    QObject *obj;
++    int fd;
 +
-+    /* Create the channel */
-+    v = qobject_input_visitor_new_str(str, "channel-type", &error_abort);
-+    visit_type_MigrationChannel(v, NULL, &channel, &error_abort);
-+    visit_free(v);
-+
-+    /* Create the object */
-+    v = qobject_output_visitor_new(&obj);
-+    visit_type_MigrationChannel(v, NULL, &channel, &error_abort);
-+    visit_complete(v, &obj);
-+    visit_free(v);
-+
-+    qapi_free_MigrationChannel(channel);
-+    return obj;
++    if (qemu_memfd_check(0)) {
++        fd = qemu_memfd_create(name, 0, 0, 0, 0, errp);
++    } else {
++        fd = qemu_shm_alloc(0, errp);
++    }
++    return fd;
 +}
++#endif
 +
- void migrate_qmp_fail(QTestState *who, const char *uri,
--                      const char *channels, const char *fmt, ...)
-+                      QObject *channels, const char *fmt, ...)
- {
-     va_list ap;
-     QDict *args, *err;
-@@ -64,8 +93,7 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
+ static
+ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+                                   qemu_ram_resize_cb resized,
+@@ -2081,6 +2102,41 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+     assert((ram_flags & ~(RAM_SHARED | RAM_RESIZEABLE | RAM_PREALLOC |
+                           RAM_NORESERVE | RAM_GUEST_MEMFD)) == 0);
+     assert(!host ^ (ram_flags & RAM_PREALLOC));
++    assert(max_size >= size);
++
++#ifdef CONFIG_POSIX         /* ignore RAM_SHARED for Windows */
++    if (!host) {
++        if (ram_flags & RAM_SHARED) {
++            const char *name = memory_region_name(mr);
++            int fd = qemu_ram_get_shared_fd(name, errp);
++
++            if (fd < 0) {
++                return NULL;
++            }
++
++            /* Use same alignment as qemu_anon_ram_alloc */
++            mr->align = QEMU_VMALLOC_ALIGN;
++
++            /*
++             * This can fail if the shm mount size is too small, or alloc from
++             * fd is not supported, but previous QEMU versions that called
++             * qemu_anon_ram_alloc for anonymous shared memory could have
++             * succeeded.  Quietly fail and fall back.
++             */
++            new_block = qemu_ram_alloc_from_fd(size, max_size, resized, mr,
++                                               ram_flags, fd, 0, false, NULL);
++            if (new_block) {
++                trace_qemu_ram_alloc_shared(name, new_block->used_length,
++                                            new_block->max_length, fd,
++                                            new_block->host);
++                return new_block;
++            }
++
++            close(fd);
++            /* fall back to anon allocation */
++        }
++    }
++#endif
  
-     g_assert(!qdict_haskey(args, "channels"));
-     if (channels) {
--        QObject *channels_obj = qobject_from_json(channels, &error_abort);
--        qdict_put_obj(args, "channels", channels_obj);
-+        qdict_put_obj(args, "channels", channels);
-     }
+     align = qemu_real_host_page_size();
+     align = MAX(align, TARGET_PAGE_SIZE);
+@@ -2092,7 +2148,6 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+     new_block->resized = resized;
+     new_block->used_length = size;
+     new_block->max_length = max_size;
+-    assert(max_size >= size);
+     new_block->fd = -1;
+     new_block->guest_memfd = -1;
+     new_block->page_size = qemu_real_host_page_size();
+diff --git a/system/trace-events b/system/trace-events
+index 5bbc3fb..be12ebf 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -33,6 +33,7 @@ address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t
+ find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
+ find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
+ ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
++qemu_ram_alloc_shared(const char *name, size_t size, size_t max_size, int fd, void *host) "%s size %zu max_size %zu fd %d host %p"
  
-     err = qtest_qmp_assert_failure_ref(
-@@ -82,7 +110,7 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
-  * qobject_from_jsonf_nofail()) with "uri": @uri spliced in.
+ # cpus.c
+ vm_stop_flush_all(int ret) "ret %d"
+diff --git a/util/memfd.c b/util/memfd.c
+index 8a2e906..07beab1 100644
+--- a/util/memfd.c
++++ b/util/memfd.c
+@@ -194,17 +194,27 @@ bool qemu_memfd_alloc_check(void)
+ /**
+  * qemu_memfd_check():
+  *
+- * Check if host supports memfd.
++ * Check if host supports memfd.  Cache the answer for the common case flags=0.
   */
- void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
--                 const char *channels, const char *fmt, ...)
-+                 QObject *channels, const char *fmt, ...)
+ bool qemu_memfd_check(unsigned int flags)
  {
-     va_list ap;
-     QDict *args;
-@@ -102,10 +130,9 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+ #ifdef CONFIG_LINUX
+-    int mfd = memfd_create("test", flags | MFD_CLOEXEC);
++    int mfd;
++    static int memfd_check = MEMFD_TODO;
  
-     g_assert(!qdict_haskey(args, "channels"));
-     if (channels) {
--        QObject *channels_obj = qobject_from_json(channels, &error_abort);
--        QList *channel_list = qobject_to(QList, channels_obj);
-+        QList *channel_list = qobject_to(QList, channels);
-         migrate_set_ports(to, channel_list);
--        qdict_put_obj(args, "channels", channels_obj);
-+        qdict_put_obj(args, "channels", channels);
-     }
- 
-     qtest_qmp_assert_success(who,
-@@ -123,7 +150,8 @@ void migrate_set_capability(QTestState *who, const char *capability,
-                              capability, value);
- }
- 
--void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
-+void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
-+                          const char *fmt, ...)
- {
-     va_list ap;
-     QDict *args, *rsp;
-@@ -133,7 +161,14 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
-     va_end(ap);
- 
-     g_assert(!qdict_haskey(args, "uri"));
--    qdict_put_str(args, "uri", uri);
-+    if (uri) {
-+        qdict_put_str(args, "uri", uri);
++    if (!flags && memfd_check != MEMFD_TODO) {
++        return memfd_check;
 +    }
 +
-+    g_assert(!qdict_haskey(args, "channels"));
-+    if (channels) {
-+        qdict_put_obj(args, "channels", channels);
++    mfd = memfd_create("test", flags | MFD_CLOEXEC);
+     if (mfd >= 0) {
+         close(mfd);
+-        return true;
+     }
++    if (!flags) {
++        memfd_check = (mfd >= 0) ? MEMFD_OK : MEMFD_KO;
 +    }
- 
-     /* This function relies on the event to work, make sure it's enabled */
-     migrate_set_capability(to, "events", true);
-diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-index caaa787..faa8181 100644
---- a/tests/qtest/migration/migration-qmp.h
-+++ b/tests/qtest/migration/migration-qmp.h
-@@ -4,17 +4,19 @@
- 
- #include "migration-util.h"
- 
-+QObject *migrate_str_to_channel(const char *str);
++    return (mfd >= 0);
 +
- G_GNUC_PRINTF(4, 5)
- void migrate_qmp_fail(QTestState *who, const char *uri,
--                      const char *channels, const char *fmt, ...);
-+                      QObject *channels, const char *fmt, ...);
+ #endif
  
- G_GNUC_PRINTF(5, 6)
- void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
--                 const char *channels, const char *fmt, ...);
-+                 QObject *channels, const char *fmt, ...);
- 
--G_GNUC_PRINTF(3, 4)
-+G_GNUC_PRINTF(4, 5)
- void migrate_incoming_qmp(QTestState *who, const char *uri,
--                          const char *fmt, ...);
-+                          QObject *channels, const char *fmt, ...);
- 
- void migration_event_wait(QTestState *s, const char *target);
- void migrate_set_capability(QTestState *who, const char *capability,
-diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index 6173430..dda3707 100644
---- a/tests/qtest/migration/misc-tests.c
-+++ b/tests/qtest/migration/misc-tests.c
-@@ -11,6 +11,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qmp/qjson.h"
- #include "libqtest.h"
- #include "migration/framework.h"
- #include "migration/migration-qmp.h"
-@@ -205,6 +207,7 @@ static void test_validate_uuid_dst_not_set(void)
- static void do_test_validate_uri_channel(MigrateCommon *args)
- {
-     QTestState *from, *to;
-+    QObject *channels;
- 
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return;
-@@ -217,7 +220,11 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
-      * 'uri' and 'channels' validation is checked even before the migration
-      * starts.
-      */
--    migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
-+    channels = args->connect_channels ?
-+               qobject_from_json(args->connect_channels, &error_abort) :
-+               NULL;
-+    migrate_qmp_fail(from, args->connect_uri, channels, "{}");
-+
-     migrate_end(from, to, false);
- }
- 
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 23599b2..436dbd9 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -152,7 +152,7 @@ static void *migrate_hook_start_fd(QTestState *from,
-     close(pair[0]);
- 
-     /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "fd:fd-mig", "{}");
-+    migrate_incoming_qmp(to, "fd:fd-mig", NULL, "{}");
- 
-     /* Send the 2nd socket to the target */
-     qtest_qmp_fds_assert_success(from, &pair[1], 1,
-@@ -479,7 +479,7 @@ static void test_multifd_tcp_cancel(void)
-     migrate_set_capability(to, "multifd", true);
- 
-     /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
-+    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
- 
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
-@@ -518,7 +518,7 @@ static void test_multifd_tcp_cancel(void)
-     migrate_set_capability(to2, "multifd", true);
- 
-     /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", "{}");
-+    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", NULL, "{}");
- 
-     migrate_ensure_non_converge(from);
- 
-diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
-index 08365ff..f04573f 100644
---- a/tests/qtest/virtio-net-failover.c
-+++ b/tests/qtest/virtio-net-failover.c
-@@ -773,7 +773,7 @@ static void test_migrate_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
- 
--    migrate_incoming_qmp(qts, uri, "{}");
-+    migrate_incoming_qmp(qts, uri, NULL, "{}");
- 
-     resp = get_failover_negociated_event(qts);
-     g_assert_cmpstr(qdict_get_str(resp, "device-id"), ==, "standby0");
-@@ -895,7 +895,7 @@ static void test_off_migrate_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, true, "primary0", MAC_PRIMARY0);
- 
--    migrate_incoming_qmp(qts, uri, "{}");
-+    migrate_incoming_qmp(qts, uri, NULL, "{}");
- 
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, true, "primary0", MAC_PRIMARY0);
-@@ -1022,7 +1022,7 @@ static void test_guest_off_migrate_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
- 
--    migrate_incoming_qmp(qts, uri, "{}");
-+    migrate_incoming_qmp(qts, uri, NULL, "{}");
- 
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
-@@ -1747,7 +1747,7 @@ static void test_multi_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby1", MAC_STANDBY1);
-     check_one_card(qts, false, "primary1", MAC_PRIMARY1);
- 
--    migrate_incoming_qmp(qts, uri, "{}");
-+    migrate_incoming_qmp(qts, uri, NULL, "{}");
- 
-     resp = get_failover_negociated_event(qts);
-     g_assert_cmpstr(qdict_get_str(resp, "device-id"), ==, "standby0");
+     return false;
 -- 
 1.8.3.1
 
