@@ -4,102 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947BBC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8313AC02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7pS-0006aT-2d; Wed, 15 Jan 2025 13:09:25 -0500
+	id 1tY7op-0006JP-90; Wed, 15 Jan 2025 13:08:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pH-0006RD-NG
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7oo-0006JG-8Z
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pF-0006YJ-H6
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:11 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7ol-0006V9-UL
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:08:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964549;
+ s=mimecast20190719; t=1736964518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PlqjkAn1GOlm1rdBdYghPXPBG+UbFaprj+bSyaXREJY=;
- b=d25nGh0OwciEXl6gzfwLVePmLl+lEjzGD2mycI8zUV1Mtr6l2oCxj3/XCqSVHX0lGxBwg4
- RYbIwpZ3pEmGSC7XnBaYpZt7/JHNfJajt3ZJUZS/vLKQk4RwYrORSvM6VBMsBQBP5o8bVC
- 7ybkPv58C2JkQ2kQXvwiDaDDgCiwhxI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=J6zW/tI+F7p0x6goRAt5C2uJU7HPuN9SAqTiBTbnTho=;
+ b=Laq/U5vRDVw4pQCyrUVnqUJukEjlJETIaaarWCfkyl2P0hsKTGnDN5Of03XfhTioFlcAhJ
+ FDm8ON/tNGQFEJe1rAWXPN67awkykbS1siyQ/t8U4+awfLB61s3XMF24+I57q7qJSZGFgY
+ PR84CB2ayKw9YJxxUbHK/tJDdJ53IxI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-6JjloW3HNmyINCvTALHAnw-1; Wed, 15 Jan 2025 13:09:06 -0500
-X-MC-Unique: 6JjloW3HNmyINCvTALHAnw-1
-X-Mimecast-MFC-AGG-ID: 6JjloW3HNmyINCvTALHAnw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43621907030so32468375e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:09:05 -0800 (PST)
+ us-mta-251-Q5go176UMyeaYCDL9LuoAw-1; Wed, 15 Jan 2025 13:08:36 -0500
+X-MC-Unique: Q5go176UMyeaYCDL9LuoAw-1
+X-Mimecast-MFC-AGG-ID: Q5go176UMyeaYCDL9LuoAw
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4361ecebc5bso36861405e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:08:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964544; x=1737569344;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PlqjkAn1GOlm1rdBdYghPXPBG+UbFaprj+bSyaXREJY=;
- b=KPw8zQqHhHLbsVUrImtQs7CHs0372+xPknVBCRMyghXoLTJ/I4sRaeSuwZRO78/c7d
- +4gCE3Pc3FYEN89HcG2A4P7skha/St2VN2bu8zK0BYSyplGTsRgHXsTerKob/z7G8QIf
- CJF1SkVWseamqgjSIUXoVID2VjA0Zz1E7gemKWAF+QminICMUVDE72bO/KPuUYaiFN/K
- KHzhY2URnNpyU/dBBMLD69Doschj6uqJ7y/ciAPnkhRosfIjtGH5VGzJcNFD5Oydj5mP
- UztlRd2zctbV9Bp4f0KpWy0+DnFWHgvzqCl7EA9+k1uxdihKpCGTCkFIrYnzSmgi+Fns
- fuVg==
-X-Gm-Message-State: AOJu0Yz/6FXGXLoaTUh9XMjSEnb6l7/IMXkxnYddIY9NbAl3eArZKqUw
- oqn9Cyy5hA85Zkt4izpcWA42l8vA6M+XAmqZPp4mHeQxJPzaFP5cJgslPMbEfi9HfMJOxt9I3o4
- buMtRQZ9uQFu2QcAr4BxjDM0SplMkqxn4buqbRVf9pfJmHsmYfgfN/D+rc6rP1Zhx264p0U4GHd
- RXfqz4Vp2dqVU5uhnUZKpjmq+l37i4kA==
-X-Gm-Gg: ASbGncvCAEzJSYvUR9nmKa6H9mXkzYDSL4bGu8LnY7QLZA81UKZh1xPs011OmupHh/O
- K+Gzap36scyaybrmzgagNL0XoQoQcoQcuzUsp7cwBQx5OKSIQKgcWAxt0t5QUpCoRKA0fIsMn8u
- 2XIslE8JJV1+RtYpxzbOjbVFbShXOAu0wrqvTVyiVflJ/LQligjXoKf+Y7cs8NjJa6F1TS8GY8p
- 6iku5Iv6qRGQDapnGx/VKv8aAI5T/OLeHdIlxvnPmWhmT3aPHLs
-X-Received: by 2002:a5d:64e2:0:b0:38b:e32a:109f with SMTP id
- ffacd0b85a97d-38be32a1305mr6677603f8f.12.1736964544291; 
- Wed, 15 Jan 2025 10:09:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbb1NadXNCQKHClDQfeUX4DtZr/29cTo0WLFfbmgKFfBwdd5Q8YhZQBX1pc+O06qLZdf7A3Q==
-X-Received: by 2002:a5d:64e2:0:b0:38b:e32a:109f with SMTP id
- ffacd0b85a97d-38be32a1305mr6677569f8f.12.1736964543849; 
- Wed, 15 Jan 2025 10:09:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1736964515; x=1737569315;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J6zW/tI+F7p0x6goRAt5C2uJU7HPuN9SAqTiBTbnTho=;
+ b=dxHr3uIZ0J+FWkJflLtzhWYc2us7ZGPG6+gF3hZH/kzN5avPyXhmMncP5GgaEbrkkf
+ /30NH0O44D8AW8YbAfEHX2YZDM4g2DUKgZEt1FVyfScJcaHwyJv/Qxx1BfeClngyWAMg
+ xP7nDi704HCSqKXk6eoyaka5h/Mjp1FRukuWzv6MPUc0Lghe15oHVRQY0Nk0xUqbBH7h
+ 1KPCt0GWgf3UGYA+fXiMrRBkdD+6iqCB7T5YNPcn0ycRCYElP6CrgY+BO+dmJBGsdIJq
+ Xi22q4eiKv/5tlR5QGoxY96d24LXnd5bBHUNmndPNv2P9vzSdVcdqXbt/KfKBhS00Cv+
+ qfyQ==
+X-Gm-Message-State: AOJu0Yx+ZN22Lu2xM7CYkuBxMgRJHYvZIuT3u/yyJf3uuyPmUvw0nHGZ
+ KpNSO2B7FCFsOqhUeCmkaXZBc+vkqugKcZeZ2/udNZxBvFeFAGBojMvHAwQPk9PVJDwXpcCwM2B
+ CrXqve9KmCObYSZBgM1o7cqteil+gPrzGV380teWZn4NfgcfdS8ZNaygGmN678Fi09QbxhQFfAR
+ jAhe/O6XJm2vwdxeqzkyVM6bgv8YMxjA==
+X-Gm-Gg: ASbGncstlvkJy/V4hHA1nUiljOSX2rz3p+PhWedg/K6xavCWlVWg+DsCsFycJnlCR60
+ 4BHwusjNIoxVMe1aarxc/eV0UwFMc2pSwc1c3IRbtIAeZn+o8qxoGnge3W8EbAwMcDqJXTHePUa
+ sST+Usfhw8w6p9IvK4Dcqc5z3ibUa0KcdAqtV8ed4EalZ5STpKDIfjDCvrAUCf5D0XzzlNFD+IQ
+ zGjkvUi6YxM0mQ9ImaDnRZ7jHY3ni2OvCqweRlNxWoBXa9wv/CZ
+X-Received: by 2002:a5d:5f85:0:b0:387:86cf:4e87 with SMTP id
+ ffacd0b85a97d-38a872deb33mr27774461f8f.15.1736964515263; 
+ Wed, 15 Jan 2025 10:08:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEkEdSlnyCI6GfyLWe8aYr6j8sU27WGhXY9nSoAfTgOoEkAxv8uLmqHuGImGuQOR/4iNrkrjw==
+X-Received: by 2002:a5d:5f85:0:b0:387:86cf:4e87 with SMTP id
+ ffacd0b85a97d-38a872deb33mr27774423f8f.15.1736964514878; 
+ Wed, 15 Jan 2025 10:08:34 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b81e4sm18569634f8f.64.2025.01.15.10.09.01
+ ffacd0b85a97d-38a8e383882sm18422257f8f.34.2025.01.15.10.08.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:09:03 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:09:00 -0500
+ Wed, 15 Jan 2025 10:08:34 -0800 (PST)
+Date: Wed, 15 Jan 2025 13:08:32 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Sun <yi.y.sun@linux.intel.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Sebastian Ott <sebott@redhat.com>, Zhenyu Zhang <zhenyzha@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 11/48] intel_iommu: Implement stage-1 translation
-Message-ID: <eb9da9d2632839c386ecbfc50f78032c9f3a75a4.1736964488.git.mst@redhat.com>
+Subject: [PULL 02/48] pci: ensure valid link status bits for downstream ports
+Message-ID: <694632fd44987cc4618612a38ad151047524a590.1736964488.git.mst@redhat.com>
 References: <cover.1736964487.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,309 +109,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Sebastian Ott <sebott@redhat.com>
 
-This adds stage-1 page table walking to support stage-1 only
-translation in scalable mode.
+PCI hotplug for downstream endpoints on arm fails because Linux'
+PCIe hotplug driver doesn't like the QEMU provided LNKSTA:
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Co-developed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20241212083757.605022-7-zhenzhong.duan@intel.com>
+  pcieport 0000:08:01.0: pciehp: Slot(2): Card present
+  pcieport 0000:08:01.0: pciehp: Slot(2): Link Up
+  pcieport 0000:08:01.0: pciehp: Slot(2): Cannot train link: status 0x2000
+
+There's 2 cases where LNKSTA isn't setup properly:
+* the downstream device has no express capability
+* max link width of the bridge is 0
+
+Move the sanity checks added via 88c869198aa63
+("pci: Sanity test minimum downstream LNKSTA") outside of the
+branch to make sure downstream ports always have a valid LNKSTA.
+
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Message-Id: <20241203121928.14861-1-sebott@redhat.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h |  34 +++++++
- hw/i386/intel_iommu.c          | 158 ++++++++++++++++++++++++++++++++-
- 2 files changed, 188 insertions(+), 4 deletions(-)
+ hw/pci/pcie.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index e810b0071f..86d3354198 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -320,6 +320,15 @@ typedef enum VTDFaultReason {
-     VTD_FR_PASID_ENTRY_P = 0x59,
-     VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index 0b455c8654..1b12db6fa2 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1113,18 +1113,22 @@ void pcie_sync_bridge_lnk(PCIDevice *bridge_dev)
+         if ((lnksta & PCI_EXP_LNKSTA_NLW) > (lnkcap & PCI_EXP_LNKCAP_MLW)) {
+             lnksta &= ~PCI_EXP_LNKSTA_NLW;
+             lnksta |= lnkcap & PCI_EXP_LNKCAP_MLW;
+-        } else if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
+-            lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
+         }
  
-+    /* Fail to access a first-level paging entry (not FS_PML4E) */
-+    VTD_FR_FS_PAGING_ENTRY_INV = 0x70,
-+    VTD_FR_FS_PAGING_ENTRY_P = 0x71,
-+    /* Non-zero reserved field in present first-stage paging entry */
-+    VTD_FR_FS_PAGING_ENTRY_RSVD = 0x72,
-+    VTD_FR_PASID_ENTRY_FSPTPTR_INV = 0x73, /* Invalid FSPTPTR in PASID entry */
-+    VTD_FR_FS_PAGING_ENTRY_US = 0x81,      /* Privilege violation */
-+    VTD_FR_SM_WRITE = 0x85,                /* No write permission */
-+
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
-     VTD_FR_MAX,                 /* Guard */
-@@ -438,6 +447,22 @@ typedef union VTDInvDesc VTDInvDesc;
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
- 
-+/* Rsvd field masks for fpte */
-+#define VTD_FS_UPPER_IGNORED 0xfff0000000000000ULL
-+#define VTD_FPTE_PAGE_L1_RSVD_MASK(aw) \
-+        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L2_RSVD_MASK(aw) \
-+        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L3_RSVD_MASK(aw) \
-+        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L4_RSVD_MASK(aw) \
-+        (0x80ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+
-+#define VTD_FPTE_LPAGE_L2_RSVD_MASK(aw) \
-+        (0x1fe000ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_LPAGE_L3_RSVD_MASK(aw) \
-+        (0x3fffe000ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+
- /* Masks for PIOTLB Invalidate Descriptor */
- #define VTD_INV_DESC_PIOTLB_G             (3ULL << 4)
- #define VTD_INV_DESC_PIOTLB_ALL_IN_PASID  (2ULL << 4)
-@@ -530,6 +555,15 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
- #define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
- 
-+#define VTD_SM_PASID_ENTRY_FLPM          3ULL
-+#define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
-+
-+/* First Level Paging Structure */
-+/* Masks for First Level Paging Entry */
-+#define VTD_FL_P                    1ULL
-+#define VTD_FL_RW                   (1ULL << 1)
-+#define VTD_FL_US                   (1ULL << 2)
-+
- /* Second Level Page Translation Pointer*/
- #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
- 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index dfac5982d6..bd6de71c02 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -48,6 +48,8 @@
- 
- /* pe operations */
- #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
-+#define VTD_PE_GET_FL_LEVEL(pe) \
-+    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FLPM))
- #define VTD_PE_GET_SL_LEVEL(pe) \
-     (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
- 
-@@ -755,6 +757,11 @@ static inline bool vtd_is_sl_level_supported(IntelIOMMUState *s, uint32_t level)
-            (1ULL << (level - 2 + VTD_CAP_SAGAW_SHIFT));
- }
- 
-+static inline bool vtd_is_fl_level_supported(IntelIOMMUState *s, uint32_t level)
-+{
-+    return level == VTD_PML4_LEVEL;
-+}
-+
- /* Return true if check passed, otherwise false */
- static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
-                                      VTDPASIDEntry *pe)
-@@ -838,6 +845,11 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-             return -VTD_FR_PASID_TABLE_ENTRY_INV;
-     }
- 
-+    if (pgtt == VTD_SM_PASID_ENTRY_FLT &&
-+        !vtd_is_fl_level_supported(s, VTD_PE_GET_FL_LEVEL(pe))) {
-+            return -VTD_FR_PASID_TABLE_ENTRY_INV;
-+    }
-+
-     return 0;
- }
- 
-@@ -973,7 +985,11 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
--        return VTD_PE_GET_SL_LEVEL(&pe);
-+        if (s->flts) {
-+            return VTD_PE_GET_FL_LEVEL(&pe);
-+        } else {
-+            return VTD_PE_GET_SL_LEVEL(&pe);
-+        }
-     }
- 
-     return vtd_ce_get_level(ce);
-@@ -1060,7 +1076,11 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
--        return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
-+        if (s->flts) {
-+            return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
-+        } else {
-+            return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
-+        }
-     }
- 
-     return vtd_ce_get_slpt_base(ce);
-@@ -1800,6 +1820,12 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_PASID_TABLE_ACCESS_ERR] = false,
-     [VTD_FR_PASID_ENTRY_P] = true,
-     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_P] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_RSVD] = true,
-+    [VTD_FR_PASID_ENTRY_FSPTPTR_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_US] = true,
-+    [VTD_FR_SM_WRITE] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-     [VTD_FR_MAX] = false,
- };
-@@ -1862,6 +1888,113 @@ out:
-     trace_vtd_pt_enable_fast_path(source_id, success);
- }
- 
-+/*
-+ * Rsvd field masks for fpte:
-+ *     vtd_fpte_rsvd 4k pages
-+ *     vtd_fpte_rsvd_large large pages
-+ *
-+ * We support only 4-level page tables.
-+ */
-+#define VTD_FPTE_RSVD_LEN 5
-+static uint64_t vtd_fpte_rsvd[VTD_FPTE_RSVD_LEN];
-+static uint64_t vtd_fpte_rsvd_large[VTD_FPTE_RSVD_LEN];
-+
-+static bool vtd_flpte_nonzero_rsvd(uint64_t flpte, uint32_t level)
-+{
-+    uint64_t rsvd_mask;
-+
-+    /*
-+     * We should have caught a guest-mis-programmed level earlier,
-+     * via vtd_is_fl_level_supported.
-+     */
-+    assert(level < VTD_FPTE_RSVD_LEN);
-+    /*
-+     * Zero level doesn't exist. The smallest level is VTD_PT_LEVEL=1 and
-+     * checked by vtd_is_last_pte().
-+     */
-+    assert(level);
-+
-+    if ((level == VTD_PD_LEVEL || level == VTD_PDP_LEVEL) &&
-+        (flpte & VTD_PT_PAGE_SIZE_MASK)) {
-+        /* large page */
-+        rsvd_mask = vtd_fpte_rsvd_large[level];
-+    } else {
-+        rsvd_mask = vtd_fpte_rsvd[level];
-+    }
-+
-+    return flpte & rsvd_mask;
-+}
-+
-+static inline bool vtd_flpte_present(uint64_t flpte)
-+{
-+    return !!(flpte & VTD_FL_P);
-+}
-+
-+/*
-+ * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-+ * of the translation, can be used for deciding the size of large page.
-+ */
-+static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-+                             uint64_t iova, bool is_write,
-+                             uint64_t *flptep, uint32_t *flpte_level,
-+                             bool *reads, bool *writes, uint8_t aw_bits,
-+                             uint32_t pasid)
-+{
-+    dma_addr_t addr = vtd_get_iova_pgtbl_base(s, ce, pasid);
-+    uint32_t level = vtd_get_iova_level(s, ce, pasid);
-+    uint32_t offset;
-+    uint64_t flpte;
-+
-+    while (true) {
-+        offset = vtd_iova_level_offset(iova, level);
-+        flpte = vtd_get_pte(addr, offset);
-+
-+        if (flpte == (uint64_t)-1) {
-+            if (level == vtd_get_iova_level(s, ce, pasid)) {
-+                /* Invalid programming of pasid-entry */
-+                return -VTD_FR_PASID_ENTRY_FSPTPTR_INV;
-+            } else {
-+                return -VTD_FR_FS_PAGING_ENTRY_INV;
-+            }
-+        }
-+
-+        if (!vtd_flpte_present(flpte)) {
-+            *reads = false;
-+            *writes = false;
-+            return -VTD_FR_FS_PAGING_ENTRY_P;
-+        }
-+
-+        /* No emulated device supports supervisor privilege request yet */
-+        if (!(flpte & VTD_FL_US)) {
-+            *reads = false;
-+            *writes = false;
-+            return -VTD_FR_FS_PAGING_ENTRY_US;
-+        }
-+
-+        *reads = true;
-+        *writes = (*writes) && (flpte & VTD_FL_RW);
-+        if (is_write && !(flpte & VTD_FL_RW)) {
-+            return -VTD_FR_SM_WRITE;
-+        }
-+        if (vtd_flpte_nonzero_rsvd(flpte, level)) {
-+            error_report_once("%s: detected flpte reserved non-zero "
-+                              "iova=0x%" PRIx64 ", level=0x%" PRIx32
-+                              "flpte=0x%" PRIx64 ", pasid=0x%" PRIX32 ")",
-+                              __func__, iova, level, flpte, pasid);
-+            return -VTD_FR_FS_PAGING_ENTRY_RSVD;
-+        }
-+
-+        if (vtd_is_last_pte(flpte, level)) {
-+            *flptep = flpte;
-+            *flpte_level = level;
-+            return 0;
-+        }
-+
-+        addr = vtd_get_pte_addr(flpte, aw_bits);
-+        level--;
-+    }
-+}
-+
- static void vtd_report_fault(IntelIOMMUState *s,
-                              int err, bool is_fpd_set,
-                              uint16_t source_id,
-@@ -2010,8 +2143,13 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+         if ((lnksta & PCI_EXP_LNKSTA_CLS) > (lnkcap & PCI_EXP_LNKCAP_SLS)) {
+             lnksta &= ~PCI_EXP_LNKSTA_CLS;
+             lnksta |= lnkcap & PCI_EXP_LNKCAP_SLS;
+-        } else if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
+-            lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
          }
      }
  
--    ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
--                               &reads, &writes, s->aw_bits, pasid);
-+    if (s->flts && s->root_scalable) {
-+        ret_fr = vtd_iova_to_flpte(s, &ce, addr, is_write, &pte, &level,
-+                                   &reads, &writes, s->aw_bits, pasid);
-+    } else {
-+        ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
-+                                   &reads, &writes, s->aw_bits, pasid);
++    if (!(lnksta & PCI_EXP_LNKSTA_NLW)) {
++        lnksta |= QEMU_PCI_EXP_LNKSTA_NLW(QEMU_PCI_EXP_LNK_X1);
 +    }
-     if (ret_fr) {
-         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-                          addr, is_write, pasid != PCI_NO_PASID, pasid);
-@@ -4286,6 +4424,18 @@ static void vtd_init(IntelIOMMUState *s)
-     vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
-                                         x86_iommu->dt_supported && s->stale_tm);
- 
-+    /*
-+     * Rsvd field masks for fpte
-+     */
-+    vtd_fpte_rsvd[0] = ~0ULL;
-+    vtd_fpte_rsvd[1] = VTD_FPTE_PAGE_L1_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[2] = VTD_FPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[3] = VTD_FPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[4] = VTD_FPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
 +
-+    vtd_fpte_rsvd_large[2] = VTD_FPTE_LPAGE_L2_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd_large[3] = VTD_FPTE_LPAGE_L3_RSVD_MASK(s->aw_bits);
++    if (!(lnksta & PCI_EXP_LNKSTA_CLS)) {
++        lnksta |= QEMU_PCI_EXP_LNKSTA_CLS(QEMU_PCI_EXP_LNK_2_5GT);
++    }
 +
-     if (s->scalable_mode || s->snoop_control) {
-         vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
-         vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
+     pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
+                                  PCI_EXP_LNKSTA_CLS | PCI_EXP_LNKSTA_NLW);
+     pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA, lnksta &
 -- 
 MST
 
