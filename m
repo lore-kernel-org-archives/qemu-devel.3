@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB188C02185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7340BC02185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 16:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY6NE-0007b1-4A; Wed, 15 Jan 2025 11:36:10 -0500
+	id 1tY6N0-0007Vq-UK; Wed, 15 Jan 2025 11:35:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tY6Mz-0007UW-D5; Wed, 15 Jan 2025 11:35:53 -0500
+ id 1tY6My-0007TG-9s; Wed, 15 Jan 2025 11:35:52 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+fb641630334796bb9467+7815+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tY6Mu-0001e8-R4; Wed, 15 Jan 2025 11:35:53 -0500
+ id 1tY6Mu-0001e6-OM; Wed, 15 Jan 2025 11:35:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:
  To:From:Reply-To:Content-ID:Content-Description;
- bh=9YnMqT9L5zpcIdMPGD+T5rZV+9M0PECfN24dS3f5adI=; b=HBCwutm0sGscO7FRumhreu04mi
- eCz0n7Ffb2F8brtPqDvF8E7RDAbGm1ok0tZslQVFmdeTfMtnqdYSuPx2VHbzK3mlJgy7dCI7gF9l8
- J886BsSw/7sDOVHHH1+N/nDL0vISpjdui07wy6kzL62PW1sx9TyIYJ6H0pGGtIF00TRzw33B9LiUs
- JobEo03D0Wdls0BhRwE/Px7ABwcKZ0hSsSLNm/r9IimyjscHWgCMV91j0hEq4EffYt5no5ryM6sM9
- /wC2w/GcThMYonDt5+CjNzqTMAyX4LtCFAAa5eKF0ISogQB+x8haCB/B65629/kFvZ3OKWHhJSPnz
- ZCepR7/w==;
+ bh=avIVcNVqQ6j0evk6/rCF7dghJGKxSFwtADzqzgfr/dc=; b=CMCvmvfDcdm9LD61HoKq/cRAPv
+ i6lBUIect+qUzZMx/qDM3KhyWioS+yXn+XWAZxssNT97ml+5q5DZC/AKzXMmJbi+/BlnOfOZivDTj
+ HRfOd4rOdFig6oPCfbzUXV0s3QNqA/ysEzwU/Imm3xaE6/KQlHUFGkL4S6HYGjeS60Tc9F2ms70Z/
+ 4onciy0CBnQLh5londT61eAMmpkN0ZJaXemMhdglNNsB8MNbqsCH8E1qykMJAfYqBNgnU3KqIzUTN
+ H4RS6tbm6SAKmEPNVN6eayfhLuSoDQptjwvM7gYIhDXN7OeqJoyzPrIayk7FTLz4AI6aR0aJaTqqT
+ mwOiMB6A==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tY6Mq-0000000GF6c-1V3F; Wed, 15 Jan 2025 16:35:44 +0000
+ id 1tY6Mq-0000000GF6G-0R8I; Wed, 15 Jan 2025 16:35:44 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
- Linux)) id 1tY6Mq-00000001Hhz-0SV5; Wed, 15 Jan 2025 16:35:44 +0000
+ Linux)) id 1tY6Mp-00000001HhS-3ZNZ; Wed, 15 Jan 2025 16:35:43 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>
@@ -45,10 +45,9 @@ Cc: Stefano Stabellini <sstabellini@kernel.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  xen-devel@lists.xenproject.org, qemu-block@nongnu.org
-Subject: [PATCH v3 6/7] hw/xen: Use xs_node_read() from xenstore_read_str()
- instead of open-coding it
-Date: Wed, 15 Jan 2025 16:27:24 +0000
-Message-ID: <20250115163542.291424-7-dwmw2@infradead.org>
+Subject: [PATCH v3 1/7] hw/xen: Add xs_node_read() helper function
+Date: Wed, 15 Jan 2025 16:27:19 +0000
+Message-ID: <20250115163542.291424-2-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250115163542.291424-1-dwmw2@infradead.org>
 References: <20250115163542.291424-1-dwmw2@infradead.org>
@@ -84,39 +83,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
-Acked-by: Roger Pau Monné <roger.pau@citrix.com>
----
- hw/xen/xen_pvdev.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+This returns the full contents of the node, having created the node path
+from the printf-style format string provided in its arguments.
 
-diff --git a/hw/xen/xen_pvdev.c b/hw/xen/xen_pvdev.c
-index c5ad71e8dc..c9143ba259 100644
---- a/hw/xen/xen_pvdev.c
-+++ b/hw/xen/xen_pvdev.c
-@@ -22,6 +22,7 @@
- #include "qemu/main-loop.h"
- #include "hw/qdev-core.h"
- #include "hw/xen/xen-legacy-backend.h"
-+#include "hw/xen/xen-bus-helper.h"
- #include "hw/xen/xen_pvdev.h"
+This will save various callers from having to do so for themselves (and
+from using xs_node_scanf() with the non-portable %ms format string.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+[remove double newline and constify trace parameters]
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+---
+ hw/xen/trace-events             |  1 +
+ hw/xen/xen-bus-helper.c         | 22 ++++++++++++++++++++++
+ include/hw/xen/xen-bus-helper.h |  9 +++++++++
+ 3 files changed, 32 insertions(+)
+
+diff --git a/hw/xen/trace-events b/hw/xen/trace-events
+index a07fe41c6d..461dee7b23 100644
+--- a/hw/xen/trace-events
++++ b/hw/xen/trace-events
+@@ -39,6 +39,7 @@ xs_node_create(const char *node) "%s"
+ xs_node_destroy(const char *node) "%s"
+ xs_node_vprintf(char *path, char *value) "%s %s"
+ xs_node_vscanf(char *path, char *value) "%s %s"
++xs_node_read(const char *path, const char *value) "%s %s"
+ xs_node_watch(char *path) "%s"
+ xs_node_unwatch(char *path) "%s"
  
- /* private */
-@@ -81,12 +82,9 @@ int xenstore_write_str(const char *base, const char *node, const char *val)
+diff --git a/hw/xen/xen-bus-helper.c b/hw/xen/xen-bus-helper.c
+index b2b2cc9c5d..22fd2f6c1a 100644
+--- a/hw/xen/xen-bus-helper.c
++++ b/hw/xen/xen-bus-helper.c
+@@ -142,6 +142,28 @@ int xs_node_scanf(struct qemu_xs_handle *h,  xs_transaction_t tid,
+     return rc;
+ }
  
- char *xenstore_read_str(const char *base, const char *node)
- {
--    char abspath[XEN_BUFSIZE];
--    unsigned int len;
-     char *str, *ret = NULL;
++char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
++                   unsigned int *len, Error **errp,
++                   const char *path_fmt, ...)
++{
++    char *path, *value;
++    va_list ap;
++
++    va_start(ap, path_fmt);
++    path = g_strdup_vprintf(path_fmt, ap);
++    va_end(ap);
++
++    value = qemu_xen_xs_read(h, tid, path, len);
++    trace_xs_node_read(path, value);
++    if (!value) {
++        error_setg_errno(errp, errno, "failed to read from '%s'", path);
++    }
++
++    g_free(path);
++
++    return value;
++}
++
+ struct qemu_xs_watch *xs_node_watch(struct qemu_xs_handle *h, const char *node,
+                                     const char *key, xs_watch_fn fn,
+                                     void *opaque, Error **errp)
+diff --git a/include/hw/xen/xen-bus-helper.h b/include/hw/xen/xen-bus-helper.h
+index d8dcc2f010..e9911115b3 100644
+--- a/include/hw/xen/xen-bus-helper.h
++++ b/include/hw/xen/xen-bus-helper.h
+@@ -38,6 +38,15 @@ int xs_node_scanf(struct qemu_xs_handle *h,  xs_transaction_t tid,
+                   const char *fmt, ...)
+     G_GNUC_SCANF(6, 7);
  
--    snprintf(abspath, sizeof(abspath), "%s/%s", base, node);
--    str = qemu_xen_xs_read(xenstore, 0, abspath, &len);
-+    str = xs_node_read(xenstore, 0, NULL, NULL, "%s/%s", base, node);
-     if (str != NULL) {
-         /* move to qemu-allocated memory to make sure
-          * callers can safely g_free() stuff. */
++/*
++ * Unlike other functions here, the printf-formatted path_fmt is for
++ * the XenStore path, not the contents of the node.
++ */
++char *xs_node_read(struct qemu_xs_handle *h, xs_transaction_t tid,
++                   unsigned int *len, Error **errp,
++                   const char *path_fmt, ...)
++    G_GNUC_PRINTF(5, 6);
++
+ /* Watch node/key unless node is empty, in which case watch key */
+ struct qemu_xs_watch *xs_node_watch(struct qemu_xs_handle *h, const char *node,
+                                     const char *key, xs_watch_fn fn,
 -- 
 2.47.0
 
