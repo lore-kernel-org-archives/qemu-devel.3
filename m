@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D631C02180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B63C02185
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYCjm-00021T-Ie; Wed, 15 Jan 2025 18:23:50 -0500
+	id 1tYCjA-0000FS-RM; Wed, 15 Jan 2025 18:23:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjl-0001xw-KY
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:49 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCj8-0000F2-V3
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:10 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCji-0003tX-JZ
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:49 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so2429175e9.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:23:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCj7-0003pT-39
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:10 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3862d6d5765so164680f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736983425; x=1737588225; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736983387; x=1737588187; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IL9xNknrHx4T5kAU+oIAzW4K0+2aGQMD1Sd2Z6TukXk=;
- b=VV2eFLcsxYNMMYHRrgfoBsWzvB3qhmfIkU+c+MEpJcw7H0TqsWwfqlVENoYw/b6Ytn
- iMXLPiFiSjVW+FBtyHP7+3iAeD79XLX7apAu2qSngVrI2He9OQAuR5nPtX3b9wDOBT55
- LqijQrqDAl2KISVFH7Lm116XN/VATFcaozLgIQz6aktTEpWZCndv48awjdbrLt0nguHN
- a/QDGwtKDs1lwpF+ujcLEekz0PtFmNnzq0Vq2whr6fHa6GkZVRusCx9zs1MeoHZY04b2
- RUOlIlnRgWO0k/74qrA9tEX5be93K0cfz+1GuqWn0cJ2qhZodHHHXfDlBPbucYAR1nHz
- yyLw==
+ bh=d9FN0qJ22bg0qGnD5rjIKTXdHjku/v+6uYThnjNFqFg=;
+ b=F2xVcYjt+x+VH3H6+KZY3o+wL1OA85s71X5rt//4NCfJVuRfB/UR/ei+oasZBgue7U
+ M66AWo3vh1hU2ESjKtdiJWL1FFnHD5lto4Sc1yAeymGTbeBeaScoFbt5t6Kv3UJceiYU
+ Ysk8IhHCTGhjnGDpt30SJIaWTr1aLSPjKGtB2Goy4OKq6AZaUH9IGkH1/BgCMBYaP2Fe
+ ZEvX1BUIaw6bqXxV7AqwvI6Y6loyb7cXKt2mqoikpbIRgua4ru7T8ZpYpHLqiM/na90Q
+ ajEMY4MbMvZjwbFCvRlE+SeGmyIQsrsS1utnHpBYbeOxVqSId/d8zt0mO/nomxWxm3bl
+ tzzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736983425; x=1737588225;
+ d=1e100.net; s=20230601; t=1736983387; x=1737588187;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IL9xNknrHx4T5kAU+oIAzW4K0+2aGQMD1Sd2Z6TukXk=;
- b=fzucF1/uAnpaaL2FY/53NgFeG6zAwg6OULUyWuKndMhfC++AYgkqClhzpgTuAgEdps
- GueQs8icgXSVLlsAqsCYHG8PuIu1Pa3hjmDUCSlsV2L6KLAfg6CnldV146lmPyfvpL2J
- WAI6YMH3td85h5e3Sv4cos6nmd4W0sL/09vammpZwZuft6LSCVqfmtuBaLyMBOa/klFp
- 2qDOGvzqAt54lz+OBQsxXpKkfBjieRMBg7jZpvFex3nzc1kYt80zVVTzqs61FyDz0978
- AeuRkMGhACiiA+eZuO3AM0ZbX+AMwfoDKoTtarT4h2TBcUZO2xNQy+70HuxFPNoKcJwY
- svXw==
-X-Gm-Message-State: AOJu0YwS/JraFsVkgjScjK7yRjg2ckH7Ok4h1iyHtWUYfJDLXUBMSkXp
- xcXxOB7hiGkB8zLutUjCAN5ueAJg79QWyX1dW8AJB4QDTTVdm2zwIuwIeJ6fnOWKZnWBKb2vPVX
- 7QFU=
-X-Gm-Gg: ASbGncvU8N+cOlGhv0tr1quIKGpOYwjpfxr4U7MG9G6ys8kkPCC1UfIUwuSJhInAmBp
- s8caiT+vtulNMSyyEjjkBH+dclx/oduOxMH0ny2Dw+QLuLZIamg1F+yKqe7W6xnAbgM7LNvrO66
- IdJjCk7hOYIEWOT7SiEfv4WTGXtBiNnhVeWJ+vyUQgbITpgC73NcP84rtm1obe2Yed7Thrj8awK
- c0ZzbCGPtYNo7UBrdf68WORCmcoT50zPtcHMDTxh7zwvhFgqSU9sbVdfUNzZF393yuzLbnpR4ul
- GJeS8oDHyn2CNNjcxBCoL4H0Hlsltt8=
-X-Google-Smtp-Source: AGHT+IE2ywlAkhr/R8XaktPQ6n3w9t2r/4TYAGxOBfCGV5Yl+nyFSn/8q1sTOU3vIg45CVDJJj2zJQ==
-X-Received: by 2002:a05:600c:3ca4:b0:436:6460:e680 with SMTP id
- 5b1f17b1804b1-436e26c3331mr272269895e9.16.1736983424665; 
- Wed, 15 Jan 2025 15:23:44 -0800 (PST)
+ bh=d9FN0qJ22bg0qGnD5rjIKTXdHjku/v+6uYThnjNFqFg=;
+ b=lMx2RMp+0ppeM61x7WCo+87hfjxdColoXhXJItRg6qoZXA9yVQbOHTH57TwwVdzydY
+ nWJqmUZQs20fVK5tMIc5cL1Fbpy86+3MoUL9qJ9/XQivBgnlsOGUlUXIaCG7xdE+vc+Q
+ Y3uvIp0F4a5se9Xa3Wk4ii8GxdUKlRXDXjN830wkyt5oELBYeXapoZsJsdiV9rneCeAp
+ ERFtu2B48iMcx3cK5G7DsZ0+9eUBYwaE2WKV3AGklxCEnle4FWRuUa5QOjVKJ+eva5yr
+ P/iMYW5E9yn70Fion8mNQoA2F9dWcVAfpHFuIz3QOyyICSxyJd2JFMTZGA1B96P0o0YF
+ qWbA==
+X-Gm-Message-State: AOJu0Yw7ryUuY5RgxusfDw3LDG399t2ja26FbVwHzwTsvV/8BuhLIUDA
+ qdzU2eG5VFwK6oZoBhCsB0IJxNeXJab1gkAj3QvfiHxyXPTemjGB6mBrXfjlgYoIAa1pVQzl7fT
+ WIIw=
+X-Gm-Gg: ASbGncuNI7Q2ZED+5nIJXLUVaWYFH5BCwjqYzjcr7cMiCeMIXxX7nWh/RVl2uVLHeV/
+ kD/jSpxM5U/wZvy5ROQCZkfMMPyuBccrIf0KuQN7nEUnEFpLiHCNMmBzj/+CsNLApxFoXv6d517
+ aIIv5FPVjSxc7E+STqEi/PaP0LLntAoHdTMMijYfpltp9KZI4bUw9H5FsnTwKVmNnq8h1jaRW5J
+ 3QFScgQ4YPBGyDAZ07ZuWvJtQJPl8HeKDWtC24baQsDVuo9mhuhEJhDG04jJ/2f56IGro3AFW3R
+ sKbQqru9+1pBU7ZXSAkqiFlQUgrdjhs=
+X-Google-Smtp-Source: AGHT+IHfRdzsNdSSx/psFMJNDEUC9uhsLiPN2YFVUCodqTxoZhMflfjkT/TXkCm/r9aiCZeV1RtQZQ==
+X-Received: by 2002:a5d:584d:0:b0:386:4a16:dad7 with SMTP id
+ ffacd0b85a97d-38a872d2a33mr30326533f8f.10.1736983387087; 
+ Wed, 15 Jan 2025 15:23:07 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d012sm18779796f8f.8.2025.01.15.15.23.42
+ ffacd0b85a97d-38a8e38c7aesm19207819f8f.53.2025.01.15.15.23.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 15:23:44 -0800 (PST)
+ Wed, 15 Jan 2025 15:23:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -74,25 +74,25 @@ Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 10/21] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-Date: Thu, 16 Jan 2025 00:22:36 +0100
-Message-ID: <20250115232247.30364-11-philmd@linaro.org>
+Subject: [PATCH 03/21] hw/i386/pc: Remove PCMachineClass::broken_reserved_end
+ field
+Date: Thu, 16 Jan 2025 00:22:29 +0100
+Message-ID: <20250115232247.30364-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250115232247.30364-1-philmd@linaro.org>
 References: <20250115232247.30364-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,62 +108,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the
-hw_compat_2_4[] array, via the 'x-disable-pcie=false'
-property. We removed all machines using that array,
-lets remove all the code around VIRTIO_PCI_FLAG_DISABLE_PCIE.
+The PCMachineClass::broken_reserved_end field was only used
+by the pc-q35-2.4 and pc-i440fx-2.4 machines, which got removed.
+Remove it and simplify pc_memory_init().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-pci.h | 4 ----
- hw/virtio/virtio-pci.c         | 5 +----
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ include/hw/i386/pc.h |  1 -
+ hw/i386/pc.c         | 13 +++++--------
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index dd6eb9a4fc7..1ca7419cd43 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -33,7 +33,6 @@ enum {
-     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
-     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
--    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
-     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
-     VIRTIO_PCI_FLAG_ATS_BIT,
-     VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
-@@ -53,9 +52,6 @@ enum {
-  * vcpu thread using ioeventfd for some devices. */
- #define VIRTIO_PCI_FLAG_USE_IOEVENTFD   (1 << VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT)
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 103b54301f8..7fc34bb4a34 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -107,7 +107,6 @@ struct PCMachineClass {
+     /* RAM / address space compat: */
+     bool gigabyte_align;
+     bool has_reserved_memory;
+-    bool broken_reserved_end;
+     bool enforce_amd_1tb_hole;
+     bool isa_bios_alias;
  
--/* virtio version flags */
--#define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 9334b033f65..bf5308160e4 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -994,14 +994,13 @@ void pc_memory_init(PCMachineState *pcms,
+ 
+     if (machine->device_memory) {
+         uint64_t *val = g_malloc(sizeof(*val));
+-        uint64_t res_mem_end = machine->device_memory->base;
 -
- /* have pio notification for modern device ? */
- #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
-     (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 8dca3ae73e6..2f2c6b13863 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2347,8 +2347,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
-     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
--    DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT, false),
-     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
-     DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
-@@ -2377,8 +2375,7 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
-     VirtIOPCIProxy *proxy = VIRTIO_PCI(qdev);
-     PCIDevice *pci_dev = &proxy->pci_dev;
+-        if (!pcmc->broken_reserved_end) {
+-            res_mem_end += memory_region_size(&machine->device_memory->mr);
+-        }
++        uint64_t res_mem_end;
  
--    if (!(proxy->flags & VIRTIO_PCI_FLAG_DISABLE_PCIE) &&
--        virtio_pci_modern(proxy)) {
-+    if (virtio_pci_modern(proxy)) {
-         pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+         if (pcms->cxl_devices_state.is_enabled) {
+             res_mem_end = cxl_resv_end;
++        } else {
++            res_mem_end = machine->device_memory->base
++                          + memory_region_size(&machine->device_memory->mr);
+         }
+         *val = cpu_to_le64(ROUND_UP(res_mem_end, 1 * GiB));
+         fw_cfg_add_file(fw_cfg, "etc/reserved-memory-end", val, sizeof(*val));
+@@ -1039,9 +1038,7 @@ uint64_t pc_pci_hole64_start(void)
+         hole64_start = pc_get_cxl_range_end(pcms);
+     } else if (pcmc->has_reserved_memory && (ms->ram_size < ms->maxram_size)) {
+         pc_get_device_memory_range(pcms, &hole64_start, &size);
+-        if (!pcmc->broken_reserved_end) {
+-            hole64_start += size;
+-        }
++        hole64_start += size;
+     } else {
+         hole64_start = pc_above_4g_end(pcms);
      }
- 
 -- 
 2.47.1
 
