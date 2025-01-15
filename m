@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133D8C02183
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 09:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12209C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 09:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXzJf-0003gL-HW; Wed, 15 Jan 2025 04:03:59 -0500
+	id 1tXzMA-0005J0-FV; Wed, 15 Jan 2025 04:06:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzJe-0003g1-Hm
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:03:58 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzM7-0005IH-V2
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:06:32 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzJd-0001Ti-0c
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:03:58 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso44394365e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 01:03:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXzM6-0002IP-52
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 04:06:31 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso61590985e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 01:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736931834; x=1737536634; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736931988; x=1737536788; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xxkIfTUSJx0OfXP0SS7AQUKyLooNQKVwHEYK8EQL1Lk=;
- b=D0LDK1zUoh33tjH50ggBnzMvWNTFDXlwnHFQz6Oj/dSXX0xMQvPhZAdRk+0kzUwxuk
- R0BrqsUaBsgPNEsAsRhjkEX/SG7kYkrY1iIkpl5a9HVxgRldByuwsXs9oAtfQLLDA4ST
- /q1V5zYZAlkxjF/GXnwzpJvO8kU8alJaJIAvDS6LVWj2cZlYPvsR9Fr7c1SXsvW2/4HB
- 40fTV+otj45tq07VaNAjD9zl6VFu3v8EMZ1WB7ki4Jjp0DgM3UnukXaH/XlVytei7KxR
- p6Xhm9HYJeR3i8IT/S9MgftapenghyK3WMKXitaCeZGgQfRss4cuIdBTjFL5s1EdA6m0
- wKnA==
+ bh=wbW9Ql9LSQ+BYyFysXfkEdaR66HSsZogomVzRFjanvs=;
+ b=mxxdhT4uATbaS4Kp7+aZHfnuL0CpK+GPsUWRXyvgdbaYoxkH2/yiGUo+wPp5dPc7bl
+ 2b/F1ikK3vMnvUG0fXJ8Ov7s+Nd53FVjyaNfih+5nXyoB42gRccHP+w0BfbblP+tWz9j
+ Zmerj+ArEoXFHrgWqr4flKNYzgLHD58hhF+b1cyvfm/wX6XGvCWECxWzo6pXw5AGtzcn
+ Mqx6J+iYMZrK/5SDq82EhlG3bNCjmbqYqfLmzfvW77jgdR33qPzS8zRuf+GY2Ncs3cHK
+ ekXXz7+5qntM4c0Q5t3V5KYsbUvLyevUIzE7vsdL4nB/h60/rMqQmrPamkW2Hlv81O5i
+ kdpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736931834; x=1737536634;
+ d=1e100.net; s=20230601; t=1736931988; x=1737536788;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xxkIfTUSJx0OfXP0SS7AQUKyLooNQKVwHEYK8EQL1Lk=;
- b=VH8ibnv4IDzmHCB3z24W6uyR0aNVh3bYDMFBYglOLu9H4dAcEAsDopEcsSOJa8ob/v
- zS6vpPpvVjS8UMHR+yKblJ8+ptDy05ZI55maMTH55bHshYH2IPLxazk73UieOfUMMaJV
- VWRMl2Yt2QJhUcrULL153PxOYncjuU0dIUz74x2POZpB7WqcseLGOS5GvtdWBbvk8AAg
- 8uODeWgKeB5UbqF4dP4oGgrCNJADQc3/wwvxmjRkq67MtTxoQegkhXIroMFKjmfa1otz
- JQrnGbYDJoKXtu8ad2LL8cx0p7XUIOzObZjS2kyrtVN0kVI1GRSExNK48pHWpdFQXEWb
- +kvQ==
-X-Gm-Message-State: AOJu0YxaRmt0aM3JwJf5E/U3iKQNZzF6zWX/2aWVOL0i9BaD/1/i27jl
- ie7q5bSWHmMNjvWihl6PWF2OPY76A16Au27N/1GbZKYEAwEC8EaknirNPa5k6xx21fbsEKmGQlv
- JEmg=
-X-Gm-Gg: ASbGnct1w3fLyuPAFcaPhUkkxCHHPLTQnj3Nk2j1oD5o8dIN49N6rdQg2gEH6e/AR0d
- qpcQ4zKvC4/iOoLhiR7sS76hjLGODxgPioRFbDmmRiOybPyxQ1o8yH4kTJUgtRoFT7qGfPC+Wm6
- c7kS+wMAFxoYBXYlQlAuwUZc+8JOXYytLHZb2VTbdWo/SyBQ1wsKrrhalVt/28bKAyGqAc+9hmO
- js/lwRPOZFJgj+/CXY38wadSArDPVAo6zbMpM2uFC4PBdDFtjp1QP//l/VX8fLKj1jbdQzvAdW0
- FI/KYlEmefte3DMozIc39eYU
-X-Google-Smtp-Source: AGHT+IEiEFl3X4Pol9kqCXnu/vq+BEG8iYsszmJF07v3rKDy8+blF1P75HV0ozWT1TmfiWvRQpvixQ==
-X-Received: by 2002:a05:600c:1f95:b0:434:a525:7257 with SMTP id
- 5b1f17b1804b1-436e26d946cmr216198645e9.21.1736931834547; 
- Wed, 15 Jan 2025 01:03:54 -0800 (PST)
+ bh=wbW9Ql9LSQ+BYyFysXfkEdaR66HSsZogomVzRFjanvs=;
+ b=nZzqzIDqXVeLitaDA6e1RfWV1ZyVIEiPshUSXB9gkZkSBqyuUMQAsrVMf0XZ1YKt1w
+ uF3oXOaSWzrfdRU/IEAr76f0ilFhof4DQjB71eri1aeCfzdhAerYSuNmjnCTkvuna3eu
+ pmdi03e2FAYEeS7gvGVmsJIPxy3RNWUV5fe/KQEktoHP2j7EQwegB8Qco1guTeH1DgxM
+ yCdNO+u9UxcFWTnY/LgIu2AdRXFBFvF0xwcKdKwOG/jMQjd2bQcu3mQsQob75Rw0+ThK
+ MCMfFF7mq8xngs5q94d1B43MkTviIBgzkAYaxl6V6DZTy+EP/5l2KGxPOHxd35WFs588
+ JpVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVX5ru61z8WUeQaV79UbLC9YKd4B3e+hbWN0xWHpoRfmL/ERC5Aq3hD5zeV5NyUrTvg4q5IF1g7cyjN@nongnu.org
+X-Gm-Message-State: AOJu0YyvqJk/TxSHggT6T+rpAARyenbhMIFeHNJKAMtirMUof+6OHPNA
+ +LVEXfX3vRkcb7DE1tSAwoGggYAR2yNtBE//qdIETqac7czKj42b8hv3o1tRGEM=
+X-Gm-Gg: ASbGncsLMzKZvbYISUmaPH+3IQh80VUsrThzjXtBxsu76/kPb51oseCUuhBMYTcvlIH
+ z9dE0fjbqPZbEXboLBryGiBmgEGQ8eHGqoK72HNxaBMj/GKW8zV/sNdkn4j1J41h/ok2/Kh5lcb
+ 47jFJHcAFbRHVrnKMVFTFA9qRPe0j4zB+so07AmZuTk+YBib6XatiLfrTx8J+OIzG3iFjjXtiIV
+ oC8510JzXlEnYv1dV5wDxCku9zp1C7SXud9DGV0mG0aXJMtsgsMVyU3VpCvUyI5olpBd6krULD2
+ 1lKbhRZn7a0y9EsxQ0YE9OfF
+X-Google-Smtp-Source: AGHT+IEsqYYFDXcnrO3i9ayFlThsfgTW2As+uadz1m63zQ5fbTUvT9L9xgjBu4pVqhs9ZsbDQAjBlw==
+X-Received: by 2002:a5d:47a9:0:b0:385:e5d8:2bea with SMTP id
+ ffacd0b85a97d-38a872de5ecmr21823802f8f.20.1736931988260; 
+ Wed, 15 Jan 2025 01:06:28 -0800 (PST)
 Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c75290a2sm16002385e9.29.2025.01.15.01.03.53
+ ffacd0b85a97d-38b15d3c7a5sm10683100f8f.32.2025.01.15.01.06.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 01:03:54 -0800 (PST)
-Message-ID: <e78fe4b2-68ac-47a8-b1a3-b715074e2f4b@linaro.org>
-Date: Wed, 15 Jan 2025 10:03:53 +0100
+ Wed, 15 Jan 2025 01:06:27 -0800 (PST)
+Message-ID: <040eea70-e991-4831-a564-bf3f6b917587@linaro.org>
+Date: Wed, 15 Jan 2025 10:06:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] hw/s390x/event-facility: Remove the obsolete
- "allow_all_mask_sizes" code
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250115073819.15452-1-thuth@redhat.com>
- <20250115073819.15452-7-thuth@redhat.com>
+Subject: Re: [PATCH] virtio-balloon-pci: Allow setting nvectors, so we can use
+ MSI-X
+To: Reza Arbab <arbab@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20241216163125.438156-1-arbab@linux.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250115073819.15452-7-thuth@redhat.com>
+In-Reply-To: <20241216163125.438156-1-arbab@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,16 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/1/25 08:38, Thomas Huth wrote:
-> Now that the machine types 2.11 and older have been removed, we
-> don't need the "allow_all_mask_sizes" compatibility handling code
-> anymore and can remove it now.
+Hi Reza,
+
+On 16/12/24 17:31, Reza Arbab wrote:
+> Most virtio-pci devices allow MSI-X. Add it to virtio-balloon-pci, but
+> only enable it in new machine types, so we don't break migration of
+> existing machine types between different qemu versions.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> This copies what was done for virtio-rng-pci in:
+> 9ea02e8f1306 ("virtio-rng-pci: Allow setting nvectors, so we can use MSI-X")
+> bad9c5a5166f ("virtio-rng-pci: fix migration compat for vectors")
+> 62bdb8871512 ("virtio-rng-pci: fix transitional migration compat for vectors")
+> 
+> Signed-off-by: Reza Arbab <arbab@linux.ibm.com>
 > ---
->   hw/s390x/event-facility.c | 37 +------------------------------------
->   1 file changed, 1 insertion(+), 36 deletions(-)
+>   hw/core/machine.c              |  6 +++++-
+>   hw/virtio/virtio-balloon-pci.c | 13 +++++++++++++
+>   2 files changed, 18 insertions(+), 1 deletion(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+> diff --git a/hw/virtio/virtio-balloon-pci.c b/hw/virtio/virtio-balloon-pci.c
+> index ce2645ba7187..1c2b071eff0c 100644
+> --- a/hw/virtio/virtio-balloon-pci.c
+> +++ b/hw/virtio/virtio-balloon-pci.c
+> @@ -35,11 +35,23 @@ struct VirtIOBalloonPCI {
+>       VirtIOBalloon vdev;
+>   };
+>   
+> +static Property virtio_balloon_properties[] = {
+> +    DEFINE_PROP_BIT("ioeventfd", VirtIOPCIProxy, flags,
+> +                    VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
+> +    DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
+> +                       DEV_NVECTORS_UNSPECIFIED),
+> +    DEFINE_PROP_END_OF_LIST(),
+
+You shouldn't use that anymore since commit 5fcabe628b8
+("include/hw/qdev-properties: Remove DEFINE_PROP_END_OF_LIST").
+
+Also, this array can be declared const.
+
+> +};
 
