@@ -4,59 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAD1C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8269C02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 15:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY56M-0005Nm-2K; Wed, 15 Jan 2025 10:14:38 -0500
+	id 1tY5GO-0007Xi-6Z; Wed, 15 Jan 2025 10:25:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tY56K-0005NN-Is
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:14:36 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tY56I-0005JL-Ej
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:14:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=osPShDJHl54wivdfAoq47oc9wtdA59pNSnEF/cqYRC0=; b=TQjgH2jZzF7jSIsO5Q7c4ZAKCv
- QVHvvsZtyLP0zZ/YjmrLVOCF1j11sxqi35wFP9UCrNIret5J7fgqFPsUEzSQv9pDEDc/Jjk33c2SE
- XKTOcc5H2LOURA8k/wnTNCXPVKTmB21wUa/fD4GU1jLTvJTsJSjtDZH/Dtv8QTIh5Gm/ZlZxxB9gt
- no2eJc3d/WgINULCYr3RdcJLB395TIF67rk1EUnlaxDIh/2UkhEEa/vltmCUhs8S8s1eoaLcfbkcO
- tklA7eW2Pn/GvfK9BWdq0A6ou13/LXhyNZBi4zAokPseL9X9ClIWechxREyVktD6nnpG8p8KaEIm+
- dPmsIY69efhx95cS2hUGWjox7eFsaU7UHBLAyHX5mhE7+lDcSY5wsMt5L+TTmJd/GNGpLBXp4psy5
- pYuxyZjWwCaltMjkMGP5/ydC/zCoz9CGdnSqfN2bTfVd7MZW0jPBfHRKz9SaRff2WG2g2GXKECLTw
- io9c35F/MyxcQFJ3V4qPk2B0/lY3ugqXDiw+suQroz1lyMzCQ8YMGi2X8RSsDQQXQeRGbXgfFqYXR
- fIVFcAb+gUehyvietWUWrZBXQQnymxebeUlFmS74ma537ljP9IEv70bJ/4feJqKrAKz65eIgHbD7t
- Y64xD1bEqLSYaHiTyeu2/JFZ0iwGn4woNoUZ4wKsQ=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v3 1/2] coreaudio: Commit the result of init in the end
-Date: Wed, 15 Jan 2025 16:14:28 +0100
-Message-ID: <2489919.FfEH3XSh6J@silver>
-In-Reply-To: <20250115-coreaudio-v3-1-bdb6bcb5bf9f@daynix.com>
-References: <20250115-coreaudio-v3-0-bdb6bcb5bf9f@daynix.com>
- <20250115-coreaudio-v3-1-bdb6bcb5bf9f@daynix.com>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tY5GL-0007XF-VO
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:24:58 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1tY5GJ-0006tK-9l
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 10:24:57 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5d982de9547so13391202a12.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 07:24:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1736954693; x=1737559493; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=uoYTnK0PpxncAWVpUQa9skhgGj0av0eg98PVmyGpktc=;
+ b=N1zsVgo/5XPA+HqowzK3iCpgyI3kTzRL9/AQAG3GxaSrc7fufcg7nDTkfHsTQCVo9a
+ 2DRssWVd7GgR5OWv3ATLFKQBv0frzifKOdLv5wVwv0Rdq7WTGsz7n1J/Ot+K5RVYurj7
+ 7vyUre2Dfoe2B9iXG/shuVmTeE0IemjQMJgNheq1YVr7505NlPl8KguzU0P9pExnv9C6
+ 2iJiMBSu7IjszFDytfHEl8OW1ZDKgG+SmWewjM/zGm9Wo32w0TqgVHId/5PwW0gr3IYh
+ A+a5FGVIWb9HqtWv7ScAdyh+FxkwiDSIpSIQ4GBvsl/J/hc3ZLNU9LMcv8oYDW7/7kK1
+ iydA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736954693; x=1737559493;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uoYTnK0PpxncAWVpUQa9skhgGj0av0eg98PVmyGpktc=;
+ b=t0fk0ITpdXW565s6VMOzjdD6+psmi1JGZ6XZQUU7CbyBezcMJ3UdMFiWeOgt4uS3Kd
+ Ca4agfT/y/zej4+6qCqPPL4RLd05W1odS8WsB/+xsF6+UI9VAS2DUL0haiI2T5BKztN8
+ R+CEn7dT9ubEWUbMZ8H7ADGb8b9H0rGNd08W2t0se+FsUgH8A2xcdLAk9nYJwve3O4kB
+ wEcIlAED6sfu3t7iqi6PGj11pnPD1K1EcHMgQEJFXn5pl2BbAikcl7cTkqJRhbpq14+V
+ 9Fyj5K0AXdV0/YoBsstPYLXKCz9vtJWj4J4jCK0oPNKsw2Osul22DxdNRYkeay3hbcEU
+ 9B/Q==
+X-Gm-Message-State: AOJu0YxccXylMH0jqYCyjiEJyAAXRPUbAowNoK1IaxpOHhfSSx21ZAGn
+ RrdHWSiRzV/zmwacrftwIg/V90Sm4bgquQ8mXT2scbPic2xQTU0VTeGt1ek6i3s=
+X-Gm-Gg: ASbGncuuhmh0wINJdktF/44IcqhFpA7COBKQ+DXgdah7PClL9x9hwkYEKalPPirwgG5
+ gntqFCVCKVzD7fjq3R/ClSn67IUJKsbnmBtMRfXSVt3IcsTzr0hgITnzaWG5pfYTg8QtXBptKCl
+ CskPVNY08YOZ1lvtcEJg3lL4lwtBvwPvPWJqY3OQhSLoXdsNymGyfbw7jbuKgE6eFXAhsugXl/R
+ 6lcrttikVD2wHLp0FvZNPj8ELNeVN6I5kaDIfoDCNYDrNv/k3QU/+MlMVDugDkMb1oAZuw08qfz
+ aZ0GvRD/X+ar1zMFisBSN8+ob70I8QsmP0LXCBsdHA==
+X-Google-Smtp-Source: AGHT+IGPoocRV0D7G3Nhg9rnZU1ENy58XhbWTH1PEy7vrpu626YyMo3FFiWyud+0h3/SDiVCakbaCw==
+X-Received: by 2002:a17:907:97c6:b0:aaf:208:fd3f with SMTP id
+ a640c23a62f3a-ab2ab558911mr2720111766b.13.1736954692863; 
+ Wed, 15 Jan 2025 07:24:52 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d9900c4b56sm7355654a12.32.2025.01.15.07.24.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 07:24:51 -0800 (PST)
+Date: Wed, 15 Jan 2025 16:24:50 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH v3 3/6] target/riscv: add profile u_parent and s_parent
+Message-ID: <20250115-3af3c8e00a967f0538bfd4b5@orel>
+References: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
+ <20250115134957.2179085-4-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250115134957.2179085-4-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,178 +101,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wednesday, January 15, 2025 1:06:55 PM CET Akihiko Odaki wrote:
-> init_out_device may only commit some part of the result and leave the
-> state inconsistent when it encounters an error. Commit the result in
-> the end of the function so that it commits the result iff it sees no
-
-Typo "if".
-
-> error.
+On Wed, Jan 15, 2025 at 10:49:54AM -0300, Daniel Henrique Barboza wrote:
+> The current 'parent' mechanic for profiles allows for one profile to be
+> a child of a previous/older profile, enabling all its extensions (and
+> the parent profile itself) and sparing us from tediously listing all
+> extensions for every profile.
 > 
-> With this change, handle_voice_change can rely on core->outputDeviceID
-> to know whether the output device is initialized after calling
-> init_out_device.
+> This works fine for u-mode profiles. For s-mode profiles this is not
+> enough: a s-mode profile extends not only his equivalent u-mode profile
+> but also the previous s-mode profile. This means, for example, that
+> RVA23S64 extends both RVA23U64 and RVA22S64.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> To fit this usage, rename the existing 'parent' to 'u_parent' and add a
+> new 's_parent' attribute for profiles. Handle both like we're doing with
+> the previous 'profile' attribute, i.e. if set, enable it. This change
+
+...like we were doing with the previous 'parent'...
+
+> does nothing for the existing profiles but will make RVA23S64 simpler.
+> 
+> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  audio/coreaudio.m | 49 +++++++++++++++++++++++++++----------------------
->  1 file changed, 27 insertions(+), 22 deletions(-)
+>  target/riscv/cpu.c         |  6 ++++--
+>  target/riscv/cpu.h         |  3 ++-
+>  target/riscv/tcg/tcg-cpu.c | 35 ++++++++++++++++++++++++++---------
+>  3 files changed, 32 insertions(+), 12 deletions(-)
 > 
-> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-> index cadd729d5053..b9e1a952ed37 100644
-> --- a/audio/coreaudio.m
-> +++ b/audio/coreaudio.m
-> @@ -355,7 +355,10 @@ static OSStatus audioDeviceIOProc(
->  static OSStatus init_out_device(coreaudioVoiceOut *core)
->  {
->      OSStatus status;
-> +    AudioDeviceID deviceID;
-
-I would probably preserve the name 'outputDeviceID' to make it more clear that
-it's for output.
-
->      AudioValueRange frameRange;
-> +    UInt32 audioDevicePropertyBufferFrameSize;
-> +    AudioDeviceIOProcID ioprocid;
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 6fb4d5f374..e215b1004d 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2349,7 +2349,8 @@ static const PropertyInfo prop_marchid = {
+>   * doesn't need to be manually enabled by the profile.
+>   */
+>  static RISCVCPUProfile RVA22U64 = {
+> -    .parent = NULL,
+> +    .u_parent = NULL,
+> +    .s_parent = NULL,
+>      .name = "rva22u64",
+>      .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVU,
+>      .priv_spec = RISCV_PROFILE_ATTR_UNUSED,
+> @@ -2381,7 +2382,8 @@ static RISCVCPUProfile RVA22U64 = {
+>   * The remaining features/extensions comes from RVA22U64.
+>   */
+>  static RISCVCPUProfile RVA22S64 = {
+> -    .parent = &RVA22U64,
+> +    .u_parent = &RVA22U64,
+> +    .s_parent = NULL,
+>      .name = "rva22s64",
+>      .misa_ext = RVS,
+>      .priv_spec = PRIV_VERSION_1_12_0,
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 97713681cb..986131a191 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -81,7 +81,8 @@ const char *riscv_get_misa_ext_description(uint32_t bit);
+>  #define CPU_CFG_OFFSET(_prop) offsetof(struct RISCVCPUConfig, _prop)
 >  
->      AudioStreamBasicDescription streamBasicDescription = {
->          .mBitsPerChannel = core->hw.info.bits,
-> @@ -368,20 +371,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->          .mSampleRate = core->hw.info.freq
->      };
+>  typedef struct riscv_cpu_profile {
+> -    struct riscv_cpu_profile *parent;
+> +    struct riscv_cpu_profile *u_parent;
+> +    struct riscv_cpu_profile *s_parent;
+>      const char *name;
+>      uint32_t misa_ext;
+>      bool enabled;
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 48be24bbbe..c9e5a3b580 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -713,13 +713,29 @@ static bool riscv_cpu_validate_profile_satp(RISCVCPU *cpu,
+>  }
+>  #endif
 >  
-> -    status = coreaudio_get_voice(&core->outputDeviceID);
-> +    status = coreaudio_get_voice(&deviceID);
->      if (status != kAudioHardwareNoError) {
->          coreaudio_playback_logerr (status,
->                                     "Could not get default output Device\n");
->          return status;
->      }
-> -    if (core->outputDeviceID == kAudioDeviceUnknown) {
-> +    if (deviceID == kAudioDeviceUnknown) {
->          dolog ("Could not initialize playback - Unknown Audiodevice\n");
->          return status;
->      }
->  
->      /* get minimum and maximum buffer frame sizes */
-> -    status = coreaudio_get_framesizerange(core->outputDeviceID,
-> -                                          &frameRange);
-> +    status = coreaudio_get_framesizerange(deviceID, &frameRange);
->      if (status == kAudioHardwareBadObjectError) {
->          return 0;
->      }
-> @@ -392,31 +394,31 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->      }
->  
->      if (frameRange.mMinimum > core->frameSizeSetting) {
-> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-> +        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
->          dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
->      } else if (frameRange.mMaximum < core->frameSizeSetting) {
-> -        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-> +        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
->          dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
->      } else {
-> -        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-> +        audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
->      }
->  
->      /* set Buffer Frame Size */
-> -    status = coreaudio_set_framesize(core->outputDeviceID,
-> -                                     &core->audioDevicePropertyBufferFrameSize);
-> +    status = coreaudio_set_framesize(deviceID,
-> +                                     &audioDevicePropertyBufferFrameSize);
->      if (status == kAudioHardwareBadObjectError) {
->          return 0;
->      }
->      if (status != kAudioHardwareNoError) {
->          coreaudio_playback_logerr (status,
->                                      "Could not set device buffer frame size %" PRIu32 "\n",
-> -                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
-> +                                    (uint32_t)audioDevicePropertyBufferFrameSize);
-
-'audioDevicePropertyBufferFrameSize' is declared as UInt32, so I guess the
-cast can be dropped.
-
->          return status;
->      }
->  
->      /* get Buffer Frame Size */
-> -    status = coreaudio_get_framesize(core->outputDeviceID,
-> -                                     &core->audioDevicePropertyBufferFrameSize);
-> +    status = coreaudio_get_framesize(deviceID,
-> +                                     &audioDevicePropertyBufferFrameSize);
->      if (status == kAudioHardwareBadObjectError) {
->          return 0;
->      }
-> @@ -425,11 +427,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->                                      "Could not get device buffer frame size\n");
->          return status;
->      }
-> -    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-
-Are you sure this should be deferred to the end of the function?
-
->  
->      /* set Samplerate */
-> -    status = coreaudio_set_streamformat(core->outputDeviceID,
-> -                                        &streamBasicDescription);
-> +    status = coreaudio_set_streamformat(deviceID, &streamBasicDescription);
->      if (status == kAudioHardwareBadObjectError) {
->          return 0;
->      }
-> @@ -437,7 +437,6 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->          coreaudio_playback_logerr (status,
->                                     "Could not set samplerate %lf\n",
->                                     streamBasicDescription.mSampleRate);
-> -        core->outputDeviceID = kAudioDeviceUnknown;
->          return status;
->      }
->  
-> @@ -451,20 +450,24 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->       * Therefore, the specified callback must be designed to avoid a deadlock
->       * with the callers of AudioObjectGetPropertyData.
->       */
-> -    core->ioprocid = NULL;
-> -    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
-> +    ioprocid = NULL;
-> +    status = AudioDeviceCreateIOProcID(deviceID,
->                                         audioDeviceIOProc,
->                                         &core->hw,
-> -                                       &core->ioprocid);
-> +                                       &ioprocid);
->      if (status == kAudioHardwareBadDeviceError) {
->          return 0;
->      }
-> -    if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
-> +    if (status != kAudioHardwareNoError || ioprocid == NULL) {
->          coreaudio_playback_logerr (status, "Could not set IOProc\n");
-> -        core->outputDeviceID = kAudioDeviceUnknown;
->          return status;
->      }
->  
-> +    core->outputDeviceID = deviceID;
-> +    core->audioDevicePropertyBufferFrameSize = audioDevicePropertyBufferFrameSize;
-> +    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-> +    core->ioprocid = ioprocid;
+> +static void riscv_cpu_check_parent_profile(RISCVCPU *cpu,
+> +                                           RISCVCPUProfile *profile,
+> +                                           RISCVCPUProfile *parent)
+> +{
+> +    const char *parent_name;
+> +    bool parent_enabled;
 > +
->      return 0;
+> +    if (!profile->enabled || !parent) {
+> +        return;
+> +    }
+> +
+> +    parent_name = parent->name;
+> +    parent_enabled = object_property_get_bool(OBJECT(cpu), parent_name, NULL);
+> +    profile->enabled = profile->enabled && parent_enabled;
+
+Could drop the 'profile->enabled &&' since we already know
+profile->enabled is true from the test above.
+
+> +}
+> +
+>  static void riscv_cpu_validate_profile(RISCVCPU *cpu,
+>                                         RISCVCPUProfile *profile)
+>  {
+>      CPURISCVState *env = &cpu->env;
+>      const char *warn_msg = "Profile %s mandates disabled extension %s";
+>      bool send_warn = profile->user_set && profile->enabled;
+> -    bool parent_enabled, profile_impl = true;
+> +    bool profile_impl = true;
+>      int i;
+>  
+>  #ifndef CONFIG_USER_ONLY
+> @@ -773,12 +789,8 @@ static void riscv_cpu_validate_profile(RISCVCPU *cpu,
+>  
+>      profile->enabled = profile_impl;
+>  
+> -    if (profile->parent != NULL) {
+> -        parent_enabled = object_property_get_bool(OBJECT(cpu),
+> -                                                  profile->parent->name,
+> -                                                  NULL);
+> -        profile->enabled = profile->enabled && parent_enabled;
+> -    }
+> +    riscv_cpu_check_parent_profile(cpu, profile, profile->u_parent);
+> +    riscv_cpu_check_parent_profile(cpu, profile, profile->s_parent);
 >  }
 >  
-> @@ -548,7 +551,9 @@ static OSStatus handle_voice_change(
->          fini_out_device(core);
->      }
+>  static void riscv_cpu_validate_profiles(RISCVCPU *cpu)
+> @@ -1181,8 +1193,13 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+>      profile->user_set = true;
+>      profile->enabled = value;
 >  
-> -    if (!init_out_device(core)) {
-> +    init_out_device(core);
+> -    if (profile->parent != NULL) {
+> -        object_property_set_bool(obj, profile->parent->name,
+> +    if (profile->u_parent != NULL) {
+> +        object_property_set_bool(obj, profile->u_parent->name,
+> +                                 profile->enabled, NULL);
+> +    }
 > +
-> +    if (core->outputDeviceID) {
->          update_device_playback_state(core);
+> +    if (profile->s_parent != NULL) {
+> +        object_property_set_bool(obj, profile->s_parent->name,
+>                                   profile->enabled, NULL);
 >      }
 >  
-> 
-> 
+> -- 
+> 2.47.1
+>
 
+Otherwise,
 
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+
+Thanks,
+drew
 
