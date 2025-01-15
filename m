@@ -4,61 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B537C02187
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916E8C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY2rx-0007t8-3j; Wed, 15 Jan 2025 07:51:37 -0500
+	id 1tY2uD-0004nT-Lz; Wed, 15 Jan 2025 07:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rM-0007dL-Cv; Wed, 15 Jan 2025 07:51:01 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tY2uB-0004Uc-4S
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:53:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rH-0006q4-VT; Wed, 15 Jan 2025 07:50:59 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id A96C15C005C;
- Wed, 15 Jan 2025 12:50:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18860C4CEE4;
- Wed, 15 Jan 2025 12:50:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1736945441;
- bh=PPyhW6VsW+yo+jj9o/izTT956e12rFUm5rYlBvONhoQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XYmrM4zSFkukc8tM/a5ZnqoTwjHKq5G5BWAUQQMYOTq4BNcHeUDiSwRNgZm36MbZo
- VDbxwYpnle7AeyPveigLVCx+fVe8T8oyEPDYxZg6SYvEle25S/fvERXzMtyJK9pM5p
- Eubme+s8b23mZytTn9/ARDYI+I94QtcQUbgKOylOnuzJlSAko1R263e4GTbmdSE/lC
- qpJeIQr+5hczwfQ6VCg9m03a7iQMaYpeuYYFuczcEUUMxvahAJyQaRzno7Sq66oBc9
- qXYdhUtvZARGeHYEkkdBaOYgHCLThkRtQNMZh+XEJ6LnVKfMFvZxAotL33Ixdtdtyc
- mfHNvfw2sNDzQ==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2r1-00000004yFq-0r1j; Wed, 15 Jan 2025 13:50:39 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: [PATCH v7 07/16] acpi/ghes: Change the type for source_id
-Date: Wed, 15 Jan 2025 13:50:23 +0100
-Message-ID: <0e83ba548c1aedd1299fe387b94db78986590a34.1736945236.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <cover.1736945236.git.mchehab+huawei@kernel.org>
-References: <cover.1736945236.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tY2u8-0007BS-Q8
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 07:53:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1736945631;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=p4b7vO7yUa6iwjJLLsaK2BBkEVopJf+ubSOiSmnqU4A=;
+ b=d3w7j3BIPBM8MewGlj0gePBNqtkk6xplD/VPBql2mPZnjx7THGpGQvjVEYRoywtqzpCaCm
+ H+38npWJSY2UhHVN3JBjVWADoDWYyF917QcfL6zcuaALUNin4r2aXSZttelkuTdf9FekhD
+ nKNuc0UusnT9WfMv0bj8A+Fk4MKxaWQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-glIO1fTMMGyMEivAReVhbA-1; Wed,
+ 15 Jan 2025 07:53:50 -0500
+X-MC-Unique: glIO1fTMMGyMEivAReVhbA-1
+X-Mimecast-MFC-AGG-ID: glIO1fTMMGyMEivAReVhbA
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FD761955D72
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 12:53:49 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4224D19560BC; Wed, 15 Jan 2025 12:53:47 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com,
+	anisinha@redhat.com
+Subject: [PATCH 1/3] tests: acpi: whitelist expected blobs
+Date: Wed, 15 Jan 2025 13:53:40 +0100
+Message-ID: <20250115125342.3883374-2-imammedo@redhat.com>
+In-Reply-To: <20250115125342.3883374-1-imammedo@redhat.com>
+References: <20250115125342.3883374-1-imammedo@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -76,63 +87,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As described at: ACPI 6.5 spec at:
-	18.3.2. ACPI Error Source
-
-In particular at GHES/GHESv2 table:
-	Table 18.10 Generic Hardware Error Source Structure
-
-HEST source ID is actually a 16-bit value.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes-stub.c    | 2 +-
- hw/acpi/ghes.c         | 2 +-
- include/hw/acpi/ghes.h | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 40 +++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
-index c315de1802d6..2b64cbd2819a 100644
---- a/hw/acpi/ghes-stub.c
-+++ b/hw/acpi/ghes-stub.c
-@@ -11,7 +11,7 @@
- #include "qemu/osdep.h"
- #include "hw/acpi/ghes.h"
- 
--int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-+int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
- {
-     return -1;
- }
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 5f67322bf0f2..edc74c38bf8a 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -383,7 +383,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     ags->present = true;
- }
- 
--int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-+int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
- {
-     uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
-     uint64_t start_addr;
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 50e3a25ea384..9295e46be25e 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -73,7 +73,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
--int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
-+int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
- 
- /**
-  * acpi_ghes_present: Report whether ACPI GHES table is present
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..085dfa9ff4 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,41 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
-2.47.1
+2.43.0
 
 
