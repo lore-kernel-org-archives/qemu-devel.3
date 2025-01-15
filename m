@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58848C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE474C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY8dY-0007G1-5M; Wed, 15 Jan 2025 14:01:08 -0500
+	id 1tY8dZ-0007Gq-3I; Wed, 15 Jan 2025 14:01:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tY8dV-0007Ew-6J
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:05 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1tY8dS-0007Cf-IG
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:02 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tY8dT-0005cT-9y
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:04 -0500
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHtj9O014221;
- Wed, 15 Jan 2025 19:01:01 GMT
+ id 1tY8dO-0005bH-QA
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:02 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHu0Go028112;
+ Wed, 15 Jan 2025 19:00:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=n0pTRsPmW36bJNdcHGHxB1VudtQ9I4/z0KcGYmfmS2s=; b=
- Xfgj2p5dRmGOuRxzLiXWFFdnr4Ryzk1whtn79gamE0bFfujttsFCjcMxEzl/0hpZ
- K+vThjmFg2jXrKq3RAPtCur9UlgMceXr7yawRYYOc0WpqntTxPe9sjLRqhE4moKR
- irjod9ZC6ZB37yHWDT79YCho2i39G3NoVel5V19lSK/pDmo6a1RWl+tt7bhNW+sE
- talX3nh046vQF336zRStWjTSR4uVp9tvBiSf5EDcg7/1dF92soqHZZV7ffoAGvuf
- hh8qkqktQVP9fy6caN7JgXvwdHrNUCsVCf2DqYhePT2MvNNyOwaEapt+FEzNebRt
- zeyb2CS787cfadsGLAnISw==
+ corp-2023-11-20; bh=Y16K6/eVE5VM03T8KQdxgNL/j9U5bX5Bd/s6nllMzko=; b=
+ REHgNgAyJTQzSGKk6FkU886WKtSPRpFkxeJRLyyxDUfz7TNFBBkL+x5WtoTl5HyX
+ 9r6DbCWL1xCuX+qwZCQzpsggZ0r2pWwTD7oDW7oV0O154yE6QvalPbFITGbi6GB+
+ B9Z4cAcRuLOEzzUSBLJG9eWhjQY9rAWbSwtOhwS4RufypSHrheOJR5P4d+M3HIGB
+ MW81R3Upsq2u3Mb3I9gGktaybHueyQgbIzf8zkCtNwFldzPYlZAf2wVV50y9Wzge
+ JjPBzvji1EAP9j7xnuCg+DGFrJfN6jBm1OQXU3RxQ0fWBmgop1YwZH+o1mFA6nIe
+ Ndy/RpW+kuvXs5miC9uNnQ==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443g8sgrh3-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 446912scux-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 19:01:01 +0000 (GMT)
+ Wed, 15 Jan 2025 19:00:55 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50FHLI5u035098; Wed, 15 Jan 2025 19:01:00 GMT
+ with ESMTP id 50FHoAN7034817; Wed, 15 Jan 2025 19:00:54 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 443f39ur4m-1
+ 443f39ur01-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 19:01:00 +0000
+ Wed, 15 Jan 2025 19:00:54 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0peF016497;
- Wed, 15 Jan 2025 19:00:59 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0pdx016497;
+ Wed, 15 Jan 2025 19:00:53 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 443f39uqwr-12; Wed, 15 Jan 2025 19:00:59 +0000
+ ESMTP id 443f39uqwr-4; Wed, 15 Jan 2025 19:00:53 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V7 11/24] migration: enhance migrate_uri_parse
-Date: Wed, 15 Jan 2025 11:00:37 -0800
-Message-Id: <1736967650-129648-12-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V7 03/24] physmem: qemu_ram_alloc_from_fd extensions
+Date: Wed, 15 Jan 2025 11:00:29 -0800
+Message-Id: <1736967650-129648-4-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
 References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
@@ -78,16 +78,16 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2501150138
-X-Proofpoint-GUID: Wp6RBdfFdOIB_Q6U5ENghW01FP0iUDEs
-X-Proofpoint-ORIG-GUID: Wp6RBdfFdOIB_Q6U5ENghW01FP0iUDEs
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Proofpoint-ORIG-GUID: D0CxDZ0ZmOD2LgCvTm05yHY6G9ta65_o
+X-Proofpoint-GUID: D0CxDZ0ZmOD2LgCvTm05yHY6G9ta65_o
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.793,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,76 +105,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Export migrate_uri_parse for use outside migration internals, and define
-a method migrate_is_uri that indicates when migrate_uri_parse should
-be used.
+Extend qemu_ram_alloc_from_fd to support resizable ram, and define
+qemu_ram_resize_cb to clean up the API.
+
+Add a grow parameter to extend the file if necessary.  However, if
+grow is false, a zero-sized file is always extended.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/misc.h |  7 +++++++
- migration/migration.c    | 11 +++++++++++
- migration/migration.h    |  2 --
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ include/exec/ram_addr.h | 13 +++++++++----
+ system/memory.c         |  4 ++--
+ system/physmem.c        | 35 ++++++++++++++++++++---------------
+ 3 files changed, 31 insertions(+), 21 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 67f7ef7..c660be8 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -108,4 +108,11 @@ bool migration_in_bg_snapshot(void);
- bool migration_block_activate(Error **errp);
- bool migration_block_inactivate(void);
- 
-+/* True if @uri starts with a syntactically valid URI prefix */
-+bool migrate_is_uri(const char *uri);
-+
-+/* Parse @uri and return @channel, returning true on success */
-+bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
-+                       Error **errp);
-+
- #endif
-diff --git a/migration/migration.c b/migration/migration.c
-index fce7b22..b5ee98e 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -14,6 +14,7 @@
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index ff157c1..94bb3cc 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -111,23 +111,30 @@ long qemu_maxrampagesize(void);
+  *
+  * Parameters:
+  *  @size: the size in bytes of the ram block
++ *  @max_size: the maximum size of the block after resizing
+  *  @mr: the memory region where the ram block is
++ *  @resized: callback after calls to qemu_ram_resize
+  *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
+  *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
+  *              RAM_READONLY_FD, RAM_GUEST_MEMFD
+  *  @mem_path or @fd: specify the backing file or device
+  *  @offset: Offset into target file
++ *  @grow: extend file if necessary (but an empty file is always extended).
+  *  @errp: pointer to Error*, to store an error if it happens
+  *
+  * Return:
+  *  On success, return a pointer to the ram block.
+  *  On failure, return NULL.
   */
++typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
++
+ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+                                    uint32_t ram_flags, const char *mem_path,
+                                    off_t offset, Error **errp);
+-RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
++RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
++                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
++                                 bool grow,
+                                  Error **errp);
  
- #include "qemu/osdep.h"
-+#include "qemu/ctype.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-@@ -587,6 +588,16 @@ void migrate_add_address(SocketAddress *address)
-                       QAPI_CLONE(SocketAddress, address));
+ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+@@ -135,9 +142,7 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
+ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
+                          Error **errp);
+ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
+-                                    void (*resized)(const char*,
+-                                                    uint64_t length,
+-                                                    void *host),
++                                    qemu_ram_resize_cb resized,
+                                     MemoryRegion *mr, Error **errp);
+ void qemu_ram_free(RAMBlock *block);
+ 
+diff --git a/system/memory.c b/system/memory.c
+index b17b553..4c82979 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1680,8 +1680,8 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr,
+     mr->readonly = !!(ram_flags & RAM_READONLY);
+     mr->terminates = true;
+     mr->destructor = memory_region_destructor_ram;
+-    mr->ram_block = qemu_ram_alloc_from_fd(size, mr, ram_flags, fd, offset,
+-                                           &err);
++    mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
++                                           offset, false, &err);
+     if (err) {
+         mr->size = int128_zero();
+         object_unparent(OBJECT(mr));
+diff --git a/system/physmem.c b/system/physmem.c
+index 792844d..4d13761 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1942,8 +1942,10 @@ out_free:
  }
  
-+bool migrate_is_uri(const char *uri)
-+{
-+    while (*uri && *uri != ':') {
-+        if (!qemu_isalpha(*uri++)) {
-+            return false;
-+        }
-+    }
-+    return *uri == ':';
-+}
-+
- bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
-                        Error **errp)
+ #ifdef CONFIG_POSIX
+-RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
++RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
++                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
++                                 bool grow,
+                                  Error **errp)
  {
-diff --git a/migration/migration.h b/migration/migration.h
-index 0df2a18..1d4d4e9 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -519,8 +519,6 @@ bool check_dirty_bitmap_mig_alias_map(const BitmapMigrationNodeAliasList *bbm,
-                                       Error **errp);
+     RAMBlock *new_block;
+@@ -1953,7 +1955,9 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+     /* Just support these ram flags by now. */
+     assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
+                           RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
+-                          RAM_READONLY_FD | RAM_GUEST_MEMFD)) == 0);
++                          RAM_READONLY_FD | RAM_GUEST_MEMFD |
++                          RAM_RESIZEABLE)) == 0);
++    assert(max_size >= size);
  
- void migrate_add_address(SocketAddress *address);
--bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
--                       Error **errp);
- int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque);
+     if (xen_enabled()) {
+         error_setg(errp, "-mem-path not supported with Xen");
+@@ -1968,13 +1972,15 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
  
- #define qemu_ram_foreach_block \
+     size = TARGET_PAGE_ALIGN(size);
+     size = REAL_HOST_PAGE_ALIGN(size);
++    max_size = TARGET_PAGE_ALIGN(max_size);
++    max_size = REAL_HOST_PAGE_ALIGN(max_size);
+ 
+     file_size = get_file_size(fd);
+-    if (file_size && file_size < offset + size) {
++    if (file_size && file_size < offset + max_size && !grow) {
+         error_setg(errp, "%s backing store size 0x%" PRIx64
+                    " is too small for 'size' option 0x" RAM_ADDR_FMT
+                    " plus 'offset' option 0x%" PRIx64,
+-                   memory_region_name(mr), file_size, size,
++                   memory_region_name(mr), file_size, max_size,
+                    (uint64_t)offset);
+         return NULL;
+     }
+@@ -1990,11 +1996,13 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+     new_block = g_malloc0(sizeof(*new_block));
+     new_block->mr = mr;
+     new_block->used_length = size;
+-    new_block->max_length = size;
++    new_block->max_length = max_size;
++    new_block->resized = resized;
+     new_block->flags = ram_flags;
+     new_block->guest_memfd = -1;
+-    new_block->host = file_ram_alloc(new_block, size, fd, !file_size, offset,
+-                                     errp);
++    new_block->host = file_ram_alloc(new_block, max_size, fd,
++                                     file_size < offset + max_size,
++                                     offset, errp);
+     if (!new_block->host) {
+         g_free(new_block);
+         return NULL;
+@@ -2046,7 +2054,8 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+         return NULL;
+     }
+ 
+-    block = qemu_ram_alloc_from_fd(size, mr, ram_flags, fd, offset, errp);
++    block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
++                                   false, errp);
+     if (!block) {
+         if (created) {
+             unlink(mem_path);
+@@ -2061,9 +2070,7 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+ 
+ static
+ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+-                                  void (*resized)(const char*,
+-                                                  uint64_t length,
+-                                                  void *host),
++                                  qemu_ram_resize_cb resized,
+                                   void *host, uint32_t ram_flags,
+                                   MemoryRegion *mr, Error **errp)
+ {
+@@ -2115,10 +2122,8 @@ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
+ }
+ 
+ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t maxsz,
+-                                     void (*resized)(const char*,
+-                                                     uint64_t length,
+-                                                     void *host),
+-                                     MemoryRegion *mr, Error **errp)
++                                    qemu_ram_resize_cb resized,
++                                    MemoryRegion *mr, Error **errp)
+ {
+     return qemu_ram_alloc_internal(size, maxsz, resized, NULL,
+                                    RAM_RESIZEABLE, mr, errp);
 -- 
 1.8.3.1
 
