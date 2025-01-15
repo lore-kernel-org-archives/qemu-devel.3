@@ -4,102 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2122EC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26403C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY7qv-0008Su-Ih; Wed, 15 Jan 2025 13:10:56 -0500
+	id 1tY8Hu-0006nQ-IJ; Wed, 15 Jan 2025 13:38:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7pi-0006gx-Tg
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tY7ph-0006f7-2P
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:09:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736964576;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M8anF+JBkvRI7NWpt9ZB3PcYSjQ6xOt/WhSnYtqwjRU=;
- b=OvAn2wW44+CHehlPz0U4kQYqbC7NPAHhsNdKOPQHTM7J3IL+ljr2ELGewo5niBr9y7uDbm
- VnrFBVLbtBTPR/mMl5myRrF5MMa+NXWxFck3thIwErPSIr25AtFS3HJqwoxnTR0Xiszwir
- 2vWlP7gb9teY86jdDgoTpU4dtYpyJ58=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-Gfv0CHGyP96LbOmgPawzIA-1; Wed, 15 Jan 2025 13:09:32 -0500
-X-MC-Unique: Gfv0CHGyP96LbOmgPawzIA-1
-X-Mimecast-MFC-AGG-ID: Gfv0CHGyP96LbOmgPawzIA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385dcae001fso50847f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:09:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tY8Hr-0006my-H3
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:38:43 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tY8Hp-0002Hl-Sh
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:38:43 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21661be2c2dso127775065ad.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:38:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736966320; x=1737571120; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rLKS8BPrTkvEESr+Xd3LfYYd7sB95wIHlX5ZChxm3FQ=;
+ b=dRAddE/kYS845YRN8GGy7aVKJBbw3knkNniobZNXw8FZRUXoR9ebiyqqqt34W+IvY2
+ E9Ip5EunBWWlQFuGeW/1VSWT2308DPFb3PfjK3GN+8MubxEbwfo/xkKTjg4k1dWXjhyv
+ AaESb3Mu+G/oDSWmER5Y+ufcnpVYudtWAHVR/ZuWmqy3pV5+MFg5fv/2LzioMv2PwQSp
+ lbTgPPF8EOTwJ8zbItvO66ACZrs4tssWUiHEzxuKZ0VE8fF6Q3aN0mvdivpm5dUs5Q3k
+ SwuanGmlv30wAIU2oY3cq1fXLs7XsGv2dHxp5Bq0JxZaUhFC83HxNXyfOgD+Qa9tuow6
+ bEMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736964571; x=1737569371;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1736966320; x=1737571120;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M8anF+JBkvRI7NWpt9ZB3PcYSjQ6xOt/WhSnYtqwjRU=;
- b=jA2VtaSNalM2MHC7gm1GEHZtIJVL5ZQWkE06GHWdzzePVsOhSXLHaNUPvTaEY3oKFT
- R1pskmKBbc+7Yary2ynqvDmGuts7CF8++DxWTHlHTexAZnYrzlzv/XWOFni9MUokxsh5
- hwXkAOLS6dM7Iu3OaWH6aGJr8sP6/JpKNrcKfnl+yCNEXmHbpzMj/5S7UeYCxMF/8M5Q
- yEcIgkDA5zbE+0MRVWdTNsq155gFcWhGTNuJ+CJ5935lZq+Ovx9tL9XXiBHaDXbsn5QQ
- wBVt6FPkxvWiQWA7jC1hM1meofUI10NbpSh9lP7QUltJTPaztO3cs4bg3J0PNACnN8hl
- 1rKQ==
-X-Gm-Message-State: AOJu0YzTmawXA1VOAdEgAhNJRoieaWf+a99t66IzEtvl0U/v7IdU/rFE
- tDFujmApudH+Ffon09sngoI78We8oJn8PpzMeomOxr4Rj16jqBe4SzJRVlsPCElmDfwkmAdg7fQ
- kOJ321wRYndIuyNvXF5Fm18RJIz4DpEozQB2Jz/fKSZt8BYjSXIsgN0cNN5D9KZbkxqBXeCNFxj
- WwFqALb4EjhfZaUo+qu6+ADTaB76kDfQ==
-X-Gm-Gg: ASbGncuGjofmA86FhL5Tv3nJN931F46oNT3BlqpPFtEpr7XITLfLwKu7t7ufkBce5kj
- /7juKqzj9jl/WpPB2H6o4xTW4EgJmxgMMDgW0nl9JQLUylYNdazI46rbOBjSZl8T+NibEuccxKH
- NR3GyUqMHnfSh01ILgZ0tyWt9E8FvZVc90fu4FopdPk94jAfsXU/f+DFc2FYTWqPJbA8vo2cZji
- Tfu18+UzcbMq78E67YKtXB/ha/JO2hIwCvmwuZbvdmuFSdbpHjZ
-X-Received: by 2002:a05:6000:719:b0:385:e879:45cc with SMTP id
- ffacd0b85a97d-38a873045d9mr22945671f8f.19.1736964571023; 
- Wed, 15 Jan 2025 10:09:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHovRL8dIO/+V4asAAqk6tHDbt90Ce9O2yWR/y35xnfF1N287i34IvK9i/2DCbNDB58NazpfA==
-X-Received: by 2002:a05:6000:719:b0:385:e879:45cc with SMTP id
- ffacd0b85a97d-38a873045d9mr22945645f8f.19.1736964570594; 
- Wed, 15 Jan 2025 10:09:30 -0800 (PST)
-Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
+ bh=rLKS8BPrTkvEESr+Xd3LfYYd7sB95wIHlX5ZChxm3FQ=;
+ b=eN8uyEBSqSVXYf9YCD99G22W523ppw9vHiA9uycvhW5uResJjjgbMVGlfx+HXhWJqJ
+ EmnqdTDUdNTB4+AQ7noYX2qyl2abrRrJwUzpKgm6fjH0v0Wc+c9bIjiqHSXqMjMQEIoC
+ /qeCha43wT0CF0Vg2lml3DtESL3eXVcGX5DXvf9YEtSE5pzNAmjiCsmupRMCqyQDFmVD
+ 0WgHBT9zMfAv4rKY2r5sDsQ2ixnUzDPIFYoCqwpEI1h9Ugrljo/Ynuu1Tyjgqt+ncwJS
+ /KB965dLYg2qivyEjf83R9WmgSDxBAyf9r3oYTBfWoDRHPpC5fOLeeme4ofSB758MY4q
+ h7Cw==
+X-Gm-Message-State: AOJu0YxqiEjmwre8U4mR7qIBpMNkjSsG538eQNkSF95y8rxzmDS2/VMK
+ UkEs+qHoJ/xIYnh6m/sRhUsnHszc3MpCUuglGjpud9Gt7QlAKXImMo0dWFyeInj2V4/QZL2Gz4F
+ Y
+X-Gm-Gg: ASbGncshs0scewtY2MoN9aoeEvKibenZe1M4Ulw1tG834sBynYmHqujyZqywzn9RlJz
+ 8f5XrfPwmxjvCYrQ0KjcuUmhSKCiVNiAnsZGcmLzpi0RBVdMVnReWNYPjbnX4KgwQDVfPd97ZAm
+ P+/p9uZzYstnGGPwPkpbqob3o2H0x2CJ2Bk0s4GCSO61DPyTI6PP3/P3wG/A0OotBRkQkWC53/C
+ B/tMx5r+AOO6MEb/2Tq27evn2TEVigVURR7C5xWpSLPsWGMflhQ2a+6TmJqDrA+dVc57vC/DRZq
+ ZJ5+Fns56OazJj9n5ZAYJbE=
+X-Google-Smtp-Source: AGHT+IGZOJvgFSTq8eXf3Y2tpubwSCtYcBsFPZIMyg50qsWbbpCLokm27WIzTTOGsXOxLJbrIoeCtg==
+X-Received: by 2002:a05:6a20:43a9:b0:1e1:b727:1801 with SMTP id
+ adf61e73a8af0-1e88d15a830mr46683726637.27.1736966320075; 
+ Wed, 15 Jan 2025 10:38:40 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c73e370fsm32124105e9.0.2025.01.15.10.09.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:09:29 -0800 (PST)
-Date: Wed, 15 Jan 2025 13:09:27 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>, Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 19/48] intel_iommu: piotlb invalidation should notify unmap
-Message-ID: <1ab93575bdcb2972c99a174a957b598f7457a899.1736964488.git.mst@redhat.com>
-References: <cover.1736964487.git.mst@redhat.com>
+ d2e1a72fcca58-72d406587a1sm9732820b3a.105.2025.01.15.10.38.39
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jan 2025 10:38:39 -0800 (PST)
+Message-ID: <d3ecd881-9907-4b6b-9693-63151a59be77@linaro.org>
+Date: Wed, 15 Jan 2025 10:38:38 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] target/openrisc: Call cpu_openrisc_clock_init() in
+ cpu_realize()
+To: qemu-devel@nongnu.org
+References: <20250114231304.77150-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250114231304.77150-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1736964487.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,115 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+On 1/14/25 15:13, Philippe Mathieu-Daudé wrote:
+> OpenRISC timer is architecturally tied to the CPU.
+> 
+> It doesn't belong to the machine init() code to
+> instanciate it: move its creation when a vCPU is
+> realized (after being created).
+> 
+> Reported-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/openrisc/openrisc_sim.c | 2 --
+>   hw/openrisc/virt.c         | 2 --
+>   target/openrisc/cpu.c      | 2 ++
+>   3 files changed, 2 insertions(+), 4 deletions(-)
 
-This is used by some emulated devices which caches address
-translation result. When piotlb invalidation issued in guest,
-those caches should be refreshed.
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
-There is already a similar implementation in iotlb invalidation.
-So update vtd_iotlb_page_invalidate_notify() to make it work
-also for piotlb invalidation.
+r~
 
-For device that does not implement ATS capability or disable
-it but still caches the translation result, it is better to
-implement ATS cap or enable it if there is need to cache the
-translation result.
-
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Message-Id: <20241212083757.605022-15-zhenzhong.duan@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/i386/intel_iommu.c | 43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
-
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 5634a37a74..7d4b99523d 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2450,8 +2450,13 @@ static void vtd_iotlb_domain_invalidate(IntelIOMMUState *s, uint16_t domain_id)
-     }
- }
- 
-+/*
-+ * There is no pasid field in iotlb invalidation descriptor, so PCI_NO_PASID
-+ * is passed as parameter. Piotlb invalidation supports pasid, pasid in its
-+ * descriptor is passed which should not be PCI_NO_PASID.
-+ */
- static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
--                                           uint16_t domain_id, hwaddr addr,
-+                                             uint16_t domain_id, hwaddr addr,
-                                              uint8_t am, uint32_t pasid)
- {
-     VTDAddressSpace *vtd_as;
-@@ -2460,19 +2465,37 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
-     hwaddr size = (1 << am) * VTD_PAGE_SIZE;
- 
-     QLIST_FOREACH(vtd_as, &(s->vtd_as_with_notifiers), next) {
--        if (pasid != PCI_NO_PASID && pasid != vtd_as->pasid) {
--            continue;
--        }
-         ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
-                                        vtd_as->devfn, &ce);
-         if (!ret && domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
-+            uint32_t rid2pasid = PCI_NO_PASID;
-+
-+            if (s->root_scalable) {
-+                rid2pasid = VTD_CE_GET_RID2PASID(&ce);
-+            }
-+
-+            /*
-+             * In legacy mode, vtd_as->pasid == pasid is always true.
-+             * In scalable mode, for vtd address space backing a PCI
-+             * device without pasid, needs to compare pasid with
-+             * rid2pasid of this device.
-+             */
-+            if (!(vtd_as->pasid == pasid ||
-+                  (vtd_as->pasid == PCI_NO_PASID && pasid == rid2pasid))) {
-+                continue;
-+            }
-+
-             if (vtd_as_has_map_notifier(vtd_as)) {
-                 /*
--                 * As long as we have MAP notifications registered in
--                 * any of our IOMMU notifiers, we need to sync the
--                 * shadow page table.
-+                 * When stage-1 translation is off, as long as we have MAP
-+                 * notifications registered in any of our IOMMU notifiers,
-+                 * we need to sync the shadow page table. Otherwise VFIO
-+                 * device attaches to nested page table instead of shadow
-+                 * page table, so no need to sync.
-                  */
--                vtd_sync_shadow_page_table_range(vtd_as, &ce, addr, size);
-+                if (!s->flts || !s->root_scalable) {
-+                    vtd_sync_shadow_page_table_range(vtd_as, &ce, addr, size);
-+                }
-             } else {
-                 /*
-                  * For UNMAP-only notifiers, we don't need to walk the
-@@ -2960,7 +2983,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-                 continue;
-             }
- 
--            if (!s->flts) {
-+            if (!s->flts || !vtd_as_has_map_notifier(vtd_as)) {
-                 vtd_address_space_sync(vtd_as);
-             }
-         }
-@@ -2981,6 +3004,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-     g_hash_table_foreach_remove(s->iotlb,
-                                 vtd_hash_remove_by_page_piotlb, &info);
-     vtd_iommu_unlock(s);
-+
-+    vtd_iotlb_page_invalidate_notify(s, domain_id, addr, am, pasid);
- }
- 
- static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
--- 
-MST
+> 
+> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+> index e0da4067ba3..d7f97d19913 100644
+> --- a/hw/openrisc/openrisc_sim.c
+> +++ b/hw/openrisc/openrisc_sim.c
+> @@ -306,8 +306,6 @@ static void openrisc_sim_init(MachineState *machine)
+>               exit(1);
+>           }
+>   
+> -        cpu_openrisc_clock_init(cpus[n]);
+> -
+>           qemu_register_reset(main_cpu_reset, cpus[n]);
+>       }
+>   
+> diff --git a/hw/openrisc/virt.c b/hw/openrisc/virt.c
+> index 7b60bf85094..676cf8d692d 100644
+> --- a/hw/openrisc/virt.c
+> +++ b/hw/openrisc/virt.c
+> @@ -487,8 +487,6 @@ static void openrisc_virt_init(MachineState *machine)
+>               exit(1);
+>           }
+>   
+> -        cpu_openrisc_clock_init(cpus[n]);
+> -
+>           qemu_register_reset(main_cpu_reset, cpus[n]);
+>       }
+>   
+> diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+> index b7bab0d7abf..291fec04fda 100644
+> --- a/target/openrisc/cpu.c
+> +++ b/target/openrisc/cpu.c
+> @@ -165,6 +165,8 @@ static void openrisc_cpu_realizefn(DeviceState *dev, Error **errp)
+>       qemu_init_vcpu(cs);
+>       cpu_reset(cs);
+>   
+> +    cpu_openrisc_clock_init(OPENRISC_CPU(dev));
+> +
+>       occ->parent_realize(dev, errp);
+>   }
+>   
 
 
