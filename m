@@ -4,63 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A896C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444A9C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 12:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY2rj-0007k1-G3; Wed, 15 Jan 2025 07:51:24 -0500
+	id 1tY2sN-0008Vq-TM; Wed, 15 Jan 2025 07:52:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rO-0007dn-2t; Wed, 15 Jan 2025 07:51:02 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1tY2sJ-0008SC-2c; Wed, 15 Jan 2025 07:51:59 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2rM-0006se-H8; Wed, 15 Jan 2025 07:51:01 -0500
+ id 1tY2sG-0006zD-K1; Wed, 15 Jan 2025 07:51:58 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 85D9E5C5C82;
- Wed, 15 Jan 2025 12:50:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD29C4CEFC;
- Wed, 15 Jan 2025 12:50:41 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 92013A41F36;
+ Wed, 15 Jan 2025 12:50:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D80CC4CEDF;
+ Wed, 15 Jan 2025 12:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1736945441;
- bh=xsPr7Wep5XMNKduaPSiVQyhTQXE031xTg/4plS/bAJo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ou/Adl6eWceqWJ2pqntMNHO4Z2Y6c4YTSkxnNn8OWJDVbbT6N3AQfLtGUnYmK2uPl
- 9yUPTdjKrX8t+uKu0V7scbC6kG3jtWSEFMLitJsNJT3VrK1cP6FWpuVipj4reTnOJD
- +BszTUlDrw3cPkFJNMMpQDVdrS+xTdKm2XYJeloi3wQ2nd1D5tkuTxjUYCvq6XnETp
- ovvnXL7MPeIS9WqXQ8rP1FJtjTlOoXIbWoqi/6jLh3IkxW7HUNbLCyiC4Gv9VQZQWt
- gtYgKi9xEj3qR/CJ7X4yLMDW4gWM1otnxCzInQdcNdPg9X2AqmwEu5JSTli8fMr2QN
- +nWsgY9McSYZg==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1tY2r1-00000004yGM-1lAk; Wed, 15 Jan 2025 13:50:39 +0100
+ s=k20201202; t=1736945515;
+ bh=xVlIA1ZBfx9UjaShX5trBrkyVh5DWAz9sUCHbHTMPHk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Ez+TasmlorDLtiE3xHdMvQyNqBQ9bEUBPw1D/lPvwZ6i9hMavx+dCQeD4k/+gQZ/0
+ /EdF/Q/QhFP+3N/E7HNmevCo7xS0bU+CkX7TYNrp0gp0zsdubMHegpwofloNSyJW7i
+ HtA6UpPisawcHNGfTi2jw0LlnLrGgpg6+cMOokpQSzt/KhzKpVUhckyLZvcsS5dZGV
+ AmQv3V2lgM2lXy4WyqwTnIM6E1Yc2i+Pz4X5R3j+qEgYv2Lerq64/r1E50mnbMWFMj
+ VqQ76DTvDBQ57y5xAhdZGWEPG42AJsoUJ6+0kGJ5SqofK6j2ThIRHZupxOtpbLEoT1
+ i7sIA06EoxhYA==
+Date: Wed, 15 Jan 2025 13:51:49 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: [PATCH v7 15/16] acpi/ghes: Change ghes fill logic to work with only
- one source
-Date: Wed, 15 Jan 2025 13:50:31 +0100
-Message-ID: <66bddd42a64c8515ad98b9975d953b4a70ffcc6d.1736945236.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <cover.1736945236.git.mchehab+huawei@kernel.org>
-References: <cover.1736945236.git.mchehab+huawei@kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 00/16] Prepare GHES driver to support error injection
+Message-ID: <20250115135149.24d1f53f@foz.lan>
+In-Reply-To: <20250115060854-mutt-send-email-mst@kernel.org>
+References: <cover.1733561462.git.mchehab+huawei@kernel.org>
+ <20250115060854-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,57 +75,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extending to multiple sources require a BIOS pointer to the
-beginning of the HEST table, which in turn requires a backward-compatible
-code.
+Em Wed, 15 Jan 2025 06:09:12 -0500
+"Michael S. Tsirkin" <mst@redhat.com> escreveu:
 
-So, the current code supports only one source. Ensure that and simplify
-the code.
+> On Sat, Dec 07, 2024 at 09:54:06AM +0100, Mauro Carvalho Chehab wrote:
+> > Hi Michael,
+> > 
+> > Please ignore the patch series I sent yesterday:
+> > 	https://lore.kernel.org/qemu-devel/20241207093922.1efa02ec@foz.lan/T/#t
+> > 
+> > The git range was wrong, and it was supposed to be v6. This is the right one.
+> > It is based on the top of v9.2.0-rc3.
+> > 
+> > Could you please merge this series for ACPI stuff? All patches were already
+> > reviewed by Igor. The changes against v4 are just on some patch descriptions,
+> > plus the addition of Reviewed-by. No Code changes.
+> > 
+> > Thanks,
+> > Mauro  
+> 
+> 
+> Still waiting for a version with minor nits fixed.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
----
- hw/acpi/ghes.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+Just sent v7 addressing the minor nits on patch 9.
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 8f59d327d3e5..b709c177cdea 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -387,15 +387,13 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
-      * As the current version supports only one source, the ack offset is
-      * just sizeof(uint64_t).
-      */
--    *read_ack_register_addr = ghes_addr +
--			      ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
-+    *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
- }
- 
- void ghes_record_cper_errors(const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
- {
-     uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
--    uint64_t start_addr;
-     AcpiGedState *acpi_ged_state;
-     AcpiGhesState *ags;
- 
-@@ -412,11 +410,9 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-     }
-     ags = &acpi_ged_state->ghes_state;
- 
--    start_addr = le64_to_cpu(ags->hw_error_le);
--
--    start_addr += source_id * sizeof(uint64_t);
--
--    get_hw_error_offsets(start_addr, &cper_addr, &read_ack_register_addr);
-+    assert(ACPI_GHES_ERROR_SOURCE_COUNT == 1);
-+    get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
-+                         &cper_addr, &read_ack_register_addr);
- 
-     if (!cper_addr) {
-         error_setg(errp, "can not find Generic Error Status Block");
--- 
-2.47.1
+> > -
+> > 
+> > During the development of a patch series meant to allow GHESv2 error injections,
+> > it was requested a change on how CPER offsets are calculated, by adding a new
+> > BIOS pointer and reworking the GHES logic. See:
+> > 
+> > https://lore.kernel.org/qemu-devel/cover.1726293808.git.mchehab+huawei@kernel.org/
+> > 
+> > Such change ended being a big patch, so several intermediate steps are needed,
+> > together with several cleanups and renames.
+> > 
+> > As agreed duing v10 review, I'll be splitting the big patch series into separate pull 
+> > requests, starting with the cleanup series. This is the first patch set, containing
+> > only such preparation patches.
+> > 
+> > The next series will contain the shift to use offsets from the location of the
+> > HEST table, together with a migration logic to make it compatible with 9.1.
+> > 
+> > ---
+> > 
+> > v5:
+> > - some changes at patches description and added some R-B;
+> > - no changes at the code.
+> > 
+> > v4:
+> > - merged a patch renaming the function which calculate offsets to:
+> >   get_hw_error_offsets(), to avoid the need of such change at the next
+> >   patch series;
+> > - removed a functional change at the logic which makes
+> >   the GHES record generation more generic;
+> > - a couple of trivial changes on patch descriptions and line break cleanups.
+> > 
+> > v3:
+> > - improved some patch descriptions;
+> > - some patches got reordered to better reflect the changes;
+> > - patch v2 08/15: acpi/ghes: Prepare to support multiple sources on ghes
+> >   was split on two patches. The first one is in this cleanup series:
+> >       acpi/ghes: Change ghes fill logic to work with only one source
+> >   contains just the simplification logic. The actual preparation will
+> >   be moved to this series:
+> >      https://lore.kernel.org/qemu-devel/cover.1727782588.git.mchehab+huawei@kernel.org/
+> > 
+> > v2: 
+> > - some indentation fixes;
+> > - some description improvements;
+> > - fixed a badly-solved merge conflict that ended renaming a parameter.
+> > 
+> > Mauro Carvalho Chehab (16):
+> >   acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
+> >   acpi/ghes: simplify acpi_ghes_record_errors() code
+> >   acpi/ghes: simplify the per-arch caller to build HEST table
+> >   acpi/ghes: better handle source_id and notification
+> >   acpi/ghes: Fix acpi_ghes_record_errors() argument
+> >   acpi/ghes: Remove a duplicated out of bounds check
+> >   acpi/ghes: Change the type for source_id
+> >   acpi/ghes: don't check if physical_address is not zero
+> >   acpi/ghes: make the GHES record generation more generic
+> >   acpi/ghes: better name GHES memory error function
+> >   acpi/ghes: don't crash QEMU if ghes GED is not found
+> >   acpi/ghes: rename etc/hardware_error file macros
+> >   acpi/ghes: better name the offset of the hardware error firmware
+> >   acpi/ghes: move offset calculus to a separate function
+> >   acpi/ghes: Change ghes fill logic to work with only one source
+> >   docs: acpi_hest_ghes: fix documentation for CPER size
+> > 
+> >  docs/specs/acpi_hest_ghes.rst  |   6 +-
+> >  hw/acpi/generic_event_device.c |   4 +-
+> >  hw/acpi/ghes-stub.c            |   2 +-
+> >  hw/acpi/ghes.c                 | 259 +++++++++++++++++++--------------
+> >  hw/arm/virt-acpi-build.c       |   5 +-
+> >  include/hw/acpi/ghes.h         |  16 +-
+> >  target/arm/kvm.c               |   2 +-
+> >  7 files changed, 169 insertions(+), 125 deletions(-)
+> > 
+> > -- 
+> > 2.47.1
+> >   
+> 
 
+
+
+Thanks,
+Mauro
 
