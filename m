@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916F8C02187
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6C2C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 23:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYCjb-0001FY-78; Wed, 15 Jan 2025 18:23:39 -0500
+	id 1tYCl0-0005oL-Uy; Wed, 15 Jan 2025 18:25:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjZ-00015D-0u
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:37 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCkd-0004pp-Ol
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:24:50 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCjX-0003rp-6D
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:23:36 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-436ce2ab251so1475135e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:23:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYCkb-000439-Jj
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 18:24:43 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-385d7b4da2bso314371f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 15:24:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736983413; x=1737588213; darn=nongnu.org;
+ d=linaro.org; s=google; t=1736983480; x=1737588280; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LtVr4r34NQSIQO5b8dinugUm7VG2kyr9M3gSUVOEACI=;
- b=c1vEzXtqwVykYLPn1fI5agGsAcr9JAQA7oLPYXUKi2U8pUjSwSgYxgcIOkaAai6zdo
- yh2OWMOIG0/QYSawczdQ3hq0indRG0eFkeywl2HvQyEGoJv5jb8ceAisKHLFJCPWhOkD
- gT2m7RRzRJ/ZpEDYsPTAMqXum75kZVX1AbeUd4aZBzy+EJZYBnntiEC/7Gmi2Hr8jKzl
- MVyfbJGzOxtlXS6a6TSvI1YhXrzcSiOI7oIqF9PfDB8vokBdQ5gB2Z4bJoaNKNoas9Cr
- vQAioPXFTzR+gHAqdOtAGJSC/bLsLa+nYucOVJQ+pC5G3Qx/YIoyn3SXTo38utZ7CQ1J
- UVVg==
+ bh=aKoFnQ5SYagANUInklr1BkIfWF4VImHQnYuMR45zsrk=;
+ b=lS3q8DGEA0xb9cJ3hY/laWP1UwbfEWv+mU+dN53LHwvgB3tb/5mENVEUEAfxMVgPXw
+ 482zzLC1xgkFmLVWhsaljpEbZVWVjDht0QROW0qD+g1dj2wQHc8vLdeZnmOE7inGuN/s
+ +IOy+jBjPbOjmHFnIL1nlVx09a6YgvNGlXK58gTn100sgZV/qDl5lKh0D4qQzzMXAi/l
+ pxbzX1syytW+N8vTX4kPcIIPogmVXDHeo/jejYJseEkFGMAZUcQn+Q3wcyoH2zs/3iTp
+ 6heIicYUx5z0H7E6bNSO71hyls82aWoA7Aqx1d5d+oLsStIg/oIFp8o/zvKz1SBaVoAZ
+ Rw3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736983413; x=1737588213;
+ d=1e100.net; s=20230601; t=1736983480; x=1737588280;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LtVr4r34NQSIQO5b8dinugUm7VG2kyr9M3gSUVOEACI=;
- b=S5E+5IUsqvI4qa7IuZ6ByY+NOW0OVhaZqisOXB/zr0MXrDy5awRwR/TflE5vrqoA7M
- 8nTVDak5/fymv0hum4Zcj1f7GC+RfkmtA0lc+e0X5uUb7DxlYiH0ugDR+w2o0N5TSOSG
- DyJDeWqEiT9pPyWjjswsDUtGQNhz/zC45QdsfM2AfvHu52P9Dug6l0TYAg05l0eWJrWO
- z8BOgxmT+HkDm5hDC2WzIqv06kZ4pHIQEr1+GaEiHvxcO5IGGjc+7rITjnwSCCcSPNRH
- fWN12LOcbXOSHgt70m8DvTFb/YISWkLdztwcm71zf9Df2kmm2P7AqtuZ+xZPc5tYDnWh
- PX0Q==
-X-Gm-Message-State: AOJu0YwchH3XIat7MvJn1zd23mbPDiunDzsUZG2OMW2n8o/uclMtDLQy
- pNFboVacmVgh/e6srFYQ2bi759pK66X/BBBwMyl/p97NmrGy6PPqFxoFB1D5XcsNLpQA1h0MwLt
- z3Dc=
-X-Gm-Gg: ASbGncuu3yTbZCTObA3E5y94CEHFpzuXAPg/7Wtb4lg+eO8k+mX3fh4eeCzLWYGQe9S
- GkktCxjMIi9GVKGTyM2nJkQBX11xs99zMbWZTxo6P3JVtvhX0U8KwQ2VAE4/qmGWkMGqw6XZ5Qj
- 4o6w8TiR3fCo0Y9nrFKT0SOJkhvTunusbXuLMJY2dptGHREAhAdTD7UAUV41WM4nhiYRBmPon54
- ctNWvjX3u6+H2dIax24q+suagsnfzzO+Jw8K4gVVSEEABMdkVU/UdFby2+ickw5uN5X7sIVIV1Z
- aiENflPKqpAsVMDzY18mV/NkvJkkBTI=
-X-Google-Smtp-Source: AGHT+IFqETvma2LLKyg0yB6yeVeoENyeDtumRwcDAA8uvIiSiSihe37ZvLYtPYCcoU1HDvdZVopRNQ==
-X-Received: by 2002:a05:600c:a09:b0:434:f1e9:afb3 with SMTP id
- 5b1f17b1804b1-436e267863emr268361935e9.3.1736983413393; 
- Wed, 15 Jan 2025 15:23:33 -0800 (PST)
+ bh=aKoFnQ5SYagANUInklr1BkIfWF4VImHQnYuMR45zsrk=;
+ b=NIy6iAzcACsi3QxBK/AoaTA+VgBTcaaP7bHXBrPfCcAPJLFNbXN0etJr7G5s2Kj0Fh
+ KKi0OAfntjysBLsqIHdXZKg97fAu0Ah2Q64orCdXryyTIK0tHUZp8MKDBVIyrkdBHTb/
+ 65+pv4Qd7vlsn5TX6C9g7XwyBsWQyXW9k508sf6b5ZUNWK3DWtSi9MuWxnI2vpog8+Eb
+ oVCQEQD39naotyZEdWv2pQbRlI4Rw3XgRtGdyDoHxriTJCfK6H+JTObLuh7/vi3Q+rMk
+ BM80LHpwAu0+XAlCR6ISgK+HkQxOQMw43m/lvxCDr1SkyIfVF/y5sVKJyNytf9tCo5S9
+ sTxg==
+X-Gm-Message-State: AOJu0YxRaCFUp8yAmjwPtWo/inxDZhotF+yaclncXcfZ6jvAnDaAMzFo
+ klfbVMN4+fQDTXKqZ8mqOlj9xPa8mcJq64toy/u/OFchUhPymJNXlaTv/KEgWszWf/msByOiKtr
+ +AxA=
+X-Gm-Gg: ASbGncuqGaez2W3OCl6MasXsmwBKcggj1a04mQolg97YWgblp5D460KY4UcMQgWeYQZ
+ nAKCShl4u9THHTL9ocNlm6kCspZv9z6tsreBzV3qRWXkdqZridZTXGzyhJ/AFy3sVCH0H75L5fI
+ ZYMNJ8rHO+qB0Fpq/X0GfrSXnKD2nMHMSGHnJ59SyKz7yJ6IKbbXHpH0C7f3uHzwFXDtL3TlGC4
+ OK87VtvNYwTL4SuQAQrSb4qzW6SmpIZJL2YD8N5qLaxb3x9D18WFIqjyGxmV3dv6uYXJnq9Jp+x
+ Gvmp60DFjJ0CRHxObLOTZ2GrWRlq87c=
+X-Google-Smtp-Source: AGHT+IFPUzDdZaQzj4hnqyTFcfmgZfa3lry5GOEq6rqqrqnCzhKrmzNmaqFKCHW/M8dbKOhUzx0Zxg==
+X-Received: by 2002:a5d:6da2:0:b0:382:3959:f429 with SMTP id
+ ffacd0b85a97d-38a872fbcdcmr175620f8f.5.1736983479636; 
+ Wed, 15 Jan 2025 15:24:39 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c749935fsm39309645e9.3.2025.01.15.15.23.32
+ ffacd0b85a97d-38a8e37d012sm18781309f8f.8.2025.01.15.15.24.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 15 Jan 2025 15:23:32 -0800 (PST)
+ Wed, 15 Jan 2025 15:24:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -74,17 +74,18 @@ Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 08/21] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-Date: Thu, 16 Jan 2025 00:22:34 +0100
-Message-ID: <20250115232247.30364-9-philmd@linaro.org>
+Subject: [PATCH 20/21] hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_DISABLE_PCIE
+ definition
+Date: Thu, 16 Jan 2025 00:22:46 +0100
+Message-ID: <20250115232247.30364-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250115232247.30364-1-philmd@linaro.org>
 References: <20250115232247.30364-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,120 +108,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
-via the 'extra_mac_registers=off' property. We removed all
-machines using that array, lets remove all the code around
-E1000_FLAG_MAC.
+VMXNET3_COMPAT_FLAG_DISABLE_PCIE was only used by the
+hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
+We removed all machines using that array, lets remove all the
+code around VMXNET3_COMPAT_FLAG_DISABLE_PCIE.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/net/e1000.c | 63 +++++++++-----------------------------------------
- 1 file changed, 11 insertions(+), 52 deletions(-)
+ hw/net/vmxnet3.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-index 3d0b2277039..14d2133cd80 100644
---- a/hw/net/e1000.c
-+++ b/hw/net/e1000.c
-@@ -127,10 +127,8 @@ struct E1000State_st {
-     QEMUTimer *flush_queue_timer;
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index a527042ab32..d8132773fad 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -41,11 +41,6 @@
+ #define PCI_DEVICE_ID_VMWARE_VMXNET3_REVISION 0x1
+ #define VMXNET3_MSIX_BAR_SIZE 0x2000
  
- /* Compatibility flags for migration to/from qemu 1.3.0 and older */
--#define E1000_FLAG_MAC_BIT 2
- #define E1000_FLAG_TSO_BIT 3
- #define E1000_FLAG_VET_BIT 4
--#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
- #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
- #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
- 
-@@ -1218,46 +1216,17 @@ enum { MAC_ACCESS_PARTIAL = 1, MAC_ACCESS_FLAG_NEEDED = 2 };
-  * n - flag needed
-  * p - partially implenented */
- static const uint8_t mac_reg_access[0x8000] = {
--    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
--    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
--    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
--    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
--    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
--    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
--    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
--    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
--    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
--    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
--    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
--    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
--    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
--    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
--    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
--    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
--    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
--    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
--    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
--    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
--    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
--    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
--    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
--    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
--    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
--    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
--    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
--    [BPTC]    = markflag(MAC),
+-/* Compatibility flags for migration */
+-#define VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT 1
+-#define VMXNET3_COMPAT_FLAG_DISABLE_PCIE \
+-    (1 << VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT)
 -
--    [TDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [TDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [TDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [TDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [TDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [RDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [RDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [RDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [RDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [RDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
--    [PBM]   = markflag(MAC) | MAC_ACCESS_PARTIAL,
-+    [TDFH]  = MAC_ACCESS_PARTIAL,
-+    [TDFT]  = MAC_ACCESS_PARTIAL,
-+    [TDFHS] = MAC_ACCESS_PARTIAL,
-+    [TDFTS] = MAC_ACCESS_PARTIAL,
-+    [TDFPC] = MAC_ACCESS_PARTIAL,
-+    [RDFH]  = MAC_ACCESS_PARTIAL,
-+    [RDFT]  = MAC_ACCESS_PARTIAL,
-+    [RDFHS] = MAC_ACCESS_PARTIAL,
-+    [RDFTS] = MAC_ACCESS_PARTIAL,
-+    [RDFPC] = MAC_ACCESS_PARTIAL,
-+    [PBM]   = MAC_ACCESS_PARTIAL,
+ #define VMXNET3_EXP_EP_OFFSET (0x48)
+ #define VMXNET3_MSI_OFFSET    (0x84)
+ #define VMXNET3_MSIX_OFFSET   (0x9c)
+@@ -2467,8 +2462,6 @@ static const VMStateDescription vmstate_vmxnet3 = {
+ 
+ static const Property vmxnet3_properties[] = {
+     DEFINE_NIC_PROPERTIES(VMXNET3State, conf),
+-    DEFINE_PROP_BIT("x-disable-pcie", VMXNET3State, compat_flags,
+-                    VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT, false),
  };
  
- static void
-@@ -1419,13 +1388,6 @@ static int e1000_tx_tso_post_load(void *opaque, int version_id)
-     return 0;
+ static void vmxnet3_realize(DeviceState *qdev, Error **errp)
+@@ -2477,9 +2470,7 @@ static void vmxnet3_realize(DeviceState *qdev, Error **errp)
+     PCIDevice *pci_dev = PCI_DEVICE(qdev);
+     VMXNET3State *s = VMXNET3(qdev);
+ 
+-    if (!(s->compat_flags & VMXNET3_COMPAT_FLAG_DISABLE_PCIE)) {
+-        pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+-    }
++    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+ 
+     vc->parent_dc_realize(qdev, errp);
  }
- 
--static bool e1000_full_mac_needed(void *opaque)
--{
--    E1000State *s = opaque;
--
--    return chkflag(MAC);
--}
--
- static bool e1000_tso_state_needed(void *opaque)
- {
-     E1000State *s = opaque;
-@@ -1451,7 +1413,6 @@ static const VMStateDescription vmstate_e1000_full_mac_state = {
-     .name = "e1000/full_mac_state",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = e1000_full_mac_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(mac_reg, E1000State, 0x8000),
-         VMSTATE_END_OF_LIST()
-@@ -1679,8 +1640,6 @@ static void pci_e1000_realize(PCIDevice *pci_dev, Error **errp)
- 
- static const Property e1000_properties[] = {
-     DEFINE_NIC_PROPERTIES(E1000State, conf),
--    DEFINE_PROP_BIT("extra_mac_registers", E1000State,
--                    compat_flags, E1000_FLAG_MAC_BIT, true),
-     DEFINE_PROP_BIT("migrate_tso_props", E1000State,
-                     compat_flags, E1000_FLAG_TSO_BIT, true),
-     DEFINE_PROP_BIT("init-vet", E1000State,
 -- 
 2.47.1
 
