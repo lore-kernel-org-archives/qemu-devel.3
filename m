@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B703C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C130C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY3lE-0004sk-L7; Wed, 15 Jan 2025 08:48:46 -0500
+	id 1tY3mg-0005u1-Cg; Wed, 15 Jan 2025 08:50:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tY3l8-0004rQ-3A
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:48:38 -0500
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tY3l5-0007YF-Am
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:48:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1736948916; x=1768484916;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=AFrabdmpmcSy7/EM8FjAcZaFFEVWeqDV0byUNFgvGi0=;
- b=PylmOahDABp8n25iMx+7MKZ9qGe8PFt2y4hGO3en97Pvr9ULkgK0SXoT
- pA5cCNoyHKf6xjRFFkf+ZsKs68swzRzRByO2H8zf+m8sfhLP+WvRVV9p8
- hROdjnlj04iJPu86GoYXi2AgRknaBJUMBANK1wlhOB+mcsQKKmFFycIJZ
- kzNhZMB7KSl8orjwabLb/YiSwdJe9Dx4rriqQAO8A+4NYjvvwWqkym/EA
- ClObTRX63Z//6H6fT1bu35jTtc0dkAQlpxYnBXl11Ar2EFFDKjT+TPf8n
- voKcRjOsedYjnlLKtrI0EVng8nWxUfAYnINX7XHEwkrvwsyoEuU+dL3Vs w==;
-X-CSE-ConnectionGUID: Pev8/sUBQZ+otpTIXkAR3Q==
-X-CSE-MsgGUID: dggnEU0ZSOOD8NWWS25Sfw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11316"; a="48286909"
-X-IronPort-AV: E=Sophos;i="6.13,206,1732608000"; d="scan'208";a="48286909"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jan 2025 05:48:33 -0800
-X-CSE-ConnectionGUID: sc7LgFwaQyyj6qHSi2tdLQ==
-X-CSE-MsgGUID: aWcPhB69TJmclWv0wI/8qg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="105620309"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 15 Jan 2025 05:48:30 -0800
-Date: Wed, 15 Jan 2025 22:07:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PULL 04/49] hw: Add QOM parentship relation with CPUs
-Message-ID: <Z4fBGl1YxFuhNQFi@intel.com>
-References: <20250112221726.30206-1-philmd@linaro.org>
- <20250112221726.30206-5-philmd@linaro.org>
- <20250113132832.049f651a@imammedo.users.ipa.redhat.com>
- <6f9225ad-edc6-4fe0-b0e6-8a93e7f50102@linaro.org>
- <20250114111829.2f577596@imammedo.users.ipa.redhat.com>
- <Z4Z25p0YvBEtV2/Z@intel.com>
- <20250115141333.005ab3eb@imammedo.users.ipa.redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tY3md-0005tO-RN
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:12 -0500
+Received: from mail-oi1-x244.google.com ([2607:f8b0:4864:20::244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tY3mb-0007q3-9l
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:50:11 -0500
+Received: by mail-oi1-x244.google.com with SMTP id
+ 5614622812f47-3eb790888c6so1805522b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 05:50:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1736949007; x=1737553807; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4/zMR1ds0rMewx+rvOE2sEE1ZAiNyaqJegyvUM7C3to=;
+ b=n5It5pXanZvE+NG085rILl0Dh7cf0cCBpQ7VfQgBmAGFcz7bhTuKxfOgztf/KjUHIM
+ 4jP8Aia6ZJNS7aeDmAWfl8CKurSaI+uW+5FACcbaB9UiGgn0rvyGDkEFZyVf0+9W/GlM
+ x9OvLeiqPU+iQWc6m9dsFnpljNnmNX/D9Bi9aIGO9NahcuG/Gxj3+EnBNLnsOz/qJ5SQ
+ 6gCwJbyxsH8h0blYiJuHWYpF8MgvkCyumN0JoBpsAnOB917IBAjasxvTUhEHllYTiddE
+ CrOf/mixW6/ho6oDaoIcvuzjZ3nOoGIduxqji9+2y6UyCv0y05NXA4geqoWWbY/SGGOt
+ Jmpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1736949007; x=1737553807;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4/zMR1ds0rMewx+rvOE2sEE1ZAiNyaqJegyvUM7C3to=;
+ b=aL0iwuoWD7pGAA2pDg8Jw50TdWxf2b3cCwIqXFj0hgR7alNvtvIffKMETAx2cDVLsN
+ 4kIQ1Ikj7fWJ3M0esEHko1idYbjOlSF2DnYNeO+7SJ0W9a4dFWZdqrk1FUCBnvpbOBFI
+ 8pJf4pKEAeLt5gnciUGCvH6W33GMV7UwX1Vgu9Yx7UT72xdFYYQJY0Na6mpOFrQdzKcD
+ +i2j/+X3X5jxSxHmtZ7qy4q6cac6EtqTudQHqNd8cxbS1/o0sSa2FNW8bwetFimxJ5TL
+ //cz26epma8HNoJO9HXp+tgCT7Kh9Zx1NeCdNEOoMGxhN+eGrR1O5ztMV1OJFuMN9s2n
+ /Mbw==
+X-Gm-Message-State: AOJu0YzTDyPkXUq6uuGqoxyRooN13EoTIuYIcrXagAft9WSDRZL1vaIU
+ /ka7UbUjE8KUTzhHjBGQRw2uHyk252fNYF9b1eibYKJFBQv4frAwviEZYugzGJ+IzuVJW6j8gqv
+ qvn6Akw==
+X-Gm-Gg: ASbGncun7EoKrbID2zWWpdmkN+9EAY7q40gqSLlZcMu4NxvpU5K0D+vhq7lAIoow/Sm
+ ana5umD83fP6peZCOru6Mkc0yt/uLCetjAFee/KDHP1OcJfA8tFe+NGW3dgmDL2zehtOMjjzs/6
+ VgFUm1sFM/aOwj2LbcYRmOk/x3lsXikflH9nMooPpptylsECTE8dyVxHEBrixFKDl5XH4jG/KdP
+ 46z1+QmBmpO2Pw9zWwVyxlEMNC/It6kHeinvQ2KV33YzTSVmGyo9XQ0JjI=
+X-Google-Smtp-Source: AGHT+IGb0vdGFASrX+ZEbujEPC4Om/XnCvnQxX/Vao9ha9jYDCrw1bx8847R9IvBLQfOILXdYsF+sg==
+X-Received: by 2002:a05:6808:11c1:b0:3eb:6326:78e3 with SMTP id
+ 5614622812f47-3ef2ee3b6bamr17483593b6e.38.1736949007666; 
+ Wed, 15 Jan 2025 05:50:07 -0800 (PST)
+Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3f0379eff69sm4952177b6e.41.2025.01.15.05.50.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 05:50:06 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v3 0/6] target/riscv: RVA23 profile support
+Date: Wed, 15 Jan 2025 10:49:51 -0300
+Message-ID: <20250115134957.2179085-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250115141333.005ab3eb@imammedo.users.ipa.redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::244;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x244.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,25 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > I remember that this was your idea all along, and I'm not sure if you're
-> > also referring to my previous patches about hybrid topology :-), which I'll
-> 
-> I'm sorry, I've should've reviewed it long time ago.
-> But it got lost in from my review queue, can you give me a pointer
-> to the latest you've posted, please? 
+Hi,
 
-You are very kind, no need sorry :-). I have also been inspired by many
-of your previous ideas (although my work may not fully meet your
-expectations yet). Here are the links:
+In this new version we're now implementing u-mode and s-mode profile
+dependencies, as suggested by Drew in v2. This makes implementing s-mode
+profiles easier since those profiles usually inherits from both their
+equivalent u-mode profiles and from a previous s-mode profile.
 
-[1]: qom-topo series, which tries to abstract every topology levels as
-     devices and build a topology tree:
-     https://lore.kernel.org/qemu-devel/20240919015533.766754-1-zhao1.liu@intel.com/
-[2]: hybird-topo series, based on [1], which allows i386 to customize
-     topology tree:
-     https://lore.kernel.org/qemu-devel/20240919061128.769139-1-zhao1.liu@intel.com/
+This is done in patch 3. Patch 4 is a change made to prevent a warning
+that will occur after patch 6, where we're adding RVA23S64 by making it
+dependent on both RVA23U64 and RVA22S64.
 
-Thanks,
-Zhao
+Patches based on alistair/riscv-to-apply.next.
+
+Changes from v2:
+- patch 3 (new):
+  - add u_parent and s_parent attributes in RISCVCPUProfile
+- patch 4 (new):
+  - do not issue warnings when a profile runs in a newer priv_ver 
+- patch 6 (former 4):
+  - add RVA22S64 as the s_parent of RVA23S64. Declare RVA23S64 by listing
+    just its own exclusive extensions
+- v2 link: https://lore.kernel.org/qemu-riscv/20250114190001.1650942-1-dbarboza@ventanamicro.com/
+
+Daniel Henrique Barboza (6):
+  target/riscv: add ssu64xl
+  target/riscv: use RVB in RVA22U64
+  target/riscv: add profile u_parent and s_parent
+  target/riscv: change priv_ver check in validate_profile()
+  target/riscv: add RVA23U64 profile
+  target/riscv: add RVA23S64 profile
+
+ target/riscv/cpu-qom.h            |   2 +
+ target/riscv/cpu.c                |  81 ++++++++++++++++++++++++++++--
+ target/riscv/cpu.h                |   3 +-
+ target/riscv/tcg/tcg-cpu.c        |  37 ++++++++++----
+ tests/data/acpi/riscv64/virt/RHCT | Bin 390 -> 400 bytes
+ 5 files changed, 109 insertions(+), 14 deletions(-)
+
+-- 
+2.47.1
 
 
