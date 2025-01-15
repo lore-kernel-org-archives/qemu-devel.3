@@ -4,90 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91589C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F90C02185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY8db-0007JQ-6e; Wed, 15 Jan 2025 14:01:11 -0500
+	id 1tY8gw-0005uE-1H; Wed, 15 Jan 2025 14:04:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tY8dX-0007Fo-CD
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:07 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tY8gp-0005BJ-MC; Wed, 15 Jan 2025 14:04:32 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tY8dV-0005dI-9r
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:07 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHtoqA027994;
- Wed, 15 Jan 2025 19:01:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=kCHlHLjR18k1Pqlms+ywU8yWmIhLhIYcY/4kHbhVxVA=; b=
- gHbLg0Z+ntM4d5Cq6tEN00paGCWyov0Bu3YctU3t4/uRMp59A8+ubyu8Q9oE2eZe
- yYMC+3fsxnaUgtV9R/AAgRi1oxz4FeujADOAxMn3+RdFazdNY5WvsijfWbHDHPQZ
- 3Ugzq1vWv6WjjmFCBfjUYC3nIGvdMEV6hWXDR58l1jeBQ2YZ0wNlGN+EGvRzg+Bl
- yc7oedDcMQc/gx0GzWELTJMuoPX+giH72rDB21nRLC7xgFcDBd99pE1OPlTPdtBU
- pVVkta9yMfZRYNKvIy8I0Gt94E58PjrBPFquHDdAw+UhYj9I0TH0wWIaQUX9vuX1
- 6H+Rfuptj4SR6DWhE9sYfw==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 446912scv3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 19:01:01 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50FHKrHL034834; Wed, 15 Jan 2025 19:01:01 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 443f39ur56-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Jan 2025 19:01:00 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0peH016497;
- Wed, 15 Jan 2025 19:01:00 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 443f39uqwr-13; Wed, 15 Jan 2025 19:01:00 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V7 12/24] migration: incoming channel
-Date: Wed, 15 Jan 2025 11:00:38 -0800
-Message-Id: <1736967650-129648-13-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
-References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-15_09,2025-01-15_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- bulkscore=0 adultscore=0
- suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
- definitions=main-2501150138
-X-Proofpoint-ORIG-GUID: _KLUo5wkRCe91yaDL72Ir6GhUBKrhIza
-X-Proofpoint-GUID: _KLUo5wkRCe91yaDL72Ir6GhUBKrhIza
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.793,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tY8gm-0006Ej-Ug; Wed, 15 Jan 2025 14:04:31 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4B0F44E602F;
+ Wed, 15 Jan 2025 20:04:24 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id QSkx0wUDXyib; Wed, 15 Jan 2025 20:04:22 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 5F0FA4E6030; Wed, 15 Jan 2025 20:04:22 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] hw/sd/sdhci: Set reset value of interrupt registers
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>,
+    philmd@linaro.org
+Message-Id: <20250115190422.5F0FA4E6030@zero.eik.bme.hu>
+Date: Wed, 15 Jan 2025 20:04:22 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,185 +57,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the -incoming option to allow an @MigrationChannel to be specified.
-This allows channels other than 'main' to be described on the command
-line, which will be needed for CPR.
+The interrupt enable registers are not reset to 0 but some bits are
+enabled on reset. At least some U-Boot versions seem to expect this
+and not initialise these registers before expecting interrupts. The
+numbers in this patch match what QorIQ P1022 has on reset and fix
+U-Boot for this SoC and should not break other drivers that initialise
+(and thus overwrite) these reset values.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- migration/migration.c | 21 ++++++++++++++++-----
- qemu-options.hx       | 21 +++++++++++++++++++++
- system/vl.c           | 36 +++++++++++++++++++++++++++++++++---
- 3 files changed, 70 insertions(+), 8 deletions(-)
+I've also noticed that the work around marked with an XXX comment near
+line 600 breaks the U-Boot I've tested so I need to disable it:
+if ((s->sdmasysad % boundary_chk) == 0) {
+-        page_aligned = true;
++//        page_aligned = true;
+}
+What should this hack fix and could it be now removed or somehow
+restricted to cases where it's needed?
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b5ee98e..5f2540f 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -695,7 +695,8 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
-     if (channels) {
-         /* To verify that Migrate channel list has only item */
-         if (channels->next) {
--            error_setg(errp, "Channel list has more than one entries");
-+            error_setg(errp, "Channel list must have only one entry, "
-+                             "for type 'main'");
-             return;
-         }
-         addr = channels->value->addr;
-@@ -2054,6 +2055,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-     MigrationState *s = migrate_get_current();
-     g_autoptr(MigrationChannel) channel = NULL;
-     MigrationAddress *addr = NULL;
-+    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
- 
-     /*
-      * Having preliminary checks for uri and channel
-@@ -2064,12 +2066,21 @@ void qmp_migrate(const char *uri, bool has_channels,
-     }
- 
-     if (channels) {
--        /* To verify that Migrate channel list has only item */
--        if (channels->next) {
--            error_setg(errp, "Channel list has more than one entries");
-+        for ( ; channels; channels = channels->next) {
-+            MigrationChannelType type = channels->value->channel_type;
-+
-+            if (channelv[type]) {
-+                error_setg(errp, "Channel list has more than one %s entry",
-+                           MigrationChannelType_str(type));
-+                return;
-+            }
-+            channelv[type] = channels->value;
-+        }
-+        addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
-+        if (!addr) {
-+            error_setg(errp, "Channel list has no main entry");
-             return;
-         }
--        addr = channels->value->addr;
-     }
- 
-     if (uri) {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 90fad31..3d1af73 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4940,10 +4940,18 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
-     "-incoming exec:cmdline\n" \
-     "                accept incoming migration on given file descriptor\n" \
-     "                or from given external command\n" \
-+    "-incoming <channel>\n" \
-+    "                accept incoming migration on the migration channel\n" \
-     "-incoming defer\n" \
-     "                wait for the URI to be specified via migrate_incoming\n",
-     QEMU_ARCH_ALL)
- SRST
-+The -incoming option specifies the migration channel for an incoming
-+migration.  It may be used multiple times to specify multiple
-+migration channel types.  The channel type is specified in <channel>,
-+or is 'main' for all other forms of -incoming.  If multiple -incoming
-+options are specified for a channel type, the last one takes precedence.
-+
- ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
-   \ 
- ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
-@@ -4963,6 +4971,19 @@ SRST
-     Accept incoming migration as an output from specified external
-     command.
- 
-+``-incoming <channel>``
-+    Accept incoming migration on the migration channel.  For the syntax
-+    of <channel>, see the QAPI documentation of ``MigrationChannel``.
-+    Examples:
-+    ::
-+
-+        -incoming '{"channel-type": "main",
-+                    "addr": { "transport": "socket",
-+                              "type": "unix",
-+                              "path": "my.sock" }}'
-+
-+        -incoming main,addr.transport=socket,addr.type=unix,addr.path=my.sock
-+
- ``-incoming defer``
-     Wait for the URI to be specified via migrate\_incoming. The monitor
-     can be used to change settings (such as migration parameters) prior
-diff --git a/system/vl.c b/system/vl.c
-index 61285ad..251efa0 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -123,6 +123,7 @@
- #include "qapi/qapi-visit-block-core.h"
- #include "qapi/qapi-visit-compat.h"
- #include "qapi/qapi-visit-machine.h"
-+#include "qapi/qapi-visit-migration.h"
- #include "qapi/qapi-visit-ui.h"
- #include "qapi/qapi-commands-block-core.h"
- #include "qapi/qapi-commands-migration.h"
-@@ -159,6 +160,8 @@ typedef struct DeviceOption {
- static const char *cpu_option;
- static const char *mem_path;
- static const char *incoming;
-+static const char *incoming_str[MIGRATION_CHANNEL_TYPE__MAX];
-+static MigrationChannel *incoming_channels[MIGRATION_CHANNEL_TYPE__MAX];
- static const char *loadvm;
- static const char *accelerators;
- static bool have_custom_ram_size;
-@@ -1822,6 +1825,30 @@ static void object_option_add_visitor(Visitor *v)
-     QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+hw/sd/sdhci.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 58375483e3..88eb0bfcb2 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -303,6 +303,8 @@ static void sdhci_reset(SDHCIState *s)
+     s->data_count = 0;
+     s->stopped_state = sdhc_not_stopped;
+     s->pending_insert_state = false;
++    s->norintstsen = 0x013f;
++    s->errintstsen = 0x117f;
  }
  
-+static void incoming_option_parse(const char *str)
-+{
-+    MigrationChannelType type = MIGRATION_CHANNEL_TYPE_MAIN;
-+    MigrationChannel *channel;
-+    Visitor *v;
-+
-+    if (!strcmp(str, "defer")) {
-+        channel = NULL;
-+    } else if (migrate_is_uri(str)) {
-+        migrate_uri_parse(str, &channel, &error_fatal);
-+    } else {
-+        v = qobject_input_visitor_new_str(str, "channel-type", &error_fatal);
-+        visit_type_MigrationChannel(v, NULL, &channel, &error_fatal);
-+        visit_free(v);
-+        type = channel->channel_type;
-+    }
-+
-+    /* New incoming spec replaces the previous */
-+    qapi_free_MigrationChannel(incoming_channels[type]);
-+    incoming_channels[type] = channel;
-+    incoming_str[type] = str;
-+    incoming = incoming_str[MIGRATION_CHANNEL_TYPE_MAIN];
-+}
-+
- static void object_option_parse(const char *str)
- {
-     QemuOpts *opts;
-@@ -2753,8 +2780,11 @@ void qmp_x_exit_preconfig(Error **errp)
-     if (incoming) {
-         Error *local_err = NULL;
-         if (strcmp(incoming, "defer") != 0) {
--            qmp_migrate_incoming(incoming, false, NULL, true, true,
--                                 &local_err);
-+            g_autofree MigrationChannelList *channels =
-+                g_new0(MigrationChannelList, 1);
-+
-+            channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
-+            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
-             if (local_err) {
-                 error_reportf_err(local_err, "-incoming %s: ", incoming);
-                 exit(1);
-@@ -3503,7 +3533,7 @@ void qemu_init(int argc, char **argv)
-                 if (!incoming) {
-                     runstate_set(RUN_STATE_INMIGRATE);
-                 }
--                incoming = optarg;
-+                incoming_option_parse(optarg);
-                 break;
-             case QEMU_OPTION_only_migratable:
-                 only_migratable = 1;
+ static void sdhci_poweron_reset(DeviceState *dev)
 -- 
-1.8.3.1
+2.30.9
 
 
