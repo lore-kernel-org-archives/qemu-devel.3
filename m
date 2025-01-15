@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C4CC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 06:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BF6C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 06:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXwV6-0001l2-Ov; Wed, 15 Jan 2025 01:03:36 -0500
+	id 1tXwW1-0001wY-9u; Wed, 15 Jan 2025 01:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tXwV4-0001km-Lu
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:03:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tXwV1-0003QW-Hf
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:03:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736921009;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XnVOHHmpalusTjnNzelzrBxpobt0iqSpAG+qSf0Njfs=;
- b=SRUH/gF7NTsUg+odGC2B+zdgobiIFLmw46s+UB3LoTLTUMEvSpDNxuOzGNNc6Rp+K3KD7M
- hhNT7DkoB3gb0uzJbjsyhDLLL0qZdxzdijV+J354LUxNd3yK5ontpzpluvpZigR9Mv/6Lf
- s2HEhzqEUzp8UFTadw4PjsRK1KvGBKM=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-573-iG5BAFxfMma4hn3TsLKFsA-1; Wed, 15 Jan 2025 01:03:23 -0500
-X-MC-Unique: iG5BAFxfMma4hn3TsLKFsA-1
-X-Mimecast-MFC-AGG-ID: iG5BAFxfMma4hn3TsLKFsA
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-aaf8396f65fso629220266b.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 22:03:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tXwVz-0001wN-Jj
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:04:31 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tXwVu-0003WB-6O
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 01:04:28 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21628b3fe7dso107696155ad.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jan 2025 22:04:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1736921063; x=1737525863;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9m+h7vCnXdJ+7bbignD2SW8iPild0iEciISIAdo4r7w=;
+ b=0RXLE/DGRQa+1xnbE5ncnlhxJPyPkmLBAgGU0XW2m73gsun+R9K/VoeTwTE7ciJKva
+ 6FOzC9QnvLf+ZB7ASeiW5+/T3enWI8ASzlQEfHPhwohBffIkhpV25Z1RXHMGXTLYyJ4o
+ DwZNmirCxLhxF0zcxh4OsnFpN7+S/8xB+M+SuveBtBPC07qq6tMWdTJsvVOGm7IGqTWA
+ I4RaUgMztEgI0uZX2nZCTwvzaxWs4fN+lskYAXl0C2ca4+aqlCYPmaeg4yvn5LCX+YqO
+ MC/pmW302RJJLqj7Yy9Kz/vwBVApOIwZPJLMEqdrrW+J6JFtZuwq5mAsXzHfAQ2ncXhJ
+ z26w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736921002; x=1737525802;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XnVOHHmpalusTjnNzelzrBxpobt0iqSpAG+qSf0Njfs=;
- b=ihh6WnHG/+d8lQKlbwPcUEHLlAdT9lMZrK8+3NwBNhk065fz0GqR6M0FF3PVkXsatY
- C4dua2rIbhEh2cpFP5a9+NXQLY6onn2naxSQDKlM2Jm34Ol5tQ7CH5fdiBNllgPvuoSQ
- 2u68v9qouYXQRGN3vhV1jA2R+Cq7paUb1j5NBlId1EyjhHF3UhGY8uJWk7H6+PUDbqnG
- u0iA8UlFw2z8QXH+yNOj2VBST8wZC7YwCO/ojd3cgcaoByLbrAJYnc2biMCY5IvO288G
- Y8xTfMCdXRgHIZT6VnUhYft4hDq/0KqqljsZ1pra5bry75fGdaE4Gx3Tc9pPErIlNlDA
- HQfg==
+ d=1e100.net; s=20230601; t=1736921064; x=1737525864;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9m+h7vCnXdJ+7bbignD2SW8iPild0iEciISIAdo4r7w=;
+ b=rlTlwmnr3KFbNGv3qkzOAtkbpGMRTvTwlydB/mqSpnb0IU6N0uzHVz6hmY128BfpwN
+ lWqjdTfe2qhCJLcJfAI75fHHkm/IdOUfEDPh6AJGLAMO6DUtY/c0nHZTX26E4XJcKrUN
+ QtlyKD2IlqCrzWqNAgnun1Saf7VSFAoJI2CLyjhwF2t6cJgUQExEIT2FVceGbx8Fzz+A
+ aMjNPgDwCPnIh2GsXSM5nrCa3tByoSL6aXp+UUi6T8QlMbt8iT6szFSkJ3la8rZgtJbO
+ GNo+Uiy7s9L0uZjZX1i9XXmyL+XaBuR5B/x/I2DipSTssGu0tY/x+qWeNtkIS2v4M72p
+ U06A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV88gGM1uGfCIrIxPm0DjfvxreyliF9zciySDjm6Xc8i0LzapgJpHi0AZ5WyTuySfBj+Sve0GYzwHSp@nongnu.org
-X-Gm-Message-State: AOJu0Yzq4rsvFAe7GtQ9fro1K1zWcxKUS6OKIcJj9/TdLVyZ2xl1jMmB
- jYEyuy/1pRffOQsuWHwlfMnLBh3asPNM7yrAlb83L4Bv5NICGYfmWqBM5qL647MvlHuf3g9Clae
- SwojMyzJNaUyF24kDckznDefemdFqMRRpHOjYtm6Rn7kIC47sQs6/VoD5aQaQvltXeiPmbxvkIi
- vJQzqwQQqnjLtvZw6+2/ERj8soQ9o=
-X-Gm-Gg: ASbGncuscSuml2T4D+9bsmfue4ciFydqjCX2LfmMlLiA/yXxrXOhEAflkedW1e9dY0Y
- vYCiMENoojaygeqGFpHYaHo1ThUsir42sFvOvHY3L
-X-Received: by 2002:a17:907:70c:b0:aae:fd36:f511 with SMTP id
- a640c23a62f3a-ab2abc6ea66mr2557882066b.47.1736921002229; 
- Tue, 14 Jan 2025 22:03:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEKwW0/ZW+CMLBmgpmdJ96T9xs3qvbAC4AkMkfKH8gO0rgc94jaBq4WE0AC4HoW6LIAedCQk+TX3Mt+JPQ21I4=
-X-Received: by 2002:a17:907:70c:b0:aae:fd36:f511 with SMTP id
- a640c23a62f3a-ab2abc6ea66mr2557880066b.47.1736921001721; Tue, 14 Jan 2025
- 22:03:21 -0800 (PST)
+ AJvYcCVbAxKOzbEX6mi4oMwp0UyieHwCmFAmG5MIAv+HuwofMMzVBoY5dCmOCg0FQsO+443fVV55p7LRGwTN@nongnu.org
+X-Gm-Message-State: AOJu0YwxW1fgxulevVkCR+PslMDnY6Nq+DxTGH5DDg0JPo5ZMBFI/gJ3
+ 15bO5Wu7c0AwvkIwJ4sQn5TNXy8nwopmX7qVeJRkMJSNPV+nTy/SnXKksj0JU6k=
+X-Gm-Gg: ASbGnctpJ2VERJ+ZJNTsb5uhHoudoHZ+OgwFjSHeqVyplPG6UYhSL8BoByAjW2ouLx8
+ q0Ff2OhygOBC6OkNFG2qVYTAYqTZhbTar1+mK8MjD4J1VCoP0RELJDexg9YmhCaJJzt6esp18Js
+ zRm7coy4xBEBzfAK5TUNTCcoJFetxVPcd/q9ZlgrxqMwosCROjJELmn91jF1akb1v8LhvG/jixh
+ Pdqx+00xU7F9g+xzErvYHm83Jr8ZIXOh9KOxAA1QTt4zzevxHO2v9edEwhaadBaS2c=
+X-Google-Smtp-Source: AGHT+IFNikn377Cs7IvAakq5lh2WOOFoqr5zGmjqAS9c0j711GO4N4PrkfP651PmVUdArp4aUVRMww==
+X-Received: by 2002:a17:903:1cf:b0:21a:8300:b9d5 with SMTP id
+ d9443c01a7336-21a83f4cd36mr448785665ad.23.1736921063539; 
+ Tue, 14 Jan 2025 22:04:23 -0800 (PST)
+Received: from [157.82.203.37] ([157.82.203.37])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f25c6a7sm75745155ad.247.2025.01.14.22.04.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jan 2025 22:04:23 -0800 (PST)
+Message-ID: <d0601ef8-f959-4bea-8993-a9b5512fabe8@daynix.com>
+Date: Wed, 15 Jan 2025 15:04:19 +0900
 MIME-Version: 1.0
-References: <20241212144918.981542-1-anisinha@redhat.com>
-In-Reply-To: <20241212144918.981542-1-anisinha@redhat.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Wed, 15 Jan 2025 11:33:10 +0530
-X-Gm-Features: AbW1kvbN2_MnODbIcnL4jMvPzjf2UowuXkHXI1dtayhaVFJqB32p02-58xDBIlk
-Message-ID: <CAK3XEhNpe9JVXKOVGM+dxorATzL8kM6u1=CDSfxH_cbpWkx3yQ@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/i386/cpu: remove default_cpu_version and simplify
-To: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>
-Cc: imammedo@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] tap: Use g_spawn_sync() and
+ g_spawn_check_wait_status()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, devel@daynix.com
+References: <20250104-glib-v2-0-12013f3e5782@daynix.com>
+ <20250104-glib-v2-2-12013f3e5782@daynix.com> <Z3ujuV1jH_dSY9HZ@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <Z3ujuV1jH_dSY9HZ@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,420 +103,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 8:19=E2=80=AFPM Ani Sinha <anisinha@redhat.com> wro=
-te:
->
-> commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
-> introduced 'default_cpu_version' for PCMachineClass. This created three
-> categories of CPU models:
->  - Most unversioned CPU models would use version 1 by default.
->  - For machines 4.0.1 and older that do not support cpu model aliases, a
->    special default_cpu_version value of CPU_VERSION_LEGACY is used.
->  - It was thought that future machines would use the latest value of cpu
->    versions corresponding to default_cpu_version value of
->    CPU_VERSION_LATEST [1].
->
-> All pc machines still use the default cpu version of 1 for
-> unversioned cpu models. CPU_VERSION_LATEST is a moving target and
-> changes with time. Therefore, if machines use CPU_VERSION_LATEST, it woul=
-d
-> mean that over a period of time, for the same machine type, the cpu versi=
-on
-> would be different depending on what is latest at that time. This would
-> break guests even when they use a constant machine type. Therefore, for
-> pc machines, use of CPU_VERSION_LATEST is not possible. Currently, only
-> microvms use CPU_VERSION_LATEST.
->
-> This change cleans up the complicated logic around default_cpu_version
-> including getting rid of default_cpu_version property itself. A couple of=
- new
-> flags are introduced, one for the legacy model for machines 4.0.1 and old=
-er
-> and other for microvms. For older machines, a new pc machine property is
-> introduced that separates pc machine versions 4.0.1 and older from the ne=
-wer
-> machines. 4.0.1 and older machines are scheduled to be deleted towards
-> end of 2025 since they would be 6 years old by then. At that time, we can
-> remove all logic around legacy cpus. Microvms are the only machines that
-> continue to use the latest cpu version. If this changes later, we can
-> remove all logic around x86_cpu_model_last_version(). Default cpu version
-> for unversioned cpu models is hardcoded to the value 1 and applies
-> unconditionally for all pc machine types of version 4.1 and above.
->
-> This change also removes all complications around CPU_VERSION_AUTO
-> including removal of the value itself.
->
-> 1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
->
-> CC: imammedo@redhat.com
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+On 2025/01/06 18:34, Daniel P. Berrangé wrote:
+> On Sat, Jan 04, 2025 at 05:04:08PM +0900, Akihiko Odaki wrote:
+>> g_spawn_sync() gives an informative message if it fails to execute
+>> the script instead of reporting exiting status 1.
+>>
+>> g_spawn_check_wait_status() also gives an message easier to understand
+>> than the raw value returned by waitpid().
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   net/tap.c | 169 ++++++++++++++++++++++++--------------------------------------
+>>   1 file changed, 66 insertions(+), 103 deletions(-)
+>>
+>> diff --git a/net/tap.c b/net/tap.c
+>> index ae1c7e398321..392a024f8ed9 100644
+>> --- a/net/tap.c
+>> +++ b/net/tap.c
+>> @@ -385,56 +385,30 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+>>       return s;
+>>   }
+>>   
+>> -static void close_all_fds_after_fork(int excluded_fd)
+>> +static void unset_cloexec(gpointer data)
+>>   {
+>> -    const int skip_fd[] = {STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO,
+>> -                           excluded_fd};
+>> -    unsigned int nskip = ARRAY_SIZE(skip_fd);
+>> -
+>> -    /*
+>> -     * skip_fd must be an ordered array of distinct fds, exclude
+>> -     * excluded_fd if already included in the [STDIN_FILENO - STDERR_FILENO]
+>> -     * range
+>> -     */
+>> -    if (excluded_fd <= STDERR_FILENO) {
+>> -        nskip--;
+>> -    }
+>> -
+>> -    qemu_close_all_open_fd(skip_fd, nskip);
+>> +    g_assert(!fcntl(GPOINTER_TO_INT(data), F_SETFD, 0));
+>>   }
+>>   
+>>   static void launch_script(const char *setup_script, const char *ifname,
+>>                             int fd, Error **errp)
+>>   {
+>> -    int pid, status;
+>> -    char *args[3];
+>> -    char **parg;
+>> +    gint status;
+>> +    gchar *argv[] = { (gchar *)setup_script, (gchar *)ifname, NULL };
+>> +    g_autoptr(GError) error = NULL;
+>>   
+>>       /* try to launch network script */
+>> -    pid = fork();
+>> -    if (pid < 0) {
+>> -        error_setg_errno(errp, errno, "could not launch network script %s",
+>> -                         setup_script);
+>> +    if (!g_spawn_sync(NULL, argv, NULL, G_SPAWN_CHILD_INHERITS_STDIN,
+>> +                      unset_cloexec, GINT_TO_POINTER(fd),
+>> +                      NULL, NULL, &status, &error)) {
+> 
+> This unset_cloexec callback is relying on knowledge of current internal
+> impl details of g_spawn_sync. The API docs say that all file descriptors
+> will be closed, except for stdin/out/err. We should not assume glib is
+> doing this by setting O_CLOEXEC, as opposed to directly calling close().
+> 
+> If we need specific FDs to remain open, we neeed to be using the other
+> g_spawn_async_with_pipes_and_fds API that accepts a list of FDs to remain
+> open.
 
-Has this been picked up by anyone?
+g_spawn_async_with_pipes_and_fds() is not available for 2.66 so we 
+cannot use it.
 
-> ---
->  hw/i386/microvm.c     |  2 +-
->  hw/i386/pc_piix.c     |  6 +++---
->  hw/i386/pc_q35.c      |  6 +++---
->  hw/i386/x86-common.c  | 15 ++++++++++---
->  include/hw/i386/pc.h  | 21 +++++++++++++++---
->  include/hw/i386/x86.h |  5 ++++-
->  target/i386/cpu.c     | 50 +++++++++++++++++++++----------------------
->  target/i386/cpu.h     | 21 ++++--------------
->  8 files changed, 69 insertions(+), 57 deletions(-)
->
-> changelog:
-> v2: explain in commit log why use of CPU_VERSION_LATEST for machines
-> is problematic.
->
-> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-> index 86637afa0f..2cbe08caea 100644
-> --- a/hw/i386/microvm.c
-> +++ b/hw/i386/microvm.c
-> @@ -458,7 +458,7 @@ static void microvm_machine_state_init(MachineState *=
-machine)
->
->      microvm_memory_init(mms);
->
-> -    x86_cpus_init(x86ms, CPU_VERSION_LATEST);
-> +    x86_cpus_init_with_latest_cpu_version(x86ms);
->
->      microvm_devices_init(mms);
->  }
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 2bf6865d40..8e0ab0387f 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -181,7 +181,8 @@ static void pc_init1(MachineState *machine, const cha=
-r *pci_type)
->      }
->
->      pc_machine_init_sgx_epc(pcms);
-> -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
-> +
-> +    pc_init_cpus(machine);
->
->      if (kvm_enabled()) {
->          kvmclock_create(pcmc->kvmclock_create_always);
-> @@ -454,7 +455,6 @@ static void pc_i440fx_machine_options(MachineClass *m=
-)
->      ObjectClass *oc =3D OBJECT_CLASS(m);
->      pcmc->default_south_bridge =3D TYPE_PIIX3_DEVICE;
->      pcmc->pci_root_uid =3D 0;
-> -    pcmc->default_cpu_version =3D 1;
->
->      m->family =3D "pc_piix";
->      m->desc =3D "Standard PC (i440FX + PIIX, 1996)";
-> @@ -661,7 +661,7 @@ static void pc_i440fx_machine_4_0_options(MachineClas=
-s *m)
->  {
->      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
->      pc_i440fx_machine_4_1_options(m);
-> -    pcmc->default_cpu_version =3D CPU_VERSION_LEGACY;
-> +    pcmc->no_versioned_cpu_model =3D true;
->      compat_props_add(m->compat_props, hw_compat_4_0, hw_compat_4_0_len);
->      compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
->  }
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index 8319b6d45e..9a4f14b336 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -187,7 +187,8 @@ static void pc_q35_init(MachineState *machine)
->      }
->
->      pc_machine_init_sgx_epc(pcms);
-> -    x86_cpus_init(x86ms, pcmc->default_cpu_version);
-> +
-> +    pc_init_cpus(machine);
->
->      if (kvm_enabled()) {
->          kvmclock_create(pcmc->kvmclock_create_always);
-> @@ -336,7 +337,6 @@ static void pc_q35_machine_options(MachineClass *m)
->  {
->      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
->      pcmc->pci_root_uid =3D 0;
-> -    pcmc->default_cpu_version =3D 1;
->
->      m->family =3D "pc_q35";
->      m->desc =3D "Standard PC (Q35 + ICH9, 2009)";
-> @@ -537,7 +537,7 @@ static void pc_q35_machine_4_0_1_options(MachineClass=
- *m)
->  {
->      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
->      pc_q35_machine_4_1_options(m);
-> -    pcmc->default_cpu_version =3D CPU_VERSION_LEGACY;
-> +    pcmc->no_versioned_cpu_model =3D true;
->      /*
->       * This is the default machine for the 4.0-stable branch. It is basi=
-cally
->       * a 4.0 that doesn't use split irqchip by default. It MUST hence ap=
-ply the
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index dc031af662..37dfdb7300 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -66,15 +66,24 @@ out:
->      object_unref(cpu);
->  }
->
-> -void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
-> +void x86_legacy_cpus_init(X86MachineState *x86ms)
-> +{
-> +    machine_uses_legacy_cpu();
-> +    x86_cpus_init(x86ms);
-> +}
-> +
-> +void x86_cpus_init_with_latest_cpu_version(X86MachineState *x86ms)
-> +{
-> +    x86_cpu_uses_lastest_version();
-> +    x86_cpus_init(x86ms);
-> +}
-> +void x86_cpus_init(X86MachineState *x86ms)
->  {
->      int i;
->      const CPUArchIdList *possible_cpus;
->      MachineState *ms =3D MACHINE(x86ms);
->      MachineClass *mc =3D MACHINE_GET_CLASS(x86ms);
->
-> -    x86_cpu_set_default_version(default_cpu_version);
-> -
->      /*
->       * Calculates the limit to CPU APIC ID values
->       *
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 14ee06287d..b514b957d9 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -92,9 +92,6 @@ struct PCMachineClass {
->
->      /* Compat options: */
->
-> -    /* Default CPU model version.  See x86_cpu_set_default_version(). */
-> -    int default_cpu_version;
-> -
->      /* ACPI compat: */
->      bool has_acpi_build;
->      int pci_root_uid;
-> @@ -125,11 +122,29 @@ struct PCMachineClass {
->       * check for memory.
->       */
->      bool broken_32bit_mem_addr_check;
-> +
-> +    /* whether the machine supports versioned cpu models */
-> +    bool no_versioned_cpu_model;
->  };
->
->  #define TYPE_PC_MACHINE "generic-pc-machine"
->  OBJECT_DECLARE_TYPE(PCMachineState, PCMachineClass, PC_MACHINE)
->
-> +static inline void pc_init_cpus(MachineState *ms)
-> +{
-> +    X86MachineState *x86ms =3D X86_MACHINE(ms);
-> +    PCMachineState *pcms =3D PC_MACHINE(ms);
-> +    PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
-> +
-> +    if (pcmc->no_versioned_cpu_model) {
-> +        /* use legacy cpu as it does not support versions */
-> +        x86_legacy_cpus_init(x86ms);
-> +    } else {
-> +        /* use non-legacy cpus */
-> +        x86_cpus_init(x86ms);
-> +    }
-> +}
-> +
->  /* ioapic.c */
->
->  GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
-> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-> index d43cb3908e..a90464f74b 100644
-> --- a/include/hw/i386/x86.h
-> +++ b/include/hw/i386/x86.h
-> @@ -114,7 +114,10 @@ void init_topo_info(X86CPUTopoInfo *topo_info, const=
- X86MachineState *x86ms);
->  uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
->                                      unsigned int cpu_index);
->
-> -void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
-> +void x86_cpus_init(X86MachineState *pcms);
-> +void x86_legacy_cpus_init(X86MachineState *x86ms);
-> +void x86_cpus_init_with_latest_cpu_version(X86MachineState *x86ms);
-> +
->  void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
->  void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
->                        DeviceState *dev, Error **errp);
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 3725dbbc4b..14f5aa359b 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -191,6 +191,9 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descrip=
-tors[] =3D {
->   */
->  #define CACHE_DESCRIPTOR_UNAVAILABLE 0xFF
->
-> +/* default cpu version to use */
-> +#define DEFAULT_CPU_VERSION 1
-> +
->  /*
->   * Return a CPUID 2 cache descriptor for a given cache.
->   * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
-> @@ -5343,20 +5346,16 @@ static const X86CPUDefinition builtin_x86_defs[] =
-=3D {
->      },
->  };
->
-> -/*
-> - * We resolve CPU model aliases using -v1 when using "-machine
-> - * none", but this is just for compatibility while libvirt isn't
-> - * adapted to resolve CPU model versions before creating VMs.
-> - * See "Runnability guarantee of CPU models" at
-> - * docs/about/deprecated.rst.
-> - */
-> -X86CPUVersion default_cpu_version =3D 1;
-> +static bool use_legacy_cpu;
-> +void machine_uses_legacy_cpu(void)
-> +{
-> +    use_legacy_cpu =3D true;
-> +}
->
-> -void x86_cpu_set_default_version(X86CPUVersion version)
-> +static bool use_last_cpu_version;
-> +void x86_cpu_uses_lastest_version(void)
->  {
-> -    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make sen=
-se */
-> -    assert(version !=3D CPU_VERSION_AUTO);
-> -    default_cpu_version =3D version;
-> +    use_last_cpu_version =3D true;
->  }
->
->  static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model=
-)
-> @@ -5374,14 +5373,11 @@ static X86CPUVersion x86_cpu_model_last_version(c=
-onst X86CPUModel *model)
->  /* Return the actual version being used for a specific CPU model */
->  static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *mo=
-del)
->  {
-> -    X86CPUVersion v =3D model->version;
-> -    if (v =3D=3D CPU_VERSION_AUTO) {
-> -        v =3D default_cpu_version;
-> -    }
-> -    if (v =3D=3D CPU_VERSION_LATEST) {
-> +    if (use_last_cpu_version) {
->          return x86_cpu_model_last_version(model);
->      }
-> -    return v;
-> +
-> +    return model->version;
->  }
->
->  static Property max_x86_cpu_properties[] =3D {
-> @@ -5986,6 +5982,12 @@ static char *x86_cpu_class_get_alias_of(X86CPUClas=
-s *cc)
->      if (!cc->model || !cc->model->is_alias) {
->          return NULL;
->      }
-> +
-> +    if (use_legacy_cpu) {
-> +        /* legacy cpu models do not support cpu aliases */
-> +        return NULL;
-> +    }
-> +
->      version =3D x86_cpu_model_resolve_version(cc->model);
->      if (version <=3D 0) {
->          return NULL;
-> @@ -6003,11 +6005,7 @@ static void x86_cpu_list_entry(gpointer data, gpoi=
-nter user_data)
->      g_autofree char *model_id =3D x86_cpu_class_get_model_id(cc);
->
->      if (!desc && alias_of) {
-> -        if (cc->model && cc->model->version =3D=3D CPU_VERSION_AUTO) {
-> -            desc =3D g_strdup("(alias configured by machine type)");
-> -        } else {
->              desc =3D g_strdup_printf("(alias of %s)", alias_of);
-> -        }
->      }
->      if (!desc && cc->model && cc->model->note) {
->          desc =3D g_strdup_printf("%s [%s]", model_id, cc->model->note);
-> @@ -6114,7 +6112,7 @@ static void x86_cpu_definition_entry(gpointer data,=
- gpointer user_data)
->       * Old machine types won't report aliases, so that alias translation
->       * doesn't break compatibility with previous QEMU versions.
->       */
-> -    if (default_cpu_version !=3D CPU_VERSION_LEGACY) {
-> +    if (!use_legacy_cpu) {
->          info->alias_of =3D x86_cpu_class_get_alias_of(cc);
->      }
->
-> @@ -6288,7 +6286,7 @@ static void x86_cpu_apply_version_props(X86CPU *cpu=
-, X86CPUModel *model)
->      const X86CPUVersionDefinition *vdef;
->      X86CPUVersion version =3D x86_cpu_model_resolve_version(model);
->
-> -    if (version =3D=3D CPU_VERSION_LEGACY) {
-> +    if (use_legacy_cpu) {
->          return;
->      }
->
-> @@ -6318,7 +6316,7 @@ static const CPUCaches *x86_cpu_get_versioned_cache=
-_info(X86CPU *cpu,
->      X86CPUVersion version =3D x86_cpu_model_resolve_version(model);
->      const CPUCaches *cache_info =3D model->cpudef->cache_info;
->
-> -    if (version =3D=3D CPU_VERSION_LEGACY) {
-> +    if (use_legacy_cpu) {
->          return cache_info;
->      }
->
-> @@ -6453,7 +6451,7 @@ static void x86_register_cpudef_types(const X86CPUD=
-efinition *def)
->      /* Unversioned model: */
->      m =3D g_new0(X86CPUModel, 1);
->      m->cpudef =3D def;
-> -    m->version =3D CPU_VERSION_AUTO;
-> +    m->version =3D DEFAULT_CPU_VERSION;
->      m->is_alias =3D true;
->      x86_register_cpu_model_type(def->name, m);
->
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 4c239a6970..5ad80c8a97 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2658,28 +2658,15 @@ void cpu_report_tpr_access(CPUX86State *env, TPRA=
-ccess access);
->  void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
->                                     TPRAccess access);
->
-> -/* Special values for X86CPUVersion: */
-> -
-> -/* Resolve to latest CPU version */
-> -#define CPU_VERSION_LATEST -1
-> -
-> -/*
-> - * Resolve to version defined by current machine type.
-> - * See x86_cpu_set_default_version()
-> - */
-> -#define CPU_VERSION_AUTO   -2
-> -
-> -/* Don't resolve to any versioned CPU models, like old QEMU versions */
-> -#define CPU_VERSION_LEGACY  0
-> -
->  typedef int X86CPUVersion;
->
->  /*
-> - * Set default CPU model version for CPU models having
-> - * version =3D=3D CPU_VERSION_AUTO.
-> + * Set CPU model version to the lastest version.
-> + * Currently, this is only used by microvm.
->   */
-> -void x86_cpu_set_default_version(X86CPUVersion version);
-> +void x86_cpu_uses_lastest_version(void);
->
-> +void machine_uses_legacy_cpu(void);
->  #ifndef CONFIG_USER_ONLY
->
->  void do_cpu_sipi(X86CPU *cpu);
-> --
-> 2.45.2
->
+An upstream developer says unsetting FD_CLOEXEC in the setup function is 
+fine in such a scenario. They are not documenting that because new glib 
+versions they are developing has g_spawn_async_with_pipes_and_fds(), 
+which is a better alternative:
+https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4452
 
+Regards,
+Akihiko Odaki
 
