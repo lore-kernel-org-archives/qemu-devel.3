@@ -4,123 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBE3C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 10:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2D3C02180
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 10:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY0Q3-0003xP-5C; Wed, 15 Jan 2025 05:14:39 -0500
+	id 1tY0Uu-0004l0-2Y; Wed, 15 Jan 2025 05:19:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tY0Pz-0003wf-2P
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:14:36 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tY0Us-0004kl-Bl
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:19:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tY0Pj-0001rv-0J
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:14:34 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tY0Uq-0002Ti-C7
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 05:19:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736936057;
+ s=mimecast20190719; t=1736936374;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Me9WQY6EBeV4wwEolMAXIhmUxCWUpgkVAiWnJ+WGn5A=;
- b=GNIU5q76dX94DU0weAOFIsw0Ra3j3xjpYqsXtbGZ4LCbRlE+ZJPz5DGMBKRda+3bXVkuFA
- psxg56CQIh8+1cXYnS99f48jp+ZTqvq58vSxs+WvZp1Sznvo/uX362BqO5NAtXJ5EDh5cv
- 8F8xdrW4EfYzqGZuw3Vxwgqkxrwu0jw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=tOuXHiINgTRXJuIWOe4F3DQorQiY488CjwgD1dVo+ew=;
+ b=M0Q7ZI8o/JNBlJ6lChEFwY39sXFepXXlubKMMkI7Tqd0acfR2R8uBuY4M0KzW2s0tF0Mj8
+ iuyXjSxZZlkqrnVsuzBH3J746hxYeJn3MQjmgUsOspAVgmTl8aD48WmW3Dxr8j9r3XML4p
+ WeFIW+krFf/vOFsntpcaWxUs2I7K6bU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-paUVVIG2OgyUXn1NTPkBAA-1; Wed, 15 Jan 2025 05:14:15 -0500
-X-MC-Unique: paUVVIG2OgyUXn1NTPkBAA-1
-X-Mimecast-MFC-AGG-ID: paUVVIG2OgyUXn1NTPkBAA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43631d8d9c7so3293465e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 02:14:15 -0800 (PST)
+ us-mta-78-0EXnUxx5N0qJX8o8T_f1rw-1; Wed, 15 Jan 2025 05:19:32 -0500
+X-MC-Unique: 0EXnUxx5N0qJX8o8T_f1rw-1
+X-Mimecast-MFC-AGG-ID: 0EXnUxx5N0qJX8o8T_f1rw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4361fc2b2d6so36385375e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 02:19:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736936053; x=1737540853;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Me9WQY6EBeV4wwEolMAXIhmUxCWUpgkVAiWnJ+WGn5A=;
- b=LKmgLCKLGw7Yo0sUxE1f2uoHGOrqQB0g04BYDwR0GgQT1QNfaLBre9w6iC5PoENrRT
- Hdm+JfjVeWGOCm9z6ewWU+9HEZnUfxfTxa/hzS1T+EoIC4X7rogpHbn3v9snl0N7g19O
- igmFa7JTmA0A+vbZcN2tSAtk5eR7MlOXqyevYYlJIaxP4Ah53BPnxXZ9s80EG6e1sOYj
- OqRyJ4Yen5LpJ9FTizOR7VjGQkgq0/ZG9BnEfluhxHkaWzFO9r+drrMVTfojixUDcih7
- XxkJGCFbWxlcjFSgIswfKqWOs4oy53wTBLbMw1VNt1SYOj+o3YrkAqY++FHK/NAqEakP
- HSGw==
-X-Gm-Message-State: AOJu0YxqczjUU4QnzrCS6enHY2agUv9nR99cZQjC7sqyxuVyIhSC02o3
- 9ASSNEoJq/dhRzLFBt3UxezoRnXtbuT3JxllvExPAnWYKrtqBCUx/UQJoQkMTtToSz7zEl6TpFK
- RQJv95Wj10GpSBvFi+Kri068bKN/ds29QarIwm6SPngw1LecEcZtXj4Dbi2RWmPM=
-X-Gm-Gg: ASbGncu26RzIwISaxUFejjU9YAeWTRuluci7dhxN2W4/4Pm0O+beWODLWq8u9TRmg82
- W7O8i8YQeVBNd3KZ3gcnRSuiISiTY67RLnFT0YXO3zLTVdz08Odg1k9gAd/W9tOIofWkLI1u0fv
- 4oVQsLk5Up9v8Y3mYPIVSDK8pMF/M0j+oyh7m2YycJ/glx0TxlW3nGvOqvO2V7bx+LSoth91HNC
- 123ccJPSqAjOHUT3GEInr+6CM2dfkGbD8OxUe0ldRVztGFmjsfh3vvD1Y8b
-X-Received: by 2002:a05:600c:4c06:b0:434:92f8:54a8 with SMTP id
- 5b1f17b1804b1-437c6a86b58mr17756265e9.0.1736936053435; 
- Wed, 15 Jan 2025 02:14:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFUlQGFN224qrGoQhgJFBSJrA/2XZxUHpWk+JKYjYdrqzdiFC0XQ/W4fiLFT6f6ACcc1BpiIg==
-X-Received: by 2002:a05:600c:4c06:b0:434:92f8:54a8 with SMTP id
- 5b1f17b1804b1-437c6a86b58mr17756095e9.0.1736936053125; 
- Wed, 15 Jan 2025 02:14:13 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-437c74d8cddsm17781285e9.30.2025.01.15.02.14.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 02:14:12 -0800 (PST)
-Message-ID: <9a0389fa-765c-443b-ac2f-7c99ed862982@redhat.com>
-Date: Wed, 15 Jan 2025 11:14:04 +0100
+ d=1e100.net; s=20230601; t=1736936371; x=1737541171;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tOuXHiINgTRXJuIWOe4F3DQorQiY488CjwgD1dVo+ew=;
+ b=bo6pgvJWaIIoBZH9ZPfFx1VH5lITsOSMs/r+NlJBbGM+tOkIwXdtwLS0AWiHypCGkm
+ +tviEFOe4gTpZ4iqQM39BUZG63+t93gIa9fgYLerolDsOqCXSF435lqW4gPODIN8gtJ/
+ 0ShnB6NKJQat65ICXBqWxhQxdlhgPnN93WjZp8H01L+3M4rZTigU3raB7J4f/qi8OXeH
+ IE+uECxXEFItTht/bQV0LcTrMbMj1xUSubE89bkdLww3FyHhuighzwTBXO3fuTYMCt+7
+ fcS+dNckkVhII3G836LUAfmR58TQk4h9UY1wbA1FU5NAusqO58ickej6Ns/0njucuqo3
+ brbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFKQWRPsW+SzTEJOtjHPE8Ycb3+QC/FtailTz9nYzQoK5yO11qUtcCrvZdbLHidrxHESqszEXOQqLH@nongnu.org
+X-Gm-Message-State: AOJu0Yz8wx4qBO6fQyJRy6ALjafaAoan19HxQKb/ERxDzMrQSJ5IfCsF
+ 86udaJItT7srjKxizgmesGbqkgoXPqx9msgwbvY99T7M88ufnCRbNzTq3JPzN4ckFNLVnfiZutq
+ wPlgp7Jc3OJNKJSNapGX5VHEEUQqQdI9kdtEAtmMArpoHYYIj+L4p
+X-Gm-Gg: ASbGncuzlJPHtXlBlYZgix7xyJGVIl9Jq3TaAKga8LS7evJ6+9KAjg//tky5wLldcbf
+ cPYKZz1QZOrj7IPwrIusGxfseECJqPWRkTX2eh6XV77aMEcTbDGn+DuGMpjFYcqZ54WVeyrrloX
+ Vdq4RVl95mfW/+YWznq5Hu004hEBum3XuWZDeM5s+zsiNW2t+Y19/W0wFvtoIFn3O33VysM5/0B
+ uyvWEn22Y7irxxsAzcaU18sqvmxFKc152Q9czSUI6WueWHXKz2fv6Y6foBi88nJgBNsz2ow/Sk8
+ GaW+KCWRdspcOHywsyvNGnrb+GqR
+X-Received: by 2002:a05:600c:3aca:b0:434:f335:855 with SMTP id
+ 5b1f17b1804b1-436e26eb428mr215241605e9.28.1736936371364; 
+ Wed, 15 Jan 2025 02:19:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFN+BIi1iavWZvJRjxMk1o5mA1RjGSkLZK0ncFGSWg3HRFl4YitZacwdaOr0r3tP6F/AZqNxw==
+X-Received: by 2002:a05:600c:3aca:b0:434:f335:855 with SMTP id
+ 5b1f17b1804b1-436e26eb428mr215241415e9.28.1736936370956; 
+ Wed, 15 Jan 2025 02:19:30 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c74ac5f9sm17698355e9.11.2025.01.15.02.19.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 02:19:30 -0800 (PST)
+Date: Wed, 15 Jan 2025 11:19:28 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, Peter Xu
+ <peterx@redhat.com>
+Subject: Re: [PULL 04/49] hw: Add QOM parentship relation with CPUs
+Message-ID: <20250115111928.17950323@imammedo.users.ipa.redhat.com>
+In-Reply-To: <87zfjtfu3g.fsf@pond.sub.org>
+References: <20250112221726.30206-1-philmd@linaro.org>
+ <20250112221726.30206-5-philmd@linaro.org>
+ <20250113132832.049f651a@imammedo.users.ipa.redhat.com>
+ <6f9225ad-edc6-4fe0-b0e6-8a93e7f50102@linaro.org>
+ <20250114111829.2f577596@imammedo.users.ipa.redhat.com>
+ <87zfjtfu3g.fsf@pond.sub.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/9] rust: vmstate: add varray support to vmstate_of!
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
-References: <20241231002336.25931-1-pbonzini@redhat.com>
- <20241231002336.25931-4-pbonzini@redhat.com> <Z33w1ykoafUl2WD7@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <Z33w1ykoafUl2WD7@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -145,38 +117,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 04:28, Zhao Liu wrote:
->> +    #[must_use]
->> +    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
->> +        assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
-> 
-> I understand you checked VMS_ARRAY here since [T; N] has this array
-> flag.
-> 
-> What if a Rust device just store a pointer to the array? If we allow
-> this use, then it seems also possible to set varray flags...Then what
-> about dropping this limitation?
+On Tue, 14 Jan 2025 13:38:59 +0100
+Markus Armbruster <armbru@redhat.com> wrote:
 
-Box can be added for that purpose:
+> Igor Mammedov <imammedo@redhat.com> writes:
+>=20
+> > On Mon, 13 Jan 2025 17:00:55 +0100
+> > Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+> > =20
+> >> On 13/1/25 13:28, Igor Mammedov wrote: =20
+> >> > On Sun, 12 Jan 2025 23:16:40 +0100
+> >> > Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+> >> >    =20
+> >> >> QDev objects created with object_new() need to manually add
+> >> >> their parent relationship with object_property_add_child().
+> >> >>
+> >> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >> >> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> >> >> Message-Id: <20240216110313.17039-22-philmd@linaro.org>
+> >> >> ---
+> >> >>   hw/i386/x86-common.c                     | 1 +
+> >> >>   hw/microblaze/petalogix_ml605_mmu.c      | 1 +
+> >> >>   hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
+> >> >>   hw/mips/cps.c                            | 1 +
+> >> >>   hw/ppc/e500.c                            | 1 +
+> >> >>   hw/ppc/spapr.c                           | 1 +
+> >> >>   6 files changed, 6 insertions(+)
+> >> >>
+> >> >> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> >> >> index 97b4f7d4a0d..9c9ffb3484a 100644
+> >> >> --- a/hw/i386/x86-common.c
+> >> >> +++ b/hw/i386/x86-common.c
+> >> >> @@ -60,6 +60,7 @@ static void x86_cpu_new(X86MachineState *x86ms, i=
+nt64_t apic_id, Error **errp)
+> >> >>       if (!object_property_set_uint(cpu, "apic-id", apic_id, errp))=
+ {
+> >> >>           goto out;
+> >> >>       }
+> >> >> +    object_property_add_child(OBJECT(x86ms), "cpu[*]", OBJECT(cpu)=
+);   =20
+> >> >=20
+> >> > I might  be missing something but why it needs to be done manually?
+> >> >=20
+> >> > device_set_realized() will place any parent-less device under (1) /m=
+achine/unattached   =20
+> >>=20
+> >> This is exactly what we want to avoid, to eventually remove
+> >> the "/machine/unattached" container for good.
+> >>=20
+> >> See "=3D Problem 4: The /machine/unattached/ orphanage =3D" in:
+> >> https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/ =20
+> >
+> >
+> > QOM paths as far as I'm aware were never part ABI nor I'm aware of
+> > of any proposal to make it or some parts of it a public interface. =20
+>=20
+> We've been waffling on this since forever.  QOM is not a public
+> interface except when it is, and it is when somebody says so, and it
+> isn't when somebody says so, resulting in a wave function that wobbles
+> like an underdone souffle, but never quite collapses.
+>=20
+> > IMHO for public ABI, QEMU provides explicit QMP commands while
+> > QOM should stay a playground for developers. =20
+>=20
+> Plenty of commands take QOM paths as arguments: eject,
+> blockdev-open-tray, blockdev-close-tray, blockdev-remove-medium,
+> blockdev-insert-medium, blockdev-change-medium,
+> block-latency-histogram-set, cxl-inject-general-media-event,
+> cxl-inject-dram-event, cxl-inject-memory-module-event,
+> cxl-inject-poison, cxl-inject-uncorrectable-errors,
+> cxl-inject-correctable-error, device_del, device-sync-config,
+> query-stats, x-query-virtio-status, x-query-virtio-queue-status,
+> x-query-virtio-vhost-queue-status, x-query-virtio-queue-element, and
+> possibly more.
 
-impl_vmstate_pointer!(Box<T> where T: VMState);
+well, unless draw a line somewhere it will never stop.
+Perhaps we should find on some border where QOM exposure stops
+and document it. So whenever question pops up again, one could be
+sent there.
 
-Also I need to drop Option<NonNull<>> because of
+all x- commands could be ignored, prefix tells no promises whatsoever,
+cxl- group all new and doesn't have excuse to expose QOM, but not
+many pay attention it subsystem considering it as platform bring up effort
 
-             if (field->flags & VMS_POINTER) {
-                 first_elem = *(void **)first_elem;
-                 assert(first_elem || !n_elems || !size);
-             }
+> The only way their QOM path arguments can be used without relying on QOM
+> paths being ABI would be obtaining the argument value with a command or
+> from an event.  I doubt that would be possible even if we tried it,
+> which we haven't.
 
-in migration/vmstate.c.
+hotpluggable-cpu command might be an example (it returns vcpu path,
+which is valid within vcpu lifetime). But then again it's for
+devs convenience.=20
 
-> However, I also doube that pointer usage is bad; we should always use
-> Vec.
+What I don't like about exposing QOM is=20
 
-Vec support is a bit tricky because the number of elements is not 
-accessible from C.  But unbounded arrays are rare in devices.  We can 
-think about it later.
+> > I this specific case, one basically replaces /machine/unattached
+> > orphanage with explicit /machine one and many 'cpuN' children,
+> > which ain't any better than device[N].
+> >
+> > and in future I can imagine that at least in x86 case vcpus
+> > might have another parent depending on configuration.
+> > (i.e. being parented to cores instead)
+> >
+> > If goal is to get rid of /machine/unattached, that's fine. =20
+>=20
+> /machine/unattached was a lazy mistake.
 
-Paolo
+no argument here
+
+>=20
+> > But please not make brittle naming under /machine/unattached
+> > as a reason as 'cpu[N]' is the same just in different place
+> > and scattered all over code (hence doubts if it's any better than curre=
+nt way). =20
+>=20
+> Can you suggest a better, workable naming scheme?
+
+nope, that's why I'm not arguing against it (modulo voicing my doubts)
+
+PS:
+Another question is if it's safe to move/rename device withing QOM tree
+wrt migration (i.e. when 1st instance has old QOM tree and 2nd a modified o=
+ne)
+
+quick smoke test works (migrating from old qemu to a new one with this patc=
+h)
+But it's better to ask to be safe.
+
+> > (ps: don't we have exactly the same for peripheral-anon container) =20
+>=20
+> Yes, but users can avoid that by passing an @id argument.
+>=20
+> [...]
+>=20
 
 
