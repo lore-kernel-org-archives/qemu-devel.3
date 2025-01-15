@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872ECC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 18:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D400DC02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 19:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY8MZ-00083F-60; Wed, 15 Jan 2025 13:43:35 -0500
+	id 1tY8dc-0007KB-6d; Wed, 15 Jan 2025 14:01:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tY8MW-00082E-Ky
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:43:32 -0500
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tY8MV-000361-7g
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 13:43:32 -0500
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-29e65257182so81286fac.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 10:43:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1736966608; x=1737571408; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LFfXCjqMoPK4O+ptGX63fRnmxQjg5+dlAqXaV80UpeI=;
- b=LaX8M5vbshQDAJDK+m7XpzpVCo5oLZUnXaKUmeBfFdm33HiiJXqo4Ovx+OaksstBZ0
- gRuy9M3ijQ7kc2cS0Miucsk1AqD41KrcXfK5W3OFEzpjXC7sJ+0bItBjdHSc/RYXdULT
- ZaT6uvrl4aC7Of6T2Y5937d5gZeV1+je3IBi/o99Sii1iPICqj8Q8gfXpoxxV0jCso5M
- i5zw20mPoEmeW1kI2m/L1XuxcMe1xysLzamHlP/9vv1G70s7h0meMOR5WfT/zcLyXCfa
- bi60JfchXu1CwQBpRsF9rTKkjarzcuJxGzX2sdZja9moZ3ibGwNrNbFYZMGXPNjR5vfV
- 7Cug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736966608; x=1737571408;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LFfXCjqMoPK4O+ptGX63fRnmxQjg5+dlAqXaV80UpeI=;
- b=Y+lh8l7Xx7+MISf91l1hLm72tprzR9053zone62txU2TDEd50HoCxupwRyKhsELtaS
- hhCtatEeJY1qiG3qHm4xurG9pLqit8nBiBqvx39uIvqknMBV123ZiamD3Q4+p0HONWxv
- Ow+YQL5iZVky+NooTni8bRfgEikLn8hB/Ck8IEGXD4M4EUiNMIDflAR+h4Y/4xoHhWhD
- VwvnP3lAzMw5YtfI5XIu8TZheqkKBfHL8GVd0FR0wtAxoZM8kF/KhphL2FPKy3ompepn
- 5dTMnLaIWZFpJyzMzBo+MaU2lyV/6NX8MoYKYVQJ/GP8jw83iSZyfGrr6ARbbepHkAXr
- 3ymg==
-X-Gm-Message-State: AOJu0YwGLcWQKxtSFz+jkqkNkw4XsK0NexXM0uXGxvRlJRCSf54zTlI+
- g/qLbjdaKDv6tQ8V8RMtl9xzw4CW+620nNO8M6mwb5Lxyt5z2+72yFJJYgBmlILiomulfp/E5Jp
- Awq0=
-X-Gm-Gg: ASbGncvRGgux3V7MIFoFeOq8wvfCrSzJ8qYE0ac1SJzVH26DLvxQobWILfs6ViZuSZm
- SPrlk8m07r+0nYqcj1n91Vq+9605LPGig416XKc1CpXrSzc4inlJE5rWC0PrmRHeVWEC4nAFLNy
- Rg7+OuXaedWAUHeRVNPGJqMgu6kJsuyHov7jZPdcJVxsz/gwVPifpqAM08eGpx9aCt/iBzzZHfa
- TytfFVyLsyoeAXZB9oToobKLNGt5HF9FSRpptu11XJTQbXVQeCQXh/l7uk=
-X-Google-Smtp-Source: AGHT+IF8eUqs7CzXGYJBLumlaBqpWohRss4fojhmPVOj4ess2swu3bekmGxHyI+MryHFKJRao0+qAQ==
-X-Received: by 2002:a05:6870:30c:b0:29e:499d:1d33 with SMTP id
- 586e51a60fabf-2aa066c7d11mr16739926fac.14.1736966608347; 
- Wed, 15 Jan 2025 10:43:28 -0800 (PST)
-Received: from grind.. ([191.202.238.10]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2ad80a5cb64sm6539196fac.47.2025.01.15.10.43.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 10:43:27 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tY8dY-0007GA-E0
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:08 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tY8dW-0005dT-4n
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 14:01:08 -0500
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50FHtrM9009505;
+ Wed, 15 Jan 2025 19:01:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=WPtAzp3t63GKnHndvZ80otHiF6D7mgKfuGwae+4YY/0=; b=
+ GpDsNTBUrtMKsI0vxkoNsYD7GEZGzIS7MuYeUgDOFZZIcr7TGxDXRd8zAoueS2wt
+ NnuXr+Zth8Nltu7onFGzP9KrVyVfP/h1+OP2lM36ndm/bc7iJ3oNkWFxuNeRibpU
+ /l4HtHZRZy7r4r/fQW9ibakvQH8ZbYm1lCBIuTvLyY3IuRADsUbYGPWSGUVZ+6Gd
+ 7yrpRpOJeC6zwiQ0STyFzGROexC1OCLPt6g8M7FFDb05Xq2Fp0E/BcMLcuqW9KTJ
+ 1hIP0e6XbdySb8UNrJ2A9XiKnA3vkIf4lJKeGaw66sNhdBfCBVnzadhBSHr3B20o
+ XcNC9w1+HFNJi18nI34n6Q==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 443h6t0nqb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jan 2025 19:01:02 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 50FHFkHL033248; Wed, 15 Jan 2025 19:01:01 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 443f39ur5v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jan 2025 19:01:01 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 50FJ0peJ016497;
+ Wed, 15 Jan 2025 19:01:00 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 443f39uqwr-14; Wed, 15 Jan 2025 19:01:00 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v4 1/6] target/riscv: add ssu64xl
-Date: Wed, 15 Jan 2025 15:43:11 -0300
-Message-ID: <20250115184316.2344583-2-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250115184316.2344583-1-dbarboza@ventanamicro.com>
-References: <20250115184316.2344583-1-dbarboza@ventanamicro.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oa1-x33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V7 13/24] migration: SCM_RIGHTS for QEMUFile
+Date: Wed, 15 Jan 2025 11:00:39 -0800
+Message-Id: <1736967650-129648-14-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-15_09,2025-01-15_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ bulkscore=0 adultscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2501150138
+X-Proofpoint-GUID: Fgg53a-YwVS2NqYqIThUoFg0bDtRcuO3
+X-Proofpoint-ORIG-GUID: Fgg53a-YwVS2NqYqIThUoFg0bDtRcuO3
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.793,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,44 +105,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ssu64xl is defined in RVA22 as:
+Define functions to put/get file descriptors to/from a QEMUFile, for qio
+channels that support SCM_RIGHTS.  Maintain ordering such that
+  put(A), put(fd), put(B)
+followed by
+  get(A), get(fd), get(B)
+always succeeds.  Other get orderings may succeed but are not guaranteed.
 
-"sstatus.UXL must be capable of holding the value 2 (i.e., UXLEN=64 must
-be supported)."
-
-This is always true in TCG and it's mandatory for RVA23, so claim
-support for it.
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- target/riscv/cpu.c                |   1 +
- tests/data/acpi/riscv64/virt/RHCT | Bin 390 -> 398 bytes
- 2 files changed, 1 insertion(+)
+ migration/qemu-file.c  | 84 +++++++++++++++++++++++++++++++++++++++++++++++---
+ migration/qemu-file.h  |  2 ++
+ migration/trace-events |  2 ++
+ 3 files changed, 84 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3d4bd157d2..b187ef2e4b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -213,6 +213,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-     ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-+    ISA_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),
-     ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
-     ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
-diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
-index 695022d56c4ac16607d4c622955ad339fbbfe997..b14ec15e553200760a63aad65586913d31ea2edc 100644
-GIT binary patch
-delta 48
-zcmZo;?qlW(@^B96V`N}pOqj@Jz^cQ@$e^;(o|BQSxYW#~B4@H2qXkC_BLhPoBLf2f
-D`wIz-
-
-delta 41
-wcmeBUZe!*O@^B7mV`N}poG_8gfK`Q&kwIpoJtyPj07f&87)Az$G)4vn0JA^`U;qFB
-
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index b6d2f58..1303a5b 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -37,6 +37,11 @@
+ #define IO_BUF_SIZE 32768
+ #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
+ 
++typedef struct FdEntry {
++    QTAILQ_ENTRY(FdEntry) entry;
++    int fd;
++} FdEntry;
++
+ struct QEMUFile {
+     QIOChannel *ioc;
+     bool is_writable;
+@@ -51,6 +56,9 @@ struct QEMUFile {
+ 
+     int last_error;
+     Error *last_error_obj;
++
++    bool can_pass_fd;
++    QTAILQ_HEAD(, FdEntry) fds;
+ };
+ 
+ /*
+@@ -109,6 +117,8 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
+     object_ref(ioc);
+     f->ioc = ioc;
+     f->is_writable = is_writable;
++    f->can_pass_fd = qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS);
++    QTAILQ_INIT(&f->fds);
+ 
+     return f;
+ }
+@@ -310,6 +320,10 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+     int len;
+     int pending;
+     Error *local_error = NULL;
++    g_autofree int *fds = NULL;
++    size_t nfd = 0;
++    int **pfds = f->can_pass_fd ? &fds : NULL;
++    size_t *pnfd = f->can_pass_fd ? &nfd : NULL;
+ 
+     assert(!qemu_file_is_writable(f));
+ 
+@@ -325,10 +339,9 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+     }
+ 
+     do {
+-        len = qio_channel_read(f->ioc,
+-                               (char *)f->buf + pending,
+-                               IO_BUF_SIZE - pending,
+-                               &local_error);
++        struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
++        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
++                                     &local_error);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+             if (qemu_in_coroutine()) {
+                 qio_channel_yield(f->ioc, G_IO_IN);
+@@ -348,9 +361,66 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+         qemu_file_set_error_obj(f, len, local_error);
+     }
+ 
++    for (int i = 0; i < nfd; i++) {
++        FdEntry *fde = g_new0(FdEntry, 1);
++        fde->fd = fds[i];
++        QTAILQ_INSERT_TAIL(&f->fds, fde, entry);
++    }
++
+     return len;
+ }
+ 
++int qemu_file_put_fd(QEMUFile *f, int fd)
++{
++    int ret = 0;
++    QIOChannel *ioc = qemu_file_get_ioc(f);
++    Error *err = NULL;
++    struct iovec iov = { (void *)" ", 1 };
++
++    /*
++     * Send a dummy byte so qemu_fill_buffer on the receiving side does not
++     * fail with a len=0 error.  Flush first to maintain ordering wrt other
++     * data.
++     */
++
++    qemu_fflush(f);
++    if (qio_channel_writev_full(ioc, &iov, 1, &fd, 1, 0, &err) < 1) {
++        error_report_err(error_copy(err));
++        qemu_file_set_error_obj(f, -EIO, err);
++        ret = -1;
++    }
++    trace_qemu_file_put_fd(f->ioc->name, fd, ret);
++    return ret;
++}
++
++int qemu_file_get_fd(QEMUFile *f)
++{
++    int fd = -1;
++    FdEntry *fde;
++
++    if (!f->can_pass_fd) {
++        Error *err = NULL;
++        error_setg(&err, "%s does not support fd passing", f->ioc->name);
++        error_report_err(error_copy(err));
++        qemu_file_set_error_obj(f, -EIO, err);
++        goto out;
++    }
++
++    /* Force the dummy byte and its fd passenger to appear. */
++    qemu_peek_byte(f, 0);
++
++    fde = QTAILQ_FIRST(&f->fds);
++    if (fde) {
++        qemu_get_byte(f);       /* Drop the dummy byte */
++        fd = fde->fd;
++        QTAILQ_REMOVE(&f->fds, fde, entry);
++        g_free(fde);
++    }
++out:
++    trace_qemu_file_get_fd(f->ioc->name, fd);
++    return fd;
++}
++
+ /** Closes the file
+  *
+  * Returns negative error value if any error happened on previous operations or
+@@ -361,11 +431,17 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+  */
+ int qemu_fclose(QEMUFile *f)
+ {
++    FdEntry *fde, *next;
+     int ret = qemu_fflush(f);
+     int ret2 = qio_channel_close(f->ioc, NULL);
+     if (ret >= 0) {
+         ret = ret2;
+     }
++    QTAILQ_FOREACH_SAFE(fde, &f->fds, entry, next) {
++        warn_report("qemu_fclose: received fd %d was never claimed", fde->fd);
++        close(fde->fd);
++        g_free(fde);
++    }
+     g_clear_pointer(&f->ioc, object_unref);
+     error_free(f->last_error_obj);
+     g_free(f);
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 11c2120..3e47a20 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -79,5 +79,7 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                           off_t pos);
+ 
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
++int qemu_file_put_fd(QEMUFile *f, int fd);
++int qemu_file_get_fd(QEMUFile *f);
+ 
+ #endif
+diff --git a/migration/trace-events b/migration/trace-events
+index 4e3061b..abd9cdf 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -88,6 +88,8 @@ put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
+ 
+ # qemu-file.c
+ qemu_file_fclose(void) ""
++qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
++qemu_file_get_fd(const char *name, int fd) "ioc %s -> fd %d"
+ 
+ # ram.c
+ get_queued_page(const char *block_name, uint64_t tmp_offset, unsigned long page_abs) "%s/0x%" PRIx64 " page_abs=0x%lx"
 -- 
-2.47.1
+1.8.3.1
 
 
