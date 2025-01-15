@@ -4,103 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1050DC02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 08:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8985BC02183
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 08:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tXz39-0006DP-LQ; Wed, 15 Jan 2025 03:46:55 -0500
+	id 1tXz8D-0007Cf-Tc; Wed, 15 Jan 2025 03:52:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tXz38-0006DH-Q0
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 03:46:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tXz36-00089V-Cm
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 03:46:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736930807;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6uIurpLRMFCMfe6HezrOV/WPAVhPmgVEcPBHpkOKDHg=;
- b=aXRA3m2jDRnEmIhHAxf757JogzU2SBm5x1AEeTT4Ec67vEkFKKDEcQESUQjANpcY0Zb4SA
- B+vr4WVQiQP1aG941/c+JWCHAY7DT5MNxkWqMnnMHGgJQx33Vd3p/MO4tAuH910lp0xcyW
- xkC37Zjb0Fl6XBJNd8hGgDiEKxsz5k4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-ZpnQgwLQOPmo9swfQM_V-w-1; Wed, 15 Jan 2025 03:46:45 -0500
-X-MC-Unique: ZpnQgwLQOPmo9swfQM_V-w-1
-X-Mimecast-MFC-AGG-ID: ZpnQgwLQOPmo9swfQM_V-w
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361ac607b6so48754945e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 00:46:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXz88-0007Bp-Ll
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 03:52:06 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tXz86-0000Es-PO
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 03:52:04 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38789e5b6a7so3462281f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 00:52:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1736931121; x=1737535921; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=s7if4vkYI6vy13WnUU24Jcsd6oMt/MiKFZwJ84dcQU0=;
+ b=dJ+PrDYKIeLxx+KJoY+k+wqNXH50cJ7NlNkG2tZpLdmi6txV/zpEpQz8IUwiZepMQi
+ ElnmvfiEWn1qZbJH4bQuI+M59Sjh5bk0ivI6NzBmQV6lmJvctO3CRAMhSrPu8xePJmCZ
+ vF7qVafpMZF25JCASOx1elEx3dBiNNs7Hu9Vmz8YD8V3WQPh6kZEoHnoaxLnZ5GdTDrN
+ vBOcR0rv9iPF1bJpffv/EiwP5cuf7rkJuZ5fjwPd5SnJ2LAKOKCdNKup02R31awIpXXC
+ IbK8C0YIcWu740uhDaDXW3NLXEqAkyMb15mIbIpmV/5WcxN9rDiKmdqCE9lRo0hEvqaA
+ asdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736930805; x=1737535605;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6uIurpLRMFCMfe6HezrOV/WPAVhPmgVEcPBHpkOKDHg=;
- b=rS/mFEj9WeEZJSRB0whuaWRv5n0n6QdO5pZ7ywROicEdIxCYw0LVzCK+eigPJ+oq56
- AomcAEp4RIgEYaoQZb/3/LMqOC7uumtFOm3ukBqFfP9Dt+woXMrCjJg9LdJITG4cOooL
- r/wfdIYgVBwIPjXf0mbHQ9vHZ4xLXVIjv1msO5MU4xBZ5xqMtvC3FpDJHZWWO2/6vyDV
- gqkecg0kqG0zsFvngU2mpR8J8Smojbz4+ebInOyzkUwAeBjxAdLqMDOiOC4WvRv24PJE
- njfOC+Yuw4C7YAB6N7ULbTYl55GLXRUZUJNJuykAVa3Qpv44Z3vmjP2mkXfx9g4N1Qkr
- 91dA==
+ d=1e100.net; s=20230601; t=1736931121; x=1737535921;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s7if4vkYI6vy13WnUU24Jcsd6oMt/MiKFZwJ84dcQU0=;
+ b=Oy84BEDGzXAnv6jkZtEv9qRYTmeWMNa6Zqdw98+WbXrgPBDjak6YT1ADbKYnSZfBjv
+ 41z03UZe33YCj/qI/yimgETZQlqgKZNl6prEtaTkOmPi5AtpmR2wGH9yCKT4DTWTmLUU
+ QyYetX5aWHSrn6AftoXe0cVwUEuxV2o2HopWNiZSAdJMdJFKMqUyiuvKRAXWEUAJSDvr
+ 3cTyMGZWgeo8dN189rnwP5w7dbfUyvrPMIW4akd+1XgNi4/yfIw014GJTLKUQeDONRwM
+ pG6CEjkiB2soCjwjYj9LS2vad2JQfhQ+wFaghAMev7aYwdNJ/Ge1+qjSMpo/CC2XUfRq
+ 6LmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmSGpiGiW2dSG/jD/vczyzVfFGUtZ+6l2BIoJtOa2F2EdbRdR6wY4m02iEep/kEoZCnvrkURLSgUsE@nongnu.org
-X-Gm-Message-State: AOJu0YzOADjhSTEvpBFy4CGkSmqkGUxsohscXrDAnXwYPIqpKWwaZ8T7
- ZTcRw4NY3/eQ4VQZdAq77TuFSw8/0zYL1crxgAqnaRprTvuZ2aSnPvSEeblVwZvwPl5vshtRPeM
- Q9ZsE/2ehy95unCjRBTyMyjHqMonkC5I3DfRv6HpFzeSqv/YaG/sl
-X-Gm-Gg: ASbGncs0x50lN5Sid+mKugtPop6RlD32CqCINfgG+og+LdeYLm4dZ5wyMaTqr8U60vd
- oVbAoC9DeReU1EaPG3cWx9Qt62EcFkHjGYNA6UvQui966b8uGQUp08V6oX3abN/FdDmQ0ubzr/P
- p05yLJRE9At5AgJpblYQ74Ys7x5DR0HVCNbdaTUxct6uotqCquXHsBQBPI3QRuDwfFTzLgpXL6b
- V5PBaQAbwyyji7pR8Usf5umyDArN6XK9nVuQNAOaE10jmH2IA==
-X-Received: by 2002:a05:600c:1d1f:b0:434:f99e:a5b5 with SMTP id
- 5b1f17b1804b1-436e271cf4amr210679775e9.28.1736930804660; 
- Wed, 15 Jan 2025 00:46:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHxGvE+CDIhSH3P3PgxaDQ/+MCGDWQX7KRPeVqMQKhQyZvKlJZedQEYQ5HUXKL/lwArB29ZQQ==
-X-Received: by 2002:a05:600c:1d1f:b0:434:f99e:a5b5 with SMTP id
- 5b1f17b1804b1-436e271cf4amr210679545e9.28.1736930804243; 
- Wed, 15 Jan 2025 00:46:44 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1f5:8f43:2a76:9f8c:65e8:ce7])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74aaffesm15429435e9.10.2025.01.15.00.46.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 00:46:43 -0800 (PST)
-Date: Wed, 15 Jan 2025 03:46:37 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH v7 RESEND 0/5] i386: Support SMP Cache Topology
-Message-ID: <20250115034612-mutt-send-email-mst@kernel.org>
-References: <20250110145115.1574345-1-zhao1.liu@intel.com>
+ AJvYcCWFHn5xMvCAjPsviqlmPK0Nc9ojEho0QP9DxKpsd1NIM7suoGt6kK5Hv0Li6L6gw+/sfsrx7JdiGXAq@nongnu.org
+X-Gm-Message-State: AOJu0Ywa9QWXxsRkUgYrdxTNkkdLp18bioMd3gcJC34c35oBqaE112nt
+ NYYKx+S9MzL4QTqy0VvS6NvHlED4meroFDi/P0Ia22FuCXaCpyTyYonWVl8tqC4=
+X-Gm-Gg: ASbGncsgJZweA9BwD6v8J7boBQQ9/IimG11SBDV/jFdP7gDVb/F/AjmD/GPe3Y6dePv
+ mS09L5YEbDKnuIwWp+izL8ZHU/F/MATcji+MA1NTq6Xmb41XhuLHCoKBXPK3pfWJdtqU4LpnbcI
+ wuwVf5aJWe5Wp3sWsSLgesklIE5fvQvKwz2gdZcBpsbl3QHuzgcG8MEY2nMSn+jEwp7f8jOMjNc
+ cLCAukZ7E5fSxbFqC9OCSx3Zap6uc/WBDS31Yuqg9FVOcuPmRveX6/LES/ZGOs7V7lXgx9xIvF4
+ oqwl+xwy1HIw14FZmVrFBVtB
+X-Google-Smtp-Source: AGHT+IGTv9EsLHcjuUbs267rq+dKbq0PuleQSHP0RGOIa34MTvERJ7pf1SHY6vUEdWRg7TPGPHADtA==
+X-Received: by 2002:a5d:6d02:0:b0:385:df43:223c with SMTP id
+ ffacd0b85a97d-38a87303941mr26591847f8f.13.1736931120935; 
+ Wed, 15 Jan 2025 00:52:00 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e4b81e4sm17302021f8f.64.2025.01.15.00.51.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jan 2025 00:52:00 -0800 (PST)
+Message-ID: <e23c0b2c-a3c6-4929-affb-99ce5dea047f@linaro.org>
+Date: Wed, 15 Jan 2025 09:51:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250110145115.1574345-1-zhao1.liu@intel.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] hw/riscv/riscv-iommu: Remove redundant struct
+ members
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+References: <20250115064737.16350-1-jason.chien@sifive.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250115064737.16350-1-jason.chien@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,118 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 10, 2025 at 10:51:10PM +0800, Zhao Liu wrote:
-> Hi folks,
-> 
-> This is my v7 resend version (updated the commit message of origin
-> v7's Patch 1).
-> 
-> Compared with v6 [1], v7 dropped the "thread" level cache topology
-> (cache per thread):
-> 
->  - Patch 1 is the new patch to reject "thread" parameter for smp-cache.
->  - Ptach 2 dropped cache per thread support.
->  (Others remain unchanged.)
-> 
-> There're several reasons:
-> 
->  * Currently, neither i386 nor ARM have real hardware support for per-
->    thread cache.
->  * ARM can't support thread level cache in device tree. [2].
-> 
-> So it is unnecessary to support it at this moment, even though per-
-> thread cache might have potential scheduling benefits for VMs without
-> CPU affinity.
-> 
-> In the future, if there is a clear demand for this feature, the correct
-> approach would be to add a new control field in MachineClass.smp_props
-> and enable it only for the machines that require it.
-> 
-> 
-> This series is based on the master branch at commit aa3a285b5bc5 ("Merge
-> tag 'mem-2024-12-21' of https://github.com/davidhildenbrand/qemu into
-> staging").
+On 15/1/25 07:47, Jason Chien wrote:
+> Initially, the IOMMU would create a thread, but this thread was removed in
+> the merged version. The struct members for thread control should have been
+> removed as well, but they were not removed at that time.
 
-pc things:
+... in commit 0c54acb8243 ("hw/riscv: add RISC-V IOMMU base emulation").
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-
-
-> Smp-cache support of ARM side can be found at [3].
 > 
-> 
-> Background
-> ==========
-> 
-> The x86 and ARM (RISCV) need to allow user to configure cache properties
-> (current only topology):
->  * For x86, the default cache topology model (of max/host CPU) does not
->    always match the Host's real physical cache topology. Performance can
->    increase when the configured virtual topology is closer to the
->    physical topology than a default topology would be.
->  * For ARM, QEMU can't get the cache topology information from the CPU
->    registers, then user configuration is necessary. Additionally, the
->    cache information is also needed for MPAM emulation (for TCG) to
->    build the right PPTT. (Originally from Jonathan)
-> 
-> 
-> About smp-cache
-> ===============
-> 
-> The API design has been discussed heavily in [4].
-> 
-> Now, smp-cache is implemented as a array integrated in -machine. Though
-> -machine currently can't support JSON format, this is the one of the
-> directions of future.
-> 
-> An example is as follows:
-> 
-> smp_cache=smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=module,smp-cache.3.cache=l3,smp-cache.3.topology=die
-> 
-> "cache" specifies the cache that the properties will be applied on. This
-> field is the combination of cache level and cache type. Now it supports
-> "l1d" (L1 data cache), "l1i" (L1 instruction cache), "l2" (L2 unified
-> cache) and "l3" (L3 unified cache).
-> 
-> "topology" field accepts CPU topology levels including "core", "module",
-> "cluster", "die", "socket", "book", "drawer" and a special value
-> "default". (Note, now, in v7, smp-cache doesn't support "thread".)
-> 
-> The "default" is introduced to make it easier for libvirt to set a
-> default parameter value without having to care about the specific
-> machine (because currently there is no proper way for machine to
-> expose supported topology levels and caches).
-> 
-> If "default" is set, then the cache topology will follow the
-> architecture's default cache topology model. If other CPU topology level
-> is set, the cache will be shared at corresponding CPU topology level.
-> 
-> [1]: Patch v6: https://lore.kernel.org/qemu-devel/20241219083237.265419-1-zhao1.liu@intel.com/
-> [2]: Gap of cache per thread for ARM: https://lore.kernel.org/qemu-devel/20250110114100.00002296@huawei.com/T/#m50c37fa5d372feac8e607c279cd446da3e22a12c
-> [3]: ARM smp-cache: https://lore.kernel.org/qemu-devel/20250102152012.1049-1-alireza.sanaee@huawei.com/
-> [4]: API disscussion: https://lore.kernel.org/qemu-devel/8734ndj33j.fsf@pond.sub.org/
-> 
-> Thanks and Best Regards,
-> Zhao
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 > ---
-> Alireza Sanaee (1):
->   i386/cpu: add has_caches flag to check smp_cache configuration
+>   hw/riscv/riscv-iommu.h | 5 -----
+>   1 file changed, 5 deletions(-)
 > 
-> Zhao Liu (4):
->   hw/core/machine: Reject thread level cache
->   i386/cpu: Support module level cache topology
->   i386/cpu: Update cache topology with machine's configuration
->   i386/pc: Support cache topology in -machine for PC machine
-> 
->  hw/core/machine-smp.c |  9 ++++++
->  hw/i386/pc.c          |  4 +++
->  include/hw/boards.h   |  3 ++
->  qemu-options.hx       | 30 +++++++++++++++++-
->  target/i386/cpu.c     | 71 ++++++++++++++++++++++++++++++++++++++++++-
->  5 files changed, 115 insertions(+), 2 deletions(-)
-> 
-> -- 
-> 2.34.1
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index 9424989df4..fa8a50fa24 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -58,11 +58,6 @@ struct RISCVIOMMUState {
+>       /* interrupt notifier */
+>       void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
+>   
+> -    /* IOMMU State Machine */
+> -    QemuThread core_proc; /* Background processing thread */
+> -    QemuCond core_cond;   /* Background processing wake up signal */
+> -    unsigned core_exec;   /* Processing thread execution actions */
+> -
+>       /* IOMMU target address space */
+>       AddressSpace *target_as;
+>       MemoryRegion *target_mr;
 
 
