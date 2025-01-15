@@ -4,132 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E21C02180
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC01C02185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jan 2025 13:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tY38U-0002rN-Ti; Wed, 15 Jan 2025 08:08:42 -0500
+	id 1tY3DR-00041r-4I; Wed, 15 Jan 2025 08:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tY38S-0002qo-Ja
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:08:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tY3DN-00041S-OD
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:13:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tY38Q-0001Sl-HZ
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:08:40 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tY3DK-0002Gi-P5
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 08:13:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1736946515;
+ s=mimecast20190719; t=1736946819;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Fc7cKU/1cAWrHZdMhH5kayTeyw/WjXePQGKlqhuh3a0=;
- b=EI/6WFZVX1dyA1ToAklUg6ZFIPK3HIZU56wEM8w/UPQIyEskHic4Og3kGBwyFaN5GwfmuP
- 8gK8LuEPAnFVLHZioT7n3I+mmePmB14TSSYRAjLghu8R9DqvSZd6I8m6IM2aQ/1frOzPeV
- OZ4e7xsgFKG9ZQCfoJeAUtwC4JZtfCQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=eQ+Bq79lXlwOY9/UHtkfJPhO/LFQPcrGRTNjIhsVoeM=;
+ b=V7xV4Tx0B3+g52I1HXZLD8gjb2srcQCQpHCV1/3V3MPArHLbR3WpfbNuzvB8fejVRXaNef
+ Anj3rM15LsJfXMF8f4tsYpEReiC++xDrGOZWzANSPU87HQ9o8uzzBk0ROSVlyNfubBHtR2
+ u+8uErkF3OYglA5nQE0YEDk/JuSGKfs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-MN1Q8T-NOh-Q8gfdQ0arxg-1; Wed, 15 Jan 2025 08:08:33 -0500
-X-MC-Unique: MN1Q8T-NOh-Q8gfdQ0arxg-1
-X-Mimecast-MFC-AGG-ID: MN1Q8T-NOh-Q8gfdQ0arxg
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385d52591d6so395150f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 05:08:33 -0800 (PST)
+ us-mta-1-5WyAIEBaP62aiTuXutT8dQ-1; Wed, 15 Jan 2025 08:13:36 -0500
+X-MC-Unique: 5WyAIEBaP62aiTuXutT8dQ-1
+X-Mimecast-MFC-AGG-ID: 5WyAIEBaP62aiTuXutT8dQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43623bf2a83so53614085e9.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 05:13:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736946512; x=1737551312;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Fc7cKU/1cAWrHZdMhH5kayTeyw/WjXePQGKlqhuh3a0=;
- b=shU6gOBR5zyOTLfYhI/tEZWllGRV72doUYEDmSJp03zoxLyt0hfa3zb/lBaeJKDcif
- wx0q4Swbhqs+Qk5yvOxOk0Ec6ySI1Oas96phySX/nDvoavp6s+tO8wv774cf0bt3Q4V9
- wZg5UDcLBeLzgFlTh8FYjHVLkxLvKoviR+UbhRdgJJ5KdefTGWedqcjJVTUTZAwrB0je
- ByyJnG5NtPLD3/0dh9x0NLVbteuhdwtqWCkOPGFcfdEsdKlRNyD/1peNCmhlTD4iWfPj
- /NuAi45FRP1qXRyRBDNDEAhKoXVUje7UiSeyZOc6GQSX1ngI/ooMG5aC5JnCzz9Zy0yT
- u/7w==
-X-Gm-Message-State: AOJu0YxPli5BzKs5pSc3z0h0EtSPqjT/UKtSauHoA5uM76/XL4shAT8r
- qS/5N7OkG9hxAtuFkG438PO9mzWKOJW3FlRNiMwFQKOfQ/V8Vk44tyaQ8SFcvGkEq2nfK0KIu+j
- GrVWpJbtj1ZvIX1GzGe3G7T0BCkif/OdBWSsYMxoFTOKANyMRWKXu
-X-Gm-Gg: ASbGncvZQZ9SUueVbcTcHjM2qids0+ClPGZxf35Ws12Ke+y85WUFwaXF5cqy+MNt6f6
- 0JoRpYHhpCNDIovKDQaKv38sMEy/qSwOpW2ZpJrhxnx6PShvGvZe9qREy0AT19paZ1zxCP/Dlg9
- JoYrjMen4d9LqiMCy/db9CuEHWORZmhmAjhRHMbwEsg9H+rGSXKnMIXIDl4TGIU5DdsPw6rusli
- Ws158qtM/zkyMAHB/LnpGwbZcTOTF00Jc9Quszzl54xy0q247jsnsUIrQZ7
-X-Received: by 2002:a05:6000:2c1:b0:386:374b:e8bc with SMTP id
- ffacd0b85a97d-38a8b0d3425mr21832181f8f.15.1736946512152; 
- Wed, 15 Jan 2025 05:08:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEFFLvv9fGNV3ed44rqeK71muipbLBKSIx5QwHIRdWFwIJNAaNwXcbnABzeVipixh4Jg45QQg==
-X-Received: by 2002:a05:6000:2c1:b0:386:374b:e8bc with SMTP id
- ffacd0b85a97d-38a8b0d3425mr21832163f8f.15.1736946511772; 
- Wed, 15 Jan 2025 05:08:31 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4b81ccsm17816154f8f.65.2025.01.15.05.08.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 05:08:30 -0800 (PST)
-Message-ID: <f1e17aac-543a-4d9b-906b-8ee98d1ff55e@redhat.com>
-Date: Wed, 15 Jan 2025 14:08:22 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 5/9] rust: vmstate: implement VMState for scalar types
+ d=1e100.net; s=20230601; t=1736946815; x=1737551615;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eQ+Bq79lXlwOY9/UHtkfJPhO/LFQPcrGRTNjIhsVoeM=;
+ b=rNG7FuiAXaWatSxZfOqP2r0WBwIkQFFHKjzUyWLrsxBDINWwgH8w+0xxDzzMsS98+U
+ OxeVa1AkC82yULQSb1M797bl+HnwYcNb1xnfLfxg01vE040tMbkJPFY+ty/bheV8JSBE
+ zaHZQ3G7FMbYw6uTdikmu//cuJcrho+KB6pC2UtPeQiufpZne82ZOi+kQeVLq1Jd2cUz
+ O8i7MsXdvwq16Ep9q97pedqJdY/9cLFpsd63zD6XrQqS/T0UcvS8J4enVDL7dVITGD5V
+ 0K5TazvhIVQelRYzZ8lr0GAZvHU/lAz+J3H4nvmDCXI9p1eQWoC7LHpFgLUIG81ihOTT
+ /Otw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7Q9wrsruXOgqv4sVtuDR+qvzjPyvF5mTdJhBcRgxHcslFl5J6ACGSTLrNKkmOCis5jSct5HQxdlqO@nongnu.org
+X-Gm-Message-State: AOJu0YyRii/JMN7QZp7SHcrN9Io0JcLlPUkIvu2B6uEKPbdq4ic9StE9
+ pyxFmjc2dUUoObLHj+zyr9rgdlw9TbjtTr7x/1ZeyT3WXrZ+OBYHCUTyy5KcULBXjvzydMIuqWh
+ P8gncKrFvSu0gAsSxIJfm3z/e8b97gLbpuKQXJjkwzt/250TyMQjR
+X-Gm-Gg: ASbGncuOy2p/UQ20AQthBnrFOyQG1w74RkIHAXenuap76Bb6W/4k8JBa0GFvKC17Cdu
+ Dl+m+ljAj9Vj22Q2klqbaLS9tVMoJAWyw1Vs0n3L9kzDQY+6zeX8U/iSGR2WjCDSoGmRn3+0TCZ
+ meepgz1YGS+hZyDYKqkzBFoPL42W6D5HBR1rrCANRRZZ5g3TqKZNGsvaenXcVt3zvRpdXM6l1Bl
+ balV2zuN9/DON8h00F3g7qaSUutPGZerfETw+wjbQF9X0qKGawijjYMN/g4riwS939527T33+Wu
+ 0kh11mkEJBMfT1G2tNdz0N6OmAcB
+X-Received: by 2002:a05:600c:348c:b0:436:ed33:1535 with SMTP id
+ 5b1f17b1804b1-436ed3316a4mr226140295e9.12.1736946815557; 
+ Wed, 15 Jan 2025 05:13:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF+mcKeHlhfgvDTQ7D6zen3YYvkNgP3ZBHU2dN9lZdPnguzeTxgaZek+YS5ORutpJpx9qd5kw==
+X-Received: by 2002:a05:600c:348c:b0:436:ed33:1535 with SMTP id
+ 5b1f17b1804b1-436ed3316a4mr226140105e9.12.1736946815269; 
+ Wed, 15 Jan 2025 05:13:35 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c0f026c0sm27220525e9.0.2025.01.15.05.13.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 05:13:34 -0800 (PST)
+Date: Wed, 15 Jan 2025 14:13:33 +0100
+From: Igor Mammedov <imammedo@redhat.com>
 To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, junjie.mao@hotmail.com
-References: <20241231002336.25931-1-pbonzini@redhat.com>
- <20241231002336.25931-6-pbonzini@redhat.com> <Z34fAFD4d/BVZQkn@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <Z34fAFD4d/BVZQkn@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, Peter Xu
+ <peterx@redhat.com>
+Subject: Re: [PULL 04/49] hw: Add QOM parentship relation with CPUs
+Message-ID: <20250115141333.005ab3eb@imammedo.users.ipa.redhat.com>
+In-Reply-To: <Z4Z25p0YvBEtV2/Z@intel.com>
+References: <20250112221726.30206-1-philmd@linaro.org>
+ <20250112221726.30206-5-philmd@linaro.org>
+ <20250113132832.049f651a@imammedo.users.ipa.redhat.com>
+ <6f9225ad-edc6-4fe0-b0e6-8a93e7f50102@linaro.org>
+ <20250114111829.2f577596@imammedo.users.ipa.redhat.com>
+ <Z4Z25p0YvBEtV2/Z@intel.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,82 +117,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 07:45, Zhao Liu wrote:
->>   #[macro_export]
->>   macro_rules! vmstate_of {
->> -    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
->> +    ($struct_name:ty, $field_name:ident $([0 .. $num:tt $(* $factor:expr)?])? $(,)?) => {
+On Tue, 14 Jan 2025 22:38:30 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
+
+> > I this specific case, one basically replaces /machine/unattached
+> > orphanage with explicit /machine one and many 'cpuN' children,
+> > which ain't any better than device[N].
+> > 
+> > and in future I can imagine that at least in x86 case vcpus
+> > might have another parent depending on configuration.
+> > (i.e. being parented to cores instead)  
 > 
-> Why change ident to tt?
+> I remember that this was your idea all along, and I'm not sure if you're
+> also referring to my previous patches about hybrid topology :-), which I'll
 
-Rebase mistake.  Initially I had $num:tt, however that becomes unclear 
-if you have [0 .. 0] where the second 0 is a field name.
+I'm sorry, I've should've reviewed it long time ago.
+But it got lost in from my review queue, can you give me a pointer
+to the latest you've posted, please? 
 
->> +impl_vmstate_scalar!(vmstate_info_bool, bool);
->> +impl_vmstate_scalar!(vmstate_info_int8, i8);
->> +impl_vmstate_scalar!(vmstate_info_int16, i16);
->> +impl_vmstate_scalar!(vmstate_info_int32, i32);
-> 
-> missed VMS_VARRAY_INT32 :-)
+> continue to refresh afterward in future (after all, the hybrid architecture
+> will continue in x86). And I think, since socket/core/thread are the three
+> default QEMU topology hierarchies, I understand that it would be best for
+> thread to always have core as parent.
 
-I left that out intentionally, as Rust is probably going to use 
-IndexMut<uNN> instead of i32.
-
->> +impl_vmstate_scalar!(vmstate_info_int64, i64);
->> +impl_vmstate_scalar!(vmstate_info_uint8, u8, VMS_VARRAY_UINT8);
->> +impl_vmstate_scalar!(vmstate_info_uint16, u16, VMS_VARRAY_UINT16);
->> +impl_vmstate_scalar!(vmstate_info_uint32, u32, VMS_VARRAY_UINT32);
-> 
-> If we want to expand in the future (e.g., support vmstate_info_int32_equal
-> and vmstate_info_int32_le), then introducing new macro variants will be
-> straightforward. So, fair enough.
-> 
->> +impl_vmstate_scalar!(vmstate_info_uint64, u64);
-> 
-> What about applying this to "usize" with vmstate_info_uint64?
-
-There's 32-bit hosts too...  So one would have to add vmstate_info_ulong 
-which is serialized as 64-bit.
-
-We can add it later, but perhaps we could also create a derive(Index, 
-IndexMut) macro that makes it possible to specify the type of the index. 
-  While Rust uses usize instead of uNN for array indices, that does not 
-have to be universal; using uNN is a lot better if it means you can get 
-rid of casts from register values to array indices and back.  See for 
-example commit 6b4f7b0705b ("rust: pl011: fix migration stream", 
-2024-12-19).
-
-That is indeed also an issue for HPET, but in that case it can be 
-isolated to a couple lines,
-
-             let timer_id: usize = ((addr - 0x100) / 0x20) as usize;
-
-and it could even be wrapped further
-
-     fn timer_and_addr(&self, addr: hwaddr) -> 
-Option<&BqlRefCell<HPETTimer>, hwaddr> {
-         let timer_id: usize = ((addr - 0x100) / 0x20) as usize;
-         if timer_id > self.num_timers.get() {
-             // TODO: Add trace point - 
-trace_hpet_timer_id_out_of_range(timer_id)
-             None
-         } else {
-             Some((self.get_timer(timer_id), addr & 0x18))
-         }
-     }
-
-     ...
-
-     match self.timer_and_addr(addr) {
-         None => 0 // Reserved,
-         Some(timer, addr) => timer.borrow_mut().read(addr, size)
-     }
-
-
-So for HPET you didn't reach the threshold of having to create "pub 
-struct HPETTimers([BqlRefCell<HPETTimer>; MAX_HPET_TIMERS])" and 
-implement Index<>.
-
-Paolo
+I guess it's fine as /machine/cpu[N] for now,
+what I've initially wished for is commit message that explains
+how do we get there and why it's done, so that later, whoever has to
+touch that code would have an idea why it's there.  
 
 
