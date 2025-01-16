@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0791DC02185
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 01:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48ED8C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 01:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYENw-0003YG-Cg; Wed, 15 Jan 2025 20:09:24 -0500
+	id 1tYEOD-0003aY-U7; Wed, 15 Jan 2025 20:09:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <prvs=104bc4e84=wilfred.mallawa@wdc.com>)
- id 1tYENt-0003Xh-B9; Wed, 15 Jan 2025 20:09:22 -0500
-Received: from esa3.hgst.iphmx.com ([216.71.153.141])
+ id 1tYEOA-0003aC-C3; Wed, 15 Jan 2025 20:09:38 -0500
+Received: from esa5.hgst.iphmx.com ([216.71.153.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <prvs=104bc4e84=wilfred.mallawa@wdc.com>)
- id 1tYENr-0004Dt-HY; Wed, 15 Jan 2025 20:09:21 -0500
+ id 1tYEO7-0004Fs-Nu; Wed, 15 Jan 2025 20:09:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1736989759; x=1768525759;
+ t=1736989775; x=1768525775;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RIcE4V9Oau2BlIHui7UckYA4eT7nPs0+wP+wuZKNg6E=;
- b=reR8xH4bQeSvuyJsVsZn34pDDdzj4hfTaq1p4XNNWU64lNUSZdJuu2CA
- 6UVv3QIsCf4s5az+gGjqaMfrgVAI1JW9ynP2FnFy4dQK6yBmU++je4vnm
- a1JxMrkW3tfV2s5/iCmRZBJgake0i8FEdwaWneguSNVlXL+4C/WkCtQh7
- Cp7PFc6y/aIzs+Sjfu9oXMCoTHUgURdmsWxO4AR++pBGWm6v+m9YQec7+
- EJaqyjF96WHRxJ0nAkzPTcg79iNbg6qzlkYg54o2PFiSJ8HiA/yn40Ygr
- tczkBLqnaVk+7mPL97fykANlSSGj7ZpY14oPKBUNjjogiYGyy5ULfLe07 A==;
-X-CSE-ConnectionGUID: uKb/pkYGQiyaZWeS0+fVDg==
-X-CSE-MsgGUID: DpjyAkRNT26mSua+NIXS0A==
-X-IronPort-AV: E=Sophos;i="6.13,207,1732550400"; d="scan'208";a="36036489"
-Received: from uls-op-cesaip01.wdc.com (HELO uls-op-cesaep01.wdc.com)
- ([199.255.45.14])
- by ob1.hgst.iphmx.com with ESMTP; 16 Jan 2025 09:09:16 +0800
-IronPort-SDR: 67884eae_KlBupYu34GYman1vMH9LAReNkN9sDIo1IgH+MR+8cKrpFUm
- RKqpZ5WYgvzMipG/WlsJQwKkaWc071lDa9h56Yg==
+ bh=J9ozxdGwSbRc+uSjkOcWz3zQbvf4VtjqTXtqt+oOQJc=;
+ b=cXGadox85yLG53jFKeBB5is/q+z3h5tkJ5UK4O3UQGLS0Th2KlNSNxww
+ h2V0CT4zc0r1P0reyv6ni5UWSJcGJGEuIwowNHTHtmdzeEqSV48qVB9x2
+ Xc+O/W+34QM3JkP0yOHehHkfCo6T4NNFsnV6uPi1xJKBicCyemb7FffJV
+ d52JF5/b9I662NUaPg719EAa5EgA+gpHSEr0spGAtNzIv03aKErLfFOp9
+ 2hYQRQsGiJ7NGc48dfgEr6qEXDGiYiQC/Khh2N8XKsAcZ0M/jrFkBLZ8w
+ G+oXPsH0sWE7L3kWT1lasp46b58WNcAPL82S+aBI86oxDdHsgHuEFmoOW g==;
+X-CSE-ConnectionGUID: iYbHGgIkRmWNQ5YLAo3PbA==
+X-CSE-MsgGUID: j1xcfgf6QLy/rONg3ul6MA==
+X-IronPort-AV: E=Sophos;i="6.13,207,1732550400"; d="scan'208";a="37059667"
+Received: from uls-op-cesaip02.wdc.com (HELO uls-op-cesaep02.wdc.com)
+ ([199.255.45.15])
+ by ob1.hgst.iphmx.com with ESMTP; 16 Jan 2025 09:09:32 +0800
+IronPort-SDR: 67884d72_5tNmTEiehvwU790Bbbo0ZCrq384n9ENOkYAUP6NOOBMGNSc
+ SE7L0jwxhg3mAhTzpxHYg9lMNZGlAMiQtwu0/Ow==
 Received: from uls-op-cesaip02.wdc.com ([10.248.3.37])
- by uls-op-cesaep01.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 15 Jan 2025 16:11:26 -0800
+ by uls-op-cesaep02.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 15 Jan 2025 16:06:10 -0800
 WDCIronportException: Internal
 Received: from unknown (HELO fedora.wdc.com) ([10.225.165.91])
- by uls-op-cesaip02.wdc.com with ESMTP; 15 Jan 2025 17:09:11 -0800
+ by uls-op-cesaip02.wdc.com with ESMTP; 15 Jan 2025 17:09:26 -0800
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: alistair.francis@wdc.com, kbusch@kernel.org, its@irrelevant.dk,
  foss@defmacro.it, stefanha@redhat.com, fam@euphon.net, philmd@linaro.org,
  kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: [RFC v2 1/3] spdm: add spdm storage transport virtual header
-Date: Thu, 16 Jan 2025 11:08:55 +1000
-Message-ID: <20250116010856.95115-3-wilfred.mallawa@wdc.com>
+Subject: [RFC v2 3/3] hw/nvme: connect SPDM over NVMe Security Send/Recv
+Date: Thu, 16 Jan 2025 11:08:57 +1000
+Message-ID: <20250116010856.95115-5-wilfred.mallawa@wdc.com>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250116010856.95115-2-wilfred.mallawa@wdc.com>
 References: <20250116010856.95115-2-wilfred.mallawa@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=216.71.153.141;
- envelope-from=prvs=104bc4e84=wilfred.mallawa@wdc.com; helo=esa3.hgst.iphmx.com
+Received-SPF: pass client-ip=216.71.153.144;
+ envelope-from=prvs=104bc4e84=wilfred.mallawa@wdc.com; helo=esa5.hgst.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -87,37 +87,178 @@ From:  Wilfred Mallawa via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This header contains the transport encoding for an SPDM message that
-uses the SPDM over Storage transport as defined by the DMTF DSP0286.
+This patch extends the existing support we have for NVMe with only DoE
+to also add support to SPDM over the NVMe Security Send/Recv commands.
+
+With the new definition of the `spdm-trans` argument, users can specify
+`spdm_trans=nvme` or `spdm_trans=doe`. This allows us to select the SPDM
+transport respectively. SPDM over the NVMe Security Send/Recv commands
+are defined in the DMTF DSP0286.
 
 Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 ---
- include/system/spdm-socket.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ docs/specs/spdm.rst         | 10 ++++--
+ hw/nvme/ctrl.c              | 62 ++++++++++++++++++++++++++++++-------
+ include/hw/pci/pci_device.h |  1 +
+ 3 files changed, 60 insertions(+), 13 deletions(-)
 
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 2b7d03f82d..fc007e5b48 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -88,6 +88,18 @@ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-  */
- void spdm_socket_close(const int socket, uint32_t transport_type);
+diff --git a/docs/specs/spdm.rst b/docs/specs/spdm.rst
+index f7de080ff0..dd6cfbbd68 100644
+--- a/docs/specs/spdm.rst
++++ b/docs/specs/spdm.rst
+@@ -98,7 +98,7 @@ Then you can add this to your QEMU command line:
+ .. code-block:: shell
  
-+/*
-+ * Defines the transport encoding for SPDM, this information shall be passed
-+ * down to the SPDM server, when conforming to the SPDM over Storage standard
-+ * as defined by DSP0286.
-+ */
-+typedef struct QEMU_PACKED {
-+    uint8_t security_protocol;
-+    uint16_t security_protocol_specific;
-+    bool inc_512;
-+    uint32_t length;
-+} StorageSpdmTransportHeader;
+     -drive file=blknvme,if=none,id=mynvme,format=raw \
+-        -device nvme,drive=mynvme,serial=deadbeef,spdm_port=2323
++        -device nvme,drive=mynvme,serial=deadbeef,spdm_port=2323,spdm_trans=doe
+ 
+ At which point QEMU will try to connect to the SPDM server.
+ 
+@@ -113,7 +113,13 @@ of the default. So the entire QEMU command might look like this
+         -append "root=/dev/vda console=ttyS0" \
+         -net none -nographic \
+         -drive file=blknvme,if=none,id=mynvme,format=raw \
+-        -device nvme,drive=mynvme,serial=deadbeef,spdm_port=2323
++        -device nvme,drive=mynvme,serial=deadbeef,spdm_port=2323,spdm_trans=doe
 +
- #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
- #define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
- #define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
++The `spdm_trans` argument defines the underlying transport type that is emulated
++by QEMU. For an PCIe NVMe controller, both "doe" and "nvme" are supported. Where,
++"doe" does SPDM transport over the PCIe extended capability Data Object Exchange
++(DOE), and "nvme" uses the NVMe Admin Security Send/Receive commands to
++implement the SPDM transport.
+ 
+ .. _DMTF:
+    https://www.dmtf.org/standards/SPDM
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index cc0a0f8bfb..653f364d88 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8742,6 +8742,23 @@ static DOEProtocol doe_spdm_prot[] = {
+     { }
+ };
+ 
++static inline uint32_t nvme_get_spdm_trans_type(PCIDevice *pci_dev)
++{
++    if (!pci_dev) {
++        return false;
++    }
++
++    if (!strcmp(pci_dev->spdm_trans, "nvme")) {
++        return SPDM_SOCKET_TRANSPORT_TYPE_NVME;
++    }
++
++    if (!strcmp(pci_dev->spdm_trans, "doe")) {
++        return SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE;
++    }
++
++    return 0;
++}
++
+ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -8825,19 +8842,31 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+ 
+     pcie_cap_deverr_init(pci_dev);
+ 
+-    /* DOE Initialisation */
++    /* SPDM Initialisation */
+     if (pci_dev->spdm_port) {
+-        uint16_t doe_offset = n->params.sriov_max_vfs ?
+-                                  PCI_CONFIG_SPACE_SIZE + PCI_ARI_SIZEOF
+-                                  : PCI_CONFIG_SPACE_SIZE;
++        switch  (nvme_get_spdm_trans_type(pci_dev)) {
++        case SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE:
++            uint16_t doe_offset = n->params.sriov_max_vfs ?
++                                    PCI_CONFIG_SPACE_SIZE + PCI_ARI_SIZEOF
++                                    : PCI_CONFIG_SPACE_SIZE;
+ 
+-        pcie_doe_init(pci_dev, &pci_dev->doe_spdm, doe_offset,
+-                      doe_spdm_prot, true, 0);
++            pcie_doe_init(pci_dev, &pci_dev->doe_spdm, doe_offset,
++                        doe_spdm_prot, true, 0);
+ 
+-        pci_dev->doe_spdm.spdm_socket = spdm_socket_connect(pci_dev->spdm_port,
+-                                                            errp);
++            pci_dev->doe_spdm.spdm_socket = spdm_socket_connect(
++                                             pci_dev->spdm_port, errp);
+ 
+-        if (pci_dev->doe_spdm.spdm_socket < 0) {
++            if (pci_dev->doe_spdm.spdm_socket < 0) {
++                return false;
++            }
++            break;
++        case SPDM_SOCKET_TRANSPORT_TYPE_NVME:
++            n->spdm_socket = spdm_socket_connect(pci_dev->spdm_port, errp);
++            if (n->spdm_socket < 0) {
++                return false;
++            }
++            break;
++        default:
+             return false;
+         }
+     }
+@@ -9106,11 +9135,17 @@ static void nvme_exit(PCIDevice *pci_dev)
+         g_free(n->cmb.buf);
+     }
+ 
++    /* Only one of the `spdm_socket` below would have been setup */
+     if (pci_dev->doe_spdm.spdm_socket > 0) {
+         spdm_socket_close(pci_dev->doe_spdm.spdm_socket,
+                           SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE);
+     }
+ 
++    if (n->spdm_socket > 0) {
++        spdm_socket_close(pci_dev->doe_spdm.spdm_socket,
++                          SPDM_SOCKET_TRANSPORT_TYPE_NVME);
++    }
++
+     if (n->pmr.dev) {
+         host_memory_backend_set_mapped(n->pmr.dev, false);
+     }
+@@ -9162,6 +9197,7 @@ static const Property nvme_props[] = {
+                      false),
+     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
+     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
++    DEFINE_PROP_STRING("spdm_trans", PCIDevice, spdm_trans),
+     DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
+     DEFINE_PROP_BOOL("atomic.dn", NvmeCtrl, params.atomic_dn, 0),
+     DEFINE_PROP_UINT16("atomic.awun", NvmeCtrl, params.atomic_awun, 0),
+@@ -9236,7 +9272,9 @@ static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
+ {
+     uint16_t old_num_vfs = pcie_sriov_num_vfs(dev);
+ 
+-    if (pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE)) {
++    /* DOE is only initialised if SPDM over DOE is used */
++    if (pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE) &&
++        nvme_get_spdm_trans_type(dev) == SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE) {
+         pcie_doe_write_config(&dev->doe_spdm, address, val, len);
+     }
+     pci_default_write_config(dev, address, val, len);
+@@ -9247,7 +9285,9 @@ static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
+ static uint32_t nvme_pci_read_config(PCIDevice *dev, uint32_t address, int len)
+ {
+     uint32_t val;
+-    if (dev->spdm_port && pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE)) {
++
++    if (dev->spdm_port && pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE) &&
++        (nvme_get_spdm_trans_type(dev) == SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE)) {
+         if (pcie_doe_read_config(&dev->doe_spdm, address, len, &val)) {
+             return val;
+         }
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index add208edfa..9ec66809d3 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -160,6 +160,7 @@ struct PCIDevice {
+ 
+     /* SPDM */
+     uint16_t spdm_port;
++    char *spdm_trans;
+ 
+     /* DOE */
+     DOECap doe_spdm;
 -- 
 2.48.0
 
