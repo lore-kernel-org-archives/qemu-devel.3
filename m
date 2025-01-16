@@ -4,58 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E31C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A7FC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYNS4-0001TY-Iy; Thu, 16 Jan 2025 05:50:16 -0500
+	id 1tYNTv-0003AY-C8; Thu, 16 Jan 2025 05:52:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tYNS0-0001Sc-RD
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:50:12 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tYNRy-0006eL-If
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:50:12 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YYfjJ1ghNz6M4nK;
- Thu, 16 Jan 2025 18:48:20 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id ACCF3140B63;
- Thu, 16 Jan 2025 18:50:06 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 16 Jan
- 2025 11:50:05 +0100
-Date: Thu, 16 Jan 2025 10:50:04 +0000
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, Fan Ni
- <fan.ni@samsung.com>
-Subject: Re: [PATCH] hw/cxl: Introduce CXL_T3_MSIX_VECTOR enumeration
-Message-ID: <20250116105004.0000442a@huawei.com>
-In-Reply-To: <3ae1403f-3a70-4826-b952-3fce27d91407@fujitsu.com>
-References: <20250115075846.167552-1-lizhijian@fujitsu.com>
- <20250115135135.000066fa@huawei.com>
- <3ae1403f-3a70-4826-b952-3fce27d91407@fujitsu.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYNTo-00032v-Cy
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:52:05 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYNTm-0006uv-P7
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:52:04 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-38789e5b6a7so432819f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 02:52:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737024720; x=1737629520; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tWAY9nFwSu7kgYW7ClZSo4bYY2o5wAOQVudqPA4FJNI=;
+ b=CQz9C08SjzeSLrHRG7oE1ig4rI5+JkIwU0RIMu+xJ8bqfJ8X7Mslc3ZhQvbFQFHQ6C
+ +ZcVXo61VRbNz/srCmvwjcDrntGB3w2pp+Cq21Suh2GzCUzwyGTj9dHDyCRYDq9M38/F
+ NgJdgqDfQaWzxIvcTeI8LyQXlo35VNK0OlxGm4TTllucEZGX2pGd9AIn3Qz4V3j6Y/gl
+ uPR8LTbk1xqErw81fTe5fqQ3dWq6hxs8cI3bYji2lYqDyTfs22aW0nmTtRnr9E1ZCkF6
+ GYX2q1i9wJDnmHW9KmpFKVOAEWPz9pA6NRKi3qTdf4D4EjjbyH9bO2iabxgRoERovzRO
+ B/cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737024720; x=1737629520;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tWAY9nFwSu7kgYW7ClZSo4bYY2o5wAOQVudqPA4FJNI=;
+ b=cIYYavU33JKYIyxSzuOzW8bMM53ubWd5/gHtafN4bHNg8OgXrGycdhdjDzJ7AANMA+
+ 81LCM7HGyoP7k6+n+ucW+6TmFrVzUuYDrogBBJpXRy9uFobsu0+bdkdSK2cL+N6ZZ5yz
+ hsOYAT5eClaXVGZlGmZXgKh/z+C3O3mW1Vz6h1o5j8MRgC0cN+AS8ddQeBbqj7RoChh7
+ 3Lyci5kXXmm24SjiH6ONAYf/bdQt75ZxWwEe4k9GnLKP9ty7f/PYyd4fcx44allwU0JD
+ erodup3NWmdQS3msliNdHW9yRuUXhr4lsozH5dmsb8mtrgxXh78dKZtiivC7o9x8r/lK
+ ftyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfpi7stzdnBeTsw4bl+OyJTMrIHnO4AX4iQ2A8SO33Rr/tTPUKGOkMv7V98jZft6DYr/i1M8xewFcP@nongnu.org
+X-Gm-Message-State: AOJu0YwiB5eoT+UBl8xXTrIAStntvZXQ8///ICtIWi5Iqq2mCvv34PFD
+ q4HPVx821qLx1Sf9wukFkDSTsn36WzDqY2/pTrjzwKR0bnsxUpGIZaFlQ3DQWGA=
+X-Gm-Gg: ASbGncsLtr5273QFhzVi6dnWqKLJik+hE7oKb85AUCb8+NIdKJuXrcUMn3eyrB03NSH
+ dVKiqbqOQ6+yTKlqWppfqVQVf1olfyP5o/Kem9aZnanvcUzXjhYzxTzKoWoVna12+PCvEaTBzmR
+ N3beEJUhSXhA0yeD5Bc5rk01el2HHEuVYjF7aIJ+fmdBxN9k2IrGfLtFxycKDRaotv/kTatnFsN
+ AnEJmLNjI8BuccGFR/2z5wJ3FM9TU9sHJK9pYmqia8vZkX1/Ytr2p8=
+X-Google-Smtp-Source: AGHT+IF0JZjsZr53E9gsxvIFP96yMGoH4Cm+VUlHj5v2ZhEUofChnS/X6KvBqa6VhLGTXIGio7Zz2Q==
+X-Received: by 2002:a05:6000:1862:b0:38a:41a3:218 with SMTP id
+ ffacd0b85a97d-38a8733899emr27204455f8f.36.1737024720548; 
+ Thu, 16 Jan 2025 02:52:00 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e383dedsm20444054f8f.35.2025.01.16.02.51.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jan 2025 02:52:00 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2EDE35F8B3;
+ Thu, 16 Jan 2025 10:51:59 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Nina Schoetterl-Glausch
+ <nsg@linux.ibm.com>
+Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
+In-Reply-To: <a82c41712409ac77d66f03e19b98382bcf11ba45.camel@linux.ibm.com>
+ (Ilya Leoshkevich's message of "Thu, 16 Jan 2025 10:19:30 +0100")
+References: <20250115232022.27332-1-iii@linux.ibm.com>
+ <ac4d48c3-d139-4af0-ab28-f2674b74cb8c@linaro.org>
+ <a82c41712409ac77d66f03e19b98382bcf11ba45.camel@linux.ibm.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Thu, 16 Jan 2025 10:51:59 +0000
+Message-ID: <87frljhvzk.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,331 +104,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jan 2025 01:18:28 +0000
-"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-> On 15/01/2025 21:51, Jonathan Cameron wrote:
-> > On Wed, 15 Jan 2025 15:58:46 +0800
-> > Li Zhijian <lizhijian@fujitsu.com> wrote:
-> >  =20
-> >> Introduce the `CXL_T3_MSIX_VECTOR` enumeration to specify MSIX vector
-> >> assignments specific to the Type 3 (T3) CXL device.
-> >>
-> >> The primary goal of this change is to encapsulate the MSIX vector uses
-> >> that are unique to the T3 device within an enumeration, improving code
-> >> readability and maintenance by avoiding magic numbers. This organizati=
-onal
-> >> change allows for more explicit references to each vector=E2=80=99s ro=
-le, thereby
-> >> reducing the potential for misconfiguration.
-> >>
-> >> It also modified `mailbox_reg_init_common` to accept the `msi_n` param=
-eter,
-> >> reflecting the new MSIX vector setup.
-> >>
-> >> This pertains to the T3 device privately; other endpoints should refra=
-in from
-> >> using it, despite its public accessibility to all of them.
-> >>
-> >> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com> =20
-> > A few things inline. I'll apply this with the following tweak. =20
->=20
-> Thank you!
->=20
-> These changes are good to me.
->=20
-> Thanks
-> Zhijian
->=20
->=20
-> BTW, during making this patch, i noticed that are a few abused cleanup in=
- the error path
-> of xxx_realize() vs xxx_exit()
->=20
-> For example:
-> ct3_realize()
-> {
-> ...
-> err1:
->    cleanup1;
->=20
-> err2:
->    cleanup2;
-> }
->=20
-> ct3_exit()
-> {
->    cleanup1;
->    cleanup2;
-> }
->=20
-> These cleanups will function correctly only if both cleanup1 and cleanup2=
- are reentrant.
-> However, this is not the case in `ct3_realize()` and other CXL-related `x=
-xx_realize()` functions.
->=20
-> When examining other devices, we rarely observe any cleanups in the `xxx_=
-realize()`
-> error path, as the cleanup in `xxx_exit()` alone suffices.
->=20
-> I intend to address these cleanups if you have not yet done so.  @Jonathan
+> On Wed, 2025-01-15 at 16:08 -0800, Richard Henderson wrote:
+>> On 1/15/25 15:20, Ilya Leoshkevich wrote:
+>> > Currently single-insn TBs created from I/O memory are not added to
+>> > region_trees. Therefore, when they generate exceptions, they are
+>> > not
+>> > handled by cpu_restore_state_from_tb(). For x86 this is not a
+>> > problem,
+>> > because x86_restore_state_to_opc() only restores pc and cc, which
+>> > are
+>> > already correct. However, on several other architectures,
+>> > restore_state_to_opc() restores more registers, and guests can
+>> > notice
+>> > incorrect values.
+>> >=20
+>> > Fix by always calling tcg_tb_insert(). This may increase the size
+>> > of
+>> > region_trees, but tcg_region_reset_all() clears it once
+>> > code_gen_buffer
+>> > fills up, so it will not grow uncontrollably.
+>> >=20
+>> > Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+>> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>> > ---
+>>=20
+>> This needs something else.=C2=A0 The reason why they're not insertted is
+>> that they're not valid=20
+>> for a second execution.=C2=A0 We need to not find them in the search tre=
+e.
+>
+> I have the impression that code_gen_buffer is=C2=A0append-only, so after =
+we
+> create a new TB for the second execution, the first TB should not
+> be deleted - is this correct? At least I haven't found=C2=A0code_gen_ptr
+> decrements, besides the rollback at the end of tb_gen_code(). Then,
+> since region_trees are indexed by code_gen_buffer pointers, and not
+> guest pointers, this should not introduce any stale entries.
 
-You've lost me.  If realize() fails we should exit hard.  Why is ct3_exit()=
- called
-as well.  Perhaps the issue is failure to set errp in some error paths?
-So we give the impression that it is fine to carry on when we should not.
+We used to generate a temporary TB, execute it and then wind codeptr
+back. We simplified the code to generate the TB but then not add it to
+QHT - I think the original reasoning was saving on scarce CF_ flags and
+not over complicating the tb_gen_code function. See around 873d64ac30
+(accel/tcg: re-factor non-RAM execution code).
 
-Jonathan
+This does have the effect of potentially regenerating the same TB
+over and over again but usually there only a few insns executed out of
+IO space.
 
->=20
->=20
-> Thanks
-> Zhijian
->=20
->=20
-> >=20
-> > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> > index e765edd227..3a0ee7e8e7 100644
-> > --- a/include/hw/cxl/cxl_device.h
-> > +++ b/include/hw/cxl/cxl_device.h
-> > @@ -133,14 +133,6 @@ typedef enum {
-> >       CXL_MBOX_MAX =3D 0x20
-> >   } CXLRetCode;
-> >=20
-> > -/* type3 device private */
-> > -enum CXL_T3_MSIX_VECTOR {
-> > -    CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS =3D 0,
-> > -    CXL_T3_MSIX_EVENT_START =3D 2,
-> > -    CXL_T3_MSIX_MBOX =3D CXL_T3_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
-> > -    CXL_T3_MSIX_VECTOR_NR
-> > -};
-> > -
-> >   typedef struct CXLCCI CXLCCI;
-> >   typedef struct cxl_device_state CXLDeviceState;
-> >   struct cxl_cmd;
-> > diff --git a/hw/cxl/switch-mailbox-cci.c b/hw/cxl/switch-mailbox-cci.c
-> > index 762d881588..833b824619 100644
-> > --- a/hw/cxl/switch-mailbox-cci.c
-> > +++ b/hw/cxl/switch-mailbox-cci.c
-> > @@ -17,7 +17,7 @@
-> >   #include "hw/qdev-properties.h"
-> >   #include "hw/cxl/cxl.h"
-> >=20
-> > -#define CXL_SWCCI_MSIX_MBOX CXL_T3_MSIX_MBOX
-> > +#define CXL_SWCCI_MSIX_MBOX 3
-> >=20
-> >   static void cswmbcci_reset(DeviceState *dev)
-> >   {
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index ba1c79afe8..dc163f5b63 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> > @@ -30,6 +30,14 @@
-> >   #include "hw/cxl/cxl.h"
-> >   #include "hw/pci/msix.h"
-> >=20
-> > +/* type3 device private */
-> > +enum CXL_T3_MSIX_VECTOR {
-> > +    CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS =3D 0,
-> > +    CXL_T3_MSIX_EVENT_START =3D 2,
-> > +    CXL_T3_MSIX_MBOX =3D CXL_T3_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
-> > +    CXL_T3_MSIX_VECTOR_NR
-> > +};
-> > +
-> >   #define DWORD_BYTE 4
-> >   #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
-> >=20
-> >  =20
-> >> ---
-> >> V3: new patch to introduce a T3 specific enumeration # Jonathan
-> >> ---
-> >>   hw/cxl/cxl-device-utils.c   | 12 +++++-------
-> >>   hw/cxl/switch-mailbox-cci.c |  4 +++-
-> >>   hw/mem/cxl_type3.c          | 12 ++++++------
-> >>   include/hw/cxl/cxl_device.h | 12 ++++++++++--
-> >>   4 files changed, 24 insertions(+), 16 deletions(-)
-> >>
-> >> diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
-> >> index 035d034f6dd8..52ad1e4c3f7a 100644
-> >> --- a/hw/cxl/cxl-device-utils.c
-> >> +++ b/hw/cxl/cxl-device-utils.c
-> >> @@ -352,10 +352,8 @@ static void device_reg_init_common(CXLDeviceState=
- *cxl_dstate)
-> >>       }
-> >>   }
-> >>  =20
-> >> -static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
-> >> +static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate, int m=
-si_n)
-> >>   {
-> >> -    const uint8_t msi_n =3D 9;
-> >> -
-> >>       /* 2048 payload size */
-> >>       ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_C=
-AP,
-> >>                        PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
-> >> @@ -382,7 +380,7 @@ static void memdev_reg_init_common(CXLDeviceState =
-*cxl_dstate)
-> >>       cxl_dstate->memdev_status =3D memdev_status_reg;
-> >>   }
-> >>  =20
-> >> -void cxl_device_register_init_t3(CXLType3Dev *ct3d)
-> >> +void cxl_device_register_init_t3(CXLType3Dev *ct3d, int msi_n)
-> >>   {
-> >>       CXLDeviceState *cxl_dstate =3D &ct3d->cxl_dstate;
-> >>       uint64_t *cap_h =3D cxl_dstate->caps_reg_state64;
-> >> @@ -398,7 +396,7 @@ void cxl_device_register_init_t3(CXLType3Dev *ct3d)
-> >>       device_reg_init_common(cxl_dstate);
-> >>  =20
-> >>       cxl_device_cap_init(cxl_dstate, MAILBOX, 2, CXL_DEV_MAILBOX_VERS=
-ION);
-> >> -    mailbox_reg_init_common(cxl_dstate);
-> >> +    mailbox_reg_init_common(cxl_dstate, msi_n);
-> >>  =20
-> >>       cxl_device_cap_init(cxl_dstate, MEMORY_DEVICE, 0x4000,
-> >>           CXL_MEM_DEV_STATUS_VERSION);
-> >> @@ -408,7 +406,7 @@ void cxl_device_register_init_t3(CXLType3Dev *ct3d)
-> >>                                 CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-> >>   }
-> >>  =20
-> >> -void cxl_device_register_init_swcci(CSWMBCCIDev *sw)
-> >> +void cxl_device_register_init_swcci(CSWMBCCIDev *sw, int msi_n)
-> >>   {
-> >>       CXLDeviceState *cxl_dstate =3D &sw->cxl_dstate;
-> >>       uint64_t *cap_h =3D cxl_dstate->caps_reg_state64;
-> >> @@ -423,7 +421,7 @@ void cxl_device_register_init_swcci(CSWMBCCIDev *s=
-w)
-> >>       device_reg_init_common(cxl_dstate);
-> >>  =20
-> >>       cxl_device_cap_init(cxl_dstate, MAILBOX, 2, 1);
-> >> -    mailbox_reg_init_common(cxl_dstate);
-> >> +    mailbox_reg_init_common(cxl_dstate, msi_n);
-> >>  =20
-> >>       cxl_device_cap_init(cxl_dstate, MEMORY_DEVICE, 0x4000, 1);
-> >>       memdev_reg_init_common(cxl_dstate);
-> >> diff --git a/hw/cxl/switch-mailbox-cci.c b/hw/cxl/switch-mailbox-cci.c
-> >> index 65cdac6cc139..762d8815880d 100644
-> >> --- a/hw/cxl/switch-mailbox-cci.c
-> >> +++ b/hw/cxl/switch-mailbox-cci.c
-> >> @@ -17,10 +17,12 @@
-> >>   #include "hw/qdev-properties.h"
-> >>   #include "hw/cxl/cxl.h"
-> >>  =20
-> >> +#define CXL_SWCCI_MSIX_MBOX CXL_T3_MSIX_MBOX =20
-> > Hard code this value.  There is no logical reason it has
-> > to match with the type 3 one.  That is just an artifact of how
-> > the code evolved.
-> >  =20
-> >> +
-> >>   static void cswmbcci_reset(DeviceState *dev)
-> >>   {
-> >>       CSWMBCCIDev *cswmb =3D CXL_SWITCH_MAILBOX_CCI(dev);
-> >> -    cxl_device_register_init_swcci(cswmb);
-> >> +    cxl_device_register_init_swcci(cswmb, CXL_SWCCI_MSIX_MBOX);
-> >>   }
-> >>  =20
-> >>   static void cswbcci_realize(PCIDevice *pci_dev, Error **errp)
-> >> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> >> index 0ae1704a345c..f64af19ed6ae 100644
-> >> --- a/hw/mem/cxl_type3.c
-> >> +++ b/hw/mem/cxl_type3.c
-> >> @@ -843,7 +843,6 @@ static void ct3_realize(PCIDevice *pci_dev, Error =
-**errp)
-> >>       ComponentRegisters *regs =3D &cxl_cstate->crb;
-> >>       MemoryRegion *mr =3D &regs->component_registers;
-> >>       uint8_t *pci_conf =3D pci_dev->config;
-> >> -    unsigned short msix_num =3D 10;
-> >>       int i, rc;
-> >>       uint16_t count;
-> >>  =20
-> >> @@ -884,16 +883,17 @@ static void ct3_realize(PCIDevice *pci_dev, Erro=
-r **errp)
-> >>                        &ct3d->cxl_dstate.device_registers);
-> >>  =20
-> >>       /* MSI(-X) Initialization */
-> >> -    rc =3D msix_init_exclusive_bar(pci_dev, msix_num, 4, NULL);
-> >> +    rc =3D msix_init_exclusive_bar(pci_dev, CXL_T3_MSIX_VECTOR_NR, 4,=
- NULL);
-> >>       if (rc) {
-> >>           goto err_address_space_free;
-> >>       }
-> >> -    for (i =3D 0; i < msix_num; i++) {
-> >> +    for (i =3D 0; i < CXL_T3_MSIX_VECTOR_NR; i++) {
-> >>           msix_vector_use(pci_dev, i);
-> >>       }
-> >>  =20
-> >>       /* DOE Initialization */
-> >> -    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, tru=
-e, 0);
-> >> +    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, tru=
-e,
-> >> +                  CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS);
-> >>  =20
-> >>       cxl_cstate->cdat.build_cdat_table =3D ct3_build_cdat_table;
-> >>       cxl_cstate->cdat.free_cdat_table =3D ct3_free_cdat_table;
-> >> @@ -908,7 +908,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error =
-**errp)
-> >>       if (rc) {
-> >>           goto err_release_cdat;
-> >>       }
-> >> -    cxl_event_init(&ct3d->cxl_dstate, 2);
-> >> +    cxl_event_init(&ct3d->cxl_dstate, CXL_T3_MSIX_EVENT_START);
-> >>  =20
-> >>       /* Set default value for patrol scrub attributes */
-> >>       ct3d->patrol_scrub_attrs.scrub_cycle_cap =3D
-> >> @@ -1202,7 +1202,7 @@ static void ct3d_reset(DeviceState *dev)
-> >>  =20
-> >>       pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->sp=
-eed);
-> >>       cxl_component_register_init_common(reg_state, write_msk, CXL2_TY=
-PE3_DEVICE);
-> >> -    cxl_device_register_init_t3(ct3d);
-> >> +    cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
-> >>  =20
-> >>       /*
-> >>        * Bring up an endpoint to target with MCTP over VDM.
-> >> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> >> index 561b375dc86d..e765edd22772 100644
-> >> --- a/include/hw/cxl/cxl_device.h
-> >> +++ b/include/hw/cxl/cxl_device.h
-> >> @@ -133,6 +133,14 @@ typedef enum {
-> >>       CXL_MBOX_MAX =3D 0x20
-> >>   } CXLRetCode;
-> >>  =20
-> >> +/* type3 device private */
-> >> +enum CXL_T3_MSIX_VECTOR {
-> >> +    CXL_T3_MSIX_PCIE_DOE_TABLE_ACCESS =3D 0,
-> >> +    CXL_T3_MSIX_EVENT_START =3D 2,
-> >> +    CXL_T3_MSIX_MBOX =3D CXL_T3_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
-> >> +    CXL_T3_MSIX_VECTOR_NR
-> >> +};
-> >> + =20
-> > Push this down in to the cxl_type3.c file.
-> >=20
-> > It it is not a global thing but specific choices for the type 3 emulati=
-on.
-> >  =20
-> >>   typedef struct CXLCCI CXLCCI;
-> >>   typedef struct cxl_device_state CXLDeviceState;
-> >>   struct cxl_cmd;
-> >> @@ -264,8 +272,8 @@ void cxl_device_register_block_init(Object *obj, C=
-XLDeviceState *dev,
-> >>   typedef struct CXLType3Dev CXLType3Dev;
-> >>   typedef struct CSWMBCCIDev CSWMBCCIDev;
-> >>   /* Set up default values for the register block */
-> >> -void cxl_device_register_init_t3(CXLType3Dev *ct3d);
-> >> -void cxl_device_register_init_swcci(CSWMBCCIDev *sw);
-> >> +void cxl_device_register_init_t3(CXLType3Dev *ct3d, int msi_n);
-> >> +void cxl_device_register_init_swcci(CSWMBCCIDev *sw, int msi_n);
-> >>  =20
-> >>   /*
-> >>    * CXL r3.1 Section 8.2.8.1: CXL Device Capabilities Array Register =
-=20
-> > =20
+However some arches do more of this than others. And now we have devices
+such as CXL where people do want to run large amounts of code directly
+out of io address space. This eventually exhausts the codegen buffer so
+we do a tb_flush() and start again. This is obviously sloooooow.
 
+>
+> While we might not need to find the ones created for the first
+> execution, we still need to find the ones for executions that fail -
+> and there is no way to tell in advance, which ones these are going to
+> be, so the idea here is to register all of them.
+>
+> Am I missing something?
+>
+>> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
