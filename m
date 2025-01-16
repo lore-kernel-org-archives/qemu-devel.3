@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101A6C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5D5C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYOn3-0000Wd-30; Thu, 16 Jan 2025 07:16:06 -0500
+	id 1tYOvt-0002NU-Tu; Thu, 16 Jan 2025 07:25:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tYOmq-0000V3-FS
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:15:48 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tYOvs-0002Ms-9f
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:25:08 -0500
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tYOmn-0006Bt-4N
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:15:48 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2ef70c7efa5so1237043a91.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:15:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tYOvq-00082F-Ax
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:25:08 -0500
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e4a6b978283so3527144276.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:25:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737029743; x=1737634543; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oIlJHDEAr5kXhrWvJRykxP6NHD7AfkEEmwT5hp65unc=;
- b=Ni4l4en3T2fnjlEqNCEt8oTOCP723A4rgYMobD1yQafFZu/b+f3hEi3sSOyr+2hgPr
- V29H93kn7l4MwP2Vd8YjNHGH/wEr77rpGGJUTOCGXkIy+gqI3UDgkWggNATGK9xJZ7LT
- gq04ze5d9pw34aP0CUtZkD69fysgK1NK/LlTgGyHqjuCur5A/j1xOgM5TToVcpK38QLl
- YNfjFjhQyspUeNBmNwbb4Irx4y7mfMC5GEnRMFM69wpFTiEKPHuss1VYtCaWSx5KfLCZ
- bFSoWEUc1E5+gyH8Nh6ylrWKb4Lec2VvEB+CSHgmaqDGBnc++Oo3OBoa8rvb2owJjZaf
- T7Pg==
+ d=linaro.org; s=google; t=1737030304; x=1737635104; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=A6vA39i9y5IA3PTpTj5f7RjAkmv2BL1Souo4U2/iAAI=;
+ b=hup4ApAJVZORAZ8Tiaj5DBgC+SU4pkiExuxgDiCwm2PRLHqSnusCr+k9uKdYZUgOZI
+ si3UeoMEtcKtyqmLo64MgZ+mlIKDEWVdwgTQiTHMBGw0UHe5MKG88EiEDaUNQlzG48L4
+ oi9mfV9NEXpJMAZGWUuvO8LyNlSPa0Ue5Kmx/HJoqbxb14lpNlTe08/hNcgyc064d+UP
+ V6Hjw4rdF5hyL5gYSdu2Pshkf1qip+47ujANfAldowAXwQ7FTozZFe1x1wMK7yki8hrk
+ n68cK6AgRBcAq4+AFo6i3KcIzfQjKwYXqEoRxjnWHrRgZdDqJeDelMPVKjEcmSlzmLYi
+ vbYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737029743; x=1737634543;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oIlJHDEAr5kXhrWvJRykxP6NHD7AfkEEmwT5hp65unc=;
- b=spanNpmyqWqh8VL7IUZe61+EWdjferx3c2qLZnUsUzt8Ns3ZlyhAA7t9nHi/PmB6Bb
- fpJQtuRLHV+N7CQ4ZBnIYSxo5HTXIlA4S9jmuKkLXG9IRXYH0ZdTYe1caMk4fruLSy79
- w+/i7nnfAjYO/vLXT+EeYejkJ+96fX86iXEVgK1lookw2C5qXKz6O/C9nQmSoz1VkLmF
- cFxo1bvh3tS2hPFtfvMemt5yqROuWjt05B+HwV5w76wjNuOGdsI/eqYNB29qJGzrb2bc
- 2AL2GRxwkPlen2oKtVHR1hP//GuFARZJVZo/J0OlBYnqDAJIdoPNqGoZkSyrCPTPJHir
- XlKA==
+ d=1e100.net; s=20230601; t=1737030304; x=1737635104;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=A6vA39i9y5IA3PTpTj5f7RjAkmv2BL1Souo4U2/iAAI=;
+ b=m9+UHafQFYNcDAQeOlfKjxvXDNRvhGsplDV+jkmIUqCUSOcPwY7hRnSKBzJOxN8n4I
+ YKYuySANxk0mZRy0yFDXH3guPINwvPEK7cPnO1CNyyaPj+zXZ24CBlYRkgNOZC1GCssy
+ qh07gN1KT175NzGej5W4CrPQ042OL4ZPJoavnJIGG5eVBtKB5rNqzDMS51N89VKC/O5J
+ RcQBEIvhB5P9VFWD6q9W1n+92c5r7Yp5Z4l8a6nDTQA/x1p116JpZk7Wkel8I3DmOPa7
+ g/J35LrmSgBX4yC/YWyHRedPEp1PkrunIlZMI1VRpDC0UbGgwlXet1PqbQYjr0jzfAc0
+ rpPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVb3s11+ea3yZKzcWxHGit5AZNsPXTPG96e9HsevCrfV8IP5JJYt6VDpQaj0EYKmY/OYEkrg/Z7ggye@nongnu.org
-X-Gm-Message-State: AOJu0YxyXhPaf5WgQUJKKwYju6SMiXZTCyaF065oAEnVa+WR2dgvN8pt
- yQjyplDLBgl3DRr/njx+aO9uKHaT0Ke81wtr37YPOvKQ/ENfs1RLsZJD/DwE3p0kV+I0a7r9ZCr
- x
-X-Gm-Gg: ASbGncvmZVN6z/sshNKwj59VwDi8VNyV4fH059ZZq/+vBLb/GvPHtr4BpBwDDEdMgzH
- eBLoPIRh8P2ScnmFrk1BY+p01XzgEFLFHgTx5qoRZ7krHW2vbnMAPsqqysFj3gYO3JWle6YcJkT
- h19oKBsSs665uXPMZcs2dobnsTqKURAWBfSA/Vv7IVQr82bayTfuzY2CwpQS7Wm6qX3B/CpsaeF
- 7GglhAt85f7LwCMi2KKVwEKA9qqXivCt2wo8P9zQ90gMKsCH8uWn73Z7ekv9J2FoZxMG/c=
-X-Google-Smtp-Source: AGHT+IHcuQl++MXnv7VUxcDBEBUzfMMwL1csW1vlU/7AHIxhtCqEyrbkXvZ+d+hBFn5+CawXuyyGRw==
-X-Received: by 2002:a17:90a:d00c:b0:2ee:c5ea:bd91 with SMTP id
- 98e67ed59e1d1-2f548f1d783mr46518448a91.29.1737029743043; 
- Thu, 16 Jan 2025 04:15:43 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.238.10])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f72c20ce31sm3153444a91.33.2025.01.16.04.15.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 04:15:42 -0800 (PST)
-Message-ID: <9c58515e-bdbd-4183-9587-a7fd205717db@ventanamicro.com>
-Date: Thu, 16 Jan 2025 09:15:39 -0300
+ AJvYcCUD9G5yVpc16FXcItl9Viekkc+xBMROQwvhD28Lo8Dv1CDWJodhZ/PYEO5aZgq0RGSi3lOLoLzYuNpw@nongnu.org
+X-Gm-Message-State: AOJu0YwPc+lZKwBlw8BDLUsW305Q2lK/KKMBJ+Ju0o+B4EUFun+kAB3L
+ oBtDueZEcQwBsvy8ByTNqRyObrAABbtIBYlaVGuQM2T8VWfY111HHTbcXZS6cNMfxRYYy/mE+y3
+ RVhYbi/KDdra2we8bwpGsJ9WBmMzv+ygshx3mGw==
+X-Gm-Gg: ASbGncsvGQn3M/dXrg/F5CqR7m19Y6Z7WHSPDRD8uXZrGMaQ6CY+ed//WqKxOTWhfxb
+ IpBDdSoqx1XCu2IdJfvdcm4G5zUVWI8va2NM1K/4=
+X-Google-Smtp-Source: AGHT+IHPIg+iR1sFJBGNyjfieVhjjoZn0h4J1pu7XGljCtipJUX2pGTyF8c54gRee5FYK41PANUp4ffPBZR7yMQG8wY=
+X-Received: by 2002:a05:690c:6384:b0:6e2:b262:bebc with SMTP id
+ 00721157ae682-6f6c9a1052cmr61737897b3.0.1737030304359; Thu, 16 Jan 2025
+ 04:25:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] riscv: disable Smdbltrp for the max cpu
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>
-Cc: Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
- qemu-devel@nongnu.org
-References: <20250116092352.1630278-1-cleger@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250116092352.1630278-1-cleger@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102f.google.com
+References: <20250115232022.27332-1-iii@linux.ibm.com>
+ <ac4d48c3-d139-4af0-ab28-f2674b74cb8c@linaro.org>
+ <a82c41712409ac77d66f03e19b98382bcf11ba45.camel@linux.ibm.com>
+ <87frljhvzk.fsf@draig.linaro.org>
+ <CAFEAcA-4M5W4=JH3s45+9JZnKrVVAgKcRcH+gVqMJqGxRfjrpw@mail.gmail.com>
+ <65e146746377bc307affc627f47c4700aaaac4ba.camel@linux.ibm.com>
+In-Reply-To: <65e146746377bc307affc627f47c4700aaaac4ba.camel@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Jan 2025 12:24:53 +0000
+X-Gm-Features: AbW1kvYD78mmj7oVZm4dHll4PSr6QHy7K0UVUXkC6YpgD6FPm1clJWaKrwlW85M
+Message-ID: <CAFEAcA-ZOJUQPGWs7Czt1A1CdyojNoQ2L62Z-MvREgkg6GO4-A@mail.gmail.com>
+Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,70 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 16 Jan 2025 at 11:48, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
+>
+> On Thu, 2025-01-16 at 11:06 +0000, Peter Maydell wrote:
+> > The original reported problem here seems to me like it's a
+> > problem with whatever target's frontend code this is.
+> > This is a single instruction TB, so either:
+> >  * the generated code for it completes the insn without
+> >    raising an exception (no problem)
+> >  * the generated code for it should raise an exception
+> >    without having modified the CPU state (so there would
+> >    be nothing to do for restore_state_to_opc)
+> >
+> > It sounds like the target is generating code which does
+> > something like:
+> >  * do part of the instruction, including updating some of
+> >    the CPU state
+> >  * then decide it needs to raise an exception, and rely on
+> >    the restore_state_to_opc handling to undo the state updates
+> >    it did previously
+> >
+> > The assumption of the "throwaway single insn TB" is that
+> > you don't do that (i.e. that restore_state_to_opc is only
+> > there for the benefit of multi-insn TBs).
 
+> The problem is not a partial state update in an instruction, but rather
+> that on some targets restore_state_to_opc is more than just a
+> "restore" - it is also "prepare for handling an exception", i.e.:
+>
+> - arm: exception.syndrome
+> - hppa: unwind_breg, psw_n
+> - mips: btarget
+> - openrisc: ppc
+> - riscv: excp_uw2
+> - s390x: int_pgm_ilen
+>
+> Some of these may be wrong due to unfamiliarity with the respective
+> architectures, sorry - but this illustrates the idea.
 
-On 1/16/25 6:23 AM, Clément Léger wrote:
-> When present, Smdbltrp is enabled by default and MDT needs to be cleared
-> to avoid generating a double trap. Since not all firmwares are currently
-> ready to handle that, disable it for the max cpu.
-> 
-> Reported-by: Atish Patra <atishp@rivosinc.com>
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> 
+Ah, yes, thanks for the clear explanation. The "throw away
+the TB" design didn't consider that (or vice-versa).
 
-This breaks 'make check-functional' indeed. Not sure why we didn't notice it
-earlier.
-
-The change is fine but it should be made in the patch that introduced the error
-since it's not merged upstream yet. The patch is:
-
-[PATCH v8 9/9] target/riscv: Add Smdbltrp ISA extension enable switch
-
-Otherwise we'll have a gap of patches where 'make check-functional' won't work
-and it'll make our lives harder when bisecting stuff. This is the same review I
-gave Frank in the v10 of the 'smrnmi' series:
-
-https://lore.kernel.org/qemu-riscv/26ecf1ca-07eb-4aed-9d06-a12c036c0723@ventanamicro.com/
-
-You can re-send "target/riscv: Add Smdbltrp ISA extension enable switch" as a v9 (I
-believe it's fine to send it standalone, no need to re-send the whole series) with
-this patch squashed in. Alternatively Alistair can squash in this change in his tree
-if he's up to it. Whatever works.
-
-But an extra patch is only justifiable if the change that broke stuff already made
-upstream and there's nothing we can do about it. This is not the case, and  we should
-fix it properly while we can.
-
-
-Thanks,
-
-Daniel
-
-
-> ---
->   target/riscv/tcg/tcg-cpu.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 48be24bbbe..0a137281de 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1439,6 +1439,16 @@ static void riscv_init_max_cpu_extensions(Object *obj)
->           isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi), false);
->           qemu_log("Smrnmi is disabled in the 'max' type CPU\n");
->       }
-> +
-> +    /*
-> +     * ext_smdbltrp requires the firmware to clear MSTATUS.MDT on startup to
-> +     * avoid generating a double trap. OpenSBI does not currently support it,
-> +     * disable it for now.
-> +     */
-> +    if (cpu->cfg.ext_smdbltrp) {
-> +        isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smdbltrp), false);
-> +        qemu_log("Smdbltrp is disabled in the 'max' type CPU\n");
-> +    }
->   }
->   
->   static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
-
+thanks
+-- PMM
 
