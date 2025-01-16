@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73B0C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06BCC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLYg-0004Wl-FS; Thu, 16 Jan 2025 03:48:58 -0500
+	id 1tYLdh-0006qd-Fq; Thu, 16 Jan 2025 03:54:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLYd-0004Mq-Ic
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:48:55 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLYb-0007fK-N3
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:48:55 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-385f07cd1a4so584322f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:48:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737017332; x=1737622132; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mdLioY+9uv1wNXZ89MB5hjYXgSWhJls88d7Z7LIFuhE=;
- b=I9gs/Or5GphmIaHEwzUiGbNDV2RfBRQpp7JZDs37td2mLqhgl2tIyPe1elG6R6HfEl
- BME+rfxRwrxyOe68VnwSQoG46b6kA2MnVrLIp2KGZzjDuqH0Vog2Siriae0Ii6OYdR+J
- J/woEHuNuNHBSJ7jjrypT3KH22VTnMW/u2GQWY18NeLmSYIxEeCe1EhOcqi+EYpUjW/p
- KIjAKsrZCvlj8HSIyQwVv7VWDy2f03vHN1tg8/tjyW7ikiJuTWQ0BahW7Toj9Deq0cOy
- OEVnhdhpek3GTkjattG2mjPLMpKMstwM1kyqUzoDxWKkbeUkri4zPKu/ap5gFfWgnyL2
- aTgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737017332; x=1737622132;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mdLioY+9uv1wNXZ89MB5hjYXgSWhJls88d7Z7LIFuhE=;
- b=wE1huedWMXM9a814F83m7j3b/1WvrYiNQD7hFJSwzLzXNC5JCkkFxJdXwf27kKyG9T
- E7uoQgAdkU8LokYHoJv5JPPJXWpabnyDDArNLaJdBnXFfalHM0Nn2+0dmNikZiyCh9RO
- JuF6WqylOYc914CR8ZQFnrB0lmtiBJphTwwUFnGiaMSYuIUWL1jVdB8nHeUvGurRrz0I
- 2u0EyqF47nBcx8W34noezUYBMUcFjFENn7sPdggvywkhJd42uZa67ho62W/Peynv2UCT
- Jlvo1rm/hEvP06BojQ2OuKcKmUa2GH5oNJPBC+NxU3kkgTu5lJLxcKSZa3FQW60rNmue
- 0afA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3I9HKxaRfSXX4wIL3dTvAhi2xc75XQpAsgObeFG1EWN+X88No8Jwj8n/LK/nPZkL95+nk5K528DZK@nongnu.org
-X-Gm-Message-State: AOJu0YwuJRIiZ3DQeMyAzD31NKpv3PgQmhrDcN1mF84SDIm3LFSeIzty
- TCWbVnFXOIaWalWfGOwombrhtfehROTikOOiYDiwGTsr4PoTDPbNwb0OUIVWbTtmnYal/ClKNMv
- Hxw8=
-X-Gm-Gg: ASbGncuqW0RKzRg/piI6CWtOYKfrjpu9zxXaSbKgyLFDMElo+UhOmem5bhg731r31C7
- ZGHeL8BHrPzT4SaXJ4HeOA3EaRuVowGaif07CgqUnOeysximiFM0LGbknLwXejMDBwRt+C6F22+
- ThOUP9DH3gASL/CDg2C2O8UFbKuqlmpSTIeCYuPVWmcvY8dOBOfDJvjfyzEYpR61xfde5cOdyla
- DYWus4CkgXKGe1WvFBs4nltq7XuGpw4jTFDN255N8SwyDFMn3gR8dXFXM36NYjfFLJhawClbEWs
- NfVNIALSC7YOPhuDova7Xh7g
-X-Google-Smtp-Source: AGHT+IFc0EGequubUfPj4rYEF3Cfvc2asamzIKmcVagKU7Nw6WMSqtPpF3Pz2I7W3PLpeLhcYSBx7g==
-X-Received: by 2002:a05:6000:1542:b0:38a:a047:6c0b with SMTP id
- ffacd0b85a97d-38aa0476d5amr21977610f8f.35.1737017332025; 
- Thu, 16 Jan 2025 00:48:52 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38b15d3c7a5sm13512605f8f.32.2025.01.16.00.48.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 00:48:51 -0800 (PST)
-Message-ID: <ad3d06df-f0ae-4508-b979-c838b3647510@linaro.org>
-Date: Thu, 16 Jan 2025 09:48:50 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tYLdf-0006qL-UJ
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:54:07 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tYLdc-0008Fs-W9
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:54:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737017646; x=1768553646;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=yZw1YWix7/0v17N1NyNVK3/J2P5q4Pb8NI/rZF51DAI=;
+ b=HDaynqYQn/+7EmFg4bS65jx3AWKY3l7vo0eqDbrDcrKfsgRNRYQdu9Ps
+ ztg2HxF2n4a9nHw6RSu3qRPZ2NEeef9SJkehPoQ0q+OOsv57I5IHVfpZS
+ OR3dGL6wwf1FxKDn4vhkSapXw1fSfGpe2gQhDYXLxSPuZcgr2cQjvj1Fi
+ cHb6DyYmhEA9u1YSGBExAnWNZsdbFjvpT1UES1EKz4kRX3UJIhseYitgu
+ 12Hw+bWLlTUMb+X+Eg4vhKthcqQoKC4s8IK3XLevdiPypJwarWRs7mXKq
+ LGNLlGqrs7bRCg7JQ7m2TclGvNKCO9PtikJ2uuDNdm+tzi3DCbCaR/XzS Q==;
+X-CSE-ConnectionGUID: UnqHbNBSRmyGvzkJvqIapQ==
+X-CSE-MsgGUID: Nu0jbO7bT1iE+PzhtxWlhA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11316"; a="41069506"
+X-IronPort-AV: E=Sophos;i="6.13,208,1732608000"; d="scan'208";a="41069506"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jan 2025 00:54:01 -0800
+X-CSE-ConnectionGUID: JcpwkuKERM6AP3SrjlcAZA==
+X-CSE-MsgGUID: wvbgJKILTuSSIhHdUD1R+Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,208,1732608000"; d="scan'208";a="105471015"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jan 2025 00:53:55 -0800
+Message-ID: <3345330e-c111-4d08-9852-9dede46957d2@intel.com>
+Date: Thu, 16 Jan 2025 16:53:51 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/about: Change notes on x86 machine type deprecation
- into a general one
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <20250116064644.65670-1-thuth@redhat.com>
+Subject: Re: [PATCH v6 56/60] i386/tdx: Don't treat SYSCALL as unavailable
+To: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-57-xiaoyao.li@intel.com>
+ <f1c7bba2-7b21-4e10-a245-36673e93f8b7@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250116064644.65670-1-thuth@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <f1c7bba2-7b21-4e10-a245-36673e93f8b7@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,86 +97,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/25 07:46, Thomas Huth wrote:
-> We now have a general note about versioned machine types getting
-> deprecated and removed at the beginning of the deprecated.rst file,
-> so we should also have a general note about this in removed-features.rst
-> (which will also apply to versioned non-x86 machine types) instead of
-> listing individual old machine types in the document.
+On 11/5/2024 5:59 PM, Paolo Bonzini wrote:
+> On 11/5/24 07:24, Xiaoyao Li wrote:
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   target/i386/kvm/tdx.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>> index 9cb099e160e4..05475edf72bd 100644
+>> --- a/target/i386/kvm/tdx.c
+>> +++ b/target/i386/kvm/tdx.c
+>> @@ -734,6 +734,13 @@ static int 
+>> tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+>>           requested = env->features[w];
+>>           unavailable = requested & ~actual;
+>> +        /*
+>> +         * Intel enumerates SYSCALL bit as 1 only when processor in 
+>> 64-bit
+>> +         * mode and before vcpu running it's not in 64-bit mode.
+>> +         */
+>> +        if (w == FEAT_8000_0001_EDX && unavailable & 
+>> CPUID_EXT2_SYSCALL) {
+>> +            unavailable &= ~CPUID_EXT2_SYSCALL;
+>> +        }
+>>           mark_unavailable_features(cpu, w, unavailable, unav_prefix);
+>>           if (unavailable) {
+>>               mismatch = true;
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   docs/about/deprecated.rst       |  7 -------
->   docs/about/removed-features.rst | 11 +++++------
->   2 files changed, 5 insertions(+), 13 deletions(-)
+> This seems like a TDX module bug?  
+
+I don't think so. The value of CPUID_EXT2_SYSCALL depends on the mode of 
+the vcpu. Per SDM, it's 0 outside 64-bit mode.
+
+The initial state of TDX vcpu is 32-bit protected mode. At the time of 
+calling KVM_TDX_GET_CPUID, vcpu hasn't started running. So the value 
+should be 0.
+
+There indeed is a TDX module. After vcpu starts running and TD guest 
+switches to 64-bit mode. The value of this bit returned by TDX module 
+via global metadata CPUID value still remains 0.
+
+Off the topic, for me, it's really a bad API to return TDX's CPUID value 
+via TD-scope metadata. It fits better with TD VCPU scope metadata.
+
+> It's the kind of thing that I guess 
+> could be worked around in KVM.
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 4a3c302962..7b42d6eecc 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -236,13 +236,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
->   better reflects the way this property affects all random data within
->   the device tree blob, not just the ``kaslr-seed`` node.
->   
-> -``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
-> -''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> -
-> -These old machine types are quite neglected nowadays and thus might have
-> -various pitfalls with regards to live migration. Use a newer machine type
-> -instead.
-> -
->   PPC 405 ``ref405ep`` machine (since 9.1)
->   ''''''''''''''''''''''''''''''''''''''''
->   
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index c6616ce05e..156c0c253c 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -972,6 +972,11 @@ from Linux in 2021, and is not supported anymore by QEMU either.
->   System emulator machines
->   ------------------------
->   
-> +Note: Versioned machine types that have been introduced in a QEMU version
-> +that has initially been released more than 6 years before are considered
-> +obsolete and will be removed without further notice in this document.
-> +Please use newer machine types instead.
+> If we do it in QEMU, I'd rather see it as
+> 
+>              actual = cpuid_entry_get_reg(entry, wi->cpuid.reg);
+>              switch (w) {
+>              case FEAT_8000_0001_EDX:
+>                  actual |= CPUID_EXT2_SYSCALL;
+>                  break;
+>              }
+>              break;
 
-This is an improvement. I still wonder if we shouldn't list them removed
-machines here, to help old users.
+I'll change to this way.
 
-   Removed in 4.0:
-     - pc-0.10
-     - ...
-   Removed in 9.0:
-     - pc-i440fx-2.3
-   Remove in 10.0:
-     - pc-i440fx-2.4
-     - pc-i440fx-2.5
-     - pc-i440fx-2.6
-     - pc-q35-2.4
-     - pc-q35-2.5
-     - pc-q35-2.6
-     - ARM virt-2.6
-     ...
 
-?
-
-> +
->   ``s390-virtio`` (removed in 2.6)
->   ''''''''''''''''''''''''''''''''
->   
-> @@ -1006,12 +1011,6 @@ mips ``fulong2e`` machine alias (removed in 6.0)
->   
->   This machine has been renamed ``fuloong2e``.
->   
-> -``pc-0.10`` up to ``pc-i440fx-2.3`` (removed in 4.0 up to 9.0)
-> -''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> -
-> -These machine types were very old and likely could not be used for live
-> -migration from old QEMU versions anymore. Use a newer machine type instead.
-> -
->   Raspberry Pi ``raspi2`` and ``raspi3`` machines (removed in 6.2)
->   ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
->   
+> Paolo
+> 
 
 
