@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F3F1C02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 22:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92197C02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 22:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYY4d-0003yZ-HO; Thu, 16 Jan 2025 17:10:47 -0500
+	id 1tYYTO-0000ez-H9; Thu, 16 Jan 2025 17:36:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tYY4V-0003xd-Ul
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 17:10:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tYY4U-0004JK-7i
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 17:10:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737065437;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3w/7Xt83amm/l8+9d346Cvv8xvPaOw1+n1RLVeOI+Fc=;
- b=TwBP20p2V4RFSwnLVx31Vx/h12+MTWDgDheglYw1eKR3z72SXSROrY1WUUQDkC3bbyVvDT
- U1LMI2uCmyaoHaFMU28APK3ZznXMEqLUVB6KVUTtF0gFl422y8wPI1nZG5SFZzZ/EmK1X+
- JGlBr/8n+c0shOO8OjTe1qeKht9EC68=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-215--MrRq8HIO2CqLybNWlljYw-1; Thu,
- 16 Jan 2025 17:10:34 -0500
-X-MC-Unique: -MrRq8HIO2CqLybNWlljYw-1
-X-Mimecast-MFC-AGG-ID: -MrRq8HIO2CqLybNWlljYw
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C5AD1955DCC; Thu, 16 Jan 2025 22:10:32 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.180])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E5DEA195608A; Thu, 16 Jan 2025 22:10:28 +0000 (UTC)
-Date: Thu, 16 Jan 2025 17:10:27 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Jason Wang <jasowang@redhat.com>, xen-devel@lists.xenproject.org,
- qemu-block@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
- David Woodhouse <dwmw@amazon.co.uk>
-Subject: Re: [PULL 0/8] Xen regression fixes and cleanups
-Message-ID: <20250116221027.GA378432@fedora>
-References: <20250116084332.1864967-1-dwmw2@infradead.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYYTH-0000e5-Tv
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 17:36:15 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYYTG-00009c-6x
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 17:36:15 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-436ce2ab251so9753775e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 14:36:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737066972; x=1737671772; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NEWcwlZ3rL0pM1lPXHd3q45mvxB7AAKYo4rVKUiR+b0=;
+ b=jtRW/7Aknpi6jRHth7kSgyUQNe9nyKiVWSvz0ZQeItzSdsCFoDgDbYpELSN7qbME42
+ eZb30poq+3geRgcH7q23H89IPsdbbiac2cqKnM6tkEGREK05b2lC1/PlLRgnAVyHJ8tO
+ W+dObCZkfTFEToq0kvhp47TsCHedrT/w5ZcO2Kd6WDvTyiUF0DwO9IU8kQkYgoBh6jz5
+ VwnQAyvV3Vo96/S59XcG+oM9cUxBb958W7X252F0eeAvYRdOM/cEfup4WNO8BgtGz6Rr
+ 5U/mPB70jLgClpgt0IoNgFvzvsEhoomJ3nO3NGn2e7WFQzg714AHX5rnAEe2JSoOX+G6
+ DI/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737066972; x=1737671772;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NEWcwlZ3rL0pM1lPXHd3q45mvxB7AAKYo4rVKUiR+b0=;
+ b=Ah1zit7VLFl5t279QUBuBZd+qHuDAabK1DwSun8prX6ju2H8ZqUzVSBj84xKX5oTl7
+ LsdJpEeym2BVjDgO7lLjlyhEzXCkBJ36nGinkVZR+d+mLFd1wh3ZmCK6I4qHZeN3TKDw
+ uAluUXUpNhX1K6dYIOUn1iLY65cJoQ+wV6zQKBvF7lgvh6ewmn3TKYscrIAtIK5eWuIp
+ ohWZdTUQ5W4wrXBPU2ZvKJNEb7msZI6bqzxIR4GfnML7uaZxSCNDijAbyIbO8UBUY3rQ
+ Ed7Mbhn4/Eb4gir0IV98FKRs6Rmcr44XfbkBtfX+zBBquMr7kKzN39hyVzLPgz1GZg2y
+ t+UA==
+X-Gm-Message-State: AOJu0YyjvBKGFKDJsWeFjj4FJzI60I4bmYMm8oqKCMEW/RrF4qcFNwuL
+ u7vgC5Mj3fR3wYYOlupX1BXn8dV3dneHiqKcZZr2xp8IQQrwBf7LZtT3et4QT8/JIulzb81mW7S
+ EyO0=
+X-Gm-Gg: ASbGnct34xdXHy5cONahk4MNjKlOXUqFesI4APuzc4bsdSCkXLGqmj9Mg7K4abp5SMe
+ 3xfszj8BS6MMzt/Ns1d0pFqVjDwj7nBOGLWrmGWhBhi5XAn9qMvvk3BZAa+cU6naaCRLe6fw2iJ
+ HMyy6iTO3LLKbDaygcOrZTOxNy47BrPTK8bDFukfJB2NTtbHH0trsFGX6fHyBAajL16i+Y41Xt8
+ nB3v7bX8manBYLPnqegjsJfrUMPx58S08RQEdfNlXcfax9IDh4dO57ekMu93cMoWOvrOtV4qu8t
+ 5+w0OfmebLYJZkVXiYxw2peodbLcpgA=
+X-Google-Smtp-Source: AGHT+IExwbmFrREWvyWRsLco6OE8GRSYcuIIEHEpNIFLaYT/kfXpzOjBJdoAqFx5YnL5oa8Y/DguRg==
+X-Received: by 2002:a05:600c:511b:b0:432:d797:404a with SMTP id
+ 5b1f17b1804b1-4389142e0e8mr3056075e9.22.1737066972163; 
+ Thu, 16 Jan 2025 14:36:12 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-438904625e5sm12313865e9.32.2025.01.16.14.36.10
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 16 Jan 2025 14:36:11 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/char/riscv_htif: Convert HTIF_DEBUG() to trace events
+Date: Thu, 16 Jan 2025 23:36:09 +0100
+Message-ID: <20250116223609.81594-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="8HLMaDdlMH1p57ew"
-Content-Disposition: inline
-In-Reply-To: <20250116084332.1864967-1-dwmw2@infradead.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,30 +101,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/char/riscv_htif.c | 15 +++------------
+ hw/char/trace-events |  4 ++++
+ 2 files changed, 7 insertions(+), 12 deletions(-)
 
---8HLMaDdlMH1p57ew
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
-
---8HLMaDdlMH1p57ew
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmeJg9MACgkQnKSrs4Gr
-c8i1bgf+MHoLNCA3PrVNq+8PBjcLbABt0e/iUMP1lMjdZbfbSuXOKnOXzkuuV4j/
-B4VgoC3lPDm5BLF8YmliXE377/khnnh87uFifbar35rL/CZ/FQaMQ1+LSmqx5muk
-B38lJR6aA16v/FmcOfQiIe3ucNcqVoxUGLMUD9maouS05t0EhSN3ZYEbwn8lU65O
-8OoVoBRgKlBH+3KQf+x5pdKC8WkFm1rzhak5WfY2G7kghzspSYvTaz9z2TPfgobq
-ejm6N8Nstls4VrqBOPUzcuJpOC5nDsx1DgabuTiGWkPwSZ1wccDNn+rfJkb85tEz
-uO8oEL54Z5Ie9w4+tfuhOl7MdVcLiw==
-=eYTV
------END PGP SIGNATURE-----
-
---8HLMaDdlMH1p57ew--
+diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+index 11a0e1a7b7d..ec5db5a597f 100644
+--- a/hw/char/riscv_htif.c
++++ b/hw/char/riscv_htif.c
+@@ -32,14 +32,7 @@
+ #include "exec/tswap.h"
+ #include "system/dma.h"
+ #include "system/runstate.h"
+-
+-#define RISCV_DEBUG_HTIF 0
+-#define HTIF_DEBUG(fmt, ...)                                                   \
+-    do {                                                                       \
+-        if (RISCV_DEBUG_HTIF) {                                                \
+-            qemu_log_mask(LOG_TRACE, "%s: " fmt "\n", __func__, ##__VA_ARGS__);\
+-        }                                                                      \
+-    } while (0)
++#include "trace.h"
+ 
+ #define HTIF_DEV_SHIFT          56
+ #define HTIF_CMD_SHIFT          48
+@@ -159,8 +152,7 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+     uint64_t payload = val_written & 0xFFFFFFFFFFFFULL;
+     int resp = 0;
+ 
+-    HTIF_DEBUG("mtohost write: device: %d cmd: %d what: %02" PRIx64
+-        " -payload: %016" PRIx64 "\n", device, cmd, payload & 0xFF, payload);
++    trace_htif_uart_write_to_host(device, cmd, payload);
+ 
+     /*
+      * Currently, there is a fixed mapping of devices:
+@@ -251,8 +243,7 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+         }
+     } else {
+         qemu_log("HTIF unknown device or command\n");
+-        HTIF_DEBUG("device: %d cmd: %d what: %02" PRIx64
+-            " payload: %016" PRIx64, device, cmd, payload & 0xFF, payload);
++        trace_htif_uart_unknown_device_command(device, cmd, payload);
+     }
+     /*
+      * Latest bbl does not set fromhost to 0 if there is a value in tohost.
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 3ee7cfcdff2..b2e3d25ae34 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -136,3 +136,7 @@ stm32f2xx_usart_read(char *id, unsigned size, uint64_t ofs, uint64_t val) " %s s
+ stm32f2xx_usart_write(char *id, unsigned size, uint64_t ofs, uint64_t val) "%s size %d ofs 0x%02" PRIx64 " <- 0x%02" PRIx64
+ stm32f2xx_usart_drop(char *id) " %s dropping the chars"
+ stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving '%c'"
++
++# riscv_htif.c
++htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
++htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
+-- 
+2.47.1
 
 
