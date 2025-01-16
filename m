@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37179C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD38C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYRuV-0006LP-JY; Thu, 16 Jan 2025 10:35:55 -0500
+	id 1tYRv3-0007Pq-Iz; Thu, 16 Jan 2025 10:36:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tYRuT-0006Kd-8A
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:35:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tYRuR-0003WV-MX
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:35:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737041747;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KjIpcD7YWjfIwGyoS2xumZ713mFtxVG+uRPiveCy82g=;
- b=KnhGQTLDTXTm5vaNam0UBzWvObAgT97H5wwxu3FLtXKsrcZ/LfSesdVVABEpDkzLNRNo4i
- r7BeMcyCuyloUnyyNMHEFKvgVSBQSybcy1c7MWdUh1XRJBQxyGmVCJMoyUS8xhgsVcpOpH
- eZw3ErAa8unig54JMtSfb5wEbIYLu3k=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-6831t00xP0Wp4wOvtZspJw-1; Thu, 16 Jan 2025 10:35:46 -0500
-X-MC-Unique: 6831t00xP0Wp4wOvtZspJw-1
-X-Mimecast-MFC-AGG-ID: 6831t00xP0Wp4wOvtZspJw
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-844ebc11477so10756839f.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:35:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tYRv0-0007Ka-PR
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:36:27 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tYRuz-0003au-0j
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:36:26 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2ee786b3277so1538466a91.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:36:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737041783; x=1737646583; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HVyLAXQ0C0qJ8NwejTb4xyIbJGMi6KcFy9Lm6IEydpA=;
+ b=Y/M4cxs6bfQdbYRkCI+IeVUFkHqinRStaFmn+CAKxLFiBIdtCWAJ6xEurebipOfWnm
+ UhTx6yON4zF6d5hAxzkVKJDI6hIq0HcwWlP5VwnoOv4WdQGiImUjr8ndTdr6yKFOhgbA
+ 5SFtYSauV+Eq3QUkEEO7icEjdeUFfHO4diiSmKBfhs7aF/HhOE+ems8XEvZQAML7rJwk
+ 89F/x/q1eAmqG70mhzdKMVeLt2p3TrliZU+JDoDvnO+hf1aJdb3WzoLFGP1a3jSl1/+I
+ ujUkk0NRYmlU3qujW5pMWmF3RE1CzzGdY9VWly0zhAoxtv2EYPPRcTnPHSc18l1vusqO
+ VcwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737041745; x=1737646545;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KjIpcD7YWjfIwGyoS2xumZ713mFtxVG+uRPiveCy82g=;
- b=M71/ImNLY2bvuGCT3ZDOShjVkonYAWmqFXnhZ4uoa792v+sv6PRtBtzwLgoZmWPYCU
- 8yoq0rJjvAPOkLgYypGDKCABJOEJlMhA60vlCdVYMd/llqU6jMZ1YCHeLAO7g+Bt/dRa
- mi++lH0rnanjmCmTWuOenapmjb8QNSTZfMm80WIDatqYuco2csbDrERKXECWXrmiJKjg
- F2UlIHAjV+D+xjqBvPi3NVP7v6bwgj8z4LTORwzjyQ03uJuNWyxwBeigL/oeZcI3IMJ/
- oR/xnGW5ZVd5Np95yF7qVahI+hEw5fU3803j0OtGqIQl+WWuchpjrej7i0k/NyDt0qLO
- purw==
-X-Gm-Message-State: AOJu0Yx/qaMNeaCcxBzr8tGEjrgJdQ5qh+EuaBfxG5CtZDQ2zAL4yFbV
- zOLqNqR6CopNf4SN7ehQGSRI6WL2A5rmizWq/nXAW0Y5vCob0wpuav3RwxrfTsoZDEWiPzat2A/
- JZMud/eFuUkc7aNm8qt34arbUOaOTAlh+zrAzPPe1FkmSyyeAUxj/
-X-Gm-Gg: ASbGncvSBifAOkG8ycekfP9joHCz/8yhQXDfnlF245nLuJDIw6edlXUyXcJZED+bYPu
- IQPSxXHwxFraMSXWDUr7oD4T4ZYP8PnI9u5it0OxchTlAWlGKabMRHVixvYvPye3ijHkUv4F37J
- mocYx+TuGNv7YwmYnZfiEzrwMSAF58hEWEDvqUGEXgTqq2quiV/QDCNbvmfqApyaicqPDTNUVDt
- XFsGFxlP79wakAPrej4C3KQwotuZqoRwJwp9TgOd+JdWPJMLtpaRgrrBQ82
-X-Received: by 2002:a05:6602:6d1a:b0:83a:9350:68b with SMTP id
- ca18e2360f4ac-84cdfddfb66mr811917939f.0.1737041745698; 
- Thu, 16 Jan 2025 07:35:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH7QFqbYKh3e3NGUt2NwBhYNKuCm/9f819uqsIQokVRh2lY9gixa9mUR5R3g1P6ULulldpTKA==
-X-Received: by 2002:a05:6602:6d1a:b0:83a:9350:68b with SMTP id
- ca18e2360f4ac-84cdfddfb66mr811917439f.0.1737041745363; 
- Thu, 16 Jan 2025 07:35:45 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4ea75649c1esm70662173.78.2025.01.16.07.35.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 07:35:44 -0800 (PST)
-Date: Thu, 16 Jan 2025 10:35:30 -0500
-From: Alex Williamson <alex.williamson@redhat.com>
-To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] vfio/igd: Fix potential overflow in igd_gtt_memory_size()
-Message-ID: <20250116103530.2cb45731.alex.williamson@redhat.com>
-In-Reply-To: <20250107130604.669697-1-clg@redhat.com>
-References: <20250107130604.669697-1-clg@redhat.com>
-Organization: Red Hat
+ d=1e100.net; s=20230601; t=1737041783; x=1737646583;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HVyLAXQ0C0qJ8NwejTb4xyIbJGMi6KcFy9Lm6IEydpA=;
+ b=LTDOdtUz4QLy+BAKCrNDt/0nVJhLMKCkG+vVt6qlBQcyIixakUZG8oeKqN2lPJrQ/9
+ QTowVXrWqVTCBYTNa21JBHPNxSS7ph2XSSbsEfvo3nL7jgjgKeqGVEDZcw3N59XqTHTD
+ kym5vJsv6MmljtSuAdBDIoiJbFsroyAfHr5J+Qw9FDiYHEBOglzkiOKLKpXinY0qi9La
+ FKpsc2JKtf1vynsVQthCv3igzy61f38uv2G5aYI6PZwaAoMbf70i7H0QaeUgYpgq67QS
+ lKcXUYVLp6Zl38PtEqFYmoGs7Ir3VulKN4tfukirh6ocyksD0baLG6YKNbcam/HhtNJk
+ i1Ng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBcQ243T0wCnzhRP+ydJ2BJprqq0fZR2mGDWRo0BapucB2pmFlgWc87ZMfq9SqSDj9M5fjYXEjwc2q@nongnu.org
+X-Gm-Message-State: AOJu0Yz8HPeoxFJKaRj6FZWig4hunES0j3JSmAPazgiNzenATkhW/b4P
+ bs2MqEmDcElsILlG0o8JtSYIkeniDWds7LyL/xoe7AfuSbk9hFRFk/KwlNAEFDiCRkBwswAMOYi
+ o
+X-Gm-Gg: ASbGncswedpSSI28qnOTGTo1jwJv50fftuMIjLnVM8GYWzFjqI+/gjha67e26+he6ce
+ HVg/qcUKVneXNM9XYl2dinyf9VE9x9Uo1DyrBubO9nQJPLM9tKg81z6CvxaZZHOV1M5LE+jL7oQ
+ rZ4ITfM6uahr1QL9cGIEZXUsZp7CulsPnBlVLH7tGUKvd5BkIt3tcLPEix3F/FUc8t51iFmiFDb
+ VdJbosK/oO/Xi0/ghZ83Xc2LeP5JQqSJx6PfUx1C33WPPb0auCKKDiN67Xr7Ie7COkUCLWinta0
+ sxBzjCrvZhnWt7fv6HbMpoc=
+X-Google-Smtp-Source: AGHT+IHLMZ7LJQKt3dtQF1jjJCAxEHgSATwMMdc0EZLdIgvXEcdQafsPAqLzXIDvK6S7CGuWY+mQ+w==
+X-Received: by 2002:a17:90b:2f46:b0:2ee:bbe0:98c6 with SMTP id
+ 98e67ed59e1d1-2f548ea6488mr47948247a91.8.1737041783010; 
+ Thu, 16 Jan 2025 07:36:23 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f72c14ffaasm3468756a91.4.2025.01.16.07.36.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 07:36:22 -0800 (PST)
+Message-ID: <09f20e10-04fc-463c-890d-9fb28d57499f@linaro.org>
+Date: Thu, 16 Jan 2025 07:36:21 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Add missing /proc/cpuinfo fields for sparc
+To: Helge Deller <deller@kernel.org>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-devel@nongnu.org
+References: <Z39B1wzNNpndmOxZ@p100>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <Z39B1wzNNpndmOxZ@p100>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,37 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  7 Jan 2025 14:06:04 +0100
-C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+On 1/8/25 19:26, Helge Deller wrote:
+> Add some missing fields which may be parsed by userspace
+> applications.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> 
+> v2:
+> - fixed cpu name and type depending on currently active CPU
 
-> The risk is mainly theoretical since the applied bit mask will keep
-> the 'ggms' shift value below 3. Nevertheless, let's use a 64 bit
-> integer type and resolve the coverity issue.
->=20
-> Resolves: Coverity CID 1585908
-> Fixes: 1e1eac5f3dcd ("vfio/igd: canonicalize memory size calculations")
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> ---
->  hw/vfio/igd.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index 0740a5dd8cc9346a92c4613194faa8dea42e1d98..b5303ea565d6a344d0a43273f=
-288bbb4a7f48327 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -133,7 +133,7 @@ static uint64_t igd_gtt_memory_size(int gen, uint16_t=
- gmch)
->      } else {
->          ggms =3D (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS=
-_MASK;
->          if (ggms !=3D 0) {
-> -            ggms =3D 1 << ggms;
-> +            ggms =3D 1ULL << ggms;
->          }
->      }
-> =20
 
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Queued, thanks
 
+
+r~
 
