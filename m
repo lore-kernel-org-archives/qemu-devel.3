@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3191EC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 17:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFB0C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 17:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYTTz-0002l2-Tq; Thu, 16 Jan 2025 12:16:39 -0500
+	id 1tYTUC-0002ms-0Y; Thu, 16 Jan 2025 12:16:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTTx-0002kb-Aq
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTUA-0002mM-9q
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTTu-0000Iy-6G
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:37 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTU8-0000LZ-R6
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737047784;
+ s=mimecast20190719; t=1737047808;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Hn/e1VzB0S1oIr3WtW6eeQA6TXlfLrfb4lAqn+p1EYQ=;
- b=FylLBekZRLKO00LQCpGQhdCILMko1Mf7aSENyjqKiaz0aHv+LHriFE+mRZS4BUoTve37/z
- 5p7OK/lytI1iw3XGtLdDO0whPHlqaJdwW2TESi3hF1SNIqXW6zrdZuLpeIa4cDae/Ujd6b
- Kgxsu0NGy3qC/JHPFTnr+MVO8cewoxs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wAFYx8WFiHSbQ2rdkWZHi60d75u4g+kEUsjeBdEGHOY=;
+ b=PHFzBXBBoWRoI5Rx7YM7uNKSQ+/Tpo/lEGHYfpo+3I4aI4gvvL17y63PYvpQWWgGc+OfpE
+ 4NfaGIwAR/2cG3n4u+3crTJ60NQtjG6jZ4qme7BmBKbsX4M09oDrvx2pCqPwT20CjQf4hl
+ icOTbBpy5MmMzAbUXIaIZZglt0p7xGc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-n0JvSyVyPGO8GNVmAG4SQw-1; Thu, 16 Jan 2025 12:16:18 -0500
-X-MC-Unique: n0JvSyVyPGO8GNVmAG4SQw-1
-X-Mimecast-MFC-AGG-ID: n0JvSyVyPGO8GNVmAG4SQw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385d735965bso763007f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 09:16:18 -0800 (PST)
+ us-mta-484-WF5SzwfAP0KWPDS_3ilb6g-1; Thu, 16 Jan 2025 12:16:45 -0500
+X-MC-Unique: WF5SzwfAP0KWPDS_3ilb6g-1
+X-Mimecast-MFC-AGG-ID: WF5SzwfAP0KWPDS_3ilb6g
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361ecebc5bso5806025e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 09:16:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737047777; x=1737652577;
+ d=1e100.net; s=20230601; t=1737047804; x=1737652604;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hn/e1VzB0S1oIr3WtW6eeQA6TXlfLrfb4lAqn+p1EYQ=;
- b=FuibM4ZHquZXdu8TVozd36omulGmlT5SyJqU1BgXWu25ION4HyeYtkNLE6laSQg+GB
- jL/ZhM/xih5jTKKSBbdphMRxJlqqjxgGAcXLQbJMEaYlJvUhcka1da2c9p4SJGtIicxP
- 1Nx/Zcmj5gad0VrVa8if63cG87uFABnHdi2BByswsvQjk0AK8IR+qld+Rn/LLlGsEHRb
- Pj/cfTp7dnJUd//2VWh+Sc33oZsKMuhsjntIfgucGWseKAKfDOPO4hc40FbBN8MCs3KV
- GGeH3JtPP0hXZS52Yp2DnXRiO+rD4QU9jh6gNVsXK0p0/ig8JkrmjfvNkqtyM/gmSLvP
- EELQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWeoz1W7nSynPYLDOf4lEJd0chGkjNPUYeh22vpvmH5VAKQz9fZOwXI+q8Au44miZmQJIbS/R7ElfR5@nongnu.org
-X-Gm-Message-State: AOJu0YwKfW1rOshCNjIS8RsK0LOWNFb7l+EWk1P0dV/1K42k7PwJHXUn
- E2W3YbXNZjfNnwRTePMfpA0Z4mU52NmgUh6YsLMcqbyIgugwItvHNuL6FBVZS93uobo1N+jyM0b
- JG/J36fP/h39h4LZXT8A2V/OzdrcKemQDAmF39mFricTaOtQUhVCu
-X-Gm-Gg: ASbGncsMpLg+Vl6B7enOSiy6AMdcj3uSYASRJJbbHkUEVizeHjWgra3Zu3prrCFSXkH
- BPB+z9UpT6P99YkAGz/XFxrhtYo4eiUclOFlb2Yth3RoTbRECN1Dm/3gdjymJvYJfMLpp3bJ8Fi
- BwumsbVRRXACPz9qQUFGrCU8yUEhdsOPIzhA8NKHsZVV7iy2bAysqontQcx0kWxH+r4odRFaOCm
- tzzMhfyk+mRQ+H7HhDxl/ntOobbr8aXtH81HNy5h/DuPJ5XpWErnfqRQm4PslRHVyEE8BbdwZpZ
- Uwa5YlAAb1tcXdX66yQ=
-X-Received: by 2002:adf:c08c:0:b0:38a:88ac:f115 with SMTP id
- ffacd0b85a97d-38a88acf14fmr23430878f8f.34.1737047777447; 
- Thu, 16 Jan 2025 09:16:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFM/TQDOwHX44Dp+ikLalQDNW4+Tmap/Y48wz5dZBITLd4SK/vccvvHekYx8JxIZmWuYpxUvw==
-X-Received: by 2002:adf:c08c:0:b0:38a:88ac:f115 with SMTP id
- ffacd0b85a97d-38a88acf14fmr23430856f8f.34.1737047777118; 
- Thu, 16 Jan 2025 09:16:17 -0800 (PST)
+ bh=wAFYx8WFiHSbQ2rdkWZHi60d75u4g+kEUsjeBdEGHOY=;
+ b=mQQ5K+W97PAscLwCDFwJSn2qDJy0zGHANoUarTsFxpHzosXl6tkhHxsDqul8gEUxbC
+ GxWPxrXgRLBQbv4r1B8Qg2f3ZPc8sem5+UnbGP0E149Sux2UMDbgsMH0SqBDVtE3H4e4
+ T65nrYiNVU0IVi89Wdt4qNsoEnEJ5oqWmjE5fLI5meB2Jf4uUG47pHKIFRepbG5hnhNL
+ 87Z0WRcSY7adx7vK1BpyS85XV1SOga2rGt5znHS/r2mFEgB9vm3WdkqlEKKqyDHRaV7V
+ qf2kYOTk80m7vZMhs44mF6Ow73YXa5E+UUQr9N9h2Nru/EkKWQRb14sU0evL8Fm5T4ks
+ rGIg==
+X-Gm-Message-State: AOJu0YxLxd4psqJHT3pJIFrUWkpR81Fxaij79zmUVNBQBl3GEr+rCZYh
+ Q599oQi4hnA1E4K5CqTRzqwVYErtwnAxCXs3UZlch4WNFMKLGAeTFD71TEVsictBSpjUfOwl1M6
+ pyWEoH7PXRYE9lMJ24d6xf9gQMqLMFx0Ii8HVNOn7vRkUACultASV
+X-Gm-Gg: ASbGncthMmkb8iVnmxUz63eHl7+HQ9Vz/qcax1tP59ynCzUXqruh3lzmUza4XZVyY4G
+ MgPhL5fkvqy+tVnr5qnQ4dq2KlGPwHYdxhoqYbW/hGbyydoxtP5J5t/cQ3T7uj2d3fXDvpajK7N
+ +nIBhfw1UTuPIRrk287UtyTafhBG9zm8EIWdIa6fiTxW9oDQZACubnRT4+qWG9YiVTIv/6AHZh6
+ L426qDMmmIIYtUro1cXvItRxmz9hriAo6Y/XL8PhU7H3VDGbuGZvlzNaB4UZ1rDyF5cddSGkFXA
+ VCGcdhWC5niwU6ozSkA=
+X-Received: by 2002:a05:6000:18a8:b0:385:e013:73f6 with SMTP id
+ ffacd0b85a97d-38a87315994mr27926807f8f.50.1737047804521; 
+ Thu, 16 Jan 2025 09:16:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFMhqqqqoD63CmBBdJhBax4acb7nUvwyPAzruvthDlAWUy/ohrlooqQWQ+o7FPi/moJWlQObg==
+X-Received: by 2002:a05:6000:18a8:b0:385:e013:73f6 with SMTP id
+ ffacd0b85a97d-38a87315994mr27926783f8f.50.1737047804206; 
+ Thu, 16 Jan 2025 09:16:44 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c749956fsm66115125e9.4.2025.01.16.09.16.16
+ ffacd0b85a97d-38bf321505asm372067f8f.7.2025.01.16.09.16.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 09:16:16 -0800 (PST)
-Message-ID: <c460c005-1cc5-42a2-a08e-c9c9d10e12b1@redhat.com>
-Date: Thu, 16 Jan 2025 18:16:15 +0100
+ Thu, 16 Jan 2025 09:16:43 -0800 (PST)
+Message-ID: <d9527e66-41fd-48f2-b5e5-f25d0433b48d@redhat.com>
+Date: Thu, 16 Jan 2025 18:16:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/iommufd: Fix SIGSEV in iommufd_cdev_attach()
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20250116102307.260849-1-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH v2 0/3] vfio/igd: VFIOConfigMirrorQuirk for igd mirrored
+ registers
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250104154219.7209-1-tomitamoeko@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,17 +126,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250116102307.260849-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20250104154219.7209-1-tomitamoeko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,16 +154,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/25 11:23, Zhenzhong Duan wrote:
-> When iommufd_cdev_ram_block_discard_disable() fails for whatever reason,
-> errp should be set or else SIGSEV is triggered in vfio_realize() when
-> error_prepend() is called.
+On 1/4/25 16:42, Tomita Moeko wrote:
+> In commit 1a2623b5c9e7 ("vfio/igd: add macro for declaring mirrored
+> registers"), I introduced a macro to handle mirrored registers in igd
+> bar0. However, using the existing VFIOConfigMirrorQuirk should be a
+> better approach I think after going through the vfio code.
 > 
-> By this chance, use the same error message for both legacy and iommufd
-> backend.
+> This patch set introduces a new header file, pci-quirks.h, to hold
+> generic quirk declarations, and extends VFIOConfigMirrorQuirk to
+> support offsets in PCI config space. This eliminates the need for
+> the previously introduced macro.
 > 
-> Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Changelog:
+> v2:
+> * Removed 'const Property' change, it was a mistake in rebasing.
+> * Removed unnecessary initializing config_offset explicitly.
+> * Separated GGC and BDSM mirror into 2 quirks.
+> Link: https://lore.kernel.org/all/20241231151953.59992-1-tomitamoeko@gmail.com/
+> 
+> Tomita Moeko (3):
+>    vfio/pci: declare generic quirks in a new header file
+>    vfio/pci: introduce config_offset field in VFIOConfigMirrorQuirk
+>    vfio/igd: use VFIOConfigMirrorQuirk for mirrored registers
+> 
+>   hw/vfio/igd.c        | 125 +++++++++++--------------------------------
+>   hw/vfio/pci-quirks.c |  57 +++-----------------
+>   hw/vfio/pci-quirks.h |  72 +++++++++++++++++++++++++
+>   3 files changed, 109 insertions(+), 145 deletions(-)
+>   create mode 100644 hw/vfio/pci-quirks.h
+> 
+
 
 
 Applied to vfio-next.
@@ -173,33 +192,5 @@ Thanks,
 
 C.
 
-
-> ---
->   hw/vfio/iommufd.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 3490a8f1eb..df61edffc0 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -515,8 +515,8 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->           } else {
->               ret = iommufd_cdev_ram_block_discard_disable(true);
->               if (ret) {
-> -                error_setg(errp,
-> -                              "Cannot set discarding of RAM broken (%d)", ret);
-> +                error_setg_errno(errp, -ret,
-> +                                 "Cannot set discarding of RAM broken");
->                   goto err_discard_disable;
->               }
->               goto found_container;
-> @@ -544,6 +544,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->   
->       ret = iommufd_cdev_ram_block_discard_disable(true);
->       if (ret) {
-> +        error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
->           goto err_discard_disable;
->       }
->   
 
 
