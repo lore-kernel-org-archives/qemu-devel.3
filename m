@@ -4,101 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2967E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 05:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3308C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 05:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYIZl-00058B-Nx; Thu, 16 Jan 2025 00:37:53 -0500
+	id 1tYItT-0008Lw-1z; Thu, 16 Jan 2025 00:58:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYIZi-00057g-Ho
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 00:37:50 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tYItR-0008LO-4f
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 00:58:13 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYIZg-0002I9-BA
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 00:37:50 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2161eb94cceso5402085ad.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 21:37:47 -0800 (PST)
+ id 1tYItO-00007M-O7
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 00:58:12 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-21634338cfdso11526725ad.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 21:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737005866; x=1737610666;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737007089; x=1737611889;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OBaa8mdtMqGNt7FNMhG5Xlqa96gK76Piqa+Zc/XRTkQ=;
- b=ykaUGxyO6SxQHs69ofGHuEjgdaNgd4go44fp47vQoLA/PI5OpAWzBneoyk1uy3p9hT
- Kh0+vXfvVESGfCAoBTo115bxIOQxfQcjy35ja5DUVizNjgn7YyF86RI/jKX+U7M8OlBz
- uUNJh581aeWD4BvCWqaI3gCphwdssCjo8sRVQxgczBUBZUgOBAQWrXP9CrRBWngPWJK0
- 8Succ9bA9Wx1UoTpHsugy4e41TvhwzeLk3vI7dJrlhhQMiZogRvG1yyyV+Sa9aC1fRjo
- fNEx0Fm1Xteb2AhOZ2tCVgfkqzKKFhbteSvPgglTpuzYAQr+5hMfZmcMcCDGRjXjPKEm
- RR8Q==
+ bh=kFQRgMGvqGHJbiby+mGDpXtQsIApGek0rCbwFbJxWCw=;
+ b=sH2+hj1RqWkqxAs9Zfa9kB3vesHwVDvEIy0lZAqNmHmogpikP1Fy7vQjeq2PruHGUx
+ gTz/8qkQU0j7UdCEmKtcDkUbFJZ7cTBOgKC57rs0qHXXZteaOJVVnXA3G062ruLZ1Ot+
+ nWkjFNCXCsAtSsNfoB6g+qzwPVBdhhF10xyB07hU9wien433kVW/Zz1YA/OcDlD6PpZ5
+ IhQHpqJDPmcTGX/NQCsxdCSGawjI4k6DLplpEoKUZknD9ho2mvDlzC+8m5Q5PCn7Jlny
+ Eo368qLTOrD1veR0PdrlLJBu2ypj5mDzqem0WJ68BIwsOsekD2dKZAruLC/pRJdJ+WFW
+ MaTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737005866; x=1737610666;
+ d=1e100.net; s=20230601; t=1737007089; x=1737611889;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OBaa8mdtMqGNt7FNMhG5Xlqa96gK76Piqa+Zc/XRTkQ=;
- b=drQyiUisEJKeY9cdHkL1/SftCWfedi+ix3KYTIeT1kEJrpMJsAKbgjZvTYZzU96hZg
- sKjkuGxTVoWtqFbtFfYjoo5hfM+P/wpZgRDuqzKAtGiasyrabbf2n6pm7hv0zVKMKBuj
- RnLJN5sadKJmFulzubbPmjozPaIuiHhg0gr6nXpW8GqCDSPQYJX1peSy1drSTDGaO8B5
- eKKqQqq+kAS6UdUvO/8BvD4m+tQADGGI8p24OweVh0BlszbxoUGrRlBsQogg70zFmKsc
- SoOFdxTEmmW1KadFyqfNVPncm7g3RuNVg5MN+4Wz1DTjE2D4KXRlm2fgDgXw/k00YOlo
- ml2g==
+ bh=kFQRgMGvqGHJbiby+mGDpXtQsIApGek0rCbwFbJxWCw=;
+ b=AcNu9bX3tyrHgo7NFvGgrjBth5hLedaCQ1uc7m/ZmMvyZBbIOYFV4SYyaPoS4aR5RU
+ RB3KjWjz3MyTg7kQjAgfRP2PC54vj7MwZupd2sE9u/kR6cyyy4id6MyGIb3EZUrcq8e5
+ jl4yVUg0Dbx/Of1ER74vy7/qKAXJ3ng5R38LwtO9YoJiEbuO8wvhvc7irO5rs1/0MOLv
+ iGVTHAdxGA9kn2ftJ4vaDxTjcBVxYZlgwxckX3LYwA5HTQllWn+n1d2Mw2cUdCOXzAdR
+ L1e/qG9MEdO/dk65liI8vcYsFL7sjQkTSbX78TIk5Jtzv2QmjWlg5bf4iBE5fEUORusS
+ MLoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrr6GvjC+ttd1XygNl8WIopdjZ9X5lW80MusAlcaUQbmoW1TxW9iLwnyFFl05nxk0AxMFu0YzWsiHM@nongnu.org
-X-Gm-Message-State: AOJu0YzbMp3kx8BGfJj6XTRMQPDKhcmmA6qqib9hdck3m+oQJmqzA5PD
- ghja9TjkpMIsRrQocYRu74usayRX7L6nBs5qHQmiLrMwL7s49/QcelzqwrKxZdA=
-X-Gm-Gg: ASbGncv7MyDzqad4WSIR4JGOTNnIUjPYD0tOmLZBNDW/+AEWvMGr+OSlJyZW+hJE7Jt
- 9/qlIJUif2TzoMlPeeMFjKkXLiuSLK0x3sO95ilD4kGvYg6Z4eAdXvqipGS+Ih77mcDrixMCrOT
- 76uBvTyx0XLwrCf2WeYl7n+oMcalFQOctzfb+xFQZbcNU51Jd8NCjTycsFpG/SCpgmBFSAMggOw
- w+t9MybcscUUSrvKyJ6MG9I3YvpXnUF5vh6+QcRLBe2wrWtS/Hiw4owUsbCNVAjtYs=
-X-Google-Smtp-Source: AGHT+IH8cJBTxw7KetplP5xGM3OuWlgAe4yxJkjj0iNdNnt3cmrHQOHJWc+W9QCdnpiHnYHofmLMbw==
-X-Received: by 2002:a05:6a00:3287:b0:725:456e:76e with SMTP id
- d2e1a72fcca58-72d21fb1d3fmr44282888b3a.6.1737005866616; 
- Wed, 15 Jan 2025 21:37:46 -0800 (PST)
+ AJvYcCXDzgAKcAPaE6M3aMGdwcJ6Cb7XXIDOKgrwMjQeDO19hAn/YaOYK8HRUCg0AjbtvOtj25B3nCGbMI/C@nongnu.org
+X-Gm-Message-State: AOJu0YzL/j/JHajsp9LVVux53DXINbr++8DkaORLZsCRyal08Jotd5WK
+ 81MnT/Z/Z+g2zCS9ik8R7iNwPLiutWY/JPZWyuClmZwopLICQ2z2piXMLRzj/5A=
+X-Gm-Gg: ASbGncuQBUl8VnpEOJ4BRUuKcbBhtxN1H4w1LubaxfqV2tRn/x2EN/oT+C/zybYacyl
+ +VFKAdYtWwLLbfYv6qiJ04kJcEq6mfOOnmoEpnRIGwkDFeH+dwAQ5PN8u8YTYfqJkk1Hc6kZ26D
+ YToyopo9XYwqILxjT7nCGfyVBvQ1Bdy3WuF6GbF53DpxKwtQ+Qrb/U+xCLEd8hKLaJsKkjIGmA0
+ Tpi3dVLkIyURjNtYT0NM1dC2x4AVWQirWBzz6itkg5IzecK+yr0Ihnq6HsmDhPIiY4=
+X-Google-Smtp-Source: AGHT+IGFh+SZWcFRXM86Iw/ZESYtT1mQBeN4FdtrIEIOOvdfU434eCTvFJgroIEMgnfQN5DA0YKjAg==
+X-Received: by 2002:a17:903:2451:b0:215:b74c:d7ad with SMTP id
+ d9443c01a7336-21a83fc389cmr502073235ad.36.1737007089125; 
+ Wed, 15 Jan 2025 21:58:09 -0800 (PST)
 Received: from [157.82.203.37] ([157.82.203.37])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d406a552fsm9970780b3a.163.2025.01.15.21.37.40
+ 98e67ed59e1d1-2f72c2f31d6sm2375233a91.40.2025.01.15.21.58.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 21:37:46 -0800 (PST)
-Message-ID: <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com>
-Date: Thu, 16 Jan 2025 14:37:38 +0900
+ Wed, 15 Jan 2025 21:58:08 -0800 (PST)
+Message-ID: <b9e73795-c866-4c13-ab80-e1a5d7226c17@daynix.com>
+Date: Thu, 16 Jan 2025 14:58:03 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-To: Peter Xu <peterx@redhat.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org, devel@daynix.com
-References: <Z4E6TnKaUt8FMWIv@x1n>
- <9bb5f964-f930-4428-b800-8b589920fe1d@daynix.com> <Z4U30j9w1kPnKX9U@x1n>
- <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com> <Z4aYpo0VEgaQedKp@x1n>
- <00a220df-b256-4b70-9974-f4c1fe018201@daynix.com> <Z4e7gFSqdhcmJPYb@x1n>
- <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com> <Z4fW_rI7Mfrtc1Fg@x1n>
- <af018f8a-ce00-4ce2-9fe9-b6ba3f97bfa1@daynix.com> <Z4fezdR1ApN8ZLTS@x1n>
+Subject: Re: [PATCH v2 5/5] qtest/e1000e|igb: Fix msix to re-trigger interrupts
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, John Snow <jsnow@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-block@nongnu.org
+References: <20250115150112.346497-1-npiggin@gmail.com>
+ <20250115150112.346497-6-npiggin@gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <Z4fezdR1ApN8ZLTS@x1n>
+In-Reply-To: <20250115150112.346497-6-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -120,31 +107,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/01/16 1:14, Peter Xu wrote:
-> On Thu, Jan 16, 2025 at 12:52:56AM +0900, Akihiko Odaki wrote:
->> Functionally, the ordering of container/subregion finalization matters if
->> some device tries to a container during finalization. In such a case,
->                        |
->                        ^ something is missing here, feel free to complete this.
+On 2025/01/16 0:01, Nicholas Piggin wrote:
+> The e1000e and igb tests don't clear the msix pending bit after waiting
+> for it, as it is masked so the irq doesn't get sent. This means all
+> subsequent waits for the interrupt does not wait or verify the interrupt
+> was generated, affecting the multiple_transfers tests.
+> 
+> To fix this, have device setup always enable and unmask the RXQ and TXQ
+> irq vectors, and verify interrupt was seen by checking the msix message
+> was seen.
 
-Oops, I meant: functionally, the ordering of container/subregion 
-finalization matters if some device tries to use a container during 
-finalization.
+I have a late question: What about using the PBACLR register? It seems 
+easier than unmasking MSI-X vectors.
+
+I first thought you are going to have a generic testing code so I 
+suggested unmasking MSI-X vectors, which is not specific to e1000e/igb 
+and portable. However, you are only fixing e1000e/igb now so it is fine 
+to rely on device-specifics. With the PBACLR you can easily clear the PBA.
 
 > 
->> removing subregions from the container at random timing can result in an
->> unexpected behavior. There is little chance to have such a scenario but we
->> should stay the safe side if possible.
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   tests/qtest/libqos/e1000e.h | 11 ++++-
+>   tests/qtest/libqos/e1000e.c | 87 +++++++++++++++++++++++++++++++++++--
+>   tests/qtest/libqos/igb.c    |  9 ++++
+>   3 files changed, 102 insertions(+), 5 deletions(-)
 > 
-> It sounds like a future feature, and I'm not sure we'll get there, so I
-> don't worry that much.  Keeping refcount core idea simple is still very
-> attractive to me.  I still prefer we have complete MR refcounting iff when
-> necessary.  It's also possible it'll never happen to QEMU.
-> 
+> diff --git a/tests/qtest/libqos/e1000e.h b/tests/qtest/libqos/e1000e.h
+> index 30643c80949..63aa8c28a39 100644
+> --- a/tests/qtest/libqos/e1000e.h
+> +++ b/tests/qtest/libqos/e1000e.h
+> @@ -22,8 +22,13 @@
+>   #include "qgraph.h"
+>   #include "pci.h"
+>   
+> -#define E1000E_RX0_MSG_ID           (0)
+> -#define E1000E_TX0_MSG_ID           (1)
+> +enum  {
+> +    E1000E_RX0_MSG_ID,
+> +    E1000E_TX0_MSG_ID,
+> +    E1000E_MSG_ID_MAX
+> +};
+> +
+> +#define E1000E_MSIX_DATA ((uint32_t[]) { 0x12345678, 0xabcdef00 })
+>   
+>   #define E1000E_ADDRESS { 0x52, 0x54, 0x00, 0x12, 0x34, 0x56 }
+>   
+> @@ -40,6 +45,7 @@ struct QE1000E_PCI {
+>       QPCIDevice pci_dev;
+>       QPCIBar mac_regs;
+>       QE1000E e1000e;
+> +    uint64_t msix_msg_addr[E1000E_MSG_ID_MAX];
+>   };
+>   
+>   static inline void e1000e_macreg_write(QE1000E *d, uint32_t reg, uint32_t val)
+> @@ -57,5 +63,6 @@ static inline uint32_t e1000e_macreg_read(QE1000E *d, uint32_t reg)
+>   void e1000e_wait_isr(QE1000E *d, uint16_t msg_id);
+>   void e1000e_tx_ring_push(QE1000E *d, void *descr);
+>   void e1000e_rx_ring_push(QE1000E *d, void *descr);
+> +void e1000e_pci_msix_enable_rxtxq_vectors(QE1000E_PCI *d);
+>   
+>   #endif
+> diff --git a/tests/qtest/libqos/e1000e.c b/tests/qtest/libqos/e1000e.c
+> index 925654c7fd4..49bedb5e009 100644
+> --- a/tests/qtest/libqos/e1000e.c
+> +++ b/tests/qtest/libqos/e1000e.c
+> @@ -19,6 +19,7 @@
+>   #include "qemu/osdep.h"
+>   #include "hw/net/e1000_regs.h"
+>   #include "hw/pci/pci_ids.h"
+> +#include "hw/pci/pci_regs.h"
+>   #include "../libqtest.h"
+>   #include "pci-pc.h"
+>   #include "qemu/sockets.h"
+> @@ -77,16 +78,48 @@ static void e1000e_foreach_callback(QPCIDevice *dev, int devfn, void *data)
+>       g_free(dev);
+>   }
+>   
+> +static bool e1000e_test_msix_irq(QE1000E *d, uint16_t msg_id,
+> +                                 uint64_t guest_msix_addr,
+> +                                 uint32_t msix_data)
+> +{
+> +    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
+> +    QPCIDevice *pci_dev = &d_pci->pci_dev;
+> +    uint32_t data;
+> +
+> +    /* msix irq test must enable msix */
+> +    g_assert(pci_dev->msix_enabled);
+> +
+> +    /* Vector must be enabled (e.g., with enable_rxtxq_vectors) */
+> +    g_assert(!qpci_msix_masked(pci_dev, msg_id));
+> +
+> +    data = qtest_readl(pci_dev->bus->qts, guest_msix_addr);
+> +    if (data == msix_data) {
+> +        /* Clear msix addr ready for next interrupt */
+> +        qtest_writel(pci_dev->bus->qts, guest_msix_addr, 0);
+> +        return true;
+> +    } else if (data == 0) {
+> +        return false;
+> +    } else {
+> +        /* Must only be either 0 (no interrupt) or the msix data. */
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+>   void e1000e_wait_isr(QE1000E *d, uint16_t msg_id)
+>   {
+>       QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
+> -    guint64 end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
+> +    QPCIDevice *pci_dev = &d_pci->pci_dev;
+> +    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
+> +    uint64_t guest_msix_addr = d_pci->msix_msg_addr[msg_id];
+> +    uint32_t msix_data = E1000E_MSIX_DATA[msg_id];
+> +
+> +    assert(pci_dev->msix_enabled);
+>   
+>       do {
+> -        if (qpci_msix_pending(&d_pci->pci_dev, msg_id)) {
+> +        if (e1000e_test_msix_irq(d, msg_id, guest_msix_addr, msix_data)) {
+>               return;
+>           }
+> -        qtest_clock_step(d_pci->pci_dev.bus->qts, 10000);
+> +        qtest_clock_step(pci_dev->bus->qts, 10000);
+>       } while (g_get_monotonic_time() < end_time);
+>   
+>       g_error("Timeout expired");
+> @@ -99,6 +132,45 @@ static void e1000e_pci_destructor(QOSGraphObject *obj)
+>       qpci_msix_disable(&epci->pci_dev);
+>   }
+>   
+> +static void e1000e_pci_msix_enable_vector(QE1000E_PCI *d, uint16_t msg_id)
+> +{
+> +    QPCIDevice *pci_dev = &d->pci_dev;
+> +    uint64_t guest_msix_addr = d->msix_msg_addr[msg_id];
+> +    uint32_t msix_data = E1000E_MSIX_DATA[msg_id];
+> +    uint32_t control;
+> +    uint64_t off;
+> +
+> +    g_assert_cmpint(msg_id , >=, 0);
+> +    g_assert_cmpint(msg_id , <, qpci_msix_table_size(pci_dev));
+> +    g_assert_cmpint(msg_id , <, E1000E_MSG_ID_MAX);
+> +    g_assert(guest_msix_addr != 0);
+> +    g_assert(msix_data != 0);
+> +
+> +    off = pci_dev->msix_table_off + (msg_id * 16);
+> +
+> +    qpci_io_writel(pci_dev, pci_dev->msix_table_bar,
+> +                   off + PCI_MSIX_ENTRY_LOWER_ADDR, guest_msix_addr & ~0UL);
+> +    qpci_io_writel(pci_dev, pci_dev->msix_table_bar,
+> +                   off + PCI_MSIX_ENTRY_UPPER_ADDR,
+> +                   (guest_msix_addr >> 32) & ~0UL);
+> +    qpci_io_writel(pci_dev, pci_dev->msix_table_bar,
+> +                   off + PCI_MSIX_ENTRY_DATA, msix_data);
+> +
+> +    control = qpci_io_readl(pci_dev, pci_dev->msix_table_bar,
+> +                            off + PCI_MSIX_ENTRY_VECTOR_CTRL);
+> +    qpci_io_writel(pci_dev, pci_dev->msix_table_bar,
+> +                   off + PCI_MSIX_ENTRY_VECTOR_CTRL,
+> +                   control & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
+> +}
+> +
+> +void e1000e_pci_msix_enable_rxtxq_vectors(QE1000E_PCI *d)
+> +{
+> +    g_assert(d->pci_dev.msix_enabled);
+> +
+> +    e1000e_pci_msix_enable_vector(d, E1000E_RX0_MSG_ID);
+> +    e1000e_pci_msix_enable_vector(d, E1000E_TX0_MSG_ID);
+> +}
+> +
+>   static void e1000e_pci_start_hw(QOSGraphObject *obj)
+>   {
+>       QE1000E_PCI *d = (QE1000E_PCI *) obj;
+> @@ -113,6 +185,7 @@ static void e1000e_pci_start_hw(QOSGraphObject *obj)
+>   
+>       /* Enable and configure MSI-X */
+>       qpci_msix_enable(&d->pci_dev);
+> +    e1000e_pci_msix_enable_rxtxq_vectors(d);
+>       e1000e_macreg_write(&d->e1000e, E1000_IVAR, E1000E_IVAR_TEST_CFG);
+>   
+>       /* Check the device status - link and speed */
+> @@ -196,6 +269,14 @@ static void *e1000e_pci_create(void *pci_bus, QGuestAllocator *alloc,
+>       d->e1000e.rx_ring = guest_alloc(alloc, E1000E_RING_LEN);
+>       g_assert(d->e1000e.rx_ring != 0);
+>   
+> +    /* Allocate and clear msix msg addr for TX */
+> +    d->msix_msg_addr[E1000E_TX0_MSG_ID] = guest_alloc(alloc, 4);
+> +    g_assert(d->msix_msg_addr[E1000E_TX0_MSG_ID] != 0);
+> +
+> +    /* Allocate and clear msix msg addr for RX */
+> +    d->msix_msg_addr[E1000E_RX0_MSG_ID] = guest_alloc(alloc, 4);
+> +    g_assert(d->msix_msg_addr[E1000E_RX0_MSG_ID] != 0);
+> +
+>       d->obj.get_driver = e1000e_pci_get_driver;
+>       d->obj.start_hw = e1000e_pci_start_hw;
+>       d->obj.destructor = e1000e_pci_destructor;
+> diff --git a/tests/qtest/libqos/igb.c b/tests/qtest/libqos/igb.c
+> index f40c4ec4cd2..c902634b3df 100644
+> --- a/tests/qtest/libqos/igb.c
+> +++ b/tests/qtest/libqos/igb.c
+> @@ -75,6 +75,7 @@ static void igb_pci_start_hw(QOSGraphObject *obj)
+>   
+>       /* Enable and configure MSI-X */
+>       qpci_msix_enable(&d->pci_dev);
+> +    e1000e_pci_msix_enable_rxtxq_vectors(d);
+>       e1000e_macreg_write(&d->e1000e, E1000_IVAR0, IGB_IVAR_TEST_CFG);
+>   
+>       /* Check the device link status */
+> @@ -161,6 +162,14 @@ static void *igb_pci_create(void *pci_bus, QGuestAllocator *alloc, void *addr)
+>       d->e1000e.rx_ring = guest_alloc(alloc, E1000E_RING_LEN);
+>       g_assert(d->e1000e.rx_ring != 0);
+>   
+> +    /* Allocate and clear msix msg addr for TX */
+> +    d->msix_msg_addr[E1000E_TX0_MSG_ID] = guest_alloc(alloc, 4);
+> +    g_assert(d->msix_msg_addr[E1000E_TX0_MSG_ID] != 0);
+> +
+> +    /* Allocate and clear msix msg addr for RX */
+> +    d->msix_msg_addr[E1000E_RX0_MSG_ID] = guest_alloc(alloc, 4);
+> +    g_assert(d->msix_msg_addr[E1000E_RX0_MSG_ID] != 0);
+> +
+>       d->obj.get_driver = igb_pci_get_driver;
+>       d->obj.start_hw = igb_pci_start_hw;
+>       d->obj.destructor = e1000e_pci_destructor;
 
-It's not just about the future but also about compatibility with the 
-current device implementations. I will not be surprised even if the 
-random ordering of subregion finalization breaks one of dozens of 
-devices we already have. We should pay attention the details as we are 
-touching the core infrastructure.
 
