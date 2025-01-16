@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35524C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E78C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYE4w-00085h-6R; Wed, 15 Jan 2025 19:49:46 -0500
+	id 1tYE4x-00086z-Lm; Wed, 15 Jan 2025 19:49:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tYE4p-00084F-E8
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:40 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tYE4q-00084N-ON
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:41 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tYE4n-00012w-Bj
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:39 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2163bd70069so5808465ad.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 16:49:36 -0800 (PST)
+ id 1tYE4o-00013s-TA
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:40 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2162c0f6a39so29612235ad.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 16:49:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736988575; x=1737593375;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736988577; x=1737593377;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kqUbD+dP6YKBEqfxOFTFYLUPlQ2bAs6lr1qlPkJnA2k=;
- b=lxqNIE0AXNCTw6azUVRqije++mc4oyza/ci4m8yBnKkywgsu6sc5B4KCfxkFAtcnNz
- SJOY9f6xmhVhcGzhUT+E1AtiXn7/F1AEe0WxiLLGNNmi9RnH9Th/6eLYwaP8HmzUEWkR
- YyXRqYx7wDlkhXHKAWVoXU2K3sBNGvi1z3YbX6qskopwIwBuFDb4YcJd9TsIJIkZD6rx
- w/I0Hw9FxugsLyZmfThkrqSnTQkhWG0bce/ugIcjHS8gEIfR3Uemtyte9XQrC6BLnTTm
- 31K8vUuWkNJBYNf3dciekwUCx4BYpL88U1xCyTTk5ifraftebRDo25bRO9wt5HJL7PUJ
- MyAQ==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=lgkkhzulTnPKcpEBmv5wI+O/YgsMfxY7bx5/eHF5LmE=;
+ b=o60CLDO2mvh6NQbaTgsK++qc94WRToo1DBVvQ4UJSYZ4/I3xwb6EKwXToNHsv+lwd+
+ bY9HmMT5m4POPLWxiKQZBh+rOfcWg+xQzj8Uz3XeB8LBJ2ZDvJP+FVRQCki5JPl8o1mP
+ PyxPWvQFEy2x4tBFgRplQYSwxSgJGLpDpBuRr8qPpGwmlaRp64QtrJHBqVTxnTwi0qQv
+ TngzHpPvlFBVMnRs0amvls6iYYDwPwkCleAyPeCKCkihLkKy0WFfRJtkA41QVyNn8hgg
+ LNLGi1eFYzAGtB/VRZOlRhNAZ81Hz3zwCRrpXACeshSwkcKeSuv+xE7toLRPD040m4O4
+ MEnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736988575; x=1737593375;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kqUbD+dP6YKBEqfxOFTFYLUPlQ2bAs6lr1qlPkJnA2k=;
- b=f9n5ph/jLAebjEQEkLspvvjgmmSPXx0dZmJRIYq0lzE28KmV94Se15E6c2U4QeBiSR
- jVqqXk6q+xOc/0sME61GS5RccFPn5EGpJNVxGcXylIgDP51cakh8hNjyPwCucVDcQMaM
- e2f9Oa7Y4NF5MFcF/X0LqV7EUV2/3YeEXeortiNrOHglB1MOEQNMZpbEpwveJg0CX/lG
- gr7seXNqyAUA4CHhTdWwPGHiTvAK69fBImcPExH4Ac60UI0be0Bkdu0hD2rWyW0hNpqc
- Llui0r8gLzdi1nelcxMnt7ilSL11ywQvkQ5F9aISPS4EYLm0Tc2+GXWlc56ynGvKm0wf
- Xk0w==
+ d=1e100.net; s=20230601; t=1736988577; x=1737593377;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lgkkhzulTnPKcpEBmv5wI+O/YgsMfxY7bx5/eHF5LmE=;
+ b=GijW09LnBdx6Mt2R7QjF6CZxLJ1RHSABFcp6uW5GLtKPXlN+Pa2ziHc0Az0EoTl8/I
+ GawLc/8chATbmtc/2rWdLkvevWiRdkeBfZVinvyZS7Q75CDlm+0YuWSjYK4O5DvimumL
+ R08GMrg87yDlQb07XC2ResXt2oaPiuGbK+E8sSOaxnOi3Bj8QyXJaJzOxYSh/REaaC6i
+ f1BVHX8LbyHM5rV+egaYehbUAwG36n61ElZedJvY9qh7Hr0KgifH4JpaGSfQNPPdegGD
+ U4rRTNEV/4P0z2Ij4VID6xY6qQKDoRgAqjn+axeXtVeEfONsXd12kPMdaCkgd4STT+hy
+ PfAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIagkH6Bi8M4wDxeB5seiy9jYhL7a12GrhgfeMXdoJzPar+7QIeBkicRscs+iuPd5IIg/3j5JJJIS2@nongnu.org
-X-Gm-Message-State: AOJu0Yw3os/yEdnoz6//aJtLPH8Tm0GVt+hcDxL16px64l2L651f5B0l
- oAkKO1dirFvSGlDTlZPBdiRwiXqQwsgEkpZgmR33mmpS3EVf5eITa+buOB4lXTitFxuuFI2ZANZ
- c
-X-Gm-Gg: ASbGncsLbpfo/3SS0FvOMQfIluQvRrLvAmI7kTHNfL1Lgb0hcl2owaNZG0X3wdlQXRy
- Pywmw9nX6XPpm1K/gIvQeOaurDKOWHTpdjosG3y8kvNjT9kXKZ9lmLn/6bJ3ek2066OTL9Z4Lbl
- Il0D03OYGiXLwrlHpc8PIcj1yJbIOy8FyLhlBtPX8s9uur50SH4cZuGNYr3EsBfwZ6RhKdWg/5W
- 3tQAfWDpI7ogBjiZletU50ZA3yrSi9upnZ3x8f3B4zxcEEGLVR6izfj6kdiGmkB/yevPQ==
-X-Google-Smtp-Source: AGHT+IE7uBXmbSI6Ml8gdSwZ0aHHEvuvY0CMJCsMXO7DHFEKXS9WhgETPySV1jdgSWMfC0wyM6fX+Q==
-X-Received: by 2002:a05:6a00:9a3:b0:725:eacf:cfdb with SMTP id
- d2e1a72fcca58-72d22033ef6mr47666283b3a.24.1736988575199; 
- Wed, 15 Jan 2025 16:49:35 -0800 (PST)
+ AJvYcCW7BVpAjPA1oIFfea3OWLKNwAlvNMf+n8wKrfecRoOMejNXG3mawQvkLWzusK3tTHDbsk1Cop0qtlCz@nongnu.org
+X-Gm-Message-State: AOJu0YzVSKiUlb5H1QmGL5+klNTNYJ3il9rapUUY6LOguecwsmcBr6m1
+ u+tEeCyhKIgMRIv4awFpFusm9SQBBDbwViMVK0ZqHq7rj7x+mfjIKlZAehBzxAvttsvsWrDrHdn
+ q
+X-Gm-Gg: ASbGncsJhVTkIddT31+0A4g2m9ePGpcO8jJq614HW7UcqKUOiir67GSe9s7OwtDv65h
+ VuZ04FEfhZ+QBZJohRTdmnjU88sLsb3D0rwcywFIhOmvbq9SIrTDiEFZOdHjFXz/RkrGcbhiZy5
+ SYgQWMVz00RtnWwPqNjuQgI5PqNbZFrNmD5URbu0uGngH0xwcscQ6NPWDZVJiJWTBrVH4yVuqwi
+ oJ+1reJhF38qXMaa9WQ4lntHrrNDHlzQd6jVyIefb7j8rdZb1BkBqJnI7ps5PaFFAoDXg==
+X-Google-Smtp-Source: AGHT+IGjMuzuTMLEd6F0ofghXzioexFDI380SwoYW+3GBbIYYSuSYVbZvijo0NwwH3yZBu3meDqU3A==
+X-Received: by 2002:a05:6a20:9188:b0:1e1:9e9f:ae4 with SMTP id
+ adf61e73a8af0-1eb0255b580mr7562798637.13.1736988577273; 
+ Wed, 15 Jan 2025 16:49:37 -0800 (PST)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d406587a1sm10036256b3a.105.2025.01.15.16.49.34
+ d2e1a72fcca58-72d406587a1sm10036256b3a.105.2025.01.15.16.49.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 16:49:34 -0800 (PST)
+ Wed, 15 Jan 2025 16:49:36 -0800 (PST)
 From: Atish Patra <atishp@rivosinc.com>
-Subject: [PATCH 0/2] Minor mhpmevent related fixes
-Date: Wed, 15 Jan 2025 16:49:31 -0800
-Message-Id: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
+Date: Wed, 15 Jan 2025 16:49:33 -0800
+Subject: [PATCH 2/2] target/riscv: Mask out upper sscofpmf bits during
+ validation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJtXiGcC/x3LQQqAIBBA0avIrBPUsqKrRIjVVLNIQykC8e5Jy
- 8fnJ4gYCCMMLEHAhyJ5VyArBsth3Y6c1mJQQmkhpebXeZuTnA9moxcj76yae6xb3WMD5boC/qF
- M45TzB+hUg6FhAAAA
+Message-Id: <20250115-pmu_minor_fixes-v1-2-c32388defb02@rivosinc.com>
+References: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
+In-Reply-To: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: Atish Patra <atishp@rivosinc.com>, liwei1518@gmail.com, 
  zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
  dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=atishp@rivosinc.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,26 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here are two small fixes around mhpmevent encoding and reset value.
-The first patch is picked from the platform specific event encoding
-series[1].
+As per the ISA definition, the upper 8 bits in hpmevent are defined
+by Sscofpmf for privilege mode filtering and overflow bits while the
+lower 56 bits are desginated for platform specific hpmevent values.
+For the reset case, mhpmevent value should have zero in lower 56 bits.
+Software may set the OF bit to indicate disable interrupt.
 
-[1] https://lore.kernel.org/qemu-devel/20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com/
+Ensure that correct value is checked after masking while clearing the
+event encodings.
 
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
-Atish Patra (2):
-      target/riscv: Fix the hpmevent mask
-      target/riscv: Mask out upper sscofpmf bits during validation
+ target/riscv/pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- target/riscv/cpu_bits.h | 9 ++++++---
- target/riscv/pmu.c      | 2 +-
- 2 files changed, 7 insertions(+), 4 deletions(-)
----
-base-commit: b82a273fb2210edf7beb9e5ca1401927fbcbe164
-change-id: 20250115-pmu_minor_fixes-7a2b8e3658e4
---
-Regards,
-Atish patra
+diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+index cf713663ee56..0408f96e6af8 100644
+--- a/target/riscv/pmu.c
++++ b/target/riscv/pmu.c
+@@ -390,7 +390,7 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+      * Expected mhpmevent value is zero for reset case. Remove the current
+      * mapping.
+      */
+-    if (!value) {
++    if (!(value & MHPMEVENT_IDX_MASK)) {
+         g_hash_table_foreach_remove(cpu->pmu_event_ctr_map,
+                                     pmu_remove_event_map,
+                                     GUINT_TO_POINTER(ctr_idx));
+
+-- 
+2.34.1
 
 
