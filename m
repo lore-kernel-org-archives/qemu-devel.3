@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CC1C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 09:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CC2C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 09:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYM6e-0007xW-Um; Thu, 16 Jan 2025 04:24:04 -0500
+	id 1tYM72-0008Fy-MY; Thu, 16 Jan 2025 04:24:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tYM6b-0007wc-9t
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:24:02 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1tYM70-0008AQ-Sc
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:24:26 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1tYM6Z-00072h-7p
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:24:01 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-38632b8ae71so553568f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 01:23:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1tYM6y-00075G-Qg
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:24:26 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4364a37a1d7so5865515e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 01:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737019437; x=1737624237; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=b5Dhkp2yMFlr3DOu7jV73dzQBALI6mf8f0t2QiTjX3o=;
- b=iNFRqDyByMoePmQkat5q26i9+ObP+Qj1NKYziWe5HaMG1D81O82PdrcaFbBjpxVeqM
- p0slTYoN+HQd+6845xbFhFxkEDOJlRDkIoFWrjS79EZbjlXUc0PMUWF3/trf5lyN3Qov
- CHyT+AnTXLV8ztuCZ/LOUJKf74Qgl5FU3LwwScJhn5VocoZIeWb7yeV+hNsRVTq/U9oE
- Zzz3CAeaM8aNr86jr3QaUg/y4417HlmhWp6xdRK5uV5Vr2P9V8FjvED+/UbtmEWgtm1W
- rCz9/NGN4XTUrrKwhJG8Ru6QkuHhYjo/R5FEMOcwJRaidgEug2ErbqID5UQFIm9EjWgI
- e53A==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1737019463; x=1737624263;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=n4tO2lpWLUlWhElOcxn349LZsfQHzK7a0FiyfdeojG0=;
+ b=EA2WLkHMjjEJ54nOa0F9om2VAi0ao5h8VAKOWEqm99N/tx0ysxI1Rq/kTQ/mLp1CQW
+ Ad80qfdWQ2/h3fAXKPzCzqzFWW9plRuUuIzrcAdcM0T/6zG3vjdKw/oiCYeVbQWUu9Hm
+ 0qMdMaIDbQtO3fwRmEXWkOqFpzHPNPyvL936cP+86GJmBli842nltrvNXgVrFctPzN6H
+ 8yr+hGP7G5GQJSqb8wiQu7XuxPZSy1NQ4lvUm6WdE/PwckHYh21zzdumLoT7BqLdEIrP
+ E/GwG7tjT9Jh5OfLMgwmfPGNcUK5WEkwjQN67wlObwIJdVaD4U9Qj2OmV0KKyvIWZtLd
+ 0Ocw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737019437; x=1737624237;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b5Dhkp2yMFlr3DOu7jV73dzQBALI6mf8f0t2QiTjX3o=;
- b=L2wchYjcs80HhLdkWp73+OwI5IDUCHZCoTmD/OE89vlD0UUZCc+VmEwZkkZIHqtkxp
- QUY6DJZnesuWfe0iwKGejliEIno6MWa9yTRddgBZCBp94fOVQ4zK76PBY4jFr6N1WV9d
- z8QchejxahyhJr03of6L9MNGkFs8t3yC6pZS6iirsflm/4fH2X/SzPf+/KFuyKcGAW5P
- Ac9/RasShDSmWlejRQMHkoabcVCmVSmuufXrGvGH7oF7hv3347XV+AriKe1I9BQSXeuK
- IDbt3bvqw9mEHD+mATXhQoa9q4f+bhkav0p0fQ0cyIF+LybIhk1RLu9pTJ/5cPgHtU2e
- Kv8w==
-X-Gm-Message-State: AOJu0YzMlDCBqy008NjQkfOwZhQ0Umd3yIRYyGJ9QyUs45Yhnwitmapn
- U/62L2qMPi4ijd/2vJJKTGgdu+PdgG106MnLWgLDCMx5Q6qeDYXAfHUpcluqnRQ=
-X-Gm-Gg: ASbGncvdY1R/p8tK+NxzhAhdCCPvAfFiRM2nn1NDl6bx+jAfgVxJLXQnlYBGgULhViI
- rCO2sFxUtNDJY04CGwR0oNfw+VLAYA9wen5ErnKD7rhKXfxddG2dSmFKLXSVK36onuqpy8lYq0o
- EiC20E+Ftk6jhE6cGxx1J73L867CfROyDe1ar7VqA3DiuEVjzlPW+TTtQwMPG4TecSWbVucTuXd
- Ss2USt/WkK4RWfq36+vle0TkadacOTU81cJi8aDjXi1JQ1nAVbs5cMOZI+zC9hsPqp8wBKYKYzl
- FdgwIZjIEQP/KmMcAN0E3gQnxDT0dFJscFk4o9kzGQ==
-X-Google-Smtp-Source: AGHT+IG5Coe+PZ6XkKM1iuZuFak9ftPrINRJJbjfoFgocoRYX1v1be2/+Duu9oF32EAQKOCxJsWUfw==
-X-Received: by 2002:a5d:598d:0:b0:386:3711:ff8c with SMTP id
- ffacd0b85a97d-38a873067b9mr32099598f8f.23.1737019437592; 
- Thu, 16 Jan 2025 01:23:57 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ d=1e100.net; s=20230601; t=1737019463; x=1737624263;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n4tO2lpWLUlWhElOcxn349LZsfQHzK7a0FiyfdeojG0=;
+ b=CAVCbwWKDCW+yDYZr2cof0ptpypDOGtL38eoxdqF8QwIBcGH4jzFS5QtXwVhRERQIn
+ OeC11yPai6+fGndx9KeZjFeFBUbh9U4m6TICcCUski65duwBPFzWAYJSBEc4Ysj0ZK8w
+ 2yROLj06RNN0zghgmXdzhBlB1YONIEo4JgQt5itY3rbNsKI4IaLpExiGwm9qAZMB9JTL
+ BzW6w48Wa4SwWYyndTQ9nwDlJ/JLpxQjsPHqPZTzukMvOMM2jNKSa3BSuHRg6e5Yi9QP
+ MzVvuYekuyU5nRBaiSGop1zMMUypvN4xsGCgeZnt/wgPekv2xglmjaOkE5R4VTkUdHnG
+ cT5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV30vIJgTuciZFvXQrFkhFl70h/YlvJ7UB1DWMlBjeuUF42RzLv2Yv/YiVud8Rr4eg2DVpDGUIXiUXi@nongnu.org
+X-Gm-Message-State: AOJu0YxybUfhrIeEJkORKINb5Ddb32gsRGV8gXGMUf0zUE1sMhCq3t7V
+ 6S6KeWn4JudQMDXpgxwxYkhdUm1CjawRMlnlefhVSSNcORvReYL0MEKmkMgaPcE=
+X-Gm-Gg: ASbGnctzWzVTwvrgLLlXn0fmq20WU2ssDLfh4Kk9yH0i5odVjAxo32dvDzODB29FwGK
+ MAipV34bSMMe+1y8rVStVKYnYu1Df55AAlbeLAiCAqGLHM7S43h8nKvXR2vzrVPrGMVosmDqjdB
+ r+eu8ZyRrn67tYGFkacsFdersmx5nO8VMmaO12EOiMbZNoDrc5pHtxXaykLftbLpaSxYngub10h
+ 6EjstxnBov6l5h9cGV1Gz3aa2Rm/H+0ZJWMwiB/f2udcqelbGTPMCrZNQ==
+X-Google-Smtp-Source: AGHT+IGzECVt+hIOy0AQktvrXyKxuw2pm8Ehw6Lrm2mWldlU0RH4XsvxuUG21oXWUIEIaU0fXGEAwg==
+X-Received: by 2002:a05:600c:c0e:b0:436:488f:4d8 with SMTP id
+ 5b1f17b1804b1-436eb9a154amr295847425e9.11.1737019462656; 
+ Thu, 16 Jan 2025 01:24:22 -0800 (PST)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d01dsm19756853f8f.9.2025.01.16.01.23.57
+ 5b1f17b1804b1-437c74aca93sm53391365e9.13.2025.01.16.01.24.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 01:23:57 -0800 (PST)
-Date: Thu, 16 Jan 2025 10:23:56 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Vasilis Liaskovitis <vliaskovitis@suse.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, jason.chien@sifive.com, zhiwei_liu@linux.alibaba.com,
- dbarboza@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- philmd@linaro.org
-Subject: Re: [RFC PATCH] hw/riscv/virt: Add serial alias in DTB
-Message-ID: <20250116-089f795c1302e6f2b4a6b8c0@orel>
-References: <20250116084629.19983-1-vliaskovitis@suse.com>
+ Thu, 16 Jan 2025 01:24:22 -0800 (PST)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH] riscv: disable Smdbltrp for the max cpu
+Date: Thu, 16 Jan 2025 10:23:45 +0100
+Message-ID: <20250116092352.1630278-1-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116084629.19983-1-vliaskovitis@suse.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=cleger@rivosinc.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,44 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 09:46:29AM +0100, Vasilis Liaskovitis wrote:
-> This patch adds an "aliases" node with a "serial0" entry for the
-> single UART in the riscv64 virt machine.
-> 
-> This was requested in Gitlab #2774. However, since the machine only
-> has one UART at the moment, it's not clear that this addition makes
-> sense.
-> 
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2774
+When present, Smdbltrp is enabled by default and MDT needs to be cleared
+to avoid generating a double trap. Since not all firmwares are currently
+ready to handle that, disable it for the max cpu.
 
-s/Fixes/Resolves/ (see docs/devel/submitting-a-patch.rst)
+Reported-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
 
-> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
-> ---
->  hw/riscv/virt.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 2bc5a9dd98..67b80e9430 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -971,6 +971,8 @@ static void create_fdt_uart(RISCVVirtState *s, const MemMapEntry *memmap,
->      }
->  
->      qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-> +    qemu_fdt_add_subnode(ms->fdt, "/aliases");
+---
+ target/riscv/tcg/tcg-cpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-create_fdt_uart() is called at machine-done time, so we should create the
-/aliases node in create_fdt() in case we ever have other uses for it.
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 48be24bbbe..0a137281de 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1439,6 +1439,16 @@ static void riscv_init_max_cpu_extensions(Object *obj)
+         isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi), false);
+         qemu_log("Smrnmi is disabled in the 'max' type CPU\n");
+     }
++
++    /*
++     * ext_smdbltrp requires the firmware to clear MSTATUS.MDT on startup to
++     * avoid generating a double trap. OpenSBI does not currently support it,
++     * disable it for now.
++     */
++    if (cpu->cfg.ext_smdbltrp) {
++        isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smdbltrp), false);
++        qemu_log("Smdbltrp is disabled in the 'max' type CPU\n");
++    }
+ }
+ 
+ static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
+-- 
+2.47.1
 
-> +    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
->  }
->  
->  static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
-> -- 
-> 2.46.0
->
-
-Thanks,
-drew
 
