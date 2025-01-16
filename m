@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B00FC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:50:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCBF8C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYE4w-00085j-6o; Wed, 15 Jan 2025 19:49:46 -0500
+	id 1tYECx-000232-Fp; Wed, 15 Jan 2025 19:58:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tYE4q-00084L-Fs
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:40 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1tYE4o-00013K-3c
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:40 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2162c0f6a39so29612125ad.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 16:49:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736988576; x=1737593376;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZkbB4hKqhuUPLPk9u5+LDLyPT5P/mS71agdt5ZhzHx0=;
- b=LzzM433GCYkn1RJyndD6jf3/v6zc/K2iaEy6ZDcjnilG7sgaJGvM2aqN75x3qYAUJj
- Ca3qqP8EnGVwXcYVQbBPpSa8yTw5CtWO//cOTRwMQf14X1KWtj2W8TAl/oyu3Qc5x8LY
- rydDoOOAW/ZQDbiSc7IUowYg8F8xlEAUkL8Xg2tHBMZsyvC8Enn8HecnYOwjh9QQVflp
- 3H/jwcXyIWhvw3EVbpSpD1ltVIv/ygkwGh1Diu6yO9kBtXS2DOyAz+Acve502LUlH+GW
- 78yJsZ2NMgx8ca9EwEfKxzslLECuA+ahS8Cum2yw/8WLzII6pta1TjNNu3yIU2YlNGlR
- zGzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736988576; x=1737593376;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZkbB4hKqhuUPLPk9u5+LDLyPT5P/mS71agdt5ZhzHx0=;
- b=Mtb99MMM0PI5dVhUzKqGkU/9rDAboPDsBO57rRsDoy2HqZyHqYRZlbas8+jvyKda0j
- t8B1CW1tyU1MRgKvLWfJM61PcYB7+7Ny+E8AH284YLN5rHpZcY5yBOtHoTGof0mzZl23
- 6IT1XMGHt3p7T4t97XfVQUPx5wPRZeR7LZXc5tnx4wgGh4QLPZuqI0XrT/BJPsKICt8o
- CIaVilVGb1nR0kSRYBp1C2RhRPVcC9acZMGMa9hAlkpKvrAQUBI7AkzY2WXUxiieFQzx
- UsL6y5uOUr0TnPLhQhnjX1659gpXdzbZLJwJNiA+ooIal5ex1UIkUKWmZd2S7ujHswVV
- mT+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU+xPv+fgzjAVoFu9Qp0KgYj9hSuUlJEjNOdVZL85GxwJL8RmZlVKRKL45gptQ9Di4ScdTeMfGvRPOm@nongnu.org
-X-Gm-Message-State: AOJu0YyBSD5pGBr93XTI36kQ5Jt9U2U5lD1bqfLb1SsgnqpQvhmv/l8H
- ZYdyjavpdjlUtp7xR/S9yjC9EKn8GCtxSH3tJPzEGlbbeEDmnOJ3KY/ZVqAIEhHjQDrEfFGd5s7
- U
-X-Gm-Gg: ASbGncvxyfa/2Crt4oPT25tzzLX6O+DEhXeoMv6INhoUeZUHgt4woD9eSlk9VIfrdrf
- 2PGoZI0XUXT1fOaqNkUdnR3xOYF9iG9FZ1++nyB+ivwsJZHzzqV4+wkdeO3gGnYoLP/ArGQOmvb
- fJkEX96zMISFapenFOekz4fZHODCLYlx4w940aOlE4j5N5hK2OHSLAoav1TsZB5g68vYrtJTV55
- 9wE1iD5AxIPFiGwrWNDmVPRIV6XZMqt2alEQmiT+E7HPGgzkjlgwWy268kKevSK0P0eKw==
-X-Google-Smtp-Source: AGHT+IFd11hEaCIlqsLgYaiVOBiDsWMyOfgilx4UwUmGCpUEsiTWL0OLIlPWjHh2fPeeylkWLc+qxQ==
-X-Received: by 2002:a05:6a20:d494:b0:1e1:ad90:dda6 with SMTP id
- adf61e73a8af0-1eb025ac6damr7932449637.20.1736988576259; 
- Wed, 15 Jan 2025 16:49:36 -0800 (PST)
-Received: from atishp.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72d406587a1sm10036256b3a.105.2025.01.15.16.49.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 16:49:35 -0800 (PST)
-From: Atish Patra <atishp@rivosinc.com>
-Date: Wed, 15 Jan 2025 16:49:32 -0800
-Subject: [PATCH 1/2] target/riscv: Fix the hpmevent mask
+ (Exim 4.90_1)
+ (envelope-from <prvs=104bc4e84=wilfred.mallawa@wdc.com>)
+ id 1tYECv-00022b-7k
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:58:01 -0500
+Received: from esa2.hgst.iphmx.com ([68.232.143.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=104bc4e84=wilfred.mallawa@wdc.com>)
+ id 1tYECs-0002G8-UY
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:58:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1736989078; x=1768525078;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=IpcM5q81RbzsvoU4Wyq4VsouVZyy9mVMBxcb1Tk10nI=;
+ b=Ml1BkMd+7nznN+spN8w4dQ0xN8M4bypOOdI+8QfXithFRsXlGfvoPMRm
+ 9h/kMI+X00bSATziPKNnMxq8zi2Xunc6g8aw3GTLWtU1CP9k1z1sRJ7A8
+ 7jYKFs/4NuLPIoqZTLGYPEvRC2QnAEAAARxYUKcytCjB3W59ryDnmzTFr
+ /11tcsEc+XGZPMqdoKvjDKgyS7lPNrXrHNatvheDZzB7tDrV/ELVFMyOS
+ jtTnm6BJ6ufeRqXs8SCH92Mdpx7EA4nViD1YphW+JIxYwJIUX3U9Y0bL5
+ Kg3a+TWa1jZKlHcQ8RTE6BS7yd5vvxX3ss7OdIGuPlyfqs9azNNtCb1Uu w==;
+X-CSE-ConnectionGUID: TZYvUHxrRw668bPh5LwvcA==
+X-CSE-MsgGUID: 4S7FOGl8T66/pvU8zezCLg==
+X-IronPort-AV: E=Sophos;i="6.13,207,1732550400"; d="scan'208";a="36550480"
+Received: from uls-op-cesaip02.wdc.com (HELO uls-op-cesaep02.wdc.com)
+ ([199.255.45.15])
+ by ob1.hgst.iphmx.com with ESMTP; 16 Jan 2025 08:57:53 +0800
+IronPort-SDR: 67884ab9_TbUXEgGYyGJAHrJ1uL99wBueo7jE7fWqfrMl3YlIBWvS4t/
+ 2VEOqA9wTgS7z9odvgeA2k068TVXpWHnaME2tLQ==
+Received: from uls-op-cesaip02.wdc.com ([10.248.3.37])
+ by uls-op-cesaep02.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 15 Jan 2025 15:54:33 -0800
+WDCIronportException: Internal
+Received: from unknown (HELO fedora.wdc.com) ([10.225.165.91])
+ by uls-op-cesaip02.wdc.com with ESMTP; 15 Jan 2025 16:57:52 -0800
+To: qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: [PATCH] spdm-socket: add seperate send/recv functions
+Date: Thu, 16 Jan 2025 10:57:49 +1000
+Message-ID: <20250116005749.92030-1-wilfred.mallawa@wdc.com>
+X-Mailer: git-send-email 2.48.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
-References: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
-In-Reply-To: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: Atish Patra <atishp@rivosinc.com>, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
-X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=atishp@rivosinc.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=68.232.143.124;
+ envelope-from=prvs=104bc4e84=wilfred.mallawa@wdc.com; helo=esa2.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,49 +79,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Wilfred Mallawa <wilfred.mallawa@wdc.com>
+From:  Wilfred Mallawa via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As per the latest privilege specification v1.13[1], the sscofpmf
-only reserves first 8 bits of hpmeventX. Update the corresponding
-masks accordingly.
+This is to support uni-directional transports such as SPDM
+over Storage. As specified by the DMTF DSP0286.
 
-[1]https://github.com/riscv/riscv-isa-manual/issues/1578
-
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 ---
- target/riscv/cpu_bits.h | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ backends/spdm-socket.c       | 27 ++++++++++++++++++++++++---
+ include/system/spdm-socket.h | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index f97c48a3943f..b48c0af9d48e 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -9,6 +9,10 @@
-                  (((uint64_t)(val) * ((mask) & ~((mask) << 1))) & \
-                  (uint64_t)(mask)))
+diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
+index 2c709c68c8..bab1b512c8 100644
+--- a/backends/spdm-socket.c
++++ b/backends/spdm-socket.c
+@@ -184,6 +184,29 @@ int spdm_socket_connect(uint16_t port, Error **errp)
+     return client_socket;
+ }
  
-+#ifndef GENMASK_ULL
-+#define GENMASK_ULL(h, l) (((~0ULL) >> (63 - (h) + (l))) << (l))
-+#endif
++uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
++                             void *rsp, uint32_t rsp_len)
++{
++    uint32_t command;
++    bool result;
 +
- /* Extension context status mask */
- #define EXT_STATUS_MASK     0x3ULL
++    result = receive_platform_data(socket, transport_type, &command,
++                                   (uint8_t *)rsp, &rsp_len);
++
++    if (!result || command == 0) {
++        return 0;
++    }
++
++    return rsp_len;
++}
++
++bool spdm_socket_send(const int socket, uint32_t socket_cmd,
++                      uint32_t transport_type, void *req, uint32_t req_len)
++{
++    return send_platform_data(socket, transport_type,
++                              socket_cmd, req, req_len);
++}
++
+ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+                          void *req, uint32_t req_len,
+                          void *rsp, uint32_t rsp_len)
+@@ -200,12 +223,10 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
  
-@@ -933,9 +937,8 @@ typedef enum RISCVException {
-                                             MHPMEVENTH_BIT_VSINH | \
-                                             MHPMEVENTH_BIT_VUINH)
+     result = receive_platform_data(socket, transport_type, &command,
+                                    (uint8_t *)rsp, &rsp_len);
+-    if (!result) {
++    if (!result || command == 0) {
+         return 0;
+     }
  
--#define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
--#define MHPMEVENT_IDX_MASK                 0xFFFFF
--#define MHPMEVENT_SSCOF_RESVD              16
-+#define MHPMEVENT_SSCOF_MASK               GENMASK_ULL(63, 56)
-+#define MHPMEVENT_IDX_MASK                 (~MHPMEVENT_SSCOF_MASK)
+-    assert(command != 0);
+-
+     return rsp_len;
+ }
  
- /* RISC-V-specific interrupt pending bits. */
- #define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
-
+diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
+index 5d8bd9aa4e..2b7d03f82d 100644
+--- a/include/system/spdm-socket.h
++++ b/include/system/spdm-socket.h
+@@ -50,6 +50,35 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+                          void *req, uint32_t req_len,
+                          void *rsp, uint32_t rsp_len);
+ 
++/**
++ * spdm_socket_rsp: Receive a message from an SPDM server
++ * @socket: socket returned from spdm_socket_connect()
++ * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
++ * @rsp: response buffer
++ * @rsp_len: response buffer length
++ *
++ * Receives a message from the SPDM server and returns the number of bytes
++ * received or 0 on failure. This can be used to receive a message from the SPDM
++ * server without sending anything first.
++ */
++uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
++                             void *rsp, uint32_t rsp_len);
++
++/**
++ * spdm_socket_rsp: Sends a message to an SPDM server
++ * @socket: socket returned from spdm_socket_connect()
++ * @socket_cmd: socket command type (normal/if_recv/if_send etc...)
++ * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
++ * @req: request buffer
++ * @req_len: request buffer length
++ *
++ * Sends platform data to a SPDM server on socket, returns true on success.
++ * The response from the server must then be fetched by using
++ * spdm_socket_receive().
++ */
++bool spdm_socket_send(const int socket, uint32_t socket_cmd,
++                      uint32_t transport_type, void *req, uint32_t req_len);
++
+ /**
+  * spdm_socket_close: send a shutdown command to the server
+  * @socket: socket returned from spdm_socket_connect()
+@@ -60,6 +89,9 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+ void spdm_socket_close(const int socket, uint32_t transport_type);
+ 
+ #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
++#define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
++#define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
++#define SOCKET_SPDM_STORAGE_ACK_STATUS            0x0004
+ #define SPDM_SOCKET_COMMAND_OOB_ENCAP_KEY_UPDATE  0x8001
+ #define SPDM_SOCKET_COMMAND_CONTINUE              0xFFFD
+ #define SPDM_SOCKET_COMMAND_SHUTDOWN              0xFFFE
+@@ -68,7 +100,10 @@ void spdm_socket_close(const int socket, uint32_t transport_type);
+ 
+ #define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
+ #define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
++#define SPDM_SOCKET_TRANSPORT_TYPE_SCSI           0x03
++#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
+ 
+ #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
++#define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
+ 
+ #endif
 -- 
-2.34.1
+2.48.0
 
 
