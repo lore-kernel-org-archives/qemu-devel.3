@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39FBCC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3AE3C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYRLc-0001xH-JW; Thu, 16 Jan 2025 09:59:52 -0500
+	id 1tYRMS-0002SV-Di; Thu, 16 Jan 2025 10:00:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYRLa-0001wr-82
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:59:50 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYRM9-0002AG-9Q
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:00:25 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYRLY-0008F1-Lj
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:59:49 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-437a92d7b96so9640515e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 06:59:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYRM6-000094-Be
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:00:24 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436326dcb1cso6618905e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:00:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737039587; x=1737644387; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6pmziWnNaDV6beFRLi5dxmWiupvkK6+TjRcXkuuJ1cs=;
- b=CNW9o3awO/0L9hzbJSra31gUVrn/11HUw8bX5RVqUs5uh/9+vuLtQO02UOuSIhMiXA
- ceKbJypVgSMFPUk0BvSIarUl9cF1OC3DOnFqTVQ/UHBHUOhwkHudjtpqCaCuvA47SYZz
- A/wv9M7bWvJgJ9NuB+3CkIsk2/s13GciW90cAWtx+qZi6LZ+2xl1I8tEex/iu3HJPtEK
- gqpSeNH6sPSAa0KxAP7ItgiJ6eXJoJY6eIM38RDn5cSvGIES8iRCB5xrEUZ0z+1aZ9UA
- vhBxgcQnLvkOuHI9mAx2i3EUEibCMugLOa0XiONOzOcHv1bhkVYOmXk0tZABr3PdJ2XG
- v1+A==
+ d=linaro.org; s=google; t=1737039620; x=1737644420; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QKyurn3hyAn+7BGFNFmnur/chv9BVb1zR9y6ikplhXM=;
+ b=E4BC0TtZooepjAwr/lMvl0KPECGC9c4R0OSYpr8yEroCyPBHqSRMH/B++BM/jpEEg8
+ PFh9cUpJM+nCzksdrusz/y9GPetI2Njl1DRVS3UUStNiCXzZ8gIuxkSwLYjfYRvyeXPN
+ ovtUdV6Y8o15ognF0GzHKnY4/GdJYi66k+O7U1nNwqeI2F/a2FazC3PwpTrZx++5CRaK
+ gafbkMEKsHf/RWSB/dcISB5Mtx+TE7AkukYXeRthHs/w78ZjToNj0qqVVY55xhjakc0J
+ TGtTP41bFBQsREbrd/2RlxomRxAqUQpR5BhxDPijNc5odPOGvaU80VKE3ETBnRU5G/EW
+ UNgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737039587; x=1737644387;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6pmziWnNaDV6beFRLi5dxmWiupvkK6+TjRcXkuuJ1cs=;
- b=nAQU/UctYUyZxQBFfFol0hPDfWQqgqjIlNnRJd6W8m7N57SL822Zmk4ZhrYUR49xwg
- 67E9mE2rHXoBr/ijZsvJQokUMGzMfdctlhiciu15JO0Bk/IhbeN0iECjzoKq77HesdB1
- vI3YJvMZN4md/rq8x61iEL0AKa+l22/2jWQDYiWCTnuUKcCAMoh0ycYTJHDnZwceRdRz
- WvtLyGDdAhGpjKBP5K8igO+vE9B/bU8Js8kBmqGHd8yRuJYdkE6EoruP5/GVN4c2wa8A
- BMYzl67nLCL1lmjgK3k4YobHQlelEiUJWvkoqJOB3TIJqPaECzVmgyU8/ShTbzVkNg6k
- vh4Q==
-X-Gm-Message-State: AOJu0YyLbWJuQahLrrYgquPboOkTL/PoFwFVeaNX/249HuSNaTQwa0Bd
- m3mV6924CFQwJihfPz2XFQCVpZIIareCMEZVW4L06qsLYeokVyb0bEc7ue3VCdYf09EKwui/LJ9
- 39W4=
-X-Gm-Gg: ASbGncvP+1j0g5lInvhsi3Qb2gv9fM0rxqEd3hfoijcPYBmeCSd5nkF7jrmTMlkrWcs
- niLytBDD4+AovdyAR3XC/hE6YlKC88Hc3DqLYl56kAqF5NbcV/YB10DY/9ofSUZumgHMC/k/qjt
- d5RFtKTOASP4+fFG9Pz/iNxEGbbOyhIfu6Y3Oi/na/94spWq+f7VzCkf8w3X2IaqmavKlBR80WR
- pcFyTDHW7j3v17E9/famAbOswCi+BomDOZKvpUQ5xK3RHw8RG2xAWH00npimjBCXLu3bgBke4oQ
- zqXGQ6YlHT6GIPpx2zzxGI023RngVPY=
-X-Google-Smtp-Source: AGHT+IGhBahpXmlwOAM1TWFTZKRt57VqRUEyN64K4dImnjWAujJuoRZ7ymPjwp1yEQDXpmf6jqPSag==
-X-Received: by 2002:a05:6000:4023:b0:385:f44a:a3b with SMTP id
- ffacd0b85a97d-38a87330649mr31307055f8f.41.1737039586851; 
- Thu, 16 Jan 2025 06:59:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737039620; x=1737644420;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QKyurn3hyAn+7BGFNFmnur/chv9BVb1zR9y6ikplhXM=;
+ b=PZzoixCzaOH9J00p145dbNJiVJqNGTvBeDxbjtT4i01dJuKecAlYT2hhNE8S/kqlPS
+ 7OK+smqkzsCo5zQ3NaTEkdHQklsu+D+IT3Cjfxr1REZOsTJ3n2NmZQqrvcFUKJAZa9CE
+ FWzpyRs03XuH0CU6xRAHZ0QsJk/uOLEaci6QdJg2CMTcu10HmZwLoA9JfquW69qsEuXk
+ VjW47w9SgNjvr2fSAObkeUNrt2A0zIRvQGcQQc4CBKffPa1hu0wKI1ONzhlMhHA9a/8b
+ AZHxFF/ic8LUK4wUUuHdQA6499t0czl2HyUhMTDPmVkuomSLmdmnbf8Md2l2/3eftfv9
+ U5Uw==
+X-Gm-Message-State: AOJu0YybYrjYRAOdAyr3ENAmObR1SeHpNkFHaOBD1jNFHkyXjO8N/gyg
+ hJwe9B6AVk7BhqQ1d5ksvotaXjDx6UUlMuoxnjyvkooq0xbsS+oh3i700dk9/EkV4Qg5vi0C5+4
+ WBG0=
+X-Gm-Gg: ASbGncuqEKuNKX+mu8sJtHD9LHuP1c4FvhekOCLIWuk/f9eiAxfgL5BXQahrTslopRd
+ yz3jlzZyZ+oGb9suo9XQytagWQxEixKL2xdLtiheglW1HxuA+eI12C7/ftQ5mhRhdPF9waeDDTw
+ wKHKWbzVVi9mE0WgLxKP/I2IzQ+XvJCSCOOKvHEXB302Ao5Bg8T2LeBmHlcTLrChGx0Coebt+wx
+ X+J3PdPHjHQfEKoCBt6W/z2f/6SkKfr2su+3rH1c6ORzbF35B9erO4IHONduJPoDgRs7rcMLL4K
+ ur+Wmj8eRo3amdpImIWA/Sod/YNDskI=
+X-Google-Smtp-Source: AGHT+IG0mL/fu8nk7Ug/5D76XUaCPxb83P8UCjrFQRIXPUaV0yU6WoLetBmExPj6udOTruHCxiaSpw==
+X-Received: by 2002:a05:600c:1ca7:b0:434:ff9d:a370 with SMTP id
+ 5b1f17b1804b1-436e255e2cbmr331132315e9.0.1737039620466; 
+ Thu, 16 Jan 2025 07:00:20 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3215066sm93922f8f.11.2025.01.16.06.59.45
+ 5b1f17b1804b1-438904623a8sm1683135e9.26.2025.01.16.07.00.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Jan 2025 06:59:46 -0800 (PST)
+ Thu, 16 Jan 2025 07:00:20 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>,
@@ -69,16 +70,18 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 v2 00/13] hw/arm: Remove virt-2.6 up to virt-2.12
- machines
-Date: Thu, 16 Jan 2025 15:59:31 +0100
-Message-ID: <20250116145944.38028-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 v2 07/13] hw/arm/virt: Remove
+ VirtMachineClass::claim_edge_triggered_timers field
+Date: Thu, 16 Jan 2025 15:59:38 +0100
+Message-ID: <20250116145944.38028-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250116145944.38028-1-philmd@linaro.org>
+References: <20250116145944.38028-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,35 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The versioned 'virt' machines up to 2.12 been marked as deprecated
-two releases ago, and are older than 6 years, so according to our
-support policy we can remove them. Remove associated dead code.
+The VirtMachineClass::claim_edge_triggered_timers field
+was only used by virt-2.8 machine, which got removed.
+Remove it and simplify fdt_add_timer_nodes() and build_gtdt().
 
-Since v1:
-- Corrected disallow_affinity_adjustment removal (Thomas)
-- Do not modify docs/about/removed-features.rst (Thomas & Daniel)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ include/hw/arm/virt.h    | 1 -
+ hw/arm/virt-acpi-build.c | 5 +----
+ hw/arm/virt.c            | 5 -----
+ 3 files changed, 1 insertion(+), 10 deletions(-)
 
-Philippe Mathieu-Daudé (13):
-  hw/arm/virt: Remove deprecated virt-2.6 machine
-  hw/arm/virt: Remove VirtMachineClass::no_pmu field
-  hw/arm/virt: Remove VirtMachineClass::disallow_affinity_adjustment
-  hw/arm/virt: Remove deprecated virt-2.7 machine
-  hw/arm/virt: Remove VirtMachineClass::no_its field
-  hw/arm/virt: Remove deprecated virt-2.8 machine
-  hw/arm/virt: Remove VirtMachineClass::claim_edge_triggered_timers
-    field
-  hw/arm/virt: Remove deprecated virt-2.9 machine
-  hw/arm/virt: Remove deprecated virt-2.10 machine
-  hw/arm/virt: Remove deprecated virt-2.11 machine
-  hw/arm/virt: Remove VirtMachineClass::smbios_old_sys_ver field
-  hw/arm/virt: Remove deprecated virt-2.12 machine
-  hw/arm/virt: Remove VirtMachineClass::no_highmem_ecam field
-
- include/hw/arm/virt.h    |   6 --
- hw/arm/virt-acpi-build.c |  10 +--
- hw/arm/virt.c            | 136 +++++++--------------------------------
- 3 files changed, 26 insertions(+), 126 deletions(-)
-
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 463ac09615e..9c531e28d04 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -118,7 +118,6 @@ typedef enum VirtGICType {
+ struct VirtMachineClass {
+     MachineClass parent;
+     bool no_tcg_its;
+-    bool claim_edge_triggered_timers;
+     bool smbios_old_sys_ver;
+     bool no_highmem_compact;
+     bool no_highmem_ecam;
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index ccecea9e09b..6e04fea165a 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -537,15 +537,12 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ static void
+ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ {
+-    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     /*
+      * Table 5-117 Flag Definitions
+      * set only "Timer interrupt Mode" and assume "Timer Interrupt
+      * polarity" bit as '0: Interrupt is Active high'
+      */
+-    uint32_t irqflags = vmc->claim_edge_triggered_timers ?
+-        1 : /* Interrupt is Edge triggered */
+-        0;  /* Interrupt is Level triggered  */
++    const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
+     AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
+                         .oem_table_id = vms->oem_table_id };
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 76d83cfdd3b..589f3e27ee8 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -361,14 +361,9 @@ static void fdt_add_timer_nodes(const VirtMachineState *vms)
+      * the correct information.
+      */
+     ARMCPU *armcpu;
+-    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     uint32_t irqflags = GIC_FDT_IRQ_FLAGS_LEVEL_HI;
+     MachineState *ms = MACHINE(vms);
+ 
+-    if (vmc->claim_edge_triggered_timers) {
+-        irqflags = GIC_FDT_IRQ_FLAGS_EDGE_LO_HI;
+-    }
+-
+     if (vms->gic_version == VIRT_GIC_VERSION_2) {
+         irqflags = deposit32(irqflags, GIC_FDT_IRQ_PPI_CPU_START,
+                              GIC_FDT_IRQ_PPI_CPU_WIDTH,
 -- 
 2.47.1
 
