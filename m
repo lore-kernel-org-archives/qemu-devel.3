@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCBF8C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D200C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 01:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYECx-000232-Fp; Wed, 15 Jan 2025 19:58:03 -0500
+	id 1tYENq-0003X7-6b; Wed, 15 Jan 2025 20:09:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <prvs=104bc4e84=wilfred.mallawa@wdc.com>)
- id 1tYECv-00022b-7k
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:58:01 -0500
-Received: from esa2.hgst.iphmx.com ([68.232.143.124])
+ id 1tYENn-0003Wh-Tx; Wed, 15 Jan 2025 20:09:15 -0500
+Received: from esa4.hgst.iphmx.com ([216.71.154.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <prvs=104bc4e84=wilfred.mallawa@wdc.com>)
- id 1tYECs-0002G8-UY
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:58:01 -0500
+ id 1tYENm-0004DC-2S; Wed, 15 Jan 2025 20:09:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1736989078; x=1768525078;
+ t=1736989754; x=1768525754;
  h=from:to:cc:subject:date:message-id:mime-version:
  content-transfer-encoding;
- bh=IpcM5q81RbzsvoU4Wyq4VsouVZyy9mVMBxcb1Tk10nI=;
- b=Ml1BkMd+7nznN+spN8w4dQ0xN8M4bypOOdI+8QfXithFRsXlGfvoPMRm
- 9h/kMI+X00bSATziPKNnMxq8zi2Xunc6g8aw3GTLWtU1CP9k1z1sRJ7A8
- 7jYKFs/4NuLPIoqZTLGYPEvRC2QnAEAAARxYUKcytCjB3W59ryDnmzTFr
- /11tcsEc+XGZPMqdoKvjDKgyS7lPNrXrHNatvheDZzB7tDrV/ELVFMyOS
- jtTnm6BJ6ufeRqXs8SCH92Mdpx7EA4nViD1YphW+JIxYwJIUX3U9Y0bL5
- Kg3a+TWa1jZKlHcQ8RTE6BS7yd5vvxX3ss7OdIGuPlyfqs9azNNtCb1Uu w==;
-X-CSE-ConnectionGUID: TZYvUHxrRw668bPh5LwvcA==
-X-CSE-MsgGUID: 4S7FOGl8T66/pvU8zezCLg==
-X-IronPort-AV: E=Sophos;i="6.13,207,1732550400"; d="scan'208";a="36550480"
-Received: from uls-op-cesaip02.wdc.com (HELO uls-op-cesaep02.wdc.com)
+ bh=1STTjrDBmra11zsVfv/orRLamkndqjMZdOyKZ2Vt5iw=;
+ b=l5DAMcfCuTUOHgOBqoJSHUtRU4GZ9lYGB9yUvvaJBeaiYVcR8NF1q6ch
+ 7tdn89s1pC35IQSEv/T6iODGuObW4KDUtqHS13f8Acl45p5eCeGWf35c4
+ lQipQC5Lwfn1909Bcl5F/AbH6tbK4igGA9LfPAfILRIVshz/umyqS2OFj
+ wfFtj0VDJZdFvFMKB3H5AZjLTEYtM2I+dfZqyIP33I146KBie+ApkXeK0
+ t6H2EYEgHuZLcXgqHcfSdp0lk0ITaEnUgFf6nTQ4atPpDfQQadlz7k79y
+ bwWHpVnmpd0S4RBsXi+znwCNnOC3aBprQLr1HBny7KlILHuStMbPa2pvk w==;
+X-CSE-ConnectionGUID: vxadmS+2T/GnCg63oOWX7g==
+X-CSE-MsgGUID: ww4uvH6bS2mpfqvp/JT2gQ==
+X-IronPort-AV: E=Sophos;i="6.13,207,1732550400"; d="scan'208";a="35419683"
+Received: from h199-255-45-15.hgst.com (HELO uls-op-cesaep02.wdc.com)
  ([199.255.45.15])
- by ob1.hgst.iphmx.com with ESMTP; 16 Jan 2025 08:57:53 +0800
-IronPort-SDR: 67884ab9_TbUXEgGYyGJAHrJ1uL99wBueo7jE7fWqfrMl3YlIBWvS4t/
- 2VEOqA9wTgS7z9odvgeA2k068TVXpWHnaME2tLQ==
+ by ob1.hgst.iphmx.com with ESMTP; 16 Jan 2025 09:09:10 +0800
+IronPort-SDR: 67884d5d_g8wf2fbRwusVW+Uo769kq8wxsUtOR+miB9lUtUEHWSFEsiV
+ z58foXs9sB3J5/0W7oqq4e3SnFGO3z5kjEPETOA==
 Received: from uls-op-cesaip02.wdc.com ([10.248.3.37])
  by uls-op-cesaep02.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 15 Jan 2025 15:54:33 -0800
+ 15 Jan 2025 16:05:49 -0800
 WDCIronportException: Internal
 Received: from unknown (HELO fedora.wdc.com) ([10.225.165.91])
- by uls-op-cesaip02.wdc.com with ESMTP; 15 Jan 2025 16:57:52 -0800
-To: qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: [PATCH] spdm-socket: add seperate send/recv functions
-Date: Thu, 16 Jan 2025 10:57:49 +1000
-Message-ID: <20250116005749.92030-1-wilfred.mallawa@wdc.com>
+ by uls-op-cesaip02.wdc.com with ESMTP; 15 Jan 2025 17:09:05 -0800
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org
+Cc: alistair.francis@wdc.com, kbusch@kernel.org, its@irrelevant.dk,
+ foss@defmacro.it, stefanha@redhat.com, fam@euphon.net, philmd@linaro.org,
+ kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: [RFC v2 0/3] Add SPDM over Storage transport support for NVMe
+Date: Thu, 16 Jan 2025 11:08:54 +1000
+Message-ID: <20250116010856.95115-2-wilfred.mallawa@wdc.com>
 X-Mailer: git-send-email 2.48.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=68.232.143.124;
- envelope-from=prvs=104bc4e84=wilfred.mallawa@wdc.com; helo=esa2.hgst.iphmx.com
+Received-SPF: pass client-ip=216.71.154.42;
+ envelope-from=prvs=104bc4e84=wilfred.mallawa@wdc.com; helo=esa4.hgst.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -84,124 +85,37 @@ From:  Wilfred Mallawa via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is to support uni-directional transports such as SPDM
-over Storage. As specified by the DMTF DSP0286.
+This series adds support for SPDM to be used over the storage transport, as
+defined by the DMTF DSP0286 [1] for NVMe. That is, using the admin
+NVMe Security Send/Receive commands, support transport for SPDM as per
+DSP0286 [1]. The binding specification (DSP0286) is still currently a draft
+specification that has an "Expected release Q4 2024" [2].
 
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
----
- backends/spdm-socket.c       | 27 ++++++++++++++++++++++++---
- include/system/spdm-socket.h | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 59 insertions(+), 3 deletions(-)
+In anticipation of it's release, this series is an RFC.
 
-diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
-index 2c709c68c8..bab1b512c8 100644
---- a/backends/spdm-socket.c
-+++ b/backends/spdm-socket.c
-@@ -184,6 +184,29 @@ int spdm_socket_connect(uint16_t port, Error **errp)
-     return client_socket;
- }
- 
-+uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-+                             void *rsp, uint32_t rsp_len)
-+{
-+    uint32_t command;
-+    bool result;
-+
-+    result = receive_platform_data(socket, transport_type, &command,
-+                                   (uint8_t *)rsp, &rsp_len);
-+
-+    if (!result || command == 0) {
-+        return 0;
-+    }
-+
-+    return rsp_len;
-+}
-+
-+bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-+                      uint32_t transport_type, void *req, uint32_t req_len)
-+{
-+    return send_platform_data(socket, transport_type,
-+                              socket_cmd, req, req_len);
-+}
-+
- uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-                          void *req, uint32_t req_len,
-                          void *rsp, uint32_t rsp_len)
-@@ -200,12 +223,10 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
- 
-     result = receive_platform_data(socket, transport_type, &command,
-                                    (uint8_t *)rsp, &rsp_len);
--    if (!result) {
-+    if (!result || command == 0) {
-         return 0;
-     }
- 
--    assert(command != 0);
--
-     return rsp_len;
- }
- 
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 5d8bd9aa4e..2b7d03f82d 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -50,6 +50,35 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-                          void *req, uint32_t req_len,
-                          void *rsp, uint32_t rsp_len);
- 
-+/**
-+ * spdm_socket_rsp: Receive a message from an SPDM server
-+ * @socket: socket returned from spdm_socket_connect()
-+ * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-+ * @rsp: response buffer
-+ * @rsp_len: response buffer length
-+ *
-+ * Receives a message from the SPDM server and returns the number of bytes
-+ * received or 0 on failure. This can be used to receive a message from the SPDM
-+ * server without sending anything first.
-+ */
-+uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-+                             void *rsp, uint32_t rsp_len);
-+
-+/**
-+ * spdm_socket_rsp: Sends a message to an SPDM server
-+ * @socket: socket returned from spdm_socket_connect()
-+ * @socket_cmd: socket command type (normal/if_recv/if_send etc...)
-+ * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-+ * @req: request buffer
-+ * @req_len: request buffer length
-+ *
-+ * Sends platform data to a SPDM server on socket, returns true on success.
-+ * The response from the server must then be fetched by using
-+ * spdm_socket_receive().
-+ */
-+bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-+                      uint32_t transport_type, void *req, uint32_t req_len);
-+
- /**
-  * spdm_socket_close: send a shutdown command to the server
-  * @socket: socket returned from spdm_socket_connect()
-@@ -60,6 +89,9 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
- void spdm_socket_close(const int socket, uint32_t transport_type);
- 
- #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
-+#define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
-+#define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
-+#define SOCKET_SPDM_STORAGE_ACK_STATUS            0x0004
- #define SPDM_SOCKET_COMMAND_OOB_ENCAP_KEY_UPDATE  0x8001
- #define SPDM_SOCKET_COMMAND_CONTINUE              0xFFFD
- #define SPDM_SOCKET_COMMAND_SHUTDOWN              0xFFFE
-@@ -68,7 +100,10 @@ void spdm_socket_close(const int socket, uint32_t transport_type);
- 
- #define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
- #define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
-+#define SPDM_SOCKET_TRANSPORT_TYPE_SCSI           0x03
-+#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
- 
- #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
-+#define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
- 
- #endif
+[1] https://www.dmtf.org/sites/default/files/standards/documents/DSP0286_1.0.0WIP90.pdf
+[2] https://www.dmtf.org/content/now-available-%E2%80%93-spdm-storage-binding-specification-wip
+
+Changes V1 -> V2:
+  - Split out the SPDM Socket API patch for separate send/recv functions
+  - Addressed comments from Klaus Jensen
+    - Dropped unnecessary allocation length check
+    - Dropped unnecessary alloc_len alignment check
+    - Fixed up `nvme_security_receive: dw10` SPSP bit-masking
+
+Wilfred Mallawa (3):
+  spdm: add spdm storage transport virtual header
+  hw/nvme: add NVMe Admin Security SPDM support
+  hw/nvme: connect SPDM over NVMe Security Send/Recv
+
+ docs/specs/spdm.rst          |  10 +-
+ hw/nvme/ctrl.c               | 265 +++++++++++++++++++++++++++++++++--
+ hw/nvme/nvme.h               |   5 +
+ include/block/nvme.h         |  15 ++
+ include/hw/pci/pci_device.h  |   1 +
+ include/system/spdm-socket.h |  12 ++
+ 6 files changed, 294 insertions(+), 14 deletions(-)
+
 -- 
 2.48.0
 
