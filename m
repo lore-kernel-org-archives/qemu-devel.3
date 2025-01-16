@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFB0C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 17:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC12C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 17:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYTUC-0002ms-0Y; Thu, 16 Jan 2025 12:16:52 -0500
+	id 1tYTU2-0002lY-Ds; Thu, 16 Jan 2025 12:16:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTUA-0002mM-9q
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTTz-0002l1-Kz
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTU8-0000LZ-R6
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:50 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYTTy-0000KO-5q
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 12:16:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737047808;
+ s=mimecast20190719; t=1737047797;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wAFYx8WFiHSbQ2rdkWZHi60d75u4g+kEUsjeBdEGHOY=;
- b=PHFzBXBBoWRoI5Rx7YM7uNKSQ+/Tpo/lEGHYfpo+3I4aI4gvvL17y63PYvpQWWgGc+OfpE
- 4NfaGIwAR/2cG3n4u+3crTJ60NQtjG6jZ4qme7BmBKbsX4M09oDrvx2pCqPwT20CjQf4hl
- icOTbBpy5MmMzAbUXIaIZZglt0p7xGc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jLf0a+uWrlY3CBhS4twrHFpg6r7keS/CHGqK/Nszags=;
+ b=ExA7pnVFbRWXAgm3hkR3nElNy3TL57vHL2lhXum4otaScZ4IwsHQTTDVMHwk123FPX5ySU
+ hPGFitezHi83SKhc7u/oIK4VUNBZp2cHpBsjhKBDPpaXwlwXkkkaFa42ATibgEbJfInDgk
+ 34e3wduC5ZkFnQJjoVgFBqxfOItvA4w=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-WF5SzwfAP0KWPDS_3ilb6g-1; Thu, 16 Jan 2025 12:16:45 -0500
-X-MC-Unique: WF5SzwfAP0KWPDS_3ilb6g-1
-X-Mimecast-MFC-AGG-ID: WF5SzwfAP0KWPDS_3ilb6g
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4361ecebc5bso5806025e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 09:16:45 -0800 (PST)
+ us-mta-383-4EnX1-O6P6WMkuXvC2N28g-1; Thu, 16 Jan 2025 12:16:34 -0500
+X-MC-Unique: 4EnX1-O6P6WMkuXvC2N28g-1
+X-Mimecast-MFC-AGG-ID: 4EnX1-O6P6WMkuXvC2N28g
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385e00ebb16so502168f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 09:16:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737047804; x=1737652604;
+ d=1e100.net; s=20230601; t=1737047792; x=1737652592;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wAFYx8WFiHSbQ2rdkWZHi60d75u4g+kEUsjeBdEGHOY=;
- b=mQQ5K+W97PAscLwCDFwJSn2qDJy0zGHANoUarTsFxpHzosXl6tkhHxsDqul8gEUxbC
- GxWPxrXgRLBQbv4r1B8Qg2f3ZPc8sem5+UnbGP0E149Sux2UMDbgsMH0SqBDVtE3H4e4
- T65nrYiNVU0IVi89Wdt4qNsoEnEJ5oqWmjE5fLI5meB2Jf4uUG47pHKIFRepbG5hnhNL
- 87Z0WRcSY7adx7vK1BpyS85XV1SOga2rGt5znHS/r2mFEgB9vm3WdkqlEKKqyDHRaV7V
- qf2kYOTk80m7vZMhs44mF6Ow73YXa5E+UUQr9N9h2Nru/EkKWQRb14sU0evL8Fm5T4ks
- rGIg==
-X-Gm-Message-State: AOJu0YxLxd4psqJHT3pJIFrUWkpR81Fxaij79zmUVNBQBl3GEr+rCZYh
- Q599oQi4hnA1E4K5CqTRzqwVYErtwnAxCXs3UZlch4WNFMKLGAeTFD71TEVsictBSpjUfOwl1M6
- pyWEoH7PXRYE9lMJ24d6xf9gQMqLMFx0Ii8HVNOn7vRkUACultASV
-X-Gm-Gg: ASbGncthMmkb8iVnmxUz63eHl7+HQ9Vz/qcax1tP59ynCzUXqruh3lzmUza4XZVyY4G
- MgPhL5fkvqy+tVnr5qnQ4dq2KlGPwHYdxhoqYbW/hGbyydoxtP5J5t/cQ3T7uj2d3fXDvpajK7N
- +nIBhfw1UTuPIRrk287UtyTafhBG9zm8EIWdIa6fiTxW9oDQZACubnRT4+qWG9YiVTIv/6AHZh6
- L426qDMmmIIYtUro1cXvItRxmz9hriAo6Y/XL8PhU7H3VDGbuGZvlzNaB4UZ1rDyF5cddSGkFXA
- VCGcdhWC5niwU6ozSkA=
-X-Received: by 2002:a05:6000:18a8:b0:385:e013:73f6 with SMTP id
- ffacd0b85a97d-38a87315994mr27926807f8f.50.1737047804521; 
- Thu, 16 Jan 2025 09:16:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFMhqqqqoD63CmBBdJhBax4acb7nUvwyPAzruvthDlAWUy/ohrlooqQWQ+o7FPi/moJWlQObg==
-X-Received: by 2002:a05:6000:18a8:b0:385:e013:73f6 with SMTP id
- ffacd0b85a97d-38a87315994mr27926783f8f.50.1737047804206; 
- Thu, 16 Jan 2025 09:16:44 -0800 (PST)
+ bh=jLf0a+uWrlY3CBhS4twrHFpg6r7keS/CHGqK/Nszags=;
+ b=iy6j+JeP2VhBp52Q361kSJIb5uwV2MogxW//DmRoWyr9PoNU6Cdm7R3O2CU3AererB
+ 1q3dVBVlKFmVi20S+So1drFbDFmT6Q9RN028PjQR/u6xuyeU9HWU8c1zzh1JOjK+fgZF
+ nMLM/doz2PyuaEtJTS6R+xUMTBC53SNlxeIrY6E2VZ8xqN0E9jJcXqI5I8oHnEJk8fAS
+ HgDBWbIT2Tkb4mJe2dBs5kUBnk/DeCLFkXZlpetsf8hV5QtzAzBNCYU2FkCg46PM5zQv
+ Grrr17vtL0B8iQLPJCzAZyKMvyUo0T9el2qYZjtHtnUnvP42kVHS3RLW4jB6x4RcANWA
+ pMww==
+X-Gm-Message-State: AOJu0YzSJyOQ8iwnNladxBX/4905oyipYPySdWLYCEZLTYP+XzN0MsHb
+ 65zHrIl6JY38c+tnxLGqU7mU2vE8CWW9j0y6kmV+tL2gxZvLFJla2iff9/MefY2bKIgF8Pl9qhK
+ 7DUz4w7g/YgrIn+UGHO9luOyOtJUHp9dZYGifGkITcT1XoXa7ijHPuD8V1lEIBqBpIm+grh/riz
+ ZKIcbZTPjNLLf8Tmt7XT2121X5FMhpZA==
+X-Gm-Gg: ASbGncs+NfqhNbot0CVPCET1sBTpaIPWDjFmonNmK4XkvnIhnMhLpmiFwFwOjVftkmw
+ 2fM9r6FbkzRUmRY0ISIVS+TPP2TFhPBMLjRIHG/znlBEplpNb6xygqa/uuOgGHv89QDPXJql4HG
+ s4axiykISsLVJDhKCd1tpmVgGtOh7jXGOMBO2Zm0P3ULFJLgVphWsgjQGiDdDJMSiuduoTN1h+J
+ 6R93NV3X1Pga2I5Sfyj6chzYNgNmISg5lGaV7lVp+Qc4VZwt7teUEfz2/ceYmDcGEuTbZiQ51Xg
+ dt2ISsf3LoUwwTkrfho=
+X-Received: by 2002:a5d:64eb:0:b0:386:41bd:53a3 with SMTP id
+ ffacd0b85a97d-38a87310667mr29962623f8f.50.1737047792541; 
+ Thu, 16 Jan 2025 09:16:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVvSQsFHvJi6/U7i+sOm6Adw+Q1syjYITWbJWeKEIWw1/BS6HFEXTe33OQ2AtEW2M8WTQCxQ==
+X-Received: by 2002:a5d:64eb:0:b0:386:41bd:53a3 with SMTP id
+ ffacd0b85a97d-38a87310667mr29962593f8f.50.1737047792142; 
+ Thu, 16 Jan 2025 09:16:32 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf321505asm372067f8f.7.2025.01.16.09.16.43
+ 5b1f17b1804b1-437c753ca42sm63997695e9.35.2025.01.16.09.16.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 09:16:43 -0800 (PST)
-Message-ID: <d9527e66-41fd-48f2-b5e5-f25d0433b48d@redhat.com>
-Date: Thu, 16 Jan 2025 18:16:42 +0100
+ Thu, 16 Jan 2025 09:16:31 -0800 (PST)
+Message-ID: <af0a3f93-18e4-47d6-8b36-d79ea88e1be3@redhat.com>
+Date: Thu, 16 Jan 2025 18:16:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] vfio/igd: VFIOConfigMirrorQuirk for igd mirrored
- registers
-To: Tomita Moeko <tomitamoeko@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250104154219.7209-1-tomitamoeko@gmail.com>
+Subject: Re: [PATCH] vfio/igd: Fix potential overflow in igd_gtt_memory_size()
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250107130604.669697-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -126,17 +125,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250104154219.7209-1-tomitamoeko@gmail.com>
+In-Reply-To: <20250107130604.669697-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -154,36 +153,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/25 16:42, Tomita Moeko wrote:
-> In commit 1a2623b5c9e7 ("vfio/igd: add macro for declaring mirrored
-> registers"), I introduced a macro to handle mirrored registers in igd
-> bar0. However, using the existing VFIOConfigMirrorQuirk should be a
-> better approach I think after going through the vfio code.
+On 1/7/25 14:06, Cédric Le Goater wrote:
+> The risk is mainly theoretical since the applied bit mask will keep
+> the 'ggms' shift value below 3. Nevertheless, let's use a 64 bit
+> integer type and resolve the coverity issue.
 > 
-> This patch set introduces a new header file, pci-quirks.h, to hold
-> generic quirk declarations, and extends VFIOConfigMirrorQuirk to
-> support offsets in PCI config space. This eliminates the need for
-> the previously introduced macro.
-> 
-> Changelog:
-> v2:
-> * Removed 'const Property' change, it was a mistake in rebasing.
-> * Removed unnecessary initializing config_offset explicitly.
-> * Separated GGC and BDSM mirror into 2 quirks.
-> Link: https://lore.kernel.org/all/20241231151953.59992-1-tomitamoeko@gmail.com/
-> 
-> Tomita Moeko (3):
->    vfio/pci: declare generic quirks in a new header file
->    vfio/pci: introduce config_offset field in VFIOConfigMirrorQuirk
->    vfio/igd: use VFIOConfigMirrorQuirk for mirrored registers
-> 
->   hw/vfio/igd.c        | 125 +++++++++++--------------------------------
->   hw/vfio/pci-quirks.c |  57 +++-----------------
->   hw/vfio/pci-quirks.h |  72 +++++++++++++++++++++++++
->   3 files changed, 109 insertions(+), 145 deletions(-)
->   create mode 100644 hw/vfio/pci-quirks.h
-> 
-
+> Resolves: Coverity CID 1585908
+> Fixes: 1e1eac5f3dcd ("vfio/igd: canonicalize memory size calculations")
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
 
 Applied to vfio-next.
@@ -192,5 +169,23 @@ Thanks,
 
 C.
 
+
+> ---
+>   hw/vfio/igd.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 0740a5dd8cc9346a92c4613194faa8dea42e1d98..b5303ea565d6a344d0a43273f288bbb4a7f48327 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -133,7 +133,7 @@ static uint64_t igd_gtt_memory_size(int gen, uint16_t gmch)
+>       } else {
+>           ggms = (gmch >> IGD_GMCH_GEN8_GGMS_SHIFT) & IGD_GMCH_GEN8_GGMS_MASK;
+>           if (ggms != 0) {
+> -            ggms = 1 << ggms;
+> +            ggms = 1ULL << ggms;
+>           }
+>       }
+>   
 
 
