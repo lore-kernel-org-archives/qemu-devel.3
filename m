@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E43C02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5571DC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYNZh-0005DS-I3; Thu, 16 Jan 2025 05:58:09 -0500
+	id 1tYNaC-0005IW-2n; Thu, 16 Jan 2025 05:58:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <danielhb413@gmail.com>)
- id 1tYNZf-0005Cj-Ee; Thu, 16 Jan 2025 05:58:07 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tYNa9-0005G0-SA
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:58:37 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <danielhb413@gmail.com>)
- id 1tYNZd-0007jK-Ou; Thu, 16 Jan 2025 05:58:07 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21680814d42so10694235ad.2; 
- Thu, 16 Jan 2025 02:58:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tYNa8-0007mo-7p
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:58:37 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e4419a47887so1193576276.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 02:58:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737025083; x=1737629883; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mfbEp2qYxtrBIIbyBCDjoEqzeGlkCi1sJCwdB657Q2A=;
- b=Xvg0CUxCXZ1r/3bZDUxSeUzLVAi73ME1fvOPcdJh4rAakK4q7jgBA1RYtswdzX866t
- /yTG+6BIRPMlwJMCMQT61rc5QTGV6FVOMUxPXAKnV23IaG1Dd0zrI62EJoqXbPBb+X/w
- KkPfJ2JvTm7/XMNlbBehIBjFjp8lPScZrMJxF30UI+3hJPhwOP1H9/7cw+6mDL4HZXDy
- FQ2LUxhiss2vDdHUWj6CjbjuDWXtk30dukpYtqYEbOs5jhg2QZ+5zFmU26znzG8WJFHj
- AFyF6xwWlhBo30GC4YJcTDXmTrim5+jje5UXhUs3RNYOjedHAm6OeGo2jC+3LwFpO6LO
- 06gg==
+ d=linaro.org; s=google; t=1737025115; x=1737629915; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FQDVStq64xfewT2IWL+LtacP2s9A0iotkXDYg2YqP9Q=;
+ b=jXXin1NHv1RmNkUWBx9BNJD2KN4BUxKUt86eT29KlNi2HVBxKpDLD5gDS5DAofOTnO
+ jLQS33YnHyzj5CU9NMfcTGQ2OadUo87OykFywY2ZU0fuF6RFpyvrzPN2fpw/GF+xInym
+ Qmlbu6nov4rstBYVA0n7vgGDXgBfgKIBxL9a8Rp9ieh+RdvDG6nH2XAwwqy/b/IZ5aDi
+ oV9OGPOKY0ibRd3fFQHSrbbebjJrAI+tnSIL1/Bq5ULtCB6HDSqJb+7SatodSx0Bh6nT
+ GbR/LDL0NLK4DiqJBB0bqVSQcjzcdp+bVp3X2CxCnG6UAtlM7AtVXVi6K0nakEGnWctY
+ NwYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737025083; x=1737629883;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mfbEp2qYxtrBIIbyBCDjoEqzeGlkCi1sJCwdB657Q2A=;
- b=eL3i6BLrrcrPgNRyWvcL/BhDZptzPqYI4iViCftNztt2fPoj2u7rw4YvYbiO1k4Mgc
- XI0V8/w2KqWWr3YZwf2EyBDFztiKKDeMU17AmuXghwCAfFee6wZ36c8xM0VgjIqbH4jr
- 0v42rZtHh0xyxlxpvx+BZ8yYmzJmwArC0Ra4DOSZvNXhJ9KFtW+vedSyMzo3+gQmH4bW
- r5IEdkTOQnswXjcCl+susDVLYO9C0z1/xce3UUpBIDFbWG7DZ01xrtB4A7CwojRpeAeO
- nviCrP3J+ujXIS4Fl+yUzG+fx8zMeOGizREZItzgWUpfBu5+40chhzlvQSHk3ro3RhQe
- pZaw==
+ d=1e100.net; s=20230601; t=1737025115; x=1737629915;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FQDVStq64xfewT2IWL+LtacP2s9A0iotkXDYg2YqP9Q=;
+ b=alxHk252yfG/iJ8IVsrq5xYE9wojNpbny6SP+7TnDju5mWj481VsIzp/PRBW+tmWXT
+ 0EGyqn/LaVrp/oCsq4ywtIblJHyv+E2d7Bvv4/324G1T/4lgxRLdmYy1P1b96PuRgySg
+ dsgkxobAaHly8kzDRQtB7NkKGj0PZNUSzrtXJTql4S5ZqCpcO89gLpncWvhOQLpn2HJ0
+ dIeh8Ek+kfKksFpjGKjKmIjRZqlF1mmMrVpV1xk+j3f6oL9xjkZR7GnyXvYH57dwY4b4
+ W1LiFS4Uoa0qFRHivvGTnYm/5lWTQk8DuZKwbIuYATGYFm8A0NeGYQak/e1TlErm0uX8
+ bCPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVl4FsnU7e/AWfh9rqeKvPNgEyyHiqAIrgq1LGXFMv6KUnSy5k3VIJXLYFscqxalCZ6x9SnZ4C0plqM@nongnu.org
-X-Gm-Message-State: AOJu0YxuVyyHC+peUz0e9UM098f+hapa+LpSi1ByrDNJwnYjrpQItYDv
- Mjp4CJxMSnB++32/GrVNiD5JnNC866HyoTBel+0zRk8MgOSh1J4f
-X-Gm-Gg: ASbGnctzzciMhyPghESKupILRv428C1nKKk8i+yo8T55glGd2YebsTBdIKkns7pQC4+
- jvKvPwpJR19eH+YTYNOqFRCfKFgJDbXowQPT3OkHKOyT/HfpvoZTZvoqonGmcSM2BeDuMjt5Ae1
- jLgVEPofXpeGP+nbMPEQphixryG8RCFUFw3O0qQEabpNDyYqQJOELKcXpxLQrDQddZpLdY9c3yw
- N0iVBK/DYWb4sWv1zYg7lnXLgBGiY0l3qIXs4cdEexUBqogaBVg4ADZXS/5fFX6Zg==
-X-Google-Smtp-Source: AGHT+IHo4uqU7Q94psZC02VFyR7gvA+prqi1bvmTBZ86rCM3PvrWGicu1YlKvhHbTU27o6P0A/2HMQ==
-X-Received: by 2002:a17:902:f70f:b0:212:4c82:e3d4 with SMTP id
- d9443c01a7336-21a83fd90e6mr501215705ad.46.1737025083495; 
- Thu, 16 Jan 2025 02:58:03 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.238.10])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f253a7bsm95021185ad.222.2025.01.16.02.57.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 02:58:02 -0800 (PST)
-Message-ID: <482d9d0c-e112-49c1-8102-f263d11127e4@gmail.com>
-Date: Thu, 16 Jan 2025 07:57:58 -0300
+ AJvYcCXK5HBUJMuKrnrSjYeI2Javo27xwSRuYZ3IbY2VoOPRdDoEeMWwpkwe4Vq5VdbIv4Ox7kYiGus8yLE+@nongnu.org
+X-Gm-Message-State: AOJu0Yw8HwzXlav/SNPecWw8XKhH8V9uro8BcMWxZpqVREpsxqB8Am/R
+ l/ZNm6jGKgmHE3WFiEumXuUeHtdQHqdncD1cYQ4fOaRaS6TRjU4OLqJciJ2x9kmp7Hzni54NM8G
+ 3u3FcvIbzI1AftLnh1pEIAS0sF6hNaHN8Z1xeSQ==
+X-Gm-Gg: ASbGncurCODegrzmleDh/zq66u3J9MI83J8oNlTu/kZPnRpwvYtFR9ziRkimu1uNk10
+ NUsM87/dl5Sb3aYwJDmCCsaATLwFnahNKCFMdmt0=
+X-Google-Smtp-Source: AGHT+IGpnRApe4yeaoaGVfZsx8iT2Aw3dW7uUAMkFnLKRxPqps5k1mzBj5RV0eRVmhyOn8WY+W9UusmoPXbGmPKq4fE=
+X-Received: by 2002:a05:690c:62c4:b0:6ee:a81f:1264 with SMTP id
+ 00721157ae682-6f5312d1f1cmr261195447b3.26.1737025114714; Thu, 16 Jan 2025
+ 02:58:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] ppc/ppc405: Remove CPU
-To: Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Laurent Vivier <laurent@vivier.eu>
-References: <20250110141800.1587589-1-clg@redhat.com>
- <20250110141800.1587589-4-clg@redhat.com>
- <1c294e9e-8774-4e3c-874c-d64bcc0f7ce7@linaro.org>
- <08932dd4-f4d2-4eae-b237-2975c820cec1@linaro.org>
- <D71LX5ZNBHSB.9MP9IHEN5WLU@gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <danielhb413@gmail.com>
-In-Reply-To: <D71LX5ZNBHSB.9MP9IHEN5WLU@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=danielhb413@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240718072050.9503-1-sgarzare@redhat.com>
+ <b6c50dd04d77d266a95d5752a24e97b65ccf3f05.camel@infradead.org>
+In-Reply-To: <b6c50dd04d77d266a95d5752a24e97b65ccf3f05.camel@infradead.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Jan 2025 10:58:22 +0000
+X-Gm-Features: AbW1kvaXdDHOxU3qh_Y2ALxfy33kkMGlxHUGQRz1x5cNqPEHXMDhe2qXEfcOB0A
+Message-ID: <CAFEAcA8npFet8ysFfRoPFdoJEZ-vY_58SvnPqQm7z5WKsHiRNA@mail.gmail.com>
+Subject: Re: [PATCH v2] scripts/checkpatch: more checks on files imported from
+ Linux
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
+ cohuck@redhat.com, berrange@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,84 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 16 Jan 2025 at 09:26, David Woodhouse <dwmw2@infradead.org> wrote:
+>
+> On Thu, 2024-07-18 at 09:20 +0200, Stefano Garzarella wrote:
+> > If a file imported from Linux is touched, emit a warning and suggest
+> > using scripts/update-linux-headers.sh.
+> >
+> > Also check that updating imported files from Linux are not mixed with
+> > other changes, in which case emit an error.
+> >
+> > Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>
+> This now seems to complain about a commit which simply adds a file to
+> update-linux-headers.sh and simultaneously adds the newly-imported
+> file. Such as commit aa274c33c39e7de981dc195abe60e1a246c9d248.
+>
+> Was that the intent? Do we really need to have *three* separate
+> commits, one for update-linux-headers.sh, one to import the new header,
+> and then the third to add the QEMU code which actually uses the new
+> header?
+>
+> $ scripts/checkpatch.pl 0001-update-linux-headers-import-linux-kvm_para.h-header.patch
+> WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+> #36:
+> new file mode 100644
+>
+> WARNING: added, moved or deleted file(s) imported from Linux, are you using scripts/update-linux-headers.sh?
+> #41: FILE: include/standard-headers/linux/kvm_para.h:1:
+> +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+>
+> ERROR: headers imported from Linux should be self-contained in a patch with no other changes
+> #99: FILE: scripts/update-linux-headers.sh:63:
+>                                       -e 'linux/kernel' \
 
+Just to state for the record the conclusion of our conversation
+on IRC; yes, the error is correct. Header-imports from
+Linux should be in a patch of their own which has no
+changes except the results of running update-linux-headers.sh
+(and ideally we would not have let aa274c33c39e7 through
+code review). So, yes, you have a series of three patches:
+ * change update-linux-headers.sh
+ * automated-change-only commit resulting from running the script
+ * the change you want to make that requires the new header
 
-On 1/14/25 4:11 AM, Nicholas Piggin wrote:
-> On Sat Jan 11, 2025 at 2:25 AM AEST, Richard Henderson wrote:
->> On 1/10/25 08:15, Philippe Mathieu-Daudé wrote:
->>> Hi Cédric,
->>>
->>> Cc'ing Laurent & Richard for user emulation.
->>>
->> ...
->>> The deprecation message (see previous patch) was about the
->>> "ppc ``ref405ep`` machine". Is that OK we remove these CPUs
->>> for user emulation?
->>>
->>> $ qemu-ppc -cpu help|fgrep 405
->>> PowerPC 405d2            PVR 20010000
->>> PowerPC 405gpa           PVR 40110000
->>> PowerPC 405gpb           PVR 40110040
->>> PowerPC 405cra           PVR 40110041
->>> PowerPC 405gpc           PVR 40110082
->>> PowerPC 405gpd           PVR 401100c4
->>> PowerPC 405gp            (alias for 405gpd)
->>> PowerPC 405crb           PVR 401100c5
->>> PowerPC 405crc           PVR 40110145
->>> PowerPC 405cr            (alias for 405crc)
->>> PowerPC 405gpe           (alias for 405crc)
->>> PowerPC npe405h          PVR 414100c0
->>> PowerPC npe405h2         PVR 41410140
->>> PowerPC 405ez            PVR 41511460
->>> PowerPC npe405l          PVR 416100c0
->>> PowerPC 405d4            PVR 41810000
->>> PowerPC 405              (alias for 405d4)
->>> PowerPC 405lp            PVR 41f10000
->>> PowerPC 405gpr           PVR 50910951
->>> PowerPC 405ep            PVR 51210950
->>
->> Up to the ppc maintainers.  I don't know of anything interesting at the user-only level
->> wrt these cpus.
-> 
-> Just getting back to things after the break...
-> 
-> We are looking at modeling some microcontrollers on the POWER
-> chips. There is an OCC power management controller which is a 405
-> and some other weird cut down 405 derivatives, we're not up to
-> those yet but we want to model them.
-> 
-> We should be able to remove a bunch of boards and CPUs, I just
-> haven't started looking, so might be easier to wait for a bit.
-> If it's not causing others too much problem, could we leave this
-> in for the time being?
-
-
-That's fine, but then we need to at least mark you as a maintainer here:
-
-PowerPC Machines
-----------------
-405 (ref405ep)
-L: qemu-ppc@nongnu.org
-S: Orphan  <----------------
-F: hw/ppc/ppc405*
-F: tests/functional/test_ppc_405.py
-
-Either with "S: Odd Fixes" or "S: Maintained" (or S: Supported, if that's really the
-case). And perhaps re-visit the deprecation notice too.
-
-I'm being petty here because, right now, all 405 code is marked for deprecation, has no
-firmware images and Linux support and etc like Cedric mentioned, and it fits exactly
-the criteria everyone else uses for removal. If we want to keep it around we'll need
-at least MAINTAINER changes to indicate it.
-
-
-Thanks,
-
-Daniel
-
-
-> 
-> Thanks,
-> Nick
-
+thanks
+-- PMM
 
