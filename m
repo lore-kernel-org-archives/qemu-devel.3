@@ -4,87 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB5FC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 11:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D296DC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 11:17:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYNiT-0000TT-4j; Thu, 16 Jan 2025 06:07:13 -0500
+	id 1tYNrU-0001oO-Vs; Thu, 16 Jan 2025 06:16:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tYNiR-0000Sm-Oj
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 06:07:11 -0500
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tYNiQ-0000yT-16
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 06:07:11 -0500
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e549be93d5eso1491742276.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 03:07:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737025627; x=1737630427; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b52tSWm+Of95KCaaDHkgkYJ6h0GzbjBzeCCqwOowkCQ=;
- b=n1oDi624/eUu2bY05NV6SGEptI2M7P8CwHjPHrc93mdbz8yxlQaR4U3AaoPvlb9G9X
- DgBgZs/kiwP4AS80LxrVw0VxqpQG8l+hyygJF/YLXb7tgJ74xLdVHutChrooOXNNQA4T
- lT/fs2N1Gqd/eW95egjjRrmzUFpN1RtwQEHE5B5ykfQGh5LLSpqMHcAe8EZ3gfDFJoOg
- r+QP3b4KPS1qFmlRtcVKP9xHZ06f8xTwcmF5WIx0Mt3tqIoNC85HYlfSmeVHaz1Q7fbC
- yPQJ2CF1kQEYbMbyCPJWHzoPkiXxLookZNYuZZVCxeO6SogpZNQB7Tr9xgqnFm4bFNS6
- IEUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737025627; x=1737630427;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b52tSWm+Of95KCaaDHkgkYJ6h0GzbjBzeCCqwOowkCQ=;
- b=icnYICIIGNtkJ8npeY1O7lKHD4+rmHv/lsKJ10Ek2fxfZPo9MBnZoJi9YJltTAFql4
- lkJoCdIZ2PRLYpJp4v06rkxqURbey6AKq2nuP3Aw/nNkPyBg6PYa3GDDt5lAZBtYD95i
- pasqXuALhjrHiIk5P24gtnvALWOEU6nvhfNJjQTdbTlqEpNhdeTqzn3iLskzC8K91BrU
- T6E2l9jnRmYd8GOZJtcN3RWWgtvF1/HrT/UXKEY/E/CyRlwQZZqe0fOH2a12uLLNdJV8
- tr/niBWH40tnKr4i2Hh6wqqU7CDWPkne339tsVROqJDEDHSmyxqu5966S6ACcoR6EwaR
- wTlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKe7UJ9JFlonNUcuiF2AHyripwT9jOT4EJjmN2ak5KT4LU5PCo8zO2EmrEqXu9kNrTNa8xEmzm3qP+@nongnu.org
-X-Gm-Message-State: AOJu0Yy9+XK2hu/RfccToui2IGbBuQVJGKB4TM+B1RnCuTJ8/UfdihMY
- iSJCxbZiMG52m2F+ugj89JtqD183MRmKAL4g0lgr9xmYKYxpN2hSe9av6xrtRGX4j2hEUw2B/6C
- bYBDE/tLFYi8+Y8k55gxJ5G6B2wevRKYYBjO9Hg==
-X-Gm-Gg: ASbGncu3s+J2e01X8I5wQsIqB/w0ZcxbeTf4HNtYFjD1ggTAPRJD9Y84tufYQYrGu4a
- OGIYgJUzdNiXoD5qAtJsO0klw54cLKxXGUSFJKT0=
-X-Google-Smtp-Source: AGHT+IGjWptSH5jfWBJfBpU2wNd5xHe290BfZiayOvkXPjb9vzH2PaVOYlvm23vmWvb6Sw/b/5u8vas/ho78ZDWVSu4=
-X-Received: by 2002:a05:690c:6a03:b0:6ef:c24e:5f5 with SMTP id
- 00721157ae682-6f531224f1cmr304321057b3.2.1737025627693; Thu, 16 Jan 2025
- 03:07:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anasonov@astralinux.ru>)
+ id 1tYNrS-0001o5-4k; Thu, 16 Jan 2025 06:16:30 -0500
+Received: from mail-gw01.astralinux.ru ([37.230.196.243])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anasonov@astralinux.ru>)
+ id 1tYNrP-0002S1-SW; Thu, 16 Jan 2025 06:16:29 -0500
+Received: from gca-sc-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
+ by mail-gw01.astralinux.ru (Postfix) with ESMTP id 5338424A2B;
+ Thu, 16 Jan 2025 14:16:17 +0300 (MSK)
+Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail03.astralinux.ru
+ [10.177.185.108])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail-gw01.astralinux.ru (Postfix) with ESMTPS;
+ Thu, 16 Jan 2025 14:16:16 +0300 (MSK)
+Received: from localhost.localdomain (unknown [10.177.119.11])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4YYgKW6NsKz1gywd;
+ Thu, 16 Jan 2025 14:16:15 +0300 (MSK)
+From: Artem Nasonov <anasonov@astralinux.ru>
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org,
+	jsnow@redhat.com
+Cc: sdl.qemu@linuxtesting.org,
+	Artem Nasonov <anasonov@astralinux.ru>
+Subject: [PATCH] hw/ide: replace assert with proper error handling
+Date: Thu, 16 Jan 2025 14:16:00 +0300
+Message-Id: <20250116111600.2570490-1-anasonov@astralinux.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-References: <20250115232022.27332-1-iii@linux.ibm.com>
- <ac4d48c3-d139-4af0-ab28-f2674b74cb8c@linaro.org>
- <a82c41712409ac77d66f03e19b98382bcf11ba45.camel@linux.ibm.com>
- <87frljhvzk.fsf@draig.linaro.org>
-In-Reply-To: <87frljhvzk.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 16 Jan 2025 11:06:55 +0000
-X-Gm-Features: AbW1kvZiFC_--v1xNm3xy9a53mkoFEyaKas272wMlETe6RQq8geSnnZDx6-T3mk
-Message-ID: <CAFEAcA-4M5W4=JH3s45+9JZnKrVVAgKcRcH+gVqMJqGxRfjrpw@mail.gmail.com>
-Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-KSMG-AntiPhishing: NotDetected, bases: 2025/01/16 09:51:00
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Envelope-From: anasonov@astralinux.ru
+X-KSMG-AntiSpam-Info: LuaCore: 49 0.3.49
+ 28b3b64a43732373258a371bd1554adb2caa23cb, {Tracking_uf_ne_domains},
+ {Tracking_from_domain_doesnt_match_to}, new-mail.astralinux.ru:7.1.1;
+ d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; 127.0.0.199:7.1.2;
+ astralinux.ru:7.1.1; gitlab.com:7.1.1, FromAlignment: s
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiSpam-Lua-Profiles: 190368 [Jan 16 2025]
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Version: 6.1.1.7
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
+ bases: 2025/01/16 07:50:00 #27039546
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected, bases: 2025/01/16 09:52:00
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 1
+Received-SPF: pass client-ip=37.230.196.243;
+ envelope-from=anasonov@astralinux.ru; helo=mail-gw01.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,83 +86,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jan 2025 at 10:52, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> Ilya Leoshkevich <iii@linux.ibm.com> writes:
->
-> > On Wed, 2025-01-15 at 16:08 -0800, Richard Henderson wrote:
-> >> On 1/15/25 15:20, Ilya Leoshkevich wrote:
-> >> > Currently single-insn TBs created from I/O memory are not added to
-> >> > region_trees. Therefore, when they generate exceptions, they are
-> >> > not
-> >> > handled by cpu_restore_state_from_tb(). For x86 this is not a
-> >> > problem,
-> >> > because x86_restore_state_to_opc() only restores pc and cc, which
-> >> > are
-> >> > already correct. However, on several other architectures,
-> >> > restore_state_to_opc() restores more registers, and guests can
-> >> > notice
-> >> > incorrect values.
-> >> >
-> >> > Fix by always calling tcg_tb_insert(). This may increase the size
-> >> > of
-> >> > region_trees, but tcg_region_reset_all() clears it once
-> >> > code_gen_buffer
-> >> > fills up, so it will not grow uncontrollably.
-> >> >
-> >> > Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-> >> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> >> > ---
-> >>
-> >> This needs something else.  The reason why they're not insertted is
-> >> that they're not valid
-> >> for a second execution.  We need to not find them in the search tree.
-> >
-> > I have the impression that code_gen_buffer is append-only, so after we
-> > create a new TB for the second execution, the first TB should not
-> > be deleted - is this correct? At least I haven't found code_gen_ptr
-> > decrements, besides the rollback at the end of tb_gen_code(). Then,
-> > since region_trees are indexed by code_gen_buffer pointers, and not
-> > guest pointers, this should not introduce any stale entries.
->
-> We used to generate a temporary TB, execute it and then wind codeptr
-> back. We simplified the code to generate the TB but then not add it to
-> QHT - I think the original reasoning was saving on scarce CF_ flags and
-> not over complicating the tb_gen_code function. See around 873d64ac30
-> (accel/tcg: re-factor non-RAM execution code).
->
-> This does have the effect of potentially regenerating the same TB
-> over and over again but usually there only a few insns executed out of
-> IO space.
+This assert was found during fuzzing and can be triggered with some qtest commands.
+So instead of assert failure I suggest to handle this error and abort the command.
+This patch is required at least to improve fuzzing process and do not spam with this assert.
+RFC.
 
-You can't avoid regenerating the TB unless you somehow put the
-entire bytes of the instruction into the hash you look up,
-because you must re-read the MMIO region, and when you do the
-second read you might read a different value than the first
-time you read and created the TB.
+Found by Linux Verification Center (linuxtesting.org) with libFuzzer.
 
-The original reported problem here seems to me like it's a
-problem with whatever target's frontend code this is.
-This is a single instruction TB, so either:
- * the generated code for it completes the insn without
-   raising an exception (no problem)
- * the generated code for it should raise an exception
-   without having modified the CPU state (so there would
-   be nothing to do for restore_state_to_opc)
+Fixes: ed78352a59 ("ide: Fix incorrect handling of some PRDTs in ide_dma_cb()")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2777
+Signed-off-by: Artem Nasonov <anasonov@astralinux.ru>
+---
+ hw/ide/core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-It sounds like the target is generating code which does
-something like:
- * do part of the instruction, including updating some of
-   the CPU state
- * then decide it needs to raise an exception, and rely on
-   the restore_state_to_opc handling to undo the state updates
-   it did previously
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index f9baba59e9..baca7121ec 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -931,7 +931,10 @@ static void ide_dma_cb(void *opaque, int ret)
+     s->io_buffer_size = n * 512;
+     prep_size = s->bus->dma->ops->prepare_buf(s->bus->dma, s->io_buffer_size);
+     /* prepare_buf() must succeed and respect the limit */
+-    assert(prep_size >= 0 && prep_size <= n * 512);
++    if (prep_size < 0 || prep_size > n * 512) {
++        ide_dma_error(s);
++        return;
++    }
+ 
+     /*
+      * Now prep_size stores the number of bytes in the sglist, and
+-- 
+2.39.5
 
-The assumption of the "throwaway single insn TB" is that
-you don't do that (i.e. that restore_state_to_opc is only
-there for the benefit of multi-insn TBs).
-
-thanks
--- PMM
 
