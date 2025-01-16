@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A88C02188
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71938C0218A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSLa-0003vH-Ki; Thu, 16 Jan 2025 11:03:54 -0500
+	id 1tYSLl-0004Cj-B2; Thu, 16 Jan 2025 11:04:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSL2-0003WD-9o
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:20 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tYSL6-0003Wl-QX
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:29 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSKv-0001Ee-Iu
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:19 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4368a293339so11632465e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:13 -0800 (PST)
+ id 1tYSKy-0001Gs-It
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:24 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3863494591bso622590f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737043392; x=1737648192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737043395; x=1737648195; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DjEsdOpQ49q8jWvklUeiIlGfQQiMPZKhuPb/zwxQMo4=;
- b=s/X2538taag0l1vyunYzxObcXr7d1ZMmD0SlOYJvw8df925aUV1aEvEc8zoOveoqKc
- s9uHm+eDDI3NuJlqVuU9iFxVjDYf4hxu36DZ3FlMEAArIpNm4vqSGW8wKVoXft+TvWF1
- Bqg0oKydoK4j0UMoBDEICcU1GO7NLPLpIDMN0yPkR3IjiICVy1pG52NZshhGB44TgjKv
- 6Kq90CTjASm15/NPrKMs7wsNr5PkfSoYQIHdL0Xv8TMQDtz3/ZiaXOKg6z7AysfwvfrP
- /X+5+HAzjSVBx+BlQ55uG2ZN5W7rH2dtFoS3us3jwMUByx5oTVzTjOfl4toaCxXqLFCy
- Ep/A==
+ bh=gi+ukBCOErHL45ERN6Ib1p4GgIF2LltQZlgS/5QMd38=;
+ b=UZiYT8pV7CVqo3bfzEUg3KUPZQK+CrufQCr9/6MAfZqcgViw0xDhnAt2LWppA5Iu1Q
+ sqBqXp3oCSk0fa41LDXWh7oUCRnr9fTK971zEpjn7QYCXeQqNJyGReCvFtwiUqjzhKVc
+ fJxnZ/w97ykdEokrh6+oPeupF5lJiqJvY9OxIZ7vhcGLOGaqJICtr92oJhZ4ntKEfoux
+ 83gqPLyT+n/UMiAe6AAwBCpYBpitogfEg0L01ly8cn5vj7xLWcWyR5jjMNyl2jau0WlN
+ Oy2e2Vzr4C7H4ww43WwPltXXwuZhn6IDoxCwgPzMOUZcj/aIHQO8w/a/rIi1jIi3l31H
+ bnkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737043392; x=1737648192;
+ d=1e100.net; s=20230601; t=1737043395; x=1737648195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DjEsdOpQ49q8jWvklUeiIlGfQQiMPZKhuPb/zwxQMo4=;
- b=VDTIa0/3aiNAD3dErrMrh3vPZZwmwo50EU5ZbpJrYkj3fn7KLDfFgBK8reQRuDADBL
- Ji6xkq5/wYojB8jIFd4IqadcuKjDaGmtEVXQAW+7v3WLDFbfcLi664OTfpfxvxUu+yq9
- bWmKbjFUmD8m2iufNF6E1TpdgZG+sNlgZAzn4u/BdnOqBXW3PPiZaFqgNn9EglkSRE+j
- pDmeKUVre5kDbTukKwRrxMDmn0P5ZiVJawxq5dPgnYJnGsxGm85a5BQpPJVWzN0fBZx4
- vHQlVl9bcvD7bDeLWylKzGtor7wyOAxY/BNQUPEdhBXkmb6lHJXqkm/5aRIPOiGxQ9ph
- 5ykA==
-X-Gm-Message-State: AOJu0YxjmPkLCzeS5vKvaQ6lHNenzuiOxE69Fpd//OolaI6C0uz8kPW2
- 26uG3foDjHQ8V6jfjF3qprfpAlQYf0sPi9q+VqtHRoskz2S31L+V30F1LWfrg+M=
-X-Gm-Gg: ASbGncsvgBWffeveyaswYPeg3NUtszSWhUVeaEpkMy/vCbRupz6rdhm4CbkAQLm0I1q
- rBDHK3KQhUst3TcLIWeJl1TtPMrXrreqEHoG+h8qAbT4RHar1nydx8NZ4vLK+n818ELBX7UJHvM
- xlaBJpfKzOlrweGjBYtgaAjl/4WOk0guboIMgWrV0XTtE9YuffSQGNaXpi69TcbC5xEAn5aHcGq
- lPg5PjrdxsnacD2rn+Yx6P95xp4SeRFWAuSQxLkIkdfr0jocGlJ4HU=
-X-Google-Smtp-Source: AGHT+IEHxgCJp4oURrwKXbO/1xEPMQIFNjtF48dw+0k//dMLWzV525ONV+vT5NoLsz0xEZV2arjBxg==
-X-Received: by 2002:a05:600c:354e:b0:434:f9c4:a850 with SMTP id
- 5b1f17b1804b1-436e269c42dmr352667015e9.10.1737043390405; 
- Thu, 16 Jan 2025 08:03:10 -0800 (PST)
+ bh=gi+ukBCOErHL45ERN6Ib1p4GgIF2LltQZlgS/5QMd38=;
+ b=LHQN1S2Pwlp/EePA9dNXBW2/OtVW82hr0ESqbWdZ022OzEbqGgXOFlg1nNVYPlppV6
+ gJPH251P9rDhAXGMmg9vSm8wu70mcHVoe8tLqCbLp242Pd75MLFr+pncYUpPdteSTyq5
+ eMLz0UGuVkhvA6qYGQsYAojSz1e1Q0IuCQAk3iOpx+dzOV0XjvO43qTlt06FGOuEAHAd
+ h0StSR3+YPlTYPRUAbjQzUlUGvNs681Infwb5qnuVkhvL6DCXuY5HAjMLPmzAQp0z0rx
+ 2n8kfimk1WFBGPstyv8pgk/uvl0Ym4yGJyRTY778/Yx9VJYY1Ij+/vJ+gNFwnvior/z0
+ eFuA==
+X-Gm-Message-State: AOJu0Yx0exYA8/sM9LBSH2shcLN0xRLpovelfdHKzP2qTDElalK292cc
+ kBIwANiirAQAql04a4CvMSgkWaWy1t9SdYlmQFB+aiPJmChtr1Tff9NTFAC1OO0=
+X-Gm-Gg: ASbGncvszxGnovG3eN91357WtXmXIklo7+QoVeiaplzXU81n/akXeu3youpRBPmjxol
+ WT3tlw5dV3hneACCzL+N4tQz3BMKU3sxLTrG3nMcgwI95TS3qwMQtOuvfEa8UvzcJeSs+Ms0UmA
+ tWfpKr2r+58gVPDeEu2bTh+E6J9ZUwxtQeMyfeLes40xsACGK0n0oCxZZAh1Kij8/PGsmWzn9LD
+ hXi+/0clkiwnJCJA8CwclhlQgkIjqIF1km1TwN7SAt8kgvv5DN77L8=
+X-Google-Smtp-Source: AGHT+IEM8OhDDPxCfsPHSX9ag4x0M1lRCc5ZmiRBoydBlmP/ot68uWyEOA8PSR8/WfiHQjdn6PSBrQ==
+X-Received: by 2002:a5d:6d0e:0:b0:38a:a117:3da1 with SMTP id
+ ffacd0b85a97d-38aa1173f70mr18502878f8f.5.1737043393558; 
+ Thu, 16 Jan 2025 08:03:13 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3275562sm205033f8f.66.2025.01.16.08.03.07
+ ffacd0b85a97d-38bf322acdcsm221210f8f.55.2025.01.16.08.03.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 08:03:08 -0800 (PST)
+ Thu, 16 Jan 2025 08:03:10 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 966B56083E;
- Thu, 16 Jan 2025 16:03:06 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 1702C60865;
+ Thu, 16 Jan 2025 16:03:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -90,24 +90,24 @@ Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 02/37] semihosting/uaccess: Briefly document returned values
-Date: Thu, 16 Jan 2025 16:02:31 +0000
-Message-Id: <20250116160306.1709518-3-alex.bennee@linaro.org>
+Subject: [PATCH v3 07/37] semihosting/meson: Build config.o and console.o once
+Date: Thu, 16 Jan 2025 16:02:36 +0000
+Message-Id: <20250116160306.1709518-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
 References: <20250116160306.1709518-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,119 +125,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since it is not obvious the get/put_user*() methods
-can return an error, add brief docstrings about it.
-Also remind to use *unlock_user() when appropriate.
+config.c and console.c don't use any target specific
+headers anymore, move them from specific_ss[] to
+system_ss[] so they are built once, but will also be
+linked once, removing global symbol clash in a single
+QEMU binary.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212115413.42109-1-philmd@linaro.org>
+Message-Id: <20250103171037.11265-6-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/semihosting/uaccess.h | 55 +++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ semihosting/meson.build | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
-index c2fa5a655d..6bc90b12d6 100644
---- a/include/semihosting/uaccess.h
-+++ b/include/semihosting/uaccess.h
-@@ -19,41 +19,96 @@
- #include "exec/tswap.h"
- #include "exec/page-protection.h"
+diff --git a/semihosting/meson.build b/semihosting/meson.build
+index 34933e5a19..86f5004bed 100644
+--- a/semihosting/meson.build
++++ b/semihosting/meson.build
+@@ -4,13 +4,16 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
+ ))
  
-+/**
-+ * get_user_u64:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u64(val, addr)                                         \
-     ({ uint64_t val_ = 0;                                               \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = tswap64(val_); ret_; })
+ specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
+-  'config.c',
+-  'console.c',
+   'uaccess.c',
+ ))
  
-+/**
-+ * get_user_u32:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u32(val, addr)                                         \
-     ({ uint32_t val_ = 0;                                               \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = tswap32(val_); ret_; })
+ common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
+-system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
++system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
++  'config.c',
++  'console.c',
++), if_false: files(
++  'stubs-system.c',
++))
  
-+/**
-+ * get_user_u8:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_u8(val, addr)                                          \
-     ({ uint8_t val_ = 0;                                                \
-        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
-                                       &val_, sizeof(val_), 0);          \
-        (val) = val_; ret_; })
- 
-+/**
-+ * get_user_ual:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define get_user_ual(arg, p) get_user_u32(arg, p)
- 
-+/**
-+ * put_user_u64:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_u64(val, addr)                                         \
-     ({ uint64_t val_ = tswap64(val);                                    \
-        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
- 
-+/**
-+ * put_user_u32:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_u32(val, addr)                                         \
-     ({ uint32_t val_ = tswap32(val);                                    \
-        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
- 
-+/**
-+ * put_user_ual:
-+ *
-+ * Returns: 0 on success, -1 on error.
-+ */
- #define put_user_ual(arg, p) put_user_u32(arg, p)
- 
-+/**
-+ * uaccess_lock_user:
-+ *
-+ * The returned pointer should be freed using uaccess_unlock_user().
-+ */
- void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-                         target_ulong len, bool copy);
-+/**
-+ * lock_user:
-+ *
-+ * The returned pointer should be freed using unlock_user().
-+ */
- #define lock_user(type, p, len, copy) uaccess_lock_user(env, p, len, copy)
- 
-+/**
-+ * uaccess_lock_user_string:
-+ *
-+ * The returned string should be freed using uaccess_unlock_user().
-+ */
- char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
-+/**
-+ * uaccess_lock_user_string:
-+ *
-+ * The returned string should be freed using unlock_user().
-+ */
- #define lock_user_string(p) uaccess_lock_user_string(env, p)
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
+ specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
+ 		if_true: files('arm-compat-semi.c'))
 -- 
 2.39.5
 
