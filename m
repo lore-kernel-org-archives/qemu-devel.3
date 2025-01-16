@@ -4,67 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8407C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CFBC02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:41:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLL5-00083p-FE; Thu, 16 Jan 2025 03:34:55 -0500
+	id 1tYLQx-0004ws-Cq; Thu, 16 Jan 2025 03:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tYLL2-0007ww-68
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:34:52 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tYLKn-0005Ys-O0
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:34:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=hZXgQm7xHfFb1lDghDtg1VLG4GmWY4ObxhD/qX/E+mU=; b=wESqLW0hl2FgMde3LWWhxFPtEP
- K8k7jo1sZD3OZCvVN84VCMR/+oDiPXrWr/Z058Mb51SrU7gnMlYGoDj/3pm/uNU1/OcEEZqAW1IYb
- 74s8WcCmJeg3Kgu2cfyeP4G7fo3HE8Nv71H6ZJUCIoVTX7fO99z9W06hJ/UvOBYlURrL45fcO7yU7
- cDymjavByUopEBNa6BpKR5IDLCiP2kpDkAe7B1eFyUlQnu/HdUt/mIoY5eu9593+mD4eswksqjiQW
- HXTxpfZ7luzE6zDGro1U0fCfFu9cnzI5WurFG4jhF/SsPciPC1WnKzG7uA2VP5JDPDvAVyuw2RPrz
- p6nYqW+A==;
-Received: from 54-240-197-234.amazon.com ([54.240.197.234]
- helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tYLKd-0000000AdFx-0beU; Thu, 16 Jan 2025 08:34:27 +0000
-Message-ID: <96e9b9f98fc6800728bc524646f73ac31a0ddf71.camel@infradead.org>
-Subject: Re: [PATCH] system/runstate: Fix regression, clarify BQL status of
- exit notifiers
-From: David Woodhouse <dwmw2@infradead.org>
-To: Phil Dennis-Jordan <phil@philjordan.eu>, Paolo Bonzini
- <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, akihiko.odaki@daynix.com
-Date: Thu, 16 Jan 2025 09:34:26 +0100
-In-Reply-To: <CAAibmn22AxOYRy4yWxcdsX4VooRGiqvpCNG4dRNnKWEcMbtwgg@mail.gmail.com>
-References: <20250112212609.17996-1-phil@philjordan.eu>
- <8dff3836-1c96-4ae8-a9d8-f86f97d78986@redhat.com>
- <CAAibmn22AxOYRy4yWxcdsX4VooRGiqvpCNG4dRNnKWEcMbtwgg@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-ILzlOuB7h/DKhN5hRz2+"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLQu-0004w5-70
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:40:56 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLQs-0006Rv-3g
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:40:55 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-385f07cd1a4so578762f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:40:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737016852; x=1737621652; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iy7zTHR1DHpaeBWIJBrTxo+HvkmkcNJIGSRhTz2feFU=;
+ b=gDSVdqwGapDfcauCg7UrsUPcmeuVh66cl3y/iA9xM8nVCL0wVP6J/W5opOtNouBVw5
+ 0GAC6IvX9xhfLdJHjRRvg2rrrxzUQ9dnisBnLqUSpwCf7qMrlAWAbi0kQLotEAF/ur+w
+ 0DW5+apd1dor75PvLcS1QxYMWyEpPWPAOgeKBefdpz86bkaV7s/GPZsljhVKiXx9qXNq
+ T1atBMID+G+PgHMfrJtFOVG5PkA2KNqRLaswPwiqLnum8c7kBxi3ImOsBd+cKn1cZApi
+ M2jY+7Iw+R1AIXDPWDOzlE0xBYc5q3o6k3qSOL+XmAM2sdG0Lm2z7CezmgvfLLzGrtLC
+ D9/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737016852; x=1737621652;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iy7zTHR1DHpaeBWIJBrTxo+HvkmkcNJIGSRhTz2feFU=;
+ b=J0JelIEL5wYMNlHe2oHpoEezS0vEGpdXSy0JPVKYpigi9L5F9Jpf7Rq7hMoJGYdXxD
+ IWuMaThf7+wBMne2FE6U3EG4w2XZyr+gs6usgIKxNHsKl65O0QMGNv4S9Vb+i2/Qtkop
+ QY7OVT0YtBRX7vubTS/ljJeTZwkJ3TnICcNXdRHB0IwKrn+C5kryOPJ6pr5vYgFhaAK9
+ naA2n/CXC3jlPDBPYmpTFXAwOUE+115ecWyxtTW9gtiEeFXjZRq/UhNUxSXPv9fIVPwM
+ GPT3TToE03hrI5KPZXzepQtqKD2jwCVBv7nq4BViQ7TfhYIephtqLyRPMe05GOKYAOmX
+ Kg8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUshG805Te2Jr9GoC51gUtbtOM+McKTH7mdXPQPyaOXxklwWpl7hPHOR14wPpMAe/Nl/m/JiPG1y531@nongnu.org
+X-Gm-Message-State: AOJu0Yw/G7cCjkW8Sefw3DKAVM6ZofifJb6A9Dh+n6H47acciHqHglnI
+ 7UHgxRKmVhLAOlTGHeuYWuM//BNx2WJ3b3VmYfYw0SH3nwz5E6dt0MzCFz/gtgI=
+X-Gm-Gg: ASbGnct0/ePe0r9USWsSdm+XzZkRvl412aXNQ4i4X5SGERERcMgnkR6vn3vB+rs18WX
+ j0uYtpyJYxR4F6bsLiefrBs/lqfxQvuclxhsyw4xbTPIkaVhe439Fq+7sSvRNq7Hc/iaMch2zPn
+ OEZu2eCssj86+ewDW7Rrn3lMtWwS+Cva9t3b3/Sq3ZURUuGF0hFuEYNdKMX2S1GqWhBw88A4bYM
+ UmLFrQaitocLb0xJG5boqvYGyJpfEhUieDtVC3tG+B35nFTQO7w19g4bH0jQesackwY9WS8/7bU
+ MQgA+S65eXmqUkM2e4mHbV9m
+X-Google-Smtp-Source: AGHT+IHtQzEq0W15KSMEoOU1EAK98LiXbf1pFXn0qM6QBZ38ARBO8VJD0hw9j1ypO1u421k/+zbNIQ==
+X-Received: by 2002:a5d:47c3:0:b0:386:3329:6a04 with SMTP id
+ ffacd0b85a97d-38a8732c076mr32561710f8f.39.1737016851801; 
+ Thu, 16 Jan 2025 00:40:51 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a8e37d01dsm19662039f8f.9.2025.01.16.00.40.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 00:40:50 -0800 (PST)
+Message-ID: <529f4fff-a98b-4a89-b770-549af3029da1@linaro.org>
+Date: Thu, 16 Jan 2025 09:40:49 +0100
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/13] hw/arm/virt: Remove
+ VirtMachineClass::disallow_affinity_adjustment
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jones <ajones@ventanamicro.com>, qemu-arm@nongnu.org,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>
+References: <20250115171009.19302-1-philmd@linaro.org>
+ <20250115171009.19302-4-philmd@linaro.org>
+ <da2fe302-dae9-4f6c-8ea8-94fcc332e167@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <da2fe302-dae9-4f6c-8ea8-94fcc332e167@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,193 +107,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 16/1/25 08:03, Thomas Huth wrote:
+> On 15/01/2025 18.09, Philippe Mathieu-Daudé wrote:
+>> The VirtMachineClass::disallow_affinity_adjustment
+>> field was only used by virt-2.6 machine, which got
+>> removed. Remove it along with the GIC*_TARGETLIST_BITS
+>> definitions, and simplify virt_cpu_mp_affinity().
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/arm/virt.h              |  1 -
+>>   include/hw/intc/arm_gic.h          |  1 -
+>>   include/hw/intc/arm_gicv3_common.h |  3 ---
+>>   hw/arm/virt.c                      | 16 ----------------
+>>   4 files changed, 21 deletions(-)
+>>
+>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+>> index 27c5bb585cb..5d3b25509ff 100644
+>> --- a/include/hw/arm/virt.h
+>> +++ b/include/hw/arm/virt.h
+>> @@ -117,7 +117,6 @@ typedef enum VirtGICType {
+>>   struct VirtMachineClass {
+>>       MachineClass parent;
+>> -    bool disallow_affinity_adjustment;
+>>       bool no_its;
+>>       bool no_tcg_its;
+>>       bool claim_edge_triggered_timers;
+>> diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
+>> index 48f6a51a70a..f5e6e5e70b4 100644
+>> --- a/include/hw/intc/arm_gic.h
+>> +++ b/include/hw/intc/arm_gic.h
+>> @@ -68,7 +68,6 @@
+>>   #include "qom/object.h"
+>>   /* Number of SGI target-list bits */
+>> -#define GIC_TARGETLIST_BITS 8
+>>   #define GIC_MAX_PRIORITY_BITS 8
+>>   #define GIC_MIN_PRIORITY_BITS 4
+>> diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/ 
+>> arm_gicv3_common.h
+>> index a3d6a0e5077..fff5e55a97d 100644
+>> --- a/include/hw/intc/arm_gicv3_common.h
+>> +++ b/include/hw/intc/arm_gicv3_common.h
+>> @@ -45,9 +45,6 @@
+>>   #define GICV3_REDIST_SIZE 0x20000
+>>   #define GICV4_REDIST_SIZE 0x40000
+>> -/* Number of SGI target-list bits */
+>> -#define GICV3_TARGETLIST_BITS 16
+>> -
+>>   /* Maximum number of list registers (architectural limit) */
+>>   #define GICV3_LR_MAX 16
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index 0080577e1a9..2a2a0bd9154 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -1760,23 +1760,7 @@ void virt_machine_done(Notifier *notifier, void 
+>> *data)
+>>   static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
+>>   {
+>>       uint8_t clustersz = ARM_DEFAULT_CPUS_PER_CLUSTER;
+>> -    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+>> -    if (!vmc->disallow_affinity_adjustment) {
+> 
+> I think this change is wrong - disallow_affinity_adjustment is false for 
+> newer machines, so you removed code here that is still in use on newer 
+> machines?
 
---=-ILzlOuB7h/DKhN5hRz2+
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Oops :| Thanks, I've be a bit overzealous here...
 
-On Wed, 2025-01-15 at 20:17 +0100, Phil Dennis-Jordan wrote:
->=20
-> BQL_LOCK_GUARD expands to a call to bql_auto_lock(), which in turn
-> defends against recursive locking by checking bql_locked().=C2=A0
->=20
-> https://gitlab.com/qemu-project/qemu/-/blob/master/include/qemu/main-loop=
-.h#L377
->=20
-> I think that should make it safe?
-
-Looks like it. I did this to test:
-
---- a/hw/i386/kvm/xen_evtchn.c
-+++ b/hw/i386/kvm/xen_evtchn.c
-@@ -451,6 +451,10 @@ void xen_evtchn_set_callback_level(int level)
-         if (level && !s->extern_gsi_level) {
-             kvm_xen_set_callback_asserted();
-         }
-+        if (level) {
-+            printf("Exiting, BQL held\n");
-+            exit(77);
-+        }
-     }
- }
-=20
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -851,6 +851,7 @@ void qemu_remove_exit_notifier(Notifier *notify)
- static void qemu_run_exit_notifiers(void)
- {
-     BQL_LOCK_GUARD();
-+    printf("%s has BQL\n", __func__);
-     notifier_list_notify(&exit_notifiers, NULL);
- }
-=20
-
-So the first time a Xen guest's callback IRQ is asserted, it exited
-with the BQL held, and qemu_run_exit_notifiers() didn't get stuck.
-
-[    0.521568] ACPI: \_SB_.GSIF: Enabled at IRQ 21
-Exiting, BQL held
-qemu_run_exit_notifiers has BQL
-
-
-The actual cleanup of the XenDevice did then deadlock on the Xen evtchn
-port_lock, which had *also* been held when my hack exited in the evtchn
-code. But that one is expected.
-
-#0  0x00007fc5b2a7b0c0 in __lll_lock_wait () at /lib64/libc.so.6
-#1  0x00007fc5b2a81d81 in pthread_mutex_lock@@GLIBC_2.2.5 ()
-    at /lib64/libc.so.6
-#2  0x0000558286c07a63 in qemu_mutex_lock_impl
-    (mutex=3D0x558294179998, file=3D0x558286f9b905 "../hw/i386/kvm/xen_evtc=
-hn.c", line=3D2147) at ../util/qemu-thread-posix.c:95
-#3  0x00005582868d774f in xen_be_evtchn_unbind (xc=3D0x5582939b3810, port=
-=3D2)
-    at ../hw/i386/kvm/xen_evtchn.c:2147
-#4  0x000055828679e0a9 in qemu_xen_evtchn_unbind
-    (xc=3D<optimized out>, port=3D<optimized out>)
-    at /home/dwmw2/git/qemu/include/hw/xen/xen_backend_ops.h:91
-#5  xen_device_unbind_event_channel
-    (xendev=3D<optimized out>, channel=3D0x5582939b4cb0, errp=3D0x0)
-    at ../hw/xen/xen-bus.c:961
-#6  0x00005582865f64b9 in xen_console_disconnect
-    (xendev=3Dxendev@entry=3D0x5582942df4a0, errp=3Derrp@entry=3D0x0)
-    at ../hw/char/xen_console.c:298
-#7  0x00005582865f6673 in xen_console_unrealize (xendev=3D0x5582942df4a0)
-    at ../hw/char/xen_console.c:411
-#8  0x000055828679e201 in xen_device_unrealize (dev=3D<optimized out>)
-    at ../hw/xen/xen-bus.c:988
-#9  0x0000558286c0da5f in notifier_list_notify (list=3D<optimized out>, dat=
-a=3D0x0)
-    at ../util/notify.c:39
-#10 0x00007fc5b2a2a461 in __run_exit_handlers () at /lib64/libc.so.6
-#11 0x00007fc5b2a2a52e in exit () at /lib64/libc.so.6
-#12 0x00005582868d86dd in xen_evtchn_set_callback_level (level=3D1)
-    at ../hw/i386/kvm/xen_evtchn.c:456
-#13 0x00005582868d7c74 in inject_callback
-    (s=3D0x558294179650, vcpu=3D<optimized out>) at ../hw/i386/kvm/xen_evtc=
-hn.c:548
-#14 do_set_port_compat
-    (s=3D<optimized out>, port=3D<optimized out>, shinfo=3D<optimized out>,=
- vcpu_info=3D<optimized out>) at ../hw/i386/kvm/xen_evtchn.c:921
-#15 set_port_pending (s=3Ds@entry=3D0x558294179650, port=3D<optimized out>)
-    at ../hw/i386/kvm/xen_evtchn.c:963
-
-
---=-ILzlOuB7h/DKhN5hRz2+
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDExNjA4MzQy
-NlowLwYJKoZIhvcNAQkEMSIEIK1UHg0WwImXjvElhCmcE6zqFAOl7azyZR0/sdpysb+OMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAQyP0OqMlMj0C
-r5/rah2WcqFfm3pGJQu5zx+MHuPwxvw5sct8xGBjhdwBX31uc96gr3MBLST7xhDyfhKi0V8tQDyN
-NlqkoZTFneWh9b7cAyhvfvPdX1TLMKC5awGGsYO3yeZbRM2mB7gScHKzau0iSadrUECQke5f/0R4
-qJYOkLtasrIY9nB3j6209ALVse2KsO0QvzUXmc9Gg8+1CL0eUK32H1oJSGzs5DNw43o31tekRlAy
-G2Rv+uWZrArLAD7K6Lq2mDdUi+6oyMXhxo3/hux42BRDSfoxkVAhHr98ykur1Y07L5XZSXz4dZx6
-cYQjbxl19DSjcXoKwJBmKD8NvZkPG8jCrtOWLZFBpL74AxW1iL98MGgd0zrd7jpcGubW9x2GX46+
-oAAZNKtkrjQkDQSfPGmz23fW5KanJCqKJO1DxHfN+TCkf0frscOMoO9UHo+GVaP3WjkZQLvmy38G
-JYwHeJiOeWgTylMKlYtGUwjbXSyxs3w/khKA38pbxE1foy1VURGCb4B2zO2EOwdoDT4tKvnmL+Ik
-Io2riYEBV1rUqRjM9DvHme3Eq19mI1Por7DKQWZQ4ZJNJW8WGffN/5D+dy5yCXpNrIqXbAIHcF3n
-bF66OjvbtEwzw3ZHcFMsa7pZy0sWYMQ5C8uq4kzNZJMDRTqDI8XWq8KI1tVf2CIAAAAAAAA=
-
-
---=-ILzlOuB7h/DKhN5hRz2+--
 
