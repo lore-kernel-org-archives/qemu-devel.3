@@ -4,146 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F2AC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 19:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBB1C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 20:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYVp4-0004Qf-2W; Thu, 16 Jan 2025 14:46:37 -0500
+	id 1tYW50-0007on-6c; Thu, 16 Jan 2025 15:03:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYVoT-0004HQ-N0
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:45:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYVoS-00050Y-4o
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:45:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737056754;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BSN58nTM7k8NbIsefdBLNqOj/I4J+YbnYP85r1qFaMs=;
- b=UUkeE+1RSfRT9inTN/2FHvjqFcBWhy1XU68k3Qf65G+1squxwJIhiAuTKpvf8GdnrLv3IZ
- J3Zm0aksbm0bnjALgqxO0FN1mTK58gcBTCB43V8XAU4kWCa9toqTS+8OtzdDg+lZhoXPfB
- uonTcHBl7/RqeDqNq9wG8emFBYjfvhs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-22-YRSGeKL3NvidZ_Ursfb4FA-1; Thu, 16 Jan 2025 14:45:52 -0500
-X-MC-Unique: YRSGeKL3NvidZ_Ursfb4FA-1
-X-Mimecast-MFC-AGG-ID: YRSGeKL3NvidZ_Ursfb4FA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38bf4913659so57479f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 11:45:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737056751; x=1737661551;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BSN58nTM7k8NbIsefdBLNqOj/I4J+YbnYP85r1qFaMs=;
- b=i9+aNqRpo+ZnaNts9t7BWkuBR4kHU/TYoOsrO6yBgOs476bpQQvStKFZF8aJTMNaGr
- +alv6nv9InmQfJ+WraJ3vS0grnQLbQJ7Cae41RKDslySdmeNkNw03mcqtAGK4/K6A2nX
- ORsrYjQ+UYqGg9ATG4YjG3SRvFL7T90NBpdzouZ9xHB6244YJ4kr2zjZ1v1p32YQUmKL
- U5ht/cOVAliukpDpJrZzMTpPwoI4/1zVEGHuPFHpPmaqJUG0VMQ5HRqqz67w68NQaIeq
- 2I61u3XfZtW9AtjoAC/BnHZHoAE/9rNr5e/Pin/UMUgj9NpVN/FIu6MFEWI4tpEkXNvi
- Z6/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgYWEFl3kVM2dNOQfpHJoSmotXvOzDNMaCH62BKBKpPc2JyGablmU3457hhFU/B+UYFtrGMRP2IM5U@nongnu.org
-X-Gm-Message-State: AOJu0YwyMZqXLqy/NeJeNOrnJCLEyI4PRHbFc+WHzRih1KV5YtjCIHr9
- szznHWGq0SFf8kcPEzo7KWb3kFqNBs00QX3x9Wog9y6GTVeNAPvkAbFtim+/Pc57DDHJWlTkgZn
- ggfhq55ygJjMaeYKBhZ+baeNW61aiFpm7xqx/V8kbJIWMMnM0p7qy
-X-Gm-Gg: ASbGncuDtWLgo/+9z0QnLpUsSX1ae9y1g1Uc6hq/HYnAXLlddmKScex7q9vwILzbn3u
- hv7TPOgpSTTm4pFI80IfRyNGEgnkyhYIB06YMOD67A49K/JJFWLmSLYYPhbGwunxoSAD9QXWAbu
- 1jxYceAA2CkuWOiQwZfji0oJtzMH2LIzZnBNxjoKLtpYssRX+CutHO6utEWC029f3LmER+hXmmu
- GJEoTBgneetld620VT3ZDT5+QbdajyMUHNS7LHyntdweEebzXajbrTOjwC10jSEGUt0mi2zWp9s
- V2++j2ERo681
-X-Received: by 2002:adf:c08c:0:b0:38a:88ac:f115 with SMTP id
- ffacd0b85a97d-38a88acf14fmr23737816f8f.34.1737056750988; 
- Thu, 16 Jan 2025 11:45:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFMUzRQRWcbiszbMkCJ2hgltP6bzIH3bVBJaJ64cGU6G1CH43JfrbRFPlvR527d07I8yq/ZNw==
-X-Received: by 2002:adf:c08c:0:b0:38a:88ac:f115 with SMTP id
- ffacd0b85a97d-38a88acf14fmr23737804f8f.34.1737056750666; 
- Thu, 16 Jan 2025 11:45:50 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
- [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43890462195sm8677475e9.30.2025.01.16.11.45.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 11:45:50 -0800 (PST)
-Message-ID: <84066ff4-a76a-4104-b7fc-5f2e37658f05@redhat.com>
-Date: Thu, 16 Jan 2025 20:45:48 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYW4x-0007oL-6r
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 15:02:59 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tYW4v-00075o-G2
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 15:02:58 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6EF7621182;
+ Thu, 16 Jan 2025 20:02:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737057773; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yHMZqfH0squsviWtBQBf0W4bd9qcaUEbbyz4djp73IE=;
+ b=Gnh5YATwcLYhR1rQSLbRDb+slwS6DepW9ho2xd58hNXLBCcirWjRnAuKnWfU1c21mceESG
+ O4Xtho30T3Gp1DGWtz80lRBBhJP0uNzan95U0Xg05z556U5F0olwbXbLZ+1WzQa7PzNoVw
+ ruV9xjR8b2ziOseHAqiDcU4mSAoDQ7g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737057773;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yHMZqfH0squsviWtBQBf0W4bd9qcaUEbbyz4djp73IE=;
+ b=9/Si494dhsxKzIQsTw/w2fF/EJx9vhhng9pTwKR4oeExyjjgcDF9ViF7nKNwRu0zj7VDmr
+ 8xUIrMQXPKNzJ+CA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1737057772; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yHMZqfH0squsviWtBQBf0W4bd9qcaUEbbyz4djp73IE=;
+ b=Pgdd85+jEWKotTs+zS/05umzjejh49GgL7D29sgQ+biBs8j+lWySsH2SnTjYNNjd4QWSFo
+ qlEu0onb4OzOHldrJj82rCNBXe75+YKbw6K7vg7umOXGsBcxmc9d/cooUgcTNZquDfCRtU
+ +EBa+PgyaOjkXDYDUXH2Gu7/WOuwBwg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1737057772;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yHMZqfH0squsviWtBQBf0W4bd9qcaUEbbyz4djp73IE=;
+ b=f3Sy9HYw6mIjYqG8Y6TB+bLCnwiW9bWdBo8mizNBGZI7GQMmR+NSdYf3zsCxjnLQw0zX1y
+ yn+jPVlrdgRhXIBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D066B13332;
+ Thu, 16 Jan 2025 20:02:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +joaI+tliWdTegAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 16 Jan 2025 20:02:51 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V7 23/24] migration-test: cpr-transfer
+In-Reply-To: <fe25b4b6-fd39-4c2a-a104-343b59b405b6@oracle.com>
+References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
+ <1736967650-129648-24-git-send-email-steven.sistare@oracle.com>
+ <8734hifujq.fsf@suse.de> <fe25b4b6-fd39-4c2a-a104-343b59b405b6@oracle.com>
+Date: Thu, 16 Jan 2025 17:02:49 -0300
+Message-ID: <87zfjqedcm.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v2 12/13] hw/arm/virt: Remove deprecated
- virt-2.12 machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250116145944.38028-1-philmd@linaro.org>
- <20250116145944.38028-13-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250116145944.38028-13-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,17 +120,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/01/2025 15.59, Philippe Mathieu-Daudé wrote:
-> This machine has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") it can now be removed.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/arm/virt.c | 11 -----------
->   1 file changed, 11 deletions(-)
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> On 1/16/2025 2:06 PM, Fabiano Rosas wrote:
+>> Steve Sistare <steven.sistare@oracle.com> writes:
+>> 
+> [...]
+>>> +    /*
+>>> +     * The cpr channel must be included in outgoing channels, but not in
+>>> +     * migrate-incoming channels.
+>>> +     */
+>>>       if (args->connect_channels) {
+>>> +        in_channels = qobject_from_json(args->connect_channels, &error_abort);
+>>>           out_channels = qobject_from_json(args->connect_channels, &error_abort);
+>>> +
+>>> +        if (args->cpr_channel) {
+>>> +            QList *channels_list = qobject_to(QList, out_channels);
+>>> +            QObject *obj = migrate_str_to_channel(args->cpr_channel);
+>>> +
+>>> +            qlist_append(channels_list, obj);
+>>> +        }
+>>>       }
+>>>   
+>>>       if (args->result == MIG_TEST_QMP_ERROR) {
+>>> @@ -735,6 +751,9 @@ void test_precopy_common(MigrateCommon *args)
+>>>       if (args->start.defer_target_connect) {
+>>>           qtest_connect(to);
+>>>           qtest_qmp_handshake(to);
+>>> +        if (!strcmp(args->listen_uri, "defer")) {
+>>> +            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
+>>> +        }
+>> 
+>> Paths that don't call migrate_incoming_qmp() never free
+>> in_channels. We'll need something like this, let me know if I can squash
+>> it in or you want to do it differently:
+>> 
+>> -- >8 --
+>>  From 62d60c39b3e5d38cac20241e63b9d023bd296d2f Mon Sep 17 00:00:00 2001
+>> From: Fabiano Rosas <farosas@suse.de>
+>> Date: Thu, 16 Jan 2025 15:40:22 -0300
+>> Subject: [PATCH] fixup! migration-test: cpr-transfer
+>> 
+>> ---
+>>   tests/qtest/migration/framework.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>> 
+>> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+>> index 699bedae69..1d5918d922 100644
+>> --- a/tests/qtest/migration/framework.c
+>> +++ b/tests/qtest/migration/framework.c
+>> @@ -753,9 +753,14 @@ void test_precopy_common(MigrateCommon *args)
+>>           qtest_qmp_handshake(to);
+>>           if (!strcmp(args->listen_uri, "defer")) {
+>>               migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
+>> +            in_channels = NULL;
+>>           }
+>>       }
+>>   
+>> +    if (in_channels) {
+>> +        qobject_unref(in_channels);
+>> +    }
+>> +
+>>       if (args->result != MIG_TEST_SUCCEED) {
+>>           bool allow_active = args->result == MIG_TEST_FAIL;
+>>           wait_for_migration_fail(from, allow_active);
+>
+> Thank-you, though it would be more direct to avoid creating in_channels when
+> not needed:
+>
+>      if (args->connect_channels) {
+>          if (args->start.defer_target_connect) {
+>              in_channels = qobject_from_json(args->connect_channels,
+>                                              &error_abort);
+>          }
+>          out_channels = qobject_from_json(args->connect_channels, &error_abort);
 
+That's better, but still needs one unref for the listen_uri != defer path.
+
+>
+> - Steve
 
