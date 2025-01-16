@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B11C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE50C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSVO-0007Xi-J8; Thu, 16 Jan 2025 11:14:02 -0500
+	id 1tYSVJ-00079z-MM; Thu, 16 Jan 2025 11:13:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSTs-0003lj-BC
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:12:41 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1tYSTo-0003jd-OG
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:12:31 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSTi-0004Wd-UD
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:12:27 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso7238145e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:12:18 -0800 (PST)
+ id 1tYSTh-0004Ue-1L
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:12:22 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43621d27adeso7365125e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:12:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737043937; x=1737648737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737043935; x=1737648735; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tO4+dhgDNIyv7ebOS6QWgeVxieJfX0lz0H9vGOgOWgE=;
- b=SqhRb8NauczcF3YsQlrsb/JIHNW+TGf5xtMhG/1pqnqWLB7AJLobffOVceTyQKdruT
- xcUuZpic93TyFawRRquFvbPLVyA9gJ7vSYxHdwx/eOT1e2b9A/71+I+OyI879n0IihZe
- tYJ5H86YwaP42STFg70FCFRAECsAtVG7CjwajjWY44/w92MSrnTn30leGSmTxNCAtmr3
- FGXrSh90rb0sJMDkRU/BVmjy1WPx7N/kaZ9yB0vc9KoMYbi8RqwFiMOlOIUMuhR7momm
- isecAGaNbd5IiUBMhs2mdEFcBS7mopGe4QrIdllSwYKz8rXJcaI/BBxn5SyxQcBfOafc
- +Y1g==
+ bh=WLe5w9j4DHWXPaIRe+z3KvHnXl+5bNcDKy/lW4VDWAc=;
+ b=b8AgYZ7v4Ci5SiEAI1jmHvCkVJkCFl3OIi1EMoENcN/OgUvOoOu0oYOic9VipuR3aA
+ 7+raSBpQbI+k2xNQyCHeB5H6OwGV5NGDy+/MwkQwf7CjKqOPTboXh7oNd0N1/xHXTTtC
+ 4bneX0fUk4un/hp1JSJTG3b2jUvOG82iaeSfPP7+l8im1AUfyyKuJ6v2hcPSxeKPQcRJ
+ OahPh0JShLO/9wUbwB03Lzy4R6fU+2D7ddMjhp6RtQlBqiLx9l86sCrGVX/t+JUsHgHA
+ 0ERnfQb3oBetbpiCO5Z0oMXgGmBMSQIuU7v5Oaq5KxAdpgTaU9lOKd7Uv7uBsANZhv94
+ jbDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737043937; x=1737648737;
+ d=1e100.net; s=20230601; t=1737043935; x=1737648735;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tO4+dhgDNIyv7ebOS6QWgeVxieJfX0lz0H9vGOgOWgE=;
- b=uuncro9v6wnidVjyI8GLz1pmGwG2Zr9ElWgM4gSYfz9FvmU9w80jGVEAKkVgz8irm7
- 6BSE4mGFYIXOlsFvbzvaBtWob5APv0plc/u0Jyabu4D4WUZT/90XipYUf1kB8ZBOO2Bz
- sXHPcMUfPtrR6zEAAfAIzGECX7KfEFkiRA1hkHkAS9luYBHLbNL7pqMaf5nh2JP9mPQj
- pxZ1CASXYy2emU7NR9eAobW9KCS5xQTgMELTcC/GNYryxuql81Pz9WsV2rBAQqVvupee
- R1i+FTgLX1/oaLiFv48U8+lqbulA7hvaaC+hHsST6khmU9d+Qee55/8TLdZjFnZdIDSn
- TQqg==
-X-Gm-Message-State: AOJu0YwhM1csHVTwu5jg/hBj0PgCHvMC0vOHTJiaTq+8KOF/ekIgOlos
- dMGEOwEMF+TQOuSO5HXQMWz6qXM5chGBq04OYf9G+DAHZln5xRBzGiNPPZLkNn0=
-X-Gm-Gg: ASbGncueidBvprTgRXgX3cYVYVwnqhgI9Bt3orY5WgN/RocfeXEC2mdm0czvibrCNEI
- M/PE5kasPv0mCh0hjnH+04wWUeX1tES0A7+soDi3keTISdGwaJz7uPzb1YocWxBLJ6BkzEUtfd0
- AgRWETuLAcSnxe0KihKqHmTryaCnbTDVCqLDEractPTPf4BFOY1kW50D6Z+gfiJfDJuZu9twq7x
- 6E8gyCL3SySJ2hccPyYUjjQxgJcpg4JMyUOonkkKIEO31mheQ2h/WE=
-X-Google-Smtp-Source: AGHT+IEKy+YKPzZ94MmVyA5tBCXIkVkFNLgN009HkLdeuMT34zI8mD0OYs3Jwdri5RtYL57VqnCPCA==
-X-Received: by 2002:a05:600c:1384:b0:436:1c04:aa8e with SMTP id
- 5b1f17b1804b1-436e26bdac1mr366312215e9.16.1737043937257; 
- Thu, 16 Jan 2025 08:12:17 -0800 (PST)
+ bh=WLe5w9j4DHWXPaIRe+z3KvHnXl+5bNcDKy/lW4VDWAc=;
+ b=G7W+7lOTyTYFMPBmS7k9kSUVWS+N4T5Lw6CME5Q9XbFQEACMdwSORc2XvR/3JZ4VDK
+ 7a8lva2zeXA/AxNNWsehWLVoZb5UuroEFp3O6vKFgDZvRhVH7LUlbPNI8Dabs87ZpvBd
+ INQvns6B0rPVaDnJGCIVFXmE+pYTWdoQ4Ysa9HxEbjCU+V54KLCPdtHrkT21vZAyAm7k
+ 6SAko0HcQ3/rVD7rJIWdKqT2W9jmu5iPRMbKaHsIBgFUtbiF4qP+CD97DwV9Pbel4us9
+ ndu0ePmNe2EbMnPHfLVXuIf0zjGYmvXFeRv/iPxsM8aYWf843EYpBxT1Je5DZRbvnnsj
+ ZLcQ==
+X-Gm-Message-State: AOJu0YySfY78MYmFq/D4gtntMXb2dcZZ7h+uzsX95ocs7bpjjGQTAbVr
+ EJmQZabu3BgW2AJnKireQ/I0fkLkHMtBBeg0OvbRCDiKSGLj7xLKXjvHRN6v8RQ=
+X-Gm-Gg: ASbGncuUig/CPYCJLXR6E9cYm7a/bDd4m1NZW1BenXBAW97McLfJJaxwHBYyLSMmXRO
+ N1Z7TJspoaEZKSvGM8DysH5muUDsqn0yox3hJmmoeNbG40HchYa84bsiTCE5xrfzen37E2u2UXQ
+ j0XSNyHASYMExRYUW/62HU6hRjKjGNHfS0NIKA1+dZwlZ1Nrs6kgJTVqHnb0cT2FC0S2wNeJyYm
+ ROwYRFBiEAYbCfyTgf9zezwX9e45olRmlEH3NKgHIqEjctinjX/w30=
+X-Google-Smtp-Source: AGHT+IGW5wYt2DWPIkVBjiq06mGFgkl2qsUn7l82B2h4BRIDMEcksTW2k1cc1Zs0sXRM401iXHBwUA==
+X-Received: by 2002:a05:600c:314b:b0:436:5fc9:30ba with SMTP id
+ 5b1f17b1804b1-436e26ebb6fmr201501935e9.29.1737043934086; 
+ Thu, 16 Jan 2025 08:12:14 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c7499884sm65557275e9.5.2025.01.16.08.12.12
+ 5b1f17b1804b1-437c74c6179sm63871185e9.22.2025.01.16.08.12.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 08:12:15 -0800 (PST)
+ Thu, 16 Jan 2025 08:12:11 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C7FE6608D4;
- Thu, 16 Jan 2025 16:03:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 36F35608DD;
+ Thu, 16 Jan 2025 16:03:09 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -90,25 +90,24 @@ Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 24/37] docs/devel/style: add a section about bitfield,
- and disallow them for packed structures
-Date: Thu, 16 Jan 2025 16:02:53 +0000
-Message-Id: <20250116160306.1709518-25-alex.bennee@linaro.org>
+Subject: [PATCH v3 28/37] tests/qtest: fix some copy and paste errors in kdoc
+Date: Thu, 16 Jan 2025 16:02:57 +0000
+Message-Id: <20250116160306.1709518-29-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
 References: <20250116160306.1709518-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,50 +123,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+A number of copy and paste kdoc comments are referring to the wrong
+definition. Fix those cases.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Stefan Weil <sw@weilnetz.de>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250110203401.178532-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- docs/devel/style.rst | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ tests/qtest/libqos/qgraph.h | 2 +-
+ tests/qtest/libqtest.h      | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-index 2f68b50079..d025933808 100644
---- a/docs/devel/style.rst
-+++ b/docs/devel/style.rst
-@@ -416,6 +416,26 @@ definitions instead of typedefs in headers and function prototypes; this
- avoids problems with duplicated typedefs and reduces the need to include
- headers from other headers.
+diff --git a/tests/qtest/libqos/qgraph.h b/tests/qtest/libqos/qgraph.h
+index 1b5de02e7b..81fbfdd0e2 100644
+--- a/tests/qtest/libqos/qgraph.h
++++ b/tests/qtest/libqos/qgraph.h
+@@ -355,7 +355,7 @@ void qos_object_start_hw(QOSGraphObject *obj);
+ QOSGraphObject *qos_machine_new(QOSGraphNode *node, QTestState *qts);
  
-+Bitfields
-+---------
-+
-+C bitfields can be a cause of non-portability issues, especially under windows
-+where `MSVC has a different way to lay them out than GCC
-+<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_, or where
-+endianness matters.
-+
-+For this reason, we disallow usage of bitfields in packed structures and in any
-+structures which are supposed to exactly match a specific layout in guest
-+memory. Some existing code may use it, and we carefully ensured the layout was
-+the one expected.
-+
-+We also suggest avoiding bitfields even in structures where the exact
-+layout does not matter, unless you can show that they provide a significant
-+usability benefit.
-+
-+We encourage the usage of ``include/hw/registerfields.h`` as a safe replacement
-+for bitfields.
-+
- Reserved namespaces in C and POSIX
- ----------------------------------
+ /**
+- * qos_machine_new(): instantiate a new driver node
++ * qos_driver_new(): instantiate a new driver node
+  * @node: A driver node to be instantiated
+  * @parent: A #QOSGraphObject to be consumed by the new driver node
+  * @alloc: An allocator to be used by the new driver node.
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index f23d80e9e5..fa08c7eca5 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -365,7 +365,7 @@ QDict *qtest_qmp_event_ref(QTestState *s, const char *event);
+ char *qtest_hmp(QTestState *s, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
  
+ /**
+- * qtest_hmpv:
++ * qtest_vhmp:
+  * @s: #QTestState instance to operate on.
+  * @fmt: HMP command to send to QEMU, formats arguments like vsprintf().
+  * @ap: HMP command arguments
+@@ -904,7 +904,7 @@ void qtest_qmp_assert_success(QTestState *qts, const char *fmt, ...)
+ 
+ #ifndef _WIN32
+ /**
+- * qtest_qmp_fd_assert_success_ref:
++ * qtest_qmp_fds_assert_success_ref:
+  * @qts: QTestState instance to operate on
+  * @fds: the file descriptors to send
+  * @nfds: number of @fds to send
+@@ -921,7 +921,7 @@ QDict *qtest_qmp_fds_assert_success_ref(QTestState *qts, int *fds, size_t nfds,
+     G_GNUC_PRINTF(4, 5);
+ 
+ /**
+- * qtest_qmp_fd_assert_success:
++ * qtest_qmp_fds_assert_success:
+  * @qts: QTestState instance to operate on
+  * @fds: the file descriptors to send
+  * @nfds: number of @fds to send
 -- 
 2.39.5
 
