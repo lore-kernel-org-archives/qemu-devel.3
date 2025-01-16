@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9BAC02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722ECC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYMzE-0006Xk-7o; Thu, 16 Jan 2025 05:20:29 -0500
+	id 1tYMzp-0007eQ-Dt; Thu, 16 Jan 2025 05:21:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYMz9-0006Qh-EW
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:20:24 -0500
+ id 1tYMzd-0007Yv-Oi
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:20:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYMz7-0001lB-Rj
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:20:23 -0500
+ id 1tYMzb-0001pC-Mp
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:20:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737022820;
+ s=mimecast20190719; t=1737022850;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V4uqf/Y9pIh5iUCka21Ce8aEEAkQz2Acb5ZUbJSvd0U=;
- b=dx8j+uEOUaL1EV9qomaSGfWDHna3E2LL9V0iih+J4/R26jFME2Dj+d8COP7rtvW29o1QgH
- UuJcci09q8XgQFAnpt5I74vaZC2kDZfKCt8kpZ3noVOdl0DBl3T2pi7xfrUNIdKF0XB4k2
- 7q2b5ZFoVNPFsj07Z6NiTc1Srfyr+IU=
+ bh=roPvsVINzCqVB92hXbebgVhdJ4PI4watS9YTk3GkYOw=;
+ b=ZIl0Sgg5D5PVoBE4p0Q55lcWww5UyXJNajr6WQIbtJeUe7uTjvyDlDj5Q3fRf1oYIqQj2C
+ Jg9Jt4ToHr8edWldx2ryDUEDhWNBDydIIpuqY8PYZkRdnyWsdAIXT3OH0ep4OlemT/j6oT
+ Yog1rIwBllgtdM+1nHSTAXMkc6XWc2w=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-Ex6a6K31O_yIwK0zFFEPfQ-1; Thu,
- 16 Jan 2025 05:20:17 -0500
-X-MC-Unique: Ex6a6K31O_yIwK0zFFEPfQ-1
-X-Mimecast-MFC-AGG-ID: Ex6a6K31O_yIwK0zFFEPfQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-pMaJn32ZMPSuNosDvTDy1g-1; Thu,
+ 16 Jan 2025 05:20:47 -0500
+X-MC-Unique: pMaJn32ZMPSuNosDvTDy1g-1
+X-Mimecast-MFC-AGG-ID: pMaJn32ZMPSuNosDvTDy1g
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A74611955F26; Thu, 16 Jan 2025 10:20:15 +0000 (UTC)
+ id EF2AE1956083; Thu, 16 Jan 2025 10:20:45 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.111])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47774195608A; Thu, 16 Jan 2025 10:20:08 +0000 (UTC)
-Date: Thu, 16 Jan 2025 10:20:05 +0000
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F152119560BF; Thu, 16 Jan 2025 10:20:38 +0000 (UTC)
+Date: Thu, 16 Jan 2025 10:20:35 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
@@ -61,18 +61,17 @@ Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 20/21] hw/net/vmxnet3: Remove
- VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
-Message-ID: <Z4jdVU4Wwk4kaDMr@redhat.com>
+Subject: Re: [PATCH 21/21] hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
+Message-ID: <Z4jdcyMCOO3jSodm@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-21-philmd@linaro.org>
+ <20250115232247.30364-22-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250115232247.30364-21-philmd@linaro.org>
+In-Reply-To: <20250115232247.30364-22-philmd@linaro.org>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -99,16 +98,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 12:22:46AM +0100, Philippe Mathieu-Daudé wrote:
-> VMXNET3_COMPAT_FLAG_DISABLE_PCIE was only used by the
-> hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-> We removed all machines using that array, lets remove all the
-> code around VMXNET3_COMPAT_FLAG_DISABLE_PCIE.
+On Thu, Jan 16, 2025 at 12:22:47AM +0100, Philippe Mathieu-Daudé wrote:
+> Simplify merging vmxnet3_realize() within vmxnet3_instance_init(),
+> removing the need for device_class_set_parent_realize().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/net/vmxnet3.c | 11 +----------
->  1 file changed, 1 insertion(+), 10 deletions(-)
+>  hw/net/vmxnet3.c | 15 +--------------
+>  1 file changed, 1 insertion(+), 14 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
