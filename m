@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D0D0C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFCEC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLAZ-0005Dv-Re; Thu, 16 Jan 2025 03:24:03 -0500
+	id 1tYLD4-00061h-5a; Thu, 16 Jan 2025 03:26:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYLAY-0005DT-Cp
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:24:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYLD2-00061L-Pb
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:26:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYLAT-0003IR-T8
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:24:00 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYLD1-0003kR-9e
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:26:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737015835;
+ s=mimecast20190719; t=1737015994;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Y7Stp3bDea/xV52G6ssm3Cqf2qTdmZUCLjGzQ3rSlvc=;
- b=VW7QPN9wDFOlSQ5ML6eGY23IzsdouICFCR4cyHFqbalUYO7KgYY1Q/al8JCPdlZ7xOZsPs
- E/UyDgqqyDbs7yxHNpQ9ipNqLZ6MrxCzeLYlafj/PFcau8HenJzzIGqnfShcYW0ZHeyFPR
- KDWroe2xOh1ZoPnGRMh2qEZTQh32Y0o=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RiX3ieGT8Z6aY6qDtujUEblaT7wAJ87wJzymzblJqko=;
+ b=eIKxcOus+9AwMXYVdzSqy7WR1p4drpc0D0s4jpEdyo1f+Ya8zLl8NnvMivh/4mH2s9j8WV
+ PtRn33yEmih4j9Nh6sQjbXj3nzlrN5GeZ1NWFM+5+N7tBcCcSHm2yP90kDuum/LMg8LlUW
+ KBR+OoTXTDADwzzKiCpsfxy2KsqAfVU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-T6tqazjbO7OscSmkjkdXtw-1; Thu, 16 Jan 2025 03:23:53 -0500
-X-MC-Unique: T6tqazjbO7OscSmkjkdXtw-1
-X-Mimecast-MFC-AGG-ID: T6tqazjbO7OscSmkjkdXtw
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so285278f8f.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:23:53 -0800 (PST)
+ us-mta-62-NYjM0YmGPnSzVGOTHR_nWQ-1; Thu, 16 Jan 2025 03:26:31 -0500
+X-MC-Unique: NYjM0YmGPnSzVGOTHR_nWQ-1
+X-Mimecast-MFC-AGG-ID: NYjM0YmGPnSzVGOTHR_nWQ
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3862be3bfc9so384052f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:26:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737015832; x=1737620632;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y7Stp3bDea/xV52G6ssm3Cqf2qTdmZUCLjGzQ3rSlvc=;
- b=UvB6L/5EzG16bxjfgPfW98sZPDr9j9SLObZ0R5i4cyqHVn0nwPsU5wT/VTpSY9ZTqJ
- Y5mOdykbKxWCSkXEAz077vvn0W1/1oyBvXzPD7BJfnCcHeEUzAQ/xODUKEdNpS0EI+iM
- lgcwWC3KTfw06W99wJwwTOngHxlp6jh22MT6+bX8Ts9poXK3FPK35V9c0Emdyiz1v7wO
- KfAQdAfQuutyBVw3j64GPGscgtA0hpWYkfm/NsrGRZWMhBEOGHJJDnpL1y7ZLUmpOuj5
- Iwi4YLXfGbPb/q7rnU0gcqltkflrIRfISslQKUKxM67Jx3bayhuGKv1gSdOp9hbI9q33
- 8vrg==
+ d=1e100.net; s=20230601; t=1737015990; x=1737620790;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RiX3ieGT8Z6aY6qDtujUEblaT7wAJ87wJzymzblJqko=;
+ b=hXGuAC50lzGy00XXHzefPeW+f4FpO0hkTGfqmTXBboBcVU+am777Mh6XlhcpvQPQ6D
+ lofxXtXY1FA3RixLEZBs2QLZCG/tpP3IXIzcATzOVzVS+HmN4rBszoSKUZm46OTBmLp5
+ Q3DeeQYx1VpGM2DyleCg+Cdmb8KJqjPWFGmmlAC+HnpskXgghG5i/lxuN0/5v8kFBJyb
+ vtVbd6MUMPyydhSzNemHR/jjVQ5KyTxYYAZFwL0RIGTURxQ0MaexkstiwYdyVAV/8igV
+ 7TdFPuxavYygVQPTNQUdDDfVGePR7bI73Fi3TJ9wiBaBbNZyztyqP/YpDzqTlxfikx0w
+ /x2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZ2xI7kuZMWWd0MdMtOkBUM+oyZa4pAn2ygTWxRubeeVn6wlk+FeIQBN3MhBMXAJHSoowRN+5yDJ/Q@nongnu.org
-X-Gm-Message-State: AOJu0YwOXNaUpYZZDp7E78oLKOkdvt7weFzvOfSSfydEsGexQ4vBzQzB
- xU3zF2QpK5xA8NcLeDnO3/L2O7YaXHbFoQKeizzl9oqHxahw/DdYE+zZlJ3Z8R04FkqN2B643er
- 6ulGaW7clR4J65XisZKBkAQDGty9Em5IbX2Czu1MwRnlPkeea/TsL
-X-Gm-Gg: ASbGncs62ACbkOdb4ls+rfFr7kumISRY/77BwlAS+Vsx0TBSDmF2++y4MuHHKi1F572
- qff9zitR5g7VfLt0uBTcQlyZuARRKU5yu72d+2aVdCC+Fy/CwJh6jXiBV0eL2ivoTllshTC/sn3
- pR5XDuVLJYOO/hGQo8Zrrl/J95xdsIL393/oohutW9ottfO7XPdmt7BXVqeAELBVwC+eQs/faJN
- ImGuW21HJkz5bAdXGBuRweCUvmPCydaVfc5CHI+3+IE7NxbzYXw/k1X6L9lJkt6/DMZaG4WXE5z
- Yz/96jwyWWlj
-X-Received: by 2002:a5d:5887:0:b0:38a:673b:3738 with SMTP id
- ffacd0b85a97d-38a87312dd3mr29305282f8f.33.1737015832215; 
- Thu, 16 Jan 2025 00:23:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFNNmomuiFQNkvj5qGaqCIbTJfXPJoUYRU5B0gtcau4d3LEMexnuBemZ9KRPzl/AcJ4sOuEpQ==
-X-Received: by 2002:a5d:5887:0:b0:38a:673b:3738 with SMTP id
- ffacd0b85a97d-38a87312dd3mr29305262f8f.33.1737015831916; 
- Thu, 16 Jan 2025 00:23:51 -0800 (PST)
+ AJvYcCVK/YafCzQrm0rlO+obpxz0cJLH6bmWjC+qMxTthENQOv/O7+5vMBfFQRjC4cOtKG+mXf3x/uCRoYuf@nongnu.org
+X-Gm-Message-State: AOJu0YyBYNRz7qXYEjPG/1HCiL3YVtJ6UMBLRVDi2Tkl3GvcHbjpESFd
+ a6l6Q9vwOO9RzeIgykEdVOBYI6vOYeuQ0xldpND2AMEfFHMNjH/ahkZ7GWreBWcVgpvE3tdLp4R
+ eX2vNrN9wgc7Ql6cozctwtlT+4aOjOzM8908JgLvS1zQxiwoxvfKV
+X-Gm-Gg: ASbGncs3Cj9aBOAJdkiLM7Qawft8xKjVsx/qJebkXJHWV5Lpkt1hFp1lmVuaxvXxsAR
+ W5f9bS8dDpK/TPvHsppSZT4BcmJc/GEtKNtGb3nNZ9mWRs9f/N13SxvXgzgEZWRcZlzHrzZHYxO
+ AP+v1BPRsW6Ls2VKqH3FazamB+m9gTrUA0fvdNq4xa0xCG0mfPpyc8DXzd/I4Qw3akzMFUJmR4F
+ AJPbMBJAGIKV+LDM5d2zfpMA0Q0qhhmeZP9ZAxfJSLdGbV3McTldfIpo0biFymg7e3/x9Vk1cqU
+ dWehDe/1fSub
+X-Received: by 2002:a5d:598d:0:b0:385:f72a:a3b0 with SMTP id
+ ffacd0b85a97d-38a8733a3ecmr27179589f8f.55.1737015990040; 
+ Thu, 16 Jan 2025 00:26:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBedwFrwtjq+vOwQ6Wj6RmFRb2TdJgutb6FUODXNuZefgabGscB0tJiQGHyUiv5zY520oKDQ==
+X-Received: by 2002:a5d:598d:0:b0:385:f72a:a3b0 with SMTP id
+ ffacd0b85a97d-38a8733a3ecmr27179561f8f.55.1737015989651; 
+ Thu, 16 Jan 2025 00:26:29 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
  [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d050sm20153724f8f.15.2025.01.16.00.23.50
+ 5b1f17b1804b1-437c753c617sm50810795e9.37.2025.01.16.00.26.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 00:23:51 -0800 (PST)
-Message-ID: <9907201a-d6e3-40d4-ad10-e07c9964e7ce@redhat.com>
-Date: Thu, 16 Jan 2025 09:23:50 +0100
+ Thu, 16 Jan 2025 00:26:28 -0800 (PST)
+Message-ID: <dfb1aba5-f95b-4fc1-9326-aa9df992870e@redhat.com>
+Date: Thu, 16 Jan 2025 09:26:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/13] hw/arm/virt: Remove
- VirtMachineClass::smbios_old_sys_ver field
+Subject: Re: [PATCH 13/13] hw/arm/virt: Remove
+ VirtMachineClass::no_highmem_ecam field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -86,9 +86,9 @@ Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
  <mst@redhat.com>
 References: <20250115171009.19302-1-philmd@linaro.org>
- <20250115171009.19302-12-philmd@linaro.org>
-Content-Language: en-US
+ <20250115171009.19302-14-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -131,19 +131,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250115171009.19302-12-philmd@linaro.org>
+In-Reply-To: <20250115171009.19302-14-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,15 +160,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/01/2025 18.10, Philippe Mathieu-Daudé wrote:
-> The VirtMachineClass::smbios_old_sys_ver field was
-> only used by virt-2.11 machine, which got removed.
-> Remove it and simplify virt_build_smbios().
+> The VirtMachineClass::no_highmem_ecam field was only
+> used by virt-2.12 machine, which got removed. Remove it
+> and simplify virt_instance_init().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
 >   include/hw/arm/virt.h | 1 -
->   hw/arm/virt.c         | 4 +---
->   2 files changed, 1 insertion(+), 4 deletions(-)
+>   hw/arm/virt.c         | 2 +-
+>   2 files changed, 1 insertion(+), 2 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
