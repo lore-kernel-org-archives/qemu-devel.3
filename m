@@ -4,97 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F85C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 14:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64440C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 14:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYQpr-0000dY-E6; Thu, 16 Jan 2025 09:27:04 -0500
+	id 1tYQwe-0001i8-4s; Thu, 16 Jan 2025 09:34:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tYQpo-0000co-Lo; Thu, 16 Jan 2025 09:27:00 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tYQwb-0001hb-DR
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:34:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tYQpn-0007X6-7t; Thu, 16 Jan 2025 09:27:00 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50G8646p021118;
- Thu, 16 Jan 2025 14:26:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5UyopB
- KL6FUpLOBTregaYabkTM69ktH4YnES0zugdAk=; b=mPFKvLb7fr9HFFG7YVPTuv
- LjWUQAIs3AsAANWce85bcCvdkPefwkOaGmNHtqKgYl8XEcgLbycFdCN14L6ULcFi
- C5M2qDgjt20ioNMXtXiMcyHsayPQSzRjqA/TWgm10kyk5sMVjQojxrvXrKHDZhZX
- WbA4NeC1Rsq1hH4mg84awq7wavTxeegSczZFDQ1i/MwvfliiaIWFwdcFiu84UxvK
- 4s0UAGM8CknTDkBHiS83CMDvIYo9WJ3SQG6KbPtZq3t1wcRoc6DmPlJxX2MM5nxq
- 1ddGmLpTAtu7B/xn3j43+TR93inF0jcGbyRlbGw4AgIcGV1vUxHLhc47Ik2XbXhg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446xa39rsk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jan 2025 14:26:57 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GB8OMl016582;
- Thu, 16 Jan 2025 14:26:57 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4445p1wuh0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jan 2025 14:26:57 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50GEQuZc28902136
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jan 2025 14:26:56 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 51FD758062;
- Thu, 16 Jan 2025 14:26:56 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F1D2E58056;
- Thu, 16 Jan 2025 14:26:55 +0000 (GMT)
-Received: from [9.61.78.171] (unknown [9.61.78.171])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 16 Jan 2025 14:26:55 +0000 (GMT)
-Message-ID: <2c96f4ae-97d7-455a-a236-a8a8e99c1e56@linux.ibm.com>
-Date: Thu, 16 Jan 2025 09:26:55 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tYQwQ-0000w4-F1
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:33:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737038029;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Gbh74LufudOrYSFtXmb3oZllp7Sy8cTi0/+Z40s1Rv4=;
+ b=HFCHPXm/qzzVlrSejhTP4qQPIdPUUqG4ySdTI1gc2iNmdz53JcuoY/f+aDoSW3fwd7XoOu
+ ekgBgVfWMEzLXgvOPnfRJHAIUvjAfuwCMWH7s1PMuBI3x9M/7/gLZYLYkh0V14UWb2JD81
+ JovCLqW9RoE+bK/tFnf1NZ2oYpY1fEQ=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373-oSLrTbaDP222OocCGZltOA-1; Thu, 16 Jan 2025 09:33:45 -0500
+X-MC-Unique: oSLrTbaDP222OocCGZltOA-1
+X-Mimecast-MFC-AGG-ID: oSLrTbaDP222OocCGZltOA
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4678f97242fso26477621cf.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 06:33:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737038024; x=1737642824;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gbh74LufudOrYSFtXmb3oZllp7Sy8cTi0/+Z40s1Rv4=;
+ b=e2NXBxny9K9sVaYWH/T4w8MVkEhK9XIgEFtNCDzFMq8/FPyPMZ6Heat+cXg8OFK5g6
+ u9DoC3eL/JZLoo5ULxQt40ZQ24e2qdf+CQOEvSb20+ihCPuKqbaF5Vd+Iyz9p5yeSHHZ
+ dh2VgNgiG6Vzo4eqw9VduGLpPbhMYxnJYK50pe4GvFZx2ky9SxhXdsGZ+dsBhSRqlFz0
+ vrI92f84rzA+8LZEkG/NAoyWDd3gG3IZv+R5LafTeuSf64H/H7xtYKGmADRjuklTU5eM
+ cfSVELuItdavGGbzw45ZVIK4QrZUMgyf5jRXyoVuGQigWW0njC+UY6Km204X0phiRhQX
+ xpQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3712FN4WoClANR0d+dfTYF3SvUvetk72MAXKEsWfa8nudBcZrqfpBYbhbWN9+FnElFZ0B2DldSZ5s@nongnu.org
+X-Gm-Message-State: AOJu0YzhKbR8U2hQ8r6MtQkXxexT/YEGXGZI/x7wehZN2gsDURKg1WqT
+ Ci/lSiyoKIaBy4DPQS9Ic+1wlJmPrC3E5WEXYYHFCf870vAccQClgegvHI0xRwOWRUectAedPlw
+ i412DO/w1odNJw+SnPGhfnP+ugYXowupb2Z0jf7OX12C/wn1YS3Q3
+X-Gm-Gg: ASbGncvRR59vw69L89ekHWgZP0uOjstp+KEJlaNOh+mgDIYHZEiyn+uxUnxie0WCLM8
+ xFxsu7jexDacKSqzQ7cdqb3HSeG/JJGXHdRIQyn2R2/ZvtK6824xqDyydtwxN94AzYKJJKiZdbC
+ WEnq0FTmC836ymmWj4UBf/sTlUJ1aCCrT+vqgU6HF4s/3rz83mx+ZR9V2ZyEmZNTp0HbJN027sR
+ Ty3EV9jdsUeP/dI2gWizLCuMv5FRRa7vDVEq6Vic0xzHh/pa8vB45kc51zQaD2ypjuopFI19iLd
+ 5gI/2icNobOH1Wjzyw==
+X-Received: by 2002:a05:622a:450:b0:464:af64:a90a with SMTP id
+ d75a77b69052e-46c7102c391mr577421921cf.23.1737038024038; 
+ Thu, 16 Jan 2025 06:33:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGORs0LKnEHIGDoPysfivYnmOrcFeJQV36zQFj7GGNfdQIwFvAJPYs4A4fhqflEaDBWh2c7DA==
+X-Received: by 2002:a05:622a:450:b0:464:af64:a90a with SMTP id
+ d75a77b69052e-46c7102c391mr577421431cf.23.1737038023725; 
+ Thu, 16 Jan 2025 06:33:43 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46e102ec299sm96481cf.6.2025.01.16.06.33.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jan 2025 06:33:43 -0800 (PST)
+Date: Thu, 16 Jan 2025 09:33:40 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
+Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
+Message-ID: <Z4kYxLsIbzq7jWzz@x1n>
+References: <Z4U30j9w1kPnKX9U@x1n>
+ <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
+ <Z4aYpo0VEgaQedKp@x1n>
+ <00a220df-b256-4b70-9974-f4c1fe018201@daynix.com>
+ <Z4e7gFSqdhcmJPYb@x1n>
+ <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com>
+ <Z4fW_rI7Mfrtc1Fg@x1n>
+ <af018f8a-ce00-4ce2-9fe9-b6ba3f97bfa1@daynix.com>
+ <Z4fezdR1ApN8ZLTS@x1n>
+ <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] pc-bios/s390-ccw: Fix problems related to network
- booting
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>
-References: <20250116115826.192047-1-thuth@redhat.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20250116115826.192047-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: L0Cms0K_jCnjOzPegKrHI9J4st2h3TwH
-X-Proofpoint-ORIG-GUID: L0Cms0K_jCnjOzPegKrHI9J4st2h3TwH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_05,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0
- bulkscore=0 clxscore=1015 adultscore=0 mlxlogscore=906 priorityscore=1501
- suspectscore=0 spamscore=0 phishscore=0 impostorscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501160102
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,33 +130,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Thomas,
+On Thu, Jan 16, 2025 at 02:37:38PM +0900, Akihiko Odaki wrote:
+> On 2025/01/16 1:14, Peter Xu wrote:
+> > On Thu, Jan 16, 2025 at 12:52:56AM +0900, Akihiko Odaki wrote:
+> > > Functionally, the ordering of container/subregion finalization matters if
+> > > some device tries to a container during finalization. In such a case,
+> >                        |
+> >                        ^ something is missing here, feel free to complete this.
+> 
+> Oops, I meant: functionally, the ordering of container/subregion
+> finalization matters if some device tries to use a container during
+> finalization.
 
-Looks good to me. I've tested and verified that the problem is fixed.
+This is true, though if we keep the concept of "all the MRs share the same
+lifecycle of the owner" idea, another fix of such is simply moving the
+container access before any detachment of MRs.
 
-Tested-by: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> > 
+> > > removing subregions from the container at random timing can result in an
+> > > unexpected behavior. There is little chance to have such a scenario but we
+> > > should stay the safe side if possible.
+> > 
+> > It sounds like a future feature, and I'm not sure we'll get there, so I
+> > don't worry that much.  Keeping refcount core idea simple is still very
+> > attractive to me.  I still prefer we have complete MR refcounting iff when
+> > necessary.  It's also possible it'll never happen to QEMU.
+> > 
+> 
+> It's not just about the future but also about compatibility with the current
+> device implementations. I will not be surprised even if the random ordering
+> of subregion finalization breaks one of dozens of devices we already have.
+> We should pay attention the details as we are touching the core
+> infrastructure.
 
-On 1/16/25 6:58 AM, Thomas Huth wrote:
-> The boot can currently fail after the s390-ccw bios used a network
-> device since we do not properly shut down the device afterwards, so
-> that incoming network packets can corrupt the memory. We have to make
-> sure to put the virtio-net device into a sane state again afterwards.
->
-> The third patch is unrelated, but I spotted this rather cosmetic
-> problem while working on the code in netmain.c, so I included it here,
-> too.
->
-> Thomas Huth (3):
->    pc-bios/s390-ccw/virtio: Add a function to reset a virtio device
->    pc-bios/s390-ccw: Fix boot problem with virtio-net devices
->    pc-bios/s390-ccw/netmain: Fix error messages with regards to the TFTP
->      server
->
->   pc-bios/s390-ccw/virtio.h     |  2 ++
->   pc-bios/s390-ccw/netmain.c    | 52 +++++++++++++++++++++--------------
->   pc-bios/s390-ccw/virtio-net.c |  5 ++++
->   pc-bios/s390-ccw/virtio.c     |  7 ++++-
->   4 files changed, 44 insertions(+), 22 deletions(-)
->
+Yes, if we can find any such example that we must follow the order of MR
+destruction, I think that could justify your approach will be required but
+not optional.  It's just that per my understanding there should be none,
+and even if there're very few outliers, it can still be trivially fixed as
+mentioned above.
+
+My gut feeling is when we need serious MR refcounting (I'd expect due to
+the current heavy code base it might be easier to start a new project if
+that's required.. that's why I was thinking maybe it will not happen.. but
+if it will..), we'll do more than your change, and that also means
+memory_region_ref() must start to refcount MRs, because a serious MR
+separate refcounting should mean MR can go on the fly before the owner.
+
+-- 
+Peter Xu
 
 
