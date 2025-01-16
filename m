@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040F1C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C71C02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYRdO-0000jD-Na; Thu, 16 Jan 2025 10:18:14 -0500
+	id 1tYRhB-0002Qn-KU; Thu, 16 Jan 2025 10:22:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYRcq-0000Vm-KY
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:17:42 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tYRh9-0002QU-Ak
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:22:07 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYRcm-0004wt-K9
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:17:39 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-216395e151bso16278565ad.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:17:36 -0800 (PST)
+ id 1tYRh7-00060e-Ba
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:22:06 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-21654fdd5daso18999245ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:22:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737040655; x=1737645455; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737040924; x=1737645724; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/wkcKaFRXPhb9u/VjkQNV6F39YFmaAYeWGSbaUleCvA=;
- b=crCnsZPedHB/2yGB3L72Y7Kw5R2ZqY27gG9Punh3PDc22mOnaEwh+nApunDUQL4n81
- UL/Rgh94Pgt3pJQeRCH0kw/Icid6CB4hQ+AM1wgr57sNEol6fa4DU0S21D9ZmSZ7xBl0
- V1a1tGXbDvn4OMomNecGcUP940BoP/hlnYKm0tJm2ASaWMl0Q05OTB++VpggZTGlCVlE
- 7txQtgsVb2FUVU21vE+Wv1JY1spYpdgDMNAZ74E68+2EHw8ctQry/1SNp+8Msd17uD7J
- eZvHXUe/5lF1OqSzKhXApH+KDxucpeB5/4gqPqrzx6pl1MHODOw8Y7wMzbwCWIwCtrVB
- EVbg==
+ bh=249OkPv8wccfOTfDDb+64dpBEQsJ0BUVMW+Lh4dFj5M=;
+ b=Q64ziyrswrUchikw3kHiLU9+JRSDjfBpH7BoddMt5WD8cIIYab9leVEQ3g6Ip7xf5b
+ QMtHqCDT/xJrZKB/jEsufeG2xXIP8B0dcphpaUnaiSo66SAzaOAiohiPJ2slfS/XC3Nq
+ 4tjQhGBa4XPI3YENBQt7CANUGBMq6qdav4GOD3Nk0d5HZooQ/TsaQoElYpsOtWGiVD/Y
+ pi0WZ/H54ynEwNI/Rk+LR+bYdmm/F9km5PMlBjqDOXLfOhc5Egx+BCYcHYAxTBQKYR2f
+ vJbfa3ojCT6y3Av5WjqCUwMEBr3hWlVY0n9FelnSTnNx0G9vdJRt5G9Y6c+6yHo5udcY
+ IWGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737040655; x=1737645455;
+ d=1e100.net; s=20230601; t=1737040924; x=1737645724;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/wkcKaFRXPhb9u/VjkQNV6F39YFmaAYeWGSbaUleCvA=;
- b=UVCWLmTh2mwvK6BvQ8+ih5RyJPLSrIMeOBC3wYxDy2tM7NrV4ne/e6xwhnzU/C35OB
- UvXkoSvYr76oAdFfQR25Xmc8eG1ZjmRVWxGkkXmOKWPo5iFvS8FiQPpTUXi8VRI0TJ7n
- 92m1z+r+vRWJ2yIv/jRXbaWrP+MYexgM0d8Zw39nJSLhm5NLh+Z0kOj/60JLJoS0SrT2
- Pw6EQ3HXV9gyGtFnjiH6diyXOnUqbdEkszJWINFJqBV7r0grS2qH81xLy1flmLKa63jS
- BiuhLc8ak0jyBXCAxlAh7YKf03UGT0+p9PdS1YJVv2fdjD0rtzflGTdSomo1JxheKzCl
- fz4Q==
-X-Gm-Message-State: AOJu0YzmX6BGM8IvTClvD65DZI1vYdmKdcd+B+SInaOX5m7LnlHOY2iQ
- /vuXAF++ol1fTBLlDck9A0e9DfJZErfMZYDF1aajNZrcRtPci5IqpQndO7vd1kc=
-X-Gm-Gg: ASbGncsI4XTZLe4D+NC0RyRdr8elzUDxvlLQ/6KzEKgUMh6p/zmTVxYdKd8MD8804eU
- LDSAC3aaQcE4bwdUMCyR/oqpxl8Z9xvV27JcoAyBlG6E7anr0lgx2ydorHjQMCloBRAqzrWlFFB
- rlrXD4rVK0ncruPEWvlHW8lIlUZ0lHdBtHJBRpJoBjmO5PyVTKRtv0PJRnREPnv6b4gJMG8t7FB
- pdDyOF5OIdnS2xIL7T9wDbs6FCur8BsQfzoVGosiCFGnO2ihxEo+KIMC7Gh1Cckt3LOzbME2Sh+
- JNBmLC3gDPnZEidAr/8nTik=
-X-Google-Smtp-Source: AGHT+IEfzlm7jtOVDtwr600aEKhLJajW8VR5GX7n6VGfQze1VHc8T9OCqJ8qwi8mPBY0mFrroYKt7w==
-X-Received: by 2002:a17:902:f605:b0:216:33f0:58d5 with SMTP id
- d9443c01a7336-21bf0cc0464mr113292745ad.17.1737040655135; 
- Thu, 16 Jan 2025 07:17:35 -0800 (PST)
+ bh=249OkPv8wccfOTfDDb+64dpBEQsJ0BUVMW+Lh4dFj5M=;
+ b=gOhHTvhNil43s6zYzqD8caVemAV9Nv9FZy7razAkq2AsqYlBXnWPJdA6jZFTMjCaSO
+ WxP2wbruPK4WLoYVeF5ngvvkFOUsHWIh6+WFjKIZy+ovrnDGZSn8os0xUeXo2r/8mjbI
+ /iM0q8jSS63BrhTNpAAE50vsg87fxP73wN8xFy5rDNWzxOYNqGkZybFImpIHKydvSY/b
+ 1fnPfOkuMnLkcmwcfI+60FNQNXgw689isBej7BFHYAr5/yg7c4FPPlrn3vWTJB1RHKtv
+ iFePFtAXvkE3oKSm6YQd2xGUw2VkA0LQIC7WKVb7C1AwQjNxWskrhl8+MYjNKhkOs3FY
+ omjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeqvVpDvWZzRlC5O+wsbO0nNx0VHaHKRjCSj+O+cpiyE88adETbX33DZdm78DKzRgUHWNSkcV8kWnm@nongnu.org
+X-Gm-Message-State: AOJu0YyThZ3Si3VBwBIfvh4n4GCpiYELha+lIjyKI9P0NKEi1aiEtNEO
+ Oh2fvoPc22Wfz/c3UEDcw7NuaUN1hxo0RsnZaXzrw38OlSC6AEzI/z3OISDICr8=
+X-Gm-Gg: ASbGncsd1AneSy7NMeBtUtiduf4Yavu/7Tq9FyBEoyNGCSUgTiBrI3DSM7Tq7fLKU6+
+ qDjpg48NHq/wXlt/oRwjB998KgB2z1Dpz79qpM9HBAl+rJdR/HUQtZHt30upN8Zl9DLnBqKBRJf
+ 1Ti3ytAptxAO1dCVoKo/sUINxafx59OzL/P9bBe1ux3ylcPnxR2OU6K8rCkp+lSYwGc6MIE+KyG
+ 5f4JRFilUmOPFyvpPo43ce6V7xjAAI5UxJiv82m+vMKnWHzK4Nduj8pJ8W258KjdDCnXN4uSwgc
+ LSY1L6wdNKl32InzNstBPKA=
+X-Google-Smtp-Source: AGHT+IFqfC9hedX1ADS5NDYX9E9OaZSohp0E3UqZX7LbmljlT7J4TK9sfxi2Zz0DpIR0t2OZ7ejhDQ==
+X-Received: by 2002:a17:902:e885:b0:215:aae1:40f0 with SMTP id
+ d9443c01a7336-21a83da6ebbmr584316935ad.0.1737040923628; 
+ Thu, 16 Jan 2025 07:22:03 -0800 (PST)
 Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3ac0b2sm1582725ad.156.2025.01.16.07.17.33
+ d9443c01a7336-21c2d3ac93bsm1620295ad.157.2025.01.16.07.22.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 07:17:33 -0800 (PST)
-Message-ID: <e344e8da-8460-42da-850d-79623daffa06@linaro.org>
-Date: Thu, 16 Jan 2025 07:17:31 -0800
+ Thu, 16 Jan 2025 07:22:03 -0800 (PST)
+Message-ID: <7f645bf5-3d57-4803-a937-f8e558391e8d@linaro.org>
+Date: Thu, 16 Jan 2025 07:22:01 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-References: <20250115232022.27332-1-iii@linux.ibm.com>
- <e74110e7-2dc4-4626-b64d-f42e3ffe7413@linaro.org>
- <5bd1b396d06a3ab42a98cdff25a1dc2051e98b0b.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/2] target/i386: Do not raise Invalid for 0 * Inf + QNaN
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20250116112536.4117889-1-peter.maydell@linaro.org>
+ <20250116112536.4117889-2-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <5bd1b396d06a3ab42a98cdff25a1dc2051e98b0b.camel@linux.ibm.com>
+In-Reply-To: <20250116112536.4117889-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,66 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/25 07:06, Ilya Leoshkevich wrote:
-> On Thu, 2025-01-16 at 06:54 -0800, Richard Henderson wrote:
->> On 1/15/25 15:20, Ilya Leoshkevich wrote:
->>> Currently single-insn TBs created from I/O memory are not added to
->>> region_trees. Therefore, when they generate exceptions, they are
->>> not
->>> handled by cpu_restore_state_from_tb(). For x86 this is not a
->>> problem,
->>> because x86_restore_state_to_opc() only restores pc and cc, which
->>> are
->>> already correct. However, on several other architectures,
->>> restore_state_to_opc() restores more registers, and guests can
->>> notice
->>> incorrect values.
->>>
->>> Fix by always calling tcg_tb_insert(). This may increase the size
->>> of
->>> region_trees, but tcg_region_reset_all() clears it once
->>> code_gen_buffer
->>> fills up, so it will not grow uncontrollably.
->>>
->>> Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
->>> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
->>> ---
->>>    accel/tcg/translate-all.c | 16 ++++++++--------
->>>    1 file changed, 8 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
->>> index 453eb20ec95..6333302813e 100644
->>> --- a/accel/tcg/translate-all.c
->>> +++ b/accel/tcg/translate-all.c
->>> @@ -531,23 +531,23 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
->>>            tb_reset_jump(tb, 1);
->>>        }
->>>    
->>> +    /*
->>> +     * Insert TB into the corresponding region tree before
->>> publishing it
->>> +     * through QHT. Otherwise rewinding happened in the TB might
->>> fail to
->>> +     * lookup itself using host PC.
->>> +     */
->>> +    tcg_tb_insert(tb);
->>
->> I think what we need is to mark the tb CF_INVALID before inserting
->> it. That way we'll
->> never match in tb_lookup (comparing guest state, including cflags),
->> but *will* find it in
->> tcg_tb_lookup (comparing host_pc).
->>
->>
->> r~
+On 1/16/25 03:25, Peter Maydell wrote:
+> In commit 8adcff4ae7 ("fpu: handle raising Invalid for infzero in
+> pick_nan_muladd") we changed the handling of 0 * Inf + QNaN to always
+> raise the Invalid exception regardless of target architecture.  (This
+> was a change affecting hppa, i386, sh4 and tricore.) However, this
+> was incorrect for i386, which documents in the SDM section 14.5.2
+> that for the 0 * Inf + NaN case that it will only raise the Invalid
+> exception when the input is an SNaN.  (This is permitted by the IEEE
+> 754-2008 specification, which documents that whether we raise Invalid
+> for 0 * Inf + QNaN is implementation defined.)
 > 
-> How can tb_lookup() find it? With this change, it is inserted into
-> region_trees, but not into tb_ctx.htable - this is done by
-> tb_link_page(), which is not called. And because it's not in
-> tb_ctx.htable, it can't end up in tb_jmp_cache either.
+> Adjust the softfloat pick_nan_muladd code to allow the target to
+> suppress the raising of Invalid for the inf * zero + NaN case (as an
+> extra flag orthogonal to its choice for when to use the default NaN),
+> and enable that for x86.
+> 
+> We do not revert here the behaviour change for hppa, sh4 or tricore:
+>   * The sh4 manual is clear that it should signal Invalid
+>   * The tricore manual is a bit vague but doesn't say it shouldn't
+>   * The hppa manual doesn't talk about fused multiply-add corner
+>     cases at all
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 8adcff4ae7 (""fpu: handle raising Invalid for infzero in pick_nan_muladd")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/fpu/softfloat-types.h | 16 +++++++++++++---
+>   target/i386/tcg/fpu_helper.c  |  5 ++++-
+>   fpu/softfloat-parts.c.inc     |  5 +++--
+>   3 files changed, 20 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+> index 9d37cdfaa8e..c51b2a5b3de 100644
+> --- a/include/fpu/softfloat-types.h
+> +++ b/include/fpu/softfloat-types.h
+> @@ -278,11 +278,21 @@ typedef enum __attribute__((__packed__)) {
+>       /* No propagation rule specified */
+>       float_infzeronan_none = 0,
+>       /* Result is never the default NaN (so always the input NaN) */
+> -    float_infzeronan_dnan_never,
+> +    float_infzeronan_dnan_never = 1,
+>       /* Result is always the default NaN */
+> -    float_infzeronan_dnan_always,
+> +    float_infzeronan_dnan_always = 2,
+>       /* Result is the default NaN if the input NaN is quiet */
+> -    float_infzeronan_dnan_if_qnan,
+> +    float_infzeronan_dnan_if_qnan = 3,
+> +    /*
+> +     * Don't raise Invalid for 0 * Inf + NaN. Default is to raise.
+> +     * IEEE 754-2008 section 7.2 makes it implementation defined whether
+> +     * 0 * Inf + QNaN raises Invalid or not. Note that 0 * Inf + SNaN will
+> +     * raise the Invalid flag for the SNaN anyway.
+> +     *
+> +     * This is a flag which can be ORed in with any of the above
+> +     * DNaN behaviour options.
+> +     */
+> +    float_infzeronan_suppress_invalid = (1 << 7),
 
-You're absolutely right.
+Why 128 and not 4?
 
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
