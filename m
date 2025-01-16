@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69992C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF211C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYOdQ-0005XR-9u; Thu, 16 Jan 2025 07:06:06 -0500
+	id 1tYOev-00069X-F8; Thu, 16 Jan 2025 07:07:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tYOdN-0005XA-Vq
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:06:02 -0500
+ id 1tYOet-00069D-Nq
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:07:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tYOdL-00048C-HO
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:06:01 -0500
+ id 1tYOer-0004qQ-L3
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:07:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737029152;
+ s=mimecast20190719; t=1737029252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=K6Bp0KAjpvMk95VXBO+I/VCRNv3QHTB8x4opGzeU/NU=;
- b=blxN7ox0mf/skaQFXDf8bqQVy5lExzknBVo++KScCk3ATsyQVVAo5dokpUcuVV11RST03K
- ulYzKWtukvZ1+bfuqeeB5vIjvHZHc9mkkGNkSy2GFYv4UHrpgj7pzUpQ2fJLKrpmg6x3DJ
- nij7JlKhy0eozmLEIcR/AD2/tfNaq8k=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Irmt0F4o1E7z/BpnG+Ry//F+o0sHD9WqDVz9BgHNXKs=;
+ b=ADFwtO7clQBeJEi1lQbZMxXQShWYSgqevDbs+xtkUNngnVQeGbYVzRmqjkOPGvPvNzSJRd
+ mwrdcxgjjO3iTNYQUVCUfIpgVBUT2FX4kUoIXfmQFB+XKzFzC9MVTKxL2eZe5leunC1ss+
+ g+UyuSwK2SIbWMIsGwYoLJrMMD6Q1a8=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-y7j5yYLWOz25nVncdxiQBQ-1; Thu, 16 Jan 2025 07:05:49 -0500
-X-MC-Unique: y7j5yYLWOz25nVncdxiQBQ-1
-X-Mimecast-MFC-AGG-ID: y7j5yYLWOz25nVncdxiQBQ
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aaf901a0ef9so73710166b.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:05:49 -0800 (PST)
+ us-mta-311-w_dCb1ymPOijYj2ZRhUfWw-1; Thu, 16 Jan 2025 07:07:30 -0500
+X-MC-Unique: w_dCb1ymPOijYj2ZRhUfWw-1
+X-Mimecast-MFC-AGG-ID: w_dCb1ymPOijYj2ZRhUfWw
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa68203d288so70857466b.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:07:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737029148; x=1737633948;
+ d=1e100.net; s=20230601; t=1737029250; x=1737634050;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K6Bp0KAjpvMk95VXBO+I/VCRNv3QHTB8x4opGzeU/NU=;
- b=O2IR7IKMO4AKOfLF+ReusryQl64bsV+YU+kaaizHHfrrjYGrzXq1jpTu0hBA65Nsv3
- gFMRR8TiW2E+7tbIq9F5P/FizWkF+0aX3nCNObuCQPokzzcPps530crI9Fqc88dM5A7V
- f+XPCB8TjcuQ8jBZm8i2T204MY6Qz/CfWYOsNhr7D8GkBYDfVMSxs5PXNakHrru7OPpw
- Elt/zgQfl5u4FSnpUC2Q2nM4xR+Oxa5/TC00GBNDbiv9wbvkldRjHEjlDBOUXRuJFC7f
- xXVgltqxndBzB9QVOwIEwVl9yug2v8XqyOFyMBAxSSFHhcLKPmMDtiXvwyGp6k2NcyaP
- 0jjg==
+ bh=Irmt0F4o1E7z/BpnG+Ry//F+o0sHD9WqDVz9BgHNXKs=;
+ b=DJBqsaZ6fDMeMTHrkYfmsEEj99p/oKRdhQYgfj11wMiLLyXL9cfkcPJBj702F4/NKP
+ 3svkikS++0rAS7Lti2LGM14aN71eHjComNAHFYTThv4yZNaXgovPRey2RWoF4sFlTAVz
+ jK9yV+Ki6C7CZ7ppZPimfvqAUbHdsROUPD1pUcM3DwGinUTG/z4uJugOrwJe/dBktBaL
+ F3I9atKkK9WsHsfvbHCUyVwDC0wgqqfIjP9ufLb1SK92sZp8zOu7sMoYYVLKoumHukFi
+ C+DDpHWBaH9BV5h50Mj9dRXWD8lCNTIiDzgIgF1O4diIb9YZ1VW3HsaTzKbnepPbEY8q
+ JdMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjNLPIgPI2imQkZ+0QKszytz4VdCKZtdrOXO6gNFzGj9TVkrhlembwzDiPrxriP5rM7v0bjoPyHP/A@nongnu.org
-X-Gm-Message-State: AOJu0YwoSusr9QAJuLu/8B/pX4HVydSF4v3TNGe1IeFAhv+4JOU+hOKo
- uNbUblezhw84EDxsLm96EEl9GKmM0vZsrw52GmvBbyqTnP7GbaD2H4sSVtB7fQBnM9zXY44M6sF
- 0MS7P0xrGSVlhzbzgltfEimaV1Tz47A4BuVlMhbim5QhevmUG0RsgmEiTSr99KJ+g360bk+ZDsn
- APAT05QuVP3G18XYULB+XUPjV72wI=
-X-Gm-Gg: ASbGncuZr3DoBuRMy/1a8xpC9fL/TBryDBdDX4D/8OgLEeVI2jFqRLqqG0eBMewRadk
- /vkUHSkEEUtGl7wJu5omKoSLnkmNoIrDqw/Q16is=
-X-Received: by 2002:a17:907:97d2:b0:aab:73c5:836 with SMTP id
- a640c23a62f3a-ab2ab711bfemr3142775766b.32.1737029148259; 
- Thu, 16 Jan 2025 04:05:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHn/OLLF1GgXnRkQDiBQp8eTqXRhr+n0R6mNuF8XFs+8T8Cx/e1uEPh3W8W/aU1hrqqCZj5vSbkFzsLn82+Z9Q=
-X-Received: by 2002:a17:907:97d2:b0:aab:73c5:836 with SMTP id
- a640c23a62f3a-ab2ab711bfemr3142773866b.32.1737029147876; Thu, 16 Jan 2025
- 04:05:47 -0800 (PST)
+ AJvYcCWOle2p23pRmQ4TO8B+H5vUYaBw9qELCKImoBmUXveeh+X8TDG82lrgsV9qQDdd4MYSplrbet7EeSkw@nongnu.org
+X-Gm-Message-State: AOJu0YyBGxF7HCrd90k6LrTiW8IgeXKY+RNiorQcCZAGscbjbjX+CqA3
+ rRGTOR0kAqibK0jra3HMQ8tWep7kL3ny2SoHZbvTjb6QgO0Wb3ASpeDXOhqNupV5zSjVIopJjCp
+ xIS6k+GWeorV9tAOvI+YW3tFVA01Scmy2O3XYAtUWX+dGvwYdgFAQkWyP8ZuqqUSkaijI+eK9qD
+ ozpYR+pu8+MhStLcKJIY8Js+7QgHY=
+X-Gm-Gg: ASbGncvVAfhWNuZagWhNqn/5fINYGy0D+xUue9/930uY2x7LVee7cn4WbfCfrZqU0Nt
+ q6xPbrp1f+AoDE3nHdzRkCQHLaIUFp2SYjqWtZgg=
+X-Received: by 2002:a17:907:1c8c:b0:aa6:7cf3:c6ef with SMTP id
+ a640c23a62f3a-ab2ab70a362mr2966136466b.15.1737029249532; 
+ Thu, 16 Jan 2025 04:07:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIeRqGVbguA6VQWAM54RWj/y3G0WaxE/LU8M0u/Kov4Cff70pSoMVyXOG8MIx+46DCjwUCC+epJ1czHO4CaCc=
+X-Received: by 2002:a17:907:1c8c:b0:aa6:7cf3:c6ef with SMTP id
+ a640c23a62f3a-ab2ab70a362mr2966132166b.15.1737029248989; Thu, 16 Jan 2025
+ 04:07:28 -0800 (PST)
 MIME-Version: 1.0
 References: <20250110104619.267564-1-anisinha@redhat.com>
- <20250110104619.267564-4-anisinha@redhat.com>
-In-Reply-To: <20250110104619.267564-4-anisinha@redhat.com>
+ <20250110104619.267564-3-anisinha@redhat.com>
+In-Reply-To: <20250110104619.267564-3-anisinha@redhat.com>
 From: Ani Sinha <anisinha@redhat.com>
-Date: Thu, 16 Jan 2025 17:35:36 +0530
-X-Gm-Features: AbW1kvb7tHBDgGO355XN8mKlNp-JGMNqXNOswUtA-9bW1xlSMYh1iVemBipnquU
-Message-ID: <CAK3XEhPyfAy1sC+TRF9wR94F6EOj7TBsV4tVnTiizLpG0XkpLg@mail.gmail.com>
-Subject: Re: [PATCH v5 3/3] tests/qtest/vmcoreinfo: add a unit test to
- exercize basic vmcoreinfo function
-To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>
+Date: Thu, 16 Jan 2025 17:37:17 +0530
+X-Gm-Features: AbW1kvaLAw1Hnq7Sndd8BYCNDunZ_jeWr644HfItb6aOSSjG9L7qv2MohK0qg-w
+Message-ID: <CAK3XEhOgmm_+67Sk8vum9td7+xju++wfVKcBgK76n2iQLCQb0A@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] tests/qtest/libqos: add DMA support for writing
+ and reading fw_cfg files
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 Cc: armbru@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -111,164 +110,230 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Jan 10, 2025 at 4:16=E2=80=AFPM Ani Sinha <anisinha@redhat.com> wro=
 te:
 >
-> A new qtest is written that exercizes the fw-cfg DMA based read and write=
- ops
-> to write values into vmcoreinfo fw-cfg file and read them back and varify=
- that
-> they are the same.
->
+> At present, the libqos/fw_cfg.c library does not support the modern DMA
+> interface which is required to write to the fw_cfg files. It only uses th=
+e IO
+> interface. Implement read and write methods based on DMA. This will enabl=
+e
+> developers to write tests that writes to the fw_cfg file(s). The structur=
+e of
+> the code is taken from edk2 fw_cfg implementation. It has been tested by
+> writing a qtest that writes to a fw_cfg file. This test will be part of a
+> future patch series.
 
 Ping ...
 
+>
 > Signed-off-by: Ani Sinha <anisinha@redhat.com>
 > ---
->  MAINTAINERS                   |  2 +
->  tests/qtest/meson.build       |  1 +
->  tests/qtest/vmcoreinfo-test.c | 90 +++++++++++++++++++++++++++++++++++
->  3 files changed, 93 insertions(+)
->  create mode 100644 tests/qtest/vmcoreinfo-test.c
+>  tests/qtest/libqos/fw_cfg.c | 142 ++++++++++++++++++++++++++++++++++++
+>  tests/qtest/libqos/fw_cfg.h |   6 +-
+>  2 files changed, 147 insertions(+), 1 deletion(-)
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2101b51217..4723d413ab 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3005,6 +3005,7 @@ F: include/system/device_tree.h
->  Dump
->  S: Supported
->  M: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> +R: Ani Sinha <anisinha@redhat.com>
->  F: dump/
->  F: hw/misc/vmcoreinfo.c
->  F: include/hw/misc/vmcoreinfo.h
-> @@ -3015,6 +3016,7 @@ F: qapi/dump.json
->  F: scripts/dump-guest-memory.py
->  F: stubs/dump.c
->  F: docs/specs/vmcoreinfo.rst
-> +F: tests/qtest/vmcoreinfo-test.c
+> diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
+> index b178d0b1b8..7c86f0fecf 100644
+> --- a/tests/qtest/libqos/fw_cfg.c
+> +++ b/tests/qtest/libqos/fw_cfg.c
+> @@ -14,6 +14,8 @@
 >
->  Error reporting
->  M: Markus Armbruster <armbru@redhat.com>
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index c5a70021c5..9804451e25 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -57,6 +57,7 @@ qtests_i386 =3D \
->    (config_all_devices.has_key('CONFIG_AHCI_ICH9') ? ['tco-test'] : []) +=
-                    \
->    (config_all_devices.has_key('CONFIG_FDC_ISA') ? ['fdc-test'] : []) +  =
-                    \
->    (config_all_devices.has_key('CONFIG_I440FX') ? ['fw_cfg-test'] : []) +=
-                    \
-> +  (config_all_devices.has_key('CONFIG_FW_CFG_DMA') ? ['vmcoreinfo-test']=
- : []) +            \
->    (config_all_devices.has_key('CONFIG_I440FX') ? ['i440fx-test'] : []) +=
-                    \
->    (config_all_devices.has_key('CONFIG_I440FX') ? ['ide-test'] : []) +   =
-                    \
->    (config_all_devices.has_key('CONFIG_I440FX') ? ['numa-test'] : []) +  =
-                    \
-> diff --git a/tests/qtest/vmcoreinfo-test.c b/tests/qtest/vmcoreinfo-test.=
-c
-> new file mode 100644
-> index 0000000000..dcf3b5ae05
-> --- /dev/null
-> +++ b/tests/qtest/vmcoreinfo-test.c
-> @@ -0,0 +1,90 @@
-> +/*
-> + * qtest vmcoreinfo test case
-> + *
-> + * Copyright Red Hat. 2025.
-> + *
-> + * Authors:
-> + *  Ani Sinha   <anisinha@redhat.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +#include "libqos/libqos-pc.h"
-> +#include "libqtest.h"
-> +#include "standard-headers/linux/qemu_fw_cfg.h"
-> +#include "libqos/fw_cfg.h"
-> +#include "qemu/bswap.h"
-> +#include "hw/misc/vmcoreinfo.h"
-> +
-> +static void test_vmcoreinfo_write_basic(void)
+>  #include "qemu/osdep.h"
+>  #include "fw_cfg.h"
+> +#include "malloc-pc.h"
+> +#include "libqos-malloc.h"
+>  #include "../libqtest.h"
+>  #include "qemu/bswap.h"
+>  #include "hw/nvram/fw_cfg.h"
+> @@ -60,6 +62,63 @@ static void mm_fw_cfg_select(QFWCFG *fw_cfg, uint16_t =
+key)
+>      qtest_writew(fw_cfg->qts, fw_cfg->base, key);
+>  }
+>
+> +static void
+> +qfw_cfg_dma_transfer(QFWCFG *fw_cfg, QOSState *qs, void *address,
+> +                     uint32_t length, uint32_t control)
 > +{
-> +    QFWCFG *fw_cfg;
-> +    QOSState *qs;
-> +    FWCfgVMCoreInfo info;
-> +    size_t filesize;
-> +    uint16_t guest_format;
-> +    uint16_t host_format;
-> +    uint32_t size;
-> +    uint64_t paddr;
+> +    FWCfgDmaAccess access;
+> +    uint32_t addr;
+> +    uint64_t guest_access_addr;
+> +    uint64_t gaddr;
 > +
-> +    qs =3D qtest_pc_boot("-device vmcoreinfo");
-> +    fw_cfg =3D pc_fw_cfg_init(qs->qts);
+> +    /* create a data buffer in guest memory */
+> +    gaddr =3D guest_alloc(&qs->alloc, length);
 > +
-> +    memset(&info, 0 , sizeof(info));
-> +    /* read vmcoreinfo and read back the host format */
-> +    filesize =3D qfw_cfg_read_file(fw_cfg, qs, FW_CFG_VMCOREINFO_FILENAM=
-E,
-> +                                &info, sizeof(info));
-> +    g_assert_cmpint(filesize, =3D=3D, sizeof(info));
+> +    if (control & FW_CFG_DMA_CTL_WRITE) {
+> +        qtest_bufwrite(fw_cfg->qts, gaddr, address, length);
+> +    }
+> +    access.address =3D cpu_to_be64(gaddr);
+> +    access.length =3D cpu_to_be32(length);
+> +    access.control =3D cpu_to_be32(control);
 > +
-> +    host_format =3D le16_to_cpu(info.host_format);
-> +    g_assert_cmpint(host_format, =3D=3D, FW_CFG_VMCOREINFO_FORMAT_ELF);
+> +    /* now create a separate buffer in guest memory for 'access' */
+> +    guest_access_addr =3D guest_alloc(&qs->alloc, sizeof(access));
+> +    qtest_bufwrite(fw_cfg->qts, guest_access_addr, &access, sizeof(acces=
+s));
 > +
-> +    memset(&info, 0 , sizeof(info));
-> +    info.guest_format =3D cpu_to_le16(FW_CFG_VMCOREINFO_FORMAT_ELF);
-> +    info.size =3D cpu_to_le32(1 * MiB);
-> +    info.paddr =3D cpu_to_le64(0xffffff00);
-> +    info.host_format =3D cpu_to_le16(host_format);
+> +    /* write lower 32 bits of address */
+> +    addr =3D cpu_to_be32((uint32_t)(uintptr_t)guest_access_addr);
+> +    qtest_outl(fw_cfg->qts, fw_cfg->base + 8, addr);
 > +
-> +    /* write the values to the host */
-> +    filesize =3D qfw_cfg_write_file(fw_cfg, qs, FW_CFG_VMCOREINFO_FILENA=
-ME,
-> +                                  &info, sizeof(info));
-> +    g_assert_cmpint(filesize, =3D=3D, sizeof(info));
+> +    /* write upper 32 bits of address */
+> +    addr =3D cpu_to_be32((uint32_t)(uintptr_t)(guest_access_addr >> 32))=
+;
+> +    qtest_outl(fw_cfg->qts, fw_cfg->base + 4, addr);
 > +
-> +    memset(&info, 0 , sizeof(info));
+> +    g_assert(!(be32_to_cpu(access.control) & FW_CFG_DMA_CTL_ERROR));
 > +
-> +    /* now read back the values we wrote and compare that they are the s=
-ame */
-> +    filesize =3D qfw_cfg_read_file(fw_cfg, qs, FW_CFG_VMCOREINFO_FILENAM=
-E,
-> +                                &info, sizeof(info));
-> +    g_assert_cmpint(filesize, =3D=3D, sizeof(info));
-> +
-> +    size =3D le32_to_cpu(info.size);
-> +    paddr =3D le64_to_cpu(info.paddr);
-> +    guest_format =3D le16_to_cpu(info.guest_format);
-> +
-> +    g_assert_cmpint(size, =3D=3D, 1 * MiB);
-> +    g_assert_cmpint(paddr, =3D=3D, 0xffffff00);
-> +    g_assert_cmpint(guest_format, =3D=3D, FW_CFG_VMCOREINFO_FORMAT_ELF);
-> +
-> +    pc_fw_cfg_uninit(fw_cfg);
-> +    qtest_shutdown(qs);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    const char *arch =3D qtest_get_arch();
-> +
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    if (strcmp(arch, "i386") && strcmp(arch, "x86_64")) {
-> +        /* skip for non-x86 */
-> +        exit(EXIT_SUCCESS);
+> +    if (control & FW_CFG_DMA_CTL_READ) {
+> +        qtest_bufread(fw_cfg->qts, gaddr, address, length);
 > +    }
 > +
-> +    qtest_add_func("vmcoreinfo/basic-write",
-> +                   test_vmcoreinfo_write_basic);
-> +
-> +    return g_test_run();
+> +    guest_free(&qs->alloc, guest_access_addr);
+> +    guest_free(&qs->alloc, gaddr);
 > +}
+> +
+> +static void
+> +qfw_cfg_write_entry(QFWCFG *fw_cfg, QOSState *qs, uint16_t key,
+> +                    void *buf, uint32_t len)
+> +{
+> +    qfw_cfg_select(fw_cfg, key);
+> +    qfw_cfg_dma_transfer(fw_cfg, qs, buf, len, FW_CFG_DMA_CTL_WRITE);
+> +}
+> +
+> +static void
+> +qfw_cfg_read_entry(QFWCFG *fw_cfg, QOSState *qs, uint16_t key,
+> +                   void *buf, uint32_t len)
+> +{
+> +    qfw_cfg_select(fw_cfg, key);
+> +    qfw_cfg_dma_transfer(fw_cfg, qs, buf, len, FW_CFG_DMA_CTL_READ);
+> +}
+> +
+>  static bool
+>  find_pdir_entry(QFWCFG *fw_cfg, const char *filename,
+>                  uint16_t *sel, uint32_t *size)
+> @@ -122,6 +181,89 @@ size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *=
+filename,
+>      return filesize;
+>  }
+>
+> +/*
+> + * The caller need check the return value. When the return value is
+> + * nonzero, it means that some bytes have been transferred.
+> + *
+> + * If the fw_cfg file in question is smaller than the allocated & passed=
+-in
+> + * buffer, then the first len bytes were read.
+> + *
+> + * If the fw_cfg file in question is larger than the passed-in
+> + * buffer, then the return value explains how much was actually read.
+> + *
+> + * It is illegal to call this function if fw_cfg does not support DMA
+> + * interface. The caller should ensure that DMA is supported before
+> + * calling this function.
+> + *
+> + * Passed QOSState pointer qs must be initialized. qs->alloc must also b=
+e
+> + * properly initialized.
+> + */
+> +size_t qfw_cfg_read_file(QFWCFG *fw_cfg, QOSState *qs, const char *filen=
+ame,
+> +                         void *data, size_t buflen)
+> +{
+> +    uint32_t len =3D 0;
+> +    uint16_t sel;
+> +    uint32_t id;
+> +
+> +    g_assert(qs);
+> +    g_assert(filename);
+> +    g_assert(data);
+> +    g_assert(buflen);
+> +    /* check if DMA is supported since we use DMA for read */
+> +    id =3D qfw_cfg_get_u32(fw_cfg, FW_CFG_ID);
+> +    g_assert(id & FW_CFG_VERSION_DMA);
+> +
+> +    if (find_pdir_entry(fw_cfg, filename, &sel, &len)) {
+> +        if (len > buflen) {
+> +            len =3D buflen;
+> +        }
+> +        qfw_cfg_read_entry(fw_cfg, qs, sel, data, len);
+> +    }
+> +
+> +    return len;
+> +}
+> +
+> +/*
+> + * The caller need check the return value. When the return value is
+> + * nonzero, it means that some bytes have been transferred.
+> + *
+> + * If the fw_cfg file in question is smaller than the allocated & passed=
+-in
+> + * buffer, then the buffer has been partially written.
+> + *
+> + * If the fw_cfg file in question is larger than the passed-in
+> + * buffer, then the return value explains how much was actually written.
+> + *
+> + * It is illegal to call this function if fw_cfg does not support DMA
+> + * interface. The caller should ensure that DMA is supported before
+> + * calling this function.
+> + *
+> + * Passed QOSState pointer qs must be initialized. qs->alloc must also b=
+e
+> + * properly initialized.
+> + */
+> +size_t qfw_cfg_write_file(QFWCFG *fw_cfg, QOSState *qs, const char *file=
+name,
+> +                          void *data, size_t buflen)
+> +{
+> +    uint32_t len =3D 0;
+> +    uint16_t sel;
+> +    uint32_t id;
+> +
+> +    g_assert(qs);
+> +    g_assert(filename);
+> +    g_assert(data);
+> +    g_assert(buflen);
+> +    /* write operation is only valid if DMA is supported */
+> +    id =3D qfw_cfg_get_u32(fw_cfg, FW_CFG_ID);
+> +    g_assert(id & FW_CFG_VERSION_DMA);
+> +
+> +    if (find_pdir_entry(fw_cfg, filename, &sel, &len)) {
+> +        if (len > buflen) {
+> +            len =3D buflen;
+> +        }
+> +        qfw_cfg_write_entry(fw_cfg, qs, sel, data, len);
+> +    }
+> +    return len;
+> +}
+> +
+>  static void mm_fw_cfg_read(QFWCFG *fw_cfg, void *data, size_t len)
+>  {
+>      uint8_t *ptr =3D data;
+> diff --git a/tests/qtest/libqos/fw_cfg.h b/tests/qtest/libqos/fw_cfg.h
+> index b0456a15df..6d6ff09725 100644
+> --- a/tests/qtest/libqos/fw_cfg.h
+> +++ b/tests/qtest/libqos/fw_cfg.h
+> @@ -14,6 +14,7 @@
+>  #define LIBQOS_FW_CFG_H
+>
+>  #include "../libqtest.h"
+> +#include "libqos.h"
+>
+>  typedef struct QFWCFG QFWCFG;
+>
+> @@ -33,7 +34,10 @@ uint32_t qfw_cfg_get_u32(QFWCFG *fw_cfg, uint16_t key)=
+;
+>  uint64_t qfw_cfg_get_u64(QFWCFG *fw_cfg, uint16_t key);
+>  size_t qfw_cfg_get_file(QFWCFG *fw_cfg, const char *filename,
+>                          void *data, size_t buflen);
+> -
+> +size_t qfw_cfg_write_file(QFWCFG *fw_cfg, QOSState *qs, const char *file=
+name,
+> +                          void *data, size_t buflen);
+> +size_t qfw_cfg_read_file(QFWCFG *fw_cfg, QOSState *qs, const char *filen=
+ame,
+> +                         void *data, size_t buflen);
+>  QFWCFG *mm_fw_cfg_init(QTestState *qts, uint64_t base);
+>  void mm_fw_cfg_uninit(QFWCFG *fw_cfg);
+>  QFWCFG *io_fw_cfg_init(QTestState *qts, uint16_t base);
 > --
 > 2.45.2
 >
