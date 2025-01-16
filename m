@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1614C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73B0C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLXi-0003hx-AF; Thu, 16 Jan 2025 03:48:00 -0500
+	id 1tYLYg-0004Wl-FS; Thu, 16 Jan 2025 03:48:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1tYLWr-0003Pi-WD
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:47:11 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLYd-0004Mq-Ic
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:48:55 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1tYLWn-0007SO-Ee
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:47:05 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso3524415e9.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:46:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLYb-0007fK-N3
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:48:55 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385f07cd1a4so584322f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:48:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1737017218; x=1737622018; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ubcG+QppDIx/jZMkDYBenA+AlXgLGAnXxSTUOAzYLiY=;
- b=LyeJW6CGG1Gmx/D4nJtLZ4NHd8VR/mP5lBcd4B66kCElnrfjIFu76UeOZ+TkJgJB3W
- /w9jTyCsBj7MlWaIjtypgmQ9elhgJbHmSwbyolI2UVj8ShRtAhRPy4T2UVLMGSECruG0
- lrqnsBQDdtJ93ZB+ENSfTN/xA5ExQrSZOgReYVsx2RmAYpR/aT9swsJBE+mNh5pg0Rgn
- hQxt+Bf3/GzcNntcRP2aDdUMvBF+uAxeNhuIhY264BUS2abgpXWVuxXHIwS1dhLHgAZ6
- KxW58NTuw0kqvETux2+xq4oSYpftpa1vQY8iiTf4Sl6abgWH9p1y8/EZsagQkTvfZOkD
- Me+Q==
+ d=linaro.org; s=google; t=1737017332; x=1737622132; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mdLioY+9uv1wNXZ89MB5hjYXgSWhJls88d7Z7LIFuhE=;
+ b=I9gs/Or5GphmIaHEwzUiGbNDV2RfBRQpp7JZDs37td2mLqhgl2tIyPe1elG6R6HfEl
+ BME+rfxRwrxyOe68VnwSQoG46b6kA2MnVrLIp2KGZzjDuqH0Vog2Siriae0Ii6OYdR+J
+ J/woEHuNuNHBSJ7jjrypT3KH22VTnMW/u2GQWY18NeLmSYIxEeCe1EhOcqi+EYpUjW/p
+ KIjAKsrZCvlj8HSIyQwVv7VWDy2f03vHN1tg8/tjyW7ikiJuTWQ0BahW7Toj9Deq0cOy
+ OEVnhdhpek3GTkjattG2mjPLMpKMstwM1kyqUzoDxWKkbeUkri4zPKu/ap5gFfWgnyL2
+ aTgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737017218; x=1737622018;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ubcG+QppDIx/jZMkDYBenA+AlXgLGAnXxSTUOAzYLiY=;
- b=aFd2Wn+tnrChFeWR93XU1Fc35OvBCzcjjVm0Ao2RT6gdf1ZqZ6/M0W9N6IMsEGwERs
- epVqz6w+BsuZgdxLahrH1peq2ohmiHu/pRQA5xf+TVja0te0Sut1eLSbK23Q5I7IVZxZ
- UbWp7mSMjt0yK4Ll3uaN7uDkTSxMr1DQlN1UUnTtd99VuZ4FzxeVe6gzEV/h1BI+cFdp
- bMJrYpR13ZhpR/aZjNsQvCz85ilTXvS90lXvaB5kQDkLBPKlh+xfqAXB9t7s1Hrlp4/Y
- kqp6Uvj4xoklreRFdurrZjXFtgZP0LGXnCEFwzIrAiMnRYHyfUQOdYcBICtZFixT3/oR
- W+6w==
-X-Gm-Message-State: AOJu0YziHw1LCRB32gy+1Wed74jTu0n8xdRv+vmqHZZm6pOriTtBlIR3
- c/OAp3jhwlgC8EuciqB+eXue/GKnlL6kH1Gwe4vfwWQ7f5ucq+ZPpUlCV8S2UVWvM5dVjoAsIpt
- xorWnmhe5
-X-Gm-Gg: ASbGncsQkLzYxJKiSaaWtjlOXGOE6hVoRJFxFGGmdDGcU6DChUCaGbJESpd+R3/2U0/
- WSWsUZJtwNIfQ6Xz+nJ/D3o6WZQOvaC4eVBz1tic5O0VsMGk8Ghmly2UPMW295QbamvwZDwRB9v
- 8FEuN8RBdpQE70rtxvfbjp8JldfttLB0MYogZtzsMmbnqAZaZquNKKNUVOUS5PInKitIUsEgdLD
- qMWxjRb4/zmoLQOyLftosQ+TWeYtHjMserG8QG0jY9ucJdzexA3fr/il6wfyovLVarnN0BpxznV
- WP3vXEK5
-X-Google-Smtp-Source: AGHT+IENMaoAUqAfcQ0CR0pDWEGtn8YlDJyp8bt/gm8HstNDpQganqvqF/tsu+4qVqf1M1SKac/dhQ==
-X-Received: by 2002:a05:600c:4f81:b0:434:f1d5:1453 with SMTP id
- 5b1f17b1804b1-436e2531ec8mr318843695e9.0.1737017217780; 
- Thu, 16 Jan 2025 00:46:57 -0800 (PST)
-Received: from localhost (ppp-2-86-138-70.home.otenet.gr. [2.86.138.70])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-437c7499502sm51600425e9.4.2025.01.16.00.46.56
+ d=1e100.net; s=20230601; t=1737017332; x=1737622132;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mdLioY+9uv1wNXZ89MB5hjYXgSWhJls88d7Z7LIFuhE=;
+ b=wE1huedWMXM9a814F83m7j3b/1WvrYiNQD7hFJSwzLzXNC5JCkkFxJdXwf27kKyG9T
+ E7uoQgAdkU8LokYHoJv5JPPJXWpabnyDDArNLaJdBnXFfalHM0Nn2+0dmNikZiyCh9RO
+ JuF6WqylOYc914CR8ZQFnrB0lmtiBJphTwwUFnGiaMSYuIUWL1jVdB8nHeUvGurRrz0I
+ 2u0EyqF47nBcx8W34noezUYBMUcFjFENn7sPdggvywkhJd42uZa67ho62W/Peynv2UCT
+ Jlvo1rm/hEvP06BojQ2OuKcKmUa2GH5oNJPBC+NxU3kkgTu5lJLxcKSZa3FQW60rNmue
+ 0afA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3I9HKxaRfSXX4wIL3dTvAhi2xc75XQpAsgObeFG1EWN+X88No8Jwj8n/LK/nPZkL95+nk5K528DZK@nongnu.org
+X-Gm-Message-State: AOJu0YwuJRIiZ3DQeMyAzD31NKpv3PgQmhrDcN1mF84SDIm3LFSeIzty
+ TCWbVnFXOIaWalWfGOwombrhtfehROTikOOiYDiwGTsr4PoTDPbNwb0OUIVWbTtmnYal/ClKNMv
+ Hxw8=
+X-Gm-Gg: ASbGncuqW0RKzRg/piI6CWtOYKfrjpu9zxXaSbKgyLFDMElo+UhOmem5bhg731r31C7
+ ZGHeL8BHrPzT4SaXJ4HeOA3EaRuVowGaif07CgqUnOeysximiFM0LGbknLwXejMDBwRt+C6F22+
+ ThOUP9DH3gASL/CDg2C2O8UFbKuqlmpSTIeCYuPVWmcvY8dOBOfDJvjfyzEYpR61xfde5cOdyla
+ DYWus4CkgXKGe1WvFBs4nltq7XuGpw4jTFDN255N8SwyDFMn3gR8dXFXM36NYjfFLJhawClbEWs
+ NfVNIALSC7YOPhuDova7Xh7g
+X-Google-Smtp-Source: AGHT+IFc0EGequubUfPj4rYEF3Cfvc2asamzIKmcVagKU7Nw6WMSqtPpF3Pz2I7W3PLpeLhcYSBx7g==
+X-Received: by 2002:a05:6000:1542:b0:38a:a047:6c0b with SMTP id
+ ffacd0b85a97d-38aa0476d5amr21977610f8f.35.1737017332025; 
+ Thu, 16 Jan 2025 00:48:52 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38b15d3c7a5sm13512605f8f.32.2025.01.16.00.48.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 00:46:57 -0800 (PST)
-From: Vasilis Liaskovitis <vliaskovitis@suse.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, jason.chien@sifive.com,
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- ajones@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- philmd@linaro.org, Vasilis Liaskovitis <vliaskovitis@suse.com>
-Subject: [RFC PATCH] hw/riscv/virt: Add serial alias in DTB
-Date: Thu, 16 Jan 2025 09:46:29 +0100
-Message-ID: <20250116084629.19983-1-vliaskovitis@suse.com>
-X-Mailer: git-send-email 2.46.0
+ Thu, 16 Jan 2025 00:48:51 -0800 (PST)
+Message-ID: <ad3d06df-f0ae-4508-b979-c838b3647510@linaro.org>
+Date: Thu, 16 Jan 2025 09:48:50 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=vliaskovitis@suse.com; helo=mail-wm1-x341.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/about: Change notes on x86 machine type deprecation
+ into a general one
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+References: <20250116064644.65670-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250116064644.65670-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,33 +105,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds an "aliases" node with a "serial0" entry for the
-single UART in the riscv64 virt machine.
+On 16/1/25 07:46, Thomas Huth wrote:
+> We now have a general note about versioned machine types getting
+> deprecated and removed at the beginning of the deprecated.rst file,
+> so we should also have a general note about this in removed-features.rst
+> (which will also apply to versioned non-x86 machine types) instead of
+> listing individual old machine types in the document.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/about/deprecated.rst       |  7 -------
+>   docs/about/removed-features.rst | 11 +++++------
+>   2 files changed, 5 insertions(+), 13 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 4a3c302962..7b42d6eecc 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -236,13 +236,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+>   better reflects the way this property affects all random data within
+>   the device tree blob, not just the ``kaslr-seed`` node.
+>   
+> -``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
+> -''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> -
+> -These old machine types are quite neglected nowadays and thus might have
+> -various pitfalls with regards to live migration. Use a newer machine type
+> -instead.
+> -
+>   PPC 405 ``ref405ep`` machine (since 9.1)
+>   ''''''''''''''''''''''''''''''''''''''''
+>   
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index c6616ce05e..156c0c253c 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -972,6 +972,11 @@ from Linux in 2021, and is not supported anymore by QEMU either.
+>   System emulator machines
+>   ------------------------
+>   
+> +Note: Versioned machine types that have been introduced in a QEMU version
+> +that has initially been released more than 6 years before are considered
+> +obsolete and will be removed without further notice in this document.
+> +Please use newer machine types instead.
 
-This was requested in Gitlab #2774. However, since the machine only
-has one UART at the moment, it's not clear that this addition makes
-sense.
+This is an improvement. I still wonder if we shouldn't list them removed
+machines here, to help old users.
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2774
-Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
----
- hw/riscv/virt.c | 2 ++
- 1 file changed, 2 insertions(+)
+   Removed in 4.0:
+     - pc-0.10
+     - ...
+   Removed in 9.0:
+     - pc-i440fx-2.3
+   Remove in 10.0:
+     - pc-i440fx-2.4
+     - pc-i440fx-2.5
+     - pc-i440fx-2.6
+     - pc-q35-2.4
+     - pc-q35-2.5
+     - pc-q35-2.6
+     - ARM virt-2.6
+     ...
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 2bc5a9dd98..67b80e9430 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -971,6 +971,8 @@ static void create_fdt_uart(RISCVVirtState *s, const MemMapEntry *memmap,
-     }
- 
-     qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-+    qemu_fdt_add_subnode(ms->fdt, "/aliases");
-+    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
- }
- 
- static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
--- 
-2.46.0
+?
+
+> +
+>   ``s390-virtio`` (removed in 2.6)
+>   ''''''''''''''''''''''''''''''''
+>   
+> @@ -1006,12 +1011,6 @@ mips ``fulong2e`` machine alias (removed in 6.0)
+>   
+>   This machine has been renamed ``fuloong2e``.
+>   
+> -``pc-0.10`` up to ``pc-i440fx-2.3`` (removed in 4.0 up to 9.0)
+> -''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> -
+> -These machine types were very old and likely could not be used for live
+> -migration from old QEMU versions anymore. Use a newer machine type instead.
+> -
+>   Raspberry Pi ``raspi2`` and ``raspi3`` machines (removed in 6.2)
+>   ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>   
 
 
