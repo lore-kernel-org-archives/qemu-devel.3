@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBC7C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0182DC02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYRNN-0003v1-92; Thu, 16 Jan 2025 10:01:42 -0500
+	id 1tYRSM-0003dM-7B; Thu, 16 Jan 2025 10:06:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYRMc-0002kN-Ui
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:01:00 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYRMa-0000HI-ME
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:00:54 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3863c36a731so899862f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:00:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737039651; x=1737644451; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cYzGP6d4KrcAWacK9hFHH1x2EKu15pc5aRijUf74uhE=;
- b=Ac2Ww1De0YGjaLkOp0L9zXwnF7lG4qwaTuxb1kfIIb/CvDu1/vQQCyv0vG062zCL00
- vhqgWs0itcuShnW+TAN/HXi4nWQQ77wJaOd++Bt1OzROgNkSlCGmqAP9/pzawUkww9Mt
- eUbNrAAPTe8scAI/kEdPWgBoN+AxpZ4H5Jo3nA9kmIX+zFOABN4brXrsfCtG22wd3LLp
- JDsSdjMhg/I1NafS+drBz2sxDylzSD9H+P5gQV1ITzhtsWAA65U+FjduJjtT051kGCPx
- qzKHYxSr+3bhcYHpcKyqXxh40/N34yXU9WRYXuozUl1EGKziyZcJPzzd6zGU8yMnfCol
- 8Idg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737039651; x=1737644451;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cYzGP6d4KrcAWacK9hFHH1x2EKu15pc5aRijUf74uhE=;
- b=ZoCrYLg3vJnJrwcXIphbDQm7xmrbLJjHd2vpxqeYLyMNTTeTutxlwGksPmJJJC4vya
- IVAru2aiaqtPYuep1ZhcyPDMQfcyXbEoBrpxmzGqlvwWtdmpEjUmb8ajWW9TsqbPIENj
- 02YuCUhiGJoJAm3Z1h7nkaKJKIhTbUolSL8JltQBsod/9FwH14ueDTU4wyCktohnbUCH
- pjubZiFJHrdMGV/n4e6zwAmFNeR6Is3j43fKNniI72PqFw0OyArk1Wq+D6UjrVgjIxT3
- Enodbqn9ak8EUycHI6ZEAJq8BeS5H80+O1UOQEA2Z+3OawJv3FDoOhe5B/2c18RvA4QQ
- Ftdw==
-X-Gm-Message-State: AOJu0Ywq+DBZvD+dbAD+a9ACvfIS7f5K+2ZlCFEysGfQFRmP7qJOUM3l
- kNm5sz22vdSsVsm1Z3XPfP/KDRJikRNbpsMfSA/r6zYr3gzGcrd56SaNrh9/pga7P3r3du/DgLq
- UpIQ=
-X-Gm-Gg: ASbGnctpet55pAaHde6NikZ3EB7tqBpQdQQ9QIetoI2ibD5ZsHBHh9OS0drxkEKiV1W
- 2tArhmh2wZZ76ha9X9B9muBGSlAnvICie6YR7WUF2vGU9vb7pmLjszRr5jBhtAFOxp1i2cDCPNZ
- OcNNsRM+g3a4P9+gI8oQtZlqVrV62JzRkkFFkgp+OTlcugdjIWusZlr0eKAEm2/gwMXWvNSjiOB
- +Krhm3/chQdOf7OaLMJnwRzPjbVyONxmfoi1VmZoKgXr66PWbX0hyeGAiBDGevGtHtgCZD1Kbnv
- ILQ9EhqAsBjEBRhMWAb6HSZFqv4G3Rc=
-X-Google-Smtp-Source: AGHT+IFnNouZVfmSrEl1WM7MP75dPQsAxjhyUBBw3x05zPxsrZeRXQxfvSB9lMJe3qHxbexTOplyTw==
-X-Received: by 2002:a05:6000:18a6:b0:38b:d8e0:a862 with SMTP id
- ffacd0b85a97d-38bd8e0aa1emr16675777f8f.43.1737039649256; 
- Thu, 16 Jan 2025 07:00:49 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3275622sm69834f8f.69.2025.01.16.07.00.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Jan 2025 07:00:48 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>, Thomas Huth <thuth@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 v2 13/13] hw/arm/virt: Remove
- VirtMachineClass::no_highmem_ecam field
-Date: Thu, 16 Jan 2025 15:59:44 +0100
-Message-ID: <20250116145944.38028-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250116145944.38028-1-philmd@linaro.org>
-References: <20250116145944.38028-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYRSG-0003ck-PC
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:06:45 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYRSF-0001xF-0E
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:06:44 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GE84Xm005939;
+ Thu, 16 Jan 2025 15:06:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pW9x5B
+ Dd6vaz8nabMb8fUen0/HUkfXz7tJObKcEOyng=; b=thZjC+M08PwYthPiO1ObT7
+ /98nIK7gaLAn5+kn2Mdl9i509rm+vsayTUSF58pxBzU00Xn1lMJoSfZWfKQLCwWJ
+ chVQ8l0TssfWMjR7DhtvekU7ayI27wMIwuQR6RnGuevJXJpJkUPcjnT2BS9128db
+ Kxi8EukFB9MybfxRzVxNePgyEN7DRdo3wll2vGwQ5gE9e8RHNPhR9BauK9mfOEgl
+ ZoN4s2o0Eq6R9hV03iHqFJOfwm1Cw9bVv0tNPsK5KOfyctXajFJ0Kb0DOOK799eA
+ 9wzbxLBM26WsOrg+qQ51yJK4+HBLSKtzziJCLaLGUJDC5jEs35ua5iUJU6gjcELg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446tkck3gn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jan 2025 15:06:40 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GDmnLk007386;
+ Thu, 16 Jan 2025 15:06:39 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443ynecnv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jan 2025 15:06:39 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50GF6b2942795350
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jan 2025 15:06:37 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 93C2720043;
+ Thu, 16 Jan 2025 15:06:37 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4A51A20040;
+ Thu, 16 Jan 2025 15:06:37 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jan 2025 15:06:37 +0000 (GMT)
+Message-ID: <5bd1b396d06a3ab42a98cdff25a1dc2051e98b0b.camel@linux.ibm.com>
+Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Date: Thu, 16 Jan 2025 16:06:37 +0100
+In-Reply-To: <e74110e7-2dc4-4626-b64d-f42e3ffe7413@linaro.org>
+References: <20250115232022.27332-1-iii@linux.ibm.com>
+ <e74110e7-2dc4-4626-b64d-f42e3ffe7413@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Yb4HFs6YjtiYcxjSX-ejqMZb5p97hRQA
+X-Proofpoint-GUID: Yb4HFs6YjtiYcxjSX-ejqMZb5p97hRQA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-16_06,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0
+ impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ mlxlogscore=998 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501160114
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,43 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtMachineClass::no_highmem_ecam field was only
-used by virt-2.12 machine, which got removed. Remove it
-and simplify virt_instance_init().
+On Thu, 2025-01-16 at 06:54 -0800, Richard Henderson wrote:
+> On 1/15/25 15:20, Ilya Leoshkevich wrote:
+> > Currently single-insn TBs created from I/O memory are not added to
+> > region_trees. Therefore, when they generate exceptions, they are
+> > not
+> > handled by cpu_restore_state_from_tb(). For x86 this is not a
+> > problem,
+> > because x86_restore_state_to_opc() only restores pc and cc, which
+> > are
+> > already correct. However, on several other architectures,
+> > restore_state_to_opc() restores more registers, and guests can
+> > notice
+> > incorrect values.
+> >=20
+> > Fix by always calling tcg_tb_insert(). This may increase the size
+> > of
+> > region_trees, but tcg_region_reset_all() clears it once
+> > code_gen_buffer
+> > fills up, so it will not grow uncontrollably.
+> >=20
+> > Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> > =C2=A0 accel/tcg/translate-all.c | 16 ++++++++--------
+> > =C2=A0 1 file changed, 8 insertions(+), 8 deletions(-)
+> >=20
+> > diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> > index 453eb20ec95..6333302813e 100644
+> > --- a/accel/tcg/translate-all.c
+> > +++ b/accel/tcg/translate-all.c
+> > @@ -531,23 +531,23 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tb_reset_jump(tb=
+, 1);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=20
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Insert TB into the corresponding region tre=
+e before
+> > publishing it
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * through QHT. Otherwise rewinding happened i=
+n the TB might
+> > fail to
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * lookup itself using host PC.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 tcg_tb_insert(tb);
+>=20
+> I think what we need is to mark the tb CF_INVALID before inserting
+> it. That way we'll=20
+> never match in tb_lookup (comparing guest state, including cflags),
+> but *will* find it in=20
+> tcg_tb_lookup (comparing host_pc).
+>=20
+>=20
+> r~
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- include/hw/arm/virt.h | 1 -
- hw/arm/virt.c         | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index b2cc012a402..9a1b0f53d21 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -119,7 +119,6 @@ struct VirtMachineClass {
-     MachineClass parent;
-     bool no_tcg_its;
-     bool no_highmem_compact;
--    bool no_highmem_ecam;
-     bool no_ged;   /* Machines < 4.2 have no support for ACPI GED device */
-     bool kvm_no_adjvtime;
-     bool no_kvm_steal_time;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index d22b445fe99..8c5ca6b59d3 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3283,7 +3283,7 @@ static void virt_instance_init(Object *obj)
-     vms->highmem_compact = !vmc->no_highmem_compact;
-     vms->gic_version = VIRT_GIC_VERSION_NOSEL;
- 
--    vms->highmem_ecam = !vmc->no_highmem_ecam;
-+    vms->highmem_ecam = true;
-     vms->highmem_mmio = true;
-     vms->highmem_redists = true;
- 
--- 
-2.47.1
-
+How can tb_lookup() find it? With this change, it is inserted into
+region_trees, but not into tb_ctx.htable - this is done by
+tb_link_page(), which is not called. And because it's not in
+tb_ctx.htable, it can't end up in tb_jmp_cache either.
 
