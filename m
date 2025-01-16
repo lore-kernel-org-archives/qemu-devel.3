@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B37C02180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F74C02183
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 09:02:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLkw-0008ET-2Q; Thu, 16 Jan 2025 04:01:38 -0500
+	id 1tYLkg-00089s-DK; Thu, 16 Jan 2025 04:01:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYLkm-0008BE-Cp
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:01:28 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tYLke-00089P-H4
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:01:20 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYLkj-0000x7-Iv
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:01:28 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21628b3fe7dso10936665ad.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 01:01:25 -0800 (PST)
+ id 1tYLkc-0000wH-Kg
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 04:01:20 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21670dce0a7so14001495ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 01:01:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737018084; x=1737622884;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737018077; x=1737622877;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oyg4pbHdwstOkTHIR1V+PL7i5L1dZO54bgS88oDmuKI=;
- b=JSzGXOKLGm/S5GNreEjX/qlLD9P9oDGQW9Q61TmNPi9q+Mm3Dnf6+oDYSs/6r6DHup
- VZKRxGmqlmPlTvy41dNBghPHmGOgdbVgffoyLF16lW4cZGCpKv5FvZWGKVLxnG8OGGMi
- PsfmMStiBfQvZ3IkINMT6qQrnQNOtFFQkByw57ScmN47M/96B1B+d1gdo0IEJmz3UzkM
- KuT5J+p1Er7Gm6DpszzlSHkE8mG8Ftgzt4OwEXh2zwrHrCvl//2Z/zkctfUF4gnAilAI
- II30CDkMwsmyjVoCzMGvxIBWfCfw7JjMN88MBs/jV9fxG4TeWyNyFFfrsgKvyy1pUbgs
- unyg==
+ :reply-to; bh=2gQd0Jy4rc+uI1Ti92SqV/hr0DQj0ZpBWM4CmdOjypM=;
+ b=JRVRSUq6rgUOb6gP+OTyCs3mQz0dMdxt/KNPtmvrYtA7SSCbCA6wiqUyRiaHTy6G6w
+ ZlVTRiOOssnDwjmS3riSm8OPKQ4x9W8JFNcO4sk+spE/CDjYnc1qd1ro7KGQHmjtbGxG
+ uwRAQFgLUENG+2cvqVj+L1LL1QoQtDAaWS9icTdX2scTH8Lty2FUl+iIJ73IUbsCZts/
+ 2Mcu/PtV41cpz9vJQkJWva+NippYlEYCghu0Nc1AO1YC05AVLCwS52D0o+R/eC/ZpIPr
+ d9FP0IkrYqnFnXeoQXjGqekIFe8f/3ibG2HYK6AcQvx6VYBFI8hCNaqLPJ5XlBk+VEX8
+ 4UKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737018084; x=1737622884;
+ d=1e100.net; s=20230601; t=1737018077; x=1737622877;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oyg4pbHdwstOkTHIR1V+PL7i5L1dZO54bgS88oDmuKI=;
- b=DbdR98bxOvFyzJnYPbUTTvJqKSsSOybQNTPMgbmQazlwbZsdT5ZRhG3zfYgvYUn+br
- OBdHAFV+y2rpKRFM/srUwk6pdQCDKzbSuLv7VV+5qLg0RiCl+g34vcBKbr8pcwRj9k+4
- VIPZiqZv9RgSZeAJs40LZ6GPiWmFUpQ9R2anKXLRZhmwYzJQr/717htzycRznZQJ+QgO
- 3Rl7rIAhLflOQCaCRdbz+eldN6XhHSMA2ykBXqHbSsJsJd2OfpIyPp7KQkucO2vqZvb0
- LxY9cyOBAGVhZQZ8+DNTJat/+mxBS1G30JgOxOPmQYFw8ld4DCmZRpG6VsM3t4M3A5r7
- eMBg==
-X-Gm-Message-State: AOJu0Yzoq96F/cCcPCqkuG2KqNA7Qsm0gweEVNMWV2lkLYT+5qKQyVno
- uWVrIDJxwSpKlAQ99wqfj3e872rPB+VdPa/18m9DKXaAqLNZj1v90q4pSp6m50Y=
-X-Gm-Gg: ASbGnctpKe36PQ3Z7LJlWxhNhBNifPTraqucb94pyryaDw5UkdgdH8gM4a0tp14k/XU
- tvrd09V1flyjga3j7XH5AJG+P1ICuFr7+PCrJ4nNr/NoGa754rI98HUClM0ShcWs8y7/MEfIddm
- q/dPAV+Alu1Y/9r//+YKA2NDbkNnvpmpHGzLavD2FAG7muwzUgxKIZYTP3sbaS/981MuqfAfh+A
- h/VZm/pgVjFn+aZInHqE9RMmpM01VknJFY1A1lFCwyP5ZBGTWN5N5s8s90=
-X-Google-Smtp-Source: AGHT+IFmNJ1enmRO7k7pgsZLhZRoJJCVDIvfPpvaf6eHEXUanEeF+2rfsRnKML38qNzlzOAb6bi0rA==
-X-Received: by 2002:a05:6a20:a107:b0:1e0:d766:8da1 with SMTP id
- adf61e73a8af0-1e88d2fc6bemr50702667637.39.1737018084282; 
- Thu, 16 Jan 2025 01:01:24 -0800 (PST)
+ bh=2gQd0Jy4rc+uI1Ti92SqV/hr0DQj0ZpBWM4CmdOjypM=;
+ b=NU9/WiBTz0IzjxJ2Q57kaL4U058frhMZq76tLg8+LZUqE1ckQZiS0vQMA+TzL1ZJ6k
+ POQH8O/UmrejuZZHC8bQZ0NFYeMjiovLU5EPatgVh+tY86gPZD7JATxQRke2MG894Pyx
+ rgp1dXVkY8z2HKOZaZjpobi4obEUp1npPxcypYDPCioeh5FP7+DGZNpxeS0abdDbQ33M
+ xR/Mx7b4QzgcUZw8rcZ3MchVqRdJ2uoln1ijggnyiKY5jbN8HAFchyeYh/47mW0Xpfxh
+ SMpzoLzfKRtH3BS5t8+rZ6QAi5acW4M96duyQxGiwEmDE4ITYEZc6TKoHd955CtDhM9i
+ 0tPA==
+X-Gm-Message-State: AOJu0YytAHIamDvl4cXypyvmWYAZikymgRihQVd8Bk3jxHGFiunUmuOJ
+ Jldmg7FjWb8Wb4+9n8vuKt0QNU4EEFYdhM/409QK+JjEPk1IIrplCsWhHjEvNQ4=
+X-Gm-Gg: ASbGncvE9wMLVh/ZeDjsIFVLHx/vw0mVo5JRjU0G5ZudpOrCsKGTWvkD7u99Kj1qxt3
+ /5xxwWEal3m43oW4ZcBQeg98L3vu8w38NhLyvDteP9R9PQNHGgBIPew8jAZw2O+dQJz6APvPbRU
+ KNetRgkl4fl1PgKucxdMQ14sUq+3TXtRZKWAmvwnO5nRVvE+HBWmiVcswFURnN8Th/foHMOaKa3
+ 1Y7Z0XenzwZyiythgpy8O97W1wltDG2vF1tTS2XRG/W22lhMjz0/5kuLkE=
+X-Google-Smtp-Source: AGHT+IGsHAXdcQyu8YJ3opLV0F5kA9eiBjGYAV8dlGdGfIEgcIK/HTKudx692rsFUvlVNRPj/ZrjPw==
+X-Received: by 2002:a05:6a20:6f09:b0:1e0:d859:e1bd with SMTP id
+ adf61e73a8af0-1e88cf635d3mr48091587637.1.1737018077261; 
+ Thu, 16 Jan 2025 01:01:17 -0800 (PST)
 Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-72d4067e31asm10345667b3a.123.2025.01.16.01.01.19
+ 41be03b00d2f7-a31d5047fc8sm11055796a12.57.2025.01.16.01.01.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 01:01:23 -0800 (PST)
+ Thu, 16 Jan 2025 01:01:16 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 16 Jan 2025 18:00:53 +0900
-Subject: [PATCH v20 02/11] hw/ppc/spapr_pci: Do not reject VFs created
- after a PF
+Date: Thu, 16 Jan 2025 18:00:52 +0900
+Subject: [PATCH v20 01/11] hw/ppc/spapr_pci: Do not create DT for disabled
+ PCI device
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250116-reuse-v20-2-7cb370606368@daynix.com>
+Message-Id: <20250116-reuse-v20-1-7cb370606368@daynix.com>
 References: <20250116-reuse-v20-0-7cb370606368@daynix.com>
 In-Reply-To: <20250116-reuse-v20-0-7cb370606368@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -88,14 +88,14 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,30 +111,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A PF may automatically create VFs and the PF may be function 0.
+Disabled means it is a disabled SR-IOV VF and hidden from the guest.
+Do not create DT when starting the system and also keep the disabled PCI
+device not linked to DRC, which generates DT in case of hotplug.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Shivaprasad G Bhat<sbhat@linux.ibm.com>
+Tested-by: Shivaprasad G Bhat<sbhat@linux.ibm.com>
 ---
- hw/ppc/spapr_pci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/ppc/spapr_pci.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index b94e4ba1314f..e0a9d50edc3d 100644
+index 904227d9aa1f..b94e4ba1314f 100644
 --- a/hw/ppc/spapr_pci.c
 +++ b/hw/ppc/spapr_pci.c
-@@ -1549,7 +1549,9 @@ static void spapr_pci_pre_plug(HotplugHandler *plug_handler,
-      * hotplug, we do not allow functions to be hotplugged to a
-      * slot that already has function 0 present
-      */
--    if (plugged_dev->hotplugged && bus->devices[PCI_DEVFN(slotnr, 0)] &&
-+    if (plugged_dev->hotplugged &&
-+        !pci_is_vf(pdev) &&
-+        bus->devices[PCI_DEVFN(slotnr, 0)] &&
-         PCI_FUNC(pdev->devfn) != 0) {
-         error_setg(errp, "PCI: slot %d function 0 already occupied by %s,"
-                    " additional functions can no longer be exposed to guest.",
+@@ -1283,8 +1283,7 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
+     PciWalkFdt *p = opaque;
+     int err;
+ 
+-    if (p->err) {
+-        /* Something's already broken, don't keep going */
++    if (p->err || !pdev->enabled) {
+         return;
+     }
+ 
+@@ -1572,6 +1571,14 @@ static void spapr_pci_plug(HotplugHandler *plug_handler,
+     SpaprDrc *drc = drc_from_dev(phb, pdev);
+     uint32_t slotnr = PCI_SLOT(pdev->devfn);
+ 
++    /*
++     * If DR or the PCI device is disabled we don't need to do anything
++     * in the case of hotplug or coldplug callbacks.
++     */
++    if (!pdev->enabled) {
++        return;
++    }
++
+     g_assert(drc);
+ 
+     if (IS_PCI_BRIDGE(plugged_dev)) {
+@@ -1647,6 +1654,11 @@ static void spapr_pci_unplug_request(HotplugHandler *plug_handler,
+     SpaprDrc *drc = drc_from_dev(phb, pdev);
+ 
+     g_assert(drc);
++
++    if (!drc->dev) {
++        return;
++    }
++
+     g_assert(drc->dev == plugged_dev);
+ 
+     if (!spapr_drc_unplug_requested(drc)) {
 
 -- 
 2.47.1
