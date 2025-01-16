@@ -4,211 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24F4C02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 20:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F169C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 21:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYWHl-0002ew-LC; Thu, 16 Jan 2025 15:16:14 -0500
+	id 1tYX7E-0003UZ-4O; Thu, 16 Jan 2025 16:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tYWHj-0002en-20
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 15:16:11 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tYWHe-0000oB-0l
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 15:16:10 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GJBm3V014518;
- Thu, 16 Jan 2025 20:16:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=ycnnx5tDlPY6U3LzLH9tjXCSUcSddeIcfr/MSKCLjUc=; b=
- RFaqmZWQEa/vNgdT3XPuZkvYt/po70rEPHgMOim/mkg/PgPeNXVxp9y2hXqNpCfG
- ABRl94KA34SlvhcIwqIBrbgR+HUd4aWm/+3TFXy0EfNksDmX9rHh7pD5FJFO2pAY
- KeltiwNIjCrBq8JR8RZuGt2gN+SJYTVGJ6QgBOg0ZlVqUedRIfH/v4820M18NhUm
- XuJ4MN8T8MvFC0iyMq0S/ljKNz7dr1yVhWl5f1Pz7IgNoPdaWqJgclIkgIT4jZth
- G3hWTS6GGIb7U+KqoixeGM8cEeXa4fZv0iSr1AWsYjunWxBOyJqIc/8p+zZUOPlN
- MPFOvI55Rk7QN1f7eoNrSw==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4475mfgggk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jan 2025 20:16:01 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 50GKDxcM038717; Thu, 16 Jan 2025 20:16:01 GMT
-Received: from nam04-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam04lp2042.outbound.protection.outlook.com [104.47.73.42])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 443f3b9hcq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jan 2025 20:16:00 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EFdwKiln78njbQQfsjQZdCMhJvk3rAIK/eYaKfUvBDOoDLR/NIdCyHDSiIV4EHXfnIwovHzzMSCF8CCKSt2DUrJ45WOCuzg/AinL/NqPtXDBgo4Ma1tGJvrCL2hBvUn89jEB0W2uJY5YVPssq23+RPga9/ms1kgimT+BGrOkBiqo0C0nnzDANjRFSuMIqplwIT4suqpkobggp97aHZiclTClmHKfsI9u1yGEl0VkyQA5bQz20gZ7ai8+seGHrdMVOfUMQFqRTiKwJE1/7z78K5X7ZehqKBBQ3LTMJ6G31ypYKFqLigiyyWhvIQc1ZKyT8Ft4YRrgaNnEufN1BQm00A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ycnnx5tDlPY6U3LzLH9tjXCSUcSddeIcfr/MSKCLjUc=;
- b=QRGaO/TDCMIh8aFdAT4BmiFdetihmprR1vgK7bK/9dpLtfLH/KeHYH9TFxwXDAulmz0ig2/xXrUZgyJ7HEe+X1EIcJfg61kkPmrVe3eZ8cdAJ1k2jSyTSOLVihGW6M6Pm/dlfF1BD+FCY0nEKmGA8FqYKtEjlqhC2k3ZjIbYGiHvk3YdhvZwk48j6nCueKjrr/HTe4rB9lCEuDNZLX27Yvfu6q1w5LHxX83MB2DKvWCeFSzxDZ87uVhB+rZztnK2YiL7//MjPrro6TVm/dsIXqlMsMa7bhiZENN0jSwgo863EQSV1dbt8SLDiZ4yYd2iw9hRpPADNLy5rpm0NmT9Dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYX7B-0003UC-Hf
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 16:09:21 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYX78-0008Gm-Ci
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 16:09:21 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so1096165f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 13:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ycnnx5tDlPY6U3LzLH9tjXCSUcSddeIcfr/MSKCLjUc=;
- b=S0ZIJlE16lCBreAqV04RR22AXJ056QJuQ6pof6A87zNqmABW46sV1/mUGJOerwdoxkGuVR4MndItlxFGjjCtm9eEYwExVlIVHZlvQd60uaDYAFa3J13Xu6UFOAOqwkIxjr/MzwbNFfwjb8gwcNRUNjTCQvX1hyMZn5txi3k1wZ4=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by DM6PR10MB4201.namprd10.prod.outlook.com (2603:10b6:5:216::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.14; Thu, 16 Jan
- 2025 20:15:39 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8356.010; Thu, 16 Jan 2025
- 20:15:38 +0000
-Message-ID: <9ccbd8e6-5e8f-444f-a057-5c9eca2020b7@oracle.com>
-Date: Thu, 16 Jan 2025 15:15:32 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V7 23/24] migration-test: cpr-transfer
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
- <1736967650-129648-24-git-send-email-steven.sistare@oracle.com>
- <8734hifujq.fsf@suse.de> <fe25b4b6-fd39-4c2a-a104-343b59b405b6@oracle.com>
- <87zfjqedcm.fsf@suse.de>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <87zfjqedcm.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BY5PR03CA0021.namprd03.prod.outlook.com
- (2603:10b6:a03:1e0::31) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ d=linaro.org; s=google; t=1737061756; x=1737666556; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ehQfsjuhR9c4bmr1DLpJA7X8dGSFzsdi+BxL6+m3doQ=;
+ b=JgvQwZfhvtamwXOI7jOFR3aDo+Q6Rz/pM5bD6Dfdju/DB5eP5+jZlv/pUvZZ6wEmHt
+ TztEyC7Ik0m/nNyge7N/MzRDl7CeiJ/VwTFAtTNUWBIpbT9EED/bWxBcfpnGKgjvWJRT
+ 70u1JIwxbW0H8dsvJ6lKUh4s6i4Zr1aBMPMRwOEkPM/ojmeUiadtX5bYodh3TT/q4A4B
+ acDWvi/i0sJ53XUm8hM0n3alAmLBh1S3PekdgzqCVl5/edsz3ALH9wr5V4Z0C+UaMDof
+ FtUCUi7e3rdcOoJAEa9Up1bQLja+pcCpLLzm4ehwGLI/zeG4AlCzx1DO6rBm2RdGHwWX
+ 9HUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737061756; x=1737666556;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ehQfsjuhR9c4bmr1DLpJA7X8dGSFzsdi+BxL6+m3doQ=;
+ b=GNV9dY0YJGm9FwABt9ISS+2uY+NPL+NPb6SOng/QaCmVv7j0M+LfgWHfylkBDsfMkj
+ OKitqPiXm44KWI1+UrmJtHe1es/FZust8XtRVu20t+EypxoKwh8csbew+q1hQPT45DgK
+ 40fXXOqxjzYShfusfUp70knpDaMEk6QEevCNMtGQYFZPRR1qGRlv9wZY1vue6V0Yvesi
+ P+aRAtjB06md1D8jGCcxgxWpRJ0p/moqXs46Jly1ZUczvXkQqtiOhKGIUkbjZgyvSe8p
+ M8Vz05d5Rg9foZH35NYvwRXK+xd8KFM3BMEtbBl7YwyxPQDpitA2ntiNuUoBwbKF5XnA
+ NT8Q==
+X-Gm-Message-State: AOJu0YyXsOxr74Ph1BFCLsO97eh5b3VmQi3XiSc2oSyjo1Rkar4E+pjv
+ I4Tofukb3446QtS1BsjzqeI5NwXWFMpj108jAEElQtL7PbxTVWHGlO+TbHeCcbiefS4gjW6II/Y
+ 8+2U=
+X-Gm-Gg: ASbGncsFrIhitkG5rwSmbsyqX0mJmo0oHbuQd4uQ3DGwgAP0YFjWXwU6787o/eLMunS
+ TXJWN3FMvQA0C4Xtp7aBPeGYJm0G5QLBBJxP44TwrJw40sRHCjzuG7e12ywEY/iMz0BTTWaC24B
+ kuPB/Zi5no2Qc/RdEQUNVn4fRzHEZFPORh3ITOl+We8SS3DS2hgwYBzoFNmOtK7XyzKu0OLlRJb
+ wL0OxvTSg8S/wjnCPSqoowqQJvNZLQAr0Pp+M9tMWZnZMXskHdU0H5poxHETsep/90Cb/BWZj0k
+ rdWiBGHYnUYYKizjILJKklz1LbYnEfU=
+X-Google-Smtp-Source: AGHT+IH8LzCEZ9JDYzraPCqJj9vG8VrRfJq6tfS5RlD9FDYe5QFON6RemlPGPIo1hIHlF8ukHuHntg==
+X-Received: by 2002:adf:fec5:0:b0:38a:88d0:18d6 with SMTP id
+ ffacd0b85a97d-38bf58e8fa8mr75883f8f.42.1737061755593; 
+ Thu, 16 Jan 2025 13:09:15 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf321504asm794697f8f.17.2025.01.16.13.09.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 16 Jan 2025 13:09:15 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] qemu/compiler: Absorb 'clang-tsa.h'
+Date: Thu, 16 Jan 2025 22:09:13 +0100
+Message-ID: <20250116210913.53782-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DM6PR10MB4201:EE_
-X-MS-Office365-Filtering-Correlation-Id: e056222d-e059-4929-7f1b-08dd366a8b2d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|7416014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MXhsdUVwM3N6ZWtjTXNIenh1V0JnRVlqSElIQzA2NEI0Mk5QV0hjZmc2NlVM?=
- =?utf-8?B?eUZLWGF1WC9VTkx1Qk5yL0dSRVQ2NFJnTTh1V2hmYUFqWXhkaEVsZjVxTDMr?=
- =?utf-8?B?YURDYlhWaG5UU29xOTRaSE4xREhTelU0eWxIYjBNaEROQWlpOFhiN3BxZFYy?=
- =?utf-8?B?TnJTSkpmbklWN09Ka3hjcWNBcXYxYk5JcitTMzBSWmp4aW5vQitnOVZOK3JB?=
- =?utf-8?B?SitpdVNNRmFUZmhIS3lXZ291RWtnTENhSEhJMmprREllbHlqQmRRQWNuUG1K?=
- =?utf-8?B?M3lJUGUydVRlOGtJZlB3WE10bFEyM2NVRSszK0Nwa3VvejJVcnFnQ2wxbTYx?=
- =?utf-8?B?ZjRrdGVrUS9aYXRVNmRMNGpnVS9wengvcENESDBTTlk4OGZsd3lrLzJEdDJ4?=
- =?utf-8?B?UTgwTEVialdBK3hLZ1dWWXljdXl6cW52ZVlmaEdHYzJaLyt1b0cycmJ4dVly?=
- =?utf-8?B?eGV1em9ZSlUyaGp2QkNPZkpDdkpSdnZNam9teU16eUxYWVhMViswNFpxOXEv?=
- =?utf-8?B?QTB4a3dJL2xaZGs4aHh2TVdJb3RucHdmcnZ6Z01iRWVKdXpkNlFLaHkxbjFl?=
- =?utf-8?B?SXNsU2E0ckFtSTdJL0ZjaFMxVEw3TDJvdFhjOFlBSHVLL3FsYURHSnJpdEZC?=
- =?utf-8?B?aExXUUJXSXlRaU9lbkljZGJpbXN1dTNUTitPYkNjaGIxVjVRNUN2ejFoeXpW?=
- =?utf-8?B?anpCc2ErREVFRVJiUW5lZG41VjIwOUIzT2NCMXFFTEZsZVZZOCsxdU1WbFJQ?=
- =?utf-8?B?aDMzbXE1OXRhU3lyVWJJMTNzZ1RZUENuc0VxYlF1Mzh3ZzZqeHdaTWVVTW16?=
- =?utf-8?B?QXVUMTZQejhxWHlvWEhUdk5ESkRmRGVDY09aSEtHWlhSbmNaMXlveHd6dGRa?=
- =?utf-8?B?RDlvRVJrWWtGT3ZPamdKcXFyU01vY2NzbnF5by9ZT3h6OWlWTk5pN3VIaUd3?=
- =?utf-8?B?bVNQTU1QdW1OeXE2VExSN1paTkJhNFByZmVkS0RRTjROclN0WVFJSTNhMjRw?=
- =?utf-8?B?c3FzRElUVjA1LzFIcVRSWnVCbTBYUFZ1U0FlaWVjOURhZkFOelpqb3FXSGZh?=
- =?utf-8?B?TlB3aDFRN01OOWp6TWxBbDc5bXZQZ1hKaGU2U1NNcGkwTmVRNDFuNHBjbVA2?=
- =?utf-8?B?dU1tTzZjT09vVVluWWl3cE1HUXFxOEkzRmhmcUhaR2l0c2JrN0R1L2JFWjJr?=
- =?utf-8?B?WXdXY000VXUyV2YxZHRIOGErdkc5NEY3NXdIZ0w3VjJaNy94TmZrcmVxOS85?=
- =?utf-8?B?L2MyR2J1NVc2Y1grWkl6d2FZeWlOTDFQeUNNRnB0QUxYWjhKckh2bVNUV2x6?=
- =?utf-8?B?aWJqNmdzUWJOUDlLbGtlSGV2MlBibnl0SUkrZSt1cEhyM3BCTmc1Q0VoVjJy?=
- =?utf-8?B?VEVwbEl0aGFiejJKa0gwbUpUZ0FLNVU4Y0lvWkZ6RnE0Q2lrcGZWQnpIVzI2?=
- =?utf-8?B?RnczbEtRZ1l5SlBFSXdvSk5lekpLNm5LWWhzU1NQbXZMbS9oeEVZb0pnUW5E?=
- =?utf-8?B?NE1KbE1IVy92L3pRL3d6Y3lscTJxejZzS1MyTk1ZcEE4LzlmcGJTczYzRmk2?=
- =?utf-8?B?Nnd1TW14Qy9JTUNSRzBiTGNKREFvTFo1YXRtSWlLTTI0T2hpdjk4S2MzVnFE?=
- =?utf-8?B?MnQ1VGdkNlVYL04wMGZFdDRvdlllWUpWM0FKaUtPT3krakJIbE9BS0JRM2Qv?=
- =?utf-8?B?ZkdSNldDZEkrbXFTeFQ0Y09WTURWT2plakpjNGg1anlQR01Va2h1ZUo5RWJT?=
- =?utf-8?B?UlhjN3VNUzhERzJXMkNsc2Q2Zno4Wkw1N0U4OTVqaVA0TmtHL3ZPM0hzVnVC?=
- =?utf-8?B?a01YcGg1LzlrS1VMS0wrRWFXV3FuRVZpRENkNFdUSmFIanUyWEt4S3hXam9j?=
- =?utf-8?Q?IurBG7rPZVX1O?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7416014)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NmpQZWw0cGZqSUt2aTZ5THNZTTdCRTZTRDhob08zNHVvbDZyOUZDTGl4anJt?=
- =?utf-8?B?cGRKMW1RM0ZrUTNyT1oxNVpEUDQyNmk1ZSttbjJpVnVVTzg0UGhrTENOMjFC?=
- =?utf-8?B?c2JBV1M3T2hPUGtoZWphZGh2SmpQa3ZDckEwN2RYSFZnMGRrVzdacDJBUlNl?=
- =?utf-8?B?TkUzaTYwY1BGYi9QUzlmWmdRNyszaXovS29UQ3ZxU2VMakt0Y01jZGtaV2M1?=
- =?utf-8?B?dkpRcEJ6aHpwbHRoOFdWaVZ2Ulowa0NzbHhvV0FxZEpOeTVid2lCZE8yaWV2?=
- =?utf-8?B?NkZNeWhvL3A1aFMyZEkxTzJncFAxNVlkVXNJZ3Boejl1WXQxa21lS3VUbFAx?=
- =?utf-8?B?Sm9waGFWRlFQU0xuc2N0NCs5aE9sb2NFL215aUxvaklXb1FTOGVGVHB0RlpQ?=
- =?utf-8?B?WnVwK1lRNExCUnJBeHF6WE5IV0lmdG05R01ibUJGbDQxVTFvZEdIVzFycWJk?=
- =?utf-8?B?MGd1RGRkWWJLMnpkTzc4SXZUemd0cW1QL3dDSFU4QkowS09lbGFXbmhsbitx?=
- =?utf-8?B?bTNaUE9sWXQ5aXNZSUFQaWxnUmg4MkJHVkh6TUNiMnI0dW41Wnh4elJTdTV1?=
- =?utf-8?B?cWFYMmNVVmp4TjZuVHpSU3YwMjJOZTM4SVhoOU9BV1ppUGJsdkpaN2NjWUM0?=
- =?utf-8?B?Y3dnSDBrZ05BSHVLWVo5T2duSEdKRE00QldlTjNFeG5SL1IzMm54SmZjUk9K?=
- =?utf-8?B?eS9UdUhtbmRpc0RJcjAydU1lRDFRcllEQURLWnV4cjJVZGZqK3lVK25ndW9U?=
- =?utf-8?B?UVRDRkVEUHVsY05ycFNkYTRnQnc0VGo1dUNVZzU0dTdaV0hDTUFoL00xeVJs?=
- =?utf-8?B?UjVYdlFFRFVBUGxKVFd1bFFIeEtXRDF0dnlmZ1F0eWxLWnpkYitlaHFYYjNR?=
- =?utf-8?B?UUJobEhrc0YxQUN2Vjc4QmdiTHo2Q05SSVI2eGx6Q3NqTkgyUDQ2ZERNSTQy?=
- =?utf-8?B?T3Fnbk1ha0tZakNBYkJHNXFrSVFrVGlXczVxbkY5Z0R4SHRZRmFSQkczb25W?=
- =?utf-8?B?eTdqSXZ5Z3V2eWRQSitOSGpXVGFYVUVlQjJZcE1MN2NHWnc1Tm15K0RyTXFB?=
- =?utf-8?B?U3V0UWNvOElUVFVvaVd2bmpDbGNNRHA4WjZjMGttOUZnUWpyYzVtM292eXFt?=
- =?utf-8?B?WHZISG45bWQ4Z2prcUpISDdkalJ4azlTMy9EbWtBWHpVR0VwWFFtM2tOR094?=
- =?utf-8?B?d2tTMW5pTnFJci8ydnlCaGRlTkoyTHBXa3plSDdTMWhsVUw2OTFGU1YwY1k0?=
- =?utf-8?B?SnN2UjJ3TjlWaGkwY1NBSTJ1YzR0YWEwR2hhVlVNK1FyQSs1ZkdyNnhIM2Fw?=
- =?utf-8?B?Qm9VY2czakE1MTczTFlnNkw2QWN2Slg4bWloVlF4am90MnpFSDYyNjJuOTZO?=
- =?utf-8?B?NW9yTnJ2b1pnT0FhcDdzM1phL0V6WmM5cTNDWksxSkRkdEh0ZXpnSnNhWWQz?=
- =?utf-8?B?UjRhY09DTGhaTlJSRFlremtxUnY1dTlNKzJrMzRheVAzeXY5a1ZRSEZleXZx?=
- =?utf-8?B?Wmd5bEhCdXJ2cFFnUVA1VkJubWxIU3VWUzY1aHNHM1M1YmFLWlRwK1gwVDFu?=
- =?utf-8?B?Zjl3RmxZTHFUc3p5UDY0MEVLRktpbW1ib1hFU0NaS2hQcDg4TmZZYTlKSWk0?=
- =?utf-8?B?M2FZRW9CbUxxc3hmVjB5dDR5TktLOFNqT3g5MVFyc005T21zcU0wT24xWnhq?=
- =?utf-8?B?UnJseXBveU51a3YvUXhYWVZsUW5ZU0l5N2VHeWtYOFNMclFTTWxhSXpuaCty?=
- =?utf-8?B?WkFrKzVOY3VCZjlmRFlRa2tVMnNxRzVmZTBDSCt3LzB5YktEWWhKWmRGeXR1?=
- =?utf-8?B?L1d1YU1sSTQ1QlZEaEFoYWs4UDVXQ0RLOXJnWGI0L3A0c1RLSnZlZCtuS0lm?=
- =?utf-8?B?d2s3Z3BQZjFraW4rNXhvWTdNZ3NJUVF0UmR4a0VuNDdqendlNXVVRDNHZ1pT?=
- =?utf-8?B?TUt2OE9xWnE0TnFsQUdKMnFNalVCU3IrM1BtQTB4UGZPNmk2aDcrS2lKc3o1?=
- =?utf-8?B?cGExV3YyUkNuak1GcVZZV2pzNUhhRUZnR043Y1Rqb3dkaGNKMUZ5WnY2cDhW?=
- =?utf-8?B?cm83c2daemZ6a2R4czNQV2t5OGhtdTlCTjJWZE9EcURkYnhibFliNWRPVmFN?=
- =?utf-8?B?V0UrekRkTmg0K0RKQmlXZUE5V2dhSHlmOWdZOXdLTVVpcEw3alFwb25SdW9k?=
- =?utf-8?B?VFE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: zJJM7bOvgAUEfZ03/+3tUeshKNtLtkCiumA8wuFZmNUrIhN/Z1OKOw8V/IQVIhrmQ1adUOfQV0As+kr7p3mnz2emUkZjeAMp3qD1twAqtO7SQwi9q69+2E9ewp6AchR1YqZF7qpGIsdzsMNv2w+OfphmrRAKLcC3Bv3idI9caj3cQOv9lrAF+ewN1I52C+U608+qJiPDB/IwRVs1csEc587kM+Q2tzyI5qEffV4QVXIrTCnFzpnd1fZIXHII4d9DZw06++enZ3VSft2BPqf6eAryWmpJbOxMXUPlld5gg4YJFq2DnrbXGskXT41d3iJGapgbZHZllmZsaTOOnAs0jrLRY/tnv/MZuN1msCe+G7WEkonMaiH6ht8tBNTT4cZpYnA5Mhn12K3qE6PH43JC6KEYan9zo4ZMpnzivE1lN5wIT0yyxji/CdzMeRmDrKA45YMDxlLP8GOW44vhAXVwKDZ/e88i+TB8P0azOT5O1qOxu9MJoutJ5AEPiTsIypjR935AoltZwza7xbWO5zqy9s49Q1jVzDtvJAn3dyF5sWcnWcpKp8JRYvg21nu3kzte7KNn9aCX9NxfskBugmoOuyG479LDBXaMNzMWrIMpcWo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e056222d-e059-4929-7f1b-08dd366a8b2d
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2025 20:15:38.8036 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6NUQNKqd5ywAGOeDXkeNlohG4zjxx3FP39qwcDzVbwA4ZRWQqkfG+ZpNvkOBVU3LYD7RCVsxtKyxsP+IeSWNUXedbaejRjTttokJKlP3+48=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR10MB4201
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_08,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0
- mlxlogscore=999 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2501160149
-X-Proofpoint-GUID: WOrq0OxGTi_HWmAfMd7MuaP_D-QUHqGR
-X-Proofpoint-ORIG-GUID: WOrq0OxGTi_HWmAfMd7MuaP_D-QUHqGR
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -224,96 +100,705 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/2025 3:02 PM, Fabiano Rosas wrote:
-> Steven Sistare <steven.sistare@oracle.com> writes:
-> 
->> On 1/16/2025 2:06 PM, Fabiano Rosas wrote:
->>> Steve Sistare <steven.sistare@oracle.com> writes:
->>>
->> [...]
->>>> +    /*
->>>> +     * The cpr channel must be included in outgoing channels, but not in
->>>> +     * migrate-incoming channels.
->>>> +     */
->>>>        if (args->connect_channels) {
->>>> +        in_channels = qobject_from_json(args->connect_channels, &error_abort);
->>>>            out_channels = qobject_from_json(args->connect_channels, &error_abort);
->>>> +
->>>> +        if (args->cpr_channel) {
->>>> +            QList *channels_list = qobject_to(QList, out_channels);
->>>> +            QObject *obj = migrate_str_to_channel(args->cpr_channel);
->>>> +
->>>> +            qlist_append(channels_list, obj);
->>>> +        }
->>>>        }
->>>>    
->>>>        if (args->result == MIG_TEST_QMP_ERROR) {
->>>> @@ -735,6 +751,9 @@ void test_precopy_common(MigrateCommon *args)
->>>>        if (args->start.defer_target_connect) {
->>>>            qtest_connect(to);
->>>>            qtest_qmp_handshake(to);
->>>> +        if (!strcmp(args->listen_uri, "defer")) {
->>>> +            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
->>>> +        }
->>>
->>> Paths that don't call migrate_incoming_qmp() never free
->>> in_channels. We'll need something like this, let me know if I can squash
->>> it in or you want to do it differently:
->>>
->>> -- >8 --
->>>   From 62d60c39b3e5d38cac20241e63b9d023bd296d2f Mon Sep 17 00:00:00 2001
->>> From: Fabiano Rosas <farosas@suse.de>
->>> Date: Thu, 16 Jan 2025 15:40:22 -0300
->>> Subject: [PATCH] fixup! migration-test: cpr-transfer
->>>
->>> ---
->>>    tests/qtest/migration/framework.c | 5 +++++
->>>    1 file changed, 5 insertions(+)
->>>
->>> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
->>> index 699bedae69..1d5918d922 100644
->>> --- a/tests/qtest/migration/framework.c
->>> +++ b/tests/qtest/migration/framework.c
->>> @@ -753,9 +753,14 @@ void test_precopy_common(MigrateCommon *args)
->>>            qtest_qmp_handshake(to);
->>>            if (!strcmp(args->listen_uri, "defer")) {
->>>                migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
->>> +            in_channels = NULL;
->>>            }
->>>        }
->>>    
->>> +    if (in_channels) {
->>> +        qobject_unref(in_channels);
->>> +    }
->>> +
->>>        if (args->result != MIG_TEST_SUCCEED) {
->>>            bool allow_active = args->result == MIG_TEST_FAIL;
->>>            wait_for_migration_fail(from, allow_active);
->>
->> Thank-you, though it would be more direct to avoid creating in_channels when
->> not needed:
->>
->>       if (args->connect_channels) {
->>           if (args->start.defer_target_connect) {
->>               in_channels = qobject_from_json(args->connect_channels,
->>                                               &error_abort);
->>           }
->>           out_channels = qobject_from_json(args->connect_channels, &error_abort);
-> 
-> That's better, but still needs one unref for the listen_uri != defer path.
+We already have "qemu/compiler.h" for compiler-specific arrangements,
+automatically included by "qemu/osdep.h" for each source file. No
+need to explicitly include a header for a Clang particularity,
+let the common "qemu/compiler.h" deal with that by having it
+include "qemu/clang-tsa.h" (renamed as qemu/clang-tsa.h.inc).
+Add a check to not include "qemu/clang-tsa.h.inc" directly,
+remove previous "qemu/clang-tsa.h" inclusions.
 
-OK, then:
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ bsd-user/qemu.h                               |   1 -
+ include/block/block_int-common.h              |   1 -
+ include/block/graph-lock.h                    |   2 -
+ include/exec/exec-all.h                       | 516 ------------------
+ include/exec/page-protection.h                |   2 -
+ include/qemu/compiler.h                       |   2 +
+ include/qemu/thread.h                         |   1 -
+ include/qemu/{clang-tsa.h => clang-tsa.h.inc} |   8 +-
+ block/create.c                                |   1 -
+ tests/unit/test-bdrv-drain.c                  |   1 -
+ tests/unit/test-block-iothread.c              |   1 -
+ util/qemu-thread-posix.c                      |   1 -
+ 12 files changed, 8 insertions(+), 529 deletions(-)
+ delete mode 100644 include/exec/exec-all.h
+ rename include/qemu/{clang-tsa.h => clang-tsa.h.inc} (97%)
 
-     if (args->connect_channels) {
-         if (args->start.defer_target_connect &&
-             !strcmp(args->listen_uri, "defer")) {
-             in_channels = qobject_from_json(args->connect_channels,
-                                             &error_abort);
-         }
-         out_channels = qobject_from_json(args->connect_channels, &error_abort);
-
-Or keep your fix.  I have no preference.
-
-- Steve
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 3eaa14f3f56..4e97c796318 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -40,7 +40,6 @@ extern char **environ;
+ #include "target.h"
+ #include "exec/gdbstub.h"
+ #include "exec/page-protection.h"
+-#include "qemu/clang-tsa.h"
+ #include "accel/tcg/vcpu-state.h"
+ 
+ #include "qemu-os.h"
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index bb91a0f62fa..ebb4e56a503 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -28,7 +28,6 @@
+ #include "block/block-common.h"
+ #include "block/block-global-state.h"
+ #include "block/snapshot.h"
+-#include "qemu/clang-tsa.h"
+ #include "qemu/iov.h"
+ #include "qemu/rcu.h"
+ #include "qemu/stats64.h"
+diff --git a/include/block/graph-lock.h b/include/block/graph-lock.h
+index dc8d9491843..2c26c721081 100644
+--- a/include/block/graph-lock.h
++++ b/include/block/graph-lock.h
+@@ -20,8 +20,6 @@
+ #ifndef GRAPH_LOCK_H
+ #define GRAPH_LOCK_H
+ 
+-#include "qemu/clang-tsa.h"
+-
+ /**
+  * Graph Lock API
+  * This API provides a rwlock used to protect block layer
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+deleted file mode 100644
+index d9045c9ac4c..00000000000
+--- a/include/exec/exec-all.h
++++ /dev/null
+@@ -1,516 +0,0 @@
+-/*
+- * internal execution defines for qemu
+- *
+- *  Copyright (c) 2003 Fabrice Bellard
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef EXEC_ALL_H
+-#define EXEC_ALL_H
+-
+-#include "cpu.h"
+-#if defined(CONFIG_USER_ONLY)
+-#include "exec/cpu_ldst.h"
+-#endif
+-#include "exec/mmu-access-type.h"
+-#include "exec/translation-block.h"
+-
+-#if !defined(CONFIG_USER_ONLY) && defined(CONFIG_TCG)
+-/* cputlb.c */
+-/**
+- * tlb_init - initialize a CPU's TLB
+- * @cpu: CPU whose TLB should be initialized
+- */
+-void tlb_init(CPUState *cpu);
+-/**
+- * tlb_destroy - destroy a CPU's TLB
+- * @cpu: CPU whose TLB should be destroyed
+- */
+-void tlb_destroy(CPUState *cpu);
+-/**
+- * tlb_flush_page:
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of page to be flushed
+- *
+- * Flush one page from the TLB of the specified CPU, for all
+- * MMU indexes.
+- */
+-void tlb_flush_page(CPUState *cpu, vaddr addr);
+-/**
+- * tlb_flush_page_all_cpus_synced:
+- * @cpu: src CPU of the flush
+- * @addr: virtual address of page to be flushed
+- *
+- * Flush one page from the TLB of all CPUs, for all
+- * MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr);
+-/**
+- * tlb_flush:
+- * @cpu: CPU whose TLB should be flushed
+- *
+- * Flush the entire TLB for the specified CPU. Most CPU architectures
+- * allow the implementation to drop entries from the TLB at any time
+- * so this is generally safe. If more selective flushing is required
+- * use one of the other functions for efficiency.
+- */
+-void tlb_flush(CPUState *cpu);
+-/**
+- * tlb_flush_all_cpus_synced:
+- * @cpu: src CPU of the flush
+- *
+- * Flush the entire TLB for all CPUs, for all MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_all_cpus_synced(CPUState *src_cpu);
+-/**
+- * tlb_flush_page_by_mmuidx:
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of page to be flushed
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush one page from the TLB of the specified CPU, for the specified
+- * MMU indexes.
+- */
+-void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr,
+-                              uint16_t idxmap);
+-/**
+- * tlb_flush_page_by_mmuidx_all_cpus_synced:
+- * @cpu: Originating CPU of the flush
+- * @addr: virtual address of page to be flushed
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush one page from the TLB of all CPUs, for the specified
+- * MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                              uint16_t idxmap);
+-/**
+- * tlb_flush_by_mmuidx:
+- * @cpu: CPU whose TLB should be flushed
+- * @wait: If true ensure synchronisation by exiting the cpu_loop
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush all entries from the TLB of the specified CPU, for the specified
+- * MMU indexes.
+- */
+-void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap);
+-/**
+- * tlb_flush_by_mmuidx_all_cpus_synced:
+- * @cpu: Originating CPU of the flush
+- * @idxmap: bitmap of MMU indexes to flush
+- *
+- * Flush all entries from the TLB of all CPUs, for the specified
+- * MMU indexes.
+- *
+- * When this function returns, no CPUs will subsequently perform
+- * translations using the flushed TLBs.
+- */
+-void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, uint16_t idxmap);
+-
+-/**
+- * tlb_flush_page_bits_by_mmuidx
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of page to be flushed
+- * @idxmap: bitmap of mmu indexes to flush
+- * @bits: number of significant bits in address
+- *
+- * Similar to tlb_flush_page_mask, but with a bitmap of indexes.
+- */
+-void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                   uint16_t idxmap, unsigned bits);
+-
+-/* Similarly, with broadcast and syncing. */
+-void tlb_flush_page_bits_by_mmuidx_all_cpus_synced
+-    (CPUState *cpu, vaddr addr, uint16_t idxmap, unsigned bits);
+-
+-/**
+- * tlb_flush_range_by_mmuidx
+- * @cpu: CPU whose TLB should be flushed
+- * @addr: virtual address of the start of the range to be flushed
+- * @len: length of range to be flushed
+- * @idxmap: bitmap of mmu indexes to flush
+- * @bits: number of significant bits in address
+- *
+- * For each mmuidx in @idxmap, flush all pages within [@addr,@addr+@len),
+- * comparing only the low @bits worth of each virtual page.
+- */
+-void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                               vaddr len, uint16_t idxmap,
+-                               unsigned bits);
+-
+-/* Similarly, with broadcast and syncing. */
+-void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                               vaddr addr,
+-                                               vaddr len,
+-                                               uint16_t idxmap,
+-                                               unsigned bits);
+-
+-/**
+- * tlb_set_page_full:
+- * @cpu: CPU context
+- * @mmu_idx: mmu index of the tlb to modify
+- * @addr: virtual address of the entry to add
+- * @full: the details of the tlb entry
+- *
+- * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
+- * @full must be filled, except for xlat_section, and constitute
+- * the complete description of the translated page.
+- *
+- * This is generally called by the target tlb_fill function after
+- * having performed a successful page table walk to find the physical
+- * address and attributes for the translation.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
+- * used by tlb_flush_page.
+- */
+-void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+-                       CPUTLBEntryFull *full);
+-
+-/**
+- * tlb_set_page_with_attrs:
+- * @cpu: CPU to add this TLB entry for
+- * @addr: virtual address of page to add entry for
+- * @paddr: physical address of the page
+- * @attrs: memory transaction attributes
+- * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
+- * @mmu_idx: MMU index to insert TLB entry for
+- * @size: size of the page in bytes
+- *
+- * Add an entry to this CPU's TLB (a mapping from virtual address
+- * @addr to physical address @paddr) with the specified memory
+- * transaction attributes. This is generally called by the target CPU
+- * specific code after it has been called through the tlb_fill()
+- * entry point and performed a successful page table walk to find
+- * the physical address and attributes for the virtual address
+- * which provoked the TLB miss.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
+- * used by tlb_flush_page.
+- */
+-void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+-                             hwaddr paddr, MemTxAttrs attrs,
+-                             int prot, int mmu_idx, vaddr size);
+-/* tlb_set_page:
+- *
+- * This function is equivalent to calling tlb_set_page_with_attrs()
+- * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
+- * as a convenience for CPUs which don't use memory transaction attributes.
+- */
+-void tlb_set_page(CPUState *cpu, vaddr addr,
+-                  hwaddr paddr, int prot,
+-                  int mmu_idx, vaddr size);
+-#else
+-static inline void tlb_init(CPUState *cpu)
+-{
+-}
+-static inline void tlb_destroy(CPUState *cpu)
+-{
+-}
+-static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
+-{
+-}
+-static inline void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr)
+-{
+-}
+-static inline void tlb_flush(CPUState *cpu)
+-{
+-}
+-static inline void tlb_flush_all_cpus_synced(CPUState *src_cpu)
+-{
+-}
+-static inline void tlb_flush_page_by_mmuidx(CPUState *cpu,
+-                                            vaddr addr, uint16_t idxmap)
+-{
+-}
+-
+-static inline void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
+-{
+-}
+-static inline void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                            vaddr addr,
+-                                                            uint16_t idxmap)
+-{
+-}
+-static inline void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                       uint16_t idxmap)
+-{
+-}
+-static inline void tlb_flush_page_bits_by_mmuidx(CPUState *cpu,
+-                                                 vaddr addr,
+-                                                 uint16_t idxmap,
+-                                                 unsigned bits)
+-{
+-}
+-static inline void
+-tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                              uint16_t idxmap, unsigned bits)
+-{
+-}
+-static inline void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                             vaddr len, uint16_t idxmap,
+-                                             unsigned bits)
+-{
+-}
+-static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                             vaddr addr,
+-                                                             vaddr len,
+-                                                             uint16_t idxmap,
+-                                                             unsigned bits)
+-{
+-}
+-#endif
+-
+-#if defined(CONFIG_TCG)
+-
+-/**
+- * probe_access:
+- * @env: CPUArchState
+- * @addr: guest virtual address to look up
+- * @size: size of the access
+- * @access_type: read, write or execute permission
+- * @mmu_idx: MMU index to use for lookup
+- * @retaddr: return address for unwinding
+- *
+- * Look up the guest virtual address @addr.  Raise an exception if the
+- * page does not satisfy @access_type.  Raise an exception if the
+- * access (@addr, @size) hits a watchpoint.  For writes, mark a clean
+- * page as dirty.
+- *
+- * Finally, return the host address for a page that is backed by RAM,
+- * or NULL if the page requires I/O.
+- */
+-void *probe_access(CPUArchState *env, vaddr addr, int size,
+-                   MMUAccessType access_type, int mmu_idx, uintptr_t retaddr);
+-
+-static inline void *probe_write(CPUArchState *env, vaddr addr, int size,
+-                                int mmu_idx, uintptr_t retaddr)
+-{
+-    return probe_access(env, addr, size, MMU_DATA_STORE, mmu_idx, retaddr);
+-}
+-
+-static inline void *probe_read(CPUArchState *env, vaddr addr, int size,
+-                               int mmu_idx, uintptr_t retaddr)
+-{
+-    return probe_access(env, addr, size, MMU_DATA_LOAD, mmu_idx, retaddr);
+-}
+-
+-/**
+- * probe_access_flags:
+- * @env: CPUArchState
+- * @addr: guest virtual address to look up
+- * @size: size of the access
+- * @access_type: read, write or execute permission
+- * @mmu_idx: MMU index to use for lookup
+- * @nonfault: suppress the fault
+- * @phost: return value for host address
+- * @retaddr: return address for unwinding
+- *
+- * Similar to probe_access, loosely returning the TLB_FLAGS_MASK for
+- * the page, and storing the host address for RAM in @phost.
+- *
+- * If @nonfault is set, do not raise an exception but return TLB_INVALID_MASK.
+- * Do not handle watchpoints, but include TLB_WATCHPOINT in the returned flags.
+- * Do handle clean pages, so exclude TLB_NOTDIRY from the returned flags.
+- * For simplicity, all "mmio-like" flags are folded to TLB_MMIO.
+- */
+-int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+-                       MMUAccessType access_type, int mmu_idx,
+-                       bool nonfault, void **phost, uintptr_t retaddr);
+-
+-#ifndef CONFIG_USER_ONLY
+-
+-/**
+- * probe_access_full:
+- * Like probe_access_flags, except also return into @pfull.
+- *
+- * The CPUTLBEntryFull structure returned via @pfull is transient
+- * and must be consumed or copied immediately, before any further
+- * access or changes to TLB @mmu_idx.
+- *
+- * This function will not fault if @nonfault is set, but will
+- * return TLB_INVALID_MASK if the page is not mapped, or is not
+- * accessible with @access_type.
+- *
+- * This function will return TLB_MMIO in order to force the access
+- * to be handled out-of-line if plugins wish to instrument the access.
+- */
+-int probe_access_full(CPUArchState *env, vaddr addr, int size,
+-                      MMUAccessType access_type, int mmu_idx,
+-                      bool nonfault, void **phost,
+-                      CPUTLBEntryFull **pfull, uintptr_t retaddr);
+-
+-/**
+- * probe_access_full_mmu:
+- * Like probe_access_full, except:
+- *
+- * This function is intended to be used for page table accesses by
+- * the target mmu itself.  Since such page walking happens while
+- * handling another potential mmu fault, this function never raises
+- * exceptions (akin to @nonfault true for probe_access_full).
+- * Likewise this function does not trigger plugin instrumentation.
+- */
+-int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+-                          MMUAccessType access_type, int mmu_idx,
+-                          void **phost, CPUTLBEntryFull **pfull);
+-
+-#endif /* !CONFIG_USER_ONLY */
+-#endif /* CONFIG_TCG */
+-
+-static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    return tb->itree.start;
+-#else
+-    return tb->page_addr[0];
+-#endif
+-}
+-
+-static inline tb_page_addr_t tb_page_addr1(const TranslationBlock *tb)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    tb_page_addr_t next = tb->itree.last & TARGET_PAGE_MASK;
+-    return next == (tb->itree.start & TARGET_PAGE_MASK) ? -1 : next;
+-#else
+-    return tb->page_addr[1];
+-#endif
+-}
+-
+-static inline void tb_set_page_addr0(TranslationBlock *tb,
+-                                     tb_page_addr_t addr)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    tb->itree.start = addr;
+-    /*
+-     * To begin, we record an interval of one byte.  When the translation
+-     * loop encounters a second page, the interval will be extended to
+-     * include the first byte of the second page, which is sufficient to
+-     * allow tb_page_addr1() above to work properly.  The final corrected
+-     * interval will be set by tb_page_add() from tb->size before the
+-     * node is added to the interval tree.
+-     */
+-    tb->itree.last = addr;
+-#else
+-    tb->page_addr[0] = addr;
+-#endif
+-}
+-
+-static inline void tb_set_page_addr1(TranslationBlock *tb,
+-                                     tb_page_addr_t addr)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    /* Extend the interval to the first byte of the second page.  See above. */
+-    tb->itree.last = addr;
+-#else
+-    tb->page_addr[1] = addr;
+-#endif
+-}
+-
+-/* TranslationBlock invalidate API */
+-void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
+-void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last);
+-void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
+-
+-/* GETPC is the true target of the return instruction that we'll execute.  */
+-#if defined(CONFIG_TCG_INTERPRETER)
+-extern __thread uintptr_t tci_tb_ptr;
+-# define GETPC() tci_tb_ptr
+-#else
+-# define GETPC() \
+-    ((uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)))
+-#endif
+-
+-/* The true return address will often point to a host insn that is part of
+-   the next translated guest insn.  Adjust the address backward to point to
+-   the middle of the call insn.  Subtracting one would do the job except for
+-   several compressed mode architectures (arm, mips) which set the low bit
+-   to indicate the compressed mode; subtracting two works around that.  It
+-   is also the case that there are no host isas that contain a call insn
+-   smaller than 4 bytes, so we don't worry about special-casing this.  */
+-#define GETPC_ADJ   2
+-
+-#if !defined(CONFIG_USER_ONLY)
+-
+-/**
+- * iotlb_to_section:
+- * @cpu: CPU performing the access
+- * @index: TCG CPU IOTLB entry
+- *
+- * Given a TCG CPU IOTLB entry, return the MemoryRegionSection that
+- * it refers to. @index will have been initially created and returned
+- * by memory_region_section_get_iotlb().
+- */
+-struct MemoryRegionSection *iotlb_to_section(CPUState *cpu,
+-                                             hwaddr index, MemTxAttrs attrs);
+-#endif
+-
+-/**
+- * get_page_addr_code_hostp()
+- * @env: CPUArchState
+- * @addr: guest virtual address of guest code
+- *
+- * See get_page_addr_code() (full-system version) for documentation on the
+- * return value.
+- *
+- * Sets *@hostp (when @hostp is non-NULL) as follows.
+- * If the return value is -1, sets *@hostp to NULL. Otherwise, sets *@hostp
+- * to the host address where @addr's content is kept.
+- *
+- * Note: this function can trigger an exception.
+- */
+-tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+-                                        void **hostp);
+-
+-/**
+- * get_page_addr_code()
+- * @env: CPUArchState
+- * @addr: guest virtual address of guest code
+- *
+- * If we cannot translate and execute from the entire RAM page, or if
+- * the region is not backed by RAM, returns -1. Otherwise, returns the
+- * ram_addr_t corresponding to the guest code at @addr.
+- *
+- * Note: this function can trigger an exception.
+- */
+-static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
+-                                                vaddr addr)
+-{
+-    return get_page_addr_code_hostp(env, addr, NULL);
+-}
+-
+-#if !defined(CONFIG_USER_ONLY)
+-
+-void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
+-void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+-
+-MemoryRegionSection *
+-address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
+-                                  hwaddr *xlat, hwaddr *plen,
+-                                  MemTxAttrs attrs, int *prot);
+-hwaddr memory_region_section_get_iotlb(CPUState *cpu,
+-                                       MemoryRegionSection *section);
+-#endif
+-
+-#endif
+diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
+index bae3355f62c..3e0a8a03331 100644
+--- a/include/exec/page-protection.h
++++ b/include/exec/page-protection.h
+@@ -40,8 +40,6 @@
+ 
+ #ifdef CONFIG_USER_ONLY
+ 
+-#include "qemu/clang-tsa.h"
+-
+ void TSA_NO_TSA mmap_lock(void);
+ void TSA_NO_TSA mmap_unlock(void);
+ bool have_mmap_lock(void);
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index c06954ccb41..6dfd8da14d9 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -7,6 +7,8 @@
+ #ifndef COMPILER_H
+ #define COMPILER_H
+ 
++#include "qemu/clang-tsa.h.inc"
++
+ #define HOST_BIG_ENDIAN (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+ 
+ /* HOST_LONG_BITS is the size of a native pointer in bits. */
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index 7eba27a7049..6f800aad31a 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -3,7 +3,6 @@
+ 
+ #include "qemu/processor.h"
+ #include "qemu/atomic.h"
+-#include "qemu/clang-tsa.h"
+ 
+ typedef struct QemuCond QemuCond;
+ typedef struct QemuSemaphore QemuSemaphore;
+diff --git a/include/qemu/clang-tsa.h b/include/qemu/clang-tsa.h.inc
+similarity index 97%
+rename from include/qemu/clang-tsa.h
+rename to include/qemu/clang-tsa.h.inc
+index ba06fb8c924..1273c39f9c5 100644
+--- a/include/qemu/clang-tsa.h
++++ b/include/qemu/clang-tsa.h.inc
+@@ -1,5 +1,5 @@
+-#ifndef CLANG_TSA_H
+-#define CLANG_TSA_H
++#ifndef CLANG_TSA_H_INC
++#define CLANG_TSA_H_INC
+ 
+ /*
+  * Copyright 2018 Jarkko Hietaniemi <jhi@iki.fi>
+@@ -24,6 +24,10 @@
+  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#ifndef COMPILER_H
++#error Cannot include this header directly
++#endif
++
+ /* http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
+  *
+  * TSA is available since clang 3.6-ish.
+diff --git a/block/create.c b/block/create.c
+index 72abafb4c12..6b23a216753 100644
+--- a/block/create.c
++++ b/block/create.c
+@@ -24,7 +24,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "block/block_int.h"
+-#include "qemu/clang-tsa.h"
+ #include "qemu/job.h"
+ #include "qemu/main-loop.h"
+ #include "qapi/qapi-commands-block-core.h"
+diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+index 98ad89b390c..7410e6f3528 100644
+--- a/tests/unit/test-bdrv-drain.c
++++ b/tests/unit/test-bdrv-drain.c
+@@ -28,7 +28,6 @@
+ #include "system/block-backend.h"
+ #include "qapi/error.h"
+ #include "qemu/main-loop.h"
+-#include "qemu/clang-tsa.h"
+ #include "iothread.h"
+ 
+ static QemuEvent done_event;
+diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
+index 1de04a8a13d..26a6c051758 100644
+--- a/tests/unit/test-block-iothread.c
++++ b/tests/unit/test-block-iothread.c
+@@ -29,7 +29,6 @@
+ #include "system/block-backend.h"
+ #include "qapi/error.h"
+ #include "qapi/qmp/qdict.h"
+-#include "qemu/clang-tsa.h"
+ #include "qemu/main-loop.h"
+ #include "iothread.h"
+ 
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index 6fff4162ac6..b2e26e21205 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -17,7 +17,6 @@
+ #include "qemu-thread-common.h"
+ #include "qemu/tsan.h"
+ #include "qemu/bitmap.h"
+-#include "qemu/clang-tsa.h"
+ 
+ #ifdef CONFIG_PTHREAD_SET_NAME_NP
+ #include <pthread_np.h>
+-- 
+2.47.1
 
 
