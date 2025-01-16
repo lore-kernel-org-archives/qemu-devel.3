@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D29C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 21:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A0E0C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 21:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYXTi-0002Vs-IK; Thu, 16 Jan 2025 16:32:38 -0500
+	id 1tYXep-0005wG-KG; Thu, 16 Jan 2025 16:44:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYXTa-0002VJ-UX
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 16:32:31 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYXTW-0004sf-LE
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 16:32:29 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GHuIJY021162;
- Thu, 16 Jan 2025 21:32:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=zKoqoi1bAqdiCNmDp
- 38xSazsbzL/KCEiDUtGPwFUcVw=; b=YmOxosnq/labP3wI5hlarjrUJ2EDVANA8
- NbBVgMgRaDfT7rYz/QlaK/5wMy5+rkoiyOE35vRabSPyV7lc//bJSNX96GmDym2d
- 0lsNbqFR6wk5VUweoUoEjOIymZAXInBRLNr+GU619yoSUaLOu2IDrSzqWJI68I6C
- RiIEHtrEd+ijoMr+1HWyo6XSdSQ0uHhfCbO/hej7ymWTj7Cf01fzThlPp+pEPU3r
- 84r7OoscVTDBSXjcMwaVLaA/fdAeq1aVbFcOHNMOTZJw9KVnwcJQBaPQXrSnXKqV
- 743uxRncfARuTdlFRdQdzDpuon4Jo4MHNEe5ILvmmqudneVaJY8vw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446xa3bt22-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jan 2025 21:32:24 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GKbcFo002693;
- Thu, 16 Jan 2025 21:32:23 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443byg0cj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jan 2025 21:32:23 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50GLWJ1G41222420
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jan 2025 21:32:19 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 91D7920043;
- Thu, 16 Jan 2025 21:32:19 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33B2320040;
- Thu, 16 Jan 2025 21:32:19 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.62.46])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jan 2025 21:32:19 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYXen-0005w5-RB
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 16:44:05 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYXem-0007LQ-87
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 16:44:05 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4361f664af5so15123785e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 13:44:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737063842; x=1737668642; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CX5TSXdMoun14dJ7IVnouq8LDBWvCnit0CgMnLfjyNo=;
+ b=x6/xqN6qxoKMl7FDm3N2sVyiq+fxNHwpgsS4JJ07xV0i8FDnQxQDpgZXl3MiCfciTz
+ +HeobdLhRAN+ITxo3E7GnpNMYopXnY2vXjSh06TIrUZhnx0TCt6FrxnNcLE12r6WwWPR
+ n7DIfsa0WwliIaGkc6s1lhNhvPUO3DyJt3KWvmsLPLrC6As/elIIjcdaFMS7F8NQwUP0
+ LwY+QLlWlCCfwD4Ku3bR6vI95rg5TA9goFxjgb17/EMPAD+YkOiFMdhkQ3HeOSI++4y5
+ KMHOJVGJ2Riy2Ag0Yi+XuDdqpGfpQq7L6Xo29Gr5ZozWhF7meWTPAj2x+afegDAwpvtg
+ OyKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737063842; x=1737668642;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CX5TSXdMoun14dJ7IVnouq8LDBWvCnit0CgMnLfjyNo=;
+ b=lmIfdTOx54oOm9GOZXuHyuYCKKC3oJuWpFmYrT9MmHKe4F53ej3zWAvf0ywlYtx4LZ
+ aKfdjceatkSZByaEiy9dBGQnfPtfpH5YTxQcQeBE52JwxoMsFC1Vc2vyBq4VYR3x/obC
+ Xyf64tPktkCJeWgDAF+plvxXOPmaHmVBfb/jasm32uRAcANGzG0FrUxwUP9mOwwavz2t
+ //jcB4BUxfRRdGN5JXqWnUhnaHiVGwMBwyL3sofeYM9SKE70itu9YJ2bG285Fbc7heKM
+ XdycvH4lwrCWZepE12By8Bf33/qBWzNQn1HcG4MYw7rprR5c9zCh78zQ7omZYxx36oaC
+ 2oTA==
+X-Gm-Message-State: AOJu0YwVNlBBEAmnzqyJfdCehhWFgNOYS49ePIIamcXf9UUPBGtO5v28
+ M+hBTjfgOa01g/q2KT/BBBMSQlSd6wLK7GGhTCnWrlsuoADpePIlbxFtnmLlvwU2UDvahmUE+LF
+ DnAU=
+X-Gm-Gg: ASbGnctgU1kS2P2WhJ9rY892VqqTOIM22T7NIxMzu83jaid8OgXnuIoz4TFbpWBhUJb
+ KgqZ/pCOE8MscElx/qzz71WHid95C9Pr9r8Gd8gwt5w8iGZb5zRRcS2gIHPh7q94NftAaTjQ9KX
+ zz42aCrbZ97H2t+LNPjZT/QLiiFd4M+E7pwgHB1stmqoH4J2QzBsBvJy3AMDVV1ra9jVvSSWCHM
+ mg9Mro4etzGmwcYqAOEI7mH1zL1GchOETzdw8020JrqaAWJC0C4Pd3M8QRBVIx2IB0qmn/GHF/A
+ u9sNqirAvWKBMGLxx54lvl8PDTpbhpI=
+X-Google-Smtp-Source: AGHT+IGWJb3E2f/qXpEBBwkqE2KkzhY+XuYslTGG94cOGo/4mPiFXrm6SKA1w//tjo+kCQfEEf/IuQ==
+X-Received: by 2002:a05:600c:3ba7:b0:435:172:5052 with SMTP id
+ 5b1f17b1804b1-438913becb8mr2079525e9.1.1737063842004; 
+ Thu, 16 Jan 2025 13:44:02 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c74c4f85sm73263865e9.18.2025.01.16.13.43.59
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 16 Jan 2025 13:44:00 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Subject: [PATCH v2 2/2] accel/tcg: Call tcg_tb_insert() for one-insn TBs
-Date: Thu, 16 Jan 2025 22:31:33 +0100
-Message-ID: <20250116213214.5695-2-iii@linux.ibm.com>
+Subject: [PATCH] softfloat: Constify helpers returning float_status field
+Date: Thu, 16 Jan 2025 22:43:58 +0100
+Message-ID: <20250116214359.67295-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250116213214.5695-1-iii@linux.ibm.com>
-References: <20250116213214.5695-1-iii@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZxdIxz8YZHWelRvUUXpdt_bmJyEwLz6F
-X-Proofpoint-ORIG-GUID: ZxdIxz8YZHWelRvUUXpdt_bmJyEwLz6F
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_09,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0
- bulkscore=0 clxscore=1015 adultscore=0 mlxlogscore=764 priorityscore=1501
- suspectscore=0 spamscore=0 phishscore=0 impostorscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2501160159
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,84 +98,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently one-insn TBs created from I/O memory are not added to
-region_trees. Therefore, when they generate exceptions, they are not
-handled by cpu_restore_state_from_tb().
+These helpers don't alter float_status. Make it const.
 
-For x86 this is not a problem, because x86_restore_state_to_opc() only
-restores pc and cc, which already have the correct values if the first
-TB instruction causes an exception. However, on several other
-architectures, restore_state_to_opc() is not stricly limited to state
-restoration and affects some exception-related registers, where guests
-can notice incorrect values, for example:
-
-- arm's exception.syndrome;
-- hppa's unwind_breg;
-- riscv's excp_uw2;
-- s390x's int_pgm_ilen.
-
-Fix by always calling tcg_tb_insert(). This may increase the size of
-region_trees, but tcg_region_reset_all() clears it once code_gen_buffer
-fills up, so it will not grow uncontrollably.
-
-Do not call tb_link_page(), which would add such TBs to the QHT, to
-prevent tb_lookup() from finding them. These TBs are single-use, since
-subsequent reads from I/O memory may return different values; they are
-not removed from code_gen_buffer only in order to keep things simple.
-
-Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/translate-all.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ include/fpu/softfloat-helpers.h | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 453eb20ec95..7ec1c53f240 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -531,23 +531,32 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
-         tb_reset_jump(tb, 1);
-     }
+diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+index dceee23c823..4cb30a48220 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -124,58 +124,61 @@ static inline void set_no_signaling_nans(bool val, float_status *status)
+     status->no_signaling_nans = val;
+ }
  
-+    /*
-+     * Insert TB into the corresponding region tree before publishing it
-+     * through QHT. Otherwise rewinding happened in the TB might fail to
-+     * lookup itself using host PC.
-+     */
-+    tcg_tb_insert(tb);
-+
-     /*
-      * If the TB is not associated with a physical RAM page then it must be
--     * a temporary one-insn TB, and we have nothing left to do. Return early
--     * before attempting to link to other TBs or add to the lookup table.
-+     * a temporary one-insn TB.
-+     *
-+     * Such TBs must be added to region trees in order to make sure that
-+     * restore_state_to_opc() - which on some architectures is not limited to
-+     * rewinding, but also affects exception handling! - is called when such a
-+     * TB causes an exception.
-+     *
-+     * At the same time, temporary one-insn TBs must be executed at most once,
-+     * because subsequent reads from, e.g., I/O memory may return different
-+     * values. So return early before attempting to link to other TBs or add
-+     * to the QHT.
-      */
-     if (tb_page_addr0(tb) == -1) {
-         assert_no_pages_locked();
-         return tb;
-     }
+-static inline bool get_float_detect_tininess(float_status *status)
++static inline bool get_float_detect_tininess(const float_status *status)
+ {
+     return status->tininess_before_rounding;
+ }
  
--    /*
--     * Insert TB into the corresponding region tree before publishing it
--     * through QHT. Otherwise rewinding happened in the TB might fail to
--     * lookup itself using host PC.
--     */
--    tcg_tb_insert(tb);
--
-     /*
-      * No explicit memory barrier is required -- tb_link_page() makes the
-      * TB visible in a consistent state.
+-static inline FloatRoundMode get_float_rounding_mode(float_status *status)
++static inline FloatRoundMode get_float_rounding_mode(const float_status *status)
+ {
+     return status->float_rounding_mode;
+ }
+ 
+-static inline int get_float_exception_flags(float_status *status)
++static inline int get_float_exception_flags(const float_status *status)
+ {
+     return status->float_exception_flags;
+ }
+ 
+ static inline FloatX80RoundPrec
+-get_floatx80_rounding_precision(float_status *status)
++get_floatx80_rounding_precision(const float_status *status)
+ {
+     return status->floatx80_rounding_precision;
+ }
+ 
+-static inline Float2NaNPropRule get_float_2nan_prop_rule(float_status *status)
++static inline Float2NaNPropRule
++get_float_2nan_prop_rule(const float_status *status)
+ {
+     return status->float_2nan_prop_rule;
+ }
+ 
+-static inline Float3NaNPropRule get_float_3nan_prop_rule(float_status *status)
++static inline Float3NaNPropRule
++get_float_3nan_prop_rule(const float_status *status)
+ {
+     return status->float_3nan_prop_rule;
+ }
+ 
+-static inline FloatInfZeroNaNRule get_float_infzeronan_rule(float_status *status)
++static inline FloatInfZeroNaNRule
++get_float_infzeronan_rule(const float_status *status)
+ {
+     return status->float_infzeronan_rule;
+ }
+ 
+-static inline uint8_t get_float_default_nan_pattern(float_status *status)
++static inline uint8_t get_float_default_nan_pattern(const float_status *status)
+ {
+     return status->default_nan_pattern;
+ }
+ 
+-static inline bool get_flush_to_zero(float_status *status)
++static inline bool get_flush_to_zero(const float_status *status)
+ {
+     return status->flush_to_zero;
+ }
+ 
+-static inline bool get_flush_inputs_to_zero(float_status *status)
++static inline bool get_flush_inputs_to_zero(const float_status *status)
+ {
+     return status->flush_inputs_to_zero;
+ }
+ 
+-static inline bool get_default_nan_mode(float_status *status)
++static inline bool get_default_nan_mode(const float_status *status)
+ {
+     return status->default_nan_mode;
+ }
 -- 
 2.47.1
 
