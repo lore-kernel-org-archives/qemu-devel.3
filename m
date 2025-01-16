@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261A0C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6A2C02180
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 13:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYQFG-0001Js-7Y; Thu, 16 Jan 2025 08:49:14 -0500
+	id 1tYQFG-0001K0-P1; Thu, 16 Jan 2025 08:49:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangboyang.id@gmail.com>)
- id 1tYNMw-0007za-P4
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:44:58 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tYPDb-0002As-UL
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:43:28 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangboyang.id@gmail.com>)
- id 1tYNMu-0005q2-VP
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:44:58 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2ee8aa26415so1365614a91.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 02:44:56 -0800 (PST)
+ id 1tYPDZ-00043r-JO
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:43:27 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2163dc5155fso14067905ad.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:43:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737024295; x=1737629095; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=b7M6a+QRFUhW0+lJkp8rK8ltbV0q50Rg0edDr8j7U5E=;
- b=lzO8ZSQx9fdUYzzbRSwvVI4ULu1eAiWtHDJhooVcSQTPAoInUfY15iiQCyZzrDvuGf
- t5sDUZHLackvSO1aJekTclQ5oVKJWZ5SejtOub2U8+o2PZWmq6lUYrfcWCYUrmdUJ4lF
- /Q6uMRjtus3NXn1mdS+4m9k3O1VOaJXZIzwpcdonj79ZU5ZCxPdKod0V2ShZ/U7Fe3uC
- AROR9gJ+VbMlFj5EqKmCzqOOOjQt7X25r+3wo4rF3ykBMwQkNEtZX8on+6D9dY6aviJM
- 1iR6BdUpthJsg0pXL+Ux9dSSe+ZRgisuE2+5eVSe3MRGMeKG+yX0hNRpKARyzlMmqRZS
- hC8g==
+ d=gmail.com; s=20230601; t=1737031402; x=1737636202; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aSKlDldicr0NPKw/1Fmt2npHVP+r6gGLc5+AfBdHcnE=;
+ b=c1S4Oj5P/R/A/xOXVHVUtm67EbmNQwdmgj3tl+jRVFcyEkZegHNzY4LMm7g5G7xcD+
+ o7QNmkVT4I7t15bF7lAU55qJ1NprAx3rtl5+ty5/swMqWlMfXkx5P5g4t3I5YR83gvHc
+ Jlfz8o/HwDqLjaHiWuW35JLY2XRaPBANhyzUdFWOjvQHw4yF2keFGXfOxVC6D/r6tiy0
+ xiflbvjr08jb3qX4f8ZLAtQLcWl7VNqDOml7zy2mjqn4nshEOgRP0KFhH1YlmtR3846p
+ iKx8FwkzNHz73VrBIdeyGRmEtxyYU4hHgxK+xuzVLRMub9SB9ePrXF6iXwOJgTmlOnEs
+ G/xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737024295; x=1737629095;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=b7M6a+QRFUhW0+lJkp8rK8ltbV0q50Rg0edDr8j7U5E=;
- b=KZDBmEJF81jkz3lFOO+GHacK+d17J1OPduSYrs4FwPZ7UT3W9VB35fmGbMcwd2F3b4
- 0V6ur7PwTEPPgG2PXQlsvitvycKRASaFOWUwIohx9KX2Ypq/pgSDSRxK/Q6WGObZO30v
- AraIxofr37d7cSqZMpByVaJESriGQPVzgbh14kiQOr6GKyRrpEZA72bBvXFGIUkmYzya
- J/EVYwgS2mla0mlBDgwLMKLWUK9DPkCo1JJ0Khib5IHrLN1fc748ea+DqRAtJp3Xu2zS
- KWDYun35FEgTgSWO9WvgpeyOw4GfHdxrj+nilcDkeUsgqpFDOyox1fvtL04Pl/fXEHS0
- vrvA==
-X-Gm-Message-State: AOJu0YwS1JXACH5ZE+gAKk5o8gIdsb/us23OxAMyplIxSa8TsMWFaVye
- +Kef89UvW9ZSe8c1Uut3subSAzqY42QjZw0Kd8Gcue9ud54rhdOMPbH4aw==
-X-Gm-Gg: ASbGncuPtiACFS3T1DKcx3YVOb78UK9C32iXezSr6zf6Kg8dUyjLC2z5WAZT80AhXST
- C8xpDdZbd/6h5Ee7jq8nzqxMjpJ5/lji7IrTRdaXmDfYQ5MzDyLAj4YM/OZ5zpB9TTaNP+KT1mu
- opadI98R2//FBDBD/2nNpxGphvMN4ry0QmHDd1gUeVsRtfxlxo5Djrzr5/VFJFDzJL01n1g0q7Q
- kugeYchkm7qm8HlA6mjn8fS/vIR+rMQBN9QdNov/Z//t8QpUL/tdIsV1+dSUaIMjGWkkQ9tPPp6
- A19g/CjBJ3F3motS+rqWDncjnYR0QHS9ySZ8z48/YDAUs46lLpc1Qm74AcM=
-X-Google-Smtp-Source: AGHT+IETJk2baRgkmG84Cc+SvcvkD3qp1zqpDgfvjG5VWLGsFppqdLGSpeU/A1CozsERIuZ22prDXw==
-X-Received: by 2002:a17:90b:3d47:b0:2ee:aed6:9ec2 with SMTP id
- 98e67ed59e1d1-2f548eae904mr51095015a91.14.1737024295305; 
- Thu, 16 Jan 2025 02:44:55 -0800 (PST)
-Received: from localhost.localdomain
+ d=1e100.net; s=20230601; t=1737031402; x=1737636202;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aSKlDldicr0NPKw/1Fmt2npHVP+r6gGLc5+AfBdHcnE=;
+ b=PzIY+dX4Vymen/XqkPiFnzEKie0YG41tJ9eBnxO9eniHC2Ho1Aw75qlKsoEoxi1cNC
+ Ij4ntucpXKBay1krPeTc5tFjPXlHSm7SrjvG+Y4dghQXpFwEWAKiSvWEccrp3FPJNQES
+ YLoYHJbzkVg4JR9+rmiJ5fLQ/lDticCVKqPyKGgUCK/X842EDLqnK5THiiQRl1e9qoNv
+ SDpsipvXfGUGla/MTkHhVUgVA3I5ynU2/oAE/urQyJnwGzJ5wqMTd14VI5da12fOEHOa
+ m/+3bPY+omCKs06bkXuDvWIpg9A7eZBo12CPwso8rAbf74oO3PwiCgnMHuQl123sQsbw
+ g0UA==
+X-Gm-Message-State: AOJu0YwqvKQseOzVfNyGn2K7J0/WBvia9MXGIb7qnI4a5frB1dCiWNai
+ DKkjljCTIEEtWZCWUvb2FBwE8UkRHA+FocOQDMmn7lQ6kU4oeSuQ
+X-Gm-Gg: ASbGnct690RZyQYbeGpRFI49CiTEg9DVagqjoueTeM42OVNLY1m20Hwk84rrTuO2Emo
+ sSKafz8zMcGjFnYqWLbonk5DFL/5PdZBE8CnEtfU/WbnZTLH3OocTMWs3SpA5uo7RagFrgBIlrR
+ IQRRd0lCnKDVwy9peGpaPRWLIrjkjWibFKR1O/mc/65wnM9yjk/kxJlFDlKfZyZ8NXbmKTKnJm3
+ aHW4kkvv9jPQmmCFJ+q4q8eKScZ3nYWmIhoVUA8VXZ0PIZasLTQE2bWK0N01OLg/vr/B9eqiG4s
+ P/XB1d1HtlEv65Fte7m8CpWMiBzcRwUA
+X-Google-Smtp-Source: AGHT+IEeiHgTbFTahtFFF6LN0u97qIsEOh7aRlVh0x3h5q8fELAQPSMGlWX53aj3uYbcwhAAYZS+/Q==
+X-Received: by 2002:a05:6a21:329d:b0:1e3:cf57:5f5f with SMTP id
+ adf61e73a8af0-1e88d043d3amr53940278637.27.1737031401062; 
+ Thu, 16 Jan 2025 04:43:21 -0800 (PST)
+Received: from [0.0.0.0]
  (ec2-13-113-80-70.ap-northeast-1.compute.amazonaws.com. [13.113.80.70])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f10e0c4sm95153885ad.24.2025.01.16.02.44.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 02:44:55 -0800 (PST)
-From: Zhang Boyang <zhangboyang.id@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Zhang Boyang <zhangboyang.id@gmail.com>
-Subject: [PATCH] qapi/ui: Fix documentation of upper bound value in
- InputMoveEvent
-Date: Thu, 16 Jan 2025 18:44:33 +0800
-Message-Id: <20250116104433.12114-1-zhangboyang.id@gmail.com>
-X-Mailer: git-send-email 2.30.2
+ 41be03b00d2f7-a31d5da4f97sm11207710a12.55.2025.01.16.04.43.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 04:43:20 -0800 (PST)
+Message-ID: <c4f521f8-f29b-4634-9216-e8d922a521b0@gmail.com>
+Date: Thu, 16 Jan 2025 20:43:18 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=zhangboyang.id@gmail.com; helo=mail-pj1-x102b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qapi/ui: Fix documentation of upper bound value in
+ InputMoveEvent
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250116104433.12114-1-zhangboyang.id@gmail.com>
+ <87ed136ifc.fsf@pond.sub.org>
+Content-Language: en-US
+From: Zhang Boyang <zhangboyang.id@gmail.com>
+In-Reply-To: <87ed136ifc.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=zhangboyang.id@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -84,7 +89,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 16 Jan 2025 08:49:09 -0500
+X-Mailman-Approved-At: Thu, 16 Jan 2025 08:49:10 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,28 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The upper bound of pointer position in InputMoveEvent should be 0x7fff,
-according to INPUT_EVENT_ABS_MAX.
 
-Signed-off-by: Zhang Boyang <zhangboyang.id@gmail.com>
----
- qapi/ui.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 460a26b981..7b18662018 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1133,7 +1133,7 @@
- # @axis: Which axis is referenced by @value.
- #
- # @value: Pointer position.  For absolute coordinates the valid range
--#     is 0 -> 0x7ffff
-+#     is 0 -> 0x7fff
- #
- # Since: 2.0
- ##
--- 
-2.30.2
+On 2025/1/16 20:40, Markus Armbruster wrote:
+> Zhang Boyang <zhangboyang.id@gmail.com> writes:
+> 
+>> The upper bound of pointer position in InputMoveEvent should be 0x7fff,
+>> according to INPUT_EVENT_ABS_MAX.
+>>
+>> Signed-off-by: Zhang Boyang <zhangboyang.id@gmail.com>
+>> ---
+>>   qapi/ui.json | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/qapi/ui.json b/qapi/ui.json
+>> index 460a26b981..7b18662018 100644
+>> --- a/qapi/ui.json
+>> +++ b/qapi/ui.json
+>> @@ -1133,7 +1133,7 @@
+>>   # @axis: Which axis is referenced by @value.
+>>   #
+>>   # @value: Pointer position.  For absolute coordinates the valid range
+>> -#     is 0 -> 0x7ffff
+>> +#     is 0 -> 0x7fff
+> 
+> Opportunity to replace "->" by "to" or "..".  If you agree, I'll squash
+> that into your patch in my tree.
+> 
+
+OK, Thank you :)
+
+Zhang Boyang
+
+>>   #
+>>   # Since: 2.0
+>>   ##
+> 
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> 
 
 
