@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71938C0218A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 800F3C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSLl-0004Cj-B2; Thu, 16 Jan 2025 11:04:05 -0500
+	id 1tYSLg-00045M-C6; Thu, 16 Jan 2025 11:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSL6-0003Wl-QX
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:29 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1tYSL2-0003WE-CH
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:20 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSKy-0001Gs-It
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:24 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3863494591bso622590f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:16 -0800 (PST)
+ id 1tYSKw-0001Et-30
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:20 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3862b40a6e0so681030f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737043395; x=1737648195; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737043392; x=1737648192; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gi+ukBCOErHL45ERN6Ib1p4GgIF2LltQZlgS/5QMd38=;
- b=UZiYT8pV7CVqo3bfzEUg3KUPZQK+CrufQCr9/6MAfZqcgViw0xDhnAt2LWppA5Iu1Q
- sqBqXp3oCSk0fa41LDXWh7oUCRnr9fTK971zEpjn7QYCXeQqNJyGReCvFtwiUqjzhKVc
- fJxnZ/w97ykdEokrh6+oPeupF5lJiqJvY9OxIZ7vhcGLOGaqJICtr92oJhZ4ntKEfoux
- 83gqPLyT+n/UMiAe6AAwBCpYBpitogfEg0L01ly8cn5vj7xLWcWyR5jjMNyl2jau0WlN
- Oy2e2Vzr4C7H4ww43WwPltXXwuZhn6IDoxCwgPzMOUZcj/aIHQO8w/a/rIi1jIi3l31H
- bnkg==
+ bh=dhwKvA93ejBJ40tAMFljSMFt/CmKzPuSCWuyLymZVmI=;
+ b=uSkP9TjKXfJqoxKvzG6YsERo4txhPnOTPC+XAvRL5hfDDXzQQ6WBdMQPhoata5ioMy
+ 3OKaT8u4+aC1YD5gUlDiAKwy9+btW/wUmvr3KedV2EO3y6KwqIjuLiNq9f+QQ0syREu6
+ 8Z7HekoHs+WbdqmyGBvk1rTx19Hhw2q5Rl54MGxeDFVgfpPTWzuaNWUzqNIhIC7BwryL
+ YiKemPnKL9dbbZSD7bvBn3r8NW+vbf9kwV6/9FIvrwXx6HzrHVcYRCLxtm4nuOyB/kZE
+ cpIWv1C+nxJ6rn/aE++/AOw1G6fE75MxnY7iITeZ6sH/WY55onXCaXQ+jJCCN2DVyOrG
+ kDyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737043395; x=1737648195;
+ d=1e100.net; s=20230601; t=1737043392; x=1737648192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gi+ukBCOErHL45ERN6Ib1p4GgIF2LltQZlgS/5QMd38=;
- b=LHQN1S2Pwlp/EePA9dNXBW2/OtVW82hr0ESqbWdZ022OzEbqGgXOFlg1nNVYPlppV6
- gJPH251P9rDhAXGMmg9vSm8wu70mcHVoe8tLqCbLp242Pd75MLFr+pncYUpPdteSTyq5
- eMLz0UGuVkhvA6qYGQsYAojSz1e1Q0IuCQAk3iOpx+dzOV0XjvO43qTlt06FGOuEAHAd
- h0StSR3+YPlTYPRUAbjQzUlUGvNs681Infwb5qnuVkhvL6DCXuY5HAjMLPmzAQp0z0rx
- 2n8kfimk1WFBGPstyv8pgk/uvl0Ym4yGJyRTY778/Yx9VJYY1Ij+/vJ+gNFwnvior/z0
- eFuA==
-X-Gm-Message-State: AOJu0Yx0exYA8/sM9LBSH2shcLN0xRLpovelfdHKzP2qTDElalK292cc
- kBIwANiirAQAql04a4CvMSgkWaWy1t9SdYlmQFB+aiPJmChtr1Tff9NTFAC1OO0=
-X-Gm-Gg: ASbGncvszxGnovG3eN91357WtXmXIklo7+QoVeiaplzXU81n/akXeu3youpRBPmjxol
- WT3tlw5dV3hneACCzL+N4tQz3BMKU3sxLTrG3nMcgwI95TS3qwMQtOuvfEa8UvzcJeSs+Ms0UmA
- tWfpKr2r+58gVPDeEu2bTh+E6J9ZUwxtQeMyfeLes40xsACGK0n0oCxZZAh1Kij8/PGsmWzn9LD
- hXi+/0clkiwnJCJA8CwclhlQgkIjqIF1km1TwN7SAt8kgvv5DN77L8=
-X-Google-Smtp-Source: AGHT+IEM8OhDDPxCfsPHSX9ag4x0M1lRCc5ZmiRBoydBlmP/ot68uWyEOA8PSR8/WfiHQjdn6PSBrQ==
-X-Received: by 2002:a5d:6d0e:0:b0:38a:a117:3da1 with SMTP id
- ffacd0b85a97d-38aa1173f70mr18502878f8f.5.1737043393558; 
- Thu, 16 Jan 2025 08:03:13 -0800 (PST)
+ bh=dhwKvA93ejBJ40tAMFljSMFt/CmKzPuSCWuyLymZVmI=;
+ b=FWEbOi4H0arJ70BqeTwvtAOoVgQHxSyhbw/neFOpURQa/RUmvEyFZwp5nafe3p5IKr
+ Fio11qkngLbK8eIjBD43f5AcM6qHKkOJ1IJsC2hz8Vf0ODKVTUoghcP0/a4bfxAKcdL7
+ xqCWDHssZZcNdXF0PSDmZM3OW1F+olDH4BH2BwqRuwS83xgKytGRIUhH5Bydly+sOVoL
+ MaSp9sGZIMNCSnAANmgP/WhYoWk0yEzpR/1A1IQhtxqep299iaAZjpJLOVFjRjEpk8HB
+ hs4lL/Dw0NbWyUp7qmicbyEdHNLIYeidZewKRDa/Uo58BmcGwW3JPsXIrdAjvBawKj94
+ TmBw==
+X-Gm-Message-State: AOJu0YwMXCHHWKAUb3Bh0u/dhqA28DyRTj7JWi4+J+kdSw7MB3XFl+iC
+ tS4jPtIbvsHg9QnFrqMO4NwmDJKW1gVs6L2aF3Ye+arMI2NpGZQ5Qx27N/P4G9g=
+X-Gm-Gg: ASbGncuIjBBwwVlD3acJjXaQ8qv+arStI9NmY0+8aahU4NIPPAIbyHEjeA4G/+bJ/k+
+ ZVDVDt8N11+dB09vavL2wi7aUqZSBRdzcdJfQjUBY2ZWb8rseVy72y9heDFhrT+cUSl5jIZbrGE
+ jqPnZ0mZdEhOTspZeAGRfR7+qW4QR0rgmqYJQQUSHkKdyFgtccfTGW7bXQ+IIH+jQBH70YgRRkv
+ PN46zO1dyawmgGLBl2kuHXiGmciX50jDtxEcfm0d4/zTSRWneqmYnU=
+X-Google-Smtp-Source: AGHT+IEexRp8/BKveDXaMvhxTCD4HM6D/TXPum//8qDbUNzo/BIZYynsN//UHLhqqaVxBsrabAcHgw==
+X-Received: by 2002:a05:6000:156a:b0:38b:e26d:ea0b with SMTP id
+ ffacd0b85a97d-38be26dea6dmr11873885f8f.25.1737043392199; 
+ Thu, 16 Jan 2025 08:03:12 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf322acdcsm221210f8f.55.2025.01.16.08.03.08
+ ffacd0b85a97d-38bf3278f06sm200649f8f.70.2025.01.16.08.03.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 16 Jan 2025 08:03:10 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1702C60865;
+ by draig.lan (Postfix) with ESMTP id 461816086B;
  Thu, 16 Jan 2025 16:03:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,24 +90,24 @@ Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 07/37] semihosting/meson: Build config.o and console.o once
-Date: Thu, 16 Jan 2025 16:02:36 +0000
-Message-Id: <20250116160306.1709518-8-alex.bennee@linaro.org>
+Subject: [PATCH v3 09/37] system: squash usb_parse into a single function
+Date: Thu, 16 Jan 2025 16:02:38 +0000
+Message-Id: <20250116160306.1709518-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
 References: <20250116160306.1709518-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,46 +123,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+We don't need to wrap usb_device_add as usb_parse is already gated
+with an if (machine_usb(current_machine)) check. Instead just assert
+and directly fail if usbdevice_create returns NULL.
 
-config.c and console.c don't use any target specific
-headers anymore, move them from specific_ss[] to
-system_ss[] so they are built once, but will also be
-linked once, removing global symbol clash in a single
-QEMU binary.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250103171037.11265-6-philmd@linaro.org>
+Message-Id: <20250109170619.2271193-10-alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- semihosting/meson.build | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ system/vl.c | 22 ++++------------------
+ 1 file changed, 4 insertions(+), 18 deletions(-)
 
-diff --git a/semihosting/meson.build b/semihosting/meson.build
-index 34933e5a19..86f5004bed 100644
---- a/semihosting/meson.build
-+++ b/semihosting/meson.build
-@@ -4,13 +4,16 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
- ))
+diff --git a/system/vl.c b/system/vl.c
+index 22c1444da4..02795c5135 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -811,31 +811,17 @@ static void configure_msg(QemuOpts *opts)
+ /***********************************************************/
+ /* USB devices */
  
- specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
--  'config.c',
--  'console.c',
-   'uaccess.c',
- ))
+-static int usb_device_add(const char *devname)
++static int usb_parse(const char *cmdline)
+ {
+-    USBDevice *dev = NULL;
++    g_assert(machine_usb(current_machine));
  
- common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
--system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
-+system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
-+  'config.c',
-+  'console.c',
-+), if_false: files(
-+  'stubs-system.c',
-+))
+-    if (!machine_usb(current_machine)) {
++    if (!usbdevice_create(cmdline)) {
++        error_report("could not add USB device '%s'", cmdline);
+         return -1;
+     }
+-
+-    dev = usbdevice_create(devname);
+-    if (!dev)
+-        return -1;
+-
+     return 0;
+ }
  
- specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
- 		if_true: files('arm-compat-semi.c'))
+-static int usb_parse(const char *cmdline)
+-{
+-    int r;
+-    r = usb_device_add(cmdline);
+-    if (r < 0) {
+-        error_report("could not add USB device '%s'", cmdline);
+-    }
+-    return r;
+-}
+-
+ /***********************************************************/
+ /* machine registration */
+ 
 -- 
 2.39.5
 
