@@ -4,111 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988A9C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C47C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSdP-0002bM-Vi; Thu, 16 Jan 2025 11:22:20 -0500
+	id 1tYSfn-0003iN-HQ; Thu, 16 Jan 2025 11:24:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSdJ-0002ar-Ia
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:22:13 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSdH-0007RN-Hq
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:22:13 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-385de9f789cso889726f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:22:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737044529; x=1737649329; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=castUuYEMS9/+bXLMhhSaPLlf0YHd3GiZGeVC9CY3P4=;
- b=wuxl4+uRwd5ZBUzIpofRS4qeBMnF7TpfZH2UIRy8wUAfqhfWQBUKzaWyXt2BgCN3Aj
- Z0SW6Q8GPrpCdQDsXWiCNSLIwCYW8TrYr+06l8AjfjSk6sJRrCyq57JEyvKNsLmKHiUU
- fiADUDoLqvKIPLtueH6apgb7851m5sYZ9BHeNLhWF8Whjx8fBe9LEPQpD3MEkf/b2yCj
- KvoRHOvTMQl/ID1CMAtEGKVDAyt7yD+xbiV+paReI7YAeJMhLu9bpZ2nj+HoY1Dz71zy
- N7bgqSbb2cDaMxOmwAHBJQxX56T90BbLrW43oohNgtJ0Gwe4fuPmfECpbHpunIGcH5/O
- 3+sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737044529; x=1737649329;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=castUuYEMS9/+bXLMhhSaPLlf0YHd3GiZGeVC9CY3P4=;
- b=NH4ujJcUnQj+tq0GZDFcr+sEdxM55q6c1Y86S47JBE3hlqt6EEM1uSN7qm34M8tXwT
- cKVGZghKSW0OoLr7uQOVyc4hkVWLvIuT8wcQihx7wEcXCqOW+jku5URFQOOd0YnVDsJH
- BlA2YFcz3wOjNHxgHgWoKW3fhyhx9jDSL/bMcJJJRfCCcZuKG/h8iGlUTNBiZs+iosPp
- Z4j0ClJdi3vrXm/Y/jqCDAXRxfx7BHxDgdc7JlSsmxaProP+aOtePa4NK4FLNQmtzpFv
- F+1dhyD7jjvYaqZ0VteSQnVyuMUFtyhTlEqm8N6fU15YDdxMGS1KWiN0d6hkBk+wjGNt
- EuJg==
-X-Gm-Message-State: AOJu0Yx1ZaEVt9/tuUfAEUo6sbSTqQX9lsHnbN6SqL78F4pB2iykCwpI
- iekpLIdoFeNWkW27Fq/IMlx5QHFEePQCFTTRpbLPE8OUzLznN7fJOqP7iU1MAhY=
-X-Gm-Gg: ASbGncs2GUwksKzu/G+aUn6b/Yb2y6ElY626nYcVrmVyORxRVOWD9SceZ14G1yyTJ7A
- O6y61V7aqXRm5UA3+R77qPf/WRH+Vv4CoCIVtcbLnslxbp6d4QRXFx1q9d3ZISopoZDrOFsPhzV
- hehSh7/0fUmiTd8Zj6xGtc6UQ5KnvE6D7ayEqmi+BcI0yjcDctRQm9nnzKskbawqCTEWUOsaOUA
- v9//u09I7/L8yUMcDelm75UEIn7ocUiY758aeLsX8Yqdp9H6t5Na2I=
-X-Google-Smtp-Source: AGHT+IHsM0L0EYZK+4kCnLugDuNjsBmjuZCVqGgDlZwmgmyMpQ846YZGMDZg7zX+mE2QHpT/eQsebQ==
-X-Received: by 2002:a5d:47af:0:b0:38b:dbeb:63a2 with SMTP id
- ffacd0b85a97d-38bdbeb64acmr14758393f8f.55.1737044529421; 
- Thu, 16 Jan 2025 08:22:09 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf327556dsm240452f8f.71.2025.01.16.08.22.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 08:22:08 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E5479608D6;
- Thu, 16 Jan 2025 16:03:08 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Jason Wang <jasowang@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, Stefano Garzarella <sgarzare@redhat.com>,
- qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, Kyle Evans <kevans@freebsd.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, David Hildenbrand <david@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 25/37] plugins: enable linking with clang/lld
-Date: Thu, 16 Jan 2025 16:02:54 +0000
-Message-Id: <20250116160306.1709518-26-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
-References: <20250116160306.1709518-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <hsu_peterdavehello_org@proton.me>)
+ id 1tYSIh-0002cX-AX
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:00:58 -0500
+Received: from mail-0301.mail-europe.com ([188.165.51.139])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hsu_peterdavehello_org@proton.me>)
+ id 1tYSIc-0000bs-Ug
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:00:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1737043242; x=1737302442;
+ bh=riHOL1WC9/Uzkv3oorp19GPyNkyqN7V668Q1DBk4B0s=;
+ h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+ List-Unsubscribe:List-Unsubscribe-Post;
+ b=HdFCDLiktS1bnY1+qacMzf1HQyTxEU69dd/Rv108od5+23Z7/4ws9lLAdOZr1v81I
+ mvUuUqgwn5MhHX7Nql7VlNr+BuTuk2dgOjdEi2zVIHdJa7q/hLZ3dwQZIXgLFDgtub
+ wpDQOI3PAxfkRwKwgB5g4cwM6+4AcL4ejdi12nj2c0SD/D0RuimktW4RVSkOT3q5TW
+ IeVFuc1pXaVdIp6mfOCodVXdILH7U3UGd41HY4XKp/eVg4aoexoZ4fjO71mUUolwzT
+ ou4r5h1conCDuYaWwXmZWjOhAPcEcO7z3l/I/K9uU7jDpG6LVaDVRrNt0/+I33bXNV
+ 1k1k5XXgQaA5A==
+Date: Thu, 16 Jan 2025 16:00:39 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: [PATCH v2] Add a simple zh_TW Traditional Chinese translation
+Message-ID: <jqHNRyfNSXtm_GkuEg4PfIhc5r7bXTHczkQEsanTuQ3kCijpQp4j_5j-phKGiazGYpCYBgpNiW3Yqj1ENbWENF4f1GlzNKi9F5yM-M8VD7s=@proton.me>
+Feedback-ID: 91804451:user:proton
+X-Pm-Message-ID: ed5d0e76bbabb19def65f834ab9e61f66a11be3c
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=188.165.51.139;
+ envelope-from=hsu_peterdavehello_org@proton.me; helo=mail-0301.mail-europe.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 16 Jan 2025 11:24:43 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,127 +64,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Peter Dave Hello <hsu_peterdavehello_org@proton.me>
+From:  Peter Dave Hello via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From 600ed9784dd5c2b209a3f5e1a5c97fc9cf4fa24e Mon Sep 17 00:00:00 2001
+From: Peter Dave Hello <hsu@peterdavehello.org>
+Date: Tue, 16 Apr 2024 00:43:29 +0800
+Subject: [PATCH v2] Add a simple zh_TW Traditional Chinese translation
 
-Windows uses a special mechanism to enable plugins to work (DLL delay
-loading). Option for lld is different than ld.
+This patch adds a basic zh_TW translation file for Taiwan Traditional
+Chinese users.
 
-MSYS2 clang based environment use lld by default, so restricting to this
-config on Windows is safe, and will avoid false bug reports.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Stefan Weil <sw@weilnetz.de>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250110203401.178532-4-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
 ---
- meson.build                   |  5 +++++
- contrib/plugins/meson.build   |  2 +-
- plugins/meson.build           | 24 ++++++++++++++++++++----
- tests/tcg/plugins/meson.build |  3 +--
- 4 files changed, 27 insertions(+), 7 deletions(-)
+ po/LINGUAS  |  1 +
+ po/zh_TW.po | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+)
+ create mode 100644 po/zh_TW.po
 
-diff --git a/meson.build b/meson.build
-index da279cc112..15a066043b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -377,6 +377,11 @@ elif host_os == 'sunos'
-   qemu_common_flags += '-D__EXTENSIONS__'
- elif host_os == 'haiku'
-   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
-+elif host_os == 'windows'
-+  # plugins use delaylib, and clang needs to be used with lld to make it work.
-+  if compiler.get_id() == 'clang' and compiler.get_linker_id() != 'ld.lld'
-+    error('On windows, you need to use lld with clang - use msys2 clang64/clangarm64 env')
-+  endif
- endif
- 
- # Choose instruction set (currently x86-only)
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 63a32c2b4f..484b9a808c 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -12,7 +12,7 @@ if get_option('plugins')
-       t += shared_module(i, files(i + '.c') + 'win32_linker.c',
-                         include_directories: '../../include/qemu',
-                         link_depends: [win32_qemu_plugin_api_lib],
--                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-+                        link_args: win32_qemu_plugin_api_link_flags,
-                         dependencies: glib)
-     else
-       t += shared_module(i, files(i + '.c'),
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 98542e926f..d60be2a4d6 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -17,14 +17,15 @@ if not enable_modules
-       capture: true,
-       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
-     emulator_link_args += ['-Wl,-exported_symbols_list,plugins/qemu-plugins-ld64.symbols']
-+  elif host_os == 'windows' and meson.get_compiler('c').get_id() == 'clang'
-+    # LLVM/lld does not support exporting specific symbols. However, it works
-+    # out of the box with dllexport/dllimport attribute we set in the code.
-   else
-     emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
-   endif
- endif
- 
- if host_os == 'windows'
--  dlltool = find_program('dlltool', required: true)
--
-   # Generate a .lib file for plugins to link against.
-   # First, create a .def file listing all the symbols a plugin should expect to have
-   # available in qemu
-@@ -33,12 +34,27 @@ if host_os == 'windows'
-     output: 'qemu_plugin_api.def',
-     capture: true,
-     command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
+diff --git a/po/LINGUAS b/po/LINGUAS
+index 9b33a365..08163e8d 100644
+--- a/po/LINGUAS
++++ b/po/LINGUAS
+@@ -7,3 +7,4 @@ sv
+ tr
+ uk
+ zh_CN
++zh_TW
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+new file mode 100644
+index 00000000..e6d2c07c
+--- /dev/null
++++ b/po/zh_TW.po
+@@ -0,0 +1,74 @@
++# Chinese translations for QEMU package.
++# Copyright (C) 2024 THE QEMU'S COPYRIGHT HOLDER
++# This file is distributed under the same license as the QEMU package.
++# Peter Dave Hello <hsu@peterdavehello.org>, 2024.
++#
++msgid ""
++msgstr ""
++"Project-Id-Version: QEMU 9.1\n"
++"Report-Msgid-Bugs-To: qemu-devel@nongnu.org\n"
++"POT-Creation-Date: 2024-04-16 17:52+0800\n"
++"PO-Revision-Date: 2024-04-16 17:52+0800\n"
++"Last-Translator: Peter Dave Hello <hsu@peterdavehello.org>\n"
++"Language-Team: Chinese (traditional)\n"
++"Language: zh_TW\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=3DUTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
 +
-   # then use dlltool to assemble a delaylib.
-+  # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
-+  # linker file we add with plugins (win32_linker.c) to identify that we want
-+  # to find missing symbols in current program.
-+  win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
-+  if meson.get_compiler('c').get_id() == 'clang'
-+    # With LLVM/lld, delaylib is specified at link time (-delayload)
-+    dlltool = find_program('llvm-dlltool', required: true)
-+    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
-+    win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
-+  else
-+    # With gcc/ld, delay lib is built with a specific delay parameter.
-+    dlltool = find_program('dlltool', required: true)
-+    dlltool_cmd = [dlltool, '--input-def', '@INPUT@',
-+                   '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
-+  endif
-   win32_qemu_plugin_api_lib = configure_file(
-     input: win32_plugin_def,
-     output: 'libqemu_plugin_api.a',
--    command: [dlltool, '--input-def', '@INPUT@',
--              '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
-+    command: dlltool_cmd
-   )
- endif
- specific_ss.add(files(
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index f847849b1b..87a17d67bd 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -5,9 +5,8 @@ if get_option('plugins')
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
-                         link_depends: [win32_qemu_plugin_api_lib],
--                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-+                        link_args: win32_qemu_plugin_api_link_flags,
-                         dependencies: glib)
--
-     else
-       t += shared_module(i, files(i + '.c'),
-                         include_directories: '../../../include/qemu',
--- 
-2.39.5
++msgid " - Press Ctrl+Alt+G to release grab"
++msgstr " - =E6=8C=89=E4=B8=8B Ctrl+Alt+G =E4=BB=A5=E9=87=8B=E6=94=BE=
+=E9=8E=96=E5=AE=9A"
++
++msgid " [Paused]"
++msgstr " [=E5=B7=B2=E6=9A=AB=E5=81=9C]"
++
++msgid "_Pause"
++msgstr "=E6=9A=AB=E5=81=9C(_P)"
++
++msgid "_Reset"
++msgstr "=E9=87=8D=E8=A8=AD(_R)"
++
++msgid "Power _Down"
++msgstr "=E9=97=9C=E6=A9=9F(_D)"
++
++msgid "_Quit"
++msgstr "=E7=B5=90=E6=9D=9F(_Q)"
++
++msgid "_Fullscreen"
++msgstr "=E5=85=A8=E8=9E=A2=E5=B9=95(_F)"
++
++msgid "_Copy"
++msgstr "=E8=A4=87=E8=A3=BD(_C)"
++
++msgid "Zoom _In"
++msgstr "=E6=94=BE=E5=A4=A7(_I)"
++
++msgid "Zoom _Out"
++msgstr "=E7=B8=AE=E5=B0=8F(_O)"
++
++msgid "Best _Fit"
++msgstr "=E6=9C=80=E4=BD=B3=E5=B0=BA=E5=AF=B8(_F)"
++
++msgid "Zoom To _Fit"
++msgstr "=E8=AA=BF=E6=95=B4=E8=87=B3=E6=9C=80=E4=BD=B3=E5=A4=A7=E5=B0=8F(_F=
+)"
++
++msgid "Grab On _Hover"
++msgstr "=E6=BB=91=E9=81=8E=E6=99=82=E9=8E=96=E5=AE=9A(_H)"
++
++msgid "_Grab Input"
++msgstr "=E9=8E=96=E5=AE=9A=E8=BC=B8=E5=85=A5(_G)"
++
++msgid "Show _Tabs"
++msgstr "=E9=A1=AF=E7=A4=BA=E5=88=86=E9=A0=81(_T)"
++
++msgid "Detach Tab"
++msgstr "=E5=88=86=E9=9B=A2=E5=88=86=E9=A0=81"
++
++msgid "Show Menubar"
++msgstr "=E9=A1=AF=E7=A4=BA=E5=8A=9F=E8=83=BD=E8=A1=A8=E5=88=97(_M)"
++
++msgid "_Machine"
++msgstr "=E6=A9=9F=E5=99=A8(_M)"
++
++msgid "_View"
++msgstr "=E6=AA=A2=E8=A6=96(_V)"
+--=20
+2.25.1
+
 
 
