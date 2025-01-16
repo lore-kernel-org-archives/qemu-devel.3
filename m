@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128CAC02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D36C02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSLb-0003yJ-Uj; Thu, 16 Jan 2025 11:03:55 -0500
+	id 1tYSND-00068J-0A; Thu, 16 Jan 2025 11:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSL0-0003VK-Pz
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:19 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1tYSL9-0003YC-Cv
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:32 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYSKv-0001EP-3F
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:18 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so10587815e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:12 -0800 (PST)
+ id 1tYSL0-0001IE-Gy
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:27 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385d7b4da2bso1028832f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737043392; x=1737648192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737043397; x=1737648197; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8J/ApKgPVXOVC7MF+COAj1wGpBADeRQ/mLFnBALjiW0=;
- b=Yb4wTeudy8Yguz3WYswrxs4fWhuRLKfRBMjTr9OCWkCggf1qZrfYUhimEeM+8Md3p0
- hMBdzk16DzCyZHRg1XbQv3ByebLYqaeRbQp8zCtACDx3sxHMq0QxtFQEjNouhdH9CEMK
- YVUeZKcNwrbX4Se64HXKXknC6J7SbWJRJYzvPJ56+1NWpNdcjFUVGPY3ZInybZAvJc+a
- apRvw9EliqFFJRIK0WczUKuZu/9+4URo0IhG/GfymX9CZZVvMp0EWWzIg6AaVE1i0KtE
- cQe6oxb8WLbUxeYwIvEcJ6UF1BgmMhgLm495FNdEqUaujY4BExIElmFvsU6jLHA02u98
- 5gFA==
+ bh=Z/fE5ihsW9j0TdJrNyGqxXoPll6S7jQ7QqKUoC+ldgQ=;
+ b=KkbFIQLitSN2xAOR7g2Xs9CdfbSaaOmzmsr/AbhWQfFgehQJihFfrVXHx4sGz5rT4s
+ v2+9aorW66o1P1EoT1NdtYGgSkwNKNtmGwyyFzyWfrDYeWRtuFoGWIwFnOk6WDM0hcrx
+ J4i//9kfT8QKT45U5hbqGD35TqM42OdBNcMyjaa5t7OjIb3Oy/AjVjLR3W6qN0FJ0F5k
+ FD4XEe8irWWkNUKBurGV8VOlrpIbRpqhz5r7PiT5UDJZ4vPR+3Z92h95k7h9gzALZhif
+ NpT0Uv/rk07nyCTOeBC4s6X6DIZALFv69YGduUNW2HbZb7eESXywTzO7HwW8vYqAuFCo
+ fACQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737043392; x=1737648192;
+ d=1e100.net; s=20230601; t=1737043397; x=1737648197;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8J/ApKgPVXOVC7MF+COAj1wGpBADeRQ/mLFnBALjiW0=;
- b=nSV4SC7+TxAKMZshe7cxHze7wwn5HumFWZ73fBkIOmSY6q9fUWsOGWBI1hv8NbCh+l
- 1mzJhdTmjg9BDqpOHAJo1kVOaMKuLrcn9F/xuYAV/hM2nIJlOwwbhUgI8JsHV9veHITq
- FoVmgF21k0Lfb+7Incop/1KeuqX5QSqLHKoIkO0OApzM8EVf88RCphiuQYLJVrHMHfMm
- 4/oKou2t7viPwcoqnpbWriBBgTT/3pYFInMDhE11z2Kbo4/1+T/XIV2geBBl3vVtPBUe
- cYrzRJBOQpnqSCuEEavLa1rkGXt0J/I0ZGFoPJI6fphiZZno8Lo+hiADuWPvZ+OLyU3c
- HDfQ==
-X-Gm-Message-State: AOJu0YwhjY7BbGH280Gv4IcO/8vo3bTX09H9/5lwjrojGBG7gXFF5bF8
- NcG7b/ZRqSQRGA0eTvV5PfhKAqbQowSJYAadP3Ur9zS4LLBvUh8MwJ5HfdXAsjI=
-X-Gm-Gg: ASbGncuKO0+MIGcKtdx1MPcKE/XhjOtWo54ZdXo0CSVrInkVMONt2f4CWiuodhPCnVk
- Zcc5QII9zOelQLWaMBsGpVkrV0pFEwtW4NKnrvv/7jJbbeb5lYWY+49yGOFl+EIkmxrIuwDvK3L
- meTdOje/revLtORMWUDjtp36arFI4csN/m6TTENDW03bICxABz5Vk2fx2orZOqdN6yu3cGygKZ7
- 74yZc61V0NNxCF5f3xQbvmF9nQtTwullB8UEilGuVB4TOd3djg8H5Q=
-X-Google-Smtp-Source: AGHT+IEXJP6WhKfmybODFvpPZ5nbovV5U/4AcpMTKNofhBEKP5Y/me8/u1USe1Q1sa7TbY0gPCvRmg==
-X-Received: by 2002:a05:600c:4e8c:b0:434:f5c0:3288 with SMTP id
- 5b1f17b1804b1-436e271d355mr314178435e9.29.1737043391368; 
- Thu, 16 Jan 2025 08:03:11 -0800 (PST)
+ bh=Z/fE5ihsW9j0TdJrNyGqxXoPll6S7jQ7QqKUoC+ldgQ=;
+ b=E/GiNdkVOzfJZDWG6gHg9Q4QqUdwdfzF71QxkyqpcSVng7vm79e4elYW7lMoUof6Ri
+ IAZsTk6aH3PGXvC/IY7q7fkX+8JHAgEROOV6PdQUQLDkcrnkGAXdA5NpV+5KH794wULT
+ 8SnpYSLkMo3m6X+1CuBTTzoZFaFh4TviCnw+WNlZpGBKDc+6Bq1QcmFYH9f4ucE4FnlI
+ MqMhgoAhYR+wrpL0Q9o2dnIYZTVAmo/cFnM93Dm/q/UsuFm9wLUWjkyF1lzLpdfv4IBk
+ +4+NBp1SjRH1JSuVlQqx4IwEh1RMKzoj+wooZJn/eadJQOHKx45Xbgq5XThuqo3/47d6
+ 6qoA==
+X-Gm-Message-State: AOJu0YySTO/Ntr2ptW3b0O0UYpw/P2TjNl4YepU2kOPka57ZCK8CLeKr
+ pWIRxO8Hsx9UA4Q2Cl9FK18g/c4zdW0vzpesfwmGeZv0nEHkQjj8VODMYwgl+4E=
+X-Gm-Gg: ASbGncuG6As0KDbmTkwiSfTLXDDxZEti5XypQU55a3998LdecboG15GE17QqDbFvtQO
+ YdMb/0SmYvvpALg+pruNj65gDV9ccGFMezE7s8Md/ni4z6WM9kwy0F3Rm0JyD86Lbl+wSD2N7oC
+ C+t9Bebmq0SbL6Pc0dMyFjARG5BFFLa974bx75mgUu+vMNnzKYMGSgjgHQ9JopErsWbypQ73vKR
+ bI8D8zCbAQBCEoNeSgzRUyz9aHf1No5C71JZmc5PnLPyAYqQtxcgEY=
+X-Google-Smtp-Source: AGHT+IGHVLk0JN7/TG8RJ5kC6fpnxe9Hl9PUAdvOkif5CXIxOLa9LIDSbuW5Q7VmYAUMIPx8ZB3i8A==
+X-Received: by 2002:a05:6000:1f8d:b0:386:1ab5:f0e1 with SMTP id
+ ffacd0b85a97d-38a873052bfmr32432858f8f.14.1737043396783; 
+ Thu, 16 Jan 2025 08:03:16 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf327dee3sm195087f8f.86.2025.01.16.08.03.08
+ ffacd0b85a97d-38bf321505asm226352f8f.7.2025.01.16.08.03.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 08:03:09 -0800 (PST)
+ Thu, 16 Jan 2025 08:03:15 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DDCD960858;
- Thu, 16 Jan 2025 16:03:06 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 06F41608A9;
+ Thu, 16 Jan 2025 16:03:08 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -90,18 +90,17 @@ Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 05/37] semihosting/arm-compat: Include missing 'cpu.h'
- header
-Date: Thu, 16 Jan 2025 16:02:34 +0000
-Message-Id: <20250116160306.1709518-6-alex.bennee@linaro.org>
+Subject: [PATCH v3 16/37] contrib/plugins/cache: fix 32-bit build
+Date: Thu, 16 Jan 2025 16:02:45 +0000
+Message-Id: <20250116160306.1709518-17-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
 References: <20250116160306.1709518-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,38 +123,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-ARM semihosting implementations in "common-semi-target.h"
-must de-reference the target CPUArchState, which is declared
-in each target "cpu.h" header. Include it in order to avoid
-when refactoring:
-
-  In file included from ../../semihosting/arm-compat-semi.c:169:
-  ../target/riscv/common-semi-target.h:16:5: error: use of undeclared identifier 'RISCVCPU'
-     16 |     RISCVCPU *cpu = RISCV_CPU(cs);
-        |     ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250103171037.11265-4-philmd@linaro.org>
+Message-Id: <20241217224306.2900490-7-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- semihosting/arm-compat-semi.c | 1 +
- 1 file changed, 1 insertion(+)
+ contrib/plugins/cache.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index d78c6428b9..86e5260e50 100644
---- a/semihosting/arm-compat-semi.c
-+++ b/semihosting/arm-compat-semi.c
-@@ -166,6 +166,7 @@ static LayoutInfo common_semi_find_bases(CPUState *cs)
+diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+index 512ef6776b..7baff86860 100644
+--- a/contrib/plugins/cache.c
++++ b/contrib/plugins/cache.c
+@@ -208,7 +208,7 @@ static int fifo_get_first_block(Cache *cache, int set)
+ static void fifo_update_on_miss(Cache *cache, int set, int blk_idx)
+ {
+     GQueue *q = cache->sets[set].fifo_queue;
+-    g_queue_push_head(q, GINT_TO_POINTER(blk_idx));
++    g_queue_push_head(q, (gpointer)(intptr_t) blk_idx);
+ }
  
- #endif
+ static void fifo_destroy(Cache *cache)
+@@ -471,13 +471,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     n_insns = qemu_plugin_tb_n_insns(tb);
+     for (i = 0; i < n_insns; i++) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+-        uint64_t effective_addr;
+-
+-        if (sys) {
+-            effective_addr = (uint64_t) qemu_plugin_insn_haddr(insn);
+-        } else {
+-            effective_addr = (uint64_t) qemu_plugin_insn_vaddr(insn);
+-        }
++        uint64_t effective_addr = sys ? (uintptr_t) qemu_plugin_insn_haddr(insn) :
++                                        qemu_plugin_insn_vaddr(insn);
  
-+#include "cpu.h"
- #include "common-semi-target.h"
+         /*
+          * Instructions might get translated multiple times, we do not create
+@@ -485,14 +480,13 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+          * entry from the hash table and register it for the callback again.
+          */
+         g_mutex_lock(&hashtable_lock);
+-        data = g_hash_table_lookup(miss_ht, GUINT_TO_POINTER(effective_addr));
++        data = g_hash_table_lookup(miss_ht, &effective_addr);
+         if (data == NULL) {
+             data = g_new0(InsnData, 1);
+             data->disas_str = qemu_plugin_insn_disas(insn);
+             data->symbol = qemu_plugin_insn_symbol(insn);
+             data->addr = effective_addr;
+-            g_hash_table_insert(miss_ht, GUINT_TO_POINTER(effective_addr),
+-                               (gpointer) data);
++            g_hash_table_insert(miss_ht, &data->addr, data);
+         }
+         g_mutex_unlock(&hashtable_lock);
  
- /*
+@@ -853,7 +847,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+ 
+-    miss_ht = g_hash_table_new_full(NULL, g_direct_equal, NULL, insn_free);
++    miss_ht = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, insn_free);
+ 
+     return 0;
+ }
 -- 
 2.39.5
 
