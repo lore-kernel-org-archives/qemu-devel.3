@@ -4,133 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1983BC02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 18:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE54BC02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 19:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYUOq-0007xJ-9G; Thu, 16 Jan 2025 13:15:24 -0500
+	id 1tYV7R-0005sI-0Z; Thu, 16 Jan 2025 14:01:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYUOk-0007wv-Pi
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 13:15:19 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tYV7N-0005rO-6w
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:01:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tYUOh-0000Vh-2n
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 13:15:17 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tYV7J-0006XI-7S
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:01:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737051313;
+ s=mimecast20190719; t=1737054078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FGBEudZxS/EtxR82kGm4Kmqe2HD40hbdFZuaL36wmwg=;
- b=JPGvGICF3mqtQY2RU2+wwIKkJxFtY7m3aFKmkVkl4wRq7jRUnmrPAw1RCUrVjv78bEeCQ2
- gp/8q3auGgnQ08gPyhWxcYfnXW/neLMPJQm6AClQN/JEMagFY4PIWtpOr7Nk8gFcwQIInb
- 4aqM//BNjXuBglieGp5lDERwEE8D52A=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=CyFWC/LsqenrAys/sMW6UGyseOoMCcwj4QqymCIHpIg=;
+ b=R5hSdbeopTfkBYMf0OyT+DuCCGdkXgOZk3ygdvFSGUokMta1Gv05xu5bBi2mpyCqU+hMas
+ mBLL9KLiOxUoFO8D1YZj+ISQ+QqiQTQavH2+eiuGW05eUQcoz969SIal8IEDgGOXCoizq2
+ b694iCUVhuEaetlp1bHB98OLdyTaIoU=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-VT-U2AZtPtKVcox9vCKuaA-1; Thu, 16 Jan 2025 13:15:12 -0500
-X-MC-Unique: VT-U2AZtPtKVcox9vCKuaA-1
-X-Mimecast-MFC-AGG-ID: VT-U2AZtPtKVcox9vCKuaA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6e23e2b8fso112314485a.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 10:15:11 -0800 (PST)
+ us-mta-658-KgRiXOdVOaalcQCaBnolvA-1; Thu, 16 Jan 2025 14:01:17 -0500
+X-MC-Unique: KgRiXOdVOaalcQCaBnolvA-1
+X-Mimecast-MFC-AGG-ID: KgRiXOdVOaalcQCaBnolvA
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-e573f577e13so3546153276.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 11:01:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737051311; x=1737656111;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FGBEudZxS/EtxR82kGm4Kmqe2HD40hbdFZuaL36wmwg=;
- b=sMQ6hxJf1AjRCM+IXM2evxnN4YFapRWvgbnztvhOvyp9dNKIMHXriBB6xNr5tNer4x
- bjW4t+kpWtQwDudUI9MbmuTgmc8jeI+BLFgAShvRWrFPcxClOMTfg+2+/GfYlu70SfyO
- CtEkkrEZZTjIrlHSWCERLWpyrCvXB+1OtrzREsiTsIEeE2HD2tWabBXIvpztA6s3MxCR
- keHXkcTcZKU2CBcqlfmDmOiaNd/EEe+SvpMuog8S/BHJwoZVxOL0csnoCGq4bUJeGZ+L
- OQg6gpY8bDb9IMKXVltSKmQNpz+TZutLs3cBrkDhw4hWTgaXur1Obs0B3Q7isV4w23yK
- zW+A==
-X-Gm-Message-State: AOJu0YxdTJjSX4e+TwbjI65oy1gSGoKh3rAgt5UJ168gCuvkxfJnjCoJ
- srTcFkKgXbry4GU42I9lnZNuM1o8D0+YYZaCayNs53ak6zx7XpiCLblwRaMIqk0XqUmXU1N8Yjo
- MwfsiPIHsthTcKGcqz0+Df/x5MFOPMnYw0NbQlaYTQa8Kz87NhY6+
-X-Gm-Gg: ASbGncs4w0pwoinmxQfMIMJWSqnE4xoDhd9+jT7m2SISqZX8JzmpV6x0ynCzzW/ii7Y
- t66ThPO0ZXvDenryJB93cL3D5J7iLq7B9enGaqqIuQwlunk1T3+ePuF1TEDhCPSlDi0T2RLmZCi
- 0P9xOxHY1XCNj0dtFuu6Uo/j2fxNBfyrHfceEfuNHxcTYBVoAQzSmD2+DXHQ3JF/Rl3SHqUFp26
- acapgbhaqJBV0vaz2qOIZb75mW6csaMKEvvYWISVT6PK6G0/emviVWfmCdMnpLwsoL9BK9JH50R
- mve1ugtlaKnex4e/dU4=
-X-Received: by 2002:a05:620a:6009:b0:7b6:dc74:82ac with SMTP id
- af79cd13be357-7bcd96e8c00mr5776601485a.1.1737051311317; 
- Thu, 16 Jan 2025 10:15:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEBtCR+zdTK1ajR5TQKR0CaqUbeIqiFaMK2naWEOZxOf/4tmp3PbuwqblWW/bRETW5wZwOZww==
-X-Received: by 2002:a05:620a:6009:b0:7b6:dc74:82ac with SMTP id
- af79cd13be357-7bcd96e8c00mr5776598185a.1.1737051311013; 
- Thu, 16 Jan 2025 10:15:11 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e1afcd387fsm2332056d6.79.2025.01.16.10.15.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 10:15:10 -0800 (PST)
-Message-ID: <f4539bec-d74b-4bf8-b874-dd8437126978@redhat.com>
-Date: Thu, 16 Jan 2025 19:15:08 +0100
+ d=1e100.net; s=20230601; t=1737054077; x=1737658877;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CyFWC/LsqenrAys/sMW6UGyseOoMCcwj4QqymCIHpIg=;
+ b=Ngsn0KrU3qfCuB6dj2rrIzndGoPMTVN9g/5A+0B0U4CbDKcD1SYmGz3X+wY/VAkIg0
+ NNmnIUzRKKRFHxij956kDwbN1z1fUYO8qI3LafVGfkz3f7g8LXxw32manYxqzwO5tPAk
+ dKdd2pUVF/o9DjMTfQYhP4ON//D8i5I/kqJqGznj7pTL+aHwex1FC+nNaEKhOJcT180E
+ F3v9Ta+GssbLxtcQi4eGnY4qWEnKd60dMDYGk8v3UqAOqwneIU+TNEtVPos/I7hfS/I4
+ efsqla9cX1Ha7dGzWLSMwQT+GSViudYo81ArfjQ1/gtp+4VEJXnMLsmsfa/+JVRhGnR5
+ 1ipQ==
+X-Gm-Message-State: AOJu0YylMU70hpiET0HrBbl2m0h0i/2zE7HwPIuVOQ667G7l/G6pm5WB
+ aKlPwTAu58e6e3ssrnP08WCH6FTheoNe6O6vTaegbrGe4TtWhsWeOaIE0cV31ucmWdWPeZQbxqk
+ oxFN/nO9c7v9BwqdaJ7r+4ok+i//RIeRl4f1jRF2VqPYu1MmiUtJpjoeNX6+vHR5GFHcpARI8cj
+ oEB1rDWnErP+CPt4vPAD4xEevx+Rw=
+X-Gm-Gg: ASbGncuaz9+o5GrKj0bipm4mu8+PXg088U2pdyq2y0Rlvm7E3l9JNVcPB9/YuIvYFQx
+ eGBDk0ZfRpaaXQ2fnfKX9nouVtyLgep5PBfB+5g==
+X-Received: by 2002:a05:690c:9a8f:b0:6ef:7fc0:a378 with SMTP id
+ 00721157ae682-6f531203393mr279113907b3.9.1737054075478; 
+ Thu, 16 Jan 2025 11:01:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7Te/MDJMftRsTFtvq7nT3vFPdgw1dqKpqez0bwzup3bOcgOQCD1XRNsBqggmewTsmoiI1XebUAzF16wYdBNk=
+X-Received: by 2002:a05:690c:9a8f:b0:6ef:7fc0:a378 with SMTP id
+ 00721157ae682-6f531203393mr279113227b3.9.1737054074922; Thu, 16 Jan 2025
+ 11:01:14 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: Support P2P access in confidential VM
-To: Alex Williamson <alex.williamson@redhat.com>,
- Wencheng Yang <east.moutain.yang@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, peterx@redhat.com,
- david@redhat.com, philmd@linaro.org, mst@redhat.com, sgarzare@redhat.com
-References: <20250116095355.41909-1-east.moutain.yang@gmail.com>
- <20250116124740.51cf4182.alex.williamson@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250116124740.51cf4182.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20250110170837.2747532-1-jonah.palmer@oracle.com>
+ <20250110170837.2747532-4-jonah.palmer@oracle.com>
+In-Reply-To: <20250110170837.2747532-4-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 16 Jan 2025 20:00:39 +0100
+X-Gm-Features: AbW1kvb4oeyfGMcNINkM6SX3DcC_bCLLhjuA2mFtzpjGWe35-pWhD0GoSihmwGA
+Message-ID: <CAJaqyWdv+Vh5SVGzqy08J8d0VEHYbYX8CK9YuNGZVpE85fOKKg@mail.gmail.com>
+Subject: Re: [RFC v3 3/5] vhost-vdpa: Implement the GPA->IOVA tree
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com, 
+ peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -155,33 +104,331 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->> --- a/linux-headers/linux/vfio.h
->> +++ b/linux-headers/linux/vfio.h
->> @@ -1560,6 +1560,7 @@ struct vfio_iommu_type1_dma_map {
->>   #define VFIO_DMA_MAP_FLAG_READ (1 << 0)		/* readable from device */
->>   #define VFIO_DMA_MAP_FLAG_WRITE (1 << 1)	/* writable from device */
->>   #define VFIO_DMA_MAP_FLAG_VADDR (1 << 2)
->> +#define VFIO_DMA_MAP_FLAG_MMIO (1 << 3)
-> 
-> Where's the kernel patch that implements the MMIO map flag.  That needs
-> to come first.
+On Fri, Jan 10, 2025 at 6:09=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+> Implements the GPA->IOVA tree for handling mapping and unmapping for
+> guest memory. This, alongside the SVQ IOVA->HVA tree & IOVA-only tree
+> implemented in the previous patches, allows us to handle guest and
+> host-only memory mapping operations separately via their own respective
+> trees.
+>
+> The next patches will implement a method to determine if an incomming
 
-Yes. This patch should also be divided in 4 parts :
+s/incomming/incoming/ (credits to google syntax highlight actually :) )
 
-   - kernel header changes with links to the threads modifying the kernel.
-   - common part,
-   - vpda part,
-   - and vfio,
+> address for translation is backed by guest or host-only memory.
+>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  hw/virtio/vhost-iova-tree.c | 50 +++++++++++++++++++++++++++++++++++++
+>  hw/virtio/vhost-iova-tree.h |  4 +++
+>  hw/virtio/vhost-vdpa.c      | 22 ++++++++++------
+>  include/qemu/iova-tree.h    | 22 ++++++++++++++++
+>  util/iova-tree.c            | 46 ++++++++++++++++++++++++++++++++++
+>  5 files changed, 136 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
+> index f6a5694857..540bc35660 100644
+> --- a/hw/virtio/vhost-iova-tree.c
+> +++ b/hw/virtio/vhost-iova-tree.c
+> @@ -31,6 +31,9 @@ struct VhostIOVATree {
+>
+>      /* Allocated IOVA addresses */
+>      IOVATree *iova_map;
+> +
+> +    /* GPA to IOVA address memory maps */
+> +    IOVATree *gpa_iova_map;
+>  };
+>
+>  /**
+> @@ -48,6 +51,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, h=
+waddr iova_last)
+>
+>      tree->iova_taddr_map =3D iova_tree_new();
+>      tree->iova_map =3D iova_tree_new();
+> +    tree->gpa_iova_map =3D gpa_tree_new();
+>      return tree;
+>  }
+>
+> @@ -58,6 +62,7 @@ void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
+>  {
+>      iova_tree_destroy(iova_tree->iova_taddr_map);
+>      iova_tree_destroy(iova_tree->iova_map);
+> +    iova_tree_destroy(iova_tree->gpa_iova_map);
+>      g_free(iova_tree);
+>  }
+>
+> @@ -134,3 +139,48 @@ int vhost_iova_tree_insert(VhostIOVATree *iova_tree,=
+ DMAMap *map)
+>
+>      return iova_tree_insert(iova_tree->iova_taddr_map, map);
+>  }
+> +
+> +/** Insert a new GPA->IOVA mapping to the GPA->IOVA tree
+> + *
+> + * @iova_tree: The VhostIOVATree
+> + * @map: The GPA->IOVA mapping
+> + *
+> + * Returns:
+> + * - IOVA_OK if the map fits in the container
+> + * - IOVA_ERR_INVALID if the map does not make sense (e.g. size overflow=
+)
+> + * - IOVA_ERR_OVERLAP if the GPA range overlaps with an existing range
+> + */
+> +int vhost_iova_tree_insert_gpa(VhostIOVATree *iova_tree, DMAMap *map)
+> +{
+> +    if (map->iova + map->size < map->iova || map->perm =3D=3D IOMMU_NONE=
+) {
+> +        return IOVA_ERR_INVALID;
+> +    }
+> +
+> +    return gpa_tree_insert(iova_tree->gpa_iova_map, map);
+> +}
+> +
+> +/**
+> + * Find the IOVA address stored from a guest memory address (GPA)
+> + *
+> + * @tree: The VhostIOVATree
+> + * @map: The map with the guest memory address
+> + *
+> + * Returns the stored GPA->IOVA mapping, or NULL if not found.
+> + */
+> +const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *tree,
+> +                                       const DMAMap *map)
+> +{
+> +    return iova_tree_find_iova(tree->gpa_iova_map, map);
+> +}
+> +
+> +/**
+> + * Remove existing mappings from the GPA->IOVA & IOVA trees
+> + *
+> + * @iova_tree: The VhostIOVATree
+> + * @map: The guest memory address map to remove
+> + */
+> +void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map)
+> +{
+> +    iova_tree_remove(iova_tree->gpa_iova_map, map);
+> +    iova_tree_remove(iova_tree->iova_map, map);
+> +}
+> diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tree.h
+> index 8bf7b64786..3e3dcd04fe 100644
+> --- a/hw/virtio/vhost-iova-tree.h
+> +++ b/hw/virtio/vhost-iova-tree.h
+> @@ -24,5 +24,9 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVA=
+Tree *iova_tree,
+>  int vhost_iova_tree_map_alloc(VhostIOVATree *iova_tree, DMAMap *map);
+>  void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map);
+>  int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map);
+> +int vhost_iova_tree_insert_gpa(VhostIOVATree *iova_tree, DMAMap *map);
+> +const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *iova_tree,
+> +                                       const DMAMap *map);
+> +void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map);
+>
+>  #endif
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index f5803f35f4..8587f3f6c8 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -361,10 +361,10 @@ static void vhost_vdpa_listener_region_add(MemoryLi=
+stener *listener,
+>      if (s->shadow_data) {
+>          int r;
+>
+> -        mem_region.translated_addr =3D (hwaddr)(uintptr_t)vaddr,
+>          mem_region.size =3D int128_get64(llsize) - 1,
+>          mem_region.perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
+>
+> +        /* Allocate an IOVA range in the IOVA tree */
+>          r =3D vhost_iova_tree_map_alloc(s->iova_tree, &mem_region);
+>          if (unlikely(r !=3D IOVA_OK)) {
+>              error_report("Can't allocate a mapping (%d)", r);
+> @@ -372,6 +372,14 @@ static void vhost_vdpa_listener_region_add(MemoryLis=
+tener *listener,
+>          }
+>
+>          iova =3D mem_region.iova;
+> +        mem_region.translated_addr =3D section->offset_within_address_sp=
+ace;
+> +
+> +        /* Add GPA->IOVA mapping to the GPA->IOVA tree */
+> +        r =3D vhost_iova_tree_insert_gpa(s->iova_tree, &mem_region);
+> +        if (unlikely(r !=3D IOVA_OK)) {
+> +            error_report("Can't add listener region mapping (%d)", r);
+> +            goto fail_map;
+> +        }
+
+If we want to make the two disjoint trees, we need to make the
+previous commits working. I mean, either insert hva and then switch to
+gpa here, or merge patches, or something similar. Otherwise, bisection
+breaks.
 
 
-Thanks,
+>      }
+>
+>      vhost_vdpa_iotlb_batch_begin_once(s);
+> @@ -386,7 +394,7 @@ static void vhost_vdpa_listener_region_add(MemoryList=
+ener *listener,
+>
+>  fail_map:
+>      if (s->shadow_data) {
+> -        vhost_iova_tree_remove(s->iova_tree, mem_region);
+> +        vhost_iova_tree_remove_gpa(s->iova_tree, mem_region);
+>      }
+>
+>  fail:
+> @@ -440,21 +448,19 @@ static void vhost_vdpa_listener_region_del(MemoryLi=
+stener *listener,
+>
+>      if (s->shadow_data) {
+>          const DMAMap *result;
+> -        const void *vaddr =3D memory_region_get_ram_ptr(section->mr) +
+> -            section->offset_within_region +
+> -            (iova - section->offset_within_address_space);
+>          DMAMap mem_region =3D {
+> -            .translated_addr =3D (hwaddr)(uintptr_t)vaddr,
+> +            .translated_addr =3D section->offset_within_address_space,
+>              .size =3D int128_get64(llsize) - 1,
+>          };
+>
+> -        result =3D vhost_iova_tree_find_iova(s->iova_tree, &mem_region);
+> +        /* Search the GPA->IOVA tree */
+> +        result =3D vhost_iova_tree_find_gpa(s->iova_tree, &mem_region);
+>          if (!result) {
+>              /* The memory listener map wasn't mapped */
+>              return;
+>          }
+>          iova =3D result->iova;
+> -        vhost_iova_tree_remove(s->iova_tree, *result);
+> +        vhost_iova_tree_remove_gpa(s->iova_tree, *result);
+>      }
+>      vhost_vdpa_iotlb_batch_begin_once(s);
+>      /*
+> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
+> index 44a45931d5..8467912a0b 100644
+> --- a/include/qemu/iova-tree.h
+> +++ b/include/qemu/iova-tree.h
+> @@ -40,6 +40,15 @@ typedef struct DMAMap {
+>  } QEMU_PACKED DMAMap;
+>  typedef gboolean (*iova_tree_iterator)(DMAMap *map);
+>
+> +/**
+> + * gpa_tree_new:
+> + *
+> + * Create a new GPA->IOVA tree.
+> + *
+> + * Returns: the tree pointer on success, or NULL otherwise.
+> + */
+> +IOVATree *gpa_tree_new(void);
+> +
+>  /**
+>   * iova_tree_new:
+>   *
+> @@ -49,6 +58,19 @@ typedef gboolean (*iova_tree_iterator)(DMAMap *map);
+>   */
+>  IOVATree *iova_tree_new(void);
+>
+> +/**
+> + * gpa_tree_insert:
+> + *
+> + * @tree: The GPA->IOVA tree we're inserting the mapping to
+> + * @map: The GPA->IOVA mapping to insert
+> + *
+> + * Inserts a GPA range to the GPA->IOVA tree. If there are overlapped
+> + * ranges, IOVA_ERR_OVERLAP will be returned.
+> + *
+> + * Return: 0 if successful, < 0 otherwise.
+> + */
+> +int gpa_tree_insert(IOVATree *tree, const DMAMap *map);
+> +
+>  /**
+>   * iova_tree_insert:
+>   *
+> diff --git a/util/iova-tree.c b/util/iova-tree.c
+> index 06295e2755..f45e63c3de 100644
+> --- a/util/iova-tree.c
+> +++ b/util/iova-tree.c
+> @@ -55,6 +55,22 @@ static void iova_tree_alloc_args_iterate(struct IOVATr=
+eeAllocArgs *args,
+>      args->this =3D next;
+>  }
+>
+> +static int gpa_tree_compare(gconstpointer a, gconstpointer b, gpointer d=
+ata)
+> +{
+> +    const DMAMap *m1 =3D a, *m2 =3D b;
+> +
+> +    if (m1->translated_addr > m2->translated_addr + m2->size) {
+> +        return 1;
+> +    }
+> +
+> +    if (m1->translated_addr + m1->size < m2->translated_addr) {
+> +        return -1;
+> +    }
+> +
+> +    /* Overlapped */
+> +    return 0;
+> +}
+> +
+>  static int iova_tree_compare(gconstpointer a, gconstpointer b, gpointer =
+data)
+>  {
+>      const DMAMap *m1 =3D a, *m2 =3D b;
+> @@ -71,6 +87,15 @@ static int iova_tree_compare(gconstpointer a, gconstpo=
+inter b, gpointer data)
+>      return 0;
+>  }
+>
+> +IOVATree *gpa_tree_new(void)
+> +{
+> +    IOVATree *gpa_tree =3D g_new0(IOVATree, 1);
+> +
+> +    gpa_tree->tree =3D g_tree_new_full(gpa_tree_compare, NULL, g_free, N=
+ULL);
+> +
+> +    return gpa_tree;
+> +}
+> +
+>  IOVATree *iova_tree_new(void)
+>  {
+>      IOVATree *iova_tree =3D g_new0(IOVATree, 1);
+> @@ -121,6 +146,27 @@ static inline void iova_tree_insert_internal(GTree *=
+gtree, DMAMap *range)
+>      g_tree_insert(gtree, range, range);
+>  }
+>
+> +int gpa_tree_insert(IOVATree *tree, const DMAMap *map)
+> +{
+> +    DMAMap *new;
+> +
+> +    if (map->translated_addr + map->size < map->translated_addr ||
+> +        map->perm =3D=3D IOMMU_NONE) {
+> +        return IOVA_ERR_INVALID;
+> +    }
+> +
+> +    /* We don't allow inserting ranges that overlap with existing ones *=
+/
+> +    if (iova_tree_find(tree,map)) {
+> +        return IOVA_ERR_OVERLAP;
+> +    }
+> +
+> +    new =3D g_new0(DMAMap, 1);
+> +    memcpy(new, map, sizeof(*new));
+> +    iova_tree_insert_internal(tree->tree, new);
+> +
+> +    return IOVA_OK;
+> +}
+> +
 
-C.
+I'm missing the advantage of using all of these functions, why not use
+another iova_tree_new and iova_tree_insert? gpa_tree_compare seems
+like a 1:1 copy of iova_tree_compare to me. Same with _insert.
 
-
-
-> I also don't understand why we're creating multiple read-only and
-> ramdev flags to distill back into vfio mapping flags.  Thanks,
-> 
+>  int iova_tree_insert(IOVATree *tree, const DMAMap *map)
+>  {
+>      DMAMap *new;
+> --
+> 2.43.5
+>
 
 
