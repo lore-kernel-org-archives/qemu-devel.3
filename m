@@ -4,108 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64440C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 14:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBBEC02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 14:45:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYQwe-0001i8-4s; Thu, 16 Jan 2025 09:34:04 -0500
+	id 1tYR7B-0005eU-JN; Thu, 16 Jan 2025 09:44:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tYQwb-0001hb-DR
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:34:01 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYR79-0005eK-VC
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:44:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tYQwQ-0000w4-F1
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:33:53 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYR78-0004dC-2q
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 09:44:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737038029;
+ s=mimecast20190719; t=1737038692;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gbh74LufudOrYSFtXmb3oZllp7Sy8cTi0/+Z40s1Rv4=;
- b=HFCHPXm/qzzVlrSejhTP4qQPIdPUUqG4ySdTI1gc2iNmdz53JcuoY/f+aDoSW3fwd7XoOu
- ekgBgVfWMEzLXgvOPnfRJHAIUvjAfuwCMWH7s1PMuBI3x9M/7/gLZYLYkh0V14UWb2JD81
- JovCLqW9RoE+bK/tFnf1NZ2oYpY1fEQ=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Lbm8ZpiJSIfk0K9r/QC6jkZD0uuOKN4cM9GExFOwd4s=;
+ b=GRtHT750nA4SqG5IzoLqfJRPaVJRyChYbKVy1rB0a4gQsYZ5XHXzFp6UZ1FkKZs0dpgNfa
+ 1AlCgZNpLixYy6rTTGCrEGv/C8eQ0Q7F52TXT66k2N4H1b3joUqPm7nclKvHfw6VZp7mWR
+ M1x+KLGBfh5MjMf31IeCZG74p1y2B1k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-oSLrTbaDP222OocCGZltOA-1; Thu, 16 Jan 2025 09:33:45 -0500
-X-MC-Unique: oSLrTbaDP222OocCGZltOA-1
-X-Mimecast-MFC-AGG-ID: oSLrTbaDP222OocCGZltOA
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4678f97242fso26477621cf.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 06:33:44 -0800 (PST)
+ us-mta-209-Lwt63Q14NcOpvQ0dzfCV6A-1; Thu, 16 Jan 2025 09:44:50 -0500
+X-MC-Unique: Lwt63Q14NcOpvQ0dzfCV6A-1
+X-Mimecast-MFC-AGG-ID: Lwt63Q14NcOpvQ0dzfCV6A
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4362153dcd6so4840565e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 06:44:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737038024; x=1737642824;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gbh74LufudOrYSFtXmb3oZllp7Sy8cTi0/+Z40s1Rv4=;
- b=e2NXBxny9K9sVaYWH/T4w8MVkEhK9XIgEFtNCDzFMq8/FPyPMZ6Heat+cXg8OFK5g6
- u9DoC3eL/JZLoo5ULxQt40ZQ24e2qdf+CQOEvSb20+ihCPuKqbaF5Vd+Iyz9p5yeSHHZ
- dh2VgNgiG6Vzo4eqw9VduGLpPbhMYxnJYK50pe4GvFZx2ky9SxhXdsGZ+dsBhSRqlFz0
- vrI92f84rzA+8LZEkG/NAoyWDd3gG3IZv+R5LafTeuSf64H/H7xtYKGmADRjuklTU5eM
- cfSVELuItdavGGbzw45ZVIK4QrZUMgyf5jRXyoVuGQigWW0njC+UY6Km204X0phiRhQX
- xpQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3712FN4WoClANR0d+dfTYF3SvUvetk72MAXKEsWfa8nudBcZrqfpBYbhbWN9+FnElFZ0B2DldSZ5s@nongnu.org
-X-Gm-Message-State: AOJu0YzhKbR8U2hQ8r6MtQkXxexT/YEGXGZI/x7wehZN2gsDURKg1WqT
- Ci/lSiyoKIaBy4DPQS9Ic+1wlJmPrC3E5WEXYYHFCf870vAccQClgegvHI0xRwOWRUectAedPlw
- i412DO/w1odNJw+SnPGhfnP+ugYXowupb2Z0jf7OX12C/wn1YS3Q3
-X-Gm-Gg: ASbGncvRR59vw69L89ekHWgZP0uOjstp+KEJlaNOh+mgDIYHZEiyn+uxUnxie0WCLM8
- xFxsu7jexDacKSqzQ7cdqb3HSeG/JJGXHdRIQyn2R2/ZvtK6824xqDyydtwxN94AzYKJJKiZdbC
- WEnq0FTmC836ymmWj4UBf/sTlUJ1aCCrT+vqgU6HF4s/3rz83mx+ZR9V2ZyEmZNTp0HbJN027sR
- Ty3EV9jdsUeP/dI2gWizLCuMv5FRRa7vDVEq6Vic0xzHh/pa8vB45kc51zQaD2ypjuopFI19iLd
- 5gI/2icNobOH1Wjzyw==
-X-Received: by 2002:a05:622a:450:b0:464:af64:a90a with SMTP id
- d75a77b69052e-46c7102c391mr577421921cf.23.1737038024038; 
- Thu, 16 Jan 2025 06:33:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGORs0LKnEHIGDoPysfivYnmOrcFeJQV36zQFj7GGNfdQIwFvAJPYs4A4fhqflEaDBWh2c7DA==
-X-Received: by 2002:a05:622a:450:b0:464:af64:a90a with SMTP id
- d75a77b69052e-46c7102c391mr577421431cf.23.1737038023725; 
- Thu, 16 Jan 2025 06:33:43 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46e102ec299sm96481cf.6.2025.01.16.06.33.41
+ d=1e100.net; s=20230601; t=1737038689; x=1737643489;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Lbm8ZpiJSIfk0K9r/QC6jkZD0uuOKN4cM9GExFOwd4s=;
+ b=MXMsvoKdZJMHYzT020oEQvpHYs5uChMQ8Xbkaf9Qd5KrEaIm6SSQGg4YvKtJF8Y9ki
+ mkVooLjzs6QyijlNYL6fzVveu0nxHjiG+LcR7isFUyAcvPbAN06MG6Kq7StZ9SofOk5R
+ 7QZwRfYzGkFeghrQVwlhMAwhQkmwdQerWQlzCK3t3T1jvigxPl6n1TI/wKSFUwRvONBh
+ tE/stCls9IyzQo4OE9c+4DGax4qlnmvj0tphIbV1g5G29elTlpaWMxv5CkYJhBOfIvhG
+ FUmQkjwNtIhYPQjSwj6/lKU2tvoLzH53SeScc6PDvG7o7u1dv5KCe0UaHFakIDT9T5hy
+ zdjg==
+X-Gm-Message-State: AOJu0YzTVOhnUeO8YP0S4QD81JR4/dKe69FP4IkF0lsAEDWbfVA2YEku
+ K13mlAbsjmhZyKT4ieB4tyNoylcmOrwPVM0Zm3xYJ8qCOlEKo2AyjpZhuKRY7zsaXBP8tsTXz4y
+ 4ov7smSNpDJRKF/cuzaKnuJo3hfflXZVWZqPqvmhXfkIrubkwKSsJ
+X-Gm-Gg: ASbGncuBgrYby9IeKcCIXN2Q/JiHFhq/Re65vzJvYS05BFCKXLt5kvPoM9zmp0GbmS3
+ DKZaYCDksWs2KAorfQ2iy+YHcg5/r8gacPmNpFd5ZkVMCQ5/1N91bFYQpYA68fS/usxrJCJ4Mz7
+ uxkBRf+uiKahQhr1uCwpV/10IpCyV1BaMASsXIHYg8InnwmbuC5UEvuCB0UY5Ch4Z+vXR0a0SKq
+ SJNaoT8g5WPSwMCeWQ/P/uxVX1GmvEt0fWQASpX7u8ozQ9iRteT
+X-Received: by 2002:a05:600c:138f:b0:434:a4fe:cd71 with SMTP id
+ 5b1f17b1804b1-436e26a88d9mr323908595e9.12.1737038689160; 
+ Thu, 16 Jan 2025 06:44:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHPReRaCN2uEKXraj157hbz58a5now8P6QeL5Qgu6taSUb7/qs6LDFL9v3TrV5Di2ft6WU1tQ==
+X-Received: by 2002:a05:600c:138f:b0:434:a4fe:cd71 with SMTP id
+ 5b1f17b1804b1-436e26a88d9mr323908115e9.12.1737038688454; 
+ Thu, 16 Jan 2025 06:44:48 -0800 (PST)
+Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-437c7527fd1sm62461775e9.31.2025.01.16.06.44.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 06:33:43 -0800 (PST)
-Date: Thu, 16 Jan 2025 09:33:40 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
+ Thu, 16 Jan 2025 06:44:47 -0800 (PST)
+Date: Thu, 16 Jan 2025 09:44:44 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-Message-ID: <Z4kYxLsIbzq7jWzz@x1n>
-References: <Z4U30j9w1kPnKX9U@x1n>
- <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
- <Z4aYpo0VEgaQedKp@x1n>
- <00a220df-b256-4b70-9974-f4c1fe018201@daynix.com>
- <Z4e7gFSqdhcmJPYb@x1n>
- <dbf863f8-6174-4c37-9553-a2d94f06de00@daynix.com>
- <Z4fW_rI7Mfrtc1Fg@x1n>
- <af018f8a-ce00-4ce2-9fe9-b6ba3f97bfa1@daynix.com>
- <Z4fezdR1ApN8ZLTS@x1n>
- <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Cornelia Huck <cohuck@redhat.com>,
+ Peter Hilber <quic_philber@quicinc.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>, paul <paul@xen.org>
+Subject: Re: [PATCH v7 0/3] hw/acpi: Add vmclock device
+Message-ID: <20250116094429-mutt-send-email-mst@kernel.org>
+References: <20250116140315.2455143-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <99016684-b5f9-446c-b85f-0dc21d1edae6@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250116140315.2455143-1-dwmw2@infradead.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -114,7 +95,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,54 +111,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 02:37:38PM +0900, Akihiko Odaki wrote:
-> On 2025/01/16 1:14, Peter Xu wrote:
-> > On Thu, Jan 16, 2025 at 12:52:56AM +0900, Akihiko Odaki wrote:
-> > > Functionally, the ordering of container/subregion finalization matters if
-> > > some device tries to a container during finalization. In such a case,
-> >                        |
-> >                        ^ something is missing here, feel free to complete this.
+On Thu, Jan 16, 2025 at 01:59:40PM +0000, David Woodhouse wrote:
+> (Posting one last time with the header commits split out).
 > 
-> Oops, I meant: functionally, the ordering of container/subregion
-> finalization matters if some device tries to use a container during
-> finalization.
-
-This is true, though if we keep the concept of "all the MRs share the same
-lifecycle of the owner" idea, another fix of such is simply moving the
-container access before any detachment of MRs.
-
+> The vmclock device addresses the problem of live migration with
+> precision clocks. The tolerances of a hardware counter (e.g. TSC) are
+> typically around ±50PPM. A guest will use NTP/PTP/PPS to discipline that
+> counter against an external source of 'real' time, and track the precise
+> frequency of the counter as it changes with environmental conditions.
 > 
-> > 
-> > > removing subregions from the container at random timing can result in an
-> > > unexpected behavior. There is little chance to have such a scenario but we
-> > > should stay the safe side if possible.
-> > 
-> > It sounds like a future feature, and I'm not sure we'll get there, so I
-> > don't worry that much.  Keeping refcount core idea simple is still very
-> > attractive to me.  I still prefer we have complete MR refcounting iff when
-> > necessary.  It's also possible it'll never happen to QEMU.
-> > 
+> When a guest is live migrated, anything it knows about the frequency of
+> the underlying counter becomes invalid. It may move from a host where
+> the counter running at -50PPM of its nominal frequency, to a host where
+> it runs at +50PPM. There will also be a step change in the value of the
+> counter, as the correctness of its absolute value at migration is
+> limited by the accuracy of the source and destination host's time
+> synchronization.
 > 
-> It's not just about the future but also about compatibility with the current
-> device implementations. I will not be surprised even if the random ordering
-> of subregion finalization breaks one of dozens of devices we already have.
-> We should pay attention the details as we are touching the core
-> infrastructure.
+> The device exposes a shared memory region to guests, which can be mapped
+> all the way to userspace. In the first phase, this merely advertises a
+> 'disruption_marker', which indicates that the guest should throw away any
+> NTP synchronization it thinks it has, and start again.
+> 
+> Because the region can be exposed all the way to userspace, applications
+> can still use time from a fast vDSO 'system call', and check the
+> disruption marker to be sure that their timestamp is indeed truthful.
+> 
+> The structure also allows for the precise time, as known by the host, to
+> be exposed directly to guests so that they don't have to wait for NTP to
+> resync from scratch.
+> 
+> The values and fields are based on the nascent virtio-rtc specification,
+> and the intent is that a version (hopefully precisely this version) of
+> this structure will be included as an optional part of that spec. In the
+> meantime, a simple ACPI device along the lines of VMGENID is perfectly
+> sufficient and is compatible with what's being shipped in certain
+> commercial hypervisors.
+> 
+> Linux guest support was merged into the 6.13-rc1 kernel:
+> https://git.kernel.org/torvalds/c/205032724226
 
-Yes, if we can find any such example that we must follow the order of MR
-destruction, I think that could justify your approach will be required but
-not optional.  It's just that per my understanding there should be none,
-and even if there're very few outliers, it can still be trivially fixed as
-mentioned above.
 
-My gut feeling is when we need serious MR refcounting (I'd expect due to
-the current heavy code base it might be easier to start a new project if
-that's required.. that's why I was thinking maybe it will not happen.. but
-if it will..), we'll do more than your change, and that also means
-memory_region_ref() must start to refcount MRs, because a serious MR
-separate refcounting should mean MR can go on the fly before the owner.
 
--- 
-Peter Xu
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+feel free to merge.
+
+> ---
+> v7:
+>  • Split update-kernel-headers.sh and the addition of the new header
+>    file into separate commits, add MAINTAINERS entry.
+> 
+> v6:
+>  • Rebase for DEFINE_PROP_END_OF_LIST removal and sysemu→system
+>    rename.
+> 
+> v5:
+>  • Trivial simplification to AML generation.
+>  • Import vmclock-abi.h from Linux now the guest support is merged.
+> 
+> v4:
+>  • Trivial checkpatch fixes and comment improvements.
+> 
+> v3:
+>  • Add comment that vmclock-abi.h will come from the Linux kernel
+>    headers once it gets merged there.
+> 
+> v2:
+>  • Change esterror/maxerror fields to nanoseconds.
+>  • Change to officially assigned AMZNC10C ACPI HID.
+>  • Fix little-endian handling of fields in update.
+> 
+> David Woodhouse (3):
+>       linux-headers: Add vmclock-abi.h
+>       linux-headers: Update to Linux 6.13-rc7
+>       hw/acpi: Add vmclock device
+> 
+>  MAINTAINERS                                  |   5 +
+>  hw/acpi/Kconfig                              |   5 +
+>  hw/acpi/meson.build                          |   1 +
+>  hw/acpi/vmclock.c                            | 179 ++++++++++++++++++++++++++
+>  hw/i386/Kconfig                              |   1 +
+>  hw/i386/acpi-build.c                         |  10 +-
+>  include/hw/acpi/vmclock.h                    |  34 +++++
+>  include/standard-headers/linux/vmclock-abi.h | 182 +++++++++++++++++++++++++++
+>  linux-headers/linux/iommufd.h                |  31 +++--
+>  linux-headers/linux/stddef.h                 |  13 +-
+>  scripts/update-linux-headers.sh              |   1 +
+>  11 files changed, 447 insertions(+), 15 deletions(-)
+> 
 
 
