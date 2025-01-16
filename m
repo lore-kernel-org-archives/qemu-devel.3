@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5571DC02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BE0C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYNaC-0005IW-2n; Thu, 16 Jan 2025 05:58:40 -0500
+	id 1tYNb5-0006xo-4f; Thu, 16 Jan 2025 05:59:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tYNa9-0005G0-SA
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:58:37 -0500
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tYNa8-0007mo-7p
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:58:37 -0500
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e4419a47887so1193576276.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 02:58:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737025115; x=1737629915; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FQDVStq64xfewT2IWL+LtacP2s9A0iotkXDYg2YqP9Q=;
- b=jXXin1NHv1RmNkUWBx9BNJD2KN4BUxKUt86eT29KlNi2HVBxKpDLD5gDS5DAofOTnO
- jLQS33YnHyzj5CU9NMfcTGQ2OadUo87OykFywY2ZU0fuF6RFpyvrzPN2fpw/GF+xInym
- Qmlbu6nov4rstBYVA0n7vgGDXgBfgKIBxL9a8Rp9ieh+RdvDG6nH2XAwwqy/b/IZ5aDi
- oV9OGPOKY0ibRd3fFQHSrbbebjJrAI+tnSIL1/Bq5ULtCB6HDSqJb+7SatodSx0Bh6nT
- GbR/LDL0NLK4DiqJBB0bqVSQcjzcdp+bVp3X2CxCnG6UAtlM7AtVXVi6K0nakEGnWctY
- NwYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737025115; x=1737629915;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FQDVStq64xfewT2IWL+LtacP2s9A0iotkXDYg2YqP9Q=;
- b=alxHk252yfG/iJ8IVsrq5xYE9wojNpbny6SP+7TnDju5mWj481VsIzp/PRBW+tmWXT
- 0EGyqn/LaVrp/oCsq4ywtIblJHyv+E2d7Bvv4/324G1T/4lgxRLdmYy1P1b96PuRgySg
- dsgkxobAaHly8kzDRQtB7NkKGj0PZNUSzrtXJTql4S5ZqCpcO89gLpncWvhOQLpn2HJ0
- dIeh8Ek+kfKksFpjGKjKmIjRZqlF1mmMrVpV1xk+j3f6oL9xjkZR7GnyXvYH57dwY4b4
- W1LiFS4Uoa0qFRHivvGTnYm/5lWTQk8DuZKwbIuYATGYFm8A0NeGYQak/e1TlErm0uX8
- bCPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXK5HBUJMuKrnrSjYeI2Javo27xwSRuYZ3IbY2VoOPRdDoEeMWwpkwe4Vq5VdbIv4Ox7kYiGus8yLE+@nongnu.org
-X-Gm-Message-State: AOJu0Yw8HwzXlav/SNPecWw8XKhH8V9uro8BcMWxZpqVREpsxqB8Am/R
- l/ZNm6jGKgmHE3WFiEumXuUeHtdQHqdncD1cYQ4fOaRaS6TRjU4OLqJciJ2x9kmp7Hzni54NM8G
- 3u3FcvIbzI1AftLnh1pEIAS0sF6hNaHN8Z1xeSQ==
-X-Gm-Gg: ASbGncurCODegrzmleDh/zq66u3J9MI83J8oNlTu/kZPnRpwvYtFR9ziRkimu1uNk10
- NUsM87/dl5Sb3aYwJDmCCsaATLwFnahNKCFMdmt0=
-X-Google-Smtp-Source: AGHT+IGpnRApe4yeaoaGVfZsx8iT2Aw3dW7uUAMkFnLKRxPqps5k1mzBj5RV0eRVmhyOn8WY+W9UusmoPXbGmPKq4fE=
-X-Received: by 2002:a05:690c:62c4:b0:6ee:a81f:1264 with SMTP id
- 00721157ae682-6f5312d1f1cmr261195447b3.26.1737025114714; Thu, 16 Jan 2025
- 02:58:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tYNb0-0006vk-9o
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:59:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tYNax-0007rw-A9
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:59:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737025163;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HwDYeGbCpeCLgUGYuu+iuURX5Kf7ZbBld7h0VMmJ+C0=;
+ b=K6dSQL3oxsTZkhIy02oHsb/AEXBxWAzeF4bP8ytakzC0aposOIzmTqjDySkt59OHsOrVWA
+ /1MEqqho80zQ3l7Afu0SwzuKBxn9NHXK1wggvw/vw2MeqIV9a5zrqzQQM1Mjjmo6FMpuhQ
+ QeYBm409o2JFX0J4gTn0oJMrPEkpQc0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-8ZTVkCvON_CYWDtnj-Xjvg-1; Thu,
+ 16 Jan 2025 05:59:19 -0500
+X-MC-Unique: 8ZTVkCvON_CYWDtnj-Xjvg-1
+X-Mimecast-MFC-AGG-ID: 8ZTVkCvON_CYWDtnj-Xjvg
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D3961955D82; Thu, 16 Jan 2025 10:59:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.111])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABC5B30001BE; Thu, 16 Jan 2025 10:59:13 +0000 (UTC)
+Date: Thu, 16 Jan 2025 10:59:10 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] docs/about: Change notes on x86 machine type deprecation
+ into a general one
+Message-ID: <Z4jmfnfLdsTbHRFd@redhat.com>
+References: <20250116064644.65670-1-thuth@redhat.com>
+ <ad3d06df-f0ae-4508-b979-c838b3647510@linaro.org>
+ <Z4jPGGezEK3XRMl8@redhat.com>
 MIME-Version: 1.0
-References: <20240718072050.9503-1-sgarzare@redhat.com>
- <b6c50dd04d77d266a95d5752a24e97b65ccf3f05.camel@infradead.org>
-In-Reply-To: <b6c50dd04d77d266a95d5752a24e97b65ccf3f05.camel@infradead.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 16 Jan 2025 10:58:22 +0000
-X-Gm-Features: AbW1kvaXdDHOxU3qh_Y2ALxfy33kkMGlxHUGQRz1x5cNqPEHXMDhe2qXEfcOB0A
-Message-ID: <CAFEAcA8npFet8ysFfRoPFdoJEZ-vY_58SvnPqQm7z5WKsHiRNA@mail.gmail.com>
-Subject: Re: [PATCH v2] scripts/checkpatch: more checks on files imported from
- Linux
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
- cohuck@redhat.com, berrange@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z4jPGGezEK3XRMl8@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,52 +90,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jan 2025 at 09:26, David Woodhouse <dwmw2@infradead.org> wrote:
->
-> On Thu, 2024-07-18 at 09:20 +0200, Stefano Garzarella wrote:
-> > If a file imported from Linux is touched, emit a warning and suggest
-> > using scripts/update-linux-headers.sh.
-> >
-> > Also check that updating imported files from Linux are not mixed with
-> > other changes, in which case emit an error.
-> >
-> > Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
->
-> This now seems to complain about a commit which simply adds a file to
-> update-linux-headers.sh and simultaneously adds the newly-imported
-> file. Such as commit aa274c33c39e7de981dc195abe60e1a246c9d248.
->
-> Was that the intent? Do we really need to have *three* separate
-> commits, one for update-linux-headers.sh, one to import the new header,
-> and then the third to add the QEMU code which actually uses the new
-> header?
->
-> $ scripts/checkpatch.pl 0001-update-linux-headers-import-linux-kvm_para.h-header.patch
-> WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-> #36:
-> new file mode 100644
->
-> WARNING: added, moved or deleted file(s) imported from Linux, are you using scripts/update-linux-headers.sh?
-> #41: FILE: include/standard-headers/linux/kvm_para.h:1:
-> +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
->
-> ERROR: headers imported from Linux should be self-contained in a patch with no other changes
-> #99: FILE: scripts/update-linux-headers.sh:63:
->                                       -e 'linux/kernel' \
+On Thu, Jan 16, 2025 at 09:19:20AM +0000, Daniel P. Berrangé wrote:
+> On Thu, Jan 16, 2025 at 09:48:50AM +0100, Philippe Mathieu-Daudé wrote:
+> > On 16/1/25 07:46, Thomas Huth wrote:
+> > > We now have a general note about versioned machine types getting
+> > > deprecated and removed at the beginning of the deprecated.rst file,
+> > > so we should also have a general note about this in removed-features.rst
+> > > (which will also apply to versioned non-x86 machine types) instead of
+> > > listing individual old machine types in the document.
+> > > 
+> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > ---
+> > >   docs/about/deprecated.rst       |  7 -------
+> > >   docs/about/removed-features.rst | 11 +++++------
+> > >   2 files changed, 5 insertions(+), 13 deletions(-)
+> > > 
+> > > diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> > > index 4a3c302962..7b42d6eecc 100644
+> > > --- a/docs/about/deprecated.rst
+> > > +++ b/docs/about/deprecated.rst
+> > > @@ -236,13 +236,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+> > >   better reflects the way this property affects all random data within
+> > >   the device tree blob, not just the ``kaslr-seed`` node.
+> > > -``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
+> > > -''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> > > -
+> > > -These old machine types are quite neglected nowadays and thus might have
+> > > -various pitfalls with regards to live migration. Use a newer machine type
+> > > -instead.
+> > > -
+> > >   PPC 405 ``ref405ep`` machine (since 9.1)
+> > >   ''''''''''''''''''''''''''''''''''''''''
+> > > diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> > > index c6616ce05e..156c0c253c 100644
+> > > --- a/docs/about/removed-features.rst
+> > > +++ b/docs/about/removed-features.rst
+> > > @@ -972,6 +972,11 @@ from Linux in 2021, and is not supported anymore by QEMU either.
+> > >   System emulator machines
+> > >   ------------------------
+> > > +Note: Versioned machine types that have been introduced in a QEMU version
+> > > +that has initially been released more than 6 years before are considered
+> > > +obsolete and will be removed without further notice in this document.
+> > > +Please use newer machine types instead.
+> > 
+> > This is an improvement. I still wonder if we shouldn't list them removed
+> > machines here, to help old users.
+> > 
+> >   Removed in 4.0:
+> >     - pc-0.10
+> >     - ...
+> >   Removed in 9.0:
+> >     - pc-i440fx-2.3
+> >   Remove in 10.0:
+> >     - pc-i440fx-2.4
+> >     - pc-i440fx-2.5
+> >     - pc-i440fx-2.6
+> >     - pc-q35-2.4
+> >     - pc-q35-2.5
+> >     - pc-q35-2.6
+> >     - ARM virt-2.6
+> >     ...
+> > 
+> > ?
+> 
+> A big part of the reason for the macros for machine type deprecation & then
+> skipping machine registration, was to eliminate repeated manual work that is
+> visible to users if forgotten. 
+> 
+> We still have the actual code deletion which is manual, but that's harmless
+> as even if forgotten, such that the code exists, the machine type will have
+> been entirely removed from view.
+> 
+> As such I'm pretty reluctant to suggest we create a new place which needs
+> manually updating when we remove machine types.
+> 
+> I wonder if its possible to get an auto-generated version number into the
+> documentation though ?
 
-Just to state for the record the conclusion of our conversation
-on IRC; yes, the error is correct. Header-imports from
-Linux should be in a patch of their own which has no
-changes except the results of running update-linux-headers.sh
-(and ideally we would not have let aa274c33c39e7 through
-code review). So, yes, you have a series of three patches:
- * change update-linux-headers.sh
- * automated-change-only commit resulting from running the script
- * the change you want to make that requires the new header
+To answer my own question, yes with something like this:
 
-thanks
--- PMM
+diff --git a/docs/conf.py b/docs/conf.py
+index 31bb9a3789..899ad13305 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -110,6 +110,22 @@
+     else:
+         version = release = "unknown version"
+ 
++bits = version.split(".")
++major = int(bits[0])
++minor = int(bits[1])
++micro = int(bits[2])
++
++# Dev snapshot, adjust to next release version
++if micro >= 50:
++    micro = 0
++    minor += 1
++    if minor == 3:
++        major += 1
++        minor = 0
++
++ver_machine_deprecation_version = "%d.%d.%d" % (major - 3, minor, micro)
++ver_machine_deletion_version = "%d.%d.%d" % (major - 6, minor, micro)
++
+ # The language for content autogenerated by Sphinx. Refer to documentation
+ # for a list of supported languages.
+ #
+@@ -138,7 +154,18 @@
+ # environment variable is not set is for the benefit of readthedocs
+ # style document building; our Makefile always sets the variable.
+ confdir = os.getenv('CONFDIR', "/etc/qemu")
+-rst_epilog = ".. |CONFDIR| replace:: ``" + confdir + "``\n"
++
++vars = {
++    "CONFDIR": confdir,
++    "VER_MACHINE_DEPRECATION_VERSION": ver_machine_deprecation_version,
++    "VER_MACHINE_DELETION_VERSION": ver_machine_deletion_version,
++}
++
++rst_epilog = "".join([
++    ".. |" + key + "| replace:: ``" + vars[key] + "``\n"
++    for key in vars.keys()
++])
++
+ # We slurp in the defs.rst.inc and literally include it into rst_epilog,
+ # because Sphinx's include:: directive doesn't work with absolute paths
+ # and there isn't any one single relative path that will work for all
+
+
+Then....
+
+
+> 
+> eg, so we can have an entry in 'deprecated.rst'
+> 
+>   Versioned machine types for x86_64, i386, aarch64  <other targets here>
+>   -----------------------------------------------------------------------
+> 
+>   In accordance with our versioned machine type deprecation policy,
+>   all machine types older than 7.0.0 have been deprecated.
+
+use   |VER_MACHINE_DEPRECATION_VERSION|  here 
+
+> 
+> and in 'removed-features.rst'
+> 
+>   Versioned machine types for x86_64, i386, aarch64  <other targets here>
+>   -----------------------------------------------------------------------
+> 
+>   In accordance with our versioned machine type removal policy,
+>   all machine types older than 4.1.0 have been removed.
+
+use   |VER_MACHINE_DELETION_VERSION|  here 
+
+though, we should not add to removed-features.rst until 10.1.0 cycle
+since we don't start to do automatic deletion until then.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
