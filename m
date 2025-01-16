@@ -4,100 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45456C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C1DC02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYNDe-0005Kl-F1; Thu, 16 Jan 2025 05:35:22 -0500
+	id 1tYNOX-0008Nv-JY; Thu, 16 Jan 2025 05:46:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tYNDd-0005KP-8n
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:35:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYNOG-0008Ly-JK
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:46:21 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tYNDb-0004PZ-Qp
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:35:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737023718;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7cRrHP5TPLKIZuQiVEHK9KguHylbHeuXYk0j0aKCdvg=;
- b=Dw480J1baAKYtOEwnnwQ2h/ah0wIWBO/Gxdrqda2nRbZKGSQegb40UQ35zU0MYZfjQjZY/
- CGmRvEegE2uZ+IpVWW+Se+ZCrSAWRiig0ztcTRi4lHDtlKVS/VHZ8QpLuHcowrzAIOo0W4
- helInQRH3jO2KMUN9RJT1e2KDDgf6No=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-iu0Sc-MGP6qxSYzwFavdSQ-1; Thu, 16 Jan 2025 05:35:16 -0500
-X-MC-Unique: iu0Sc-MGP6qxSYzwFavdSQ-1
-X-Mimecast-MFC-AGG-ID: iu0Sc-MGP6qxSYzwFavdSQ
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-468f6f2f57aso10039261cf.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 02:35:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737023716; x=1737628516;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7cRrHP5TPLKIZuQiVEHK9KguHylbHeuXYk0j0aKCdvg=;
- b=FTWB4zLxIR3OkSl7N3Ui5L1kwR454vFIUqHt9DRffP4I1N6buyF6AXFO4nLPCRUNfo
- LGBFyfPnKtppfKHjTlxL9wXJLCfIbEoU2ybQe+WZBcrxCSrH3tpt1zFGQFQJ77/5fw7Y
- yehWmO7FN4SZUKHWtb3rajNBae56d34R/LEsbgpDMdTeTx2fJLsXLoF3+OpBMUxN6/c1
- 9DPBzRs2LXjL35+ndL8Cf7A3GjmocQHBzADHQtbMiM82d5h5jA5RfJSiR2Y9crqLzMqK
- Rm+TSxL13Shu8BkIpqP4z4PIvn+ORdjp7lZTUQNF/E5wf+j1nDnCp+8olI5kYb4U/b/3
- XwGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0xfX5RwkXVgTDgS/t6twjCoXX9z/l1xbQ29q+vaGC22+cr1im2Ovik356WHx+el4yZiWHAs6V1UIK@nongnu.org
-X-Gm-Message-State: AOJu0YxKs93c55acG1gHsoSnscoRqpjncIRaoHjyi5SCAjsfbpV2ZZXN
- 5f8SlkAT4LJGLflyd1gVtzGGI2ePpEpiCZYXxAGXCoP94y6O7uyXMEj1JnQCEyhsrBzyKAYAxEH
- v1HAOxKC2qtw/p8zDYDEUKfRZIPuuUwXuevWXduiIGUtlIhuMnNa+
-X-Gm-Gg: ASbGncvFlxJCE2+c9QX7N2mUxeIhafLv7G/LcvFex5WrukLsXf0zQaNzjYsCvLCcWc3
- KSlJ7zaEEG5phnMld8VYJOMjzq/23SFJRhjlvwUL3jSTZHiZQ+ll6nucJEBMFfC2QIwcu2jM0YB
- fQPaY4XnholzePeCCJEHAE1BrZHolM7cSnCibOgOiAZ/qUqS9yAneFq25yuChM5CQfVtsrNBqUf
- YlFPjv+LP3qWQsX034c92dXFT7f+fOXHP60oGaHFgN6GEtJopx+BCS79CQMXy8dIfsqRLrnz410
- ntk7Yim/PQpu848bY8Z2YnYMLsNu
-X-Received: by 2002:ac8:5989:0:b0:467:86a9:f7d4 with SMTP id
- d75a77b69052e-46c7108eba6mr435951261cf.16.1737023715964; 
- Thu, 16 Jan 2025 02:35:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEjCpGqWt39TbBi/vCw+G/ef3qbb1qj6oEeDgv72yUw7ad5Vr/EMM6CPEBa+miQf8yZP7uj6g==
-X-Received: by 2002:ac8:5989:0:b0:467:86a9:f7d4 with SMTP id
- d75a77b69052e-46c7108eba6mr435950881cf.16.1737023715595; 
- Thu, 16 Jan 2025 02:35:15 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46c873dbf16sm74159781cf.67.2025.01.16.02.35.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 02:35:14 -0800 (PST)
-Message-ID: <0fb13dcd-3b0f-48b2-9b8b-b829053bb74d@redhat.com>
-Date: Thu, 16 Jan 2025 11:35:11 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYNOD-00068b-EU
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:46:20 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YYfd50RXvz6L5Rb;
+ Thu, 16 Jan 2025 18:44:41 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0BF421409EA;
+ Thu, 16 Jan 2025 18:46:14 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 16 Jan
+ 2025 11:46:13 +0100
+Date: Thu, 16 Jan 2025 10:46:12 +0000
+To: Fan Ni <nifan.cxl@gmail.com>
+CC: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "a.manzanares@samsung.com" <a.manzanares@samsung.com>,
+ "anisa.su887@gmail.com" <anisa.su887@gmail.com>, "dave@stgolabs.net"
+ <dave@stgolabs.net>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [ISSUE] memdev cannot be enabled after reboot due to failed
+ dvsec range check [QEMU setup]
+Message-ID: <20250116104612.00000ea0@huawei.com>
+In-Reply-To: <Z4g-iMVj4D2sUE20@smc-140338-bm01>
+References: <Z4bJdCliETI_t2DL@fan>
+ <80665bcd-7d6e-4f7a-9ab4-e292486f2681@fujitsu.com>
+ <Z4g-iMVj4D2sUE20@smc-140338-bm01>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/iommufd: Fix SIGSEV in iommufd_cdev_attach()
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20250116102307.260849-1-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250116102307.260849-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.793, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,54 +72,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On Wed, 15 Jan 2025 23:02:32 +0000
+Fan Ni <nifan.cxl@gmail.com> wrote:
+
+> On Wed, Jan 15, 2025 at 01:06:24AM +0000, Zhijian Li (Fujitsu) wrote:
+> > Cced QEMU,
+> > 
+> > Hi Fan,
+> > 
+> > I recalled we had a reboot issue[1] months ago
+> > I guess your issue was caused by some registers not reset during reboot.
+> > 
+> > [1] https://lore.kernel.org/linux-cxl/20240409075846.85370-1-lizhijian@fujitsu.com/
+> >   
+> Hi Zhijian,
+> Thanks for the pointer. With the fix applied, the issue goes away.
+
+Note that as per the thread above, that fix is not sufficient which
+is why I dropped it again from my trees.
+
+Reset is not currently well handled by the qemu code.
+I'm happy to look at patches to fully support it but that fix needs
+to be complete and not break any other cases.
+
+Jonathan
 
 
-On 1/16/25 11:23 AM, Zhenzhong Duan wrote:
-> When iommufd_cdev_ram_block_discard_disable() fails for whatever reason,
-> errp should be set or else SIGSEV is triggered in vfio_realize() when
-> error_prepend() is called.
->
-> By this chance, use the same error message for both legacy and iommufd
-> backend.
->
-> Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/vfio/iommufd.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 3490a8f1eb..df61edffc0 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -515,8 +515,8 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->          } else {
->              ret = iommufd_cdev_ram_block_discard_disable(true);
->              if (ret) {
-> -                error_setg(errp,
-> -                              "Cannot set discarding of RAM broken (%d)", ret);
-> +                error_setg_errno(errp, -ret,
-> +                                 "Cannot set discarding of RAM broken");
->                  goto err_discard_disable;
->              }
->              goto found_container;
-> @@ -544,6 +544,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->  
->      ret = iommufd_cdev_ram_block_discard_disable(true);
->      if (ret) {
-> +        error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
->          goto err_discard_disable;
->      }
->  
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Thanks!
-
-Eric
+> 
+> Fan
+> > 
+> > On 15/01/2025 04:30, Fan Ni wrote:  
+> > > Hi,
+> > > 
+> > > Recently, while testing cxl with qemu setup, I found the memdev cannot
+> > > be enabled successfully after reboot.
+> > > 
+> > > Here is the setup and the steps I have tried.
+> > > 
+> > > QEMU:
+> > > https://gitlab.com/qemu-project/qemu.git
+> > > branch: master
+> > > commit: 8032c78e556cd0baec111740a6c636863f9bd7c8
+> > > 
+> > > Kernel:
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/
+> > > branch: next
+> > > 2f84d072bdcb7d6ec66cc4d0de9f37a3dc394cd2
+> > > 
+> > > Steps to reproduce the issue.
+> > > 1.  start the vm with cxl pmem device attached directly to RP.
+> > > 2. Load the cxl drivers cxl_acpi cxl_core cxl_pci cxl_port cxl_mem, etc.
+> > > Everyting works expected, the memory is corrected enabled and shown with
+> > > cxl list.
+> > > 3. Reboot the VM (run reboot command inside vm, no shutdown);
+> > > 4. Load the cxl drivers as in step 2. the cxl pmem is not correctly enabled.
+> > > 
+> > > dmesg shows some error as below:
+> > > -------------------------------
+> > > [   17.131729] cxl_core:cxl_hdm_decode_init:443: cxl_pci 0000:0d:00.0: DVSEC Range0 denied by platform
+> > > [   17.135267] cxl_pci 0000:0d:00.0: Range register decodes outside platform defined CXL ranges.
+> > > [   17.138428] cxl_core:cxl_bus_probe:2073: cxl_port endpoint2: probe: -6
+> > > [   17.141104] cxl_core:devm_cxl_add_port:936: cxl_mem mem0: endpoint2 added to port1
+> > > [   17.143703] cxl_mem mem0: endpoint2 failed probe
+> > > [   17.145324] cxl_core:cxl_bus_probe:2073: cxl_mem mem0: probe: -6
+> > > [   17.171416] cxl_core:cxl_detach_ep:1499: cxl_mem mem0: disconnect mem0 from port1
+> > > ------------------------------
+> > > Compare the step 2 and 4 with debug info. we can see,
+> > > In step 2, when entry function: cxl_hdm_decode_init().
+> > > 
+> > > (gdb) p *info
+> > > $2 = {mem_enabled = false, ranges = 0, port = 0xffff8881097eac00, dvsec_range = {{start = 0, end = 0}, {start = 0, end = 0}}}
+> > > 
+> > > The info struct is from cxl_dvsec_rr_decode(), where if mem_enabled is
+> > > not enabled, it will return directly without reading dvsec range, so
+> > > ranges == 0.
+> > > This is what happened in step 2: no dvsec ranges are provided to the function for checking.
+> > > 
+> > > When init the hdm decoder in cxl_hdm_decode_init function, the memory enable bit will be set.
+> > > 
+> > > In step 4, after reboot, the enabled memory enable bit sustained and the dvsec range
+> > > register will be read from the device in cxl_dvsec_rr_decode.
+> > > So when entrying cxl_hdm_decode_init(),
+> > > ------------------------------------
+> > > $2 = {mem_enabled = true, ranges = 1, port = 0xffff888103c77400, dvsec_range = {{start = 0, end = 536870911}, {start = 0, end = 0}}}
+> > > Breakpoint 2 at 0xffffffffc0657bbe: file drivers/cxl/core/pci.c, line 416.
+> > > ------------------------------------
+> > > It will cause the dvsec_range_allowed() failing as the range from dvsec range
+> > > registers starts at address zero [0, 512], which does not match the hpa range
+> > > stored in cxld->hpa_range, causing the issue.
+> > > 
+> > > ------------------------------------
+> > > Thread 1 hit Breakpoint 4, dvsec_range_allowed (dev=0xffff888108af9848,
+> > >      arg=0xffffc9000059f9b0) at drivers/cxl/core/pci.c:265
+> > > 265		if (!(cxld->flags & CXL_DECODER_F_RAM))
+> > > (gdb) b 268
+> > > Breakpoint 5 at 0xffffffffc0657d31: file drivers/cxl/core/pci.c, line 271.
+> > > (gdb) p /x cxld->hpa_range
+> > > $5 = {start = 0xa90000000, end = 0xb8fffffff}
+> > > (gdb) p /x *dev_range
+> > > $7 = {start = 0x0, end = 0x1fffffff}
+> > > (gdb)
+> > > ------------------------------------
+> > > The hpa_range is set when parsing the cfmws in __cxl_parse_cfmws.
+> > > 
+> > > Any throughts?
+> > > 
+> > > Open question: do we need to update the dvsec range register after we parse the
+> > > cfmws to make the two above match.  
+> 
 
 
