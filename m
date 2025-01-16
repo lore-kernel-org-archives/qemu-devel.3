@@ -4,82 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2115C02187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20E4C02183
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSFf-0000e1-M8; Thu, 16 Jan 2025 10:57:47 -0500
+	id 1tYSFZ-0000c5-1P; Thu, 16 Jan 2025 10:57:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tYSFd-0000dh-Vn
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:57:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tYSFc-0008Fw-AX
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:57:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737043060;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kvgPcGfB/6RHZuQxTauuuQGONAp82xTjpjkZKsQ7lXA=;
- b=cO2iOL1sFtAsJpWi3WgoFrNVre7DTif5zLi1hK8iuA20EW9l0dA3lpVXkRQ1eDEwsT4Yy9
- qcLnACi01ZGjFZawMTc8g53BHbwS9KeengInALmkV5SG8UUcNnuBNFqdnn6RVinnj9GCnM
- GPJ4nZC5TdTcyvuP+QxLdJo0YCydfGY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-601-e-COnUP8Ng6yCYzWO18nvA-1; Thu,
- 16 Jan 2025 10:57:35 -0500
-X-MC-Unique: e-COnUP8Ng6yCYzWO18nvA-1
-X-Mimecast-MFC-AGG-ID: e-COnUP8Ng6yCYzWO18nvA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3CFC1913388; Thu, 16 Jan 2025 15:57:27 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.205])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5CB530001BE; Thu, 16 Jan 2025 15:57:26 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>, paul@xen.org, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Peter Hilber <quic_philber@quicinc.com>, "Mohamed
- Abuelfotoh, Hazem" <abuehaze@amazon.com>
-Subject: Re: [PATCH v7 2/3] linux-headers: Update to Linux 6.13-rc7
-In-Reply-To: <dcc0b6e46ebbd92ff2b689670731eaa8ffe43b9f.camel@infradead.org>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250116140315.2455143-1-dwmw2@infradead.org>
- <20250116140315.2455143-3-dwmw2@infradead.org>
- <b486bc8d-af20-46f3-b6f5-b32cc0a54fa5@xen.org>
- <dcc0b6e46ebbd92ff2b689670731eaa8ffe43b9f.camel@infradead.org>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Thu, 16 Jan 2025 16:57:23 +0100
-Message-ID: <87r05292fw.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYSFX-0000b8-Bp
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:57:39 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYSFV-0008Ek-Sq
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:57:39 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-436637e8c8dso10426885e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:57:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737043056; x=1737647856; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sgywbnAY+FtfIBUT6SqmzPvm0ofX88tcaLBV3njidT0=;
+ b=v1IW2nENYKYHsayFsHqXRu5iYnTDTKotyndnLKa7UQ0e5+6YA1OV+ps5oQO1n3SoMf
+ 8hjui1XL+kSpBAdyn2QhPwaiIgwSzzZYSlnDOWtdvz2Zs3IZqTQhqRgtRywTgL6UOvDj
+ sQ9ksgylA2b+aNyWvuu6J8QhhLNMed8o+o+CrS3SDJw04TYV8F9jIivI9gvYmLzhkDpC
+ t4fQa0zmyqwkMV9FnO7lyTTWlU3xF96ukdLMroM0EpsB32LDMPG0/fc6MFw8xDm5lAeL
+ SPYbOipVc4lM1x9IYZW5YNDwLoYiDaTpoKfcAdVTq+V/QjPadOL/V4gLb2zYL/7bsUuG
+ 1Lmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737043056; x=1737647856;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sgywbnAY+FtfIBUT6SqmzPvm0ofX88tcaLBV3njidT0=;
+ b=CLogLK9dpZ1W97pDFzHDnoSdKq9wI5dwXJ4ZtyAMnQnUaClXy20lL9UMUEh3aU7Kk3
+ urBZr5g85fzWSfhpajAK+FqKhNVJSfV6H81R38pc+gBfWEC+EWLSY6GxC5HBHk2//A9D
+ 0SzcYXlXIBQl+GhGzL2zAZ2aN1u9weUBcfSLB9AYxkPn75mp77uK260osMqUQmBKTRgR
+ snZyKmVP0+vPn/E0TJJVa8J3GciTYkDt6OIPrZNVjo+rD27deeYyHaNH+haXOuDN4o+S
+ sBMTVGoH8Go8xkJxEGG/Bsuy2J/D7yUsrhASxRLVI3bVb0ILJd9FgDyiBS6V97nDkYk6
+ 1OIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBNSwputNp2C1xfe1G61G6Gcy/gID0BNSl3PQyW2dy3onsqQvELLdUMw5lKJGoJny4bQPKj0lSjyZJ@nongnu.org
+X-Gm-Message-State: AOJu0YwlwFlzTSdJEHULMKltB3vLy9mKSadJ3xFSDbwVaKVdkEO49CqF
+ BGV308jDg6E6Vh8QBUU05sjW5TMUQoR3yShBh3Jw/OI10PzRO7um6oQSdRulZiY=
+X-Gm-Gg: ASbGncsSSY+/YW10JAT8GY3RZNbSaPobj8xUeAE54zwjpDoHRHOlHy/qsF3NQ/wtNtn
+ MnYhq3y82TU5P0BNf/xljzynITn4ZQV32qwKoPT2CmsTImvFcWQzFDx/+q1CQ0Ojf9Dk+KKIYNC
+ g6ZqdPtJENAGuYkdPCeiZ8X3NliCjvDLsdp3vL8H+9/4974SdYzCZK+3q/jae9bm7cE41i15WN2
+ 2Fo13Qa5v20FzAae/CCny0Q4dGbzik0X2hr/Mrok/Eaxxl+d4kw5iVOBqI4kY20xsyvYIcLM+EH
+ YgZEYr7u8RXJIldfYtdceFJv
+X-Google-Smtp-Source: AGHT+IHtGmVUo9l1YzT0QHd8IhOxBxBtUhmdNblKGJmwXL0MgVx2PjDEheVajabPHRhz95EK24V/lA==
+X-Received: by 2002:a5d:47c4:0:b0:385:f16d:48b4 with SMTP id
+ ffacd0b85a97d-38a8733046dmr33267171f8f.40.1737043055965; 
+ Thu, 16 Jan 2025 07:57:35 -0800 (PST)
+Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf327decbsm190957f8f.90.2025.01.16.07.57.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 07:57:35 -0800 (PST)
+Message-ID: <c6c34207-a59f-43f0-92d8-1af3b101e0c5@linaro.org>
+Date: Thu, 16 Jan 2025 16:57:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/3] hw/acpi: Add vmclock device
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Cornelia Huck <cohuck@redhat.com>,
+ Peter Hilber <quic_philber@quicinc.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>, paul <paul@xen.org>
+References: <20250116140315.2455143-1-dwmw2@infradead.org>
+ <20250116140315.2455143-4-dwmw2@infradead.org>
+ <56e3ad5c-758b-4799-86a4-bb503aa34cea@linaro.org>
+ <b5850fa317e89e4e0de1bfe478a7d2cfd9422c37.camel@infradead.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b5850fa317e89e4e0de1bfe478a7d2cfd9422c37.camel@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,44 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16 2025, David Woodhouse <dwmw2@infradead.org> wrote:
+On 16/1/25 16:32, David Woodhouse wrote:
+> On Thu, 2025-01-16 at 16:15 +0100, Philippe Mathieu-Daudé wrote:
+>>
+>>> --- a/hw/acpi/Kconfig
+>>> +++ b/hw/acpi/Kconfig
+>>> @@ -60,6 +60,11 @@ config ACPI_VMGENID
+>>>         default y
+>>>         depends on PC
+>>>     
+>>> +config ACPI_VMCLOCK
+>>> +    bool
+>>> +    default y
+>>> +    depends on PC
+>>
+>> This doesn't look right (apparently the kernel side also build on ARM).
+> 
+> I don't think it's strictly wrong; there are no circumstances in which
+> PC is set not I386 && ACPI, or vice versa? I was just going from the
+> existing setup for VMGENID, which I think could also theoretically
+> exist on Arm too?
 
-> On Thu, 2025-01-16 at 15:07 +0100, Paul Durrant wrote:
->> On 16/01/2025 14:59, David Woodhouse wrote:
->> > From: David Woodhouse <dwmw@amazon.co.uk>
->> >=20
->> > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
->> > ---
->> > =C2=A0 include/standard-headers/linux/vmclock-abi.h | 182 ++++++++++++=
-+++++++
->> > =C2=A0 linux-headers/linux/iommufd.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 31 ++--
->> > =C2=A0 linux-headers/linux/stddef.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 13 =
-+-
->> > =C2=A0 3 files changed, 212 insertions(+), 14 deletions(-)
->> > =C2=A0 create mode 100644 include/standard-headers/linux/vmclock-abi.h
->> >=20
->>=20
->> No functional change?
->
-> Well, other than adding vmclock-abi.h. The rest is almost all in
-> comments apart IIRC from the TAG thing, which shouldn't affect us as we
-> don't use C++.
->
-> I didn't really want to make those other changes but it seems that's
-> the process we use; we have to add the new header to the list in
-> update-linux-headers.sh and then have a separate commit which runs the
-> script again to do a wholesale import.
->
-> I suppose I could have cheated and done the import from 6.13-rc1 again,
-> but the extra changes did indeed seem like there should be no
-> functional change.
+Unfortunately PC (and MALTA) are bad examples, beeing ones of the
+oldest QEMU machines. Their code is spaghetti.
 
-If the other headers are not updated by this change, they will be
-updated by a later change anyway; IMHO it doesn't really matter when the
-headers are updated, as long as the update is done against a specific,
-released Linux version. Dragging along other random stuff is normal for
-a headers update.
+ACPI_VMGENID seems over-restricted. IIUC it should be:
+
+     select ACPI
+     select FW_CFG
+
+The idea is to keep the smallest dependency, i.e. if someone wants
+to build a binary with only microvm machine and use vmclock in it,
+it shouldn't have to build the PC machines.
+
+>> I'm only seeing e820_add_entry (I386) and ACPI API called. So:
+>>
+>>       depends on I386 && ACPI
+
+Actually the Kconfig should be:
+
+     select ACPI
+     depends on I386
+
+>> If later we want ARM support we'll have to rework the e820_add_entry()
+>> call.
+> 
+> Sure, that certainly makes it easier to add Arm later, and I really do
+> intend to do so. I've done it in my tree. Thanks.
 
 
