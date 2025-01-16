@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BA7E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 07:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FAA2E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 07:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYJwV-0004gS-3n; Thu, 16 Jan 2025 02:05:27 -0500
+	id 1tYJxM-0005LG-Us; Thu, 16 Jan 2025 02:06:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYJwR-0004er-PR
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 02:05:25 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYJxK-0005Id-MJ
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 02:06:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYJwQ-0005tW-1H
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 02:05:23 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYJxH-0006Z4-MK
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 02:06:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737011113;
+ s=mimecast20190719; t=1737011173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gbOrTLBnztBZMpBgK6mWrolAzWbd5PyfmHB2jNTOcHQ=;
- b=RONN4/5pwsqCC62zZvmBqFPgtuP93VuKALIcOueMXEnmxBEzjoJSv+IRxzsuerLpUU/fZN
- F8gm6C4C3o0EqxSzqPk6mFQ2fMPCe0jvRpUXIFvXhZBgEu1EFlX6Bta3w+mgL9nysgeR/0
- d0eeJDX7ShHBye+suVqbuf2RIHG8eZc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E47Zn/fi7gZe/DzzSBjV6Emnp7HhUif7hclHDVtVWHc=;
+ b=gfek9MS01t0nFAHBtJ4WCZUFry2CeHVlmElDwrY3i3OdGYL4UGsS3RsCNkJhFsdW9Hcg3L
+ Y69pwgIuDrNsBd6Se8y3ayvZl1IzqJuj8luH96eD2v3r3RJ6Pw9V7kPwb4C9exDrMCIlpI
+ qdB+5tFHzRldMNJrkE5qiFf27H/8wNo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-Z-N6spn6MgGhMgkt20k6RQ-1; Thu, 16 Jan 2025 02:05:09 -0500
-X-MC-Unique: Z-N6spn6MgGhMgkt20k6RQ-1
-X-Mimecast-MFC-AGG-ID: Z-N6spn6MgGhMgkt20k6RQ
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43651b1ba8aso3185435e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 23:05:08 -0800 (PST)
+ us-mta-2-dVq3xA92N1mkAw1OzoZCTQ-1; Thu, 16 Jan 2025 02:06:11 -0500
+X-MC-Unique: dVq3xA92N1mkAw1OzoZCTQ-1
+X-Mimecast-MFC-AGG-ID: dVq3xA92N1mkAw1OzoZCTQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3860bc1d4f1so384791f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 23:06:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737011107; x=1737615907;
+ d=1e100.net; s=20230601; t=1737011169; x=1737615969;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gbOrTLBnztBZMpBgK6mWrolAzWbd5PyfmHB2jNTOcHQ=;
- b=kZhnfV93w/aT5b0qr5aEuddRHKYxWTjek/uD/DcTFt7WvHFNkqnN7Gny6sxxCflBRe
- evJk4S8fErRCWoLXyd1UCU68/0dfyxsrKvyaADRw5842W6Bk2RHUYnsg1naAbriRLz35
- cQXtEfLk8Zebe2RKoYYbsiWWPWSHo7zYKYazvQ8/AuSd8MeFXqNLM5iumzYLkBJeppXW
- k6NC3bk4iZs20u9xL5IsEfGjPRasKznry7dtTXyAtZB8XrkTljY1yMEt8ge0Q37qeZHo
- UZren3wWKf3WGPPKLXSZBuUMesNkNd3vLoEsXClpLZnK68uu4LPBOGIONPfs7rPwHpJm
- rgRQ==
-X-Gm-Message-State: AOJu0YwgnmCnSyD4iLYZSr+Oyz6AxfPVjK1U55iIRuIAgczIFxHWXNE5
- vpFMfLvxaXyagucT/Yn4uGRWsfOeILN77Lqv08dHLNbeJd8LBCbpkXFzUq/AdPtLEjYxd1jftMO
- TNt/d3uZN1xkAfYRl7mRT8Hg7ghJRu2OWYMn+3FY8pdSbSMnWbhOl
-X-Gm-Gg: ASbGncuQUhroQnAISHFTj+z/Sgn9fUzq7eNPhXuO9fGRdb2dB4PC/j52OfJB1QrqdgB
- OLaGI1ydOBMDOGPrkEy30YPkNrA8YxXSvIzHnAyE/7qhB/0D++cphEDeQIuXSoQSwq6O5FnX5gT
- y0HZEp7iGSJI7Avr/K8zEeYLFdd6oRe/6HEcYlrWQXdVD/HjejGfaMu055+S7xSozyuLNRp/XPb
- L+BwKaGO+JVorY1ZIMkpm2M1gpQ3jqB2YTJ80rGK8VpMa2cej53
-X-Received: by 2002:a5d:64e9:0:b0:385:f7d2:7e29 with SMTP id
- ffacd0b85a97d-38a87304221mr30931238f8f.15.1737011107289; 
- Wed, 15 Jan 2025 23:05:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEqmsCbnb5bpxwkDe8Xy0EJBrTq0BcnobDgmNI062VkE+70jasCyPrn41kh585Z0dJi6h7o3g==
-X-Received: by 2002:a5d:64e9:0:b0:385:f7d2:7e29 with SMTP id
- ffacd0b85a97d-38a87304221mr30931187f8f.15.1737011106903; 
- Wed, 15 Jan 2025 23:05:06 -0800 (PST)
+ bh=E47Zn/fi7gZe/DzzSBjV6Emnp7HhUif7hclHDVtVWHc=;
+ b=tmDTy3dIyZSTNh5ZzVvzy1pANF+8mYvYHZikkLQ+b6G/wYKnyZ4I1HP9yHYYBv/6oA
+ WxOrX5EHZIgIBtUAvO2qWd5WbcwE0kYjigx2kUmeWzogdlK69W0RHZPPcFG6dt1ngeWc
+ zp2ORzplCzhXRni9afhXD+FW7eK+jTyNy0hutji4ZfJscupM706B76S0Zs5hIoraeeVO
+ O6t72uS+Jy6t60fNRqZxcxODiQx7j1GcNdOVtW+PRaHn7zqLJjl82U8TAmLcc0ZnXZwA
+ zomd1JA1zgzdJuHANl73+x703iGVJUXO2+lVCEN74qvTRAO82vJo10NO81BcnZ1gQxsk
+ fSow==
+X-Gm-Message-State: AOJu0Yzzb+ZYW+wDJ01FDrlTC6SuL12++P4Xyal4IYPhUjy33ULLWXfu
+ 0KgCkI2eM6qGODYMgAE6lOrtLEScTPpcxhIm+qxqroQoqJPSfpAjlMtwQGv7OYPWX3neNbEi0/D
+ z6gXeiTcZN+xcP/gW1SQkhFBIsblKRScAZvgWkTAEDaxZmvj6wbyJxLxQTxirxOc91p1s0x7Ib4
+ JwQNp7oqW/HLtgfrQ5TdOgGBhQbdSD6g==
+X-Gm-Gg: ASbGncvme4iCPOAO3tN06XG96dJJZx9/i3gW9opryde/4g5TnYm9GaywgVN3x9yCz6N
+ Nd9c/9Oc6zR8QXWWhLHJq9k560UAzNheRkbWeSBNTAhzSa5RCQAeycfWo0lDLEobOMcg3U74fg9
+ lhamvze1NigbD1KR3sao7c3/MZrcsPTDW9LxsxBWo4F2l0UVxID8xjI15RyqlLlPTsn3bhq+cT4
+ MpvLi8IGXLUxkQQ9M8VGOc6Ci17hDys6BbLkMkKAgQX6Fr2lGcJ
+X-Received: by 2002:a05:6000:1f8d:b0:385:eb85:f111 with SMTP id
+ ffacd0b85a97d-38a87305259mr28995846f8f.14.1737011169513; 
+ Wed, 15 Jan 2025 23:06:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpFsK4Twma7/Q1YQJ+ESa35iuxB+eS/vm7JiwjQHk9Di+mVmKTuW6CVRu6DVi1A9wMgRSqAw==
+X-Received: by 2002:a05:6000:1f8d:b0:385:eb85:f111 with SMTP id
+ ffacd0b85a97d-38a87305259mr28995804f8f.14.1737011168959; 
+ Wed, 15 Jan 2025 23:06:08 -0800 (PST)
 Received: from redhat.com ([2a0d:6fc7:342:db8c:4ec4:322b:a6a8:f411])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e37d0bdsm19486030f8f.3.2025.01.15.23.05.05
+ ffacd0b85a97d-38bebccc93asm1312960f8f.17.2025.01.15.23.06.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jan 2025 23:05:06 -0800 (PST)
-Date: Thu, 16 Jan 2025 02:05:03 -0500
+ Wed, 15 Jan 2025 23:06:08 -0800 (PST)
+Date: Thu, 16 Jan 2025 02:06:05 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
 Subject: Re: [PULL 00/48] virtio,pc,pci: features, fixes, cleanups
-Message-ID: <20250116020413-mutt-send-email-mst@kernel.org>
+Message-ID: <20250116020536-mutt-send-email-mst@kernel.org>
 References: <cover.1736964487.git.mst@redhat.com>
- <4f0312153b3232dc25afbb3901f00a3c53465074.camel@infradead.org>
- <20250115174130-mutt-send-email-mst@kernel.org>
- <E43462B5-CFB5-433F-BB70-BEDC8D2FD4F2@infradead.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <E43462B5-CFB5-433F-BB70-BEDC8D2FD4F2@infradead.org>
+In-Reply-To: <cover.1736964487.git.mst@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
@@ -108,57 +106,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 12:05:59AM +0100, David Woodhouse wrote:
-> On 15 January 2025 23:42:41 CET, "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >On Wed, Jan 15, 2025 at 07:15:18PM +0100, David Woodhouse wrote:
-> >> On Wed, 2025-01-15 at 13:08 -0500, Michael S. Tsirkin wrote:
-> >> > The following changes since commit 7433709a147706ad7d1956b15669279933d0f82b:
-> >> > 
-> >> >   Merge tag 'hw-misc-20250113' of https://github.com/philmd/qemu into staging (2025-01-14 12:46:56 -0500)
-> >> > 
-> >> > are available in the Git repository at:
-> >> > 
-> >> >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> >> > 
-> >> > for you to fetch changes up to 60f543ad917fad731e39ff8ce2ca83b9a9cc9d90:
-> >> > 
-> >> >   virtio-net: vhost-user: Implement internal migration (2025-01-15 13:07:34 -0500)
-> >> > 
-> >> > ----------------------------------------------------------------
-> >> > virtio,pc,pci: features, fixes, cleanups
-> >> > 
-> >> > The big thing here are:
-> >> > stage-1 translation in vtd
-> >> > internal migration in vhost-user
-> >> > ghes driver preparation for error injection
-> >> > new resource uuid feature in virtio gpu
-> >> > 
-> >> > And as usual, fixes and cleanups.
-> >> > 
-> >> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> >> 
-> >> Should I be concerned that the vmclock device isn't in this PR?
-> >> 
-> >> https://lore.kernel.org/qemu-devel/20250109080033-mutt-send-email-mst@kernel.org/
-> >> 
-> >
-> >Oops.. it was there :( Dropped by mistake in a rebase.
-> >I'll redo the pull, thanks!
-> >
+On Wed, Jan 15, 2025 at 01:08:28PM -0500, Michael S. Tsirkin wrote:
+> The following changes since commit 7433709a147706ad7d1956b15669279933d0f82b:
 > 
-> If it's easier, I could just round it up with the pull request I need to send tomorro^W later today anyway?
-
-Yes pls do. You can add:
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-but, I noticed checkpatch warnings:
-
-3634039b93cc51816263e0cb5ba32e1b61142d5d:89: WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-3634039b93cc51816263e0cb5ba32e1b61142d5d:366: WARNING: added, moved or deleted file(s) imported from Linux, are you using scripts/update-linux-headers.sh?
-3634039b93cc51816263e0cb5ba32e1b61142d5d:366: ERROR: headers imported from Linux should be self-contained in a patch with no other changes
+>   Merge tag 'hw-misc-20250113' of https://github.com/philmd/qemu into staging (2025-01-14 12:46:56 -0500)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> 
+> for you to fetch changes up to 60f543ad917fad731e39ff8ce2ca83b9a9cc9d90:
+> 
+>   virtio-net: vhost-user: Implement internal migration (2025-01-15 13:07:34 -0500)
 
 
-Please address.
+OK I missed including David's patch but he'll merge it himself.
+So the request stands.
+
+> ----------------------------------------------------------------
+> virtio,pc,pci: features, fixes, cleanups
+> 
+> The big thing here are:
+> stage-1 translation in vtd
+> internal migration in vhost-user
+> ghes driver preparation for error injection
+> new resource uuid feature in virtio gpu
+> 
+> And as usual, fixes and cleanups.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> 
+> ----------------------------------------------------------------
+> Clément Mathieu--Drif (4):
+>       intel_iommu: Check if the input address is canonical
+>       intel_iommu: Set accessed and dirty bits during stage-1 translation
+>       intel_iommu: Add an internal API to find an address space with PASID
+>       intel_iommu: Add support for PASID-based device IOTLB invalidation
+> 
+> Dorinda Bassey (1):
+>       virtio-gpu: Add definition for resource_uuid feature
+> 
+> Igor Mammedov (6):
+>       tests: acpi: whitelist expected blobs
+>       cpuhp: make sure that remove events are handled within the same SCI
+>       tests: acpi: update expected blobs
+>       tests: acpi: whitelist expected blobs
+>       pci: acpi: Windows 'PCI Label Id' bug workaround
+>       tests: acpi: update expected blobs
+> 
+> Laurent Vivier (2):
+>       vhost: Add stubs for the migration state transfer interface
+>       virtio-net: vhost-user: Implement internal migration
+> 
+> Li Zhijian (1):
+>       hw/cxl: Fix msix_notify: Assertion `vector < dev->msix_entries_nr`
+> 
+> Mauro Carvalho Chehab (16):
+>       acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
+>       acpi/ghes: simplify acpi_ghes_record_errors() code
+>       acpi/ghes: simplify the per-arch caller to build HEST table
+>       acpi/ghes: better handle source_id and notification
+>       acpi/ghes: Fix acpi_ghes_record_errors() argument
+>       acpi/ghes: Remove a duplicated out of bounds check
+>       acpi/ghes: Change the type for source_id
+>       acpi/ghes: don't check if physical_address is not zero
+>       acpi/ghes: make the GHES record generation more generic
+>       acpi/ghes: better name GHES memory error function
+>       acpi/ghes: don't crash QEMU if ghes GED is not found
+>       acpi/ghes: rename etc/hardware_error file macros
+>       acpi/ghes: better name the offset of the hardware error firmware
+>       acpi/ghes: move offset calculus to a separate function
+>       acpi/ghes: Change ghes fill logic to work with only one source
+>       docs: acpi_hest_ghes: fix documentation for CPER size
+> 
+> Nicholas Piggin (1):
+>       pci/msix: Fix msix pba read vector poll end calculation
+> 
+> Sebastian Ott (1):
+>       pci: ensure valid link status bits for downstream ports
+> 
+> Yi Liu (2):
+>       intel_iommu: Rename slpte to pte
+>       intel_iommu: Implement stage-1 translation
+> 
+> Yu Zhang (1):
+>       intel_iommu: Use the latest fault reasons defined by spec
+> 
+> Zhenzhong Duan (13):
+>       intel_iommu: Make pasid entry type check accurate
+>       intel_iommu: Add a placeholder variable for scalable mode stage-1 translation
+>       intel_iommu: Flush stage-2 cache in PASID-selective PASID-based iotlb invalidation
+>       intel_iommu: Check stage-1 translation result with interrupt range
+>       intel_iommu: Flush stage-1 cache in iotlb invalidation
+>       intel_iommu: Process PASID-based iotlb invalidation
+>       intel_iommu: piotlb invalidation should notify unmap
+>       tests/acpi: q35: allow DMAR acpi table changes
+>       intel_iommu: Set default aw_bits to 48 starting from QEMU 9.2
+>       tests/acpi: q35: Update host address width in DMAR
+>       intel_iommu: Introduce a property x-flts for stage-1 translation
+>       intel_iommu: Introduce a property to control FS1GP cap bit setting
+>       tests/qtest: Add intel-iommu test
+> 
+>  hw/i386/intel_iommu_internal.h                    | 101 ++-
+>  include/hw/acpi/ghes.h                            |  16 +-
+>  include/hw/i386/intel_iommu.h                     |   8 +-
+>  include/hw/virtio/vhost.h                         |  23 +
+>  include/hw/virtio/virtio-gpu.h                    |   3 +
+>  hw/acpi/cpu.c                                     |  43 +-
+>  hw/acpi/generic_event_device.c                    |   4 +-
+>  hw/acpi/ghes-stub.c                               |   2 +-
+>  hw/acpi/ghes.c                                    | 256 ++++----
+>  hw/arm/virt-acpi-build.c                          |   5 +-
+>  hw/display/vhost-user-gpu.c                       |   8 +
+>  hw/display/virtio-gpu-base.c                      |   3 +
+>  hw/i386/acpi-build.c                              |  33 +-
+>  hw/i386/intel_iommu.c                             | 734 +++++++++++++++++-----
+>  hw/i386/pc.c                                      |   1 +
+>  hw/mem/cxl_type3.c                                |   2 +-
+>  hw/net/virtio-net.c                               | 135 +++-
+>  hw/pci/msix.c                                     |   2 +-
+>  hw/pci/pcie.c                                     |  12 +-
+>  target/arm/kvm.c                                  |   2 +-
+>  tests/qtest/intel-iommu-test.c                    |  64 ++
+>  MAINTAINERS                                       |   1 +
+>  docs/specs/acpi_hest_ghes.rst                     |   6 +-
+>  tests/data/acpi/x86/pc/DSDT                       | Bin 8526 -> 8611 bytes
+>  tests/data/acpi/x86/pc/DSDT.acpierst              | Bin 8437 -> 8522 bytes
+>  tests/data/acpi/x86/pc/DSDT.acpihmat              | Bin 9851 -> 9936 bytes
+>  tests/data/acpi/x86/pc/DSDT.bridge                | Bin 15397 -> 15482 bytes
+>  tests/data/acpi/x86/pc/DSDT.cphp                  | Bin 8990 -> 9075 bytes
+>  tests/data/acpi/x86/pc/DSDT.dimmpxm               | Bin 10180 -> 10265 bytes
+>  tests/data/acpi/x86/pc/DSDT.hpbridge              | Bin 8477 -> 8562 bytes
+>  tests/data/acpi/x86/pc/DSDT.hpbrroot              | Bin 5033 -> 5100 bytes
+>  tests/data/acpi/x86/pc/DSDT.ipmikcs               | Bin 8598 -> 8683 bytes
+>  tests/data/acpi/x86/pc/DSDT.memhp                 | Bin 9885 -> 9970 bytes
+>  tests/data/acpi/x86/pc/DSDT.nohpet                | Bin 8384 -> 8469 bytes
+>  tests/data/acpi/x86/pc/DSDT.numamem               | Bin 8532 -> 8617 bytes
+>  tests/data/acpi/x86/pc/DSDT.roothp                | Bin 12319 -> 12404 bytes
+>  tests/data/acpi/x86/q35/DMAR.dmar                 | Bin 120 -> 120 bytes
+>  tests/data/acpi/x86/q35/DSDT                      | Bin 8355 -> 8440 bytes
+>  tests/data/acpi/x86/q35/DSDT.acpierst             | Bin 8372 -> 8457 bytes
+>  tests/data/acpi/x86/q35/DSDT.acpihmat             | Bin 9680 -> 9765 bytes
+>  tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x   | Bin 12565 -> 12650 bytes
+>  tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator | Bin 8634 -> 8719 bytes
+>  tests/data/acpi/x86/q35/DSDT.applesmc             | Bin 8401 -> 8486 bytes
+>  tests/data/acpi/x86/q35/DSDT.bridge               | Bin 11968 -> 12053 bytes
+>  tests/data/acpi/x86/q35/DSDT.core-count           | Bin 12913 -> 12998 bytes
+>  tests/data/acpi/x86/q35/DSDT.core-count2          | Bin 33770 -> 33855 bytes
+>  tests/data/acpi/x86/q35/DSDT.cphp                 | Bin 8819 -> 8904 bytes
+>  tests/data/acpi/x86/q35/DSDT.cxl                  | Bin 13146 -> 13231 bytes
+>  tests/data/acpi/x86/q35/DSDT.dimmpxm              | Bin 10009 -> 10094 bytes
+>  tests/data/acpi/x86/q35/DSDT.ipmibt               | Bin 8430 -> 8515 bytes
+>  tests/data/acpi/x86/q35/DSDT.ipmismbus            | Bin 8443 -> 8528 bytes
+>  tests/data/acpi/x86/q35/DSDT.ivrs                 | Bin 8372 -> 8457 bytes
+>  tests/data/acpi/x86/q35/DSDT.memhp                | Bin 9714 -> 9799 bytes
+>  tests/data/acpi/x86/q35/DSDT.mmio64               | Bin 9485 -> 9570 bytes
+>  tests/data/acpi/x86/q35/DSDT.multi-bridge         | Bin 13208 -> 13293 bytes
+>  tests/data/acpi/x86/q35/DSDT.noacpihp             | Bin 8235 -> 8302 bytes
+>  tests/data/acpi/x86/q35/DSDT.nohpet               | Bin 8213 -> 8298 bytes
+>  tests/data/acpi/x86/q35/DSDT.numamem              | Bin 8361 -> 8446 bytes
+>  tests/data/acpi/x86/q35/DSDT.pvpanic-isa          | Bin 8456 -> 8541 bytes
+>  tests/data/acpi/x86/q35/DSDT.thread-count         | Bin 12913 -> 12998 bytes
+>  tests/data/acpi/x86/q35/DSDT.thread-count2        | Bin 33770 -> 33855 bytes
+>  tests/data/acpi/x86/q35/DSDT.tis.tpm12            | Bin 8961 -> 9046 bytes
+>  tests/data/acpi/x86/q35/DSDT.tis.tpm2             | Bin 8987 -> 9072 bytes
+>  tests/data/acpi/x86/q35/DSDT.type4-count          | Bin 18589 -> 18674 bytes
+>  tests/data/acpi/x86/q35/DSDT.viot                 | Bin 14612 -> 14697 bytes
+>  tests/data/acpi/x86/q35/DSDT.xapic                | Bin 35718 -> 35803 bytes
+>  tests/qtest/meson.build                           |   1 +
+>  67 files changed, 1132 insertions(+), 333 deletions(-)
+>  create mode 100644 tests/qtest/intel-iommu-test.c
+> 
 
 
