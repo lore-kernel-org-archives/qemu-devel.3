@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C71C02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 432CBC02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 15:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYRhB-0002Qn-KU; Thu, 16 Jan 2025 10:22:09 -0500
+	id 1tYRs9-0004T7-S1; Thu, 16 Jan 2025 10:33:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYRh9-0002QU-Ak
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:22:07 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYRh7-00060e-Ba
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 10:22:06 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21654fdd5daso18999245ad.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 07:22:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737040924; x=1737645724; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=249OkPv8wccfOTfDDb+64dpBEQsJ0BUVMW+Lh4dFj5M=;
- b=Q64ziyrswrUchikw3kHiLU9+JRSDjfBpH7BoddMt5WD8cIIYab9leVEQ3g6Ip7xf5b
- QMtHqCDT/xJrZKB/jEsufeG2xXIP8B0dcphpaUnaiSo66SAzaOAiohiPJ2slfS/XC3Nq
- 4tjQhGBa4XPI3YENBQt7CANUGBMq6qdav4GOD3Nk0d5HZooQ/TsaQoElYpsOtWGiVD/Y
- pi0WZ/H54ynEwNI/Rk+LR+bYdmm/F9km5PMlBjqDOXLfOhc5Egx+BCYcHYAxTBQKYR2f
- vJbfa3ojCT6y3Av5WjqCUwMEBr3hWlVY0n9FelnSTnNx0G9vdJRt5G9Y6c+6yHo5udcY
- IWGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737040924; x=1737645724;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=249OkPv8wccfOTfDDb+64dpBEQsJ0BUVMW+Lh4dFj5M=;
- b=gOhHTvhNil43s6zYzqD8caVemAV9Nv9FZy7razAkq2AsqYlBXnWPJdA6jZFTMjCaSO
- WxP2wbruPK4WLoYVeF5ngvvkFOUsHWIh6+WFjKIZy+ovrnDGZSn8os0xUeXo2r/8mjbI
- /iM0q8jSS63BrhTNpAAE50vsg87fxP73wN8xFy5rDNWzxOYNqGkZybFImpIHKydvSY/b
- 1fnPfOkuMnLkcmwcfI+60FNQNXgw689isBej7BFHYAr5/yg7c4FPPlrn3vWTJB1RHKtv
- iFePFtAXvkE3oKSm6YQd2xGUw2VkA0LQIC7WKVb7C1AwQjNxWskrhl8+MYjNKhkOs3FY
- omjA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWeqvVpDvWZzRlC5O+wsbO0nNx0VHaHKRjCSj+O+cpiyE88adETbX33DZdm78DKzRgUHWNSkcV8kWnm@nongnu.org
-X-Gm-Message-State: AOJu0YyThZ3Si3VBwBIfvh4n4GCpiYELha+lIjyKI9P0NKEi1aiEtNEO
- Oh2fvoPc22Wfz/c3UEDcw7NuaUN1hxo0RsnZaXzrw38OlSC6AEzI/z3OISDICr8=
-X-Gm-Gg: ASbGncsd1AneSy7NMeBtUtiduf4Yavu/7Tq9FyBEoyNGCSUgTiBrI3DSM7Tq7fLKU6+
- qDjpg48NHq/wXlt/oRwjB998KgB2z1Dpz79qpM9HBAl+rJdR/HUQtZHt30upN8Zl9DLnBqKBRJf
- 1Ti3ytAptxAO1dCVoKo/sUINxafx59OzL/P9bBe1ux3ylcPnxR2OU6K8rCkp+lSYwGc6MIE+KyG
- 5f4JRFilUmOPFyvpPo43ce6V7xjAAI5UxJiv82m+vMKnWHzK4Nduj8pJ8W258KjdDCnXN4uSwgc
- LSY1L6wdNKl32InzNstBPKA=
-X-Google-Smtp-Source: AGHT+IFqfC9hedX1ADS5NDYX9E9OaZSohp0E3UqZX7LbmljlT7J4TK9sfxi2Zz0DpIR0t2OZ7ejhDQ==
-X-Received: by 2002:a17:902:e885:b0:215:aae1:40f0 with SMTP id
- d9443c01a7336-21a83da6ebbmr584316935ad.0.1737040923628; 
- Thu, 16 Jan 2025 07:22:03 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3ac93bsm1620295ad.157.2025.01.16.07.22.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 07:22:03 -0800 (PST)
-Message-ID: <7f645bf5-3d57-4803-a937-f8e558391e8d@linaro.org>
-Date: Thu, 16 Jan 2025 07:22:01 -0800
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1tYRs6-0004Sf-Mz; Thu, 16 Jan 2025 10:33:26 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1tYRs5-00032I-0k; Thu, 16 Jan 2025 10:33:26 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GCSTjb005745;
+ Thu, 16 Jan 2025 15:33:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2cBZ8N
+ EeTutt8vgABvfEDuF5e4p0OqAtId8jBtC6t5g=; b=rAqje5KTu3kiVz0pnUQuTR
+ u1R7LdpPPZRJCZs64eGKpH53Cwl/S+1gG9XcxFh1X1n2PkVYfKNMSHkG/RtG4BlU
+ FZYlaY1iVizmNaaWmvgi9rkXmjz4E92Cl6WedolVRd2/Qhb2kGc5owNVneGQDwUp
+ 3QG3qkm3Akw4LhdlY9i0u1RUMIDYY75q+l2p0+3MDojGRxSVmdedwbLsRGDmTACI
+ ip136mJLOhOUTQGnX4sqEVkRvePexIR9AyE97F69yjZKg0DREZeZBYxOZUzbzPrz
+ Ddkf7B46CcYCPNID2MdWyaB/3VQDiMH0Zg/p0g2muUWFM0kaUvjyJ/b2dG2I17cQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446tkhb8sf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jan 2025 15:33:21 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GCtZd4002693;
+ Thu, 16 Jan 2025 15:33:20 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443byejy1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jan 2025 15:33:20 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50GFXIOH47251950
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jan 2025 15:33:19 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC9FC58054;
+ Thu, 16 Jan 2025 15:33:18 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D4AC258050;
+ Thu, 16 Jan 2025 15:33:17 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.67.174.5]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jan 2025 15:33:17 +0000 (GMT)
+Message-ID: <0f063b4c07b56a26b208d07654ba33531b6ab48b.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/3] pc-bios/s390-ccw: Fix problems related to network
+ booting
+From: Eric Farman <farman@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Jared Rossi
+ <jrossi@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>
+Date: Thu, 16 Jan 2025 10:33:17 -0500
+In-Reply-To: <20250116115826.192047-1-thuth@redhat.com>
+References: <20250116115826.192047-1-thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.2 (3.54.2-1.fc41) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/i386: Do not raise Invalid for 0 * Inf + QNaN
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20250116112536.4117889-1-peter.maydell@linaro.org>
- <20250116112536.4117889-2-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250116112536.4117889-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: LJu7ud7pjRE_ZPvOKEdGso2q_cz0mmUm
+X-Proofpoint-ORIG-GUID: LJu7ud7pjRE_ZPvOKEdGso2q_cz0mmUm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-16_06,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 mlxscore=0 clxscore=1015
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=781 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2501160117
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,69 +109,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/25 03:25, Peter Maydell wrote:
-> In commit 8adcff4ae7 ("fpu: handle raising Invalid for infzero in
-> pick_nan_muladd") we changed the handling of 0 * Inf + QNaN to always
-> raise the Invalid exception regardless of target architecture.  (This
-> was a change affecting hppa, i386, sh4 and tricore.) However, this
-> was incorrect for i386, which documents in the SDM section 14.5.2
-> that for the 0 * Inf + NaN case that it will only raise the Invalid
-> exception when the input is an SNaN.  (This is permitted by the IEEE
-> 754-2008 specification, which documents that whether we raise Invalid
-> for 0 * Inf + QNaN is implementation defined.)
-> 
-> Adjust the softfloat pick_nan_muladd code to allow the target to
-> suppress the raising of Invalid for the inf * zero + NaN case (as an
-> extra flag orthogonal to its choice for when to use the default NaN),
-> and enable that for x86.
-> 
-> We do not revert here the behaviour change for hppa, sh4 or tricore:
->   * The sh4 manual is clear that it should signal Invalid
->   * The tricore manual is a bit vague but doesn't say it shouldn't
->   * The hppa manual doesn't talk about fused multiply-add corner
->     cases at all
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 8adcff4ae7 (""fpu: handle raising Invalid for infzero in pick_nan_muladd")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   include/fpu/softfloat-types.h | 16 +++++++++++++---
->   target/i386/tcg/fpu_helper.c  |  5 ++++-
->   fpu/softfloat-parts.c.inc     |  5 +++--
->   3 files changed, 20 insertions(+), 6 deletions(-)
-> 
-> diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-> index 9d37cdfaa8e..c51b2a5b3de 100644
-> --- a/include/fpu/softfloat-types.h
-> +++ b/include/fpu/softfloat-types.h
-> @@ -278,11 +278,21 @@ typedef enum __attribute__((__packed__)) {
->       /* No propagation rule specified */
->       float_infzeronan_none = 0,
->       /* Result is never the default NaN (so always the input NaN) */
-> -    float_infzeronan_dnan_never,
-> +    float_infzeronan_dnan_never = 1,
->       /* Result is always the default NaN */
-> -    float_infzeronan_dnan_always,
-> +    float_infzeronan_dnan_always = 2,
->       /* Result is the default NaN if the input NaN is quiet */
-> -    float_infzeronan_dnan_if_qnan,
-> +    float_infzeronan_dnan_if_qnan = 3,
-> +    /*
-> +     * Don't raise Invalid for 0 * Inf + NaN. Default is to raise.
-> +     * IEEE 754-2008 section 7.2 makes it implementation defined whether
-> +     * 0 * Inf + QNaN raises Invalid or not. Note that 0 * Inf + SNaN will
-> +     * raise the Invalid flag for the SNaN anyway.
-> +     *
-> +     * This is a flag which can be ORed in with any of the above
-> +     * DNaN behaviour options.
-> +     */
-> +    float_infzeronan_suppress_invalid = (1 << 7),
+On Thu, 2025-01-16 at 12:58 +0100, Thomas Huth wrote:
+> The boot can currently fail after the s390-ccw bios used a network
+> device since we do not properly shut down the device afterwards, so
+> that incoming network packets can corrupt the memory. We have to make
+> sure to put the virtio-net device into a sane state again afterwards.
+>=20
+> The third patch is unrelated, but I spotted this rather cosmetic
+> problem while working on the code in netmain.c, so I included it here,
+> too.
+>=20
+> Thomas Huth (3):
+>   pc-bios/s390-ccw/virtio: Add a function to reset a virtio device
+>   pc-bios/s390-ccw: Fix boot problem with virtio-net devices
+>   pc-bios/s390-ccw/netmain: Fix error messages with regards to the TFTP
+>     server
 
-Why 128 and not 4?
+Looks good to me; Thank you, Thomas! For the series:
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-
-r~
+>=20
+>  pc-bios/s390-ccw/virtio.h     |  2 ++
+>  pc-bios/s390-ccw/netmain.c    | 52 +++++++++++++++++++++--------------
+>  pc-bios/s390-ccw/virtio-net.c |  5 ++++
+>  pc-bios/s390-ccw/virtio.c     |  7 ++++-
+>  4 files changed, 44 insertions(+), 22 deletions(-)
+>=20
 
