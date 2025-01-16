@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE52C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35524C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 00:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYDRK-0003fW-Rm; Wed, 15 Jan 2025 19:08:50 -0500
+	id 1tYE4w-00085h-6R; Wed, 15 Jan 2025 19:49:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYDRJ-0003dl-Gb
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:08:49 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1tYE4p-00084F-E8
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:40 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYDRH-0001x2-HQ
- for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:08:49 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ee397a82f6so720142a91.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 16:08:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1tYE4n-00012w-Bj
+ for qemu-devel@nongnu.org; Wed, 15 Jan 2025 19:49:39 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2163bd70069so5808465ad.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 16:49:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1736986125; x=1737590925; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zwVrcxS1ovCsuHRW/q9XhvBXJxtjoziHugVqGqMrcCA=;
- b=Qt0mP1U5Xfqup1owsOnhYNZ+vuUeF69Cbqk5KUQLzWNTHW3zxLGCGO0z1MwKdd5jD2
- KbUbm8f2+JxnwiPialLShQufyukJyNVRsDbLe+bVQ73dz4Ld+1ISFi2nUOG6jcT1F8b9
- 6oP6iF2YTaYC/5gUmN8AG7zyRECD5TTFwbiPftfYGFPj5ovjkA6Ra8F5knvw34Ovitae
- UHhe6BsngUl26WDBkx/xp+/mO0BWL82hws9DGUuBBlWWBjldWqSwie8thi3BeS/F5V/3
- hcSPvchZpKH/mgMxr4mDCZxreh8aO6YACzcgoUHkfjprTJeWo/nhBxgXQSq7cUSbo+/H
- l5Vg==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1736988575; x=1737593375;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kqUbD+dP6YKBEqfxOFTFYLUPlQ2bAs6lr1qlPkJnA2k=;
+ b=lxqNIE0AXNCTw6azUVRqije++mc4oyza/ci4m8yBnKkywgsu6sc5B4KCfxkFAtcnNz
+ SJOY9f6xmhVhcGzhUT+E1AtiXn7/F1AEe0WxiLLGNNmi9RnH9Th/6eLYwaP8HmzUEWkR
+ YyXRqYx7wDlkhXHKAWVoXU2K3sBNGvi1z3YbX6qskopwIwBuFDb4YcJd9TsIJIkZD6rx
+ w/I0Hw9FxugsLyZmfThkrqSnTQkhWG0bce/ugIcjHS8gEIfR3Uemtyte9XQrC6BLnTTm
+ 31K8vUuWkNJBYNf3dciekwUCx4BYpL88U1xCyTTk5ifraftebRDo25bRO9wt5HJL7PUJ
+ MyAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736986125; x=1737590925;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zwVrcxS1ovCsuHRW/q9XhvBXJxtjoziHugVqGqMrcCA=;
- b=tVrtKYRePx/XMTTn6lFpmu02bsQWWBNVBQ5UowkUGuhOAAo2l9bqKnCfZOuSz+5pw7
- /4Z8hWCaCrC9yp004QocjouELjzsYeZl5hwxkYPhmtimcn5wu12oxblIwLHqhItmlbOG
- fwjjicoIyoalR3rq4tgRjOsl4At+kxG5CviPF9LW72q4yt/bw3MjMIJoQDp1h0iK1OV5
- kAfylqIMBxUb8Y9wcKyCqQKNyRM4ItQjnfijKbylpGvOM07mSEO4yejTdhMUR96fHH9K
- W+18RUr5+7CwGjpjXviLtf9xTQHGLHFgApzeIIGBiOTS82hHMLmMCgwXIKJASCDDUfE4
- 5SFw==
-X-Gm-Message-State: AOJu0YwuvAbB+W13R21zuIXGimcz0YbrpjNo1rXQIj9aa69OPh4o3FL2
- uddByyzky5NqCmxsQK9feXynucdUFqDteQlb6BbaIbAEVBXsUtM7SERWmISrkI5L9wxBb074U2B
- p
-X-Gm-Gg: ASbGnct9vH9+DwdVS3EFFwuqoCwDH2FTEl2qng0oXODiIeAqp2UWEM2wknjtwWoq5wI
- aJmFocCQ21YoFGjj2jLlfSz9xlA6XLp4MhUBg7xqdcQ8dk1oMPugDFEyg1QEZHHCcTq9L+d2C2i
- qWXpYfVhPTd/qAfnhzP0yP1+b8ywpAP8XkE567Pl+gVgd3WTV24JXn5Wg8OTkSORq00muKz2Iga
- 5vG+itjavH4eqVxu5EOE57gnC6ABbfoqOMgByhJuT+n+tIFxv1AlWfe88Fzm17kNG8SxDCJ7X6H
- 5qAZ9dWCcuD4+Fh+HYmIXhU=
-X-Google-Smtp-Source: AGHT+IEHFy3vLZLdlIWmrfthPeZjaDRQ8UHt9AfQ44hHrl1WJtE/pg9UNZThtmP9ZbnU0ePYspbEIg==
-X-Received: by 2002:a17:90b:2c84:b0:2ea:a25d:3baa with SMTP id
- 98e67ed59e1d1-2f548f17351mr40850162a91.5.1736986125573; 
- Wed, 15 Jan 2025 16:08:45 -0800 (PST)
-Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ d=1e100.net; s=20230601; t=1736988575; x=1737593375;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kqUbD+dP6YKBEqfxOFTFYLUPlQ2bAs6lr1qlPkJnA2k=;
+ b=f9n5ph/jLAebjEQEkLspvvjgmmSPXx0dZmJRIYq0lzE28KmV94Se15E6c2U4QeBiSR
+ jVqqXk6q+xOc/0sME61GS5RccFPn5EGpJNVxGcXylIgDP51cakh8hNjyPwCucVDcQMaM
+ e2f9Oa7Y4NF5MFcF/X0LqV7EUV2/3YeEXeortiNrOHglB1MOEQNMZpbEpwveJg0CX/lG
+ gr7seXNqyAUA4CHhTdWwPGHiTvAK69fBImcPExH4Ac60UI0be0Bkdu0hD2rWyW0hNpqc
+ Llui0r8gLzdi1nelcxMnt7ilSL11ywQvkQ5F9aISPS4EYLm0Tc2+GXWlc56ynGvKm0wf
+ Xk0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIagkH6Bi8M4wDxeB5seiy9jYhL7a12GrhgfeMXdoJzPar+7QIeBkicRscs+iuPd5IIg/3j5JJJIS2@nongnu.org
+X-Gm-Message-State: AOJu0Yw3os/yEdnoz6//aJtLPH8Tm0GVt+hcDxL16px64l2L651f5B0l
+ oAkKO1dirFvSGlDTlZPBdiRwiXqQwsgEkpZgmR33mmpS3EVf5eITa+buOB4lXTitFxuuFI2ZANZ
+ c
+X-Gm-Gg: ASbGncsLbpfo/3SS0FvOMQfIluQvRrLvAmI7kTHNfL1Lgb0hcl2owaNZG0X3wdlQXRy
+ Pywmw9nX6XPpm1K/gIvQeOaurDKOWHTpdjosG3y8kvNjT9kXKZ9lmLn/6bJ3ek2066OTL9Z4Lbl
+ Il0D03OYGiXLwrlHpc8PIcj1yJbIOy8FyLhlBtPX8s9uur50SH4cZuGNYr3EsBfwZ6RhKdWg/5W
+ 3tQAfWDpI7ogBjiZletU50ZA3yrSi9upnZ3x8f3B4zxcEEGLVR6izfj6kdiGmkB/yevPQ==
+X-Google-Smtp-Source: AGHT+IE7uBXmbSI6Ml8gdSwZ0aHHEvuvY0CMJCsMXO7DHFEKXS9WhgETPySV1jdgSWMfC0wyM6fX+Q==
+X-Received: by 2002:a05:6a00:9a3:b0:725:eacf:cfdb with SMTP id
+ d2e1a72fcca58-72d22033ef6mr47666283b3a.24.1736988575199; 
+ Wed, 15 Jan 2025 16:49:35 -0800 (PST)
+Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f72c2bb332sm2166614a91.36.2025.01.15.16.08.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 16:08:45 -0800 (PST)
-Message-ID: <ac4d48c3-d139-4af0-ab28-f2674b74cb8c@linaro.org>
-Date: Wed, 15 Jan 2025 16:08:43 -0800
+ d2e1a72fcca58-72d406587a1sm10036256b3a.105.2025.01.15.16.49.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jan 2025 16:49:34 -0800 (PST)
+From: Atish Patra <atishp@rivosinc.com>
+Subject: [PATCH 0/2] Minor mhpmevent related fixes
+Date: Wed, 15 Jan 2025 16:49:31 -0800
+Message-Id: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-References: <20250115232022.27332-1-iii@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250115232022.27332-1-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-B4-Tracking: v=1; b=H4sIAJtXiGcC/x3LQQqAIBBA0avIrBPUsqKrRIjVVLNIQykC8e5Jy
+ 8fnJ4gYCCMMLEHAhyJ5VyArBsth3Y6c1mJQQmkhpebXeZuTnA9moxcj76yae6xb3WMD5boC/qF
+ M45TzB+hUg6FhAAAA
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: Atish Patra <atishp@rivosinc.com>, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com
+X-Mailer: b4 0.15-dev-13183
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,67 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/25 15:20, Ilya Leoshkevich wrote:
-> Currently single-insn TBs created from I/O memory are not added to
-> region_trees. Therefore, when they generate exceptions, they are not
-> handled by cpu_restore_state_from_tb(). For x86 this is not a problem,
-> because x86_restore_state_to_opc() only restores pc and cc, which are
-> already correct. However, on several other architectures,
-> restore_state_to_opc() restores more registers, and guests can notice
-> incorrect values.
-> 
-> Fix by always calling tcg_tb_insert(). This may increase the size of
-> region_trees, but tcg_region_reset_all() clears it once code_gen_buffer
-> fills up, so it will not grow uncontrollably.
-> 
-> Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
+Here are two small fixes around mhpmevent encoding and reset value.
+The first patch is picked from the platform specific event encoding
+series[1].
 
-This needs something else.  The reason why they're not insertted is that they're not valid 
-for a second execution.  We need to not find them in the search tree.
+[1] https://lore.kernel.org/qemu-devel/20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com/
 
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+---
+Atish Patra (2):
+      target/riscv: Fix the hpmevent mask
+      target/riscv: Mask out upper sscofpmf bits during validation
 
-r~
-
->   accel/tcg/translate-all.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-> index 453eb20ec95..6333302813e 100644
-> --- a/accel/tcg/translate-all.c
-> +++ b/accel/tcg/translate-all.c
-> @@ -531,23 +531,23 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
->           tb_reset_jump(tb, 1);
->       }
->   
-> +    /*
-> +     * Insert TB into the corresponding region tree before publishing it
-> +     * through QHT. Otherwise rewinding happened in the TB might fail to
-> +     * lookup itself using host PC.
-> +     */
-> +    tcg_tb_insert(tb);
-> +
->       /*
->        * If the TB is not associated with a physical RAM page then it must be
->        * a temporary one-insn TB, and we have nothing left to do. Return early
-> -     * before attempting to link to other TBs or add to the lookup table.
-> +     * before attempting to link to other TBs.
->        */
->       if (tb_page_addr0(tb) == -1) {
->           assert_no_pages_locked();
->           return tb;
->       }
->   
-> -    /*
-> -     * Insert TB into the corresponding region tree before publishing it
-> -     * through QHT. Otherwise rewinding happened in the TB might fail to
-> -     * lookup itself using host PC.
-> -     */
-> -    tcg_tb_insert(tb);
-> -
->       /*
->        * No explicit memory barrier is required -- tb_link_page() makes the
->        * TB visible in a consistent state.
+ target/riscv/cpu_bits.h | 9 ++++++---
+ target/riscv/pmu.c      | 2 +-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+---
+base-commit: b82a273fb2210edf7beb9e5ca1401927fbcbe164
+change-id: 20250115-pmu_minor_fixes-7a2b8e3658e4
+--
+Regards,
+Atish patra
 
 
