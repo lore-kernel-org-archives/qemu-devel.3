@@ -4,124 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613CBC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 19:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB6BC02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 19:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYV8Z-0006Gt-VS; Thu, 16 Jan 2025 14:02:39 -0500
+	id 1tYV97-0006pE-En; Thu, 16 Jan 2025 14:03:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYV8S-00068X-IC
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:02:33 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYV8O-0006dm-Mx
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:02:32 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3862d161947so743700f8f.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 11:02:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737054143; x=1737658943; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fuRyw5EWWx6Yp+3IBCpdAz3q5PYO8xyuKBCIsOMef9E=;
- b=RMYzBDwwm3po1f1i0K3RYhwuzekPYE6LqZw3WgVj81Kf6VnA7VKUWHuC5WqIzNLm/p
- ZW5vNmt7mPHMAq6bN2VtT2iObw4SfLpAiaJ51V5caXjPa7mgRzXMNo4v3juPNTg44g39
- VeksL/syJSed4+eAE8XWV60ibv6xxXpzFEykXleaj+gdMP+cpLKP3V6xTPp5JN+k0xKx
- 6gwgHXA29AooGieqyj+5/xC+7Axm66iTHHPix73f8fo5kLEn2T/IXx0v6Zqbnh/npcpd
- +wTMNyiOX7QWfgezEiOVr+PjR62Nsc4qrb4Xw1o9CR/lvOGRp1RFG2F+yKBKsAaSPotw
- J6Ng==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tYV91-0006mO-5I
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:03:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tYV8y-0006hg-OD
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 14:03:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737054181;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yZf2viWkuuZ1b9O9mAysBkLOCkwwqsTjsyf8kLjYhcY=;
+ b=M1AAJcLJ6cl0ykchwAlcUzAitioLZlg7VA5/tjx63Obm8DOr5D3gsjbhGg1zIK1i40/Ic8
+ sht+O8Lyr8ZZAybb56RZcqA4nVgwQniwbyX0MjveEIcCQaMkePOvK2cxgkNeGW0eev/YN4
+ pJru/WNQxYPDYjYmDY4Q/l/CTRHomLI=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-jT0TJ2etOmqilhDTxDu4FA-1; Thu, 16 Jan 2025 14:03:00 -0500
+X-MC-Unique: jT0TJ2etOmqilhDTxDu4FA-1
+X-Mimecast-MFC-AGG-ID: jT0TJ2etOmqilhDTxDu4FA
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-e54d9b54500so3396128276.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 11:02:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737054143; x=1737658943;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fuRyw5EWWx6Yp+3IBCpdAz3q5PYO8xyuKBCIsOMef9E=;
- b=wPwsZWeREe3Yp3vz3sszqCtgl4IZPHKTdAlbDFEvQBHjjrEw0PjvU7kNDkV7W2CIiE
- m0DGBhLPnSGbgncx1G4qBhmBXf9nxiK8y6TEhcDgsDivw2GqRIl6GuOTY8y81GO+L7+i
- KDXRvwd8FjPT5FbojIWSJ3BNRg37V8975cXxLfdzJYLXxUO6L93+kybZOSSxv06HPKeU
- 7VlTEJ+wr/HcQnU9/sb7+EUw7lVWPWsClbAwzK5i1PT6DAhrSnL+orX8tCNq2L4luOyw
- qNK0iazoD7/NE3cLdDCb4ykaP1Tbgza5Jfr5XCUWhskzKuUKRxIkYnRAu/+yqA0wenjN
- UZxw==
-X-Gm-Message-State: AOJu0YxLrHHJ0IbMmbyv0pXdDLBeD+BPfuG8Kca3r7Q7v6D+4F+Et+mM
- H72h4smywHwMilsQydOLuDHDcE3TDQWPdL3pL2W5wLY5sN5eZKIOOBV7jHnJXOI=
-X-Gm-Gg: ASbGncucCx8MxbrvXig3o6Pxky/gHEMj6D1iqAUY/9vsvVGgtkJPYEzveC5S/+FDOij
- VRZz5VyWmZfkNRHAoNkNjRFPyBTUJ4pTrFu/4HOmzZB8CotcWAAicR3Eq7OQ4h0tF1+aBx6UlQ8
- 2aa/TbL/JgG+OpDoONOk3iL0/W6uLA1SBZCP6L7jHlMmLSKdOvVWX2zqiZruZzVkF7IZMUstW7p
- 4VmM+iY2FQdr4PLLDFzInr0lqMlX0OSAU4G0uc8PsemYob57UxSmZQwwBNr1z+T5fjfEfwfgGhu
- NLszd9tvPLSXrYuelQbIVpsl
-X-Google-Smtp-Source: AGHT+IEcSQubzWb3CBuT1dMQ1/yjGUHi79uHcxM8wbngetpI0P1jFH07ZTZYoEfZXlXddWqceC+h5Q==
-X-Received: by 2002:a5d:64a8:0:b0:385:e429:e591 with SMTP id
- ffacd0b85a97d-38a8730a6bdmr34444859f8f.23.1737054142828; 
- Thu, 16 Jan 2025 11:02:22 -0800 (PST)
-Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43890421fabsm7885525e9.24.2025.01.16.11.02.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 11:02:22 -0800 (PST)
-Message-ID: <b55ea724-cdc7-4e8c-a954-b10a1cde9bdd@linaro.org>
-Date: Thu, 16 Jan 2025 20:02:18 +0100
+ d=1e100.net; s=20230601; t=1737054178; x=1737658978;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yZf2viWkuuZ1b9O9mAysBkLOCkwwqsTjsyf8kLjYhcY=;
+ b=smOUc1rMn0ffZSneO7seYqFU3XayAIKopUodg7LuqU4S+2JjbLsv34noKRWm2yKPz5
+ TpYlLjK1ZR9XbQNCflbxQGn1rieIW5JFq9oHGDVcxULl17P/WIlM4QUmAHMiDZhSQqBh
+ cv30fdPBft1EzV/iBgayjKm7jLt/czyOQgKdweWk0oHCMVMs2Omg3EwDA5+h5d0NORbq
+ 0WZEr+ny6cq4yKVW4IOHSIsesOC82uNKO1OApZBzOGZGn7WRhVvGbejIsYo+dYxgQQn8
+ +GDYPeCBdhswerW4DcsKOUo0xNE/z2IRHQTI5Eu1ra7XU52ONdgfFu8DGTGSm3S03JQp
+ 7H7w==
+X-Gm-Message-State: AOJu0YzAQuDscNPY/eoNo99ymMvPz4zVKPddxqLPcbDVEk+GLsZQ/X1f
+ Iv/f1rxVMdZVZ+LcHPX3hnQFaTZ1v+aZ+pqd7EIcEzaqOWyGSMPObpXd7VEAyV28elA7TweLIe4
+ WWQyMaXs5wbm5EOojAoG4hpsk4dbRIxZWPh4pZjIQdBQX6H/fAdBLc7WvrNM65EwiJe1N5JMQxP
+ hi8rnh/XWbYP0G+8RbbkdvY+b92gi38dQPbkg=
+X-Gm-Gg: ASbGncvocIQhTWUq9mUUDWaVpOdE05olUPzwlCYxhZKfMK1KZLfquPQ3+5pI5oR27AT
+ /fdxFeIjofJp+3m2E6pmypM11YNMYOphq+Tl/0Q==
+X-Received: by 2002:a05:690c:4a05:b0:6ef:738a:94b3 with SMTP id
+ 00721157ae682-6f5312273a4mr255326617b3.4.1737054178156; 
+ Thu, 16 Jan 2025 11:02:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGh7u+ExmLPFJk4cpY1lilY5AephLB7Z6TtAiFPvZhKqOWiMqSNU5wL/+hpb+L85hPChwTzd3TvUkjA1jsGA7U=
+X-Received: by 2002:a05:690c:4a05:b0:6ef:738a:94b3 with SMTP id
+ 00721157ae682-6f5312273a4mr255326247b3.4.1737054177709; Thu, 16 Jan 2025
+ 11:02:57 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/22] exec/cpu: Call cpu_remove_sync() once in
- cpu_common_unrealize()
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>,
- kvm@vger.kernel.org, Marek Vasut <marex@denx.de>,
- David Gibson <david@gibson.dropbear.id.au>, Brian Cain <bcain@quicinc.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Claudio Fontana <cfontana@suse.de>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-ppc@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Alessandro Di Federico <ale@rev.ng>, Song Gao <gaosong@loongson.cn>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Chris Wulff <crwulff@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Fabiano Rosas <farosas@suse.de>,
- qemu-s390x@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- Luc Michel <luc@lmichel.fr>, Weiwei Li <liweiwei@iscas.ac.cn>,
- Bin Meng <bin.meng@windriver.com>, Stafford Horne <shorne@gmail.com>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>,
- "Daniel P . Berrange" <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Greg Kurz <groug@kaod.org>,
- Michael Rolnik <mrolnik@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>
-References: <20230918160257.30127-1-philmd@linaro.org>
- <20230918160257.30127-7-philmd@linaro.org>
- <20231128174215.32d2a350@imammedo.users.ipa.redhat.com>
- <5f25576c-598f-4fd7-8238-61edcff2c411@linaro.org>
-Content-Language: en-US
-In-Reply-To: <5f25576c-598f-4fd7-8238-61edcff2c411@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250110170837.2747532-1-jonah.palmer@oracle.com>
+ <20250110170837.2747532-5-jonah.palmer@oracle.com>
+In-Reply-To: <20250110170837.2747532-5-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 16 Jan 2025 20:02:21 +0100
+X-Gm-Features: AbW1kvYx_YaXYAYnhLCs4Gvd0aIglwggDPOs8na9THf2bqxkA-oHaNtOFwcKi4I
+Message-ID: <CAJaqyWfSffrHcMt-EFW9P_jmVjK6v4hf_V_rLrrihTguQNX7Lw@mail.gmail.com>
+Subject: Re: [RFC v3 4/5] virtio: add in_xlat_addr & out_xlat_addr
+ VirtQueueElement members
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com, 
+ peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,141 +105,481 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/25 19:05, Philippe Mathieu-Daudé wrote:
-> On 28/11/23 17:42, Igor Mammedov wrote:
->> On Mon, 18 Sep 2023 18:02:39 +0200
->> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->>> While create_vcpu_thread() creates a vCPU thread, its counterpart
->>> is cpu_remove_sync(), which join and destroy the thread.
->>>
->>> create_vcpu_thread() is called in qemu_init_vcpu(), itself called
->>> in cpu_common_realizefn(). Since we don't have qemu_deinit_vcpu()
->>> helper (we probably don't need any), simply destroy the thread in
->>> cpu_common_unrealizefn().
->>>
->>> Note: only the PPC and X86 targets were calling cpu_remove_sync(),
->>> meaning all other targets were leaking the thread when the vCPU
->>> was unrealized (mostly when vCPU are hot-unplugged).
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/core/cpu-common.c  | 3 +++
->>>   target/i386/cpu.c     | 1 -
->>>   target/ppc/cpu_init.c | 2 --
->>>   3 files changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
->>> index a3b8de7054..e5841c59df 100644
->>> --- a/hw/core/cpu-common.c
->>> +++ b/hw/core/cpu-common.c
->>> @@ -221,6 +221,9 @@ static void cpu_common_unrealizefn(DeviceState *dev)
->>>       /* NOTE: latest generic point before the cpu is fully 
->>> unrealized */
->>>       cpu_exec_unrealizefn(cpu);
->>> +
->>> +    /* Destroy vCPU thread */
->>> +    cpu_remove_sync(cpu);
->>>   }
->>>   static void cpu_common_initfn(Object *obj)
->>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>> index cb41d30aab..d79797d963 100644
->>> --- a/target/i386/cpu.c
->>> +++ b/target/i386/cpu.c
->>> @@ -7470,7 +7470,6 @@ static void x86_cpu_unrealizefn(DeviceState *dev)
->>>       X86CPUClass *xcc = X86_CPU_GET_CLASS(dev);
->>>   #ifndef CONFIG_USER_ONLY
->>> -    cpu_remove_sync(CPU(dev));
->>>       qemu_unregister_reset(x86_cpu_machine_reset_cb, dev);
->>>   #endif
->>
->> missing  followup context:
->>      ...
->>      xcc->parent_unrealize(dev);
->>
->> Before the patch, vcpu thread is stopped and onnly then
->> clean up happens.
->>
->> After the patch we have cleanup while vcpu thread is still running.
->>
->> Even if it doesn't explode, such ordering still seems to be wrong.
-> 
-> OK.
-> 
->>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
->>> index e2c06c1f32..24d4e8fa7e 100644
->>> --- a/target/ppc/cpu_init.c
->>> +++ b/target/ppc/cpu_init.c
->>> @@ -6853,8 +6853,6 @@ static void ppc_cpu_unrealize(DeviceState *dev)
->>>       pcc->parent_unrealize(dev);
->>> -    cpu_remove_sync(CPU(cpu));
->>
->> bug in current code?
-> 
-> Plausibly. See:
-> 
-> commit f1023d21e81b7bf523ddf2ac91a48117f20ef9d7
-> Author: Greg Kurz <groug@kaod.org>
-> Date:   Thu Oct 15 23:18:32 2020 +0200
-> 
->      spapr: Unrealize vCPUs with qdev_unrealize()
-> 
->      Since we introduced CPU hot-unplug in sPAPR, we don't unrealize the
->      vCPU objects explicitly. Instead, we let QOM handle that for us
->      under object_property_del_all() when the CPU core object is
->      finalized. The only thing we do is calling cpu_remove_sync() to
->      tear the vCPU thread down.
-> 
->      This happens to work but it is ugly because:
->      - we call qdev_realize() but the corresponding qdev_unrealize() is
->        buried deep in the QOM code
->      - we call cpu_remove_sync() to undo qemu_init_vcpu() called by
->        ppc_cpu_realize() in target/ppc/translate_init.c.inc
->      - the CPU init and teardown paths aren't really symmetrical
-> 
->      The latter didn't bite us so far but a future patch that greatly
->      simplifies the CPU core realize path needs it to avoid a crash
->      in QOM.
-> 
->      For all these reasons, have ppc_cpu_unrealize() to undo the changes
->      of ppc_cpu_realize() by calling cpu_remove_sync() at the right
->      place, and have the sPAPR CPU core code to call qdev_unrealize().
-> 
->      This requires to add a missing stub because translate_init.c.inc is
->      also compiled for user mode.
+On Fri, Jan 10, 2025 at 6:09=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+> Adds the in_xlat_addr & out_xlat_addr hwaddr arrays to the
+> VirtQueueElement struct and introduces an optional GPA output parameter
+> to dma_memory_map().
+>
+> These arrays will store a VirtQueueElement's input/output descriptors'
+> GPA of the mapped memory region, if it's backed by guest memory, via
+> dma_memory_map().
+>
+> The GPA will always correspond 1:1 to the iovec entry when translating
+> addresses between Qemu VAs and SVQ IOVAs in vhost_svq_translate_addr().
+> This helps to avoid extra complicated code in SVQ's
+> vhost_svq_vring_write_descs() function (e.g. splitting up iovec into
+> multiple buffers, not breaking devices using aliased mapping, etc.).
+>
+> Since the translation is only done once inside the DMA API alongside
+> virtqueue_pop(), the cost should be minimal.
+>
 
-See also:
+I think this is a very strong change as it touches the dma subsystem.
+Let me try to avoid it on 5/5 :).
 
-commit 5e22e29201d80124bca0124f2034e72b698cbb6f
-Author: David Gibson <david@gibson.dropbear.id.au>
-Date:   Wed Jun 13 12:08:42 2018 +1000
-
-     pnv: Add cpu unrealize path
-
-     Currently we don't have any unrealize path for pnv cpu cores.
-     We get away with this because we don't yet support cpu hotplug
-     for pnv.
-
-     However, we're going to want it eventually, and in the meantime,
-     it makes it non-obvious why there are a bunch of allocations on
-     the realize() path that don't have matching frees.
-
-     So, implement the missing unrealize path.
-
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index f4c41d89d6d..f7cf33f547a 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -186,6 +186,26 @@ err:
-      error_propagate(errp, local_err);
-  }
-
-+static void pnv_unrealize_vcpu(PowerPCCPU *cpu)
-+{
-+    qemu_unregister_reset(pnv_cpu_reset, cpu);
-+    object_unparent(cpu->intc);
-+    cpu_remove_sync(CPU(cpu));
-+    object_unparent(OBJECT(cpu));
-+}
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>  hw/display/virtio-gpu.c     |  5 ++--
+>  hw/hyperv/vmbus.c           |  8 +++---
+>  hw/ide/ahci.c               |  7 +++---
+>  hw/usb/libhw.c              |  2 +-
+>  hw/virtio/virtio.c          | 50 ++++++++++++++++++++++++++-----------
+>  include/hw/pci/pci_device.h |  2 +-
+>  include/hw/virtio/virtio.h  |  2 ++
+>  include/system/dma.h        | 25 ++++++++++++++++++-
+>  system/dma-helpers.c        |  2 +-
+>  9 files changed, 77 insertions(+), 26 deletions(-)
+>
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index 11a7a85750..afb9a8b69f 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -839,7 +839,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+>              len =3D l;
+>              map =3D dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+>                                   DMA_DIRECTION_TO_DEVICE,
+> -                                 MEMTXATTRS_UNSPECIFIED);
+> +                                 MEMTXATTRS_UNSPECIFIED, NULL);
+>              if (!map) {
+>                  qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO m=
+emory for"
+>                                " element %d\n", __func__, e);
+> @@ -1258,7 +1258,8 @@ static bool virtio_gpu_load_restore_mapping(VirtIOG=
+PU *g,
+>          hwaddr len =3D res->iov[i].iov_len;
+>          res->iov[i].iov_base =3D
+>              dma_memory_map(VIRTIO_DEVICE(g)->dma_as, res->addrs[i], &len=
+,
+> -                           DMA_DIRECTION_TO_DEVICE, MEMTXATTRS_UNSPECIFI=
+ED);
+> +                           DMA_DIRECTION_TO_DEVICE, MEMTXATTRS_UNSPECIFI=
+ED,
+> +                           NULL);
+>
+>          if (!res->iov[i].iov_base || len !=3D res->iov[i].iov_len) {
+>              /* Clean up the half-a-mapping we just created... */
+> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+> index 12a7dc4312..c3308a1bfd 100644
+> --- a/hw/hyperv/vmbus.c
+> +++ b/hw/hyperv/vmbus.c
+> @@ -374,7 +374,7 @@ static ssize_t gpadl_iter_io(GpadlIter *iter, void *b=
+uf, uint32_t len)
+>              maddr =3D (iter->gpadl->gfns[idx] << TARGET_PAGE_BITS) | off=
+_in_page;
+>
+>              iter->map =3D dma_memory_map(iter->as, maddr, &mlen, iter->d=
+ir,
+> -                                       MEMTXATTRS_UNSPECIFIED);
+> +                                       MEMTXATTRS_UNSPECIFIED, NULL);
+>              if (mlen !=3D pgleft) {
+>                  dma_memory_unmap(iter->as, iter->map, mlen, iter->dir, 0=
+);
+>                  iter->map =3D NULL;
+> @@ -492,7 +492,8 @@ int vmbus_map_sgl(VMBusChanReq *req, DMADirection dir=
+, struct iovec *iov,
+>              }
+>
+>              iov[ret_cnt].iov_base =3D dma_memory_map(sgl->as, a, &l, dir=
+,
+> -                                                   MEMTXATTRS_UNSPECIFIE=
+D);
+> +                                                   MEMTXATTRS_UNSPECIFIE=
+D,
+> +                                                   NULL);
+>              if (!l) {
+>                  ret =3D -EFAULT;
+>                  goto err;
+> @@ -568,7 +569,8 @@ static vmbus_ring_buffer *ringbuf_map_hdr(VMBusRingBu=
+fCommon *ringbuf)
+>      dma_addr_t mlen =3D sizeof(*rb);
+>
+>      rb =3D dma_memory_map(ringbuf->as, ringbuf->rb_addr, &mlen,
+> -                        DMA_DIRECTION_FROM_DEVICE, MEMTXATTRS_UNSPECIFIE=
+D);
+> +                        DMA_DIRECTION_FROM_DEVICE, MEMTXATTRS_UNSPECIFIE=
+D,
+> +                        NULL);
+>      if (mlen !=3D sizeof(*rb)) {
+>          dma_memory_unmap(ringbuf->as, rb, mlen,
+>                           DMA_DIRECTION_FROM_DEVICE, 0);
+> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+> index 1303c21cb7..aeea2dc61d 100644
+> --- a/hw/ide/ahci.c
+> +++ b/hw/ide/ahci.c
+> @@ -221,7 +221,7 @@ static void map_page(AddressSpace *as, uint8_t **ptr,=
+ uint64_t addr,
+>      }
+>
+>      *ptr =3D dma_memory_map(as, addr, &len, DMA_DIRECTION_FROM_DEVICE,
+> -                          MEMTXATTRS_UNSPECIFIED);
+> +                          MEMTXATTRS_UNSPECIFIED, NULL);
+>      if (len < wanted && *ptr) {
+>          dma_memory_unmap(as, *ptr, len, DMA_DIRECTION_FROM_DEVICE, len);
+>          *ptr =3D NULL;
+> @@ -928,7 +928,7 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUS=
+GList *sglist,
+>      /* map PRDT */
+>      if (!(prdt =3D dma_memory_map(ad->hba->as, prdt_addr, &prdt_len,
+>                                  DMA_DIRECTION_TO_DEVICE,
+> -                                MEMTXATTRS_UNSPECIFIED))){
+> +                                MEMTXATTRS_UNSPECIFIED, NULL))) {
+>          trace_ahci_populate_sglist_no_map(ad->hba, ad->port_no);
+>          return -1;
+>      }
+> @@ -1338,7 +1338,8 @@ static void handle_cmd(AHCIState *s, int port, uint=
+8_t slot)
+>      tbl_addr =3D le64_to_cpu(cmd->tbl_addr);
+>      cmd_len =3D 0x80;
+>      cmd_fis =3D dma_memory_map(s->as, tbl_addr, &cmd_len,
+> -                             DMA_DIRECTION_TO_DEVICE, MEMTXATTRS_UNSPECI=
+FIED);
+> +                             DMA_DIRECTION_TO_DEVICE, MEMTXATTRS_UNSPECI=
+FIED,
+> +                             NULL);
+>      if (!cmd_fis) {
+>          trace_handle_cmd_badfis(s, port);
+>          return;
+> diff --git a/hw/usb/libhw.c b/hw/usb/libhw.c
+> index 4f03ef4ba9..762d70b419 100644
+> --- a/hw/usb/libhw.c
+> +++ b/hw/usb/libhw.c
+> @@ -37,7 +37,7 @@ int usb_packet_map(USBPacket *p, QEMUSGList *sgl)
+>          while (len) {
+>              dma_addr_t xlen =3D len;
+>              mem =3D dma_memory_map(sgl->as, base, &xlen, dir,
+> -                                 MEMTXATTRS_UNSPECIFIED);
+> +                                 MEMTXATTRS_UNSPECIFIED, NULL);
+>              if (!mem) {
+>                  goto err;
+>              }
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 85110bce37..be756f3ac8 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -1553,9 +1553,9 @@ int virtqueue_avail_bytes(VirtQueue *vq, unsigned i=
+nt in_bytes,
+>  }
+>
+>  static bool virtqueue_map_desc(VirtIODevice *vdev, unsigned int *p_num_s=
+g,
+> -                               hwaddr *addr, struct iovec *iov,
+> -                               unsigned int max_num_sg, bool is_write,
+> -                               hwaddr pa, size_t sz)
+> +                               hwaddr *addr, hwaddr *xlat_addr,
+> +                               struct iovec *iov, unsigned int max_num_s=
+g,
+> +                               bool is_write, hwaddr pa, size_t sz)
+>  {
+>      bool ok =3D false;
+>      unsigned num_sg =3D *p_num_sg;
+> @@ -1579,7 +1579,8 @@ static bool virtqueue_map_desc(VirtIODevice *vdev, =
+unsigned int *p_num_sg,
+>                                                is_write ?
+>                                                DMA_DIRECTION_FROM_DEVICE =
+:
+>                                                DMA_DIRECTION_TO_DEVICE,
+> -                                              MEMTXATTRS_UNSPECIFIED);
+> +                                              MEMTXATTRS_UNSPECIFIED,
+> +                                              &xlat_addr[num_sg]);
+>          if (!iov[num_sg].iov_base) {
+>              virtio_error(vdev, "virtio: bogus descriptor or out of resou=
+rces");
+>              goto out;
+> @@ -1618,7 +1619,7 @@ static void virtqueue_undo_map_desc(unsigned int ou=
+t_num, unsigned int in_num,
+>
+>  static void virtqueue_map_iovec(VirtIODevice *vdev, struct iovec *sg,
+>                                  hwaddr *addr, unsigned int num_sg,
+> -                                bool is_write)
+> +                                hwaddr *xlat_addr, bool is_write)
+>  {
+>      unsigned int i;
+>      hwaddr len;
+> @@ -1629,7 +1630,8 @@ static void virtqueue_map_iovec(VirtIODevice *vdev,=
+ struct iovec *sg,
+>                                          addr[i], &len, is_write ?
+>                                          DMA_DIRECTION_FROM_DEVICE :
+>                                          DMA_DIRECTION_TO_DEVICE,
+> -                                        MEMTXATTRS_UNSPECIFIED);
+> +                                        MEMTXATTRS_UNSPECIFIED,
+> +                                        &xlat_addr[i]);
+>          if (!sg[i].iov_base) {
+>              error_report("virtio: error trying to map MMIO memory");
+>              exit(1);
+> @@ -1643,9 +1645,10 @@ static void virtqueue_map_iovec(VirtIODevice *vdev=
+, struct iovec *sg,
+>
+>  void virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem)
+>  {
+> -    virtqueue_map_iovec(vdev, elem->in_sg, elem->in_addr, elem->in_num, =
+true);
+> +    virtqueue_map_iovec(vdev, elem->in_sg, elem->in_addr, elem->in_num,
+> +                        elem->in_xlat_addr, true);
+>      virtqueue_map_iovec(vdev, elem->out_sg, elem->out_addr, elem->out_nu=
+m,
+> -                                                                        =
+false);
+> +                        elem->out_xlat_addr, false);
+>  }
+>
+>  static void *virtqueue_alloc_element(size_t sz, unsigned out_num, unsign=
+ed in_num)
+> @@ -1654,7 +1657,14 @@ static void *virtqueue_alloc_element(size_t sz, un=
+signed out_num, unsigned in_nu
+>      size_t in_addr_ofs =3D QEMU_ALIGN_UP(sz, __alignof__(elem->in_addr[0=
+]));
+>      size_t out_addr_ofs =3D in_addr_ofs + in_num * sizeof(elem->in_addr[=
+0]);
+>      size_t out_addr_end =3D out_addr_ofs + out_num * sizeof(elem->out_ad=
+dr[0]);
+> -    size_t in_sg_ofs =3D QEMU_ALIGN_UP(out_addr_end, __alignof__(elem->i=
+n_sg[0]));
+> +    size_t in_xlat_addr_ofs =3D
+> +        QEMU_ALIGN_UP(out_addr_end, __alignof__(elem->in_xlat_addr[0]));
+> +    size_t out_xlat_addr_ofs =3D in_xlat_addr_ofs + in_num *
+> +                               sizeof(elem->in_xlat_addr[0]);
+> +    size_t out_xlat_addr_end =3D out_xlat_addr_ofs + out_num *
+> +                               sizeof(elem->out_xlat_addr[0]);
+> +    size_t in_sg_ofs =3D
+> +        QEMU_ALIGN_UP(out_xlat_addr_end, __alignof__(elem->in_sg[0]));
+>      size_t out_sg_ofs =3D in_sg_ofs + in_num * sizeof(elem->in_sg[0]);
+>      size_t out_sg_end =3D out_sg_ofs + out_num * sizeof(elem->out_sg[0])=
+;
+>
+> @@ -1665,6 +1675,8 @@ static void *virtqueue_alloc_element(size_t sz, uns=
+igned out_num, unsigned in_nu
+>      elem->in_num =3D in_num;
+>      elem->in_addr =3D (void *)elem + in_addr_ofs;
+>      elem->out_addr =3D (void *)elem + out_addr_ofs;
+> +    elem->in_xlat_addr =3D (void *)elem + in_xlat_addr_ofs;
+> +    elem->out_xlat_addr =3D (void *)elem + out_xlat_addr_ofs;
+>      elem->in_sg =3D (void *)elem + in_sg_ofs;
+>      elem->out_sg =3D (void *)elem + out_sg_ofs;
+>      return elem;
+> @@ -1681,6 +1693,7 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
+e_t sz)
+>      VirtQueueElement *elem =3D NULL;
+>      unsigned out_num, in_num, elem_entries;
+>      hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> +    hwaddr xlat_addr[VIRTQUEUE_MAX_SIZE];
+>      struct iovec iov[VIRTQUEUE_MAX_SIZE];
+>      VRingDesc desc;
+>      int rc;
+> @@ -1754,7 +1767,7 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
+e_t sz)
+>
+>          if (desc.flags & VRING_DESC_F_WRITE) {
+>              map_ok =3D virtqueue_map_desc(vdev, &in_num, addr + out_num,
+> -                                        iov + out_num,
+> +                                        xlat_addr + out_num, iov + out_n=
+um,
+>                                          VIRTQUEUE_MAX_SIZE - out_num, tr=
+ue,
+>                                          desc.addr, desc.len);
+>          } else {
+> @@ -1762,8 +1775,8 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
+e_t sz)
+>                  virtio_error(vdev, "Incorrect order for descriptors");
+>                  goto err_undo_map;
+>              }
+> -            map_ok =3D virtqueue_map_desc(vdev, &out_num, addr, iov,
+> -                                        VIRTQUEUE_MAX_SIZE, false,
+> +            map_ok =3D virtqueue_map_desc(vdev, &out_num, addr, xlat_add=
+r,
+> +                                        iov, VIRTQUEUE_MAX_SIZE, false,
+>                                          desc.addr, desc.len);
+>          }
+>          if (!map_ok) {
+> @@ -1790,10 +1803,12 @@ static void *virtqueue_split_pop(VirtQueue *vq, s=
+ize_t sz)
+>      for (i =3D 0; i < out_num; i++) {
+>          elem->out_addr[i] =3D addr[i];
+>          elem->out_sg[i] =3D iov[i];
+> +        elem->out_xlat_addr[i] =3D xlat_addr[i];
+>      }
+>      for (i =3D 0; i < in_num; i++) {
+>          elem->in_addr[i] =3D addr[out_num + i];
+>          elem->in_sg[i] =3D iov[out_num + i];
+> +        elem->in_xlat_addr[i] =3D xlat_addr[out_num + i];
+>      }
+>
+>      if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+> @@ -1827,6 +1842,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, si=
+ze_t sz)
+>      VirtQueueElement *elem =3D NULL;
+>      unsigned out_num, in_num, elem_entries;
+>      hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> +    hwaddr xlat_addr[VIRTQUEUE_MAX_SIZE];
+>      struct iovec iov[VIRTQUEUE_MAX_SIZE];
+>      VRingPackedDesc desc;
+>      uint16_t id;
+> @@ -1891,7 +1907,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, si=
+ze_t sz)
+>
+>          if (desc.flags & VRING_DESC_F_WRITE) {
+>              map_ok =3D virtqueue_map_desc(vdev, &in_num, addr + out_num,
+> -                                        iov + out_num,
+> +                                        xlat_addr + out_num, iov + out_n=
+um,
+>                                          VIRTQUEUE_MAX_SIZE - out_num, tr=
+ue,
+>                                          desc.addr, desc.len);
+>          } else {
+> @@ -1899,7 +1915,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, si=
+ze_t sz)
+>                  virtio_error(vdev, "Incorrect order for descriptors");
+>                  goto err_undo_map;
+>              }
+> -            map_ok =3D virtqueue_map_desc(vdev, &out_num, addr, iov,
+> +            map_ok =3D virtqueue_map_desc(vdev, &out_num, addr, xlat_add=
+r, iov,
+>                                          VIRTQUEUE_MAX_SIZE, false,
+>                                          desc.addr, desc.len);
+>          }
+> @@ -1928,10 +1944,12 @@ static void *virtqueue_packed_pop(VirtQueue *vq, =
+size_t sz)
+>      for (i =3D 0; i < out_num; i++) {
+>          elem->out_addr[i] =3D addr[i];
+>          elem->out_sg[i] =3D iov[i];
+> +        elem->out_xlat_addr[i] =3D xlat_addr[i];
+>      }
+>      for (i =3D 0; i < in_num; i++) {
+>          elem->in_addr[i] =3D addr[out_num + i];
+>          elem->in_sg[i] =3D iov[out_num + i];
+> +        elem->in_xlat_addr[i] =3D xlat_addr[out_num + i];
+>      }
+>
+>      elem->index =3D id;
+> @@ -2117,10 +2135,14 @@ void *qemu_get_virtqueue_element(VirtIODevice *vd=
+ev, QEMUFile *f, size_t sz)
+>      elem->index =3D data.index;
+>
+>      for (i =3D 0; i < elem->in_num; i++) {
+> +        /* xlat_addr is overwritten by virtqueue_map */
+> +        elem->in_xlat_addr[i] =3D 0;
+>          elem->in_addr[i] =3D data.in_addr[i];
+>      }
+>
+>      for (i =3D 0; i < elem->out_num; i++) {
+> +        /* xlat_addr is overwritten by virtqueue_map */
+> +        elem->out_xlat_addr[i] =3D 0;
+>          elem->out_addr[i] =3D data.out_addr[i];
+>      }
+>
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index 8eaf0d58bb..e2bb453dcc 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -328,7 +328,7 @@ static inline void *pci_dma_map(PCIDevice *dev, dma_a=
+ddr_t addr,
+>                                  dma_addr_t *plen, DMADirection dir)
+>  {
+>      return dma_memory_map(pci_get_address_space(dev), addr, plen, dir,
+> -                          MEMTXATTRS_UNSPECIFIED);
+> +                          MEMTXATTRS_UNSPECIFIED, NULL);
+>  }
+>
+>  static inline void pci_dma_unmap(PCIDevice *dev, void *buffer, dma_addr_=
+t len,
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 6386910280..e822aafd91 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -75,6 +75,8 @@ typedef struct VirtQueueElement
+>      hwaddr *out_addr;
+>      struct iovec *in_sg;
+>      struct iovec *out_sg;
+> +    hwaddr *in_xlat_addr;
+> +    hwaddr *out_xlat_addr;
+>  } VirtQueueElement;
+>
+>  #define VIRTIO_QUEUE_MAX 1024
+> diff --git a/include/system/dma.h b/include/system/dma.h
+> index 5a49a30628..b5d4c07452 100644
+> --- a/include/system/dma.h
+> +++ b/include/system/dma.h
+> @@ -12,6 +12,7 @@
+>
+>  #include "exec/memory.h"
+>  #include "exec/address-spaces.h"
+> +#include "exec/ramblock.h"
+>  #include "block/block.h"
+>  #include "block/accounting.h"
+>
+> @@ -201,10 +202,12 @@ MemTxResult dma_memory_set(AddressSpace *as, dma_ad=
+dr_t addr,
+>   * @len: pointer to length of buffer; updated on return
+>   * @dir: indicates the transfer direction
+>   * @attrs: memory attributes
+> + * @guest_addr: optional output for GPA
+>   */
+>  static inline void *dma_memory_map(AddressSpace *as,
+>                                     dma_addr_t addr, dma_addr_t *len,
+> -                                   DMADirection dir, MemTxAttrs attrs)
+> +                                   DMADirection dir, MemTxAttrs attrs,
+> +                                   hwaddr *guest_addr)
+>  {
+>      hwaddr xlen =3D *len;
+>      void *p;
+> @@ -212,6 +215,26 @@ static inline void *dma_memory_map(AddressSpace *as,
+>      p =3D address_space_map(as, addr, &xlen, dir =3D=3D DMA_DIRECTION_FR=
+OM_DEVICE,
+>                            attrs);
+>      *len =3D xlen;
+> +
+> +    /* Attempt to find a backing GPA for this HVA */
+> +    if (guest_addr) {
+> +        if (p) {
+> +            RAMBlock *rb;
+> +            ram_addr_t offset;
+> +
+> +            rb =3D qemu_ram_block_from_host(p, false, &offset);
+> +            if (rb) {
+> +                /* HVA corresponds to guest memory */
+> +                *guest_addr =3D rb->offset + offset;
+> +            } else {
+> +                /* HVA doesn't correspond to guest memory */
+> +                *guest_addr =3D 0;
+> +            }
+> +        } else {
+> +            /* Mapping failed */
+> +            *guest_addr =3D 0;
+> +        }
+> +    }
+>      return p;
+>  }
+>
+> diff --git a/system/dma-helpers.c b/system/dma-helpers.c
+> index f6403242f5..a6d2352c0f 100644
+> --- a/system/dma-helpers.c
+> +++ b/system/dma-helpers.c
+> @@ -135,7 +135,7 @@ static void dma_blk_cb(void *opaque, int ret)
+>          cur_addr =3D dbs->sg->sg[dbs->sg_cur_index].base + dbs->sg_cur_b=
+yte;
+>          cur_len =3D dbs->sg->sg[dbs->sg_cur_index].len - dbs->sg_cur_byt=
+e;
+>          mem =3D dma_memory_map(dbs->sg->as, cur_addr, &cur_len, dbs->dir=
+,
+> -                             MEMTXATTRS_UNSPECIFIED);
+> +                             MEMTXATTRS_UNSPECIFIED, NULL);
+>          /*
+>           * Make reads deterministic in icount mode. Windows sometimes is=
+sues
+>           * disk read requests with overlapping SGs. It leads
+> --
+> 2.43.5
+>
 
 
