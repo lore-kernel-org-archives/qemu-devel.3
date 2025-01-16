@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA84C02180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5500C02183
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLTn-0006pW-W7; Thu, 16 Jan 2025 03:43:56 -0500
+	id 1tYLTo-0006q2-Hf; Thu, 16 Jan 2025 03:43:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tYLTl-0006oQ-7j; Thu, 16 Jan 2025 03:43:53 -0500
+ id 1tYLTl-0006oS-Ay; Thu, 16 Jan 2025 03:43:53 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tYLTg-0006nh-N6; Thu, 16 Jan 2025 03:43:52 -0500
+ id 1tYLTg-0006no-OU; Thu, 16 Jan 2025 03:43:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:
- To:From:Reply-To:Content-ID:Content-Description;
- bh=ZBKlQ7iGXowmo3aHS0zEEFjY8wis7AgQV7Ky19BXiPo=; b=YbwhsJicNuvRKaM7mZLvcVWK6x
- WiVFjSENH4z5Pkik/TbbBGKMRfokc5n3AnYla8b8TFya79gei5DGXoFPyNtEYDuoSbPEvASAzUe7s
- /Okku4GLLdh7ZIL8/95IXpTsU/ufviN5uegG73LLfNVBGmmo9yc08EgZA/7pCEqFQVNkHvfd1eaAT
- uMcjr7k3BZPtzBzzpGoQsPxEIArLFfbtmXn+/6XPkKmtZ8YokNBXePazZ5GcK744aKhRDmDrlbUl/
- 9xSpFhIshTG4A/stggqsUQoqVTd1+in6ftZfGoH5NjzvWbDV4Q4x7VbLT7Vo0voq4syaI0/+Emwej
- 65f7SNhg==;
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Reply-To:Content-Type:Content-ID:Content-Description;
+ bh=rf4XQLZvATxaJ4ZS360lOa75wV7gwRBU9Wx/NrfpNKM=; b=sFlr5bcNd4N4BJ5gR3Jk2RMuSZ
+ 5ueFpFbkgmzLDSSjXJ4F7E+VBxywP+JIRlQoRKp3wkAY8M1RXh+2AgFkdaR0I+RJ/HbnrYMA+Z0zU
+ 2lmxNsy2Qy/lJdQ9rSRQOyDus7jTuvUOxbVmPxnvd+PQKO1ZzaiVWnoNH0DVgLxdULgr2CX7e6mvu
+ QrD2RyTvgL5O6bdVak0nEQCYiMG6AHb8ODInb95f1z/eiaN9PgRwMoW9LxHdxLVJTzHvEJkOKa99m
+ RL0y+rCcqZpKVNodam5HJp2Ry+5gdt3tdeSL9bekAURJVRyjXefSwKZWd44xr0u1/xBMze+9o1USG
+ +58fvVNg==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tYLTd-0000000AkbP-02Qr; Thu, 16 Jan 2025 08:43:45 +0000
+ id 1tYLTd-0000000AkbX-0VhX; Thu, 16 Jan 2025 08:43:45 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
- Linux)) id 1tYLTc-00000007pI3-2yCA; Thu, 16 Jan 2025 08:43:44 +0000
+ Linux)) id 1tYLTc-00000007pIG-3SiW; Thu, 16 Jan 2025 08:43:44 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>,
 	qemu-devel@nongnu.org
@@ -47,16 +47,14 @@ Cc: Stefano Stabellini <sstabellini@kernel.org>,
  xen-devel@lists.xenproject.org, qemu-block@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  David Woodhouse <dwmw@amazon.co.uk>,
- Anthony PERARD <anthony.perard@vates.tech>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>
-Subject: [PULL 5/8] hw/xen: Use xs_node_read() from xen_netdev_get_name()
-Date: Thu, 16 Jan 2025 08:43:29 +0000
-Message-ID: <20250116084332.1864967-6-dwmw2@infradead.org>
+ Anthony PERARD <anthony.perard@vates.tech>
+Subject: [PULL 7/8] hw/xen: Fix errp handling in xen_console
+Date: Thu, 16 Jan 2025 08:43:31 +0000
+Message-ID: <20250116084332.1864967-8-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250116084332.1864967-1-dwmw2@infradead.org>
 References: <20250116084332.1864967-1-dwmw2@infradead.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
  casper.infradead.org. See http://www.infradead.org/rpr.html
@@ -87,49 +85,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Now that xs_node_read() can construct a node path, no need to open-code it.
+When attempting to read the 'output' node, interpret any error *other*
+than ENOENT as a fatal error. For ENOENT, fall back to serial_hd() to
+find a character device, or create a null device.
+
+Do not attempt to prepend to errp when serial_hd() fails; the error
+isn't relevant (and prior to this change, wasn't set anyway).
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
-Acked-by: Roger Pau Monné <roger.pau@citrix.com>
 ---
- hw/net/xen_nic.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ hw/char/xen_console.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-index 97ebd9fa30..5410039490 100644
---- a/hw/net/xen_nic.c
-+++ b/hw/net/xen_nic.c
-@@ -510,23 +510,22 @@ static char *xen_netdev_get_name(XenDevice *xendev, Error **errp)
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index e61902461b..d03c188d1d 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -569,7 +569,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
  
-     if (netdev->dev == -1) {
-         XenBus *xenbus = XEN_BUS(qdev_get_parent_bus(DEVICE(xendev)));
--        char fe_path[XENSTORE_ABS_PATH_MAX + 1];
-         int idx = (xen_mode == XEN_EMULATE) ? 0 : 1;
-+        Error *local_err = NULL;
-         char *value;
+     snprintf(label, sizeof(label), "xencons%ld", number);
  
-         /* Theoretically we could go up to INT_MAX here but that's overkill */
-         while (idx < 100) {
--            snprintf(fe_path, sizeof(fe_path),
--                     "/local/domain/%u/device/vif/%u",
--                     xendev->frontend_id, idx);
--            value = qemu_xen_xs_read(xenbus->xsh, XBT_NULL, fe_path, NULL);
-+            value = xs_node_read(xenbus->xsh, XBT_NULL, NULL, &local_err,
-+                                 "/local/domain/%u/device/vif/%u",
-+                                 xendev->frontend_id, idx);
-             if (!value) {
-                 if (errno == ENOENT) {
-                     netdev->dev = idx;
-+                    error_free(local_err);
-                     goto found;
-                 }
--                error_setg(errp, "cannot read %s: %s", fe_path,
--                           strerror(errno));
-+                error_propagate(errp, local_err);
-                 return NULL;
-             }
-             free(value);
+-    output = xs_node_read(xsh, XBT_NULL, NULL, NULL, "%s/%s", fe, "output");
++    output = xs_node_read(xsh, XBT_NULL, NULL, errp, "%s/%s", fe, "output");
+     if (output) {
+         /*
+          * FIXME: sure we want to support implicit
+@@ -581,19 +581,27 @@ static void xen_console_device_create(XenBackendInstance *backend,
+                        output);
+             goto fail;
+         }
+-    } else if (number) {
+-        cd = serial_hd(number);
+-        if (!cd) {
+-            error_prepend(errp, "console: No serial device #%ld found: ",
+-                          number);
+-            goto fail;
+-        }
++    } else if (errno != ENOENT) {
++        error_prepend(errp, "console: No valid chardev found: ");
++        goto fail;
+     } else {
+-        /* No 'output' node on primary console: use null. */
+-        cd = qemu_chr_new(label, "null", NULL);
+-        if (!cd) {
+-            error_setg(errp, "console: failed to create null device");
+-            goto fail;
++        error_free(*errp);
++        *errp = NULL;
++
++        if (number) {
++            cd = serial_hd(number);
++            if (!cd) {
++                error_setg(errp, "console: No serial device #%ld found",
++                           number);
++                goto fail;
++            }
++        } else {
++            /* No 'output' node on primary console: use null. */
++            cd = qemu_chr_new(label, "null", NULL);
++            if (!cd) {
++                error_setg(errp, "console: failed to create null device");
++                goto fail;
++            }
+         }
+     }
+ 
 -- 
 2.47.0
 
