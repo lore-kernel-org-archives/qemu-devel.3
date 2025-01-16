@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C4FC02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCF2C02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYP8K-0007Uk-Rg; Thu, 16 Jan 2025 07:38:00 -0500
+	id 1tYPAz-00005N-I5; Thu, 16 Jan 2025 07:40:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYP8K-0007UX-2X
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:38:00 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tYPAl-0008UI-OW
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:40:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYP8I-0002lq-E5
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:37:59 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tYPAj-0003dH-UF
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:40:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737031077;
+ s=mimecast20190719; t=1737031229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/ZNXDp4+kPrgkLq825wuI/WjNyEnM5nsSMbMF5oFOgw=;
- b=E8WJgm7UQMiLhrzTm9v6oiMvrAVTKjCmbU2+2ZZdY6YnxZRWpCjR/6KYfFTGGCmu9/0uzd
- lXWV35RZFB0Tid1pilGrCUzZWi/y76vMq7EQiwAif0P8zJTwq1AVoPS4JsInDTGRYQk82e
- u32h5Epx9odRXv7kHQgx7M84r2U+4B4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=iBjPR3V1IWujIeNx1ikIVImipKb5BNuaOQax++1CYfs=;
+ b=e28f3UR0a/mK7cj2L1EqsZHv8p4Ja2IG24oRUeDzj4reTinY6yYfzNMxeP52w1U9htMjDj
+ y/7n67GBialr6IDiWHvRHs3G/j1sXTmm54gXM9eDuKuovsBwCXZ+wrGoyZayvMrvNo3KPR
+ JHqdiqpjlFQNvMl3Gk7HId1laPaMYEQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-tkEJ8q9SOSGXHwRb6MNcwg-1; Thu,
- 16 Jan 2025 07:37:55 -0500
-X-MC-Unique: tkEJ8q9SOSGXHwRb6MNcwg-1
-X-Mimecast-MFC-AGG-ID: tkEJ8q9SOSGXHwRb6MNcwg
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-qEUoemckMjm6zTA1RVdfWQ-1; Thu,
+ 16 Jan 2025 07:40:27 -0500
+X-MC-Unique: qEUoemckMjm6zTA1RVdfWQ-1
+X-Mimecast-MFC-AGG-ID: qEUoemckMjm6zTA1RVdfWQ
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C460319560AF; Thu, 16 Jan 2025 12:37:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.196.38])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5662C3003E7F; Thu, 16 Jan 2025 12:37:47 +0000 (UTC)
-Date: Thu, 16 Jan 2025 13:37:44 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: tugy@chinatelecom.cn, eblake@redhat.com, armbru@redhat.com,
- hreitz@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/2] support block encryption/decryption in parallel
-Message-ID: <Z4j9mGpbbXyjKbmI@redhat.com>
-References: <cover.1732789721.git.tugy@chinatelecom.cn>
- <Z1xZK9u8L_ydtnAJ@redhat.com>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5ECED1955DB9; Thu, 16 Jan 2025 12:40:26 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.48])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 18C8019560A3; Thu, 16 Jan 2025 12:40:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B1C9A21E6924; Thu, 16 Jan 2025 13:40:23 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Boyang <zhangboyang.id@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] qapi/ui: Fix documentation of upper bound value in
+ InputMoveEvent
+In-Reply-To: <20250116104433.12114-1-zhangboyang.id@gmail.com> (Zhang Boyang's
+ message of "Thu, 16 Jan 2025 18:44:33 +0800")
+References: <20250116104433.12114-1-zhangboyang.id@gmail.com>
+Date: Thu, 16 Jan 2025 13:40:23 +0100
+Message-ID: <87ed136ifc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z1xZK9u8L_ydtnAJ@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,94 +85,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 13.12.2024 um 16:56 hat Daniel P. Berrangé geschrieben:
-> On Thu, Nov 28, 2024 at 06:51:20PM +0800, tugy@chinatelecom.cn wrote:
-> > From: Guoyi Tu <tugy@chinatelecom.cn>
-> > 
-> > Currently, disk I/O encryption and decryption operations are performed sequentially
-> > in the main thread or IOthread. When the number of I/O requests increases,
-> > this becomes a performance bottleneck.
-> > 
-> > To address this issue, this patch use thread pool to perform I/O encryption
-> > and decryption in parallel, improving overall efficiency.
-> 
-> We already have support for parallel encryption through use of IO threads
-> since approximately this commit:
-> 
->   commit af206c284e4c1b17cdfb0f17e898b288c0fc1751
->   Author: Stefan Hajnoczi <stefanha@redhat.com>
->   Date:   Mon May 27 11:58:50 2024 -0400
-> 
->     block/crypto: create ciphers on demand
->     
->     Ciphers are pre-allocated by qcrypto_block_init_cipher() depending on
->     the given number of threads. The -device
->     virtio-blk-pci,iothread-vq-mapping= feature allows users to assign
->     multiple IOThreads to a virtio-blk device, but the association between
->     the virtio-blk device and the block driver happens after the block
->     driver is already open.
->     
->     When the number of threads given to qcrypto_block_init_cipher() is
->     smaller than the actual number of threads at runtime, the
->     block->n_free_ciphers > 0 assertion in qcrypto_block_pop_cipher() can
->     fail.
->     
->     Get rid of qcrypto_block_init_cipher() n_thread's argument and allocate
->     ciphers on demand.
-> 
-> 
-> Say we have QEMU pinned to 4 host CPUs, and we've setup 4 IO threads
-> for the disk, then encryption can max out 4 host CPUs worth of resource.
+Zhang Boyang <zhangboyang.id@gmail.com> writes:
 
-This is a lot of "if"s. Even just that it requires explicit
-configuration and doesn't work out of the box would be a strong point
-for me why having something that works by default (like a thread pool)
-is worth it.
+> The upper bound of pointer position in InputMoveEvent should be 0x7fff,
+> according to INPUT_EVENT_ABS_MAX.
+>
+> Signed-off-by: Zhang Boyang <zhangboyang.id@gmail.com>
+> ---
+>  qapi/ui.json | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/qapi/ui.json b/qapi/ui.json
+> index 460a26b981..7b18662018 100644
+> --- a/qapi/ui.json
+> +++ b/qapi/ui.json
+> @@ -1133,7 +1133,7 @@
+>  # @axis: Which axis is referenced by @value.
+>  #
+>  # @value: Pointer position.  For absolute coordinates the valid range
+> -#     is 0 -> 0x7ffff
+> +#     is 0 -> 0x7fff
 
-You're assuming that it's even possible to setup 4 iothreads which share
-the load evenly. That's not a given at all. The only device that can
-even make use of more than one iothread is virtio-blk. (And if we're
-looking at all devices that exist in QEMU, most devices can't even make
-use of a single iothread!) But if you do have a virtio-blk device, then
-that setup means one iothread per queue. In a Linux guest, if all I/O
-comes from a single CPU, then it will use the same queue and we'll have
-three idle iothreads and one that is overloaded.
+Opportunity to replace "->" by "to" or "..".  If you agree, I'll squash
+that into your patch in my tree.
 
-So in order to achieve a similar effect with iothreads, you must be
-using virtio-blk, you must explicitly configure four iothreads and four
-mappings of virtqueues to iothreads, and you must run a workload in the
-guest that performs I/O from four different threads running on different
-CPUs.
+>  #
+>  # Since: 2.0
+>  ##
 
-There are certainly good use cases for iothreads, but with this number
-of preconditions, I don't think we can assume that they make it
-unnecessary to parallelise things in other ways, too.
-
-> How is this new proposed way to use a thread pool going to do better
-> than that in an apples-to-apples comparison ? ie allow same number
-> of host CPUs for both. The fundamental limit is still the AES performance
-> of the host CPU(s) that you allow QEMU to execute work on. If the thread
-> pool is allowed to use 4 host CPUs, it shouldn't be significantly different
-> from allowing use of 4 host CPUs for I/O threads surely ?
-> 
-> Having multiple different ways to support parallel encryption is not
-> ideal. If there's something I/O threads can't do optimally right
-> now, is it practical to make them work better ?
-
-The limitations inside the guest obviously can't be changed by QEMU.
-
-We could in theory add iothread support to more devices, though if they
-don't have a concept of multiple queues that could be processed by
-different threads, it's pretty pointless (apart from working around
-limitations in the backends like you're suggesting here).
-
-And of course, the most interesting one would be solving the
-out-of-the-box aspect. This is far from trivial, because the optimal
-configuration really depends on your workload, and nothing on the host
-can know automatically what will eventually run in the guest. So it will
-be tough finding defaults that improve this case without also hurting
-other cases.
-
-Kevin
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
