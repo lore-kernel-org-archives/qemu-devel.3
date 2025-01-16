@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5D5C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9967C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYOvt-0002NU-Tu; Thu, 16 Jan 2025 07:25:09 -0500
+	id 1tYP1l-0003wW-2C; Thu, 16 Jan 2025 07:31:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tYOvs-0002Ms-9f
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:25:08 -0500
-Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tYP1i-0003vb-CT
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:31:10 -0500
+Received: from mail-oo1-xc43.google.com ([2607:f8b0:4864:20::c43])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tYOvq-00082F-Ax
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:25:08 -0500
-Received: by mail-yb1-xb29.google.com with SMTP id
- 3f1490d57ef6-e4a6b978283so3527144276.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:25:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tYP1e-0001CH-26
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:31:10 -0500
+Received: by mail-oo1-xc43.google.com with SMTP id
+ 006d021491bc7-5f2dee7d218so360148eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:30:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737030304; x=1737635104; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=A6vA39i9y5IA3PTpTj5f7RjAkmv2BL1Souo4U2/iAAI=;
- b=hup4ApAJVZORAZ8Tiaj5DBgC+SU4pkiExuxgDiCwm2PRLHqSnusCr+k9uKdYZUgOZI
- si3UeoMEtcKtyqmLo64MgZ+mlIKDEWVdwgTQiTHMBGw0UHe5MKG88EiEDaUNQlzG48L4
- oi9mfV9NEXpJMAZGWUuvO8LyNlSPa0Ue5Kmx/HJoqbxb14lpNlTe08/hNcgyc064d+UP
- V6Hjw4rdF5hyL5gYSdu2Pshkf1qip+47ujANfAldowAXwQ7FTozZFe1x1wMK7yki8hrk
- n68cK6AgRBcAq4+AFo6i3KcIzfQjKwYXqEoRxjnWHrRgZdDqJeDelMPVKjEcmSlzmLYi
- vbYQ==
+ d=ventanamicro.com; s=google; t=1737030659; x=1737635459; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SPCmTHJ30+Z0P1UK1SYBdnSWIoFkUkGXia6Kn2gnWy0=;
+ b=ID4/BN2gayaVQf/I3VxCaXuTaTpWUws0HcRolO4D3wwqG6hZKowkQeYRNKIs9LWKW/
+ Mpe5YdmetwyOHBsLRDlgeSjLVE4NSKZybcjPkbbf05fOi9S0xtxkuj9L0HOEwZJYK6ch
+ CddskU+HSlAkfzrXppMxAGh4dkffUW0TE1DzQlsn/WgiS+4shY4qN7YDS1SpxXH2xyBG
+ /Oz7HO+NLuwXqDxdmrw7vlRvrdMEwrgSQIG6/f4KOS9wPs8XfwVMdQlSx3kZnmXkIQyZ
+ 1adyXAB+C060g5GWmSO9E9OG9XCwe4qyUjLk4GUIjRKqbli8OlFYkFVJCo9CjuR7b1/D
+ EnXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737030304; x=1737635104;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A6vA39i9y5IA3PTpTj5f7RjAkmv2BL1Souo4U2/iAAI=;
- b=m9+UHafQFYNcDAQeOlfKjxvXDNRvhGsplDV+jkmIUqCUSOcPwY7hRnSKBzJOxN8n4I
- YKYuySANxk0mZRy0yFDXH3guPINwvPEK7cPnO1CNyyaPj+zXZ24CBlYRkgNOZC1GCssy
- qh07gN1KT175NzGej5W4CrPQ042OL4ZPJoavnJIGG5eVBtKB5rNqzDMS51N89VKC/O5J
- RcQBEIvhB5P9VFWD6q9W1n+92c5r7Yp5Z4l8a6nDTQA/x1p116JpZk7Wkel8I3DmOPa7
- g/J35LrmSgBX4yC/YWyHRedPEp1PkrunIlZMI1VRpDC0UbGgwlXet1PqbQYjr0jzfAc0
- rpPQ==
+ d=1e100.net; s=20230601; t=1737030659; x=1737635459;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SPCmTHJ30+Z0P1UK1SYBdnSWIoFkUkGXia6Kn2gnWy0=;
+ b=DckY4beh4+vz0l32Dxdx5+3xW6Nj2XHwmXUqyhZeZ1I7xgNFOXSYEo0KyPNwCk3I31
+ VLc4HlJDju88CCBtEFm83Rao1JIfFxC0i9Ui1boqXPUuiGlsK4V6SqJZAi21Z4J4/Mwc
+ s1E3Dp/vwIUYtaC3cM7RqLAZL6FVNvWwLHPkHVICYsels2hQdjkivn9FwdjRx1GqNfHZ
+ Xd4e+EdBhOGLxRuAqBSSp5P0CBGU0DFgsn0lJWFBED+3PUxUx/bQlAImCzr1LA1orD+Z
+ zALv2zC5rfvBbjTRFYZaXwVzn4hkAWnPLZiq2CqBOCKGnRcrZPzW+sHZmjbdRfN6KmWF
+ o6mQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUD9G5yVpc16FXcItl9Viekkc+xBMROQwvhD28Lo8Dv1CDWJodhZ/PYEO5aZgq0RGSi3lOLoLzYuNpw@nongnu.org
-X-Gm-Message-State: AOJu0YwPc+lZKwBlw8BDLUsW305Q2lK/KKMBJ+Ju0o+B4EUFun+kAB3L
- oBtDueZEcQwBsvy8ByTNqRyObrAABbtIBYlaVGuQM2T8VWfY111HHTbcXZS6cNMfxRYYy/mE+y3
- RVhYbi/KDdra2we8bwpGsJ9WBmMzv+ygshx3mGw==
-X-Gm-Gg: ASbGncsvGQn3M/dXrg/F5CqR7m19Y6Z7WHSPDRD8uXZrGMaQ6CY+ed//WqKxOTWhfxb
- IpBDdSoqx1XCu2IdJfvdcm4G5zUVWI8va2NM1K/4=
-X-Google-Smtp-Source: AGHT+IHPIg+iR1sFJBGNyjfieVhjjoZn0h4J1pu7XGljCtipJUX2pGTyF8c54gRee5FYK41PANUp4ffPBZR7yMQG8wY=
-X-Received: by 2002:a05:690c:6384:b0:6e2:b262:bebc with SMTP id
- 00721157ae682-6f6c9a1052cmr61737897b3.0.1737030304359; Thu, 16 Jan 2025
- 04:25:04 -0800 (PST)
+ AJvYcCWk0cLJkmX3LGYD1rHVFeISpSP24FRScy+gBNYf3jldO2P1qSMqaQkIn7QuO+Un6tiHQ+ga1M96OnnF@nongnu.org
+X-Gm-Message-State: AOJu0YwsErgDBaT8tsfYIjCkgFScQuGmQemZP8bcpjZfrTd6R3b8gttQ
+ CO15ChnQxrqBpKQ2GvG7LmJwrU79ibD+T5DW1jWty82PeKj9e/MI5gVyrq/QM4g=
+X-Gm-Gg: ASbGncu7H8btN6Dx7/uqcAOofq+PxQyom2eqgdVKcmtBHmgMsgRvcJxKPPyBGDnhRs1
+ FU3KJ6W4XjuyUOupHiEgFTpQ1S8Z8r4A07+UyXb809hI202Wmk24UrbTl3mPAgcUvIhHTxley8A
+ I3FjFfOM7HtI0gxD5kUFVQLuPoYCP2cR54/Pdn4rTBsIPOwFd0y1UZI9YklT1syCUreutxVR4JP
+ ogEVakKVwqOBBUcCQH6umDUgdbSN2HqeEM9OPC1RmIiZPZ4EmR0b/2MV3hKcpF8cAkqJjk=
+X-Google-Smtp-Source: AGHT+IE7wl4YuZItxTjDj/1ruvAQAQzbgS4LvbC1/QAlid7NU8gis0U7HISlsnpUvJEz3IzQziJ/zg==
+X-Received: by 2002:a05:6820:4d02:b0:5f8:91b0:6c0f with SMTP id
+ 006d021491bc7-5f891b06d2amr14225383eaf.6.1737030658914; 
+ Thu, 16 Jan 2025 04:30:58 -0800 (PST)
+Received: from [192.168.68.110] ([191.202.238.10])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f882641dc9sm6677161eaf.13.2025.01.16.04.30.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 04:30:57 -0800 (PST)
+Message-ID: <4fc33d8d-e443-43c3-9809-7f9c025f2883@ventanamicro.com>
+Date: Thu, 16 Jan 2025 09:30:53 -0300
 MIME-Version: 1.0
-References: <20250115232022.27332-1-iii@linux.ibm.com>
- <ac4d48c3-d139-4af0-ab28-f2674b74cb8c@linaro.org>
- <a82c41712409ac77d66f03e19b98382bcf11ba45.camel@linux.ibm.com>
- <87frljhvzk.fsf@draig.linaro.org>
- <CAFEAcA-4M5W4=JH3s45+9JZnKrVVAgKcRcH+gVqMJqGxRfjrpw@mail.gmail.com>
- <65e146746377bc307affc627f47c4700aaaac4ba.camel@linux.ibm.com>
-In-Reply-To: <65e146746377bc307affc627f47c4700aaaac4ba.camel@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 16 Jan 2025 12:24:53 +0000
-X-Gm-Features: AbW1kvYD78mmj7oVZm4dHll4PSr6QHy7K0UVUXkC6YpgD6FPm1clJWaKrwlW85M
-Message-ID: <CAFEAcA-ZOJUQPGWs7Czt1A1CdyojNoQ2L62Z-MvREgkg6GO4-A@mail.gmail.com>
-Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/riscv: Fix the hpmevent mask
+To: Atish Patra <atishp@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ bin.meng@windriver.com, alistair.francis@wdc.com
+References: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
+ <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c43;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc43.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,47 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jan 2025 at 11:48, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
->
-> On Thu, 2025-01-16 at 11:06 +0000, Peter Maydell wrote:
-> > The original reported problem here seems to me like it's a
-> > problem with whatever target's frontend code this is.
-> > This is a single instruction TB, so either:
-> >  * the generated code for it completes the insn without
-> >    raising an exception (no problem)
-> >  * the generated code for it should raise an exception
-> >    without having modified the CPU state (so there would
-> >    be nothing to do for restore_state_to_opc)
-> >
-> > It sounds like the target is generating code which does
-> > something like:
-> >  * do part of the instruction, including updating some of
-> >    the CPU state
-> >  * then decide it needs to raise an exception, and rely on
-> >    the restore_state_to_opc handling to undo the state updates
-> >    it did previously
-> >
-> > The assumption of the "throwaway single insn TB" is that
-> > you don't do that (i.e. that restore_state_to_opc is only
-> > there for the benefit of multi-insn TBs).
 
-> The problem is not a partial state update in an instruction, but rather
-> that on some targets restore_state_to_opc is more than just a
-> "restore" - it is also "prepare for handling an exception", i.e.:
->
-> - arm: exception.syndrome
-> - hppa: unwind_breg, psw_n
-> - mips: btarget
-> - openrisc: ppc
-> - riscv: excp_uw2
-> - s390x: int_pgm_ilen
->
-> Some of these may be wrong due to unfamiliarity with the respective
-> architectures, sorry - but this illustrates the idea.
 
-Ah, yes, thanks for the clear explanation. The "throw away
-the TB" design didn't consider that (or vice-versa).
+On 1/15/25 9:49 PM, Atish Patra wrote:
+> As per the latest privilege specification v1.13[1], the sscofpmf
+> only reserves first 8 bits of hpmeventX. Update the corresponding
+> masks accordingly.
+> 
+> [1]https://github.com/riscv/riscv-isa-manual/issues/1578
+> 
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> ---
 
-thanks
--- PMM
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/cpu_bits.h | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index f97c48a3943f..b48c0af9d48e 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -9,6 +9,10 @@
+>                    (((uint64_t)(val) * ((mask) & ~((mask) << 1))) & \
+>                    (uint64_t)(mask)))
+>   
+> +#ifndef GENMASK_ULL
+> +#define GENMASK_ULL(h, l) (((~0ULL) >> (63 - (h) + (l))) << (l))
+> +#endif
+> +
+>   /* Extension context status mask */
+>   #define EXT_STATUS_MASK     0x3ULL
+>   
+> @@ -933,9 +937,8 @@ typedef enum RISCVException {
+>                                               MHPMEVENTH_BIT_VSINH | \
+>                                               MHPMEVENTH_BIT_VUINH)
+>   
+> -#define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
+> -#define MHPMEVENT_IDX_MASK                 0xFFFFF
+> -#define MHPMEVENT_SSCOF_RESVD              16
+> +#define MHPMEVENT_SSCOF_MASK               GENMASK_ULL(63, 56)
+> +#define MHPMEVENT_IDX_MASK                 (~MHPMEVENT_SSCOF_MASK)
+>   
+>   /* RISC-V-specific interrupt pending bits. */
+>   #define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
+> 
+
 
