@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962D8C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 13:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261A0C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 13:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYQBp-0000YB-BH; Thu, 16 Jan 2025 08:45:41 -0500
+	id 1tYQFG-0001Js-7Y; Thu, 16 Jan 2025 08:49:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tYQBo-0000Xy-4c
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 08:45:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tYQBm-0004B9-Km
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 08:45:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737035136;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PwgpN6DDOqWs+rEQ8j/WTxRboXSBmmR3o7o0MPgNNTo=;
- b=GeTiwiNPBvN6mOq8HjTZsSjZgSMRoO/465JfhixaUL/dycdnGo02Kw98g4MwOWTSquH0F0
- AHrGRKrTA7AUi/tm4Y8wnNTurhyYItRwVXUN5WGRWujLV063WDyHVgEPoaC0UbSY7HgVQa
- AllNx59YLHOFWiTpOkRoc6cGesUe46k=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-73IcjZh9N7a4ksUmeqb0oA-1; Thu,
- 16 Jan 2025 08:45:31 -0500
-X-MC-Unique: 73IcjZh9N7a4ksUmeqb0oA-1
-X-Mimecast-MFC-AGG-ID: 73IcjZh9N7a4ksUmeqb0oA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 718691955D81; Thu, 16 Jan 2025 13:45:30 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.48])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DCE71955F1B; Thu, 16 Jan 2025 13:45:29 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 69C7721E6924; Thu, 16 Jan 2025 14:45:24 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  alex.bennee@linaro.org
-Subject: Re: [PATCH] MAINTAINERS: Add me as the maintainer for ivshmem-flat
-In-Reply-To: <20250107015639.27648-1-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Tue, 7 Jan 2025 01:56:39 +0000")
-References: <20250107015639.27648-1-gustavo.romero@linaro.org>
-Date: Thu, 16 Jan 2025 14:45:24 +0100
-Message-ID: <875xme27pn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhangboyang.id@gmail.com>)
+ id 1tYNMw-0007za-P4
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:44:58 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangboyang.id@gmail.com>)
+ id 1tYNMu-0005q2-VP
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:44:58 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ee8aa26415so1365614a91.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 02:44:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1737024295; x=1737629095; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=b7M6a+QRFUhW0+lJkp8rK8ltbV0q50Rg0edDr8j7U5E=;
+ b=lzO8ZSQx9fdUYzzbRSwvVI4ULu1eAiWtHDJhooVcSQTPAoInUfY15iiQCyZzrDvuGf
+ t5sDUZHLackvSO1aJekTclQ5oVKJWZ5SejtOub2U8+o2PZWmq6lUYrfcWCYUrmdUJ4lF
+ /Q6uMRjtus3NXn1mdS+4m9k3O1VOaJXZIzwpcdonj79ZU5ZCxPdKod0V2ShZ/U7Fe3uC
+ AROR9gJ+VbMlFj5EqKmCzqOOOjQt7X25r+3wo4rF3ykBMwQkNEtZX8on+6D9dY6aviJM
+ 1iR6BdUpthJsg0pXL+Ux9dSSe+ZRgisuE2+5eVSe3MRGMeKG+yX0hNRpKARyzlMmqRZS
+ hC8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737024295; x=1737629095;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b7M6a+QRFUhW0+lJkp8rK8ltbV0q50Rg0edDr8j7U5E=;
+ b=KZDBmEJF81jkz3lFOO+GHacK+d17J1OPduSYrs4FwPZ7UT3W9VB35fmGbMcwd2F3b4
+ 0V6ur7PwTEPPgG2PXQlsvitvycKRASaFOWUwIohx9KX2Ypq/pgSDSRxK/Q6WGObZO30v
+ AraIxofr37d7cSqZMpByVaJESriGQPVzgbh14kiQOr6GKyRrpEZA72bBvXFGIUkmYzya
+ J/EVYwgS2mla0mlBDgwLMKLWUK9DPkCo1JJ0Khib5IHrLN1fc748ea+DqRAtJp3Xu2zS
+ KWDYun35FEgTgSWO9WvgpeyOw4GfHdxrj+nilcDkeUsgqpFDOyox1fvtL04Pl/fXEHS0
+ vrvA==
+X-Gm-Message-State: AOJu0YwS1JXACH5ZE+gAKk5o8gIdsb/us23OxAMyplIxSa8TsMWFaVye
+ +Kef89UvW9ZSe8c1Uut3subSAzqY42QjZw0Kd8Gcue9ud54rhdOMPbH4aw==
+X-Gm-Gg: ASbGncuPtiACFS3T1DKcx3YVOb78UK9C32iXezSr6zf6Kg8dUyjLC2z5WAZT80AhXST
+ C8xpDdZbd/6h5Ee7jq8nzqxMjpJ5/lji7IrTRdaXmDfYQ5MzDyLAj4YM/OZ5zpB9TTaNP+KT1mu
+ opadI98R2//FBDBD/2nNpxGphvMN4ry0QmHDd1gUeVsRtfxlxo5Djrzr5/VFJFDzJL01n1g0q7Q
+ kugeYchkm7qm8HlA6mjn8fS/vIR+rMQBN9QdNov/Z//t8QpUL/tdIsV1+dSUaIMjGWkkQ9tPPp6
+ A19g/CjBJ3F3motS+rqWDncjnYR0QHS9ySZ8z48/YDAUs46lLpc1Qm74AcM=
+X-Google-Smtp-Source: AGHT+IETJk2baRgkmG84Cc+SvcvkD3qp1zqpDgfvjG5VWLGsFppqdLGSpeU/A1CozsERIuZ22prDXw==
+X-Received: by 2002:a17:90b:3d47:b0:2ee:aed6:9ec2 with SMTP id
+ 98e67ed59e1d1-2f548eae904mr51095015a91.14.1737024295305; 
+ Thu, 16 Jan 2025 02:44:55 -0800 (PST)
+Received: from localhost.localdomain
+ (ec2-13-113-80-70.ap-northeast-1.compute.amazonaws.com. [13.113.80.70])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f10e0c4sm95153885ad.24.2025.01.16.02.44.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jan 2025 02:44:55 -0800 (PST)
+From: Zhang Boyang <zhangboyang.id@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Zhang Boyang <zhangboyang.id@gmail.com>
+Subject: [PATCH] qapi/ui: Fix documentation of upper bound value in
+ InputMoveEvent
+Date: Thu, 16 Jan 2025 18:44:33 +0800
+Message-Id: <20250116104433.12114-1-zhangboyang.id@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=zhangboyang.id@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 16 Jan 2025 08:49:09 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,35 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+The upper bound of pointer position in InputMoveEvent should be 0x7fff,
+according to INPUT_EVENT_ABS_MAX.
 
-> Add me as the maintainer for the ivshmem-flat device.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->  MAINTAINERS | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2101b51217..461f98525b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2785,6 +2785,13 @@ F: hw/hyperv/hv-balloon*.h
->  F: include/hw/hyperv/dynmem-proto.h
->  F: include/hw/hyperv/hv-balloon.h
->  
-> +ivshmem-flat
-> +M: Gustavo Romero <gustavo.romero@linaro.org>
-> +S: Maintained
-> +F: hw/misc/ivshmem-flat.c
-> +F: include/hw/misc/ivshmem-flat.h
-> +F: docs/system/devices/ivshmem-flat.rst
-> +
->  Subsystems
->  ----------
->  Overall Audio backends
+Signed-off-by: Zhang Boyang <zhangboyang.id@gmail.com>
+---
+ qapi/ui.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I missed this, and it's been merged already, but I'll ask anyway: would
-you be willing to maintain all of ivshmem-pci.c, too?
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 460a26b981..7b18662018 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1133,7 +1133,7 @@
+ # @axis: Which axis is referenced by @value.
+ #
+ # @value: Pointer position.  For absolute coordinates the valid range
+-#     is 0 -> 0x7ffff
++#     is 0 -> 0x7fff
+ #
+ # Since: 2.0
+ ##
+-- 
+2.30.2
 
 
