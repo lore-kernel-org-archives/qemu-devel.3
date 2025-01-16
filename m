@@ -4,80 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADADC02187
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C67C02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSSS-0007jC-5o; Thu, 16 Jan 2025 11:11:00 -0500
+	id 1tYSMp-0005Wj-DR; Thu, 16 Jan 2025 11:05:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1tYSRk-0006qA-I0
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:10:19 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYSL5-0003WX-3Y
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:29 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1tYSRh-0003sN-1n
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:10:15 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso7412405e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:10:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYSKw-0001Fi-VC
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:03:21 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43635796b48so7481515e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:03:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1737043811; x=1737648611; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GEWldn/GMK3xl84pELbqj9/jbZSGKnwPEb6qTgzibUk=;
- b=YdYRxYAlyz6QpvU0lgLQg8UKXU8bB9GJU4WpKpkQyDQWHcspxPoFR/wNnA7IAxqA6p
- FcMrcb2RiM+rjh9SIFuHt4jKUrLRzMgzJO6e+Q7GunFuhAVGJh4NaBHFPO13+y1P66nG
- DhmC4LbKVZgG7PdKRMgM9rTHG+AbzsIeS3Hq8VXwdzpYgWec2f/IGgUQn7ZLkVXtaPS3
- FqmSG9XSJGt/HS+4tDO++MAiGhVDgUIoRw59nBWtzarZ7sC34xBp82P9QpIeXfTi0x7O
- NkwifFosDTnQLW+GAltTC5gMBnCrExZ3ab9YkS0DCnSIkXV0CTu3wp8GHcbo1kPxAqY9
- 7bDw==
+ d=linaro.org; s=google; t=1737043393; x=1737648193; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q0SipZjZSJ8RGOzW6wWIIrmkUJqEseFLNGa6w4kFsPM=;
+ b=r8aAlNmk8qPIKDTMOTIThybdafb6ITsKuIwyeLPXys8Kk4O+lqgofUHQgMShyLTOOa
+ HR+nfZw9fu4ZDGhuH6Gdf7OHVH+bZrPR4HhbhkYiztjVkaW/27YgpjWhRvn4ztP9jabr
+ xRaXQ0EUSXW5ojbXrB9fVU1VF7+XAVQMj/RAt+lETSnIfstB5f3Cwye0o3ud2z2JfdSP
+ PveMUg7A7Cnabe7EF8T/c30NyqUangT9mAGn1MrErPG0Hau5XScGEHkQHT8PpyAkuczE
+ ZSnhfduN2C5ZrrJoNhj6adXnZeQvOIRCZadriHnwrWRggCaIwzPvj7znzmMcwrnb8675
+ sm2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737043811; x=1737648611;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GEWldn/GMK3xl84pELbqj9/jbZSGKnwPEb6qTgzibUk=;
- b=kl21GsK2VBdIsRs/bff4CdyNYdIJrZ1+nYRthwsgHfkI9bKq/uBcjbPMmTRbx4pK8/
- VxPSb+QZetMoW1kiGqUGxKwic/z8Gxj0NaxL33ke+3VzsWCXiR8kooE1ds5XZ/MrRk1I
- gRllvQXVtbUkwSKNsC9h6M5KDSw3Oq2T8vEWFexgdT1IRqXRff7zfDjqTIeqpy/CDvXf
- FZeI9q+ZpLHSOfw/RKrRZ6Jo3JlF4B+smo7j0ho9Ckq2v08H3c/bpTLCGyHPjy+WGQ5B
- 94YNruLN/yDK0sD3Xg4gf0ed9XbvqikBNb/exm5vJiI9AYgTTkVXkqMSR5yW0O0o8FFJ
- kYVw==
-X-Gm-Message-State: AOJu0Yydg63YbOAr3ciWsA0hsLxYHGCC0twG5HjkXQWyPS0v7/q9hbYU
- 30RHF/EhJYo9caFMy6B9nm73xsFRSBJ2N+P5GwB2iyhsvKnJG7nMG2i1sh/S/Ni5HoZKNe73Wko
- TtbsMYg==
-X-Gm-Gg: ASbGnctoobLvnrf4uiPMdPpXkLUw44j8y46YLD2tBTH0FMSDVTAJJihptFh1WQ/fRjE
- FxQmiIO5I44nphz+bew/+/zM5uoIaxr5WAcVwwnBzyK4m8IyN5AcVr5JEuHYbG7l1c3zQVN4vdu
- sHgXhAVKnP6zML/zqQ07M5llg0eYvwOjXOEuA77FReYM2Y7BFVuvMNFF/Fw6yPiRGhfpU51Ulza
- dcYo8f/bfu9629I9AfaAFGEgd342516026lp2wvywMHqK52c+Q5fjemZCoFe8PDzhdFby6pawaL
- qIRvx9ul
-X-Google-Smtp-Source: AGHT+IGEs5ZldKpKOPzsJdIV/PYK/jtP5uJe8daS7b/olvgKwpSmVh2yw4R/3tL6gBmyoVazpwLMmw==
-X-Received: by 2002:a05:600c:3c96:b0:42c:b8c9:16c8 with SMTP id
- 5b1f17b1804b1-437c6b1d2d0mr71836485e9.10.1737043810689; 
- Thu, 16 Jan 2025 08:10:10 -0800 (PST)
-Received: from localhost (ppp-2-86-138-70.home.otenet.gr. [2.86.138.70])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-43890417a76sm3651405e9.16.2025.01.16.08.10.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 08:10:10 -0800 (PST)
-From: Vasilis Liaskovitis <vliaskovitis@suse.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, jason.chien@sifive.com,
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
- ajones@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- philmd@linaro.org, Vasilis Liaskovitis <vliaskovitis@suse.com>
-Subject: [PATCH v3] hw/riscv/virt: Add serial alias in DTB
-Date: Thu, 16 Jan 2025 17:10:07 +0100
-Message-ID: <20250116161007.39710-1-vliaskovitis@suse.com>
-X-Mailer: git-send-email 2.46.0
+ d=1e100.net; s=20230601; t=1737043393; x=1737648193;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=q0SipZjZSJ8RGOzW6wWIIrmkUJqEseFLNGa6w4kFsPM=;
+ b=HXZblrBk3yDQbKcFOHqRgwmt4UlpmFJFqh17OCtJAWcmQSffB5w01GbAwtpzQx0NKc
+ qwrAjmV4+Mt8EA4ZMEG1EP2PVhVosbeOV6a3nRn4VbHX27oS1w8IY0NbMUVgIzG9douE
+ XZndeebO9VSswICYcQJQGGfZ08dlOK2fOZm4Vf/2c+38eSfGU+csnVs7QUWkUqhQSscf
+ qbm3ffqurHTfpgoOh5qYj0bkW1kdSjCkwEkyrH8i3scy0UX9cvH+z7yuwHWv1D/2zwqX
+ AJIdZ7wIyxQ9STkV4XKSi5V5VFSzS8pTQDPLxh8/QGipVh+ZWhWO6QHLFivcDy/Xhij4
+ KLwA==
+X-Gm-Message-State: AOJu0YxfL3ydwD1VNonNT2sy+6HjAbdA+g5WCigx5qsPIXsYKT3muPIm
+ 6Y30xQLCxv979qKl5wSKTXo4G3KFSlx4sbFE8dDlwmtfrvyhW5r5IcrTAvu2weE=
+X-Gm-Gg: ASbGncvy/Exvy8cYgMXi5OkBu4RergCZk93AyIJQsyjze7OMSG2No8EHpLuH2imQSUX
+ cKKH+uDTmzNOTfY3L+YoBXrLWorSCHCbxzDeIX9CXpmeQZ8gRxRm19y5Xc7ApIRmGSi8CSRCOW5
+ jhJbVT9r/UIZl2+1XrUhHJsbUPTN4outXTSAudrrqw9UHtZNSk10LALlaIrCOdRitStOpWS/akS
+ NKC57Xw/JLptMa0K6JRQyzDn6GMJbyAJoMn1Dur6TTBrnqIHcVvHaI=
+X-Google-Smtp-Source: AGHT+IFYjp4G+8Eoy64Ai8ne/iUQBrd+D0c2rfbhOdo1KaxZ/zM1d1gjv7uorIjInXGHObkxk+PkmQ==
+X-Received: by 2002:a05:600c:1e29:b0:434:e892:1033 with SMTP id
+ 5b1f17b1804b1-437c6b7b184mr70429135e9.2.1737043391766; 
+ Thu, 16 Jan 2025 08:03:11 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4389046885esm3193275e9.36.2025.01.16.08.03.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jan 2025 08:03:09 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0191A60859;
+ Thu, 16 Jan 2025 16:03:07 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Jason Wang <jasowang@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ John Snow <jsnow@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 06/37] semihosting/console: Avoid including 'cpu.h'
+Date: Thu, 16 Jan 2025 16:02:35 +0000
+Message-Id: <20250116160306.1709518-7-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
+References: <20250116160306.1709518-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=vliaskovitis@suse.com; helo=mail-wm1-x344.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,38 +123,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an "aliases" node with a "serial0" entry for the single UART
-in the riscv virt machine.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2774
-Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+The CPUState structure is declared in "hw/core/cpu.h",
+the EXCP_HALTED definition in "exec/cpu-common.h".
+Both headers are indirectly include by "cpu.h". In
+order to remove "cpu.h" from "semihosting/console.h",
+explicitly include them in console.c, otherwise we'd
+get:
+
+  ../semihosting/console.c:88:11: error: incomplete definition of type 'struct CPUState'
+     88 |         cs->exception_index = EXCP_HALTED;
+        |         ~~^
+  ../semihosting/console.c:88:31: error: use of undeclared identifier 'EXCP_HALTED'
+     88 |         cs->exception_index = EXCP_HALTED;
+        |                               ^
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250103171037.11265-5-philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/riscv/virt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/semihosting/console.h | 2 --
+ semihosting/console.c         | 3 ++-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 2bc5a9dd98..fb1928cebf 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -971,6 +971,7 @@ static void create_fdt_uart(RISCVVirtState *s, const MemMapEntry *memmap,
-     }
+diff --git a/include/semihosting/console.h b/include/semihosting/console.h
+index bd78e5f03f..1c12e178ee 100644
+--- a/include/semihosting/console.h
++++ b/include/semihosting/console.h
+@@ -9,8 +9,6 @@
+ #ifndef SEMIHOST_CONSOLE_H
+ #define SEMIHOST_CONSOLE_H
  
-     qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-+    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
- }
+-#include "cpu.h"
+-
+ /**
+  * qemu_semihosting_console_read:
+  * @cs: CPUState
+diff --git a/semihosting/console.c b/semihosting/console.c
+index 60102bbab6..c3683a1566 100644
+--- a/semihosting/console.c
++++ b/semihosting/console.c
+@@ -18,14 +18,15 @@
+ #include "qemu/osdep.h"
+ #include "semihosting/semihost.h"
+ #include "semihosting/console.h"
++#include "exec/cpu-common.h"
+ #include "exec/gdbstub.h"
+-#include "exec/exec-all.h"
+ #include "qemu/log.h"
+ #include "chardev/char.h"
+ #include "chardev/char-fe.h"
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "qemu/fifo8.h"
++#include "hw/core/cpu.h"
  
- static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
-@@ -1180,6 +1181,8 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
-     qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed",
-                      rng_seed, sizeof(rng_seed));
- 
-+    qemu_fdt_add_subnode(ms->fdt, "/aliases");
-+
-     create_fdt_flash(s, memmap);
-     create_fdt_fw_cfg(s, memmap);
-     create_fdt_pmu(s);
+ /* Access to this structure is protected by the BQL */
+ typedef struct SemihostingConsole {
 -- 
-2.46.0
+2.39.5
 
 
