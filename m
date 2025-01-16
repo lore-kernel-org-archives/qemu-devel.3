@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C5AAC02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 23:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F2EC02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 23:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYYuv-0005vn-0o; Thu, 16 Jan 2025 18:04:49 -0500
+	id 1tYZAn-0000jO-Tw; Thu, 16 Jan 2025 18:21:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYYut-0005vP-3J
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 18:04:47 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tYZAY-0000iX-NH; Thu, 16 Jan 2025 18:21:00 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYYur-0004xs-Fk
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 18:04:46 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-385ddcfc97bso1202166f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 15:04:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tYZAW-0007aP-Sf; Thu, 16 Jan 2025 18:20:58 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3ecae02beso2112882a12.0; 
+ Thu, 16 Jan 2025 15:20:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737068684; x=1737673484; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1737069653; x=1737674453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nLjAfEesdApASDyVsAST+uy4KXHzjDdggJGXjuSffuw=;
- b=cd2eACeMmBeD5o7k/NuSiehHU/jHI7jfjmz2v0QOB44X3A2HWBC+XQabqTltDVgtx3
- ZZYA8KWsoCpU2KoUviauY+TqfGErtzMTirg59OBtlc3EcEAkupAfYa1C20FielgaDKGz
- 1N563iup0W97wutj5z6U3cIQgolpQxxWBTMHZ0GxC3RYghWMHLDhnEFU6akNqYidicdI
- FUQwvvmxVJ3WxuBsETniy0m3bLgbwkBAKTA+c0S7/iJEA1mnog03rVNMtvFS0JTgvOrK
- HCquYQwlnhSua7W8jIxe3JPuXLgsonAwiYf6L46yjS5+4d+wPpso9rg1OaHx/wYudCbo
- Sxzg==
+ bh=fYe+XSjSei7dwlYLiMPvIvsafese8IALlVr/aMTToto=;
+ b=UTsoXrSgJY12EpIWYsjFs05o68vNbRfytkp+r1QMIOtVFM5ucdFIqne66PVIPjz1j+
+ EeJIjD75djI1tPntrQJ/gLQDsKs1RBpwDxtpY3ffC2Oj1r55old0tgmJhDgmbl6tb+pU
+ NmlM97cEg/HjSGEM17soS4i27D6gm14pbOz7pg7MiIxWSwrIWPlZXRYzyUTLDdDIc21v
+ X5oLsmv8RNVZNL3GRWEp7BMDIne5SQ0mowkaGJw/wme4QfrNPVW/Mq09J6N6DEmG6C9G
+ Xh0GbftcD7lfHNlGpOnn1KQD9Rb/BC1nDxkU3GDH1rw4lZ3/6Xt12u91ovywRvjLSiIl
+ dwEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737068684; x=1737673484;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1737069653; x=1737674453;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nLjAfEesdApASDyVsAST+uy4KXHzjDdggJGXjuSffuw=;
- b=hjmB+T686x6mBvuw5ib/sRW1JTZzCDK8l1xN5ygl8X0RJR19gx0N0tKgUSJiMJWrLk
- +KFt87BvYCtWu5uLyPVqN7NIvn573B2lDgwDl7+CAABlsXpp5XEvAI9rxmG9aVtJ8nCw
- omxUqBq5SyJc0PydM27gKqJnTKmLy9GNYXGA23zeZ4cgVm9y4yC72OBXWMtFR+dpZcRz
- fzDPW1V0ziaOHw6+byfrn7tyQXwSaXW7dBOSFXOD5lshfaPPD5gfTf3RG6TA50XuR0n2
- MXblnEaiXP+5ZP5lAUC8u5/PldjcYLNbMRhAh6R4Wemoau3a05S6f2upcb+5OJ2TIKxT
- +PPQ==
-X-Gm-Message-State: AOJu0YwbEjMnBPL7CVH7oTZxmYRD9iHrgCkrrs4kRL2yfEomPpzp9mm6
- Zqx11u2Br8mdxNfTl4d+sQbGk/k6eovg+VMH/VgiDMBhY02dXBLKye2m18bzQAvMP8LGuzN9eYS
- sp4k=
-X-Gm-Gg: ASbGncsYhWzYhs7MlyTnnpDtLbq8kSvCJLAsvq/OFnWnWrrvTrT26yjqZSzdKmAT+MM
- HLl04cKU2dOfrnzjJFWGHLeyX2VVe1LnTrOIb4tSsdHbSbf3j1xe4MVHZkWgWUDnJaLfinTgYb5
- 6FC6V4Ht8pGc0Fcnx4GFrpiTPO53YWy0ot0DcUKwNo1H/Nn8SE9NPmox1VJSsZAclAGf7Siy/Vm
- I07xQPZAZvOG18f1d4lXgm6fECB//sDEpdlyP8DEfro+NDOSgwPuqydp4roG8Y6ZfgL7stwOoyp
- OZPFplPmmECRGl6voD4nJTComu0TfDY=
-X-Google-Smtp-Source: AGHT+IGhjTugVyMuVVwIEtirXSVUO7G45R1rLYAYuF6AuwFyONi/aB8WDZMv3X/rtJKqVClbvw7PEQ==
-X-Received: by 2002:a5d:64a1:0:b0:385:f44a:a53 with SMTP id
- ffacd0b85a97d-38bf5655b07mr267507f8f.4.1737068683638; 
- Thu, 16 Jan 2025 15:04:43 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf327dee3sm922535f8f.86.2025.01.16.15.04.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Jan 2025 15:04:42 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC PATCH 1/2] cpus: Introduce const_cpu_env() and
- const_env_archcpu()
-Date: Fri, 17 Jan 2025 00:04:34 +0100
-Message-ID: <20250116230435.87580-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250116230435.87580-1-philmd@linaro.org>
-References: <20250116230435.87580-1-philmd@linaro.org>
+ bh=fYe+XSjSei7dwlYLiMPvIvsafese8IALlVr/aMTToto=;
+ b=Xmdhf2ZmTjgcLNT8mdnzedJ0YaXxqQvndoKVXgpdYpTUSZNCsGSR4lsIzsBziTqikP
+ lDS7jF0P/iZhaqWYthyTQNYysFFvvYL/Rrot8B0FLToIJfFHRQEJrHjx7MspBxEe3rIf
+ w0id/JqPgKbRbjx6HGanqBjrx5dN/lPmI2PxcqHWW3QN91iVJTBOMFHNXcFhfIqwFYxK
+ JG2vkvharO9yrIWv+TKZmJuQzXPJ3RlHVKCmgH6bUmAzAAsfeQir/UsXswV2IYW3t3A1
+ 6jR4kI/XQW9P8GQYghJny0xhyxx4rhpYypckBz6Q/mrxQQEq/9ADtmir8Smz4ZxMfO8/
+ Yhfw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhNjCrtA6HJeT7C4l0kzQA+6AXDW3Ht5bBXl1gI1axWfurvsvFo8+QW6g/IdkDTm2f4kLFnmUkfg==@nongnu.org,
+ AJvYcCWJMmuYUFT9gugXEWmEYaOt89FK7QlVZh4aqupHOXOZ3akUw1fIiVMjilw0PQ3RgYmTmn8gMak4fp0Ajg==@nongnu.org,
+ AJvYcCXx/kd0NqAOvTTFKBVIBTm3x/NmFr0dNpTyF8Do1zpgYU7EX9zrT3YOeqk20hxWf1wH4g89nY5ZLoW0dw==@nongnu.org
+X-Gm-Message-State: AOJu0Yza4c457skApsfFC3N/6X2J4nkNlIcYNLhvdf5lDFbBt2Brdzt0
+ xZvL5gxeN1dcKvz11vyHt9XlPdSscD15Ghw0DbTiLqIxpus4SprK
+X-Gm-Gg: ASbGncvSigcDKE/Lw09A1S2jZgvd9GBW+u0vpIKAb3ryuldb8wyZ19G6FW5h/zDbEbH
+ xqktSPb/QwCE517XFPk0yRWfW3nkwPTDjeKS/a+5eHBbXx96ktbVNd6EZsMOVQGH6CX/0cgCFN2
+ k/Zi6jv5VAJFuTH0dgFqmO+ZQJ1GF81mYQc3q4sQS8xl8Qew/E/9hNiLkBglMGDsrPnfj052i9u
+ f0Qe0ICWn9ceD6sv53uXIosn6OOnMbOWrNpUnpQbCfmSuKLstH6tS+PHz6l/uZw2K5vBWdmU1WR
+ SQwMb80btC/cFSE1Ik0IaMHp9VY=
+X-Google-Smtp-Source: AGHT+IHzuqU53fI/EoDbDTwMk93KCgdtziHIC77o69G/hZWf/No8rUWaYcDPO9CN19h5xg4qvyccEQ==
+X-Received: by 2002:a05:6402:3550:b0:5d0:b925:a8a with SMTP id
+ 4fb4d7f45d1cf-5db7d300e84mr437549a12.16.1737069652522; 
+ Thu, 16 Jan 2025 15:20:52 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-078-055-006-027.78.55.pool.telefonica.de.
+ [78.55.6.27]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5db73eb5966sm556158a12.56.2025.01.16.15.20.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 15:20:51 -0800 (PST)
+Date: Thu, 16 Jan 2025 23:20:50 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Guenter Roeck <linux@roeck-us.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_08/14=5D_hw/sd/sd=3A_Allow_for_inverting?=
+ =?US-ASCII?Q?_polarities_of_presence_and_write-protect_GPIOs?=
+In-Reply-To: <e202623e-eac7-4ed3-87fb-002491ddf745@linaro.org>
+References: <20250108092538.11474-1-shentey@gmail.com>
+ <20250108092538.11474-9-shentey@gmail.com>
+ <342ca371-3e14-4108-9c45-e15cda51b9ca@linaro.org>
+ <FBA535B4-8191-4CEB-905F-FA4C3416048C@gmail.com>
+ <e202623e-eac7-4ed3-87fb-002491ddf745@linaro.org>
+Message-ID: <6AF83F55-5BFF-438D-AB05-5403D619B403@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,50 +114,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-const_cpu_env() is similar to cpu_env() but return a const
-CPU 'env' state.
-Same for const_env_archcpu() w.r.t. env_archcpu().
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/exec/cpu-common.h | 5 +++++
- include/hw/core/cpu.h     | 6 ++++++
- 2 files changed, 11 insertions(+)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index b1d76d69850..f765e97a973 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -250,6 +250,11 @@ static inline ArchCPU *env_archcpu(CPUArchState *env)
-     return (void *)env - sizeof(CPUState);
- }
- 
-+static inline const ArchCPU *const_env_archcpu(const CPUArchState *env)
-+{
-+    return (const void *)env - sizeof(CPUState);
-+}
-+
- /**
-  * env_cpu_const(env)
-  * @env: The architecture environment
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index c3ca0babcb3..ecb31221b26 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -588,6 +588,12 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
-     return (CPUArchState *)(cpu + 1);
- }
- 
-+static inline const CPUArchState *const_cpu_env(const CPUState *cpu)
-+{
-+    /* We validate that CPUArchState follows CPUState in cpu-all.h. */
-+    return (const CPUArchState *)(cpu + 1);
-+}
-+
- typedef QTAILQ_HEAD(CPUTailQ, CPUState) CPUTailQ;
- extern CPUTailQ cpus_queue;
- 
--- 
-2.47.1
+Am 12=2E Januar 2025 18:06:04 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
+hilmd@linaro=2Eorg>:
+>On 9/1/25 17:20, Bernhard Beschow wrote:
+>>=20
+>>=20
+>> Am 9=2E Januar 2025 11:40:10 UTC schrieb "Philippe Mathieu-Daud=C3=A9" =
+<philmd@linaro=2Eorg>:
+>>> Hi Bernhard,
+>>>=20
+>>> On 8/1/25 10:25, Bernhard Beschow wrote:
+>>>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>>> ---
+>>>>    hw/sd/sd=2Ec | 12 ++++++++----
+>>>>    1 file changed, 8 insertions(+), 4 deletions(-)
+>>>=20
+>>>=20
+>>>> @@ -876,8 +878,8 @@ static void sd_reset(DeviceState *dev)
+>>>>        sd->cmd_line =3D true;
+>>>>        sd->multi_blk_cnt =3D 0;
+>>>>    -    qemu_set_irq(sd->readonly_cb, sd_get_readonly(sd));
+>>>> -    qemu_set_irq(sd->inserted_cb, sd_get_inserted(sd));
+>>>> +    qemu_set_irq(sd->readonly_cb, sd_get_readonly(sd) ^ sd->readonly=
+_active_low);
+>>>=20
+>>> Please embed in sd_get_readonly(),
+>>>=20
+>>>> +    qemu_set_irq(sd->inserted_cb, sd_get_inserted(sd) ^ sd->inserted=
+_active_low);
+>>>=20
+>>> and sd_get_inserted()=2E
+>>=20
+>> Are you sure? I deliberately implemented it as is because embedding wou=
+ld change the internal logic of the device as well as SDCardClass::{get_ins=
+erted, get_readonly}=2E
+>
+>Yes, this is why I requested that change=2E Why don't you think it is cor=
+rect?
 
+I'm asking because I think that moving the xor inside the methods would br=
+eak the device model=2E
+
+The goal of the active_low attributes is to invert the polarity of the GPI=
+Os only which allows to model boards where these are inverted=2E IOW they a=
+re intended to influence the wiring=2E That is in contrast to the two metho=
+ds which determine the internal logic of the device model=2E They are also =
+used as virtual method implementations of SDCardClass::{get_inserted, get_r=
+eadonly} which determine the logic of the sd bus=2E Moving the xor inside i=
+nverts their return values if s->*_active_low are true, effectively flippin=
+g every if statement, which seems wrong to me=2E What do I miss?
+
+Best regards,
+Bernhard
+
+>
+>>=20
+>> Best regards,
+>> Bernhard
+>
+>>> With the requested changes:
+>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>>>=20
+>
 
