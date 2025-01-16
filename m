@@ -4,72 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBC9C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988A9C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:22:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSVZ-0000OM-GQ; Thu, 16 Jan 2025 11:14:14 -0500
+	id 1tYSdP-0002bM-Vi; Thu, 16 Jan 2025 11:22:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tYSUW-0004iE-IR; Thu, 16 Jan 2025 11:13:10 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tYSUU-0004mF-54; Thu, 16 Jan 2025 11:13:08 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 465E84E603E;
- Thu, 16 Jan 2025 17:13:03 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 4hNBsxdYkAAM; Thu, 16 Jan 2025 17:13:00 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E57384E6063; Thu, 16 Jan 2025 17:13:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E28F474577C;
- Thu, 16 Jan 2025 17:13:00 +0100 (CET)
-Date: Thu, 16 Jan 2025 17:13:00 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, 
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, devel@daynix.com
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-In-Reply-To: <CAFEAcA87oYqMj1t+yriXHLuTg3G-=eRwOvt4-n4uJmeNujTBxQ@mail.gmail.com>
-Message-ID: <d9acf231-829e-4a9c-7429-282fcc2ae756@eik.bme.hu>
-References: <59e70978-8895-f513-1b5e-1dc599e288ff@eik.bme.hu>
- <Z4AjkXbZeu3T94Y1@x1n> <Z4AldAcucTyqZ0HJ@x1n>
- <811633f6-6bf8-4a22-a21a-789e9a4747d7@daynix.com> <Z4E6TnKaUt8FMWIv@x1n>
- <9bb5f964-f930-4428-b800-8b589920fe1d@daynix.com> <Z4U30j9w1kPnKX9U@x1n>
- <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com> <Z4aYpo0VEgaQedKp@x1n>
- <CAFEAcA_mpWZO8V9cE74bKzveEEZDXkqE+XbOFFdhmKUKO3dmSw@mail.gmail.com>
- <Z4a3GxEbz1jjCDc5@x1n>
- <CAFEAcA87oYqMj1t+yriXHLuTg3G-=eRwOvt4-n4uJmeNujTBxQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYSdJ-0002ar-Ia
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:22:13 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYSdH-0007RN-Hq
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:22:13 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-385de9f789cso889726f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737044529; x=1737649329; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=castUuYEMS9/+bXLMhhSaPLlf0YHd3GiZGeVC9CY3P4=;
+ b=wuxl4+uRwd5ZBUzIpofRS4qeBMnF7TpfZH2UIRy8wUAfqhfWQBUKzaWyXt2BgCN3Aj
+ Z0SW6Q8GPrpCdQDsXWiCNSLIwCYW8TrYr+06l8AjfjSk6sJRrCyq57JEyvKNsLmKHiUU
+ fiADUDoLqvKIPLtueH6apgb7851m5sYZ9BHeNLhWF8Whjx8fBe9LEPQpD3MEkf/b2yCj
+ KvoRHOvTMQl/ID1CMAtEGKVDAyt7yD+xbiV+paReI7YAeJMhLu9bpZ2nj+HoY1Dz71zy
+ N7bgqSbb2cDaMxOmwAHBJQxX56T90BbLrW43oohNgtJ0Gwe4fuPmfECpbHpunIGcH5/O
+ 3+sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737044529; x=1737649329;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=castUuYEMS9/+bXLMhhSaPLlf0YHd3GiZGeVC9CY3P4=;
+ b=NH4ujJcUnQj+tq0GZDFcr+sEdxM55q6c1Y86S47JBE3hlqt6EEM1uSN7qm34M8tXwT
+ cKVGZghKSW0OoLr7uQOVyc4hkVWLvIuT8wcQihx7wEcXCqOW+jku5URFQOOd0YnVDsJH
+ BlA2YFcz3wOjNHxgHgWoKW3fhyhx9jDSL/bMcJJJRfCCcZuKG/h8iGlUTNBiZs+iosPp
+ Z4j0ClJdi3vrXm/Y/jqCDAXRxfx7BHxDgdc7JlSsmxaProP+aOtePa4NK4FLNQmtzpFv
+ F+1dhyD7jjvYaqZ0VteSQnVyuMUFtyhTlEqm8N6fU15YDdxMGS1KWiN0d6hkBk+wjGNt
+ EuJg==
+X-Gm-Message-State: AOJu0Yx1ZaEVt9/tuUfAEUo6sbSTqQX9lsHnbN6SqL78F4pB2iykCwpI
+ iekpLIdoFeNWkW27Fq/IMlx5QHFEePQCFTTRpbLPE8OUzLznN7fJOqP7iU1MAhY=
+X-Gm-Gg: ASbGncs2GUwksKzu/G+aUn6b/Yb2y6ElY626nYcVrmVyORxRVOWD9SceZ14G1yyTJ7A
+ O6y61V7aqXRm5UA3+R77qPf/WRH+Vv4CoCIVtcbLnslxbp6d4QRXFx1q9d3ZISopoZDrOFsPhzV
+ hehSh7/0fUmiTd8Zj6xGtc6UQ5KnvE6D7ayEqmi+BcI0yjcDctRQm9nnzKskbawqCTEWUOsaOUA
+ v9//u09I7/L8yUMcDelm75UEIn7ocUiY758aeLsX8Yqdp9H6t5Na2I=
+X-Google-Smtp-Source: AGHT+IHsM0L0EYZK+4kCnLugDuNjsBmjuZCVqGgDlZwmgmyMpQ846YZGMDZg7zX+mE2QHpT/eQsebQ==
+X-Received: by 2002:a5d:47af:0:b0:38b:dbeb:63a2 with SMTP id
+ ffacd0b85a97d-38bdbeb64acmr14758393f8f.55.1737044529421; 
+ Thu, 16 Jan 2025 08:22:09 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38bf327556dsm240452f8f.71.2025.01.16.08.22.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jan 2025 08:22:08 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E5479608D6;
+ Thu, 16 Jan 2025 16:03:08 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Jason Wang <jasowang@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-arm@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ John Snow <jsnow@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Alexandre Iooss <erdnaxe@crans.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 25/37] plugins: enable linking with clang/lld
+Date: Thu, 16 Jan 2025 16:02:54 +0000
+Message-Id: <20250116160306.1709518-26-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250116160306.1709518-1-alex.bennee@linaro.org>
+References: <20250116160306.1709518-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,81 +123,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jan 2025, Peter Maydell wrote:
-> On Tue, 14 Jan 2025 at 19:12, Peter Xu <peterx@redhat.com> wrote:
->>
->> On Tue, Jan 14, 2025 at 05:42:57PM +0000, Peter Maydell wrote:
->>> There's at least one test in the arm qtests that will hit this.
->>> I suspect that you'll find that most architectures except x86
->>> (where we don't have models of complex SoCs and the few
->>> machines we do have tend to be old code that is less QOMified)
->>> will hit similar issues. I think there's a general issue here,
->>> this isn't just "some particular ppc device is wrongly coded".
->>
->> I see.  Do you know how many of them would be important memory leaks that
->> we should fix immediately?
->
-> None of these are important memory leaks, because the device is
-> almost always present for the lifetime of the simulation. The
-> only case you'd actually get a visible leak would be if you
-> could hot-unplug the device, and even then you'd have to
-> deliberately sit there doing hot-plug-then-unplug cycles to
-> leak an interesting amount of memory.
->
-> The main reason to want to fix them is that it lets us run
-> "make check" under the sanitizer and catch other, more
-> interesting leaks.
->
->> I mean, we have known memory leaks in QEMU in many places I assume.  I am
->> curious how important this problem is, and whether such would justify a
->> memory API change that is not reaching a quorum state (and, imho, add
->> complexity to memory core and of course that spreads to x86 too even if it
->> was not affected) to be merged.  Or perhaps we can fix the important ones
->> first from the device model directly instead.
->
-> The problem is generic, and the problem is that we have not actually
-> nailed down how this is supposed to work, i.e:
-> * what are the reference counts counting?
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-It would be very unintuitive if ref counts not counted the number of 
-references to the object that contains this ref count. If I understood 
-correctly that's the reason for this discussion that in this case the ref 
-count of the owner is counting the MRs instead of its own references and 
-the MR's ref count is not used which is confusing.
+Windows uses a special mechanism to enable plugins to work (DLL delay
+loading). Option for lld is different than ld.
 
-> * if a device has this kind of memory region inside another,
->   how is it supposed to be coded so as to not leak memory?
->
-> If we can figure out how the lifecycle and memory management
-> is supposed to work, then yes, we can fix the relevant device
-> models so that they follow whatever the rules are. But it seems
+MSYS2 clang based environment use lld by default, so restricting to this
+config on Windows is safe, and will avoid false bug reports.
 
-If looking for rules to follow one proven and relatively simple set is 
-what Cocoa uses on macOS. There's a very short introduction here:
-https://www.peachpit.com/articles/article.aspx?p=377302&seqNum=2
-and a bit longer more complete here:
-https://www.tomdalling.com/blog/cocoa/an-in-depth-look-at-manual-memory-management-in-objective-c/
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Stefan Weil <sw@weilnetz.de>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250110203401.178532-4-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ meson.build                   |  5 +++++
+ contrib/plugins/meson.build   |  2 +-
+ plugins/meson.build           | 24 ++++++++++++++++++++----
+ tests/tcg/plugins/meson.build |  3 +--
+ 4 files changed, 27 insertions(+), 7 deletions(-)
 
-I think this case is one which is shortly mentioned at the end of the 
-second link which is solved by not retaining the contained objects so this 
-is closer to what PeterX suggests just dropping the refcounting on the 
-owner and consider the MRs owned by the superregions once added there. 
-This means add subregion would pass the reference to the owner and remove 
-subregion passes it back to who called it so the MR's ref count needs no 
-change but then who added the MR should not use it after passing it to the 
-superregion and who called remove subregion should release it. But I don't 
-really understans the problem so maybe it's more complex.
+diff --git a/meson.build b/meson.build
+index da279cc112..15a066043b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -377,6 +377,11 @@ elif host_os == 'sunos'
+   qemu_common_flags += '-D__EXTENSIONS__'
+ elif host_os == 'haiku'
+   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
++elif host_os == 'windows'
++  # plugins use delaylib, and clang needs to be used with lld to make it work.
++  if compiler.get_id() == 'clang' and compiler.get_linker_id() != 'ld.lld'
++    error('On windows, you need to use lld with clang - use msys2 clang64/clangarm64 env')
++  endif
+ endif
+ 
+ # Choose instruction set (currently x86-only)
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 63a32c2b4f..484b9a808c 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -12,7 +12,7 @@ if get_option('plugins')
+       t += shared_module(i, files(i + '.c') + 'win32_linker.c',
+                         include_directories: '../../include/qemu',
+                         link_depends: [win32_qemu_plugin_api_lib],
+-                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
++                        link_args: win32_qemu_plugin_api_link_flags,
+                         dependencies: glib)
+     else
+       t += shared_module(i, files(i + '.c'),
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 98542e926f..d60be2a4d6 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -17,14 +17,15 @@ if not enable_modules
+       capture: true,
+       command: ['sed', '-ne', 's/^[[:space:]]*\\(qemu_.*\\);/_\\1/p', '@INPUT@'])
+     emulator_link_args += ['-Wl,-exported_symbols_list,plugins/qemu-plugins-ld64.symbols']
++  elif host_os == 'windows' and meson.get_compiler('c').get_id() == 'clang'
++    # LLVM/lld does not support exporting specific symbols. However, it works
++    # out of the box with dllexport/dllimport attribute we set in the code.
+   else
+     emulator_link_args += ['-Xlinker', '--dynamic-list=' + qemu_plugin_symbols.full_path()]
+   endif
+ endif
+ 
+ if host_os == 'windows'
+-  dlltool = find_program('dlltool', required: true)
+-
+   # Generate a .lib file for plugins to link against.
+   # First, create a .def file listing all the symbols a plugin should expect to have
+   # available in qemu
+@@ -33,12 +34,27 @@ if host_os == 'windows'
+     output: 'qemu_plugin_api.def',
+     capture: true,
+     command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
++
+   # then use dlltool to assemble a delaylib.
++  # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
++  # linker file we add with plugins (win32_linker.c) to identify that we want
++  # to find missing symbols in current program.
++  win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
++  if meson.get_compiler('c').get_id() == 'clang'
++    # With LLVM/lld, delaylib is specified at link time (-delayload)
++    dlltool = find_program('llvm-dlltool', required: true)
++    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
++    win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
++  else
++    # With gcc/ld, delay lib is built with a specific delay parameter.
++    dlltool = find_program('dlltool', required: true)
++    dlltool_cmd = [dlltool, '--input-def', '@INPUT@',
++                   '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
++  endif
+   win32_qemu_plugin_api_lib = configure_file(
+     input: win32_plugin_def,
+     output: 'libqemu_plugin_api.a',
+-    command: [dlltool, '--input-def', '@INPUT@',
+-              '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
++    command: dlltool_cmd
+   )
+ endif
+ specific_ss.add(files(
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index f847849b1b..87a17d67bd 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -5,9 +5,8 @@ if get_option('plugins')
+       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+                         include_directories: '../../../include/qemu',
+                         link_depends: [win32_qemu_plugin_api_lib],
+-                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
++                        link_args: win32_qemu_plugin_api_link_flags,
+                         dependencies: glib)
+-
+     else
+       t += shared_module(i, files(i + '.c'),
+                         include_directories: '../../../include/qemu',
+-- 
+2.39.5
 
-Regards,
-BALATON Zoltan
-
-> to me that at the moment we have not got a consensus on how
-> this is supposed to work. Until we have that, there's no way to
-> fix this at the device model level, because we don't know what
-> changes we need to make.
->
-> thanks
-> -- PMM
->
->
 
