@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BADC02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4933AC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 10:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYMsg-0002JN-AQ; Thu, 16 Jan 2025 05:13:42 -0500
+	id 1tYMvZ-0003IQ-Fn; Thu, 16 Jan 2025 05:16:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYMsV-0002HG-J6
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:13:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tYMvX-0003Hq-Cg
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:16:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYMsT-0000Uv-9s
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:13:31 -0500
+ id 1tYMvV-0001By-CE
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 05:16:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737022407;
+ s=mimecast20190719; t=1737022595;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2sDUZF/oGmFIWqXR1BIl7in98wxAxa4nRic/WUyi76w=;
- b=YUpFgLAd3o0QFEwJ8IDjOq9Ym8kthNQMOeSqqqMz0j4SYCWxz2YG6EwQKz8bhfww4YQt0R
- sXFMVd1uRJypwq7lPdD31CpwqYbpx/XIdfy4yYaZHXktW4XTuIi3r/Q88xg6YKX9Hd1jUW
- 0q9DQboxHrAUrNGgaSdzTRB/d0JycdE=
+ bh=kWHZodg0UQZhye0VX4EGMq7LOSQ9gdKUeLoQxFvrOkU=;
+ b=MsFX0Hs3etEaB4tN58Y0rc3DOVWIyq7ZZifQUktvBRCepWQlEn0aD4+76Gdq2cVkx9RYTA
+ ziKtr/W3I/499DU3TxSllDmxOjrAT5mMoDGrDe9/RNq4huIMa/yVoSZL5onHnBo3ch4l1I
+ xtB/n2bnmqlV43m3lJEHHQoLdLec3OE=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-QtrtpaJXNLGD6366jVTUXg-1; Thu,
- 16 Jan 2025 05:13:24 -0500
-X-MC-Unique: QtrtpaJXNLGD6366jVTUXg-1
-X-Mimecast-MFC-AGG-ID: QtrtpaJXNLGD6366jVTUXg
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-nUy1ydzrPsCStZclcznT7Q-1; Thu,
+ 16 Jan 2025 05:16:31 -0500
+X-MC-Unique: nUy1ydzrPsCStZclcznT7Q-1
+X-Mimecast-MFC-AGG-ID: nUy1ydzrPsCStZclcznT7Q
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3811C19560B2; Thu, 16 Jan 2025 10:13:22 +0000 (UTC)
+ id CBDF11956053; Thu, 16 Jan 2025 10:16:29 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.111])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE390195E3D9; Thu, 16 Jan 2025 10:13:07 +0000 (UTC)
-Date: Thu, 16 Jan 2025 10:13:00 +0000
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98A7719560AA; Thu, 16 Jan 2025 10:16:23 +0000 (UTC)
+Date: Thu, 16 Jan 2025 10:16:19 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
@@ -61,27 +61,27 @@ Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 13/21] hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
-Message-ID: <Z4jbrOx6URfmaFvh@redhat.com>
+Subject: Re: [PATCH 14/21] hw/core/machine: Remove hw_compat_2_5[] array
+Message-ID: <Z4jccyf5ACWOA-xJ@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-14-philmd@linaro.org>
+ <20250115232247.30364-15-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250115232247.30364-14-philmd@linaro.org>
+In-Reply-To: <20250115232247.30364-15-philmd@linaro.org>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,55 +98,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 12:22:39AM +0100, Philippe Mathieu-Daudé wrote:
-> The MachineClass::legacy_fw_cfg_order boolean was only used
-> by the pc-q35-2.5 and pc-i440fx-2.5 machines, which got
-> removed. Remove it along with:
-> 
-> - FW_CFG_ORDER_OVERRIDE_* definitions
-> - fw_cfg_set_order_override()
-> - fw_cfg_reset_order_override()
-> - fw_cfg_order[]
-> - rom_set_order_override()
-> - rom_reset_order_override()
-> 
-> Simplify CLI and pc_vga_init() / pc_nic_init().
+On Thu, Jan 16, 2025 at 12:22:40AM +0100, Philippe Mathieu-Daudé wrote:
+> The hw_compat_2_5[] array was only used by the pc-q35-2.5 and
+> pc-i440fx-2.5 machines, which got removed. Remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/boards.h       |   3 +-
->  include/hw/loader.h       |   2 -
->  include/hw/nvram/fw_cfg.h |  10 ----
->  hw/core/loader.c          |  14 -----
->  hw/i386/pc.c              |   7 +--
->  hw/nvram/fw_cfg.c         | 109 +++-----------------------------------
->  system/vl.c               |   5 --
->  7 files changed, 9 insertions(+), 141 deletions(-)
+>  include/hw/boards.h | 3 ---
+>  hw/core/machine.c   | 9 ---------
+>  2 files changed, 12 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-> 
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index e9e33c57f27..a231c8cecee 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -284,8 +284,7 @@ struct MachineClass {
->          no_floppy:1,
->          no_cdrom:1,
->          no_sdcard:1,
-> -        pci_allow_0_address:1,
-> -        legacy_fw_cfg_order:1;
-> +        pci_allow_0_address:1;
-
-Pre-existing separate problem - why do we go to the trouble of using
-bitfields here ???? Further down in the struct we lots of simple "bool"
-fields.
-
-The number of instances of MachineClass is not large enough that we s
-ave a useful amount of memory through bitfields.
-
-SO I'd suggest we just convert these to bools. Not needed for this patch
-though.
 
 
 With regards,
