@@ -4,92 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94400C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B0CC02180
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 08:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYLSn-0005kd-Tj; Thu, 16 Jan 2025 03:42:55 -0500
+	id 1tYLTq-0006qb-47; Thu, 16 Jan 2025 03:43:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLSk-0005kQ-PV
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:42:51 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYLSj-0006gP-7n
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 03:42:50 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43624b2d453so5401205e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 00:42:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737016967; x=1737621767; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oeVnZZxDZCC6UIiWdDDXFU4rImc3pg6DoahRCAJfVvA=;
- b=CT15vnmB+93C9/Fe13TJ4TqoCJ0/g88MEW1YnPhpYLB446J21NcD+SwSqFvUOZ1I9M
- 8pI7fXeFB+KsYurnEigeYNWH/VfvDSS09iwE8a77lKjU+YOuetB8tZgBwYd5OlY3McND
- mmi8LgFVSyW3bEGy6IBC8Atpn8Pjk85vJFUCjzGaQGVMAjTZQRLoxx5oXVQB/8+N4zhM
- 4ohXgI3hAS66nXvcBmWwZqBpheuTaKtJsGplKBPnmcFuYBk1MuZbJeq0XXgKnmQHiEDT
- pkE8BCsMrOdZINqfZDI/ThDrumEljSEyFicQtBWAIWt05J5GcUPALJcv2rehGRuRDrup
- tleA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737016967; x=1737621767;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oeVnZZxDZCC6UIiWdDDXFU4rImc3pg6DoahRCAJfVvA=;
- b=LRf9WgNRIwiVXvf5T1zeCagExURD8KF5w3vGm2/3RRx27tE91TTd65KQnK9rah0L8l
- KJ7R1DKXwWP9NjaSZc2nCp2uyELQ1TjOhisFT3FK2HoQUdK2GsktfiC+9WjmQnRviS3V
- zc3WgAk6voohtjLpCld1UlsMhuaD7JA9oVLDHZu5ytZucVNVpMvgOZDdTepDNc1RdG7H
- J+IweXzJx1se8aovutTXcotQPx9R8yQ0DvZQVv8LiGl8C88q4fNNlro9d+BqS/RVWA+T
- 3c/QrXxKQiMeuR/ped1RowV42XL1btbnZhMnbJcRiQhVrzCwaG2P7A54cSdsowKJnG2j
- RbLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWmDLwDXdjdMdjn9fuDxOWqjCNiiOu+9DbnyrE5gp+Xb1sv4o5WwCBvLo3kNC+iaaeissvZMqu7JfrH@nongnu.org
-X-Gm-Message-State: AOJu0Yx/3WuJeg7SLztCmRfGlY3SPTU2eyntqP/9gIyw/iupIKXZ+/ms
- 5U9PfkrjVhxljFq/rCByWQLHqGwhTRLlgj24SlGhjh/pOBMuqnyrswp07CH2toU=
-X-Gm-Gg: ASbGncsIP3Rh81CLu+jdcz0UZrRDksSXIuhqdMKTq3zhIu0qWb1D79TGyblNfk30Kkf
- e0uTJrKhlmkcG8xCFHwtI3a1mOlzAr+SsHyatq/mFi+BGRPY4yY2RrJIaNm+1D0U3YLQcfoGH1A
- EECcx8QVC8zN9ykTA8ZD3E6AXv8hljHb/7T99rTjipsDPtNbH+H8m1H9W7E53D+l/f/OsZHaVhS
- 6sBrTPv7pc9KoTIrDvEVJczPXfFF5DOV1WmNQyDvlenmmEwMMgLWbe8YqW/kXtfSv/g//zDIhhe
- 3Y6yFyJaLn654lRRMZRk58kz
-X-Google-Smtp-Source: AGHT+IGiWMeDv9PAhtkzL5eh97DdicfTmJjHLEjfCxeovVvq9YP+8CYwByY73IkNSHBMYxIi5dExvw==
-X-Received: by 2002:a5d:6483:0:b0:385:fabf:13d5 with SMTP id
- ffacd0b85a97d-38a8730d55cmr33585638f8f.25.1737016967628; 
- Thu, 16 Jan 2025 00:42:47 -0800 (PST)
-Received: from [192.168.69.181] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a8e4c1c01sm20144699f8f.97.2025.01.16.00.42.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 00:42:46 -0800 (PST)
-Message-ID: <c79554e7-3308-4f9c-9aa3-c6b2116e0705@linaro.org>
-Date: Thu, 16 Jan 2025 09:42:46 +0100
+ (Exim 4.90_1) (envelope-from
+ <BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tYLTm-0006p0-83; Thu, 16 Jan 2025 03:43:54 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tYLTg-0006nn-Np; Thu, 16 Jan 2025 03:43:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Reply-To:Content-Type:Content-ID:Content-Description;
+ bh=tjqHi7zeaRi1ZPcfAv+eUnMUtGpd7kq8NDwOvC3nsVk=; b=bSv6dzL1vdg3gqEa+FP0eVjouM
+ j1nwqH+kRmJ+mY1u3/gaLep/NqlwSpdMpOcYt1dytUykeQJVgUuDnW4v49K4RgJNc1dx01+0jassk
+ JhfKQKY5znnu+hthvlM4rlvAL7lOcloj9F/r3RlWMgiPSzFm/nh/QaAZWfD39v3o2hNz6zOeabUBz
+ iOU0OF5os3V/ZMvjShsLmfv83KQ99Fhq7pJ/v1xsw+hZYc7c0qoRIKFqE2/q5yXXsUWMrvUMsP4l4
+ VDN+WWnfDRy1TysjP3lpzq4ulph49cnnjXzdy+j4ZY6W56keXvTz9FkFo8EXnhsclB1dGNdfwLaZO
+ I9gZjIXw==;
+Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
+ by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tYLTd-0000000Akbc-0hzA; Thu, 16 Jan 2025 08:43:45 +0000
+Received: from dwoodhou by i7.infradead.org with local (Exim 4.98 #2 (Red Hat
+ Linux)) id 1tYLTc-00000007pIP-3i2w; Thu, 16 Jan 2025 08:43:44 +0000
+From: David Woodhouse <dwmw2@infradead.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ xen-devel@lists.xenproject.org, qemu-block@nongnu.org,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PULL 8/8] system/runstate: Fix regression,
+ clarify BQL status of exit notifiers
+Date: Thu, 16 Jan 2025 08:43:32 +0000
+Message-ID: <20250116084332.1864967-9-dwmw2@infradead.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250116084332.1864967-1-dwmw2@infradead.org>
+References: <20250116084332.1864967-1-dwmw2@infradead.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: Remove myself as Avocado Framework
- reviewer
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20250106055024.70139-1-philmd@linaro.org>
- <41e195c3-7dbd-4e39-aaeb-0a40119cc5b0@linaro.org>
- <94b3ae30-e6ab-4c8a-a5e0-21544c6bfe34@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <94b3ae30-e6ab-4c8a-a5e0-21544c6bfe34@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+cabf69696ff47aa9dee2+7816+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,27 +83,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/25 07:40, Thomas Huth wrote:
-> On 15/01/2025 20.58, Philippe Mathieu-Daudé wrote:
->> On 6/1/25 06:50, Philippe Mathieu-Daudé wrote:
->>> While I was very enthusiastic when Avocado was presented to
->>> the QEMU community and pushed forward to have it integrated,
->>> time passed and I lost interest. Be honest, remove my R: tag
->>> to not give fake expectation I'd review patches related to
->>> Avocado anymore.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   MAINTAINERS | 1 -
->>>   1 file changed, 1 deletion(-)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 
+By changing the way the main QEMU event loop is invoked, I inadvertently
+changed the BQL status of exit notifiers: some of them implicitly
+assumed they would be called with the BQL held; the BQL is however
+not held during the exit(status) call in qemu_default_main().
 
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> 
-> I can take it with my next functional testing pull request if nobody 
-> else picks it up before.
+Instead of attempting to ensuring we always call exit() from the BQL -
+including any transitive calls - this change adds a BQL lock guard to
+qemu_run_exit_notifiers, ensuring the BQL will always be held in the
+exit notifiers.
 
-Thanks :)
+Additionally, the BQL promise is now documented at the
+qemu_{add,remove}_exit_notifier() declarations.
+
+Fixes: f5ab12caba4f ("ui & main loop: Redesign of system-specific main
+thread event handling")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2771
+Reported-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+ include/system/system.h | 1 +
+ system/runstate.c       | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/include/system/system.h b/include/system/system.h
+index 5364ad4f27..0cbb43ec30 100644
+--- a/include/system/system.h
++++ b/include/system/system.h
+@@ -15,6 +15,7 @@ extern bool qemu_uuid_set;
+ 
+ const char *qemu_get_vm_name(void);
+ 
++/* Exit notifiers will run with BQL held. */
+ void qemu_add_exit_notifier(Notifier *notify);
+ void qemu_remove_exit_notifier(Notifier *notify);
+ 
+diff --git a/system/runstate.c b/system/runstate.c
+index 3a8fe866bc..272801d307 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -850,6 +850,7 @@ void qemu_remove_exit_notifier(Notifier *notify)
+ 
+ static void qemu_run_exit_notifiers(void)
+ {
++    BQL_LOCK_GUARD();
+     notifier_list_notify(&exit_notifiers, NULL);
+ }
+ 
+-- 
+2.47.0
 
 
