@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DBFC02188
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADADC02187
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 16:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYSQW-0004o3-Ap; Thu, 16 Jan 2025 11:09:01 -0500
+	id 1tYSSS-0007jC-5o; Thu, 16 Jan 2025 11:11:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYSQK-0004aI-04
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:08:52 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYSQF-0003Ld-IA
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:08:47 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GE6JE5024324;
- Thu, 16 Jan 2025 16:08:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=B78XKd
- 1YydWwtzqAuJH14QkikYV+twQKDAQd5xpF1e0=; b=QoUYeGi/5OqCIcw4FaIRNV
- vL9Z4iKNvTDV0t/qeWOwnXpZQPdhY527A96ipvpP2bV3KdQkRBkjRwsEqGY+q6dN
- 049DadBGGwTlUw2xEncDSkOgoSeAT6C3bKPTFIh1TsT2NyPOfU7aPlx5wpwGmjTJ
- OuawIZ5M3GMHNyp6pky0niT9CjVG1n/ZaquY1m0gJI+AIaD1EYhZVKb82SF/2xig
- 3AxkOz7r8GKb9zeoAG4AE7CAavvFXIngsBzVGYtdYWVI6yBkWnPyaZwN4CCZEkIn
- YXJHlZO+kMpblOCUZ73+LDhogsTTYAlMHeB/R2CTZXSUDOKVoiuo0wldBPwnMTzw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4473k58mcf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jan 2025 16:08:42 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GFIT2N016491;
- Thu, 16 Jan 2025 16:08:41 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4445p1x77f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jan 2025 16:08:41 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50GG8dSN34472244
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jan 2025 16:08:39 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 96C4A2004D;
- Thu, 16 Jan 2025 16:08:39 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D01E20049;
- Thu, 16 Jan 2025 16:08:39 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jan 2025 16:08:39 +0000 (GMT)
-Message-ID: <42e8b64f104ab347e562e962a363f8c379b2dffe.camel@linux.ibm.com>
-Subject: Re: [PATCH] accel/tcg: Call tcg_tb_insert() for one-insn TBs
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-devel@nongnu.org, Nina Schoetterl-Glausch
- <nsg@linux.ibm.com>
-Date: Thu, 16 Jan 2025 17:08:38 +0100
-In-Reply-To: <CAFEAcA9zpD6oO6fU-yq+MsSj-WGh5p7Zvaz=VtdvCykrzJW+ww@mail.gmail.com>
-References: <20250115232022.27332-1-iii@linux.ibm.com>
- <e74110e7-2dc4-4626-b64d-f42e3ffe7413@linaro.org>
- <5bd1b396d06a3ab42a98cdff25a1dc2051e98b0b.camel@linux.ibm.com>
- <e344e8da-8460-42da-850d-79623daffa06@linaro.org>
- <87sepihinf.fsf@draig.linaro.org>
- <CAFEAcA9zpD6oO6fU-yq+MsSj-WGh5p7Zvaz=VtdvCykrzJW+ww@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
+ id 1tYSRk-0006qA-I0
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:10:19 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
+ id 1tYSRh-0003sN-1n
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 11:10:15 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-4361b6f9faeso7412405e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 08:10:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1737043811; x=1737648611; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GEWldn/GMK3xl84pELbqj9/jbZSGKnwPEb6qTgzibUk=;
+ b=YdYRxYAlyz6QpvU0lgLQg8UKXU8bB9GJU4WpKpkQyDQWHcspxPoFR/wNnA7IAxqA6p
+ FcMrcb2RiM+rjh9SIFuHt4jKUrLRzMgzJO6e+Q7GunFuhAVGJh4NaBHFPO13+y1P66nG
+ DhmC4LbKVZgG7PdKRMgM9rTHG+AbzsIeS3Hq8VXwdzpYgWec2f/IGgUQn7ZLkVXtaPS3
+ FqmSG9XSJGt/HS+4tDO++MAiGhVDgUIoRw59nBWtzarZ7sC34xBp82P9QpIeXfTi0x7O
+ NkwifFosDTnQLW+GAltTC5gMBnCrExZ3ab9YkS0DCnSIkXV0CTu3wp8GHcbo1kPxAqY9
+ 7bDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737043811; x=1737648611;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GEWldn/GMK3xl84pELbqj9/jbZSGKnwPEb6qTgzibUk=;
+ b=kl21GsK2VBdIsRs/bff4CdyNYdIJrZ1+nYRthwsgHfkI9bKq/uBcjbPMmTRbx4pK8/
+ VxPSb+QZetMoW1kiGqUGxKwic/z8Gxj0NaxL33ke+3VzsWCXiR8kooE1ds5XZ/MrRk1I
+ gRllvQXVtbUkwSKNsC9h6M5KDSw3Oq2T8vEWFexgdT1IRqXRff7zfDjqTIeqpy/CDvXf
+ FZeI9q+ZpLHSOfw/RKrRZ6Jo3JlF4B+smo7j0ho9Ckq2v08H3c/bpTLCGyHPjy+WGQ5B
+ 94YNruLN/yDK0sD3Xg4gf0ed9XbvqikBNb/exm5vJiI9AYgTTkVXkqMSR5yW0O0o8FFJ
+ kYVw==
+X-Gm-Message-State: AOJu0Yydg63YbOAr3ciWsA0hsLxYHGCC0twG5HjkXQWyPS0v7/q9hbYU
+ 30RHF/EhJYo9caFMy6B9nm73xsFRSBJ2N+P5GwB2iyhsvKnJG7nMG2i1sh/S/Ni5HoZKNe73Wko
+ TtbsMYg==
+X-Gm-Gg: ASbGnctoobLvnrf4uiPMdPpXkLUw44j8y46YLD2tBTH0FMSDVTAJJihptFh1WQ/fRjE
+ FxQmiIO5I44nphz+bew/+/zM5uoIaxr5WAcVwwnBzyK4m8IyN5AcVr5JEuHYbG7l1c3zQVN4vdu
+ sHgXhAVKnP6zML/zqQ07M5llg0eYvwOjXOEuA77FReYM2Y7BFVuvMNFF/Fw6yPiRGhfpU51Ulza
+ dcYo8f/bfu9629I9AfaAFGEgd342516026lp2wvywMHqK52c+Q5fjemZCoFe8PDzhdFby6pawaL
+ qIRvx9ul
+X-Google-Smtp-Source: AGHT+IGEs5ZldKpKOPzsJdIV/PYK/jtP5uJe8daS7b/olvgKwpSmVh2yw4R/3tL6gBmyoVazpwLMmw==
+X-Received: by 2002:a05:600c:3c96:b0:42c:b8c9:16c8 with SMTP id
+ 5b1f17b1804b1-437c6b1d2d0mr71836485e9.10.1737043810689; 
+ Thu, 16 Jan 2025 08:10:10 -0800 (PST)
+Received: from localhost (ppp-2-86-138-70.home.otenet.gr. [2.86.138.70])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-43890417a76sm3651405e9.16.2025.01.16.08.10.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 08:10:10 -0800 (PST)
+From: Vasilis Liaskovitis <vliaskovitis@suse.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, jason.chien@sifive.com,
+ zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
+ ajones@ventanamicro.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ philmd@linaro.org, Vasilis Liaskovitis <vliaskovitis@suse.com>
+Subject: [PATCH v3] hw/riscv/virt: Add serial alias in DTB
+Date: Thu, 16 Jan 2025 17:10:07 +0100
+Message-ID: <20250116161007.39710-1-vliaskovitis@suse.com>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: fFLv7jWU1JNN6-pVmbgy8a321SALGhpO
-X-Proofpoint-ORIG-GUID: fFLv7jWU1JNN6-pVmbgy8a321SALGhpO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-16_06,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0
- adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 mlxlogscore=978 impostorscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501160121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=vliaskovitis@suse.com; helo=mail-wm1-x344.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,95 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-01-16 at 15:41 +0000, Peter Maydell wrote:
-> On Thu, 16 Jan 2025 at 15:40, Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> wrote:
-> >=20
-> > Richard Henderson <richard.henderson@linaro.org> writes:
-> >=20
-> > > On 1/16/25 07:06, Ilya Leoshkevich wrote:
-> > > > On Thu, 2025-01-16 at 06:54 -0800, Richard Henderson wrote:
-> > > > > On 1/15/25 15:20, Ilya Leoshkevich wrote:
-> > > > > > Currently single-insn TBs created from I/O memory are not
-> > > > > > added to
-> > > > > > region_trees. Therefore, when they generate exceptions,
-> > > > > > they are
-> > > > > > not
-> > > > > > handled by cpu_restore_state_from_tb(). For x86 this is not
-> > > > > > a
-> > > > > > problem,
-> > > > > > because x86_restore_state_to_opc() only restores pc and cc,
-> > > > > > which
-> > > > > > are
-> > > > > > already correct. However, on several other architectures,
-> > > > > > restore_state_to_opc() restores more registers, and guests
-> > > > > > can
-> > > > > > notice
-> > > > > > incorrect values.
-> > > > > >=20
-> > > > > > Fix by always calling tcg_tb_insert(). This may increase
-> > > > > > the size
-> > > > > > of
-> > > > > > region_trees, but tcg_region_reset_all() clears it once
-> > > > > > code_gen_buffer
-> > > > > > fills up, so it will not grow uncontrollably.
-> > > > > >=20
-> > > > > > Co-developed-by: Nina Schoetterl-Glausch
-> > > > > > <nsg@linux.ibm.com>
-> > > > > > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > > > > > ---
-> > > > > > =C2=A0=C2=A0 accel/tcg/translate-all.c | 16 ++++++++--------
-> > > > > > =C2=A0=C2=A0 1 file changed, 8 insertions(+), 8 deletions(-)
-> > > > > >=20
-> > > > > > diff --git a/accel/tcg/translate-all.c
-> > > > > > b/accel/tcg/translate-all.c
-> > > > > > index 453eb20ec95..6333302813e 100644
-> > > > > > --- a/accel/tcg/translate-all.c
-> > > > > > +++ b/accel/tcg/translate-all.c
-> > > > > > @@ -531,23 +531,23 @@ TranslationBlock
-> > > > > > *tb_gen_code(CPUState *cpu,
-> > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tb=
-_reset_jump(tb, 1);
-> > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > > > > > =C2=A0=C2=A0 +=C2=A0=C2=A0=C2=A0 /*
-> > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0 * Insert TB into the corresponding re=
-gion tree before
-> > > > > > publishing it
-> > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0 * through QHT. Otherwise rewinding ha=
-ppened in the TB
-> > > > > > might
-> > > > > > fail to
-> > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0 * lookup itself using host PC.
-> > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > > > > > +=C2=A0=C2=A0=C2=A0 tcg_tb_insert(tb);
-> > > > >=20
-> > > > > I think what we need is to mark the tb CF_INVALID before
-> > > > > inserting
-> > > > > it. That way we'll
-> > > > > never match in tb_lookup (comparing guest state, including
-> > > > > cflags),
-> > > > > but *will* find it in
-> > > > > tcg_tb_lookup (comparing host_pc).
-> > > > >=20
-> > > > >=20
-> > > > > r~
-> > > > How can tb_lookup() find it? With this change, it is inserted
-> > > > into
-> > > > region_trees, but not into tb_ctx.htable - this is done by
-> > > > tb_link_page(), which is not called. And because it's not in
-> > > > tb_ctx.htable, it can't end up in tb_jmp_cache either.
-> > >=20
-> > > You're absolutely right.
-> > >=20
-> > > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> >=20
-> > It would still be nice to update the docstrings on the two lookup
-> > functions to make it clear what they are for though.
->=20
-> Given this thread, perhaps also consider briefly mentioning some
-> of the details in the commit message and/or the comment?
->=20
-> -- PMM
+Add an "aliases" node with a "serial0" entry for the single UART
+in the riscv virt machine.
 
-Ok. I will send a v2 with docstring additions in a separate patch.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2774
+Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+---
+ hw/riscv/virt.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 2bc5a9dd98..fb1928cebf 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -971,6 +971,7 @@ static void create_fdt_uart(RISCVVirtState *s, const MemMapEntry *memmap,
+     }
+ 
+     qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
++    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
+ }
+ 
+ static void create_fdt_rtc(RISCVVirtState *s, const MemMapEntry *memmap,
+@@ -1180,6 +1181,8 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+     qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed",
+                      rng_seed, sizeof(rng_seed));
+ 
++    qemu_fdt_add_subnode(ms->fdt, "/aliases");
++
+     create_fdt_flash(s, memmap);
+     create_fdt_fw_cfg(s, memmap);
+     create_fdt_pmu(s);
+-- 
+2.46.0
+
 
