@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E83DCE77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 06:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A20AE77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 07:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYJjl-0001k3-Aj; Thu, 16 Jan 2025 01:52:17 -0500
+	id 1tYJv1-0003jL-77; Thu, 16 Jan 2025 02:03:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYJjk-0001jd-3t
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 01:52:16 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYJuu-0003hk-Kl
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 02:03:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYJji-0003nq-Gr
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 01:52:15 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYJus-0005bk-0v
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 02:03:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737010333;
+ s=mimecast20190719; t=1737011024;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lKEwV/sdKWrppjVdXOPc4zyU0Q24V4j4YXXoN26YHJg=;
- b=Q44GpOEDAnKxhYFKJDxrdIIIwMy5/L49MUYRidL93VB9S4XpjLzbTUkoFvkPuk8h1RdYxx
- cBPEzjQpNvVsHMGNmaTLpYS04zZjlyL5JzdlxKuzOT+lO3g1C4bP2gJkKoapHdcqZkIvsz
- iW7NptkU1gVJLf/ztG8KlHgcvcKArEg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MdwEGYe5hAfLyz6bxzdeyj9JuNqAt84KEKdtrWjPfsw=;
+ b=cMK32x272+LRbCZCLl3wamiZ4CS3X3td9lzOYxOUREhCZjQ7m/uTeYD4WU6U+UO98GUquS
+ jZXk+LhvqXvOZCkfNwmDx26hI8xDyp7HyRSjpgus1xctyouiMuEU6/42MaQOXcbS8Ukm9T
+ BeJph2N5sD92zkvfIcyFipVoE4DeANk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-6nWHkpxxNz2YRZ3wt8cgzQ-1; Thu, 16 Jan 2025 01:52:10 -0500
-X-MC-Unique: 6nWHkpxxNz2YRZ3wt8cgzQ-1
-X-Mimecast-MFC-AGG-ID: 6nWHkpxxNz2YRZ3wt8cgzQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43631d8d9c7so2634895e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 22:52:10 -0800 (PST)
+ us-mta-669-uPhf9Vt3OaaBb5n39MaaDg-1; Thu, 16 Jan 2025 02:03:43 -0500
+X-MC-Unique: uPhf9Vt3OaaBb5n39MaaDg-1
+X-Mimecast-MFC-AGG-ID: uPhf9Vt3OaaBb5n39MaaDg
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4361efc9d1fso3509985e9.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Jan 2025 23:03:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737010327; x=1737615127;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lKEwV/sdKWrppjVdXOPc4zyU0Q24V4j4YXXoN26YHJg=;
- b=W/BeIq14AGCbPD//v0499RxaYw6Ad4gl6jE17WBEDxcqgsvbXnzlqOuQtHzrq11s3k
- jE9RGORxrcDbbN+YSR44Kf/h0SQZw7YNP1BrWxTtzA5X7QoOeTxlAsqgXA/hsYJZzJfU
- jXX2NMyGdM0YpfId37cOH+0wRg5krS3LF9Lm0Aj/vWT1E0WT4W8lTF6AH8EesMp8qBie
- RYdaGnw4APzvYCocFZlbZBiiRGLfOtNZEJgVMSszHJGFgyRCBbkhKQYD3Pjgv8pY3Q1o
- PYlINiDCeSts3fT8zyh1+LViiCV+nxMAU/4BeGF4WBa6vWCYHIWOT11NtPmKFTl4x6Tq
- uyTQ==
+ d=1e100.net; s=20230601; t=1737011022; x=1737615822;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MdwEGYe5hAfLyz6bxzdeyj9JuNqAt84KEKdtrWjPfsw=;
+ b=XFctOLwWmZDPiHcQO64eZIP47G5+OXy6j0XJSDebtWohVscV0GHO/L2BRfHoFgRReL
+ XijcmMbd30cpM6BZ2FGHm/ZFeJiu6ADZ+wezbpAd6Ns8lJQj72EWdWw8/j7v+uLzVjQe
+ cCVTFNzpBkeJpKzz+dYkU/UYefNAdfBUJxc61qxGv5EZ7PScO9eTstArk3Qe916m+d+n
+ eK6lj5IDqT/pDYy69Vl6z/K0DEq7yxuZ7lLSoHyvWxzjEBa8ziA7TH6h0Q8tWmobWNBk
+ SbF8C6GyEln/ztj01SFdCOIwBsVjTbvDoAZUoogFuyWXss5vHI0URkWz8t0lFXxj9opr
+ JK8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+yWpVgikuT5yu03Df7SZthbrDc6F9HxpG15hal3HLTclWpoPirc77MipM+pV8l+F52BSiURaFMiQB@nongnu.org
-X-Gm-Message-State: AOJu0Yz+s3c6V7iFIidCsz3PvOMMT6pi1Cp/Q3arF8Fjm1kiCZ9jyrQB
- OMuACXgcy3vGgZyPrKNH1Hp6w8V0zy4yCJUs71AuiU6iHoAjkMZgeZnweFyeCRLwb6IDiUnszv8
- udCW2wV5QD/ZJXPxzOD5VBXf2JIkpuMzClgMQio1Ztd7dcljx6viI
-X-Gm-Gg: ASbGncso0C4daVMg1rVpoHhqeqkdmFuX6w/Cgz30wJM3MHXGX7/8ixbWPcczmKdDTR0
- GKfGtCtBrWT0o/oR9nVQfq3VNdWu7Fr2M1wfteoWivulvco1KA68p2LsYlKvWWh2fPKnL3WVW3h
- Svq7WPsH3pxEepUpUdFsDyR2sS/OfowZDM2C8qNY6cBRYjOcPQ6hIAMmhkxDffgs3TqJSadl3ME
- vDte9isz8XH6FNNtBrav7XS0q/2QYbzAvcSKkhtVthJuEoBkwpYYSX/BdBINwHpPkGwht/vVFjT
- PrEbTkVhJxJ5
-X-Received: by 2002:a05:600c:8712:b0:434:ff08:202e with SMTP id
- 5b1f17b1804b1-437c6b1c468mr46702055e9.8.1737010326956; 
- Wed, 15 Jan 2025 22:52:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnf/UO24Eiwm6ELQEMlY98e5qVkCQ0bTtfeBlkEbue+DV2s064D9NL6UrEbnwQPhNFqSFBsg==
-X-Received: by 2002:a05:600c:8712:b0:434:ff08:202e with SMTP id
- 5b1f17b1804b1-437c6b1c468mr46701825e9.8.1737010326595; 
- Wed, 15 Jan 2025 22:52:06 -0800 (PST)
+ AJvYcCUNthR795w5zFlLTANHCV/nc3Fipvxa9x/1ctAsf1z8/Cx/+qGTnXYMt7wy9mfsWZl5VJhJkpkHZZOC@nongnu.org
+X-Gm-Message-State: AOJu0Ywsq132xXYqXAmrujvDMVbTa4zgCSqTupWZKNz1xThRA0XBdzAc
+ 1eL7QMP5YjihbtlBgTejZOYeBN7W5pnrrWt1PT7aDdiGi9zRkDm6B8MyUAjiZJk0bLjCbmo8ovX
+ RC5En9Kb0mm3xzJV3ldhQJ2Db6uFH215H8wALITxCIOVh8zmQ5SIK
+X-Gm-Gg: ASbGncscgYABQAeSd/xShqPnObFKpG3iuMg56QLFOI44FzhER56kKkMYJqIABCoRHWe
+ LAsNj3bhjKwJkRNL434JeNJ7fL27WsOj5E4qffzIxHU/Kt0GJ4gMHPbJPMlNr5dMaMk0Hg++Zx2
+ wUmHrs8YNL1C7pJB3+CddO55yKybV7FTRBjtuL6FybJmV6ZLCzlRvAXSUV+jU2P2eFO/aA5mpVL
+ 8GZTi+6v5brWZSwyF8sYmRYDIjH93xHog/rZCfulNoLiZ4WW2t2I4qn+nGxjO4gNH5yYXUJH5/s
+ FlToPhnYE2c1
+X-Received: by 2002:a05:600c:1d07:b0:434:fa73:a907 with SMTP id
+ 5b1f17b1804b1-436e269a5f5mr281596565e9.13.1737011021688; 
+ Wed, 15 Jan 2025 23:03:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGAVCTWNqvWKwPauIwSMpI33oxZGO/okwQTeJwBWpCcvDORog0ereHT/i5lWP5aVx1UgE+56Q==
+X-Received: by 2002:a05:600c:1d07:b0:434:fa73:a907 with SMTP id
+ 5b1f17b1804b1-436e269a5f5mr281596275e9.13.1737011021331; 
+ Wed, 15 Jan 2025 23:03:41 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
  [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74ab449sm48141245e9.10.2025.01.15.22.52.04
+ 5b1f17b1804b1-437c74c6799sm48910115e9.24.2025.01.15.23.03.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jan 2025 22:52:05 -0800 (PST)
-Message-ID: <82e6d8c3-3b5e-4c67-a1a8-8485e618d23e@redhat.com>
-Date: Thu, 16 Jan 2025 07:52:03 +0100
+ Wed, 15 Jan 2025 23:03:40 -0800 (PST)
+Message-ID: <da2fe302-dae9-4f6c-8ea8-94fcc332e167@redhat.com>
+Date: Thu, 16 Jan 2025 08:03:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] hw/arm/virt: Remove deprecated virt-2.6 machine
+Subject: Re: [PATCH 03/13] hw/arm/virt: Remove
+ VirtMachineClass::disallow_affinity_adjustment
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -85,9 +86,9 @@ Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
  <mst@redhat.com>
 References: <20250115171009.19302-1-philmd@linaro.org>
- <20250115171009.19302-2-philmd@linaro.org>
-Content-Language: en-US
+ <20250115171009.19302-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -130,7 +131,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250115171009.19302-2-philmd@linaro.org>
+In-Reply-To: <20250115171009.19302-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -142,7 +143,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,57 +160,90 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/01/2025 18.09, Philippe Mathieu-Daudé wrote:
-> This machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") it can now be removed.
+> The VirtMachineClass::disallow_affinity_adjustment
+> field was only used by virt-2.6 machine, which got
+> removed. Remove it along with the GIC*_TARGETLIST_BITS
+> definitions, and simplify virt_cpu_mp_affinity().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   docs/about/removed-features.rst |  4 ++++
->   hw/arm/virt.c                   | 12 ------------
->   2 files changed, 4 insertions(+), 12 deletions(-)
+>   include/hw/arm/virt.h              |  1 -
+>   include/hw/intc/arm_gic.h          |  1 -
+>   include/hw/intc/arm_gicv3_common.h |  3 ---
+>   hw/arm/virt.c                      | 16 ----------------
+>   4 files changed, 21 deletions(-)
 > 
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index c6616ce05e5..813988fad4a 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -1065,6 +1065,10 @@ for all machine types using the PXA2xx and OMAP2 SoCs. We are also
->   dropping the ``cheetah`` OMAP1 board, because we don't have any
->   test images for it and don't know of anybody who does.
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index 27c5bb585cb..5d3b25509ff 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -117,7 +117,6 @@ typedef enum VirtGICType {
 >   
-> +Arm ``virt-2.6`` (removed in 10.0)
-> +''''''''''''''''''''''''''''''''''
-> +This versioned machine has been supported for a period of more than 6 years.
-
-I'd like to suggest that we rather add a generic statement to this file instead:
-
-  https://lore.kernel.org/qemu-devel/20250116064644.65670-1-thuth@redhat.com/
-
->   linux-user mode CPUs
->   --------------------
+>   struct VirtMachineClass {
+>       MachineClass parent;
+> -    bool disallow_affinity_adjustment;
+>       bool no_its;
+>       bool no_tcg_its;
+>       bool claim_edge_triggered_timers;
+> diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
+> index 48f6a51a70a..f5e6e5e70b4 100644
+> --- a/include/hw/intc/arm_gic.h
+> +++ b/include/hw/intc/arm_gic.h
+> @@ -68,7 +68,6 @@
+>   #include "qom/object.h"
+>   
+>   /* Number of SGI target-list bits */
+> -#define GIC_TARGETLIST_BITS 8
+>   #define GIC_MAX_PRIORITY_BITS 8
+>   #define GIC_MIN_PRIORITY_BITS 4
+>   
+> diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+> index a3d6a0e5077..fff5e55a97d 100644
+> --- a/include/hw/intc/arm_gicv3_common.h
+> +++ b/include/hw/intc/arm_gicv3_common.h
+> @@ -45,9 +45,6 @@
+>   #define GICV3_REDIST_SIZE 0x20000
+>   #define GICV4_REDIST_SIZE 0x40000
+>   
+> -/* Number of SGI target-list bits */
+> -#define GICV3_TARGETLIST_BITS 16
+> -
+>   /* Maximum number of list registers (architectural limit) */
+>   #define GICV3_LR_MAX 16
 >   
 > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 99e0a68b6c5..3bb8a9c7bd6 100644
+> index 0080577e1a9..2a2a0bd9154 100644
 > --- a/hw/arm/virt.c
 > +++ b/hw/arm/virt.c
-> @@ -3606,15 +3606,3 @@ static void virt_machine_2_7_options(MachineClass *mc)
->       mc->minimum_page_bits = 0;
->   }
->   DEFINE_VIRT_MACHINE(2, 7)
-> -
-> -static void virt_machine_2_6_options(MachineClass *mc)
-> -{
-> -    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-> -
-> -    virt_machine_2_7_options(mc);
-> -    compat_props_add(mc->compat_props, hw_compat_2_6, hw_compat_2_6_len);
-> -    vmc->disallow_affinity_adjustment = true;
-> -    /* Disable PMU for 2.6 as PMU support was first introduced in 2.7 */
-> -    vmc->no_pmu = true;
-> -}
-> -DEFINE_VIRT_MACHINE(2, 6)
+> @@ -1760,23 +1760,7 @@ void virt_machine_done(Notifier *notifier, void *data)
+>   static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
+>   {
+>       uint8_t clustersz = ARM_DEFAULT_CPUS_PER_CLUSTER;
+> -    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+>   
+> -    if (!vmc->disallow_affinity_adjustment) {
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I think this change is wrong - disallow_affinity_adjustment is false for 
+newer machines, so you removed code here that is still in use on newer machines?
+
+  Thomas
+
+> -        /* Adjust MPIDR like 64-bit KVM hosts, which incorporate the
+> -         * GIC's target-list limitations. 32-bit KVM hosts currently
+> -         * always create clusters of 4 CPUs, but that is expected to
+> -         * change when they gain support for gicv3. When KVM is enabled
+> -         * it will override the changes we make here, therefore our
+> -         * purposes are to make TCG consistent (with 64-bit KVM hosts)
+> -         * and to improve SGI efficiency.
+> -         */
+> -        if (vms->gic_version == VIRT_GIC_VERSION_2) {
+> -            clustersz = GIC_TARGETLIST_BITS;
+> -        } else {
+> -            clustersz = GICV3_TARGETLIST_BITS;
+> -        }
+> -    }
+>       return arm_build_mp_affinity(idx, clustersz);
+>   }
+>   
 
 
