@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9967C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2338C02187
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 12:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYP1l-0003wW-2C; Thu, 16 Jan 2025 07:31:13 -0500
+	id 1tYP1t-0003x9-8A; Thu, 16 Jan 2025 07:31:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tYP1i-0003vb-CT
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:31:10 -0500
-Received: from mail-oo1-xc43.google.com ([2607:f8b0:4864:20::c43])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tYP1e-0001CH-26
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 07:31:10 -0500
-Received: by mail-oo1-xc43.google.com with SMTP id
- 006d021491bc7-5f2dee7d218so360148eaf.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 04:30:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737030659; x=1737635459; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SPCmTHJ30+Z0P1UK1SYBdnSWIoFkUkGXia6Kn2gnWy0=;
- b=ID4/BN2gayaVQf/I3VxCaXuTaTpWUws0HcRolO4D3wwqG6hZKowkQeYRNKIs9LWKW/
- Mpe5YdmetwyOHBsLRDlgeSjLVE4NSKZybcjPkbbf05fOi9S0xtxkuj9L0HOEwZJYK6ch
- CddskU+HSlAkfzrXppMxAGh4dkffUW0TE1DzQlsn/WgiS+4shY4qN7YDS1SpxXH2xyBG
- /Oz7HO+NLuwXqDxdmrw7vlRvrdMEwrgSQIG6/f4KOS9wPs8XfwVMdQlSx3kZnmXkIQyZ
- 1adyXAB+C060g5GWmSO9E9OG9XCwe4qyUjLk4GUIjRKqbli8OlFYkFVJCo9CjuR7b1/D
- EnXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737030659; x=1737635459;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SPCmTHJ30+Z0P1UK1SYBdnSWIoFkUkGXia6Kn2gnWy0=;
- b=DckY4beh4+vz0l32Dxdx5+3xW6Nj2XHwmXUqyhZeZ1I7xgNFOXSYEo0KyPNwCk3I31
- VLc4HlJDju88CCBtEFm83Rao1JIfFxC0i9Ui1boqXPUuiGlsK4V6SqJZAi21Z4J4/Mwc
- s1E3Dp/vwIUYtaC3cM7RqLAZL6FVNvWwLHPkHVICYsels2hQdjkivn9FwdjRx1GqNfHZ
- Xd4e+EdBhOGLxRuAqBSSp5P0CBGU0DFgsn0lJWFBED+3PUxUx/bQlAImCzr1LA1orD+Z
- zALv2zC5rfvBbjTRFYZaXwVzn4hkAWnPLZiq2CqBOCKGnRcrZPzW+sHZmjbdRfN6KmWF
- o6mQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWk0cLJkmX3LGYD1rHVFeISpSP24FRScy+gBNYf3jldO2P1qSMqaQkIn7QuO+Un6tiHQ+ga1M96OnnF@nongnu.org
-X-Gm-Message-State: AOJu0YwsErgDBaT8tsfYIjCkgFScQuGmQemZP8bcpjZfrTd6R3b8gttQ
- CO15ChnQxrqBpKQ2GvG7LmJwrU79ibD+T5DW1jWty82PeKj9e/MI5gVyrq/QM4g=
-X-Gm-Gg: ASbGncu7H8btN6Dx7/uqcAOofq+PxQyom2eqgdVKcmtBHmgMsgRvcJxKPPyBGDnhRs1
- FU3KJ6W4XjuyUOupHiEgFTpQ1S8Z8r4A07+UyXb809hI202Wmk24UrbTl3mPAgcUvIhHTxley8A
- I3FjFfOM7HtI0gxD5kUFVQLuPoYCP2cR54/Pdn4rTBsIPOwFd0y1UZI9YklT1syCUreutxVR4JP
- ogEVakKVwqOBBUcCQH6umDUgdbSN2HqeEM9OPC1RmIiZPZ4EmR0b/2MV3hKcpF8cAkqJjk=
-X-Google-Smtp-Source: AGHT+IE7wl4YuZItxTjDj/1ruvAQAQzbgS4LvbC1/QAlid7NU8gis0U7HISlsnpUvJEz3IzQziJ/zg==
-X-Received: by 2002:a05:6820:4d02:b0:5f8:91b0:6c0f with SMTP id
- 006d021491bc7-5f891b06d2amr14225383eaf.6.1737030658914; 
- Thu, 16 Jan 2025 04:30:58 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.238.10])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f882641dc9sm6677161eaf.13.2025.01.16.04.30.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 04:30:57 -0800 (PST)
-Message-ID: <4fc33d8d-e443-43c3-9809-7f9c025f2883@ventanamicro.com>
-Date: Thu, 16 Jan 2025 09:30:53 -0300
+ (Exim 4.90_1) (envelope-from <anasonov@astralinux.ru>)
+ id 1tYP1l-0003wa-1L; Thu, 16 Jan 2025 07:31:13 -0500
+Received: from mail-gw02.astralinux.ru ([195.16.41.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anasonov@astralinux.ru>)
+ id 1tYP1i-0001Dg-QL; Thu, 16 Jan 2025 07:31:12 -0500
+Received: from gca-msk-a-srv-ksmg02.astralinux.ru (localhost [127.0.0.1])
+ by mail-gw02.astralinux.ru (Postfix) with ESMTP id 48AFA1F707;
+ Thu, 16 Jan 2025 15:31:05 +0300 (MSK)
+Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail05.astralinux.ru
+ [10.177.185.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail-gw02.astralinux.ru (Postfix) with ESMTPS;
+ Thu, 16 Jan 2025 15:31:03 +0300 (MSK)
+Received: from [10.198.52.156] (unknown [10.198.52.156])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4YYhzp56n7z1c0sM;
+ Thu, 16 Jan 2025 15:31:02 +0300 (MSK)
+Message-ID: <90110e6f-55ec-4006-aa3a-22137dab631d@astralinux.ru>
+Date: Thu, 16 Jan 2025 15:30:58 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: Fix the hpmevent mask
-To: Atish Patra <atishp@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- bin.meng@windriver.com, alistair.francis@wdc.com
-References: <20250115-pmu_minor_fixes-v1-0-c32388defb02@rivosinc.com>
- <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250115-pmu_minor_fixes-v1-1-c32388defb02@rivosinc.com>
+User-Agent: RuPost Desktop
+Subject: Re: [PATCH] hw/ide: replace assert with proper error handling
+Content-Language: ru
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, jsnow@redhat.com,
+ sdl.qemu@linuxtesting.org
+References: <20250116111600.2570490-1-anasonov@astralinux.ru>
+ <CAFEAcA_S1COmR=_t8Q7mXoEoAwYSbxUNRSvZmp35LiH9JSbtPg@mail.gmail.com>
+From: =?UTF-8?B?0JDRgNGC0LXQvCDQndCw0YHQvtC90L7Qsg==?= <anasonov@astralinux.ru>
+In-Reply-To: <CAFEAcA_S1COmR=_t8Q7mXoEoAwYSbxUNRSvZmp35LiH9JSbtPg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c43;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc43.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-KSMG-AntiPhishing: NotDetected, bases: 2025/01/16 11:17:00
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Envelope-From: anasonov@astralinux.ru
+X-KSMG-AntiSpam-Info: LuaCore: 49 0.3.49
+ 28b3b64a43732373258a371bd1554adb2caa23cb, {Tracking_uf_ne_domains},
+ {Tracking_from_domain_doesnt_match_to}, new-mail.astralinux.ru:7.1.1;
+ d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; 127.0.0.199:7.1.2;
+ astralinux.ru:7.1.1; gitlab.com:7.1.1, FromAlignment: s
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiSpam-Lua-Profiles: 190372 [Jan 16 2025]
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Version: 6.1.1.7
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
+ bases: 2025/01/16 10:48:00 #27040539
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected, bases: 2025/01/16 11:17:00
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 1
+Received-SPF: pass client-ip=195.16.41.108;
+ envelope-from=anasonov@astralinux.ru; helo=mail-gw02.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,50 +89,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+16/01/25 14:32, Peter Maydell пишет:
+> On Thu, 16 Jan 2025 at 11:17, Artem Nasonov <anasonov@astralinux.ru> wrote:
+>> This assert was found during fuzzing and can be triggered with some qtest commands.
+>> So instead of assert failure I suggest to handle this error and abort the command.
+>> This patch is required at least to improve fuzzing process and do not spam with this assert.
+>> RFC.
+>>
+>> Found by Linux Verification Center (linuxtesting.org) with libFuzzer.
+>>
+>> Fixes: ed78352a59 ("ide: Fix incorrect handling of some PRDTs in ide_dma_cb()")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2777
+>> Signed-off-by: Artem Nasonov <anasonov@astralinux.ru>
+>> ---
+>>   hw/ide/core.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/ide/core.c b/hw/ide/core.c
+>> index f9baba59e9..baca7121ec 100644
+>> --- a/hw/ide/core.c
+>> +++ b/hw/ide/core.c
+>> @@ -931,7 +931,10 @@ static void ide_dma_cb(void *opaque, int ret)
+>>       s->io_buffer_size = n * 512;
+>>       prep_size = s->bus->dma->ops->prepare_buf(s->bus->dma, s->io_buffer_size);
+>>       /* prepare_buf() must succeed and respect the limit */
+>> -    assert(prep_size >= 0 && prep_size <= n * 512);
+>> +    if (prep_size < 0 || prep_size > n * 512) {
+>> +        ide_dma_error(s);
+>> +        return;
+>> +    }
+> Now the comment and the code disagree (the comment
+> says that the callback must never do the thing that we
+> now have code to handle).
+>
+> What's the actual situation when the prepare_buf callback hits
+> this assertion? Is the problem in this code, or is it in the
+> callback implementation? Which IDEDMAOps is involved?
+>
+> thanks
+> -- PMM
 
+Steps to reproduse are described in related issue:
 
-On 1/15/25 9:49 PM, Atish Patra wrote:
-> As per the latest privilege specification v1.13[1], the sscofpmf
-> only reserves first 8 bits of hpmeventX. Update the corresponding
-> masks accordingly.
-> 
-> [1]https://github.com/riscv/riscv-isa-manual/issues/1578
-> 
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/cpu_bits.h | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index f97c48a3943f..b48c0af9d48e 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -9,6 +9,10 @@
->                    (((uint64_t)(val) * ((mask) & ~((mask) << 1))) & \
->                    (uint64_t)(mask)))
->   
-> +#ifndef GENMASK_ULL
-> +#define GENMASK_ULL(h, l) (((~0ULL) >> (63 - (h) + (l))) << (l))
-> +#endif
-> +
->   /* Extension context status mask */
->   #define EXT_STATUS_MASK     0x3ULL
->   
-> @@ -933,9 +937,8 @@ typedef enum RISCVException {
->                                               MHPMEVENTH_BIT_VSINH | \
->                                               MHPMEVENTH_BIT_VUINH)
->   
-> -#define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
-> -#define MHPMEVENT_IDX_MASK                 0xFFFFF
-> -#define MHPMEVENT_SSCOF_RESVD              16
-> +#define MHPMEVENT_SSCOF_MASK               GENMASK_ULL(63, 56)
-> +#define MHPMEVENT_IDX_MASK                 (~MHPMEVENT_SSCOF_MASK)
->   
->   /* RISC-V-specific interrupt pending bits. */
->   #define CPU_INTERRUPT_RNMI                 CPU_INTERRUPT_TGT_EXT_0
-> 
-
+https://gitlab.com/qemu-project/qemu/-/issues/2777 In this case, 
+function ahci_dma_prepare_buf() from hw/ide/ahci.c stands for 
+s->bus->dma->ops->prepare_buf. It is called and returns -1. This is 
+because of call to ahci_populate_sglist() function, which returns -1 due 
+to check if (!prdtl), where prdtl is one of the fields of AHCIDevice cmd 
+header. So we have a situation: prepare_buf() must succeed, but returns 
+-1 for some reason and application fails (which is harmful for fuzzing 
+too). We may solve it in two ways: patch callback or patch caller. I 
+don't see any possible way to handle error of populating sglist inside 
+ahci_dma_prepare_buf() function: it fails to prepare buf, but has to 
+return something. Since then, we should catch this error and interrupt 
+operation or maybe other action. Thanks, Artem
 
