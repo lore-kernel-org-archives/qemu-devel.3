@@ -4,73 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5F3C02180
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 11:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9652C02183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 11:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYO2Q-0006oO-F5; Thu, 16 Jan 2025 06:27:50 -0500
+	id 1tYO5Y-0007fI-Sz; Thu, 16 Jan 2025 06:31:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYO2N-0006o8-NZ
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 06:27:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYO2L-0004OA-As
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 06:27:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737026861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2b3bxRJgEIXuvreXMsJikDDfxJDZXZ63jQmJzHiTMGU=;
- b=VT66nL1yIl9x0siJlDTMYB2KxEGjFgXPf8tLesN+friHIvTzHwBjCQ9ewTZZ266mjwiEwj
- SxbxZfaWHhvgouW+H2Eej3yep3wKvfA4bojMIAKiEpfWe3onY8SAhlfl5iGPDlU4WYQZ2f
- V9rYfXgR2xWCFciY1gAYNPCpCIlMjTQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-chiCCYOHPkKldWgi1CoN7g-1; Thu,
- 16 Jan 2025 06:27:38 -0500
-X-MC-Unique: chiCCYOHPkKldWgi1CoN7g-1
-X-Mimecast-MFC-AGG-ID: chiCCYOHPkKldWgi1CoN7g
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BCAB1955E7B; Thu, 16 Jan 2025 11:27:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.196.38])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 256AC19560AA; Thu, 16 Jan 2025 11:27:34 +0000 (UTC)
-Date: Thu, 16 Jan 2025 12:27:32 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Roman Penyaev <r.peniaev@gmail.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 6/8] chardev/char-mux: implement backend chardev
- multiplexing
-Message-ID: <Z4jtJMNeXexEEpVZ@redhat.com>
-References: <20241016102605.459395-1-r.peniaev@gmail.com>
- <20241016102605.459395-7-r.peniaev@gmail.com>
- <CAJ+F1CLkn2WcmJEmNpJwNcc5VPriDTdSFWcv44QWaYtvHycKcQ@mail.gmail.com>
- <87frmuwo6p.fsf@pond.sub.org>
- <CACZ9PQUk7ZjwfYWVNq3z2Wp_pnkKO8ObhLc6uy5ABHq2yCL9Ag@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tYO5D-0007d3-Nc
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 06:30:43 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tYO59-0005MH-Pr
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 06:30:42 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxieDZ7YhnzGBkAA--.65105S3;
+ Thu, 16 Jan 2025 19:30:33 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMAxfcXZ7YhneOQkAA--.11212S3;
+ Thu, 16 Jan 2025 19:30:33 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2 1/6] target/loongarch: Add dynamic function access with CSR
+ register
+Date: Thu, 16 Jan 2025 19:30:27 +0800
+Message-Id: <20250116113032.599899-2-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250116113032.599899-1-maobibo@loongson.cn>
+References: <20250116113032.599899-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACZ9PQUk7ZjwfYWVNq3z2Wp_pnkKO8ObhLc6uy5ABHq2yCL9Ag@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.793,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxfcXZ7YhneOQkAA--.11212S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,51 +65,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 17.12.2024 um 11:32 hat Roman Penyaev geschrieben:
-> Hi Markus,
-> 
-> Thanks for the explicit info. But I have a lot to ask :)
-> Do I understand correctly that there are two ways to parse
-> arguments: classic, via qemu_opts_parse_noisily() and modern, via
-> qobject_input_visitor_new_str()? (for example, I look in
-> net/net.c, netdev_parse_modern()). My goal is not to create a
-> completely new option, but to add (extend) parameters for
-> chardev, namely to add a new type of backend device. This
-> complicates everything, since chardev uses
-> qemu_opts_parse_noisily() for parsing and bypasses the modern
-> way (I hope I'm not mistaken, maybe Marc can comment). And I'm
-> not sure that it's easy to replace the classic way of parsing
-> arguments with the modern way without breaking anything.
+With CSR register, dynamic function access is used for CSR register
+access in TCG mode, so that csr info can be used by other modules.
 
-A few years ago, I tried to unify the QMP and CLI code paths for
-creating chardevs and this involved using QAPI for everything. As far as
-I can remember, chardevs don't use any of the QemuOpts features that
-don't exist in they keyval parser, so it's easy from that angle.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ .../tcg/insn_trans/trans_privileged.c.inc     | 37 +++++++++++++++++--
+ target/loongarch/tcg/tcg_loongarch.h          | 12 ++++++
+ target/loongarch/tcg/translate.c              |  5 +++
+ 3 files changed, 51 insertions(+), 3 deletions(-)
+ create mode 100644 target/loongarch/tcg/tcg_loongarch.h
 
-What makes it more complicated is that CLI and QMP options have diverged
-quite a bit, and while generally the same functionality is available, it
-sometimes uses different names or is negated in one compared to the
-other etc.
-
-So I ended up writing compatibility code that translated legacy CLI
-options into QAPI-compatible ones, and then I could use the exising QAPI
-types. Part of it made use of aliases, which would have been a new
-feature in QAPI, but Markus didn't like them in the end. They could have
-been replaced by manual conversion code, but I didn't have time (nor, to
-be honest, motivation) to work it any more when Markus had finally made
-that decision. It shouldn't actually be very hard.
-
-Anyway, if it's of any use for you, feel free to resurrect parts of it:
-
-https://repo.or.cz/qemu/kevin.git/shortlog/refs/tags/qapi-alias-chardev-v4
-
-(Or maybe I will eventually...)
-
-Whatever you choose to do, my one request for you would be that you
-really make sure that CLI and QMP are structured and behave exactly the
-same with your new option, to avoid making the problem worse than it
-already is.
-
-Kevin
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 30f9b83fb2..96958bd6c1 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -76,7 +76,7 @@ enum {
+ #define CSR_OFF(NAME) \
+     CSR_OFF_FLAGS(NAME, 0)
+ 
+-static const CSRInfo csr_info[] = {
++static CSRInfo csr_info[] = {
+     CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+     CSR_OFF(PRMD),
+     CSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
+@@ -160,9 +160,9 @@ static bool check_plv(DisasContext *ctx)
+     return false;
+ }
+ 
+-static const CSRInfo *get_csr(unsigned csr_num)
++static CSRInfo *get_csr(unsigned csr_num)
+ {
+-    const CSRInfo *csr;
++    CSRInfo *csr;
+ 
+     if (csr_num >= ARRAY_SIZE(csr_info)) {
+         return NULL;
+@@ -174,6 +174,37 @@ static const CSRInfo *get_csr(unsigned csr_num)
+     return csr;
+ }
+ 
++static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
++                               GenCSRWrite writefn)
++{
++    CSRInfo *csr;
++
++    csr = get_csr(csr_num);
++    if (!csr) {
++        return false;
++    }
++
++    csr->readfn = readfn;
++    csr->writefn = writefn;
++    return true;
++}
++
++#define SET_CSR_FUNC(NAME, read, write)                 \
++        set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
++
++void loongarch_csr_translate_init(void)
++{
++    SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
++    SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
++    SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
++    SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
++    SET_CSR_FUNC(CPUID, gen_helper_csrrd_cpuid, NULL);
++    SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
++    SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
++    SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
++}
++#undef SET_CSR_FUNC
++
+ static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+ {
+     if ((csr->flags & CSRFL_READONLY) && write) {
+diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+new file mode 100644
+index 0000000000..da2539e995
+--- /dev/null
++++ b/target/loongarch/tcg/tcg_loongarch.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU LoongArch TCG interface
++ *
++ * Copyright (c) 2025 Loongson Technology Corporation Limited
++ */
++#ifndef TARGET_LOONGARCH_TCG_LOONGARCH_H
++#define TARGET_LOONGARCH_TCG_LOONGARCH_H
++
++void loongarch_csr_translate_init(void);
++
++#endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 68be999410..3480f54c71 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -16,6 +16,7 @@
+ #include "exec/log.h"
+ #include "qemu/qemu-print.h"
+ #include "fpu/softfloat.h"
++#include "tcg_loongarch.h"
+ #include "translate.h"
+ #include "internals.h"
+ #include "vec.h"
+@@ -358,4 +359,8 @@ void loongarch_translate_init(void)
+                     offsetof(CPULoongArchState, lladdr), "lladdr");
+     cpu_llval = tcg_global_mem_new(tcg_env,
+                     offsetof(CPULoongArchState, llval), "llval");
++
++#ifndef CONFIG_USER_ONLY
++    loongarch_csr_translate_init();
++#endif
+ }
+-- 
+2.39.3
 
 
