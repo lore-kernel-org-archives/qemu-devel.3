@@ -4,59 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D1BC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 11:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C11C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 11:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYkn1-0005Na-K5; Fri, 17 Jan 2025 06:45:28 -0500
+	id 1tYkzt-0008Bx-2O; Fri, 17 Jan 2025 06:58:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tYkmz-0005NO-DO
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:45:25 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tYkzZ-00088v-7T
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:58:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tYkmv-000059-9F
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:45:24 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YZHtT26CDz6M4Pj;
- Fri, 17 Jan 2025 19:43:29 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 4BDE0140CB9;
- Fri, 17 Jan 2025 19:45:17 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 17 Jan
- 2025 12:45:16 +0100
-Date: Fri, 17 Jan 2025 11:45:14 +0000
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-CC: <fan.ni@samsung.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <chenbaozi@phytium.com.cn>
-Subject: Re: [PATCH 1/1] cxl/cxl-host: Support creation of a new CXL Host
- Bridge
-Message-ID: <20250117114514.00003772@huawei.com>
-In-Reply-To: <20250117034343.26356-2-wangyuquan1236@phytium.com.cn>
-References: <20250117034343.26356-1-wangyuquan1236@phytium.com.cn>
- <20250117034343.26356-2-wangyuquan1236@phytium.com.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tYkzU-0001Vz-Dy
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:58:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737115096;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vgiFfaasXO8VGobwAlMlzIj6h+bzf61jzxiicScyZz8=;
+ b=GGsKLcUvwUIuikt/XtbuEaSv6Ap2sPykiNPtbgX5kkQRV/3WQPYEAnnE3Bwyg+w3aSo5OG
+ n4fu/tWrD/E5CipOCVnshIUn6YHPP2sDbAGxha3zLJKg1t9DmthsECXZ6xPWxLhxbgBrv3
+ 6MFmzaKKHg+7G5k2+ThuuhRbB8mApsI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-N_Kb1NQNP3S-xSsfKNFFEw-1; Fri,
+ 17 Jan 2025 06:58:15 -0500
+X-MC-Unique: N_Kb1NQNP3S-xSsfKNFFEw-1
+X-Mimecast-MFC-AGG-ID: N_Kb1NQNP3S-xSsfKNFFEw
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 329C719560A2; Fri, 17 Jan 2025 11:58:13 +0000 (UTC)
+Received: from gezellig (unknown [10.39.194.27])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F239C1955F22; Fri, 17 Jan 2025 11:58:08 +0000 (UTC)
+Date: Fri, 17 Jan 2025 12:58:04 +0100
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ devel@lists.libvirt.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH 2/3] hw/i386/pc_piix: Remove pc-i440fx-2.4 up to
+ pc-i440fx-2.12
+Message-ID: <Z4pFzJzNfBxXkjS1@gezellig>
+References: <20250117102738.59714-1-thuth@redhat.com>
+ <20250117102738.59714-3-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117102738.59714-3-thuth@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,428 +89,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jan 2025 11:43:43 +0800
-Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
-
-> This work defines a new cxl host bridge type (TYPE_CXL_HOST). This
-> could be considered as a prototype of an independent cxl host bridge
-> which combines gpex features (ecam, mmio windows & irq) and pxb-cxl
-> features(CHBCR) at meanwhile.
+On Fri, Jan 17, 2025 at 11:27:37AM +0100, Thomas Huth wrote:
+> These machines have explicitly been marked as deprecated in
+> QEMU 9.1, so it should be fine to remove these antique versioned
+> machine types two releases later in 10.0.
 > 
-> The root bus path of CXL_HOST is "0001:00", that would not affect the
-> original pcie host topology. In the previous, the pxb-cxl-host with
-> any cxl root ports and cxl endpoint devices would occupy the BDF
-> number of the original pcie domain. This new type provide a solution
-> to resolve the problem.
-> 
-> Also the CXLFixedWindow struct adds a new member 'target_chb' to
-> record the target list of CXLHostBridge. And necessary is to adjust
-> the logic of 'cxl_cfmws_find_device' and 'cxl_fmws_link_targets' to
-> allow different types of cxl host bridge.
-> 
-> Move 'cxl_get_hb_cstate' & 'cxl_get_hb_passthrough' from pxb code
-> into cxl-host code.
-> 
-> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-
-This needs review form people more familiar with host bridges in general
-than I am, but I'll give some comments.
-
-Firstly there are some mechanical renames in here which are probably
-fine but belong in a separate precursor patch.
-
-Please have one series that introduces this and makes use of it.
-There are functions that are exposed more widely than previously
-without it being clear why.
-
-Also, the new host bridge support needs to be it's own thing, not
-in cxl-host.c which is the Host support (so cfmws routing) not
-the host bridge support.  Probably wants to be in hw/pci-host/cxl.c
-alongside gpex etc.
-
-Jonathan
-
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/cxl/cxl-host-stubs.c             |   2 +
->  hw/cxl/cxl-host.c                   | 220 ++++++++++++++++++++++++++--
->  hw/pci-bridge/pci_expander_bridge.c |  20 +--
->  include/hw/cxl/cxl.h                |  23 +++
->  include/hw/cxl/cxl_component.h      |   4 +-
->  include/hw/cxl/cxl_host.h           |   6 +
->  6 files changed, 242 insertions(+), 33 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
-> index cae4afcdde..aea94933ba 100644
-> --- a/hw/cxl/cxl-host-stubs.c
-> +++ b/hw/cxl/cxl-host-stubs.c
-> @@ -11,5 +11,7 @@
->  void cxl_fmws_link_targets(CXLState *stat, Error **errp) {};
->  void cxl_machine_init(Object *obj, CXLState *state) {};
->  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
-> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> +                        CXLFixedMemoryWindowOptions *object, Error **errp) {};
+>  docs/about/deprecated.rst       |  7 ---
+>  docs/about/removed-features.rst |  4 +-
+>  docs/interop/firmware.json      |  2 +-
+>  hw/i386/pc_piix.c               | 95 ---------------------------------
+>  qemu-options.hx                 | 10 ++--
+>  5 files changed, 8 insertions(+), 110 deletions(-)
+
+Looks good to me.  Nice that it has the side-effect of speeding up a
+bit of the upstream CI, as it drops unncessary tests.  I also saw your
+note in the cover letter that the corresponding Q35 machine types will
+be removed in QEMU 10.1.  Thanks!
+
+FWIW:
+
+    Reviewed-by: Kashyap Chamarthy <kchamart@redhat.com>
+
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 4a3c302962..7b42d6eecc 100644
+
+[...]
+
+>  PPC 405 ``ref405ep`` machine (since 9.1)
+>  ''''''''''''''''''''''''''''''''''''''''
 >  
->  const MemoryRegionOps cfmws_ops;
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index e9f2543c43..81a5948874 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -16,15 +16,37 @@
->  #include "qapi/qapi-visit-machine.h"
->  #include "hw/cxl/cxl.h"
->  #include "hw/cxl/cxl_host.h"
-> +#include "hw/irq.h"
->  #include "hw/pci/pci_bus.h"
->  #include "hw/pci/pci_bridge.h"
->  #include "hw/pci/pci_host.h"
->  #include "hw/pci/pcie_port.h"
->  #include "hw/pci-bridge/pci_expander_bridge.h"
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index c6616ce05e..936846ed7b 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -1006,8 +1006,8 @@ mips ``fulong2e`` machine alias (removed in 6.0)
 >  
-> -static void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> -                                           CXLFixedMemoryWindowOptions *object,
-> -                                           Error **errp)
-> +CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb, int type)
-> +{
-> +    if (type == 0) {
-> +        CXLHost *pxbhost = PXB_CXL_HOST(hb);
-> +        return &pxbhost->cxl_cstate;
-> +    } else {
-> +        CXLHostBridge *cxlhost = CXL_HOST(hb);
-> +        return &cxlhost->cxl_cstate;
-> +    }
-> +}
-> +
-> +bool cxl_get_hb_passthrough(PCIHostState *hb, int type)
-> +{
-> +    if (type == 0) {
-> +        CXLHost *pxbhost = PXB_CXL_HOST(hb);
-> +        return pxbhost->passthrough;
-> +    } else {
-> +        return false;
-> +    }
-> +}
-As below. To me these add nothing useful. I'd put the code inline.
-
-> +
-> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> +                                    CXLFixedMemoryWindowOptions *object,
-> +                                    Error **errp)
->  {
->      ERRP_GUARD();
->      g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
-> @@ -81,18 +103,24 @@ void cxl_fmws_link_targets(CXLState *cxl_state, Error **errp)
->              int i;
+>  This machine has been renamed ``fuloong2e``.
 >  
->              for (i = 0; i < fw->num_targets; i++) {
-> -                Object *o;
-> +                Object *pxb_cxl, *cxl_host;
->                  bool ambig;
+> -``pc-0.10`` up to ``pc-i440fx-2.3`` (removed in 4.0 up to 9.0)
+> -''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +``pc-0.10`` up to ``pc-i440fx-2.12`` (removed in 4.0 up to 10.0)
+> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 >  
-> -                o = object_resolve_path_type(fw->targets[i],
-> +                pxb_cxl = object_resolve_path_type(fw->targets[i],
->                                               TYPE_PXB_CXL_DEV,
->                                               &ambig);
-
-Do a resolve without type then dynamic cast to check which one it is.
-Should end up simpler and you only need one object pointer.
-
-
-> -                if (!o) {
-> -                    error_setg(errp, "Could not resolve CXLFM target %s",
-> -                               fw->targets[i]);
-> +                if (!pxb_cxl) {
-> +                    cxl_host = object_resolve_path_type(fw->targets[i],
-> +                                             TYPE_CXL_HOST,
-> +                                             &ambig);
-> +                    if (!cxl_host) {
-> +                        error_setg(errp, "Could not resolve CXLFM target %s",
-> +                                   fw->targets[i]);
->                      return;
-> +                    }
-
-Indent looks suspicious.
-
-> +                    fw->target_chb[i] = CXL_HOST(cxl_host);
->                  }
-> -                fw->target_hbs[i] = PXB_CXL_DEV(o);
-> +                fw->target_hbs[i] = PXB_CXL_DEV(pxb_cxl);
-This is casting something we might know is null. Make it conditional on pxb_cxl.
-
->              }
->          }
->      }
-> @@ -162,23 +190,36 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->      uint8_t target;
->      bool target_found;
->      PCIDevice *rp, *d;
-> +    int type;
+>  These machine types were very old and likely could not be used for live
+>  migration from old QEMU versions anymore. Use a newer machine type instead.
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index 57f55f6c54..f1e74318ff 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -97,7 +97,7 @@
+>  #            machine types, not aliases. Glob patterns are understood,
+>  #            which is especially useful for versioned machine types.
+>  #            (For example, the glob pattern "pc-i440fx-*" matches
+> -#            "pc-i440fx-2.12".) On the QEMU command line, "-machine
+> +#            "pc-i440fx-9.1".) On the QEMU command line, "-machine
+>  #            type=..." specifies the requested machine type (but that
+>  #            option does not accept glob patterns).
+>  #
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 04d2957adc..b821c32b38 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -698,101 +698,6 @@ static void pc_i440fx_machine_3_0_options(MachineClass *m)
 >  
->      /* Address is relative to memory region. Convert to HPA */
->      addr += fw->base;
+>  DEFINE_I440FX_MACHINE(3, 0);
 >  
->      rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
-> -    hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
-> -    if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
-> -        return NULL;
-> +    if (fw->target_chb[rb_index]) {
-> +        type = CXL_HOST_BRIDGE_TYPE;
-> +        hb = PCI_HOST_BRIDGE(fw->target_chb[rb_index]);
-> +        CXLHostBridge *host = fw->target_chb[rb_index];
-> +
-> +        hb_cstate = &host->cxl_cstate;
-> +        cache_mem = hb_cstate->crb.cache_mem_registers;
-> +        target_found = cxl_hdm_find_target(cache_mem, addr, &target);
-> +        rp = pcie_find_port_by_pn(hb->bus, target);
-> +    } else {
-> +        type = PXB_CXL_HOST_TYPE;
-
-use a bool or just duplicate the small amount of code that follows that is type
-dependent.  Then can split the cxl_get_hb_passthrough() and cxl_get_hb_cstate()
-dependent on the type. There is little benefit that I can see in combining them
-as the two paths do very different things
-
-
-> +        hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
-> +        if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
-> +            return NULL;
-> +        }
->      }
->  
-> -    if (cxl_get_hb_passthrough(hb)) {
-> +    if (cxl_get_hb_passthrough(hb, type)) {
->          rp = pcie_find_port_first(hb->bus);
->          if (!rp) {
->              return NULL;
->          }
->      } else {
-> -        hb_cstate = cxl_get_hb_cstate(hb);
-> +        hb_cstate = cxl_get_hb_cstate(hb, type);
->          if (!hb_cstate) {
->              return NULL;
->          }
-> @@ -372,3 +413,154 @@ void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp)
->          }
->      }
->  }
-
-All of the elements specific to the new host bridge need to go in a separate
-file under hw/pci/pci-host I think.
-
-That way we can build it only for SBSA-ref for now, not x86 etc where
-I don't see any reason to move away from PXB-CXL.
-(Note that I very much still need that on ARM as well because for me
-a fixed reference platform like SBSA-REF isn't useful for normal work.
-I appreciate it has it's uses though!).
-
-> +
-> +static void cxl_host_set_irq(void *opaque, int irq_num, int level)
-> +{
-> +    CXLHostBridge *host = opaque;
-> +
-> +    qemu_set_irq(host->irq[irq_num], level);
-> +}
-
-...
-
-> +
-> +void cxl_host_hook_up_registers(CXLState *cxl_state, CXLHostBridge *host,
-> +                                Error **errp)
-> +{
-> +    CXLComponentState *cxl_cstate = &host->cxl_cstate;
-> +    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
-> +    hwaddr offset;
-> +
-> +    offset = memory_region_size(mr) * cxl_state->next_mr_idx;
-> +    if (offset > memory_region_size(&cxl_state->host_mr)) {
-> +        error_setg(errp, "Insufficient space for sbsa cxl host register space");
-> +        return;
-> +    }
-> +
-> +    memory_region_add_subregion(&cxl_state->host_mr, offset, mr);
-
-Do you need this complexity?  I need it for PXB because we have a dynamic
-set up and lots of PXBs is an important test case. For your use, can
-we not just create each host bridge with provided memory region for
-that one?
-
-> +    cxl_state->next_mr_idx++;
-> +}
-
-> +static void cxl_host_class_init(ObjectClass *class, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(class);
-> +    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
-> +
-> +    hc->root_bus_path = cxl_host_root_bus_path;
-> +    dc->realize = cxl_host_realize;
-> +    dc->desc = "CXL Host Bridge";
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> +    dc->fw_name = "cxl";
-> +}
-> +
-> +static const TypeInfo cxl_host_info = {
-> +    .name          = TYPE_CXL_HOST,
-> +    .parent        = TYPE_PCIE_HOST_BRIDGE,
-> +    .instance_size = sizeof(CXLHostBridge),
-> +    .class_init    = cxl_host_class_init,
-> +};
-> +
-> +static void cxl_host_register(void)
-> +{
-> +    type_register_static(&cxl_host_info);
-> +}
-This stuff definitely belongs alongside the other host bridge
-definitions not in cxl-host.c which is about the fixed memory
-windows - so the actual host bit of routing, not the host bridge.
-
-> +
-> +type_init(cxl_host_register)
-> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-> index 07d411cff5..2f1b26256b 100644
-> --- a/hw/pci-bridge/pci_expander_bridge.c
-> +++ b/hw/pci-bridge/pci_expander_bridge.c
-> @@ -56,20 +56,6 @@ static GList *pxb_dev_list;
->  
->  #define TYPE_PXB_HOST "pxb-host"
->  
-> -CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb)
+> -static void pc_i440fx_machine_2_12_options(MachineClass *m)
 > -{
-> -    CXLHost *host = PXB_CXL_HOST(hb);
-> -
-> -    return &host->cxl_cstate;
+> -    pc_i440fx_machine_3_0_options(m);
+> -    compat_props_add(m->compat_props, hw_compat_2_12, hw_compat_2_12_len);
+> -    compat_props_add(m->compat_props, pc_compat_2_12, pc_compat_2_12_len);
 > -}
-> -
-> -bool cxl_get_hb_passthrough(PCIHostState *hb)
-> -{
-> -    CXLHost *host = PXB_CXL_HOST(hb);
-> -
-> -    return host->passthrough;
-> -}
-> -
->  static int pxb_bus_num(PCIBus *bus)
->  {
->      PXBDev *pxb = PXB_DEV(bus->parent_dev);
-> @@ -240,7 +226,7 @@ static void pxb_cxl_host_class_init(ObjectClass *class, void *data)
->   * This is a device to handle the MMIO for a CXL host bridge. It does nothing
->   * else.
->   */
-> -static const TypeInfo cxl_host_info = {
-> +static const TypeInfo pxb_cxl_host_info = {
 
-I agree this could potentially be confusing, but please do the rename
-in a patch that just does that.
+[...]
 
->      .name          = TYPE_PXB_CXL_HOST,
->      .parent        = TYPE_PCI_HOST_BRIDGE,
->      .instance_size = sizeof(CXLHost),
-> @@ -524,7 +510,7 @@ static void pxb_cxl_dev_class_init(ObjectClass *klass, void *data)
->       * vendor, device, class, etc. ids are intentionally left out.
->       */
->  
-> -    dc->desc = "CXL Host Bridge";
-> +    dc->desc = "PXB CXL Host Bridge";
->      device_class_set_props(dc, pxb_cxl_dev_properties);
->      set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->  
-> @@ -551,7 +537,7 @@ static void pxb_register_types(void)
->      type_register_static(&pxb_pcie_bus_info);
->      type_register_static(&pxb_cxl_bus_info);
->      type_register_static(&pxb_host_info);
-> -    type_register_static(&cxl_host_info);
-> +    type_register_static(&pxb_cxl_host_info);
->      type_register_static(&pxb_dev_info);
->      type_register_static(&pxb_pcie_dev_info);
->      type_register_static(&pxb_cxl_dev_info);
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b6864..548a1bd28c 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -17,6 +17,7 @@
->  #include "cxl_pci.h"
->  #include "cxl_component.h"
->  #include "cxl_device.h"
-> +#include "hw/pci/pcie_host.h"
->  
->  #define CXL_CACHE_LINE_SIZE 64
->  #define CXL_COMPONENT_REG_BAR_IDX 0
-> @@ -24,12 +25,34 @@
->  
->  #define CXL_WINDOW_MAX 10
->  
-> +#define PXB_CXL_HOST_TYPE 0
-> +#define CXL_HOST_BRIDGE_TYPE 1
-Only used in one place where we pick between these two.
-Just use a bool down there.
 
-> +
-> +#define TYPE_CXL_HOST "cxl-host"
-> +OBJECT_DECLARE_SIMPLE_TYPE(CXLHostBridge, CXL_HOST)
-> +
-> +#define CXL_HOST_NUM_IRQS 4
-> +
->  typedef struct PXBCXLDev PXBCXLDev;
->  
-> +typedef struct CXLHostBridge {
-> +    PCIExpressHost parent_obj;
-> +
-> +    CXLComponentState cxl_cstate;
-> +
-> +    MemoryRegion io_ioport;
-> +    MemoryRegion io_mmio;
-> +    MemoryRegion io_ioport_window;
-> +    MemoryRegion io_mmio_window;
-> +    qemu_irq irq[CXL_HOST_NUM_IRQS];
-> +    int irq_num[CXL_HOST_NUM_IRQS];
-> +} CXLHostBridge;
-> +
->  typedef struct CXLFixedWindow {
->      uint64_t size;
->      char **targets;
->      PXBCXLDev *target_hbs[16];
-> +    CXLHostBridge *target_chb[16];
->      uint8_t num_targets;
->      uint8_t enc_int_ways;
->      uint8_t enc_int_gran;
-> diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-> index 945ee6ffd0..953521d601 100644
-> --- a/include/hw/cxl/cxl_component.h
-> +++ b/include/hw/cxl/cxl_component.h
-> @@ -270,8 +270,8 @@ uint8_t cxl_interleave_granularity_enc(uint64_t gran, Error **errp);
->  
->  hwaddr cxl_decode_ig(int ig);
->  
-> -CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb);
-> -bool cxl_get_hb_passthrough(PCIHostState *hb);
-> +CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb, int type);
-> +bool cxl_get_hb_passthrough(PCIHostState *hb, int type);
->  
->  bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp);
->  void cxl_doe_cdat_release(CXLComponentState *cxl_cstate);
-> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
-> index c9bc9c7c50..d6d915141a 100644
-> --- a/include/hw/cxl/cxl_host.h
-> +++ b/include/hw/cxl/cxl_host.h
-> @@ -16,6 +16,12 @@
->  void cxl_machine_init(Object *obj, CXLState *state);
->  void cxl_fmws_link_targets(CXLState *stat, Error **errp);
->  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
-> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
-> +                        CXLFixedMemoryWindowOptions *object, Error **errp);
-> +
-> +int cxl_host_set_irq_num(CXLHostBridge *host, int index, int gsi);
-> +void cxl_host_hook_up_registers(CXLState *cxl_state, CXLHostBridge *host,
-> +                                Error **errp);
->  
->  extern const MemoryRegionOps cfmws_ops;
->  
-Thanks,
-
-Jonathan
-
+-- 
+/kashyap
 
 
