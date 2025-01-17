@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D517C02183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jan 2025 23:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2638C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYZSK-0003pn-Lf; Thu, 16 Jan 2025 18:39:20 -0500
+	id 1tYa1z-0002AP-Ka; Thu, 16 Jan 2025 19:16:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tYZSE-0003pJ-DY; Thu, 16 Jan 2025 18:39:14 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tYZS9-0001EH-FP; Thu, 16 Jan 2025 18:39:11 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5da12190e75so3040630a12.1; 
- Thu, 16 Jan 2025 15:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737070745; x=1737675545; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WPddaBlTnCpqPRcq2UIs71qmpQumLiZWMEWObSxaXvU=;
- b=e3hK4O86cJ85Kzlw0Qp6DBdc3L+ayaOe5hjQWJ71TcRAmhJpZ7JW/vRSUNjKSNt2cu
- mK7YbojmpxtKy6MMu1cRIl+j4s4rzqkBhz0zxouyZrosLXGbFNQ9kjM0093Wj+Xa/dSo
- WtahcB+zoLJ+5hfxYeAJMQkeOJPOP6j7dvd9rMVTQGskkqvJeH82S4DItjtLhaMhtLh2
- sZdriaEpq+3fhURvWv9diQ2V8Beciu1lOz6XxsZfiXaDIt8IupGXbgWq4FSb+6503khK
- z29ZNUQ2el9uV7tAsZ+0h4n8fdhnZzlWWd5BeRaBrQd6QhvSf7c4KKTDI+TUso64Qv86
- WvkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737070745; x=1737675545;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WPddaBlTnCpqPRcq2UIs71qmpQumLiZWMEWObSxaXvU=;
- b=bSbw5Zup+IelMJIuHGcyyJxHtZnLGR88qH+/beXyRMiUio9WjyiNxDkahx0chVsgMy
- Mttequthfqs6PGtyxqRVGxKH+4gnOZaiblQj9G9gCTyYGKieM99dri2oQIMfxWNhpINv
- 64McDtobDNkOX6acTwLrG7vpMWorcMG6R2YLKACLVYGV353yxq96tZKnjrnbA2eA0QIA
- rnkV7J/IM1WdvU0PySq16JqK5QZ+ijKvGUeTY1GFswrLrJQooH/sdR7/6y1b9TLAIYTY
- zfuAsfHNudaUCh0VmsYn4UpaX0tK8yuKHgoSpUevkWSkBJGjOSlsgIBfij8ICVQ4E1uu
- loyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRYkZpWe/bBrvTHGIj5K6oRXBhMTWObyg+vTGcZBQMYZLW7CZvg8btvTdQAQqK8gOvtazLLBOzOejKWeI=@nongnu.org,
- AJvYcCXDML7jsshst8ujSvnssBbAYOqTegqzzq6O8GuAz4QVdJWYYKwxOVP3kA/ppy5w8uVLnZA7efk16a9GoQ==@nongnu.org,
- AJvYcCXmSmjqrxdjxEaU7u0CIAmhZH0cuWXx3hWdp3jd2rE3xcUyk7a0cLWFPmLW3DGBPRLcvCZ/SchS2Q==@nongnu.org,
- AJvYcCXxANmk+wDuHgyW5igsQNOEWO2TW87JyQrU69tzH6CsXbZeQ8o4PFUoVl5jJjyrWJ3zwvqLVMPHvMIkQg==@nongnu.org
-X-Gm-Message-State: AOJu0Ywrk/5OkOaVA7dTCHShEVtmXN1DhMPsoxaZC5+UBo8DJowMqhPv
- ReaKxQBk86WcgOxKpdZrypZBAbc2U9rG9tPta8BMT9FlXqorEHpA
-X-Gm-Gg: ASbGncs0i7tXDC8xr+KgVkf0G6jV+qIxaMF5an8k+Vrrhce8EaFGUTtRO2Qsi+oYWgj
- QgLkdQfc2l8bGTvKxjxloEzp/ZrNmGeSGL+vBvVp74Q0PoLkAz+gMXacDLRNBr+/krnfKgzsNYD
- Wx4681T3Lnbmb85ThWoSP2MohFlKBtLI3MW2P3TlqY/tZe4PgqbaEA/MuVpeT8tsy7tmwKjhoaG
- zGLWnMfEDCe13neZ9gm8QqYaOvg9uid5a/SvlffrZ0Ac20/Qn6dH/8SMmUVbtHPM8oDeICi6Ll9
- pOWcDbxVzM3Ev32Nc+7V+hXGACg=
-X-Google-Smtp-Source: AGHT+IEmfM7Tp+ek7u2FHhgHhnq/qefDrmHfQuOTevufLnnN6fe1IFFGGd35rVAguqezhwCL77rT9g==
-X-Received: by 2002:a17:907:9805:b0:aab:c6a5:7c71 with SMTP id
- a640c23a62f3a-ab38b232faamr42776466b.14.1737070744747; 
- Thu, 16 Jan 2025 15:39:04 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-078-055-006-027.78.55.pool.telefonica.de.
- [78.55.6.27]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384ce0c99sm68816166b.41.2025.01.16.15.39.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 15:39:04 -0800 (PST)
-Date: Thu, 16 Jan 2025 23:39:03 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-CC: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Guenter Roeck <linux@roeck-us.net>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_01/13=5D_hw/sd/sdhci=3A_S?=
- =?US-ASCII?Q?et_SDHC=5FNIS=5FDMA_bit_when_appropriate?=
-In-Reply-To: <823b6f0c-7e2f-4cc2-bf5f-79f34c77d7f6@tls.msk.ru>
-References: <20250111183711.2338-1-shentey@gmail.com>
- <20250111183711.2338-2-shentey@gmail.com>
- <823b6f0c-7e2f-4cc2-bf5f-79f34c77d7f6@tls.msk.ru>
-Message-ID: <B999663C-B1F1-4A26-AF25-BAA23B8AFBA3@gmail.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1r-00028F-Lz
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:03 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1p-0008LE-4j
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:03 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GE6LZO024421;
+ Fri, 17 Jan 2025 00:15:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Fsssl3rVDoQ/QfSTr
+ ko38/tT8zJbgxDACXrxI8DUNKs=; b=SFyMeaJhvWnmy+GyQvMFyTEPU1DJuqzrx
+ wdVDniSk3NxzI2wuBB5I+2eW7yikywgZ4g3qO2aAPVdR4I/A2/2Tn/LDjjIQr4QE
+ peMLkvsrFR54KkD5OeaGGhILOq7w4qbZCPto4AEhqsxU0PqZ1HhD8YFSE8X9MSAS
+ 4/FJ66JGi30umn/txHZIsUTtKmAvlvc8016rVHuNfJxMACLVv7IdHwl+ffwJ3FF0
+ D3qoMVRCsGjiZsK6/04gnGKxwkf3dezs4Eec3A5ymxFjMStvTIafLOfbv2vLT1VC
+ zFNTTLA9hYuEcspO4dMci3f1L35CG5HS9V+iVw//+C1EXityXyxXA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4473k5akw3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GMSKLV016512;
+ Fri, 17 Jan 2025 00:15:48 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4445p20192-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jan 2025 00:15:47 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50H0FkVV40042936
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Jan 2025 00:15:46 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 392EC20043;
+ Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BBEB920040;
+ Fri, 17 Jan 2025 00:15:45 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.62.46])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 17 Jan 2025 00:15:45 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v6 1/8] gdbstub: Allow the %d placeholder in the socket path
+Date: Fri, 17 Jan 2025 01:11:26 +0100
+Message-ID: <20250117001542.8290-2-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com>
+References: <20250117001542.8290-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: H3iC7AHEcdYD1myWPr_ZugzN8uzrlkO0
+X-Proofpoint-ORIG-GUID: H3iC7AHEcdYD1myWPr_ZugzN8uzrlkO0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-16_10,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501160178
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,38 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Just like for QEMU_LOG_FILENAME, replace %d with PID in the GDB socket
+path. This allows running multi-process applications with, e.g.,
+export QEMU_GDB=/tmp/qemu-%d.sock. Currently this is not possible,
+since the first process will cause the subsequent ones to fail due to
+not being able to bind() the GDB socket.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ gdbstub/user.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Am 15=2E Januar 2025 12:55:29 UTC schrieb Michael Tokarev <mjt@tls=2Emsk=
-=2Eru>:
->11=2E01=2E2025 21:36, Bernhard Beschow wrote:
->> In U-Boot, the fsl_esdhc[_imx] driver waits for both "transmit complete=
-d" and
->> "DMA" bits in esdhc_send_cmd_common() by means of DATA_COMPLETE constan=
-t=2E QEMU
->> currently misses to set the DMA bit which causes the driver to loop for=
-ever=2E Fix
->> that by setting the DMA bit if enabled when doing DMA block transfers=
-=2E
->>=20
->> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->
->Is this a qemu-stable material?
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index c2bdfc3d491..fd29d595f40 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -317,9 +317,19 @@ static bool gdb_accept_socket(int gdb_fd)
+ 
+ static int gdbserver_open_socket(const char *path)
+ {
++    g_autoptr(GString) buf = g_string_new("");
+     struct sockaddr_un sockaddr = {};
++    char *pid_placeholder;
+     int fd, ret;
+ 
++    pid_placeholder = strstr(path, "%d");
++    if (pid_placeholder != NULL) {
++        g_string_append_len(buf, path, pid_placeholder - path);
++        g_string_append_printf(buf, "%d", qemu_get_thread_id());
++        g_string_append(buf, pid_placeholder + 2);
++        path = buf->str;
++    }
++
+     fd = socket(AF_UNIX, SOCK_STREAM, 0);
+     if (fd < 0) {
+         perror("create socket");
+-- 
+2.47.1
 
-Good question=2E Given that this part of the code has some further issues =
-[1] I'd rather not alter stable behavior because we might just trade one bu=
-g for another=2E
-
-Best regards,
-Bernhard
-
-[1] <https://lore=2Ekernel=2Eorg/qemu-devel/4b846383-83bf-4252-a172-95604f=
-2f585b@linaro=2Eorg/>
-
-
->
->Thanks,
->
->/mjt
 
