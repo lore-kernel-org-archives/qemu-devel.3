@@ -4,87 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37103C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 07:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FA9C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 07:12:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYgQl-0000Wk-Ed; Fri, 17 Jan 2025 02:06:11 -0500
+	id 1tYgVj-0001LK-Ph; Fri, 17 Jan 2025 02:11:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tYgQk-0000WS-1u
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 02:06:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tYgVd-0001K4-Td; Fri, 17 Jan 2025 02:11:13 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tYgQf-0007TT-3o
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 02:06:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737097563;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y6Yesf3+j/k7hgOXyFBBoT9cNkww3rV6IdUuwKkJFrw=;
- b=SsYKOvI/6rTyMFs4RgUC0P0pDC2NSm9GLZDuILMUnx1yr2tVzNtuhuTR/o7gfZQwxuyOoQ
- coH5M0s2AeiIvHdMcJjk5XczaK5ATQAS8jt/LuEInhVA/F3yH0YTVc/n1sTUVaAvSZ3Ze1
- 3pJqx9UmgZGWytMGZhg29dLcysoB+2g=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-3e4ac6VaO5-Wl9ZZqHQSXA-1; Fri, 17 Jan 2025 02:06:01 -0500
-X-MC-Unique: 3e4ac6VaO5-Wl9ZZqHQSXA-1
-X-Mimecast-MFC-AGG-ID: 3e4ac6VaO5-Wl9ZZqHQSXA
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-aa6b904a886so147680966b.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 23:06:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737097560; x=1737702360;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y6Yesf3+j/k7hgOXyFBBoT9cNkww3rV6IdUuwKkJFrw=;
- b=tOlkrXQKmB/e9cPHPMFiJ2BJ5DcyefpDeOwoE5MtbAQbC2d8UayH/CN6ZyRNSYPXxh
- QabWHE1/eMfVy6qyHuZI/pM76Q3tRom9gg6bfmy1irWxCXrViRgmo88wKQdmPyV8WFfJ
- KYGWG9EZbxtgG1ePkS8tsRLDSzFJxUGtRfB+MguxBqyYq/sKYla/q7QjN7e5r2Kx30Vs
- yadQGlvckPrHhx1G36W3XlEl5PH07Dv/z8gZzWzqlCPvfUloNPzgORAEl/TX8n/xbjM6
- cURH1t/P7bPhJCA0yJVA0wTUaf1A5w2tsRnTYXOzAK8zpu90s49zUiPRNRkdc7mshtcl
- pbgA==
-X-Gm-Message-State: AOJu0YzvQPcZD05Z4wmZK1q3kYCbMNht8W2+avemICAWDAlvYiKctr59
- EZ0+wpYeW+5pmTMq1C0inXaV75Ds/XNMQPenyjkppVHpDM5KpHbAqL3naGuwMVecCzCIN4U2j1x
- rsVF5YqYm6hXsNZK0YqBzYwtQAvPxL8wYSqDrmo4lppxK73NrLL1V35RDkcNYLQpn0vvaxvq+3b
- 4sfyLy60orlqHef+ZK6RVcoeP2www=
-X-Gm-Gg: ASbGncs40BN1vCwziqr6pUoX2dr+NDoPtxtlbFhxpzk8q/TbMVT2FrrDPPokCzO5oVT
- dnUsskG+FXtlNYfELoM54Hc4WCAz1BsMufF6m
-X-Received: by 2002:a17:907:1c11:b0:ab3:7720:d87c with SMTP id
- a640c23a62f3a-ab38b384218mr168132166b.35.1737097559783; 
- Thu, 16 Jan 2025 23:05:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHwETaH2rX9YsPRXWvj9jAvOVM9lqy1b9q/Qi6KKd2cb7qEfE2s8W9DvUw5wHii+Ifasw/rSG8+kbs8hrkVfvw=
-X-Received: by 2002:a17:907:1c11:b0:ab3:7720:d87c with SMTP id
- a640c23a62f3a-ab38b384218mr168129566b.35.1737097559392; Thu, 16 Jan 2025
- 23:05:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tYgVb-00080b-VQ; Fri, 17 Jan 2025 02:11:13 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B3D7D97B9;
+ Fri, 17 Jan 2025 10:11:00 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0AC0B19D0D2;
+ Fri, 17 Jan 2025 10:11:08 +0300 (MSK)
+Message-ID: <4b9b3f52-8f00-4135-a121-a4115be2a789@tls.msk.ru>
+Date: Fri, 17 Jan 2025 10:11:07 +0300
 MIME-Version: 1.0
-References: <20250115125342.3883374-1-imammedo@redhat.com>
- <20250115125342.3883374-3-imammedo@redhat.com>
-In-Reply-To: <20250115125342.3883374-3-imammedo@redhat.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 17 Jan 2025 12:35:47 +0530
-X-Gm-Features: AbW1kvY4jlfdV69jkaVYrSanRjbf_2mqsxf63SArSTLaKOrEbSPmAg5XD32hSLs
-Message-ID: <CAK3XEhNMFrvN4dkHj93fapCqCcAaHr5gp+TTbNfGF==YwJGR+A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] pci: acpi: Windows 'PCI Label Id' bug workaround
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/13] hw/sd/sdhci: Set SDHC_NIS_DMA bit when
+ appropriate
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20250111183711.2338-1-shentey@gmail.com>
+ <20250111183711.2338-2-shentey@gmail.com>
+ <823b6f0c-7e2f-4cc2-bf5f-79f34c77d7f6@tls.msk.ru>
+ <B999663C-B1F1-4A26-AF25-BAA23B8AFBA3@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <B999663C-B1F1-4A26-AF25-BAA23B8AFBA3@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,118 +115,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 15, 2025 at 6:23=E2=80=AFPM Igor Mammedov <imammedo@redhat.com>=
- wrote:
->
-> Current versions of Windows call _DSM(func=3D7) regardless
-> of whether it is supported or not. It leads to NICs having bogus
-> 'PCI Label Id =3D 0', where none should be set at all.
->
-> Also presence of 'PCI Label Id' triggers another Windows bug
-> on localized versions that leads to hangs. The later bug is fixed
-> in latest updates for 'Windows Server' but not in consumer
-> versions of Windows (and there is no plans to fix it
-> as far as I'm aware).
->
-> Given it's easy, implement Microsoft suggested workaround
-> (return invalid Package) so that affected Windows versions
-> could boot on QEMU.
-> This would effectvely remove bogus 'PCI Label Id's on NICs,
-> but MS teem confirmed that flipping 'PCI Label Id' should not
-> change 'Network Connection' ennumeration, so it should be safe
-> for QEMU to change _DSM without any compat code.
->
-> Smoke tested with WinXP and WS2022
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/774
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->  hw/i386/acpi-build.c | 33 +++++++++++++++++++++++----------
->  1 file changed, 23 insertions(+), 10 deletions(-)
->
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 733b8f0851..1311a0d4f3 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -654,6 +654,7 @@ static Aml *aml_pci_pdsm(void)
->      Aml *acpi_index =3D aml_local(2);
->      Aml *zero =3D aml_int(0);
->      Aml *one =3D aml_int(1);
-> +    Aml *not_supp =3D aml_int(0xFFFFFFFF);
->      Aml *func =3D aml_arg(2);
->      Aml *params =3D aml_arg(4);
->      Aml *bnum =3D aml_derefof(aml_index(params, aml_int(0)));
-> @@ -678,7 +679,7 @@ static Aml *aml_pci_pdsm(void)
->           */
->          ifctx1 =3D aml_if(aml_lnot(
->                       aml_or(aml_equal(acpi_index, zero),
-> -                            aml_equal(acpi_index, aml_int(0xFFFFFFFF)), =
-NULL)
-> +                            aml_equal(acpi_index, not_supp), NULL)
->                   ));
->          {
->              /* have supported functions */
-> @@ -704,18 +705,30 @@ static Aml *aml_pci_pdsm(void)
->      {
->         Aml *pkg =3D aml_package(2);
->
-> -       aml_append(pkg, zero);
-> -       /*
-> -        * optional, if not impl. should return null string
-> -        */
-> -       aml_append(pkg, aml_string("%s", ""));
-> -       aml_append(ifctx, aml_store(pkg, ret));
-> -
->         aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_=
-index));
-> +       aml_append(ifctx, aml_store(pkg, ret));
->         /*
-> -        * update acpi-index to actual value
-> +        * Windows calls func=3D7 without checking if it's available,
-> +        * as workaround Microsoft has suggested to return invalid for fu=
-nc7
-> +        * Package, so return 2 elements package but only initialize elem=
-ents
-> +        * when acpi_index is supported and leave them uninitialized, whi=
-ch
-> +        * leads elements to being Uninitialized ObjectType and should tr=
-ip
-> +        * Windows into discarding result as an unexpected and prevent se=
-tting
-> +        * bogus 'PCI Label' on the device.
+17.01.2025 02:39, Bernhard Beschow wrote:
+> Am 15. Januar 2025 12:55:29 UTC schrieb Michael Tokarev <mjt@tls.msk.ru>:
 
-This comment is very confusing!
+>> Is this a qemu-stable material?
+> 
+> Good question. Given that this part of the code has some further issues [1] I'd rather not alter stable behavior because we might just trade one bug for another.
 
->          */
-> -       aml_append(ifctx, aml_store(acpi_index, aml_index(ret, zero)));
-> +       ifctx1 =3D aml_if(aml_lnot(aml_lor(
-> +                    aml_equal(acpi_index, zero), aml_equal(acpi_index, n=
-ot_supp)
-> +                )));
+And it's a good answer!  Thank you for sharing your thoughts.
+I agree, I dropped this (simple) change from the stable series.
 
-So this conditional checks if the acpi index is supported (because its
-aml_lnot()).
-
-> +       {
-> +           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)=
-));
-> +           /*
-> +            * optional, if not impl. should return null string
-> +            */
-
-I know this comes from the existing code but I am still confused. Why
-is this appending "return null string" logic to "if acpi index is
-supprted" conditional?
-
-> +           aml_append(ifctx1, aml_store(aml_string("%s", ""),
-> +                                        aml_index(ret, one)));
-> +       }
-> +       aml_append(ifctx, ifctx1);
-> +
->         aml_append(ifctx, aml_return(ret));
->      }
->
-> --
-> 2.43.0
->
+/mjt
 
 
