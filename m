@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD34C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC9DC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfrf-0006zO-CC; Fri, 17 Jan 2025 01:29:55 -0500
+	id 1tYg9L-0003J3-7s; Fri, 17 Jan 2025 01:48:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYfrd-0006yo-Jg; Fri, 17 Jan 2025 01:29:53 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYfrb-0002kM-Jr; Fri, 17 Jan 2025 01:29:53 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 87C86D96F8;
- Fri, 17 Jan 2025 09:29:41 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8697519D09B;
- Fri, 17 Jan 2025 09:29:49 +0300 (MSK)
-Message-ID: <1e110577-8784-4c6c-8d2c-f4f0c1321eb4@tls.msk.ru>
-Date: Fri, 17 Jan 2025 09:29:49 +0300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tYg8p-0002xZ-Ni
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:39 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tYg8j-000577-3Y
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:38 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-21a7ed0155cso26807335ad.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 22:47:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737096448; x=1737701248;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=oD5ynekI1pncuUsoZ3D40zipNa+S5IKwwfMz+sh95pQ=;
+ b=BMbL2T5saP7+FA3BYW4rhDSk94WtvQNVcs5Qr4IYyMrSEUoGlqIcml46DxJkIzC6md
+ +rKhbwrTwTSfcus7XcbCDYzvWpNbuHl2+dH4XmX0KvvGHSUfprEYk8cmbLPAAr19bSJS
+ FstrGaxxB9UMG8OPL7Fx9ZJutf+YJM9P9E6Sob8sEq2zTt9YLVRDtbEqqU9MC/REMTSs
+ /sFz1if07knVLzyR5js6hlfIgC7KgW5zxBWvYAkLfeDu4ILOOdkZ7FLBhlIFTfM72teY
+ Png3Ld5JuyeeyBzWRBDgdTojXxtrJv85bCcg3L3IGx92gS/MMky6rFjA4GGOUNQJTXz9
+ or/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737096448; x=1737701248;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oD5ynekI1pncuUsoZ3D40zipNa+S5IKwwfMz+sh95pQ=;
+ b=XQ4I2pFE1ZdzeUVt9HNAjDcQlVptLT/ehYd6iGKMJaKuop2+stWMFTi+ZEqL4IfTpH
+ aiic9LJ7P5/fecoVChtvdTfolNxUyeZY/HUwm4CVqeQW39sxCsQ66R+vKY6d2+hPneYu
+ YpKtgDEQkUT020Tqxcmsi7VdxL6pwXf8DmpRaohchZ35onlhTUj99uOGtQwdZtXxPf1B
+ dseNAWVvTjw2XUIwdHmIch18NoBe3FvEuGZmeAnTD9IhgHKzBufSrTMSx8jugUPsrK5w
+ ACeLKKoGuqisaZAEsphblrZG7wpZ4LV8WBKO83Vy3IcemeGDC8iKcjAb/I8fPp6Cj1jL
+ Bc1Q==
+X-Gm-Message-State: AOJu0Yw6ah/jPqmnb7ZWtZoXpSBy0GLtXSTuCX82Id+oAVB/GznYfdVW
+ wjmQfxBbnuFqFcCkUtTagj0USXuniXTCG9+DaRF5kHRn02eyfwXeFy8pcEwBVsw=
+X-Gm-Gg: ASbGncvhgP3eYq8jf8JBlqY2CAX91VZjbS0gKorLTQDWqNIJIWpL0W3F2xWtg7/Jma1
+ eRf+ta9wNsvJsaKi7YmSskKY5sLzDWUUthL14XebOmf9dUkBBY/lpcQgqn57H5KZkjaQsYmchLF
+ mJtEyKz9gl46avuhzxF8jM6NvnFCW0nsnoLBkcv3m7PYaUjO3BczStsPwuI/fPsrHet/39Bf8lu
+ XiL2VE13nnFXwJtPjdwJ6HtCfg1UKoPtIXH2JnQUInus8McbIyALMUOgvc=
+X-Google-Smtp-Source: AGHT+IFTUgQOgRUIYM0TAKwq8GsySnUp6unfk8UgsYsGr4Vu6buAMgsowUdvcJ3PeVkGjgu4NeHGrA==
+X-Received: by 2002:a17:903:2b06:b0:216:1367:7e48 with SMTP id
+ d9443c01a7336-21c34cd5e4emr26690545ad.0.1737096448329; 
+ Thu, 16 Jan 2025 22:47:28 -0800 (PST)
+Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-21c2cea07b6sm9617865ad.35.2025.01.16.22.47.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jan 2025 22:47:28 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Fri, 17 Jan 2025 15:47:02 +0900
+Subject: [PATCH v4 3/3] coreaudio: Initialize the buffer for device change
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] pci: acpi: Windows 'PCI Label Id' bug workaround
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20250115125342.3883374-1-imammedo@redhat.com>
- <20250115125342.3883374-3-imammedo@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250115125342.3883374-3-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20250117-coreaudio-v4-3-f8d4fa4cb5f4@daynix.com>
+References: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
+In-Reply-To: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
+To: Gerd Hoffmann <kraxel@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,100 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-15.01.2025 15:53, Igor Mammedov wrote:
-> Current versions of Windows call _DSM(func=7) regardless
-> of whether it is supported or not. It leads to NICs having bogus
-> 'PCI Label Id = 0', where none should be set at all.
-> 
-> Also presence of 'PCI Label Id' triggers another Windows bug
-> on localized versions that leads to hangs. The later bug is fixed
-> in latest updates for 'Windows Server' but not in consumer
-> versions of Windows (and there is no plans to fix it
-> as far as I'm aware).
-> 
-> Given it's easy, implement Microsoft suggested workaround
-> (return invalid Package) so that affected Windows versions
-> could boot on QEMU.
-> This would effectvely remove bogus 'PCI Label Id's on NICs,
-> but MS teem confirmed that flipping 'PCI Label Id' should not
-> change 'Network Connection' ennumeration, so it should be safe
-> for QEMU to change _DSM without any compat code.
+Reallocate buffers when the active device change as the required buffer
+size may differ.
 
-While this is not a qemu bug fix, this change feels like a good
-candidate for qemu-stable, - what do you think?  I picked it up
-for current stable series, which are 7.2, 8.2, 9.1 and 9.2.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ audio/coreaudio.m | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index b9e1a952ed37..72a6df0f75ee 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -466,6 +466,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+     core->outputDeviceID = deviceID;
+     core->audioDevicePropertyBufferFrameSize = audioDevicePropertyBufferFrameSize;
+     core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
++    audio_generic_initialize_buffer_out(&core->hw);
+     core->ioprocid = ioprocid;
+ 
+     return 0;
 
-/mjt
-
-> Smoke tested with WinXP and WS2022
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/774
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->   hw/i386/acpi-build.c | 33 +++++++++++++++++++++++----------
->   1 file changed, 23 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 733b8f0851..1311a0d4f3 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -654,6 +654,7 @@ static Aml *aml_pci_pdsm(void)
->       Aml *acpi_index = aml_local(2);
->       Aml *zero = aml_int(0);
->       Aml *one = aml_int(1);
-> +    Aml *not_supp = aml_int(0xFFFFFFFF);
->       Aml *func = aml_arg(2);
->       Aml *params = aml_arg(4);
->       Aml *bnum = aml_derefof(aml_index(params, aml_int(0)));
-> @@ -678,7 +679,7 @@ static Aml *aml_pci_pdsm(void)
->            */
->           ifctx1 = aml_if(aml_lnot(
->                        aml_or(aml_equal(acpi_index, zero),
-> -                            aml_equal(acpi_index, aml_int(0xFFFFFFFF)), NULL)
-> +                            aml_equal(acpi_index, not_supp), NULL)
->                    ));
->           {
->               /* have supported functions */
-> @@ -704,18 +705,30 @@ static Aml *aml_pci_pdsm(void)
->       {
->          Aml *pkg = aml_package(2);
->   
-> -       aml_append(pkg, zero);
-> -       /*
-> -        * optional, if not impl. should return null string
-> -        */
-> -       aml_append(pkg, aml_string("%s", ""));
-> -       aml_append(ifctx, aml_store(pkg, ret));
-> -
->          aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
-> +       aml_append(ifctx, aml_store(pkg, ret));
->          /*
-> -        * update acpi-index to actual value
-> +        * Windows calls func=7 without checking if it's available,
-> +        * as workaround Microsoft has suggested to return invalid for func7
-> +        * Package, so return 2 elements package but only initialize elements
-> +        * when acpi_index is supported and leave them uninitialized, which
-> +        * leads elements to being Uninitialized ObjectType and should trip
-> +        * Windows into discarding result as an unexpected and prevent setting
-> +        * bogus 'PCI Label' on the device.
->           */
-> -       aml_append(ifctx, aml_store(acpi_index, aml_index(ret, zero)));
-> +       ifctx1 = aml_if(aml_lnot(aml_lor(
-> +                    aml_equal(acpi_index, zero), aml_equal(acpi_index, not_supp)
-> +                )));
-> +       {
-> +           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)));
-> +           /*
-> +            * optional, if not impl. should return null string
-> +            */
-> +           aml_append(ifctx1, aml_store(aml_string("%s", ""),
-> +                                        aml_index(ret, one)));
-> +       }
-> +       aml_append(ifctx, ifctx1);
-> +
->          aml_append(ifctx, aml_return(ret));
->       }
->   
+-- 
+2.47.1
 
 
