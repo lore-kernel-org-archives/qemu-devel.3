@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22B1C02188
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 16:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1775C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 16:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYomV-0002wC-Jw; Fri, 17 Jan 2025 11:01:11 -0500
+	id 1tYono-0003JK-Ea; Fri, 17 Jan 2025 11:02:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYomT-0002vb-8n
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:01:09 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYomP-00015Z-Vz
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:01:09 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ab2bb0822a4so436360066b.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 08:01:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737129663; x=1737734463; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QMX8neI+Vn25vJGZyNf8DZLweO620Hm9MVq3oL/kxE8=;
- b=Rjv1uQJQvCQ5Kf4LmtKd9BtdE+3esTACeouQ1MAxg1oYHP4LeDczKcJ1E9VIWwKceF
- Lv47Nnx/MCM1spO/jLyz3q/5Q9HyFKurZSofhzfeWIv8XfE2+K7suKXvNTiRgcOVk9nb
- 91R4EjWl5z6hxmbS5ODiw+Dp4lFHA+QTuMvJnhykFvN2t42dq9uzaQZnN4OSTrpNAUbK
- EYINBvqatgmuG9WEovuUSPto3h/gbalqlCyLJmjfdGF7bD3Tl3iUZuyVgZue3mS+YuOp
- XKXjYSWrBqw8t2A9ZwJC6qY04r5YJv1lOiK7kX5qzI1Rob/1zyOigVw0034eK60uzmKB
- Ehtw==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tYong-0003Fr-L2
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:02:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tYonc-0001E2-K7
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:02:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737129737;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:to:
+ cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5jW/wo7233xWUQsW5xLgPaXn5rLpefJHSy+gczKkEcU=;
+ b=etBbz13x1gcisuvNYfH1Se0fW/T7uRgPyDOvhkgEW7ZnG7su2DZDWk2Q/FIuTQi7ARgzIX
+ XcA75x8WaOKc65O/7lImW6h4L0vhK+3SKbwzxWpkKVJ5g+/XSeBt6vqz4oRAgtj/WV3hHa
+ mHfWuHcaASY9feGSliQnWmedKIj7Q4c=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-207-RjPeKkhIP_6k6kxQwSjqGA-1; Fri, 17 Jan 2025 11:02:14 -0500
+X-MC-Unique: RjPeKkhIP_6k6kxQwSjqGA-1
+X-Mimecast-MFC-AGG-ID: RjPeKkhIP_6k6kxQwSjqGA
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa689b88293so210097666b.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 08:02:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737129663; x=1737734463;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QMX8neI+Vn25vJGZyNf8DZLweO620Hm9MVq3oL/kxE8=;
- b=kUm1uZTC6R1m6UdnLkmlSxCpt3nNw5plU9AjbMZ5DwCvDsmgivvKeIOwyoxtW6gGsp
- 9+BmJ1gV69JTIJp0yvkFdMfpr5Y3LfXn8tAQWoDXGyUKhOAxH5Z8y0DLGV39GjLLGxLV
- Jrlkgn6gVdtCcLwzX2W1RoLCWIazMd0hz8/11DMhiSDWwYMYatbDSCO8ldQvdPVLN4ZG
- jfHZAAtzOa2TEe5kSJWjBGrVSa8V59HMrluKR4Dvl3CPN4F6iewFvre/yMMeyHeyD3UP
- 1Iew7abqJ7LR6MnmMyiSBGkzlO9w0mqOvwj+JLSywYAlNkqVcHKc0bZaSj3egIe5DXW8
- hjlQ==
-X-Gm-Message-State: AOJu0YzCu36oF17dfMpTXTnICrU+YQN+PW6PyBHyC8tgAsqNXU76h8a7
- CwxTXYbCNsUleXN1/sQSKP92fvyQJ0oM555LfkPDE9Vl2JFqi3h0qAZEhb2U4fkny83unfzau1s
- 8SlI=
-X-Gm-Gg: ASbGncs0RwjH8XL8kNWuTZZXqZxHZvHu2gsvwuppdN3EF0y34nVfGri1I6q1N0CgDte
- TdASNEOphmjy84Y7nxgKfUGmDCWBJKoTbzfB6o7TD7lP84+HOHx/LgbNbr4hr7R1lgBMUL14uSl
- h8h0sO+1c7jWHQaRyOaKJAvDCuxWYVOnVxDmpi9JvPu4y4a7iwZ710AX3GIMZf0UGONvPZvnZGz
- F4JLS7EaI+Rlq3w7RkAe+/NzDssLsxjgcbziO6snUlBZ5dpA/wRczg=
-X-Google-Smtp-Source: AGHT+IGuHusBSOH1pVOXd3ueUWW5ijHJcxIJwlCpT4jbBLBDVgZlv2ajflCu7fFTRByo2FqW0+XgLw==
-X-Received: by 2002:a17:907:2d8f:b0:aae:c3c1:1361 with SMTP id
- a640c23a62f3a-ab38b37eb60mr303372566b.44.1737129661118; 
- Fri, 17 Jan 2025 08:01:01 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384c5ad7bsm190678766b.36.2025.01.17.08.01.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 08:01:00 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 296136083E;
- Fri, 17 Jan 2025 16:00:59 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] rust: add --check-cfg test to rustc arguments
-In-Reply-To: <20250107155406.53161-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Tue, 7 Jan 2025 16:54:05 +0100")
-References: <20250107155406.53161-1-pbonzini@redhat.com>
-User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Fri, 17 Jan 2025 16:00:59 +0000
-Message-ID: <87plklfn0k.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1737129733; x=1737734533;
+ h=content-transfer-encoding:cc:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5jW/wo7233xWUQsW5xLgPaXn5rLpefJHSy+gczKkEcU=;
+ b=H90AQycOVUjlEtSVsyahh2hI8Bl2TLNkGxuveuxGQeksNasz4ZY8WTR3qM3Dyx4Mi8
+ HoCQmqvO4hYWsU0Grjtzg8W3WcdFkC2sy/yBwYbFudOi3EMRc6VVv/Y+2ESYd+6H5XES
+ aLrYm9SyvdzGOvCxuwOtqY0ViC+Y3lHs6EQcbgUl68HW378t/iftWmjtgq19b4xrvY2r
+ XfVqQvgTFR4lnDBVSbUz/FqYGNvpq1e9FR+kvGxx1pMLM3rcRbi2MfhVWOx4tTdwbNfZ
+ Cvkg20q3kvSNwUpMReaXQ3arO+AJAQkfqRxNBAJHZXskyP/7erdzURSqH38Io20hrRt/
+ r4rg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX2Z0OqmLZTi/43huM3Au4nRJNBo3vwYD2MTCJcyh/KrRiJAa24Di2yzXV3q2MrsxU2RfwDQp79cBeA@nongnu.org
+X-Gm-Message-State: AOJu0YzlHtN2AgExyqJKmvZK9gKb5zlO+LAM04/UvU6uSps0sS7xvmZG
+ XchHhkr+bWRR1NWaQiMynWpHvuIOX2EPgdyUF94ueuaF0hCW+5o4Odsp0CV72VrUCIeJHW/osyt
+ s5cIep4N0kijO6NSle6+Hcr4KRZ2o2fGzf2qfGEWyfNHVvmMQKp9spD/hND5ryeD0uJKTYukm7M
+ 5XT93ETqatsdE5EFJ4Es8UafcLfd4=
+X-Gm-Gg: ASbGncuN5e2H7wWAEE0WNEGc1qOyJGIRsZLfH5Ey4wStlCi2Mmoabws30zXO7gGW2PA
+ XFenwCh941jXuEMtKsByezHNUX1mjH82JRK9x
+X-Google-Smtp-Source: AGHT+IHQTabPhGSQY5EGAqp6+1cRnE89BlcjBtmetz0riZk5auXhBKCskNp+7wj7xMw2a5dzlrJpGNERdrpm45DabIA=
+X-Received: by 2002:a17:906:6a12:b0:aa6:a8da:7ba3 with SMTP id
+ a640c23a62f3a-ab38b163e98mr358298566b.27.1737129733218; 
+ Fri, 17 Jan 2025 08:02:13 -0800 (PST)
+X-Received: by 2002:a17:906:6a12:b0:aa6:a8da:7ba3 with SMTP id
+ a640c23a62f3a-ab38b163e98mt329902466b.27.1737129731258; Fri, 17 Jan 2025
+ 08:02:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250110104335.267518-1-anisinha@redhat.com>
+In-Reply-To: <20250110104335.267518-1-anisinha@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Fri, 17 Jan 2025 21:32:00 +0530
+X-Gm-Features: AbW1kvYAzei6mDI1NeLPfLMnAgc86MPypoYAY9tV925vJo6CHHn9gj__IK3_mhg
+Message-ID: <CAK3XEhMSUC=axO2nBP3SC2KxGOnwfU8=MDi_m=GoYwUWusMfbg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] tests/qtest/libqos: add DMA support for writing
+ and reading fw_cfg files
+Cc: farosas@suse.de, armbru@redhat.com, kraxel@redhat.com, lvivier@redhat.com, 
+ pbonzini@redhat.com, philmd@linaro.org, berrange@redhat.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,62 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Fri, Jan 10, 2025 at 4:16=E2=80=AFPM Ani Sinha <anisinha@redhat.com> wro=
+te:
+>
+> This patchset enables DMA interface support for writing fw-cfg files in
+> libqtest. The first patch is just a code refactoring so that fw-cfg
+> directory parsing can be part of a separate helper function.
+> The second patch is the actual patch that introduces two new apis for
+> writing and reading fw-cfg files using DMA interface. The apis are
+> tested by writing a new basic qtest for vmcoreinfo device in patch 3.
+>
+> $ MALLOC_PERTURB_=3D255  QTEST_QEMU_BINARY=3D./qemu-system-x86_64  /works=
+pace/qemu-ani/build/tests/qtest/vmcoreinfo-test
+> TAP version 13
+> # random seed: R02S33ea0ae4568aae69a6191a97e6ea37fc
+> 1..1
+> # Start of x86_64 tests
+> # Start of vmcoreinfo tests
+> # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-267380.=
+sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-267380.qmp,id=
+=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -dev=
+ice vmcoreinfo -accel qtest
+> ok 1 /x86_64/vmcoreinfo/basic-write
+> # End of vmcoreinfo tests
+> # End of x86_64 tests
 
-> rustc will check that every reachable #[cfg] matches a list of
-> the expected config names and values.  Recent versions of rustc are
-> also complaining about #[cfg(test)], even if it is basically a standard
-> part of the language.  So, always allow it.
-
-Hmm this breaks the non-project CI builds even further (I as hoping it
-would help):
-
-  FAILED: rust/qemu-api/libqemu_api.rlib=20
-  /usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc -=
-C linker=3Dcc -C link-arg=3D-m64 --color=3Dauto -C debug-assertions=3Dyes -=
-C overflow-checks=3Dno --crate-type rlib -D warnings --edition=3D2021 -C op=
-t-level=3D2 -g -D unexpected_cfgs -D unsafe_op_in_unsafe_fn -D warnings -D =
-unknown_lints --check-cfg test --check-cfg 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLO=
-C)' --check-cfg 'cfg(MESON)' --check-cfg 'cfg(has_offset_of)' --cfg MESON -=
-C default-linker-libraries --crate-name qemu_api --emit dep-info=3Drust/qem=
-u-api/qemu_api.d --emit link=3Drust/qemu-api/libqemu_api.rlib --out-dir rus=
-t/qemu-api/libqemu_api.rlib.p -C metadata=3D81e2432@@qemu_api@sta --check-c=
-fg 'cfg(feature,values("allocator"))' --check-cfg 'cfg(feature,values("debu=
-g_cell"))' --cfg HAVE_GLIB_WITH_ALIGNED_ALLOC --cfg has_offset_of rust/qemu=
--api/libqemu_api.rlib.p/structured/lib.rs
-  error: invalid `--check-cfg` argument: `test`
-    |
-    =3D note: expected `cfg(name, values("value1", "value2", ... "valueN"))`
-    =3D note: visit <https://doc.rust-lang.org/nightly/rustc/check-cfg.html=
-> for more details
-  [778/3165] Generating tests/Test QAPI files with a custom command
-  [779/3165] Compiling Rust source ../subprojects/syn-2.0.66/src/lib.rs
-  ninja: build stopped: subcommand failed.
-  make: *** [Makefile:168: run-ninja] Error 1
-
-See https://gitlab.com/stsquad/qemu/-/jobs/8883566658
+CI pipeline seems green when run on this patch series:
+https://gitlab.com/anisinha/qemu/-/pipelines/1629670893
+(one failure seems unrelated)
 
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  scripts/rust/rustc_args.py | 2 ++
->  1 file changed, 2 insertions(+)
+> cc: kraxel@redhat.com
+> cc: farosas@suse.de
+> cc: lvivier@redhat.com
+> cc: pbonzini@redhat.com
+> cc: armbru@redhat.com
+> cc: philmd@linaro.org
+> cc: berrange@redhat.com
+> cc: qemu-devel@nongnu.org
+> cc: farosas@suse.de
 >
-> diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-> index 5525b3886fa..d79dc6d81f1 100644
-> --- a/scripts/rust/rustc_args.py
-> +++ b/scripts/rust/rustc_args.py
-> @@ -215,6 +215,8 @@ def main() -> None:
->=20=20
->      if rustc_version >=3D (1, 80):
->          if args.lints:
-> +            print("--check-cfg")
-> +            print("test")
->              for cfg in sorted(cargo_toml.check_cfg):
->                  print("--check-cfg")
->                  print(cfg)
+> changelog:
+> v3: first working version of the patch.
+> v4: refactoring without any new changes put into a new patch.
+> v5: a new qtest added to exercize the two new write and read apis.
+>
+> all along, other review feedbacks has been taken into account.
+>
+> Ani Sinha (3):
+>   libqos/fw_cfg: refactor file directory iteraton to make it more
+>     reusable
+>   tests/qtest/libqos: add DMA support for writing and reading fw_cfg
+>     files
+>   tests/qtest/vmcoreinfo: add a unit test to exercize basic vmcoreinfo
+>     function
+>
+>  MAINTAINERS                   |   2 +
+>  tests/qtest/libqos/fw_cfg.c   | 204 ++++++++++++++++++++++++++++++----
+>  tests/qtest/libqos/fw_cfg.h   |   6 +-
+>  tests/qtest/meson.build       |   1 +
+>  tests/qtest/vmcoreinfo-test.c |  90 +++++++++++++++
+>  5 files changed, 280 insertions(+), 23 deletions(-)
+>  create mode 100644 tests/qtest/vmcoreinfo-test.c
+>
+> --
+> 2.45.2
+>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
