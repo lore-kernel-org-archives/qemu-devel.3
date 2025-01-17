@@ -4,93 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC07C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF52EC02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYlds-0002U1-DD; Fri, 17 Jan 2025 07:40:04 -0500
+	id 1tYlfk-0003pz-6K; Fri, 17 Jan 2025 07:42:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tYldp-0002TL-Hz
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:40:01 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tYldn-0007xR-RJ
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:40:01 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2165448243fso46150815ad.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 04:39:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1737117597; x=1737722397; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+h3KeTQFTuj6hD+7yCDC+cNM9Zms608OSpSuV8VXXAo=;
- b=YdQIb+pczylj4nKV5TkPF7rXYRn3XXeNQmxxOnQRYZubrr3CHjZdu0+RXpoxG0+Re+
- M1SaBo9w8BwZlbviASpfJW28sAA5WFumy3xfY7+JJ4LKqfN0JQlVvZOqTXM99f96NxoX
- evrgwluYwnyV+jbx775/HV/k2BJEgoLMyDr/mB42aT5MI7/bfQ7p4E1VQRV3xCbNTgl2
- A+yj6TzFcRi+/7/2ip922io4SFCVAah5oliFxh+KSoGVDUiFx/jsI+u4YQdc49ZpFb+I
- cij3/Q2hNauVxIsArVwbIwGc4Q0ZUZhShQiaW1EX6LlXIwwA5S2Djj3J/vK/5/cMYOrU
- hQJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737117597; x=1737722397;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+h3KeTQFTuj6hD+7yCDC+cNM9Zms608OSpSuV8VXXAo=;
- b=On+U/bnLibOQNBAzlovhtNmUNxsKHyrKRjNa9jbK6/0KxsozKKxJKkp+ZwCe+j4f3T
- Eae7K8dt53EIFlCwcyhPEsOeLdr/P6+SvVf3mPV3ELJlq++AMVVlj0vaZLiwI6nd8mRW
- OTGsUY3w3RD6QUfKEaE920MIgjRFvq8zxotOZMyohAOOsUNqmdIZMJ9WEOpsE7gZpJfm
- 5l5rioy7JaQU6dp3fjVEoaF0LBQo8EWuiLFY0shdgoGMTqAJEg9VAW1oJPE6lugBSAnV
- dkHaGXcZnVLFbC41I8/THOZh2pR0bMGd3OJ9q5YXrQ0LAoVWmd2x/ban3FIMhM4UWYOo
- ZV6w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4cfJfri2Xc5MljsWWGom96fIOJcUwRh3JGnO79pwkACcLQxH/XVi9catzayE+ZjUNP78FivkgIVG3@nongnu.org
-X-Gm-Message-State: AOJu0YzWB2V2+7Zp5FBC430nHnop1WwlvfntRg5UrVyxZ6/ILB27LFHu
- 5+T2FbOKv3l045Bzo/9yKp7vESBrGnL6R25FRBrL5e6HqA4xNRaQ6cNNPqP7mLw=
-X-Gm-Gg: ASbGncu8+2OTDzjX8NkCTnj49JFHCjkmHkNiL/1xRk2XTC9RGWEXBN4pRLF1b7rBO0a
- 0UuxgIQPSv0X60Lha31LHaN7nN1oyCPZmhVS0LEM5WV/xztflXQ0KO2PV8SWJy8HSgHhwg9k1LP
- XYBb+I9PGF9WVUoWweih44ID4INkXLDllHfJbcON/Xeah/UDfKIEMWZm9WJ8NTV5+WjrW0d00/v
- vY/3o5mYem4HBF1cqtMzjtW4mlkA8vKDEo6u0D/FC7Ilcg8CzjcNrtuIr4B59cMI5myc/Y=
-X-Google-Smtp-Source: AGHT+IEvMrY7bWSKcsXlM2olESM8MUnXBAjoK+kJognxeBht8TlEH6jsKwtY6l3XVQ9Sezrte/wVrg==
-X-Received: by 2002:a05:6a00:a09:b0:72d:80da:aff with SMTP id
- d2e1a72fcca58-72daf9c1dfcmr3864193b3a.9.1737117597395; 
- Fri, 17 Jan 2025 04:39:57 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.238.10])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72dab7f3025sm1809732b3a.12.2025.01.17.04.39.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 04:39:56 -0800 (PST)
-Message-ID: <c5c83e85-6c5b-4d70-be82-06eed6e63bc5@ventanamicro.com>
-Date: Fri, 17 Jan 2025 09:39:52 -0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tYlfh-0003jv-RI
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:41:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tYlfg-0008OC-4J
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:41:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737117711;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KXf6PxSUQ9yIrDcM5OXYcyszX+HHbMzUhivospHhLYc=;
+ b=CGROTPdCvyeBCYHlkwL2+DHqoHZSrhUXPo7+TN0OHNjd/91RhpWjgSZ1gmecthkKyy8CdW
+ dAUp2tbmRb0BrDcFCW/OEfIJxgZHEMlpiwWwHq4rv6HxpvCbHWvBw4kKPbyfTNcHtMZyRU
+ ZsutbG9NxuHnb6+oRvvDJyEqgAxhMwU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-rnxOrVXUMJWuGSXJp4F_lQ-1; Fri,
+ 17 Jan 2025 07:41:47 -0500
+X-MC-Unique: rnxOrVXUMJWuGSXJp4F_lQ-1
+X-Mimecast-MFC-AGG-ID: rnxOrVXUMJWuGSXJp4F_lQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8283E1955DD7; Fri, 17 Jan 2025 12:41:41 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.60])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D6395195605F; Fri, 17 Jan 2025 12:41:39 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Brian Cain <bcain@quicinc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 1/3] scripts: mandate that new files have
+ SPDX-License-Identifier
+Date: Fri, 17 Jan 2025 12:41:34 +0000
+Message-ID: <20250117124136.3389778-2-berrange@redhat.com>
+In-Reply-To: <20250117124136.3389778-1-berrange@redhat.com>
+References: <20250117124136.3389778-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] cpus: Introduce const_cpu_env() and
- const_env_archcpu()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250116230435.87580-1-philmd@linaro.org>
- <20250116230435.87580-2-philmd@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250116230435.87580-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.79,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,78 +87,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Going forward we want all newly created source files to have an
+SPDX-License-Identifier tag present.
 
+Initially mandate this for C, Python, Perl, Shell source files,
+as well as JSON (QAPI) and Makefiles, while encouraging users
+to consider it for other file types.
 
-On 1/16/25 8:04 PM, Philippe Mathieu-Daudé wrote:
-> const_cpu_env() is similar to cpu_env() but return a const
-> CPU 'env' state.
-> Same for const_env_archcpu() w.r.t. env_archcpu().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/cpu-common.h | 5 +++++
->   include/hw/core/cpu.h     | 6 ++++++
->   2 files changed, 11 insertions(+)
-> 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index b1d76d69850..f765e97a973 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -250,6 +250,11 @@ static inline ArchCPU *env_archcpu(CPUArchState *env)
->       return (void *)env - sizeof(CPUState);
->   }
->   
-> +static inline const ArchCPU *const_env_archcpu(const CPUArchState *env)
-> +{
-> +    return (const void *)env - sizeof(CPUState);
-> +}
-> +
+Reviewed-by: Brian Cain <bcain@quicinc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/checkpatch.pl | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-Can't we get away with something like:
-  
-+static inline const ArchCPU *const_env_archcpu(CPUArchState *env)
-+{
-+    return env_archcpu(env);
-+}
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 06d07e6c22..01f25aa88d 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1378,6 +1378,8 @@ sub process {
+ 	my $in_imported_file = 0;
+ 	my $in_no_imported_file = 0;
+ 	my $non_utf8_charset = 0;
++	my $expect_spdx = 0;
++	my $expect_spdx_file;
+ 
+ 	our @report = ();
+ 	our $cnt_lines = 0;
+@@ -1615,6 +1617,34 @@ sub process {
+ 			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
+ 		}
+ 
++# All new files should have a SPDX-License-Identifier tag
++		if ($line =~ /^new file mode\s*\d+\s*$/) {
++		    if ($expect_spdx) {
++			if ($expect_spdx_file =~
++			    /\.(c|h|py|pl|sh|json|inc|Makefile)$/) {
++			    # source code files MUST have SPDX license declared
++			    ERROR("New file '$expect_spdx_file' requires " .
++				  "'SPDX-License-Identifer'");
++			} else {
++			    # Other files MAY have SPDX license if appropriate
++			    WARNING("Does new file '$expect_spdx_file' need " .
++				    "'SPDX-License-Identifer'?");
++			}
++		    }
++		    $expect_spdx = 1;
++		    $expect_spdx_file = undef;
++		} elsif ($expect_spdx) {
++		    $expect_spdx_file = $realfile unless
++			defined $expect_spdx_file;
 +
-  
-
-We're just adding a 'const' to a pointer that env_archcpu() already retrieves,
-so might as well use env_archcpu(). The 'const' will be added by the compiler.
-This code builds without warnings in gcc and clang in my env (Fedora 41).
-
-If we want to be a bit more explicit I suggest:
-
-+static inline const ArchCPU *const_env_archcpu(CPUArchState *env)
-+{
-+    return (const ArchCPU *)env_archcpu(env);
-+}
++		    # SPDX tags may occurr in comments which were
++		    # stripped from '$line', so use '$rawline'
++		    if ($rawline =~ /SPDX-License-Identifier/) {
++			$expect_spdx = 0;
++			$expect_spdx_file = undef;
++		    }
++		}
 +
-
-Same observation with const_cpu_env() and cpu_env(). Thanks,
-
-
-Daniel
-
->   /**
->    * env_cpu_const(env)
->    * @env: The architecture environment
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index c3ca0babcb3..ecb31221b26 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -588,6 +588,12 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
->       return (CPUArchState *)(cpu + 1);
->   }
->   
-> +static inline const CPUArchState *const_cpu_env(const CPUState *cpu)
-> +{
-> +    /* We validate that CPUArchState follows CPUState in cpu-all.h. */
-> +    return (const CPUArchState *)(cpu + 1);
-> +}
-> +
->   typedef QTAILQ_HEAD(CPUTailQ, CPUState) CPUTailQ;
->   extern CPUTailQ cpus_queue;
->   
+ # Check for wrappage within a valid hunk of the file
+ 		if ($realcnt != 0 && $line !~ m{^(?:\+|-| |\\ No newline|$)}) {
+ 			ERROR("patch seems to be corrupt (line wrapped?)\n" .
+-- 
+2.47.1
 
 
