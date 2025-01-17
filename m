@@ -4,85 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6526CC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 03:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5923FC02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 04:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYdMI-0002PY-7n; Thu, 16 Jan 2025 22:49:22 -0500
+	id 1tYddY-0005oy-OU; Thu, 16 Jan 2025 23:07:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYdMC-0002PE-Jb; Thu, 16 Jan 2025 22:49:16 -0500
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYdM9-0004iq-4W; Thu, 16 Jan 2025 22:49:15 -0500
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-518c46cc6e4so434477e0c.3; 
- Thu, 16 Jan 2025 19:49:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737085750; x=1737690550; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5WwhmqBQIl7znAzfoBMjm0WAQMm9oqHMaTXtv4we1v8=;
- b=Qvoq3m16vallhR8snHMjBbzNk4o5I7spA73SmTElEnnXYCbOvq4QiKoU6aznyjQF4B
- 4aasRd+6DMJKlOmLvK9sFY6c1OHMhiwmtVYG8ivoX+mQFOfuIB2HU3Q9f+avZDd/A+/N
- v2nF7ZkE0VQLUFrP1/qDIGyB7vRmfj0HAsRsLwYhihQN26VAhfEdT3OUT/8ao8eL+Bth
- KTEVRaqXu/XyDv9bWvJ5kybpAB4tNL/sRFeDlUix5D38pMkHfheAIhC1Ybcw+eD/GxrZ
- LUsRtmezf961EpBFd0wnlzKfPiOqqwwcxW/mfIenekTXH6niVrW1kKfVN06rvJdYos24
- uQgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737085750; x=1737690550;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5WwhmqBQIl7znAzfoBMjm0WAQMm9oqHMaTXtv4we1v8=;
- b=heLBJpKXXJtO2AWLMI8GIktFmWci5j8hEHYhFtRZkSUNmeDrPOm5V72zgvi3pZ3Uv8
- sTIFZgP56b/Xh5v69TQxl+IA/62bLQ2qxZVcUxF0+fBqqxx0L1s/anQhpxzj/QCHwQ4A
- PWFLqHyK+4h+lM6qd/QprErFbUJxEQTpRySoqNkJcEIKN+ld3ChUb34w+iwxC/SV48/1
- LfVp+AWP1TnpwWc2gcNFs/mKgLrl2X2pYdfYZS14Wp3TeBopQJNXReVuNCq3aUZ2OIFF
- s2K0xuwr/wUROmESJPckG1MJg64IZ3n0v6ZLrjQfqhpVdfzf6RVJLm+yRTaKrfyItEq8
- POrA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyg/MfeSISeicbdN9jXRoK0ikpGrJ8nP8C2+RCdayvlLwHqnEY34ix6EFFf92Eb5u4UO8j+H9cyigi@nongnu.org
-X-Gm-Message-State: AOJu0YzeZFFuxt1XfIY4P8Pau8thRZRJZRIeKYDScRXbJFg2Rqv3Q1Sj
- 0lrmWthX++V/3zjyrzZxkROKPQGtIir0tdQhUOAkLfGe8+wzsYiGKGP08v+0n4jXHDbwYb314vk
- vsaumLrqsGuMpdpiUlLo6CbG0Sgk=
-X-Gm-Gg: ASbGncsq1rMkpVJm4lF0lkF0sYrksAaQpV616yAsdQcCYgp/wwXpwnKfrrJ5T92tzyh
- PlETsvpslbKkFrgxWV865QTuGJvFf3ayzN2TWEBqwRgYQRM21B83ClhUpMQADovSAOhE=
-X-Google-Smtp-Source: AGHT+IHBCnR7RINpDOHSz19V7tM8Z0U0tOH/Q+OKKO415CTXVl6DViygL/0uuCZ5j0a/lASYjVb/32pfscyPA18qksg=
-X-Received: by 2002:a05:6122:3d46:b0:518:a261:adca with SMTP id
- 71dfb90a1353d-51d5b301146mr913004e0c.8.1737085750455; Thu, 16 Jan 2025
- 19:49:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1tYddV-0005nt-3m; Thu, 16 Jan 2025 23:07:09 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1tYddS-0006w5-Vz; Thu, 16 Jan 2025 23:07:08 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GNJ2Ym024549;
+ Fri, 17 Jan 2025 04:06:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=j2WtY7PpvfNoJKOSo3g0k1yAnYTv
+ VbZe7NKspCrFzmE=; b=hUk/e1ghCQxVvf3+4TR4EXUBWq23Nxfbwr2ns7kFIRRk
+ 8TkYm/1E7eolZwKSUAzdXNcfF14Hh9px1UDIzkeJLOpWXmoQJrhkOZTRZAQ+dtZ4
+ vlDDJtqGNgX04Sdv/pNze+bKEl8lXwrl52NLSNMcefOEKAns14N5CEyXv8ahqhLV
+ Z79Nc7VA1WY1KqOzG3IR47o9Iv1nF3rXKw+ZCiBRZsPPDxGJwIIce6phwmKNUzRY
+ nSZLbAhj2dRAIyAjxtuy/rVYwwAfLRmp/in/dSJLAdDtsbH8tlAVRLybVr4OC3f2
+ q0uYMdxG5dRKVDjj1OrA8YsbB+OjHexkNzzJ5+JOvw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4473k5bbas-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jan 2025 04:06:46 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50H46kdP008026;
+ Fri, 17 Jan 2025 04:06:46 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4473k5bbap-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jan 2025 04:06:46 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50H2HCLq001089;
+ Fri, 17 Jan 2025 04:06:45 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 44456k8wc3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jan 2025 04:06:45 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50H46fDu65863942
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Jan 2025 04:06:41 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA0F22004E;
+ Fri, 17 Jan 2025 04:06:41 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F3F520043;
+ Fri, 17 Jan 2025 04:06:40 +0000 (GMT)
+Received: from [172.17.0.2] (unknown [9.3.101.175])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 17 Jan 2025 04:06:40 +0000 (GMT)
+Subject: [PATCH v9 0/2] ppc: Enable 2nd DAWR support on Power10
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+To: npiggin@gmail.com
+Cc: danielhb413@gmail.com, harshpb@linux.ibm.com, pbonzini@redhat.com,
+ qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ sbhat@linux.ibm.com
+Date: Fri, 17 Jan 2025 04:06:39 +0000
+Message-ID: <173708679976.1678.10844458987521427074.stgit@linux.ibm.com>
+User-Agent: StGit/1.5
 MIME-Version: 1.0
-References: <20250116223609.81594-1-philmd@linaro.org>
-In-Reply-To: <20250116223609.81594-1-philmd@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 17 Jan 2025 13:48:44 +1000
-X-Gm-Features: AbW1kvYVtOZLnR1dsUnRBQQt6CERsv43XhKCi8Bjvq5a3D4CqZq-lL_0CQr4XnM
-Message-ID: <CAKmqyKNN3ev46pYn-B7Mng1Q4XMajRKA4D_VwqCLPB85KhcH8A@mail.gmail.com>
-Subject: Re: [PATCH] hw/char/riscv_htif: Convert HTIF_DEBUG() to trace events
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Weiwei Li <liwei1518@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: eHSmqQmNA6aQ8Jh0Kf1Enc-0RWS0su1H
+X-Proofpoint-ORIG-GUID: Os9MC1TB4yqtdKEzfYBaxgkAb8FCMPA2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-17_01,2025-01-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0
+ clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501170028
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,88 +113,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 17, 2025 at 8:37=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Extends the existing watchpoint facility from TCG DAWR0 emulation to DAWR1 on
+Power10 for powernv in the first patch, and for pseries in the second patch
+with both TCG and KVM.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+Changelog:
+v8: https://lore.kernel.org/qemu-devel/170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com/
+v8->v9:
+  - Rebased to upstream.
+  - Addressed the changes suggested by David, Nick and Harsh.
+  - Added g_assert_not_reached in h_set_mode_resource_set_dawr0() in Patch 2.
+  - Made SPAPR_CAP_DAWR1 default ON, so also made it off for cpus below P10.
 
-Alistair
+v7: https://lore.kernel.org/qemu-devel/170063834599.621665.9541440879278084501.stgit@ltcd48-lp2.aus.stglab.ibm.com/
+v7->v8:
+  - Fixed the missed out ppc_store_dawr* calls.
+  - Removed the macros and split the patch into 2 one just enabling the
+    facility for powernv and the next one doing the same for pseries guest.
+  - The macro removal barely increased the number of lines by 12 as against
+    the previous version.
 
-> ---
->  hw/char/riscv_htif.c | 15 +++------------
->  hw/char/trace-events |  4 ++++
->  2 files changed, 7 insertions(+), 12 deletions(-)
->
-> diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-> index 11a0e1a7b7d..ec5db5a597f 100644
-> --- a/hw/char/riscv_htif.c
-> +++ b/hw/char/riscv_htif.c
-> @@ -32,14 +32,7 @@
->  #include "exec/tswap.h"
->  #include "system/dma.h"
->  #include "system/runstate.h"
-> -
-> -#define RISCV_DEBUG_HTIF 0
-> -#define HTIF_DEBUG(fmt, ...)                                            =
-       \
-> -    do {                                                                =
-       \
-> -        if (RISCV_DEBUG_HTIF) {                                         =
-       \
-> -            qemu_log_mask(LOG_TRACE, "%s: " fmt "\n", __func__, ##__VA_A=
-RGS__);\
-> -        }                                                               =
-       \
-> -    } while (0)
-> +#include "trace.h"
->
->  #define HTIF_DEV_SHIFT          56
->  #define HTIF_CMD_SHIFT          48
-> @@ -159,8 +152,7 @@ static void htif_handle_tohost_write(HTIFState *s, ui=
-nt64_t val_written)
->      uint64_t payload =3D val_written & 0xFFFFFFFFFFFFULL;
->      int resp =3D 0;
->
-> -    HTIF_DEBUG("mtohost write: device: %d cmd: %d what: %02" PRIx64
-> -        " -payload: %016" PRIx64 "\n", device, cmd, payload & 0xFF, payl=
-oad);
-> +    trace_htif_uart_write_to_host(device, cmd, payload);
->
->      /*
->       * Currently, there is a fixed mapping of devices:
-> @@ -251,8 +243,7 @@ static void htif_handle_tohost_write(HTIFState *s, ui=
-nt64_t val_written)
->          }
->      } else {
->          qemu_log("HTIF unknown device or command\n");
-> -        HTIF_DEBUG("device: %d cmd: %d what: %02" PRIx64
-> -            " payload: %016" PRIx64, device, cmd, payload & 0xFF, payloa=
-d);
-> +        trace_htif_uart_unknown_device_command(device, cmd, payload);
->      }
->      /*
->       * Latest bbl does not set fromhost to 0 if there is a value in toho=
-st.
-> diff --git a/hw/char/trace-events b/hw/char/trace-events
-> index 3ee7cfcdff2..b2e3d25ae34 100644
-> --- a/hw/char/trace-events
-> +++ b/hw/char/trace-events
-> @@ -136,3 +136,7 @@ stm32f2xx_usart_read(char *id, unsigned size, uint64_=
-t ofs, uint64_t val) " %s s
->  stm32f2xx_usart_write(char *id, unsigned size, uint64_t ofs, uint64_t va=
-l) "%s size %d ofs 0x%02" PRIx64 " <- 0x%02" PRIx64
->  stm32f2xx_usart_drop(char *id) " %s dropping the chars"
->  stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving '%c'"
-> +
-> +# riscv_htif.c
-> +htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "=
-device: %u cmd: %02u payload: %016" PRIx64
-> +htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t p=
-ayload) "device: %u cmd: %02u payload: %016" PRIx64
-> --
-> 2.47.1
->
->
+v6: https://lore.kernel.org/qemu-devel/168871963321.58984.15628382614621248470.stgit@ltcd89-lp2/
+v6->v7:
+  - Sorry about the delay in sending out this version, I have dropped the
+    Reviewed-bys as suggested and converted the patch to RFC back again.
+  - Added the TCG support. Basically, converted the existing DAWR0 support
+    routines into macros for reuse by the DAWR1. Let me know if the macro
+    conversions should be moved to a separate independent patch.
+  - As the dawr1 works on TCG, the checks in cap_dawr1_apply() report a warning
+    now only for P9 or P9 compat modes for both KVM and TCG use cases.
+  - 'make test' passes for caps checks. Also, as suggested by Greg Kurz, the
+    'make test' after making the DAWR1 default 'on' and updating defaut cpu
+    to Power10, shows no failures.
+
+v5: https://lore.kernel.org/all/20210412114433.129702-1-ravi.bangoria@linux.ibm.com/
+v5->v6:
+  - The other patches in the original series already merged.
+  - Rebased to the top of the tree. So, the gen_spr_book3s_310_dbg() is renamed
+    to register_book3s_310_dbg_sprs() and moved to cpu_init.c accordingly.
+  - No functional changes.
+
+v4: https://lore.kernel.org/r/20210406053833.282907-1-ravi.bangoria@linux.ibm.com
+v3->v4:
+  - Make error message more proper.
+
+v3: https://lore.kernel.org/r/20210330095350.36309-1-ravi.bangoria@linux.ibm.com
+v3->v4:
+  - spapr_dt_pa_features(): POWER10 processor is compatible with 3.0
+    (PCR_COMPAT_3_00). No need to ppc_check_compat(3_10) for now as
+    ppc_check_compati(3_00) will also be true. ppc_check_compat(3_10)
+    can be added while introducing pa_features_310 in future.
+  - Use error_append_hint() for hints. Also add ERRP_GUARD().
+  - Add kvmppc_set_cap_dawr1() stub function for CONFIG_KVM=n.
+
+v2: https://lore.kernel.org/r/20210329041906.213991-1-ravi.bangoria@linux.ibm.com
+v2->v3:
+  - Don't introduce pa_features_310[], instead, reuse pa_features_300[]
+    for 3.1 guests, as there is no difference between initial values of
+    them atm.
+  - Call gen_spr_book3s_310_dbg() from init_proc_POWER10() instead of
+    init_proc_POWER8(). Also, Don't call gen_spr_book3s_207_dbg() from
+    gen_spr_book3s_310_dbg() as init_proc_POWER10() already calls it.
+
+v1: https://lore.kernel.org/r/20200723104220.314671-1-ravi.bangoria@linux.ibm.com
+v1->v2:
+  - Introduce machine capability cap-dawr1 to enable/disable
+    the feature. By default, 2nd DAWR is OFF for guests even
+    when host kvm supports it. User has to manually enable it
+    with -machine cap-dawr1=on if he wishes to use it.
+  - Split the header file changes into separate patch. (Sync
+    headers from v5.12-rc3)
+
+Shivaprasad G Bhat (2):
+      ppc: Enable 2nd DAWR support on Power10 PowerNV machine
+      ppc: spapr: Enable 2nd DAWR on Power10 pSeries machine
+
+
+ hw/ppc/spapr.c           |  7 ++++-
+ hw/ppc/spapr_caps.c      | 43 +++++++++++++++++++++++++++++
+ hw/ppc/spapr_hcall.c     | 27 ++++++++++++------
+ include/hw/ppc/spapr.h   |  6 +++-
+ target/ppc/cpu.c         | 45 +++++++++++++++++++++---------
+ target/ppc/cpu.h         |  6 ++--
+ target/ppc/cpu_init.c    | 15 ++++++++++
+ target/ppc/excp_helper.c | 59 +++++++++++++++++++++-------------------
+ target/ppc/helper.h      |  2 ++
+ target/ppc/kvm.c         | 12 ++++++++
+ target/ppc/kvm_ppc.h     | 12 ++++++++
+ target/ppc/machine.c     |  3 +-
+ target/ppc/misc_helper.c | 10 +++++++
+ target/ppc/spr_common.h  |  2 ++
+ target/ppc/translate.c   | 12 ++++++++
+ 15 files changed, 206 insertions(+), 55 deletions(-)
+
+--
+Signature
+
+
 
