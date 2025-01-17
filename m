@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E75C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 05:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EABF5C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 05:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfLO-0004iB-5T; Fri, 17 Jan 2025 00:56:34 -0500
+	id 1tYfMC-0006rq-P0; Fri, 17 Jan 2025 00:57:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfLM-0004h3-Bs
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:56:32 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tYfMB-0006ml-IV
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:57:23 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfLK-0005vy-Pa
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:56:32 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21636268e43so39483125ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:56:30 -0800 (PST)
+ id 1tYfM9-00062B-Ib
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:57:23 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-21649a7bcdcso30621425ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:57:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737093389; x=1737698189; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737093440; x=1737698240; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7dd2Kc7PIJ7W/euC/t6aymQpi5oLNSFstO6Tm9FVxVI=;
- b=C8qV873KZDSYfeDgJkhYbfsum4/1R9gPFv26xbtmReeyRYvKDi3qSMJk9enn42AFyb
- 53spRYK6yT487iicYL/dVXThvQYV3+bGEI3MDPbZa4xwf/E7WSZyP4np/qipL6SHGY/g
- mOBnJLWdeNYUud2r1Mwb0gff7C5yib3H7ciYnGrXgE8wag5iKGjeX5r8ueUXmQTXDOF/
- cuxYO1JxmJJwsF02+0q/CmOKGVC6YttrO15QzHMfgr7BExWnUomgoqxZmtJCDLPZVk8b
- V7nsg2ghgi8BaVfRISoBNT1HAINct+CWlN5vqmDzht5hxkVrvV0LjJkp/iC/PFKPnxu3
- VSYw==
+ bh=KqK68H5+JozMTYRJ10cNihw65UnhFaW6gWCPmDIEE04=;
+ b=l6odzjbN2nIw07JhFPk7RC65M+THVXeY79J7RHjtRFGes/hWpOVDCf7rCUOZW/F70W
+ 1YYmx8coCNBlpOukoOslwpQlLs7l94wlG4HKtJjtgRJ8LgkdgtMzhBWYNAM9vK5fnUA+
+ sTYwGWKAwoXKzpn+0jBcGskSnvkskB8ipWq2XIoRRxg2IR8XsIO8fGI+9HW3HJFuh33i
+ tqbWKjZ879jt7L9AkHKOo7qyIQ2lxf9m0InqHvB7FO9iss0Da5PkZHs97zcNYT/OymH6
+ d7u/HKeO/7d7dOlq2blYKc72vJ+/dsGK5iTTAhHskFhDjx397YHRNE0m6Bc/GgIV4wKa
+ b9SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737093389; x=1737698189;
+ d=1e100.net; s=20230601; t=1737093440; x=1737698240;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7dd2Kc7PIJ7W/euC/t6aymQpi5oLNSFstO6Tm9FVxVI=;
- b=dvkMIGNv9xSpS07HLup3Q7FkokBfRSqmw+rkhxx0rAE8Y9N9MKlGFAvlZfnoA+e5Tt
- 7Uibr1xdfAakmCNYlD+FLiQrNzitAIKrPsXEqYXWJeuN18meTnlblbZISfxliq9LyDsz
- cMaMPP79m6yBAw6woP+IeghCX/20ZbZ0wSYIK0Pzts1oxYKsASiISQKM8S0eRv+8qiJG
- T43wAsZYKJSKHdULzo4/03tvGrORGioorIjG/9PE2lKqtP0D+D7+uw1U/c3vmM4oVmLg
- YJvC3EdwSUcFMEVjhGesUO3IyawYER6K3i7/BbxSpxrg3Cm7noOqGjrY6UMJKyHKUfcn
- BqJA==
-X-Gm-Message-State: AOJu0YxMH+lVSkZxTBg5mD7xwXOIP93/PIj0vCGLbj/peLdtwVL7gS6C
- 41N+xVpMUzsquWsiZAJ3KFE4uVHNIvzzqtGGvTSrkY5DZq60JBPj9VILsA==
-X-Gm-Gg: ASbGncuvn7lmdDeer3RZ1OqJ4nozWIY2UYVj1daNPtIgW3q6CM9Mx8z+QxJjh6FbD/S
- knWyZ2hTGMGR671EZkP1o+opH8tDU3rrVMqGSsPkfH/kzbPaipL67bkJw+S5AzVhGO4A2mftR3L
- Fwotr/beEIs+ZoP+mHSz1PUI0TkTZB1WGilJRKUn/xRmNTClnIq0EWC2fMW1Z65I14MsyTVxi5I
- tfRuf2fd+tV2CIrTZb3IBb2dX+muvTKLKWxEkqrKElWecSjh+04KHTFuAoSKkNG1v/upbG3U+xN
- QLDgA72ySI4UrtVdtt5+wapKrpYzl+fcfFX7n5EdMUhfNKWN4eHEws8kJfm2
-X-Google-Smtp-Source: AGHT+IHzhPlcfoPxnMz6jvo0mlM5BtNYEc6cg+YhUsGL4lz/m7fHzZW0iOL/g+RhLR0uYTKQMjomtg==
-X-Received: by 2002:a17:902:d481:b0:21b:d105:26c9 with SMTP id
- d9443c01a7336-21c3550f10fmr25413595ad.18.1737093388671; 
- Thu, 16 Jan 2025 21:56:28 -0800 (PST)
+ bh=KqK68H5+JozMTYRJ10cNihw65UnhFaW6gWCPmDIEE04=;
+ b=Znmc9Vg9obZl/Hq3VjM3TM7UcRTU6MgNbIPBclx9/cuHii/4Q7mvmAhz7l8wo0c9+E
+ 5k7ZkPR4+uMv/UCGW1kJfB1hBY5u56QffzoPIfnqYmafUqmOh9cZtsecqPeo2zEBOExe
+ 5XZFZtiY6M7pjp2n/1/0jHwydSmFJq9Rh/D7m1LARBmX46DLiZQFnqnEtFuhVQ4bc/Xc
+ UA3phJ9Lb22TEUSDf+YfrqJrC+USiW0V3Arzb0L3MucMo2V+9eci3viH0f05DYLBYYOV
+ qC3NIWxD3XdBbPNzOM/qsdkDgmlkJmuianEdQ31eBujpOmqZVyESH6JtqNzukzgHfLTf
+ 5vyw==
+X-Gm-Message-State: AOJu0Yy/cWUky/EEYkBXe4tpPi2fPF3V6fxQdnjT2aMvU6mmCX1InfZi
+ STUzKtQTl96NomHRYCWqva1P1sJsx6uY+hwW0jtWNYeCUEF4pzbBShJ6cw==
+X-Gm-Gg: ASbGncuLxi5xQ6oogaMcULto09BFkkfLB50xDlyQ/aTdIX3vzF5kuluhOSPj5R7dBHC
+ j6Rdj4k1E8Hs91Goa2AkbQjz4QRuTP3MIDMkJGMJVuW7xNiToFNhvkgtFDrJ5Rag6goQSm6jBOW
+ oXbkXUUeD8nOtNN2I4qdwiXk/yOV8kiS5UUy90H040V6EMSIEvtFVfXRjHrh+3oXnrMKXXqmAFU
+ lLWXPyXZ9cw2gn3NfWit3z2s55clKjpvfJnIA7F56KNjy5QlsExgm6PFP6dSW9Fzfl13Bbb6nt/
+ 5wW1u+zq8LNzLn/EuCOjCrQpeiF7zF1WrqMybPw6+dBD9AE3yZi8n4DrlvbO
+X-Google-Smtp-Source: AGHT+IGkPCNj1vFstOo7VTPR7XRTsT4KgRVfxJgWFEk28S6amC9elciU+mM+KIFyuejDDPFb+Vbjrg==
+X-Received: by 2002:a17:902:f706:b0:216:282d:c67b with SMTP id
+ d9443c01a7336-21c355c4287mr25094895ad.35.1737093440074; 
+ Thu, 16 Jan 2025 21:57:20 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.56.26
+ d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.57.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 21:56:28 -0800 (PST)
+ Thu, 16 Jan 2025 21:57:19 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Tommy Wu <tommy.wu@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 08/50] target/riscv: add shvsatpa
-Date: Fri, 17 Jan 2025 15:55:10 +1000
-Message-ID: <20250117055552.108376-9-alistair.francis@wdc.com>
+Subject: [PULL 23/50] target/riscv: Add Smrnmi mnret instruction
+Date: Fri, 17 Jan 2025 15:55:25 +1000
+Message-ID: <20250117055552.108376-24-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117055552.108376-1-alistair.francis@wdc.com>
 References: <20250117055552.108376-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,38 +105,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Tommy Wu <tommy.wu@sifive.com>
 
-shvsatpa is defined in RVA22 as:
+This patch adds a new instruction 'mnret'. 'mnret' is an M-mode-only
+instruction that uses the values in `mnepc` and `mnstatus` to return to the
+program counter, privilege mode, and virtualization mode of the
+interrupted context.
 
-"All translation modes supported in satp must be supported in vsatp."
-
-This is always true in TCG so let's claim support for it.
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241218114026.1652352-8-dbarboza@ventanamicro.com>
+Message-ID: <20250106054336.1878291-5-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c                |   1 +
- tests/data/acpi/riscv64/virt/RHCT | Bin 374 -> 382 bytes
- 2 files changed, 1 insertion(+)
+ target/riscv/helper.h                         |  1 +
+ target/riscv/insn32.decode                    |  3 ++
+ target/riscv/op_helper.c                      | 45 ++++++++++++++++---
+ .../riscv/insn_trans/trans_privileged.c.inc   | 20 +++++++++
+ 4 files changed, 64 insertions(+), 5 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 20cbb6b2f4..2f58eeb689 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -185,6 +185,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-     ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-+    ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shvstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shvstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
-index 2c7dc6c9ab..fcd9c95a6a 100644
-Binary files a/tests/data/acpi/riscv64/virt/RHCT and b/tests/data/acpi/riscv64/virt/RHCT differ
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 451261ce5a..16ea240d26 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -131,6 +131,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(sret, tl, env)
+ DEF_HELPER_1(mret, tl, env)
++DEF_HELPER_1(mnret, tl, env)
+ DEF_HELPER_1(wfi, void, env)
+ DEF_HELPER_1(wrs_nto, void, env)
+ DEF_HELPER_1(tlb_flush, void, env)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index e9139ec1b9..942c434c6e 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -121,6 +121,9 @@ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+ sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
+ 
++# *** NMI ***
++mnret       0111000    00010 00000 000 00000 1110011
++
+ # *** RV32I Base Instruction Set ***
+ lui      ....................       ..... 0110111 @u
+ {
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 952ef8b3ec..bb022d89e2 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -328,24 +328,30 @@ target_ulong helper_sret(CPURISCVState *env)
+     return retpc;
+ }
+ 
+-target_ulong helper_mret(CPURISCVState *env)
++static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
++                                  target_ulong prev_priv)
+ {
+     if (!(env->priv >= PRV_M)) {
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+     }
+ 
+-    target_ulong retpc = env->mepc;
+     if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
+         riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+     }
+ 
+-    uint64_t mstatus = env->mstatus;
+-    target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
+-
+     if (riscv_cpu_cfg(env)->pmp &&
+         !pmp_get_num_rules(env) && (prev_priv != PRV_M)) {
+         riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
+     }
++}
++
++target_ulong helper_mret(CPURISCVState *env)
++{
++    target_ulong retpc = env->mepc;
++    uint64_t mstatus = env->mstatus;
++    target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
++
++    check_ret_from_m_mode(env, retpc, prev_priv);
+ 
+     target_ulong prev_virt = get_field(env->mstatus, MSTATUS_MPV) &&
+                              (prev_priv != PRV_M);
+@@ -377,6 +383,35 @@ target_ulong helper_mret(CPURISCVState *env)
+     return retpc;
+ }
+ 
++target_ulong helper_mnret(CPURISCVState *env)
++{
++    target_ulong retpc = env->mnepc;
++    target_ulong prev_priv = get_field(env->mnstatus, MNSTATUS_MNPP);
++    target_ulong prev_virt;
++
++    check_ret_from_m_mode(env, retpc, prev_priv);
++
++    prev_virt = get_field(env->mnstatus, MNSTATUS_MNPV) &&
++                (prev_priv != PRV_M);
++    env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, true);
++
++    /*
++     * If MNRET changes the privilege mode to a mode
++     * less privileged than M, it also sets mstatus.MPRV to 0.
++     */
++    if (prev_priv < PRV_M) {
++        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, false);
++    }
++
++    if (riscv_has_ext(env, RVH) && prev_virt) {
++        riscv_cpu_swap_hypervisor_regs(env);
++    }
++
++    riscv_cpu_set_mode(env, prev_priv, prev_virt);
++
++    return retpc;
++}
++
+ void helper_wfi(CPURISCVState *env)
+ {
+     CPUState *cs = env_cpu(env);
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index ecd3b8b2c9..73f940d406 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -18,6 +18,12 @@
+  * this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
+ 
++#define REQUIRE_SMRNMI(ctx) do {     \
++    if (!ctx->cfg_ptr->ext_smrnmi) { \
++        return false;                \
++    }                                \
++} while (0)
++
+ static bool trans_ecall(DisasContext *ctx, arg_ecall *a)
+ {
+     /* always generates U-level ECALL, fixed in do_interrupt handler */
+@@ -106,6 +112,20 @@ static bool trans_mret(DisasContext *ctx, arg_mret *a)
+ #endif
+ }
+ 
++static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
++{
++#ifndef CONFIG_USER_ONLY
++    REQUIRE_SMRNMI(ctx);
++    decode_save_opc(ctx, 0);
++    gen_helper_mnret(cpu_pc, tcg_env);
++    tcg_gen_exit_tb(NULL, 0); /* no chaining */
++    ctx->base.is_jmp = DISAS_NORETURN;
++    return true;
++#else
++    return false;
++#endif
++}
++
+ static bool trans_wfi(DisasContext *ctx, arg_wfi *a)
+ {
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.47.1
 
