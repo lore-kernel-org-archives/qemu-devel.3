@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525D2C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB00FC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYiJH-0001ul-Al; Fri, 17 Jan 2025 04:06:35 -0500
+	id 1tYiKs-0003RN-Ds; Fri, 17 Jan 2025 04:08:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiJF-0001ts-G0
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:06:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiKm-0003NJ-VX
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:08:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiJC-0000XM-WD
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:06:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiKk-0000gF-Np
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:08:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737104788;
+ s=mimecast20190719; t=1737104885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lVApERT39wl0qD/0OqshEgsuSHUoeIxyApF+WoO6CIM=;
- b=HoBaZSbZbk9EGNzeiQYErn8OYD/LgW5dq3PzETp2pj7YcgtMVV510Irtj8Iya2qukREn3m
- 4TllTt9IbcqXw2EkKUorOPkvr+ngz/mv86miLK2IIewrS/HlWN+DWA46AqGkFj22mXf5Kx
- uk0qzzgEe9B+4aZRttxZZeyy5fNlotI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wIk7DY7FkrFQfZgQU3hx0jsmI+hpw5R356/ChpRIazI=;
+ b=D0Js9Y4W6/nfEdhNA0lDAOQBy+eEVYq8TKhO3G0FZe5TCzvRyM2M6Bfr715nwxR0ACjs3H
+ 8pdyiKqN/3ML7VbrrDbrIERSd+vQJNeJmQzkXk4i0jsOJgOmdsEi9AsQMQCTplD152lMVH
+ X3HTQr1c8LsucAZkmA/v1h9tbyVNJ5k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-Xi2NjsddNc2ZQV4MMH4aQw-1; Fri, 17 Jan 2025 04:06:25 -0500
-X-MC-Unique: Xi2NjsddNc2ZQV4MMH4aQw-1
-X-Mimecast-MFC-AGG-ID: Xi2NjsddNc2ZQV4MMH4aQw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4362552ce62so8955245e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:06:25 -0800 (PST)
+ us-mta-657-jiFTyWMgN2WWOU8UeYg2KQ-1; Fri, 17 Jan 2025 04:08:04 -0500
+X-MC-Unique: jiFTyWMgN2WWOU8UeYg2KQ-1
+X-Mimecast-MFC-AGG-ID: jiFTyWMgN2WWOU8UeYg2KQ
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4359eb032c9so13782345e9.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:08:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737104784; x=1737709584;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lVApERT39wl0qD/0OqshEgsuSHUoeIxyApF+WoO6CIM=;
- b=NVLk9kasyozFTPY/asqXpB3AbW8cK3FleZv03OH6jMMkX8/SrOGOSbImems00kOHvf
- 4iEIxGO1j3EwdmZP1ILpwh+dh/KPZbMe/DY/mjjxz0LEkqtbHjje8p8C9/R/IXN6EZgd
- vt9qUbKY3hfwFElMHRebQMzH91AgkvhpLYSn+lOS0Pd6PQys7/di1VmEPFkip4JXWvW0
- N9bZVgXkF8QGL1hjY+TMhLN36+B5NVcC10tzrBz31PgsAnYih3fBQ097fsspUZGhsUt2
- famATipp67E2rbn0Bp85w3PkPvsh9pUsG5eZMp/JYGBYgLi84ua+JgnsQQzmy0div7zt
- mppQ==
+ d=1e100.net; s=20230601; t=1737104883; x=1737709683;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wIk7DY7FkrFQfZgQU3hx0jsmI+hpw5R356/ChpRIazI=;
+ b=vg0gbgrvV1VYHvyCn6zMQLEWqrG79QCh98ySX2vpHNih6ady6f4RrMDBF38YK51teV
+ /ef4LfzD/0dChC5wCqDKpvMvMkiUp4wHhI0o6QYW/IhFBsyb9cUzL7pQ5ByzpBMiYEVg
+ lFbZ8jTNK5F9e+cUXtv+a5rUjWYFyCqrpz+8RpibXDwqNkA7kSScZAHBZdKUy9v3Eh+7
+ AVA9jn/k1TiZwtJEwfGOhxujJtWrION8ayb96V7KC257CKpYlkrz1EtvoO4BSFr831Sq
+ wD1OLzaBjnV5eo7OnpmyxLO+E8p9y1zOZoAy2L0Tjl6iP9AaUVfu1Nru2XsevEsTXIRk
+ pYAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBZI17xjsSG4GkpH+4Irsaz6TGLRdSYQFqcQEYPksGYnkptvjxfcZmqPqANsw1x/9rezjq9qDAZOwo@nongnu.org
-X-Gm-Message-State: AOJu0Yzu+Hk8uRhn4IB8ItdYnNKV/DD+mtAOUuJSMWN+3hyHxIikjPbJ
- N3MaA0UV1P+UULJkIc1S+F2AG+D9fbONc+2P5ZW5lZBvr5AhQSAihz0XdLUZDKFJwK2bP7NQarh
- kEw/qsVoGDwF3Ce4e7w0r9sG1PkbBKVq9/EXMQwJI8MwbdpB2nujj
-X-Gm-Gg: ASbGnctUoPF0vFkK26IrNLk2sPp8PPqvvaqRH37s6wsuRg+9itFvMrMEc8e59Va1vPA
- D+LuKMUT8wYOFIHpfgdu3b53+IGWs3Gx3X2IV6VoiJmDmcpMm9lJd0rtaATwQsYj+ioxhS5V8Rq
- TYWOA/yVLvqT5A9gdrFR2+L7APCkRsPvBDQqFiRL8Tpfi8KoRNmiKvRy5+ZdRWc1+4KXSAEClxR
- +rlk4gR1nBD9ieLiSuxsdE/nYTl1No7S1Mcr192J62kJtVPo/IWx9CK1tc6p1O7wO4C3PDVTxEL
- WUBiiur6+G5H
-X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
- 5b1f17b1804b1-438912d5426mr19803595e9.0.1737104784288; 
- Fri, 17 Jan 2025 01:06:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGMNPC8xFm6gdUYYFR9zvZDGAmss8xYO8I0hGiZcLTUJVBk69m9QEqvC70WcInEQ87f4Ufjqg==
-X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
- 5b1f17b1804b1-438912d5426mr19803155e9.0.1737104783916; 
- Fri, 17 Jan 2025 01:06:23 -0800 (PST)
+ AJvYcCWfJ84GH5b692w0e9pbXVhtnJw+6eCZYmePT/+jHE8di8sKAjXH8jrilm4TxjB+IYrNN/7XmxUGVYA2@nongnu.org
+X-Gm-Message-State: AOJu0Ywvr/JjveCxSyNSXlS121IUy/ohCyuvH9vDiWJTZAyBgmvQvlsz
+ L8kui9KfBl35vD19aqhcRCu8TC1Awt8QhCoF8kWu7JQ7avZ64FFAlwJZ7VObke9UUJizlshkncX
+ 2Iv5/OCrvdEJQ/TY5LCu9WUsMdJlmYzW5BzOR7261OXHlreYjyTKZ
+X-Gm-Gg: ASbGncuDXKhj226KTfoGHEfv6zYaJeMdZzE5fs1F0gqMqVqQ6F+CDM1ebmrZJJPCVov
+ DW4Ya5kL/bbf3ei3HMKGDO055R6EXUkarlNt96i6SORiUle4odo8Yucz0MZA5p/Hmw9aO1N8AVW
+ sH4jcy/h+KXCA70eHFJFUbBJQe9s+K6CzVJu2A3OVHvR6ihPXb9TR6h2ua/WLvjTnuuKkXS0j3l
+ 6nr0h85nEVNdDdxvwpj20uS5zBUgN/DQvyd9KjdxH93UJJSmgpBvisa+Cq+BP/H2IqwJEnfNyVd
+ kQu6uYXKSvI0
+X-Received: by 2002:a05:600c:b87:b0:431:12a8:7f1a with SMTP id
+ 5b1f17b1804b1-438913de56dmr18061755e9.16.1737104883219; 
+ Fri, 17 Jan 2025 01:08:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQsMNlXQjAyxiSL/o3szZDMy93nyZqAodFdg8mARW/WwxdYS1loZqnXmw1uuQAinliz7aG5A==
+X-Received: by 2002:a05:600c:b87:b0:431:12a8:7f1a with SMTP id
+ 5b1f17b1804b1-438913de56dmr18060995e9.16.1737104882667; 
+ Fri, 17 Jan 2025 01:08:02 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
  [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4389041f603sm26525325e9.21.2025.01.17.01.06.22
+ ffacd0b85a97d-38bf322aa40sm1965204f8f.45.2025.01.17.01.08.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 01:06:23 -0800 (PST)
-Message-ID: <1f4f420a-0f29-4eae-88e5-0bb100536d63@redhat.com>
-Date: Fri, 17 Jan 2025 10:06:21 +0100
+ Fri, 17 Jan 2025 01:08:02 -0800 (PST)
+Message-ID: <aa863f22-57fb-4ddd-bce4-1b0a86c9023b@redhat.com>
+Date: Fri, 17 Jan 2025 10:08:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/21] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
+Subject: Re: [PATCH 10/21] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_DISABLE_PCIE definition
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -90,9 +90,9 @@ Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-10-philmd@linaro.org>
-Content-Language: en-US
+ <20250115232247.30364-11-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -135,17 +135,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250115232247.30364-10-philmd@linaro.org>
+In-Reply-To: <20250115232247.30364-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -164,87 +164,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
-> VIRTIO_PCI_FLAG_MIGRATE_EXTRA was only used by the
-> hw_compat_2_4[] array, via the 'migrate-extra=true'
+> VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the
+> hw_compat_2_4[] array, via the 'x-disable-pcie=false'
 > property. We removed all machines using that array,
-> lets remove all the code around VIRTIO_PCI_FLAG_MIGRATE_EXTRA.
+> lets remove all the code around VIRTIO_PCI_FLAG_DISABLE_PCIE.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/virtio/virtio-pci.h |  4 ----
->   hw/virtio/virtio-pci.c         | 10 ----------
->   2 files changed, 14 deletions(-)
+>   include/hw/virtio/virtio-pci.h | 4 ----
+>   hw/virtio/virtio-pci.c         | 5 +----
+>   2 files changed, 1 insertion(+), 8 deletions(-)
 > 
 > diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-> index 971c5fabd44..dd6eb9a4fc7 100644
+> index dd6eb9a4fc7..1ca7419cd43 100644
 > --- a/include/hw/virtio/virtio-pci.h
 > +++ b/include/hw/virtio/virtio-pci.h
-> @@ -32,7 +32,6 @@ DECLARE_OBJ_CHECKERS(VirtioPCIBusState, VirtioPCIBusClass,
->   enum {
+> @@ -33,7 +33,6 @@ enum {
 >       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
 >       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-> -    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
 >       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
->       VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
+> -    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
 >       VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
-> @@ -57,9 +56,6 @@ enum {
->   /* virtio version flags */
->   #define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
->   
-> -/* migrate extra state */
-> -#define VIRTIO_PCI_FLAG_MIGRATE_EXTRA (1 << VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT)
-> -
->   /* have pio notification for modern device ? */
->   #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
->       (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index c773a9130c7..8dca3ae73e6 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -144,13 +144,6 @@ static const VMStateDescription vmstate_virtio_pci = {
->       }
->   };
->   
-> -static bool virtio_pci_has_extra_state(DeviceState *d)
-> -{
-> -    VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
-> -
-> -    return proxy->flags & VIRTIO_PCI_FLAG_MIGRATE_EXTRA;
-> -}
-> -
->   static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
->   {
->       VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
-> @@ -2352,8 +2345,6 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
->   static const Property virtio_pci_properties[] = {
->       DEFINE_PROP_BIT("virtio-pci-bus-master-bug-migration", VirtIOPCIProxy, flags,
->                       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
-> -    DEFINE_PROP_BIT("migrate-extra", VirtIOPCIProxy, flags,
-> -                    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT, true),
->       DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
->                       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
->       DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
-> @@ -2601,7 +2592,6 @@ static void virtio_pci_bus_class_init(ObjectClass *klass, void *data)
->       k->load_queue = virtio_pci_load_queue;
->       k->save_extra_state = virtio_pci_save_extra_state;
->       k->load_extra_state = virtio_pci_load_extra_state;
-> -    k->has_extra_state = virtio_pci_has_extra_state;
+>       VIRTIO_PCI_FLAG_ATS_BIT,
+>       VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
 
-Did you test your patches? Looking at the calling site:
+I assume it's ok that the other following bits change their value here?
 
-static bool virtio_extra_state_needed(void *opaque)
-{
-     VirtIODevice *vdev = opaque;
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-
-     return k->has_extra_state &&
-         k->has_extra_state(qbus->parent);
-}
-
-... this will return now false instead of true, so I think your patch here 
-is wrong?
-
-  Thomas
+If so:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
