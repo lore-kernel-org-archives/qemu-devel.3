@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9722EC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6A9C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYl2C-0000qR-6Q; Fri, 17 Jan 2025 07:01:08 -0500
+	id 1tYl43-0001iL-8C; Fri, 17 Jan 2025 07:03:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rakicaleksandar1999@gmail.com>)
- id 1tYl21-0000pg-Uk
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:01:02 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1tYl3J-0001YE-TN
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:02:19 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rakicaleksandar1999@gmail.com>)
- id 1tYl1w-0001v2-9i
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:00:57 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3862f11a13dso239787f8f.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 04:00:41 -0800 (PST)
+ id 1tYl3I-00024z-Af
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:02:17 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3862f11a13dso239990f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 04:02:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737115239; x=1737720039; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737115334; x=1737720134; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=Y5Wn8IdIujOf9r+OIV59CwZZpGZD/iuYJPnVCpa5bUY=;
- b=NpdKo18etB2IetiMQiHAO7Rn3WpxFf661f+oalN5Yka3y5IcuEk85RJSLi8mvMoJrR
- 0EMdsBqHfQNSzqxzAZ4tFQAhWs9bfv9zNWQqhzU73RnF8VrHJ6e1F8wILKtsBCXkhGU0
- l7pmaNPagbg6K3Vk4ic0EGx2gJ5vX+ZMK4y2xhkHgPR9C5q+dGNYDHxM1r02+ucELjEd
- ckLOurAg926DVAN1RvOFJSwm8kga3Ww3OpdVCSxjOxoa7uvwk2WrEPcjcVgDuf/KgnLs
- TRckPlrEjz23svSwnTkn3el+HrGivTjt0uyn0w0vCZSyoX1nGbTdYbCO1VjbREd5kf3C
- MwmQ==
+ b=JYqfPJU7YZVYbMmVUhOGjC2Jlnf8XAnWu0uRmnSq7VzNOR+2ZftHPB3k4J91sfYxD1
+ ct2rM/yfLAgis9FhwyP9por1w7G/dfPAf9hXx4SvWOzY1+eh8el3lv3Lt5vHt9iyM4BW
+ 06Symy9wwmsCuJbMb6KXNJPR4N664O3wXGAKkKdeLSkeYnKaYw1Z/XeP0fK2mDyvfTns
+ fJd/IUemNYX/jSr7j1EfEPp/+EwiHV0atEMq33sGAyTQEA4rpiBqmilxf+qmhyJBQq1r
+ zztD0Dqau+42V546JgusL/ulO06GVyVwOQ7C25yiGA3F9Bj7OGvZK+xDSRROOVDaD+tk
+ bnIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737115239; x=1737720039;
+ d=1e100.net; s=20230601; t=1737115334; x=1737720134;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=Y5Wn8IdIujOf9r+OIV59CwZZpGZD/iuYJPnVCpa5bUY=;
- b=qFLB4xGIo2+kCmCdH4x0O2M29okr20R5nsEYOdavWciuQ1IZUDekNYbp8urS5ydhkS
- hVtJwWA+++co/SjfcOWRIj/xWepYwsAGM4+r3Ujx+acLxbpBfAsBKLR1fQh6+q9vXn7v
- xTqAwQuKsBkenSRsr31lu7pRVhX/3ttdNkd/T5puY2/iypiwSXW1kcPe7xVG/FtMLpQT
- vQ2iROQe0aHxyQ6OZvecLjyRMqEJ0GXWnW/XaW9I9yIgfVjePEHKUWOQ1kaacIMH+8MC
- Fgr/asLlNEtxVYslMhO2HKLcT8aG7u19wJeTF3mIzyTk808okJYM7LlkCFNvwStwlm0V
- zmeQ==
+ b=QXHPQWc1FWtp7gp65aCf18XABgbXcVIjevw4tSAfZgjeYOYQgCEOO0PgDvArtWUt3L
+ vyNvHMAsjCNwnFxSqRlHBRsxXv2XWogv/OwKqyVEb5pgrwpRECgHJKZOxfSI+FCk1gOX
+ KYik61Cj9VbnadjGWM75W5HFIBJVYlqAMWtrHMFoUMUmBomAAEZMeuP2ZzsQZyVw5KjW
+ cXDkLeqlUQkqMsULN/dsdSx14Ip/S5VJuZNpi/oho6aaJd8sq+S4LSxh186//imDZSRw
+ XvmsMJYIK0jiIqT2piFKibPoarvfz+li1tkznIqMLZ3EMKrmQWmYMVAV6yOUxlYoiznY
+ EAcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQH2clB36hdv5ywUqvlPRSOIKumkq3Dsxt8o4TFKvbBBMWtWpfmrgfqjeU1tkmP3OP3IqdQ5+SHSES@nongnu.org
-X-Gm-Message-State: AOJu0YwALnNWsMnY12645cz99idPG5YZbi46JvRLeVlJL1jxVDJV26x5
- tyGEmDZyrspb3MJQfLSBHVubewNmxXs9d7Xxf+q6OuGYyeffsyst
-X-Gm-Gg: ASbGncvt9ibH7qCtKnKH3plY+xmyf2+rvSA6jVMq3m7t7Acm09aDPy5+ueXcSZF+50Z
- LfEIGbGAFDEEGFqV/nn4rK/ZD9Ky0OTCeDOr+A7UG8G6ycHHHBbU+dQ45gqOkAikQ/OIA/S8B0A
- W5W8GsFeURdG7uArARgpLsCnTE4kehJ/PVn3XqeoQpMSKBRFmEuUlTT0lEoKldUhMJDLMmyItQC
- 2JWzS9Sm4uSD84uYJ83PyGzy3VKNo306DKoIFgWhRJ2jh91m0mmFtbP/WslPYBNpDWoBtvMDNrx
- khSX
-X-Google-Smtp-Source: AGHT+IG6LWnag+IxFRrZA95rHwQcT+9ocmhPc4ZmVhb1DBs2YxOrcEYoFGAoJTPyDTspHlQa3R3+qw==
-X-Received: by 2002:a05:6000:2ad:b0:38a:888c:6785 with SMTP id
- ffacd0b85a97d-38bf566b484mr726632f8f.6.1737115238829; 
- Fri, 17 Jan 2025 04:00:38 -0800 (PST)
+ AJvYcCUlgAsg+s4uieZwcr7mBBKOIZPZJSnCsHuz47L9H38NmQYMWnNQSANvhIkGD4vDTonk2qUbW0zaoFo4@nongnu.org
+X-Gm-Message-State: AOJu0Yy9F23+h0fdC8TACYrWoiS+q0y/enOLYO13G5jKNLSLDMMmJoUE
+ 1NAh8FX+deRD1wV34otKvm/bJmJAwDOdmGe+EGQPWXn5rra6ltyF
+X-Gm-Gg: ASbGncvGbUa2mvaBcuJFfcJyvooC7oAIADEqJzHceVbs1GXZDq5krFw6OcOJXpzxqyo
+ y04bv+LRpRO3+1LaqTQaJr0EZ8bD6q3lmYI+a31hmqLk3y0IrGwXBruWMMJhydYZMSDBrzmMGpv
+ TdgsiI55UTqQTq83JHsFO9BhaEw+jZoOBp2WcqY4nelBnTzCU+HGNkALAE6MUbZP5cRoR85JE7O
+ BtMra5V+XdmUwP+wuPnnvJLEopbMHgUNULoFq5CEWlI91yHYhTThfgtGaKZ0ZfZM1yghOH18k/U
+ mlNy
+X-Google-Smtp-Source: AGHT+IE8Xz2TxvvtqWQvsCzdb6xLty5gf6aKmtIsS4iyiWQIYcUAvomwujW8DvHchTH0Rx8a6NDkCg==
+X-Received: by 2002:a05:6000:4a06:b0:385:f909:eb33 with SMTP id
+ ffacd0b85a97d-38bf57a9a78mr931425f8f.10.1737115333666; 
+ Fri, 17 Jan 2025 04:02:13 -0800 (PST)
 Received: from L-H2N0CV05D839062.. ([79.175.87.218])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-38bf2fc5caasm2382574f8f.0.2025.01.17.04.00.36
+ ffacd0b85a97d-38bf3275595sm2360702f8f.67.2025.01.17.04.02.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 04:00:38 -0800 (PST)
+ Fri, 17 Jan 2025 04:02:13 -0800 (PST)
 From: Aleksandar Rakic <rakicaleksandar1999@gmail.com>
 X-Google-Original-From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 To: rakicaleksandar1999@gmail.com
-Cc: aleksandar.rakic@htecgroup.com, alex.bennee@linaro.org,
- amarkovic@wavecomp.com, arikalo@gmail.com, aurelien@aurel32.net,
- berrange@redhat.com, cfu@mips.com, djordje.todorovic@htecgroup.com,
+Cc: aleksandar.rakic@htecgroup.com, alex.bennee@linaro.org, arikalo@gmail.com,
+ aurelien@aurel32.net, berrange@redhat.com, cfu@mips.com,
+ djordje.todorovic@htecgroup.com, fshahbazker@wavecomp.com,
  hreitz@redhat.com, jiaxun.yang@flygoat.com, kwolf@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, philmd@linaro.org,
- pierrick.bouvier@linaro.org, qemu-devel@nongnu.org, yongbok.kim@mips.com
-Subject: Re: [PATCH v3 1/4] Add support for emulation of CRC32 instructions
-Date: Fri, 17 Jan 2025 13:00:19 +0100
-Message-Id: <20250117120020.795440-1-aleksandar.rakic@htecgroup.com>
+ pierrick.bouvier@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 2/4] Skip NaN mode check for soft-float
+Date: Fri, 17 Jan 2025 13:02:08 +0100
+Message-Id: <20250117120208.795738-1-aleksandar.rakic@htecgroup.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241211151426.87373-1-aleksandar.rakic@htecgroup.com>
-References: <20241211151426.87373-1-aleksandar.rakic@htecgroup.com>
+In-Reply-To: <20241211151737.87765-1-aleksandar.rakic@htecgroup.com>
+References: <20241211151737.87765-1-aleksandar.rakic@htecgroup.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=rakicaleksandar1999@gmail.com; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=rakicaleksandar1999@gmail.com; helo=mail-wr1-x436.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
