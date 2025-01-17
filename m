@@ -4,86 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EC0C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525D2C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYiEI-00021d-Pc; Fri, 17 Jan 2025 04:01:26 -0500
+	id 1tYiJH-0001ul-Al; Fri, 17 Jan 2025 04:06:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYiEH-00020R-3A
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:01:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiJF-0001ts-G0
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:06:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYiE9-00085T-5P
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:01:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiJC-0000XM-WD
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:06:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737104476;
+ s=mimecast20190719; t=1737104788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dOt3f+8UTPP9tgmhHLRL6fKjbSiAqZOk7IsRwsCirFA=;
- b=VNBp+/yMoAGFqh9za6rEHrG4Txai2lUhcupUMtMEthilNoBTccRBBs5yedqhw2PYkFIVIo
- d0opxUnkurQ62H/58YVVnCWQeyXPE+pN735joVo3tHchbmX46n/fIkYeAugjTmkyt3JhVd
- n0Rc9gkXF9rj64ZcqlE8sm64A/2Ov8M=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=lVApERT39wl0qD/0OqshEgsuSHUoeIxyApF+WoO6CIM=;
+ b=HoBaZSbZbk9EGNzeiQYErn8OYD/LgW5dq3PzETp2pj7YcgtMVV510Irtj8Iya2qukREn3m
+ 4TllTt9IbcqXw2EkKUorOPkvr+ngz/mv86miLK2IIewrS/HlWN+DWA46AqGkFj22mXf5Kx
+ uk0qzzgEe9B+4aZRttxZZeyy5fNlotI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-OJxVoxQ6PkCGqWmGv9bJ8g-1; Fri, 17 Jan 2025 04:01:14 -0500
-X-MC-Unique: OJxVoxQ6PkCGqWmGv9bJ8g-1
-X-Mimecast-MFC-AGG-ID: OJxVoxQ6PkCGqWmGv9bJ8g
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-aafc90962ffso211913566b.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:01:14 -0800 (PST)
+ us-mta-250-Xi2NjsddNc2ZQV4MMH4aQw-1; Fri, 17 Jan 2025 04:06:25 -0500
+X-MC-Unique: Xi2NjsddNc2ZQV4MMH4aQw-1
+X-Mimecast-MFC-AGG-ID: Xi2NjsddNc2ZQV4MMH4aQw
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4362552ce62so8955245e9.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:06:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737104473; x=1737709273;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dOt3f+8UTPP9tgmhHLRL6fKjbSiAqZOk7IsRwsCirFA=;
- b=pAwbwf8xpim9pidb4wWOu01RfFv3pRxGlNoB4aJKkeNd/6VAoVJM8D3hnf+alwIUMf
- ZUqsPjt7CiqsxcxFR7+0jzYM6xBJq4OTs6r5PEqwCPLQqxP5yYu46iLDKbkoiq3iPYhA
- RwzYi3l8acZpfLIMZUAPLej7gz5UKypVqHZVEbSVCkC5KCUCEfFjqDebK1Upe4QsUfCY
- UT4oegf/bo3ulAZSxcubNv+ThVBkd+0D1zii4DhNQ+M5A+gHqTr7c4kit4VASss/JHpM
- 5d1w8P8VHpSAjYITVjG+X52BsZfVEebLhavKIqz/TOq+TEpSqCica2ek7ZkRgXEOdTvt
- M1qA==
-X-Gm-Message-State: AOJu0YwW5FUyie359DEGdNn1yPLWDbbfbfSpXhlzGLs1My0u53B1eJqQ
- 1xW8hOECvQokAXqg8AaHxlnoHNfoeoO0rOYiVTKG504cPoOVcB5TkxLow1KM3pKrRRrXVXzx0Li
- h4knVWuo1x7Va9u5hsNcArXytSwYSDP4fKCYq9fxLSWHU2PdrkEpwmDuiPour2dcXa/hFxn8dZl
- GQuyGvuPu44XRUVYtSTDdhzLgR9QuLIzXDrFjI3ps=
-X-Gm-Gg: ASbGncvaa7NxH6b69k5sBmPFdv93x2hqzFlpY2Q1c2ttYYfLVJHTKhSKDAFilEjAYEs
- RgE3YSHZwIXBS29t7jy7uWH83DNZ6YMdrz2DxvwaI/7mlg+vWJcUgNaIEi1gYLoiyuBKA8wPM9w
- iMj6LtDylDStWdjiTRHtiTYDH0N+an3sn0/PC0hLkAjA8e1/5W8I+WBhz3HoFvIsyvcWrmTgHDR
- VCBz7dXthiky7Z5vC/pZDWv7UjFmbokuCY5HDhmwxPmFnfgJBMDrrT4lHd2
-X-Received: by 2002:a17:907:97ca:b0:aa6:7881:1e84 with SMTP id
- a640c23a62f3a-ab38b231d63mr146345166b.15.1737104472745; 
- Fri, 17 Jan 2025 01:01:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF90MTO1Q4FoHoXxivuEUIRCUnY5Wx26PnCJeB1XPqPFzYUIszV5CcOn3jBnQ9CRzS194WjpA==
-X-Received: by 2002:a17:907:97ca:b0:aa6:7881:1e84 with SMTP id
- a640c23a62f3a-ab38b231d63mr146341266b.15.1737104471920; 
- Fri, 17 Jan 2025 01:01:11 -0800 (PST)
-Received: from [192.168.10.3] ([176.206.124.70])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384f8442esm133647466b.129.2025.01.17.01.01.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 01:01:11 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: zhao1.liu@intel.com,
-	qemu-rust@nongnu.org
-Subject: [PATCH 09/10] rust: vmstate: remove translation of C vmstate macros
-Date: Fri, 17 Jan 2025 10:00:45 +0100
-Message-ID: <20250117090046.1045010-10-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250117090046.1045010-1-pbonzini@redhat.com>
-References: <20250117090046.1045010-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1737104784; x=1737709584;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lVApERT39wl0qD/0OqshEgsuSHUoeIxyApF+WoO6CIM=;
+ b=NVLk9kasyozFTPY/asqXpB3AbW8cK3FleZv03OH6jMMkX8/SrOGOSbImems00kOHvf
+ 4iEIxGO1j3EwdmZP1ILpwh+dh/KPZbMe/DY/mjjxz0LEkqtbHjje8p8C9/R/IXN6EZgd
+ vt9qUbKY3hfwFElMHRebQMzH91AgkvhpLYSn+lOS0Pd6PQys7/di1VmEPFkip4JXWvW0
+ N9bZVgXkF8QGL1hjY+TMhLN36+B5NVcC10tzrBz31PgsAnYih3fBQ097fsspUZGhsUt2
+ famATipp67E2rbn0Bp85w3PkPvsh9pUsG5eZMp/JYGBYgLi84ua+JgnsQQzmy0div7zt
+ mppQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBZI17xjsSG4GkpH+4Irsaz6TGLRdSYQFqcQEYPksGYnkptvjxfcZmqPqANsw1x/9rezjq9qDAZOwo@nongnu.org
+X-Gm-Message-State: AOJu0Yzu+Hk8uRhn4IB8ItdYnNKV/DD+mtAOUuJSMWN+3hyHxIikjPbJ
+ N3MaA0UV1P+UULJkIc1S+F2AG+D9fbONc+2P5ZW5lZBvr5AhQSAihz0XdLUZDKFJwK2bP7NQarh
+ kEw/qsVoGDwF3Ce4e7w0r9sG1PkbBKVq9/EXMQwJI8MwbdpB2nujj
+X-Gm-Gg: ASbGnctUoPF0vFkK26IrNLk2sPp8PPqvvaqRH37s6wsuRg+9itFvMrMEc8e59Va1vPA
+ D+LuKMUT8wYOFIHpfgdu3b53+IGWs3Gx3X2IV6VoiJmDmcpMm9lJd0rtaATwQsYj+ioxhS5V8Rq
+ TYWOA/yVLvqT5A9gdrFR2+L7APCkRsPvBDQqFiRL8Tpfi8KoRNmiKvRy5+ZdRWc1+4KXSAEClxR
+ +rlk4gR1nBD9ieLiSuxsdE/nYTl1No7S1Mcr192J62kJtVPo/IWx9CK1tc6p1O7wO4C3PDVTxEL
+ WUBiiur6+G5H
+X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438912d5426mr19803595e9.0.1737104784288; 
+ Fri, 17 Jan 2025 01:06:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGMNPC8xFm6gdUYYFR9zvZDGAmss8xYO8I0hGiZcLTUJVBk69m9QEqvC70WcInEQ87f4Ufjqg==
+X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438912d5426mr19803155e9.0.1737104783916; 
+ Fri, 17 Jan 2025 01:06:23 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
+ [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4389041f603sm26525325e9.21.2025.01.17.01.06.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jan 2025 01:06:23 -0800 (PST)
+Message-ID: <1f4f420a-0f29-4eae-88e5-0bb100536d63@redhat.com>
+Date: Fri, 17 Jan 2025 10:06:21 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/21] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20250115232247.30364-1-philmd@linaro.org>
+ <20250115232247.30364-10-philmd@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20250115232247.30364-10-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -92,7 +147,7 @@ X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,326 +163,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep vmstate_clock!; because it uses a field of type VMStateDescription,
-it cannot be converted to the VMState trait without access to the
-const_refs_static feature.
+On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
+> VIRTIO_PCI_FLAG_MIGRATE_EXTRA was only used by the
+> hw_compat_2_4[] array, via the 'migrate-extra=true'
+> property. We removed all machines using that array,
+> lets remove all the code around VIRTIO_PCI_FLAG_MIGRATE_EXTRA.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/virtio/virtio-pci.h |  4 ----
+>   hw/virtio/virtio-pci.c         | 10 ----------
+>   2 files changed, 14 deletions(-)
+> 
+> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+> index 971c5fabd44..dd6eb9a4fc7 100644
+> --- a/include/hw/virtio/virtio-pci.h
+> +++ b/include/hw/virtio/virtio-pci.h
+> @@ -32,7 +32,6 @@ DECLARE_OBJ_CHECKERS(VirtioPCIBusState, VirtioPCIBusClass,
+>   enum {
+>       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+>       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+> -    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
+>       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+>       VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
+>       VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+> @@ -57,9 +56,6 @@ enum {
+>   /* virtio version flags */
+>   #define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
+>   
+> -/* migrate extra state */
+> -#define VIRTIO_PCI_FLAG_MIGRATE_EXTRA (1 << VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT)
+> -
+>   /* have pio notification for modern device ? */
+>   #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
+>       (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index c773a9130c7..8dca3ae73e6 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -144,13 +144,6 @@ static const VMStateDescription vmstate_virtio_pci = {
+>       }
+>   };
+>   
+> -static bool virtio_pci_has_extra_state(DeviceState *d)
+> -{
+> -    VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+> -
+> -    return proxy->flags & VIRTIO_PCI_FLAG_MIGRATE_EXTRA;
+> -}
+> -
+>   static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
+>   {
+>       VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+> @@ -2352,8 +2345,6 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+>   static const Property virtio_pci_properties[] = {
+>       DEFINE_PROP_BIT("virtio-pci-bus-master-bug-migration", VirtIOPCIProxy, flags,
+>                       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
+> -    DEFINE_PROP_BIT("migrate-extra", VirtIOPCIProxy, flags,
+> -                    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT, true),
+>       DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
+>                       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+>       DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
+> @@ -2601,7 +2592,6 @@ static void virtio_pci_bus_class_init(ObjectClass *klass, void *data)
+>       k->load_queue = virtio_pci_load_queue;
+>       k->save_extra_state = virtio_pci_save_extra_state;
+>       k->load_extra_state = virtio_pci_load_extra_state;
+> -    k->has_extra_state = virtio_pci_has_extra_state;
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/src/vmstate.rs | 274 +++--------------------------------
- 1 file changed, 23 insertions(+), 251 deletions(-)
+Did you test your patches? Looking at the calling site:
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 94a2a29fe7e..70dd3c4fc48 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -21,8 +21,8 @@
- //!   [`vmstate_fields`](crate::vmstate_fields).
- //!
- //! * direct equivalents to the C macros declared in
--//!   `include/migration/vmstate.h`. These are not type-safe and should not be
--//!   used if the equivalent functionality is available with `vmstate_of!`.
-+//!   `include/migration/vmstate.h`. These are not type-safe and only provide
-+//!   functionality that is missing from `vmstate_of!`.
- 
- use core::{marker::PhantomData, mem, ptr::NonNull};
- 
-@@ -407,223 +407,16 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
-     const BASE: VMStateField = <T as VMState>::BASE.with_array_flag(N);
- }
- 
--#[doc(alias = "VMSTATE_UNUSED_BUFFER")]
--#[macro_export]
--macro_rules! vmstate_unused_buffer {
--    ($field_exists_fn:expr, $version_id:expr, $size:expr) => {{
--        $crate::bindings::VMStateField {
--            name: c_str!("unused").as_ptr(),
--            err_hint: ::core::ptr::null(),
--            offset: 0,
--            size: $size,
--            start: 0,
--            num: 0,
--            num_offset: 0,
--            size_offset: 0,
--            info: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_info_unused_buffer) },
--            flags: VMStateFlags::VMS_BUFFER,
--            vmsd: ::core::ptr::null(),
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: $field_exists_fn,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_UNUSED_V")]
--#[macro_export]
--macro_rules! vmstate_unused_v {
--    ($version_id:expr, $size:expr) => {{
--        $crate::vmstate_unused_buffer!(None, $version_id, $size)
--    }};
--}
--
- #[doc(alias = "VMSTATE_UNUSED")]
- #[macro_export]
- macro_rules! vmstate_unused {
-     ($size:expr) => {{
--        $crate::vmstate_unused_v!(0, $size)
--    }};
--}
--
--#[doc(alias = "VMSTATE_SINGLE_TEST")]
--#[macro_export]
--macro_rules! vmstate_single_test {
--    ($field_name:ident, $struct_name:ty, $field_exists_fn:expr, $version_id:expr, $info:expr, $size:expr) => {{
-         $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            err_hint: ::core::ptr::null(),
--            offset: $crate::offset_of!($struct_name, $field_name),
-+            name: $crate::c_str!("unused").as_ptr(),
-             size: $size,
--            start: 0,
--            num: 0,
--            num_offset: 0,
--            size_offset: 0,
--            info: unsafe { $info },
--            flags: VMStateFlags::VMS_SINGLE,
--            vmsd: ::core::ptr::null(),
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: $field_exists_fn,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_SINGLE")]
--#[macro_export]
--macro_rules! vmstate_single {
--    ($field_name:ident, $struct_name:ty, $version_id:expr, $info:expr, $size:expr) => {{
--        $crate::vmstate_single_test!($field_name, $struct_name, None, $version_id, $info, $size)
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32_V")]
--#[macro_export]
--macro_rules! vmstate_uint32_v {
--    ($field_name:ident, $struct_name:ty, $version_id:expr) => {{
--        $crate::vmstate_single!(
--            $field_name,
--            $struct_name,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint32),
--            ::core::mem::size_of::<u32>()
--        )
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32")]
--#[macro_export]
--macro_rules! vmstate_uint32 {
--    ($field_name:ident, $struct_name:ty) => {{
--        $crate::vmstate_uint32_v!($field_name, $struct_name, 0)
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY")]
--#[macro_export]
--macro_rules! vmstate_array {
--    ($field_name:ident, $struct_name:ty, $length:expr, $version_id:expr, $info:expr, $size:expr) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            err_hint: ::core::ptr::null(),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            size: $size,
--            start: 0,
--            num: $length as _,
--            num_offset: 0,
--            size_offset: 0,
--            info: unsafe { $info },
--            flags: VMStateFlags::VMS_ARRAY,
--            vmsd: ::core::ptr::null(),
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: None,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32_ARRAY_V")]
--#[macro_export]
--macro_rules! vmstate_uint32_array_v {
--    ($field_name:ident, $struct_name:ty, $length:expr, $version_id:expr) => {{
--        $crate::vmstate_array!(
--            $field_name,
--            $struct_name,
--            $length,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_info_uint32),
--            ::core::mem::size_of::<u32>()
--        )
--    }};
--}
--
--#[doc(alias = "VMSTATE_UINT32_ARRAY")]
--#[macro_export]
--macro_rules! vmstate_uint32_array {
--    ($field_name:ident, $struct_name:ty, $length:expr) => {{
--        $crate::vmstate_uint32_array_v!($field_name, $struct_name, $length, 0)
--    }};
--}
--
--#[doc(alias = "VMSTATE_STRUCT_POINTER_V")]
--#[macro_export]
--macro_rules! vmstate_struct_pointer_v {
--    ($field_name:ident, $struct_name:ty, $version_id:expr, $vmsd:expr, $type:ty) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            err_hint: ::core::ptr::null(),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            size: ::core::mem::size_of::<*const $type>(),
--            start: 0,
--            num: 0,
--            num_offset: 0,
--            size_offset: 0,
--            info: ::core::ptr::null(),
--            flags: VMStateFlags(VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_POINTER.0),
--            vmsd: unsafe { $vmsd },
--            version_id: $version_id,
--            struct_version_id: 0,
--            field_exists: None,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_OF_POINTER")]
--#[macro_export]
--macro_rules! vmstate_array_of_pointer {
--    ($field_name:ident, $struct_name:ty, $num:expr, $version_id:expr, $info:expr, $type:ty) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            version_id: $version_id,
--            num: $num as _,
--            info: unsafe { $info },
--            size: ::core::mem::size_of::<*const $type>(),
--            flags: VMStateFlags(VMStateFlags::VMS_ARRAY.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            err_hint: ::core::ptr::null(),
--            start: 0,
--            num_offset: 0,
--            size_offset: 0,
--            vmsd: ::core::ptr::null(),
--            struct_version_id: 0,
--            field_exists: None,
--        }
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_OF_POINTER_TO_STRUCT")]
--#[macro_export]
--macro_rules! vmstate_array_of_pointer_to_struct {
--    ($field_name:ident, $struct_name:ty, $num:expr, $version_id:expr, $vmsd:expr, $type:ty) => {{
--        $crate::bindings::VMStateField {
--            name: ::core::concat!(::core::stringify!($field_name), 0)
--                .as_bytes()
--                .as_ptr() as *const ::std::os::raw::c_char,
--            version_id: $version_id,
--            num: $num as _,
--            vmsd: unsafe { $vmsd },
--            size: ::core::mem::size_of::<*const $type>(),
--            flags: VMStateFlags(
--                VMStateFlags::VMS_ARRAY.0
--                    | VMStateFlags::VMS_STRUCT.0
--                    | VMStateFlags::VMS_ARRAY_OF_POINTER.0,
--            ),
--            offset: $crate::offset_of!($struct_name, $field_name),
--            err_hint: ::core::ptr::null(),
--            start: 0,
--            num_offset: 0,
--            size_offset: 0,
--            vmsd: ::core::ptr::null(),
--            struct_version_id: 0,
--            field_exists: None,
-+            info: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_info_unused_buffer) },
-+            flags: $crate::bindings::VMStateFlags::VMS_BUFFER,
-+            ..$crate::zeroable::Zeroable::ZERO
-         }
-     }};
- }
-@@ -661,48 +454,27 @@ macro_rules! vmstate_struct {
-     };
- }
- 
--#[doc(alias = "VMSTATE_CLOCK_V")]
--#[macro_export]
--macro_rules! vmstate_clock_v {
--    ($field_name:ident, $struct_name:ty, $version_id:expr) => {{
--        $crate::vmstate_struct_pointer_v!(
--            $field_name,
--            $struct_name,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_clock),
--            $crate::bindings::Clock
--        )
--    }};
--}
--
- #[doc(alias = "VMSTATE_CLOCK")]
- #[macro_export]
- macro_rules! vmstate_clock {
-     ($field_name:ident, $struct_name:ty) => {{
--        $crate::vmstate_clock_v!($field_name, $struct_name, 0)
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_CLOCK_V")]
--#[macro_export]
--macro_rules! vmstate_array_clock_v {
--    ($field_name:ident, $struct_name:ty, $num:expr, $version_id:expr) => {{
--        $crate::vmstate_array_of_pointer_to_struct!(
--            $field_name,
--            $struct_name,
--            $num,
--            $version_id,
--            ::core::ptr::addr_of!($crate::bindings::vmstate_clock),
--            $crate::bindings::Clock
--        )
--    }};
--}
--
--#[doc(alias = "VMSTATE_ARRAY_CLOCK")]
--#[macro_export]
--macro_rules! vmstate_array_clock {
--    ($field_name:ident, $struct_name:ty, $num:expr) => {{
--        $crate::vmstate_array_clock_v!($field_name, $struct_name, $name, 0)
-+        $crate::bindings::VMStateField {
-+            name: ::core::concat!(::core::stringify!($field_name), "\0")
-+                .as_bytes()
-+                .as_ptr() as *const ::std::os::raw::c_char,
-+            offset: {
-+                $crate::assert_field_type!(
-+                    $struct_name,
-+                    $field_name,
-+                    core::ptr::NonNull<$crate::bindings::Clock>
-+                );
-+                $crate::offset_of!($struct_name, $field_name)
-+            },
-+            size: ::core::mem::size_of::<*const $crate::bindings::Clock>(),
-+            flags: VMStateFlags(VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_POINTER.0),
-+            vmsd: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_clock) },
-+            ..$crate::zeroable::Zeroable::ZERO
-+        }
-     }};
- }
- 
--- 
-2.47.1
+static bool virtio_extra_state_needed(void *opaque)
+{
+     VirtIODevice *vdev = opaque;
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+
+     return k->has_extra_state &&
+         k->has_extra_state(qbus->parent);
+}
+
+... this will return now false instead of true, so I think your patch here 
+is wrong?
+
+  Thomas
 
 
