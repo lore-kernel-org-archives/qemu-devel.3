@@ -4,62 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CEEDC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5263FC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 10:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYisp-0007Fg-QG; Fri, 17 Jan 2025 04:43:20 -0500
+	id 1tYjJk-0003FG-3X; Fri, 17 Jan 2025 05:11:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tYiso-0007FW-AQ
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:43:18 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tYjJi-0003Dm-HP
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:11:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tYisl-00063Z-UK
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:43:18 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YZFCg6DJlz6HJgx;
- Fri, 17 Jan 2025 17:43:11 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 0D1D91402CB;
- Fri, 17 Jan 2025 17:43:13 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 17 Jan
- 2025 10:43:12 +0100
-Date: Fri, 17 Jan 2025 09:43:11 +0000
-To: Itaru Kitayama <itaru.kitayama@linux.dev>
-CC: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, <qemu-devel@nongnu.org>
-Subject: Re: CXL emulation on aarch64
-Message-ID: <20250117094311.00000e64@huawei.com>
-In-Reply-To: <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
-References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
- <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
- <20250110123128.00004a5b@huawei.com>
- <09D52CDC-44E5-48C4-8D32-E4DD0964F9AF@linux.dev>
- <20250114102626.00000c53@huawei.com>
- <88E9D774-A760-45F7-A173-24A07BB55733@linux.dev>
- <20250116105833.000056da@huawei.com>
- <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tYjJd-0001bB-U7
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:11:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737108660;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=+Mp/x+/ogPHuu7PB5/FkjauJT57NxP0CE3V1Kpk01Jo=;
+ b=PPDFAvu/q+vbbC4Z7uwTqJNFPi4G9ESgN037zUlvgku/ZAmGqo0Zxy8G4IIWP2EI0UZYH2
+ iANToyTI4m6sucB/L4G1yOC4uY0awtnyka/waxwT7ln02Ci81VFK2qBSsomLc04fCA+W5e
+ sR3kLoT2ZoNzT6dHFfgKrK3auMWTREE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-mNirULXQP4GP6LpAoENbgg-1; Fri,
+ 17 Jan 2025 05:10:58 -0500
+X-MC-Unique: mNirULXQP4GP6LpAoENbgg-1
+X-Mimecast-MFC-AGG-ID: mNirULXQP4GP6LpAoENbgg
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C04B319560BA
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:10:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15B5C195608A; Fri, 17 Jan 2025 10:10:54 +0000 (UTC)
+Date: Fri, 17 Jan 2025 10:10:51 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Victor Toso <victortoso@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ John Snow <jsnow@redhat.com>, Andrea Bolognani <abologna@redhat.com>
+Subject: Re: [PATCH v3 1/8] qapi: golang: Generate enum type
+Message-ID: <Z4osq2u_UIQOGfze@redhat.com>
+References: <20250110104946.74960-1-victortoso@redhat.com>
+ <20250110104946.74960-2-victortoso@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250110104946.74960-2-victortoso@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,193 +84,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jan 2025 10:13:41 +0900
-Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+On Fri, Jan 10, 2025 at 11:49:39AM +0100, Victor Toso wrote:
+> This patch handles QAPI enum types and generates its equivalent in Go.
+> We sort the output based on enum's type name.
+> 
+> Enums are being handled as strings in Golang.
+> 
+> 1. For each QAPI enum, we will define a string type in Go to be the
+>    assigned type of this specific enum.
+> 
+> 2. Naming: CamelCase will be used in any identifier that we want to
+>    export, which is everything.
+> 
+> Example:
+> 
+> qapi:
+>   | ##
+>   | # @DisplayProtocol:
+>   | #
+>   | # Display protocols which support changing password options.
+>   | #
+>   | # Since: 7.0
+>   | ##
+>   | { 'enum': 'DisplayProtocol',
+>   |   'data': [ 'vnc', 'spice' ] }
+> 
+> go:
+>   | // Display protocols which support changing password options.
+>   | //
+>   | // Since: 7.0
+>   | type DisplayProtocol string
+>   |
+>   | const (
+>   | 	DisplayProtocolVnc   DisplayProtocol = "vnc"
+>   | 	DisplayProtocolSpice DisplayProtocol = "spice"
+>   | )
+> 
+> Signed-off-by: Victor Toso <victortoso@redhat.com>
+> ---
+>  scripts/qapi/golang.py | 266 +++++++++++++++++++++++++++++++++++++++++
+>  scripts/qapi/main.py   |   3 +
+>  2 files changed, 269 insertions(+)
+>  create mode 100644 scripts/qapi/golang.py
+> 
+> diff --git a/scripts/qapi/golang.py b/scripts/qapi/golang.py
+> new file mode 100644
+> index 0000000000..1e04c99f1c
+> --- /dev/null
+> +++ b/scripts/qapi/golang.py
+> @@ -0,0 +1,266 @@
+> +"""
+> +Golang QAPI generator
+> +"""
+> +
+> +# Copyright (c) 2025 Red Hat Inc.
+> +#
+> +# Authors:
+> +#  Victor Toso <victortoso@redhat.com>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2.
+> +# See the COPYING file in the top-level directory.
 
-> > On Jan 16, 2025, at 19:58, Jonathan Cameron <Jonathan.Cameron@huawei.co=
-m> wrote:
-> >=20
-> > On Thu, 16 Jan 2025 15:04:53 +0900
-> > Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
-> >  =20
-> >> Hi Jonathan,
-> >>  =20
-> >>> On Jan 14, 2025, at 19:26, Jonathan Cameron <Jonathan.Cameron@huawei.=
-com> wrote:
-> >>>=20
-> >>> On Tue, 14 Jan 2025 12:03:03 +0900
-> >>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
-> >>>  =20
-> >>>> Hi Jonathan,=20
-> >>>>  =20
-> >>>>> On Jan 10, 2025, at 21:31, Jonathan Cameron <Jonathan.Cameron@huawe=
-i.com> wrote:
-> >>>>>=20
-> >>>>> On Fri, 10 Jan 2025 09:20:54 +0000
-> >>>>> "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> wrote:
-> >>>>>  =20
-> >>>>>> On 10/01/2025 13:29, Itaru Kitayama wrote:     =20
-> >>>>>>> Hi,
-> >>>>>>> Is anybody working on the CXL emulation on aarch64?       =20
-> >>>>>>=20
-> >>>>>> I'm not currently working on the CXL emulation on aarch64.
-> >>>>>>=20
-> >>>>>> However, IIRC the CXL maintainer's tree should work.
-> >>>>>> https://gitlab.com/jic23/qemu/     =20
-> >>>>>=20
-> >>>>> Pick up latest branch from there. I'm prepping a rebased version
-> >>>>> with some new stuff but might take a few more days.     =20
-> >>>>=20
-> >>>> Thanks for sharing your work with us.  Your master and cxl-2024-11-2=
-7 branches give:
-> >>>>=20
-> >>>> $ qemu-system-aarch64: -accel tcg,cxl=3Don: Property 'tcg-accel.cxl'=
- not found   =20
-> >>>=20
-> >>> cxl is a machine property not a accel one. So needs to be after virt
-> >>> There are tests in the tree for bios tables. Copy the command line fr=
-om those.
-> >>>  =20
-> >>>>=20
-> >>>> My commands are below:
-> >>>> $HOME/projects/qemu/build/qemu-system-aarch64 \
-> >>>>       -M virt,virtualization=3Don,gic-version=3D3 \
-> >>>>       -M acpi=3Doff -cpu max,sme=3Doff -m 8G -smp 4 \
-> >>>>       -accel tcg,cxl=3Don \
-> >>>>       -nographic \
-> >>>>       -bios $HOME/cca-v4/out/bin/flash.bin \
-> >>>>       -kernel Image-cca \
-> >>>>       -drive format=3Draw,if=3Dnone,file=3D$HOME/cca-v4/out-or/image=
-s/rootfs.ext2,id=3Dhd0 \
-> >>>>       -device virtio-blk-pci,drive=3Dhd0 \
-> >>>>       -append root=3D/dev/vda \
-> >>>>       -nodefaults \
-> >>>>       --serial tcp:localhost:54320 \
-> >>>>        -serial tcp:localhost:54321 \
-> >>>>        -append "root=3D/dev/vda earlycon console=3Dhvc0" \
-> >>>>        -device virtio-net-pci,netdev=3Dnet0 \
-> >>>>        -netdev user,id=3Dnet0 \
-> >>>>        -device virtio-9p-device,fsdev=3Dshr0,mount_tag=3Dshr0 \
-> >>>>        -fsdev local,security_model=3Dnone,path=3D../../,id=3Dshr0
-> >>>>=20
-> >>>> Yes, I=E2=80=99m using Linaro=E2=80=99s CCA capable OP-TEE builds ab=
-ove.   =20
-> >>>=20
-> >>> I'm a little curious why optee is relevant for this but shouldn't mat=
-ter as long
-> >>> as an appropriate EDK2 is loaded.
-> >>>  =20
-> >>=20
-> >> I picked up your tree=E2=80=99s =E2=80=9Cmaster=E2=80=9D and =E2=80=9C=
-cxl-next=E2=80=9D as of today, and only the latter at least booted.
-> >> The former gives:
-> >>=20
-> >> qemu-system-aarch64: Property 'virt-9.2-machine.cxl' not found
-> >>=20
-> >> Should I stick with the cxl-next? My concern is that the base QEMU ver=
-sion is a bit old
-> >> 7.0.50. =20
-> >=20
-> > Always use the latest dated branch on that tree.  I release whenever th=
-ere
-> > is something new to carry or a major rebase needed.
-> >=20
-> > cxl-<date> is the right branch to use. Hope that helps. =20
->=20
-> When do you think you want to get them (aarch64 specific?) merged mainlin=
-e. Any reason you want to carry the patches by yourself?
+Did you mean to say GPL-2.0-only ? Generally we'd expect
+new code to be GPL-2.0-or-later.
 
-Nothing much has changed since I presented on this at Linaro connect in 202=
-3.
-https://resources.linaro.org/en/resource/hM986DSHfoTrZ98UjpvLg1
-
-The issue is device tree bindings for PCI Expander bridgess and the fact th=
-at
-those need to be generated without the full enumeration that EDK2 is doing
-prior to ACPI final table builds. In order to move forward with that it
-needs a bunch of work to prove that we absolutely cannot get patches
-upstream to support kernel base enumeration and breaking up of the
-various resources (like EDK2 does).
-
-Given PXB enumeration in kernel has some issues on ARM anyway (that you can=
- paper
-over with _DSM 5 - it self requiring an extra patch that isn't upstreamable=
- because
-of IO port issues) there is quite a bit of work needed, mostly not in QEMU.
-Or convince Peter and others that not all virt support needs DT bindings
-(note that PXB for PCIE has been supported for years without an DT support,
-just no one noticed!)
-
-After that we'd need to figure out CXL DT bindings in general and add kernel
-code support - despite there being no known DT based CXL systems out there,=
- so
-that is going to be hard to do.  Various CXL kernel maintainers have expres=
-sed
-they aren't against such support, but it's hardly going to be review priori=
-ty
-(other than for me if someone else does the work!)
-
-For me this isn't particularly high priority. The ARM bit is fairly easy to=
- rebase.
-I would like to see it solved, but it is behind various other items on my
-backlog.
-
-There are SBSA machine patches on list, but it's not a useful platform for
-CXL kernel code development because of the limited supported configurations
-(in keeping with the more or less fixed model that SBSA-ref uses).
-
-Jonathan
+Also we'd now desire "SPDX-License-Identifier: GPL-2.0-or-later"
+for any newly added files, which reminds me to finish my patches
+to checkpatch.pl to enforce SPDX usage.
 
 
 
->=20
-> Itaru.
->=20
-> >=20
-> > Jonathan
-> >  =20
-> >>=20
-> >> Thanks,
-> >> Itaru.
-> >>  =20
-> >>> Jonathan
-> >>>  =20
-> >>>>=20
-> >>>> Let me know which branch you were suggesting.
-> >>>>=20
-> >>>> Thanks,
-> >>>> Itaru.=20
-> >>>>  =20
-> >>>>>=20
-> >>>>> Note my main development work is on arm64 so that tends to work
-> >>>>> more reliably than x86 which I only lightly test for stuff that
-> >>>>> isn't ready for upstream yet.
-> >>>>>=20
-> >>>>> Give me a shout if you run into any problems.
-> >>>>>=20
-> >>>>> The main blocker on upstreaming this is resolving the missing devic=
-e tree
-> >>>>> support for PCI expander bridges.  I've not made any progress on th=
-is since
-> >>>>> talk at Linaro connect in 2023.
-> >>>>>=20
-> >>>>> Jonathan
-> >>>>>=20
-> >>>>>  =20
-> >>>>>>=20
-> >>>>>>=20
-> >>>>>> Thanks
-> >>>>>> Zhijian
-> >>>>>>  =20
-> >>>>>>> If there=E2=80=99s a WIP branch, a pointer would be appreciated.
-> >>>>>>>=20
-> >>>>>>> Itaru       =20
->=20
->=20
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
