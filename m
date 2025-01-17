@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD43C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 08:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46913C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 08:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYi6B-0006H7-5f; Fri, 17 Jan 2025 03:53:03 -0500
+	id 1tYi8H-00080k-Ko; Fri, 17 Jan 2025 03:55:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYi66-0006DK-Ui
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:52:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYi8F-0007yi-VQ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:55:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYi64-0006sr-NY
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:52:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYi8E-0007Ex-Dt
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:55:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737103975;
+ s=mimecast20190719; t=1737104109;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Nbz7pTOaIvfFkVMaVkfZmNSRTinSNx1/DExwTRtwD+8=;
- b=c6vzGsLMqr+4AWU7V6rv7xstC+RuXUZSq96CsiGz7nqFEbzMjuKBYpDkNDqSgIoqraZYXG
- oQ7xa5UczwQV3oSDADoryTyEqeBp0EaZdnljplKT8njuNlpnqq5z5q10L4uXU8yhXyuQnC
- dKbeCbLjXQOEZt7zj51FuKXUwArd2FA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MPAu7vdK6fBGy9Hm0CSVGXVVmg2uDavLVK6ihFmZ3VE=;
+ b=QDQDeGxLaaHzYog3QpvyP56Tn1T7xzzZDXBA07xsS/E/fTpzI6aprxOdockY/JHlFhkk54
+ sPmafuBHKgsff1vn8Crq5PZiF/j+xXveIkcCD7wf/ItKGtvrenrLEVkp8XVV0cKVu9MBYB
+ ESeSwyGccyyekd6cDpiilVMMfnf1WII=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-7-LufNnXYGOHiySACRcSn9pw-1; Fri, 17 Jan 2025 03:52:53 -0500
-X-MC-Unique: LufNnXYGOHiySACRcSn9pw-1
-X-Mimecast-MFC-AGG-ID: LufNnXYGOHiySACRcSn9pw
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38bf5ef17a5so346328f8f.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 00:52:53 -0800 (PST)
+ us-mta-367-Fis05WhWP3qw9TAlvopUWw-1; Fri, 17 Jan 2025 03:55:06 -0500
+X-MC-Unique: Fis05WhWP3qw9TAlvopUWw-1
+X-Mimecast-MFC-AGG-ID: Fis05WhWP3qw9TAlvopUWw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4359206e1e4so14691975e9.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 00:55:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737103973; x=1737708773;
+ d=1e100.net; s=20230601; t=1737104105; x=1737708905;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Nbz7pTOaIvfFkVMaVkfZmNSRTinSNx1/DExwTRtwD+8=;
- b=T9fuLAqsTSHmsgqm6dqwdHYdv9yd5ax+BtN/w6Nsu0Mu45NGavVRwgNy+ufR5xTwOw
- srK5rY3OL4IfTex0DERpfMcv9hR4dHxzNZyDpqME1jhqQ0kDlujCLW2nfhYIUKdAoR0b
- R9Ndjv99XHBt/zMt6FKaYUreuzDvYH34pvps55ny6xI8WL7jvA60X0vrvcOWigNaDBnm
- ZX6lOso0Tls+k0pqJ115zSF1TdJnfXlv5+fSTEkWLbh0ModrISY+XbPW0kvtYaKdIxnE
- bKasztGD1OohL+9cl9mBRSYqsuOi75YF63iIZqKlA1DsWREUcEPskxnngLVXsx9022aS
- K7EQ==
+ bh=MPAu7vdK6fBGy9Hm0CSVGXVVmg2uDavLVK6ihFmZ3VE=;
+ b=G+SkOOJn1zFBfeXchkLo1iACd7bcQbbGm+B5Ea/DwSh5hR2vDHA4wLGyj9zd1lzwYs
+ 9Y1xPP+HrGyTKix75nlfejTT+lY9mz3I+njo+2EJSX/Letaqw5mCsxEHzVxUXLAWjvLY
+ UqautfW5VIMhNs1zSIVha/WTKj80ccoNp8dNFyJO1FAIpuq6EGoUVupQ5/DxXeMOneD+
+ kYcyQIu7WWgy0k08nwI1Cauz/dMK0txQweGSE7K5hhDErVRY0tbyFkBzfvThk1k24W2V
+ C31l5w/TirWwdmVe+LaeNdUjr1ochwF8GFfwLF/5zoCRttYjLhmp9/PBC1hcF0QoO7dE
+ Q0bA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDm7y1b+jCPDgLzOMPcho138uZ1/u5ubpsJIGRa7D5eLP1IVYGKbjkGxBNotusGA0feifiI7MpPM9Q@nongnu.org
-X-Gm-Message-State: AOJu0Yz3VbHqpBeJgRqtq8VtaVAWu8TYBDDqSh5CP4A64XJ/7zgWhv9J
- nSaVEGLz6ysKxUkrd0TPPTmLg2qwK4cYS17ZJJdPcCxaw3gpHvUf2EG90OwNXP02HENndIkNOr7
- 1nVbf49tZOEYlDvRioF6SoRZsmH1RdwRmz3EGHIiG70rMFHrluepY
-X-Gm-Gg: ASbGncuN6XD4ipEMzNhRKcxOFbN5stsVks4b1TmY6ESmFRrQKuiQOyWdzdeDrH4w1il
- /JEVBsWQOA4w+xwW62I/DEpJPeeXDIaRxSdiUItMTJ5UVkuRFCDpOZmOfQmzaxgnbmjVhra2daw
- Eb5H9dLKi09ZZeFqnmqt2q49s23cz5wwTYAbsBwlOQyoC1LqE7pAKx6FbPttiex5sNeT9QKDM7K
- YSsGtUe1wgdiunENjASJguO1Ifsz3O+ujzJbUsjP5a7q+jCmehL39r1b8CpdGydBWE+HkfSsMIi
- 6zk7rsoSkdYN
-X-Received: by 2002:a05:6000:178e:b0:388:c61d:43e4 with SMTP id
- ffacd0b85a97d-38bf57b9d47mr1258797f8f.45.1737103972760; 
- Fri, 17 Jan 2025 00:52:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG1vAG4A4w2ulsi16D8ZB4wYfSAOaKt2HirTQ4tv+9x7MTYNaMoPFaWfhuz7y535EmrP5A3vg==
-X-Received: by 2002:a05:6000:178e:b0:388:c61d:43e4 with SMTP id
- ffacd0b85a97d-38bf57b9d47mr1258775f8f.45.1737103972434; 
- Fri, 17 Jan 2025 00:52:52 -0800 (PST)
+ AJvYcCVh7CiJFzNGJ3XICaktLwLsNmxKAdL89963PcQ6EHE8xQe0HZJcLDR5NAPKACaEHVfjfaWhbbi6efBK@nongnu.org
+X-Gm-Message-State: AOJu0YxQGZjbQVGY5YUXhEDyUyEHwFTAWelIr1qlHugN7Np0f7/Wk7/D
+ yfTZcGjVaNwM81REmA8/oQox8hwcglVmhnUa8Qz30wbuj6JUoB8BVvAh07Eo+eN7TxmCVD20EBN
+ csM0kmuT36E0g9buUTmAs9kawAi348m8r6vHPxG4QCJGzdIp5ifwrCrC5RG7i
+X-Gm-Gg: ASbGncs0q0l0Auw/XZozSVJyvzVwQq/oo/dyf1g5oGv8Th9mwSe+BJJ1WdkR03FL9Mh
+ ctrBpviCQC+tBwyU6Zj+0r/cUWGqBIfnQBKK1x0RtuoZEYG7FN8O592y0vtIOtHb/lKoBOjUn6Q
+ xZF4s/5bo1WSaW18/IU1D39Ll5umnBO9y+zq9Opd0/c+9s6fv6u+air6rZSAR3jI0wqpKkjL9vq
+ 85w1HFVwfmtK7agyG/e9eCGSYEkFGxXYCZc6/dzE1/MZcKGMiRNrS5aVhkQ5d0+ubpmqlMQruwN
+ 5CkX/MwH0quc
+X-Received: by 2002:a05:600c:348c:b0:434:a04d:1670 with SMTP id
+ 5b1f17b1804b1-438912d7c1bmr17837445e9.0.1737104105712; 
+ Fri, 17 Jan 2025 00:55:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFVPbY9ETSsJ5ZG/m6GSxnCRSe19LMXhhSEmWeuRXQrgYli8Us3M4zT2EE1UdmwHbH7znOPYg==
+X-Received: by 2002:a05:600c:348c:b0:434:a04d:1670 with SMTP id
+ 5b1f17b1804b1-438912d7c1bmr17837065e9.0.1737104105273; 
+ Fri, 17 Jan 2025 00:55:05 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
  [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4389046885esm25669135e9.36.2025.01.17.00.52.50
+ 5b1f17b1804b1-437c74ac5f9sm84545205e9.11.2025.01.17.00.55.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 00:52:52 -0800 (PST)
-Message-ID: <9ee34c5f-d65c-447a-b128-96cf44b94b6e@redhat.com>
-Date: Fri, 17 Jan 2025 09:52:49 +0100
+ Fri, 17 Jan 2025 00:55:04 -0800 (PST)
+Message-ID: <84543b6f-97f6-4c95-bf5c-8a815684a7f2@redhat.com>
+Date: Fri, 17 Jan 2025 09:55:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/21] hw/i386/pc: Remove unused pc_compat_2_3 declarations
+Subject: Re: [PATCH 03/21] hw/i386/pc: Remove
+ PCMachineClass::broken_reserved_end field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
+ qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
  Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -89,7 +90,7 @@ Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-2-philmd@linaro.org>
+ <20250115232247.30364-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -134,7 +135,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250115232247.30364-2-philmd@linaro.org>
+In-Reply-To: <20250115232247.30364-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -163,30 +164,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
-> We removed the implementations in commit 46a2bd52571
-> ("hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine")
-> but forgot to remove the declarations. Do it now.
+> The PCMachineClass::broken_reserved_end field was only used
+> by the pc-q35-2.4 and pc-i440fx-2.4 machines, which got removed.
+> Remove it and simplify pc_memory_init().
 > 
-> Fixes: 46a2bd52571 ("hw/i386/pc: Remove deprecated pc-i440fx-2.3 machine")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/pc.h | 3 ---
->   1 file changed, 3 deletions(-)
-> 
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index a558705cb9a..103b54301f8 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -302,9 +302,6 @@ extern const size_t pc_compat_2_5_len;
->   extern GlobalProperty pc_compat_2_4[];
->   extern const size_t pc_compat_2_4_len;
->   
-> -extern GlobalProperty pc_compat_2_3[];
-> -extern const size_t pc_compat_2_3_len;
-> -
->   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
->       static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
->       { \
+>   include/hw/i386/pc.h |  1 -
+>   hw/i386/pc.c         | 13 +++++--------
+>   2 files changed, 5 insertions(+), 9 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
