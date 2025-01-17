@@ -4,101 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292D5C02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40680C0218A
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 10:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYjjN-0006GE-6G; Fri, 17 Jan 2025 05:37:37 -0500
+	id 1tYjkC-0006T2-9C; Fri, 17 Jan 2025 05:38:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYjjL-0006G3-RI
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:37:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tYjjK-0006Bc-BM
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:37:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737110251;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xIv18XoOYrdqnoTyS3/Z9KVTSp6n+0RJSIQO452ksPg=;
- b=aXlWc8Jo6FMI4smvfytNa0txwDyrzCET+mkFPnzarWEnSeyFM8aqJeHVc343yeHILYiU37
- db1WYhbXvEcRo/gGyBLyPZ3HrIuv8haXHOG0BUGIf5yedv7+VEjn8jEMY658u/p0OWuNDX
- HQ7BCICdTepsrBmJ6CKFMXzlqgQ92M0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-EHwHLvqLPiKNvQHinByUfw-1; Fri, 17 Jan 2025 05:37:30 -0500
-X-MC-Unique: EHwHLvqLPiKNvQHinByUfw-1
-X-Mimecast-MFC-AGG-ID: EHwHLvqLPiKNvQHinByUfw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361b090d23so9677105e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 02:37:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYjk7-0006PS-RQ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:38:25 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYjk6-0006FV-At
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:38:23 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-aaf6b1a5f2bso596708066b.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 02:38:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737110300; x=1737715100; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dA4cABuQ7O+G2L4wqAZH5Yk7B1njb+jBnA7h7zxdLc0=;
+ b=gu8VNU2nGT+879hPnaBGYD9v1UQ1ZJpmDV9/HZo8mbpchPNqxHVzZH85VI7rAKxzGu
+ 1KB5CHCSZOIoThnuEAMfd7Vn7nPcE/zQT/S1X2lY8whuPPde2k9vSCCZuSDqNUCJl64M
+ qPGKSeNUMnGoIBORZ0L1NjnY84vKI+Pwc4jV1iY0Qjyo24xbtK9TrNwFwifdjjFVdTE9
+ zTXnyKc0L1JcdIfEhPKEUwrrBlsfX+uzouU72g5BCC5iHNOlpDFY5PsStJpbjQsTGEjL
+ abLgR6U3xGay8aImVjEGHfy+lgWDUXf7If7zFL7rhvcORSQmCkTsSdg2OVniaPcuXpPR
+ CwRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737110249; x=1737715049;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xIv18XoOYrdqnoTyS3/Z9KVTSp6n+0RJSIQO452ksPg=;
- b=KrUooJ5r6RofXLB6MdInYQm3euC+Ci6XQVfX8i3l6CZivmgmwKX02uVcBjRP1n7EbC
- 77WEg0YWCaI3G9XoPQpgyHaX6tcR2RKIpzqqT7blS0vGEOGuGtSHVaMURmPNLCVKgb4B
- Seg8oRhaOPVhNtOA9hj48wBCDVNwkWWEzsNU5zBlyrEfB8xXAhLaoAVn+b0ahqBo39Iu
- DVFuatPUjVlcsNS00V3NerGdk9pPg7ctu+hwfiwJ5uFDkEufeNNjapNSKlGsAM/KIsQ+
- yHBQnFyHIi8MGARAbAdxejWsKC+0wyVGYZbDrPi+ZVsSNv7GXA4T2MohXy4xCtDtHTs6
- uGaQ==
-X-Gm-Message-State: AOJu0YyqOnvs+bOdBSNTJDrra1XvB0HsUsENi38W9GFBVU2ntnxQKnZz
- AHTPFuB6rS8i09snSa8J7TmD8pOLV9zRVPQRJWDwFYfc2OCeGX/S2KCdDSk1bPGxREv0WQJ62Vp
- +t7IULprCfNM4+/dGJUW7nnygbHFO95HODX0awt+EQ+BPlKFzArzb
-X-Gm-Gg: ASbGncstYKRF5ZYlUHbYjA8G0avhzCVfaBCPtJPYi8M2ph/vPcs0pUEsmhOjkgJxnJ/
- rqEGs4/gQrXHWj/sauunHEbUMy5bL3wY0U+VdxVe7O96HcNv23LSrEbtWAmUnUi+IZWA51+PZ7X
- bNTmxmlB2Mp3hKjYaH4OEwt5GtCwfuLphWevUjgvzYkDnsjo0IMwCMb+Hme5Y5Fm+1Zha3NejhJ
- RqxKrlYsDSRFSjBZXZ3eHqvLxx+3JRlXx5/274P8g52wahBcQU=
-X-Received: by 2002:a05:600c:3b02:b0:431:54d9:da57 with SMTP id
- 5b1f17b1804b1-4389144d5a1mr21076655e9.30.1737110248859; 
- Fri, 17 Jan 2025 02:37:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE9A0pwmsa2GME/FCih+XyngkAjwxLEiIfgIrEH14VWOBKEogAMBB1kQYm0q6bzpnrmNLcAeA==
-X-Received: by 2002:a05:600c:3b02:b0:431:54d9:da57 with SMTP id
- 5b1f17b1804b1-4389144d5a1mr21076265e9.30.1737110248492; 
- Fri, 17 Jan 2025 02:37:28 -0800 (PST)
-Received: from redhat.com ([2a02:14f:176:ec4a:872c:4127:e393:c8f1])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74ac604sm88949045e9.13.2025.01.17.02.37.24
+ d=1e100.net; s=20230601; t=1737110300; x=1737715100;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dA4cABuQ7O+G2L4wqAZH5Yk7B1njb+jBnA7h7zxdLc0=;
+ b=c4eOguoaXuO+VNqNRGohrK5u+/L0i6FYlIRPv6tE8TjOrwR5KMiCVYvCMbD6x/jKgU
+ 5qCyAQt9IlCCOlPR+a6ywkePNg6jHJpwotb5kJ+lkPqmsnpxdDHWgUhP8bPtAGCVLyX9
+ 6/Et2eNwW65q7LX16Xu6KO5z8tQoPoL2wQ6Nbbp9UVcg+N6+gYx5R73/ZiSo9p1fkK6k
+ YMJ7xCivOlLazL5hjoOIk0j/+JwzeNRhvQV/ve8jkTcBR1CEmBBmfe1ZeriiAB5UTdsd
+ A/HvNvtYqqPws5n+qwz1e7E87VQLh2PHI1YmKEfbbTf8Gh6vV3X0CS9l4XTNuvF7v9As
+ 115A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUskNiAoIcHaPEdGMB1OH4leqaAypYlu2fH9eSLWfbABj4ew7ezfkyIwLxUUvkCYEM0onDI/SlP6xpr@nongnu.org
+X-Gm-Message-State: AOJu0Yyl3syeIIXjA0O0+e0mqvwNEp/Sm9LoatjsIonbfKORqbUpm+Ot
+ jM4N9QxsGT/aCA+2qqnlGghhVJ0VpEv5xYdF/aiX1bEA0BHC8trxJ7Kj44NjOPc=
+X-Gm-Gg: ASbGncv55TF4XArG9HnM9CICEJPqPofGeNhnG8OyS7bQRsGL2oC9P9ELAoJ/eYjrxQQ
+ kmzEe4fq5PuVTyLAAX5iVD08DWjDZM8CU/QaOp2stQyB8mbBDji3QW5glM6BDlCw5Ws+n8Y6RR3
+ GhTzmfBAJ1rBA2nBtAwfLDnbyDD3pfgBqI+rYnHTH9g5mHXQ3IIEuLRxQZ/yuk4+FHLw0Tvg2ug
+ +WjNkCH4mv+J5d4xfp7YTJudYGHPV+ldc1fUmWRoSGh74xl1qCDwFc=
+X-Google-Smtp-Source: AGHT+IGXgDFRNs9z6PqN/p7CZqgDgbhAKhdlLrOza7NKJNlUe1L+MTg6HmNN2PJJujI5g68DfaKvCg==
+X-Received: by 2002:a17:907:9729:b0:aa6:9d09:b17b with SMTP id
+ a640c23a62f3a-ab36e49ef53mr464378166b.28.1737110300322; 
+ Fri, 17 Jan 2025 02:38:20 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5db73edccd4sm1293037a12.77.2025.01.17.02.38.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 02:37:27 -0800 (PST)
-Date: Fri, 17 Jan 2025 05:37:21 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 00/21] hw/i386/pc: Remove deprecated 2.4 and 2.5 PC
- machines
-Message-ID: <20250117053711-mutt-send-email-mst@kernel.org>
-References: <20250115232247.30364-1-philmd@linaro.org>
+ Fri, 17 Jan 2025 02:38:19 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 396E56083E;
+ Fri, 17 Jan 2025 10:38:19 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,  Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Subject: Re: [PATCH v2 2/2] accel/tcg: Call tcg_tb_insert() for one-insn TBs
+In-Reply-To: <20250116213214.5695-2-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Thu, 16 Jan 2025 22:31:33 +0100")
+References: <20250116213214.5695-1-iii@linux.ibm.com>
+ <20250116213214.5695-2-iii@linux.ibm.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Fri, 17 Jan 2025 10:38:19 +0000
+Message-ID: <87a5bphgis.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250115232247.30364-1-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,67 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 16, 2025 at 12:22:26AM +0100, Philippe Mathieu-Daudé wrote:
-> The versioned 'pc' and 'q35' machines up to 2.12 been marked
-> as deprecated two releases ago, and are older than 6 years,
-> so according to our support policy we can remove them.
-> 
-> This series only includes the 2.4 and 2.5 machines removal,
-> as it is a big enough number of LoC removed. Rest will
-> follow. Highlight is the legacy fw_cfg API removal :)
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-tagged, thanks!
+> Currently one-insn TBs created from I/O memory are not added to
+> region_trees. Therefore, when they generate exceptions, they are not
+> handled by cpu_restore_state_from_tb().
+>
+> For x86 this is not a problem, because x86_restore_state_to_opc() only
+> restores pc and cc, which already have the correct values if the first
+> TB instruction causes an exception. However, on several other
+> architectures, restore_state_to_opc() is not stricly limited to state
+> restoration and affects some exception-related registers, where guests
+> can notice incorrect values, for example:
+>
+> - arm's exception.syndrome;
+> - hppa's unwind_breg;
+> - riscv's excp_uw2;
+> - s390x's int_pgm_ilen.
+>
+> Fix by always calling tcg_tb_insert(). This may increase the size of
+> region_trees, but tcg_region_reset_all() clears it once code_gen_buffer
+> fills up, so it will not grow uncontrollably.
+>
+> Do not call tb_link_page(), which would add such TBs to the QHT, to
+> prevent tb_lookup() from finding them. These TBs are single-use, since
+> subsequent reads from I/O memory may return different values; they are
+> not removed from code_gen_buffer only in order to keep things simple.
+>
+> Co-developed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
-> Philippe Mathieu-Daudé (21):
->   hw/i386/pc: Remove unused pc_compat_2_3 declarations
->   hw/i386/pc: Remove deprecated pc-q35-2.4 and pc-i440fx-2.4 machines
->   hw/i386/pc: Remove PCMachineClass::broken_reserved_end field
->   hw/i386/pc: Remove pc_compat_2_4[] array
->   target/i386/cpu: Remove X86CPU::check_cpuid field
->   target/i386/cpu: Pass Error** to x86_cpu_filter_features()
->   hw/core/machine: Remove hw_compat_2_4[] array
->   hw/net/e1000: Remove unused E1000_FLAG_MAC flag
->   hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
->   hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_DISABLE_PCIE definition
->   hw/i386/pc: Remove deprecated pc-q35-2.5 and pc-i440fx-2.5 machines
->   hw/i386/x86: Remove X86MachineClass::save_tsc_khz field
->   hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
->   hw/core/machine: Remove hw_compat_2_5[] array
->   hw/block/fdc-isa: Remove 'fallback' property
->   hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_OLD_PCI_CONFIGURATION
->     definition
->   hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
->   hw/scsi/vmw_pvscsi: Convert DeviceRealize -> InstanceInit
->   hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS definition
->   hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
->   hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
-> 
->  docs/about/removed-features.rst |   4 ++
->  include/hw/boards.h             |   9 +--
->  include/hw/i386/pc.h            |  10 ---
->  include/hw/i386/x86.h           |   5 --
->  include/hw/loader.h             |   2 -
->  include/hw/nvram/fw_cfg.h       |  10 ---
->  include/hw/virtio/virtio-pci.h  |   8 ---
->  target/i386/cpu.h               |   1 -
->  hw/block/fdc-isa.c              |   4 +-
->  hw/core/loader.c                |  14 ----
->  hw/core/machine.c               |  18 ------
->  hw/i386/pc.c                    |  42 ++----------
->  hw/i386/pc_piix.c               |  26 --------
->  hw/i386/pc_q35.c                |  26 --------
->  hw/i386/x86.c                   |   1 -
->  hw/net/e1000.c                  |  63 ++++--------------
->  hw/net/vmxnet3.c                |  44 ++-----------
->  hw/nvram/fw_cfg.c               | 109 ++------------------------------
->  hw/scsi/vmw_pvscsi.c            |  67 ++++----------------
->  hw/virtio/virtio-pci.c          |  15 +----
->  system/vl.c                     |   5 --
->  target/i386/cpu.c               |  27 +++-----
->  target/i386/machine.c           |   5 +-
->  23 files changed, 61 insertions(+), 454 deletions(-)
-> 
-> -- 
-> 2.47.1
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
