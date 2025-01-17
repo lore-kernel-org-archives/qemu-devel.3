@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 810F4C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 16:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9F9C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 16:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYpQH-0000aI-91; Fri, 17 Jan 2025 11:42:17 -0500
+	id 1tYpSE-0001bR-8F; Fri, 17 Jan 2025 11:44:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpQ5-0000ZI-3R
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:42:05 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpS8-0001au-9t
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:44:12 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpQ2-0000Gk-Bi
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:42:04 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-385d7b4da2bso2080808f8f.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 08:42:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpRx-0000Q8-NE
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:44:08 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-38637614567so1165396f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 08:44:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737132120; x=1737736920; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737132239; x=1737737039; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tD1tuxi7bHI8bBdrTyWjCLW1onKMFnZKFOgvVbAQyTo=;
- b=pLSw/XjPP0Az63jB5CgFVYXtpW+HNUyytnuPUcbDDarp3F1q1jFhKJLc9T/leEDwQ7
- oEqRjgArjcn0Ex7wiP7idktwYOa7nLAvXHUPu/wB5iLSV5/kN4gZvMN/ZUn/Y8QjKUKC
- /aa/NbipXOzvVsJuJJReVq/WmUQMis8H9EGhwC23JF0FsR8utL+Lqm8t58LlRGlFkZOD
- PGibwpwWwEyrszpsMSoEeO8BBpkIp/qHbMV0ToDe88ET2U1x6fI/Z0uK6QBFvtSgVgCX
- IDBdz0plfktSbPv2kL7gS1atjf7eVtJCo8vCWO0u+E34ZJvltOQkC+zqt1KvUcVF7tUj
- wmnw==
+ bh=RGQEicfXp8ygk7BdiCeHtgatykjkNeKCo54KXBZR0dg=;
+ b=GHuIO33fylfv6aDqedrLzqBJQDSHx6ADmHk9J8xB9qlrs550T3nAgcVIK+i3/6Cr3J
+ VHj63GzR8WEJ9wu94v9qcR/e+Wo5S1ry9paRi0GiyPDk0Ta5xdwEOIR2Og6plR+hEZ6m
+ S3JtxDDlVTohqCCxB0vlOKqMJpqkZiJsDLeWU5ZEXqpRDPvjyN65T3PB9gJeK//EZooF
+ YT+Cs47y4VRTi/q6UvS+CY2W9OMHG+IkfmSipZFGQeXY6psoP1NyD3U0SH6ZGK5DRUCI
+ LY1rjNGOek/05S3OEHFwbouwarci30coekTxMWMvAxvkfSlf7SIYYed9uX97Sqo0RQ06
+ nDQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737132120; x=1737736920;
+ d=1e100.net; s=20230601; t=1737132239; x=1737737039;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tD1tuxi7bHI8bBdrTyWjCLW1onKMFnZKFOgvVbAQyTo=;
- b=ELtTHa7507+FI6EoI+ctzbr68AbGtXWCidAiTofs0HHrcrUEO2XrjAxVh1KG8I2Sdq
- 0hSFitCGYi2+Wy3/d0qonhqRlLmK75cM+TRNmp9vy0ZBYSa4MGPnV7vXjp3oJGVbWACf
- uptBsx2wUVDx4WIsaGzcBtCOwSaCkQXiCfCVU8hz9iPZUbv4oaTtRbmRBhOOLKmWNGuD
- HoR84Lurlh17qdmiHVOg2TZQ9PJZCUsu8MpfueeBgZaq8OIvbybXFwB2cLzi4+FNBfgV
- EVxVx/MJTxynLQP4Bgzw0hleYXuw1tt5T7AMMkS+O+w1dI0hahdwi1WgZLnP09WzDpes
- LWoA==
+ bh=RGQEicfXp8ygk7BdiCeHtgatykjkNeKCo54KXBZR0dg=;
+ b=Q1KkxnJStNGgTNwfR6ShDo7PBTJM4JeIzk7NCCW/X3vzTSj5helpqvvYyaztGjAZGd
+ 9H3bKhsLHsdINEblYwJbZjGt9VXdZ83MVoeWp/vZvKk1cnPwswMRijxC9kGCp8XO3XNE
+ HgrL6t1V/KwwCrKO+CHqzW2HVKDjecGW1u7I2E2adBP4po5avrTz9OgcGQRUBdanfs3Q
+ Oq72rDOWccfhZceQA3iE72QUokjyGIIDtE9dGpAUJPs39XcAj99lRI64BC17BGKdasjV
+ bXDbaT+jSmA5Xsoekm1cLX7D2ZePZakhHwRXq+esvv+a2uLGB3lb6lS2MEKRRDM8o7Dw
+ ckaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0yC+2Nok/1vjkzmRoyIdmuMUCVZGJN7V7v4gbY9aJB72VgBHqMA2zeefHqK57SB7RWaJXluySJiKi@nongnu.org
-X-Gm-Message-State: AOJu0YxMlnNIYD2cNZL25P4J0pvYWefREhTcn1tiZsl8qAzPSyfSHMlm
- ounPHYIU03ZeeISJFBujXiKqVwnJ/e9ineF0c3M/XywKk5CPqUG2wpyz73IDKRQ=
-X-Gm-Gg: ASbGnctKnv6UXFI6gakZCRH9Q1C3QeNu5PsEjTtwDZPIY5cWDVPzxpCEmLEO6g8B4yS
- Ftbr4VwmRQMojizQ672YdFe3Z4HdINmvx++0LhjzacIcyxoLFNDM6G90u+lQpffegD/E07IEJUU
- HH7KcMO+S5oqOed5eKrKNicgOC31fTVll3pZ7hDID+wqGwvGKiT0yb2pPipSnbFiv1bp9WOLle7
- Q4arsk7Q9QPth1YRbV+U4o97vBsF3bEeeNsdR8aP02iWHFNXFzbmTrG2XSEWteNvAWTx5mBNdLA
- PfhEIntJTjCJKRply7FXzftr
-X-Google-Smtp-Source: AGHT+IEiyQd1i/bwxWtPKEaP6lMPqTUSWwdr1mV9L2VBelHFqcRmTNtjLMBxueYcRzu5iKFLRJeEuA==
-X-Received: by 2002:a05:6000:1acc:b0:382:4ab4:b3e5 with SMTP id
- ffacd0b85a97d-38bf55bbddemr3534110f8f.0.1737132119694; 
- Fri, 17 Jan 2025 08:41:59 -0800 (PST)
+ AJvYcCWzFJkj5CIwglAKc9V0stlSuJp4DFSTZ+92TIJabLmgZtYaD6eVNUOMm3W9IsjpnD1yKPOi7yxTxtHV@nongnu.org
+X-Gm-Message-State: AOJu0YxYjFUGebcGKbz8F+U6BHAAKWh27i3fj1LAVx+elKUfRFyka7UF
+ 0uS8BxZkkWDIUcB71ADE0S/1jySkhafpCDOD5vooilaY7CRw1bgoNeT1npkN/QU=
+X-Gm-Gg: ASbGnctRLNs/L3E+Uhm2IWhViw2q3aY0BnBnivzIKsHWdagWYtnagIjfzBDasTd4+8M
+ hBh8lWxguD43GHIFmu4D7A4eALo2sO1zAzLxzRzQzbsyyzgPb8D9pC7nuCouzFw4fF92LRltfw1
+ qIjHCU0l/wi7WPQpQREJi/X/pGPA6JsybiCmKrMrPZ9mP6KseLcsZSRAoMTh/2Bdl9we1XiexUN
+ 2Zp6gUr5z41tg2XkdY2a7KuF4XGnDHcIhAdKI2dmF/63gwcT3mznQNw9pet+6rS5L6TCw4lkhGg
+ wwiGjFv5JuQ6qMvsdhp3IqMV
+X-Google-Smtp-Source: AGHT+IGyeriFfiMpWkosQkpamef/d0uqOyfcvgvNpfJb5GwKg52Dq79dC/6WHGy5tFZDt2EVuG6d8A==
+X-Received: by 2002:adf:a113:0:b0:38a:8d4c:aad3 with SMTP id
+ ffacd0b85a97d-38bf5664d6bmr2555645f8f.18.1737132239472; 
+ Fri, 17 Jan 2025 08:43:59 -0800 (PST)
 Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3288f79sm2885862f8f.100.2025.01.17.08.41.58
+ 5b1f17b1804b1-437c74c475csm100140285e9.20.2025.01.17.08.43.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 08:41:59 -0800 (PST)
-Message-ID: <293b6780-17e6-4cee-a141-55022a9a75c2@linaro.org>
-Date: Fri, 17 Jan 2025 17:41:57 +0100
+ Fri, 17 Jan 2025 08:43:58 -0800 (PST)
+Message-ID: <6b916259-da1a-4a16-84a3-64eb466714c8@linaro.org>
+Date: Fri, 17 Jan 2025 17:43:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/21] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
+Subject: Re: [PATCH 10/21] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_DISABLE_PCIE definition
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-9-philmd@linaro.org>
- <75e7805f-1ffa-421d-9415-5132131d80a7@redhat.com>
+ <20250115232247.30364-11-philmd@linaro.org>
+ <aa863f22-57fb-4ddd-bce4-1b0a86c9023b@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <75e7805f-1ffa-421d-9415-5132131d80a7@redhat.com>
+In-Reply-To: <aa863f22-57fb-4ddd-bce4-1b0a86c9023b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,76 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/1/25 09:58, Thomas Huth wrote:
+On 17/1/25 10:08, Thomas Huth wrote:
 > On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
->> E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
->> via the 'extra_mac_registers=off' property. We removed all
->> machines using that array, lets remove all the code around
->> E1000_FLAG_MAC.
+>> VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the
+>> hw_compat_2_4[] array, via the 'x-disable-pcie=false'
+>> property. We removed all machines using that array,
+>> lets remove all the code around VIRTIO_PCI_FLAG_DISABLE_PCIE.
 >>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   hw/net/e1000.c | 63 +++++++++-----------------------------------------
->>   1 file changed, 11 insertions(+), 52 deletions(-)
+>>   include/hw/virtio/virtio-pci.h | 4 ----
+>>   hw/virtio/virtio-pci.c         | 5 +----
+>>   2 files changed, 1 insertion(+), 8 deletions(-)
 >>
->> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
->> index 3d0b2277039..14d2133cd80 100644
->> --- a/hw/net/e1000.c
->> +++ b/hw/net/e1000.c
->> @@ -127,10 +127,8 @@ struct E1000State_st {
->>       QEMUTimer *flush_queue_timer;
->>   /* Compatibility flags for migration to/from qemu 1.3.0 and older */
->> -#define E1000_FLAG_MAC_BIT 2
->>   #define E1000_FLAG_TSO_BIT 3
->>   #define E1000_FLAG_VET_BIT 4
->> -#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
->>   #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
->>   #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
->> @@ -1218,46 +1216,17 @@ enum { MAC_ACCESS_PARTIAL = 1, 
->> MAC_ACCESS_FLAG_NEEDED = 2 };
->>    * n - flag needed
->>    * p - partially implenented */
->>   static const uint8_t mac_reg_access[0x8000] = {
->> -    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
->> -    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
->> -    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
->> -    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
->> -    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
->> -    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
->> -    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
->> -    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
->> -    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
->> -    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
->> -    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
->> -    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
->> -    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
->> -    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
->> -    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
->> -    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
->> -    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
->> -    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
->> -    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
->> -    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
->> -    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
->> -    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
->> -    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
->> -    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
->> -    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
->> -    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
->> -    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
->> -    [BPTC]    = markflag(MAC),
+>> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/ 
+>> virtio-pci.h
+>> index dd6eb9a4fc7..1ca7419cd43 100644
+>> --- a/include/hw/virtio/virtio-pci.h
+>> +++ b/include/hw/virtio/virtio-pci.h
+>> @@ -33,7 +33,6 @@ enum {
+>>       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+>>       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+>>       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+>> -    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
+>>       VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+>>       VIRTIO_PCI_FLAG_ATS_BIT,
+>>       VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
 > 
-> I think this is wrong. All those registers should still be marked with 
-> MAC_ACCESS_FLAG_NEEDED, shouldn't they?
+> I assume it's ok that the other following bits change their value here?
 
-I followed Paolo's removal in commit fa4ec9ffda7
-("e1000: remove old compatibility code"):
+I followed previous commit 9a4c0e220d8 ("hw/virtio-pci:
+fix virtio behaviour"):
 
--    [RDTR]    = markflag(MIT),    [TADV]    = markflag(MIT),
--    [RADV]    = markflag(MIT),    [ITR]     = markflag(MIT),
-
-Is it the same problem?
+diff --git a/hw/virtio/virtio-pci.h b/hw/virtio/virtio-pci.h
+index e4548c2f970..25fbf8a375d 100644
+--- a/hw/virtio/virtio-pci.h
++++ b/hw/virtio/virtio-pci.h
+@@ -61,8 +61,6 @@ typedef struct VirtioBusClass VirtioPCIBusClass;
+  enum {
+      VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+      VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+-    VIRTIO_PCI_FLAG_DISABLE_LEGACY_BIT,
+-    VIRTIO_PCI_FLAG_DISABLE_MODERN_BIT,
+      VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
+      VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+      VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
 
 > 
->   Thomas
+> If so:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+Thanks!
 
