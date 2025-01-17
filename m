@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEA1C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 10:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A41DC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 10:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYjuj-0002qP-IA; Fri, 17 Jan 2025 05:49:21 -0500
+	id 1tYk1A-0005JJ-Ki; Fri, 17 Jan 2025 05:56:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tYjuh-0002pt-Fm
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:49:19 -0500
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tYjuf-0007jh-KU
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:49:19 -0500
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-51878d9511bso597145e0c.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 02:49:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1737110955; x=1737715755;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=n4NuWJxOx3mu33CTYwEBJSMLzUPzZfqG4RG4jYeLOTo=;
- b=UDczaKdXS013DIsmIlV106rKCAwa37izHBMAN6rUU7RS9M548z6Bcv5+ZtffxTld2Y
- SGf0gSN3U5rfMJXDcQVQxzoekxKaI/k1cCRl0L31EE+HSmyh+4Nsne/dhw1gni/0IjUt
- ac3gnkFmHRUw7tBbY2owWoRcUfrEpLBbLmcTVyOhacPYO36H5/hgvOrHkbfluV6+FxRD
- O/aK2Q/1NJxWb4RqrNtnM8o2lt3iqzf0WWmXGlw2jXJL3zpFB43BpUp/ZrUbshh7iiiq
- opH5NabGbgvGpyQgwcM7W8B1JV0AujhddwEg/3enkrOS9lnzP+UMF3cMd3zIq+B2/uCJ
- XiGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737110955; x=1737715755;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n4NuWJxOx3mu33CTYwEBJSMLzUPzZfqG4RG4jYeLOTo=;
- b=VaMCggHSE0/roKKBv3P6luaKUYzB5hIHEU8XlPYIuGkAoj8WT3dU5UfdJHFCCw5CDG
- k2QKsh3Pe5AjeMk4D+lSBTpW7XGOkmIFF4DHilcAVmZKw4TUAd4Fw4J/WeOpDi3pg6Jh
- o3GIEWosRMIjCeaWUyrkTAHn7wOrZ24ui/P/r98VwsPttOrYcpIkFt9IuZktcLnTjc//
- pLKW9+7l9bFMJe+0/9idLNJ9tM98lh7ZDDAv3VgEBcBuWdP8Br5lZup5KlXT3vizUwqA
- q54AI3yD4JLgcIxiyomw8mvnpfQ8b/+7s7lwLVyAqJm+g2p7hE5ZLpCt2aw93EtS/aCF
- ToJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEqAqT0i7UD38YBSiTp655GA2fXqPpwxiKhJ+L/5v90RkIVWWPVIpOu7DrTCQXaGm85cnVz7yT+noF@nongnu.org
-X-Gm-Message-State: AOJu0YzlFM6lNdhhwoqsFM6hk2tpT9c2DONRLTT2Tei6efpr03J+EFxN
- y++JTPniNJ04Pvus5dcLzakXJEsRo23no+lGrK2aqQjhogG9vwbXJeb/0Xki8MKz9lL5UDSUs84
- /0j1Y9vdLhOFGhlCxUhTfQoiKoqDcywXBWttB
-X-Gm-Gg: ASbGncselkA7Mj8y12qkNmHiNCw725g3CBjDcbMqbpU/o47Iil9g2239ArTrmsVn54G
- e1wGndUa8rWCYw/VMX1JSWpgNHoWEZqYPHsElIQ==
-X-Google-Smtp-Source: AGHT+IH4ij7t2YqNAHp50WuDuwXtNOKzSmwYgrR/K+Rp/DQeORqBQke3IdObKvN6pIfnPmahRiFcdZDdsdqNy3cEnTU=
-X-Received: by 2002:a05:6122:8c3:b0:51c:baa4:122a with SMTP id
- 71dfb90a1353d-51d5b26cb5cmr1328428e0c.5.1737110955435; Fri, 17 Jan 2025
- 02:49:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tYk17-0005Im-Em; Fri, 17 Jan 2025 05:55:57 -0500
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tYk15-0000B8-70; Fri, 17 Jan 2025 05:55:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737111355; x=1768647355;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=zzlSGjWEBiAzt8BVRjUGQb5eR0GNjttLRovMi6NHpw8=;
+ b=CAOtcoJfRre2hY8I6RYNwYWT6FrJSVnfNZ5OsOgRUJ239doVq8kJfn9L
+ yvaVn0VYR3yTeDYneoWUsCPJ7TsvXnIwrrNctaC3xv7yzDlpAe39NEGe9
+ KdE/TxVIIpT1vuwXe5DfDXgH6AVYFjoiSKiPnFQBqLvdywzh2RgH/g7y8
+ LvKpXgfTzIiKTjlhhr0CD1xVzLoS9UoZ88UmvoQmVYsInILZZnu2U1BHS
+ 7VU1r31YCRL+zRibcSsMKIHe8oJuMNkjBg7xFq/xsNS/5iM98+52gg871
+ blReO0fegWY+WsFNT6uLOomSCgOUHVC7KdEENCfcBPqRCoe7lwdVCNurO Q==;
+X-CSE-ConnectionGUID: rr4+uPvIT0KeDjrtLKzHxg==
+X-CSE-MsgGUID: oVuR8izBQeaoZvDZyA53eg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11317"; a="55087976"
+X-IronPort-AV: E=Sophos;i="6.13,212,1732608000"; d="scan'208";a="55087976"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jan 2025 02:55:50 -0800
+X-CSE-ConnectionGUID: V1FA4IXLQVGkTQjCoCX9Rw==
+X-CSE-MsgGUID: eJQ2ZzsoSBS2BfP2KBqnjQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="136656268"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 17 Jan 2025 02:55:46 -0800
+Date: Fri, 17 Jan 2025 19:14:37 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
+Message-ID: <Z4o7nbonhTHftVXq@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-5-zhao1.liu@intel.com>
+ <6108dfe6-f629-431c-be91-51abff338e85@redhat.com>
+ <Z1XJBJp+l92+OrY9@intel.com>
+ <CABgObfaeoLociD5rzptg4Uj4anMonc0M8iP_TK3qa-17FecR2A@mail.gmail.com>
+ <Z4h3Q/JBxtWxi+bK@intel.com>
+ <CABgObfYeRASh3oao6fpKBcijnhGaMKdAWsAQbrya7rwwOJfE1g@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250116084332.1864967-1-dwmw2@infradead.org>
- <20250116221027.GA378432@fedora>
-In-Reply-To: <20250116221027.GA378432@fedora>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Fri, 17 Jan 2025 11:49:04 +0100
-X-Gm-Features: AbW1kvb4AeccwBqIzFVHnPiFJhTWZ1TstlsQUXoSrYiE5sx0D-GJpwLMYQbE0uk
-Message-ID: <CAAibmn0Tsn9ZQ1wgoLLhCY=DQAkSDDtKBYOKKoSGmYe2TDTZuQ@mail.gmail.com>
-Subject: Re: [PULL 0/8] Xen regression fixes and cleanups
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000006f3e29062be4a92b"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::a30;
- envelope-from=phil@philjordan.eu; helo=mail-vk1-xa30.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfYeRASh3oao6fpKBcijnhGaMKdAWsAQbrya7rwwOJfE1g@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,44 +92,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006f3e29062be4a92b
-Content-Type: text/plain; charset="UTF-8"
+> >         unsafe {
+> >             qdev_init_gpio_in(
+> >                 self.upcast::<DeviceState>() as *const DeviceState as *mut DeviceState,
+> 
+> I think you can use self.as_mut_ptr::<DeviceState>() or something like that.
 
-On Thu, 16 Jan 2025 at 23:10, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+Yes, thank you!
 
-> Applied, thanks.
->
-> Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for
-> any user-visible changes.
->
+> 
+> >         assert!(pins.len() > 0);
+> 
+> !pins.is_empty().
 
-This note made me realise that my feature addition (macOS PV graphics
-device) that caused the regression requiring my patch in this series hasn't
-made it into the changelog. I'd be happy to add it myself, but I don't have
-a wiki account. How do I get one?
+Yes.
 
-Thanks,
-Phil
+> But I am not sure it's needed...
+> >
+> >         unsafe {
+> >             qdev_init_gpio_out(
+> >                 self.upcast::<DeviceState>() as *const DeviceState as *mut DeviceState,
+> >                 pins[0].as_ptr(),
+> >                 pins.len() as c_int,
+> 
+> ... if you use instead pins.as_ptr() without the initial dereference.
 
---0000000000006f3e29062be4a92b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Emm, pins.as_ptr() returns `*const InterruptSource`, which can't be
+converted to `*mut *mut IRQState` with InterruptSource::as_ptr().
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 16 Jan =
-2025 at 23:10, Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com">s=
-tefanha@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">Applied, thanks.<br>
-<br>
-Please update the changelog at <a href=3D"https://wiki.qemu.org/ChangeLog/1=
-0.0" rel=3D"noreferrer" target=3D"_blank">https://wiki.qemu.org/ChangeLog/1=
-0.0</a> for any user-visible changes.<br></blockquote><div><br></div><div>T=
-his note made me realise that my feature addition (macOS PV graphics device=
-) that caused the regression requiring my patch in this series hasn&#39;t m=
-ade it into the changelog. I&#39;d be happy to add it myself, but I don&#39=
-;t have a wiki account. How do I get one?</div><div><br></div><div>Thanks,<=
-/div><div>Phil</div><div><br></div><div>=C2=A0</div></div></div>
+So I haven't thought of a better way yet...
 
---0000000000006f3e29062be4a92b--
+> > impl HPETState {
+> >     ...
+> >
+> >     fn handle_legacy_irq(&self, irq: u32, level: u32) {
+> >         if irq == HPET_LEGACY_PIT_INT {
+> >             if !self.is_legacy_mode() {
+> >                 self.irqs[0].set(level != 0);
+> >             }
+> >         } else {
+> >             self.rtc_irq_level.set(level as u8);
+> 
+> Any reason why you defined rtc_irq_level as InterruptSource<u8>
+> instead of InterruptSource<u32>?
+
+Thanks! I missed to clean up this, having previously used u8.
+
+Regards,
+Zhao
+
 
