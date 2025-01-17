@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B58C02188
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDC9C0218A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYq9V-0004Hc-QB; Fri, 17 Jan 2025 12:29:01 -0500
+	id 1tYq9q-0004TY-Cd; Fri, 17 Jan 2025 12:29:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYq9T-0004H9-30
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:28:59 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tYq9o-0004SW-WE
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:29:21 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYq9R-00079k-Jw
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:28:58 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2165cb60719so45291995ad.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:28:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tYq9m-0007Iz-Dl
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:29:20 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-21661be2c2dso47187125ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:29:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737134936; x=1737739736; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xGPgC9P3Ba0DssIQxEX94j+fNUvlB/TMC/uHifO9Zmk=;
- b=RnL4ZMR6eY88MgbRxtT30EzoLL1iPpUEfzuFuYsbPDpHu5GwSyZJcAuUGzkVnWF5W1
- TC9AQvxyGV+k5Kcut6V/VWiQ6vBhEZ1cydN+nyDWd4gekdSzXVgmxYfZ6uarB7fmIGan
- KA024j9I+pgoF6qj7/G8A7RVQBOZ0f6pCQ5VYROuyH2csMQHGElBiReg9Tksl3CL73D4
- NcWdT0OdjhwYYRV7XfQhp7Mi3YADIj2wOhnQuM5fgjIjlW1NF8ixh4Rl9A2BY7C+kQ4z
- 7vPFkE7bbptAKvNJBK99K7B7QW1FLcUSS5bab1ykc23ywdM8lBBVCrNvsMh0GlRM2ZJh
- 5vag==
+ d=linaro.org; s=google; t=1737134957; x=1737739757; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=s1Nxjp30m81UPhMyRlrDqGvk7psw64M8eUM4q6xRqYY=;
+ b=JFp/NQO6iNjMQpv0hxz4hjt5m0ZurL/qPbEAEY6z4BwXvaA/X22bYQLJRGULzXaKSo
+ Mb9tXswfA2WZUTFmdFNy08sTcnhzxTMxBdAfxQH+S0JQJyalxjiHcTq+SDuTPWNMpvPR
+ m8FZ7txrOk2hKZ9BHyt6bzo9OJT0uWIkf8AaQ1DVrYJxuS6DX5IlemA7gsiSo2F3NuCz
+ VKmy3lTSwOXVfEFc9AgXuw27CjHS/dNveQ7FxTaG7cpbXlz9z6DVZOsTLcuI7oxXP/HB
+ pkR6CbiVhDjDUL5eszD4c/ZA9V/SBnlts8oFTuaT/TX7VGZTTTZIrJF8yLL1e2R2uQxf
+ L1Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737134936; x=1737739736;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xGPgC9P3Ba0DssIQxEX94j+fNUvlB/TMC/uHifO9Zmk=;
- b=bGONtTlZJQ3e4F0yAV/JxhV7l02WXlh3HYFt4jSb7Im07EP1StEbx8uB+rvID48on9
- gdydKwuhZNP2OonzPimotGT8GHLzgDVIL0++QWcGkVEFn4deIdKhv9hBwCoYfQ+ZI1pd
- V+iGVaePEWZ1iGR5dSdyGWpOnvmck3ciEcSPc6HZFHJmxMismNJVXTtU+UVXjMnSsR1e
- hwY7tSbOaWj4OWV0N9hApCJAyQgF3YVTouBQTogKhKbhfg2x6nE4ya5gEezRGgBvzQ+D
- odh7wH7lrREDjhU4gjjjQZMHa2V0XPktVKSu+OqTPjFnFQRwCOwlaNjQc8dRVy2+9hr3
- ztQw==
+ d=1e100.net; s=20230601; t=1737134957; x=1737739757;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s1Nxjp30m81UPhMyRlrDqGvk7psw64M8eUM4q6xRqYY=;
+ b=T5A9oPns56SQ7ZtHRDDMjaLLBJz3mF1nG9vJGk/qVXSPFrNtU9gns6E6NK46OgNH2/
+ Jpn+SMJMPH1vz2pvwH8XZH7UZNeDWdbLJcxtMyx2CITiZEi0261YzLLHRgqkka58Q1/A
+ aJh9CY90cKgPoOb8Nxqy0WzN5sXZsV6KuY/dtWKHrwZcNfgpMMQTVqn1BYIFp70cnZzA
+ DMAh6y9q3tR/NEUl4c1XdqDPW7jqAWO43T2FlEdqFAc/sjGhO+rFT+N4d7peHRK3Duv2
+ RJ8z1xHfTccM0g6RWi7AcocYlo6Ub2ttf7tzrsIseU+OqrXJ66ayDAyoakXpUHRt2CI1
+ SWzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWJkRWuo7MntCplFxdQhDfAJ2+d0U1IN0CejKoxkZw0EJdUZj0VT5RSEGjHlJQtr0ggHyRtU5iY/Yz@nongnu.org
-X-Gm-Message-State: AOJu0YzB54Mwtb/BRF1HPBMLd8tCR4icWeNGXQFzXplUFQNntQcatiLH
- av4ejq1CS1z/5qAaWkxm3kVDRJM/OuqA54H6b+eltrP+KDBzvJXA
-X-Gm-Gg: ASbGncvIS0JgdjOG5XP0B07rMXTu3/oZQMuAGnWPQqiWz4/+m12B6dF86mjXEUqnqcS
- p36Wzxpys17nQQJFUnpN3So2AqDTjjuiCSVHen3/XjEag++9gqjjQZhaKM96AM2jh8zRmmlaMjF
- JwLRmpoy7Iq8TYi7PaW2KLjrnCW6pPiXyzkZFUXwpT2N4T17Bp5HLNH0ULo7vFeMv/bGGgwofwY
- 8y6rN4xjW+1Tw8eC0O1CQ1AOu3Rb8xxTmCLfHz4JdMno5hcLPYMsGswySluwpeKGRw2CUJZIYWy
- 9UUdpqcxzscWrFU=
-X-Google-Smtp-Source: AGHT+IGVM7W2A84Ek91MpCU2t86v8Jo49c+HsGJpSgbnJyrmnMFarREpebTwuBa3Oh/4LqVfpWQm+g==
-X-Received: by 2002:a17:902:cf0b:b0:216:2dc5:233c with SMTP id
- d9443c01a7336-21c355c8f76mr60247225ad.41.1737134936173; 
- Fri, 17 Jan 2025 09:28:56 -0800 (PST)
-Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
- [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3a8a2bsm18658805ad.142.2025.01.17.09.28.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 09:28:55 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
-Subject: [PATCH 2/2] hw/pci: Assert a bar is not registered multiple times
-Date: Sat, 18 Jan 2025 03:28:41 +1000
-Message-ID: <20250117172842.406338-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250117172842.406338-1-npiggin@gmail.com>
-References: <20250117172842.406338-1-npiggin@gmail.com>
+ AJvYcCXpi2CD/3gW4CR4c13mcRNJ34Ty/pd4d3ib4WgD4GPDGjyhhp3+ybz+rKKf2MJQWxKUQryNGOD7URR1@nongnu.org
+X-Gm-Message-State: AOJu0Yxj+BcS8aACU+K9TT7rGPl+15bruBUkCNwxmu9VyiMwatFVKoGK
+ tzpn94KhUpVS3a5r0H8v2PgMXzYvrtoKST/V4MNE5R+LfiKBXq4I+XRr0XJscM0=
+X-Gm-Gg: ASbGncsnNXn6mk0TaUGG/hD/q/1PgRqN8hYuEtzffJOayYssIxfoN3UermMF36XTyZk
+ +0fK38pJeXPDAz+DUFAOYzIZ78/MT+JJGSmgGxBc6KuwMiNQkw6BREIN4sK0VjBmO1yYioIAhm2
+ zM1Nau25KUos8pAYq10WkvcnyefCsC+LwqoDNMJ8yuL8wL9ssluXCLHpCMBTaBwxA+z/l6KzHQW
+ 1Hm59071ajDV89cqAOxskTkGxfqF0I0TemOWemC2KrygTQKmKuoHBjclvdYeLjKQbmUZiNZ1OHI
+ VrPfoiDXjBRHHlrBddL5YVc=
+X-Google-Smtp-Source: AGHT+IGFxofdNNvXzgbkKFmd/ScrBbDFgbamJFxDAw2kNylutaqncB9VFPwVSNOlT+odjscLtHrwqg==
+X-Received: by 2002:a05:6a20:9150:b0:1e7:6f82:321f with SMTP id
+ adf61e73a8af0-1eb21498449mr5395505637.17.1737134957046; 
+ Fri, 17 Jan 2025 09:29:17 -0800 (PST)
+Received: from [192.168.0.4] (174-21-71-127.tukw.qwest.net. [174.21.71.127])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72dab815c32sm2236346b3a.59.2025.01.17.09.29.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jan 2025 09:29:16 -0800 (PST)
+Message-ID: <5e96c221-0aad-4e5f-80c1-9992a8106d46@linaro.org>
+Date: Fri, 17 Jan 2025 09:29:14 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] qemu/compiler: Absorb 'clang-tsa.h'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250117170201.91182-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250117170201.91182-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,27 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing should be doing this, but it doesn't get caught by
-pci_register_bar(). Add an assertion to prevent misuse.
+On 1/17/25 09:02, Philippe Mathieu-Daudé wrote:
+> We already have "qemu/compiler.h" for compiler-specific arrangements,
+> automatically included by "qemu/osdep.h" for each source file. No
+> need to explicitly include a header for a Clang particularity.
+> 
+> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   bsd-user/qemu.h                  |   1 -
+>   include/block/block_int-common.h |   1 -
+>   include/block/graph-lock.h       |   2 -
+>   include/exec/page-protection.h   |   2 -
+>   include/qemu/clang-tsa.h         | 114 -------------------------------
+>   include/qemu/compiler.h          |  87 +++++++++++++++++++++++
+>   include/qemu/thread.h            |   1 -
+>   block/create.c                   |   1 -
+>   tests/unit/test-bdrv-drain.c     |   1 -
+>   tests/unit/test-block-iothread.c |   1 -
+>   util/qemu-thread-posix.c         |   1 -
+>   11 files changed, 87 insertions(+), 125 deletions(-)
+>   delete mode 100644 include/qemu/clang-tsa.h
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/pci/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 2afa423925c..b067a55c5bc 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1391,6 +1391,7 @@ void pci_register_bar(PCIDevice *pci_dev, int region_num,
-     assert(hdr_type != PCI_HEADER_TYPE_BRIDGE || region_num < 2);
- 
-     r = &pci_dev->io_regions[region_num];
-+    assert(!r->size);
-     r->addr = PCI_BAR_UNMAPPED;
-     r->size = size;
-     r->type = type;
--- 
-2.45.2
 
+r~
 
