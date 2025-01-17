@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E952EC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECC2C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYiLw-0004p5-0x; Fri, 17 Jan 2025 04:09:21 -0500
+	id 1tYiT2-0007qr-Bf; Fri, 17 Jan 2025 04:16:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiLp-0004hS-IG
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:09:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiT0-0007qP-G4
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:16:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiLo-0000nf-8g
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:09:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiSy-0002EN-QO
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:16:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737104951;
+ s=mimecast20190719; t=1737105394;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PGdObsHLUzbgk5bnmr/UGwrsuMY4Xx7Xp/f/WM59RXU=;
- b=i1YQqNrwEF/aN9bHIndUzu+hJsLNbyDaCtnhiC+Uz6LaFTLT+Z9peTFYrJx1VPrp0hunHc
- rnWSN+FBhJ6bthDmJEAYPqj3nNmLW+Ruo0fkQX6BIpymdRnhEbIPYhmo3sjTz312ONu7ag
- 5LHtrj6jLDNhjp/7eHTLNZZFn9vW5gY=
+ bh=9zeOcIV+Fb7bQ6HKEMYpcJ0xHGKXHrqmHKbomeSVPKU=;
+ b=dqvMRvSx6JXOGJiMEz6MxCaFtu3lstkZJIrtGwd35cqz2RxdGdAkX2qsWBgaO0vD3BuNey
+ 8mb4rgczKoa3y5vwnWyMtbzy7m1GbqtJS4T+9QfrA8o/RSABthWYj0Hhi8JiArubqKO4f2
+ xXSpNrYk0l+TrZPEbClRUPHfyny8hMM=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-LwpdiYvEM-C3PQMOQdYkNA-1; Fri, 17 Jan 2025 04:09:08 -0500
-X-MC-Unique: LwpdiYvEM-C3PQMOQdYkNA-1
-X-Mimecast-MFC-AGG-ID: LwpdiYvEM-C3PQMOQdYkNA
+ us-mta-9-PE23tBjONWGdTYxhDKAnmg-1; Fri, 17 Jan 2025 04:16:33 -0500
+X-MC-Unique: PE23tBjONWGdTYxhDKAnmg-1
+X-Mimecast-MFC-AGG-ID: PE23tBjONWGdTYxhDKAnmg
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43619b135bcso8923755e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:09:07 -0800 (PST)
+ 5b1f17b1804b1-4362552ce62so9007265e9.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:16:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737104947; x=1737709747;
+ d=1e100.net; s=20230601; t=1737105392; x=1737710192;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PGdObsHLUzbgk5bnmr/UGwrsuMY4Xx7Xp/f/WM59RXU=;
- b=JrKnqDBqrX0CgzloAnnrp/k4Bd0AQDI4sTsYi4XdZmGuq0EYp1Ro0mEX9YcqjhnVag
- jBwdn5WoXLcvHDopnVjYfo4/6SmgnD2H4dmaGhkE77RT4V7FAdpkkmv50PyZMJ6WWjd2
- BVZjhq8G7J2L9tUTj4LzqU6VmTQ/h++US3sLszJsIlTMgCv5+PwHzxUpGG4Zq5qg0E/F
- Hc8F6aQ0rzEPFB5Fk+pi9UnhcP9RgxzNuD+vQO22pF7LEkWLV+K8zjVpQgTq1m2VjCe4
- TjmD/sQ32X4DAdcJVVnkjCdiqKXp2wsJFtNuME6OIeq3KccNKjXFpw8EwXK6k84nWNam
- nUCQ==
+ bh=9zeOcIV+Fb7bQ6HKEMYpcJ0xHGKXHrqmHKbomeSVPKU=;
+ b=Y00eRDOfEawEy2/eBz10eRIrXyENibGSr7gTD+/R2PqR3wdfKtjpatJgYD2vgSz60A
+ qt0HZlh0GQgh032LLEXbAb26Uy7lYFT/I3AB3JxUjeNFTg9oeobfxRRNE7HmSUlxnZTs
+ bicHDFA2qeTAi6xtM783AR5figsxAWj4Dz/L7EHnsajVueEtUqS5AeMwz2zcS7jFdzuU
+ wtyAurSCkQKtdAfPwGC7TK771O2FvKFDM7CyL9cwB0qGDH+mA5fHYj3MA6vgPx24O1QP
+ Kyix7YWmDr0EySU4XIddjU5KWC7vIZ4Q+EjRHg6AvdbOvgL8v/TOeHOMflsHdCSCC4W0
+ xWZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwO8O+xB0OhcQ/k2kF76A+n7Gy4DNuiCJ0b59uUbKDTxbbozyWxibY2puyDLheX6A2GxsY6uu5/ELI@nongnu.org
-X-Gm-Message-State: AOJu0YyyqKrdx2CYWiDa4i6Vv8gK2VneZQkzDPriGq+kXIkOwMvWKVHW
- ymR5byvFByzv0H1Di+F6SNelluAhvXg2NN/kSEBb6kv0KkhKXOTKlRXQNeAjkd+zagFchIGv+pv
- hs6DNWnXiX/coqTLoPiYpdH7daEMv8KG8k6bc15f0isb3T1mMEShn
-X-Gm-Gg: ASbGncvEDnbbzm11PpjAsDZmZt2xmnjX2MIIwwv15Q1rCJezX64+STJ8Fb4tbw8fU2d
- VdKsBvO2BIJtPuvDnMePMMTSLJZdHGcUlVBrmL5PO8yijY+qKgmAiWp0nz0Zf5DYQ296NmUVa+8
- 5lTxxnpbMco+tsoVcOvgrF7NUH9seRk2ic21xCey3ybByOUJCal/xvkJ7mRY9uUwKH2b1zfcuts
- KPkWUlIoi97+WLiZJ8ZDidfFJSILmx9ZOSOCCjm7C4dWdsbusZcVPnukMgzMsmakc/45TaowE8M
- ASrSGnPpK/K4
-X-Received: by 2002:a05:600c:1d19:b0:434:f623:9ff3 with SMTP id
- 5b1f17b1804b1-438913e0303mr18416525e9.15.1737104946863; 
- Fri, 17 Jan 2025 01:09:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErsjlh4r1GCAuhPsaZmft4Wbly5jWGieaF+1j5r4JSynsidTtg2xJ4UcvOQbshOaZgpm+W8g==
-X-Received: by 2002:a05:600c:1d19:b0:434:f623:9ff3 with SMTP id
- 5b1f17b1804b1-438913e0303mr18415855e9.15.1737104946440; 
- Fri, 17 Jan 2025 01:09:06 -0800 (PST)
+ AJvYcCXShn7ABmITqreKKQ3BPryi/mqdKEv4vn8Rq9iEwJwlVGOGYUpflQERXLC2W3Aph5MxNVXiCIfeqzqx@nongnu.org
+X-Gm-Message-State: AOJu0Yx65ae0n6HGQvORvymSym3czpNHVEge+xjUAMZbOomeQWR6/a4d
+ UdXCBGQrDKoOdBVn/G93thxJymLtchzgpskZPmczBXCJMMbGuMvbOMf3HHELTFHiG/8n6phlKJ4
+ RAR/PrsAuQYRQu6ZnInX7/+BqBxjDJOSUTZSPj434ArmPczlTeWLj
+X-Gm-Gg: ASbGncsqYsXfMrvRg+f3AZz5yg59NFk86a1lykn6PN2gpZJMnHlXGuKSgo+YPVitiDu
+ yFm8ssxofcJSvC9z3KMzrzqup5UDEN93CnjYr59zmbNee3wbxnH6CldgbyIsZRbHbwcp8XW+lwb
+ r4kleztMK2mKR/T8yhFRqdYF35t6gtr05/IaGyag5b9EltCEx08mzjCiwIrkYcukgQZdTp2G5zG
+ +798N5s2mUyMhDuOp4a/MTdQKAW+LTwd9ildt2nGBj/wbm7m3JRDpkLpzYZLfjrlKYUp/BLGxSp
+ dP2zMlkClo/W
+X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438912d5426mr20397935e9.0.1737105392349; 
+ Fri, 17 Jan 2025 01:16:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEpqyGXuBODQwx9bDlpvDRwaTvOa4sw4VeAyXKzlpQIwtY5QeFNPUCjTYde2kZttUNATROZWA==
+X-Received: by 2002:a05:600c:4e08:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-438912d5426mr20397575e9.0.1737105391977; 
+ Fri, 17 Jan 2025 01:16:31 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
  [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74c6179sm86667435e9.22.2025.01.17.01.09.03
+ 5b1f17b1804b1-4389046bab0sm26118325e9.38.2025.01.17.01.16.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 01:09:06 -0800 (PST)
-Message-ID: <ceb218ed-bb17-4b56-b7b5-26c0d39e1c76@redhat.com>
-Date: Fri, 17 Jan 2025 10:09:03 +0100
+ Fri, 17 Jan 2025 01:16:31 -0800 (PST)
+Message-ID: <00cc3b9d-7bf3-430c-abc9-d7dcaed25c59@redhat.com>
+Date: Fri, 17 Jan 2025 10:16:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/21] hw/i386/x86: Remove X86MachineClass::save_tsc_khz
- field
+Subject: Re: [PATCH 16/21] hw/scsi/vmw_pvscsi: Remove
+ PVSCSI_COMPAT_OLD_PCI_CONFIGURATION definition
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -90,7 +90,7 @@ Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-13-philmd@linaro.org>
+ <20250115232247.30364-17-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -135,19 +135,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250115232247.30364-13-philmd@linaro.org>
+In-Reply-To: <20250115232247.30364-17-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,17 +164,61 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
-> The X86MachineClass::save_tsc_khz boolean was only used
-> by the pc-q35-2.5 and pc-i440fx-2.5 machines, which got
-> removed. Remove it and simplify tsc_khz_needed().
+> PVSCSI_COMPAT_OLD_PCI_CONFIGURATION was only used by the
+> hw_compat_2_5[] array, via the 'x-old-pci-configuration=on'
+> property. We removed all machines using that array, lets remove
+> all the code around PVSCSI_COMPAT_OLD_PCI_CONFIGURATION.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/x86.h | 5 -----
->   hw/i386/x86.c         | 1 -
->   target/i386/machine.c | 5 ++---
->   3 files changed, 2 insertions(+), 9 deletions(-)
+>   hw/scsi/vmw_pvscsi.c | 12 ++----------
+>   1 file changed, 2 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
+> index f07e377cb88..8c793b4188d 100644
+> --- a/hw/scsi/vmw_pvscsi.c
+> +++ b/hw/scsi/vmw_pvscsi.c
+> @@ -69,17 +69,11 @@ OBJECT_DECLARE_TYPE(PVSCSIState, PVSCSIClass, PVSCSI)
+>   
+>   
+>   /* Compatibility flags for migration */
+> -#define PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT 0
+> -#define PVSCSI_COMPAT_OLD_PCI_CONFIGURATION \
+> -    (1 << PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT)
+>   #define PVSCSI_COMPAT_DISABLE_PCIE_BIT 1
+>   #define PVSCSI_COMPAT_DISABLE_PCIE \
+>       (1 << PVSCSI_COMPAT_DISABLE_PCIE_BIT)
+>   
+> -#define PVSCSI_USE_OLD_PCI_CONFIGURATION(s) \
+> -    ((s)->compat_flags & PVSCSI_COMPAT_OLD_PCI_CONFIGURATION)
+> -#define PVSCSI_MSI_OFFSET(s) \
+> -    (PVSCSI_USE_OLD_PCI_CONFIGURATION(s) ? 0x50 : 0x7c)
+> +#define PVSCSI_MSI_OFFSET    (0x7c)
+>   #define PVSCSI_EXP_EP_OFFSET (0x40)
+>   
+>   typedef struct PVSCSIRingInfo {
+> @@ -1110,7 +1104,7 @@ pvscsi_init_msi(PVSCSIState *s)
+>       int res;
+>       PCIDevice *d = PCI_DEVICE(s);
+>   
+> -    res = msi_init(d, PVSCSI_MSI_OFFSET(s), PVSCSI_MSIX_NUM_VECTORS,
+> +    res = msi_init(d, PVSCSI_MSI_OFFSET, PVSCSI_MSIX_NUM_VECTORS,
+>                      PVSCSI_USE_64BIT, PVSCSI_PER_VECTOR_MASK, NULL);
+>       if (res < 0) {
+>           trace_pvscsi_init_msi_fail(res);
+> @@ -1298,8 +1292,6 @@ static const VMStateDescription vmstate_pvscsi = {
+>   
+>   static const Property pvscsi_properties[] = {
+>       DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
+> -    DEFINE_PROP_BIT("x-old-pci-configuration", PVSCSIState, compat_flags,
+> -                    PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT, false),
+>       DEFINE_PROP_BIT("x-disable-pcie", PVSCSIState, compat_flags,
+>                       PVSCSI_COMPAT_DISABLE_PCIE_BIT, false),
+>   };
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Does this compile? I think you missed a spot that uses 
+PVSCSI_USE_OLD_PCI_CONFIGURATION in pvscsi_realizefn() ?
+
+  Thomas
 
 
