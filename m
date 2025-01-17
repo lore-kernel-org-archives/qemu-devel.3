@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1396C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 21:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1921CC02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 21:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYtkY-0002KF-Du; Fri, 17 Jan 2025 16:19:30 -0500
+	id 1tYtn8-0003yY-Hk; Fri, 17 Jan 2025 16:22:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYtkR-0002Jm-Vo
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:19:24 -0500
+ id 1tYtn6-0003y4-DE
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:22:08 -0500
 Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYtkQ-0008Mt-Bb
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:19:23 -0500
+ id 1tYtn4-0000WN-NG
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:22:07 -0500
 Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5da12190e75so5089838a12.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 13:19:21 -0800 (PST)
+ 4fb4d7f45d1cf-5da12292b67so4190672a12.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 13:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737148760; x=1737753560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737148925; x=1737753725; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o+egERJj47ySd6G4AysZcCZlgph0yKOktKHfzmttkE0=;
- b=c98aXjMEPHrNor9orWA3K8OyTQyNowPDcCb2uGHNgpPIxbL5OAJLsd2SL2J/VMiG/Y
- Vx5TYE0AR9JbdRmWVtEvQrqROZUB+wdUc4kaRGTOR2hzEuG2DUbVjU2014GaRHD3Yx6x
- X7Oj4wwOTfS5Ph8KgcTGaUT7Nhn3VKweRde+rguX/egQg1E/BlJJEAkContXmF71kGYF
- o6bQTDjJMV7mNA6XS+pM5cTRxUiBDq5PUfmbeC95LzoDnuO3A2mozjUCRhfAAOYxUeB6
- czI4fWs0TBB6pO2dc4MeFBEXJVevZwlthZFfbUsIbD6Znug1URes+KnbxoX0rFRxUHKe
- BXyQ==
+ bh=Kf4qxlBszTl5uWUziL/BAAofSkTZ5DDNEEyqH9IcavU=;
+ b=EeB1SPp0yct7KA+urzwTlLIIDJ+nMwtAdlbi2iJIJcCbtycIwq7DbC148YK0SOytlb
+ 9N7diTjIb3Uy6EIgEJNMoU904lHVu9FdxhV8MqEc43BMl7vQDDMooGGvUYyJMtfuSiej
+ 6JrJtekFfDk83ZAmIrOxXT6uXqs10LYaMdRSF0e1EI0+PM4JXNzmN9cR9rK+4oEjax0K
+ ggNtfgiNHg3fmHawWEYgrw+Gm99A3yftP2Yu9pY7q3oB0sEXfNTzYMz/KOgB/RQaFHqp
+ PW3sbnKSBNKm7Fe0Ekj0pL7H5UMmWM2Ws9n7FkLUgeVaFGj2h8OHuDZ9RciJKXJURMeR
+ 45Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737148760; x=1737753560;
+ d=1e100.net; s=20230601; t=1737148925; x=1737753725;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=o+egERJj47ySd6G4AysZcCZlgph0yKOktKHfzmttkE0=;
- b=wvaxC7LWK7W+wfBKtoT2P/hLt4ssDgKSdJow4xnyl+S6knva7PRRe2W3UxbuppNKhz
- CHt9Rt5464xF1nCfhLNzxoQST0a4L87Ab1fAhlOvMbOR7j9e0K51hKpYCcfsVXDtYtjY
- YIIxCS06cOiBCye86092C82Tke1pKRCBDPMu0d8C6PqKKfMinqR8riJx++lnqF4EJvVf
- pewIfy2WodGhb7/bYHFIVxYiwtSWx3jsziqvWKsqD82Ot2IPk6normcMHW8JSXg0BLGo
- 4QKIOHoa2n5GeI/78vczBWsjprvvMxf2P6o6d7xaJP1jCGmdQbhZDE8UJJAghP1lDMGi
- 4eIg==
+ bh=Kf4qxlBszTl5uWUziL/BAAofSkTZ5DDNEEyqH9IcavU=;
+ b=rPT44FXUatxyl6KKFHapwe5UqbKgmjmgbmJN01nZ4Z/3JquknE2c87OqaIzADDyLRy
+ Cn6bh0sB2axMSDWdwdIIUVeYd7k8xiNJ2T8uYh8ngLYrKh2xzh1ZoB5rrxq+IZZqrAd4
+ R6KG6bcYIe3PgMKPm/sojGQOx+QtCOnveesCXF3jUi6OrAWOv4VkhXbnDz8VT52oHU9K
+ 2Y7pNZ3TGoFvZozSlifkqX531sKGnkeFrLPHHby6yxGbTX0nkLA+XADTR1XBvlEYQoMF
+ qCrKnr8z+bWOKNiXPuU0J3TS0VyxlCwBzOzm6roM2ddzY2FiMWxwUqiPMRvtpc4bTjEK
+ wdeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWZ3YipTxTkLN+lbAtc9y/R7V2X6YTO+3/UsGQjqSw1G83q1pN9fMnJDR/EVX1nD/1cprPzggKbQr0@nongnu.org
-X-Gm-Message-State: AOJu0YyC3aO2Buie/VYarNCPXoCpioo8qlD9PPeqRh6hMHy8F18aB87D
- mbXGY5BfgiRB7vHL/p2nf+S2xPLub6qrSHJLjgrE2IlrfGhhIl/wOdy3/kTf7As=
-X-Gm-Gg: ASbGncuHyNhtVW2z+ni12fOjcNnyEIwI4+dxvCmpSK24jM0/Srl9p2K0oBaATsZ7kIs
- 1VkbdKIOVq41jRv0YKgYRHMqGrVjdiVmjqVSA6Y08CVlSImy4xX/HBYHZjN2L3XDDTdpBbRcDSt
- oZ2BLbamGBJUVJj9NgxX4hl9vWbf69FXv2ngDAnO6/kk+wbrZCrmnUGdgmCV3PDzxZ3GYgph65M
- wGL6g+yvusP23qo2GI87bZUVr1LL5pfghAfrbKlKzs+zmc1XFuhGN8=
-X-Google-Smtp-Source: AGHT+IErdmPNQQegAGesFhXAxjn7H4yDC6TNT0T8EGF24BOEUod3ykpVEjnYXfM5zXX+M7vQBbajrA==
-X-Received: by 2002:a05:6402:1e95:b0:5d1:fb79:c1b2 with SMTP id
- 4fb4d7f45d1cf-5db7d2f9ceamr3907489a12.11.1737148759890; 
- Fri, 17 Jan 2025 13:19:19 -0800 (PST)
+ AJvYcCWyJZMVBNbDjFhAeiNQVDeKF8NWhu8u5L/0u6CflIRx24s0jQMrVkoFprey82lLAmA4Xuhsl3uvsLe6@nongnu.org
+X-Gm-Message-State: AOJu0Yytg2HJE/4h3dWgp6TFYwwawcBaDRlpTmoYmVjYBWV/Wfs0AJMj
+ DHUgsUf7RlntoWvq/Fyaq4rTETgKeLyypm/X/WdDMVD7l1KklrWV49IBmKZ5L3UhP2RrucdaDZy
+ Z/IU=
+X-Gm-Gg: ASbGncuwj/q3EJ0QTSNbz9P2Bg0o0rANy7AVeifv6eHQwmugV2QDrgD1BFG3gYZr2+/
+ lS+wiVFQ1Crt2hqDbx5fqOupbjH7+trBqe+ejZH38axD/gwBifIk4VIJ+GRdC/P8pJAjaWLHUAS
+ 1l3kXkXM8qYyRios1SZ0d1TQiYDFXCZtVeXu3KY7aZlRyoVZKNQcypO1erGbDHvF2fquNza/IXY
+ cIdVJQSxe0mzkzkXGcWv8gZDQI/1yGexHmiARwGsi/Wiaavd+S/2z0=
+X-Google-Smtp-Source: AGHT+IGaAoaCXZVdfiYQW57ZdjKMAOpVO1OlFfdTNjN+/+6p7feVM0LfDm4fnQFeogRviwtZLpnT1Q==
+X-Received: by 2002:a05:6402:26c9:b0:5da:1219:c81 with SMTP id
+ 4fb4d7f45d1cf-5db7d300633mr9807775a12.16.1737148924990; 
+ Fri, 17 Jan 2025 13:22:04 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5db73edccd4sm2044238a12.77.2025.01.17.13.19.17
+ a640c23a62f3a-ab384c60717sm231525266b.37.2025.01.17.13.22.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 13:19:18 -0800 (PST)
+ Fri, 17 Jan 2025 13:22:04 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C5AF06083E;
- Fri, 17 Jan 2025 21:19:16 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C1AD16083E;
+ Fri, 17 Jan 2025 21:22:02 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Ilya Leoshkevich <iii@linux.ibm.com>
 Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
@@ -75,15 +76,14 @@ Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
  <philmd@linaro.org>,
  qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH v6 2/8] gdbstub: Try unlinking the unix socket before
- binding
-In-Reply-To: <20250117001542.8290-3-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Fri, 17 Jan 2025 01:11:27 +0100")
+Subject: Re: [PATCH v6 6/8] gdbstub: Allow late attachment
+In-Reply-To: <20250117001542.8290-7-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Fri, 17 Jan 2025 01:11:31 +0100")
 References: <20250117001542.8290-1-iii@linux.ibm.com>
- <20250117001542.8290-3-iii@linux.ibm.com>
+ <20250117001542.8290-7-iii@linux.ibm.com>
 User-Agent: mu4e 1.12.8; emacs 29.4
-Date: Fri, 17 Jan 2025 21:19:16 +0000
-Message-ID: <871px1nnor.fsf@draig.linaro.org>
+Date: Fri, 17 Jan 2025 21:22:02 +0000
+Message-ID: <87v7udm8zp.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -113,44 +113,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-> In case an emulated process execve()s another emulated process, bind()
-> will fail, because the socket already exists. So try deleting it. Use
-> the existing unix_listen() function which does this. Link qemu-user
-> with qemu-sockets.c and add the monitor_get_fd() stub.
+> Allow debugging individual processes in multi-process applications by
+> starting them with export QEMU_GDB=3D/tmp/qemu-%d.sock,suspend=3Dn.
+> Currently one would have to attach to every process to ensure the app
+> makes progress.
 >
-<snip>
-...
-> -    ret =3D listen(fd, 1);
-> -    if (ret < 0) {
-> -        perror("listen socket");
-> -        close(fd);
-> -        return -1;
-> -    }
-> -
-> -    return fd;
-> +    return unix_listen(path, errp);
-
-Nice ;-)
-
->  }
->=20=20
-<snip>
-> diff --git a/util/meson.build b/util/meson.build
-> index 5d8bef98912..780b5977a89 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -84,6 +84,8 @@ if have_block or have_ga
->    util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-c=
-oroutine-io.c'))
->    util_ss.add(files(f'coroutine-@coroutine_backend@.c'))
->    util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
-> +endif
-> +if have_block or have_ga or have_user
->    util_ss.add(files('qemu-sockets.c'))
->  endif
->  if have_block
-
-I guess have_block is synonymous with have_system:
+> In case suspend=3Dn is not specified, the flow remains unchanged. If it
+> is specified, then accepting the client connection is delegated to a
+> thread. In the future this machinery may be reused for handling
+> reconnections and interruptions.
+>
+> On accepting a connection, the thread schedules gdb_handlesig() on the
+> first CPU and wakes it up with host_interrupt_signal. Note that the
+> result of this gdb_handlesig() invocation is handled, as opposed to
+> many other existing call sites. These other call sites probably need to
+> be fixed separately.
+>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
