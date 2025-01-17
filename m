@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD5BC0218A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EDF9C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYa23-0002At-80; Thu, 16 Jan 2025 19:16:15 -0500
+	id 1tYa1t-00029U-Ol; Thu, 16 Jan 2025 19:16:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1u-00029r-RC
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:07 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1q-00028D-RB
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:02 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1p-0008LG-IS
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:06 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1n-0008KE-CE
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:02 -0500
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GN0vIr005703;
- Fri, 17 Jan 2025 00:15:53 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GM0VKn007885;
+ Fri, 17 Jan 2025 00:15:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ZfKal3
- jtbQfwqzCxrP2BbllLZzij0kr1Kfs/b7UIssM=; b=lsjdItdA9x/ieW+21VRzxg
- ZpVtS/wNPbGu+IJwYNySFoiDjDXdc7rayRZkUmDnaOsXyQSwc/i0RCUr8hhyG3jb
- 95dDDoWDL5fQ55vMRit+9suhXvEQdS2BK4RTylu1qYLRyLhIplLNBZVIKrb6Uh0L
- 0taBZqppXpGY3TsAownO9BuxoCwOegpip9XqTKbF/4yl5/YB3oelVUaNjogZznQ1
- SHHTRxglzva9msHD5gbvCOT9H6B9lDjtuzrcmGWJHz8KPPVIEZw/LpgOAWYy6Wvl
- NGtw8jgWBfkzF3GzZdrNZvPJ2rw2pP9Q37Ww1xcSJ60pzrzTPEStcxl6AI6oHKxw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446tkcneg3-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=4fu3GDQOQ9FOS9iFS
+ Yy+3L5RzBVEUo1P+XpIXrxmcI4=; b=hfuUJGmS9yRnv60GNAH5xgbUwzQsQNT/e
+ 5hjsZVvInwm/rrAQzpwA3hizAz4g1/NsnNukjPLY+zyZ7XWq+Uvs6PK8GwYRIcsc
+ Hq9dGHaAMQt/iKk/IPZjTxhgJ/ISCqle53+kKkCOGSANOI9VXc/1zBzRbjUSQw8e
+ sX627N/dCFvzbmzNaKqxNwjHmzb5Ql5cYz9ekCkg4Zrla0vusvFBOQ7x2LCfn4gY
+ ORBVotMFk62u8yPSCp6s9TGgVtkXLupm+odLqcsTjIYeP7SdNKj+upvPCer2TZ41
+ 8niRsCvVFMitui2hmrqR2lcoZkkPYkMejIlD+ns76BDnoVIftH3BA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446tkcnefy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GKek2F002666;
- Fri, 17 Jan 2025 00:15:51 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443byggy0-1
+ Fri, 17 Jan 2025 00:15:49 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GKSMhW004540;
+ Fri, 17 Jan 2025 00:15:48 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4442yt0jk2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:51 +0000
+ Fri, 17 Jan 2025 00:15:48 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50H0Fn1f56361222
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50H0FkK940042938
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Jan 2025 00:15:49 GMT
+ Fri, 17 Jan 2025 00:15:46 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6BBDF20040;
- Fri, 17 Jan 2025 00:15:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BB17C2004B;
+ Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEE2F2004B;
- Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 49DEA20040;
+ Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.62.46])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
+ Fri, 17 Jan 2025 00:15:46 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,19 +67,17 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v6 7/8] docs/user: Document the %d placeholder and suspend=n
- QEMU_GDB features
-Date: Fri, 17 Jan 2025 01:11:32 +0100
-Message-ID: <20250117001542.8290-8-iii@linux.ibm.com>
+Subject: [PATCH v6 2/8] gdbstub: Try unlinking the unix socket before binding
+Date: Fri, 17 Jan 2025 01:11:27 +0100
+Message-ID: <20250117001542.8290-3-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com>
 References: <20250117001542.8290-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: USv0HpZvjX1LvZLrlAQQrlwWaPTxW_V_
-X-Proofpoint-GUID: USv0HpZvjX1LvZLrlAQQrlwWaPTxW_V_
+X-Proofpoint-ORIG-GUID: lBpMcVpkEUIGWomKJemK5xmVh_c4Nb3M
+X-Proofpoint-GUID: lBpMcVpkEUIGWomKJemK5xmVh_c4Nb3M
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-16_10,2025-01-16_01,2024-11-22_01
@@ -88,7 +85,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  adultscore=0 malwarescore=0
  impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501
  lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=923 phishscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.19.0-2411120000 definitions=main-2501160178
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -115,46 +112,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+In case an emulated process execve()s another emulated process, bind()
+will fail, because the socket already exists. So try deleting it. Use
+the existing unix_listen() function which does this. Link qemu-user
+with qemu-sockets.c and add the monitor_get_fd() stub.
+
+Note that it is not possible to handle this in do_execv(): deleting
+gdbserver_user_state.socket_path before safe_execve() is not correct,
+because the latter may fail, and afterwards we may lose control.
+
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- docs/user/main.rst | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ gdbstub/user.c     | 29 +++--------------------------
+ stubs/meson.build  |  2 ++
+ stubs/monitor-fd.c |  9 +++++++++
+ util/meson.build   |  2 ++
+ 4 files changed, 16 insertions(+), 26 deletions(-)
+ create mode 100644 stubs/monitor-fd.c
 
-diff --git a/docs/user/main.rst b/docs/user/main.rst
-index 80a77f0a0c9..9a1c60448c5 100644
---- a/docs/user/main.rst
-+++ b/docs/user/main.rst
-@@ -54,7 +54,7 @@ Command line options
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index fd29d595f40..8225b702802 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -315,12 +315,10 @@ static bool gdb_accept_socket(int gdb_fd)
+     return true;
+ }
  
- ::
+-static int gdbserver_open_socket(const char *path)
++static int gdbserver_open_socket(const char *path, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+-    struct sockaddr_un sockaddr = {};
+     char *pid_placeholder;
+-    int fd, ret;
  
--   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g port] [-B offset] [-R size] program [arguments...]
-+   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g endpoint] [-B offset] [-R size] program [arguments...]
+     pid_placeholder = strstr(path, "%d");
+     if (pid_placeholder != NULL) {
+@@ -330,28 +328,7 @@ static int gdbserver_open_socket(const char *path)
+         path = buf->str;
+     }
  
- ``-h``
-    Print the help
-@@ -91,8 +91,18 @@ Debug options:
-    Activate logging of the specified items (use '-d help' for a list of
-    log items)
+-    fd = socket(AF_UNIX, SOCK_STREAM, 0);
+-    if (fd < 0) {
+-        perror("create socket");
+-        return -1;
+-    }
+-
+-    sockaddr.sun_family = AF_UNIX;
+-    pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun_path) - 1, path);
+-    ret = bind(fd, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
+-    if (ret < 0) {
+-        perror("bind socket");
+-        close(fd);
+-        return -1;
+-    }
+-    ret = listen(fd, 1);
+-    if (ret < 0) {
+-        perror("listen socket");
+-        close(fd);
+-        return -1;
+-    }
+-
+-    return fd;
++    return unix_listen(path, errp);
+ }
  
--``-g port``
--   Wait gdb connection to port
-+``-g endpoint``
-+   Wait gdb connection to a port (e.g., ``1234``) or a unix socket (e.g.,
-+   ``/tmp/qemu.sock``).
+ static bool gdb_accept_tcp(int gdb_fd)
+@@ -424,7 +401,7 @@ bool gdbserver_start(const char *port_or_path, Error **errp)
+     if (port > 0) {
+         gdb_fd = gdbserver_open_port(port, errp);
+     } else {
+-        gdb_fd = gdbserver_open_socket(port_or_path);
++        gdb_fd = gdbserver_open_socket(port_or_path, errp);
+     }
+ 
+     if (gdb_fd < 0) {
+diff --git a/stubs/meson.build b/stubs/meson.build
+index e91614a874d..17168d03eed 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -61,6 +61,8 @@ if have_user
+   if not (have_system or have_tools)
+     stub_ss.add(files('qdev.c'))
+   endif
 +
-+   If a unix socket path contains single ``%d`` placeholder (e.g.,
-+   ``/tmp/qemu-%d.sock``), it is replaced by the emulator PID, which is useful
-+   when passing this option via the ``QEMU_GDB`` environment variable to a
-+   multi-process application.
-+
-+   If the endpoint address is followed by ``,suspend=n`` (e.g.,
-+   ``1234,suspend=n``), then the emulated program starts without waiting for a
-+   connection, which can be established at any later point in time.
++  stub_ss.add(files('monitor-fd.c'))
+ endif
  
- ``-one-insn-per-tb``
-    Run the emulation with one guest instruction per translation block.
+ if have_system
+diff --git a/stubs/monitor-fd.c b/stubs/monitor-fd.c
+new file mode 100644
+index 00000000000..9bb67498850
+--- /dev/null
++++ b/stubs/monitor-fd.c
+@@ -0,0 +1,9 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "monitor/monitor.h"
++
++int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
++{
++    abort();
++}
+diff --git a/util/meson.build b/util/meson.build
+index 5d8bef98912..780b5977a89 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -84,6 +84,8 @@ if have_block or have_ga
+   util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
+   util_ss.add(files(f'coroutine-@coroutine_backend@.c'))
+   util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
++endif
++if have_block or have_ga or have_user
+   util_ss.add(files('qemu-sockets.c'))
+ endif
+ if have_block
 -- 
 2.47.1
 
