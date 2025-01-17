@@ -4,67 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD31C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 11:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D1BC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 11:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYkeu-0003FU-Ge; Fri, 17 Jan 2025 06:37:05 -0500
+	id 1tYkn1-0005Na-K5; Fri, 17 Jan 2025 06:45:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+8324082fcfa3b97b2327+7817+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tYker-0003Cc-Cs
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:37:01 -0500
-Received: from casper.infradead.org ([90.155.50.34])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYkmz-0005NO-DO
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:45:25 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+8324082fcfa3b97b2327+7817+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tYkek-0007Gc-RS
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:37:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=cwSfUpyetrkxmJFyA8D0lzYVz4+2mLFrrrcV2fFs0FU=; b=UEsUIseYjzu6xWmnU38PhOEMpL
- /1MZLOS08xYzJzdumGpTfxS1gIoxksOP9pAvYlsR9ImwcR0B/efDM3xr5CiFKUWimvqNkI/3+cJuH
- C7EPqHWApMn1Gv0J8nkXRwG/e3YxakKLfFwLb5qnzejJt9/hW8ccYhY0sWitbGXS/uKPhzlMf3Gkw
- W3r1uporBhn7pKE/GQ8Hl4GjVIZZG0wqmEy4egqrBMigEj1tZeBfy2PrXjkJLHwWv+GtcBQA8ewTt
- Km4h0aMJ0jDLNilGeAO4kssv5TN0fLktzwrURPf1hPIUvD3efYgs0AMpieqBPtQbWDbM7iyHPe5CR
- s0+LTj7Q==;
-Received: from 54-240-197-233.amazon.com ([54.240.197.233]
- helo=edge-m2-r3-217.e-iad50.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tYkeW-0000000CJYw-41Yl; Fri, 17 Jan 2025 11:36:41 +0000
-Message-ID: <43e9e8b7b2aea133d0353908b1bf09ae8d75a3d0.camel@infradead.org>
-Subject: Re: [PULL 0/8] Xen regression fixes and cleanups
-From: David Woodhouse <dwmw2@infradead.org>
-To: Phil Dennis-Jordan <phil@philjordan.eu>, Stefan Hajnoczi
- <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org
-Date: Fri, 17 Jan 2025 12:36:39 +0100
-In-Reply-To: <CAAibmn0Tsn9ZQ1wgoLLhCY=DQAkSDDtKBYOKKoSGmYe2TDTZuQ@mail.gmail.com>
-References: <20250116084332.1864967-1-dwmw2@infradead.org>
- <20250116221027.GA378432@fedora>
- <CAAibmn0Tsn9ZQ1wgoLLhCY=DQAkSDDtKBYOKKoSGmYe2TDTZuQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-XEbk0ZPP6tTmPp+X9Fk0"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYkmv-000059-9F
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 06:45:24 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YZHtT26CDz6M4Pj;
+ Fri, 17 Jan 2025 19:43:29 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4BDE0140CB9;
+ Fri, 17 Jan 2025 19:45:17 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 17 Jan
+ 2025 12:45:16 +0100
+Date: Fri, 17 Jan 2025 11:45:14 +0000
+To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+CC: <fan.ni@samsung.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
+ <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <chenbaozi@phytium.com.cn>
+Subject: Re: [PATCH 1/1] cxl/cxl-host: Support creation of a new CXL Host
+ Bridge
+Message-ID: <20250117114514.00003772@huawei.com>
+In-Reply-To: <20250117034343.26356-2-wangyuquan1236@phytium.com.cn>
+References: <20250117034343.26356-1-wangyuquan1236@phytium.com.cn>
+ <20250117034343.26356-2-wangyuquan1236@phytium.com.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=90.155.50.34;
- envelope-from=BATV+8324082fcfa3b97b2327+7817+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,121 +69,428 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 17 Jan 2025 11:43:43 +0800
+Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
 
---=-XEbk0ZPP6tTmPp+X9Fk0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> This work defines a new cxl host bridge type (TYPE_CXL_HOST). This
+> could be considered as a prototype of an independent cxl host bridge
+> which combines gpex features (ecam, mmio windows & irq) and pxb-cxl
+> features(CHBCR) at meanwhile.
+> 
+> The root bus path of CXL_HOST is "0001:00", that would not affect the
+> original pcie host topology. In the previous, the pxb-cxl-host with
+> any cxl root ports and cxl endpoint devices would occupy the BDF
+> number of the original pcie domain. This new type provide a solution
+> to resolve the problem.
+> 
+> Also the CXLFixedWindow struct adds a new member 'target_chb' to
+> record the target list of CXLHostBridge. And necessary is to adjust
+> the logic of 'cxl_cfmws_find_device' and 'cxl_fmws_link_targets' to
+> allow different types of cxl host bridge.
+> 
+> Move 'cxl_get_hb_cstate' & 'cxl_get_hb_passthrough' from pxb code
+> into cxl-host code.
+> 
+> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
 
-On Fri, 2025-01-17 at 11:49 +0100, Phil Dennis-Jordan wrote:
->=20
-> This note made me realise that my feature addition (macOS PV graphics
-> device) that caused the regression requiring my patch in this series
-> hasn't made it into the changelog. I'd be happy to add it myself, but
-> I don't have a wiki account. How do I get one?
+This needs review form people more familiar with host bridges in general
+than I am, but I'll give some comments.
 
-I think the automatic account creation and you have to mail someone to
-get access, but I can't remember whom.
+Firstly there are some mechanical renames in here which are probably
+fine but belong in a separate precursor patch.
 
-If you want to give me something I can cut/paste, I can add it for you.
+Please have one series that introduces this and makes use of it.
+There are functions that are exposed more widely than previously
+without it being clear why.
 
---=-XEbk0ZPP6tTmPp+X9Fk0
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+Also, the new host bridge support needs to be it's own thing, not
+in cxl-host.c which is the Host support (so cfmws routing) not
+the host bridge support.  Probably wants to be in hw/pci-host/cxl.c
+alongside gpex etc.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDExNzExMzYz
-OVowLwYJKoZIhvcNAQkEMSIEIJDOgrjyKT9ZEPNAsOepsIa8xMMlXeAU1qqfJjzCaE8iMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAk9A3vVDvvxh0
-qe4hhceTlSknqNbPvCbYLqDxQPVQpbFTyN8n2tlCyp/7SeKxYtCdml0CR6njWvuDCACfFVaYRqTW
-Za99IOeSrrnJEAiZjJ/xUMzedhgVwMJuJe9s51VRz4eJLLKkxAA5WkS7uokf7ZUsCX7mMt81S2g8
-mn2P4YgupBhZC2I+KQm/wRKK6aj7rm/Iq9Ki8Y67mVJ4mrKsu2OlkvESaduJtsoutkHHCDokk0Mo
-4YCYiLN6jH5A+QADQv68reVYcuxQ+nIyr/4B3w7aCOA+T4W9FniuT4fM8mhPYbfpuJcuUJNRtgnY
-59RLaYGHRyhFVWLnoM5fyMxuG2DC2wiSO9I4pnsLxhxLsI01WvuagBA3F6x9YNPEOBHrJOsGCIUz
-+aVpiVmAPJliBR4rqQA2sR+W3vRGuPy+muemg1PmzyoibFrpSOVD7jKgvcV2VHB6rLeHmmc0OoRF
-nHi5QMhL48Jb7kMFswX0F6aaxb72ITvYdMrYGqmwrG4felZvBpK2YfoNNMBjsIK5CXQqOzCUFLau
-WJ83MS7IfxkbMLsYz05147Hp12r0avwVrlyYQjl/0x/21nIqCyt3b6yWkthYQvmX8VUPc+wlbu0N
-0ttO3ai96GGx5yeKLULw+sLfjAVeyd54DxH3PRgC1Kq4sVObIscTB0T+8q2FBjAAAAAAAAA=
+Jonathan
+
+> ---
+>  hw/cxl/cxl-host-stubs.c             |   2 +
+>  hw/cxl/cxl-host.c                   | 220 ++++++++++++++++++++++++++--
+>  hw/pci-bridge/pci_expander_bridge.c |  20 +--
+>  include/hw/cxl/cxl.h                |  23 +++
+>  include/hw/cxl/cxl_component.h      |   4 +-
+>  include/hw/cxl/cxl_host.h           |   6 +
+>  6 files changed, 242 insertions(+), 33 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+> index cae4afcdde..aea94933ba 100644
+> --- a/hw/cxl/cxl-host-stubs.c
+> +++ b/hw/cxl/cxl-host-stubs.c
+> @@ -11,5 +11,7 @@
+>  void cxl_fmws_link_targets(CXLState *stat, Error **errp) {};
+>  void cxl_machine_init(Object *obj, CXLState *state) {};
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp) {};
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +                        CXLFixedMemoryWindowOptions *object, Error **errp) {};
+>  
+>  const MemoryRegionOps cfmws_ops;
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index e9f2543c43..81a5948874 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -16,15 +16,37 @@
+>  #include "qapi/qapi-visit-machine.h"
+>  #include "hw/cxl/cxl.h"
+>  #include "hw/cxl/cxl_host.h"
+> +#include "hw/irq.h"
+>  #include "hw/pci/pci_bus.h"
+>  #include "hw/pci/pci_bridge.h"
+>  #include "hw/pci/pci_host.h"
+>  #include "hw/pci/pcie_port.h"
+>  #include "hw/pci-bridge/pci_expander_bridge.h"
+>  
+> -static void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> -                                           CXLFixedMemoryWindowOptions *object,
+> -                                           Error **errp)
+> +CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb, int type)
+> +{
+> +    if (type == 0) {
+> +        CXLHost *pxbhost = PXB_CXL_HOST(hb);
+> +        return &pxbhost->cxl_cstate;
+> +    } else {
+> +        CXLHostBridge *cxlhost = CXL_HOST(hb);
+> +        return &cxlhost->cxl_cstate;
+> +    }
+> +}
+> +
+> +bool cxl_get_hb_passthrough(PCIHostState *hb, int type)
+> +{
+> +    if (type == 0) {
+> +        CXLHost *pxbhost = PXB_CXL_HOST(hb);
+> +        return pxbhost->passthrough;
+> +    } else {
+> +        return false;
+> +    }
+> +}
+As below. To me these add nothing useful. I'd put the code inline.
+
+> +
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +                                    CXLFixedMemoryWindowOptions *object,
+> +                                    Error **errp)
+>  {
+>      ERRP_GUARD();
+>      g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
+> @@ -81,18 +103,24 @@ void cxl_fmws_link_targets(CXLState *cxl_state, Error **errp)
+>              int i;
+>  
+>              for (i = 0; i < fw->num_targets; i++) {
+> -                Object *o;
+> +                Object *pxb_cxl, *cxl_host;
+>                  bool ambig;
+>  
+> -                o = object_resolve_path_type(fw->targets[i],
+> +                pxb_cxl = object_resolve_path_type(fw->targets[i],
+>                                               TYPE_PXB_CXL_DEV,
+>                                               &ambig);
+
+Do a resolve without type then dynamic cast to check which one it is.
+Should end up simpler and you only need one object pointer.
 
 
---=-XEbk0ZPP6tTmPp+X9Fk0--
+> -                if (!o) {
+> -                    error_setg(errp, "Could not resolve CXLFM target %s",
+> -                               fw->targets[i]);
+> +                if (!pxb_cxl) {
+> +                    cxl_host = object_resolve_path_type(fw->targets[i],
+> +                                             TYPE_CXL_HOST,
+> +                                             &ambig);
+> +                    if (!cxl_host) {
+> +                        error_setg(errp, "Could not resolve CXLFM target %s",
+> +                                   fw->targets[i]);
+>                      return;
+> +                    }
+
+Indent looks suspicious.
+
+> +                    fw->target_chb[i] = CXL_HOST(cxl_host);
+>                  }
+> -                fw->target_hbs[i] = PXB_CXL_DEV(o);
+> +                fw->target_hbs[i] = PXB_CXL_DEV(pxb_cxl);
+This is casting something we might know is null. Make it conditional on pxb_cxl.
+
+>              }
+>          }
+>      }
+> @@ -162,23 +190,36 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+>      uint8_t target;
+>      bool target_found;
+>      PCIDevice *rp, *d;
+> +    int type;
+>  
+>      /* Address is relative to memory region. Convert to HPA */
+>      addr += fw->base;
+>  
+>      rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
+> -    hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+> -    if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
+> -        return NULL;
+> +    if (fw->target_chb[rb_index]) {
+> +        type = CXL_HOST_BRIDGE_TYPE;
+> +        hb = PCI_HOST_BRIDGE(fw->target_chb[rb_index]);
+> +        CXLHostBridge *host = fw->target_chb[rb_index];
+> +
+> +        hb_cstate = &host->cxl_cstate;
+> +        cache_mem = hb_cstate->crb.cache_mem_registers;
+> +        target_found = cxl_hdm_find_target(cache_mem, addr, &target);
+> +        rp = pcie_find_port_by_pn(hb->bus, target);
+> +    } else {
+> +        type = PXB_CXL_HOST_TYPE;
+
+use a bool or just duplicate the small amount of code that follows that is type
+dependent.  Then can split the cxl_get_hb_passthrough() and cxl_get_hb_cstate()
+dependent on the type. There is little benefit that I can see in combining them
+as the two paths do very different things
+
+
+> +        hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+> +        if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
+> +            return NULL;
+> +        }
+>      }
+>  
+> -    if (cxl_get_hb_passthrough(hb)) {
+> +    if (cxl_get_hb_passthrough(hb, type)) {
+>          rp = pcie_find_port_first(hb->bus);
+>          if (!rp) {
+>              return NULL;
+>          }
+>      } else {
+> -        hb_cstate = cxl_get_hb_cstate(hb);
+> +        hb_cstate = cxl_get_hb_cstate(hb, type);
+>          if (!hb_cstate) {
+>              return NULL;
+>          }
+> @@ -372,3 +413,154 @@ void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp)
+>          }
+>      }
+>  }
+
+All of the elements specific to the new host bridge need to go in a separate
+file under hw/pci/pci-host I think.
+
+That way we can build it only for SBSA-ref for now, not x86 etc where
+I don't see any reason to move away from PXB-CXL.
+(Note that I very much still need that on ARM as well because for me
+a fixed reference platform like SBSA-REF isn't useful for normal work.
+I appreciate it has it's uses though!).
+
+> +
+> +static void cxl_host_set_irq(void *opaque, int irq_num, int level)
+> +{
+> +    CXLHostBridge *host = opaque;
+> +
+> +    qemu_set_irq(host->irq[irq_num], level);
+> +}
+
+...
+
+> +
+> +void cxl_host_hook_up_registers(CXLState *cxl_state, CXLHostBridge *host,
+> +                                Error **errp)
+> +{
+> +    CXLComponentState *cxl_cstate = &host->cxl_cstate;
+> +    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
+> +    hwaddr offset;
+> +
+> +    offset = memory_region_size(mr) * cxl_state->next_mr_idx;
+> +    if (offset > memory_region_size(&cxl_state->host_mr)) {
+> +        error_setg(errp, "Insufficient space for sbsa cxl host register space");
+> +        return;
+> +    }
+> +
+> +    memory_region_add_subregion(&cxl_state->host_mr, offset, mr);
+
+Do you need this complexity?  I need it for PXB because we have a dynamic
+set up and lots of PXBs is an important test case. For your use, can
+we not just create each host bridge with provided memory region for
+that one?
+
+> +    cxl_state->next_mr_idx++;
+> +}
+
+> +static void cxl_host_class_init(ObjectClass *class, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(class);
+> +    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
+> +
+> +    hc->root_bus_path = cxl_host_root_bus_path;
+> +    dc->realize = cxl_host_realize;
+> +    dc->desc = "CXL Host Bridge";
+> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+> +    dc->fw_name = "cxl";
+> +}
+> +
+> +static const TypeInfo cxl_host_info = {
+> +    .name          = TYPE_CXL_HOST,
+> +    .parent        = TYPE_PCIE_HOST_BRIDGE,
+> +    .instance_size = sizeof(CXLHostBridge),
+> +    .class_init    = cxl_host_class_init,
+> +};
+> +
+> +static void cxl_host_register(void)
+> +{
+> +    type_register_static(&cxl_host_info);
+> +}
+This stuff definitely belongs alongside the other host bridge
+definitions not in cxl-host.c which is about the fixed memory
+windows - so the actual host bit of routing, not the host bridge.
+
+> +
+> +type_init(cxl_host_register)
+> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> index 07d411cff5..2f1b26256b 100644
+> --- a/hw/pci-bridge/pci_expander_bridge.c
+> +++ b/hw/pci-bridge/pci_expander_bridge.c
+> @@ -56,20 +56,6 @@ static GList *pxb_dev_list;
+>  
+>  #define TYPE_PXB_HOST "pxb-host"
+>  
+> -CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb)
+> -{
+> -    CXLHost *host = PXB_CXL_HOST(hb);
+> -
+> -    return &host->cxl_cstate;
+> -}
+> -
+> -bool cxl_get_hb_passthrough(PCIHostState *hb)
+> -{
+> -    CXLHost *host = PXB_CXL_HOST(hb);
+> -
+> -    return host->passthrough;
+> -}
+> -
+>  static int pxb_bus_num(PCIBus *bus)
+>  {
+>      PXBDev *pxb = PXB_DEV(bus->parent_dev);
+> @@ -240,7 +226,7 @@ static void pxb_cxl_host_class_init(ObjectClass *class, void *data)
+>   * This is a device to handle the MMIO for a CXL host bridge. It does nothing
+>   * else.
+>   */
+> -static const TypeInfo cxl_host_info = {
+> +static const TypeInfo pxb_cxl_host_info = {
+
+I agree this could potentially be confusing, but please do the rename
+in a patch that just does that.
+
+>      .name          = TYPE_PXB_CXL_HOST,
+>      .parent        = TYPE_PCI_HOST_BRIDGE,
+>      .instance_size = sizeof(CXLHost),
+> @@ -524,7 +510,7 @@ static void pxb_cxl_dev_class_init(ObjectClass *klass, void *data)
+>       * vendor, device, class, etc. ids are intentionally left out.
+>       */
+>  
+> -    dc->desc = "CXL Host Bridge";
+> +    dc->desc = "PXB CXL Host Bridge";
+>      device_class_set_props(dc, pxb_cxl_dev_properties);
+>      set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+>  
+> @@ -551,7 +537,7 @@ static void pxb_register_types(void)
+>      type_register_static(&pxb_pcie_bus_info);
+>      type_register_static(&pxb_cxl_bus_info);
+>      type_register_static(&pxb_host_info);
+> -    type_register_static(&cxl_host_info);
+> +    type_register_static(&pxb_cxl_host_info);
+>      type_register_static(&pxb_dev_info);
+>      type_register_static(&pxb_pcie_dev_info);
+>      type_register_static(&pxb_cxl_dev_info);
+> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
+> index 75e47b6864..548a1bd28c 100644
+> --- a/include/hw/cxl/cxl.h
+> +++ b/include/hw/cxl/cxl.h
+> @@ -17,6 +17,7 @@
+>  #include "cxl_pci.h"
+>  #include "cxl_component.h"
+>  #include "cxl_device.h"
+> +#include "hw/pci/pcie_host.h"
+>  
+>  #define CXL_CACHE_LINE_SIZE 64
+>  #define CXL_COMPONENT_REG_BAR_IDX 0
+> @@ -24,12 +25,34 @@
+>  
+>  #define CXL_WINDOW_MAX 10
+>  
+> +#define PXB_CXL_HOST_TYPE 0
+> +#define CXL_HOST_BRIDGE_TYPE 1
+Only used in one place where we pick between these two.
+Just use a bool down there.
+
+> +
+> +#define TYPE_CXL_HOST "cxl-host"
+> +OBJECT_DECLARE_SIMPLE_TYPE(CXLHostBridge, CXL_HOST)
+> +
+> +#define CXL_HOST_NUM_IRQS 4
+> +
+>  typedef struct PXBCXLDev PXBCXLDev;
+>  
+> +typedef struct CXLHostBridge {
+> +    PCIExpressHost parent_obj;
+> +
+> +    CXLComponentState cxl_cstate;
+> +
+> +    MemoryRegion io_ioport;
+> +    MemoryRegion io_mmio;
+> +    MemoryRegion io_ioport_window;
+> +    MemoryRegion io_mmio_window;
+> +    qemu_irq irq[CXL_HOST_NUM_IRQS];
+> +    int irq_num[CXL_HOST_NUM_IRQS];
+> +} CXLHostBridge;
+> +
+>  typedef struct CXLFixedWindow {
+>      uint64_t size;
+>      char **targets;
+>      PXBCXLDev *target_hbs[16];
+> +    CXLHostBridge *target_chb[16];
+>      uint8_t num_targets;
+>      uint8_t enc_int_ways;
+>      uint8_t enc_int_gran;
+> diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+> index 945ee6ffd0..953521d601 100644
+> --- a/include/hw/cxl/cxl_component.h
+> +++ b/include/hw/cxl/cxl_component.h
+> @@ -270,8 +270,8 @@ uint8_t cxl_interleave_granularity_enc(uint64_t gran, Error **errp);
+>  
+>  hwaddr cxl_decode_ig(int ig);
+>  
+> -CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb);
+> -bool cxl_get_hb_passthrough(PCIHostState *hb);
+> +CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb, int type);
+> +bool cxl_get_hb_passthrough(PCIHostState *hb, int type);
+>  
+>  bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp);
+>  void cxl_doe_cdat_release(CXLComponentState *cxl_cstate);
+> diff --git a/include/hw/cxl/cxl_host.h b/include/hw/cxl/cxl_host.h
+> index c9bc9c7c50..d6d915141a 100644
+> --- a/include/hw/cxl/cxl_host.h
+> +++ b/include/hw/cxl/cxl_host.h
+> @@ -16,6 +16,12 @@
+>  void cxl_machine_init(Object *obj, CXLState *state);
+>  void cxl_fmws_link_targets(CXLState *stat, Error **errp);
+>  void cxl_hook_up_pxb_registers(PCIBus *bus, CXLState *state, Error **errp);
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +                        CXLFixedMemoryWindowOptions *object, Error **errp);
+> +
+> +int cxl_host_set_irq_num(CXLHostBridge *host, int index, int gsi);
+> +void cxl_host_hook_up_registers(CXLState *cxl_state, CXLHostBridge *host,
+> +                                Error **errp);
+>  
+>  extern const MemoryRegionOps cfmws_ops;
+>  
+Thanks,
+
+Jonathan
+
+
 
