@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507F7C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CEEDC02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYiqG-0006KU-DB; Fri, 17 Jan 2025 04:40:40 -0500
+	id 1tYisp-0007Fg-QG; Fri, 17 Jan 2025 04:43:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYiq5-0006Is-5r
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:40:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYiso-0007FW-AQ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:43:18 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tYiq1-0005q4-I0
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:40:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737106823;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j4NAqgi38LYT3oNbCaFz5kq8bGXKXTd/Mkrfbxdb2Lg=;
- b=Lk0tGEBhTv22FF8qom72DGYg9ez5VJfFOcVKDGTDZ92Iuenn/bNQwBsh/sCCQ4PRQtJ1IS
- muGW8H2B4BAT+6sgDKuMhJ5C92eHI/62A+XTTbe8UaZU5V82hwElhk0Y6MLdLqn/fCqbyW
- 1kKNcCy/GLHYBWbfvTQvxngqmWXiNmQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-aeifTFv2M7Sf1ySxAbuzRA-1; Fri, 17 Jan 2025 04:40:22 -0500
-X-MC-Unique: aeifTFv2M7Sf1ySxAbuzRA-1
-X-Mimecast-MFC-AGG-ID: aeifTFv2M7Sf1ySxAbuzRA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43624b08181so9711355e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:40:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737106821; x=1737711621;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=j4NAqgi38LYT3oNbCaFz5kq8bGXKXTd/Mkrfbxdb2Lg=;
- b=hFXtLGjc9iFDH5GRpQIuEyg6qQjbLU4Z3Q/qIGLsTAccyftGnHQ1CpYxPEk5px9Tcy
- SvSZCrtt6aZuiXO6b9EDAyEwjN3ZVooOJV0zu0p7MkzQDxt+4ZOkcs8rWNpwMvaFs55E
- UO249M6A8k7i4HqJtInzFEclJa0qm1KjxbXKUkpGG4j0UzraM31lT+IUlr2gnnUaq4VE
- VnM5OZ3qeCZJYSUx5iNMTh8X6YtvhPgsqiu4cLXcQEdvXGDXenmsleahOro+V6/z3Xt+
- 2TWz4b81QzSWY9YsV3Fwk7S88g2Ksq3vEDhlQ3BfvEGJEhCUw93h/TCuTYcoH8pf0DLB
- sqFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWgQhg1fyG4Kl/mqW/sY3MiLoMOInty3zfI/hqla5F6mcu5GVWIbelEB/snDVrecrefZ85IXrqUtw8v@nongnu.org
-X-Gm-Message-State: AOJu0YwJFdB9wKFM89TYd3vTXQWDbPym9iOoA7yiMWBLWYzTheJW32Qe
- c12wVPj1D6LwQVF0wVCupHtMLuXUWALBo/0M1eSTC0X04B2zCQMs35hUJAl4EAKYerTyTBwTS6Q
- 79L/9fTfeGTT3l2G1iMisnJ0TBAX2EupWNwEZSxCLk75MqB1sj7yllZmgF8ENN6725mInOXNjeP
- R8PvzLHppsSUkZ35LBM4ifh9Uq4js=
-X-Gm-Gg: ASbGncu3MLeAep9w+mqQiHsYT+nvUJVHRRb3W/9QoAUNSik8oo8EFXoSH1K4f6PPqo6
- JRbOiASy+rngQdC2965dk1MVgVkOuiEV3BVQArmg=
-X-Received: by 2002:a05:600c:1c21:b0:434:f3d8:62db with SMTP id
- 5b1f17b1804b1-438918b9b23mr15736725e9.2.1737106820896; 
- Fri, 17 Jan 2025 01:40:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUoiYTSdqDZzGsD5/Mr+0+Tg3ZnFftZ99f8c8smHy3LfjA2Q8Dq02AxpdQ91/x4RZt/VWZbBNfPgkELJMfJQc=
-X-Received: by 2002:a05:600c:1c21:b0:434:f3d8:62db with SMTP id
- 5b1f17b1804b1-438918b9b23mr15736545e9.2.1737106820532; Fri, 17 Jan 2025
- 01:40:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYisl-00063Z-UK
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:43:18 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YZFCg6DJlz6HJgx;
+ Fri, 17 Jan 2025 17:43:11 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0D1D91402CB;
+ Fri, 17 Jan 2025 17:43:13 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 17 Jan
+ 2025 10:43:12 +0100
+Date: Fri, 17 Jan 2025 09:43:11 +0000
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+CC: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, <qemu-devel@nongnu.org>
+Subject: Re: CXL emulation on aarch64
+Message-ID: <20250117094311.00000e64@huawei.com>
+In-Reply-To: <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
+References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
+ <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
+ <20250110123128.00004a5b@huawei.com>
+ <09D52CDC-44E5-48C4-8D32-E4DD0964F9AF@linux.dev>
+ <20250114102626.00000c53@huawei.com>
+ <88E9D774-A760-45F7-A173-24A07BB55733@linux.dev>
+ <20250116105833.000056da@huawei.com>
+ <9DF43D0C-E03E-420E-AB4E-0EE571D06A38@linux.dev>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-5-zhao1.liu@intel.com>
- <6108dfe6-f629-431c-be91-51abff338e85@redhat.com> <Z1XJBJp+l92+OrY9@intel.com>
- <CABgObfaeoLociD5rzptg4Uj4anMonc0M8iP_TK3qa-17FecR2A@mail.gmail.com>
- <Z4h3Q/JBxtWxi+bK@intel.com>
-In-Reply-To: <Z4h3Q/JBxtWxi+bK@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 17 Jan 2025 10:40:08 +0100
-X-Gm-Features: AbW1kvb2PCtCgUiJzEKlxZs3QajGac2825Y6_WF0gndo7Kebo2kQ1iYm5H4pTOU
-Message-ID: <CABgObfYeRASh3oao6fpKBcijnhGaMKdAWsAQbrya7rwwOJfE1g@mail.gmail.com>
-Subject: Re: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Junjie Mao <junjie.mao@hotmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,109 +72,193 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like timer there are just a couple nits here.
+On Fri, 17 Jan 2025 10:13:41 +0900
+Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
 
-On Thu, Jan 16, 2025 at 3:45=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
-> * gpio_in and gpio_out:
->
-> /// Trait for methods of [`DeviceState`] and its subclasses.
-> pub trait DeviceMethods: ObjectDeref
-> where
->     Self::Target: IsA<DeviceState>,
-> {
->     fn init_gpio_in<F>(&self, lines_num: u32, _f: F)
+> > On Jan 16, 2025, at 19:58, Jonathan Cameron <Jonathan.Cameron@huawei.co=
+m> wrote:
+> >=20
+> > On Thu, 16 Jan 2025 15:04:53 +0900
+> > Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+> >  =20
+> >> Hi Jonathan,
+> >>  =20
+> >>> On Jan 14, 2025, at 19:26, Jonathan Cameron <Jonathan.Cameron@huawei.=
+com> wrote:
+> >>>=20
+> >>> On Tue, 14 Jan 2025 12:03:03 +0900
+> >>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+> >>>  =20
+> >>>> Hi Jonathan,=20
+> >>>>  =20
+> >>>>> On Jan 10, 2025, at 21:31, Jonathan Cameron <Jonathan.Cameron@huawe=
+i.com> wrote:
+> >>>>>=20
+> >>>>> On Fri, 10 Jan 2025 09:20:54 +0000
+> >>>>> "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> wrote:
+> >>>>>  =20
+> >>>>>> On 10/01/2025 13:29, Itaru Kitayama wrote:     =20
+> >>>>>>> Hi,
+> >>>>>>> Is anybody working on the CXL emulation on aarch64?       =20
+> >>>>>>=20
+> >>>>>> I'm not currently working on the CXL emulation on aarch64.
+> >>>>>>=20
+> >>>>>> However, IIRC the CXL maintainer's tree should work.
+> >>>>>> https://gitlab.com/jic23/qemu/     =20
+> >>>>>=20
+> >>>>> Pick up latest branch from there. I'm prepping a rebased version
+> >>>>> with some new stuff but might take a few more days.     =20
+> >>>>=20
+> >>>> Thanks for sharing your work with us.  Your master and cxl-2024-11-2=
+7 branches give:
+> >>>>=20
+> >>>> $ qemu-system-aarch64: -accel tcg,cxl=3Don: Property 'tcg-accel.cxl'=
+ not found   =20
+> >>>=20
+> >>> cxl is a machine property not a accel one. So needs to be after virt
+> >>> There are tests in the tree for bios tables. Copy the command line fr=
+om those.
+> >>>  =20
+> >>>>=20
+> >>>> My commands are below:
+> >>>> $HOME/projects/qemu/build/qemu-system-aarch64 \
+> >>>>       -M virt,virtualization=3Don,gic-version=3D3 \
+> >>>>       -M acpi=3Doff -cpu max,sme=3Doff -m 8G -smp 4 \
+> >>>>       -accel tcg,cxl=3Don \
+> >>>>       -nographic \
+> >>>>       -bios $HOME/cca-v4/out/bin/flash.bin \
+> >>>>       -kernel Image-cca \
+> >>>>       -drive format=3Draw,if=3Dnone,file=3D$HOME/cca-v4/out-or/image=
+s/rootfs.ext2,id=3Dhd0 \
+> >>>>       -device virtio-blk-pci,drive=3Dhd0 \
+> >>>>       -append root=3D/dev/vda \
+> >>>>       -nodefaults \
+> >>>>       --serial tcp:localhost:54320 \
+> >>>>        -serial tcp:localhost:54321 \
+> >>>>        -append "root=3D/dev/vda earlycon console=3Dhvc0" \
+> >>>>        -device virtio-net-pci,netdev=3Dnet0 \
+> >>>>        -netdev user,id=3Dnet0 \
+> >>>>        -device virtio-9p-device,fsdev=3Dshr0,mount_tag=3Dshr0 \
+> >>>>        -fsdev local,security_model=3Dnone,path=3D../../,id=3Dshr0
+> >>>>=20
+> >>>> Yes, I=E2=80=99m using Linaro=E2=80=99s CCA capable OP-TEE builds ab=
+ove.   =20
+> >>>=20
+> >>> I'm a little curious why optee is relevant for this but shouldn't mat=
+ter as long
+> >>> as an appropriate EDK2 is loaded.
+> >>>  =20
+> >>=20
+> >> I picked up your tree=E2=80=99s =E2=80=9Cmaster=E2=80=9D and =E2=80=9C=
+cxl-next=E2=80=9D as of today, and only the latter at least booted.
+> >> The former gives:
+> >>=20
+> >> qemu-system-aarch64: Property 'virt-9.2-machine.cxl' not found
+> >>=20
+> >> Should I stick with the cxl-next? My concern is that the base QEMU ver=
+sion is a bit old
+> >> 7.0.50. =20
+> >=20
+> > Always use the latest dated branch on that tree.  I release whenever th=
+ere
+> > is something new to carry or a major rebase needed.
+> >=20
+> > cxl-<date> is the right branch to use. Hope that helps. =20
+>=20
+> When do you think you want to get them (aarch64 specific?) merged mainlin=
+e. Any reason you want to carry the patches by yourself?
 
-num_lines :)
+Nothing much has changed since I presented on this at Linaro connect in 202=
+3.
+https://resources.linaro.org/en/resource/hM986DSHfoTrZ98UjpvLg1
 
->     where
->         F: for<'a> FnCall<(&'a Self::Target, u32, u32)>,
->     {
->         unsafe extern "C" fn rust_irq_handler<T, F: for<'a> FnCall<(&'a T=
-, u32, u32)>>(
->             opaque: *mut c_void,
->             lines_num: c_int,
+The issue is device tree bindings for PCI Expander bridgess and the fact th=
+at
+those need to be generated without the full enumeration that EDK2 is doing
+prior to ACPI final table builds. In order to move forward with that it
+needs a bunch of work to prove that we absolutely cannot get patches
+upstream to support kernel base enumeration and breaking up of the
+various resources (like EDK2 does).
 
-"line" instead of lines_num.
->         unsafe {
->             qdev_init_gpio_in(
->                 self.upcast::<DeviceState>() as *const DeviceState as *mu=
-t DeviceState,
+Given PXB enumeration in kernel has some issues on ARM anyway (that you can=
+ paper
+over with _DSM 5 - it self requiring an extra patch that isn't upstreamable=
+ because
+of IO port issues) there is quite a bit of work needed, mostly not in QEMU.
+Or convince Peter and others that not all virt support needs DT bindings
+(note that PXB for PCIE has been supported for years without an DT support,
+just no one noticed!)
 
-I think you can use self.as_mut_ptr::<DeviceState>() or something like that=
-.
+After that we'd need to figure out CXL DT bindings in general and add kernel
+code support - despite there being no known DT based CXL systems out there,=
+ so
+that is going to be hard to do.  Various CXL kernel maintainers have expres=
+sed
+they aren't against such support, but it's hardly going to be review priori=
+ty
+(other than for me if someone else does the work!)
 
->         assert!(pins.len() > 0);
+For me this isn't particularly high priority. The ARM bit is fairly easy to=
+ rebase.
+I would like to see it solved, but it is behind various other items on my
+backlog.
 
-!pins.is_empty(). But I am not sure it's needed...
->
->         unsafe {
->             qdev_init_gpio_out(
->                 self.upcast::<DeviceState>() as *const DeviceState as *mu=
-t DeviceState,
->                 pins[0].as_ptr(),
->                 pins.len() as c_int,
+There are SBSA machine patches on list, but it's not a useful platform for
+CXL kernel code development because of the limited supported configurations
+(in keeping with the more or less fixed model that SBSA-ref uses).
 
-... if you use instead pins.as_ptr() without the initial dereference.
+Jonathan
 
-> impl HPETState {
->     ...
->
->     fn handle_legacy_irq(&self, irq: u32, level: u32) {
->         if irq =3D=3D HPET_LEGACY_PIT_INT {
->             if !self.is_legacy_mode() {
->                 self.irqs[0].set(level !=3D 0);
->             }
->         } else {
->             self.rtc_irq_level.set(level as u8);
 
-Any reason why you defined rtc_irq_level as InterruptSource<u8>
-instead of InterruptSource<u32>?
 
->     fn realize(&self) {
->         ...
->         self.init_gpio_in(2, HPETState::handle_legacy_irq);
->         self.init_gpio_out(from_ref(&self.pit_enabled));
->     }
-> }
->
-> ---
->
-> I made the handler accept the inmuttable reference, but init_gpio_in()
-> is called in realize(), which now accepts the `&mut self`.
->
-> I think init_gpio_in() should be called in realize() so that realize()
-> needs to become safe in advance (before your plan).
->
-> The safe realize() mainly affects pl011, and before you formally
-> introduce char binding, if you don't mind, I can make this change to
-> pl011:
->
-> -    pub fn realize(&mut self) {
-> +    pub fn realize(&self) {
->          // SAFETY: self.char_backend has the correct size and alignment =
-for a
->          // CharBackend object, and its callbacks are of the correct type=
-s.
->          unsafe {
->              qemu_chr_fe_set_handlers(
-> -                addr_of_mut!(self.char_backend),
-> +                addr_of!(self.char_backend) as *mut CharBackend,
->                  Some(pl011_can_receive),
->                  Some(pl011_receive),
->                  Some(pl011_event),
->                  None,
-> -                addr_of_mut!(*self).cast::<c_void>(),
-> +                addr_of!(*self).cast::<c_void>() as *mut c_void,
->                  core::ptr::null_mut(),
->                  true,
->              );
-
-That's fine, yes.
-
-Paolo
+>=20
+> Itaru.
+>=20
+> >=20
+> > Jonathan
+> >  =20
+> >>=20
+> >> Thanks,
+> >> Itaru.
+> >>  =20
+> >>> Jonathan
+> >>>  =20
+> >>>>=20
+> >>>> Let me know which branch you were suggesting.
+> >>>>=20
+> >>>> Thanks,
+> >>>> Itaru.=20
+> >>>>  =20
+> >>>>>=20
+> >>>>> Note my main development work is on arm64 so that tends to work
+> >>>>> more reliably than x86 which I only lightly test for stuff that
+> >>>>> isn't ready for upstream yet.
+> >>>>>=20
+> >>>>> Give me a shout if you run into any problems.
+> >>>>>=20
+> >>>>> The main blocker on upstreaming this is resolving the missing devic=
+e tree
+> >>>>> support for PCI expander bridges.  I've not made any progress on th=
+is since
+> >>>>> talk at Linaro connect in 2023.
+> >>>>>=20
+> >>>>> Jonathan
+> >>>>>=20
+> >>>>>  =20
+> >>>>>>=20
+> >>>>>>=20
+> >>>>>> Thanks
+> >>>>>> Zhijian
+> >>>>>>  =20
+> >>>>>>> If there=E2=80=99s a WIP branch, a pointer would be appreciated.
+> >>>>>>>=20
+> >>>>>>> Itaru       =20
+>=20
+>=20
 
 
