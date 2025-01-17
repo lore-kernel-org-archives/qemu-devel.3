@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7858C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D666C02188
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYpl7-00052r-HP; Fri, 17 Jan 2025 12:03:49 -0500
+	id 1tYplz-0005zg-1z; Fri, 17 Jan 2025 12:04:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYpl4-0004uS-C2
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:03:46 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYplC-0005IC-UZ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:04:02 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYpl2-0003IY-CY
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:03:45 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-21670dce0a7so53372395ad.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:03:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYplB-0003L4-9d
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:03:54 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2164b662090so46041015ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:03:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737133422; x=1737738222; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737133431; x=1737738231; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bz9BF9PbmirtQ18cY8gX0lnAdWnnAogpyF7tlrah8S4=;
- b=TkrrME2vizJZ5uV8NH94mY0Oi1ElnuZp4SHZ/icuq8on3co3FtACP+awUB9MpQRi/M
- tXR8qmCrBeUo03aKC03QbC6+jIcLwlre+gAhZqy8dp8GA7hAu/mmwSh2flEQs6s9v2Ww
- ygrOnmu0yUPHPjCjqBTI/oj8tN/klvUBj05TOzHcfdCI2aCGAo40uhnOv2I2PhcvJy2v
- NS2TuaxLfA8myFXZFhu/q/mbtbXi6+mlojZG1k2XsHkHZfHUe4AMX9BI8XZuK4whJykI
- pJEQfs+NfqJxq6pwm78pQMdQgi2ZMfrMv80u3r9xKlU7WFcvMq1Ur4jsHM+1WtAKiWgo
- KAMA==
+ bh=8aXybp6m1M+vXi2xN0TsmNLhT/jKq3ExXEUmLXhSP5Y=;
+ b=kDvKjuOd+SEjh1k1qz7vsZmR3ytorsz/zlQQaN7VrAb12TYceNegj7JcBFxpqJTSfg
+ 9Zf/xEDfWgacJiiRcuDcf2xQPiK3rOrql8fyMAX+uDlf5cWDs3Im6bzN2pF9zfQSITls
+ sr+DahPSPQ1peOAfsvoZV0Jnuh8MNyTqmErlSDSQF6zHA8dotu/T9v8rLDNyVOvs/0t9
+ H1OeToiAogLDbbf0LNQQheaJ1ZFCs3LseAKZeTd70icpFELSbY8BY6KKNIRJ/CVlddr3
+ XPsOm5tlG0nDskVRmuYwoJ4RNLa/h+GFG6Jrk93j8bfxqcGVunMtUb/Vf+nlaWoklI4T
+ 64Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737133422; x=1737738222;
+ d=1e100.net; s=20230601; t=1737133431; x=1737738231;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bz9BF9PbmirtQ18cY8gX0lnAdWnnAogpyF7tlrah8S4=;
- b=Bf3UXfSpBqQGId0O3FvvDTDuOpGyfLKgT2UibnjSkhWueYtvn+Dob5bFv+zv0DayXq
- sSD0xbOi7nbXerthLjeqbWhZOHsW7iBp1hAOlxTgOqP+rn2d2l3O8SDh/kyRQZWQ3Zpm
- x/4ZtahAmqJt4HLqdiF1ReafE8SdIxKQDkvRTISGQQRLsv3p4mUlZK/NtpkNrafqAva1
- 1tPv5t/FD24bSeP6DEskBslQyy56Xt1hIvu20ER3PlofSNlJi3bletUCTFUB4DT7Jra2
- lQm5+NTln+MEVTQJcHMUPU4R29+PvosT8PT8+i9LEaoZVRtRebrHlOkOptLQYSlOPInY
- Z1LQ==
-X-Gm-Message-State: AOJu0YwMG0eScwGXfQH+FukjhAU9DoFz8+Aa7fPWTJjFE7PEK0+goixn
- PAsRKmx6BzZXLViXa191xiJd4HbiMRgU5jGAg0kDHVygpUJJgSM+B91FSQ==
-X-Gm-Gg: ASbGnctJXnNcxiVbuR2O5ViHTTtxvSaM2nMFYt5XmI55qUF+Dn2247gXLVB2KikJKA5
- rt591Sp98oA5c8N4Cjj8Iyl4jxxx9ydb7iVAOpgkTSJJX+YfRmYUgrzk0gFLKRZxcxgOf7I1nPL
- Sw0nQNBJWtH3cnjjZ2AdNxjHn8pubV56jb35FF/oRIorRh0nA58IeCOzoZHCcU/odDWpRe6FnTl
- B22Jcx+UdOIGpfpySFcbJWLgaDjo1k2NE9DZj5xpc9hZz1EeoAhhY935xQH1sbOw16NfT4tb6LR
- pP4y03b5J8jXC2w=
-X-Google-Smtp-Source: AGHT+IEneBcY/W+j0Eg5tMdLn4Xw0iFj8znpsFJcYQaFOdK0zeAN0m3YXuBqLZ36gSPhCGaFJX4RAw==
-X-Received: by 2002:a17:902:f545:b0:215:6e01:ad19 with SMTP id
- d9443c01a7336-21c35587f37mr53232765ad.29.1737133422208; 
- Fri, 17 Jan 2025 09:03:42 -0800 (PST)
+ bh=8aXybp6m1M+vXi2xN0TsmNLhT/jKq3ExXEUmLXhSP5Y=;
+ b=uwenC7hd40E2BU7Trej57gL+OrNMmSEBb77yToO61MPw5toEUpEUr4HbMCEfUfMrc8
+ HgXWdK1+yjJnvSDsuwJ2k1ZWY9HBahcBhw1QE54RK1AfM9zillRZPQM0ObQjxiUEFpBw
+ 66vDAZ/h2ciDZE36JPzOCtoeh+Wtw/wDx5Ldu/ORopnqiXP6iaAthKghLlkuxdWa2FMH
+ l341d2dDteRJzAbMqvKLDdNbBaAhXcBwPFB+WEkqR///+2bMEj7RC2T3ciLUh1wIKvcQ
+ GJWA7+aXxfQ/YInNR1bC7RFnrPO7wyJAD48KbGU6MJWXv4sDQJP8E7kEFklOj8m9bxre
+ 0lmQ==
+X-Gm-Message-State: AOJu0YyMAZRdU0HmNoqJIW08pp5EXfPwPcc8edEg2QHe72R1Zxr2WoXS
+ JQycTD6bvPd0AjDQvOiFk50iilgt8ehQ4/6+Zn6j2809CjlC/iSZEeQtQA==
+X-Gm-Gg: ASbGncs0ezEpu5Q8jdS0S04hmIs5S1UzwGYWN2bcVO0G+DvY+Mk10DHN5KkNudl81ub
+ 6iwnU3fx01dVAMigPL3A97FDaOd+jK4s7XxGVXKlR4Su5IlOJ9/TKNeQBb9OTSa5GeJMERwZ0yn
+ Pys35P/kmcV6icYz6sioxTa9862PhwcuTioh4ykez9rrjbO/w3iebp/By7Alt3ysBw7bxZqatHJ
+ rkdww+ajnXHGopsJ/56QfjIHE6v03I7mpr78Zu53Fe725D22for2L51EXFDF853wB2rAb1bt4QN
+ hWDX3TNc8dsQkb4=
+X-Google-Smtp-Source: AGHT+IEJJfWqn8HG5Wqoi+KU2TIVv+NC3m+V2CljxwrPvvjswy7nRBwRTHoW/jQsUtDn7gVDgH1daQ==
+X-Received: by 2002:a17:902:f70b:b0:21a:82b7:fea2 with SMTP id
+ d9443c01a7336-21c35502582mr60469495ad.15.1737133431145; 
+ Fri, 17 Jan 2025 09:03:51 -0800 (PST)
 Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
  [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2cea0b91sm18249435ad.49.2025.01.17.09.03.38
+ d9443c01a7336-21c2cea0b91sm18249435ad.49.2025.01.17.09.03.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 09:03:41 -0800 (PST)
+ Fri, 17 Jan 2025 09:03:50 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -69,16 +69,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6/9] net/e1000e|igb: Fix interrupt throttling logic
-Date: Sat, 18 Jan 2025 03:03:02 +1000
-Message-ID: <20250117170306.403075-7-npiggin@gmail.com>
+Subject: [PATCH 8/9] net/e1000e: Fix xITR minimum value
+Date: Sat, 18 Jan 2025 03:03:04 +1000
+Message-ID: <20250117170306.403075-9-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250117170306.403075-1-npiggin@gmail.com>
 References: <20250117170306.403075-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,158 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Interrupt throttling is broken in several ways:
-- Timer expiry sends an interrupt even if there is no cause.
-- Timer expiry that results in an interrupt does not re-arm
-  the timer so an interrupt can appear immediately after the
-  timer expiry interrupt.
-- Interrupt auto-clear should not clear cause if an interrupt
-  is delayed by throttling.
+The ITR minimum value may be a mis-reading or ambiguity in the spec.
+Section 10.2.4.2 says the maximum observable interrupt rate should never
+exceed 7813, but that is in context of example of the interval being
+programmed to 500. On the other hand 7.4.4 does say ITR rules permit
+no more than that rate.
 
-Fix these by skipping the auto-clear logic if an interrupt is
-delayed, and when the throttle timer expires check the cause
-bits corresponding to the msix vector before sending an irq,
-and send it using the functions that run the throttling state
-machine and perform auto-clear.
+There is no minimum value specified, and zero is explicitly allowed and
+disables throttling logic (which is already supported behaviour in the
+throttling code of the models). This seems to fall outside ITR rules, so
+should not cause any limit.
+
+Spec 7.4.4 also says that EITR registers should be initialised to zero.
+
+Remove the minimum value from the ITR and EITR registers, and set ITR
+default to 500.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/net/e1000e_core.c | 60 +++++++++++++++++++++++++++++++++++++++-----
- hw/net/igb_core.c    | 28 +++++++++++++--------
- 2 files changed, 72 insertions(+), 16 deletions(-)
+ hw/net/e1000e_core.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
 diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index e32955d244b..c5be20bcbbe 100644
+index c5be20bcbbe..34bb5f8096b 100644
 --- a/hw/net/e1000e_core.c
 +++ b/hw/net/e1000e_core.c
-@@ -168,16 +168,63 @@ e1000e_intrmgr_on_throttling_timer(void *opaque)
-     }
- }
+@@ -51,8 +51,13 @@
  
-+/* Find causes from IVAR vectors and only interrupt if causes are set */
-+static uint32_t find_msix_causes(E1000ECore *core, int vec)
-+{
-+    uint32_t causes = 0;
-+    uint32_t int_cfg;
-+
-+    int_cfg = E1000_IVAR_RXQ0(core->mac[IVAR]);
-+    if (E1000_IVAR_ENTRY_VALID(int_cfg) &&
-+        E1000_IVAR_ENTRY_VEC(int_cfg) == vec) {
-+        causes |= E1000_ICR_RXQ0;
-+    }
-+
-+    int_cfg = E1000_IVAR_RXQ1(core->mac[IVAR]);
-+    if (E1000_IVAR_ENTRY_VALID(int_cfg) &&
-+        E1000_IVAR_ENTRY_VEC(int_cfg) == vec) {
-+        causes |= E1000_ICR_RXQ1;
-+    }
-+
-+    int_cfg = E1000_IVAR_TXQ0(core->mac[IVAR]);
-+    if (E1000_IVAR_ENTRY_VALID(int_cfg) &&
-+        E1000_IVAR_ENTRY_VEC(int_cfg) == vec) {
-+        causes |= E1000_ICR_TXQ0;
-+    }
-+
-+    int_cfg = E1000_IVAR_TXQ1(core->mac[IVAR]);
-+    if (E1000_IVAR_ENTRY_VALID(int_cfg) &&
-+        E1000_IVAR_ENTRY_VEC(int_cfg) == vec) {
-+        causes |= E1000_ICR_TXQ1;
-+    }
-+
-+    int_cfg = E1000_IVAR_OTHER(core->mac[IVAR]);
-+    if (E1000_IVAR_ENTRY_VALID(int_cfg) &&
-+        E1000_IVAR_ENTRY_VEC(int_cfg) == vec) {
-+        causes |= E1000_ICR_OTHER;
-+    }
-+
-+    return causes;
-+}
-+
-+static void
-+e1000e_msix_notify(E1000ECore *core, uint32_t causes);
-+
- static void
- e1000e_intrmgr_on_msix_throttling_timer(void *opaque)
- {
-     E1000IntrDelayTimer *timer = opaque;
--    int idx = timer - &timer->core->eitr[0];
-+    E1000ECore *core = timer->core;
-+    int idx = timer - &core->eitr[0];
-+    uint32_t causes;
+ #include "trace.h"
  
-     timer->running = false;
+-/* No more then 7813 interrupts per second according to spec 10.2.4.2 */
+-#define E1000E_MIN_XITR     (500)
++/*
++ * A suggested range for ITR is 651-5580, according to spec 10.2.4.2, but
++ * QEMU has traditionally set 500 here and spec 7.4.4 ITR rules says the
++ * max observable interrupts from the adapter should be 7813/s (corresponding
++ * to 500).
++ */
++#define E1000E_DEFAULT_ITR (500)
  
--    trace_e1000e_irq_msix_notify_postponed_vec(idx);
--    msix_notify(timer->core->owner, idx);
-+    causes = find_msix_causes(core, idx);
-+    if (core->mac[IMS] & core->mac[ICR] & causes) {
-+        trace_e1000e_irq_msix_notify_postponed_vec(idx);
-+        e1000e_msix_notify(core, causes);
-+    }
+ #define E1000E_MAX_TX_FRAGS (64)
+ 
+@@ -2831,11 +2836,7 @@ e1000e_set_itr(E1000ECore *core, int index, uint32_t val)
+     trace_e1000e_irq_itr_set(val);
+ 
+     core->itr_guest_value = interval;
+-    if (interval == 0) {
+-        core->mac[index] = 0;
+-    } else {
+-        core->mac[index] = MAX(interval, E1000E_MIN_XITR);
+-    }
++    core->mac[index] = interval;
  }
  
  static void
-@@ -1982,10 +2029,11 @@ e1000e_msix_notify_one(E1000ECore *core, uint32_t cause, uint32_t int_cfg)
-     if (E1000_IVAR_ENTRY_VALID(int_cfg)) {
-         uint32_t vec = E1000_IVAR_ENTRY_VEC(int_cfg);
-         if (vec < E1000E_MSIX_VEC_NUM) {
--            if (!e1000e_eitr_should_postpone(core, vec)) {
--                trace_e1000e_irq_msix_notify_vec(vec);
--                msix_notify(core->owner, vec);
-+            if (e1000e_eitr_should_postpone(core, vec)) {
-+                return;
-             }
-+            trace_e1000e_irq_msix_notify_vec(vec);
-+            msix_notify(core->owner, vec);
-         } else {
-             trace_e1000e_wrn_msix_vec_wrong(cause, int_cfg);
-         }
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index cdebc917d2e..dad32be54fd 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -168,16 +168,7 @@ igb_intmgr_timer_resume(IGBIntrDelayTimer *timer)
+@@ -2847,11 +2848,7 @@ e1000e_set_eitr(E1000ECore *core, int index, uint32_t val)
+     trace_e1000e_irq_eitr_set(eitr_num, val);
+ 
+     core->eitr_guest_value[eitr_num] = interval;
+-    if (interval == 0) {
+-        core->mac[index] = 0;
+-    } else {
+-        core->mac[index] = MAX(interval, E1000E_MIN_XITR);
+-    }
++    core->mac[index] = interval;
  }
  
  static void
--igb_intrmgr_on_msix_throttling_timer(void *opaque)
--{
--    IGBIntrDelayTimer *timer = opaque;
--    int idx = timer - &timer->core->eitr[0];
--
--    timer->running = false;
--
--    trace_e1000e_irq_msix_notify_postponed_vec(idx);
--    igb_msix_notify(timer->core, idx);
--}
-+igb_intrmgr_on_msix_throttling_timer(void *opaque);
+@@ -3500,8 +3497,7 @@ static const uint32_t e1000e_mac_reg_init[] = {
+     [FACTPS]        = E1000_FACTPS_LAN0_ON | 0x20000000,
+     [SWSM]          = 1,
+     [RXCSUM]        = E1000_RXCSUM_IPOFLD | E1000_RXCSUM_TUOFLD,
+-    [ITR]           = E1000E_MIN_XITR,
+-    [EITR...EITR + E1000E_MSIX_VEC_NUM - 1] = E1000E_MIN_XITR,
++    [ITR]           = E1000E_DEFAULT_ITR,
+ };
  
- static void
- igb_intrmgr_initialize_all_timers(IGBCore *core, bool create)
-@@ -2279,6 +2270,23 @@ static void igb_send_msix(IGBCore *core, uint32_t causes)
-     }
- }
- 
-+static void
-+igb_intrmgr_on_msix_throttling_timer(void *opaque)
-+{
-+    IGBIntrDelayTimer *timer = opaque;
-+    IGBCore *core = timer->core;
-+    int vector = timer - &core->eitr[0];
-+    uint32_t causes;
-+
-+    timer->running = false;
-+
-+    causes = core->mac[EICR] & core->mac[EIMS];
-+    if ((causes & BIT(vector)) && !igb_eitr_should_postpone(core, vector)) {
-+        trace_e1000e_irq_msix_notify_postponed_vec(vector);
-+        igb_msix_notify(core, vector);
-+    }
-+}
-+
- static inline void
- igb_fix_icr_asserted(IGBCore *core)
- {
+ static void e1000e_reset(E1000ECore *core, bool sw)
 -- 
 2.45.2
 
