@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451F2C0218A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B077C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYr2A-0004Ag-O5; Fri, 17 Jan 2025 13:25:31 -0500
+	id 1tYr5j-0005Q8-6m; Fri, 17 Jan 2025 13:29:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr27-00049o-Fx
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:27 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tYr5e-0004xe-AN
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:29:06 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr23-0007uA-It
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:25 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2166f1e589cso61674395ad.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:23 -0800 (PST)
+ id 1tYr5c-0000FF-4k
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:29:06 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2f78a4ca5deso1118782a91.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:29:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737138321; x=1737743121; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737138543; x=1737743343; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IxMn5wJHRN3fIBCSyLsUosuOZgtHeKHyf3XHFjAQWv0=;
- b=SUjk52X9Pg6mkAadYru6UctC223wShlaHNfiUbnVocZohP9J50zclBK8tyCM3xz86i
- CrIA1jjaN3S5v1SdQFZHHNbDZa+7xdL+C0NZohf4b6YYALCLd8JCcD67FXoXqmDtAAOO
- VCXThrYa/CZ0L012ZpIj4KRA7Otnee2CutFZUhU+DWnOUH4scX3ULtgoJRQxE0h0LYkE
- +baSn/LqzWS515MdQjl9SFAO0TGoMQZEyLRFm7lYLdkkemeBIcQ7ZFo0MY8GqyyZwygA
- 1S5OVO48ZUbZER+oOeaJl3YbxiqsW0opaqxRgGtgq9qpVLMcCy8SIKcS10z+pNM9FE12
- UlTA==
+ bh=3NPfmN7vMo+libG/5c+CuF6EQ8tBzjs2DEYBljqFu3U=;
+ b=rySccsW3oRMJ2umc/HyGR/sQYRUKrBNxVjldTYe4eaaB131v8OcltddA8CKOnIjP54
+ HNcGywq+gCrxbrwDF7F1hhIDkHQxNQ/uGjX5qyqE7sSs6lXBLQuRl/q6hUyiApoKbj4/
+ fwTaY/0YtJEEwzu7QEtZrMZqOXtAm8nWfyYfsFM4MOz+4MjRyFeDL6rdOCbwQaaa/tVH
+ 3Y5+NoaFPdZmzS6aT3qU2Jg2D4DM6sslhZquURZEPr2s8DNOm3tB82u1onvaZy4SZzDa
+ 80ryaBVbYQ20ilqpcn9OJX8gOKpTAiJfbamF6Pmc87+eMM2EKWJeLTcuhwOc5RuVfI8Z
+ W8OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737138321; x=1737743121;
+ d=1e100.net; s=20230601; t=1737138543; x=1737743343;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IxMn5wJHRN3fIBCSyLsUosuOZgtHeKHyf3XHFjAQWv0=;
- b=HVKXupYyXNpgXu8mjMRmGJRLcEQQjlY3vu4JDHcZxSheS9Lzqszl8lGJCO/V6+2ijd
- u+VsYtj9+CYgLZ3ux6jwUqV96Op2Q+IeCEpANoSeritT8gzZMjAPiTBN/KzoxVieiDgc
- +aFO92XYBTPRTXwcZoB1WIe7xUfwuMW3IlqVnogwewfyGg1j0CYWWjzXU5dev+se1DPR
- gXr+x0LOadCFJZWIZGqCDzAm9jIE5kKdqQPeqRprMcgJNGz/C/UuSKfmctTpN5bOynVd
- IehxOSHv9JpAQkZ+UlyhMUbDmiuYVgaTM2rbxyxc1si7pDECKbuust7mC8rIcVUJf6mN
- W9eg==
-X-Gm-Message-State: AOJu0Yw1bdvnpoTOD+TbG7/UBZ1ny/hOExr/2NDt/cIPU/iRWFcc3uyO
- ZYavpCowCIdUv3oxXxFRk+FfNP/PrKeYJslQqrU8J0qqx8sntcVJRAXUg8jOVLHEc5zEx9Gm8lS
- r
-X-Gm-Gg: ASbGncvv5nBdjRnfNTb1wMQdbj2jIfksTMwWAR3UoykvIOa6X/kXo0BPXW46SYVd2f9
- I7YcVjUzF7IyNOtAyNlPlPHicJJDjB8wNlgAgjuyux8hngPET+R8kVb4HcVnDa94jykb8pQgKGA
- nHSwyYDb5k+RjvaDO/QlkWfAFhv6/jKtDll6fDqViPQ1ctTzGZODFA8FDUb1WE0WpWsSjJ/bXiK
- OapsJ6iBlwPijeEgocfK9d3XIDWbtpCWczpAwq2fY/hTtZn2bpSXg/zP7utPILWIiauSEBvCxUP
- sWYx8gohNeG8gwA=
-X-Google-Smtp-Source: AGHT+IHwKJaMB8InW6WVATXxSB89YoSFtfvwSX6PxhL3vC3/5DSkCdkEvoAKNSoo8zttqqwxZhJNIQ==
-X-Received: by 2002:a17:903:244f:b0:216:643a:535a with SMTP id
- d9443c01a7336-21c355c7c15mr46382745ad.20.1737138321177; 
- Fri, 17 Jan 2025 10:25:21 -0800 (PST)
+ bh=3NPfmN7vMo+libG/5c+CuF6EQ8tBzjs2DEYBljqFu3U=;
+ b=RWM1fkfdPMp+U6DcybMJSRtf+BhW3YuLFVXoLdvNdK3zrKTzDwU4sx7Sv6TawWRmU1
+ FK8Z2eAGsuJ9Gol3sr3/1FBQb1iwBuUOgf3eNgRt5LnNBADsdXKXBGEYwKvZiWhRUB8I
+ a1qELHHAqo1E+m76/4agfx43gDkcMB7owsf/us/MTH4SUkC2k2bdLEkxziht9k0zmFKA
+ dqNE7QBJJsdQq/RlA4T0jhKLuTgTk2vKSmzV5eL3w6hWjQpTLYiNx7qH3BhxjslOg8Kt
+ Lu02HZYYFzcZmo9x17mCtbv8H4TRdNi0f98RTLlptaXt9Xx/Wa2DrVWOfTwfxF5I6q2A
+ bxag==
+X-Gm-Message-State: AOJu0YyRlSztVlAY0YmNlL2W8xr4zT7y0I8rQJdsctM4HEw4mtJqcqsF
+ 6bf/YvQoT1ABz3T59vfwJFgvI+TcA4OOjgD3yndhpXI2fy2FaGQ2YEKeiEDtA79ohcLkT+FE93s
+ B
+X-Gm-Gg: ASbGncsGS+aeMNNISdZKvZyycC3h221fSLqUngwI2J4mo09CKvWTf9G0bIDVaeqS+nQ
+ 6us8yRrlzdUkyH4XXgmFJy28z1AX6WDHHlRLh1p6BYqOyLQJL79vnmL08IU5qqukmP5ldLlV15w
+ jQPWxEbFMGxEEWwcNzTJHLYcn1oB1G+is2r19B0Pnwfe5URfDtECNMwKhJbafoRbLbvE/XCHxXn
+ AmX3p4b+bvZt2OYKo6rzpo+4cmnmw1hTeuPq7rSAQiOHkIXrLZ1udzju2MUlvFdjB1IhO3QDNoT
+ I1Gx0AzeWNvcIkc=
+X-Google-Smtp-Source: AGHT+IEHyxMl16cxzxxsGA9PZtvlaRSLntZk+pQesmJPx7JyOt6yegUQiQKhexwDikQP/DVE0JFdrg==
+X-Received: by 2002:a17:90b:3a08:b0:2ee:dcf6:1c77 with SMTP id
+ 98e67ed59e1d1-2f782c9cb1emr5784504a91.16.1737138542916; 
+ Fri, 17 Jan 2025 10:29:02 -0800 (PST)
 Received: from stoup.. (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.20
+ 98e67ed59e1d1-2f77629bf96sm2614105a91.36.2025.01.17.10.29.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 10:25:20 -0800 (PST)
+ Fri, 17 Jan 2025 10:29:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 31/68] tcg: Include 'tcg-target-has.h' once in 'tcg-has.h'
-Date: Fri, 17 Jan 2025 10:24:19 -0800
-Message-ID: <20250117182456.2077110-32-richard.henderson@linaro.org>
+Subject: [PULL 50/68] tcg/aarch64: Expand extract with offset 0 with andi
+Date: Fri, 17 Jan 2025 10:24:38 -0800
+Message-ID: <20250117182456.2077110-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250117182456.2077110-1-richard.henderson@linaro.org>
 References: <20250117182456.2077110-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,166 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250108215156.8731-14-philmd@linaro.org>
----
- tcg/aarch64/tcg-target.h     | 2 --
- tcg/arm/tcg-target.h         | 2 --
- tcg/i386/tcg-target.h        | 2 --
- tcg/loongarch64/tcg-target.h | 2 --
- tcg/mips/tcg-target.h        | 2 --
- tcg/ppc/tcg-target.h         | 2 --
- tcg/riscv/tcg-target.h       | 2 --
- tcg/s390x/tcg-target.h       | 2 --
- tcg/sparc64/tcg-target.h     | 2 --
- tcg/tcg-has.h                | 2 ++
- tcg/tci/tcg-target.h         | 2 --
- 11 files changed, 2 insertions(+), 20 deletions(-)
+We're about to change canonicalization of masks as extract
+instead of and.  Retain the andi expansion here.
 
-diff --git a/tcg/aarch64/tcg-target.h b/tcg/aarch64/tcg-target.h
-index 9a682e51a4..1ef8b2e300 100644
---- a/tcg/aarch64/tcg-target.h
-+++ b/tcg/aarch64/tcg-target.h
-@@ -47,8 +47,6 @@ typedef enum {
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/aarch64/tcg-target.c.inc | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index ede6f47235..66eb4b73b5 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -2450,7 +2450,12 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
  
- #define TCG_TARGET_NB_REGS 64
+     case INDEX_op_extract_i64:
+     case INDEX_op_extract_i32:
+-        tcg_out_ubfm(s, ext, a0, a1, a2, a2 + args[3] - 1);
++        if (a2 == 0) {
++            uint64_t mask = MAKE_64BIT_MASK(0, args[3]);
++            tcg_out_logicali(s, I3404_ANDI, ext, a0, a1, mask);
++        } else {
++            tcg_out_ubfm(s, ext, a0, a1, a2, a2 + args[3] - 1);
++        }
+         break;
  
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (0)
- 
- #endif /* AARCH64_TCG_TARGET_H */
-diff --git a/tcg/arm/tcg-target.h b/tcg/arm/tcg-target.h
-index e114f7ddf4..21563e00f9 100644
---- a/tcg/arm/tcg-target.h
-+++ b/tcg/arm/tcg-target.h
-@@ -70,8 +70,6 @@ typedef enum {
- 
- #define TCG_TARGET_NB_REGS 32
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (0)
- 
- #endif
-diff --git a/tcg/i386/tcg-target.h b/tcg/i386/tcg-target.h
-index a1dfdeb28d..e6d7fd526e 100644
---- a/tcg/i386/tcg-target.h
-+++ b/tcg/i386/tcg-target.h
-@@ -88,8 +88,6 @@ typedef enum {
-     TCG_REG_CALL_STACK = TCG_REG_ESP
- } TCGReg;
- 
--#include "tcg-target-has.h"
--
- /* This defines the natural memory order supported by this
-  * architecture before guarantees made by various barrier
-  * instructions.
-diff --git a/tcg/loongarch64/tcg-target.h b/tcg/loongarch64/tcg-target.h
-index a3a6130720..0432a4ebbd 100644
---- a/tcg/loongarch64/tcg-target.h
-+++ b/tcg/loongarch64/tcg-target.h
-@@ -85,8 +85,6 @@ typedef enum {
-     TCG_VEC_TMP0 = TCG_REG_V23,
- } TCGReg;
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (0)
- 
- #endif /* LOONGARCH_TCG_TARGET_H */
-diff --git a/tcg/mips/tcg-target.h b/tcg/mips/tcg-target.h
-index a34765b389..210044ca12 100644
---- a/tcg/mips/tcg-target.h
-+++ b/tcg/mips/tcg-target.h
-@@ -70,8 +70,6 @@ typedef enum {
-     TCG_AREG0 = TCG_REG_S8,
- } TCGReg;
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO           0
- 
- #endif
-diff --git a/tcg/ppc/tcg-target.h b/tcg/ppc/tcg-target.h
-index fa2cc28183..0bc13d7363 100644
---- a/tcg/ppc/tcg-target.h
-+++ b/tcg/ppc/tcg-target.h
-@@ -53,8 +53,6 @@ typedef enum {
-     TCG_AREG0 = TCG_REG_R27
- } TCGReg;
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (0)
- 
- #endif
-diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
-index c710321bdb..4c40662402 100644
---- a/tcg/riscv/tcg-target.h
-+++ b/tcg/riscv/tcg-target.h
-@@ -57,8 +57,6 @@ typedef enum {
-     TCG_REG_TMP2       = TCG_REG_T4,
- } TCGReg;
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (0)
- 
- #endif
-diff --git a/tcg/s390x/tcg-target.h b/tcg/s390x/tcg-target.h
-index 220ed68b1f..f790b77075 100644
---- a/tcg/s390x/tcg-target.h
-+++ b/tcg/s390x/tcg-target.h
-@@ -51,8 +51,6 @@ typedef enum TCGReg {
- 
- #define TCG_TARGET_NB_REGS 64
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (TCG_MO_ALL & ~TCG_MO_ST_LD)
- 
- #endif
-diff --git a/tcg/sparc64/tcg-target.h b/tcg/sparc64/tcg-target.h
-index 1462144631..5ecca5586b 100644
---- a/tcg/sparc64/tcg-target.h
-+++ b/tcg/sparc64/tcg-target.h
-@@ -66,8 +66,6 @@ typedef enum {
- 
- #define TCG_AREG0 TCG_REG_I0
- 
--#include "tcg-target-has.h"
--
- #define TCG_TARGET_DEFAULT_MO (0)
- 
- #endif
-diff --git a/tcg/tcg-has.h b/tcg/tcg-has.h
-index c09ce13389..65b6a0b0cf 100644
---- a/tcg/tcg-has.h
-+++ b/tcg/tcg-has.h
-@@ -7,6 +7,8 @@
- #ifndef TCG_HAS_H
- #define TCG_HAS_H
- 
-+#include "tcg-target-has.h"
-+
- #if TCG_TARGET_REG_BITS == 32
- /* Turn some undef macros into false macros.  */
- #define TCG_TARGET_HAS_extr_i64_i32     0
-diff --git a/tcg/tci/tcg-target.h b/tcg/tci/tcg-target.h
-index 899d9861a6..fea92f7848 100644
---- a/tcg/tci/tcg-target.h
-+++ b/tcg/tci/tcg-target.h
-@@ -44,8 +44,6 @@
- #define TCG_TARGET_INSN_UNIT_SIZE 4
- #define MAX_CODE_GEN_BUFFER_SIZE  ((size_t)-1)
- 
--#include "tcg-target-has.h"
--
- /* Number of registers available. */
- #define TCG_TARGET_NB_REGS 16
- 
+     case INDEX_op_sextract_i64:
 -- 
 2.43.0
 
