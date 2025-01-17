@@ -4,97 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76CC8C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61AF3C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYifP-0008Ld-V6; Fri, 17 Jan 2025 04:29:28 -0500
+	id 1tYikA-0002UK-Nt; Fri, 17 Jan 2025 04:34:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tYifA-00082B-5l; Fri, 17 Jan 2025 04:29:12 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tYif8-0003oc-0g; Fri, 17 Jan 2025 04:29:11 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-ab34a170526so259765566b.0; 
- Fri, 17 Jan 2025 01:29:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737106147; x=1737710947; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x3OXCptAB3T1Y5AIABafbO97M/zyNcnw8SxPu1ye6Nc=;
- b=hTAnEo+KjWSJNdJ6mU2KpJTtt7rkfmG5Crwr4AdlFvSHOimEc83tE897eGwNdUrV6E
- GpSOwcJ/cm+dGhH2Bb5EAJYt16s1Az4Bx0JQPeR5+wl/ZcF7MjghxfFrs4YxGXtbtUBr
- R7IfBuF/nRkkLWFBWaTpUs30cIfo5PnbPj3wkMkVMUbIRXWXbfrSbpHVF0MtwzX0Mctj
- gv0XDzivpHlPEqKt7o94wmJCdQNUihESJRjWJI4wEVrgj6ODDqj4ZF8ymRv89tqKiZGA
- 1EXCUujDrlsdZnI2DRpwKx+BoMDI9aiTJzK7MAeN0iPHXsRL31pOckk5cAEo2a3BlguR
- +6YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737106147; x=1737710947;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x3OXCptAB3T1Y5AIABafbO97M/zyNcnw8SxPu1ye6Nc=;
- b=HFcrat+EMbtHXp7qD3Ymaa+qlIImQn+vHWQEMpafJm3+JCrUADz8xJMgnZGvTz7pLv
- SP4LgBMQncJHYY+TPZeagqcAfSCVIawvsOlwawH2DVEgQGA3isCiuVj5IT3Iz1UzXier
- undYa4eXl6qnWanoetoQTn5QGeOmc6VjoZfHwp5tveWSh1gJUJeRTk9i1ivjrKZ4qFmG
- J7SXqhwAsYTcIvDO6eTRnVdsvgNpTWtoHj9puaYaNPM83C1PNqol0iglqCLHJTw3jHsI
- rM1q15EaDUxYg26zbyAq4U7DpQB4Rno95JNAjGOiNghxtALzrRW7+5n4hPKv+2liD7am
- glzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQfQ0ymqjCCTPrCxmReQc9QJKldnD5oWlYUyuIBlHqNzIIjebMJsfLd9bmVD/ID1baKoThDsmvOw==@nongnu.org,
- AJvYcCWbYnko6rNMaMFj7GWr+YNqINaJFa6imkNNz+xtKY6TG9e3HnEOJgHxe3N9Nmc6Z6d0LcOKsnAWbWHPcQ==@nongnu.org,
- AJvYcCXTyTTDkxSz9A7PaBi69taT3mrOeeOGTNYS5hbjypccB/B9SJUFCBdEGc/hrGOMMLBBArSSJfBqdu3paQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzUU2Qq5BwqXhT75v2AD3VY7ZE6ftbA9imBPlHZ1CLmua7HztJO
- ej7kdfzgzU3MsG7rXDW3Pjkt4Xsd+faayAHNPTWVSubBZFqNFA0W
-X-Gm-Gg: ASbGncuqcRxcUWoKIbXP4sovhCo+fRa7mXAFU4uF0Hq0UeLmA4tOZ4B4Kc4nDxltQLu
- 7rvMFRjg/IrMJH+TclVG/mHLXoqBG49bdAlQTbz9rBLSnU4lss+b5brGzJ83FGXc4Vi0/L02qvV
- y4CULckJIsk9/5uYIfM/grE/lbl4GU+MjpS4RlE6FaE3ehtheoJXswxmAINlIK/LFkUsGZ6Lscg
- gj47BfvSax9wLo7TEVIyT8qFnAdf/5N5g46JOU13bTQ2zXFKpCwhClUDhocDE9e+5PSJtX5TNWe
- BSPM2sD4LorKGz1FZn7ynRDxX8hR
-X-Google-Smtp-Source: AGHT+IFwj8FfS2YUPofAJpydk6wLFSDxXKtRFbNLv3+R7NEgvBETlZtMTkuKXUrbKRDJaj0Sfy78mg==
-X-Received: by 2002:a17:907:724d:b0:aa6:b1b3:2b82 with SMTP id
- a640c23a62f3a-ab38b0b7f70mr74454066b.3.1737106147366; 
- Fri, 17 Jan 2025 01:29:07 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-089-012-021-087.89.12.pool.telefonica.de.
- [89.12.21.87]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384ce1687sm138288366b.49.2025.01.17.01.29.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 01:29:07 -0800 (PST)
-Date: Fri, 17 Jan 2025 09:29:04 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Guenter Roeck <linux@roeck-us.net>, Peter Maydell <peter.maydell@linaro.org>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_07/13=5D_hw/sd/sd=3A_Allow_for_inverti?=
- =?US-ASCII?Q?ng_polarities_of_presence_and_write-protect_GPIOs?=
-In-Reply-To: <8e61492c-e293-4bea-a0e0-e41d815d8b47@linaro.org>
-References: <20250111183711.2338-1-shentey@gmail.com>
- <20250111183711.2338-8-shentey@gmail.com>
- <8e61492c-e293-4bea-a0e0-e41d815d8b47@linaro.org>
-Message-ID: <1B33AD33-9D74-4F18-B9E9-EF6973962601@gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYik3-0002SN-Fb
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:34:18 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tYik0-0004wL-Iu
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:34:15 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YZDzB2GZPz67KPV;
+ Fri, 17 Jan 2025 17:32:22 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5DE451400DB;
+ Fri, 17 Jan 2025 17:33:58 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 17 Jan
+ 2025 10:33:57 +0100
+Date: Fri, 17 Jan 2025 09:34:00 +0000
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+CC: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, <qemu-devel@nongnu.org>
+Subject: Re: CXL emulation on aarch64
+Message-ID: <20250117093400.00007afb@huawei.com>
+In-Reply-To: <C7740553-EA65-4576-9FAB-13780CA3D810@linux.dev>
+References: <0C019F50-9020-42ED-B051-998F03BFB709@linux.dev>
+ <483e8037-3c72-4560-b4b8-2437d37ca8c4@fujitsu.com>
+ <20250110123128.00004a5b@huawei.com>
+ <09D52CDC-44E5-48C4-8D32-E4DD0964F9AF@linux.dev>
+ <20250114102626.00000c53@huawei.com>
+ <88E9D774-A760-45F7-A173-24A07BB55733@linux.dev>
+ <20250116105833.000056da@huawei.com>
+ <C7740553-EA65-4576-9FAB-13780CA3D810@linux.dev>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -59
+X-Spam_score: -6.0
+X-Spam_bar: ------
+X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.797, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,22 +72,186 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 17 Jan 2025 09:24:15 +0900
+Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
 
+> > On Jan 16, 2025, at 19:58, Jonathan Cameron <Jonathan.Cameron@huawei.co=
+m> wrote:
+> >=20
+> > On Thu, 16 Jan 2025 15:04:53 +0900
+> > Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+> >  =20
+> >> Hi Jonathan,
+> >>  =20
+> >>> On Jan 14, 2025, at 19:26, Jonathan Cameron <Jonathan.Cameron@huawei.=
+com> wrote:
+> >>>=20
+> >>> On Tue, 14 Jan 2025 12:03:03 +0900
+> >>> Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+> >>>  =20
+> >>>> Hi Jonathan,=20
+> >>>>  =20
+> >>>>> On Jan 10, 2025, at 21:31, Jonathan Cameron <Jonathan.Cameron@huawe=
+i.com> wrote:
+> >>>>>=20
+> >>>>> On Fri, 10 Jan 2025 09:20:54 +0000
+> >>>>> "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org> wrote:
+> >>>>>  =20
+> >>>>>> On 10/01/2025 13:29, Itaru Kitayama wrote:     =20
+> >>>>>>> Hi,
+> >>>>>>> Is anybody working on the CXL emulation on aarch64?       =20
+> >>>>>>=20
+> >>>>>> I'm not currently working on the CXL emulation on aarch64.
+> >>>>>>=20
+> >>>>>> However, IIRC the CXL maintainer's tree should work.
+> >>>>>> https://gitlab.com/jic23/qemu/     =20
+> >>>>>=20
+> >>>>> Pick up latest branch from there. I'm prepping a rebased version
+> >>>>> with some new stuff but might take a few more days.     =20
+> >>>>=20
+> >>>> Thanks for sharing your work with us.  Your master and cxl-2024-11-2=
+7 branches give:
+> >>>>=20
+> >>>> $ qemu-system-aarch64: -accel tcg,cxl=3Don: Property 'tcg-accel.cxl'=
+ not found   =20
+> >>>=20
+> >>> cxl is a machine property not a accel one. So needs to be after virt
+> >>> There are tests in the tree for bios tables. Copy the command line fr=
+om those.
+> >>>  =20
+> >>>>=20
+> >>>> My commands are below:
+> >>>> $HOME/projects/qemu/build/qemu-system-aarch64 \
+> >>>>       -M virt,virtualization=3Don,gic-version=3D3 \
+> >>>>       -M acpi=3Doff -cpu max,sme=3Doff -m 8G -smp 4 \
+> >>>>       -accel tcg,cxl=3Don \
+> >>>>       -nographic \
+> >>>>       -bios $HOME/cca-v4/out/bin/flash.bin \
+> >>>>       -kernel Image-cca \
+> >>>>       -drive format=3Draw,if=3Dnone,file=3D$HOME/cca-v4/out-or/image=
+s/rootfs.ext2,id=3Dhd0 \
+> >>>>       -device virtio-blk-pci,drive=3Dhd0 \
+> >>>>       -append root=3D/dev/vda \
+> >>>>       -nodefaults \
+> >>>>       --serial tcp:localhost:54320 \
+> >>>>        -serial tcp:localhost:54321 \
+> >>>>        -append "root=3D/dev/vda earlycon console=3Dhvc0" \
+> >>>>        -device virtio-net-pci,netdev=3Dnet0 \
+> >>>>        -netdev user,id=3Dnet0 \
+> >>>>        -device virtio-9p-device,fsdev=3Dshr0,mount_tag=3Dshr0 \
+> >>>>        -fsdev local,security_model=3Dnone,path=3D../../,id=3Dshr0
+> >>>>=20
+> >>>> Yes, I=E2=80=99m using Linaro=E2=80=99s CCA capable OP-TEE builds ab=
+ove.   =20
+> >>>=20
+> >>> I'm a little curious why optee is relevant for this but shouldn't mat=
+ter as long
+> >>> as an appropriate EDK2 is loaded.
+> >>>  =20
+> >>=20
+> >> I picked up your tree=E2=80=99s =E2=80=9Cmaster=E2=80=9D and =E2=80=9C=
+cxl-next=E2=80=9D as of today, and only the latter at least booted.
+> >> The former gives:
+> >>=20
+> >> qemu-system-aarch64: Property 'virt-9.2-machine.cxl' not found
+> >>=20
+> >> Should I stick with the cxl-next? My concern is that the base QEMU ver=
+sion is a bit old
+> >> 7.0.50. =20
+> >=20
+> > Always use the latest dated branch on that tree.  I release whenever th=
+ere
+> > is something new to carry or a major rebase needed.
+> >=20
+> > cxl-<date> is the right branch to use. Hope that helps.
+> >  =20
+>=20
+> Okay the cxl-2024-11-27 gives this:
+>=20
+> qemu-system-aarch64: CFMWS does not fit under PA limit
+>=20
+> Below is my QEMU options I use currently:
+>=20
 
-Am 15=2E Januar 2025 17:32:13 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
-hilmd@linaro=2Eorg>:
->On 11/1/25 19:37, Bernhard Beschow wrote:
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>   hw/sd/sd=2Ec | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->
->See question on v1:
->https://lore=2Ekernel=2Eorg/qemu-devel/e202623e-eac7-4ed3-87fb-002491ddf7=
-45@linaro=2Eorg/
+Try using max as the cpu (or n1 or later).  a53 is ancient
+which is probably where the limit comes from.
 
-Oh, I missed that=2E I answered there to keep the context=2E
+> /home/itaru/projects/qemu/build/qemu-system-aarch64 \
+>          -M virt,virtualization=3Don,pflash0=3Drom,pflash1=3Defivars,gic-=
+version=3D3,virtualization=3Don,cxl=3Don -m 8192 \
+>          -cpu cortex-a53 \
+>          -smp 2 \
+>          -accel tcg \
+>          -nographic \
+>          -display none \
+>          -kernel ${HOME}/projects/linux/arch/arm64/boot/Image \
+>          -append "root=3D/dev/vda rw earlycon acpi=3Dforce" \
+>          -drive format=3Draw,if=3Dnone,file=3D${HOME}/ubuntu24.img,id=3Dh=
+d0 \
+>          -device virtio-blk-pci,drive=3Dhd0 \
+>          -nodefaults \
+>          -serial mon:stdio \
+>          -device virtio-net-pci,netdev=3Dnet0 \
+>          -netdev user,id=3Dnet0,hostfwd=3Dtcp::8024-:22 \
+>          -blockdev node-name=3Drom,driver=3Dfile,filename=3Dedk2-aarch64-=
+code.fd,read-only=3Dtrue \
+>          -blockdev node-name=3Defivars,driver=3Dfile,filename=3Dqemu-arm6=
+4-efivars.test \
+>          -object memory-backend-file,id=3Dcxl-mem1,share=3Don,mem-path=3D=
+/tmp/cxltest.raw,size=3D256M \
+>          -object memory-backend-file,id=3Dcxl-lsa1,share=3Don,mem-path=3D=
+/tmp/lsa.raw,size=3D256M \
+>          -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1 \
+>          -device cxl-rp,port=3D0,bus=3Dcxl.1,id=3Droot_port13,chassis=3D0=
+,slot=3D2 \
+>          -device cxl-type3,bus=3Droot_port13,memdev=3Dcxl-mem1,lsa=3Dcxl-=
+lsa1,id=3Dcxl-pmem0 \
+>          -M cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=3D4G
+>=20
+> > Jonathan
+> >  =20
+> >>=20
+> >> Thanks,
+> >> Itaru.
+> >>  =20
+> >>> Jonathan
+> >>>  =20
+> >>>>=20
+> >>>> Let me know which branch you were suggesting.
+> >>>>=20
+> >>>> Thanks,
+> >>>> Itaru.=20
+> >>>>  =20
+> >>>>>=20
+> >>>>> Note my main development work is on arm64 so that tends to work
+> >>>>> more reliably than x86 which I only lightly test for stuff that
+> >>>>> isn't ready for upstream yet.
+> >>>>>=20
+> >>>>> Give me a shout if you run into any problems.
+> >>>>>=20
+> >>>>> The main blocker on upstreaming this is resolving the missing devic=
+e tree
+> >>>>> support for PCI expander bridges.  I've not made any progress on th=
+is since
+> >>>>> talk at Linaro connect in 2023.
+> >>>>>=20
+> >>>>> Jonathan
+> >>>>>=20
+> >>>>>  =20
+> >>>>>>=20
+> >>>>>>=20
+> >>>>>> Thanks
+> >>>>>> Zhijian
+> >>>>>>  =20
+> >>>>>>> If there=E2=80=99s a WIP branch, a pointer would be appreciated.
+> >>>>>>>=20
+> >>>>>>> Itaru       =20
+>=20
+>=20
+
 
