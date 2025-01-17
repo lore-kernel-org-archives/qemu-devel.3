@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34D3C02185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06CCC02183
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYq9O-0004G2-8C; Fri, 17 Jan 2025 12:28:54 -0500
+	id 1tYq9R-0004Gk-N9; Fri, 17 Jan 2025 12:28:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYq9M-0004Fn-Pj
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:28:52 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYq9Q-0004GW-DE
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:28:56 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYq9K-000770-QC
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:28:52 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2156e078563so32847165ad.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:28:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tYq9O-00078R-Vu
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:28:56 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so46020585ad.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:28:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737134929; x=1737739729; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FogQALS97iJ4jyyHuwnbahFIptxhN64hjUIw+g1peCg=;
- b=HMa3UEENDUtEUsDWWBtOt1n2PW7EXCu+BvVoXW67S2Xqmc+/0s0ADfontlMJsnaPtJ
- uL/0T8TVijnfYUfQB2JCiAAQef/v00f86YdSUBICvjiuRI0dNzO9QlZDUYIAB1+ngTT+
- q9kjS+y4oLtPDmN8aobTAAMq3SOcBMw2OLjgmGFZWOMYtCjc0Xqfzmb5U+3OmlJrZZv/
- /ybR9yfdjhOPDrsRTRXidCNjC+pElR7cgrxp7ek9FZO9UCSWl5lxa0jvZklCBZqdAGiw
- Ffn8oUAD0NHGXJBDIBtU/cmlIChH9HepbuwQoqILxztllcxwGe79v6j4kBGWxstVIFvf
- dzyw==
+ d=gmail.com; s=20230601; t=1737134933; x=1737739733; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DEqWTc5ydAaQroS10fFe0iUZijmNw6ECGMsxRlRKy+Y=;
+ b=gZFJKHJrzHTT0DrX0rfCEoCNUNBzfgygg57C6Ia78PYZ1Rvf6F49tz6ICtks3rvHty
+ 2PdHLXFzvYA3i7dT/PbHfcoL2R1+k7gOlt7fxpzvEebbZki2tpBK+OdPmnhDFuqAyClX
+ Aj0LBxnzJG7EhjtKEHPFnbkJsxcvNpPlBS4Lx3tfMo4pDVH4WL6p4pod0S6T6tXqRAW+
+ a4gB5QhJs1vrrouUW7mwGBxpJO4CUJY08mfw19XgCsrWBJZimtFGwDY0h+9G7Qj6muBA
+ Vio2DJljGX9SDfCmzwWJU5Xi4sBhpzn2FDBWO0KD8Ywqk6G4O546mhiI7dv+25hUnWpN
+ Hw2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737134929; x=1737739729;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FogQALS97iJ4jyyHuwnbahFIptxhN64hjUIw+g1peCg=;
- b=gSruRWw0XGGrQI4++LC0UBEzq4XnI1a2QrZjY+YrNeAYC+ugMUKCezLgxNw7Ras0kk
- onWezPHZYlybt9Zh6cb9N0sNBCNBfnbr4Y3Ib5tQjvsxYOWlqLgEwYg6bnx/i6/EeJ5q
- cVVNWBSxoDZ+IGo6rH/8C+uvCCxZmLTkhWWW7F7O38ZTxocDl7duf0zotCbD+7NMlSbl
- tyKikN9hCEiEtdzGGHPfvrtLI+Uk0mA8DK4dh0UKU7Uq5xap2ZZI/w3WeRFRAXjLqUn/
- iVmE3W1WuiXWxGiAQP4FVoEg1SEnxFEPaqCSK8RiHV71+3oBStZyZz7l8rpa20WS0B3L
- A7kw==
+ d=1e100.net; s=20230601; t=1737134933; x=1737739733;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DEqWTc5ydAaQroS10fFe0iUZijmNw6ECGMsxRlRKy+Y=;
+ b=QHXvtTsPQ0QjJ7YAWBJouHmW8W5j8CJZflwGupmYvdFqj/UpRrVJJnnw7foh1FYZ7n
+ hCU9xDBQulynfz1HUwNpGN/hfPAjRg+yxiclN6ue5cLxforLV52L1hVriEgNhz+2uaLG
+ hV0Kr6n1YsSIPmqRp7f8k3Qzxdd1703yxp5WQU+GwFhsNU5nkIPygI50BxkLUXzYyi2/
+ mzotRrTZSCViAlyXTM7yt/pvD5LBiLwFGKhWIge6QMPhj+hn0bzD07ap26Y+md+Ux5zf
+ qVIPTdV575hn+j0u7GF5572KWDE72OBY5hiLhDyBYHh3iPDHgzrHQmg9aMX6NSq9KKHz
+ gJhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3RUJ5xbeyQ3z8F+ZLIBBYgkefxUk3MbObkllj3uKV3COXYhE96LLRD89Ms36F3LzD1frueEgbkzzf@nongnu.org
-X-Gm-Message-State: AOJu0YyVrrK980QaOVN1N17ObSPxKy3FrVzqv9+ndLnyTdMDXYdui+qh
- tuovOTI8nVx202+ZxIsZ+JFGuCKfXmfYttOXjnWUJCVixBBocHJcIcF2KQ==
-X-Gm-Gg: ASbGncuYmeUZP2p5+/BZ95tNeAz2KqsdAajWqG/kJBP81kl4EflLF09ZQqvbXuAtc5n
- 0rxa/tKFxfwt38HYl1HPgjnXjXlBVn5Bg54YDTRZEAEpCql4cfWrVp8+zGLJcNMOMXj1D+jClEr
- XkWRuyyPtBHCVtcF2yUHLbFAbmANK5/t0rmNCSaHd0ptCBXUavXF9NgyHHYnEgCTNPEEQdwP/n1
- pUy9rSeHbttw/2iHTaoM4KOZGkQG2yyZ4anCnYUdBSyitk3dPC3RnOC11Z8FkVnvcZeqIXbH2V8
- zLr442hHs+2L078=
-X-Google-Smtp-Source: AGHT+IG4CNTSPvCuKmfoeEVKELfZ1H1ceYI79IHRtyA7BZNbM9zwUgs4VFjIz80gZUHc9GxDhE20RA==
-X-Received: by 2002:a17:902:d501:b0:20c:9821:6998 with SMTP id
- d9443c01a7336-21c352c798emr60589715ad.10.1737134929355; 
- Fri, 17 Jan 2025 09:28:49 -0800 (PST)
+ AJvYcCXMMwN7z8RSIvYq5oNI1jwWsRzilsIUl4uEoM+CDofYcfo5pHo9Ft0qCmLtFjciA/79YHt/TqMTPplv@nongnu.org
+X-Gm-Message-State: AOJu0YwNaUQXbE+aNDD+Av0Gs78gse3zNAdqy/pBONRzFl/d2gK1T+Vx
+ gxr6wy724FDddQ188ErwcV7P2nx2asGaNY3VkG9OcOWLKewiQDODUx1Jgg==
+X-Gm-Gg: ASbGncsupkD5cvLencxB+f6drxWonB1OXLKsilzqIrFTHIzbKktKge1oPxCi39jsYWL
+ wPjskAulbBWAVlhM9KtOGzOIHHkxwSRBfA276ufHhHWtP/0Yy3A2643dSJpyeFjimOUoFtSB1PP
+ ZCAozyidZUui6TGtkVChR23TsaSuMBQyr+DsqwW0A2jWs5ByOaWwPz/NdPKsS9GNEVMRGyouhrC
+ KpXnFWhCHShGDs/WgMQaw832ADMx2KYO86CorkiWaq4qLtdyWDox32Bkl4OmozBgYgJ4/RMAI6G
+ TaEBHsf7jxbxWa8=
+X-Google-Smtp-Source: AGHT+IHNy+2QauNlXQHFcE6ESJW0IkNBP2c+Hm54EYqutzDkn3SmkYg4S2i4ndP63AR+LvivBTE59A==
+X-Received: by 2002:a17:902:ce09:b0:216:2bd7:1c2e with SMTP id
+ d9443c01a7336-21c3540acc8mr51546615ad.18.1737134933310; 
+ Fri, 17 Jan 2025 09:28:53 -0800 (PST)
 Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
  [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3a8a2bsm18658805ad.142.2025.01.17.09.28.46
+ d9443c01a7336-21c2d3a8a2bsm18658805ad.142.2025.01.17.09.28.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 09:28:48 -0800 (PST)
+ Fri, 17 Jan 2025 09:28:52 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
-Subject: [PATCH 0/2] hw/pci: catch a few error cases
-Date: Sat, 18 Jan 2025 03:28:39 +1000
-Message-ID: <20250117172842.406338-1-npiggin@gmail.com>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+Subject: [PATCH 1/2] hw/pci/msix: Warn on PBA writes
+Date: Sat, 18 Jan 2025 03:28:40 +1000
+Message-ID: <20250117172842.406338-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250117172842.406338-1-npiggin@gmail.com>
+References: <20250117172842.406338-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,22 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Of the MSI-X PBA pending bits, the PCI Local Bus Specification says:
 
-These would have helped to catch a few bugs I ran into / created
-recently, so they might be worth upstreaming.
+  Software should never write, and should only read
+  Pending Bits. If software writes to Pending Bits, the
+  result is undefined.
 
-Thanks,
-Nick
+Log a GUEST_ERROR message if the PBA is written to by software.
 
-Nicholas Piggin (2):
-  hw/pci/msix: Warn on PBA writes
-  hw/pci: Assert a bar is not registered multiple times
-
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
  hw/pci/msix.c | 9 +++++++++
- hw/pci/pci.c  | 1 +
- 2 files changed, 10 insertions(+)
+ 1 file changed, 9 insertions(+)
 
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index 57ec7084a47..66f27b9d712 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -15,6 +15,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pci.h"
+@@ -260,6 +261,14 @@ static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
+ static void msix_pba_mmio_write(void *opaque, hwaddr addr,
+                                 uint64_t val, unsigned size)
+ {
++    PCIDevice *dev = opaque;
++
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "PCI [%s:%02x:%02x.%x] attempt to write to MSI-X "
++                  "PBA at 0x%" FMT_PCIBUS ", ignoring.\n",
++                  pci_root_bus_path(dev), pci_dev_bus_num(dev),
++                  PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn),
++                  addr);
+ }
+ 
+ static const MemoryRegionOps msix_pba_mmio_ops = {
 -- 
 2.45.2
 
