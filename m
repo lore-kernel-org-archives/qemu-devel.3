@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C870CC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37103C02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 07:06:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYg8Z-0002tx-8x; Fri, 17 Jan 2025 01:47:23 -0500
+	id 1tYgQl-0000Wk-Ed; Fri, 17 Jan 2025 02:06:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYg8X-0002tU-Qp
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:21 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tYg8W-00055h-3X
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 01:47:21 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-21634338cfdso43680265ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 22:47:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1737096438; x=1737701238;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8flhO7OFgjJStUozbkecdgxyph0L237eJ5zpIYSa2Sg=;
- b=DPN33yAKGBMW399gIsW2D+kd3TuFyt7Nl3SIt2IjRccYxGrWuC7ElNUfXIcV8Z5yNo
- bQGbKR4RNcs04jLq4r6P0c1WN+5spoWaeR0C8dd9skCrf+bw22iRD3Czp/k4J4K6ZaDC
- VpNqD4jX2pL8ixyTGNy4P7DbrPVrFGKOBslIFR4LnqV2+OiHuj837CQkjmmsLbQlL2qa
- fB3FjmzGQZsSOy0NSu1eMzp204vwMXZrPUxd0bAFRjLHetxwyhxNeISKmVjrhJGTwl5U
- tG+DxOs7YcM8qeNiSQULdLYZwDcYOChFqXSE5SpYECwVl4sJRtTQ98EHOpoSKHnqIH/j
- iQXA==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tYgQk-0000WS-1u
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 02:06:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tYgQf-0007TT-3o
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 02:06:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1737097563;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y6Yesf3+j/k7hgOXyFBBoT9cNkww3rV6IdUuwKkJFrw=;
+ b=SsYKOvI/6rTyMFs4RgUC0P0pDC2NSm9GLZDuILMUnx1yr2tVzNtuhuTR/o7gfZQwxuyOoQ
+ coH5M0s2AeiIvHdMcJjk5XczaK5ATQAS8jt/LuEInhVA/F3yH0YTVc/n1sTUVaAvSZ3Ze1
+ 3pJqx9UmgZGWytMGZhg29dLcysoB+2g=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-428-3e4ac6VaO5-Wl9ZZqHQSXA-1; Fri, 17 Jan 2025 02:06:01 -0500
+X-MC-Unique: 3e4ac6VaO5-Wl9ZZqHQSXA-1
+X-Mimecast-MFC-AGG-ID: 3e4ac6VaO5-Wl9ZZqHQSXA
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-aa6b904a886so147680966b.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 23:06:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737096438; x=1737701238;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1737097560; x=1737702360;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8flhO7OFgjJStUozbkecdgxyph0L237eJ5zpIYSa2Sg=;
- b=aA+7kdHxVuG973T/156iX77CaMDXkh6jn6vhnZONU5/yJoQtVS8DcXNLXomZ7oyfzv
- wA9QPYAQ0xNvZ48/InjwnfTrMz/Dw5MJOvZP0R4HercF6LeT1UJtDwAtyzm9+wB3x8ST
- /C1lIwClVzUPsSO8hrNZY7osDr/2bXiq5hS+lV3+Rky99sUKaNp3mHUDw8u8uDCnlrDV
- i2myhLo9Z9+Vr69KLz8rfWIatieEY0TvhIT4YzXe0lEEeMRXxW1/aJgH4u9n65SBdiKb
- 081s99CkK/J7qe/0OzxpZdICuPl7IblUpETT3AN40pAkpSlUL8Rc+sefyWgi9w31lkvc
- aTnA==
-X-Gm-Message-State: AOJu0Yz/IvBC8p3QdpwwYhq8biHx2lEyPmPBhP0iQZ5SFJOyAzGMS0DU
- Qc6Q2jItpeGVIrFJYvdTVxPaFnuU5wNxqWcdbQVUxP0ALQo/YVwhgEM43SqORVJpw/8r0dlZwBB
- 1lfU=
-X-Gm-Gg: ASbGncsGeLe5Gt2Cr74DtgO/ZAp4c8q3OrD387Buu663LAHxzua2fGnAPyaeL18whmI
- 1gq0Mrz7B0inwDecQ0CEw5tAP31q8xTccfpAhHcfilKSOxDo06ZwzxciKxbxl6i1LQF7XLQJfrW
- FOnAMvSuY4cadi+0BQ3uAUtpULr+wvrBGqObBryIT2jwqZxYVjbKS9YT1htlwrjQ9dOlwvLnxs8
- IucRqY7nwfmGnRX6sQrLLdbBnI1zSLLZOmt/f2NPVN4c05J5vy2m7qRFc0=
-X-Google-Smtp-Source: AGHT+IHV5dMaPbzQuZ146GM/a7AvsMUpDkmdomN1PPjW4v9cqR9c7OLKfYUD5VzW2DtIK4aze7KMcQ==
-X-Received: by 2002:a17:903:32cf:b0:216:5af7:5a8e with SMTP id
- d9443c01a7336-21c355ec9c0mr24055655ad.26.1737096438591; 
- Thu, 16 Jan 2025 22:47:18 -0800 (PST)
-Received: from localhost ([157.82.203.37]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-21c2d4027e3sm9309305ad.222.2025.01.16.22.47.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jan 2025 22:47:18 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 17 Jan 2025 15:47:00 +0900
-Subject: [PATCH v4 1/3] coreaudio: Commit the result of init in the end
+ bh=Y6Yesf3+j/k7hgOXyFBBoT9cNkww3rV6IdUuwKkJFrw=;
+ b=tOlkrXQKmB/e9cPHPMFiJ2BJ5DcyefpDeOwoE5MtbAQbC2d8UayH/CN6ZyRNSYPXxh
+ QabWHE1/eMfVy6qyHuZI/pM76Q3tRom9gg6bfmy1irWxCXrViRgmo88wKQdmPyV8WFfJ
+ KYGWG9EZbxtgG1ePkS8tsRLDSzFJxUGtRfB+MguxBqyYq/sKYla/q7QjN7e5r2Kx30Vs
+ yadQGlvckPrHhx1G36W3XlEl5PH07Dv/z8gZzWzqlCPvfUloNPzgORAEl/TX8n/xbjM6
+ cURH1t/P7bPhJCA0yJVA0wTUaf1A5w2tsRnTYXOzAK8zpu90s49zUiPRNRkdc7mshtcl
+ pbgA==
+X-Gm-Message-State: AOJu0YzvQPcZD05Z4wmZK1q3kYCbMNht8W2+avemICAWDAlvYiKctr59
+ EZ0+wpYeW+5pmTMq1C0inXaV75Ds/XNMQPenyjkppVHpDM5KpHbAqL3naGuwMVecCzCIN4U2j1x
+ rsVF5YqYm6hXsNZK0YqBzYwtQAvPxL8wYSqDrmo4lppxK73NrLL1V35RDkcNYLQpn0vvaxvq+3b
+ 4sfyLy60orlqHef+ZK6RVcoeP2www=
+X-Gm-Gg: ASbGncs40BN1vCwziqr6pUoX2dr+NDoPtxtlbFhxpzk8q/TbMVT2FrrDPPokCzO5oVT
+ dnUsskG+FXtlNYfELoM54Hc4WCAz1BsMufF6m
+X-Received: by 2002:a17:907:1c11:b0:ab3:7720:d87c with SMTP id
+ a640c23a62f3a-ab38b384218mr168132166b.35.1737097559783; 
+ Thu, 16 Jan 2025 23:05:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHwETaH2rX9YsPRXWvj9jAvOVM9lqy1b9q/Qi6KKd2cb7qEfE2s8W9DvUw5wHii+Ifasw/rSG8+kbs8hrkVfvw=
+X-Received: by 2002:a17:907:1c11:b0:ab3:7720:d87c with SMTP id
+ a640c23a62f3a-ab38b384218mr168129566b.35.1737097559392; Thu, 16 Jan 2025
+ 23:05:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-coreaudio-v4-1-f8d4fa4cb5f4@daynix.com>
-References: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
-In-Reply-To: <20250117-coreaudio-v4-0-f8d4fa4cb5f4@daynix.com>
-To: Gerd Hoffmann <kraxel@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250115125342.3883374-1-imammedo@redhat.com>
+ <20250115125342.3883374-3-imammedo@redhat.com>
+In-Reply-To: <20250115125342.3883374-3-imammedo@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Fri, 17 Jan 2025 12:35:47 +0530
+X-Gm-Features: AbW1kvY4jlfdV69jkaVYrSanRjbf_2mqsxf63SArSTLaKOrEbSPmAg5XD32hSLs
+Message-ID: <CAK3XEhNMFrvN4dkHj93fapCqCcAaHr5gp+TTbNfGF==YwJGR+A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] pci: acpi: Windows 'PCI Label Id' bug workaround
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,165 +102,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-init_out_device may only commit some part of the result and leave the
-state inconsistent when it encounters a fatal error or the device gets
-unplugged during the operation, which is expressed by
-kAudioHardwareBadObjectError or kAudioHardwareBadDeviceError. Commit the
-result in the end of the function so that it commits the result iff it
-sees no fatal error and the device remains plugged.
+On Wed, Jan 15, 2025 at 6:23=E2=80=AFPM Igor Mammedov <imammedo@redhat.com>=
+ wrote:
+>
+> Current versions of Windows call _DSM(func=3D7) regardless
+> of whether it is supported or not. It leads to NICs having bogus
+> 'PCI Label Id =3D 0', where none should be set at all.
+>
+> Also presence of 'PCI Label Id' triggers another Windows bug
+> on localized versions that leads to hangs. The later bug is fixed
+> in latest updates for 'Windows Server' but not in consumer
+> versions of Windows (and there is no plans to fix it
+> as far as I'm aware).
+>
+> Given it's easy, implement Microsoft suggested workaround
+> (return invalid Package) so that affected Windows versions
+> could boot on QEMU.
+> This would effectvely remove bogus 'PCI Label Id's on NICs,
+> but MS teem confirmed that flipping 'PCI Label Id' should not
+> change 'Network Connection' ennumeration, so it should be safe
+> for QEMU to change _DSM without any compat code.
+>
+> Smoke tested with WinXP and WS2022
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/774
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  hw/i386/acpi-build.c | 33 +++++++++++++++++++++++----------
+>  1 file changed, 23 insertions(+), 10 deletions(-)
+>
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 733b8f0851..1311a0d4f3 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -654,6 +654,7 @@ static Aml *aml_pci_pdsm(void)
+>      Aml *acpi_index =3D aml_local(2);
+>      Aml *zero =3D aml_int(0);
+>      Aml *one =3D aml_int(1);
+> +    Aml *not_supp =3D aml_int(0xFFFFFFFF);
+>      Aml *func =3D aml_arg(2);
+>      Aml *params =3D aml_arg(4);
+>      Aml *bnum =3D aml_derefof(aml_index(params, aml_int(0)));
+> @@ -678,7 +679,7 @@ static Aml *aml_pci_pdsm(void)
+>           */
+>          ifctx1 =3D aml_if(aml_lnot(
+>                       aml_or(aml_equal(acpi_index, zero),
+> -                            aml_equal(acpi_index, aml_int(0xFFFFFFFF)), =
+NULL)
+> +                            aml_equal(acpi_index, not_supp), NULL)
+>                   ));
+>          {
+>              /* have supported functions */
+> @@ -704,18 +705,30 @@ static Aml *aml_pci_pdsm(void)
+>      {
+>         Aml *pkg =3D aml_package(2);
+>
+> -       aml_append(pkg, zero);
+> -       /*
+> -        * optional, if not impl. should return null string
+> -        */
+> -       aml_append(pkg, aml_string("%s", ""));
+> -       aml_append(ifctx, aml_store(pkg, ret));
+> -
+>         aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_=
+index));
+> +       aml_append(ifctx, aml_store(pkg, ret));
+>         /*
+> -        * update acpi-index to actual value
+> +        * Windows calls func=3D7 without checking if it's available,
+> +        * as workaround Microsoft has suggested to return invalid for fu=
+nc7
+> +        * Package, so return 2 elements package but only initialize elem=
+ents
+> +        * when acpi_index is supported and leave them uninitialized, whi=
+ch
+> +        * leads elements to being Uninitialized ObjectType and should tr=
+ip
+> +        * Windows into discarding result as an unexpected and prevent se=
+tting
+> +        * bogus 'PCI Label' on the device.
 
-With this change, handle_voice_change can rely on core->outputDeviceID
-to know whether the output device is initialized after calling
-init_out_device.
+This comment is very confusing!
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- audio/coreaudio.m | 49 +++++++++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+>          */
+> -       aml_append(ifctx, aml_store(acpi_index, aml_index(ret, zero)));
+> +       ifctx1 =3D aml_if(aml_lnot(aml_lor(
+> +                    aml_equal(acpi_index, zero), aml_equal(acpi_index, n=
+ot_supp)
+> +                )));
 
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index cadd729d5053..b9e1a952ed37 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -355,7 +355,10 @@ static OSStatus audioDeviceIOProc(
- static OSStatus init_out_device(coreaudioVoiceOut *core)
- {
-     OSStatus status;
-+    AudioDeviceID deviceID;
-     AudioValueRange frameRange;
-+    UInt32 audioDevicePropertyBufferFrameSize;
-+    AudioDeviceIOProcID ioprocid;
- 
-     AudioStreamBasicDescription streamBasicDescription = {
-         .mBitsPerChannel = core->hw.info.bits,
-@@ -368,20 +371,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         .mSampleRate = core->hw.info.freq
-     };
- 
--    status = coreaudio_get_voice(&core->outputDeviceID);
-+    status = coreaudio_get_voice(&deviceID);
-     if (status != kAudioHardwareNoError) {
-         coreaudio_playback_logerr (status,
-                                    "Could not get default output Device\n");
-         return status;
-     }
--    if (core->outputDeviceID == kAudioDeviceUnknown) {
-+    if (deviceID == kAudioDeviceUnknown) {
-         dolog ("Could not initialize playback - Unknown Audiodevice\n");
-         return status;
-     }
- 
-     /* get minimum and maximum buffer frame sizes */
--    status = coreaudio_get_framesizerange(core->outputDeviceID,
--                                          &frameRange);
-+    status = coreaudio_get_framesizerange(deviceID, &frameRange);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-@@ -392,31 +394,31 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-     }
- 
-     if (frameRange.mMinimum > core->frameSizeSetting) {
--        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-+        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
-         dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
-     } else if (frameRange.mMaximum < core->frameSizeSetting) {
--        core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-+        audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
-         dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
-     } else {
--        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-+        audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
-     }
- 
-     /* set Buffer Frame Size */
--    status = coreaudio_set_framesize(core->outputDeviceID,
--                                     &core->audioDevicePropertyBufferFrameSize);
-+    status = coreaudio_set_framesize(deviceID,
-+                                     &audioDevicePropertyBufferFrameSize);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-     if (status != kAudioHardwareNoError) {
-         coreaudio_playback_logerr (status,
-                                     "Could not set device buffer frame size %" PRIu32 "\n",
--                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
-+                                    (uint32_t)audioDevicePropertyBufferFrameSize);
-         return status;
-     }
- 
-     /* get Buffer Frame Size */
--    status = coreaudio_get_framesize(core->outputDeviceID,
--                                     &core->audioDevicePropertyBufferFrameSize);
-+    status = coreaudio_get_framesize(deviceID,
-+                                     &audioDevicePropertyBufferFrameSize);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-@@ -425,11 +427,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-                                     "Could not get device buffer frame size\n");
-         return status;
-     }
--    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
- 
-     /* set Samplerate */
--    status = coreaudio_set_streamformat(core->outputDeviceID,
--                                        &streamBasicDescription);
-+    status = coreaudio_set_streamformat(deviceID, &streamBasicDescription);
-     if (status == kAudioHardwareBadObjectError) {
-         return 0;
-     }
-@@ -437,7 +437,6 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-         coreaudio_playback_logerr (status,
-                                    "Could not set samplerate %lf\n",
-                                    streamBasicDescription.mSampleRate);
--        core->outputDeviceID = kAudioDeviceUnknown;
-         return status;
-     }
- 
-@@ -451,20 +450,24 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-      * Therefore, the specified callback must be designed to avoid a deadlock
-      * with the callers of AudioObjectGetPropertyData.
-      */
--    core->ioprocid = NULL;
--    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
-+    ioprocid = NULL;
-+    status = AudioDeviceCreateIOProcID(deviceID,
-                                        audioDeviceIOProc,
-                                        &core->hw,
--                                       &core->ioprocid);
-+                                       &ioprocid);
-     if (status == kAudioHardwareBadDeviceError) {
-         return 0;
-     }
--    if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
-+    if (status != kAudioHardwareNoError || ioprocid == NULL) {
-         coreaudio_playback_logerr (status, "Could not set IOProc\n");
--        core->outputDeviceID = kAudioDeviceUnknown;
-         return status;
-     }
- 
-+    core->outputDeviceID = deviceID;
-+    core->audioDevicePropertyBufferFrameSize = audioDevicePropertyBufferFrameSize;
-+    core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
-+    core->ioprocid = ioprocid;
-+
-     return 0;
- }
- 
-@@ -548,7 +551,9 @@ static OSStatus handle_voice_change(
-         fini_out_device(core);
-     }
- 
--    if (!init_out_device(core)) {
-+    init_out_device(core);
-+
-+    if (core->outputDeviceID) {
-         update_device_playback_state(core);
-     }
- 
+So this conditional checks if the acpi index is supported (because its
+aml_lnot()).
 
--- 
-2.47.1
+> +       {
+> +           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)=
+));
+> +           /*
+> +            * optional, if not impl. should return null string
+> +            */
+
+I know this comes from the existing code but I am still confused. Why
+is this appending "return null string" logic to "if acpi index is
+supprted" conditional?
+
+> +           aml_append(ifctx1, aml_store(aml_string("%s", ""),
+> +                                        aml_index(ret, one)));
+> +       }
+> +       aml_append(ifctx, ifctx1);
+> +
+>         aml_append(ifctx, aml_return(ret));
+>      }
+>
+> --
+> 2.43.0
+>
 
 
