@@ -4,61 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C72FAC0218A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:42:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B95BC02188
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 12:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYlfe-0003es-AH; Fri, 17 Jan 2025 07:41:54 -0500
+	id 1tYlfb-0003e3-He; Fri, 17 Jan 2025 07:41:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYlfd-0003eS-5Z
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:41:53 -0500
+ id 1tYlfZ-0003cp-MF
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:41:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYlfb-0008Nn-Gg
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:41:52 -0500
+ id 1tYlfV-0008Jw-6k
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 07:41:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737117710;
+ s=mimecast20190719; t=1737117702;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XngVGLXTSadpJgMbE9fRr6XaEIXLeTK1mNEUBzv8rzo=;
- b=fzpdvhC0f6690j2f/1k2+unPSv/S7HqjgHbFrG6qVQYwFb26xcYXogazPV6383gW2q+H9Y
- O21pRrRpKBFUl6JP00gJOhUtDFe32jtnI5J2/MMigF/B/wu5i8LV7DWaTfQ2U+d8ujmcKo
- uibUHXoeKvqb6T9ayMHlCk+2u6V7pgY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zqA0/tzBXBWXlol5oY7bJYF1LgWl/FDDRalGGG/kocY=;
+ b=SngGLP2SW2qBWE3hqTltKo/SGIVHdj5xb601L64MQCe3aIm/15X/MyN/v6hU0t99KL/3B9
+ Yb/Gb7VFDnOU4gCRKkBlH+hr4wW2lrCMvoDiOLITjN9FgLnoNN0zNXey5KUoXOCYL+B0dl
+ gPV8dm053XCv5iOjaBakYiTsp/ce0yo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-ODlUJT2iP8Grf_Zs9EqncA-1; Fri,
- 17 Jan 2025 07:41:46 -0500
-X-MC-Unique: ODlUJT2iP8Grf_Zs9EqncA-1
-X-Mimecast-MFC-AGG-ID: ODlUJT2iP8Grf_Zs9EqncA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-CaEQeBw3NFew71-9SwfzDw-1; Fri,
+ 17 Jan 2025 07:41:40 -0500
+X-MC-Unique: CaEQeBw3NFew71-9SwfzDw-1
+X-Mimecast-MFC-AGG-ID: CaEQeBw3NFew71-9SwfzDw
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09AAA1955D82; Fri, 17 Jan 2025 12:41:46 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E535195608A
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 12:41:39 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.60])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 123E519560BF; Fri, 17 Jan 2025 12:41:43 +0000 (UTC)
+ id 20E9519560BF; Fri, 17 Jan 2025 12:41:37 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 3/3] scripts: forbid use of arbitrary SPDX tags besides
- license identifiers
-Date: Fri, 17 Jan 2025 12:41:36 +0000
-Message-ID: <20250117124136.3389778-4-berrange@redhat.com>
-In-Reply-To: <20250117124136.3389778-1-berrange@redhat.com>
-References: <20250117124136.3389778-1-berrange@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 0/3] scripts: mandate use of SPDX-License-Identifier tags
+ in new files
+Date: Fri, 17 Jan 2025 12:41:33 +0000
+Message-ID: <20250117124136.3389778-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -86,51 +83,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While SPDX-License-Identifier is a well known SPDX tag, there are a
-great many more besides that[1]. These are mostly focused on making
-machine readable metadata available to the 'reuse' tool and similar.
-They cover concepts like author names, copyright owners, and much
-more. It is even possible to define source file line groups and apply
-different SPDX tags to regions of code within a file.
+One of the items raised at the QEMU maintainers meeting at KVM Forum
+2024 was adoption of SPDX-License-Identifier for licensing of newly
+contributed source files, for which there were no dissenting voices.
 
-At this time we're only interested in adopting SPDX for recording the
-file global licensing info, so detect & reject any other SPDX metadata.
-If we want to explicitly collect extra data in SPDX format, we can
-evaluate each data item on its merits when someone wants to propose it
-at a later date.
+Thus, this series proposes a way to put this into action by extending
+checkpatch.pl to mandate SPDX-License-Identifier in all new files.
 
-[1] https://spdx.github.io/spdx-spec/v2.2.2/file-tags/
-    https://spdx.github.io/spdx-spec/v2.2.2/file-information/
+Furthermore, anytime it sees SPDX-License-Identifier in any patch,
+whether a new file or pre-existing, it validates the declared license
+name. If it is not one of the commonly used QEMU licenses (the GPL
+variants, MIT, & a few BSD variants), it will report an error. To
+encourage sticking with GPL-2.0-or-later by default, it will issue
+a warning even if it is one of the common licenses, encouraging
+the contributor to double check their choice. This will reduce
+accidental license proliferation.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/checkpatch.pl | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Finally, I've seen a few other random SPDX tags such as:
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 8995d2c391..83b59fb443 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1714,6 +1714,18 @@ sub process {
- 		    &checkspdx($realfile, $1);
- 		}
- 
-+		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
-+		    my $tag = $1;
-+		    my @permitted = qw(
-+			SPDX-License-Identifier
-+		    );
-+
-+		    unless (grep { /^$tag$/ } @permitted) {
-+			ERROR("Tag $tag not permitted in QEMU code, valid " .
-+			      "choices are: " . join(", ", @permitted));
-+		    }
-+		}
-+
- # Check for wrappage within a valid hunk of the file
- 		if ($realcnt != 0 && $line !~ m{^(?:\+|-| |\\ No newline|$)}) {
- 			ERROR("patch seems to be corrupt (line wrapped?)\n" .
+  * SPDX-FileCopyrightText  - replacing "Copyright ..."
+  * SPDX-FileContributor - replacing "Authors: ..."
+  * SPDX-URL - a link to the link license text
+  * SPDX-sourceInfo - arbitrary free form text about the file
+
+These may or may not be worth considering in QEMU, but this series
+discourages their usage by raising an error in checkpatch for now.
+
+If we feel we want to adopt any of these, I think it should be
+through a concious decision applied universally. Inconsistent &
+adhoc usage of other SPDX tags by a subset of contributors feels
+like it doesn't seem to give a clear win, and could even be a
+net loss through making practices inconsistent across the code.
+
+Changed in v3:
+
+ * Add missing accepted license LGPL-2.1-only
+ * Drop LGPL-2.0-only & LGPL-2.0-or-later as acceptable
+ * Fix typo in commit message
+
+Changed in v2:
+
+ * Tweaks to the commit messages
+ * Expand the message warning about non GPL-2.0-or-later
+   usage, to request an explanation in the commit message
+   for the unusual choice.
+
+Daniel P. Berrangé (3):
+  scripts: mandate that new files have SPDX-License-Identifier
+  scripts: validate SPDX license choices
+  scripts: forbid use of arbitrary SPDX tags besides license identifiers
+
+ scripts/checkpatch.pl | 111 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 111 insertions(+)
+
 -- 
 2.47.1
 
