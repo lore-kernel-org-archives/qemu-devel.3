@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC0EC02185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05CD3C02183
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfOT-0004Di-B7; Fri, 17 Jan 2025 00:59:46 -0500
+	id 1tYfNa-0000wU-2q; Fri, 17 Jan 2025 00:58:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfNQ-0008WK-7s
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:40 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tYfNX-0000Z2-43
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:47 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfNO-0006C0-Mg
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:40 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21654fdd5daso29500605ad.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:58:38 -0800 (PST)
+ id 1tYfNU-0006Cy-TZ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:46 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-21a7ed0155cso26356805ad.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737093517; x=1737698317; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737093523; x=1737698323; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xvdkqG4Go3/xSDmo4Ii1PJ0xtb5LrLWxZWiWdkHVtCE=;
- b=GFL+G3wcEcjMFSQ+kcP1tdYx8hsRCu7DKhbWhFf33j0VKZfeMUVyWAe9T066oJ1Fzo
- ao4hlFfNK+yo9nBE6ZqwY099MOspnlYznvVjZ04y/QdgvVD2a6qHIFkoHMp2skSuQJpS
- A7rsDavtBc5KMc34HzYG3DgSA+Y1dZ6AdtSnBVhF5VWxiTtlQziYtsdNzLzd9vvS6WEF
- VAtLwTCPS8TggW+Oher3i0CXz6kqJ3SX4b+7oc7rXpNUhry4ZF5aEx48lndbV1iF45Ty
- zDiaEGAsCSIIGg3z9TarMA3nR8BhYupSgOanaIs31kjXmmG/lBfV4QtHlM5mgrkycJLL
- ifMA==
+ bh=Do6AjO363mpahoSyzZEmer+bg1C5rcKUN5LUlQeK8f8=;
+ b=Sc2YNTrSTLUWRL/G9U9K9HJJuu2ryQB1CqPFUpN6zr5+DqQcllZ30BEsqYpbv4PwXP
+ 400b26MTZerqrcaWyx45t3c+50jzaEyYQeHSMJ6jw/XN4KsEqDKnvEp91xp/k+R07G0V
+ V2vTcotjw8MeqxciKSzg8zT8D9gJ1QsqnwRENFHxtBNUhhTH8fzeArOuI0QdrfYqsJhQ
+ ZGvho5GNtqC5tKIFC+Vt5aZn/WIEPeu1a8QuvYk5TFUhM/uCG/5QCwf937v76UqzpPf/
+ aYvQ0HyZ5TyVuarsjWJT87lgWyxcfngkCzwTWs/YvXB9/UV7hn+dnKP9pLgIb7EhvVuL
+ 7kNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737093517; x=1737698317;
+ d=1e100.net; s=20230601; t=1737093523; x=1737698323;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xvdkqG4Go3/xSDmo4Ii1PJ0xtb5LrLWxZWiWdkHVtCE=;
- b=sAmchZDHS0mzTJM4Msa/crjnOBhb+7ACvIRAjhBa8xONrfxvob46ifcxzduAyRIQU4
- UoZTNKedPpzCiFu6Ts2SvwobcWQqfSs3PQUT7vzBvMd/pTP4b+g+7658hekqo1xTPXiE
- dKupef/WEtwsKqXvXGOM2gTz3MJupSH3ilzgVk80NrSKqplwragqMVTSvQa/cExDRYFM
- Vwk5TlDDxd5T2AyBNFhL+5ITXv+hMSrpSd7Apouct3/Fur5od1oF2dwi93nFfUxaqNA6
- TS30i47Sa7bLB5HQGJYDB0NzBdGYl9NfPjfissVonFy7Z/nNXNOfz5QCFvmBv92MJGTz
- Fimw==
-X-Gm-Message-State: AOJu0YyikReO34RlPbCGPfE9yQIT159OYIOBeCs4i0U+cJ9cOHnXjYJ8
- g04V1Vzs0LaXywbNmtObRMTAPSfDxnUaAlTd0IpBVDtg47ecU3sVv+PwOQ==
-X-Gm-Gg: ASbGncvtHS1hOtpGRH/yLh0r2blDpiZPQ6nY9Q0kO8NQZ0yXp3XO/T+dqRtAaKSgmSz
- qYVcu5ATxEnGI6aGDqUuy8anv0LcY3p2CBYOwD37rYE/COxFGv5enXTegs3L7wdM7rDmxZF5Mil
- E10+cJoKlGsWZ3i7jkfYL1rZPsyYFknrWZN14t08st1+U+9LTfhfZX4r7U95iRZSsPjJfr2Lj84
- 1o225Yy9it16CTsHFSMTyw9lm9axtVUvZLw+rpzoaGnP7QP/mO0mCkPJtrPzoWgYTASoKEfUAqF
- 5nk3jD87H9r+HvImRIkYkTR6uIznZvI0wcw8y9dzUSGxOKgWhD8SLs0LcuKr
-X-Google-Smtp-Source: AGHT+IFp1a/vI3JxYpqj9P6q1S+vPwr1tb3+tIPSlCIrtnWMTQbRf+nOR1o39hnGQngGET03xYaZBg==
-X-Received: by 2002:a17:902:d2c5:b0:216:779a:d5f3 with SMTP id
- d9443c01a7336-21c353edbd7mr25262305ad.14.1737093516897; 
- Thu, 16 Jan 2025 21:58:36 -0800 (PST)
+ bh=Do6AjO363mpahoSyzZEmer+bg1C5rcKUN5LUlQeK8f8=;
+ b=S16BbYkn+i9pteqyXEqEgciS1H5EdWGRedoTSI19/qygO8E4smtkGypREk2jhkXoDd
+ 9JY5s7Cpg47rXX6dFKixN8Osuuy3FWLurLxZRJk9snLoHkZwDmuQeCbaOoZDHqp8iwFp
+ jziv730BRlockoD+tfPezQgVxbWvAzQZyYUdSGUrd4q5OrsNqBYJYLvdus4XEm/wQvOD
+ Mq7SPpORm7onZKUf/STbuHcAEmtKOGt1TRSFier8JIgsrA9+Fxl/7dDDw+1Ys+ra7jrB
+ Lzma+Nc+yPEk+6TfdklNh9uyR6Rn+Ap4OW6wigggZIGZghp4BLfhlKDmr+6hlUO/NM7i
+ qHsw==
+X-Gm-Message-State: AOJu0YxqLcB6/S5mABVApFfUXfSjGCHaIxn+bJHXpIi9ph8Z/CjtV1vX
+ iSHmWlSV0s5I9Lqk1495rPCwSuKC0QdbCrvkToybL/HaU60aMQe7iyzm8A==
+X-Gm-Gg: ASbGncuEAgRPOe3S6jCM7EZwHh4M7i0ar7wgp/kiro+l9qUgNUuilAHC9tTgc8JTIXP
+ Fp8bkx4Di1pmXBRIQtZJpz4IGOHGFWBewY9r8T8Vs6rTMMFVreICn22bHOfeNSVU7PJpKIWJi4u
+ gDQwt20YgTotJIQ+nkQyMGc7IBBY4lCAWn49bmDYziFikzwf7lWZI4ffF2YQTUH+GANqEvE7dtA
+ H4Gmc59i6GUevscQmpP7aw7NmAuVU9qxEMRUY4ubr512HaHBeAK94ttE0T6zGUNNTTEZ48NCo0S
+ ucqgEK1zAaRc3Y9Vbjcicu/TFqlZWGhw9zx545GjOZpJrn1ETNUQCBGbiBjI
+X-Google-Smtp-Source: AGHT+IF2w/QPkBpI47m606F8CFdfdisIssckbCBpd5Bwb2Lt+WBXKZDfzdWWFsfSYOEwqnETTgM1AQ==
+X-Received: by 2002:a17:902:da8d:b0:216:386e:dd8 with SMTP id
+ d9443c01a7336-21c3540cd05mr21419115ad.17.1737093523359; 
+ Thu, 16 Jan 2025 21:58:43 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.58.34
+ d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.58.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 21:58:36 -0800 (PST)
+ Thu, 16 Jan 2025 21:58:42 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 46/50] target/riscv: Implement Smdbltrp behavior
-Date: Fri, 17 Jan 2025 15:55:48 +1000
-Message-ID: <20250117055552.108376-47-alistair.francis@wdc.com>
+Subject: [PULL 48/50] hw/riscv/riscv-iommu.c: Introduce a translation tag for
+ the page table cache
+Date: Fri, 17 Jan 2025 15:55:50 +1000
+Message-ID: <20250117055552.108376-49-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117055552.108376-1-alistair.francis@wdc.com>
 References: <20250117055552.108376-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,107 +105,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Jason Chien <jason.chien@sifive.com>
 
-When the Smsdbltrp ISA extension is enabled, if a trap happens while
-MSTATUS.MDT is already set, it will trigger an abort or an NMI is the
-Smrnmi extension is available.
+This commit introduces a translation tag to avoid invalidating an entry
+that should not be invalidated when IOMMU executes invalidation commands.
+E.g. IOTINVAL.VMA with GV=0, AV=0, PSCV=1 invalidates both a mapping
+of single stage translation and a mapping of nested translation with
+the same PSCID, but only the former one should be invalidated.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250110125441.3208676-9-cleger@rivosinc.com>
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20241108110147.11178-1-jason.chien@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_helper.c | 57 ++++++++++++++++++++++++++++-----------
- 1 file changed, 41 insertions(+), 16 deletions(-)
+ hw/riscv/riscv-iommu.c | 205 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 153 insertions(+), 52 deletions(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 539ba327e7..e1dfc4ecbf 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1938,6 +1938,24 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
-     /* if no promotion, return original cause */
-     return orig_cause;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 8bf920deab..e7568ca227 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -64,8 +64,16 @@ struct RISCVIOMMUContext {
+     uint64_t msiptp;            /* MSI redirection page table pointer */
+ };
+ 
++typedef enum RISCVIOMMUTransTag {
++    RISCV_IOMMU_TRANS_TAG_BY,  /* Bypass */
++    RISCV_IOMMU_TRANS_TAG_SS,  /* Single Stage */
++    RISCV_IOMMU_TRANS_TAG_VG,  /* G-stage only */
++    RISCV_IOMMU_TRANS_TAG_VN,  /* Nested translation */
++} RISCVIOMMUTransTag;
++
+ /* Address translation cache entry */
+ struct RISCVIOMMUEntry {
++    RISCVIOMMUTransTag tag;     /* Translation Tag */
+     uint64_t iova:44;           /* IOVA Page Number */
+     uint64_t pscid:20;          /* Process Soft-Context identifier */
+     uint64_t phys:44;           /* Physical Page Number */
+@@ -1227,7 +1235,7 @@ static gboolean riscv_iommu_iot_equal(gconstpointer v1, gconstpointer v2)
+     RISCVIOMMUEntry *t1 = (RISCVIOMMUEntry *) v1;
+     RISCVIOMMUEntry *t2 = (RISCVIOMMUEntry *) v2;
+     return t1->gscid == t2->gscid && t1->pscid == t2->pscid &&
+-           t1->iova == t2->iova;
++           t1->iova == t2->iova && t1->tag == t2->tag;
  }
-+
-+static void riscv_do_nmi(CPURISCVState *env, target_ulong cause, bool virt)
+ 
+ static guint riscv_iommu_iot_hash(gconstpointer v)
+@@ -1236,67 +1244,115 @@ static guint riscv_iommu_iot_hash(gconstpointer v)
+     return (guint)t->iova;
+ }
+ 
+-/* GV: 1 PSCV: 1 AV: 1 */
++/* GV: 0 AV: 0 PSCV: 0 GVMA: 0 */
++/* GV: 0 AV: 0 GVMA: 1 */
++static
++void riscv_iommu_iot_inval_all(gpointer key, gpointer value, gpointer data)
 +{
-+    env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
-+    env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV, virt);
-+    env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP, env->priv);
-+    env->mncause = cause;
-+    env->mnepc = env->pc;
-+    env->pc = env->rnmi_irqvec;
-+
-+    if (cpu_get_fcfien(env)) {
-+        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP, env->elp);
++    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
++    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
++    if (iot->tag == arg->tag) {
++        iot->perm = IOMMU_NONE;
 +    }
-+
-+    /* Trapping to M mode, virt is disabled */
-+    riscv_cpu_set_mode(env, PRV_M, false);
 +}
 +
- /*
-  * Handle Traps
-  *
-@@ -1977,22 +1995,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     bool nnmi_excep = false;
++/* GV: 0 AV: 0 PSCV: 1 GVMA: 0 */
++static
++void riscv_iommu_iot_inval_pscid(gpointer key, gpointer value, gpointer data)
++{
++    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
++    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
++    if (iot->tag == arg->tag &&
++        iot->pscid == arg->pscid) {
++        iot->perm = IOMMU_NONE;
++    }
++}
++
++/* GV: 0 AV: 1 PSCV: 0 GVMA: 0 */
++static
++void riscv_iommu_iot_inval_iova(gpointer key, gpointer value, gpointer data)
++{
++    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
++    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
++    if (iot->tag == arg->tag &&
++        iot->iova == arg->iova) {
++        iot->perm = IOMMU_NONE;
++    }
++}
++
++/* GV: 0 AV: 1 PSCV: 1 GVMA: 0 */
+ static void riscv_iommu_iot_inval_pscid_iova(gpointer key, gpointer value,
+                                              gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->gscid == arg->gscid &&
++    if (iot->tag == arg->tag &&
+         iot->pscid == arg->pscid &&
+         iot->iova == arg->iova) {
+         iot->perm = IOMMU_NONE;
+     }
+ }
  
-     if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
--        env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
--        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV,
--                                  env->virt_enabled);
--        env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPP,
--                                  env->priv);
--        env->mncause = cause | ((target_ulong)1U << (mxlen - 1));
--        env->mnepc = env->pc;
--        env->pc = env->rnmi_irqvec;
--
--        if (cpu_get_fcfien(env)) {
--            env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPELP, env->elp);
--        }
--
--        /* Trapping to M mode, virt is disabled */
--        riscv_cpu_set_mode(env, PRV_M, false);
--
-+        riscv_do_nmi(env, cause | ((target_ulong)1U << (mxlen - 1)),
-+                     env->virt_enabled);
-         return;
+-/* GV: 1 PSCV: 1 AV: 0 */
+-static void riscv_iommu_iot_inval_pscid(gpointer key, gpointer value,
+-                                        gpointer data)
++/* GV: 1 AV: 0 PSCV: 0 GVMA: 0 */
++/* GV: 1 AV: 0 GVMA: 1 */
++static
++void riscv_iommu_iot_inval_gscid(gpointer key, gpointer value, gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->gscid == arg->gscid &&
+-        iot->pscid == arg->pscid) {
++    if (iot->tag == arg->tag &&
++        iot->gscid == arg->gscid) {
+         iot->perm = IOMMU_NONE;
+     }
+ }
+ 
+-/* GV: 1 GVMA: 1 */
+-static void riscv_iommu_iot_inval_gscid_gpa(gpointer key, gpointer value,
+-                                            gpointer data)
++/* GV: 1 AV: 0 PSCV: 1 GVMA: 0 */
++static void riscv_iommu_iot_inval_gscid_pscid(gpointer key, gpointer value,
++                                              gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->gscid == arg->gscid) {
+-        /* simplified cache, no GPA matching */
++    if (iot->tag == arg->tag &&
++        iot->gscid == arg->gscid &&
++        iot->pscid == arg->pscid) {
+         iot->perm = IOMMU_NONE;
+     }
+ }
+ 
+-/* GV: 1 GVMA: 0 */
+-static void riscv_iommu_iot_inval_gscid(gpointer key, gpointer value,
+-                                        gpointer data)
++/* GV: 1 AV: 1 PSCV: 0 GVMA: 0 */
++/* GV: 1 AV: 1 GVMA: 1 */
++static void riscv_iommu_iot_inval_gscid_iova(gpointer key, gpointer value,
++                                             gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
+-    if (iot->gscid == arg->gscid) {
++    if (iot->tag == arg->tag &&
++        iot->gscid == arg->gscid &&
++        iot->iova == arg->iova) {
+         iot->perm = IOMMU_NONE;
+     }
+ }
+ 
+-/* GV: 0 */
+-static void riscv_iommu_iot_inval_all(gpointer key, gpointer value,
+-                                      gpointer data)
++/* GV: 1 AV: 1 PSCV: 1 GVMA: 0 */
++static void riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key, gpointer value,
++                                                   gpointer data)
+ {
+     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
+-    iot->perm = IOMMU_NONE;
++    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
++    if (iot->tag == arg->tag &&
++        iot->gscid == arg->gscid &&
++        iot->pscid == arg->pscid &&
++        iot->iova == arg->iova) {
++        iot->perm = IOMMU_NONE;
++    }
+ }
+ 
+ /* caller should keep ref-count for iot_cache object */
+ static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+-    GHashTable *iot_cache, hwaddr iova)
++    GHashTable *iot_cache, hwaddr iova, RISCVIOMMUTransTag transtag)
+ {
+     RISCVIOMMUEntry key = {
++        .tag   = transtag,
+         .gscid = get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID),
+         .pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
+         .iova  = PPN_DOWN(iova),
+@@ -1322,10 +1378,11 @@ static void riscv_iommu_iot_update(RISCVIOMMUState *s,
+ }
+ 
+ static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+-    uint32_t gscid, uint32_t pscid, hwaddr iova)
++    uint32_t gscid, uint32_t pscid, hwaddr iova, RISCVIOMMUTransTag transtag)
+ {
+     GHashTable *iot_cache;
+     RISCVIOMMUEntry key = {
++        .tag = transtag,
+         .gscid = gscid,
+         .pscid = pscid,
+         .iova  = PPN_DOWN(iova),
+@@ -1336,9 +1393,24 @@ static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+     g_hash_table_unref(iot_cache);
+ }
+ 
++static RISCVIOMMUTransTag riscv_iommu_get_transtag(RISCVIOMMUContext *ctx)
++{
++    uint64_t satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
++    uint64_t gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
++
++    if (satp == RISCV_IOMMU_DC_FSC_MODE_BARE) {
++        return (gatp == RISCV_IOMMU_DC_IOHGATP_MODE_BARE) ?
++            RISCV_IOMMU_TRANS_TAG_BY : RISCV_IOMMU_TRANS_TAG_VG;
++    } else {
++        return (gatp == RISCV_IOMMU_DC_IOHGATP_MODE_BARE) ?
++            RISCV_IOMMU_TRANS_TAG_SS : RISCV_IOMMU_TRANS_TAG_VN;
++    }
++}
++
+ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     IOMMUTLBEntry *iotlb, bool enable_cache)
+ {
++    RISCVIOMMUTransTag transtag = riscv_iommu_get_transtag(ctx);
+     RISCVIOMMUEntry *iot;
+     IOMMUAccessFlags perm;
+     bool enable_pid;
+@@ -1364,7 +1436,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         }
      }
  
-@@ -2204,11 +2208,32 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-             /* Trapping to M mode, virt is disabled */
-             virt = false;
-         }
-+        /*
-+         * If the hart encounters an exception while executing in M-mode,
-+         * with the mnstatus.NMIE bit clear, the program counter is set to
-+         * the RNMI exception trap handler address.
-+         */
-+        nnmi_excep = cpu->cfg.ext_smrnmi &&
-+                     !get_field(env->mnstatus, MNSTATUS_NMIE) &&
-+                     !async;
+-    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
++    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova, transtag);
+     perm = iot ? iot->perm : IOMMU_NONE;
+     if (perm != IOMMU_NONE) {
+         iotlb->translated_addr = PPN_PHYS(iot->phys);
+@@ -1395,6 +1467,7 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         iot->gscid = get_field(ctx->gatp, RISCV_IOMMU_DC_IOHGATP_GSCID);
+         iot->pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
+         iot->perm = iotlb->perm;
++        iot->tag = transtag;
+         riscv_iommu_iot_update(s, iot_cache, iot);
+     }
  
-         s = env->mstatus;
-         s = set_field(s, MSTATUS_MPIE, get_field(s, MSTATUS_MIE));
-         s = set_field(s, MSTATUS_MPP, env->priv);
-         s = set_field(s, MSTATUS_MIE, 0);
-+        if (cpu->cfg.ext_smdbltrp) {
-+            if (env->mstatus & MSTATUS_MDT) {
-+                assert(env->priv == PRV_M);
-+                if (!cpu->cfg.ext_smrnmi || nnmi_excep) {
-+                    cpu_abort(CPU(cpu), "M-mode double trap\n");
-+                } else {
-+                    riscv_do_nmi(env, cause, false);
-+                    return;
-+                }
+@@ -1602,44 +1675,72 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+ 
+         case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_GVMA,
+                              RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
+-            if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
++        {
++            bool gv = !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV);
++            bool av = !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV);
++            bool pscv = !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV);
++            uint32_t gscid = get_field(cmd.dword0,
++                                       RISCV_IOMMU_CMD_IOTINVAL_GSCID);
++            uint32_t pscid = get_field(cmd.dword0,
++                                       RISCV_IOMMU_CMD_IOTINVAL_PSCID);
++            hwaddr iova = (cmd.dword1 << 2) & TARGET_PAGE_MASK;
++
++            if (pscv) {
+                 /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
+                 goto cmd_ill;
+-            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
+-                /* invalidate all cache mappings */
+-                func = riscv_iommu_iot_inval_all;
+-            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
+-                /* invalidate cache matching GSCID */
+-                func = riscv_iommu_iot_inval_gscid;
+-            } else {
+-                /* invalidate cache matching GSCID and ADDR (GPA) */
+-                func = riscv_iommu_iot_inval_gscid_gpa;
+             }
+-            riscv_iommu_iot_inval(s, func,
+-                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0,
+-                cmd.dword1 << 2 & TARGET_PAGE_MASK);
++
++            func = riscv_iommu_iot_inval_all;
++
++            if (gv) {
++                func = (av) ? riscv_iommu_iot_inval_gscid_iova :
++                              riscv_iommu_iot_inval_gscid;
 +            }
 +
-+            s = set_field(s, MSTATUS_MDT, 1);
++            riscv_iommu_iot_inval(
++                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VG);
++
++            riscv_iommu_iot_inval(
++                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VN);
+             break;
 +        }
-         env->mstatus = s;
-         env->mcause = cause | ((target_ulong)async << (mxlen - 1));
-         if (smode_double_trap) {
+ 
+         case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
+                              RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
+-            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
+-                /* invalidate all cache mappings, simplified model */
+-                func = riscv_iommu_iot_inval_all;
+-            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
+-                /* invalidate cache matching GSCID, simplified model */
+-                func = riscv_iommu_iot_inval_gscid;
+-            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
+-                /* invalidate cache matching GSCID and PSCID */
+-                func = riscv_iommu_iot_inval_pscid;
++        {
++            bool gv = !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV);
++            bool av = !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV);
++            bool pscv = !!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV);
++            uint32_t gscid = get_field(cmd.dword0,
++                                       RISCV_IOMMU_CMD_IOTINVAL_GSCID);
++            uint32_t pscid = get_field(cmd.dword0,
++                                       RISCV_IOMMU_CMD_IOTINVAL_PSCID);
++            hwaddr iova = (cmd.dword1 << 2) & TARGET_PAGE_MASK;
++            RISCVIOMMUTransTag transtag;
++
++            if (gv) {
++                transtag = RISCV_IOMMU_TRANS_TAG_VN;
++                if (pscv) {
++                    func = (av) ? riscv_iommu_iot_inval_gscid_pscid_iova :
++                                  riscv_iommu_iot_inval_gscid_pscid;
++                } else {
++                    func = (av) ? riscv_iommu_iot_inval_gscid_iova :
++                                  riscv_iommu_iot_inval_gscid;
++                }
+             } else {
+-                /* invalidate cache matching GSCID and PSCID and ADDR (IOVA) */
+-                func = riscv_iommu_iot_inval_pscid_iova;
++                transtag = RISCV_IOMMU_TRANS_TAG_SS;
++                if (pscv) {
++                    func = (av) ? riscv_iommu_iot_inval_pscid_iova :
++                                  riscv_iommu_iot_inval_pscid;
++                } else {
++                    func = (av) ? riscv_iommu_iot_inval_iova :
++                                  riscv_iommu_iot_inval_all;
++                }
+             }
+-            riscv_iommu_iot_inval(s, func,
+-                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
+-                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
+-                cmd.dword1 << 2 & TARGET_PAGE_MASK);
++
++            riscv_iommu_iot_inval(s, func, gscid, pscid, iova, transtag);
+             break;
++        }
+ 
+         case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
+                              RISCV_IOMMU_CMD_IODIR_OPCODE):
 -- 
 2.47.1
 
