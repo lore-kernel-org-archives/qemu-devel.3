@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9F9C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 16:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2DF7C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 16:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYpSE-0001bR-8F; Fri, 17 Jan 2025 11:44:20 -0500
+	id 1tYpUW-0002j9-C2; Fri, 17 Jan 2025 11:46:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpS8-0001au-9t
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:44:12 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpUD-0002hP-U9
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:46:23 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpRx-0000Q8-NE
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:44:08 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-38637614567so1165396f8f.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 08:44:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYpUB-0000sO-KG
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 11:46:21 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43635796b48so15088535e9.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 08:46:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737132239; x=1737737039; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737132372; x=1737737172; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RGQEicfXp8ygk7BdiCeHtgatykjkNeKCo54KXBZR0dg=;
- b=GHuIO33fylfv6aDqedrLzqBJQDSHx6ADmHk9J8xB9qlrs550T3nAgcVIK+i3/6Cr3J
- VHj63GzR8WEJ9wu94v9qcR/e+Wo5S1ry9paRi0GiyPDk0Ta5xdwEOIR2Og6plR+hEZ6m
- S3JtxDDlVTohqCCxB0vlOKqMJpqkZiJsDLeWU5ZEXqpRDPvjyN65T3PB9gJeK//EZooF
- YT+Cs47y4VRTi/q6UvS+CY2W9OMHG+IkfmSipZFGQeXY6psoP1NyD3U0SH6ZGK5DRUCI
- LY1rjNGOek/05S3OEHFwbouwarci30coekTxMWMvAxvkfSlf7SIYYed9uX97Sqo0RQ06
- nDQA==
+ bh=Nl8KuxhtB+NX/h3bJB3DtYvNd4dS5Rvzrl4M2S/omPI=;
+ b=mlmzTyDmqOjQwlJ3agpGsmbNQdm/yx9XWP/jk7DCtk+YWtEILfxrYCNoSIAtOt5K0+
+ aPNTYLsxWhbqUT3GAdl0oiYY5GlhyduO99MtCrDMCo5HXZ21n7Z5zcmKTa8v/DtpvxC6
+ A7PDaTs5jNoXJ10D+da8aLALgI0vLp13KEHQ0/nWRlUzGYaUua7lhOnM+qXBxcrvl39M
+ E3qRcxFUV3ylihU+Ey2c+T7ulQ9T0NPUAxiX+9xGxi/fvmW3ZBGQjc7Ikp5UOcTqMXzn
+ NUpSHBMDjzz3ZeWbreMbdIC8nOHHON+tT+5wWNfR7JS0Woiu4dg8HotC8wMnIooRHstg
+ XHPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737132239; x=1737737039;
+ d=1e100.net; s=20230601; t=1737132372; x=1737737172;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RGQEicfXp8ygk7BdiCeHtgatykjkNeKCo54KXBZR0dg=;
- b=Q1KkxnJStNGgTNwfR6ShDo7PBTJM4JeIzk7NCCW/X3vzTSj5helpqvvYyaztGjAZGd
- 9H3bKhsLHsdINEblYwJbZjGt9VXdZ83MVoeWp/vZvKk1cnPwswMRijxC9kGCp8XO3XNE
- HgrL6t1V/KwwCrKO+CHqzW2HVKDjecGW1u7I2E2adBP4po5avrTz9OgcGQRUBdanfs3Q
- Oq72rDOWccfhZceQA3iE72QUokjyGIIDtE9dGpAUJPs39XcAj99lRI64BC17BGKdasjV
- bXDbaT+jSmA5Xsoekm1cLX7D2ZePZakhHwRXq+esvv+a2uLGB3lb6lS2MEKRRDM8o7Dw
- ckaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzFJkj5CIwglAKc9V0stlSuJp4DFSTZ+92TIJabLmgZtYaD6eVNUOMm3W9IsjpnD1yKPOi7yxTxtHV@nongnu.org
-X-Gm-Message-State: AOJu0YxYjFUGebcGKbz8F+U6BHAAKWh27i3fj1LAVx+elKUfRFyka7UF
- 0uS8BxZkkWDIUcB71ADE0S/1jySkhafpCDOD5vooilaY7CRw1bgoNeT1npkN/QU=
-X-Gm-Gg: ASbGnctRLNs/L3E+Uhm2IWhViw2q3aY0BnBnivzIKsHWdagWYtnagIjfzBDasTd4+8M
- hBh8lWxguD43GHIFmu4D7A4eALo2sO1zAzLxzRzQzbsyyzgPb8D9pC7nuCouzFw4fF92LRltfw1
- qIjHCU0l/wi7WPQpQREJi/X/pGPA6JsybiCmKrMrPZ9mP6KseLcsZSRAoMTh/2Bdl9we1XiexUN
- 2Zp6gUr5z41tg2XkdY2a7KuF4XGnDHcIhAdKI2dmF/63gwcT3mznQNw9pet+6rS5L6TCw4lkhGg
- wwiGjFv5JuQ6qMvsdhp3IqMV
-X-Google-Smtp-Source: AGHT+IGyeriFfiMpWkosQkpamef/d0uqOyfcvgvNpfJb5GwKg52Dq79dC/6WHGy5tFZDt2EVuG6d8A==
-X-Received: by 2002:adf:a113:0:b0:38a:8d4c:aad3 with SMTP id
- ffacd0b85a97d-38bf5664d6bmr2555645f8f.18.1737132239472; 
- Fri, 17 Jan 2025 08:43:59 -0800 (PST)
+ bh=Nl8KuxhtB+NX/h3bJB3DtYvNd4dS5Rvzrl4M2S/omPI=;
+ b=mxfDj7N7aR5HJVoiRkvUFlI762YFSM3co0fth6LtMcZPD0PJl3iH3i3wC4mpoCeXSC
+ QpOsiwnrd6Oj82kYSc7hIjcII9/C9lS/IvLpfGJrySqaEY9IbRg7PjLRpuzxr7DY68PE
+ jdNl4ulBfaSsAH4zGXMZPybWNiFHJJ+OJ0Ffh3jRaosFnu8g/eXHHKOo0pqsYCEsI8X1
+ 41A1XCZhw32mSE3xU6U6Pmkm/VZ1SqU6WQVxPsAhqSsz36hH5LjuCmKtuP8DKjlhuCu4
+ PPN6VH0e3Hr6axN3GAldwph2ZrxtjwmPR7jjAk+tjIpr2BlaGwuxqZLMPZWZBoQ6P51V
+ 3XMg==
+X-Gm-Message-State: AOJu0YwhPnLVfxwArSOzgflG/FL1ZylxmqlLdGIVExB6vN3apN+yLZ+V
+ YeJYHu9cGJP8YA5Gv/RlZeA6RaQkBZB+kCg3PJvEKBDyCXWSKez0PSTRC268N7Q=
+X-Gm-Gg: ASbGncvy8w7JUFSJJ1mi1BmPflwQRvERzWZ/Zjg1mnzgZLwwXYRifEt/tg/WpjSFYH7
+ twrNLPD0VVvjLTmnkWvdiFbZsVUhe7whNGthELsqbzn6q53+cxgQc4CrR3H/Cp58QR3fJtbSL91
+ 2OKpgY+tdii9JNMCSVTa8rO5R/LKhYJ+BtJhcYK8f5a0PQGExCewz2/IVeWshIjLvh1WnFvJ4p6
+ oyfVnBGotGCo3xXhvl2MBQqs7cr9cVrIp36NtDy/8uOdnwC1OpxO80JQgjm1nmJk9F9LLcaTbNc
+ pWnusNjKDDVGEcbuKkB6UeMO
+X-Google-Smtp-Source: AGHT+IGj47y7iThBWmSQ6OngRkvSAPgxrROjJhLQQqfoJthzc/9HuCGnXvWrsF/29ePjdcgNSkWBlg==
+X-Received: by 2002:a05:600c:1d0f:b0:435:edb0:5d27 with SMTP id
+ 5b1f17b1804b1-437c6afdc92mr117564705e9.9.1737132371788; 
+ Fri, 17 Jan 2025 08:46:11 -0800 (PST)
 Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-437c74c475csm100140285e9.20.2025.01.17.08.43.58
+ 5b1f17b1804b1-4389041f610sm38767755e9.20.2025.01.17.08.46.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 08:43:58 -0800 (PST)
-Message-ID: <6b916259-da1a-4a16-84a3-64eb466714c8@linaro.org>
-Date: Fri, 17 Jan 2025 17:43:57 +0100
+ Fri, 17 Jan 2025 08:46:11 -0800 (PST)
+Message-ID: <aa6d67eb-0ea7-43e6-98ac-ccb5977987c5@linaro.org>
+Date: Fri, 17 Jan 2025 17:46:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/21] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
+Subject: Re: [PATCH 00/21] hw/i386/pc: Remove deprecated 2.4 and 2.5 PC
+ machines
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Dmitry Fleytman
+ <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
  Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-11-philmd@linaro.org>
- <aa863f22-57fb-4ddd-bce4-1b0a86c9023b@redhat.com>
+ <20250117053711-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aa863f22-57fb-4ddd-bce4-1b0a86c9023b@redhat.com>
+In-Reply-To: <20250117053711-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,55 +108,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/1/25 10:08, Thomas Huth wrote:
-> On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
->> VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the
->> hw_compat_2_4[] array, via the 'x-disable-pcie=false'
->> property. We removed all machines using that array,
->> lets remove all the code around VIRTIO_PCI_FLAG_DISABLE_PCIE.
+On 17/1/25 11:37, Michael S. Tsirkin wrote:
+> On Thu, Jan 16, 2025 at 12:22:26AM +0100, Philippe Mathieu-Daudé wrote:
+>> The versioned 'pc' and 'q35' machines up to 2.12 been marked
+>> as deprecated two releases ago, and are older than 6 years,
+>> so according to our support policy we can remove them.
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/virtio/virtio-pci.h | 4 ----
->>   hw/virtio/virtio-pci.c         | 5 +----
->>   2 files changed, 1 insertion(+), 8 deletions(-)
->>
->> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/ 
->> virtio-pci.h
->> index dd6eb9a4fc7..1ca7419cd43 100644
->> --- a/include/hw/virtio/virtio-pci.h
->> +++ b/include/hw/virtio/virtio-pci.h
->> @@ -33,7 +33,6 @@ enum {
->>       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
->>       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
->>       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
->> -    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
->>       VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
->>       VIRTIO_PCI_FLAG_ATS_BIT,
->>       VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+>> This series only includes the 2.4 and 2.5 machines removal,
+>> as it is a big enough number of LoC removed. Rest will
+>> follow. Highlight is the legacy fw_cfg API removal :)
 > 
-> I assume it's ok that the other following bits change their value here?
+> tagged, thanks!
 
-I followed previous commit 9a4c0e220d8 ("hw/virtio-pci:
-fix virtio behaviour"):
+Thanks but hold on... First Thomas made review comments I need
+to address, but then Daniel clarified we can not remove these
+until 10.1...
 
-diff --git a/hw/virtio/virtio-pci.h b/hw/virtio/virtio-pci.h
-index e4548c2f970..25fbf8a375d 100644
---- a/hw/virtio/virtio-pci.h
-+++ b/hw/virtio/virtio-pci.h
-@@ -61,8 +61,6 @@ typedef struct VirtioBusClass VirtioPCIBusClass;
-  enum {
-      VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
-      VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
--    VIRTIO_PCI_FLAG_DISABLE_LEGACY_BIT,
--    VIRTIO_PCI_FLAG_DISABLE_MODERN_BIT,
-      VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
-      VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
-      VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
-
-> 
-> If so:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-Thanks!
 
