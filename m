@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8170C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1918C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 06:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfLt-0005am-B5; Fri, 17 Jan 2025 00:57:05 -0500
+	id 1tYfON-0003kR-Gq; Fri, 17 Jan 2025 00:59:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfLq-0005Qq-4O
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:57:02 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tYfNH-0008PT-J8
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:34 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfLo-0005zD-9z
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:57:01 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-215770613dbso22704265ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:56:59 -0800 (PST)
+ id 1tYfNG-0006Ak-7Q
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:58:31 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2164b662090so31372465ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:58:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737093418; x=1737698218; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1737093508; x=1737698308; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HoGXO43r9qDXaHablQVjOVSCK/3SyKJM+5NhSlCrZrs=;
- b=XN0WCST0HtvRJjCvvJXnmdfLVUnx2FvqGMrKIINxhv7JUcfIJUfD28J+zfu1oDB1gQ
- ee8zzyinAjzned/sLdfSfg60FvJSeofhRsHwbfa3zJDZ9qcFGZciszLq7Q+LM73c/qvg
- fVa04cNCcWin1Xq5RMxCov+ka/EvjrMlyR69nMwYZrHYmMycwUouvuZQIoYijSawcIC4
- RzqNxq3VPzoTY2AyF2+4ZEgg2sA+Keyqt9bm84HKqGe2EBvpRw/Oo94lFe/+4h2VdwyA
- ZPlDvBLjEs9ZvUCuLae0dWlSd8w5f+SSDSoJrIdKphlc2SkeVaemNeeLsu/A++Y+WiPt
- wz/A==
+ bh=ha6R4w5o0eEsmWuIMDfoi06cN3XJ7oTSvRwcrmeSWXQ=;
+ b=RomLDYkOlTYtZ3jfS8gp+V8Q0macCrt3vClBnhod35Y+piPG+ugECJ4TpZ82doBdny
+ 1P+Q6DKrG11ed9ASrPoyxr1O3iWpJq4BkcKRNHgIM72dClCguq4woc0c3tqp0eGZ82oC
+ TyBtnOehqXPujJ3YR7A1531suSfN198lH0eDcUloles5etJpI66pQeONEbboqtIkLliT
+ fYWPGDdcWW4thkJuhw8XIiYwo2/GvhPyua3PFeNNCSCv0u8iaYSkMUXruZoHKbLAJhbP
+ wIqoUWGCFfIT/vS7E+hEFPUaFZEs6jmklBZmxyMJZvYC59Ar2ORJfx3c3Ox1hvz6/Js/
+ tFRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737093418; x=1737698218;
+ d=1e100.net; s=20230601; t=1737093508; x=1737698308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HoGXO43r9qDXaHablQVjOVSCK/3SyKJM+5NhSlCrZrs=;
- b=JXFngqlUmg9J3tyFSmY09UkucY09W38E40n4DgblG0y2GJbDP70fMM4oYVhNk/ZCza
- aYh0DEiXCILkybIi/wFgzUY87sD5x0KsY97UseRR9RCdSDm6BnP7hTIgfBnTAuVGPOfd
- 2sIcVg2Yta4z03dU1sS/pUz2VhmI5Z0OGo0N5roQevojeFnMLnJvCN+phsrGymD19Oy/
- gEMK1/sZLWhpMfbHp9Dp24ymwj/ApmC9ylDCFXYOW7VaIy6zQfc+sP5ldtso4JfGu3mD
- QTOzBG7CZPtTpTACZWpOtkDRQaZDdhwYp9VhFt1e7txEoSiRdCwtOwDERdvgrELoJOs6
- q6BQ==
-X-Gm-Message-State: AOJu0YyKrsghozo3vAlnXZeRrLD674IkedMWz14zNdekJzENgjPtffIx
- K6QZeLsxld+VQFnWyJTudwj7GztlfqM4F9u4ZeaTC43m/6wxma1lphtMKA==
-X-Gm-Gg: ASbGncvwKI1IyYPY2qePWbF+WW/0oHH0gn93/av0rVYpdbSMYN50VGpaknkVCs0Zacx
- w+O3TzkTf1u2JjohfW4PngUdPGNbccPSdBnVYOVVgAS53M/2yp5FMaEyqivWpCeVkM9A7nUTyPd
- a6QkOWCUfSD3LsIFu6e6B5MibhHvrz8JBZQLm80cbhGeVQe4ZScaVInI0iAkr9Y+5Fd6vsHP0ev
- NCNo9b5n6k5ZVzpWUwqIo246ugiVl05KOf0JwzoJBY6NI6kwHAv0KIVc2IFV7gppoNUT9kiwoxm
- /OJUt40V77fTvKB/p3B/3aDf/Y9s0gGyJ3b/PNpFBDux2+ZAd2bmofJz7u7+
-X-Google-Smtp-Source: AGHT+IEMLFPQns9pN9MMUSrYPzjxeLBa/FD3336VRlWhT/xQjyuJxPhJA8ceuZ2tHrZsuq7z0kEFJw==
-X-Received: by 2002:a17:903:2447:b0:215:8ca3:3bac with SMTP id
- d9443c01a7336-21c3540278dmr21599015ad.16.1737093418490; 
- Thu, 16 Jan 2025 21:56:58 -0800 (PST)
+ bh=ha6R4w5o0eEsmWuIMDfoi06cN3XJ7oTSvRwcrmeSWXQ=;
+ b=pVU8mCGRdNCCBfSFGfujNMIpj0nbg0Hg5NX7xaSGG2BPYqNjXe6dErnvz3XQXUFLRC
+ IuVtsqPDSJetXStLpDPkl+nXpjvgDfv86oSgLHsCnPuSjW05JCVQ9Ol4P59HPbg1CzKs
+ X2DWeO/Yq0X5OFfw0UUvaTMhKVysPcN/MhSgg0HCZPbbH6s8Pc+uvsOZ7bRMMOG3FQch
+ PaL/4nX5ceyAd1gf6mXAW0ABGV6vxDzwpIAPD//AvGIdznI/RluLyd/i76QRlzXCUFTR
+ Ru8GuUlCCFHLMlQafo619YyniBghrRJxsGMip0CK43HscEb43x51hGuWB1OWEK8qYm1/
+ tGJA==
+X-Gm-Message-State: AOJu0YwCkAZwdKcB876dCP9ptBANmHtQ/c37IZKPHnDyBjykVtFUQJEY
+ NdwvswHsWOA8cBfwSMn3fnrovXit4VhnR6XEfZR7/WIrHesLXE0aVgeKoA==
+X-Gm-Gg: ASbGncsDD5HgbbgNw7qBzH3fh0/Meu05hBN9Ffevl6O996HZac1CrrLrOuVAPzfZpoe
+ aIVMIetTmn3upvdspP4C9/PhX0k5ioGaNGTbP5RFd8ZOggxI7MPbbTdXGcqvaDZk3sPQ4kJ7wdk
+ GipQCMFsjsHOGlFJ/Y44eo1M+Pl5BCW+FWQvG5vB5tJJG5ZNgpRQS+M8LYWihtdrI2t+NYxIqUx
+ C+Fld6zpIyKOIaRwfM9wChrP9dNi37nWMJbEhPCd8u925iENIdmiaDuxnGtRweN6zseix+YxTix
+ Qx/ExiAf1TEdF04JC3thC/O+h5egv5uyltrAvCizn3NjelSzLxkdeEV4bJkL
+X-Google-Smtp-Source: AGHT+IG/u29T5ev7zqMwiU7peSHrC0oicYlNzKIBb0brrAoKy69B53i0/nrYrUHHHy/Se4ciTRparw==
+X-Received: by 2002:a17:902:d583:b0:215:4d90:4caf with SMTP id
+ d9443c01a7336-21c353e700fmr26486545ad.14.1737093507707; 
+ Thu, 16 Jan 2025 21:58:27 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.56.55
+ d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.58.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 21:56:58 -0800 (PST)
+ Thu, 16 Jan 2025 21:58:27 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alexey Baturo <baturo.alexey@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 17/50] target/riscv: Update address modify functions to take
- into account pointer masking
-Date: Fri, 17 Jan 2025 15:55:19 +1000
-Message-ID: <20250117055552.108376-18-alistair.francis@wdc.com>
+Subject: [PULL 43/50] target/riscv: Add Ssdbltrp ISA extension enable switch
+Date: Fri, 17 Jan 2025 15:55:45 +1000
+Message-ID: <20250117055552.108376-44-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117055552.108376-1-alistair.francis@wdc.com>
 References: <20250117055552.108376-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,92 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Baturo <baturo.alexey@gmail.com>
+From: Clément Léger <cleger@rivosinc.com>
 
-Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Add the switch to enable the Ssdbltrp ISA extension.
+
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250106102346.1100149-6-baturo.alexey@gmail.com>
+Message-ID: <20250110125441.3208676-6-cleger@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/translate.c     | 22 ++++++++++++++++------
- target/riscv/vector_helper.c | 16 ++++++++++++++++
- 2 files changed, 32 insertions(+), 6 deletions(-)
+ target/riscv/cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 26350b2826..698b74f7a8 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -589,8 +589,10 @@ static TCGv get_address(DisasContext *ctx, int rs1, int imm)
-     TCGv src1 = get_gpr(ctx, rs1, EXT_NONE);
- 
-     tcg_gen_addi_tl(addr, src1, imm);
--    if (get_address_xl(ctx) == MXL_RV32) {
--        tcg_gen_ext32u_tl(addr, addr);
-+    if (ctx->addr_signed) {
-+        tcg_gen_sextract_tl(addr, addr, 0, ctx->addr_xl);
-+    } else {
-+        tcg_gen_extract_tl(addr, addr, 0, ctx->addr_xl);
-     }
- 
-     return addr;
-@@ -603,8 +605,10 @@ static TCGv get_address_indexed(DisasContext *ctx, int rs1, TCGv offs)
-     TCGv src1 = get_gpr(ctx, rs1, EXT_NONE);
- 
-     tcg_gen_add_tl(addr, src1, offs);
--    if (get_xl(ctx) == MXL_RV32) {
--        tcg_gen_ext32u_tl(addr, addr);
-+    if (ctx->addr_signed) {
-+        tcg_gen_sextract_tl(addr, addr, 0, ctx->addr_xl);
-+    } else {
-+        tcg_gen_extract_tl(addr, addr, 0, ctx->addr_xl);
-     }
- 
-     return addr;
-@@ -1234,8 +1238,14 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
-     ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
-     ctx->cs = cs;
--    ctx->addr_xl = 0;
--    ctx->addr_signed = false;
-+    if (get_xl(ctx) == MXL_RV32) {
-+        ctx->addr_xl = 32;
-+        ctx->addr_signed = false;
-+    } else {
-+        int pm_pmm = FIELD_EX32(tb_flags, TB_FLAGS, PM_PMM);
-+        ctx->addr_xl = 64 - riscv_pm_get_pmlen(pm_pmm);
-+        ctx->addr_signed = FIELD_EX32(tb_flags, TB_FLAGS, PM_SIGNEXTEND);
-+    }
-     ctx->ztso = cpu->cfg.ext_ztso;
-     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
-     ctx->bcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, BCFI_ENABLED);
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index cf5dd7f2e1..0eea124b66 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -107,6 +107,22 @@ static inline uint32_t vext_max_elems(uint32_t desc, uint32_t log2_esz)
- 
- static inline target_ulong adjust_addr(CPURISCVState *env, target_ulong addr)
- {
-+    if (riscv_cpu_mxl(env) == MXL_RV32) {
-+        return addr;
-+    }
-+    RISCVPmPmm pmm = riscv_pm_get_pmm(env);
-+    if (pmm == PMM_FIELD_DISABLED) {
-+        return addr;
-+    }
-+    int pmlen = riscv_pm_get_pmlen(pmm);
-+    bool signext = riscv_cpu_virt_mem_enabled(env);
-+    addr = addr << pmlen;
-+    /* sign/zero extend masked address by N-1 bit */
-+    if (signext) {
-+        addr = (target_long)addr >> pmlen;
-+    } else {
-+        addr = addr >> pmlen;
-+    }
-     return addr;
- }
- 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5540eb7f63..9e1ce0e1f1 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -205,6 +205,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+     ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sscsrind, PRIV_VERSION_1_12_0, ext_sscsrind),
++    ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
+     ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+     ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
+     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+@@ -1628,6 +1629,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("smnpm", ext_smnpm, false),
+     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+     MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
++    MULTI_EXT_CFG_BOOL("ssdbltrp", ext_ssdbltrp, false),
+     MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
+     MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
+     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
 -- 
 2.47.1
 
