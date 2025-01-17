@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD15CC02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39DD6C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYmdq-0001lB-6R; Fri, 17 Jan 2025 08:44:06 -0500
+	id 1tYmd5-00015P-IR; Fri, 17 Jan 2025 08:43:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmd0-00012G-8g
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:14 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1tYmcu-0000x1-Fn
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:08 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmcw-0002FN-31
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:14 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e9a88793so3563345a12.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:09 -0800 (PST)
+ id 1tYmcq-0002DH-98
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:07 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5d414b8af7bso3968588a12.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737121389; x=1737726189; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737121382; x=1737726182; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BweiGGrjQIGk1dVGD1ZKLAbH1Kswi6PYCPMuHmp0Q1k=;
- b=DDqAtGK7KP4hQCqPwlp85M/5Y+UYFxyz1aXhlkvYOks30v0xGzFOXt+4T9WxMltBAs
- OW0qNr9dsfwvl/mw2xfzW1M8QyJygLY1KFUaJ7aAWZtjTsa7JnsvxnL3ckM4VKN1Q1/J
- 4hyDgfJx/ElkwuzVhIhhKGVpEsl1t0I7lzsDIYEnwQCLuxD1j0UOiTKZfIdI/+jMWo6G
- /Mk4CA2w8jqfTCdQFDBCB2tMS8TAWvrqoj04fd0ss/tpbwzrxZQ/vCSf78i81H83YB5c
- PIej6c23Di/I7HCScjm/8YNY4Fz0m80OYSmOzKn3/H9/R2g5Q9cFV6bextrmZxcnoyyP
- 7dIQ==
+ bh=RmjVABPbnCsJ8Mr6h+L49GfrK8//sgmPrYPBbRhvLAY=;
+ b=Ibuq4YfcqznUg/DbVMmsb8+I75Hqd+4yySzd6UyvJnt1dy5msd2bAEJDGIu2gjr77P
+ 7kv4E57YFLAt5TGS4EDm6FO2v1u8m+4a7rQti4CG0kv1gdrXPttuVMMuCt2cNm0s2WsQ
+ gLw3x/+iDI/wPl9il2MLwX12gP4Fwe8C8Pjx1Eaktd5wAUjC3teY8pMDIsxubdGepbHA
+ 7NIj+f83kmSDXzLb21rO75NRe1lwv5MgYsmuPDSARvE75qwjelGlz4eGRnvmWAl0jyzy
+ FES5UrBFi9Z40NnbidD6U45t4oGJCIlZk0NB6RGUT+K09AONywiUOrOwCkD1g7qORTLQ
+ PO+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737121389; x=1737726189;
+ d=1e100.net; s=20230601; t=1737121382; x=1737726182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BweiGGrjQIGk1dVGD1ZKLAbH1Kswi6PYCPMuHmp0Q1k=;
- b=tV38+GA+XOWc3cu2fUJPX4a67VrAs/Gczed76jHhbUgHa5YZ0/hk/FJsOS8vHuqsAy
- DZMhsPTYehem5KBH4ulbaerrDZ5+fcRZUTwinobLlz0JPJ2n/vEPJKr0x++jVz6gaAEu
- 1KvUHc+PXKOcTtz43KrsxkK/j4LyUY9KoX3+hW7+jiSWQWnwV1GsShlRz5LFUy7fcVNF
- ma0J/udXvuM54OT0AkpCepSa3P2NLmdVwKvXgyzIBvrObQipjEY3IPp/vRtXIp+NQlN8
- +e71MPFvKxsq+wJemgLcblMWy7D6A5rpGv4FACJuwepQaAmlWfcvM/m00Xb6xG73ZVoY
- dRoA==
-X-Gm-Message-State: AOJu0YzmB+HxZQhdGKdNH8S1LtBMpV8APhN6nt+mHamiaO3RY+QwQheH
- 8Q6nS7H/SK7op1x6UC5pwdXoucL0lF5M5na/NUyw6Kw5ibzrg4TWxmNtc00YVU8=
-X-Gm-Gg: ASbGncvADERGFklDzaPQv/dzyYCv9vTrwTVTl/8WXvzJWMB9QNgcNMiJBWD6ry5TUgh
- sjHD2uC7Vz6fNsnX598QaCwnSTYD86twJD8sBFsWSxcfg/MfBAROHPe0/dZDCSv8hkb0QPvNlt2
- iAhQhDSh21+vA4H6I4uBOficVnalZYrqNFNo+Ftdi2OV8rqZg0r3pPVmBs7pMo7e1Fuv1yQsoQ4
- eKe5MLEa5nRvdTYqsLWwd5IM1RANc7bhI2o+UyeSs4oCu3npwzus3A=
-X-Google-Smtp-Source: AGHT+IFk1+Oy1TOXGZ8g4I9xM1xsQPsj89hmeV58GbW3/ataKNaxDE91kPt5XlcrcA/iTVSlcKfpNQ==
-X-Received: by 2002:a17:907:9450:b0:aa6:9198:75a2 with SMTP id
- a640c23a62f3a-ab38b3787ecmr244697766b.44.1737121388587; 
- Fri, 17 Jan 2025 05:43:08 -0800 (PST)
+ bh=RmjVABPbnCsJ8Mr6h+L49GfrK8//sgmPrYPBbRhvLAY=;
+ b=a0wfKc170NznYUlm6Gqmiqw4ItE5XYjrKZdYpB10yyLH97KLvP/7Zxx+ZkSf5UMixm
+ ZVfUEF6IJfgHhe0CzoeX3ftKT3ZNWq0Zf251/VXTPQwdMxTKOCUkjHL3KcWISpWja6GB
+ Weq406CrPy0SR7iAd9oyXB3borBcALYfHDrW6JZvX2pf7hB6rarLvPMMpodlmR3GrZuF
+ YLjBtb5pCht+X/lFa8cg4nDhVtf2USdIrxSrtmGUXJKISjzEyFdVqbxTo3eiaYjt7Giy
+ GHVcpGgjB/NCsco7mcqxMLBSjSma2h1cjIzYiIT6A+NAMzjiUYlCbpHUEQe7DgT+QFv5
+ TQPg==
+X-Gm-Message-State: AOJu0Yzl0J0BDXpYMjRk56YTzhw5WWQBMYi8yn0Nzn3iF/uNqyvlhEav
+ pbmGlJWqRqExQ1DnJhOc+DVTLFY9Q2JAo9xcCtk2sHf58zPHD7IpJv5ioiw0b3g=
+X-Gm-Gg: ASbGncsRTTBNmkghaR7xN1PxzAgMmUNle/nIA5MWh4HNdPh9Kk32IU6daMeKPKH5wEm
+ B1B9I50aBrzbV8ILuG9e+ygkCT0KuhQWoDpB4HsoDbb94sOyWw4fL7AY0b64inEyZyaI8RuwOoz
+ lPKJz08GEsjI3AiHLurmaI9cOR9iNiG+q2xJRgYsKss523ZKeZLfKLXtBQuKHleQSK3KEWY9dUL
+ w1Xoz3FHmLwwn7gq8BItlFOKYSxZY1UuypAzaErh0VOsMORNB5OvEA=
+X-Google-Smtp-Source: AGHT+IGrp2uYlWu3xihGxu1xfJOH4DM4k10hWHqLaKkKD0ubckw9XXlY9MDMC+XAadbbDjRL6Y0K6g==
+X-Received: by 2002:a05:6402:2692:b0:5d0:e73c:b7f2 with SMTP id
+ 4fb4d7f45d1cf-5db7d2d2ffdmr2654110a12.7.1737121382176; 
+ Fri, 17 Jan 2025 05:43:02 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384fcc926sm170193766b.164.2025.01.17.05.43.04
+ 4fb4d7f45d1cf-5db736428e3sm1486362a12.14.2025.01.17.05.42.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 05:43:07 -0800 (PST)
+ Fri, 17 Jan 2025 05:43:01 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 982D5608DF;
- Fri, 17 Jan 2025 13:42:59 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id EC3CF60884;
+ Fri, 17 Jan 2025 13:42:57 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 28/37] tests/qtest: fix some copy and paste errors in kdoc
-Date: Fri, 17 Jan 2025 13:42:47 +0000
-Message-Id: <20250117134256.2079356-29-alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 11/37] tests/tcg/plugins/insn: remove unused callback parameter
+Date: Fri, 17 Jan 2025 13:42:30 +0000
+Message-Id: <20250117134256.2079356-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250117134256.2079356-1-alex.bennee@linaro.org>
 References: <20250117134256.2079356-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,57 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A number of copy and paste kdoc comments are referring to the wrong
-definition. Fix those cases.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250116160306.1709518-29-alex.bennee@linaro.org>
+Message-Id: <20250116160306.1709518-12-alex.bennee@linaro.org>
 
-diff --git a/tests/qtest/libqos/qgraph.h b/tests/qtest/libqos/qgraph.h
-index 1b5de02e7b..81fbfdd0e2 100644
---- a/tests/qtest/libqos/qgraph.h
-+++ b/tests/qtest/libqos/qgraph.h
-@@ -355,7 +355,7 @@ void qos_object_start_hw(QOSGraphObject *obj);
- QOSGraphObject *qos_machine_new(QOSGraphNode *node, QTestState *qts);
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index baf2d07205..0c723cb9ed 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -150,10 +150,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+             qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
+         } else {
+-            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
+             qemu_plugin_register_vcpu_insn_exec_cb(
+-                insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS,
+-                GUINT_TO_POINTER(vaddr));
++                insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS, NULL);
+         }
  
- /**
-- * qos_machine_new(): instantiate a new driver node
-+ * qos_driver_new(): instantiate a new driver node
-  * @node: A driver node to be instantiated
-  * @parent: A #QOSGraphObject to be consumed by the new driver node
-  * @alloc: An allocator to be used by the new driver node.
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index f23d80e9e5..fa08c7eca5 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -365,7 +365,7 @@ QDict *qtest_qmp_event_ref(QTestState *s, const char *event);
- char *qtest_hmp(QTestState *s, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
- 
- /**
-- * qtest_hmpv:
-+ * qtest_vhmp:
-  * @s: #QTestState instance to operate on.
-  * @fmt: HMP command to send to QEMU, formats arguments like vsprintf().
-  * @ap: HMP command arguments
-@@ -904,7 +904,7 @@ void qtest_qmp_assert_success(QTestState *qts, const char *fmt, ...)
- 
- #ifndef _WIN32
- /**
-- * qtest_qmp_fd_assert_success_ref:
-+ * qtest_qmp_fds_assert_success_ref:
-  * @qts: QTestState instance to operate on
-  * @fds: the file descriptors to send
-  * @nfds: number of @fds to send
-@@ -921,7 +921,7 @@ QDict *qtest_qmp_fds_assert_success_ref(QTestState *qts, int *fds, size_t nfds,
-     G_GNUC_PRINTF(4, 5);
- 
- /**
-- * qtest_qmp_fd_assert_success:
-+ * qtest_qmp_fds_assert_success:
-  * @qts: QTestState instance to operate on
-  * @fds: the file descriptors to send
-  * @nfds: number of @fds to send
+         if (do_size) {
 -- 
 2.39.5
 
