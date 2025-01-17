@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97906C02185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 997A0C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 05:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYfKx-0004bh-5z; Fri, 17 Jan 2025 00:56:07 -0500
+	id 1tYfLT-0004k1-Qk; Fri, 17 Jan 2025 00:56:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfKw-0004bH-7N
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:56:06 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tYfLS-0004jY-17
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:56:38 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tYfKu-0005sP-8e
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:56:05 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21634338cfdso42874865ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:56:03 -0800 (PST)
+ id 1tYfLQ-0005xD-H5
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 00:56:37 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2166022c5caso28742315ad.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jan 2025 21:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737093362; x=1737698162; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=o/DZGZeWD0MxvygJ9aCip0QDeN363QjnwDH1CWULPhM=;
- b=mgnKYUeQRLqlzRMDHNrS84sYgBCDhPtw42CMWRPy7nNaQPGDRPtjsjzNtB4+8x5nbB
- z9YABT0RR00vhGzbQCu0YMb7mXclO9KunE6gJDpF/n8IHI1QsnHfYdhjh1UN6lWzzmPi
- /nrOyEsCDl9Ax/80NY+abpAk9oxr0Umx23/GSEF63WYpoFTAyaBWXqT34nnriATMI672
- 1b69c3GTeaFjgr3w1oAkHSxzQ6vLoNxGVDwzm2x5DIf3f9KEAe6NhkwY8yv4zQjzPw4+
- Xvr9VXKiGkCLBJhASj420Y8k0agJS2RM91H30NegnILwSLPHHcIfle0um1u3xza8/gZx
- 2gEQ==
+ d=gmail.com; s=20230601; t=1737093395; x=1737698195; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ns2SZo6J1ZJQLcHXaGJS2LfH5vBStHvDZXJNG1Vraik=;
+ b=laJuZkhMeHUaon54sCdb2u7KwPdVDRmoe8naArE8ENFaHDzVqWR4Lp+LDeQYQB2T1B
+ PTYiPXmqgbDpnlWwHmcS7mg+N6iKv8fuzoMC6GJp0C1T6T6t1faGA3Iwf+1o33jaMXFn
+ dVv47KZBDusv11eCb1yOxVCfmMxZosvtniGHGFO5OC2jDgGFdUIwcfhFaS2SOXN6oARo
+ Ld6YSD6c567yzHcB9hAUQlP93l4QtV0n5nj2mkuJ0KDU4jFuzVsrlx4N2NuNczHYCh3j
+ f4cqC2Q7VC4PXHUl+LROoIa04PPxJd3qnBRkuqcWYRwD7H01Wh0Zz0IfR4iMK/mPq091
+ Gh5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737093362; x=1737698162;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o/DZGZeWD0MxvygJ9aCip0QDeN363QjnwDH1CWULPhM=;
- b=g4Hy33bpPmyOF4z8Fmi+iRekO9NDic03Xx/juBmzCt2wnORpbokD2DfhSUXvBUA2pl
- HQzNIv5TS2DMY1oVFJNZ07/VlWSoO++MKbhXzS9MWd9b7wMhzq0fevddHe3p1b0EwHFS
- iezGZbCuplC92xV2xLJnkmasNbHxG2caNbvzlav1kwWhmMigO0ggszXSTjB/UO7wba5t
- 7RDR8xQnUyny+IkgIDFfpmqoPBO3/f9Nt/8Fb61S6dqkw8KFo1SZI45nTjtHVnb/tmqt
- Y9GIuSpGtCZpRHEFxemYFPydJahk/JTZm+RXMsVBGXvtp/hyFvs+Y1c2Kr2+r7bVHEzd
- I5Rg==
-X-Gm-Message-State: AOJu0Yxl3bFg96ZZ/muNB1oKapHiiFsmbM/wwdtj6GqDUVxb6B180SPz
- Va+GdhdE/yYXFCgf0H6HHqh9ikLx23Z2CxihE56K6Fq/B+Ur5eJPy31nHg==
-X-Gm-Gg: ASbGncsmRrDyYSHuBdgFdV9X1LX/LKGYGS5M/uQy0meIcZmYd7TdygirDO7ZEmKtT8z
- 9R0vmP9HH4VfeVnLfkCy/L5dCk3FssDMzYbG8qDNOnYCYbWtkyFNqanzST0djcrbeDuqLiXnpdg
- UW21MFnueYMOFsG/f1mbLFgKVftZD/Kl2E6mOnD0bqVjFwef2OKnMUG90AhMfpNnz0B2QRX34p0
- pW0pdZ/pnaBbEwIBqTydqL9mU0Va3yMW+X+pqWE507CIujiUHM4ZJwugGQk/ZOrZ/6tcghc2N9M
- B41kJLeLMMbDbmNZXwxW7cn28Hb5W36PVVFkWzbmmrgkmyNDGszKL6gt4acW
-X-Google-Smtp-Source: AGHT+IF0D2cx5M2E2iypYtYivzKLTiQSWOJFTOGFMTJDfHCE9vKI8UkTzg0mGhIzmHp06ppjkvOm3g==
-X-Received: by 2002:a17:903:32ce:b0:215:b190:de6 with SMTP id
- d9443c01a7336-21c3553b341mr18521805ad.3.1737093361826; 
- Thu, 16 Jan 2025 21:56:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1737093395; x=1737698195;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ns2SZo6J1ZJQLcHXaGJS2LfH5vBStHvDZXJNG1Vraik=;
+ b=c/ZRoG1cDDesZ8tFDpppRthQrwyCr4I2v8Y5NL4kH6fTqL319yC4Cy1NZX4qB0MygP
+ IATP2EFwEPkquYoqN5kzr8dmrAHujS1DMjuEfhFtGyLRzzirQtR9/292kwWdLi4o7jTi
+ lHIL/xs/Jxmid8fQmv/Hwsj2UIyDuXvsCPE6ewwkzayHeSIZEjYdNXjou7juw61QRKti
+ GZyjTKoA1/mIVLVaDui+3f/SD9cq2n22jE/4XTP/fIjwAjMZMDnYtwk1z7mx0kjbDLkd
+ IZGvz2faR1RyoNffx6j9foyuh9v915E0DMToMc4lS3dBW2zq/J80nXRk+F1kEVF1AEOy
+ Kh9A==
+X-Gm-Message-State: AOJu0Yzj/Fr+oiALKVLgav3+aHhXCr//Rt7TcjUxPPemVGCd0kn/J6+0
+ l5mqefT/71hA/6Sgm0N2ToMRXK9z2bawkoFoxKTsj17S8wK6QNbU/uYLug==
+X-Gm-Gg: ASbGncu3tVyYqUTPSGfUD8kodcOEKMrTT3zqvdXyK0AhBLWbgjxvmWzG6Sr3WL2NExr
+ ++BBOSZnIod0cah6OmHSczRiUBxh9LXM2oGUREWQg9B8DNd5xAO8iXuHQTw8LT7iEl6iILWvmEX
+ 06axtE0zZaiaKXIvR9Mk9oOyLPO/08CBjepWopL1UOoIsrbZVA/5Na7Dl1eIu8Cw2qV9rKzuRbt
+ fjt1NOOK87HxdwO5l8evDKjht0nFbH9dJcIdGK/8zlJ0zM5l3c/ooM9cl4ov2uqlNq0nuafbhse
+ xn6wguHIgEu4d4Yx+GOnC0pxCJ/oajNCYKR9Be1NHl2wcgqXtJdOYlA6b9im
+X-Google-Smtp-Source: AGHT+IFBYyDC1EVKoaSvq8f4DKO0f5Ls7YJrUOaUk1oyjZpEA8nZBgjsU0iH62ueKrL02tjks7/2HQ==
+X-Received: by 2002:a17:902:cec6:b0:216:5568:38c9 with SMTP id
+ d9443c01a7336-21c35574ee8mr20143045ad.31.1737093394942; 
+ Thu, 16 Jan 2025 21:56:34 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.55.59
+ d9443c01a7336-21c2d3d6fbbsm8563595ad.168.2025.01.16.21.56.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2025 21:56:01 -0800 (PST)
+ Thu, 16 Jan 2025 21:56:34 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/50] riscv-to-apply queue
-Date: Fri, 17 Jan 2025 15:55:02 +1000
-Message-ID: <20250117055552.108376-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 10/50] target/riscv/tcg: add sha
+Date: Fri, 17 Jan 2025 15:55:12 +1000
+Message-ID: <20250117055552.108376-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250117055552.108376-1-alistair.francis@wdc.com>
+References: <20250117055552.108376-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,134 +103,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4d5d933bbc7cc52f6cc6b9021f91fa06266222d5:
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-  Merge tag 'pull-xenfv-20250116' of git://git.infradead.org/users/dwmw2/qemu into staging (2025-01-16 09:03:43 -0500)
+'sha' is the augmented hypervisor extension, defined in RVA22 as a set of
+the following extensions:
 
-are available in the Git repository at:
+- RVH
+- Ssstateen
+- Shcounterenw (always present)
+- Shvstvala (always present)
+- Shtvala (always present)
+- Shvstvecd (always present)
+- Shvsatpa (always present)
+- Shgatpa (always present)
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20250117-2
+We can claim support for 'sha' by checking if we have RVH and ssstateen.
 
-for you to fetch changes up to f195d4af294f76762407e2273a564950a8f42db6:
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241218114026.1652352-10-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu_cfg.h     | 1 +
+ target/riscv/cpu.c         | 2 ++
+ target/riscv/tcg/tcg-cpu.c | 8 ++++++++
+ 3 files changed, 11 insertions(+)
 
-  hw/char/riscv_htif: Convert HTIF_DEBUG() to trace events (2025-01-17 15:52:56 +1000)
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index a1457ab4f4..fe0c4173d2 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -141,6 +141,7 @@ struct RISCVCPUConfig {
+     bool ext_svade;
+     bool ext_zic64b;
+     bool ext_ssstateen;
++    bool ext_sha;
+ 
+     /*
+      * Always 'true' booleans for named features
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 3e138572d4..954425081d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -184,6 +184,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+     ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
++    ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+     ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+@@ -1714,6 +1715,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+     MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
++    MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
+ 
+     { },
+ };
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 8b89c99c0f..e03b409248 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -212,6 +212,11 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_offset)
+         cpu->cfg.cbop_blocksize = 64;
+         cpu->cfg.cboz_blocksize = 64;
+         break;
++    case CPU_CFG_OFFSET(ext_sha):
++        if (!cpu_misa_ext_is_user_set(RVH)) {
++            riscv_cpu_write_misa_bit(cpu, RVH, true);
++        }
++        /* fallthrough */
+     case CPU_CFG_OFFSET(ext_ssstateen):
+         cpu->cfg.ext_smstateen = true;
+         break;
+@@ -352,6 +357,9 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
+                           cpu->cfg.cboz_blocksize == 64;
+ 
+     cpu->cfg.ext_ssstateen = cpu->cfg.ext_smstateen;
++
++    cpu->cfg.ext_sha = riscv_has_ext(&cpu->env, RVH) &&
++                       cpu->cfg.ext_ssstateen;
+ }
+ 
+ static void riscv_cpu_validate_g(RISCVCPU *cpu)
+-- 
+2.47.1
 
-----------------------------------------------------------------
-Second RISC-V PR for 10.0
-
-* Reduce the overhead for simple RISC-V vector unit-stride loads and stores
-* Add V bit to GDB priv reg
-* Add 'sha' support
-* Add traces for exceptions in user mode
-* Update Pointer Masking to Zjpm v1.0
-* Add Smrnmi support
-* Fix timebase-frequency when using KVM acceleration
-* Add RISC-V Counter delegation ISA extension support
-* Add support for Smdbltrp and Ssdbltrp extensions
-* Introduce a translation tag for the IOMMU page table cache
-* Support Supm and Sspm as part of Zjpm v1.0
-* Convert htif debug prints to trace events
-
-----------------------------------------------------------------
-Alexey Baturo (8):
-      target/riscv: Remove obsolete pointer masking extension code.
-      target/riscv: Add new CSR fields for S{sn, mn, m}pm extensions as part of Zjpm v1.0
-      target/riscv: Add helper functions to calculate current number of masked bits for pointer masking
-      target/riscv: Add pointer masking tb flags
-      target/riscv: Update address modify functions to take into account pointer masking
-      target/riscv: Apply pointer masking for virtualized memory accesses
-      target/riscv: Enable updates for pointer masking variables and thus enable pointer masking extension
-      target/riscv: Support Supm and Sspm as part of Zjpm v1.0
-
-Atish Patra (5):
-      target/riscv: Enable S*stateen bits for AIA
-      target/riscv: Add properties for counter delegation ISA extensions
-      target/riscv: Invoke pmu init after feature enable
-      target/riscv: Add implied rule for counter delegation extensions
-      target/riscv: Add configuration for S[m|s]csrind, Smcdeleg/Ssccfg
-
-Clément Léger (9):
-      target/riscv: Fix henvcfg potentially containing stale bits
-      target/riscv: Add Ssdbltrp CSRs handling
-      target/riscv: Implement Ssdbltrp sret, mret and mnret behavior
-      target/riscv: Implement Ssdbltrp exception handling
-      target/riscv: Add Ssdbltrp ISA extension enable switch
-      target/riscv: Add Smdbltrp CSRs handling
-      target/riscv: Implement Smdbltrp sret, mret and mnret behavior
-      target/riscv: Implement Smdbltrp behavior
-      target/riscv: Add Smdbltrp ISA extension enable switch
-
-Craig Blackmore (2):
-      target/riscv: rvv: fix typo in vext continuous ldst function names
-      target/riscv: rvv: speed up small unit-stride loads and stores
-
-Daniel Henrique Barboza (9):
-      target/riscv: add shcounterenw
-      target/riscv: add shvstvala
-      target/riscv: add shtvala
-      target/riscv: add shvstvecd
-      target/riscv: add shvsatpa
-      target/riscv: add shgatpa
-      target/riscv/tcg: add sha
-      target/riscv: use RISCVException enum in exception helpers
-      target/riscv: add trace in riscv_raise_exception()
-
-Frank Chang (1):
-      target/riscv: Add Zicfilp support for Smrnmi
-
-Jason Chien (1):
-      hw/riscv/riscv-iommu.c: Introduce a translation tag for the page table cache
-
-Kaiwen Xue (6):
-      target/riscv: Add properties for Indirect CSR Access extension
-      target/riscv: Decouple AIA processing from xiselect and xireg
-      target/riscv: Support generic CSR indirect access
-      target/riscv: Add counter delegation definitions
-      target/riscv: Add select value range check for counter delegation
-      target/riscv: Add counter delegation/configuration support
-
-Philippe Mathieu-Daudé (3):
-      target/riscv: Have kvm_riscv_get_timebase_frequency() take RISCVCPU cpu
-      hw/riscv/virt: Remove unnecessary use of &first_cpu
-      hw/char/riscv_htif: Convert HTIF_DEBUG() to trace events
-
-Tommy Wu (5):
-      target/riscv: Add 'ext_smrnmi' in the RISCVCPUConfig
-      target/riscv: Add Smrnmi CSRs
-      target/riscv: Handle Smrnmi interrupt and exception
-      target/riscv: Add Smrnmi mnret instruction
-      target/riscv: Add Smrnmi cpu extension
-
-Yanfeng Liu (1):
-      riscv/gdbstub: add V bit to priv reg
-
- include/hw/riscv/riscv_hart.h                  |    4 +
- target/riscv/cpu.h                             |   65 +-
- target/riscv/cpu_bits.h                        |  157 ++-
- target/riscv/cpu_cfg.h                         |   13 +
- target/riscv/helper.h                          |    1 +
- target/riscv/internals.h                       |   54 +
- target/riscv/kvm/kvm_riscv.h                   |    4 +-
- target/riscv/pmp.h                             |    1 +
- target/riscv/insn32.decode                     |    3 +
- hw/char/riscv_htif.c                           |   15 +-
- hw/riscv/riscv-iommu.c                         |  205 +++-
- hw/riscv/riscv_hart.c                          |   41 +
- hw/riscv/virt.c                                |    2 +-
- target/riscv/cpu.c                             |   97 +-
- target/riscv/cpu_helper.c                      |  311 +++++-
- target/riscv/csr.c                             | 1257 +++++++++++++++++-------
- target/riscv/gdbstub.c                         |   23 +-
- target/riscv/kvm/kvm-cpu.c                     |    4 +-
- target/riscv/machine.c                         |   18 +-
- target/riscv/op_helper.c                       |  126 ++-
- target/riscv/pmp.c                             |   14 +-
- target/riscv/tcg/tcg-cpu.c                     |   50 +-
- target/riscv/translate.c                       |   49 +-
- target/riscv/vector_helper.c                   |   31 +-
- target/riscv/insn_trans/trans_privileged.c.inc |   20 +
- hw/char/trace-events                           |    4 +
- target/riscv/trace-events                      |    3 +
- tests/data/acpi/riscv64/virt/RHCT              |  Bin 332 -> 390 bytes
- 28 files changed, 1852 insertions(+), 720 deletions(-)
 
