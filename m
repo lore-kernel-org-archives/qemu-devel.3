@@ -4,89 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7DBC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26544C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 17:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYq46-0007kg-PZ; Fri, 17 Jan 2025 12:23:26 -0500
+	id 1tYq5O-0001gp-Bl; Fri, 17 Jan 2025 12:24:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tYq3k-0007Uq-Uk; Fri, 17 Jan 2025 12:23:05 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYq5J-0001Qw-V7
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:24:42 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tYq3j-00063I-9c; Fri, 17 Jan 2025 12:23:04 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-21675fd60feso53732115ad.2; 
- Fri, 17 Jan 2025 09:23:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tYq5C-0006Cp-4Y
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 12:24:36 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3862d161947so1329112f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 09:24:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1737134581; x=1737739381; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1QIwrFyIStAPgOTMlYQifj6PiT67/GJsSNdwJzc5QhY=;
- b=hfd4nnNc2yZxZRg+PQMNVfxThBqRgmUJ/btWjv953lUZ5ir6atRs8McRwDKqQoKQ5B
- oDyDR3gD9xpIXhg+EOwO2SecCIu1ii/9Yjy6c3havCZiY5xM5SNDl9RbA+7HMWuxpUPy
- qbL9nT27QBN3dtN5Ibxk6cUTnUU+d+9V4ciLp53AkDc0FB/81wCugvOnUWkPqswK/Tuv
- hMsy9WutyCEcFIBikA13GDeoSudVjfceVXZfCFF7PvYIMcU+FXqEHDZgmHEkim6Iyjy5
- jRAc0OQv/8uyshUPweXI5+Fr1DYE66MBBW5HONKWYjgjTwzsa7TScfWA4PLecEdAKaZ6
- Wy1Q==
+ d=linaro.org; s=google; t=1737134672; x=1737739472; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0pLsAWDJOraFG88EG1SozRkXs1n2DWuvNRJ2Y9eAxkU=;
+ b=bbTqKbRf9+UaEb8DlBlzCuL7xElcp9Lqo4sIIjmmyYaxuRnns9nMBjfVY5UBoQSWW3
+ d0+i+nqkSrrOtrN2/kkUmFdtk2bthBvEH9VbXlEzdtTDgVAor0a2rG9UfVXe+j2RjEpI
+ zjsjShEyXKhrrujFb6mJTVAzntcGya3vz0DNwE+D+lO5KIe3xIE7Fs+GbDAyqIOmsOnH
+ 3ca7CvcsAB+KKkufLRPvCNv1+qt+vRNjNZ68KeD9TT1EYRA/7v6WCfmfnewwDPKRDf0i
+ 5BEzqiC2glJtNFDpwH2ouxS0ZikSfXHRdJCyBeSCW50/IjJKb+NrAdosOGHefQ0k4dP3
+ GD6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737134581; x=1737739381;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1QIwrFyIStAPgOTMlYQifj6PiT67/GJsSNdwJzc5QhY=;
- b=D3DMxn6yA2qGOKawmwQn4T0NWwvdtd+4beLk1lj+LdMcLDQLGSBXnWzI2B1EgkJWMm
- GHoVMQsRto7Y4Vu7l3qAgbFOZBJ+7vR801o25xVmPSDIStmxz+XR6WzKl7gXLNFv4smf
- 4iX3k5dMfNR7LLoRb/1Qeadm1184a5JePHhBsaQVnWhU430LsjM5wYzN+W9pNV2BDnW3
- 535eRtYxH3ce7mvZR49c/lc0k+gnmTqIM2L3dGK7evGctzJL2q12Y9LruksMsyVuVPb6
- zUq9x8Qv7CQyC9ww5g2Wv18O/oSN43t4V/GpKdYEuC1cdQQLgkY5/cW+Bg5VjTItNzHW
- 9OQA==
+ d=1e100.net; s=20230601; t=1737134672; x=1737739472;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0pLsAWDJOraFG88EG1SozRkXs1n2DWuvNRJ2Y9eAxkU=;
+ b=S7U8TRkCL1I0TazQVl2B/byYGGtCt8NBy2DYfKOE3ElZAp9eKR1rQCImCSxczGMWhh
+ rBiPTUFm4IEzWnNxDBvaREO74VmYVJrE+ZgjTtcoYvbYG6MuDo9tLdFMgAFvwIcpEuwY
+ pRAfhXUeJ/gGeqEhTKRstpVqo6M/d33l0NXwRJWPC8LwW9NviW2qCLQxvrRm17hYfaTM
+ GGhbZUvFUAXyT4LsTsJNFHD6FtMG9B4ZaYIyOmDQ0h21Fv67NPgZu7UK1B4nf4zjeyVI
+ MYU3SEoUxbibf4LBHiFtg6yOyPetSDJXIXgtRbfLMpOT4GC9qjmd1Gn9UNcx1WUE9nSl
+ I0wA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTplks0pElR48WSszWM179alrozLuHOvmPAfqjLE/rIiQro4MaEVAm1I4VCbFfvSf3isEuPMmYWMz0@nongnu.org,
- AJvYcCWAAejxerKPsVaQuABHWlMnb2gRfJrMPGh1Ohpe3Mx4xqUuFc7hEoE1JULQT5uN1jjUhm0N7x4fnzFnzQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yxkp1fHiPL+daBdZf6NTqYqiHpc8bv6j6gJq02p59PqBH1AAyNs
- 45A2jUH8PKHDPLXxy26UAuQ4wkCqmPnTfJheJ5RUWb5ygZwkHuTg
-X-Gm-Gg: ASbGncv4kR6zENJcNzIY2ojhET3d89AqMEok2f5sN9dMh16eTi4qkVhWus4nJKHQJB9
- 25fp6cmgSfIpLZUmyhMbo8a/7rEsYhlluoQEgDcMjo3WHLNHn+L1AOoX8DmnRnEjfnt1oFPGYwz
- qguBpcK0xA6gQiVNqZKgoNwld6GdPCaOPpjPyuYMmxl2dvWZFr9E+eJ9jP/cQYrQSWcAIwRHDTx
- ix+OiiHSJrwiJgR+ZdmTuAWj/edZbIsCQgW38OI38auyXZxf2Zh9JsnJQlMU69C9dlyxmQ5YSC/
- DK1H3ocUI5oKDhM=
-X-Google-Smtp-Source: AGHT+IH4DUtk0f5fuhqap0s3zLrGN2cK0ZOCQqHKqvZMGgFDa1mv1pFj87J6AAYmhgQsHrfvHLcxcA==
-X-Received: by 2002:a05:6a20:244e:b0:1e0:d4f4:5b39 with SMTP id
- adf61e73a8af0-1eb214caa0emr5688547637.24.1737134581339; 
- Fri, 17 Jan 2025 09:23:01 -0800 (PST)
-Received: from wheely.local0.net (124-169-212-233.tpgi.com.au.
- [124.169.212.233]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72daba511a4sm2235950b3a.140.2025.01.17.09.22.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 09:23:00 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Nicholas Piggin <npiggin@gmail.com>, John Snow <jsnow@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v3 2/4] qtest/libqos/pci: Enforce balanced iomap/unmap
-Date: Sat, 18 Jan 2025 03:22:41 +1000
-Message-ID: <20250117172244.406206-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250117172244.406206-1-npiggin@gmail.com>
-References: <20250117172244.406206-1-npiggin@gmail.com>
+ AJvYcCWnp0NabUK7oT09AhRqhIIy8CyY8EI4vMJRd5ZRlw4RCUwfTk/g5PKlldPAPBT2PMJZVPEaI5pNs2rD@nongnu.org
+X-Gm-Message-State: AOJu0YxKAt8HXzAR/F14D1FlgtsrDO2LIAclvFrQNHklYoL1jgCWLkf6
+ fw4XkqhvRZRaLAh6JtGzo8DDYFsXGLcAKeXPVmCYHTjpBhaPzohluxN91S0ZpDw=
+X-Gm-Gg: ASbGncsfAwVYOZPj3Z+xsbyJvVkNILIxATTvyPSIUJe5OsNY/WusAWuA204tBIwC1EM
+ mcagONNCJhfZu5hUiEe/fszJ/gz9Fr6L5m/BMoAerxlNa6EAbGoZl5PrKEHRgaO7zEHttQ9fnHl
+ KCG8ywSQ6p+QrjGomP5iIM36JuqWzfHcvvFXHnM511jlEB01RE4BxbSsXIwizUSBAYapaklk3pS
+ RXL1ze8g9oFmcM06a7MOPkT8AO+PTt3QJ148dZZ2eidC+gY9wv0FWnkHM+8nOaRWSAb9lh2M/cm
+ sicLKoM8cBHEXw0t77iiWM5S
+X-Google-Smtp-Source: AGHT+IHQ0mj2dJkGREvXcoi2iy1mKr9412P1DIpFc1kJYiyLrWvUlr+7zfrFSivENGmA/cI0T5Zd9A==
+X-Received: by 2002:a05:6000:1548:b0:38b:e32a:10aa with SMTP id
+ ffacd0b85a97d-38bf565521bmr3404553f8f.5.1737134672157; 
+ Fri, 17 Jan 2025 09:24:32 -0800 (PST)
+Received: from [192.168.69.151] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43890420412sm41035045e9.18.2025.01.17.09.24.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jan 2025 09:24:31 -0800 (PST)
+Message-ID: <da1630f6-f25c-45ff-a69c-a2d9a5e0eeb6@linaro.org>
+Date: Fri, 17 Jan 2025 18:24:30 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/14] hw/sd/sd: Allow for inverting polarities of
+ presence and write-protect GPIOs
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Guenter Roeck <linux@roeck-us.net>, Andrey Smirnov
+ <andrew.smirnov@gmail.com>, Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250108092538.11474-1-shentey@gmail.com>
+ <20250108092538.11474-9-shentey@gmail.com>
+ <342ca371-3e14-4108-9c45-e15cda51b9ca@linaro.org>
+ <FBA535B4-8191-4CEB-905F-FA4C3416048C@gmail.com>
+ <e202623e-eac7-4ed3-87fb-002491ddf745@linaro.org>
+ <6AF83F55-5BFF-438D-AB05-5403D619B403@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6AF83F55-5BFF-438D-AB05-5403D619B403@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,179 +112,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add assertions to ensure a BAR is not mapped twice, and only
-previously mapped BARs are unmapped. This can help catch some
-bugs.
+On 17/1/25 00:20, Bernhard Beschow wrote:
+> 
+> 
+> Am 12. Januar 2025 18:06:04 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> On 9/1/25 17:20, Bernhard Beschow wrote:
+>>>
+>>>
+>>> Am 9. Januar 2025 11:40:10 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>>>> Hi Bernhard,
+>>>>
+>>>> On 8/1/25 10:25, Bernhard Beschow wrote:
+>>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>>>> ---
+>>>>>     hw/sd/sd.c | 12 ++++++++----
+>>>>>     1 file changed, 8 insertions(+), 4 deletions(-)
+>>>>
+>>>>
+>>>>> @@ -876,8 +878,8 @@ static void sd_reset(DeviceState *dev)
+>>>>>         sd->cmd_line = true;
+>>>>>         sd->multi_blk_cnt = 0;
+>>>>>     -    qemu_set_irq(sd->readonly_cb, sd_get_readonly(sd));
+>>>>> -    qemu_set_irq(sd->inserted_cb, sd_get_inserted(sd));
+>>>>> +    qemu_set_irq(sd->readonly_cb, sd_get_readonly(sd) ^ sd->readonly_active_low);
+>>>>
+>>>> Please embed in sd_get_readonly(),
+>>>>
+>>>>> +    qemu_set_irq(sd->inserted_cb, sd_get_inserted(sd) ^ sd->inserted_active_low);
+>>>>
+>>>> and sd_get_inserted().
+>>>
+>>> Are you sure? I deliberately implemented it as is because embedding would change the internal logic of the device as well as SDCardClass::{get_inserted, get_readonly}.
+>>
+>> Yes, this is why I requested that change. Why don't you think it is correct?
+> 
+> I'm asking because I think that moving the xor inside the methods would break the device model.
+> 
+> The goal of the active_low attributes is to invert the polarity of the GPIOs only which allows to model boards where these are inverted. IOW they are intended to influence the wiring. That is in contrast to the two methods which determine the internal logic of the device model. They are also used as virtual method implementations of SDCardClass::{get_inserted, get_readonly} which determine the logic of the sd bus. Moving the xor inside inverts their return values if s->*_active_low are true, effectively flipping every if statement, which seems wrong to me. What do I miss?
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/qtest/libqos/ahci.h       |  1 +
- tests/qtest/libqos/pci.h        |  2 ++
- tests/qtest/libqos/virtio-pci.h |  1 +
- tests/qtest/ahci-test.c         |  2 ++
- tests/qtest/libqos/ahci.c       |  6 ++++++
- tests/qtest/libqos/pci.c        | 32 +++++++++++++++++++++++++++++++-
- tests/qtest/libqos/virtio-pci.c |  6 +++++-
- 7 files changed, 48 insertions(+), 2 deletions(-)
+Right... Then maybe we should model polarity in qemu_irq.
 
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index a0487a1557d..5d7e26aee2a 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -575,6 +575,7 @@ QPCIDevice *get_ahci_device(QTestState *qts, uint32_t *fingerprint);
- void free_ahci_device(QPCIDevice *dev);
- void ahci_pci_enable(AHCIQState *ahci);
- void start_ahci_device(AHCIQState *ahci);
-+void stop_ahci_device(AHCIQState *ahci);
- void ahci_hba_enable(AHCIQState *ahci);
- 
- /* Port Management */
-diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index 83896145235..9dc82ea723a 100644
---- a/tests/qtest/libqos/pci.h
-+++ b/tests/qtest/libqos/pci.h
-@@ -65,6 +65,8 @@ struct QPCIDevice
- {
-     QPCIBus *bus;
-     int devfn;
-+    bool bars_mapped[6];
-+    QPCIBar bars[6];
-     bool msix_enabled;
-     QPCIBar msix_table_bar, msix_pba_bar;
-     uint64_t msix_table_off, msix_pba_off;
-diff --git a/tests/qtest/libqos/virtio-pci.h b/tests/qtest/libqos/virtio-pci.h
-index f5115cacba2..efdf904b254 100644
---- a/tests/qtest/libqos/virtio-pci.h
-+++ b/tests/qtest/libqos/virtio-pci.h
-@@ -26,6 +26,7 @@ typedef struct QVirtioPCIDevice {
-     uint64_t config_msix_addr;
-     uint32_t config_msix_data;
- 
-+    bool enabled;
-     int bar_idx;
- 
-     /* VIRTIO 1.0 */
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 5a1923f721b..b3dae7a8ce4 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1483,6 +1483,8 @@ static void test_reset_pending_callback(void)
-     /* Wait for throttled write to finish. */
-     sleep(1);
- 
-+    stop_ahci_device(ahci);
-+
-     /* Start again. */
-     ahci_clean_mem(ahci);
-     ahci_pci_enable(ahci);
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 34a75b7f43b..cfc435b6663 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -217,6 +217,12 @@ void start_ahci_device(AHCIQState *ahci)
-     qpci_device_enable(ahci->dev);
- }
- 
-+void stop_ahci_device(AHCIQState *ahci)
-+{
-+    /* Map AHCI's ABAR (BAR5) */
-+    qpci_iounmap(ahci->dev, ahci->hba_bar);
-+}
-+
- /**
-  * Test and initialize the AHCI's HBA memory areas.
-  * Initialize and start any ports with devices attached.
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index a59197b9922..05089a5f24f 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -93,12 +93,17 @@ QPCIDevice *qpci_device_find(QPCIBus *bus, int devfn)
- void qpci_device_init(QPCIDevice *dev, QPCIBus *bus, QPCIAddress *addr)
- {
-     uint16_t vendor_id, device_id;
-+    int i;
- 
-     qpci_device_set(dev, bus, addr->devfn);
-     vendor_id = qpci_config_readw(dev, PCI_VENDOR_ID);
-     device_id = qpci_config_readw(dev, PCI_DEVICE_ID);
-     g_assert(!addr->vendor_id || vendor_id == addr->vendor_id);
-     g_assert(!addr->device_id || device_id == addr->device_id);
-+
-+    for (i = 0; i < 6; i++) {
-+        g_assert(!dev->bars_mapped[i]);
-+    }
- }
- 
- static uint8_t qpci_find_resource_reserve_capability(QPCIDevice *dev)
-@@ -529,6 +534,8 @@ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
-     uint64_t loc;
- 
-     g_assert(barno >= 0 && barno <= 5);
-+    g_assert(!dev->bars_mapped[barno]);
-+
-     bar_reg = bar_reg_map[barno];
- 
-     qpci_config_writel(dev, bar_reg, 0xFFFFFFFF);
-@@ -572,12 +579,35 @@ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr)
-     }
- 
-     bar.addr = loc;
-+
-+    dev->bars_mapped[barno] = true;
-+    dev->bars[barno] = bar;
-+
-     return bar;
- }
- 
- void qpci_iounmap(QPCIDevice *dev, QPCIBar bar)
- {
--    /* FIXME */
-+    static const int bar_reg_map[] = {
-+        PCI_BASE_ADDRESS_0, PCI_BASE_ADDRESS_1, PCI_BASE_ADDRESS_2,
-+        PCI_BASE_ADDRESS_3, PCI_BASE_ADDRESS_4, PCI_BASE_ADDRESS_5,
-+    };
-+    int bar_reg;
-+    int i;
-+
-+    for (i = 0; i < 6; i++) {
-+        if (!dev->bars_mapped[i]) {
-+            continue;
-+        }
-+        if (dev->bars[i].addr == bar.addr) {
-+            dev->bars_mapped[i] = false;
-+            bar_reg = bar_reg_map[i];
-+            qpci_config_writel(dev, bar_reg, 0xFFFFFFFF);
-+            /* FIXME: the address space is leaked */
-+            return;
-+        }
-+    }
-+    g_assert_not_reached();
- }
- 
- QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr)
-diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
-index 485b8f6b7e0..2b59fb181c9 100644
---- a/tests/qtest/libqos/virtio-pci.c
-+++ b/tests/qtest/libqos/virtio-pci.c
-@@ -304,11 +304,15 @@ void qvirtio_pci_device_enable(QVirtioPCIDevice *d)
- {
-     qpci_device_enable(d->pdev);
-     d->bar = qpci_iomap(d->pdev, d->bar_idx, NULL);
-+    d->enabled = true;
- }
- 
- void qvirtio_pci_device_disable(QVirtioPCIDevice *d)
- {
--    qpci_iounmap(d->pdev, d->bar);
-+    if (d->enabled) {
-+        qpci_iounmap(d->pdev, d->bar);
-+        d->enabled = false;
-+    }
- }
- 
- void qvirtqueue_pci_msix_setup(QVirtioPCIDevice *d, QVirtQueuePCI *vqpci,
--- 
-2.45.2
-
+Patches 7 & 8 queued, thanks!
 
