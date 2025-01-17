@@ -4,150 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0292EC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 960EFC02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYib3-0001bY-19; Fri, 17 Jan 2025 04:24:57 -0500
+	id 1tYidG-0002YW-OF; Fri, 17 Jan 2025 04:27:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYib1-0001b8-FE
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:24:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tYidE-0002Xr-VD
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:27:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiaz-00035H-VJ
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:24:55 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tYidD-0003Pl-7k
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:27:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737105893;
+ s=mimecast20190719; t=1737106030;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tDNK3Itl48mC30+V7JH6eei5KqzPVYO9+iYMGDD9ePw=;
- b=ZIk3IgtvaHY5xQarOey7QC9b4Bcs4QmqN4KHZ5Zgivs421xIWYWzlavB59YlumVjnrNoMZ
- FwumUR0laCathWXWcYXyIqaRUQ6FJF+bMPxWnkknH4kkNOgtLtuUmRMhYsm+2GsVyieDXZ
- DAswv4cuzBmODiN8X8yhp38ESfQrRfQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=yg9E2XuUSyGQRjCtC8wEmW8Wp8rdiIMGDc9ZVcc615o=;
+ b=gCugkKQErxGiZAZu+UEnEUKPxr6GQhlEatYJDE7Yvnc3iLJehyEQXwj4LvMin9cXPjcaeG
+ SpRDhhunvksZLif1JswPs9wYYerFaWxxv5y54bU9oYrb6EsRONnygIDSS6wcMKTf8nX1qG
+ b6hfGbgKYJkAoPhOI93Z6pfEz9noylk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-hDtWXWhuMOGEYLHpyZulrw-1; Fri, 17 Jan 2025 04:24:51 -0500
-X-MC-Unique: hDtWXWhuMOGEYLHpyZulrw-1
-X-Mimecast-MFC-AGG-ID: hDtWXWhuMOGEYLHpyZulrw
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385d7611ad3so1171628f8f.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:24:51 -0800 (PST)
+ us-mta-575-769Py5syN2KXodCZEe6mDA-1; Fri, 17 Jan 2025 04:27:07 -0500
+X-MC-Unique: 769Py5syN2KXodCZEe6mDA-1
+X-Mimecast-MFC-AGG-ID: 769Py5syN2KXodCZEe6mDA
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aaf901a0ef9so166379466b.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:27:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737105890; x=1737710690;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tDNK3Itl48mC30+V7JH6eei5KqzPVYO9+iYMGDD9ePw=;
- b=qHiEO4I0loUYvhZ+lAU841qb06Pbc8ZsgTQNKORIMFCrspIeOYPwZfqIVMBGNobynr
- U1vSs/j/YcGL6VYvq3BrPkd/eZo2ArxRJfue1LiE2u+ZoJmaWbaKkm3y20XY+bBjzgAF
- B8ihfmK0GmwtGeNMTqhQg69WZ5cXS8o1yaZ+DGz37/q7U9oeGfFBs7LVnkGMk55wd4mF
- LMpErJs5e38yALFOr+Yc0fmXlApSU4rxMJVdwZ/Pmsd0KbUREZMKcdhJMkCeB5DmH4Pv
- 5HYAY9zWZ5ebWn6F0hJ2ozp6GGcLJTMSu1lxcpP5EfaW4hfhVAoaFKx5ayEAlPpgiyKy
- /Qrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJGuXXCh5d2z/5JUzhW/f7Xc5iggeyZT9RzVKLTWFSb21tc3C5wx0uCAtFaE8CZhR4aBI07iDI58Mx@nongnu.org
-X-Gm-Message-State: AOJu0Yxlxnrke3z1s2jQdtBfOtOd5Jupo2L/E4muT5ijoWl5T40ChALT
- 52njPTJAh9z+T8kyOE55HiBpniWU7/ReDAqTp6vTA+bDVjDbn6f2n0LHM/7+wwdp9e3XRcYy8wd
- f+VUH0TUpIPBRCzNtldjudSf23/v5V2h5fmIIbUEHgVkajsaDkqT5
-X-Gm-Gg: ASbGncuZbtr7eJOxoKMRsZ1sjzTQglTbYNmUpe8uO+ur6GzU/XRS111pvPQHsHdU95Q
- mNFg1QVJblhwfLV4+6l8dnmEU8kNNEv5GYcTyqSxEejuAkk1KdEqhVc3Wisbcyix3m3hr4/qtQ9
- ZBsJ9t/hy6cvuHct9qlgqScRI4oAJdVycf9iOTeceyz3qsxREOd2J3N6TxIX+4bqW4zKkibrb+0
- /74+mkjJDxBx0wtiK0LGWPgeLAsqFrcm3tgTrg9Ohg3XkOdbvraF9ncTlafhWRtx0G5QbeAs3zm
- H64G3QHDKjWt
-X-Received: by 2002:a5d:64a1:0:b0:385:f7d9:99f5 with SMTP id
- ffacd0b85a97d-38bf57d3813mr1825456f8f.51.1737105890135; 
- Fri, 17 Jan 2025 01:24:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLsCxvOi6Lzb1sAJij8xn7SFeR1d9gqvsohS9ftO/55RH3uxIS6sgY2xHvTR8RBvkpXERZ1Q==
-X-Received: by 2002:a5d:64a1:0:b0:385:f7d9:99f5 with SMTP id
- ffacd0b85a97d-38bf57d3813mr1825380f8f.51.1737105889019; 
- Fri, 17 Jan 2025 01:24:49 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
- [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf327e327sm1949094f8f.87.2025.01.17.01.24.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 01:24:48 -0800 (PST)
-Message-ID: <c6f75836-b52a-4ee0-9599-3aa5dbea84b7@redhat.com>
-Date: Fri, 17 Jan 2025 10:24:46 +0100
+ d=1e100.net; s=20230601; t=1737106026; x=1737710826;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yg9E2XuUSyGQRjCtC8wEmW8Wp8rdiIMGDc9ZVcc615o=;
+ b=GWepBezQl/bhqqSdpu8awSpBxBZ1/6q16WdQQf3OsW4nyntctUJvVVip+7lgeX8XYO
+ bhA1hwjXEPT2C1jorrOujQs1CtPE0XKfbCH6ZRibmpQEs6LHE2Na9DxYZdFVRqhIAT4i
+ h/y0brUscdWemC+QWYqoUMMZ5Wkw5JjcTix33oNFueZMt0UA+muSDf4Lr2LTa5wbpyxT
+ 5ILqvBTSL4FayXj9y7+jXS/vqp0QGRrJc6yH/rK7xZXnx70G8ISAgysTc4ytfF/Z5/OT
+ A+skird4hy/cri6wL5UQ6/UA07d6jzPO8BEvGemf+dLeI6JX/XgMMQQ94XQbC1uUDAZo
+ duJQ==
+X-Gm-Message-State: AOJu0Yzlo2lffzhQeWrCuaOXGzTvn5eGh3zzb6/moF+kBikAjjZO+YKo
+ 6AELkGi5X9VsbhDrlbJDdWfEFPIejDCO0PDDcJzGpaw0+wPMWfGjOcbE1ljO0CAOJc82Lnpokf8
+ Fp4C6YAHZtfB9V8Fz5D47cQqzag7FWLMkO2sPef7lZQmV+K7S0nvJGZdhuJGBjPwvob9yFosEco
+ w3dOY71hps/wX6YkOJwHJOZZ3DGHMnlAisZQqzHEk=
+X-Gm-Gg: ASbGncunjR8u/BnyPWZK+kEeyiYCBlkv+2IgtUXpaW40f6TTaUdfFotI9NPxTdZhD2A
+ twx8xBcYUMvzl1Ac5oxCNcRconPivi9whh59HrwT9Ay8ViKh586fwE0Z8DHvacXtfE9OpokS1vz
+ zd9+zoIZrkmF0JsT9Lb91mcU9THUjrCKaLoXhJOnFkFQOfc9UClQlpiNJJmnjqar28Ch19Q8lL0
+ HaEAlK88BsIaXKfofXtT+5vrI1wcZIr40e/yZ+EkoDFg0FwFsyiqcPlOVWp
+X-Received: by 2002:a17:907:3206:b0:aac:622:8f6 with SMTP id
+ a640c23a62f3a-ab38b1ff09emr197267666b.17.1737106025785; 
+ Fri, 17 Jan 2025 01:27:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGU5XNZEKrYV9IyAuzfTQf6xXnxWnsSY9NzqVGivP0fD/0XYrPu9v560RW9MBSNGAlHZevAig==
+X-Received: by 2002:a17:907:3206:b0:aac:622:8f6 with SMTP id
+ a640c23a62f3a-ab38b1ff09emr197265966b.17.1737106025264; 
+ Fri, 17 Jan 2025 01:27:05 -0800 (PST)
+Received: from [192.168.10.3] ([176.206.124.70])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab384f8d88fsm139383966b.140.2025.01.17.01.27.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jan 2025 01:27:04 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH 03/10] rust: pl011: extract conversion to RegisterOffset
+Date: Fri, 17 Jan 2025 10:26:50 +0100
+Message-ID: <20250117092657.1051233-4-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250117092657.1051233-1-pbonzini@redhat.com>
+References: <20250117092657.1051233-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/21] hw/scsi/vmw_pvscsi: Remove
- PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-18-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250115232247.30364-18-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,26 +107,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
-> PVSCSI_COMPAT_DISABLE_PCIE_BIT was only used by the
-> hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-> We removed all machines using that array, lets remove all the
-> code around PVSCSI_COMPAT_DISABLE_PCIE_BIT.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-...
-> @@ -1292,19 +1269,14 @@ static const VMStateDescription vmstate_pvscsi = {
->   
->   static const Property pvscsi_properties[] = {
->       DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
-> -    DEFINE_PROP_BIT("x-disable-pcie", PVSCSIState, compat_flags,
-> -                    PVSCSI_COMPAT_DISABLE_PCIE_BIT, false),
->   };
+As an added bonus, this also makes the new function return u32 instead
+of u64, thus factoring some casts into a single place.
 
-While you're at it, I think this was the last user of compat_flags, so you 
-could remove that compat_flags field from the struct, too, now?
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/src/device.rs | 114 +++++++++++++++++--------------
+ 1 file changed, 63 insertions(+), 51 deletions(-)
 
-  Thomas
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index e85e46ba0bb..6d662865182 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -5,6 +5,7 @@
+ use core::ptr::{addr_of_mut, NonNull};
+ use std::{
+     ffi::CStr,
++    ops::ControlFlow,
+     os::raw::{c_int, c_uint, c_void},
+ };
+ 
+@@ -214,19 +215,11 @@ fn post_init(&self) {
+         }
+     }
+ 
+-    pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u64, u64> {
++    fn regs_read(&mut self, offset: RegisterOffset) -> ControlFlow<u32, u32> {
+         use RegisterOffset::*;
+ 
+-        let value = match RegisterOffset::try_from(offset) {
+-            Err(v) if (0x3f8..0x400).contains(&(v >> 2)) => {
+-                let device_id = self.get_class().device_id;
+-                u32::from(device_id[(offset - 0xfe0) >> 2])
+-            }
+-            Err(_) => {
+-                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
+-                0
+-            }
+-            Ok(DR) => {
++        std::ops::ControlFlow::Break(match offset {
++            DR => {
+                 self.flags.set_receive_fifo_full(false);
+                 let c = self.read_fifo[self.read_pos];
+                 if self.read_count > 0 {
+@@ -243,39 +236,33 @@ pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u
+                 self.receive_status_error_clear.set_from_data(c);
+                 self.update();
+                 // Must call qemu_chr_fe_accept_input, so return Continue:
+-                let c = u32::from(c);
+-                return std::ops::ControlFlow::Continue(u64::from(c));
+-            }
+-            Ok(RSR) => u32::from(self.receive_status_error_clear),
+-            Ok(FR) => u32::from(self.flags),
+-            Ok(FBRD) => self.fbrd,
+-            Ok(ILPR) => self.ilpr,
+-            Ok(IBRD) => self.ibrd,
+-            Ok(LCR_H) => u32::from(self.line_control),
+-            Ok(CR) => u32::from(self.control),
+-            Ok(FLS) => self.ifl,
+-            Ok(IMSC) => self.int_enabled,
+-            Ok(RIS) => self.int_level,
+-            Ok(MIS) => self.int_level & self.int_enabled,
+-            Ok(ICR) => {
++                return ControlFlow::Continue(u32::from(c));
++            },
++            RSR => u32::from(self.receive_status_error_clear),
++            FR => u32::from(self.flags),
++            FBRD => self.fbrd,
++            ILPR => self.ilpr,
++            IBRD => self.ibrd,
++            LCR_H => u32::from(self.line_control),
++            CR => u32::from(self.control),
++            FLS => self.ifl,
++            IMSC => self.int_enabled,
++            RIS => self.int_level,
++            MIS => self.int_level & self.int_enabled,
++            ICR => {
+                 // "The UARTICR Register is the interrupt clear register and is write-only"
+                 // Source: ARM DDI 0183G 3.3.13 Interrupt Clear Register, UARTICR
+                 0
+-            }
+-            Ok(DMACR) => self.dmacr,
+-        };
+-        std::ops::ControlFlow::Break(value.into())
++            },
++            DMACR => self.dmacr,
++        })
+     }
+ 
+-    pub fn write(&mut self, offset: hwaddr, value: u64) {
++    fn regs_write(&mut self, offset: RegisterOffset, value: u32) {
+         // eprintln!("write offset {offset} value {value}");
+         use RegisterOffset::*;
+-        let value: u32 = value as u32;
+-        match RegisterOffset::try_from(offset) {
+-            Err(_bad_offset) => {
+-                eprintln!("write bad offset {offset} value {value}");
+-            }
+-            Ok(DR) => {
++        match offset {
++            DR => {
+                 // ??? Check if transmitter is enabled.
+                 let ch: u8 = value as u8;
+                 // XXX this blocks entire thread. Rewrite to use
+@@ -290,22 +277,22 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
+                 self.int_level |= registers::INT_TX;
+                 self.update();
+             }
+-            Ok(RSR) => {
+-                self.receive_status_error_clear.reset();
++            RSR => {
++                self.receive_status_error_clear = 0.into();
+             }
+-            Ok(FR) => {
++            FR => {
+                 // flag writes are ignored
+             }
+-            Ok(ILPR) => {
++            ILPR => {
+                 self.ilpr = value;
+             }
+-            Ok(IBRD) => {
++            IBRD => {
+                 self.ibrd = value;
+             }
+-            Ok(FBRD) => {
++            FBRD => {
+                 self.fbrd = value;
+             }
+-            Ok(LCR_H) => {
++            LCR_H => {
+                 let new_val: registers::LineControl = value.into();
+                 // Reset the FIFO state on FIFO enable or disable
+                 if self.line_control.fifos_enabled() != new_val.fifos_enabled() {
+@@ -328,26 +315,26 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
+                 self.line_control = new_val;
+                 self.set_read_trigger();
+             }
+-            Ok(CR) => {
++            CR => {
+                 // ??? Need to implement the enable bit.
+                 self.control = value.into();
+                 self.loopback_mdmctrl();
+             }
+-            Ok(FLS) => {
++            FLS => {
+                 self.ifl = value;
+                 self.set_read_trigger();
+             }
+-            Ok(IMSC) => {
++            IMSC => {
+                 self.int_enabled = value;
+                 self.update();
+             }
+-            Ok(RIS) => {}
+-            Ok(MIS) => {}
+-            Ok(ICR) => {
++            RIS => {}
++            MIS => {}
++            ICR => {
+                 self.int_level &= !value;
+                 self.update();
+             }
+-            Ok(DMACR) => {
++            DMACR => {
+                 self.dmacr = value;
+                 if value & 3 > 0 {
+                     // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
+@@ -562,6 +549,31 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+ 
+         Ok(())
+     }
++
++    pub fn read(&mut self, offset: hwaddr, _size: u32) -> ControlFlow<u64, u64> {
++        match RegisterOffset::try_from(offset) {
++            Err(v) if (0x3f8..0x400).contains(&(v >> 2)) => {
++                let device_id = self.get_class().device_id;
++                ControlFlow::Break(u64::from(device_id[(offset - 0xfe0) >> 2]))
++            }
++            Err(_) => {
++                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
++                ControlFlow::Break(0)
++            }
++            Ok(field) => match self.regs_read(field) {
++                ControlFlow::Break(value) => ControlFlow::Break(value.into()),
++                ControlFlow::Continue(value) => ControlFlow::Continue(value.into()),
++            }
++        }
++    }
++
++    pub fn write(&mut self, offset: hwaddr, value: u64) {
++        if let Ok(field) = RegisterOffset::try_from(offset) {
++           self.regs_write(field, value as u32);
++        } else {
++            eprintln!("write bad offset {offset} value {value}");
++        }
++    }
+ }
+ 
+ /// Which bits in the interrupt status matter for each outbound IRQ line ?
+-- 
+2.47.1
 
 
