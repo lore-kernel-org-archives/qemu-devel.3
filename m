@@ -4,46 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FA9C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 07:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11969C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 07:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYgVj-0001LK-Ph; Fri, 17 Jan 2025 02:11:19 -0500
+	id 1tYgf2-0006NJ-88; Fri, 17 Jan 2025 02:20:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYgVd-0001K4-Td; Fri, 17 Jan 2025 02:11:13 -0500
+ id 1tYgex-0006Mr-3q; Fri, 17 Jan 2025 02:20:51 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tYgVb-00080b-VQ; Fri, 17 Jan 2025 02:11:13 -0500
+ id 1tYgeu-00011F-FN; Fri, 17 Jan 2025 02:20:50 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0B3D7D97B9;
- Fri, 17 Jan 2025 10:11:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D0BBD97CF;
+ Fri, 17 Jan 2025 10:20:36 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0AC0B19D0D2;
- Fri, 17 Jan 2025 10:11:08 +0300 (MSK)
-Message-ID: <4b9b3f52-8f00-4135-a121-a4115be2a789@tls.msk.ru>
-Date: Fri, 17 Jan 2025 10:11:07 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D73F19D0E0;
+ Fri, 17 Jan 2025 10:20:44 +0300 (MSK)
+Message-ID: <9c06632b-751b-4a2f-aa87-e07691bebfba@tls.msk.ru>
+Date: Fri, 17 Jan 2025 10:20:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/13] hw/sd/sdhci: Set SDHC_NIS_DMA bit when
- appropriate
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Laurent Vivier <lvivier@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20250111183711.2338-1-shentey@gmail.com>
- <20250111183711.2338-2-shentey@gmail.com>
- <823b6f0c-7e2f-4cc2-bf5f-79f34c77d7f6@tls.msk.ru>
- <B999663C-B1F1-4A26-AF25-BAA23B8AFBA3@gmail.com>
+Subject: Re: [PATCH v3] hw/cxl: Fix msix_notify: Assertion `vector <
+ dev->msix_entries_nr`
+To: Li Zhijian <lizhijian@fujitsu.com>, qemu-devel@nongnu.org
+Cc: linux-cxl@vger.kernel.org, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250115075834.167504-1-lizhijian@fujitsu.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <B999663C-B1F1-4A26-AF25-BAA23B8AFBA3@gmail.com>
+In-Reply-To: <20250115075834.167504-1-lizhijian@fujitsu.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -115,16 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.01.2025 02:39, Bernhard Beschow wrote:
-> Am 15. Januar 2025 12:55:29 UTC schrieb Michael Tokarev <mjt@tls.msk.ru>:
-
->> Is this a qemu-stable material?
+15.01.2025 10:58, Li Zhijian via wrote:
+> This assertion always happens when we sanitize the CXL memory device.
+> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
 > 
-> Good question. Given that this part of the code has some further issues [1] I'd rather not alter stable behavior because we might just trade one bug for another.
+> It is incorrect to register an MSIX number beyond the device's capability.
+> 
+> Increase the device's MSIX number to cover the mailbox msix number(9).
 
-And it's a good answer!  Thank you for sharing your thoughts.
-I agree, I dropped this (simple) change from the stable series.
+This seems to be like a qemu-stable material (8.2+), is it not?
+
+Thanks,
 
 /mjt
+
+> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> ---
+> V3:
+>    Just increate the device's msix number, A new enumeration will be introduced in later patch. # Jonathan
+> 
+> V2:
+>    Just increase msix number and add enum to maintainer their values # Jonathan
+> ---
+>   hw/mem/cxl_type3.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index bd7652740f4b..0ae1704a345c 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -843,7 +843,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>       ComponentRegisters *regs = &cxl_cstate->crb;
+>       MemoryRegion *mr = &regs->component_registers;
+>       uint8_t *pci_conf = pci_dev->config;
+> -    unsigned short msix_num = 6;
+> +    unsigned short msix_num = 10;
+>       int i, rc;
+>       uint16_t count;
+>   
 
 
