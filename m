@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E28EC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 21:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC86C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 21:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYtnm-0004X1-FZ; Fri, 17 Jan 2025 16:22:50 -0500
+	id 1tYtoZ-0005Fa-K7; Fri, 17 Jan 2025 16:23:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tYtnj-0004Pg-EB; Fri, 17 Jan 2025 16:22:48 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1tYtnh-0000Zt-QR; Fri, 17 Jan 2025 16:22:47 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50HEkoY1026713;
- Fri, 17 Jan 2025 21:22:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=0MASglXxHIWlYiEr6
- WNNSYzQg10g57WhFF+Wndy8DuM=; b=LKDA1eotnk4exAaPEqAJ5e26ggI3K54F7
- y6B3s1pGTE2YOpNivNtQzf2MZlT8MczY9qEM+Bvm/p/zQFFmvFTWGfk3q9IaIFi+
- GOgtFcwv/JLRf3WLLoL7mCf25a7jGIqXSPKdVSQhh1NXeDNJNV2tAaZbkZRhNIMG
- aDsIVRPlwlAVx8h+H6SB5j9TzPwCFYZyKNiMh4inDI2dZxrcSB1cT/oUhV/X0DB4
- PVxGpr/DCmDsG/rYFKRHTose79wl9xlEPvQtC7L6hTWhehwtHy8cFl0C/OWzSd6B
- rYzOrVEGK23/a+UalASFlSdzL/sJdJauwnu4PiGYTSBXv/rs6US9Q==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 447fpcck5d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 21:22:42 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50HL4XSt004526;
- Fri, 17 Jan 2025 21:22:41 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4442yt51me-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 21:22:41 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50HLMeRR53281240
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Jan 2025 21:22:40 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADE7858055;
- Fri, 17 Jan 2025 21:22:40 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25DAC5804B;
- Fri, 17 Jan 2025 21:22:40 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.83.203])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Jan 2025 21:22:40 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: jrossi@linux.ibm.com
-Subject: [PATCH 1/1] pc-bios/s390-ccw: Abort IPL on invalid loadparm
-Date: Fri, 17 Jan 2025 16:22:35 -0500
-Message-ID: <20250117212235.1324063-2-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250117212235.1324063-1-jrossi@linux.ibm.com>
-References: <20250117212235.1324063-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYtoU-00056P-5j
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:23:36 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYtoS-0000i1-Fs
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 16:23:33 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-aaec111762bso492590266b.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 13:23:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737149010; x=1737753810; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AQVliGBj/xNYeqnWgpiK/29YYP2+ghiH9j2yQp5FAQc=;
+ b=L7iyncCOwCW8L3iA8N4HET/apu4+c1m8QXdMLFxkVl93SfguHhSuqnVQHVbFrdY7xz
+ Q/tgkn6EHwg85I5hUGtFFneDYSd42Icx370acQwT3gjs9TUz6M2qs34rM42K0a6uiBBq
+ IqNsX92L/lAgJwVIRmMa/ESKpdAWpMX0GcUcptDydshuVbPoA7um2mkQdqx0MnO2cbNZ
+ hZBdWt9UrgpwvQsxsMz1Fx5R+rhL3tI1Lc2KIkgJIPtEdig7dGWkd6XKUBw4sypNQWTU
+ 4M92Cl35a5O2NhlWXhmVU9O22HQUz95TkJNjCtuLGZPaMJLVJSpmXm6cKeNsPl798OIQ
+ dmnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737149010; x=1737753810;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AQVliGBj/xNYeqnWgpiK/29YYP2+ghiH9j2yQp5FAQc=;
+ b=w25qnwqUfAx0jl437tzYNIQqW2/XeZ4R8O54wsP2cYdtWQCQVZc2Gym/uaNTlpgkj1
+ LHA2ZyXK7xnZ1lU1zvO7VXkQnQMPaiqXz6cJWtY+N6iSSoN505nZs1Ff2ftJFwyNCdks
+ NLnPiBRrH7XNSvRj9UkIUm08UnHipdekgdHHkyKByh1BJFHCY0MpkIvKXv+SHlIVzSOz
+ 1P/hrhVd9EkopazMbJ7U0Ut/C4S9mk5BGGExHly6HwemzH4c9UWa+6lMHmSTquSJhSN8
+ 9A342hzUSjApNHL3PyftLdTlXJ5p7LP59r1NbGGg1G1KEsm4HqgCBkLnyp4vdZqGNXA/
+ UmXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEXtaXWLrQh2mT37nUswqgGIX5JT+ysRGILqb5l5MOQgpPU7jhFYOhC5RB+rVHpkJVldwKSerPAiEi@nongnu.org
+X-Gm-Message-State: AOJu0Ywo1aJavSbR3uow0icKDk75KYx7qd9wn5pcHkYBLPYZ593B4GdU
+ SPcpRLYVk4ybxOfK0EfgKiZZkzieQJGQpxVChTbRBE8WX1sIBU4R9/VX7c0BA3s=
+X-Gm-Gg: ASbGncuy5lIWfCPh7lHKgii57tzOrMu7HdQHQGCEvyF0/MW7S829zzMCREf9G1L2nKb
+ YpkPgJbw//W0N7Gu/sPULXVR+c85SCao+4ZTHeI0YNOcc/RypZo6jD0+V/45FyOo3SRq52eU4N4
+ D4U45/WbvSAsMb20Vilq7la12NST0FpU77Ie1hpnoYUFvad8NWWfuHSOxmXMZdtKQsbUea+SmlL
+ 8HjxYxgHuC/loDfGAZS1l/SQJAWbmXMclYyi9jCBRowvZE9efsq9cc=
+X-Google-Smtp-Source: AGHT+IFiinzWu9R/X0uAD+klYND2y47IPeQoGELCFrjfyMBfzDGsXCg26wcUDY3nnB+JwBWbfBsk9w==
+X-Received: by 2002:a17:907:d0f:b0:aae:bd4c:2683 with SMTP id
+ a640c23a62f3a-ab38b3c63f5mr416087166b.49.1737149010067; 
+ Fri, 17 Jan 2025 13:23:30 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab384f1e57bsm232133766b.104.2025.01.17.13.23.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jan 2025 13:23:28 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3A87B6083E;
+ Fri, 17 Jan 2025 21:23:28 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Warner Losh <imp@bsdimp.com>,  Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Kyle Evans
+ <kevans@freebsd.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH v6 0/8] gdbstub: Allow late attachment
+In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Fri, 17 Jan 2025 01:11:25 +0100")
+References: <20250117001542.8290-1-iii@linux.ibm.com>
+User-Agent: mu4e 1.12.8; emacs 29.4
+Date: Fri, 17 Jan 2025 21:23:28 +0000
+Message-ID: <87plklm8xb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: pvdbNoNS0wNzlyEquggAYyEs4a2D9i95
-X-Proofpoint-GUID: pvdbNoNS0wNzlyEquggAYyEs4a2D9i95
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-17_07,2025-01-16_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 mlxlogscore=826 spamscore=0 malwarescore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501170163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.79, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,59 +109,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-Because the loadparm specifies an exact kernel the user wants to boot, if the
-loadparm is invalid it must represent a misconfiguration of the guest. Thus we
-should abort the IPL immediately, without attempting to use other devices, to
-avoid booting into an unintended guest image.
+<snip>
+>
+> Hi,
+>
+> This series adds the ability to attach GDB to a running qemu-user
+> instance. This is useful for debugging multi-process apps.
+>
+> Patches 1 and 2 implement a small related feature: the ability to
+> create individual UNIX sockets for each child process.
+>
+> Patches 3-5 add the required infrastructure. In particular, we need
+> to reserve a host signal for waking up threads, as discussed in [1].
+> By the way, the problem with atomicity of checking for pending signals
+> and invoking syscalls that I'm describing in that thread seems to
+> have already been solved by the safe_syscall infrastructure, so the
+> changes are fairly simple.
+>
+> Patch 6 is the implementation, patch 7 is a documentation update,
+> patch 8 is a test. I tested this series on Linux and only
+> compile-tested on the BSDs.
+>
+> If this series is accepted, I will rebase the all-stop series on top
+> of it.
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- pc-bios/s390-ccw/bootmap.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+Queued to gdbstub/next, thanks.
 
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 56f2f75640..0f8baa0198 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -336,8 +336,7 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
- 
-     debug_print_int("loadparm", loadparm);
-     if (loadparm >= MAX_BOOT_ENTRIES) {
--        puts("loadparm value greater than max number of boot entries allowed");
--        return -EINVAL;
-+        panic("loadparm value greater than max number of boot entries allowed");
-     }
- 
-     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
-@@ -348,8 +347,8 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
- 
-     block_nr = gen_eckd_block_num(&bmt->entry[loadparm].xeckd, ldipl);
-     if (block_nr == NULL_BLOCK_NR) {
--        puts("Cannot find Boot Map Table Entry");
--        return -EIO;
-+        printf("The requested boot entry (%d) is invalid\n", loadparm);
-+        panic("Invalid loadparm");
-     }
- 
-     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
-@@ -792,8 +791,12 @@ static int ipl_scsi(void)
- 
-     debug_print_int("loadparm", loadparm);
-     if (loadparm >= MAX_BOOT_ENTRIES) {
--        puts("loadparm value greater than max number of boot entries allowed");
--        return -EINVAL;
-+        panic("loadparm value greater than max number of boot entries allowed");
-+    }
-+
-+    if (!valid_entries[loadparm]) {
-+        printf("The requested boot entry (%d) is invalid\n", loadparm);
-+        panic("Invalid loadparm");
-     }
- 
-     return zipl_run(&prog_table->entry[loadparm].scsi);
--- 
-2.43.5
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
