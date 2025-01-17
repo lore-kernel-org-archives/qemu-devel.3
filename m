@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976B2C02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD15CC02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYmdL-0001EP-Hr; Fri, 17 Jan 2025 08:43:35 -0500
+	id 1tYmdq-0001lB-6R; Fri, 17 Jan 2025 08:44:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmcv-0000yR-Lj
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:10 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1tYmd0-00012G-8g
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:14 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tYmcq-0002DL-9m
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:09 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-aa67ac42819so328474866b.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:03 -0800 (PST)
+ id 1tYmcw-0002FN-31
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:14 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e9a88793so3563345a12.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737121382; x=1737726182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737121389; x=1737726189; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HMQ58Acbctk4+YTi9iqzJht+eWjui8AFJynO1iL5Mfg=;
- b=l+aJ8gVuW8CAE5GSMBQTjcjALr+Bc3agYqL8WCYxI6HXrLM8sSkrReUEKaAhhj+chd
- o5AyAkjZyHOfa9ZiWIx4mcuhZbUx+W17F7igYP9819pdjBKKN1KplfMWm5AOXYIKGQnC
- cQEcDtYGcUBwAyp88zoB2FuhjMgRk4B5fDCrg3vSE8zfyXgB58TnAySyztPCOozdPnS9
- e07qYQEyMnqMPDGlNHAcnpBDXn4NKjsckNQp16EUFDYqnxjE2Oi5QDkaTXbIEKhqQTMH
- co924p7hjdwpAUGXWG6dQkYDNwszHfDsA8MMTPXeNSeJFjicdTFfZUZeEvuiODnYhjC8
- lyKg==
+ bh=BweiGGrjQIGk1dVGD1ZKLAbH1Kswi6PYCPMuHmp0Q1k=;
+ b=DDqAtGK7KP4hQCqPwlp85M/5Y+UYFxyz1aXhlkvYOks30v0xGzFOXt+4T9WxMltBAs
+ OW0qNr9dsfwvl/mw2xfzW1M8QyJygLY1KFUaJ7aAWZtjTsa7JnsvxnL3ckM4VKN1Q1/J
+ 4hyDgfJx/ElkwuzVhIhhKGVpEsl1t0I7lzsDIYEnwQCLuxD1j0UOiTKZfIdI/+jMWo6G
+ /Mk4CA2w8jqfTCdQFDBCB2tMS8TAWvrqoj04fd0ss/tpbwzrxZQ/vCSf78i81H83YB5c
+ PIej6c23Di/I7HCScjm/8YNY4Fz0m80OYSmOzKn3/H9/R2g5Q9cFV6bextrmZxcnoyyP
+ 7dIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737121382; x=1737726182;
+ d=1e100.net; s=20230601; t=1737121389; x=1737726189;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HMQ58Acbctk4+YTi9iqzJht+eWjui8AFJynO1iL5Mfg=;
- b=WlInPNj/x/EoOiZQ76s4AFRRqTj9oybux7GDmz5MsMXTlOC9/rE+XBG7AsxugGlZaQ
- N7iI7Fc3NYWo2d/tQ7w2yDX+nSJmekEMcQe1pPCudg52B1epClbTQK0Jl4mrZ4sEHOLl
- FbiVuv3EhA4Fj/qj4H3gjlfBLKLANbAje7FkJNosVWAYE/kI0ANEfEWt4cR5AqtspcXX
- H1WvguqlVdXCZ9Tn0B4YEgFpqIFwLlMs6Wj32L1cOpeWm7c68EgPT0lny9ZlYZ+H57Dh
- tE0oyRBlJpr/TfAn0GhQ5BQJEgvjehd4NLWfqg2w8lQ7ABVlP3u5bUH2C+GMjxj7ejSp
- 3kUw==
-X-Gm-Message-State: AOJu0YyBQRcs92kWqygl9o3wqykVirBJ8eoQgRch9DMVWuz3yArZDa+3
- 8yDtIQ0bfriZkRNj21E0VaIEY/X7Wr3qMcXye/bABtdmUnZgohVR767xaEYLkwA=
-X-Gm-Gg: ASbGnctvl+aTdYidyHCjYpO+bcEkxV83lzWf6Fr+q9j1HitqiH1KlQNQlQSN1+N3TuQ
- My1XoRRbTsOPlwAFYQUZ5KZ8O+RzN6R9L5XQpGe/KCRKBAUxevt/Q4uaVpw7rT7pvvOUh0C6v52
- PVJUTdTYNo2HJMliSYwBjjCMBOWdiKZOTRwzXdqv4gJX9CRPlntqVLq3iTlq2unQUq4K2549WNR
- l0ALKpzoVY2P9Qe+8qJxv99QSgqf7CvqHa6OkJ5Utw8gmrhOFYGTVE=
-X-Google-Smtp-Source: AGHT+IGEm1FpSAymfJQwJVLxxPS047LGoXIZhmVZGh9Tm+6w6ppZN6+f0ty5Eyv7IB5iSbAf0EJwQA==
-X-Received: by 2002:a17:907:8691:b0:aa6:7470:8efe with SMTP id
- a640c23a62f3a-ab38b10cf47mr233120366b.13.1737121382318; 
- Fri, 17 Jan 2025 05:43:02 -0800 (PST)
+ bh=BweiGGrjQIGk1dVGD1ZKLAbH1Kswi6PYCPMuHmp0Q1k=;
+ b=tV38+GA+XOWc3cu2fUJPX4a67VrAs/Gczed76jHhbUgHa5YZ0/hk/FJsOS8vHuqsAy
+ DZMhsPTYehem5KBH4ulbaerrDZ5+fcRZUTwinobLlz0JPJ2n/vEPJKr0x++jVz6gaAEu
+ 1KvUHc+PXKOcTtz43KrsxkK/j4LyUY9KoX3+hW7+jiSWQWnwV1GsShlRz5LFUy7fcVNF
+ ma0J/udXvuM54OT0AkpCepSa3P2NLmdVwKvXgyzIBvrObQipjEY3IPp/vRtXIp+NQlN8
+ +e71MPFvKxsq+wJemgLcblMWy7D6A5rpGv4FACJuwepQaAmlWfcvM/m00Xb6xG73ZVoY
+ dRoA==
+X-Gm-Message-State: AOJu0YzmB+HxZQhdGKdNH8S1LtBMpV8APhN6nt+mHamiaO3RY+QwQheH
+ 8Q6nS7H/SK7op1x6UC5pwdXoucL0lF5M5na/NUyw6Kw5ibzrg4TWxmNtc00YVU8=
+X-Gm-Gg: ASbGncvADERGFklDzaPQv/dzyYCv9vTrwTVTl/8WXvzJWMB9QNgcNMiJBWD6ry5TUgh
+ sjHD2uC7Vz6fNsnX598QaCwnSTYD86twJD8sBFsWSxcfg/MfBAROHPe0/dZDCSv8hkb0QPvNlt2
+ iAhQhDSh21+vA4H6I4uBOficVnalZYrqNFNo+Ftdi2OV8rqZg0r3pPVmBs7pMo7e1Fuv1yQsoQ4
+ eKe5MLEa5nRvdTYqsLWwd5IM1RANc7bhI2o+UyeSs4oCu3npwzus3A=
+X-Google-Smtp-Source: AGHT+IFk1+Oy1TOXGZ8g4I9xM1xsQPsj89hmeV58GbW3/ataKNaxDE91kPt5XlcrcA/iTVSlcKfpNQ==
+X-Received: by 2002:a17:907:9450:b0:aa6:9198:75a2 with SMTP id
+ a640c23a62f3a-ab38b3787ecmr244697766b.44.1737121388587; 
+ Fri, 17 Jan 2025 05:43:08 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ab384c5c47bsm174136766b.16.2025.01.17.05.42.59
+ a640c23a62f3a-ab384fcc926sm170193766b.164.2025.01.17.05.43.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 05:43:00 -0800 (PST)
+ Fri, 17 Jan 2025 05:43:07 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9F3976086F;
- Fri, 17 Jan 2025 13:42:57 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 982D5608DF;
+ Fri, 17 Jan 2025 13:42:59 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 08/37] system/vl: more error exit into config enumeration code
-Date: Fri, 17 Jan 2025 13:42:27 +0000
-Message-Id: <20250117134256.2079356-9-alex.bennee@linaro.org>
+Subject: [PULL 28/37] tests/qtest: fix some copy and paste errors in kdoc
+Date: Fri, 17 Jan 2025 13:42:47 +0000
+Message-Id: <20250117134256.2079356-29-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250117134256.2079356-1-alex.bennee@linaro.org>
 References: <20250117134256.2079356-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,91 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All of the failures to configure devices will result in QEMU exiting
-with an error code. In preparation for passing Error * down the chain
-re-name the iterator to foreach_device_config_or_exit and exit using
-&error_fatal instead of returning a failure indication.
+A number of copy and paste kdoc comments are referring to the wrong
+definition. Fix those cases.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250116160306.1709518-9-alex.bennee@linaro.org>
+Message-Id: <20250116160306.1709518-29-alex.bennee@linaro.org>
 
-diff --git a/system/vl.c b/system/vl.c
-index be029c52ef..22c1444da4 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1307,7 +1307,15 @@ static void add_device_config(int type, const char *cmdline)
-     QTAILQ_INSERT_TAIL(&device_configs, conf, next);
- }
+diff --git a/tests/qtest/libqos/qgraph.h b/tests/qtest/libqos/qgraph.h
+index 1b5de02e7b..81fbfdd0e2 100644
+--- a/tests/qtest/libqos/qgraph.h
++++ b/tests/qtest/libqos/qgraph.h
+@@ -355,7 +355,7 @@ void qos_object_start_hw(QOSGraphObject *obj);
+ QOSGraphObject *qos_machine_new(QOSGraphNode *node, QTestState *qts);
  
--static int foreach_device_config(int type, int (*func)(const char *cmdline))
-+/**
-+ * foreach_device_config_or_exit(): process per-device configs
-+ * @type: device_config type
-+ * @func: device specific config function, returning pass/fail
-+ *
-+ * Any failure is fatal and we exit with an error message.
-+ */
-+static void foreach_device_config_or_exit(int type,
-+                                          int (*func)(const char *cmdline))
- {
-     struct device_config *conf;
-     int rc;
-@@ -1319,10 +1327,10 @@ static int foreach_device_config(int type, int (*func)(const char *cmdline))
-         rc = func(conf->cmdline);
-         loc_pop(&conf->loc);
-         if (rc) {
--            return rc;
-+            error_setg(&error_fatal, "failed to configure: %s", conf->cmdline);
-+            exit(1);
-         }
-     }
--    return 0;
- }
+ /**
+- * qos_machine_new(): instantiate a new driver node
++ * qos_driver_new(): instantiate a new driver node
+  * @node: A driver node to be instantiated
+  * @parent: A #QOSGraphObject to be consumed by the new driver node
+  * @alloc: An allocator to be used by the new driver node.
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index f23d80e9e5..fa08c7eca5 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -365,7 +365,7 @@ QDict *qtest_qmp_event_ref(QTestState *s, const char *event);
+ char *qtest_hmp(QTestState *s, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
  
- static void qemu_disable_default_devices(void)
-@@ -2044,12 +2052,9 @@ static void qemu_create_late_backends(void)
-     qemu_opts_foreach(qemu_find_opts("mon"),
-                       mon_init_func, NULL, &error_fatal);
+ /**
+- * qtest_hmpv:
++ * qtest_vhmp:
+  * @s: #QTestState instance to operate on.
+  * @fmt: HMP command to send to QEMU, formats arguments like vsprintf().
+  * @ap: HMP command arguments
+@@ -904,7 +904,7 @@ void qtest_qmp_assert_success(QTestState *qts, const char *fmt, ...)
  
--    if (foreach_device_config(DEV_SERIAL, serial_parse) < 0)
--        exit(1);
--    if (foreach_device_config(DEV_PARALLEL, parallel_parse) < 0)
--        exit(1);
--    if (foreach_device_config(DEV_DEBUGCON, debugcon_parse) < 0)
--        exit(1);
-+    foreach_device_config_or_exit(DEV_SERIAL, serial_parse);
-+    foreach_device_config_or_exit(DEV_PARALLEL, parallel_parse);
-+    foreach_device_config_or_exit(DEV_DEBUGCON, debugcon_parse);
+ #ifndef _WIN32
+ /**
+- * qtest_qmp_fd_assert_success_ref:
++ * qtest_qmp_fds_assert_success_ref:
+  * @qts: QTestState instance to operate on
+  * @fds: the file descriptors to send
+  * @nfds: number of @fds to send
+@@ -921,7 +921,7 @@ QDict *qtest_qmp_fds_assert_success_ref(QTestState *qts, int *fds, size_t nfds,
+     G_GNUC_PRINTF(4, 5);
  
-     /* now chardevs have been created we may have semihosting to connect */
-     qemu_semihosting_chardev_init();
-@@ -2667,8 +2672,7 @@ static void qemu_create_cli_devices(void)
- 
-     /* init USB devices */
-     if (machine_usb(current_machine)) {
--        if (foreach_device_config(DEV_USB, usb_parse) < 0)
--            exit(1);
-+        foreach_device_config_or_exit(DEV_USB, usb_parse);
-     }
- 
-     /* init generic devices */
-@@ -2715,10 +2719,8 @@ static bool qemu_machine_creation_done(Error **errp)
-         exit(1);
-     }
- 
--    if (foreach_device_config(DEV_GDB, gdbserver_start) < 0) {
--        error_setg(errp, "could not start gdbserver");
--        return false;
--    }
-+    foreach_device_config_or_exit(DEV_GDB, gdbserver_start);
-+
-     if (!vga_interface_created && !default_vga &&
-         vga_interface_type != VGA_NONE) {
-         warn_report("A -vga option was passed but this machine "
+ /**
+- * qtest_qmp_fd_assert_success:
++ * qtest_qmp_fds_assert_success:
+  * @qts: QTestState instance to operate on
+  * @fds: the file descriptors to send
+  * @nfds: number of @fds to send
 -- 
 2.39.5
 
