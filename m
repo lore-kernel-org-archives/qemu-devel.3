@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0889EC02183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E56DDC02188
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 18:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYr5l-0005kp-IW; Fri, 17 Jan 2025 13:29:13 -0500
+	id 1tYr24-00048b-5w; Fri, 17 Jan 2025 13:25:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr5f-00050r-0C
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:29:07 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tYr1y-000454-GZ
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:18 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tYr5d-0000FY-2T
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:29:06 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-216728b1836so44552175ad.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:29:04 -0800 (PST)
+ id 1tYr1w-0007sg-7L
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 13:25:18 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-21c2f1b610dso32616045ad.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:25:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1737138543; x=1737743343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1737138315; x=1737743115; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KWp2/JFv2fva2VTRy/d8GxCMMgAUanLYBFx81Z63oKk=;
- b=V8KaUMTkGiukZ731Py50F1jIl2aGlOoq/Oxrm5+m/IY0tYy9nFbsak9W6fAy5jJkH/
- E7PeUcMEV4kRhEGl3tOD+CFuuZNCC8PYXAnQkzMP6lzFmg2147oE5Ff8E7OgQQYu+e7Z
- fRNuXEE/HjbeA5dpQu4DcM4+FkH+gxHjw5DViqqchb/QK6pP2wTYPg4aDUU8BhKCVMt6
- IvIWTfw7DUh+5q0K8ecXXtWhA4OpzgiH8bBmI3rbikaBwaBteQBNKY16VK8iAk8G35MX
- imoRgIVxZLqmfvGL2kRxCKUE8se38prj8c6FnA/krvYBMRdOwOoow4AVQ5Yz3F3Lz1px
- ZskA==
+ bh=lE0h923NoKk15/QsPZdut8ARp6zLfAFkgoa9rjgCwZY=;
+ b=oOj4XhmkNBG0Fra/WOqarJYl8o4BIdaStaa8dMwSL1Uw6qpTwuE7Ni97vCwOU9vNya
+ wMIUi6CyAemSvpp8EThc3h5WoGNC2MgbCaCs26YWZBsoV41FGCMtZ2xNRTQ10qP1CRYh
+ BLgLMXMH/7us6Sg03aW/odTrOWLXzm8EpaLutfXBHkpnUA61WD64+OkSSVg00HluX/h6
+ NqK4F2nFt9wi2RV2qQny4vCshpqeh/AVUlQYNZtJjXNWH4htLbiut4RWxps+R0S8RvgQ
+ NqkuvN6XkwasqgjYjk3DZRNV/D/GbfmDRALGJTvXCTHgeUxdFfVw4hMd2nHIay0ECSMN
+ 2O3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737138543; x=1737743343;
+ d=1e100.net; s=20230601; t=1737138315; x=1737743115;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KWp2/JFv2fva2VTRy/d8GxCMMgAUanLYBFx81Z63oKk=;
- b=QjyxLplLc2MuPPw89iqDIFefZYx9SdKAuN4Ey4DhlEP2alVIaafe2Aoq+J0X/KO69G
- ATWo0mx/wRp972z29Q9a6YHXQJFciI78USkEuFWQeTzYjePwijAYkeQ1dMt18wdOFznv
- pmHE/grxaMIqJAyzEFve+cgxckNRfePsgPjsloKF+G8yLg3FnFUtNKrtsIPBypVNENDx
- 3F18KBxm6ytT6lg+ACBZAzNvj05s/xFZfOyH9ldkKE2gXuO/CFkqwMya15cNoceFn8JI
- C10YXBRg1jKeKfOMDTzApqOV4FzeFP1/jEF5UeVWhPMqxFwx6F3dPC3KKb5d8Qs0YUnR
- vUhA==
-X-Gm-Message-State: AOJu0YwAUbbgFKWpPtd+SFFYD9qpofWHxwK9dGO56NQxU28HxiROArFo
- G/Q4yEuhghpRVCcDnvloAfEfP6btpVqGvgkJkLZwqMauQXsbKG1bhEbG8/ADN3kjifAdKM6cUkW
- h
-X-Gm-Gg: ASbGncukrp0mY/VB2bg49hw6NISl5eQFVY99wcC/67qX7xVyfTOoXtpmHyjds2wYows
- 3/6Z0nRFH+2onFSj8GeJjyP5iX92bHBsJglppUE/BD/AT1DTggZYXSQRFFjh6XGvo2QiwpleBY8
- pHSaDYcf3g+dvJCAQhx8x4/XAIrSRkYoQuCaSY0f65WGCtZdXIrOH7ZvOpc17Pw1VEYYz6p9m/K
- 0qYD0SxZj5TIlOZndAh+5kcLrD1dRBloBn47GDKe/H4H7iR1gIUY9+5WBQCphilOCnKJ4OuJ9+e
- oIs7pssEFQxFfZ8=
-X-Google-Smtp-Source: AGHT+IE0DQs4nFw2lwWbJskcnD31LHQgyDTjZh5a0pKrUIv6SHuOU9mgHqEkSJjDVwf5My6OXt+yUw==
-X-Received: by 2002:a17:90b:3503:b0:2ea:61de:38f7 with SMTP id
- 98e67ed59e1d1-2f782d59adbmr5059850a91.29.1737138543528; 
- Fri, 17 Jan 2025 10:29:03 -0800 (PST)
+ bh=lE0h923NoKk15/QsPZdut8ARp6zLfAFkgoa9rjgCwZY=;
+ b=bipZRKGG7m9CSbJzBk+suIsv/3PmpSGA54OKUDgZbzKv419x9p0o7FUClE5B+Evaws
+ xeZ2m7HB1cOmj9RsRn+NWnobeijcDyZPVAatcdCZ70ho5csmUSf4hZQT+GWjIq2zGEhN
+ gbpM8hm6DKWHaMWJUF5UzpDXA5DMqMr3FS+Xbd+V7trgos0hJTBRIrnhRsXFZqZMMdFd
+ 3zSCcGC7kIyex5AdrDbIGG6HcWgo+QHm0gpe2zKzsUhvJUNIYynGdPcvMtgCzkkU/Vy6
+ DWra5GKZyn/nk6CRsjtIvp9/yQfoqN+5Wv5K9XjJsJplV3LC1jh+q2gSr8AMAgyB9tr+
+ TZZw==
+X-Gm-Message-State: AOJu0YyznSyrfquY5gjran3oiPIXqBnP26c5dYigrkSKnIXXyuuDa+0i
+ 3fgF59OJAaBGHTIVqDuzEWjXLBTdNCAsZBnHF44nokDqc/MQxMRPrSi3uDkdNwYy/PI64371G31
+ A
+X-Gm-Gg: ASbGncvvJjaRphvBuThpqOiRP/2Sluhj77iZFN4fpvCUDl1tx3WNlZtG6IkUR6qRPTQ
+ gX3hduRURzspqHK12+en3DtOotzRzV87d0tIviKfUVAgTIoLutno5BCSnA5QFzEeYfjRrnVOMBy
+ v3FHPKzOwrvOH4sgCsguGkDYsVtgacSD62hUpwotB/43n9bcG1VgRe6YLVWZmkxFJE8f6QGw/5t
+ hwVRNPfTHEGJWlRIzqyxhosST3SJDOtsZXEnU3hoNX8IWcCPHXzcQKB7/Ih0FHSEzNtuI1OF6/G
+ QNJvToU0DVihcDw=
+X-Google-Smtp-Source: AGHT+IFSzXtgnG+7ZWFk4SjbEHTBPzVt6Vvke0KNH55mcSuEdfKW88K7IQox+z/Q12ORLGPasKRjeQ==
+X-Received: by 2002:a17:902:e810:b0:215:a412:4f12 with SMTP id
+ d9443c01a7336-21c355bfa7cmr53360625ad.33.1737138314806; 
+ Fri, 17 Jan 2025 10:25:14 -0800 (PST)
 Received: from stoup.. (174-21-71-127.tukw.qwest.net. [174.21.71.127])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f77629bf96sm2614105a91.36.2025.01.17.10.29.03
+ d9443c01a7336-21c2d3acccesm18879005ad.123.2025.01.17.10.25.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jan 2025 10:29:03 -0800 (PST)
+ Fri, 17 Jan 2025 10:25:14 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 51/68] tcg/arm: Add full [US]XT[BH] into {s}extract
-Date: Fri, 17 Jan 2025 10:24:39 -0800
-Message-ID: <20250117182456.2077110-52-richard.henderson@linaro.org>
+Subject: [PULL 23/68] tcg/i386: Extract TCG_TARGET_HAS_foo defs to
+ 'tcg-target-has.h'
+Date: Fri, 17 Jan 2025 10:24:11 -0800
+Message-ID: <20250117182456.2077110-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250117182456.2077110-1-richard.henderson@linaro.org>
 References: <20250117182456.2077110-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,126 +101,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The armv6 uxt and sxt opcodes have a 2-bit rotate field
-which supports extractions from ofs = {0,8,16,24}.
-Special case ofs = 0, len <= 8 as AND.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250108215156.8731-6-philmd@linaro.org>
 ---
- tcg/arm/tcg-target-has.h | 21 ++++++++++++++--
- tcg/arm/tcg-target.c.inc | 54 +++++++++++++++++++++++++++++++++++-----
- 2 files changed, 67 insertions(+), 8 deletions(-)
+ tcg/i386/tcg-target-has.h | 139 ++++++++++++++++++++++++++++++++++++++
+ tcg/i386/tcg-target.h     | 129 +----------------------------------
+ 2 files changed, 140 insertions(+), 128 deletions(-)
+ create mode 100644 tcg/i386/tcg-target-has.h
 
-diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
-index 316185500d..d9f3311102 100644
---- a/tcg/arm/tcg-target-has.h
-+++ b/tcg/arm/tcg-target-has.h
-@@ -41,8 +41,8 @@ extern bool use_neon_instructions;
- #define TCG_TARGET_HAS_ctz_i32          use_armv7_instructions
- #define TCG_TARGET_HAS_ctpop_i32        0
- #define TCG_TARGET_HAS_deposit_i32      use_armv7_instructions
--#define TCG_TARGET_HAS_extract_i32      use_armv7_instructions
--#define TCG_TARGET_HAS_sextract_i32     use_armv7_instructions
+diff --git a/tcg/i386/tcg-target-has.h b/tcg/i386/tcg-target-has.h
+new file mode 100644
+index 0000000000..3ea2eab807
+--- /dev/null
++++ b/tcg/i386/tcg-target-has.h
+@@ -0,0 +1,139 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Define target-specific opcode support
++ * Copyright (c) 2008 Fabrice Bellard
++ */
++
++#ifndef TCG_TARGET_HAS_H
++#define TCG_TARGET_HAS_H
++
++#include "host/cpuinfo.h"
++
++#define have_bmi1         (cpuinfo & CPUINFO_BMI1)
++#define have_popcnt       (cpuinfo & CPUINFO_POPCNT)
++#define have_avx1         (cpuinfo & CPUINFO_AVX1)
++#define have_avx2         (cpuinfo & CPUINFO_AVX2)
++#define have_movbe        (cpuinfo & CPUINFO_MOVBE)
++
++/*
++ * There are interesting instructions in AVX512, so long as we have AVX512VL,
++ * which indicates support for EVEX on sizes smaller than 512 bits.
++ */
++#define have_avx512vl     ((cpuinfo & CPUINFO_AVX512VL) && \
++                           (cpuinfo & CPUINFO_AVX512F))
++#define have_avx512bw     ((cpuinfo & CPUINFO_AVX512BW) && have_avx512vl)
++#define have_avx512dq     ((cpuinfo & CPUINFO_AVX512DQ) && have_avx512vl)
++#define have_avx512vbmi2  ((cpuinfo & CPUINFO_AVX512VBMI2) && have_avx512vl)
++
++/* optional instructions */
++#define TCG_TARGET_HAS_div2_i32         1
++#define TCG_TARGET_HAS_rot_i32          1
++#define TCG_TARGET_HAS_ext8s_i32        1
++#define TCG_TARGET_HAS_ext16s_i32       1
++#define TCG_TARGET_HAS_ext8u_i32        1
++#define TCG_TARGET_HAS_ext16u_i32       1
++#define TCG_TARGET_HAS_bswap16_i32      1
++#define TCG_TARGET_HAS_bswap32_i32      1
++#define TCG_TARGET_HAS_not_i32          1
++#define TCG_TARGET_HAS_andc_i32         have_bmi1
++#define TCG_TARGET_HAS_orc_i32          0
++#define TCG_TARGET_HAS_eqv_i32          0
++#define TCG_TARGET_HAS_nand_i32         0
++#define TCG_TARGET_HAS_nor_i32          0
++#define TCG_TARGET_HAS_clz_i32          1
++#define TCG_TARGET_HAS_ctz_i32          1
++#define TCG_TARGET_HAS_ctpop_i32        have_popcnt
++#define TCG_TARGET_HAS_deposit_i32      1
 +#define TCG_TARGET_HAS_extract_i32      1
 +#define TCG_TARGET_HAS_sextract_i32     1
- #define TCG_TARGET_HAS_extract2_i32     1
- #define TCG_TARGET_HAS_negsetcond_i32   1
- #define TCG_TARGET_HAS_mulu2_i32        1
-@@ -82,4 +82,21 @@ extern bool use_neon_instructions;
- #define TCG_TARGET_HAS_cmpsel_vec       0
- #define TCG_TARGET_HAS_tst_vec          1
++#define TCG_TARGET_HAS_extract2_i32     1
++#define TCG_TARGET_HAS_negsetcond_i32   1
++#define TCG_TARGET_HAS_add2_i32         1
++#define TCG_TARGET_HAS_sub2_i32         1
++#define TCG_TARGET_HAS_mulu2_i32        1
++#define TCG_TARGET_HAS_muls2_i32        1
++#define TCG_TARGET_HAS_muluh_i32        0
++#define TCG_TARGET_HAS_mulsh_i32        0
++
++#if TCG_TARGET_REG_BITS == 64
++/* Keep 32-bit values zero-extended in a register.  */
++#define TCG_TARGET_HAS_extr_i64_i32     1
++#define TCG_TARGET_HAS_div2_i64         1
++#define TCG_TARGET_HAS_rot_i64          1
++#define TCG_TARGET_HAS_ext8s_i64        1
++#define TCG_TARGET_HAS_ext16s_i64       1
++#define TCG_TARGET_HAS_ext32s_i64       1
++#define TCG_TARGET_HAS_ext8u_i64        1
++#define TCG_TARGET_HAS_ext16u_i64       1
++#define TCG_TARGET_HAS_ext32u_i64       1
++#define TCG_TARGET_HAS_bswap16_i64      1
++#define TCG_TARGET_HAS_bswap32_i64      1
++#define TCG_TARGET_HAS_bswap64_i64      1
++#define TCG_TARGET_HAS_not_i64          1
++#define TCG_TARGET_HAS_andc_i64         have_bmi1
++#define TCG_TARGET_HAS_orc_i64          0
++#define TCG_TARGET_HAS_eqv_i64          0
++#define TCG_TARGET_HAS_nand_i64         0
++#define TCG_TARGET_HAS_nor_i64          0
++#define TCG_TARGET_HAS_clz_i64          1
++#define TCG_TARGET_HAS_ctz_i64          1
++#define TCG_TARGET_HAS_ctpop_i64        have_popcnt
++#define TCG_TARGET_HAS_deposit_i64      1
++#define TCG_TARGET_HAS_extract_i64      1
++#define TCG_TARGET_HAS_sextract_i64     0
++#define TCG_TARGET_HAS_extract2_i64     1
++#define TCG_TARGET_HAS_negsetcond_i64   1
++#define TCG_TARGET_HAS_add2_i64         1
++#define TCG_TARGET_HAS_sub2_i64         1
++#define TCG_TARGET_HAS_mulu2_i64        1
++#define TCG_TARGET_HAS_muls2_i64        1
++#define TCG_TARGET_HAS_muluh_i64        0
++#define TCG_TARGET_HAS_mulsh_i64        0
++#define TCG_TARGET_HAS_qemu_st8_i32     0
++#else
++#define TCG_TARGET_HAS_qemu_st8_i32     1
++#endif
++
++#define TCG_TARGET_HAS_qemu_ldst_i128 \
++    (TCG_TARGET_REG_BITS == 64 && (cpuinfo & CPUINFO_ATOMIC_VMOVDQA))
++
++#define TCG_TARGET_HAS_tst              1
++
++/* We do not support older SSE systems, only beginning with AVX1.  */
++#define TCG_TARGET_HAS_v64              have_avx1
++#define TCG_TARGET_HAS_v128             have_avx1
++#define TCG_TARGET_HAS_v256             have_avx2
++
++#define TCG_TARGET_HAS_andc_vec         1
++#define TCG_TARGET_HAS_orc_vec          have_avx512vl
++#define TCG_TARGET_HAS_nand_vec         have_avx512vl
++#define TCG_TARGET_HAS_nor_vec          have_avx512vl
++#define TCG_TARGET_HAS_eqv_vec          have_avx512vl
++#define TCG_TARGET_HAS_not_vec          have_avx512vl
++#define TCG_TARGET_HAS_neg_vec          0
++#define TCG_TARGET_HAS_abs_vec          1
++#define TCG_TARGET_HAS_roti_vec         have_avx512vl
++#define TCG_TARGET_HAS_rots_vec         0
++#define TCG_TARGET_HAS_rotv_vec         have_avx512vl
++#define TCG_TARGET_HAS_shi_vec          1
++#define TCG_TARGET_HAS_shs_vec          1
++#define TCG_TARGET_HAS_shv_vec          have_avx2
++#define TCG_TARGET_HAS_mul_vec          1
++#define TCG_TARGET_HAS_sat_vec          1
++#define TCG_TARGET_HAS_minmax_vec       1
++#define TCG_TARGET_HAS_bitsel_vec       have_avx512vl
++#define TCG_TARGET_HAS_cmpsel_vec       1
++#define TCG_TARGET_HAS_tst_vec          have_avx512bw
++
++#define TCG_TARGET_deposit_i32_valid(ofs, len) \
++    (((ofs) == 0 && ((len) == 8 || (len) == 16)) || \
++     (TCG_TARGET_REG_BITS == 32 && (ofs) == 8 && (len) == 8))
++#define TCG_TARGET_deposit_i64_valid    TCG_TARGET_deposit_i32_valid
++
++/* Check for the possibility of high-byte extraction and, for 64-bit,
++   zero-extending 32-bit right-shift.  */
++#define TCG_TARGET_extract_i32_valid(ofs, len) ((ofs) == 8 && (len) == 8)
++#define TCG_TARGET_extract_i64_valid(ofs, len) \
++    (((ofs) == 8 && (len) == 8) || ((ofs) + (len)) == 32)
++
++#endif
+diff --git a/tcg/i386/tcg-target.h b/tcg/i386/tcg-target.h
+index 9961d8e757..a1dfdeb28d 100644
+--- a/tcg/i386/tcg-target.h
++++ b/tcg/i386/tcg-target.h
+@@ -25,8 +25,6 @@
+ #ifndef I386_TCG_TARGET_H
+ #define I386_TCG_TARGET_H
  
-+static inline bool
-+tcg_target_extract_valid(TCGType type, unsigned ofs, unsigned len)
-+{
-+    if (use_armv7_instructions) {
-+        return true;  /* SBFX or UBFX */
-+    }
-+    switch (len) {
-+    case 8:   /* SXTB or UXTB */
-+    case 16:  /* SXTH or UXTH */
-+        return (ofs % 8) == 0;
-+    }
-+    return false;
-+}
-+
-+#define TCG_TARGET_extract_valid   tcg_target_extract_valid
-+#define TCG_TARGET_sextract_valid  tcg_target_extract_valid
-+
- #endif
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 9cfb733a14..12dad7307f 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1036,19 +1036,61 @@ static void tcg_out_deposit(TCGContext *s, ARMCond cond, TCGReg rd,
- static void tcg_out_extract(TCGContext *s, ARMCond cond, TCGReg rd,
-                             TCGReg rn, int ofs, int len)
- {
--    /* ubfx */
--    tcg_out32(s, 0x07e00050 | (cond << 28) | (rd << 12) | rn
--              | (ofs << 7) | ((len - 1) << 16));
-+    /* According to gcc, AND can be faster. */
-+    if (ofs == 0 && len <= 8) {
-+        tcg_out_dat_imm(s, cond, ARITH_AND, rd, rn,
-+                        encode_imm_nofail((1 << len) - 1));
-+        return;
-+    }
-+
-+    if (use_armv7_instructions) {
-+        /* ubfx */
-+        tcg_out32(s, 0x07e00050 | (cond << 28) | (rd << 12) | rn
-+                  | (ofs << 7) | ((len - 1) << 16));
-+        return;
-+    }
-+
-+    assert(ofs % 8 == 0);
-+    switch (len) {
-+    case 8:
-+        /* uxtb */
-+        tcg_out32(s, 0x06ef0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
-+        break;
-+    case 16:
-+        /* uxth */
-+        tcg_out32(s, 0x06ff0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- }
+-#include "host/cpuinfo.h"
+-
+ #define TCG_TARGET_INSN_UNIT_SIZE  1
  
- static void tcg_out_sextract(TCGContext *s, ARMCond cond, TCGReg rd,
-                              TCGReg rn, int ofs, int len)
- {
--    /* sbfx */
--    tcg_out32(s, 0x07a00050 | (cond << 28) | (rd << 12) | rn
--              | (ofs << 7) | ((len - 1) << 16));
-+    if (use_armv7_instructions) {
-+        /* sbfx */
-+        tcg_out32(s, 0x07a00050 | (cond << 28) | (rd << 12) | rn
-+                  | (ofs << 7) | ((len - 1) << 16));
-+        return;
-+    }
-+
-+    assert(ofs % 8 == 0);
-+    switch (len) {
-+    case 8:
-+        /* sxtb */
-+        tcg_out32(s, 0x06af0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
-+        break;
-+    case 16:
-+        /* sxth */
-+        tcg_out32(s, 0x06bf0070 | (cond << 28) | (rd << 12) | (ofs << 7) | rn);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- }
+ #ifdef __x86_64__
+@@ -90,132 +88,7 @@ typedef enum {
+     TCG_REG_CALL_STACK = TCG_REG_ESP
+ } TCGReg;
  
-+
- static void tcg_out_ld32u(TCGContext *s, ARMCond cond,
-                           TCGReg rd, TCGReg rn, int32_t offset)
- {
+-#define have_bmi1         (cpuinfo & CPUINFO_BMI1)
+-#define have_popcnt       (cpuinfo & CPUINFO_POPCNT)
+-#define have_avx1         (cpuinfo & CPUINFO_AVX1)
+-#define have_avx2         (cpuinfo & CPUINFO_AVX2)
+-#define have_movbe        (cpuinfo & CPUINFO_MOVBE)
+-
+-/*
+- * There are interesting instructions in AVX512, so long as we have AVX512VL,
+- * which indicates support for EVEX on sizes smaller than 512 bits.
+- */
+-#define have_avx512vl     ((cpuinfo & CPUINFO_AVX512VL) && \
+-                           (cpuinfo & CPUINFO_AVX512F))
+-#define have_avx512bw     ((cpuinfo & CPUINFO_AVX512BW) && have_avx512vl)
+-#define have_avx512dq     ((cpuinfo & CPUINFO_AVX512DQ) && have_avx512vl)
+-#define have_avx512vbmi2  ((cpuinfo & CPUINFO_AVX512VBMI2) && have_avx512vl)
+-
+-/* optional instructions */
+-#define TCG_TARGET_HAS_div2_i32         1
+-#define TCG_TARGET_HAS_rot_i32          1
+-#define TCG_TARGET_HAS_ext8s_i32        1
+-#define TCG_TARGET_HAS_ext16s_i32       1
+-#define TCG_TARGET_HAS_ext8u_i32        1
+-#define TCG_TARGET_HAS_ext16u_i32       1
+-#define TCG_TARGET_HAS_bswap16_i32      1
+-#define TCG_TARGET_HAS_bswap32_i32      1
+-#define TCG_TARGET_HAS_not_i32          1
+-#define TCG_TARGET_HAS_andc_i32         have_bmi1
+-#define TCG_TARGET_HAS_orc_i32          0
+-#define TCG_TARGET_HAS_eqv_i32          0
+-#define TCG_TARGET_HAS_nand_i32         0
+-#define TCG_TARGET_HAS_nor_i32          0
+-#define TCG_TARGET_HAS_clz_i32          1
+-#define TCG_TARGET_HAS_ctz_i32          1
+-#define TCG_TARGET_HAS_ctpop_i32        have_popcnt
+-#define TCG_TARGET_HAS_deposit_i32      1
+-#define TCG_TARGET_HAS_extract_i32      1
+-#define TCG_TARGET_HAS_sextract_i32     1
+-#define TCG_TARGET_HAS_extract2_i32     1
+-#define TCG_TARGET_HAS_negsetcond_i32   1
+-#define TCG_TARGET_HAS_add2_i32         1
+-#define TCG_TARGET_HAS_sub2_i32         1
+-#define TCG_TARGET_HAS_mulu2_i32        1
+-#define TCG_TARGET_HAS_muls2_i32        1
+-#define TCG_TARGET_HAS_muluh_i32        0
+-#define TCG_TARGET_HAS_mulsh_i32        0
+-
+-#if TCG_TARGET_REG_BITS == 64
+-/* Keep 32-bit values zero-extended in a register.  */
+-#define TCG_TARGET_HAS_extr_i64_i32     1
+-#define TCG_TARGET_HAS_div2_i64         1
+-#define TCG_TARGET_HAS_rot_i64          1
+-#define TCG_TARGET_HAS_ext8s_i64        1
+-#define TCG_TARGET_HAS_ext16s_i64       1
+-#define TCG_TARGET_HAS_ext32s_i64       1
+-#define TCG_TARGET_HAS_ext8u_i64        1
+-#define TCG_TARGET_HAS_ext16u_i64       1
+-#define TCG_TARGET_HAS_ext32u_i64       1
+-#define TCG_TARGET_HAS_bswap16_i64      1
+-#define TCG_TARGET_HAS_bswap32_i64      1
+-#define TCG_TARGET_HAS_bswap64_i64      1
+-#define TCG_TARGET_HAS_not_i64          1
+-#define TCG_TARGET_HAS_andc_i64         have_bmi1
+-#define TCG_TARGET_HAS_orc_i64          0
+-#define TCG_TARGET_HAS_eqv_i64          0
+-#define TCG_TARGET_HAS_nand_i64         0
+-#define TCG_TARGET_HAS_nor_i64          0
+-#define TCG_TARGET_HAS_clz_i64          1
+-#define TCG_TARGET_HAS_ctz_i64          1
+-#define TCG_TARGET_HAS_ctpop_i64        have_popcnt
+-#define TCG_TARGET_HAS_deposit_i64      1
+-#define TCG_TARGET_HAS_extract_i64      1
+-#define TCG_TARGET_HAS_sextract_i64     0
+-#define TCG_TARGET_HAS_extract2_i64     1
+-#define TCG_TARGET_HAS_negsetcond_i64   1
+-#define TCG_TARGET_HAS_add2_i64         1
+-#define TCG_TARGET_HAS_sub2_i64         1
+-#define TCG_TARGET_HAS_mulu2_i64        1
+-#define TCG_TARGET_HAS_muls2_i64        1
+-#define TCG_TARGET_HAS_muluh_i64        0
+-#define TCG_TARGET_HAS_mulsh_i64        0
+-#define TCG_TARGET_HAS_qemu_st8_i32     0
+-#else
+-#define TCG_TARGET_HAS_qemu_st8_i32     1
+-#endif
+-
+-#define TCG_TARGET_HAS_qemu_ldst_i128 \
+-    (TCG_TARGET_REG_BITS == 64 && (cpuinfo & CPUINFO_ATOMIC_VMOVDQA))
+-
+-#define TCG_TARGET_HAS_tst              1
+-
+-/* We do not support older SSE systems, only beginning with AVX1.  */
+-#define TCG_TARGET_HAS_v64              have_avx1
+-#define TCG_TARGET_HAS_v128             have_avx1
+-#define TCG_TARGET_HAS_v256             have_avx2
+-
+-#define TCG_TARGET_HAS_andc_vec         1
+-#define TCG_TARGET_HAS_orc_vec          have_avx512vl
+-#define TCG_TARGET_HAS_nand_vec         have_avx512vl
+-#define TCG_TARGET_HAS_nor_vec          have_avx512vl
+-#define TCG_TARGET_HAS_eqv_vec          have_avx512vl
+-#define TCG_TARGET_HAS_not_vec          have_avx512vl
+-#define TCG_TARGET_HAS_neg_vec          0
+-#define TCG_TARGET_HAS_abs_vec          1
+-#define TCG_TARGET_HAS_roti_vec         have_avx512vl
+-#define TCG_TARGET_HAS_rots_vec         0
+-#define TCG_TARGET_HAS_rotv_vec         have_avx512vl
+-#define TCG_TARGET_HAS_shi_vec          1
+-#define TCG_TARGET_HAS_shs_vec          1
+-#define TCG_TARGET_HAS_shv_vec          have_avx2
+-#define TCG_TARGET_HAS_mul_vec          1
+-#define TCG_TARGET_HAS_sat_vec          1
+-#define TCG_TARGET_HAS_minmax_vec       1
+-#define TCG_TARGET_HAS_bitsel_vec       have_avx512vl
+-#define TCG_TARGET_HAS_cmpsel_vec       1
+-#define TCG_TARGET_HAS_tst_vec          have_avx512bw
+-
+-#define TCG_TARGET_deposit_i32_valid(ofs, len) \
+-    (((ofs) == 0 && ((len) == 8 || (len) == 16)) || \
+-     (TCG_TARGET_REG_BITS == 32 && (ofs) == 8 && (len) == 8))
+-#define TCG_TARGET_deposit_i64_valid    TCG_TARGET_deposit_i32_valid
+-
+-/* Check for the possibility of high-byte extraction and, for 64-bit,
+-   zero-extending 32-bit right-shift.  */
+-#define TCG_TARGET_extract_i32_valid(ofs, len) ((ofs) == 8 && (len) == 8)
+-#define TCG_TARGET_extract_i64_valid(ofs, len) \
+-    (((ofs) == 8 && (len) == 8) || ((ofs) + (len)) == 32)
++#include "tcg-target-has.h"
+ 
+ /* This defines the natural memory order supported by this
+  * architecture before guarantees made by various barrier
 -- 
 2.43.0
 
