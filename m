@@ -4,147 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB2FC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 08:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3537EC02185
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 09:01:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYiBR-0000fD-7y; Fri, 17 Jan 2025 03:58:29 -0500
+	id 1tYiDw-0001pq-9n; Fri, 17 Jan 2025 04:01:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiBM-0000eG-Oi
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:58:25 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tYiDs-0001pF-6G
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:01:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tYiBK-0007We-6y
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 03:58:23 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tYiDm-000828-8p
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 04:00:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737104300;
+ s=mimecast20190719; t=1737104453;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qPhFJxodvztzGMzbdk93Hqb7J69Qqw307bcQi5zBzbc=;
- b=hFWcaZw9G1f3cb6QO71z728o7BFnYWkiYmDnBBuFbcgXNOA8inC4RLooDfkZHEJY0tgTMM
- nWqyLlQbgZ6TlkuzmSeSvTeOr77JgEm/H8I0xxiIcCUalK9M7SPaLhJXsUpIjDlxgkOxch
- 8rc5icyFPiqO8aV0Ya2sRs57ViXatKs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lochbdNwgn2xiZvOYaiCH7K0XCGeWnITWJQQX3Wahbs=;
+ b=KC72wE1djLjpf0wCNVUTTw1xWw8xmd8hJvmMQGmmT0bXpW3haY3NYnzBupg2y0fjH++8f1
+ mSvyiFqgWb5OAm2hrjCCtFmp4pfB6GfbsXtW+s93+YT5+kSHfCI39Zje37IwC1KGZuSAdU
+ ZH+RpyyUdje1kxOR/4ut1sEtVjxKu6g=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-XLpCegtTOEOO8GyKM3Gsfg-1; Fri, 17 Jan 2025 03:58:18 -0500
-X-MC-Unique: XLpCegtTOEOO8GyKM3Gsfg-1
-X-Mimecast-MFC-AGG-ID: XLpCegtTOEOO8GyKM3Gsfg
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385d80576abso1388605f8f.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 00:58:18 -0800 (PST)
+ us-mta-447-_uw4hkzgOpC7Gv7UEDcs_Q-1; Fri, 17 Jan 2025 04:00:52 -0500
+X-MC-Unique: _uw4hkzgOpC7Gv7UEDcs_Q-1
+X-Mimecast-MFC-AGG-ID: _uw4hkzgOpC7Gv7UEDcs_Q
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-aa68203d288so144594466b.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 01:00:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1737104297; x=1737709097;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1737104450; x=1737709250;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qPhFJxodvztzGMzbdk93Hqb7J69Qqw307bcQi5zBzbc=;
- b=CPGCQWfa4YCHicXpAuSo7LBaTH8BfkQm7gck3P6PLX6fIZnZLEplInx7U1oxgxoUbM
- 1YVdFlvEpN4SNCb+E2ckZtmKoZa+VXkgbxlRg1ToGvJT7BpER8MeOUAr3wk+SQWqr9Lh
- 7dMLnGafTTXy2InsLk3PVFBw7nkkI1/XS8EhTsoL12P8rPGdCZQ3b9IQKsZenOu9QdRB
- eAsOsUqIZi9JwbnMdMUWiLK9YqIrJPDyEhiXSjGDwWz7QNe/HqxU82Uxn23CzX+/vW5M
- 2DaY2NK7USzBJVmslYzbL1tkzLJ7W28zi69/gsJV1LrhP2xWbaRqJEgqJU6gn2mthiIv
- Iq6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZBAnReL6zoHh7SKjWZXRQtICbd1HXt8kaTISvt1dskRVehkpP2jLz0ztdRwGVRJmL7fzQFYMP5f72@nongnu.org
-X-Gm-Message-State: AOJu0YyzAncETW/lcZWtYaBGm0osDdEVqyVPtXE3EAbLRTPAFOCE5ADO
- QgpExLB+3cgoS8FLgm0EWkyD2FLQ2Xmn9+TAFE4Stpih0Teq44oXFv0A4N6fpZJq0HARwnxQPfb
- mUY39F/AAxzX6vysvr7TgjprSiI46OgeJAYTyr7iqywyDJYp3uC0m
-X-Gm-Gg: ASbGncvPWji6bMJBL9RXepSYi19LqK10F9bjYx0RUxPKvI+Ip/ROkZbzQpUIttMi9rZ
- vJpzS8vnZsofhc4SuUKs6r7vyfQb1cWIHDEHQpD5w4vuK9747K/PRY88ZHCu/mszcZBIH0iL56s
- Z+4RFaBUwhBuqOEhBqclHeu+WMPZj5T+jxTySVqSo4F047Q+Y5FbFNHE43N3oxbCHJtjEO3tHKX
- jcjoWGoaaANPUXE6gcqUmZl4y1X0CsdFKwlcbQT2ps62UcY1JXp7VrempibuvIEsMSGhp/hnk3F
- pNmQQeFByy47
-X-Received: by 2002:a5d:6489:0:b0:385:f6f4:f8e with SMTP id
- ffacd0b85a97d-38bf57bd824mr1270205f8f.50.1737104297267; 
- Fri, 17 Jan 2025 00:58:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF7xMV/NrIJrF4+hxR2xkLqMfYMSgbk91HLkhKQ6glrBcn+T1OwXTsm4Zg8v/rNYGil5cMHQg==
-X-Received: by 2002:a5d:6489:0:b0:385:f6f4:f8e with SMTP id
- ffacd0b85a97d-38bf57bd824mr1270180f8f.50.1737104296788; 
- Fri, 17 Jan 2025 00:58:16 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-51-119.web.vodafone.de.
- [109.42.51.119]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38bf3214fbdsm2004184f8f.19.2025.01.17.00.58.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jan 2025 00:58:16 -0800 (PST)
-Message-ID: <75e7805f-1ffa-421d-9415-5132131d80a7@redhat.com>
-Date: Fri, 17 Jan 2025 09:58:14 +0100
+ bh=lochbdNwgn2xiZvOYaiCH7K0XCGeWnITWJQQX3Wahbs=;
+ b=dpDmrh3/hGSbSGrasSnTRfqEB5PoDLPVV/jUdVD9u5vpR3mGPbkQ77KsXAnV0yeZHD
+ lX6RC1HGkNo42hcEIh9FfyoSRai0MwMhraWMo3IspgXVY+wmFPLZEUVCbqpO/SYjABKJ
+ DvLtOJwy86MoQ1BA8qThYFh4f2D2oeLyMszsTzN4/SN5VapsjgdRiD6qOz0OH0NZNa3N
+ JLYD0rr9iLneNJRWiR0z5ftDT0L2u8Y9ZMZUjDUORUeiQfhZhYoziI6tKCM5LfvcXL+2
+ 7TwTHynYF7ed0mWbYJT8iL9JXgrWkLvjZl9XpPyt24taCKosZAAEeTo//7kShWyfXAka
+ IonA==
+X-Gm-Message-State: AOJu0Yz70pPofjv6A3BHEMz3u9Am6rwZVpwRQNGVLj6w1mOGClJueVYB
+ rMkIHBUf0/lwcMopntqTKm6kpGVUmSHXqeO/39jEbn7gqFrg7TZqVEFBFHdLBFoT8EiKmxQLya9
+ hZk1NIJnSnS0tu6FbCyuQw7VLw38aRLsH5xq6Smwxy+zAgMNN1v6ptIzuxry0mMfDmTIo9gXP8j
+ +LSwAqfDyX7wxBKV6Xm9vn6ID7nGOzFR1Cs4eINrI=
+X-Gm-Gg: ASbGncsLx+EFWt8c6MflHkmi9iMPLRZOrdbJrSt7suD3JXhVRkGpxNfQRSU8WHthSwX
+ IVzVeq7JirNdZ2oFwrbd9+82jU+W8E1fF+VET7ymFLWccZxz1kVIlkh0pONdDEmRewfdNrSCzfR
+ CVV9ZF67BKbvh2sEuauU4qtdPfwXoVS+GVhJXLYY9PHGnKoDMYnDv16iCyHMOwN79Xj4acIQYNh
+ nGLaElBriaKKNvzhUYgeU1BHK9hrtK9a7DuvX4rCwGiD8ohiNwlEbeV7wUr
+X-Received: by 2002:a17:907:d9f:b0:aa6:7ec4:8bac with SMTP id
+ a640c23a62f3a-ab38b1100c3mr185350466b.17.1737104450091; 
+ Fri, 17 Jan 2025 01:00:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFVqysmZdh7m+Yxpv5bZN7QirBE8CFDC3dWjk3FJjb/61G4m9IY/jAcuPz+/uZzGNNqNRK7zg==
+X-Received: by 2002:a17:907:d9f:b0:aa6:7ec4:8bac with SMTP id
+ a640c23a62f3a-ab38b1100c3mr185345866b.17.1737104449556; 
+ Fri, 17 Jan 2025 01:00:49 -0800 (PST)
+Received: from [192.168.10.3] ([176.206.124.70])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab384fcb262sm133248166b.169.2025.01.17.01.00.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jan 2025 01:00:48 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com,
+	qemu-rust@nongnu.org
+Subject: [PATCH 00/10] rust: (mostly) type safe VMState
+Date: Fri, 17 Jan 2025 10:00:36 +0100
+Message-ID: <20250117090046.1045010-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/21] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20250115232247.30364-1-philmd@linaro.org>
- <20250115232247.30364-9-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250115232247.30364-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -162,126 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
-> E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
-> via the 'extra_mac_registers=off' property. We removed all
-> machines using that array, lets remove all the code around
-> E1000_FLAG_MAC.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/net/e1000.c | 63 +++++++++-----------------------------------------
->   1 file changed, 11 insertions(+), 52 deletions(-)
-> 
-> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-> index 3d0b2277039..14d2133cd80 100644
-> --- a/hw/net/e1000.c
-> +++ b/hw/net/e1000.c
-> @@ -127,10 +127,8 @@ struct E1000State_st {
->       QEMUTimer *flush_queue_timer;
->   
->   /* Compatibility flags for migration to/from qemu 1.3.0 and older */
-> -#define E1000_FLAG_MAC_BIT 2
->   #define E1000_FLAG_TSO_BIT 3
->   #define E1000_FLAG_VET_BIT 4
-> -#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
->   #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
->   #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
->   
-> @@ -1218,46 +1216,17 @@ enum { MAC_ACCESS_PARTIAL = 1, MAC_ACCESS_FLAG_NEEDED = 2 };
->    * n - flag needed
->    * p - partially implenented */
->   static const uint8_t mac_reg_access[0x8000] = {
-> -    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
-> -    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
-> -    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
-> -    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
-> -    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
-> -    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
-> -    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
-> -    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
-> -    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
-> -    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
-> -    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
-> -    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
-> -    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
-> -    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
-> -    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
-> -    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
-> -    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
-> -    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
-> -    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
-> -    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
-> -    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
-> -    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
-> -    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
-> -    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
-> -    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
-> -    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
-> -    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
-> -    [BPTC]    = markflag(MAC),
+The existing translation of the C macros for vmstate does not make
+any attempt to type-check vmstate declarations against the struct, so
+introduce a new system that computes VMStateField based on the actual
+struct declaration.
 
-I think this is wrong. All those registers should still be marked with 
-MAC_ACCESS_FLAG_NEEDED, shouldn't they?
+Macros do not have full access to the type system, therefore a full
+implementation of this scheme requires a helper trait to analyze the type
+and produce a VMStateField from it; the trait stores the VMStateField
+as ana associated const.  Then, a macro "vmstate_of!" accepts arguments
+similar to "offset_of!" and tricks the compiler into looking up the
+trait for the right type.
 
-  Thomas
+Structs and cells have their own sub-VMStateDescription.  This poses
+a problem in that references can only be included in associated consts
+starting with Rust 1.83.0, when the const_refs_static was stabilized.
+So for now structs and cells cannot be done in a type-safe manner,
+but arrays, pointers and scalars can.
 
+Technically, scalar types have the same issue in that they point to a
+VMStateInfo.  For this case however there is onlyya limited list of
+VMStateInfos, so I am placing them in an enum, and going from enum
+to &VMStateInfo only when building the VMStateField (i.e. in a static's
+value rather than in an associated const, and in a macro rather than in
+a const fn).  This isn't great, but it's easily removed when QEMU starts
+accepting a newer Rust version.
 
-> -    [TDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [TDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [TDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [TDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [TDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [RDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [RDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [RDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [RDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [RDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> -    [PBM]   = markflag(MAC) | MAC_ACCESS_PARTIAL,
-> +    [TDFH]  = MAC_ACCESS_PARTIAL,
-> +    [TDFT]  = MAC_ACCESS_PARTIAL,
-> +    [TDFHS] = MAC_ACCESS_PARTIAL,
-> +    [TDFTS] = MAC_ACCESS_PARTIAL,
-> +    [TDFPC] = MAC_ACCESS_PARTIAL,
-> +    [RDFH]  = MAC_ACCESS_PARTIAL,
-> +    [RDFT]  = MAC_ACCESS_PARTIAL,
-> +    [RDFHS] = MAC_ACCESS_PARTIAL,
-> +    [RDFTS] = MAC_ACCESS_PARTIAL,
-> +    [RDFPC] = MAC_ACCESS_PARTIAL,
-> +    [PBM]   = MAC_ACCESS_PARTIAL,
->   };
->   
->   static void
-> @@ -1419,13 +1388,6 @@ static int e1000_tx_tso_post_load(void *opaque, int version_id)
->       return 0;
->   }
->   
-> -static bool e1000_full_mac_needed(void *opaque)
-> -{
-> -    E1000State *s = opaque;
-> -
-> -    return chkflag(MAC);
-> -}
-> -
->   static bool e1000_tso_state_needed(void *opaque)
->   {
->       E1000State *s = opaque;
-> @@ -1451,7 +1413,6 @@ static const VMStateDescription vmstate_e1000_full_mac_state = {
->       .name = "e1000/full_mac_state",
->       .version_id = 1,
->       .minimum_version_id = 1,
-> -    .needed = e1000_full_mac_needed,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32_ARRAY(mac_reg, E1000State, 0x8000),
->           VMSTATE_END_OF_LIST()
-> @@ -1679,8 +1640,6 @@ static void pci_e1000_realize(PCIDevice *pci_dev, Error **errp)
->   
->   static const Property e1000_properties[] = {
->       DEFINE_NIC_PROPERTIES(E1000State, conf),
-> -    DEFINE_PROP_BIT("extra_mac_registers", E1000State,
-> -                    compat_flags, E1000_FLAG_MAC_BIT, true),
->       DEFINE_PROP_BIT("migrate_tso_props", E1000State,
->                       compat_flags, E1000_FLAG_TSO_BIT, true),
->       DEFINE_PROP_BIT("init-vet", E1000State,
+The series also introduces the pattern of applying changes to a struct
+using methods with a fn(mut self) -> Self signature, for example
+
+    pub const fn with_version_id(mut self, version_id: i32) -> Self {
+        self.version_id = version_id;
+        self
+    }
+
+This is not quite the builder pattern because there is no need for a
+final ".build()" call, but it's similar/related.
+
+The unfavorable diffstat comes half from the const_refs_static workaround,
+half from new documentation (so in that case it's a plus rather than
+a minus).  And also, there is more functionality and extensibility in
+the new mechanism, whereas only a subset of the C macros was included
+in the previous implementation.  The exception is "field_exists", which
+may be added later if needed as a modifier, similar to with_version_id().
+
+Paolo
+
+v1->v2:
+- add attribution for call_func_with_field macro
+- add VMS_VARRAY_FLAGS, check it in with_array_flag
+- remove Option<NonNull<T>> support, add Box<T>
+- fix cut and paste typo in vmstate_varray_flag
+- fix rustfmt
+- move SCALAR_TYPE definitions to the right patch
+- keep $num as an ident rather than tt
+- remove vmstate_cell
+- make order of parameters consistent in vmstate_clock (last patch, new)
+
+Paolo Bonzini (10):
+  rust: vmstate: add new type safe implementation
+  rust: vmstate: implement VMState for non-leaf types
+  rust: vmstate: add varray support to vmstate_of!
+  rust: vmstate: implement Zeroable for VMStateField
+  rust: vmstate: implement VMState for scalar types
+  rust: vmstate: add public utility macros to implement VMState
+  rust: qemu_api: add vmstate_struct
+  rust: pl011: switch vmstate to new-style macros
+  rust: vmstate: remove translation of C vmstate macros
+  rust: vmstate: make order of parameters consistent in vmstate_clock
+
+ rust/hw/char/pl011/src/device.rs       |   3 +-
+ rust/hw/char/pl011/src/device_class.rs |  38 +-
+ rust/hw/char/pl011/src/lib.rs          |   6 +
+ rust/qemu-api/src/prelude.rs           |   2 +
+ rust/qemu-api/src/vmstate.rs           | 700 ++++++++++++++++---------
+ rust/qemu-api/src/zeroable.rs          |  31 ++
+ 6 files changed, 504 insertions(+), 276 deletions(-)
+
+-- 
+2.47.1
 
 
