@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5263FC02183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 10:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A31C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 10:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYjJk-0003FG-3X; Fri, 17 Jan 2025 05:11:08 -0500
+	id 1tYjLo-0004Ze-2B; Fri, 17 Jan 2025 05:13:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYjJi-0003Dm-HP
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:11:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tYjLl-0004W2-KH; Fri, 17 Jan 2025 05:13:14 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tYjJd-0001bB-U7
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 05:11:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737108660;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+Mp/x+/ogPHuu7PB5/FkjauJT57NxP0CE3V1Kpk01Jo=;
- b=PPDFAvu/q+vbbC4Z7uwTqJNFPi4G9ESgN037zUlvgku/ZAmGqo0Zxy8G4IIWP2EI0UZYH2
- iANToyTI4m6sucB/L4G1yOC4uY0awtnyka/waxwT7ln02Ci81VFK2qBSsomLc04fCA+W5e
- sR3kLoT2ZoNzT6dHFfgKrK3auMWTREE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-mNirULXQP4GP6LpAoENbgg-1; Fri,
- 17 Jan 2025 05:10:58 -0500
-X-MC-Unique: mNirULXQP4GP6LpAoENbgg-1
-X-Mimecast-MFC-AGG-ID: mNirULXQP4GP6LpAoENbgg
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C04B319560BA
- for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 10:10:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15B5C195608A; Fri, 17 Jan 2025 10:10:54 +0000 (UTC)
-Date: Fri, 17 Jan 2025 10:10:51 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Victor Toso <victortoso@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- John Snow <jsnow@redhat.com>, Andrea Bolognani <abologna@redhat.com>
-Subject: Re: [PATCH v3 1/8] qapi: golang: Generate enum type
-Message-ID: <Z4osq2u_UIQOGfze@redhat.com>
-References: <20250110104946.74960-1-victortoso@redhat.com>
- <20250110104946.74960-2-victortoso@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tYjLf-0001nf-Gw; Fri, 17 Jan 2025 05:13:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1737108788; x=1768644788;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=SIgXHvANC82Vg5ReA7IdnJaf8txoLEWwOmUSigIHr1E=;
+ b=QPk0OGdfwugbp1V+cygNjkyxbi0mC8tZnKqauNvmHQxDJvgG4saIQZp5
+ NHbRgO7iJiAMP95GpP6cw0CpjJI31CgnCuVG/R25aCJBEKixQKeERNObC
+ PR46qOtWyeEaoNxeKTdYoLdv0wjRomdcaG9GkGKoHNQfQdGH3fXMGZTj2
+ xWrwi8hP30EuPggPVoDCcBJ9af5LsD1DTIp7V3E8f2VTtaJukj9SxiKsI
+ VysXe8KSh6Yvg1CxJRDPqkVhItpWaamqy6r6KFEBH9B7levDJzBOr/3Dr
+ 5hs0H0B67ALz7SzGRSWAVZ//bHJ3V5d0WAfezWcS0bruY0L2kwN0cbesP A==;
+X-CSE-ConnectionGUID: jjOKpBM6QbSVpKQ/mxph9g==
+X-CSE-MsgGUID: 3GElGCZARo2MT9Ez1cEgWA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="37653914"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; d="scan'208";a="37653914"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jan 2025 02:13:02 -0800
+X-CSE-ConnectionGUID: uuQp4KGPSf2/vMZfvMk9eg==
+X-CSE-MsgGUID: 5/19OrRTQO2IA3olY19A1w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="105612788"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 17 Jan 2025 02:12:59 -0800
+Date: Fri, 17 Jan 2025 18:31:51 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+Message-ID: <Z4oxlydZIK/f/aNC@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-10-zhao1.liu@intel.com>
+ <1da970e8-1708-48ef-87c4-1099d23e8909@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250110104946.74960-2-victortoso@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+In-Reply-To: <1da970e8-1708-48ef-87c4-1099d23e8909@redhat.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.093,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.797,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,85 +85,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 10, 2025 at 11:49:39AM +0100, Victor Toso wrote:
-> This patch handles QAPI enum types and generates its equivalent in Go.
-> We sort the output based on enum's type name.
+> This breaks if you disable HPET, which is why fw_cfg.c defines it.
 > 
-> Enums are being handled as strings in Golang.
+> You can do something like
 > 
-> 1. For each QAPI enum, we will define a string type in Go to be the
->    assigned type of this specific enum.
-> 
-> 2. Naming: CamelCase will be used in any identifier that we want to
->    export, which is everything.
-> 
-> Example:
-> 
-> qapi:
->   | ##
->   | # @DisplayProtocol:
->   | #
->   | # Display protocols which support changing password options.
->   | #
->   | # Since: 7.0
->   | ##
->   | { 'enum': 'DisplayProtocol',
->   |   'data': [ 'vnc', 'spice' ] }
-> 
-> go:
->   | // Display protocols which support changing password options.
->   | //
->   | // Since: 7.0
->   | type DisplayProtocol string
->   |
->   | const (
->   | 	DisplayProtocolVnc   DisplayProtocol = "vnc"
->   | 	DisplayProtocolSpice DisplayProtocol = "spice"
->   | )
-> 
-> Signed-off-by: Victor Toso <victortoso@redhat.com>
-> ---
->  scripts/qapi/golang.py | 266 +++++++++++++++++++++++++++++++++++++++++
->  scripts/qapi/main.py   |   3 +
->  2 files changed, 269 insertions(+)
->  create mode 100644 scripts/qapi/golang.py
-> 
-> diff --git a/scripts/qapi/golang.py b/scripts/qapi/golang.py
+> diff --git a/include/hw/timer/hpet-fw-cfg.h b/include/hw/timer/hpet-fw-cfg.h
 > new file mode 100644
-> index 0000000000..1e04c99f1c
+> index 00000000000..234a49fc92e
 > --- /dev/null
-> +++ b/scripts/qapi/golang.py
-> @@ -0,0 +1,266 @@
-> +"""
-> +Golang QAPI generator
-> +"""
+> +++ b/include/hw/timer/hpet-fw-cfg.h
+> @@ -0,0 +1,16 @@
+> +struct hpet_fw_entry
+> +{
+> +    uint32_t event_timer_block_id;
+> +    uint64_t address;
+> +    uint16_t min_tick;
+> +    uint8_t page_prot;
+> +} QEMU_PACKED;
 > +
-> +# Copyright (c) 2025 Red Hat Inc.
-> +#
-> +# Authors:
-> +#  Victor Toso <victortoso@redhat.com>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2.
-> +# See the COPYING file in the top-level directory.
+> +struct hpet_fw_config
+> +{
+> +    uint8_t count;
+> +    struct hpet_fw_entry hpet[8];
+> +} QEMU_PACKED;
+> +
+> +extern struct hpet_fw_config hpet_fw_cfg;
+> +
+> diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
+> index d17a8d43199..6f7fcbc3c60 100644
+> --- a/include/hw/timer/hpet.h
+> +++ b/include/hw/timer/hpet.h
+> @@ -60,26 +60,12 @@
+>  #define HPET_TN_INT_ROUTE_CAP_SHIFT 32
+>  #define HPET_TN_CFG_BITS_READONLY_OR_RESERVED 0xffff80b1U
+> -struct hpet_fw_entry
+> -{
+> -    uint32_t event_timer_block_id;
+> -    uint64_t address;
+> -    uint16_t min_tick;
+> -    uint8_t page_prot;
+> -} QEMU_PACKED;
+> -
+> -struct hpet_fw_config
+> -{
+> -    uint8_t count;
+> -    struct hpet_fw_entry hpet[8];
+> -} QEMU_PACKED;
+> -
+> -extern struct hpet_fw_config hpet_cfg;
+> -
+>  #define TYPE_HPET "hpet"
+>  #define HPET_INTCAP "hpet-intcap"
+> +#include "hw/timer/hpet-fw-cfg.h"
+> +
+>  static inline bool hpet_find(void)
+>  {
+>      return object_resolve_path_type("", TYPE_HPET, NULL);
+> diff --git a/rust/wrapper.h b/rust/wrapper.h
+> index 285d0eb6ad0..82381e43472 100644
+> --- a/rust/wrapper.h
+> +++ b/rust/wrapper.h
+> @@ -62,3 +62,4 @@ typedef enum memory_order {
+>  #include "qapi/error.h"
+>  #include "migration/vmstate.h"
+>  #include "chardev/char-serial.h"
+> +#include "hw/timer/hpet-fw-cfg.h"
+> 
+> 
+> but you will have to use unsafe to access it since it's a "static mut".
+> 
 
-Did you mean to say GPL-2.0-only ? Generally we'd expect
-new code to be GPL-2.0-or-later.
+Unfortunately, this way doesn't work either, if we disable both
+CONFIG_HPET and CONFIG_X_HPET_RUST.
 
-Also we'd now desire "SPDX-License-Identifier: GPL-2.0-or-later"
-for any newly added files, which reminds me to finish my patches
-to checkpatch.pl to enforce SPDX usage.
+This is because I integrates hpet_fw_cfg into hpet lib which is compiled
+under CONFIG_X_HPET_RUST along with other HPET parts.
+
+The place broken is when hpet_fw_cfg is written into machine's fw_cfg (in
+hw/i386/fw_cfg.c).
+
+I think we can just wrap such write like:
+
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 162785019b7a..3635b83620da 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -147,7 +147,14 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+ #endif
+     fw_cfg_add_i32(fw_cfg, FW_CFG_IRQ0_OVERRIDE, 1);
+
+-    fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_fw_cfg, sizeof(hpet_fw_cfg));
++#if defined(CONFIG_HPET) || defined(CONFIG_X_HPET_RUST)
++    PCMachineState *pcms = (PCMachineState *)object_dynamic_cast(OBJECT(ms),
++                                                                 TYPE_PC_MACHINE);
++    if (pcms && pcms->hpet_enabled) {
++        fw_cfg_add_bytes(fw_cfg, FW_CFG_HPET, &hpet_fw_cfg, sizeof(hpet_fw_cfg));
++    }
++#endif
++
+     /* allocate memory for the NUMA channel: one (64bit) word for the number
+      * of nodes, one word for each VCPU->node and one word for each node to
+      * hold the amount of memory.
+
+---
+
+The hpet_fw_cfg is written unconditionally since 40ac17cd, because it
+concerns ACPI HPET is created unconditionally. But that fact has changed
+and ACPI checks HPET device now (hw/i386/acpi-build.c):
+
+static void acpi_get_misc_info(AcpiMiscInfo *info)
+{
+    info->has_hpet = hpet_find();
+#ifdef CONFIG_TPM
+    info->tpm_version = tpm_get_version(tpm_find());
+#endif
+}
+
+I think this is a thorough enough solution and I can post a separate
+patch.
+
+Thanks,
+Zhao
 
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
