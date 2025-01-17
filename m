@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDF1C02188
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD5BC0218A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 00:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYa23-0002Ah-5Q; Thu, 16 Jan 2025 19:16:15 -0500
+	id 1tYa23-0002At-80; Thu, 16 Jan 2025 19:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1q-00028B-HT
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:02 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1u-00029r-RC
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:07 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1o-0008Ky-99
- for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:02 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GNx8r3010217;
- Fri, 17 Jan 2025 00:15:51 GMT
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tYa1p-0008LG-IS
+ for qemu-devel@nongnu.org; Thu, 16 Jan 2025 19:16:06 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50GN0vIr005703;
+ Fri, 17 Jan 2025 00:15:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=lqBLmsPseIgZdEy+F
- XGCD+smodzboEzocSFjlx8t59Y=; b=fA/P1Jsd2GkZZ8ADLZDtAOzMWkP0m9yui
- rWsAQR9KuLbNMf9JaSVgWpc1RIpyWPDTmNBTs7Y64+ETe7jDUjkyvjlMOt9FZaXN
- mhgXrzS/GAfDjqR+CINtYQA+Nyy1atVRH0QjNmOYBpmakH4/F0SDRNUDPo1FPx9F
- 6w61trsbC8yiYOe4NjR1RPFN1Nhv3STO+3JN9mxMOktvxTP0Xn/FwlckCNbFHT+Y
- odGgpcJX5OHbuDzjho7AOan1RzgqOw+h2ZXF+KfKOf7vV/lGyKiHzLK47oC9ntaS
- z5LNlNq/fJUVL55wXxfKlPCW79e6KW3VHM/MH1haR0AeWol2/+d4Q==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 447c8j81k3-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ZfKal3
+ jtbQfwqzCxrP2BbllLZzij0kr1Kfs/b7UIssM=; b=lsjdItdA9x/ieW+21VRzxg
+ ZpVtS/wNPbGu+IJwYNySFoiDjDXdc7rayRZkUmDnaOsXyQSwc/i0RCUr8hhyG3jb
+ 95dDDoWDL5fQ55vMRit+9suhXvEQdS2BK4RTylu1qYLRyLhIplLNBZVIKrb6Uh0L
+ 0taBZqppXpGY3TsAownO9BuxoCwOegpip9XqTKbF/4yl5/YB3oelVUaNjogZznQ1
+ SHHTRxglzva9msHD5gbvCOT9H6B9lDjtuzrcmGWJHz8KPPVIEZw/LpgOAWYy6Wvl
+ NGtw8jgWBfkzF3GzZdrNZvPJ2rw2pP9Q37Ww1xcSJ60pzrzTPEStcxl6AI6oHKxw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 446tkcneg3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:51 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GN2wKD016485;
- Fri, 17 Jan 2025 00:15:50 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4445p20195-1
+ Fri, 17 Jan 2025 00:15:52 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50GKek2F002666;
+ Fri, 17 Jan 2025 00:15:51 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4443byggy0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Jan 2025 00:15:50 +0000
+ Fri, 17 Jan 2025 00:15:51 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 50H0Fm0R62390690
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 50H0Fn1f56361222
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Jan 2025 00:15:48 GMT
+ Fri, 17 Jan 2025 00:15:49 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C5B520040;
+ by IMSVA (Postfix) with ESMTP id 6BBDF20040;
+ Fri, 17 Jan 2025 00:15:49 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EEE2F2004B;
  Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC1472004B;
- Fri, 17 Jan 2025 00:15:47 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.62.46])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Jan 2025 00:15:47 +0000 (GMT)
+ Fri, 17 Jan 2025 00:15:48 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -67,26 +68,28 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v6 5/8] osdep: Introduce qemu_kill_thread()
-Date: Fri, 17 Jan 2025 01:11:30 +0100
-Message-ID: <20250117001542.8290-6-iii@linux.ibm.com>
+Subject: [PATCH v6 7/8] docs/user: Document the %d placeholder and suspend=n
+ QEMU_GDB features
+Date: Fri, 17 Jan 2025 01:11:32 +0100
+Message-ID: <20250117001542.8290-8-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250117001542.8290-1-iii@linux.ibm.com>
 References: <20250117001542.8290-1-iii@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DND7P4MUQkp95221yS_NnNnuEO0NdZA9
-X-Proofpoint-ORIG-GUID: DND7P4MUQkp95221yS_NnNnuEO0NdZA9
+X-Proofpoint-ORIG-GUID: USv0HpZvjX1LvZLrlAQQrlwWaPTxW_V_
+X-Proofpoint-GUID: USv0HpZvjX1LvZLrlAQQrlwWaPTxW_V_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-01-16_10,2025-01-16_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 adultscore=0
- phishscore=0 impostorscore=0 mlxscore=0 mlxlogscore=934 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501160178
+ adultscore=0 malwarescore=0
+ impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2411120000 definitions=main-2501160178
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -44
@@ -112,64 +115,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a function for sending signals to individual threads. It does not make
-sense on Windows, so do not provide an implementation, so that if someone
-uses it by accident, they will get a linker error.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- include/qemu/osdep.h |  9 +++++++++
- util/oslib-posix.c   | 15 +++++++++++++++
- 2 files changed, 24 insertions(+)
+ docs/user/main.rst | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index b94fb5fab8c..37ee3eabae3 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -630,6 +630,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **errp);
+diff --git a/docs/user/main.rst b/docs/user/main.rst
+index 80a77f0a0c9..9a1c60448c5 100644
+--- a/docs/user/main.rst
++++ b/docs/user/main.rst
+@@ -54,7 +54,7 @@ Command line options
  
- int qemu_get_thread_id(void);
+ ::
  
-+/**
-+ * qemu_kill_thread:
-+ * @tid: thread id.
-+ * @sig: host signal.
-+ *
-+ * Send @sig to one of QEMU's own threads with identifier @tid.
-+ */
-+int qemu_kill_thread(int tid, int sig);
+-   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g port] [-B offset] [-R size] program [arguments...]
++   qemu-i386 [-h] [-d] [-L path] [-s size] [-cpu model] [-g endpoint] [-B offset] [-R size] program [arguments...]
+ 
+ ``-h``
+    Print the help
+@@ -91,8 +91,18 @@ Debug options:
+    Activate logging of the specified items (use '-d help' for a list of
+    log items)
+ 
+-``-g port``
+-   Wait gdb connection to port
++``-g endpoint``
++   Wait gdb connection to a port (e.g., ``1234``) or a unix socket (e.g.,
++   ``/tmp/qemu.sock``).
 +
- #ifndef CONFIG_IOVEC
- struct iovec {
-     void *iov_base;
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 7a542cb50b5..f8eb3f17b2f 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -111,6 +111,21 @@ int qemu_get_thread_id(void)
- #endif
- }
- 
-+int qemu_kill_thread(int tid, int sig)
-+{
-+#if defined(__linux__)
-+    return syscall(__NR_tgkill, getpid(), tid, sig);
-+#elif defined(__FreeBSD__)
-+    return thr_kill2(getpid(), tid, sig);
-+#elif defined(__NetBSD__)
-+    return _lwp_kill(tid, sig);
-+#elif defined(__OpenBSD__)
-+    return thrkill(tid, sig, NULL);
-+#else
-+    return kill(tid, sig);
-+#endif
-+}
++   If a unix socket path contains single ``%d`` placeholder (e.g.,
++   ``/tmp/qemu-%d.sock``), it is replaced by the emulator PID, which is useful
++   when passing this option via the ``QEMU_GDB`` environment variable to a
++   multi-process application.
 +
- int qemu_daemon(int nochdir, int noclose)
- {
-     return daemon(nochdir, noclose);
++   If the endpoint address is followed by ``,suspend=n`` (e.g.,
++   ``1234,suspend=n``), then the emulated program starts without waiting for a
++   connection, which can be established at any later point in time.
+ 
+ ``-one-insn-per-tb``
+    Run the emulation with one guest instruction per translation block.
 -- 
 2.47.1
 
