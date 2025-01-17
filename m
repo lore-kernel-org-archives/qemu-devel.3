@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61886C02185
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A51C02183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jan 2025 13:43:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tYmH1-0003r7-VA; Fri, 17 Jan 2025 08:20:31 -0500
+	id 1tYmd4-00014b-Ha; Fri, 17 Jan 2025 08:43:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYmH0-0003qv-1d
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:20:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tYmGy-0006Me-FQ
- for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:20:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1737120022;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bnsBFEaqcbJMeWOEJt0sktShqsSJAIDe54vk5Al6waE=;
- b=L1bry0xA7xCQEuyKX2+qglIk1pVnrTD3kYhJI9CbZgr+i6JlQ60o6r8CstuipEmq5KwvXv
- ERkYeRiqFmsTcEW8VuHNHgx6k/cFA0rGhKTSDvG7/N0vzYvzWyRt0IffSDwOj0imzHTeK6
- hXHT7uueQc4qQCUzFOw1zM0/riCiO7M=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-DWLmY5glNXyWgPOMUbhHvA-1; Fri,
- 17 Jan 2025 08:20:18 -0500
-X-MC-Unique: DWLmY5glNXyWgPOMUbhHvA-1
-X-Mimecast-MFC-AGG-ID: DWLmY5glNXyWgPOMUbhHvA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 517B919560B8; Fri, 17 Jan 2025 13:20:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.176])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC72C1955F1B; Fri, 17 Jan 2025 13:20:15 +0000 (UTC)
-Date: Fri, 17 Jan 2025 14:20:13 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Roman Penyaev <r.peniaev@gmail.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 6/8] chardev/char-mux: implement backend chardev
- multiplexing
-Message-ID: <Z4pZDeGqoqg4Iedk@redhat.com>
-References: <20241016102605.459395-1-r.peniaev@gmail.com>
- <20241016102605.459395-7-r.peniaev@gmail.com>
- <CAJ+F1CLkn2WcmJEmNpJwNcc5VPriDTdSFWcv44QWaYtvHycKcQ@mail.gmail.com>
- <87frmuwo6p.fsf@pond.sub.org>
- <CACZ9PQUk7ZjwfYWVNq3z2Wp_pnkKO8ObhLc6uy5ABHq2yCL9Ag@mail.gmail.com>
- <Z4jtJMNeXexEEpVZ@redhat.com>
- <CACZ9PQVzRwgqix=6Do67kgLEJNP4xQZ4dHKrfONHh78vJU1CLg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYmcu-0000x9-JF
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:08 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tYmcq-0002CP-7w
+ for qemu-devel@nongnu.org; Fri, 17 Jan 2025 08:43:06 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-aa67ac42819so328466466b.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jan 2025 05:43:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1737121378; x=1737726178; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SPhUiahc8AcG/DudZ+NnvJ9oGMqaRHCp9nDZpFVSZuQ=;
+ b=QYRYaxlnaVtvi9VsrJl6JYzdghVQlTuNtC5Rrqe5skykCMHTWbbKQ31mhVgDthvY1b
+ ylzNOv4rxFJbmgtTLQ90NKH88YsiYG/o8iVP604iQRI4kRYy2Vq9Ti72QN2iMwF/iC0U
+ xBZpS5H1hJVK1yxUv3x9auZP3+wV01wkPw82nWB3MqTfhES/LwKAk4X/edJMwVbu87Rg
+ 5AXvS+E1E9OXV69xEH+2jVsJLhJ3crA/3nq3PjZMPF27oGsjhE8JrmctLFdjnnIuDSOx
+ Wu9C9YSTfEfSLs2Qr9B4wHQiuAhC/99vauOqIiqJHyX4Z85LAfLTZ7xJiMNkRwfcGX0m
+ K4qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1737121378; x=1737726178;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SPhUiahc8AcG/DudZ+NnvJ9oGMqaRHCp9nDZpFVSZuQ=;
+ b=l1uPKAGEr1tUS0JPE8u4YtYU0d+UhrKo3ARFpKlCQj4S3SgyEqHZ+PcV5Az2LuwNZn
+ 4miFtGdV+z2FtUnJWFfDYJPxVmOPvQ5uzSe1n6bKpsFO20m8HolXfQHvEI99alwRqYjl
+ WZQb39dRVJuIRtqUNBCabCU5/TDbQCynUdMlSMIc90pZps/sjTgGxrQbUbU2HvjNereu
+ PPmzixPpfbz8hnYwRe60jAVBq3Nfz5wxnAQtXCOfSzojGkcXcqRBBKEH6bVTMRLSI/70
+ J7gS0F8otAAZ42qBtDN5AUkOyeMGR+xpG2jR4YsvawNDA/1YeVIa/CkAi5dgIqffHKMg
+ GsXw==
+X-Gm-Message-State: AOJu0YwUteDWWV3lijE4HDX7BiJPANmtQJSwuNA9QrzBuTj9ZvlQ9mZ1
+ JaChwOJPFuci0ikiM3jLc8DX5gpHXAilNxQoyT+VnDO4eJVghE2lgY5eAJTHij7m2bi0pJ9fmFG
+ AnWw=
+X-Gm-Gg: ASbGncsiTP0blQlFEv0xVf+Dvaelkv4QxBSCrHa0pTX+LfgX9nNKmDtQto94zIW47n+
+ zyKKM/4N695Imh9BZBJVleFfBsgaFif1AnD+WcH0/2g8xdkHti5StgktgZ946RxVnVeW0E8mYCk
+ xbXaHq3ECqYGJX81KICr5XaF4iFl462deWmkG3FmJfOCMW6bQoK5SH4x6XgwHpKI5asPjjVSyCM
+ z1+hOl+PBIf8jmfdnFQfFR/DIFMBTuJPMAEVfM9mpf1iySuHdldKwc=
+X-Google-Smtp-Source: AGHT+IHWymvHQFT/Kb8O3h5piJK1U+wH0Hxx/H8XzS4NpgH7ag2xPRorb058tFVpzgn647tGJgdS/g==
+X-Received: by 2002:a17:906:6a20:b0:aac:23f4:f971 with SMTP id
+ a640c23a62f3a-ab38b1b45e1mr280462566b.33.1737121378166; 
+ Fri, 17 Jan 2025 05:42:58 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ab384f22fd2sm171481766b.110.2025.01.17.05.42.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jan 2025 05:42:57 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F1D386084C;
+ Fri, 17 Jan 2025 13:42:56 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 01/37] semihosting: add guest_error logging for failed opens
+Date: Fri, 17 Jan 2025 13:42:20 +0000
+Message-Id: <20250117134256.2079356-2-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250117134256.2079356-1-alex.bennee@linaro.org>
+References: <20250117134256.2079356-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACZ9PQVzRwgqix=6Do67kgLEJNP4xQZ4dHKrfONHh78vJU1CLg@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.79,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,23 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 17.01.2025 um 09:03 hat Roman Penyaev geschrieben:
-> On Thu, Jan 16, 2025 at 12:27 PM Kevin Wolf <kwolf@redhat.com> wrote:
-> > Whatever you choose to do, my one request for you would be that you
-> > really make sure that CLI and QMP are structured and behave exactly the
-> > same with your new option, to avoid making the problem worse than it
-> > already is.
-> 
-> I understand this as keeping compatibility between CLI and QAPI at the
-> command line interface level. In simple words: a new command line option
-> "list.0=id0,list.1=id1" should be parsed in CLI exactly as QAPI will parse
-> it in the possible bright future (I mean once the whole chardev is switched
-> to QAPI). If my understanding is correct, then, with Markus and Mark-Andre
-> help, I'm on the right track.
+This usually indicates the semihosting call was expecting to find
+something but didn't.
 
-Yes, that's exactly what I mean. Good to hear that you're already
-planning to keep this in mind.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250116160306.1709518-2-alex.bennee@linaro.org>
 
-Kevin
+diff --git a/semihosting/syscalls.c b/semihosting/syscalls.c
+index c40348f996..f6451d9bb0 100644
+--- a/semihosting/syscalls.c
++++ b/semihosting/syscalls.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "cpu.h"
+ #include "gdbstub/syscalls.h"
+ #include "semihosting/guestfd.h"
+@@ -287,6 +288,7 @@ static void host_open(CPUState *cs, gdb_syscall_complete_cb complete,
+ 
+     ret = open(p, host_flags, mode);
+     if (ret < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to open %s\n", __func__, p);
+         complete(cs, -1, errno);
+     } else {
+         int guestfd = alloc_guestfd();
+-- 
+2.39.5
 
 
